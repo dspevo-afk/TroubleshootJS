@@ -51,7 +51,7 @@ final class E03RelayMutationChecks {
                             }
                         });
                         boolean failed=false;
-                        try{controller.installNewFromCatalog(ReplaceableRelayCapability.CORRECT);}
+                        try{controller.installNewFromCatalog(ReplaceableRelayCapability.COIL_5V);}
                         catch(IllegalStateException expected){failed=expected.getMessage().contains("e03-attachment-");}
                         finally{PhysicalMutationScope.clearFailureHookForDeveloperVerification();}
                         require(failed&&writes[0]==occurrence,"injected attachment failure observed");
@@ -60,7 +60,7 @@ final class E03RelayMutationChecks {
                         GeneratedRuntimeInvariant.verify(sim,owner,sim.getBoardModificationController(),sim.elmList);
                         settle(sim,owner);
                     }
-                    require(controller.installNewFromCatalog(ReplaceableRelayCapability.WRONG),"wrong relay is mechanically compatible");
+                    require(controller.installNewFromCatalog(ReplaceableRelayCapability.COIL_12V),"wrong relay is mechanically compatible");
                     settle(sim,owner); sim.setBoardPowerState(BoardPowerState.POWERED); settle(sim,owner);
                     require(!sim.getGeneratedChallengeController().performCustomerRetest().isPassed(),"12 V replacement fails on 5 V");
                     sim.setBoardPowerState(BoardPowerState.UNPOWERED); sim.advanceGeneratedTemporalProfile(.025); settle(sim,owner);

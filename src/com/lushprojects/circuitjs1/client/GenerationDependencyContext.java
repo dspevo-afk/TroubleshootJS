@@ -21,7 +21,7 @@ import java.util.Vector;
  */
 final class GenerationDependencyContext {
     /** Current interpretation epoch.  Caches are valid only in this runtime. */
-    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v6";
+    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v7";
     static final String CIRCUIT_DUMP_EPOCH =
         "circuitjs-source-load-model-inputs-no-transient-dump-v3";
     static final String POWER_REFERENCE_STORAGE_SEAM = "power-domain-contract-v1";
@@ -223,6 +223,7 @@ final class GenerationDependencyContext {
 
         appendStringList(out, "board.nets", netIds, false);
         appendField(out,"routing.score",PcbRouteMetrics.SCORE_VERSION);
+        frame(out,"single-copper-layer"); frame(out,board.getPlacementConstraints().routingLayer.name());
         for(PcbPlacementConstraints.Part demand:board.getPlacementConstraints().getParts()) {
             frame(out,"placement"); frame(out,demand.componentId); frame(out,demand.regionId);
             frame(out,demand.regionLabel); frame(out,demand.domainId);
@@ -952,6 +953,7 @@ final class GenerationDependencyContext {
         case 't':
             // TransistorElm: pnp, live VBE, live VCE, beta, model name.
             return joinDumpTokens(tokens, 7, 8);
+        case 451: // Fuse resistance, I-squared-t, persistent heat and blown state.
         case 453: // External load resistance and persistent stress state.
         case 450: // DC compliance settings; no transient state.
         case 'd':

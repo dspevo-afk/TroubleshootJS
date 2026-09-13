@@ -135,6 +135,16 @@ final class NamedRandomStreams {
         return canonical.get(new Stream(streamSeed).nextInt(canonical.size()));
     }
 
+    /** Fisher-Yates order; GWT 2.7 does not emulate Collections.shuffle. */
+    static <T> void shuffle(List<T> values, java.util.Random random) {
+        for (int size = values.size(); size > 1; size--) {
+            int other = random.nextInt(size);
+            T value = values.get(size - 1);
+            values.set(size - 1, values.get(other));
+            values.set(other, value);
+        }
+    }
+
     private long derive(String scope, String blockKey, Concern concern,
             int concernRevision, String semanticKey) {
         ChallengeContractException.required(concern, "stream.concern");

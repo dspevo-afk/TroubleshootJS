@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "inputCount": 1076,
+  "compiledPermutations": 5,
+  "executionFileCount": 1422,
+  "executionDigest": "4ce82866bd75fc1ed801a1e1799434f882605e7d5c294390c7019a24191fe605",
+  "previewIdentityMatched": true,
+  "sourceChangedAfterFinalBuild": false,
+  "boundary": "All consumed source/test/script files and compiled permutations unchanged; only task documentation and evidence added after final-source gates."
+}

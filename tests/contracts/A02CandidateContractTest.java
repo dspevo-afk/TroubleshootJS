@@ -215,7 +215,9 @@ public final class A02CandidateContractTest {
             "NMOS_LOW_SIDE_SWITCH/0/NMOS_DS_OPEN",
             "NMOS_LOW_SIDE_SWITCH/1/NMOS_DS_SHORT", "NMOS_LOW_SIDE_SWITCH/2/NMOS_GATE_OPEN",
             "RELAY_OUTPUT/0/RELAY_COIL_OPEN", "RELAY_OUTPUT/2/RELAY_CONTACT_OPEN",
-            "RELAY_OUTPUT/4/BASE_RESISTOR_OPEN"
+            "RELAY_OUTPUT/4/BASE_RESISTOR_OPEN",
+            "RB15_CONTROL/0/RELAY_COIL_OPEN", "RB15_CONTROL/0/RELAY_CONTACT_OPEN",
+            "RB15_CONTROL/0/BASE_RESISTOR_OPEN"
         };
         try {
             java.lang.reflect.Method normal = Task41DeveloperVerifier.class

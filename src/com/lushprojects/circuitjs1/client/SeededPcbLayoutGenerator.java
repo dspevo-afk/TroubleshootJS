@@ -9,7 +9,7 @@ import java.util.Vector;
  */
 class SeededPcbLayoutGenerator {
     /** Current corrected layout algorithm; package geometry remains contract v3. */
-    static final int CURRENT_VERSION = 6;
+    static final int CURRENT_VERSION = 7;
     private static final int GRID = 10;
     private static final int MAX_ATTEMPTS = 80;
     private static final int TARGET_VIABLE_CANDIDATES = 5;
@@ -57,6 +57,9 @@ class SeededPcbLayoutGenerator {
     PcbBoardLayout generate(TroubleshootBoard board, long seed) {
         return generate(board, seed, attemptObserver);
     }
+    PcbBoardLayout generate(TroubleshootBoard board,long seed,long routingSeed) {
+        return generate(board,seed,attemptObserver,routingSeed);
+    }
 
     /**
      * Generates with a per-call checkpoint owner.  The overload lets a staged
@@ -65,27 +68,46 @@ class SeededPcbLayoutGenerator {
      */
     PcbBoardLayout generate(TroubleshootBoard board, long seed,
             AttemptObserver observer) {
-        if (board == null)
-            throw new IllegalArgumentException("Missing logical board for PCB generation");
-        AttemptObserver effectiveObserver = observer == null ? attemptObserver : observer;
-        PcbRoutingRejectedException lastFailure = null;
-        PcbBoardLayout bestLayout = null;
-        double bestScore = Double.POSITIVE_INFINITY;
-        int viableCandidates = 0;
-        for (int attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
-            effectiveObserver.check(attempt);
+        return generate(board,seed,observer,seed);
+    }
+    private PcbBoardLayout generate(TroubleshootBoard board,long seed,AttemptObserver observer,long routingSeed) {
+        Session session=new Session(board,seed,routingSeed,observer);
+        while(!session.advance()) { }
+        return session.result();
+    }
+    Session begin(TroubleshootBoard board,long seed,long routingSeed) {
+        return new Session(board,seed,routingSeed,attemptObserver);
+    }
+    /** One placement and its bounded routing alternatives per generation work unit. */
+    final class Session {
+        private final TroubleshootBoard board;
+        private final long seed,routingSeed;
+        private final AttemptObserver observer;
+        private final GenerationStatistics statistics=new GenerationStatistics();
+        private PcbRoutingRejectedException lastFailure;
+        private PcbBoardLayout bestLayout;
+        private double bestScore=Double.POSITIVE_INFINITY;
+        private int attempt,viableCandidates;
+        private boolean complete;
+        Session(TroubleshootBoard board,long seed,long routingSeed,AttemptObserver observer) {
+            if(board==null)throw new IllegalArgumentException("Missing logical board for PCB generation");
+            this.board=board;this.seed=seed;this.routingSeed=routingSeed;
+            this.observer=observer==null?attemptObserver:observer;
+        }
+        boolean advance() {
+            if(complete)throw new IllegalStateException("PCB planning is already complete");
+            observer.check(attempt);
+            statistics.placements++;
             try {
                 int variationMode = (int) ((seed % 4 + 4) % 4);
                 PcbBoardLayout candidate = generateAttempt(board, seed,
-                    variationMode, attempt, effectiveObserver);
+                    variationMode, attempt, observer,routingSeed,statistics);
                 double score = candidate.getRouteQualityScore(board);
                 if (bestLayout == null || score < bestScore) {
                     bestLayout = candidate;
                     bestScore = score;
                 }
                 viableCandidates++;
-                if (viableCandidates >= TARGET_VIABLE_CANDIDATES)
-                    break;
             } catch (CandidateRejected failure) {
                 lastFailure = PcbRoutingRejectedException.attemptRejected(
                     failure.getKind(), attempt, seed, failure.getMessage());
@@ -94,17 +116,26 @@ class SeededPcbLayoutGenerator {
                     PcbRoutingRejectedException.Kind.ROUTING, attempt, seed,
                     failure.getMessage());
             }
+            attempt++;
+            complete=attempt==MAX_ATTEMPTS || viableCandidates >=
+                (board.getPlacementConstraints().routingLayer==PcbCopperLayer.BOTTOM ? 1 : TARGET_VIABLE_CANDIDATES);
+            if(complete) {
+                if(bestLayout==null) {
+                    if(lastFailure==null)throw new IllegalStateException("PCB generation stopped without a result or rejection");
+                    throw PcbRoutingRejectedException.exhausted(seed,MAX_ATTEMPTS,lastFailure);
+                }
+                bestLayout.setGenerationStatistics(statistics.placements,statistics.routes,statistics.expansions,statistics.routeMillis,seed,routingSeed);
+            }
+            return complete;
         }
-        if (bestLayout != null)
+        PcbBoardLayout result() {
+            if(!complete || bestLayout==null)throw new IllegalStateException("PCB planning has no completed result");
             return bestLayout;
-        if (lastFailure == null)
-            throw new IllegalStateException("PCB generation stopped without a viable layout or " +
-                "an expected rejection");
-        throw PcbRoutingRejectedException.exhausted(seed, MAX_ATTEMPTS, lastFailure);
+        }
     }
 
     private PcbBoardLayout generateAttempt(TroubleshootBoard board, long seed,
-            int variationMode, int attempt, AttemptObserver observer) {
+            int variationMode, int attempt, AttemptObserver observer,long routingSeed,GenerationStatistics statistics) {
         PcbPlacementPlanner.Plan plan;
         try {
             plan = new PcbPlacementPlanner(footprintRegistry).plan(board,
@@ -113,9 +144,21 @@ class SeededPcbLayoutGenerator {
             throw reject(PcbRoutingRejectedException.Kind.PLACEMENT, failure.reason);
         }
         Rectangle outline = plan.outline;
-        PcbBoardLayout layout = plan.materialize();
-        try { PcbNetRouter.route(layout, board, outline, attempt, observer); }
-        catch (PcbNetRouter.Rejected failure) { throw reject(PcbRoutingRejectedException.Kind.ROUTING, failure.getMessage()); }
+        PcbBoardLayout layout = null;
+        // Four feedback alternatives, then an independent reverse/farthest
+        // tree. The latter avoids a cycle caused by repeatedly promoting blockers.
+        int treeVariants=board.getPlacementConstraints().routingLayer==PcbCopperLayer.BOTTOM ? 5 : 1;
+        Vector<String> blocked=new Vector<String>();
+        for(int tree=0;tree<treeVariants;tree++) {
+            layout=plan.materialize();
+            statistics.routes++;long routingStarted=System.currentTimeMillis();
+            try { PcbNetRouter.route(layout, board, outline, attempt, observer,true,routingSeed,tree,tree==4?null:blocked); break; }
+            catch (PcbNetRouter.Rejected failure) {
+                if(failure.blockedNet!=null) {blocked.remove(failure.blockedNet);blocked.add(failure.blockedNet);}
+                if(tree+1==treeVariants) throw reject(PcbRoutingRejectedException.Kind.ROUTING, failure.getMessage());
+            }
+            finally {statistics.expansions+=layout.getRoutingExpansions();statistics.routeMillis+=System.currentTimeMillis()-routingStarted;}
+        }
         placeSilkscreen(layout, board, outline);
         layout.validateGeometry(board);
         int edgeMargin=FINAL_EDGE_MARGIN;
@@ -135,10 +178,14 @@ class SeededPcbLayoutGenerator {
         return layout;
     }
 
+    private static final class GenerationStatistics { int placements,routes,expansions;long routeMillis; }
+
     private void placeSilkscreen(PcbBoardLayout layout, TroubleshootBoard board,
             Rectangle outline) {
         String title;
-        if (board.getId().equals("DIODE_PROTECTED_INDICATOR"))
+        if (board.getId().equals("RB15_CONTROL_BOARD"))
+            title = "TSJ CONTROL BOARD";
+        else if (board.getId().equals("DIODE_PROTECTED_INDICATOR"))
             title = "TSJ DIODE INDICATOR";
         else if (board.getId().equals("PARALLEL_DUAL_INDICATOR"))
             title = "TSJ PARALLEL INDICATORS";
@@ -259,6 +306,7 @@ class SeededPcbLayoutGenerator {
                 return false;
         }
         for (PcbTraceGeometry trace : layout.getTraces()) {
+            if(trace.getLayer()!=PcbCopperLayer.TOP) continue;
             int[] xPoints = trace.getXPoints();
             int[] yPoints = trace.getYPoints();
             for (int index = 1; index < xPoints.length; index++) {

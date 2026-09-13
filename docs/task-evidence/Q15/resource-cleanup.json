@@ -1,0 +1,32 @@
+{
+  "status": "PARTIAL",
+  "preview": {
+    "status": "PASS",
+    "pid": 18720,
+    "createdUtc": "2026-09-13T03:55:54.5877213Z",
+    "executable": "powershell.exe",
+    "script": "scripts/preview.ps1",
+    "port": 64115,
+    "runId": "Q15-final",
+    "ownershipRevalidated": true,
+    "stopped": true,
+    "cleanupMs": 16
+  },
+  "browser": {
+    "status": "PASS",
+    "taskTabsClosed": true,
+    "finalTabListEmpty": true
+  },
+  "scratch": {
+    "directoryName": "TroubleshootJS-Q15-9de3ad5ef0374dcc80777a0afcb25547",
+    "retained": "Raw logs, failure reports, source experiments, ownership receipts and temporary compiled classes",
+    "classesCleanup": "NOT RUN",
+    "reason": "Automatic approval review blocked the combined process-stop/recursive scratch-classes cleanup command without a specific reason. A narrower, separately ownership-checked preview shutdown succeeded. No alternate deletion was attempted."
+  },
+  "preserved": [
+    "Pre-existing tests/contracts/__pycache__/",
+    "Foreign preview on port8899",
+    "Unrelated host applications and processes"
+  ],
+  "activeTaskProcesses": 0
+}

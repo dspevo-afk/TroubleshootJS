@@ -7,8 +7,8 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Branch observed during review:** `codex/task43p-final-recovery`<br>
-**Latest completed task:** **E03: Relay and switched-output families with alternate drivers**<br>
-**Current checkpoint:** **E01 AND E03 COMPLETE - QUALIFIED.** Bounded solver-backed supplies, independent bench controls, persistent fuse/load failure and the isolated five-terminal relay family are accepted on base `d2e9d35`. Both BJT and NMOS variants support coil/contact/drive faults, real flyback, physical replacement and HIGH/LOW customer retest. Final native contracts, five-permutation JDK8/GWT build, compiled electrical/mutation/diagnostic regressions and visible player checks pass. Source rollback preserves partial isolation and current settings. **Q15 is next and unstarted.** The relay uses a bounded nine-part layout; larger-board qualification, arcing/EMC/mains and general trace repair are outside this delivery. A11-D1 and the historical Windows browser-wrapper qualification limit remain. [E01 evidence](task-evidence/E01/README.md), [E03 evidence and limits](task-evidence/E03/README.md).
+**Latest completed task:** **Q15: Heterogeneous procedural control-board qualification**<br>
+**Current checkpoint:** **Q15 COMPLETE - QUALIFIED.** The sixteen-package procedural control board combines a protected 12 V supply, 5 V command, BJT/NMOS output drivers and RC/resistive conditioning. Eleven exact seeds cover four designs and three faults with real hypothesis repair/retest, causal support and one routed bottom copper layer. Final native contracts, five-permutation JDK8/GWT build, compiled regressions and visible player workflows pass. The worst cohort admission is 80.627 s under the unchanged 90 s job limit; the family does not qualify arbitrary circuits at every size in the 5–20-part envelope. The authored nine-part E03 reference remains separate. A11-D1 and the historical Windows browser-wrapper qualification limit remain. **U04 is next and unstarted.** [Q15 evidence and limits](task-evidence/Q15/README.md).
 
 > Build the current game. Historical development code, challenge versions, file formats, identifiers, reports and tests are not product contracts. Keep useful working behavior because the current game needs it, not because an old milestone happened to implement it that way.
 
@@ -666,10 +666,10 @@ preferred queue. The milestone cards remain authoritative for scope, hard
 prerequisites, acceptance and conditional capabilities; this section chooses the
 preferred next eligible milestone. Future implementation needs its own authorization.
 
-**Already complete:** T49, N00, A01-A11, R00, P01-P04, U01, E01 and E03. A10 and A11 ran earlier
+**Already complete:** T49, N00, A01-A11, R00, P01-P04, U01, E01, E03 and Q15. A10 and A11 ran earlier
 than the old preferred order while satisfying their hard prerequisites: A10
 required A05/A07/A09/P02; A11 required A04/A08/A09. Their earlier placement does
-not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 is now complete. **Next: Q15.**
+not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 → Q15 is now complete. **Next: U04.**
 
 | Wave | Preferred sequence |
 |---|---|
@@ -2348,7 +2348,9 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### Q15 · Heterogeneous 15-part procedural control-board qualification
 
-**Status:** UNSTARTED.
+**Status:** COMPLETE — QUALIFIED (2026-09-13).
+
+**Implementation/evidence:** `RB15_CONTROL` declares sixteen causal packages before allocation, with independent named-stream driver, conditioning, fault, placement and routing choices. Four BJT/NMOS × RC/resistive designs share the customer intent; three admitted faults across RDRIVE/K1 have legal physical hypothesis repair and retest. Eleven frozen seeds include exact signed-long extremes and produce distinct procedural geometry. Native Q15 passes 6,713 assertions; the final compiled cohort passes 481 assertions plus 80 support checks, all six stages, and unchanged 90 s/5 s/640 limits. Final JDK8/GWT, A10/E03/A08/Task41/Task49 and strict readers pass. Five inspected player screenshots cover failed, wrong, alternative and correct repairs, power/probing and cancellation. The cohort informed fixes and is not a random-population success-rate estimate or qualification of every 5–20-part size. [Q15 evidence, distributions and retained failures](task-evidence/Q15/README.md).
 
 **Hard prerequisites:** [A05](#m-a05), [A08](#m-a08), [A10](#m-a10), [A11](#m-a11), [P03](#m-p03), [P04](#m-p04), [U01](#m-u01), [E01](#m-e01), [E03](#m-e03)
 

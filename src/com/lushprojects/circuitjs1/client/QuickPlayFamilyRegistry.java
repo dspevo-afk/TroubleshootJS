@@ -33,17 +33,19 @@ final class QuickPlayFamilyRegistry {
         result.add(NPN_LOW_SIDE_SWITCH);
         result.add(NMOS_LOW_SIDE_SWITCH);
         result.add(RELAY_OUTPUT);
+        result.add(Rb15Plan.FAMILY_ID);
         return result;
     }
 
     static boolean isNormalPlayerEligible(String familyId) {
-        return RELAY_OUTPUT.equals(familyId) || LED_INDICATOR.equals(familyId) ||
+        return Rb15Plan.FAMILY_ID.equals(familyId) || RELAY_OUTPUT.equals(familyId) || LED_INDICATOR.equals(familyId) ||
             DIODE_PROTECTED_INDICATOR.equals(familyId) ||
             PARALLEL_DUAL_INDICATOR.equals(familyId) || RC_DELAY.equals(familyId) ||
             NPN_LOW_SIDE_SWITCH.equals(familyId) || NMOS_LOW_SIDE_SWITCH.equals(familyId);
     }
 
     static GeneratedBoardInstance generate(String familyId, long seed) {
+        if (Rb15Plan.FAMILY_ID.equals(familyId)) return new RelayOutputGenerator().generateResolved(seed,null,Rb15Plan.resolve(seed));
         if (RELAY_OUTPUT.equals(familyId)) return new RelayOutputGenerator().generate(seed);
         if (LED_INDICATOR.equals(familyId))
             return new LedIndicatorGenerator().generate(seed);
@@ -69,6 +71,7 @@ final class QuickPlayFamilyRegistry {
         if (!isNormalPlayerEligible(familyId))
             throw new IllegalArgumentException("Quick Play family is not normal-player eligible: " +
                 familyId);
+        if(Rb15Plan.FAMILY_ID.equals(familyId)) return selectionValue;
         long[] normalPlayerSeeds = seedsFor(familyId);
         for (long seed : normalPlayerSeeds)
             if (seed == selectionValue)

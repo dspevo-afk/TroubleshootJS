@@ -20,6 +20,9 @@ final class PhysicalPackages {
     static final PhysicalPackage AXIAL_RESISTOR = packageWithCatalog("AXIAL_RESISTOR",
         new String[] { "1", "2" }, false, axialResistorVariants(), "SPAN_220",
         PhysicalPackage.GeometryVariantSelection.SEEDED_CATALOG);
+    static final PhysicalPackage AXIAL_FUSE = packageWithCatalog("AXIAL_FUSE",
+        new String[] { "1", "2" }, false, axialResistorVariants(), "SPAN_220",
+        PhysicalPackage.GeometryVariantSelection.FIXED_DEFAULT);
     static final PhysicalPackage AXIAL_DIODE = packageWithCatalog("AXIAL_DIODE",
         new String[] { "A", "K" }, false, axialDiodeVariants(), "SPAN_230",
         PhysicalPackage.GeometryVariantSelection.SEEDED_CATALOG);

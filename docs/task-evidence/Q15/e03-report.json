@@ -1,0 +1,25 @@
+{
+  "schema": "e03-relay-proof-v1",
+  "status": "PASS",
+  "assertions": 46,
+  "cases": [
+    {
+      "driver": "BJT",
+      "onVolts": 11.983356449375867,
+      "offVolts": 0.0000021599996120613696,
+      "coilAmps": 0.03946289271920575,
+      "flybackAmps": 0.03875142343256246
+    },
+    {
+      "driver": "NMOS",
+      "onVolts": 11.983356449375867,
+      "offVolts": 0.0000021599996120613696,
+      "coilAmps": 0.03996543849100743,
+      "flybackAmps": 0.039245585520358624
+    }
+  ],
+  "rawElapsedMs": 2763,
+  "mutationAssertions": 113,
+  "playerCases": 6,
+  "elapsedMs": 54953
+}

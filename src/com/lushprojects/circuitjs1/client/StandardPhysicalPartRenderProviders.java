@@ -18,6 +18,7 @@ final class StandardPhysicalPartRenderProviders {
             new FixedProvider(new ConnectorRenderer()));
         registry.register(PhysicalPackages.AXIAL_RESISTOR,
             new FixedProvider(new ResistorRenderer()));
+        registry.register(PhysicalPackages.AXIAL_FUSE, new FixedProvider(new MultiTerminalRenderer()));
         registry.register(PhysicalPackages.AXIAL_DIODE,
             new FixedProvider(new DiodeRenderer()));
         registry.register(PhysicalPackages.THROUGH_HOLE_LED,

@@ -55,14 +55,15 @@ final class QuickPlayDeveloperVerifier {
 
     private static void verifyEligibleFamilies() {
         Vector<String> families = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
-        require(families.size() == 7 &&
+        require(families.size() == 8 &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("LED_INDICATOR") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("DIODE_PROTECTED_INDICATOR") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("PARALLEL_DUAL_INDICATOR") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("RC_DELAY") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("NPN_LOW_SIDE_SWITCH") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("NMOS_LOW_SIDE_SWITCH") &&
-            QuickPlayFamilyRegistry.isNormalPlayerEligible("RELAY_OUTPUT"),
+            QuickPlayFamilyRegistry.isNormalPlayerEligible("RELAY_OUTPUT") &&
+            QuickPlayFamilyRegistry.isNormalPlayerEligible(Rb15Plan.FAMILY_ID),
             "Quick Play eligible-family registry changed");
         require(!QuickPlayFamilyRegistry.isNormalPlayerEligible("DIODE_SHORT") &&
             !QuickPlayFamilyRegistry.isNormalPlayerEligible("TASK_37_FUTURE"),
@@ -156,7 +157,7 @@ final class QuickPlayDeveloperVerifier {
                 GeneratedBoardInstance generated = selector.generate(selection);
                 require(familyId.equals(selection.getFamilyId()) &&
                     familyId.equals(generated.getCircuitFamilyId()) &&
-                    contains(expectedSeeds, selection.getSeed()) &&
+                    (Rb15Plan.FAMILY_ID.equals(familyId) ? selection.getSeed()==injectedValue : contains(expectedSeeds, selection.getSeed())) &&
                     generated.getSeed() == selection.getSeed(),
                     "Quick Play selection escaped the " + familyId + " seed envelope for " +
                         injectedValue);

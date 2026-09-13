@@ -34,8 +34,14 @@ final class PcbPlacementConstraints {
     }
     private final TreeMap<String,Part> parts = new TreeMap<String,Part>();
     private final Vector<Barrier> barriers;
+    final PcbCopperLayer routingLayer;
     PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers) {
+        this(declarations,barriers,PcbCopperLayer.TOP);
+    }
+    PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers,PcbCopperLayer routingLayer) {
         if (declarations == null || barriers == null) throw new IllegalArgumentException("Missing placement declarations");
+        if(routingLayer==null) throw new IllegalArgumentException("Missing single copper layer");
+        this.routingLayer=routingLayer;
         this.barriers=new Vector<Barrier>(barriers);
         for (Part part : declarations) {
             if (part == null || parts.put(part.componentId, part) != null) throw new IllegalArgumentException("Duplicate placement part");

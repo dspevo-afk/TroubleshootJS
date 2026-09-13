@@ -51,9 +51,10 @@ final class LeafChallengeReplay {
     static String describe(ChallengeDescriptor descriptor) {
         ChallengeContractException.required(descriptor, "descriptor");
         StringBuilder result = new StringBuilder(descriptor.toCanonical());
-        result.append("\nnamed-derivation=").append(NamedRandomStreams.DERIVATION_VERSION)
-            .append("\nnamed-stream-use=reserved-not-consumed-by-leaf@")
-            .append(descriptor.getGenerator().getVersion());
+        result.append("\nnamed-derivation=").append(NamedRandomStreams.DERIVATION_VERSION);
+        if(Rb15Plan.FAMILY_ID.equals(descriptor.getDeviceIntent().getId()))
+            result.append("\nnamed-stream-use=rb15-plan@1\n").append(Rb15Plan.resolve(descriptor.getRootSeed()).canonical());
+        else result.append("\nnamed-stream-use=reserved-not-consumed-by-leaf@").append(descriptor.getGenerator().getVersion());
         try {
             requireSupported(descriptor);
             result.append("\nreplay-resolution=supported;admission=not-assessed-by-description");

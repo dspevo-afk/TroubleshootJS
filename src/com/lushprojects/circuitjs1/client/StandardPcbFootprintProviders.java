@@ -18,6 +18,7 @@ final class StandardPcbFootprintProviders {
         registry.register(PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2,
             new OutputHeaderProvider());
         registry.register(PhysicalPackages.AXIAL_RESISTOR, new AxialProvider(0));
+        registry.register(PhysicalPackages.AXIAL_FUSE, new AxialProvider(0));
         registry.register(PhysicalPackages.AXIAL_DIODE, new AxialProvider(1));
         registry.register(PhysicalPackages.THROUGH_HOLE_LED, new LedProvider());
         registry.register(PhysicalPackages.TO92_NPN, new NpnProvider());

@@ -1,0 +1,18 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+PASS: Q15 eleven cases/four designs/three faults; forced cleanup; 16 reader negatives
+{
+  "status": "PASS",
+  "attempts": 24,
+  "cancellationMaxMs": 3,
+  "first": {
+    "p50Ms": 652,
+    "p95Ms": 1833,
+    "worstMs": 1833
+  },
+  "immediateRepeat": {
+    "p50Ms": 652,
+    "p95Ms": 1811,
+    "worstMs": 1811
+  }
+}
+PASS: Q15, A10, E03, A08, twenty Task41 routes, Task49 and negative report canaries.

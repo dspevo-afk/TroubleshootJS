@@ -35,7 +35,7 @@ channel. Final compaction preserves access margins and revalidates the plan.
 The workbench envelope can grow to accommodate separate tray chrome; it is not
 a fixed constraint on physical board feasibility. RB15/RB30/RB56/RB100 fixtures
 are structural qualification inputs, not playable or electrically qualified
-boards. Q15 and later milestones own those content claims.
+boards. The separate RB15_CONTROL family below implements Q15's playable content.
 
 `PcbNetRouter` owns the current single-layer Manhattan search. Typed net roles
 and declared external supply/return bindings determine priority. Two bounded
@@ -46,15 +46,21 @@ once, avoiding geometry copies inside the search loop; no snapshot survives
 the attempt or substitutes for live electrical state. The multi-goal Manhattan
 lower bound uses the actual minimum step
 cost, 2; this is a search lower-bound guarantee, not global tree optimality.
+On an unpopulated routing face, exact pad/edge reservation tables avoid repeated
+rectangle scans. Initial branches use a 10-per-step lower bound; later branches
+use `max(0, 7 * distance - 5)` because existing same-net copper is a goal and its
+discounted cost can occur only on the last step. Flat search-state arrays preserve
+the existing costs and tie ordering. The selected face must have copper at every
+terminal; through-hole leads can route on the solder side beneath top-side bodies.
 `PcbRouteCanonicalizer` removes only collinear subdivisions and retains endpoint,
 escape and branch-contact witnesses. `PcbRouteMetrics` measures union length,
 bends and unique shared length; duplicate copper earns no extra score reward.
 Candidate statistics report expansions, raw segments and moves rejected by
 other-net occupancy/clearance. Existing legality and retry limits remain in force.
 
-The current layout epoch is 6 and dependency interpretation is v5. Dependency
+The current layout epoch is 7 and dependency interpretation is v7. Dependency
 capture includes placement demands, canonical domain barriers, typed net roles
-and the route score version. Historical layout artifacts reject through the
+and the route score version, including the declared routing layer. Historical layout artifacts reject through the
 existing current-version boundary. Circuit topology, values, fault selection,
 measurement physics and repair/retest owners remain separate from planning.
 
@@ -69,7 +75,14 @@ electrical and physical owners. `GenerationJob` owns canonical candidate orderin
 deterministic work limits, elapsed deadlines, typed outcomes and six-stage receipt
 lineage. `GenerationCoordinator` adapts those stages to the existing generators,
 CircuitJS settlement, copper/access validators and diagnostic provider boundary.
-Current constructors materialize layout alongside the healthy graph; the physical
+RB15 resolves its complete board declaration first. A job-owned construction
+session tries one placement and up to five routing alternatives per work unit,
+before allocating any electrical graph. Its immutable resolved plan retains the
+sealed procedural geometry with exact placement/routing seeds. Each hypothesis
+materializes a fresh sealed layout container from those coordinate values and a
+disjoint electrical/physical graph; no solver state or proof is cached. Cancellation
+during routing releases the session and leaves the exact player graph in place.
+Other constructors materialize layout alongside the healthy graph; the physical
 stage separately qualifies that realization before diagnostic proof begins.
 Scenario selection configures and settles its real initial input while the candidate
 is private, before dependency capture. The final symptom stage presents that selected
@@ -376,8 +389,50 @@ as on existing temporal boards). Unreferenced loose-part DC is unsupported;
 resistance and diode tests use real temporary sources. `PowerDomainContractProvider`
 lets the current dependency identity capture declarations from either the existing
 power assessment or the relay energy/reference owner. The current interpretation
-is dependency-v6/dump-model-v3; transient relay current is excluded, while model
+is dependency-v7/dump-model-v3; transient relay current is excluded, while model
 parameters and persistent faults remain included. [Qualification](task-evidence/E03/README.md).
+
+## Q15 small procedural control board
+
+`Rb15Plan` resolves the RB15_CONTROL intent into sixteen causal packages and
+36 terminals before allocation. Independent named streams choose BJT/NMOS output
+drivers, RC-filter/resistive-termination support, fault, placement and routing.
+The four designs share the same customer HIGH/LOW switching requirement. Exact
+signed-long seeds enter the ordinary catalog and `control-board` URL route.
+
+`Rb15Support` owns the 12 V input's fuse, series reverse-polarity diode, 1 uF
+storage with a 2.2 kOhm bleeder, 1 kOhm command series resistor, 10 nF driver filter or
+100 kOhm termination, and a 3.3 kOhm/red-LED power indicator. These are real
+CircuitJS elements. The external 5 V command and 12 V board source disconnect
+independently and share a declared return. The external 180 Ohm load is not counted
+as a board package. `RelayOutputGenerator` validates each allocation against this
+manifest and reuses the existing driver, relay, physical mutation and diagnostic
+owners. The original nine-package E03 authored layout remains a separate reference.
+
+The procedural planner uses current package demands, functional regions and
+connector anchors. On the single bottom copper layer it selects the first legal
+layout from at most 80 placements, with five bounded tree orders per placement.
+Retries promote blocked nets; the final reverse/farthest order is independent
+of that feedback so repeatedly prioritizing blockers cannot eliminate it.
+After the first canonical placements, named streams permute regions, parts and
+net/branch ordering. Existing geometry, connectivity, pad access and clearance
+validators still qualify the result. Routing statistics include rejected attempts;
+the 5-second work-unit, 90-second job and 640-unit guards are unchanged. This is
+a sixteen-package family within the small 5–20 envelope, not a claim that arbitrary
+boards of every size or topology in that range are supported.
+
+The admitted faults remain drive-resistor-open, relay-coil-open and relay-contact-open.
+`RelayOutputDiagnosticProvider` rejects foreign seeds, identities, targets, values
+and unsupported hypotheses before construction. Coil replacements must suit the
+actual 12 V topology; the mechanically compatible 5 V part is overdriven. Customer
+retest checks real HIGH/LOW load voltage and indicator current. A 100 kOhm drive
+replacement is a valid NMOS alternative but cannot supply sufficient BJT base
+current. Active meters require both sources off, fresh observations, coil current
+below 1 uA and capacitor voltage below 50 mV; stimulus and cleanup advance the
+actual solver for 25 ms without resetting energy. `Q15SupportChecks` uses detached
+graphs and independent ablations to verify every support package's contribution.
+The filter capacitor shares the driver pull-down's terminals, preserving its
+discharge path even with an open drive resistor and disconnected command source.
 
 ## A06 power/reference and operating-state contracts
 
@@ -1189,9 +1244,10 @@ PCB geometry is a separate rendering layer. `PcbBoardLayout` contains the board
 outline, component placements, pad placements, traces, and parts-tray geometry,
 and references only stable `BoardComponent`, `BoardPad`, and `BoardNet` IDs.
 It does not contain CircuitJS elements or analyzed node numbers. The
-`SeededPcbLayoutGenerator` consumes that logical board after electrical
-validation and produces a simple one-sided layout for the LED indicator,
-diode-protected indicator, and dual-parallel-indicator families. It does not
+`SeededPcbLayoutGenerator` consumes the declared logical board and produces
+a single-copper-layer layout for the LED indicator, diode-protected indicator,
+dual-parallel-indicator and RB15 control-board families. Electrical qualification
+remains mandatory before publication. It does not
 choose components, nets, faults, meter readings, or repair outcomes.
 
 The generator uses a deterministic seed stream. `PcbPlacementPlanner` derives

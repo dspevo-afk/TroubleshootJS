@@ -1,0 +1,229 @@
+{
+  "status": "RETAINED_FAILURES",
+  "candidateBase": "99a0001982ad92d245fda1e38a9c7ea1045da3a3",
+  "scratchBasename": "TroubleshootJS-Q15-9de3ad5ef0374dcc80777a0afcb25547",
+  "earlier": {
+    "routing": "Bounded intermediate algorithms rejected frozen seeds; all attempts remain in scratch.",
+    "gwt": "Initial build rejected unsupported Collections.shuffle; replaced with deterministic Fisher-Yates.",
+    "runtime": "Fuse dependency, temporal metadata and verifier catalog/terminal ordering failures were fixed before later qualification."
+  },
+  "compiled": [
+    {
+      "file": "gwt-seventh-seed3-failure.json",
+      "report": {
+        "candidate": "gwt-seventh",
+        "status": "FAIL",
+        "result": "FAIL:q15:Q15: admission seed=3 stage=HEALTHY outcome=TIMEOUT failure=com.lushprojects.circuitjs1.client.GenerationJob$Deadline: Generation work-unit budget exhausted",
+        "completedCases": "0,1,2 observed in console; no per-case JSON was published by this candidate",
+        "cleanup": "NOT INDEPENDENTLY RECORDED"
+      }
+    },
+    {
+      "file": "gwt-tenth-discharge-failure.json",
+      "report": {
+        "protocol": "TSJ-Q15-1",
+        "status": "FAIL",
+        "cases": [
+          {
+            "seed": "0",
+            "design": "RB15_NMOS_RESISTIVE_BIAS",
+            "fault": "BASE_RESISTOR_OPEN",
+            "packages": 16,
+            "hypotheses": 3,
+            "stages": 6,
+            "admissionMs": 23216,
+            "maxUnitMs": 1291,
+            "repairMs": 13011,
+            "supportMs": 5770,
+            "workUnits": 84,
+            "routeExpansions": 662652,
+            "routeAttempts": 7,
+            "routeMs": 966,
+            "stageMs": [
+              0,
+              2505,
+              18,
+              20302,
+              0,
+              13
+            ]
+          },
+          {
+            "seed": "1",
+            "design": "RB15_BJT_RESISTIVE_BIAS",
+            "fault": "RELAY_COIL_OPEN",
+            "packages": 16,
+            "hypotheses": 3,
+            "stages": 6,
+            "admissionMs": 23118,
+            "maxUnitMs": 1274,
+            "repairMs": 8495,
+            "supportMs": 5452,
+            "workUnits": 84,
+            "routeExpansions": 1010445,
+            "routeAttempts": 7,
+            "routeMs": 1452,
+            "stageMs": [
+              0,
+              2968,
+              17,
+              19747,
+              1,
+              13
+            ]
+          },
+          {
+            "seed": "2",
+            "design": "RB15_NMOS_RESISTIVE_BIAS",
+            "fault": "RELAY_COIL_OPEN",
+            "packages": 16,
+            "hypotheses": 3,
+            "stages": 6,
+            "admissionMs": 23510,
+            "maxUnitMs": 1317,
+            "repairMs": 8622,
+            "supportMs": 0,
+            "workUnits": 84,
+            "routeExpansions": 682201,
+            "routeAttempts": 7,
+            "routeMs": 1007,
+            "stageMs": [
+              0,
+              2539,
+              17,
+              20555,
+              0,
+              14
+            ]
+          }
+        ],
+        "assertions": 130,
+        "supportAssertions": 40,
+        "cancellationMs": 0,
+        "elapsedMs": 136803,
+        "cleanupMs": 1,
+        "ownerRestored": true,
+        "operation": "admission",
+        "activeSeed": "3",
+        "failure": "java.lang.AssertionError: Q15: admission seed=3 stage=HYPOTHESES outcome=PROGRAMMING_FAILURE failure=java.lang.IllegalStateException: Unavailable active diagnostic measurement: OHM_K1.A1_K1.A2:DISCHARGE"
+      }
+    },
+    {
+      "file": "q15-eleventh-progress.json",
+      "report": {
+        "protocol": "TSJ-Q15-1",
+        "status": "FAIL",
+        "cases": [
+          {
+            "seed": "0",
+            "design": "RB15_NMOS_RESISTIVE_BIAS",
+            "fault": "BASE_RESISTOR_OPEN",
+            "packages": 16,
+            "hypotheses": 3,
+            "stages": 6,
+            "admissionMs": 37050,
+            "maxUnitMs": 2226,
+            "repairMs": 20392,
+            "supportMs": 8469,
+            "workUnits": 84,
+            "routeExpansions": 1598461,
+            "routeAttempts": 16,
+            "routeMs": 4686,
+            "stageMs": [
+              0,
+              7160,
+              26,
+              29448,
+              0,
+              16
+            ]
+          },
+          {
+            "seed": "1",
+            "design": "RB15_BJT_RESISTIVE_BIAS",
+            "fault": "RELAY_COIL_OPEN",
+            "packages": 16,
+            "hypotheses": 3,
+            "stages": 6,
+            "admissionMs": 37836,
+            "maxUnitMs": 2126,
+            "repairMs": 13092,
+            "supportMs": 7439,
+            "workUnits": 84,
+            "routeExpansions": 2064292,
+            "routeAttempts": 16,
+            "routeMs": 5088,
+            "stageMs": [
+              0,
+              7308,
+              24,
+              30061,
+              1,
+              21
+            ]
+          },
+          {
+            "seed": "2",
+            "design": "RB15_NMOS_RESISTIVE_BIAS",
+            "fault": "RELAY_COIL_OPEN",
+            "packages": 16,
+            "hypotheses": 3,
+            "stages": 6,
+            "admissionMs": 35284,
+            "maxUnitMs": 1989,
+            "repairMs": 12533,
+            "supportMs": 0,
+            "workUnits": 84,
+            "routeExpansions": 1526410,
+            "routeAttempts": 16,
+            "routeMs": 3987,
+            "stageMs": [
+              0,
+              6241,
+              28,
+              28561,
+              0,
+              21
+            ]
+          }
+        ],
+        "assertions": 169,
+        "supportAssertions": 40,
+        "cancellationMs": 1,
+        "elapsedMs": 277516,
+        "cleanupMs": 1,
+        "ownerRestored": true,
+        "operation": "support",
+        "activeSeed": "3",
+        "failure": "java.lang.AssertionError: Q15 support: D1 carries released coil energy"
+      }
+    },
+    {
+      "candidate": "gwt-ninth",
+      "status": "FAIL",
+      "phase": "HYPOTHESES",
+      "elapsedMs": 2221,
+      "workUnits": 8,
+      "failure": "Fresh installation cannot reuse mutable owners",
+      "fix": "Fresh sealed layout containers share immutable coordinate values only."
+    }
+  ],
+  "environment": [
+    {
+      "status": "BLOCKED",
+      "operation": "screenshot",
+      "failure": "Empty page screenshot timed out and no Windows windows were targetable.",
+      "resolution": "User unlocked/reconnected Windows; subsequent full-page production screenshots succeeded."
+    },
+    {
+      "status": "FAIL",
+      "candidate": "gwt-eleventh",
+      "operation": "compiled Q15 initial attempts",
+      "attempts": 2,
+      "failure": "Browser reported This page crashed before a terminal report was captured.",
+      "cleanup": "NOT INDEPENDENTLY RECORDED",
+      "cause": "UNDETERMINED",
+      "followup": "Fresh normal seed0 and seed3 pages admitted without errors; isolated LED-bootstrap Q15 run produced the retained flyback assertion failure with owner restoration."
+    }
+  ]
+}

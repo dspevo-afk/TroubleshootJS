@@ -36,12 +36,14 @@ final class GenerationRequest {
         Prepared cached = cache.get(key);
         if (cached != null) return cached;
         BoundedAssemblyPlan plan = null;
+        Rb15Plan rb15 = null;
         if (composition) {
             plan = BoundedAssemblyPlan.resolve(BoundedAssemblyRequest.forControlledIndicator(descriptor));
         } else {
             LeafChallengeReplay.requireSupported(descriptor);
+            if(Rb15Plan.FAMILY_ID.equals(descriptor.getDeviceIntent().getId())) rb15=Rb15Plan.resolve(descriptor.getRootSeed());
         }
-        Prepared result = new Prepared(this, plan);
+        Prepared result = new Prepared(this, plan, rb15);
         cache.put(key, result);
         return result;
     }
@@ -49,16 +51,43 @@ final class GenerationRequest {
     static final class Prepared {
         private final GenerationRequest request;
         private final BoundedAssemblyPlan plan;
-        private Prepared(GenerationRequest request, BoundedAssemblyPlan plan) {
-            this.request = request; this.plan = plan;
+        private final Rb15Plan rb15;
+        private Prepared(GenerationRequest request, BoundedAssemblyPlan plan, Rb15Plan rb15) {
+            this.request = request; this.plan = plan; this.rb15=rb15;
         }
         Construction construct() {
+            return construct(null);
+        }
+        ConstructionSession beginConstruction() {return new ConstructionSession(this);}
+        private Construction construct(PcbBoardLayout layout) {
+            if(rb15 != null) return new Construction(new RelayOutputGenerator().generateResolved(rb15.seed,null,
+                layout==null?rb15:rb15.withRoutedLayout(layout)),rb15.canonical());
             if (plan == null)
                 return new Construction(LeafChallengeReplay.generate(request.descriptor), request.canonical());
             BoundedGeneratedBoardAssembler.Result result = BoundedGeneratedBoardAssembler.assemblePreparedPlan(plan);
             return new Construction(result.getInstance(), result.getRealizationManifest().toCanonical());
         }
         String canonical() { return request.canonical(); }
+    }
+
+    /** Mutable work belongs to one job, outside the immutable resolution cache. */
+    static final class ConstructionSession {
+        private final Prepared prepared;
+        private final SeededPcbLayoutGenerator.Session routing;
+        private Construction result;
+        ConstructionSession(Prepared prepared) {
+            this.prepared=prepared;
+            Rb15Plan plan=prepared.rb15;
+            routing=plan==null?null:new SeededPcbLayoutGenerator().begin(plan.board(),plan.layoutSeed,plan.routingSeed);
+        }
+        boolean advance() {
+            if(result!=null)throw new IllegalStateException("Construction already completed");
+            if(routing!=null && !routing.advance())return false;
+            result=prepared.construct(routing==null?null:routing.result());return true;
+        }
+        Construction result() {
+            if(result==null)throw new IllegalStateException("Construction is incomplete");return result;
+        }
     }
 
     static final class Construction {

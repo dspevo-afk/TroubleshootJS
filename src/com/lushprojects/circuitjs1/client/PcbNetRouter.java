@@ -9,7 +9,11 @@ import java.util.Vector;
 final class PcbNetRouter {
     private static final int GRID=10, ROUTING_CHECK_INTERVAL=128;
     static final int MINIMUM_STEP_COST=2;
-    static final class Rejected extends RuntimeException { Rejected(String reason) { super(reason); } }
+    static final class Rejected extends RuntimeException {
+        final String blockedNet;
+        Rejected(String reason) { this(reason,null); }
+        Rejected(String reason,String blockedNet) { super(reason);this.blockedNet=blockedNet; }
+    }
     private static Rejected reject(PcbRoutingRejectedException.Kind kind,String message) { return new Rejected(message); }
     private static Rectangle traceCollisionEnvelope(Rectangle r) {
         int margin=PcbTraceRules.TRACE_WIDTH/2;
@@ -21,25 +25,55 @@ final class PcbNetRouter {
     }
     static void route(PcbBoardLayout layout,TroubleshootBoard board,Rectangle outline,int attempt,
             SeededPcbLayoutGenerator.AttemptObserver observer,boolean canonical) {
+        route(layout,board,outline,attempt,observer,canonical,0);
+    }
+    static void route(PcbBoardLayout layout,TroubleshootBoard board,Rectangle outline,int attempt,
+            SeededPcbLayoutGenerator.AttemptObserver observer,boolean canonical,long routingSeed) {
+        route(layout,board,outline,attempt,observer,canonical,routingSeed,0);
+    }
+    static void route(PcbBoardLayout layout,TroubleshootBoard board,Rectangle outline,int attempt,
+            SeededPcbLayoutGenerator.AttemptObserver observer,boolean canonical,long routingSeed,int treeVariant) {
+        route(layout,board,outline,attempt,observer,canonical,routingSeed,treeVariant,null);
+    }
+    static void route(PcbBoardLayout layout,TroubleshootBoard board,Rectangle outline,int attempt,
+            SeededPcbLayoutGenerator.AttemptObserver observer,boolean canonical,long routingSeed,int treeVariant,Vector<String> blocked) {
         Router router=new Router(layout,board,outline,attempt,observer);
         Vector<String> nets=board.getNetIds();
         final TroubleshootBoard definition=board;
+        final int order=board.getPlacementConstraints().routingLayer==PcbCopperLayer.BOTTOM?(attempt/2)%4:0;
         Collections.sort(nets,new Comparator<String>() { public int compare(String a,String b) {
             int ap=priority(definition,a),bp=priority(definition,b);
+            if(order==1) { ap=-ap;bp=-bp; }
+            if(order>=2) {
+                ap=definition.getNet(a).getPadIds().size();bp=definition.getNet(b).getPadIds().size();
+                if(order==2) {ap=-ap;bp=-bp;}
+            }
             return ap==bp?a.compareTo(b):ap<bp?-1:1;
         }});
+        if(board.getPlacementConstraints().routingLayer==PcbCopperLayer.BOTTOM && attempt>=8)
+            NamedRandomStreams.shuffle(nets,new java.util.Random(routingSeed ^ (0x632be59bd9b4e019L*(attempt+1))));
+        if(treeVariant>=2) Collections.reverse(nets);
+        if(blocked!=null)for(String net:blocked) {nets.remove(net);nets.add(0,net);}
         try {
         for(String net:nets) {
             Vector<String> remaining=board.getNet(net).getPadIds(); Collections.sort(remaining);
-            if(remaining.size()<2) throw new IllegalStateException("Cannot route net with fewer than two pads: "+net);
+            // A declared unused contact remains a physical pad without invented copper.
+            if(remaining.size()==1) continue;
+            if(remaining.isEmpty()) throw new IllegalStateException("Cannot route a net without pads: "+net);
             Vector<String> reached=new Vector<String>();
             // Bounded medoid/farthest candidates. Every tie ends in the canonical pad ID.
             String root=chooseRoot(layout,remaining,attempt%2); remaining.remove(root); reached.add(root);
+            java.util.Random branchOrder=new java.util.Random(routingSeed ^ net.hashCode() ^ (0x9e3779b97f4a7c15L*(attempt+1)));
             boolean trunk=false;
             while(!remaining.isEmpty()) {
-                String next=chooseNext(layout,remaining,reached); remaining.remove(next);
+                String next=treeVariant%2==1 ?
+                    remaining.get(branchOrder.nextInt(remaining.size())) :
+                    treeVariant>=2?chooseFarthest(layout,remaining,reached):chooseNext(layout,remaining,reached);
+                remaining.remove(next);
                 if(internallyReached(board,next,reached)) { reached.add(next); continue; }
-                PcbTraceGeometry trace=router.route(net,next,trunk?null:root);
+                PcbTraceGeometry trace;
+                try { trace=router.route(net,next,trunk?null:root); }
+                catch(Rejected failure) {throw new Rejected(failure.getMessage(),net);}
                 layout.addTrace(trace); reached.add(next); trunk=true;
             }
         }
@@ -74,6 +108,18 @@ final class PcbNetRouter {
         }
         return best;
     }
+    private static String chooseFarthest(PcbBoardLayout layout,Vector<String> remaining,Vector<String> reached) {
+        String best=remaining.get(0);long farthest=-1;
+        for(String id:remaining) {
+            long nearest=Long.MAX_VALUE;PcbPadPlacement a=layout.getPad(id);
+            for(String other:reached) {
+                PcbPadPlacement b=layout.getPad(other);
+                nearest=Math.min(nearest,Math.abs(a.getX()-b.getX())+Math.abs(a.getY()-b.getY()));
+            }
+            if(nearest>farthest) {best=id;farthest=nearest;}
+        }
+        return best;
+    }
     private static boolean internallyReached(TroubleshootBoard board,String id,Vector<String> reached) {
         BoardPad pad=board.getPad(id);
         for(String other:reached) {
@@ -103,6 +149,9 @@ final class PcbNetRouter {
         private final Rectangle[] courtyards, collisionCourtyards;
         private final int attempt;
         private final SeededPcbLayoutGenerator.AttemptObserver observer;
+        private final PcbCopperLayer layer;
+        private boolean emptyComponentFace=true;
+        private String[][] horizontalReservation,verticalReservation,padAt;
 
         Router(PcbBoardLayout layout, TroubleshootBoard board, Rectangle outline,
                 int attempt, SeededPcbLayoutGenerator.AttemptObserver observer) {
@@ -111,6 +160,7 @@ final class PcbNetRouter {
             this.outline = outline;
             this.attempt = attempt;
             this.observer = observer;
+            layer=board.getPlacementConstraints().routingLayer;
             minX = outline.x + GRID;
             minY = outline.y + GRID;
             gridWidth = (outline.width - 2 * GRID) / GRID + 1;
@@ -124,6 +174,8 @@ final class PcbNetRouter {
             escapeReservations = new Rectangle[pads.length];
             for (int index = 0; index < pads.length; index++) {
                 PcbPadPlacement pad = pads[index];
+                if(!PcbCopperAccess.hasCopper(pad,layer))
+                    throw new IllegalArgumentException("Requested routing layer has no pad land: "+pad.getPadId());
                 padNets[index] = board.getPad(pad.getPadId()).getNetId();
                 int length = ((pad.getEscapeLength() + GRID - 1) / GRID) * GRID;
                 int ex = pad.getX() + pad.getEscapeDx() * length;
@@ -132,14 +184,34 @@ final class PcbNetRouter {
                 escapeReservations[index] = new Rectangle(Math.min(pad.getX(), ex) - margin,
                     Math.min(pad.getY(), ey) - margin, Math.abs(pad.getX() - ex) + margin * 2,
                     Math.abs(pad.getY() - ey) + margin * 2);
+                if(pad.getMountingSide()!=layer.getFace())
+                    escapeReservations[index]=new Rectangle(pad.getX()-margin,pad.getY()-margin,margin*2,margin*2);
             }
             components = layout.getComponents().toArray(new PcbComponentPlacement[0]);
             courtyards = new Rectangle[components.length];
             collisionCourtyards = new Rectangle[components.length];
             for (int index = 0; index < components.length; index++) {
                 courtyards[index] = components[index].getRoutingCourtyard();
+                if(components[index].getMountingSide()==layer.getFace()) emptyComponentFace=false;
                 collisionCourtyards[index] = traceCollisionEnvelope(courtyards[index]);
             }
+            if(emptyComponentFace) {
+                horizontalReservation=new String[gridWidth][gridHeight];verticalReservation=new String[gridWidth][gridHeight];padAt=new String[gridWidth][gridHeight];
+                for(int i=0;i<pads.length;i++) {
+                    Rectangle r=escapeReservations[i];
+                    int px=gridX(pads[i].getX()),py=gridY(pads[i].getY());
+                    if(px>=0&&py>=0&&px<gridWidth&&py<gridHeight)padAt[px][py]=pads[i].getPadId();
+                    int x0=Math.max(0,(r.x-minX)/GRID-1),x1=Math.min(gridWidth-1,(r.x+r.width-minX)/GRID+1);
+                    int y0=Math.max(0,(r.y-minY)/GRID-1),y1=Math.min(gridHeight-1,(r.y+r.height-minY)/GRID+1);
+                    for(int x=x0;x<=x1;x++) for(int y=y0;y<=y1;y++) {
+                        if(r.intersects(new Rectangle(minX+x*GRID,minY+y*GRID,GRID,1))) reserve(horizontalReservation,x,y,padNets[i]);
+                        if(r.intersects(new Rectangle(minX+x*GRID,minY+y*GRID,1,GRID))) reserve(verticalReservation,x,y,padNets[i]);
+                    }
+                }
+            }
+        }
+        private void reserve(String[][] cells,int x,int y,String net) {
+            cells[x][y]=cells[x][y]==null || cells[x][y].equals(net)?net:"";
         }
 
         PcbTraceGeometry route(String netId, String startPadId, String endPadId) {
@@ -162,20 +234,11 @@ final class PcbNetRouter {
             final int noneDirection = 4;
             final int[] directionX = { 0, 1, 0, -1 };
             final int[] directionY = { -1, 0, 1, 0 };
-            double[][][] bestCost = new double[gridWidth][gridHeight][5];
-            int[][][] previousX = new int[gridWidth][gridHeight][5];
-            int[][][] previousY = new int[gridWidth][gridHeight][5];
-            int[][][] previousDirection = new int[gridWidth][gridHeight][5];
-            for (int x = 0; x < gridWidth; x++) {
-                for (int y = 0; y < gridHeight; y++) {
-                    for (int direction = 0; direction < 5; direction++) {
-                        bestCost[x][y][direction] = Double.POSITIVE_INFINITY;
-                        previousX[x][y][direction] = -1;
-                        previousY[x][y][direction] = -1;
-                        previousDirection[x][y][direction] = -1;
-                    }
-                }
-            }
+            // Flat, zero-initialized storage avoids four forests of per-cell
+            // arrays in JavaScript. Previous uses zero for unseen, -1 for the
+            // root, and prior state + 1 for a discovered predecessor.
+            double[] bestCost = new double[gridWidth*gridHeight*5];
+            int[] previous = new int[bestCost.length];
             PriorityQueue<SearchNode> open = new PriorityQueue<SearchNode>(128,
                 new Comparator<SearchNode>() {
                     public int compare(SearchNode first, SearchNode second) {
@@ -183,9 +246,9 @@ final class PcbNetRouter {
                     }
                 });
             int sequence = 0;
-            bestCost[startX][startY][noneDirection] = 0;
+            previous[stateKey(startX,startY,noneDirection)] = -1;
             open.add(new SearchNode(startX, startY, noneDirection, 0,
-                distances[startY*gridWidth+startX] * MINIMUM_STEP_COST, sequence++));
+                lowerBound(distances[startY*gridWidth+startX],endPad), sequence++));
             SearchNode goal = null;
             int expanded = 0;
             while (!open.isEmpty()) {
@@ -194,7 +257,8 @@ final class PcbNetRouter {
                 if (expanded > (long)gridWidth*gridHeight*20) throw new Rejected("SEARCH_WORK_BUDGET");
                 SearchNode current = open.poll();
                 expansions++;
-                if (current.cost != bestCost[current.x][current.y][current.direction])
+                int currentKey=stateKey(current.x,current.y,current.direction);
+                if (current.cost != bestCost[currentKey])
                     continue;
                 if (goals[current.y*gridWidth+current.x]) {
                     goal = current;
@@ -206,7 +270,7 @@ final class PcbNetRouter {
                     if (nextX < 0 || nextY < 0 || nextX >= gridWidth || nextY >= gridHeight ||
                             !isLegalMove(current, nextX, nextY, direction, startX, startY,
                                 endX, endY, startPad, endPad) ||
-                            !canTraverse(current.x, current.y, nextX, nextY, startPad, endPad) ||
+                            !canTraverse(current.x, current.y, nextX, nextY, startPad, endPad,netId) ||
                             !canOccupy(nextX, nextY, netId, startPad, endPad))
                         continue;
                     double stepCost = GRID;
@@ -217,14 +281,13 @@ final class PcbNetRouter {
                     double cost = current.cost + stepCost;
                     if (current.direction != noneDirection && current.direction != direction)
                         cost += 35;
-                    if (cost >= bestCost[nextX][nextY][direction])
+                    int nextKey=stateKey(nextX,nextY,direction);
+                    if (previous[nextKey]!=0 && cost >= bestCost[nextKey])
                         continue;
-                    bestCost[nextX][nextY][direction] = cost;
-                    previousX[nextX][nextY][direction] = current.x;
-                    previousY[nextX][nextY][direction] = current.y;
-                    previousDirection[nextX][nextY][direction] = current.direction;
+                    bestCost[nextKey] = cost;
+                    previous[nextKey] = currentKey+1;
                     open.add(new SearchNode(nextX, nextY, direction, cost,
-                        distances[nextY*gridWidth+nextX] * MINIMUM_STEP_COST, sequence++));
+                        lowerBound(distances[nextY*gridWidth+nextX],endPad), sequence++));
                 }
             }
             if (goal == null)
@@ -239,14 +302,13 @@ final class PcbNetRouter {
             int currentDirection = goal.direction;
             while (currentX >= 0 && currentY >= 0) {
                 points.add(new Point(minX + currentX * GRID, minY + currentY * GRID));
-                int priorX = previousX[currentX][currentY][currentDirection];
-                int priorY = previousY[currentX][currentY][currentDirection];
-                int priorDirection = previousDirection[currentX][currentY][currentDirection];
-                if (priorX < 0 || priorY < 0)
-                    break;
-                currentX = priorX;
-                currentY = priorY;
-                currentDirection = priorDirection;
+                int prior=previous[stateKey(currentX,currentY,currentDirection)];
+                if(prior==-1) break;
+                if(prior==0) throw new IllegalStateException("Missing routing predecessor");
+                prior--;
+                currentDirection=prior%5;
+                currentX=(prior/5)%gridWidth;
+                currentY=(prior/5)/gridWidth;
             }
             Collections.reverse(points);
             if(points.size()<2) throw new Rejected("ZERO_LENGTH_BRANCH");
@@ -262,15 +324,24 @@ final class PcbNetRouter {
                 yPoints[index] = routedPoints.get(index).y;
             }
             return new PcbTraceGeometry(endPadId==null ? "tree/"+netId+"/branch/"+startPadId :
-                PcbTraceGeometry.defaultSourceId(startPadId,endPadId,PcbCopperLayer.TOP),netId,
-                startPadId,endPadId,PcbCopperLayer.TOP,PcbCopperAccess.Exposure.EXPOSED,xPoints,yPoints);
+                PcbTraceGeometry.defaultSourceId(startPadId,endPadId,layer),netId,
+                startPadId,endPadId,layer,PcbCopperAccess.Exposure.EXPOSED,xPoints,yPoints);
         }
 
         private boolean canJoinTree(int x,int y) {
+            if(emptyComponentFace) return true;
             int px=minX+x*GRID,py=minY+y*GRID;
-            for(Rectangle courtyard:collisionCourtyards)
-                if(containsInclusive(courtyard,px,py)) return false;
+            for(int i=0;i<collisionCourtyards.length;i++)
+                if(components[i].getMountingSide()==layer.getFace() && containsInclusive(collisionCourtyards[i],px,py)) return false;
             return true;
+        }
+        private int lowerBound(int distance,PcbPadPlacement end) {
+            if(layer!=PcbCopperLayer.BOTTOM || !emptyComponentFace) return distance*MINIMUM_STEP_COST;
+            // All parts in the bottom-layer envelope mount on top. Thus every
+            // cell of existing same-net copper is a goal: the cost-2 step can
+            // occur only once, at arrival; preceding fresh/clearance steps cost
+            // at least 7. The initial two-pad branch has no same-net copper yet.
+            return end!=null ? distance*10 : Math.max(0,distance*7-5);
         }
         /** Manhattan lower bound to ANY connected trunk cell, multiplied by the true minimum step cost. */
         private int[] distanceField(boolean[] goals) {
@@ -290,12 +361,12 @@ final class PcbNetRouter {
                 PcbPadPlacement endPad) {
             int startDx=current.x-startX,startDy=current.y-startY;
             int startDistance=(startDx*startPad.getEscapeDx()+startDy*startPad.getEscapeDy())*GRID;
-            if (startPad.getEscapeLength() > 0 && startDistance>=0 && startDistance<startPad.getEscapeLength() &&
+            if (startPad.getMountingSide()==layer.getFace() && startPad.getEscapeLength() > 0 && startDistance>=0 && startDistance<startPad.getEscapeLength() &&
                     startDx*startPad.getEscapeDy()==startDy*startPad.getEscapeDx() &&
                     (directionX(direction) != startPad.getEscapeDx() ||
                     directionY(direction) != startPad.getEscapeDy()))
                 return false;
-            if (endPad!=null && endPad.getEscapeLength() > 0 &&
+            if (endPad!=null && endPad.getMountingSide()==layer.getFace() && endPad.getEscapeLength() > 0 &&
                     (nextX-endX)*endPad.getEscapeDy()==(nextY-endY)*endPad.getEscapeDx() &&
                     ((nextX-endX)*endPad.getEscapeDx()+(nextY-endY)*endPad.getEscapeDy())*GRID>=0 &&
                     ((nextX-endX)*endPad.getEscapeDx()+(nextY-endY)*endPad.getEscapeDy())*GRID<endPad.getEscapeLength() &&
@@ -314,6 +385,8 @@ final class PcbNetRouter {
                 congestionRejections++;
                 return false;
             }
+            if(emptyComponentFace) return padAt[x][y]==null || padAt[x][y].equals(startPad.getPadId()) ||
+                endPad!=null && padAt[x][y].equals(endPad.getPadId());
             if (isPadAtOtherNet(physicalX, physicalY, startPad.getPadId(),
                         endPad==null?null:endPad.getPadId()))
                 return false;
@@ -322,6 +395,7 @@ final class PcbNetRouter {
                 return true;
             for (int index = 0; index < components.length; index++) {
                 PcbComponentPlacement component = components[index];
+                if(component.getMountingSide()!=layer.getFace()) continue;
                 if (!containsInclusive(courtyards[index], physicalX, physicalY))
                     continue;
                 boolean startEscape = component.getComponentId().equals(
@@ -337,14 +411,19 @@ final class PcbNetRouter {
         }
 
         private boolean canTraverse(int fromX, int fromY, int toX, int toY,
-                PcbPadPlacement startPad, PcbPadPlacement endPad) {
+                PcbPadPlacement startPad, PcbPadPlacement endPad,String net) {
+            // Cache the exact existing rectangle/step intersection predicate on
+            // the unpopulated face, avoiding a per-search-edge scan of every pad.
+            if(emptyComponentFace) {
+                String reserved=fromY==toY?horizontalReservation[Math.min(fromX,toX)][fromY]:verticalReservation[fromX][Math.min(fromY,toY)];
+                return reserved==null || reserved.equals(net);
+            }
             int startPhysicalX = minX + fromX * GRID;
             int startPhysicalY = minY + fromY * GRID;
             int endPhysicalX = minX + toX * GRID;
             int endPhysicalY = minY + toY * GRID;
             String startComponentId = board.getPad(startPad.getPadId()).getComponentId();
             String endComponentId = endPad==null?null:board.getPad(endPad.getPadId()).getComponentId();
-            String net=board.getPad(startPad.getPadId()).getNetId();
             Rectangle move = new Rectangle(Math.min(startPhysicalX,endPhysicalX),Math.min(startPhysicalY,endPhysicalY),
                 Math.max(1,Math.abs(startPhysicalX-endPhysicalX)),Math.max(1,Math.abs(startPhysicalY-endPhysicalY)));
             for(int index = 0; index < pads.length; index++) {
@@ -356,6 +435,7 @@ final class PcbNetRouter {
             Rectangle stroke = traceStroke(startPhysicalX, startPhysicalY, endPhysicalX, endPhysicalY);
             for (int index = 0; index < components.length; index++) {
                 PcbComponentPlacement component = components[index];
+                if(component.getMountingSide()!=layer.getFace()) continue;
                 if (!courtyards[index].intersects(stroke))
                     continue;
                 boolean startEscape = component.getComponentId().equals(startComponentId) &&
@@ -435,6 +515,7 @@ final class PcbNetRouter {
         private int gridX(int x) {
             return (x - minX) % GRID == 0 ? (x - minX) / GRID : -1;
         }
+        private int stateKey(int x,int y,int direction) { return (y*gridWidth+x)*5+direction; }
         private int gridY(int y) {
             return (y - minY) % GRID == 0 ? (y - minY) / GRID : -1;
         }

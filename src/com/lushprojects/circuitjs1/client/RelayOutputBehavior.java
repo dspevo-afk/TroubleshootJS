@@ -13,10 +13,17 @@ final class RelayOutputBehavior implements GeneratedBoardFamilyState,
     private final GeneratedBoardOperationCatalog operations = new GeneratedBoardOperationCatalog();
     private final GeneratedCustomerRetestProfile retest;
     private GeneratedObservedBehavior observed;
+    private final Rb15Plan plan;
+    private final LEDElm indicator;
 
     RelayOutputBehavior(SwitchElm command, CircuitPostMeasurementEndpoint output,
             CircuitPostMeasurementEndpoint reference) {
+        this(command, output, reference, null, null);
+    }
+    RelayOutputBehavior(SwitchElm command, CircuitPostMeasurementEndpoint output,
+            CircuitPostMeasurementEndpoint reference, Rb15Plan plan, LEDElm indicator) {
         this.command = command; this.output = output; this.reference = reference;
+        this.plan=plan; this.indicator=indicator;
         operations.add(new GeneratedBoardOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH,
             "Set control HIGH", new GeneratedBoardOperation.Executor() {
                 public GeneratedCustomerRetestResult execute(CirSim sim, GeneratedBoardInstance owner) {
@@ -31,7 +38,8 @@ final class RelayOutputBehavior implements GeneratedBoardFamilyState,
             }));
         retest = new GeneratedCustomerRetestProfile("RELAY_OUTPUT_RETEST",
             "Check that the external load turns on with control HIGH and off with control LOW.",
-            "Connect the 5 V control supplies and the isolated 12 V load supply.",
+            plan == null ? "Connect the 5 V control supplies and the isolated 12 V load supply." :
+                "Connect the 12 V board supply and 5 V command input; check the power indicator.",
             "Control HIGH, then LOW; restore the previous command.",
             "Measure the load across J4 terminals 1 and 2.",
             "Allow 25 ms of solver time after each command.",
@@ -44,7 +52,7 @@ final class RelayOutputBehavior implements GeneratedBoardFamilyState,
                     try {
                         setCommand(sim, true); boolean on = healthyOn();
                         setCommand(sim, false); boolean off = healthyOff();
-                        return on && off ? GeneratedCustomerRetestSupport.success() :
+                        return on && off && installedRatings(owner) ? GeneratedCustomerRetestSupport.success() :
                             GeneratedCustomerRetestSupport.failure();
                     } finally {
                         // Synchronous input recipe never connects a source or restores a foreign owner.
@@ -62,6 +70,7 @@ final class RelayOutputBehavior implements GeneratedBoardFamilyState,
 
     public void requireOwnedBy(GeneratedBoardInstance owner) {
         if (owner == null || !owner.getSimulationElements().contains(command) ||
+                (plan != null && (indicator == null || !owner.getSimulationElements().contains(indicator))) ||
                 !owner.getSimulationElements().contains(output.getElement()) ||
                 !owner.getSimulationElements().contains(reference.getElement()) ||
                 !same(owner.getSimulationBindings().getEndpoint("J4.1"), output) ||
@@ -83,6 +92,12 @@ final class RelayOutputBehavior implements GeneratedBoardFamilyState,
         parameters.put("output-off-max-volts", "0.05");
         parameters.put("discharged-amps", Double.toString(DISCHARGED_AMPS));
         parameters.put("recipe", "HIGH-sample-LOW-sample-HIGH");
+        if(plan != null) {
+            parameters.put("design",plan.topology());
+            parameters.put("output-on-min-volts","10.0");
+            parameters.put("indicator-current-amps","0.002..0.004");
+            parameters.put("capacitor-discharge-volts","0.05");
+        }
         return new GeneratedTemporalDependency("RELAY_OUTPUT_TEMPORAL", 1,
             GeneratedTemporalDependency.FRESH_GENERATED_OWNER_COLD_V1, "J4.1", "J4.2", parameters);
     }
@@ -101,8 +116,14 @@ final class RelayOutputBehavior implements GeneratedBoardFamilyState,
         return output.getElement().getPostVoltage(output.getPostIndex()) -
             reference.getElement().getPostVoltage(reference.getPostIndex());
     }
-    private boolean healthyOn() { double v = outputVoltage(); return v > 10.8 && v < 12.6; }
-    private boolean healthyOff() { return Math.abs(outputVoltage()) < .05; }
+    private boolean supportHealthy() { return indicator == null || (indicator.getCurrent() > .002 && indicator.getCurrent() < .004); }
+    private boolean healthyOn() { double v = outputVoltage(); return v > (plan == null ? 10.8 : 10.0) && v < 12.6 && supportHealthy(); }
+    private boolean healthyOff() { return Math.abs(outputVoltage()) < .05 && supportHealthy(); }
+    private boolean installedRatings(GeneratedBoardInstance owner) {
+        if(plan == null) return true;
+        PhysicalPart<?> part=owner.getPhysicalBoardRuntime().getInstalledPart("K1");
+        return part instanceof PhysicalRelayPart && ((PhysicalRelayPart)part).getSpecification().nominalVolts == 12;
+    }
     public void prepareHealthyProfile(CirSim sim, GeneratedBoardInstance owner) {
         requireOwnedBy(owner);
         setCommand(sim, true); boolean on = healthyOn();
@@ -130,6 +151,7 @@ final class RelayOutputBehavior implements GeneratedBoardFamilyState,
     public GeneratedRepairStatus getRepairStatus(GeneratedBoardInstance owner,
             BoardModificationController modifications, BoardPowerState power, boolean overlay) {
         return !overlay && power == BoardPowerState.POWERED && modifications.isFullyRestored() &&
+            installedRatings(owner) &&
             (isCommandedOn() ? healthyOn() : healthyOff()) ? GeneratedRepairStatus.CORRECTLY_RESTORED :
                 GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
     }
@@ -142,6 +164,10 @@ final class RelayOutputBehavior implements GeneratedBoardFamilyState,
         return getRepairStatus(owner, modifications, power, overlay) == GeneratedRepairStatus.CORRECTLY_RESTORED;
     }
     static boolean isDischarged(GeneratedBoardInstance owner) {
+        for (CircuitElm e : owner.getSimulationElements()) if (e instanceof CapacitorElm) {
+            double volts=e.getPostVoltage(0)-e.getPostVoltage(1);
+            if (!PowerDomainContract.finite(volts) || Math.abs(volts) >= .05) return false;
+        }
         for (CircuitElm e : owner.getSimulationElements()) if (e instanceof ServiceRelayElm) {
             double amps = ((ServiceRelayElm)e).coilCurrent;
             if (!PowerDomainContract.finite(amps) || Math.abs(amps) >= DISCHARGED_AMPS) return false;

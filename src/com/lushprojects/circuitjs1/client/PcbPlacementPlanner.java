@@ -95,6 +95,7 @@ final class PcbPlacementPlanner {
         Vector<Region> regions=new Vector<Region>(groups.values());
         // Alternate regional order is bounded global feedback; no fixed region walls block nets.
         if (variant%2==1) Collections.reverse(regions);
+        if(candidate>=OUTLINE_CANDIDATES && constraints.routingLayer==PcbCopperLayer.BOTTOM) NamedRandomStreams.shuffle(regions,random);
         int left=40+(leftAnchored?anchorWidth:0), x=left,y=50,rowHeight=0;
         Vector<PcbFootprint> placed=new Vector<PcbFootprint>(); int evaluations=0;
         for (Region region : regions) {
@@ -102,6 +103,7 @@ final class PcbPlacementPlanner {
             for (Item item : region.items) { regionArea+=(long)(item.envelope.width+CHANNEL)*(item.envelope.height+CHANNEL); widest=Math.max(widest,item.envelope.width); }
             int roomWidth=Math.min(contentWidth, Math.max(widest+2*region.margin,align((int)Math.sqrt(regionArea*aspects[variant])+2*region.margin)));
             order(region.items,topology,seed ^ (0x9e3779b97f4a7c15L*(candidate+1)));
+            if(candidate>=OUTLINE_CANDIDATES && constraints.routingLayer==PcbCopperLayer.BOTTOM) NamedRandomStreams.shuffle(region.items,random);
             int rx=region.margin,ry=region.margin,rh=0,used=0;
             for (Item item : region.items) {
                 if (rx+item.envelope.width+region.margin>roomWidth && rx>region.margin) { rx=region.margin; ry+=rh+CHANNEL; rh=0; }

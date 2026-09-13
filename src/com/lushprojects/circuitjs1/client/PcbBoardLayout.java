@@ -33,6 +33,34 @@ class PcbBoardLayout {
     int getRoutingExpansions() { return routingExpansions; }
     int getRawRoutingSegments() { return rawRoutingSegments; }
     int getRoutingCongestionRejections() { return routingCongestionRejections; }
+    private int generationPlacementAttempts,generationRoutingAttempts,generationRoutingExpansions;
+    private long generationRoutingMillis;
+    private long generationPlacementSeed,generationRoutingSeed;
+    private boolean procedural;
+    void setGenerationStatistics(int placements,int routes,int expansions,long millis,long placementSeed,long routingSeed) {
+        requireMutable();generationPlacementAttempts=placements;generationRoutingAttempts=routes;
+        generationRoutingExpansions=expansions;generationRoutingMillis=millis;
+        generationPlacementSeed=placementSeed;generationRoutingSeed=routingSeed;procedural=true;
+    }
+    boolean matchesGenerationSeeds(long placement,long routing) {
+        return procedural && generationPlacementSeed==placement && generationRoutingSeed==routing;
+    }
+    int getGenerationPlacementAttempts() { return generationPlacementAttempts; }
+    int getGenerationRoutingAttempts() { return generationRoutingAttempts; }
+    int getGenerationRoutingExpansions() { return generationRoutingExpansions; }
+    long getGenerationRoutingMillis() { return generationRoutingMillis; }
+    /** Fresh layout owner from frozen coordinate values; never repeats routing. */
+    PcbBoardLayout copySealed() {
+        if(!sealed)throw new IllegalStateException("Only a frozen realization can be copied");
+        PcbBoardLayout copy=new PcbBoardLayout(width,height,boardOutline,partsTray,layoutAlgorithmVersion);
+        copy.pads.putAll(pads);copy.components.putAll(components);
+        copy.silkscreenLabels.putAll(silkscreenLabels);copy.traces.addAll(traces);
+        copy.regions.putAll(regions);copy.holes.putAll(holes);
+        copy.setRoutingStatistics(routingExpansions,rawRoutingSegments,routingCongestionRejections);
+        if(procedural)copy.setGenerationStatistics(generationPlacementAttempts,generationRoutingAttempts,
+            generationRoutingExpansions,generationRoutingMillis,generationPlacementSeed,generationRoutingSeed);
+        copy.seal();return copy;
+    }
     void replaceTraces(Vector<PcbTraceGeometry> candidates) {
         requireMutable();
         if(candidates==null) throw new IllegalArgumentException("Missing routes");

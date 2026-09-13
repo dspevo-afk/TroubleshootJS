@@ -1,0 +1,14 @@
+{
+  "protocol": "TSJ-Q15-1",
+  "status": "FAIL",
+  "cases": [],
+  "assertions": 0,
+  "supportAssertions": 0,
+  "cancellationMs": 0,
+  "elapsedMs": 27,
+  "cleanupMs": 3,
+  "ownerRestored": true,
+  "operation": "cancellation",
+  "activeSeed": "0",
+  "failure": "java.lang.AssertionError: q15-explicit-failure-canary"
+}

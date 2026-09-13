@@ -5,7 +5,7 @@ import java.util.Vector;
 /** Relay-specific five-terminal adapter over the A08 mutation transaction. */
 final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability, PhysicalBoardInstallationProvider.Scoped, WorkbenchPartsProvider {
     static final String ID="REPLACEABLE_RELAY";
-    static final String CORRECT="RELAY_5V", WRONG="RELAY_12V";
+    static final String COIL_5V="RELAY_5V", COIL_12V="RELAY_12V";
     private final RelaySlot slot;
     private final PhysicalPartInventory<PhysicalRelayPart> inventory;
     ReplaceableRelayCapability(PhysicalBoardSlot physical,PhysicalRelayPart original,WireElm[] attachments) {
@@ -22,8 +22,8 @@ final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability
     public boolean showOccupiedMessageWhenPowered() { return false; }
     public Vector<WorkbenchCatalogEntry> getCatalogEntries() {
         Vector<WorkbenchCatalogEntry> out=new Vector<WorkbenchCatalogEntry>();
-        out.add(new WorkbenchCatalogEntry(CORRECT,new RelaySpecification(5).label()));
-        out.add(new WorkbenchCatalogEntry(WRONG,new RelaySpecification(12).label())); return out;
+        out.add(new WorkbenchCatalogEntry(COIL_5V,new RelaySpecification(5).label()));
+        out.add(new WorkbenchCatalogEntry(COIL_12V,new RelaySpecification(12).label())); return out;
     }
     public Vector<PhysicalPart<?>> getLooseParts() {
         Vector<PhysicalPart<?>> out=new Vector<PhysicalPart<?>>();out.addAll(inventory.getLooseParts());return out;
@@ -63,7 +63,7 @@ final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability
             if(!supports(op)||!safe())return false;
             if(WorkbenchOperation.REMOVE.equals(op.getId())) return !slot.isEmpty() && (op.getPart()==null||op.getPart()==slot.getInstalledPart());
             if(!slot.isEmpty())return false;
-            if(WorkbenchOperation.CATALOG_INSTALL.equals(op.getId()))return CORRECT.equals(op.getCatalogEntryId())||WRONG.equals(op.getCatalogEntryId());
+            if(WorkbenchOperation.CATALOG_INSTALL.equals(op.getId()))return COIL_5V.equals(op.getCatalogEntryId())||COIL_12V.equals(op.getCatalogEntryId());
             return op.getPart()!=null && inventory.contains(op.getPart().getId()) && inventory.get(op.getPart().getId())==op.getPart() && !op.getPart().isInstalled();
         }
         public boolean invoke(WorkbenchOperation op,WorkbenchCapabilityContext context){
@@ -75,7 +75,7 @@ final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability
         public boolean removeInstalledPart(){return mutate("remove",null,null);}
         public boolean install(String id){return mutate("install",inventory.get(id),null);}
         public boolean installNewFromCatalog(String id){
-            if(!CORRECT.equals(id)&&!WRONG.equals(id))throw new IllegalArgumentException("Unknown relay catalog choice");
+            if(!COIL_5V.equals(id)&&!COIL_12V.equals(id))throw new IllegalArgumentException("Unknown relay catalog choice");
             return mutate("catalog",null,id);
         }
         private boolean mutate(String operation,PhysicalRelayPart requested,final String catalog){
@@ -89,7 +89,7 @@ final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability
                 } else {
                     PhysicalRelayPart part=requested;
                     if(catalog!=null){
-                        final RelaySpecification spec=new RelaySpecification(CORRECT.equals(catalog)?5:12);
+                        final RelaySpecification spec=new RelaySpecification(COIL_5V.equals(catalog)?5:12);
                         int left=0;for(CircuitElm e:owner.getSimulationElements())left=Math.min(left,Math.min(e.x,e.x2));
                         if(left < -1000000)throw new IllegalStateException("Relay backing allocation exhausted");
                         final ServiceRelayElm element=spec.create(left-1024,1024);

@@ -168,6 +168,7 @@ final class GenerationCoordinator {
         private GenerationRequest.Prepared prepared;
         private String realizationManifest;
         private GeneratedBoardInstance candidate;
+        private GenerationRequest.ConstructionSession constructionSession;
         private FreshGeneratedRuntimeInstallation.Staged installation;
         private GeneratedDiagnosticProofService.Session proof;
         private boolean notified, cleanupComplete;
@@ -207,9 +208,12 @@ final class GenerationCoordinator {
             job.checkpoint();
             if (installation == null) {
                 try {
-                    GenerationRequest.Construction construction = prepared.construct();
+                    if(constructionSession==null)constructionSession=prepared.beginConstruction();
+                    if(!constructionSession.advance())return null;
+                    GenerationRequest.Construction construction = constructionSession.result();
                     candidate = construction.instance;
                     realizationManifest = construction.realizationManifest;
+                    constructionSession=null;
                 }
                 catch (PcbRoutingRejectedException rejection) { throw new GenerationJob.Rejected(rejection.getMessage()); }
                 catch (BoundedGeneratedBoardAssembler.AssemblyFailure failure) {
@@ -336,12 +340,12 @@ final class GenerationCoordinator {
         void releaseSavedOwners() {
             if (proof != null) lastCleanupAudit = proof.getCleanupAudit();
             original = null; originalController = null; originalGraph = null;
-            installation = null; proof = null; prepared = null;
+            installation = null; proof = null; prepared = null; constructionSession = null;
             if (job.getOutcome() != GenerationJob.Outcome.PASS) candidate = null;
         }
         boolean hasSavedOwners() {
             return original != null || originalGraph != null || originalController != null ||
-                installation != null || proof != null;
+                installation != null || proof != null || constructionSession != null;
         }
     }
 }

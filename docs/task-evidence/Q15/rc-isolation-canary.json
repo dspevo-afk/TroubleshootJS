@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "route": "?tsjChallenge=rc&seed=0&tsjDebug=true",
+  "evidence": "Ordinary generation reached an enabled RC service ticket and customer retest controls; no generation_failure or browser error was observed.",
+  "limitation": "The preceding A10 profile-boundary assertion does not expose its nested job failure. This canary establishes normal admission only; the full A10 gate remains required."
+}

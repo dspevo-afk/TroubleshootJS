@@ -1,0 +1,3 @@
+PASS: native Quick Play verifyEligibleFamilies elapsedMs=43
+PASS: native Quick Play verifyDeterministicFamilySelection elapsedMs=6958
+PASS: native Quick Play verifySelectionEnvelopes elapsedMs=22872

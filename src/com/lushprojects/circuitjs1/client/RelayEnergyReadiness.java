@@ -7,7 +7,12 @@ final class RelayEnergyReadiness implements ActiveMeasurementReadinessCapability
         PhysicalBoardRuntimePowerLifecycle, PhysicalBoardRuntimeLifecycle, PhysicalBoardInstallationProvider {
     static final String ID = "RELAY_ENERGY_READINESS";
     private CirSim sim;
-    private final PowerDomainContract contract = RelayPowerDomains.create();
+    private final PowerDomainContract contract;
+    RelayEnergyReadiness() { this(RelayPowerDomains.create()); }
+    RelayEnergyReadiness(PowerDomainContract contract) {
+        if (contract == null) throw new IllegalArgumentException("Missing energy/reference declaration");
+        this.contract = contract;
+    }
     private GeneratedBoardInstance owner;
     private SolverExecutionBoundary.Observation observed, invalidated;
     public String getCapabilityId() { return ID; }

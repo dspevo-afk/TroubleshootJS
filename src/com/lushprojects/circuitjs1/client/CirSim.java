@@ -106,6 +106,7 @@ MouseOutHandler, MouseWheelHandler {
     Button resetButton;
 	Button boardPowerButton;
 	Button controlledIndicatorChallengeButton;
+	Button controlBoardChallengeButton;
     Button runStopButton;
     Button dumpMatrixButton;
     MenuItem aboutItem;
@@ -427,6 +428,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootA07VerificationComplete;
 	boolean troubleshootA07ForcedFailure;
 	boolean troubleshootE03Verification, troubleshootE03ForcedFailure, troubleshootE03VerificationComplete;
+	boolean troubleshootQ15Verification, troubleshootQ15ForcedFailure, troubleshootQ15VerificationComplete;
     boolean troubleshootE01Verification, troubleshootE01VerificationComplete, troubleshootE01ForcedFailure;
 	boolean troubleshootA06Verification;
 	boolean troubleshootA06VerificationComplete;
@@ -616,6 +618,8 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootA07ForcedFailure = troubleshootA07Verification && qp.getBooleanValue("tsjA07Fail", false);
 	    troubleshootE01Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyE01", false);
             troubleshootE03Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyE03", false);
+            troubleshootQ15Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyQ15", false);
+            troubleshootQ15ForcedFailure = troubleshootQ15Verification && qp.getBooleanValue("tsjQ15Fail", false);
             troubleshootE03ForcedFailure = troubleshootE03Verification && qp.getBooleanValue("tsjE03Fail", false);
         troubleshootE01ForcedFailure = troubleshootE01Verification && qp.getBooleanValue("tsjE01Fail", false);
 	    troubleshootA06Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA06", false);
@@ -904,6 +908,14 @@ MouseOutHandler, MouseWheelHandler {
 	    }
 	});
 	verticalPanel.add(boardPowerButton = new Button("Board Power: ON"));
+	verticalPanel.add(controlBoardChallengeButton = new Button("New control board"));
+	controlBoardChallengeButton.setStyleName("tsj-action-button");
+	controlBoardChallengeButton.addClickHandler(new ClickHandler() {
+	    public void onClick(ClickEvent event) {
+	        if(canOpenControlledIndicatorChallenge())
+	            startGeneration(GenerationRequest.leaf(Rb15Plan.FAMILY_ID,System.currentTimeMillis(),false));
+	    }
+	});
 	boardPowerButton.setStyleName("tsj-power-button");
 	boardPowerButton.setVisible(false);
 	boardPowerButton.addClickHandler(new ClickHandler() {
@@ -1081,6 +1093,8 @@ MouseOutHandler, MouseWheelHandler {
             startGeneration(GenerationRequest.leaf(QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH, troubleshootFixtureSeed, false));
 	else if ("relay".equals(troubleshootChallenge))
             startGeneration(GenerationRequest.leaf(QuickPlayFamilyRegistry.RELAY_OUTPUT, troubleshootFixtureSeed, false));
+	else if ("control-board".equals(troubleshootChallenge))
+            startGeneration(GenerationRequest.leaf(Rb15Plan.FAMILY_ID, troubleshootFixtureSeed, false));
 	else if ("nmos".equals(troubleshootChallenge))
             startGeneration(GenerationRequest.leaf(QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH, troubleshootFixtureSeed, false));
 	else if ("controlled-indicator".equals(troubleshootChallenge)) {
@@ -4788,7 +4802,7 @@ MouseOutHandler, MouseWheelHandler {
 	pcbWorkbenchController = (!troubleshootDebug || FreshGeneratedRuntimeInstallation.isInProgress(this) ||
 	    troubleshootTask41Verification || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
-	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootU01Verification || troubleshootA10Verification ||
+	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootU01Verification || troubleshootA10Verification ||
 	    troubleshootA01Measurement ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
@@ -4918,6 +4932,7 @@ MouseOutHandler, MouseWheelHandler {
         if (busy) {
             if (boardPowerButton != null) boardPowerButton.setEnabled(false);
             if (controlledIndicatorChallengeButton != null) controlledIndicatorChallengeButton.setEnabled(false);
+            if (controlBoardChallengeButton != null) controlBoardChallengeButton.setEnabled(false);
             if (resetButton != null) resetButton.setEnabled(false);
             if (instrumentController != null) instrumentController.setInteractionEnabled(false);
         } else {
@@ -5317,6 +5332,7 @@ MouseOutHandler, MouseWheelHandler {
                 A07SolverDeveloperVerifier.start(this, troubleshootA07ForcedFailure);
             }
 	    if (!developerVerifierRunning && troubleshootE03Verification &&
+	        !troubleshootQ15Verification &&
                 !troubleshootE03VerificationComplete &&
                 !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
                 generatedChallengeController != null && generatedChallengeController.isReady() &&
@@ -5329,6 +5345,20 @@ MouseOutHandler, MouseWheelHandler {
                     developerVerifierRunning=false;
                     if(failure==null) {publishE03Evidence(report);publishBrowserVerificationResult("PASS:e03");}
                     else {publishBrowserVerificationResult("FAIL:e03:"+failure.getMessage());console("E03 failure: "+failure);}
+                }
+            });
+        }
+        if (!developerVerifierRunning && troubleshootQ15Verification && !troubleshootQ15VerificationComplete &&
+                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() && generatedChallengeController!=null &&
+                generatedChallengeController.isReady() && isGeneratedRuntimeSettled()) {
+            developerVerifierRunning=true;troubleshootQ15VerificationComplete=true;
+            publishBrowserVerificationResult("RUNNING:q15");
+            Q15ControlBoardDeveloperVerifier.start(this,troubleshootQ15ForcedFailure,new Q15ControlBoardDeveloperVerifier.Completion() {
+                public void finished(String report,Throwable failure) {
+                    developerVerifierRunning=false;
+                    publishQ15Evidence(report);
+                    if(failure==null) {publishBrowserVerificationResult("PASS:q15");}
+                    else {publishBrowserVerificationResult("FAIL:q15:"+failure.getMessage());console("Q15 failure: "+failure);}
                 }
             });
         }
@@ -5530,7 +5560,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootTask40Verification || troubleshootTask41Verification ||
 		    troubleshootA01Measurement ||
 		    troubleshootTask46Verification || troubleshootTask47Verification ||
-		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootU01Verification || troubleshootA10Verification ||
+		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootU01Verification || troubleshootA10Verification ||
 		    troubleshootTask43Verification || troubleshootTask43PVerification)) {
 		String failureMessage = e.getMessage();
 		if (troubleshootTask43PForcedFailure && failureMessage != null &&
@@ -5634,6 +5664,9 @@ MouseOutHandler, MouseWheelHandler {
 
     private static native void publishE03Evidence(String evidence) /*-{
         $doc.documentElement.setAttribute("data-tsj-e03-report", evidence);
+    }-*/;
+    private static native void publishQ15Evidence(String evidence) /*-{
+        $doc.documentElement.setAttribute("data-tsj-q15-report", evidence);
     }-*/;
 
     private static native void publishE01Evidence(String evidence) /*-{
@@ -5880,6 +5913,8 @@ MouseOutHandler, MouseWheelHandler {
 	    boardPowerButton.setEnabled(enabled && !isActiveMeasurementCleanupBlocked());
 	if (controlledIndicatorChallengeButton != null)
 	    controlledIndicatorChallengeButton.setEnabled(canOpenControlledIndicatorChallenge());
+	if (controlBoardChallengeButton != null)
+	    controlBoardChallengeButton.setEnabled(canOpenControlledIndicatorChallenge());
 	refreshBoardModificationControls();
 	}
 

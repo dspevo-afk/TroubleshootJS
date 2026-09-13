@@ -1,0 +1,49 @@
+PASS: E03 relay contracts 161 assertions
+Q15_ROUTE seed=0 cohort=development design=RB15_NMOS_RESISTIVE_BIAS millis=845 routeMillis=590 attempts=16 expansions=1598461 score=61501.70608999159
+Q15_ROUTE seed=1 cohort=development design=RB15_BJT_RESISTIVE_BIAS millis=393 routeMillis=379 attempts=16 expansions=2064292 score=61512.00465832467
+Q15_ROUTE seed=2 cohort=development design=RB15_NMOS_RESISTIVE_BIAS millis=325 routeMillis=309 attempts=16 expansions=1526410 score=61793.929584678146
+Q15_ROUTE seed=3 cohort=development design=RB15_NMOS_RC_FILTER millis=4075 routeMillis=4010 attempts=199 expansions=19378393 score=62624.19571362982
+Q15_ROUTE seed=17 cohort=holdout design=RB15_NMOS_RC_FILTER millis=3534 routeMillis=3482 attempts=171 expansions=16627732 score=70611.91216028671
+Q15_ROUTE seed=42 cohort=holdout design=RB15_NMOS_RC_FILTER millis=872 routeMillis=850 attempts=41 expansions=4275973 score=73735.16476512662
+Q15_ROUTE seed=101 cohort=holdout design=RB15_BJT_RC_FILTER millis=1182 routeMillis=1159 attempts=55 expansions=5607014 score=70632.34352039825
+Q15_ROUTE seed=-1 cohort=holdout design=RB15_NMOS_RESISTIVE_BIAS millis=364 routeMillis=352 attempts=16 expansions=1632398 score=61707.40465832465
+Q15_ROUTE seed=9007199254740993 cohort=holdout design=RB15_NMOS_RC_FILTER millis=3795 routeMillis=3740 attempts=193 expansions=18165752 score=73814.31899022196
+Q15_ROUTE seed=-9223372036854775808 cohort=holdout design=RB15_BJT_RESISTIVE_BIAS millis=3150 routeMillis=3103 attempts=159 expansions=14651160 score=58725.160193284515
+Q15_ROUTE seed=9223372036854775807 cohort=holdout design=RB15_BJT_RESISTIVE_BIAS millis=815 routeMillis=798 attempts=43 expansions=3900367 score=56074.93016011361
+PASS: Q15 control board contracts assertions=6713 designs=4
+PASS: Task46 410 assertions, 36 negative cases; pure descriptor/constraints/named-stream corpus
+PASS: Task44 9 groups, 247 assertions; no simulator dependency
+PASS: Task45 202 assertions
+PASS: current resistive assembly contracts 241 assertions
+PASS: current controlled-indicator contracts 201 assertions
+PASS: current switched-low-side compatibility 16 assertions
+PASS: current value synthesis 188 assertions
+PASS: A05 role providers 280 assertions
+PASS: E01 source contracts 96015 assertions
+PASS: A06 power contracts assertions=152
+PASS: A07 execution contracts assertions=38
+PASS: A09 diagnostic contracts assertions=302 replays=40
+PASS: A10 generation contracts assertions=190
+PASS: A10 routing rejection contracts assertions=26
+PASS: A10 dependency contracts assertions=12
+PASS: A11 provider conformance
+PASS: A03IdentityContractTest assertions=30
+PASS: A02CandidateContractTest
+PASS: A02GeometryContractTest 32 assertions
+PASS: P01 physical pose contracts assertions=8357 poses=43
+PASS: P02 conductor contracts 3209 assertions; 40 independent lattice cases; 48 shared-copper permutations; 16 SMD poses
+PASS: U01 viewport contracts assertions=1233
+PASS: P03 placement contracts assertions=864267
+PASS: P04 routing contracts assertions=6408 branches=6
+PASS: A02ReplayContractTest assertions=148
+PASS: ElectricalUnitPackageMapContractTest assertions=37
+PASS: A04ConstructionContractTest assertions=680
+PASS: A04PhysicalDeclarationContractTest assertions=5270
+PASS: Task46 independent seed oracle 22 vectors; literal TSV/Java correspondence exact
+PASS: A11 provider boundaries/report assertions=125
+PASS: A09 independent diagnostic contracts assertions=143
+PASS: current value synthesis oracle 9 seeds; bounded6/schema2 repeated-channel equations exact
+PASS: A05 independent role selection oracle 6 seeds
+PASS: A04 report contracts assertions=470
+PASS: current contracts; 30 Java suites, independent seed/value/role oracles and report protocol.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

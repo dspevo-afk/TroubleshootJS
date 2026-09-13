@@ -69,6 +69,7 @@ final class PhysicalSpecificationDeveloperVerifier {
     $sourcePaths += $stub
     $testDefinitions = @(
         @{ Name = 'E03RelayContractTest'; Marker = 'E03 relay contracts ' },
+        @{ Name = 'Q15ControlBoardContractTest'; Marker = 'Q15 control board contracts ' },
         @{ Name = 'ChallengeDescriptorContractTest'; Marker = 'Task46 ' },
         @{ Name = 'FunctionalBlockContractTest'; Marker = 'Task44 ' },
         @{ Name = 'ElectricalPortContractTest'; Marker = 'Task45 ' },

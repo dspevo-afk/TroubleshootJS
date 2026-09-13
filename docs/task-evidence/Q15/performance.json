@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "machine": "Windows 11 Home; AMD Ryzen 7 7700 (8 cores); approximately 32 GB RAM",
+  "runtime": "Codex in-app Chromium; production GWT 2.7.0 output",
+  "method": "Nearest-rank quantiles across eleven sequential first admissions. LED bootstrap and routing-cancellation canary prime the runtime; these are not cold-process measurements. Native and compiled timings are separate populations. Routing totals include rejected attempts.",
+  "admission": {
+    "count": 11,
+    "minimumMs": 26167,
+    "p50Ms": 36657,
+    "p95Ms": 80627,
+    "maximumMs": 80627
+  },
+  "routing": {
+    "count": 11,
+    "minimumMs": 2801,
+    "p50Ms": 10171,
+    "p95Ms": 41667,
+    "maximumMs": 41667
+  },
+  "hypothesisProof": {
+    "count": 11,
+    "minimumMs": 21023,
+    "p50Ms": 21998,
+    "p95Ms": 38413,
+    "maximumMs": 38413
+  },
+  "workUnit": {
+    "count": 11,
+    "minimumMs": 1384,
+    "p50Ms": 1990,
+    "p95Ms": 2797,
+    "maximumMs": 2797
+  },
+  "jobLimitMs": 90000,
+  "workUnitLimitMs": 5000,
+  "workLimit": 640,
+  "maxWork": 120.0,
+  "cancellationNote": "Q15 cancellation handler completed in 0 ms at millisecond resolution; this does not bound input-queue latency."
+}
