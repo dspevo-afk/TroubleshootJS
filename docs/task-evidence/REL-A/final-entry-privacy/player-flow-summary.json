@@ -1,0 +1,49 @@
+{
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "status": "PASS",
+  "kind": "Final actual visible player-input qualification, not human calibration",
+  "flows": [
+    {
+      "status": "PASS",
+      "artifact": "../../U04/player-input-entry-final.json",
+      "scope": "RC3; cancellation; normal RB15 draws42/17; both known bad exact replays and prior owner/OFF recovery; exact9007199254740993"
+    },
+    {
+      "status": "PASS",
+      "artifact": "rb15-player-input.json",
+      "scope": "RB150 unrepaired rejection, independent-source OHM guard, retained terminals, bottom copper, real separate acquisition/removal/install, HIGH/LOW voltage and customer retest, completed guards"
+    },
+    {
+      "status": "PASS",
+      "artifact": "../../U05/player-input-entry-final.json",
+      "scope": "MEDIUM0 unrepaired rejection, all-source isolation, scoped public catalogs, OL to330Ohm with real separate acquisition/removal/install, two-channel customer retest"
+    },
+    {
+      "status": "PASS",
+      "artifact": "quick-play-player-input.json",
+      "scope": "Ordinary unforced LED0 and RC0 ticket/workbench entry and exact replay/build identity"
+    },
+    {
+      "status": "PASS",
+      "artifact": "../../U04/ui-input-entry-final.json",
+      "scope": "Settings/Resources/menu keyboard/focus, persistence, replay/profile rejection, privacy"
+    }
+  ],
+  "screenshotsInspected": [
+    "../../U04/settings-entry-final.png",
+    "../../U04/resources-entry-final.png",
+    "../../U04/replay-error-entry-final.png",
+    "rb15-unrepaired.png",
+    "rb15-copper.png",
+    "rb15-results.png",
+    "../../U05/medium-shop-entry-final.png",
+    "../../U05/medium-results-entry-final.png"
+  ],
+  "limits": [
+    "Human EASY/MEDIUM seed3 outcomes pending; these agent inputs are not human calibration.",
+    "Black probes used visible accessible placement controls; no native right-mouse certification.",
+    "Browser timing observations include transport and observation gaps; no inferred cleanup/job timings.",
+    "Ordinary Quick Play draws LED0/RC0 are not RB15 or random-population coverage.",
+    "Retained failed legacy cancellation inputs do not prove coordinator failure; normal final cancellation passes."
+  ]
+}

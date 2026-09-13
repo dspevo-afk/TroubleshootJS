@@ -1,11 +1,12 @@
 package com.lushprojects.circuitjs1.client;
 
 /** Family-owned three-terminal board slot with explicit B/C/E attachment order. */
-final class NpnComponentSlot {
+final class NpnComponentSlot implements PhysicalMutationSlot {
     private final String componentId;
     private final NpnSpecification intendedSpecification;
     private final WireElm[] attachments;
     private final PhysicalBoardSlot physicalSlot;
+    private final PhysicalMutationSlot.AttachmentState emptySlotAttachmentState;
 
     NpnComponentSlot(String componentId, NpnSpecification intendedSpecification,
             PhysicalNpnPart installedPart, WireElm baseAttachment,
@@ -21,13 +22,22 @@ final class NpnComponentSlot {
         this.physicalSlot = physicalSlot;
         attach(installedPart);
         physicalSlot.install(installedPart);
+        this.emptySlotAttachmentState = captureAttachmentState();
     }
 
-    String getComponentId() { return componentId; }
+    public String getComponentId() { return componentId; }
     NpnSpecification getIntendedSpecification() { return intendedSpecification; }
-    PhysicalBoardSlot getPhysicalSlot() { return physicalSlot; }
-    PhysicalNpnPart getInstalledPart() { return (PhysicalNpnPart) physicalSlot.getInstalledPart(); }
-    boolean isEmpty() { return !physicalSlot.isOccupied(); }
+    public PhysicalBoardSlot getPhysicalSlot() { return physicalSlot; }
+    public PhysicalNpnPart getInstalledPart() { return (PhysicalNpnPart) physicalSlot.getInstalledPart(); }
+    public boolean isEmpty() { return !physicalSlot.isOccupied(); }
+    public boolean acceptsPart(PhysicalPart<?> part) {
+        return part instanceof PhysicalNpnPart;
+    }
+    public CircuitMeasurementEndpoint getExpectedEndpoint(PhysicalPart<?> part, BoardPad pad) {
+        if (!acceptsPart(part) || pad == null || !componentId.equals(pad.getComponentId()))
+            throw new IllegalArgumentException("Foreign NPN terminal mapping");
+        return ((PhysicalNpnPart) part).getTerminalForBoardPad(pad.getId());
+    }
     void clear() { physicalSlot.remove(); }
 
     void install(PhysicalNpnPart part) {
@@ -35,6 +45,61 @@ final class NpnComponentSlot {
             throw new IllegalArgumentException("Missing NPN part");
         attach(part);
         physicalSlot.install(part);
+    }
+
+    public void installForMutation(PhysicalPart<?> candidate, PhysicalMutationScope scope) {
+        if (!(candidate instanceof PhysicalNpnPart) || scope == null)
+            throw new IllegalArgumentException("Missing NPN mutation install context");
+        if (!scope.owns(this))
+            throw new IllegalStateException("Physical mutation scope does not own NPN slot");
+        attach((PhysicalNpnPart) candidate);
+        scope.afterAttachmentWrite();
+        physicalSlot.install((PhysicalNpnPart) candidate);
+        scope.afterSlotMountWrite();
+    }
+
+    public PhysicalPart<?> clearForMutation(PhysicalMutationScope scope) {
+        if (scope == null || !scope.owns(this))
+            throw new IllegalStateException("Physical mutation scope does not own NPN slot");
+        PhysicalPart<?> removed = physicalSlot.remove();
+        scope.afterSlotClearWrite();
+        return removed;
+    }
+
+    public PhysicalMutationSlot.AttachmentState captureAttachmentState() {
+        return new NpnAttachmentState(attachments);
+    }
+
+    public void restoreAttachmentState(PhysicalMutationSlot.AttachmentState captured) {
+        if (!(captured instanceof NpnAttachmentState))
+            throw new IllegalArgumentException("Missing NPN attachment state");
+        NpnAttachmentState state = (NpnAttachmentState) captured;
+        for (int index = 0; index < attachments.length; index++) {
+            attachments[index].x = state.coordinates[index * 4];
+            attachments[index].y = state.coordinates[index * 4 + 1];
+            attachments[index].x2 = state.coordinates[index * 4 + 2];
+            attachments[index].y2 = state.coordinates[index * 4 + 3];
+            attachments[index].setPoints();
+        }
+    }
+
+    public void restoreEmptySlotAttachmentState(PhysicalMutationScope scope) {
+        if (scope == null || !scope.owns(this))
+            throw new IllegalStateException("Physical mutation scope does not own NPN slot");
+        restoreAttachmentState(emptySlotAttachmentState);
+    }
+
+    private static final class NpnAttachmentState implements PhysicalMutationSlot.AttachmentState {
+        private final int[] coordinates = new int[12];
+
+        private NpnAttachmentState(WireElm[] attachments) {
+            for (int index = 0; index < attachments.length; index++) {
+                coordinates[index * 4] = attachments[index].x;
+                coordinates[index * 4 + 1] = attachments[index].y;
+                coordinates[index * 4 + 2] = attachments[index].x2;
+                coordinates[index * 4 + 3] = attachments[index].y2;
+            }
+        }
     }
 
     private void attach(PhysicalNpnPart part) {

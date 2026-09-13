@@ -42,6 +42,7 @@ final class GeneratedDiagnosticObservationExecutor {
         private final CirSim sim;
         private final GeneratedBoardInstance instance;
         private final GeneratedChallengeController controller;
+        private final Vector<CircuitElm> graph;
         private final Vector<GeneratedDiagnosticProgram.Step> steps;
         private final GeneratedDiagnosticExecutionTrace.Builder trace;
         private final Vector<GeneratedDiagnosticSample> samples =
@@ -49,6 +50,7 @@ final class GeneratedDiagnosticObservationExecutor {
         private int nextStep;
         private boolean complete;
         private boolean closed;
+        private boolean cancelling;
 
         private Cursor(CirSim sim, GeneratedBoardInstance instance,
                 GeneratedDiagnosticProgram program, GeneratedDiagnosticExecutionTrace.Builder trace) {
@@ -66,6 +68,7 @@ final class GeneratedDiagnosticObservationExecutor {
             this.sim = sim;
             this.instance = instance;
             this.controller = sim.getGeneratedChallengeController();
+            this.graph = sim.elmList;
             this.trace = trace;
         }
 
@@ -98,6 +101,8 @@ final class GeneratedDiagnosticObservationExecutor {
                 throwFailure(failure);
                 return false;
             }
+            if (steps.get(nextStep).kind != GeneratedDiagnosticProgram.Kind.SETTLE)
+                trace.recordCompletedSemanticAction();
             nextStep++;
             if (nextStep >= steps.size()) {
                 require(!samples.isEmpty(), "Production diagnostic observations are empty");
@@ -131,32 +136,26 @@ final class GeneratedDiagnosticObservationExecutor {
         /** Cleans a partial observation without publishing any samples. */
         void cancel() {
             if (closed) return;
-            Throwable failure = null;
-            try {
-                requireCurrentContext("observation-cancel");
-                closeInstrumentMode();
-            } catch (Throwable problem) {
-                failure = problem;
-            } finally {
-                closed = true;
-            }
-            if (failure != null) throwFailure(failure);
+            cancelling = true;
+            requireCurrentContext("observation-cancel");
+            closeInstrumentMode();
+            // Failed cleanup retains this exact cursor for a guarded retry.
+            closed = true;
         }
 
         private void ensureOpen() {
-            if (closed)
+            if (closed || cancelling)
                 throw new IllegalStateException("Diagnostic observation cursor is closed");
         }
 
         private void requireCurrentContext(String boundary) {
-            require(sim.getGeneratedBoardInstance() == instance &&
-                sim.getGeneratedChallengeController() == controller,
+            require(isCurrentContext(),
                 "Diagnostic observation lost its exact candidate at " + boundary);
         }
 
         private boolean isCurrentContext() {
             return sim.getGeneratedBoardInstance() == instance &&
-                sim.getGeneratedChallengeController() == controller;
+                sim.getGeneratedChallengeController() == controller && sim.elmList == graph;
         }
 
         private void closeInstrumentMode() {

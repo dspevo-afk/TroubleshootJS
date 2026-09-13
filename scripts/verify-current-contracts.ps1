@@ -68,8 +68,11 @@ final class PhysicalSpecificationDeveloperVerifier {
         Sort-Object Name | ForEach-Object { $_.FullName })
     $sourcePaths += $stub
     $testDefinitions = @(
+        @{ Name = 'U04SessionContractTest'; Marker = 'U04 session contracts ' },
+        @{ Name = 'U05DifficultyContractTest'; Marker = 'U05 difficulty contracts ' },
         @{ Name = 'E03RelayContractTest'; Marker = 'E03 relay contracts ' },
         @{ Name = 'Q15ControlBoardContractTest'; Marker = 'Q15 control board contracts ' },
+        @{ Name = 'QuickPlayContractTest'; Marker = 'Quick Play current seed envelopes and construction' },
         @{ Name = 'ChallengeDescriptorContractTest'; Marker = 'Task46 ' },
         @{ Name = 'FunctionalBlockContractTest'; Marker = 'Task44 ' },
         @{ Name = 'ElectricalPortContractTest'; Marker = 'Task45 ' },

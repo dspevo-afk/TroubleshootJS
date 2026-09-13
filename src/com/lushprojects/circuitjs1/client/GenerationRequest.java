@@ -8,12 +8,17 @@ final class GenerationRequest {
     private final ChallengeDescriptor descriptor;
     private final boolean composition;
     private final boolean quickPlay;
+    private final DifficultyProfile difficulty;
 
     private GenerationRequest(ChallengeDescriptor descriptor, boolean composition, boolean quickPlay) {
+        this(descriptor, composition, quickPlay, null);
+    }
+    private GenerationRequest(ChallengeDescriptor descriptor, boolean composition, boolean quickPlay, DifficultyProfile difficulty) {
         if (descriptor == null) throw new IllegalArgumentException("Missing generation descriptor");
         this.descriptor = descriptor;
         this.composition = composition;
         this.quickPlay = quickPlay;
+        this.difficulty = difficulty;
     }
 
     static GenerationRequest leaf(String familyId, long seed, boolean quickPlay) {
@@ -22,12 +27,21 @@ final class GenerationRequest {
     static GenerationRequest controlled(long seed) {
         return new GenerationRequest(BoundedAssemblyRequest.controlledDescriptor(seed), true, false);
     }
+    static GenerationRequest player(PlayerLaunchRequest request) {
+        if (request == null) throw new IllegalArgumentException("Missing player launch");
+        boolean composed = ControlledIndicatorBlockContributions.FAMILY_ID.equals(request.familyId);
+        return new GenerationRequest(composed ? BoundedAssemblyRequest.controlledDescriptor(request.seed) :
+            ChallengeDescriptor.current(request.familyId, request.seed), composed, false, request.profile);
+    }
+    DifficultyProfile getDifficulty() { return difficulty; }
     String canonical() {
         return "tsj-generation-request/1;native;" + descriptor.toCanonical() +
-            ";quickPlay=" + quickPlay + ";layout=" + SeededPcbLayoutGenerator.CURRENT_VERSION;
+            ";quickPlay=" + quickPlay + ";layout=" + SeededPcbLayoutGenerator.CURRENT_VERSION +
+            (difficulty == null ? "" : ";difficulty=" + difficulty + "@" + DifficultyProfile.VERSION + ";assessment=" + DifficultyAssessment.VERSION);
     }
     ChallengeDescriptor getDescriptor() { return descriptor; }
     boolean isQuickPlay() { return quickPlay; }
+    boolean requiresExplicitCompletion() { return quickPlay || difficulty != null; }
     boolean isComposition() { return composition; }
 
     Prepared resolve(PlanCache cache) {

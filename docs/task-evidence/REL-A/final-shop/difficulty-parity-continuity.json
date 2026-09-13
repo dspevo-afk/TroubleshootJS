@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "comparedCases": 38,
+  "comparedFields": [
+    "family",
+    "seed",
+    "requested",
+    "computed",
+    "features",
+    "repairPassed"
+  ],
+  "before": "alpha-report.json",
+  "after": "alpha-continuity-report.json",
+  "currentExecutionDigest": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+  "interpretation": "Fresh actual run; exact profile/feature/repair parity, no runtime evidence reuse."
+}

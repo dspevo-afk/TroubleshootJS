@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "executionDigest": "b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d",
+  "cases": 11,
+  "assertions": 481,
+  "supportAssertions": 80,
+  "operationElapsedMs": 560040,
+  "cleanupElapsedMs": 2,
+  "ownerRestored": true,
+  "cancellationMs": 0,
+  "admissionP50Ms": 31078,
+  "admissionP95Ms": 58285,
+  "maxUnitMs": 2016,
+  "maxWorkUnits": 120,
+  "reader": "PASS: sixteen malformed canaries and fresh forced cleanup",
+  "populationEstimate": false
+}

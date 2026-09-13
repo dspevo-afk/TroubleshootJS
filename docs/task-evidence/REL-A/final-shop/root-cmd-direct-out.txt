@@ -1,0 +1,7 @@
+WARNING: The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might
+make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the
+Verbose parameter. For a list of approved verbs, type Get-Verb.
+Archived stale preview state for diagnosis: <repository>\.tools\preview\recovery\stale-state-20260913T191629817Z-cc6858d459ab4728bc2bbf5ab21e9819.json
+TroubleshootJS preview started (PID 4108).
+Preview root URL (for verify-browser -BaseUrl): http://127.0.0.1:8899
+Preview page URL: http://127.0.0.1:8899/circuitjs.html?tsjQuickPlay=true

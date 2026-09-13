@@ -1,0 +1,6 @@
+COMMAND: ./scripts/verify-q15-evidence.ps1 -EvidenceRoot docs/task-evidence/REL-A/q15
+PASS: Q15 eleven cases/four designs/three faults; forced cleanup;16 reader negatives.
+PASS: A10 24 attempts, cancellationMax3ms; first p50/p95 844/2093ms, repeat851/2009ms.
+PASS: Q15,A10,E03,A08,twenty Task41 routes,Task49 and negative report canaries.
+Exit0; command wall0.906s.
+Current UI executionb5080dcf; unchanged-Java A10 execution35b0bbb2 has the audited boundary in ../menu-focus-input-delta.json.

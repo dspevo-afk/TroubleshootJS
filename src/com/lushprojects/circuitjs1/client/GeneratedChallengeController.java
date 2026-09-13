@@ -21,6 +21,48 @@ class GeneratedChallengeController {
     private boolean stagedGenerationPresentation;
     interface RetestCompletionDispatch { void dispatch(Runnable completion); }
     private RetestCompletionDispatch retestCompletionDispatch;
+    private boolean boundedTemporalPreparation;
+    private GeneratedWork<GeneratedRepairStatus> preparationProfileWork;
+    private int temporalPreparationUnits;
+    private GeneratedWork<GeneratedCustomerRetestResult> activeRetestWork;
+    private GeneratedWork<Void> activeRetestCompletion;
+
+    void useBoundedTemporalPreparation() { boundedTemporalPreparation = true; }
+    boolean hasTemporalPreparationWork() { return preparationProfileWork != null; }
+    int getTemporalPreparationUnits() { return temporalPreparationUnits; }
+    boolean requiresExplicitCompletion() { return finishJobRequired; }
+
+    void cancelTemporalPreparation() {
+        GeneratedWork<GeneratedRepairStatus> work = preparationProfileWork;
+        if (work != null) work.cancel();
+        preparationProfileWork = null;
+    }
+
+    void cancelOwnedWork() {
+        Throwable failure = null;
+        try { cancelTemporalPreparation(); } catch (Throwable problem) { failure = problem; }
+        GeneratedWork<?> work = activeRetestWork;
+        try { if (work != null) work.cancel(); activeRetestWork = null; }
+        catch (Throwable problem) { if (failure == null) failure = problem; else failure.addSuppressed(problem); }
+        if (activeRetestWork == null) operationInProgress = false;
+        work = activeRetestCompletion;
+        try { if (work != null) work.cancel(); activeRetestCompletion = null; }
+        catch (Throwable problem) { if (failure == null) failure = problem; else failure.addSuppressed(problem); }
+        if (failure instanceof Error) throw (Error) failure;
+        if (failure instanceof RuntimeException) throw (RuntimeException) failure;
+        if (failure != null) throw new IllegalStateException("Generated work cleanup failed", failure);
+    }
+
+    private boolean advancePreparationProfile(GeneratedTemporalBehavior.Profile profile) {
+        if (preparationProfileWork == null)
+            preparationProfileWork = instance.getTemporalBehavior().beginProfile(sim, instance, profile);
+        boolean more = preparationProfileWork.step();
+        temporalPreparationUnits++;
+        if (more) { sim.generatedBoardVerificationPending = true; return false; }
+        preparationProfileWork.finish();
+        preparationProfileWork = null;
+        return true;
+    }
 
     GeneratedChallengeController(CirSim sim, GeneratedBoardInstance instance) {
         this(sim, instance, false);
@@ -120,8 +162,11 @@ class GeneratedChallengeController {
     void afterGeneratedVerification() {
         if (state == GeneratedChallengeState.PREPARING_HEALTHY) {
             boolean temporal = instance.getTemporalBehavior() != null;
-            if (temporal)
-                instance.getTemporalBehavior().prepareHealthyProfile(sim, instance);
+            if (temporal) {
+                if (boundedTemporalPreparation) {
+                    if (!advancePreparationProfile(GeneratedTemporalBehavior.Profile.HEALTHY)) return;
+                } else instance.getTemporalBehavior().prepareHealthyProfile(sim, instance);
+            }
             lifecycleEvidence.healthyGraphAnalyzedAfterTimeAdvance = true;
             lifecycleEvidence.healthyFamilyValidated = true;
             state = GeneratedChallengeState.PREPARING_FAULTED;
@@ -135,8 +180,11 @@ class GeneratedChallengeController {
             return;
         }
         if (state == GeneratedChallengeState.PREPARING_FAULTED) {
-            if (instance.getTemporalBehavior() != null)
-                instance.getTemporalBehavior().prepareFaultedProfile(sim, instance);
+            if (instance.getTemporalBehavior() != null) {
+                if (boundedTemporalPreparation) {
+                    if (!advancePreparationProfile(GeneratedTemporalBehavior.Profile.FAULTED)) return;
+                } else instance.getTemporalBehavior().prepareFaultedProfile(sim, instance);
+            }
             lifecycleEvidence.faultedGraphAnalyzedAfterTimeAdvance = true;
             if (instance.getTemporalBehavior() != null)
                 instance.getTemporalBehavior().verifyFaultedProfile(sim, instance,
@@ -256,40 +304,118 @@ class GeneratedChallengeController {
     }
 
     GeneratedCustomerRetestResult performCustomerRetest() {
+        return GeneratedWork.complete(beginCustomerRetest());
+    }
+
+    GeneratedWork<GeneratedCustomerRetestResult> beginCustomerRetest() {
         if (!isCurrentOwner() || state != GeneratedChallengeState.READY ||
                 !sim.isGeneratedRuntimeSettled())
-            return GeneratedCustomerRetestSupport.failure();
+            return GeneratedWork.value(GeneratedCustomerRetestSupport.failure());
         final Object request = new Object();
         currentRetestRequest = request;
         customerRetestResult = null;
-        final GeneratedCustomerRetestResult result;
         operationInProgress = true;
+        final GeneratedWork<GeneratedCustomerRetestResult> operation;
         try {
-            result = instance.invokeOperation(GeneratedBoardOperationIds.CUSTOMER_RETEST, sim);
-        } finally {
+            GeneratedBoardOperation declared = instance.getOperationCatalog().find(
+                GeneratedBoardOperationIds.CUSTOMER_RETEST);
+            if (declared == null) throw new IllegalStateException("Missing customer retest operation");
+            operation = declared.begin(sim, instance);
+            if (operation == null) throw new IllegalStateException("Missing customer retest work");
+        } catch (RuntimeException failure) {
             operationInProgress = false;
+            throw failure;
+        } catch (Error failure) {
+            operationInProgress = false;
+            throw failure;
         }
-        // This is the actual result publication callback, also captured by
-        // the bounded developer succession proof. Normal dispatch is immediate.
-        Runnable completion = new Runnable() {
-            public void run() {
+        activeRetestWork = new GeneratedWork<GeneratedCustomerRetestResult>() {
+            private boolean complete, cancelled;
+            private GeneratedCustomerRetestResult result;
+            boolean step() {
+                if (cancelled) throw new IllegalStateException("Customer retest was cancelled");
+                if (complete) return false;
                 if (request != currentRetestRequest || !isCurrentOwner() ||
                         state != GeneratedChallengeState.READY)
-                    return;
-                customerRetestResult = result;
-                if (canLatchCompletionAfterCustomerRetest())
-                    latchCompleted();
-                else {
-                    sim.refreshBoardModificationControls();
-                    sim.repaint();
+                    throw new IllegalStateException("Customer retest lost its request owner");
+                if (operation.step()) return true;
+                result = operation.finish();
+                complete = true;
+                operationInProgress = false;
+                activeRetestWork = null;
+                GeneratedWork<Void> completion = retestCompletion(request, result);
+                activeRetestCompletion = completion;
+                try {
+                    if (retestCompletionDispatch == null) completion.run();
+                    else retestCompletionDispatch.dispatch(completion);
+                } catch (RuntimeException failure) {
+                    try { completion.cancel(); } catch (Throwable cleanup) { failure.addSuppressed(cleanup); }
+                    throw failure;
+                } catch (Error failure) {
+                    try { completion.cancel(); } catch (Throwable cleanup) { failure.addSuppressed(cleanup); }
+                    throw failure;
                 }
+                return false;
+            }
+            GeneratedCustomerRetestResult finish() {
+                if (!complete || cancelled) throw new IllegalStateException("Customer retest is incomplete");
+                return result;
+            }
+            void cancel() {
+                if (cancelled || complete) return;
+                operation.cancel();
+                cancelled = true;
+                if (activeRetestWork == this) { activeRetestWork = null; operationInProgress = false; }
+            }
+            int getWorkUnits() { return operation.getWorkUnits(); }
+        };
+        return activeRetestWork;
+    }
+
+    private GeneratedWork<Void> retestCompletion(final Object request,
+            final GeneratedCustomerRetestResult result) {
+        return new GeneratedWork<Void>() {
+            private boolean complete;
+            private GeneratedWork<GeneratedRepairStatus> repair;
+            boolean step() {
+                if (complete) return false;
+                if (request != currentRetestRequest || !isCurrentOwner() ||
+                        state != GeneratedChallengeState.READY) { cancel(); return false; }
+                boolean restored = false;
+                if (!finishJobRequired && result != null && result.isPassed()) {
+                    if (instance.getTemporalBehavior() != null) {
+                        if (repair == null) repair = instance.getTemporalBehavior().beginProfile(
+                            sim, instance, GeneratedTemporalBehavior.Profile.REPAIR);
+                        if (repair.step()) return true;
+                        restored = repair.finish() == GeneratedRepairStatus.CORRECTLY_RESTORED;
+                        repair = null;
+                    } else restored = getLiveRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED;
+                }
+                customerRetestResult = result;
+                complete = true;
+                if (activeRetestCompletion == this) activeRetestCompletion = null;
+                if (restored) latchCompleted();
+                else { sim.refreshBoardModificationControls(); sim.repaint(); }
+                return false;
+            }
+            Void finish() {
+                if (!complete) throw new IllegalStateException("Retest completion is incomplete");
+                return null;
+            }
+            void cancel() {
+                if (complete) return;
+                GeneratedWork<GeneratedRepairStatus> pending = repair;
+                if (pending != null) pending.cancel();
+                repair = null;
+                complete = true;
+                if (activeRetestCompletion == this) activeRetestCompletion = null;
+            }
+            int getWorkUnits() {
+                return !finishJobRequired && result != null && result.isPassed() &&
+                    instance.getTemporalBehavior() != null ?
+                    instance.getTemporalBehavior().getProfileWorkUnits() : 1;
             }
         };
-        if (retestCompletionDispatch == null)
-            completion.run();
-        else
-            retestCompletionDispatch.dispatch(completion);
-        return result;
     }
 
     boolean invokePlayerOperation(String stableId) {

@@ -1,0 +1,22 @@
+{
+  "status": "SUPERSEDED",
+  "artifact": "../U04/ui-contracts.txt",
+  "assertions": 45,
+  "auditManifest": "candidate-inputs.json",
+  "inputs": [
+    {
+      "path": "war/tsj-workbench-ui.js",
+      "sha256": "e1891c5d03adcf72f95b1109c6adb24d63106c1d8f4ecaefdc59b55767ef1042"
+    },
+    {
+      "path": "war/tsj-workbench-ui.css",
+      "sha256": "e47a4e6231634362449b3714ca37517de2be42f31d206eaf66c44c7b2499a78a"
+    },
+    {
+      "path": "tests/contracts/u04_ui_contract.mjs",
+      "sha256": "0555219ca1ed3cb06a5bc74b7c92eae3b5b78dd7dd815b5e6151ac99f1c6bdd8"
+    }
+  ],
+  "scope": "Reuses the passing jsdom adapter check with all consumed repository inputs unchanged. Native15 and actual final GWT build are fresh. DOM shims do not qualify real browser/player interactions; those remain a separate fresh gate.",
+  "currentUse": "Fresh49-assertion UI run after the menu focus correction replaces this earlier45-assertion reuse."
+}

@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "operation": "Stop owned first-phase preview",
+  "pid": 884,
+  "startTicks": 639248915237887624,
+  "runId": "U04-U05-RELA-rc-phase-1",
+  "port": 64206,
+  "elapsedMs": 20,
+  "ownershipVerified": true,
+  "reason": "Completed first-phase Alpha; preparing cleanup-candidate build"
+}

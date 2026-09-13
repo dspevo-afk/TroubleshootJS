@@ -222,11 +222,54 @@ final class CompositionMutationGateDeveloperVerifier {
                 sim.elmList);
         } catch (IllegalStateException expected) { rejected = true; }
         require(rejected, "duplicate same-instance modification owner rejected");
+        Observation beforeDeclarations = new Observation(sim, capability);
+        PhysicalBoardRuntime runtime = board.getPhysicalBoardRuntime();
+        ReplaceableLedBoardCapability led = ReplaceableLedBoardCapability.require(board);
+        runtime.validateSupportedCompositionProviders();
+        require(runtime.getScopedMutationCapability(componentId) == capability &&
+            runtime.getScopedMutationCapability(led.getComponentId()) == led,
+            "current resistor and LED providers have their exact bounded declarations");
+        PhysicalBoardRuntime undeclared = new PhysicalBoardRuntime(board.getBoard());
+        undeclared.registerCapability(new UnscopedCatalogCapability(led));
         rejected = false;
-        try { board.getPhysicalBoardRuntime().validateSupportedCompositionProviders(); }
-        catch (IllegalStateException expected) { rejected = true; }
-        require(rejected, "LED mutable provider must not enter resistor-only composition");
+        try { undeclared.validateSupportedCompositionProviders(); }
+        catch (IllegalStateException expected) {
+            require(("Composition does not support mutable provider: " +
+                UnscopedCatalogCapability.ID).equals(expected.getMessage()),
+                "undeclared provider rejection must identify its missing bounded declaration");
+            rejected = true;
+        }
+        require(rejected, "an unscoped mutable catalog remains unsupported");
+        PhysicalBoardRuntime foreignRuntime = new PhysicalBoardRuntime(board.getBoard());
+        foreignRuntime.registerCapability(led);
+        rejected = false;
+        try { foreignRuntime.validateSupportedCompositionProviders(); }
+        catch (IllegalStateException expected) {
+            require("Mutable provider is not owned by physical runtime".equals(expected.getMessage()),
+                "foreign declaration rejection must identify its physical owner");
+            rejected = true;
+        }
+        require(rejected, "a valid declaration cannot belong to a foreign runtime");
+        beforeDeclarations.assertSame(sim, capability, "composition provider declarations");
         invariant(sim);
+    }
+
+    /** Real catalog projection deliberately lacking a bounded mutation declaration. */
+    private static final class UnscopedCatalogCapability implements
+            PhysicalBoardRuntimeCapability, WorkbenchPartsProvider {
+        static final String ID = "A08_UNSCOPED_MUTABLE_NEGATIVE";
+        private final WorkbenchPartsProvider catalog;
+        UnscopedCatalogCapability(WorkbenchPartsProvider catalog) { this.catalog = catalog; }
+        public String getCapabilityId() { return ID; }
+        public String getComponentId() { return catalog.getComponentId(); }
+        public String getCatalogTitle() { return catalog.getCatalogTitle(); }
+        public String getInstallNewLabel() { return catalog.getInstallNewLabel(); }
+        public boolean showOccupiedMessageWhenPowered() { return catalog.showOccupiedMessageWhenPowered(); }
+        public Vector<WorkbenchCatalogEntry> getCatalogEntries() { return catalog.getCatalogEntries(); }
+        public Vector<PhysicalPart<?>> getLooseParts() { return catalog.getLooseParts(); }
+        public String getPartLabel(PhysicalPart<?> part) { return catalog.getPartLabel(part); }
+        public PhysicalPart<?> getPart(String partId) { return catalog.getPart(partId); }
+        public boolean ownsPart(String partId) { return catalog.ownsPart(partId); }
     }
 
     private static void verifyFailedClosedAbort(final CirSim sim,

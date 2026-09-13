@@ -1,0 +1,22 @@
+{
+  "protocol": "troubleshootjs-preview-identity-v1",
+  "sourceDigest": "4a886af0ee07af79b3691544e6f33f1605d6cd98715057b3e20f634fc83a01e9",
+  "scriptDigest": "216db0113d6da93653d50f1b61fb405b37f686f8af455123e2f71954817f84a5",
+  "webDigest": "0195397583cba966b63d412d656b946251e25e94c3ea57023fdf2d27f49aa10b",
+  "executionDigest": "14a2fb1f0712188cc9c12d543afca1143ca9ddabf0e144f57c713e0764b45001",
+  "executionFileCount": 1436,
+  "previewPort": 64207,
+  "processId": 18508,
+  "processStartTicks": 639249193210851891,
+  "verifierRunId": "U04-U05-RELA-final-shop-2",
+  "verifierNonce": "f049bd4f4dcf47beb849c28206575ab6",
+  "identityStatus": "PASS",
+  "qualificationStatus": "IN PROGRESS - retained stress-fixture failure",
+  "managedExecSession": 80384,
+  "sourceInputs": "a3b61c5841974539e1db404342fc7bc7c91b9648e38aff66dc3e9166513631ce",
+  "build": "gwt-receipt-label-2.txt",
+  "buildExitCode": 0,
+  "compileSeconds": 69.666,
+  "linkSeconds": 1.397,
+  "permutations": 5
+}

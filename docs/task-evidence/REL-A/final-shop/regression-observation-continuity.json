@@ -1,0 +1,23 @@
+{
+  "status": "OBSERVATION LIMITS",
+  "executionDigest": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+  "events": [
+    {
+      "phase": "A10",
+      "result": "Read-only Browser Page.getFrameTree timed out while synchronous verifier ran. Original run later published PASS:a10 and full report."
+    },
+    {
+      "phase": "A10 timing observer",
+      "result": "Optional Node timing binding declared inside a prior conditional was not retained. No wall time is claimed from that binding; actual report performance timings remain intact."
+    },
+    {
+      "phase": "A08",
+      "result": "CDP deadline before dispatch while verifier ran. Original run later published PASS:a08 and1103 assertions."
+    },
+    {
+      "phase": "Task41",
+      "result": "CDP deadline before dispatch while synchronous verifier ran. Run retained; no failure/cleanup inferred from observer timeout."
+    }
+  ],
+  "interpretation": "These are observation/transport limitations, not passing tests, admission time or cleanup receipts. No full command restarted to bypass them."
+}

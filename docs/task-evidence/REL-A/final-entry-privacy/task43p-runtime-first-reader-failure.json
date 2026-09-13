@@ -1,0 +1,8 @@
+{
+  "status": "FAIL",
+  "operation": "Assert-Task43PRuntimeEvidence",
+  "exitCode": 1,
+  "reason": "Task43P runtime evidence expected a non-empty string at runtime.runId.",
+  "cause": "Root launch omitted tsjVerifierRun and tsjVerifierRoute. Behavioral OBSERVED is not a passing strict receipt.",
+  "next": "Rerun runtime route with nonempty run/route query identifiers after Alpha finishes."
+}

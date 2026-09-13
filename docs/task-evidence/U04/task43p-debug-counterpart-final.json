@@ -1,0 +1,84 @@
+{
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "status": "OBSERVED: explicit-debug hook remains active",
+  "route": "?tsjChallenge=led&seed=0&tsjDebug=true&tsjVerifyTask43P=true&tsjTask43PForcedFailure=true&tsjTask43PSourceExperiment=privacy-canary&running=true",
+  "observation": {
+    "body": "File\tEdit\tDraw\tScopes\tOptions\tCircuits\nReset\tRUN / Stop\n\n\nMULTIMETER\n\n\nDC V\tOHM\nCONT\tDIODE\n\n\n--- V\n\n\n\n\nThe board could not be prepared.\n\n\nOpen controlled indicator\n\nNew control board\n\n\n\nSimulation Speed\n\n\n\n\nCurrent Speed\n\n\n\n\nPower Brightness\n\n\n\n\nCurrent Circuit:\n\n\n\n",
+    "status": "FAIL:generation:PROGRAMMING_FAILURE"
+  },
+  "logs": [
+    {
+      "level": "log",
+      "message": "exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-forced-negative-request-invalid",
+      "timestamp": "2026-09-13T13:08:19.605Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-forced-negative-request-invalid",
+      "timestamp": "2026-09-13T13:08:19.605Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-forced-negative-request-invalid",
+      "timestamp": "2026-09-13T13:08:19.606Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-forced-negative-request-invalid",
+      "timestamp": "2026-09-13T13:08:19.606Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-forced-negative-request-invalid",
+      "timestamp": "2026-09-13T13:08:19.607Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-forced-negative-request-invalid",
+      "timestamp": "2026-09-13T13:08:19.607Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-forced-negative-request-invalid",
+      "timestamp": "2026-09-13T13:08:19.608Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-forced-negative-request-invalid",
+      "timestamp": "2026-09-13T13:08:19.609Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-forced-negative-request-invalid",
+      "timestamp": "2026-09-13T13:08:19.609Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-forced-negative-request-invalid",
+      "timestamp": "2026-09-13T13:08:19.610Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-forced-negative-request-invalid",
+      "timestamp": "2026-09-13T13:08:19.610Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "generation_failure:PROGRAMMING_FAILURE:stage=HEALTHY:elapsedMs=273:work=2:Generated runtime did not settle after 20 updateCircuit attempts: generation-healthy-and-faulted, owner=true, ready=false, settled=false, pending=true, analyzed=true, analyze=false, dc=false, verificationRunning=false, installation=false, overlay=false, pendingPower=null, observationalDepth=0, operation=false, mutation=false, failedOwner=false, stop=null, time=0.00001, requestedAt=0",
+      "timestamp": "2026-09-13T13:08:19.612Z",
+      "url": "circuitjs1-0.js"
+    }
+  ],
+  "limit": "Intentionally invalid source experiment lacks required forced-request identity; not a valid Task43P forced-proof receipt. Typed replay with debug=true opens the separate developer UI and was not a challenge entry."
+}

@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "priorExecution": "33426a5f4aa40e2700fd46e60b9ee636f5d1a37dc94770daf21deffdc600859d",
+  "finalExecution": "6a99edda7053c29a54007a3c4a3fa9ae53384777254649aa4059c16b28b07cd6",
+  "changedSinceCompiledEntry": [
+    "scripts/start-preview.ps1"
+  ],
+  "addedToInputManifest": [
+    "Start TroubleshootJS.cmd"
+  ],
+  "inputCount": 1154,
+  "inputSha256": "6391ebe641028882c919f551a90d1476d939705a746ec38a57eee1962686141d",
+  "sourceDigest": "78ab5bad00ba0e40e99bd7298c368cc8bcac792bbeaee8348f7845e5ae18f933",
+  "webDigest": "b280a77d556901d8791142cd8506615ddfd76c4bdc6d2c3e38400766ede59e2c",
+  "boundary": "Only root launcher/start-preview changed. The running compiled verifier, normal player page, native runner, preview server and VerifierIsolation do not consume start-preview or the root CMD. Their Java, UI, compiled output, tests, runner and preview/module inputs are unchanged. Reuse final-Java GWT/native33/Alpha38/UI88/player evidence under this exact boundary; launcher is separately tested through real Windows paths. Fresh Q15 and remaining routes use the restarted final preview."
+}

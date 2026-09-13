@@ -6,6 +6,7 @@ class DiodeComponentSlot implements PhysicalMutationSlot {
     private final WireElm anodePadAttachment;
     private final WireElm cathodePadAttachment;
     private final PhysicalBoardSlot physicalSlot;
+    private final PhysicalMutationSlot.AttachmentState emptySlotAttachmentState;
 
     DiodeComponentSlot(String componentId, DiodeNameplate intendedNameplate,
             PhysicalDiodePart installedPart, WireElm anodePadAttachment,
@@ -19,6 +20,7 @@ class DiodeComponentSlot implements PhysicalMutationSlot {
         this.cathodePadAttachment = cathodePadAttachment;
         this.physicalSlot = physicalSlot;
         install(installedPart);
+        this.emptySlotAttachmentState = captureAttachmentState();
     }
 
     public String getComponentId() { return componentId; }
@@ -85,6 +87,12 @@ class DiodeComponentSlot implements PhysicalMutationSlot {
         cathodePadAttachment.x2 = state.cathodeX2;
         cathodePadAttachment.y2 = state.cathodeY2;
         cathodePadAttachment.setPoints();
+    }
+
+    public void restoreEmptySlotAttachmentState(PhysicalMutationScope scope) {
+        if (scope == null || !scope.owns(this))
+            throw new IllegalStateException("Physical mutation scope does not own diode slot");
+        restoreAttachmentState(emptySlotAttachmentState);
     }
 
     private static final class DiodeAttachmentState implements PhysicalMutationSlot.AttachmentState {

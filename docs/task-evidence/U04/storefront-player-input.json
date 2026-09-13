@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "kind": "Real visible Browser input; intermediate compiled candidate, not full release acceptance",
+  "candidateExecutionDigest": "14a2fb1f0712188cc9c12d543afca1143ca9ddabf0e144f57c713e0764b45001",
+  "replay": "tsj-alpha/1/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/3",
+  "steps": [
+    "Accept ticket",
+    "Run customer retest: did not pass",
+    "Board Power OFF: all3 supplies disconnected",
+    "Open Shop: All parts,73 actual resistor entries",
+    "Search330: five matching actual values; exact330 selected",
+    "Add to Parts Tray:330Ohm,success notice,real loose count0to1,search retained",
+    "Close Shop; inspect Channel A RLOAD",
+    "Remove component to tray",
+    "Select purchased Part16: offered Install as Channel A / RLOAD",
+    "Install as Channel A / RLOAD",
+    "Board Power ON",
+    "Run customer retest: PASS"
+  ],
+  "observedResult": "The live board passed the customer’s functional checks.",
+  "screenshots": [
+    "storefront-catalog.png",
+    "compatible-target.png",
+    "storefront-repair-result.png"
+  ],
+  "limits": [
+    "No direct controller injection.",
+    "No private fault lookup.",
+    "This is agent player-input evidence, not a human calibration trial.",
+    "First storefront screenshot exposed excess chrome and stale retest notice; refinement pending.",
+    "Compatible-target screenshot shows empty pads/tray but target button is below its crop; DOM observation and actual button click provide installation evidence.",
+    "Original user tab7/preview64206 remains preserved."
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "scope": "Composed seeds 0 and 3 relocation canaries after canonical empty-slot restoration; final full corpus still pending",
+  "executionDigest": "33426a5f4aa40e2700fd46e60b9ee636f5d1a37dc94770daf21deffdc600859d",
+  "perBoardChecks": 26,
+  "ordinaryMutationRowsRequired": 230,
+  "malformedCanariesRequired": 35,
+  "gwtBuild": {
+    "status": "PASS",
+    "exitCode": 0,
+    "compileSeconds": 68.305,
+    "linkSeconds": 1.34,
+    "permutations": 5
+  },
+  "retainedBuildFailure": {
+    "artifact": "gwt-rebind-4.txt",
+    "exitCode": 2,
+    "cause": "Anonymous A08 undeclared-slot negative adapter required the new restoration method; added rejecting implementation before successful build5"
+  },
+  "launcherCorrection": "IN PROGRESS independently; startup script changes are not yet frozen"
+}

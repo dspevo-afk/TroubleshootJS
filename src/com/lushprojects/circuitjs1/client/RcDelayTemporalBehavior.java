@@ -1,5 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Vector;
+
 /**
  * Family-owned CircuitJS transient sequence for the RC-delay board. Values
  * are sampled from the solved graph after genuine external isolation; C1
@@ -122,20 +124,35 @@ final class RcDelayTemporalBehavior implements GeneratedTemporalBehavior,
         return LIVE_SOLVER_ADVANCE_SECONDS;
     }
 
+    /**
+     * The temporal recipe has exactly the four solver calls already used by
+     * the synchronous sample.  Keep that count aligned with the resumable
+     * cursor so generation budgets describe actual solver work.
+     */
+    public int getProfileWorkUnits() {
+        return 4;
+    }
+
+    public GeneratedWork<GeneratedRepairStatus> beginProfile(final CirSim sim,
+            final GeneratedBoardInstance instance, final Profile profile) {
+        if (sim == null || instance == null || profile == null)
+            throw new IllegalArgumentException("Missing RC temporal profile context");
+        if (sim.getGeneratedBoardInstance() != instance || instance.getTemporalBehavior() != this)
+            throw new IllegalStateException("RC temporal profile has no current owner");
+        if (profile == Profile.REPAIR && (sim.activeMeasurementOverlay ||
+                sim.getBoardPowerController().getState() != BoardPowerState.POWERED ||
+                sim.getBoardModificationController() == null ||
+                !sim.getBoardModificationController().isFullyRestored()))
+            return GeneratedWork.value(GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL);
+        return new RcProfileWork(sim, instance, profile);
+    }
+
     public void prepareHealthyProfile(CirSim sim, GeneratedBoardInstance instance) {
-        samplePowerCycle(sim);
-        healthyResidualVoltage = residualVoltage;
-        healthyEarlyVoltage = earlyVoltage;
-        healthyLateVoltage = lateVoltage;
-        if (!isHealthyDelay())
-            throw new IllegalStateException("Healthy RC graph did not produce a visible delay");
-        healthyReferenceCaptured = true;
-        observedBehavior = GeneratedObservedBehavior.RC_DELAY_HEALTHY_DELAY;
+        GeneratedWork.complete(beginProfile(sim, instance, Profile.HEALTHY));
     }
 
     public void prepareFaultedProfile(CirSim sim, GeneratedBoardInstance instance) {
-        samplePowerCycle(sim);
-        observedBehavior = classifyAgainstHealthyProfile();
+        GeneratedWork.complete(beginProfile(sim, instance, Profile.FAULTED));
     }
 
     public void verifyFaultedProfile(CirSim sim, GeneratedBoardInstance instance,
@@ -149,13 +166,10 @@ final class RcDelayTemporalBehavior implements GeneratedTemporalBehavior,
             BoardModificationController modifications, BoardPowerState powerState,
             boolean activeMeasurementOverlay) {
         if (activeMeasurementOverlay || powerState != BoardPowerState.POWERED ||
+                modifications == null || modifications != sim.getBoardModificationController() ||
                 !modifications.isFullyRestored())
             return GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
-        samplePowerCycle(sim);
-        observedBehavior = classifyAgainstHealthyProfile();
-        return observedBehavior == GeneratedObservedBehavior.RC_DELAY_HEALTHY_DELAY ?
-            GeneratedRepairStatus.CORRECTLY_RESTORED :
-            GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
+        return GeneratedWork.complete(beginProfile(sim, instance, Profile.REPAIR));
     }
 
     public GeneratedObservedBehavior getObservedBehavior() { return observedBehavior; }
@@ -188,23 +202,75 @@ final class RcDelayTemporalBehavior implements GeneratedTemporalBehavior,
 
     /** Customer-facing retest: the board is really isolated, discharged, and repowered. */
     void performCustomerRetest(CirSim sim) {
-        samplePowerCycle(sim);
-        observedBehavior = classifyAgainstHealthyProfile();
+        GeneratedWork.complete(beginCustomerRetest(sim,
+            sim == null ? null : sim.getGeneratedBoardInstance()));
+    }
+
+    /**
+     * Customer retest uses the same four-phase cursor as repair validation.
+     * The wrapper deliberately defers the profile finish until its own finish
+     * so neither samples nor the player result become visible at the final
+     * step boundary.
+     */
+    GeneratedWork<GeneratedCustomerRetestResult> beginCustomerRetest(
+            final CirSim sim, final GeneratedBoardInstance instance) {
+        if (sim == null || instance == null || sim.activeMeasurementOverlay ||
+                sim.getBoardModificationController() == null ||
+                !sim.getBoardModificationController().isFullyRestored())
+            return GeneratedWork.value(GeneratedCustomerRetestSupport.failure());
+        if (sim.getBoardPowerController().getState() != BoardPowerState.POWERED)
+            return GeneratedWork.value(GeneratedCustomerRetestSupport.powerRequiredFailure());
+
+        final BoardModificationController modifications =
+            sim.getBoardModificationController();
+        final boolean physicalState = modifications.isFullyRestored();
+        final GeneratedWork<GeneratedRepairStatus> profile =
+            beginProfile(sim, instance, Profile.REPAIR);
+        return new GeneratedWork<GeneratedCustomerRetestResult>() {
+            private boolean complete;
+            private boolean cancelled;
+            private boolean readyToFinish;
+            private GeneratedCustomerRetestResult result;
+
+            boolean step() {
+                if (cancelled)
+                    throw new IllegalStateException("RC customer retest was cancelled");
+                if (complete || readyToFinish)
+                    return false;
+                boolean more = profile.step();
+                if (more)
+                    return true;
+                readyToFinish = true;
+                return false;
+            }
+
+            GeneratedCustomerRetestResult finish() {
+                if (complete)
+                    return result;
+                if (cancelled || !readyToFinish)
+                    throw new IllegalStateException("RC customer retest is incomplete");
+                GeneratedRepairStatus status = profile.finish();
+                requireRetestPhysicalState(sim, instance, modifications, physicalState);
+                result = status == GeneratedRepairStatus.CORRECTLY_RESTORED ?
+                    GeneratedCustomerRetestSupport.success() :
+                    GeneratedCustomerRetestSupport.failure();
+                complete = true;
+                return result;
+            }
+
+            void cancel() {
+                if (cancelled || complete)
+                    return;
+                profile.cancel();
+                cancelled = true;
+            }
+
+            int getWorkUnits() { return getProfileWorkUnits(); }
+        };
     }
 
     boolean passedCustomerRetest() {
         return observedBehavior == GeneratedObservedBehavior.RC_DELAY_HEALTHY_DELAY;
-    }
-
-    private void samplePowerCycle(CirSim sim) {
-        sim.setBoardPowerStateForGeneratedTemporalProfile(BoardPowerState.UNPOWERED);
-        advanceSolverTime(sim, NATURAL_DISCHARGE_SECONDS);
-        residualVoltage = Math.abs(voltage());
-        sim.setBoardPowerStateForGeneratedTemporalProfile(BoardPowerState.POWERED);
-        advanceSolverTime(sim, EARLY_SAMPLE_SECONDS);
-        earlyVoltage = voltage();
-        advanceSolverTime(sim, LATE_SAMPLE_SECONDS);
-        lateVoltage = voltage();
     }
 
     /**
@@ -213,32 +279,293 @@ final class RcDelayTemporalBehavior implements GeneratedTemporalBehavior,
      * which permits a real R1/R2 divider instead of pretending RC_OUT equals
      * VIN.
      */
-    private GeneratedObservedBehavior classifyAgainstHealthyProfile() {
-        if (!finite(residualVoltage) || !finite(earlyVoltage) || !finite(lateVoltage) ||
+    private GeneratedObservedBehavior classifyAgainstHealthyProfile(double residual,
+            double early, double late) {
+        if (!finite(residual) || !finite(early) || !finite(late) ||
                 !finite(healthyEarlyVoltage) || !finite(healthyLateVoltage))
             throw new IllegalStateException("RC temporal profile produced a non-finite sample");
         double healthyRise = healthyLateVoltage - healthyEarlyVoltage;
         if (healthyRise <= nominalSupply * CLASSIFICATION_RISE_MINIMUM_FRACTION)
             throw new IllegalStateException("Healthy RC reference has no measurable rise");
-        if (lateVoltage < healthyLateVoltage * CLASSIFICATION_LATE_MAXIMUM_FRACTION)
+        if (late < healthyLateVoltage * CLASSIFICATION_LATE_MAXIMUM_FRACTION)
             return GeneratedObservedBehavior.RC_DELAY_STUCK_LOW;
-        if (earlyVoltage > healthyEarlyVoltage + healthyRise *
+        if (early > healthyEarlyVoltage + healthyRise *
                 CLASSIFICATION_EARLY_DIFFERENCE_FRACTION)
             return GeneratedObservedBehavior.RC_DELAY_TOO_FAST;
-        if (Math.abs(earlyVoltage - healthyEarlyVoltage) <= healthyRise *
+        if (Math.abs(early - healthyEarlyVoltage) <= healthyRise *
                 CLASSIFICATION_HEALTHY_EARLY_DIFFERENCE_FRACTION &&
-                Math.abs(lateVoltage - healthyLateVoltage) <= healthyRise *
+                Math.abs(late - healthyLateVoltage) <= healthyRise *
                 CLASSIFICATION_HEALTHY_LATE_DIFFERENCE_FRACTION)
             return GeneratedObservedBehavior.RC_DELAY_HEALTHY_DELAY;
         return GeneratedObservedBehavior.RC_DELAY_STUCK_LOW;
     }
 
-    private boolean isHealthyDelay() {
-        return finite(residualVoltage) && finite(earlyVoltage) && finite(lateVoltage) &&
-            residualVoltage < ActiveMeasurementReadiness.RESIDUAL_VOLTAGE_THRESHOLD_VOLTS &&
-            lateVoltage > nominalSupply * HEALTHY_LATE_MINIMUM_FRACTION &&
-            earlyVoltage < lateVoltage * HEALTHY_EARLY_MAXIMUM_FRACTION &&
-            lateVoltage - earlyVoltage > nominalSupply * HEALTHY_RISE_MINIMUM_FRACTION;
+    private boolean isHealthyDelay(double residual, double early, double late) {
+        return finite(residual) && finite(early) && finite(late) &&
+            residual < ActiveMeasurementReadiness.RESIDUAL_VOLTAGE_THRESHOLD_VOLTS &&
+            late > nominalSupply * HEALTHY_LATE_MINIMUM_FRACTION &&
+            early < late * HEALTHY_EARLY_MAXIMUM_FRACTION &&
+            late - early > nominalSupply * HEALTHY_RISE_MINIMUM_FRACTION;
+    }
+
+    /**
+     * Four-phase owner cursor for one RC profile.  Each step contains one of
+     * the existing solver calls; the cursor retains no solver permit between
+     * steps and publishes its samples only from finish().
+     */
+    private final class RcProfileWork extends GeneratedWork<GeneratedRepairStatus> {
+        private static final int PHASE_COUNT = 4;
+
+        private final CirSim ownerSim;
+        private final GeneratedBoardInstance ownerInstance;
+        private final Object ownerGraph;
+        private final Vector<CircuitElm> ownerGraphElements;
+        private final PhysicalMutationReceipt ownerMutationReceipt;
+        private final GeneratedChallengeController ownerChallenge;
+        private final GeneratedBoardFamilyState ownerFamilyState;
+        private final GeneratedDiagnosticProvider ownerProvider;
+        private final GeneratedTemporalBehavior ownerTemporalBehavior;
+        private final GeneratedFaultBinding ownerFaultBinding;
+        private final GeneratedChallengeDefinition ownerDefinition;
+        private final TroubleshootBoard ownerBoard;
+        private final BoardSimulationBindings ownerSimulationBindings;
+        private final PhysicalBoardRuntime ownerRuntime;
+        private final BoardPowerController ownerPowerController;
+        private final GeneratedExternalPowerBindings ownerPowerBindings;
+        private final BoardModificationController ownerModifications;
+        private final BoardPowerState priorPowerState;
+        private final GeneratedExternalPowerBindings.SavedControls priorControls;
+        private final boolean priorPhysicalState;
+
+        private GeneratedExternalPowerBindings.ControlObservation expectedControls;
+        private GeneratedExternalPowerBindings.SavedControls expectedSavedControls;
+        private BoardPowerState expectedPowerState;
+        private int phase;
+        private boolean complete;
+        private boolean cancelled;
+        private double localResidualVoltage;
+        private double localEarlyVoltage;
+        private double localLateVoltage;
+        private GeneratedObservedBehavior localObservedBehavior;
+        private GeneratedRepairStatus result;
+
+        RcProfileWork(CirSim sim, GeneratedBoardInstance instance, Profile profile) {
+            if (sim == null || instance == null || profile == null)
+                throw new IllegalArgumentException("Missing RC temporal profile context");
+            if (CircuitElm.sim != sim || sim.getGeneratedBoardInstance() != instance ||
+                    sim.elmList == null || instance.getTemporalBehavior() !=
+                        RcDelayTemporalBehavior.this)
+                throw new IllegalStateException("RC temporal profile has no current owner");
+            requireOwnedBy(instance);
+
+            ownerSim = sim;
+            ownerInstance = instance;
+            ownerGraph = sim.elmList;
+            ownerGraphElements = new Vector<CircuitElm>(sim.elmList);
+            ownerChallenge = sim.getGeneratedChallengeController();
+            ownerFamilyState = instance.getFamilyState();
+            ownerProvider = instance.getDiagnosticProvider();
+            ownerTemporalBehavior = instance.getTemporalBehavior();
+            ownerFaultBinding = instance.getFaultBinding();
+            ownerDefinition = instance.getChallengeDefinition();
+            ownerBoard = instance.getBoard();
+            ownerSimulationBindings = instance.getSimulationBindings();
+            ownerRuntime = instance.getPhysicalBoardRuntime();
+            ownerMutationReceipt = ownerRuntime.getLastMutationReceipt();
+            ownerPowerController = sim.getBoardPowerController();
+            ownerPowerBindings = instance.getExternalPowerBindings();
+            ownerModifications = sim.getBoardModificationController();
+            if (ownerPowerBindings == null || ownerPowerController == null ||
+                    ownerPowerController.getBindingsForDeveloperVerification() !=
+                        ownerPowerBindings || ownerModifications == null || ownerRuntime == null)
+                throw new IllegalStateException("RC temporal profile has incomplete owner state");
+            priorPowerState = ownerPowerController.getState();
+            if (priorPowerState == null)
+                throw new IllegalStateException("RC temporal profile has no power state");
+            priorControls = ownerPowerBindings.saveControls();
+            expectedControls = ownerPowerBindings.observeControls();
+            expectedSavedControls = ownerPowerBindings.saveControls();
+            expectedPowerState = priorPowerState;
+            priorPhysicalState = ownerModifications.isFullyRestored();
+            requireCurrent("begin");
+            this.profile = profile;
+        }
+
+        private final Profile profile;
+
+        boolean step() {
+            if (cancelled)
+                throw new IllegalStateException("RC temporal profile was cancelled");
+            if (complete || phase >= PHASE_COUNT)
+                return false;
+            requireCurrent("phase " + phase + " before");
+            if (phase == 0) {
+                ownerSim.setBoardPowerStateForGeneratedTemporalProfile(
+                    BoardPowerState.UNPOWERED);
+                expectedPowerState = BoardPowerState.UNPOWERED;
+                rememberCurrentControls();
+                ownerSim.advanceGeneratedTemporalProfile(.750);
+            } else if (phase == 1) {
+                ownerSim.advanceGeneratedTemporalProfile(.250);
+                localResidualVoltage = Math.abs(voltage());
+            } else if (phase == 2) {
+                ownerSim.setBoardPowerStateForGeneratedTemporalProfile(
+                    BoardPowerState.POWERED);
+                expectedPowerState = BoardPowerState.POWERED;
+                rememberCurrentControls();
+                ownerSim.advanceGeneratedTemporalProfile(.100);
+                localEarlyVoltage = voltage();
+            } else {
+                ownerSim.advanceGeneratedTemporalProfile(.700);
+                localLateVoltage = voltage();
+                classifyLocalProfile();
+            }
+            phase++;
+            requireCurrent("phase " + (phase - 1) + " after");
+            return phase < PHASE_COUNT;
+        }
+
+        GeneratedRepairStatus finish() {
+            if (complete)
+                return result;
+            if (cancelled || phase < PHASE_COUNT || localObservedBehavior == null)
+                throw new IllegalStateException("RC temporal profile is incomplete");
+            requireCurrent("finish");
+            residualVoltage = localResidualVoltage;
+            earlyVoltage = localEarlyVoltage;
+            lateVoltage = localLateVoltage;
+            observedBehavior = localObservedBehavior;
+            if (profile == Profile.HEALTHY) {
+                healthyResidualVoltage = localResidualVoltage;
+                healthyEarlyVoltage = localEarlyVoltage;
+                healthyLateVoltage = localLateVoltage;
+                healthyReferenceCaptured = true;
+                result = GeneratedRepairStatus.CORRECTLY_RESTORED;
+            } else if (profile == Profile.FAULTED) {
+                result = GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
+            } else {
+                result = localObservedBehavior ==
+                    GeneratedObservedBehavior.RC_DELAY_HEALTHY_DELAY ?
+                    GeneratedRepairStatus.CORRECTLY_RESTORED :
+                    GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
+            }
+            complete = true;
+            return result;
+        }
+
+        void cancel() {
+            if (cancelled || complete)
+                return;
+            Throwable cleanupFailure = null;
+            if (canRestorePriorControls()) {
+                try {
+                    ownerPowerController.restoreForDeveloperVerification(
+                        ownerPowerBindings, priorPowerState, priorControls);
+                    if (isCurrentOwnerIdentity())
+                        ownerRuntime.onBoardPowerStateChanged(priorPowerState);
+                } catch (Throwable failure) {
+                    cleanupFailure = failure;
+                    // Retain the effects of this synchronous restoration attempt
+                    // so an exact retry can finish after a partial cleanup failure.
+                    if (isCurrentOwnerIdentity()) {
+                        expectedPowerState = ownerPowerController.getState();
+                        rememberCurrentControls();
+                    }
+                }
+            }
+            if (cleanupFailure instanceof Error)
+                throw (Error) cleanupFailure;
+            if (cleanupFailure instanceof RuntimeException)
+                throw (RuntimeException) cleanupFailure;
+            if (cleanupFailure != null)
+                throw new IllegalStateException("RC temporal profile cleanup failed",
+                    cleanupFailure);
+            cancelled = true;
+        }
+
+        int getWorkUnits() { return PHASE_COUNT; }
+
+        private void classifyLocalProfile() {
+            if (profile == Profile.HEALTHY) {
+                if (!isHealthyDelay(localResidualVoltage, localEarlyVoltage,
+                        localLateVoltage))
+                    throw new IllegalStateException(
+                        "Healthy RC graph did not produce a visible delay");
+                localObservedBehavior = GeneratedObservedBehavior.RC_DELAY_HEALTHY_DELAY;
+                return;
+            }
+            localObservedBehavior = classifyAgainstHealthyProfile(localResidualVoltage,
+                localEarlyVoltage, localLateVoltage);
+        }
+
+        private void rememberCurrentControls() {
+            expectedControls = ownerPowerBindings.observeControls();
+            expectedSavedControls = ownerPowerBindings.saveControls();
+        }
+
+        private void requireCurrent(String stage) {
+            if (!isCurrentOwnerIdentity() || ownerPowerController.getState() !=
+                    expectedPowerState || ownerModifications.isFullyRestored() !=
+                        priorPhysicalState || !controlsAreCurrent())
+                throw new IllegalStateException("RC temporal profile lost its owner at " + stage);
+            requireOwnedBy(ownerInstance);
+        }
+
+        private boolean controlsAreCurrent() {
+            try {
+                return expectedControls != null && expectedControls.isCurrent() &&
+                    expectedSavedControls != null && expectedSavedControls.matches();
+            } catch (Throwable ignored) {
+                return false;
+            }
+        }
+
+        private boolean canRestorePriorControls() {
+            try {
+                return isCurrentOwnerIdentity() &&
+                    ownerPowerController.getState() == expectedPowerState &&
+                    ownerModifications.isFullyRestored() == priorPhysicalState &&
+                    controlsAreCurrent();
+            } catch (Throwable ignored) {
+                return false;
+            }
+        }
+
+        private boolean isCurrentOwnerIdentity() {
+            return ownerSim.getGeneratedBoardInstance() == ownerInstance &&
+                ownerSim.elmList == ownerGraph && graphElementsUnchanged() && CircuitElm.sim == ownerSim &&
+                ownerSim.getGeneratedChallengeController() == ownerChallenge &&
+                ownerSim.getBoardModificationController() == ownerModifications &&
+                ownerSim.getBoardPowerController() == ownerPowerController &&
+                ownerPowerController.getBindingsForDeveloperVerification() ==
+                    ownerPowerBindings && ownerInstance.getBoard() == ownerBoard &&
+                ownerInstance.getSimulationBindings() == ownerSimulationBindings &&
+                ownerInstance.getExternalPowerBindings() == ownerPowerBindings &&
+                ownerInstance.getPhysicalBoardRuntime() == ownerRuntime &&
+                ownerRuntime.getLastMutationReceipt() == ownerMutationReceipt &&
+                ownerInstance.getFamilyState() == ownerFamilyState &&
+                ownerInstance.getDiagnosticProvider() == ownerProvider &&
+                ownerInstance.getTemporalBehavior() == ownerTemporalBehavior &&
+                ownerInstance.getFaultBinding() == ownerFaultBinding &&
+                ownerInstance.getChallengeDefinition() == ownerDefinition;
+        }
+
+        private boolean graphElementsUnchanged() {
+            if (ownerSim.elmList.size() != ownerGraphElements.size()) return false;
+            for (int i = 0; i < ownerGraphElements.size(); i++)
+                if (ownerSim.elmList.get(i) != ownerGraphElements.get(i)) return false;
+            return true;
+        }
+    }
+
+    private static void requireRetestPhysicalState(CirSim sim,
+            GeneratedBoardInstance instance, BoardModificationController modifications,
+            boolean expectedState) {
+        if (sim == null || instance == null || modifications == null ||
+                sim.getGeneratedBoardInstance() != instance ||
+                sim.getBoardModificationController() != modifications ||
+                modifications.isFullyRestored() != expectedState)
+            throw new IllegalStateException("Customer retest changed physical board state");
     }
 
     private static void advanceSolverTime(CirSim sim, double seconds) {

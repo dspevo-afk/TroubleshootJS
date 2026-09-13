@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "pid": 18932,
+  "startTicks": 639248887369035797,
+  "runId": "U04-U05-RELA-rc-timing",
+  "port": 64206,
+  "ownershipVerified": true,
+  "exitProven": true,
+  "cleanupMs": 21
+}

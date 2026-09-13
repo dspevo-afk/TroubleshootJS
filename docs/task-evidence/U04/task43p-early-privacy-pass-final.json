@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "route": "?replay=tsj-alpha/1/EASY/LED_INDICATOR/3&tsjDebug=false&tsjVerifyTask43P=true&tsjTask43PForcedFailure=true&tsjTask43PSourceExperiment=privacy-canary",
+  "observation": {
+    "ariaTitleLeaks": [],
+    "privateAttributes": [],
+    "visibleTicket": [
+      "Customer ticket\nCustomer complaint\n\nIndicator does not light.\n\nFunctional retest\n\nObserve the indicator after repair.\n\nExamine the board and use the instruments to identify a repair. Switch off every supply and wait for stored energy to discharge before changing parts.\n\nAccept ticket and startMain menuResources\nReplay and bug-report identity"
+    ]
+  },
+  "priorFailure": "task43p-early-privacy-failure-b508.json"
+}

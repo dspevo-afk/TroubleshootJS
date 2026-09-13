@@ -127,7 +127,8 @@ final class FreshGeneratedRuntimeInstallation {
             sim.getGeneratedChallengeController().deferGenerationPresentation();
             enterStep();
             if (candidate.getTemporalBehavior() != null) {
-                GeneratedRuntimeDeveloperSettlement.settleHealthy(sim, candidate, "generation-healthy-profile");
+                GeneratedRuntimeDeveloperSettlement.stepTemporalPreparation(sim, candidate, true,
+                    "generation-healthy-profile");
                 return;
             }
             finishPreparation();
@@ -136,6 +137,9 @@ final class FreshGeneratedRuntimeInstallation {
         void finishPreparation() {
             if (preparationComplete) throw new IllegalStateException("Generation preparation is already complete");
             enterStep();
+            if (candidate.getTemporalBehavior() != null &&
+                    !GeneratedRuntimeDeveloperSettlement.stepTemporalPreparation(sim, candidate, false,
+                        "generation-temporal-preparation")) return;
             GeneratedRuntimeDeveloperSettlement.settle(sim, candidate, "generation-healthy-and-faulted");
             sim.getGeneratedChallengeController().prepareGenerationInputState();
             if (!sim.isGeneratedRuntimeSettled())
@@ -202,12 +206,12 @@ final class FreshGeneratedRuntimeInstallation {
             if (active != sim || (!ownsCandidate() && !originalPreparation && !originalRestoration))
                 throw new IllegalStateException("Refusing to restore generation over a successor owner");
             Throwable failure = null;
-            try { candidate.getExternalPowerBindings().setConnected(false); }
-            catch (Throwable cleanup) { failure = retain(failure, cleanup); }
             try { sim.invalidateGeneratedOwnerWork(); }
             catch (Throwable cleanup) { failure = retain(failure, cleanup); }
             try { sim.setSimRunning(false); }
             catch (Throwable cleanup) { failure = retain(failure, cleanup); }
+            // A failed owned-work cancellation must retain its graph for an exact retry.
+            rethrowCleanup(failure);
             try { disposeCandidate(); }
             catch (Throwable cleanup) { failure = retain(failure, cleanup); }
             // Retain the exact graph until all owned resources are disposed.
@@ -220,7 +224,8 @@ final class FreshGeneratedRuntimeInstallation {
                 snapshot.restore(sim); snapshot.assertRestored(sim);
             } catch (Throwable restoration) {
                 failure = retain(failure, restoration);
-                sim.markGeneratedRuntimeFailure(sim.getGeneratedBoardInstance(), failure);
+                try { sim.markGeneratedRuntimeFailure(sim.getGeneratedBoardInstance(), failure); }
+                catch (Throwable markFailure) { failure = retain(failure, markFailure); }
             }
             rethrowCleanup(failure);
             finished = true; active = null;
@@ -231,6 +236,12 @@ final class FreshGeneratedRuntimeInstallation {
             if (failure != null) throw new IllegalStateException("Generation cleanup failed", failure);
         }
         private void disposeCandidate() {
+            // Cancelling a temporal cursor may restore its captured power controls.
+            // Final isolation belongs here, after cancellation and before any delete,
+            // including candidates aborted before preparation began.
+            candidate.getExternalPowerBindings().setConnected(false);
+            if (!candidate.getExternalPowerBindings().areAllDisconnected())
+                throw new IllegalStateException("Candidate disposal retained external power");
             Throwable failure = null;
             for (CircuitElm element : candidate.getSimulationElements()) {
                 if (disposedElements.contains(element)) continue;
@@ -341,8 +352,8 @@ final class FreshGeneratedRuntimeInstallation {
                 // Candidate objects are disjoint, so disposal never deletes
                 // the player's original graph or clears its inventory/faults.
                 try {
-                    candidate.getExternalPowerBindings().setConnected(false);
                     sim.invalidateGeneratedOwnerWork();
+                    candidate.getExternalPowerBindings().setConnected(false);
                     sim.setSimRunning(false);
                     for (CircuitElm element : candidate.getSimulationElements()) element.delete();
                 } catch (Throwable cleanup) {

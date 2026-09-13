@@ -1,0 +1,41 @@
+{
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "status": "PASS",
+  "closedOwnedTabs": [
+    "3",
+    "6"
+  ],
+  "retainedTabs": [
+    {
+      "id": "1",
+      "title": "This site can't be reached",
+      "url": "retained error page"
+    },
+    {
+      "id": "2",
+      "title": "127.0.0.1:64206/circuitjs.html?replay=tsj-alpha/1/EASY/LED_INDICATOR/3",
+      "url": "http://127.0.0.1:64206/circuitjs.html?replay=tsj-alpha/1/EASY/LED_INDICATOR/3"
+    },
+    {
+      "id": "4",
+      "title": "This page crashed",
+      "url": "retained error page"
+    },
+    {
+      "id": "5",
+      "title": "This page crashed",
+      "url": "retained error page"
+    }
+  ],
+  "preview": {
+    "pid": 20120,
+    "startTicks": "639249013380886830",
+    "port": 64206,
+    "runId": "U04-U05-RELA-entry-privacy",
+    "identityReceipt": "final-input-audit.json"
+  },
+  "humanTrialTab": "2; not navigated or interacted with by this final qualification pass",
+  "otherResources": "Task-owned raw evidence and jsdom scratch retained for continuation; no build/native/verifier job or worker writer remains.",
+  "preserved": "Pre-existing tests/contracts/__pycache__ remains untracked and untouched.",
+  "scope": "Closure of completed owned tabs3/6 verified; preview intentionally retained for human trials."
+}

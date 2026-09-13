@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "protocol": "troubleshootjs-preview-identity-v1",
+  "executionDigest": "4d529e91ea6f2af66183f82a62dbd1d815c340632ad3aebef33f71c4e16c5631",
+  "sourceDigest": "782bb41aef94720677aa2f71634ec46943ed99fcc33aaf20a68c0aa914833b52",
+  "scriptDigest": "216db0113d6da93653d50f1b61fb405b37f686f8af455123e2f71954817f84a5",
+  "webDigest": "e6c47ebd6ca73f2d6fa3d22a1460a628e0aaeb74dfcdd0be48fbae04f66200d0",
+  "executionFileCount": 1434,
+  "pid": 884,
+  "startTicks": 639248915237887624,
+  "port": 64206,
+  "runId": "U04-U05-RELA-rc-phase-1",
+  "sourceManifest": "rc-phase-inputs.json"
+}

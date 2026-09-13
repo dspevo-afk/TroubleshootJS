@@ -1,0 +1,22 @@
+{
+  "replay": "tsj-alpha/1/EASY/RB15_CONTROL/0",
+  "execution": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+  "input": "Actual visible terminal selector and probe-placement buttons",
+  "power": "Both supplies OFF",
+  "before": {
+    "forward": "OL",
+    "reverse": "0 Ohm"
+  },
+  "after": {
+    "continuityForward": "0 Ohm",
+    "continuityReverse": "0 Ohm",
+    "ohmForward": "0 Ohm",
+    "ohmReverse": "0 Ohm"
+  },
+  "screenshots": [
+    "continuity-before-ol.png",
+    "continuity-before-reversed-fit.png",
+    "continuity-fixed-forward.png",
+    "continuity-fixed-reversed.png"
+  ]
+}

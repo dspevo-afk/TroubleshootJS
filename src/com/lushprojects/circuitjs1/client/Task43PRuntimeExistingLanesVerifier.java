@@ -61,6 +61,16 @@ final class Task43PRuntimeExistingLanesVerifier {
     private static CaseObservation runCase(CirSim sim, Task41SimulationSnapshot snapshot,
             String lane, String familyId, long seed, GeneratedBoardInstance originalOwner,
             GeneratedChallengeController originalChallenge) {
+        try {
+            return runCandidateCase(sim, snapshot, lane, familyId, seed, originalOwner, originalChallenge);
+        } catch (Throwable failure) {
+            throw new IllegalStateException("task43p-runtime-existing-lane-" + lane + ": " + failure.getMessage(), failure);
+        }
+    }
+
+    private static CaseObservation runCandidateCase(CirSim sim, Task41SimulationSnapshot snapshot,
+            String lane, String familyId, long seed, GeneratedBoardInstance originalOwner,
+            GeneratedChallengeController originalChallenge) {
         GeneratedBoardInstance candidate = null;
         GeneratedChallengeController challenge = null;
         PhysicalPart<?> originalPart = null;

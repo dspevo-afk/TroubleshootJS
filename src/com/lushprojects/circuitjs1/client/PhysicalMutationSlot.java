@@ -19,6 +19,9 @@ interface PhysicalMutationSlot {
     AttachmentState captureAttachmentState();
     void restoreAttachmentState(AttachmentState state);
 
+    /** Restores the generated attachment geometry retained by an empty slot. */
+    void restoreEmptySlotAttachmentState(PhysicalMutationScope scope);
+
     void installForMutation(PhysicalPart<?> part, PhysicalMutationScope scope);
     PhysicalPart<?> clearForMutation(PhysicalMutationScope scope);
 

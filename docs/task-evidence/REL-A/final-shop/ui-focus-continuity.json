@@ -1,0 +1,78 @@
+{
+  "status": "PASS",
+  "execution": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+  "kind": "Actual visible player inputs while Q15 uses a separate tab; no concurrent generation",
+  "settings": {
+    "settingsBack": {
+      "tag": "INPUT",
+      "type": "checkbox"
+    },
+    "settingsForward": "Close",
+    "settingsReturn": {
+      "classes": "tsj-workbench-ui tsj-high-contrast",
+      "focus": "Settings",
+      "reading": "0 Ohm"
+    },
+    "persistedAfterReopen": true,
+    "restoredOriginalPreference": true
+  },
+  "resources": {
+    "resourcesBack": {
+      "tag": "SUMMARY",
+      "text": "Replay and bug-report identity"
+    },
+    "resourcesForward": {
+      "backgroundInert": true,
+      "focus": "Close"
+    },
+    "resourcesReturn": {
+      "classes": "tsj-workbench-ui",
+      "focus": "Resources",
+      "reading": "0 Ohm"
+    }
+  },
+  "menu": {
+    "menuCollapsedBack": {
+      "tag": "SUMMARY",
+      "text": "Replay and bug-report identity"
+    },
+    "menuCollapsedForward": {
+      "tag": "SELECT",
+      "value": "EASY"
+    },
+    "menuExpandedBack": {
+      "tag": "TEXTAREA",
+      "value": "tsj-alpha/1 / 86FD1F070A796251AB4E73435DBBBD51"
+    },
+    "menuExpandedForward": {
+      "tag": "SELECT",
+      "value": "EASY"
+    },
+    "mediumFamilies": [
+      [
+        {
+          "text": "Two-channel controller",
+          "value": "COMPOSED_CONTROLLED_INDICATOR"
+        }
+      ]
+    ],
+    "hardNotice": [
+      "This difficulty profile is unavailable",
+      "",
+      "This difficulty profile is unavailable"
+    ],
+    "epochNotice": [
+      "Unsupported replay identity or epoch",
+      "",
+      "Unsupported replay identity or epoch"
+    ]
+  },
+  "final": {
+    "bodyClass": "tsj-workbench-ui",
+    "dialogs": 1,
+    "privateReports": [],
+    "reading": "0 Ohm",
+    "backgroundInert": false,
+    "visibleDialogs": 0
+  }
+}

@@ -1,0 +1,3 @@
+PASS: Q15 eleven cases/four designs/three faults; forced cleanup; 16 reader negatives
+Command: python tests/contracts/q15_evidence_contract.py docs/task-evidence/REL-A/final-entry-privacy/q15
+Process exit0.

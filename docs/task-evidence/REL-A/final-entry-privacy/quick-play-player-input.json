@@ -1,0 +1,31 @@
+{
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "route": "?tsjQuickPlay=true",
+  "debug": false,
+  "kind": "Two ordinary unforced entries using visible input",
+  "draws": [
+    {
+      "identity": [
+        "tsj-alpha/1/EASY/LED_INDICATOR/0",
+        "tsj-alpha/1 / 6A7778C50F3797A9E5C587F0FD7198E1"
+      ],
+      "privateAttributes": [],
+      "qualifiedEnvelope": true,
+      "ticketAndWorkbench": true
+    },
+    {
+      "identity": [
+        "tsj-alpha/1/EASY/RC_DELAY/0",
+        "tsj-alpha/1 / 6A7778C50F3797A9E5C587F0FD7198E1"
+      ],
+      "privateAttributes": [],
+      "qualifiedEnvelope": true,
+      "ticketAndWorkbench": true
+    }
+  ],
+  "status": "PASS",
+  "limits": [
+    "These two unforced draws were LED0 and RC0. They are not RB15 coverage or a random-population success estimate.",
+    "Compiled 16-entropy/eight-family selection and two explicit normal U04 RB15 draws provide the separately recorded RB15 coverage."
+  ]
+}

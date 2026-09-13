@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "scope": "Focused native Shop projection over frozen5ea production classes; not final integrated qualification",
+  "assertions": 76,
+  "checks": [
+    "composed MEDIUM0/3 four real resistor providers group into one73-entry catalog",
+    "real NPN0 retains146 recipe/geometry options, medium and wide lead spacing",
+    "public request/session owner contracts"
+  ],
+  "commands": [
+    "JDK8 javac with frozen original-preview sources and current PlayerShopCatalog/U04SessionContractTest overlay",
+    "JDK8 java -ea com.lushprojects.circuitjs1.client.U04SessionContractTest",
+    "node --check war/tsj-workbench-ui.js",
+    "node tests/contracts/u04_ui_contract.mjs <owned-jsdom-entry>"
+  ],
+  "uiAssertions": 49,
+  "inputs": {
+    "src/com/lushprojects/circuitjs1/client/PlayerShopCatalog.java": "37bb12b92b752e903593598264ca8f1bb8eb7c58e870a9a3faec38d0b3606772",
+    "tests/contracts/U04SessionContractTest.java": "7153b9bbca0645113f40906a20e7c008c9731bf3a379711e465e856f6c4c916e"
+  },
+  "limits": [
+    "No cross-target installation or final GWT proof yet",
+    "Full native and combined final runtime gates remain NOT RUN for this correction"
+  ],
+  "productionDeltaCompile": {
+    "status": "FAIL",
+    "stage": "focused JDK8 compile of16 changed production/verifier classes against preserved baseline",
+    "exitCode": 1,
+    "failure": "GeneratedRuntimeInvariant.java:468 compares incomparable PhysicalMutationSlot and PhysicalBoardSlot",
+    "resolution": "Compared the scoped mutation slot through getPhysicalSlot(); fresh focused JDK8 compilation of15 production/controller classes PASS exit0. Alpha/cross-target fixtures still in progress; this is not final qualification.",
+    "correctedStatus": "PASS",
+    "correctedExitCode": 0
+  },
+  "fixtureReview": {
+    "status": "IN PROGRESS",
+    "findings": [
+      "stress fixture originally chose first loose330Ohm and could skip service advancement at a non-overloaded sample",
+      "foreign-board fixture originally created only an unregistered canary",
+      "public power transition needed prior settlement after changing input/overload analysis"
+    ],
+    "corrections": [
+      "explicit10Ohm stock from RB/RG into RLOAD; real HIGH commands and positive solver overload; numeric power/service/damage proof on same identity",
+      "loose candidate registered in a separate constructed LED3 runtime; template geometry bound",
+      "settle before/after power transitions and assert actual power/isolation; preserve public channel inputs",
+      "Original-source-slot rejection retained as22nd row for each composed0/3 cross-target group."
+    ],
+    "pending": "Actual GWT/compiled runtime canaries and visible storefront purchase/compatible repair; maintained final Java native suite now PASS."
+  },
+  "finalNative": {
+    "status": "PASS",
+    "java": "JDK8 1.8.0_502",
+    "suites": 33,
+    "exitCode": 0,
+    "cleanup": "PASS",
+    "artifact": "../REL-A/final-shop/native-contracts.txt",
+    "limit": "Storefront restoration still in progress; final runtime qualification pending."
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "phase": "After Alpha38 and during final Quick Play",
+  "executionDigest": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+  "executionFileCount": 1437,
+  "sourceDigest": "3856517817952b22e0c1985843aa4252dae5efa03c77c61d8644e9135b29f652",
+  "scriptDigest": "925b4e26cdb04dba53f98e6f082272a4cea6c372abd20edceb74192d8496b9c2",
+  "webDigest": "97543fa2cab73e773e84e5eb4000fbfd82ad2f1d8aebb35d7b6e099ac78f6b8d",
+  "previewPid": 17324,
+  "previewStartTicks": 639249258397003903,
+  "exactExecutableAndLaunchCommand": true,
+  "initialAuditAttempt": "FAIL: root used absent ExecutionDigest property instead of maintained Digest. Source inspection and actual named fields establish no input drift; no production change or corpus rerun.",
+  "qualification": "Current digests and owned preview match accepted build. Incomplete runtime gates retain pending status."
+}

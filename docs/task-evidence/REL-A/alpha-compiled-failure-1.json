@@ -1,0 +1,128 @@
+{
+  "protocol": "TSJ-ALPHA-1",
+  "status": "FAIL",
+  "pilot": false,
+  "cases": [
+    {
+      "family": "LED_INDICATOR",
+      "seed": "0",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=3;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=13-13;modes=3;inputs=2;railTargets=3;temporal=0;parallel=false",
+      "admissionMs": 1116,
+      "maxUnitMs": 227,
+      "workUnits": 59,
+      "repairPassed": true
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "2",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=3;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=13-13;modes=3;inputs=2;railTargets=3;temporal=0;parallel=false",
+      "admissionMs": 1269,
+      "maxUnitMs": 249,
+      "workUnits": 59,
+      "repairPassed": true
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "3",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=3;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=13-13;modes=3;inputs=2;railTargets=3;temporal=0;parallel=false",
+      "admissionMs": 1127,
+      "maxUnitMs": 192,
+      "workUnits": 59,
+      "repairPassed": true
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "4",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=3;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=13-13;modes=3;inputs=2;railTargets=3;temporal=0;parallel=false",
+      "admissionMs": 1321,
+      "maxUnitMs": 267,
+      "workUnits": 59,
+      "repairPassed": true
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "seed": "0",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=4;hypotheses=1;repairs=1;owners=1;readings=0;singleRemaining=1;executedEvidenceDepth=6-6;legalWitnessActions=14-14;modes=4;inputs=2;railTargets=4;temporal=0;parallel=false",
+      "admissionMs": 1325,
+      "maxUnitMs": 588,
+      "workUnits": 24,
+      "repairPassed": true
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "seed": "2",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=4;hypotheses=1;repairs=1;owners=1;readings=0;singleRemaining=1;executedEvidenceDepth=6-6;legalWitnessActions=14-14;modes=4;inputs=2;railTargets=4;temporal=0;parallel=false",
+      "admissionMs": 1896,
+      "maxUnitMs": 880,
+      "workUnits": 24,
+      "repairPassed": true
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "seed": "3",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=4;hypotheses=1;repairs=1;owners=1;readings=0;singleRemaining=1;executedEvidenceDepth=6-6;legalWitnessActions=14-14;modes=4;inputs=2;railTargets=4;temporal=0;parallel=false",
+      "admissionMs": 1339,
+      "maxUnitMs": 601,
+      "workUnits": 24,
+      "repairPassed": true
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "seed": "0",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=5;hypotheses=2;repairs=1;owners=1;readings=0;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=15-15;modes=3;inputs=2;railTargets=4;temporal=0;parallel=true",
+      "admissionMs": 3007,
+      "maxUnitMs": 910,
+      "workUnits": 45,
+      "repairPassed": true
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "seed": "2",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=5;hypotheses=2;repairs=1;owners=1;readings=0;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=15-15;modes=3;inputs=2;railTargets=4;temporal=0;parallel=true",
+      "admissionMs": 2840,
+      "maxUnitMs": 865,
+      "workUnits": 45,
+      "repairPassed": true
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "seed": "3",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=5;hypotheses=2;repairs=1;owners=1;readings=0;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=15-15;modes=3;inputs=2;railTargets=4;temporal=0;parallel=true",
+      "admissionMs": 3023,
+      "maxUnitMs": 916,
+      "workUnits": 45,
+      "repairPassed": true
+    }
+  ],
+  "assertions": 256,
+  "acquisitions": 25,
+  "staleCallbacks": 23,
+  "negativeChecks": 15,
+  "cancellationMs": 0,
+  "elapsedMs": 73932,
+  "cleanupMs": 2,
+  "ownerRestored": true,
+  "operation": "admission",
+  "activeCase": 10,
+  "failure": "java.lang.AssertionError: Alpha: admission RC_DELAY/0 TIMEOUT/HYPOTHESES/com.lushprojects.circuitjs1.client.GenerationJob$Deadline: Generation work-unit budget exhausted"
+}

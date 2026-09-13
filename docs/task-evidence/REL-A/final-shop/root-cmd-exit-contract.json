@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "childExit": 37,
+  "actualCmdExit": 37,
+  "cmdSha256": "43ccb6899eb59ff779abd222ddb36d59dc038a2afd40b43a32ba1563bd724f59",
+  "entry": "Byte-identical root CMD with controlled failing PowerShell child",
+  "realFullStartup": "root-cmd-direct-result.json"
+}

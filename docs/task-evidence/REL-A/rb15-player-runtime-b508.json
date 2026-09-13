@@ -1,0 +1,107 @@
+{
+  "executionDigest": "b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d",
+  "identity": [
+    "tsj-alpha/1/EASY/RB15_CONTROL/0",
+    "tsj-alpha/1 / F57701814F3E8FC362B9C11C46DA6A69"
+  ],
+  "kind": "Agent-operated visible inputs",
+  "checks": [
+    {
+      "check": "unrepaired customer retest rejects",
+      "status": "PASS",
+      "observed": "Main menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting."
+    },
+    {
+      "check": "OHM with command supply still connected",
+      "status": "PASS",
+      "observed": "\n\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nMULTIMETER\n\n\nDC V\tOHM\nCONT\tDIODE\n\n\nPOWER OFF\n\n\n\n\n\n\nBoard Power: ON\n\n\n\n\n\n\n\n\n\n\n\n\nBENCH POWER\n\n\nSupply 1 (+12V): disconnected\n\nConnect Supply 1 (+12V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nSupply 2 (+5V): 5 V, 49.51 μA\n\nDisconnect Supply 2 (+5V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nEach output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.\n\n\nBOARD VIEW\n\n\nFi"
+    },
+    {
+      "check": "both supplies OFF permits actual in-circuit resistance",
+      "status": "PASS",
+      "reading": "199.96 kOhm",
+      "targets": "RDRIVE terminal 1 red; RDRIVE terminal 2 black",
+      "interpretation": "In-circuit parallel-path reading; not an isolated OL measurement."
+    },
+    {
+      "check": "real1k resistor acquisition while original remains mounted",
+      "status": "PASS",
+      "installed": true,
+      "text": "Shop\nClose\n\nAdded to the real Parts Tray. Select the loose part on the workbench to install it.\n\nAcquire a real loose part into the Parts Tray. The installed part stays in place. To repair: close Shop, remove the installed part if needed, select the loose part in the Parts Tray and install it separately.\n\nAll supplies are isolated. Acquisition is available.\n\nSwitched output · RDRIVE — Resistor Replacement Catalog\n\nLoose parts in this catalog: 1\n\nReplacement specification\n10 Ohm +/-5%\n12 Ohm +/-5%\n15 Ohm +/-5%\n18 Ohm +/-5%\n22 Ohm +/-5%\n27 Ohm +/-5%\n33 Ohm +/-5%\n39 Ohm +/-5%\n47 Ohm +/-5%\n56 Ohm +/-5%\n68 Ohm +/-5%\n82 Ohm +/-5%\n100 Ohm +/-5%\n120 Ohm +/-5%\n150 Ohm +/-5%\n180 Ohm +/-5%\n220 Ohm +/-5%\n270 Ohm +/-5%\n330 Ohm +/-5%\n390 Ohm +/-5%\n470 Ohm +/-5%\n560 Ohm +/-5%\n680 Ohm +/-5%\n820 Ohm +/-5%\n1000 Ohm +/-5%\n1200 Ohm +/-5%\n1500 Ohm +/-5%\n1800 Ohm +/-5%\n2200 Ohm +/-5%\n2700 Ohm +/-5%\n3300 Ohm +/-5%\n3900 Ohm +/-5%\n4700 Ohm +/-5%\n5600 Ohm +/-5%\n6800 Ohm +/-5%\n8200 Ohm +/-5%\n10000 Ohm +/-5%\n12000 Ohm +/-5%\n15000 Ohm +/-5%\n18000 Ohm +/-5%\n22000 Ohm +/-5%\n27000 Ohm +/-5%\n33000 Ohm +/-5%\n39000 Ohm +/-5%\n47000 Ohm +/-5%\n56000 Ohm +/-5%\n68000 Ohm +/-5%\n82000 Ohm +/-5%\n100000 Ohm +/-5%\n120000 Ohm +/-5%\n150000 Ohm +/-5%\n180000 Ohm +/-5%\n220000 Ohm +/-5%\n270000 Ohm +/-5%\n330000 Ohm +/-5%\n390000 Ohm +/-5%\n470000 Ohm +/-5%\n560000 Ohm +/-5%\n680000 Ohm +/-5%\n820000 Ohm +/-5%\n1000000 Ohm +/-5%\n1200000 Ohm +/-5%\n1500000 Ohm +/-5%\n1800000 Ohm +/-5%\n2200000 Ohm +/-5%\n2700000 Ohm +/-5%\n3300000 Ohm +/-5%\n3900000 Ohm +/-5%\n4700000 Ohm +/-5%\n5600000 Ohm +/-5%\n6800000 Ohm +/-5%\n8200000 Ohm +/-5%\n10000000 Ohm +/-5%\nAcquire to tray\nSwitched output · K1 — Relay Replacement Catalog\n\nLoose parts in this catalog: 0\n\nReplacement specification\n5 V coil / SPDT / 24 V DC, 0.5 A contacts\n12 V coil / SPDT / 24 V DC, 0.5 A contacts\nAcquire to tray"
+    },
+    {
+      "check": "bottom copper and unchanged probe endpoints",
+      "status": "PASS",
+      "observation": "Visible copper route view; RDRIVE red/black endpoint markers retained. In-circuit reading199.96kOhm was unchanged during the earlier face switch."
+    },
+    {
+      "check": "separate original removal and tray installation",
+      "status": "PASS",
+      "removed": "Part 4",
+      "installed": "Part 17 /1000 Ohm +/-5%",
+      "input": "Remove component, select loose Part17, Install as RDRIVE"
+    },
+    {
+      "check": "replacement changes actual in-circuit reading at retained terminals",
+      "status": "PASS",
+      "before": "199.96 kOhm",
+      "after": "995.025 Ohm",
+      "expected": "1kOhm replacement in parallel with approximately200kOhm surrounding path; both sources OFF"
+    },
+    {
+      "check": "visible HIGH command after repair",
+      "status": "PASS",
+      "supplyReadings": [
+        "Supply 1 (+12V): 11.996 V, 84.956 mA",
+        "Supply 1 (+12V)",
+        "Supply 2 (+5V): 5 V, 97.563 μA",
+        "Supply 2 (+5V)"
+      ]
+    },
+    {
+      "check": "visible LOW command after repair",
+      "status": "PASS",
+      "supplyReadings": [
+        "Supply 1 (+12V): 12 V, 8.043 mA",
+        "Supply 1 (+12V)",
+        "Supply 2 (+5V): 5 V, 0 A",
+        "Supply 2 (+5V)"
+      ]
+    },
+    {
+      "check": "repaired customer retest Results and normal privacy",
+      "status": "PASS",
+      "dialog": [
+        "Customer retest passed\n\nCustomer retest passed. The reported behavior is resolved.\n\nThe live board passed the customer’s functional checks.\n\nCustomer retest passed. The reported behavior is resolved.\n\nNew board / Main menuReplay this challengeReturn to board\nReplay and bug-report identity"
+      ],
+      "privateAttributes": [],
+      "privateLabels": []
+    },
+    {
+      "check": "return from Results retains completed session guards",
+      "status": "PASS",
+      "nav": [
+        {
+          "disabled": false,
+          "text": "Main menu"
+        },
+        {
+          "disabled": true,
+          "text": "Shop"
+        },
+        {
+          "disabled": false,
+          "text": "Resources"
+        },
+        {
+          "disabled": false,
+          "text": "Settings"
+        },
+        {
+          "disabled": true,
+          "text": "Run customer retest"
+        }
+      ]
+    }
+  ]
+}

@@ -2,6 +2,9 @@ package com.lushprojects.circuitjs1.client;
 
 /** Exclusive solver work and accepted-state identity; no electrical model. */
 final class SolverExecutionBoundary {
+    // Millisecond wall clocks are exact integers in this range in both Java
+    // and JavaScript. Seed, generation and observation identities remain long.
+    static final double MAX_WALL_MILLIS = 9007199254740991d;
     enum Outcome { RUNNING, COMPLETE, CANCELLED, STALE_OWNER, BUSY,
         NUMERICAL_FAILURE, NONCONVERGENCE, WORK_EXHAUSTED, DEADLINE, CLEANUP_FAILURE }
     static final class Failure extends IllegalStateException {
@@ -21,16 +24,17 @@ final class SolverExecutionBoundary {
     }
     static final class Operation {
         final Object owner, graph;
-        final long generation, revision, id, startedAt, deadline;
+        final long generation, revision, id;
+        final double startedAt, deadline;
         final int acceptedLimit, trialLimit;
         int acceptedSteps, nonlinearTrials;
         boolean trialInProgress;
-        long lastWallTime;
+        double lastWallTime;
         double lastAcceptedTime;
         Outcome outcome = Outcome.RUNNING;
         private Observation candidate;
         private Operation(Object owner, Object graph, long generation, long revision,
-                long id, int acceptedLimit, int trialLimit, long now, long wallLimit,
+                long id, int acceptedLimit, int trialLimit, double now, double wallLimit,
                 double initialTime) {
             this.owner = owner; this.graph = graph; this.generation = generation;
             this.revision = revision; this.id = id; this.acceptedLimit = acceptedLimit;
@@ -65,10 +69,11 @@ final class SolverExecutionBoundary {
     boolean isBusy() { return active != null; }
     long getGeneration() { return generation; }
     long getRevision() { return revision; }
-    Operation begin(int acceptedLimit, int trialLimit, long now, long wallLimit, double initialTime) {
+    Operation begin(int acceptedLimit, int trialLimit, double now, double wallLimit, double initialTime) {
         requireIdle();
         if (owner == null || graph == null || acceptedLimit < 1 || trialLimit < 1 ||
-                now < 0 || wallLimit < 1 || now > Long.MAX_VALUE - wallLimit || !finite(initialTime))
+                !wallMillis(now) || !wallMillis(wallLimit) || wallLimit < 1 ||
+                now > MAX_WALL_MILLIS - wallLimit || !finite(initialTime))
             throw new IllegalArgumentException("Invalid bounded solver request");
         operationSerial = increment(operationSerial);
         active = new Operation(owner, graph, generation, revision, operationSerial,
@@ -76,21 +81,21 @@ final class SolverExecutionBoundary {
         active.candidate = latest; // A no-work tick retains, but never refreshes, a sample.
         return active;
     }
-    void check(Operation operation, long now) {
+    void check(Operation operation, double now) {
         if (operation == null || operation != active || operation.owner != owner ||
                 operation.graph != graph || operation.generation != generation ||
                 operation.revision != revision)
             throw new Failure(Outcome.STALE_OWNER, "Retired or foreign solver operation");
         if (operation.outcome != Outcome.RUNNING)
             throw new Failure(operation.outcome, "Solver operation is " + operation.outcome);
-        if (now < operation.lastWallTime || now >= operation.deadline) {
+        if (!wallMillis(now) || now < operation.lastWallTime || now >= operation.deadline) {
             operation.outcome = Outcome.DEADLINE;
             throw new Failure(Outcome.DEADLINE, "Solver deadline reached or wall clock regressed; accepted=" + operation.acceptedSteps +
                 "; trials=" + operation.nonlinearTrials);
         }
         operation.lastWallTime = now;
     }
-    void beginTrial(Operation operation, long now) {
+    void beginTrial(Operation operation, double now) {
         check(operation, now);
         if (operation.acceptedSteps >= operation.acceptedLimit ||
                 operation.nonlinearTrials >= operation.trialLimit) {
@@ -101,7 +106,7 @@ final class SolverExecutionBoundary {
         // Rejected trials may mutate companion models, so no old sample is publishable.
         latest = null; operation.candidate = null;
     }
-    void accepted(Operation operation, double time, long now) {
+    void accepted(Operation operation, double time, double now) {
         check(operation, now);
         if (!operation.trialInProgress || !finite(time) || time <= operation.lastAcceptedTime) {
             operation.outcome = Outcome.NUMERICAL_FAILURE;
@@ -148,6 +153,9 @@ final class SolverExecutionBoundary {
             isCurrent(observation, operation.owner, operation.graph, observation.simulationTime);
     }
     static boolean finite(double value) { return !Double.isNaN(value) && !Double.isInfinite(value); }
+    private static boolean wallMillis(double value) {
+        return finite(value) && value >= 0 && value <= MAX_WALL_MILLIS && value == Math.floor(value);
+    }
     private static long increment(long value) {
         if (value == Long.MAX_VALUE) throw new IllegalStateException("Solver identity space exhausted");
         return value + 1;

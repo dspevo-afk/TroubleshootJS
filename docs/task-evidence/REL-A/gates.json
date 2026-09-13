@@ -1,0 +1,246 @@
+{
+  "sourceInputs": 1155,
+  "executionInputs": 1437,
+  "releaseStatus": "ACCEPTED - U04/U05/REL-A and mandatory Q15, Shop, launcher and continuity corrections; publication pending",
+  "gates": [
+    {
+      "gate": "Maintained native contracts",
+      "status": "PASS",
+      "priorStatus": "PASS",
+      "priorResult": "RC phase candidate native run12: 33 Java suites plus independent oracles; exit0; cleanup PASS",
+      "priorShopCandidateStatus": "PASS",
+      "priorShopCandidateResult": "Final native17: 33 Java suites, independent seed/value/role/report oracles; exit0, cleanup PASS. Q15 6771, P03 864267, P04 6408, A11 conformance plus125 independent assertions.",
+      "priorShopCandidateArtifact": "native-contracts.txt",
+      "result": "Fresh native33 plus independent seed/value/role/report oracles,exit0; exact scratch/classes cleanup PASS after meter endpoint fix.",
+      "artifact": "final-shop/native-continuity.txt",
+      "beforeReceiptLabelCorrection": {
+        "status": "PASS",
+        "result": "Current compatible-installation Java candidate: actual JDK8,33 Java suites and independent seed/value/role/report oracles;exit0,cleanup PASS. U04 76,U05 23,Q15 6771,P03 864267,P04 6408. Final storefront JS/CSS-only delta requires explicit consumed-input reuse audit.",
+        "artifact": "final-shop/native-contracts.txt"
+      },
+      "beforeContinuity": {
+        "status": "PASS",
+        "result": "Fresh final-Java native33 plus independent oracles; exit0 and owned scratch cleanup PASS.",
+        "artifact": "final-shop/native-rebind.txt"
+      }
+    },
+    {
+      "gate": "Actual JDK8/GWT production build",
+      "status": "PASS",
+      "priorStatus": "PASS",
+      "priorResult": "RC phase candidate: five permutations; 70.720s compile,1.359s link; exit0",
+      "priorShopCandidateStatus": "PASS",
+      "priorShopCandidateResult": "Final entry/privacy candidate: JDK8 1.8.0_502, five permutations,71.677s compile/1.365s link,exit0",
+      "priorShopCandidateArtifact": "gwt-build.txt",
+      "result": "Exact endpoint candidate; JDK8 five permutations,69.974s compile/1.407s link,exit0.",
+      "artifact": "final-shop/gwt-continuity-1.txt",
+      "beforeReceiptLabelCorrection": {
+        "status": "PASS",
+        "result": "Final restored storefront/compatible-installation candidate;actual JDK8,five permutations,69.048s compile,1.445s link,exit0. HTTP preview identity matches maintained execution provenance.",
+        "artifact": "final-shop/gwt-build.txt"
+      },
+      "beforeContinuity": {
+        "status": "PASS",
+        "result": "Final-Java empty-slot restoration; five permutations,68.305s compile,1.340s link,exit0. Prior missing-method failure retained.",
+        "artifact": "final-shop/gwt-rebind-5.txt"
+      }
+    },
+    {
+      "gate": "UI adapter contracts",
+      "status": "PASS",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "Fresh49 assertions after real-browser collapsed-disclosure focus fix; node syntax PASS; real input still separate.",
+      "priorShopCandidateStatus": "PASS",
+      "priorShopCandidateResult": "Fresh final-source invocation: 49 jsdom assertions and node syntax; exit0. Browser proof separate.",
+      "priorShopCandidateArtifact": "../U04/ui-contracts.txt",
+      "result": "Fresh root node syntax/jsdom88 PASS after storefront product cards, full browsing/search, spacing and local action notices. Actual final player proof still separate.",
+      "artifact": "final-shop/ui-contracts-refined.txt"
+    },
+    {
+      "gate": "Final integrated Alpha corpus",
+      "status": "PASS",
+      "priorStatus": "PASS",
+      "priorResult": "First RC phase candidate: 38 cases PASS, 848144ms operation, 2ms cleanup; rc maximum units1903/1934/1994ms. Subsequent review found cleanup blockers.",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "Unchanged compiled Java on35b0bbb2:38 cases/1217 assertions/223 mutation checks,851241ms operation/2ms cleanup,owner restored. Two-file UI focus delta audited in menu-focus-input-delta.json.  Fresh b5080dcf forced negative restores owner; strict reader+20 malformed canaries PASS.",
+      "priorShopCandidateStatus": "PASS",
+      "priorShopCandidateResult": "Fresh final38 cases/1217 assertions/223 mutation checks;884074ms operation/2ms cleanup,owner restored. Fresh forced failure15ms/1ms cleanup,owner restored; strict reader+20 malformed canaries PASS.",
+      "priorShopCandidateArtifact": "final-entry-privacy/alpha-summary.json",
+      "result": "Fresh full38 cases,1245 assertions,115 acquisitions,230 mutation rows;915535ms operation/2ms cleanup,owner restored. Forced failure and35 malformed reader canaries PASS.",
+      "artifact": "final-shop/alpha-continuity-summary.json",
+      "beforeContinuity": {
+        "status": "PASS",
+        "result": "Full38 cases,1245 assertions,230 mutation rows,115 acquisitions;958301ms operation/2ms cleanup,owner restored. Forced failure restores owner; strict reader plus35 malformed canaries PASS. Launcher-only consumed-input audit retains this game-code proof.",
+        "artifact": "final-shop/alpha-summary.json"
+      }
+    },
+    {
+      "gate": "Final Q15 full compiled corpus/readers",
+      "status": "PASS",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "Fresh b5080dcf: all11 seeds/four designs/three faults,481+80 assertions,560040ms operation/2ms cleanup;16 malformed canaries and forced owner restoration PASS. Maintained combined Q15/A10/E03/A08/Task41/Task49 reader PASS,exit0.",
+      "priorShopCandidateStatus": "PASS",
+      "priorShopCandidateResult": "Fresh final eleven seeds/four designs/three faults;481+80 assertions,557220ms operation/1ms cleanup,owner restored. Fresh forced failure16ms/2ms cleanup,owner restored. Maintained Q15 strict reader+16 malformed canaries PASS; maintained combined Q15/A10/E03/A08/Task41/Task49 reader and negative canaries PASS,exit0.",
+      "priorShopCandidateArtifact": "final-entry-privacy/q15/summary.json",
+      "result": "Fresh11 seeds,613 assertions plus80 support,66 copper readings;623124ms operation,2ms cleanup,owner restored. Forced/22 malformed and maintained combined Q15/A10/E03/A08/Task41/Task49 readers PASS.",
+      "artifact": "final-shop/q15/summary.json"
+    },
+    {
+      "gate": "Final affected compiled regressions",
+      "status": "PASS",
+      "priorStatus": "PASS",
+      "priorResult": "Corrected A08 PASS1103 with cleanup/forced failure and E01/E03 maintained readers. Prior E01/E03, Task49, Task41, A10, A07 and U01 consumed inputs audited unchanged.",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "Fresh b5080dcf Task41,Task49,A08,E01,E03,A07,U01, affected strict readers and negative canaries PASS. A10/Task43P PASS on unchanged compiled Java; two-file UI delta audited.",
+      "priorShopCandidateStatus": "PASS",
+      "priorShopCandidateResult": "Fresh final Task41/Task49/A08/E01/E03/A07/U01 reports PASS; maintained electrical and Q15 combined readers, A07 strict reader, applicable forced failures and malformed canaries PASS,exit0. Final A10 and Task43P separate gates also PASS.",
+      "priorShopCandidateArtifact": "final-entry-privacy/regressions.json",
+      "result": "Fresh Task41/49,A08,E01/E03,A07,U01 and Task43P runtime; maintained strict and combined readers, applicable forced failures and malformed canaries PASS.",
+      "artifact": "final-shop/regressions-continuity.json"
+    },
+    {
+      "gate": "Final Quick Play compiled selection/completion",
+      "status": "PASS",
+      "priorStatus": "PASS",
+      "priorResult": "Full sixteen-entropy/eight-family selection/construction corpus plus LED seed3 legacy repair/completion",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "Current b5080dcf full sixteen-entropy/eight-family selection/construction, LED3 unrepaired rejection, correct completion and fresh session isolation. Legacy report does not provide separate operation/cleanup durations. Visible entry checks remain separate.",
+      "priorShopCandidateStatus": "PASS",
+      "priorShopCandidateResult": "Fresh final full16-entropy/eight-family selector/construction corpus, including16 RB15 choices with exact selected/generated equality in qualified11; LED3 unrepaired rejection/correct completion/fresh isolation. Legacy report lacks separate operation/cleanup durations; observed elapsed is an upper bound.",
+      "priorShopCandidateArtifact": "final-entry-privacy/quick-play-final.json",
+      "result": "Fresh full16-entropy/eight-family construction,16 qualified RB15 draws with exact seed equality; LED3 unrepaired rejection, correct completion and fresh isolation. Legacy report lacks operation/cleanup timing; observed wall time is an upper bound.",
+      "artifact": "final-shop/quick-play-continuity.json"
+    },
+    {
+      "gate": "Normal final RC seed3 preparation",
+      "status": "PASS",
+      "priorStatus": "PASS",
+      "priorResult": "Ticket reached with exact replay; observed upper bound 54,157 ms",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "Actual exact replay reaches ticket with every digit and current GWT identity; observation timing is an upper bound.",
+      "priorShopCandidateStatus": "PASS",
+      "priorShopCandidateResult": "Fresh final normal RC3 ticket/replay and GWT identity; all41 verifier flags plus Task43P forced-source flags remain inert with debug=false.",
+      "priorShopCandidateArtifact": "../U04/player-input-entry-final.json",
+      "result": "Fresh visible menu replay reaches RC3 ticket with exact canonical identity/current build, all41 verifier flags and forced Task43P inputs inert behind debug=false.",
+      "artifact": "final-shop/player-entry-continuity.json"
+    },
+    {
+      "gate": "Normal final cancellation",
+      "status": "PASS",
+      "priorStatus": "PASS",
+      "priorResult": "Visible pointer cancellation retained prior RC seed3; locator timeout and 1,029 ms pointer round trip recorded separately from coordinator latency",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "Actual visible Cancel preparation preserves prior RC3 and OFF power; button round trip804ms includes transport, not cleanup latency.",
+      "priorShopCandidateStatus": "PASS",
+      "priorShopCandidateResult": "Actual visible pointer cancellation retains exact RC3 replay and OFF/disconnected source. Pointer round trip2098ms includes Browser transport and is not coordinator cleanup latency; settled controls and identity checked separately.",
+      "priorShopCandidateArtifact": "../U04/player-input-entry-final.json",
+      "result": "Visible New board/Cancel preparation returns to prior RC3 and OFF supply. Settled main-menu replay proves exact identity. Initial pre-paint/missing-workbench-textarea observation retained as observer limit.",
+      "artifact": "final-shop/player-entry-continuity.json"
+    },
+    {
+      "gate": "Final Settings/Resources/menu focus",
+      "status": "PASS",
+      "priorStatus": "PASS",
+      "priorResult": "Both focus wraps, exact draft, return focus, preference persistence and restoration, generic reference, inert background, no private attributes/reports",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "Fresh b5080dcf actual keyboard proof: collapsed/expanded menu reverse/forward wraps and Resources wraps. Settings draft/persistence/return focus, privacy and inert background passed on unchanged presentation behavior immediately before this two-file fix.49 fresh adapter assertions; three inspected screenshots. Original menu failure retained.",
+      "priorShopCandidateStatus": "PASS",
+      "priorShopCandidateResult": "Fresh final preview: collapsed/expanded menu reverse/forward wraps; Settings draft/persistence/exact reverse and restored preferences; Resources wraps/privacy/inert background; invalid epoch/HARD rejection and MEDIUM family filtering. Two screenshots inspected. No concurrent generation.",
+      "priorShopCandidateArtifact": "../U04/ui-input-entry-final.json",
+      "result": "Actual current-build Settings wrap/persistence/exact preference restoration; Resources/menu collapsed and expanded focus; inert background; MEDIUM filtering and unavailable epoch/profile rejection preserve RB15/0 and CONT0.",
+      "artifact": "final-shop/ui-focus-continuity.json"
+    },
+    {
+      "gate": "Final remaining Q15/player/replay flows",
+      "status": "PASS",
+      "priorCandidateStatus": "IN PROGRESS",
+      "priorCandidateResult": "Normal RB15 random draws, both known bad exact replay failures/recovery, >2^53 replay, full RB15/MEDIUM repairs, privacy41flags and two ordinary Quick Play entries PASS. Legacy debug New control board crashes reproduced in two tabs; existing async scheduling canary in progress.",
+      "priorShopCandidateStatus": "PASS",
+      "priorShopCandidateResult": "Fresh final normal RB15 draws42/17, both bad exact seeds fail honestly and retain seed17/OFF, exact9007199254740993 replay, full RB150/MEDIUM0 real acquisition/removal/install/retest, all41 verifier flags plus forced Task43P source inputs inert with debug=false, and unforced Quick Play LED0/RC0 ticket/workbench entries PASS. Eight useful final screenshots inspected across U04/U05/REL-A. Failed legacy cancellation inputs remain separate; final normal cancellation passes.",
+      "priorShopCandidateArtifact": "final-entry-privacy/player-flow-summary.json",
+      "result": "Current normal LED3/RC3 entries, visible cancellation preserving RC3/OFF, normal RB15 draws3/42, both known bad exact seeds honestly rejected while retaining RB15/42 with both sources OFF, and exact9007199254740993 replay all pass. All41 verifier flags plus forced Task43P source inputs inert under debug=false. Current RB15 physical repair and prior repeated MEDIUM transfer are explicitly identified separately.",
+      "artifact": "final-shop/player-entry-continuity.json"
+    },
+    {
+      "gate": "Initial qualitative EASY/MEDIUM trial evidence and finding resolution",
+      "status": "PASS",
+      "result": "Both attempted trials and the actual MEDIUM failure are retained in the original human receipt. Reported Shop restriction and layout issues are fixed; current compiled38 and actual repair/transfer flows pass. This is initial qualitative calibration, not a successful human retry or population difficulty/success-rate claim.",
+      "reportedTrialStatus": "FAIL: MEDIUM attempt blocked by the then-current Shop/installation defect; EASY outcome and both timings unspecified.",
+      "artifact": "../U05/human-trials.json"
+    },
+    {
+      "gate": "Root integrated source review",
+      "status": "PASS",
+      "priorStatus": "PASS",
+      "priorResult": "Resolved findings and review scope recorded; runtime gates remain separate",
+      "priorCandidateStatus": "NOT RUN",
+      "priorCandidateResult": "Requires current-source qualification after the RC temporal work/controller/proof change; prior evidence retained",
+      "priorShopCandidateStatus": "PASS",
+      "priorShopCandidateResult": "Earlier complete integrated source review retained under unchanged 1150-input boundary; root re-inspected complete CirSim delta and current replay/session consumers. Final read-only leaf reviewed exact scheduling/privacy delta, no remaining blocker in scope. Runtime gates and staged review remain separate.",
+      "priorShopCandidateArtifact": "root-review.md",
+      "result": "Root integrated diff review plus bounded independent read-only meter and session/catalog reviews, no blockers. Reviewers did not rerun root runtime gates.",
+      "artifact": "root-review.md"
+    },
+    {
+      "gate": "Staged review/commit/push/remote verification/Gmail",
+      "status": "NOT RUN"
+    },
+    {
+      "gate": "Separately authorized visual pass",
+      "status": "NOT RUN",
+      "result": "Conditional on stable alpha acceptance; own subsequent commit"
+    },
+    {
+      "gate": "RC phase A10 qualification",
+      "status": "PASS",
+      "priorStatus": "PASS",
+      "priorResult": "1274 assertions,24 benchmark attempts; independent501 RC phase checks; RC admission58026/58332ms,max units1886/1916ms; cleanupPASS; strict reader and nine malformed phase canariesPASS",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "Final35b0bbb2:1274 assertions/24 attempts,707 RC phase/abort checks,14 observation cleanup checks; strict reader+17 malformed canaries; explicit forced failure/no report; cleanup PASS. RC0 admission59622/59870ms,max units1937/2037ms,cancellationMax3ms.",
+      "priorShopCandidateStatus": "PASS",
+      "priorShopCandidateResult": "Fresh final A10:1274 assertions/24 attempts,707 RC phase/abort and14 cleanup checks; RC0 first/repeat59853/59387ms,max units1945/1904ms; cleanupPASS. Maintained strict reader+17 malformed canaries and exact forced failure/no report PASS.",
+      "priorShopCandidateArtifact": "final-entry-privacy/a10-report.json",
+      "result": "Fresh1274 assertions/24 attempts,707 RC phase/abort and14 cleanup checks; strict17 malformed canaries and forced failure PASS.",
+      "artifact": "final-shop/a10-readers.json"
+    },
+    {
+      "gate": "Task43P overlay and owner-callback complementary coverage",
+      "status": "PASS",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "35b0bbb2: runtime OBSERVED; maintained reader exit0/zero open blockers; real overlays, seven cleanup safety cases, settlement/reset order and actual owner-replacement callback; malformed contract probe PASS. Windows CDP wrapper not qualified.",
+      "priorShopCandidateStatus": "PASS",
+      "priorShopCandidateResult": "Fresh final-source OBSERVED runtime; maintained strict reader exit0/zero open blockers across A,B/F,C,E,D,G,H,I; real overlays/cleanup and actual owner callback replacement. Fresh malformed reader probe PASS. Initial missing-provenance reader failure retained. Windows CDP wrapper not qualified.",
+      "priorShopCandidateArtifact": "final-entry-privacy/task43p-runtime-reader.json",
+      "result": "Fresh runtime OBSERVED; strict identified reader exit0/zero open blockers, malformed contract probe PASS. Windows CDP wrapper unqualified.",
+      "artifact": "final-shop/task43p-runtime-reader-continuity.json"
+    },
+    {
+      "gate": "Final frozen input and preview audit",
+      "status": "PASS",
+      "priorShopCandidateStatus": "PASS",
+      "priorShopCandidateResult": "1151 consumed input hashes unchanged; maintained1435-file execution digest matches final build, HTTP preview and exact owned process identity. Documentation/evidence-only updates follow.",
+      "priorShopCandidateArtifact": "final-entry-privacy/final-input-audit.json",
+      "result": "All1155 frozen source/test/script/root CMD inputs and maintained1437-file execution provenance rehashed without drift after final technical gates; final-execution-audit-continuity.json matches exact preview owner and HTTP identity.",
+      "artifact": "final-shop/final-execution-audit-continuity.json"
+    },
+    {
+      "gate": "Normal Windows launcher recovery",
+      "status": "PASS",
+      "result": "Actual Windows stale/reuse/foreign canaries and root CMD exit0 in11756ms; exact child exit37 propagates. Launcher inputs unchanged by meter fix.",
+      "artifact": "final-shop/launcher-recovery.json"
+    },
+    {
+      "gate": "Reported same-copper continuity polarity asymmetry",
+      "status": "PASS",
+      "result": "Reproduced OL/0 before. Exact endpoint correction: ten compiled off-grid fixtures/20 assertions and existing resistance lifecycle PASS; visible RB15 seed0 CONT/OHM both directions all0 Ohm. Open paths and diode polarity retained.",
+      "artifact": "final-shop/continuity-player-input.json"
+    }
+  ],
+  "sourceQualificationNote": "All1155 frozen source/test/script/root CMD inputs and maintained1437-file execution provenance rehashed without drift after final technical gates; final-execution-audit-continuity.json matches exact preview owner and HTTP identity.",
+  "priorCandidateExecutionDigest": "b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d",
+  "currentSourceStatus": "Generic full-catalog purchasing, compatible purchased-part installation, canonical empty-slot restoration, launcher recovery and exact meter endpoints are implemented and qualified.",
+  "priorShopCandidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "candidateExecutionDigest": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+  "currentExecutionDigest": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+  "priorCandidateExecutionDigestBeforeFinalFreeze": "f83f0a2e0244570b9318ec27be0b2fac1d7a67d08a77cb6fc522ba9541731052"
+}

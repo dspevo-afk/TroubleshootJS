@@ -12,6 +12,136 @@ instruments, valid repair behavior and answer privacy remain required. The
 [current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
 older evidence packets describe their own historical candidates.
 
+## U04 product session and U05 initial difficulty
+
+`PlayerLaunchRequest` is the exact public launch/replay boundary. The current
+`tsj-alpha/1/PROFILE/FAMILY/SEED` format transports a canonical signed-long seed
+as text; unsupported epochs, families and profiles reject before live mutation.
+An explicit exact seed is never substituted. Random launches explicitly call
+`PlayerLaunchRequest.random`, which delegates the existing families to
+`QuickPlayFamilyRegistry.selectNormalPlayerSeed`. RB15 normal selection is
+restricted to `0, 1, 2, 3, 17, 42, 101, -1, 9007199254740993, Long.MIN_VALUE,
+Long.MAX_VALUE`. The legacy New control board control uses that same selector.
+The legacy interactive button explicitly requests asynchronous generation even
+in the developer workbench; startup/verifier scheduling retains its existing
+choice. All legacy verification flags are normalized behind `tsjDebug` before
+early admission, with the common late dispatch guard retained.
+The composed controller's initial random corpus is `0, 3`. The selected seed,
+generation descriptor, published owner and replay all agree. Arbitrary procedural
+RB15 seeds remain a larger, unqualified space: exact replay may fail honestly
+within unchanged routing/time limits. This is not population success-rate evidence.
+
+`PlayerSession` owns menu/preparation/ticket/workbench/retest/results/error
+transitions and revocable session tokens. `PlayerSessionController` orchestrates
+existing generation, challenge and inventory owners. Generation retains the
+previous board until admission; cancellation/error leaves that exact owner
+available. Current challenge behavior determines completion. A passed retest
+waits for ordinary input-restoration analysis to settle before finishing its
+exact owner, result and session token; a five-second watchdog fails safely and
+is revoked before completion or successor work. A narrow JSON
+projection contains public names, complaint, replay/build identity and real
+catalog/loose counts; it contains no fault, private original or proof data.
+`PlayerShopCatalog` projects one category per public part type from the current
+runtime's registered catalogs. Acquisition requests identify the category and
+specification; destination component names are not shopping categories. The
+projection chooses an existing acquiring provider and counts real loose identities
+without creating another inventory. Installation is a later physical action.
+Deduplication includes the exact package geometry as well as the canonical
+catalog recipe. NPN boards can have different resistor lead spacings, so their
+distinct purchasable fits remain available under one Resistors category. Public
+fit labels describe lead spacing without inventing real-world dimensions or
+using destination names. Ephemeral specification handles resolve back to the
+actual recipe and acquiring provider under the current session/modal lease.
+The JavaScript/CSS adapter presents a website-style full catalog with product
+cards, category filters and search over those real entries. Purchases update the
+actual loose count without rebuilding the active search, scroll or keyboard
+focus. Fit labels remain public specifications, not destination selectors.
+The adapter presents session states, isolates modal focus and
+revokes Shop leases on close/reopen/focus loss. It neither polls simulation nor
+maintains another inventory. Neutral tray ordinals come from current runtime
+inventory order; private part IDs remain internal.
+
+The shared solver lease checks use exact integer-valued double millisecond clocks
+in GWT, avoiding emulated-long allocation on every nonlinear trial. The JVM uses
+its real system millisecond clock. Clock values/deadline sums outside `0..2^53-1`,
+nonfinite/fractional values, regression and deadline equality fail closed. This
+is only wall-clock bookkeeping: generation, seed and accepted-state identities
+remain signed longs; solver samples, steps, check cadence and all time/work
+limits are unchanged. The actual compiled A07 and RC gates qualify this seam.
+
+`CatalogAcquisitionProvider` extends the installed mutation adapters with real
+loose acquisition. Existing typed inventories allocate identities and actual
+CircuitJS backings, bind the existing physical geometry and retain the installed
+slot/bindings. All seven current adapters declare their exact mutation slot and
+inventory to the existing `PhysicalMutationScope`. Capacitor, NPN, NMOS and LED
+slots own typed attachment capture/restoration alongside the existing resistor,
+diode and relay adapters. Failed acquisition restores inventory serial/identity,
+canonical and active backings; failed installation also restores bindings,
+endpoints and mounting. The NMOS adapter compensates its exact prior fault-path
+enable state. Current modification-owner guards reject retained providers even
+when the board object is unchanged. Post-commit refresh failures mark the exact
+runtime failed rather than pretending that the committed action rolled back.
+Normal Shop acquisition
+and later tray installation are separate player actions. Resources contain
+generic reference material. Versioned browser preferences change presentation
+only, with explicit recovery when storage is unavailable.
+
+Purchased parts retain one source inventory and provenance when installed at
+another compatible position. `PhysicalBoardRuntime` resolves an ordered set of
+empty targets from the exact registered part identity, typed slot, package and
+geometry. The typed controllers and mutation scope retain current-owner, power
+and instrument guards before writes. Installation changes mount state and target
+graph/bindings; removal leaves the same loose identity in its acquisition
+inventory. Removal also restores the empty position's generated primary and
+auxiliary bindings, component endpoints and typed attachment geometry. Those
+construction-time references retain original/fault ownership without claiming a
+purchased part after it moves elsewhere. The existing scope snapshots compensate
+this restoration on failure, including its explicit empty-slot rebind checkpoint.
+The workbench presents public channel/region labels for these targets.
+Generated originals keep their existing source-slot restriction because their
+original graph/fault bindings are not portable. Eligibility never depends on
+which fault was selected. Source-owned resistor stress uses the part's actual
+current mount and CircuitJS power, retaining one stress state across transfers.
+
+Temporary resistance/continuity, diode and loaded-voltage stimuli attach with
+`CircuitElm.setPosition` to the exact resolved electrical posts. These posts may
+fall between schematic editor grid points, notably the relay/control-board net
+anchors. Interactive `drag` snapping must never construct a measurement circuit.
+The meter still injects its real source/load into CircuitJS and uses the existing
+measurement transaction and cleanup; there is no geometry-based zero-reading
+shortcut. Compiled off-grid wire, resistor, open-path, diode and loaded-voltage
+fixtures check both directions, and the Q15 corpus checks three continuous copper
+pairs in both directions on every qualified seed.
+
+`DifficultyAssessment` runs over the complete exact-owner diagnostic receipt
+before publication and is included in generation dependencies. Physics,
+tolerances, markings and instruments are identical across profiles. It aggregates
+all repair classes, owners and certified solver observations without selecting
+the injected fault as an assistance hint. `DiagnosticReduction` searches bounded
+adaptive observation choices using conservative tolerance neighborhoods. Its
+reading count is the optimum over the certified measurement set; it is not a
+minimum over every possible human strategy.
+
+The completed execution trace also counts ordered semantic actions, including
+repeats: non-SETTLE observation steps plus repair-start power-off, removal,
+catalog replacement, retest power-on and a passed customer retest. These
+`legalWitnessActions` certify an actually executed route, an existence/upper
+bound distinct from required distinguishing readings. Internal settlement and
+cleanup are excluded; a paired meter reading is one semantic action, not a
+click count. The current five-action repair skeleton must change with future
+provider workflows. Distinct evidence-category depth and declared rail/target
+names remain separate descriptive features; neither is a human action minimum
+or an independent-domain count.
+
+Initial conservative MEDIUM requires at least two distinguishing readings,
+multiple repair owners/classes, and temporal or parallel-path interaction.
+The two-channel controller is the current candidate; the other eight families
+are EASY candidates even when they have more packages. Every admission must
+prove the requested band. HARD and PSYCHOTIC remain unavailable. Human trials
+and the qualified corpus bound the calibration; mathematical counters cannot
+establish subjective difficulty by themselves. The current report records
+acceptance status, evidence and limits.
+
 ## U01 viewport and P03/P04 physical planning
 
 `PcbViewport` owns the permanent board camera and the temporary cursor-centered
@@ -105,12 +235,29 @@ persists across yields and incomplete cleanup; ambient verifier proof scopes do
 not count as competing production sessions. Each private hypothesis gets separate graph,
 adjustable and history containers; cleanup disconnects its actual external source
 bindings and deletes its elements before restoring the protected owner.
-Temporal healthy and faulted profiles run in separate units; the real customer
-retest and its guarded completion callback also run separately. Each still uses
-the existing CircuitJS temporal model and all ordinary completion checks.
+`GeneratedWork` holds finite provider work: `step` completes one solver operation,
+`finish` publishes its completed result without another solve, and `cancel` retires
+only its exact owned state. Temporal providers declare their unit counts; the
+proof service accounts for healthy, faulted, repaired and customer-retest profiles
+and the separate guarded completion callback. RC yields at its existing four
+solver calls: OFF/.750 s, OFF/.250 s with residual capture, ON/.100 s with early
+capture, and ON/.700 s with late capture. Synchronous callers drain the same
+provider work. Resumption bypasses ordinary UI solver frames between phases, so
+the existing accepted steps and samples remain the sequence oracle. Relay profiles
+retain their existing one-unit recipes. The controller owns preparation and retest
+work; the diagnostic session owns its repair profile and captured completion.
+No active solver permit or partial profile evidence crosses a yield.
 An incomplete cleanup retains its exact owner and blocks a successor job. Snapshot
 restoration cannot detach a private graph whose disposal has failed; guarded retries
 skip elements already disposed successfully.
+Observation cursors remain reachable until instrument exit succeeds; cancellation
+failure prevents further measurement or sample publication. Closed-session retries
+must match the exact candidate, controller and graph before exiting the instrument.
+Staged disposal disconnects external sources after cancelling owned temporal work,
+because that cancellation may restore the cursor's saved power controls.
+The restore boundary makes one immediate cleanup retry during abort; a recovered
+one-shot exit failure still fails that attempt and preserves its original error.
+Persistent failure retains the cursor for a later closed-session retry.
 
 Runtime budgets distinguish a 90-second cumulative job from a five-second active
 operation and 640 deterministic work units. CircuitJS retains its separate 500 ms
@@ -1888,54 +2035,31 @@ identity, runtime inventory lifecycle, terminal/pad identity, CircuitJS
 backing, capability discovery, footprint provider, and render provider.
 No capacitor implementation or Task 36 behavior belongs to this boundary.
 
-## Task 35(A) Quick Play session and completion boundary
+## Quick Play selection and developer regression seam
 
-Quick Play is an additive player route selected by `tsjQuickPlay=true`. The
-small `QuickPlaySession` seam owns one `QuickPlaySelection`, and
-`QuickPlaySelector` obtains exactly a family choice and a fresh generator seed
-from its selection source. `QuickPlayFamilyRegistry` is the normal-player
-eligibility boundary: the legacy families retain their validated seed envelope
-`{0, 2, 3}`, while `NPN_LOW_SIDE_SWITCH` has its own validated envelope
-`{0, 1, 2, 3}`. The selector delegates the selected seed to the selected
-family's ordinary generator path; it does not randomize topology, values,
-faults, layout, or measurements itself. Normal selection therefore never
-forces a developer-only fault or verifier route.
+The normal `tsjQuickPlay=true` entry uses the U04 session coordinator and
+`QuickPlaySelector`. The selector obtains family entropy and seed entropy, then
+maps the latter through the chosen family's explicit envelope. It does not alter
+topology, component values, faults, layout or measurements itself. The current
+sets are LED `{0,2,3,4}`, diode/parallel/RC `{0,2,3}`, NPN/NMOS `{0,1,2}`, relay
+`{0,1,2,3,4,5}`, and RB15's eleven qualified seeds listed above. The composed
+controller is offered separately in the U04 family menu on `{0,3}`.
 
-The session and its generated board are page-owned state. A full reload of the
-Quick Play URL constructs a new selector/session, board, physical runtime,
-CircuitJS graph, probes, inventory, and challenge controller, so the next
-selection does not reuse prior physical modifications, damage, or completion
-state. The selected family and seed are available only through a developer
-verification attribute/getter; normal UI shows the real PCB, service complaint,
-and workbench without fault, answer, specification, rating, stress, or damage
-metadata.
+`QuickPlaySession.forCandidate` checks actual selected/generated identity before
+publication. U04 retains the exact published board and current replay across
+menu/ticket/workbench transitions; a new session owns fresh graph, inventory and
+challenge state. Explicit normal replay/challenge entries precede random Quick
+Play. Developer fixtures require the separate debug route and cannot replace a
+normal replay. Normal UI shows public replay/build information, complaint,
+markings and catalog choices, with no selected fault or private original IDs.
 
-The Quick Play canary exercises the same ordinary selector/generator boundary
-with exact and arbitrary injected selection values. It proves that NPN seeds
-0, 1, 2, and 3 naturally reach C-E open, C-E short, base-resistor open, and
-load-path open respectively, while the legacy families remain on `{0, 2, 3}`
-and the diode developer-only short remains excluded. The NPN canary also reads
-the generated physical load-input nameplates (`9 V`, `12 V`, `5 V`, `9 V`),
-so the seed envelope covers all three nominal load supplies without teaching
-Quick Play about fault effects or bypassing the family generator.
-
-Route precedence remains explicit: `tsjFixture` and `tsjChallenge` routes are
-resolved before Quick Play, and their existing family/seed behavior is
-unchanged. Quick Play therefore cannot replace an explicit challenge, fixture,
-or developer verification route. The focused developer verifier injects its
-selection source so selector coverage is deterministic rather than
-probabilistic.
-
-`PcbWorkbenchController` adds `Finish Job` only when the active installed
-challenge came from Quick Play. The button is disabled while the generic
-challenge controller is preparing. Its action calls
-`GeneratedChallengeController.finishJob()`, which checks the existing generic
-`GeneratedRepairStatus` contract against the live solver-backed board. A failed
-or degraded check leaves the same board and reports only
-`Functional check failed. Continue troubleshooting.`. A correctly restored
-board crosses the existing generic completion boundary and then reloads the
-Quick Play URL for a clean next session. Stock CircuitJS, explicit generated
-routes, and arbitrary developer routes do not receive this control.
+The original debug-only Quick Play verifier and Finish Job control remain a
+separate regression seam over the existing challenge completion owner. They test
+selection envelopes, exact seeds, fresh sessions, rejected unrepaired completion,
+valid physical repair and privacy. Normal U04 uses the explicit customer retest
+and results screens described above. The maintained native canaries exercise
+arbitrary entropy, including full signed-long extremes and both known unroutable
+arbitrary RB15 seeds, without allowing those values into normal random selection.
 
 ## Task 36 — capacitor foundation, RC delay, and stored-energy readiness
 

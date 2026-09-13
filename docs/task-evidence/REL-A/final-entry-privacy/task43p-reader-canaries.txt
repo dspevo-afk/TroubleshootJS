@@ -1,0 +1,2 @@
+PASS:Task43PRuntimeEvidenceContractProbe; process exit0.
+Fresh maintained command: scripts/Task43PRuntimeEvidence.ps1 -Task43PRuntimeEvidenceContractProbe

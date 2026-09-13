@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "assertions": 1245,
+  "acquisitions": 115,
+  "staleCallbacks": 105,
+  "mutationChecks": 230,
+  "negativeChecks": 72,
+  "cancellationMs": 0,
+  "elapsedMs": 915535,
+  "cleanupMs": 2,
+  "ownerRestored": true,
+  "cases": 38,
+  "executionDigest": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+  "strictReader": "PASS",
+  "malformedCanaries": 35,
+  "forcedFailure": "PASS,15ms operation/3ms cleanup,owner restored",
+  "maxAdmissionMs": 61742,
+  "maxUnitMs": 3202,
+  "inputAudit": "input-audit-continuity.json"
+}

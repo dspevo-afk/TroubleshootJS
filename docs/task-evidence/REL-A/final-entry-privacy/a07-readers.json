@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "reader": "Maintained Test-A07Report",
+  "malformedRejected": [
+    "empty",
+    "fake PASS",
+    "missing cleanup",
+    "missing runtime case",
+    "duplicate latency",
+    "fake playable model",
+    "wrong ladder current"
+  ],
+  "forcedNegative": "PASS: exact failure and no report",
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623"
+}

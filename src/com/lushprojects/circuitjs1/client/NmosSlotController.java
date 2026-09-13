@@ -1,7 +1,8 @@
 package com.lushprojects.circuitjs1.client;
 
 /** Runtime graph and identity mutation controller for the replaceable NMOS Q1. */
-final class NmosSlotController implements PhysicalSlotMutationProvider {
+final class NmosSlotController implements PhysicalSlotMutationProvider,
+        PhysicalSlotMutationProvider.Scoped, CatalogAcquisitionProvider {
     private final CirSim sim;
     private final GeneratedBoardInstance instance;
     private final BoardModificationController modifications;
@@ -54,8 +55,8 @@ final class NmosSlotController implements PhysicalSlotMutationProvider {
             return slot.isEmpty() && hasCatalogEntry(operation.getCatalogEntryId());
         if (WorkbenchOperation.INSTALL.equals(id))
             return operation.getPart() instanceof PhysicalNmosPart &&
-                capability.ownsPart(operation.getPart().getId()) &&
-                !operation.getPart().isInstalled() && slot.isEmpty();
+                instance.getPhysicalBoardRuntime().isPartInstallableAt(operation.getPart(),
+                    getComponentId());
         if (WorkbenchOperation.REMOVE.equals(id))
             return !slot.isEmpty() && matchesInstalledPart(operation);
         if (WorkbenchOperation.LIFT_LEAD.equals(id))
@@ -87,12 +88,22 @@ final class NmosSlotController implements PhysicalSlotMutationProvider {
 
     public String getComponentId() { return "Q1"; }
     public boolean ownsPart(String partId) { return capability.ownsPart(partId); }
+    public PhysicalMutationSlot getMutationSlot() { return capability.getSlot(); }
 
     public boolean removeInstalledPart() {
         requireSafeMutation();
         if (capability.getSlot().isEmpty()) return false;
-        modifications.removeComponentDeferredRefresh("Q1");
-        capability.getSlot().clear();
+        PhysicalMutationScope scope = newScope("remove", null);
+        try {
+            modifications.disconnectComponentForMutation(scope, "Q1");
+            scope.clearPart();
+            scope.commit();
+        } catch (Throwable failure) {
+            scope.abort(failure);
+            PhysicalMutationScope.rethrow(failure);
+            return false;
+        }
+        scope.closeAfterCommit();
         finishMutation();
         return true;
     }
@@ -100,50 +111,80 @@ final class NmosSlotController implements PhysicalSlotMutationProvider {
     public boolean install(String partId) {
         requireSafeMutation();
         if (!capability.getSlot().isEmpty()) return false;
-        PhysicalNmosPart part = capability.getInventory().get(partId);
-        if (part.isInstalled()) return false;
-        installPart(part);
+        PhysicalPart<?> candidate = instance.getPhysicalBoardRuntime().getPart(partId);
+        if (!(candidate instanceof PhysicalNmosPart) ||
+                !instance.getPhysicalBoardRuntime().isPartInstallableAt(candidate,
+                    getComponentId()))
+            return false;
+        PhysicalNmosPart part = (PhysicalNmosPart) candidate;
+        PhysicalMutationScope scope = newScope("install", part);
+        try {
+            scope.replacePrimaryBinding(part.getElement());
+            retargetComponentLeadBindings(part, scope);
+            scope.installPart(part);
+            setOriginalFaultBoardPathEnabled(part, scope);
+            scope.restoreComponentGraph();
+            scope.commit();
+        } catch (Throwable failure) {
+            scope.abort(failure);
+            PhysicalMutationScope.rethrow(failure);
+            return false;
+        }
+        scope.closeAfterCommit();
+        finishMutation();
         return true;
     }
 
     public boolean installNewFromCatalog(String catalogEntryId) {
+        return catalogPart(catalogEntryId, true) != null;
+    }
+
+    public PhysicalPart<?> acquireFromCatalog(String catalogEntryId) {
+        return catalogPart(catalogEntryId, false);
+    }
+
+    private PhysicalNmosPart catalogPart(String catalogEntryId, boolean install) {
         requireSafeMutation();
-        if (!capability.getSlot().isEmpty()) return false;
+        final NmosComponentSlot slot = capability.getSlot();
+        if (install && !slot.isEmpty()) return null;
         final NmosCatalogEntry entry = capability.getCatalog().get(catalogEntryId);
         final NmosSpecification specification = entry.getSpecification();
         final NMosfetElm element = DynamicNmosBackingAllocator.create(
                 instance.getSimulationElements(), specification);
-        PhysicalNmosPart part = capability.getInventory().acquire("Q1_CATALOG_PART",
-            new PhysicalPartIdentityFactory<PhysicalNmosPart>() {
-                public PhysicalNmosPart create(String partId) {
-                    return new PhysicalNmosPart(partId, specification,
-                        entry.getPlayerVisibleNameplate().forPhysicalPartId(partId), element,
-                        null, NmosPartLocation.LOOSE, new PhysicalPartProvenance(
-                            PhysicalPartProvenance.CATALOG_ACQUIRED, partId));
-                }
-            });
-        setOriginalFaultBoardPathEnabled(false);
-        instance.registerRuntimeSimulationElement(element);
-        sim.elmList.add(element);
-        installPart(part);
-        return true;
-    }
-
-    private void installPart(PhysicalNmosPart part) {
-        instance.getComponentBindings().replaceSingleElement("Q1", part.getElement());
-        for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings()
-                .getForComponent("Q1"))
-            binding.setComponentEndpoint(part.getTerminalForBoardPad(binding.getPadId()));
-        capability.getSlot().install(part);
-        setOriginalFaultBoardPathEnabled(part.ownsGeneratedFault(instance.getFaultBinding()));
-        modifications.restoreComponent("Q1");
+        final String componentId = slot.getComponentId();
+        PhysicalMutationScope scope = newScope(install ? "catalog" : "acquire", null,
+            null, catalogEntryId);
+        PhysicalNmosPart part;
+        try {
+            part = scope.acquire(capability.getInventory(), componentId + "_CATALOG_PART",
+                new PhysicalPartIdentityFactory<PhysicalNmosPart>() {
+                    public PhysicalNmosPart create(String partId) {
+                        PhysicalNmosPart created = new PhysicalNmosPart(partId, specification,
+                            entry.getPlayerVisibleNameplate().forPhysicalPartId(partId), element,
+                            null, NmosPartLocation.LOOSE, new PhysicalPartProvenance(
+                                PhysicalPartProvenance.CATALOG_ACQUIRED, partId));
+                        slot.getPhysicalSlot().bindGeometryForAcquisition(created);
+                        return created;
+                    }
+                });
+            scope.registerCanonicalElement(element);
+            scope.appendActiveElement(element);
+            if (install) {
+                scope.replacePrimaryBinding(element);
+                retargetComponentLeadBindings(part, scope);
+                scope.installPart(part);
+                setOriginalFaultBoardPathEnabled(part, scope);
+                scope.restoreComponentGraph();
+            }
+            scope.commit();
+        } catch (Throwable failure) {
+            scope.abort(failure);
+            PhysicalMutationScope.rethrow(failure);
+            return null;
+        }
+        scope.closeAfterCommit();
         finishMutation();
-    }
-
-    private void setOriginalFaultBoardPathEnabled(boolean enabled) {
-        GeneratedFaultBinding binding = instance.getFaultBinding();
-        if (binding == null || !(binding.getEffect() instanceof NmosfetDsShortFaultEffect)) return;
-        ((NmosfetDsShortFaultEffect) binding.getEffect()).setBoardPathEnabled(enabled);
+        return part;
     }
 
     private void requireSafeMutation() {
@@ -153,20 +194,71 @@ final class NmosSlotController implements PhysicalSlotMutationProvider {
     }
 
     private boolean isSafeMutationAvailable() {
-        return sim.getGeneratedBoardInstance() == instance && !sim.activeMeasurementOverlay &&
-            sim.isChallengeInteractionEnabled() && sim.getBoardPowerController()
-                .isElectricallyUnpowered();
+        return sim.getGeneratedBoardInstance() == instance &&
+            sim.getBoardModificationController() == modifications &&
+            !sim.activeMeasurementOverlay && sim.isChallengeInteractionEnabled() &&
+            sim.getBoardPowerController().isElectricallyUnpowered() &&
+            !instance.getPhysicalBoardRuntime().isMutationInProgress() &&
+            !instance.getPhysicalBoardRuntime().isMutationOwnerQuarantined(getComponentId());
     }
 
     private void finishMutation() {
-        sim.needAnalyze();
-        sim.requestGeneratedBoardVerification();
-        sim.refreshBoardModificationControls();
+        try {
+            if (sim.getGeneratedChallengeController() != null)
+                sim.getGeneratedChallengeController().invalidateCustomerRetest();
+            sim.needAnalyze();
+            sim.requestGeneratedBoardVerification();
+            sim.refreshBoardModificationControls();
+        } catch (Throwable failure) {
+            sim.markGeneratedRuntimeFailure(instance, failure);
+            PhysicalMutationScope.rethrow(failure);
+        }
     }
 
     private boolean matchesInstalledPart(WorkbenchOperation operation) {
         return operation.getPart() == null || operation.getPart() == capability.getSlot()
             .getInstalledPart();
+    }
+
+    private boolean ownsPartIdentity(PhysicalPart<?> part) {
+        return part != null && part.getId() != null &&
+            capability.getInventory().contains(part.getId()) &&
+            capability.getInventory().get(part.getId()) == part;
+    }
+
+    private PhysicalMutationScope newScope(String operation, PhysicalPart<?> requestedPart) {
+        return newScope(operation, requestedPart, null, null);
+    }
+
+    private PhysicalMutationScope newScope(String operation, PhysicalPart<?> requestedPart,
+            String padId, String catalogEntryId) {
+        PhysicalMutationIntent intent = PhysicalMutationIntent.prepare(
+            instance.getPhysicalBoardRuntime(), instance, modifications,
+            capability.getSlot(), operation, padId, catalogEntryId, requestedPart);
+        return new PhysicalMutationScope(sim, instance, modifications, intent);
+    }
+
+    private void retargetComponentLeadBindings(PhysicalNmosPart part,
+            PhysicalMutationScope scope) {
+        for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings()
+                .getForComponent("Q1"))
+            scope.retargetEndpoint(binding, part.getTerminalForBoardPad(binding.getPadId()));
+    }
+
+    private void setOriginalFaultBoardPathEnabled(final PhysicalNmosPart part,
+            PhysicalMutationScope scope) {
+        GeneratedFaultBinding binding = instance.getFaultBinding();
+        if (binding == null || !(binding.getEffect() instanceof NmosfetDsShortFaultEffect))
+            return;
+        final NmosfetDsShortFaultEffect effect =
+            (NmosfetDsShortFaultEffect) binding.getEffect();
+        final boolean previous = effect.isBoardPathEnabled();
+        scope.setProviderCompensation(new PhysicalMutationScope.ProviderCompensation() {
+            public void compensate() {
+                effect.setBoardPathEnabled(previous);
+            }
+        });
+        effect.setBoardPathEnabled(part.ownsGeneratedFault(binding));
     }
     private boolean hasConnectedPad(String padId) {
         return hasPad(padId) && modifications.isLeadConnected("Q1", padId);

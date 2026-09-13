@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "executionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "cases": 11,
+  "assertions": 481,
+  "supportAssertions": 80,
+  "operationElapsedMs": 557220,
+  "cleanupElapsedMs": 1,
+  "ownerRestored": true,
+  "cancellationMs": 0,
+  "admissionP50Ms": 31022,
+  "admissionP95Ms": 58444,
+  "maxUnitMs": 2070,
+  "maxWorkUnits": 120,
+  "reader": "PASS: maintained Q15 strict reader,forced cleanup,16 malformed canaries; maintained combined Q15/A10/E03/A08/Task41/Task49 reader and negatives,exit0",
+  "populationEstimate": false
+}

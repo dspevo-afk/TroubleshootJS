@@ -1,0 +1,74 @@
+{
+  "report": {
+    "assertions": 20,
+    "cases": [
+      {
+        "direction": 0,
+        "fixture": "0",
+        "mode": "resistance",
+        "result": 0.001
+      },
+      {
+        "direction": 0,
+        "fixture": "680",
+        "mode": "resistance",
+        "result": 0.0005952380952380954
+      },
+      {
+        "direction": 0,
+        "fixture": "open",
+        "mode": "resistance",
+        "result": 0
+      },
+      {
+        "direction": 0,
+        "fixture": "1N4148",
+        "mode": "diode",
+        "result": 0.6521783207497229
+      },
+      {
+        "direction": 0,
+        "fixture": "5V/10Mohm",
+        "mode": "dc",
+        "result": 2.5
+      },
+      {
+        "direction": 1,
+        "fixture": "0",
+        "mode": "resistance",
+        "result": 0.001
+      },
+      {
+        "direction": 1,
+        "fixture": "680",
+        "mode": "resistance",
+        "result": 0.0005952380952380952
+      },
+      {
+        "direction": 1,
+        "fixture": "open",
+        "mode": "resistance",
+        "result": 0
+      },
+      {
+        "direction": 1,
+        "fixture": "1N4148",
+        "mode": "diode",
+        "result": 2.999995648
+      },
+      {
+        "direction": 1,
+        "fixture": "5V/10Mohm",
+        "mode": "dc",
+        "result": -2.5
+      }
+    ],
+    "cleanupMs": 11,
+    "failure": null,
+    "operationMs": 4,
+    "ownerRestored": true,
+    "protocol": "TSJ-MEASUREMENT-ENDPOINTS-1",
+    "status": "PASS"
+  },
+  "status": "PASS:resistance"
+}

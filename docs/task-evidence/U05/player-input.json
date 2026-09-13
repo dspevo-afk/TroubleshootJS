@@ -1,0 +1,26 @@
+{
+  "executionDigest": "775ffbf494b5da97a43b6978689c2b16acc8bd83f0ef9b77e8ed03ac2cc66f7a",
+  "kind": "agent-operated acceptance; not a human trial",
+  "interactions": [
+    {
+      "action": "Menu → MEDIUM → Two-channel controller → exact seed 0 → Prepare exact seed"
+    },
+    {
+      "action": "Accept ticket → unrepaired customer retest",
+      "text": "\n\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nMULTIMETER\n\n\nDC V\tOHM\nCONT\tDIODE\n\n\n--- V\n\n\n\n\n\n\nBoard Power: ON\n\n\n\n\n\n\n\n\n\n\n\n\nBENCH POWER\n\n\nSupply 1 (+5V): 5 V, 49.662 μA\n\nDisconnect Supply 1 (+5V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nSupply 2 (+5V): 5 V, 49.662 μA\n\nDisconnect Supply 2 (+5V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nSupply 3 (+5V): 4.999 V, 13.07 mA\n\nDisconnect Supply 3 (+5V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nEach output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.\n\n\nBOARD VIEW\n\n\nFit boar"
+    },
+    {
+      "action": "power off all three supplies; OHM across Channel A RLOAD via visible terminal selectors",
+      "reading": "OL"
+    },
+    {
+      "action": "Shop Channel A RLOAD → 330 Ohm +/-5% → Acquire",
+      "observation": "Shop\nClose\n\nAdded to the real Parts Tray. Select the loose part on the workbench to install it.\n\nAcquire a real loose part into the Parts Tray. The installed part stays in place. To repair: close Shop, remove the installed part if needed, select the loose part in the Parts Tray a",
+      "finding": "Catalog heading exposes a long public realization/component identifier; presentation label correction needed."
+    },
+    {
+      "action": "remove Channel A RLOAD; install acquired 330 Ohm resistor; power on; Run customer retest",
+      "result": "Customer retest passed\n\nCustomer retest passed. The reported behavior is resolved.\n\nThe live board passed the customer’s functional checks.\n\nCustomer retest passed. The reported behavior is resolved.\n\nNew board / Main menuReplay this challengeReturn to board\nReplay and bug-report identity"
+    }
+  ]
+}

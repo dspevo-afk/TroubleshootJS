@@ -1,8 +1,14 @@
 # Q15 — small procedural control-board qualification
 
-Status: COMPLETE — QUALIFIED. Final implementation, electrical/physical proof,
-regressions and visible player checks pass. This packet identifies the accepted
-candidate; Git history and the final handoff record its publication.
+Status: original eleven-seed cohort QUALIFIED; the normal-player admission correction
+passes accepted U04/U05/REL-A qualification, including recorded qualitative
+human trials and verified corrections to their reported defects. Independent review found that the original
+random selector admitted arbitrary RB15 seeds outside this cohort. The correction
+uses the explicit eleven-seed envelope below for Quick Play and New Board;
+exact replay remains exact and can reject. The current source/build, new native
+canaries and fresh compiled gates are recorded in [the combined packet](../REL-A/README.md).
+The remainder of this packet records the original accepted candidate, not proof
+that its unrestricted random boundary was valid.
 Base: `99a0001982ad92d245fda1e38a9c7ea1045da3a3`, branch
 `codex/task43p-final-recovery`. No later milestone is included.
 

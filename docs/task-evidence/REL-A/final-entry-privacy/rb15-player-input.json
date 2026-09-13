@@ -1,0 +1,164 @@
+{
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "kind": "Actual visible player actions; not human calibration",
+  "identity": [
+    "tsj-alpha/1/EASY/RB15_CONTROL/0",
+    "tsj-alpha/1 / 6A7778C50F3797A9E5C587F0FD7198E1"
+  ],
+  "checks": [
+    {
+      "check": "Unrepaired customer retest rejects",
+      "status": "PASS",
+      "message": "Customer retest did not pass. Continue troubleshooting."
+    },
+    {
+      "check": "Independent +5 V source blocks resistance after +12 V disconnected",
+      "status": "PASS",
+      "observed": "POWER OFF; Supply 1 disconnected; Supply 2 still 5 V"
+    },
+    {
+      "check": "Both supplies disconnected, retained RDRIVE terminal probes",
+      "status": "PASS",
+      "reading": "199.96 kOhm"
+    },
+    {
+      "check": "Bottom copper retains red/black endpoints",
+      "status": "PASS",
+      "screenshot": "rb15-copper.png"
+    },
+    {
+      "check": "Acquire independent loose replacement before removal",
+      "status": "PASS",
+      "catalog": "Switched output RDRIVE",
+      "selected": "1000 Ohm +/-5%",
+      "count": "0 -> 1",
+      "otherCatalogCount": 0,
+      "original": "Installed",
+      "loosePart": "Part 17"
+    },
+    {
+      "check": "Physical removal and separate tray installation update retained terminal readings",
+      "status": "PASS",
+      "removed": "Part 4",
+      "installed": "Part 17 as RDRIVE",
+      "reading": "995.025 Ohm"
+    },
+    {
+      "check": "Powered output control HIGH",
+      "status": "PASS",
+      "probes": "J4.1 red / J4.2 black",
+      "reading": "11.092 V"
+    },
+    {
+      "check": "Powered output control LOW",
+      "status": "PASS",
+      "probes": "J4.1 red / J4.2 black",
+      "reading": "2.031 μV"
+    },
+    {
+      "check": "Final customer HIGH/LOW functional retest",
+      "status": "PASS",
+      "observed": "Customer retest passed. The reported behavior is resolved."
+    },
+    {
+      "check": "Completed session guards",
+      "status": "PASS",
+      "disabled": [
+        "Shop",
+        "Run customer retest",
+        "DC V",
+        "OHM",
+        "CONT",
+        "DIODE",
+        "Board Power"
+      ]
+    }
+  ],
+  "status": "PASS",
+  "verifierFlags": [
+    "tsjVerifyA02",
+    "tsjVerifyA03",
+    "tsjVerifyA04",
+    "tsjVerifyA06",
+    "tsjVerifyA07",
+    "tsjVerifyA08",
+    "tsjVerifyA10",
+    "tsjVerifyAlpha",
+    "tsjVerifyArchitecture",
+    "tsjVerifyChallenge",
+    "tsjVerifyCompositionGate",
+    "tsjVerifyDiode",
+    "tsjVerifyE01",
+    "tsjVerifyE03",
+    "tsjVerifyGeometry",
+    "tsjVerifyLayout",
+    "tsjVerifyLedParts",
+    "tsjVerifyMeter",
+    "tsjVerifyNmos",
+    "tsjVerifyNpn",
+    "tsjVerifyP01",
+    "tsjVerifyP02",
+    "tsjVerifyParallel",
+    "tsjVerifyQ15",
+    "tsjVerifyQuickPlay",
+    "tsjVerifyRc",
+    "tsjVerifyReplacement",
+    "tsjVerifyResistance",
+    "tsjVerifyStoredEnergy",
+    "tsjVerifyStress",
+    "tsjVerifyTask39",
+    "tsjVerifyTask40",
+    "tsjVerifyTask41",
+    "tsjVerifyTask43",
+    "tsjVerifyTask43P",
+    "tsjVerifyTask46",
+    "tsjVerifyTask47",
+    "tsjVerifyTask48",
+    "tsjVerifyTask49",
+    "tsjVerifyU01",
+    "tsjVerifyWrongRepair"
+  ],
+  "debug": false,
+  "extraNegativeInputs": [
+    "tsjTask43PForcedFailure=true",
+    "tsjTask43PSourceExperiment=privacy-canary"
+  ],
+  "privacy": {
+    "attributes": [
+      [
+        "data-tsj-preview-identity-protocol",
+        "troubleshootjs-execution-provenance-v1"
+      ],
+      [
+        "data-tsj-preview-source-digest",
+        "a79ca086a0d9e748ea852fd147e22f79b50215346377ea6402addf544040b309"
+      ],
+      [
+        "data-tsj-preview-script-digest",
+        "216db0113d6da93653d50f1b61fb405b37f686f8af455123e2f71954817f84a5"
+      ],
+      [
+        "data-tsj-preview-web-digest",
+        "033aa7f73ed2947d53d079faac89ba4930af048c3a15c9e2caeb5517b6195e30"
+      ],
+      [
+        "data-tsj-preview-execution-digest",
+        "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623"
+      ],
+      [
+        "data-tsj-preview-file-count",
+        "1435"
+      ]
+    ],
+    "privateLabels": []
+  },
+  "screenshots": [
+    "rb15-unrepaired.png",
+    "rb15-copper.png",
+    "rb15-results.png"
+  ],
+  "limits": [
+    "Automated visible input is not a human user trial.",
+    "Black probe used the visible Place black probe button; no native right-mouse certification."
+  ]
+}

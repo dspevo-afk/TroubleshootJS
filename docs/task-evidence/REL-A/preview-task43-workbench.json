@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "executionDigest": "2c9a8567bc81502ce6e9efcd912578337758e52107e47b15f0a6968c52b72d51",
+  "sourceDigest": "f789b8ab1b14a1974b2e497b29c7438f53f52b607fddd23c2a50eb81af4a4802",
+  "scriptDigest": "216db0113d6da93653d50f1b61fb405b37f686f8af455123e2f71954817f84a5",
+  "webDigest": "ec35125e5d25715ddd97fc4c6d2ec2592cec56f734f67301cd1754a1013edad5",
+  "executionFileCount": 1435,
+  "pid": 832,
+  "startTicks": 639248948546624175,
+  "runId": "U04-U05-RELA-task43-workbench",
+  "port": 64206,
+  "sourceManifest": "task43-workbench-inputs.json"
+}

@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "runtimeStatus": "OBSERVED",
+  "reader": "Assert-Task43PRuntimeEvidence",
+  "readerExitCode": 0,
+  "openBlockerCount": 0,
+  "malformedContractProbe": "PASS",
+  "candidateExecutionDigest": "35b0bbb28d03de8c828895f6d3390ec11d2ff2c32748f8fa42e4210b6d47dfa1",
+  "coverage": "Four existing lanes, four real-overlay cleanup cases, seven cleanup safety cases, settlement/reset order, actual owner replacement callback",
+  "limits": "In-app Browser runtime observations and strict reader; does not qualify the historical Windows CDP wrapper."
+}

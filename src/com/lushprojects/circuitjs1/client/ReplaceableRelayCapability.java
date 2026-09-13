@@ -40,7 +40,7 @@ final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability
         if(owner.getPhysicalBoardRuntime()!=slot.physical.getRuntime()) throw new IllegalArgumentException("Foreign relay installation");
         return new Controller(sim,owner,modifications);
     }
-    private final class Controller implements PhysicalSlotMutationProvider,PhysicalSlotMutationProvider.Scoped {
+    private final class Controller implements PhysicalSlotMutationProvider,PhysicalSlotMutationProvider.Scoped, CatalogAcquisitionProvider {
         private final CirSim sim;
         private final GeneratedBoardInstance owner;
         private final BoardModificationController modifications;
@@ -55,7 +55,8 @@ final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability
             WorkbenchOperation.INSTALL.equals(op.getId())?"Install as "+getComponentId():"Install new relay";}
         public boolean supports(WorkbenchOperation op){return op!=null && getComponentId().equals(op.getComponentId()) &&
             (WorkbenchOperation.REMOVE.equals(op.getId())||WorkbenchOperation.INSTALL.equals(op.getId())||WorkbenchOperation.CATALOG_INSTALL.equals(op.getId()));}
-        private boolean safe(){return sim.getGeneratedBoardInstance()==owner && sim.isChallengeInteractionEnabled() &&
+        private boolean safe(){return sim.getGeneratedBoardInstance()==owner &&
+            sim.getBoardModificationController()==modifications && sim.isChallengeInteractionEnabled() &&
             !sim.activeMeasurementOverlay && sim.getBoardPowerController().isElectricallyUnpowered() &&
             !owner.getPhysicalBoardRuntime().isMutationInProgress() && !owner.getPhysicalBoardRuntime().isMutationQuarantined() &&
             RelayOutputBehavior.isDischarged(owner);}
@@ -64,7 +65,8 @@ final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability
             if(WorkbenchOperation.REMOVE.equals(op.getId())) return !slot.isEmpty() && (op.getPart()==null||op.getPart()==slot.getInstalledPart());
             if(!slot.isEmpty())return false;
             if(WorkbenchOperation.CATALOG_INSTALL.equals(op.getId()))return COIL_5V.equals(op.getCatalogEntryId())||COIL_12V.equals(op.getCatalogEntryId());
-            return op.getPart()!=null && inventory.contains(op.getPart().getId()) && inventory.get(op.getPart().getId())==op.getPart() && !op.getPart().isInstalled();
+            return op.getPart() instanceof PhysicalRelayPart &&
+                owner.getPhysicalBoardRuntime().isPartInstallableAt(op.getPart(), getComponentId());
         }
         public boolean invoke(WorkbenchOperation op,WorkbenchCapabilityContext context){
             if(!isAvailable(op,context))return false;
@@ -73,10 +75,49 @@ final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability
             return installNewFromCatalog(op.getCatalogEntryId());
         }
         public boolean removeInstalledPart(){return mutate("remove",null,null);}
-        public boolean install(String id){return mutate("install",inventory.get(id),null);}
+        public boolean install(String id){
+            PhysicalPart<?> candidate=owner.getPhysicalBoardRuntime().getPart(id);
+            if(!(candidate instanceof PhysicalRelayPart) ||
+                !owner.getPhysicalBoardRuntime().isPartInstallableAt(candidate,getComponentId())) return false;
+            return mutate("install",(PhysicalRelayPart)candidate,null);
+        }
         public boolean installNewFromCatalog(String id){
             if(!COIL_5V.equals(id)&&!COIL_12V.equals(id))throw new IllegalArgumentException("Unknown relay catalog choice");
             return mutate("catalog",null,id);
+        }
+        public PhysicalPart<?> acquireFromCatalog(String id) {
+            if (!safe()) throw new BoardModificationRejectedException("Disconnect supplies and wait for discharge before acquiring a relay");
+            requireCatalog(id);
+            PhysicalMutationScope scope = new PhysicalMutationScope(sim, owner, modifications,
+                PhysicalMutationIntent.prepare(owner.getPhysicalBoardRuntime(), owner, modifications,
+                    slot, "acquire", null, id, null));
+            PhysicalRelayPart part;
+            try { part = acquireRelay(scope, id); scope.commit(); }
+            catch (Throwable failure) { scope.abort(failure); PhysicalMutationScope.rethrow(failure); return null; }
+            scope.closeAfterCommit();
+            sim.needAnalyze(); sim.requestGeneratedBoardVerification(); sim.refreshBoardModificationControls();
+            return part;
+        }
+        private void requireCatalog(String id) {
+            if (!COIL_5V.equals(id) && !COIL_12V.equals(id)) throw new IllegalArgumentException("Unknown relay catalog choice");
+        }
+        private PhysicalRelayPart acquireRelay(PhysicalMutationScope scope, String catalog) {
+            requireCatalog(catalog);
+            final RelaySpecification spec = new RelaySpecification(COIL_5V.equals(catalog) ? 5 : 12);
+            int left = 0;
+            for (CircuitElm e : owner.getSimulationElements()) left = Math.min(left, Math.min(e.x, e.x2));
+            if (left < -1000000) throw new IllegalStateException("Relay backing allocation exhausted");
+            final ServiceRelayElm element = spec.create(left - 1024, 1024);
+            PhysicalRelayPart part = scope.acquire(inventory, getComponentId() + "_CATALOG_PART",
+                new PhysicalPartIdentityFactory<PhysicalRelayPart>() {
+                    public PhysicalRelayPart create(String id) {
+                        PhysicalRelayPart p = new PhysicalRelayPart(id, spec, element, null,
+                            new PhysicalPartProvenance(PhysicalPartProvenance.CATALOG_ACQUIRED, id));
+                        slot.physical.bindGeometryForAcquisition(p); return p;
+                    }
+                });
+            scope.registerCanonicalElement(element); scope.appendActiveElement(element);
+            return part;
         }
         private boolean mutate(String operation,PhysicalRelayPart requested,final String catalog){
             if(!safe())throw new BoardModificationRejectedException("Disconnect all supplies and wait for coil discharge before replacing the relay");
@@ -88,19 +129,7 @@ final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability
                     modifications.disconnectComponentForMutation(scope,getComponentId());scope.clearPart();
                 } else {
                     PhysicalRelayPart part=requested;
-                    if(catalog!=null){
-                        final RelaySpecification spec=new RelaySpecification(COIL_5V.equals(catalog)?5:12);
-                        int left=0;for(CircuitElm e:owner.getSimulationElements())left=Math.min(left,Math.min(e.x,e.x2));
-                        if(left < -1000000)throw new IllegalStateException("Relay backing allocation exhausted");
-                        final ServiceRelayElm element=spec.create(left-1024,1024);
-                        part=scope.acquire(inventory,getComponentId()+"_CATALOG_PART",new PhysicalPartIdentityFactory<PhysicalRelayPart>(){
-                            public PhysicalRelayPart create(String id){
-                                PhysicalRelayPart p=new PhysicalRelayPart(id,spec,element,null,new PhysicalPartProvenance(PhysicalPartProvenance.CATALOG_ACQUIRED,id));
-                                slot.physical.bindGeometryForAcquisition(p);return p;
-                            }
-                        });
-                        scope.registerCanonicalElement(element);scope.appendActiveElement(element);
-                    }
+                    if(catalog!=null) part=acquireRelay(scope,catalog);
                     scope.replacePrimaryBinding(part.getElement());
                     for(GeneratedComponentConnectionBinding b:owner.getConnectionBindings().getForComponent(getComponentId()))
                         scope.retargetEndpoint(b,part.terminal(owner.getBoard().getPad(b.getPadId()).getTerminalId()));
@@ -119,11 +148,13 @@ final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability
     private static final class RelaySlot implements PhysicalMutationSlot {
         final PhysicalBoardSlot physical;
         final WireElm[] attachments;
+        final AttachmentState emptySlotAttachmentState;
         RelaySlot(PhysicalBoardSlot physical,PhysicalRelayPart original,WireElm[] attachments){
             if(attachments==null||attachments.length!=5)throw new IllegalArgumentException("Relay needs five attachments");
             this.physical=physical;this.attachments=new WireElm[5];
             for(int i=0;i<5;i++){ if(attachments[i]==null)throw new IllegalArgumentException("Missing relay attachment"); this.attachments[i]=attachments[i]; }
             physical.install(original);
+            emptySlotAttachmentState=captureAttachmentState();
         }
         public String getComponentId(){return physical.getComponentId();}
         public PhysicalBoardSlot getPhysicalSlot(){return physical;}
@@ -146,6 +177,10 @@ final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability
         public PhysicalPart<?> clearForMutation(PhysicalMutationScope scope){
             if(!scope.owns(this))throw new IllegalArgumentException("Foreign relay scope");
             PhysicalPart<?> p=physical.remove();scope.afterSlotClearWrite();return p;
+        }
+        public void restoreEmptySlotAttachmentState(PhysicalMutationScope scope){
+            if(scope==null||!scope.owns(this))throw new IllegalArgumentException("Foreign relay scope");
+            restoreAttachmentState(emptySlotAttachmentState);
         }
         private final class State implements AttachmentState{
             final RelaySlot owner = RelaySlot.this;

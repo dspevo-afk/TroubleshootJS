@@ -1,0 +1,4869 @@
+{
+  "protocol": "TSJ-ALPHA-1",
+  "status": "PASS",
+  "cases": [
+    {
+      "family": "LED_INDICATOR",
+      "seed": "0",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=3;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=13-13;modes=3;inputs=2;railTargets=3;temporal=0;parallel=false",
+      "admissionMs": 1384,
+      "maxUnitMs": 268,
+      "workUnits": 59,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 255
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 1,
+          "elapsedMs": 268
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "2",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=3;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=13-13;modes=3;inputs=2;railTargets=3;temporal=0;parallel=false",
+      "admissionMs": 1445,
+      "maxUnitMs": 269,
+      "workUnits": 59,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 269
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 1,
+          "elapsedMs": 255
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 19,
+          "elapsedMs": 260
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 268
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "3",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=3;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=13-13;modes=3;inputs=2;railTargets=3;temporal=0;parallel=false",
+      "admissionMs": 1421,
+      "maxUnitMs": 263,
+      "workUnits": 59,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 263
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 1,
+          "elapsedMs": 261
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 19,
+          "elapsedMs": 258
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 250
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "4",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=3;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=13-13;modes=3;inputs=2;railTargets=3;temporal=0;parallel=false",
+      "admissionMs": 1445,
+      "maxUnitMs": 269,
+      "workUnits": 59,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 269
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 1,
+          "elapsedMs": 262
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 19,
+          "elapsedMs": 261
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 263
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "seed": "0",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=4;hypotheses=1;repairs=1;owners=1;readings=0;singleRemaining=1;executedEvidenceDepth=6-6;legalWitnessActions=14-14;modes=4;inputs=2;railTargets=4;temporal=0;parallel=false",
+      "admissionMs": 1789,
+      "maxUnitMs": 825,
+      "workUnits": 24,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 825
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 1,
+          "elapsedMs": 813
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "seed": "2",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=4;hypotheses=1;repairs=1;owners=1;readings=0;singleRemaining=1;executedEvidenceDepth=6-6;legalWitnessActions=14-14;modes=4;inputs=2;railTargets=4;temporal=0;parallel=false",
+      "admissionMs": 2614,
+      "maxUnitMs": 1242,
+      "workUnits": 24,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1242
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 1,
+          "elapsedMs": 1219
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "seed": "3",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=4;hypotheses=1;repairs=1;owners=1;readings=0;singleRemaining=1;executedEvidenceDepth=6-6;legalWitnessActions=14-14;modes=4;inputs=2;railTargets=4;temporal=0;parallel=false",
+      "admissionMs": 1853,
+      "maxUnitMs": 861,
+      "workUnits": 24,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 835
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 1,
+          "elapsedMs": 861
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "seed": "0",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=5;hypotheses=2;repairs=1;owners=1;readings=0;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=15-15;modes=3;inputs=2;railTargets=4;temporal=0;parallel=true",
+      "admissionMs": 4037,
+      "maxUnitMs": 1250,
+      "workUnits": 45,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1250
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 1,
+          "elapsedMs": 1240
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 21,
+          "elapsedMs": 1244
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "seed": "2",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=5;hypotheses=2;repairs=1;owners=1;readings=0;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=15-15;modes=3;inputs=2;railTargets=4;temporal=0;parallel=true",
+      "admissionMs": 3899,
+      "maxUnitMs": 1211,
+      "workUnits": 45,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1184
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 1,
+          "elapsedMs": 1211
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 21,
+          "elapsedMs": 1192
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "seed": "3",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=5;hypotheses=2;repairs=1;owners=1;readings=0;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=15-15;modes=3;inputs=2;railTargets=4;temporal=0;parallel=true",
+      "admissionMs": 4067,
+      "maxUnitMs": 1440,
+      "workUnits": 45,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1184
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 1,
+          "elapsedMs": 1440
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 21,
+          "elapsedMs": 1143
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RC_DELAY",
+      "seed": "0",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=6;hypotheses=2;repairs=2;owners=1;readings=1;singleRemaining=1;executedEvidenceDepth=10-10;legalWitnessActions=16-16;modes=2;inputs=4;railTargets=3;temporal=4;parallel=false",
+      "admissionMs": 51405,
+      "maxUnitMs": 1955,
+      "workUnits": 82,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1731
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 570
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 4,
+          "elapsedMs": 1703
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 5,
+          "elapsedMs": 1589
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 6,
+          "elapsedMs": 518
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 8,
+          "elapsedMs": 1653
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 1732
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 561
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 5,
+          "elapsedMs": 1745
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 6,
+          "elapsedMs": 1621
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 7,
+          "elapsedMs": 514
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 9,
+          "elapsedMs": 1607
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 11,
+          "elapsedMs": 250
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 1574
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 19,
+          "elapsedMs": 1672
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 26,
+          "elapsedMs": 1829
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 581
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 251
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 1783
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 30,
+          "elapsedMs": 1755
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 31,
+          "elapsedMs": 577
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 32,
+          "elapsedMs": 250
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 1768
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 1702
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 38,
+          "elapsedMs": 558
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 1729
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 1681
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 559
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 44,
+          "elapsedMs": 1704
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 46,
+          "elapsedMs": 260
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 51,
+          "elapsedMs": 1689
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 1771
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 61,
+          "elapsedMs": 1893
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 62,
+          "elapsedMs": 620
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 63,
+          "elapsedMs": 271
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 1955
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 1885
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 623
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 272
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 68,
+          "elapsedMs": 1918
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RC_DELAY",
+      "seed": "2",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=6;hypotheses=2;repairs=2;owners=1;readings=1;singleRemaining=1;executedEvidenceDepth=10-10;legalWitnessActions=16-16;modes=2;inputs=4;railTargets=3;temporal=4;parallel=false",
+      "admissionMs": 58093,
+      "maxUnitMs": 2374,
+      "workUnits": 82,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1703
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 550
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 4,
+          "elapsedMs": 1730
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 5,
+          "elapsedMs": 1717
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 6,
+          "elapsedMs": 551
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 8,
+          "elapsedMs": 1722
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 1708
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 554
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 5,
+          "elapsedMs": 1715
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 6,
+          "elapsedMs": 1775
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 7,
+          "elapsedMs": 662
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 274
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 9,
+          "elapsedMs": 1901
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 11,
+          "elapsedMs": 289
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 14,
+          "elapsedMs": 258
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 1837
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 19,
+          "elapsedMs": 1952
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 26,
+          "elapsedMs": 2117
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 670
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 289
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 2086
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 30,
+          "elapsedMs": 2034
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 31,
+          "elapsedMs": 681
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 32,
+          "elapsedMs": 284
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 2045
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 1947
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 38,
+          "elapsedMs": 653
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 281
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 1983
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 1953
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 643
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 43,
+          "elapsedMs": 313
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 44,
+          "elapsedMs": 2049
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 46,
+          "elapsedMs": 303
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 49,
+          "elapsedMs": 280
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 51,
+          "elapsedMs": 2072
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 2053
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 61,
+          "elapsedMs": 2246
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 62,
+          "elapsedMs": 730
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 63,
+          "elapsedMs": 325
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 2374
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 2214
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 721
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 314
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 68,
+          "elapsedMs": 2215
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RC_DELAY",
+      "seed": "3",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=6;hypotheses=2;repairs=2;owners=1;readings=1;singleRemaining=1;executedEvidenceDepth=10-10;legalWitnessActions=16-16;modes=2;inputs=4;railTargets=3;temporal=4;parallel=false",
+      "admissionMs": 58466,
+      "maxUnitMs": 2239,
+      "workUnits": 82,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1995
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 636
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 3,
+          "elapsedMs": 270
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 4,
+          "elapsedMs": 1985
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 5,
+          "elapsedMs": 1775
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 6,
+          "elapsedMs": 556
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 7,
+          "elapsedMs": 256
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 8,
+          "elapsedMs": 1781
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 1917
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 621
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 4,
+          "elapsedMs": 275
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 5,
+          "elapsedMs": 1933
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 6,
+          "elapsedMs": 1763
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 7,
+          "elapsedMs": 573
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 253
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 9,
+          "elapsedMs": 1784
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 11,
+          "elapsedMs": 271
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 1756
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 19,
+          "elapsedMs": 1883
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 26,
+          "elapsedMs": 2028
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 711
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 303
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 2123
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 30,
+          "elapsedMs": 2011
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 31,
+          "elapsedMs": 654
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 32,
+          "elapsedMs": 289
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 1989
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 1945
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 38,
+          "elapsedMs": 628
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 268
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 1966
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 2062
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 629
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 43,
+          "elapsedMs": 273
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 44,
+          "elapsedMs": 1932
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 46,
+          "elapsedMs": 295
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 49,
+          "elapsedMs": 283
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 51,
+          "elapsedMs": 1968
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 2084
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 61,
+          "elapsedMs": 2185
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 62,
+          "elapsedMs": 726
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 63,
+          "elapsedMs": 307
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 2239
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 2192
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 713
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 317
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 68,
+          "elapsedMs": 2221
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "seed": "0",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=7;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=7-7;legalWitnessActions=20-20;modes=3;inputs=4;railTargets=4;temporal=0;parallel=false",
+      "admissionMs": 723,
+      "maxUnitMs": 31,
+      "workUnits": 80,
+      "slowUnits": [],
+      "repairPassed": true
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "seed": "1",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=7;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=7-7;legalWitnessActions=20-20;modes=3;inputs=4;railTargets=4;temporal=0;parallel=false",
+      "admissionMs": 721,
+      "maxUnitMs": 27,
+      "workUnits": 80,
+      "slowUnits": [],
+      "repairPassed": true
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "seed": "2",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=7;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=7-7;legalWitnessActions=20-20;modes=3;inputs=4;railTargets=4;temporal=0;parallel=false",
+      "admissionMs": 701,
+      "maxUnitMs": 25,
+      "workUnits": 80,
+      "slowUnits": [],
+      "repairPassed": true
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "seed": "0",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=6;hypotheses=3;repairs=2;owners=1;readings=1;singleRemaining=1;executedEvidenceDepth=7-7;legalWitnessActions=20-20;modes=3;inputs=4;railTargets=4;temporal=0;parallel=false",
+      "admissionMs": 567,
+      "maxUnitMs": 18,
+      "workUnits": 80,
+      "slowUnits": [],
+      "repairPassed": true
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "seed": "1",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=6;hypotheses=3;repairs=2;owners=1;readings=1;singleRemaining=1;executedEvidenceDepth=7-7;legalWitnessActions=20-20;modes=3;inputs=4;railTargets=4;temporal=0;parallel=false",
+      "admissionMs": 549,
+      "maxUnitMs": 16,
+      "workUnits": 80,
+      "slowUnits": [],
+      "repairPassed": true
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "seed": "2",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=6;hypotheses=3;repairs=2;owners=1;readings=1;singleRemaining=1;executedEvidenceDepth=7-7;legalWitnessActions=20-20;modes=3;inputs=4;railTargets=4;temporal=0;parallel=false",
+      "admissionMs": 542,
+      "maxUnitMs": 15,
+      "workUnits": 80,
+      "slowUnits": [],
+      "repairPassed": true
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "seed": "0",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=9;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=8-8;legalWitnessActions=18-18;modes=3;inputs=4;railTargets=2;temporal=1;parallel=false",
+      "admissionMs": 19958,
+      "maxUnitMs": 1304,
+      "workUnits": 81,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1074
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 437
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 1028
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 427
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 4,
+          "elapsedMs": 366
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 329
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 14,
+          "elapsedMs": 502
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 15,
+          "elapsedMs": 497
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 508
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 17,
+          "elapsedMs": 510
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 23,
+          "elapsedMs": 1304
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 1048
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 423
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 357
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 319
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 490
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 502
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 495
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 507
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 48,
+          "elapsedMs": 1108
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 52,
+          "elapsedMs": 1013
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 53,
+          "elapsedMs": 420
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 355
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 58,
+          "elapsedMs": 325
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 506
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 504
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 501
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 504
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 73,
+          "elapsedMs": 1281
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "seed": "1",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=9;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=8-8;legalWitnessActions=18-18;modes=3;inputs=4;railTargets=2;temporal=1;parallel=false",
+      "admissionMs": 21300,
+      "maxUnitMs": 1409,
+      "workUnits": 81,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1095
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 434
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 1067
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 435
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 4,
+          "elapsedMs": 382
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 332
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 14,
+          "elapsedMs": 529
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 15,
+          "elapsedMs": 526
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 519
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 17,
+          "elapsedMs": 541
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 23,
+          "elapsedMs": 1380
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 1087
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 499
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 374
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 337
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 526
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 519
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 531
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 559
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 48,
+          "elapsedMs": 1266
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 52,
+          "elapsedMs": 1104
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 53,
+          "elapsedMs": 473
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 399
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 58,
+          "elapsedMs": 378
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 62,
+          "elapsedMs": 259
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 558
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 560
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 533
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 542
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 73,
+          "elapsedMs": 1409
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "seed": "2",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=9;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=8-8;legalWitnessActions=18-18;modes=3;inputs=4;railTargets=2;temporal=1;parallel=false",
+      "admissionMs": 18342,
+      "maxUnitMs": 1176,
+      "workUnits": 81,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1091
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 391
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 927
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 390
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 4,
+          "elapsedMs": 328
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 290
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 14,
+          "elapsedMs": 465
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 15,
+          "elapsedMs": 457
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 456
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 17,
+          "elapsedMs": 456
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 23,
+          "elapsedMs": 1166
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 927
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 386
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 325
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 292
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 461
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 463
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 462
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 458
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 48,
+          "elapsedMs": 1056
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 52,
+          "elapsedMs": 944
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 53,
+          "elapsedMs": 382
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 327
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 58,
+          "elapsedMs": 294
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 461
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 456
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 455
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 450
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 73,
+          "elapsedMs": 1176
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "seed": "3",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=9;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=8-8;legalWitnessActions=18-18;modes=3;inputs=4;railTargets=2;temporal=1;parallel=false",
+      "admissionMs": 21465,
+      "maxUnitMs": 1455,
+      "workUnits": 81,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 973
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 395
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 971
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 400
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 4,
+          "elapsedMs": 353
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 302
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 14,
+          "elapsedMs": 465
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 15,
+          "elapsedMs": 480
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 472
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 17,
+          "elapsedMs": 466
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 23,
+          "elapsedMs": 1433
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 1109
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 477
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 394
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 375
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 600
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 552
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 672
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 607
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 48,
+          "elapsedMs": 1439
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 52,
+          "elapsedMs": 1166
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 53,
+          "elapsedMs": 454
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 392
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 58,
+          "elapsedMs": 383
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 62,
+          "elapsedMs": 266
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 540
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 551
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 564
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 557
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 73,
+          "elapsedMs": 1455
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "seed": "4",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=9;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=8-8;legalWitnessActions=18-18;modes=3;inputs=4;railTargets=2;temporal=1;parallel=false",
+      "admissionMs": 22537,
+      "maxUnitMs": 1561,
+      "workUnits": 81,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1078
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 470
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 1098
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 496
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 4,
+          "elapsedMs": 407
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 426
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 12,
+          "elapsedMs": 253
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 14,
+          "elapsedMs": 560
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 15,
+          "elapsedMs": 536
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 555
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 17,
+          "elapsedMs": 537
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 23,
+          "elapsedMs": 1370
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 1119
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 462
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 397
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 367
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 351
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 568
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 557
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 594
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 561
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 48,
+          "elapsedMs": 1561
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 52,
+          "elapsedMs": 1186
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 53,
+          "elapsedMs": 527
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 403
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 58,
+          "elapsedMs": 357
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 600
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 577
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 540
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 542
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 73,
+          "elapsedMs": 1396
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "seed": "5",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=9;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=8-8;legalWitnessActions=18-18;modes=3;inputs=4;railTargets=2;temporal=1;parallel=false",
+      "admissionMs": 23178,
+      "maxUnitMs": 1611,
+      "workUnits": 81,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1163
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 524
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 1207
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 514
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 4,
+          "elapsedMs": 411
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 369
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 12,
+          "elapsedMs": 263
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 14,
+          "elapsedMs": 566
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 15,
+          "elapsedMs": 588
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 544
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 17,
+          "elapsedMs": 583
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 23,
+          "elapsedMs": 1611
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 1315
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 479
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 421
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 444
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 279
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 587
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 578
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 552
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 611
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 48,
+          "elapsedMs": 1439
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 52,
+          "elapsedMs": 1140
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 53,
+          "elapsedMs": 465
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 406
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 58,
+          "elapsedMs": 365
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 553
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 582
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 552
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 548
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 73,
+          "elapsedMs": 1425
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "0",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=16;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=8-8;legalWitnessActions=18-18;modes=3;inputs=4;railTargets=1;temporal=1;parallel=false",
+      "admissionMs": 33382,
+      "maxUnitMs": 2327,
+      "workUnits": 84,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1378
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 833
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 3,
+          "elapsedMs": 1055
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 4,
+          "elapsedMs": 1537
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 5,
+          "elapsedMs": 585
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 1314
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 605
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 4,
+          "elapsedMs": 499
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 483
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 12,
+          "elapsedMs": 359
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 14,
+          "elapsedMs": 821
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 15,
+          "elapsedMs": 752
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 768
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 17,
+          "elapsedMs": 744
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 23,
+          "elapsedMs": 1667
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 1467
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 629
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 489
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 466
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 403
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 763
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 787
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 828
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 774
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 48,
+          "elapsedMs": 1567
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 52,
+          "elapsedMs": 1473
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 53,
+          "elapsedMs": 648
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 502
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 58,
+          "elapsedMs": 509
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 62,
+          "elapsedMs": 423
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 917
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 1025
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 893
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 778
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 73,
+          "elapsedMs": 2327
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "1",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=16;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=8-8;legalWitnessActions=18-18;modes=3;inputs=4;railTargets=1;temporal=1;parallel=false",
+      "admissionMs": 31294,
+      "maxUnitMs": 1898,
+      "workUnits": 84,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1120
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 1012
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 3,
+          "elapsedMs": 1898
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 4,
+          "elapsedMs": 1525
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 5,
+          "elapsedMs": 565
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 1282
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 573
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 4,
+          "elapsedMs": 488
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 437
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 12,
+          "elapsedMs": 346
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 14,
+          "elapsedMs": 745
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 15,
+          "elapsedMs": 734
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 729
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 17,
+          "elapsedMs": 734
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 23,
+          "elapsedMs": 1576
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 1321
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 590
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 493
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 441
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 433
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 836
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 734
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 729
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 748
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 48,
+          "elapsedMs": 1400
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 52,
+          "elapsedMs": 1273
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 53,
+          "elapsedMs": 573
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 499
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 58,
+          "elapsedMs": 441
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 62,
+          "elapsedMs": 354
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 739
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 735
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 738
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 736
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 73,
+          "elapsedMs": 1576
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "2",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=16;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=8-8;legalWitnessActions=18-18;modes=3;inputs=4;railTargets=1;temporal=1;parallel=false",
+      "admissionMs": 31235,
+      "maxUnitMs": 1624,
+      "workUnits": 84,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1322
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 761
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 3,
+          "elapsedMs": 1086
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 4,
+          "elapsedMs": 1508
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 5,
+          "elapsedMs": 592
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 1429
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 627
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 4,
+          "elapsedMs": 494
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 457
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 12,
+          "elapsedMs": 371
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 14,
+          "elapsedMs": 805
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 15,
+          "elapsedMs": 779
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 762
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 17,
+          "elapsedMs": 746
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 23,
+          "elapsedMs": 1603
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 1311
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 589
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 490
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 456
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 417
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 784
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 785
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 760
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 759
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 48,
+          "elapsedMs": 1449
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 52,
+          "elapsedMs": 1315
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 53,
+          "elapsedMs": 579
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 487
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 58,
+          "elapsedMs": 463
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 62,
+          "elapsedMs": 417
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 779
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 775
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 751
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 747
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 73,
+          "elapsedMs": 1624
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "3",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=16;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=8-8;legalWitnessActions=18-18;modes=3;inputs=4;railTargets=1;temporal=1;parallel=false",
+      "admissionMs": 71868,
+      "maxUnitMs": 2511,
+      "workUnits": 120,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1805
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 1137
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 3,
+          "elapsedMs": 1213
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 4,
+          "elapsedMs": 1285
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 5,
+          "elapsedMs": 1281
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 6,
+          "elapsedMs": 1328
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 7,
+          "elapsedMs": 979
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 8,
+          "elapsedMs": 914
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 9,
+          "elapsedMs": 1221
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 10,
+          "elapsedMs": 961
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 11,
+          "elapsedMs": 1355
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 12,
+          "elapsedMs": 1010
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 13,
+          "elapsedMs": 907
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 14,
+          "elapsedMs": 919
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 15,
+          "elapsedMs": 785
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 16,
+          "elapsedMs": 1075
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 17,
+          "elapsedMs": 1151
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 18,
+          "elapsedMs": 852
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 19,
+          "elapsedMs": 890
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 20,
+          "elapsedMs": 902
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 21,
+          "elapsedMs": 1141
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 22,
+          "elapsedMs": 870
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 23,
+          "elapsedMs": 1429
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 24,
+          "elapsedMs": 1064
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 25,
+          "elapsedMs": 1024
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 26,
+          "elapsedMs": 1119
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 27,
+          "elapsedMs": 1205
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 28,
+          "elapsedMs": 912
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 29,
+          "elapsedMs": 1387
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 30,
+          "elapsedMs": 965
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 31,
+          "elapsedMs": 1028
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 32,
+          "elapsedMs": 795
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 33,
+          "elapsedMs": 932
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 34,
+          "elapsedMs": 1014
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 35,
+          "elapsedMs": 1064
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 36,
+          "elapsedMs": 1018
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 37,
+          "elapsedMs": 1071
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 38,
+          "elapsedMs": 735
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 39,
+          "elapsedMs": 1111
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 40,
+          "elapsedMs": 2511
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 41,
+          "elapsedMs": 637
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 1380
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 596
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 4,
+          "elapsedMs": 498
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 507
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 12,
+          "elapsedMs": 363
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 14,
+          "elapsedMs": 780
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 15,
+          "elapsedMs": 771
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 776
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 17,
+          "elapsedMs": 750
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 23,
+          "elapsedMs": 1686
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 1394
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 667
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 510
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 459
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 476
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 786
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 790
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 755
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 788
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 48,
+          "elapsedMs": 1512
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 52,
+          "elapsedMs": 1388
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 53,
+          "elapsedMs": 609
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 496
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 58,
+          "elapsedMs": 500
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 62,
+          "elapsedMs": 423
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 786
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 786
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 751
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 751
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 73,
+          "elapsedMs": 1682
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "17",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=16;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=8-8;legalWitnessActions=18-18;modes=3;inputs=4;railTargets=1;temporal=1;parallel=false",
+      "admissionMs": 63206,
+      "maxUnitMs": 1702,
+      "workUnits": 115,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1378
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 850
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 3,
+          "elapsedMs": 1240
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 4,
+          "elapsedMs": 1084
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 5,
+          "elapsedMs": 1055
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 6,
+          "elapsedMs": 973
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 7,
+          "elapsedMs": 1275
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 8,
+          "elapsedMs": 653
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 9,
+          "elapsedMs": 957
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 10,
+          "elapsedMs": 586
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 11,
+          "elapsedMs": 1193
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 12,
+          "elapsedMs": 766
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 13,
+          "elapsedMs": 1560
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 14,
+          "elapsedMs": 991
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 15,
+          "elapsedMs": 1418
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 16,
+          "elapsedMs": 1282
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 17,
+          "elapsedMs": 995
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 18,
+          "elapsedMs": 853
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 19,
+          "elapsedMs": 1184
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 20,
+          "elapsedMs": 1008
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 21,
+          "elapsedMs": 1192
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 22,
+          "elapsedMs": 618
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 23,
+          "elapsedMs": 1197
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 24,
+          "elapsedMs": 846
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 25,
+          "elapsedMs": 1377
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 26,
+          "elapsedMs": 737
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 27,
+          "elapsedMs": 1122
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 28,
+          "elapsedMs": 1100
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 29,
+          "elapsedMs": 741
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 30,
+          "elapsedMs": 900
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 31,
+          "elapsedMs": 804
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 32,
+          "elapsedMs": 970
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 33,
+          "elapsedMs": 1095
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 34,
+          "elapsedMs": 796
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 35,
+          "elapsedMs": 1337
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 36,
+          "elapsedMs": 493
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 1302
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 576
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 4,
+          "elapsedMs": 485
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 482
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 12,
+          "elapsedMs": 353
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 14,
+          "elapsedMs": 774
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 15,
+          "elapsedMs": 759
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 751
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 17,
+          "elapsedMs": 755
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 23,
+          "elapsedMs": 1702
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 1398
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 642
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 489
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 466
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 421
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 808
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 808
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 756
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 757
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 48,
+          "elapsedMs": 1512
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 52,
+          "elapsedMs": 1413
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 53,
+          "elapsedMs": 575
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 505
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 58,
+          "elapsedMs": 558
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 62,
+          "elapsedMs": 423
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 813
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 786
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 779
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 766
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 73,
+          "elapsedMs": 1640
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "42",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=16;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=8-8;legalWitnessActions=18-18;modes=3;inputs=4;railTargets=1;temporal=1;parallel=false",
+      "admissionMs": 31725,
+      "maxUnitMs": 1446,
+      "workUnits": 89,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1083
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 805
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 3,
+          "elapsedMs": 976
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 4,
+          "elapsedMs": 1021
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 5,
+          "elapsedMs": 1183
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 6,
+          "elapsedMs": 841
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 7,
+          "elapsedMs": 905
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 8,
+          "elapsedMs": 668
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 9,
+          "elapsedMs": 1402
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 10,
+          "elapsedMs": 493
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 1165
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 499
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 4,
+          "elapsedMs": 423
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 450
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 12,
+          "elapsedMs": 300
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 14,
+          "elapsedMs": 645
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 15,
+          "elapsedMs": 650
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 645
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 17,
+          "elapsedMs": 637
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 23,
+          "elapsedMs": 1446
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 1141
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 535
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 420
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 380
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 354
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 680
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 660
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 634
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 639
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 48,
+          "elapsedMs": 1283
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 52,
+          "elapsedMs": 1141
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 53,
+          "elapsedMs": 494
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 417
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 58,
+          "elapsedMs": 426
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 62,
+          "elapsedMs": 361
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 666
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 660
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 631
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 633
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 73,
+          "elapsedMs": 1417
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "101",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=16;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=8-8;legalWitnessActions=18-18;modes=3;inputs=4;railTargets=1;temporal=1;parallel=false",
+      "admissionMs": 33200,
+      "maxUnitMs": 1969,
+      "workUnits": 91,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1113
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 705
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 3,
+          "elapsedMs": 1073
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 4,
+          "elapsedMs": 1006
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 5,
+          "elapsedMs": 1019
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 6,
+          "elapsedMs": 913
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 7,
+          "elapsedMs": 849
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 8,
+          "elapsedMs": 943
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 9,
+          "elapsedMs": 915
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 10,
+          "elapsedMs": 941
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 11,
+          "elapsedMs": 1969
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 12,
+          "elapsedMs": 484
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 1098
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 481
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 4,
+          "elapsedMs": 413
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 372
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 12,
+          "elapsedMs": 296
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 14,
+          "elapsedMs": 620
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 15,
+          "elapsedMs": 625
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 625
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 17,
+          "elapsedMs": 620
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 23,
+          "elapsedMs": 1380
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 1092
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 505
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 416
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 371
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 293
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 631
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 624
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 618
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 617
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 48,
+          "elapsedMs": 1198
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 52,
+          "elapsedMs": 1089
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 53,
+          "elapsedMs": 491
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 408
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 58,
+          "elapsedMs": 372
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 62,
+          "elapsedMs": 298
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 622
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 623
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 622
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 623
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 73,
+          "elapsedMs": 1345
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "-1",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=16;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=8-8;legalWitnessActions=18-18;modes=3;inputs=4;railTargets=1;temporal=1;parallel=false",
+      "admissionMs": 26682,
+      "maxUnitMs": 1386,
+      "workUnits": 84,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 1179
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 839
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 3,
+          "elapsedMs": 763
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 4,
+          "elapsedMs": 1303
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 5,
+          "elapsedMs": 495
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 1121
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 496
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 4,
+          "elapsedMs": 424
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 386
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 12,
+          "elapsedMs": 302
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 14,
+          "elapsedMs": 659
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 15,
+          "elapsedMs": 655
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 644
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 17,
+          "elapsedMs": 640
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 23,
+          "elapsedMs": 1382
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 1188
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 513
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 421
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 380
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 351
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 656
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 660
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 640
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 647
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 48,
+          "elapsedMs": 1231
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 52,
+          "elapsedMs": 1134
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 53,
+          "elapsedMs": 499
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 425
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 58,
+          "elapsedMs": 399
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 62,
+          "elapsedMs": 370
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 663
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 673
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 641
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 643
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 73,
+          "elapsedMs": 1386
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "9007199254740993",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=16;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=8-8;legalWitnessActions=18-18;modes=3;inputs=4;railTargets=1;temporal=1;parallel=false",
+      "admissionMs": 57731,
+      "maxUnitMs": 1606,
+      "workUnits": 120,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 895
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 628
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 3,
+          "elapsedMs": 833
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 4,
+          "elapsedMs": 1116
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 5,
+          "elapsedMs": 1032
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 6,
+          "elapsedMs": 1023
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 7,
+          "elapsedMs": 1033
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 8,
+          "elapsedMs": 728
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 9,
+          "elapsedMs": 968
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 10,
+          "elapsedMs": 939
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 11,
+          "elapsedMs": 894
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 12,
+          "elapsedMs": 876
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 13,
+          "elapsedMs": 1012
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 14,
+          "elapsedMs": 644
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 15,
+          "elapsedMs": 891
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 16,
+          "elapsedMs": 795
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 17,
+          "elapsedMs": 1099
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 18,
+          "elapsedMs": 923
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 19,
+          "elapsedMs": 657
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 20,
+          "elapsedMs": 883
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 21,
+          "elapsedMs": 1038
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 22,
+          "elapsedMs": 796
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 23,
+          "elapsedMs": 1106
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 25,
+          "elapsedMs": 654
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 26,
+          "elapsedMs": 666
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 27,
+          "elapsedMs": 932
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 28,
+          "elapsedMs": 724
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 29,
+          "elapsedMs": 920
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 30,
+          "elapsedMs": 580
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 31,
+          "elapsedMs": 612
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 32,
+          "elapsedMs": 772
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 33,
+          "elapsedMs": 837
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 34,
+          "elapsedMs": 807
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 35,
+          "elapsedMs": 993
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 36,
+          "elapsedMs": 815
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 37,
+          "elapsedMs": 779
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 38,
+          "elapsedMs": 829
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 39,
+          "elapsedMs": 1268
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 40,
+          "elapsedMs": 1606
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 41,
+          "elapsedMs": 494
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 1147
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 498
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 4,
+          "elapsedMs": 418
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 416
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 12,
+          "elapsedMs": 298
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 14,
+          "elapsedMs": 645
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 15,
+          "elapsedMs": 649
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 637
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 17,
+          "elapsedMs": 638
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 23,
+          "elapsedMs": 1429
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 1145
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 539
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 426
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 387
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 359
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 666
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 667
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 651
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 643
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 48,
+          "elapsedMs": 1283
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 52,
+          "elapsedMs": 1144
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 53,
+          "elapsedMs": 490
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 419
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 58,
+          "elapsedMs": 425
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 62,
+          "elapsedMs": 362
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 665
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 682
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 636
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 634
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 73,
+          "elapsedMs": 1415
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "-9223372036854775808",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=16;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=8-8;legalWitnessActions=18-18;modes=3;inputs=4;railTargets=1;temporal=1;parallel=false",
+      "admissionMs": 50837,
+      "maxUnitMs": 1761,
+      "workUnits": 113,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 887
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 747
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 3,
+          "elapsedMs": 1043
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 4,
+          "elapsedMs": 884
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 5,
+          "elapsedMs": 892
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 6,
+          "elapsedMs": 729
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 7,
+          "elapsedMs": 996
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 8,
+          "elapsedMs": 576
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 9,
+          "elapsedMs": 776
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 10,
+          "elapsedMs": 957
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 11,
+          "elapsedMs": 1242
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 12,
+          "elapsedMs": 601
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 13,
+          "elapsedMs": 847
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 14,
+          "elapsedMs": 686
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 15,
+          "elapsedMs": 1068
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 16,
+          "elapsedMs": 724
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 17,
+          "elapsedMs": 745
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 18,
+          "elapsedMs": 686
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 19,
+          "elapsedMs": 780
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 20,
+          "elapsedMs": 336
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 21,
+          "elapsedMs": 1134
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 22,
+          "elapsedMs": 1033
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 23,
+          "elapsedMs": 1154
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 24,
+          "elapsedMs": 546
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 25,
+          "elapsedMs": 1051
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 26,
+          "elapsedMs": 913
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 27,
+          "elapsedMs": 1121
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 28,
+          "elapsedMs": 959
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 29,
+          "elapsedMs": 893
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 30,
+          "elapsedMs": 642
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 31,
+          "elapsedMs": 695
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 32,
+          "elapsedMs": 775
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 33,
+          "elapsedMs": 1761
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 34,
+          "elapsedMs": 478
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 1082
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 491
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 4,
+          "elapsedMs": 413
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 373
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 12,
+          "elapsedMs": 299
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 14,
+          "elapsedMs": 633
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 15,
+          "elapsedMs": 626
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 631
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 17,
+          "elapsedMs": 629
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 23,
+          "elapsedMs": 1348
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 1080
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 489
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 415
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 376
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 297
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 638
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 636
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 643
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 634
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 48,
+          "elapsedMs": 1210
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 52,
+          "elapsedMs": 1113
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 53,
+          "elapsedMs": 503
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 419
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 58,
+          "elapsedMs": 373
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 62,
+          "elapsedMs": 296
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 629
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 628
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 625
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 625
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 73,
+          "elapsedMs": 1342
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "9223372036854775807",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=16;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=8-8;legalWitnessActions=18-18;modes=3;inputs=4;railTargets=1;temporal=1;parallel=false",
+      "admissionMs": 30177,
+      "maxUnitMs": 1581,
+      "workUnits": 89,
+      "slowUnits": [
+        {
+          "stage": "HEALTHY",
+          "unit": 1,
+          "elapsedMs": 986
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 2,
+          "elapsedMs": 837
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 3,
+          "elapsedMs": 696
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 4,
+          "elapsedMs": 916
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 5,
+          "elapsedMs": 853
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 6,
+          "elapsedMs": 807
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 7,
+          "elapsedMs": 758
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 8,
+          "elapsedMs": 801
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 9,
+          "elapsedMs": 1581
+        },
+        {
+          "stage": "HEALTHY",
+          "unit": 10,
+          "elapsedMs": 493
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 2,
+          "elapsedMs": 1088
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 3,
+          "elapsedMs": 491
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 4,
+          "elapsedMs": 411
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 8,
+          "elapsedMs": 416
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 12,
+          "elapsedMs": 307
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 14,
+          "elapsedMs": 651
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 15,
+          "elapsedMs": 642
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 16,
+          "elapsedMs": 629
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 17,
+          "elapsedMs": 626
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 23,
+          "elapsedMs": 1351
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 27,
+          "elapsedMs": 1090
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 28,
+          "elapsedMs": 485
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 29,
+          "elapsedMs": 409
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 33,
+          "elapsedMs": 383
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 37,
+          "elapsedMs": 297
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 39,
+          "elapsedMs": 648
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 40,
+          "elapsedMs": 656
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 41,
+          "elapsedMs": 630
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 42,
+          "elapsedMs": 621
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 48,
+          "elapsedMs": 1200
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 52,
+          "elapsedMs": 1097
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 53,
+          "elapsedMs": 496
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 54,
+          "elapsedMs": 410
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 58,
+          "elapsedMs": 375
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 62,
+          "elapsedMs": 295
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 64,
+          "elapsedMs": 648
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 65,
+          "elapsedMs": 626
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 66,
+          "elapsedMs": 622
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 67,
+          "elapsedMs": 620
+        },
+        {
+          "stage": "HYPOTHESES",
+          "unit": 73,
+          "elapsedMs": 1347
+        }
+      ],
+      "repairPassed": true
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "seed": "0",
+      "requested": "MEDIUM",
+      "computed": "MEDIUM",
+      "features": "difficulty/1;profile=MEDIUM;parts=15;hypotheses=4;repairs=4;owners=4;readings=2;singleRemaining=2;executedEvidenceDepth=13-13;legalWitnessActions=148-148;modes=3;inputs=6;railTargets=6;temporal=4;parallel=true",
+      "admissionMs": 5140,
+      "maxUnitMs": 110,
+      "workUnits": 617,
+      "slowUnits": [],
+      "repairPassed": true
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "seed": "3",
+      "requested": "MEDIUM",
+      "computed": "MEDIUM",
+      "features": "difficulty/1;profile=MEDIUM;parts=15;hypotheses=4;repairs=4;owners=4;readings=2;singleRemaining=2;executedEvidenceDepth=13-13;legalWitnessActions=148-148;modes=3;inputs=6;railTargets=6;temporal=4;parallel=true",
+      "admissionMs": 5102,
+      "maxUnitMs": 91,
+      "workUnits": 617,
+      "slowUnits": [],
+      "repairPassed": true
+    }
+  ],
+  "assertions": 1245,
+  "acquisitions": 115,
+  "mutationChecks": 230,
+  "elapsedMs": 958301,
+  "cleanupMs": 2,
+  "ownerRestored": true,
+  "failure": null
+}

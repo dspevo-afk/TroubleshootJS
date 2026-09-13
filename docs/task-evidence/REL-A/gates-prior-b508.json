@@ -1,0 +1,129 @@
+{
+  "sourceInputs": 1151,
+  "executionInputs": 1435,
+  "releaseStatus": "IN PROGRESS - final combined qualification pending",
+  "gates": [
+    {
+      "gate": "Maintained native contracts",
+      "status": "PASS",
+      "artifact": "native-contracts.txt",
+      "priorStatus": "PASS",
+      "priorResult": "RC phase candidate native run12: 33 Java suites plus independent oracles; exit0; cleanup PASS",
+      "result": "Native15: 33 Java suites, independent oracles, exit0, cleanup PASS"
+    },
+    {
+      "gate": "Actual JDK8/GWT production build",
+      "status": "PASS",
+      "artifact": "gwt-build.txt",
+      "priorStatus": "PASS",
+      "priorResult": "RC phase candidate: five permutations; 70.720s compile,1.359s link; exit0",
+      "result": "Final runtime candidate: five permutations,70.426s compile/1.325s link,exit0"
+    },
+    {
+      "gate": "UI adapter contracts",
+      "status": "PASS",
+      "result": "Fresh49 assertions after real-browser collapsed-disclosure focus fix; node syntax PASS; real input still separate.",
+      "artifact": "../U04/ui-contracts.txt"
+    },
+    {
+      "gate": "Final integrated Alpha corpus",
+      "status": "PASS",
+      "result": "Unchanged compiled Java on35b0bbb2:38 cases/1217 assertions/223 mutation checks,851241ms operation/2ms cleanup,owner restored. Two-file UI focus delta audited in menu-focus-input-delta.json.  Fresh b5080dcf forced negative restores owner; strict reader+20 malformed canaries PASS.",
+      "artifact": "alpha-compiled.json",
+      "priorStatus": "PASS",
+      "priorResult": "First RC phase candidate: 38 cases PASS, 848144ms operation, 2ms cleanup; rc maximum units1903/1934/1994ms. Subsequent review found cleanup blockers."
+    },
+    {
+      "gate": "Final Q15 full compiled corpus/readers",
+      "status": "PASS",
+      "result": "Fresh b5080dcf: all11 seeds/four designs/three faults,481+80 assertions,560040ms operation/2ms cleanup;16 malformed canaries and forced owner restoration PASS. Maintained combined Q15/A10/E03/A08/Task41/Task49 reader PASS,exit0.",
+      "artifact": "q15/final-runtime-summary.json"
+    },
+    {
+      "gate": "Final affected compiled regressions",
+      "status": "PASS",
+      "artifact": "regressions-current.json",
+      "priorStatus": "PASS",
+      "priorResult": "Corrected A08 PASS1103 with cleanup/forced failure and E01/E03 maintained readers. Prior E01/E03, Task49, Task41, A10, A07 and U01 consumed inputs audited unchanged.",
+      "result": "Fresh b5080dcf Task41,Task49,A08,E01,E03,A07,U01, affected strict readers and negative canaries PASS. A10/Task43P PASS on unchanged compiled Java; two-file UI delta audited."
+    },
+    {
+      "gate": "Final Quick Play compiled selection/completion",
+      "status": "PASS",
+      "artifact": "quick-play-final.json",
+      "priorStatus": "PASS",
+      "priorResult": "Full sixteen-entropy/eight-family selection/construction corpus plus LED seed3 legacy repair/completion",
+      "result": "Current b5080dcf full sixteen-entropy/eight-family selection/construction, LED3 unrepaired rejection, correct completion and fresh session isolation. Legacy report does not provide separate operation/cleanup durations. Visible entry checks remain separate."
+    },
+    {
+      "gate": "Normal final RC seed3 preparation",
+      "status": "PASS",
+      "artifact": "../U04/player-runtime-b508.json",
+      "priorStatus": "PASS",
+      "priorResult": "Ticket reached with exact replay; observed upper bound 54,157 ms",
+      "result": "Actual exact replay reaches ticket with every digit and current GWT identity; observation timing is an upper bound."
+    },
+    {
+      "gate": "Normal final cancellation",
+      "status": "PASS",
+      "artifact": "../U04/player-runtime-b508.json",
+      "priorStatus": "PASS",
+      "priorResult": "Visible pointer cancellation retained prior RC seed3; locator timeout and 1,029 ms pointer round trip recorded separately from coordinator latency",
+      "result": "Actual visible Cancel preparation preserves prior RC3 and OFF power; button round trip804ms includes transport, not cleanup latency."
+    },
+    {
+      "gate": "Final Settings/Resources/menu focus",
+      "status": "PASS",
+      "artifact": "../U04/menu-focus-runtime-pass.json",
+      "priorStatus": "PASS",
+      "priorResult": "Both focus wraps, exact draft, return focus, preference persistence and restoration, generic reference, inert background, no private attributes/reports",
+      "result": "Fresh b5080dcf actual keyboard proof: collapsed/expanded menu reverse/forward wraps and Resources wraps. Settings draft/persistence/return focus, privacy and inert background passed on unchanged presentation behavior immediately before this two-file fix.49 fresh adapter assertions; three inspected screenshots. Original menu failure retained."
+    },
+    {
+      "gate": "Final remaining Q15/player/replay flows",
+      "status": "IN PROGRESS",
+      "result": "Normal RB15 random draws, both known bad exact replay failures/recovery, >2^53 replay, full RB15/MEDIUM repairs, privacy41flags and two ordinary Quick Play entries PASS. Legacy debug New control board crashes reproduced in two tabs; existing async scheduling canary in progress.",
+      "artifact": "legacy-entry-crash-b508.json"
+    },
+    {
+      "gate": "Human EASY/MEDIUM trials",
+      "status": "NOT RUN",
+      "result": "Requested; no results received. Agent input is not human calibration."
+    },
+    {
+      "gate": "Root integrated source review",
+      "status": "NOT RUN",
+      "artifact": "root-review.md",
+      "priorStatus": "PASS",
+      "priorResult": "Resolved findings and review scope recorded; runtime gates remain separate",
+      "result": "Requires current-source qualification after the RC temporal work/controller/proof change; prior evidence retained"
+    },
+    {
+      "gate": "Staged review/commit/push/remote verification/Gmail",
+      "status": "NOT RUN"
+    },
+    {
+      "gate": "Separately authorized visual pass",
+      "status": "NOT RUN",
+      "result": "Conditional on stable alpha acceptance; own subsequent commit"
+    },
+    {
+      "gate": "RC phase A10 qualification",
+      "status": "PASS",
+      "result": "Final35b0bbb2:1274 assertions/24 attempts,707 RC phase/abort checks,14 observation cleanup checks; strict reader+17 malformed canaries; explicit forced failure/no report; cleanup PASS. RC0 admission59622/59870ms,max units1937/2037ms,cancellationMax3ms.",
+      "artifact": "a10-report.json",
+      "priorStatus": "PASS",
+      "priorResult": "1274 assertions,24 benchmark attempts; independent501 RC phase checks; RC admission58026/58332ms,max units1886/1916ms; cleanupPASS; strict reader and nine malformed phase canariesPASS"
+    },
+    {
+      "gate": "Task43P overlay and owner-callback complementary coverage",
+      "status": "PASS",
+      "artifact": "task43p-runtime-reader.json",
+      "result": "35b0bbb2: runtime OBSERVED; maintained reader exit0/zero open blockers; real overlays, seven cleanup safety cases, settlement/reset order and actual owner-replacement callback; malformed contract probe PASS. Windows CDP wrapper not qualified."
+    }
+  ],
+  "sourceQualificationNote": "Native15, actual five-permutation build, A10, Task43P and Alpha consumed compiled inputs unchanged by the final two-file UI/test focus correction; see menu-focus-input-delta.json. Remaining compiled gates ran against current b5080dcf HTTP/tree identity.",
+  "priorCandidateExecutionDigest": "8b4d01937d385062d2786bced76999cac918151b9074945056b390b36ebfb25b",
+  "currentSourceStatus": "Technical corpora and ordinary player flows PASS; newly reproduced legacy interactive debug scheduling crash under investigation; human trials pending.",
+  "candidateExecutionDigest": "b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d"
+}

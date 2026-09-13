@@ -18,17 +18,19 @@ class ResistanceMeasurementStimulus implements ActiveMeasurementStimulus {
         Point blackPoint = black.getElement().getPost(black.getPostIndex());
         Point midpoint = findUnusedPoint(sim, redPoint, blackPoint);
         source = new DCVoltageElm(midpoint.x, midpoint.y);
-        source.drag(redPoint.x, redPoint.y);
+        // Solver endpoints need not lie on the schematic editor's grid.  Drag
+        // snaps its destination and can silently disconnect the red probe.
+        source.setPosition(midpoint.x, midpoint.y, redPoint.x, redPoint.y);
         source.maxVoltage = TEST_VOLTAGE;
         internalResistor = new ResistorElm(blackPoint.x, blackPoint.y);
-        internalResistor.drag(midpoint.x, midpoint.y);
+        internalResistor.setPosition(blackPoint.x, blackPoint.y, midpoint.x, midpoint.y);
         internalResistor.setResistance(INTERNAL_RESISTANCE);
         Point referencePoint = findUnusedPoint(sim, midpoint, redPoint);
         referenceResistor = new ResistorElm(blackPoint.x, blackPoint.y);
-        referenceResistor.drag(referencePoint.x, referencePoint.y);
+        referenceResistor.setPosition(blackPoint.x, blackPoint.y, referencePoint.x, referencePoint.y);
         referenceResistor.setResistance(REFERENCE_RESISTANCE);
         referenceGround = new GroundElm(referencePoint.x, referencePoint.y);
-        referenceGround.drag(referencePoint.x, referencePoint.y + 32);
+        referenceGround.setPosition(referencePoint.x, referencePoint.y, referencePoint.x, referencePoint.y + 32);
     }
 
     public void install(CirSim sim) {

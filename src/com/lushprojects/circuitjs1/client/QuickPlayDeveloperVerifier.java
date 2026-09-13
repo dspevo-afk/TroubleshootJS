@@ -137,8 +137,8 @@ final class QuickPlayDeveloperVerifier {
      */
     private static void verifySelectionEnvelopes() {
         Vector<String> families = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
-        long[] injectedValues = { Long.MIN_VALUE, -7, -1, 0, 1, 2, 3, 4, 17,
-            Long.MAX_VALUE };
+        long[] injectedValues = { Long.MIN_VALUE, Long.MAX_VALUE, -4518705223253195925L,
+            -5365808313541656343L, -17, -7, -1, 0, 1, 2, 3, 4, 17, 42, 101, 9007199254740993L };
         long[] legacySeeds = { 0, 2, 3 };
         long[] ledSeeds = { 0, 2, 3, 4 };
         long[] npnSeeds = { 0, 1, 2 };
@@ -149,7 +149,8 @@ final class QuickPlayDeveloperVerifier {
                 ledSeeds : QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(familyId) ?
                 npnSeeds : QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(familyId) ?
                 nmosSeeds : QuickPlayFamilyRegistry.RELAY_OUTPUT.equals(familyId) ?
-                new long[] {0,1,2,3,4,5} : legacySeeds;
+                new long[] {0,1,2,3,4,5} : Rb15Plan.FAMILY_ID.equals(familyId) ?
+                new long[] {0,1,2,3,17,42,101,-1,9007199254740993L,Long.MIN_VALUE,Long.MAX_VALUE} : legacySeeds;
             for (long injectedValue : injectedValues) {
                 QuickPlaySelector selector = new QuickPlaySelector(new QuickPlayFixedRandomSource(
                     new long[] { familyIndex, injectedValue }));
@@ -157,7 +158,7 @@ final class QuickPlayDeveloperVerifier {
                 GeneratedBoardInstance generated = selector.generate(selection);
                 require(familyId.equals(selection.getFamilyId()) &&
                     familyId.equals(generated.getCircuitFamilyId()) &&
-                    (Rb15Plan.FAMILY_ID.equals(familyId) ? selection.getSeed()==injectedValue : contains(expectedSeeds, selection.getSeed())) &&
+                    contains(expectedSeeds, selection.getSeed()) &&
                     generated.getSeed() == selection.getSeed(),
                     "Quick Play selection escaped the " + familyId + " seed envelope for " +
                         injectedValue);
@@ -282,6 +283,41 @@ final class QuickPlayDeveloperVerifier {
             !sim.finishQuickPlayJob() && !challenge.isCompleted() &&
             challenge.getState() == GeneratedChallengeState.READY,
             "Finish Job advanced an unrepaired challenge");
+        settle(sim, sim.getGeneratedBoardInstance());
+    }
+
+    private static void settle(CirSim sim, GeneratedBoardInstance owner) {
+        GeneratedRuntimeDeveloperSettlement.settle(sim, owner, "Quick Play public action");
+    }
+
+    private static void power(CirSim sim, GeneratedBoardInstance owner, BoardPowerState state) {
+        settle(sim, owner);
+        sim.setBoardPowerState(state);
+        if (owner.getTemporalBehavior() != null) sim.advanceGeneratedTemporalProfile(.025);
+        settle(sim, owner);
+        require(sim.getBoardPowerController().getState() == state &&
+            (state != BoardPowerState.UNPOWERED || sim.getBoardPowerController().isElectricallyUnpowered()),
+            "Quick Play public power action did not reach requested electrical isolation");
+    }
+
+    private static void replace(CirSim sim, GeneratedBoardInstance owner,
+            PhysicalSlotMutationProvider provider, String catalogId) {
+        require(provider != null, "Quick Play repair has no current slot provider");
+        power(sim, owner, BoardPowerState.UNPOWERED);
+        require(provider.removeInstalledPart(), "Quick Play separate removal was not accepted");
+        settle(sim, owner);
+        require(provider.installNewFromCatalog(catalogId), "Quick Play catalog replacement was not accepted");
+        settle(sim, owner);
+    }
+
+    private static void finishRepaired(CirSim sim, GeneratedBoardInstance owner,
+            GeneratedChallengeController challenge) {
+        settle(sim, owner);
+        require(challenge.performCustomerRetest().isPassed(), "Quick Play repaired customer retest failed");
+        settle(sim, owner);
+        require(sim.finishQuickPlayJob() && challenge.isCompleted(),
+            "Quick Play passed customer retest did not finish its current owner");
+        settle(sim, owner);
     }
 
     private static void verifyCorrectRepairCanFinish(CirSim sim,
@@ -306,22 +342,14 @@ final class QuickPlayDeveloperVerifier {
             "Quick Play verification selection is not the deterministic LED proof");
         ResistorSlotController slots = sim.getResistorSlotController();
         require(slots != null, "Quick Play LED proof has no resistor capability");
-        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        sim.updateCircuit();
-        require(slots.removeInstalledPart() &&
-            slots.installNewFromCatalog("R_CATALOG_1000"),
-            "Quick Play correct physical repair was not accepted");
-        sim.setBoardPowerState(BoardPowerState.POWERED);
-        sim.analyzeCircuit();
-        sim.runCircuit(true);
-        sim.runCircuit(true);
+        replace(sim, instance, slots, "R_CATALOG_1000");
+        power(sim, instance, BoardPowerState.POWERED);
         sim.verifyGeneratedBoard();
         require(challenge.getDefinition().getBehaviorContract().getRepairStatus(instance,
             sim.getBoardModificationController(), BoardPowerState.POWERED, false) ==
-            GeneratedRepairStatus.CORRECTLY_RESTORED && challenge.performCustomerRetest().isPassed() &&
-            sim.finishQuickPlayJob() &&
-            challenge.isCompleted(),
-            "Correctly restored Quick Play challenge did not finish through generic status");
+            GeneratedRepairStatus.CORRECTLY_RESTORED,
+            "Correctly restored Quick Play challenge did not report generic repair status");
+        finishRepaired(sim, instance, challenge);
     }
 
     private static void verifyCompletedPhysicalMutationIsRejected(CirSim sim,
@@ -410,6 +438,7 @@ final class QuickPlayDeveloperVerifier {
         try {
             require(sim.invokeGeneratedPlayerOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH),
                 "Completed switch challenge rejected public HIGH operation");
+            settle(sim, instance);
             if (QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId()))
                 require(NpnLowSideSwitchGeneratedBoardValidator.isHealthyOn(instance),
                     "Completed NPN HIGH operation did not remain solver-backed");
@@ -418,6 +447,7 @@ final class QuickPlayDeveloperVerifier {
                     "Completed NMOS HIGH operation did not remain solver-backed");
             require(sim.invokeGeneratedPlayerOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW),
                 "Completed switch challenge rejected public LOW operation");
+            settle(sim, instance);
             if (QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(instance.getCircuitFamilyId()))
                 require(NpnLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance),
                     "Completed NPN LOW operation did not remain solver-backed");
@@ -429,6 +459,7 @@ final class QuickPlayDeveloperVerifier {
                     GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
                     GeneratedBoardOperationIds.CONTROL_INPUT_LOW),
                 "Completed switch challenge could not restore prior public operation state");
+            settle(sim, instance);
         }
     }
 
@@ -436,61 +467,45 @@ final class QuickPlayDeveloperVerifier {
             GeneratedChallengeController challenge, GeneratedBoardInstance instance) {
         NpnSlotController slots = sim.getNpnSlotController();
         require(slots != null, "Quick Play NPN seed 1 has no Q1 slot controller");
-        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        sim.updateCircuit();
-        require(slots.removeInstalledPart() && slots.installNewFromCatalog(
-            NpnReplacementCatalog.CORRECT),
-            "Quick Play NPN seed 1 did not accept the correct Q1 catalog replacement");
-        sim.setBoardPowerState(BoardPowerState.POWERED);
+        replace(sim, instance, slots, NpnReplacementCatalog.CORRECT);
+        power(sim, instance, BoardPowerState.POWERED);
         NpnLowSideSwitchFamilyState state = (NpnLowSideSwitchFamilyState)
             instance.getFamilyState();
         instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_HIGH, sim);
+        settle(sim, instance);
         require(NpnLowSideSwitchGeneratedBoardValidator.isHealthyOn(instance),
             "Quick Play NPN seed 1 replacement did not restore real ON behavior");
         instance.invokeOperation(GeneratedBoardOperationIds.CONTROL_INPUT_LOW, sim);
+        settle(sim, instance);
         require(NpnLowSideSwitchGeneratedBoardValidator.isHealthyOff(instance),
             "Quick Play NPN seed 1 replacement did not restore real OFF behavior");
-        require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED &&
-            challenge.performCustomerRetest().isPassed() && sim.finishQuickPlayJob() &&
-            challenge.isCompleted(),
-            "Quick Play NPN seed 1 correct replacement did not finish generically");
+        require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED,
+            "Quick Play NPN seed 1 correct replacement did not report generic repair status");
+        finishRepaired(sim, instance, challenge);
     }
 
     private static void verifyNpnCorrectRepairCanFinish(CirSim sim,
             GeneratedChallengeController challenge, GeneratedBoardInstance instance) {
         String target = challenge.getDefinition().getFault().getTargetComponentId();
-        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        sim.updateCircuit();
         if ("Q1".equals(target)) {
             NpnSlotController slots = sim.getNpnSlotController();
-            require(slots != null && slots.removeInstalledPart() &&
-                slots.installNewFromCatalog(NpnReplacementCatalog.CORRECT),
-                "Quick Play NPN replacement was not accepted");
+            replace(sim, instance, slots, NpnReplacementCatalog.CORRECT);
         } else {
             ResistorSlotController slots = sim.getResistorSlotController(target);
-            require(slots != null && slots.removeInstalledPart() &&
-                slots.installNewFromCatalog("R_CATALOG_" + ("RB".equals(target) ? "1000" : "330")),
-                "Quick Play NPN resistor replacement was not accepted");
+            replace(sim, instance, slots, "R_CATALOG_" + ("RB".equals(target) ? "1000" : "330"));
         }
-        sim.setBoardPowerState(BoardPowerState.POWERED);
-        sim.analyzeCircuit();
-        sim.runCircuit(true);
-        sim.runCircuit(true);
-        require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED &&
-            challenge.performCustomerRetest().isPassed() && sim.finishQuickPlayJob() &&
-            challenge.isCompleted(),
-            "Correctly restored NPN Quick Play challenge did not finish through generic status");
+        power(sim, instance, BoardPowerState.POWERED);
+        require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED,
+            "Correctly restored NPN Quick Play challenge did not report generic repair status");
+        finishRepaired(sim, instance, challenge);
     }
 
     private static void verifyNmosCorrectRepairCanFinish(CirSim sim,
             GeneratedChallengeController challenge) {
         NmosSlotController slots = sim.getNmosSlotController();
         require(slots != null, "Quick Play NMOS challenge has no Q1 slot controller");
-        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        sim.updateCircuit();
-        require(slots.removeInstalledPart() && slots.installNewFromCatalog(
-            NmosReplacementCatalog.CORRECT),
-            "Quick Play NMOS replacement was not accepted");
+        GeneratedBoardInstance instance = sim.getGeneratedBoardInstance();
+        replace(sim, instance, slots, NmosReplacementCatalog.CORRECT);
         for (CircuitElm element : sim.getGeneratedBoardInstance().getFaultBinding()
                 .getPrivateSimulationElements())
             require(sim.elmList.contains(element),
@@ -504,31 +519,22 @@ final class QuickPlayDeveloperVerifier {
                 .getInstalledPart("Q1")).ownsGeneratedFault(
                     sim.getGeneratedBoardInstance().getFaultBinding()),
             "Quick Play NMOS catalog replacement retained original fault identity");
-        sim.setBoardPowerState(BoardPowerState.POWERED);
-        sim.analyzeCircuit();
-        sim.runCircuit(true);
-        sim.runCircuit(true);
-        require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED &&
-            challenge.performCustomerRetest().isPassed() && sim.finishQuickPlayJob() &&
-            challenge.isCompleted(),
-            "Correctly restored NMOS Quick Play challenge did not finish generically");
+        power(sim, instance, BoardPowerState.POWERED);
+        require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED,
+            "Correctly restored NMOS Quick Play challenge did not report generic repair status");
+        finishRepaired(sim, instance, challenge);
     }
 
     private static void verifyRcCorrectRepairCanFinish(CirSim sim,
             GeneratedChallengeController challenge, GeneratedBoardInstance instance) {
         CapacitorSlotController slots = sim.getCapacitorSlotController();
         require(slots != null, "Quick Play RC proof has no capacitor capability");
-        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-        sim.updateCircuit();
-        require(slots.removeInstalledPart() && slots.installNewFromCatalog(
-            CapacitorReplacementCatalog.CORRECT),
-            "Quick Play RC replacement was not accepted");
-        sim.setBoardPowerState(BoardPowerState.POWERED);
+        replace(sim, instance, slots, CapacitorReplacementCatalog.CORRECT);
+        power(sim, instance, BoardPowerState.POWERED);
         GeneratedRepairStatus status = challenge.getRepairStatus();
-        require(status == GeneratedRepairStatus.CORRECTLY_RESTORED &&
-            challenge.performCustomerRetest().isPassed() && sim.finishQuickPlayJob() &&
-            challenge.isCompleted(),
-            "RC Quick Play Finish Job did not use the temporal functional test");
+        require(status == GeneratedRepairStatus.CORRECTLY_RESTORED,
+            "RC Quick Play repair did not report generic repair status");
+        finishRepaired(sim, instance, challenge);
         verifyCompletedRcFinishIsNoOp(sim, challenge, instance);
     }
 

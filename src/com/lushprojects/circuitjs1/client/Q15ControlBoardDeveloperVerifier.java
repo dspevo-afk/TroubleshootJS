@@ -12,6 +12,7 @@ final class Q15ControlBoardDeveloperVerifier {
             int index,assertions,supportAssertions;
             int phase=-1;
             long cancellationMs,repairMs;
+            String continuity;
             GeneratedBoardInstance activeOwner;
             String operation="cancellation";
             final GenerationCoordinator coordinator=sim.generationCoordinator;
@@ -77,7 +78,8 @@ final class Q15ControlBoardDeveloperVerifier {
                     cases.append("{\"seed\":\"").append(Long.toString(owner.getSeed())).append("\",\"design\":\"").append(Rb15Plan.resolve(owner.getSeed()).topology())
                         .append("\",\"fault\":\"").append(owner.getFaultBinding().getFault().getType()).append("\",\"packages\":16,\"hypotheses\":3,\"stages\":6,\"admissionMs\":")
                         .append(job.getElapsedMillis()).append(",\"maxUnitMs\":").append(coordinator.getMaxAdvanceMillis()).append(",\"repairMs\":").append(repairMs)
-                        .append(",\"supportMs\":").append(System.currentTimeMillis()-supportStarted).append(",\"workUnits\":").append(job.getStepCount())
+                        .append(",\"supportMs\":").append(System.currentTimeMillis()-supportStarted).append(",\"continuity\":").append(continuity)
+                        .append(",\"workUnits\":").append(job.getStepCount())
                         .append(",\"routeExpansions\":").append(owner.getPcbLayout().getGenerationRoutingExpansions())
                         .append(",\"routeAttempts\":").append(owner.getPcbLayout().getGenerationRoutingAttempts())
                         .append(",\"routeMs\":").append(owner.getPcbLayout().getGenerationRoutingMillis()).append(",\"stageMs\":[");
@@ -116,6 +118,7 @@ final class Q15ControlBoardDeveloperVerifier {
                 PhysicalSlotMutationProvider mutation=owner.getPhysicalBoardRuntime().getMutationProvider(target);
                 power(owner,BoardPowerState.UNPOWERED);
                 require(RelayOutputBehavior.isDischarged(owner),"real coil and capacitor discharge");
+                continuity=verifyCopperContinuity(owner);
                 require(mutation.removeInstalledPart(),"legal selected-owner removal");settle(owner);
                 String wrong=target.equals("K1")?ReplaceableRelayCapability.COIL_5V:"R_CATALOG_1000000";
                 require(mutation.installNewFromCatalog(wrong),"mechanically valid wrong replacement");settle(owner);
@@ -145,6 +148,24 @@ final class Q15ControlBoardDeveloperVerifier {
                 CircuitPostMeasurementEndpoint a=(CircuitPostMeasurementEndpoint)owner.getSimulationBindings().getEndpoint(first);
                 CircuitPostMeasurementEndpoint b=(CircuitPostMeasurementEndpoint)owner.getSimulationBindings().getEndpoint(second);
                 return a.getElement().getPostVoltage(a.getPostIndex())-b.getElement().getPostVoltage(b.getPostIndex());
+            }
+            String verifyCopperContinuity(GeneratedBoardInstance owner) {
+                String[][] pairs={{"J1.1","F1.1"},{"J1.2","RBLEED.2"},{"J2.1","RIN.1"}};
+                StringBuilder readings=new StringBuilder("[");
+                for(String[] pair:pairs) for(int direction=0;direction<2;direction++) {
+                    String red=pair[direction],black=pair[1-direction];
+                    settle(owner);
+                    CircuitPostMeasurementEndpoint a=(CircuitPostMeasurementEndpoint)owner.getSimulationBindings().getEndpoint(red);
+                    CircuitPostMeasurementEndpoint b=(CircuitPostMeasurementEndpoint)owner.getSimulationBindings().getEndpoint(black);
+                    double ohms=sim.measureResistance(a,b);
+                    require(!Double.isNaN(ohms) && !Double.isInfinite(ohms) && ohms>=0 && ohms<.001,
+                        "continuous copper "+red+" to "+black+" reads zero: "+ohms+"; "+sim.getLastResistanceMeasurementDiagnosticsForDeveloperVerification());
+                    require(sim.isActiveMeasurementSolverRestoredForDeveloperVerification() && !sim.activeMeasurementOverlay &&
+                        sim.getBoardPowerController().isElectricallyUnpowered(),"continuity restores the exact unpowered graph");
+                    if(readings.length()>1)readings.append(',');
+                    readings.append("{\"red\":").append(quote(red)).append(",\"black\":").append(quote(black)).append(",\"ohms\":").append(ohms).append('}');
+                }
+                return readings.append(']').toString();
             }
         }.schedule(0);
     }

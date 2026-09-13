@@ -101,9 +101,11 @@ final class Task43PMeasurementCleanupDeveloperVerifier {
             if (kind == 3 || kind == 5)
                 require(caught == analysisFailure, kind, "analysis-failure-lost");
             if (kind == 6)
-                require(caught instanceof IllegalStateException &&
-                    "Temporary measurement solver restoration failed: Exception in stampCircuit()"
-                        .equals(caught.getMessage()), kind, "native-stop-not-surfaced");
+                require(caught instanceof SolverExecutionBoundary.Failure &&
+                    ((SolverExecutionBoundary.Failure) caught).outcome ==
+                        SolverExecutionBoundary.Outcome.NUMERICAL_FAILURE &&
+                    "CircuitJS stopped: Exception in stampCircuit()".equals(caught.getMessage()),
+                    kind, "native-stop-not-surfaced:" + caught);
             require(sim.activeMeasurementOverlay && !sim.activeMeasurementSolverRestored &&
                 !sim.isActiveMeasurementSolverRestoredForDeveloperVerification() &&
                 sim.circuitMatrix == null && !sim.simRunning && sim.stopMessage != null &&

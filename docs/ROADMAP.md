@@ -7,8 +7,8 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Branch observed during review:** `codex/task43p-final-recovery`<br>
-**Latest completed task:** **Q15: Heterogeneous procedural control-board qualification**<br>
-**Current checkpoint:** **Q15 COMPLETE - QUALIFIED.** The sixteen-package procedural control board combines a protected 12 V supply, 5 V command, BJT/NMOS output drivers and RC/resistive conditioning. Eleven exact seeds cover four designs and three faults with real hypothesis repair/retest, causal support and one routed bottom copper layer. Final native contracts, five-permutation JDK8/GWT build, compiled regressions and visible player workflows pass. The worst cohort admission is 80.627 s under the unchanged 90 s job limit; the family does not qualify arbitrary circuits at every size in the 5–20-part envelope. The authored nine-part E03 reference remains separate. A11-D1 and the historical Windows browser-wrapper qualification limit remain. **U04 is next and unstarted.** [Q15 evidence and limits](task-evidence/Q15/README.md).
+**Latest completed task:** **U04 / U05 / REL-A: Limited desktop alpha**<br>
+**Current checkpoint:** **U04 / U05 / REL-A COMPLETE.** Typed sessions, initial computed EASY/MEDIUM profiles and limited low-voltage desktop alpha are qualified, with mandatory eleven-seed normal RB15 admission, the full website catalog, compatible purchased-part installation, Windows launcher recovery and exact meter endpoint fixes. Final GWT5/native33, Alpha38, Q15all11/66 copper readings, affected compiled/strict/negative gates and actual repair/retest/replay/privacy/focus flows pass. Human attempts and uncertainty remain qualitative evidence; no population difficulty or arbitrary-seed guarantee is claimed. The separately authorized visual pass follows in its own commit. **Next unstarted roadmap milestone: P05.** [Evidence and limits](task-evidence/REL-A/README.md).
 
 > Build the current game. Historical development code, challenge versions, file formats, identifiers, reports and tests are not product contracts. Keep useful working behavior because the current game needs it, not because an old milestone happened to implement it that way.
 
@@ -666,10 +666,11 @@ preferred queue. The milestone cards remain authoritative for scope, hard
 prerequisites, acceptance and conditional capabilities; this section chooses the
 preferred next eligible milestone. Future implementation needs its own authorization.
 
-**Already complete:** T49, N00, A01-A11, R00, P01-P04, U01, E01, E03 and Q15. A10 and A11 ran earlier
+**Already complete:** T49, N00, A01-A11, R00, P01-P04, U01, E01, E03, Q15, U04, U05 and REL-A. A10 and A11 ran earlier
 than the old preferred order while satisfying their hard prerequisites: A10
 required A05/A07/A09/P02; A11 required A04/A08/A09. Their earlier placement does
-not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 → Q15 is now complete. **Next: U04.**
+not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 → Q15 → U04 → U05 → REL-A is now complete.
+**Next roadmap milestone: P05.** The separately authorized visual pass precedes it.
 
 | Wave | Preferred sequence |
 |---|---|
@@ -1444,7 +1445,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### U04 · Explicit sessions, Resources, Settings and honest catalog surface
 
-**Status:** UNSTARTED.
+**Status:** COMPLETE — typed session loop, exact replay/error/cancellation, Resources/Settings, full real catalog and compatible purchased-part installation qualified. Native76/UI88, final Alpha38 and actual input/focus/privacy/repair checks pass. [Evidence](task-evidence/U04/README.md).
 
 **Hard prerequisites:** [A10](#m-a10), [U01](#m-u01)
 
@@ -1474,7 +1475,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### U05 · Computed difficulty and staged profile calibration
 
-**Status:** UNSTARTED.
+**Status:** COMPLETE for initial EASY/MEDIUM — version1 measured diagnostic features, requested-profile admission,38-case separation/repair corpus and qualitative user findings recorded. Reported mechanical/UI defects are fixed and qualified; the failed human attempt and missing EASY outcome/timings remain explicit. HARD/PSYCHOTIC stay unavailable. [Evidence and later calibration protocol](task-evidence/U05/README.md).
 
 **Hard prerequisites:** [A09](#m-a09), [A10](#m-a10), [U04](#m-u04), [Q15](#m-q15)
 
@@ -2410,7 +2411,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### REL-A · Limited desktop alpha: architecture learning release
 
-**Status:** UNSTARTED.
+**Status:** COMPLETE — limited low-voltage desktop alpha accepted on the current curated routes. Final source/build, native/compiled/strict-reader and actual player gates pass after the Q15, Shop, launcher and meter corrections. This is not arbitrary 5–20-part circuit, mains, HARD/PSYCHOTIC or large-board qualification. [Release evidence and limits](task-evidence/REL-A/README.md).
 
 **Hard prerequisites:** [Q15](#m-q15), [U04](#m-u04), [U05](#m-u05), [A11](#m-a11)
 

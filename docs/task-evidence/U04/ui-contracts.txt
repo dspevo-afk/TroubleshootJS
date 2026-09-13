@@ -1,0 +1,3 @@
+Final entry/privacy candidate: fresh run after native17 and production build.
+PASS U04 UI adapter contracts: 49 assertions. jsdom26.1.0; real Chromium-style closed-details rectangles, collapsed/expanded focus boundaries. Real GWT/browser input qualification remains separate.
+PASS node --check war/tsj-workbench-ui.js; process exit0.

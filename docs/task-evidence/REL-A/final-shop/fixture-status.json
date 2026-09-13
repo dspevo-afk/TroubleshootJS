@@ -1,0 +1,36 @@
+{
+  "status": "IN PROGRESS",
+  "receiptLabel": {
+    "status": "FIXED",
+    "proof": "canary-composed3-failure-2.json reaches stress after compensated receipt assertions"
+  },
+  "overload": {
+    "status": "INVALID FIXTURE ASSUMPTION",
+    "proof": "stress-fixture-player-diagnosis.json",
+    "actualVoltageVolts": 1.576,
+    "nominalResistanceOhms": 10,
+    "derivedApproximatePowerW": 0.2483776,
+    "ratingW": 0.25,
+    "next": "Use a physically valid overload position/specification; do not change physics or rating.",
+    "correction": "Select actual NMOS-driven RLOAD via resolved plan and BoardComponent type, keeping real10Ohm part/rating; no physics change.",
+    "qualification": "Third compiled canary advances beyond prior overload assertion, then fails mutable component-binding ownership; completed rows were not retained by that earlier verifier."
+  },
+  "realPlayerRepair": {
+    "status": "PASS",
+    "proof": "../../U04/storefront-player-input.json"
+  },
+  "refinedStorefront": {
+    "status": "PASS intermediate actual Browser input + focused88",
+    "artifact": "../../U04/storefront-refined-input.json",
+    "screenshot": "../../U04/storefront-refined-npn.png",
+    "limit": "Full final qualification awaits backend fix."
+  },
+  "repeatedRelocation": {
+    "status": "FAIL",
+    "artifact": "canary-composed3-failure-3.json",
+    "ownerRestored": true,
+    "finding": "Mutable generated element duplicate ownership at Channel B RLOAD while moving the same purchased part through multiple slots. Empty-slot binding retention under investigation.",
+    "worker": "Luna leaf cross_relocation owns mutation/binding/controller implementation; root owns fixtures/readers/UI/docs.",
+    "rootDiagnosticChange": "Alpha now preserves completed cross-target rows in finally even when a later operation fails."
+  }
+}

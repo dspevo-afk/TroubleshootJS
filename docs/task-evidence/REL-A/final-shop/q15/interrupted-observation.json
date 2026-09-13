@@ -1,0 +1,10 @@
+{
+  "status": "BLOCKED",
+  "reason": "Previously running tab8 is no longer available in the selected browser session. Two tabs.list observations only returned tab10; report read rejected Tab 8 is not part of browser session.",
+  "elapsedUpperBoundMs": 778556,
+  "operationElapsedMs": null,
+  "cleanupMs": null,
+  "reportCaptured": false,
+  "executionDigest": "6a99edda7053c29a54007a3c4a3fa9ae53384777254649aa4059c16b28b07cd6",
+  "next": "Rerun final full11 corpus after current continuity investigation/fix; unavailable report is not PASS."
+}

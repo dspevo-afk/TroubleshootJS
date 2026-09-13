@@ -1,0 +1,162 @@
+{
+  "source": "../REL-A/final-shop/alpha-continuity-report.json",
+  "executionDigest": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+  "status": "PASS",
+  "interpretation": "All38 fresh compiled cases; curated regression evidence, not human success or population estimates.",
+  "families": [
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "cases": 2,
+      "profile": "MEDIUM",
+      "parts": [
+        15
+      ],
+      "requiredReadings": [
+        2
+      ],
+      "repairClasses": [
+        4
+      ],
+      "legalWitnessActions": [
+        "148-148"
+      ]
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "cases": 3,
+      "profile": "EASY",
+      "parts": [
+        4
+      ],
+      "requiredReadings": [
+        0
+      ],
+      "repairClasses": [
+        1
+      ],
+      "legalWitnessActions": [
+        "14-14"
+      ]
+    },
+    {
+      "family": "LED_INDICATOR",
+      "cases": 4,
+      "profile": "EASY",
+      "parts": [
+        3
+      ],
+      "requiredReadings": [
+        1
+      ],
+      "repairClasses": [
+        2
+      ],
+      "legalWitnessActions": [
+        "13-13"
+      ]
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "cases": 3,
+      "profile": "EASY",
+      "parts": [
+        6
+      ],
+      "requiredReadings": [
+        1
+      ],
+      "repairClasses": [
+        2
+      ],
+      "legalWitnessActions": [
+        "20-20"
+      ]
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "cases": 3,
+      "profile": "EASY",
+      "parts": [
+        7
+      ],
+      "requiredReadings": [
+        1
+      ],
+      "repairClasses": [
+        2
+      ],
+      "legalWitnessActions": [
+        "20-20"
+      ]
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "cases": 3,
+      "profile": "EASY",
+      "parts": [
+        5
+      ],
+      "requiredReadings": [
+        0
+      ],
+      "repairClasses": [
+        1
+      ],
+      "legalWitnessActions": [
+        "15-15"
+      ]
+    },
+    {
+      "family": "RB15_CONTROL",
+      "cases": 11,
+      "profile": "EASY",
+      "parts": [
+        16
+      ],
+      "requiredReadings": [
+        1
+      ],
+      "repairClasses": [
+        2
+      ],
+      "legalWitnessActions": [
+        "18-18"
+      ]
+    },
+    {
+      "family": "RC_DELAY",
+      "cases": 3,
+      "profile": "EASY",
+      "parts": [
+        6
+      ],
+      "requiredReadings": [
+        1
+      ],
+      "repairClasses": [
+        2
+      ],
+      "legalWitnessActions": [
+        "16-16"
+      ]
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "cases": 6,
+      "profile": "EASY",
+      "parts": [
+        9
+      ],
+      "requiredReadings": [
+        1
+      ],
+      "repairClasses": [
+        2
+      ],
+      "legalWitnessActions": [
+        "18-18"
+      ]
+    }
+  ],
+  "parity": "../REL-A/final-shop/difficulty-parity-continuity.json"
+}

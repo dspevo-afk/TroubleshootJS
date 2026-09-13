@@ -1,0 +1,19 @@
+{
+  "candidateExecutionDigest": "1859d1bcfde43274cc285e3e9c2c94c48d69074cbe2bcf7851c32d6a9e6bd359",
+  "surface": "Production Browser; URL-driven existing compiled verifiers; observed data-tsj-verification",
+  "cases": [
+    {
+      "query": "tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyWrongRepair=true",
+      "status": "PASS:wrong-repair"
+    },
+    {
+      "query": "tsjChallenge=led&seed=0&tsjDebug=true&tsjVerifyMeter=true",
+      "status": "PASS:meter"
+    },
+    {
+      "query": "tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyStress=true",
+      "status": "PASS:stress"
+    }
+  ],
+  "limitation": "Standalone helper results do not resolve the combined Task43P failure or certify the Windows wrapper."
+}

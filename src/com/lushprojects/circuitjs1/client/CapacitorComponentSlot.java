@@ -1,12 +1,13 @@
 package com.lushprojects.circuitjs1.client;
 
 /** Family-owned attachment seam for one polarized capacitor board location. */
-final class CapacitorComponentSlot {
+final class CapacitorComponentSlot implements PhysicalMutationSlot {
     private final String componentId;
     private final CapacitorSpecification intendedSpecification;
     private final WireElm positiveAttachment;
     private final WireElm negativeAttachment;
     private final PhysicalBoardSlot physicalSlot;
+    private final PhysicalMutationSlot.AttachmentState emptySlotAttachmentState;
 
     CapacitorComponentSlot(String componentId, CapacitorSpecification intendedSpecification,
             PhysicalCapacitorPart installedPart, WireElm positiveAttachment,
@@ -23,15 +24,24 @@ final class CapacitorComponentSlot {
         this.negativeAttachment = negativeAttachment;
         this.physicalSlot = physicalSlot;
         install(installedPart);
+        this.emptySlotAttachmentState = captureAttachmentState();
     }
 
-    String getComponentId() { return componentId; }
+    public String getComponentId() { return componentId; }
     CapacitorSpecification getIntendedSpecification() { return intendedSpecification; }
-    PhysicalBoardSlot getPhysicalSlot() { return physicalSlot; }
-    PhysicalCapacitorPart getInstalledPart() {
+    public PhysicalBoardSlot getPhysicalSlot() { return physicalSlot; }
+    public PhysicalCapacitorPart getInstalledPart() {
         return (PhysicalCapacitorPart) physicalSlot.getInstalledPart();
     }
-    boolean isEmpty() { return !physicalSlot.isOccupied(); }
+    public boolean isEmpty() { return !physicalSlot.isOccupied(); }
+    public boolean acceptsPart(PhysicalPart<?> part) {
+        return part instanceof PhysicalCapacitorPart;
+    }
+    public CircuitMeasurementEndpoint getExpectedEndpoint(PhysicalPart<?> part, BoardPad pad) {
+        if (!acceptsPart(part) || pad == null || !componentId.equals(pad.getComponentId()))
+            throw new IllegalArgumentException("Foreign capacitor terminal mapping");
+        return ((PhysicalCapacitorPart) part).getTerminalForBoardPad(pad.getId());
+    }
     void clear() { physicalSlot.remove(); }
 
     void install(PhysicalCapacitorPart part) {
@@ -42,6 +52,83 @@ final class CapacitorComponentSlot {
         moveAttachmentEnd(negativeAttachment, part.getTerminalForBoardPad(componentId + ".-"),
             true);
         physicalSlot.install(part);
+    }
+
+    public void installForMutation(PhysicalPart<?> candidate, PhysicalMutationScope scope) {
+        if (!(candidate instanceof PhysicalCapacitorPart) || scope == null)
+            throw new IllegalArgumentException("Missing capacitor mutation install context");
+        if (!scope.owns(this))
+            throw new IllegalStateException("Physical mutation scope does not own capacitor slot");
+        PhysicalCapacitorPart part = (PhysicalCapacitorPart) candidate;
+        if (!part.getSpecification().isPolarized())
+            throw new IllegalArgumentException("Invalid polarized capacitor installation");
+        moveAttachmentEnd(positiveAttachment,
+            part.getTerminalForBoardPad(componentId + ".+"), false);
+        moveAttachmentEnd(negativeAttachment,
+            part.getTerminalForBoardPad(componentId + ".-"), true);
+        scope.afterAttachmentWrite();
+        physicalSlot.install(part);
+        scope.afterSlotMountWrite();
+    }
+
+    public PhysicalPart<?> clearForMutation(PhysicalMutationScope scope) {
+        if (scope == null || !scope.owns(this))
+            throw new IllegalStateException("Physical mutation scope does not own capacitor slot");
+        PhysicalPart<?> removed = physicalSlot.remove();
+        scope.afterSlotClearWrite();
+        return removed;
+    }
+
+    public PhysicalMutationSlot.AttachmentState captureAttachmentState() {
+        return new CapacitorAttachmentState(positiveAttachment.x, positiveAttachment.y,
+            positiveAttachment.x2, positiveAttachment.y2, negativeAttachment.x,
+            negativeAttachment.y, negativeAttachment.x2, negativeAttachment.y2);
+    }
+
+    public void restoreAttachmentState(PhysicalMutationSlot.AttachmentState captured) {
+        if (!(captured instanceof CapacitorAttachmentState))
+            throw new IllegalArgumentException("Missing capacitor attachment state");
+        CapacitorAttachmentState state = (CapacitorAttachmentState) captured;
+        positiveAttachment.x = state.positiveX;
+        positiveAttachment.y = state.positiveY;
+        positiveAttachment.x2 = state.positiveX2;
+        positiveAttachment.y2 = state.positiveY2;
+        positiveAttachment.setPoints();
+        negativeAttachment.x = state.negativeX;
+        negativeAttachment.y = state.negativeY;
+        negativeAttachment.x2 = state.negativeX2;
+        negativeAttachment.y2 = state.negativeY2;
+        negativeAttachment.setPoints();
+    }
+
+    public void restoreEmptySlotAttachmentState(PhysicalMutationScope scope) {
+        if (scope == null || !scope.owns(this))
+            throw new IllegalStateException("Physical mutation scope does not own capacitor slot");
+        restoreAttachmentState(emptySlotAttachmentState);
+    }
+
+    private static final class CapacitorAttachmentState implements PhysicalMutationSlot.AttachmentState {
+        private final int positiveX;
+        private final int positiveY;
+        private final int positiveX2;
+        private final int positiveY2;
+        private final int negativeX;
+        private final int negativeY;
+        private final int negativeX2;
+        private final int negativeY2;
+
+        private CapacitorAttachmentState(int positiveX, int positiveY, int positiveX2,
+                int positiveY2, int negativeX, int negativeY, int negativeX2,
+                int negativeY2) {
+            this.positiveX = positiveX;
+            this.positiveY = positiveY;
+            this.positiveX2 = positiveX2;
+            this.positiveY2 = positiveY2;
+            this.negativeX = negativeX;
+            this.negativeY = negativeY;
+            this.negativeX2 = negativeX2;
+            this.negativeY2 = negativeY2;
+        }
     }
 
     private void moveAttachmentEnd(WireElm attachment, CircuitMeasurementEndpoint endpoint,

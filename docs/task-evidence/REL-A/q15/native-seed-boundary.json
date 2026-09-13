@@ -1,0 +1,103 @@
+{
+  "status": "PASS",
+  "source": "Final entry/privacy candidate native17",
+  "qualifiedSeeds": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "17",
+    "42",
+    "101",
+    "-1",
+    "9007199254740993",
+    "-9223372036854775808",
+    "9223372036854775807"
+  ],
+  "selectorRows": [
+    {
+      "entropy": "-9223372036854775808",
+      "selected": "-9223372036854775808",
+      "replay": "tsj-alpha/1/EASY/RB15_CONTROL/-9223372036854775808"
+    },
+    {
+      "entropy": "9223372036854775807",
+      "selected": "9223372036854775807",
+      "replay": "tsj-alpha/1/EASY/RB15_CONTROL/9223372036854775807"
+    },
+    {
+      "entropy": "-4518705223253195925",
+      "selected": "101",
+      "replay": "tsj-alpha/1/EASY/RB15_CONTROL/101"
+    },
+    {
+      "entropy": "-5365808313541656343",
+      "selected": "0",
+      "replay": "tsj-alpha/1/EASY/RB15_CONTROL/0"
+    },
+    {
+      "entropy": "-17",
+      "selected": "42",
+      "replay": "tsj-alpha/1/EASY/RB15_CONTROL/42"
+    },
+    {
+      "entropy": "-1",
+      "selected": "-1",
+      "replay": "tsj-alpha/1/EASY/RB15_CONTROL/-1"
+    },
+    {
+      "entropy": "0",
+      "selected": "0",
+      "replay": "tsj-alpha/1/EASY/RB15_CONTROL/0"
+    },
+    {
+      "entropy": "1",
+      "selected": "1",
+      "replay": "tsj-alpha/1/EASY/RB15_CONTROL/1"
+    },
+    {
+      "entropy": "2",
+      "selected": "2",
+      "replay": "tsj-alpha/1/EASY/RB15_CONTROL/2"
+    },
+    {
+      "entropy": "3",
+      "selected": "3",
+      "replay": "tsj-alpha/1/EASY/RB15_CONTROL/3"
+    },
+    {
+      "entropy": "17",
+      "selected": "17",
+      "replay": "tsj-alpha/1/EASY/RB15_CONTROL/17"
+    },
+    {
+      "entropy": "42",
+      "selected": "42",
+      "replay": "tsj-alpha/1/EASY/RB15_CONTROL/42"
+    },
+    {
+      "entropy": "101",
+      "selected": "101",
+      "replay": "tsj-alpha/1/EASY/RB15_CONTROL/101"
+    },
+    {
+      "entropy": "9007199254740993",
+      "selected": "9007199254740993",
+      "replay": "tsj-alpha/1/EASY/RB15_CONTROL/9007199254740993"
+    }
+  ],
+  "exactRejections": [
+    {
+      "seed": "-4518705223253195925",
+      "attempts": 80,
+      "elapsedMs": 7446
+    },
+    {
+      "seed": "-5365808313541656343",
+      "attempts": 80,
+      "elapsedMs": 7359
+    }
+  ],
+  "limits": "80 placement attempts, 90-second job, 5-second unit and 640 work units unchanged. Deterministic cohorts are not random-population estimates.",
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623"
+}

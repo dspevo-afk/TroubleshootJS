@@ -1,0 +1,95 @@
+{
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "route": "?tsjChallenge=led&seed=0&tsjDebug=true",
+  "status": "PASS: repeated legacy entry",
+  "admissions": [
+    {
+      "clickRoundTripMs": 289,
+      "observedAfterMs": 49185,
+      "observation": {
+        "buttons": [
+          {
+            "disabled": false,
+            "text": "Cancel board preparation"
+          },
+          {
+            "disabled": false,
+            "text": "New control board"
+          },
+          {
+            "disabled": false,
+            "text": "Set control HIGH"
+          },
+          {
+            "disabled": false,
+            "text": "Set control LOW"
+          }
+        ],
+        "components": [
+          "Inspect component",
+          "C1",
+          "C2",
+          "D1",
+          "DREV",
+          "F1",
+          "J1",
+          "J2",
+          "J4",
+          "K1",
+          "LED1",
+          "Q1",
+          "RBLEED",
+          "RDRIVE",
+          "RIN",
+          "RLED",
+          "RPD"
+        ],
+        "preparing": false,
+        "preview": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+        "supply": [
+          "Supply 1 (+12V): 11.999 V, 23.571 mA",
+          "Supply 2 (+5V): 5 V, 49.02 \u03bcA"
+        ]
+      }
+    },
+    {
+      "observation": {
+        "componentCount": 16,
+        "newBoardEnabled": true,
+        "power": [
+          "Board Power: ON"
+        ],
+        "preparing": false,
+        "preview": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+        "supply": [
+          "Supply 1 (+12V): 12 V, 8.043 mA",
+          "Supply 2 (+5V): 5 V, 2.197 mA"
+        ]
+      },
+      "clickInputReturned": true,
+      "exactRoundTripMs": null
+    }
+  ],
+  "limit": "Legacy view has no public seed display. Exact envelope identity is separately proved by native/compiled selectors and normal U04 replay display; observation timings include idle work and transport.",
+  "cancelLocatorFailure": {
+    "status": "FAIL",
+    "operation": "Browser role-locator cancellation click",
+    "error": "Timed out running CDP command DOM.getNodeForLocation for tab3",
+    "limit": "No successful click or coordinator cancellation is established by this timeout.",
+    "observedElapsedUpperBoundMs": 19269,
+    "timingNote": "Includes delay until the failure was recorded, not the CDP operation or application cancellation duration."
+  },
+  "cancelPointerAttempt": {
+    "status": "FAIL",
+    "roundTripMs": 2556,
+    "reason": "Preparation ended after the geometry read; this coordinate activated Open controlled indicator instead. No cancellation is claimed.",
+    "observedNextBoard": "Controlled indicator with three +5V supplies"
+  },
+  "cancelKeyboardAttempt": {
+    "status": "FAIL",
+    "operation": "Browser focused Enter cancellation",
+    "error": "Timed out running CDP command Page.createIsolatedWorld for tab3",
+    "limit": "No input delivery or coordinator cancellation established"
+  },
+  "cancellationStatus": "NOT PROVEN: transport attempts preserved; final normal U04 cancellation remains separate"
+}

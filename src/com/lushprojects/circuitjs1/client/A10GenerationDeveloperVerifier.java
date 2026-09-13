@@ -7,7 +7,7 @@ final class A10GenerationDeveloperVerifier {
     private static int assertions, cancellations, unitCancellations, failures, lifecycleFailures;
     private static final long BENCHMARK_ATTEMPT_MILLIS = 5000;
     private static long cancellationMaxMs;
-    private static String temporalRegression;
+    private static String temporalRegression, temporalWork, observationCleanup;
     private static final Vector<String> metrics = new Vector<String>();
     private A10GenerationDeveloperVerifier() { }
 
@@ -15,6 +15,8 @@ final class A10GenerationDeveloperVerifier {
         assertions = cancellations = unitCancellations = failures = lifecycleFailures = 0; cancellationMaxMs = 0;
         metrics.clear(); clearReport();
         temporalRegression = "null";
+        temporalWork = "null";
+        observationCleanup = "null";
         if (forceFailure) throw new IllegalStateException("a10-explicit-failure-canary");
         GenerationCoordinator coordinator = sim.generationCoordinator;
         require(coordinator != null && coordinator.getJob() != null &&
@@ -32,6 +34,9 @@ final class A10GenerationDeveloperVerifier {
         try {
             A10TemporalBatchVerifier.verify(sim);
             require(true, "real fixed/adaptive RC serial and temporal batches agree exactly");
+            temporalWork = RcTemporalWorkDeveloperVerifier.verify(sim);
+            require(true, "RC profile phases preserve the independent sequence and reject stale/cancelled work");
+            observationCleanup = GeneratedCleanupDeveloperVerifier.verify(sim);
             verifyRetiredUiReferences(sim, coordinator, original);
             // Cancellation at every externally resumable boundary uses the actual
             // stage implementation and exact original graph, not a service double.
@@ -374,6 +379,8 @@ final class A10GenerationDeveloperVerifier {
             ",\"temporalBatch\":{\"fixedAndAdaptive\":true,\"exactStateAndEvents\":true,\"rcOracle\":true," +
             "\"measurementCounters\":true,\"stoppedStep\":true}" +
             ",\"temporalRegression\":" + temporalRegression +
+            ",\"temporalWork\":" + temporalWork +
+            ",\"observationCleanup\":" + observationCleanup +
             ",\"browser\":" + browserEnvironment() + ",\"attempts\":[" + rows + "]}";
     }
     private static String stages(GenerationJob job) {

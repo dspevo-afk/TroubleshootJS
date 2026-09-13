@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "inputs": 1155,
+  "aggregateSha256": "6635af42c3bffd9cc7855f7c767533f72896ce5f699019e6de20f15ff741d371",
+  "drift": [],
+  "phase": "Final acceptance audit after all compiled/native/build gates; last UI-only exact replay checks",
+  "reusedUnchangedBoundaries": {
+    "ui": {
+      "war/tsj-workbench-ui.js": "349598e5ebb695bfbd55a5a3350a397fcfd2914d3bf150a4f67ad903fd526a5f",
+      "war/tsj-workbench-ui.css": "a2be8c116d6c35adf88aadafb17fec1e75c1291670aafafd4ffd613a173be81c",
+      "tests/contracts/u04_ui_contract.mjs": "500329726354cb1f59f8ca78f75021b40dfa0466fcd6788a651f5677a6f1b570"
+    },
+    "launcher": {
+      "Start TroubleshootJS.cmd": "43ccb6899eb59ff779abd222ddb36d59dc038a2afd40b43a32ba1563bd724f59",
+      "scripts/start-preview.ps1": "7e1590007ce185541ce8cf6a7158b687f0328c6ef21c313d1d98a85e5ca8b544",
+      "scripts/preview.ps1": "ecb510e020ee1c5322c312f0cbec049924903f13d693d660ff1eef6f93324ae4",
+      "scripts/VerifierIsolation.psm1": "bf21b959dfc96e04219a6f828819c58023c364fb869e902adcd65deded94436e"
+    }
+  }
+}

@@ -1,0 +1,3 @@
+PASS: Q15 eleven cases/four designs/three faults; fresh forced cleanup;16 reader negatives.
+Final execution b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d.
+Combined maintained Q15 and electrical regression readers PASS against fresh Task41/Task49/A08/E01/E03 reports; see readers-current.txt and ../electrical-readers-current.txt.

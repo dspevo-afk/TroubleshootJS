@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "runtimeExecutionDigest": "35b0bbb28d03de8c828895f6d3390ec11d2ff2c32748f8fa42e4210b6d47dfa1",
+  "currentUiExecutionDigest": "b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d",
+  "reuseBoundary": "menu-focus-input-delta.json",
+  "cases": 38,
+  "assertions": 1217,
+  "acquisitions": 110,
+  "staleCallbacks": 105,
+  "negativeChecks": 72,
+  "mutationChecks": 223,
+  "operationElapsedMs": 851241,
+  "cleanupElapsedMs": 2,
+  "ownerRestored": true,
+  "admissionP50Ms": 17478,
+  "admissionMaxMs": 58230,
+  "maxUnitMs": 2029,
+  "maxWorkUnits": 617,
+  "humanTrials": "NOT RUN",
+  "populationEstimate": false
+}

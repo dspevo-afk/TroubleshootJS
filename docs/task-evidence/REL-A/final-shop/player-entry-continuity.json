@@ -1,0 +1,253 @@
+{
+  "status": "PASS",
+  "executionDigest": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+  "interaction": "Actual normal visible buttons/textboxes/comboboxes in production Browser; no injected controller calls",
+  "checks": [
+    {
+      "check": "Normal LED3 ticket with all41 verifier flags plus forced Task43P and debug=false",
+      "status": "PASS",
+      "observation": {
+        "ariaTitleLeaks": [],
+        "identity": [
+          "tsj-alpha/1/EASY/LED_INDICATOR/3",
+          "tsj-alpha/1 / 86FD1F070A796251AB4E73435DBBBD51"
+        ],
+        "power": [
+          "Board Power: ON",
+          "Disconnect Supply 1 (+12V)"
+        ],
+        "preview": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+        "privateAttributes": [],
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        }
+      }
+    },
+    {
+      "check": "Exact normal RC3 ticket/replay/privacy",
+      "status": "PASS",
+      "observedElapsedUpperBoundMs": 128403,
+      "observation": {
+        "ariaTitleLeaks": [],
+        "identity": [
+          "tsj-alpha/1/EASY/RC_DELAY/3",
+          "tsj-alpha/1 / 86FD1F070A796251AB4E73435DBBBD51"
+        ],
+        "power": [
+          "Board Power: ON",
+          "Disconnect Supply 1 (+12V)"
+        ],
+        "preview": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+        "privateAttributes": [],
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        }
+      }
+    },
+    {
+      "check": "Visible cancellation preserves prior RC3/OFF",
+      "status": "PASS",
+      "inputRoundTripMs": 3818,
+      "observation": {
+        "ariaTitleLeaks": [],
+        "identity": [
+          "tsj-alpha/1/EASY/RC_DELAY/3",
+          "tsj-alpha/1 / 86FD1F070A796251AB4E73435DBBBD51"
+        ],
+        "power": [
+          "Board Power: OFF",
+          "Connect Supply 1 (+12V)"
+        ],
+        "preview": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+        "privateAttributes": [],
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        }
+      },
+      "timingLimit": "Visible click round trip includes Browser transport; not coordinator cleanup latency.",
+      "initialObservation": {
+        "check": "Visible cancellation preserves prior RC3/OFF",
+        "status": "FAIL",
+        "inputRoundTripMs": 3818,
+        "observation": {
+          "ariaTitleLeaks": [],
+          "identity": [],
+          "power": [
+            "Board Power: OFF",
+            "Connect Supply 1 (+12V)"
+          ],
+          "preview": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+          "privateAttributes": [],
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        "timingLimit": "Visible click round trip includes Browser transport; not coordinator cleanup latency."
+      },
+      "initialObservationLimit": "First read occurred before preparing overlay dismissal and before opening a surface that exposes replay; missing textarea was not evidence of a changed owner. Settled normal menu proves exact prior replay and OFF power."
+    },
+    {
+      "check": "Normal New board RB15 draw1 reaches ticket",
+      "status": "PASS",
+      "observedElapsedUpperBoundMs": 124375,
+      "observation": {
+        "ariaTitleLeaks": [],
+        "identity": [
+          "tsj-alpha/1/EASY/RB15_CONTROL/3",
+          "tsj-alpha/1 / 86FD1F070A796251AB4E73435DBBBD51"
+        ],
+        "power": [
+          "Board Power: ON",
+          "Disconnect Supply 1 (+12V)",
+          "Disconnect Supply 2 (+5V)"
+        ],
+        "preview": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+        "privateAttributes": [],
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        }
+      },
+      "qualifiedEnvelope": true
+    },
+    {
+      "check": "Normal New board RB15 draw2 reaches ticket",
+      "status": "PASS",
+      "observedElapsedUpperBoundMs": 99627,
+      "observation": {
+        "ariaTitleLeaks": [],
+        "identity": [
+          "tsj-alpha/1/EASY/RB15_CONTROL/42",
+          "tsj-alpha/1 / 86FD1F070A796251AB4E73435DBBBD51"
+        ],
+        "power": [
+          "Board Power: ON",
+          "Disconnect Supply 1 (+12V)",
+          "Disconnect Supply 2 (+5V)"
+        ],
+        "preview": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+        "privateAttributes": [],
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        }
+      },
+      "qualifiedEnvelope": true
+    },
+    {
+      "check": "Known unroutable exact seed1 fails honestly and retains RB15/42 with both sources OFF",
+      "status": "PASS",
+      "requestedReplay": "tsj-alpha/1/EASY/RB15_CONTROL/-4518705223253195925",
+      "error": {
+        "ariaTitleLeaks": [],
+        "identity": [
+          "tsj-alpha/1/EASY/RB15_CONTROL/42",
+          "tsj-alpha/1 / 86FD1F070A796251AB4E73435DBBBD51"
+        ],
+        "power": [
+          "Board Power: OFF",
+          "Connect Supply 1 (+12V)",
+          "Connect Supply 2 (+5V)"
+        ],
+        "preview": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+        "privateAttributes": [],
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        }
+      },
+      "retained": {
+        "ariaTitleLeaks": [],
+        "identity": [
+          "tsj-alpha/1/EASY/RB15_CONTROL/42",
+          "tsj-alpha/1 / 86FD1F070A796251AB4E73435DBBBD51"
+        ],
+        "power": [
+          "Board Power: OFF",
+          "Connect Supply 1 (+12V)",
+          "Connect Supply 2 (+5V)"
+        ],
+        "preview": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+        "privateAttributes": [],
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        }
+      },
+      "observedElapsedUpperBoundMs": 408414
+    },
+    {
+      "check": "Known unroutable exact seed2 fails honestly and retains RB15/42 with both sources OFF",
+      "status": "PASS",
+      "requestedReplay": "tsj-alpha/1/EASY/RB15_CONTROL/-5365808313541656343",
+      "error": {
+        "ariaTitleLeaks": [],
+        "identity": [
+          "tsj-alpha/1/EASY/RB15_CONTROL/42",
+          "tsj-alpha/1 / 86FD1F070A796251AB4E73435DBBBD51"
+        ],
+        "power": [
+          "Board Power: OFF",
+          "Connect Supply 1 (+12V)",
+          "Connect Supply 2 (+5V)"
+        ],
+        "preview": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+        "privateAttributes": [],
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        }
+      },
+      "retained": {
+        "ariaTitleLeaks": [],
+        "identity": [
+          "tsj-alpha/1/EASY/RB15_CONTROL/42",
+          "tsj-alpha/1 / 86FD1F070A796251AB4E73435DBBBD51"
+        ],
+        "power": [
+          "Board Power: OFF",
+          "Connect Supply 1 (+12V)",
+          "Connect Supply 2 (+5V)"
+        ],
+        "preview": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+        "privateAttributes": [],
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        }
+      },
+      "observedElapsedUpperBoundMs": 106072
+    },
+    {
+      "check": "Exact replay retains seed greater than 2^53 without rounding and reaches normal ticket",
+      "status": "PASS",
+      "observation": {
+        "ariaTitleLeaks": [],
+        "identity": [
+          "tsj-alpha/1/EASY/RB15_CONTROL/9007199254740993",
+          "tsj-alpha/1 / 86FD1F070A796251AB4E73435DBBBD51"
+        ],
+        "power": [
+          "Board Power: ON",
+          "Disconnect Supply 1 (+12V)",
+          "Disconnect Supply 2 (+5V)"
+        ],
+        "preview": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+        "privateAttributes": [],
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        }
+      }
+    }
+  ],
+  "limits": [
+    "Observation timing includes idle/transport and is only an upper bound.",
+    "Normal Workbench replay identity is exposed through Main menu/Resources, not a hidden test API.",
+    "Initial cancellation read before modal dismissal retained as observer error."
+  ]
+}

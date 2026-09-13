@@ -1,0 +1,141 @@
+{
+  "executionDigest": "b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d",
+  "kind": "Agent-operated real visible inputs; not human calibration",
+  "checks": [
+    {
+      "check": "normal RC3 exact replay admission",
+      "status": "PASS",
+      "observedUpperBoundMs": 75784,
+      "identity": [
+        "tsj-alpha/1/EASY/RC_DELAY/3",
+        "tsj-alpha/1 / F57701814F3E8FC362B9C11C46DA6A69"
+      ],
+      "text": "Customer ticket\nCustomer complaint\n\nThe controller responds immediately after power-up.\n\nFunctional retest\n\nPower the board ON, then power-cycle and observe the delayed output.\n\nExamine the board and use the instruments to identify a repair. Switch off every supply and wait for stored energy to discharge before changing parts.\n\nAccept ticket and startMain menuResources\nReplay and bug-report identity\n\nReplay reconstructs the initial challenge. It does not save repairs or inventory. Only the current replay format is supported.\n\nCurrent replay\nInterpretation / build\n\nYou can select and copy this information for a bug report. Nothing is sent automatically."
+    },
+    {
+      "check": "cancel normal RB15 selection retains prior RC3 and OFF power",
+      "status": "PASS",
+      "input": "Visible Cancel preparation, then Main menu and replay disclosure",
+      "inputRoundTripMs": 804,
+      "limit": "Transport-inclusive observation; not coordinator cleanup duration. First disclosure lookup had no match because cancellation returned to workbench; the subsequent menu input is the recorded identity proof.",
+      "identity": [
+        "",
+        "tsj-alpha/1/EASY/RC_DELAY/3",
+        "tsj-alpha/1 / F57701814F3E8FC362B9C11C46DA6A69"
+      ],
+      "powerButtons": [
+        "Board Power: OFF",
+        "Connect Supply 1 (+12V)"
+      ],
+      "text": "TroubleshootJS · Desktop alpha\n\nChoose a board, read the customer ticket, then examine, measure, isolate, repair and retest.\n\nDifficulty\nEASY\nMEDIUM\nHARD — unavailable\nPSYCHOTIC — unavailable\nBoard family\nIndicator board\nProtected indicator\nDual indicator\nTiming board\nBJT output driver\nMOSFET output driver\nRelay output reference\nProcedural control board\nNew board\n\nNew board chooses from the current seed pool. The chosen seed appears in Replay and bug-report identity after preparation.\n\nExact seed (signed decimal integer)\n\nPrepare exact seed attempts exactly the integer you enter. An exact seed can fail preparation; it is never replaced with another seed.\n\nPrepare exact seed\nOpen current replay\nPrepare replay\nResume current board\nResources\nSettings\n\nLimited desktop alpha: selected low-voltage boards in the 5–20-part range, including a 16-part procedural control board with routed bottom copper. The 3-part indicator and 4-part protected indicator are introductory practice boards.\n\nEASY and MEDIUM candidates are checked before play. HARD and PSYCHOTIC are unavailable. Mains circuits, larger boards and general multilayer routing are not supported. Session saves are not available.\n\nReplay and bug-report identity\n\nReplay reconstructs the initial challenge. It does not save repairs or inventory. Only the current replay format is supported.\n\nCurrent replay\nInterpretation / build\n\nYou can select and copy this information for a bug report. Nothing is sent automatically."
+    },
+    {
+      "check": "normal U04 New board RB15 draw1 reaches ticket",
+      "status": "PASS",
+      "observedUpperBoundMs": 61144,
+      "identity": [
+        "tsj-alpha/1/EASY/RB15_CONTROL/-9223372036854775808",
+        "tsj-alpha/1 / F57701814F3E8FC362B9C11C46DA6A69"
+      ],
+      "ticket": "Customer ticket\nCustomer complaint\n\nThe external load will not turn on when the control input is HIGH. Restore switching on HIGH and off on LOW.\n\nFunctional retest\n\nCheck that the external load turns on with control HIGH and off with control LOW.\n\nExamine the board and use the instruments to identify a repair. Switch off every supply and wait for stored energy to discharge before changing parts.\n\nAccept ticket and startMain menuResources\nReplay and bug-report identity\n\nReplay reconstructs the initial challenge. It does not save repairs or inventory. Only the current replay format is supported.\n\nCurrent replay\nInterpretation / build\n\nYou can select and copy this information for a bug report. Nothing is sent automatically.",
+      "qualifiedEnvelope": true
+    },
+    {
+      "check": "normal U04 New board RB15 draw2 reaches ticket",
+      "status": "PASS",
+      "observedUpperBoundMs": 74435,
+      "identity": [
+        "tsj-alpha/1/EASY/RB15_CONTROL/17",
+        "tsj-alpha/1 / F57701814F3E8FC362B9C11C46DA6A69"
+      ],
+      "qualifiedEnvelope": true
+    },
+    {
+      "check": "known bad exact RB15 replay1 fails honestly",
+      "status": "PASS",
+      "requestedReplay": "tsj-alpha/1/EASY/RB15_CONTROL/-4518705223253195925",
+      "elapsedObservedUpperBoundMs": 114496,
+      "buttons": [
+        "Close",
+        "Main menu",
+        "Resume previous board"
+      ],
+      "dialog": "Board preparation failed\n\nThis exact board could not be prepared for this difficulty. Try another seed or board. Replay: tsj-alpha/1/EASY/RB15_CONTROL/-4518705223253195925\n\nThe previous board, if any, is retained. Use the main menu to choose another seed or enter a supported current replay.\n\nMain menuResume previous board\nReplay and bug-report identity",
+      "powerButtons": [
+        "Board Power: OFF",
+        "Connect Supply 1 (+12V)",
+        "Connect Supply 2 (+5V)"
+      ]
+    },
+    {
+      "check": "bad exact replay1 retains previous RB15 seed17 and OFF power",
+      "status": "PASS",
+      "identity": [
+        "",
+        "tsj-alpha/1/EASY/RB15_CONTROL/17",
+        "tsj-alpha/1 / F57701814F3E8FC362B9C11C46DA6A69"
+      ],
+      "powerButtons": [
+        "Board Power: OFF",
+        "Connect Supply 1 (+12V)",
+        "Connect Supply 2 (+5V)"
+      ]
+    },
+    {
+      "check": "known bad exact RB15 replay2 fails honestly",
+      "status": "PASS",
+      "requestedReplay": "tsj-alpha/1/EASY/RB15_CONTROL/-5365808313541656343",
+      "elapsedObservedUpperBoundMs": 88551,
+      "dialog": "Board preparation failed\n\nThis exact board could not be prepared for this difficulty. Try another seed or board. Replay: tsj-alpha/1/EASY/RB15_CONTROL/-5365808313541656343\n\nThe previous board, if any, is retained. Use the main menu to choose another seed or enter a supported current replay.\n\nMain menuResume previous board\nReplay and bug-report identity",
+      "powerButtons": [
+        "Board Power: OFF",
+        "Connect Supply 1 (+12V)",
+        "Connect Supply 2 (+5V)"
+      ]
+    },
+    {
+      "check": "bad exact replay2 retains previous RB15 seed17 and OFF power",
+      "status": "PASS",
+      "identity": [
+        "",
+        "tsj-alpha/1/EASY/RB15_CONTROL/17",
+        "tsj-alpha/1 / F57701814F3E8FC362B9C11C46DA6A69"
+      ],
+      "powerButtons": [
+        "Board Power: OFF",
+        "Connect Supply 1 (+12V)",
+        "Connect Supply 2 (+5V)"
+      ]
+    },
+    {
+      "check": "normal exact RB15 replay beyond2^53 reaches ticket without rounding",
+      "status": "PASS",
+      "observedUpperBoundMs": 122161,
+      "identity": [
+        "tsj-alpha/1/EASY/RB15_CONTROL/9007199254740993",
+        "tsj-alpha/1 / F57701814F3E8FC362B9C11C46DA6A69"
+      ]
+    },
+    {
+      "check": "ordinary Quick Play draw1 reaches ticket",
+      "status": "PASS",
+      "route": "?tsjQuickPlay=true",
+      "identity": [
+        "tsj-alpha/1/EASY/RELAY_OUTPUT/1",
+        "tsj-alpha/1 / F57701814F3E8FC362B9C11C46DA6A69"
+      ],
+      "observedUpperBoundMs": 40033
+    },
+    {
+      "check": "ordinary Quick Play draw2 reaches ticket",
+      "status": "PASS",
+      "route": "?tsjQuickPlay=true",
+      "identity": [
+        "tsj-alpha/1/EASY/PARALLEL_DUAL_INDICATOR/2",
+        "tsj-alpha/1 / F57701814F3E8FC362B9C11C46DA6A69"
+      ],
+      "observedUpperBoundMs": 49583
+    }
+  ],
+  "timingNote": "All player admission durations are observation upper bounds, not operation or cleanup timings. Exact replay errors expose the attempted identity but intentionally omit the private failure phase; the actual80-placement rejection proof is in the native seed-boundary receipt."
+}

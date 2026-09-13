@@ -72,8 +72,39 @@ final class A07ExecutionContractVectors {
         expect(Outcome.STALE_OWNER, new Runnable() { public void run() { b.beginTrial(stale, 1401); }});
         b.beginTrial(successor, 1401); b.accepted(successor, .5, 1402); b.finish(successor, Outcome.COMPLETE);
         require(b.canPublish(successor, b.observation()) && !b.canPublish(first, sample), "successor is sole result owner");
+        wallClocks();
         events();
         return assertions;
+    }
+    private static void wallClocks() {
+        final SolverExecutionBoundary clock = new SolverExecutionBoundary();
+        clock.bind(new Object(), new Object());
+        for (double invalid : new double[] {-1, .5, Double.NaN, Double.POSITIVE_INFINITY,
+                SolverExecutionBoundary.MAX_WALL_MILLIS + 1}) {
+            boolean rejected = false;
+            try { clock.begin(1, 1, invalid, 10, 0); }
+            catch (IllegalArgumentException expected) { rejected = true; }
+            require(rejected && !clock.isBusy(), "invalid wall clock cannot acquire a solver lease");
+        }
+        for (double invalid : new double[] {0, .5, Double.NaN, Double.POSITIVE_INFINITY,
+                SolverExecutionBoundary.MAX_WALL_MILLIS}) {
+            boolean rejected = false;
+            try { clock.begin(1, 1, 100, invalid, 0); }
+            catch (IllegalArgumentException expected) { rejected = true; }
+            require(rejected && !clock.isBusy(), "invalid or overflowing wall limit is rejected");
+        }
+        final Operation edge = clock.begin(1, 1, SolverExecutionBoundary.MAX_WALL_MILLIS - 10, 10, 0);
+        clock.check(edge, SolverExecutionBoundary.MAX_WALL_MILLIS - 1);
+        require(edge.outcome == Outcome.RUNNING, "one millisecond before the exact maximum deadline is live");
+        expect(Outcome.DEADLINE, new Runnable() { public void run() { clock.check(edge, SolverExecutionBoundary.MAX_WALL_MILLIS); }});
+        clock.finish(edge, Outcome.COMPLETE);
+        for (final double invalid : new double[] {Double.NaN, Double.POSITIVE_INFINITY, 100.5,
+                SolverExecutionBoundary.MAX_WALL_MILLIS + 1}) {
+            final Operation operation = clock.begin(1, 1, 100, 10, 0);
+            expect(Outcome.DEADLINE, new Runnable() { public void run() { clock.check(operation, invalid); }});
+            require(clock.finish(operation, Outcome.COMPLETE) == Outcome.DEADLINE && clock.observation() == null,
+                "invalid in-flight wall clock cannot publish");
+        }
     }
     private static void events() {
         require(eventTrace(false).equals("ABDC"), "chronological and FIFO tie ordering");

@@ -1,0 +1,292 @@
+- iframe
+- iframe
+- table:
+  - rowgroup:
+    - row:
+      - cell
+    - row "Workbench navigation MULTIMETER DC V OHM CONT DIODE --- V":
+      - cell "Workbench navigation MULTIMETER DC V OHM CONT DIODE --- V":
+        - navigation "Workbench navigation":
+          - button "Main menu"
+          - button "Shop"
+          - button "Resources"
+          - button "Settings"
+          - button "Run customer retest"
+          - status: Added to the real Parts Tray. Select the loose part on the workbench to install it.
+        - table:
+          - rowgroup:
+            - row "MULTIMETER":
+              - cell "MULTIMETER":
+                - generic: MULTIMETER
+            - row "DC V OHM CONT DIODE":
+              - cell "DC V OHM CONT DIODE":
+                - table:
+                  - rowgroup:
+                    - row "DC V OHM":
+                      - cell "DC V":
+                        - button "DC V"
+                      - cell "OHM":
+                        - button "OHM"
+                    - row "CONT DIODE":
+                      - cell "CONT":
+                        - button "CONT"
+                      - cell "DIODE":
+                        - button "DIODE"
+            - row "--- V":
+              - cell "--- V":
+                - generic: "--- V"
+            - row:
+              - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - 'row "Board Power: OFF"':
+      - 'cell "Board Power: OFF"':
+        - 'button "Board Power: OFF"'
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - 'row "BENCH POWER Supply 1 (+5V): disconnected Connect Supply 1 (+5V) Limit: 250 mA Supply 2 (+5V): disconnected Connect Supply 2 (+5V) Limit: 250 mA Supply 3 (+5V): disconnected Connect Supply 3 (+5V) Limit: 250 mA Each output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage."':
+      - 'cell "BENCH POWER Supply 1 (+5V): disconnected Connect Supply 1 (+5V) Limit: 250 mA Supply 2 (+5V): disconnected Connect Supply 2 (+5V) Limit: 250 mA Supply 3 (+5V): disconnected Connect Supply 3 (+5V) Limit: 250 mA Each output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage."':
+        - table:
+          - rowgroup:
+            - row "BENCH POWER":
+              - cell "BENCH POWER":
+                - generic: BENCH POWER
+            - 'row "Supply 1 (+5V): disconnected"':
+              - 'cell "Supply 1 (+5V): disconnected"':
+                - generic: "Supply 1 (+5V): disconnected"
+            - row "Connect Supply 1 (+5V)":
+              - cell "Connect Supply 1 (+5V)":
+                - button "Connect Supply 1 (+5V)"
+            - 'row "Limit: 250 mA"':
+              - 'cell "Limit: 250 mA"':
+                - combobox "Supply 1 (+5V) current limit":
+                  - 'option "Limit: 1 mA"'
+                  - 'option "Limit: 10 mA"'
+                  - 'option "Limit: 25 mA"'
+                  - 'option "Limit: 100 mA"'
+                  - 'option "Limit: 250 mA" [selected]'
+                  - 'option "Limit: 500 mA"'
+            - 'row "Supply 2 (+5V): disconnected"':
+              - 'cell "Supply 2 (+5V): disconnected"':
+                - generic: "Supply 2 (+5V): disconnected"
+            - row "Connect Supply 2 (+5V)":
+              - cell "Connect Supply 2 (+5V)":
+                - button "Connect Supply 2 (+5V)"
+            - 'row "Limit: 250 mA"':
+              - 'cell "Limit: 250 mA"':
+                - combobox "Supply 2 (+5V) current limit":
+                  - 'option "Limit: 1 mA"'
+                  - 'option "Limit: 10 mA"'
+                  - 'option "Limit: 25 mA"'
+                  - 'option "Limit: 100 mA"'
+                  - 'option "Limit: 250 mA" [selected]'
+                  - 'option "Limit: 500 mA"'
+            - 'row "Supply 3 (+5V): disconnected"':
+              - 'cell "Supply 3 (+5V): disconnected"':
+                - generic: "Supply 3 (+5V): disconnected"
+            - row "Connect Supply 3 (+5V)":
+              - cell "Connect Supply 3 (+5V)":
+                - button "Connect Supply 3 (+5V)"
+            - 'row "Limit: 250 mA"':
+              - 'cell "Limit: 250 mA"':
+                - combobox "Supply 3 (+5V) current limit":
+                  - 'option "Limit: 1 mA"'
+                  - 'option "Limit: 10 mA"'
+                  - 'option "Limit: 25 mA"'
+                  - 'option "Limit: 100 mA"'
+                  - 'option "Limit: 250 mA" [selected]'
+                  - 'option "Limit: 500 mA"'
+            - row "Each output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.":
+              - cell "Each output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.":
+                - generic: Each output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.
+    - row "Board view":
+      - cell "Board view":
+        - table "Board view":
+          - rowgroup:
+            - row "BOARD VIEW":
+              - cell "BOARD VIEW":
+                - generic: BOARD VIEW
+            - row "Fit board Fit selection":
+              - cell "Fit board Fit selection":
+                - table:
+                  - rowgroup:
+                    - row "Fit board":
+                      - cell "Fit board":
+                        - button "Fit board"
+                    - row "Fit selection":
+                      - cell "Fit selection":
+                        - button "Fit selection"
+            - row "Zoom + Zoom - View bottom copper":
+              - cell "Zoom + Zoom - View bottom copper":
+                - table:
+                  - rowgroup:
+                    - row "Zoom +":
+                      - cell "Zoom +":
+                        - button "Zoom +"
+                    - row "Zoom -":
+                      - cell "Zoom -":
+                        - button "Zoom -"
+                    - row "View bottom copper":
+                      - cell "View bottom copper":
+                        - button "View bottom copper"
+            - 'row "Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe."':
+              - 'cell "Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe."':
+                - generic: "Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe."
+            - row "Top side / top copper":
+              - cell "Top side / top copper":
+                - generic: Top side / top copper
+            - row "Inspect functional region":
+              - cell "Inspect functional region":
+                - combobox "Inspect functional region":
+                  - option "Inspect functional region" [selected]
+                  - option "Channel A"
+                  - option "Channel B"
+                  - option "Power input"
+                  - option "Power indicator"
+            - row "Inspect component":
+              - cell "Inspect component":
+                - combobox "Inspect component":
+                  - option "Inspect component" [selected]
+                  - option "J2"
+                  - option "Q1"
+                  - option "RB"
+                  - option "RPD"
+                  - option "LED1"
+                  - option "RLOAD"
+                  - option "J3"
+                  - option "Q1"
+                  - option "RG"
+                  - option "RPD"
+                  - option "LED1"
+                  - option "RLOAD"
+                  - option "J1"
+                  - option "LED1"
+                  - option "RSUP"
+            - row "Inspect terminal":
+              - cell "Inspect terminal":
+                - combobox "Inspect terminal":
+                  - option "Inspect terminal" [selected]
+                  - option "J2 terminal 1"
+                  - option "J2 terminal 2"
+                  - option "Q1 terminal B"
+                  - option "Q1 terminal C"
+                  - option "Q1 terminal E"
+                  - option "RB terminal 1"
+                  - option "RB terminal 2"
+                  - option "RPD terminal 1"
+                  - option "RPD terminal 2"
+                  - option "LED1 terminal A"
+                  - option "LED1 terminal K"
+                  - option "RLOAD terminal 1"
+                  - option "RLOAD terminal 2"
+                  - option "J3 terminal 1"
+                  - option "J3 terminal 2"
+                  - option "Q1 terminal G"
+                  - option "Q1 terminal D"
+                  - option "Q1 terminal S"
+                  - option "RG terminal 1"
+                  - option "RG terminal 2"
+                  - option "RPD terminal 1"
+                  - option "RPD terminal 2"
+                  - option "LED1 terminal A"
+                  - option "LED1 terminal K"
+                  - option "RLOAD terminal 1"
+                  - option "RLOAD terminal 2"
+                  - option "J1 terminal 1"
+                  - option "J1 terminal 2"
+                  - option "LED1 terminal A"
+                  - option "LED1 terminal K"
+                  - option "RSUP terminal 1"
+                  - option "RSUP terminal 2"
+            - row "Place red probe Place black probe":
+              - cell "Place red probe Place black probe":
+                - table:
+                  - rowgroup:
+                    - row "Place red probe":
+                      - cell "Place red probe":
+                        - button "Place red probe"
+                    - row "Place black probe":
+                      - cell "Place black probe":
+                        - button "Place black probe"
+            - row:
+              - cell:
+                - status
+    - 'row "Service Ticket One of the controlled indicators does not turn on. Customer retest: Set each channel HIGH and LOW and verify every indicator responds. Channel A HIGH Channel A LOW Channel B HIGH Channel B LOW"':
+      - 'cell "Service Ticket One of the controlled indicators does not turn on. Customer retest: Set each channel HIGH and LOW and verify every indicator responds. Channel A HIGH Channel A LOW Channel B HIGH Channel B LOW"':
+        - table:
+          - rowgroup:
+            - row "Service Ticket":
+              - cell "Service Ticket":
+                - generic: Service Ticket
+            - row "One of the controlled indicators does not turn on.":
+              - cell "One of the controlled indicators does not turn on.":
+                - generic: One of the controlled indicators does not turn on.
+            - 'row "Customer retest: Set each channel HIGH and LOW and verify every indicator responds."':
+              - 'cell "Customer retest: Set each channel HIGH and LOW and verify every indicator responds."':
+                - generic: "Customer retest: Set each channel HIGH and LOW and verify every indicator responds."
+            - row "Channel A HIGH":
+              - cell "Channel A HIGH":
+                - button "Channel A HIGH"
+            - row "Channel A LOW":
+              - cell "Channel A LOW":
+                - button "Channel A LOW"
+            - row "Channel B HIGH":
+              - cell "Channel B HIGH":
+                - button "Channel B HIGH"
+            - row "Channel B LOW":
+              - cell "Channel B LOW":
+                - button "Channel B LOW"
+    - row:
+      - cell
+    - 'row "Parts Tray Part 16 - 330 Ohm +/-5% Part 6 - 330 Ohm +/-5% Part 17 - 330 Ohm +/-5% Selected: Part 16 - 330 Ohm +/-5% State: Loose Install as RB Inspect loose part"':
+      - 'cell "Parts Tray Part 16 - 330 Ohm +/-5% Part 6 - 330 Ohm +/-5% Part 17 - 330 Ohm +/-5% Selected: Part 16 - 330 Ohm +/-5% State: Loose Install as RB Inspect loose part"':
+        - table:
+          - rowgroup:
+            - row "Parts Tray":
+              - cell "Parts Tray":
+                - generic: Parts Tray
+            - row "Part 16 - 330 Ohm +/-5%":
+              - cell "Part 16 - 330 Ohm +/-5%":
+                - button "Part 16 - 330 Ohm +/-5%"
+            - row "Part 6 - 330 Ohm +/-5%":
+              - cell "Part 6 - 330 Ohm +/-5%":
+                - button "Part 6 - 330 Ohm +/-5%"
+            - row "Part 17 - 330 Ohm +/-5%":
+              - cell "Part 17 - 330 Ohm +/-5%":
+                - button "Part 17 - 330 Ohm +/-5%"
+            - 'row "Selected: Part 16 - 330 Ohm +/-5%"':
+              - 'cell "Selected: Part 16 - 330 Ohm +/-5%"':
+                - generic: "Selected: Part 16 - 330 Ohm +/-5%"
+            - 'row "State: Loose"':
+              - 'cell "State: Loose"':
+                - generic: "State: Loose"
+            - row "Install as RB":
+              - cell "Install as RB":
+                - button "Install as RB" [disabled]
+            - row "Inspect loose part":
+              - cell "Inspect loose part":
+                - button "Inspect loose part"

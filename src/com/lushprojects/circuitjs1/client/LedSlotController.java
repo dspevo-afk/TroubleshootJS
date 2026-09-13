@@ -1,6 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
-class LedSlotController implements PhysicalSlotMutationProvider {
+class LedSlotController implements PhysicalSlotMutationProvider,
+        PhysicalSlotMutationProvider.Scoped, CatalogAcquisitionProvider {
     private final CirSim sim;
     private final GeneratedBoardInstance instance;
     private final BoardModificationController modifications;
@@ -56,8 +57,9 @@ class LedSlotController implements PhysicalSlotMutationProvider {
         if (WorkbenchOperation.CATALOG_INSTALL.equals(id))
             return slot.isEmpty() && hasCatalogEntry(operation.getCatalogEntryId());
         if (WorkbenchOperation.INSTALL.equals(id))
-            return operation.getPart() != null && ownsPart(operation.getPart().getId()) &&
-                !operation.getPart().isInstalled() && slot.isEmpty();
+            return operation.getPart() instanceof PhysicalLedPart &&
+                instance.getPhysicalBoardRuntime().isPartInstallableAt(operation.getPart(),
+                    getComponentId());
         if (WorkbenchOperation.REMOVE.equals(id))
             return !slot.isEmpty() && matchesInstalledPart(operation);
         if (WorkbenchOperation.LIFT_LEAD.equals(id))
@@ -90,13 +92,23 @@ class LedSlotController implements PhysicalSlotMutationProvider {
 
     public String getComponentId() { return capability.getSlot().getComponentId(); }
     public boolean ownsPart(String partId) { return capability.getInventory().contains(partId); }
+    public PhysicalMutationSlot getMutationSlot() { return capability.getSlot(); }
 
     public boolean removeInstalledPart() {
         requireSafeMutation();
         LedComponentSlot slot = capability.getSlot();
         if (slot.isEmpty()) return false;
-        modifications.removeComponentDeferredRefresh(slot.getComponentId());
-        slot.clear();
+        PhysicalMutationScope scope = newScope("remove", null);
+        try {
+            modifications.disconnectComponentForMutation(scope, slot.getComponentId());
+            scope.clearPart();
+            scope.commit();
+        } catch (Throwable failure) {
+            scope.abort(failure);
+            PhysicalMutationScope.rethrow(failure);
+            return false;
+        }
+        scope.closeAfterCommit();
         finishMutation();
         return true;
     }
@@ -104,66 +116,129 @@ class LedSlotController implements PhysicalSlotMutationProvider {
     public boolean install(String partId) {
         requireSafeMutation();
         if (!capability.getSlot().isEmpty()) return false;
-        PhysicalLedPart part = capability.getInventory().get(partId);
-        if (part.isInstalled()) return false;
-        installPart(part);
+        PhysicalPart<?> candidate = instance.getPhysicalBoardRuntime().getPart(partId);
+        if (!(candidate instanceof PhysicalLedPart) ||
+                !instance.getPhysicalBoardRuntime().isPartInstallableAt(candidate,
+                    getComponentId()))
+            return false;
+        PhysicalLedPart part = (PhysicalLedPart) candidate;
+        PhysicalMutationScope scope = newScope("install", part);
+        try {
+            scope.replacePrimaryBinding(part.getElement());
+            retargetComponentLeadBindings(part, scope);
+            scope.installPart(part);
+            scope.restoreComponentGraph();
+            scope.commit();
+            instance.getOperationalStates().replaceLed(getComponentId(), part.getElement());
+        } catch (Throwable failure) {
+            scope.abort(failure);
+            PhysicalMutationScope.rethrow(failure);
+            return false;
+        }
+        scope.closeAfterCommit();
+        finishMutation();
         return true;
     }
 
     public boolean installNewFromCatalog(String catalogEntryId) {
+        return catalogPart(catalogEntryId, true) != null;
+    }
+
+    public PhysicalPart<?> acquireFromCatalog(String catalogEntryId) {
+        return catalogPart(catalogEntryId, false);
+    }
+
+    private PhysicalLedPart catalogPart(String catalogEntryId, boolean install) {
         requireSafeMutation();
-        if (!capability.getSlot().isEmpty()) return false;
+        final LedComponentSlot slot = capability.getSlot();
+        if (install && !slot.isEmpty()) return null;
         final LedCatalogEntry entry = capability.getCatalog().get(catalogEntryId);
         final LedNameplate specification = entry.getSpecification();
         final PhysicalNameplate playerNameplate = entry.getPlayerVisibleNameplate();
         final LEDElm element = DynamicLedBackingAllocator.create(instance.getSimulationElements(),
             specification);
-        final String componentId = capability.getSlot().getComponentId();
-        PhysicalLedPart part = capability.getInventory().acquire(
-            componentId + "_CATALOG_PART",
-            new PhysicalPartIdentityFactory<PhysicalLedPart>() {
-                public PhysicalLedPart create(String partId) {
-                    return new PhysicalLedPart(partId, specification, specification,
-                        playerNameplate.forPhysicalPartId(partId), element,
-                        entry.isReversedInstallation(), LedPartLocation.LOOSE,
-                        new PhysicalPartProvenance(PhysicalPartProvenance.CATALOG_ACQUIRED,
-                            partId));
-                }
-            });
-        instance.registerRuntimeSimulationElement(element);
-        sim.elmList.add(element);
-        installPart(part);
-        return true;
-    }
-
-    private void installPart(PhysicalLedPart part) {
-        String componentId = capability.getSlot().getComponentId();
-        instance.getComponentBindings().replaceSingleElement(componentId, part.getElement());
-        instance.getOperationalStates().replaceLed(componentId, part.getElement());
-        for (GeneratedComponentConnectionBinding binding :
-                instance.getConnectionBindings().getForComponent(componentId))
-            binding.setComponentEndpoint(part.getTerminalForBoardPad(binding.getPadId()));
-        capability.getSlot().install(part);
-        modifications.restoreComponent(componentId);
+        final String componentId = slot.getComponentId();
+        PhysicalMutationScope scope = newScope(install ? "catalog" : "acquire", null,
+            null, catalogEntryId);
+        PhysicalLedPart part;
+        try {
+            part = scope.acquire(capability.getInventory(), componentId + "_CATALOG_PART",
+                new PhysicalPartIdentityFactory<PhysicalLedPart>() {
+                    public PhysicalLedPart create(String partId) {
+                        PhysicalLedPart created = new PhysicalLedPart(partId, specification,
+                            specification, playerNameplate.forPhysicalPartId(partId), element,
+                            entry.isReversedInstallation(), LedPartLocation.LOOSE,
+                            new PhysicalPartProvenance(PhysicalPartProvenance.CATALOG_ACQUIRED,
+                                partId));
+                        slot.getPhysicalSlot().bindGeometryForAcquisition(created);
+                        return created;
+                    }
+                });
+            scope.registerCanonicalElement(element);
+            scope.appendActiveElement(element);
+            if (install) {
+                scope.replacePrimaryBinding(element);
+                retargetComponentLeadBindings(part, scope);
+                scope.installPart(part);
+                scope.restoreComponentGraph();
+            }
+            scope.commit();
+            if (install)
+                instance.getOperationalStates().replaceLed(componentId, element);
+        } catch (Throwable failure) {
+            scope.abort(failure);
+            PhysicalMutationScope.rethrow(failure);
+            return null;
+        }
+        scope.closeAfterCommit();
         finishMutation();
+        return part;
     }
 
     private void requireSafeMutation() {
-        if (sim.getGeneratedBoardInstance() != instance || sim.activeMeasurementOverlay ||
-                !sim.isChallengeInteractionEnabled() ||
-                !sim.getBoardPowerController().isElectricallyUnpowered())
+        if (!isSafeMutationAvailable())
             throw new BoardModificationRejectedException(
                 "LED replacement requires electrically unpowered generated board");
     }
 
     private boolean isSafeMutationAvailable() {
-        return sim.getGeneratedBoardInstance() == instance && !sim.activeMeasurementOverlay &&
+        return sim.getGeneratedBoardInstance() == instance &&
+            sim.getBoardModificationController() == modifications &&
+            !sim.activeMeasurementOverlay &&
             sim.isChallengeInteractionEnabled() &&
-            sim.getBoardPowerController().isElectricallyUnpowered();
+            sim.getBoardPowerController().isElectricallyUnpowered() &&
+            !instance.getPhysicalBoardRuntime().isMutationInProgress() &&
+            !instance.getPhysicalBoardRuntime().isMutationOwnerQuarantined(getComponentId());
     }
 
     private boolean matchesInstalledPart(WorkbenchOperation operation) {
         return operation.getPart() == null || operation.getPart() == capability.getSlot().getInstalledPart();
+    }
+
+    private boolean ownsPartIdentity(PhysicalPart<?> part) {
+        return part != null && part.getId() != null &&
+            capability.getInventory().contains(part.getId()) &&
+            capability.getInventory().get(part.getId()) == part;
+    }
+
+    private PhysicalMutationScope newScope(String operation, PhysicalPart<?> requestedPart) {
+        return newScope(operation, requestedPart, null, null);
+    }
+
+    private PhysicalMutationScope newScope(String operation, PhysicalPart<?> requestedPart,
+            String padId, String catalogEntryId) {
+        PhysicalMutationIntent intent = PhysicalMutationIntent.prepare(
+            instance.getPhysicalBoardRuntime(), instance, modifications,
+            capability.getSlot(), operation, padId, catalogEntryId, requestedPart);
+        return new PhysicalMutationScope(sim, instance, modifications, intent);
+    }
+
+    private void retargetComponentLeadBindings(PhysicalLedPart part,
+            PhysicalMutationScope scope) {
+        String componentId = capability.getSlot().getComponentId();
+        for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings()
+                .getForComponent(componentId))
+            scope.retargetEndpoint(binding, part.getTerminalForBoardPad(binding.getPadId()));
     }
 
     private boolean hasConnectedPad(String padId) {
@@ -186,8 +261,15 @@ class LedSlotController implements PhysicalSlotMutationProvider {
         return false;
     }
     private void finishMutation() {
-        sim.needAnalyze();
-        sim.requestGeneratedBoardVerification();
-        sim.refreshBoardModificationControls();
+        try {
+            if (sim.getGeneratedChallengeController() != null)
+                sim.getGeneratedChallengeController().invalidateCustomerRetest();
+            sim.needAnalyze();
+            sim.requestGeneratedBoardVerification();
+            sim.refreshBoardModificationControls();
+        } catch (Throwable failure) {
+            sim.markGeneratedRuntimeFailure(instance, failure);
+            PhysicalMutationScope.rethrow(failure);
+        }
     }
 }

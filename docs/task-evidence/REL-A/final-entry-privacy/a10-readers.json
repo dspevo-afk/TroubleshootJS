@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "attempts": 24,
+  "cancellationMaxMs": 3,
+  "first": {
+    "p50Ms": 841,
+    "p95Ms": 2112,
+    "worstMs": 2112
+  },
+  "immediateRepeat": {
+    "p50Ms": 841,
+    "p95Ms": 2032,
+    "worstMs": 2032
+  },
+  "malformedCanariesRejected": [
+    "missing temporalWork.comparedProfiles",
+    "missing temporalWork.phases",
+    "missing temporalWork.cancelBoundaries",
+    "missing temporalWork.staleGraphBoundaries",
+    "missing temporalWork.sourceChangeBoundaries",
+    "missing temporalWork.exactStateSamplesEventsCounters",
+    "missing temporalWork.partialPublicationRejected",
+    "missing temporalWork.repairPowerGuard",
+    "missing temporalWork.stagedAbortBoundaries",
+    "missing temporalWork.abortedSourcesDisconnected",
+    "missing observationCleanup.assertions",
+    "missing observationCleanup.cursorRetry",
+    "missing observationCleanup.closedSessionRetry",
+    "missing observationCleanup.retainedObservation",
+    "missing observationCleanup.successorUntouched",
+    "missing observationCleanup.leaseRetained",
+    "missing observationCleanup.privateGraphDisposed"
+  ],
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "scope": "Actual final A10 report; maintained strict reader and17 missing-proof canaries. Complementary Task43P actual overlays/owner replacement passed separately."
+}

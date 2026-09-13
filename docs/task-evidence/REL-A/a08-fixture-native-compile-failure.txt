@@ -1,0 +1,24 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+<repo>\src\com\lushprojects\circuitjs1\client\CompositionMutationGateDeveloperVerifier.java:243: error: variable foreign is already defined in method verifyInvariantNegatives(CirSim,ReplaceableResistorBoardCapability)
+        PhysicalBoardRuntime foreign = new PhysicalBoardRuntime(board.getBoard());
+                             ^
+<repo>\src\com\lushprojects\circuitjs1\client\CompositionMutationGateDeveloperVerifier.java:244: error: cannot find symbol
+        foreign.registerCapability(led);
+               ^
+  symbol:   method registerCapability(ReplaceableLedBoardCapability)
+  location: variable foreign of type CircuitElm
+<repo>\src\com\lushprojects\circuitjs1\client\CompositionMutationGateDeveloperVerifier.java:246: error: cannot find symbol
+        try { foreign.validateSupportedCompositionProviders(); }
+                     ^
+  symbol:   method validateSupportedCompositionProviders()
+  location: variable foreign of type CircuitElm
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+3 errors
+1 warning
+
+CURRENT_CONTRACT_FAILURE: Current production-class compilation failed, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

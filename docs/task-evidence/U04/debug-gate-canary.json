@@ -1,0 +1,30 @@
+{
+  "heading": "Customer ticket",
+  "reports": [],
+  "titles": [
+    {
+      "aria": "Workbench navigation",
+      "title": null
+    },
+    {
+      "aria": "Supply 1 (+5V) current limit",
+      "title": null
+    },
+    {
+      "aria": "Board view",
+      "title": null
+    },
+    {
+      "aria": "Inspect functional region",
+      "title": null
+    },
+    {
+      "aria": "Inspect component",
+      "title": null
+    },
+    {
+      "aria": "Inspect terminal",
+      "title": null
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "verifiedPid": 3688,
+  "startTicks": 639248969817581278,
+  "runId": "U04-U05-RELA-menu-focus",
+  "port": 64206,
+  "ownershipChecks": [
+    "PID",
+    "UTC creation ticks",
+    "executable",
+    "run ID",
+    "nonce",
+    "port"
+  ],
+  "cleanupElapsedMs": 23
+}

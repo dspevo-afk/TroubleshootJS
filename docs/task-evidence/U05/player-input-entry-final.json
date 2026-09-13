@@ -1,0 +1,135 @@
+{
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "status": "PASS",
+  "kind": "Actual visible player actions; not human calibration",
+  "replay": "tsj-alpha/1/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/0",
+  "debug": false,
+  "verifierFlags": [
+    "tsjVerifyA02",
+    "tsjVerifyA03",
+    "tsjVerifyA04",
+    "tsjVerifyA06",
+    "tsjVerifyA07",
+    "tsjVerifyA08",
+    "tsjVerifyA10",
+    "tsjVerifyAlpha",
+    "tsjVerifyArchitecture",
+    "tsjVerifyChallenge",
+    "tsjVerifyCompositionGate",
+    "tsjVerifyDiode",
+    "tsjVerifyE01",
+    "tsjVerifyE03",
+    "tsjVerifyGeometry",
+    "tsjVerifyLayout",
+    "tsjVerifyLedParts",
+    "tsjVerifyMeter",
+    "tsjVerifyNmos",
+    "tsjVerifyNpn",
+    "tsjVerifyP01",
+    "tsjVerifyP02",
+    "tsjVerifyParallel",
+    "tsjVerifyQ15",
+    "tsjVerifyQuickPlay",
+    "tsjVerifyRc",
+    "tsjVerifyReplacement",
+    "tsjVerifyResistance",
+    "tsjVerifyStoredEnergy",
+    "tsjVerifyStress",
+    "tsjVerifyTask39",
+    "tsjVerifyTask40",
+    "tsjVerifyTask41",
+    "tsjVerifyTask43",
+    "tsjVerifyTask43P",
+    "tsjVerifyTask46",
+    "tsjVerifyTask47",
+    "tsjVerifyTask48",
+    "tsjVerifyTask49",
+    "tsjVerifyU01",
+    "tsjVerifyWrongRepair"
+  ],
+  "extraNegativeInputs": [
+    "tsjTask43PForcedFailure=true",
+    "tsjTask43PSourceExperiment=privacy-canary"
+  ],
+  "checks": [
+    {
+      "check": "Exact MEDIUM replay and current build reach ticket",
+      "status": "PASS"
+    },
+    {
+      "check": "Unrepaired customer retest rejects",
+      "status": "PASS",
+      "message": "Customer retest did not pass. Continue troubleshooting."
+    },
+    {
+      "check": "Board power disconnects all three supplies",
+      "status": "PASS"
+    },
+    {
+      "check": "Channel A RLOAD isolated resistance",
+      "status": "PASS",
+      "reading": "OL",
+      "targets": [
+        {
+          "label": "RLOAD terminal 1",
+          "value": "tsj-realization-v1/controlled-indicator@1/channel-a-load/resistor-led-load@2/resistor-led-load@2/pad/RLOAD.1"
+        },
+        {
+          "label": "RLOAD terminal 2",
+          "value": "tsj-realization-v1/controlled-indicator@1/channel-a-load/resistor-led-load@2/resistor-led-load@2/pad/RLOAD.2"
+        }
+      ]
+    },
+    {
+      "check": "Public channel/component catalogs acquire only the selected loose part and retain original",
+      "status": "PASS",
+      "observed": {
+        "counts": [
+          "Loose parts in this catalog: 0",
+          "Loose parts in this catalog: 1",
+          "Loose parts in this catalog: 0",
+          "Loose parts in this catalog: 0"
+        ],
+        "headings": [
+          "Channel A · RG — RG replacement resistors",
+          "Channel A · RLOAD — RLOAD replacement resistors",
+          "Channel B · RG — RG replacement resistors",
+          "Channel B · RLOAD — RLOAD replacement resistors"
+        ],
+        "installed": true,
+        "tray": [
+          "Part 16 - 330 Ohm +/-5%"
+        ]
+      }
+    },
+    {
+      "check": "Separate removal/install updates retained probe measurement",
+      "status": "PASS",
+      "removed": "Part 6",
+      "installed": "Part 16 as Channel A RLOAD",
+      "reading": "330 Ohm"
+    },
+    {
+      "check": "Powered two-channel HIGH/LOW customer retest reaches Results",
+      "status": "PASS",
+      "message": "Customer retest passed. The reported behavior is resolved."
+    }
+  ],
+  "identity": [
+    "tsj-alpha/1/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/0",
+    "tsj-alpha/1 / 6A7778C50F3797A9E5C587F0FD7198E1"
+  ],
+  "privacy": {
+    "privateAttributes": [],
+    "privateLabels": []
+  },
+  "screenshots": [
+    "medium-shop-entry-final.png",
+    "medium-results-entry-final.png"
+  ],
+  "limits": [
+    "Automated visible input is not a human calibration trial.",
+    "Repeated component/terminal labels were selected using their observed DOM option values; functional-region selection does not filter these selectors.",
+    "Visible Place black probe button used; no native right-mouse certification."
+  ]
+}

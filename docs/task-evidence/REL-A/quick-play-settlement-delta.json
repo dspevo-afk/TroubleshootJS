@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "prior": "before-quick-play-settlement-inputs.json",
+  "current": "candidate-inputs.json",
+  "changed": [
+    {
+      "sha256": "aef48a9432afa3986d29221cbfd6d6b822ab36d6b100d696b96e069832bce8a2",
+      "path": "src/com/lushprojects/circuitjs1/client/QuickPlayDeveloperVerifier.java"
+    }
+  ],
+  "scope": "Developer Quick Play verifier only: ordinary settlement between dependent public actions, unchanged product guards and electrical oracles."
+}

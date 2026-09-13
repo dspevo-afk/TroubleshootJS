@@ -1,0 +1,51 @@
+{
+  "status": "PASS",
+  "reason": "Initial staged diff-check found trailing spaces in wrapped PowerShell warnings and extra terminal blank lines. Normalize presentation whitespace only; all result/failure text retained. Raw pre-normalization files preserved in task-owned OS temp.",
+  "files": [
+    {
+      "file": "docs/task-evidence/REL-A/checkpoint-before-human-shop.md",
+      "beforeSha256": "4a813a786749691b7ac9a9ffa74438601ccd2ae992ac860fda777d75cb0121f1",
+      "afterSha256": "b2ef4191583e9b5873c6a6f98fe99f75bde4f8cd133cb9284b61c50afe990170"
+    },
+    {
+      "file": "docs/task-evidence/REL-A/final-shop/native-continuity-receipt.txt",
+      "beforeSha256": "c71ee660c09cdd2b65af0bb974597d19be40085fc22bcac5c030e56a7adf5627",
+      "afterSha256": "aef820f75d55a2cc369a18d1a476e1b2d6259b6b927fae31c4805355f581d3e7"
+    },
+    {
+      "file": "docs/task-evidence/REL-A/final-shop/native-continuity.txt",
+      "beforeSha256": "8366c1b9246ea630a21cfc4468ce38a60a579c592d1816a5a5b36093ad6917b0",
+      "afterSha256": "0735662e00e7f1d83b9e082683b7c7539922be177923808c8cc0bb777a0c0479"
+    },
+    {
+      "file": "docs/task-evidence/REL-A/final-shop/native-contracts.txt",
+      "beforeSha256": "c8ef4f6de188f1f35cb7e50bda87ba067b35eb4c849de13ab50f91a5e25d398a",
+      "afterSha256": "95cc0882ecc13e5a5bc2cf84bdb47ad88a8d099c7c5e884d1cb7ddc7cbf26cc4"
+    },
+    {
+      "file": "docs/task-evidence/REL-A/final-shop/native-rebind-receipt.txt",
+      "beforeSha256": "318e27905a2b694def206e2fe352474592b0197abfc8fde5c91035fd71c752a0",
+      "afterSha256": "0c3e5b5574f257c18dfa674813ba19a77a543d44ef641882f9bd5ef478ed4192"
+    },
+    {
+      "file": "docs/task-evidence/REL-A/final-shop/native-rebind.txt",
+      "beforeSha256": "543f9c5bdb9e90e7a7500be712980ba2fd2a7a48bd1def89a303ee5cc7849ad8",
+      "afterSha256": "b8962b73765f3d1d6afc6fbf133674800611afac487f2f31010ab40731557ec4"
+    },
+    {
+      "file": "docs/task-evidence/REL-A/final-shop/native-receipt.txt",
+      "beforeSha256": "523f3695dd647b5744c1807813ee88d3f2447601cf0a520d73e0b52a59c4020b",
+      "afterSha256": "f4f0c9476b8a6ca762641c41dc936d954ba1cc460d0f551e57617749e00b4f16"
+    },
+    {
+      "file": "docs/task-evidence/REL-A/final-shop/root-cmd-direct-out.txt",
+      "beforeSha256": "2c94b406c5c329914455ab9c77828c85801807306eb8975e69ca41297d2767d0",
+      "afterSha256": "520cc60f5c35966db0f77d0e3f099fa6f8c6c67e6c9d1c8aa6d85960278d9125"
+    },
+    {
+      "file": "docs/task-evidence/REL-A/gwt-before-label.txt",
+      "beforeSha256": "674b97dc28e3431590462b2fce17a832cef936e3041dec69d16f11950e503a66",
+      "afterSha256": "aeb8ac8f29a9f44ce43a54db60629543c74d134e987fab2915c74b15eb4bee7a"
+    }
+  ]
+}

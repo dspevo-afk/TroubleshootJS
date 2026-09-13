@@ -1,0 +1,12 @@
+{
+  "previousManifest": "before-a08-fixture-inputs.json",
+  "currentManifest": "candidate-inputs.json",
+  "changed": [
+    {
+      "sha256": "a40b342b1dfc6d4b16ff035bbfb754f5ad85d8a8073e38f3c84494785e098721",
+      "path": "src/com/lushprojects/circuitjs1/client/CompositionMutationGateDeveloperVerifier.java"
+    }
+  ],
+  "removed": [],
+  "scope": "Developer-only A08 composition-provider acceptance/negative fixture. Product code, other verifiers, native contracts and UI inputs unchanged from the preceding candidate."
+}

@@ -10,6 +10,11 @@ class GeneratedComponentBindings {
         new HashMap<String, Vector<CircuitElm>>();
     private final HashMap<String, Vector<CircuitElm>> auxiliaryComponentElements =
         new HashMap<String, Vector<CircuitElm>>();
+    /** Immutable generated bindings used when a mutable slot is empty. */
+    private final HashMap<String, Vector<CircuitElm>> canonicalComponentElements =
+        new HashMap<String, Vector<CircuitElm>>();
+    private final HashMap<String, Vector<CircuitElm>> canonicalAuxiliaryComponentElements =
+        new HashMap<String, Vector<CircuitElm>>();
 
     GeneratedComponentBindings(TroubleshootBoard board) {
         this.board = board;
@@ -34,7 +39,9 @@ class GeneratedComponentBindings {
 	    if (element == null)
 		throw new IllegalArgumentException("Missing simulation element for component: " + componentId);
 	}
-        componentElements.put(componentId, new Vector<CircuitElm>(elements));
+        Vector<CircuitElm> copy = new Vector<CircuitElm>(elements);
+        componentElements.put(componentId, copy);
+        canonicalComponentElements.put(componentId, new Vector<CircuitElm>(copy));
     }
 
     Vector<CircuitElm> getElements(String componentId) {
@@ -84,12 +91,19 @@ class GeneratedComponentBindings {
         Vector<CircuitElm> elements = new Vector<CircuitElm>();
         elements.add(element);
         auxiliaryComponentElements.put(componentId, elements);
+        if (!canonicalAuxiliaryComponentElements.containsKey(componentId))
+            canonicalAuxiliaryComponentElements.put(componentId,
+                new Vector<CircuitElm>(elements));
     }
 
     void replaceAuxiliaryComponentElement(String componentId, CircuitElm element) {
+        if (constructionAborted)
+            throw new IllegalStateException("Construction bindings were revoked");
         if (!componentElements.containsKey(componentId) || element == null)
             throw new IllegalArgumentException("Invalid auxiliary component replacement: " + componentId);
-        bindAuxiliaryComponentElement(componentId, element);
+        Vector<CircuitElm> elements = new Vector<CircuitElm>();
+        elements.add(element);
+        auxiliaryComponentElements.put(componentId, elements);
     }
 
     void replaceSingleElement(String componentId, CircuitElm element) {
@@ -98,6 +112,21 @@ class GeneratedComponentBindings {
         Vector<CircuitElm> elements = new Vector<CircuitElm>();
         elements.add(element);
         componentElements.put(componentId, elements);
+    }
+
+    /** Restores the generated backing retained by an empty mutable slot. */
+    void restoreCanonicalForMutation(String componentId) {
+        Vector<CircuitElm> canonical = canonicalComponentElements.get(componentId);
+        if (componentId == null || canonical == null || canonical.isEmpty() ||
+                !componentElements.containsKey(componentId))
+            throw new IllegalArgumentException("Invalid canonical component restoration: " +
+                componentId);
+        componentElements.put(componentId, new Vector<CircuitElm>(canonical));
+        Vector<CircuitElm> auxiliary = canonicalAuxiliaryComponentElements.get(componentId);
+        if (auxiliary == null || auxiliary.isEmpty())
+            auxiliaryComponentElements.remove(componentId);
+        else
+            auxiliaryComponentElements.put(componentId, new Vector<CircuitElm>(auxiliary));
     }
 
     /** Restores the exact two binding vectors captured by a resistor scope. */
@@ -143,5 +172,7 @@ class GeneratedComponentBindings {
         constructionAborted = true;
         componentElements.clear();
         auxiliaryComponentElements.clear();
+        canonicalComponentElements.clear();
+        canonicalAuxiliaryComponentElements.clear();
     }
 }

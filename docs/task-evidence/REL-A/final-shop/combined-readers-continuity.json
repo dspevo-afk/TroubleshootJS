@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "executionDigest": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+  "commands": [
+    {
+      "command": "./scripts/verify-e01-e03-evidence.ps1 -EvidenceRoot docs/task-evidence/REL-A/final-shop",
+      "exitCode": 0,
+      "result": "E01/E03 electrical reports, forced failures, five reader canaries and maintained Task41/Task49/A08 readers PASS"
+    },
+    {
+      "command": "./scripts/verify-q15-evidence.ps1 -EvidenceRoot docs/task-evidence/REL-A/final-shop/q15",
+      "exitCode": 0,
+      "result": "Q15all11/22 malformed, A10, E03, A08,20 Task41 routes, Task49 and negative report canaries PASS"
+    }
+  ],
+  "consumedReports": {
+    "E01/compiled-source-proof.json": "e0963269a0d45e0aed15bed39116e513187f3d1ce96431751f9ec368b35e865c",
+    "E03/compiled-relay-proof.json": "e3332f202b78042e6578a68a0b1bbd9cc83bde0ddd6e8f11a338e96df870e4da",
+    "E01/a08-report.json": "75956463dc163990cb879b793924d23c766fe4f56a66e99b64a7b0c8d4210ab3",
+    "E01/task49-report.json": "abe61c7e0a232272d9bb3aead76cbcbe11de718e005e9e17e8b7287a3e039e58",
+    "E03/task41-report.txt": "cb75c4b159a3df51ac3641aa7fe8387bf459f93c205ef61820153de8b4598b38",
+    "q15/compiled-control-board.json": "bdd09f52a3b3b573db822a07a43bcb222a0b6cbf820e869101eeea160395941e",
+    "q15/forced-negative.json": "cc1bea6021e798bb4518673916c7e672dfddefb0f1e2c5c0e91cf128090dba94",
+    "q15/a10-report.json": "191b2017e23a06bcbe4f72dcf49e20af7170fb8e7d3e2964aeebf349503e899e",
+    "q15/e03-report.json": "e3332f202b78042e6578a68a0b1bbd9cc83bde0ddd6e8f11a338e96df870e4da",
+    "q15/a08-report.json": "75956463dc163990cb879b793924d23c766fe4f56a66e99b64a7b0c8d4210ab3",
+    "q15/task41-report.txt": "cb75c4b159a3df51ac3641aa7fe8387bf459f93c205ef61820153de8b4598b38",
+    "q15/task49-report.json": "abe61c7e0a232272d9bb3aead76cbcbe11de718e005e9e17e8b7287a3e039e58"
+  },
+  "duplicateLayouts": "Exact bytes independently compared; no previous-candidate report substituted.",
+  "limits": "Built-in Browser evidence and maintained readers do not certify the historical Windows CDP wrapper. Module unapproved-verb warnings were present; both commands completed normally."
+}

@@ -10,6 +10,7 @@ class ResistanceMeasurementDeveloperVerifier {
     private static double healthyLedCurrent;
 
     static void verify(CirSim sim) {
+        MeasurementEndpointDeveloperVerifier.verify(sim);
         if (sim.getGeneratedChallengeController() != null) {
             MeterLifecycleDeveloperVerifier.verify(sim);
             return;

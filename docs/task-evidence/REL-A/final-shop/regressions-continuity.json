@@ -1,0 +1,74 @@
+{
+  "status": "PASS",
+  "executionDigest": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+  "scope": "Fresh final production preview through built-in Browser; maintained strict readers; no Windows CDP wrapper certification",
+  "gates": [
+    {
+      "name": "A08",
+      "status": "PASS",
+      "artifact": "a08-report.json",
+      "assertions": 1103,
+      "cleanup": "PASS"
+    },
+    {
+      "name": "E01",
+      "status": "PASS",
+      "artifact": "E01/compiled-source-proof.json",
+      "assertions": 21,
+      "elapsedMs": 18
+    },
+    {
+      "name": "E03",
+      "status": "PASS",
+      "artifact": "E03/compiled-relay-proof.json",
+      "assertions": 46,
+      "mutationAssertions": 113,
+      "playerCases": 6,
+      "elapsedMs": 38183,
+      "rawElapsedMs": 1914
+    },
+    {
+      "name": "Task49",
+      "status": "PASS",
+      "artifact": "E01/task49-report.json",
+      "assertions": 397
+    },
+    {
+      "name": "A07",
+      "status": "PASS",
+      "artifact": "a07-report.json",
+      "pureAssertions": 58,
+      "runtimeAssertions": 71,
+      "cleanup": "PASS"
+    },
+    {
+      "name": "U01",
+      "status": "PASS",
+      "artifact": "u01-report.json",
+      "assertions": 1237,
+      "liveTargets": 6,
+      "identityUnchanged": true
+    },
+    {
+      "name": "Task41",
+      "status": "PASS",
+      "artifact": "E03/task41-report.txt",
+      "routes": 20,
+      "solverSamples": 182,
+      "timingLimit": "Legacy report has no operation/cleanup split."
+    },
+    {
+      "name": "Task43P runtime",
+      "status": "PASS",
+      "artifact": "task43p-runtime-reader-continuity.json",
+      "openBlockers": 0,
+      "readers": "Maintained exact-run/route reader plus malformed contract probe PASS."
+    }
+  ],
+  "readers": {
+    "combinedElectricalAndQ15": "combined-readers-continuity.json",
+    "a07": "a07-readers.json",
+    "a10": "a10-readers.json",
+    "task43p": "task43p-runtime-reader-continuity.json"
+  }
+}

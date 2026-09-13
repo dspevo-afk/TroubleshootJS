@@ -6,6 +6,7 @@ class ReplaceableComponentSlot implements PhysicalMutationSlot {
     private final WireElm firstAttachment;
     private final WireElm secondAttachment;
     private final PhysicalBoardSlot physicalSlot;
+    private final PhysicalMutationSlot.AttachmentState emptySlotAttachmentState;
 
     ReplaceableComponentSlot(String componentId, ResistorNameplate intendedNameplate,
             PhysicalResistorPart installedPart, WireElm firstAttachment, WireElm secondAttachment,
@@ -21,6 +22,7 @@ class ReplaceableComponentSlot implements PhysicalMutationSlot {
         this.physicalSlot = physicalSlot;
         attach(installedPart);
         physicalSlot.install(installedPart);
+        this.emptySlotAttachmentState = captureAttachmentState();
     }
 
     public String getComponentId() { return componentId; }
@@ -87,6 +89,12 @@ class ReplaceableComponentSlot implements PhysicalMutationSlot {
         secondAttachment.x2 = state.secondX2;
         secondAttachment.y2 = state.secondY2;
         secondAttachment.setPoints();
+    }
+
+    public void restoreEmptySlotAttachmentState(PhysicalMutationScope scope) {
+        if (scope == null || !scope.owns(this))
+            throw new IllegalStateException("Physical mutation scope does not own resistor slot");
+        restoreAttachmentState(emptySlotAttachmentState);
     }
 
     private static final class ResistorAttachmentState implements PhysicalMutationSlot.AttachmentState {

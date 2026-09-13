@@ -35,9 +35,9 @@ public class QueryParameters
             String[] nameValues = search.substring(1).split("&");
             for (int i = 0; i < nameValues.length; i++)
             {
-                String[] pair = nameValues[i].split("=");
+                String[] pair = nameValues[i].split("=", 2);
 
-                map.put(pair[0], URL.decode(pair[1]));
+                map.put(pair[0], pair.length == 2 ? URL.decode(pair[1]) : "");
             }
         }
     }

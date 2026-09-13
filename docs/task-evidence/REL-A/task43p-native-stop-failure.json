@@ -1,0 +1,161 @@
+{
+  "candidate": "2c9a8567bc81502ce6e9efcd912578337758e52107e47b15f0a6968c52b72d51",
+  "route": "task43p-cleanup",
+  "observed": {
+    "runtime": null,
+    "staticEvidence": "{\"protocol\":\"TSJ-TASK43P-2\",\"status\":\"UNPROVEN\",\"developerOnly\":true,\"forcedNegativeRequested\":false,\"family\":\"LED_INDICATOR\",\"topology\":\"DIRECT_SERIES\",\"seed\":0,\"fault\":\"LED_R1_OPEN\",\"faultType\":\"RESISTOR_OPEN\",\"faultOwner\":\"R1\",\"faultApplied\":true,\"earlyFinishBlocked\":true,\"state\":\"READY\",\"ready\":true,\"completed\":false,\"repairStatus\":\"STILL_FAULTED_OR_NONFUNCTIONAL\",\"retestPresent\":false,\"generatedVerificationPending\":false,\"generatedVerificationAnalyzed\":true,\"developerVerifierRunning\":true,\"forcedNegativeProof\":{\"requested\":false,\"nonce\":\"\",\"routeId\":\"\",\"requestId\":\"\",\"executionDigest\":\"\"},\"lifecycle\":{\"healthyInstalled\":true,\"healthyAnalyzed\":true,\"faultApplied\":true,\"faultAnalyzed\":true,\"faultValidated\":true,\"readyAfterValidation\":true},\"verifierDesignStateBefore\":\"board=LED_INDICATOR|family=LED_INDICATOR|topology=DIRECT_SERIES|seed=0|state=READY|fault=true|power=POWERED|pendingPower=null|overlay=false|pendingVerification=false|analyzed=true|slot=LED_INDICATOR.SLOT.J1:J1:J1:com.lushprojects.circuitjs1.client.PhysicalPartMountState@5c8|slot=LED_INDICATOR.SLOT.LED1:LED1:LED1_ORIGINAL:com.lushprojects.circuitjs1.client.PhysicalPartMountState@5c9|lead=LED1.A:true|lead=LED1.K:true|slot=LED_INDICATOR.SLOT.R1:R1:R1_ORIGINAL:com.lushprojects.circuitjs1.client.PhysicalPartMountState@5ca|lead=R1.1:true|lead=R1.2:true|part=J1:true:false:false|part=LED1_ORIGINAL:true:true:false|part=R1_ORIGINAL:true:true:true|connection=LED1.A:true|connection=LED1.K:true|connection=R1.1:true|connection=R1.2:true\",\"verifierDesignStateAfter\":\"board=LED_INDICATOR|family=LED_INDICATOR|topology=DIRECT_SERIES|seed=0|state=READY|fault=true|power=POWERED|pendingPower=null|overlay=false|pendingVerification=false|analyzed=true|slot=LED_INDICATOR.SLOT.J1:J1:J1:com.lushprojects.circuitjs1.client.PhysicalPartMountState@5c8|slot=LED_INDICATOR.SLOT.LED1:LED1:LED1_ORIGINAL:com.lushprojects.circuitjs1.client.PhysicalPartMountState@5c9|lead=LED1.A:true|lead=LED1.K:true|slot=LED_INDICATOR.SLOT.R1:R1:R1_ORIGINAL:com.lushprojects.circuitjs1.client.PhysicalPartMountState@5ca|lead=R1.1:true|lead=R1.2:true|part=J1:true:false:false|part=LED1_ORIGINAL:true:true:false|part=R1_ORIGINAL:true:true:true|connection=LED1.A:true|connection=LED1.K:true|connection=R1.1:true|connection=R1.2:true\",\"mutationCleanup\":{\"readOnly\":true,\"activeMeasurementOverlay\":false,\"pendingBoardPowerState\":null,\"temporarySolverRestored\":false,\"fullyRestoredAtEntry\":true},\"lanes\":{\"A\":{\"status\":\"PARTIAL\",\"observation\":\"early Finish blocked; isolation/repair/wrong-repair round trip not exercised by this route\"},\"B\":{\"status\":\"PARTIAL\",\"observation\":\"stable current part/slot identities checked; replacement A/B invalidation not exercised by this route\"},\"C\":{\"status\":\"PARTIAL\",\"observation\":\"fault/private owner separation checked; solver-derived secondary causality not exercised\"},\"D\":{\"status\":\"PARTIAL\",\"observation\":\"no current overlay/pending-power residue; rapid action and failure cleanup sequence not exercised\"},\"E\":{\"status\":\"UNPROVEN\",\"observation\":\"current family has no stored-energy owner\"},\"F\":{\"status\":\"PARTIAL\",\"observation\":\"installed/board-side physical identity and live triad checked; lift/reconnect/remove/reinstall sequence not exercised\"},\"G\":{\"status\":\"PARTIAL\",\"observation\":\"early Finish settlement guard checked; repair/retest/terminal Finish sequence not exercised\"},\"H\":{\"status\":\"UNPROVEN\",\"observation\":\"fresh-session and route-order isolation not exercised; Task 41 snapshot remains its narrower fresh-candidate proof\"},\"I\":{\"status\":\"UNPROVEN\",\"observation\":\"request/board/session epoch is absent; no stale callback effect reproduced\"}},\"epochContract\":{\"requestEpoch\":false,\"boardEpoch\":false,\"sessionEpoch\":false},\"triad\":{\"status\":\"PASS\",\"validator\":\"canonical-source-observations-v2\",\"manifestAuthoring\":\"independent\",\"observationSources\":[\"raw-logical-board\",\"raw-pcb-layout-copper\",\"renderer\",\"physical-package\",\"solver-post\"],\"family\":\"LED_INDICATOR\",\"topology\":\"DIRECT_SERIES\",\"seed\":0,\"fault\":\"LED_R1_OPEN\",\"faultType\":\"RESISTOR_OPEN\",\"faultOwner\":\"R1\",\"terminalCount\":6,\"rawTraceChecks\":3,\"renderedSurfaceChecks\":6,\"solverChecks\":6,\"negativeFixtureScope\":\"same-canonical-path-source-snapshot\",\"liveReadings\":[\"J1.1=5\",\"J1.2=0\",\"LED1.A=4.945372654351821e-8\",\"LED1.K=0\",\"R1.1=5\",\"R1.2=4.945372654351821e-8\"],\"negativeFixtures\":[{\"id\":\"renderer-only-pad-offset\",\"sourceMutation\":\"renderer source pad point +20px\",\"caught\":true},{\"id\":\"renderer-only-lead-offset\",\"sourceMutation\":\"renderer source lead endpoint +20px\",\"caught\":true},{\"id\":\"raw-copper-endpoint-gap\",\"sourceMutation\":\"raw copper endpoint displacement\",\"caught\":true},{\"id\":\"raw-net-mismatch\",\"sourceMutation\":\"raw copper net changed before validation\",\"caught\":true},{\"id\":\"solver-binding-post-mismatch\",\"sourceMutation\":\"solver source endpoint identity/class/post/node changed before canonical validation\",\"caught\":true},{\"id\":\"raw-empty-unmanifested-net\",\"sourceMutation\":\"raw logical-board source added an empty unmanifested net\",\"caught\":true},{\"id\":\"mirror-transform-mismatch\",\"sourceMutation\":\"package source transform changed before validation\",\"caught\":true},{\"id\":\"internally-self-consistent-wrong-mapping\",\"sourceMutation\":\"raw board/net/copper sources coherently remapped to an unmanifested net\",\"caught\":true},{\"id\":\"omitted-terminal\",\"sourceMutation\":\"renderer source terminal omitted before canonical validation\",\"caught\":true}],\"terminals\":[{\"padId\":\"J1.1\",\"rawNetId\":\"VIN\",\"rawEndpoint\":[614,170],\"renderedPadId\":\"J1.1\",\"renderedTerminalId\":\"1\",\"renderedPadPoint\":[714,276],\"packageId\":\"THROUGH_HOLE_CONNECTOR_2\",\"variant\":\"DEFAULT_MIRRORED_X\",\"transform\":\"MIRROR_X\",\"solverOracleNetId\":\"VIN\",\"solverClass\":\"SwitchElm\",\"solverPost\":1,\"solverNode\":5},{\"padId\":\"J1.2\",\"rawNetId\":\"GND\",\"rawEndpoint\":[614,230],\"renderedPadId\":\"J1.2\",\"renderedTerminalId\":\"2\",\"renderedPadPoint\":[714,348],\"packageId\":\"THROUGH_HOLE_CONNECTOR_2\",\"variant\":\"DEFAULT_MIRRORED_X\",\"transform\":\"MIRROR_X\",\"solverOracleNetId\":\"GND\",\"solverClass\":\"GroundElm\",\"solverPost\":0,\"solverNode\":1},{\"padId\":\"R1.1\",\"rawNetId\":\"VIN\",\"rawEndpoint\":[144,330],\"renderedPadId\":\"R1.1\",\"renderedTerminalId\":\"1\",\"renderedPadPoint\":[146,469],\"packageId\":\"AXIAL_RESISTOR\",\"variant\":\"SPAN_240\",\"transform\":\"IDENTITY\",\"solverOracleNetId\":\"VIN\",\"solverClass\":\"WireElm\",\"solverPost\":1,\"solverNode\":5},{\"padId\":\"R1.2\",\"rawNetId\":\"LED_NODE\",\"rawEndpoint\":[324,330],\"renderedPadId\":\"R1.2\",\"renderedTerminalId\":\"2\",\"renderedPadPoint\":[363,469],\"packageId\":\"AXIAL_RESISTOR\",\"variant\":\"SPAN_240\",\"transform\":\"IDENTITY\",\"solverOracleNetId\":\"LED_NODE\",\"solverClass\":\"WireElm\",\"solverPost\":0,\"solverNode\":7},{\"padId\":\"LED1.A\",\"rawNetId\":\"LED_NODE\",\"rawEndpoint\":[134,200],\"renderedPadId\":\"LED1.A\",\"renderedTerminalId\":\"A\",\"renderedPadPoint\":[134,312],\"packageId\":\"THROUGH_HOLE_LED\",\"variant\":\"DEFAULT\",\"transform\":\"IDENTITY\",\"solverOracleNetId\":\"LED_NODE\",\"solverClass\":\"WireElm\",\"solverPost\":1,\"solverNode\":7},{\"padId\":\"LED1.K\",\"rawNetId\":\"GND\",\"rawEndpoint\":[174,200],\"renderedPadId\":\"LED1.K\",\"renderedTerminalId\":\"K\",\"renderedPadPoint\":[182,312],\"packageId\":\"THROUGH_HOLE_LED\",\"variant\":\"DEFAULT\",\"transform\":\"IDENTITY\",\"solverOracleNetId\":\"GND\",\"solverClass\":\"GroundElm\",\"solverPost\":0,\"solverNode\":1}]}}",
+    "status": "FAIL:task43p-cleanup-safety-6:native-stop-not-surfaced"
+  },
+  "logs": [
+    {
+      "level": "log",
+      "message": "converged after 21 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 20 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 8 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 21 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 20 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 8 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 21 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 20 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 8 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 21 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 20 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 12 unconnected",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 8 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 21 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 20 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 8 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 21 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 20 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 12 unconnected",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 12 unconnected",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 8 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 21 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "converged after 20 iterations, timeStep = 0.000005",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "node 12 unconnected",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    },
+    {
+      "level": "log",
+      "message": "exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for LED_INDICATOR/DIRECT_SERIES, seed 0: task43p-cleanup-safety-6:native-stop-not-surfaced",
+      "timestamp": "2026-09-13T11:15:53.441Z",
+      "url": "circuitjs1-0.js"
+    }
+  ]
+}

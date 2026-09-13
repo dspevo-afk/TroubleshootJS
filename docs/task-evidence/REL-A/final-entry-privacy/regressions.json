@@ -1,0 +1,65 @@
+{
+  "executionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "scope": "Fresh final production preview through built-in Browser; strict combined readers run after all reports.",
+  "gates": [
+    {
+      "name": "Task41",
+      "status": "PASS",
+      "artifact": "E03/task41-report.txt",
+      "result": "20 routes/182 actual solver samples; maintained strict combined reader PASS"
+    },
+    {
+      "name": "Task49",
+      "status": "PASS",
+      "artifact": "E01/task49-report.json",
+      "result": "397 assertions; maintained strict combined reader PASS"
+    },
+    {
+      "name": "A08",
+      "status": "PASS",
+      "artifact": "a08-report.json",
+      "result": "1103 assertions,90 compensated writes and5 fresh failures; cleanup PASS, forced failure/no report; maintained strict combined reader PASS"
+    },
+    {
+      "name": "E01",
+      "status": "PASS",
+      "artifact": "E01/compiled-source-proof.json",
+      "result": "21 assertions, actual nominal/limited/short/backfeed thresholds,19ms; exact forced failure/no report; maintained strict combined reader PASS"
+    },
+    {
+      "name": "E03",
+      "status": "PASS",
+      "artifact": "E03/compiled-relay-proof.json",
+      "assertions": 46,
+      "mutationAssertions": 113,
+      "playerCases": 6,
+      "operationElapsedMs": 35192,
+      "rawElapsedMs": 1808,
+      "result": "Exact forced failure/no report; maintained strict electrical reader PASS"
+    },
+    {
+      "name": "A07",
+      "status": "PASS",
+      "artifact": "a07-report.json",
+      "pureAssertions": 58,
+      "runtimeAssertions": 71,
+      "modelAssertions": 59,
+      "operationElapsedMs": 861,
+      "cleanup": "PASS",
+      "reader": "a07-readers.json: maintained reader,seven malformed canaries and forced failure PASS"
+    },
+    {
+      "name": "U01",
+      "status": "PASS",
+      "artifact": "u01-report.json",
+      "assertions": 1237,
+      "liveTargets": 6,
+      "identityUnchanged": true
+    }
+  ],
+  "readers": {
+    "electrical": "PASS: verify-e01-e03-evidence.ps1,exit0",
+    "q15": "PASS: verify-q15-evidence.ps1,exit0",
+    "A07": "PASS: maintained strict reader,seven malformed canaries,exit0"
+  }
+}

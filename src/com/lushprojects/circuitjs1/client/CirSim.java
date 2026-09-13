@@ -366,6 +366,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean quickPlayActive;
 	QuickPlaySession quickPlaySession;
     GenerationCoordinator generationCoordinator;
+    PlayerSessionController playerSessionController;
     Label generationStatus;
     Button generationCancelButton;
 	boolean troubleshootResistanceVerification;
@@ -429,6 +430,8 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootA07ForcedFailure;
 	boolean troubleshootE03Verification, troubleshootE03ForcedFailure, troubleshootE03VerificationComplete;
 	boolean troubleshootQ15Verification, troubleshootQ15ForcedFailure, troubleshootQ15VerificationComplete;
+    boolean troubleshootAlphaVerification, troubleshootAlphaPilot, troubleshootAlphaForced, troubleshootAlphaComplete;
+    int troubleshootAlphaCase = -1;
     boolean troubleshootE01Verification, troubleshootE01VerificationComplete, troubleshootE01ForcedFailure;
 	boolean troubleshootA06Verification;
 	boolean troubleshootA06VerificationComplete;
@@ -522,6 +525,7 @@ MouseOutHandler, MouseWheelHandler {
 	    startCircuit = qp.getValue("startCircuit");
 	    startLabel   = qp.getValue("startLabel");
 	    startCircuitLink = qp.getValue("startCircuitLink");
+	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
 	    troubleshootFixture = qp.getValue("tsjFixture");
 	    troubleshootChallenge = qp.getValue("tsjChallenge");
 	    troubleshootNpnFault = qp.getValue("tsjNpnFault");
@@ -529,37 +533,37 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootFixtureSeed = parseTroubleshootFixtureSeed(qp.getValue("seed"));
 	    controlledIndicatorSeedText = qp.getValue("seed");
 	    troubleshootQuickPlay = qp.getBooleanValue("tsjQuickPlay", false);
-	    troubleshootQuickPlayVerification = qp.getBooleanValue("tsjVerifyQuickPlay", false);
+	    troubleshootQuickPlayVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyQuickPlay", false);
 	    String quickPlayTestSeed = qp.getValue("tsjQuickPlayTestSeed");
 	    troubleshootQuickPlayVerificationSeed = quickPlayTestSeed == null ? 3 :
 		parseTroubleshootFixtureSeed(quickPlayTestSeed);
 	    String quickPlayTestFamily = qp.getValue("tsjQuickPlayTestFamily");
 	    troubleshootQuickPlayVerificationFamilyIndex = quickPlayTestFamily == null ? 0 :
 		(int) parseTroubleshootFixtureSeed(quickPlayTestFamily);
-	    troubleshootResistanceVerification = qp.getBooleanValue("tsjVerifyResistance", false);
-	    troubleshootChallengeVerification = qp.getBooleanValue("tsjVerifyChallenge", false);
-	    troubleshootReplacementVerification = qp.getBooleanValue("tsjVerifyReplacement", false);
-	    troubleshootWrongRepairVerification = qp.getBooleanValue("tsjVerifyWrongRepair", false);
-	    troubleshootMeterVerification = qp.getBooleanValue("tsjVerifyMeter", false);
-	    troubleshootDiodeVerification = qp.getBooleanValue("tsjVerifyDiode", false);
-	    troubleshootDiodeShort = qp.getBooleanValue("tsjDiodeShort", false);
-	    troubleshootLedPhysicalVerification = qp.getBooleanValue("tsjVerifyLedParts", false);
-	    troubleshootParallelVerification = qp.getBooleanValue("tsjVerifyParallel", false);
-	    troubleshootStressVerification = qp.getBooleanValue("tsjVerifyStress", false);
-	    troubleshootStressVerificationDeferred = qp.getBooleanValue("tsjStressDeferred", false);
-	    troubleshootGeometryVerification = qp.getBooleanValue("tsjVerifyGeometry", false);
-	    troubleshootLayoutVerification = qp.getBooleanValue("tsjVerifyLayout", false);
-	    troubleshootArchitectureVerification = qp.getBooleanValue("tsjVerifyArchitecture", false);
-	    troubleshootRcVerification = qp.getBooleanValue("tsjVerifyRc", false);
-	    troubleshootNpnVerification = qp.getBooleanValue("tsjVerifyNpn", false);
-	    troubleshootNmosVerification = qp.getBooleanValue("tsjVerifyNmos", false);
-	    troubleshootTask39Verification = qp.getBooleanValue("tsjVerifyTask39", false);
-	    troubleshootTask40Verification = qp.getBooleanValue("tsjVerifyTask40", false);
-	    troubleshootTask41Verification = qp.getBooleanValue("tsjVerifyTask41", false);
-	    troubleshootTask43Verification = qp.getBooleanValue("tsjVerifyTask43", false);
+	    troubleshootResistanceVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyResistance", false);
+	    troubleshootChallengeVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyChallenge", false);
+	    troubleshootReplacementVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyReplacement", false);
+	    troubleshootWrongRepairVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyWrongRepair", false);
+	    troubleshootMeterVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyMeter", false);
+	    troubleshootDiodeVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyDiode", false);
+	    troubleshootDiodeShort = troubleshootDebug && qp.getBooleanValue("tsjDiodeShort", false);
+	    troubleshootLedPhysicalVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyLedParts", false);
+	    troubleshootParallelVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyParallel", false);
+	    troubleshootStressVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyStress", false);
+	    troubleshootStressVerificationDeferred = troubleshootStressVerification && qp.getBooleanValue("tsjStressDeferred", false);
+	    troubleshootGeometryVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyGeometry", false);
+	    troubleshootLayoutVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyLayout", false);
+	    troubleshootArchitectureVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyArchitecture", false);
+	    troubleshootRcVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyRc", false);
+	    troubleshootNpnVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyNpn", false);
+	    troubleshootNmosVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyNmos", false);
+	    troubleshootTask39Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyTask39", false);
+	    troubleshootTask40Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyTask40", false);
+	    troubleshootTask41Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyTask41", false);
+	    troubleshootTask43Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyTask43", false);
 	    troubleshootTask43ForcedFailure = troubleshootTask43Verification &&
 		qp.getBooleanValue("tsjTask43ForcedFailure", false);
-	    troubleshootTask43PVerification = qp.getBooleanValue("tsjVerifyTask43P", false);
+	    troubleshootTask43PVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyTask43P", false);
 	    troubleshootTask43PRuntimeVerification = troubleshootTask43PVerification &&
 		qp.getBooleanValue("tsjTask43PRuntime", false);
 	    troubleshootTask43PForcedFailure = troubleshootTask43PVerification &&
@@ -576,8 +580,7 @@ MouseOutHandler, MouseWheelHandler {
 		qp.getValue("tsjTask43PSourceExperiment"));
 	    troubleshootVerifierRunId = queryValueOrEmpty(qp.getValue("tsjVerifierRun"));
 	    troubleshootVerifierRouteId = queryValueOrEmpty(qp.getValue("tsjVerifierRoute"));
-	    troubleshootStoredEnergyVerification = qp.getBooleanValue("tsjVerifyStoredEnergy", false);
-	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
+	    troubleshootStoredEnergyVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyStoredEnergy", false);
 	    troubleshootTask46Verification = troubleshootDebug &&
 		qp.getBooleanValue("tsjVerifyTask46", false);
 	    troubleshootTask47Verification = troubleshootDebug &&
@@ -619,6 +622,11 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootE01Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyE01", false);
             troubleshootE03Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyE03", false);
             troubleshootQ15Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyQ15", false);
+            troubleshootAlphaVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyAlpha", false);
+            troubleshootAlphaPilot = troubleshootAlphaVerification && qp.getBooleanValue("tsjAlphaPilot", false);
+            troubleshootAlphaForced = troubleshootAlphaVerification && qp.getBooleanValue("tsjAlphaFail", false);
+            if (troubleshootAlphaVerification && qp.getValue("tsjAlphaCase") != null)
+                troubleshootAlphaCase = Integer.parseInt(qp.getValue("tsjAlphaCase"));
             troubleshootQ15ForcedFailure = troubleshootQ15Verification && qp.getBooleanValue("tsjQ15Fail", false);
             troubleshootE03ForcedFailure = troubleshootE03Verification && qp.getBooleanValue("tsjE03Fail", false);
         troubleshootE01ForcedFailure = troubleshootE01Verification && qp.getBooleanValue("tsjE01Fail", false);
@@ -670,6 +678,10 @@ MouseOutHandler, MouseWheelHandler {
 	else
 	    euroSetting = getOptionFromStorage("euroResistors", !weAreInUS());
 	boolean euroGates = getOptionFromStorage("euroGates", weAreInGermany());
+        if (!troubleshootDebug) {
+            hideMenu = true; hideSidebar = false; noEditing = true;
+            startCircuitText = null; startCircuit = null; startCircuitLink = null;
+        }
 
 	transform = new double[6];
 	String os = Navigator.getPlatform();
@@ -887,6 +899,7 @@ MouseOutHandler, MouseWheelHandler {
 	});
 	instrumentController = new InstrumentController(this, verticalPanel);
         generationCoordinator = new GenerationCoordinator(this);
+        if (!troubleshootDebug) playerSessionController = new PlayerSessionController(this);
         verticalPanel.add(generationStatus = new Label(""));
         generationStatus.setVisible(false);
         verticalPanel.add(generationCancelButton = new Button("Cancel board preparation"));
@@ -913,7 +926,8 @@ MouseOutHandler, MouseWheelHandler {
 	controlBoardChallengeButton.addClickHandler(new ClickHandler() {
 	    public void onClick(ClickEvent event) {
 	        if(canOpenControlledIndicatorChallenge())
-	            startGeneration(GenerationRequest.leaf(Rb15Plan.FAMILY_ID,System.currentTimeMillis(),false));
+	            startGeneration(GenerationRequest.leaf(Rb15Plan.FAMILY_ID,
+	                QuickPlayFamilyRegistry.selectNormalPlayerSeed(Rb15Plan.FAMILY_ID, System.currentTimeMillis()), false), true);
 	    }
 	});
 	boardPowerButton.setStyleName("tsj-power-button");
@@ -1029,7 +1043,7 @@ MouseOutHandler, MouseWheelHandler {
 		    getSetupList(false);
 		    readSetupFile(startCircuit, startLabel);
 		}
-		else if (troubleshootFixture != null || troubleshootChallenge != null ||
+		else if (!troubleshootDebug || troubleshootFixture != null || troubleshootChallenge != null ||
 			troubleshootQuickPlay)
 		    getSetupList(false);
 		else
@@ -1070,7 +1084,13 @@ MouseOutHandler, MouseWheelHandler {
 
 	
 	
-	if ("led".equals(troubleshootFixture))
+        if (playerSessionController != null) {
+            controlledIndicatorChallengeButton.setVisible(false);
+            controlBoardChallengeButton.setVisible(false);
+            updateGeneratedView();
+            playerSessionController.openInitial(qp);
+        }
+	else if ("led".equals(troubleshootFixture))
 	    installGeneratedBoard(generateLedBoard(troubleshootFixtureSeed));
 	else if ("diode".equals(troubleshootFixture))
 	    installGeneratedBoard(new DiodeProtectedIndicatorGenerator().generate(troubleshootFixtureSeed));
@@ -1733,6 +1753,7 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     void invalidateGeneratedOwnerWork() {
+        if (generatedChallengeController != null) generatedChallengeController.cancelOwnedWork();
         solverExecutor.retire();
 	pendingGeneratedRepaint = null;
 	needsRepaint = false;
@@ -4800,7 +4821,7 @@ MouseOutHandler, MouseWheelHandler {
 	// Task 46's explicit debug route retains the real workbench so its
 	// initial legacy challenge goes through unchanged diagnostic admission.
 	pcbWorkbenchController = (!troubleshootDebug || FreshGeneratedRuntimeInstallation.isInProgress(this) ||
-	    troubleshootTask41Verification || troubleshootTask46Verification ||
+	    troubleshootTask41Verification || troubleshootTask43PVerification || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
 	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootU01Verification || troubleshootA10Verification ||
 	    troubleshootA01Measurement ||
@@ -4883,6 +4904,12 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     private void startGeneration(GenerationRequest request) {
+        startGeneration(request, !troubleshootDebug || troubleshootA10Verification);
+    }
+
+    // Interactive entry must yield even in a debug workbench. Bootstrap and
+    // verifier callers retain their explicitly selected scheduling behavior.
+    private void startGeneration(GenerationRequest request, boolean asynchronous) {
         generationCoordinator.start(request, new GenerationCoordinator.Completion() {
             public void complete(GenerationJob result, GeneratedBoardInstance published) {
                 if (result.getOutcome() != GenerationJob.Outcome.PASS &&
@@ -4895,7 +4922,7 @@ MouseOutHandler, MouseWheelHandler {
                 refreshChallengeInteractionState();
                 repaint();
             }
-        }, !troubleshootDebug || troubleshootA10Verification);
+        }, asynchronous);
     }
 
     private void runA10GenerationVerificationIfReady() {
@@ -5021,6 +5048,15 @@ MouseOutHandler, MouseWheelHandler {
             }
     }
 
+    /** Resume an already-started private profile without an extra UI solver frame. */
+    void resumeGeneratedTemporalPreparation() {
+        if (generatedChallengeController == null ||
+                !generatedChallengeController.hasTemporalPreparationWork() ||
+                !generatedBoardVerificationPending || !generatedBoardVerificationAnalyzed)
+            throw new IllegalStateException("Missing owned temporal preparation callback");
+        runGeneratedBoardVerificationIfReady(false);
+    }
+
     private void runGeneratedBoardVerificationIfReady(boolean didAnalyze) {
 	if (holdCompositionGateVerification)
 	    return;
@@ -5047,7 +5083,11 @@ MouseOutHandler, MouseWheelHandler {
 	    boolean previousVerificationRunning = generatedVerificationRunning;
 	    generatedVerificationRunning = true;
 	    try {
-		verifyGeneratedBoard();
+		// An owned temporal callback resumes after its preceding solver call.
+		// The ordinary graph verification already ran before that callback began.
+		if (generatedChallengeController == null ||
+		        !generatedChallengeController.hasTemporalPreparationWork())
+		    verifyGeneratedBoard();
 		generatedBoardVerificationPending = false;
 		if (generatedChallengeController != null)
 		    generatedChallengeController.afterGeneratedVerification();
@@ -5061,7 +5101,7 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     private void runDeveloperVerificationIfReady() {
-        if (holdCompositionGateVerification || developerVerifierRunning ||
+        if (!troubleshootDebug || holdCompositionGateVerification || developerVerifierRunning ||
                 GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() ||
                 generatedBoardInstance == null || !isGeneratedRuntimeSettled())
             return;
@@ -5345,6 +5385,18 @@ MouseOutHandler, MouseWheelHandler {
                     developerVerifierRunning=false;
                     if(failure==null) {publishE03Evidence(report);publishBrowserVerificationResult("PASS:e03");}
                     else {publishBrowserVerificationResult("FAIL:e03:"+failure.getMessage());console("E03 failure: "+failure);}
+                }
+            });
+        }
+        if (!developerVerifierRunning && troubleshootAlphaVerification && !troubleshootAlphaComplete &&
+                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() && generatedChallengeController != null &&
+                generatedChallengeController.isReady() && isGeneratedRuntimeSettled()) {
+            developerVerifierRunning = true; troubleshootAlphaComplete = true;
+            publishBrowserVerificationResult("RUNNING:alpha");
+            AlphaDeveloperVerifier.start(this, troubleshootAlphaPilot, troubleshootAlphaForced, troubleshootAlphaCase, new AlphaDeveloperVerifier.Completion() {
+                public void finished(String report, Throwable failure) {
+                    developerVerifierRunning = false; AlphaDeveloperVerifier.publish(report);
+                    publishBrowserVerificationResult(failure == null ? "PASS:alpha" : "FAIL:alpha:" + failure.getMessage());
                 }
             });
         }
@@ -6084,7 +6136,7 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     private void updateGeneratedView() {
-	boolean pcbVisible = isPcbWorkbenchVisible();
+	boolean pcbVisible = isPcbWorkbenchVisible() || !troubleshootDebug;
 	menuBar.setVisible(!pcbVisible);
 	buttonPanel.setVisible(!pcbVisible);
 	if (loadFileInput != null)
@@ -6103,6 +6155,7 @@ MouseOutHandler, MouseWheelHandler {
     void refreshBoardModificationControls() {
 	if (pcbWorkbenchController != null)
 	    pcbWorkbenchController.refresh();
+        if (playerSessionController != null) playerSessionController.refresh();
     }
 
     void refreshGeneratedUiForDeveloperVerification() {

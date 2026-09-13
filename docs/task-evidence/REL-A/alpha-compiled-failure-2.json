@@ -1,0 +1,161 @@
+{
+  "protocol": "TSJ-ALPHA-1",
+  "status": "FAIL",
+  "pilot": false,
+  "cases": [
+    {
+      "family": "LED_INDICATOR",
+      "seed": "0",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=3;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=13-13;modes=3;inputs=2;railTargets=3;temporal=0;parallel=false",
+      "admissionMs": 1024,
+      "maxUnitMs": 200,
+      "workUnits": 59,
+      "repairPassed": true
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "2",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=3;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=13-13;modes=3;inputs=2;railTargets=3;temporal=0;parallel=false",
+      "admissionMs": 1032,
+      "maxUnitMs": 174,
+      "workUnits": 59,
+      "repairPassed": true
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "3",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=3;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=13-13;modes=3;inputs=2;railTargets=3;temporal=0;parallel=false",
+      "admissionMs": 1025,
+      "maxUnitMs": 170,
+      "workUnits": 59,
+      "repairPassed": true
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "4",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=3;hypotheses=3;repairs=2;owners=2;readings=1;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=13-13;modes=3;inputs=2;railTargets=3;temporal=0;parallel=false",
+      "admissionMs": 1039,
+      "maxUnitMs": 174,
+      "workUnits": 59,
+      "repairPassed": true
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "seed": "0",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=4;hypotheses=1;repairs=1;owners=1;readings=0;singleRemaining=1;executedEvidenceDepth=6-6;legalWitnessActions=14-14;modes=4;inputs=2;railTargets=4;temporal=0;parallel=false",
+      "admissionMs": 1227,
+      "maxUnitMs": 547,
+      "workUnits": 24,
+      "repairPassed": true
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "seed": "2",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=4;hypotheses=1;repairs=1;owners=1;readings=0;singleRemaining=1;executedEvidenceDepth=6-6;legalWitnessActions=14-14;modes=4;inputs=2;railTargets=4;temporal=0;parallel=false",
+      "admissionMs": 1850,
+      "maxUnitMs": 885,
+      "workUnits": 24,
+      "repairPassed": true
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "seed": "3",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=4;hypotheses=1;repairs=1;owners=1;readings=0;singleRemaining=1;executedEvidenceDepth=6-6;legalWitnessActions=14-14;modes=4;inputs=2;railTargets=4;temporal=0;parallel=false",
+      "admissionMs": 1254,
+      "maxUnitMs": 561,
+      "workUnits": 24,
+      "repairPassed": true
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "seed": "0",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=5;hypotheses=2;repairs=1;owners=1;readings=0;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=15-15;modes=3;inputs=2;railTargets=4;temporal=0;parallel=true",
+      "admissionMs": 2801,
+      "maxUnitMs": 845,
+      "workUnits": 45,
+      "repairPassed": true
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "seed": "2",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=5;hypotheses=2;repairs=1;owners=1;readings=0;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=15-15;modes=3;inputs=2;railTargets=4;temporal=0;parallel=true",
+      "admissionMs": 2655,
+      "maxUnitMs": 804,
+      "workUnits": 45,
+      "repairPassed": true
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "seed": "3",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=5;hypotheses=2;repairs=1;owners=1;readings=0;singleRemaining=1;executedEvidenceDepth=5-5;legalWitnessActions=15-15;modes=3;inputs=2;railTargets=4;temporal=0;parallel=true",
+      "admissionMs": 2830,
+      "maxUnitMs": 857,
+      "workUnits": 45,
+      "repairPassed": true
+    },
+    {
+      "family": "RC_DELAY",
+      "seed": "0",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=6;hypotheses=2;repairs=2;owners=1;readings=1;singleRemaining=1;executedEvidenceDepth=10-10;legalWitnessActions=16-16;modes=2;inputs=4;railTargets=3;temporal=4;parallel=false",
+      "admissionMs": 50462,
+      "maxUnitMs": 4640,
+      "workUnits": 52,
+      "repairPassed": true
+    },
+    {
+      "family": "RC_DELAY",
+      "seed": "2",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=6;hypotheses=2;repairs=2;owners=1;readings=1;singleRemaining=1;executedEvidenceDepth=10-10;legalWitnessActions=16-16;modes=2;inputs=4;railTargets=3;temporal=4;parallel=false",
+      "admissionMs": 50943,
+      "maxUnitMs": 4790,
+      "workUnits": 52,
+      "repairPassed": true
+    },
+    {
+      "family": "RC_DELAY",
+      "seed": "3",
+      "requested": "EASY",
+      "computed": "EASY",
+      "features": "difficulty/1;profile=EASY;parts=6;hypotheses=2;repairs=2;owners=1;readings=1;singleRemaining=1;executedEvidenceDepth=10-10;legalWitnessActions=16-16;modes=2;inputs=4;railTargets=3;temporal=4;parallel=false",
+      "admissionMs": 51400,
+      "maxUnitMs": 4934,
+      "workUnits": 52,
+      "repairPassed": true
+    }
+  ],
+  "assertions": 328,
+  "acquisitions": 31,
+  "staleCallbacks": 31,
+  "negativeChecks": 18,
+  "cancellationMs": 0,
+  "elapsedMs": 217355,
+  "cleanupMs": 2,
+  "ownerRestored": true,
+  "operation": "catalog-and-repair",
+  "activeCase": 13,
+  "failure": "com.lushprojects.circuitjs1.client.BoardModificationRejectedException: Resistor replacement requires electrically unpowered generated board"
+}

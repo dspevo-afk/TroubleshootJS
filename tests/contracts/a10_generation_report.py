@@ -37,6 +37,20 @@ def validate(report):
             report.get('maxWork') == 640 and report.get('benchmarkAttemptMillis') == 5000,
             'Budget changed')
     temporal = report.get('temporalRegression', {})
+    cleanup = report.get('observationCleanup', {})
+    integer(cleanup.get('assertions'), 14)
+    require(all(cleanup.get(key) is True for key in ('cursorRetry', 'closedSessionRetry',
+            'retainedObservation', 'successorUntouched', 'leaseRetained', 'privateGraphDisposed')),
+            'Missing observation cleanup failure/retry proof')
+    work = report.get('temporalWork', {})
+    integer(work.get('assertions'), 100)
+    require(work.get('comparedProfiles') == 2 and work.get('phases') == 4 and
+            work.get('cancelBoundaries') == work.get('staleGraphBoundaries') ==
+            work.get('sourceChangeBoundaries') == 4 and
+            work.get('stagedAbortBoundaries') == 9 and work.get('abortedSourcesDisconnected') is True and
+            work.get('exactStateSamplesEventsCounters') is True and
+            work.get('partialPublicationRejected') is True and work.get('repairPowerGuard') is True,
+            'Missing independent RC phase or cancellation proof')
     require(report.get('temporalBatch') == {'fixedAndAdaptive': True,
             'exactStateAndEvents': True, 'rcOracle': True, 'measurementCounters': True,
             'stoppedStep': True}, 'Missing actual serial/batch RC oracle')

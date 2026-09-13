@@ -4,7 +4,7 @@ import java.util.Vector;
 
 /** Runtime capability exposing the original/catalog NMOS identity boundary. */
 final class ReplaceableNmosBoardCapability implements PhysicalBoardRuntimeCapability,
-        PhysicalBoardInstallationProvider, WorkbenchPartsProvider {
+        PhysicalBoardInstallationProvider.Scoped, WorkbenchPartsProvider {
     static final String ID = "REPLACEABLE_NMOS";
     private final NmosComponentSlot slot;
     private final PhysicalPartInventory<PhysicalNmosPart> inventory;
@@ -24,6 +24,9 @@ final class ReplaceableNmosBoardCapability implements PhysicalBoardRuntimeCapabi
     NmosComponentSlot getSlot() { return slot; }
     PhysicalPartInventory<PhysicalNmosPart> getInventory() { return inventory; }
     NmosReplacementCatalog getCatalog() { return catalog; }
+
+    public PhysicalMutationSlot getMutationSlot() { return slot; }
+    public PhysicalPartInventory<?> getMutationInventory() { return inventory; }
 
     public PhysicalSlotMutationProvider install(CirSim sim, GeneratedBoardInstance instance,
             BoardModificationController modifications, double initialSimulationTime) {

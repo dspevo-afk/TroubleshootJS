@@ -1,0 +1,74 @@
+{
+  "executionDigest": "35a16e27c22c18c17357c6f51d8736a648ee543a4a06506899579cc13707a2da",
+  "replay": "tsj-alpha/1/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/0",
+  "kind": "Agent-operated visible-input acceptance; not a human trial",
+  "checks": [
+    {
+      "check": "unrepaired customer retest",
+      "status": "PASS",
+      "observed": "Main menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting."
+    },
+    {
+      "check": "public catalog label and real acquisition",
+      "status": "PASS",
+      "before": {
+        "counts": [
+          "Loose parts in this catalog: 0",
+          "Loose parts in this catalog: 0",
+          "Loose parts in this catalog: 0",
+          "Loose parts in this catalog: 0"
+        ],
+        "headings": [
+          "Channel A · RG — RG replacement resistors",
+          "Channel A · RLOAD — RLOAD replacement resistors",
+          "Channel B · RG — RG replacement resistors",
+          "Channel B · RLOAD — RLOAD replacement resistors"
+        ],
+        "opaqueHeading": false
+      },
+      "after": {
+        "counts": [
+          "Loose parts in this catalog: 0",
+          "Loose parts in this catalog: 1",
+          "Loose parts in this catalog: 0",
+          "Loose parts in this catalog: 0"
+        ],
+        "headings": [
+          "Channel A · RG — RG replacement resistors",
+          "Channel A · RLOAD — RLOAD replacement resistors",
+          "Channel B · RG — RG replacement resistors",
+          "Channel B · RLOAD — RLOAD replacement resistors"
+        ]
+      }
+    },
+    {
+      "check": "unpowered Channel A RLOAD measurement",
+      "status": "PASS",
+      "reading": "OL",
+      "publicMarking": "330 Ohm +/-5%",
+      "input": "OHM plus visible terminal selectors and red/black probe buttons"
+    },
+    {
+      "check": "separate tray installation and powered customer retest",
+      "status": "PASS",
+      "removed": "Part 6",
+      "acquiredAndInstalled": "Part 16",
+      "result": "Customer retest passed\n\nCustomer retest passed. The reported behavior is resolved.\n\nThe live board passed the customer’s functional checks.\n\nCustomer retest passed. The reported behavior is resolved.\n\nNew board / Main menuReplay this challengeReturn to board\nReplay and bug-report identity\n\nReplay reconstructs the initial challenge. It does not save repairs or inventory. Only the current replay format is supported.\n\nCurrent replay\nInterpretation / build\n\nYou can select and copy this information for a bug report. Nothing is sent automatically."
+    },
+    {
+      "check": "normal named developer-report attributes and ARIA/title privacy",
+      "status": "PASS",
+      "developerReports": [],
+      "privateAriaTitles": []
+    }
+  ],
+  "identityRead": {
+    "status": "PASS",
+    "scope": "Fresh normal reconstruction of the same requested replay on the frozen build; not a retained owner across navigation",
+    "values": [
+      "tsj-alpha/1/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/0",
+      "tsj-alpha/1 / 3A2170BC2F5EDA02794A135480A74B4D"
+    ]
+  },
+  "toolLimit": "A getAttributeNames DOM read was unsupported by the Browser facade; fixed named-attribute and ARIA/title reads then succeeded."
+}

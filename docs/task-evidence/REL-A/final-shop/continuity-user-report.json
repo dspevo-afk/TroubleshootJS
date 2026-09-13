@@ -1,0 +1,37 @@
+{
+  "status": "FIX VERIFIED - final release qualification continues",
+  "reporter": "user",
+  "mode": "CONTINUITY",
+  "power": "OFF",
+  "observations": [
+    "Two visibly joined copper pads read OL.",
+    "Reversing the probes on those pads read 0 Ohm and BEEP."
+  ],
+  "boardIdentity": "tsj-alpha/1/EASY/RB15_CONTROL/0",
+  "sourceScreenshots": [
+    "Screenshot 2026-09-13 152008.png",
+    "Screenshot 2026-09-13 152210.png"
+  ],
+  "traceGameplay": "E08 unstarted; no active generated trace break established.",
+  "rootVerification": "Twice reproduced using actual visible Inspect terminal / Place red probe / Place black probe controls, both sources OFF and CONT selected.",
+  "observedPairs": [
+    {
+      "red": "J1.1",
+      "black": "F1.1",
+      "display": "OL"
+    },
+    {
+      "red": "F1.1",
+      "black": "J1.1",
+      "display": "0 Ohm",
+      "beep": true
+    }
+  ],
+  "screenshots": [
+    "continuity-before-ol.png",
+    "continuity-before-reversed-fit.png"
+  ],
+  "cause": "Temporary meter source used CircuitElm.drag, which snapped its red endpoint to the editor grid. Exact RAW_INPUT net anchor (100,700) is off-grid; F1.1 copper endpoint (4800,128) is on-grid. Reverse direction preserved the off-grid black endpoint via constructor. Similar drag attachment affects diode red and voltage-load black endpoints.",
+  "fix": "Use existing CircuitElm.setPosition for exact solver endpoints in all three temporary measurement stimuli. No same-net shortcut, fake reading, solver tolerance or power policy change.",
+  "regression": "Ten independent off-grid physical fixtures/20 assertions PASS; all11 Q15 seeds/66 directed copper readings PASS; strict22 malformed canaries PASS; actual CONT/OHM both orientations0Ohm and complete RB15 repair/customer retest PASS."
+}

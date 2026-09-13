@@ -1,0 +1,14 @@
+{
+  "status": "FAIL",
+  "executionDigest": "b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d",
+  "route": "?replay=tsj-alpha/1/EASY/LED_INDICATOR/3&tsjDebug=false&tsjVerifyTask43P=true&tsjTask43PForcedFailure=true&tsjTask43PSourceExperiment=privacy-canary",
+  "attrs": [
+    {
+      "name": "data-tsj-verification",
+      "value": "FAIL:task43p-forced-negative-request-invalid"
+    }
+  ],
+  "dialog": [
+    "Board preparation failed\n\nThis exact board could not be prepared for this difficulty. Try another seed or board. Replay: tsj-alpha/1/EASY/LED_INDICATOR/3\n\nThe previous board, if any, is retained. Use the main menu to choose another seed or enter a supported current replay.\n\nMain menu\nReplay and bug-report identity"
+  ]
+}

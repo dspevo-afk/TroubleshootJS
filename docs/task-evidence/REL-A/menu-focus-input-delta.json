@@ -1,0 +1,23 @@
+{
+  "status": "AUDITED",
+  "priorManifest": "final-runtime-inputs.json",
+  "currentManifest": "final-ui-inputs.json",
+  "changes": [
+    {
+      "path": "tests/contracts/u04_ui_contract.mjs",
+      "before": "0555219ca1ed3cb06a5bc74b7c92eae3b5b78dd7dd815b5e6151ac99f1c6bdd8",
+      "after": "1ef2ce4c56a3252d672afa859469b1631fea295c69b2443fe45340f3a91abd31"
+    },
+    {
+      "path": "war/tsj-workbench-ui.js",
+      "before": "e1891c5d03adcf72f95b1109c6adb24d63106c1d8f4ecaefdc59b55767ef1042",
+      "after": "c8b6654b53f61dedcff461d06e6d1c1a8ce0d21686b7427c84113d25cb8aa79f"
+    }
+  ],
+  "unchanged": "All Java, GWT module/dependencies, build/native/verifier scripts, electrical models, contracts/readers and CSS remain byte-identical. The GWT compiler consumes Java/module inputs; the changed UI file is loaded by circuitjs.html separately.",
+  "runtimeBoundary": "The in-flight Alpha page retains its previously loaded35b0bbb2 script and reports that execution identity. Its developer route has no PlayerSessionController or product modal and never calls the changed focusable() function. Fresh normal-player keyboard/modal checks are required on the new UI preview.",
+  "gateBoundary": "Native15 and five-permutation GWT production build qualify unchanged consumed inputs. A10/Task43P qualify unchanged compiled Java paths. Final UI and all remaining gates use the new preview; the loaded Alpha report retains its original execution identity.",
+  "currentExecutionDigest": "b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d",
+  "priorExecutionDigest": "35b0bbb28d03de8c828895f6d3390ec11d2ff2c32748f8fa42e4210b6d47dfa1",
+  "alphaResult": "PASS38 cases/1217 assertions/223 mutation checks,851241ms operation/2ms cleanup, original owner restored; report in alpha-compiled.json retains prior execution identity."
+}

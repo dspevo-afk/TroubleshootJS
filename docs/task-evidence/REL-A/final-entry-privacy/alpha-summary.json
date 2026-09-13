@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "cases": 38,
+  "assertions": 1217,
+  "acquisitions": 110,
+  "staleCallbacks": 105,
+  "negativeChecks": 72,
+  "mutationChecks": 223,
+  "operationElapsedMs": 884074,
+  "cleanupElapsedMs": 2,
+  "ownerRestored": true,
+  "admissionP50Ms": 17715,
+  "admissionMaxMs": 60273,
+  "maxUnitMs": 2161,
+  "maxWorkUnits": 617,
+  "rcCases": [
+    {
+      "seed": "0",
+      "admissionMs": 53853,
+      "maxUnitMs": 2161,
+      "workUnits": 82
+    },
+    {
+      "seed": "2",
+      "admissionMs": 52228,
+      "maxUnitMs": 2092,
+      "workUnits": 82
+    },
+    {
+      "seed": "3",
+      "admissionMs": 50996,
+      "maxUnitMs": 1930,
+      "workUnits": 82
+    }
+  ],
+  "humanTrials": "NOT RUN / awaiting response",
+  "populationEstimate": false
+}

@@ -1,6 +1,8 @@
 package com.lushprojects.circuitjs1.client;
 
 import java.util.Vector;
+import com.google.gwt.core.client.Duration;
+import com.google.gwt.core.client.GWT;
 import com.lushprojects.circuitjs1.client.SolverExecutionBoundary.Operation;
 import com.lushprojects.circuitjs1.client.SolverExecutionBoundary.Observation;
 import com.lushprojects.circuitjs1.client.SolverExecutionBoundary.Outcome;
@@ -24,7 +26,7 @@ final class CircuitSolverExecutor {
     private boolean requiresAnalysis = true;
     private Operation stepOperation;
     private int stepAcceptedCount;
-    private long stepStartedAt;
+    private double stepStartedAt;
     private SolverEventQueue events = new SolverEventQueue(1024, 1024, 0);
     int goodIterations = 100;
     boolean goodIteration = true;
@@ -155,12 +157,18 @@ final class CircuitSolverExecutor {
         if (!analyzing && requiresAnalysis)
             throw new Failure(Outcome.STALE_OWNER, "CircuitJS graph/source revision requires analysis before stepping");
         if (count < 1 || count > STEP_LIMIT) throw new IllegalArgumentException("Invalid solver step limit");
-        return boundary.begin(count, TRIAL_LIMIT, System.currentTimeMillis(), wallLimit, sim.t);
+        return boundary.begin(count, TRIAL_LIMIT, wallTimeMillis(), wallLimit, sim.t);
+    }
+    // GWT's System.currentTimeMillis boxes each sample into emulated long
+    // words. Millions of guarded solver trials need the same exact millisecond
+    // clock without that allocation; the boundary validates its integer range.
+    static double wallTimeMillis() {
+        return GWT.isScript() ? Duration.currentTimeMillis() : (double)System.currentTimeMillis();
     }
     void check(Operation operation) {
-        check(operation, System.currentTimeMillis());
+        check(operation, wallTimeMillis());
     }
-    private void check(Operation operation, long now) {
+    private void check(Operation operation, double now) {
         boundary.check(operation, now);
         if (CircuitElm.sim != sim || operation.owner != currentOwner() || operation.graph != sim.elmList ||
                 !controlsCurrent() ||
@@ -168,7 +176,7 @@ final class CircuitSolverExecutor {
             throw new Failure(Outcome.STALE_OWNER, "Solver state changed during an owned operation");
     }
     void beginTrial(Operation operation) {
-        long now = System.currentTimeMillis();
+        double now = wallTimeMillis();
         check(operation, now);
         if (stepOperation != operation || stepAcceptedCount != operation.acceptedSteps) {
             stepOperation = operation; stepAcceptedCount = operation.acceptedSteps; stepStartedAt = now;
@@ -181,7 +189,7 @@ final class CircuitSolverExecutor {
         check(operation);
         requireFinite(sim.nodeVoltages); requireFinite(sim.circuitRightSide);
         events.dispatchAccepted(sim.t);
-        boundary.accepted(operation, sim.t, System.currentTimeMillis());
+        boundary.accepted(operation, sim.t, wallTimeMillis());
     }
     void requireFinite(double[] values) {
         if (values == null) return;
@@ -337,7 +345,7 @@ final class CircuitSolverExecutor {
         String getDiagnostic() { return diagnostic; }
         int getAcceptedSteps() { return operation.acceptedSteps; }
         int getSliceCount() { return slices; }
-        long getWallMillis() { return finishedAt - operation.startedAt; }
+        long getWallMillis() { return (long)(finishedAt - operation.startedAt); }
         long getMaxSliceMillis() { return maxSliceMillis; }
         long getMaxYieldMillis() { return maxYieldMillis; }
         long getCancellationMillis() { return cancelledAt < 0 ? -1 : finishedAt - cancelledAt; }

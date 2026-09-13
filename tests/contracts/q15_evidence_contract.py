@@ -1,6 +1,7 @@
 """Strict Q15 acceptance reader: frozen cohort, real-stage coverage and budgets."""
 import copy
 import json
+import math
 import pathlib
 import sys
 
@@ -12,6 +13,7 @@ DESIGNS = ['NMOS_RESISTIVE_BIAS', 'BJT_RESISTIVE_BIAS', 'NMOS_RESISTIVE_BIAS',
            'NMOS_RESISTIVE_BIAS', 'NMOS_RC_FILTER', 'BJT_RESISTIVE_BIAS',
            'BJT_RESISTIVE_BIAS']
 FAULTS = {'BASE_RESISTOR_OPEN', 'RELAY_COIL_OPEN', 'RELAY_CONTACT_OPEN'}
+COPPER_PAIRS = [('J1.1', 'F1.1'), ('J1.2', 'RBLEED.2'), ('J2.1', 'RIN.1')]
 
 
 def require(ok, message):
@@ -46,6 +48,16 @@ def validate(report):
         integer(row.get('workUnits'), 6, 640)
         integer(row.get('repairMs'), 1)
         integer(row.get('supportMs'))
+        continuity = row.get('continuity')
+        expected = [pair for a, b in COPPER_PAIRS for pair in [(a, b), (b, a)]]
+        require(type(continuity) is list and len(continuity) == len(expected),
+                'missing two-direction copper continuity proof')
+        for sample, pair in zip(continuity, expected):
+            require((sample.get('red'), sample.get('black')) == pair,
+                    'wrong or duplicated continuity endpoints')
+            ohms = sample.get('ohms')
+            require(type(ohms) in (int, float) and math.isfinite(ohms) and 0 <= ohms < .001,
+                    'continuous copper did not measure zero')
         integer(row.get('routeAttempts'), 1, 400)
         integer(row.get('routeExpansions'), 1)
         integer(row.get('routeMs'), 0, row['admissionMs'])
@@ -86,6 +98,17 @@ def main(root):
                          ('packages', True)]:
         candidate = copy.deepcopy(report)
         candidate['cases'][0][field] = value
+        malformed.append(candidate)
+    candidate = copy.deepcopy(report)
+    candidate['cases'][0].pop('continuity')
+    malformed.append(candidate)
+    candidate = copy.deepcopy(report)
+    candidate['cases'][0]['continuity'].pop()
+    malformed.append(candidate)
+    for field, value in [('black', 'J1.1'), ('ohms', 3), ('ohms', float('nan')),
+                         ('ohms', True)]:
+        candidate = copy.deepcopy(report)
+        candidate['cases'][0]['continuity'][0][field] = value
         malformed.append(candidate)
     require(all(rejects(candidate) for candidate in malformed), 'reader accepted malformed proof')
     print(f'PASS: Q15 eleven cases/four designs/three faults; forced cleanup; {len(malformed)} reader negatives')

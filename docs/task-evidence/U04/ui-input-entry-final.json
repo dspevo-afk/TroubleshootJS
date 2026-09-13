@@ -1,0 +1,200 @@
+{
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "kind": "Actual visible keyboard/modal inputs; no board generation during parallel Alpha",
+  "checks": [
+    {
+      "check": "Menu collapsed/expanded reverse and forward focus",
+      "status": "PASS",
+      "collapsedBack": {
+        "label": null,
+        "tag": "SUMMARY",
+        "text": "Replay and bug-report identity"
+      },
+      "collapsedForward": {
+        "label": "tsj-product-field-1",
+        "tag": "SELECT",
+        "value": "EASY"
+      },
+      "expandedBack": {
+        "ariaLabel": null,
+        "tag": "TEXTAREA",
+        "value": "tsj-alpha/1 / 6A7778C50F3797A9E5C587F0FD7198E1"
+      },
+      "expandedForward": {
+        "tag": "SELECT",
+        "value": "EASY"
+      }
+    },
+    {
+      "check": "Settings wrap/close/exact draft",
+      "status": "PASS",
+      "back": {
+        "label": null,
+        "tag": "INPUT",
+        "type": "checkbox"
+      },
+      "forward": "Close",
+      "contrast": {
+        "bodyClass": "tsj-workbench-ui tsj-high-contrast",
+        "checked": [
+          {
+            "checked": true,
+            "label": null
+          },
+          {
+            "checked": false,
+            "label": null
+          },
+          {
+            "checked": false,
+            "label": null
+          }
+        ]
+      },
+      "return": {
+        "draft": [
+          "9007199254740993"
+        ],
+        "focus": "Settings"
+      }
+    },
+    {
+      "check": "Resources focus/privacy/inert background",
+      "status": "PASS",
+      "back": {
+        "tag": "SUMMARY",
+        "text": "Replay and bug-report identity"
+      },
+      "forward": "Close",
+      "privacy": {
+        "ariaTitleLeaks": [],
+        "inertBackground": 7,
+        "privateAttributes": []
+      }
+    },
+    {
+      "check": "Settings persistence/reverse exact target/restoration",
+      "status": "PASS",
+      "persisted": {
+        "bodyClass": "tsj-workbench-ui tsj-high-contrast",
+        "checks": [
+          {
+            "checked": true,
+            "text": "Higher contrast interface"
+          },
+          {
+            "checked": false,
+            "text": "Larger interface text"
+          },
+          {
+            "checked": false,
+            "text": "Reduce interface motion"
+          }
+        ]
+      },
+      "reverse": {
+        "label": "Reduce interface motion",
+        "tag": "INPUT"
+      },
+      "restored": {
+        "bodyClass": "tsj-workbench-ui",
+        "checks": [
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "check": "Unsupported replay epoch/HARD and family policy",
+      "status": "PASS",
+      "epochText": "TroubleshootJS · Desktop alpha\n\nUnsupported replay identity or epoch\n\nChoose a board, read the customer ticket, then examine, measure, isolate, repair and retest.\n\nDifficulty\nEASY\nMEDIUM\nHARD — unavailable\nPSYCHOTIC — unavailable\nBoard family\nIndicator board\nProtected indicator\nDual indicator\nTiming board\nBJT output driver\nMOSFET output driver\nRelay output reference\nProcedural control board\nNew board\n\nNew board chooses from the current seed pool. The chosen seed appears in Replay and bug-report identity after preparation.\n\nExact seed (signed decimal integer)\n\nPrepare exact seed attempts exactly the integer you enter. An exact seed can fail preparation; it is never replaced with another seed.\n\nPrepare exact seed\nOpen current replay\nPrepare replay\nResources\nSettings\n\nLimited desktop alpha: selected low-voltage boards in the 5–20-part range, including a 16-part procedural control board with routed bottom copper. The 3-part indicator and 4-part protected indicator are introductory practice boards.\n\nEASY and MEDIUM candidates are checked before play. HARD and PSYCHOTIC are unavailable. Mains circuits, larger boards and general multilayer routing are not supported. Session saves are not available.\n\nReplay and bug-report identity",
+      "hardText": "TroubleshootJS · Desktop alpha\n\nThis difficulty profile is unavailable\n\nChoose a board, read the customer ticket, then examine, measure, isolate, repair and retest.\n\nDifficulty\nEASY\nMEDIUM\nHARD — unavailable\nPSYCHOTIC — unavailable\nBoard family\nIndicator board\nProtected indicator\nDual indicator\nTiming board\nBJT output driver\nMOSFET output driver\nRelay output reference\nProcedural control board\nNew board\n\nNew board chooses from the current seed pool. The chosen seed appears in Replay and bug-report identity after preparation.\n\nExact seed (signed decimal integer)\n\nPrepare exact seed attempts exactly the integer you enter. An exact seed can fail preparation; it is never replaced with another seed.\n\nPrepare exact seed\nOpen current replay\nPrepare replay\nResources\nSettings\n\nLimited desktop alpha: selected low-voltage boards in the 5–20-part range, including a 16-part procedural control board with routed bottom copper. The 3-part indicator and 4-part protected indicator are introductory practice boards.\n\nEASY and MEDIUM candidates are checked before play. HARD and PSYCHOTIC are unavailable. Mains circuits, larger boards and general multilayer routing are not supported. Session saves are not available.\n\nReplay and bug-report identity",
+      "mediumChoices": [
+        {
+          "options": [
+            {
+              "disabled": false,
+              "text": "EASY"
+            },
+            {
+              "disabled": false,
+              "text": "MEDIUM"
+            },
+            {
+              "disabled": true,
+              "text": "HARD — unavailable"
+            },
+            {
+              "disabled": true,
+              "text": "PSYCHOTIC — unavailable"
+            }
+          ],
+          "value": "MEDIUM"
+        },
+        {
+          "options": [
+            {
+              "disabled": false,
+              "text": "Two-channel controller"
+            }
+          ],
+          "value": "COMPOSED_CONTROLLED_INDICATOR"
+        }
+      ]
+    }
+  ],
+  "status": "PASS",
+  "normalVerifierFlags": [
+    "tsjVerifyA02",
+    "tsjVerifyA03",
+    "tsjVerifyA04",
+    "tsjVerifyA06",
+    "tsjVerifyA07",
+    "tsjVerifyA08",
+    "tsjVerifyA10",
+    "tsjVerifyAlpha",
+    "tsjVerifyArchitecture",
+    "tsjVerifyChallenge",
+    "tsjVerifyCompositionGate",
+    "tsjVerifyDiode",
+    "tsjVerifyE01",
+    "tsjVerifyE03",
+    "tsjVerifyGeometry",
+    "tsjVerifyLayout",
+    "tsjVerifyLedParts",
+    "tsjVerifyMeter",
+    "tsjVerifyNmos",
+    "tsjVerifyNpn",
+    "tsjVerifyP01",
+    "tsjVerifyP02",
+    "tsjVerifyParallel",
+    "tsjVerifyQ15",
+    "tsjVerifyQuickPlay",
+    "tsjVerifyRc",
+    "tsjVerifyReplacement",
+    "tsjVerifyResistance",
+    "tsjVerifyStoredEnergy",
+    "tsjVerifyStress",
+    "tsjVerifyTask39",
+    "tsjVerifyTask40",
+    "tsjVerifyTask41",
+    "tsjVerifyTask43",
+    "tsjVerifyTask43P",
+    "tsjVerifyTask46",
+    "tsjVerifyTask47",
+    "tsjVerifyTask48",
+    "tsjVerifyTask49",
+    "tsjVerifyU01",
+    "tsjVerifyWrongRepair"
+  ],
+  "additionalFlags": [
+    "tsjTask43PForcedFailure=true",
+    "tsjTask43PSourceExperiment=privacy-canary"
+  ],
+  "screenshots": [
+    "resources-entry-final.png",
+    "settings-entry-final.png"
+  ],
+  "limit": "These UI checks run with no active board. Final board admission/repair privacy and human difficulty trials are separate."
+}

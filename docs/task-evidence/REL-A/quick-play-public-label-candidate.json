@@ -1,0 +1,6 @@
+{
+  "report": "unrepaired-finish-blocked;correct-finish-passed;fresh-session-isolated",
+  "status": "PASS:quick-play",
+  "elapsedObservedMs": 313330,
+  "executionDigest": "35a16e27c22c18c17357c6f51d8736a648ee543a4a06506899579cc13707a2da"
+}

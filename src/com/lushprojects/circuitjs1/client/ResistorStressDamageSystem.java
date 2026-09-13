@@ -112,11 +112,9 @@ class ResistorStressDamageSystem {
     }
 
     private void integrate(double seconds) {
-        ReplaceableComponentSlot slot = capability.getSlot();
-        PhysicalResistorPart installed = slot.isEmpty() ? null : slot.getInstalledPart();
         for (ResistorStressState state : states.values()) {
             PhysicalResistorPart part = state.getPart();
-            if (part != installed || !part.isInstalled())
+            if (!isInstalled(part))
                 continue;
             double power = Math.abs(part.getElement().getPower());
             if (Double.isNaN(power) || Double.isInfinite(power))
@@ -141,9 +139,11 @@ class ResistorStressDamageSystem {
     }
 
     private boolean isInstalled(PhysicalResistorPart part) {
-        ReplaceableComponentSlot slot = capability.getSlot();
-        return !slot.isEmpty() && slot.getInstalledPart() == part &&
-            part.isInstalled();
+        PhysicalBoardSlot mountedSlot = part == null ? null : part.getBoardSlot();
+        PhysicalBoardSlot sourceSlot = capability.getSlot().getPhysicalSlot();
+        return part != null && part.isInstalled() && mountedSlot != null &&
+            mountedSlot.getRuntime() == sourceSlot.getRuntime() &&
+            mountedSlot.getInstalledPart() == part;
     }
 
     private boolean isBoardPowered() {

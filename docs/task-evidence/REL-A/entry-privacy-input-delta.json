@@ -1,0 +1,14 @@
+{
+  "status": "SOURCE FROZEN - fresh build and runtime qualification pending",
+  "previousManifest": "final-ui-inputs.json",
+  "currentManifest": "entry-privacy-inputs.json",
+  "changedInputs": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "before": "9a9419adb204fe33c1caa6fdb2b10117f19f059b39a0addee519658716e8ca56",
+      "after": "b788d12b005fa8c089a33ac8624de1d136935842ab0b9dfae77a69c52f6ab303"
+    }
+  ],
+  "behavior": "Legacy New control board interactive click explicitly selects asynchronous scheduling. Legacy verifier query flags are normalized behind debug before early admission; normal Task43P source/forced flags cannot activate private verification. Startup debug scheduling, source/proof/solver/mutation algorithms and limits are unchanged.",
+  "priorEvidence": "All b5080dcf/35b0bbb2 results remain their original candidate evidence until fresh gates or a documented unchanged-consumption audit qualify reuse."
+}

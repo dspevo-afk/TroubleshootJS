@@ -1,0 +1,22 @@
+{
+  "protocol": "troubleshootjs-preview-identity-v1",
+  "sourceDigest": "3856517817952b22e0c1985843aa4252dae5efa03c77c61d8644e9135b29f652",
+  "scriptDigest": "925b4e26cdb04dba53f98e6f082272a4cea6c372abd20edceb74192d8496b9c2",
+  "webDigest": "97543fa2cab73e773e84e5eb4000fbfd82ad2f1d8aebb35d7b6e099ac78f6b8d",
+  "executionDigest": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+  "executionFileCount": 1437,
+  "previewPort": 64209,
+  "processId": 17324,
+  "processStartTicks": 639249258397003903,
+  "verifierRunId": "U04-U05-RELA-continuity-1",
+  "verifierNonce": "edc7b8fccb1d4971a6bb45f72eac7d1c",
+  "identityStatus": "PASS",
+  "qualificationStatus": "ACCEPTED - all required technical/player gates PASS; qualitative user findings retained with verified corrections; publication pending",
+  "managedExecSession": 51157,
+  "sourceInputs": "6635af42c3bffd9cc7855f7c767533f72896ce5f699019e6de20f15ff741d371",
+  "build": "gwt-continuity-1.txt",
+  "buildExitCode": 0,
+  "compileSeconds": 69.974,
+  "linkSeconds": 1.407,
+  "permutations": 5
+}

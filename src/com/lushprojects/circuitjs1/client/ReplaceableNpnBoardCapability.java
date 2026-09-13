@@ -4,7 +4,7 @@ import java.util.Vector;
 
 /** Runtime capability exposing Q1 identity, catalog, and loose-part lifecycle. */
 final class ReplaceableNpnBoardCapability implements PhysicalBoardRuntimeCapability,
-        PhysicalBoardInstallationProvider, WorkbenchPartsProvider {
+        PhysicalBoardInstallationProvider.Scoped, WorkbenchPartsProvider {
     static final String ID = "REPLACEABLE_NPN";
     private final NpnComponentSlot slot;
     private final PhysicalPartInventory<PhysicalNpnPart> inventory;
@@ -24,6 +24,9 @@ final class ReplaceableNpnBoardCapability implements PhysicalBoardRuntimeCapabil
     NpnComponentSlot getSlot() { return slot; }
     PhysicalPartInventory<PhysicalNpnPart> getInventory() { return inventory; }
     NpnReplacementCatalog getCatalog() { return catalog; }
+
+    public PhysicalMutationSlot getMutationSlot() { return slot; }
+    public PhysicalPartInventory<?> getMutationInventory() { return inventory; }
 
     public PhysicalSlotMutationProvider install(CirSim sim, GeneratedBoardInstance instance,
             BoardModificationController modifications, double initialSimulationTime) {

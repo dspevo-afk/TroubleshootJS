@@ -1,0 +1,7 @@
+{
+  "status": "FAIL:U01 forced-negative",
+  "report": null,
+  "preview": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+  "expectedMarkerSource": "U01ViewportDeveloperVerifier.java:35",
+  "initialObserverError": "Root expected the other verifiers naming convention; actual maintained U01 marker confirmed in source. No product or oracle changed."
+}

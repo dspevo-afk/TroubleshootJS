@@ -12,6 +12,41 @@ final class GeneratedRuntimeDeveloperSettlement {
     private GeneratedRuntimeDeveloperSettlement() {
     }
 
+    /** Advance at most one existing temporal solver-call phase of private preparation. */
+    static boolean stepTemporalPreparation(CirSim sim, GeneratedBoardInstance expectedOwner,
+            boolean healthyOnly, String label) {
+        GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
+        if (challenge == null || sim.getGeneratedBoardInstance() != expectedOwner ||
+                challenge.getInstanceForRuntimeValidation() != expectedOwner ||
+                expectedOwner.getTemporalBehavior() == null)
+            throw new IllegalStateException("Temporal preparation lost its owner: " + label);
+        challenge.useBoundedTemporalPreparation();
+        int before = challenge.getTemporalPreparationUnits();
+        boolean wasRunning = sim.simIsRunning();
+        if (!wasRunning) sim.setSimRunning(true);
+        try {
+            for (int attempt = 0; attempt < MAX_UPDATE_ATTEMPTS; attempt++) {
+                GenerationWorkScope.check();
+                if (challenge.hasTemporalPreparationWork()) sim.resumeGeneratedTemporalPreparation();
+                else sim.updateCircuit();
+                if (sim.getGeneratedBoardInstance() != expectedOwner ||
+                        sim.getGeneratedChallengeController() != challenge)
+                    throw new IllegalStateException("Temporal preparation replaced its owner: " + label);
+                boolean complete = healthyOnly ? !challenge.isHealthyValidationExpected() :
+                    challenge.isReady() && sim.isGeneratedRuntimeSettled();
+                if (complete) return true;
+                if (challenge.getTemporalPreparationUnits() != before) return false;
+                if (!sim.analyzeFlag && !sim.dcAnalysisFlag &&
+                        sim.generatedBoardVerificationPending && sim.generatedBoardVerificationAnalyzed &&
+                        sim.t <= sim.generatedBoardVerificationStartTime && sim.stopMessage == null)
+                    sim.solverExecutor.advanceSteps(1);
+            }
+            throw new IllegalStateException("Temporal preparation made no phase progress: " + label);
+        } finally {
+            if (!wasRunning) sim.setSimRunning(false);
+        }
+    }
+
     /**
      * Runs the ordinary CircuitJS update path through the healthy temporal
      * callback only.  Applying the generated fault queues a second verification

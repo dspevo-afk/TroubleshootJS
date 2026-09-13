@@ -1,0 +1,93 @@
+{
+  "executionDigest": "775ffbf494b5da97a43b6978689c2b16acc8bd83f0ef9b77e8ed03ac2cc66f7a",
+  "interactions": [
+    {
+      "check": "settings reverse wrap",
+      "focus": "Reduce interface motion",
+      "insideDialog": true
+    },
+    {
+      "check": "settings forward wrap",
+      "focus": "Close",
+      "insideDialog": true
+    },
+    {
+      "bodyClass": "tsj-workbench-ui tsj-high-contrast",
+      "check": "settings saved",
+      "text": "SettingsCloseThese preferences affect interface presentation only. Board physics, geometry, probe targets and instrument behavior stay controlled by the simulator.Preferences saved in this browser.Higher contrast interfaceLarger interface textReduce interface motionSession saves are not available in this alpha."
+    },
+    {
+      "check": "settings close retains draft and focus",
+      "focus": "Settings",
+      "seed": "9007199254740993"
+    },
+    {
+      "check": "preference survives reload",
+      "checked": [
+        {
+          "checked": true,
+          "label": "Higher contrast interface"
+        },
+        {
+          "checked": false,
+          "label": "Larger interface text"
+        },
+        {
+          "checked": false,
+          "label": "Reduce interface motion"
+        }
+      ]
+    },
+    {
+      "check": "normal BJT unrepaired retest",
+      "privateAttributes": [],
+      "reports": [],
+      "text": "\n\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nMULTIMETER\n\n\nDC V\tOHM\nCONT\tDIODE\n\n\n--- V\n\n\n\n\n\n\nBoard Power: ON\n\n\n\n\n\n\n\n\n\n\n\n\nBENCH POWER\n\n\nSupply 1 (+9V): 9 V, -0.035 pA\n\nDisconnect Supply 1 (+9V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nSupply 2 (+5V): 5 V, 4.349 mA\n\nDisconnect Supply 2 (+5V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nEach output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.\n\n\nBOARD VIEW\n\n\nFit board\nFit selection\n\n\nZoom +\nZoom -\nView bottom copper\n\n\nWheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe.\n\n\nTop side / top copper\n\n\nInspect component\nJ1\nJ2\nLED1\nQ1\nRB\nRLOAD\nRPD\n\n\nInspect terminal\nJ1 terminal 1\nJ1 terminal 2\nJ2 terminal 1\nJ2 terminal 2\nLED1 terminal A\nLED1 terminal K\nQ1 terminal B\nQ1 terminal C\nQ1 terminal E\nRB terminal 1\nRB terminal 2\nRLOAD terminal 1\nRLOAD terminal 2\nRPD terminal 1\nRPD terminal 2\n\n\nPlace red probe\nPlace black probe\n\n\n\n\nService Ticket\n\n\nThe controlled load does not switch on.\n\n\nCustomer retest: Set control HIGH and LOW and observe the controlled load response.\n\nSet control HIGH\nSet control LOW\n\n\n\nParts Tray\n\n\nNo loose parts."
+    },
+    {
+      "action": "NPN seed 0 power off; red mouse placement and accessible black probe on RLOAD",
+      "observation": "\n\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nMULTIMETER\n\n\nDC V\tOHM\nCONT\tDIODE\n\n\n330 Ohm\n\n\n\n\n\n\nBoard Power: OFF\n\n\n\n\n\n\n\n\n\n\n\n\nBENCH POWER\n\n\nSupp",
+      "limitation": "CUA rejected the right-button string; black probe was placed using the visible keyboard-accessible control."
+    },
+    {
+      "action": "remove Q1, then acquire Generic NPN transistor through Shop",
+      "observation": "Q1 catalog loose parts changed from 1 to 2; acquisition confirmed a real tray part."
+    },
+    {
+      "action": "install acquired Q1, power on, Run customer retest",
+      "result": "Customer retest passed\n\nCustomer retest passed. The reported behavior is resolved.\n\nThe live board passed the customer’s functional checks.\n\nCustomer retest passed. The reported behavior is resolved.\n\nNew board / Main menuReplay this challengeReturn to board\nReplay and bug-report identity"
+    },
+    {
+      "check": "completed board terminal controls",
+      "controls": [
+        {
+          "disabled": true,
+          "text": "Shop"
+        },
+        {
+          "disabled": true,
+          "text": "Run customer retest"
+        }
+      ]
+    },
+    {
+      "action": "Prepare replay with unsupported epoch 0",
+      "result": "TroubleshootJS · Desktop alpha\n\nUnsupported replay identity or epoch\n\nChoose a board, read the customer ticket, then examine, measure, isolate, repair and retest.\n\nDifficulty\nEASY\nMEDIUM\nHARD — unavailable\nPSYCHOTIC — unavailable\nBoard family\nIndicator board\nProtected indicator\nDual indicator\nTiming board\nBJT output driver\nMOSFET output driver\nRelay output reference\nProcedural control board\nNew board\n\nNew board chooses from the current seed pool. The chosen seed appears in Replay and bug-report identity after preparation.\n\nExact seed (signed decimal integer)\n\nPrepare exact seed attempts exactly the integer you enter. An exact seed can fail preparation; it is never replaced with another seed.\n\nPrepare exact seed\nOpen current replay\nPrepare replay\nResume current board\nResources\nSettings\n\nLimited desktop alpha: selected low-voltage boards in the 5–20-part range, including a 16-part procedural control board with routed bottom copper. The 3-part indicator and 4-part protected indicator are introductory practice boards.\n\nEASY and MEDIUM candidates are checked before play. HARD and PSYCHOTIC are unavailable. Mains circuits, larger boards and general multilayer routing are not supported. Session saves are not available.\n\nReplay and bug-report identity"
+    },
+    {
+      "action": "Timing board New board while dedicated Q15 verifier was also running",
+      "result": "Board preparation failed\n\nThis exact board could not be prepared for this difficulty. Try another seed or board. Replay: tsj-alpha/1/EASY/RC_DELAY/3\n\nThe previous board, if any, is retained. Use the main menu to choose another seed or enter a supported current replay.\n\nMain menuResume previous board\nReplay and bug-report identity",
+      "status": "FAIL",
+      "limitation": "Two Cancel preparation locator clicks timed out at the Browser 3000ms command boundary. Exact RC seed3 preparation failed; the private phase is not exposed in normal mode. Concurrent Q15 load is a possible cause, not a proved diagnosis."
+    },
+    {
+      "action": "Resume previous board after preparation failure",
+      "result": "\n\nMain menu\nShop\nResources\nSettings\nRun customer retest\nMULTIMETER\n\n\nDC V\tOHM\nCONT\tDIODE\n\n\n--- V\n\n\n\n\nThe board could not be prepared.\n\n\n\nBoard Power: ON\n\n\n\n\n\n\n\n\n\n\n\n\nBENCH POWER\n\n\nSupply 1 (+5V): 5 V, 49.662 μA\n\nDisconnect Supply 1 (+5V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nSupply 2 (+5V): 5 V, 49.662 μA\n\nDisconnect Supply 2 (+5V)\n\nL"
+    },
+    {
+      "check": "recovered prior completed MEDIUM board",
+      "text": " terminal G\nQ1 terminal D\nQ1 terminal S\nRG terminal 1\nRG terminal 2\nRPD terminal 1\nRPD terminal 2\nLED1 terminal A\nLED1 terminal K\nRLOAD terminal 1\nRLOAD terminal 2\nJ3 terminal 1\nJ3 terminal 2\nQ1 terminal G\nQ1 terminal D\nQ1 terminal S\nRG terminal 1\nRG terminal 2\nRPD terminal 1\nRPD terminal 2\nLED1 terminal A\nLED1 terminal K\nRLOAD terminal 1\nRLOAD terminal 2\nJ1 terminal 1\nJ1 terminal 2\nLED1 terminal A\nLED1 terminal K\nRSUP terminal 1\nRSUP terminal 2\n\n\nPlace red probe\nPlace black probe\n\n\n\n\nService Ticket\n\n\nRepair verified. The controlled indicator switches normally.\n\n\nCustomer retest: Set each channel HIGH and LOW and verify every indicator responds.\n\nChannel A HIGH\nChannel A LOW\nChannel B HIGH\nChannel B LOW\n\n\n\nParts Tray\n\nPart 6 - 330 Ohm +/-5%",
+      "powerControl": "disabled in completed state; no isolation action claimed"
+    }
+  ]
+}

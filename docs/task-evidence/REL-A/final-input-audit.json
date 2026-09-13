@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "manifest": "final-ui-inputs.json",
+  "verifiedInputs": 1151,
+  "changedInputs": [],
+  "executionDigest": "b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d",
+  "scope": "Each current source/test/script/web input in the frozen manifest matches its SHA256. Documentation and evidence changes are outside the execution tree. Staged review has not occurred."
+}

@@ -1,0 +1,455 @@
+{
+  "protocol": "TSJ-ALPHA-1",
+  "status": "PASS",
+  "pilot": false,
+  "cases": [
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "seed": "0",
+      "requested": "MEDIUM",
+      "computed": "MEDIUM",
+      "features": "difficulty/1;profile=MEDIUM;parts=15;hypotheses=4;repairs=4;owners=4;readings=2;singleRemaining=2;executedEvidenceDepth=13-13;legalWitnessActions=148-148;modes=3;inputs=6;railTargets=6;temporal=4;parallel=true",
+      "admissionMs": 5056,
+      "maxUnitMs": 129,
+      "workUnits": 617,
+      "slowUnits": [],
+      "repairPassed": true
+    }
+  ],
+  "assertions": 53,
+  "acquisitions": 6,
+  "staleCallbacks": 1,
+  "mutationChecks": 30,
+  "mutationProviders": [
+    "resistor"
+  ],
+  "mutationCases": [
+    {
+      "provider": "resistor",
+      "operation": "acquire",
+      "stage": "OWNER_CHANGE",
+      "occurrence": 1,
+      "status": "REJECTED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "acquire",
+      "stage": "AFTER_INVENTORY_ACQUIRE",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "acquire",
+      "stage": "AFTER_CANONICAL_REGISTER",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "acquire",
+      "stage": "AFTER_GRAPH_APPEND",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "acquire",
+      "stage": "AFTER_COMMIT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "remove",
+      "stage": "AFTER_GRAPH_DISCONNECT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "remove",
+      "stage": "AFTER_SLOT_CLEAR",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "remove",
+      "stage": "AFTER_EMPTY_SLOT_REBIND",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "remove",
+      "stage": "AFTER_COMMIT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_INVENTORY_ACQUIRE",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_CANONICAL_REGISTER",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_GRAPH_APPEND",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_PRIMARY_BINDING",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "install",
+      "stage": "AFTER_PRIMARY_BINDING",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_ENDPOINT_RETARGET",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "install",
+      "stage": "AFTER_ENDPOINT_RETARGET",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_ENDPOINT_RETARGET",
+      "occurrence": 2,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "install",
+      "stage": "AFTER_ENDPOINT_RETARGET",
+      "occurrence": 2,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_ATTACHMENT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "install",
+      "stage": "AFTER_ATTACHMENT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_SLOT_MOUNT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "install",
+      "stage": "AFTER_SLOT_MOUNT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_GRAPH_CONNECT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "install",
+      "stage": "AFTER_GRAPH_CONNECT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_GRAPH_CONNECT",
+      "occurrence": 2,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "install",
+      "stage": "AFTER_GRAPH_CONNECT",
+      "occurrence": 2,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_GRAPH_RESTORE",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "install",
+      "stage": "AFTER_GRAPH_RESTORE",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_COMMIT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "install",
+      "stage": "AFTER_COMMIT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    }
+  ],
+  "shopCases": [
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "seed": "0",
+      "variant": "SPAN_220",
+      "measuredOhms": 330,
+      "sourcePreserved": true,
+      "fitAndTypeRejections": false
+    }
+  ],
+  "crossTargetCases": [
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "seed": "0",
+      "checks": 26,
+      "cases": [
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-eligibility",
+          "stage": "OCCUPIED",
+          "occurrence": 1,
+          "status": "REJECTED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-eligibility",
+          "stage": "WRONG_TYPE",
+          "occurrence": 1,
+          "status": "REJECTED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-eligibility",
+          "stage": "WRONG_GEOMETRY",
+          "occurrence": 1,
+          "status": "NOT_APPLICABLE"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-eligibility",
+          "stage": "FOREIGN_SAME_ID",
+          "occurrence": 1,
+          "status": "REJECTED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-eligibility",
+          "stage": "FOREIGN_BOARD",
+          "occurrence": 1,
+          "status": "REJECTED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-eligibility",
+          "stage": "STALE_PROVIDER",
+          "occurrence": 1,
+          "status": "REJECTED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-eligibility",
+          "stage": "POWERED",
+          "occurrence": 1,
+          "status": "REJECTED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-install",
+          "stage": "AFTER_PRIMARY_BINDING",
+          "occurrence": 1,
+          "status": "COMPENSATED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-install",
+          "stage": "AFTER_ENDPOINT_RETARGET",
+          "occurrence": 1,
+          "status": "COMPENSATED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-install",
+          "stage": "AFTER_ENDPOINT_RETARGET",
+          "occurrence": 2,
+          "status": "COMPENSATED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-install",
+          "stage": "AFTER_ATTACHMENT",
+          "occurrence": 1,
+          "status": "COMPENSATED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-install",
+          "stage": "AFTER_SLOT_MOUNT",
+          "occurrence": 1,
+          "status": "COMPENSATED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-install",
+          "stage": "AFTER_GRAPH_CONNECT",
+          "occurrence": 1,
+          "status": "COMPENSATED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-install",
+          "stage": "AFTER_GRAPH_CONNECT",
+          "occurrence": 2,
+          "status": "COMPENSATED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-install",
+          "stage": "AFTER_GRAPH_RESTORE",
+          "occurrence": 1,
+          "status": "COMPENSATED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-install",
+          "stage": "AFTER_COMMIT",
+          "occurrence": 1,
+          "status": "COMPENSATED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-install",
+          "stage": "COMMIT",
+          "occurrence": 1,
+          "status": "SOURCE_INVENTORY_RETAINED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-stress",
+          "stage": "ACTUAL_CURRENT",
+          "occurrence": 1,
+          "status": "DAMAGED_SAME_PART",
+          "actualPowerW": 0.5706435518425564,
+          "ratedPowerW": 0.25,
+          "serviceBefore": 0.000005000000000000013,
+          "serviceAfter": 0.500005,
+          "damageBefore": 0.0000041124914935284185,
+          "damageAfter": 0.41125326184433425,
+          "samePart": true
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-remove",
+          "stage": "AFTER_GRAPH_DISCONNECT",
+          "occurrence": 1,
+          "status": "COMPENSATED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-remove",
+          "stage": "AFTER_SLOT_CLEAR",
+          "occurrence": 1,
+          "status": "COMPENSATED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-remove",
+          "stage": "AFTER_EMPTY_SLOT_REBIND",
+          "occurrence": 1,
+          "status": "COMPENSATED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-remove",
+          "stage": "AFTER_COMMIT",
+          "occurrence": 1,
+          "status": "COMPENSATED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-remove-check",
+          "stage": "IDENTITY",
+          "occurrence": 1,
+          "status": "SAME_SOURCE_PART"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-remove",
+          "stage": "COMMIT",
+          "occurrence": 1,
+          "status": "SOURCE_LOOSE_RETAINED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-eligibility",
+          "stage": "ORIGINAL_TARGET",
+          "occurrence": 1,
+          "status": "REJECTED"
+        },
+        {
+          "provider": "resistor-cross",
+          "operation": "cross-reinstall",
+          "stage": "COMMIT",
+          "occurrence": 1,
+          "status": "ALTERNATE_TARGET"
+        }
+      ]
+    }
+  ],
+  "negativeChecks": 4,
+  "cancellationMs": 0,
+  "elapsedMs": 5795,
+  "cleanupMs": 1,
+  "ownerRestored": true,
+  "operation": "catalog-and-repair",
+  "activeSlowUnits": [],
+  "activeCase": 37,
+  "failure": null
+}

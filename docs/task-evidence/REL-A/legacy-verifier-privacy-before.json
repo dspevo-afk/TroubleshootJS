@@ -1,0 +1,33 @@
+{
+  "reports": [
+    {
+      "name": "data-tsj-preview-identity-protocol",
+      "value": "troubleshootjs-execution-provenance-v1"
+    },
+    {
+      "name": "data-tsj-preview-source-digest",
+      "value": "0f883a124f303f0f9f6e7e55033dd1db3686dd470cda60bcaad18bec69793bf7"
+    },
+    {
+      "name": "data-tsj-preview-script-digest",
+      "value": "7faa8b623e4f08d4e8c333a884e6f29f768082a933ff6c680a8ba6aecd2bffcc"
+    },
+    {
+      "name": "data-tsj-preview-web-digest",
+      "value": "500e61f5b7b533002ef076154994abb5ea2bb29b87ba5f9a3aa06f1416ce8715"
+    },
+    {
+      "name": "data-tsj-preview-execution-digest",
+      "value": "182669b6c2008aa3d147c09c3b34dcd10a157e3a07e5059e6f4a405fd78f9eb9"
+    },
+    {
+      "name": "data-tsj-preview-file-count",
+      "value": "1431"
+    },
+    {
+      "name": "data-tsj-verification",
+      "value": "FAIL:Quick Play workbench did not expose the Finish Job boundary"
+    }
+  ],
+  "text": "\n\nMain menu\nShop\nResources\nSettings\nRun customer retest\nMULTIMETER\n\n\nDC V\tOHM\nCONT\tDIODE\n\n\n--- V\n\n\n\n\n\n\nBoard Power: ON\n\n\n\n\n\n\n\n\n\n\n\n\nBENCH POWER\n\n\nSupply 1 (+5V): 5 V, 0 A\n\nDisconnect Supply 1 (+5V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nEach output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.\n\n\nBOARD VIEW\n\n\nFit board\nFit selection\n\n\nZoom +\nZoom -\nView bottom copper\n\n\nWheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe.\n\n\nTop side / top copper\n\n\nInspect functional region\nCircuit\n\n\nInspect component\nJ1\nLED1\nR1\n\n\nInspect terminal\nJ1 terminal 1\nJ1 terminal 2\nLED1 terminal A\nLED1 terminal K\nR1 terminal 1\nR1 terminal 2\n\n\nPlace red probe\nPlace black probe\n\n\n\n\nService Ticket\n\n\nIndicator does not light.\n\n\nCustomer retest: Observe the indicator after repair.\n\n\n\nParts Tray\n\n\nNo loose parts.\nCustomer ticket\nCustomer complaint\n\nIndicator does not light.\n\nFunctional retest\n\nObserve the indicator after repair.\n\nExamine the board and use the instruments to identify a repair. Switch off every supply and wait for stored energy to discharge before changing parts.\n\nAccept ticket and startMain menuResources\nReplay and bug-report identity"
+}

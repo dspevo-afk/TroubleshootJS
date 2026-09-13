@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "scope": "Intermediate production UI QA; backend repeated-relocation fix and final combined qualification pending",
+  "compiledExecutionDigest": "f83f0a2e0244570b9318ec27be0b2fac1d7a67d08a77cb6fc522ba9541731052",
+  "replay": "tsj-alpha/1/EASY/NPN_LOW_SIDE_SWITCH/0",
+  "viewport": {
+    "width": 1226,
+    "height": 1272
+  },
+  "observations": [
+    "All parts shows all148 real entries:146 resistor specification/fit options and2 NPN models",
+    "Prior customer-retest failure omitted from Shop notice; empty notice takes no space",
+    "Complete product rows and Add buttons visible in inspected screenshot",
+    "NPN category filters to2of148",
+    "Shift-Tab from Close reaches last visible product action; Tab returns to Close",
+    "Generic NPN action produces actual added-to-tray notice and loose count0to1,category preserved",
+    "Closing/reopening drops stale purchase notice",
+    "Powered board shows148disabled acquisition actions and truthful isolation note",
+    "Final cleanup:all supplies OFF,Shop reopened ready for browsing"
+  ],
+  "screenshot": "storefront-refined-npn.png",
+  "limits": [
+    "Observed viewport differs from earlier1280x720 screenshot; no exact720-height certification claimed.",
+    "No controller injection or private metadata inspection.",
+    "Final compiled candidate must rerun affected player proof after backend fix."
+  ]
+}

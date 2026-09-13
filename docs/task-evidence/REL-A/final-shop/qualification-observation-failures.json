@@ -1,0 +1,14 @@
+[
+  {
+    "phase": "Alpha38 while RC cases active",
+    "operation": "Read published DOM report through built-in Browser",
+    "status": "TIMEOUT",
+    "detail": "CDP Page.getFrameTree for tab8 timed out; no full corpus rerun; report will be polled later",
+    "timeUtc": "2026-09-13T19:00:34.068145+00:00"
+  },
+  {
+    "phase": "Alpha38 observation",
+    "status": "TIMEOUT",
+    "detail": "Two later published-report reads hit pre-dispatch/Page.getFrameTree deadlines. Browser tabs.list and a full DOM snapshot succeeded between them and showed Preparing board; corpus was not restarted."
+  }
+]

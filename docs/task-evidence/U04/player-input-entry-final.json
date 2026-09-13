@@ -1,0 +1,125 @@
+{
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "kind": "Agent-operated actual visible player inputs; human calibration remains separate",
+  "checks": [
+    {
+      "check": "Final normal RC3 ticket/exact replay/privacy",
+      "status": "PASS",
+      "observedElapsedUpperBoundMs": 199659,
+      "observation": {
+        "identity": [
+          "tsj-alpha/1/EASY/RC_DELAY/3",
+          "tsj-alpha/1 / 6A7778C50F3797A9E5C587F0FD7198E1"
+        ],
+        "preview": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+        "privateAttributes": []
+      }
+    },
+    {
+      "check": "Final visible Q15 cancellation retains previous RC3 and OFF power",
+      "status": "PASS",
+      "input": "New board then visible Cancel preparation pointer",
+      "inputRoundTripMs": 2098,
+      "observation": {
+        "identity": [
+          "",
+          "tsj-alpha/1/EASY/RC_DELAY/3",
+          "tsj-alpha/1 / 6A7778C50F3797A9E5C587F0FD7198E1"
+        ],
+        "power": [
+          "Board Power: OFF",
+          "Connect Supply 1 (+12V)"
+        ],
+        "privateAttributes": []
+      },
+      "timingLimit": "Pointer round trip includes Browser transport; not coordinator cleanup duration. Immediate pre-paint snapshot was followed by settled normal controls."
+    },
+    {
+      "check": "Default menu family after cancellation",
+      "status": "OBSERVED",
+      "identity": [
+        "tsj-alpha/1/EASY/LED_INDICATOR/0",
+        "tsj-alpha/1 / 6A7778C50F3797A9E5C587F0FD7198E1"
+      ],
+      "limit": "Root clicked New board after reopening the menu without reselecting RB15. This was an indicator draw and does not count as a Q15 selection."
+    },
+    {
+      "check": "Final normal RB15 draw1 reaches ticket",
+      "status": "PASS",
+      "identity": [
+        "tsj-alpha/1/EASY/RB15_CONTROL/42",
+        "tsj-alpha/1 / 6A7778C50F3797A9E5C587F0FD7198E1"
+      ],
+      "qualifiedEnvelope": true,
+      "observedElapsedUpperBoundMs": 145445
+    },
+    {
+      "check": "Final normal RB15 draw2 reaches ticket",
+      "status": "PASS",
+      "identity": [
+        "tsj-alpha/1/EASY/RB15_CONTROL/17",
+        "tsj-alpha/1 / 6A7778C50F3797A9E5C587F0FD7198E1"
+      ],
+      "qualifiedEnvelope": true,
+      "observedElapsedUpperBoundMs": 146938
+    },
+    {
+      "check": "Final exact bad seed1 fails honestly and preserves previous owner/power",
+      "status": "PASS",
+      "error": "Board preparation failed\n\nThis exact board could not be prepared for this difficulty. Try another seed or board. Replay: tsj-alpha/1/EASY/RB15_CONTROL/-4518705223253195925\n\nThe previous board, if any, is retained. Use the main menu to choose another seed or enter a supported current replay.\n\nMain menuResume previous board\nReplay and bug-report identity",
+      "observedElapsedUpperBoundMs": 129551,
+      "recovery": {
+        "identity": [
+          "",
+          "tsj-alpha/1/EASY/RB15_CONTROL/17",
+          "tsj-alpha/1 / 6A7778C50F3797A9E5C587F0FD7198E1"
+        ],
+        "power": [
+          "Board Power: OFF",
+          "Connect Supply 1 (+12V)",
+          "Connect Supply 2 (+5V)"
+        ],
+        "privateAttributes": []
+      },
+      "timingLimit": "Upper-bound browser observation; native17 separately proves80 placement attempts. No private phase or cleanup time is inferred."
+    },
+    {
+      "check": "Final exact bad seed2 fails honestly and preserves previous owner/power",
+      "status": "PASS",
+      "error": "Board preparation failed\n\nThis exact board could not be prepared for this difficulty. Try another seed or board. Replay: tsj-alpha/1/EASY/RB15_CONTROL/-5365808313541656343\n\nThe previous board, if any, is retained. Use the main menu to choose another seed or enter a supported current replay.\n\nMain menuResume previous board\nReplay and bug-report identity",
+      "observedElapsedUpperBoundMs": 159712,
+      "recovery": {
+        "identity": [
+          "",
+          "tsj-alpha/1/EASY/RB15_CONTROL/17",
+          "tsj-alpha/1 / 6A7778C50F3797A9E5C587F0FD7198E1"
+        ],
+        "power": [
+          "Board Power: OFF",
+          "Connect Supply 1 (+12V)",
+          "Connect Supply 2 (+5V)"
+        ],
+        "privateAttributes": []
+      },
+      "timingLimit": "Upper-bound browser observation; native17 separately proves80 placements. No private phase or cleanup time is inferred."
+    },
+    {
+      "check": "Final explicit replay preserves seed above2^53",
+      "status": "PASS",
+      "identity": [
+        "tsj-alpha/1/EASY/RB15_CONTROL/9007199254740993",
+        "tsj-alpha/1 / 6A7778C50F3797A9E5C587F0FD7198E1"
+      ],
+      "observedElapsedUpperBoundMs": 169965
+    }
+  ],
+  "status": "PASS",
+  "linkedRepairEvidence": [
+    "../REL-A/final-entry-privacy/rb15-player-input.json",
+    "../U05/player-input-entry-final.json"
+  ],
+  "limits": [
+    "Agent-operated visible input, not human calibration.",
+    "Observed elapsed values include polling/other work and are upper bounds, not generation or cleanup durations."
+  ]
+}

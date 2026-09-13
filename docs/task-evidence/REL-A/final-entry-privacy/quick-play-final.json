@@ -1,0 +1,14 @@
+{
+  "family": "LED_INDICATOR",
+  "preview": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "report": "unrepaired-finish-blocked;correct-finish-passed;fresh-session-isolated",
+  "seed": "3",
+  "status": "PASS:quick-play",
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "observedElapsedUpperBoundMs": 440975,
+  "operationElapsedMs": null,
+  "cleanupElapsedMs": null,
+  "route": "?tsjQuickPlay=true&tsjDebug=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=0&tsjQuickPlayTestSeed=3",
+  "coverage": "Full16-entropy/eight-family selector and successful construction, including16 RB15 choices within the explicit11-seed envelope with exact selected/generated equality; initial LED3 unrepaired rejection/correct completion/fresh isolation.",
+  "timingLimit": "Legacy report provides no separate operation or cleanup durations. Observed elapsed includes tool reads and idle intervals."
+}

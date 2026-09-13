@@ -1,0 +1,61 @@
+{
+  "executionDigest": "b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d",
+  "kind": "Agent-operated visible inputs; not human calibration",
+  "identity": [
+    "tsj-alpha/1/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/0",
+    "tsj-alpha/1 / F57701814F3E8FC362B9C11C46DA6A69"
+  ],
+  "route": "http://127.0.0.1:64206/circuitjs.html?replay=tsj-alpha/1/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/0&tsjDebug=false&tsjVerifyA02=true&tsjVerifyA03=true&tsjVerifyA04=true&tsjVerifyA06=true&tsjVerifyA07=true&tsjVerifyA08=true&tsjVerifyA10=true&tsjVerifyAlpha=true&tsjVerifyArchitecture=true&tsjVerifyChallenge=true&tsjVerifyCompositionGate=true&tsjVerifyDiode=true&tsjVerifyE01=true&tsjVerifyE03=true&tsjVerifyGeometry=true&tsjVerifyLayout=true&tsjVerifyLedParts=true&tsjVerifyMeter=true&tsjVerifyNmos=true&tsjVerifyNpn=true&tsjVerifyP01=true&tsjVerifyP02=true&tsjVerifyParallel=true&tsjVerifyQ15=true&tsjVerifyQuickPlay=true&tsjVerifyRc=true&tsjVerifyReplacement=true&tsjVerifyResistance=true&tsjVerifyStoredEnergy=true&tsjVerifyStress=true&tsjVerifyTask39=true&tsjVerifyTask40=true&tsjVerifyTask41=true&tsjVerifyTask43=true&tsjVerifyTask43P=true&tsjVerifyTask46=true&tsjVerifyTask47=true&tsjVerifyTask48=true&tsjVerifyTask49=true&tsjVerifyU01=true&tsjVerifyWrongRepair=true",
+  "verifierFlagCount": 41,
+  "checks": [
+    {
+      "check": "unrepaired MEDIUM customer retest rejects",
+      "status": "PASS",
+      "observed": "Main menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting."
+    },
+    {
+      "check": "unpowered Channel A RLOAD measurement",
+      "status": "PASS",
+      "reading": "OL",
+      "targets": {
+        "black": "tsj-realization-v1/controlled-indicator@1/channel-a-load/resistor-led-load@2/resistor-led-load@2/pad/RLOAD.2",
+        "component": "tsj-realization-v1/controlled-indicator@1/channel-a-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD",
+        "red": "tsj-realization-v1/controlled-indicator@1/channel-a-load/resistor-led-load@2/resistor-led-load@2/pad/RLOAD.1"
+      },
+      "input": "Actual OHM, visible terminal selectors, red and black buttons; all three supplies disconnected"
+    },
+    {
+      "check": "public catalog and real loose acquisition retaining original",
+      "status": "PASS",
+      "counts": [
+        "Loose parts in this catalog: 0",
+        "Loose parts in this catalog: 1",
+        "Loose parts in this catalog: 0",
+        "Loose parts in this catalog: 0"
+      ],
+      "headings": [
+        "Channel A · RG — RG replacement resistors",
+        "Channel A · RLOAD — RLOAD replacement resistors",
+        "Channel B · RG — RG replacement resistors",
+        "Channel B · RLOAD — RLOAD replacement resistors"
+      ],
+      "installed": true
+    },
+    {
+      "check": "separate removal and installation changes live retained-terminal reading",
+      "status": "PASS",
+      "removed": "Part6",
+      "installed": "Part16 /330Ohm",
+      "measurement": "\n\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nAdded to the real Parts Tray. Select the loose part on the workbench to install it.\n\nMULTIMETER\n\n\nDC V\tOHM\nCONT\tDIODE\n\n\n330 Ohm\n\n\n\n\n\n\nBoard Power: OFF\n\n\n\n\n\n\n\n\n\n\n\n\nBENCH POWER\n\n\nSupply 1 (+5V): disconnected\n\nConnect Supply 1 (+5V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nSupply 2 (+5V): disconnected\n\n"
+    },
+    {
+      "check": "MEDIUM repaired Results and41 verifier flags gated by debug=false",
+      "status": "PASS",
+      "dialog": [
+        "Customer retest passed\n\nCustomer retest passed. The reported behavior is resolved.\n\nThe live board passed the customer’s functional checks.\n\nCustomer retest passed. The reported behavior is resolved.\n\nNew board / Main menuReplay this challengeReturn to board\nReplay and bug-report identity"
+      ],
+      "privateAttributes": [],
+      "privateLabels": []
+    }
+  ]
+}

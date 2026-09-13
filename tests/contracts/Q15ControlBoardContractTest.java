@@ -9,11 +9,12 @@ public final class Q15ControlBoardContractTest {
     static final long[] HOLDOUT={17,42,101,-1,9007199254740993L,Long.MIN_VALUE,Long.MAX_VALUE};
     public static void main(String[] args) throws Exception {
         CirSim sim=new CirSim();sim.gridSize=16;sim.gridMask=~15;sim.gridRound=7;CircuitElm.sim=sim;
+        verifyRandomBoundary();
         HashSet<String> designs=new HashSet<String>(),geometries=new HashSet<String>();
         for(long[] cohort:new long[][]{DEVELOPMENT,HOLDOUT}) for(long seed:cohort) {
             Rb15Plan plan=Rb15Plan.resolve(seed); TroubleshootBoard board=plan.board();
             require(plan.canonical().equals(Rb15Plan.resolve(seed).canonical()),"current deterministic plan");
-            require(QuickPlayFamilyRegistry.selectNormalPlayerSeed(Rb15Plan.FAMILY_ID,seed)==seed,"exact signed seed enters normal population");
+            require(QuickPlayFamilyRegistry.selectNormalPlayerSeed(Rb15Plan.FAMILY_ID,seed)==seed,"qualified signed seed retains selection identity");
             require(board.getComponentIds().size()==16,"sixteen purposeful packages in 5-20 envelope");
             require(board.getPadIds().size()==36,"complete package terminal inventory");
             require(board.getPowerInputIds().size()==2,"separate external power and command sources");
@@ -28,6 +29,8 @@ public final class Q15ControlBoardContractTest {
             designs.add(plan.topology());
             long start=System.nanoTime();
             GeneratedBoardInstance owner=GenerationRequest.leaf(Rb15Plan.FAMILY_ID,seed,false).resolve(new GenerationRequest.PlanCache()).construct().instance;
+            require(owner.getSeed()==seed && owner.getChallengeDefinition().getSelectionSeed()==seed,
+                "selected, generated and session seed identity agree");
             PcbBoardLayout layout=owner.getPcbLayout();
             long millis=(System.nanoTime()-start)/1000000;
             layout.validateGeometry(board);
@@ -48,7 +51,42 @@ public final class Q15ControlBoardContractTest {
         }
         require(designs.size()==4,"both drivers and both meaningful support populations");
         require(geometries.size()==DEVELOPMENT.length+HOLDOUT.length,"fresh procedural geometries across cohort");
+        for (long bad : new long[] {-4518705223253195925L, -5365808313541656343L}) {
+            PlayerLaunchRequest exact = new PlayerLaunchRequest(Rb15Plan.FAMILY_ID, Long.toString(bad), "EASY");
+            require(PlayerLaunchRequest.parse(exact.replay()).seed == bad && exact.generation().getDescriptor().getRootSeed() == bad,
+                "explicit arbitrary replay is never remapped");
+            long start = System.nanoTime();
+            try {
+                exact.generation().resolve(new GenerationRequest.PlanCache()).construct();
+                throw new AssertionError("Known unsupported arbitrary seed unexpectedly constructed; qualify before adding it");
+            } catch (PcbRoutingRejectedException expected) {
+                require(expected.isExhausted() && expected.getAttemptCount()==80, "exact unsupported seed fails within unchanged routing bound");
+                System.out.println("Q15_EXACT_REJECTION seed="+bad+" attempts="+expected.getAttemptCount()+" millis="+(System.nanoTime()-start)/1000000);
+            }
+        }
         System.out.println("PASS: Q15 control board contracts assertions="+assertions+" designs="+designs.size());
+    }
+    private static void verifyRandomBoundary() {
+        // Independent expected envelope and mapping. Includes both proven arbitrary failures.
+        long[] expected = {0,1,2,3,17,42,101,-1,9007199254740993L,Long.MIN_VALUE,Long.MAX_VALUE};
+        long[] entropy = {Long.MIN_VALUE,Long.MAX_VALUE,-4518705223253195925L,-5365808313541656343L,
+            -17,-1,0,1,2,3,17,42,101,9007199254740993L};
+        HashSet<Long> selectedSeeds = new HashSet<Long>();
+        for (long value : entropy) {
+            int index=(int)(value % expected.length); if(index<0)index+=expected.length;
+            long wanted=expected[index]; for(long seed:expected)if(seed==value)wanted=seed;
+            QuickPlaySelection quick = new QuickPlaySelector(new QuickPlayFixedRandomSource(new long[]{7,value})).select();
+            PlayerLaunchRequest button = PlayerLaunchRequest.random(Rb15Plan.FAMILY_ID,Long.toString(value),"EASY");
+            require(quick.getFamilyId().equals(Rb15Plan.FAMILY_ID) && quick.getSeed()==wanted && button.seed==wanted,
+                "Quick Play and New board share the independent qualified envelope mapping");
+            require(button.seed!=-4518705223253195925L && button.seed!=-5365808313541656343L,
+                "known arbitrary failures cannot enter normal-player selection");
+            require(PlayerLaunchRequest.parse(button.replay()).replay().equals(button.replay()) &&
+                button.generation().getDescriptor().getRootSeed()==wanted,"random selection becomes exact replay and generation identity");
+            selectedSeeds.add(wanted);
+            System.out.println("Q15_SELECTION entropy="+value+" selected="+wanted+" replay="+button.replay());
+        }
+        require(selectedSeeds.size()==expected.length,"selectors exercise every subsequently constructed qualified seed");
     }
     private static void negatives(CirSim sim,GeneratedBoardInstance owner,Rb15Plan plan) throws Exception {
         GeneratedFaultCandidate valid=owner.getFaultCandidates().get(0);

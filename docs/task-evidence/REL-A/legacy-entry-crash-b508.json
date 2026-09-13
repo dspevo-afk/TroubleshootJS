@@ -1,0 +1,21 @@
+{
+  "status": "FAIL",
+  "phase": "legacy New control board first click",
+  "executionDigest": "b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d",
+  "route": "?tsjChallenge=led&seed=0&tsjDebug=true",
+  "tabId": "4",
+  "input": "Visible New control board Playwright click",
+  "transport": "Input.dispatchMouseEvent timed out after approximately4.1s tool wall time",
+  "subsequentObservation": "Browser tool refused the internal data URL for This page crashed /127.0.0.1 crashed unexpectedly. No selected/generated seed was recovered.",
+  "diagnosis": "NOT ESTABLISHED; fresh-tab isolated reproduction pending. No budget or source changed.",
+  "cleanup": "NOT RUN; crash tab retained, no browser process termination",
+  "freshReproduction": {
+    "status": "FAIL",
+    "tabId": "5",
+    "sameRoute": true,
+    "input": "Visible New control board",
+    "toolWallSeconds": 4.1,
+    "subsequentTabTitle": "This page crashed",
+    "diagnosis": "Static candidate: debug dispatch synchronously drains the entire generation job. No causal runtime attribution established yet."
+  }
+}

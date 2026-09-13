@@ -1,0 +1,162 @@
+{
+  "source": "../REL-A/alpha-compiled.json",
+  "executionDigest": "35b0bbb28d03de8c828895f6d3390ec11d2ff2c32748f8fa42e4210b6d47dfa1",
+  "currentUiExecutionDigest": "b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d",
+  "reuseBoundary": "../REL-A/menu-focus-input-delta.json",
+  "interpretation": "All38 final compiled Java cases; curated deterministic evidence, not human trials or a population estimate. UI-only focus filter/test change does not alter difficulty inputs.",
+  "families": [
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "cases": 2,
+      "profile": "MEDIUM",
+      "parts": [
+        15
+      ],
+      "requiredReadings": [
+        2
+      ],
+      "repairClasses": [
+        4
+      ],
+      "legalWitnessActions": [
+        "148-148"
+      ]
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "cases": 3,
+      "profile": "EASY",
+      "parts": [
+        4
+      ],
+      "requiredReadings": [
+        0
+      ],
+      "repairClasses": [
+        1
+      ],
+      "legalWitnessActions": [
+        "14-14"
+      ]
+    },
+    {
+      "family": "LED_INDICATOR",
+      "cases": 4,
+      "profile": "EASY",
+      "parts": [
+        3
+      ],
+      "requiredReadings": [
+        1
+      ],
+      "repairClasses": [
+        2
+      ],
+      "legalWitnessActions": [
+        "13-13"
+      ]
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "cases": 3,
+      "profile": "EASY",
+      "parts": [
+        6
+      ],
+      "requiredReadings": [
+        1
+      ],
+      "repairClasses": [
+        2
+      ],
+      "legalWitnessActions": [
+        "20-20"
+      ]
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "cases": 3,
+      "profile": "EASY",
+      "parts": [
+        7
+      ],
+      "requiredReadings": [
+        1
+      ],
+      "repairClasses": [
+        2
+      ],
+      "legalWitnessActions": [
+        "20-20"
+      ]
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "cases": 3,
+      "profile": "EASY",
+      "parts": [
+        5
+      ],
+      "requiredReadings": [
+        0
+      ],
+      "repairClasses": [
+        1
+      ],
+      "legalWitnessActions": [
+        "15-15"
+      ]
+    },
+    {
+      "family": "RB15_CONTROL",
+      "cases": 11,
+      "profile": "EASY",
+      "parts": [
+        16
+      ],
+      "requiredReadings": [
+        1
+      ],
+      "repairClasses": [
+        2
+      ],
+      "legalWitnessActions": [
+        "18-18"
+      ]
+    },
+    {
+      "family": "RC_DELAY",
+      "cases": 3,
+      "profile": "EASY",
+      "parts": [
+        6
+      ],
+      "requiredReadings": [
+        1
+      ],
+      "repairClasses": [
+        2
+      ],
+      "legalWitnessActions": [
+        "16-16"
+      ]
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "cases": 6,
+      "profile": "EASY",
+      "parts": [
+        9
+      ],
+      "requiredReadings": [
+        1
+      ],
+      "repairClasses": [
+        2
+      ],
+      "legalWitnessActions": [
+        "18-18"
+      ]
+    }
+  ]
+}

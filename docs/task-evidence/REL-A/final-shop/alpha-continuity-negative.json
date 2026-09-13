@@ -1,0 +1,23 @@
+{
+  "acquisitions": 0,
+  "activeCase": 0,
+  "activeSlowUnits": [],
+  "assertions": 0,
+  "cancellationMs": 0,
+  "cases": [],
+  "cleanupMs": 3,
+  "crossTargetCases": [],
+  "elapsedMs": 15,
+  "failure": "java.lang.IllegalStateException: start owner=false power=POWERED isolated=false settled=true state=READY: java.lang.AssertionError: alpha-explicit-failure-canary",
+  "mutationCases": [],
+  "mutationChecks": 0,
+  "mutationProviders": [],
+  "negativeChecks": 0,
+  "operation": "start",
+  "ownerRestored": true,
+  "pilot": false,
+  "protocol": "TSJ-ALPHA-1",
+  "shopCases": [],
+  "staleCallbacks": 0,
+  "status": "FAIL"
+}

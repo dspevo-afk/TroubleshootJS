@@ -1,0 +1,7 @@
+{
+  "status": "OBSERVATION BLOCKED",
+  "observedWallMs": 243263,
+  "message": "CDP operation exceeded its deadline before command dispatch",
+  "operation": "Read published Quick Play report while synchronous verifier is still executing",
+  "interpretation": "No PASS, failure, admission timing or cleanup result inferred. Full command was not restarted."
+}

@@ -69,6 +69,12 @@ class GeneratedComponentConnectionBindings {
         return result;
     }
 
+    /** Restores generated component endpoints while a mutable slot is empty. */
+    void restoreCanonicalComponentEndpoints(String componentId) {
+        for (GeneratedComponentConnectionBinding binding : getForComponent(componentId))
+            binding.restoreCanonicalComponentEndpoint();
+    }
+
     Vector<GeneratedComponentConnectionBinding> getAll() {
         Vector<GeneratedComponentConnectionBinding> result = new Vector<GeneratedComponentConnectionBinding>();
         for (String padId : board.getPadIds()) {

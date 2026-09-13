@@ -1,0 +1,2 @@
+PASS: Alpha compiled corpus=38; fresh forced negative restores owner; malformed canaries=20.
+Compiled execution35b0bbb2, fresh UI/forced-negative executionb5080dcf; unchanged consumed Java/difficulty inputs audited in menu-focus-input-delta.json. Human trials remain separate.

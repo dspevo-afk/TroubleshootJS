@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "changedInputs": [
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+    "tests/contracts/u04_ui_contract.mjs",
+    "war/tsj-workbench-ui.js"
+  ],
+  "sourceFiles": 1148,
+  "scope": "Public catalog display label and its DOM fixture; opaque action identities and electrical code unchanged."
+}

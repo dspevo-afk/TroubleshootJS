@@ -1,0 +1,238 @@
+{
+  "protocol": "TSJ-ALPHA-1",
+  "status": "FAIL",
+  "pilot": false,
+  "cases": [],
+  "assertions": 46,
+  "acquisitions": 5,
+  "staleCallbacks": 1,
+  "mutationChecks": 29,
+  "mutationProviders": [
+    "resistor"
+  ],
+  "mutationCases": [
+    {
+      "provider": "resistor",
+      "operation": "acquire",
+      "stage": "OWNER_CHANGE",
+      "occurrence": 1,
+      "status": "REJECTED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "acquire",
+      "stage": "AFTER_INVENTORY_ACQUIRE",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "acquire",
+      "stage": "AFTER_CANONICAL_REGISTER",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "acquire",
+      "stage": "AFTER_GRAPH_APPEND",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "acquire",
+      "stage": "AFTER_COMMIT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "remove",
+      "stage": "AFTER_GRAPH_DISCONNECT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "remove",
+      "stage": "AFTER_SLOT_CLEAR",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "remove",
+      "stage": "AFTER_COMMIT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_INVENTORY_ACQUIRE",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_CANONICAL_REGISTER",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_GRAPH_APPEND",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_PRIMARY_BINDING",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "install",
+      "stage": "AFTER_PRIMARY_BINDING",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_ENDPOINT_RETARGET",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "install",
+      "stage": "AFTER_ENDPOINT_RETARGET",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_ENDPOINT_RETARGET",
+      "occurrence": 2,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "install",
+      "stage": "AFTER_ENDPOINT_RETARGET",
+      "occurrence": 2,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_ATTACHMENT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "install",
+      "stage": "AFTER_ATTACHMENT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_SLOT_MOUNT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "install",
+      "stage": "AFTER_SLOT_MOUNT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_GRAPH_CONNECT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "install",
+      "stage": "AFTER_GRAPH_CONNECT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_GRAPH_CONNECT",
+      "occurrence": 2,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "install",
+      "stage": "AFTER_GRAPH_CONNECT",
+      "occurrence": 2,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_GRAPH_RESTORE",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "install",
+      "stage": "AFTER_GRAPH_RESTORE",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "catalog",
+      "stage": "AFTER_COMMIT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    },
+    {
+      "provider": "resistor",
+      "operation": "install",
+      "stage": "AFTER_COMMIT",
+      "occurrence": 1,
+      "status": "COMPENSATED"
+    }
+  ],
+  "shopCases": [
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "seed": "3",
+      "variant": "SPAN_220",
+      "measuredOhms": 330,
+      "sourcePreserved": true,
+      "fitAndTypeRejections": false
+    }
+  ],
+  "crossTargetCases": [],
+  "negativeChecks": 4,
+  "cancellationMs": 0,
+  "elapsedMs": 5637,
+  "cleanupMs": 2,
+  "ownerRestored": true,
+  "operation": "cross-target-catalog-mutations",
+  "activeSlowUnits": [],
+  "activeCase": 37,
+  "failure": "java.lang.IllegalStateException: cross-target-catalog-mutations owner=true power=UNPOWERED isolated=true settled=true state=READY: java.lang.AssertionError: U04 catalog mutation: actual compensated receipt"
+}

@@ -1,0 +1,50 @@
+{
+  "executionDigest": "b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d",
+  "input": "Visible Browser keyboard and disclosure clicks",
+  "steps": [
+    {
+      "action": "Collapsed disclosure, reverse wrap from Difficulty",
+      "observed": {
+        "tag": "SUMMARY",
+        "text": "Replay and bug-report identity"
+      }
+    },
+    {
+      "action": "Collapsed disclosure, forward wrap from summary",
+      "observed": {
+        "id": "tsj-product-field-1",
+        "tag": "SELECT"
+      }
+    },
+    {
+      "action": "Expanded disclosure, reverse wrap includes build field",
+      "observed": {
+        "id": "tsj-product-field-6",
+        "tag": "TEXTAREA",
+        "value": "tsj-alpha/1 / F57701814F3E8FC362B9C11C46DA6A69"
+      }
+    },
+    {
+      "action": "Expanded disclosure forward wrap",
+      "observed": {
+        "id": "tsj-product-field-1",
+        "tag": "SELECT"
+      }
+    },
+    {
+      "action": "Resources closed disclosure reverse wrap",
+      "observed": {
+        "tag": "SUMMARY",
+        "text": "Replay and bug-report identity"
+      }
+    },
+    {
+      "action": "Resources forward wrap to Close",
+      "observed": {
+        "tag": "BUTTON",
+        "text": "Close"
+      }
+    }
+  ],
+  "status": "PASS"
+}

@@ -1,0 +1,21 @@
+{
+  "status": "PASS application admission",
+  "executionDigest": "b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d",
+  "route": "?tsjChallenge=led&seed=0&tsjDebug=true&tsjVerifyA10=true&tsjA10Fail=true",
+  "precondition": "Expected FAIL:a10-explicit-failure-canary completed; normal user button was enabled. A10 flag selects the existing async start branch; no A10 corpus ran.",
+  "inputRoundTripMs": 300,
+  "admissionObservedUpperBoundMs": 101318,
+  "result": {
+    "buttons": [
+      {
+        "disabled": false
+      }
+    ],
+    "componentCount": 16,
+    "title": "",
+    "visibleTextMatches": [
+      "New control board"
+    ]
+  },
+  "limits": "Different random draw from the crashed runs. This supports the scheduling diagnosis but does not identify the renderer crash cause or recover crashed seeds."
+}

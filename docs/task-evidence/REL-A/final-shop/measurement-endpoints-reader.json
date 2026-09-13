@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "cases": 10,
+  "assertions": 20,
+  "independentExpectations": "1mA through wire,1/1680A through680Ohm,open<100nA,1N4148 forward0.4..1V/reverse>2.9V,10Mohm/10Mohm loaded divider+/-2.5V",
+  "operationMs": 4,
+  "cleanupMs": 11,
+  "ownerRestored": true,
+  "existingResistanceLifecycle": "PASS:resistance"
+}

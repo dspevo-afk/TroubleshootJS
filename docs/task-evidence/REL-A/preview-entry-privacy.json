@@ -1,0 +1,19 @@
+{
+  "protocol": "troubleshootjs-preview-identity-v1",
+  "repositoryRoot": "<repository>",
+  "previewScript": "<repository>/scripts/preview.ps1",
+  "webRoot": "<repository>/war",
+  "sourceRoot": "<repository>/src",
+  "scriptRoot": "<repository>/scripts",
+  "sourceDigest": "a79ca086a0d9e748ea852fd147e22f79b50215346377ea6402addf544040b309",
+  "scriptDigest": "216db0113d6da93653d50f1b61fb405b37f686f8af455123e2f71954817f84a5",
+  "webDigest": "033aa7f73ed2947d53d079faac89ba4930af048c3a15c9e2caeb5517b6195e30",
+  "executionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "executionFileCount": 1435,
+  "previewPort": 64206,
+  "processId": 20120,
+  "processStartTicks": 639249013380886830,
+  "verifierRunId": "U04-U05-RELA-entry-privacy",
+  "verifierNonce": "cb6f15d9b6294d8e8726044bf838a912",
+  "verification": "PASS: HTTP identity equals maintained tree digest and recorded process ownership"
+}

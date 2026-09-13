@@ -1,0 +1,1130 @@
+{
+  "protocol": "TSJ-A10-GENERATION-1",
+  "status": "PASS",
+  "assertions": 1274,
+  "cancellations": 6,
+  "rejected": 5,
+  "unitCancellations": 18,
+  "lifecycleFailures": 12,
+  "cancellationMaxMs": 3,
+  "cleanup": "PASS",
+  "maxJobMillis": 90000,
+  "maxStepMillis": 5000,
+  "benchmarkAttemptMillis": 5000,
+  "maxWork": 640,
+  "retiredUiReferences": true,
+  "sessionExclusivity": true,
+  "temporalBatch": {
+    "fixedAndAdaptive": true,
+    "exactStateAndEvents": true,
+    "rcOracle": true,
+    "measurementCounters": true,
+    "stoppedStep": true
+  },
+  "temporalRegression": {
+    "family": "RC_DELAY",
+    "seed": "0",
+    "firstOutcome": "PASS",
+    "firstMs": 59853,
+    "firstMaxAdvanceMs": 1945,
+    "repeatMs": 59387,
+    "repeatMaxAdvanceMs": 1904,
+    "profileBoundaryCancelled": true,
+    "dependenciesEqual": true,
+    "changedReferenceRejected": true
+  },
+  "temporalWork": {
+    "assertions": 707,
+    "comparedProfiles": 2,
+    "phases": 4,
+    "cancelBoundaries": 4,
+    "staleGraphBoundaries": 4,
+    "sourceChangeBoundaries": 4,
+    "exactStateSamplesEventsCounters": true,
+    "partialPublicationRejected": true,
+    "repairPowerGuard": true,
+    "stagedAbortBoundaries": 9,
+    "abortedSourcesDisconnected": true
+  },
+  "observationCleanup": {
+    "assertions": 14,
+    "cursorRetry": true,
+    "closedSessionRetry": true,
+    "retainedObservation": true,
+    "successorUntouched": true,
+    "leaseRetained": true,
+    "privateGraphDisposed": true
+  },
+  "browser": {
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "devicePixelRatio": 1,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+    "memory": {
+      "status": "AVAILABLE",
+      "usedJSHeapSize": 143258588,
+      "totalJSHeapSize": 216295636,
+      "jsHeapSizeLimit": 4395630592
+    }
+  },
+  "attempts": [
+    {
+      "family": "LED_INDICATOR",
+      "seed": "0",
+      "corpus": "pilot",
+      "repeat": 0,
+      "elapsedMs": 846,
+      "outcome": "PASS",
+      "work": 59,
+      "maxAdvanceMs": 195,
+      "planCacheHit": true,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 195,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 4,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 644,
+          "work": 54
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 3,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "0",
+      "corpus": "pilot",
+      "repeat": 1,
+      "elapsedMs": 846,
+      "outcome": "PASS",
+      "work": 59,
+      "maxAdvanceMs": 196,
+      "planCacheHit": true,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 196,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 3,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 644,
+          "work": 54
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 3,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "1",
+      "corpus": "pilot",
+      "repeat": 0,
+      "elapsedMs": 854,
+      "outcome": "PASS",
+      "work": 59,
+      "maxAdvanceMs": 200,
+      "planCacheHit": false,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 200,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 3,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 648,
+          "work": 54
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 3,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "1",
+      "corpus": "pilot",
+      "repeat": 1,
+      "elapsedMs": 846,
+      "outcome": "PASS",
+      "work": 59,
+      "maxAdvanceMs": 198,
+      "planCacheHit": true,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 198,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 3,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 641,
+          "work": 54
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 3,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "seed": "0",
+      "corpus": "pilot",
+      "repeat": 0,
+      "elapsedMs": 155,
+      "outcome": "PASS",
+      "work": 80,
+      "maxAdvanceMs": 16,
+      "planCacheHit": false,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 16,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 6,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 128,
+          "work": 75
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 5,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "seed": "0",
+      "corpus": "pilot",
+      "repeat": 1,
+      "elapsedMs": 151,
+      "outcome": "PASS",
+      "work": 80,
+      "maxAdvanceMs": 16,
+      "planCacheHit": true,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 16,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 6,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 122,
+          "work": 75
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 6,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "seed": "1",
+      "corpus": "pilot",
+      "repeat": 0,
+      "elapsedMs": 149,
+      "outcome": "PASS",
+      "work": 80,
+      "maxAdvanceMs": 11,
+      "planCacheHit": false,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 11,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 6,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 123,
+          "work": 75
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 7,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "seed": "1",
+      "corpus": "pilot",
+      "repeat": 1,
+      "elapsedMs": 145,
+      "outcome": "PASS",
+      "work": 80,
+      "maxAdvanceMs": 12,
+      "planCacheHit": true,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 12,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 7,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 120,
+          "work": 75
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 5,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "controlled-indicator",
+      "seed": "0",
+      "corpus": "pilot",
+      "repeat": 0,
+      "elapsedMs": 2035,
+      "outcome": "PASS",
+      "work": 617,
+      "maxAdvanceMs": 106,
+      "planCacheHit": false,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 18,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 106,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 28,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 1857,
+          "work": 612
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 2,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 20,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "controlled-indicator",
+      "seed": "0",
+      "corpus": "pilot",
+      "repeat": 1,
+      "elapsedMs": 1951,
+      "outcome": "PASS",
+      "work": 617,
+      "maxAdvanceMs": 89,
+      "planCacheHit": true,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 89,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 23,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 1811,
+          "work": 612
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 2,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 20,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "controlled-indicator",
+      "seed": "1",
+      "corpus": "pilot",
+      "repeat": 0,
+      "elapsedMs": 2062,
+      "outcome": "PASS",
+      "work": 617,
+      "maxAdvanceMs": 159,
+      "planCacheHit": false,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 6,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 159,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 27,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 1840,
+          "work": 612
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 2,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 21,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "controlled-indicator",
+      "seed": "1",
+      "corpus": "pilot",
+      "repeat": 1,
+      "elapsedMs": 1955,
+      "outcome": "PASS",
+      "work": 617,
+      "maxAdvanceMs": 88,
+      "planCacheHit": true,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 88,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 24,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 1811,
+          "work": 612
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 2,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 19,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "2",
+      "corpus": "holdout",
+      "repeat": 0,
+      "elapsedMs": 841,
+      "outcome": "PASS",
+      "work": 59,
+      "maxAdvanceMs": 197,
+      "planCacheHit": false,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 197,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 4,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 637,
+          "work": 54
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 3,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "2",
+      "corpus": "holdout",
+      "repeat": 1,
+      "elapsedMs": 841,
+      "outcome": "PASS",
+      "work": 59,
+      "maxAdvanceMs": 195,
+      "planCacheHit": true,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 195,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 3,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 639,
+          "work": 54
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 3,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "3",
+      "corpus": "holdout",
+      "repeat": 0,
+      "elapsedMs": 829,
+      "outcome": "PASS",
+      "work": 59,
+      "maxAdvanceMs": 192,
+      "planCacheHit": false,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 192,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 3,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 631,
+          "work": 54
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 1,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 2,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "3",
+      "corpus": "holdout",
+      "repeat": 1,
+      "elapsedMs": 833,
+      "outcome": "PASS",
+      "work": 59,
+      "maxAdvanceMs": 192,
+      "planCacheHit": true,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 191,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 3,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 634,
+          "work": 54
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 1,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 3,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "seed": "2",
+      "corpus": "holdout",
+      "repeat": 0,
+      "elapsedMs": 143,
+      "outcome": "PASS",
+      "work": 80,
+      "maxAdvanceMs": 13,
+      "planCacheHit": false,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 13,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 6,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 119,
+          "work": 75
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 5,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "seed": "2",
+      "corpus": "holdout",
+      "repeat": 1,
+      "elapsedMs": 140,
+      "outcome": "PASS",
+      "work": 80,
+      "maxAdvanceMs": 13,
+      "planCacheHit": true,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 13,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 5,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 117,
+          "work": 75
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 1,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 4,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "seed": "3",
+      "corpus": "holdout",
+      "repeat": 0,
+      "elapsedMs": 141,
+      "outcome": "PASS",
+      "work": 80,
+      "maxAdvanceMs": 12,
+      "planCacheHit": false,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 12,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 6,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 117,
+          "work": 75
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 5,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "seed": "3",
+      "corpus": "holdout",
+      "repeat": 1,
+      "elapsedMs": 140,
+      "outcome": "PASS",
+      "work": 80,
+      "maxAdvanceMs": 11,
+      "planCacheHit": true,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 11,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 6,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 119,
+          "work": 75
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 4,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "controlled-indicator",
+      "seed": "2",
+      "corpus": "holdout",
+      "repeat": 0,
+      "elapsedMs": 2112,
+      "outcome": "PASS",
+      "work": 617,
+      "maxAdvanceMs": 90,
+      "planCacheHit": false,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 6,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 90,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 29,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 1957,
+          "work": 612
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 2,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 21,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "controlled-indicator",
+      "seed": "2",
+      "corpus": "holdout",
+      "repeat": 1,
+      "elapsedMs": 2032,
+      "outcome": "PASS",
+      "work": 617,
+      "maxAdvanceMs": 101,
+      "planCacheHit": true,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 101,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 27,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 1879,
+          "work": 612
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 2,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 19,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "controlled-indicator",
+      "seed": "3",
+      "corpus": "holdout",
+      "repeat": 0,
+      "elapsedMs": 1978,
+      "outcome": "PASS",
+      "work": 617,
+      "maxAdvanceMs": 87,
+      "planCacheHit": false,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 6,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 87,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 25,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 1836,
+          "work": 612
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 1,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 19,
+          "work": 1
+        }
+      ]
+    },
+    {
+      "family": "controlled-indicator",
+      "seed": "3",
+      "corpus": "holdout",
+      "repeat": 1,
+      "elapsedMs": 1969,
+      "outcome": "PASS",
+      "work": 617,
+      "maxAdvanceMs": 87,
+      "planCacheHit": true,
+      "proofCacheHit": false,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "work": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 87,
+          "work": 1
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 23,
+          "work": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 1832,
+          "work": 612
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 1,
+          "work": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 22,
+          "work": 1
+        }
+      ]
+    }
+  ]
+}

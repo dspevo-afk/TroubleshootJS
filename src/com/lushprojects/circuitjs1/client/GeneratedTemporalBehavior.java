@@ -6,6 +6,12 @@ package com.lushprojects.circuitjs1.client;
  * circuit; it never needs to know a family or component name.
  */
 interface GeneratedTemporalBehavior {
+    enum Profile { HEALTHY, FAULTED, REPAIR }
+
+    int getProfileWorkUnits();
+    GeneratedWork<GeneratedRepairStatus> beginProfile(CirSim sim,
+            GeneratedBoardInstance instance, Profile profile);
+
     /** Validate captured observation endpoints before any temporal callback runs. */
     void requireOwnedBy(GeneratedBoardInstance instance);
 

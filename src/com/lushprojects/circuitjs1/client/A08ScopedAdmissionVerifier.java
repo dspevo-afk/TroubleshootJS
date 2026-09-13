@@ -16,6 +16,7 @@ final class A08ScopedAdmissionVerifier {
             }
             public AttachmentState captureAttachmentState() { throw new AssertionError("Undeclared slot was admitted"); }
             public void restoreAttachmentState(AttachmentState state) { throw new AssertionError("Undeclared slot wrote state"); }
+            public void restoreEmptySlotAttachmentState(PhysicalMutationScope scope) { throw new AssertionError("Undeclared slot wrote state"); }
             public void installForMutation(PhysicalPart<?> part, PhysicalMutationScope scope) { throw new AssertionError(); }
             public PhysicalPart<?> clearForMutation(PhysicalMutationScope scope) { throw new AssertionError(); }
         };

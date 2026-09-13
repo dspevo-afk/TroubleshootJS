@@ -1,0 +1,10 @@
+{
+  "report": null,
+  "status": "FAIL:a10-explicit-failure-canary",
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "expectedMarkerSource": "A10GenerationDeveloperVerifier forceFailure plus CirSim FAIL:+message; same marker in prior independent receipt",
+  "initialObservationAssertion": {
+    "status": "FAIL",
+    "reason": "Root initially expected an extra a10: prefix. Source inspection confirmed the existing marker; no product or reader code changed."
+  }
+}

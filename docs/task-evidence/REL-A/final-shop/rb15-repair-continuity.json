@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "execution": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+  "replay": "tsj-alpha/1/EASY/RB15_CONTROL/0",
+  "kind": "Actual visible player controls; no controller injection",
+  "unrepaired": [
+    "Customer retest did not pass. Continue troubleshooting.",
+    "",
+    ""
+  ],
+  "readings": {
+    "before": "199.96 kOhm",
+    "after": "995.025 Ohm",
+    "high": "11.092 V",
+    "low": "2.031 μV"
+  },
+  "shop": {
+    "total": 75,
+    "categories": [
+      "Resistors",
+      "Relays"
+    ],
+    "purchased": "Part 17 - 1000 Ohm +/-5%",
+    "searchRetained": "1000 Ohm",
+    "looseCountAfterPurchase": 1,
+    "note": "Search is literal catalog wording; 1 kOhm returned no matches, 1000 Ohm found the actual card."
+  },
+  "mutation": "Removed RDRIVE original Part4; installed purchased Part17 using Install as Switched output / RDRIVE; original remains in tray.",
+  "result": " \"Customer retest passed\":\n  - banner:\n    - heading \"Customer retest passed\" [level=2]\n  - status: Customer retest passed. The reported behavior is resolved.\n  - paragraph: The live board passed the customer’s functional checks.\n  - paragraph: Customer retest passed. The reported behavior is resolved.\n  - button \"New board / Main menu\" [active]\n  - button \"Replay this challenge\"\n  - button \"Return to board\"\n  - generic \"Replay and bug-report identity\"",
+  "completedState": "Powered, mutation-locked; viewport remains usable",
+  "retainedInputAttempt": "View top copper selector had no match after Return to board; fresh DOM showed View bottom copper, confirming top face already active.",
+  "screenshot": "rb15-repaired-continuity.png"
+}

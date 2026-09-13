@@ -1,0 +1,99 @@
+{
+  "executionDigest": "785e9b1f158230065b5bb57a183b05b45d1aa5022068c639197643ff6c0f1a54",
+  "interactions": [
+    {
+      "check": "isolated final-source RC seed3 admission",
+      "status": "PASS",
+      "elapsedUpperBoundMs": 54157,
+      "identity": [
+        "tsj-alpha/1/EASY/RC_DELAY/3",
+        "tsj-alpha/1 / 9C9662BFDA2C817678E9313FFF463986"
+      ],
+      "text": "Customer ticket\nCustomer complaint\n\nThe controller responds immediately after power-up.\n\nFunctional retest\n\nPower the board ON, then power-cycle and observe the delayed output.\n\nExamine the board and use the instruments to identify a repair. Switch off every supply and wait for stored energy to discharge before changing parts.\n\nAccept ticket and startMain menuResources\nReplay and bug-report identity"
+    },
+    {
+      "check": "normal control-board New board cancellation",
+      "status": "PASS",
+      "input": "Visible pointer at Cancel preparation after a locator command timed out",
+      "clickRoundTripMs": 1029,
+      "identityAfter": [
+        "",
+        "tsj-alpha/1/EASY/RC_DELAY/3",
+        "tsj-alpha/1 / 9C9662BFDA2C817678E9313FFF463986"
+      ],
+      "limitation": "Click round trip includes Browser transport and is not the coordinator cleanup latency."
+    },
+    {
+      "check": "final Settings focus and contrast",
+      "reverse": {
+        "focus": "Reduce interface motion",
+        "inside": true
+      },
+      "forward": {
+        "focus": "Close",
+        "inside": true
+      },
+      "bodyClass": "tsj-workbench-ui tsj-high-contrast"
+    },
+    {
+      "check": "final Settings close preserves exact draft and returns focus",
+      "observation": {
+        "draft": "9007199254740993",
+        "focus": "Settings"
+      }
+    },
+    {
+      "check": "final settings persist after reload",
+      "observation": {
+        "bodyClass": "tsj-workbench-ui tsj-high-contrast",
+        "contrast": true
+      }
+    },
+    {
+      "check": "final generic Resources",
+      "text": "Resources\nClose\nInspect and navigate\n\nUse Fit board or Fit selection, Zoom + / −, and the top/bottom copper controls. The mouse wheel zooms; Shift-drag or middle-drag pans. Hold Space over the board for the inspection loupe; release it to return to the permanent view.\n\nPlace probes\n\nSelect DCV, Ohms, continuity or diode mode. Left click places the red probe; right click places the black probe. Selecting the active mode again exits it. Use accessible pads, terminals or exposed copper.\n\nDC voltage\n\nMeasure between two electrical endpoints with the required supplies on. The sign is red relative to black. Observe the instrument’s reference-domain and readiness messages.\n\nOhms and continuity\n\nDisconnect all board supplies and allow stored energy to discharge. In-circuit readings include parallel paths: a low resistance or continuity tone does not by itself identify a failed part. Isolate a lead or remove a part when needed to distinguish paths.\n\nDiode mode\n\nUse an isolated, discharged board. The instrument applies a test current; polarity and parallel paths affect the reading. Reverse the probes to compare directions. Follow any settling or unsupported-measurement message.\n\nRepair and verify\n\nIsolate every supply and wait for discharge. Remove the part to the Parts Tray, acquire an appropriate loose replacement from Shop, select it and install it into the empty slot. Restore the relevant supplies and inputs, then run the customer retest. A part swap alone does not establish that the customer’s problem is fixed.\n\nResistor color reference\n\nFour bands: first two digits × multiplier, then tolerance. Five bands: first three digits × multiplier, then tolerance. Example: brown–black–red–gold = 1 kΩ ±5%. Read from the end opposite the spaced tolerance band.\n\nResistor bands: digit, multiplier and tolerance\nColor\tDigit\tMultiplier\tTolerance\nBlack\t0\t×1\t—\nBrown\t1\t×10\t±1%\nRed\t2\t×100\t±2%\nOrange\t3\t×1 k\t—\nYellow\t4\t×10 k\t—\nGreen\t5\t×100 k\t±0.5%\nBlue\t6\t×1 M\t±0.25%\nViolet\t7\t×10 M\t±0.1%\nGray\t8\t×100 M\t±0.05%\nWhite\t9\t×1 G\t—\nGold\t—\t×0.1\t±5%\nSilver\t—\t×0.01\t±10%\nNone\t—\t—\t±20%\n\nLimited desktop alpha: selected low-voltage boards in the 5–20-part range, including a 16-part procedural control board with routed bottom copper. The 3-part indicator and 4-part protected indicator are introductory practice boards.\n\nEASY and MEDIUM candidates are checked before play. HARD and PSYCHOTIC are unavailable. Mains circuits, larger boards and general multilayer routing are not supported. Session saves are not available.\n\nReplay and bug-report identity"
+    },
+    {
+      "check": "normal final menu privacy and background isolation",
+      "attributes": [],
+      "background": [
+        {
+          "aria": "true",
+          "inert": true,
+          "tag": "SCRIPT"
+        },
+        {
+          "aria": "true",
+          "inert": true,
+          "tag": "SCRIPT"
+        },
+        {
+          "aria": "true",
+          "inert": true,
+          "tag": "SCRIPT"
+        },
+        {
+          "aria": "true",
+          "inert": true,
+          "tag": "IFRAME"
+        },
+        {
+          "aria": "true",
+          "inert": true,
+          "tag": "IFRAME"
+        },
+        {
+          "aria": "true",
+          "inert": true,
+          "tag": "DIV"
+        },
+        {
+          "aria": "true",
+          "inert": true,
+          "tag": "DIV"
+        }
+      ],
+      "reports": []
+    }
+  ]
+}

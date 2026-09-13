@@ -1,0 +1,159 @@
+{
+  "sourceInputs": 1151,
+  "executionInputs": 1435,
+  "releaseStatus": "IN PROGRESS - final technical qualification PASS; human EASY/MEDIUM trial outcomes pending",
+  "gates": [
+    {
+      "gate": "Maintained native contracts",
+      "status": "PASS",
+      "artifact": "native-contracts.txt",
+      "priorStatus": "PASS",
+      "priorResult": "RC phase candidate native run12: 33 Java suites plus independent oracles; exit0; cleanup PASS",
+      "result": "Final native17: 33 Java suites, independent seed/value/role/report oracles; exit0, cleanup PASS. Q15 6771, P03 864267, P04 6408, A11 conformance plus125 independent assertions."
+    },
+    {
+      "gate": "Actual JDK8/GWT production build",
+      "status": "PASS",
+      "artifact": "gwt-build.txt",
+      "priorStatus": "PASS",
+      "priorResult": "RC phase candidate: five permutations; 70.720s compile,1.359s link; exit0",
+      "result": "Final entry/privacy candidate: JDK8 1.8.0_502, five permutations,71.677s compile/1.365s link,exit0"
+    },
+    {
+      "gate": "UI adapter contracts",
+      "status": "PASS",
+      "result": "Fresh final-source invocation: 49 jsdom assertions and node syntax; exit0. Browser proof separate.",
+      "artifact": "../U04/ui-contracts.txt",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "Fresh49 assertions after real-browser collapsed-disclosure focus fix; node syntax PASS; real input still separate."
+    },
+    {
+      "gate": "Final integrated Alpha corpus",
+      "status": "PASS",
+      "result": "Fresh final38 cases/1217 assertions/223 mutation checks;884074ms operation/2ms cleanup,owner restored. Fresh forced failure15ms/1ms cleanup,owner restored; strict reader+20 malformed canaries PASS.",
+      "artifact": "final-entry-privacy/alpha-summary.json",
+      "priorStatus": "PASS",
+      "priorResult": "First RC phase candidate: 38 cases PASS, 848144ms operation, 2ms cleanup; rc maximum units1903/1934/1994ms. Subsequent review found cleanup blockers.",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "Unchanged compiled Java on35b0bbb2:38 cases/1217 assertions/223 mutation checks,851241ms operation/2ms cleanup,owner restored. Two-file UI focus delta audited in menu-focus-input-delta.json.  Fresh b5080dcf forced negative restores owner; strict reader+20 malformed canaries PASS."
+    },
+    {
+      "gate": "Final Q15 full compiled corpus/readers",
+      "status": "PASS",
+      "result": "Fresh final eleven seeds/four designs/three faults;481+80 assertions,557220ms operation/1ms cleanup,owner restored. Fresh forced failure16ms/2ms cleanup,owner restored. Maintained Q15 strict reader+16 malformed canaries PASS; maintained combined Q15/A10/E03/A08/Task41/Task49 reader and negative canaries PASS,exit0.",
+      "artifact": "final-entry-privacy/q15/summary.json",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "Fresh b5080dcf: all11 seeds/four designs/three faults,481+80 assertions,560040ms operation/2ms cleanup;16 malformed canaries and forced owner restoration PASS. Maintained combined Q15/A10/E03/A08/Task41/Task49 reader PASS,exit0."
+    },
+    {
+      "gate": "Final affected compiled regressions",
+      "status": "PASS",
+      "artifact": "final-entry-privacy/regressions.json",
+      "priorStatus": "PASS",
+      "priorResult": "Corrected A08 PASS1103 with cleanup/forced failure and E01/E03 maintained readers. Prior E01/E03, Task49, Task41, A10, A07 and U01 consumed inputs audited unchanged.",
+      "result": "Fresh final Task41/Task49/A08/E01/E03/A07/U01 reports PASS; maintained electrical and Q15 combined readers, A07 strict reader, applicable forced failures and malformed canaries PASS,exit0. Final A10 and Task43P separate gates also PASS.",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "Fresh b5080dcf Task41,Task49,A08,E01,E03,A07,U01, affected strict readers and negative canaries PASS. A10/Task43P PASS on unchanged compiled Java; two-file UI delta audited."
+    },
+    {
+      "gate": "Final Quick Play compiled selection/completion",
+      "status": "PASS",
+      "artifact": "final-entry-privacy/quick-play-final.json",
+      "priorStatus": "PASS",
+      "priorResult": "Full sixteen-entropy/eight-family selection/construction corpus plus LED seed3 legacy repair/completion",
+      "result": "Fresh final full16-entropy/eight-family selector/construction corpus, including16 RB15 choices with exact selected/generated equality in qualified11; LED3 unrepaired rejection/correct completion/fresh isolation. Legacy report lacks separate operation/cleanup durations; observed elapsed is an upper bound.",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "Current b5080dcf full sixteen-entropy/eight-family selection/construction, LED3 unrepaired rejection, correct completion and fresh session isolation. Legacy report does not provide separate operation/cleanup durations. Visible entry checks remain separate."
+    },
+    {
+      "gate": "Normal final RC seed3 preparation",
+      "status": "PASS",
+      "artifact": "../U04/player-input-entry-final.json",
+      "priorStatus": "PASS",
+      "priorResult": "Ticket reached with exact replay; observed upper bound 54,157 ms",
+      "result": "Fresh final normal RC3 ticket/replay and GWT identity; all41 verifier flags plus Task43P forced-source flags remain inert with debug=false.",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "Actual exact replay reaches ticket with every digit and current GWT identity; observation timing is an upper bound."
+    },
+    {
+      "gate": "Normal final cancellation",
+      "status": "PASS",
+      "artifact": "../U04/player-input-entry-final.json",
+      "priorStatus": "PASS",
+      "priorResult": "Visible pointer cancellation retained prior RC seed3; locator timeout and 1,029 ms pointer round trip recorded separately from coordinator latency",
+      "result": "Actual visible pointer cancellation retains exact RC3 replay and OFF/disconnected source. Pointer round trip2098ms includes Browser transport and is not coordinator cleanup latency; settled controls and identity checked separately.",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "Actual visible Cancel preparation preserves prior RC3 and OFF power; button round trip804ms includes transport, not cleanup latency."
+    },
+    {
+      "gate": "Final Settings/Resources/menu focus",
+      "status": "PASS",
+      "artifact": "../U04/ui-input-entry-final.json",
+      "priorStatus": "PASS",
+      "priorResult": "Both focus wraps, exact draft, return focus, preference persistence and restoration, generic reference, inert background, no private attributes/reports",
+      "result": "Fresh final preview: collapsed/expanded menu reverse/forward wraps; Settings draft/persistence/exact reverse and restored preferences; Resources wraps/privacy/inert background; invalid epoch/HARD rejection and MEDIUM family filtering. Two screenshots inspected. No concurrent generation.",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "Fresh b5080dcf actual keyboard proof: collapsed/expanded menu reverse/forward wraps and Resources wraps. Settings draft/persistence/return focus, privacy and inert background passed on unchanged presentation behavior immediately before this two-file fix.49 fresh adapter assertions; three inspected screenshots. Original menu failure retained."
+    },
+    {
+      "gate": "Final remaining Q15/player/replay flows",
+      "status": "PASS",
+      "result": "Fresh final normal RB15 draws42/17, both bad exact seeds fail honestly and retain seed17/OFF, exact9007199254740993 replay, full RB150/MEDIUM0 real acquisition/removal/install/retest, all41 verifier flags plus forced Task43P source inputs inert with debug=false, and unforced Quick Play LED0/RC0 ticket/workbench entries PASS. Eight useful final screenshots inspected across U04/U05/REL-A. Failed legacy cancellation inputs remain separate; final normal cancellation passes.",
+      "artifact": "final-entry-privacy/player-flow-summary.json",
+      "priorCandidateStatus": "IN PROGRESS",
+      "priorCandidateResult": "Normal RB15 random draws, both known bad exact replay failures/recovery, >2^53 replay, full RB15/MEDIUM repairs, privacy41flags and two ordinary Quick Play entries PASS. Legacy debug New control board crashes reproduced in two tabs; existing async scheduling canary in progress."
+    },
+    {
+      "gate": "Human EASY/MEDIUM trials",
+      "status": "NOT RUN",
+      "result": "Requested; no results received. Agent input is not human calibration."
+    },
+    {
+      "gate": "Root integrated source review",
+      "status": "PASS",
+      "artifact": "root-review.md",
+      "priorStatus": "PASS",
+      "priorResult": "Resolved findings and review scope recorded; runtime gates remain separate",
+      "result": "Earlier complete integrated source review retained under unchanged 1150-input boundary; root re-inspected complete CirSim delta and current replay/session consumers. Final read-only leaf reviewed exact scheduling/privacy delta, no remaining blocker in scope. Runtime gates and staged review remain separate.",
+      "priorCandidateStatus": "NOT RUN",
+      "priorCandidateResult": "Requires current-source qualification after the RC temporal work/controller/proof change; prior evidence retained"
+    },
+    {
+      "gate": "Staged review/commit/push/remote verification/Gmail",
+      "status": "NOT RUN"
+    },
+    {
+      "gate": "Separately authorized visual pass",
+      "status": "NOT RUN",
+      "result": "Conditional on stable alpha acceptance; own subsequent commit"
+    },
+    {
+      "gate": "RC phase A10 qualification",
+      "status": "PASS",
+      "result": "Fresh final A10:1274 assertions/24 attempts,707 RC phase/abort and14 cleanup checks; RC0 first/repeat59853/59387ms,max units1945/1904ms; cleanupPASS. Maintained strict reader+17 malformed canaries and exact forced failure/no report PASS.",
+      "artifact": "final-entry-privacy/a10-report.json",
+      "priorStatus": "PASS",
+      "priorResult": "1274 assertions,24 benchmark attempts; independent501 RC phase checks; RC admission58026/58332ms,max units1886/1916ms; cleanupPASS; strict reader and nine malformed phase canariesPASS",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "Final35b0bbb2:1274 assertions/24 attempts,707 RC phase/abort checks,14 observation cleanup checks; strict reader+17 malformed canaries; explicit forced failure/no report; cleanup PASS. RC0 admission59622/59870ms,max units1937/2037ms,cancellationMax3ms."
+    },
+    {
+      "gate": "Task43P overlay and owner-callback complementary coverage",
+      "status": "PASS",
+      "artifact": "final-entry-privacy/task43p-runtime-reader.json",
+      "result": "Fresh final-source OBSERVED runtime; maintained strict reader exit0/zero open blockers across A,B/F,C,E,D,G,H,I; real overlays/cleanup and actual owner callback replacement. Fresh malformed reader probe PASS. Initial missing-provenance reader failure retained. Windows CDP wrapper not qualified.",
+      "priorCandidateStatus": "PASS",
+      "priorCandidateResult": "35b0bbb2: runtime OBSERVED; maintained reader exit0/zero open blockers; real overlays, seven cleanup safety cases, settlement/reset order and actual owner-replacement callback; malformed contract probe PASS. Windows CDP wrapper not qualified."
+    },
+    {
+      "gate": "Final frozen input and preview audit",
+      "status": "PASS",
+      "artifact": "final-entry-privacy/final-input-audit.json",
+      "result": "1151 consumed input hashes unchanged; maintained1435-file execution digest matches final build, HTTP preview and exact owned process identity. Documentation/evidence-only updates follow."
+    }
+  ],
+  "sourceQualificationNote": "Final-entry-privacy/final-input-audit.json verifies all1151 frozen consumed inputs, all1435 execution files and the owned preview HTTP/tree/process identity after final qualification. All required fresh technical gates pass. Prior b508/35b0 reports retain their actual identities.",
+  "priorCandidateExecutionDigest": "b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d",
+  "currentSourceStatus": "All final native/build/compiled/readers, normal player workflows and frozen-input/preview audits PASS. Human trial evidence remains NOT RUN; acceptance/publication and the subsequent visual pass have not occurred.",
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623"
+}

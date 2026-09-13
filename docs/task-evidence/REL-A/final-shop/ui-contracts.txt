@@ -1,0 +1,2 @@
+PASS: node --check war/tsj-workbench-ui.js
+PASS U04 UI adapter contracts: 83 assertions. jsdom26.1.0 only; production browser input remains separate.

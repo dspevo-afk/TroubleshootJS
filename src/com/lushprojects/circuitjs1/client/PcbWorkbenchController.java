@@ -472,13 +472,14 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
             return;
         boolean powered = !sim.getBoardPowerController().isElectricallyUnpowered();
         boolean powerWarningAdded = false;
-        for (WorkbenchPartsProvider provider : providers)
-            powerWarningAdded = addCatalog(provider, powered, powerWarningAdded);
+        if (sim.playerSessionController == null)
+            for (WorkbenchPartsProvider provider : providers)
+                powerWarningAdded = addCatalog(provider, powered, powerWarningAdded);
 
         partsPanel.add(styledLabel("Parts Tray", "tsj-component-title"));
         Vector<PhysicalPart<?>> looseParts = getLooseParts(providers);
         if (looseParts.isEmpty())
-            partsPanel.add(new Label("No removed parts."));
+            partsPanel.add(new Label("No loose parts."));
         int pageSize = renderer.getPartsPerTrayPage();
         int start = renderer.getTrayPage() * pageSize;
         int end = Math.min(looseParts.size(), start + pageSize);
@@ -567,12 +568,21 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         installNew.setEnabled(isOperationAvailable(null, operation));
     }
 
+    private String playerPartLabel(WorkbenchPartsProvider provider, PhysicalPart<?> part) {
+        if (sim.troubleshootDebug) return provider.getPartLabel(part);
+        int index = instance.getPhysicalBoardRuntime().getPhysicalParts().indexOf(part);
+        if (index < 0) throw new IllegalArgumentException("Part is outside the current inventory");
+        PhysicalNameplate markings = part.getPlayerVisibleNameplate();
+        return "Part " + (index + 1) + " - " + (markings.hasWorkbenchDetail() ?
+            markings.getWorkbenchDetailValue() : markings.getDisplayName());
+    }
+
     private void addLoosePartButton(PhysicalPart<?> part) {
         WorkbenchPartsProvider provider = instance.getPhysicalBoardRuntime()
             .getWorkbenchPartsProviderForPart(part.getId());
         if (provider == null)
             throw new IllegalStateException("Loose part has no workbench provider: " + part.getId());
-        Button select = new Button(provider.getPartLabel(part));
+        Button select = new Button(playerPartLabel(provider, part));
         select.setStyleName("tsj-action-button");
         select.setEnabled(isCurrentPhysicalActionable());
         final String partId = part.getId();
@@ -594,35 +604,45 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     private void addSelectedPartControls(final WorkbenchPartsProvider provider,
             final String selectedPartId) {
         final PhysicalPart<?> part = provider.getPart(selectedPartId);
-        final String componentId = provider.getComponentId();
-        partsPanel.add(new Label("Selected: " + provider.getPartLabel(part)));
+        partsPanel.add(new Label("Selected: " + playerPartLabel(provider, part)));
         partsPanel.add(new Label("State: Loose"));
-        final WorkbenchOperation installOperation = WorkbenchOperation.forPartAtSlot(
-            WorkbenchOperation.INSTALL, part, componentId);
-        Button install = new Button(operationLabel(part, installOperation,
-            "Install as " + playerComponentName(componentId)));
-        install.setStyleName("tsj-action-button");
-        install.setEnabled(getCapability(part, installOperation) != null &&
-            isOperationAvailable(part, installOperation));
-        ClickHandler installHandler = new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                if (!isCurrentPhysicalActionable())
-                    return;
-                try {
-                    if (dispatchOperation(part, installOperation))
-                        renderer.setSelectedPartId(null);
-                } catch (BoardModificationRejectedException exception) {
-                    feedback.setText("Turn board power off before modifying components.");
-                }
-                if (!isCurrentOwner())
-                    return;
-                refresh();
-                sim.repaint();
+        PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
+        Vector<PhysicalSlotMutationProvider> targets =
+            runtime.getCompatibleMutationProviders(part);
+        if (targets.isEmpty()) {
+            partsPanel.add(new Label("No compatible empty target."));
+        } else {
+            partsPanel.add(new Label("Compatible targets:"));
+            for (final PhysicalSlotMutationProvider target : targets) {
+                final String targetComponentId = target.getComponentId();
+                final WorkbenchOperation installOperation = WorkbenchOperation.forPartAtSlot(
+                    WorkbenchOperation.INSTALL, part, targetComponentId);
+                final String targetLabel = playerTargetLabel(targetComponentId);
+                Button install = new Button("Install as " + targetLabel);
+                install.setStyleName("tsj-action-button");
+                install.setEnabled(getCapability(part, installOperation) != null &&
+                    isOperationAvailable(part, installOperation));
+                ClickHandler installHandler = new ClickHandler() {
+                    public void onClick(ClickEvent event) {
+                        if (!isCurrentPhysicalActionable())
+                            return;
+                        try {
+                            if (dispatchOperation(part, installOperation))
+                                renderer.setSelectedPartId(null);
+                        } catch (BoardModificationRejectedException exception) {
+                            feedback.setText("Turn board power off before modifying components.");
+                        }
+                        if (!isCurrentOwner())
+                            return;
+                        refresh();
+                        sim.repaint();
+                    }
+                };
+                lastPhysicalActionHandler = installHandler;
+                install.addClickHandler(installHandler);
+                partsPanel.add(install);
             }
-        };
-        lastPhysicalActionHandler = installHandler;
-        install.addClickHandler(installHandler);
-        partsPanel.add(install);
+        }
 
         final WorkbenchOperation inspectOperation =
             WorkbenchOperation.forPart(WorkbenchOperation.INSPECT_LOOSE, part);
@@ -637,7 +657,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
                     if (!isCurrentPhysicalActionable())
                         return;
                     if (dispatchOperation(part, inspectOperation))
-                        feedback.setText("Inspection: " + provider.getPartLabel(part));
+                        feedback.setText("Inspection: " + playerPartLabel(provider, part));
                     if (!isCurrentOwner())
                         return;
                     refresh();
@@ -697,7 +717,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
             "Preparing challenge..."));
         if (challenge.isReady())
             addCustomerOperationControls(challenge);
-        if (quickPlay) {
+        if (quickPlay && sim.playerSessionController == null) {
             final Button finish = new Button("Finish Job");
             finish.setStyleName("tsj-action-button");
             finish.setEnabled(isCurrentSemanticActionable(challenge) && !challenge.isCompleted() &&
@@ -757,7 +777,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         }
         final GeneratedBoardOperation retestOperation = instance.getOperationCatalog().find(
             GeneratedBoardOperationIds.CUSTOMER_RETEST);
-        if (retestOperation != null) {
+        if (retestOperation != null && sim.playerSessionController == null) {
             Button retest = new Button(retestOperation.getPlayerLabel());
             retest.setStyleName("tsj-action-button");
             retest.setEnabled(isCurrentSemanticActionable(challenge) && !challenge.isCompleted());
@@ -955,6 +975,15 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
 
     private String playerComponentName(String componentId) {
         return instance.getBoard().getComponent(componentId).getDisplayName();
+    }
+
+    private String playerTargetLabel(String componentId) {
+        String componentLabel = playerComponentName(componentId);
+        for (PcbLayoutRegion region : renderer.getLayoutForProvider().getRegions())
+            for (String member : region.getComponentIds())
+                if (componentId.equals(member))
+                    return region.label + " / " + componentLabel;
+        return componentLabel;
     }
 
     private interface ComponentAction { void execute(); }

@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "attempts": 24,
+  "cancellationMaxMs": 5,
+  "first": {
+    "p50Ms": 915,
+    "p95Ms": 2213,
+    "worstMs": 2213
+  },
+  "immediateRepeat": {
+    "p50Ms": 896,
+    "p95Ms": 2124,
+    "worstMs": 2124
+  },
+  "malformedCanariesRejected": [
+    "missing temporalWork.comparedProfiles",
+    "missing temporalWork.phases",
+    "missing temporalWork.cancelBoundaries",
+    "missing temporalWork.staleGraphBoundaries",
+    "missing temporalWork.sourceChangeBoundaries",
+    "missing temporalWork.exactStateSamplesEventsCounters",
+    "missing temporalWork.partialPublicationRejected",
+    "missing temporalWork.repairPowerGuard",
+    "missing temporalWork.stagedAbortBoundaries",
+    "missing temporalWork.abortedSourcesDisconnected",
+    "missing observationCleanup.assertions",
+    "missing observationCleanup.cursorRetry",
+    "missing observationCleanup.closedSessionRetry",
+    "missing observationCleanup.retainedObservation",
+    "missing observationCleanup.successorUntouched",
+    "missing observationCleanup.leaseRetained",
+    "missing observationCleanup.privateGraphDisposed"
+  ],
+  "forcedNegative": "PASS",
+  "candidateExecutionDigest": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae"
+}

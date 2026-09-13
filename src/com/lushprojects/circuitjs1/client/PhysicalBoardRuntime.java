@@ -365,8 +365,24 @@ final class PhysicalBoardRuntime {
         if (partId == null)
             return null;
         for (WorkbenchPartsProvider provider : getWorkbenchPartsProviders())
-            if (provider.ownsPart(partId))
+            if (provider.ownsPart(partId) && provider.getPart(partId) == getPart(partId))
                 return provider;
+        return null;
+    }
+
+    /**
+     * Returns the mutable provider that owns the part's source inventory.
+     * Inventory membership stays with that provider when a loose part is
+     * mounted in another compatible slot.
+     */
+    PhysicalSlotMutationProvider getSourceMutationProviderForPart(String partId) {
+        if (partId == null)
+            return null;
+        for (String componentId : slotOrder) {
+            PhysicalSlotMutationProvider provider = mutationProviders.get(componentId);
+            if (provider != null && provider.ownsPart(partId))
+                return provider;
+        }
         return null;
     }
 
@@ -472,12 +488,94 @@ final class PhysicalBoardRuntime {
     }
 
     PhysicalSlotMutationProvider getMutationProviderForPart(String partId) {
-        if (partId == null)
-            return null;
-        for (PhysicalSlotMutationProvider provider : mutationProviders.values())
-            if (provider.ownsPart(partId))
-                return provider;
-        return null;
+        return getSourceMutationProviderForPart(partId);
+    }
+
+    /**
+     * Checks source membership and target compatibility without transferring
+     * inventory ownership.  This is deliberately a pure admission predicate;
+     * current simulator/controller ownership is checked by the typed
+     * controller and PhysicalMutationScope before any write.
+     */
+    boolean isPartInstallableAt(PhysicalPart<?> part, String targetComponentId) {
+        if (part == null || part.getId() == null || targetComponentId == null)
+            return false;
+        if (getPart(part.getId()) != part || getInventoryIdForPart(part.getId()) == null ||
+                part.isInstalled() || part.getBoardSlot() != null)
+            return false;
+
+        WorkbenchPartsProvider sourceParts = getWorkbenchPartsProviderForPart(part.getId());
+        PhysicalSlotMutationProvider sourceMutation = getSourceMutationProviderForPart(part.getId());
+        if (sourceParts == null || sourceMutation == null ||
+                !sourceParts.getComponentId().equals(sourceMutation.getComponentId()) ||
+                sourceParts.getPart(part.getId()) != part)
+            return false;
+        PhysicalBoardInstallationProvider.Scoped sourceDeclaration =
+            getScopedMutationCapability(sourceMutation.getComponentId());
+        if (sourceDeclaration == null || sourceDeclaration.getMutationInventory() == null ||
+                sourceDeclaration.getMutationInventory().getRuntime() != this ||
+                !getInventoryIdForPart(part.getId()).equals(
+                    sourceDeclaration.getMutationInventory().getInventoryId()) ||
+                !sourceDeclaration.getMutationInventory().contains(part.getId()))
+            return false;
+
+        PhysicalBoardSlot targetPhysicalSlot = getSlot(targetComponentId);
+        PhysicalSlotMutationProvider targetProvider = getMutationProvider(targetComponentId);
+        if (targetPhysicalSlot == null || targetProvider == null ||
+                !(targetProvider instanceof PhysicalSlotMutationProvider.Scoped) ||
+                !targetComponentId.equals(targetProvider.getComponentId()))
+            return false;
+        PhysicalMutationSlot targetSlot =
+            ((PhysicalSlotMutationProvider.Scoped) targetProvider).getMutationSlot();
+        if (targetSlot == null || targetSlot.getPhysicalSlot() != targetPhysicalSlot ||
+                !targetSlot.isEmpty() || !targetSlot.acceptsPart(part))
+            return false;
+        if (targetPhysicalSlot.getPhysicalPackage() == null || part.getPackage() == null ||
+                !targetPhysicalSlot.getPhysicalPackage().isEquivalentTo(part.getPackage()))
+            return false;
+        PhysicalGeometryRealization expected = targetPhysicalSlot.getGeometryRealization();
+        PhysicalGeometryRealization actual = part.getGeometryRealization();
+        if (expected != null && (actual == null || !expected.isEquivalentTo(actual)))
+            return false;
+
+        // A generated original retains its source slot's graph/fault binding
+        // contract. Catalog-acquired parts remain portable between matching
+        // target slots.
+        return !part.isOriginal() || targetComponentId.equals(sourceMutation.getComponentId());
+    }
+
+    /** Ordered target resolution used by the workbench and player tray. */
+    Vector<PhysicalSlotMutationProvider> getCompatibleMutationProviders(PhysicalPart<?> part) {
+        Vector<PhysicalSlotMutationProvider> result =
+            new Vector<PhysicalSlotMutationProvider>();
+        if (part == null)
+            return result;
+        for (String componentId : slotOrder) {
+            PhysicalSlotMutationProvider provider = mutationProviders.get(componentId);
+            if (provider != null && isPartInstallableAt(part, componentId))
+                result.add(provider);
+        }
+        return result;
+    }
+
+    /** Source ownership remains valid after a part is mounted cross-slot. */
+    boolean isPartOwnedByRegisteredProvider(PhysicalPart<?> part) {
+        if (part == null || part.getId() == null || getPart(part.getId()) != part ||
+                getInventoryIdForPart(part.getId()) == null)
+            return false;
+        WorkbenchPartsProvider sourceParts = getWorkbenchPartsProviderForPart(part.getId());
+        PhysicalSlotMutationProvider sourceMutation = getSourceMutationProviderForPart(part.getId());
+        if (sourceParts == null || sourceMutation == null ||
+                !sourceParts.getComponentId().equals(sourceMutation.getComponentId()) ||
+                sourceParts.getPart(part.getId()) != part)
+            return false;
+        PhysicalBoardInstallationProvider.Scoped declaration =
+            getScopedMutationCapability(sourceMutation.getComponentId());
+        return declaration != null && declaration.getMutationInventory() != null &&
+            declaration.getMutationInventory().getRuntime() == this &&
+            getInventoryIdForPart(part.getId()).equals(
+                declaration.getMutationInventory().getInventoryId()) &&
+            declaration.getMutationInventory().contains(part.getId());
     }
 
     Vector<PhysicalSlotMutationProvider> getMutationProviders() {

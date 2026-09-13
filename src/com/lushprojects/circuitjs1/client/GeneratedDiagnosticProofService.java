@@ -94,7 +94,7 @@ final class GeneratedDiagnosticProofService {
      * GenerationJob stage units (resolve, healthy, physical, symptom and
      * publish) are deliberately outside this value.
      */
-    static int requiredWorkUnits(GeneratedBoardInstance owner) {
+    static int requiredWorkUnits(GeneratedBoardInstance owner, boolean explicitCompletion) {
         if (owner == null) throw new IllegalArgumentException("Missing diagnostic owner");
         GeneratedDiagnosticProvider provider = owner.getDiagnosticProvider();
         if (provider == null) throw new IllegalArgumentException("Missing diagnostic provider");
@@ -103,6 +103,17 @@ final class GeneratedDiagnosticProofService {
         int fixedUnits = owner.getTemporalBehavior() == null ? FIXED_HYPOTHESIS_UNIT_COUNT :
             TEMPORAL_FIXED_HYPOTHESIS_UNIT_COUNT;
         int perHypothesis = fixedUnits + program.getSteps().size();
+        if (owner.getTemporalBehavior() != null) {
+            int profileUnits = owner.getTemporalBehavior().getProfileWorkUnits();
+            GeneratedBoardOperation retest = owner.getOperationCatalog().find(
+                GeneratedBoardOperationIds.CUSTOMER_RETEST);
+            if (profileUnits < 1 || profileUnits > 64 || retest == null ||
+                    retest.getWorkUnits(owner) < 1 || retest.getWorkUnits(owner) > 64)
+                throw new IllegalArgumentException("Invalid declared temporal work units");
+            // Healthy, faulted and repaired profiles, then the real customer operation.
+            perHypothesis += 3 * (profileUnits - 1) + retest.getWorkUnits(owner) - 1;
+            if (!explicitCompletion) perHypothesis += profileUnits - 1;
+        }
         int count = hypothesesFor(owner).size();
         if (perHypothesis <= 0 || count > Integer.MAX_VALUE / perHypothesis)
             throw new IllegalArgumentException("Diagnostic proof work count overflow");
@@ -228,7 +239,9 @@ final class GeneratedDiagnosticProofService {
         private GeneratedDiagnosticObservationExecutor.Cursor observationCursor;
         private Vector<GeneratedDiagnosticSample> activeSamples;
         private GeneratedCustomerRetestResult activeRetest;
-        private Runnable pendingRetestCompletion;
+        private GeneratedWork<Void> pendingRetestCompletion;
+        private GeneratedWork<GeneratedRepairStatus> repairProfileWork;
+        private GeneratedWork<GeneratedCustomerRetestResult> retestWork;
         private GeneratedChallengeController.RetestCompletionDispatch savedRetestCompletionDispatch;
         private GeneratedChallengeController retestDispatchOwner;
         private boolean retestDispatchInstalled;
@@ -370,12 +383,10 @@ final class GeneratedDiagnosticProofService {
                     Unit.CANDIDATE_HEALTHY_SETTLE;
                 return;
             case CANDIDATE_HEALTHY_SETTLE:
-                runCandidateHealthySettle();
-                nextUnit = Unit.CANDIDATE_SETTLE;
+                if (runCandidateHealthySettle()) nextUnit = Unit.CANDIDATE_SETTLE;
                 return;
             case CANDIDATE_SETTLE:
-                runCandidateSettleAndPrepareObservations();
-                nextUnit = Unit.OBSERVATION_STEP;
+                if (runCandidateSettleAndPrepareObservations()) nextUnit = Unit.OBSERVATION_STEP;
                 return;
             case OBSERVATION_STEP:
                 runObservationStep();
@@ -397,17 +408,14 @@ final class GeneratedDiagnosticProofService {
                 nextUnit = Unit.REPAIR_STATUS_SETTLE;
                 return;
             case REPAIR_STATUS_SETTLE:
-                runRepairStatusAndSettle();
-                nextUnit = Unit.CUSTOMER_RETEST;
+                if (runRepairStatusAndSettle()) nextUnit = Unit.CUSTOMER_RETEST;
                 return;
             case CUSTOMER_RETEST:
-                runCustomerRetest();
-                nextUnit = pendingRetestCompletion == null ? Unit.EVIDENCE_RESTORE_PRIMARY :
-                    Unit.CUSTOMER_RETEST_COMPLETION;
+                if (runCustomerRetest()) nextUnit = pendingRetestCompletion == null ?
+                    Unit.EVIDENCE_RESTORE_PRIMARY : Unit.CUSTOMER_RETEST_COMPLETION;
                 return;
             case CUSTOMER_RETEST_COMPLETION:
-                runCustomerRetestCompletion();
-                nextUnit = Unit.EVIDENCE_RESTORE_PRIMARY;
+                if (runCustomerRetestCompletion()) nextUnit = Unit.EVIDENCE_RESTORE_PRIMARY;
                 return;
             case EVIDENCE_RESTORE_PRIMARY:
                 runEvidence();
@@ -474,8 +482,11 @@ final class GeneratedDiagnosticProofService {
                 "Production diagnostic proof attached a private board to the player UI");
         }
 
-        private void runCandidateSettleAndPrepareObservations() {
+        private boolean runCandidateSettleAndPrepareObservations() {
             checkpointAndRequireCandidate();
+            if (activeCandidate.getTemporalBehavior() != null &&
+                    !GeneratedRuntimeDeveloperSettlement.stepTemporalPreparation(sim, activeCandidate,
+                        false, "production-diagnostic-candidate")) return false;
             GeneratedRuntimeDeveloperSettlement.settle(sim, activeCandidate,
                 "production-diagnostic-candidate");
             checkpointAndRequireCandidate();
@@ -487,16 +498,18 @@ final class GeneratedDiagnosticProofService {
             observationCursor = GeneratedDiagnosticObservationExecutor.begin(
                 sim, activeCandidate, program, activeTrace);
             checkpointAndRequireCandidate();
+            return true;
         }
 
-        private void runCandidateHealthySettle() {
+        private boolean runCandidateHealthySettle() {
             checkpointAndRequireCandidate();
             require(activeCandidate != null && owner.getTemporalBehavior() != null &&
                     activeCandidate.getTemporalBehavior() != null,
                 "Temporal diagnostic proof lost its healthy profile owner");
-            GeneratedRuntimeDeveloperSettlement.settleHealthy(sim, activeCandidate,
-                "production-diagnostic-candidate-healthy");
+            boolean complete = GeneratedRuntimeDeveloperSettlement.stepTemporalPreparation(sim, activeCandidate,
+                true, "production-diagnostic-candidate-healthy");
             checkpointAndRequireCandidate();
+            return complete;
         }
 
         private void runObservationStep() {
@@ -520,6 +533,7 @@ final class GeneratedDiagnosticProofService {
             GeneratedRuntimeDeveloperSettlement.settle(sim, activeCandidate,
                 "production-diagnostic-repair-start");
             checkpointAndRequireCandidate();
+            activeTrace.recordCompletedSemanticAction();
         }
 
         private void runRemoveAndSettle() {
@@ -571,45 +585,57 @@ final class GeneratedDiagnosticProofService {
             GeneratedRuntimeDeveloperSettlement.settle(sim, activeCandidate,
                 "production-diagnostic-retest-power");
             checkpointAndRequireCandidate();
+            activeTrace.recordCompletedSemanticAction();
         }
 
-        private void runRepairStatusAndSettle() {
+        private boolean runRepairStatusAndSettle() {
             checkpointAndRequireCandidate();
             GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
-            require(challenge == activeCandidateController &&
-                challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED,
+            require(challenge == activeCandidateController, "Diagnostic repair status lost its controller");
+            GeneratedRepairStatus status;
+            if (activeCandidate.getTemporalBehavior() != null) {
+                if (repairProfileWork == null) repairProfileWork = activeCandidate.getTemporalBehavior()
+                    .beginProfile(sim, activeCandidate, GeneratedTemporalBehavior.Profile.REPAIR);
+                if (repairProfileWork.step()) { checkpointAndRequireCandidate(); return false; }
+                status = repairProfileWork.finish();
+                repairProfileWork = null;
+            } else status = challenge.getRepairStatus();
+            require(status == GeneratedRepairStatus.CORRECTLY_RESTORED,
                 "Diagnostic replacement failed the device's electrical repair behavior");
             checkpointAndRequireCandidate();
             GeneratedRuntimeDeveloperSettlement.settle(sim, activeCandidate,
                 "production-diagnostic-retest-ready");
             checkpointAndRequireCandidate();
+            return true;
         }
 
-        private void runCustomerRetest() {
+        private boolean runCustomerRetest() {
             checkpointAndRequireCandidate();
             GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
             require(challenge == activeCandidateController, "Diagnostic retest lost its controller");
             checkpointAndRequireCandidate();
             if (activeCandidate.getTemporalBehavior() != null) {
-                captureTemporalRetestCompletion(challenge);
+                boolean complete = captureTemporalRetestCompletion(challenge);
                 checkpointAndRequireCandidate();
-                return;
+                return complete;
             }
             GeneratedCustomerRetestResult retest = challenge.performCustomerRetest();
             verifyCustomerRetest(challenge, retest);
+            return true;
         }
 
-        private void runCustomerRetestCompletion() {
+        private boolean runCustomerRetestCompletion() {
             checkpointAndRequireCandidate();
             GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
             require(challenge == activeCandidateController && activeRetest != null &&
                     pendingRetestCompletion != null,
                 "Missing temporal customer retest completion");
-            Runnable completion = pendingRetestCompletion;
+            if (pendingRetestCompletion.step()) { checkpointAndRequireCandidate(); return false; }
+            GeneratedWork<Void> completion = pendingRetestCompletion;
             pendingRetestCompletion = null;
             Throwable failure = null;
             try {
-                completion.run();
+                completion.finish();
             } catch (Throwable problem) {
                 failure = problem;
             } finally {
@@ -618,38 +644,46 @@ final class GeneratedDiagnosticProofService {
             if (failure != null) throwFailure(failure);
             checkpointAndRequireCandidate();
             verifyCustomerRetest(challenge, activeRetest);
+            return true;
         }
 
-        private void captureTemporalRetestCompletion(final GeneratedChallengeController challenge) {
+        private boolean captureTemporalRetestCompletion(final GeneratedChallengeController challenge) {
             require(challenge == activeCandidateController && activeCandidate.getTemporalBehavior() != null,
                 "Temporal customer retest requires its exact controller");
-            require(pendingRetestCompletion == null && !retestDispatchInstalled,
-                "Temporal customer retest already has a completion callback");
-            activeRetest = null;
-            savedRetestCompletionDispatch =
-                challenge.getRetestCompletionDispatchForDeveloperVerification();
-            retestDispatchOwner = challenge;
-            retestDispatchInstalled = true;
-            challenge.setRetestCompletionDispatchForDeveloperVerification(
-                new GeneratedChallengeController.RetestCompletionDispatch() {
-                    public void dispatch(Runnable completion) {
-                        if (completion == null || pendingRetestCompletion != null)
-                            throw new IllegalStateException(
-                                "Temporal customer retest dispatched an invalid completion");
-                        pendingRetestCompletion = completion;
-                    }
-                });
+            if (retestWork == null) {
+                require(pendingRetestCompletion == null && !retestDispatchInstalled,
+                    "Temporal customer retest already has a completion callback");
+                activeRetest = null;
+                savedRetestCompletionDispatch =
+                    challenge.getRetestCompletionDispatchForDeveloperVerification();
+                retestDispatchOwner = challenge;
+                retestDispatchInstalled = true;
+                challenge.setRetestCompletionDispatchForDeveloperVerification(
+                    new GeneratedChallengeController.RetestCompletionDispatch() {
+                        public void dispatch(Runnable completion) {
+                            if (!(completion instanceof GeneratedWork) || pendingRetestCompletion != null)
+                                throw new IllegalStateException(
+                                    "Temporal customer retest dispatched an invalid completion");
+                            pendingRetestCompletion = (GeneratedWork<Void>) completion;
+                        }
+                    });
+                retestWork = challenge.beginCustomerRetest();
+            }
             Throwable failure = null;
             try {
-                activeRetest = challenge.performCustomerRetest();
+                if (retestWork.step()) return false;
+                activeRetest = retestWork.finish();
+                retestWork = null;
             } catch (Throwable problem) {
                 failure = problem;
             } finally {
-                failure = retain(failure, clearRetestCompletionDispatch());
+                if (retestWork == null || failure != null)
+                    failure = retain(failure, clearRetestCompletionDispatch());
             }
             if (failure != null) throwFailure(failure);
             require(activeRetest != null && pendingRetestCompletion != null,
                 "Temporal customer retest did not provide its completion callback");
+            return true;
         }
 
         private void verifyCustomerRetest(GeneratedChallengeController challenge,
@@ -721,6 +755,7 @@ final class GeneratedDiagnosticProofService {
 
         /** True while a failed exact attempt still owns private cleanup state. */
         boolean hasPendingPrivateCleanup() { return privateCleanupPending; }
+        boolean retainsObservationForDeveloperVerification() { return observationCursor != null; }
 
         /** Marks a paused proof owner as installation-in-progress without retaining the guard. */
         void pause() {
@@ -792,6 +827,7 @@ final class GeneratedDiagnosticProofService {
                     throw new IllegalStateException(
                         "Production diagnostic proof retained pending cleanup after owner succession");
                 Throwable retry = clearRetestCompletionState();
+                retry = retain(retry, cancelObservationCursor());
                 retry = retain(retry, restoreOriginal());
                 retry = retain(retry, endInternalProof());
                 if (retry != null) throwFailure(retry);
@@ -847,8 +883,22 @@ final class GeneratedDiagnosticProofService {
 
         private Throwable clearRetestCompletionState() {
             Throwable failure = clearRetestCompletionDispatch();
-            if (failure == null) {
+            try {
+                if (repairProfileWork != null) repairProfileWork.cancel();
+                repairProfileWork = null;
+            } catch (Throwable problem) { failure = retain(failure, problem); }
+            try {
+                if (retestWork != null) retestWork.cancel();
+                retestWork = null;
+            } catch (Throwable problem) { failure = retain(failure, problem); }
+            try {
+                if (pendingRetestCompletion != null) pendingRetestCompletion.cancel();
                 pendingRetestCompletion = null;
+            } catch (Throwable problem) { failure = retain(failure, problem); }
+            try {
+                if (activeCandidateController != null) activeCandidateController.cancelOwnedWork();
+            } catch (Throwable problem) { failure = retain(failure, problem); }
+            if (failure == null) {
                 activeRetest = null;
             }
             return failure;
@@ -963,16 +1013,17 @@ final class GeneratedDiagnosticProofService {
         private Throwable cancelObservationCursor() {
             if (observationCursor == null) return null;
             GeneratedDiagnosticObservationExecutor.Cursor cursor = observationCursor;
-            observationCursor = null;
-            if (activeCandidate == null ||
-                    sim.getGeneratedBoardInstance() != activeCandidate ||
-                    sim.getGeneratedChallengeController() != activeCandidateController)
+            if (!isCurrentCandidate(activeCandidate)) {
+                privateCleanupPending = true;
                 return new IllegalStateException(
                     "Production diagnostic proof refused to clean observation over a successor owner");
+            }
             try {
                 cursor.cancel();
+                observationCursor = null;
                 return null;
             } catch (Throwable failure) {
+                privateCleanupPending = true;
                 return failure;
             }
         }
@@ -997,6 +1048,12 @@ final class GeneratedDiagnosticProofService {
             GeneratedBoardInstance candidate = activeCandidate;
             if (candidate != null)
                 rememberPrivateOwnerForCleanup();
+            failure = retain(failure, clearRetestCompletionState());
+            failure = retain(failure, cancelObservationCursor());
+            if (failure != null) {
+                if (candidate != null) privateCleanupPending = true;
+                return failure;
+            }
             try {
                 sim.instrumentController.clearTargets();
                 sim.instrumentController.exitInstrumentModeForDeveloperVerification();
@@ -1004,6 +1061,10 @@ final class GeneratedDiagnosticProofService {
                     "Production diagnostic overlay cleanup failed");
             } catch (Throwable cleanup) {
                 failure = retain(failure, cleanup);
+            }
+            if (failure != null) {
+                if (candidate != null) privateCleanupPending = true;
+                return failure;
             }
             if (!isCurrentProofContext()) {
                 failure = retain(failure, new IllegalStateException(
@@ -1337,7 +1398,6 @@ final class GeneratedDiagnosticProofService {
             failed = true;
             elapsedMillis = elapsedNow();
             privateBoards.clear();
-            observationCursor = null;
             clearActiveHypothesis();
             if (!privateCleanupPending)
                 clearActiveCandidate();
@@ -1348,7 +1408,6 @@ final class GeneratedDiagnosticProofService {
             closed = true;
             elapsedMillis = elapsedNow();
             privateBoards.clear();
-            observationCursor = null;
             clearActiveHypothesis();
             if (!privateCleanupPending)
                 clearActiveCandidate();

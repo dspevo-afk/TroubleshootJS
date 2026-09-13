@@ -1,0 +1,22 @@
+{
+  "protocol": "troubleshootjs-preview-identity-v1",
+  "sourceDigest": "2fee0e41298e6db9dbeaf19f6e13c846b6c08488c1544afb5c2e622ca22c018d",
+  "scriptDigest": "216db0113d6da93653d50f1b61fb405b37f686f8af455123e2f71954817f84a5",
+  "webDigest": "d1056dd703fbdea8dc29d909f5736d0f64849f689101e68c6d9a692ed475f625",
+  "executionDigest": "2980aaf07ca1846a7638025550fbd11a40ec17aa884036b04d908ecb096744aa",
+  "executionFileCount": 1436,
+  "previewPort": 64207,
+  "processId": 21500,
+  "processStartTicks": 639249189594435069,
+  "verifierRunId": "U04-U05-RELA-final-shop",
+  "verifierNonce": "90c039d028974b50be80395dce959b337",
+  "status": "PASS",
+  "managedExecSession": 13356,
+  "sourceInputs": "3229a561460e7f26c3ac896e0a775861b89ccb896fb270787f0d8f2824bab2c4",
+  "nativeReuse": "native-reuse-audit.json",
+  "build": "gwt-build.txt",
+  "buildExitCode": 0,
+  "compileSeconds": 69.048,
+  "linkSeconds": 1.445,
+  "permutations": 5
+}

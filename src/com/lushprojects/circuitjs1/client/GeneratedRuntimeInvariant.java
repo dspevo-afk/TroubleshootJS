@@ -462,11 +462,20 @@ final class GeneratedRuntimeInvariant {
             require(slot != null && mutation != null && mutation.getComponentId().equals(componentId),
                 "Workbench provider has no matching runtime slot/provider: " + componentId);
             PhysicalPart<?> installed = slot.getInstalledPart();
-            if (installed != null)
-                require(provider.ownsPart(installed.getId()) &&
-                        provider.getPart(installed.getId()) == installed &&
-                        mutation.ownsPart(installed.getId()),
+            if (installed != null) {
+                PhysicalSlotMutationProvider sourceMutation =
+                    runtime.getMutationProviderForPart(installed.getId());
+                require(runtime.isPartOwnedByRegisteredProvider(installed) &&
+                        mutation instanceof PhysicalSlotMutationProvider.Scoped &&
+                        ((PhysicalSlotMutationProvider.Scoped) mutation).getMutationSlot() != null &&
+                        ((PhysicalSlotMutationProvider.Scoped) mutation).getMutationSlot()
+                            .getPhysicalSlot() == slot &&
+                        ((PhysicalSlotMutationProvider.Scoped) mutation).getMutationSlot()
+                            .acceptsPart(installed) &&
+                        (!installed.isOriginal() || (sourceMutation != null &&
+                            componentId.equals(sourceMutation.getComponentId()))),
                     "Workbench provider lost installed part identity: " + componentId);
+            }
             for (PhysicalPart<?> loose : provider.getLooseParts()) {
                 require(loose != null && !loose.isInstalled() &&
                         runtime.getPart(loose.getId()) == loose && provider.ownsPart(loose.getId()) &&

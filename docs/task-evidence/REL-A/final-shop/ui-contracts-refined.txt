@@ -1,0 +1,2 @@
+PASS: node --check war/tsj-workbench-ui.js
+PASS U04 UI adapter contracts:88 assertions (jsdom26.1.0). Root fresh invocation after final spacing/notice refinement; actual browser proof separate.

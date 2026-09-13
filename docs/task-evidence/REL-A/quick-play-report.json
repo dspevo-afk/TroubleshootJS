@@ -1,0 +1,11 @@
+{
+  "report": "unrepaired-finish-blocked;correct-finish-passed;fresh-session-isolated",
+  "status": "PASS:quick-play",
+  "executionDigest": "b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d",
+  "observedAt": "2026-09-13T12:20:27.068Z",
+  "route": "?tsjQuickPlay=true&tsjDebug=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=0&tsjQuickPlayTestSeed=3",
+  "qualification": "Full sixteen-entropy/eight-family selector and construction contracts; initial LED3 unrepaired rejection, correct completion and fresh session isolation",
+  "operationElapsedMs": null,
+  "cleanupElapsedMs": null,
+  "limits": "The legacy report does not expose separate operation/cleanup duration. CDP reads timed out while synchronous work was active; a later read observed PASS. Normal visible entry is separate."
+}

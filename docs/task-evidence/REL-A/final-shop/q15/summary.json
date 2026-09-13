@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "assertions": 613,
+  "supportAssertions": 80,
+  "elapsedMs": 623124,
+  "cleanupMs": 2,
+  "ownerRestored": true,
+  "cancellationMs": 0,
+  "cases": 11,
+  "continuityReadings": 66,
+  "maxAdmissionMs": 59544,
+  "maxUnitMs": 2065,
+  "malformedCanaries": 22,
+  "forcedCleanup": "PASS",
+  "executionDigest": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+  "combinedReaders": "PASS: current Q15/A10/E03/A08/Task41/Task49 and malformed proof readers,exit0"
+}

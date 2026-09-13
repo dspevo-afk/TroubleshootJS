@@ -32,6 +32,7 @@ final class GeneratedDiagnosticSolvabilityEvidence {
     private final Vector<String> executedIsolationActionIds;
     private final Vector<String> executedTemporalWaitSamples;
     private final int measuredExecutionDepth;
+    private final int completedSemanticActions;
     private final GeneratedDiagnosticRepairSemantics repairSemantics;
     private final boolean unaffectedFunctionRetestObservation;
     private final String equivalentRepairClass;
@@ -81,6 +82,7 @@ final class GeneratedDiagnosticSolvabilityEvidence {
         executedIsolationActionIds = executionTrace.getExecutedIsolationActionIds();
         executedTemporalWaitSamples = executionTrace.getExecutedTemporalWaitSamples();
         measuredExecutionDepth = executionTrace.getMeasuredDiagnosticDepth();
+        completedSemanticActions = executionTrace.getCompletedSemanticActions();
         repairSemantics = executionTrace.getRepairSemantics();
         this.unaffectedFunctionRetestObservation = unaffectedFunctionRetestObservation;
         this.equivalentRepairClass = equivalentRepairClass;
@@ -119,6 +121,7 @@ final class GeneratedDiagnosticSolvabilityEvidence {
         this.executedIsolationActionIds = copy(source.executedIsolationActionIds);
         this.executedTemporalWaitSamples = copy(source.executedTemporalWaitSamples);
         this.measuredExecutionDepth = source.measuredExecutionDepth;
+        this.completedSemanticActions = source.completedSemanticActions;
         this.repairSemantics = source.repairSemantics;
         this.unaffectedFunctionRetestObservation = source.unaffectedFunctionRetestObservation;
         this.equivalentRepairClass = classId;
@@ -141,6 +144,7 @@ final class GeneratedDiagnosticSolvabilityEvidence {
     int getAdmittedPhysicalOwnerCount() { return admittedPhysicalOwnerCount; }
     int getDeclaredPlanDepth() { return declaredPlanDepth; }
     int getMeasuredExecutionDepth() { return measuredExecutionDepth; }
+    int getCompletedSemanticActions() { return completedSemanticActions; }
     Vector<String> getDeclaredTemplateIds() { return copy(declaredTemplateIds); }
     Vector<String> getDeclaredProbeTargetIds() { return copy(declaredProbeTargetIds); }
     Vector<String> getDeclaredInputPowerTransitions() {

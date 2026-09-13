@@ -17,6 +17,7 @@ final class PhysicalMutationScope {
         AFTER_GRAPH_CONNECT,
         AFTER_GRAPH_APPEND,
         AFTER_SLOT_CLEAR,
+        AFTER_EMPTY_SLOT_REBIND,
         AFTER_PRIMARY_BINDING,
         AFTER_AUXILIARY_BINDING,
         AFTER_ENDPOINT_RETARGET,
@@ -245,7 +246,17 @@ final class PhysicalMutationScope {
         requireOpen();
         if (slot.getInstalledPart() != installedPartBefore)
             throw new IllegalStateException("Physical mutation slot owner changed before clear");
-        return slot.clearForMutation(this);
+        PhysicalPart<?> removed = slot.clearForMutation(this);
+        slot.restoreEmptySlotAttachmentState(this);
+        // An empty slot retains its generated backing as the component's
+        // canonical owner.  Without this rebinding, a portable acquired part
+        // moved to another slot would remain claimed by both components.
+        instance.getComponentBindings().restoreCanonicalForMutation(
+            intent.getComponentId());
+        instance.getConnectionBindings().restoreCanonicalComponentEndpoints(
+            intent.getComponentId());
+        checkpoint(FailureStage.AFTER_EMPTY_SLOT_REBIND);
+        return removed;
     }
 
     void registerCanonicalElement(CircuitElm element) {

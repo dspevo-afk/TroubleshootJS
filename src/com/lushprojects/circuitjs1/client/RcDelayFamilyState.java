@@ -20,34 +20,17 @@ final class RcDelayFamilyState implements GeneratedBoardFamilyState {
             new GeneratedCustomerRetestProfile.Executor() {
             public GeneratedCustomerRetestResult execute(CirSim sim,
                     GeneratedBoardInstance instance) {
-                if (sim == null || instance == null || sim.activeMeasurementOverlay ||
-                        sim.getBoardModificationController() == null ||
-                        !sim.getBoardModificationController().isFullyRestored())
-                    return GeneratedCustomerRetestSupport.failure();
-                if (sim.getBoardPowerController().getState() != BoardPowerState.POWERED)
-                    return GeneratedCustomerRetestSupport.powerRequiredFailure();
-                BoardPowerState priorPower = sim.getBoardPowerController().getState();
-                boolean priorPhysicalState = sim.getBoardModificationController().isFullyRestored();
-                try {
-                    temporal.performCustomerRetest(sim);
-                    return temporal.passedCustomerRetest() ?
-                        GeneratedCustomerRetestSupport.success() :
-                        GeneratedCustomerRetestSupport.failure();
-                } finally {
-                    try {
-                        GeneratedCustomerRetestSupport.restorePower(sim, priorPower);
-                    } finally {
-                        if (priorPhysicalState != sim.getBoardModificationController()
-                                .isFullyRestored())
-                            throw new IllegalStateException("Customer retest changed physical board state");
-                    }
-                }
+                return GeneratedWork.complete(temporal.beginCustomerRetest(sim, instance));
             }
         });
         operations.add(new GeneratedBoardOperation(GeneratedBoardOperationIds.CUSTOMER_RETEST,
-            "Power-cycle and Retest Customer", new GeneratedBoardOperation.Executor() {
-            public GeneratedCustomerRetestResult execute(CirSim sim, GeneratedBoardInstance instance) {
-                return retestProfile.execute(sim, instance);
+            "Power-cycle and Retest Customer", new GeneratedBoardOperation.ResumableExecutor() {
+            public GeneratedWork<GeneratedCustomerRetestResult> begin(CirSim sim,
+                    GeneratedBoardInstance instance) {
+                return temporal.beginCustomerRetest(sim, instance);
+            }
+            public int getWorkUnits(GeneratedBoardInstance instance) {
+                return temporal.getProfileWorkUnits();
             }
         }));
     }

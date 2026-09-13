@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "runtimeStatus": "OBSERVED",
+  "reader": "Assert-Task43PRuntimeEvidence",
+  "readerExitCode": 0,
+  "openBlockerCount": 0,
+  "verifiedLanes": [
+    "A",
+    "B/F",
+    "C",
+    "E",
+    "D",
+    "G",
+    "H",
+    "I"
+  ],
+  "malformedContractProbe": "PASS",
+  "executionDigest": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+  "limit": "Actual built-in Browser runtime and maintained reader; historical Windows CDP wrapper unqualified."
+}

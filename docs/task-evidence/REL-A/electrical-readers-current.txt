@@ -1,0 +1,3 @@
+COMMAND: ./scripts/verify-e01-e03-evidence.ps1 -EvidenceRoot docs/task-evidence/REL-A
+PASS: E01/E03 electrical reports, forced failures, five reader canaries and maintained Task41/Task49/A08 readers.
+Exit0; command wall0.734s.

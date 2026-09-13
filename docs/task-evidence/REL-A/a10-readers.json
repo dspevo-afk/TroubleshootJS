@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "attempts": 24,
+  "cancellationMaxMs": 3,
+  "first": {
+    "p50Ms": 844,
+    "p95Ms": 2093,
+    "worstMs": 2093
+  },
+  "immediateRepeat": {
+    "p50Ms": 851,
+    "p95Ms": 2009,
+    "worstMs": 2009
+  },
+  "malformedCanariesRejected": [
+    "missing temporalWork.comparedProfiles",
+    "missing temporalWork.phases",
+    "missing temporalWork.cancelBoundaries",
+    "missing temporalWork.staleGraphBoundaries",
+    "missing temporalWork.sourceChangeBoundaries",
+    "missing temporalWork.exactStateSamplesEventsCounters",
+    "missing temporalWork.partialPublicationRejected",
+    "missing temporalWork.repairPowerGuard",
+    "missing temporalWork.stagedAbortBoundaries",
+    "missing temporalWork.abortedSourcesDisconnected",
+    "missing observationCleanup.assertions",
+    "missing observationCleanup.cursorRetry",
+    "missing observationCleanup.closedSessionRetry",
+    "missing observationCleanup.retainedObservation",
+    "missing observationCleanup.successorUntouched",
+    "missing observationCleanup.leaseRetained",
+    "missing observationCleanup.privateGraphDisposed"
+  ],
+  "executionDigest": "35b0bbb28d03de8c828895f6d3390ec11d2ff2c32748f8fa42e4210b6d47dfa1",
+  "scope": "Final compiled A10: RC phase/abort and actual instrument-controller cleanup; complementary real overlays/owner replacement passed Task43P separately."
+}

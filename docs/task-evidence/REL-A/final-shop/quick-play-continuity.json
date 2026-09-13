@@ -1,0 +1,12 @@
+{
+  "family": "LED_INDICATOR",
+  "preview": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+  "report": "unrepaired-finish-blocked;correct-finish-passed;fresh-session-isolated",
+  "seed": "3",
+  "status": "PASS:quick-play",
+  "observedElapsedUpperBoundMs": 491973,
+  "operationElapsedMs": null,
+  "cleanupElapsedMs": null,
+  "timingLimit": "Synchronous legacy verifier has no operation/cleanup split. Browser observation time includes observation delay and cannot stand in for either.",
+  "coverage": "Full16-entropy/eight-family construction,16 RB15 draws in qualified11, exact selected/generated seed equality, LED3 unrepaired/correct completion, fresh session isolation."
+}

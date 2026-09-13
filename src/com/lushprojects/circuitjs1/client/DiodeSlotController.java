@@ -1,7 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
 class DiodeSlotController implements PhysicalSlotMutationProvider,
-        PhysicalSlotMutationProvider.Scoped {
+        PhysicalSlotMutationProvider.Scoped, CatalogAcquisitionProvider {
     private final CirSim sim;
     private final GeneratedBoardInstance instance;
     private final BoardModificationController modifications;
@@ -58,8 +58,9 @@ class DiodeSlotController implements PhysicalSlotMutationProvider,
         if (WorkbenchOperation.CATALOG_INSTALL.equals(id))
             return slot.isEmpty() && hasCatalogEntry(operation.getCatalogEntryId());
         if (WorkbenchOperation.INSTALL.equals(id))
-            return operation.getPart() != null && ownsPartIdentity(operation.getPart()) &&
-                !operation.getPart().isInstalled() && slot.isEmpty();
+            return operation.getPart() instanceof PhysicalDiodePart &&
+                instance.getPhysicalBoardRuntime().isPartInstallableAt(operation.getPart(),
+                    getComponentId());
         if (WorkbenchOperation.REMOVE.equals(id))
             return !slot.isEmpty() && matchesInstalledPart(operation);
         if (WorkbenchOperation.LIFT_LEAD.equals(id))
@@ -119,9 +120,12 @@ class DiodeSlotController implements PhysicalSlotMutationProvider,
         DiodeComponentSlot slot = capability.getSlot();
         if (!slot.isEmpty())
             return false;
-        PhysicalDiodePart part = capability.getInventory().get(partId);
-        if (part.isInstalled())
+        PhysicalPart<?> candidate = instance.getPhysicalBoardRuntime().getPart(partId);
+        if (!(candidate instanceof PhysicalDiodePart) ||
+                !instance.getPhysicalBoardRuntime().isPartInstallableAt(candidate,
+                    getComponentId()))
             return false;
+        PhysicalDiodePart part = (PhysicalDiodePart) candidate;
         PhysicalMutationScope scope = newScope("install", part);
         try {
             scope.replacePrimaryBinding(part.getElement());
@@ -140,18 +144,27 @@ class DiodeSlotController implements PhysicalSlotMutationProvider,
     }
 
     public boolean installNewFromCatalog(String catalogEntryId) {
+        return catalogPart(catalogEntryId, true) != null;
+    }
+
+    public PhysicalPart<?> acquireFromCatalog(String catalogEntryId) {
+        return catalogPart(catalogEntryId, false);
+    }
+
+    private PhysicalDiodePart catalogPart(String catalogEntryId, boolean install) {
         requireSafeMutation();
         final DiodeComponentSlot slot = capability.getSlot();
-        if (!slot.isEmpty())
-            return false;
+        if (install && !slot.isEmpty())
+            return null;
         final DiodeCatalogEntry entry = capability.getCatalog().get(catalogEntryId);
         final DiodeNameplate specification = entry.getSpecification();
         final PhysicalNameplate playerNameplate = entry.getPlayerVisibleNameplate();
         final DiodeElm element = DynamicDiodeBackingAllocator.create(instance.getSimulationElements());
         final String componentId = slot.getComponentId();
-        PhysicalMutationScope scope = newScope("catalog", null, null, catalogEntryId);
+        PhysicalMutationScope scope = newScope(install ? "catalog" : "acquire", null, null, catalogEntryId);
+        PhysicalDiodePart part;
         try {
-        PhysicalDiodePart part = scope.acquire(capability.getInventory(),
+        part = scope.acquire(capability.getInventory(),
             componentId + "_CATALOG_PART",
             new PhysicalPartIdentityFactory<PhysicalDiodePart>() {
                 public PhysicalDiodePart create(String partId) {
@@ -166,19 +179,21 @@ class DiodeSlotController implements PhysicalSlotMutationProvider,
             });
         scope.registerCanonicalElement(element);
         scope.appendActiveElement(element);
+        if (install) {
         scope.replacePrimaryBinding(element);
         retargetComponentLeadBindings(part, scope);
         scope.installPart(part);
         scope.restoreComponentGraph();
+        }
         scope.commit();
         } catch (Throwable failure) {
             scope.abort(failure);
             PhysicalMutationScope.rethrow(failure);
-            return false;
+            return null;
         }
         scope.closeAfterCommit();
         finishMutation();
-        return true;
+        return part;
     }
 
     private void requireSafeMutation() {
@@ -192,7 +207,9 @@ class DiodeSlotController implements PhysicalSlotMutationProvider,
     }
 
     private boolean isSafeMutationAvailable() {
-        return sim.getGeneratedBoardInstance() == instance && !sim.activeMeasurementOverlay &&
+        return sim.getGeneratedBoardInstance() == instance &&
+            sim.getBoardModificationController() == modifications &&
+            !sim.activeMeasurementOverlay &&
             sim.isChallengeInteractionEnabled() &&
             sim.getBoardPowerController().isElectricallyUnpowered() &&
             !instance.getPhysicalBoardRuntime().isMutationInProgress() &&

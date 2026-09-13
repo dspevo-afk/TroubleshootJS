@@ -551,10 +551,27 @@ final class ArchitectureDeveloperVerifier {
     private static void verifyRuntimeProviderPart(PhysicalBoardRuntime runtime,
             WorkbenchPartsProvider partsProvider, PhysicalSlotMutationProvider mutationProvider,
             PhysicalPart<?> part) {
-        require(runtime.getPart(part.getId()) == part && partsProvider.ownsPart(part.getId()) &&
-                partsProvider.getPart(part.getId()) == part && mutationProvider.ownsPart(part.getId()) &&
-                runtime.getWorkbenchPartsProviderForPart(part.getId()) == partsProvider,
+        WorkbenchPartsProvider sourceParts = runtime.getWorkbenchPartsProviderForPart(part.getId());
+        PhysicalSlotMutationProvider sourceMutation = runtime.getMutationProviderForPart(part.getId());
+        require(runtime.getPart(part.getId()) == part &&
+                runtime.isPartOwnedByRegisteredProvider(part) && sourceParts != null &&
+                sourceParts.getPart(part.getId()) == part && sourceMutation != null &&
+                sourceMutation.ownsPart(part.getId()),
             "provider view escaped runtime-owned physical identity: " + part.getId());
+        if (!part.isInstalled())
+            require(sourceParts == partsProvider && sourceMutation == mutationProvider,
+                "loose provider does not expose its source inventory: " + part.getId());
+        else {
+            require(mutationProvider instanceof PhysicalSlotMutationProvider.Scoped,
+                "installed provider has no scoped target slot: " + part.getId());
+            PhysicalMutationSlot targetSlot =
+                ((PhysicalSlotMutationProvider.Scoped) mutationProvider).getMutationSlot();
+            require(targetSlot != null && part.getBoardSlot() == targetSlot.getPhysicalSlot() &&
+                    targetSlot.getInstalledPart() == part &&
+                    (!part.isOriginal() || (sourceMutation != null &&
+                        mutationProvider.getComponentId().equals(sourceMutation.getComponentId()))),
+                "installed provider does not expose its current target slot: " + part.getId());
+        }
     }
 
     private static void verifyPhysicalDefinitionProviders(GeneratedBoardInstance instance) {

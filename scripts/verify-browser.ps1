@@ -2761,6 +2761,11 @@ function Write-VerifierRouteTiming([string]$Name, [string]$Phase, [string]$Outco
 
 function verifyRoute([string]$name, [string]$url, [string]$expected,
         [string]$expectedComplaint = '', [string]$expectedFailure = '') {
+    # Compiled verifier entry is developer-only, including legacy query flags.
+    # Preserve an explicit debug=false privacy canary rather than overriding it.
+    if ($url -match '[?&]tsjVerify[^=&]*=' -and $url -notmatch '[?&]tsjDebug=') {
+        $url += '&tsjDebug=true'
+    }
     $profile = $null
     $browser = $null
     $socket = $null

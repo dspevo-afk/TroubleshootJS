@@ -14,7 +14,8 @@ class DcVoltageMeasurementStimulus implements ActiveMeasurementStimulus {
         Point redPoint = red.getElement().getPost(red.getPostIndex());
         Point blackPoint = black.getElement().getPost(black.getPostIndex());
         inputResistor = new ResistorElm(redPoint.x, redPoint.y);
-        inputResistor.drag(blackPoint.x, blackPoint.y);
+        // The meter's load must connect to the actual post, even off-grid.
+        inputResistor.setPosition(redPoint.x, redPoint.y, blackPoint.x, blackPoint.y);
         inputResistor.setResistance(INPUT_RESISTANCE);
     }
 

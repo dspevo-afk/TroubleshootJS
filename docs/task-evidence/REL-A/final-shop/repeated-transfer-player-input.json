@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "candidateExecutionDigest": "33426a5f4aa40e2700fd46e60b9ee636f5d1a37dc94770daf21deffdc600859d",
+  "replay": "tsj-alpha/1/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/3",
+  "kind": "Agent-operated real visible inputs",
+  "actions": [
+    "Accept ticket; unrepaired customer retest fails",
+    "Isolate all supplies; Shop search330; acquire generic330Ohm resistor as Part16",
+    "Remove Channel A RLOAD original Part6; install Part16 at A",
+    "Remove Part16 from A; remove B original Part12; both targets shown",
+    "Install same Part16 at B; remove it; install same Part16 back at A",
+    "Restore Part12 at B; power on; customer retest passes",
+    "Return to completed board; fit board"
+  ],
+  "retainedInputFailures": [
+    "First tightly batched reinspection after installation had no Remove component match. Fresh component selections exposed the action and the sequence continued.",
+    "Power-off click after completion was disabled; completed board remains powered and mutation-locked. No OFF claim.",
+    "Attribute enumeration used an unsupported Browser DOM method; explicit published-report attribute reads succeeded."
+  ],
+  "final": {
+    "buttons": [
+      {
+        "disabled": false,
+        "label": "Main menu"
+      },
+      {
+        "disabled": true,
+        "label": "Board Power: ON"
+      },
+      {
+        "disabled": false,
+        "label": "Fit board"
+      },
+      {
+        "disabled": false,
+        "label": "New board / Main menu"
+      }
+    ],
+    "looseText": [
+      "Part 6 - 330 Ohm +/-5%"
+    ],
+    "reports": []
+  },
+  "limitations": [
+    "Human calibration is separate",
+    "Launcher correction is not part of this preview candidate"
+  ]
+}

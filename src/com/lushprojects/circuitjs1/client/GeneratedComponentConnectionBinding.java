@@ -4,6 +4,8 @@ class GeneratedComponentConnectionBinding {
     private final String componentId;
     private final String padId;
     private final CircuitMeasurementEndpoint boardEndpoint;
+    /** Original generated endpoint retained while the slot is temporarily empty. */
+    private final CircuitMeasurementEndpoint canonicalComponentEndpoint;
     private CircuitMeasurementEndpoint componentEndpoint;
     private final CircuitElm connectionElement;
 
@@ -13,6 +15,7 @@ class GeneratedComponentConnectionBinding {
         this.componentId = componentId;
         this.padId = padId;
         this.boardEndpoint = boardEndpoint;
+        this.canonicalComponentEndpoint = componentEndpoint;
         this.componentEndpoint = componentEndpoint;
         this.connectionElement = connectionElement;
     }
@@ -25,6 +28,9 @@ class GeneratedComponentConnectionBinding {
 	if (endpoint == null)
 	    throw new IllegalArgumentException("Missing component endpoint");
 	componentEndpoint = endpoint;
+    }
+    void restoreCanonicalComponentEndpoint() {
+        componentEndpoint = canonicalComponentEndpoint;
     }
     CircuitElm getConnectionElement() { return connectionElement; }
 }

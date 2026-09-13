@@ -1,0 +1,22 @@
+{
+  "protocol": "troubleshootjs-preview-identity-v1",
+  "sourceDigest": "78ab5bad00ba0e40e99bd7298c368cc8bcac792bbeaee8348f7845e5ae18f933",
+  "scriptDigest": "216db0113d6da93653d50f1b61fb405b37f686f8af455123e2f71954817f84a5",
+  "webDigest": "b280a77d556901d8791142cd8506615ddfd76c4bdc6d2c3e38400766ede59e2c",
+  "executionDigest": "33426a5f4aa40e2700fd46e60b9ee636f5d1a37dc94770daf21deffdc600859d",
+  "executionFileCount": 1436,
+  "previewPort": 64207,
+  "processId": 20444,
+  "processStartTicks": 639249220716750357,
+  "verifierRunId": "U04-U05-RELA-final-shop-5",
+  "verifierNonce": "c2185a7a3a4b45689e45535a784338fb",
+  "identityStatus": "PASS",
+  "qualificationStatus": "IN PROGRESS - full Alpha running; launcher separately owned",
+  "managedExecSession": 65020,
+  "sourceInputs": "b5e1a168b9ad9227eb21e4911b66d29ce40606361d62d436d8c77eedd796cf11",
+  "build": "gwt-rebind-5.txt",
+  "buildExitCode": 0,
+  "compileSeconds": 68.305,
+  "linkSeconds": 1.34,
+  "permutations": 5
+}

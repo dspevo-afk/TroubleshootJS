@@ -1,0 +1,12 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+[java-version:stderr] openjdk version "1.8.0_502"
+[java-version:stderr] OpenJDK Runtime Environment (Temurin)(build 1.8.0_502-b07)
+[java-version:stderr] OpenJDK 64-Bit Server VM (Temurin)(build 25.502-b07, mixed mode)
+[gwt-compile:stdout] Compiling module com.lushprojects.circuitjs1.circuitjs1
+[gwt-compile:stdout]    Ignored 1 unit with compilation errors in first pass.
+[gwt-compile:stdout] Compile with -strict or with -logLevel set to TRACE or DEBUG to see all errors.
+[gwt-compile:stdout]    Tracing compile failure path for type 'com.lushprojects.circuitjs1.client.A08ScopedAdmissionVerifier'
+[gwt-compile:stdout]       [ERROR] Errors in 'file:/<repository>/src/com/lushprojects/circuitjs1/client/A08ScopedAdmissionVerifier.java'
+[gwt-compile:stdout]          [ERROR] Line 8: The type new PhysicalMutationSlot(){} must implement the inherited abstract method PhysicalMutationSlot.restoreEmptySlotAttachmentState(PhysicalMutationScope)
+[gwt-compile:stdout]    [ERROR] Hint: Check the inheritance chain from your module; it may not be inheriting a required module or a module may not be adding its source path entries properly
+BUILD_INFRASTRUCTURE: GWT Compile failed with exit code 1. Logs retained at '<user>\AppData\Local\Temp\TroubleshootJS\build-process-08f602824d2440059b492cf7c119e522'.

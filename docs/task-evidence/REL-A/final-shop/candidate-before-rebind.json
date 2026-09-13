@@ -1,0 +1,22 @@
+{
+  "protocol": "troubleshootjs-preview-identity-v1",
+  "sourceDigest": "8b9976227bf6f43b2070f73856108799070df1e1f2139a6764daceb33d91e8a3",
+  "scriptDigest": "216db0113d6da93653d50f1b61fb405b37f686f8af455123e2f71954817f84a5",
+  "webDigest": "0ad90c5a130941b1d323d564aa401e74e3217d8972cb688e295e1bf723428c33",
+  "executionDigest": "f83f0a2e0244570b9318ec27be0b2fac1d7a67d08a77cb6fc522ba9541731052",
+  "executionFileCount": 1436,
+  "previewPort": 64207,
+  "processId": 21112,
+  "processStartTicks": 639249204421264119,
+  "verifierRunId": "U04-U05-RELA-final-shop-3",
+  "verifierNonce": "c7299cc342424d36b5c11bfd1ddab696",
+  "identityStatus": "PASS",
+  "qualificationStatus": "IN PROGRESS",
+  "managedExecSession": 24543,
+  "sourceInputs": "b14413ea2c65b8802c6364ce1d65f118c20bfa565e9baec7ad1993647e00e8de",
+  "build": "gwt-nmos-fixture-3.txt",
+  "buildExitCode": 0,
+  "compileSeconds": 67.584,
+  "linkSeconds": 1.411,
+  "permutations": 5
+}

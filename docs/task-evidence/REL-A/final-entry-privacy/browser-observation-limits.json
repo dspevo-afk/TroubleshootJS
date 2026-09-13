@@ -1,0 +1,33 @@
+{
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "scope": "Read-only built-in Browser sampling; distinct from application gate status and from the historical Windows CDP wrapper.",
+  "observations": [
+    {
+      "phase": "first Task43P runtime progress read",
+      "status": "FAIL",
+      "error": "CDP operation exceeded its deadline before command dispatch"
+    },
+    {
+      "phase": "Alpha progress read during independent normal-menu reload",
+      "status": "FAIL",
+      "error": "Timed out running CDP command Page.getFrameTree for tab3"
+    },
+    {
+      "phase": "A10 progress read",
+      "status": "FAIL",
+      "error": "Timed out running CDP command Page.getFrameTree for tab3"
+    },
+    {
+      "phase": "Quick Play full selector/construction progress read",
+      "status": "FAIL",
+      "error": "CDP operation exceeded its deadline before command dispatch"
+    },
+    {
+      "phase": "Task41 diagnostic progress read",
+      "status": "FAIL",
+      "error": "CDP operation exceeded its deadline before command dispatch",
+      "occurrences": 2
+    }
+  ],
+  "interpretation": "These timed-out reads supplied no PASS evidence. Completed reports captured later and independently validated by maintained readers establish application results. No command timeout or transport behavior is certified as passing."
+}

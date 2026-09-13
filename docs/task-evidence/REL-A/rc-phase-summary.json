@@ -1,0 +1,70 @@
+{
+  "status": "PRIOR CANDIDATE - cleanup blockers found",
+  "sourceManifest": "rc-phase-inputs.json",
+  "executionDigest": "4d529e91ea6f2af66183f82a62dbd1d815c340632ad3aebef33f71c4e16c5631",
+  "native": {
+    "status": "PASS",
+    "suites": 33,
+    "exitCode": 0,
+    "cleanup": "PASS"
+  },
+  "gwt": {
+    "status": "PASS",
+    "permutations": 5,
+    "compileSeconds": 70.72,
+    "linkSeconds": 1.359,
+    "exitCode": 0
+  },
+  "a10": {
+    "status": "PASS",
+    "assertions": 1274,
+    "rcWorkAssertions": 501,
+    "attempts": 24,
+    "cleanup": "PASS",
+    "strictReader": "PASS",
+    "newMalformedCanariesRejected": 9,
+    "rcFirstMs": 58026,
+    "rcRepeatMs": 58332,
+    "rcFirstMaximumUnitMs": 1886,
+    "rcRepeatMaximumUnitMs": 1916
+  },
+  "focusedRc3": {
+    "status": "PASS",
+    "admissionMs": 50540,
+    "maximumUnitMs": 1967,
+    "workUnits": 82,
+    "repairPassed": true,
+    "artifact": "alpha-rc3-phase-1.json"
+  },
+  "priorFailure": "alpha-final-failure.json",
+  "priorFocusedTiming": "alpha-rc3-unit-timing.json",
+  "limits": "No placement/job/unit/work budget changed. Focused and prior-candidate passes do not replace the full combined qualification; no population timing estimate.",
+  "remaining": [
+    "Full current-source Alpha38",
+    "Full current-source Q15 eleven-case cohort and readers",
+    "Other affected compiled regressions",
+    "Quick Play and normal player/replay/privacy flows",
+    "Human EASY/MEDIUM trials",
+    "Integrated/staged review and publication"
+  ],
+  "fullAlpha": {
+    "status": "PASS",
+    "cases": 38,
+    "operationMs": 848144,
+    "cleanupMs": 2,
+    "artifact": "alpha-rc-phase-1.json",
+    "rcMaximumUnitMs": [
+      1903,
+      1934,
+      1994
+    ]
+  },
+  "cleanupReview": {
+    "status": "BLOCKERS FOUND",
+    "findings": [
+      "Staged abort isolated before temporal cancellation could restore POWERED controls.",
+      "Failed observation cleanup discarded its retry handle and could restore before cleanup completed."
+    ],
+    "resolution": "Root source now orders final isolation after cancellation and retains observation/private ownership through cleanup failure; new canaries and fresh qualification pending."
+  }
+}

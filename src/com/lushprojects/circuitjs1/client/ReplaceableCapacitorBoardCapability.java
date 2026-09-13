@@ -4,7 +4,7 @@ import java.util.Vector;
 
 /** Typed runtime adapter for the RC family’s fault-owning capacitor location. */
 final class ReplaceableCapacitorBoardCapability implements PhysicalBoardRuntimeCapability,
-        PhysicalBoardInstallationProvider, WorkbenchPartsProvider {
+        PhysicalBoardInstallationProvider.Scoped, WorkbenchPartsProvider {
     static final String ID = "REPLACEABLE_CAPACITOR";
 
     private final CapacitorComponentSlot slot;
@@ -26,6 +26,9 @@ final class ReplaceableCapacitorBoardCapability implements PhysicalBoardRuntimeC
     CapacitorComponentSlot getSlot() { return slot; }
     PhysicalPartInventory<PhysicalCapacitorPart> getInventory() { return inventory; }
     CapacitorReplacementCatalog getCatalog() { return catalog; }
+
+    public PhysicalMutationSlot getMutationSlot() { return slot; }
+    public PhysicalPartInventory<?> getMutationInventory() { return inventory; }
 
     public PhysicalSlotMutationProvider install(CirSim sim, GeneratedBoardInstance instance,
             BoardModificationController modifications, double initialSimulationTime) {

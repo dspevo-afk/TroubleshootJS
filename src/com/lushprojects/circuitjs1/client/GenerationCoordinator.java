@@ -4,7 +4,7 @@ import com.google.gwt.user.client.Timer;
 
 /** One serial generation owner per CirSim; browser turns never race candidates. */
 final class GenerationCoordinator {
-    // RC admission includes 14 real temporal sequences (52 canonical units).
+    // Temporal profiles yield between their existing completed solver calls.
     // Pilot evidence rerates this whole-job guard independently from A01's
     // 30s aggregate corpus; the frozen benchmark retains 5s per full attempt.
     static final long MAX_JOB_MILLIS = 90000;
@@ -48,6 +48,10 @@ final class GenerationCoordinator {
     }
     boolean retainsSavedOwnersForDeveloperVerification() {
         return services != null && services.hasSavedOwners();
+    }
+    boolean retainsObservationForDeveloperVerification() {
+        return services != null && services.proof != null &&
+            services.proof.retainsObservationForDeveloperVerification();
     }
     void retryFailedCleanupForDeveloperVerification() {
         if (isRunning() || advancing || services == null || !services.hasSavedOwners())
@@ -171,6 +175,7 @@ final class GenerationCoordinator {
         private GenerationRequest.ConstructionSession constructionSession;
         private FreshGeneratedRuntimeInstallation.Staged installation;
         private GeneratedDiagnosticProofService.Session proof;
+        private DifficultyAssessment difficulty;
         private boolean notified, cleanupComplete;
 
         Services(GenerationRequest request, Completion completion) {
@@ -227,14 +232,16 @@ final class GenerationCoordinator {
                 job.checkpoint();
                 if (candidate == null || candidate.getPcbLayout() == null)
                     throw new IllegalStateException("Native generation returned incomplete physical ownership");
-                int proofUnits = GeneratedDiagnosticProofService.requiredWorkUnits(candidate);
-                int otherUnits = candidate.getTemporalBehavior() == null ? 5 : 6;
+                int proofUnits = GeneratedDiagnosticProofService.requiredWorkUnits(candidate,
+                    request.requiresExplicitCompletion());
+                int otherUnits = candidate.getTemporalBehavior() == null ? 5 :
+                    4 + 2 * candidate.getTemporalBehavior().getProfileWorkUnits();
                 if (proofUnits > MAX_JOB_STEPS - otherUnits)
                     throw new GenerationJob.Failure(GenerationJob.Outcome.WORK_EXHAUSTED,
                         "Diagnostic program exceeds the current generation work budget");
                 if (request.isComposition()) candidate.getPhysicalBoardRuntime().validateSupportedCompositionProviders();
                 installation = new FreshGeneratedRuntimeInstallation.Staged(sim, candidate);
-                installation.prepare(request.isQuickPlay());
+                installation.prepare(request.requiresExplicitCompletion());
             } else {
                 installation.finishPreparation();
             }
@@ -260,8 +267,13 @@ final class GenerationCoordinator {
             boolean more = proof.step();
             if (!more) {
                 proof.finish();
+                if (request.getDifficulty() != null) {
+                    difficulty = DifficultyAssessment.assess(candidate, sim.getGeneratedChallengeController().getDiagnosticProofReceipt());
+                    difficulty.require(request.getDifficulty());
+                }
                 if (job.getStageWorkCount(GenerationJob.Stage.HYPOTHESES) !=
-                        GeneratedDiagnosticProofService.requiredWorkUnits(candidate))
+                        GeneratedDiagnosticProofService.requiredWorkUnits(candidate,
+                            request.requiresExplicitCompletion()))
                     throw new IllegalStateException("Diagnostic operation count differs from its declared program");
             }
             return more;
@@ -279,6 +291,10 @@ final class GenerationCoordinator {
         }
         public void publish(GenerationReceipt receipt) {
             if (receipt == null) throw new IllegalStateException("Missing generation proof receipt");
+            if (request.getDifficulty() != null) {
+                if (difficulty == null) throw new IllegalStateException("Missing difficulty admission evidence");
+                difficulty.require(request.getDifficulty());
+            }
             if (request.isQuickPlay()) {
                 QuickPlaySelection selection = new QuickPlaySelection(request.getDescriptor().getDeviceIntent().getId(),
                     request.getDescriptor().getRootSeed());

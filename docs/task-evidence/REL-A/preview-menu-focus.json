@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "executionDigest": "b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d",
+  "sourceDigest": "be095baed68d9de782da22209cf35eedab957953e083778cd73eb13163ece588",
+  "scriptDigest": "216db0113d6da93653d50f1b61fb405b37f686f8af455123e2f71954817f84a5",
+  "webDigest": "7136f4d9c13e7624d6e64d949c232b7db0122ca5124c681ad5c3e164a9adb51a",
+  "executionFileCount": 1435,
+  "pid": 3688,
+  "startTicks": 639248969817581278,
+  "runId": "U04-U05-RELA-menu-focus",
+  "port": 64206,
+  "sourceManifest": "final-ui-inputs.json"
+}

@@ -1,0 +1,8 @@
+{
+  "status": "FAIL",
+  "artifact": "canary-composed3-failure-1.json",
+  "ownerRestored": true,
+  "cause": "injected() reused the report operation cross-install as the expected real transaction operation; ResistorSlotController correctly records install.",
+  "correction": "Separate report operation from required physical receipt operation via an explicit overload; retain complete compensation/identity/graph assertions and report precise checkpoint on failure.",
+  "qualification": "Pending fresh compiled canary and final native/build gates."
+}

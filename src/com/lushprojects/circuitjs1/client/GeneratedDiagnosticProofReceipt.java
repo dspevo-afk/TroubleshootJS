@@ -55,4 +55,10 @@ final class GeneratedDiagnosticProofReceipt {
     long getElapsedMillis() { return elapsedMillis; }
     String getProviderId() { return providerId; }
     String getProgramIdentity() { return programIdentity; }
+    void requireAssessmentOwner(GeneratedBoardInstance expected) {
+        if (owner != expected || expected == null || expected.getDiagnosticProvider() != provider ||
+                expected.getDiagnosticSolvabilityContract() != contract ||
+                !programIdentity.equals(provider.getObservationProgram().canonical()))
+            throw new IllegalArgumentException("Difficulty proof belongs to a different owner");
+    }
 }

@@ -107,6 +107,41 @@ final class RelayOutputBehavior implements GeneratedBoardFamilyState,
     public GeneratedBoardOperationCatalog getOperationCatalog() { return operations; }
     public GeneratedCustomerRetestProfile getCustomerRetestProfile() { return retest; }
     public double getLiveSolverAdvanceSeconds() { return .005; }
+    public int getProfileWorkUnits() { return 1; }
+    public GeneratedWork<GeneratedRepairStatus> beginProfile(final CirSim sim,
+            final GeneratedBoardInstance owner, final Profile profile) {
+        if (sim == null || owner == null || profile == null)
+            throw new IllegalArgumentException("Missing relay profile context");
+        final Object graph = sim.elmList;
+        return new GeneratedWork<GeneratedRepairStatus>() {
+            private boolean complete, cancelled;
+            private GeneratedRepairStatus result;
+            boolean step() {
+                if (cancelled) throw new IllegalStateException("Relay profile was cancelled");
+                if (complete) return false;
+                if (sim.getGeneratedBoardInstance() != owner || sim.elmList != graph ||
+                        owner.getTemporalBehavior() != RelayOutputBehavior.this)
+                    throw new IllegalStateException("Relay profile lost its owner");
+                requireOwnedBy(owner);
+                if (profile == Profile.HEALTHY) {
+                    prepareHealthyProfile(sim, owner);
+                    result = GeneratedRepairStatus.CORRECTLY_RESTORED;
+                } else if (profile == Profile.FAULTED) {
+                    prepareFaultedProfile(sim, owner);
+                    result = GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
+                } else result = getRepairStatus(sim, owner, sim.getBoardModificationController(),
+                    sim.getBoardPowerController().getState(), sim.activeMeasurementOverlay);
+                complete = true;
+                return false;
+            }
+            GeneratedRepairStatus finish() {
+                if (!complete || cancelled) throw new IllegalStateException("Relay profile is incomplete");
+                return result;
+            }
+            void cancel() { if (!complete) cancelled = true; }
+            int getWorkUnits() { return 1; }
+        };
+    }
     boolean isCommandedOn() { return command.position == 0; }
     private void setCommand(CirSim sim, boolean on) {
         if (isCommandedOn() != on) command.toggle();

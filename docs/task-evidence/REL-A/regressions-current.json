@@ -1,0 +1,71 @@
+{
+  "executionDigest": "b5080dcf8a26650157498b86f5d4c3a6d88f15a57d4ba3c4e79c85f2ebda747d",
+  "scope": "Fresh compiled regressions through built-in Browser. Historical Windows CDP wrapper remains unqualified.",
+  "gates": [
+    {
+      "name": "Task41",
+      "status": "PASS",
+      "artifact": "E03/task41-report.txt",
+      "result": "20 diagnostic routes/182 actual solver samples; strict combined reader PASS",
+      "reader": "PASS: maintained combined evidence readers and negative canaries"
+    },
+    {
+      "name": "Task49",
+      "status": "PASS",
+      "artifact": "E01/task49-report.json",
+      "result": "397 assertions; original owner restored and candidate cleanup reported; strict combined reader PASS",
+      "reader": "PASS: maintained combined evidence readers and negative canaries"
+    },
+    {
+      "name": "A08",
+      "status": "PASS",
+      "artifact": "a08-report.json",
+      "assertions": 1103,
+      "compensatedWrites": 90,
+      "freshFailures": 5,
+      "cleanup": "PASS",
+      "operationElapsedMs": 41976,
+      "result": "Fresh explicit failure publishes no report; combined strict reader PASS",
+      "reader": "PASS: maintained combined evidence readers and negative canaries"
+    },
+    {
+      "name": "E01",
+      "status": "PASS",
+      "artifact": "E01/compiled-source-proof.json",
+      "assertions": 21,
+      "operationElapsedMs": 16,
+      "result": "Protected supply, current limit, short and backfeed thresholds; exact forced failure/no report; combined strict reader PASS",
+      "reader": "PASS: maintained combined evidence readers and negative canaries"
+    },
+    {
+      "name": "E03",
+      "status": "PASS",
+      "artifact": "E03/compiled-relay-proof.json",
+      "assertions": 46,
+      "mutationAssertions": 113,
+      "playerCases": 6,
+      "operationElapsedMs": 35200,
+      "rawElapsedMs": 1777,
+      "result": "Fresh forced failure/no report; maintained electrical thresholds and strict readers PASS"
+    },
+    {
+      "name": "A07",
+      "status": "PASS",
+      "artifact": "a07-report.json",
+      "pureAssertions": 58,
+      "runtimeAssertions": 71,
+      "modelAssertions": 59,
+      "operationElapsedMs": 853,
+      "cleanup": "PASS",
+      "reader": "a07-readers.txt: maintained reader, seven malformed canaries and forced failure PASS"
+    },
+    {
+      "name": "U01",
+      "status": "PASS",
+      "artifact": "u01-report.json",
+      "assertions": 1237,
+      "liveTargets": 6,
+      "identityUnchanged": true
+    }
+  ]
+}

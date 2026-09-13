@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "baselineNativeInputs": "16c8fd6362dc839fc44d3d1665c46094d6a07472d6a24db2346a96e6b22e6e63",
+  "finalSourceInputs": "3229a561460e7f26c3ac896e0a775861b89ccb896fb270787f0d8f2824bab2c4",
+  "inputCount": 1153,
+  "changedAfterNative": [
+    {
+      "path": "tests/contracts/u04_ui_contract.mjs",
+      "before": "3331849e618080ea1603ce71de8a14313f3d85f187083ea173c321d2eef72c86",
+      "after": "0a2016780c8b1ba8104db956d8098ed5683617bd9a6f0125102fbdab58378d10"
+    },
+    {
+      "path": "war/tsj-workbench-ui.css",
+      "before": "e47a4e6231634362449b3714ca37517de2be42f31d206eaf66c44c7b2499a78a",
+      "after": "1dda55affe1b36dc43916134540c4f993f5d1979be5b26b389b3623f0b88af25"
+    },
+    {
+      "path": "war/tsj-workbench-ui.js",
+      "before": "447fd4cbb5b862cff91f42b27648936101e33b0f904474c1e82631c223969974",
+      "after": "1fef416c0f94b049110861bee3f6ddf3bea14571a955af3e68fb6d7c2d2414ab"
+    }
+  ],
+  "nativeReuse": "All Java sources, maintained native scripts, Java tests and independent native oracles unchanged. Only storefront JS/CSS and its separate jsdom test changed. Native33 PASS reused within this audited boundary; actual final GWT/runtime/UI proof remains required.",
+  "exclusions": [
+    "docs evidence",
+    "Python caches",
+    "war/circuitjs1 generated output",
+    "war/WEB-INF/deploy generated output"
+  ]
+}

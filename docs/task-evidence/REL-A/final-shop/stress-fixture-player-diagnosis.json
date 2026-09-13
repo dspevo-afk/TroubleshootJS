@@ -1,0 +1,19 @@
+{
+  "status": "FINDING",
+  "candidateExecutionDigest": "14a2fb1f0712188cc9c12d543afca1143ca9ddabf0e144f57c713e0764b45001",
+  "replay": "tsj-alpha/1/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/3",
+  "input": "Real visible Shop10Ohm acquisition, Channel A RLOAD remove/install, power ON/A HIGH, DCV red/black through accessible RLOAD terminals.",
+  "observedResistanceLabelOhms": 10,
+  "observedDropVolts": 1.576,
+  "displayDerivedPowerWatts": 0.24837760000000003,
+  "ratedPowerWatts": 0.25,
+  "benchTotalMilliamps": 170.591,
+  "interpretation": "Observed DC voltage implies approximately0.2484W in the10Ohm resistor, below its0.25W rating. The original fixture assumption of an overload at this position is invalid.",
+  "wrongRepairRetest": "Did not pass",
+  "cleanup": "DC mode exited; all supplies switched off",
+  "limits": [
+    "Voltage display is rounded; power here is explicitly calculated from that observed display, not injected or substituted for solver evidence.",
+    "Agent visible input, not human calibration.",
+    "No private fault lookup."
+  ]
+}

@@ -1,0 +1,198 @@
+{
+  "status": "PASS",
+  "priorExecutionDigest": "35b0bbb28d03de8c828895f6d3390ec11d2ff2c32748f8fa42e4210b6d47dfa1",
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "checks": [
+    {
+      "family": "LED_INDICATOR",
+      "seed": "0",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "2",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "3",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "LED_INDICATOR",
+      "seed": "4",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "seed": "0",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "seed": "2",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "seed": "3",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "seed": "0",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "seed": "2",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "seed": "3",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RC_DELAY",
+      "seed": "0",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RC_DELAY",
+      "seed": "2",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RC_DELAY",
+      "seed": "3",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "seed": "0",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "seed": "1",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "seed": "2",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "seed": "0",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "seed": "1",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "seed": "2",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "seed": "0",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "seed": "1",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "seed": "2",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "seed": "3",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "seed": "4",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "seed": "5",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "0",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "1",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "2",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "3",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "17",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "42",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "101",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "-1",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "9007199254740993",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "-9223372036854775808",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "9223372036854775807",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "seed": "0",
+      "sameProfileAndFeatures": true
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "seed": "3",
+      "sameProfileAndFeatures": true
+    }
+  ],
+  "scope": "Same exact38 cases, profile, full difficulty feature receipt and successful repair result; timings intentionally not compared."
+}

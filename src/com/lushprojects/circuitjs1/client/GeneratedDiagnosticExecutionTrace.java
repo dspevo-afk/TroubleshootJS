@@ -89,6 +89,7 @@ final class GeneratedDiagnosticExecutionTrace {
     private final Vector<String> executedIsolationActionIds;
     private final Vector<String> executedTemporalWaitSamples;
     private final int measuredDiagnosticDepth;
+    private final int completedSemanticActions;
     private final GeneratedDiagnosticRepairSemantics repairSemantics;
 
     private GeneratedDiagnosticExecutionTrace(Builder builder,
@@ -103,6 +104,7 @@ final class GeneratedDiagnosticExecutionTrace {
             executedInputPowerTransitions, executedIsolationActionIds,
             executedTemporalWaitSamples);
         repairSemantics = semantics;
+        completedSemanticActions = builder.completedSemanticActions;
     }
 
     static Builder builder() { return new Builder(); }
@@ -123,6 +125,7 @@ final class GeneratedDiagnosticExecutionTrace {
         return new Vector<String>(executedTemporalWaitSamples);
     }
     int getMeasuredDiagnosticDepth() { return measuredDiagnosticDepth; }
+    int getCompletedSemanticActions() { return completedSemanticActions; }
     boolean hasConsistentMeasuredDepth() {
         return measuredDiagnosticDepth == deriveMeasuredDiagnosticDepth(executedMeterModeIds,
             executedInputPowerTransitions, executedIsolationActionIds,
@@ -149,6 +152,7 @@ final class GeneratedDiagnosticExecutionTrace {
     }
 
     static final class Builder {
+        private int completedSemanticActions;
         private final Vector<String> executedActionIds = new Vector<String>();
         private final Vector<String> executedRepairActionIds = new Vector<String>();
         private final Vector<String> executedMeterModeIds = new Vector<String>();
@@ -158,7 +162,12 @@ final class GeneratedDiagnosticExecutionTrace {
 
         void recordAction(String actionId) {
             addUnique(executedActionIds, actionId);
+            recordCompletedSemanticAction();
         }
+
+        // Ordered executions count even when an action ID repeats. A paired
+        // instrument reading is one semantic action, not a mouse-click count.
+        void recordCompletedSemanticAction() { completedSemanticActions++; }
 
         void recordRepairAction(String actionId) {
             recordAction(actionId);

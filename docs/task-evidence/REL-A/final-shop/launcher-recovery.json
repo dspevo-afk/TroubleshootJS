@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "sourceBoundary": "Start TroubleshootJS.cmd and scripts/start-preview.ps1 only; shared VerifierIsolation unchanged.",
+  "rootActualCmd": {
+    "exitCode": 0,
+    "elapsedMs": 11756,
+    "previewRemainsAlive": true,
+    "artifact": "root-cmd-direct-result.json"
+  },
+  "rootExitPropagation": {
+    "status": "PASS",
+    "controlledPowerShellExit": 37,
+    "actualCmdExit": 37,
+    "artifact": "root-cmd-exit-contract.json"
+  },
+  "workerRealWindowsCanaries": [
+    {
+      "case": "stale same-worktree record",
+      "exitCode": 0,
+      "result": "Archive preserved; fresh preview identity matched; task preview cleanup verified.",
+      "staleStateSha256": "ece8f7c9bb9a3c08725b4d2e048b17f3d8c29fdc7b589fdb752801b1ed637b64"
+    },
+    {
+      "case": "detached live preview after launcher parent exited",
+      "exitCode": 0,
+      "result": "Same child PID/start/command/port and HTTP worktree identity reused; task preview cleanup verified."
+    },
+    {
+      "case": "foreign or unprovable state with real listener",
+      "exitCode": 1,
+      "result": "State byte-identical and listener/process survived rejection; afterward exact task-owned cleanup verified.",
+      "stateSha256": "d6e48a0a67758f7c90868fab31e52b9c7049e370de1720327a9141d6013f2f53"
+    }
+  ],
+  "retainedLimit": "Initial root native-pipeline invocation inherited background child output handles and stayed open until the exact owned preview was stopped; its elapsed time is not launch latency. Separate bounded actual CMD process provides the successful11756ms measurement.",
+  "resource": "Current root-launcher preview remains for user Quick Play; no user board reloaded or process stopped during continuity investigation."
+}

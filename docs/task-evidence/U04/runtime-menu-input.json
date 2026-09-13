@@ -1,0 +1,199 @@
+{
+  "executionDigest": "35b0bbb28d03de8c828895f6d3390ec11d2ff2c32748f8fa42e4210b6d47dfa1",
+  "route": "http://127.0.0.1:64206/circuitjs.html",
+  "input": "Built-in Browser visible controls; no controller injection",
+  "steps": [
+    {
+      "action": "Initial keyboard/locator attempt",
+      "status": "NOT PROVEN",
+      "note": "The first Settings ordinal was unavailable because the background control is inert; menu focus also includes the replay disclosure."
+    },
+    {
+      "action": "Settings focus boundaries",
+      "reverse": {
+        "inside": true,
+        "label": null,
+        "tag": "INPUT",
+        "text": ""
+      },
+      "forward": {
+        "inside": true,
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Close"
+      }
+    },
+    {
+      "action": "Settings reverse focus named target",
+      "observed": {
+        "control": "Reduce interface motion",
+        "inside": true,
+        "type": "checkbox"
+      }
+    },
+    {
+      "action": "Close Settings returns to unchanged menu draft",
+      "observed": {
+        "bodyClass": "tsj-workbench-ui tsj-high-contrast",
+        "draft": "9007199254740993",
+        "focus": "Settings"
+      }
+    },
+    {
+      "action": "Generic Resources and modal privacy/isolation",
+      "observed": {
+        "background": [
+          {
+            "aria": "true",
+            "inert": true,
+            "tag": "SCRIPT"
+          },
+          {
+            "aria": "true",
+            "inert": true,
+            "tag": "SCRIPT"
+          },
+          {
+            "aria": "true",
+            "inert": true,
+            "tag": "SCRIPT"
+          },
+          {
+            "aria": "true",
+            "inert": true,
+            "tag": "IFRAME"
+          },
+          {
+            "aria": "true",
+            "inert": true,
+            "tag": "IFRAME"
+          },
+          {
+            "aria": "true",
+            "inert": true,
+            "tag": "DIV"
+          },
+          {
+            "aria": "true",
+            "inert": true,
+            "tag": "DIV"
+          }
+        ],
+        "labelLeaks": [],
+        "text": "Resources\nClose\nInspect and navigate\n\nUse Fit board or Fit selection, Zoom + / \u2212, and the top/bottom copper controls. The mouse wheel zooms; Shift-drag or middle-drag pans. Hold Space over the board for the inspection loupe; release it to return to the permanent view.\n\nPlace probes\n\nSelect DCV, Ohms, continuity or diode mode. Left click places the red probe; right click places the black probe. Selecting the active mode again exits it. Use accessible pads, terminals or exposed copper.\n\nDC voltage\n\nMeasure between two electrical endpoints with the required supplies on. The sign is red relative to black. Observe the instrument\u2019s reference-domain and readiness messages.\n\nOhms and continuity\n\nDisconnect all board supplies and allow stored energy to discharge. In-circuit readings include parallel paths: a low resistance or continuity tone does not by itself identify a failed part. Isolate a lead or remove a part when needed to distinguish paths.\n\nDiode mode\n\nUse an isolated, discharged board. The instrument applies a test current; polarity and parallel paths affect the reading. Reverse the probes to compare directions. Follow any settling or unsupported-measurement message.\n\nRepair and verify\n\nIsolate every supply and wait for discharge. Remove the part to the Parts Tray, acquire an appropriate loose replacement from Shop, select it and install it into the empty slot. Restore the relevant supplies and inputs, then run the customer retest. A part swap alone does not establish that the customer\u2019s problem is fixed.\n\nResistor color reference\n\nFour bands: first two digits \u00d7 multiplier, then tolerance. Five bands: first three digits \u00d7 multiplier, then tolerance. Example: brown\u2013black\u2013red\u2013gold = 1 k\u03a9 \u00b15%. Read from the end opposite the spaced tolerance band.\n\nResistor bands: digit, multiplier and tolerance\nColor\tDigit\tMultiplier\tTolerance\nBlack\t0\t\u00d71\t\u2014\nBrown\t1\t\u00d710\t\u00b11%\nRed\t2\t\u00d7100\t\u00b12%\nOrange\t3\t\u00d71 k\t\u2014\nYellow\t4\t\u00d710 k\t\u2014\nGreen\t5\t\u00d7100 k\t\u00b10.5%\nBlue\t6\t\u00d71 M\t\u00b10.25%\nViolet\t7\t\u00d710 M\t\u00b10.1%\nGray\t8\t\u00d7100 M\t\u00b10.05%\nWhite\t9\t\u00d71 G\t\u2014\nGold\t\u2014\t\u00d70.1\t\u00b15%\nSilver\t\u2014\t\u00d70.01\t\u00b110%\nNone\t\u2014\t\u2014\t\u00b120%\n\nLimited desktop alpha: selected low-voltage boards in the 5\u201320-part range, including a 16-part procedural control board with routed bottom copper. The 3-part indicator and 4-part protected indicator are introductory practice boards.\n\nEASY and MEDIUM candidates are checked before play. HARD and PSYCHOTIC are unavailable. Mains circuits, larger boards and general multilayer routing are not supported. Session saves are not available.\n\nReplay and bug-report identity",
+        "observedTsjAttributes": [
+          "data-tsj-preview-identity-protocol",
+          "data-tsj-preview-source-digest",
+          "data-tsj-preview-script-digest",
+          "data-tsj-preview-web-digest",
+          "data-tsj-preview-execution-digest",
+          "data-tsj-preview-file-count"
+        ],
+        "publicPreviewIdentityAttributes": [
+          "data-tsj-preview-identity-protocol",
+          "data-tsj-preview-source-digest",
+          "data-tsj-preview-script-digest",
+          "data-tsj-preview-web-digest",
+          "data-tsj-preview-execution-digest",
+          "data-tsj-preview-file-count"
+        ],
+        "privateOrVerifierAttributes": []
+      }
+    },
+    {
+      "action": "Settings persisted after production reload",
+      "observed": {
+        "bodyClass": "tsj-workbench-ui tsj-high-contrast",
+        "checks": [
+          {
+            "checked": true,
+            "name": "Higher contrast interface"
+          },
+          {
+            "checked": false,
+            "name": "Larger interface text"
+          },
+          {
+            "checked": false,
+            "name": "Reduce interface motion"
+          }
+        ]
+      }
+    },
+    {
+      "action": "Restore original contrast preference",
+      "bodyClass": "tsj-workbench-ui"
+    },
+    {
+      "action": "Unsupported replay epoch through real input",
+      "observed": "TroubleshootJS \u00b7 Desktop alpha\n\nUnsupported replay identity or epoch\n\nChoose a board, read the customer ticket, then examine, measure, isolate, repair and retest.\n\nDifficulty\nEASY\nMEDIUM\nHARD \u2014 unavailable\nPSYCHOTIC \u2014 unavailable\nBoard family\nIndicator board\nProtected indicator\nDual indicator\nTiming board\nBJT output driver\nMOSFET output driver\nRelay output reference\nProcedural control board\nNew board\n\nNew board chooses from the current seed pool. The chosen seed appears in Replay and bug-report identity after preparation.\n\nExact seed (signed decimal integer)\n\nPrepare exact seed attempts exactly the integer you enter. An exact seed can fail preparation; it is never replaced with another seed.\n\nPrepare exact seed\nOpen current replay\nPrepare replay\nResources\nSettings\n\nLimited desktop alpha: selected low-voltage boards in the 5\u201320-part range, including a 16-part procedural control board with routed bottom copper. The 3-part indicator and 4-part protected indicator are introductory practice boards.\n\nEASY and MEDIUM candidates are checked before play. HARD and PSYCHOTIC are unavailable. Mains circuits, larger boards and general multilayer routing are not supported. Session saves are not available.\n\nReplay and bug-report identity"
+    },
+    {
+      "action": "Unavailable HARD replay rejected",
+      "observed": "TroubleshootJS \u00b7 Desktop alpha\n\nThis difficulty profile is unavailable\n\nChoose a board, read the customer ticket, then examine, measure, isolate, repair and retest.\n\nDifficulty\nEASY\nMEDIUM\nHARD \u2014 unavailable\nPSYCHOTIC \u2014 unavailable\nBoard family\nIndicator board\nProtected indicator\nDual indicator\nTiming board\nBJT output driver\nMOSFET output driver\nRelay output reference\nProcedural control board\nNew board\n\nNew board chooses from the current seed pool. The chosen seed appears in Replay and bug-report identity after preparation.\n\nExact seed (signed decimal integer)\n\nPrepare exact seed attempts exactly the integer you enter. An exact seed can fail preparation; it is never replaced with another seed.\n\nPrepare exact seed\nOpen current replay\nPrepare replay\nResources\nSettings\n\nLimited desktop alpha: selected low-voltage boards in the 5\u201320-part range, including a 16-part procedural control board with routed bottom copper. The 3-part indicator and 4-part protected indicator are introductory practice boards.\n\nEASY and MEDIUM candidates are checked before play. HARD and PSYCHOTIC are unavailable. Mains circuits, larger boards and general multilayer routing are not supported. Session saves are not available.\n\nReplay and bug-report identity"
+    },
+    {
+      "action": "MEDIUM advertises only its supported family; advanced profiles disabled",
+      "observed": {
+        "selects": [
+          {
+            "options": [
+              {
+                "disabled": false,
+                "text": "EASY",
+                "value": "EASY"
+              },
+              {
+                "disabled": false,
+                "text": "MEDIUM",
+                "value": "MEDIUM"
+              },
+              {
+                "disabled": true,
+                "text": "HARD \u2014 unavailable",
+                "value": "HARD"
+              },
+              {
+                "disabled": true,
+                "text": "PSYCHOTIC \u2014 unavailable",
+                "value": "PSYCHOTIC"
+              }
+            ],
+            "value": "MEDIUM"
+          },
+          {
+            "options": [
+              {
+                "disabled": false,
+                "text": "Two-channel controller",
+                "value": "COMPOSED_CONTROLLED_INDICATOR"
+              }
+            ],
+            "value": "COMPOSED_CONTROLLED_INDICATOR"
+          }
+        ],
+        "observedTsjAttributes": [
+          "data-tsj-preview-identity-protocol",
+          "data-tsj-preview-source-digest",
+          "data-tsj-preview-script-digest",
+          "data-tsj-preview-web-digest",
+          "data-tsj-preview-execution-digest",
+          "data-tsj-preview-file-count"
+        ],
+        "publicPreviewIdentityAttributes": [
+          "data-tsj-preview-identity-protocol",
+          "data-tsj-preview-source-digest",
+          "data-tsj-preview-script-digest",
+          "data-tsj-preview-web-digest",
+          "data-tsj-preview-execution-digest",
+          "data-tsj-preview-file-count"
+        ],
+        "privateOrVerifierAttributes": []
+      }
+    }
+  ],
+  "status": "PARTIAL",
+  "limits": "Menu/Settings/Resources and invalid-input checks only. Actual final-board generation, cancellation, diagnosis and repair remain separate. The first menu keyboard locator attempt is retained as NOT PROVEN; Settings wraps were confirmed with visible input.",
+  "privacyNote": "The preview adds public source/script/web execution fingerprints to DOM attributes. They contain no fault, original-part identity, diagnostic answer or verifier report.",
+  "followUp": "Settings/Resources observations stand, but the separate actual menu reverse-wrap failure is preserved in menu-focus-runtime-failure.json. A focused fix and49 adapter assertions pass; updated production Browser proof pending."
+}

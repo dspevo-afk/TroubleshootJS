@@ -1,0 +1,1 @@
+PASS: maintained A07 strict reader, seven malformed/missing-proof canaries, exact compiled forced failure; final b5080dcf preview.

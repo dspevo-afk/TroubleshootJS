@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "purpose": "Task43P lane diagnosis",
+  "executionDigest": "6c6ac380e6120e75f9902436fe788cc7dde995a06eb82b17f055b3c08c9141ec",
+  "sourceDigest": "a5caf1626ae55c8e677bdee6d7832f9feae9c5a19ea04564f7cb0b1192f59547",
+  "webDigest": "b3a766c2f50b3d09964de5b2bb7553e689c5f4bafb78a4f5ff5d94292f04e4ae",
+  "pid": 2424,
+  "startTicks": 639248944271095592,
+  "runId": "U04-U05-RELA-task43-context",
+  "port": 64206,
+  "sourceDelta": "Only Task43PRuntimeExistingLanesVerifier adds a lane-specific exception wrapper since rc-cleanup-inputs.json"
+}

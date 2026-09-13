@@ -1,0 +1,91 @@
+{
+  "status": "FINDING",
+  "kind": "User-reported qualitative trials plus read-only observation",
+  "candidateExecutionDigest": "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623",
+  "trials": [
+    {
+      "profile": "EASY",
+      "attempted": true,
+      "reportedOutcome": "Not specified",
+      "elapsedTime": "Not supplied",
+      "actions": "Not supplied"
+    },
+    {
+      "profile": "MEDIUM",
+      "replay": "tsj-alpha/1/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/3",
+      "reportedOutcome": "Blocked replacing removed Channel A RLOAD",
+      "reportedActions": [
+        "Removed Channel A RLOAD",
+        "Purchased resistor replacements",
+        "Only the removed resistor offers installation as RLOAD"
+      ],
+      "reportedReading": "Removed resistor reads OL (reported by user; not remeasured by agent)",
+      "elapsedTime": "Not supplied",
+      "assistance": "After the trial, agent identified target-bound installation, gave the old-build same-source Shop-row workaround, and explained that OL across both leads of an isolated330Ohm resistor suggests an open part. No private selected-fault lookup or hint.",
+      "confusion": [
+        "Multiple component-specific resistor dropdowns in Shop",
+        "Unable to install a purchased resistor into RLOAD",
+        "Unsure which component caused the complaint"
+      ]
+    }
+  ],
+  "observed": {
+    "mode": "Read-only DOM and screenshot; user board unmodified",
+    "supplies": "All three disconnected",
+    "emptySlot": "Channel A RLOAD",
+    "selectedPart": "Part 16 - 330 Ohm +/-5%",
+    "availableInstall": "Install as RB (disabled)",
+    "trayParts": [
+      "Part 16 - 330 Ohm +/-5%",
+      "Part 6 - 330 Ohm +/-5%",
+      "Part 17 - 330 Ohm +/-5%"
+    ],
+    "previewIdentity": [
+      [
+        "data-tsj-preview-identity-protocol",
+        "troubleshootjs-execution-provenance-v1"
+      ],
+      [
+        "data-tsj-preview-source-digest",
+        "a79ca086a0d9e748ea852fd147e22f79b50215346377ea6402addf544040b309"
+      ],
+      [
+        "data-tsj-preview-script-digest",
+        "216db0113d6da93653d50f1b61fb405b37f686f8af455123e2f71954817f84a5"
+      ],
+      [
+        "data-tsj-preview-web-digest",
+        "033aa7f73ed2947d53d079faac89ba4930af048c3a15c9e2caeb5517b6195e30"
+      ],
+      [
+        "data-tsj-preview-execution-digest",
+        "5ea881de6b5c6132b19ff55fd581b2e52be131090f0cec6dc041224e15032623"
+      ],
+      [
+        "data-tsj-preview-file-count",
+        "1435"
+      ]
+    ]
+  },
+  "artifacts": [
+    "human-medium3-install-blocked.png",
+    "human-medium3-install-blocked-dom.txt"
+  ],
+  "requiredCorrection": "Generic type/specification Shop acquisition and compatible target installation independent of originating slot; preserve physical part identity and live CircuitJS/mutation invariants.",
+  "limits": [
+    "Qualitative owner feedback, not population calibration.",
+    "No selected fault revealed or inferred for the user.",
+    "Earlier same-target automated repair paths missed this cross-target usability restriction."
+  ],
+  "storefrontFeedback": {
+    "reported": "User rejects the replacement plain-dropdown layout and explicitly wants the mock shop website with the full catalog of components visible.",
+    "correction": "Restore browsable product cards, categories and search over every real available catalog entry, with purchases entering the actual Parts Tray.",
+    "status": "FIX VERIFIED"
+  },
+  "resolution": {
+    "status": "FIX VERIFIED",
+    "executionDigest": "6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae",
+    "evidence": "../REL-A/final-shop/alpha-continuity-summary.json",
+    "scope": "Current compiled38 corpus includes generic acquisition, compatibility rejection, repeated cross-slot removal/install and real-current stress checks. Actual visible MEDIUM3 A-to-B-to-A retest passed before the meter correction; current RB15 generic repair passes after it. This does not replace the reported failed human trial with a human success."
+  }
+}

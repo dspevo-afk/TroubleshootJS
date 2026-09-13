@@ -1,0 +1,14 @@
+{
+  "protocol": "troubleshootjs-preview-identity-v1",
+  "executionDigest": "1859d1bcfde43274cc285e3e9c2c94c48d69074cbe2bcf7851c32d6a9e6bd359",
+  "sourceDigest": "ca1c57ae1dad801a0e87036bcff7a2d818018bccb7d9c0d68a60d8d8c32be18a",
+  "scriptDigest": "216db0113d6da93653d50f1b61fb405b37f686f8af455123e2f71954817f84a5",
+  "webDigest": "daaf872b0209a5ad7c9d04c3c388af361872600fbc8d99b7668c8196aeb2fbd6",
+  "executionFileCount": 1435,
+  "status": "PASS",
+  "pid": 4608,
+  "startTicks": 639248936088517925,
+  "runId": "U04-U05-RELA-rc-cleanup-2",
+  "port": 64206,
+  "sourceManifest": "rc-cleanup-inputs.json"
+}

@@ -17,10 +17,11 @@ class DiodeTestStimulus implements ActiveMeasurementStimulus {
         Point blackPoint = black.getElement().getPost(black.getPostIndex());
         Point midpoint = ResistanceMeasurementStimulus.findUnusedPoint(sim, redPoint, blackPoint);
         source = new DCVoltageElm(midpoint.x, midpoint.y);
-        source.drag(redPoint.x, redPoint.y);
+        // Attach to the exact solver post, independent of editor grid snapping.
+        source.setPosition(midpoint.x, midpoint.y, redPoint.x, redPoint.y);
         source.maxVoltage = TEST_VOLTAGE;
         internalResistor = new ResistorElm(blackPoint.x, blackPoint.y);
-        internalResistor.drag(midpoint.x, midpoint.y);
+        internalResistor.setPosition(blackPoint.x, blackPoint.y, midpoint.x, midpoint.y);
         internalResistor.setResistance(INTERNAL_RESISTANCE);
     }
 

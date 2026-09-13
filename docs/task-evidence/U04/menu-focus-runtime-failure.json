@@ -1,0 +1,48 @@
+{
+  "status": "FAIL",
+  "executionDigest": "35b0bbb28d03de8c828895f6d3390ec11d2ff2c32748f8fa42e4210b6d47dfa1",
+  "input": "Visible Difficulty control, Shift+Tab",
+  "expected": "Focus on visible Replay and bug-report identity summary",
+  "observed": "Focus remained on Difficulty; collapsed disclosure textareas still reported layout rectangles.",
+  "dom": {
+    "fields": [
+      {
+        "closedDetails": false,
+        "id": "tsj-product-field-1",
+        "rects": 1,
+        "tag": "SELECT"
+      },
+      {
+        "closedDetails": false,
+        "id": "tsj-product-field-2",
+        "rects": 1,
+        "tag": "SELECT"
+      },
+      {
+        "closedDetails": false,
+        "id": "tsj-product-field-4",
+        "rects": 1,
+        "tag": "TEXTAREA"
+      },
+      {
+        "closedDetails": true,
+        "id": "",
+        "rects": 1,
+        "tag": "SUMMARY"
+      },
+      {
+        "closedDetails": true,
+        "id": "tsj-product-field-5",
+        "rects": 1,
+        "tag": "TEXTAREA"
+      },
+      {
+        "closedDetails": true,
+        "id": "tsj-product-field-6",
+        "rects": 1,
+        "tag": "TEXTAREA"
+      }
+    ],
+    "focus": "<select id=\"tsj-product-field-1\"><option value=\"EASY\">EASY</option><option value=\"MEDIUM\">MEDIUM</option><option value=\"HARD\" disabled=\"\">HARD — unavailable</option><option value=\"PSYCHOTIC\" disabled=\"\">PSYCHOTIC — unavailable</option></select>"
+  }
+}
