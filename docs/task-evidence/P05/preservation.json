@@ -1,0 +1,12 @@
+{
+  "originalDirtyFiles": 97,
+  "unchangedBytes": 94,
+  "sharedP05HunksOnly": [
+    "scripts/verify-current-contracts.ps1",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java"
+  ],
+  "unstagedTestOnlyException": "tests/contracts/DensePcbPackingContractTest.java",
+  "originalTestSha256": "2a2349e12575ec4cd104ee685cb525adb70d05084690c0a36dc5edaf397e010a",
+  "integratedTestSha256": "53e9b897c87249f4b2febe93f32151ffb6a30f398c145d12cd0b4b6631a27d21",
+  "noResetCleanOrUnrelatedStaging": true
+}

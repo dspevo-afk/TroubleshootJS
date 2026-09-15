@@ -1,0 +1,428 @@
+{
+  "summary": {
+    "before": {
+      "cases": 13,
+      "accepted": 11,
+      "elapsedMilliseconds": {
+        "sum": 37349.0922,
+        "p50": 1206.9721,
+        "p95NearestRank": 9252.0933,
+        "worst": 9252.0933
+      },
+      "expansionsRecorded": 90319040
+    },
+    "integrated": {
+      "cases": 13,
+      "accepted": 13,
+      "elapsedMilliseconds": {
+        "sum": 19964.4044,
+        "p50": 970.1346,
+        "p95NearestRank": 4456.3633,
+        "worst": 4456.3633
+      },
+      "expansionsRecorded": 100004633
+    },
+    "publication": {
+      "cases": 13,
+      "accepted": 13,
+      "elapsedMilliseconds": {
+        "sum": 18378.4731,
+        "p50": 873.8977,
+        "p95NearestRank": 4527.0777,
+        "worst": 4527.0777
+      },
+      "expansionsRecorded": 92076268
+    }
+  },
+  "cases": {
+    "before": [
+      {
+        "seed": "0",
+        "outcome": "SUCCESS",
+        "placements": 4,
+        "routes": 17,
+        "expansions": 1649563,
+        "area": 1872650,
+        "score": 56085.73518328226,
+        "elapsedMs": 829.5932
+      },
+      {
+        "seed": "1",
+        "outcome": "SUCCESS",
+        "placements": 4,
+        "routes": 17,
+        "expansions": 2117267,
+        "area": 1872650,
+        "score": 56094.39745633004,
+        "elapsedMs": 647.1833
+      },
+      {
+        "seed": "2",
+        "outcome": "SUCCESS",
+        "placements": 4,
+        "routes": 17,
+        "expansions": 1580651,
+        "area": 1937150,
+        "score": 57536.420974711065,
+        "elapsedMs": 401.8793
+      },
+      {
+        "seed": "3",
+        "outcome": "SUCCESS",
+        "placements": 40,
+        "routes": 200,
+        "expansions": 19497624,
+        "area": 1705620,
+        "score": 53451.75028191968,
+        "elapsedMs": 4336.9746
+      },
+      {
+        "seed": "17",
+        "outcome": "SUCCESS",
+        "placements": 35,
+        "routes": 172,
+        "expansions": 16675494,
+        "area": 1973940,
+        "score": 57549.263299352264,
+        "elapsedMs": 3467.7342
+      },
+      {
+        "seed": "42",
+        "outcome": "SUCCESS",
+        "placements": 9,
+        "routes": 42,
+        "expansions": 4369984,
+        "area": 2097410,
+        "score": 62787.86305525439,
+        "elapsedMs": 903.4189
+      },
+      {
+        "seed": "101",
+        "outcome": "SUCCESS",
+        "placements": 11,
+        "routes": 56,
+        "expansions": 5702466,
+        "area": 1944390,
+        "score": 59450.02164527333,
+        "elapsedMs": 1206.9721
+      },
+      {
+        "seed": "-1",
+        "outcome": "SUCCESS",
+        "placements": 4,
+        "routes": 17,
+        "expansions": 1686749,
+        "area": 1894150,
+        "score": 56675.95123705832,
+        "elapsedMs": 388.0333
+      },
+      {
+        "seed": "9007199254740993",
+        "outcome": "SUCCESS",
+        "placements": 40,
+        "routes": 194,
+        "expansions": 18299917,
+        "area": 2499840,
+        "score": 67026.84738631603,
+        "elapsedMs": 3817.336
+      },
+      {
+        "seed": "-9223372036854775808",
+        "outcome": "SUCCESS",
+        "placements": 33,
+        "routes": 160,
+        "expansions": 14787581,
+        "area": 1954680,
+        "score": 56110.16349084897,
+        "elapsedMs": 3141.6179
+      },
+      {
+        "seed": "9223372036854775807",
+        "outcome": "SUCCESS",
+        "placements": 9,
+        "routes": 44,
+        "expansions": 3951744,
+        "area": 1927750,
+        "score": 53249.691302257925,
+        "elapsedMs": 811.5235
+      },
+      {
+        "seed": "-4518705223253195925",
+        "outcome": "ROUTING",
+        "placements": 80,
+        "elapsedMs": 8144.7326
+      },
+      {
+        "seed": "-5365808313541656343",
+        "outcome": "ROUTING",
+        "placements": 80,
+        "elapsedMs": 9252.0933
+      }
+    ],
+    "integrated": [
+      {
+        "seed": "0",
+        "outcome": "SUCCESS",
+        "placements": 4,
+        "routes": 17,
+        "expansions": 2067534,
+        "area": 1872650,
+        "score": 56085.73518328226,
+        "elapsedMs": 774.0262
+      },
+      {
+        "seed": "1",
+        "outcome": "SUCCESS",
+        "placements": 4,
+        "routes": 17,
+        "expansions": 2469403,
+        "area": 1872650,
+        "score": 56094.39745633004,
+        "elapsedMs": 486.1557
+      },
+      {
+        "seed": "2",
+        "outcome": "SUCCESS",
+        "placements": 4,
+        "routes": 17,
+        "expansions": 1960310,
+        "area": 1937150,
+        "score": 57536.420974711065,
+        "elapsedMs": 418.6303
+      },
+      {
+        "seed": "3",
+        "outcome": "SUCCESS",
+        "placements": 19,
+        "routes": 98,
+        "expansions": 12177385,
+        "area": 1894050,
+        "score": 55961.0394677611,
+        "elapsedMs": 2470.1022
+      },
+      {
+        "seed": "17",
+        "outcome": "SUCCESS",
+        "placements": 13,
+        "routes": 68,
+        "expansions": 7953975,
+        "area": 1881880,
+        "score": 51766.42140915534,
+        "elapsedMs": 1734.4236
+      },
+      {
+        "seed": "42",
+        "outcome": "SUCCESS",
+        "placements": 7,
+        "routes": 38,
+        "expansions": 4607580,
+        "area": 1906320,
+        "score": 55936.51071523159,
+        "elapsedMs": 970.1346
+      },
+      {
+        "seed": "101",
+        "outcome": "SUCCESS",
+        "placements": 11,
+        "routes": 60,
+        "expansions": 7325194,
+        "area": 1944390,
+        "score": 59450.02164527333,
+        "elapsedMs": 1430.7254
+      },
+      {
+        "seed": "-1",
+        "outcome": "SUCCESS",
+        "placements": 4,
+        "routes": 17,
+        "expansions": 2057188,
+        "area": 1894150,
+        "score": 56675.95123705832,
+        "elapsedMs": 417.3584
+      },
+      {
+        "seed": "9007199254740993",
+        "outcome": "SUCCESS",
+        "placements": 24,
+        "routes": 119,
+        "expansions": 14786399,
+        "area": 1669284,
+        "score": 51627.565014450905,
+        "elapsedMs": 2791.0296
+      },
+      {
+        "seed": "-9223372036854775808",
+        "outcome": "SUCCESS",
+        "placements": 4,
+        "routes": 19,
+        "expansions": 2078676,
+        "area": 1937150,
+        "score": 57764.42641189793,
+        "elapsedMs": 420.8555
+      },
+      {
+        "seed": "9223372036854775807",
+        "outcome": "SUCCESS",
+        "placements": 4,
+        "routes": 19,
+        "expansions": 2426675,
+        "area": 1937150,
+        "score": 57624.453171344,
+        "elapsedMs": 470.8342
+      },
+      {
+        "seed": "-4518705223253195925",
+        "outcome": "SUCCESS",
+        "placements": 26,
+        "routes": 130,
+        "expansions": 16151038,
+        "area": 1951290,
+        "score": 59515.27461786968,
+        "elapsedMs": 3123.7654
+      },
+      {
+        "seed": "-5365808313541656343",
+        "outcome": "SUCCESS",
+        "placements": 38,
+        "routes": 193,
+        "expansions": 23943276,
+        "area": 1682040,
+        "score": 52929.29405417023,
+        "elapsedMs": 4456.3633
+      }
+    ],
+    "publication": [
+      {
+        "seed": "0",
+        "outcome": "SUCCESS",
+        "placements": 4,
+        "routes": 17,
+        "expansions": 2067534,
+        "area": 1872650,
+        "score": 56085.73518328226,
+        "elapsedMs": 732.1837
+      },
+      {
+        "seed": "1",
+        "outcome": "SUCCESS",
+        "placements": 4,
+        "routes": 17,
+        "expansions": 2469403,
+        "area": 1872650,
+        "score": 56094.39745633004,
+        "elapsedMs": 478.298
+      },
+      {
+        "seed": "2",
+        "outcome": "SUCCESS",
+        "placements": 4,
+        "routes": 17,
+        "expansions": 1960310,
+        "area": 1937150,
+        "score": 57536.420974711065,
+        "elapsedMs": 411.554
+      },
+      {
+        "seed": "3",
+        "outcome": "SUCCESS",
+        "placements": 19,
+        "routes": 98,
+        "expansions": 12177385,
+        "area": 1894050,
+        "score": 55961.0394677611,
+        "elapsedMs": 2308.6643
+      },
+      {
+        "seed": "17",
+        "outcome": "SUCCESS",
+        "placements": 13,
+        "routes": 68,
+        "expansions": 7953975,
+        "area": 1881880,
+        "score": 51766.42140915534,
+        "elapsedMs": 1544.8966
+      },
+      {
+        "seed": "42",
+        "outcome": "SUCCESS",
+        "placements": 7,
+        "routes": 38,
+        "expansions": 4607580,
+        "area": 1906320,
+        "score": 55936.51071523159,
+        "elapsedMs": 873.8977
+      },
+      {
+        "seed": "101",
+        "outcome": "SUCCESS",
+        "placements": 11,
+        "routes": 60,
+        "expansions": 7325194,
+        "area": 1944390,
+        "score": 59674.2070035671,
+        "elapsedMs": 1384.0844
+      },
+      {
+        "seed": "-1",
+        "outcome": "SUCCESS",
+        "placements": 4,
+        "routes": 17,
+        "expansions": 2057188,
+        "area": 1894150,
+        "score": 56675.95123705832,
+        "elapsedMs": 407.7601
+      },
+      {
+        "seed": "9007199254740993",
+        "outcome": "SUCCESS",
+        "placements": 24,
+        "routes": 119,
+        "expansions": 14786399,
+        "area": 1669284,
+        "score": 51627.565014450905,
+        "elapsedMs": 3006.1453
+      },
+      {
+        "seed": "-9223372036854775808",
+        "outcome": "SUCCESS",
+        "placements": 4,
+        "routes": 19,
+        "expansions": 2078676,
+        "area": 1937150,
+        "score": 57629.42641189793,
+        "elapsedMs": 493.2656
+      },
+      {
+        "seed": "9223372036854775807",
+        "outcome": "SUCCESS",
+        "placements": 4,
+        "routes": 19,
+        "expansions": 2426675,
+        "area": 1937150,
+        "score": 57624.453171344,
+        "elapsedMs": 499.1162
+      },
+      {
+        "seed": "-4518705223253195925",
+        "outcome": "SUCCESS",
+        "placements": 12,
+        "routes": 62,
+        "expansions": 8222673,
+        "area": 2543320,
+        "score": 72034.49173856033,
+        "elapsedMs": 1711.5295
+      },
+      {
+        "seed": "-5365808313541656343",
+        "outcome": "SUCCESS",
+        "placements": 38,
+        "routes": 193,
+        "expansions": 23943276,
+        "area": 1682040,
+        "score": 52929.29405417023,
+        "elapsedMs": 4527.0777
+      }
+    ]
+  },
+  "timingQualification": "Single-host observations, not controlled cold/warm or modest-host qualification. The pre-P05 baseline includes pending visual work; publication excludes that work."
+}

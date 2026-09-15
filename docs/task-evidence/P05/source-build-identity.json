@@ -1,0 +1,74 @@
+{
+  "base": "94d885ea37955c46980ae7d1e55a68b8dd3e17ea",
+  "candidates": {
+    "publication-final": {
+      "sourceTreeSha256": "f0107370a1775cb1540c0578014fd3731e6bbc95d6c83ec6116f911a34d96046",
+      "p05Files": {
+        "src/com/lushprojects/circuitjs1/client/PcbRoutingWork.java": "92ed3fd3ad27900a2ded9c7b5d5000247e020b8321b016a5e87368b60b4f9414",
+        "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java": "e92be1b41c7c838f94302fb783dc2fbbb8b33665a49bfe99dc1d87d709d87df5",
+        "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java": "9795337f1c8e43cf3686e78902e5345dd7f3ea45913c3f9670e46289c41c261a",
+        "tests/benchmarks/p05-routing-corpus.tsv": "85df38e8beecdc5db648ebbc22bd2b42a8916ac82c9190c9b3a71df9adf9d7cc",
+        "tests/contracts/P05RoutingCorpus.java": "8e9c0f9733bbd09de36c394cf7b7463df3c2842de05fa2606a508f482c7fec86",
+        "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "a5b85c6b5b6ba0ce1e57122413d871d38a76908c826bf617520ab97b6e786a2b",
+        "src/com/lushprojects/circuitjs1/client/PcbRoutingRejectedException.java": "28bd8e6de7ce715bbda455fbeea077e30cdd6ef3133abad341d7163a1ac6bddb",
+        "tests/contracts/P05GenerationCorpus.java": "c5aae07cc841c1afac7017a10120bbbfeb61f17ec8d7caff7cc3bf2df05b289c",
+        "tests/contracts/Q15ControlBoardContractTest.java": "195847abf1113449d9183afc547d420f0cedf564d8a21162b19da79530f01565",
+        "tests/contracts/P05RoutingContractTest.java": "af9378fb5d3c1e8676fb67eedb987308ae384b238ec90aef77c04d7dbd69cbd7",
+        "src/com/lushprojects/circuitjs1/client/PcbLayoutDeveloperVerifier.java": "935f0884d0f39dc12dc5b760ffd85fb78dab052c2c93e087f41687dea05ba882",
+        "scripts/verify-current-contracts.ps1": "a8771d6b99d9e6a17f3c16f6fde0f29735a62c3d611a1b54363c98751aedf9ce"
+      },
+      "compiledPermutations": {
+        "1D683A4DF47E08297E12CA20874F6567.cache.js": "e94197f9bfbba399845d98c3af9e4ae38d57e45c73131f650ad92035faaf9a9a",
+        "23470B2BA276343A2D026464A849671D.cache.js": "1685178a53678bf359a9ff872fc4a90b560975f5a8e35c8fa6a90046aea0bc35",
+        "38111F092A5430CF6B07BA13C4766513.cache.js": "78391c85137df6797e517e460914665543c51c366a5a8943d851529de1bd9efb",
+        "E990AD641228EF82A21F4990FB73C4F8.cache.js": "1559cda49af6c2ab46292832ea41a2ae8c45ed71f3e6230b2836bf7861e76796",
+        "FDED5F225DD8F12392C742E7F7EBF32C.cache.js": "7b0b77c385ad1396109417e7fb0f40cacb85b0c4c8739ef33b8e898553ac01a7"
+      }
+    },
+    "integrated-final": {
+      "sourceTreeSha256": "b4df46c4b8bba187a99351b859595f57e6f3af77437d389e0c29bc647fbd4c3b",
+      "p05Files": {
+        "src/com/lushprojects/circuitjs1/client/PcbRoutingWork.java": "92ed3fd3ad27900a2ded9c7b5d5000247e020b8321b016a5e87368b60b4f9414",
+        "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java": "e92be1b41c7c838f94302fb783dc2fbbb8b33665a49bfe99dc1d87d709d87df5",
+        "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java": "9795337f1c8e43cf3686e78902e5345dd7f3ea45913c3f9670e46289c41c261a",
+        "tests/benchmarks/p05-routing-corpus.tsv": "85df38e8beecdc5db648ebbc22bd2b42a8916ac82c9190c9b3a71df9adf9d7cc",
+        "tests/contracts/P05RoutingCorpus.java": "8e9c0f9733bbd09de36c394cf7b7463df3c2842de05fa2606a508f482c7fec86",
+        "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "3b8ee9cd905bc57164c1f0df490f8ea7d6baef5e50928aa358f14f9f941da0c9",
+        "src/com/lushprojects/circuitjs1/client/PcbRoutingRejectedException.java": "28bd8e6de7ce715bbda455fbeea077e30cdd6ef3133abad341d7163a1ac6bddb",
+        "tests/contracts/P05GenerationCorpus.java": "c5aae07cc841c1afac7017a10120bbbfeb61f17ec8d7caff7cc3bf2df05b289c",
+        "tests/contracts/Q15ControlBoardContractTest.java": "195847abf1113449d9183afc547d420f0cedf564d8a21162b19da79530f01565",
+        "tests/contracts/P05RoutingContractTest.java": "af9378fb5d3c1e8676fb67eedb987308ae384b238ec90aef77c04d7dbd69cbd7",
+        "src/com/lushprojects/circuitjs1/client/PcbLayoutDeveloperVerifier.java": "935f0884d0f39dc12dc5b760ffd85fb78dab052c2c93e087f41687dea05ba882",
+        "scripts/verify-current-contracts.ps1": "a5cce67872e90ffb1d429d1a2fee3146db886dd051e491dca27591c57707b207"
+      },
+      "compiledPermutations": {
+        "3577BA09873BD3ECFACDBB7E5250378A.cache.js": "cef21550dd85da2798db49066deda1a65b5467938d8a2a72c9e9a6c0c6d767bb",
+        "5585E4F7A4B2A512B76D95DF02B6301C.cache.js": "85a9781145f1d246330c664e991070ba9d779786c99ffdaffc6b6be31505c863",
+        "857762528BB8AED47448C5F0D0E7EC03.cache.js": "a45a81b9eb67cf9b910d68297048fec99c5777eedcc32506e02bafc49ff02fc5",
+        "C94BBEBB6E62070CB3DB40B2A33AD061.cache.js": "032659d5acc577ef2d5f44b6e4d7d8b7e8627f99d5d47b2e44c162b8293fcbe4",
+        "EA8BDEED78E24A5CCB1864566F6CDAF4.cache.js": "bb628172dd0543c7077372a2e3f35858a4773f1647b0260a0709e46fc44c8bf2"
+      }
+    }
+  },
+  "gates": [
+    {
+      "name": "native-publication",
+      "exitCode": 0,
+      "elapsedSeconds": 68.18786454200745,
+      "logSha256": "130b47fab4329e2f0109c4c1b1e361f6ae0b6caa655754fbe5e77386d44e0cd2"
+    },
+    {
+      "name": "build-publication-final",
+      "exitCode": 0,
+      "elapsedSeconds": 70.07950401306152,
+      "logSha256": "cb1385d6e8971480e50c0022f23e83696d443f0c92011b511d2b4f1eee0fb0a1"
+    },
+    {
+      "name": "build-integrated-final",
+      "exitCode": 0,
+      "elapsedSeconds": 71.67621231079102,
+      "logSha256": "292304e7972d1b3332d7a612644ff210962606f8c91f4d3c61e9ba3eded7fa0a"
+    }
+  ],
+  "compiledReuse": "All five final publication cache.js files match the just-qualified layout/Q15 build byte-for-byte; production inputs match preserved source manifests."
+}

@@ -1,0 +1,40 @@
+{
+  "native-integrated-qualified": [
+    "PASS: PCB compaction contracts assertions=416 reducedFamilies=9",
+    "PASS: visual workbench contracts assertions=150",
+    "PASS: physical serviceability contracts assertions=846",
+    "PASS: Q15 control board contracts assertions=6863 designs=4",
+    "PASS: A10 routing rejection contracts assertions=28",
+    "PASS: P02 conductor contracts 3209 assertions; 40 independent lattice cases; 48 shared-copper permutations; 16 SMD poses",
+    "PASS: U01 viewport contracts assertions=1259",
+    "PASS: P03 placement contracts assertions=864267",
+    "PASS: P04 routing contracts assertions=6408 branches=6",
+    "P05_PROOF order-only=routing-work@1;outcome=SUCCESS;reason=null;netAttempts=4;branchSearches=6;orders=1;ripPasses=0;ripped=0;rerouted=0;expansions=35080;failures=0;rawSegments=425;conflicts=1037;order[0]=12:BRANCH1_NODE,3:GND,3:VIN,12:BRANCH2_NODE,tree=0;",
+    "P05_PROOF rip-up=routing-work@1;outcome=SUCCESS;reason=null;netAttempts=7;branchSearches=11;orders=1;ripPasses=1;ripped=2;rerouted=3;expansions=71986;failures=0;rawSegments=635;conflicts=1980;order[0]=3:GND,3:VIN,12:BRANCH1_NODE,12:BRANCH2_NODE,tree=0;rip[BRANCH1_NODE]=[VIN, GND];recovered[BRANCH1_NODE];",
+    "P05_OCCUPANCY shared-halo ownership, exact survivor, repeated rip-up, ghost-copper and stale-clearance negatives PASS",
+    "P05_EXHAUSTION routing-work@1;outcome=EXHAUSTED;reason=NO_PATH;netAttempts=14;branchSearches=14;orders=5;ripPasses=2;ripped=2;rerouted=4;expansions=23390;failures=5;rawSegments=266;conflicts=735;order[0]=1:A,1:B,tree=0;rip[B]=[A];reject[NO_PATH:A];order[1]=1:A,1:B,tree=1;rip[B]=[A];reject[NO_PATH:A];order[2]=1:B,1:A,tree=2;reject[NO_PATH:A];order[3]=1:B,1:A,tree=3;reject[NO_PATH:A];order[4]=1:B,1:A,tree=4;reject[NO_PATH:A];",
+    "P05_BUDGET routing-work@1;outcome=EXHAUSTED;reason=SEARCH_LIMIT;netAttempts=1;branchSearches=1;orders=1;ripPasses=0;ripped=0;rerouted=0;expansions=1;failures=1;rawSegments=0;conflicts=0;order[0]=1:A,1:B,tree=0;reject[SEARCH_LIMIT:A];",
+    "PASS: P05 routing contracts assertions=21976",
+    "PASS: P05 frozen corpus rows=70 successes=24",
+    "PASS: P05 generation comparison rows=13"
+  ],
+  "native-publication": [
+    "PASS: PCB compaction contracts assertions=416 reducedFamilies=9",
+    "PASS: Q15 control board contracts assertions=6863 designs=4",
+    "PASS: A10 routing rejection contracts assertions=28",
+    "PASS: P02 conductor contracts 3209 assertions; 40 independent lattice cases; 48 shared-copper permutations; 16 SMD poses",
+    "PASS: P03 placement contracts assertions=864267",
+    "PASS: P04 routing contracts assertions=6408 branches=6",
+    "P05_PROOF order-only=routing-work@1;outcome=SUCCESS;reason=null;netAttempts=4;branchSearches=6;orders=1;ripPasses=0;ripped=0;rerouted=0;expansions=35080;failures=0;rawSegments=425;conflicts=1037;order[0]=12:BRANCH1_NODE,3:GND,3:VIN,12:BRANCH2_NODE,tree=0;",
+    "P05_PROOF rip-up=routing-work@1;outcome=SUCCESS;reason=null;netAttempts=7;branchSearches=11;orders=1;ripPasses=1;ripped=2;rerouted=3;expansions=71986;failures=0;rawSegments=635;conflicts=1980;order[0]=3:GND,3:VIN,12:BRANCH1_NODE,12:BRANCH2_NODE,tree=0;rip[BRANCH1_NODE]=[VIN, GND];recovered[BRANCH1_NODE];",
+    "P05_OCCUPANCY shared-halo ownership, exact survivor, repeated rip-up, ghost-copper and stale-clearance negatives PASS",
+    "P05_EXHAUSTION routing-work@1;outcome=EXHAUSTED;reason=NO_PATH;netAttempts=14;branchSearches=14;orders=5;ripPasses=2;ripped=2;rerouted=4;expansions=23390;failures=5;rawSegments=266;conflicts=735;order[0]=1:A,1:B,tree=0;rip[B]=[A];reject[NO_PATH:A];order[1]=1:A,1:B,tree=1;rip[B]=[A];reject[NO_PATH:A];order[2]=1:B,1:A,tree=2;reject[NO_PATH:A];order[3]=1:B,1:A,tree=3;reject[NO_PATH:A];order[4]=1:B,1:A,tree=4;reject[NO_PATH:A];",
+    "P05_BUDGET routing-work@1;outcome=EXHAUSTED;reason=SEARCH_LIMIT;netAttempts=1;branchSearches=1;orders=1;ripPasses=0;ripped=0;rerouted=0;expansions=1;failures=1;rawSegments=0;conflicts=0;order[0]=1:A,1:B,tree=0;reject[SEARCH_LIMIT:A];",
+    "PASS: P05 routing contracts assertions=21976",
+    "PASS: P05 frozen corpus rows=70 successes=24",
+    "PASS: P05 generation comparison rows=13"
+  ],
+  "dense-qualified": [
+    "PASS: dense PCB packing seeds=11 areaSum=20746824"
+  ]
+}

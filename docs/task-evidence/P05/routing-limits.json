@@ -1,0 +1,11 @@
+{
+  "orderings": 5,
+  "ripUpPasses": 2,
+  "victimsPerPass": 2,
+  "reroutedNetAttempts": 6,
+  "totalExpansions": 1000000,
+  "maxGridCells": 700000,
+  "perBranchExpansionsPerCell": 20,
+  "netAttemptFormula": "5*N+6",
+  "scope": "One fixed-placement routing request. Original and optional compact plans each have a request; existing generator maximum 80 placements is unchanged."
+}

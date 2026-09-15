@@ -2,19 +2,31 @@ package com.lushprojects.circuitjs1.client;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.PriorityQueue;
+import java.util.TreeMap;
 import java.util.Vector;
 
-/** Current bounded single-layer tree router; P06 owns optional layer transitions. */
+/** Bounded single-layer tree routing with private, ownership-safe congestion recovery. */
 final class PcbNetRouter {
     private static final int GRID=10, ROUTING_CHECK_INTERVAL=128;
     static final int MINIMUM_STEP_COST=2;
+    enum Reason { NO_PATH, GRID_LIMIT, SEARCH_LIMIT, RECOVERY_LIMIT, QUALITY_LIMIT }
     static final class Rejected extends RuntimeException {
+        final Reason reason;
         final String blockedNet;
-        Rejected(String reason) { this(reason,null); }
-        Rejected(String reason,String blockedNet) { super(reason);this.blockedNet=blockedNet; }
+        final PcbRoutingWork.Statistics statistics;
+        Rejected(String message) { this(Reason.NO_PATH,message,null); }
+        Rejected(Reason reason,String message,String blockedNet) { this(reason,message,blockedNet,null); }
+        Rejected(Reason reason,String message,String blockedNet,PcbRoutingWork.Statistics statistics) {
+            super(message);
+            if(reason==null) throw new IllegalArgumentException("Missing routing rejection reason");
+            this.reason=reason; this.blockedNet=blockedNet; this.statistics=statistics;
+        }
     }
-    private static Rejected reject(PcbRoutingRejectedException.Kind kind,String message) { return new Rejected(message); }
+    private static Rejected reject(PcbRoutingRejectedException.Kind kind,String message) {
+        return new Rejected(Reason.NO_PATH,message,null);
+    }
     private static Rectangle traceCollisionEnvelope(Rectangle r) {
         int margin=PcbTraceRules.TRACE_WIDTH/2;
         return new Rectangle(r.x-margin,r.y-margin,r.width+margin*2,r.height+margin*2);
@@ -36,50 +48,186 @@ final class PcbNetRouter {
         route(layout,board,outline,attempt,observer,canonical,routingSeed,treeVariant,null);
     }
     static void route(PcbBoardLayout layout,TroubleshootBoard board,Rectangle outline,int attempt,
-            SeededPcbLayoutGenerator.AttemptObserver observer,boolean canonical,long routingSeed,int treeVariant,Vector<String> blocked) {
-        Router router=new Router(layout,board,outline,attempt,observer);
-        Vector<String> nets=board.getNetIds();
-        final TroubleshootBoard definition=board;
-        final int order=board.getPlacementConstraints().routingLayer==PcbCopperLayer.BOTTOM?(attempt/2)%4:0;
-        Collections.sort(nets,new Comparator<String>() { public int compare(String a,String b) {
-            int ap=priority(definition,a),bp=priority(definition,b);
-            if(order==1) { ap=-ap;bp=-bp; }
-            if(order>=2) {
-                ap=definition.getNet(a).getPadIds().size();bp=definition.getNet(b).getPadIds().size();
-                if(order==2) {ap=-ap;bp=-bp;}
-            }
-            return ap==bp?a.compareTo(b):ap<bp?-1:1;
-        }});
-        if(board.getPlacementConstraints().routingLayer==PcbCopperLayer.BOTTOM && attempt>=8)
-            NamedRandomStreams.shuffle(nets,new java.util.Random(routingSeed ^ (0x632be59bd9b4e019L*(attempt+1))));
-        if(treeVariant>=2) Collections.reverse(nets);
-        if(blocked!=null)for(String net:blocked) {nets.remove(net);nets.add(0,net);}
+            SeededPcbLayoutGenerator.AttemptObserver observer,boolean canonical,long routingSeed,
+            int treeVariant,Vector<String> blocked) {
+        routeWithLimits(layout,board,outline,attempt,observer,canonical,routingSeed,treeVariant,blocked,
+            PcbRoutingWork.Limits.DEFAULT);
+    }
+    /** Tighter limits qualify ablation/exhaustion without a global mutable mode. */
+    static void routeWithLimits(PcbBoardLayout output,TroubleshootBoard board,Rectangle outline,int attempt,
+            SeededPcbLayoutGenerator.AttemptObserver observer,boolean canonical,long routingSeed,
+            int treeVariant,Vector<String> blocked,PcbRoutingWork.Limits limits) {
+        if(output==null || board==null || outline==null || observer==null || attempt<0 || treeVariant<0 || treeVariant>=PcbRoutingWork.Limits.MAX_ORDERINGS)
+            throw new IllegalArgumentException("Invalid routing request");
+        outline=new Rectangle(outline);
+        blocked=blocked==null?null:new Vector<String>(blocked);
+        PcbBoardLayout template=output.copyForRouting();
+        output.validateAgainst(board);
+        Rectangle actual=template.getBoardOutline();
+        if(actual.x!=outline.x || actual.y!=outline.y || actual.width!=outline.width || actual.height!=outline.height)
+            throw new IllegalArgumentException("Routing outline differs from the placement");
+        Vector<NetRequest> requests=new Vector<NetRequest>();
+        for(String net:board.getNetIds()) requests.add(new NetRequest(board,template,net));
+        final PcbRoutingWork work=new PcbRoutingWork(limits,requests.size());
+        String promoted=null;
+        Rejected last=null;
         try {
-        for(String net:nets) {
-            Vector<String> remaining=board.getNet(net).getPadIds(); Collections.sort(remaining);
-            // A declared unused contact remains a physical pad without invented copper.
-            if(remaining.size()==1) continue;
-            if(remaining.isEmpty()) throw new IllegalStateException("Cannot route a net without pads: "+net);
-            Vector<String> reached=new Vector<String>();
-            // Bounded medoid/farthest candidates. Every tie ends in the canonical pad ID.
-            String root=chooseRoot(layout,remaining,attempt%2); remaining.remove(root); reached.add(root);
-            java.util.Random branchOrder=new java.util.Random(routingSeed ^ net.hashCode() ^ (0x9e3779b97f4a7c15L*(attempt+1)));
-            boolean trunk=false;
-            while(!remaining.isEmpty()) {
-                String next=treeVariant%2==1 ?
-                    remaining.get(branchOrder.nextInt(remaining.size())) :
-                    treeVariant>=2?chooseFarthest(layout,remaining,reached):chooseNext(layout,remaining,reached);
-                remaining.remove(next);
-                if(internallyReached(board,next,reached)) { reached.add(next); continue; }
-                PcbTraceGeometry trace;
-                try { trace=router.route(net,next,trunk?null:root); }
-                catch(Rejected failure) {throw new Rejected(failure.getMessage(),net);}
-                layout.addTrace(trace); reached.add(next); trunk=true;
+            for(int pass=0;pass<limits.orderings;pass++) {
+                observer.check(attempt);
+                Vector<NetRequest> order=ordered(requests,board,attempt,routingSeed,treeVariant,pass,promoted,blocked);
+                // Retain P04's useful bounded tree candidates inside this one budget.
+                int treeChoice=(treeVariant+pass)%PcbRoutingWork.Limits.MAX_ORDERINGS;
+                String key=orderKey(order)+"tree="+treeChoice;
+                work.orderingPasses++;
+                work.decisions.append("order[").append(pass).append("]=").append(key).append(';');
+                PcbBoardLayout candidate=template.copyForRouting();
+                Router router=new Router(candidate,board,outline,attempt,observer);
+                router.work=work;
+                HashSet<String> completed=new HashSet<String>();
+                try {
+                    for(NetRequest net:order) {
+                        if(completed.contains(net.id)) continue;
+                        try {
+                            routeNet(router,net,attempt,routingSeed,treeChoice,false);
+                            completed.add(net.id);
+                        } catch(Rejected failure) {
+                            if(failure.reason!=Reason.NO_PATH) throw failure;
+                            Vector<String> victims=router.victims(completed,limits.victimsPerPass);
+                            if(victims.isEmpty() || work.ripUpPasses>=limits.ripUpPasses ||
+                                    work.reroutedNets+victims.size()+1>limits.reroutedNets) throw failure;
+                            work.ripUpPasses++;
+                            work.rippedNets+=victims.size();
+                            work.decisions.append("rip[").append(net.id).append("]=").append(victims).append(';');
+                            router.removeNets(victims);
+                            completed.removeAll(victims);
+                            // Failed net gets its constrained route first; no partial
+                            // copper or board mutation can escape this private attempt.
+                            routeNet(router,net,attempt,routingSeed,treeChoice,true);
+                            completed.add(net.id);
+                            for(String victim:victims) {
+                                NetRequest request=find(requests,victim);
+                                routeNet(router,request,attempt,routingSeed,treeChoice,true);
+                                completed.add(victim);
+                            }
+                            work.decisions.append("recovered[").append(net.id).append("];");
+                        }
+                    }
+                    router.requireExactOccupancy();
+                    if(canonical) PcbRouteCanonicalizer.canonicalize(candidate);
+                    router.requireExactOccupancy();
+                    candidate.validateRoutingGeometry(board);
+                    candidate.validateRouteQuality();
+                    // Last cancellation checkpoint is BEFORE the only publication.
+                    observer.check(attempt);
+                    output.replaceTraces(candidate.getTraces());
+                    work.outcome=PcbRoutingWork.Outcome.SUCCESS;
+                    return;
+                } catch(Rejected failure) {
+                    last=failure; promoted=failure.blockedNet;
+                    work.candidateFailures++;
+                    work.decisions.append("reject[").append(failure.reason).append(':').append(promoted).append("];");
+                    if(failure.reason!=Reason.NO_PATH) break;
+                } catch(PcbBoardLayout.RouteQualityRejectedException quality) {
+                    last=new Rejected(Reason.QUALITY_LIMIT,quality.getMessage(),null);
+                    promoted=null; work.candidateFailures++;
+                    work.decisions.append("reject[QUALITY:").append(quality.getKind()).append("];");
+                }
             }
-        }
-        if(canonical) PcbRouteCanonicalizer.canonicalize(layout);
+            if(last==null) throw new IllegalStateException("Routing stopped without a candidate outcome");
+            work.outcome=PcbRoutingWork.Outcome.EXHAUSTED;
+            work.rejectionReason=last.reason;
+            throw new Rejected(last.reason,last.getMessage(),last.blockedNet,work.snapshot());
+        } catch(Rejected failure) {
+            work.outcome=PcbRoutingWork.Outcome.EXHAUSTED;
+            work.rejectionReason=failure.reason;
+            if(work.candidateFailures==0) work.candidateFailures++;
+            if(failure.statistics!=null) throw failure;
+            throw new Rejected(failure.reason,failure.getMessage(),failure.blockedNet,work.snapshot());
         } finally {
-            layout.setRoutingStatistics(router.expansions,router.rawSegments,router.congestionRejections);
+            output.setRoutingStatistics(work.expansions,work.rawSegments,work.congestionRejections);
+            output.setRoutingRecoveryStatistics(work.snapshot());
+        }
+    }
+    /** Snapshot canonical pad membership and typed demand once, before any route. */
+    private static final class NetRequest {
+        final String id;
+        final Vector<String> pads;
+        final int priority,degree;
+        final long span;
+        NetRequest(TroubleshootBoard board,PcbBoardLayout layout,String id) {
+            this.id=id; pads=board.getNet(id).getPadIds(); Collections.sort(pads);
+            if(pads.isEmpty()) throw new IllegalStateException("Cannot route a net without pads: "+id);
+            priority=priority(board,id); degree=pads.size();
+            int minX=Integer.MAX_VALUE,minY=Integer.MAX_VALUE,maxX=Integer.MIN_VALUE,maxY=Integer.MIN_VALUE;
+            for(String pad:pads) {
+                PcbPadPlacement p=layout.getPad(pad);
+                minX=Math.min(minX,p.getX()); minY=Math.min(minY,p.getY());
+                maxX=Math.max(maxX,p.getX()); maxY=Math.max(maxY,p.getY());
+            }
+            span=(long)maxX-minX+(long)maxY-minY;
+        }
+    }
+    private static NetRequest find(Vector<NetRequest> requests,String id) {
+        for(NetRequest request:requests) if(request.id.equals(id)) return request;
+        throw new IllegalStateException("Unknown routing owner: "+id);
+    }
+    private static Vector<NetRequest> ordered(Vector<NetRequest> requests,TroubleshootBoard board,
+            int attempt,long routingSeed,int treeVariant,final int pass,String promoted,Vector<String> blocked) {
+        Vector<NetRequest> nets=new Vector<NetRequest>(requests);
+        final int initial=board.getPlacementConstraints().routingLayer==PcbCopperLayer.BOTTOM?(attempt/2)%4:0;
+        Collections.sort(nets,new Comparator<NetRequest>() { public int compare(NetRequest a,NetRequest b) {
+            if(pass==2 || pass==3) {
+                if(pass==3 && a.span!=b.span) return a.span<b.span?-1:1;
+                if(a.degree!=b.degree) return a.degree>b.degree?-1:1;
+                if(a.priority!=b.priority) return a.priority<b.priority?-1:1;
+                if(a.span!=b.span) return a.span>b.span?-1:1;
+                return b.id.compareTo(a.id);
+            }
+            int ap=a.priority,bp=b.priority;
+            if(initial==1) { ap=-ap; bp=-bp; }
+            if(initial>=2) { ap=a.degree; bp=b.degree; if(initial==2) {ap=-ap;bp=-bp;} }
+            return ap==bp?a.id.compareTo(b.id):ap<bp?-1:1;
+        }});
+        // Preserve the existing seeded initial order for hard bottom-layer placements.
+        // New recovery alternatives are conflict/demand informed, not random retries.
+        if(pass!=2 && pass!=3 && board.getPlacementConstraints().routingLayer==PcbCopperLayer.BOTTOM && attempt>=8)
+            NamedRandomStreams.shuffle(nets,new java.util.Random(routingSeed ^ (0x632be59bd9b4e019L*(attempt+1))));
+        if(pass==4 || pass<2 && treeVariant>=2) Collections.reverse(nets);
+        if(pass==0 && blocked!=null) for(String id:blocked) {
+            NetRequest net=find(requests,id); nets.remove(net); nets.add(0,net);
+        }
+        if(pass==1 && promoted!=null) {
+            NetRequest net=find(requests,promoted); nets.remove(net); nets.add(0,net);
+        }
+        return nets;
+    }
+    private static String orderKey(Vector<NetRequest> order) {
+        StringBuilder key=new StringBuilder();
+        for(NetRequest net:order) key.append(net.id.length()).append(':').append(net.id).append(',');
+        return key.toString();
+    }
+    private static void routeNet(Router router,NetRequest net,int attempt,long seed,int treeVariant,boolean reroute) {
+        if(net.degree==1) return;
+        router.work.beginNet(net.id,reroute);
+        router.conflicts.clear();
+        Vector<String> remaining=new Vector<String>(net.pads),reached=new Vector<String>();
+        String root=chooseRoot(router.layout,remaining,attempt%2);
+        remaining.remove(root); reached.add(root);
+        java.util.Random branchOrder=new java.util.Random(seed ^ net.id.hashCode() ^ (0x9e3779b97f4a7c15L*(attempt+1)));
+        boolean trunk=false;
+        try {
+            while(!remaining.isEmpty()) {
+                String next=treeVariant%2==1?remaining.get(branchOrder.nextInt(remaining.size())):
+                    treeVariant>=2?chooseFarthest(router.layout,remaining,reached):chooseNext(router.layout,remaining,reached);
+                remaining.remove(next);
+                if(internallyReached(router.board,next,reached)) { reached.add(next); continue; }
+                PcbTraceGeometry trace=router.route(net.id,next,trunk?null:root);
+                router.layout.addTrace(trace); reached.add(next); trunk=true;
+            }
+        } catch(Rejected failure) {
+            Vector<String> partial=new Vector<String>(); partial.add(net.id);
+            router.removeNets(partial);
+            throw new Rejected(failure.reason,failure.getMessage(),net.id);
         }
     }
     static int priority(TroubleshootBoard board,String net) {
@@ -129,7 +277,9 @@ final class PcbNetRouter {
         }
         return false;
     }
-    private static class Router {
+    static final class Router {
+        PcbRoutingWork work;
+        final TreeMap<String,Integer> conflicts=new TreeMap<String,Integer>();
         int expansions,rawSegments,congestionRejections;
         private final PcbBoardLayout layout;
         private final TroubleshootBoard board;
@@ -156,6 +306,7 @@ final class PcbNetRouter {
         Router(PcbBoardLayout layout, TroubleshootBoard board, Rectangle outline,
                 int attempt, SeededPcbLayoutGenerator.AttemptObserver observer) {
             this.layout = layout;
+            work=new PcbRoutingWork(PcbRoutingWork.Limits.DEFAULT,board.getNetIds().size());
             this.board = board;
             this.outline = outline;
             this.attempt = attempt;
@@ -165,8 +316,8 @@ final class PcbNetRouter {
             minY = outline.y + GRID;
             gridWidth = (outline.width - 2 * GRID) / GRID + 1;
             gridHeight = (outline.height - 2 * GRID) / GRID + 1;
-            if (gridWidth < 1 || gridHeight < 1 || (long)gridWidth*gridHeight > 700000)
-                throw new Rejected("ROUTING_GRID_BUDGET");
+            if (gridWidth < 1 || gridHeight < 1 || (long)gridWidth*gridHeight > PcbRoutingWork.MAX_GRID_CELLS)
+                throw new Rejected(Reason.GRID_LIMIT,"ROUTING_GRID_BUDGET",null);
             occupiedNet = new String[gridWidth][gridHeight];
             clearanceNet = new String[gridWidth][gridHeight];
             pads = layout.getPads().toArray(new PcbPadPlacement[0]);
@@ -215,6 +366,7 @@ final class PcbNetRouter {
         }
 
         PcbTraceGeometry route(String netId, String startPadId, String endPadId) {
+            work.branchSearches++;
             PcbPadPlacement startPad = layout.getPad(startPadId);
             PcbPadPlacement endPad = layout.getPad(endPadId);
             int startX = gridX(startPad.getX());
@@ -254,7 +406,9 @@ final class PcbNetRouter {
             while (!open.isEmpty()) {
                 if ((expanded++ % ROUTING_CHECK_INTERVAL) == 0)
                     observer.check(attempt);
-                if (expanded > (long)gridWidth*gridHeight*20) throw new Rejected("SEARCH_WORK_BUDGET");
+                if (expanded > (long)gridWidth*gridHeight*PcbRoutingWork.SEARCH_EXPANSIONS_PER_CELL)
+                    throw new Rejected(Reason.SEARCH_LIMIT,"SEARCH_WORK_BUDGET",netId);
+                work.expand(netId);
                 SearchNode current = open.poll();
                 expansions++;
                 int currentKey=stateKey(current.x,current.y,current.direction);
@@ -313,6 +467,7 @@ final class PcbNetRouter {
             Collections.reverse(points);
             if(points.size()<2) throw new Rejected("ZERO_LENGTH_BRANCH");
             rawSegments+=points.size()-1;
+            work.rawSegments+=points.size()-1;
             markCopper(points, netId);
             // Keep the searched path for independent comparison. The canonicalizer
             // removes only collinear subdivisions and retains physical witnesses.
@@ -382,7 +537,8 @@ final class PcbNetRouter {
             int physicalY = minY + y * GRID;
             if ((occupiedNet[x][y] != null && !netId.equals(occupiedNet[x][y])) ||
                     (clearanceNet[x][y] != null && !netId.equals(clearanceNet[x][y]))) {
-                congestionRejections++;
+                congestionRejections++; work.congestionRejections++;
+                recordConflicts(x,y,netId);
                 return false;
             }
             if(emptyComponentFace) return padAt[x][y]==null || padAt[x][y].equals(startPad.getPadId()) ||
@@ -473,10 +629,103 @@ final class PcbNetRouter {
             return false;
         }
 
+        /** Attribute rejected cells to actual copper owners, including shared clearance halos. */
+        private void recordConflicts(int x,int y,String net) {
+            int radius=PcbTraceRules.ROUTING_GRID_CLEARANCE_CELLS;
+            for(int nx=Math.max(0,x-radius);nx<=Math.min(gridWidth-1,x+radius);nx++)
+                for(int ny=Math.max(0,y-radius);ny<=Math.min(gridHeight-1,y+radius);ny++) {
+                    String owner=occupiedNet[nx][ny];
+                    if(owner==null || owner.equals(net)) continue;
+                    Integer count=conflicts.get(owner);
+                    conflicts.put(owner,count==null?1:count+1);
+                }
+        }
+        Vector<String> victims(java.util.Set<String> completed,int limit) {
+            Vector<String> result=new Vector<String>();
+            for(String owner:conflicts.keySet()) if(completed.contains(owner)) result.add(owner);
+            Collections.sort(result,new Comparator<String>() { public int compare(String a,String b) {
+                int ac=conflicts.get(a),bc=conflicts.get(b);
+                return ac==bc?a.compareTo(b):ac>bc?-1:1;
+            }});
+            while(result.size()>limit) result.remove(result.size()-1);
+            return result;
+        }
+        /** Traces own copper. Rebuild derived occupancy rather than subtract shared halo cells. */
+        void removeNets(Vector<String> owners) {
+            if(owners==null) throw new IllegalArgumentException("Missing rip-up owners");
+            for(String owner:owners) if(board.getNet(owner)==null)
+                throw new IllegalArgumentException("Unknown rip-up owner: "+owner);
+            Vector<PcbTraceGeometry> survivors=new Vector<PcbTraceGeometry>();
+            boolean changed=false;
+            for(PcbTraceGeometry trace:layout.getTraces()) {
+                if(owners.contains(trace.getNetId())) changed=true;
+                else survivors.add(trace);
+            }
+            if(!changed) return;
+            layout.replaceTraces(survivors);
+            for(int x=0;x<gridWidth;x++) {
+                java.util.Arrays.fill(occupiedNet[x],null);
+                java.util.Arrays.fill(clearanceNet[x],null);
+            }
+            for(PcbTraceGeometry trace:survivors) markCopper(gridPoints(trace),trace.getNetId());
+        }
+        private Vector<Point> gridPoints(PcbTraceGeometry trace) {
+            if(trace.getLayer()!=layer || board.getNet(trace.getNetId())==null)
+                throw new IllegalStateException("Foreign copper in routing state");
+            Vector<Point> result=new Vector<Point>();
+            int[] xs=trace.getXPoints(),ys=trace.getYPoints();
+            for(int i=1;i<xs.length;i++) {
+                boolean horizontal=ys[i]==ys[i-1];
+                if(horizontal?xs[i]==xs[i-1]:xs[i]!=xs[i-1])
+                    throw new IllegalStateException("Routing copper has a zero/diagonal segment");
+                int fixed=horizontal?gridY(ys[i]):gridX(xs[i]);
+                int low=horizontal?Math.min(xs[i-1],xs[i]):Math.min(ys[i-1],ys[i]);
+                int high=horizontal?Math.max(xs[i-1],xs[i]):Math.max(ys[i-1],ys[i]);
+                int origin=horizontal?minX:minY,count=horizontal?gridWidth:gridHeight;
+                if(fixed<0 || fixed>=(horizontal?gridHeight:gridWidth) || low<origin || high>origin+(count-1)*GRID)
+                    throw new IllegalStateException("Routing copper is outside its grid");
+                // Canonicalization inserts exact escape/contact witnesses along
+                // existing segments; collinear witness coordinates need not be grid vertices.
+                for(int coordinate=origin+((low-origin+GRID-1)/GRID)*GRID;coordinate<=high;coordinate+=GRID)
+                    result.add(horizontal?new Point(coordinate,ys[i]):new Point(xs[i],coordinate));
+            }
+            return result;
+        }
+        /** Compare, never repair: stale or missing cells fail before publication. */
+        void requireExactOccupancy() {
+            String[][] expected=new String[gridWidth][gridHeight];
+            for(PcbTraceGeometry trace:layout.getTraces()) for(Point point:gridPoints(trace)) {
+                int x=gridX(point.x),y=gridY(point.y);
+                String previous=expected[x][y];
+                if(previous!=null && !previous.equals(trace.getNetId()))
+                    throw new IllegalStateException("Two copper owners occupy one routing cell");
+                expected[x][y]=trace.getNetId();
+            }
+            int radius=PcbTraceRules.ROUTING_GRID_CLEARANCE_CELLS;
+            for(int x=0;x<gridWidth;x++) for(int y=0;y<gridHeight;y++) {
+                if(!equal(expected[x][y],occupiedNet[x][y]))
+                    throw new IllegalStateException("Stale/missing routed occupancy");
+                String halo=null;
+                for(int nx=Math.max(0,x-radius);nx<=Math.min(gridWidth-1,x+radius);nx++)
+                    for(int ny=Math.max(0,y-radius);ny<=Math.min(gridHeight-1,y+radius);ny++) {
+                        String owner=expected[nx][ny];
+                        if(owner!=null) halo=halo==null || halo.equals(owner)?owner:"";
+                    }
+                if(!equal(halo,clearanceNet[x][y]))
+                    throw new IllegalStateException("Stale/missing routing clearance");
+                if(expected[x][y]!=null && !expected[x][y].equals(halo))
+                    throw new IllegalStateException("Routed copper violates another owner's clearance");
+            }
+        }
+        private boolean equal(String a,String b) { return a==null?b==null:a.equals(b); }
+
         private void markCopper(Vector<Point> points, String netId) {
             for (Point point : points) {
                 int centerX = gridX(point.x);
                 int centerY = gridY(point.y);
+                if((occupiedNet[centerX][centerY]!=null && !netId.equals(occupiedNet[centerX][centerY])) ||
+                        (clearanceNet[centerX][centerY]!=null && !netId.equals(clearanceNet[centerX][centerY])))
+                    throw new IllegalStateException("Routing attempted cross-owner copper publication");
                 occupiedNet[centerX][centerY] = netId;
                 for (int x = Math.max(0, centerX - PcbTraceRules.ROUTING_GRID_CLEARANCE_CELLS);
                         x <= Math.min(gridWidth - 1,
@@ -484,8 +733,7 @@ final class PcbNetRouter {
                     for (int y = Math.max(0, centerY - PcbTraceRules.ROUTING_GRID_CLEARANCE_CELLS);
                             y <= Math.min(gridHeight - 1,
                                 centerY + PcbTraceRules.ROUTING_GRID_CLEARANCE_CELLS); y++)
-                        if (clearanceNet[x][y] == null)
-                            clearanceNet[x][y] = netId;
+                        reserve(clearanceNet,x,y,netId);
                 }
             }
         }

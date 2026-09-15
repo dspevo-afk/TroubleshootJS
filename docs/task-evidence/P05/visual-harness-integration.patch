@@ -1,0 +1,34 @@
+--- a/tests/contracts/DensePcbPackingContractTest.java
++++ b/tests/contracts/DensePcbPackingContractTest.java
+@@ -190,19 +190,18 @@
+             PcbPlacementPlanner.Plan plan, boolean compactProbe) {
+         Rectangle outline = plan.outline;
+         PcbBoardLayout layout = null;
+-        // Four feedback alternatives, then an independent reverse/farthest
+-        // tree. The latter avoids a cycle caused by repeatedly promoting blockers.
+-        int treeVariants=!compactProbe && board.getPlacementConstraints().routingLayer==PcbCopperLayer.BOTTOM ? 5 : 1;
+-        Vector<String> blocked=new Vector<String>();
+-        for(int tree=0;tree<treeVariants;tree++) {
+-            layout=plan.materialize();
+-            statistics.routes++;long routingStarted=System.currentTimeMillis();
+-            try { PcbNetRouter.route(layout, board, outline, attempt, observer,true,routingSeed,tree,tree==4?null:blocked); break; }
+-            catch (PcbNetRouter.Rejected failure) {
+-                if(failure.blockedNet!=null) {blocked.remove(failure.blockedNet);blocked.add(failure.blockedNet);}
+-                if(tree+1==treeVariants) throw reject(PcbRoutingRejectedException.Kind.ROUTING, failure.getMessage());
+-            }
+-            finally {statistics.expansions+=layout.getRoutingExpansions();statistics.routeMillis+=System.currentTimeMillis()-routingStarted;}
++        // P05 owns every ordering/recovery pass. This ablation disables only
++        // routed compaction; do not wrap the new scheduler in the old loop.
++        layout=plan.materialize();
++        long routingStarted=System.currentTimeMillis();
++        try { PcbNetRouter.route(layout,board,outline,attempt,observer,true,routingSeed); }
++        catch (PcbNetRouter.Rejected failure) {
++            throw reject(PcbRoutingRejectedException.Kind.ROUTING,failure.getMessage());
++        } finally {
++            PcbRoutingWork.Statistics recovery=layout.getRoutingRecoveryStatistics();
++            if(recovery!=null) statistics.routes+=recovery.orderingPasses;
++            statistics.expansions+=layout.getRoutingExpansions();
++            statistics.routeMillis+=System.currentTimeMillis()-routingStarted;
+         }
+         placeSilkscreen(layout, board, outline);
+         layout.validateGeometry(board);

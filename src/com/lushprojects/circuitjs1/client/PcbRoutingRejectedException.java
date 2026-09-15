@@ -20,9 +20,11 @@ final class PcbRoutingRejectedException extends RuntimeException {
     private final int attemptCount;
     private final long seed;
     private final boolean exhausted;
+    private final PcbRoutingWork.Statistics recovery;
+    PcbRoutingWork.Statistics getRoutingRecoveryStatistics() { return recovery; }
 
     private PcbRoutingRejectedException(Kind kind, int attemptIndex, int attemptCount,
-            long seed, boolean exhausted, String message, Throwable cause) {
+            long seed, boolean exhausted, String message, Throwable cause,PcbRoutingWork.Statistics recovery) {
         super(message, cause);
         if (kind == null || attemptIndex < 0 || attemptCount < 1 ||
                 attemptIndex >= attemptCount)
@@ -32,14 +34,20 @@ final class PcbRoutingRejectedException extends RuntimeException {
         this.attemptCount = attemptCount;
         this.seed = seed;
         this.exhausted = exhausted;
+        this.recovery = recovery;
     }
 
     static PcbRoutingRejectedException attemptRejected(Kind kind, int attemptIndex,
             long seed, String detail) {
+        return attemptRejected(kind,attemptIndex,seed,detail,null);
+    }
+
+    static PcbRoutingRejectedException attemptRejected(Kind kind,int attemptIndex,
+            long seed,String detail,PcbRoutingWork.Statistics recovery) {
         String message = "PCB " + kindLabel(kind) + " candidate rejected at attempt " +
             attemptIndex + (detail == null ? "" : ": " + detail);
         return new PcbRoutingRejectedException(kind, attemptIndex, attemptIndex + 1,
-            seed, false, message, null);
+            seed, false, message, null,recovery);
     }
 
     static PcbRoutingRejectedException exhausted(long seed, int attemptCount,
@@ -49,7 +57,7 @@ final class PcbRoutingRejectedException extends RuntimeException {
         String message = "Unable to generate a routed PCB after " + attemptCount +
             " deterministic attempts for seed " + seed + ": " + lastRejection.getMessage();
         return new PcbRoutingRejectedException(lastRejection.kind, attemptCount - 1,
-            attemptCount, seed, true, message, lastRejection);
+            attemptCount, seed, true, message, lastRejection,lastRejection.recovery);
     }
 
     /**
@@ -65,7 +73,7 @@ final class PcbRoutingRejectedException extends RuntimeException {
         String message = "PCB routing candidate rejected for seed " + seed + ": " +
             qualityFailure.getMessage();
         return new PcbRoutingRejectedException(Kind.ROUTING, 0, 1, seed, false,
-            message, qualityFailure);
+            message, qualityFailure,null);
     }
 
     private static String kindLabel(Kind kind) {

@@ -9,7 +9,7 @@ import java.util.Vector;
  */
 class SeededPcbLayoutGenerator {
     /** Current corrected layout algorithm; package geometry remains contract v3. */
-    static final int CURRENT_VERSION = 9;
+    static final int CURRENT_VERSION = 11;
     private static final int GRID = 10;
     private static final int MAX_ATTEMPTS = 80;
     private static final int TARGET_VIABLE_CANDIDATES = 5;
@@ -114,7 +114,7 @@ class SeededPcbLayoutGenerator {
                 viableCandidates++;
             } catch (CandidateRejected failure) {
                 lastFailure = PcbRoutingRejectedException.attemptRejected(
-                    failure.getKind(), attempt, seed, failure.getMessage());
+                    failure.getKind(), attempt, seed, failure.getMessage(),failure.recovery);
             } catch (PcbBoardLayout.RouteQualityRejectedException failure) {
                 lastFailure = PcbRoutingRejectedException.attemptRejected(
                     PcbRoutingRejectedException.Kind.ROUTING, attempt, seed,
@@ -153,7 +153,7 @@ class SeededPcbLayoutGenerator {
         if (compact == plan) return original;
         // Keep every successful original candidate. A smaller layout is accepted
         // only after its own real routing, access and geometry checks succeed.
-        // One compact tree attempt avoids multiplying a difficult search budget.
+        // One bounded compact routing request retains the successful original on exhaustion.
         try {
             PcbBoardLayout result = routePlan(board, seed, variationMode, attempt, observer,
                 routingSeed, statistics, compact, true);
@@ -167,20 +167,21 @@ class SeededPcbLayoutGenerator {
             PcbPlacementPlanner.Plan plan, boolean compactProbe) {
         Rectangle outline = plan.outline;
         PcbBoardLayout layout = null;
-        // Four feedback alternatives, then an independent reverse/farthest
-        // tree. The latter avoids a cycle caused by repeatedly promoting blockers.
-        int treeVariants=!compactProbe && board.getPlacementConstraints().routingLayer==PcbCopperLayer.BOTTOM ? 5 : 1;
-        Vector<String> blocked=new Vector<String>();
-        for(int tree=0;tree<treeVariants;tree++) {
-            layout=plan.materialize();
-            statistics.routes++;long routingStarted=System.currentTimeMillis();
-            try { PcbNetRouter.route(layout, board, outline, attempt, observer,true,routingSeed,tree,tree==4?null:blocked); break; }
-            catch (PcbNetRouter.Rejected failure) {
-                if(failure.blockedNet!=null) {blocked.remove(failure.blockedNet);blocked.add(failure.blockedNet);}
-                if(tree+1==treeVariants) throw reject(PcbRoutingRejectedException.Kind.ROUTING, failure.getMessage());
-            }
-            finally {statistics.expansions+=layout.getRoutingExpansions();statistics.routeMillis+=System.currentTimeMillis()-routingStarted;}
+        // One scheduler owns all ordering and rip-up budgets for this placement.
+        layout=plan.materialize();
+        long routingStarted=System.currentTimeMillis();
+        try { PcbNetRouter.route(layout,board,outline,attempt,observer,true,routingSeed); }
+        catch(PcbNetRouter.Rejected failure) {
+            throw new CandidateRejected(PcbRoutingRejectedException.Kind.ROUTING,
+                failure.getMessage(),failure.statistics);
+        } finally {
+            PcbRoutingWork.Statistics routed=layout.getRoutingRecoveryStatistics();
+            if(routed!=null) statistics.routes+=routed.orderingPasses;
+            statistics.expansions+=layout.getRoutingExpansions();
+            statistics.routeMillis+=System.currentTimeMillis()-routingStarted;
         }
+        PcbRoutingWork.Statistics recovery=layout.getRoutingRecoveryStatistics();
+        layout.setRoutingRecoveryStatistics(recovery);
         placeSilkscreen(layout, board, outline);
         layout.validateGeometry(board);
         int edgeMargin=FINAL_EDGE_MARGIN;
@@ -379,9 +380,14 @@ class SeededPcbLayoutGenerator {
     private static final class CandidateRejected extends RuntimeException {
         private static final long serialVersionUID = 1L;
         private final PcbRoutingRejectedException.Kind kind;
+        private final PcbRoutingWork.Statistics recovery;
 
         CandidateRejected(PcbRoutingRejectedException.Kind kind, String message) {
+            this(kind,message,null);
+        }
+        CandidateRejected(PcbRoutingRejectedException.Kind kind,String message,PcbRoutingWork.Statistics recovery) {
             super(message);
+            this.recovery=recovery;
             if (kind == null)
                 throw new IllegalArgumentException("Missing PCB candidate rejection kind");
             this.kind = kind;

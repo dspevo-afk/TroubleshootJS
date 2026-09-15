@@ -1,6 +1,54 @@
 # TroubleshootJS - Current Task Report
 
-## Current: post-REL-A procedural Quick Play roadmap clarification
+## Current: P05 bounded routing recovery complete
+
+September 15, 2026. Branch `codex/task43p-final-recovery`; patch base
+`94d885ea37955c46980ae7d1e55a68b8dd3e17ea`. The commit containing this checkpoint
+is the qualified P05 candidate. Publication must verify its local/remote SHA.
+
+P05 adds immutable net requests, deterministic alternative orders, actual-blocker
+selection, bounded local rip-up, exact occupancy reconstruction/audits and private
+final publication. Limits per placement request: five orders, two rip-up passes,
+two victims/pass, six rerouted-net attempts, one million expansions, `5*N+6` net
+attempts, 700,000 grid cells and the existing `20*cells` branch guard. Original and
+compact plans remain separate requests; the existing 80-placement cap is unchanged.
+
+Frozen fixed-placement acceptance improves 14/70 to 24/70, with identical physical
+identity hashes, no lost accepted case and no worse common accepted route score.
+Recorded expansions rise 6.42M to 31.25M. Full-generation success improves 11/13
+to 13/13. Integrated cohort board area falls 4.31%, but seed 3 grows 11.05%.
+The tradeoff and all held-out failures are retained, not hidden behind averages.
+
+PASS: clean-publication nine native suites; integrated twelve suites; separate
+11-seed dense test; both fresh maintained JDK8/GWT five-permutation builds;
+publication/integrated compiled layout; publication Q15 all eleven seeds including
+cancellation, wrong/correct repair, continuity and owner restoration; integrated
+normal-player seed 3 menu/ticket/flip/pan/zoom. Normal preparation took 24.72 s.
+P05 has 21,976 assertions; P03 864,267; P04 6,408. Compiled Q15 reuse after the
+fresh rebuild is justified by exact source and all five emitted JavaScript hashes.
+
+Root integrated review completed; no independent agent review. Full unrelated
+release matrices, new-browser populations and modest-host certification were not
+run. Failed polling/cwd/UI-selector attempts are recorded separately. The inspected
+pending UI still has a pre-existing heading encoding blemish; no new visual claim.
+
+Unrelated visual/FPS/packing/tray/shop implementation and evidence remain unstaged.
+Only P05 hunks of the shared generator/runner are published. One necessary
+untracked DensePcbPackingContractTest integration hunk removes its duplicated
+old retry scheduler; all seeds/assertions and the 60-second limit are retained.
+That file remains untracked; its original and minimal patch are preserved.
+
+Task-owned browser contexts, recorded browser-process identities and loopback
+servers are closed. Raw evidence is in the OS Temp directories
+`TroubleshootJS-P05-resume-20260915-dzyh5u7_` and
+`TroubleshootJS-P05-20260915-4jwc0pgd`. No broad cleanup occurred.
+[Compact evidence, commands, limits and screenshots](task-evidence/P05/README.md).
+Next unstarted milestone: P06. P07 and the post-P09 arbitrary-candidate-seed
+Quick Play gate remain unstarted; the current Q15 whitelist is unchanged.
+
+---
+
+## Historical: post-REL-A procedural Quick Play roadmap clarification
 
 Date: September 14, 2026. Branch `codex/task43p-final-recovery`.
 Documentation/product-contract correction only. The owner reports the post-REL-A

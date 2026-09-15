@@ -25,6 +25,21 @@ class PcbBoardLayout {
     private final HashMap<String, PcbSilkscreenLabel> silkscreenLabels =
         new HashMap<String, PcbSilkscreenLabel>();
     private final Vector<PcbTraceGeometry> traces = new Vector<PcbTraceGeometry>();
+    private PcbRoutingWork.Statistics routingRecoveryStatistics;
+    void setRoutingRecoveryStatistics(PcbRoutingWork.Statistics statistics) {
+        requireMutable(); routingRecoveryStatistics=statistics;
+    }
+    PcbRoutingWork.Statistics getRoutingRecoveryStatistics() { return routingRecoveryStatistics; }
+    /** Private routing candidate: immutable placements are shared, mutable copper is not. */
+    PcbBoardLayout copyForRouting() {
+        requireMutable();
+        if (!traces.isEmpty()) throw new IllegalStateException("Routing requires an unrouted placement");
+        PcbBoardLayout copy=new PcbBoardLayout(width,height,boardOutline,partsTray,layoutAlgorithmVersion);
+        copy.pads.putAll(pads); copy.components.putAll(components);
+        copy.silkscreenLabels.putAll(silkscreenLabels);
+        copy.regions.putAll(regions); copy.holes.putAll(holes);
+        return copy;
+    }
     private int routingExpansions,rawRoutingSegments,routingCongestionRejections;
     void setRoutingStatistics(int expansions,int rawSegments,int congestionRejections) {
         requireMutable(); routingExpansions=expansions; rawRoutingSegments=rawSegments;
@@ -57,6 +72,7 @@ class PcbBoardLayout {
         copy.silkscreenLabels.putAll(silkscreenLabels);copy.traces.addAll(traces);
         copy.regions.putAll(regions);copy.holes.putAll(holes);
         copy.setRoutingStatistics(routingExpansions,rawRoutingSegments,routingCongestionRejections);
+        copy.setRoutingRecoveryStatistics(routingRecoveryStatistics);
         if(procedural)copy.setGenerationStatistics(generationPlacementAttempts,generationRoutingAttempts,
             generationRoutingExpansions,generationRoutingMillis,generationPlacementSeed,generationRoutingSeed);
         copy.seal();return copy;
@@ -161,6 +177,13 @@ class PcbBoardLayout {
     }
 
     void validateGeometry(TroubleshootBoard board) {
+        validateRoutingGeometry(board);
+        validateSilkscreen(board);
+        validateRouteQuality();
+    }
+
+    /** The same hard physical checks, before the separate silkscreen stage. */
+    void validateRoutingGeometry(TroubleshootBoard board) {
         board.validate();
         validateAgainst(board);
         for (String componentId : board.getComponentIds()) {
@@ -249,8 +272,6 @@ class PcbBoardLayout {
         for (PcbBoardHole hole : holes.values()) requireInside(hole.getBounds(),boardOutline,"hole " + hole.id);
         validatePhysicalConnectivity(board);
         validateTraceClearance();
-        validateSilkscreen(board);
-        validateRouteQuality();
     }
 
     private void validateDeclaredRoutePad(TroubleshootBoard board, PcbTraceGeometry trace,

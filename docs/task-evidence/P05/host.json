@@ -1,0 +1,10 @@
+{
+  "cpu": "AMD Ryzen 7 7700 8-Core Processor              ",
+  "ramBytes": 34081759232,
+  "os": "Microsoft Windows 11 Home",
+  "osBuild": "26200",
+  "gpu": [
+    "NVIDIA GeForce RTX 3070"
+  ],
+  "logicalProcessors": 16
+}

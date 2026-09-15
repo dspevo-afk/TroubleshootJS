@@ -58,8 +58,14 @@ public final class Q15ControlBoardContractTest {
                 "explicit arbitrary replay is never remapped");
             long start = System.nanoTime();
             try {
-                exact.generation().resolve(new GenerationRequest.PlanCache()).construct();
-                throw new AssertionError("Known unsupported arbitrary seed unexpectedly constructed; qualify before adding it");
+                GeneratedBoardInstance recovered=exact.generation().resolve(new GenerationRequest.PlanCache()).construct().instance;
+                recovered.getPcbLayout().validateGeometry(recovered.getBoard());
+                require(recovered.getSeed()==bad,"recovered hard replay retains its exact seed");
+                require(QuickPlayFamilyRegistry.selectNormalPlayerSeed(Rb15Plan.FAMILY_ID,bad)!=bad,
+                    "routing recovery does not admit a new normal-player seed");
+                System.out.println("Q15_EXACT_RECOVERY seed="+bad+" attempts="+recovered.getPcbLayout().getGenerationPlacementAttempts()+
+                    " millis="+(System.nanoTime()-start)/1000000);
+                for(CircuitElm element:recovered.getSimulationElements())element.delete();
             } catch (PcbRoutingRejectedException expected) {
                 require(expected.isExhausted() && expected.getAttemptCount()==80, "exact unsupported seed fails within unchanged routing bound");
                 System.out.println("Q15_EXACT_REJECTION seed="+bad+" attempts="+expected.getAttemptCount()+" millis="+(System.nanoTime()-start)/1000000);
@@ -98,7 +104,7 @@ public final class Q15ControlBoardContractTest {
             "support ablation samples the actual external load, not a solder wire");
     }
     private static void verifyRandomBoundary() {
-        // Independent expected envelope and mapping. Includes both proven arbitrary failures.
+        // Independent unchanged admission envelope, including both formerly rejected hard replays.
         long[] expected = {0,1,2,3,17,42,101,-1,9007199254740993L,Long.MIN_VALUE,Long.MAX_VALUE};
         long[] entropy = {Long.MIN_VALUE,Long.MAX_VALUE,-4518705223253195925L,-5365808313541656343L,
             -17,-1,0,1,2,3,17,42,101,9007199254740993L};
@@ -111,7 +117,7 @@ public final class Q15ControlBoardContractTest {
             require(quick.getFamilyId().equals(Rb15Plan.FAMILY_ID) && quick.getSeed()==wanted && button.seed==wanted,
                 "Quick Play and New board share the independent qualified envelope mapping");
             require(button.seed!=-4518705223253195925L && button.seed!=-5365808313541656343L,
-                "known arbitrary failures cannot enter normal-player selection");
+                "unqualified arbitrary holdouts cannot enter normal-player selection");
             require(PlayerLaunchRequest.parse(button.replay()).replay().equals(button.replay()) &&
                 button.generation().getDescriptor().getRootSeed()==wanted,"random selection becomes exact replay and generation identity");
             selectedSeeds.add(wanted);

@@ -330,13 +330,37 @@ terminal; through-hole leads can route on the solder side beneath top-side bodie
 escape and branch-contact witnesses. `PcbRouteMetrics` measures union length,
 bends and unique shared length; duplicate copper earns no extra score reward.
 Candidate statistics report expansions, raw segments and moves rejected by
-other-net occupancy/clearance. Existing legality and retry limits remain in force.
+other-net occupancy/clearance. Existing legality is unchanged; the bounded P05 scheduler below owns recovery limits.
 
-The current layout epoch is 7 and dependency interpretation is v7. Dependency
+The current layout epoch is 11 and dependency interpretation is v7. Dependency
 capture includes placement demands, canonical domain barriers, typed net roles
 and the route score version, including the declared routing layer. Historical layout artifacts reject through the
 existing current-version boundary. Circuit topology, values, fault selection,
 measurement physics and repair/retest owners remain separate from planning.
+
+## P05 bounded routing recovery
+
+`PcbNetRouter` freezes sorted stable net/pad requests and typed priority/degree/span
+metadata before starting mutable attempts. Each order has private layout copper,
+occupancy, reservations and deterministic conflict counts. `PcbRoutingWork` owns
+one shared request budget: five orders, two rip-up passes, two victims per pass,
+six rerouted-net attempts and one million expansions, with `5*N+6` net attempts.
+The existing grid/branch guards and 80-placement generator limit remain finite.
+Original and compact placement plans receive separate bounded requests.
+
+Recovery selects actual routed blockers by conflict count and stable ID ties.
+Removing a net deletes only exact-owned traces and rebuilds occupancy and shared
+clearance halos from surviving geometry. An exact audit runs before and after
+canonicalization. Only fully validated connectivity, clearance and quality are
+published after a final cancellation checkpoint. Exhaustion leaves output copper
+empty; invariant and cancellation/stale/deadline exceptions propagate unchanged.
+Immutable work receipts survive sealing/compaction and classified outer rejection.
+The generator no longer wraps this scheduler in its former net-order retry loop.
+
+No elapsed-time winner, electrical change, implicit resizing, clearance exception,
+new copper layer, factory crossover or negotiated congestion is introduced.
+See [P05 evidence](task-evidence/P05/README.md) for the matched frozen corpus,
+local-recovery witness, independent occupancy negatives and explicit adverse costs.
 
 ## A10 staged generation and publication
 
