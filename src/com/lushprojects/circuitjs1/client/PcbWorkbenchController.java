@@ -48,6 +48,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     private final boolean quickPlay;
     private VerticalPanel sidebar;
     private boolean attachedToSidebar;
+    private final Object benchInstrumentOwner = new Object();
     private String finishFeedbackText = "";
     private String customerRetestFeedbackText = "";
     /*
@@ -179,6 +180,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     }
 
     void detachFromSidebar() {
+        suspendBenchInstrument(benchInstrumentOwner);
         closeComponentMenu();
         closeInteractionNotice();
         cancelViewFrame(viewFrame); viewFrame = null;
@@ -210,9 +212,31 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         if (isCurrentOwner()) {
             if (sim.dialogIsShowing() || !sim.isChallengeInteractionEnabled()) cancelViewGesture();
             renderHost.draw(graphics, area);
+            presentBenchInstrument();
             drawPartDrag(graphics);
         }
     }
+
+    /** Read-only presentation seam: no circuit, solution, or controller references cross it. */
+    private void presentBenchInstrument() {
+        if (!attachedToSidebar) return;
+        if (!renderHost.isProduction()) { suspendBenchInstrument(benchInstrumentOwner); return; }
+        PcbViewport.Transform camera = renderer.getViewport().permanent();
+        Rectangle home = renderer.getMeterHome(), area = renderer.getViewport().getArea();
+        projectBenchInstrument(benchInstrumentOwner, sim.cv.getElement(), camera.scale, camera.x, camera.y,
+            area.x, area.y, area.width, area.height, home.x, home.y, home.width, home.height);
+    }
+    private static native void projectBenchInstrument(Object owner, com.google.gwt.dom.client.Element canvas,
+            double scale, double x, double y, int ax, int ay, int aw, int ah,
+            int hx, int hy, int hw, int hh) /*-{
+        if ($wnd.tsjBenchInstruments) $wnd.tsjBenchInstruments.project(owner, canvas, {
+            scale: scale, x: x, y: y, area: {x: ax, y: ay, width: aw, height: ah},
+            home: {x: hx, y: hy, width: hw, height: hh}
+        });
+    }-*/;
+    private static native void suspendBenchInstrument(Object owner) /*-{
+        if ($wnd.tsjBenchInstruments) $wnd.tsjBenchInstruments.suspend(owner);
+    }-*/;
 
     ProbeTarget findProbeTarget(int x, int y) {
         ProbeTarget target = !isCurrentOwner() ? null : renderer.hasViewportFixture() ?
@@ -245,6 +269,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         sim.backcontext.setTransform(1, 0, 0, 1, 0, 0);
         Graphics graphics = new Graphics(sim.backcontext);
         renderHost.draw(graphics, sim.circuitArea);
+        presentBenchInstrument();
         drawPartDrag(graphics);
         sim.instrumentController.draw(graphics);
         sim.cvcontext.drawImage(sim.backcontext.getCanvas(), 0.0, 0.0);

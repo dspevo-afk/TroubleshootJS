@@ -1,5 +1,40 @@
 # Visual pass completion checkpoint
 
+## Current: draggable bench multimeter follow-up complete
+
+Branch: `codex/task43p-final-recovery`.
+Base: `7aedfb1bb89675a4845dedcc27a6d4de54cb1e00`.
+The commit containing this checkpoint implements the requested follow-up.
+**P05 remains unstarted.**
+
+The meter now uses per-board bench-world position, starts left of the PCB, and
+moves by its TSJ MM-90 header only. Primary pointer capture/window fallback,
+keyboard arrows/Home/Escape, cancellation and same-board menu/resume persistence
+are present. Native meter controls and electrical ownership remain unchanged.
+Fit bench includes meter/board/tray and keeps furniture unmirrored on either face.
+The existing half-visible-board pan limit is unchanged. Visibility-edge world
+re-seating and oversized-zoom scaling keep the whole meter below the toolbar and
+inside the visible bench without constraining board inspection.
+
+Final GWT build: five permutations PASS. Meter DOM69 and existing UI112 PASS.
+Focused actual-source native: five suites/2,265 assertions PASS.
+Compiled U01: 1,263 assertions/six live targets PASS; expected forced-negative FAIL.
+Real final-build browser input verifies initial/moved positions, body non-drag,
+fast captured movement, pan/flip/fit, actual meter readings, component selection,
+tray/shop replacement, failed/passed retest, menu persistence and 1024x768 zoom.
+
+See [current report](CODEX_TASK_REPORT.md) and
+[follow-up evidence](task-evidence/bench-meter/README.md).
+Five inspected screenshots, action/state receipts, final-source hashes and exact
+browser/preview cleanup are retained. Full release-wide matrices were not rerun.
+Old untracked evidence/cache and other sessions were preserved.
+Raw scratch: `TroubleshootJS-bench-meter-20260914-fkl67cei` in OS Temp.
+The separate delivery receipt records actual publication/notification after commit.
+
+---
+
+## Historical: previous visual/serviceability pass
+
 The authorized visual/serviceability pass is complete in the commit containing
 this file. Branch: `codex/task43p-final-recovery`. Base:
 `f41e80f6227ffd04c0092ff01207bdc8e392c2ed`. P05 remains unstarted.

@@ -1,0 +1,12 @@
+{
+    "protocol":  "troubleshootjs-preview-identity-v1",
+    "verifierRunId":  "70f5d512594e4adc986d16b5ca2e604a",
+    "previewPort":  55132,
+    "processId":  28744,
+    "processStartTicks":  639250313316303873,
+    "sourceDigest":  "264d1c13349c90e5b1ed3164bf91d24e1dee2573467fb1feceb18961d3200826",
+    "scriptDigest":  "75d71d753c344545ef3f4b02f0d4c208c2052d3daabfd73105d08a2b60fda544",
+    "webDigest":  "fddabe685a9edc3b2521e38dda5d548101539d07ba282cf1bfd7663e8d00619c",
+    "executionDigest":  "daa9f8e607c7c795b39672f3b4cd5a491cb5c2528df3bc68efcb8002cd647a7b",
+    "executionFileCount":  1463
+}

@@ -65,6 +65,30 @@ final class U01ViewportChecks {
         try { camera.zoom(Double.NaN, 1, 1); } catch (IllegalArgumentException expected) { rejected = true; }
         require(rejected, "invalid zoom rejected");
         verifyPanLimits();
+        verifyFurnitureFit();
+    }
+    private void verifyFurnitureFit() {
+        Rectangle board = new Rectangle(40, 20, 800, 400);
+        Rectangle meter = new Rectangle(-244, 20, 252, 454);
+        Rectangle tray = new Rectangle(900, 20, 200, 400);
+        Rectangle bench = board.union(tray).union(meter);
+        PcbViewport camera = new PcbViewport(board);
+        camera.resize(new Rectangle(0, 0, 1200, 700));
+        camera.fitWorkbench(bench);
+        PcbViewport.Transform top = camera.permanent();
+        for (PcbBoardSide side : PcbBoardSide.values()) {
+            camera.setFace(side); camera.pan(100, 100); camera.fitWorkbench(bench);
+            PcbViewport.Transform t = camera.permanent();
+            near(t.scale, top.scale, "bench fit keeps furniture scale across flips");
+            near(t.x, top.x, "bench fit never mirrors furniture X");
+            near(t.y, top.y, "bench fit keeps furniture Y across flips");
+            PcbViewport.Transform furniture = new PcbViewport.Transform(t.scale, t.x, t.y, 0, false);
+            Rectangle m = furniture.project(meter), b = t.project(board), r = furniture.project(tray);
+            require(m.x >= 19 && m.y >= 19 && m.x + m.width < b.x,
+                "full meter starts left of either PCB face with a gap");
+            require(r.x > b.x + b.width && r.x + r.width <= 1181 && m.y + m.height <= 681,
+                "full meter and right tray fit together");
+        }
     }
     private void verifyPanLimits() {
         Rectangle board = new Rectangle(40, 20, 800, 400);

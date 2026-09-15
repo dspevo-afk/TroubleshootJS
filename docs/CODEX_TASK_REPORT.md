@@ -1,6 +1,63 @@
 # TroubleshootJS - Current Task Report
 
-## Completed: visual workbench and physical serviceability pass
+## Completed: draggable bench-space multimeter follow-up
+
+Date: September 14, 2026. Branch `codex/task43p-final-recovery`.
+Base: `7aedfb1bb89675a4845dedcc27a6d4de54cb1e00`.
+The commit containing this report implements the requested bench-object follow-up.
+**P05 remains unstarted.** Earlier full visual-pass results below are historical.
+
+### Delivered
+
+The existing multimeter now starts entirely left of the PCB, resting on the bench
+with a contact shadow. A board-owned world position is projected through the
+unmirrored permanent camera. Only its TSJ MM-90 header drags, with grab/grabbing,
+primary pointer capture, robust cancellation, keyboard positioning and Home reset.
+The native controls, instrument ownership and electrical action guards remain real.
+Position survives the same board's menu/resume navigation; no restart persistence
+or new circuit-state persistence system was introduced.
+
+Fit bench now includes meter/PCB/tray and does not mirror the furniture envelope
+on the bottom face. The numeric half-visible-PCB-area pan limit is unchanged.
+At visibility edges the meter re-seats in world coordinates; unusually large zoom
+caps the case to the visible bench. These documented exceptions keep controls
+reachable without turning camera movement into a fight with the multimeter.
+
+### Validation
+
+Final real GWT OBF build: all five permutations PASS, exit 0, 87.170 seconds.
+New meter DOM contracts: 69 checks PASS; existing U04 UI: 112 checks PASS.
+Five actual-source native suites PASS: viewport 1,259, visual workbench 38,
+architecture footprint 46, serviceability 846 and session 76 assertions.
+Compiled U01: 1,263 assertions/six live pad targets PASS, identity unchanged;
+its explicit forced-negative produced the expected FAIL marker.
+
+Real headless Edge mouse/keyboard input on the final compiled build verified:
+left placement, header-only drag, native capture/fast outside-window movement,
+clamping, world-consistent pan, the half-board limit, both faces/Fit bench,
+component context selection, OL/680 Ohm measurements, actual removal to tray,
+shop330 replacement/installation, failed-before/passed-after customer retest,
+menu/resume persistence, and 1024x768 fit/higher zoom. Five screenshots were
+visually inspected. [Evidence and coordinate rules](task-evidence/bench-meter/README.md)
+include hashes, input events and public state/geometry snapshots.
+
+### Qualification repair and limits
+
+The initial browser run caught GWT toolbar clipping of the absolute-positioned
+meter. The exact clipping containers were fixed; a DOM regression was added and
+the final build/browser checks rerun. Both owned browser/preview runs cleaned up
+exactly. Existing untracked evidence/cache and unrelated processes were untouched.
+Integrated root diff review was performed; no independent-agent review is claimed.
+Full release-wide Alpha/Q15/native matrices, arbitrary seeds, touch hardware and
+cross-browser coverage were NOT RUN for this scoped presentation change.
+
+Raw evidence: OS-temp `TroubleshootJS-bench-meter-20260914-fkl67cei`.
+The post-commit delivery receipt there records the actual SHA, remote equality
+and notification outcome. Publication is not inferred from an older checkpoint.
+
+---
+
+## Historical: completed visual workbench and physical serviceability pass
 
 Date: September 14, 2026. Branch `codex/task43p-final-recovery`.
 Base: `f41e80f6227ffd04c0092ff01207bdc8e392c2ed`.

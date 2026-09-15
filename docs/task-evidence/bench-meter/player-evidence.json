@@ -1,0 +1,1474 @@
+{
+  "01-initial-left": {
+    "meter": {
+      "x": 20,
+      "y": 281.1875,
+      "width": 282.239990234375,
+      "height": 508.47998046875,
+      "top": 281.1875,
+      "right": 302.239990234375,
+      "bottom": 789.66748046875,
+      "left": 20
+    },
+    "header": {
+      "x": 48,
+      "y": 301.3475036621094,
+      "width": 226.239990234375,
+      "height": 33.144989013671875,
+      "top": 301.3475036621094,
+      "right": 274.239990234375,
+      "bottom": 334.49249267578125,
+      "left": 48
+    },
+    "world": {
+      "x": -244,
+      "y": 48
+    },
+    "scale": 1.12,
+    "visible": "visible",
+    "hit": true,
+    "canvas": {
+      "x": 0,
+      "y": 112,
+      "width": 1440,
+      "height": 848,
+      "top": 112,
+      "right": 1440,
+      "bottom": 960,
+      "left": 0
+    },
+    "screen": "WORKBENCH",
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray"
+  },
+  "02-body-not-handle": {
+    "meter": {
+      "x": 120,
+      "y": 361.1875,
+      "width": 282.239990234375,
+      "height": 508.47998046875,
+      "top": 361.1875,
+      "right": 402.239990234375,
+      "bottom": 869.66748046875,
+      "left": 120
+    },
+    "header": {
+      "x": 148,
+      "y": 381.3475036621094,
+      "width": 226.239990234375,
+      "height": 33.144989013671875,
+      "top": 381.3475036621094,
+      "right": 374.239990234375,
+      "bottom": 414.49249267578125,
+      "left": 148
+    },
+    "world": {
+      "x": -154.71428571428572,
+      "y": 119.42857142857142
+    },
+    "scale": 1.12,
+    "visible": "visible",
+    "hit": true,
+    "canvas": {
+      "x": 0,
+      "y": 112,
+      "width": 1440,
+      "height": 848,
+      "top": 112,
+      "right": 1440,
+      "bottom": 960,
+      "left": 0
+    },
+    "screen": "WORKBENCH",
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray"
+  },
+  "02-header-drag": {
+    "meter": {
+      "x": 120,
+      "y": 361.1875,
+      "width": 282.239990234375,
+      "height": 508.47998046875,
+      "top": 361.1875,
+      "right": 402.239990234375,
+      "bottom": 869.66748046875,
+      "left": 120
+    },
+    "header": {
+      "x": 148,
+      "y": 381.3475036621094,
+      "width": 226.239990234375,
+      "height": 33.144989013671875,
+      "top": 381.3475036621094,
+      "right": 374.239990234375,
+      "bottom": 414.49249267578125,
+      "left": 148
+    },
+    "world": {
+      "x": -154.71428571428572,
+      "y": 119.42857142857142
+    },
+    "scale": 1.12,
+    "visible": "visible",
+    "hit": true,
+    "canvas": {
+      "x": 0,
+      "y": 112,
+      "width": 1440,
+      "height": 848,
+      "top": 112,
+      "right": 1440,
+      "bottom": 960,
+      "left": 0
+    },
+    "screen": "WORKBENCH",
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray"
+  },
+  "03-pan": {
+    "meter": {
+      "x": 200,
+      "y": 316.1875,
+      "width": 282.239990234375,
+      "height": 508.47998046875,
+      "top": 316.1875,
+      "right": 482.239990234375,
+      "bottom": 824.66748046875,
+      "left": 200
+    },
+    "header": {
+      "x": 228,
+      "y": 336.3475036621094,
+      "width": 226.239990234375,
+      "height": 33.144989013671875,
+      "top": 336.3475036621094,
+      "right": 454.239990234375,
+      "bottom": 369.49249267578125,
+      "left": 228
+    },
+    "world": {
+      "x": -154.71428571428572,
+      "y": 119.42857142857142
+    },
+    "scale": 1.12,
+    "visible": "visible",
+    "hit": true,
+    "canvas": {
+      "x": 0,
+      "y": 112,
+      "width": 1440,
+      "height": 848,
+      "top": 112,
+      "right": 1440,
+      "bottom": 960,
+      "left": 0
+    },
+    "screen": "WORKBENCH",
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray"
+  },
+  "04-fast-drag-clamped": {
+    "meter": {
+      "x": 12,
+      "y": 124,
+      "width": 282.239990234375,
+      "height": 508.47998046875,
+      "top": 124,
+      "right": 294.239990234375,
+      "bottom": 632.47998046875,
+      "left": 12
+    },
+    "header": {
+      "x": 40,
+      "y": 144.16000366210938,
+      "width": 226.239990234375,
+      "height": 33.144989013671875,
+      "top": 144.16000366210938,
+      "right": 266.239990234375,
+      "bottom": 177.30499267578125,
+      "left": 40
+    },
+    "world": {
+      "x": -322.5714285714285,
+      "y": -52.17857142857142
+    },
+    "scale": 1.12,
+    "visible": "visible",
+    "hit": true,
+    "canvas": {
+      "x": 0,
+      "y": 112,
+      "width": 1440,
+      "height": 848,
+      "top": 112,
+      "right": 1440,
+      "bottom": 960,
+      "left": 0
+    },
+    "screen": "WORKBENCH",
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray"
+  },
+  "05-pan-limit": {
+    "meter": {
+      "x": 607.1875,
+      "y": 264,
+      "width": 282.239990234375,
+      "height": 508.47998046875,
+      "top": 264,
+      "right": 889.427490234375,
+      "bottom": 772.47998046875,
+      "left": 607.1875
+    },
+    "header": {
+      "x": 635.1875,
+      "y": 284.1600036621094,
+      "width": 226.239990234375,
+      "height": 33.144989013671875,
+      "top": 284.1600036621094,
+      "right": 861.427490234375,
+      "bottom": 317.30499267578125,
+      "left": 635.1875
+    },
+    "world": {
+      "x": -322.5714285714285,
+      "y": -52.17857142857142
+    },
+    "scale": 1.12,
+    "visible": "visible",
+    "hit": true,
+    "canvas": {
+      "x": 0,
+      "y": 112,
+      "width": 1440,
+      "height": 848,
+      "top": 112,
+      "right": 1440,
+      "bottom": 960,
+      "left": 0
+    },
+    "screen": "WORKBENCH",
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray"
+  },
+  "06-fit-home": {
+    "meter": {
+      "x": 20,
+      "y": 281.1875,
+      "width": 282.239990234375,
+      "height": 508.47998046875,
+      "top": 281.1875,
+      "right": 302.239990234375,
+      "bottom": 789.66748046875,
+      "left": 20
+    },
+    "header": {
+      "x": 48,
+      "y": 301.3475036621094,
+      "width": 226.239990234375,
+      "height": 33.144989013671875,
+      "top": 301.3475036621094,
+      "right": 274.239990234375,
+      "bottom": 334.49249267578125,
+      "left": 48
+    },
+    "world": {
+      "x": -244,
+      "y": 48
+    },
+    "scale": 1.12,
+    "visible": "visible",
+    "hit": true,
+    "canvas": {
+      "x": 0,
+      "y": 112,
+      "width": 1440,
+      "height": 848,
+      "top": 112,
+      "right": 1440,
+      "bottom": 960,
+      "left": 0
+    },
+    "screen": "WORKBENCH",
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray"
+  },
+  "07-bottom-fit": {
+    "meter": {
+      "x": 20,
+      "y": 281.1875,
+      "width": 282.239990234375,
+      "height": 508.47998046875,
+      "top": 281.1875,
+      "right": 302.239990234375,
+      "bottom": 789.66748046875,
+      "left": 20
+    },
+    "header": {
+      "x": 48,
+      "y": 301.3475036621094,
+      "width": 226.239990234375,
+      "height": 33.144989013671875,
+      "top": 301.3475036621094,
+      "right": 274.239990234375,
+      "bottom": 334.49249267578125,
+      "left": 48
+    },
+    "world": {
+      "x": -244,
+      "y": 48
+    },
+    "scale": 1.12,
+    "visible": "visible",
+    "hit": true,
+    "canvas": {
+      "x": 0,
+      "y": 112,
+      "width": 1440,
+      "height": 848,
+      "top": 112,
+      "right": 1440,
+      "bottom": 960,
+      "left": 0
+    },
+    "screen": "WORKBENCH",
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray"
+  },
+  "08-component-context": {
+    "snapshot": {
+      "token": 4,
+      "screen": "WORKBENCH",
+      "message": "",
+      "notice": "",
+      "epoch": "tsj-alpha/1",
+      "build": "4068ECA73980DA5E8857B0CB608BD92C",
+      "hasBoard": true,
+      "replay": "tsj-alpha/1/EASY/PARALLEL_DUAL_INDICATOR/0",
+      "profile": "EASY",
+      "families": [
+        {
+          "id": "LED_INDICATOR",
+          "name": "Indicator board",
+          "profile": "EASY"
+        },
+        {
+          "id": "DIODE_PROTECTED_INDICATOR",
+          "name": "Protected indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "PARALLEL_DUAL_INDICATOR",
+          "name": "Dual indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "RC_DELAY",
+          "name": "Timing board",
+          "profile": "EASY"
+        },
+        {
+          "id": "NPN_LOW_SIDE_SWITCH",
+          "name": "BJT output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "NMOS_LOW_SIDE_SWITCH",
+          "name": "MOSFET output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "RELAY_OUTPUT",
+          "name": "Relay output reference",
+          "profile": "EASY"
+        },
+        {
+          "id": "RB15_CONTROL",
+          "name": "Procedural control board",
+          "profile": "EASY"
+        },
+        {
+          "id": "COMPOSED_CONTROLLED_INDICATOR",
+          "name": "Two-channel controller",
+          "profile": "MEDIUM"
+        }
+      ],
+      "complaint": "The two indicators do not behave the same.",
+      "retestInstruction": "Observe both indicators after repair.",
+      "ready": true,
+      "completed": false,
+      "isolated": false
+    },
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nComponent\nParts tray\nR1\n\n\nSwitch off board power to modify this part.\n\nLift lead 1\nLift lead 2\nRemove component",
+    "focus": "<canvas width=\"1440\" height=\"848\" tabindex=\"0\" style=\"width: 1440px; height: 848px; position: absolute; inset: 0px;\"></canvas>",
+    "viewport": {
+      "width": 1440,
+      "height": 960
+    },
+    "reports": [
+      [
+        "data-tsj-preview-identity-protocol",
+        "troubleshootjs-execution-provenance-v1"
+      ],
+      [
+        "data-tsj-preview-source-digest",
+        "264d1c13349c90e5b1ed3164bf91d24e1dee2573467fb1feceb18961d3200826"
+      ],
+      [
+        "data-tsj-preview-script-digest",
+        "75d71d753c344545ef3f4b02f0d4c208c2052d3daabfd73105d08a2b60fda544"
+      ],
+      [
+        "data-tsj-preview-web-digest",
+        "fddabe685a9edc3b2521e38dda5d548101539d07ba282cf1bfd7663e8d00619c"
+      ],
+      [
+        "data-tsj-preview-execution-digest",
+        "daa9f8e607c7c795b39672f3b4cd5a491cb5c2528df3bc68efcb8002cd647a7b"
+      ],
+      [
+        "data-tsj-preview-file-count",
+        "1463"
+      ]
+    ],
+    "meterMode": "NONE"
+  },
+  "08-component-selection": {
+    "snapshot": {
+      "token": 4,
+      "screen": "WORKBENCH",
+      "message": "",
+      "notice": "",
+      "epoch": "tsj-alpha/1",
+      "build": "4068ECA73980DA5E8857B0CB608BD92C",
+      "hasBoard": true,
+      "replay": "tsj-alpha/1/EASY/PARALLEL_DUAL_INDICATOR/0",
+      "profile": "EASY",
+      "families": [
+        {
+          "id": "LED_INDICATOR",
+          "name": "Indicator board",
+          "profile": "EASY"
+        },
+        {
+          "id": "DIODE_PROTECTED_INDICATOR",
+          "name": "Protected indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "PARALLEL_DUAL_INDICATOR",
+          "name": "Dual indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "RC_DELAY",
+          "name": "Timing board",
+          "profile": "EASY"
+        },
+        {
+          "id": "NPN_LOW_SIDE_SWITCH",
+          "name": "BJT output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "NMOS_LOW_SIDE_SWITCH",
+          "name": "MOSFET output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "RELAY_OUTPUT",
+          "name": "Relay output reference",
+          "profile": "EASY"
+        },
+        {
+          "id": "RB15_CONTROL",
+          "name": "Procedural control board",
+          "profile": "EASY"
+        },
+        {
+          "id": "COMPOSED_CONTROLLED_INDICATOR",
+          "name": "Two-channel controller",
+          "profile": "MEDIUM"
+        }
+      ],
+      "complaint": "The two indicators do not behave the same.",
+      "retestInstruction": "Observe both indicators after repair.",
+      "ready": true,
+      "completed": false,
+      "isolated": false
+    },
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray",
+    "focus": "<canvas width=\"1440\" height=\"848\" tabindex=\"0\" style=\"width: 1440px; height: 848px; position: absolute; inset: 0px;\"></canvas>",
+    "viewport": {
+      "width": 1440,
+      "height": 960
+    },
+    "reports": [
+      [
+        "data-tsj-preview-identity-protocol",
+        "troubleshootjs-execution-provenance-v1"
+      ],
+      [
+        "data-tsj-preview-source-digest",
+        "264d1c13349c90e5b1ed3164bf91d24e1dee2573467fb1feceb18961d3200826"
+      ],
+      [
+        "data-tsj-preview-script-digest",
+        "75d71d753c344545ef3f4b02f0d4c208c2052d3daabfd73105d08a2b60fda544"
+      ],
+      [
+        "data-tsj-preview-web-digest",
+        "fddabe685a9edc3b2521e38dda5d548101539d07ba282cf1bfd7663e8d00619c"
+      ],
+      [
+        "data-tsj-preview-execution-digest",
+        "daa9f8e607c7c795b39672f3b4cd5a491cb5c2528df3bc68efcb8002cd647a7b"
+      ],
+      [
+        "data-tsj-preview-file-count",
+        "1463"
+      ]
+    ],
+    "meterMode": "NONE"
+  },
+  "09-unrepaired-retest": {
+    "snapshot": {
+      "token": 6,
+      "screen": "WORKBENCH",
+      "message": "Customer retest did not pass. Continue troubleshooting.",
+      "notice": "",
+      "epoch": "tsj-alpha/1",
+      "build": "4068ECA73980DA5E8857B0CB608BD92C",
+      "hasBoard": true,
+      "replay": "tsj-alpha/1/EASY/PARALLEL_DUAL_INDICATOR/0",
+      "profile": "EASY",
+      "families": [
+        {
+          "id": "LED_INDICATOR",
+          "name": "Indicator board",
+          "profile": "EASY"
+        },
+        {
+          "id": "DIODE_PROTECTED_INDICATOR",
+          "name": "Protected indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "PARALLEL_DUAL_INDICATOR",
+          "name": "Dual indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "RC_DELAY",
+          "name": "Timing board",
+          "profile": "EASY"
+        },
+        {
+          "id": "NPN_LOW_SIDE_SWITCH",
+          "name": "BJT output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "NMOS_LOW_SIDE_SWITCH",
+          "name": "MOSFET output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "RELAY_OUTPUT",
+          "name": "Relay output reference",
+          "profile": "EASY"
+        },
+        {
+          "id": "RB15_CONTROL",
+          "name": "Procedural control board",
+          "profile": "EASY"
+        },
+        {
+          "id": "COMPOSED_CONTROLLED_INDICATOR",
+          "name": "Two-channel controller",
+          "profile": "MEDIUM"
+        }
+      ],
+      "complaint": "The two indicators do not behave the same.",
+      "retestInstruction": "Observe both indicators after repair.",
+      "ready": true,
+      "completed": false,
+      "isolated": false
+    },
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray",
+    "focus": "<button class=\"tsj-product-button tsj-product-primary\" type=\"button\" aria-label=\"Run customer retest\" title=\"Run customer retest\"><svg viewBox=\"0 0 24 24\" class=\"tsj-ui-icon\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M20 8A9 9 0 1 1 16 4 M8 11L12 15L21 5\"></path></svg><span class=\"tsj-button-label\">Run customer retest</span></button>",
+    "viewport": {
+      "width": 1440,
+      "height": 960
+    },
+    "reports": [
+      [
+        "data-tsj-preview-identity-protocol",
+        "troubleshootjs-execution-provenance-v1"
+      ],
+      [
+        "data-tsj-preview-source-digest",
+        "264d1c13349c90e5b1ed3164bf91d24e1dee2573467fb1feceb18961d3200826"
+      ],
+      [
+        "data-tsj-preview-script-digest",
+        "75d71d753c344545ef3f4b02f0d4c208c2052d3daabfd73105d08a2b60fda544"
+      ],
+      [
+        "data-tsj-preview-web-digest",
+        "fddabe685a9edc3b2521e38dda5d548101539d07ba282cf1bfd7663e8d00619c"
+      ],
+      [
+        "data-tsj-preview-execution-digest",
+        "daa9f8e607c7c795b39672f3b4cd5a491cb5c2528df3bc68efcb8002cd647a7b"
+      ],
+      [
+        "data-tsj-preview-file-count",
+        "1463"
+      ]
+    ],
+    "meterMode": "NONE"
+  },
+  "10-r1-open-reading": {
+    "snapshot": {
+      "token": 6,
+      "screen": "WORKBENCH",
+      "message": "Customer retest did not pass. Continue troubleshooting.",
+      "notice": "",
+      "epoch": "tsj-alpha/1",
+      "build": "4068ECA73980DA5E8857B0CB608BD92C",
+      "hasBoard": true,
+      "replay": "tsj-alpha/1/EASY/PARALLEL_DUAL_INDICATOR/0",
+      "profile": "EASY",
+      "families": [
+        {
+          "id": "LED_INDICATOR",
+          "name": "Indicator board",
+          "profile": "EASY"
+        },
+        {
+          "id": "DIODE_PROTECTED_INDICATOR",
+          "name": "Protected indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "PARALLEL_DUAL_INDICATOR",
+          "name": "Dual indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "RC_DELAY",
+          "name": "Timing board",
+          "profile": "EASY"
+        },
+        {
+          "id": "NPN_LOW_SIDE_SWITCH",
+          "name": "BJT output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "NMOS_LOW_SIDE_SWITCH",
+          "name": "MOSFET output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "RELAY_OUTPUT",
+          "name": "Relay output reference",
+          "profile": "EASY"
+        },
+        {
+          "id": "RB15_CONTROL",
+          "name": "Procedural control board",
+          "profile": "EASY"
+        },
+        {
+          "id": "COMPOSED_CONTROLLED_INDICATOR",
+          "name": "Two-channel controller",
+          "profile": "MEDIUM"
+        }
+      ],
+      "complaint": "The two indicators do not behave the same.",
+      "retestInstruction": "Observe both indicators after repair.",
+      "ready": true,
+      "completed": false,
+      "isolated": true
+    },
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\nOL\nBoard Power: OFF\nSupplies\nView\nTicket\nParts tray",
+    "focus": "<canvas width=\"1440\" height=\"848\" tabindex=\"0\" style=\"width: 1440px; height: 848px; position: absolute; inset: 0px;\"></canvas>",
+    "viewport": {
+      "width": 1440,
+      "height": 960
+    },
+    "reports": [
+      [
+        "data-tsj-preview-identity-protocol",
+        "troubleshootjs-execution-provenance-v1"
+      ],
+      [
+        "data-tsj-preview-source-digest",
+        "264d1c13349c90e5b1ed3164bf91d24e1dee2573467fb1feceb18961d3200826"
+      ],
+      [
+        "data-tsj-preview-script-digest",
+        "75d71d753c344545ef3f4b02f0d4c208c2052d3daabfd73105d08a2b60fda544"
+      ],
+      [
+        "data-tsj-preview-web-digest",
+        "fddabe685a9edc3b2521e38dda5d548101539d07ba282cf1bfd7663e8d00619c"
+      ],
+      [
+        "data-tsj-preview-execution-digest",
+        "daa9f8e607c7c795b39672f3b4cd5a491cb5c2528df3bc68efcb8002cd647a7b"
+      ],
+      [
+        "data-tsj-preview-file-count",
+        "1463"
+      ]
+    ],
+    "meterMode": "RESISTANCE"
+  },
+  "11-r2-healthy-reading": {
+    "snapshot": {
+      "token": 6,
+      "screen": "WORKBENCH",
+      "message": "Customer retest did not pass. Continue troubleshooting.",
+      "notice": "",
+      "epoch": "tsj-alpha/1",
+      "build": "4068ECA73980DA5E8857B0CB608BD92C",
+      "hasBoard": true,
+      "replay": "tsj-alpha/1/EASY/PARALLEL_DUAL_INDICATOR/0",
+      "profile": "EASY",
+      "families": [
+        {
+          "id": "LED_INDICATOR",
+          "name": "Indicator board",
+          "profile": "EASY"
+        },
+        {
+          "id": "DIODE_PROTECTED_INDICATOR",
+          "name": "Protected indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "PARALLEL_DUAL_INDICATOR",
+          "name": "Dual indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "RC_DELAY",
+          "name": "Timing board",
+          "profile": "EASY"
+        },
+        {
+          "id": "NPN_LOW_SIDE_SWITCH",
+          "name": "BJT output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "NMOS_LOW_SIDE_SWITCH",
+          "name": "MOSFET output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "RELAY_OUTPUT",
+          "name": "Relay output reference",
+          "profile": "EASY"
+        },
+        {
+          "id": "RB15_CONTROL",
+          "name": "Procedural control board",
+          "profile": "EASY"
+        },
+        {
+          "id": "COMPOSED_CONTROLLED_INDICATOR",
+          "name": "Two-channel controller",
+          "profile": "MEDIUM"
+        }
+      ],
+      "complaint": "The two indicators do not behave the same.",
+      "retestInstruction": "Observe both indicators after repair.",
+      "ready": true,
+      "completed": false,
+      "isolated": true
+    },
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n680 Ohm\nBoard Power: OFF\nSupplies\nView\nTicket\nParts tray",
+    "focus": "<canvas width=\"1440\" height=\"848\" tabindex=\"0\" style=\"width: 1440px; height: 848px; position: absolute; inset: 0px;\"></canvas>",
+    "viewport": {
+      "width": 1440,
+      "height": 960
+    },
+    "reports": [
+      [
+        "data-tsj-preview-identity-protocol",
+        "troubleshootjs-execution-provenance-v1"
+      ],
+      [
+        "data-tsj-preview-source-digest",
+        "264d1c13349c90e5b1ed3164bf91d24e1dee2573467fb1feceb18961d3200826"
+      ],
+      [
+        "data-tsj-preview-script-digest",
+        "75d71d753c344545ef3f4b02f0d4c208c2052d3daabfd73105d08a2b60fda544"
+      ],
+      [
+        "data-tsj-preview-web-digest",
+        "fddabe685a9edc3b2521e38dda5d548101539d07ba282cf1bfd7663e8d00619c"
+      ],
+      [
+        "data-tsj-preview-execution-digest",
+        "daa9f8e607c7c795b39672f3b4cd5a491cb5c2528df3bc68efcb8002cd647a7b"
+      ],
+      [
+        "data-tsj-preview-file-count",
+        "1463"
+      ]
+    ],
+    "meterMode": "RESISTANCE"
+  },
+  "12-remove-to-tray": {
+    "snapshot": {
+      "token": 6,
+      "screen": "WORKBENCH",
+      "message": "Customer retest did not pass. Continue troubleshooting.",
+      "notice": "",
+      "epoch": "tsj-alpha/1",
+      "build": "4068ECA73980DA5E8857B0CB608BD92C",
+      "hasBoard": true,
+      "replay": "tsj-alpha/1/EASY/PARALLEL_DUAL_INDICATOR/0",
+      "profile": "EASY",
+      "families": [
+        {
+          "id": "LED_INDICATOR",
+          "name": "Indicator board",
+          "profile": "EASY"
+        },
+        {
+          "id": "DIODE_PROTECTED_INDICATOR",
+          "name": "Protected indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "PARALLEL_DUAL_INDICATOR",
+          "name": "Dual indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "RC_DELAY",
+          "name": "Timing board",
+          "profile": "EASY"
+        },
+        {
+          "id": "NPN_LOW_SIDE_SWITCH",
+          "name": "BJT output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "NMOS_LOW_SIDE_SWITCH",
+          "name": "MOSFET output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "RELAY_OUTPUT",
+          "name": "Relay output reference",
+          "profile": "EASY"
+        },
+        {
+          "id": "RB15_CONTROL",
+          "name": "Procedural control board",
+          "profile": "EASY"
+        },
+        {
+          "id": "COMPOSED_CONTROLLED_INDICATOR",
+          "name": "Two-channel controller",
+          "profile": "MEDIUM"
+        }
+      ],
+      "complaint": "The two indicators do not behave the same.",
+      "retestInstruction": "Observe both indicators after repair.",
+      "ready": true,
+      "completed": false,
+      "isolated": true
+    },
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: OFF\nSupplies\nView\nTicket\nParts tray\nPart moved to tray.",
+    "focus": "<canvas width=\"1440\" height=\"848\" tabindex=\"0\" style=\"width: 1440px; height: 848px; position: absolute; inset: 0px;\"></canvas>",
+    "viewport": {
+      "width": 1440,
+      "height": 960
+    },
+    "reports": [
+      [
+        "data-tsj-preview-identity-protocol",
+        "troubleshootjs-execution-provenance-v1"
+      ],
+      [
+        "data-tsj-preview-source-digest",
+        "264d1c13349c90e5b1ed3164bf91d24e1dee2573467fb1feceb18961d3200826"
+      ],
+      [
+        "data-tsj-preview-script-digest",
+        "75d71d753c344545ef3f4b02f0d4c208c2052d3daabfd73105d08a2b60fda544"
+      ],
+      [
+        "data-tsj-preview-web-digest",
+        "fddabe685a9edc3b2521e38dda5d548101539d07ba282cf1bfd7663e8d00619c"
+      ],
+      [
+        "data-tsj-preview-execution-digest",
+        "daa9f8e607c7c795b39672f3b4cd5a491cb5c2528df3bc68efcb8002cd647a7b"
+      ],
+      [
+        "data-tsj-preview-file-count",
+        "1463"
+      ]
+    ],
+    "meterMode": "NONE"
+  },
+  "13-tray-selection": {
+    "snapshot": {
+      "token": 6,
+      "screen": "WORKBENCH",
+      "message": "Customer retest did not pass. Continue troubleshooting.",
+      "notice": "",
+      "epoch": "tsj-alpha/1",
+      "build": "4068ECA73980DA5E8857B0CB608BD92C",
+      "hasBoard": true,
+      "replay": "tsj-alpha/1/EASY/PARALLEL_DUAL_INDICATOR/0",
+      "profile": "EASY",
+      "families": [
+        {
+          "id": "LED_INDICATOR",
+          "name": "Indicator board",
+          "profile": "EASY"
+        },
+        {
+          "id": "DIODE_PROTECTED_INDICATOR",
+          "name": "Protected indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "PARALLEL_DUAL_INDICATOR",
+          "name": "Dual indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "RC_DELAY",
+          "name": "Timing board",
+          "profile": "EASY"
+        },
+        {
+          "id": "NPN_LOW_SIDE_SWITCH",
+          "name": "BJT output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "NMOS_LOW_SIDE_SWITCH",
+          "name": "MOSFET output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "RELAY_OUTPUT",
+          "name": "Relay output reference",
+          "profile": "EASY"
+        },
+        {
+          "id": "RB15_CONTROL",
+          "name": "Procedural control board",
+          "profile": "EASY"
+        },
+        {
+          "id": "COMPOSED_CONTROLLED_INDICATOR",
+          "name": "Two-channel controller",
+          "profile": "MEDIUM"
+        }
+      ],
+      "complaint": "The two indicators do not behave the same.",
+      "retestInstruction": "Observe both indicators after repair.",
+      "ready": true,
+      "completed": false,
+      "isolated": true
+    },
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: OFF\nSupplies\nView\nTicket\nParts tray\nParts Tray\n\nPart 1 - Color bands\n\nSelected: Part 1 - Color bands\n\n\nState: Loose\n\n\nCompatible targets:\n\nInstall as Circuit / R1",
+    "focus": "<button class=\"tsj-product-button tsj-tool-trigger\" type=\"button\" title=\"Parts Tray\" aria-label=\"Parts Tray\" popovertarget=\"tsj-native-tool-5\" aria-haspopup=\"dialog\"><svg viewBox=\"0 0 24 24\" class=\"tsj-ui-icon\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M3 7H21V20H3Z M3 7L6 3H18L21 7 M9 7V11H15V7\"></path></svg><span class=\"tsj-button-label\">Parts tray</span></button>",
+    "viewport": {
+      "width": 1440,
+      "height": 960
+    },
+    "reports": [
+      [
+        "data-tsj-preview-identity-protocol",
+        "troubleshootjs-execution-provenance-v1"
+      ],
+      [
+        "data-tsj-preview-source-digest",
+        "264d1c13349c90e5b1ed3164bf91d24e1dee2573467fb1feceb18961d3200826"
+      ],
+      [
+        "data-tsj-preview-script-digest",
+        "75d71d753c344545ef3f4b02f0d4c208c2052d3daabfd73105d08a2b60fda544"
+      ],
+      [
+        "data-tsj-preview-web-digest",
+        "fddabe685a9edc3b2521e38dda5d548101539d07ba282cf1bfd7663e8d00619c"
+      ],
+      [
+        "data-tsj-preview-execution-digest",
+        "daa9f8e607c7c795b39672f3b4cd5a491cb5c2528df3bc68efcb8002cd647a7b"
+      ],
+      [
+        "data-tsj-preview-file-count",
+        "1463"
+      ]
+    ],
+    "meterMode": "NONE"
+  },
+  "14-shop-acquisition": {
+    "snapshot": {
+      "token": 6,
+      "screen": "WORKBENCH",
+      "message": "Customer retest did not pass. Continue troubleshooting.",
+      "notice": "",
+      "epoch": "tsj-alpha/1",
+      "build": "4068ECA73980DA5E8857B0CB608BD92C",
+      "hasBoard": true,
+      "replay": "tsj-alpha/1/EASY/PARALLEL_DUAL_INDICATOR/0",
+      "profile": "EASY",
+      "families": [
+        {
+          "id": "LED_INDICATOR",
+          "name": "Indicator board",
+          "profile": "EASY"
+        },
+        {
+          "id": "DIODE_PROTECTED_INDICATOR",
+          "name": "Protected indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "PARALLEL_DUAL_INDICATOR",
+          "name": "Dual indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "RC_DELAY",
+          "name": "Timing board",
+          "profile": "EASY"
+        },
+        {
+          "id": "NPN_LOW_SIDE_SWITCH",
+          "name": "BJT output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "NMOS_LOW_SIDE_SWITCH",
+          "name": "MOSFET output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "RELAY_OUTPUT",
+          "name": "Relay output reference",
+          "profile": "EASY"
+        },
+        {
+          "id": "RB15_CONTROL",
+          "name": "Procedural control board",
+          "profile": "EASY"
+        },
+        {
+          "id": "COMPOSED_CONTROLLED_INDICATOR",
+          "name": "Two-channel controller",
+          "profile": "MEDIUM"
+        }
+      ],
+      "complaint": "The two indicators do not behave the same.",
+      "retestInstruction": "Observe both indicators after repair.",
+      "ready": true,
+      "completed": false,
+      "isolated": true
+    },
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nAdded to the real Parts Tray. Select the loose part on the workbench to install it.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: OFF\nSupplies\nView\nTicket\nParts tray\nShop\nClose\n\nAdded to the real Parts Tray. Select the loose part on the workbench to install it.\n\nLocal shop\nstore.copperline.example/components\n\nELECTRONIC COMPONENTS\n\nCopperline Supply Co.\n\nParts Tray \u00b7 2 loose parts\n\nThe right part starts with the specification.\n\nBrowse the full catalog. Match the rating and lead spacing, add to your Parts Tray, then install on the board.\n\nAll parts\nResistors\nConnectors\nLEDs\nSearch components\nClear search\n\nSupplies isolated \u00b7 Ready to add parts to your tray.\n\nShowing 5 of 76 components\n\nResistors\n\n330 Ohm +/-5%\nAdd to Parts Tray\n\nResistors\n\n3300 Ohm +/-5%\nAdd to Parts Tray\n\nResistors\n\n33000 Ohm +/-5%\nAdd to Parts Tray\n\nResistors\n\n330000 Ohm +/-5%\nAdd to Parts Tray\n\nResistors\n\n3300000 Ohm +/-5%\nAdd to Parts Tray",
+    "focus": "<body class=\"tsj-workbench-ui\" data-player-screen=\"WORKBENCH\">\n  <!-- Include the next line to allow support for dropbox import/export. You will need your own app key. -->\n  <!--<script type=\"text/javascript\" src=\"https://www.dropbox.com/static/api/2/dropins.js\" id=\"dropboxjs\" data-app-key=\"YOUR_KEY\"></script>-->\n\n  <script language=\"javascript\" src=\"lz-string.min.js\" inert=\"\" aria-hidden=\"true\"></script>\n   \n    <!-- This script tag is what actually loads the GWT module.  The -->\n    <!-- 'noca",
+    "viewport": {
+      "width": 1440,
+      "height": 960
+    },
+    "reports": [
+      [
+        "data-tsj-preview-identity-protocol",
+        "troubleshootjs-execution-provenance-v1"
+      ],
+      [
+        "data-tsj-preview-source-digest",
+        "264d1c13349c90e5b1ed3164bf91d24e1dee2573467fb1feceb18961d3200826"
+      ],
+      [
+        "data-tsj-preview-script-digest",
+        "75d71d753c344545ef3f4b02f0d4c208c2052d3daabfd73105d08a2b60fda544"
+      ],
+      [
+        "data-tsj-preview-web-digest",
+        "fddabe685a9edc3b2521e38dda5d548101539d07ba282cf1bfd7663e8d00619c"
+      ],
+      [
+        "data-tsj-preview-execution-digest",
+        "daa9f8e607c7c795b39672f3b4cd5a491cb5c2528df3bc68efcb8002cd647a7b"
+      ],
+      [
+        "data-tsj-preview-file-count",
+        "1463"
+      ]
+    ],
+    "meterMode": "NONE"
+  },
+  "15-install-replacement": {
+    "snapshot": {
+      "token": 6,
+      "screen": "WORKBENCH",
+      "message": "Customer retest did not pass. Continue troubleshooting.",
+      "notice": "",
+      "epoch": "tsj-alpha/1",
+      "build": "4068ECA73980DA5E8857B0CB608BD92C",
+      "hasBoard": true,
+      "replay": "tsj-alpha/1/EASY/PARALLEL_DUAL_INDICATOR/0",
+      "profile": "EASY",
+      "families": [
+        {
+          "id": "LED_INDICATOR",
+          "name": "Indicator board",
+          "profile": "EASY"
+        },
+        {
+          "id": "DIODE_PROTECTED_INDICATOR",
+          "name": "Protected indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "PARALLEL_DUAL_INDICATOR",
+          "name": "Dual indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "RC_DELAY",
+          "name": "Timing board",
+          "profile": "EASY"
+        },
+        {
+          "id": "NPN_LOW_SIDE_SWITCH",
+          "name": "BJT output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "NMOS_LOW_SIDE_SWITCH",
+          "name": "MOSFET output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "RELAY_OUTPUT",
+          "name": "Relay output reference",
+          "profile": "EASY"
+        },
+        {
+          "id": "RB15_CONTROL",
+          "name": "Procedural control board",
+          "profile": "EASY"
+        },
+        {
+          "id": "COMPOSED_CONTROLLED_INDICATOR",
+          "name": "Two-channel controller",
+          "profile": "MEDIUM"
+        }
+      ],
+      "complaint": "The two indicators do not behave the same.",
+      "retestInstruction": "Observe both indicators after repair.",
+      "ready": true,
+      "completed": false,
+      "isolated": true
+    },
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nAdded to the real Parts Tray. Select the loose part on the workbench to install it.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: OFF\nSupplies\nView\nTicket\nParts tray\nParts Tray\n\nPart 1 - Color bands",
+    "focus": "<body class=\"tsj-workbench-ui\" data-player-screen=\"WORKBENCH\">\n  <!-- Include the next line to allow support for dropbox import/export. You will need your own app key. -->\n  <!--<script type=\"text/javascript\" src=\"https://www.dropbox.com/static/api/2/dropins.js\" id=\"dropboxjs\" data-app-key=\"YOUR_KEY\"></script>-->\n\n  <script language=\"javascript\" src=\"lz-string.min.js\"></script>\n   \n    <!-- This script tag is what actually loads the GWT module.  The -->\n    <!-- 'nocache.js' file (also called a ",
+    "viewport": {
+      "width": 1440,
+      "height": 960
+    },
+    "reports": [
+      [
+        "data-tsj-preview-identity-protocol",
+        "troubleshootjs-execution-provenance-v1"
+      ],
+      [
+        "data-tsj-preview-source-digest",
+        "264d1c13349c90e5b1ed3164bf91d24e1dee2573467fb1feceb18961d3200826"
+      ],
+      [
+        "data-tsj-preview-script-digest",
+        "75d71d753c344545ef3f4b02f0d4c208c2052d3daabfd73105d08a2b60fda544"
+      ],
+      [
+        "data-tsj-preview-web-digest",
+        "fddabe685a9edc3b2521e38dda5d548101539d07ba282cf1bfd7663e8d00619c"
+      ],
+      [
+        "data-tsj-preview-execution-digest",
+        "daa9f8e607c7c795b39672f3b4cd5a491cb5c2528df3bc68efcb8002cd647a7b"
+      ],
+      [
+        "data-tsj-preview-file-count",
+        "1463"
+      ]
+    ],
+    "meterMode": "NONE"
+  },
+  "16-repaired-retest": {
+    "snapshot": {
+      "token": 8,
+      "screen": "RESULTS",
+      "message": "Customer retest passed. The reported behavior is resolved.",
+      "notice": "",
+      "epoch": "tsj-alpha/1",
+      "build": "4068ECA73980DA5E8857B0CB608BD92C",
+      "hasBoard": true,
+      "replay": "tsj-alpha/1/EASY/PARALLEL_DUAL_INDICATOR/0",
+      "profile": "EASY",
+      "families": [
+        {
+          "id": "LED_INDICATOR",
+          "name": "Indicator board",
+          "profile": "EASY"
+        },
+        {
+          "id": "DIODE_PROTECTED_INDICATOR",
+          "name": "Protected indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "PARALLEL_DUAL_INDICATOR",
+          "name": "Dual indicator",
+          "profile": "EASY"
+        },
+        {
+          "id": "RC_DELAY",
+          "name": "Timing board",
+          "profile": "EASY"
+        },
+        {
+          "id": "NPN_LOW_SIDE_SWITCH",
+          "name": "BJT output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "NMOS_LOW_SIDE_SWITCH",
+          "name": "MOSFET output driver",
+          "profile": "EASY"
+        },
+        {
+          "id": "RELAY_OUTPUT",
+          "name": "Relay output reference",
+          "profile": "EASY"
+        },
+        {
+          "id": "RB15_CONTROL",
+          "name": "Procedural control board",
+          "profile": "EASY"
+        },
+        {
+          "id": "COMPOSED_CONTROLLED_INDICATOR",
+          "name": "Two-channel controller",
+          "profile": "MEDIUM"
+        }
+      ],
+      "complaint": "Repair verified. Both indicators operating normally.",
+      "retestInstruction": "Observe both indicators after repair.",
+      "ready": true,
+      "completed": true,
+      "isolated": false
+    },
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest passed. The reported behavior is resolved.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray\nCustomer retest passed\n\nCustomer retest passed. The reported behavior is resolved.\n\nFUNCTION VERIFIED\n\nReady to return to the customer.\n\nThe live board passed the customer\u2019s functional checks.\n\nCustomer retest passed. The reported behavior is resolved.\n\nNew board / Main menu\nReplay this challenge\nReturn to board\nReplay and bug-report identity",
+    "focus": "<button class=\"tsj-product-button tsj-product-primary\" type=\"button\">New board / Main menu</button>",
+    "viewport": {
+      "width": 1440,
+      "height": 960
+    },
+    "reports": [
+      [
+        "data-tsj-preview-identity-protocol",
+        "troubleshootjs-execution-provenance-v1"
+      ],
+      [
+        "data-tsj-preview-source-digest",
+        "264d1c13349c90e5b1ed3164bf91d24e1dee2573467fb1feceb18961d3200826"
+      ],
+      [
+        "data-tsj-preview-script-digest",
+        "75d71d753c344545ef3f4b02f0d4c208c2052d3daabfd73105d08a2b60fda544"
+      ],
+      [
+        "data-tsj-preview-web-digest",
+        "fddabe685a9edc3b2521e38dda5d548101539d07ba282cf1bfd7663e8d00619c"
+      ],
+      [
+        "data-tsj-preview-execution-digest",
+        "daa9f8e607c7c795b39672f3b4cd5a491cb5c2528df3bc68efcb8002cd647a7b"
+      ],
+      [
+        "data-tsj-preview-file-count",
+        "1463"
+      ]
+    ],
+    "meterMode": "NONE"
+  },
+  "17-before-menu": {
+    "meter": {
+      "x": 90,
+      "y": 321.1875,
+      "width": 282.239990234375,
+      "height": 508.47998046875,
+      "top": 321.1875,
+      "right": 372.239990234375,
+      "bottom": 829.66748046875,
+      "left": 90
+    },
+    "header": {
+      "x": 118,
+      "y": 341.3475036621094,
+      "width": 226.239990234375,
+      "height": 33.144989013671875,
+      "top": 341.3475036621094,
+      "right": 344.239990234375,
+      "bottom": 374.49249267578125,
+      "left": 118
+    },
+    "world": {
+      "x": -181.5,
+      "y": 83.71428571428571
+    },
+    "scale": 1.12,
+    "visible": "visible",
+    "hit": true,
+    "canvas": {
+      "x": 0,
+      "y": 112,
+      "width": 1440,
+      "height": 848,
+      "top": 112,
+      "right": 1440,
+      "bottom": 960,
+      "left": 0
+    },
+    "screen": "WORKBENCH",
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray"
+  },
+  "18-resume": {
+    "meter": {
+      "x": 90,
+      "y": 321.1875,
+      "width": 282.239990234375,
+      "height": 508.47998046875,
+      "top": 321.1875,
+      "right": 372.239990234375,
+      "bottom": 829.66748046875,
+      "left": 90
+    },
+    "header": {
+      "x": 118,
+      "y": 341.3475036621094,
+      "width": 226.239990234375,
+      "height": 33.144989013671875,
+      "top": 341.3475036621094,
+      "right": 344.239990234375,
+      "bottom": 374.49249267578125,
+      "left": 118
+    },
+    "world": {
+      "x": -181.5,
+      "y": 83.71428571428571
+    },
+    "scale": 1.12,
+    "visible": "visible",
+    "hit": true,
+    "canvas": {
+      "x": 0,
+      "y": 112,
+      "width": 1440,
+      "height": 848,
+      "top": 112,
+      "right": 1440,
+      "bottom": 960,
+      "left": 0
+    },
+    "screen": "WORKBENCH",
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray"
+  },
+  "19-small-viewport": {
+    "meter": {
+      "x": 20,
+      "y": 260.90625,
+      "width": 198.3743896484375,
+      "height": 357.3887939453125,
+      "top": 260.90625,
+      "right": 218.3743896484375,
+      "bottom": 618.2950439453125,
+      "left": 20
+    },
+    "header": {
+      "x": 39.68000030517578,
+      "y": 275.0758361816406,
+      "width": 159.014404296875,
+      "height": 23.29620361328125,
+      "top": 275.0758361816406,
+      "right": 198.69440460205078,
+      "bottom": 298.3720397949219,
+      "left": 39.68000030517578
+    },
+    "world": {
+      "x": -244,
+      "y": 48
+    },
+    "scale": 0.7872,
+    "visible": "visible",
+    "hit": true,
+    "canvas": {
+      "x": 0,
+      "y": 112,
+      "width": 1024,
+      "height": 656,
+      "top": 112,
+      "right": 1024,
+      "bottom": 768,
+      "left": 0
+    },
+    "screen": "WORKBENCH",
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON"
+  },
+  "20-zoom": {
+    "meter": {
+      "x": 12,
+      "y": 124,
+      "width": 347.47137451171875,
+      "height": 626,
+      "top": 124,
+      "right": 359.47137451171875,
+      "bottom": 750,
+      "left": 12
+    },
+    "header": {
+      "x": 46.47136688232422,
+      "y": 148.8193817138672,
+      "width": 278.52862548828125,
+      "height": 40.80548095703125,
+      "top": 148.8193817138672,
+      "right": 324.99999237060547,
+      "bottom": 189.62486267089844,
+      "left": 46.47136688232422
+    },
+    "world": {
+      "x": 192.8036735922915,
+      "y": 156.5599217103283
+    },
+    "scale": 1.3788546255506609,
+    "visible": "visible",
+    "hit": true,
+    "canvas": {
+      "x": 0,
+      "y": 112,
+      "width": 1024,
+      "height": 656,
+      "top": 112,
+      "right": 1024,
+      "bottom": 768,
+      "left": 0
+    },
+    "screen": "WORKBENCH",
+    "body": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\n\u00b5A\nCAP\nHz\n%\n\u00b0C/\u00b0F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV \u03a9\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON"
+  }
+}

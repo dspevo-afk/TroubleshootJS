@@ -1,0 +1,31 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them
+less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose
+parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: visual workbench contracts assertions=38
+
+PASS: architecture footprint contracts assertions=46 routedPackages=4 deterministicRepeats=4 familyRegressions=6
+
+SERVICE_COVERAGE LED_INDICATOR parts=3
+SERVICE_COVERAGE DIODE_PROTECTED_INDICATOR parts=4
+SERVICE_COVERAGE PARALLEL_DUAL_INDICATOR parts=5
+SERVICE_COVERAGE RC_DELAY parts=6
+SERVICE_COVERAGE NPN_LOW_SIDE_SWITCH parts=7
+SERVICE_COVERAGE NMOS_LOW_SIDE_SWITCH parts=6
+SERVICE_COVERAGE RELAY_OUTPUT parts=9
+SERVICE_COVERAGE RB15_CONTROL parts=16
+SERVICE_COVERAGE COMPOSED_CONTROLLED_INDICATOR parts=15
+PASS: physical serviceability contracts assertions=846
+
+PASS: U04 session contracts assertions=76
+
+PASS: U01 viewport contracts assertions=1259
+
+PASS: focused current contracts; 5 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

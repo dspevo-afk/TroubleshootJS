@@ -128,6 +128,23 @@ explicitly disabled rather than producing invented readings. Meter movement
 changes presentation only and consumes its pointer/keyboard gestures before
 the underlying board can interpret them.
 
+The meter has a per-board WeakMap state (world position and captured-pointer drag
+metadata), projected by a read-only `PcbWorkbenchController` presentation seam.
+It shares the unmirrored permanent bench camera, not PCB face mirroring or the
+Space inspection transform. Its home lies left of the PCB; initial Fit bench
+includes case, board and tray. `PcbViewport.fitWorkbench` fits that unmirrored
+furniture envelope on either board face. Native widget ownership is unchanged;
+explicit overflow release on the GWT dock and layout wrapper avoids clipping.
+
+Only its header is a drag handle, with primary-pointer capture/window fallback,
+keyboard arrows/Home/Escape, and cancellation on blur/resize/overlay/owner change.
+World position survives same-board menu navigation. Ordinary pan translates the
+meter with the bench; visibility-edge recovery re-seats its world position and
+oversized zoom caps its rendered case to the visible canvas below the toolbar.
+The existing half-maximum-visible-PCB-area pan bound is not widened or replaced.
+See `docs/task-evidence/bench-meter/README.md` for the explicit visibility tradeoff
+and final compiled-browser input evidence.
+
 `WorkbenchRelayFeedback` observes actual installed relay contact transitions.
 Initial state, private verification and owner replacement are silent. The audio
 adapter synthesizes a short mechanical click after a user gesture, respects

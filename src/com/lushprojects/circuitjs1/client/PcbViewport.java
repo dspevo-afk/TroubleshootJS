@@ -93,14 +93,16 @@ final class PcbViewport {
         dismiss(); face = value;
     }
     void fitBoard() { fit(outline); }
-    void fit(Rectangle target) {
+    void fit(Rectangle target) { fit(target, true); }
+    void fitWorkbench(Rectangle target) { fit(target, false); }
+    private void fit(Rectangle target, boolean mirrorTarget) {
         PcbCoordinateSystem.requireBoardRectangle(target);
         if (target.width <= 0 || target.height <= 0) throw new IllegalArgumentException("Empty target");
         dismiss();
         scale = Math.min(MAX_SCALE, Math.min(Math.max(1, area.width - 40) / (double)target.width,
             Math.max(1, area.height - 40) / (double)target.height));
         double cx = target.x + target.width / 2.0;
-        if (face == PcbBoardSide.BOTTOM) cx = mirror() - cx;
+        if (mirrorTarget && face == PcbBoardSide.BOTTOM) cx = mirror() - cx;
         x = area.x + area.width / 2.0 - scale * cx;
         y = area.y + area.height / 2.0 - scale * (target.y + target.height / 2.0);
     }

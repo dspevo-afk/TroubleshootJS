@@ -1,0 +1,18 @@
+PASS: visual workbench contracts assertions=38
+
+PASS: architecture footprint contracts assertions=46 routedPackages=4 deterministicRepeats=4 familyRegressions=6
+
+SERVICE_COVERAGE LED_INDICATOR parts=3
+SERVICE_COVERAGE DIODE_PROTECTED_INDICATOR parts=4
+SERVICE_COVERAGE PARALLEL_DUAL_INDICATOR parts=5
+SERVICE_COVERAGE RC_DELAY parts=6
+SERVICE_COVERAGE NPN_LOW_SIDE_SWITCH parts=7
+SERVICE_COVERAGE NMOS_LOW_SIDE_SWITCH parts=6
+SERVICE_COVERAGE RELAY_OUTPUT parts=9
+SERVICE_COVERAGE RB15_CONTROL parts=16
+SERVICE_COVERAGE COMPOSED_CONTROLLED_INDICATOR parts=15
+PASS: physical serviceability contracts assertions=846
+
+PASS: U04 session contracts assertions=76
+
+PASS: U01 viewport contracts assertions=1259
