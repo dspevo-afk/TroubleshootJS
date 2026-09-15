@@ -9,6 +9,7 @@
 **Branch observed during review:** `codex/task43p-final-recovery`<br>
 **Latest completed task:** **U04 / U05 / REL-A: Limited desktop alpha**<br>
 **Current checkpoint:** **U04 / U05 / REL-A COMPLETE.** Typed sessions, initial computed EASY/MEDIUM profiles and limited low-voltage desktop alpha are qualified, with mandatory eleven-seed normal RB15 admission, the full website catalog, compatible purchased-part installation, Windows launcher recovery and exact meter endpoint fixes. Final GWT5/native33, Alpha38, Q15all11/66 copper readings, affected compiled/strict/negative gates and actual repair/retest/replay/privacy/focus flows pass. Human attempts and uncertainty remain qualitative evidence; no population difficulty or arbitrary-seed guarantee is claimed. The separately authorized visual pass is completed in its own commit, documented below. **Next unstarted roadmap milestone: P05.** [Evidence and limits](task-evidence/REL-A/README.md).
+**Roadmap clarification (2026-09-14):** The post-P09 Procedural Quick Play Admission Gate now explicitly requires fresh arbitrary candidate signed-long seeds within qualified families/envelopes, bounded rejection/retry, exact accepted-seed replay, and population/layout-diversity evidence before normal-medium procedural qualification proceeds. This is a documentation/product-contract clarification only: REL-A remains curated/bounded, no generator or Quick Play production behavior is changed here, and P05 remains the next unstarted implementation milestone.
 
 **Completed post-release correction:** The authorized visual pass and fault-blind serviceability correction are qualified in the completion commit containing this update. All nine playable families have real supported part-service ownership. Fresh GWT33 build, Q15/native proof repair and actual menu/progress/measure/drag/shop/repair/retest flow pass; unaffected GWT32 and native31 results are explicitly reused under input audits. [Final evidence and limitations](task-evidence/visual-productization/final33/README.md). **P05 remains unstarted and requires separate authorization.**
 
@@ -642,6 +643,8 @@ Use development and frozen holdout corpora drawn from the advertised current env
 
 Legitimately retained loose parts and in-game history are not memory leaks. Replaced owners should release their handlers, temporary sources, solver graphs and stale callbacks. Bound waveform/history storage explicitly where appropriate. Current saves/resumes, source changes and repeated repair interact with that lifecycle and need combined checks.
 
+After the post-P09 Procedural Quick Play Admission Gate, a family qualified for broad normal-player procedural admission must draw fresh signed-long candidate seeds rather than map launch randomness exclusively onto a frozen seed whitelist. "Arbitrary" here means arbitrary candidate seeds within that family's qualified intent and SupportedEnvelope, not arbitrary circuits or netlists. Frozen seed cohorts remain regression/holdout fixtures. Population evidence must record success/rejection distributions and stages, same-seed determinism, bounded retry behavior and meaningful physical-layout diversity; value/fault-only changes or pathological near-clones do not establish population diversity.
+
 ## 6.11 Stateful devices and instruments
 
 Stateful devices declare supplies, reset/clock priority, input thresholds/loading, initialization and supported bandwidth. Unknown or unsupported timing is not silently converted to a convenient logical zero. External clock networks must causally drive the device when shown; otherwise the package declares an internal clock. Display brightness integrates actual solved segment currents over bounded simulation-time history; the renderer cannot read a desired numeral or advance state.
@@ -653,7 +656,7 @@ Every enabled instrument declares electrical connection/stimulus, burden/loading
 
 ## 7.1 Status and authority
 
-T49, N00, A01-A11, R00, P01-P04 and U01 are accepted/completed: 19 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. E01 is the next unstarted milestone. Qualification prefers the built-in Browser for current compiled and player checks; the unchanged isolated CLI launcher's ownership deadline remains a separately reported infrastructure limitation.
+T49, N00, A01-A11, R00, P01-P04, U01, E01, E03, Q15, U04, U05 and REL-A are accepted/completed: 25 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. P05 is the next unstarted milestone. Qualification prefers the built-in Browser for current compiled and player checks; the unchanged isolated CLI launcher's ownership deadline remains a separately reported infrastructure limitation.
 
 A task-specific prompt authorizes a bounded scope. Follow current AGENTS.md for orchestration, ownership, review, publication and safety; R00 replaced its contradictory blanket compatibility wording under the owner's explicit instruction. A current correct requirement outranks an obsolete test. Do not start writers before relevant shared-interface investigations are reconciled.
 
@@ -672,12 +675,12 @@ preferred next eligible milestone. Future implementation needs its own authoriza
 than the old preferred order while satisfying their hard prerequisites: A10
 required A05/A07/A09/P02; A11 required A04/A08/A09. Their earlier placement does
 not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 → Q15 → U04 → U05 → REL-A is now complete.
-**Next roadmap milestone: P05.** The separately authorized visual pass precedes it.
+**Next roadmap milestone: P05.** The separately authorized visual pass is complete; P05 remains next.
 
 | Wave | Preferred sequence |
 |---|---|
 | Small-board platform | E01 → E03 → Q15 → U04 → U05 → REL-A |
-| Normal-board scaling | P05 → P06 → P07 → P08 → P09 → U02 → U03 → E02 → E04 → D01 → Q30 → U06 → U07 |
+| Normal-board scaling | P05 → P06 → P07 → P08 → P09 → Procedural Quick Play Admission Gate → U02 → U03 → E02 → E04 → D01 → Q30 → U06 → U07 |
 | Advanced boards | E05 → E06 → conditional E08 → Q60 → HARD calibration through U05 → REL-B |
 | Mature target | Q100 → selected advanced X capabilities → X05 → X09 → REL-1 |
 
@@ -1347,7 +1350,22 @@ The shared current-only policy and validation rules apply to every card. There i
 
 **Expected extension and scale effects:** Pluggability: content requests a declared envelope. Scale: evidence-bound 30/60/100 physical evolution.
 
-**Direct hard dependents:** [E08](#m-e08), [IMPORT-4](#m-import-4), [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100).
+**Direct hard dependents:** [E08](#m-e08), [IMPORT-4](#m-import-4), [Q30](#m-q30), [Q60](#m-q60), [Q100](#m-q100). Q30 additionally requires the non-catalog post-P09 integration gate below.
+
+<a id="post-p09-quick-play"></a>
+#### Mandatory post-P09 integration gate · Procedural Quick Play arbitrary-candidate-seed admission
+
+**Status:** UNSTARTED. This is a required integration/qualification gate, not a new catalog node. It does not authorize implementation before P09 and does not change P05 as the next roadmap milestone.
+
+**Purpose:** Retire curated seed whitelists as the complete normal-player population for each family once the physical pipeline and that family are qualified for broader procedural admission. Preserve frozen cohorts as regression evidence rather than permanent gameplay limits.
+
+**Required behavior:** Normal Quick Play draws fresh signed 64-bit candidate seeds within a qualified family/profile and SupportedEnvelope. Each candidate traverses the normal bounded semantic, healthy-electrical, physical placement/routing/correspondence, diagnostic/serviceability and repair/retest admission path. Expected incompatibility or exhaustion rejects the candidate cleanly. Retry count/work is explicitly bounded and candidate order is deterministic from the launch randomness; wall-clock completion order cannot choose a different accepted result. A successful challenge retains its exact accepted seed and current interpretation/profile identity for reproducible replay.
+
+**Population and diversity acceptance:** The existing Q15 eleven-seed cohort and other frozen cohorts remain regression/holdout fixtures but cease to be the entire normal-player population once their family passes this gate. Qualification uses a predeclared population/holdout corpus large enough to expose overfitting and records success/rejection distributions by stage. Same-seed regeneration must reproduce the same discrete design. Distinct candidate seeds are not required to be globally unique across all 2^64 values, but the admitted population must show meaningful physical variety in board shape/aspect, sensible region arrangement, component placement/orientation and routed copper. Different values or faults alone, trivial coordinate jitter, or most seeds collapsing onto one near-identical macro layout do not satisfy the diversity claim. Electrical realism, access and sensible functional relationships outrank visual randomness.
+
+**Important negatives:** Unlimited retry; entropy remapped secretly to the old whitelist; failed candidates silently admitted; unsupported-envelope expansion mislabeled as arbitrary circuits; wall-clock race selecting the winner; accepted seed not replayable; held-out failures removed to improve the reported rate; diagnostic population silently shrunk; near-clone layouts counted as meaningful diversity.
+
+**Evidence boundary:** This gate changes normal-player seed admission only after P09 and relevant family qualification. REL-A remains a curated low-voltage alpha and is not retroactively upgraded. Completing this documentation correction does not implement the gate.
 
 <a id="m-u01"></a>
 
@@ -2353,7 +2371,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 **Status:** COMPLETE — QUALIFIED (2026-09-13).
 
-**Implementation/evidence:** `RB15_CONTROL` declares sixteen causal packages before allocation, with independent named-stream driver, conditioning, fault, placement and routing choices. Four BJT/NMOS × RC/resistive designs share the customer intent; three admitted faults across RDRIVE/K1 have legal physical hypothesis repair and retest. Eleven frozen seeds include exact signed-long extremes and produce distinct procedural geometry. Native Q15 passes 6,713 assertions; the final compiled cohort passes 481 assertions plus 80 support checks, all six stages, and unchanged 90 s/5 s/640 limits. Final JDK8/GWT, A10/E03/A08/Task41/Task49 and strict readers pass. Five inspected player screenshots cover failed, wrong, alternative and correct repairs, power/probing and cancellation. The cohort informed fixes and is not a random-population success-rate estimate or qualification of every 5–20-part size. [Q15 evidence, distributions and retained failures](task-evidence/Q15/README.md).
+**Implementation/evidence:** `RB15_CONTROL` declares sixteen causal packages before allocation, with independent named-stream driver, conditioning, fault, placement and routing choices. Four BJT/NMOS × RC/resistive designs share the customer intent; three admitted faults across RDRIVE/K1 have legal physical hypothesis repair and retest. Eleven frozen seeds include exact signed-long extremes and produce distinct procedural geometry. They remain regression/qualification fixtures; after the post-P09 Procedural Quick Play Admission Gate they are not the complete normal-player RB15 population. Native Q15 passes 6,713 assertions; the final compiled cohort passes 481 assertions plus 80 support checks, all six stages, and unchanged 90 s/5 s/640 limits. Final JDK8/GWT, A10/E03/A08/Task41/Task49 and strict readers pass. Five inspected player screenshots cover failed, wrong, alternative and correct repairs, power/probing and cancellation. The cohort informed fixes and is not a random-population success-rate estimate or qualification of every 5–20-part size. [Q15 evidence, distributions and retained failures](task-evidence/Q15/README.md).
 
 **Hard prerequisites:** [A05](#m-a05), [A08](#m-a08), [A10](#m-a10), [A11](#m-a11), [P03](#m-p03), [P04](#m-p04), [U01](#m-u01), [E01](#m-e01), [E03](#m-e03)
 
@@ -2385,7 +2403,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 **Status:** UNSTARTED.
 
-**Hard prerequisites:** [Q15](#m-q15), [E02](#m-e02), [E03](#m-e03), [E04](#m-e04), [D01](#m-d01), [P09](#m-p09), [U02](#m-u02)
+**Hard prerequisites:** [Q15](#m-q15), [E02](#m-e02), [E03](#m-e03), [E04](#m-e04), [D01](#m-d01), [P09](#m-p09), [Procedural Quick Play Admission Gate](#post-p09-quick-play), [U02](#m-u02)
 
 **Priority / applicability:** Required normal-medium gate
 

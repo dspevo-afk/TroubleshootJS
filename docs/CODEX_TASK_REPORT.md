@@ -1,5 +1,33 @@
 # TroubleshootJS - Current Task Report
 
+## Current: post-REL-A procedural Quick Play roadmap clarification
+
+Date: September 14, 2026. Branch `codex/task43p-final-recovery`.
+Documentation/product-contract correction only. The owner reports the post-REL-A
+visual pass complete; this task does not modify, stage, qualify or publish the
+preserved visual/polish implementation currently present elsewhere in the worktree.
+
+The roadmap now has a mandatory non-catalog integration gate after P09 and before
+Q30. Once a family is qualified for broader procedural admission, normal Quick Play
+must draw fresh signed-long candidate seeds within its qualified intent and
+SupportedEnvelope, run them through bounded normal admission, reject/retry within
+explicit deterministic work limits, and retain the exact accepted seed for replay.
+Frozen cohorts such as the eleven Q15 seeds remain regression/holdout fixtures,
+not the permanent complete normal-player population after that gate.
+
+The gate also requires population evidence for success/rejection stages,
+same-seed determinism and meaningful PCB layout diversity. "Arbitrary" means
+arbitrary candidate seeds inside a bounded qualified family/envelope, never
+arbitrary circuits or netlists. REL-A remains the accepted curated low-voltage
+alpha. No generator, Quick Play, solver, routing or player production code changes
+belong to this documentation correction. P05 remains the next implementation
+milestone; the new seed-admission gate is not authorized until after P09.
+
+Validation for this documentation task is diff/consistency review and
+`git diff --check`; no production rebuild is required by AGENTS.md for docs-only
+changes. Unrelated tracked/untracked visual-productization work is preserved.
+
+---
 ## Completed: multimeter world-lock correction
 
 Scope: the owner's latest meter-only bug fix, above
