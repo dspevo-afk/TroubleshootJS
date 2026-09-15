@@ -27,6 +27,7 @@ final class PhysicalPackageGeometry {
     private final Rectangle dragEnvelope;
     private final PcbGeometryContractVersion geometryContractVersion;
     private final boolean developerGeneric;
+    private final RaisedCrossoverGeometry raisedCrossover;
 
     PhysicalPackageGeometry(int width, int height, Vector<Terminal> terminals,
             Rectangle bodyBounds, Rectangle bodyKeepOut, Rectangle routingCourtyard,
@@ -47,6 +48,15 @@ final class PhysicalPackageGeometry {
             Rectangle bodyBounds, Rectangle bodyKeepOut, Rectangle routingCourtyard,
             Rectangle selectionEnvelope, Rectangle dragEnvelope,
             PcbGeometryContractVersion geometryContractVersion, boolean developerGeneric) {
+        this(width, height, terminals, bodyBounds, bodyKeepOut, routingCourtyard,
+            selectionEnvelope, dragEnvelope, geometryContractVersion, developerGeneric, null);
+    }
+
+    private PhysicalPackageGeometry(int width, int height, Vector<Terminal> terminals,
+            Rectangle bodyBounds, Rectangle bodyKeepOut, Rectangle routingCourtyard,
+            Rectangle selectionEnvelope, Rectangle dragEnvelope,
+            PcbGeometryContractVersion geometryContractVersion, boolean developerGeneric,
+            RaisedCrossoverGeometry raisedCrossover) {
         if (width <= 0 || height <= 0 || terminals == null || terminals.size() == 0 ||
                 bodyBounds == null || bodyKeepOut == null || routingCourtyard == null ||
                 selectionEnvelope == null || dragEnvelope == null ||
@@ -68,8 +78,20 @@ final class PhysicalPackageGeometry {
         this.dragEnvelope = copyPositive(dragEnvelope, "drag envelope");
         this.geometryContractVersion = geometryContractVersion;
         this.developerGeneric = developerGeneric;
+        this.raisedCrossover = raisedCrossover;
         validate();
+        if (raisedCrossover != null) raisedCrossover.validate(this);
     }
+
+    PhysicalPackageGeometry withRaisedCrossover(RaisedCrossoverGeometry declaration) {
+        if (declaration == null || raisedCrossover != null)
+            throw new IllegalArgumentException("Missing or duplicate raised crossover declaration");
+        return new PhysicalPackageGeometry(width, height, terminals, bodyBounds, bodyKeepOut,
+            routingCourtyard, selectionEnvelope, dragEnvelope, geometryContractVersion,
+            developerGeneric, declaration);
+    }
+
+    RaisedCrossoverGeometry getRaisedCrossover() { return raisedCrossover; }
 
     int getWidth() { return width; }
     int getHeight() { return height; }
@@ -134,7 +156,8 @@ final class PhysicalPackageGeometry {
         return new PhysicalPackageGeometry(width, height, mirrored,
             mirrorRect(bodyBounds), mirrorRect(bodyKeepOut), mirrorRect(routingCourtyard),
             mirrorRect(selectionEnvelope), mirrorRect(dragEnvelope),
-            geometryContractVersion, developerGeneric);
+            geometryContractVersion, developerGeneric, raisedCrossover == null ? null :
+                raisedCrossover.mirroredHorizontally(width));
     }
 
     /** Package-local geometry translated into board coordinates. */
@@ -557,6 +580,8 @@ final class PhysicalPackageGeometry {
         if (other == null || width != other.width || height != other.height ||
                 !geometryContractVersion.equals(other.geometryContractVersion) ||
                 developerGeneric != other.developerGeneric ||
+                (raisedCrossover == null ? other.raisedCrossover != null :
+                    !raisedCrossover.isEquivalentTo(other.raisedCrossover)) ||
                 !bodyBounds.equals(other.bodyBounds) || !bodyKeepOut.equals(other.bodyKeepOut) ||
                 !routingCourtyard.equals(other.routingCourtyard) ||
                 !selectionEnvelope.equals(other.selectionEnvelope) ||

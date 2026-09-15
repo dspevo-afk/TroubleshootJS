@@ -21,7 +21,7 @@ final class ServiceableBoardConstruction {
             PhysicalPart<?> original = runtime.getInstalledPart(id);
             if (original == null) throw new IllegalStateException("Missing physical service part: " + id);
             PhysicalSpecification spec = original.getSpecification();
-            if (spec instanceof BasicPhysicalSpecification) {
+            if (spec instanceof BasicPhysicalSpecification || spec instanceof FactoryLinkSpecification) {
                 completeBasic(board, elements, components, connections, runtime, original, id);
                 continue;
             }
@@ -78,7 +78,8 @@ final class ServiceableBoardConstruction {
             pkg.isEquivalentTo(PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2);
         // Developer-only arbitrary packages retain their declared fixed behavior.
         // The playable-family coverage gate rejects any unowned current position.
-        if (!connector && !pkg.isEquivalentTo(PhysicalPackages.AXIAL_FUSE)) return;
+        boolean factoryLink = original.getSpecification() instanceof FactoryLinkSpecification;
+        if (!connector && !factoryLink && !pkg.isEquivalentTo(PhysicalPackages.AXIAL_FUSE)) return;
         Vector<CircuitElm> backing;
         WireElm[] docking = new WireElm[0];
         if (connector) {
@@ -98,13 +99,18 @@ final class ServiceableBoardConstruction {
                     docking[i] = wire(free, backing.get(i).getPost(1)); elements.add(docking[i]);
                 }
             }
+        } else if (factoryLink) {
+            backing = new Vector<CircuitElm>(); backing.add(components.getSingleElement(id));
+            FactoryLinkSpecification.requireBacking(original.getSpecification(), pkg, backing);
+            if (connections.getForComponentOrEmpty(id).isEmpty())
+                relocate(backing.get(0), board, components, connections, elements);
         } else if (pkg.isEquivalentTo(PhysicalPackages.AXIAL_FUSE) && components.hasComponentBinding(id) &&
                 components.getSingleElement(id) instanceof ProtectionFuseElm) {
             backing = new Vector<CircuitElm>(); backing.add(components.getSingleElement(id));
             if (connections.getForComponentOrEmpty(id).isEmpty()) relocate(backing.get(0), board, components, connections, elements);
         } else throw mismatch(id);
         PhysicalServicePart part = new PhysicalServicePart(original.getId(),
-            (BasicPhysicalSpecification)original.getSpecification(), original.getPlayerVisibleNameplate(), pkg, backing,
+            original.getSpecification(), original.getPlayerVisibleNameplate(), pkg, backing,
             new PhysicalPartProvenance(PhysicalPartProvenance.GENERATED_ORIGINAL, id));
         WireElm[] leads = new WireElm[2];
         for (int i = 0; i < 2; i++) {
@@ -133,7 +139,12 @@ final class ServiceableBoardConstruction {
 
     static Vector<CircuitElm> newServiceBacking(PhysicalPackage pkg, CircuitElm prototype, Vector<CircuitElm> active) {
         Vector<CircuitElm> occupied = new Vector<CircuitElm>(active), result = new Vector<CircuitElm>();
-        if (pkg.isEquivalentTo(PhysicalPackages.AXIAL_FUSE)) {
+        if (pkg == PhysicalPackages.RAISED_FACTORY_LINK) {
+            Vector<CircuitElm> check = new Vector<CircuitElm>(); check.add(prototype);
+            FactoryLinkSpecification.requireBacking(FactoryLinkSpecification.STANDARD, pkg, check);
+            Point p = freeServicePoint(occupied);
+            result.add(FactoryLinkSpecification.STANDARD.createElement(p.x, p.y));
+        } else if (pkg.isEquivalentTo(PhysicalPackages.AXIAL_FUSE)) {
             if (!(prototype instanceof ProtectionFuseElm)) throw mismatch(pkg.getId());
             Point p = freeServicePoint(occupied);
             ProtectionFuseElm fuse = new ProtectionFuseElm(p.x, p.y);

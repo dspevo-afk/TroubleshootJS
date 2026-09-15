@@ -12,6 +12,52 @@ instruments, valid repair behavior and answer privacy remain required. The
 [current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
 older evidence packets describe their own historical candidates.
 
+## Raised factory-crossover prototype (P06)
+
+`PhysicalPackageGeometry` optionally owns an immutable `RaisedCrossoverGeometry`:
+local insulated passage, elevated conductor-bottom height, insulation thickness
+and supported copper-height envelope. These are drawing units, not millimetres
+or a manufacturer clearance/rating claim. The declaration must span the courtyard,
+intersect its body, and exclude exposed pads, both lead states and probe surfaces.
+Package pose, mirror, equality, copying and sealed geometry fingerprints retain it.
+The full courtyard still governs component placement.
+
+`PcbComponentPlacement` projects that declaration. `PcbNetRouter` and the independent
+layout validator permit only the complete swept copper/courtyard intersection
+inside the declared same-face passage. Existing foreign-pad, trace-clearance,
+endpoint-escape, connectivity, route-quality and bounded-search rules remain.
+A flat axial body has no exception. Other-face copper follows the existing layer
+rules, not the underpass permission. No public copper junction is created at the
+visual crossing.
+
+`PhysicalPackages.RAISED_FACTORY_LINK` has two exposed terminals, an insulated
+body and no package-internal copper union. `FactoryLinkSpecification.STANDARD`
+requires a real finite 50-milliohm `ResistorElm`; that value is the fixed low-voltage
+prototype model, not an ideal wire or a thermal/current rating. Construction and
+service inventory reject mismatched package/specification/backing declarations.
+`ServiceableBoardConstruction` adopts the existing `PhysicalServicePart`,
+`ServiceComponentSlot` and scoped service controller. Removal, lead lift, catalog
+replacement and reinstallation retain the existing live mutation, power, probe,
+provenance and rollback owners. Component conduction is deliberately excluded
+from permanent-copper projection. Removal disconnects the actual link's solder
+attachments, not the copper underneath it.
+
+`PcbFactoryLinkPolicy` enforces the prototype's count/density envelope: at most two
+links, one plus one per twelve non-link parts, and at least 60,000 board-area units
+per link. It declares a 32-candidate ceiling and proposes a 400-route-unit link
+penalty for later strategy comparisons. P06 does not install an automatic link
+insertion search, relax normal diagnostics, or change the Quick Play seed set.
+Any raised package in `GeneratedBoardInstance` requires a fresh, explicitly
+**developer-only** construction and the exact finite backing. Normal admission
+remains rejected until P09 qualifies the changed topology with its affected proofs.
+
+`P06FactoryLinkFixtures` freezes matched linked and all-copper controls;
+`P06FactoryLinkPrototype` builds independent 5 V link/load and 7 V underpass loops.
+The debug-gated `P06FactoryLinkDeveloperVerifier` exercises the real solver,
+production service/probe paths and exact prior-owner restoration. Its optional
+bench is not a normal customer challenge or a substitute for diagnostic proof.
+See [P06 evidence](task-evidence/P06/README.md) for measured tradeoffs and limits.
+
 ## Physical service and the post-REL-A workbench
 
 `ServiceableBoardConstruction` completes every currently playable physical

@@ -11,6 +11,7 @@ final class StandardPhysicalPartRenderProviders {
 
     static PhysicalPartRenderRegistry createRegistry() {
         PhysicalPartRenderRegistry registry = new PhysicalPartRenderRegistry();
+        registry.register(P06FactoryLinkFixtures.TEST_POINT, new FixedProvider(new MultiTerminalRenderer()));
         registry.register(PhysicalPackages.RELAY_SPDT, new FixedProvider(new RelayRenderer()));
         registry.register(PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,
             new FixedProvider(new ConnectorRenderer()));
@@ -19,6 +20,7 @@ final class StandardPhysicalPartRenderProviders {
         registry.register(PhysicalPackages.AXIAL_RESISTOR,
             new FixedProvider(new ResistorRenderer()));
         registry.register(PhysicalPackages.AXIAL_FUSE, new FixedProvider(new FuseRenderer()));
+        registry.register(PhysicalPackages.RAISED_FACTORY_LINK, new FixedProvider(new FactoryLinkRenderer()));
         registry.register(PhysicalPackages.AXIAL_DIODE,
             new FixedProvider(new DiodeRenderer()));
         registry.register(PhysicalPackages.THROUGH_HOLE_LED,
@@ -817,6 +819,14 @@ final class StandardPhysicalPartRenderProviders {
             graphics.fillRect(bounds.x + Math.max(2, bounds.width / 10),
                 bounds.y + bounds.height - Math.max(3, bounds.height / 7),
                 Math.max(2, bounds.width / 7), Math.max(1, bounds.height / 18));
+        }
+    }
+
+    private static final class FactoryLinkRenderer extends MultiTerminalRenderer {
+        protected void drawPackageBody(Graphics graphics, PhysicalPartRenderContext context, Rectangle bounds) {
+            // The blue sleeve is insulated: only the separately projected endpoint metal is probeable.
+            WorkbenchVisualTheme.body(graphics, bounds, "#3e7491", "#80b6cf", true);
+            WorkbenchVisualTheme.marking(graphics, "LINK", bounds, Math.max(8, context.scale(10)), "#eff8ff");
         }
     }
 

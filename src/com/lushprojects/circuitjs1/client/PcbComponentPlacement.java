@@ -195,6 +195,19 @@ class PcbComponentPlacement {
     int getGeometryContractVersionValue() { return geometryContractVersion.getValue(); }
     PhysicalGeometryRealization getGeometryRealization() { return geometryRealization; }
 
+    Rectangle getUnderpass() {
+        RaisedCrossoverGeometry raised = physicalGeometry.getRaisedCrossover();
+        return raised == null ? null : pose.toBoardRectangle(raised.getUnderpass(),
+            physicalGeometry.getWidth(), physicalGeometry.getHeight());
+    }
+
+    boolean permitsUnderpass(PcbCopperLayer layer, Rectangle stroke) {
+        return physicalGeometry.getRaisedCrossover() != null &&
+            physicalGeometry.getRaisedCrossover().maximumCopperHeight >= PcbTraceRules.COPPER_HEIGHT &&
+            layer != null && layer.getFace() == getMountingSide() &&
+            RaisedCrossoverGeometry.permits(routingCourtyard, getUnderpass(), stroke);
+    }
+
     String geometryFingerprint() {
         StringBuilder result = new StringBuilder();
         result.append("component=").append(componentId).append('@').append(x).append(',')
@@ -290,6 +303,8 @@ class PcbComponentPlacement {
             .append(geometry.getHeight()).append('|')
             .append("version=").append(geometry.getGeometryContractVersionValue()).append('|')
             .append("developerGeneric=").append(geometry.isDeveloperGeneric()).append('|');
+        if (geometry.getRaisedCrossover() != null)
+            result.append("raisedCrossover=").append(geometry.getRaisedCrossover().fingerprint()).append('|');
         appendRectangle(result, "localBody", geometry.getBodyBounds());
         appendRectangle(result, "localKeepout", geometry.getBodyKeepOut());
         appendRectangle(result, "localCourtyard", geometry.getRoutingCourtyard());

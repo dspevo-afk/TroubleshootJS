@@ -21,6 +21,7 @@ final class ReplaceableServiceBoardCapability implements PhysicalBoardRuntimeCap
     PhysicalServicePart original() { return original; }
     String catalogId() { return original.getPackage().getId() + "_STANDARD"; }
     String catalogLabel() {
+        if (original.isFactoryLink()) return "Raised insulated factory link (50 mOhm)";
         if (!original.isConnector()) return "250 mA fuse";
         return original.getPackage().isEquivalentTo(PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2) ?
             "2-pin output header" : "2-pin terminal connector";
@@ -30,7 +31,7 @@ final class ReplaceableServiceBoardCapability implements PhysicalBoardRuntimeCap
         return new ServiceSlotController(sim, instance, modifications, this);
     }
     public String getCatalogTitle() { return "Replacement Catalog"; }
-    public String getInstallNewLabel() { return "Install new " + (original.isConnector() ? "connector" : "fuse"); }
+    public String getInstallNewLabel() { return "Install new " + (original.isFactoryLink() ? "factory link" : original.isConnector() ? "connector" : "fuse"); }
     public boolean showOccupiedMessageWhenPowered() { return false; }
     public Vector<WorkbenchCatalogEntry> getCatalogEntries() {
         Vector<WorkbenchCatalogEntry> result = new Vector<WorkbenchCatalogEntry>();

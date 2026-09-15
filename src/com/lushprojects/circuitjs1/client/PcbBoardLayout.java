@@ -186,6 +186,7 @@ class PcbBoardLayout {
     void validateRoutingGeometry(TroubleshootBoard board) {
         board.validate();
         validateAgainst(board);
+        PcbFactoryLinkPolicy.validateLayout(this);
         for (String componentId : board.getComponentIds()) {
             if (!components.containsKey(componentId))
                 throw new IllegalStateException("PCB layout is missing component: " + componentId);
@@ -332,6 +333,8 @@ class PcbBoardLayout {
             for (int index = 1; index < xPoints.length; index++) {
                 if (keepOut.intersects(getTraceSegmentBounds(xPoints[index - 1],
                         yPoints[index - 1], xPoints[index], yPoints[index])) &&
+                        !component.permitsUnderpass(trace.getLayer(), getTraceSegmentBounds(
+                            xPoints[index - 1], yPoints[index - 1], xPoints[index], yPoints[index])) &&
                         !isLegalEndpointEscape(component, trace, startPad, endPad,
                             xPoints[index - 1], yPoints[index - 1], xPoints[index],
                             yPoints[index]))

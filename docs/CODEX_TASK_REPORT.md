@@ -1,6 +1,64 @@
 # TroubleshootJS - Current Task Report
 
-## Current: P05 bounded routing recovery complete
+## Current: P06 raised factory-crossover prototype complete
+
+September 15, 2026. Branch `codex/task43p-final-recovery`; patch base
+`9082930f197c173b1e22ca7ada8033e4143fbdd8`. The commit containing this checkpoint
+is the qualified P06 candidate. Publication must verify its local/remote SHA.
+
+The dedicated raised factory link has a real finite 50-milliohm CircuitJS backing,
+two exposed terminals, an insulated height-declared underpass, complete placement
+courtyard and stable geometry/physical identity. Routing and independent validation
+check the full swept copper stroke. No board-copper junction exists at the crossing.
+Existing scoped service, lead lifting, removal, replacement and actual probes are
+reused. Package/specification/backing mismatches fail closed in construction and
+inventory. Fresh developer-only construction is required; normal admission remains
+blocked until P09 qualifies the changed topology and affected diagnostic proofs.
+
+Prototype limits are two links maximum, one plus one per twelve non-link parts,
+and 60,000 board-area units per link. A 32-candidate ceiling and 400-route-unit
+penalty are proposed; automatic insertion is not implemented. Dimensions/heights
+are drawing units, not manufacturer clearance or current/thermal ratings.
+Three genuine all-copper controls use identical external endpoint positions and
+outlines. One extra linked part reduces copper length 46.0-48.1% and search work
+86.2-86.8%, but saves **no board area**. No broader population claim is made.
+
+PASS: 43 clean native suites plus independent oracles before the final inventory
+negative hardening; all three affected final suites rerun (P06 1,705 assertions,
+serviceability 846, provider conformance 429). Source audit identifies exactly the
+last guard and its test as changes. Five final integrated native suites also pass,
+including unchanged eleven-seed dense packing, P01 and P02. Both final-source
+JDK8/GWT five-permutation builds pass. Clean compiled P06 (47 real-runtime checks),
+forced-negative owner restoration, layout/geometry and Q15 all eleven cases pass.
+Q15 takes 379.73 seconds overall and restores the exact prior owner.
+
+The real solver measures 49.975 mA through the installed link/load, zero removed,
+and 49.975 mA restored; independent underpass current stays 7 mA. Actual browser
+mouse/control input removes, reinstalls and probes the link; the meter reads
+50 mOhm. The integrated normal-player menu/seed-3/ticket/flip/pan/zoom flow passes,
+with preparation 25.86 seconds. Source variants and reuse boundaries are explicit.
+
+Root integrated review completed; no independent agent review. No broad new-browser,
+modest-machine performance, user-study or unrelated release certification. The
+legacy developer bench has an existing narrow/clipped sidebar; it is not a polished
+normal customer challenge. All failed fixture/merge attempts remain separate from
+passing receipts, without relaxing geometry, electrical rules or test budgets.
+
+All 18 pre-existing tracked changes and 79 untracked files are preserved. Only
+P06 blobs from the clean candidate are staged; shared CirSim/contract-runner visual
+hunks remain outside this commit. No broad cleanup or unrelated process termination
+occurred. Task-owned browsers, exact recorded process identities and loopback
+listeners terminated cleanly. Raw evidence and recovery checkout remain under the
+owned OS Temp directory `TroubleshootJS-P06-20260915-g3kl9e46`.
+
+[Evidence, exact comparisons, commands and inspected screenshots](task-evidence/P06/README.md).
+Next unstarted milestone: **P07**, the required two-layer routing/viewing/interaction
+comparison. P09 normal adoption and the post-P09 arbitrary-seed Quick Play gate
+remain unstarted; the existing curated normal population is unchanged.
+
+---
+
+## Historical: P05 bounded routing recovery complete
 
 September 15, 2026. Branch `codex/task43p-final-recovery`; patch base
 `94d885ea37955c46980ae7d1e55a68b8dd3e17ea`. The commit containing this checkpoint

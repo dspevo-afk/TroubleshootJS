@@ -63,6 +63,7 @@ final class PcbNetRouter {
         blocked=blocked==null?null:new Vector<String>(blocked);
         PcbBoardLayout template=output.copyForRouting();
         output.validateAgainst(board);
+        PcbFactoryLinkPolicy.validateLayout(output);
         Rectangle actual=template.getBoardOutline();
         if(actual.x!=outline.x || actual.y!=outline.y || actual.width!=outline.width || actual.height!=outline.height)
             throw new IllegalArgumentException("Routing outline differs from the placement");
@@ -487,7 +488,9 @@ final class PcbNetRouter {
             if(emptyComponentFace) return true;
             int px=minX+x*GRID,py=minY+y*GRID;
             for(int i=0;i<collisionCourtyards.length;i++)
-                if(components[i].getMountingSide()==layer.getFace() && containsInclusive(collisionCourtyards[i],px,py)) return false;
+                if(components[i].getMountingSide()==layer.getFace() &&
+                        containsInclusive(collisionCourtyards[i],px,py) &&
+                        !components[i].permitsUnderpass(layer,traceStroke(px,py,px,py))) return false;
             return true;
         }
         private int lowerBound(int distance,PcbPadPlacement end) {
@@ -560,7 +563,8 @@ final class PcbNetRouter {
                 boolean endEscape = endPad!=null && component.getComponentId().equals(
                     board.getPad(endPad.getPadId()).getComponentId()) &&
                     endPad.isInEscapeCorridor(physicalX, physicalY);
-                if (!startEscape && !endEscape)
+                if (!startEscape && !endEscape && !component.permitsUnderpass(layer,
+                        traceStroke(physicalX,physicalY,physicalX,physicalY)))
                     return false;
             }
             return true;
@@ -600,7 +604,7 @@ final class PcbNetRouter {
                 boolean endEscape = component.getComponentId().equals(endComponentId) &&
                     courtyardIntersectionIsEscape(collisionCourtyards[index], endPad,
                         startPhysicalX, startPhysicalY, endPhysicalX, endPhysicalY);
-                if (!startEscape && !endEscape)
+                if (!startEscape && !endEscape && !component.permitsUnderpass(layer, stroke))
                     return false;
             }
             return true;

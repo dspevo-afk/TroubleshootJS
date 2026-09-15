@@ -105,6 +105,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'P03PlacementContractTest'; Marker = 'P03 placement contracts ' },
         @{ Name = 'P04RoutingContractTest'; Marker = 'P04 routing contracts ' },
         @{ Name = 'P05RoutingContractTest'; Marker = 'P05 routing contracts ' },
+        @{ Name = 'P06FactoryLinkContractTest'; Marker = 'P06 factory-link contracts ' },
         @{ Name = 'P05RoutingCorpus'; Marker = 'P05 frozen corpus ' },
         @{ Name = 'P05GenerationCorpus'; Marker = 'P05 generation comparison ' },
         @{ Name = 'A02ReplayContractTest'; Marker = 'A02ReplayContractTest ' },

@@ -1,0 +1,881 @@
+{
+  "schema": 1,
+  "milestone": "P06",
+  "base": "9082930f197c173b1e22ca7ada8033e4143fbdd8",
+  "status": "PASS",
+  "runs": [
+    {
+      "mode": "p06",
+      "outcome": "PASS",
+      "errors": [],
+      "status": "PASS:p06",
+      "elapsedSeconds": 4.013854599994374,
+      "browser": "153.0.4234.32",
+      "report": {
+        "schema": 1,
+        "status": "PASS",
+        "runtimeAssertions": 47,
+        "initialLoadAmps": 0.04997501249375312,
+        "removedLoadAmps": 0,
+        "restoredLoadAmps": 0.04997501249375312,
+        "underpassAmps": 0.007,
+        "ownerRestored": true,
+        "prototypeRetained": false,
+        "normalAdoption": false,
+        "copperIdentityPreserved": true
+      },
+      "ownerCleanup": {
+        "ownerRestored": true,
+        "prototypeRetained": false
+      },
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "run": "browser-final",
+      "sourceVariant": "clean-publication",
+      "compiledResources": [
+        "circuitjs1.nocache.js",
+        "8B02CC5350B5A40BEB9403ACBF292695.cache.js"
+      ]
+    },
+    {
+      "mode": "negative",
+      "outcome": "PASS",
+      "errors": [],
+      "status": "FAIL:P06 forced-negative",
+      "elapsedSeconds": 4.069489699999394,
+      "browser": "153.0.4234.32",
+      "report": null,
+      "ownerCleanup": {
+        "ownerRestored": true,
+        "prototypeRetained": false
+      },
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "run": "negative-final",
+      "sourceVariant": "clean-publication",
+      "compiledResources": [
+        "circuitjs1.nocache.js",
+        "8B02CC5350B5A40BEB9403ACBF292695.cache.js"
+      ]
+    },
+    {
+      "mode": "bench",
+      "outcome": "PASS",
+      "errors": [],
+      "status": "PASS:p06",
+      "elapsedSeconds": 4.42485360000137,
+      "browser": "153.0.4234.32",
+      "report": {
+        "schema": 1,
+        "status": "PASS",
+        "runtimeAssertions": 47,
+        "initialLoadAmps": 0.04997501249375312,
+        "removedLoadAmps": 0,
+        "restoredLoadAmps": 0.04997501249375312,
+        "underpassAmps": 0.007,
+        "ownerRestored": false,
+        "prototypeRetained": true,
+        "normalAdoption": false,
+        "copperIdentityPreserved": true
+      },
+      "ownerCleanup": {
+        "ownerRestored": false,
+        "prototypeRetained": true
+      },
+      "measuredLinkOhms": 0.05,
+      "inputs": [
+        "view bottom copper",
+        "view top copper",
+        "right-click actual link body",
+        "remove component",
+        "select loose physical link",
+        "install as FL1",
+        "OHM",
+        "place red on FL1.1",
+        "place black on FL1.2"
+      ],
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "run": "bench-final",
+      "sourceVariant": "clean-publication",
+      "compiledResources": [
+        "circuitjs1.nocache.js",
+        "8B02CC5350B5A40BEB9403ACBF292695.cache.js"
+      ]
+    },
+    {
+      "mode": "layout",
+      "outcome": "PASS",
+      "errors": [],
+      "status": "PASS:layout",
+      "elapsedSeconds": 26.2997652999984,
+      "browser": "153.0.4234.32",
+      "report": null,
+      "ownerCleanup": null,
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "run": "layout-final",
+      "sourceVariant": "clean-publication",
+      "compiledResources": [
+        "circuitjs1.nocache.js",
+        "8B02CC5350B5A40BEB9403ACBF292695.cache.js"
+      ]
+    },
+    {
+      "mode": "q15",
+      "outcome": "PASS",
+      "errors": [],
+      "status": "PASS:q15",
+      "elapsedSeconds": 379.7265550000011,
+      "browser": "153.0.4234.32",
+      "report": {
+        "protocol": "TSJ-Q15-1",
+        "status": "PASS",
+        "cases": [
+          {
+            "seed": "0",
+            "design": "RB15_NMOS_RESISTIVE_BIAS",
+            "fault": "BASE_RESISTOR_OPEN",
+            "packages": 16,
+            "hypotheses": 3,
+            "stages": 6,
+            "admissionMs": 18138,
+            "maxUnitMs": 1035,
+            "repairMs": 10382,
+            "supportMs": 4060,
+            "continuity": [
+              {
+                "red": "J1.1",
+                "black": "F1.1",
+                "ohms": 0
+              },
+              {
+                "red": "F1.1",
+                "black": "J1.1",
+                "ohms": 0
+              },
+              {
+                "red": "J1.2",
+                "black": "RBLEED.2",
+                "ohms": 0
+              },
+              {
+                "red": "RBLEED.2",
+                "black": "J1.2",
+                "ohms": 0
+              },
+              {
+                "red": "J2.1",
+                "black": "RIN.1",
+                "ohms": 0
+              },
+              {
+                "red": "RIN.1",
+                "black": "J2.1",
+                "ohms": 0
+              }
+            ],
+            "workUnits": 84,
+            "routeExpansions": 2067534,
+            "routeAttempts": 17,
+            "routeMs": 2826,
+            "stageMs": [
+              0,
+              4010,
+              17,
+              13699,
+              2,
+              14
+            ]
+          },
+          {
+            "seed": "1",
+            "design": "RB15_BJT_RESISTIVE_BIAS",
+            "fault": "RELAY_COIL_OPEN",
+            "packages": 16,
+            "hypotheses": 3,
+            "stages": 6,
+            "admissionMs": 20017,
+            "maxUnitMs": 1212,
+            "repairMs": 8124,
+            "supportMs": 3892,
+            "continuity": [
+              {
+                "red": "J1.1",
+                "black": "F1.1",
+                "ohms": 0
+              },
+              {
+                "red": "F1.1",
+                "black": "J1.1",
+                "ohms": 0
+              },
+              {
+                "red": "J1.2",
+                "black": "RBLEED.2",
+                "ohms": 0
+              },
+              {
+                "red": "RBLEED.2",
+                "black": "J1.2",
+                "ohms": 0
+              },
+              {
+                "red": "J2.1",
+                "black": "RIN.1",
+                "ohms": 0
+              },
+              {
+                "red": "RIN.1",
+                "black": "J2.1",
+                "ohms": 0
+              }
+            ],
+            "workUnits": 84,
+            "routeExpansions": 2469403,
+            "routeAttempts": 17,
+            "routeMs": 3270,
+            "stageMs": [
+              0,
+              4433,
+              16,
+              15138,
+              3,
+              13
+            ]
+          },
+          {
+            "seed": "2",
+            "design": "RB15_NMOS_RESISTIVE_BIAS",
+            "fault": "RELAY_COIL_OPEN",
+            "packages": 16,
+            "hypotheses": 3,
+            "stages": 6,
+            "admissionMs": 18403,
+            "maxUnitMs": 1016,
+            "repairMs": 8103,
+            "supportMs": 0,
+            "continuity": [
+              {
+                "red": "J1.1",
+                "black": "F1.1",
+                "ohms": 0
+              },
+              {
+                "red": "F1.1",
+                "black": "J1.1",
+                "ohms": 0
+              },
+              {
+                "red": "J1.2",
+                "black": "RBLEED.2",
+                "ohms": 0
+              },
+              {
+                "red": "RBLEED.2",
+                "black": "J1.2",
+                "ohms": 0
+              },
+              {
+                "red": "J2.1",
+                "black": "RIN.1",
+                "ohms": 0
+              },
+              {
+                "red": "RIN.1",
+                "black": "J2.1",
+                "ohms": 0
+              }
+            ],
+            "workUnits": 84,
+            "routeExpansions": 1960310,
+            "routeAttempts": 17,
+            "routeMs": 2792,
+            "stageMs": [
+              0,
+              3953,
+              24,
+              14014,
+              3,
+              14
+            ]
+          },
+          {
+            "seed": "3",
+            "design": "RB15_NMOS_RC_FILTER",
+            "fault": "RELAY_CONTACT_OPEN",
+            "packages": 16,
+            "hypotheses": 3,
+            "stages": 6,
+            "admissionMs": 34144,
+            "maxUnitMs": 3611,
+            "repairMs": 8514,
+            "supportMs": 4378,
+            "continuity": [
+              {
+                "red": "J1.1",
+                "black": "F1.1",
+                "ohms": 0
+              },
+              {
+                "red": "F1.1",
+                "black": "J1.1",
+                "ohms": 0
+              },
+              {
+                "red": "J1.2",
+                "black": "RBLEED.2",
+                "ohms": 0
+              },
+              {
+                "red": "RBLEED.2",
+                "black": "J1.2",
+                "ohms": 0
+              },
+              {
+                "red": "J2.1",
+                "black": "RIN.1",
+                "ohms": 0
+              },
+              {
+                "red": "RIN.1",
+                "black": "J2.1",
+                "ohms": 0
+              }
+            ],
+            "workUnits": 99,
+            "routeExpansions": 12177385,
+            "routeAttempts": 98,
+            "routeMs": 17600,
+            "stageMs": [
+              0,
+              19248,
+              15,
+              14380,
+              2,
+              13
+            ]
+          },
+          {
+            "seed": "17",
+            "design": "RB15_NMOS_RC_FILTER",
+            "fault": "RELAY_COIL_OPEN",
+            "packages": 16,
+            "hypotheses": 3,
+            "stages": 6,
+            "admissionMs": 27038,
+            "maxUnitMs": 2359,
+            "repairMs": 8232,
+            "supportMs": 1,
+            "continuity": [
+              {
+                "red": "J1.1",
+                "black": "F1.1",
+                "ohms": 0
+              },
+              {
+                "red": "F1.1",
+                "black": "J1.1",
+                "ohms": 0
+              },
+              {
+                "red": "J1.2",
+                "black": "RBLEED.2",
+                "ohms": 0
+              },
+              {
+                "red": "RBLEED.2",
+                "black": "J1.2",
+                "ohms": 0
+              },
+              {
+                "red": "J2.1",
+                "black": "RIN.1",
+                "ohms": 0
+              },
+              {
+                "red": "RIN.1",
+                "black": "J2.1",
+                "ohms": 0
+              }
+            ],
+            "workUnits": 93,
+            "routeExpansions": 7953975,
+            "routeAttempts": 68,
+            "routeMs": 11156,
+            "stageMs": [
+              0,
+              12411,
+              20,
+              14132,
+              2,
+              13
+            ]
+          },
+          {
+            "seed": "42",
+            "design": "RB15_NMOS_RC_FILTER",
+            "fault": "RELAY_CONTACT_OPEN",
+            "packages": 16,
+            "hypotheses": 3,
+            "stages": 6,
+            "admissionMs": 22126,
+            "maxUnitMs": 2099,
+            "repairMs": 8287,
+            "supportMs": 0,
+            "continuity": [
+              {
+                "red": "J1.1",
+                "black": "F1.1",
+                "ohms": 0
+              },
+              {
+                "red": "F1.1",
+                "black": "J1.1",
+                "ohms": 0
+              },
+              {
+                "red": "J1.2",
+                "black": "RBLEED.2",
+                "ohms": 0
+              },
+              {
+                "red": "RBLEED.2",
+                "black": "J1.2",
+                "ohms": 0
+              },
+              {
+                "red": "J2.1",
+                "black": "RIN.1",
+                "ohms": 0
+              },
+              {
+                "red": "RIN.1",
+                "black": "J2.1",
+                "ohms": 0
+              }
+            ],
+            "workUnits": 87,
+            "routeExpansions": 4607580,
+            "routeAttempts": 38,
+            "routeMs": 6379,
+            "stageMs": [
+              0,
+              7612,
+              16,
+              14064,
+              2,
+              13
+            ]
+          },
+          {
+            "seed": "101",
+            "design": "RB15_BJT_RC_FILTER",
+            "fault": "BASE_RESISTOR_OPEN",
+            "packages": 16,
+            "hypotheses": 3,
+            "stages": 6,
+            "admissionMs": 25016,
+            "maxUnitMs": 2417,
+            "repairMs": 9828,
+            "supportMs": 3862,
+            "continuity": [
+              {
+                "red": "J1.1",
+                "black": "F1.1",
+                "ohms": 0
+              },
+              {
+                "red": "F1.1",
+                "black": "J1.1",
+                "ohms": 0
+              },
+              {
+                "red": "J1.2",
+                "black": "RBLEED.2",
+                "ohms": 0
+              },
+              {
+                "red": "RBLEED.2",
+                "black": "J1.2",
+                "ohms": 0
+              },
+              {
+                "red": "J2.1",
+                "black": "RIN.1",
+                "ohms": 0
+              },
+              {
+                "red": "RIN.1",
+                "black": "J2.1",
+                "ohms": 0
+              }
+            ],
+            "workUnits": 91,
+            "routeExpansions": 7325194,
+            "routeAttempts": 60,
+            "routeMs": 10156,
+            "stageMs": [
+              0,
+              11345,
+              15,
+              13186,
+              2,
+              14
+            ]
+          },
+          {
+            "seed": "-1",
+            "design": "RB15_NMOS_RESISTIVE_BIAS",
+            "fault": "RELAY_CONTACT_OPEN",
+            "packages": 16,
+            "hypotheses": 3,
+            "stages": 6,
+            "admissionMs": 19613,
+            "maxUnitMs": 1148,
+            "repairMs": 8718,
+            "supportMs": 0,
+            "continuity": [
+              {
+                "red": "J1.1",
+                "black": "F1.1",
+                "ohms": 0
+              },
+              {
+                "red": "F1.1",
+                "black": "J1.1",
+                "ohms": 0
+              },
+              {
+                "red": "J1.2",
+                "black": "RBLEED.2",
+                "ohms": 0
+              },
+              {
+                "red": "RBLEED.2",
+                "black": "J1.2",
+                "ohms": 0
+              },
+              {
+                "red": "J2.1",
+                "black": "RIN.1",
+                "ohms": 0
+              },
+              {
+                "red": "RIN.1",
+                "black": "J2.1",
+                "ohms": 0
+              }
+            ],
+            "workUnits": 84,
+            "routeExpansions": 2057188,
+            "routeAttempts": 17,
+            "routeMs": 2891,
+            "stageMs": [
+              0,
+              4293,
+              16,
+              14873,
+              2,
+              14
+            ]
+          },
+          {
+            "seed": "9007199254740993",
+            "design": "RB15_NMOS_RC_FILTER",
+            "fault": "RELAY_CONTACT_OPEN",
+            "packages": 16,
+            "hypotheses": 3,
+            "stages": 6,
+            "admissionMs": 36883,
+            "maxUnitMs": 1271,
+            "repairMs": 8308,
+            "supportMs": 0,
+            "continuity": [
+              {
+                "red": "J1.1",
+                "black": "F1.1",
+                "ohms": 0
+              },
+              {
+                "red": "F1.1",
+                "black": "J1.1",
+                "ohms": 0
+              },
+              {
+                "red": "J1.2",
+                "black": "RBLEED.2",
+                "ohms": 0
+              },
+              {
+                "red": "RBLEED.2",
+                "black": "J1.2",
+                "ohms": 0
+              },
+              {
+                "red": "J2.1",
+                "black": "RIN.1",
+                "ohms": 0
+              },
+              {
+                "red": "RIN.1",
+                "black": "J2.1",
+                "ohms": 0
+              }
+            ],
+            "workUnits": 104,
+            "routeExpansions": 14786399,
+            "routeAttempts": 119,
+            "routeMs": 20848,
+            "stageMs": [
+              0,
+              22221,
+              15,
+              14122,
+              2,
+              13
+            ]
+          },
+          {
+            "seed": "-9223372036854775808",
+            "design": "RB15_BJT_RESISTIVE_BIAS",
+            "fault": "RELAY_CONTACT_OPEN",
+            "packages": 16,
+            "hypotheses": 3,
+            "stages": 6,
+            "admissionMs": 18627,
+            "maxUnitMs": 1329,
+            "repairMs": 8389,
+            "supportMs": 0,
+            "continuity": [
+              {
+                "red": "J1.1",
+                "black": "F1.1",
+                "ohms": 0
+              },
+              {
+                "red": "F1.1",
+                "black": "J1.1",
+                "ohms": 0
+              },
+              {
+                "red": "J1.2",
+                "black": "RBLEED.2",
+                "ohms": 0
+              },
+              {
+                "red": "RBLEED.2",
+                "black": "J1.2",
+                "ohms": 0
+              },
+              {
+                "red": "J2.1",
+                "black": "RIN.1",
+                "ohms": 0
+              },
+              {
+                "red": "RIN.1",
+                "black": "J2.1",
+                "ohms": 0
+              }
+            ],
+            "workUnits": 84,
+            "routeExpansions": 2078676,
+            "routeAttempts": 19,
+            "routeMs": 3012,
+            "stageMs": [
+              0,
+              4222,
+              16,
+              13961,
+              3,
+              13
+            ]
+          },
+          {
+            "seed": "9223372036854775807",
+            "design": "RB15_BJT_RESISTIVE_BIAS",
+            "fault": "BASE_RESISTOR_OPEN",
+            "packages": 16,
+            "hypotheses": 3,
+            "stages": 6,
+            "admissionMs": 19001,
+            "maxUnitMs": 1410,
+            "repairMs": 10239,
+            "supportMs": 1,
+            "continuity": [
+              {
+                "red": "J1.1",
+                "black": "F1.1",
+                "ohms": 0
+              },
+              {
+                "red": "F1.1",
+                "black": "J1.1",
+                "ohms": 0
+              },
+              {
+                "red": "J1.2",
+                "black": "RBLEED.2",
+                "ohms": 0
+              },
+              {
+                "red": "RBLEED.2",
+                "black": "J1.2",
+                "ohms": 0
+              },
+              {
+                "red": "J2.1",
+                "black": "RIN.1",
+                "ohms": 0
+              },
+              {
+                "red": "RIN.1",
+                "black": "J2.1",
+                "ohms": 0
+              }
+            ],
+            "workUnits": 84,
+            "routeExpansions": 2426675,
+            "routeAttempts": 19,
+            "routeMs": 3355,
+            "stageMs": [
+              0,
+              4564,
+              15,
+              13987,
+              2,
+              13
+            ]
+          }
+        ],
+        "assertions": 613,
+        "supportAssertions": 80,
+        "cancellationMs": 0,
+        "elapsedMs": 377667,
+        "cleanupMs": 2,
+        "ownerRestored": true,
+        "operation": "support",
+        "activeSeed": "9223372036854775807",
+        "failure": null
+      },
+      "ownerCleanup": null,
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "run": "q15-final",
+      "sourceVariant": "clean-publication",
+      "compiledResources": [
+        "circuitjs1.nocache.js",
+        "8B02CC5350B5A40BEB9403ACBF292695.cache.js"
+      ]
+    },
+    {
+      "mode": "p06",
+      "outcome": "PASS",
+      "errors": [],
+      "status": "PASS:p06",
+      "elapsedSeconds": 2.9999376999985543,
+      "browser": "153.0.4234.32",
+      "report": {
+        "schema": 1,
+        "status": "PASS",
+        "runtimeAssertions": 47,
+        "initialLoadAmps": 0.04997501249375312,
+        "removedLoadAmps": 0,
+        "restoredLoadAmps": 0.04997501249375312,
+        "underpassAmps": 0.007,
+        "ownerRestored": true,
+        "prototypeRetained": false,
+        "normalAdoption": false,
+        "copperIdentityPreserved": true
+      },
+      "ownerCleanup": {
+        "ownerRestored": true,
+        "prototypeRetained": false
+      },
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "run": "p06-integrated",
+      "sourceVariant": "preserved-visual-integration",
+      "compiledResources": [
+        "circuitjs1.nocache.js",
+        "FC608401463224DE22A637A00CC4CA64.cache.js"
+      ]
+    },
+    {
+      "mode": "player",
+      "outcome": "PASS",
+      "errors": [],
+      "family": "RB15_CONTROL",
+      "seed": "3",
+      "preparationSeconds": 25.863652400003048,
+      "preparedScreen": "TICKET",
+      "ticketText": "Customer ticket\n\nSERVICE JOB\n\nCustomer complaint\n\nThe external load will not turn on when the control input is HIGH. Restore switching on HIGH and off on LOW.\n\nFUNCTIONAL RETEST\n\nCheck that the external load turns on with control HIGH and off with control LOW.\n\nExamine the board and use the instruments to identify a repair. Switch off every supply and wait for stored energy to discharge before changing parts.\n\nAccept ticket and start\nMain menu\nResources\nReplay and bug-report identity",
+      "buttons": [
+        "Main menu",
+        "Shop",
+        "Resources",
+        "Settings",
+        "Run customer retest",
+        "TSJ MM-90",
+        "HOLD",
+        "RANGE",
+        "MIN/MAX",
+        "LIGHT",
+        "OFF",
+        "V~",
+        "A",
+        "mA",
+        "\u00c2\u00b5A",
+        "CAP",
+        "Hz",
+        "%",
+        "\u00c2\u00b0C/\u00c2\u00b0F",
+        "DC V",
+        "OHM",
+        "CONT",
+        "DIODE",
+        "Board Power: ON",
+        "Supplies",
+        "View",
+        "Ticket",
+        "Parts tray",
+        "\u25b2 PARTS TRAY \u00b7 0 parts"
+      ],
+      "finalScreen": "WORKBENCH",
+      "browser": "153.0.4234.32",
+      "inputs": [
+        "normal menu",
+        "family selection",
+        "exact seed 3",
+        "prepare",
+        "accept ticket",
+        "flip to bottom copper",
+        "middle-drag pan",
+        "wheel zoom"
+      ],
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "run": "player-integrated",
+      "sourceVariant": "preserved-visual-integration",
+      "compiledResources": [
+        "circuitjs1.nocache.js",
+        "FC608401463224DE22A637A00CC4CA64.cache.js"
+      ]
+    }
+  ]
+}

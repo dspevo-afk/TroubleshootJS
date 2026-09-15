@@ -420,6 +420,7 @@ MouseOutHandler, MouseWheelHandler {
     boolean troubleshootP02Verification;
     boolean troubleshootP02VerificationComplete;
     boolean troubleshootP02ForcedFailure;
+    boolean troubleshootP06Verification, troubleshootP06Complete, troubleshootP06Forced, troubleshootP06Bench;
     boolean troubleshootU01Verification, troubleshootU01Complete, troubleshootU01ForcedFailure;
     int troubleshootU01Fixture;
     boolean troubleshootA10Verification;
@@ -614,6 +615,9 @@ MouseOutHandler, MouseWheelHandler {
             troubleshootP01ForcedFailure = troubleshootP01Verification && qp.getBooleanValue("tsjP01Fail", false);
             troubleshootP02Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyP02", false);
             troubleshootP02ForcedFailure = troubleshootP02Verification && qp.getBooleanValue("tsjP02Fail", false);
+            troubleshootP06Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyP06", false);
+            troubleshootP06Forced = troubleshootP06Verification && qp.getBooleanValue("tsjP06Fail", false);
+            troubleshootP06Bench = troubleshootP06Verification && qp.getBooleanValue("tsjP06Bench", false);
             troubleshootU01Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyU01", false);
             troubleshootU01ForcedFailure = troubleshootU01Verification && qp.getBooleanValue("tsjU01Fail", false);
             if (troubleshootU01Verification && qp.getValue("tsjViewportFixture") != null)
@@ -1837,6 +1841,7 @@ MouseOutHandler, MouseWheelHandler {
 			runGeneratedBoardVerificationIfReady(didAnalyze);
             runDeveloperVerificationIfReady();
             runP02ConductorVerificationIfReady();
+            runP06FactoryLinkVerificationIfReady();
             runU01ViewportVerificationIfReady();
             runA10GenerationVerificationIfReady();
 			// Deferred meter work may consume this analysis only after the
@@ -4865,7 +4870,7 @@ MouseOutHandler, MouseWheelHandler {
 	pcbWorkbenchController = (!troubleshootDebug || FreshGeneratedRuntimeInstallation.isInProgress(this) ||
 	    troubleshootTask41Verification || troubleshootTask43PVerification || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
-	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootU01Verification || troubleshootA10Verification ||
+	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootU01Verification || troubleshootA10Verification ||
 	    troubleshootA01Measurement ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
@@ -5063,6 +5068,23 @@ MouseOutHandler, MouseWheelHandler {
                 publishBrowserVerificationResult("PASS:u01");
             } catch (RuntimeException failure) {
                 publishBrowserVerificationResult("FAIL:" + failure.getMessage()); throw failure;
+            } finally { developerVerifierRunning = false; }
+        }
+    }
+
+    private void runP06FactoryLinkVerificationIfReady() {
+        if (!developerVerifierRunning && troubleshootP06Verification && !troubleshootP06Complete &&
+                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+                generatedChallengeController != null && generatedChallengeController.isReady() &&
+                isGeneratedRuntimeSettled()) {
+            developerVerifierRunning = true; troubleshootP06Complete = true;
+            publishBrowserVerificationResult("RUNNING:p06");
+            try {
+                P06FactoryLinkDeveloperVerifier.verify(this, troubleshootP06Forced, troubleshootP06Bench);
+                publishBrowserVerificationResult("PASS:p06");
+            } catch (Throwable failure) {
+                publishBrowserVerificationResult("FAIL:" + failure.getMessage());
+                PhysicalMutationScope.rethrow(failure);
             } finally { developerVerifierRunning = false; }
         }
     }
@@ -5678,7 +5700,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootTask40Verification || troubleshootTask41Verification ||
 		    troubleshootA01Measurement ||
 		    troubleshootTask46Verification || troubleshootTask47Verification ||
-		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootU01Verification || troubleshootA10Verification ||
+		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootU01Verification || troubleshootA10Verification ||
 		    troubleshootTask43Verification || troubleshootTask43PVerification)) {
 		String failureMessage = e.getMessage();
 		if (troubleshootTask43PForcedFailure && failureMessage != null &&

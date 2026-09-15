@@ -70,6 +70,19 @@ final class PhysicalPackages {
     static final PhysicalPackage DEV_CANARY_CONNECTOR_6 = developerCanaryPackageOf(
         "DEV_CANARY_CONNECTOR_6", new String[] { "1", "2", "3", "4", "5", "6" }, true);
 
+    /** P06 explicit prototype package. Not an axial resistor and not board copper. */
+    static final PhysicalPackage RAISED_FACTORY_LINK = raisedFactoryLink();
+
+    private static PhysicalPackage raisedFactoryLink() {
+        PhysicalPackageGeometry geometry = axialResistorVariant(220).withRaisedCrossover(
+            new RaisedCrossoverGeometry(new Rectangle(92, 5, 36, 60), 16, 2, 2));
+        Vector<PhysicalPackage.GeometryVariant> variants = new Vector<PhysicalPackage.GeometryVariant>();
+        variants.add(new PhysicalPackage.GeometryVariant("RAISED_220", "IDENTITY", geometry));
+        return new PhysicalPackage("RAISED_FACTORY_LINK", toVector(new String[] {"1", "2"}),
+            new Vector<String>(), false, geometry, variants, "RAISED_220",
+            PhysicalPackage.GeometryVariantSelection.FIXED_DEFAULT, allCardinalRotations(), bothBoardSides());
+    }
+
     private PhysicalPackages() { }
 
     static PhysicalPackage developerConnectorForCount(int count) {
