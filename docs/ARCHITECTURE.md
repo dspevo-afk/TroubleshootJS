@@ -138,12 +138,18 @@ explicit overflow release on the GWT dock and layout wrapper avoids clipping.
 
 Only its header is a drag handle, with primary-pointer capture/window fallback,
 keyboard arrows/Home/Escape, and cancellation on blur/resize/overlay/owner change.
-World position survives same-board menu navigation. Ordinary pan translates the
-meter with the bench; visibility-edge recovery re-seats its world position and
-oversized zoom caps its rendered case to the visible canvas below the toolbar.
-The existing half-maximum-visible-PCB-area pan bound is not widened or replaced.
-See `docs/task-evidence/bench-meter/README.md` for the explicit visibility tradeoff
-and final compiled-browser input evidence.
+World position survives same-board menu navigation. Camera pan, zoom, resize and
+repaint never write it. The meter can leave the viewport and returns to its exact
+dropped location when the camera returns. Its scale follows the permanent camera
+without a viewport-size cap. Only deliberate header/keyboard movement, explicit
+Home reset and a new board's initial placement change its world position.
+
+CSS clip-path in unscaled case coordinates trims paint and pointer hit testing
+at the canvas, toolbar and optional bottom drawer boundary. Those presentation
+bounds never push or shrink the physical meter. Contact shadows remain where
+there is visible bench space. The existing half-visible-PCB pan bound is unchanged.
+See `docs/task-evidence/meter-world-lock/README.md` for the focused correction;
+the earlier always-visible policy in bench-meter evidence is superseded.
 
 `WorkbenchRelayFeedback` observes actual installed relay contact transitions.
 Initial state, private verification and owner replacement are silent. The audio

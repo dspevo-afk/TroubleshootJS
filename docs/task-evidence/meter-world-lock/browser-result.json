@@ -1,0 +1,60 @@
+{
+    "screenBefore":  {
+                         "x":  64,
+                         "y":  442.265625,
+                         "width":  139.25782775878906,
+                         "height":  250.8851318359375,
+                         "top":  442.265625,
+                         "right":  203.25782775878906,
+                         "bottom":  693.1507568359375,
+                         "left":  64
+                     },
+    "worldBefore":  {
+                        "x":  -134.37792078284332,
+                        "y":  474.95639534883725
+                    },
+    "base":  "d1745961a7f626aea9c830422583b2b96a10c705",
+    "screenReturned":  {
+                           "x":  64,
+                           "y":  442.265625,
+                           "width":  139.25782775878906,
+                           "height":  250.8851318359375,
+                           "top":  442.265625,
+                           "right":  203.25782775878906,
+                           "bottom":  693.1507568359375,
+                           "left":  64
+                       },
+    "scaleBefore":  0.5526104417670683,
+    "toolbarHit":  {
+                       "meter":  false,
+                       "button":  "Board Power: ON",
+                       "clip":  "inset(112.391px -12px -12px)"
+                   },
+    "offscreenRight":  -2913.65380859375,
+    "family":  "RB15_CONTROL",
+    "worldReturned":  {
+                          "x":  -134.37792078284332,
+                          "y":  474.95639534883725
+                      },
+    "status":  "PASS",
+    "scaleZoomed":  3.024749592264135,
+    "worldZoomed":  {
+                        "x":  -134.37792078284332,
+                        "y":  474.95639534883725
+                    },
+    "seed":  "3",
+    "checks":  [
+                   "header drag",
+                   "body nondrag",
+                   "offscreen zoom and exact return",
+                   "natural camera scale",
+                   "pan and return",
+                   "flip",
+                   "1024x768 resize and restore",
+                   "menu resume",
+                   "toolbar clipping and hit testing",
+                   "Home reset",
+                   "backlight and mode controls"
+               ],
+    "browser":  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36 Edg/153.0.0.0"
+}

@@ -1,6 +1,38 @@
 # TroubleshootJS - Current Task Report
 
-## Completed: draggable bench-space multimeter follow-up
+## Completed: multimeter world-lock correction
+
+Scope: the owner's latest meter-only bug fix, above
+`d1745961a7f626aea9c830422583b2b96a10c705` on `codex/task43p-final-recovery`.
+The former always-visible meter requirement is explicitly superseded.
+
+The meter no longer re-seats its world position or caps its size during camera
+pan/zoom, viewport resizing or drawer clipping. It may leave the viewport and
+returns to the exact dropped location. CSS clipping protects toolbar/canvas and
+optional drawer hit regions without moving the case. Header capture, keyboard
+positioning, explicit Home reset and same-board menu persistence are retained.
+No Java, solver, layout-generation or pan-limit change belongs to this fix.
+
+Validation: fresh isolated final-candidate JDK8/GWT build, all five permutations
+PASS. Meter DOM contracts 358 PASS; existing UI contracts 112 PASS. The new
+zoom regression fails on published d174596 and passes on this correction.
+Real compiled Edge input on RB15_CONTROL seed 3 passes header/body distinction,
+offscreen zoom and exact return, pan/flip, 1024x768 resize/restore, menu resume,
+clipped toolbar hit testing, Home and live meter mode/backlight controls.
+World coordinates and returned screen bounds are exactly equal; no app exceptions.
+[Evidence](task-evidence/meter-world-lock/README.md) includes five inspected images.
+
+Both build and browser qualification used an isolated candidate based on HEAD
+plus this meter patch, not the larger unfinished worktree. The earlier FPS,
+packing, bottom drawer and Shop implementation remains uncommitted and unqualified;
+its unrelated files were preserved. No full electrical/release matrix or touch/
+cross-browser qualification was repeated. Root diff review completed; no agent review.
+Task-owned browser/preview cleanup passed; raw logs remain in OS Temp.
+Next work is the separate four-item polish completion; P05 remains unstarted.
+
+---
+
+## Historical: draggable bench-space multimeter follow-up
 
 Date: September 14, 2026. Branch `codex/task43p-final-recovery`.
 Base: `7aedfb1bb89675a4845dedcc27a6d4de54cb1e00`.

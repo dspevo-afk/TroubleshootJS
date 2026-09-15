@@ -50,6 +50,13 @@ point('pointerdown',grip,start.x,start.y,2,0,false); check(captured===1,'second 
 point('pointermove',d,start.x+80,start.y+40);
 near(position().x,initial.x+100,'inverse projected drag X'); near(position().y,initial.y+50,'inverse projected drag Y');
 point('pointerup',d,start.x+80,start.y+40); check(captured===null && !grip.classList.contains('is-dragging'),'release ends drag');
+const movedView={...view}, movedWorld=position(), movedBox=box();
+api.project(owner,canvas,{...view,scale:8,x:-3000,y:-2000});
+assert.deepEqual(position(),movedWorld,'zooming away must leave the meter at its dropped WORLD location'); checks++;
+near(Number(panel.style.getPropertyValue('--meter-scale')),8,'zoom cannot cap physical meter scale');
+check(box().right<0,'zooming into the PCB can leave the meter entirely offscreen');
+api.project(owner,canvas,movedView);
+assert.deepEqual(box(),movedBox,'zooming back restores the exact dropped screen location'); checks++;
 const moved=position(); point('pointerdown',display,300,300); point('pointermove',d,600,500); point('pointerup',d,600,500);
 assert.deepEqual(position(),moved); checks++; check(calls.length===0,'moving meter never invokes electrical actions');
 api.mount({...snapshot,token:2}); assert.deepEqual(position(),moved); checks++;
@@ -73,7 +80,13 @@ start=down(); w.dispatchEvent(new w.Event('resize')); check(captured===null,'res
 captureFails=true; start=down(); point('pointermove',d,start.x+16,start.y+8); point('pointerup',d,start.x+16,start.y+8);
 near(position().x,-264,'window fallback retains drag without pointer capture'); captureFails=false;
 for(const [x,y] of [[-100000,-100000],[100000,100000],[-100000,100000],[100000,-100000]]) {
-  start=down(); point('pointermove',d,x,y); point('pointerup',d,x,y); visible();
+  const beforeDrag=position(); start=down();
+  point('pointermove',d,x,y); point('pointerup',d,x,y);
+  near(position().x,beforeDrag.x+(x-start.x)/view.scale,'drag may leave viewport X');
+  near(position().y,beforeDrag.y+(y-start.y)/view.scale,'drag may leave viewport Y');
+  const offscreen=position(); api.project(owner,canvas,view);
+  assert.deepEqual(position(),offscreen,'repaint must not recover a deliberately moved meter'); checks++;
+  key('Home');
 }
 key('Home'); const home=position();
 api.project(other,canvas,view); near(position().x,-284,'new board starts at left-side home');
@@ -83,11 +96,36 @@ api.project(owner,canvas,view); assert.deepEqual(position(),home); checks++;
 api.project(other,canvas,view); assert.deepEqual(position(),otherPosition); checks++;
 start=down(); api.suspend(other); check(captured===null && panel.dataset.benchVisible==='false','owner suspension cancels and hides');
 api.project(other,canvas,view); assert.deepEqual(position(),otherPosition); checks++;
+const savedView={...view}, savedWorld=position(), savedBox=box();
 w.innerWidth=640; w.innerHeight=480; canvas.width=640; canvas.height=340;
 view={...view,scale:8,x:-3000,y:-2000,area:{x:0,y:0,width:640,height:340}};
-api.project(other,canvas,view); visible(); check(Number(panel.style.getPropertyValue('--meter-scale'))<1,'oversized zoom shrinks to visible bench, not offscreen');
-view={...view,x:1e7,y:-1e7}; api.project(other,canvas,view); visible();
-check(Number.isFinite(position().x) && Number.isFinite(position().y),'extreme camera recovery keeps finite world state');
+api.project(other,canvas,view);
+assert.deepEqual(position(),savedWorld,'zoom cannot change physical location'); checks++;
+near(Number(panel.style.getPropertyValue('--meter-scale')),8,'zoom uses full physical camera scale');
+check(box().right<0,'meter can be entirely offscreen');
+for(let i=0;i<90;i++) {
+  view={...view,scale:[.2,1,8][i%3],x:(i%2?1:-1)*i*1000,y:(i%3?1:-1)*i*800};
+  api.project(other,canvas,view); api.mount(snapshot); w.dispatchEvent(new w.Event('resize'));
+  assert.deepEqual(position(),savedWorld,'repeated pan/zoom/resize has zero world drift'); checks++;
+  near(box().left,view.x+savedWorld.x*view.scale,'projected X follows camera even offscreen');
+  near(box().top,140+view.y+savedWorld.y*view.scale,'projected Y follows camera even offscreen');
+}
+view={...view,scale:.8,x:-40-savedWorld.x*.8,y:100-140-savedWorld.y*.8};
+api.project(other,canvas,view);
+const clips=()=>panel.style.clipPath.match(/-?[\d.]+(?=px)/g).map(Number);
+near(clips()[0],65,'toolbar overlap clips top without relocation');
+near(clips()[3],65,'left overlap clips case and hit area without relocation');
+const beforeDrawer=box(), beforeClip=clips();
+w.tsjTrayDrawer={top:360}; api.project(other,canvas,view);
+assert.deepEqual(position(),savedWorld,'drawer opening cannot move meter'); checks++;
+assert.deepEqual(box(),beforeDrawer,'drawer opening cannot shrink meter'); checks++;
+check(clips()[2]>beforeClip[2],'drawer only clips overlapping paint and hit area');
+w.tsjTrayDrawer.top=null; api.project(other,canvas,view);
+assert.deepEqual(clips(),beforeClip,'drawer closing restores exact clipping'); checks++;
+w.innerWidth=1400; w.innerHeight=850; canvas.width=1400; canvas.height=700;
+view=savedView; api.project(other,canvas,view);
+assert.deepEqual(position(),savedWorld,'camera round trip preserves exact position'); checks++;
+assert.deepEqual(box(),savedBox,'camera round trip restores exact screen projection'); checks++;
 const electricalPosition=position(); d.querySelector('.tsj-meter-off').click();
 check(calls.length===1 && calls[0][2]==='meter' && calls[0][3]==='NONE','real meter action bridge retained');
 d.querySelector('.tsj-meter-light').click(); check(panel.classList.contains('is-backlit'),'backlight still operates');

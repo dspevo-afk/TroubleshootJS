@@ -1,0 +1,20 @@
+{
+  "01-initial.png": "06276fa3508b1287ff5ae375413aa47194031dc00d98a6c8dcfc30b5aaff78a3",
+  "02-dropped.png": "6a66baa752b5b1faab0632a0c8d4384c9d32f3295a26f805654bb752b73947ee",
+  "03-zoomed-offscreen.png": "ec7f31f7691d7c5d4f7b712edebb4fda64be5d2c4a2e84ee26f7bb3eb72956dc",
+  "04-returned.png": "6a66baa752b5b1faab0632a0c8d4384c9d32f3295a26f805654bb752b73947ee",
+  "05-toolbar-clipped.png": "c9b902ac122562fbedc41284c9c87814c9d72d707f15c4d462fab2e941f2fa43",
+  "browser-cleanup.json": "c3228824f2385cd4beb8fb3ef5bbd29adde20185ccdbd2667440fb73f1d81acd",
+  "browser-result.json": "4e7b9e31edb0c4973fdd24ff5c722eeb128e7217316d419d15f791c4f7479a5c",
+  "build-result.json": "e27de469da65712e839bb17f1096e2dfdd885015d7720709ac07356ac168de4b",
+  "build.log": "72055f9bc50ee8d324e47f76474a8dacd984225a6f7d0a517db2c930c56d2504",
+  "candidate.json": "182e68d417f14982e41a5c24a31ab0c584a42c47fd3934ddd58b9c5fcbe61bac",
+  "input-events.jsonl": "002307f0c679cecbedfc284fd065866d7a7c7e10e7ef55bd6a9e9cc9730eecb0",
+  "meter-unit.log": "3dbd61d31d2b01dfcfddcda9ec436fdf50a4efae4d85320077876308c9ce20ba",
+  "player-states.json": "03b39956a4f90869ccadb9e83f05d94232b5b4e156412eae3736b22f4d97f165",
+  "provenance.json": "b5fb62e6cc2b43e9efb8c2632d39492ed4c4c40a645a0137e50a0a8f9482c594",
+  "README.md": "239d3b71ae39a835b425f321c0e559c601e42739bd5c2def5694700365eaacc5",
+  "red-before.log": "0e255c597ec684a6ec4b096833c586e7b9098584bddceaef63d8001257416871",
+  "ui-unit.log": "d6b9f07d0fb8cd4b177d28ccded9b2e3fa1af004728c02e4ac6a5b684fbab5b6",
+  "worktree-cleanup.json": "0f0de58ab8f5e8aaf133a6d374635f89b017d0b0f8871def3142948bebc638ab"
+}

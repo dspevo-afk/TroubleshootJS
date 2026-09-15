@@ -46,11 +46,12 @@
       right: Math.min(window.innerWidth - 12, r.left + (c.area.x + c.area.width) * rx - 16),
       bottom: Math.min(window.innerHeight - 14, r.top + (c.area.y + c.area.height) * ry - 18)
     };
+    if (window.tsjTrayDrawer && window.tsjTrayDrawer.top !== null)
+      bounds.bottom = Math.min(bounds.bottom, window.tsjTrayDrawer.top - 10);
     if (!(rx > 0 && ry > 0 && c.scale > 0 && bounds.right > bounds.left && bounds.bottom > bounds.top)) return null;
-    // Normal scale is physical camera scale. Only shrink an oversized instrument
-    // to fit the visible bench; never restrict the PCB's close inspection zoom.
-    var scale = Math.min(c.scale * Math.min(rx, ry),
-      (bounds.right - bounds.left) / c.home.width, (bounds.bottom - bounds.top) / c.home.height);
+    // The camera determines physical size. Viewport and drawer bounds clip
+    // presentation only; they must never resize or relocate bench furniture.
+    var scale = c.scale * Math.min(rx, ry);
     return { rect: r, rx: rx, ry: ry, bounds: bounds, scale: scale,
       width: c.home.width * scale, height: c.home.height * scale };
   }
@@ -69,12 +70,17 @@
     if (!state.position) state.position = { x: c.home.x, y: c.home.y };
     var x = g.rect.left + (c.x + state.position.x * c.scale) * g.rx;
     var y = g.rect.top + (c.y + state.position.y * c.scale) * g.ry;
-    var projectedX = x, projectedY = y;
-    x = Math.max(g.bounds.left, Math.min(x, g.bounds.right - g.width));
-    y = Math.max(g.bounds.top, Math.min(y, g.bounds.bottom - g.height));
-    // At an edge, re-seat on the visible bench in WORLD coordinates. This is
-    // visibility recovery, not a stored screen offset or a restriction on pan.
-    if (x !== projectedX || y !== projectedY) state.position = toWorld(x, y, g);
+    // Never write placement during projection. Going out of view is normal:
+    // pan/zoom back and the meter is exactly where the player left it.
+    // Clip in unscaled case coordinates, including hit testing. Negative
+    // insets retain the contact shadow where there is room on the bench.
+    var clip = [(g.bounds.top - y) / g.scale,
+      (x + g.width - g.bounds.right) / g.scale,
+      (y + g.height - g.bounds.bottom) / g.scale,
+      (g.bounds.left - x) / g.scale];
+    style('clipPath', 'inset(' + clip.map(function (edge) {
+      return Math.max(-12, edge).toFixed(3) + 'px';
+    }).join(' ') + ')');
     // The native widget keeps its GWT parent/handlers. Absolute coordinates are
     // converted from the canvas into that containing block, never window-fixed.
     var parent = panel.offsetParent, pr = parent ? parent.getBoundingClientRect() : {left:0, top:0};

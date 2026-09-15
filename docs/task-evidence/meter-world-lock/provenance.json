@@ -1,0 +1,19 @@
+{
+  "base": "d1745961a7f626aea9c830422583b2b96a10c705",
+  "productionDiff": [
+    "war/tsj-bench-instruments.js"
+  ],
+  "sourceUnchangedDuringBrowser": true,
+  "unrelatedWorkingChangesExcluded": true,
+  "files": {
+    "war/tsj-bench-instruments.js": "915bc69871f337577f0a80d25b583d97922e9bd23c66ae927f56915a932379f2",
+    "tests/contracts/bench_meter_contract.mjs": "6db30e6a0ea2d361e25721b22babed732f97114ceb82b0ed5d1b9b12cbd76f43"
+  },
+  "gwtPermutations": {
+    "02ECC501668A1896E43D14FB8DAA153F.cache.js": "029d9606718b29c37d8cc198720f953486147e52a9132af2511b7321f9624017",
+    "4068ECA73980DA5E8857B0CB608BD92C.cache.js": "b44413d6a584ca7d0b12dc78dfdeb88ea1105c6e637a970f4ef2ed5adbd844eb",
+    "427BC8F138D8AFEEBDA837B30C1DB6FA.cache.js": "f7a924b2353a0b2331ff38563f5751b1ae53de2cb848cbe315b7c6240e736232",
+    "7714DE872B13710FD9E1D37388097CA7.cache.js": "be5f945e8700d09bc5f18632f8103f9d3df57165038c2d85cfc43f4d1c6e5855",
+    "C5A3D778FA90DFF71D25E9C4A4546BB6.cache.js": "f92a6adb5839ad081cdddac0a29f602e1c64524034d4d57bee68ddd0dab159c6"
+  }
+}
