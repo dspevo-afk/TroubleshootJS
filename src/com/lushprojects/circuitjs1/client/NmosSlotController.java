@@ -19,13 +19,13 @@ final class NmosSlotController implements PhysicalSlotMutationProvider,
     }
 
     public WorkbenchCapabilityMetadata getMetadata() {
-        return new WorkbenchCapabilityMetadata("REPLACEABLE_NMOS_Q1", "NMOS workbench",
+        return new WorkbenchCapabilityMetadata("REPLACEABLE_NMOS_" + getComponentId(), "NMOS workbench",
             "SLOT_OPERATIONS");
     }
 
     public String getOperationLabel(WorkbenchOperation operation) {
         if (operation == null) return "Modify MOSFET";
-        if (WorkbenchOperation.INSTALL.equals(operation.getId())) return "Install as Q1";
+        if (WorkbenchOperation.INSTALL.equals(operation.getId())) return "Install as " + getComponentId();
         if (WorkbenchOperation.CATALOG_INSTALL.equals(operation.getId()))
             return capability.getInstallNewLabel();
         if (WorkbenchOperation.LIFT_LEAD.equals(operation.getId()) ||
@@ -40,7 +40,7 @@ final class NmosSlotController implements PhysicalSlotMutationProvider,
     }
 
     public boolean supports(WorkbenchOperation operation) {
-        if (operation == null || !"Q1".equals(operation.getComponentId())) return false;
+        if (operation == null || !getComponentId().equals(operation.getComponentId())) return false;
         String id = operation.getId();
         return WorkbenchOperation.INSTALL.equals(id) || WorkbenchOperation.REMOVE.equals(id) ||
             WorkbenchOperation.CATALOG_INSTALL.equals(id) || WorkbenchOperation.LIFT_LEAD.equals(id) ||
@@ -61,15 +61,15 @@ final class NmosSlotController implements PhysicalSlotMutationProvider,
             return !slot.isEmpty() && matchesInstalledPart(operation);
         if (WorkbenchOperation.LIFT_LEAD.equals(id))
             return !slot.isEmpty() && matchesInstalledPart(operation) &&
-                modifications.getComponentState("Q1") == ComponentPhysicalState.INSTALLED &&
+                modifications.getComponentState(getComponentId()) == ComponentPhysicalState.INSTALLED &&
                 hasConnectedPad(operation.getPadId());
         if (WorkbenchOperation.RECONNECT_LEAD.equals(id))
             return !slot.isEmpty() && matchesInstalledPart(operation) &&
-                modifications.getComponentState("Q1") == ComponentPhysicalState.LEAD_LIFTED &&
+                modifications.getComponentState(getComponentId()) == ComponentPhysicalState.LEAD_LIFTED &&
                 hasDisconnectedPad(operation.getPadId());
         if (WorkbenchOperation.RESTORE.equals(id))
             return !slot.isEmpty() && matchesInstalledPart(operation) &&
-                modifications.getComponentState("Q1") != ComponentPhysicalState.INSTALLED;
+                modifications.getComponentState(getComponentId()) != ComponentPhysicalState.INSTALLED;
         return false;
     }
 
@@ -80,13 +80,13 @@ final class NmosSlotController implements PhysicalSlotMutationProvider,
         if (WorkbenchOperation.INSTALL.equals(operation.getId())) return install(operation.getPart().getId());
         if (WorkbenchOperation.REMOVE.equals(operation.getId())) return removeInstalledPart();
         if (WorkbenchOperation.LIFT_LEAD.equals(operation.getId()))
-            return modifications.liftLead("Q1", operation.getPadId());
+            return modifications.liftLead(getComponentId(), operation.getPadId());
         if (WorkbenchOperation.RECONNECT_LEAD.equals(operation.getId()))
-            return modifications.reconnectLead("Q1", operation.getPadId());
-        return modifications.restoreComponent("Q1");
+            return modifications.reconnectLead(getComponentId(), operation.getPadId());
+        return modifications.restoreComponent(getComponentId());
     }
 
-    public String getComponentId() { return "Q1"; }
+    public String getComponentId() { return capability.getSlot().getComponentId(); }
     public boolean ownsPart(String partId) { return capability.ownsPart(partId); }
     public PhysicalMutationSlot getMutationSlot() { return capability.getSlot(); }
 
@@ -95,7 +95,7 @@ final class NmosSlotController implements PhysicalSlotMutationProvider,
         if (capability.getSlot().isEmpty()) return false;
         PhysicalMutationScope scope = newScope("remove", null);
         try {
-            modifications.disconnectComponentForMutation(scope, "Q1");
+            modifications.disconnectComponentForMutation(scope, getComponentId());
             scope.clearPart();
             scope.commit();
         } catch (Throwable failure) {
@@ -241,14 +241,15 @@ final class NmosSlotController implements PhysicalSlotMutationProvider,
     private void retargetComponentLeadBindings(PhysicalNmosPart part,
             PhysicalMutationScope scope) {
         for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings()
-                .getForComponent("Q1"))
+                .getForComponent(getComponentId()))
             scope.retargetEndpoint(binding, part.getTerminalForBoardPad(binding.getPadId()));
     }
 
     private void setOriginalFaultBoardPathEnabled(final PhysicalNmosPart part,
             PhysicalMutationScope scope) {
         GeneratedFaultBinding binding = instance.getFaultBinding();
-        if (binding == null || !(binding.getEffect() instanceof NmosfetDsShortFaultEffect))
+        if (binding == null || !getComponentId().equals(binding.getFault().getTargetComponentId()) ||
+                !(binding.getEffect() instanceof NmosfetDsShortFaultEffect))
             return;
         final NmosfetDsShortFaultEffect effect =
             (NmosfetDsShortFaultEffect) binding.getEffect();
@@ -261,14 +262,14 @@ final class NmosSlotController implements PhysicalSlotMutationProvider,
         effect.setBoardPathEnabled(part.ownsGeneratedFault(binding));
     }
     private boolean hasConnectedPad(String padId) {
-        return hasPad(padId) && modifications.isLeadConnected("Q1", padId);
+        return hasPad(padId) && modifications.isLeadConnected(getComponentId(), padId);
     }
     private boolean hasDisconnectedPad(String padId) {
-        return hasPad(padId) && !modifications.isLeadConnected("Q1", padId);
+        return hasPad(padId) && !modifications.isLeadConnected(getComponentId(), padId);
     }
     private boolean hasPad(String padId) {
         BoardPad pad = padId == null ? null : instance.getBoard().getPad(padId);
-        return pad != null && "Q1".equals(pad.getComponentId());
+        return pad != null && getComponentId().equals(pad.getComponentId());
     }
     private boolean hasCatalogEntry(String id) {
         if (id == null) return false;

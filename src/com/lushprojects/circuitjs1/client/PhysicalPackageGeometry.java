@@ -429,7 +429,7 @@ final class PhysicalPackageGeometry {
             Point body = new Point(width - 55, padY);
             Point liftedEnd = new Point(width - 60, padY);
             terminals.add(terminal(terminalIds.get(index), pad, centered(pad, 26, 26),
-                centered(pad, 30, 30), body, liftedEnd, -1, 0, 30));
+                centered(pad, 30, 30), body, liftedEnd, 1, 0, 30));
         }
         Rectangle body = new Rectangle(10, 10, width - 50, height - 20);
         Rectangle keepOut = new Rectangle(10, 10, width - 50, height - 20);

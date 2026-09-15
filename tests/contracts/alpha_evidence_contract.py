@@ -18,7 +18,9 @@ COHORT = {
     "COMPOSED_CONTROLLED_INDICATOR": [0, 3],
 }
 EXPECTED = {(family, str(seed)) for family, seeds in COHORT.items() for seed in seeds}
-TERMINALS = {"resistor": 2, "diode": 2, "led": 2, "capacitor": 2, "npn": 3, "nmos": 3, "relay": 5}
+TERMINALS = {"resistor": 2, "diode": 2, "led": 2, "capacitor": 2, "npn": 3, "nmos": 3, "relay": 5,
+             "connector": 2, "fuse": 2}
+SERVICE_POSITIONS = dict(zip(COHORT, [3, 4, 5, 6, 7, 6, 9, 16, 15]))
 
 
 def mutation_matrix():
@@ -36,7 +38,9 @@ def mutation_matrix():
         stages["install"] += common
         for operation, checkpoints in stages.items():
             for stage in checkpoints:
-                count = terminals if stage in ["ENDPOINT_RETARGET", "GRAPH_CONNECT"] else 1
+                count = terminals if stage in ["ENDPOINT_RETARGET", "GRAPH_CONNECT", "GRAPH_DISCONNECT"] else 1
+                if provider == "connector" and stage in ["GRAPH_CONNECT", "GRAPH_DISCONNECT"]:
+                    count += 2  # Two independently owned external cable contacts.
                 for occurrence in range(1, count + 1):
                     expected.add((provider, operation, "AFTER_" + stage, occurrence, "COMPENSATED"))
     return expected
@@ -126,7 +130,7 @@ def validate(report, negative=False):
     require(report.get("operation") == "catalog-and-repair", "Final operation")
     require(report["assertions"] >= 400 and report["acquisitions"] > len(EXPECTED) and
             report["staleCallbacks"] >= len(EXPECTED) and report["negativeChecks"] >= len(EXPECTED), "Missing boundary coverage")
-    require(type(report.get("mutationProviders")) is list and len(report["mutationProviders"]) == 7 and
+    require(type(report.get("mutationProviders")) is list and len(report["mutationProviders"]) == len(TERMINALS) and
             set(report["mutationProviders"]) == set(TERMINALS), "Missing actual acquisition/installation compensation providers")
     require(type(report.get("mutationCases")) is list and len(report["mutationCases"]) == report["mutationChecks"] == len(EXPECTED_MUTATIONS),
             "Missing actual acquisition/installation compensation cases")
@@ -157,6 +161,19 @@ def validate(report, negative=False):
         observed_shop.add(key)
     require(observed_shop == expected_shop, "Incomplete public Shop physical-fit choices")
     validate_cross_targets(report.get("crossTargetCases"))
+    require(type(report.get("serviceCases")) is list, "Missing all-position physical service evidence")
+    service = {key: set() for key in EXPECTED}
+    for row in report["serviceCases"]:
+        require(type(row) is dict, "Malformed service evidence")
+        key = (row.get("family"), row.get("seed"))
+        component = row.get("component")
+        require(key in service and type(component) is str and component and component not in service[key],
+                "Foreign/duplicate physical service position")
+        require(row.get("type") in TERMINALS and row.get("removeReplaceReinstall") is True,
+                "Physical position was not removed, replaced and reinstalled")
+        service[key].add(component)
+    for (family, seed), positions in service.items():
+        require(len(positions) == SERVICE_POSITIONS[family], "Missing service positions: " + family + "/" + seed)
     found = set()
     for case in report["cases"]:
         require(type(case) is dict, "Malformed case")
@@ -201,6 +218,9 @@ def malformed_canaries(report):
                  lambda x: x["cases"][0].update(workUnits=641),
                  lambda x: x.update(cleanupMs=True), lambda x: x["cases"][0].update(features="difficulty/1"),
                  lambda x: x.update(mutationChecks=0), lambda x: x["mutationProviders"].pop(),
+                 lambda x: x["serviceCases"].pop(),
+                 lambda x: x["serviceCases"].append(x["serviceCases"][0]),
+                 lambda x: x["serviceCases"][0].update(removeReplaceReinstall=False),
                  lambda x: x["mutationCases"].pop(), lambda x: x["mutationCases"][0].update(status="ISOLATED"),
                  lambda x: x["shopCases"].pop(), lambda x: x["shopCases"].append(x["shopCases"][0]),
                  lambda x: x["shopCases"][0].update(variant="SPAN_220"),

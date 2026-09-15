@@ -136,6 +136,9 @@ class GeneratedBoardInstance {
                  !suppliedDiagnosticSolvabilityContract.isDeveloperFixture()))
             throw new IllegalArgumentException(
                 "Supplied diagnostic contract must be an explicit developer fixture");
+        ServiceableBoardConstruction.complete(board, simulationElements, componentBindings,
+            connectionBindings, physicalSpecifications, physicalRuntime);
+        operationalStates.completePhysicalBindings(physicalRuntime);
         this.board = board;
         this.developerBoardEndpointOracle = board.getSimulationBindings()
             .captureGeneratedBoardEndpointOracle();
@@ -165,6 +168,7 @@ class GeneratedBoardInstance {
         if (pcbLayout != null)
             physicalRuntime.bindGeometryRealizations(pcbLayout);
         physicalRuntime.validate();
+        physicalRuntime.finishConstruction();
         this.faultBinding = faultBinding;
         this.faultCandidates = faultCandidates == null ?
             new Vector<GeneratedFaultCandidate>() :

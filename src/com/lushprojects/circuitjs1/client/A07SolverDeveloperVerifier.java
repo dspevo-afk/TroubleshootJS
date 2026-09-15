@@ -28,9 +28,12 @@ final class A07SolverDeveloperVerifier {
     private void run() {
         started = System.currentTimeMillis();
         pureAssertions = A07ExecutionContractVectors.run();
+        pureAssertions += LuFactorizationChecks.run();
         observations();
         reentryAndIsolation();
         failure("nonfinite", Outcome.NUMERICAL_FAILURE);
+        failure("matrix-nonfinite", Outcome.NUMERICAL_FAILURE);
+        failure("matrix-overflow", Outcome.NUMERICAL_FAILURE);
         failure("singular", Outcome.NUMERICAL_FAILURE);
         failure("nonconvergent", Outcome.NONCONVERGENCE);
         scheduledState();
@@ -425,9 +428,18 @@ final class A07SolverDeveloperVerifier {
         CircuitSolverExecutor.AsyncRun cancelRun;
         ProbeResistor(int x, int y, String mode) { super(x, y); this.mode = mode; }
         int getVoltageSourceCount() { return "singular".equals(mode) ? 1 : 0; }
-        boolean nonLinear() { return "nonconvergent".equals(mode) || "reentry".equals(mode); }
+        boolean nonLinear() { return "nonconvergent".equals(mode) || "reentry".equals(mode) || mode.startsWith("matrix-"); }
+        void stamp() {
+            super.stamp();
+            if (mode.startsWith("matrix-")) { sim.stampNonLinear(nodes[0]); sim.stampNonLinear(nodes[1]); }
+        }
         void doStep() {
             super.doStep();
+            if ("matrix-nonfinite".equals(mode)) sim.stampMatrix(nodes[0], nodes[0], Double.NaN);
+            if ("matrix-overflow".equals(mode)) {
+                sim.stampMatrix(nodes[0], nodes[0], Double.MAX_VALUE);
+                sim.stampMatrix(nodes[0], nodes[0], Double.MAX_VALUE);
+            }
             if ("nonconvergent".equals(mode)) sim.converged = false;
             if ("reentry".equals(mode) && !reentryRejected) {
                 try { sim.runCircuit(true); }

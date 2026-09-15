@@ -1,0 +1,20 @@
+{
+  "path": "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java",
+  "beforeSha256": "ec2e73829a44909ffa2c0c29d0d091a694eae4ff6007a9885628c6980c7d3600",
+  "afterSha256": "93d330741887da347d4c16cbfd4ab39397127f4a0ce31129922844fd8585ad8e",
+  "change": "Removed horizontal whitespace from three otherwise blank source lines only. No tokens, line numbers or executable expressions changed.",
+  "beforeBytes": 5622,
+  "afterBytes": 5611,
+  "build": {
+    "gate": "build34",
+    "exitCode": 0,
+    "elapsedMs": 71404,
+    "completedUtc": "2026-09-15T00:24:10.621680+00:00"
+  },
+  "compiledOutputByteIdentical": true,
+  "inputCount": 1154,
+  "changedInputs": [
+    "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java"
+  ],
+  "note": "Final GWT34 rebuild after blank-line whitespace cleanup is byte-identical to the GWT33 compiled output used for Q15 and actual player testing; all prior compiled qualification therefore applies to the identical output. Native executable tokens and line numbers are unchanged."
+}

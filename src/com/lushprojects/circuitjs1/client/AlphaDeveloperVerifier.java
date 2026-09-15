@@ -25,6 +25,7 @@ final class AlphaDeveloperVerifier {
             final StringBuilder mutationCases = new StringBuilder();
             final StringBuilder shopCases = new StringBuilder();
             final StringBuilder crossTargetCases = new StringBuilder();
+            final StringBuilder serviceCases = new StringBuilder();
             int index = caseOnly < 0 ? 0 : caseOnly, phase, assertions, acquisitions, staleCallbacks, failuresChecked, mutationChecks;
             long cancellationMs;
             String operation = "start";
@@ -113,7 +114,10 @@ final class AlphaDeveloperVerifier {
                 }
                 require(count == owner.getPhysicalBoardRuntime().getPhysicalParts().size(), "stale acquisition leaves successor inventory unchanged");
             }
-            void settle() { GeneratedRuntimeDeveloperSettlement.settle(sim, owner, "Alpha current owner"); }
+            void settle() {
+                GeneratedRuntimeDeveloperSettlement.settle(sim, owner, "Alpha current owner");
+                WireCurrentAdjacencyChecks.verify(sim);
+            }
             void power(BoardPowerState state) {
                 // Retests may leave ordinary analysis queued. Public power
                 // controls intentionally reject a click until that work settles.
@@ -163,6 +167,8 @@ final class AlphaDeveloperVerifier {
                     require(owner.getComponentBindings().getElements(catalog.getComponentId()).equals(bindings), "acquisition never retargets installed electrical bindings");
                     for (CircuitElm e : part.getElectricalBacking().getCircuitElements()) require(sim.elmList.contains(e), "loose part is backed by the active CircuitJS graph");
                     require(part.getGeometryRealization() != null, "loose physical package is inspectable"); acquisitions++;
+                    operation = "physical-service/" + catalog.getComponentId();
+                    verifyServicePosition(provider, installed, part);
                     String mutationType = U04CatalogMutationVerifier.type(part);
                     if (!mutationProviders.contains(mutationType)) {
                         operation = "catalog-compensation/" + mutationType;
@@ -211,12 +217,55 @@ final class AlphaDeveloperVerifier {
                 require("".equals(product.action(product.session.token(), view, "retest", "", "", "")),
                     "public session accepts repaired retest");
                 settle(); product.refresh();
+                require(challenge.getCustomerRetestResult() != null,
+                    "public retest produced a result: " + product.session.message());
                 require(challenge.getCustomerRetestResult().isPassed(), "catalog repair restores actual customer behavior");
                 require(challenge.isCompleted() && product.session.screen() == PlayerSession.Screen.RESULTS,
                     "settled public retest completes its exact session owner");
                 require(!sim.activeMeasurementOverlay, "repair and retest leave no temporary meter graph");
                 challenge.endDeveloperVerificationScope();
                 operation = "catalog-and-repair";
+            }
+            void verifyServicePosition(PhysicalSlotMutationProvider provider, PhysicalPart<?> original, PhysicalPart<?> spare) {
+                String id = provider.getComponentId();
+                PhysicalBoardRuntime runtime = owner.getPhysicalBoardRuntime();
+                PhysicalPartProvenance provenance = original.getProvenance();
+                PhysicalPartElectricalBacking backing = original.getElectricalBacking();
+                WorkbenchOperation remove = WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, original);
+                require(provider.supports(remove) && provider.isAvailable(remove, sim.pcbWorkbenchController),
+                    "every occupied position exposes physical removal, regardless of fault");
+                for (String pad : owner.getBoard().getComponent(id).getPadIds()) {
+                    WorkbenchOperation lift = WorkbenchOperation.forPartLead(WorkbenchOperation.LIFT_LEAD, original, id, pad);
+                    if (!provider.supports(lift)) continue;
+                    operation = "physical-service/" + id + "/lift/" + pad;
+                    require(provider.isAvailable(lift, sim.pcbWorkbenchController) && provider.invoke(lift, sim.pcbWorkbenchController), "supported lead lifts"); settle();
+                    require(!sim.elmList.contains(owner.getConnectionBindings().get(id, pad).getConnectionElement()), "lift removes actual graph attachment");
+                    WorkbenchOperation reconnect = WorkbenchOperation.forPartLead(WorkbenchOperation.RECONNECT_LEAD, original, id, pad);
+                    operation = "physical-service/" + id + "/reconnect/" + pad;
+                    require(provider.isAvailable(reconnect, sim.pcbWorkbenchController) && provider.invoke(reconnect, sim.pcbWorkbenchController), "same lead reconnects"); settle();
+                }
+                operation = "physical-service/" + id + "/remove-original";
+                require(provider.removeInstalledPart(), "healthy and faulty originals can enter tray"); settle();
+                require(runtime.getPart(original.getId()) == original && original.getElectricalBacking() == backing &&
+                    original.getProvenance() == provenance && !original.isInstalled() &&
+                    runtime.getWorkbenchPartsProviderForPart(original.getId()).getLooseParts().contains(original), "removed original retains real tray identity and provenance");
+                for (GeneratedComponentConnectionBinding link : owner.getConnectionBindings().getForComponent(id))
+                    require(!sim.elmList.contains(link.getConnectionElement()), "removal disconnects every actual lead");
+                operation = "physical-service/" + id + "/install-replacement";
+                require(provider.install(spare.getId()), "compatible replacement remains legal at every position"); settle();
+                require(runtime.getInstalledPart(id) == spare, "chosen replacement stays installed");
+                for (CircuitElm element : owner.getComponentBindings().getElements(id))
+                    require(spare.getElectricalBacking().getCircuitElements().contains(element), "replacement owns actual electrical binding");
+                operation = "physical-service/" + id + "/remove-replacement";
+                require(provider.removeInstalledPart(), "replacement can return to its inventory"); settle();
+                operation = "physical-service/" + id + "/reinstall-original";
+                require(provider.install(original.getId()), "exact removed original is reinstallable"); settle();
+                require(runtime.getInstalledPart(id) == original && original.getElectricalBacking() == backing, "restoration retains original contribution");
+                GeneratedRuntimeInvariant.verify(sim, owner, sim.getBoardModificationController(), sim.elmList);
+                if (serviceCases.length() > 0) serviceCases.append(',');
+                serviceCases.append("{\"family\":").append(quote(family())).append(",\"seed\":").append(quote(Long.toString(seed())))
+                    .append(",\"component\":").append(quote(id)).append(",\"type\":").append(quote(U04CatalogMutationVerifier.type(original)))
+                    .append(",\"removeReplaceReinstall\":true}");
             }
             void verifyPublicShop(PlayerSessionController product) {
                 PhysicalBoardRuntime runtime = owner.getPhysicalBoardRuntime();
@@ -326,6 +375,7 @@ final class AlphaDeveloperVerifier {
                     ",\"mutationCases\":[" + mutationCases + "]" +
                     ",\"shopCases\":[" + shopCases + "]" +
                     ",\"crossTargetCases\":[" + crossTargetCases + "]" +
+                    ",\"serviceCases\":[" + serviceCases + "]" +
                     ",\"negativeChecks\":" + failuresChecked + ",\"cancellationMs\":" + cancellationMs + ",\"elapsedMs\":" + elapsed +
                     ",\"cleanupMs\":" + cleanup + ",\"ownerRestored\":" + restored + ",\"operation\":" + quote(operation) +
                     ",\"activeSlowUnits\":[" + slowUnits + "]" +

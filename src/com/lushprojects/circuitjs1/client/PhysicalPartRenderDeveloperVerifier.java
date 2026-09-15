@@ -11,6 +11,13 @@ final class PhysicalPartRenderDeveloperVerifier {
     private PhysicalPartRenderDeveloperVerifier() { }
 
     static void verify(CirSim sim) {
+        if (sim == null) throw new IllegalArgumentException("Missing render verifier simulator");
+        Task41SimulationSnapshot protectedOwner = Task41SimulationSnapshot.capture(sim);
+        try { verifyOwned(sim); }
+        finally { protectedOwner.restore(sim); protectedOwner.assertRestored(sim); }
+    }
+
+    private static void verifyOwned(CirSim sim) {
         if (sim == null || sim.pcbWorkbenchController == null)
             throw new IllegalStateException("Physical render verification requires a workbench");
         PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
@@ -203,7 +210,12 @@ final class PhysicalPartRenderDeveloperVerifier {
             originalSnapshot.beginProof(sim);
             fixture = LooseProjectionLifecycleFixture.create(sim, originalRenderer, registry);
             sim.generatedBoardInstance = fixture.instance;
+            sim.pcbWorkbenchController = fixture.controller;
+            sim.boardModificationController = fixture.modifications;
             PcbWorkbenchRenderer renderer = fixture.controller.getRenderer();
+            // A renderer must receive a real viewport before screen-space hit
+            // testing; the split PCB/tray view intentionally rejects offscreen hits.
+            renderer.draw(new Graphics(sim.backcontext), sim.circuitArea);
             require(renderer.getTrayPageCount() >= 2,
                 "Loose lifecycle canary did not provide two tray pages");
             renderer.setTrayPage(0);
@@ -859,17 +871,19 @@ final class PhysicalPartRenderDeveloperVerifier {
     private static final class LooseProjectionLifecycleFixture {
         private final GeneratedBoardInstance instance;
         private final PcbWorkbenchController controller;
+        private final BoardModificationController modifications;
         private final String boardPadId;
         private final PhysicalPart<?> multiTerminalPart;
         private final GeneratedExternalPowerBindings powerBindings;
         private final Vector<CircuitElm> elements;
 
         private LooseProjectionLifecycleFixture(GeneratedBoardInstance instance,
-                PcbWorkbenchController controller, String boardPadId,
+                PcbWorkbenchController controller, BoardModificationController modifications, String boardPadId,
                 PhysicalPart<?> multiTerminalPart, GeneratedExternalPowerBindings powerBindings,
                 Vector<CircuitElm> elements) {
             this.instance = instance;
             this.controller = controller;
+            this.modifications = modifications;
             this.boardPadId = boardPadId;
             this.multiTerminalPart = multiTerminalPart;
             this.powerBindings = powerBindings;
@@ -953,6 +967,18 @@ final class PhysicalPartRenderDeveloperVerifier {
                     new CircuitPostMeasurementEndpoint(returnGround, 0));
                 board.validate();
 
+                // Own a coherent layout for this two-pad fixture. Borrowing
+                // another board's entire layout (and publishing null here) is
+                // invalid once both render backends consume the owner scene.
+                Rectangle outline = layout.getBoardOutline();
+                layout = new PcbBoardLayout(layout.getWidth(), layout.getHeight(),
+                    outline, layout.getPartsTray());
+                PcbFootprint fixtureFootprint = PcbFootprint.fromPhysicalPackage(
+                    board.getComponent(boardComponentId), outline.x + outline.width / 2,
+                    outline.y + outline.height / 2);
+                layout.addComponent(fixtureFootprint.getPlacement());
+                for (PcbPadPlacement pad : fixtureFootprint.getPads()) layout.addPad(pad);
+                layout.validateAgainst(board);
                 PhysicalBoardRuntime runtime = new PhysicalBoardRuntime(board);
                 runtime.createSlot(boardComponentId);
                 Vector<PhysicalPart<?>> parts = new Vector<PhysicalPart<?>>();
@@ -974,8 +1000,13 @@ final class PhysicalPartRenderDeveloperVerifier {
                     elements.addAll(part.getElectricalBacking().getCircuitElements());
                 }
                 installFixtureElements(sim, elements, insertedElements);
-                LooseProjectionPartsProvider provider = new LooseProjectionPartsProvider(parts);
+                // The deliberately empty fixture slot still has an explicit
+                // loose-inventory owner, scoped to its real component identity.
+                LooseProjectionPartsProvider provider = new LooseProjectionPartsProvider(boardComponentId, parts);
                 runtime.registerCapability(provider);
+                require(runtime.getWorkbenchPartsProvider(boardComponentId) == provider &&
+                        runtime.getInstalledPart(boardComponentId) == null,
+                    "Loose lifecycle fixture lost its declared empty-slot inventory owner");
 
                 GeneratedComponentBindings componentBindings =
                     new GeneratedComponentBindings(board);
@@ -1012,7 +1043,7 @@ final class PhysicalPartRenderDeveloperVerifier {
                 GeneratedBoardInstance instance = new GeneratedBoardInstance(board, elements,
                     43L, QuickPlayFamilyRegistry.LED_INDICATOR, "TASK43_LOOSE_LIFECYCLE",
                     "Task 43 loose lifecycle canary", componentBindings, powerBindings,
-                    connectionBindings, behavior, null, specifications, null, null, null, null,
+                    connectionBindings, behavior, layout, specifications, null, new GeneratedComponentOperationalStates(), null, null,
                     runtime, null, true, new Vector<GeneratedFaultCandidate>(),
                     GeneratedDiagnosticSolvabilityContract.forDeveloperFixture(
                         QuickPlayFamilyRegistry.LED_INDICATOR, "TASK43_LOOSE_LIFECYCLE",
@@ -1021,7 +1052,7 @@ final class PhysicalPartRenderDeveloperVerifier {
                     instance);
                 controller = new PcbWorkbenchController(sim, instance, modifications, layout,
                     null, false, false);
-                return new LooseProjectionLifecycleFixture(instance, controller, boardPadId,
+                return new LooseProjectionLifecycleFixture(instance, controller, modifications, boardPadId,
                     parts.lastElement(), powerBindings, elements);
             } catch (RuntimeException failure) {
                 try {
@@ -1080,13 +1111,17 @@ final class PhysicalPartRenderDeveloperVerifier {
     private static final class LooseProjectionPartsProvider implements WorkbenchPartsProvider,
             PhysicalBoardRuntimeCapability {
         private final Vector<PhysicalPart<?>> parts;
+        private final String componentId;
 
-        LooseProjectionPartsProvider(Vector<PhysicalPart<?>> parts) {
+        LooseProjectionPartsProvider(String componentId, Vector<PhysicalPart<?>> parts) {
+            if (componentId == null || componentId.length() == 0)
+                throw new IllegalArgumentException("Missing loose fixture slot owner");
+            this.componentId = componentId;
             this.parts = new Vector<PhysicalPart<?>>(parts);
         }
 
         public String getCapabilityId() { return "TASK43_LOOSE_LIFECYCLE_PARTS"; }
-        public String getComponentId() { return "TASK43_LOOSE_LIFECYCLE"; }
+        public String getComponentId() { return componentId; }
         public String getCatalogTitle() { return ""; }
         public String getInstallNewLabel() { return ""; }
         public boolean showOccupiedMessageWhenPowered() { return false; }
@@ -1135,6 +1170,7 @@ final class PhysicalPartRenderDeveloperVerifier {
             "Installed overlap canary has no standard package renderer");
         PcbWorkbenchRenderer canonicalRenderer = new PcbWorkbenchRenderer(fixture.instance,
             fixture.modifications, fixture.layout, registry);
+        canonicalRenderer.draw(new Graphics(sim.backcontext), sim.circuitArea);
         PhysicalPartRenderGeometry canonicalGeometry = canonicalRenderer
             .getInstalledGeometryForDeveloperVerification(fixture.componentId);
         PhysicalPartRenderTerminal canonicalTerminal = findTerminal(canonicalGeometry,
@@ -1152,6 +1188,7 @@ final class PhysicalPartRenderDeveloperVerifier {
                 .getTerminalIndex()));
         PcbWorkbenchRenderer malformedRenderer = new PcbWorkbenchRenderer(fixture.instance,
             fixture.modifications, fixture.layout, malformedRegistry);
+        malformedRenderer.draw(new Graphics(sim.backcontext), sim.circuitArea);
         PhysicalPartRenderGeometry malformedGeometry = malformedRenderer
             .getInstalledGeometryForDeveloperVerification(fixture.componentId);
         PhysicalPartRenderTerminal malformedTerminal = findTerminal(malformedGeometry,
@@ -1182,6 +1219,7 @@ final class PhysicalPartRenderDeveloperVerifier {
             PhysicalPartRenderRegistry registry, InstalledRenderNegativeFixture fixture) {
         PcbWorkbenchRenderer canonicalRenderer = new PcbWorkbenchRenderer(fixture.instance,
             fixture.modifications, fixture.layout, registry);
+        canonicalRenderer.draw(new Graphics(sim.backcontext), sim.circuitArea);
         PhysicalPartRenderGeometry geometry = canonicalRenderer
             .getInstalledGeometryForDeveloperVerification(fixture.componentId);
         final PhysicalPartRenderTerminal terminal = findTerminal(geometry, fixture.liftedPadId);
@@ -1438,10 +1476,10 @@ final class PhysicalPartRenderDeveloperVerifier {
         // CircuitJS endpoint wrappers semantically only at the binding/terminal boundary.
         try {
             if (!power.isElectricallyUnpowered())
-                power.setState(BoardPowerState.UNPOWERED);
+                setRenderPower(sim, instance, BoardPowerState.UNPOWERED);
             require(power.isElectricallyUnpowered(),
                 "Render probe canary could not establish safe unpowered mutation state");
-            require(modifications.liftLead(candidate.componentId, binding.getPadId()),
+            require(readyModifications(sim, instance, modifications).liftLead(candidate.componentId, binding.getPadId()),
                 "Render probe canary could not lift named lead: " + binding.getPadId());
 
             PhysicalPartRenderGeometry geometry = renderer
@@ -1505,7 +1543,7 @@ final class PhysicalPartRenderDeveloperVerifier {
                 stablePartId, stableEndpoint);
             require(!wrongComponentTarget.isValid(),
                 "Component target accepted the wrong component binding: " + binding.getPadId());
-            require(modifications.reconnectLead(candidate.componentId, binding.getPadId()),
+            require(readyModifications(sim, instance, modifications).reconnectLead(candidate.componentId, binding.getPadId()),
                 "Render probe canary could not reconnect named lead: " + binding.getPadId());
             require(!componentTarget.isValid() && componentTarget.getMarkerPoint() == null &&
                     renderer.getComponentLeadPoint(candidate.componentId,
@@ -1517,7 +1555,7 @@ final class PhysicalPartRenderDeveloperVerifier {
             require(reconnectedPad instanceof BoardPadProbeTarget && reconnectedPad.isValid(),
                 "Reconnected lead did not restore board-pad resolution: " + binding.getPadId());
 
-            require(modifications.liftLead(candidate.componentId, binding.getPadId()),
+            require(readyModifications(sim, instance, modifications).liftLead(candidate.componentId, binding.getPadId()),
                 "Render probe lifecycle canary could not re-lift before physical removal: " +
                     binding.getPadId());
             PhysicalPartRenderGeometry reliftedGeometry = renderer
@@ -1535,7 +1573,7 @@ final class PhysicalPartRenderDeveloperVerifier {
                     beforeGraphRemoval.isValid(),
                 "Relifted lead did not provide a target before graph-only removal: " +
                     binding.getPadId());
-            require(modifications.removeComponent(candidate.componentId) &&
+            require(readyModifications(sim, instance, modifications).removeComponent(candidate.componentId) &&
                     modifications.getComponentState(candidate.componentId) ==
                         ComponentPhysicalState.REMOVED && slot.getInstalledPart() == candidate.part &&
                     candidate.part.isInstalled() && isPhysicallyMounted(runtime,
@@ -1559,7 +1597,7 @@ final class PhysicalPartRenderDeveloperVerifier {
                         stableEndpoint),
                 "Graph-only removal lost the still-mounted component-side target: " +
                     binding.getPadId());
-            require(mutationProvider.removeInstalledPart() && slot.getInstalledPart() == null &&
+            require(readyProvider(sim, instance, mutationProvider).removeInstalledPart() && slot.getInstalledPart() == null &&
                     !candidate.part.isInstalled() && candidate.part.getBoardSlot() == null,
                 "Physical removal did not reach final slot-empty state: " + binding.getPadId());
             verifyRemovedLooseCarrier(renderer, candidate.part, carrier);
@@ -1575,7 +1613,7 @@ final class PhysicalPartRenderDeveloperVerifier {
                 "Final physical removal did not invalidate installed interaction: " +
                     binding.getPadId());
 
-            require(mutationProvider.install(stablePartId) && slot.getInstalledPart() == candidate.part &&
+            require(readyProvider(sim, instance, mutationProvider).install(stablePartId) && slot.getInstalledPart() == candidate.part &&
                     candidate.part.isInstalled() && candidate.part.getGeometryRealization() == carrier &&
                     findPartTerminal(candidate.part, stableTerminal.getTerminalName()) == stableTerminal &&
                     stableTerminal.getEndpoint() == stableEndpoint &&
@@ -1594,7 +1632,7 @@ final class PhysicalPartRenderDeveloperVerifier {
                         binding.getPadId()) == null,
                 "Connected reinstall did not expose board-side probing only: " +
                     binding.getPadId());
-            require(modifications.liftLead(candidate.componentId, binding.getPadId()),
+            require(readyModifications(sim, instance, modifications).liftLead(candidate.componentId, binding.getPadId()),
                 "Render probe lifecycle canary could not lift after same-part reinstall: " +
                     binding.getPadId());
             PhysicalPartRenderGeometry reinstalledGeometry = renderer
@@ -1631,54 +1669,41 @@ final class PhysicalPartRenderDeveloperVerifier {
         } finally {
             PhysicalPart<?> installed = slot.getInstalledPart();
             if (installed != null && installed != candidate.part)
-                mutationProvider.removeInstalledPart();
+                readyProvider(sim, instance, mutationProvider).removeInstalledPart();
             if (slot.getInstalledPart() == null)
-                mutationProvider.install(stablePartId);
+                readyProvider(sim, instance, mutationProvider).install(stablePartId);
             if (modifications.getComponentState(candidate.componentId) !=
                     ComponentPhysicalState.INSTALLED)
-                modifications.restoreComponent(candidate.componentId);
+                readyModifications(sim, instance, modifications).restoreComponent(candidate.componentId);
             if (savedPower == BoardPowerState.POWERED)
-                power.setState(BoardPowerState.POWERED);
+                setRenderPower(sim, instance, BoardPowerState.POWERED);
             else
-                power.setState(BoardPowerState.UNPOWERED);
+                setRenderPower(sim, instance, BoardPowerState.UNPOWERED);
         }
     }
 
     private static void verifyReplacementEndpointInvalidation(CirSim sim,
             PhysicalPartRenderRegistry registry) {
-        GeneratedBoardInstance savedInstance = sim.generatedBoardInstance;
-        BoardModificationController savedModifications = sim.boardModificationController;
-        GeneratedChallengeController savedChallengeController = sim.generatedChallengeController;
-        PcbWorkbenchController savedWorkbench = sim.pcbWorkbenchController;
-        Vector<CircuitElm> savedElements = sim.elmList;
-        BoardPowerState savedPower = sim.getBoardPowerController().getState();
-        boolean savedAnalyzeFlag = sim.analyzeFlag;
-        boolean savedNeedsRepaint = sim.needsRepaint;
-        boolean savedVerificationPending = sim.generatedBoardVerificationPending;
-        boolean savedVerificationAnalyzed = sim.generatedBoardVerificationAnalyzed;
-        double savedVerificationStartTime = sim.generatedBoardVerificationStartTime;
+        GeneratedRuntimeDeveloperSettlement.settle(sim, sim.getGeneratedBoardInstance(), "render replacement snapshot");
+        Task41SimulationSnapshot protectedOwner = Task41SimulationSnapshot.capture(sim);
         GeneratedBoardInstance isolatedInstance = null;
         BoardModificationController isolatedModifications = null;
         PhysicalSlotMutationProvider isolatedMutationProvider = null;
         PhysicalBoardSlot isolatedSlot = null;
-        sim.beginObservationalValidation();
         try {
             // Catalog acquisition is intentionally append-only in the production
             // runtime.  Exercise the real provider on a disposable generated board
             // so its acquired identity cannot enter the live board fingerprint.
             isolatedInstance = new LedIndicatorGenerator().generateForFaultVerification(0,
                 GeneratedFaultType.RESISTOR_OPEN);
-            isolatedModifications = new BoardModificationController(sim, isolatedInstance);
-            sim.generatedBoardInstance = isolatedInstance;
-            sim.generatedChallengeController = null;
-            sim.boardModificationController = isolatedModifications;
-            sim.pcbWorkbenchController = null;
-            sim.elmList = isolatedInstance.getSimulationElements();
-            isolatedInstance.getPhysicalBoardRuntime().installRegisteredCapabilities(sim,
-                isolatedInstance, isolatedModifications, sim.t);
+            FreshGeneratedRuntimeInstallation.install(sim, isolatedInstance, false);
+            GeneratedRuntimeDeveloperSettlement.settle(sim, isolatedInstance, "render replacement initial");
+            isolatedModifications = sim.getBoardModificationController();
+            setRenderPower(sim, isolatedInstance, BoardPowerState.UNPOWERED);
 
             PcbWorkbenchRenderer isolatedRenderer = new PcbWorkbenchRenderer(isolatedInstance,
                 isolatedModifications, isolatedInstance.getPcbLayout(), registry);
+            isolatedRenderer.draw(new Graphics(sim.backcontext), sim.circuitArea);
             InstalledLeadCandidate candidate = findMountedLeadCandidate(isolatedInstance,
                 isolatedModifications);
             require(candidate != null && "R1".equals(candidate.componentId),
@@ -1693,7 +1718,7 @@ final class PhysicalPartRenderDeveloperVerifier {
                     partsProvider != null && partsProvider.getCatalogEntries() != null &&
                     !partsProvider.getCatalogEntries().isEmpty(),
                 "Replacement endpoint canary has no isolated catalog path");
-            require(isolatedModifications.liftLead(candidate.componentId, binding.getPadId()),
+            require(readyModifications(sim, isolatedInstance, isolatedModifications).liftLead(candidate.componentId, binding.getPadId()),
                 "Replacement endpoint canary could not lift the isolated original lead: " +
                     binding.getPadId());
             Point originalPoint = isolatedRenderer.getComponentLeadPoint(candidate.componentId,
@@ -1714,10 +1739,10 @@ final class PhysicalPartRenderDeveloperVerifier {
                     binding.getPadId());
             CircuitMeasurementEndpoint originalEndpoint = originalTerminal.getEndpoint();
             WorkbenchCatalogEntry catalogEntry = partsProvider.getCatalogEntries().firstElement();
-            require(isolatedMutationProvider.removeInstalledPart(),
+            require(readyProvider(sim, isolatedInstance, isolatedMutationProvider).removeInstalledPart(),
                 "Replacement endpoint canary could not remove the isolated original part: " +
                     candidate.componentId);
-            require(isolatedMutationProvider.installNewFromCatalog(catalogEntry.getId()),
+            require(readyProvider(sim, isolatedInstance, isolatedMutationProvider).installNewFromCatalog(catalogEntry.getId()),
                 "Replacement endpoint canary could not install an isolated catalog part: " +
                     candidate.componentId);
             PhysicalPart<?> replacement = isolatedSlot.getInstalledPart();
@@ -1742,7 +1767,7 @@ final class PhysicalPartRenderDeveloperVerifier {
                 "Installed target silently migrated to an isolated replacement endpoint: " +
                     binding.getPadId());
 
-            require(isolatedModifications.liftLead(candidate.componentId, binding.getPadId()),
+            require(readyModifications(sim, isolatedInstance, isolatedModifications).liftLead(candidate.componentId, binding.getPadId()),
                 "Replacement endpoint canary could not lift the isolated replacement lead: " +
                     binding.getPadId());
             Point replacementPoint = isolatedRenderer.getComponentLeadPoint(
@@ -1765,26 +1790,26 @@ final class PhysicalPartRenderDeveloperVerifier {
                 "Replacement lead did not acquire a fresh isolated physical endpoint target: " +
                     binding.getPadId());
         } finally {
-            try {
-                if (isolatedMutationProvider != null && isolatedSlot != null &&
-                        isolatedSlot.getInstalledPart() != null)
-                    isolatedMutationProvider.removeInstalledPart();
-            } finally {
-                sim.generatedBoardInstance = savedInstance;
-                sim.generatedChallengeController = savedChallengeController;
-                sim.boardModificationController = savedModifications;
-                sim.pcbWorkbenchController = savedWorkbench;
-                sim.elmList = savedElements;
-                sim.analyzeFlag = savedAnalyzeFlag;
-                sim.needsRepaint = savedNeedsRepaint;
-                sim.generatedBoardVerificationPending = savedVerificationPending;
-                sim.generatedBoardVerificationAnalyzed = savedVerificationAnalyzed;
-                sim.generatedBoardVerificationStartTime = savedVerificationStartTime;
-                require(sim.getBoardPowerController().getState() == savedPower,
-                    "Isolated replacement canary changed live board power state");
-                sim.endObservationalValidation();
-            }
+            protectedOwner.restore(sim);
+            protectedOwner.assertRestored(sim);
         }
+    }
+
+    private static BoardModificationController readyModifications(CirSim sim,
+            GeneratedBoardInstance owner, BoardModificationController modifications) {
+        GeneratedRuntimeDeveloperSettlement.settle(sim, owner, "render lead action");
+        return modifications;
+    }
+    private static PhysicalSlotMutationProvider readyProvider(CirSim sim,
+            GeneratedBoardInstance owner, PhysicalSlotMutationProvider provider) {
+        GeneratedRuntimeDeveloperSettlement.settle(sim, owner, "render part action");
+        return provider;
+    }
+    private static void setRenderPower(CirSim sim, GeneratedBoardInstance owner, BoardPowerState state) {
+        GeneratedRuntimeDeveloperSettlement.settle(sim, owner, "render before power");
+        sim.setBoardPowerState(state);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, owner, "render after power");
+        require(sim.getBoardPowerController().getState() == state, "Render fixture power request failed");
     }
 
     private static final class InstalledRenderNegativeFixture {
@@ -1833,10 +1858,16 @@ final class PhysicalPartRenderDeveloperVerifier {
 
             PhysicalBoardRuntime runtime = new PhysicalBoardRuntime(board);
             PhysicalBoardSlot slot = runtime.createSlot(componentId);
-            LooseRenderCanaryPart part = LooseRenderCanaryPart.create(componentId + "_PART",
-                physicalPackage, false);
+            // This fixture is advertised as a real resistor, so give its
+            // production painter an actual single-resistor backing/nameplate.
+            // The variable-terminal loose canary is intentionally not a resistor.
+            ResistorElm resistor = new ResistorElm(700, 700);
+            resistor.drag(780, 700);
+            resistor.setResistance(1000);
+            PhysicalResistorPart part = new PhysicalResistorPart(componentId + "_PART",
+                new ResistorNameplate(componentId, 1000, 5), resistor, null, null,
+                ResistorPartLocation.LOOSE);
             slot.install(part);
-            runtime.bindGeometryRealizations(layout);
 
             Vector<CircuitElm> simulationElements = new Vector<CircuitElm>();
             Vector<CircuitElm> partElements = part.getElectricalBacking().getCircuitElements();
@@ -1900,11 +1931,14 @@ final class PhysicalPartRenderDeveloperVerifier {
                 simulationElements, 43L, QuickPlayFamilyRegistry.LED_INDICATOR,
                 componentId, "Installed render negative canary", componentBindings,
                 powerBindings, connectionBindings, behavior, layout, specifications, null,
-                null, null, null, runtime, null, true,
+                new GeneratedComponentOperationalStates(), null, null, runtime, null, true,
                 new Vector<GeneratedFaultCandidate>(),
                 GeneratedDiagnosticSolvabilityContract.forDeveloperFixture(
                     QuickPlayFamilyRegistry.LED_INDICATOR, componentId, 43L,
                     new Vector<GeneratedFaultCandidate>()));
+            // Construction completes its typed secondary path and inventory
+            // before publishing geometry. Retain the final canonical part.
+            part = (PhysicalResistorPart) runtime.getInstalledPart(componentId);
             BoardModificationController modifications = new InstalledNegativeModificationController(
                 sim, instance, componentId, liftedPadId);
             return new InstalledRenderNegativeFixture(componentId, liftedPadId, physicalPackage,

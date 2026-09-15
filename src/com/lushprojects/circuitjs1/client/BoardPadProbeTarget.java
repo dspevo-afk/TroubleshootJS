@@ -4,10 +4,10 @@ class BoardPadProbeTarget implements ProbeTarget {
     private final CirSim sim;
     private final GeneratedBoardInstance instance;
     private final String padId;
-    private final PcbWorkbenchRenderer renderer;
+    private final PhysicalProbeProjection renderer;
 
     BoardPadProbeTarget(CirSim sim, GeneratedBoardInstance instance, String padId,
-            PcbWorkbenchRenderer renderer) {
+            PhysicalProbeProjection renderer) {
         this.sim = sim;
         this.instance = instance;
         this.padId = padId;

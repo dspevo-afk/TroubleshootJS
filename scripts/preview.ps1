@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param(
     [ValidateRange(1, 65535)]
     [int]$Port = 8899,
@@ -266,6 +266,18 @@ try {
                     }
                 }
                 Write-PreviewTcpResponse $client $response
+            } catch {
+                # A readiness probe or canceled navigation may close after accept
+                # but before GetStream/Write. It must not terminate the preview.
+                # Listener failures (no accepted client) and programming errors
+                # still propagate; only this connection's transport loss is local.
+                $cause = $_.Exception
+                while ($null -ne $cause.InnerException) { $cause = $cause.InnerException }
+                if ($null -eq $client -or -not (
+                        $cause -is [IO.IOException] -or
+                        $cause -is [Net.Sockets.SocketException] -or
+                        $cause -is [InvalidOperationException])) { throw }
+                Write-Verbose 'Preview client disconnected before its response completed.'
             } finally {
                 if ($null -ne $client) {
                     try { $client.Close() } catch { }

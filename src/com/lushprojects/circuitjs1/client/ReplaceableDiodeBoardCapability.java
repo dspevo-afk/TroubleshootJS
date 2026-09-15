@@ -7,6 +7,8 @@ final class ReplaceableDiodeBoardCapability implements PhysicalBoardRuntimeCapab
         PhysicalBoardInstallationProvider.Scoped, WorkbenchPartsProvider {
     static final String ID = "REPLACEABLE_DIODE";
 
+    private final String capabilityId;
+
     private final DiodeComponentSlot slot;
     private final PhysicalPartInventory<PhysicalDiodePart> inventory;
     private final DiodeReplacementCatalog catalog;
@@ -15,6 +17,15 @@ final class ReplaceableDiodeBoardCapability implements PhysicalBoardRuntimeCapab
     ReplaceableDiodeBoardCapability(DiodeComponentSlot slot,
             PhysicalPartInventory<PhysicalDiodePart> inventory,
             DiodeReplacementCatalog catalog) {
+        this(slot, inventory, catalog, ID);
+    }
+
+    ReplaceableDiodeBoardCapability(DiodeComponentSlot slot,
+            PhysicalPartInventory<PhysicalDiodePart> inventory,
+            DiodeReplacementCatalog catalog, String capabilityId) {
+        if (capabilityId == null || capabilityId.length() == 0)
+            throw new IllegalArgumentException("Missing capability identity");
+        this.capabilityId = capabilityId;
         if (slot == null || inventory == null || catalog == null)
             throw new IllegalArgumentException("Missing replaceable diode runtime capability");
         this.slot = slot;
@@ -22,7 +33,7 @@ final class ReplaceableDiodeBoardCapability implements PhysicalBoardRuntimeCapab
         this.catalog = catalog;
     }
 
-    public String getCapabilityId() { return ID; }
+    public String getCapabilityId() { return capabilityId; }
     DiodeComponentSlot getSlot() { return slot; }
     PhysicalPartInventory<PhysicalDiodePart> getInventory() { return inventory; }
     DiodeReplacementCatalog getCatalog() { return catalog; }

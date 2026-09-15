@@ -166,6 +166,7 @@ class DiodeProtectedIndicatorGenerator {
 
         String description = "Generated diode-protected indicator, seed " + seed + ", " +
             supplyVoltage + " V";
+        connections.declareConnectorHarness("J1", connectorFaultSwitch, 1, supply, 0);
         return new GeneratedBoardInstance(board, elements, seed, FAMILY_ID,
             DIRECT_SERIES_VARIANT, description, components, power, connections,
             behaviorContract,

@@ -3,7 +3,7 @@ package com.lushprojects.circuitjs1.client;
 /** Production diagnostic recipe owned by the parallel-dual-indicator variant. */
 final class ParallelDualIndicatorDiagnosticProvider extends LeafDiagnosticProvider {
     ParallelDualIndicatorDiagnosticProvider(long seed) { super(seed); }
-    public String getProviderId() { return "parallel-dual-indicator-diagnostic@1"; }
+    public String getProviderId() { return "parallel-dual-indicator-diagnostic@2"; }
 
     public GeneratedDiagnosticPlan getDiagnosticPlan() {
         return new GeneratedDiagnosticPlan("PARALLEL_BRANCH_COMPONENT_CHECK", "J1.2",
@@ -18,7 +18,8 @@ final class ParallelDualIndicatorDiagnosticProvider extends LeafDiagnosticProvid
     }
 
     public GeneratedBoardInstance generateHypothesis(GeneratedFaultCandidate hypothesis) {
-        return new ParallelDualIndicatorGenerator().generateForFaultVerification(seed, hypothesis.getFault().getType());
+        return new ParallelDualIndicatorGenerator().generateForFaultVerification(seed,
+            hypothesis.getFault().getType(), hypothesis.getFault().getTargetComponentId());
     }
 
     public GeneratedDiagnosticProgram getObservationProgram() {
@@ -27,6 +28,7 @@ final class ParallelDualIndicatorDiagnosticProvider extends LeafDiagnosticProvid
         dcSweep(program, plan, "STEADY_STATE");
         program.power("BOARD_POWER_OFF", BoardPowerState.UNPOWERED).settle();
         passivePair(program, "R1.1", "R1.2");
+        passivePair(program, "R2.1", "R2.2");
         return program.build();
     }
 }

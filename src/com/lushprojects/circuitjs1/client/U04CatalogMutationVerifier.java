@@ -23,6 +23,7 @@ final class U04CatalogMutationVerifier {
         if (part instanceof PhysicalNmosPart) return "nmos";
         if (part instanceof PhysicalLedPart) return "led";
         if (part instanceof PhysicalRelayPart) return "relay";
+        if (part instanceof PhysicalServicePart) return ((PhysicalServicePart)part).isConnector() ? "connector" : "fuse";
         throw new AssertionError("Uncovered catalog part type");
     }
 
@@ -47,7 +48,11 @@ final class U04CatalogMutationVerifier {
         final Runnable remove = new Runnable() {
             public void run() { require(provider.removeInstalledPart(), "remove reached owner"); }
         };
-        injected("remove", PhysicalMutationScope.FailureStage.AFTER_GRAPH_DISCONNECT, 1, remove);
+        int contactCount = provider instanceof PhysicalSlotMutationProvider.Scoped &&
+            ((PhysicalSlotMutationProvider.Scoped)provider).getMutationSlot() instanceof PhysicalMutationSlot.Docking ?
+            ((PhysicalMutationSlot.Docking)((PhysicalSlotMutationProvider.Scoped)provider).getMutationSlot()).getDockingAttachments().size() : 0;
+        for (int occurrence = 1; occurrence <= original.getTerminalCount() + contactCount; occurrence++)
+            injected("remove", PhysicalMutationScope.FailureStage.AFTER_GRAPH_DISCONNECT, occurrence, remove);
         injected("remove", PhysicalMutationScope.FailureStage.AFTER_SLOT_CLEAR, 1, remove);
         injected("remove", PhysicalMutationScope.FailureStage.AFTER_EMPTY_SLOT_REBIND, 1, remove);
         injected("remove", PhysicalMutationScope.FailureStage.AFTER_COMMIT, 1, remove);
@@ -70,8 +75,8 @@ final class U04CatalogMutationVerifier {
             PhysicalMutationScope.FailureStage.AFTER_COMMIT
         };
         for (PhysicalMutationScope.FailureStage stage : installStages) {
-            int occurrences = stage == PhysicalMutationScope.FailureStage.AFTER_ENDPOINT_RETARGET ||
-                stage == PhysicalMutationScope.FailureStage.AFTER_GRAPH_CONNECT ? original.getTerminalCount() : 1;
+            int occurrences = stage == PhysicalMutationScope.FailureStage.AFTER_ENDPOINT_RETARGET ? original.getTerminalCount() :
+                stage == PhysicalMutationScope.FailureStage.AFTER_GRAPH_CONNECT ? original.getTerminalCount() + contactCount : 1;
             for (int occurrence = 1; occurrence <= occurrences; occurrence++) {
                 injected("catalog", stage, occurrence, catalog);
                 injected("install", stage, occurrence, install);

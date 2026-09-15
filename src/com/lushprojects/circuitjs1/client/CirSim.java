@@ -287,6 +287,8 @@ MouseOutHandler, MouseWheelHandler {
     Canvas backcv;
     Context2d backcontext;
     static final int MENUBARHEIGHT=30;
+    static final int WORKBENCH_TOP_HEIGHT = 112;
+    private int horizontalDockHeight = MENUBARHEIGHT;
     static int VERTICALPANELWIDTH=166; // default
     static final int POSTGRABSQ=25;
     static final int MINPOSTGRABSIZE = 256;
@@ -309,7 +311,7 @@ MouseOutHandler, MouseWheelHandler {
     	int width, height;
     	width=(int)RootLayoutPanel.get().getOffsetWidth();
     	height=(int)RootLayoutPanel.get().getOffsetHeight();
-    	height=height-MENUBARHEIGHT;
+        height=Math.max(1, height - horizontalDockHeight);
     	width=width-VERTICALPANELWIDTH;
 		if (cv != null) {
 			cv.setWidth(width + "PX");
@@ -367,6 +369,7 @@ MouseOutHandler, MouseWheelHandler {
 	QuickPlaySession quickPlaySession;
     GenerationCoordinator generationCoordinator;
     PlayerSessionController playerSessionController;
+    private final WorkbenchRelayFeedback relayFeedback = new WorkbenchRelayFeedback();
     Label generationStatus;
     Button generationCancelButton;
 	boolean troubleshootResistanceVerification;
@@ -431,6 +434,8 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootE03Verification, troubleshootE03ForcedFailure, troubleshootE03VerificationComplete;
 	boolean troubleshootQ15Verification, troubleshootQ15ForcedFailure, troubleshootQ15VerificationComplete;
     boolean troubleshootAlphaVerification, troubleshootAlphaPilot, troubleshootAlphaForced, troubleshootAlphaComplete;
+    boolean troubleshootRender0Verification, troubleshootRender0Forced, troubleshootRender0Complete;
+    boolean troubleshootServiceVerification, troubleshootServiceForced, troubleshootServiceComplete;
     int troubleshootAlphaCase = -1;
     boolean troubleshootE01Verification, troubleshootE01VerificationComplete, troubleshootE01ForcedFailure;
 	boolean troubleshootA06Verification;
@@ -623,6 +628,10 @@ MouseOutHandler, MouseWheelHandler {
             troubleshootE03Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyE03", false);
             troubleshootQ15Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyQ15", false);
             troubleshootAlphaVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyAlpha", false);
+            troubleshootRender0Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyRender0", false);
+            troubleshootRender0Forced = troubleshootRender0Verification && qp.getBooleanValue("tsjRender0Fail", false);
+            troubleshootServiceVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyService", false);
+            troubleshootServiceForced = troubleshootServiceVerification && qp.getBooleanValue("tsjServiceFail", false);
             troubleshootAlphaPilot = troubleshootAlphaVerification && qp.getBooleanValue("tsjAlphaPilot", false);
             troubleshootAlphaForced = troubleshootAlphaVerification && qp.getBooleanValue("tsjAlphaFail", false);
             if (troubleshootAlphaVerification && qp.getValue("tsjAlphaCase") != null)
@@ -736,8 +745,9 @@ MouseOutHandler, MouseWheelHandler {
 	    VERTICALPANELWIDTH = 166;
 	if (VERTICALPANELWIDTH < 128)
 	    VERTICALPANELWIDTH = 128;
-	if ((troubleshootFixture != null || troubleshootChallenge != null) && !troubleshootDebug)
-	    VERTICALPANELWIDTH = 250;
+	// Normal workbench controls occupy the top dock; its canvas keeps the full width.
+	if (!troubleshootDebug)
+	    VERTICALPANELWIDTH = 0;
 
 	menuBar = new MenuBar();
 	menuBar.addItem(LS("File"), fileMenuBar);
@@ -860,13 +870,20 @@ MouseOutHandler, MouseWheelHandler {
 	if (!hideMenu)
 	    layoutPanel.addNorth(menuBar, MENUBARHEIGHT);
 
+	horizontalDockHeight = (hideMenu ? 0 : MENUBARHEIGHT) +
+            (!troubleshootDebug && !hideSidebar ? WORKBENCH_TOP_HEIGHT : 0);
 	if (hideSidebar)
 	    VERTICALPANELWIDTH = 0;
 	else {
 	    verticalPanel.setWidth("100%");
 	    ScrollPanel sidebarScroll = new ScrollPanel(verticalPanel);
 	    sidebarScroll.setSize("100%", "100%");
-	    layoutPanel.addEast(sidebarScroll, VERTICALPANELWIDTH);
+            if (!troubleshootDebug) {
+                sidebarScroll.setStyleName("tsj-workbench-top-dock");
+                layoutPanel.addNorth(sidebarScroll, WORKBENCH_TOP_HEIGHT);
+            } else {
+                layoutPanel.addEast(sidebarScroll, VERTICALPANELWIDTH);
+            }
 	}
 	RootLayoutPanel.get().add(layoutPanel);
 
@@ -1860,6 +1877,7 @@ MouseOutHandler, MouseWheelHandler {
 	if (isPcbWorkbenchVisible()) {
 	    backcontext.setTransform(1, 0, 0, 1, 0, 0);
 	    pcbWorkbenchController.draw(g, circuitArea);
+            relayFeedback.update(this);
 	    instrumentController.draw(g);
 	    cvcontext.drawImage(backcontext.getCanvas(), 0.0, 0.0);
 	    frames++;
@@ -2277,6 +2295,8 @@ MouseOutHandler, MouseWheelHandler {
     class WireInfo {
 	WireElm wire;
 	Vector<CircuitElm> neighbors;
+	CircuitElm[] currentNeighbors;
+	int[] currentNeighborPosts;
 	int post;
 	WireInfo(WireElm w) {
 	    wire = w;
@@ -2392,6 +2412,19 @@ MouseOutHandler, MouseWheelHandler {
 	    }
 	}
 	
+	// The analyzed graph fixes these post indices until the next analysis.
+	// Resolve them once; every solver step still sums the actual currents in
+	// the same dependency order, including accepted-step callbacks.
+	for (WireInfo wi : wireInfoList) {
+	    wi.currentNeighbors = new CircuitElm[wi.neighbors.size()];
+	    wi.currentNeighborPosts = new int[wi.neighbors.size()];
+	    Point point = wi.wire.getPost(wi.post);
+	    for (int j = 0; j < wi.neighbors.size(); j++) {
+	        CircuitElm neighbor = wi.neighbors.get(j);
+	        wi.currentNeighbors[j] = neighbor;
+	        wi.currentNeighborPosts[j] = neighbor.getNodeAtPoint(point.x, point.y);
+	    }
+	}
 	return true;
     }
 
@@ -2681,6 +2714,7 @@ MouseOutHandler, MouseWheelHandler {
 	makePostDrawList();
 	if (!calcWireInfo())
 	    return;
+	for (CircuitNode node : nodeList) node.prepareVoltageRecipients();
 	nodeMap = null; // done with this
 	
 	int vscount = 0;
@@ -2760,6 +2794,7 @@ MouseOutHandler, MouseWheelHandler {
 	// check if we called stop()
 	if (circuitMatrix == null)
 	    return;
+	requireFiniteMatrix();
 	
 	// if a matrix is linear, we can do the lu_factor here instead of
 	// needing to do it every frame
@@ -2770,6 +2805,7 @@ MouseOutHandler, MouseWheelHandler {
 		stop("Singular matrix!", null);
 		return;
 	    }
+	    requireFiniteMatrix();
 	}
     }
 
@@ -3103,15 +3139,15 @@ MouseOutHandler, MouseWheelHandler {
     // of dv in node j will increase the current into node i by x dv.
     // (Unless i or j is a voltage source node.)
     void stampMatrix(int i, int j, double x) {
-	if (Double.isInfinite(x))
-	    debugger();
 	if (i > 0 && j > 0) {
+	    requireFiniteStamp(x);
 	    if (circuitNeedsMap) {
 		i = circuitRowInfo[i-1].mapRow;
 		RowInfo ri = circuitRowInfo[j-1];
 		if (ri.type == RowInfo.ROW_CONST) {
 		    //System.out.println("Stamping constant " + i + " " + j + " " + x);
 		    circuitRightSide[i] -= x*ri.value;
+		    requireFiniteStamp(circuitRightSide[i]);
 		    return;
 		}
 		j = ri.mapCol;
@@ -3121,7 +3157,19 @@ MouseOutHandler, MouseWheelHandler {
 		j--;
 	    }
 	    circuitMatrix[i][j] += x;
+	    requireFiniteStamp(circuitMatrix[i][j]);
 	}
+    }
+
+    private static void requireFiniteStamp(double value) {
+        if (!SolverExecutionBoundary.finite(value))
+            throw new SolverExecutionBoundary.Failure(SolverExecutionBoundary.Outcome.NUMERICAL_FAILURE,
+                "Nonfinite CircuitJS matrix stamp");
+    }
+
+    private void requireFiniteMatrix() {
+        for (int i = 0; i < circuitMatrixSize; i++)
+            for (int j = 0; j < circuitMatrixSize; j++) requireFiniteStamp(circuitMatrix[i][j]);
     }
 
     // stamp value x on the right side of row i, representing an
@@ -3212,6 +3260,19 @@ MouseOutHandler, MouseWheelHandler {
 	    return;
 	
 	boolean delayWireProcessing = canDelayWireProcessing();
+	// Ideal WireElm inherits empty iteration callbacks. Keep every electrical
+	// model in its original order while avoiding those empty virtual calls on
+	// service leads and cable contacts. Exact class equality preserves any
+	// future wire subclass with its own behavior. The owned operation checks
+	// graph/source revisions before the next trial or accepted step.
+	CircuitElm[] iterationElements = new CircuitElm[elmList.size()];
+        ScopeElm[] embeddedScopes = new ScopeElm[elmList.size()];
+	int iterationElementCount = 0, embeddedScopeCount = 0;
+	for (CircuitElm element : elmList) {
+	    if (element.getClass() != WireElm.class)
+	        iterationElements[iterationElementCount++] = element;
+            if (element instanceof ScopeElm) embeddedScopes[embeddedScopeCount++] = (ScopeElm)element;
+        }
 	
 	int timeStepCountAtFrameStart = timeStepCount;
 	
@@ -3231,10 +3292,8 @@ MouseOutHandler, MouseWheelHandler {
 	    }
 	    
 	    int i, j, subiter;
-	    for (i = 0; i != elmList.size(); i++) {
-		CircuitElm ce = getElm(i);
-		ce.startIteration();
-	    }
+	    for (i = 0; i != iterationElementCount; i++)
+		iterationElements[i].startIteration();
 	    steps++;
 	    int subiterCount = (adjustTimeStep && timeStep/2 > minTimeStep) ? 100 : 5000;
 	    for (subiter = 0; subiter != subiterCount; subiter++) {
@@ -3248,28 +3307,20 @@ MouseOutHandler, MouseWheelHandler {
 		for (i = 0; i != circuitMatrixSize; i++)
 		    circuitRightSide[i] = origRightSide[i];
 		if (circuitNonLinear) {
-		    for (i = 0; i != circuitMatrixSize; i++)
-			for (j = 0; j != circuitMatrixSize; j++)
-			    circuitMatrix[i][j] = origMatrix[i][j];
+                    for (i = 0; i != circuitMatrixSize; i++) {
+                        double[] row = circuitMatrix[i], original = origMatrix[i];
+                        for (j = 0; j != circuitMatrixSize; j++) row[j] = original[j];
+                    }
 		}
-		for (i = 0; i != elmList.size(); i++) {
-		    CircuitElm ce = getElm(i);
-		    ce.doStep();
-		}
+		for (i = 0; i != iterationElementCount; i++)
+		    iterationElements[i].doStep();
 		if (stopMessage != null)
 		    return;
 		boolean printit = debugprint;
 		debugprint = false;
-		for (j = 0; j != circuitMatrixSize; j++) {
-		    for (i = 0; i != circuitMatrixSize; i++) {
-			double x = circuitMatrix[i][j];
-			if (Double.isNaN(x) || Double.isInfinite(x)) {
-			    stop("nan/infinite matrix!", null);
-			    console("circuitMatrix " + i + " " + j + " is " + x);
-			    return;
-			}
-		    }
-		}
+		// Analysis validates the constant matrix; stampMatrix validates every
+		// dynamic write and accumulated value. Avoid scanning untouched cells
+		// after each trial, especially in independent loose-part islands.
 		if (printit) {
 		    for (j = 0; j != circuitMatrixSize; j++) {
 			String x = "";
@@ -3339,15 +3390,15 @@ MouseOutHandler, MouseWheelHandler {
 		timeStepAccum -= maxTimeStep;
 		timeStepCount++;
 	    }
-	    for (i = 0; i != elmList.size(); i++)
-		getElm(i).stepFinished();
+	    for (i = 0; i != iterationElementCount; i++)
+		iterationElements[i].stepFinished();
 	    if (!delayWireProcessing)
 		calcWireCurrents();
 	    for (i = 0; i != scopeCount; i++)
 	    	scopes[i].timeStep();
-	    for (i=0; i != elmList.size(); i++)
-		if (getElm(i) instanceof ScopeElm)
-		    ((ScopeElm)getElm(i)).stepScope();
+            // Resolve type membership once per owned batch, not once per
+            // accepted step for every wire, part and instrument island.
+            for (i = 0; i < embeddedScopeCount; i++) embeddedScopes[i].stepScope();
 	    // save last node voltages so we can restart the next iteration if necessary
 	    for (i = 0; i != lastNodeVoltages.length; i++)
 		lastNodeVoltages[i] = nodeVoltages[i];
@@ -3415,15 +3466,9 @@ MouseOutHandler, MouseWheelHandler {
     
     // set node voltages in each element given an array of node voltages
     void setNodeVoltages(double nv[]) {
-	int j, k;
+	int j;
 	for (j = 0; j != nv.length; j++) {
-	    double res = nv[j];
-	    CircuitNode cn = getCircuitNode(j+1);
-	    for (k = 0; k != cn.links.size(); k++) {
-		CircuitNodeLink cnl = (CircuitNodeLink)
-			cn.links.elementAt(k);
-		cnl.elm.setNodeVoltage(cnl.num, res);
-	    }
+	    getCircuitNode(j+1).applyVoltage(nv[j]);
 	}
     }
     
@@ -3440,11 +3485,8 @@ MouseOutHandler, MouseWheelHandler {
 	    WireInfo wi = wireInfoList.get(i);
 	    double cur = 0;
 	    int j;
-	    Point p = wi.wire.getPost(wi.post);
-	    for (j = 0; j != wi.neighbors.size(); j++) {
-		CircuitElm ce = wi.neighbors.get(j);
-		int n = ce.getNodeAtPoint(p.x, p.y);
-		cur += ce.getCurrentIntoNode(n);
+	    for (j = 0; j != wi.currentNeighbors.length; j++) {
+		cur += wi.currentNeighbors[j].getCurrentIntoNode(wi.currentNeighborPosts[j]);
 	    }
 	    if (wi.post == 0)
 		wi.wire.setCurrent(-1, cur);
@@ -5388,6 +5430,30 @@ MouseOutHandler, MouseWheelHandler {
                 }
             });
         }
+        if (!developerVerifierRunning && troubleshootServiceVerification && !troubleshootServiceComplete &&
+                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() && generatedChallengeController != null &&
+                generatedChallengeController.isReady() && isGeneratedRuntimeSettled()) {
+            developerVerifierRunning = true; troubleshootServiceComplete = true;
+            publishBrowserVerificationResult("RUNNING:service");
+            FaultBlindManipulationVerifier.start(this, troubleshootServiceForced, new FaultBlindManipulationVerifier.Completion() {
+                public void finished(String report, Throwable failure) {
+                    developerVerifierRunning = false; FaultBlindManipulationVerifier.publish(report);
+                    publishBrowserVerificationResult(failure == null ? "PASS:service" : "FAIL:service:" + failure.getMessage());
+                }
+            });
+        }
+        if (!developerVerifierRunning && troubleshootRender0Verification && !troubleshootRender0Complete &&
+                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() && generatedChallengeController != null &&
+                generatedChallengeController.isReady() && isGeneratedRuntimeSettled()) {
+            developerVerifierRunning = true; troubleshootRender0Complete = true;
+            publishBrowserVerificationResult("RUNNING:render0");
+            Render0DeveloperVerifier.start(this, troubleshootRender0Forced, new Render0DeveloperVerifier.Completion() {
+                public void finished(String report, Throwable failure) {
+                    developerVerifierRunning = false; Render0DeveloperVerifier.publish(report);
+                    publishBrowserVerificationResult(failure == null ? "PASS:render0" : "FAIL:render0:" + failure.getMessage());
+                }
+            });
+        }
         if (!developerVerifierRunning && troubleshootAlphaVerification && !troubleshootAlphaComplete &&
                 !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() && generatedChallengeController != null &&
                 generatedChallengeController.isReady() && isGeneratedRuntimeSettled()) {
@@ -6887,17 +6953,21 @@ MouseOutHandler, MouseWheelHandler {
             cv.getElement().focus();
             if (pcbWorkbenchController.beginPan(e.getNativeButton(), e.isShiftKeyDown(), e.getX(), e.getY())) return;
         }
-	// An active instrument owns the whole gesture so CircuitJS editing never sees probe clicks.
+	// Conductive targets keep red/black probe priority; bodies remain selectable in meter modes.
 	if (instrumentController.isHandlingPointerInput()) {
 	    ProbeTarget target = isPcbWorkbenchVisible() ?
 		pcbWorkbenchController.findProbeTarget(e.getX(), e.getY()) :
 		findPostTarget(e.getX(), e.getY());
-	    instrumentController.handlePointerInput(e.getNativeButton(), target);
-	    return;
+	    if (target != null || !isPcbWorkbenchVisible()) {
+                instrumentController.handlePointerInput(e.getNativeButton(), target);
+                return;
+            }
 	}
 	if (isPcbWorkbenchVisible()) {
 	    if (e.getNativeButton() == NativeEvent.BUTTON_LEFT)
-		pcbWorkbenchController.selectComponentAt(e.getX(), e.getY());
+		pcbWorkbenchController.beginPartDrag(e.getX(), e.getY());
+            else if (e.getNativeButton() == NativeEvent.BUTTON_RIGHT)
+                pcbWorkbenchController.openComponentMenu(e.getX(), e.getY());
 	    return;
 	}
     	
@@ -7020,7 +7090,7 @@ MouseOutHandler, MouseWheelHandler {
     public void onMouseUp(MouseUpEvent e) {
     	e.preventDefault();
     	mouseDragging=false;
-        if (isPcbWorkbenchVisible()) { pcbWorkbenchController.endPan(); return; }
+        if (isPcbWorkbenchVisible()) { pcbWorkbenchController.releasePartDrag(e.getX(), e.getY()); pcbWorkbenchController.endPan(); return; }
 	if (instrumentController.isHandlingPointerInput())
 	    return;
     	
@@ -7625,10 +7695,11 @@ MouseOutHandler, MouseWheelHandler {
 	// are all zeroes
 	for (i = 0; i != n; i++) { 
 	    boolean row_all_zeros = true;
+            double[] row = a[i];
 	    for (j = 0; j != n; j++) {
-		if (a[i][j] != 0) {
+		requireFiniteStamp(row[j]);
+		if (row[j] != 0) {
 		    row_all_zeros = false;
-		    break;
 		}
 	    }
 	    // if all zeros, it's a singular matrix
@@ -7636,15 +7707,21 @@ MouseOutHandler, MouseWheelHandler {
 		return false;
 	}
 	
-        // use Crout's method; loop through the columns
+        // Crout's method, updating each column in ascending k order. Each
+        // entry receives exactly the original sequence of subtractions.
+        // A zero column coefficient contributes nothing to any row; avoiding
+        // those products matters for real disconnected Parts Tray islands.
+        // Inputs and every factor stay finite, including before zero skips.
 	for (j = 0; j != n; j++) {
-	    
-	    // calculate upper triangular elements for this column
-	    for (i = 0; i != j; i++) {
-		double q = a[i][j];
-		for (k = 0; k != i; k++)
-		    q -= a[i][k]*a[k][j];
-		a[i][j] = q;
+	    for (k = 0; k != j; k++) {
+		double coefficient = a[k][j];
+		if (coefficient == 0) continue;
+		for (i = k+1; i != n; i++) {
+                    double[] row = a[i];
+                    double value = row[j] - row[k]*coefficient;
+                    requireFiniteStamp(value);
+                    row[j] = value;
+		}
 	    }
 
 	    // calculate lower triangular elements for this column
@@ -7652,9 +7729,6 @@ MouseOutHandler, MouseWheelHandler {
 	    int largestRow = -1;
 	    for (i = j; i != n; i++) {
 		double q = a[i][j];
-		for (k = 0; k != j; k++)
-		    q -= a[i][k]*a[k][j];
-		a[i][j] = q;
 		double x = Math.abs(q);
 		if (x >= largest) {
 		    largest = x;
@@ -7664,12 +7738,10 @@ MouseOutHandler, MouseWheelHandler {
 	    
 	    // pivoting
 	    if (j != largestRow) {
-		double x;
-		for (k = 0; k != n; k++) {
-		    x = a[largestRow][k];
-		    a[largestRow][k] = a[j][k];
-		    a[j][k] = x;
-		}
+                double[] pivot = a[largestRow], current = a[j];
+                for (k = 0; k != n; k++) {
+                    double value = pivot[k]; pivot[k] = current[k]; current[k] = value;
+                }
 	    }
 
 	    // keep track of row interchanges
@@ -7683,8 +7755,12 @@ MouseOutHandler, MouseWheelHandler {
 
 	    if (j != n-1) {
 		double mult = 1.0/a[j][j];
-		for (i = j+1; i != n; i++)
-		    a[i][j] *= mult;
+		requireFiniteStamp(mult);
+		for (i = j+1; i != n; i++) {
+                    double[] row = a[i];
+                    double value = row[j] * mult;
+                    requireFiniteStamp(value); row[j] = value;
+		}
 	    }
 	}
 	return true;
@@ -7715,8 +7791,9 @@ MouseOutHandler, MouseWheelHandler {
 	    
 	    b[row] = b[i];
 	    // forward substitution using the lower triangular matrix
+            double[] matrixRow = a[i];
 	    for (j = bi; j < i; j++)
-		tot -= a[i][j]*b[j];
+		tot -= matrixRow[j]*b[j];
 	    b[i] = tot;
 	}
 	for (i = n-1; i >= 0; i--) {
@@ -7724,9 +7801,10 @@ MouseOutHandler, MouseWheelHandler {
 	    
 	    // back-substitution using the upper triangular matrix
 	    int j;
+            double[] matrixRow = a[i];
 	    for (j = i+1; j != n; j++)
-		tot -= a[i][j]*b[j];
-	    b[i] = tot/a[i][i];
+		tot -= matrixRow[j]*b[j];
+	    b[i] = tot/matrixRow[i];
 	}
     }
 

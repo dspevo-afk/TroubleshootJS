@@ -130,6 +130,7 @@ final class StoredEnergyDeveloperVerifier {
             "Stored-energy verifier did not restore the original fault-owning C1");
         GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
             "stored-energy-original-installed");
+        verifyReplacementStorage(sim, instance, temporal);
         sim.setBoardPowerState(BoardPowerState.POWERED);
         GeneratedRuntimeDeveloperSettlement.settle(sim, instance,
             "stored-energy-final-powered");
@@ -137,6 +138,37 @@ final class StoredEnergyDeveloperVerifier {
         require(!sim.activeMeasurementOverlay && sim.getBoardModificationController().isFullyRestored(),
             "Stored-energy verification contaminated the restored board state");
         sim.setCircuitTitle("Stored-energy verification passed");
+    }
+
+    private static void verifyReplacementStorage(CirSim sim, GeneratedBoardInstance instance,
+            RcDelayTemporalBehavior temporal) {
+        PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
+        PhysicalSlotMutationProvider provider = runtime.getMutationProvider("C2");
+        PhysicalPart<?> original = runtime.getInstalledPart("C2");
+        PhysicalCapacitorPart replacement = (PhysicalCapacitorPart)((CatalogAcquisitionProvider)provider)
+            .acquireFromCatalog("C_CERAMIC_1UF_25V");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "stored-energy-C2-acquired");
+        require(provider.removeInstalledPart(), "Healthy supporting capacitor is removable");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "stored-energy-C2-removed");
+        require(provider.install(replacement.getId()), "Wrong compatible supporting capacitor installs");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "stored-energy-C2-installed");
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "stored-energy-C2-powered");
+        temporal.advanceForDeveloperVerification(sim, .020);
+        require(replacement.getElement().getVoltageDiff() > 1, "Actual replacement C2 charges from the supply");
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "stored-energy-C2-isolated");
+        require(provider.removeInstalledPart(), "Charged supporting capacitor enters its real tray inventory");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "stored-energy-C2-loose");
+        CircuitPostMeasurementEndpoint first = (CircuitPostMeasurementEndpoint)replacement.getTerminal(0).getEndpoint();
+        CircuitPostMeasurementEndpoint second = (CircuitPostMeasurementEndpoint)replacement.getTerminal(1).getEndpoint();
+        require(replacement.getElement().getVoltageDiff() > ActiveMeasurementReadiness.RESIDUAL_VOLTAGE_THRESHOLD_VOLTS &&
+            sim.getActiveMeasurementReadiness(first, second) == ActiveMeasurementReadiness.DISCHARGE,
+            "Readiness follows the charged replacement's actual loose terminals");
+        require(Double.isNaN(sim.measureResistance(first, second)) && !sim.activeMeasurementOverlay,
+            "Charged supporting replacement cannot receive a temporary active-meter stimulus");
+        require(provider.install(original.getId()), "Exact original supporting capacitor reinstalls");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "stored-energy-C2-restored");
     }
 
     private static void verifyChargedMeasurementBlock(CirSim sim,

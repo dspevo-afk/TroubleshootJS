@@ -11,6 +11,9 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.event.logical.shared.CloseEvent;
+import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.user.client.Window;
@@ -20,14 +23,26 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     private final GeneratedBoardInstance instance;
     private final BoardModificationController modifications;
     private final PcbWorkbenchRenderer renderer;
+    private final WorkbenchRenderHost renderHost;
     private final VerticalPanel panel = new VerticalPanel();
     private final VerticalPanel ticketPanel = new VerticalPanel();
     private final VerticalPanel partsPanel = new VerticalPanel();
     private final Label feedback = new Label();
+    private PopupPanel componentMenu;
+    private Object componentMenuLease;
+    private PhysicalPart<?> draggedPart;
+    private String draggedFromComponent;
+    private int dragStartX, dragStartY, dragX, dragY;
+    private boolean partDragging;
+    private PopupPanel interactionNotice;
+    private com.google.gwt.user.client.Timer noticeTimer;
     private BenchPowerPanel benchPowerPanel;
     private final VerticalPanel viewPanel = new VerticalPanel();
     private final Label viewFeedback = new Label();
     private JavaScriptObject viewListeners;
+    private JavaScriptObject viewFrame;
+    private int viewFrameRequests, viewFramesPresented, viewFramesSkipped;
+    private double lastViewRequestTime, maximumViewLatencyMs, maximumViewDrawMs;
     private boolean panning;
     private int panX, panY;
     private final boolean quickPlay;
@@ -115,6 +130,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         this.modifications = modifications;
         this.quickPlay = quickPlay;
         renderer = new PcbWorkbenchRenderer(instance, modifications, layout);
+        renderHost = new WorkbenchRenderHost(sim, instance, modifications, renderer);
         final CirSim simulation = sim;
         renderer.setLooseProjectionTransitionListener(
             new PcbWorkbenchRenderer.LooseProjectionTransitionListener() {
@@ -126,10 +142,13 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
                 }
             });
         ticketPanel.setStyleName("tsj-component-panel");
+        ticketPanel.getElement().setAttribute("aria-label", "Service ticket");
         ticketPanel.setVisible(false);
         panel.setStyleName("tsj-component-panel");
+        panel.getElement().setAttribute("aria-label", "Component");
         panel.setVisible(false);
         partsPanel.setStyleName("tsj-component-panel");
+        partsPanel.getElement().setAttribute("aria-label", "Parts Tray");
         viewPanel.setStyleName("tsj-component-panel");
         viewPanel.getElement().setAttribute("aria-label", "Board view");
         viewFeedback.getElement().setAttribute("role", "status");
@@ -160,6 +179,9 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     }
 
     void detachFromSidebar() {
+        closeComponentMenu();
+        closeInteractionNotice();
+        cancelViewFrame(viewFrame); viewFrame = null;
         cancelViewGesture();
         removeViewListeners(viewListeners); viewListeners = null;
         if (!attachedToSidebar)
@@ -176,6 +198,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
 
     void disposeForDeveloperVerification() {
         detachFromSidebar();
+        renderHost.detach();
         ticketPanel.clear();
         panel.clear();
         partsPanel.clear();
@@ -186,23 +209,78 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     void draw(Graphics graphics, Rectangle area) {
         if (isCurrentOwner()) {
             if (sim.dialogIsShowing() || !sim.isChallengeInteractionEnabled()) cancelViewGesture();
-            renderer.draw(graphics, area);
+            renderHost.draw(graphics, area);
+            drawPartDrag(graphics);
         }
     }
 
     ProbeTarget findProbeTarget(int x, int y) {
-        ProbeTarget target = isCurrentOwner() ? renderer.findProbeTarget(sim, x, y) : null;
+        ProbeTarget target = !isCurrentOwner() ? null : renderer.hasViewportFixture() ?
+            renderer.findProbeTarget(sim, x, y) : renderHost.resolve(renderHost.hit(x, y, true));
         if (renderer.wasTargetAmbiguous()) viewFeedback.setText("Several terminals overlap. Zoom in to choose one.");
         return target;
     }
 
     void cancelViewGesture() {
+        cancelPartDrag();
         panning = false; renderer.getViewport().dismiss(); renderer.updateProjection();
     }
+    /** Camera paints coalesce at display cadence without advancing the electrical simulation. */
+    void requestViewFrame() {
+        if (!isCurrentOwner() || !attachedToSidebar) return;
+        viewFrameRequests++;
+        lastViewRequestTime = viewClock();
+        if (viewFrame == null) viewFrame = scheduleViewFrame(this);
+    }
+    private void presentViewFrame(JavaScriptObject token) {
+        if (token != viewFrame) return;
+        viewFrame = null;
+        if (!isCurrentOwner() || !attachedToSidebar || sim.dialogIsShowing() ||
+                !sim.isChallengeInteractionEnabled() || sim.activeMeasurementOverlay ||
+                sim.analyzeFlag || sim.dcAnalysisFlag) {
+            viewFramesSkipped++;
+            return;
+        }
+        double started = viewClock();
+        sim.backcontext.setTransform(1, 0, 0, 1, 0, 0);
+        Graphics graphics = new Graphics(sim.backcontext);
+        renderHost.draw(graphics, sim.circuitArea);
+        drawPartDrag(graphics);
+        sim.instrumentController.draw(graphics);
+        sim.cvcontext.drawImage(sim.backcontext.getCanvas(), 0.0, 0.0);
+        viewFramesPresented++;
+        maximumViewLatencyMs = Math.max(maximumViewLatencyMs, started - lastViewRequestTime);
+        maximumViewDrawMs = Math.max(maximumViewDrawMs, viewClock() - started);
+    }
+    private static native double viewClock() /*-{ return $wnd.performance.now(); }-*/;
+    private static native JavaScriptObject scheduleViewFrame(PcbWorkbenchController owner) /*-{
+        var token = { id: 0 };
+        token.id = $wnd.requestAnimationFrame($entry(function() {
+            owner.@com.lushprojects.circuitjs1.client.PcbWorkbenchController::presentViewFrame(Lcom/google/gwt/core/client/JavaScriptObject;)(token);
+        }));
+        return token;
+    }-*/;
+    private static native void cancelViewFrame(JavaScriptObject token) /*-{
+        if (token) $wnd.cancelAnimationFrame(token.id);
+    }-*/;
+    String viewFrameEvidenceForDeveloperVerification() {
+        return "{\"requests\":" + viewFrameRequests + ",\"presented\":" + viewFramesPresented +
+            ",\"skipped\":" + viewFramesSkipped + ",\"pending\":" + (viewFrame != null) +
+            ",\"maxLatencyMs\":" + maximumViewLatencyMs + ",\"maxDrawMs\":" + maximumViewDrawMs + "}";
+    }
+    int viewFramesPresentedForDeveloperVerification() { return viewFramesPresented; }
+    boolean hasPendingViewFrameForDeveloperVerification() { return viewFrame != null; }
     void pointerMove(int x, int y) {
         if (!isCurrentOwner()) return;
+        if (draggedPart != null) {
+            dragX=x; dragY=y;
+            if (Math.abs(x-dragStartX)+Math.abs(y-dragStartY)>8) partDragging=true;
+        }
         if (panning) { renderer.getViewport().pan(x - panX, y - panY); panX = x; panY = y; }
-        renderer.getViewport().moveCursor(x, y); renderer.updateProjection(); sim.repaint();
+        renderer.getViewport().moveCursor(x, y);
+        if (panning || draggedPart != null || renderer.getViewport().isInspecting()) {
+            renderer.updateProjection(); requestViewFrame();
+        }
     }
     boolean beginPan(int button, boolean shift, int x, int y) {
         if (!isCurrentPhysicalActionable() || !renderer.getViewport().contains(x, y) ||
@@ -211,18 +289,71 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         panning = true; panX = x; panY = y; return true;
     }
     void endPan() { panning = false; }
+    void beginPartDrag(int x,int y) {
+        cancelPartDrag();
+        if (!isCurrentPhysicalActionable() || !renderHost.isProduction() || !selectComponentAt(x,y)) return;
+        draggedFromComponent=renderer.getSelectedComponentId();
+        draggedPart=draggedFromComponent==null?instance.getPhysicalBoardRuntime().getPart(renderer.getSelectedPartId()):
+            instance.getPhysicalBoardRuntime().getInstalledPart(draggedFromComponent);
+        dragStartX=dragX=x; dragStartY=dragY=y;
+    }
+    void cancelPartDrag() { draggedPart=null; draggedFromComponent=null; partDragging=false; }
+    private void drawPartDrag(Graphics graphics) {
+        if (partDragging && draggedPart!=null && renderHost.isProduction())
+            renderer.drawDraggedPart(graphics,draggedPart,draggedFromComponent,dragX-dragStartX,dragY-dragStartY);
+    }
+    void releasePartDrag(int x,int y) {
+        PhysicalPart<?> part=draggedPart; String from=draggedFromComponent; boolean moved=partDragging;
+        cancelPartDrag();
+        if (!moved || part==null || !isCurrentPhysicalActionable()) return;
+        WorkbenchRenderHit drop=renderHost.dropHit(x,y);
+        String message="Drop the part on the tray or a compatible board footprint.";
+        try {
+            if (!sim.getBoardPowerController().isElectricallyUnpowered()) message="Switch off board power before moving parts.";
+            else if (instance.getPhysicalBoardRuntime().getPart(part.getId())!=part) message="That part is no longer on this workbench.";
+            else if (renderHost.accepts(drop) && from!=null && drop.kind==WorkbenchRenderHit.Kind.TRAY &&
+                    instance.getPhysicalBoardRuntime().getInstalledPart(from)==part) {
+                WorkbenchOperation remove=WorkbenchOperation.forPart(WorkbenchOperation.REMOVE,part);
+                if(isOperationAvailable(part,remove) && dispatchOperation(part,remove)) {
+                    renderer.setSelectedComponentId(null); renderer.setSelectedPartId(part.getId());
+                    message="Part moved to tray.";
+                } else message="This part cannot be removed in its current state.";
+            } else if(renderHost.accepts(drop) && from==null && !part.isInstalled() && drop.kind==WorkbenchRenderHit.Kind.SLOT) {
+                WorkbenchOperation install=WorkbenchOperation.forPartAtSlot(WorkbenchOperation.INSTALL,part,drop.id);
+                if(isOperationAvailable(part,install) && dispatchOperation(part,install)) {
+                    renderer.setSelectedPartId(null); renderer.setSelectedComponentId(drop.id);
+                    message="Part installed.";
+                } else message="That footprint is occupied or incompatible with this part.";
+            }
+        } catch(BoardModificationRejectedException failure) { message="Switch off board power before moving parts."; }
+        if (!isCurrentOwner()) return;
+        refresh(); sim.repaint(); showInteractionNotice(message);
+    }
+    private void closeInteractionNotice() {
+        if(noticeTimer!=null)noticeTimer.cancel(); noticeTimer=null;
+        if(interactionNotice!=null)interactionNotice.hide(); interactionNotice=null;
+    }
+    private void showInteractionNotice(String message) {
+        closeInteractionNotice();
+        final PopupPanel notice=new PopupPanel(); interactionNotice=notice;
+        notice.setStyleName("tsj-interaction-notice"); notice.getElement().setAttribute("role","status");
+        notice.getElement().setAttribute("aria-live","polite"); notice.add(new Label(message));
+        notice.show(); notice.setPopupPosition(Math.max(8,(Window.getClientWidth()-notice.getOffsetWidth())/2),sim.cv.getAbsoluteTop()+12);
+        noticeTimer=new com.google.gwt.user.client.Timer() { public void run() { if(interactionNotice==notice)closeInteractionNotice(); } };
+        noticeTimer.schedule(3500);
+    }
     void wheel(int delta, int x, int y) {
         if (!isCurrentPhysicalActionable() || sim.dialogIsShowing()) return;
         renderer.getViewport().zoom(Math.pow(1.12, Math.max(-3, Math.min(3, -delta))), x, y);
-        renderer.updateProjection(); sim.repaint();
+        renderer.updateProjection(); requestViewFrame();
     }
     boolean space(boolean down, int x, int y) {
-        if (!down) { cancelViewGesture(); sim.repaint(); return true; }
+        if (!down) { cancelViewGesture(); requestViewFrame(); return true; }
         if (!isCurrentPhysicalActionable() || sim.dialogIsShowing()) return false;
         boolean handled = renderer.getViewport().inspect(x, y);
-        renderer.updateProjection(); sim.repaint(); return handled;
+        renderer.updateProjection(); requestViewFrame(); return handled;
     }
-    private void viewChanged() { renderer.updateProjection(); sim.repaint(); }
+    private void viewChanged() { renderer.updateProjection(); requestViewFrame(); }
     void auditViewEvent(NativeEvent event) {
         if (!sim.troubleshootU01Verification) return;
         if ("mousemove".equals(event.getType()) && !panning && !renderer.getViewport().isInspecting()) return;
@@ -253,12 +384,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         viewPanel.clear();
         viewPanel.add(new Label("BOARD VIEW"));
         VerticalPanel controls = new VerticalPanel();
-        controls.add(viewButton("Fit board", new Runnable() { public void run() { renderer.getViewport().fitBoard(); }}));
-        controls.add(viewButton("Fit selection", new Runnable() { public void run() {
-            PcbComponentPlacement selected = renderer.getLayoutForProvider().getComponent(renderer.getSelectedComponentId());
-            if (selected != null) renderer.getViewport().fit(selected.getRoutingCourtyard());
-            else viewFeedback.setText("Select a component first.");
-        }}));
+        controls.add(viewButton("Fit bench", new Runnable() { public void run() { renderer.fitWorkbench(); }}));
         viewPanel.add(controls);
         VerticalPanel zoom = new VerticalPanel();
         zoom.add(viewButton("Zoom +", new Runnable() { public void run() { zoomFromButton(1.5); }}));
@@ -270,23 +396,9 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         viewPanel.add(zoom);
         viewPanel.add(new Label("Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe."));
         viewPanel.add(new Label(renderer.getViewingFace() == PcbBoardSide.TOP ? "Top side / top copper" : "Bottom side / bottom copper"));
-        final Vector<PcbLayoutRegion> regions = renderer.getLayoutForProvider().getRegions();
-        if (!regions.isEmpty()) {
-            final ListBox regionChoice = new ListBox();
-            regionChoice.getElement().setAttribute("aria-label", "Inspect functional region");
-            regionChoice.addItem("Inspect functional region");
-            for (PcbLayoutRegion region : regions) regionChoice.addItem(region.label);
-            regionChoice.addChangeHandler(new ChangeHandler() { public void onChange(ChangeEvent event) {
-                int index = regionChoice.getSelectedIndex() - 1;
-                if (!isCurrentOwner() || index < 0) return;
-                cancelViewGesture(); renderer.getViewport().fit(regions.get(index).bounds(renderer.getLayoutForProvider()));
-                viewChanged();
-            }});
-            viewPanel.add(regionChoice);
-        }
         final ListBox components = new ListBox();
-        components.getElement().setAttribute("aria-label", "Inspect component");
-        components.addItem("Inspect component", "");
+        components.getElement().setAttribute("aria-label", "Select component");
+        components.addItem("Select component", "");
         Vector<String> ids = instance.getBoard().getComponentIds(); java.util.Collections.sort(ids);
         for (String id : ids) components.addItem(instance.getBoard().getComponent(id).getDisplayName(), id);
         components.addChangeHandler(new ChangeHandler() { public void onChange(ChangeEvent event) {
@@ -294,26 +406,18 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
             String id = components.getValue(components.getSelectedIndex());
             PcbComponentPlacement part = renderer.getLayoutForProvider().getComponent(id);
             if (part == null) return;
-            cancelViewGesture(); renderer.setViewingFace(part.getMountingSide());
-            renderer.setSelectedComponentId(id); renderer.getViewport().fit(part.getRoutingCourtyard());
-            rebuildPanel(); rebuildViewPanel(); viewChanged();
+            renderer.setSelectedComponentId(id);
+            rebuildPanel(); viewChanged();
         }});
         viewPanel.add(components);
         final ListBox pads = new ListBox();
-        pads.getElement().setAttribute("aria-label", "Inspect terminal");
-        pads.addItem("Inspect terminal", "");
+        pads.getElement().setAttribute("aria-label", "Probe terminal");
+        pads.addItem("Probe terminal", "");
         for (String id : ids) {
             BoardComponent part = instance.getBoard().getComponent(id);
             for (String padId : part.getPadIds()) if (renderer.canProbePad(padId))
                 pads.addItem(part.getDisplayName() + " terminal " + instance.getBoard().getPad(padId).getTerminalId(), padId);
         }
-        pads.addChangeHandler(new ChangeHandler() { public void onChange(ChangeEvent event) {
-            if (!isCurrentOwner()) return;
-            PcbPadPlacement pad = renderer.getLayoutForProvider().getPad(pads.getValue(pads.getSelectedIndex()));
-            if (pad == null) return;
-            cancelViewGesture(); renderer.getViewport().fit(new Rectangle(pad.getX() - 80, pad.getY() - 80, 160, 160));
-            viewChanged();
-        }});
         viewPanel.add(pads);
         VerticalPanel probes = new VerticalPanel();
         probes.add(viewButton("Place red probe", new Runnable() { public void run() { probeSelected(pads, NativeEvent.BUTTON_LEFT); }}));
@@ -332,7 +436,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         String id = pads.getValue(pads.getSelectedIndex()); Point point = renderer.getPadPoint(id);
         ProbeTarget target = point == null ? null : findProbeTarget(point.x, point.y);
         if (!(target instanceof BoardPadProbeTarget) || !id.equals(((BoardPadProbeTarget)target).getPadId())) {
-            viewFeedback.setText("That terminal is outside this view or covered. Inspect it first."); return;
+            viewFeedback.setText("That terminal is outside this view or covered. Pan or zoom to it."); return;
         }
         sim.instrumentController.handlePointerInput(button, target); sim.repaint();
     }
@@ -356,7 +460,8 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     boolean selectComponentAt(int x, int y) {
         if (!isCurrentPhysicalActionable())
             return false;
-        String partId = renderer.findPartId(x, y);
+        WorkbenchRenderHit hit = renderHost.hit(x, y, false);
+        String partId = renderHost.selectedPart(hit);
         if (partId != null) {
             renderer.setSelectedPartId(partId);
             renderer.setSelectedComponentId(null);
@@ -365,7 +470,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
             sim.repaint();
             return true;
         }
-        String componentId = renderer.findComponentId(x, y);
+        String componentId = renderHost.selectedComponent(hit);
         renderer.setSelectedPartId(null);
         renderer.setSelectedComponentId(componentId);
         rebuildPanel();
@@ -379,6 +484,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         rebuildTicket();
         rebuildPanel();
         rebuildPartsPanel();
+        renderHost.scene();
         if (benchPowerPanel != null) benchPowerPanel.refreshReadings();
     }
 
@@ -393,6 +499,13 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     }
 
     PcbWorkbenchRenderer getRenderer() { return renderer; }
+    WorkbenchRenderHost getRenderHostForDeveloperVerification() { return renderHost; }
+    void replaceRendererForDeveloperVerification(WorkbenchRenderBackend backend) {
+        if (!sim.troubleshootDebug || !isCurrentOwner()) throw new IllegalStateException("Renderer canary is developer-only");
+        cancelViewGesture();
+        if (backend == null) renderHost.restoreProduction(); else renderHost.replace(backend);
+        sim.repaint();
+    }
 
     private WorkbenchCapabilityStrategy getCapability(PhysicalPart part,
             WorkbenchOperation operation) {
@@ -412,6 +525,46 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
             return false;
         WorkbenchCapabilityStrategy capability = getCapability(part, operation);
         return capability != null && capability.invoke(operation, this);
+    }
+
+    void closeComponentMenu() {
+        componentMenuLease = null;
+        if (componentMenu != null) componentMenu.hide();
+        componentMenu = null;
+    }
+    boolean openComponentMenu(int x, int y) {
+        if (!isCurrentPhysicalActionable() || sim.dialogIsShowing()) return false;
+        WorkbenchRenderHit hit = renderHost.hit(x,y,false);
+        String component = renderHost.selectedComponent(hit), partId = renderHost.selectedPart(hit);
+        if (component == null && partId == null) return false;
+        selectComponentAt(x,y);
+        closeComponentMenu();
+        final PopupPanel popup = new PopupPanel(true);
+        componentMenu = popup; componentMenuLease = new Object();
+        popup.setStyleName("tsj-component-context-menu");
+        popup.getElement().setAttribute("role", "dialog");
+        popup.getElement().setAttribute("aria-label", "Component actions");
+        VerticalPanel actions = new VerticalPanel();
+        if (component != null) {
+            actions.add(styledLabel(playerComponentName(component),"tsj-component-title"));
+            Vector<GeneratedComponentConnectionBinding> bindings = instance.getConnectionBindings().getForComponentOrEmpty(component);
+            if (!sim.getBoardPowerController().isElectricallyUnpowered()) actions.add(new Label("Switch off board power to modify this part."));
+            if (!bindings.isEmpty()) addActions(actions,component,bindings,!sim.getBoardPowerController().isElectricallyUnpowered());
+        } else {
+            WorkbenchPartsProvider provider = instance.getPhysicalBoardRuntime().getWorkbenchPartsProviderForPart(partId);
+            if (provider != null) addSelectedPartControls(actions,provider,partId);
+        }
+        popup.add(actions);
+        popup.addCloseHandler(new CloseHandler<PopupPanel>() { public void onClose(CloseEvent<PopupPanel> event) {
+            if (componentMenu == popup) { componentMenuLease = null; componentMenu = null; }
+            if (isCurrentOwner()) sim.cv.getElement().focus();
+        }});
+        popup.setPopupPosition(sim.cv.getAbsoluteLeft()+x,sim.cv.getAbsoluteTop()+y);
+        popup.show();
+        popup.setPopupPosition(Math.max(8,Math.min(sim.cv.getAbsoluteLeft()+x,Window.getClientWidth()-popup.getOffsetWidth()-8)),
+            Math.max(8,Math.min(sim.cv.getAbsoluteTop()+y,Window.getClientHeight()-popup.getOffsetHeight()-8)));
+        if (actions.getWidgetCount()>1 && actions.getWidget(1) instanceof Button) ((Button)actions.getWidget(1)).setFocus(true);
+        return true;
     }
 
     private String operationLabel(PhysicalPart part, WorkbenchOperation operation,
@@ -460,7 +613,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         boolean preparationDisabled = !sim.isChallengeInteractionEnabled();
         if (powered)
             feedback.setText("Turn board power off before modifying components.");
-        addActions(componentId, bindings, powered || preparationDisabled);
+        addActions(panel, componentId, bindings, powered || preparationDisabled);
     }
 
     private void rebuildPartsPanel() {
@@ -493,7 +646,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         WorkbenchPartsProvider selectedProvider =
             runtime.getWorkbenchPartsProviderForPart(selectedPartId);
         if (selectedProvider != null)
-            addSelectedPartControls(selectedProvider, selectedPartId);
+            addSelectedPartControls(partsPanel, selectedProvider, selectedPartId);
     }
 
     private boolean addCatalog(final WorkbenchPartsProvider provider, boolean powered,
@@ -601,18 +754,19 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         partsPanel.add(select);
     }
 
-    private void addSelectedPartControls(final WorkbenchPartsProvider provider,
+    private void addSelectedPartControls(final VerticalPanel targetPanel, final WorkbenchPartsProvider provider,
             final String selectedPartId) {
+        final Object menuLease = componentMenuLease;
         final PhysicalPart<?> part = provider.getPart(selectedPartId);
-        partsPanel.add(new Label("Selected: " + playerPartLabel(provider, part)));
-        partsPanel.add(new Label("State: Loose"));
+        targetPanel.add(new Label("Selected: " + playerPartLabel(provider, part)));
+        targetPanel.add(new Label("State: Loose"));
         PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
         Vector<PhysicalSlotMutationProvider> targets =
             runtime.getCompatibleMutationProviders(part);
         if (targets.isEmpty()) {
-            partsPanel.add(new Label("No compatible empty target."));
+            targetPanel.add(new Label("No compatible empty target."));
         } else {
-            partsPanel.add(new Label("Compatible targets:"));
+            targetPanel.add(new Label("Compatible targets:"));
             for (final PhysicalSlotMutationProvider target : targets) {
                 final String targetComponentId = target.getComponentId();
                 final WorkbenchOperation installOperation = WorkbenchOperation.forPartAtSlot(
@@ -624,7 +778,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
                     isOperationAvailable(part, installOperation));
                 ClickHandler installHandler = new ClickHandler() {
                     public void onClick(ClickEvent event) {
-                        if (!isCurrentPhysicalActionable())
+                        if (!isCurrentPhysicalActionable() || (targetPanel != partsPanel && menuLease != componentMenuLease))
                             return;
                         try {
                             if (dispatchOperation(part, installOperation))
@@ -634,39 +788,17 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
                         }
                         if (!isCurrentOwner())
                             return;
+                        closeComponentMenu();
                         refresh();
                         sim.repaint();
                     }
                 };
                 lastPhysicalActionHandler = installHandler;
                 install.addClickHandler(installHandler);
-                partsPanel.add(install);
+                targetPanel.add(install);
             }
         }
 
-        final WorkbenchOperation inspectOperation =
-            WorkbenchOperation.forPart(WorkbenchOperation.INSPECT_LOOSE, part);
-        final WorkbenchCapabilityStrategy inspectCapability = getCapability(part,
-            inspectOperation);
-        if (inspectCapability != null) {
-            Button inspect = new Button(inspectCapability.getOperationLabel(inspectOperation));
-            inspect.setStyleName("tsj-action-button");
-            inspect.setEnabled(isOperationAvailable(part, inspectOperation));
-            ClickHandler inspectHandler = new ClickHandler() {
-                public void onClick(ClickEvent event) {
-                    if (!isCurrentPhysicalActionable())
-                        return;
-                    if (dispatchOperation(part, inspectOperation))
-                        feedback.setText("Inspection: " + playerPartLabel(provider, part));
-                    if (!isCurrentOwner())
-                        return;
-                    refresh();
-                    sim.repaint();
-                }
-            };
-            inspect.addClickHandler(inspectHandler);
-            partsPanel.add(inspect);
-        }
     }
 
     private Vector<PhysicalPart<?>> getLooseParts(Vector<WorkbenchPartsProvider> providers) {
@@ -804,7 +936,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         }
     }
 
-    private void addActions(final String componentId,
+    private void addActions(final VerticalPanel targetPanel, final String componentId,
             Vector<GeneratedComponentConnectionBinding> bindings, boolean disabled) {
         if (isManagedSlotEmpty(componentId))
             return;
@@ -820,14 +952,14 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
                         binding.getPadId()) :
                     WorkbenchOperation.forPartLead(WorkbenchOperation.LIFT_LEAD, part,
                         componentId, binding.getPadId());
-                addAction(operationLabel(part, operation, "Lift lead " + pad.getTerminalId()),
+                addAction(targetPanel, operationLabel(part, operation, "Lift lead " + pad.getTerminalId()),
                     disabled || !isOperationAvailable(part, operation), new ComponentAction() {
                     public void execute() {
                         dispatchOperation(part, operation);
                     }
                 });
             }
-            addRemoveAction(componentId, part, disabled);
+            addRemoveAction(targetPanel, componentId, part, disabled);
         } else if (state == ComponentPhysicalState.LEAD_LIFTED) {
             for (final GeneratedComponentConnectionBinding binding : bindings) {
                 final BoardPad pad = instance.getBoard().getPad(binding.getPadId());
@@ -837,7 +969,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
                             componentId, binding.getPadId()) :
                         WorkbenchOperation.forPartLead(WorkbenchOperation.LIFT_LEAD, part,
                             componentId, binding.getPadId());
-                    addAction(operationLabel(part, operation, "Lift lead " + pad.getTerminalId()),
+                    addAction(targetPanel, operationLabel(part, operation, "Lift lead " + pad.getTerminalId()),
                         disabled || !isOperationAvailable(part, operation), new ComponentAction() {
                         public void execute() {
                             dispatchOperation(part, operation);
@@ -849,7 +981,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
                             componentId, binding.getPadId()) :
                         WorkbenchOperation.forPartLead(WorkbenchOperation.RECONNECT_LEAD, part,
                             componentId, binding.getPadId());
-                    addAction(operationLabel(part, operation,
+                    addAction(targetPanel, operationLabel(part, operation,
                             "Reconnect lead " + pad.getTerminalId()),
                         disabled || !isOperationAvailable(part, operation),
                         new ComponentAction() {
@@ -859,19 +991,19 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
                         });
                 }
             }
-            addRemoveAction(componentId, part, disabled);
-            addRestoreAction(componentId, part, disabled);
+            addRemoveAction(targetPanel, componentId, part, disabled);
+            addRestoreAction(targetPanel, componentId, part, disabled);
         } else {
-            addRestoreAction(componentId, part, disabled);
+            addRestoreAction(targetPanel, componentId, part, disabled);
         }
     }
 
-    private void addRemoveAction(final String componentId, final PhysicalPart part,
+    private void addRemoveAction(final VerticalPanel targetPanel, final String componentId, final PhysicalPart part,
             boolean disabled) {
         final WorkbenchOperation operation = part == null ?
             WorkbenchOperation.forComponent(WorkbenchOperation.REMOVE, componentId) :
             WorkbenchOperation.forPart(WorkbenchOperation.REMOVE, part);
-        addAction(operationLabel(part, operation, "Remove component"),
+        addAction(targetPanel, operationLabel(part, operation, "Remove component"),
             disabled || !isOperationAvailable(part, operation),
             new ComponentAction() {
             public void execute() {
@@ -880,12 +1012,12 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         });
     }
 
-    private void addRestoreAction(final String componentId, final PhysicalPart part,
+    private void addRestoreAction(final VerticalPanel targetPanel, final String componentId, final PhysicalPart part,
             boolean disabled) {
         final WorkbenchOperation operation = part == null ?
             WorkbenchOperation.forComponent(WorkbenchOperation.RESTORE, componentId) :
             WorkbenchOperation.forPart(WorkbenchOperation.RESTORE, part);
-        addAction(operationLabel(part, operation, "Restore component"),
+        addAction(targetPanel, operationLabel(part, operation, "Restore component"),
             disabled || !isOperationAvailable(part, operation),
             new ComponentAction() {
             public void execute() {
@@ -894,16 +1026,18 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         });
     }
 
-    private void addAction(final String text, boolean disabled, final ComponentAction action) {
+    private void addAction(final VerticalPanel targetPanel, final String text, boolean disabled, final ComponentAction action) {
+        final Object menuLease = componentMenuLease;
         Button button = new Button(text);
         button.setStyleName("tsj-action-button");
         button.setEnabled(!disabled);
         ClickHandler actionHandler = new ClickHandler() {
             public void onClick(ClickEvent event) {
-                if (!isCurrentPhysicalActionable())
+                if (!isCurrentPhysicalActionable() || (targetPanel != panel && menuLease != componentMenuLease))
                     return;
                 try {
                     action.execute();
+                    closeComponentMenu();
                     feedback.setText("");
                 } catch (BoardModificationRejectedException exception) {
                     feedback.setText("Turn board power off before modifying components.");
@@ -916,7 +1050,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         };
         lastPhysicalActionHandler = actionHandler;
         button.addClickHandler(actionHandler);
-        panel.add(button);
+        targetPanel.add(button);
     }
 
     private Label styledLabel(String text, String style) {

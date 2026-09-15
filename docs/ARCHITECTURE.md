@@ -12,6 +12,127 @@ instruments, valid repair behavior and answer privacy remain required. The
 [current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
 older evidence packets describe their own historical candidates.
 
+## Physical service and the post-REL-A workbench
+
+`ServiceableBoardConstruction` completes every currently playable physical
+position before `GeneratedBoardInstance` captures its construction oracle or
+publishes geometry. It receives component specifications, packages, electrical
+bindings and the physical runtime, without a selected fault or diagnostic
+hypothesis. Existing typed resistor, diode, LED, capacitor, transistor and relay
+providers own their healthy and faulty instances alike. Supporting ceramic
+capacitors use the same capacitor owner with their nonpolarized package and
+compatible catalog. Arbitrary developer-only packages retain their declared
+behavior; the current-family coverage gate requires a real service owner for
+every playable position.
+
+Directly wired supporting parts receive separable, owned CircuitJS attachments.
+Construction preserves the original board copper endpoints while relocating the
+part's electrical posts. `PhysicalServicePart` and `ServiceComponentSlot` provide
+real fuse and connector service. Each connector has two independent metal pins;
+explicit generator-owned harness declarations identify its external cable ends.
+The connector does not short those pins together. A removed connector loses its
+solder attachments and cable contacts. An output header without a cable has no
+invented external connection. `PhysicalMutationSlot.Docking` declares these
+contacts to the existing mutation scope, active-graph rollback and runtime
+invariant. Graph verification permits their absence only for an empty declared
+position, and copper projection excludes them from permanent PCB copper.
+
+Action discovery reads registered physical capabilities, exact part identity,
+mount state, package compatibility, accessibility and the existing owner, power,
+meter and transaction guards. Private fault metadata is absent from menu
+construction and capability discovery. Execution retains existing fault-effect
+ownership where needed to keep the real removed or installed part's electrical
+model coherent. Originals retain their source-slot installation rule; purchased
+parts can move to other eligible positions while keeping their original inventory
+and provenance. Compatible wrong values remain installed and are evaluated by
+CircuitJS and customer behavior. Parallel Dual Indicator admits resistor faults
+at either R1 or R2; both positions always have their physical service providers.
+Live LED observations follow the current installed electrical element.
+The normal READY state does not reassert the original fault symptom after player
+edits. Initial healthy/faulted validation remains at admission; runtime graph and
+ownership checks remain active, and customer retest judges current behavior.
+
+Stored-energy readiness enumerates the current runtime's physical capacitors,
+including supporting-capacitor replacements and loose charged parts. Installed
+storage guards its board nets; loose storage guards its own probe terminals.
+The existing owner, isolation and accepted-solver-observation checks still apply.
+
+The larger serviceable graphs keep CircuitJS's wire-current calculation and its
+original dependency order. Analysis now resolves neighbor post indices once;
+each scheduled current refresh still sums actual element currents. Every graph
+analysis rebuilds this adjacency. The compiled service/alpha checks compare it
+exactly with the original coordinate-lookup algorithm from identical inputs,
+restore the previous wire samples, and reject a deliberately stale post index.
+Solver equations, stepping and generation budgets are unchanged.
+Analysis also freezes each node's voltage recipients in their original order.
+Exact ideal `WireElm` instances bypass only inherited empty iteration/current
+callbacks; other models and wire subclasses keep their callbacks. Constant
+matrices are checked after reduction and linear factorization. Dynamic matrix
+stamps check both their input and accumulated value, including constant-row RHS
+contributions, instead of rescanning unchanged cells after every trial. Real
+nonfinite-stamp and overflow canaries accompany the existing solver/model,
+ownership, callback and cleanup gates.
+
+Crout factorization accumulates each column in the original ascending order of
+terms, skipping a zero coefficient only after all inputs and computed factors
+are proven finite. Pivot selection, tiny-pivot handling and substitution remain
+unchanged. This reduces zero products between disconnected tray islands without
+removing their electrical models. `LuFactorizationChecks` retains the original
+algorithm as an independent JVM/GWT oracle for exact factors, pivot choices and
+solutions across dense, sparse, disconnected, singular and row-swapped fixtures.
+
+The production workbench uses a shared camera for the PCB and its adjacent metal
+Parts Tray. The PCB flips inside its outline while the tray remains on the bench.
+Pan limits retain half the PCB area at overview. At high zoom the limit is
+half the maximum PCB area that can fit in the viewport, including diagonal
+drags; the tray never counts toward the required visible PCB area. Camera paints coalesce through animation
+frames without advancing the solver. Wood grain is deterministic, subtle,
+world-anchored canvas geometry with bounded visible detail. Component bodies,
+metal terminals, mask and copper retain their canonical physical geometry.
+Lifted leads use one appearance/probe projection, including their actual bent
+tip in selection and drag bounds. Body selection remains available in meter
+modes; conductive targets retain red/black probe priority. Context actions and
+board/tray dragging invoke the existing guarded physical operations.
+
+`WorkbenchRenderHost` attaches a backend to immutable `WorkbenchPhysicalScene`
+snapshots and resolves its stable hits through the current physical owner.
+`CanvasWorkbenchBackend` adapts the production painter.
+`SvgWorkbenchCanaryBackend` is the small developer RENDER-0 proof: it consumes
+the same board, component, terminal, pad and copper identities and can detach
+without rebuilding the challenge or solver. It is not another electrical model
+or a completed alternate product renderer. Attachment tokens reject stale and
+foreign hits; marker/hit queries refresh current mount state. The compiled proof
+checks solver identity, real meter results, actual repair, immutable scene
+collections and cleanup. Layout and interpretation epochs are now 8.
+
+## Workbench progress, compact placement and instrument presentation
+
+`GenerationProgress` reports six completed stages and actual proof-work units,
+not a time estimate. A narrow public snapshot excludes catalog construction
+outside Shop. The adapter refreshes preparation/retest status without advancing
+simulation. Player preparation pauses while its tab is hidden and resumes the
+same job: `ForegroundGenerationClock` excludes only hidden idle time, retaining
+all accumulated active time within the existing 90-second limit. Developer
+verification keeps wall-time budgets. The continuation/watchdog is revoked at
+terminal completion, and completion is delivered even if UI restoration throws.
+
+`PcbPlacementCompactor` removes only empty routing-courtyard bands before
+routing. Every candidate retains exact package geometry and rigidly translated
+pad/probe targets, then passes the original placement validator. It neither
+shrinks parts nor substitutes a decorative board for the validated layout.
+
+The top toolbar displays the existing native GWT widgets in DOM popovers,
+without cloned controls. The draggable meter and rotary selector delegate to
+the same live instrument owner and its guards. Unimplemented functions are
+explicitly disabled rather than producing invented readings. Meter movement
+changes presentation only and consumes its pointer/keyboard gestures before
+the underlying board can interpret them.
+
+`WorkbenchRelayFeedback` observes actual installed relay contact transitions.
+Initial state, private verification and owner replacement are silent. The audio
+adapter synthesizes a short mechanical click after a user gesture, respects
+mute/background state and cannot affect the solver if audio is unavailable.
+
 ## U04 product session and U05 initial difficulty
 
 `PlayerLaunchRequest` is the exact public launch/replay boundary. The current
@@ -72,7 +193,7 @@ limits are unchanged. The actual compiled A07 and RC gates qualify this seam.
 `CatalogAcquisitionProvider` extends the installed mutation adapters with real
 loose acquisition. Existing typed inventories allocate identities and actual
 CircuitJS backings, bind the existing physical geometry and retain the installed
-slot/bindings. All seven current adapters declare their exact mutation slot and
+slot/bindings. All current adapters declare their exact mutation slot and
 inventory to the existing `PhysicalMutationScope`. Capacitor, NPN, NMOS and LED
 slots own typed attachment capture/restoration alongside the existing resistor,
 diode and relay adapters. Failed acquisition restores inventory serial/identity,

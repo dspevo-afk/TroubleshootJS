@@ -42,6 +42,7 @@ public final class Q15ControlBoardContractTest {
             }
             for(PcbTraceGeometry trace:layout.getTraces()) require(trace.getLayer()==PcbCopperLayer.BOTTOM,"one copper layer, no implicit crossings");
             owner.getTemporalBehavior().getDependency(owner);
+            verifySupportFixtureTargets(owner);
             require(owner.getDiagnosticProvider().getCorrectCatalogId(owner,"K1").equals("RELAY_12V"),"answer follows the twelve-volt topology");
             if(seed==0) negatives(sim,owner,plan);
             System.out.println("Q15_ROUTE seed="+Long.toString(seed)+" cohort="+(cohort==DEVELOPMENT?"development":"holdout")+
@@ -65,6 +66,36 @@ public final class Q15ControlBoardContractTest {
             }
         }
         System.out.println("PASS: Q15 control board contracts assertions="+assertions+" designs="+designs.size());
+    }
+    private static void verifySupportFixtureTargets(GeneratedBoardInstance owner) throws Exception {
+        java.lang.reflect.Field commandField=RelayOutputBehavior.class.getDeclaredField("command");
+        commandField.setAccessible(true);
+        SwitchElm expected=(SwitchElm)commandField.get(owner.getFamilyState());
+        require(Q15SupportChecks.resolveCommand(owner)==expected,"support ablation uses the actual family command");
+        SwitchElm oldLast=null;
+        for(CircuitElm element:owner.getSimulationElements())
+            if(element instanceof SwitchElm && !(element instanceof WireElm)) oldLast=(SwitchElm)element;
+        require(oldLast!=expected,"regression exposes the former last-switch alias");
+        java.lang.reflect.Field graphField=GeneratedBoardInstance.class.getDeclaredField("simulationElements");
+        graphField.setAccessible(true);
+        @SuppressWarnings("unchecked")
+        java.util.Vector<CircuitElm> graph=(java.util.Vector<CircuitElm>)graphField.get(owner);
+        java.util.Collections.reverse(graph);
+        require(Q15SupportChecks.resolveCommand(owner)==expected,"command selection ignores element order");
+        java.util.Collections.reverse(graph);
+        int index=graph.indexOf(expected); graph.remove(index);
+        try { Q15SupportChecks.resolveCommand(owner); throw new AssertionError("Missing command accepted"); }
+        catch(AssertionError failure) { require("Missing command switch".equals(failure.getMessage()),"missing command fails closed"); }
+        finally {graph.add(index,expected);}
+        SwitchElm duplicate=new SwitchElm(expected.x,expected.y);
+        duplicate.x2=expected.x2;duplicate.y2=expected.y2;duplicate.setPoints();graph.add(duplicate);
+        try { Q15SupportChecks.resolveCommand(owner); throw new AssertionError("Duplicate command accepted"); }
+        catch(AssertionError failure) { require("Ambiguous command switch".equals(failure.getMessage()),"ambiguous command fails closed"); }
+        finally {graph.remove(duplicate);duplicate.delete();}
+        java.lang.reflect.Field outputField=RelayOutputBehavior.class.getDeclaredField("output");outputField.setAccessible(true);
+        CircuitElm load=((CircuitPostMeasurementEndpoint)outputField.get(owner.getFamilyState())).getElement();
+        require(Q15SupportChecks.resolveLoad(owner)==load && load instanceof BoundedExternalLoadElm,
+            "support ablation samples the actual external load, not a solder wire");
     }
     private static void verifyRandomBoundary() {
         // Independent expected envelope and mapping. Includes both proven arbitrary failures.

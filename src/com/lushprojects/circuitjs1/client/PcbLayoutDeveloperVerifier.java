@@ -30,9 +30,11 @@ class PcbLayoutDeveloperVerifier {
         PcbBoardLayout seed2Repeat = seed2RepeatBoard.getPcbLayout();
         PcbBoardLayout seed3 = seed3Board.getPcbLayout();
         PcbBoardLayout seed3Repeat = seed3RepeatBoard.getPcbLayout();
-        verifyRouteQuality(seed0, seed0Board.getBoard());
-        verifyRouteQuality(seed2, seed2Board.getBoard());
-        verifyRouteQuality(seed3, seed3Board.getBoard());
+        boolean planned = "LED_INDICATOR".equals(familyId) || "DIODE_PROTECTED_INDICATOR".equals(familyId) ||
+            "PARALLEL_DUAL_INDICATOR".equals(familyId);
+        verifyRouteQuality(seed0, seed0Board.getBoard(), planned);
+        verifyRouteQuality(seed2, seed2Board.getBoard(), planned);
+        verifyRouteQuality(seed3, seed3Board.getBoard(), planned);
         verifyLabels(seed0, seed0Board.getBoard());
         verifyLabels(seed2, seed2Board.getBoard());
         verifyLabels(seed3, seed3Board.getBoard());
@@ -63,7 +65,7 @@ class PcbLayoutDeveloperVerifier {
             familyId + " seeds 2 and 3 lack meaningful geometry variation");
     }
 
-    private static void verifyRouteQuality(PcbBoardLayout layout, TroubleshootBoard board) {
+    private static void verifyRouteQuality(PcbBoardLayout layout, TroubleshootBoard board, boolean planned) {
         layout.validateRouteQuality();
         verifyCopperClearance(layout);
         for (PcbTraceGeometry trace : layout.getTraces()) {
@@ -79,8 +81,12 @@ class PcbLayoutDeveloperVerifier {
         require(layout.getCompactnessMetric() >= .40,
             "PCB content is too sparse for its derived outline: " +
                 layout.getCompactnessMetric());
-        require(layout.getLargestEdgeMargin() <= 34,
-            "PCB has an excessive unused edge margin: " + layout.getLargestEdgeMargin());
+        int expectedEdgeMargin = 26;
+        // Named RC/switch factories retain their explicit 26-unit template margin.
+        if (planned) for (PcbPlacementConstraints.Part part : board.getPlacementConstraints().getParts())
+            expectedEdgeMargin = Math.max(expectedEdgeMargin, part.accessMargin + 30);
+        require(layout.getLargestEdgeMargin() == expectedEdgeMargin,
+            "PCB margin disagrees with declared P03 service access: " + layout.getLargestEdgeMargin());
         verifyRoutingCourtyards(layout, board);
         require(PcbTraceRules.MIN_CENTERLINE_CLEARANCE ==
                 PcbTraceRules.TRACE_WIDTH + PcbTraceRules.MIN_VISIBLE_CLEARANCE,
@@ -98,6 +104,22 @@ class PcbLayoutDeveloperVerifier {
     private static void verifyEndpointEscape(PcbBoardLayout layout, PcbTraceGeometry trace,
             boolean start) {
         String padId = start ? trace.getStartPadId() : trace.getEndPadId();
+        if (padId == null) {
+            int[] bx=trace.getXPoints(), by=trace.getYPoints(); int endpoint=start?0:bx.length-1;
+            boolean contact=false;
+            for (PcbTraceGeometry trunk : layout.getTraces()) {
+                if (trunk == trace || trunk.getLayer() != trace.getLayer() ||
+                        !trunk.getNetId().equals(trace.getNetId())) continue;
+                int[] tx=trunk.getXPoints(), ty=trunk.getYPoints();
+                for (int i=1;i<tx.length;i++) {
+                    int x=bx[endpoint], y=by[endpoint];
+                    if ((tx[i]==tx[i-1] && x==tx[i] && y>=Math.min(ty[i],ty[i-1]) && y<=Math.max(ty[i],ty[i-1])) ||
+                        (ty[i]==ty[i-1] && y==ty[i] && x>=Math.min(tx[i],tx[i-1]) && x<=Math.max(tx[i],tx[i-1])))
+                        contact=true;
+                }
+            }
+            require(contact,"branch lacks real same-layer/same-net trunk contact"); return;
+        }
         PcbPadPlacement pad = layout.getPad(padId);
         if (pad.getEscapeLength() == 0)
             return;
@@ -148,20 +170,14 @@ class PcbLayoutDeveloperVerifier {
             "seed 3 LED cathode escape corridor does not leave its keep-out");
         PcbTraceGeometry groundTrace = null;
         for (PcbTraceGeometry trace : layout.getTraces()) {
-            if ("GND".equals(trace.getNetId()) && "J1.2".equals(trace.getStartPadId()) &&
-                    "LED1.K".equals(trace.getEndPadId())) {
-                groundTrace = trace;
-                break;
-            }
+            if ("GND".equals(trace.getNetId()) && ("LED1.K".equals(trace.getStartPadId()) ||
+                    "LED1.K".equals(trace.getEndPadId()))) { groundTrace=trace; break; }
         }
-        require(groundTrace != null, "seed 3 GND-to-LED cathode trace is missing");
-        int[] x = groundTrace.getXPoints();
-        int[] y = groundTrace.getYPoints();
-        require(x[x.length - 2] == cathode.getX() &&
-                y[x.length - 2] > cathode.getY() &&
-                x[x.length - 1] == cathode.getX() &&
-                y[x.length - 1] == cathode.getY(),
-            "seed 3 GND trace approaches LED1.K through the component body");
+        require(groundTrace != null, "seed 3 cathode copper endpoint is missing");
+        verifyEndpointEscape(layout, groundTrace, "LED1.K".equals(groundTrace.getStartPadId()));
+        PcbConductorGraph.Snapshot copper=layout.captureConductorGraph(
+            TroubleshootBoardFixtures.createLedIndicatorBoard()).pristine();
+        require(copper.padsConnected("J1.2","LED1.K"),"seed 3 ground-to-cathode copper is disconnected");
     }
 
     private static void verifyRoutingCourtyards(PcbBoardLayout layout, TroubleshootBoard board) {
@@ -195,11 +211,12 @@ class PcbLayoutDeveloperVerifier {
             TroubleshootBoard board, PcbComponentPlacement component, PcbTraceGeometry trace,
             int x1, int y1, int x2, int y2) {
         String[] endpointIds = { trace.getStartPadId(), trace.getEndPadId() };
-        boolean sameEndpointComponent = board.getPad(trace.getStartPadId()).getComponentId()
-            .equals(board.getPad(trace.getEndPadId()).getComponentId());
+        BoardPad firstPad=board.getPad(trace.getStartPadId()), lastPad=board.getPad(trace.getEndPadId());
+        boolean sameEndpointComponent = firstPad != null && lastPad != null &&
+            firstPad.getComponentId().equals(lastPad.getComponentId());
         for (String endpointId : endpointIds) {
             BoardPad boardPad = board.getPad(endpointId);
-            if (!component.getComponentId().equals(boardPad.getComponentId()))
+            if (boardPad == null || !component.getComponentId().equals(boardPad.getComponentId()))
                 continue;
             PcbPadPlacement pad = layout.getPad(endpointId);
             if (sameEndpointComponent && !((x1 == pad.getX() && y1 == pad.getY()) ||
@@ -330,23 +347,13 @@ class PcbLayoutDeveloperVerifier {
 
     private static void verifyMultiPadNet(PcbBoardLayout layout, TroubleshootBoard board,
             String netId, String[] padIds) {
-        int traceCount = 0;
-        Vector<String> reached = new Vector<String>();
-        for (PcbTraceGeometry trace : layout.getTraces()) {
-            if (!netId.equals(trace.getNetId()))
-                continue;
-            traceCount++;
-            require(padIds[0].equals(trace.getStartPadId()),
-                "Multi-pad net did not route from its stable root: " + netId);
-            require(!reached.contains(trace.getEndPadId()),
-                "Multi-pad net has duplicate route endpoint: " + trace.getEndPadId());
-            reached.add(trace.getEndPadId());
-        }
-        require(traceCount == padIds.length - 1 && reached.size() == padIds.length - 1,
-            "Multi-pad net has a disconnected or decorative branch: " + netId);
-        for (int index = 1; index < padIds.length; index++)
-            require(reached.contains(padIds[index]) && board.getPad(padIds[index]) != null,
-                "Multi-pad net is missing pad copper: " + padIds[index]);
+        int traceCount=0;
+        for (PcbTraceGeometry trace : layout.getTraces()) if (netId.equals(trace.getNetId())) traceCount++;
+        require(traceCount == padIds.length-1,"multi-pad net does not form its minimal tree");
+        for (String id : padIds)
+            require(board.getPad(id) != null && netId.equals(board.getPad(id).getNetId()),
+                "multi-pad net is missing its stable pad: " + id);
+        ArchitectureDeveloperVerifier.verifyRasterConnectivity(layout,board);
     }
 
     private static boolean containsInclusive(Rectangle rectangle, int x, int y) {

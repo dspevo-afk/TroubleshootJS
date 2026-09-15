@@ -240,6 +240,7 @@ final class PhysicalMutationScope {
             throw new IllegalArgumentException("Physical mutation install part is foreign");
         validateCandidateGeometry(part);
         slot.installForMutation(part, this);
+        modifications.setDockingAttachmentsForMutation(this, slot, true);
     }
 
     PhysicalPart<?> clearPart() {
@@ -247,6 +248,7 @@ final class PhysicalMutationScope {
         if (slot.getInstalledPart() != installedPartBefore)
             throw new IllegalStateException("Physical mutation slot owner changed before clear");
         PhysicalPart<?> removed = slot.clearForMutation(this);
+        modifications.setDockingAttachmentsForMutation(this, slot, false);
         slot.restoreEmptySlotAttachmentState(this);
         // An empty slot retains its generated backing as the component's
         // canonical owner.  Without this rebinding, a portable acquired part

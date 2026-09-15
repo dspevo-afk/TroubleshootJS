@@ -31,12 +31,12 @@ $mutation=Get-Content -LiteralPath (Join-Path $EvidenceRoot 'a08-report.json') -
 $diagnostic=Get-Content -LiteralPath (Join-Path $EvidenceRoot 'task41-report.txt') -Raw
 $construction=Get-Content -LiteralPath (Join-Path $EvidenceRoot 'task49-report.json') -Raw
 if (-not (Test-Relay $relay) -or -not (Test-A08Report $mutation) -or
-        -not (Test-Task41Report $diagnostic) -or $diagnostic -notmatch '(?:^|;)routes=20(?:;|$)' -or
+        -not (Test-Task41Report $diagnostic) -or $diagnostic -notmatch '(?:^|;)routes=22(?:;|$)' -or
         -not (Test-ControlledReport $construction 'TSJ-TASK49-2')) {
     throw 'Incomplete current electrical, mutation, diagnostic or construction regression.'
 }
 if ((Test-Relay '{"status":"PASS"}') -or (Test-A08Report '{}') -or
-        (Test-Task41Report 'routes=20;result=PASS') -or
+        (Test-Task41Report 'routes=22;result=PASS') -or
         (Test-ControlledReport '{"protocol":"TSJ-TASK49-2","status":"PASS"}' 'TSJ-TASK49-2') -or
         (Test-Relay ($relay.Replace('"NMOS"','"BJT"')))) {
     throw 'Maintained regression reader accepted a negative canary.'
@@ -45,4 +45,4 @@ if ((Test-Relay '{"status":"PASS"}') -or (Test-A08Report '{}') -or
 if ($LASTEXITCODE -ne 0) { throw 'Q15 evidence reader failed.' }
 & $Python (Join-Path $PSScriptRoot '../tests/contracts/a10_generation_report.py') --report (Join-Path $EvidenceRoot 'a10-report.json')
 if ($LASTEXITCODE -ne 0) { throw 'A10 evidence reader failed.' }
-Write-Output 'PASS: Q15, A10, E03, A08, twenty Task41 routes, Task49 and negative report canaries.'
+Write-Output 'PASS: Q15, A10, E03, A08, twenty-two Task41 routes, Task49 and negative report canaries.'

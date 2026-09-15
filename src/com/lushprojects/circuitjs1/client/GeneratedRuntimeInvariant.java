@@ -40,10 +40,29 @@ final class GeneratedRuntimeInvariant {
         verifyComponentBindings(instance, canonical, claimed);
         verifyPowerBindings(instance, canonical, claimed);
         verifyConnectionBindings(instance, canonical, activeElements, claimed);
+        verifyDockingAttachments(instance, canonical, activeElements, claimed);
         verifyInstalledComponentBindings(instance);
         verifyModificationState(instance, modifications, activeElements);
         verifyPhysicalRuntime(instance, canonical, activeElements);
         verifyFaultOwnership(instance, canonical);
+    }
+
+    private static void verifyDockingAttachments(GeneratedBoardInstance instance,
+            Vector<CircuitElm> canonical, Vector<CircuitElm> active, Vector<CircuitElm> claimed) {
+        for (PhysicalBoardSlot physical : instance.getPhysicalBoardRuntime().getSlots()) {
+            PhysicalBoardInstallationProvider.Scoped provider = instance.getPhysicalBoardRuntime()
+                .getScopedMutationCapability(physical.getComponentId());
+            if (provider == null || !(provider.getMutationSlot() instanceof PhysicalMutationSlot.Docking)) continue;
+            PhysicalMutationSlot.Docking slot = (PhysicalMutationSlot.Docking)provider.getMutationSlot();
+            slot.validateDockingAttachments();
+            for (CircuitElm contact : slot.getDockingAttachments()) {
+                require(contact instanceof WireElm && containsIdentity(canonical, contact) &&
+                    !containsIdentity(claimed, contact), "Foreign or aliased connector cable contact");
+                claimed.add(contact);
+                require(countIdentity(active, contact) == (physical.isOccupied() ? 1 : 0),
+                    "Connector cable contact disagrees with physical mount state");
+            }
+        }
     }
 
     /** Settled-owner form used by simulator verification and independent gates. */

@@ -205,11 +205,11 @@ final class PhysicalPackages {
     private static PhysicalPackageGeometry to92(String[] terminalIds) {
         Vector<PhysicalPackageGeometry.Terminal> terminals =
             new Vector<PhysicalPackageGeometry.Terminal>();
-        terminals.add(terminal(terminalIds[0], 20, 90, 48, 65, 48, 59, -1, 0, 30));
-        terminals.add(terminal(terminalIds[1], 60, 90, 80, 70, 80, 64, 0, 1, 36));
-        terminals.add(terminal(terminalIds[2], 100, 90, 92, 70, 92, 64, 0, 1, 36));
-        return geometry(130, 125, terminals, new Rectangle(44, 26, 64, 56),
-            new Rectangle(28, 12, 84, 78), new Rectangle(5, 4, 120, 118));
+        terminals.add(terminal(terminalIds[0], 20, 90, 44, 70, 44, 64, -1, 0, 30));
+        terminals.add(terminal(terminalIds[1], 60, 90, 60, 70, 60, 64, 0, 1, 36));
+        terminals.add(terminal(terminalIds[2], 100, 90, 76, 70, 76, 64, 0, 1, 36));
+        return geometry(130, 125, terminals, new Rectangle(28, 26, 64, 56),
+            new Rectangle(18, 12, 84, 78), new Rectangle(5, 4, 120, 118));
     }
 
     private static PhysicalPackageGeometry electrolytic() {

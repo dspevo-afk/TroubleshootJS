@@ -55,6 +55,16 @@ class BoardSimulationBindings {
         return padEndpoints.get(padId);
     }
 
+    boolean isConstructionComplete() { return developerVerificationReady; }
+
+    void completeServiceAnchor(String padId, CircuitMeasurementEndpoint expected,
+            CircuitMeasurementEndpoint persistent) {
+        if (constructionAborted || developerVerificationReady ||
+                padEndpoints.get(padId) != expected || persistent == null)
+            throw new IllegalStateException("Service copper must be completed by its unpublished construction owner");
+        padEndpoints.put(padId, persistent);
+    }
+
     /**
      * Captures the authoritative generated pad map without going through the
      * live lookup method.  GeneratedBoardInstance calls this exactly at its

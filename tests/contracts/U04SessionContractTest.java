@@ -65,10 +65,12 @@ public final class U04SessionContractTest {
                 .generation().resolve(new GenerationRequest.PlanCache()).construct().instance;
             PhysicalBoardRuntime runtime = owner.getPhysicalBoardRuntime();
             java.util.Vector<String> partOrder = runtime.getPartOrder();
-            check(runtime.getWorkbenchPartsProviders().size() == 4,
-                "two channel driver/load catalogs exist in the real composed runtime");
+            check(runtime.getWorkbenchPartsProviders().size() == 15,
+                "every composed-board position has its physical replacement catalog");
             final PlayerShopCatalog shop = new PlayerShopCatalog(owner);
-            check(shop.categories().size() == 1, "four target catalogs become one part-type catalog");
+            java.util.HashSet<String> physicalTypes = new java.util.HashSet<String>();
+            for (String id : owner.getBoard().getComponentIds()) physicalTypes.add(owner.getBoard().getComponent(id).getType());
+            check(shop.categories().size() == physicalTypes.size(), "catalogs group every physical part type without destination duplicates");
             PlayerShopCatalog.Category resistors = shop.category("RESISTOR");
             check("Resistors".equals(resistors.title) && resistors.entries().size() == 73,
                 "one complete E12 resistor catalog without destination duplicates");
@@ -78,7 +80,7 @@ public final class U04SessionContractTest {
                 "10000000 Ohm +/-5%".equals(resistors.label(find(resistors, "R_CATALOG_10000000", "SPAN_220"))),
                 "public catalog retains selected specifications across the value range");
             resistors.entries().clear(); shop.categories().clear();
-            check(shop.categories().size() == 1 && resistors.entries().size() == 73 &&
+            check(shop.categories().size() == physicalTypes.size() && resistors.entries().size() == 73 &&
                 partOrder.equals(runtime.getPartOrder()), "projection does not own or mutate catalog/inventory storage");
             reject(new Attempt() { public void run() { shop.category("RLOAD"); } });
             reject(new Attempt() { public void run() { shop.category("RESISTOR").entry("R_CATALOG_UNKNOWN"); } });

@@ -1,0 +1,7 @@
+﻿{
+    "gate":  "UI adapter112 and three script syntax checks",
+    "exitCode":  0,
+    "candidate":  "GWT32",
+    "playerInput":  false,
+    "dependency":  "existing external jsdom"
+}

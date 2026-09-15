@@ -1,0 +1,14 @@
+﻿{
+    "ExitCode":  0,
+    "OpenBlockerCount":  0,
+    "VerifiedLanes":  [
+                          "A",
+                          "B/F",
+                          "C",
+                          "E",
+                          "D",
+                          "G",
+                          "H",
+                          "I"
+                      ]
+}

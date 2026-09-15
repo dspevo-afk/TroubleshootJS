@@ -273,17 +273,10 @@ class GeneratedChallengeController {
             return;
         if (!faults.isApplied())
             throw new IllegalStateException("Selected challenge fault was cleared outside developer scope");
-        String targetComponentId = definition.getFault().getTargetComponentId();
-        Vector<GeneratedComponentConnectionBinding> targetConnections =
-            instance.getConnectionBindings().getForComponentOrEmpty(targetComponentId);
-        boolean targetInstalled = targetConnections.isEmpty() ||
-            sim.getBoardModificationController().isComponentInstalled(targetComponentId);
-        if (instance.getFamilyState().isFaultedTargetInstalled(instance, targetComponentId) &&
-            targetInstalled &&
-            sim.getBoardModificationController().isFullyRestored() &&
-            instance.getExternalPowerBindings().hasNominalBenchSettings() &&
-            sim.getBoardPowerController().getState() == BoardPowerState.POWERED)
-            verifyFaultedBehavior(BoardPowerState.POWERED);
+        // Admission already proved the generated fault's symptom. In READY,
+        // supported player edits may create additional failures or change that
+        // symptom. Structural/electrical ownership is verified by the runtime;
+        // only the customer retest decides whether the current behavior works.
         if (canLatchCompletionAfterCustomerRetest()) {
             latchCompleted();
         }
@@ -458,15 +451,6 @@ class GeneratedChallengeController {
         state = GeneratedChallengeState.COMPLETED;
         sim.refreshChallengeInteractionState();
         sim.repaint();
-    }
-
-    private void verifyFaultedBehavior(BoardPowerState powerState) {
-        if (instance.getTemporalBehavior() != null)
-            instance.getTemporalBehavior().verifyFaultedProfile(sim, instance,
-                sim.getBoardModificationController(), powerState);
-        else
-            definition.getBehaviorContract().verifyFaulted(instance,
-                sim.getBoardModificationController(), powerState);
     }
 
     private void validateDefinition() {

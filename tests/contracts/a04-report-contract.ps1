@@ -279,7 +279,8 @@ Assert-ReportContract (-not (Test-RouteReady 'a06' $powerReports)) 'Unfinished A
 Assert-ReportContract (@(Get-RouteDefinitions 'A06' $false).Count -eq 6) 'A06 selected corpus changed.'
 # A07 has independently constructed report vectors, not a copied runtime receipt.
 $runtimeNames=@('accepted-state-source-and-time-identity','exclusive-private-graph-and-reentrant-model',
-    'real-nonfinite','real-singular','real-nonconvergent','real-accepted-step-scheduling',
+    'real-nonfinite','real-matrix-nonfinite','real-matrix-overflow',
+    'real-singular','real-nonconvergent','real-accepted-step-scheduling',
     'real-finite-event-feedback','real-stale-owner-callback-and-restore-refusal',
     'real-injected-cleanup-failure-and-explicit-recovery','real-browser-yield-and-accepted-publication',
     'cancel-0-and-obsolete-callback','cancel-1-and-obsolete-callback','cancel-2-and-obsolete-callback',
@@ -316,7 +317,7 @@ $scaleRows=@(foreach ($n in @(20,40,60,100)) { foreach ($seed in @(0,1)) { forea
         sourceVoltage=10;totalResistance=$total;observedCurrent=$amps;nodeVoltages=$nodes}
 } } })
 $execution=[ordered]@{version='TSJ-A07-SOLVER-1';status='PASS';cleanup='PASS';pureAssertions=38;
-    runtimeAssertions=71;wallMs=100;runtimeCases=@($runtimeNames | ForEach-Object { @{case=$_;status='PASS'} });
+    runtimeAssertions=73;wallMs=100;runtimeCases=@($runtimeNames | ForEach-Object { @{case=$_;status='PASS'} });
     models=@{assertions=59;physicalPackages=$null;playableQualification=$false;
         limits=@('synthetic fixtures only','current-based relay','linear transformer','open-loop converter');rows=$modelRows};
     scale=$scaleRows;latencies=@(
@@ -343,6 +344,8 @@ Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Duplicate A0
 $bad=Copy-Report $execution;$bad.runtimeCases[0].status='FAIL'
 Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Failed execution canary accepted.'
 foreach ($name in @(
+    'real-matrix-nonfinite',
+    'real-matrix-overflow',
     'schematic-reload-empty-event-clock',
     'schematic-reload-discards-old-events',
     'schematic-reanalysis-preserves-events',
@@ -351,10 +354,10 @@ foreach ($name in @(
     'schematic-redo-retires-event-clock')) {
     $bad=Copy-Report $execution
     $bad.runtimeCases=@($bad.runtimeCases | Where-Object case -cne $name)
-    Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) "Missing schematic lifecycle case accepted: $name"
+    Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) "Missing required runtime case accepted: $name"
     $bad=Copy-Report $execution
     ($bad.runtimeCases | Where-Object case -ceq $name).status='FAIL'
-    Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) "Failed schematic lifecycle case accepted: $name"
+    Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) "Failed required runtime case accepted: $name"
 }
 $bad=Copy-Report $execution;$bad.models.rows[0].value=0
 Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Broken relay physics accepted behind PASS.'

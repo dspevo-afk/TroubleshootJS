@@ -138,6 +138,19 @@ final class PhysicalConstructionMaterializer {
                     constructionReceipt, operationalLeds);
         }
 
+        for (PhysicalExternalInputDeclaration input : declarations.getExternalInputs()) {
+            String id = runtime.getBoard().getPad(input.getPositivePadId()).getComponentId();
+            CircuitElm contact = constructionReceipt.getComponentBindings().getSingleElement(id);
+            CircuitElm supply = null;
+            for (CircuitElm backing : constructionReceipt.getPowerBindings().getBinding(input.getInputId()).getBackingElements())
+                if (backing instanceof DCVoltageElm) {
+                    if (supply != null) throw new IllegalStateException("Ambiguous external connector supply");
+                    supply = backing;
+                }
+            if (!(contact instanceof SwitchElm) || supply == null)
+                throw new IllegalStateException("Missing declared external connector boundary");
+            constructionReceipt.getConnectionBindings().declareConnectorHarness(id, contact, 1, supply, 0);
+        }
         runtime.validateSupportedCompositionProviders();
         runtime.validate();
         return new PhysicalMaterializationReceipt(plan, spec, constructionReceipt, runtime,

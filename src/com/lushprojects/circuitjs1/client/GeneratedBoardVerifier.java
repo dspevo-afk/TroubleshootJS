@@ -16,7 +16,8 @@ class GeneratedBoardVerifier {
             modifications.verifyStructuralState();
         for (CircuitElm element : instance.getSimulationElements()) {
             if (!activeElements.contains(element) &&
-                    !instance.getConnectionBindings().isConnectionElement(element))
+                    !instance.getConnectionBindings().isConnectionElement(element) &&
+                    !instance.getPhysicalBoardRuntime().isDisconnectedDockingAttachment(element))
                 throw new IllegalStateException("Undeclared generated element missing from graph");
         }
         for (String padId : board.getPadIds()) {

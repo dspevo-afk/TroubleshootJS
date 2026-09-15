@@ -1,0 +1,68 @@
+{
+  "comparison": "Same current packages and seed0 plan before vs after whitespace compaction; not a cross-build benchmark.",
+  "rows": [
+    {
+      "family": "LED_INDICATOR",
+      "seed": "0",
+      "uncompactedArea": 334400,
+      "compactedArea": 272800,
+      "areaReductionPercent": 18.42
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "seed": "0",
+      "uncompactedArea": 504000,
+      "compactedArea": 359900,
+      "areaReductionPercent": 28.59
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "seed": "0",
+      "uncompactedArea": 578500,
+      "compactedArea": 481000,
+      "areaReductionPercent": 16.85
+    },
+    {
+      "family": "RC_DELAY",
+      "seed": "0",
+      "uncompactedArea": 620400,
+      "compactedArea": 473600,
+      "areaReductionPercent": 23.66
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "seed": "0",
+      "uncompactedArea": 885800,
+      "compactedArea": 688500,
+      "areaReductionPercent": 22.27
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "seed": "0",
+      "uncompactedArea": 679000,
+      "compactedArea": 565800,
+      "areaReductionPercent": 16.67
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "seed": "0",
+      "uncompactedArea": 1212000,
+      "compactedArea": 1100900,
+      "areaReductionPercent": 9.17
+    },
+    {
+      "family": "RB15_CONTROL",
+      "seed": "0",
+      "uncompactedArea": 2184000,
+      "compactedArea": 2064000,
+      "areaReductionPercent": 5.49
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "seed": "0",
+      "uncompactedArea": 1552500,
+      "compactedArea": 1332000,
+      "areaReductionPercent": 14.2
+    }
+  ]
+}

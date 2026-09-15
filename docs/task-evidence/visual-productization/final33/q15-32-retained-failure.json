@@ -1,0 +1,1 @@
+{"protocol":"TSJ-Q15-1","status":"FAIL","cases":[],"assertions":63,"supportAssertions":0,"cancellationMs":0,"elapsedMs":30942,"cleanupMs":2,"ownerRestored":true,"operation":"support","activeSeed":"0","failure":"java.lang.AssertionError: Q15 support: D1 carries released coil energy after the driver turns off"}

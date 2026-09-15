@@ -178,13 +178,14 @@ final class RcDelayGenerator {
             "J2.1", "J2.2", values.supplyVoltage);
         runtime.registerCapability(temporal);
         runtime.registerCapability(new StoredEnergyMeasurementReadinessCapability(
-            replaceableCapacitor, fixedC2, bindings));
+            runtime, bindings));
         GeneratedChallengeBehaviorContract behavior = new GeneratedChallengeBehaviorAdapter(
             new RcDelayGeneratedBoardValidator(), new RcDelayFaultValidator(),
             new RcDelayRepairValidator());
         GeneratedScenarioCatalog<GeneratedObservedBehavior> scenarios =
             GeneratedScenarioLibrary.rcDelay();
         GeneratedFault fault = selected.getFault();
+        connections.declareConnectorHarness("J1", vinInput, 1, supply, 0);
         return new GeneratedBoardInstance(board, elements, seed, FAMILY_ID, CHARGE_DELAY_VARIANT,
             "Generated RC delay controller, seed " + seed, components, power, connections,
             behavior, RcDelayPcbLayoutFactory.create(board, seed), specs, faultBinding, operational,

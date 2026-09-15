@@ -8,12 +8,48 @@ class GeneratedComponentConnectionBindings {
     private boolean constructionAborted;
     private final HashMap<String, GeneratedComponentConnectionBinding> bindings =
         new HashMap<String, GeneratedComponentConnectionBinding>();
+    private final HashMap<String, CircuitPostMeasurementEndpoint[]> connectorHarnesses =
+        new HashMap<String, CircuitPostMeasurementEndpoint[]>();
+
+    /** Generator-owned cable boundary; independent of faults and service menus. */
+    void declareConnectorHarness(String id, CircuitElm first, int firstPost,
+            CircuitElm second, int secondPost) {
+        if (constructionAborted || board.getSimulationBindings().isConstructionComplete() ||
+                board.getComponent(id) == null || connectorHarnesses.containsKey(id))
+            throw new IllegalStateException("Invalid connector construction declaration: " + id);
+        connectorHarnesses.put(id, new CircuitPostMeasurementEndpoint[] {
+            new CircuitPostMeasurementEndpoint(first, firstPost),
+            new CircuitPostMeasurementEndpoint(second, secondPost) });
+    }
+
+    CircuitPostMeasurementEndpoint[] getConnectorHarness(String id) {
+        CircuitPostMeasurementEndpoint[] endpoints = connectorHarnesses.get(id);
+        return endpoints == null ? null : new CircuitPostMeasurementEndpoint[] {endpoints[0], endpoints[1]};
+    }
 
     GeneratedComponentConnectionBindings(TroubleshootBoard board) {
         this.board = board;
     }
 
     TroubleshootBoard getBoardForRuntimeValidation() { return board; }
+
+    /** Finish a declared lead's physical endpoint before any live owner is published. */
+    void completeConstructionEndpoint(String padId, CircuitMeasurementEndpoint endpoint) {
+        if (constructionAborted || board.getSimulationBindings().isConstructionComplete())
+            throw new IllegalStateException("Physical connection construction is closed");
+        GeneratedComponentConnectionBinding prior = bindings.get(padId);
+        if (prior == null || endpoint == null) throw new IllegalArgumentException("Missing construction lead");
+        bindings.put(padId, new GeneratedComponentConnectionBinding(prior.getComponentId(), padId,
+            prior.getBoardEndpoint(), endpoint, prior.getConnectionElement()));
+    }
+
+    void completeConstructionBoardEndpoint(String padId, CircuitMeasurementEndpoint endpoint) {
+        if (constructionAborted || board.getSimulationBindings().isConstructionComplete())
+            throw new IllegalStateException("Physical connection construction is closed");
+        GeneratedComponentConnectionBinding prior = bindings.get(padId);
+        if (prior != null) bindings.put(padId, new GeneratedComponentConnectionBinding(prior.getComponentId(), padId,
+            endpoint, prior.getComponentEndpoint(), prior.getConnectionElement()));
+    }
 
     void bind(String componentId, String padId, CircuitMeasurementEndpoint boardEndpoint,
             CircuitMeasurementEndpoint componentEndpoint, CircuitElm connectionElement) {

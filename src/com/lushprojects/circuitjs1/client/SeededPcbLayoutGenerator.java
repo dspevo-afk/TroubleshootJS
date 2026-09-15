@@ -9,7 +9,7 @@ import java.util.Vector;
  */
 class SeededPcbLayoutGenerator {
     /** Current corrected layout algorithm; package geometry remains contract v3. */
-    static final int CURRENT_VERSION = 7;
+    static final int CURRENT_VERSION = 9;
     private static final int GRID = 10;
     private static final int MAX_ATTEMPTS = 80;
     private static final int TARGET_VIABLE_CANDIDATES = 5;
@@ -87,6 +87,7 @@ class SeededPcbLayoutGenerator {
         private PcbRoutingRejectedException lastFailure;
         private PcbBoardLayout bestLayout;
         private double bestScore=Double.POSITIVE_INFINITY;
+        private long bestArea=Long.MAX_VALUE;
         private int attempt,viableCandidates;
         private boolean complete;
         Session(TroubleshootBoard board,long seed,long routingSeed,AttemptObserver observer) {
@@ -103,7 +104,10 @@ class SeededPcbLayoutGenerator {
                 PcbBoardLayout candidate = generateAttempt(board, seed,
                     variationMode, attempt, observer,routingSeed,statistics);
                 double score = candidate.getRouteQualityScore(board);
-                if (bestLayout == null || score < bestScore) {
+                Rectangle bounds = candidate.getBoardOutline();
+                long area = (long)bounds.width * bounds.height;
+                if (bestLayout == null || area < bestArea || (area == bestArea && score < bestScore)) {
+                    bestArea = area;
                     bestLayout = candidate;
                     bestScore = score;
                 }
@@ -143,11 +147,29 @@ class SeededPcbLayoutGenerator {
         } catch (PcbPlacementPlanner.Rejected failure) {
             throw reject(PcbRoutingRejectedException.Kind.PLACEMENT, failure.reason);
         }
+        PcbBoardLayout original = routePlan(board, seed, variationMode, attempt, observer,
+            routingSeed, statistics, plan, false);
+        PcbPlacementPlanner.Plan compact = PcbPlacementCompactor.compact(board, board.getPlacementConstraints(), plan);
+        if (compact == plan) return original;
+        // Keep every successful original candidate. A smaller layout is accepted
+        // only after its own real routing, access and geometry checks succeed.
+        // One compact tree attempt avoids multiplying a difficult search budget.
+        try {
+            PcbBoardLayout result = routePlan(board, seed, variationMode, attempt, observer,
+                routingSeed, statistics, compact, true);
+            Rectangle a=original.getBoardOutline(), b=result.getBoardOutline();
+            return (long)b.width*b.height < (long)a.width*a.height ? result : original;
+        } catch (CandidateRejected unavailable) { return original; }
+        catch (PcbBoardLayout.RouteQualityRejectedException unavailable) { return original; }
+    }
+    private PcbBoardLayout routePlan(TroubleshootBoard board, long seed, int variationMode,
+            int attempt, AttemptObserver observer, long routingSeed, GenerationStatistics statistics,
+            PcbPlacementPlanner.Plan plan, boolean compactProbe) {
         Rectangle outline = plan.outline;
         PcbBoardLayout layout = null;
         // Four feedback alternatives, then an independent reverse/farthest
         // tree. The latter avoids a cycle caused by repeatedly promoting blockers.
-        int treeVariants=board.getPlacementConstraints().routingLayer==PcbCopperLayer.BOTTOM ? 5 : 1;
+        int treeVariants=!compactProbe && board.getPlacementConstraints().routingLayer==PcbCopperLayer.BOTTOM ? 5 : 1;
         Vector<String> blocked=new Vector<String>();
         for(int tree=0;tree<treeVariants;tree++) {
             layout=plan.materialize();

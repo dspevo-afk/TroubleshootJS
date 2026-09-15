@@ -12,8 +12,7 @@ final class A08FreshOwnerAliasVerifier {
         reject(sim, copy(clean, original.getPcbLayout(), clean.getOperationalStates(), null),
             "mutable owners");
         clean = diode(original.getSeed());
-        reject(sim, copy(clean, clean.getPcbLayout(), original.getOperationalStates(), null),
-            "mutable owners");
+        rejectOperationalStateConstruction(sim, clean, original.getOperationalStates());
         clean = diode(original.getSeed());
         clean.getOperationalStates().replaceLed("LED1",
             (LEDElm) original.getComponentBindings().getElements("LED1").firstElement());
@@ -175,6 +174,29 @@ final class A08FreshOwnerAliasVerifier {
     }
 
     private GeneratedBoardInstance diode(long seed) { return new DiodeProtectedIndicatorGenerator().generate(seed); }
+
+    private void rejectOperationalStateConstruction(CirSim sim, GeneratedBoardInstance clean,
+            GeneratedComponentOperationalStates foreign) {
+        Task41SimulationSnapshot before = Task41SimulationSnapshot.capture(sim);
+        GeneratedBoardInstance owner = sim.getGeneratedBoardInstance();
+        String geometry = coordinates(owner.getPcbLayout());
+        boolean illuminated = owner.getOperationalStates().isIlluminated("LED1");
+        boolean rejected = false;
+        // Physical service completion validates the observed LED against its
+        // actual part during construction, before a candidate can reach install.
+        // The separate altered-LED fixture still proves install-time ownership.
+        try { copy(clean, clean.getPcbLayout(), foreign, null); }
+        catch (IllegalStateException failure) {
+            rejected = "Foreign physical LED observation".equals(failure.getMessage());
+        }
+        require(rejected, "foreign operational owner rejected during physical construction");
+        before.assertRestored(sim);
+        require(owner == sim.getGeneratedBoardInstance() && !FreshGeneratedRuntimeInstallation.isInProgress(sim),
+            "construction rejection precedes live installation");
+        require(geometry.equals(coordinates(owner.getPcbLayout())) &&
+            illuminated == owner.getOperationalStates().isIlluminated("LED1"),
+            "construction rejection preserves original geometry and operational bindings");
+    }
 
     private void reject(CirSim sim, GeneratedBoardInstance candidate, String message) {
         Task41SimulationSnapshot before = Task41SimulationSnapshot.capture(sim);

@@ -18,6 +18,8 @@ final class PhysicalPartRenderContext {
     private final TroubleshootBoard developerCanaryBoard;
     private final HashMap<String, Point> developerCanaryPadPoints;
     private boolean bodyDrawn;
+    private final HashMap<Integer, WorkbenchLiftedLeadAppearance> liftedAppearance =
+        new HashMap<Integer, WorkbenchLiftedLeadAppearance>();
 
     PhysicalPartRenderContext(PcbWorkbenchRenderer renderer, PcbComponentPlacement placement,
             PhysicalPart<?> part, PhysicalPackage physicalPackage, int trayIndex, boolean loose) {
@@ -163,8 +165,9 @@ final class PhysicalPartRenderContext {
     Point getInstalledLeadBodyPoint(int terminal) {
         if (placement == null)
             return new Point(0, 0);
-        Point point = getInstalledPlacedGeometry().getLeadBodyPoint(terminal,
-            !isLeadConnected(terminal));
+        WorkbenchLiftedLeadAppearance lifted = getInstalledLiftedLeadAppearance(terminal);
+        Point point = lifted == null ? getInstalledPlacedGeometry().getLeadBodyPoint(terminal,
+            !isLeadConnected(terminal)) : lifted.getBodyPoint();
         return point == null ? getSyntheticTerminalPoint(terminal) :
             new Point(screenX(point.x), screenY(point.y));
     }
@@ -172,8 +175,9 @@ final class PhysicalPartRenderContext {
     Point getInstalledLeadEndPoint(int terminal) {
         if (placement == null)
             return new Point(0, 0);
-        Point point = getInstalledPlacedGeometry().getLeadEndPoint(terminal,
-            !isLeadConnected(terminal));
+        WorkbenchLiftedLeadAppearance lifted = getInstalledLiftedLeadAppearance(terminal);
+        Point point = lifted == null ? getInstalledPlacedGeometry().getLeadEndPoint(terminal,
+            !isLeadConnected(terminal)) : lifted.getTipPoint();
         return point == null ? getSyntheticTerminalPoint(terminal) :
             new Point(screenX(point.x), screenY(point.y));
     }
@@ -197,8 +201,9 @@ final class PhysicalPartRenderContext {
     Point getInstalledComponentLeadPoint(int terminal) {
         if (placement == null)
             return getSyntheticTerminalPoint(terminal);
-        Point point = getInstalledPlacedGeometry().getComponentLeadProbeCenter(terminal,
-            !isLeadConnected(terminal));
+        WorkbenchLiftedLeadAppearance lifted = getInstalledLiftedLeadAppearance(terminal);
+        Point point = lifted == null ? getInstalledPlacedGeometry().getComponentLeadProbeCenter(terminal,
+            !isLeadConnected(terminal)) : lifted.getTipPoint();
         return point == null ? getSyntheticTerminalPoint(terminal) :
             new Point(screenX(point.x), screenY(point.y));
     }
@@ -206,22 +211,32 @@ final class PhysicalPartRenderContext {
     Rectangle getInstalledComponentLeadProbeBounds(int terminal) {
         if (placement == null)
             return new Rectangle(0, 0, 1, 1);
-        return renderer.screenRectForProvider(getInstalledPlacedGeometry()
-            .getComponentLeadProbeBounds(terminal, !isLeadConnected(terminal)));
+        WorkbenchLiftedLeadAppearance lifted = getInstalledLiftedLeadAppearance(terminal);
+        return renderer.screenRectForProvider(lifted == null ? getInstalledPlacedGeometry()
+            .getComponentLeadProbeBounds(terminal, !isLeadConnected(terminal)) : lifted.getProbeBounds());
     }
 
     Rectangle getInstalledSelectionBounds() {
         if (placement == null)
             return new Rectangle(0, 0, 1, 1);
-        return renderer.screenRectForProvider(installedPhysicalGeometry().placedAt(
-            placement.getPose()).getSelectionEnvelope());
+        return renderer.screenRectForProvider(withLiftedLeads(installedPhysicalGeometry().placedAt(
+            placement.getPose()).getSelectionEnvelope()));
     }
 
     Rectangle getInstalledDragBounds() {
         if (placement == null)
             return new Rectangle(0, 0, 1, 1);
-        return renderer.screenRectForProvider(installedPhysicalGeometry().placedAt(
-            placement.getPose()).getDragEnvelope());
+        return renderer.screenRectForProvider(withLiftedLeads(installedPhysicalGeometry().placedAt(
+            placement.getPose()).getDragEnvelope()));
+    }
+
+    private Rectangle withLiftedLeads(Rectangle envelope) {
+        Rectangle result = new Rectangle(envelope);
+        for (int i = 0; i < physicalPackage.getTerminalCount(); i++) {
+            WorkbenchLiftedLeadAppearance lifted = getInstalledLiftedLeadAppearance(i);
+            if (lifted != null) result = result.union(lifted.getLeadBounds()).union(lifted.getProbeBounds());
+        }
+        return result;
     }
 
     Rectangle getInstalledProbeBounds(int terminal) {
@@ -241,8 +256,48 @@ final class PhysicalPartRenderContext {
     Rectangle getInstalledLeadBounds(int terminal) {
         if (placement == null)
             return new Rectangle(0, 0, 1, 1);
-        return renderer.screenRectForProvider(getInstalledPlacedGeometry().getLeadBounds(terminal,
-            !isLeadConnected(terminal)));
+        WorkbenchLiftedLeadAppearance lifted = getInstalledLiftedLeadAppearance(terminal);
+        return renderer.screenRectForProvider(lifted == null ? getInstalledPlacedGeometry().getLeadBounds(terminal,
+            !isLeadConnected(terminal)) : lifted.getLeadBounds());
+    }
+
+    /** The visible lead polyline and its terminal probe share one physical pose. */
+    Vector<Point> getInstalledLeadPath(int terminal) {
+        WorkbenchLiftedLeadAppearance lifted = getInstalledLiftedLeadAppearance(terminal);
+        Vector<Point> result = new Vector<Point>();
+        if (lifted == null) {
+            result.add(getInstalledLeadBodyPoint(terminal)); result.add(getInstalledLeadEndPoint(terminal));
+        } else for (Point point : lifted.getPath()) result.add(new Point(screenX(point.x), screenY(point.y)));
+        return result;
+    }
+
+    Vector<Rectangle> getInstalledLeadSegmentBounds(int terminal) {
+        WorkbenchLiftedLeadAppearance lifted = getInstalledLiftedLeadAppearance(terminal);
+        Vector<Rectangle> result = new Vector<Rectangle>();
+        if (lifted == null) result.add(getInstalledLeadBounds(terminal));
+        else for (Rectangle segment : lifted.getLeadSegments()) result.add(renderer.screenRectForProvider(segment));
+        return result;
+    }
+
+    WorkbenchLiftedLeadAppearance getInstalledLiftedLeadAppearance(int terminal) {
+        if (placement == null || developerCanaryBoard != null || isLeadConnected(terminal)) return null;
+        WorkbenchLiftedLeadAppearance result = liftedAppearance.get(Integer.valueOf(terminal));
+        if (result != null) return result;
+        Vector<Rectangle> pads = new Vector<Rectangle>(), traces = new Vector<Rectangle>(),
+            bodies = new Vector<Rectangle>();
+        PcbBoardLayout layout = renderer.getLayoutForProvider();
+        for (PcbPadPlacement pad : layout.getPads()) pads.add(pad.getProbeBounds());
+        PcbConductorGraph.Snapshot copper = getInstance().getCurrentConductorSnapshot();
+        for (PcbConductorGraph.Surface surface : copper.getGraph().getSurfaces())
+            if (surface.edgeId != null && copper.hasEdge(surface.edgeId)) traces.add(surface.getBounds());
+        for (PcbComponentPlacement other : layout.getComponents())
+            if (!other.getComponentId().equals(getComponentId()) &&
+                    getInstance().getPhysicalBoardRuntime().getInstalledPart(other.getComponentId()) != null)
+                bodies.add(other.getPhysicalGeometry().placedAt(other.getPose()).getBodyBounds());
+        result = WorkbenchLiftedLeadAppearance.project(installedPhysicalGeometry(), placement.getPose(),
+            terminal, pads, traces, bodies);
+        liftedAppearance.put(Integer.valueOf(terminal), result);
+        return result;
     }
 
     Point getLooseTerminalPoint(int terminal, boolean reversed) {

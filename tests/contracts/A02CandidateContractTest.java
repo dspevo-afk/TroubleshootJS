@@ -204,20 +204,22 @@ public final class A02CandidateContractTest {
     /** The current verifier corpus must retain every accepted seed/type case. */
     private static void testCurrentDiagnosticCorpus() {
         String[] expected = {
-            "LED_INDICATOR/0/RESISTOR_OPEN", "LED_INDICATOR/0/RESISTOR_INCORRECT_VALUE",
-            "LED_INDICATOR/0/LED_OPEN", "DIODE_PROTECTED_INDICATOR/0/DIODE_OPEN",
-            "PARALLEL_DUAL_INDICATOR/0/RESISTOR_OPEN",
-            "PARALLEL_DUAL_INDICATOR/0/RESISTOR_INCORRECT_VALUE",
-            "RC_DELAY/0/CAPACITOR_OPEN", "RC_DELAY/2/CAPACITOR_SHORT",
-            "NPN_LOW_SIDE_SWITCH/0/TRANSISTOR_CE_OPEN",
-            "NPN_LOW_SIDE_SWITCH/1/TRANSISTOR_CE_SHORT",
-            "NPN_LOW_SIDE_SWITCH/2/BASE_RESISTOR_OPEN",
-            "NMOS_LOW_SIDE_SWITCH/0/NMOS_DS_OPEN",
-            "NMOS_LOW_SIDE_SWITCH/1/NMOS_DS_SHORT", "NMOS_LOW_SIDE_SWITCH/2/NMOS_GATE_OPEN",
-            "RELAY_OUTPUT/0/RELAY_COIL_OPEN", "RELAY_OUTPUT/2/RELAY_CONTACT_OPEN",
-            "RELAY_OUTPUT/4/BASE_RESISTOR_OPEN",
-            "RB15_CONTROL/0/RELAY_COIL_OPEN", "RB15_CONTROL/0/RELAY_CONTACT_OPEN",
-            "RB15_CONTROL/0/BASE_RESISTOR_OPEN"
+            "LED_INDICATOR/0/RESISTOR_OPEN/R1", "LED_INDICATOR/0/RESISTOR_INCORRECT_VALUE/R1",
+            "LED_INDICATOR/0/LED_OPEN/LED1", "DIODE_PROTECTED_INDICATOR/0/DIODE_OPEN/D1",
+            "PARALLEL_DUAL_INDICATOR/0/RESISTOR_OPEN/R1",
+            "PARALLEL_DUAL_INDICATOR/0/RESISTOR_INCORRECT_VALUE/R1",
+            "PARALLEL_DUAL_INDICATOR/0/RESISTOR_OPEN/R2",
+            "PARALLEL_DUAL_INDICATOR/0/RESISTOR_INCORRECT_VALUE/R2",
+            "RC_DELAY/0/CAPACITOR_OPEN/C1", "RC_DELAY/2/CAPACITOR_SHORT/C1",
+            "NPN_LOW_SIDE_SWITCH/0/TRANSISTOR_CE_OPEN/Q1",
+            "NPN_LOW_SIDE_SWITCH/1/TRANSISTOR_CE_SHORT/Q1",
+            "NPN_LOW_SIDE_SWITCH/2/BASE_RESISTOR_OPEN/RB",
+            "NMOS_LOW_SIDE_SWITCH/0/NMOS_DS_OPEN/Q1",
+            "NMOS_LOW_SIDE_SWITCH/1/NMOS_DS_SHORT/Q1", "NMOS_LOW_SIDE_SWITCH/2/NMOS_GATE_OPEN/Q1",
+            "RELAY_OUTPUT/0/RELAY_COIL_OPEN/K1", "RELAY_OUTPUT/2/RELAY_CONTACT_OPEN/K1",
+            "RELAY_OUTPUT/4/BASE_RESISTOR_OPEN/RDRIVE",
+            "RB15_CONTROL/0/RELAY_COIL_OPEN/K1", "RB15_CONTROL/0/RELAY_CONTACT_OPEN/K1",
+            "RB15_CONTROL/0/BASE_RESISTOR_OPEN/RDRIVE"
         };
         try {
             java.lang.reflect.Method normal = Task41DeveloperVerifier.class
@@ -233,13 +235,14 @@ public final class A02CandidateContractTest {
                 java.lang.reflect.Field key = routeClass.getDeclaredField("hypothesisKey");
                 family.setAccessible(true); seed.setAccessible(true);
                 type.setAccessible(true); key.setAccessible(true);
-                String fixture = family.get(route) + "/" + seed.get(route) + "/" + type.get(route);
-                require(!actual.contains(fixture), "duplicate corpus fixture: " + fixture);
-                actual.add(fixture);
                 java.lang.reflect.Method generate = routeClass.getDeclaredMethod("generate");
                 generate.setAccessible(true);
                 GeneratedBoardInstance regenerated = (GeneratedBoardInstance) generate.invoke(route);
                 try {
+                    String fixture = family.get(route) + "/" + seed.get(route) + "/" + type.get(route) + "/" +
+                        regenerated.getFaultBinding().getFault().getTargetComponentId();
+                    require(!actual.contains(fixture), "duplicate corpus fixture: " + fixture);
+                    actual.add(fixture);
                     require(key.get(route).equals(regenerated.getFaultBinding().getFault()
                         .getHypothesisKey()), "current corpus regenerated a different hypothesis");
                 } finally { dispose(regenerated); }

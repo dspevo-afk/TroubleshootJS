@@ -51,6 +51,19 @@ class GeneratedComponentBindings {
         return new Vector<CircuitElm>(elements);
     }
 
+    void completeServiceBinding(String componentId, CircuitElm primary, CircuitElm auxiliary) {
+        if (constructionAborted || board.getSimulationBindings().isConstructionComplete() ||
+                primary == null || !componentElements.containsKey(componentId))
+            throw new IllegalStateException("Invalid service construction binding");
+        Vector<CircuitElm> first = new Vector<CircuitElm>(); first.add(primary);
+        componentElements.put(componentId, first);
+        canonicalComponentElements.put(componentId, new Vector<CircuitElm>(first));
+        Vector<CircuitElm> second = new Vector<CircuitElm>();
+        if (auxiliary != null) second.add(auxiliary);
+        auxiliaryComponentElements.put(componentId, second);
+        canonicalAuxiliaryComponentElements.put(componentId, new Vector<CircuitElm>(second));
+    }
+
     /** Returns whether the generator supplied a primary binding for the component. */
     boolean hasComponentBinding(String componentId) {
         return componentElements.containsKey(componentId);

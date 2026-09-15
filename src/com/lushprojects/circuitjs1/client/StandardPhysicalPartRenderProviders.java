@@ -11,14 +11,14 @@ final class StandardPhysicalPartRenderProviders {
 
     static PhysicalPartRenderRegistry createRegistry() {
         PhysicalPartRenderRegistry registry = new PhysicalPartRenderRegistry();
-        registry.register(PhysicalPackages.RELAY_SPDT, new FixedProvider(new MultiTerminalRenderer()));
+        registry.register(PhysicalPackages.RELAY_SPDT, new FixedProvider(new RelayRenderer()));
         registry.register(PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,
             new FixedProvider(new ConnectorRenderer()));
         registry.register(PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2,
             new FixedProvider(new ConnectorRenderer()));
         registry.register(PhysicalPackages.AXIAL_RESISTOR,
             new FixedProvider(new ResistorRenderer()));
-        registry.register(PhysicalPackages.AXIAL_FUSE, new FixedProvider(new MultiTerminalRenderer()));
+        registry.register(PhysicalPackages.AXIAL_FUSE, new FixedProvider(new FuseRenderer()));
         registry.register(PhysicalPackages.AXIAL_DIODE,
             new FixedProvider(new DiodeRenderer()));
         registry.register(PhysicalPackages.THROUGH_HOLE_LED,
@@ -89,7 +89,8 @@ final class StandardPhysicalPartRenderProviders {
             Vector<Rectangle> leads = new Vector<Rectangle>();
             for (PhysicalPartRenderTerminal terminal : terminals) {
                 leads.add(terminal.getLeadBounds());
-                hits.add(new PhysicalPartRenderHitRegion(terminal.getLeadBounds()));
+                for (Rectangle segment : context.getInstalledLeadSegmentBounds(terminal.getTerminalIndex()))
+                    hits.add(new PhysicalPartRenderHitRegion(segment));
                 if (terminal.getBoardPadProbeBounds() != null)
                     hits.add(new PhysicalPartRenderHitRegion(
                         terminal.getBoardPadProbeBounds()));
@@ -145,16 +146,19 @@ final class StandardPhysicalPartRenderProviders {
             return result;
         }
 
-        protected void drawInstalledLead(Graphics graphics, PhysicalPartRenderGeometry geometry,
+        protected void drawInstalledLead(Graphics graphics, PhysicalPartRenderContext context, PhysicalPartRenderGeometry geometry,
                 int terminal) {
-            PhysicalPartRenderTerminal lead = installedTerminal(geometry, terminal);
-            drawLead(graphics, lead.getLeadEndPoint(), lead.getLeadBodyPoint());
+            drawInstalledLead(graphics, context, geometry, terminal, Math.max(2, context.scale(3)));
         }
 
-        protected void drawInstalledLead(Graphics graphics, PhysicalPartRenderGeometry geometry,
+        protected void drawInstalledLead(Graphics graphics, PhysicalPartRenderContext context, PhysicalPartRenderGeometry geometry,
                 int terminal, int width) {
-            PhysicalPartRenderTerminal lead = installedTerminal(geometry, terminal);
-            drawLead(graphics, lead.getLeadEndPoint(), lead.getLeadBodyPoint(), width);
+            Vector<Point> path = context.getInstalledLeadPath(terminal);
+            for (int i = 1; i < path.size(); i++) drawLead(graphics, path.get(i-1), path.get(i), width);
+            if (!context.isLeadConnected(terminal)) {
+                Rectangle tip = context.getInstalledComponentLeadProbeBounds(terminal);
+                WorkbenchVisualTheme.ellipse(graphics, tip.x, tip.y, tip.width, tip.height, WorkbenchVisualTheme.METAL_LIGHT);
+            }
         }
 
         protected Vector<PhysicalPartRenderTerminal> looseTerminals(
@@ -182,25 +186,20 @@ final class StandardPhysicalPartRenderProviders {
 
         protected void drawSelection(Graphics graphics, PhysicalPartRenderGeometry geometry) {
             Rectangle bounds = geometry.getSelectionBounds();
-            graphics.setColor("#f4d35e");
-            graphics.setLineWidth(4);
-            graphics.drawRect(bounds.x - 8, bounds.y - 8, bounds.width + 16, bounds.height + 16);
+            graphics.setColor(WorkbenchVisualTheme.SELECTION);
+            graphics.setLineWidth(2);
+            graphics.drawRect(bounds.x - 4, bounds.y - 4, bounds.width + 8, bounds.height + 8);
             graphics.setLineWidth(1);
         }
 
         protected void drawLead(Graphics graphics, Point start, Point end) {
-            graphics.setColor("#a8adb0");
-            graphics.setLineWidth(3);
-            graphics.drawLine(start.x, start.y, end.x, end.y);
-            graphics.setLineWidth(1);
+            WorkbenchVisualTheme.lead(graphics, start, end, 3);
         }
 
         protected void drawLead(Graphics graphics, Point start, Point end, int width) {
-            graphics.setColor("#a8adb0");
-            graphics.setLineWidth(width);
-            graphics.drawLine(start.x, start.y, end.x, end.y);
-            graphics.setLineWidth(1);
+            WorkbenchVisualTheme.lead(graphics, start, end, width);
         }
+
     }
 
     /**
@@ -292,8 +291,8 @@ final class StandardPhysicalPartRenderProviders {
             int leadWidth = Math.max(3, context.scale(4));
             PhysicalPartRenderTerminal lead1 = installedTerminal(geometry, 0);
             PhysicalPartRenderTerminal lead2 = installedTerminal(geometry, 1);
-            drawLead(graphics, lead1.getLeadBodyPoint(), lead1.getLeadEndPoint(), leadWidth);
-            drawLead(graphics, lead2.getLeadBodyPoint(), lead2.getLeadEndPoint(), leadWidth);
+            drawInstalledLead(graphics, context, geometry, 0, leadWidth);
+            drawInstalledLead(graphics, context, geometry, 1, leadWidth);
             drawResistorBody(graphics, context, nameplate, body);
             context.markBodyDrawn();
         }
@@ -313,40 +312,33 @@ final class StandardPhysicalPartRenderProviders {
         }
 
         private void drawResistorBody(Graphics graphics, PhysicalPartRenderContext context,
-            ResistorNameplate nameplate, int left, int right, int y, int height) {
-            graphics.setColor("#d9c79b");
-            graphics.fillRect(left, y - height / 2, right - left, height);
-            graphics.setColor("#302a22");
-            graphics.drawRect(left, y - height / 2, right - left, height);
-            ResistorColorBand[] bands = ResistorColorCode.getFourBandCode(nameplate);
-            for (int index = 0; index < bands.length; index++) {
-                int x = left + (right - left) * (index + 1) / 5;
-                graphics.setColor(bandColor(bands[index]));
-                graphics.fillRect(x - Math.max(2, context.scale(3)), y - height / 2,
-                    Math.max(4, context.scale(6)), height);
-            }
-        }
-
-        private void drawResistorBody(Graphics graphics, PhysicalPartRenderContext context,
                 ResistorNameplate nameplate, Rectangle body) {
-            graphics.setColor("#d9c79b");
-            graphics.fillRect(body.x, body.y, body.width, body.height);
-            graphics.setColor("#302a22");
-            graphics.drawRect(body.x, body.y, body.width, body.height);
+            WorkbenchVisualTheme.body(graphics, body, WorkbenchVisualTheme.RESISTOR,
+                "#ece0c0", true);
+            boolean horizontal = body.width >= body.height;
+            int length = horizontal ? body.width : body.height;
+            int bandWidth = Math.max(1, Math.min(context.scale(6), length / 9));
             ResistorColorBand[] bands = ResistorColorCode.getFourBandCode(nameplate);
+            graphics.context.save();
+            WorkbenchVisualTheme.roundedPath(graphics, body.x, body.y, body.width,
+                body.height, Math.min(body.width, body.height) * .38);
+            graphics.context.clip();
             for (int index = 0; index < bands.length; index++) {
-                int x = body.x + body.width * (index + 1) / 5;
+                int position = length * (index == 3 ? 80 : 20 + index * 17) / 100;
                 graphics.setColor(bandColor(bands[index]));
-                graphics.fillRect(x - Math.max(2, context.scale(3)), body.y,
-                    Math.max(4, context.scale(6)), body.height);
+                if (horizontal)
+                    graphics.fillRect(body.x + position - bandWidth / 2, body.y, bandWidth, body.height);
+                else
+                    graphics.fillRect(body.x, body.y + position - bandWidth / 2, body.width, bandWidth);
             }
-        }
-
-        protected void drawLead(Graphics graphics, Point start, Point end, int width) {
-            graphics.setColor("#c6c2b2");
-            graphics.setLineWidth(width);
-            graphics.drawLine(start.x, start.y, end.x, end.y);
-            graphics.setLineWidth(1);
+            graphics.setColor("rgba(255,255,255,0.16)");
+            if (horizontal)
+                graphics.fillRect(body.x + 2, body.y + Math.max(1, body.height / 4),
+                    Math.max(0, body.width - 4), Math.max(1, body.height / 7));
+            else
+                graphics.fillRect(body.x + Math.max(1, body.width / 4), body.y + 2,
+                    Math.max(1, body.width / 7), Math.max(0, body.height - 4));
+            graphics.context.restore();
         }
     }
 
@@ -362,46 +354,31 @@ final class StandardPhysicalPartRenderProviders {
 
         public void drawInstalled(Graphics graphics, PhysicalPartRenderContext context,
                 PhysicalPartRenderGeometry geometry, boolean selected) {
-            if (!context.isInstalledPartMounted())
-                return;
+            if (!context.isInstalledPartMounted()) return;
             DIODE_METADATA.require(context.getPart());
             boolean reversed = DIODE_METADATA.isReversed(context.getPart());
-            Rectangle body = geometry.getBodyBounds();
-            Point leftPad = installedTerminal(geometry, 0).getBoardPadPoint();
-            Point rightPad = installedTerminal(geometry, 1).getBoardPadPoint();
-            if (leftPad == null || rightPad == null)
-                return;
-            int leadWidth = Math.max(3, context.scale(4));
-            drawInstalledLead(graphics, geometry, 0, leadWidth);
-            drawInstalledLead(graphics, geometry, 1, leadWidth);
-            graphics.setColor("#282c31");
-            graphics.fillRect(body.x, body.y, body.width, body.height);
-            graphics.setColor("#111315");
-            graphics.drawRect(body.x, body.y, body.width, body.height);
-            drawCathodeBand(graphics, reversed ? body.x : body.x + body.width,
-                body.y + body.height / 2, body.height, reversed, context);
-            graphics.drawString("K", reversed ? leftPad.x - context.scale(5) :
-                rightPad.x - context.scale(5), rightPad.y + context.scale(28));
+            Point first = installedTerminal(geometry, 0).getBoardPadPoint();
+            Point second = installedTerminal(geometry, 1).getBoardPadPoint();
+            if (first == null || second == null) return;
+            drawInstalledLead(graphics, context, geometry, 0, Math.max(3, context.scale(4)));
+            drawInstalledLead(graphics, context, geometry, 1, Math.max(3, context.scale(4)));
+            Point cathode = reversed ? first : second;
+            drawBody(graphics, context, geometry.getBodyBounds(), reversed ? second : first, cathode);
+            graphics.setColor(WorkbenchVisualTheme.SILK);
+            graphics.setFont(new Font(WorkbenchVisualTheme.FONT, 0, Math.max(9, context.scale(11))));
+            graphics.drawString("K", cathode.x - context.scale(4), cathode.y + context.scale(26));
             context.markBodyDrawn();
         }
 
         public void drawLoose(Graphics graphics, PhysicalPartRenderContext context,
                 PhysicalPartRenderGeometry geometry, boolean selected) {
-            if (context.getPart() == null)
-                return;
-            Point anode = geometry.getTerminal(0).getPoint();
-            Point cathode = geometry.getTerminal(1).getPoint();
-            Rectangle body = geometry.getBodyBounds();
-            boolean cathodeLeft = cathode.x < anode.x;
+            if (context.getPart() == null) return;
+            DIODE_METADATA.require(context.getPart());
             drawLooseLeads(graphics, geometry, context);
-            graphics.setColor("#282c31");
-            graphics.fillRect(body.x, body.y, body.width, body.height);
-            graphics.setColor("#111315");
-            graphics.drawRect(body.x, body.y, body.width, body.height);
-            drawCathodeBand(graphics, cathodeLeft ? body.x : body.x + body.width,
-                body.y + body.height / 2, body.height, cathodeLeft, context);
-            drawPartLabel(graphics, context, context.getPart().getId().equals(
-                context.getRenderer().getSelectedPartForProvider()) ? "SELECTED" : "DIODE",
+            Rectangle body = geometry.getBodyBounds();
+            drawBody(graphics, context, body, geometry.getTerminal(0).getPoint(),
+                geometry.getTerminal(1).getPoint());
+            drawPartLabel(graphics, context, selected ? "SELECTED" : "DIODE",
                 body.x, body.y - context.scale(8));
             context.markBodyDrawn();
         }
@@ -410,11 +387,12 @@ final class StandardPhysicalPartRenderProviders {
             return context.getPart() != null && DIODE_METADATA.isReversed(context.getPart());
         }
 
-        private void drawCathodeBand(Graphics graphics, int edge, int y, int height, boolean left,
-                PhysicalPartRenderContext context) {
-            int width = Math.max(5, context.scale(8));
-            graphics.setColor("#d8dde0");
-            graphics.fillRect(left ? edge : edge - width, y - height / 2, width, height);
+        private void drawBody(Graphics graphics, PhysicalPartRenderContext context,
+                Rectangle body, Point anode, Point cathode) {
+            WorkbenchVisualTheme.body(graphics, body, WorkbenchVisualTheme.BODY,
+                WorkbenchVisualTheme.BODY_LIGHT, true);
+            WorkbenchVisualTheme.polarityStripe(graphics, body, anode, cathode,
+                Math.max(3, context.scale(7)), WorkbenchVisualTheme.METAL_LIGHT);
         }
     }
 
@@ -430,64 +408,32 @@ final class StandardPhysicalPartRenderProviders {
 
         public void drawInstalled(Graphics graphics, PhysicalPartRenderContext context,
                 PhysicalPartRenderGeometry geometry, boolean selected) {
-            if (!context.isInstalledPartMounted())
-                return;
-            LED_METADATA.require(context.getPart());
-            PhysicalPartRenderTerminal anodeTerminal = installedTerminal(geometry, 0);
-            PhysicalPartRenderTerminal cathodeTerminal = installedTerminal(geometry, 1);
-            Point anode = anodeTerminal.getBoardPadPoint();
-            Point cathode = cathodeTerminal.getBoardPadPoint();
-            if (anode == null || cathode == null)
-                return;
-            Rectangle body = geometry.getBodyBounds();
-            int centerX = body.x + body.width / 2;
-            int centerY = body.y + body.height / 2;
-            int radius = Math.min(body.width, body.height) / 2;
-            drawLedLead(graphics, anodeTerminal.getLeadEndPoint(), anodeTerminal.getLeadBodyPoint());
-            drawLedLead(graphics, cathodeTerminal.getLeadEndPoint(),
-                cathodeTerminal.getLeadBodyPoint());
-            graphics.setColor("#b5232d");
-            if (context.isIlluminated()) {
-                graphics.setColor("#ffdc4f");
-                graphics.fillOval(centerX - radius - context.scale(9), centerY - radius - context.scale(9),
-                    radius * 2 + context.scale(18), radius * 2 + context.scale(18));
-                graphics.setColor("#b5232d");
-            }
-            graphics.fillOval(body.x, body.y, body.width, body.height);
-            graphics.setColor("#f36a6f");
-            graphics.fillOval(centerX - radius / 2, centerY - radius / 2, radius / 2, radius / 2);
-            graphics.setColor("#f3efe4");
+            if (!context.isInstalledPartMounted()) return;
+            LedNameplate nameplate = LED_METADATA.require(context.getPart());
+            Point first = installedTerminal(geometry, 0).getBoardPadPoint();
+            Point second = installedTerminal(geometry, 1).getBoardPadPoint();
+            if (first == null || second == null) return;
+            drawInstalledLead(graphics, context, geometry, 0);
+            drawInstalledLead(graphics, context, geometry, 1);
             boolean reversed = LED_METADATA.isReversed(context.getPart());
-            graphics.fillRect(reversed ? centerX - radius : centerX + radius - context.scale(6),
-                centerY - radius / 2, Math.max(3, context.scale(5)), radius);
-            graphics.drawString("K", (reversed ? anode : cathode).x - context.scale(4),
-                cathode.y + context.scale(27));
+            Point cathode = reversed ? first : second;
+            drawLens(graphics, context, nameplate, geometry.getBodyBounds(),
+                reversed ? second : first, cathode, context.isIlluminated());
+            graphics.setColor(WorkbenchVisualTheme.SILK);
+            graphics.setFont(new Font(WorkbenchVisualTheme.FONT, 0, Math.max(9, context.scale(11))));
+            graphics.drawString("K", cathode.x - context.scale(4), cathode.y + context.scale(26));
             context.markBodyDrawn();
         }
 
         public void drawLoose(Graphics graphics, PhysicalPartRenderContext context,
                 PhysicalPartRenderGeometry geometry, boolean selected) {
-            if (context.getPart() == null)
-                return;
-            Point anode = geometry.getTerminal(0).getPoint();
-            Point cathode = geometry.getTerminal(1).getPoint();
+            if (context.getPart() == null) return;
+            LedNameplate nameplate = LED_METADATA.require(context.getPart());
+            drawLooseLeads(graphics, geometry, context);
             Rectangle body = geometry.getBodyBounds();
-            int centerX = body.x + body.width / 2;
-            int centerY = body.y + body.height / 2;
-            int radius = Math.max(1, Math.min(body.width, body.height) / 2);
-            for (PhysicalPartRenderTerminal terminal : geometry.getTerminals())
-                drawLedLead(graphics, terminal, context);
-            graphics.setColor("#b5232d");
-            graphics.fillOval(body.x, body.y, body.width, body.height);
-            graphics.setColor("#f36a6f");
-            graphics.fillOval(centerX - radius / 2, centerY - radius / 2, radius / 2, radius / 2);
-            boolean cathodeLeft = cathode.x < anode.x;
-            graphics.setColor("#f3efe4");
-            int markingWidth = Math.max(1, Math.min(body.width, context.scale(4)));
-            graphics.fillRect(cathodeLeft ? body.x : body.x + body.width - markingWidth,
-                body.y + body.height / 4, markingWidth, Math.max(1, body.height / 2));
-            drawPartLabel(graphics, context, context.getPart().getId().equals(
-                context.getRenderer().getSelectedPartForProvider()) ? "SELECTED" : "LED",
+            drawLens(graphics, context, nameplate, body, geometry.getTerminal(0).getPoint(),
+                geometry.getTerminal(1).getPoint(), false);
+            drawPartLabel(graphics, context, selected ? "SELECTED" : "LED",
                 body.x, body.y - context.scale(8));
             context.markBodyDrawn();
         }
@@ -496,21 +442,30 @@ final class StandardPhysicalPartRenderProviders {
             return context.getPart() != null && LED_METADATA.isReversed(context.getPart());
         }
 
-        private void drawLedLead(Graphics graphics, Point start, Point end) {
-            graphics.setColor("#a6b8ad");
-            graphics.setLineWidth(3);
-            graphics.drawLine(start.x, start.y, end.x, end.y);
-            graphics.setLineWidth(1);
+        private void drawLens(Graphics graphics, PhysicalPartRenderContext context,
+                LedNameplate nameplate, Rectangle b, Point anode, Point cathode, boolean illuminated) {
+            WorkbenchVisualTheme.ellipse(graphics, b.x + 1, b.y + 2, b.width, b.height,
+                WorkbenchVisualTheme.SHADOW);
+            WorkbenchVisualTheme.ellipse(graphics, b.x, b.y, b.width, b.height,
+                WorkbenchVisualTheme.BODY_EDGE);
+            int rim = Math.max(1, Math.min(b.width, b.height) / 12);
+            WorkbenchVisualTheme.ellipse(graphics, b.x + rim, b.y + rim,
+                b.width - rim * 2, b.height - rim * 2, lensColor(nameplate, 24, illuminated ? 218 : 128));
+            WorkbenchVisualTheme.ellipse(graphics, b.x + b.width * .25, b.y + b.height * .17,
+                b.width * .35, b.height * .27, illuminated ? lensColor(nameplate, 174, 80) :
+                "rgba(255,255,255,0.27)");
+            graphics.context.save();
+            WorkbenchVisualTheme.ellipsePath(graphics, b.x, b.y, b.width, b.height);
+            graphics.context.clip();
+            WorkbenchVisualTheme.polarityStripe(graphics, b, anode, cathode,
+                Math.max(2, context.scale(4)), WorkbenchVisualTheme.SILK);
+            graphics.context.restore();
         }
 
-        private void drawLedLead(Graphics graphics, PhysicalPartRenderTerminal terminal,
-                PhysicalPartRenderContext context) {
-            graphics.setColor("#a6b8ad");
-            graphics.setLineWidth(context.getLooseLeadStrokeWidth(terminal.getLeadBounds()));
-            Point start = terminal.getLeadBodyPoint();
-            Point end = terminal.getLeadEndPoint();
-            graphics.drawLine(start.x, start.y, end.x, end.y);
-            graphics.setLineWidth(1);
+        private String lensColor(LedNameplate nameplate, int base, int range) {
+            return "rgb(" + (base + Math.round(nameplate.getRed() * range)) + "," +
+                (base + Math.round(nameplate.getGreen() * range)) + "," +
+                (base + Math.round(nameplate.getBlue() * range)) + ")";
         }
     }
 
@@ -537,16 +492,14 @@ final class StandardPhysicalPartRenderProviders {
             int centerX = body.x + body.width / 2;
             int centerY = body.y + body.height / 2;
             int radius = Math.min(body.width, body.height) / 2;
-            drawInstalledLead(graphics, geometry, 0);
-            drawInstalledLead(graphics, geometry, 1);
-            drawInstalledLead(graphics, geometry, 2);
-            graphics.setColor("#2f6680");
-            graphics.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2);
-            graphics.setColor("#c7e0ea");
-            graphics.drawRect(centerX - radius, centerY - radius, radius * 2, radius * 2);
-            graphics.setColor("#eef5f1");
-            graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(9, context.scale(11))));
-            graphics.drawString("NPN", centerX - context.scale(16), centerY + context.scale(4));
+            drawInstalledLead(graphics, context, geometry, 0);
+            drawInstalledLead(graphics, context, geometry, 1);
+            drawInstalledLead(graphics, context, geometry, 2);
+            drawTransistorBody(graphics, body, geometry.getTerminal(1).getLeadBodyPoint());
+            graphics.setColor(WorkbenchVisualTheme.SILK);
+            graphics.setFont(new Font(WorkbenchVisualTheme.FONT, Font.BOLD, Math.max(9, context.scale(11))));
+            WorkbenchVisualTheme.marking(graphics, "NPN", body, Math.max(9, context.scale(11)),
+                WorkbenchVisualTheme.SILK);
             graphics.drawString("B", base.x - context.scale(5), base.y + context.scale(22));
             graphics.drawString("C", collector.x - context.scale(5), collector.y + context.scale(22));
             graphics.drawString("E", emitter.x - context.scale(5), emitter.y + context.scale(22));
@@ -562,10 +515,7 @@ final class StandardPhysicalPartRenderProviders {
             int centerY = body.y + body.height / 2;
             int radius = Math.max(1, Math.min(body.width, body.height) / 2);
             drawLooseLeads(graphics, geometry, context);
-            graphics.setColor("#2f6680");
-            graphics.fillOval(body.x, body.y, body.width, body.height);
-            graphics.setColor("#c7e0ea");
-            graphics.drawRect(body.x, body.y, body.width, body.height);
+            drawTransistorBody(graphics, body, geometry.getTerminal(1).getLeadBodyPoint());
             drawPartLabel(graphics, context, context.getPart().getId().equals(
                 context.getRenderer().getSelectedPartForProvider()) ? "SELECTED" : "NPN",
                 body.x, body.y - context.scale(8));
@@ -594,16 +544,14 @@ final class StandardPhysicalPartRenderProviders {
             int centerX = body.x + body.width / 2;
             int centerY = body.y + body.height / 2;
             int radius = Math.min(body.width, body.height) / 2;
-            drawInstalledLead(graphics, geometry, 0);
-            drawInstalledLead(graphics, geometry, 1);
-            drawInstalledLead(graphics, geometry, 2);
-            graphics.setColor("#2f6680");
-            graphics.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2);
-            graphics.setColor("#c7e0ea");
-            graphics.drawRect(centerX - radius, centerY - radius, radius * 2, radius * 2);
-            graphics.setColor("#eef5f1");
-            graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(9, context.scale(11))));
-            graphics.drawString("NMOS", centerX - context.scale(20), centerY + context.scale(4));
+            drawInstalledLead(graphics, context, geometry, 0);
+            drawInstalledLead(graphics, context, geometry, 1);
+            drawInstalledLead(graphics, context, geometry, 2);
+            drawTransistorBody(graphics, body, geometry.getTerminal(1).getLeadBodyPoint());
+            graphics.setColor(WorkbenchVisualTheme.SILK);
+            graphics.setFont(new Font(WorkbenchVisualTheme.FONT, Font.BOLD, Math.max(9, context.scale(11))));
+            WorkbenchVisualTheme.marking(graphics, "NMOS", body, Math.max(9, context.scale(11)),
+                WorkbenchVisualTheme.SILK);
             graphics.drawString("G", gate.x - context.scale(5), gate.y + context.scale(22));
             graphics.drawString("D", drain.x - context.scale(5), drain.y + context.scale(22));
             graphics.drawString("S", source.x - context.scale(5), source.y + context.scale(22));
@@ -615,10 +563,7 @@ final class StandardPhysicalPartRenderProviders {
             if (context.getPart() == null) return;
             Rectangle body = geometry.getBodyBounds();
             drawLooseLeads(graphics, geometry, context);
-            graphics.setColor("#2f6680");
-            graphics.fillOval(body.x, body.y, body.width, body.height);
-            graphics.setColor("#c7e0ea");
-            graphics.drawRect(body.x, body.y, body.width, body.height);
+            drawTransistorBody(graphics, body, geometry.getTerminal(1).getLeadBodyPoint());
             drawPartLabel(graphics, context, context.getPart().getId().equals(
                 context.getRenderer().getSelectedPartForProvider()) ? "SELECTED" : "NMOS",
                 body.x, body.y - context.scale(8));
@@ -650,9 +595,9 @@ final class StandardPhysicalPartRenderProviders {
             int centerY = body.y + body.height / 2;
             int radius = Math.min(body.width, body.height) / 2;
             int leadWidth = Math.max(3, context.scale(4));
-            drawInstalledLead(graphics, geometry, 0, leadWidth);
-            drawInstalledLead(graphics, geometry, 1, leadWidth);
-            drawElectrolyticBody(graphics, context, specification, centerX, centerY, radius);
+            drawInstalledLead(graphics, context, geometry, 0, leadWidth);
+            drawInstalledLead(graphics, context, geometry, 1, leadWidth);
+            drawElectrolyticBody(graphics, context, specification, body, plus, minus);
             graphics.setColor("#f7f5e8");
             graphics.drawString("+", plus.x - context.scale(5), plus.y - context.scale(10));
             graphics.drawString("-", minus.x - context.scale(4), minus.y - context.scale(10));
@@ -671,7 +616,7 @@ final class StandardPhysicalPartRenderProviders {
             int centerY = body.y + body.height / 2;
             int radius = Math.max(1, Math.min(body.width, body.height) / 2);
             drawLooseLeads(graphics, geometry, context);
-            drawElectrolyticBody(graphics, context, specification, centerX, centerY, radius);
+            drawElectrolyticBody(graphics, context, specification, body, plus, minus);
             graphics.setColor("#f7f5e8");
             graphics.drawString("+", plus.x + context.scale(4), plus.y - context.scale(8));
             drawPartLabel(graphics, context, context.getPart().getId().equals(
@@ -681,20 +626,26 @@ final class StandardPhysicalPartRenderProviders {
         }
 
         private void drawElectrolyticBody(Graphics graphics, PhysicalPartRenderContext context,
-                CapacitorSpecification specification, int centerX, int centerY, int radius) {
-            graphics.setColor("#35576d");
-            graphics.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2);
-            graphics.setColor("#182833");
-            graphics.drawRect(centerX - radius + context.scale(2),
-                centerY - radius + context.scale(2), radius * 2 - context.scale(4),
-                radius * 2 - context.scale(4));
-            graphics.setColor("#d9e1df");
-            graphics.fillRect(centerX + radius / 3, centerY - radius + context.scale(3),
-                Math.max(4, context.scale(7)), radius * 2 - context.scale(6));
-            graphics.setColor("#eff4ed");
-            graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(8, context.scale(10))));
-            graphics.drawString(specification.getNameplate().getMarking(),
-                centerX - radius + context.scale(4), centerY + context.scale(4));
+                CapacitorSpecification specification, Rectangle b, Point plus, Point minus) {
+            WorkbenchVisualTheme.ellipse(graphics, b.x + 1, b.y + 2, b.width, b.height,
+                WorkbenchVisualTheme.SHADOW);
+            WorkbenchVisualTheme.ellipse(graphics, b.x, b.y, b.width, b.height,
+                WorkbenchVisualTheme.BODY_EDGE);
+            int rim = Math.max(1, Math.min(b.width, b.height) / 10);
+            WorkbenchVisualTheme.ellipse(graphics, b.x + rim, b.y + rim,
+                b.width - rim * 2, b.height - rim * 2, WorkbenchVisualTheme.BODY_LIGHT);
+            graphics.context.save();
+            WorkbenchVisualTheme.ellipsePath(graphics, b.x + rim, b.y + rim,
+                b.width - rim * 2, b.height - rim * 2);
+            graphics.context.clip();
+            WorkbenchVisualTheme.polarityStripe(graphics, b, plus, minus,
+                Math.max(2, Math.min(b.width, b.height) / 5), WorkbenchVisualTheme.METAL_LIGHT);
+            graphics.context.restore();
+            int inset = Math.max(2, Math.min(b.width, b.height) / 4);
+            WorkbenchVisualTheme.ellipse(graphics, b.x + inset, b.y + inset,
+                b.width - inset * 2, b.height - inset * 2, WorkbenchVisualTheme.METAL);
+            WorkbenchVisualTheme.marking(graphics, specification.getNameplate().getMarking(),
+                b, Math.max(8, context.scale(10)), WorkbenchVisualTheme.SILK);
         }
     }
 
@@ -720,8 +671,8 @@ final class StandardPhysicalPartRenderProviders {
             Rectangle body = geometry.getBodyBounds();
             int centerX = body.x + body.width / 2;
             int centerY = body.y + body.height / 2;
-            drawInstalledLead(graphics, geometry, 0);
-            drawInstalledLead(graphics, geometry, 1);
+            drawInstalledLead(graphics, context, geometry, 0);
+            drawInstalledLead(graphics, context, geometry, 1);
             drawCeramicBody(graphics, context, specification, centerX, centerY,
                 body.width / 2, body.height / 2);
             context.markBodyDrawn();
@@ -745,16 +696,18 @@ final class StandardPhysicalPartRenderProviders {
         private void drawCeramicBody(Graphics graphics, PhysicalPartRenderContext context,
                 CapacitorSpecification specification, int centerX, int centerY, int halfWidth,
                 int halfHeight) {
-            graphics.setColor("#bd8a54");
-            graphics.fillRect(centerX - halfWidth, centerY - halfHeight, halfWidth * 2,
-                halfHeight * 2);
-            graphics.setColor("#5b402c");
-            graphics.drawRect(centerX - halfWidth, centerY - halfHeight, halfWidth * 2,
-                halfHeight * 2);
-            graphics.setColor("#2b211a");
-            graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(8, context.scale(10))));
-            graphics.drawString(specification.getNameplate().getMarking(),
-                centerX - halfWidth + context.scale(3), centerY + context.scale(4));
+            Rectangle body = new Rectangle(centerX - halfWidth, centerY - halfHeight,
+                halfWidth * 2, halfHeight * 2);
+            WorkbenchVisualTheme.ellipse(graphics, body.x + 1, body.y + 2, body.width, body.height,
+                WorkbenchVisualTheme.SHADOW);
+            WorkbenchVisualTheme.ellipse(graphics, body.x, body.y, body.width, body.height,
+                "#8e5938");
+            WorkbenchVisualTheme.ellipse(graphics, body.x + 1, body.y + 1,
+                Math.max(1, body.width - 2), Math.max(1, body.height - 3), WorkbenchVisualTheme.CERAMIC);
+            WorkbenchVisualTheme.ellipse(graphics, body.x + body.width * .2, body.y + body.height * .12,
+                body.width * .4, body.height * .2, "rgba(255,237,199,0.24)");
+            WorkbenchVisualTheme.marking(graphics, specification.getNameplate().getMarking(),
+                body, Math.max(8, context.scale(10)), "#362919");
         }
     }
 
@@ -769,59 +722,42 @@ final class StandardPhysicalPartRenderProviders {
 
         public void drawInstalled(Graphics graphics, PhysicalPartRenderContext context,
                 PhysicalPartRenderGeometry geometry, boolean selected) {
-            if (!context.isInstalledPartMounted())
-                return;
-            Rectangle bounds = context.getInstalledBodyBounds();
-            graphics.setColor("#2d8f71");
-            graphics.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
-            graphics.setColor("#b8ead7");
-            graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
+            if (!context.isInstalledPartMounted()) return;
             for (PhysicalPartRenderTerminal terminal : geometry.getTerminals())
-                drawInstalledLead(graphics, geometry, terminal.getTerminalIndex());
-            drawConnectorPads(graphics, geometry, context);
+                drawInstalledLead(graphics, context, geometry, terminal.getTerminalIndex());
+            WorkbenchVisualTheme.body(graphics, geometry.getBodyBounds(), WorkbenchVisualTheme.CONNECTOR,
+                WorkbenchVisualTheme.CONNECTOR_LIGHT, false);
+            for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
+                Point point = terminal.getBoardPadPoint();
+                if (point != null) drawScrew(graphics, point, terminal.getPadBounds());
+            }
             context.markBodyDrawn();
         }
 
         public void drawLoose(Graphics graphics, PhysicalPartRenderContext context,
                 PhysicalPartRenderGeometry geometry, boolean selected) {
-            Rectangle bounds = geometry.getBodyBounds();
-            graphics.setColor("#2d8f71");
-            graphics.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
-            graphics.setColor("#b8ead7");
-            graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
             drawLooseLeads(graphics, geometry, context);
-            for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
-                Rectangle pad = terminal.getPadBounds();
-                graphics.setColor("#b8c8c2");
-                graphics.fillOval(pad.x, pad.y, pad.width, pad.height);
-                graphics.setColor("#4d5b57");
-                graphics.drawString(terminal.getTerminalId(), pad.x + pad.width / 3,
-                    pad.y + pad.height * 2 / 3);
-            }
+            WorkbenchVisualTheme.body(graphics, geometry.getBodyBounds(), WorkbenchVisualTheme.CONNECTOR,
+                WorkbenchVisualTheme.CONNECTOR_LIGHT, false);
+            for (PhysicalPartRenderTerminal terminal : geometry.getTerminals())
+                drawScrew(graphics, terminal.getPoint(), terminal.getPadBounds());
             context.markBodyDrawn();
         }
 
-        private void drawConnectorPads(Graphics graphics, PhysicalPartRenderGeometry geometry,
-                PhysicalPartRenderContext context) {
-            for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
-                int index = terminal.getTerminalIndex();
-                Point pad = terminal.getBoardPadPoint();
-                if (pad == null)
-                    continue;
-                int radius = Math.max(13, context.scale(20));
-                graphics.setColor("#b8c8c2");
-                graphics.fillOval(pad.x - radius, pad.y - radius, radius * 2, radius * 2);
-                graphics.setColor("#4d5b57");
-                graphics.setLineWidth(3);
-                graphics.drawLine(pad.x - radius / 2, pad.y, pad.x + radius / 2, pad.y);
-                if (index == 0)
-                    graphics.drawLine(pad.x, pad.y - radius / 2, pad.x, pad.y + radius / 2);
-                graphics.setLineWidth(1);
-            }
+        private void drawScrew(Graphics graphics, Point point, Rectangle bounds) {
+            int radius = Math.max(1, Math.min(bounds.width, bounds.height) / 2);
+            WorkbenchVisualTheme.ellipse(graphics, point.x - radius, point.y - radius,
+                radius * 2, radius * 2, WorkbenchVisualTheme.BODY_EDGE);
+            WorkbenchVisualTheme.ellipse(graphics, point.x - radius + 1, point.y - radius + 1,
+                Math.max(1, radius * 2 - 2), Math.max(1, radius * 2 - 2), WorkbenchVisualTheme.METAL_LIGHT);
+            graphics.setColor(WorkbenchVisualTheme.METAL);
+            graphics.setLineWidth(1);
+            graphics.drawLine(point.x - radius / 2, point.y + radius / 2,
+                point.x + radius / 2, point.y - radius / 2);
         }
     }
 
-    private static final class MultiTerminalRenderer extends BaseRenderer {
+    private static class MultiTerminalRenderer extends BaseRenderer {
         public PhysicalPartRenderGeometry getInstalledGeometry(PhysicalPartRenderContext context) {
             return installedGeometry(context, installedTerminals(context));
         }
@@ -832,55 +768,101 @@ final class StandardPhysicalPartRenderProviders {
 
         public void drawInstalled(Graphics graphics, PhysicalPartRenderContext context,
                 PhysicalPartRenderGeometry geometry, boolean selected) {
-            if (!context.isInstalledPartMounted())
-                return;
-            Rectangle bounds = context.getInstalledBodyBounds();
-            boolean connector = context.getPhysicalPackage().isConnector();
-            graphics.setColor(connector ? "#2d8f71" : "#485b69");
-            graphics.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
-            graphics.setColor(connector ? "#b8ead7" : "#d6e2ea");
-            graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
+            if (!context.isInstalledPartMounted()) return;
+            for (PhysicalPartRenderTerminal terminal : geometry.getTerminals())
+                drawInstalledLead(graphics, context, geometry, terminal.getTerminalIndex());
+            drawPackageBody(graphics, context, geometry.getBodyBounds());
+            graphics.setFont(new Font(WorkbenchVisualTheme.FONT, 0, Math.max(8, context.scale(10))));
+            graphics.setColor(WorkbenchVisualTheme.SILK_SECONDARY);
             for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
-                drawInstalledLead(graphics, geometry, terminal.getTerminalIndex());
-                Point pad = terminal.getBoardPadPoint();
-                if (pad == null)
-                    continue;
-                graphics.setColor("#b8c8c2");
-                int radius = Math.max(10, context.scale(16));
-                graphics.fillOval(pad.x - radius, pad.y - radius, radius * 2, radius * 2);
-                graphics.setColor("#4d5b57");
-                graphics.drawString(terminal.getTerminalId(), pad.x - context.scale(4),
-                    pad.y + context.scale(4));
+                Point point = terminal.getBoardPadPoint();
+                if (point != null)
+                    graphics.drawString(terminal.getTerminalId(), point.x + context.scale(9),
+                        point.y - context.scale(9));
             }
             context.markBodyDrawn();
         }
 
         public void drawLoose(Graphics graphics, PhysicalPartRenderContext context,
                 PhysicalPartRenderGeometry geometry, boolean selected) {
-            Rectangle bounds = geometry.getBodyBounds();
-            boolean connector = context.getPhysicalPackage().isConnector();
-            graphics.setColor(connector ? "#2d8f71" : "#485b69");
-            graphics.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
-            graphics.setColor(connector ? "#b8ead7" : "#d6e2ea");
-            graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
             drawLooseLeads(graphics, geometry, context);
+            drawPackageBody(graphics, context, geometry.getBodyBounds());
             for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
                 Rectangle pad = terminal.getPadBounds();
-                graphics.setColor("#b8c8c2");
-                graphics.fillOval(pad.x, pad.y, pad.width, pad.height);
-                graphics.setColor("#4d5b57");
+                WorkbenchVisualTheme.ellipse(graphics, pad.x, pad.y, pad.width, pad.height,
+                    WorkbenchVisualTheme.METAL_LIGHT);
+                graphics.setColor(WorkbenchVisualTheme.TEXT);
+                graphics.setFont(new Font(WorkbenchVisualTheme.FONT, 0, Math.max(8, context.scale(10))));
                 Point point = terminal.getPoint();
-                graphics.drawString(terminal.getTerminalId(), point.x - context.scale(4),
-                    point.y + context.scale(4));
+                graphics.drawString(terminal.getTerminalId(), point.x + context.scale(7),
+                    point.y - context.scale(7));
             }
             context.markBodyDrawn();
         }
+
+        protected void drawPackageBody(Graphics graphics, PhysicalPartRenderContext context, Rectangle bounds) {
+            WorkbenchVisualTheme.body(graphics, bounds, WorkbenchVisualTheme.BODY,
+                WorkbenchVisualTheme.BODY_LIGHT, false);
+        }
+    }
+
+    private static final class RelayRenderer extends MultiTerminalRenderer {
+        protected void drawPackageBody(Graphics graphics, PhysicalPartRenderContext context, Rectangle bounds) {
+            WorkbenchVisualTheme.body(graphics, bounds, "#b9c5b8", "#dce3d5", false);
+            Rectangle label = new Rectangle(bounds.x + bounds.width / 8, bounds.y + bounds.height / 4,
+                bounds.width * 3 / 4, bounds.height / 2);
+            WorkbenchVisualTheme.marking(graphics, "SPDT", label, Math.max(9, context.scale(12)),
+                WorkbenchVisualTheme.TEXT);
+            graphics.setColor(WorkbenchVisualTheme.MUTED_TEXT);
+            graphics.fillRect(bounds.x + Math.max(2, bounds.width / 10),
+                bounds.y + bounds.height - Math.max(3, bounds.height / 7),
+                Math.max(2, bounds.width / 7), Math.max(1, bounds.height / 18));
+        }
+    }
+
+    private static final class FuseRenderer extends MultiTerminalRenderer {
+        protected void drawPackageBody(Graphics graphics, PhysicalPartRenderContext context, Rectangle bounds) {
+            WorkbenchVisualTheme.body(graphics, bounds, "#dedecd", "#f3f2e4", true);
+            boolean horizontal = bounds.width >= bounds.height;
+            int cap = Math.max(1, (horizontal ? bounds.width : bounds.height) / 6);
+            graphics.setColor(WorkbenchVisualTheme.METAL_LIGHT);
+            if (horizontal) {
+                graphics.fillRect(bounds.x + 1, bounds.y + 1, cap, Math.max(1, bounds.height - 2));
+                graphics.fillRect(bounds.x + bounds.width - cap - 1, bounds.y + 1, cap,
+                    Math.max(1, bounds.height - 2));
+            } else {
+                graphics.fillRect(bounds.x + 1, bounds.y + 1, Math.max(1, bounds.width - 2), cap);
+                graphics.fillRect(bounds.x + 1, bounds.y + bounds.height - cap - 1,
+                    Math.max(1, bounds.width - 2), cap);
+            }
+            WorkbenchVisualTheme.marking(graphics, "FUSE", bounds, Math.max(8, context.scale(10)),
+                WorkbenchVisualTheme.MUTED_TEXT);
+        }
+    }
+
+    private static void drawTransistorBody(Graphics graphics, Rectangle b, Point leadRoot) {
+        // The flat face follows the already transformed lead-root geometry.
+        int dx = leadRoot.x - b.x - b.width / 2;
+        int dy = leadRoot.y - b.y - b.height / 2;
+        graphics.context.save();
+        if (Math.abs(dx) > Math.abs(dy))
+            graphics.clipRect(b.x + (dx < 0 ? b.width / 5 : 0), b.y,
+                b.width * 4 / 5, b.height);
+        else
+            graphics.clipRect(b.x, b.y + (dy < 0 ? b.height / 5 : 0),
+                b.width, b.height * 4 / 5);
+        WorkbenchVisualTheme.ellipse(graphics, b.x, b.y, b.width, b.height, WorkbenchVisualTheme.BODY_EDGE);
+        WorkbenchVisualTheme.ellipse(graphics, b.x + 1, b.y + 1,
+            Math.max(1, b.width - 2), Math.max(1, b.height - 2), WorkbenchVisualTheme.BODY);
+        WorkbenchVisualTheme.ellipse(graphics, b.x + b.width * .18, b.y + b.height * .1,
+            b.width * .56, b.height * .2, WorkbenchVisualTheme.BODY_LIGHT);
+        graphics.context.restore();
     }
 
     private static void drawPartLabel(Graphics graphics, PhysicalPartRenderContext context,
             String text, int x, int y) {
-        graphics.setFont(new Font("sans-serif", Font.BOLD, Math.max(11, context.scale(13))));
-        graphics.setColor("#3d484c");
+        graphics.setFont(new Font(WorkbenchVisualTheme.FONT, Font.BOLD, Math.max(11, context.scale(13))));
+        graphics.setColor(WorkbenchVisualTheme.TEXT);
         graphics.drawString(text, x, y);
     }
 

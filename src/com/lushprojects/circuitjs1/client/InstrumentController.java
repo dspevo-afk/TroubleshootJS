@@ -23,6 +23,7 @@ class InstrumentController {
     private final HashMap<String, ClickHandler> modeHandlers =
         new HashMap<String, ClickHandler>();
     private final Grid modeGrid;
+    private final VerticalPanel meterPanel;
     private final Label readingLabel;
     private final Label continuityLabel;
     private final ContinuityFeedback continuityFeedback;
@@ -97,7 +98,8 @@ class InstrumentController {
         modeRegistry = StandardInstrumentModeProviders.createRegistry();
         activeStrategy = modeRegistry.get("NONE");
 
-        VerticalPanel meterPanel = new VerticalPanel();
+        meterPanel = new VerticalPanel();
+        meterPanel.getElement().setAttribute("data-mode", "NONE");
         meterPanel.setStyleName("tsj-meter-panel");
         Label meterTitle = new Label("MULTIMETER");
         meterTitle.setStyleName("tsj-section-title");
@@ -177,6 +179,7 @@ class InstrumentController {
         if (saved == null)
             throw new IllegalArgumentException("Missing instrument state snapshot");
         activeStrategy = saved.activeStrategy;
+        meterPanel.getElement().setAttribute("data-mode", activeStrategy.getId());
         redProbe = saved.redProbe;
         blackProbe = saved.blackProbe;
         interactionEnabled = saved.interactionEnabled;
@@ -440,6 +443,15 @@ class InstrumentController {
         drawProbe(graphics, blackProbe, Color.black);
     }
 
+    /** The bench dial uses the same live guard, strategy and cleanup as native buttons. */
+    boolean selectPlayerMode(String id) {
+        if (!isCurrentPlayerInteractionAllowed() || id == null ||
+                !("NONE".equals(id) || modeButtons.containsKey(id))) return false;
+        setActiveMode(id, true);
+        updateReading();
+        return true;
+    }
+
     private void toggleMode(String id) {
         if (activeStrategy.getId().equals(id))
             setActiveMode("NONE", true);
@@ -458,6 +470,7 @@ class InstrumentController {
             activeStrategy.deactivate(this);
         boolean changed = activeStrategy != strategy;
         activeStrategy = strategy;
+        meterPanel.getElement().setAttribute("data-mode", activeStrategy.getId());
         if (changed)
             activeStrategy.activate(this);
         for (String id : modeButtons.keySet())
@@ -474,6 +487,7 @@ class InstrumentController {
             return;
         final Button button = new Button(strategy.getLabel());
         button.addStyleName("chbut");
+        button.getElement().setAttribute("data-instrument-mode", strategy.getId());
         int index = modeButtons.size();
         modeButtons.put(strategy.getId(), button);
         int rows = Math.max(1, (modeButtons.size() + 1) / 2);

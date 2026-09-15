@@ -1,325 +1,438 @@
-/* Presentation-only workbench shell.  CircuitJS layout and canvas geometry
- * remain owned by the GWT application. */
-
+/* Presentation tokens. GWT retains ownership of dock dimensions, PCB geometry,
+ * transforms and instrument state. These rules present existing HTML controls. */
+body.tsj-workbench-ui {
+  --tsj-font: "Trebuchet MS", Verdana, system-ui, sans-serif;
+  --tsj-mono: "Cascadia Mono", Consolas, monospace;
+  --tsj-mat: #ba9970;
+  --tsj-chrome: #292340;
+  --tsj-panel: #44385e;
+  --tsj-panel-raised: #59496f;
+  --tsj-panel-line: #89749d;
+  --tsj-panel-ink: #fff3ca;
+  --tsj-panel-muted: #ddcbe6;
+  --tsj-surface: #f4e5bc;
+  --tsj-paper: #fff7da;
+  --tsj-ink: #30253f;
+  --tsj-muted: #6a576c;
+  --tsj-line: #594768;
+  --tsj-accent: #247d78;
+  --tsj-accent-hover: #195f5c;
+  --tsj-accent-soft: #dbeabb;
+  --tsj-active: #267b77;
+  --tsj-focus: #287faf;
+  --tsj-chrome-focus: #ffd459;
+  --tsj-warning: #8e5126;
+  --tsj-error: #efad98;
+  --tsj-metal: #c0cbc4;
+  --tsj-lcd: #c9d8b9;
+  --tsj-lcd-ink: #203229;
+  background: var(--tsj-mat); font-family: var(--tsj-font);
+}
+/* Native Java/GWT panels retain their widgets and event handlers. */
+body.tsj-workbench-ui .tsj-workbench-toolbar-host {
+  position: relative; display: block; width: 100%; height: 112px; box-sizing: border-box;
+  background: var(--tsj-chrome); color: var(--tsj-panel-ink); border-bottom: 1px solid var(--tsj-panel-line);
+}
+body.tsj-workbench-ui .tsj-workbench-toolbar-host > tbody {
+  display: flex; align-items: center; gap: 10px; width: 100%; min-width: 0; height: 100%;
+  box-sizing: border-box; padding: 59px 18px 7px;
+}
+body.tsj-workbench-ui .tsj-workbench-toolbar-host > tbody > tr { display: block; flex-shrink: 0; }
+body.tsj-workbench-ui .tsj-workbench-toolbar-host > tbody > tr > td { display: block; padding: 0; }
+body.tsj-workbench-ui .tsj-workbench-toolbar-host > tbody > tr.tsj-toolbar-empty { display: none; }
 body.tsj-workbench-ui .tsj-meter-panel,
 body.tsj-workbench-ui .tsj-component-panel {
-  box-sizing: border-box;
-  width: calc(100% - 20px);
-  margin: 10px;
-  padding: 12px;
-  border: 1px solid #465054;
-  border-radius: 4px;
-  background: #252b2e;
-  color: #e6eceb;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+  box-sizing: border-box; table-layout: fixed; width: calc(100% - 20px);
+  margin: 0 10px 12px; padding: 12px; border: 1px solid var(--tsj-panel-line);
+  border-radius: 7px; background: var(--tsj-panel); color: var(--tsj-panel-ink);
+  box-shadow: 0 2px 3px #101a1426, inset 0 1px 0 #ffffff0a;
+  font: 12px/1.45 var(--tsj-font); overflow-wrap: anywhere;
 }
-
-body.tsj-workbench-ui .tsj-meter-panel {
-  border-top: 3px solid #b66c2a;
+body.tsj-workbench-ui .tsj-meter-panel > tbody > tr > td,
+body.tsj-workbench-ui .tsj-component-panel > tbody > tr > td { min-width: 0; }
+body.tsj-workbench-ui .tsj-component-panel .gwt-Label { margin: 3px 0; }
+body.tsj-workbench-ui .tsj-component-panel > tbody > tr:first-child > td > .gwt-Label,
+body.tsj-workbench-ui .tsj-section-title {
+  margin: 0 0 9px; color: var(--tsj-panel-muted); font: 600 11px/1.4 var(--tsj-font);
+  letter-spacing: .12em; text-transform: uppercase;
 }
-
-body.tsj-workbench-ui .tsj-component-panel {
-  border-top: 3px solid #7c8788;
-}
-
-body.tsj-workbench-ui .tsj-section-title,
 body.tsj-workbench-ui .tsj-component-title {
-  color: #f0c487;
-  font-family: Georgia, serif;
-  letter-spacing: .04em;
+  margin: 0 0 8px; color: var(--tsj-panel-ink); font: 600 16px/1.35 var(--tsj-font);
+  letter-spacing: 0;
 }
-
-body.tsj-workbench-ui .tsj-component-title {
-  font-size: 17px;
-}
-
-body.tsj-workbench-ui .tsj-meter-panel,
-body.tsj-workbench-ui .tsj-component-panel,
-body.tsj-workbench-ui .tsj-meter-panel select,
-body.tsj-workbench-ui .tsj-component-panel select {
-  color: #e6eceb;
-}
-
-body.tsj-workbench-ui .tsj-meter-panel select,
-body.tsj-workbench-ui .tsj-component-panel select {
-  box-sizing: border-box;
-  width: 100%;
-  min-height: 32px;
-  padding: 5px 7px;
-  border: 1px solid #667174;
-  border-radius: 3px;
-  background: #15191b;
-}
-
-body.tsj-workbench-ui .tsj-meter-modes td {
-  padding: 2px;
-}
-
 body.tsj-workbench-ui .tsj-meter-panel button,
 body.tsj-workbench-ui .tsj-component-panel button,
 body.tsj-workbench-ui .tsj-power-button,
 body.tsj-workbench-ui .tsj-meter-panel select,
 body.tsj-workbench-ui .tsj-component-panel select {
-  font-family: Arial, sans-serif;
-  font-size: 12px;
+  box-sizing: border-box; min-height: 34px; padding: 7px 9px;
+  border: 1px solid var(--tsj-panel-line); border-radius: 4px;
+  background: var(--tsj-panel-raised); color: var(--tsj-panel-ink);
+  font: 500 12px/1.35 var(--tsj-font); cursor: pointer; white-space: normal;
 }
-
-body.tsj-workbench-ui .tsj-meter-panel button,
-body.tsj-workbench-ui .tsj-component-panel button,
-body.tsj-workbench-ui .tsj-power-button {
-  box-sizing: border-box;
-  min-height: 32px;
-  padding: 6px 9px;
-  border: 1px solid #687477;
-  border-radius: 3px;
-  background: #353d40;
-  color: #eef2f0;
-  cursor: pointer;
+body.tsj-workbench-ui .tsj-component-panel button { width: 100%; }
+body.tsj-workbench-ui .tsj-meter-panel select,
+body.tsj-workbench-ui .tsj-component-panel select {
+  width: 100%; max-width: 100%; margin: 3px 0; background: var(--tsj-chrome);
 }
-
 body.tsj-workbench-ui .tsj-meter-panel button:hover,
-body.tsj-workbench-ui .tsj-meter-panel button:focus,
 body.tsj-workbench-ui .tsj-component-panel button:hover,
-body.tsj-workbench-ui .tsj-component-panel button:focus,
-body.tsj-workbench-ui .tsj-power-button:hover,
-body.tsj-workbench-ui .tsj-power-button:focus {
-  border-color: #d09450;
-  background: #424b4e;
+body.tsj-workbench-ui .tsj-power-button:hover {
+  background: var(--tsj-panel-line); border-color: var(--tsj-metal);
 }
-
+body.tsj-workbench-ui .tsj-meter-panel button:focus-visible,
+body.tsj-workbench-ui .tsj-component-panel button:focus-visible,
+body.tsj-workbench-ui .tsj-meter-panel select:focus-visible,
+body.tsj-workbench-ui .tsj-component-panel select:focus-visible,
+body.tsj-workbench-ui .tsj-power-button:focus-visible {
+  outline: 2px solid var(--tsj-chrome-focus); outline-offset: 2px;
+}
 body.tsj-workbench-ui .tsj-meter-panel button.chsel,
 body.tsj-workbench-ui .tsj-component-panel button.chsel,
 body.tsj-workbench-ui .tsj-power-button.chsel {
-  border-color: #d4944c;
-  background: #76502f;
-  color: #fff4e4;
-  box-shadow: inset 0 0 0 1px rgba(244, 194, 123, .18);
+  border-color: var(--tsj-panel-muted); background: var(--tsj-active);
+  color: var(--tsj-panel-ink); box-shadow: inset 0 -2px 0 var(--tsj-panel-muted);
 }
-
 body.tsj-workbench-ui .tsj-meter-panel button:disabled,
 body.tsj-workbench-ui .tsj-component-panel button:disabled,
 body.tsj-workbench-ui .tsj-power-button:disabled,
-body.tsj-workbench-ui .tsj-meter-panel button[disabled],
-body.tsj-workbench-ui .tsj-component-panel button[disabled],
-body.tsj-workbench-ui .tsj-power-button[disabled] {
-  border-color: #3b4244;
-  background: #252a2c;
-  color: #899294;
-  cursor: default;
+body.tsj-workbench-ui .tsj-meter-panel select:disabled,
+body.tsj-workbench-ui .tsj-component-panel select:disabled {
+  border-color: var(--tsj-panel-line); background: var(--tsj-panel);
+  color: var(--tsj-panel-muted); opacity: .62; cursor: default; box-shadow: none;
 }
-
-body.tsj-workbench-ui .tsj-meter-display {
-  min-height: 48px;
-  padding: 9px 8px;
-  border: 2px solid #6e7770;
-  border-radius: 2px;
-  background: #c3c19b;
-  color: #1a211c;
-  font-family: Consolas, "Courier New", monospace;
-  font-size: 20px;
-  letter-spacing: .04em;
-  box-shadow: inset 0 1px 5px rgba(16, 20, 18, .35);
-}
-
-body.tsj-workbench-ui .tsj-continuity-indicator {
-  color: #e7bd59;
-}
-
+/* The meter's own stylesheet presents these same native widgets on the bench. */
 body.tsj-workbench-ui .tsj-power-button {
-  box-sizing: border-box;
-  width: calc(100% - 20px);
-  margin: 4px 10px 10px;
-  border-color: #bd7531;
-  background: #614328;
-  color: #fff0d9;
-  font-weight: bold;
-  letter-spacing: .02em;
+  width: 142px; margin: 0 8px 0 0; min-height: 42px;
+  background: var(--tsj-panel-raised); font-weight: 600; letter-spacing: .02em;
 }
+body.tsj-workbench-ui .tsj-action-button { width: 100%; margin-top: 6px; border-color: var(--tsj-panel-muted); }
+body.tsj-workbench-ui .tsj-inline-feedback { margin: 8px 0; color: var(--tsj-error); font: 12px/1.45 var(--tsj-font); }
+body.tsj-workbench-ui .tsj-component-panel .gwt-Label-selected,
+body.tsj-workbench-ui .tsj-component-panel .gwt-Label-current { color: var(--tsj-panel-ink); border-color: var(--tsj-panel-line); }
+body.tsj-workbench-ui .tsj-component-panel .gwt-Label-1off,
+body.tsj-workbench-ui .tsj-component-panel .gwt-Label-2off { color: var(--tsj-panel-muted); }
+/* Pair the existing Board view button groups, preserving native widgets/order. */
+body.tsj-workbench-ui .tsj-component-panel[aria-label="Board view"] > tbody > tr > td > table { width: 100%; display: block; margin: 3px 0; }
+body.tsj-workbench-ui .tsj-component-panel[aria-label="Board view"] > tbody > tr > td > table > tbody { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+body.tsj-workbench-ui .tsj-component-panel[aria-label="Board view"] > tbody > tr > td > table > tbody > tr,
+body.tsj-workbench-ui .tsj-component-panel[aria-label="Board view"] > tbody > tr > td > table > tbody > tr > td { display: block; min-width: 0; }
+body.tsj-workbench-ui .tsj-component-panel[aria-label="Board view"] > tbody > tr > td > table > tbody > tr:nth-child(3) { grid-column: 1 / -1; }
+body.tsj-workbench-ui .tsj-component-panel[aria-label="Board view"] > tbody > tr > td > table > tbody > tr:only-child { grid-column: 1 / -1; }
 
-body.tsj-workbench-ui .tsj-power-button:hover,
-body.tsj-workbench-ui .tsj-power-button:focus {
-  background: #80562e;
+/* All normal controls originate at the top. Native secondary panels stay in
+ * their GWT cells and open in the browser top layer, without a second sidebar. */
+body.tsj-workbench-ui .tsj-native-popover {
+  position: fixed; inset: auto; left: var(--tsj-tool-left, 18px); top: var(--tsj-tool-top, 150px);
+  width: min(340px, calc(100vw - 24px)); max-height: calc(100vh - var(--tsj-tool-top, 150px) - 14px);
+  margin: 0; padding: 18px; border: 1px solid var(--tsj-panel-line); border-radius: 8px;
+  background: var(--tsj-panel); box-shadow: 0 12px 36px #09130d55; overflow-y: auto;
 }
-
-body.tsj-workbench-ui .tsj-action-button {
-  width: 100%;
-  margin-top: 6px;
-  border-color: #ad6a2d;
-  background: #59412d;
-  color: #fff1dd;
-}
-
-body.tsj-workbench-ui .tsj-action-button:hover,
-body.tsj-workbench-ui .tsj-action-button:focus {
-  background: #725033;
-}
-
-body.tsj-workbench-ui .tsj-inline-feedback {
-  color: #e6a07f;
-}
-
-body.tsj-workbench-ui .tsj-component-panel .tsj-selected,
-body.tsj-workbench-ui .tsj-component-panel .tsj-current {
-  color: #f0c487;
-}
-
-body.tsj-workbench-ui .tsj-workbench-sidebar-host {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  table-layout: fixed;
-}
-
-body.tsj-workbench-ui .tsj-workbench-sidebar-host .tsj-workbench-sidebar-cell {
-  width: 100%;
-  min-width: 0;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-body.tsj-workbench-ui .tsj-workbench-sidebar-host .tsj-workbench-shell {
-  min-width: 0;
-}
-
-/* Product shell remains in the sidebar. Its separate body-level modal allows
- * background inertness without ever inerting the dialog's own ancestors. */
-.tsj-workbench-shell { width: 100%; max-width: 100%; box-sizing: border-box; }
-.tsj-product-floating { position: fixed; right: 12px; top: 12px; width: 240px; z-index: 10000; }
-.tsj-ui-strip {
-  display: flex; flex-wrap: wrap; gap: 6px; margin: 0 10px 10px; padding: 10px;
-  border: 1px solid #4d585b; border-radius: 4px; background: #1b2022;
-  color: #edf2f0; font: 13px/1.5 Arial, sans-serif;
-}
-.tsj-ui-strip > button { flex: 1 1 42%; }
-.tsj-ui-strip > .tsj-product-primary { flex-basis: 100%; }
+body.tsj-workbench-ui .tsj-native-popover:not(:popover-open) { display: none; }
+body.tsj-workbench-ui .tsj-native-popover:popover-open { display: block; }
+body.tsj-workbench-ui .tsj-native-popover > tbody { display: table; width: 100%; }
+.tsj-workbench-shell { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 20px; width: 100%; min-width: 0; height: 56px; padding: 0 18px; border-bottom: 1px solid var(--tsj-panel-line); box-sizing: border-box; background: var(--tsj-chrome); }
+.tsj-product-floating { position: fixed; z-index: 10000; }
+.tsj-workbench-brand { display: flex; flex-shrink: 0; align-items: center; gap: 9px; color: var(--tsj-panel-ink); font-family: var(--tsj-font); }
+.tsj-workbench-brand > .tsj-ui-icon { width: 25px; height: 25px; color: var(--tsj-panel-muted); }
+.tsj-workbench-brand > div { flex: 1; min-width: 0; }
+.tsj-workbench-brand strong { display: block; font-size: 15px; font-weight: 650; letter-spacing: -.03em; }
+.tsj-workbench-brand div > span { display: block; margin-top: 3px; color: var(--tsj-panel-muted); font-size: 8px; letter-spacing: .09em; }
+.tsj-alpha-badge { padding: 3px 4px; border: 1px solid var(--tsj-panel-line); border-radius: 3px; color: var(--tsj-panel-muted); font-size: 8px; letter-spacing: .08em; }
+.tsj-ui-icon { display: inline-block; width: 17px; height: 17px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.65; stroke-linecap: round; stroke-linejoin: round; vertical-align: middle; }
+.tsj-ui-strip { order: 2; display: flex; flex-shrink: 0; align-items: center; gap: 6px; margin: 0 0 0 auto; color: var(--tsj-panel-ink); font: 12px/1.4 var(--tsj-font); }
+.tsj-ui-strip > button { display: flex; justify-content: center; align-items: center; gap: 7px; padding: 7px 11px; background: var(--tsj-panel); color: var(--tsj-panel-ink); border-color: var(--tsj-panel-line); font-size: 12px; }
+.tsj-ui-strip > button:hover { background: var(--tsj-panel-raised); border-color: var(--tsj-metal); }
+.tsj-ui-strip > button:disabled { background: var(--tsj-chrome); color: var(--tsj-panel-muted); border-color: var(--tsj-panel-line); opacity: .62; }
+.tsj-ui-strip > .tsj-product-primary { background: var(--tsj-active); border-color: var(--tsj-active); }
+.tsj-workbench-shell > .tsj-product-notice { order: 1; flex: 1; min-width: 0; max-height: 42px; margin: 0; overflow: auto; font: 11px/1.4 var(--tsj-font); color: var(--tsj-panel-muted); }
 .tsj-product-button {
-  min-height: 36px; padding: 7px 12px; border: 1px solid #79888c;
-  border-radius: 4px; background: #343e42; color: #f2f5f4;
-  font: inherit; cursor: pointer; white-space: normal;
+  box-sizing: border-box; min-height: 36px; padding: 8px 13px; border: 1px solid var(--tsj-line);
+  border-radius: 5px; background: var(--tsj-paper); color: var(--tsj-ink);
+  border: 2px solid var(--tsj-line); box-shadow: 2px 3px 0 var(--tsj-line);
+  font: 600 .875em/1.35 var(--tsj-font); cursor: pointer; white-space: normal;
 }
-.tsj-product-button:hover { background: #455359; border-color: #efb66e; }
-.tsj-product-button:disabled { background: #272e30; border-color: #475358; color: #9ba8ad; cursor: default; }
-.tsj-product-primary { background: #71502f; border-color: #db9c54; font-weight: bold; }
-.tsj-product-button:focus-visible,
-.tsj-ui-dialog :focus-visible { outline: 3px solid #ffce82; outline-offset: 3px; }
-.tsj-ui-overlay {
-  position: fixed; inset: 0; z-index: 10010; display: none; padding: 24px;
-  background: rgba(5, 9, 12, .9); pointer-events: auto;
-  align-items: center; justify-content: center; overscroll-behavior: contain;
-}
+.tsj-product-button:hover { background: var(--tsj-accent-soft); border-color: var(--tsj-accent); }
+.tsj-product-button:disabled { background: var(--tsj-surface); border-color: var(--tsj-line); color: var(--tsj-muted); cursor: default; }
+.tsj-product-primary { background: var(--tsj-accent); border-color: var(--tsj-accent); color: #fff; }
+.tsj-product-primary:hover { background: var(--tsj-accent-hover); color: #fff; }
+.tsj-product-button:focus-visible, .tsj-ui-dialog :focus-visible { outline: 3px solid var(--tsj-focus); outline-offset: 3px; }
+.tsj-ui-strip > button:focus-visible { outline-color: var(--tsj-chrome-focus); }
+/* Toolbar buttons override the light dialog-button base above. Keep their
+ * dark material, hover, active and focus treatments together in the cascade. */
+.tsj-tool-trigger { display: inline-flex; flex-direction: row; align-items: center; justify-content: center; gap: 6px; min-width: 76px; min-height: 42px; padding: 8px 11px; border-color: var(--tsj-panel-line); background: var(--tsj-panel); color: var(--tsj-panel-ink); font-size: 11px; box-shadow: inset 0 1px 0 #ffffff08; }
+.tsj-tool-trigger .tsj-ui-icon { width: 20px; height: 20px; color: var(--tsj-panel-muted); }
+.tsj-tool-trigger:hover { background: var(--tsj-panel-raised); border-color: var(--tsj-metal); }
+.tsj-tool-trigger[hidden] { display: none; }
+.tsj-tool-trigger:has(+ :popover-open) { border-color: var(--tsj-panel-muted); background: var(--tsj-active); }
+.tsj-tool-trigger:has(+ :popover-open) .tsj-ui-icon { color: var(--tsj-panel-ink); }
+.tsj-tool-trigger:focus-visible { outline-color: var(--tsj-chrome-focus); }
+
+/* Body-level dialogs preserve the established inert/focus/lease boundary. */
+.tsj-ui-overlay { position: fixed; inset: 0; z-index: 10010; display: none; padding: 24px; background: repeating-linear-gradient(135deg, #1c4442ed 0 20px, #244c49ed 20px 40px); pointer-events: auto; align-items: center; justify-content: center; overscroll-behavior: contain; }
 .tsj-ui-overlay.is-open { display: flex; }
 .tsj-ui-overlay[hidden], .tsj-ui-dialog [hidden] { display: none !important; }
 .tsj-ui-dialog {
-  width: min(820px, 100%); max-height: 100%; display: flex; flex-direction: column;
-  box-sizing: border-box; border: 1px solid #7c8c91; border-top: 3px solid #db9c54;
-  border-radius: 6px; background: #20282c; color: #edf2f0;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, .55); font: 15px/1.5 Arial, sans-serif;
-  overflow: hidden;
+  width: min(820px, 100%); max-height: 100%; display: flex; flex-direction: column; box-sizing: border-box;
+  border: 4px solid #292340; border-radius: 12px; background: var(--tsj-surface); color: var(--tsj-ink);
+  box-shadow: 9px 10px 0 #18122799, inset 0 0 0 3px #fff8e0; font: 14px/1.55 var(--tsj-font); overflow: hidden;
 }
-.tsj-ui-dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 22px; border-bottom: 1px solid #526166; }
-.tsj-ui-dialog-header h2 { margin: 0; font: bold 23px/1.3 Georgia, serif; color: #f0c487; }
-.tsj-ui-close { flex-shrink: 0; }
-.tsj-product-content { padding: 4px 22px 22px; overflow-y: auto; min-height: 0; overscroll-behavior: contain; }
-.tsj-product-content h3 { margin: 20px 0 8px; color: #f0c487; font-size: 18px; }
+.tsj-ui-dialog-header { display: flex; flex-shrink: 0; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 26px; border-bottom: 1px solid var(--tsj-panel-line); background: var(--tsj-chrome); color: var(--tsj-panel-ink); }
+.tsj-ui-dialog-header h2 { margin: 0; color: var(--tsj-panel-ink); font: 600 18px/1.35 var(--tsj-font); letter-spacing: -.02em; }
+.tsj-ui-close { flex-shrink: 0; background: var(--tsj-panel); border-color: var(--tsj-panel-line); color: var(--tsj-panel-ink); }
+.tsj-ui-close:hover { background: var(--tsj-panel-raised); border-color: var(--tsj-metal); }
+.tsj-ui-close:focus-visible { outline-color: var(--tsj-chrome-focus); }
+.tsj-product-content { padding: 6px 26px 24px; overflow-y: auto; min-height: 0; overscroll-behavior: contain; }
+.tsj-product-content h3 { margin: 18px 0 7px; color: var(--tsj-ink); font-size: 17px; font-weight: 650; line-height: 1.4; letter-spacing: -.02em; }
+.tsj-product-content h4 { margin: 0 0 8px; font-size: 13px; font-weight: 650; }
 .tsj-product-content p { margin: 10px 0; }
 .tsj-product-content > button { margin: 6px 8px 6px 0; }
-.tsj-product-notice { margin: 0; color: #ffe1aa; overflow-wrap: anywhere; }
+.tsj-product-notice { margin: 0; color: var(--tsj-warning); overflow-wrap: anywhere; }
 .tsj-product-notice:empty { display: none; }
-.tsj-ui-dialog > .tsj-product-notice { padding: 12px 22px; border-bottom: 1px solid #526166; max-height: 25vh; overflow: auto; }
-.tsj-ui-strip > .tsj-product-notice { width: 100%; font-size: 13px; }
-.tsj-product-form { margin: 16px 0; padding: 16px; border: 1px solid #526166; border-radius: 4px; }
+.tsj-ui-dialog > .tsj-product-notice { flex-shrink: 0; padding: 10px 26px; border-bottom: 1px solid var(--tsj-line); background: var(--tsj-paper); max-height: 20vh; overflow: auto; }
+.tsj-product-intro { padding: 13px 0 8px; }
+.tsj-product-content .tsj-product-eyebrow { margin: 8px 0; color: var(--tsj-accent); font-size: 10px; font-weight: 700; letter-spacing: .14em; }
+.tsj-product-intro h3 { margin: 8px 0; font-size: 29px; line-height: 1.2; letter-spacing: -.045em; }
+.tsj-product-intro > p:not(.tsj-product-eyebrow) { max-width: 650px; color: var(--tsj-muted); }
+.tsj-product-process { display: flex; flex-wrap: wrap; gap: 8px 22px; list-style: decimal-leading-zero inside; margin: 17px 0 5px; padding: 0; color: var(--tsj-ink); font-size: 12px; font-weight: 600; }
+.tsj-product-process li::marker { color: var(--tsj-muted); font-size: 10px; font-variant-numeric: tabular-nums; }
+.tsj-product-setup { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: start; }
+.tsj-product-form { margin: 16px 0 0; padding: 18px; border: 3px solid var(--tsj-line); border-radius: 8px; background: var(--tsj-paper); box-shadow: 4px 4px 0 #baa385; }
+.tsj-product-form > h3 { margin-top: 0; }
 .tsj-product-form > button { margin: 6px 8px 0 0; }
-.tsj-product-field { display: flex; flex-direction: column; gap: 6px; margin: 12px 0; font-weight: bold; }
+.tsj-product-new-board > .tsj-product-primary { width: 100%; margin-right: 0; }
+.tsj-product-choices { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: 10px; }
+.tsj-product-field { display: flex; flex-direction: column; gap: 6px; margin: 12px 0; font-size: 12px; font-weight: 600; }
 .tsj-product-field input, .tsj-product-field select, .tsj-product-field textarea {
-  min-width: 0; width: 100%; box-sizing: border-box; min-height: 38px;
-  border: 1px solid #829198; border-radius: 3px; padding: 8px;
-  background: #10171b; color: #f0f4f2; font: inherit; font-weight: normal;
+  min-width: 0; width: 100%; box-sizing: border-box; min-height: 38px; border: 1px solid var(--tsj-line);
+  border-radius: 4px; padding: 8px 10px; background: var(--tsj-paper); color: var(--tsj-ink); font: 400 13px/1.4 var(--tsj-font);
 }
 .tsj-product-field textarea { resize: vertical; overflow-wrap: anywhere; }
-.tsj-product-field textarea[readonly] { font-family: Consolas, monospace; font-size: .9em; }
-.tsj-product-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
-.tsj-product-identity { margin-top: 20px; border-top: 1px solid #526166; padding-top: 12px; }
-.tsj-product-identity summary { cursor: pointer; }
-/* The local parts website uses the live catalog and inventory projection. */
+.tsj-product-field textarea[readonly] { font-family: var(--tsj-mono); font-size: 12px; background: var(--tsj-surface); }
+.tsj-product-content .tsj-product-hint { color: var(--tsj-muted); font-size: 12px; }
+.tsj-product-exact { border-top: 1px solid var(--tsj-line); margin-top: 18px; padding-top: 15px; }
+.tsj-product-exact .tsj-product-field { margin-bottom: 7px; }
+.tsj-product-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0; }
+.tsj-product-support { margin: 22px 0 0; border-top: 1px solid var(--tsj-line); padding-top: 1px; color: var(--tsj-muted); font-size: 12px; }
+.tsj-product-support h3 { color: var(--tsj-muted); font-size: 13px; }
+.tsj-product-identity { margin-top: 20px; border-top: 1px solid var(--tsj-line); padding-top: 12px; color: var(--tsj-muted); font-size: 12px; }
+.tsj-product-identity summary { cursor: pointer; font-weight: 600; }
+.tsj-product-ticket { margin: 18px 0; padding: 22px 24px; border: 1px solid var(--tsj-line); border-left: 4px solid var(--tsj-accent); border-radius: 5px; background: var(--tsj-paper); }
+.tsj-product-ticket > h3 { margin-top: 8px; font-size: 20px; }
+.tsj-product-ticket .tsj-product-complaint { margin: 12px 0 20px; font-size: 19px; line-height: 1.55; color: var(--tsj-ink); }
+.tsj-product-retest { padding-top: 1px; border-top: 1px solid var(--tsj-line); }
+.tsj-product-retest h3 { color: var(--tsj-muted); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+.tsj-product-success { background: var(--tsj-accent-soft); }
+.tsj-product-guides { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0 24px; }
+.tsj-product-guide { min-width: 0; padding: 16px; background: var(--tsj-paper); border: 1px solid var(--tsj-line); border-radius: 6px; }
+.tsj-product-guide h3 { margin-top: 0; font-size: 15px; }
+.tsj-product-guide p { color: var(--tsj-muted); font-size: 13px; }
+.tsj-product-check { display: flex; align-items: center; gap: 15px; margin: 12px 0; padding: 17px; border: 1px solid var(--tsj-line); border-radius: 6px; background: var(--tsj-paper); cursor: pointer; }
+.tsj-product-check input { flex-shrink: 0; width: 19px; height: 19px; margin: 0; accent-color: var(--tsj-accent); }
+.tsj-product-check strong { display: block; font-size: 14px; font-weight: 600; }
+.tsj-product-check small { display: block; margin-top: 3px; color: var(--tsj-muted); font-size: 12px; }
+.tsj-product-reference { width: 100%; border-collapse: collapse; margin: 12px 0; background: var(--tsj-paper); font-size: 12px; }
+.tsj-product-reference th, .tsj-product-reference td { padding: 8px 10px; border-bottom: 1px solid var(--tsj-line); text-align: left; }
+.tsj-product-reference th { background: var(--tsj-accent-soft); font-weight: 600; }
+.tsj-product-reference caption { text-align: left; margin-bottom: 8px; color: var(--tsj-muted); }
+.tsj-product-reference td:first-child::before { content: ""; display: inline-block; width: 12px; height: 12px; margin-right: 8px; border: 1px solid var(--tsj-muted); border-radius: 2px; background: var(--tsj-band); vertical-align: -2px; }
+.tsj-product-reference [data-band="black"] { --tsj-band: #171b18; }
+.tsj-product-reference [data-band="brown"] { --tsj-band: #865d3b; }
+.tsj-product-reference [data-band="red"] { --tsj-band: #bf433c; }
+.tsj-product-reference [data-band="orange"] { --tsj-band: #d68437; }
+.tsj-product-reference [data-band="yellow"] { --tsj-band: #ead563; }
+.tsj-product-reference [data-band="green"] { --tsj-band: #4c8a60; }
+.tsj-product-reference [data-band="blue"] { --tsj-band: #436ca6; }
+.tsj-product-reference [data-band="violet"] { --tsj-band: #8763a3; }
+.tsj-product-reference [data-band="gray"] { --tsj-band: #909793; }
+.tsj-product-reference [data-band="white"] { --tsj-band: #fff; }
+.tsj-product-reference [data-band="gold"] { --tsj-band: #bd9d4b; }
+.tsj-product-reference [data-band="silver"] { --tsj-band: #c4ccc8; }
+.tsj-product-reference [data-band="none"] { --tsj-band: transparent; }
+
+/* Supplier website: real catalog entries, public specifications and live counts. */
 .tsj-store-dialog { width: min(1200px, 100%); height: min(900px, 100%); }
-.tsj-store-dialog .tsj-ui-dialog-header { padding: 8px 22px; flex-shrink: 0; }
-.tsj-store-dialog > .tsj-product-notice { flex-shrink: 0; padding: 8px 22px; max-height: 15vh; }
-.tsj-store-dialog .tsj-product-content { padding: 0; background: #f2f3ed; color: #233b36; }
-.tsj-store-toolbar { display: flex; align-items: center; gap: 12px; padding: 5px 22px; background: #303c3e; color: #e0e8e4; font-size: .8em; }
+.tsj-store-dialog .tsj-ui-dialog-header { padding: 10px 24px; }
+.tsj-store-dialog > .tsj-product-notice { padding: 8px 24px; max-height: 15vh; }
+.tsj-store-dialog .tsj-product-content { padding: 0; background: var(--tsj-surface); color: var(--tsj-ink); }
+.tsj-store-toolbar { display: flex; align-items: center; gap: 12px; padding: 6px 24px; border-bottom: 1px solid var(--tsj-line); background: var(--tsj-paper); color: var(--tsj-muted); font-size: 10px; }
 .tsj-store-local { flex-shrink: 0; }
-.tsj-store-address { flex: 1; min-width: 0; padding: 3px 12px; border: 1px solid #5c6a6c; border-radius: 4px; background: #1c2629; overflow-wrap: anywhere; font-family: Consolas, monospace; }
-.tsj-store-supplier { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 12px 24px; background: #173f36; color: #eef3e7; }
-.tsj-store-supplier h3 { margin: 2px 0 0; color: #fbedd3; font: bold 28px/1.2 Georgia, serif; }
+.tsj-store-address { flex: 1; min-width: 0; padding: 3px 12px; border: 1px solid var(--tsj-line); border-radius: 4px; background: var(--tsj-surface); overflow-wrap: anywhere; font-family: var(--tsj-mono); }
+.tsj-store-supplier { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 26px; background: var(--tsj-chrome); color: var(--tsj-panel-ink); }
+.tsj-store-supplier h3 { margin: 3px 0 0; color: var(--tsj-panel-ink); font: 650 26px/1.2 var(--tsj-font); letter-spacing: -.035em; }
 .tsj-store-supplier p { margin: 0; }
-.tsj-store-supplier .tsj-store-eyebrow { color: #cadacd; font-size: .7em; letter-spacing: .16em; }
-.tsj-store-tray { padding: 8px 12px; border: 1px solid #66877a; border-radius: 4px; font-size: .9em; white-space: nowrap; }
-.tsj-store .tsj-store-intro { margin: 0; padding: 8px 24px; color: #496059; font-size: .9em; }
-.tsj-store-browse { position: sticky; top: 0; z-index: 1; padding: 8px 24px; border-top: 1px solid #cdd5ca; border-bottom: 1px solid #cdd5ca; background: #fbfcf6; }
-.tsj-store-categories { display: flex; flex-wrap: wrap; gap: 7px; }
-.tsj-store .tsj-product-button { background: #f9fbf5; color: #21493d; border-color: #9cafa1; }
-.tsj-store .tsj-product-button:hover { background: #e4ece0; border-color: #3b7259; }
-.tsj-store-categories .tsj-product-button { min-height: 32px; padding: 4px 11px; border-radius: 18px; font-size: .85em; }
-.tsj-store-categories .tsj-product-button[aria-pressed="true"] { background: #214e3e; border-color: #214e3e; color: #fff; }
-.tsj-store-search { display: flex; align-items: flex-end; gap: 10px; margin-top: 6px; }
-.tsj-store-search .tsj-product-field { flex: 1; margin: 0; gap: 3px; font-size: .85em; }
-.tsj-store-search input { background: #fff; color: #233b36; border-color: #8fa397; }
-.tsj-store-search > button { flex-shrink: 0; font-size: .85em; min-height: 38px; }
-.tsj-store .tsj-store-note { margin: 0; padding: 7px 24px 0; color: #4b603a; font-size: .85em; }
-.tsj-store .tsj-store-results { margin: 0; padding: 6px 24px; color: #496059; font-size: .85em; }
-.tsj-store-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(205px, 1fr)); gap: 12px; padding: 0 24px 24px; }
-.tsj-store-card { display: flex; flex-direction: column; min-width: 0; padding: 15px; border: 1px solid #c2cdbf; border-radius: 5px; background: #fffef8; }
-.tsj-store-component { display: block; width: 100%; height: 56px; margin-bottom: 10px; border-radius: 3px; background: #edf1e8; stroke: #456052; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.tsj-store-component-body { fill: #c1cfbc; }
+.tsj-store-supplier .tsj-store-eyebrow { color: var(--tsj-panel-muted); font-size: 9px; font-weight: 600; letter-spacing: .17em; }
+.tsj-store-tray { padding: 9px 12px; border: 1px solid var(--tsj-panel-line); border-radius: 5px; background: var(--tsj-panel); font-size: 12px; white-space: nowrap; }
+.tsj-store .tsj-store-intro { margin: 0; padding: 14px 26px; background: var(--tsj-accent-soft); border-bottom: 1px solid var(--tsj-line); }
+.tsj-store-intro h3 { margin: 0 0 4px; font-size: 20px; letter-spacing: -.025em; }
+.tsj-store-intro p { margin: 0; color: var(--tsj-muted); font-size: 12px; }
+.tsj-store-browse { position: sticky; top: 0; z-index: 1; padding: 13px 26px; border-bottom: 1px solid var(--tsj-line); background: var(--tsj-paper); }
+.tsj-store-categories { display: flex; flex-wrap: wrap; gap: 6px; }
+.tsj-store-categories .tsj-product-button { min-height: 30px; padding: 5px 10px; border-color: transparent; background: var(--tsj-surface); border-radius: 4px; font-size: 11px; }
+.tsj-store-categories .tsj-product-button:hover { border-color: var(--tsj-accent); }
+.tsj-store-categories .tsj-product-button[aria-pressed="true"] { background: var(--tsj-accent); border-color: var(--tsj-accent); color: #fff; }
+.tsj-store-search { display: flex; align-items: flex-end; gap: 10px; margin-top: 10px; }
+.tsj-store-search .tsj-product-field { flex: 1; margin: 0; gap: 4px; font-size: 11px; }
+.tsj-store-search > button { flex-shrink: 0; font-size: 12px; min-height: 38px; }
+.tsj-store .tsj-store-note { margin: 0; padding: 12px 26px 0; color: var(--tsj-muted); font-size: 12px; }
+.tsj-store .tsj-store-results { margin: 0; padding: 8px 26px 12px; color: var(--tsj-muted); font-size: 11px; }
+.tsj-store-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 12px; padding: 0 26px 26px; }
+.tsj-store-card { display: flex; flex-direction: column; min-width: 0; padding: 15px; border: 1px solid var(--tsj-line); border-radius: 6px; background: var(--tsj-paper); box-shadow: 0 1px 2px #30253f08; }
+.tsj-store-component { display: block; width: 100%; height: 72px; margin-bottom: 12px; border-radius: 4px; background: var(--tsj-surface); stroke: var(--tsj-muted); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.tsj-store-component-body { fill: var(--tsj-metal); }
 .tsj-store-component-line { fill: none; }
-.tsj-store-card .tsj-store-type { margin: 0 0 7px; font-size: .75em; color: #58704f; }
-.tsj-store-card h4 { margin: 0 0 12px; color: #233b36; font-size: 1.05em; line-height: 1.4; overflow-wrap: anywhere; }
-.tsj-store-card .tsj-store-add { margin-top: auto; min-height: 34px; font-size: .8em; font-weight: bold; }
-.tsj-store .tsj-product-button:disabled { background: #ecefe7; color: #677469; border-color: #bdc7b9; }
-.tsj-store .tsj-store-empty { margin: 0; padding: 12px 24px 30px; }
-.tsj-store :focus-visible { outline-color: #9b4b10; }
-.tsj-product-check { display: flex; align-items: center; gap: 12px; margin: 20px 0; cursor: pointer; }
-.tsj-product-check input { width: 20px; height: 20px; accent-color: #b67a3e; }
-.tsj-product-reference { width: 100%; border-collapse: collapse; margin: 12px 0; }
-.tsj-product-reference th, .tsj-product-reference td { padding: 7px; border: 1px solid #66777e; text-align: left; }
-.tsj-product-reference caption { text-align: left; margin-bottom: 8px; }
-/* These classes style HTML controls only: no canvas filter, transform or hit-target changes. */
+.tsj-store-card .tsj-store-type { margin: 0 0 5px; font-size: 10px; font-weight: 600; color: var(--tsj-muted); }
+.tsj-store-card h4 { margin: 0 0 16px; color: var(--tsj-ink); font-size: 13px; line-height: 1.55; font-weight: 600; overflow-wrap: anywhere; }
+.tsj-store-card .tsj-store-add { margin-top: auto; min-height: 35px; font-size: 11px; border-color: var(--tsj-accent); color: var(--tsj-accent); }
+.tsj-store-card .tsj-store-add:disabled { color: var(--tsj-muted); border-color: var(--tsj-line); }
+.tsj-store .tsj-store-empty { margin: 0; padding: 14px 26px 30px; }
+
+/* Preferences affect HTML only, never the canvas or probe targets. */
 body.tsj-large-text .tsj-ui-dialog { font-size: 18px; }
-body.tsj-large-text .tsj-ui-strip { font-size: 16px; }
+body.tsj-large-text .tsj-ui-strip { font-size: 15px; }
+body.tsj-large-text .tsj-ui-strip > button { font-size: 15px; }
+body.tsj-large-text .tsj-tool-trigger { font-size: 14px; }
 body.tsj-large-text .tsj-component-panel,
+body.tsj-large-text .tsj-meter-panel,
 body.tsj-large-text .tsj-component-panel button,
 body.tsj-large-text .tsj-component-panel select,
 body.tsj-large-text .tsj-meter-panel button,
-body.tsj-large-text .tsj-meter-panel select { font-size: 15px; }
-body.tsj-high-contrast .tsj-ui-dialog,
-body.tsj-high-contrast .tsj-ui-strip,
-body.tsj-high-contrast .tsj-component-panel,
-body.tsj-high-contrast .tsj-meter-panel { background: #080b0d; color: #fff; border-color: #c4d0d5; }
-body.tsj-high-contrast .tsj-product-button,
-body.tsj-high-contrast .tsj-product-field input,
-body.tsj-high-contrast .tsj-product-field select,
-body.tsj-high-contrast .tsj-product-field textarea { border-color: #d8e2e5; color: #fff; background: #10191e; }
-body.tsj-high-contrast .tsj-product-button:disabled { color: #a4b2b8; border-color: #63747c; }
-body.tsj-high-contrast .tsj-store-dialog .tsj-product-content,
-body.tsj-high-contrast .tsj-store-browse,
-body.tsj-high-contrast .tsj-store-card { background: #080b0d; color: #fff; border-color: #c4d0d5; }
-body.tsj-high-contrast .tsj-store p,
-body.tsj-high-contrast .tsj-store h4 { color: #fff; }
-body.tsj-high-contrast .tsj-store-categories .tsj-product-button[aria-pressed="true"] { background: #eef4e8; color: #10251c; }
-body.tsj-high-contrast .tsj-store-component { background: #17231e; stroke: #eef4e8; }
-body.tsj-high-contrast .tsj-store-component-body { fill: #435d49; }
-body.tsj-high-contrast .tsj-store :focus-visible { outline-color: #ffce82; }
+body.tsj-large-text .tsj-meter-panel select,
+body.tsj-large-text .tsj-power-button,
+body.tsj-large-text .tsj-product-field,
+body.tsj-large-text .tsj-product-field input,
+body.tsj-large-text .tsj-product-field select,
+body.tsj-large-text .tsj-product-field textarea,
+body.tsj-large-text .tsj-product-hint,
+body.tsj-large-text .tsj-product-support,
+body.tsj-large-text .tsj-product-identity,
+body.tsj-large-text .tsj-product-guide p,
+body.tsj-large-text .tsj-product-check small,
+body.tsj-large-text .tsj-product-reference,
+body.tsj-large-text .tsj-store p,
+body.tsj-large-text .tsj-store h4,
+body.tsj-large-text .tsj-store button { font-size: 15px; }
+body.tsj-high-contrast {
+  --tsj-chrome: #080e0b; --tsj-panel: #101a14; --tsj-panel-raised: #25382a;
+  --tsj-panel-line: #a7b9aa; --tsj-panel-ink: #fff; --tsj-panel-muted: #deebdf;
+  --tsj-surface: #080e0b; --tsj-paper: #101a14; --tsj-ink: #fff; --tsj-muted: #deebdf;
+  --tsj-line: #a7b9aa; --tsj-accent: #b7e1bd; --tsj-accent-hover: #d0ebd3;
+  --tsj-accent-soft: #263d2c; --tsj-focus: #ffd583; --tsj-chrome-focus: #ffd583;
+  --tsj-warning: #ffe0ac; --tsj-error: #ffc7b6; --tsj-metal: #708e78;
+}
+body.tsj-high-contrast .tsj-product-primary,
+body.tsj-high-contrast .tsj-store-categories .tsj-product-button[aria-pressed="true"] { background: var(--tsj-accent); color: var(--tsj-chrome); }
+body.tsj-high-contrast .tsj-meter-panel button:disabled,
+body.tsj-high-contrast .tsj-component-panel button:disabled,
+body.tsj-high-contrast .tsj-power-button:disabled,
+body.tsj-high-contrast .tsj-meter-panel select:disabled,
+body.tsj-high-contrast .tsj-component-panel select:disabled,
+body.tsj-high-contrast .tsj-ui-strip > button:disabled { opacity: 1; border-style: dashed; }
 body.tsj-reduced-motion .tsj-workbench-shell *,
 body.tsj-reduced-motion .tsj-ui-overlay * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-@media (max-width: 620px) {
+/* At smaller desktop widths, the same top controls use their labelled icons.
+ * Names remain in aria-label/title, and all native actions remain available.
+ * The 112px GWT dock remains the only owner of the board's available height. */
+@media (max-width: 1100px) {
+  .tsj-workbench-shell { gap: 12px; }
+  .tsj-ui-strip > button { width: 38px; min-width: 38px; padding: 8px; }
+  .tsj-ui-strip .tsj-button-label, .tsj-tool-trigger .tsj-button-label { display: none; }
+  .tsj-tool-trigger { min-width: 42px; width: 42px; min-height: 38px; padding: 8px; }
+  body.tsj-workbench-ui .tsj-workbench-toolbar-host > tbody { gap: 8px; }
+  body.tsj-workbench-ui .tsj-power-button { width: 120px; margin-right: 0; }
+}
+@media (max-width: 760px) {
+  .tsj-workbench-shell { padding: 0 10px; }
+  .tsj-workbench-brand .tsj-alpha-badge { display: none; }
+  .tsj-ui-strip { gap: 4px; }
+  .tsj-tool-trigger { width: 38px; min-width: 38px; }
+  body.tsj-workbench-ui .tsj-workbench-toolbar-host > tbody { gap: 6px; padding-left: 10px; padding-right: 10px; }
+  body.tsj-workbench-ui .tsj-meter-display { font-size: 18px; }
+  body.tsj-workbench-ui .tsj-power-button { width: 96px; }
+}
+@media (max-width: 700px) {
   .tsj-ui-overlay { padding: 10px; }
-  .tsj-ui-dialog-header { padding: 12px; }
-  .tsj-product-content { padding: 4px 12px 16px; }
-  .tsj-ui-dialog-header h2 { font-size: 20px; }
+  .tsj-ui-dialog-header { padding: 13px 16px; }
+  .tsj-product-content { padding: 4px 16px 18px; }
+  .tsj-product-intro h3 { font-size: 25px; }
+  .tsj-product-setup, .tsj-product-guides { grid-template-columns: 1fr; }
+  .tsj-product-ticket { padding: 17px; }
   .tsj-store-dialog .tsj-product-content { padding: 0; }
-  .tsj-store-toolbar { padding: 8px 12px; gap: 8px; }
-  .tsj-store-supplier { padding: 16px 12px; align-items: flex-start; flex-direction: column; gap: 12px; }
-  .tsj-store-supplier h3 { font-size: 25px; }
-  .tsj-store .tsj-store-intro, .tsj-store-browse { padding: 12px; }
-  .tsj-store .tsj-store-note, .tsj-store .tsj-store-results { padding-left: 12px; padding-right: 12px; }
-  .tsj-store-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); padding: 0 12px 16px; }
+  .tsj-store-toolbar { padding: 6px 16px; gap: 8px; }
+  .tsj-store-supplier { padding: 15px 16px; align-items: flex-start; flex-direction: column; gap: 12px; }
+  .tsj-store-supplier h3 { font-size: 23px; }
+  .tsj-store .tsj-store-intro, .tsj-store-browse { padding: 12px 16px; }
+  .tsj-store .tsj-store-note, .tsj-store .tsj-store-results { padding-left: 16px; padding-right: 16px; }
+  .tsj-store-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); padding: 0 16px 18px; }
+}
+/* Physical component actions stay with the board's current GWT owner. */
+.tsj-component-context-menu {
+  z-index: 10010;
+  padding: 10px;
+  min-width: 190px;
+  max-width: min(340px, calc(100vw - 16px));
+  max-height: calc(100vh - 24px);
+  overflow: auto;
+  border: 1px solid #6b7b72;
+  border-radius: 10px;
+  background: #f0f3ed;
+  color: #263e33;
+  box-shadow: 0 8px 24px #0c211a40;
+  font: 13px/1.5 'Segoe UI', sans-serif;
+}
+.tsj-component-context-menu table { width: 100%; }
+.tsj-component-context-menu button { width: 100%; margin-top: 5px; padding: 8px 12px; text-align: left; border: 1px solid #b5c2b8; border-radius: 5px; background: #e1e8df; color: #253d31; cursor: pointer; }
+.tsj-component-context-menu button:hover { background: #ceddca; }
+.tsj-component-context-menu button:focus-visible { outline: 3px solid #397b99; outline-offset: 2px; }
+.tsj-component-context-menu button:disabled { opacity: .55; cursor: default; }
+.tsj-interaction-notice { z-index: 10005; padding: 9px 16px; border: 1px solid #889f8d; border-radius: 7px; background: #213b30ee; color: #f2f1e4; box-shadow: 0 4px 14px #12271b30; font: 13px/1.5 'Segoe UI', sans-serif; pointer-events: none; }
+
+/* Service-desk presentation: chunky lettering, ink outlines and hard-offset shadows. */
+.tsj-ui-dialog-header { background: linear-gradient(90deg,#315d67,#463358); border-bottom: 3px solid #292340; }
+.tsj-ui-dialog-header h2 { font-weight: 900; letter-spacing: .025em; }
+.tsj-product-intro { text-align: center; padding-top: 17px; }
+.tsj-product-intro > p:not(.tsj-product-eyebrow) { margin-left: auto; margin-right: auto; }
+.tsj-product-intro .tsj-retro-title { margin: 8px 0 13px; color: #ffcc59; font: 900 66px/.98 Impact,'Arial Black',sans-serif; letter-spacing: .01em; transform: rotate(-2deg); -webkit-text-stroke: 2px #342545; text-shadow: 4px 5px 0 #342545; }
+.tsj-product-process { justify-content: center; font-weight: 900; color: #49344f; }
+.tsj-product-process li { border-bottom: 3px solid #cea760; padding-bottom: 5px; }
+.tsj-product-new-board { margin-top: 6px; padding: 16px 22px; }
+.tsj-product-new-board > h3 { margin-bottom: 3px; font-size: 20px; }
+.tsj-product-new-board > .tsj-product-primary { background: #efad39; color: #30253f; font: 900 19px/1.2 'Trebuchet MS',sans-serif; min-height: 46px; text-transform: uppercase; border-color: #594768; }
+.tsj-product-new-board > .tsj-product-primary:hover { background: #ffd567; }
+.tsj-product-exact, .tsj-product-replay-disclosure, .tsj-product-about { margin-top: 14px; padding-top: 11px; border-top: 2px dotted #af956f; }
+.tsj-product-exact > summary, .tsj-product-replay-disclosure > summary, .tsj-product-about > summary { cursor: pointer; font-weight: 900; color: var(--tsj-ink); }
+.tsj-product-about .tsj-product-support { border: 0; margin-top: 0; }
+.tsj-product-identity { margin-top: 13px; }
+.tsj-workbench-brand strong { font: 900 20px 'Trebuchet MS',sans-serif; text-shadow: 2px 2px 0 #111026; }
+.tsj-workbench-toolbar-host { box-shadow: inset 0 -4px 0 #18172c; }
+.tsj-generation-progress { margin: 25px 0 12px; padding: 20px; border: 3px solid #49334e; border-radius: 9px; background: var(--tsj-paper); box-shadow: 5px 5px 0 #b59d7a; }
+.tsj-generation-progress progress { display: inline-block; width: calc(100% - 64px); height: 29px; border: 3px solid #30253f; border-radius: 3px; background: #c6b99c; vertical-align: middle; appearance: none; }
+.tsj-generation-progress progress::-webkit-progress-bar { background: #c6b99c; box-shadow: inset 2px 2px 0 #8c7f74; }
+.tsj-generation-progress progress::-webkit-progress-value { background: repeating-linear-gradient(90deg,#318781 0 14px,#8ed6a4 14px 17px); }
+.tsj-generation-progress progress::-moz-progress-bar { background: #318781; }
+.tsj-generation-progress > strong { display: inline-block; width: 56px; text-align: right; font: 900 22px Consolas,monospace; }
+.tsj-progress-stages { display: grid; grid-template-columns: repeat(6,1fr); gap: 6px; padding: 0; list-style: none; font-size: 10px; font-weight: 900; }
+.tsj-progress-stages li { padding: 8px 2px; border-bottom: 4px solid #b3a28e; text-align: center; }
+.tsj-progress-stages .is-done { border-color: #247d78; color: #195f5c; }
+.tsj-progress-stages .is-current { background: #f7ce74; border-color: #75516d; }
+@media(max-width:700px) { .tsj-product-intro .tsj-retro-title { font-size: 49px; } .tsj-progress-stages { grid-template-columns: repeat(3,1fr); } }
+
+/* Context actions use the same paper/ink palette as the service desk. The
+ * generic component title is light on the dark toolbar, not on this paper. */
+body.tsj-workbench-ui .tsj-component-context-menu {
+  border: 2px solid var(--tsj-line); background: var(--tsj-paper);
+  color: var(--tsj-ink); box-shadow: 4px 5px 0 #30253f66;
+  font-family: var(--tsj-font);
+}
+body.tsj-workbench-ui .tsj-component-context-menu .tsj-component-title {
+  color: var(--tsj-ink); font-weight: 900;
+}
+body.tsj-workbench-ui .tsj-component-context-menu button {
+  border-color: var(--tsj-line); background: var(--tsj-surface); color: var(--tsj-ink);
+}
+body.tsj-workbench-ui .tsj-component-context-menu button:hover {
+  background: var(--tsj-accent-soft);
+}
+body.tsj-workbench-ui .tsj-component-context-menu .tsj-inline-feedback {
+  color: var(--tsj-warning);
 }

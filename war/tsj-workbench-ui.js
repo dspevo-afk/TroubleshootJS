@@ -6,7 +6,8 @@
   var auxiliary = '', renderedKey = '', lease = null, returnFocus = null, auxiliaryFocus = null;
   var savedContent = null, savedStart = null;
   var background = [], controls = {}, shopRows = [], shopCategories = [], shopSignature = '', shopCategory = '';
-  var localMessage = '', settingsNotice = '', serial = 0;
+  var localMessage = '', settingsNotice = '', serial = 0, progressTimer = null;
+  var toolbarHost = null, toolbarObserver = null, toolbarQueued = false, nativeTools = [];
   var settingsKey = 'tsj.presentation.v1';
   var settings = { version: 1, highContrast: false, largeText: false, reducedMotion: false };
 
@@ -22,6 +23,33 @@
   function button(parent, text, callback, className) {
     var node = append(parent, 'button', text, className || 'tsj-product-button');
     node.type = 'button'; node.addEventListener('click', callback); return node;
+  }
+  function icon(parent, name) {
+    // Local, decorative interface glyphs never introduce additional controls.
+    var paths = {
+      board: 'M7 3H4V21H20V3H17 M8 3H16V9H8Z M8 15H12V19H8Z M16 13V18H20 M4 11H8',
+      menu: 'M4 6H20 M4 12H20 M4 18H20',
+      shop: 'M4 9V20H20V9 M3 9L5 3H19L21 9 M3 9Q6 13 9 9Q12 13 15 9Q18 13 21 9 M9 20V15H15V20',
+      resources: 'M12 5Q7 2 3 4V20Q7 18 12 21Q17 18 21 20V4Q17 2 12 5V21',
+      settings: 'M4 6H20 M4 12H20 M4 18H20 M8 3V9 M16 9V15 M10 15V21',
+      retest: 'M20 8A9 9 0 1 1 16 4 M8 11L12 15L21 5',
+      power: 'M9 3V8 M15 3V8 M7 8H17V11A5 5 0 0 1 7 11Z M12 16V21',
+      view: 'M3 8V3H8 M16 3H21V8 M21 16V21H16 M8 21H3V16 M8 12H16 M12 8V16',
+      ticket: 'M8 5H5V21H19V5H16 M8 3H16V7H8Z M8 12H16 M8 16H14',
+      component: 'M7 7H17V17H7Z M9 3V7 M15 3V7 M9 17V21 M15 17V21 M3 9H7 M3 15H7 M17 9H21 M17 15H21',
+      parts: 'M3 7H21V20H3Z M3 7L6 3H18L21 7 M9 7V11H15V7'
+    };
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('class', 'tsj-ui-icon');
+    svg.setAttribute('aria-hidden', 'true'); svg.setAttribute('focusable', 'false');
+    var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    if (parent.tagName === 'BUTTON') {
+      var label = parent.textContent;
+      parent.replaceChildren(element('span', label, 'tsj-button-label'));
+      if (!parent.hasAttribute('aria-label')) parent.setAttribute('aria-label', label);
+      if (!parent.title) parent.title = label;
+    }
+    path.setAttribute('d', paths[name]); svg.appendChild(path); parent.insertBefore(svg, parent.firstChild);
   }
   function setText(node, value) {
     value = value || '';
@@ -71,8 +99,10 @@
     append(details, 'p', 'You can select and copy this information for a bug report. Nothing is sent automatically.');
   }
   function support(parent) {
-    append(parent, 'p', 'Limited desktop alpha: selected low-voltage boards in the 5–20-part range, including a 16-part procedural control board with routed bottom copper. The 3-part indicator and 4-part protected indicator are introductory practice boards.');
-    append(parent, 'p', 'EASY and MEDIUM candidates are checked before play. HARD and PSYCHOTIC are unavailable. Mains circuits, larger boards and general multilayer routing are not supported. Session saves are not available.');
+    var note = append(parent, 'section', undefined, 'tsj-product-support');
+    append(note, 'h3', 'About this desktop alpha');
+    append(note, 'p', 'Selected low-voltage boards in the 5–20-part range, including a 16-part procedural control board with routed bottom copper. The 3-part indicator and 4-part protected indicator are introductory practice boards.');
+    append(note, 'p', 'EASY and MEDIUM candidates are checked before play. HARD and PSYCHOTIC are unavailable. Mains circuits, larger boards and general multilayer routing are not supported. Session saves are not available.');
   }
 
   function invalidateView() {
@@ -106,6 +136,7 @@
   }
   function focusDialog() { (focusable()[0] || dialog).focus(); }
   function showOverlay() {
+    closeNativeTools();
     if (!window.tsjWorkbenchOverlayOpen) returnFocus = document.activeElement;
     overlay.classList.add('is-open'); overlay.hidden = false;
     window.tsjWorkbenchOverlayOpen = true;
@@ -142,14 +173,22 @@
   }
 
   function menu(parent) {
-    append(parent, 'p', 'Choose a board, read the customer ticket, then examine, measure, isolate, repair and retest.');
-    var form = append(parent, 'form', undefined, 'tsj-product-form');
-    var profile = field(form, 'Difficulty', 'select');
+    var intro = append(parent, 'header', undefined, 'tsj-product-intro');
+    append(intro, 'p', 'THE ELECTRONICS REPAIR GAME', 'tsj-product-eyebrow');
+    append(intro, 'h3', 'Troubleshoot!', 'tsj-retro-title');
+    append(intro, 'p', 'A customer. A faulty board. A bench full of possibilities.');
+    var process = append(intro, 'ol', undefined, 'tsj-product-process');
+    ['Examine', 'Measure', 'Isolate', 'Repair', 'Retest'].forEach(function (step) { append(process, 'li', step); });
+    var setup = append(parent, 'div', undefined, 'tsj-product-setup');
+    var form = append(setup, 'form', undefined, 'tsj-product-form tsj-product-new-board');
+    append(form, 'h3', 'Start a service job');
+    var choices = append(form, 'div', undefined, 'tsj-product-choices');
+    var profile = field(choices, 'Difficulty', 'select');
     ['EASY', 'MEDIUM', 'HARD', 'PSYCHOTIC'].forEach(function (name) {
       var option = append(profile, 'option', name + (name === 'HARD' || name === 'PSYCHOTIC' ? ' — unavailable' : ''));
       option.value = name; option.disabled = name === 'HARD' || name === 'PSYCHOTIC';
     });
-    var family = field(form, 'Board family', 'select');
+    var family = field(choices, 'Board family', 'select');
     function updateFamilies() {
       var selected = family.value;
       family.replaceChildren();
@@ -166,16 +205,22 @@
       // the actual seed through its qualified envelope for this family/profile.
       invoke(token, view, 'random', family.value, randomSeed(), profile.value);
     }, 'tsj-product-button tsj-product-primary');
-    append(form, 'p', 'New board chooses from the current seed pool. The chosen seed appears in Replay and bug-report identity after preparation.');
-    var seed = field(form, 'Exact seed (signed decimal integer)');
+    append(form, 'p', 'Choose a board from the current seed pool. Read its customer ticket before entering the workbench.', 'tsj-product-hint');
+    var exact = append(form, 'details', undefined, 'tsj-product-exact');
+    append(exact, 'summary', 'Enter an exact seed');
+    var seed = field(exact, 'Exact seed (signed decimal integer)');
     seed.type = 'text'; seed.value = '0'; seed.required = true;
     seed.maxLength = 20; seed.autocomplete = 'off'; seed.spellcheck = false;
-    append(form, 'p', 'Prepare exact seed attempts exactly the integer you enter. An exact seed can fail preparation; it is never replaced with another seed.');
-    var launch = append(form, 'button', 'Prepare exact seed', 'tsj-product-button'); launch.type = 'submit';
+    append(exact, 'p', 'An exact seed can fail preparation. It is never replaced with another seed.', 'tsj-product-hint');
+    var launch = append(exact, 'button', 'Prepare exact seed', 'tsj-product-button'); launch.type = 'submit';
     form.addEventListener('submit', function (event) {
       event.preventDefault(); invoke(token, view, 'launch', family.value, seed.value, profile.value);
     });
-    var replayForm = append(parent, 'form', undefined, 'tsj-product-form');
+    var replayDetails = append(parent, 'details', undefined, 'tsj-product-replay-disclosure');
+    append(replayDetails, 'summary', 'Open a saved replay code');
+    var replayForm = append(replayDetails, 'form', undefined, 'tsj-product-form tsj-product-replay');
+    append(replayForm, 'h3', 'Return to a challenge');
+    append(replayForm, 'p', 'Paste a current replay to reconstruct its initial board. Repairs and tray contents are not saved.', 'tsj-product-hint');
     var replay = field(replayForm, 'Open current replay', 'textarea'); replay.rows = 2; replay.required = true; replay.spellcheck = false;
     var open = append(replayForm, 'button', 'Prepare replay', 'tsj-product-button'); open.type = 'submit';
     replayForm.addEventListener('submit', function (event) { event.preventDefault(); invoke(token, view, 'replay', replay.value); });
@@ -183,23 +228,33 @@
     var links = append(parent, 'div', undefined, 'tsj-product-actions');
     button(links, 'Resources', function () { openAuxiliary('Resources'); });
     button(links, 'Settings', function () { openAuxiliary('Settings'); });
-    support(parent); identity(parent);
+    var about = append(parent, 'details', undefined, 'tsj-product-about');
+    append(about, 'summary', 'About this alpha'); support(about); identity(parent);
   }
   function ticket(parent) {
-    append(parent, 'h3', 'Customer complaint'); append(parent, 'p', snapshot.complaint);
-    append(parent, 'h3', 'Functional retest'); append(parent, 'p', snapshot.retestInstruction);
-    append(parent, 'p', 'Examine the board and use the instruments to identify a repair. Switch off every supply and wait for stored energy to discharge before changing parts.');
-    controls.start = actionButton(parent, 'Accept ticket and start', 'resume');
-    actionButton(parent, 'Main menu', 'menu');
-    button(parent, 'Resources', function () { openAuxiliary('Resources'); });
+    var sheet = append(parent, 'article', undefined, 'tsj-product-ticket');
+    append(sheet, 'p', 'SERVICE JOB', 'tsj-product-eyebrow');
+    append(sheet, 'h3', 'Customer complaint'); append(sheet, 'p', snapshot.complaint, 'tsj-product-complaint');
+    var retest = append(sheet, 'section', undefined, 'tsj-product-retest');
+    append(retest, 'h3', 'Functional retest'); append(retest, 'p', snapshot.retestInstruction);
+    append(parent, 'p', 'Examine the board and use the instruments to identify a repair. Switch off every supply and wait for stored energy to discharge before changing parts.', 'tsj-product-hint');
+    var actions = append(parent, 'div', undefined, 'tsj-product-actions');
+    controls.start = actionButton(actions, 'Accept ticket and start', 'resume');
+    controls.start.classList.add('tsj-product-primary');
+    actionButton(actions, 'Main menu', 'menu');
+    button(actions, 'Resources', function () { openAuxiliary('Resources'); });
     identity(parent);
   }
   function results(parent) {
-    append(parent, 'p', 'The live board passed the customer’s functional checks.');
-    append(parent, 'p', snapshot.message);
-    actionButton(parent, 'New board / Main menu', 'menu');
-    actionButton(parent, 'Replay this challenge', 'replay', snapshot.replay);
-    actionButton(parent, 'Return to board', 'resume'); identity(parent);
+    var result = append(parent, 'section', undefined, 'tsj-product-ticket tsj-product-success');
+    append(result, 'p', 'FUNCTION VERIFIED', 'tsj-product-eyebrow');
+    append(result, 'h3', 'Ready to return to the customer.');
+    append(result, 'p', 'The live board passed the customer’s functional checks.');
+    append(result, 'p', snapshot.message);
+    var actions = append(parent, 'div', undefined, 'tsj-product-actions');
+    actionButton(actions, 'New board / Main menu', 'menu').classList.add('tsj-product-primary');
+    actionButton(actions, 'Replay this challenge', 'replay', snapshot.replay);
+    actionButton(actions, 'Return to board', 'resume'); identity(parent);
   }
   function shop(parent) {
     var storefront = append(parent, 'div', undefined, 'tsj-store');
@@ -211,7 +266,9 @@
     append(brand, 'p', 'ELECTRONIC COMPONENTS', 'tsj-store-eyebrow');
     append(brand, 'h3', 'Copperline Supply Co.');
     controls.shopTrayCount = append(supplier, 'p', undefined, 'tsj-store-tray');
-    append(storefront, 'p', 'Match the specification and lead spacing. Add to your Parts Tray, then install on the board.', 'tsj-store-intro');
+    var intro = append(storefront, 'section', undefined, 'tsj-store-intro');
+    append(intro, 'h3', 'The right part starts with the specification.');
+    append(intro, 'p', 'Browse the full catalog. Match the rating and lead spacing, add to your Parts Tray, then install on the board.');
     var browse = append(storefront, 'div', undefined, 'tsj-store-browse');
     controls.shopNav = append(browse, 'nav', undefined, 'tsj-store-categories');
     controls.shopNav.setAttribute('aria-label', 'Component categories');
@@ -317,14 +374,19 @@
 
   function resources(parent) {
     var sections = [
-      ['Inspect and navigate', 'Use Fit board or Fit selection, Zoom + / −, and the top/bottom copper controls. The mouse wheel zooms; Shift-drag or middle-drag pans. Hold Space over the board for the inspection loupe; release it to return to the permanent view.'],
+      ['Navigate the bench', 'Use Fit bench, Zoom + / −, and the top/bottom copper controls. The mouse wheel zooms; Shift-drag or middle-drag pans. Hold Space over the board for the inspection loupe; release it to return to the permanent view.'],
       ['Place probes', 'Select DCV, Ohms, continuity or diode mode. Left click places the red probe; right click places the black probe. Selecting the active mode again exits it. Use accessible pads, terminals or exposed copper.'],
       ['DC voltage', 'Measure between two electrical endpoints with the required supplies on. The sign is red relative to black. Observe the instrument’s reference-domain and readiness messages.'],
       ['Ohms and continuity', 'Disconnect all board supplies and allow stored energy to discharge. In-circuit readings include parallel paths: a low resistance or continuity tone does not by itself identify a failed part. Isolate a lead or remove a part when needed to distinguish paths.'],
       ['Diode mode', 'Use an isolated, discharged board. The instrument applies a test current; polarity and parallel paths affect the reading. Reverse the probes to compare directions. Follow any settling or unsupported-measurement message.'],
       ['Repair and verify', 'Isolate every supply and wait for discharge. Remove the part to the Parts Tray, acquire an appropriate loose replacement from Shop, select it and install it into the empty slot. Restore the relevant supplies and inputs, then run the customer retest. A part swap alone does not establish that the customer’s problem is fixed.']
     ];
-    sections.forEach(function (section) { append(parent, 'h3', section[0]); append(parent, 'p', section[1]); });
+    append(parent, 'p', 'Measurement, navigation and repair references for the workbench.', 'tsj-product-hint');
+    var guides = append(parent, 'div', undefined, 'tsj-product-guides');
+    sections.forEach(function (section) {
+      var guide = append(guides, 'section', undefined, 'tsj-product-guide');
+      append(guide, 'h3', section[0]); append(guide, 'p', section[1]);
+    });
     append(parent, 'h3', 'Resistor color reference');
     append(parent, 'p', 'Four bands: first two digits × multiplier, then tolerance. Five bands: first three digits × multiplier, then tolerance. Example: brown–black–red–gold = 1 kΩ ±5%. Read from the end opposite the spaced tolerance band.');
     var table = append(parent, 'table', undefined, 'tsj-product-reference');
@@ -333,7 +395,8 @@
     ['Color', 'Digit', 'Multiplier', 'Tolerance'].forEach(function (label) { var th = append(head, 'th', label); th.scope = 'col'; });
     var body = append(table, 'tbody');
     [['Black','0','×1','—'],['Brown','1','×10','±1%'],['Red','2','×100','±2%'],['Orange','3','×1 k','—'],['Yellow','4','×10 k','—'],['Green','5','×100 k','±0.5%'],['Blue','6','×1 M','±0.25%'],['Violet','7','×10 M','±0.1%'],['Gray','8','×100 M','±0.05%'],['White','9','×1 G','—'],['Gold','—','×0.1','±5%'],['Silver','—','×0.01','±10%'],['None','—','—','±20%']].forEach(function (row) {
-      var tr = append(body, 'tr'); row.forEach(function (value) { append(tr, 'td', value); });
+      var tr = append(body, 'tr'); tr.setAttribute('data-band', row[0].toLowerCase());
+      row.forEach(function (value) { append(tr, 'td', value); });
     });
     support(parent); identity(parent);
   }
@@ -358,12 +421,15 @@
     applySettings();
   }
   function settingsPage(parent) {
-    append(parent, 'p', 'These preferences affect interface presentation only. Board physics, geometry, probe targets and instrument behavior stay controlled by the simulator.');
+    append(parent, 'p', 'Make the workbench comfortable to read. These preferences change interface presentation; board and instrument behavior stays the same.', 'tsj-product-hint');
     var note = append(parent, 'p', settingsNotice, 'tsj-product-notice'); note.setAttribute('role', 'status');
-    [['highContrast', 'Higher contrast interface'], ['largeText', 'Larger interface text'], ['reducedMotion', 'Reduce interface motion']].forEach(function (item) {
+    [['highContrast', 'Higher contrast interface', 'Increase contrast for panels, text and controls.'], ['largeText', 'Larger interface text', 'Increase the size of text in menus and workbench controls.'], ['reducedMotion', 'Reduce interface motion', 'Keep interface transitions and scrolling immediate.']].forEach(function (item) {
       var label = append(parent, 'label', undefined, 'tsj-product-check');
       var input = append(label, 'input'); input.type = 'checkbox'; input.checked = settings[item[0]];
-      append(label, 'span', item[1]);
+      var description = append(label, 'span');
+      var title = append(description, 'strong', item[1]); title.id = 'tsj-preference-title-' + (++serial);
+      var hint = append(description, 'small', item[2]); hint.id = 'tsj-preference-hint-' + serial;
+      input.setAttribute('aria-labelledby', title.id); input.setAttribute('aria-describedby', hint.id);
       input.addEventListener('change', function () {
         settings[item[0]] = input.checked; applySettings();
         try {
@@ -373,15 +439,144 @@
         setText(note, settingsNotice);
       });
     });
+    if (window.tsjBenchAudio) {
+      var audioLabel = append(parent, 'label', undefined, 'tsj-product-check');
+      var audioInput = append(audioLabel, 'input'); audioInput.type = 'checkbox';
+      audioInput.checked = !window.tsjBenchAudio.getMuted();
+      audioInput.setAttribute('aria-label', 'Relay contact sounds');
+      var audioText = append(audioLabel, 'span');
+      append(audioText, 'strong', 'Relay contact sounds');
+      append(audioText, 'small', 'Mechanical clicks follow actual relay pickup and release.');
+      audioInput.addEventListener('change', function () { window.tsjBenchAudio.setMuted(!audioInput.checked); });
+    }
     append(parent, 'p', 'Session saves are not available in this alpha.');
   }
 
+  function progressView(parent) {
+    var panel = append(parent, 'section', undefined, 'tsj-generation-progress');
+    append(panel, 'div', 'CIRCUIT CHECK', 'tsj-product-eyebrow');
+    controls.progressLabel = append(panel, 'h3', 'Resolve circuit');
+    controls.progress = append(panel, 'progress'); controls.progress.max = 100; controls.progress.value = 0;
+    controls.progress.setAttribute('aria-label', 'Board preparation: completed verification stages');
+    controls.progressCount = append(panel, 'strong', '0%');
+    controls.progressDetail = append(panel, 'p', 'Starting the simulation...', 'tsj-progress-detail');
+    controls.progressDetail.setAttribute('role', 'status');
+    controls.progressSteps = append(panel, 'ol', undefined, 'tsj-progress-stages');
+    ['Resolve', 'Build & test', 'PCB', 'Measurements', 'Ticket', 'Ready'].forEach(function (name) {
+      append(controls.progressSteps, 'li', name);
+    });
+  }
+  function updateProgress() {
+    if (!controls.progress) return;
+    var p = snapshot.progress;
+    if (!p) {
+      controls.progress.removeAttribute('value');
+      setText(controls.progressCount, '');
+      setText(controls.progressLabel, 'Starting circuit checks');
+      setText(controls.progressDetail, 'Waiting for the current build to report its first completed step.');
+      return;
+    }
+    controls.progress.value = p.percent;
+    controls.progress.setAttribute('aria-valuetext', p.label + ', stage ' + p.phase + ' of ' + p.phases);
+    setText(controls.progressLabel, p.label); setText(controls.progressCount, p.percent + '%');
+    if (p.paused) {
+      setText(controls.progressLabel, 'Preparation paused');
+      setText(controls.progressDetail, 'This tab is in the background. Return here to continue the same checks; no work is discarded.');
+      return;
+    }
+    var age = Math.floor(p.lastUpdateAgeMs / 1000);
+    setText(controls.progressDetail, Math.floor(p.elapsedMs / 1000) + 's elapsed / ' + p.units +
+      ' work units completed' + (age >= 3 ? ' / Last completed step ' + age + 's ago; working on the next check.' : ''));
+    Array.prototype.forEach.call(controls.progressSteps.children, function (node, index) {
+      node.classList.toggle('is-done', index + 1 < p.phase);
+      node.classList.toggle('is-current', index + 1 === p.phase);
+    });
+  }
+
+  function closeNativeTools() {
+    nativeTools.forEach(function (tool) {
+      if (tool.panel.isConnected && typeof tool.panel.hidePopover === 'function' && tool.panel.matches(':popover-open')) tool.panel.hidePopover();
+    });
+  }
+  function positionNativeTool(tool) {
+    var bounds = tool.trigger.getBoundingClientRect();
+    // This positions a DOM tool panel only. It never touches the board viewport.
+    var width = Math.min(340, Math.max(240, window.innerWidth - 24));
+    tool.panel.style.setProperty('--tsj-tool-left', Math.max(12, Math.min(bounds.left, window.innerWidth - width - 12)) + 'px');
+    tool.panel.style.setProperty('--tsj-tool-top', Math.min(bounds.bottom + 10, window.innerHeight - 120) + 'px');
+  }
+  function updateNativeTools() {
+    if (!toolbarHost) return;
+    nativeTools = nativeTools.filter(function (tool) { return toolbarHost.contains(tool.panel); });
+    var labels = {
+      'Bench power': ['Supplies', 'power'], 'Board view': ['View', 'view'],
+      'Service ticket': ['Ticket', 'ticket'], 'Component': ['Component', 'component'],
+      'Parts Tray': ['Parts tray', 'parts']
+    };
+    Array.prototype.forEach.call(toolbarHost.querySelectorAll('.tsj-component-panel'), function (panel) {
+      var label = panel.getAttribute('aria-label'), presentation = labels[label];
+      if (!presentation) return;
+      var tool = nativeTools.filter(function (item) { return item.panel === panel; })[0];
+      if (!tool) {
+        // Keep each native table in its original GWT cell. The browser top layer
+        // displays the same widget; no cloned controls or alternate owner exists.
+        if (!panel.id) panel.id = 'tsj-native-tool-' + (++serial);
+        panel.setAttribute('popover', 'auto'); panel.setAttribute('role', 'dialog');
+        panel.classList.add('tsj-native-popover');
+        var trigger = element('button', presentation[0], 'tsj-product-button tsj-tool-trigger');
+        trigger.type = 'button'; trigger.title = label; trigger.setAttribute('aria-label', label);
+        trigger.setAttribute('popovertarget', panel.id); trigger.setAttribute('aria-haspopup', 'dialog');
+        icon(trigger, presentation[1]); panel.parentNode.insertBefore(trigger, panel);
+        tool = { panel: panel, trigger: trigger }; nativeTools.push(tool);
+        trigger.addEventListener('click', function () { positionNativeTool(tool); });
+        panel.addEventListener('beforetoggle', function (event) {
+          if (event.newState === 'open') {
+            if (window.tsjWorkbenchOverlayOpen || panel.style.display === 'none') event.preventDefault();
+            else positionNativeTool(tool);
+          }
+        });
+      }
+      tool.trigger.hidden = panel.style.display === 'none';
+      if (tool.trigger.hidden && typeof panel.hidePopover === 'function' && panel.matches(':popover-open')) panel.hidePopover();
+    });
+    // GWT leaves layout rows behind for setVisible(false). Collapse only those
+    // empty native rows so hidden legacy widgets cannot pad the instrument strip.
+    if (!toolbarHost.tBodies[0]) return;
+    Array.prototype.forEach.call(toolbarHost.tBodies[0].rows, function (row) {
+      var visible = Array.prototype.some.call(row.cells[0].children, function (node) {
+        return !node.hidden && node.style.display !== 'none';
+      });
+      row.classList.toggle('tsj-toolbar-empty', !visible);
+    });
+  }
+  function scheduleNativeTools() {
+    if (toolbarQueued) return;
+    toolbarQueued = true;
+    window.setTimeout(function () { toolbarQueued = false; updateNativeTools(); }, 0);
+  }
   function mountShell() {
     var anchor = document.querySelector('.tsj-meter-panel');
     if (anchor && anchor.parentNode && shell.parentNode !== anchor.parentNode) {
       anchor.parentNode.insertBefore(shell, anchor);
-      anchor.parentNode.classList.add('tsj-workbench-sidebar-cell');
-      var table = anchor.closest('table'); if (table) table.classList.add('tsj-workbench-sidebar-host');
+      anchor.parentNode.classList.add('tsj-workbench-toolbar-cell');
+      var table = anchor.parentNode.closest('table');
+      if (table) {
+        table.classList.add('tsj-workbench-toolbar-host');
+        if (table !== toolbarHost) {
+          if (toolbarObserver) toolbarObserver.disconnect();
+          closeNativeTools(); nativeTools = []; toolbarHost = table;
+          if (window.MutationObserver) {
+            toolbarObserver = new window.MutationObserver(function (changes) {
+              if (changes.some(function (change) {
+                return change.type === 'attributes' || Array.prototype.some.call(change.addedNodes, function (node) { return node.nodeType === 1; }) ||
+                  Array.prototype.some.call(change.removedNodes, function (node) { return node.nodeType === 1; });
+              })) scheduleNativeTools();
+            });
+            toolbarObserver.observe(table, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+          }
+        }
+        updateNativeTools();
+      }
     } else if (!shell.isConnected) document.body.appendChild(shell);
     shell.classList.toggle('tsj-product-floating', shell.parentNode === document.body);
   }
@@ -392,13 +587,22 @@
     document.body.classList.add('tsj-workbench-ui');
     loadSettings();
     shell = element('div', undefined, 'tsj-workbench-shell');
+    var brand = append(shell, 'header', undefined, 'tsj-workbench-brand');
+    icon(brand, 'board');
+    var brandText = append(brand, 'div');
+    append(brandText, 'strong', 'TroubleshootJS');
+    append(brandText, 'span', 'ELECTRONICS WORKBENCH');
+    append(brand, 'span', 'ALPHA', 'tsj-alpha-badge');
     var nav = append(shell, 'nav', undefined, 'tsj-ui-strip'); nav.setAttribute('aria-label', 'Workbench navigation');
     controls.menu = button(nav, 'Main menu', function () { invoke(snapshot.token, 0, 'menu'); });
+    icon(controls.menu, 'menu');
     controls.shop = button(nav, 'Shop', function () { openAuxiliary('Shop'); });
-    button(nav, 'Resources', function () { openAuxiliary('Resources'); });
-    button(nav, 'Settings', function () { openAuxiliary('Settings'); });
+    icon(controls.shop, 'shop');
+    icon(button(nav, 'Resources', function () { openAuxiliary('Resources'); }), 'resources');
+    icon(button(nav, 'Settings', function () { openAuxiliary('Settings'); }), 'settings');
     controls.retest = button(nav, 'Run customer retest', function () { invoke(snapshot.token, 0, 'retest'); }, 'tsj-product-button tsj-product-primary');
-    shellStatus = append(nav, 'p', undefined, 'tsj-product-notice'); shellStatus.setAttribute('role', 'status');
+    icon(controls.retest, 'retest');
+    shellStatus = append(shell, 'p', undefined, 'tsj-product-notice'); shellStatus.setAttribute('role', 'status');
     overlay = element('div', undefined, 'tsj-ui-overlay'); overlay.hidden = true;
     dialog = append(overlay, 'section', undefined, 'tsj-ui-dialog'); dialog.tabIndex = -1;
     dialog.setAttribute('role', 'dialog'); dialog.setAttribute('aria-modal', 'true'); dialog.setAttribute('aria-labelledby', 'tsj-product-heading');
@@ -415,12 +619,20 @@
   }
   function render() {
     if (!initialize()) return;
-    var next = bridge.snapshot();
+    var next = bridge.snapshot(auxiliary === 'Shop');
     if (snapshot && (snapshot.token !== next.token || snapshot.screen !== next.screen)) {
+      closeNativeTools();
       auxiliary = ''; localMessage = ''; invalidateView(); renderedKey = '';
       savedContent = null; savedStart = null; auxiliaryFocus = null;
     }
     snapshot = next; mountShell();
+    document.body.setAttribute('data-player-screen', snapshot.screen);
+    if (window.tsjBenchInstruments) window.tsjBenchInstruments.mount(snapshot);
+    if ((snapshot.screen === 'PREPARING' || snapshot.screen === 'RETEST') && progressTimer === null)
+      progressTimer = window.setInterval(schedule, 300);
+    else if (snapshot.screen !== 'PREPARING' && snapshot.screen !== 'RETEST' && progressTimer !== null) {
+      window.clearInterval(progressTimer); progressTimer = null;
+    }
     controls.retest.disabled = snapshot.screen !== 'WORKBENCH' || !snapshot.ready || snapshot.completed;
     controls.shop.disabled = snapshot.screen !== 'WORKBENCH' || snapshot.completed;
     controls.menu.disabled = snapshot.screen === 'PREPARING' || snapshot.screen === 'RETEST';
@@ -434,7 +646,7 @@
     }
     if (key !== renderedKey) {
       invalidateView(); lease = bridge.openView();
-      content.replaceChildren(); controls.shopList = null; controls.start = null;
+      content.replaceChildren(); controls.shopList = null; controls.start = null; controls.progress = null;
       closeButton.hidden = !auxiliary;
       var titles = { MENU: 'TroubleshootJS · Desktop alpha', PREPARING: 'Preparing board', TICKET: 'Customer ticket', RETEST: 'Running customer retest', RESULTS: 'Customer retest passed', ERROR: 'Board preparation failed' };
       setText(heading, titles[page] || page);
@@ -449,7 +661,8 @@
       else if (page === 'Resources') resources(content);
       else if (page === 'Settings') settingsPage(content);
       else if (page === 'PREPARING') {
-        append(content, 'p', 'The simulator is proving healthy behavior, a meaningful symptom and diagnostic access before publishing the board. Preparation may take a minute or more.');
+        progressView(content);
+        append(content, 'p', 'Testing the real circuit before it reaches your bench. Timing boards take longer. The bar tracks completed stages, not an estimated wait. Switching away pauses preparation until you return.', 'tsj-product-hint');
         actionButton(content, 'Cancel preparation', 'cancel');
       } else if (page === 'RETEST') append(content, 'p', 'Checking the live board against the customer’s required behavior.');
       else {
@@ -461,6 +674,7 @@
       renderedKey = key; showOverlay(); content.scrollTop = 0; focusDialog();
     }
     if (page === 'Shop') updateShop();
+    if (page === 'PREPARING') updateProgress();
     if (controls.start) controls.start.disabled = !snapshot.ready;
     setText(modalStatus, page === 'Shop' ? localMessage : localMessage || snapshot.notice || snapshot.message);
   }
@@ -508,7 +722,9 @@
   window.addEventListener('blur', function () {
     // Closing Shop revokes retained acquisition callbacks across lost window focus.
     if (auxiliary === 'Shop') closeAuxiliary();
+    closeNativeTools();
   });
+  window.addEventListener('resize', closeNativeTools);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
   else start();
 }(window, document));

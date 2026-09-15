@@ -1,6 +1,126 @@
 # TroubleshootJS - Current Task Report
 
-## Current checkpoint - U04/U05/REL-A accepted; publication next - 2026-09-13
+## Completed: visual workbench and physical serviceability pass
+
+Date: September 14, 2026. Branch `codex/task43p-final-recovery`.
+Base: `f41e80f6227ffd04c0092ff01207bdc8e392c2ed`.
+The commit containing this report completes the separately authorized post-REL-A
+visual/service correction. **P05 remains unstarted.**
+
+### Delivered
+
+Refined retro menu and toolbar, physical packages with centered three-lead
+bodies, compact routed layouts, wood workbench, adjacent metal Parts Tray,
+shared camera and half-visible-board pan bounds, guarded physical dragging,
+lifted-lead rendering/probing, movable real meter controls, and contact-driven
+relay audio. Preparation shows actual stage/work progress and elapsed time;
+hidden tabs pause normal generation without renewing its active-time budget.
+CircuitJS solver hot-path improvements retain electrical equations and checks.
+
+Every actual part on all nine currently playable families has fault-blind
+physical service ownership, including connectors, fuses and supporting parts.
+Original/purchased identity, compatible wrong repairs, component-owned stored
+energy and electrical retest remain real. The developer-only RENDER-0 proves a
+small alternate backend against the same scene; it is not a full product renderer.
+
+### Final repair discovered during qualification
+
+Q15 support verification still selected the last SwitchElm as the command.
+Resistor secondary-failure switches invalidated that assumption. It also sampled
+a J4 solder wire as the external load after connector separation. The proof now
+resolves declared J2/J4 harness targets. Its independent native regression checks
+the actual family targets, graph reordering, missing command and ambiguity.
+The electrical model, numerical thresholds and generation budgets were unchanged.
+
+### Validation and provenance
+
+Fresh GWT33: all five permutations PASS, build exit0/74.634s. Fresh Q15 native:
+6861 assertions/all11 seeds PASS. Fresh compiled Q15: all11 cases/four designs/
+three faults PASS, 613 assertions plus80 support assertions; forced failure and
+exact owner restoration PASS. Final1154-file execution input audit: zero drift.
+
+The only32-to33 non-output changes are the Q15 proof and its test. Unaffected
+compiled32 results are explicitly reused: Alpha38/9835 assertions/356 service
+positions/310 compensated-mutation checks, A07/A08/E03/A10/Task41/Task49,
+architecture/layout/meter/U01/stored-energy/service/RENDER-0 and their negatives.
+Full native31's39 Java suites and independent oracles are reused through the
+recorded32 audit plus its fresh architecture fixture, with fresh33 Q15 coverage.
+No complete native33 or complete compiled33 rerun is claimed.
+
+Maintained strict readers pass, including Alpha38 malformed controls and Q15's
+22 malformed controls. Task43P's raw runtime is OBSERVED; its actual maintained
+runtime oracle accepts zero blockers and rejects a wrong run. A08's intentional
+failure is exactly `FAIL:a08:a08-explicit-failure-canary`; the original observer
+expected a wrong token, and that failed receipt remains preserved.
+
+Fresh normal-player CDP input on real compiled GWT33: menu New board -> RB15seed3
+with advancing visible progress -> ticket -> workbench; meter drag, board flip,
+diagonal bounded pan; Parallel0 -> real OL/680 Ohm readings -> healthy removal,
+failed retest, drag restoration -> shop330 purchase -> physical drag installation
+-> powered customer retest PASS. Results also inspected at1024x768. Public
+snapshot/title/ARIA scan found no solution metadata. Five inspected screenshots
+and transcripts accompany [final evidence](task-evidence/visual-productization/final33/README.md).
+
+### Limitations and cleanup
+
+The larger normal board took about36 seconds; progress is honest, not a promise
+of instant preparation. Same-plan compaction reduced seed0 outline area by5.49%
+to28.59%, depending on family, not a cross-build generation speed benchmark.
+HARD/PSYCHOTIC, arbitrary-seed acceptance, general browser support and human
+difficulty/population calibration remain outside this task. No independent
+agent review was run; the integrated root review is explicit in the evidence.
+
+A headed Q15 attempt stayed OS-hidden and timed out; the same unchanged build
+passed using the maintained headless launcher. The Windows CLI wrapper is not
+newly qualified. Exact cleanup succeeded for browser32r,33 and final33h. An older
+exited browser32 profile/claim was retained when identity could not be verified.
+No unrelated coding process was terminated. Old raw evidence and the pre-existing
+Python cache remain untracked and untouched.
+
+
+### Publication-only normalization
+
+The staged whitespace check found three otherwise blank lines in the developer
+LU oracle and Windows line endings in copied logs. Only that whitespace was
+removed. A fresh all-five-permutation GWT34 build passed and produced byte-for-byte
+identical compiled output to tested GWT33. `publication34-format-audit.json` and
+`candidate34-inputs.json` record the sole source-byte change; no executable token
+or line number changed. Browser/player evidence remains correctly labeled33.
+Published text uses LF; collected.json keeps both raw and published report hashes.
+
+### Files and next step
+
+Implementation boundaries and ownership are documented in ARCHITECTURE.md.
+`final33/collected.json`, `reuse-audit.json`, frozen input manifests,
+`qualification-summary.json`, `player-acceptance.json`, retained failures and
+`SHA256SUMS.json` provide scoped provenance. The commit diff lists intended files.
+Next roadmap milestone is P05, requiring separate authorization.
+
+---
+
+## Historical checkpoint - Paused at user-requested1% usage cutoff - 2026-09-13
+
+- **Resume:** [POST_REL_A_CHECKPOINT.md](POST_REL_A_CHECKPOINT.md) is the complete current continuation file. User requested a durable checkpoint at1% remaining allowance; live main weekly remaining is1%. Implementation and acceptance are unfinished. No heavy gate remains running.
+- **Scope/base:** Recovered visual/productization and small developer RENDER-0, subtle wood grain, and fault-blind removal/replacement for every actual part on every playable board. Branch `codex/task43p-final-recovery`; HEAD `f41e80f6227ffd04c0092ff01207bdc8e392c2ed`. Root only; no agents, staging, commit, push or email. P05 remains unstarted.
+- **Implemented:** All nine families/71 seed0 positions have real physical service providers, including supporting parts/connectors/fuses; tray provenance, eligible wrong repairs, ordinary READY after player edits and replacement/loose-capacitor energy guards. Recovered visual camera/tray/drag/lifted-tip changes and wood grain are integrated. CircuitJS hot-path changes preserve equations/steps/budgets and have independent original-algorithm comparisons.
+- **Compiled GWT15:** Actual JDK8/GWT PASS,5 permutations,69.882s compile/1.320s link/exit0. Full native35 plus independent seed/value/role/report474/cleanup PASS. A08 PASS1103/90 compensated writes/5 fresh failures/45174ms/cleanup and strict-reader negative. Execution digest `69b1024cb02a4a2c6f591b63d4ba4151061e3118de8a677a8c9bf8a91497b9d7`;779 frozen inputs. The sole14-to15 input delta was the A08 earlier-construction-rejection fixture, audited.
+- **Full corpus GWT14:** Alpha38 PASS9835 assertions/356 physical-service positions/310 mutation checks/9 categories/400 acquisitions/379 stale-provider callbacks/357 negatives;1146895ms operation/3ms cleanup/exact owner restored. All three RC repaired retests pass; max active unit1980ms. Strict reader plus38 malformed canaries PASS. A07 PASS24867 pure/73 runtime/59 model; service61/RENDER-0 65/six negatives/current UI108 PASS. Forced Alpha/service/RENDER-0 restore their exact owners. These retain their actual candidate boundary.
+- **Unbuilt after15:** E03 still expected healthy flyback D1 to be fixed. Updated `E03RelayMutationChecks.java` to prove real healthy removal/reinstallation and retest. Also updated `ArchitectureDeveloperVerifier.java` to derive service expectations from declared providers instead of provenance, and `Task43PPhysicalTruthDeveloperVerifier.java` for separable service connector endpoints. These three verifier edits are UNBUILT/NOT RUN. Preserve `e03-build15-failure.json` and earlier failures. New build and affected gates are next; do not call current preview final source.
+- **Current real UI:** Normal GWT15 Parallel0: R1/R2 menus identical; healthy R2 lifted lead reads680 Ohm; actual drag to tray/power ON extinguishes both LEDs and fails retest; same R2 dragged back and UI says installed. Current board OFF, R2 restored, R1 original fault remains. Fresh powered-restoration/wrong-value/correct-repair and larger-board checks remain. Current screenshots and menu transcript saved; older build6 images remain separate.
+- **Resources/preserved:** Exact owned preview64326/session70986/PID22972/start639249476410079743/run`visual-service-final15` intentionally retained for continuation. Owner/startup receipts and raw logs in OS-temp `TroubleshootJS-visual-resume-dea213734895400bb9e844ffcfc53180`. Owned prior previews64320–64325 stopped after checks. Browser tab1 is normal Parallel0; tab2 holds terminal E03 failure. Pre-existing pycache/recovered raw evidence/uncertain earlier-session resources remain untouched. Historical Windows browser wrapper is unqualified; no independent agent review ran.
+- **Next:** Follow the detailed checkpoint: compile new verifier edits; E03/architecture/Task43P and outstanding compiled companions/readers/negatives; final corpus/input audit and actual player proof; root review/docs; explicit-path staging/commit, normal origin push/remote SHA check, one authorized Gmail completion. No publication until unresolved acceptance is complete.
+
+## Historical checkpoint - Alpha published; visual pass and RENDER-0 in progress - 2026-09-13
+
+- **Scope/HEAD:** U04/U05/REL-A and Shop/launcher/meter fixes published at f41e80f6227ffd04c0092ff01207bdc8e392c2ed on codex/task43p-final-recovery. Normal origin push and exact remote SHA verified; established Gmail SENT, message 1a09ca4dda7fc336. The separately authorized visual/productization pass and developer-only RENDER-0 second-renderer proof are active. P05 is unstarted.
+- **Current work:** Polished physical packages, light-green masked traces and metallic pads; a top toolbar with consolidated controls; no Inspect X shortcuts. Latest owner additions: wooden bench, metal parts tray anchored beside the PCB and sharing its camera, fix the old side-scroll container clipping the toolbar, and improve choppy RB15 panning. Preserve actual geometry/access, stable identities and CircuitJS truth. No new trace-repair or 3D gameplay.
+- **Ownership:** Root owns Java, integration, RENDER-0, performance, docs and qualification. Astra visual_interface owns only war/tsj-workbench-ui.js, war/tsj-workbench-ui.css and tests/contracts/u04_ui_contract.mjs; current responsive follow-up is active. Read-only RENDER-0 investigation finished. No simultaneous heavy gates.
+- **Evidence/status:** Historical alpha gates remain accepted for its published candidate. Visual paint pilot GWT5 PASS77.472s/1.366s; current top layout, world tray and RENDER-0 are NOT YET qualified. Before screenshots retained in task-evidence/visual-productization. Current Browser tab14 still runs the old sidebar candidate; old loaded pages do not prove the new layout. Final-source build, native and compiled boundary/lifecycle/meter checks plus real player screenshots/interactions remain required.
+- **Resources/preserved:** Visual scratch OS-temp/TroubleshootJS-visual-render0-ed186ee1af314d17b02d71c3aa18f544. Existing previews and alpha scratch retain the exact ownership records below; their startup fingerprints are stale after source/build edits. Browser currently lists only tab14. Pre-existing tests/contracts/__pycache__/ is retained/excluded.
+- **Next:** Finish integrated visual/renderer changes, inspect the actual fresh production preview, resolve findings and qualify. Commit/push visual follow-on separately, verify remote and notify once. Stop before P05.
+
+
+## Historical checkpoint - U04/U05/REL-A accepted; publication next - 2026-09-13
 
 - **Scope/base:** U04/U05/REL-A, mandatory Q15 seed correction and user-reported Shop, Windows launcher and continuity fixes complete on codex/task43p-final-recovery, base ec10aa8b849149c33ae00153873c94c6aa6c9ca6. The accepting commit contains this checkpoint; normal push and Gmail follow actual execution. The authorized major visual pass follows from that integrated HEAD in a separate commit. P05 remains unstarted.
 - **Delivered:** Typed exact-replay/session/menu/ticket/retest/error flow; Resources/Settings/focus/privacy; computed initial EASY/MEDIUM and unavailable advanced profiles; generic full website catalog and purchased-part compatibility independent of source target; canonical empty-slot/identity/stress restoration. Normal RB15 selection is exactly eleven qualified seeds. Root launcher recovers proven local stale state/reuses proven live state and preserves foreign/uncertain state.

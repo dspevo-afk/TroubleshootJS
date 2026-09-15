@@ -1,0 +1,1 @@
+{"schema":1,"status":"FAIL","checks":17,"cases":[],"operation":"remove-healthy/R2","operationMs":1645,"cleanupMs":3,"ownerRestored":true,"failure":"java.lang.IllegalStateException: remove-healthy/R2: java.lang.IllegalStateException: service-forced-failure-after-healthy-removal"}

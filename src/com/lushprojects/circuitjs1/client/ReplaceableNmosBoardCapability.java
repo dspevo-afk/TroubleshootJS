@@ -6,6 +6,8 @@ import java.util.Vector;
 final class ReplaceableNmosBoardCapability implements PhysicalBoardRuntimeCapability,
         PhysicalBoardInstallationProvider.Scoped, WorkbenchPartsProvider {
     static final String ID = "REPLACEABLE_NMOS";
+    private final String capabilityId;
+
     private final NmosComponentSlot slot;
     private final PhysicalPartInventory<PhysicalNmosPart> inventory;
     private final NmosReplacementCatalog catalog;
@@ -13,6 +15,14 @@ final class ReplaceableNmosBoardCapability implements PhysicalBoardRuntimeCapabi
 
     ReplaceableNmosBoardCapability(NmosComponentSlot slot,
             PhysicalPartInventory<PhysicalNmosPart> inventory, NmosReplacementCatalog catalog) {
+        this(slot, inventory, catalog, ID);
+    }
+
+    ReplaceableNmosBoardCapability(NmosComponentSlot slot,
+            PhysicalPartInventory<PhysicalNmosPart> inventory, NmosReplacementCatalog catalog, String capabilityId) {
+        if (capabilityId == null || capabilityId.length() == 0)
+            throw new IllegalArgumentException("Missing capability identity");
+        this.capabilityId = capabilityId;
         if (slot == null || inventory == null || catalog == null)
             throw new IllegalArgumentException("Missing replaceable NMOS capability");
         this.slot = slot;
@@ -20,7 +30,7 @@ final class ReplaceableNmosBoardCapability implements PhysicalBoardRuntimeCapabi
         this.catalog = catalog;
     }
 
-    public String getCapabilityId() { return ID; }
+    public String getCapabilityId() { return capabilityId; }
     NmosComponentSlot getSlot() { return slot; }
     PhysicalPartInventory<PhysicalNmosPart> getInventory() { return inventory; }
     NmosReplacementCatalog getCatalog() { return catalog; }
@@ -34,7 +44,7 @@ final class ReplaceableNmosBoardCapability implements PhysicalBoardRuntimeCapabi
         return controller;
     }
     NmosSlotController getController() { return controller; }
-    public String getComponentId() { return "Q1"; }
+    public String getComponentId() { return slot.getComponentId(); }
     public String getCatalogTitle() { return "NMOS Replacement Catalog"; }
     public String getInstallNewLabel() { return "Install new NMOS"; }
     public boolean showOccupiedMessageWhenPowered() { return false; }

@@ -228,6 +228,7 @@ class LedIndicatorGenerator {
 
         String description = "Generated LED indicator, seed " + seed + ", " + supplyVoltage +
             " V";
+        connectionBindings.declareConnectorHarness("J1", connectorFaultSwitch, 1, supply, 0);
         return new GeneratedBoardInstance(board, elements, seed, "LED_INDICATOR",
             DIRECT_SERIES_VARIANT, description, componentBindings, powerBindings,
             connectionBindings, behaviorContract,

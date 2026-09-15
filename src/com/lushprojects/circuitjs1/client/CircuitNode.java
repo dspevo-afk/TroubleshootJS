@@ -23,6 +23,32 @@ import java.util.Vector;
 
 class CircuitNode {
     Vector<CircuitNodeLink> links;
+    CircuitElm[] voltageElements;
+    int[] voltagePosts;
+    boolean[] idealWires;
     boolean internal;
     CircuitNode() { links = new Vector<CircuitNodeLink>(); }
+
+    /** Frozen by analysis; a new graph gets new CircuitNode instances. */
+    void prepareVoltageRecipients() {
+        voltageElements = new CircuitElm[links.size()];
+        voltagePosts = new int[links.size()];
+        idealWires = new boolean[links.size()];
+        for (int i = 0; i < links.size(); i++) {
+            CircuitNodeLink link = links.get(i);
+            voltageElements[i] = link.elm;
+            voltagePosts[i] = link.num;
+            idealWires[i] = link.elm.getClass() == WireElm.class;
+        }
+    }
+
+    void applyVoltage(double value) {
+        for (int i = 0; i < voltageElements.length; i++) {
+            CircuitElm element = voltageElements[i];
+            // Exact ideal wires inherit an empty calculateCurrent callback.
+            // All other models keep their original voltage setter and order.
+            if (idealWires[i]) element.volts[voltagePosts[i]] = value;
+            else element.setNodeVoltage(voltagePosts[i], value);
+        }
+    }
 }

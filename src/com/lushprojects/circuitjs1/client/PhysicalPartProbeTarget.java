@@ -6,11 +6,11 @@ class PhysicalPartProbeTarget implements ProbeTarget {
     private final GeneratedBoardInstance instance;
     private final String partId;
     private final int terminal;
-    private final PcbWorkbenchRenderer renderer;
+    private final PhysicalProbeProjection renderer;
     private final Object looseProjectionToken;
 
     PhysicalPartProbeTarget(CirSim sim, GeneratedBoardInstance instance, String partId,
-            int terminal, PcbWorkbenchRenderer renderer) {
+            int terminal, PhysicalProbeProjection renderer) {
         this.sim = sim;
         this.instance = instance;
         this.partId = partId;
@@ -18,6 +18,9 @@ class PhysicalPartProbeTarget implements ProbeTarget {
         this.renderer = renderer;
         looseProjectionToken = renderer == null ? null : renderer.captureLooseProjectionToken();
     }
+
+    String getPartId() { return partId; }
+    int getTerminalIndex() { return terminal; }
 
     public boolean isValid() {
         if (sim == null || instance == null || renderer == null || looseProjectionToken == null ||

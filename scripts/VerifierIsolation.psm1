@@ -6138,6 +6138,54 @@ function Test-VerifierPreviewOwnerPortFields($OwnerRecord) {
     return $true
 }
 
+function Test-VerifierSameRootPreviewListenerEligibility($Context, $Inspection,
+        $Listeners, $OwnerRecord, $ProcessId, $ProcessStartTicks,
+        $PreviewListenerOwner) {
+    # Only the exact run-owned preview may avoid a descendant census. Mixed,
+    # kernel, foreign, direct-process and browser owners retain their paths.
+    if ($null -eq $Context -or $null -eq $OwnerRecord -or
+            $null -eq $PreviewListenerOwner -or $null -eq $Inspection -or
+            -not [object]::ReferenceEquals($OwnerRecord, $PreviewListenerOwner) -or
+            -not [object]::ReferenceEquals($OwnerRecord, $Context.Server) -or
+            $OwnerRecord.PSObject.Properties['Profile'] -or
+            $OwnerRecord.PSObject.Properties['DirectProcessOwner']) { return $false }
+    foreach ($name in @('ProcessId', 'ProcessStartTicks', 'ProcessParentProcessId',
+            'ProcessParentProcessStartTicks', 'ProcessCommandLine', 'Script',
+            'Port', 'RunId', 'Nonce', 'Owner', 'IdentityVerified', 'Process')) {
+        if (-not $OwnerRecord.PSObject.Properties[$name]) { return $false }
+    }
+    if ($OwnerRecord.Owner -cne 'run' -or
+            -not (Test-VerifierStrictBooleanValue $OwnerRecord.IdentityVerified) -or
+            -not $OwnerRecord.IdentityVerified -or
+            $OwnerRecord.Process -isnot [Diagnostics.Process] -or
+            -not (Test-VerifierStrictIntegralValue $ProcessId 1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $ProcessStartTicks 1)) { return $false }
+    foreach ($name in @('ProcessId', 'ProcessStartTicks', 'ProcessParentProcessId',
+            'ProcessParentProcessStartTicks', 'Port')) {
+        if (-not (Test-VerifierStrictIntegralValue $OwnerRecord.$name 1)) { return $false }
+    }
+    foreach ($name in @('ProcessCommandLine', 'Script', 'RunId', 'Nonce')) {
+        if (-not (Test-VerifierStrictStringValue $OwnerRecord.$name) -or
+                [string]::IsNullOrWhiteSpace($OwnerRecord.$name)) { return $false }
+    }
+    if ([long]$OwnerRecord.ProcessId -ne [long]$ProcessId -or
+            [long]$OwnerRecord.ProcessStartTicks -ne [long]$ProcessStartTicks -or
+            $OwnerRecord.RunId -cne $Context.RunId -or
+            $OwnerRecord.Nonce -cne $Context.PreviewNonce -or
+            $Inspection.ListenerOwnerKind -cne $script:VerifierUserProcessOwnerKind -or
+            @($Listeners).Count -eq 0) { return $false }
+    foreach ($listener in @($Listeners)) {
+        if ($listener.ListenerOwnerKind -cne $script:VerifierUserProcessOwnerKind -or
+                -not (Test-VerifierStrictIntegralValue $listener.ProcessId 1 ([int]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $listener.ProcessStartTicks 1) -or
+                -not (Test-VerifierStrictIntegralValue $listener.Port 1 65535) -or
+                [long]$listener.Port -ne [long]$OwnerRecord.Port -or
+                [long]$listener.ProcessId -ne [long]$ProcessId -or
+                [long]$listener.ProcessStartTicks -ne [long]$ProcessStartTicks) { return $false }
+    }
+    return $true
+}
+
 function Test-VerifierSameRootBrowserListenerEligibility($Inspection,
         $Listeners, $OwnerRecord, $ProcessId, $ProcessStartTicks,
         $PreviewListenerOwner) {
@@ -6462,6 +6510,25 @@ function Test-VerifierLiveListenerInspectionAuthorization($Inspection,
                     [string]$listener.ProcessStartTicks
                 if (-not $expectedListenerKeys.ContainsKey($key)) { return $false }
             }
+        }
+
+        if (Test-VerifierSameRootPreviewListenerEligibility $PreviewContext `
+                $attemptInspection $attemptListeners $PreviewOwner `
+                $AuthorizedProcessId $AuthorizedProcessStartTicks $PreviewOwner) {
+            try {
+                $identity = Get-VerifierCurrentProcessIdentity $AuthorizedProcessId `
+                    $AuthorizedProcessStartTicks $PreviewOwner.ProcessParentProcessId `
+                    $PreviewOwner.ProcessCommandLine $PreviewOwner.Script $PreviewOwner.Port `
+                    $PreviewOwner.RunId $PreviewOwner.Nonce `
+                    $PreviewOwner.ProcessParentProcessStartTicks $PreviewOwner.Process.Path
+                foreach ($listener in $attemptListeners) {
+                    if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks -or
+                            -not (Test-VerifierListenerBelongsToOwner $PreviewOwner `
+                                $listener $AuthorizedProcessId $AuthorizedProcessStartTicks `
+                                @($identity.Record))) { return $false }
+                }
+                return ($retryBudget.ElapsedTicks -lt $retryBudgetTicks)
+            } catch { return $false }
         }
 
         # A genuine same-root browser listener can use the narrow PID-scoped
@@ -6789,7 +6856,8 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
     $expectedListenerKeys = $null
     for ($attempt = 1; $attempt -le 3; $attempt++) {
         if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
         }
         $inspection = try {
             if ($null -ne $PreviewListenerOwner) {
@@ -6806,15 +6874,18 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
         }
         $proofStage = 'structural-listener-validation'
         if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
         }
         if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
         }
         $inspectionSchemaValid = Test-VerifierListenerInspectionSchema $inspection `
             $Context $PreviewListenerOwner $null -StructuralOnly
         if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
         }
         if (-not $inspectionSchemaValid -or
                 -not $inspection.Success -or -not $inspection.Known) {
@@ -6832,12 +6903,14 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
                 Throw-VerifierInfrastructure "Owned port $($Lease.Port) returned a listener on a different port."
             }
             if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
             }
             $listenerSchemaValid = Test-VerifierListenerRecordSchema $listener $Context `
                 $PreviewListenerOwner $null -StructuralOnly
             if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
             }
             if (-not $listenerSchemaValid) {
                 Throw-VerifierInfrastructure ("Loopback port $($Lease.Port) returned a malformed or unauthorized listener owner record. " +
@@ -6889,12 +6962,14 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
             # authorization token.  Both all-kernel and mixed listener paths
             # carry this same token through every downstream consumer.
             if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-                Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+                Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
             }
             $kernelAuthorizationProof = New-VerifierRunOwnedPreviewHttpSysAuthorizationProof `
                 $Context $OwnerRecord ([int]$Lease.Port)
             if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-                Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+                Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
             }
             if ($null -eq $kernelAuthorizationProof) {
                 Throw-VerifierInfrastructure ("Loopback port $($Lease.Port) reported a kernel transport listener " +
@@ -6913,12 +6988,14 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
             $proofStage = 'kernel-semantic-authorization'
             foreach ($listener in $listeners) {
                 if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-                    Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+                    Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
                 }
                 $kernelListenerProof = Test-VerifierRunOwnedPreviewHttpSysListener $Context `
                     $OwnerRecord $listener $kernelAuthorizationProof
                 if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-                    Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+                    Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
                 }
                 if (-not $kernelListenerProof) {
                     Throw-VerifierInfrastructure ("Loopback port $($Lease.Port) returned a kernel listener " +
@@ -6942,11 +7019,13 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
                  $OwnerRecord.PSObject.Properties['Script'])) {
             $proofStage = 'browser-live-identity'
             if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
             }
             $currentRoot = Get-VerifierCurrentProcessRecordById ([int]$ProcessId)
             if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
             }
             if ($null -eq $currentRoot -or
                     [long]$currentRoot.ProcessStartTicks -ne [long]$ProcessStartTicks) {
@@ -6967,7 +7046,8 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
                     Get-VerifierCurrentProcessRecordById ([int]$listener.ProcessId)
                 }
                 if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
                 }
                 if ($null -eq $currentListener -or
                         [long]$currentListener.ProcessStartTicks -ne
@@ -7042,13 +7122,28 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
         } else { '' }
         $snapshot = $null
         $ownershipError = $null
-        if ($sameRootBrowserListenerSet) {
+        $sameRootPreviewListenerSet = Test-VerifierSameRootPreviewListenerEligibility `
+            $Context $inspection $listeners $OwnerRecord $ProcessId $ProcessStartTicks `
+            $PreviewListenerOwner
+        if ($sameRootPreviewListenerSet) {
+            $proofStage = 'preview-root-listener-scoped-identity'
+            # The listener is the preview itself, not a descendant. Re-prove
+            # its live PID/start, launch parent/start, exact command and all
+            # script/port/run/nonce markers. Keep the existing downstream
+            # listener proof and the single 500 ms whole-call deadline.
+            $identity = Get-VerifierCurrentProcessIdentity $ProcessId $ProcessStartTicks `
+                $OwnerRecord.ProcessParentProcessId $OwnerRecord.ProcessCommandLine `
+                $OwnerRecord.Script $OwnerRecord.Port $OwnerRecord.RunId $OwnerRecord.Nonce `
+                $OwnerRecord.ProcessParentProcessStartTicks $OwnerRecord.Process.Path
+            $snapshot = @($identity.Record)
+        } elseif ($sameRootBrowserListenerSet) {
             $proofStage = 'browser-root-listener-fast-identity'
         } elseif ($null -ne $OwnerRecord -and
                 ($OwnerRecord.PSObject.Properties['Profile'] -or
                  $OwnerRecord.PSObject.Properties['Script'])) {
             if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
             }
             $proofStage = 'browser-ownership-snapshot'
             try {
@@ -7059,15 +7154,18 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
                 $ownershipError = $_
             }
             if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
             }
         }
         if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
         }
         $missingProcessId = Get-VerifierMissingProcessId $ownershipError
         if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
         }
         if ($null -ne $ownershipError -and $missingProcessId -le 0) {
             if (Test-VerifierInfrastructureError $ownershipError) { throw $ownershipError }
@@ -7081,12 +7179,14 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
                 $listenerKind = $listener.ListenerOwnerKind
                 if ($listenerKind -eq $script:VerifierKernelTransportOwnerKind) {
                     if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
                     }
                     $kernelListenerProof = Test-VerifierRunOwnedPreviewHttpSysListener `
                         $Context $OwnerRecord $listener $kernelAuthorizationProof
                     if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
                     }
                     if (-not $kernelListenerProof) {
                         Throw-VerifierInfrastructure ("Loopback port $($Lease.Port) reported a kernel transport listener " +
@@ -7120,11 +7220,13 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
                 }
                 if (-not $belongs) {
                     if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-                        Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+                        Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
                     }
                     $missingProcessId = Get-VerifierMissingProcessId $listenerError
                     if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-                        Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+                        Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
                     }
                     if ($missingProcessId -le 0) {
                         Throw-VerifierInfrastructure ("Loopback port $($Lease.Port) is listening under foreign " +
@@ -7138,7 +7240,8 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
         }
         if ($null -eq $failedListener -and $missingProcessId -le 0) {
             if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
             }
             return [pscustomobject]@{
                 Inspection = $inspection; Listeners = @($listeners); Snapshot = @($snapshot)
@@ -7166,13 +7269,15 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
         $secondView = $null
         $secondViewError = $null
         if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
         }
         try { $secondView = Get-VerifierCurrentProcessRecordById $missingProcessId } catch {
             $secondViewError = $_
         }
         if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
         }
         if ($null -ne $secondViewError) {
             if (Test-VerifierInfrastructureError $secondViewError) { throw $secondViewError }
@@ -7184,22 +7289,26 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
         }
         $proofStage = 'missing-descendant-refresh'
         if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
         }
         $remainingTicks = $retryBudgetTicks - $retryBudget.ElapsedTicks
         if ($remainingTicks -le 0) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
         }
         $remainingMilliseconds = ([double]$remainingTicks * 1000.0) /
             [double][Diagnostics.Stopwatch]::Frequency
         $sleepMilliseconds = [int][Math]::Floor(
             [Math]::Min(50.0, $remainingMilliseconds - 1.0))
         if ($sleepMilliseconds -lt 1) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
         }
         Start-Sleep -Milliseconds $sleepMilliseconds
         if ($retryBudget.ElapsedTicks -ge $retryBudgetTicks) {
-            Throw-VerifierInfrastructure 'Port lease ownership proof exceeded its bounded monotonic deadline.'
+            Throw-VerifierInfrastructure ("Port lease ownership proof exceeded its bounded monotonic deadline. " +
+                "[stage=$proofStage elapsedMs=$([long]$proofStageStopwatch.ElapsedMilliseconds)]")
         }
     }
     Throw-VerifierInfrastructure ("Port lease ownership proof did not complete. " +
@@ -14353,7 +14462,10 @@ function Complete-VerifierBrowserSession($Context, $SessionRecord) {
 }
 
 function New-VerifierBrowserSession($Context, $RouteName, $Url,
-        $BrowserPath, $TimeoutSeconds) {
+        $BrowserPath, $TimeoutSeconds, $Headed = $false) {
+    if (-not (Test-VerifierStrictBooleanValue $Headed)) {
+        Throw-VerifierInfrastructure 'Browser headed mode must be an exact Boolean before allocation.'
+    }
     if (-not (Test-VerifierStrictStringValue $RouteName) -or
             [String]::IsNullOrWhiteSpace($RouteName)) {
         Throw-VerifierInfrastructure 'A browser session route name must be one exact non-empty string before allocation.'
@@ -14380,7 +14492,7 @@ function New-VerifierBrowserSession($Context, $RouteName, $Url,
         if (-not (Test-Path -LiteralPath $BrowserPath -PathType Leaf)) {
             Throw-VerifierInfrastructure "Browser executable was not found: $BrowserPath"
         }
-        $arguments = @('--headless=new', '--disable-gpu', '--no-first-run', '--disable-sync',
+        $arguments = @('--no-first-run', '--disable-sync',
             '--window-size=1440,1000', "--user-data-dir=$($browserSessionRecord.Profile)",
             "--remote-debugging-port=$($browserSessionRecord.CdpPort)",
             "--tsj-verifier-run=$($Context.RunId)",
@@ -14388,6 +14500,7 @@ function New-VerifierBrowserSession($Context, $RouteName, $Url,
             "--tsj-verifier-worktree=$($Context.RepositoryIdentity)",
             "--tsj-verifier-recovery-token=$($browserSessionRecord.RecoveryReceipt.AuthorityToken)",
             'about:blank')
+        if (-not $Headed) { $arguments = @('--headless=new', '--disable-gpu') + $arguments }
         $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
         # The browser root enters its named no-breakaway job in the same
         # CreateProcess operation that starts it.  Assigning a job after a

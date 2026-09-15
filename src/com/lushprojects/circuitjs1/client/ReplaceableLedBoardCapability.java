@@ -7,6 +7,8 @@ final class ReplaceableLedBoardCapability implements PhysicalBoardRuntimeCapabil
         PhysicalBoardInstallationProvider.Scoped, WorkbenchPartsProvider {
     static final String ID = "REPLACEABLE_LED";
 
+    private final String capabilityId;
+
     private final LedComponentSlot slot;
     private final PhysicalPartInventory<PhysicalLedPart> inventory;
     private final LedReplacementCatalog catalog;
@@ -15,6 +17,15 @@ final class ReplaceableLedBoardCapability implements PhysicalBoardRuntimeCapabil
     ReplaceableLedBoardCapability(LedComponentSlot slot,
             PhysicalPartInventory<PhysicalLedPart> inventory,
             LedReplacementCatalog catalog) {
+        this(slot, inventory, catalog, ID);
+    }
+
+    ReplaceableLedBoardCapability(LedComponentSlot slot,
+            PhysicalPartInventory<PhysicalLedPart> inventory,
+            LedReplacementCatalog catalog, String capabilityId) {
+        if (capabilityId == null || capabilityId.length() == 0)
+            throw new IllegalArgumentException("Missing capability identity");
+        this.capabilityId = capabilityId;
         if (slot == null || inventory == null || catalog == null)
             throw new IllegalArgumentException("Missing replaceable LED runtime capability");
         this.slot = slot;
@@ -22,7 +33,7 @@ final class ReplaceableLedBoardCapability implements PhysicalBoardRuntimeCapabil
         this.catalog = catalog;
     }
 
-    public String getCapabilityId() { return ID; }
+    public String getCapabilityId() { return capabilityId; }
     LedComponentSlot getSlot() { return slot; }
     PhysicalPartInventory<PhysicalLedPart> getInventory() { return inventory; }
     LedReplacementCatalog getCatalog() { return catalog; }

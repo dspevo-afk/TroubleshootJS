@@ -19,5 +19,5 @@ final class PhysicalPartProvenance {
 
     String getKind() { return kind; }
     String getSourceId() { return sourceId; }
-    boolean isOriginal() { return GENERATED_ORIGINAL.equals(kind); }
+    boolean isOriginal() { return GENERATED_ORIGINAL.equals(kind) || FIXED_GENERATED.equals(kind); }
 }

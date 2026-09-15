@@ -6,7 +6,7 @@ final class PhysicalPartRenderProbeProviders {
         new PhysicalPartRenderProbeProvider() {
             public ProbeTarget createLooseProbeTarget(CirSim sim,
                     GeneratedBoardInstance instance, PhysicalPart<?> part, int terminal,
-                    PcbWorkbenchRenderer renderer) {
+                    PhysicalProbeProjection renderer) {
                 return new PhysicalResistorPartProbeTarget(sim, instance, part.getId(), terminal,
                     renderer);
             }
@@ -16,7 +16,7 @@ final class PhysicalPartRenderProbeProviders {
         new PhysicalPartRenderProbeProvider() {
             public ProbeTarget createLooseProbeTarget(CirSim sim,
                     GeneratedBoardInstance instance, PhysicalPart<?> part, int terminal,
-                    PcbWorkbenchRenderer renderer) {
+                    PhysicalProbeProjection renderer) {
                 return new PhysicalDiodePartProbeTarget(sim, instance, part.getId(), terminal,
                     renderer);
             }
@@ -26,7 +26,7 @@ final class PhysicalPartRenderProbeProviders {
         new PhysicalPartRenderProbeProvider() {
             public ProbeTarget createLooseProbeTarget(CirSim sim,
                     GeneratedBoardInstance instance, PhysicalPart<?> part, int terminal,
-                    PcbWorkbenchRenderer renderer) {
+                    PhysicalProbeProjection renderer) {
                 return new PhysicalLedPartProbeTarget(sim, instance, part.getId(), terminal,
                     renderer);
             }
@@ -36,7 +36,7 @@ final class PhysicalPartRenderProbeProviders {
         new PhysicalPartRenderProbeProvider() {
             public ProbeTarget createLooseProbeTarget(CirSim sim,
                     GeneratedBoardInstance instance, PhysicalPart<?> part, int terminal,
-                    PcbWorkbenchRenderer renderer) {
+                    PhysicalProbeProjection renderer) {
                 return new PhysicalCapacitorPartProbeTarget(sim, instance, part.getId(),
                     terminal, renderer);
             }
@@ -46,7 +46,7 @@ final class PhysicalPartRenderProbeProviders {
         new PhysicalPartRenderProbeProvider() {
             public ProbeTarget createLooseProbeTarget(CirSim sim,
                     GeneratedBoardInstance instance, PhysicalPart<?> part, int terminal,
-                    PcbWorkbenchRenderer renderer) {
+                    PhysicalProbeProjection renderer) {
                 return new PhysicalNpnPartProbeTarget(sim, instance, part.getId(), terminal,
                     renderer);
             }
@@ -56,11 +56,19 @@ final class PhysicalPartRenderProbeProviders {
         new PhysicalPartRenderProbeProvider() {
             public ProbeTarget createLooseProbeTarget(CirSim sim,
                     GeneratedBoardInstance instance, PhysicalPart<?> part, int terminal,
-                    PcbWorkbenchRenderer renderer) {
+                    PhysicalProbeProjection renderer) {
                 return new PhysicalNmosPartProbeTarget(sim, instance, part.getId(), terminal,
                     renderer);
             }
         };
 
+    static final PhysicalPartRenderProbeProvider SERVICE =
+        new PhysicalPartRenderProbeProvider() {
+            public ProbeTarget createLooseProbeTarget(CirSim sim,
+                    GeneratedBoardInstance instance, PhysicalPart<?> part, int terminal,
+                    PhysicalProbeProjection renderer) {
+                return new PhysicalPartProbeTarget(sim, instance, part.getId(), terminal, renderer);
+            }
+        };
     private PhysicalPartRenderProbeProviders() { }
 }

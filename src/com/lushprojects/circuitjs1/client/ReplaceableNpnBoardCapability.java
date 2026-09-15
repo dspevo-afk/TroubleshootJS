@@ -6,6 +6,8 @@ import java.util.Vector;
 final class ReplaceableNpnBoardCapability implements PhysicalBoardRuntimeCapability,
         PhysicalBoardInstallationProvider.Scoped, WorkbenchPartsProvider {
     static final String ID = "REPLACEABLE_NPN";
+    private final String capabilityId;
+
     private final NpnComponentSlot slot;
     private final PhysicalPartInventory<PhysicalNpnPart> inventory;
     private final NpnReplacementCatalog catalog;
@@ -13,6 +15,14 @@ final class ReplaceableNpnBoardCapability implements PhysicalBoardRuntimeCapabil
 
     ReplaceableNpnBoardCapability(NpnComponentSlot slot,
             PhysicalPartInventory<PhysicalNpnPart> inventory, NpnReplacementCatalog catalog) {
+        this(slot, inventory, catalog, ID);
+    }
+
+    ReplaceableNpnBoardCapability(NpnComponentSlot slot,
+            PhysicalPartInventory<PhysicalNpnPart> inventory, NpnReplacementCatalog catalog, String capabilityId) {
+        if (capabilityId == null || capabilityId.length() == 0)
+            throw new IllegalArgumentException("Missing capability identity");
+        this.capabilityId = capabilityId;
         if (slot == null || inventory == null || catalog == null)
             throw new IllegalArgumentException("Missing replaceable NPN capability");
         this.slot = slot;
@@ -20,7 +30,7 @@ final class ReplaceableNpnBoardCapability implements PhysicalBoardRuntimeCapabil
         this.catalog = catalog;
     }
 
-    public String getCapabilityId() { return ID; }
+    public String getCapabilityId() { return capabilityId; }
     NpnComponentSlot getSlot() { return slot; }
     PhysicalPartInventory<PhysicalNpnPart> getInventory() { return inventory; }
     NpnReplacementCatalog getCatalog() { return catalog; }
@@ -35,7 +45,7 @@ final class ReplaceableNpnBoardCapability implements PhysicalBoardRuntimeCapabil
     }
 
     NpnSlotController getController() { return controller; }
-    public String getComponentId() { return "Q1"; }
+    public String getComponentId() { return slot.getComponentId(); }
     public String getCatalogTitle() { return "NPN Replacement Catalog"; }
     public String getInstallNewLabel() { return "Install new NPN"; }
     public boolean showOccupiedMessageWhenPowered() { return false; }

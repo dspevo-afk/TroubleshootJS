@@ -1,0 +1,63 @@
+{
+  "base": "f41e80f6227ffd04c0092ff01207bdc8e392c2ed",
+  "inputCount": 1154,
+  "changedNonOutputInputs": [
+    "src/com/lushprojects/circuitjs1/client/Q15SupportChecks.java",
+    "tests/contracts/Q15ControlBoardContractTest.java"
+  ],
+  "finalBuild": {
+    "gate": "build33",
+    "exitCode": 0,
+    "elapsedMs": 74634,
+    "completedUtc": "2026-09-14T23:51:05.442597+00:00"
+  },
+  "focusedQ15": {
+    "gate": "q15-fixture33b",
+    "exitCode": 0,
+    "elapsedMs": 49129,
+    "completedUtc": "2026-09-14T23:49:50.728588+00:00"
+  },
+  "native32Audit": {
+    "base": "f41e80f6227ffd04c0092ff01207bdc8e392c2ed",
+    "candidate": "GWT32",
+    "inputCount": 1154,
+    "fullNative": {
+      "gate": "native31",
+      "exitCode": 0,
+      "elapsedMs": 134241,
+      "completedUtc": "2026-09-14T22:34:35.493030+00:00"
+    },
+    "fullNativeSuites": 39,
+    "nativeReceiptSha256": "43e8c1c8c44553bb77cac4ff8eae219f7b98bc486e23b1cb91d3f61cc1101829",
+    "changedNonOutputInputs": [
+      "src/com/lushprojects/circuitjs1/client/PhysicalPartRenderDeveloperVerifier.java",
+      "tests/contracts/ArchitectureFootprintContractTest.java"
+    ],
+    "affectedFocusedSuite": {
+      "gate": "fixture32",
+      "exitCode": 0,
+      "elapsedMs": 22814,
+      "completedUtc": "2026-09-14T22:43:15.946776+00:00"
+    },
+    "focusedAssertions": 46,
+    "compiledArchitecture": "architecture32 PASS",
+    "policy": "Full native31 is reused only with this input delta and the fresh affected focused native32/compiled32 checks. No full native32 run is claimed."
+  },
+  "policy": "Only the Q15 developer fixture and its independent JVM test changed since GWT32. Fresh GWT33 five-permutation build and Q15 browser/native qualification; unaffected GWT32 reports and audited native31 are explicitly reused. No full GWT33 regression rerun or independent-agent review is claimed.",
+  "source32": {
+    "sourceDigest": "e83c377c67c4a55ce2dd5360e85f259da1c266b739f7f58a10f12e34187535d9",
+    "scriptDigest": "75d71d753c344545ef3f4b02f0d4c208c2052d3daabfd73105d08a2b60fda544",
+    "webDigest": "08765c50c5ea0301ddbbf8c26636e257aa6a151b051368a5f0ad2d4db9971fb6",
+    "executionDigest": "82636fb7d03b61a756ee282cff0e8e5ef0595d0316f68042cfd66a297fca9e9e",
+    "executionFileCount": 1463
+  },
+  "source33": {
+    "sourceDigest": "ab7d4b37a3acbd2c7825cc55a10b11a7d960ab4d40fb1f3a90a2faca77d6e9f9",
+    "scriptDigest": "75d71d753c344545ef3f4b02f0d4c208c2052d3daabfd73105d08a2b60fda544",
+    "webDigest": "952fd157c96fcc47550afd74e52f94c8bfdcab876d412354a683b2c579e3e40f",
+    "executionDigest": "9b3e8b6aa2a69cf02dd601526370d3a944c03737163d372da3e98a46494c6c87",
+    "executionFileCount": 1463
+  },
+  "candidate32InputSha256": "df39cce35daabd898d384f26425138c4437fe1d1688d179a498d36668e91e578",
+  "candidate33InputSha256": "13a33023dd36b4d4aaf083cc020e390a778dd1c030b18608a4f384e86cf3151a"
+}

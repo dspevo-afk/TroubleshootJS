@@ -13,8 +13,22 @@ final class CapacitorReplacementCatalog implements PhysicalPartCatalog<Capacitor
         new Vector<CapacitorCatalogEntry>();
     private final HashMap<String, CapacitorCatalogEntry> byId =
         new HashMap<String, CapacitorCatalogEntry>();
+    private final PhysicalPackage physicalPackage;
 
     CapacitorReplacementCatalog() {
+        this(PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR);
+    }
+
+    CapacitorReplacementCatalog(PhysicalPackage physicalPackage) {
+        this.physicalPackage = physicalPackage;
+        if (physicalPackage.isEquivalentTo(PhysicalPackages.RADIAL_CERAMIC_CAPACITOR)) {
+            add("C_CERAMIC_10NF_25V", 1e-8, "10 nF 25 V");
+            add("C_CERAMIC_100NF_25V", 1e-7, "100 nF 25 V");
+            add("C_CERAMIC_1UF_25V", 1e-6, "1 uF 25 V");
+            return;
+        }
+        if (!physicalPackage.isEquivalentTo(PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR))
+            throw new IllegalArgumentException("Unsupported capacitor service package");
         add(CORRECT, 33e-6, "33 uF 16 V");
         add(WRONG_LOW, 1e-6, "1 uF 16 V");
         // This is intentionally much larger than the timing value so the
@@ -25,8 +39,9 @@ final class CapacitorReplacementCatalog implements PhysicalPartCatalog<Capacitor
 
     private void add(String id, double capacitanceFarads, String marking) {
         CapacitorSpecification specification = new CapacitorSpecification(id, capacitanceFarads,
-            20, 16, PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR,
-            new CapacitorNameplate("Electrolytic capacitor", marking));
+            20, physicalPackage.isEquivalentTo(PhysicalPackages.RADIAL_CERAMIC_CAPACITOR) ? 25 : 16, physicalPackage,
+            new CapacitorNameplate(physicalPackage.isEquivalentTo(PhysicalPackages.RADIAL_CERAMIC_CAPACITOR) ?
+                "Ceramic capacitor" : "Electrolytic capacitor", marking));
         CapacitorCatalogEntry entry = new CapacitorCatalogEntry(id, specification);
         entries.add(entry);
         byId.put(id, entry);

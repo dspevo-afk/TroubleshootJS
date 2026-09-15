@@ -1,0 +1,82 @@
+[
+    {
+        "screen":  "PREPARING",
+        "progress":  {
+                         "label":  "Check the physical board",
+                         "paused":  false,
+                         "activeElapsedMs":  1014,
+                         "percent":  33,
+                         "phase":  3,
+                         "phases":  6,
+                         "units":  2,
+                         "elapsedMs":  1014,
+                         "lastUpdateAgeMs":  2
+                     },
+        "visibleValue":  "0",
+        "message":  "Preparing and checking the board…",
+        "replay":  "tsj-alpha/1/EASY/RB15_CONTROL/3",
+        "body":  "otJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nPreparing and checking the board…\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nPreparing board...\nCancel board preparation\nBoard Power: ON\nPreparing board\n\nPreparing and checking the board…\n\nCIRCUIT CHECK\nResolve circuit\n0%\n\n0s elapsed / 0 work units completed\n\nResolve\nBuild \u0026 test\nPCB\nMeasurements\nTicket\nReady\n\nTesting the real circuit before it reaches your bench. Timing boards take longer. The bar tracks completed stages, not an estimated wait. Switching away pauses preparation until you return.\n\nCancel preparation"
+    },
+    {
+        "screen":  "PREPARING",
+        "progress":  {
+                         "label":  "Verify measurements and repairs",
+                         "paused":  false,
+                         "activeElapsedMs":  3082,
+                         "percent":  54,
+                         "phase":  4,
+                         "phases":  6,
+                         "units":  26,
+                         "elapsedMs":  3082,
+                         "lastUpdateAgeMs":  0
+                     },
+        "visibleValue":  "53",
+        "message":  "Preparing and checking the board…",
+        "replay":  "tsj-alpha/1/EASY/RB15_CONTROL/3",
+        "body":  "ORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nPreparing and checking the board…\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nPreparing board...\nCancel board preparation\nBoard Power: ON\nPreparing board\n\nPreparing and checking the board…\n\nCIRCUIT CHECK\nVerify measurements and repairs\n53%\n\n2s elapsed / 23 work units completed\n\nResolve\nBuild \u0026 test\nPCB\nMeasurements\nTicket\nReady\n\nTesting the real circuit before it reaches your bench. Timing boards take longer. The bar tracks completed stages, not an estimated wait. Switching away pauses preparation until you return.\n\nCancel preparation"
+    },
+    {
+        "screen":  "PREPARING",
+        "progress":  {
+                         "label":  "Verify measurements and repairs",
+                         "paused":  false,
+                         "activeElapsedMs":  4167,
+                         "percent":  58,
+                         "phase":  4,
+                         "phases":  6,
+                         "units":  48,
+                         "elapsedMs":  4167,
+                         "lastUpdateAgeMs":  1
+                     },
+        "visibleValue":  "57",
+        "message":  "Preparing and checking the board…",
+        "replay":  "tsj-alpha/1/EASY/RB15_CONTROL/3",
+        "body":  "ORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nPreparing and checking the board…\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nPreparing board...\nCancel board preparation\nBoard Power: ON\nPreparing board\n\nPreparing and checking the board…\n\nCIRCUIT CHECK\nVerify measurements and repairs\n57%\n\n3s elapsed / 45 work units completed\n\nResolve\nBuild \u0026 test\nPCB\nMeasurements\nTicket\nReady\n\nTesting the real circuit before it reaches your bench. Timing boards take longer. The bar tracks completed stages, not an estimated wait. Switching away pauses preparation until you return.\n\nCancel preparation"
+    },
+    {
+        "screen":  "PREPARING",
+        "progress":  {
+                         "label":  "Verify measurements and repairs",
+                         "paused":  false,
+                         "activeElapsedMs":  5238,
+                         "percent":  62,
+                         "phase":  4,
+                         "phases":  6,
+                         "units":  70,
+                         "elapsedMs":  5238,
+                         "lastUpdateAgeMs":  0
+                     },
+        "visibleValue":  "62",
+        "message":  "Preparing and checking the board…",
+        "replay":  "tsj-alpha/1/EASY/RB15_CONTROL/3",
+        "body":  "ORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nPreparing and checking the board…\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nPreparing board...\nCancel board preparation\nBoard Power: ON\nPreparing board\n\nPreparing and checking the board…\n\nCIRCUIT CHECK\nVerify measurements and repairs\n62%\n\n4s elapsed / 67 work units completed\n\nResolve\nBuild \u0026 test\nPCB\nMeasurements\nTicket\nReady\n\nTesting the real circuit before it reaches your bench. Timing boards take longer. The bar tracks completed stages, not an estimated wait. Switching away pauses preparation until you return.\n\nCancel preparation"
+    },
+    {
+        "screen":  "TICKET",
+        "progress":  null,
+        "visibleValue":  null,
+        "message":  "",
+        "replay":  "tsj-alpha/1/EASY/PARALLEL_DUAL_INDICATOR/0",
+        "body":  "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nGRAY FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray\nCustomer ticket\n\nSERVICE JOB\n\nCustomer complaint\n\nThe two indicators do not behave the same.\n\nFUNCTIONAL RETEST\n\nObserve both indicators after repair.\n\nExamine the board and use the instruments to identify a repair. Switch off every supply and wait for stored energy to discharge before changing parts.\n\nAccept ticket and start\nMain menu\nResources\nReplay and bug-report identity"
+    }
+]

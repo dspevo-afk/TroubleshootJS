@@ -252,6 +252,8 @@ final class NmosLowSideSwitchGenerator {
             behaviorContract);
         PcbBoardLayout layout = NmosLowSideSwitchPcbLayoutFactory.create(board, specifications,
             seed);
+        connectionBindings.declareConnectorHarness("J1", loadIsolation, 1, loadSupply, 0);
+        connectionBindings.declareConnectorHarness("J2", controlBoardTrace, 1, controlSupply, 0);
         return new GeneratedBoardInstance(board, elements, seed, FAMILY_ID, TOPOLOGY_VARIANT,
             "Generated NMOS low-side switch, seed " + seed, componentBindings, powerBindings,
             connectionBindings, behaviorContract, layout, specifications, selectedBinding,

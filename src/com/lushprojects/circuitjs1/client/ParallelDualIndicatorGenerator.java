@@ -17,17 +17,23 @@ class ParallelDualIndicatorGenerator {
     private static final double[] R2_VALUES = { 680, 1500, 2200 };
 
     GeneratedBoardInstance generate(long seed) {
-        return generate(seed, null);
+        return generate(seed, null, null);
     }
 
     GeneratedBoardInstance generateForFaultVerification(long seed, GeneratedFaultType type) {
+        return generateForFaultVerification(seed, type, "R1");
+    }
+
+    GeneratedBoardInstance generateForFaultVerification(long seed, GeneratedFaultType type, String target) {
         if (type != GeneratedFaultType.RESISTOR_OPEN &&
                 type != GeneratedFaultType.RESISTOR_INCORRECT_VALUE)
             throw new IllegalArgumentException("Unsupported parallel diagnostic fault: " + type);
-        return generate(seed, type);
+        if (!"R1".equals(target) && !"R2".equals(target))
+            throw new IllegalArgumentException("Unsupported parallel fault position");
+        return generate(seed, type, target);
     }
 
-    private GeneratedBoardInstance generate(long seed, GeneratedFaultType forcedType) {
+    private GeneratedBoardInstance generate(long seed, GeneratedFaultType forcedType, String forcedTarget) {
         Random random = new Random(seed);
         int valueIndex = random.nextInt(SUPPLY_VOLTAGES.length);
         double supplyVoltage = SUPPLY_VOLTAGES[valueIndex];
@@ -85,7 +91,9 @@ class ParallelDualIndicatorGenerator {
         ResistorElm r2 = new ResistorElm(384, 368);
         r2.drag(448, 368);
         r2.setResistance(r2Value);
-        WireElm r2Lead2Link = new WireElm(448, 368);
+        SwitchElm r2FaultIsolation = new SwitchElm(448, 368);
+        r2FaultIsolation.drag(480, 368);
+        WireElm r2Lead2Link = new WireElm(480, 368);
         r2Lead2Link.drag(576, 368);
         WireElm branch2Trace = new WireElm(576, 368);
         branch2Trace.drag(608, 368);
@@ -142,12 +150,17 @@ class ParallelDualIndicatorGenerator {
         faultCandidates.add(GeneratedFaultEngine.resistorIncorrectValue(
             "PARALLEL_R1_INCORRECT_VALUE", FAMILY_ID, seed, "R1", r1, r1Value,
             r1Value * 100));
+        faultCandidates.add(GeneratedFaultEngine.resistorOpen("PARALLEL_R2_OPEN", FAMILY_ID,
+            seed, "R2", r2FaultIsolation));
+        faultCandidates.add(GeneratedFaultEngine.resistorIncorrectValue(
+            "PARALLEL_R2_INCORRECT_VALUE", FAMILY_ID, seed, "R2", r2, r2Value,
+            r2Value * 100));
         faultCandidates.add(GeneratedFaultEngine.connectorOpenPath("PARALLEL_J1_OPEN_PATH",
             FAMILY_ID, seed, "J1", connectorFaultSwitch, false));
         GeneratedFaultEngine.clearAll(faultCandidates);
         GeneratedFaultCandidate selectedFault = forcedType == null ?
             GeneratedFaultEngine.select(seed, faultCandidates) :
-            GeneratedFaultEngine.select(forcedType, faultCandidates);
+            selectFault(forcedType, forcedTarget, faultCandidates);
         for (GeneratedFaultCandidate candidate : faultCandidates)
             for (CircuitElm privateElement : candidate.getPrivateSimulationElements())
                 if (!elements.contains(privateElement))
@@ -191,6 +204,23 @@ class ParallelDualIndicatorGenerator {
         physicalRuntime.registerCapability(new ReplaceableResistorBoardCapability(r1Slot,
             resistorInventory, resistorCatalog));
 
+        GeneratedFaultBinding r2FaultBinding = "R2".equals(fault.getTargetComponentId()) ? faultBinding : null;
+        ResistorSecondaryOpenPath r2OpenPath = ResistorSecondaryOpenPath.create(
+            new CircuitPostMeasurementEndpoint(r2FaultIsolation, 1));
+        elements.add(r2OpenPath.getSimulationElement());
+        PhysicalResistorPart originalR2 = new PhysicalResistorPart("R2_ORIGINAL",
+            StandardPhysicalDefinitionProviders.RESISTOR.require(physicalSpecifications, "R2"),
+            new ResistorNameplate("R2_ORIGINAL", r2Value, 5), physicalSpecifications.getNameplate("R2"),
+            r2, r2FaultBinding, r2OpenPath, ResistorPartLocation.INSTALLED,
+            new PhysicalPartProvenance(PhysicalPartProvenance.GENERATED_ORIGINAL, "R2"));
+        componentBindings.bindAuxiliaryComponentElement("R2", r2OpenPath.getSimulationElement());
+        PhysicalPartInventory<PhysicalResistorPart> r2Inventory = new PhysicalPartInventory<PhysicalResistorPart>(
+            physicalRuntime, "R2_REPLACEMENTS", PhysicalResistorPart.class);
+        r2Inventory.add(originalR2);
+        physicalRuntime.registerCapability(new ReplaceableResistorBoardCapability("REPLACEABLE_RESISTOR_R2",
+            new ReplaceableComponentSlot("R2", StandardPhysicalDefinitionProviders.RESISTOR.require(physicalSpecifications, "R2"),
+                originalR2, r2Lead1Link, r2Lead2Link, r2PhysicalSlot), r2Inventory, new ResistorReplacementCatalog()));
+
         GeneratedChallengeBehaviorContract behaviorContract =
             new GeneratedChallengeBehaviorAdapter(
                 new ParallelDualIndicatorGeneratedBoardValidator(),
@@ -231,17 +261,12 @@ class ParallelDualIndicatorGenerator {
         connectionBindings.bind("R2", "R2.1", bindings.getEndpoint("R2.1"),
             new CircuitPostMeasurementEndpoint(r2, 0), r2Lead1Link);
         connectionBindings.bind("R2", "R2.2", bindings.getEndpoint("R2.2"),
-            new CircuitPostMeasurementEndpoint(r2, 1), r2Lead2Link);
+            originalR2.getPublicTerminal(1), r2Lead2Link);
         connectionBindings.bind("LED2", "LED2.A", bindings.getEndpoint("LED2.A"),
             new CircuitPostMeasurementEndpoint(led2, 0), branch2AnodeLink);
         connectionBindings.bind("LED2", "LED2.K", bindings.getEndpoint("LED2.K"),
             new CircuitPostMeasurementEndpoint(led2, 1), led2CathodeLink);
 
-        FixedPhysicalPart<ResistorNameplate> fixedR2 =
-            PhysicalFoundationPartFactory.fromBoardBindings("R2",
-                StandardPhysicalDefinitionProviders.RESISTOR.require(physicalSpecifications, "R2"),
-                physicalSpecifications.getNameplate("R2"), PhysicalPackages.AXIAL_RESISTOR,
-                bindings, r2, new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED, "R2"));
         FixedPhysicalPart<LedNameplate> fixedLed1 =
             PhysicalFoundationPartFactory.fromBoardBindings("LED1",
                 StandardPhysicalDefinitionProviders.LED.require(physicalSpecifications, "LED1"),
@@ -258,11 +283,11 @@ class ParallelDualIndicatorGenerator {
                 physicalSpecifications.getNameplate("J1"), PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,
                 bindings, connectorFaultSwitch,
                 new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED, "J1"));
-        r2PhysicalSlot.install(fixedR2);
         led1PhysicalSlot.install(fixedLed1);
         led2PhysicalSlot.install(fixedLed2);
         j1PhysicalSlot.install(connector);
 
+        connectionBindings.declareConnectorHarness("J1", connectorFaultSwitch, 1, supply, 0);
         return new GeneratedBoardInstance(board, elements, seed, FAMILY_ID,
             DUAL_PARALLEL_BRANCHES_VARIANT,
             "Generated dual parallel indicator board, seed " + seed,
@@ -275,6 +300,14 @@ class ParallelDualIndicatorGenerator {
                 behaviorContract),
             new ParallelDualIndicatorFamilyState(),
             physicalRuntime, null, false, faultCandidates, null, new ParallelDualIndicatorDiagnosticProvider(seed));
+    }
+
+    private static GeneratedFaultCandidate selectFault(GeneratedFaultType type, String target,
+            Vector<GeneratedFaultCandidate> candidates) {
+        for (GeneratedFaultCandidate candidate : candidates)
+            if (candidate.getFault().getType() == type && target.equals(candidate.getFault().getTargetComponentId()))
+                return GeneratedFaultEngine.selectHypothesis(candidate.getHypothesisKey(), candidates);
+        throw new IllegalArgumentException("Unknown parallel fault hypothesis");
     }
 
     private LEDElm createLed(int x1, int y1, int x2, int y2, LedNameplate nameplate) {

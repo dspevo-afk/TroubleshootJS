@@ -19,7 +19,11 @@ final class GenerationCoordinator {
     private final GenerationRequest.PlanCache plans = new GenerationRequest.PlanCache();
     private GenerationJob job;
     private Services services;
-    private Timer continuation;
+    private Timer continuation, watchdog;
+    private long startedAt, lastProgressAt;
+    private int expectedProofUnits;
+    private ForegroundGenerationClock foregroundClock;
+    private boolean foregroundBudget;
     private boolean advancing;
     private int yields;
     private long cancelledAt, cancellationLatency, maxAdvanceMillis;
@@ -33,12 +37,22 @@ final class GenerationCoordinator {
     GenerationCoordinator(CirSim sim) {
         if (sim == null) throw new IllegalArgumentException("Missing generation simulator");
         this.sim = sim;
+        if (com.google.gwt.core.client.GWT.isClient()) installVisibilityListener();
     }
     boolean isRunning() { return job != null && job.isRunning(); }
     boolean isBetweenSteps() { return isRunning() && !advancing; }
     boolean isAdvancing() { return advancing; }
     GenerationJob getJob() { return job; }
     int getYieldCount() { return yields; }
+    int getProgressPercent() { return job == null ? 0 : GenerationProgress.percent(job.getStage(),
+        job.getStageWorkCount(GenerationJob.Stage.HYPOTHESES), expectedProofUnits,
+        job.getOutcome() == GenerationJob.Outcome.PASS); }
+    String getProgressLabel() { return GenerationProgress.label(job == null ? null : job.getStage()); }
+    long getProgressElapsedMillis() { return Math.max(0, System.currentTimeMillis() - startedAt); }
+    long getProgressAgeMillis() { return Math.max(0, System.currentTimeMillis() - lastProgressAt); }
+
+    boolean isProgressPaused() { return foregroundBudget && foregroundClock != null && foregroundClock.isPaused(); }
+    long getProgressActiveMillis() { return foregroundClock == null ? 0 : foregroundClock.elapsedMillis(System.currentTimeMillis()); }
     int getPlanCacheHits() { return plans.getHits(); }
     int getPlanCacheMisses() { return plans.getMisses(); }
     long getCancellationLatencyMillis() { return cancellationLatency; }
@@ -63,6 +77,7 @@ final class GenerationCoordinator {
     /** Developer driver of the exact same stage implementation, with explicit turns. */
     void startForDeveloperVerification(GenerationRequest request) {
         start(request, null, true);
+        if (watchdog != null) { watchdog.cancel(); watchdog = null; }
         if (continuation != null) { continuation.cancel(); continuation = null; }
     }
     void advanceForDeveloperVerification() {
@@ -78,13 +93,63 @@ final class GenerationCoordinator {
             throw new IllegalStateException("Previous generation has incomplete cleanup");
         if (!sim.isGeneratedRuntimeSettled() || sim.activeMeasurementOverlay)
             throw new IllegalStateException("Generation requires an idle settled owner");
+        foregroundBudget = asynchronous && !sim.troubleshootDebug;
+        foregroundClock = new ForegroundGenerationClock(System.currentTimeMillis(),
+            foregroundBudget && pageHidden());
         services = new Services(request, completion);
         job = new GenerationJob(services, MAX_JOB_MILLIS, MAX_JOB_STEPS, MAX_STEP_MILLIS);
         yields = 0; cancelledAt = 0; cancellationLatency = 0; maxAdvanceMillis = 0;
         lastCleanupAudit = null;
+        startedAt = lastProgressAt = System.currentTimeMillis(); expectedProofUnits = 0;
         sim.setGenerationBusy(true, "Preparing board...");
-        if (asynchronous) schedule();
-        else while (isRunning()) advance();
+        try {
+            if (asynchronous) { if (!isProgressPaused()) { schedule(); watch(job); } }
+            else while (isRunning()) advance();
+        } catch (Throwable failure) {
+            job.failInfrastructure(failure);
+            completed();
+        }
+    }
+
+    private void visibilityChanged() {
+        if (!foregroundBudget || !isRunning() || advancing) return;
+        boolean hidden = pageHidden();
+        foregroundClock.setPaused(System.currentTimeMillis(), hidden);
+        if (hidden) {
+            if (continuation != null) { continuation.cancel(); continuation = null; }
+            if (watchdog != null) { watchdog.cancel(); watchdog = null; }
+        } else {
+            if (continuation == null) schedule();
+            if (watchdog == null) watch(job);
+        }
+        if (sim.playerSessionController != null) sim.playerSessionController.refresh();
+    }
+    private static boolean pageHidden() {
+        return com.google.gwt.core.client.GWT.isClient() && nativePageHidden();
+    }
+    private static native boolean nativePageHidden() /*-{ return !!$doc.hidden; }-*/;
+    private native void installVisibilityListener() /*-{
+        var owner = this;
+        $doc.addEventListener('visibilitychange', $entry(function() {
+            owner.@com.lushprojects.circuitjs1.client.GenerationCoordinator::visibilityChanged()();
+        }));
+    }-*/;
+
+    private void watch(final GenerationJob watched) {
+        if (watchdog != null) watchdog.cancel();
+        watchdog = new Timer() {
+            public void run() {
+                if (job != watched || advancing || isProgressPaused()) return;
+                if (!watched.isRunning()) { completed(); return; }
+                try { watched.checkpoint(); }
+                catch (Throwable failure) {
+                    watched.advance(); // Complete the marked terminal job's exact abort.
+                    completed(); return;
+                }
+                if (continuation == null) GenerationCoordinator.this.schedule();
+            }
+        };
+        watchdog.scheduleRepeating(1000);
     }
 
     private void schedule() {
@@ -93,6 +158,7 @@ final class GenerationCoordinator {
             public void run() {
                 if (job != scheduledJob || !scheduledJob.isRunning()) return;
                 continuation = null;
+                if (foregroundBudget && pageHidden()) { visibilityChanged(); return; }
                 long turnStarted = System.currentTimeMillis();
                 for (int unit = 0; unit < MAX_UNITS_PER_TURN && scheduledJob.isRunning(); unit++) {
                     advance();
@@ -133,6 +199,7 @@ final class GenerationCoordinator {
             }
         } finally {
             maxAdvanceMillis = Math.max(maxAdvanceMillis, Math.max(0, System.currentTimeMillis() - began));
+            lastProgressAt = System.currentTimeMillis();
             advancing = false;
         }
         if (!isRunning()) completed();
@@ -151,16 +218,28 @@ final class GenerationCoordinator {
     }
     private void completed() {
         if (services == null || services.notified) return;
-        services.notified = true;
+        final Services finished = services;
+        final GenerationJob terminal = job;
+        finished.notified = true;
         if (continuation != null) { continuation.cancel(); continuation = null; }
+        if (watchdog != null) { watchdog.cancel(); watchdog = null; }
         if (cancelledAt != 0) cancellationLatency = Math.max(0, System.currentTimeMillis() - cancelledAt);
-        sim.setGenerationBusy(false, job.getOutcome() == GenerationJob.Outcome.PASS ? "" :
-            job.getOutcome() == GenerationJob.Outcome.CANCELLED ? "Board preparation cancelled." :
-            "The board could not be prepared.");
-        if (job.getOutcome() != GenerationJob.Outcome.INFRASTRUCTURE_FAILURE || services.cleanupComplete)
-            services.releaseSavedOwners();
-        if (services.completion != null)
-            services.completion.complete(job, job.getOutcome() == GenerationJob.Outcome.PASS ? services.candidate : null);
+        // Presentation failure must not strand the public session in PREPARING.
+        // Deliver exactly once even when restoring old UI controls throws.
+        try {
+            sim.setGenerationBusy(false, terminal.getOutcome() == GenerationJob.Outcome.PASS ? "" :
+                terminal.getOutcome() == GenerationJob.Outcome.CANCELLED ? "Board preparation cancelled." :
+                "The board could not be prepared.");
+        } finally {
+            try {
+                if (terminal.getOutcome() != GenerationJob.Outcome.INFRASTRUCTURE_FAILURE || finished.cleanupComplete)
+                    finished.releaseSavedOwners();
+            } finally {
+                if (finished.completion != null)
+                    finished.completion.complete(terminal,
+                        terminal.getOutcome() == GenerationJob.Outcome.PASS ? finished.candidate : null);
+            }
+        }
     }
 
     private final class Services implements GenerationJob.Services {
@@ -234,6 +313,7 @@ final class GenerationCoordinator {
                     throw new IllegalStateException("Native generation returned incomplete physical ownership");
                 int proofUnits = GeneratedDiagnosticProofService.requiredWorkUnits(candidate,
                     request.requiresExplicitCompletion());
+                expectedProofUnits = proofUnits;
                 int otherUnits = candidate.getTemporalBehavior() == null ? 5 :
                     4 + 2 * candidate.getTemporalBehavior().getProfileWorkUnits();
                 if (proofUnits > MAX_JOB_STEPS - otherUnits)
@@ -348,7 +428,10 @@ final class GenerationCoordinator {
             return installation.ownsCandidate() || (proof != null &&
                 FreshGeneratedRuntimeInstallation.isInProgress(sim) && proof.ownsWorkingOwner());
         }
-        public long nowMillis() { return System.currentTimeMillis(); }
+        public long nowMillis() {
+            long wall = System.currentTimeMillis();
+            return foregroundBudget ? foregroundClock.nowMillis(wall) : wall;
+        }
         void pause() {
             if (proof != null) proof.pause();
             else if (installation != null) installation.pause();

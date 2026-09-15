@@ -25,6 +25,7 @@ final class BenchPowerPanel extends VerticalPanel {
     BenchPowerPanel(final CirSim sim, final GeneratedBoardInstance owner) {
         this.sim = sim; this.owner = owner;
         setStyleName("tsj-component-panel");
+        getElement().setAttribute("aria-label", "Bench power");
         add(new Label("BENCH POWER"));
         for (final String id : owner.getBoard().getPowerInputIds()) {
             final ExternalPowerSimulationBinding binding = owner.getExternalPowerBindings().getBinding(id);

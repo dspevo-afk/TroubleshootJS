@@ -64,6 +64,31 @@ final class U01ViewportChecks {
         boolean rejected = false;
         try { camera.zoom(Double.NaN, 1, 1); } catch (IllegalArgumentException expected) { rejected = true; }
         require(rejected, "invalid zoom rejected");
+        verifyPanLimits();
+    }
+    private void verifyPanLimits() {
+        Rectangle board = new Rectangle(40, 20, 800, 400);
+        Rectangle bench = board.union(new Rectangle(900, 20, 200, 400));
+        Rectangle view = new Rectangle(0, 0, 1200, 700);
+        PcbViewport camera = new PcbViewport(board); camera.setWorkbenchBounds(bench); camera.resize(view);
+        for (PcbBoardSide side : PcbBoardSide.values()) for (int dx : new int[] {-100000, 100000})
+            for (int dy : new int[] {-100000, 100000}) {
+                camera.setFace(side); camera.fitBoard(); camera.pan(dx, dy);
+                Rectangle projected = camera.permanent().project(board);
+                require(overlap(projected, view) + 3 * projected.width >= .5 * projected.width * projected.height,
+                    "overview pan retains half the physical board area, including corner drags");
+                camera.zoom(3, 600, 350); camera.pan(dx, dy);
+                // The PCB flips within its outline; the tray remains on the right.
+                // Project their combined bench envelope without reflecting furniture.
+                PcbViewport.Transform t = camera.permanent();
+                projected = new PcbViewport.Transform(t.scale, t.x, t.y, 0, false).project(bench);
+                require(overlap(projected, view) + 3 * view.width >= .5 * view.width * view.height,
+                    "close pan retains board or adjacent tray in half the view");
+            }
+    }
+    private double overlap(Rectangle a, Rectangle b) {
+        return Math.max(0, Math.min(a.x + a.width, b.x + b.width) - Math.max(a.x, b.x)) *
+            (double)Math.max(0, Math.min(a.y + a.height, b.y + b.height) - Math.max(a.y, b.y));
     }
     private U01ViewportChecks() { }
 }

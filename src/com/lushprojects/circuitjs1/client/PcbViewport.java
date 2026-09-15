@@ -4,6 +4,7 @@ package com.lushprojects.circuitjs1.client;
 final class PcbViewport {
     static final double MAX_SCALE = 8;
     private final Rectangle outline;
+    private Rectangle workbenchBounds;
     private Rectangle area = new Rectangle(0, 0, 1, 1);
     private PcbBoardSide face = PcbBoardSide.TOP;
     private double scale = 1, x, y;
@@ -63,6 +64,12 @@ final class PcbViewport {
         PcbCoordinateSystem.requireBoardRectangle(outline);
         if (outline.width <= 0 || outline.height <= 0) throw new IllegalArgumentException("Empty board");
         this.outline = new Rectangle(outline);
+        workbenchBounds = new Rectangle(outline);
+    }
+    void setWorkbenchBounds(Rectangle bounds) {
+        PcbCoordinateSystem.requireBoardRectangle(bounds);
+        if (bounds.width <= 0 || bounds.height <= 0) throw new IllegalArgumentException("Empty workbench");
+        workbenchBounds = new Rectangle(bounds);
     }
     Rectangle getArea() { return new Rectangle(area); }
     boolean contains(int sx, int sy) { return area.contains(sx, sy); }
@@ -78,6 +85,7 @@ final class PcbViewport {
         }
         area = new Rectangle(value);
         if (!initialized) { initialized = true; fit(outline); }
+        constrainPan();
     }
     PcbBoardSide getFace() { return face; }
     void setFace(PcbBoardSide value) {
@@ -101,6 +109,38 @@ final class PcbViewport {
         if (inspecting) return;
         x = Math.max(-1e9, Math.min(1e9, x + dx));
         y = Math.max(-1e9, Math.min(1e9, y + dy));
+        constrainPan();
+    }
+    private void constrainPan() {
+        // Limit the PCB itself, never the larger bench/tray envelope. At high
+        // zoom half the maximum visible PCB area replaces an impossible demand
+        // that half an oversized board fit on screen. Diagonal drags obey the
+        // same area bound as horizontal and vertical drags.
+        double width = outline.width * scale, height = outline.height * scale;
+        double left = x + outline.x * scale, top = y + outline.y * scale;
+        double fullLeft = clamp(left, Math.min(area.x, area.x + area.width - width),
+            Math.max(area.x, area.x + area.width - width));
+        double fullTop = clamp(top, Math.min(area.y, area.y + area.height - height),
+            Math.max(area.y, area.y + area.height - height));
+        double required = .5 * Math.min(width, area.width) * Math.min(height, area.height);
+        if (visibleArea(left, top, width, height) >= required) return;
+        double low = 0, high = 1;
+        for (int i = 0; i < 40; i++) {
+            double fraction = (low + high) / 2;
+            if (visibleArea(fullLeft + (left - fullLeft) * fraction,
+                    fullTop + (top - fullTop) * fraction, width, height) >= required)
+                low = fraction;
+            else high = fraction;
+        }
+        x = fullLeft + (left - fullLeft) * low - outline.x * scale;
+        y = fullTop + (top - fullTop) * low - outline.y * scale;
+    }
+    private double visibleArea(double left, double top, double width, double height) {
+        return Math.max(0, Math.min(left + width, area.x + area.width) - Math.max(left, area.x)) *
+            Math.max(0, Math.min(top + height, area.y + area.height) - Math.max(top, area.y));
+    }
+    private static double clamp(double value, double min, double max) {
+        return Math.max(min, Math.min(max, value));
     }
     void zoom(double factor, int sx, int sy) {
         if (!(factor > 0) || !finite(factor)) throw new IllegalArgumentException("Invalid zoom");
@@ -115,6 +155,7 @@ final class PcbViewport {
         x = sx - (sx - x) * next / scale;
         y = sy - (sy - y) * next / scale;
         scale = next;
+        constrainPan();
     }
     boolean inspect(int sx, int sy) {
         if (!contains(sx, sy)) return false;

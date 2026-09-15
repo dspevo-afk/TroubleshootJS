@@ -141,12 +141,18 @@ final class PhysicalFoundationDeveloperVerifier {
         for (PcbTraceGeometry trace : layout.getTraces()) {
             BoardPad start = board.getPad(trace.getStartPadId());
             BoardPad end = board.getPad(trace.getEndPadId());
-            require(start != null && end != null && trace.getNetId().equals(start.getNetId()) &&
-                    trace.getNetId().equals(end.getNetId()),
+            require(start != null && trace.getNetId().equals(start.getNetId()) &&
+                    (trace.getEndPadId() == null || (end != null && trace.getNetId().equals(end.getNetId()))),
                 "physical canary route escaped its logical net: " + terminalCount);
-            increment(endpointCounts, trace.getStartPadId());
-            increment(endpointCounts, trace.getEndPadId());
+            // P04 permits a branch to terminate on existing trunk copper. Count
+            // actual pad contacts, not just optional named endpoint metadata.
+            for (String padId : board.getPadIds())
+                if (trace.getNetId().equals(board.getPad(padId).getNetId()) && touches(trace, layout.getPad(padId)))
+                    increment(endpointCounts, padId);
         }
+        // Independent unit-grid connectivity catches opens/shorts even when
+        // route metadata is plausible. Logical net labels never join copper.
+        ArchitectureDeveloperVerifier.verifyRasterConnectivity(layout, board);
         for (int terminal = 0; terminal < part.getTerminalCount(); terminal++) {
             PhysicalPartTerminal physicalTerminal = part.getTerminal(terminal);
             String padId = componentId + "." + physicalTerminal.getTerminalName();
@@ -164,12 +170,12 @@ final class PhysicalFoundationDeveloperVerifier {
         }
         if (terminalCount <= 4) {
             require(layout.getTraces().size() == terminalCount - 1 &&
-                    Integer.valueOf(1).equals(endpointCounts.get(componentId + ".1")) &&
+                    hasContact(endpointCounts, componentId + ".1") &&
                     endpointCounts.get(componentId + ".2") == null,
                 "physical canary declared internal pair was not routed through its package: " +
                     terminalCount);
             for (int terminal = 3; terminal <= terminalCount; terminal++)
-                require(Integer.valueOf(1).equals(endpointCounts.get(componentId + "." + terminal)),
+                require(hasContact(endpointCounts, componentId + "." + terminal),
                     "physical canary undeclared pair lost copper: " + componentId + "." + terminal);
             TopologyPlacementGraph topology = new TopologyPlacementGraph(board);
             require(!hasLink(topology, componentId, componentId + ".1", componentId + ".2",
@@ -183,9 +189,24 @@ final class PhysicalFoundationDeveloperVerifier {
             require(layout.getTraces().size() == terminalCount,
                 "unconnected physical canary omitted copper: " + terminalCount);
             for (int terminal = 1; terminal <= terminalCount; terminal++)
-                require(Integer.valueOf(1).equals(endpointCounts.get(componentId + "." + terminal)),
+                require(hasContact(endpointCounts, componentId + "." + terminal),
                     "unconnected physical canary pad lost copper: " + componentId + "." + terminal);
         }
+    }
+
+    private static boolean hasContact(HashMap<String, Integer> counts, String id) {
+        Integer count = counts.get(id); return count != null && count.intValue() > 0;
+    }
+
+    private static boolean touches(PcbTraceGeometry trace, PcbPadPlacement pad) {
+        int[] x = trace.getXPoints(), y = trace.getYPoints();
+        for (int i = 1; i < x.length; i++)
+            if ((x[i] == x[i-1] && pad.getX() == x[i] &&
+                    pad.getY() >= Math.min(y[i-1], y[i]) && pad.getY() <= Math.max(y[i-1], y[i])) ||
+                (y[i] == y[i-1] && pad.getY() == y[i] &&
+                    pad.getX() >= Math.min(x[i-1], x[i]) && pad.getX() <= Math.max(x[i-1], x[i])))
+                return true;
+        return false;
     }
 
     private static boolean hasLink(TopologyPlacementGraph topology, String componentId,

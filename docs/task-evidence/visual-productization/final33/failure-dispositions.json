@@ -1,0 +1,32 @@
+[
+  {
+    "case": "Q15-32 flyback assertion",
+    "cause": "Developer proof selected the last SwitchElm, now a resistor failure-path switch; J4 board wire was also not the external load.",
+    "resolution": "Exact J2/J4 harness resolution, independent target/order/absence/ambiguity checks; full Q15-33h passes11 cases. Electrical models and thresholds unchanged."
+  },
+  {
+    "case": "Initial q15-fixture33 native negative",
+    "cause": "New negative mutated public defensive-copy vector instead of fixture private backing.",
+    "resolution": "Corrected test setup, exact finally restoration; q15-fixture33b PASS6861. No production correction was made for this test error."
+  },
+  {
+    "case": "Q15-33 headed timeout",
+    "cause": "OS reported hidden despite normal window and focus; admission wall deadline fired.",
+    "resolution": "Raw failure retained; exact headed cleanup. Same built app passed via normal maintained headless browser. No budget changes or visibility spoofing."
+  },
+  {
+    "case": "A08 negative observer",
+    "cause": "Observer expected FAIL:A08_VERIFY_FORCED_FAILURE instead of actual maintained failure token.",
+    "resolution": "Retained WRONG_FAILURE receipt; corrected exact reader accepts FAIL:a08:a08-explicit-failure-canary, not arbitrary failures."
+  },
+  {
+    "case": "RENDER0-32 hidden timing failure",
+    "cause": "Initial verifier timing while browser hidden.",
+    "resolution": "Foreground identical-input32 rerun and intentional failure pass strict equality/cleanup readers; original report retained."
+  },
+  {
+    "case": "Original browser32 process exited",
+    "cause": "Exact old cleanup could not confirm ownership after process exited.",
+    "resolution": "Old profile/port61958 claim retained. No broad kill or unsafe cleanup. Later owned browser32r/33 cleaned; final33h cleanup receipt separately recorded."
+  }
+]

@@ -82,6 +82,7 @@ final class RelayOutputGenerator {
 
         BoundedExternalLoadElm load = new BoundedExternalLoadElm(3600, 400, 180); load.drag(3680, 400); load.configure(180);
         a.connector("J4", "External load: 180 Ohm / 6 W maximum", "CONTACT_OUT", loadReturn, load, 0, load, 1);
+        a.connections.declareConnectorHarness("J4", load, 0, load, 1);
         a.elements.add(load);
         a.wire(a.nets.get("CONTACT_OUT"), load.getPost(0));
         a.wire(a.nets.get(loadReturn), load.getPost(1));
@@ -111,9 +112,13 @@ final class RelayOutputGenerator {
                 new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED, id)));
         }
         PhysicalBoardSlot driveSlot = runtime.createSlot("RDRIVE");
+        ResistorSecondaryOpenPath driveSecondary = ResistorSecondaryOpenPath.create(new CircuitPostMeasurementEndpoint(drive, 1));
+        a.elements.add(driveSecondary.getSimulationElement());
+        a.components.bindAuxiliaryComponentElement("RDRIVE", driveSecondary.getSimulationElement());
+        a.connections.completeConstructionEndpoint("RDRIVE.2", driveSecondary.getPublicTerminal());
         PhysicalResistorPart drivePart = new PhysicalResistorPart("RDRIVE_ORIGINAL", driveSpec, driveSpec,
             new PhysicalNameplate("RDRIVE_ORIGINAL", "Resistor markings", "Markings", "Color bands"), drive,
-            "RDRIVE".equals(selected.getFault().getTargetComponentId()) ? selected : null, null, ResistorPartLocation.INSTALLED,
+            "RDRIVE".equals(selected.getFault().getTargetComponentId()) ? selected : null, driveSecondary, ResistorPartLocation.INSTALLED,
             new PhysicalPartProvenance(PhysicalPartProvenance.GENERATED_ORIGINAL, "RDRIVE"));
         PhysicalPartInventory<PhysicalResistorPart> resistors = new PhysicalPartInventory<PhysicalResistorPart>(runtime,
             "RDRIVE_REPLACEMENTS", PhysicalResistorPart.class); resistors.add(drivePart);
@@ -198,6 +203,7 @@ final class RelayOutputGenerator {
             WireElm positiveLead = wire(output.getPost(1), nets.get(positive));
             WireElm negativeLead = wire(source.getPost(0), nets.get(negative));
             connector(id, volts + " V " + (withCommand ? "command input" : "supply"), positive, negative, positiveLead, 1, negativeLead, 1);
+            connections.declareConnectorHarness(id, positiveLead, 1, negativeLead, 1);
             if(!declared) board.addPowerInput(new ExternalBoardPowerInput(input, id + ".1", id + ".2", positive, negative));
             else {
                 ExternalBoardPowerInput expected=board.getPowerInput(input);

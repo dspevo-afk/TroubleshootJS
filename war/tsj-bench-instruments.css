@@ -1,0 +1,71 @@
+/* Native meter widgets stay with their GWT owner; only their bench presentation moves. */
+body.tsj-workbench-ui .tsj-bench-meter {
+  --meter-scale: 1; position: fixed; z-index: 10002; display: block;
+  width: 252px; height: 454px; margin: 0; padding: 0; box-sizing: border-box;
+  border: 10px solid #242126; border-radius: 31px 31px 49px 49px;
+  background: linear-gradient(100deg, #f57b20, #ffab3e 46%, #e9691c);
+  color: #201c24; box-shadow: 7px 10px 0 #26170e55, inset 3px 0 0 #ffd883, inset -4px 0 0 #b94715;
+  transform: scale(var(--meter-scale)); transform-origin: top left; overflow: visible;
+  font: 12px/1.3 'Trebuchet MS', Verdana, sans-serif; user-select: none;
+}
+body.tsj-workbench-ui .tsj-bench-meter::before {
+  content: ''; position: absolute; inset: 124px 12px 75px; pointer-events: none;
+  border: 3px solid #302b2e; border-radius: 16px 16px 38px 38px; background: #302c30;
+  box-shadow: inset 2px 3px 0 #51444a;
+}
+body.tsj-workbench-ui .tsj-bench-meter > tbody,
+body.tsj-workbench-ui .tsj-bench-meter > tbody > tr,
+body.tsj-workbench-ui .tsj-bench-meter > tbody > tr > td { display: block; padding: 0; margin: 0; }
+body.tsj-workbench-ui .tsj-bench-meter .tsj-section-title { display: none; }
+body.tsj-workbench-ui .tsj-bench-meter .tsj-meter-grip {
+  position: absolute; left: 15px; top: 8px; width: 202px; min-height: 29px; padding: 4px 8px;
+  background: #252127; color: #ffe8bf; border: 2px solid #17151a; border-radius: 7px;
+  font: 900 16px/1.1 'Trebuchet MS', sans-serif; letter-spacing: .07em; cursor: grab; touch-action: none;
+}
+.tsj-meter-grip.is-dragging { cursor: grabbing !important; }
+.tsj-meter-brand { position: absolute; top: 39px; width: 100%; text-align: center; font-size: 9px; font-weight: bold; letter-spacing: .08em; }
+body.tsj-workbench-ui .tsj-bench-meter .tsj-meter-display {
+  position: absolute; top: 55px; left: 17px; width: 198px; height: 60px; box-sizing: border-box;
+  padding: 13px 8px; border: 5px solid #30292e; border-radius: 7px; background: #b9c7a3; color: #213025;
+  box-shadow: inset 2px 3px 0 #778971; text-align: right; font: bold 24px/1.1 Consolas, monospace;
+}
+body.tsj-workbench-ui .tsj-bench-meter.is-backlit .tsj-meter-display { background: #e9ffb1; box-shadow: inset 2px 3px 0 #bad281, 0 0 16px #ffe5a588; }
+.tsj-meter-extras { position: absolute; display: flex; gap: 4px; left: 17px; right: 17px; top: 120px; }
+body.tsj-workbench-ui .tsj-bench-meter .tsj-meter-extras button {
+  flex: 1; min-width: 0; min-height: 24px; padding: 3px 1px; border: 2px solid #19171d; border-radius: 6px;
+  font-size: 8px; background: #3e343b; color: #fff0cf;
+}
+body.tsj-workbench-ui .tsj-bench-meter button:disabled { opacity: 1; color: #b1a8ad; cursor: not-allowed; background: #4c454c; border-color: #28232c; }
+body.tsj-workbench-ui .tsj-bench-meter .tsj-meter-modes { width: 0; height: 0; }
+body.tsj-workbench-ui .tsj-bench-meter .tsj-meter-modes button {
+  position: absolute; z-index: 2; width: 64px; min-height: 28px; padding: 4px 2px; border: 2px solid #151119;
+  border-radius: 8px; background: #423841; color: #fff3ce; font-size: 11px; font-weight: 900;
+  box-shadow: 0 3px 0 #151119;
+}
+body.tsj-workbench-ui .tsj-bench-meter [data-instrument-mode='DC_VOLTAGE'] { top: 161px; left: 15px; }
+body.tsj-workbench-ui .tsj-bench-meter [data-instrument-mode='RESISTANCE'] { top: 161px; right: 15px; }
+body.tsj-workbench-ui .tsj-bench-meter [data-instrument-mode='CONTINUITY'] { top: 268px; left: 15px; }
+body.tsj-workbench-ui .tsj-bench-meter [data-instrument-mode='DIODE'] { top: 268px; right: 15px; }
+body.tsj-workbench-ui .tsj-bench-meter button.chsel { background: #fcae3f; color: #24202a; border-color: #ffe8ae; }
+.tsj-meter-dial { position: absolute; top: 176px; left: 65px; width: 102px; height: 102px; border-radius: 50%; cursor: pointer; touch-action: none;
+  border: 4px solid #17141c; box-sizing: border-box; background: repeating-conic-gradient(#77666c 0deg 2deg,#28232c 2deg 14deg); box-shadow: 3px 5px 0 #17141c; }
+.tsj-meter-knob { position: absolute; inset: 10px; border: 2px solid #17141c; border-radius: 50%; background: #51444a; transform: rotate(var(--dial-angle)); }
+.tsj-meter-knob::before { content: ''; position: absolute; top: -3px; left: 27px; width: 16px; height: 76px; background: linear-gradient(90deg,#242026,#69565a,#302931); border: 2px solid #17141c; border-radius: 8px; }
+.tsj-meter-knob::after { content: ''; position: absolute; top: 0; left: 32px; width: 9px; height: 19px; background: #ffbd50; border-radius: 3px; }
+body.tsj-workbench-ui .tsj-bench-meter .tsj-meter-off { position: absolute; top: 223px; left: 18px; width: 42px; min-height: 27px; padding: 3px; font-size: 10px; background: #f9a044; color: #24202a; border: 2px solid #17141c; border-radius: 6px; }
+.tsj-meter-off[aria-pressed='true'] { box-shadow: 0 0 0 2px #ffe6a4; }
+.tsj-meter-future { position: absolute; left: 20px; right: 20px; top: 308px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+body.tsj-workbench-ui .tsj-bench-meter .tsj-meter-future button { min-height: 21px; padding: 2px; border-radius: 4px; font-size: 9px; }
+.tsj-meter-future-label { position: absolute; top: 361px; width: 100%; font-size: 8px; text-align: center; font-weight: bold; }
+.tsj-meter-jacks { position: absolute; top: 379px; left: 25px; right: 25px; display: flex; justify-content: space-between; }
+.tsj-meter-jack { position: relative; padding-top: 23px; width: 46px; color: #242029; text-align: center; font-size: 9px; font-weight: 900; }
+.tsj-meter-jack::before { content: ''; position: absolute; top: 0; left: 14px; width: 16px; height: 16px; border: 3px solid #b92725; border-radius: 50%; background: #0e0c11; box-shadow: 0 0 0 2px #e6b178; }
+.tsj-meter-jack.common::before { border-color: #30292f; }
+.tsj-meter-jack.volts::after, .tsj-meter-jack.common::after { content: ''; position: absolute; top: 10px; left: 19px; width: 6px; height: 19px; background: #df3332; border-radius: 3px; transform: rotate(-14deg); box-shadow: 1px 1px 0 #17131b; }
+.tsj-meter-jack.common::after { background: #25202b; transform: rotate(14deg); }
+body.tsj-workbench-ui .tsj-bench-meter .tsj-meter-note { position: absolute; top: 416px; left: 12px; width: 210px; margin: 0; font-size: 8px; text-align: center; color: #30202b; }
+body.tsj-workbench-ui .tsj-bench-meter .tsj-continuity-indicator { position: absolute; z-index: 2; top: 60px; left: 27px; color: #213025; font: bold 9px Consolas, monospace; }
+body.tsj-workbench-ui .tsj-bench-meter :focus-visible { outline: 3px solid #fff6b0; outline-offset: 3px; }
+body.tsj-workbench-ui[data-player-screen='MENU'] .tsj-bench-meter { visibility: hidden; }
+body.tsj-high-contrast .tsj-bench-meter { outline: 3px solid #ffdc80; }
+body.tsj-large-text .tsj-bench-meter .tsj-meter-note { font-size: 9px; }

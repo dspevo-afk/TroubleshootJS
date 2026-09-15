@@ -2,7 +2,8 @@
 param(
     [string]$JavaHome = $env:JAVA_HOME,
     [string]$PythonExe = 'python',
-    [string]$ReceiptOutputPath = ''
+    [string]$ReceiptOutputPath = '',
+    [string[]]$Suite = @()
 )
 
 # Maintained current seed, identity, geometry, recipe and construction contracts.
@@ -68,6 +69,11 @@ final class PhysicalSpecificationDeveloperVerifier {
         Sort-Object Name | ForEach-Object { $_.FullName })
     $sourcePaths += $stub
     $testDefinitions = @(
+        @{ Name = 'PcbCompactionContractTest'; Marker = 'PCB compaction contracts ' },
+        @{ Name = 'VisualWorkbenchContractTest'; Marker = 'visual workbench contracts ' },
+        @{ Name = 'Task43PhysicalEndpointContractTest'; Marker = 'Task43 current physical endpoint contracts ' },
+        @{ Name = 'ArchitectureFootprintContractTest'; Marker = 'architecture footprint contracts ' },
+        @{ Name = 'PhysicalServiceabilityContractTest'; Marker = 'physical serviceability contracts ' },
         @{ Name = 'U04SessionContractTest'; Marker = 'U04 session contracts ' },
         @{ Name = 'U05DifficultyContractTest'; Marker = 'U05 difficulty contracts ' },
         @{ Name = 'E03RelayContractTest'; Marker = 'E03 relay contracts ' },
@@ -95,6 +101,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'P01PhysicalPoseContractTest'; Marker = 'P01 physical pose contracts ' },
         @{ Name = 'P02ConductorContractTest'; Marker = 'P02 conductor contracts ' },
         @{ Name = 'U01ViewportContractTest'; Marker = 'U01 viewport contracts ' },
+        @{ Name = 'WorkbenchLiftedLeadAppearanceContractTest'; Marker = 'lifted lead appearance contracts ' },
         @{ Name = 'P03PlacementContractTest'; Marker = 'P03 placement contracts ' },
         @{ Name = 'P04RoutingContractTest'; Marker = 'P04 routing contracts ' },
         @{ Name = 'A02ReplayContractTest'; Marker = 'A02ReplayContractTest ' },
@@ -102,6 +109,9 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'A04ConstructionContractTest'; Marker = 'A04ConstructionContractTest ' },
         @{ Name = 'A04PhysicalDeclarationContractTest'; Marker = 'A04PhysicalDeclarationContractTest ' })
     $testClasses = @($testDefinitions | ForEach-Object { $_.Name })
+    foreach ($selectedSuite in $Suite) {
+        if ($testClasses -notcontains $selectedSuite) { throw ('Unknown current suite: ' + $selectedSuite) }
+    }
     foreach ($testClass in $testClasses) {
         $testSource = Join-Path $repositoryRoot ('tests/contracts/' + $testClass + '.java')
         if (-not (Test-Path -LiteralPath $testSource -PathType Leaf)) {
@@ -126,6 +136,7 @@ final class PhysicalSpecificationDeveloperVerifier {
     $outputs = @{}
     foreach ($definition in $testDefinitions) {
         $testClass = $definition.Name
+        if ($Suite.Count -gt 0 -and $Suite -notcontains $testClass) { continue }
         $testArguments = @('-ea', '-cp', $classPath,
             ('com.lushprojects.circuitjs1.client.' + $testClass))
         if ($testClass -eq 'A03IdentityContractTest') {
@@ -142,6 +153,14 @@ final class PhysicalSpecificationDeveloperVerifier {
                 ', exit ' + $tested.ExitCode)
         }
     }
+    if ($Suite.Count -gt 0) {
+        if ($ReceiptOutputPath) {
+            [IO.File]::WriteAllText([IO.Path]::GetFullPath($ReceiptOutputPath),
+                [String]::Join([Environment]::NewLine, $receipts),
+                (New-Object Text.UTF8Encoding($false)))
+        }
+        Write-Host ('PASS: focused current contracts; ' + $Suite.Count + ' Java suites. Full matrix and independent oracles NOT RUN.')
+    } else {
     $python = (Get-Command $PythonExe -ErrorAction Stop).Source
     if (-not $python -or -not (Test-Path -LiteralPath $python -PathType Leaf)) {
         throw 'Select an available Python executable with -PythonExe.'
@@ -191,6 +210,15 @@ final class PhysicalSpecificationDeveloperVerifier {
         throw ('Current browser report protocol failed, exit ' + $protocol.ExitCode)
     }
     $receipts.Add($protocol.Stdout)
+    $listenerContract = Invoke-VerifierBoundedProcess $powershell @('-NoProfile', '-ExecutionPolicy',
+        'Bypass', '-File', (Join-Path $repositoryRoot 'tests/contracts/preview-listener-identity.ps1')) 60000
+    Write-Host $listenerContract.Stdout
+    if ($listenerContract.Stderr) { Write-Host $listenerContract.Stderr }
+    if (-not $listenerContract.TerminationProven -or $listenerContract.ExitCode -ne 0 -or
+            $listenerContract.Stdout -notmatch '(?m)^PASS: preview listener identity contracts assertions=') {
+        throw ('Preview listener identity contract failed, exit ' + $listenerContract.ExitCode)
+    }
+    $receipts.Add($listenerContract.Stdout)
     if ($ReceiptOutputPath) {
         foreach ($parityName in @('vectors', 'manifest-resistive', 'manifest-controlled', 'manifest-controlled-alt')) {
             $paritySource = Join-Path $taskRoot ('parity.' + $parityName + '.txt')
@@ -212,6 +240,7 @@ final class PhysicalSpecificationDeveloperVerifier {
             (New-Object Text.UTF8Encoding($false)))
     }
     Write-Host ('PASS: current contracts; ' + $testDefinitions.Count + ' Java suites, independent seed/value/role oracles and report protocol.')
+    }
     $resultCode = 0
 } catch {
     Write-Host ('CURRENT_CONTRACT_FAILURE: ' + $_.Exception.Message)

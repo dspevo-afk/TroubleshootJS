@@ -223,6 +223,19 @@ class BoardModificationController {
         return changed;
     }
 
+    void setDockingAttachmentsForMutation(PhysicalMutationScope scope,
+            PhysicalMutationSlot slot, boolean attached) {
+        if (scope == null || !scope.owns(this) || !scope.owns(slot))
+            throw new IllegalStateException("Foreign connector docking scope");
+        if (!(slot instanceof PhysicalMutationSlot.Docking)) return;
+        for (CircuitElm wire : ((PhysicalMutationSlot.Docking)slot).getDockingAttachments()) {
+            if (!instance.ownsRuntimeSimulationElement(wire))
+                throw new IllegalStateException("Foreign cable attachment");
+            if (attached) insertInCanonicalOrder(wire); else removeAllOccurrences(wire);
+            scope.afterGraphWrite(attached);
+        }
+    }
+
     boolean restoreComponentForMutation(PhysicalMutationScope scope, String componentId) {
         if (scope == null || !scope.owns(this) ||
                 !scope.getIntent().getComponentId().equals(componentId))

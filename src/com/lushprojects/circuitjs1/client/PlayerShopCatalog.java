@@ -102,6 +102,8 @@ final class PlayerShopCatalog {
         if ("NPN_TRANSISTOR".equals(type)) return "NPN transistors";
         if ("NMOS_TRANSISTOR".equals(type)) return "N-channel MOSFETs";
         if ("RELAY".equals(type)) return "Relays";
+        if ("CONNECTOR".equals(type)) return "Connectors";
+        if ("FUSE".equals(type)) return "Fuses";
         return type + " parts";
     }
 

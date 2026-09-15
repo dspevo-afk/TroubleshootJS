@@ -39,6 +39,12 @@ final class PcbConductorProjection {
         // Detachable leads and external sources are not permanent board copper.
         for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings().getAll())
             excluded.add(binding.getConnectionElement());
+        for (PhysicalBoardSlot slot : instance.getPhysicalBoardRuntime().getSlots()) {
+            PhysicalBoardInstallationProvider.Scoped provider = instance.getPhysicalBoardRuntime()
+                .getScopedMutationCapability(slot.getComponentId());
+            if (provider != null && provider.getMutationSlot() instanceof PhysicalMutationSlot.Docking)
+                excluded.addAll(((PhysicalMutationSlot.Docking)provider.getMutationSlot()).getDockingAttachments());
+        }
         Map<Integer,Integer> parent=new HashMap<Integer,Integer>();
         for (CircuitElm element : active) {
             if (excluded.contains(element) || instance.getExternalPowerBindings().isBackingElement(element)) continue;

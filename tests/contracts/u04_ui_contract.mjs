@@ -15,7 +15,7 @@ const pause = () => new Promise(resolve => setTimeout(resolve, 12));
 const initial = () => ({ token: 1, screen: 'MENU', message: '', notice: '', epoch: 'tsj-alpha/1', build: 'test-build', hasBoard: false,
   families: [{ id: 'led', name: 'Indicator board', profile: 'EASY' }, { id: 'control', name: 'Control board', profile: 'MEDIUM' }] });
 async function fixture({ storage, deny = false, noBridge = false } = {}) {
-  const dom = new JSDOM('<!doctype html><body><main aria-hidden="false"><div class="tsj-meter-panel"></div></main><aside inert="kept" aria-hidden="true"></aside></body>', { url: 'https://example.invalid/circuitjs.html', runScripts: 'outside-only', pretendToBeVisual: true });
+  const dom = new JSDOM('<!doctype html><body><main aria-hidden="false"><table id="native-toolbar"><tbody><tr><td><table class="tsj-meter-panel"><tbody><tr><td>Multimeter</td></tr></tbody></table></td></tr></tbody></table></main><aside inert="kept" aria-hidden="true"></aside></body>', { url: 'https://example.invalid/circuitjs.html', runScripts: 'outside-only', pretendToBeVisual: true });
   const w = dom.window, d = w.document;
   // jsdom has no layout. Visibility below is a unit-test approximation only.
   w.HTMLElement.prototype.getClientRects = function () {
@@ -51,8 +51,12 @@ check(f.w.tsjWorkbenchOverlayOpen, 'initial menu blocks board');
 check(f.d.querySelector('main').hasAttribute('inert'), 'actual inert attribute applied to background');
 check(f.d.querySelector('[role="dialog"]').contains(f.d.activeElement), 'focus enters dialog');
 check(f.d.querySelector('[role="dialog"]').getAttribute('aria-labelledby') === 'tsj-product-heading', 'dialog is labelled');
+check(f.d.querySelector('#native-toolbar').classList.contains('tsj-workbench-toolbar-host') && !f.d.querySelector('.tsj-meter-panel').classList.contains('tsj-workbench-toolbar-host') && f.d.querySelector('.tsj-workbench-shell').nextElementSibling === f.d.querySelector('.tsj-meter-panel'), 'native table shell mounts before the meter and styles the containing top dock without replacing its widgets');
+check([...f.d.querySelectorAll('.tsj-workbench-shell svg')].length === 6 && [...f.d.querySelectorAll('.tsj-workbench-shell svg')].every(icon => icon.getAttribute('aria-hidden') === 'true' && icon.getAttribute('focusable') === 'false' && !icon.querySelector('text, title, a, use, image')), 'product identity and all five navigation glyphs are decorative and add no focus stops or external resources');
+check([...f.d.querySelectorAll('.tsj-ui-strip button')].map(button => button.textContent).join('|') === 'Main menu|Shop|Resources|Settings|Run customer retest', 'decorative navigation retains all existing visible action names and order');
+check([...f.d.querySelectorAll('.tsj-ui-strip button')].every(button => button.getAttribute('aria-label') === button.textContent && button.title === button.textContent && button.querySelector('.tsj-button-label')), 'all navigation actions retain full accessible names and tooltips when compact CSS hides their visual labels');
 check([...f.d.querySelectorAll('option')].filter(n => n.disabled).map(n => n.value).join(',') === 'HARD,PSYCHOTIC', 'advanced profiles unavailable');
-const menuFirst = f.d.querySelector('select'), disclosure = f.d.querySelector('details');
+const menuFirst = f.d.querySelector('select'), disclosure = f.d.querySelector('.tsj-product-identity');
 menuFirst.focus(); key(f, 'Tab', true);
 check(f.d.activeElement === disclosure.querySelector('summary'), 'collapsed replay fields cannot trap reverse menu focus');
 key(f, 'Tab'); check(f.d.activeElement === menuFirst, 'collapsed disclosure summary wraps to first menu control');
@@ -75,6 +79,15 @@ const replay = f.d.querySelectorAll('form textarea')[0]; replay.value = 'unknown
 f.d.querySelectorAll('form')[1].dispatchEvent(new f.w.Event('submit', { bubbles: true, cancelable: true }));
 check(f.calls.at(-1).name === 'replay' && f.calls.at(-1).args[0] === replay.value, 'replay delegated unchanged for owner validation');
 await f.update({ screen: 'PREPARING', token: 2, message: 'Preparing' });
+check(!f.d.querySelector('progress').hasAttribute('value') && !f.d.querySelector('.tsj-generation-progress').textContent.includes('0%'), 'missing compiled progress is indeterminate, not a false zero');
+const progressNode=f.d.querySelector('progress');
+await f.update({progress:{percent:16,phase:2,phases:6,label:'Build and test healthy circuit',units:2,elapsedMs:1200,lastUpdateAgeMs:0,paused:false}});
+check(progressNode.value===16 && f.d.querySelector('.tsj-generation-progress').textContent.includes('16%'), 'reported completed work updates the actual progress bar');
+await f.update({progress:{percent:58,phase:4,phases:6,label:'Verify measurements and repairs',units:50,elapsedMs:4000,lastUpdateAgeMs:0,paused:false}});
+check(f.d.querySelector('progress')===progressNode && progressNode.value===58, 'progress updates without replacing controls or restarting the screen');
+await f.update({progress:{percent:58,phase:4,phases:6,label:'Verify measurements and repairs',units:50,elapsedMs:9000,lastUpdateAgeMs:5000,paused:true}});
+check(progressNode.value===58 && f.d.querySelector('.tsj-generation-progress').textContent.includes('Preparation paused'), 'background suspension is explicit and retains completed progress');
+
 key(f, 'Escape'); check(f.w.tsjWorkbenchOverlayOpen && f.d.querySelector('main').hasAttribute('inert'), 'Escape cannot expose board during preparation');
 click(f, 'Cancel preparation'); check(f.calls.at(-1).name === 'cancel' && f.calls.at(-1).token === 2, 'explicit cancel uses current session');
 const beforeKey = f.calls.length; byText(f.d, 'Cancel preparation').focus(); key(f, 'Enter');
@@ -153,12 +166,14 @@ f.w.dispatchEvent(new f.w.Event('blur')); check(!f.w.tsjWorkbenchOverlayOpen, 'w
 click(f, 'Shop'); const previousOwnerButton = byText(f.d, 'Add to Parts Tray');
 await f.update({ token: 5, screen: 'MENU' }); previousOwnerButton.click(); check(!f.calls.at(-1).accepted, 'owner transition rejects old callback');
 click(f, 'Resources'); check(f.d.querySelector('.tsj-product-reference').textContent.includes('Silver'), 'generic resistor reference present');
+check(f.d.querySelector('.tsj-product-content').textContent.includes('Fit bench') && !/Fit selection|Fit board/.test(f.d.querySelector('.tsj-product-content').textContent), 'navigation reference follows the current Fit bench action without obsolete per-selection guidance');
 check(shopStatus().textContent === 'Earlier unrelated board notice.', 'other auxiliary screens retain their existing snapshot notice behavior');
 key(f, 'Escape'); check(f.w.tsjWorkbenchOverlayOpen && f.d.querySelector('#tsj-product-heading').textContent.includes('Desktop alpha'), 'closing reference returns to blocking menu');
 const draftSeed = f.d.querySelector('input[type=text]'); draftSeed.value = '9223372036854775807';
 const resourceTrigger = byText(f.d, 'Resources'); resourceTrigger.focus(); resourceTrigger.click(); key(f, 'Escape');
 check(f.d.activeElement === resourceTrigger && f.d.querySelector('input[type=text]') === draftSeed && draftSeed.value === '9223372036854775807', 'auxiliary close preserves menu draft and exact return-focus control');
 click(f, 'Settings'); const checkboxes = f.d.querySelectorAll('input[type=checkbox]'); checkboxes[0].click();
+check([...checkboxes].map(input => f.d.getElementById(input.getAttribute('aria-labelledby')).textContent).join('|') === 'Higher contrast interface|Larger interface text|Reduce interface motion' && [...checkboxes].every(input => f.d.getElementById(input.getAttribute('aria-describedby')).textContent.length > 0), 'settings keep their accessible names and expose the new explanatory text as descriptions');
 const stored = JSON.parse(f.w.localStorage.getItem('tsj.presentation.v1'));
 check(stored.version === 1 && stored.highContrast === true && Object.keys(stored).length === 4, 'settings persist only versioned validated presentation fields');
 check(f.d.body.classList.contains('tsj-high-contrast'), 'presentation setting applied to HTML');
@@ -173,6 +188,60 @@ check(visibleCards().length === 1 && visibleCards()[0].querySelector('h4').textC
 visibleCards()[0].querySelector('button').click();
 check(f.calls.at(-1).accepted && f.calls.at(-1).args.join('|') === 'CAPACITOR|spec-live|', 'newly available card uses the current catalog lease');
 f.close();
+
+// Native popover visibility/focus is qualified in the real production browser.
+// These DOM checks prove the adapter keeps GWT widgets/owners and closes tools
+// at modal/session boundaries; the small spies do not simulate browser input.
+const top = await fixture();
+await top.update({ screen: 'WORKBENCH', token: 2, hasBoard: true, ready: true });
+const nativeHost = top.d.querySelector('#native-toolbar'), nativeLabels = ['Bench power', 'Board view', 'Service ticket', 'Component', 'Parts Tray'];
+let nativeActions = 0;
+const originalPanels = nativeLabels.map(label => {
+  const cell = nativeHost.tBodies[0].insertRow().insertCell();
+  const panel = top.d.createElement('table'); panel.className = 'tsj-component-panel'; panel.setAttribute('aria-label', label);
+  const nativeControl = top.d.createElement('button'); nativeControl.textContent = 'Existing native action';
+  nativeControl.addEventListener('click', () => nativeActions++);
+  panel.createTBody().insertRow().insertCell().append(nativeControl); cell.append(panel);
+  return { panel, cell, nativeControl };
+});
+await top.flush();
+const triggers = () => [...top.d.querySelectorAll('.tsj-tool-trigger')];
+check(triggers().length === 5 && triggers().map(button => button.getAttribute('aria-label')).join('|') === nativeLabels.join('|'), 'top strip exposes each supplied public native tool once in native order');
+check(originalPanels.every(({panel,cell,nativeControl}) => panel.parentNode === cell && panel.contains(nativeControl) && panel.getAttribute('popover') === 'auto' && panel.getAttribute('role') === 'dialog' && cell.querySelector('.tsj-tool-trigger').getAttribute('popovertarget') === panel.id), 'native popovers retain original GWT parent cells, exact widgets and declarative invoker relationships');
+check(triggers().every(button => button.title === button.getAttribute('aria-label') && button.getAttribute('aria-haspopup') === 'dialog' && button.querySelector('svg').getAttribute('aria-hidden') === 'true' && button.querySelector('.tsj-button-label')), 'compact tool icons preserve full public names, tooltips and dialog semantics independently of their abbreviated visual labels');
+originalPanels[0].nativeControl.click();
+check(nativeActions === 1 && top.calls.length === 0, 'the existing native handler remains the only action owner after top-tool presentation');
+const componentTool = originalPanels[3], componentTrigger = componentTool.cell.querySelector('.tsj-tool-trigger');
+componentTool.panel.style.display = 'none'; await top.flush();
+check(componentTrigger.hidden && componentTool.cell.parentNode.classList.contains('tsj-toolbar-empty'), 'Java-hidden selection panel has no visible top trigger or empty layout row');
+componentTool.panel.style.display = ''; await top.flush();
+check(!componentTrigger.hidden && !componentTool.cell.parentNode.classList.contains('tsj-toolbar-empty') && componentTool.cell.querySelector('.tsj-tool-trigger') === componentTrigger, 'Java-visible selection reuses its same trigger and original widget');
+triggers()[0].click();
+check(top.calls.length === 0 && originalPanels[0].panel.style.getPropertyValue('--tsj-tool-left') !== '', 'tool invocation only positions the real DOM panel and never issues an electrical or session action');
+const nativeOpen = new Set(), closedNative = [];
+originalPanels.forEach(({panel}) => {
+  const originalMatches = panel.matches.bind(panel);
+  panel.matches = selector => selector === ':popover-open' ? nativeOpen.has(panel) : originalMatches(selector);
+  panel.hidePopover = () => { nativeOpen.delete(panel); closedNative.push(panel); };
+});
+nativeOpen.add(originalPanels[0].panel); click(top, 'Resources');
+check(closedNative.includes(originalPanels[0].panel) && top.d.querySelector('main').hasAttribute('inert'), 'opening an existing modal closes native top-layer tools before inerting the workbench');
+const guardedToggle = new top.w.Event('beforetoggle', { cancelable: true }); Object.defineProperty(guardedToggle, 'newState', { value: 'open' });
+originalPanels[1].panel.dispatchEvent(guardedToggle);
+check(guardedToggle.defaultPrevented, 'a retained native trigger cannot open a tool above an active session modal');
+click(top, 'Close'); nativeOpen.add(originalPanels[1].panel); top.w.dispatchEvent(new top.w.Event('blur'));
+check(closedNative.includes(originalPanels[1].panel), 'losing window focus closes an open native tool');
+nativeOpen.add(originalPanels[2].panel); await top.update({ token: 3 });
+check(closedNative.includes(originalPanels[2].panel), 'session owner change closes retained native top-layer tools');
+const oldToolId = componentTool.panel.id;
+componentTool.cell.parentNode.remove(); await top.flush();
+check(triggers().length === 4 && !top.d.getElementById(oldToolId), 'GWT removal drops the original panel and its trigger without retaining a duplicate surface');
+const replacementCell = nativeHost.tBodies[0].insertRow().insertCell(), replacement = top.d.createElement('table');
+replacement.className = 'tsj-component-panel'; replacement.setAttribute('aria-label', 'Component'); replacement.createTBody().insertRow().insertCell().textContent = 'New owner'; replacementCell.append(replacement); await top.flush();
+check(triggers().length === 5 && replacement.id !== oldToolId && replacement.parentNode === replacementCell, 'a successor native panel receives a fresh invoker while staying in its new GWT cell');
+const nativeSnapshotCount = top.snapshots(); originalPanels[0].nativeControl.textContent = 'Refreshed native reading'; await top.flush();
+check(top.snapshots() === nativeSnapshotCount && originalPanels[0].cell.querySelector('.tsj-tool-trigger') === triggers()[0], 'native reading refresh neither polls the simulator snapshot nor rebuilds controls');
+top.close();
 
 const denied = await fixture({ deny: true }); click(denied, 'Settings'); denied.d.querySelector('input[type=checkbox]').click();
 check(denied.d.querySelector('.tsj-product-content').textContent.includes('only to this session'), 'storage denial is truthful and nonfatal'); denied.close();

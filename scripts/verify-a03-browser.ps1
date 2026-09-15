@@ -4,6 +4,7 @@ param(
     [string]$Gate = 'Current',
     [switch]$Smoke,
     [switch]$ForceTcpListener,
+    [switch]$Headed,
     [AllowEmptyString()]
     [string]$BrowserPath = '',
     [AllowEmptyString()]
@@ -429,7 +430,7 @@ function Test-A07Report([object]$Value) {
         $p = (Get-ExactReportText $Value) | ConvertFrom-Json -ErrorAction Stop
         if ($p.version -cne 'TSJ-A07-SOLVER-1' -or $p.status -cne 'PASS' -or $p.cleanup -cne 'PASS' -or
                 -not (Test-VerifierStrictIntegralValue $p.pureAssertions 38L ([long]::MaxValue)) -or
-                -not (Test-VerifierStrictIntegralValue $p.runtimeAssertions 71L ([long]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $p.runtimeAssertions 73L ([long]::MaxValue)) -or
                 -not (Test-A07FiniteNumber $p.wallMs 0 ([double]::MaxValue))) { return $false }
         if ($p.latencies -isnot [array] -or $p.latencies.Count -ne 6) { return $false }
         foreach ($kind in @('completed','cancel-0','cancel-1','cancel-2','cancel-3','cancel-4')) {
@@ -446,7 +447,8 @@ function Test-A07Report([object]$Value) {
                     $row.cancelToTerminalMs -gt $row.wallMs) { return $false }
         }
         $cases = @('accepted-state-source-and-time-identity',
-            'exclusive-private-graph-and-reentrant-model', 'real-nonfinite', 'real-singular',
+            'exclusive-private-graph-and-reentrant-model', 'real-nonfinite', 'real-matrix-nonfinite',
+            'real-matrix-overflow', 'real-singular',
             'real-nonconvergent', 'real-accepted-step-scheduling', 'real-finite-event-feedback',
             'real-stale-owner-callback-and-restore-refusal', 'real-injected-cleanup-failure-and-explicit-recovery',
             'real-browser-yield-and-accepted-publication', 'cancel-0-and-obsolete-callback',
@@ -995,7 +997,7 @@ try {
     $firstUrl = $baseUrl + '/circuitjs.html?' + [string]$definitions[0].query
     Set-Operation 'browser' 'New-VerifierBrowserSession'
     $session = New-VerifierBrowserSession $context 'a03-browser-report' $firstUrl `
-        $resolvedBrowser $TimeoutSeconds
+        $resolvedBrowser $TimeoutSeconds ([bool]$Headed)
     Set-Operation 'browser' 'enable-cdp-domains' $session.Deadline
     [void](Invoke-Cdp $session.Socket 'Page.enable' @{} $session.Deadline)
     [void](Invoke-Cdp $session.Socket 'Runtime.enable' @{} $session.Deadline)
@@ -1101,7 +1103,7 @@ try {
         }
         $report = [ordered]@{
             protocol = 'troubleshootjs-a03-browser-report-v1'
-            gate = $Gate; smoke = [bool]$Smoke; runId = $context.RunId
+            gate = $Gate; smoke = [bool]$Smoke; headed = [bool]$Headed; runId = $context.RunId
             repositoryIdentity = $context.RepositoryIdentity
             sourceDigests = $sourceDigests
             previewIdentity = if ($previewIdentity) { $previewIdentity } else { [ordered]@{} }

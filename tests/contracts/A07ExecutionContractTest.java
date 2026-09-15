@@ -3,6 +3,7 @@ package com.lushprojects.circuitjs1.client;
 public final class A07ExecutionContractTest {
     public static void main(String[] args) {
         int count = A07ExecutionContractVectors.run();
+        count += LuFactorizationChecks.run();
         long before = System.currentTimeMillis();
         double selected = CircuitSolverExecutor.wallTimeMillis();
         long after = System.currentTimeMillis();

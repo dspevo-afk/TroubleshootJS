@@ -4,9 +4,7 @@ package com.lushprojects.circuitjs1.client;
 final class CapacitorCatalogEntry extends AbstractPhysicalCatalogEntry<CapacitorSpecification> {
     CapacitorCatalogEntry(String id, CapacitorSpecification specification) {
         super(id, specification, specification.getNameplate().forPhysicalPartId(id),
-            PhysicalPartOrientation.NORMAL);
-        if (!specification.isPolarized())
-            throw new IllegalArgumentException("Capacitor replacement catalog requires polarity");
+            specification.isPolarized() ? PhysicalPartOrientation.NORMAL : PhysicalPartOrientation.NON_POLARIZED);
     }
 
     CapacitorNameplate getNameplate() { return getSpecification().getNameplate(); }

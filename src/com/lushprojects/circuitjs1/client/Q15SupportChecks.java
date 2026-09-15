@@ -13,12 +13,32 @@ final class Q15SupportChecks {
             owner=new RelayOutputGenerator().generateResolved(seed,null,plan);
             owner.getFaultBinding().setApplied(false);
             proof.install(owner.getSimulationElements());
-            SwitchElm found=null;
-            for(CircuitElm element:owner.getSimulationElements())
-                if(element instanceof SwitchElm && !(element instanceof WireElm)) found=(SwitchElm)element;
-            if(found==null)throw new AssertionError("Missing command switch");command=found;
+            command=resolveCommand(owner);
             proof.analyze();proof.advanceFor(.025);
         } catch(Throwable failure) {proof.close();throw failure;}
+    }
+    // Follow the declared external command cable, not incidental element order.
+    // Resistor secondary-failure switches are also SwitchElm instances.
+    static SwitchElm resolveCommand(GeneratedBoardInstance owner) {
+        CircuitPostMeasurementEndpoint[] harness=owner.getConnectionBindings().getConnectorHarness("J2");
+        if(harness==null || harness.length!=2 || !(harness[0].getElement() instanceof WireElm))
+            throw new AssertionError("Missing command input harness");
+        Point upstream=harness[0].getElement().getPost(1-harness[0].getPostIndex());
+        SwitchElm found=null;
+        for(CircuitElm element:owner.getSimulationElements()) {
+            if(!(element instanceof SwitchElm) || element instanceof WireElm || !element.getPost(1).equals(upstream)) continue;
+            if(found!=null)throw new AssertionError("Ambiguous command switch");
+            found=(SwitchElm)element;
+        }
+        if(found==null)throw new AssertionError("Missing command switch");
+        return found;
+    }
+    static CircuitElm resolveLoad(GeneratedBoardInstance owner) {
+        CircuitPostMeasurementEndpoint[] harness=owner.getConnectionBindings().getConnectorHarness("J4");
+        if(harness==null || harness.length!=2 || !(harness[0].getElement() instanceof BoundedExternalLoadElm) ||
+                harness[1].getElement()!=harness[0].getElement() || harness[0].getPostIndex()!=0 || harness[1].getPostIndex()!=1)
+            throw new AssertionError("Missing external load harness");
+        return harness[0].getElement();
     }
     static int verify(CirSim sim,long seed) {
         Q15SupportChecks test=new Q15SupportChecks(sim,seed);
@@ -35,7 +55,7 @@ final class Q15SupportChecks {
         CapacitorElm bulk=(CapacitorElm)part("C1");
         ResistorElm bleed=(ResistorElm)part("RBLEED"),input=(ResistorElm)part("RIN"),limiter=(ResistorElm)part("RLED");
         LEDElm led=(LEDElm)part("LED1");
-        CircuitElm load=((CircuitPostMeasurementEndpoint)owner.getSimulationBindings().getEndpoint("J4.1")).getElement();
+        CircuitElm load=resolveLoad(owner);
         require(load.getVoltageDiff()>10 && load.getVoltageDiff()<12,"connector J4 delivers real loaded output");
         require(relay.coilCurrent>.013 && relay.coilCurrent<.018,"driver Q1 energizes actual twelve-volt coil");
         require(led.getCurrent()>.002 && led.getCurrent()<.004,"LED1 is a powered indicator");

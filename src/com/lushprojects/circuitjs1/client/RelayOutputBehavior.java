@@ -50,8 +50,8 @@ final class RelayOutputBehavior implements GeneratedBoardFamilyState,
                         return GeneratedCustomerRetestSupport.failure();
                     boolean prior = isCommandedOn();
                     try {
-                        setCommand(sim, true); boolean on = healthyOn();
-                        setCommand(sim, false); boolean off = healthyOff();
+                        setCommand(sim, true); boolean on = healthyOn(owner);
+                        setCommand(sim, false); boolean off = healthyOff(owner);
                         return on && off && installedRatings(owner) ? GeneratedCustomerRetestSupport.success() :
                             GeneratedCustomerRetestSupport.failure();
                     } finally {
@@ -69,12 +69,12 @@ final class RelayOutputBehavior implements GeneratedBoardFamilyState,
     }
 
     public void requireOwnedBy(GeneratedBoardInstance owner) {
+        CircuitPostMeasurementEndpoint[] harness = owner == null ? null : owner.getConnectionBindings().getConnectorHarness("J4");
         if (owner == null || !owner.getSimulationElements().contains(command) ||
                 (plan != null && (indicator == null || !owner.getSimulationElements().contains(indicator))) ||
                 !owner.getSimulationElements().contains(output.getElement()) ||
                 !owner.getSimulationElements().contains(reference.getElement()) ||
-                !same(owner.getSimulationBindings().getEndpoint("J4.1"), output) ||
-                !same(owner.getSimulationBindings().getEndpoint("J4.2"), reference))
+                harness == null || !same(harness[0], output) || !same(harness[1], reference))
             throw new IllegalArgumentException("Foreign relay behavior endpoints");
     }
     private boolean same(CircuitMeasurementEndpoint actual, CircuitPostMeasurementEndpoint expected) {
@@ -92,6 +92,7 @@ final class RelayOutputBehavior implements GeneratedBoardFamilyState,
         parameters.put("output-off-max-volts", "0.05");
         parameters.put("discharged-amps", Double.toString(DISCHARGED_AMPS));
         parameters.put("recipe", "HIGH-sample-LOW-sample-HIGH");
+        parameters.put("output-location", "J4-external-load-side");
         if(plan != null) {
             parameters.put("design",plan.topology());
             parameters.put("output-on-min-volts","10.0");
@@ -151,9 +152,9 @@ final class RelayOutputBehavior implements GeneratedBoardFamilyState,
         return output.getElement().getPostVoltage(output.getPostIndex()) -
             reference.getElement().getPostVoltage(reference.getPostIndex());
     }
-    private boolean supportHealthy() { return indicator == null || (indicator.getCurrent() > .002 && indicator.getCurrent() < .004); }
-    private boolean healthyOn() { double v = outputVoltage(); return v > (plan == null ? 10.8 : 10.0) && v < 12.6 && supportHealthy(); }
-    private boolean healthyOff() { return Math.abs(outputVoltage()) < .05 && supportHealthy(); }
+    private boolean supportHealthy(GeneratedBoardInstance owner) { if (indicator == null) return true; PhysicalPart<?> part = owner.getPhysicalBoardRuntime().getInstalledPart("LED1"); if (!(part instanceof PhysicalLedPart)) return false; double current = ((PhysicalLedPart)part).getElement().getCurrent(); return current > .002 && current < .004; }
+    private boolean healthyOn(GeneratedBoardInstance owner) { double v = outputVoltage(); return v > (plan == null ? 10.8 : 10.0) && v < 12.6 && supportHealthy(owner); }
+    private boolean healthyOff(GeneratedBoardInstance owner) { return Math.abs(outputVoltage()) < .05 && supportHealthy(owner); }
     private boolean installedRatings(GeneratedBoardInstance owner) {
         if(plan == null) return true;
         PhysicalPart<?> part=owner.getPhysicalBoardRuntime().getInstalledPart("K1");
@@ -161,18 +162,18 @@ final class RelayOutputBehavior implements GeneratedBoardFamilyState,
     }
     public void prepareHealthyProfile(CirSim sim, GeneratedBoardInstance owner) {
         requireOwnedBy(owner);
-        setCommand(sim, true); boolean on = healthyOn();
-        setCommand(sim, false); boolean off = healthyOff();
+        setCommand(sim, true); boolean on = healthyOn(owner);
+        setCommand(sim, false); boolean off = healthyOff(owner);
         setCommand(sim, true);
-        if (!on || !off || !healthyOn()) throw new IllegalStateException("Healthy relay failed HIGH/LOW retest");
+        if (!on || !off || !healthyOn(owner)) throw new IllegalStateException("Healthy relay failed HIGH/LOW retest");
     }
     public void prepareFaultedProfile(CirSim sim, GeneratedBoardInstance owner) {
         requireOwnedBy(owner); setCommand(sim, true);
-        observed = healthyOn() ? null : GeneratedObservedBehavior.RELAY_LOAD_NOT_SWITCHING;
+        observed = healthyOn(owner) ? null : GeneratedObservedBehavior.RELAY_LOAD_NOT_SWITCHING;
     }
     public void verifyHealthy(GeneratedBoardInstance owner, BoardPowerState power) {
         requireOwnedBy(owner);
-        if (power != BoardPowerState.POWERED || !healthyOn())
+        if (power != BoardPowerState.POWERED || !healthyOn(owner))
             throw new IllegalStateException("Healthy relay output is absent");
     }
     public void verifyFaulted(GeneratedBoardInstance owner, BoardModificationController modifications,
@@ -187,7 +188,7 @@ final class RelayOutputBehavior implements GeneratedBoardFamilyState,
             BoardModificationController modifications, BoardPowerState power, boolean overlay) {
         return !overlay && power == BoardPowerState.POWERED && modifications.isFullyRestored() &&
             installedRatings(owner) &&
-            (isCommandedOn() ? healthyOn() : healthyOff()) ? GeneratedRepairStatus.CORRECTLY_RESTORED :
+            (isCommandedOn() ? healthyOn(owner) : healthyOff(owner)) ? GeneratedRepairStatus.CORRECTLY_RESTORED :
                 GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
     }
     public GeneratedRepairStatus getRepairStatus(CirSim sim, GeneratedBoardInstance owner,

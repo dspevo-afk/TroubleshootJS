@@ -335,6 +335,8 @@ final class NpnLowSideSwitchGenerator {
             "NPN_LOW_SIDE_SWITCH_CHALLENGE", FAMILY_ID, TOPOLOGY_VARIANT, seed, scenarios,
             "Repair verified. The controlled load switches normally.", fault, faultBinding,
             behaviorContract);
+        connectionBindings.declareConnectorHarness("J1", loadIsolation, 1, loadSupply, 0);
+        connectionBindings.declareConnectorHarness("J2", controlDriveTrace, 1, controlSupply, 0);
         return new GeneratedBoardInstance(board, elements, seed, FAMILY_ID, TOPOLOGY_VARIANT,
             "Generated NPN low-side switch, seed " + seed, componentBindings, powerBindings,
             connectionBindings, behaviorContract, layout, specifications, faultBinding,

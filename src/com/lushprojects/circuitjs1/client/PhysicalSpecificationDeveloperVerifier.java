@@ -202,15 +202,14 @@ final class PhysicalSpecificationDeveloperVerifier {
     private static TroubleshootBoard createFutureBoard(PhysicalPackage physicalPackage) {
         TroubleshootBoard board = new TroubleshootBoard("TASK35_FUTURE_BOARD");
         board.addNet(new BoardNet("TASK35_POSITIVE"));
-        board.addNet(new BoardNet("TASK35_NEGATIVE"));
         board.addComponent(new BoardComponent("PWR_IN", "CONNECTOR",
             PhysicalPackages.THROUGH_HOLE_CONNECTOR_2));
         board.addComponent(new BoardComponent("U35", "TASK35_FUTURE", physicalPackage));
         board.addPad(new BoardPad("PWR_IN.1", "PWR_IN", "1", "TASK35_POSITIVE"));
-        board.addPad(new BoardPad("PWR_IN.2", "PWR_IN", "2", "TASK35_NEGATIVE"));
+        board.addPad(new BoardPad("PWR_IN.2", "PWR_IN", "2", "TASK35_POSITIVE"));
         board.addPad(new BoardPad("U35.1", "U35", "1", "TASK35_POSITIVE"));
         board.addPad(new BoardPad("U35.2", "U35", "2", "TASK35_POSITIVE"));
-        board.addPad(new BoardPad("U35.3", "U35", "3", "TASK35_NEGATIVE"));
+        board.addPad(new BoardPad("U35.3", "U35", "3", "TASK35_POSITIVE"));
         board.validate();
         return board;
     }

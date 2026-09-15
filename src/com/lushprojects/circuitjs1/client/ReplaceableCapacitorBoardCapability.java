@@ -7,6 +7,8 @@ final class ReplaceableCapacitorBoardCapability implements PhysicalBoardRuntimeC
         PhysicalBoardInstallationProvider.Scoped, WorkbenchPartsProvider {
     static final String ID = "REPLACEABLE_CAPACITOR";
 
+    private final String capabilityId;
+
     private final CapacitorComponentSlot slot;
     private final PhysicalPartInventory<PhysicalCapacitorPart> inventory;
     private final CapacitorReplacementCatalog catalog;
@@ -15,6 +17,15 @@ final class ReplaceableCapacitorBoardCapability implements PhysicalBoardRuntimeC
     ReplaceableCapacitorBoardCapability(CapacitorComponentSlot slot,
             PhysicalPartInventory<PhysicalCapacitorPart> inventory,
             CapacitorReplacementCatalog catalog) {
+        this(slot, inventory, catalog, ID);
+    }
+
+    ReplaceableCapacitorBoardCapability(CapacitorComponentSlot slot,
+            PhysicalPartInventory<PhysicalCapacitorPart> inventory,
+            CapacitorReplacementCatalog catalog, String capabilityId) {
+        if (capabilityId == null || capabilityId.length() == 0)
+            throw new IllegalArgumentException("Missing capability identity");
+        this.capabilityId = capabilityId;
         if (slot == null || inventory == null || catalog == null)
             throw new IllegalArgumentException("Missing replaceable capacitor runtime capability");
         this.slot = slot;
@@ -22,7 +33,7 @@ final class ReplaceableCapacitorBoardCapability implements PhysicalBoardRuntimeC
         this.catalog = catalog;
     }
 
-    public String getCapabilityId() { return ID; }
+    public String getCapabilityId() { return capabilityId; }
     CapacitorComponentSlot getSlot() { return slot; }
     PhysicalPartInventory<PhysicalCapacitorPart> getInventory() { return inventory; }
     CapacitorReplacementCatalog getCatalog() { return catalog; }

@@ -318,9 +318,11 @@ public final class A03IdentityContractVectors {
             @Override public void run() { RealizationManifest.parse(missingVersion); }
         }, ChallengeContractException.Code.MISSING_FIELD, "versions",
                 "missing required version pin");
+        final String currentPin = "layout|pcb-layout@" + SeededPcbLayoutGenerator.CURRENT_VERSION;
+        final String unknownPin = "layout|pcb-layout@" + (SeededPcbLayoutGenerator.CURRENT_VERSION + 1);
         final String unknownVersion = canonical.replace(
-                "layout|pcb-layout@" + SeededPcbLayoutGenerator.CURRENT_VERSION,
-                "layout|pcb-layout@9");
+                "version=" + currentPin.length() + ":" + currentPin,
+                "version=" + unknownPin.length() + ":" + unknownPin);
         String unknownVersionFailure = expectChallengeFailure(new Action() {
             @Override public void run() { RealizationManifest.parse(unknownVersion); }
         }, ChallengeContractException.Code.UNSUPPORTED_VERSION, "version.owner",

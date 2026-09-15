@@ -721,6 +721,7 @@ final class Task41DeveloperVerifier {
             require(actual == derived,
                 "Task 41 owner-diversity contract is not derived for " + familyId);
             if (QuickPlayFamilyRegistry.LED_INDICATOR.equals(familyId) ||
+                    QuickPlayFamilyRegistry.PARALLEL_DUAL_INDICATOR.equals(familyId) ||
                     QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(familyId) ||
                     QuickPlayFamilyRegistry.RELAY_OUTPUT.equals(familyId) || Rb15Plan.FAMILY_ID.equals(familyId))
                 require(actual == GeneratedDiagnosticOwnerDiversity.MULTI_OWNER_DIAGNOSTIC,

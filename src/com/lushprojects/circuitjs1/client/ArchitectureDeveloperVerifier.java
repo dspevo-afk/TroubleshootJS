@@ -20,8 +20,8 @@ final class ArchitectureDeveloperVerifier {
         PhysicalSpecificationDeveloperVerifier.verify(sim);
         PhysicalFoundationDeveloperVerifier.verify(sim);
         PhysicalPartRenderDeveloperVerifier.verify(sim);
-        // This is intentionally part of the architecture route: migrating the
-        // provider boundary must preserve the established legacy geometry.
+        // Provider migration must preserve physical connectivity and current
+        // P03 access margins / P04 branch routing, not obsolete star layouts.
         PcbLayoutDeveloperVerifier.verify(sim);
     }
 
@@ -82,40 +82,58 @@ final class ArchitectureDeveloperVerifier {
                     componentId + ".4", "Z_CANARY_NEGATIVE"),
                 "placement graph omitted an undeclared package link");
 
-        HashMap<String, Integer> endpointCounts = new HashMap<String, Integer>();
-        int positiveTraces = 0;
-        int negativeTraces = 0;
+        int positiveTraces = 0, negativeTraces = 0;
         for (PcbTraceGeometry trace : layout.getTraces()) {
-            BoardPad start = board.getPad(trace.getStartPadId());
-            BoardPad end = board.getPad(trace.getEndPadId());
-            require(start != null && end != null && trace.getNetId().equals(start.getNetId()) &&
-                    trace.getNetId().equals(end.getNetId()),
-                "internal-connectivity canary trace escaped its net: " + trace.getNetId());
-            require(("PWR_IN".equals(start.getComponentId()) &&
-                    componentId.equals(end.getComponentId())) ||
-                    (componentId.equals(start.getComponentId()) &&
-                    "PWR_IN".equals(end.getComponentId())),
-                "internal-connectivity canary trace has unexpected endpoints: " +
-                    trace.getNetId());
-            if ("Z_CANARY_POSITIVE".equals(trace.getNetId()))
-                positiveTraces++;
-            else if ("Z_CANARY_NEGATIVE".equals(trace.getNetId()))
-                negativeTraces++;
-            else
-                throw new IllegalStateException("Unexpected internal-connectivity canary net: " +
-                    trace.getNetId());
-            increment(endpointCounts, trace.getStartPadId());
-            increment(endpointCounts, trace.getEndPadId());
+            if ("Z_CANARY_POSITIVE".equals(trace.getNetId())) positiveTraces++;
+            else if ("Z_CANARY_NEGATIVE".equals(trace.getNetId())) negativeTraces++;
+            else throw new IllegalStateException("Unexpected canary net: " + trace.getNetId());
         }
-        require(positiveTraces == 1 && negativeTraces == pinCount - 2 &&
-                layout.getTraces().size() == pinCount - 1,
-            "internal-connectivity canary routing decision changed: " + pinCount);
-        require(Integer.valueOf(1).equals(endpointCounts.get(componentId + ".1")) &&
-                endpointCounts.get(componentId + ".2") == null,
-            "declared internal package pad was not the sole omitted copper endpoint: " + pinCount);
-        for (int terminal = 3; terminal <= pinCount; terminal++)
-            require(Integer.valueOf(1).equals(endpointCounts.get(componentId + "." + terminal)),
-                "undeclared package pair lost required copper: " + componentId + "." + terminal);
+        require(positiveTraces == 1 && negativeTraces == pinCount - 2,
+            "declared internal connection did not replace exactly one copper branch");
+        verifyRasterConnectivity(layout, board);
+    }
+
+    // Independent unit-grid witness: a P04 branch can end at real trunk copper,
+    // not a named pad. Net labels never create raster or internal-package edges.
+    static void verifyRasterConnectivity(PcbBoardLayout layout, TroubleshootBoard board) {
+        HashMap<String,String> parent = new HashMap<String,String>();
+        for (PcbTraceGeometry trace : layout.getTraces()) {
+            require(trace.getLayer() == board.getPlacementConstraints().routingLayer,
+                "canary unexpectedly changed its declared single routing layer");
+            int[] x = trace.getXPoints(), y = trace.getYPoints();
+            for (int i = 1; i < x.length; i++) {
+                require((x[i] == x[i-1]) != (y[i] == y[i-1]), "non-Manhattan or empty canary segment");
+                int dx = x[i] == x[i-1] ? 0 : x[i] > x[i-1] ? 1 : -1;
+                int dy = y[i] == y[i-1] ? 0 : y[i] > y[i-1] ? 1 : -1;
+                int px=x[i-1], py=y[i-1];
+                while (px != x[i] || py != y[i]) {
+                    joinRaster(parent, px+","+py, (px+dx)+","+(py+dy)); px+=dx; py+=dy;
+                }
+            }
+        }
+        for (String id : board.getComponentIds()) {
+            BoardComponent component = board.getComponent(id);
+            for (String a : component.getPadIds()) for (String b : component.getPadIds())
+                if (component.getPhysicalPackage().isInternallyConnected(
+                        board.getPad(a).getTerminalId(), board.getPad(b).getTerminalId()))
+                    joinRaster(parent, rasterPad(layout,a), rasterPad(layout,b));
+        }
+        for (String a : board.getPadIds()) for (String b : board.getPadIds())
+            require(rasterRoot(parent,rasterPad(layout,a)).equals(rasterRoot(parent,rasterPad(layout,b))) ==
+                    board.getPad(a).getNetId().equals(board.getPad(b).getNetId()),
+                "independent copper raster disagrees with declared connectivity: " + a + "/" + b);
+    }
+    private static String rasterPad(PcbBoardLayout layout, String id) {
+        PcbPadPlacement pad=layout.getPad(id); return pad.getX()+","+pad.getY();
+    }
+    private static String rasterRoot(HashMap<String,String> parent, String key) {
+        if (!parent.containsKey(key)) parent.put(key,key);
+        String root=key; while (!parent.get(root).equals(root)) root=parent.get(root);
+        while (!parent.get(key).equals(root)) { String next=parent.get(key); parent.put(key,root); key=next; }
+        return root;
+    }
+    private static void joinRaster(HashMap<String,String> parent, String a, String b) {
+        parent.put(rasterRoot(parent,a),rasterRoot(parent,b));
     }
 
     private static boolean hasTopologyLink(TopologyPlacementGraph topology, String componentId,
@@ -482,26 +500,27 @@ final class ArchitectureDeveloperVerifier {
                 require(endpoints.put(first.getEndpoint(), Boolean.TRUE) == null,
                     "physical part terminals share an endpoint: " + part.getId());
             }
-            if (part.getProvenance() == null ||
-                    !PhysicalPartProvenance.FIXED_GENERATED.equals(part.getProvenance().getKind())) {
-                require(!WorkbenchCapabilityDiscovery.discover(part).isEmpty(),
-                    "workbench capability discovery returned no capabilities: " + part.getId());
-                String componentId = part.getBoardSlot() == null ? null :
-                    part.getBoardSlot().getComponentId();
-                require(componentId != null,
-                    "replaceable production part is not mounted: " + part.getId());
+            String componentId = part.getBoardSlot() == null ? null :
+                part.getBoardSlot().getComponentId();
+            require(componentId != null, "production part is not mounted: " + part.getId());
+            // Provenance records origin, not whether a physical service owner
+            // exists. Supporting originals retain that origin after conversion.
+            PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
+            if (runtime.getWorkbenchPartsProvider(componentId) != null) {
                 WorkbenchOperation remove = WorkbenchOperation.forPart(
                     WorkbenchOperation.REMOVE, part);
+                require(!WorkbenchCapabilityDiscovery.discover(part, remove,
+                        runtime.getWorkbenchCapabilityRegistry()).isEmpty(),
+                    "workbench capability discovery returned no service capability: " + part.getId());
                 WorkbenchCapabilityStrategy removeCapability =
                     WorkbenchCapabilityDiscovery.find(part, remove,
                         instance.getPhysicalBoardRuntime().getWorkbenchCapabilityRegistry());
                 require(removeCapability instanceof PhysicalSlotMutationProvider &&
+                        removeCapability == runtime.getMutationProvider(componentId) &&
                         removeCapability.getMetadata() != null &&
                         removeCapability.getOperationLabel(remove).length() > 0,
                     "workbench provider operation was not discovered: " + part.getId());
             } else {
-                String componentId = part.getBoardSlot() == null ? null :
-                    part.getBoardSlot().getComponentId();
                 require((part instanceof PhysicalCapacitorPart || part.getCapabilities().isEmpty()) &&
                     componentId != null,
                     "fixed production part exposes mutation capabilities: " + part.getId());

@@ -1,0 +1,91 @@
+{
+    "snapshot":  {
+                     "token":  1,
+                     "screen":  "MENU",
+                     "message":  "",
+                     "notice":  "",
+                     "epoch":  "tsj-alpha/1",
+                     "build":  "8823E1948AD839C3461BB9C0FE9597C1",
+                     "hasBoard":  false,
+                     "families":  [
+                                      {
+                                          "id":  "LED_INDICATOR",
+                                          "name":  "Indicator board",
+                                          "profile":  "EASY"
+                                      },
+                                      {
+                                          "id":  "DIODE_PROTECTED_INDICATOR",
+                                          "name":  "Protected indicator",
+                                          "profile":  "EASY"
+                                      },
+                                      {
+                                          "id":  "PARALLEL_DUAL_INDICATOR",
+                                          "name":  "Dual indicator",
+                                          "profile":  "EASY"
+                                      },
+                                      {
+                                          "id":  "RC_DELAY",
+                                          "name":  "Timing board",
+                                          "profile":  "EASY"
+                                      },
+                                      {
+                                          "id":  "NPN_LOW_SIDE_SWITCH",
+                                          "name":  "BJT output driver",
+                                          "profile":  "EASY"
+                                      },
+                                      {
+                                          "id":  "NMOS_LOW_SIDE_SWITCH",
+                                          "name":  "MOSFET output driver",
+                                          "profile":  "EASY"
+                                      },
+                                      {
+                                          "id":  "RELAY_OUTPUT",
+                                          "name":  "Relay output reference",
+                                          "profile":  "EASY"
+                                      },
+                                      {
+                                          "id":  "RB15_CONTROL",
+                                          "name":  "Procedural control board",
+                                          "profile":  "EASY"
+                                      },
+                                      {
+                                          "id":  "COMPOSED_CONTROLLED_INDICATOR",
+                                          "name":  "Two-channel controller",
+                                          "profile":  "MEDIUM"
+                                      }
+                                  ]
+                 },
+    "body":  "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTroubleshootJS · Desktop alpha\n\nTHE ELECTRONICS REPAIR GAME\n\nTroubleshoot!\n\nA customer. A faulty board. A bench full of possibilities.\n\nExamine\nMeasure\nIsolate\nRepair\nRetest\nStart a service job\nDifficulty\nEASY\nMEDIUM\nHARD — unavailable\nPSYCHOTIC — unavailable\nBoard family\nIndicator board\nProtected indicator\nDual indicator\nTiming board\nBJT output driver\nMOSFET output driver\nRelay output reference\nProcedural control board\nNEW BOARD\n\nChoose a board from the current seed pool. Read its customer ticket before entering the workbench.\n\nEnter an exact seed\nOpen a saved replay code\nResources\nSettings\nAbout this alpha\nReplay and bug-report identity",
+    "focus":  "\u003cselect id=\"tsj-product-field-1\"\u003e\u003coption value=\"EASY\"\u003eEASY\u003c/option\u003e\u003coption value=\"MEDIUM\"\u003eMEDIUM\u003c/option\u003e\u003coption value=\"HARD\" disabled=\"\"\u003eHARD — unavailable\u003c/option\u003e\u003coption value=\"PSYCHOTIC\" disabled=\"\"\u003ePSYCHOTIC — unavailable\u003c/option\u003e\u003c/select\u003e",
+    "viewport":  {
+                     "width":  1416,
+                     "height":  908
+                 },
+    "reports":  [
+                    [
+                        "data-tsj-preview-identity-protocol",
+                        "troubleshootjs-execution-provenance-v1"
+                    ],
+                    [
+                        "data-tsj-preview-source-digest",
+                        "ab7d4b37a3acbd2c7825cc55a10b11a7d960ab4d40fb1f3a90a2faca77d6e9f9"
+                    ],
+                    [
+                        "data-tsj-preview-script-digest",
+                        "75d71d753c344545ef3f4b02f0d4c208c2052d3daabfd73105d08a2b60fda544"
+                    ],
+                    [
+                        "data-tsj-preview-web-digest",
+                        "952fd157c96fcc47550afd74e52f94c8bfdcab876d412354a683b2c579e3e40f"
+                    ],
+                    [
+                        "data-tsj-preview-execution-digest",
+                        "9b3e8b6aa2a69cf02dd601526370d3a944c03737163d372da3e98a46494c6c87"
+                    ],
+                    [
+                        "data-tsj-preview-file-count",
+                        "1463"
+                    ]
+                ],
+    "meterMode":  "NONE"
+}

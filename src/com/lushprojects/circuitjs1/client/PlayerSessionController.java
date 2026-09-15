@@ -94,6 +94,12 @@ final class PlayerSessionController {
             else if ("menu".equals(action)) session.enter(expected, PlayerSession.Screen.MENU);
             else if ("resume".equals(action)) session.enter(expected, PlayerSession.Screen.WORKBENCH);
             else if ("retest".equals(action)) retest(expected);
+            else if ("meter".equals(action)) {
+                if (!ownsCurrentBoard() || session.screen() != PlayerSession.Screen.WORKBENCH)
+                    return "The meter belongs to the current workbench.";
+                if (!sim.instrumentController.selectPlayerMode(first))
+                    return "This meter function is unavailable while the board is busy.";
+            }
             else if ("acquire".equals(action)) {
                 if (view != viewToken) return "This catalog view has closed.";
                 return acquire(first, second);
@@ -102,6 +108,8 @@ final class PlayerSessionController {
         catch (RuntimeException failure) { return "The action is unavailable while the board is busy or requires isolation."; }
         refresh(); return "";
     }
+
+    boolean isWorkbenchScreen() { return session.screen() == PlayerSession.Screen.WORKBENCH && ownsCurrentBoard(); }
 
     private boolean ownsCurrentBoard() {
         return session.owner() != null && sim.getGeneratedBoardInstance() == session.owner() &&
@@ -145,6 +153,7 @@ final class PlayerSessionController {
             pendingRetest.watchdog.schedule(5000);
             finishRetest(false);
         } catch (RuntimeException failure) {
+            if (sim.troubleshootDebug) CirSim.console("Customer retest failed: " + failure);
             clearRetest();
             session.retested(token, owner, false, "The retest could not finish. Check board power and try again.");
         }
@@ -183,7 +192,7 @@ final class PlayerSessionController {
 
     void refresh() { finishRetest(false); if (bridgeReady) notifyView(); }
 
-    String snapshot() {
+    String snapshot(boolean includeCatalog) {
         JSONObject out = new JSONObject();
         out.put("token", new JSONNumber(session.token()));
         put(out, "screen", session.screen().name()); put(out, "message", session.message()); put(out, "notice", notice);
@@ -197,6 +206,20 @@ final class PlayerSessionController {
             put(family, "profile", PlayerFamilyCatalog.candidateProfile(id).name()); families.set(families.size(), family);
         }
         out.put("families", families);
+        if (session.screen() == PlayerSession.Screen.PREPARING && sim.generationCoordinator.getJob() != null) {
+            GenerationCoordinator generation = sim.generationCoordinator;
+            JSONObject progress = new JSONObject();
+            put(progress, "label", generation.getProgressLabel());
+            progress.put("paused", JSONBoolean.getInstance(generation.isProgressPaused()));
+            progress.put("activeElapsedMs", new JSONNumber(generation.getProgressActiveMillis()));
+            progress.put("percent", new JSONNumber(generation.getProgressPercent()));
+            progress.put("phase", new JSONNumber(generation.getJob().getStage().ordinal() + 1));
+            progress.put("phases", new JSONNumber(6));
+            progress.put("units", new JSONNumber(generation.getJob().getStepCount()));
+            progress.put("elapsedMs", new JSONNumber(generation.getProgressElapsedMillis()));
+            progress.put("lastUpdateAgeMs", new JSONNumber(generation.getProgressAgeMillis()));
+            out.put("progress", progress);
+        }
         if (ownsCurrentBoard()) {
             GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
             put(out, "complaint", challenge.getComplaintText());
@@ -204,6 +227,7 @@ final class PlayerSessionController {
             out.put("ready", JSONBoolean.getInstance(sim.isGeneratedSemanticInteractionEnabled()));
             out.put("completed", JSONBoolean.getInstance(challenge.isCompleted()));
             out.put("isolated", JSONBoolean.getInstance(sim.getBoardPowerController().isElectricallyUnpowered()));
+            if (includeCatalog) {
             JSONArray catalogs = new JSONArray();
             for (PlayerShopCatalog.Category category : new PlayerShopCatalog(sim.getGeneratedBoardInstance()).categories()) {
                 JSONObject catalog = new JSONObject(); put(catalog, "id", category.id);
@@ -217,6 +241,7 @@ final class PlayerSessionController {
                 catalogs.set(catalogs.size(), catalog);
             }
             out.put("catalogs", catalogs);
+            }
         }
         return out.toString();
     }
@@ -226,7 +251,7 @@ final class PlayerSessionController {
     private native void installBridge() /*-{
         var owner = this;
         $wnd.tsjProduct = {
-            snapshot: $entry(function() { return JSON.parse(owner.@com.lushprojects.circuitjs1.client.PlayerSessionController::snapshot()()); }),
+            snapshot: $entry(function(includeCatalog) { return JSON.parse(owner.@com.lushprojects.circuitjs1.client.PlayerSessionController::snapshot(Z)(includeCatalog !== false)); }),
             action: $entry(function(token, view, name, a, b, c) {
                 return owner.@com.lushprojects.circuitjs1.client.PlayerSessionController::action(IILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)(token, view, name, a || '', b || '', c || '');
             }),

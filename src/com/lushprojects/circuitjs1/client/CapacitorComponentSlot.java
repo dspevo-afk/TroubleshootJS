@@ -16,8 +16,6 @@ final class CapacitorComponentSlot implements PhysicalMutationSlot {
                 installedPart == null || positiveAttachment == null || negativeAttachment == null ||
                 physicalSlot == null)
             throw new IllegalArgumentException("Invalid capacitor component slot");
-        if (!intendedSpecification.isPolarized())
-            throw new IllegalArgumentException("Replaceable capacitor slot requires polarity");
         this.componentId = componentId;
         this.intendedSpecification = intendedSpecification;
         this.positiveAttachment = positiveAttachment;
@@ -45,11 +43,10 @@ final class CapacitorComponentSlot implements PhysicalMutationSlot {
     void clear() { physicalSlot.remove(); }
 
     void install(PhysicalCapacitorPart part) {
-        if (part == null || !part.getSpecification().isPolarized())
-            throw new IllegalArgumentException("Invalid polarized capacitor installation");
-        moveAttachmentEnd(positiveAttachment, part.getTerminalForBoardPad(componentId + ".+"),
+        if (part == null) throw new IllegalArgumentException("Missing capacitor part");
+        moveAttachmentEnd(positiveAttachment, part.getTerminalForBoardPad(terminalPad(0)),
             false);
-        moveAttachmentEnd(negativeAttachment, part.getTerminalForBoardPad(componentId + ".-"),
+        moveAttachmentEnd(negativeAttachment, part.getTerminalForBoardPad(terminalPad(1)),
             true);
         physicalSlot.install(part);
     }
@@ -60,12 +57,10 @@ final class CapacitorComponentSlot implements PhysicalMutationSlot {
         if (!scope.owns(this))
             throw new IllegalStateException("Physical mutation scope does not own capacitor slot");
         PhysicalCapacitorPart part = (PhysicalCapacitorPart) candidate;
-        if (!part.getSpecification().isPolarized())
-            throw new IllegalArgumentException("Invalid polarized capacitor installation");
         moveAttachmentEnd(positiveAttachment,
-            part.getTerminalForBoardPad(componentId + ".+"), false);
+            part.getTerminalForBoardPad(terminalPad(0)), false);
         moveAttachmentEnd(negativeAttachment,
-            part.getTerminalForBoardPad(componentId + ".-"), true);
+            part.getTerminalForBoardPad(terminalPad(1)), true);
         scope.afterAttachmentWrite();
         physicalSlot.install(part);
         scope.afterSlotMountWrite();
@@ -77,6 +72,10 @@ final class CapacitorComponentSlot implements PhysicalMutationSlot {
         PhysicalPart<?> removed = physicalSlot.remove();
         scope.afterSlotClearWrite();
         return removed;
+    }
+
+    private String terminalPad(int terminal) {
+        return componentId + "." + physicalSlot.getPhysicalPackage().getTerminalIds().get(terminal);
     }
 
     public PhysicalMutationSlot.AttachmentState captureAttachmentState() {

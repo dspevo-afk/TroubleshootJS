@@ -1796,13 +1796,16 @@ final class Task43PPhysicalTruthDeveloperVerifier {
     }
 
     private static Manifest manifestFor(String family) {
+        // Serviceable construction separates board copper from detachable
+        // components and external harness posts. These literal anchors were
+        // audited against construction, not learned from the binding under test.
         Manifest result = new Manifest();
         if ("LED_INDICATOR".equals(family)) {
             addPackage(result, "J1", "THROUGH_HOLE_CONNECTOR_2", true);
             addPackage(result, "R1", "AXIAL_RESISTOR", false, "SPAN_220", "SPAN_240",
                 "SPAN_260");
             addPackage(result, "LED1", "THROUGH_HOLE_LED", false);
-            addTerminal(result, "J1.1", "J1", "1", "VIN", "SwitchElm", 1);
+            addTerminal(result, "J1.1", "J1", "1", "VIN", "WireElm", 0);
             addTerminal(result, "J1.2", "J1", "2", "GND", "GroundElm", 0);
             addTerminal(result, "R1.1", "R1", "1", "VIN", "WireElm", 1);
             addTerminal(result, "R1.2", "R1", "2", "LED_NODE", "WireElm", 0);
@@ -1814,14 +1817,14 @@ final class Task43PPhysicalTruthDeveloperVerifier {
             addPackage(result, "R1", "AXIAL_RESISTOR", false, "SPAN_220", "SPAN_240",
                 "SPAN_260");
             addPackage(result, "LED1", "THROUGH_HOLE_LED", false);
-            addTerminal(result, "J1.1", "J1", "1", "VIN", "SwitchElm", 1);
+            addTerminal(result, "J1.1", "J1", "1", "VIN", "WireElm", 0);
             addTerminal(result, "J1.2", "J1", "2", "GND", "GroundElm", 0);
             addTerminal(result, "D1.A", "D1", "A", "VIN", "WireElm", 1);
             addTerminal(result, "D1.K", "D1", "K", "DIODE_OUT", "WireElm", 0);
-            addTerminal(result, "R1.1", "R1", "1", "DIODE_OUT", "ResistorElm", 0);
-            addTerminal(result, "R1.2", "R1", "2", "LED_NODE", "ResistorElm", 1);
-            addTerminal(result, "LED1.A", "LED1", "A", "LED_NODE", "LEDElm", 0);
-            addTerminal(result, "LED1.K", "LED1", "K", "GND", "LEDElm", 1);
+            addTerminal(result, "R1.1", "R1", "1", "DIODE_OUT", "WireElm", 1);
+            addTerminal(result, "R1.2", "R1", "2", "LED_NODE", "WireElm", 0);
+            addTerminal(result, "LED1.A", "LED1", "A", "LED_NODE", "WireElm", 1);
+            addTerminal(result, "LED1.K", "LED1", "K", "GND", "WireElm", 1);
         } else if (RcDelayGenerator.FAMILY_ID.equals(family)) {
             addPackage(result, "J1", "THROUGH_HOLE_CONNECTOR_2", true);
             addPackage(result, "J2", "THROUGH_HOLE_OUTPUT_HEADER_2", false);
@@ -1831,18 +1834,18 @@ final class Task43PPhysicalTruthDeveloperVerifier {
                 "SPAN_260");
             addPackage(result, "C1", "RADIAL_ELECTROLYTIC_CAPACITOR", false);
             addPackage(result, "C2", "RADIAL_CERAMIC_CAPACITOR", false);
-            addTerminal(result, "J1.1", "J1", "1", "VIN", "WireElm", 1);
+            addTerminal(result, "J1.1", "J1", "1", "VIN", "WireElm", 0);
             addTerminal(result, "J1.2", "J1", "2", "GND", "GroundElm", 0);
             addTerminal(result, "J2.1", "J2", "1", "RC_OUT", "WireElm", 1);
             addTerminal(result, "J2.2", "J2", "2", "GND", "GroundElm", 0);
             addTerminal(result, "R1.1", "R1", "1", "VIN", "WireElm", 1);
-            addTerminal(result, "R1.2", "R1", "2", "RC_OUT", "ResistorElm", 1);
+            addTerminal(result, "R1.2", "R1", "2", "RC_OUT", "WireElm", 0);
             addTerminal(result, "R2.1", "R2", "1", "RC_OUT", "WireElm", 1);
-            addTerminal(result, "R2.2", "R2", "2", "GND", "ResistorElm", 1);
+            addTerminal(result, "R2.2", "R2", "2", "GND", "WireElm", 0);
             addTerminal(result, "C1.+", "C1", "+", "RC_OUT", "WireElm", 1);
             addTerminal(result, "C1.-", "C1", "-", "GND", "GroundElm", 0);
-            addTerminal(result, "C2.1", "C2", "1", "VIN", "CapacitorElm", 0);
-            addTerminal(result, "C2.2", "C2", "2", "GND", "CapacitorElm", 1);
+            addTerminal(result, "C2.1", "C2", "1", "VIN", "WireElm", 0);
+            addTerminal(result, "C2.2", "C2", "2", "GND", "WireElm", 0);
         } else if (NpnLowSideSwitchGenerator.FAMILY_ID.equals(family)) {
             addSwitchPackage(result, "J1");
             addSwitchPackage(result, "J2");
@@ -1861,9 +1864,9 @@ final class Task43PPhysicalTruthDeveloperVerifier {
             addTerminal(result, "RLOAD.2", "RLOAD", "2", "LOAD_NODE", "WireElm", 0);
             addTerminal(result, "LED1.A", "LED1", "A", "LOAD_NODE", "WireElm", 1);
             addTerminal(result, "LED1.K", "LED1", "K", "COLLECTOR", "WireElm", 0);
-            addTerminal(result, "J2.1", "J2", "1", "CONTROL_INPUT", "WireElm", 1);
+            addTerminal(result, "J2.1", "J2", "1", "CONTROL_INPUT", "WireElm", 0);
             addTerminal(result, "J2.2", "J2", "2", "GND", "GroundElm", 0);
-            addTerminal(result, "RB.1", "RB", "1", "CONTROL_INPUT", "WireElm", 1);
+            addTerminal(result, "RB.1", "RB", "1", "CONTROL_INPUT", "WireElm", 0);
             addTerminal(result, "RB.2", "RB", "2", "BASE", "WireElm", 1);
             addTerminal(result, "RPD.1", "RPD", "1", "BASE", "WireElm", 1);
             addTerminal(result, "RPD.2", "RPD", "2", "GND", "GroundElm", 0);
@@ -1885,7 +1888,7 @@ final class Task43PPhysicalTruthDeveloperVerifier {
             addTerminal(result, "RLOAD.2", "RLOAD", "2", "LOAD_NODE", "WireElm", 0);
             addTerminal(result, "LED1.A", "LED1", "A", "LOAD_NODE", "WireElm", 1);
             addTerminal(result, "LED1.K", "LED1", "K", "DRAIN", "WireElm", 0);
-            addTerminal(result, "J2.1", "J2", "1", "CONTROL_INPUT", "WireElm", 1);
+            addTerminal(result, "J2.1", "J2", "1", "CONTROL_INPUT", "WireElm", 0);
             addTerminal(result, "J2.2", "J2", "2", "GND", "GroundElm", 0);
             addTerminal(result, "RPD.1", "RPD", "1", "CONTROL_INPUT", "WireElm", 0);
             addTerminal(result, "RPD.2", "RPD", "2", "GND", "GroundElm", 0);
@@ -1900,7 +1903,7 @@ final class Task43PPhysicalTruthDeveloperVerifier {
                 "SPAN_260");
             addPackage(result, "LED1", "THROUGH_HOLE_LED", false);
             addPackage(result, "LED2", "THROUGH_HOLE_LED", false);
-            addTerminal(result, "J1.1", "J1", "1", "VIN", "SwitchElm", 1);
+            addTerminal(result, "J1.1", "J1", "1", "VIN", "WireElm", 0);
             addTerminal(result, "J1.2", "J1", "2", "GND", "WireElm", 1);
             addTerminal(result, "R1.1", "R1", "1", "VIN", "WireElm", 1);
             addTerminal(result, "R1.2", "R1", "2", "BRANCH1_NODE", "WireElm", 0);
@@ -1958,11 +1961,9 @@ final class Task43PPhysicalTruthDeveloperVerifier {
                     pad.getId());
             String componentId = plan.idFor(ownerKey,
                 FunctionalBlockDescriptor.EntityKind.COMPONENT, endpoint.getComponentId());
-            boolean mutable = contribution != null &&
-                plan.getDecisionOwners().containsValue(componentId);
             String[] solver = controlledSolverEndpoint(
                 descriptor.getComponents().get(endpoint.getComponentId()).getTypeId(),
-                endpoint.getTerminalId(), mutable);
+                endpoint.getTerminalId(), endpoint.getComponentId());
             addTerminal(manifest, plan.idFor(ownerKey,
                 FunctionalBlockDescriptor.EntityKind.PAD, pad.getId()), componentId,
                 endpoint.getTerminalId(), plan.netFor(ownerKey, pad.getNetId()),
@@ -1979,31 +1980,20 @@ final class Task43PPhysicalTruthDeveloperVerifier {
         throw new IllegalStateException("Unknown controlled package type " + typeId);
     }
 
+    /** Literal persistent-copper anchors after service separation. Audited against
+     * the typed controlled construction and ServiceableBoardConstruction: the
+     * supply adapter reuses its first bus wire's post 1; control adapters create
+     * post-0 anchors; detached devices never retain solver-owned component posts. */
     private static String[] controlledSolverEndpoint(String typeId,
-            String terminalId, boolean mutable) {
+            String terminalId, String localComponentId) {
         if ("CONNECTOR_2".equals(typeId))
-            return "1".equals(terminalId) ? new String[] { "SwitchElm", "1" } :
+            return "1".equals(terminalId) ? new String[] { "WireElm", "J1".equals(localComponentId) ? "1" : "0" } :
                 new String[] { "GroundElm", "0" };
-        if ("RESISTOR".equals(typeId)) {
-            if (mutable)
-                return "1".equals(terminalId) ? new String[] { "WireElm", "1" } :
-                    new String[] { "WireElm", "0" };
-            return "1".equals(terminalId) ? new String[] { "ResistorElm", "0" } :
-                new String[] { "ResistorElm", "1" };
-        }
-        if ("LED".equals(typeId))
-            return "A".equals(terminalId) ? new String[] { "LEDElm", "0" } :
-                new String[] { "LEDElm", "1" };
-        if ("NMOS".equals(typeId)) {
-            if ("G".equals(terminalId)) return new String[] { "NMosfetElm", "0" };
-            if ("D".equals(terminalId)) return new String[] { "NMosfetElm", "2" };
-            return new String[] { "NMosfetElm", "1" };
-        }
-        if ("NPN".equals(typeId)) {
-            if ("B".equals(terminalId)) return new String[] { "NTransistorElm", "0" };
-            if ("C".equals(terminalId)) return new String[] { "NTransistorElm", "1" };
-            return new String[] { "NTransistorElm", "2" };
-        }
+        if ("RESISTOR".equals(typeId))
+            return new String[] { "WireElm", "RPD".equals(localComponentId) || "2".equals(terminalId) ? "0" : "1" };
+        if ("LED".equals(typeId)) return new String[] { "WireElm", "1" };
+        if ("NMOS".equals(typeId)) return new String[] { "WireElm", "D".equals(terminalId) ? "0" : "1" };
+        if ("NPN".equals(typeId)) return new String[] { "WireElm", "C".equals(terminalId) ? "0" : "1" };
         throw new IllegalStateException("Unknown controlled solver type " + typeId);
     }
 
@@ -2363,7 +2353,16 @@ final class Task43PPhysicalTruthDeveloperVerifier {
          * Internal fixed parts deliberately do not take this branch: their
          * physical terminals are component-side endpoints, not board pads.
          */
-        if (part instanceof FixedPhysicalPart) {
+        if (part instanceof PhysicalServicePart) {
+            GeneratedComponentConnectionBinding lead = instance.getConnectionBindings().getOrNull(expected.padId);
+            require(lead != null && lead.getBoardEndpoint() instanceof CircuitPostMeasurementEndpoint &&
+                lead.getComponentEndpoint() instanceof CircuitPostMeasurementEndpoint &&
+                retainedTerminal.getEndpoint() instanceof CircuitPostMeasurementEndpoint &&
+                sameEndpointIdentity(retainedBoardEndpoint, (CircuitPostMeasurementEndpoint)lead.getBoardEndpoint()) &&
+                sameEndpointIdentity((CircuitPostMeasurementEndpoint)retainedTerminal.getEndpoint(),
+                    (CircuitPostMeasurementEndpoint)lead.getComponentEndpoint()),
+                "task43p-service-foundation-endpoint-mismatch:" + expected.padId);
+        } else if (part instanceof FixedPhysicalPart) {
             CircuitMeasurementEndpoint foundationEndpoint = retainedTerminal.getEndpoint();
             require(foundationEndpoint instanceof CircuitPostMeasurementEndpoint,
                 "task43p-fixed-foundation-endpoint-invalid:" + expected.padId);

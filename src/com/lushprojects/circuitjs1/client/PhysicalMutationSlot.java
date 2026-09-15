@@ -27,4 +27,10 @@ interface PhysicalMutationSlot {
 
     /** Marker owned by the concrete slot; the scope never inspects its type. */
     interface AttachmentState { }
+
+    /** Real cable contacts belonging to a removable connector position. */
+    interface Docking extends PhysicalMutationSlot {
+        java.util.Vector<CircuitElm> getDockingAttachments();
+        void validateDockingAttachments();
+    }
 }

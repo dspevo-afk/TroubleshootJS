@@ -32,6 +32,24 @@ final class PhysicalBoardRuntime {
     private boolean mutationQuarantined;
     private String mutationQuarantineComponentId;
     private String mutationQuarantineDiagnostic;
+    private boolean constructionComplete;
+
+    /** Construction-only handoff from a fixed declaration to its typed service owner. */
+    void prepareServicePart(PhysicalPart<?> original, PhysicalPart<?> servicePart) {
+        if (constructionComplete || original == null || servicePart == null ||
+                getPart(original.getId()) != original || !original.getId().equals(servicePart.getId()) ||
+                getInventoryIdForPart(original.getId()) != null || original.getGeometryRealization() != null ||
+                !original.getPackage().isEquivalentTo(servicePart.getPackage()))
+            throw new IllegalStateException("Service construction must precede published physical ownership");
+        PhysicalBoardSlot slot = original.getBoardSlot();
+        if (slot == null || slot.getRuntime() != this || slot.getInstalledPart() != original ||
+                getWorkbenchPartsProvider(slot.getComponentId()) != null)
+            throw new IllegalStateException("Service construction has no unclaimed original slot");
+        slot.remove();
+        partsById.put(original.getId(), servicePart);
+    }
+
+    void finishConstruction() { constructionComplete = true; }
 
     PhysicalBoardRuntime(TroubleshootBoard board) {
         if (board == null)
@@ -596,6 +614,20 @@ final class PhysicalBoardRuntime {
             found = scoped;
         }
         return found;
+    }
+
+    /** Only an empty connector position may omit its declared cable contacts. */
+    boolean isDisconnectedDockingAttachment(CircuitElm element) {
+        for (PhysicalBoardSlot physical : getSlots()) {
+            PhysicalBoardInstallationProvider.Scoped provider = getScopedMutationCapability(physical.getComponentId());
+            if (provider == null || !(provider.getMutationSlot() instanceof PhysicalMutationSlot.Docking)) continue;
+            PhysicalMutationSlot.Docking docking = (PhysicalMutationSlot.Docking)provider.getMutationSlot();
+            if (containsIdentity(docking.getDockingAttachments(), element)) {
+                docking.validateDockingAttachments();
+                return !physical.isOccupied();
+            }
+        }
+        return false;
     }
 
     /** Admission check for the bounded composed consumer. */

@@ -67,12 +67,33 @@ final class E03RelayMutationChecks {
                     require(controller.removeInstalledPart(),"remove wrong relay"); settle(sim,owner);
                 }
                 require(controller.installNewFromCatalog(owner.getDiagnosticProvider().getCorrectCatalogId(owner,id)),"install specified replacement");
-                settle(sim,owner); sim.setBoardPowerState(BoardPowerState.POWERED); settle(sim,owner);
-                require(sim.getGeneratedChallengeController().performCustomerRetest().isPassed(),"repaired HIGH/LOW retest seed="+seed);
+                settle(sim,owner);
+                // Exercise healthy service while the ticket is still READY.
+                // A successful customer retest deliberately latches COMPLETED
+                // and rejects later power/mutation attempts. Retest comes last.
+                GeneratedRuntimeInvariant.verify(sim,owner,sim.getBoardModificationController(),sim.elmList);
+                // Healthy flyback protection is a real serviceable diode too.
+                PhysicalBoardRuntime runtime=owner.getPhysicalBoardRuntime();
+                PhysicalPart<?> flyback=runtime.getInstalledPart("D1");
+                PhysicalPartProvenance provenance=flyback.getProvenance();
+                PhysicalSlotMutationProvider flybackController=runtime.getMutationProvider("D1");
+                require(flybackController!=null && !flyback.isFaulted(),"healthy flyback has a physical service owner");
+                sim.setBoardPowerState(BoardPowerState.UNPOWERED); sim.advanceGeneratedTemporalProfile(.025); settle(sim,owner);
+                require(sim.getBoardPowerController().isElectricallyUnpowered() && RelayOutputBehavior.isDischarged(owner),
+                    "healthy flyback service follows real power isolation and coil discharge");
+                require(flybackController.removeInstalledPart(),"remove healthy flyback after actual coil discharge"); settle(sim,owner);
+                require(!flyback.isInstalled() && runtime.getInstalledPart("D1")==null &&
+                    runtime.getPart(flyback.getId())==flyback && flyback.getProvenance()==provenance,
+                    "removed flyback retains its exact physical identity and provenance");
+                for(GeneratedComponentConnectionBinding lead:owner.getConnectionBindings().getForComponent("D1"))
+                    require(!sim.elmList.contains(lead.getConnectionElement()),"removed flyback loses its real solder connections");
+                require(flybackController.install(flyback.getId()),"same healthy flyback reinstalls"); settle(sim,owner);
+                require(runtime.getInstalledPart("D1")==flyback,"reinstalled flyback is the original physical part");
+                sim.setBoardPowerState(BoardPowerState.POWERED); settle(sim,owner);
+                require(sim.getGeneratedChallengeController().performCustomerRetest().isPassed(),
+                    "restored flyback preserves the repaired HIGH/LOW behavior");
                 require(original.isFaulted()&&!original.isInstalled(),"successful repair does not heal tray original");
                 GeneratedRuntimeInvariant.verify(sim,owner,sim.getBoardModificationController(),sim.elmList);
-                // The fixed flyback owner has no player removal path.
-                require(owner.getPhysicalBoardRuntime().getMutationProvider("D1")==null,"unsupported flyback removal is not offered");
             } finally {
                 PhysicalMutationScope.clearFailureHookForDeveloperVerification();
                 protectedOwner.restore(sim); protectedOwner.assertRestored(sim);

@@ -162,7 +162,7 @@ final class CapacitorSlotController implements PhysicalSlotMutationProvider,
         if (install && !slot.isEmpty())
             return null;
         final CapacitorCatalogEntry entry = capability.getCatalog().get(catalogEntryId);
-        if (entry.getOrientation() != PhysicalPartOrientation.NORMAL)
+        if (entry.getOrientation() == PhysicalPartOrientation.REVERSED)
             throw new IllegalArgumentException("Reversed capacitor installation is not supported");
         final CapacitorSpecification specification = entry.getSpecification();
         final CapacitorElm element = DynamicCapacitorBackingAllocator.create(

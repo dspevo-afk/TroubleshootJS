@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "candidate": "GWT33",
+  "environment": "Maintained headless Edge, real compiled app; CDP mouse/key input. Not a human study.",
+  "normalControlReplay": "tsj-alpha/1/EASY/RB15_CONTROL/3",
+  "progressVisiblePercents": [
+    0,
+    16,
+    50,
+    52,
+    53,
+    54,
+    55,
+    56,
+    58,
+    59,
+    60,
+    61,
+    64,
+    65
+  ],
+  "lastPreparingSampleMs": 35433,
+  "trials": [
+    "Retro normal menu at 1416x908, exact-seed and catalog controls",
+    "Normal New board chooses RB15 seed3, visible time/work counters and advancing progress, then ticket/workbench",
+    "Three-lead package visually aligned; exact geometry remains independently covered by VisualWorkbench contracts",
+    "Real draggable meter, bottom-face copper flip, diagonal half-board pan clamp; board remains READY",
+    "Parallel0 exact launch through menu in about5.9s",
+    "Real pad clicks: R1 open circuit, R2 680 Ohm; healthy/faulty menus expose the same physical actions",
+    "Healthy R2 removed while isolated; retest failed with R1 still faulty and R2 absent",
+    "Original R2 dragged from tray to its actual footprint; repower restores LED2 while LED1 stays dark",
+    "R1 removed; actual shop search/acquisition adds Part6 330 Ohm; physical drag installs purchased resistor",
+    "Repowered customer retest PASS, completed true, RESULTS",
+    "Results modal and controls inspected at1024x768; public snapshot/title/ARIA scan contains no solution metadata"
+  ],
+  "limitations": [
+    "This is an operator-driven automated browser trial, not blind human difficulty validation.",
+    "Fresh wrong-value repair trial was not repeated; compiled Alpha and earlier GWT24 player evidence cover that path.",
+    "Headed Windows verification stayed OS-hidden; final Q15 and player checks used the maintained headless option."
+  ]
+}

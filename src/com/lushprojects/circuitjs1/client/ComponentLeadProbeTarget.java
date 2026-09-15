@@ -5,27 +5,27 @@ class ComponentLeadProbeTarget implements ProbeTarget {
     private final GeneratedBoardInstance instance;
     private final String componentId;
     private final String padId;
-    private final PcbWorkbenchRenderer renderer;
+    private final PhysicalProbeProjection renderer;
     private final String physicalPartId;
     private final CircuitMeasurementEndpoint endpoint;
     private final Object lifecycleIdentity;
 
     ComponentLeadProbeTarget(CirSim sim, GeneratedBoardInstance instance, String componentId,
-            String padId, PcbWorkbenchRenderer renderer) {
+            String padId, PhysicalProbeProjection renderer) {
         this(sim, instance, componentId, padId, renderer, getInstalledPartId(instance, componentId),
             instance.getConnectionBindings().get(componentId, padId).getComponentEndpoint(),
             renderer == null ? null : renderer.captureInstalledTargetIdentity(componentId, padId));
     }
 
     ComponentLeadProbeTarget(CirSim sim, GeneratedBoardInstance instance, String componentId,
-            String padId, PcbWorkbenchRenderer renderer, String physicalPartId,
+            String padId, PhysicalProbeProjection renderer, String physicalPartId,
             CircuitMeasurementEndpoint endpoint) {
         this(sim, instance, componentId, padId, renderer, physicalPartId, endpoint,
             renderer == null ? null : renderer.captureInstalledTargetIdentity(componentId, padId));
     }
 
     ComponentLeadProbeTarget(CirSim sim, GeneratedBoardInstance instance, String componentId,
-            String padId, PcbWorkbenchRenderer renderer, String physicalPartId,
+            String padId, PhysicalProbeProjection renderer, String physicalPartId,
             CircuitMeasurementEndpoint endpoint, Object lifecycleIdentity) {
         this.sim = sim;
         this.instance = instance;

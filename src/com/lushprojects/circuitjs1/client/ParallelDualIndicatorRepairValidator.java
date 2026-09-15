@@ -4,10 +4,7 @@ class ParallelDualIndicatorRepairValidator implements GeneratedRepairValidator {
     public GeneratedRepairStatus getRepairStatus(GeneratedBoardInstance instance,
             BoardModificationController modifications, BoardPowerState powerState,
             boolean activeMeasurementOverlay) {
-        ReplaceableComponentSlot slot = ReplaceableResistorBoardCapability.require(instance)
-            .getSlot();
-        if (powerState != BoardPowerState.POWERED || activeMeasurementOverlay || slot.isEmpty() ||
-                !modifications.isComponentInstalled("R1") || slot.getInstalledPart().isFaulted())
+        if (powerState != BoardPowerState.POWERED || activeMeasurementOverlay)
             return GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
         ResistorElm r1 = ParallelDualIndicatorGeneratedBoardValidator.resistor(instance, "R1");
         ResistorElm r2 = ParallelDualIndicatorGeneratedBoardValidator.resistor(instance, "R2");

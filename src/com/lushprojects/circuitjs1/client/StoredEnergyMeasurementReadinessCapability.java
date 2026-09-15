@@ -10,8 +10,7 @@ final class StoredEnergyMeasurementReadinessCapability implements
         ActiveMeasurementReadinessCapability, PhysicalBoardRuntimePowerLifecycle,
         PhysicalBoardRuntimeLifecycle, PhysicalBoardInstallationProvider {
     static final String CAPABILITY_ID = "STORED_ENERGY_MEASUREMENT_READINESS";
-    private final ReplaceableCapacitorBoardCapability replaceable;
-    private final PhysicalCapacitorPart fixedCapacitor;
+    private final PhysicalBoardRuntime runtime;
     private final BoardSimulationBindings boardBindings;
     private boolean awaitingSolverSample;
     private CirSim sim;
@@ -19,12 +18,10 @@ final class StoredEnergyMeasurementReadinessCapability implements
     private SolverExecutionBoundary.Observation observed, invalidated;
 
     StoredEnergyMeasurementReadinessCapability(
-            ReplaceableCapacitorBoardCapability replaceable,
-            PhysicalCapacitorPart fixedCapacitor, BoardSimulationBindings boardBindings) {
-        if (replaceable == null || fixedCapacitor == null || boardBindings == null)
+            PhysicalBoardRuntime runtime, BoardSimulationBindings boardBindings) {
+        if (runtime == null || boardBindings == null || runtime.getBoard().getSimulationBindings() != boardBindings)
             throw new IllegalArgumentException("Missing stored-energy readiness context");
-        this.replaceable = replaceable;
-        this.fixedCapacitor = fixedCapacitor;
+        this.runtime = runtime;
         this.boardBindings = boardBindings;
     }
 
@@ -32,7 +29,8 @@ final class StoredEnergyMeasurementReadinessCapability implements
 
     public PhysicalSlotMutationProvider install(CirSim sim, GeneratedBoardInstance instance,
             BoardModificationController modifications, double time) {
-        if (sim == null || instance == null || instance.getSimulationBindings() != boardBindings ||
+        if (sim == null || instance == null || instance.getPhysicalBoardRuntime() != runtime ||
+                instance.getSimulationBindings() != boardBindings ||
                 instance.getPhysicalBoardRuntime().getCapability(CAPABILITY_ID) != this)
             throw new IllegalArgumentException("Foreign stored-energy installation");
         this.sim = sim; this.instance = instance; resetForBoardReset(); return null;
@@ -81,17 +79,17 @@ final class StoredEnergyMeasurementReadinessCapability implements
             CircuitPostMeasurementEndpoint black) {
         if (red == null || black == null)
             return false;
-        return isBoardEndpoint(red) || isBoardEndpoint(black) ||
-            isPartTerminal(replaceable.getSlot().getInstalledPart(), red) ||
-            isPartTerminal(replaceable.getSlot().getInstalledPart(), black) ||
-            isPartTerminal(fixedCapacitor, red) || isPartTerminal(fixedCapacitor, black) ||
-            isLoosePartTerminal(red) || isLoosePartTerminal(black);
+        if (isBoardEndpoint(red) || isBoardEndpoint(black)) return true;
+        for (PhysicalCapacitorPart part : capacitors())
+            if (isPartTerminal(part, red) || isPartTerminal(part, black)) return true;
+        return false;
     }
 
     private boolean isBoardEndpoint(CircuitPostMeasurementEndpoint endpoint) {
         String netId = boardBindings.getNetIdForEndpoint(endpoint);
-        return netId != null && (isInstalledStorageNet(replaceable.getSlot().getInstalledPart(),
-                netId) || isInstalledStorageNet(fixedCapacitor, netId));
+        if (netId != null) for (PhysicalCapacitorPart part : capacitors())
+            if (isInstalledStorageNet(part, netId)) return true;
+        return false;
     }
 
     /**
@@ -109,24 +107,19 @@ final class StoredEnergyMeasurementReadinessCapability implements
         return false;
     }
 
-    private boolean isLoosePartTerminal(CircuitPostMeasurementEndpoint endpoint) {
-        for (PhysicalCapacitorPart part : replaceable.getInventory().getLooseParts())
-            if (isPartTerminal(part, endpoint))
-                return true;
-        return false;
+    private Vector<PhysicalCapacitorPart> capacitors() {
+        Vector<PhysicalCapacitorPart> result = new Vector<PhysicalCapacitorPart>();
+        for (PhysicalPart<?> part : runtime.getPhysicalParts())
+            if (part instanceof PhysicalCapacitorPart) result.add((PhysicalCapacitorPart)part);
+        return result;
     }
 
     private ActiveMeasurementReadiness storageReadiness(CircuitPostMeasurementEndpoint red,
             CircuitPostMeasurementEndpoint black) {
         boolean boardMeasurement = isBoardEndpoint(red) || isBoardEndpoint(black);
         ActiveMeasurementReadiness result = ActiveMeasurementReadiness.READY;
-        PhysicalCapacitorPart installed = replaceable.getSlot().getInstalledPart();
-        if (boardMeasurement || isPartTerminal(installed, red) || isPartTerminal(installed, black))
-            result = ActiveMeasurementReadiness.combine(result, partReadiness(installed));
-        if (boardMeasurement || isPartTerminal(fixedCapacitor, red) || isPartTerminal(fixedCapacitor, black))
-            result = ActiveMeasurementReadiness.combine(result, partReadiness(fixedCapacitor));
-        for (PhysicalCapacitorPart part : replaceable.getInventory().getLooseParts())
-            if (isPartTerminal(part, red) || isPartTerminal(part, black))
+        for (PhysicalCapacitorPart part : capacitors())
+            if ((boardMeasurement && part.isInstalled()) || isPartTerminal(part, red) || isPartTerminal(part, black))
                 result = ActiveMeasurementReadiness.combine(result, partReadiness(part));
         return result;
     }

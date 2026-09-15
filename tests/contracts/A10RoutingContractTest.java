@@ -52,14 +52,18 @@ public final class A10RoutingContractTest {
                 return PcbFootprint.fromPhysicalPackage(component, x, y, random, outline);
             }
         });
+        // Forty serviceable parts now fit. Use the real declared capacity boundary:
+        // 128 bodies plus J1 exceeds the unchanged 128-part planner limit.
+        require(PcbPlacementPlanner.MAX_PARTS == 128, "declared placement part budget");
         final int[] checks = new int[] { 0 };
         try {
             new SeededPcbLayoutGenerator(registry, new SeededPcbLayoutGenerator.AttemptObserver() {
                 public void check(int attempt) { checks[0]++; }
-            }).generate(denseBoard(densePackage, 40), 0L);
+            }).generate(denseBoard(densePackage, 128), 0L);
             throw new AssertionError("dense placement unexpectedly produced a layout");
         } catch (PcbRoutingRejectedException expected) {
             require(expected.isExhausted(), "placement rejection reports bounded exhaustion");
+            require(expected.getMessage().contains("PART_LIMIT"), "capacity rejection has its precise cause");
             require(expected.getKind() == PcbRoutingRejectedException.Kind.PLACEMENT,
                 "placement rejection keeps its physical classification");
             require(expected.getAttemptCount() == 80 && checks[0] == 80,
