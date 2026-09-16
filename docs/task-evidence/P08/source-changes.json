@@ -1,0 +1,36 @@
+{
+  "base": "31a124a135728f40c62873436fade6bca0382bd3",
+  "finalCodeSha256": {
+    "scripts/verify-current-contracts.ps1": "516b7defcf2c5c3b8209b1bfdd87e1f7bacdaaee8c29c32e18a84bd3bed2ac2e",
+    "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java": "0680133a1aa1d0ad5d00b33a0f467318a7a9ae910f4c0ad8dcbaee414178a429",
+    "src/com/lushprojects/circuitjs1/client/PcbConductorBuilder.java": "75c71f7e1c1f9f588f83f7ff1a5d67cd44c5f23ead0faeec4fbdd0bdab50af68",
+    "src/com/lushprojects/circuitjs1/client/PcbConductorGraph.java": "72cb9532db8aea9859a2b233946a5c2fb8b76d40ff9b56682cb81f3c6694a3c4",
+    "src/com/lushprojects/circuitjs1/client/PcbConductorProjection.java": "f8ddbbf851978e54578ea1fbb0f372d1b7c3fd78a1de198b23c4064318995df9",
+    "src/com/lushprojects/circuitjs1/client/PcbCopperProbeAccess.java": "86e6373b2bf15bcd00494da844817accd08b5b3e9416060d835fa8bd8cf9f8a9",
+    "src/com/lushprojects/circuitjs1/client/PcbCopperViewCache.java": "46146f08a2bf999345bbb0a45618fe914a21223bbe565aa9f27d976576ca1ec3",
+    "src/com/lushprojects/circuitjs1/client/PcbSpatialIndex.java": "1824b1142f12c1b86006f409115d1b10de90ee73aef5dd882a9c31cca8ea3fbd",
+    "src/com/lushprojects/circuitjs1/client/PcbTraceClearance.java": "60f0b515e94332c43223ffd6b683f85430337b7f1ca23224e83be4eb4ec7cedf",
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java": "cd9d9b1fdae1462e8f2e98ce649ed71688021350207b28b04c3653f766b3b506",
+    "tests/contracts/P04RoutingContractTest.java": "7620470dc421553600bf772e8b261a57a63801acf09cc6ba665d13180edba863",
+    "tests/contracts/P08ReferenceConductorBuilder.java": "47e0840629e876971d67130a53230422f00e2784440f0d02e8e39bf2fdf4ea44",
+    "tests/contracts/P08ScalabilityContractTest.java": "cf8e2b9bec72add1ec900de8a644088d1020fd9869ed3675007baa6755708da5",
+    "tests/contracts/P08StructuralFixtures.java": "40780947c3c752b3c265acea1274489fbb09630a4b7e6123ee29db7982bdedc5",
+    "tests/contracts/Q15ControlBoardContractTest.java": "b644eeafe223bc71d6c810e4b88f58ecfc123a48a0d2d27372d0113bebc66a35"
+  },
+  "sharedPreservation": [
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "mergedSha256": "6300bc55dcb3c3d1609cfbe757b4de90f426282dd33352159e86cc773b26efc9",
+      "originalSha256": "a3dd9d65b6a5e94f33cfea10a3f04e8bd00af272ed4501c2215c00c3ae90210d",
+      "reverseDeltaRestoresOriginalTextExactly": true,
+      "newlinePolicy": "preserve uniform CRLF; otherwise normalize LF"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java",
+      "mergedSha256": "3a5d643cff395fd196f9587904f0ed7078543a6820f775392f1141f269872467",
+      "originalSha256": "63f9815b8a04e6a7f7aff192302da1b24b50fbdc4cba9081182444d647ea1ab4",
+      "reverseDeltaRestoresOriginalTextExactly": true,
+      "newlinePolicy": "preserve uniform CRLF; otherwise normalize LF"
+    }
+  ]
+}

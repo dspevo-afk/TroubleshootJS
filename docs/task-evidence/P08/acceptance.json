@@ -1,0 +1,58 @@
+{
+  "milestone": "P08",
+  "status": "QUALIFIED",
+  "base": "31a124a135728f40c62873436fade6bca0382bd3",
+  "branch": "codex/task43p-final-recovery",
+  "native": {
+    "fullJavaSuites": 46,
+    "p08Assertions": 2022,
+    "independentOraclesAndReportProtocol": "PASS",
+    "listenerProtocolAssertions": 23,
+    "nativeListenerProtocolLive": false,
+    "preservedWorktreeFocusedSuites": 9
+  },
+  "gwt": {
+    "cleanPermutations": 5,
+    "preservedWorktreePermutations": 5
+  },
+  "browser": {
+    "currentRuns": 13,
+    "q15Cases": 11,
+    "q15Assertions": 613,
+    "q15SupportAssertions": 80,
+    "allResultsPass": true,
+    "allOwnedProcessesAndListenersReleased": true,
+    "inspectedScreenshots": 4
+  },
+  "scale": {
+    "profiles": 8,
+    "mixedInventorySizes": [
+      15,
+      30,
+      56,
+      100
+    ],
+    "denseSegments": 128,
+    "independentExactGraphAndClearanceParity": true,
+    "measuresBrowserFps": false,
+    "provesNormal100ComponentPlayability": false
+  },
+  "preservation": {
+    "originalFiles": 97,
+    "unchangedBytes": 95,
+    "mergedWithExactReverseTextProof": [
+      "scripts/verify-current-contracts.ps1",
+      "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java"
+    ],
+    "unrelatedChangesIncludedInCommit": false
+  },
+  "limits": [
+    "Dense candidate work remains all-pairs and can be slower.",
+    "No cached validation PASS, solver reading or live part occlusion.",
+    "Mixed large fixtures are validation-only, not normal routing/admission evidence.",
+    "No new normal multilayer strategy, automatic factory links or live trace-cut repair.",
+    "Earlier failed/unqualified attempts retained; test budgets unchanged."
+  ],
+  "nextUnstarted": "P09 - Production physical envelope and layer-strategy qualification",
+  "publicationIdentity": "Supplied by Git and final delivery receipt; no circular self-hash"
+}

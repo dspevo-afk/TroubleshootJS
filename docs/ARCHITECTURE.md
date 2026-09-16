@@ -12,6 +12,42 @@ instruments, valid repair behavior and answer privacy remain required. The
 [current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
 older evidence packets describe their own historical candidates.
 
+## Scalable physical validation and copper projections (P08)
+
+`PcbSpatialIndex` is a linear-storage, deterministic interval broad phase. It
+selects an axis from actual geometry, retains closed-boundary contacts and layer
+masks, and returns candidates in canonical source order. The conductor builder
+and clearance validator still execute their exact physical predicates. Swept
+copper bounds and decoded trace coordinates are captured once per validation.
+Dense overlap still requires quadratic candidate-pair work; sorting and graph
+construction add overhead, and no universal speed-up is promised.
+
+`PcbConductorGraph` indexes immutable surfaces and memoizes its pristine partition.
+Every cut snapshot rebuilds full global connectivity and the canonical actual-pad
+lookup for each physical island. Solver correspondence remains freshly observed;
+a two-way island/root bijection replaces pairwise equivalence comparisons without
+turning component conduction or logical net labels into permanent copper.
+
+`PcbCopperViewCache` retains only one current immutable surface projection. Its
+key is exact copper-snapshot identity, every camera-transform scalar, face and
+explicit projection policy version. A new geometry/package owner never aliases an
+old entry merely because a hash or canonical copper string matches. Arrays and
+returned geometry remain defensive. Physical part occlusion and actual instrument
+readings are not cached; rendering and hit testing use the same projected surface.
+
+No incremental-validation shortcut was introduced. Edits still run full relevant
+layout/contact/clearance and global connectivity checks. A local change cannot
+reuse a prior PASS or hide a remote short, a missing via or a topology split.
+The current brute-force conductor oracle is test-only and deliberately independent
+of the interval candidate implementation. It is not shipped in the GWT runtime.
+
+The P08 scale corpus includes frozen mixed-package RB15/RB30/RB56/RB100 inventories
+on deliberately roomy validation-only trees, plus point fixtures and dense shared
+copper. These measure validation, not production routing or playable large boards.
+Thread allocations and explicit index payload are distinguished from retained
+heap; JVM timings are not browser FPS. See [P08 evidence](task-evidence/P08/README.md).
+P09 layer-strategy/production-envelope qualification remains a separate milestone.
+
 ## Two-layer routing and interaction comparison (P07)
 
 `PcbLayerRoutingPrototype` is an explicit developer-only, plated-through-hole

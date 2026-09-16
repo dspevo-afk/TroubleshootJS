@@ -674,43 +674,10 @@ class PcbBoardLayout {
     }
 
     void validateTraceClearance() {
-        long minimumSquared = (long) PcbTraceRules.MIN_CENTERLINE_CLEARANCE *
-            PcbTraceRules.MIN_CENTERLINE_CLEARANCE;
-        for (int first = 0; first < traces.size(); first++) {
-            for (int second = first + 1; second < traces.size(); second++) {
-                PcbTraceGeometry firstTrace = traces.get(first);
-                PcbTraceGeometry secondTrace = traces.get(second);
-                if (firstTrace.getLayer() != secondTrace.getLayer() ||
-                        firstTrace.getNetId().equals(secondTrace.getNetId()))
-                    continue;
-                int[] firstX = firstTrace.getXPoints();
-                int[] firstY = firstTrace.getYPoints();
-                int[] secondX = secondTrace.getXPoints();
-                int[] secondY = secondTrace.getYPoints();
-                for (int firstIndex = 1; firstIndex < firstX.length; firstIndex++) {
-                    for (int secondIndex = 1; secondIndex < secondX.length; secondIndex++) {
-                        long distanceSquared = segmentDistanceSquared(
-                            firstX[firstIndex - 1], firstY[firstIndex - 1], firstX[firstIndex],
-                            firstY[firstIndex], secondX[secondIndex - 1],
-                            secondY[secondIndex - 1], secondX[secondIndex],
-                            secondY[secondIndex]);
-                        if (distanceSquared < minimumSquared)
-                            throw new IllegalStateException("PCB traces violate copper clearance: " +
-                                firstTrace.getNetId() + " / " + secondTrace.getNetId() +
-                                " distanceSquared=" + distanceSquared + " minimumSquared=" +
-                                minimumSquared + " firstSegment=" +
-                                firstX[firstIndex - 1] + "," + firstY[firstIndex - 1] + " -> " +
-                                firstX[firstIndex] + "," + firstY[firstIndex] +
-                                " secondSegment=" + secondX[secondIndex - 1] + "," +
-                                secondY[secondIndex - 1] + " -> " + secondX[secondIndex] + "," +
-                                secondY[secondIndex]);
-                    }
-                }
-            }
-        }
+        PcbTraceClearance.validate(traces);
     }
 
-    private static long segmentDistanceSquared(int ax1, int ay1, int ax2, int ay2,
+    static long segmentDistanceSquared(int ax1, int ay1, int ax2, int ay2,
             int bx1, int by1, int bx2, int by2) {
         if (segmentsIntersect(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2))
             return 0;

@@ -1,0 +1,26 @@
+[
+  {
+    "file": "visual/01-top-via-measurement.png",
+    "sourceRun": "integrated-bench",
+    "sha256": "1d812dc363d19d913a14d7148685c02418b1959473679168f2b84bbd5a6b25fc",
+    "visuallyInspected": true
+  },
+  {
+    "file": "visual/02-bottom-trace-measurement.png",
+    "sourceRun": "integrated-bench",
+    "sha256": "350f620074847cf5577747b539c3710f9b9a1d56ab042c4a9e8b64b64ce1a605",
+    "visuallyInspected": true
+  },
+  {
+    "file": "visual/03-board-front.png",
+    "sourceRun": "integrated-player",
+    "sha256": "ca97b0ffd6fe728f740f8bd8d16730c04563bd525b7d44020fc07805eccc8e07",
+    "visuallyInspected": true
+  },
+  {
+    "file": "visual/04-copper-navigation.png",
+    "sourceRun": "integrated-player",
+    "sha256": "8cc10b12bffb22346df3c44149d3c6bb04fe36acf6f9ffd731c0cacc80ec79bf",
+    "visuallyInspected": true
+  }
+]

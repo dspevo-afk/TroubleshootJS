@@ -1,24 +1,19 @@
 package com.lushprojects.circuitjs1.client;
 
-import java.util.TreeSet;
-
 /** Resolve current physical islands, never logical-net labels, to actual bound pads. */
 final class PcbCopperProbeAccess {
     static PcbConductorGraph.Surface surface(PcbConductorGraph.Snapshot copper,String id) {
-        for(PcbConductorGraph.Surface surface:copper.getGraph().getSurfaces())
-            if(surface.id.equals(id)) return surface;
-        return null;
+        return copper.getGraph().getSurface(id);
     }
     static boolean available(PcbConductorGraph.Snapshot copper,PcbConductorGraph.Surface surface,PcbBoardSide face) {
-        return surface!=null && surface.padId==null && surface.canProbe(face) &&
+        return surface!=null && copper.getGraph().getSurface(surface.id)==surface &&
+            surface.padId==null && surface.canProbe(face) &&
             (surface.edgeId==null || copper.hasEdge(surface.edgeId));
     }
     static String connectedPad(PcbConductorGraph.Snapshot copper,String surfaceId) {
         PcbConductorGraph.Surface surface=surface(copper,surfaceId);
         if(surface==null || surface.edgeId!=null && !copper.hasEdge(surface.edgeId)) return null;
-        for(String pad:new TreeSet<String>(copper.getGraph().getTerminalJunctions().keySet()))
-            if(copper.connected(surface.junctionId,copper.getGraph().getTerminalJunctions().get(pad))) return pad;
-        return null;
+        return copper.firstPadAt(surface.junctionId);
     }
     static Point marker(PcbConductorGraph.Surface surface) {
         Rectangle b=surface.getBounds();

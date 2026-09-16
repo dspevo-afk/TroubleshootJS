@@ -81,6 +81,8 @@ final class PcbConductorGraph {
     private final Map<String, Junction> junctions;
     private final Map<String, Edge> edges;
     private final List<Surface> surfaces;
+    private final Map<String,Surface> surfacesById;
+    private Snapshot pristineSnapshot;
     private final Map<String, String> padFaces;
     private final Map<String, String> terminals;
     private final String canonical;
@@ -129,6 +131,9 @@ final class PcbConductorGraph {
         this.junctions = Collections.unmodifiableMap(js);
         this.edges = Collections.unmodifiableMap(es);
         this.surfaces = Collections.unmodifiableList(ss);
+        HashMap<String,Surface> surfaceIndex=new HashMap<String,Surface>();
+        for(Surface surface:ss)surfaceIndex.put(surface.id,surface);
+        this.surfacesById=Collections.unmodifiableMap(surfaceIndex);
         this.padFaces = freezeReferences(padFaces, js);
         this.terminals = freezeReferences(terminals, js);
         StringBuilder out = new StringBuilder("P02-COPPER/1\n");
@@ -173,16 +178,21 @@ final class PcbConductorGraph {
     Map<String,Junction> getJunctions() { return junctions; }
     Map<String,Edge> getEdges() { return edges; }
     List<Surface> getSurfaces() { return surfaces; }
+    Surface getSurface(String id) { return surfacesById.get(id); }
     Map<String,String> getTerminalJunctions() { return terminals; }
     String getPadJunction(String pad, PcbCopperLayer layer) { return padFaces.get(faceKey(pad, layer)); }
     String toCanonical() { return canonical; }
-    Snapshot pristine() { return new Snapshot(this, Collections.<String>emptySet()); }
+    Snapshot pristine() {
+        if(pristineSnapshot==null)pristineSnapshot=new Snapshot(this,Collections.<String>emptySet());
+        return pristineSnapshot;
+    }
 
     /** Immutable connectivity. Island numbers are scratch, not saved or exposed identities. */
     static final class Snapshot {
         private final PcbConductorGraph graph;
         private final Set<String> cuts;
         private final Map<String,Integer> islands = new HashMap<String,Integer>();
+        private final Map<Integer,String> firstPadByIsland = new HashMap<Integer,String>();
         Snapshot(PcbConductorGraph graph, Set<String> cutIds) {
             this.graph = graph;
             TreeSet<String> copy = new TreeSet<String>();
@@ -210,6 +220,21 @@ final class PcbConductorGraph {
                     }
                 }
             }
+            for(Map.Entry<String,String> terminal:graph.terminals.entrySet()) {
+                Integer owner=islands.get(terminal.getValue());
+                if(!firstPadByIsland.containsKey(owner))firstPadByIsland.put(owner,terminal.getKey());
+            }
+        }
+        /** A snapshot owns a full connectivity rebuild, never a dirty-region approximation. */
+        int islandOfPad(String pad) {
+            Integer island=islands.get(graph.terminals.get(pad));
+            if(island==null)throw new IllegalArgumentException("Unknown physical pad");
+            return island.intValue();
+        }
+        String firstPadAt(String junction) {
+            Integer island=islands.get(junction);
+            if(island==null)throw new IllegalArgumentException("Unknown physical junction");
+            return firstPadByIsland.get(island);
         }
         PcbConductorGraph getGraph() { return graph; }
         Set<String> getCutEdgeIds() { return cuts; }

@@ -1,0 +1,38 @@
+{
+  "attempts": [
+    {
+      "name": "focused",
+      "qualification": "New mirrored test-point fixture used a guessed pose; repaired from the real package transform.",
+      "rawLogSha256": "6a0d9ec14bc8f4f9420876f499ea5fd34a2e7117f6ba310721d67a5b3e350f82"
+    },
+    {
+      "name": "focused2",
+      "qualification": "Grid prototype passed correctness but added small-board/allocation overhead; discarded in favor of interval storage.",
+      "rawLogSha256": "083a8ef25e5dc28b507eb7526b42f9fa3e15943eb72e406a05a501f1b3941ebe"
+    },
+    {
+      "name": "native-final",
+      "qualification": "All 46 Java suites passed; default WindowsApps Python oracle startup exceeded the unchanged 60-second limit. Not a full PASS.",
+      "rawLogSha256": "35cba9727cc67884af59049f90d07fd896b1d8f10e6858b9ccbc399ca728c652"
+    },
+    {
+      "name": "native-final-realpython",
+      "qualification": "All 46 Java suites passed; direct Store executable failed the bounded launcher access/start-identity gate. Not a full PASS.",
+      "rawLogSha256": "dca67bb27d9d775cc8681626b1253a5fb4773662c6b5cf015c46d1a88a2ec3bc"
+    },
+    {
+      "name": "gwt-clean",
+      "qualification": "GWT rejected int[].clone(); replaced with explicit arraycopy. All five permutations passed afterward.",
+      "rawLogSha256": "601481d22ab08b20ef45d8ea813d7c387b83cbd047963376e24910f69cfd2473"
+    },
+    {
+      "name": "native-qualified",
+      "qualification": "Q15 reflected the first constructor rather than its signature; corrected Q15 and the identical P04 pattern without changing oracle expectations.",
+      "rawLogSha256": "1ea99560be618c6c179221663da4ff205d71b4b96a469942efcba602887497af"
+    }
+  ],
+  "finalNative": "native-qualified2, exit 0; all 46 Java suites and independent oracles/report protocol passed",
+  "finalBuilds": "gwt-clean2 and gwt-integrated, both exit 0/all five permutations",
+  "budgetChanges": false,
+  "historicalLogsReusedAsFinalProof": false
+}

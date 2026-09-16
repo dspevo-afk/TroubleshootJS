@@ -8,24 +8,9 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-/** Normalizes current Manhattan copper before assigning immutable graph identities. */
-final class PcbConductorBuilder {
-    static final class Statistics {
-        long segmentPairs, segmentLandPairs, landPairs, referencePairs;
-        long broadPhaseBoxTests, indexPayloadBytes;
-        int segments, lands, nodes, references;
-        long exactPairs() { return segmentPairs+segmentLandPairs+landPairs; }
-        void reset() {
-            segmentPairs=segmentLandPairs=landPairs=referencePairs=0;
-            broadPhaseBoxTests=indexPayloadBytes=0;segments=lands=nodes=references=0;
-        }
-        void include(PcbSpatialIndex index) {
-            PcbSpatialIndex.Statistics s=index.statistics;
-            broadPhaseBoxTests+=s.boxTests;indexPayloadBytes+=s.primitivePayloadBytes();
-            nodes+=s.nodes;references+=s.references;
-        }
-    }
-    private Statistics statistics;
+/** Test-only independent all-pairs physical oracle. Keep current exact contact semantics; no runtime use. */
+final class P08ReferenceConductorBuilder {
+    static long segmentPairs, segmentLandPairs, landPairs;
     private final TroubleshootBoard board;
     private final PcbBoardLayout layout;
     private final List<Segment> segments = new ArrayList<Segment>();
@@ -34,18 +19,13 @@ final class PcbConductorBuilder {
     private final TreeMap<String,Land> lands = new TreeMap<String,Land>();
     private final TreeMap<String,String> padFaces = new TreeMap<String,String>();
     private final TreeMap<String,String> terminals = new TreeMap<String,String>();
-    private PcbConductorBuilder(TroubleshootBoard board, PcbBoardLayout layout) {
+    private P08ReferenceConductorBuilder(TroubleshootBoard board, PcbBoardLayout layout) {
         if (board == null || layout == null) throw new IllegalArgumentException("Missing copper input");
         this.board = board; this.layout = layout;
     }
     static PcbConductorGraph capture(TroubleshootBoard board, PcbBoardLayout layout) {
-        return capture(board,layout,new Statistics());
-    }
-    static PcbConductorGraph capture(TroubleshootBoard board,PcbBoardLayout layout,Statistics statistics) {
-        if(statistics==null)throw new IllegalArgumentException("Missing physical work counters");
-        PcbConductorBuilder builder=new PcbConductorBuilder(board,layout);
-        statistics.reset();builder.statistics=statistics;
-        return builder.build();
+        segmentPairs=segmentLandPairs=landPairs=0;
+        return new P08ReferenceConductorBuilder(board, layout).build();
     }
     private static String key(PcbCopperLayer layer, int x, int y) { return layer + ":" + x + ":" + y; }
     private static final class Node {
@@ -63,7 +43,6 @@ final class PcbConductorBuilder {
         final PcbCopperAccess.Exposure exposure;
         final int x1, y1, x2, y2;
         final boolean horizontal;
-        private final Rectangle strokeBounds;
         final TreeSet<Integer> splits = new TreeSet<Integer>();
         Segment(PcbTraceGeometry trace, int ax, int ay, int bx, int by) {
             if ((ax == bx) == (ay == by)) throw new IllegalArgumentException("Invalid copper segment");
@@ -71,7 +50,6 @@ final class PcbConductorBuilder {
             exposure = trace.getExposure(); horizontal = ay == by;
             x1 = Math.min(ax,bx); x2 = Math.max(ax,bx); y1 = Math.min(ay,by); y2 = Math.max(ay,by);
             splits.add(horizontal ? x1 : y1); splits.add(horizontal ? x2 : y2);
-            strokeBounds=stroke(x1,y1,x2,y2);
         }
         int project(int x, int y) {
             return horizontal ? Math.max(x1,Math.min(x2,x)) : Math.max(y1,Math.min(y2,y));
@@ -79,7 +57,7 @@ final class PcbConductorBuilder {
         String supportingLine() { return layer + (horizontal ? ":H:" + y1 : ":V:" + x1); }
         int x(int value) { return horizontal ? value : x1; }
         int y(int value) { return horizontal ? y1 : value; }
-        Rectangle bounds() { return strokeBounds; }
+        Rectangle bounds() { return stroke(x1,y1,x2,y2); }
         boolean contains(int x, int y) {
             return x >= x1 && x <= x2 && y >= y1 && y <= y2;
         }
@@ -129,26 +107,15 @@ final class PcbConductorBuilder {
     private PcbConductorGraph build() {
         layout.validateAgainst(board);
         addPadsAndHoles(); addRoutes();
-        ArrayList<Land> all = new ArrayList<Land>(lands.values());
-        PcbSpatialIndex segmentIndex=segmentIndex(), landIndex=landIndex(all);
-        statistics.segments=segments.size();statistics.lands=all.size();
-        long segmentCount=segments.size(), landCount=all.size();
-        statistics.referencePairs=segmentCount*(segmentCount-1)/2+segmentCount*landCount+landCount*(landCount-1)/2;
         for (int i=0; i<segments.size(); i++) {
             Segment a = segments.get(i);
-            PcbSpatialIndex.Box area=new PcbSpatialIndex.Box(a.bounds());
-            int mask=PcbSpatialIndex.mask(a.layer);
-            for (int j:segmentIndex.query(area,mask)) if(j>i) {
-                statistics.segmentPairs++;contact(a,segments.get(j));
-            }
-            for (int j:landIndex.query(area,mask)) {
-                statistics.segmentLandPairs++;contact(a,all.get(j));
-            }
+            for (int j=i+1; j<segments.size(); j++) contact(a,segments.get(j));
+            for (Land land : lands.values()) contact(a,land);
         }
         normalizeCollinearSplits();
-        for (int i=0; i<all.size(); i++) for (int j:landIndex.query(
-                new PcbSpatialIndex.Box(all.get(i).bounds),PcbSpatialIndex.mask(all.get(i).node.layer))) if(j>i) {
-            statistics.landPairs++;
+        ArrayList<Land> all = new ArrayList<Land>(lands.values());
+        for (int i=0; i<all.size(); i++) for (int j=i+1; j<all.size(); j++) {
+            landPairs++;
             Land a=all.get(i), b=all.get(j);
             if (a.node.layer == b.node.layer && touch(a.bounds,b.bounds)) {
                 link(a.node,b.node,PcbConductorGraph.Kind.CONTACT,a.id + "/" + b.id,
@@ -166,36 +133,16 @@ final class PcbConductorBuilder {
         }
         for (PcbBoardHole hole : layout.getHoles()) {
             if (hole.kind == PcbBoardHole.Kind.NON_PLATED) {
-                PcbSpatialIndex.Box area=new PcbSpatialIndex.Box(hole.getBounds());
-                for (int i:segmentIndex.query(area,3)) if (touch(hole.getBounds(),segments.get(i).bounds()))
+                for (Segment segment : segments) if (touch(hole.getBounds(),segment.bounds()))
                     throw new IllegalStateException("Non-plated hole intersects copper");
-                for (int i:landIndex.query(area,3)) if (touch(hole.getBounds(),all.get(i).bounds))
+                for (Land land : lands.values()) if (touch(hole.getBounds(),land.bounds))
                     throw new IllegalStateException("Non-plated hole intersects land");
             } else for (PcbCopperLayer layer : PcbCopperLayer.values())
                 if (!lands.get("hole/" + PcbConductorGraph.faceKey(hole.id,layer)).externalContact)
                     throw new IllegalStateException("Plated hole has an unattached layer endpoint");
         }
-        statistics.include(segmentIndex);statistics.include(landIndex);
         addInternalConnections();
         return freeze();
-    }
-    private PcbSpatialIndex segmentIndex() {
-        ArrayList<PcbSpatialIndex.Box> boxes=new ArrayList<PcbSpatialIndex.Box>();
-        int[] masks=new int[segments.size()];
-        for(int i=0;i<segments.size();i++) {
-            Segment s=segments.get(i);boxes.add(new PcbSpatialIndex.Box(s.bounds()));
-            masks[i]=PcbSpatialIndex.mask(s.layer);
-        }
-        return new PcbSpatialIndex(boxes,masks);
-    }
-    private PcbSpatialIndex landIndex(List<Land> all) {
-        ArrayList<PcbSpatialIndex.Box> boxes=new ArrayList<PcbSpatialIndex.Box>();
-        int[] masks=new int[all.size()];
-        for(int i=0;i<all.size();i++) {
-            Land land=all.get(i);boxes.add(new PcbSpatialIndex.Box(land.bounds));
-            masks[i]=PcbSpatialIndex.mask(land.node.layer);
-        }
-        return new PcbSpatialIndex(boxes,masks);
     }
     /** Collect first, then distribute: pairwise copying misses later and transitive contacts. */
     private void normalizeCollinearSplits() {
@@ -282,6 +229,7 @@ final class PcbConductorBuilder {
             throw new IllegalArgumentException("Trace endpoint has no matching physical layer land");
     }
     private void contact(Segment a, Segment b) {
+        segmentPairs++;
         if (a.layer != b.layer || !touch(a.bounds(),b.bounds())) return;
         sameNet(a.net,b.net);
         if (a.horizontal == b.horizontal && (a.horizontal ? a.y1 == b.y1 : a.x1 == b.x1)) {
@@ -310,6 +258,7 @@ final class PcbConductorBuilder {
             PcbConductorGraph.Kind.CONTACT,provenance,PcbCopperAccess.Exposure.EXPOSED);
     }
     private void contact(Segment segment, Land land) {
+        segmentLandPairs++;
         if (segment.layer != land.node.layer || !touch(segment.bounds(),land.bounds)) return;
         sameNet(segment.net,land.node.net);
         int at = segment.project(land.node.x,land.node.y); segment.splits.add(at);

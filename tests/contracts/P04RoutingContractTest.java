@@ -110,7 +110,9 @@ public final class P04RoutingContractTest {
         // Invoke the selected router's actual distance field. An independent
         // weighted Dijkstra oracle includes discounted copper, costs 7/10 and walls.
         Class<?> type=Class.forName("com.lushprojects.circuitjs1.client.PcbNetRouter$Router");
-        java.lang.reflect.Constructor<?> constructor=type.getDeclaredConstructors()[0];constructor.setAccessible(true);
+        java.lang.reflect.Constructor<?> constructor=type.getDeclaredConstructor(PcbBoardLayout.class,
+            TroubleshootBoard.class,Rectangle.class,int.class,SeededPcbLayoutGenerator.AttemptObserver.class);
+        constructor.setAccessible(true);
         Rectangle outline=new Rectangle(0,0,140,100);int width=13,height=9,n=width*height;
         Object router=constructor.newInstance(new PcbBoardLayout(400,300,outline,new Rectangle(180,20,150,200)),
             new TroubleshootBoard("heuristic"),outline,0,new SeededPcbLayoutGenerator.AttemptObserver(){public void check(int attempt){}});

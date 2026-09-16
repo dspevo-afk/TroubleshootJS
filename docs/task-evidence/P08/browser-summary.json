@@ -1,0 +1,191 @@
+{
+  "runs": [
+    {
+      "name": "integrated-bench",
+      "outcome": "PASS",
+      "status": "PASS:p07",
+      "runtimeErrors": 0,
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "loadedResourceSha256": {
+        "circuitjs1.nocache.js": "e53b3236b9d5243ffd703531642ea642efb60fa716a115ecdad62d035ce305b4",
+        "848DACF06D24134E56EE19EE0A688E3C.cache.js": "ac3b94564611598df59e709458fa3518b0d0f447dbe83e0207ef59ee7a2b551e"
+      }
+    },
+    {
+      "name": "integrated-negative",
+      "outcome": "PASS",
+      "status": "FAIL:P07 forced-negative",
+      "runtimeErrors": 0,
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "loadedResourceSha256": {
+        "circuitjs1.nocache.js": "e53b3236b9d5243ffd703531642ea642efb60fa716a115ecdad62d035ce305b4",
+        "848DACF06D24134E56EE19EE0A688E3C.cache.js": "ac3b94564611598df59e709458fa3518b0d0f447dbe83e0207ef59ee7a2b551e"
+      }
+    },
+    {
+      "name": "integrated-player",
+      "outcome": "PASS",
+      "status": "WORKBENCH",
+      "runtimeErrors": 0,
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "loadedResourceSha256": {
+        "circuitjs1.nocache.js": "e53b3236b9d5243ffd703531642ea642efb60fa716a115ecdad62d035ce305b4",
+        "848DACF06D24134E56EE19EE0A688E3C.cache.js": "ac3b94564611598df59e709458fa3518b0d0f447dbe83e0207ef59ee7a2b551e"
+      }
+    },
+    {
+      "name": "clean-p07",
+      "outcome": "PASS",
+      "status": "PASS:p07",
+      "runtimeErrors": 0,
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "loadedResourceSha256": {
+        "circuitjs1.nocache.js": "30d48883c58285181c19449c7e3b5de16ec51d62903d5801bc2286d10271d2d9",
+        "E6C04BF7FBDA18DAFB6F46B0780504AC.cache.js": "4a8a80cc740f0cf6126e6e5fe334d92e691967a5caecc9fb38ec66098c980c02"
+      }
+    },
+    {
+      "name": "clean-negative",
+      "outcome": "PASS",
+      "status": "FAIL:P07 forced-negative",
+      "runtimeErrors": 0,
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "loadedResourceSha256": {
+        "circuitjs1.nocache.js": "30d48883c58285181c19449c7e3b5de16ec51d62903d5801bc2286d10271d2d9",
+        "E6C04BF7FBDA18DAFB6F46B0780504AC.cache.js": "4a8a80cc740f0cf6126e6e5fe334d92e691967a5caecc9fb38ec66098c980c02"
+      }
+    },
+    {
+      "name": "clean-bench",
+      "outcome": "PASS",
+      "status": "PASS:p07",
+      "runtimeErrors": 0,
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "loadedResourceSha256": {
+        "circuitjs1.nocache.js": "30d48883c58285181c19449c7e3b5de16ec51d62903d5801bc2286d10271d2d9",
+        "E6C04BF7FBDA18DAFB6F46B0780504AC.cache.js": "4a8a80cc740f0cf6126e6e5fe334d92e691967a5caecc9fb38ec66098c980c02"
+      }
+    },
+    {
+      "name": "clean-layout",
+      "outcome": "PASS",
+      "status": "PASS:layout",
+      "runtimeErrors": 0,
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "loadedResourceSha256": {
+        "circuitjs1.nocache.js": "30d48883c58285181c19449c7e3b5de16ec51d62903d5801bc2286d10271d2d9",
+        "E6C04BF7FBDA18DAFB6F46B0780504AC.cache.js": "4a8a80cc740f0cf6126e6e5fe334d92e691967a5caecc9fb38ec66098c980c02"
+      }
+    },
+    {
+      "name": "clean-p06",
+      "outcome": "PASS",
+      "status": "PASS:p06",
+      "runtimeErrors": 0,
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "loadedResourceSha256": {
+        "circuitjs1.nocache.js": "30d48883c58285181c19449c7e3b5de16ec51d62903d5801bc2286d10271d2d9",
+        "E6C04BF7FBDA18DAFB6F46B0780504AC.cache.js": "4a8a80cc740f0cf6126e6e5fe334d92e691967a5caecc9fb38ec66098c980c02"
+      }
+    },
+    {
+      "name": "clean-p06negative",
+      "outcome": "PASS",
+      "status": "FAIL:P06 forced-negative",
+      "runtimeErrors": 0,
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "loadedResourceSha256": {
+        "circuitjs1.nocache.js": "30d48883c58285181c19449c7e3b5de16ec51d62903d5801bc2286d10271d2d9",
+        "E6C04BF7FBDA18DAFB6F46B0780504AC.cache.js": "4a8a80cc740f0cf6126e6e5fe334d92e691967a5caecc9fb38ec66098c980c02"
+      }
+    },
+    {
+      "name": "clean-p06bench",
+      "outcome": "PASS",
+      "status": "PASS:p06",
+      "runtimeErrors": 0,
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "loadedResourceSha256": {
+        "circuitjs1.nocache.js": "30d48883c58285181c19449c7e3b5de16ec51d62903d5801bc2286d10271d2d9",
+        "E6C04BF7FBDA18DAFB6F46B0780504AC.cache.js": "4a8a80cc740f0cf6126e6e5fe334d92e691967a5caecc9fb38ec66098c980c02"
+      }
+    },
+    {
+      "name": "clean-q15",
+      "outcome": "PASS",
+      "status": "PASS:q15",
+      "runtimeErrors": 0,
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "loadedResourceSha256": {
+        "circuitjs1.nocache.js": "30d48883c58285181c19449c7e3b5de16ec51d62903d5801bc2286d10271d2d9",
+        "E6C04BF7FBDA18DAFB6F46B0780504AC.cache.js": "4a8a80cc740f0cf6126e6e5fe334d92e691967a5caecc9fb38ec66098c980c02"
+      }
+    },
+    {
+      "name": "clean-q15negative",
+      "outcome": "PASS",
+      "status": "FAIL:q15:q15-explicit-failure-canary",
+      "runtimeErrors": 0,
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "loadedResourceSha256": {
+        "circuitjs1.nocache.js": "30d48883c58285181c19449c7e3b5de16ec51d62903d5801bc2286d10271d2d9",
+        "E6C04BF7FBDA18DAFB6F46B0780504AC.cache.js": "4a8a80cc740f0cf6126e6e5fe334d92e691967a5caecc9fb38ec66098c980c02"
+      }
+    },
+    {
+      "name": "clean-player",
+      "outcome": "PASS",
+      "status": "WORKBENCH",
+      "runtimeErrors": 0,
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "loadedResourceSha256": {
+        "circuitjs1.nocache.js": "30d48883c58285181c19449c7e3b5de16ec51d62903d5801bc2286d10271d2d9",
+        "E6C04BF7FBDA18DAFB6F46B0780504AC.cache.js": "4a8a80cc740f0cf6126e6e5fe334d92e691967a5caecc9fb38ec66098c980c02"
+      }
+    }
+  ],
+  "q15Cases": 11,
+  "q15Assertions": 613,
+  "q15SupportAssertions": 80,
+  "freshFinalSourceRuns": true,
+  "allOwnedBrowserProcessesAndListenersReleased": true
+}

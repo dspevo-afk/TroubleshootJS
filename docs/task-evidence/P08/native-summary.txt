@@ -1,0 +1,67 @@
+Final current-session native gate. The following is an excerpt, not the full raw log.
+Full raw log SHA-256: e7bfa99359deefd62709fff5fbe86d0ff619d279666090da6abe6aa3b4b93347
+
+PASS: PCB compaction contracts assertions=416 reducedFamilies=9
+PASS: visual workbench contracts assertions=38
+PASS: Task43 current physical endpoint contracts assertions=320 legacyFamilies=6 controlledSignedSeeds=4
+PASS: architecture footprint contracts assertions=46 routedPackages=4 deterministicRepeats=4 familyRegressions=6
+PASS: physical serviceability contracts assertions=846
+PASS: U04 session contracts assertions=76
+PASS: U05 difficulty contracts assertions=23
+PASS: E03 relay contracts 161 assertions
+PASS: Q15 control board contracts assertions=6863 designs=4
+PASS: Quick Play current seed envelopes and construction
+PASS: Task46 410 assertions, 36 negative cases; pure descriptor/constraints/named-stream corpus
+PASS: Task44 9 groups, 247 assertions; no simulator dependency
+PASS: Task45 202 assertions
+PASS: current resistive assembly contracts 241 assertions
+PASS: current controlled-indicator contracts 201 assertions
+PASS: current switched-low-side compatibility 16 assertions
+PASS: current value synthesis 188 assertions
+PASS: A05 role providers 280 assertions
+PASS: E01 source contracts 96015 assertions
+PASS: A06 power contracts assertions=152
+PASS: A07 execution contracts assertions=24868
+PASS: A09 diagnostic contracts assertions=322 replays=44
+PASS: A10 generation contracts assertions=190
+PASS: A10 routing rejection contracts assertions=28
+PASS: A10 dependency contracts assertions=12
+PASS: A11 provider conformance
+PASS: A03IdentityContractTest assertions=30
+PASS: A02CandidateContractTest
+PASS: A02GeometryContractTest 32 assertions
+PASS: P01 physical pose contracts assertions=8357 poses=43
+PASS: P02 conductor contracts 3209 assertions; 40 independent lattice cases; 48 shared-copper permutations; 16 SMD poses
+PASS: U01 viewport contracts assertions=1259
+PASS: lifted lead appearance contracts assertions=337 poses=80
+PASS: P03 placement contracts assertions=864267
+PASS: P04 routing contracts assertions=6408 branches=6
+PASS: P05 routing contracts assertions=21976
+PASS: P06 factory-link contracts assertions=1705
+PASS: P07 two-layer contracts assertions=48
+P08_SCALE profile=points-15 components=15 segments=7 lands=30 exactContacts=14 referenceContacts=666 broadPhaseBoxTests=142 references=37 indexNodes=37 indexPrimitiveBytes=1776 exactClearance=0 referenceClearance=21 fastMedianNanos=184200 referenceMedianNanos=168800 fastAllocatedBytes=207144 referenceAllocatedBytes=204256 fullValidationMedianNanos=839700 cached1000Nanos=204600 uncached1000Nanos=5845800 retainedViewBuilds=1
+P08_SCALE profile=points-30 components=30 segments=15 lands=60 exactContacts=30 referenceContacts=2775 broadPhaseBoxTests=343 references=75 indexNodes=75 indexPrimitiveBytes=3600 exactClearance=0 referenceClearance=105 fastMedianNanos=491300 referenceMedianNanos=452300 fastAllocatedBytes=419216 referenceAllocatedBytes=427144 fullValidationMedianNanos=1640600 cached1000Nanos=103400 uncached1000Nanos=5975100 retainedViewBuilds=1
+P08_SCALE profile=points-56 components=56 segments=28 lands=112 exactContacts=56 referenceContacts=9730 broadPhaseBoxTests=756 references=140 indexNodes=140 indexPrimitiveBytes=6720 exactClearance=0 referenceClearance=378 fastMedianNanos=656600 referenceMedianNanos=960800 fastAllocatedBytes=787312 referenceAllocatedBytes=842984 fullValidationMedianNanos=2195800 cached1000Nanos=86400 uncached1000Nanos=7210300 retainedViewBuilds=1
+P08_SCALE profile=points-100 components=100 segments=50 lands=200 exactContacts=100 referenceContacts=31125 broadPhaseBoxTests=1490 references=250 indexNodes=250 indexPrimitiveBytes=12000 exactClearance=0 referenceClearance=1225 fastMedianNanos=1277200 referenceMedianNanos=1750300 fastAllocatedBytes=1431280 referenceAllocatedBytes=1476888 fullValidationMedianNanos=3423500 cached1000Nanos=89700 uncached1000Nanos=17861700 retainedViewBuilds=1
+P08_SCALE profile=mixed-RB15 components=15 segments=71 lands=66 exactContacts=92 referenceContacts=9316 broadPhaseBoxTests=1178 references=137 indexNodes=137 indexPrimitiveBytes=6576 exactClearance=0 referenceClearance=2262 fastMedianNanos=695000 referenceMedianNanos=1011400 fastAllocatedBytes=1081472 referenceAllocatedBytes=1244000 fullValidationMedianNanos=1065400 cached1000Nanos=351400 uncached1000Nanos=29363100 retainedViewBuilds=1
+P08_SCALE profile=mixed-RB30 components=30 segments=146 lands=144 exactContacts=204 referenceContacts=41905 broadPhaseBoxTests=2793 references=290 indexNodes=290 indexPrimitiveBytes=13920 exactClearance=0 referenceClearance=9853 fastMedianNanos=1542500 referenceMedianNanos=1902900 fastAllocatedBytes=2311760 referenceAllocatedBytes=3172896 fullValidationMedianNanos=2595000 cached1000Nanos=174500 uncached1000Nanos=45037400 retainedViewBuilds=1
+P08_SCALE profile=mixed-RB56 components=56 segments=300 lands=328 exactContacts=436 referenceContacts=196878 broadPhaseBoxTests=7447 references=628 indexNodes=628 indexPrimitiveBytes=30144 exactClearance=0 referenceClearance=42989 fastMedianNanos=3836900 referenceMedianNanos=7290800 fastAllocatedBytes=4938088 referenceAllocatedBytes=8870160 fullValidationMedianNanos=5582300 cached1000Nanos=331600 uncached1000Nanos=102724500 retainedViewBuilds=1
+P08_SCALE profile=mixed-RB100 components=100 segments=535 lands=586 exactContacts=778 referenceContacts=627760 broadPhaseBoxTests=14160 references=1121 indexNodes=1121 indexPrimitiveBytes=53808 exactClearance=0 referenceClearance=139615 fastMedianNanos=6192800 referenceMedianNanos=16037700 fastAllocatedBytes=9076984 referenceAllocatedBytes=22144880 fullValidationMedianNanos=11046100 cached1000Nanos=446500 uncached1000Nanos=174595400 retainedViewBuilds=1
+P08_DENSE segments=128 exactContacts=8128 referenceContacts=8128 broadPhaseBoxTests=16384 references=128 indexPrimitiveBytes=6144 fastNanos=454000 referenceNanos=279600 fastAllocatedBytes=886616 referenceAllocatedBytes=794464
+PASS: P08 scalable physical contracts assertions=2022
+PASS: P07 frozen layer corpus rows=54 successes=7
+PASS: P05 frozen corpus rows=70 successes=24
+PASS: P05 generation comparison rows=13
+PASS: A02ReplayContractTest assertions=148
+PASS: ElectricalUnitPackageMapContractTest assertions=37
+PASS: A04ConstructionContractTest assertions=680
+PASS: A04PhysicalDeclarationContractTest assertions=5270
+PASS: Task46 independent seed oracle 22 vectors; literal TSV/Java correspondence exact
+PASS: A11 provider boundaries/report assertions=125
+PASS: A09 independent diagnostic contracts assertions=143
+PASS: current value synthesis oracle 9 seeds; bounded6/schema2 repeated-channel equations exact
+PASS: A05 independent role selection oracle 6 seeds
+PASS: A04 report contracts assertions=474
+PASS: preview listener identity contracts assertions=23 live=False
+PASS: current contracts; 46 Java suites, independent seed/value/role oracles and report protocol.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

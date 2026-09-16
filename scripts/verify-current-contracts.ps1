@@ -107,6 +107,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'P05RoutingContractTest'; Marker = 'P05 routing contracts ' },
         @{ Name = 'P06FactoryLinkContractTest'; Marker = 'P06 factory-link contracts ' },
         @{ Name = 'P07TwoLayerContractTest'; Marker = 'P07 two-layer contracts ' },
+        @{ Name = 'P08ScalabilityContractTest'; Marker = 'P08 scalable physical contracts ' },
         @{ Name = 'P07LayerCorpus'; Marker = 'P07 frozen layer corpus ' },
         @{ Name = 'P05RoutingCorpus'; Marker = 'P05 frozen corpus ' },
         @{ Name = 'P05GenerationCorpus'; Marker = 'P05 generation comparison ' },
@@ -127,6 +128,8 @@ final class PhysicalSpecificationDeveloperVerifier {
     }
     $argumentsFile = Join-Path $taskRoot 'sources.txt'
     $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/P03StructuralFixtures.java')
+    $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/P08ReferenceConductorBuilder.java')
+    $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/P08StructuralFixtures.java')
     [IO.File]::WriteAllLines($argumentsFile, @($sourcePaths | ForEach-Object {
         '"' + $_.Replace('\', '/') + '"'
     }), (New-Object Text.UTF8Encoding($false)))

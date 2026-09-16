@@ -1,0 +1,37 @@
+{
+  "runnerPid": 3872,
+  "stages": [
+    {
+      "name": "native-integrated",
+      "started": 1789525331.0338995,
+      "state": "PASS",
+      "pid": 9428,
+      "exitCode": 0,
+      "ended": 1789525391.0159755
+    },
+    {
+      "name": "integrated-bench",
+      "started": 1789525391.016397,
+      "state": "PASS",
+      "pid": 13016,
+      "exitCode": 0,
+      "ended": 1789525450.758641
+    },
+    {
+      "name": "integrated-negative",
+      "started": 1789525450.7590458,
+      "state": "PASS",
+      "pid": 8224,
+      "exitCode": 0,
+      "ended": 1789525496.6727138
+    },
+    {
+      "name": "integrated-player",
+      "started": 1789525496.673093,
+      "state": "PASS",
+      "pid": 12884,
+      "exitCode": 0,
+      "ended": 1789525575.9799592
+    }
+  ]
+}

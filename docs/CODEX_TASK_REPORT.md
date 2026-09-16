@@ -1,3 +1,45 @@
+# Current checkpoint - P08 complete
+
+Scope: scalable physical validation and copper projection caches on P07 base
+`31a124a135728f40c62873436fade6bca0382bd3`; branch `codex/task43p-final-recovery`.
+Next unstarted milestone: **P09 - Production physical envelope and layer-strategy qualification**.
+
+Implemented an evidence-selected interval broad phase with unchanged exact copper
+predicates; immutable surface/island lookup and single-entry view projections;
+and exact linear physical/solver partition correspondence. Full connectivity is
+rebuilt on changed cut snapshots. No cached PASS, solver reading or live occlusion
+is substituted for actual validation. The all-pairs reference is test-only.
+
+Qualification: all 46 maintained Java suites and independent oracles/report
+protocol passed. P08 passes 2,022 assertions, including boundary/array/pose/package/
+layer/policy/via/nonlocal-contact/cut-split falsifiers. Both clean and preserved
+working combinations compile all five GWT permutations. The preserved combination
+also passes nine targeted native suites. Thirteen current compiled browser runs
+pass, including actual P07 and P06 copper/service measurements, layout, all eleven
+Q15 seeds (613 assertions plus 80 support checks), forced negatives and normal
+player/seed/face/pan/zoom/privacy checks. Four screenshots were inspected.
+
+The mixed 100-component validation-only fixture reduced exact contact comparisons
+from 627,760 to 778. Final native medians were 16.038 ms reference versus 6.193 ms
+current, with about 59% fewer allocated bytes. This is not FPS or proof of normal
+100-component playability. Dense coincident copper retains all pairs and is slower.
+P09 layer-strategy/envelope adoption, large-board content and the post-P09 Quick
+Play admission gate remain unstarted; frozen P07 routing failures are not upgraded.
+
+All 97 pre-existing changed/untracked files were preserved: 95 byte-identical and
+two shared files with reverse-delta text preservation. Their visual/FPS/tray work
+remains outside the P08 commit. Test-constructor ordering and task-local Python
+launcher issues found during qualification are recorded; no budgets were widened.
+
+Evidence: `docs/task-evidence/P08/README.md`, `acceptance.json`, `scale.json`,
+`source-changes.json`, `build-identity.json`, `browser-summary.json`, and `REVIEW.md`.
+Reproduction: `docs/task-evidence/P08/REPRODUCE.md`.
+Git and the final delivery receipt are authoritative for the publication SHA.
+
+---
+
+## Prior checkpoint retained below
+
 # Current checkpoint - P07 complete (2026-09-15)
 
 Scope: required two-layer routing/viewing/interaction comparison on P06 base

@@ -1,0 +1,85 @@
+{
+  "runnerPid": 17984,
+  "stages": [
+    {
+      "name": "clean-p07",
+      "started": 1789525713.7674963,
+      "state": "PASS",
+      "pid": 3532,
+      "exitCode": 0,
+      "ended": 1789525780.1602237
+    },
+    {
+      "name": "clean-negative",
+      "started": 1789525780.1606004,
+      "state": "PASS",
+      "pid": 17732,
+      "exitCode": 0,
+      "ended": 1789525891.0525174
+    },
+    {
+      "name": "clean-bench",
+      "started": 1789525891.0528986,
+      "state": "PASS",
+      "pid": 15984,
+      "exitCode": 0,
+      "ended": 1789525928.9690392
+    },
+    {
+      "name": "clean-layout",
+      "started": 1789525928.9694672,
+      "state": "PASS",
+      "pid": 11076,
+      "exitCode": 0,
+      "ended": 1789525996.134212
+    },
+    {
+      "name": "clean-p06",
+      "started": 1789525996.1346269,
+      "state": "PASS",
+      "pid": 4860,
+      "exitCode": 0,
+      "ended": 1789526058.8523834
+    },
+    {
+      "name": "clean-p06negative",
+      "started": 1789526058.852765,
+      "state": "PASS",
+      "pid": 21316,
+      "exitCode": 0,
+      "ended": 1789526082.3868413
+    },
+    {
+      "name": "clean-p06bench",
+      "started": 1789526082.3872411,
+      "state": "PASS",
+      "pid": 17192,
+      "exitCode": 0,
+      "ended": 1789526114.021259
+    },
+    {
+      "name": "clean-q15",
+      "started": 1789526114.021721,
+      "state": "PASS",
+      "pid": 9908,
+      "exitCode": 0,
+      "ended": 1789526557.892777
+    },
+    {
+      "name": "clean-q15negative",
+      "started": 1789526557.8932528,
+      "state": "PASS",
+      "pid": 15120,
+      "exitCode": 0,
+      "ended": 1789526569.9696715
+    },
+    {
+      "name": "clean-player",
+      "started": 1789526569.9701273,
+      "state": "PASS",
+      "pid": 18312,
+      "exitCode": 0,
+      "ended": 1789526634.7316363
+    }
+  ]
+}

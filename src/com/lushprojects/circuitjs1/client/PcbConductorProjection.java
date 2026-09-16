@@ -78,10 +78,15 @@ final class PcbConductorProjection {
             throw new IllegalStateException("Incomplete copper/solver correspondence");
         for (String pad : pads) if (observed.get(pad) == null)
             throw new IllegalStateException("Missing copper/solver observation");
-        for (int i=0; i<pads.size(); i++) for (int j=i+1; j<pads.size(); j++) {
-            String a=pads.get(i), b=pads.get(j);
-            if (snapshot.padsConnected(a,b) != observed.get(a).equals(observed.get(b)))
-                throw new IllegalStateException("Physical copper and solver islands disagree: " + a + " / " + b);
+        Map<Integer,Integer> physicalToSolver=new HashMap<Integer,Integer>();
+        Map<Integer,Integer> solverToPhysical=new HashMap<Integer,Integer>();
+        for(String pad:pads) {
+            Integer physical=Integer.valueOf(snapshot.islandOfPad(pad)), solver=observed.get(pad);
+            Integer priorSolver=physicalToSolver.get(physical), priorPhysical=solverToPhysical.get(solver);
+            if(priorSolver!=null && !priorSolver.equals(solver) ||
+                    priorPhysical!=null && !priorPhysical.equals(physical))
+                throw new IllegalStateException("Physical copper and solver islands disagree at: "+pad);
+            physicalToSolver.put(physical,solver);solverToPhysical.put(solver,physical);
         }
     }
     private static int find(Map<Integer,Integer> parents, int node) {

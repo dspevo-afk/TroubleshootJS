@@ -16,6 +16,7 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
     private PcbViewport viewport;
     private U01ViewportFixture viewportFixture;
     private PcbViewport.Transform projection;
+    private final PcbCopperViewCache copperView=new PcbCopperViewCache();
     private PcbViewport.Transform trayProjection;
     private Rectangle trayArea = new Rectangle(0, 0, 1, 1);
     private boolean workbenchViewInitialized;
@@ -135,22 +136,17 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
         graphics.drawLine(outline.x + 1, outline.y + 1, outline.x + 1, outline.y + outline.height - 2);
         int traceWidth = Math.max(1, scaleInt(PcbTraceRules.TRACE_WIDTH));
         PcbConductorGraph.Snapshot copper = instance.getCurrentConductorSnapshot();
-        for (PcbConductorGraph.Surface surface : copper.getGraph().getSurfaces()) {
-            if (surface.edgeId == null || !copper.hasEdge(surface.edgeId) || !surface.canProbe(viewingFace)) continue;
-            PcbConductorGraph.Edge edge = copper.getGraph().getEdges().get(surface.edgeId);
-            PcbConductorGraph.Junction a = copper.getGraph().getJunctions().get(edge.first);
-            PcbConductorGraph.Junction b = copper.getGraph().getJunctions().get(edge.second);
-            Point first = screenPointForProvider(new Point(a.x,a.y));
-            Point second = screenPointForProvider(new Point(b.x,b.y));
+        for (PcbCopperViewCache.Entry entry:copperView.entries(copper,projection,viewingFace,PcbCopperViewCache.POLICY_VERSION)) {
+            if(entry.surface.edgeId==null)continue;
             // Both material strokes stay centered on the exact current conductor.
             // The highlight is narrower; it adds no copper or probe surface.
             graphics.setColor(WorkbenchVisualTheme.COPPER);
             graphics.setLineWidth(traceWidth);
-            graphics.drawLine(first.x,first.y,second.x,second.y);
+            graphics.drawLine(entry.firstX,entry.firstY,entry.secondX,entry.secondY);
             if (traceWidth >= 3) {
                 graphics.setColor(WorkbenchVisualTheme.COPPER_LIGHT);
                 graphics.setLineWidth(Math.max(1, traceWidth / 3));
-                graphics.drawLine(first.x,first.y,second.x,second.y);
+                graphics.drawLine(entry.firstX,entry.firstY,entry.secondX,entry.secondY);
             }
         }
         graphics.setLineWidth(1);
@@ -356,8 +352,9 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
         }
         PcbConductorGraph.Snapshot copper=instance.getCurrentConductorSnapshot();
         PcbConductorGraph.Surface selected=null;
-        for(PcbConductorGraph.Surface surface:copper.getGraph().getSurfaces()) {
-            if(!canProbeCopper(surface.id) || !screenRectForProvider(surface.getBounds()).contains(x,y)) continue;
+        for(PcbCopperViewCache.Entry entry:copperView.entries(copper,projection,viewingFace,PcbCopperViewCache.POLICY_VERSION)) {
+            PcbConductorGraph.Surface surface=entry.surface;
+            if(!canProbeCopper(surface.id) || !entry.contains(x,y)) continue;
             if(selected!=null && !copper.connected(selected.junctionId,surface.junctionId)) {
                 ambiguousTarget=true; return null;
             }
@@ -370,15 +367,15 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
     public boolean canProbeCopper(String id) {
         if(!instance.isDeveloperOnlyFaultRoute()) return false;
         PcbConductorGraph.Snapshot copper=instance.getCurrentConductorSnapshot();
-        PcbConductorGraph.Surface surface=PcbCopperProbeAccess.surface(copper,id);
-        if(!PcbCopperProbeAccess.available(copper,surface,viewingFace)) return false;
-        Point point=screenPointForProvider(PcbCopperProbeAccess.marker(surface));
+        PcbCopperViewCache.Entry entry=copperView.get(copper,projection,viewingFace,PcbCopperViewCache.POLICY_VERSION,id);
+        if(entry==null)return false;
+        Point point=entry.marker();
         return !isOccluded(point.x,point.y,null);
     }
     public Point getCopperPoint(String id) {
         if(!canProbeCopper(id)) return null;
-        return screenPointForProvider(PcbCopperProbeAccess.marker(
-            PcbCopperProbeAccess.surface(instance.getCurrentConductorSnapshot(),id)));
+        return copperView.get(instance.getCurrentConductorSnapshot(),projection,viewingFace,
+            PcbCopperViewCache.POLICY_VERSION,id).marker();
     }
 
     String findComponentId(int screenX, int screenY) {

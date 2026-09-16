@@ -1,0 +1,714 @@
+{
+  "identity": {
+    "pid": 21352,
+    "root": "<CLEAN_SOURCE>",
+    "port": 62514,
+    "profile": "<P08_SCRATCH>\\clean-q15\\profile",
+    "started": 1789526185.778843,
+    "nocacheSha256": "30d48883c58285181c19449c7e3b5de16ec51d62903d5801bc2286d10271d2d9"
+  },
+  "result": {
+    "mode": "q15",
+    "outcome": "PASS",
+    "errors": [],
+    "httpErrors": [],
+    "status": "PASS:q15",
+    "elapsedSeconds": 370.54216769999766,
+    "browser": "153.0.4234.32",
+    "report": {
+      "protocol": "TSJ-Q15-1",
+      "status": "PASS",
+      "cases": [
+        {
+          "seed": "0",
+          "design": "RB15_NMOS_RESISTIVE_BIAS",
+          "fault": "BASE_RESISTOR_OPEN",
+          "packages": 16,
+          "hypotheses": 3,
+          "stages": 6,
+          "admissionMs": 18167,
+          "maxUnitMs": 1025,
+          "repairMs": 10336,
+          "supportMs": 4067,
+          "continuity": [
+            {
+              "red": "J1.1",
+              "black": "F1.1",
+              "ohms": 0
+            },
+            {
+              "red": "F1.1",
+              "black": "J1.1",
+              "ohms": 0
+            },
+            {
+              "red": "J1.2",
+              "black": "RBLEED.2",
+              "ohms": 0
+            },
+            {
+              "red": "RBLEED.2",
+              "black": "J1.2",
+              "ohms": 0
+            },
+            {
+              "red": "J2.1",
+              "black": "RIN.1",
+              "ohms": 0
+            },
+            {
+              "red": "RIN.1",
+              "black": "J2.1",
+              "ohms": 0
+            }
+          ],
+          "workUnits": 84,
+          "routeExpansions": 2067534,
+          "routeAttempts": 17,
+          "routeMs": 2790,
+          "stageMs": [
+            1,
+            3967,
+            18,
+            13778,
+            2,
+            12
+          ]
+        },
+        {
+          "seed": "1",
+          "design": "RB15_BJT_RESISTIVE_BIAS",
+          "fault": "RELAY_COIL_OPEN",
+          "packages": 16,
+          "hypotheses": 3,
+          "stages": 6,
+          "admissionMs": 18729,
+          "maxUnitMs": 1193,
+          "repairMs": 8073,
+          "supportMs": 3826,
+          "continuity": [
+            {
+              "red": "J1.1",
+              "black": "F1.1",
+              "ohms": 0
+            },
+            {
+              "red": "F1.1",
+              "black": "J1.1",
+              "ohms": 0
+            },
+            {
+              "red": "J1.2",
+              "black": "RBLEED.2",
+              "ohms": 0
+            },
+            {
+              "red": "RBLEED.2",
+              "black": "J1.2",
+              "ohms": 0
+            },
+            {
+              "red": "J2.1",
+              "black": "RIN.1",
+              "ohms": 0
+            },
+            {
+              "red": "RIN.1",
+              "black": "J2.1",
+              "ohms": 0
+            }
+          ],
+          "workUnits": 84,
+          "routeExpansions": 2469403,
+          "routeAttempts": 17,
+          "routeMs": 3214,
+          "stageMs": [
+            0,
+            4365,
+            24,
+            13911,
+            3,
+            12
+          ]
+        },
+        {
+          "seed": "2",
+          "design": "RB15_NMOS_RESISTIVE_BIAS",
+          "fault": "RELAY_COIL_OPEN",
+          "packages": 16,
+          "hypotheses": 3,
+          "stages": 6,
+          "admissionMs": 18473,
+          "maxUnitMs": 1008,
+          "repairMs": 8157,
+          "supportMs": 0,
+          "continuity": [
+            {
+              "red": "J1.1",
+              "black": "F1.1",
+              "ohms": 0
+            },
+            {
+              "red": "F1.1",
+              "black": "J1.1",
+              "ohms": 0
+            },
+            {
+              "red": "J1.2",
+              "black": "RBLEED.2",
+              "ohms": 0
+            },
+            {
+              "red": "RBLEED.2",
+              "black": "J1.2",
+              "ohms": 0
+            },
+            {
+              "red": "J2.1",
+              "black": "RIN.1",
+              "ohms": 0
+            },
+            {
+              "red": "RIN.1",
+              "black": "J2.1",
+              "ohms": 0
+            }
+          ],
+          "workUnits": 84,
+          "routeExpansions": 1960310,
+          "routeAttempts": 17,
+          "routeMs": 2710,
+          "stageMs": [
+            0,
+            3865,
+            12,
+            14169,
+            3,
+            13
+          ]
+        },
+        {
+          "seed": "3",
+          "design": "RB15_NMOS_RC_FILTER",
+          "fault": "RELAY_CONTACT_OPEN",
+          "packages": 16,
+          "hypotheses": 3,
+          "stages": 6,
+          "admissionMs": 32203,
+          "maxUnitMs": 2380,
+          "repairMs": 8215,
+          "supportMs": 4341,
+          "continuity": [
+            {
+              "red": "J1.1",
+              "black": "F1.1",
+              "ohms": 0
+            },
+            {
+              "red": "F1.1",
+              "black": "J1.1",
+              "ohms": 0
+            },
+            {
+              "red": "J1.2",
+              "black": "RBLEED.2",
+              "ohms": 0
+            },
+            {
+              "red": "RBLEED.2",
+              "black": "J1.2",
+              "ohms": 0
+            },
+            {
+              "red": "J2.1",
+              "black": "RIN.1",
+              "ohms": 0
+            },
+            {
+              "red": "RIN.1",
+              "black": "J2.1",
+              "ohms": 0
+            }
+          ],
+          "workUnits": 99,
+          "routeExpansions": 12177385,
+          "routeAttempts": 98,
+          "routeMs": 16535,
+          "stageMs": [
+            0,
+            17831,
+            11,
+            13869,
+            2,
+            11
+          ]
+        },
+        {
+          "seed": "17",
+          "design": "RB15_NMOS_RC_FILTER",
+          "fault": "RELAY_COIL_OPEN",
+          "packages": 16,
+          "hypotheses": 3,
+          "stages": 6,
+          "admissionMs": 26305,
+          "maxUnitMs": 2292,
+          "repairMs": 8148,
+          "supportMs": 0,
+          "continuity": [
+            {
+              "red": "J1.1",
+              "black": "F1.1",
+              "ohms": 0
+            },
+            {
+              "red": "F1.1",
+              "black": "J1.1",
+              "ohms": 0
+            },
+            {
+              "red": "J1.2",
+              "black": "RBLEED.2",
+              "ohms": 0
+            },
+            {
+              "red": "RBLEED.2",
+              "black": "J1.2",
+              "ohms": 0
+            },
+            {
+              "red": "J2.1",
+              "black": "RIN.1",
+              "ohms": 0
+            },
+            {
+              "red": "RIN.1",
+              "black": "J2.1",
+              "ohms": 0
+            }
+          ],
+          "workUnits": 93,
+          "routeExpansions": 7953975,
+          "routeAttempts": 68,
+          "routeMs": 10847,
+          "stageMs": [
+            0,
+            12083,
+            14,
+            13751,
+            2,
+            12
+          ]
+        },
+        {
+          "seed": "42",
+          "design": "RB15_NMOS_RC_FILTER",
+          "fault": "RELAY_CONTACT_OPEN",
+          "packages": 16,
+          "hypotheses": 3,
+          "stages": 6,
+          "admissionMs": 21607,
+          "maxUnitMs": 2068,
+          "repairMs": 8109,
+          "supportMs": 0,
+          "continuity": [
+            {
+              "red": "J1.1",
+              "black": "F1.1",
+              "ohms": 0
+            },
+            {
+              "red": "F1.1",
+              "black": "J1.1",
+              "ohms": 0
+            },
+            {
+              "red": "J1.2",
+              "black": "RBLEED.2",
+              "ohms": 0
+            },
+            {
+              "red": "RBLEED.2",
+              "black": "J1.2",
+              "ohms": 0
+            },
+            {
+              "red": "J2.1",
+              "black": "RIN.1",
+              "ohms": 0
+            },
+            {
+              "red": "RIN.1",
+              "black": "J2.1",
+              "ohms": 0
+            }
+          ],
+          "workUnits": 87,
+          "routeExpansions": 4607580,
+          "routeAttempts": 38,
+          "routeMs": 6213,
+          "stageMs": [
+            0,
+            7416,
+            13,
+            13736,
+            4,
+            12
+          ]
+        },
+        {
+          "seed": "101",
+          "design": "RB15_BJT_RC_FILTER",
+          "fault": "BASE_RESISTOR_OPEN",
+          "packages": 16,
+          "hypotheses": 3,
+          "stages": 6,
+          "admissionMs": 24682,
+          "maxUnitMs": 2368,
+          "repairMs": 9692,
+          "supportMs": 3802,
+          "continuity": [
+            {
+              "red": "J1.1",
+              "black": "F1.1",
+              "ohms": 0
+            },
+            {
+              "red": "F1.1",
+              "black": "J1.1",
+              "ohms": 0
+            },
+            {
+              "red": "J1.2",
+              "black": "RBLEED.2",
+              "ohms": 0
+            },
+            {
+              "red": "RBLEED.2",
+              "black": "J1.2",
+              "ohms": 0
+            },
+            {
+              "red": "J2.1",
+              "black": "RIN.1",
+              "ohms": 0
+            },
+            {
+              "red": "RIN.1",
+              "black": "J2.1",
+              "ohms": 0
+            }
+          ],
+          "workUnits": 91,
+          "routeExpansions": 7325194,
+          "routeAttempts": 60,
+          "routeMs": 9951,
+          "stageMs": [
+            0,
+            11120,
+            12,
+            13093,
+            2,
+            11
+          ]
+        },
+        {
+          "seed": "-1",
+          "design": "RB15_NMOS_RESISTIVE_BIAS",
+          "fault": "RELAY_CONTACT_OPEN",
+          "packages": 16,
+          "hypotheses": 3,
+          "stages": 6,
+          "admissionMs": 18435,
+          "maxUnitMs": 1029,
+          "repairMs": 8252,
+          "supportMs": 0,
+          "continuity": [
+            {
+              "red": "J1.1",
+              "black": "F1.1",
+              "ohms": 0
+            },
+            {
+              "red": "F1.1",
+              "black": "J1.1",
+              "ohms": 0
+            },
+            {
+              "red": "J1.2",
+              "black": "RBLEED.2",
+              "ohms": 0
+            },
+            {
+              "red": "RBLEED.2",
+              "black": "J1.2",
+              "ohms": 0
+            },
+            {
+              "red": "J2.1",
+              "black": "RIN.1",
+              "ohms": 0
+            },
+            {
+              "red": "RIN.1",
+              "black": "J2.1",
+              "ohms": 0
+            }
+          ],
+          "workUnits": 84,
+          "routeExpansions": 2057188,
+          "routeAttempts": 17,
+          "routeMs": 2833,
+          "stageMs": [
+            1,
+            4005,
+            12,
+            13982,
+            2,
+            11
+          ]
+        },
+        {
+          "seed": "9007199254740993",
+          "design": "RB15_NMOS_RC_FILTER",
+          "fault": "RELAY_CONTACT_OPEN",
+          "packages": 16,
+          "hypotheses": 3,
+          "stages": 6,
+          "admissionMs": 35905,
+          "maxUnitMs": 1235,
+          "repairMs": 8070,
+          "supportMs": 0,
+          "continuity": [
+            {
+              "red": "J1.1",
+              "black": "F1.1",
+              "ohms": 0
+            },
+            {
+              "red": "F1.1",
+              "black": "J1.1",
+              "ohms": 0
+            },
+            {
+              "red": "J1.2",
+              "black": "RBLEED.2",
+              "ohms": 0
+            },
+            {
+              "red": "RBLEED.2",
+              "black": "J1.2",
+              "ohms": 0
+            },
+            {
+              "red": "J2.1",
+              "black": "RIN.1",
+              "ohms": 0
+            },
+            {
+              "red": "RIN.1",
+              "black": "J2.1",
+              "ohms": 0
+            }
+          ],
+          "workUnits": 104,
+          "routeExpansions": 14786399,
+          "routeAttempts": 119,
+          "routeMs": 20239,
+          "stageMs": [
+            0,
+            21552,
+            11,
+            13822,
+            2,
+            11
+          ]
+        },
+        {
+          "seed": "-9223372036854775808",
+          "design": "RB15_BJT_RESISTIVE_BIAS",
+          "fault": "RELAY_CONTACT_OPEN",
+          "packages": 16,
+          "hypotheses": 3,
+          "stages": 6,
+          "admissionMs": 18355,
+          "maxUnitMs": 1304,
+          "repairMs": 8206,
+          "supportMs": 0,
+          "continuity": [
+            {
+              "red": "J1.1",
+              "black": "F1.1",
+              "ohms": 0
+            },
+            {
+              "red": "F1.1",
+              "black": "J1.1",
+              "ohms": 0
+            },
+            {
+              "red": "J1.2",
+              "black": "RBLEED.2",
+              "ohms": 0
+            },
+            {
+              "red": "RBLEED.2",
+              "black": "J1.2",
+              "ohms": 0
+            },
+            {
+              "red": "J2.1",
+              "black": "RIN.1",
+              "ohms": 0
+            },
+            {
+              "red": "RIN.1",
+              "black": "J2.1",
+              "ohms": 0
+            }
+          ],
+          "workUnits": 84,
+          "routeExpansions": 2078676,
+          "routeAttempts": 19,
+          "routeMs": 2970,
+          "stageMs": [
+            0,
+            4148,
+            12,
+            13776,
+            2,
+            11
+          ]
+        },
+        {
+          "seed": "9223372036854775807",
+          "design": "RB15_BJT_RESISTIVE_BIAS",
+          "fault": "BASE_RESISTOR_OPEN",
+          "packages": 16,
+          "hypotheses": 3,
+          "stages": 6,
+          "admissionMs": 18586,
+          "maxUnitMs": 1376,
+          "repairMs": 10077,
+          "supportMs": 0,
+          "continuity": [
+            {
+              "red": "J1.1",
+              "black": "F1.1",
+              "ohms": 0
+            },
+            {
+              "red": "F1.1",
+              "black": "J1.1",
+              "ohms": 0
+            },
+            {
+              "red": "J1.2",
+              "black": "RBLEED.2",
+              "ohms": 0
+            },
+            {
+              "red": "RBLEED.2",
+              "black": "J1.2",
+              "ohms": 0
+            },
+            {
+              "red": "J2.1",
+              "black": "RIN.1",
+              "ohms": 0
+            },
+            {
+              "red": "RIN.1",
+              "black": "J2.1",
+              "ohms": 0
+            }
+          ],
+          "workUnits": 84,
+          "routeExpansions": 2426675,
+          "routeAttempts": 19,
+          "routeMs": 3256,
+          "stageMs": [
+            0,
+            4399,
+            11,
+            13751,
+            2,
+            11
+          ]
+        }
+      ],
+      "assertions": 613,
+      "supportAssertions": 80,
+      "cancellationMs": 0,
+      "elapsedMs": 368458,
+      "cleanupMs": 2,
+      "ownerRestored": true,
+      "operation": "support",
+      "activeSeed": "9223372036854775807",
+      "failure": null
+    },
+    "ownerCleanup": null,
+    "resources": [
+      "http://127.0.0.1:62514/circuitjs1/circuitjs1.nocache.js",
+      "http://127.0.0.1:62514/circuitjs1/E6C04BF7FBDA18DAFB6F46B0780504AC.cache.js"
+    ],
+    "cleanup": {
+      "serverThreadStopped": true,
+      "ownedSurvivors": []
+    }
+  },
+  "loadedResourceSha256": {
+    "circuitjs1.nocache.js": "30d48883c58285181c19449c7e3b5de16ec51d62903d5801bc2286d10271d2d9",
+    "E6C04BF7FBDA18DAFB6F46B0780504AC.cache.js": "4a8a80cc740f0cf6126e6e5fe334d92e691967a5caecc9fb38ec66098c980c02"
+  },
+  "ownership": [
+    {
+      "pid": 3252,
+      "parent": 14684,
+      "created": "2026-09-16T02:36:26.0125330Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "CommandLine": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --disable-background-timer-throttling --disable-renderer-backgrounding --user-data-dir=<P08_SCRATCH>\\clean-q15\\profile --remote-debugging-pipe about:blank"
+    },
+    {
+      "pid": 17832,
+      "parent": 3252,
+      "created": "2026-09-16T02:36:26.0231730Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "CommandLine": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --type=crashpad-handler --user-data-dir=<P08_SCRATCH>\\clean-q15\\profile /prefetch:4 --monitor-self-annotation=ptype=crashpad-handler --database=<P08_SCRATCH>\\clean-q15\\profile\\Crashpad --annotation=IsOfficialBuild=1 --annotation=channel= --annotation=chromium-version=153.0.8010.37 \"--annotation=exe=C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --annotation=plat=Win64 --annotation=prod=Edge --annotation=ver=153.0.4234.32 --initial-client-data=0x174,0x178,0x17c,0x150,0x184,0x7ffc127b3360,0x7ffc127b3370,0x7ffc127b3380"
+    },
+    {
+      "pid": 5408,
+      "parent": 3252,
+      "created": "2026-09-16T02:36:26.0772370Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "CommandLine": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --type=gpu-process --no-sandbox --disable-breakpad --headless --noerrdialogs --user-data-dir=\"<P08_SCRATCH>\\clean-q15\\profile\" --gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA= --startup-read-main-dll --field-trial-handle=1896,i,798489029469942566,2817899830217242335,262144 --enable-features=CDPScreenshotNewSurface,msMetricsLogFastStartup,msSendMetricsLogOnClose --disable-features=AcceptCHFrame,AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,RenderDocument,ThirdPartyStoragePartitioning,Translate --variations-seed-version --pseudonymization-salt-handle=1904,i,904159678411059972,8327680001268333305,4 --trace-process-track-uuid=3190708988185955192 --mojo-platform-channel-handle=1876 /prefetch:2"
+    },
+    {
+      "pid": 8696,
+      "parent": 3252,
+      "created": "2026-09-16T02:36:26.0808050Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "CommandLine": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --mute-audio --noerrdialogs --user-data-dir=\"<P08_SCRATCH>\\clean-q15\\profile\" --startup-read-main-dll --field-trial-handle=1896,i,798489029469942566,2817899830217242335,262144 --enable-features=CDPScreenshotNewSurface,msMetricsLogFastStartup,msSendMetricsLogOnClose --disable-features=AcceptCHFrame,AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,RenderDocument,ThirdPartyStoragePartitioning,Translate --variations-seed-version --pseudonymization-salt-handle=1904,i,904159678411059972,8327680001268333305,4 --trace-process-track-uuid=3190708989122997041 --mojo-platform-channel-handle=2116 /prefetch:11"
+    },
+    {
+      "pid": 5780,
+      "parent": 3252,
+      "created": "2026-09-16T02:36:26.1017210Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "CommandLine": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=service --no-sandbox --mute-audio --noerrdialogs --user-data-dir=\"<P08_SCRATCH>\\clean-q15\\profile\" --startup-read-main-dll --field-trial-handle=1896,i,798489029469942566,2817899830217242335,262144 --enable-features=CDPScreenshotNewSurface,msMetricsLogFastStartup,msSendMetricsLogOnClose --disable-features=AcceptCHFrame,AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,RenderDocument,ThirdPartyStoragePartitioning,Translate --variations-seed-version --pseudonymization-salt-handle=1904,i,904159678411059972,8327680001268333305,4 --trace-process-track-uuid=3190708990060038890 --mojo-platform-channel-handle=2440 /prefetch:13"
+    },
+    {
+      "pid": 19272,
+      "parent": 3252,
+      "created": "2026-09-16T02:36:26.1915580Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "CommandLine": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --type=renderer --noerrdialogs --user-data-dir=\"<P08_SCRATCH>\\clean-q15\\profile\" --pdf-upsell-enabled --no-sandbox --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --enable-automation --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --video-capture-use-gpu-memory-buffer --lang=en-US --js-flags --device-scale-factor=1 --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=6 --launch-time-ticks=72299279782 --ssd-no-pressure-read-main-dll --field-trial-handle=1896,i,798489029469942566,2817899830217242335,262144 --enable-features=CDPScreenshotNewSurface,msMetricsLogFastStartup,msSendMetricsLogOnClose --disable-features=AcceptCHFrame,AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,RenderDocument,ThirdPartyStoragePartitioning,Translate --variations-seed-version --pseudonymization-salt-handle=1904,i,904159678411059972,8327680001268333305,4 --trace-process-track-uuid=3190708991934122588 --mojo-platform-channel-handle=3268 /prefetch:1"
+    },
+    {
+      "pid": 2588,
+      "parent": 3252,
+      "created": "2026-09-16T02:36:26.1953260Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "CommandLine": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --type=renderer --noerrdialogs --user-data-dir=\"<P08_SCRATCH>\\clean-q15\\profile\" --pdf-upsell-enabled --no-sandbox --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --enable-automation --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --video-capture-use-gpu-memory-buffer --lang=en-US --js-flags --device-scale-factor=1 --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=5 --launch-time-ticks=72299283730 --skip-read-main-dll --field-trial-handle=1896,i,798489029469942566,2817899830217242335,262144 --enable-features=CDPScreenshotNewSurface,msMetricsLogFastStartup,msSendMetricsLogOnClose --disable-features=AcceptCHFrame,AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,RenderDocument,ThirdPartyStoragePartitioning,Translate --variations-seed-version --pseudonymization-salt-handle=1904,i,904159678411059972,8327680001268333305,4 --trace-process-track-uuid=3190708990997080739 --mojo-platform-channel-handle=3404 /prefetch:1"
+    }
+  ]
+}

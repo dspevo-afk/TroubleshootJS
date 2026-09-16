@@ -179,7 +179,9 @@ public final class Q15ControlBoardContractTest {
     }
     private static void edgeReservationOracle(TroubleshootBoard board,PcbBoardLayout layout) throws Exception {
         Class<?> type=Class.forName("com.lushprojects.circuitjs1.client.PcbNetRouter$Router");
-        java.lang.reflect.Constructor<?> constructor=type.getDeclaredConstructors()[0];constructor.setAccessible(true);
+        java.lang.reflect.Constructor<?> constructor=type.getDeclaredConstructor(PcbBoardLayout.class,
+            TroubleshootBoard.class,Rectangle.class,int.class,SeededPcbLayoutGenerator.AttemptObserver.class);
+        constructor.setAccessible(true);
         Rectangle outline=layout.getBoardOutline();int minX=outline.x+10,minY=outline.y+10;
         Object router=constructor.newInstance(layout,board,outline,0,new SeededPcbLayoutGenerator.AttemptObserver(){public void check(int attempt){}});
         java.lang.reflect.Method traverse=type.getDeclaredMethod("canTraverse",int.class,int.class,int.class,int.class,PcbPadPlacement.class,PcbPadPlacement.class,String.class);traverse.setAccessible(true);

@@ -1,0 +1,52 @@
+{
+  "clean": {
+    "sourceFileCount": 1070,
+    "sourceTreeSha256": "e96ec81202ce96ddd1965736f8098933a7a286789877f9a4fd69c231a0deaf23",
+    "buildScriptSha256": "424f91d0be7d8452b85c050a2312b1e61e7541b124200074496dc64ca13af45c",
+    "compiler": "Temurin JDK 8u502 / GWT 2.7.0; all 5 permutations",
+    "gwtJarSha256": {
+      "asm-5.0.3.jar": "71c4f78e437b8fdcd9cc0dfd2abea8c089eb677005a6a5cff320206cc52b46cc",
+      "asm-analysis-5.0.3.jar": "e8fa2a63462c96557dcd36c25525e1264b77366ff851cf0b94eb7592b290849d",
+      "asm-commons-5.0.3.jar": "18c1e092230233c9d29e46f21943d769bdb48130cc279e4b0e663f423948c2da",
+      "asm-tree-5.0.3.jar": "347a7a9400f9964e87c91d3980e48eebdc8d024bc3b36f7f22189c662853a51c",
+      "asm-util-5.0.3.jar": "2768edbfa2681b5077f08151de586a6d66b916703cda3ab297e58b41ae8f2362",
+      "gwt-dev-2.7.0.jar": "c7321e367fc24e5c7ad97b74d1cf2980c45fbd7cbe1fd412f8a8ba128f685135",
+      "gwt-user-2.7.0.jar": "d3721bcdd7c6855a524801212dd74548967d8fb65cbc212a20890732ff2c6948",
+      "validation-api-1.0.0.GA-sources.jar": "a394d52a9b7fe2bb14f0718d2b3c8308ffe8f37e911956012398d55c9f9f9b54",
+      "validation-api-1.0.0.GA.jar": "e459f313ebc6db2483f8ceaad39af07086361b474fa92e40f442e8de5d9895dc"
+    },
+    "compiledArtifactSha256": {
+      "99DEF9C4B5B6EFA652619B84B22CCF52.cache.js": "073d1238cf876bf02ddcee78197099223152a4f681e61f7a7b8fd5c5e07656aa",
+      "A1723DD232C56377C48945412FECBF77.cache.js": "c471aa5ad6f259ebafc6c3471a28980ac6ad484980b85e247410630b7b184065",
+      "BD4DA138E87DD22C018FDED66F9FBE47.cache.js": "81e08e6a15e81bb69502ae8e7cd25c44a1189eecc2b609ee75a416b1080f24ec",
+      "circuitjs1.nocache.js": "30d48883c58285181c19449c7e3b5de16ec51d62903d5801bc2286d10271d2d9",
+      "E262494C0D8E2100EB57763C0DF6EC10.cache.js": "9a6c6da6b43911876893eda2335ab6ad4bc6d3611afe37d3876b87f27fa9a856",
+      "E6C04BF7FBDA18DAFB6F46B0780504AC.cache.js": "4a8a80cc740f0cf6126e6e5fe334d92e691967a5caecc9fb38ec66098c980c02"
+    }
+  },
+  "preservedWorktree": {
+    "sourceFileCount": 1071,
+    "sourceTreeSha256": "d29c05430a51bab1b55a5913b4accfa0434f440acddab273ded22fc61cf4a9fd",
+    "buildScriptSha256": "424f91d0be7d8452b85c050a2312b1e61e7541b124200074496dc64ca13af45c",
+    "compiler": "Temurin JDK 8u502 / GWT 2.7.0; all 5 permutations",
+    "gwtJarSha256": {
+      "asm-5.0.3.jar": "71c4f78e437b8fdcd9cc0dfd2abea8c089eb677005a6a5cff320206cc52b46cc",
+      "asm-analysis-5.0.3.jar": "e8fa2a63462c96557dcd36c25525e1264b77366ff851cf0b94eb7592b290849d",
+      "asm-commons-5.0.3.jar": "18c1e092230233c9d29e46f21943d769bdb48130cc279e4b0e663f423948c2da",
+      "asm-tree-5.0.3.jar": "347a7a9400f9964e87c91d3980e48eebdc8d024bc3b36f7f22189c662853a51c",
+      "asm-util-5.0.3.jar": "2768edbfa2681b5077f08151de586a6d66b916703cda3ab297e58b41ae8f2362",
+      "gwt-dev-2.7.0.jar": "c7321e367fc24e5c7ad97b74d1cf2980c45fbd7cbe1fd412f8a8ba128f685135",
+      "gwt-user-2.7.0.jar": "d3721bcdd7c6855a524801212dd74548967d8fb65cbc212a20890732ff2c6948",
+      "validation-api-1.0.0.GA-sources.jar": "a394d52a9b7fe2bb14f0718d2b3c8308ffe8f37e911956012398d55c9f9f9b54",
+      "validation-api-1.0.0.GA.jar": "e459f313ebc6db2483f8ceaad39af07086361b474fa92e40f442e8de5d9895dc"
+    },
+    "compiledArtifactSha256": {
+      "24ED9B61E826BFA3D31575F696321A75.cache.js": "21d2fefdbe7166994cbf1d26528214fa1c2d48d1b6a4b3b778bdc5907da60d27",
+      "848DACF06D24134E56EE19EE0A688E3C.cache.js": "ac3b94564611598df59e709458fa3518b0d0f447dbe83e0207ef59ee7a2b551e",
+      "9DE87DCA98369AD18B24900EB6E1B97F.cache.js": "40ec73384617fb2ebbca3a5cd07abb6641c8b46f1d736f092fdbeb52c2c9a53b",
+      "circuitjs1.nocache.js": "e53b3236b9d5243ffd703531642ea642efb60fa716a115ecdad62d035ce305b4",
+      "E2C532FE2FFD6F68857586F306570447.cache.js": "baea4a2928039251f1f7a3845bf02421ea003a217be2842c857678a8cd75fe99",
+      "F41CAB37276F8A641A2798039B22EF59.cache.js": "a43f1275baf247b97d4a7a2a59d74d95b46e4e44820fc28690cc1ba127286c21"
+    }
+  }
+}

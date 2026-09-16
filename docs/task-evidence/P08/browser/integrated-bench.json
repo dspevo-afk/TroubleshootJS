@@ -1,0 +1,146 @@
+{
+  "identity": {
+    "pid": 14120,
+    "root": "<PRESERVED_WORKTREE>",
+    "port": 52440,
+    "profile": "<PRESERVED_WORKTREE>-bench\\profile",
+    "started": 1789525441.541693,
+    "nocacheSha256": "e53b3236b9d5243ffd703531642ea642efb60fa716a115ecdad62d035ce305b4"
+  },
+  "result": {
+    "mode": "bench",
+    "outcome": "PASS",
+    "errors": [],
+    "httpErrors": [],
+    "status": "PASS:p07",
+    "elapsedSeconds": 2.1390263000066625,
+    "browser": "153.0.4234.32",
+    "report": {
+      "schema": 1,
+      "status": "PASS",
+      "runtimeAssertions": 42,
+      "vias": 2,
+      "expansions": 3405,
+      "overAmps": 0.05,
+      "underAmps": 0.007,
+      "ownerRestored": false,
+      "prototypeRetained": true,
+      "normalAdoption": false
+    },
+    "ownerCleanup": {
+      "ownerRestored": false,
+      "prototypeRetained": true
+    },
+    "resources": [
+      "http://127.0.0.1:52440/circuitjs1/circuitjs1.nocache.js",
+      "http://127.0.0.1:52440/circuitjs1/848DACF06D24134E56EE19EE0A688E3C.cache.js"
+    ],
+    "measurements": [
+      {
+        "face": "TOP",
+        "kind": "opposite-layer-crossing",
+        "reading": "5 V",
+        "expectedVolts": 5
+      },
+      {
+        "face": "TOP",
+        "kind": "via",
+        "reading": "7 V",
+        "expectedVolts": 7
+      },
+      {
+        "face": "TOP",
+        "kind": "via",
+        "reading": "7 V",
+        "expectedVolts": 7
+      },
+      {
+        "face": "BOTTOM",
+        "kind": "trace",
+        "reading": "7 V",
+        "expectedVolts": 7
+      },
+      {
+        "face": "BOTTOM",
+        "kind": "via",
+        "reading": "7 V",
+        "expectedVolts": 7
+      },
+      {
+        "face": "BOTTOM",
+        "kind": "via",
+        "reading": "7 V",
+        "expectedVolts": 7
+      }
+    ],
+    "inputs": [
+      "DC V",
+      "physical right-click ground",
+      "physical left-click each top via",
+      "View bottom copper",
+      "physical right-click ground",
+      "physical left-click underside trace and vias",
+      "View top copper",
+      "hidden-face contact invalidated"
+    ],
+    "cleanup": {
+      "serverThreadStopped": true,
+      "ownedSurvivors": []
+    }
+  },
+  "loadedResourceSha256": {
+    "circuitjs1.nocache.js": "e53b3236b9d5243ffd703531642ea642efb60fa716a115ecdad62d035ce305b4",
+    "848DACF06D24134E56EE19EE0A688E3C.cache.js": "ac3b94564611598df59e709458fa3518b0d0f447dbe83e0207ef59ee7a2b551e"
+  },
+  "ownership": [
+    {
+      "pid": 15900,
+      "parent": 10068,
+      "created": "2026-09-16T02:24:05.9708450Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "CommandLine": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --disable-background-timer-throttling --disable-renderer-backgrounding --user-data-dir=<PRESERVED_WORKTREE>-bench\\profile --remote-debugging-pipe about:blank"
+    },
+    {
+      "pid": 10608,
+      "parent": 15900,
+      "created": "2026-09-16T02:24:05.9828540Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "CommandLine": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --type=crashpad-handler --user-data-dir=<PRESERVED_WORKTREE>-bench\\profile /prefetch:4 --monitor-self-annotation=ptype=crashpad-handler --database=<PRESERVED_WORKTREE>-bench\\profile\\Crashpad --annotation=IsOfficialBuild=1 --annotation=channel= --annotation=chromium-version=153.0.8010.37 \"--annotation=exe=C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --annotation=plat=Win64 --annotation=prod=Edge --annotation=ver=153.0.4234.32 --initial-client-data=0x174,0x178,0x17c,0x150,0x184,0x7ffc127b3360,0x7ffc127b3370,0x7ffc127b3380"
+    },
+    {
+      "pid": 19508,
+      "parent": 15900,
+      "created": "2026-09-16T02:24:06.0407960Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "CommandLine": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --type=gpu-process --no-sandbox --disable-breakpad --headless --noerrdialogs --user-data-dir=\"<PRESERVED_WORKTREE>-bench\\profile\" --gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA= --startup-read-main-dll --field-trial-handle=1872,i,10890500137388901527,7251079450496917578,262144 --enable-features=CDPScreenshotNewSurface,msMetricsLogFastStartup,msSendMetricsLogOnClose --disable-features=AcceptCHFrame,AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,RenderDocument,ThirdPartyStoragePartitioning,Translate --variations-seed-version --pseudonymization-salt-handle=1892,i,1611419776480875226,17213922714825034649,4 --trace-process-track-uuid=3190708988185955192 --mojo-platform-channel-handle=1860 /prefetch:2"
+    },
+    {
+      "pid": 8572,
+      "parent": 15900,
+      "created": "2026-09-16T02:24:06.0454630Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "CommandLine": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --mute-audio --noerrdialogs --user-data-dir=\"<PRESERVED_WORKTREE>-bench\\profile\" --startup-read-main-dll --field-trial-handle=1872,i,10890500137388901527,7251079450496917578,262144 --enable-features=CDPScreenshotNewSurface,msMetricsLogFastStartup,msSendMetricsLogOnClose --disable-features=AcceptCHFrame,AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,RenderDocument,ThirdPartyStoragePartitioning,Translate --variations-seed-version --pseudonymization-salt-handle=1892,i,1611419776480875226,17213922714825034649,4 --trace-process-track-uuid=3190708989122997041 --mojo-platform-channel-handle=1984 /prefetch:11"
+    },
+    {
+      "pid": 6784,
+      "parent": 15900,
+      "created": "2026-09-16T02:24:06.0697000Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "CommandLine": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=service --no-sandbox --mute-audio --noerrdialogs --user-data-dir=\"<PRESERVED_WORKTREE>-bench\\profile\" --startup-read-main-dll --field-trial-handle=1872,i,10890500137388901527,7251079450496917578,262144 --enable-features=CDPScreenshotNewSurface,msMetricsLogFastStartup,msSendMetricsLogOnClose --disable-features=AcceptCHFrame,AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,RenderDocument,ThirdPartyStoragePartitioning,Translate --variations-seed-version --pseudonymization-salt-handle=1892,i,1611419776480875226,17213922714825034649,4 --trace-process-track-uuid=3190708990060038890 --mojo-platform-channel-handle=2200 /prefetch:13"
+    },
+    {
+      "pid": 14592,
+      "parent": 15900,
+      "created": "2026-09-16T02:24:06.1590280Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "CommandLine": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --type=renderer --noerrdialogs --user-data-dir=\"<PRESERVED_WORKTREE>-bench\\profile\" --pdf-upsell-enabled --no-sandbox --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --enable-automation --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --video-capture-use-gpu-memory-buffer --lang=en-US --js-flags --device-scale-factor=1 --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=6 --launch-time-ticks=71559247206 --ssd-no-pressure-read-main-dll --field-trial-handle=1872,i,10890500137388901527,7251079450496917578,262144 --enable-features=CDPScreenshotNewSurface,msMetricsLogFastStartup,msSendMetricsLogOnClose --disable-features=AcceptCHFrame,AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,RenderDocument,ThirdPartyStoragePartitioning,Translate --variations-seed-version --pseudonymization-salt-handle=1892,i,1611419776480875226,17213922714825034649,4 --trace-process-track-uuid=3190708991934122588 --mojo-platform-channel-handle=3276 /prefetch:1"
+    },
+    {
+      "pid": 5652,
+      "parent": 15900,
+      "created": "2026-09-16T02:24:06.1627970Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "CommandLine": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --type=renderer --noerrdialogs --user-data-dir=\"<PRESERVED_WORKTREE>-bench\\profile\" --pdf-upsell-enabled --no-sandbox --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --enable-automation --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --video-capture-use-gpu-memory-buffer --lang=en-US --js-flags --device-scale-factor=1 --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=5 --launch-time-ticks=71559251122 --skip-read-main-dll --field-trial-handle=1872,i,10890500137388901527,7251079450496917578,262144 --enable-features=CDPScreenshotNewSurface,msMetricsLogFastStartup,msSendMetricsLogOnClose --disable-features=AcceptCHFrame,AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,RenderDocument,ThirdPartyStoragePartitioning,Translate --variations-seed-version --pseudonymization-salt-handle=1892,i,1611419776480875226,17213922714825034649,4 --trace-process-track-uuid=3190708990997080739 --mojo-platform-channel-handle=3316 /prefetch:1"
+    }
+  ]
+}
