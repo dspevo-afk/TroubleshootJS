@@ -79,7 +79,7 @@ final class PcbTwoLayerRules {
         boolean via=false;
         for(PcbBoardHole hole:layout.getHoles()) via|=hole.kind==PcbBoardHole.Kind.VIA;
         if(top && bottom || via)
-            throw new IllegalArgumentException("Two-layer routing requires developer-only construction until P09 admission");
+            throw new IllegalArgumentException("Two-layer routing requires developer-only construction outside the P09 production envelope");
     }
 
     static PcbBoardHole via(String id,String net,int x,int y) {

@@ -166,6 +166,9 @@ class GeneratedChallengeController {
                 if (boundedTemporalPreparation) {
                     if (!advancePreparationProfile(GeneratedTemporalBehavior.Profile.HEALTHY)) return;
                 } else instance.getTemporalBehavior().prepareHealthyProfile(sim, instance);
+                // Keep the independent health predicate, but run it only after
+                // the entire owned temporal profile has completed successfully.
+                definition.getBehaviorContract().verifyHealthy(instance,sim.getBoardPowerController().getState());
             }
             lifecycleEvidence.healthyGraphAnalyzedAfterTimeAdvance = true;
             lifecycleEvidence.healthyFamilyValidated = true;
@@ -205,6 +208,15 @@ class GeneratedChallengeController {
                 presentScenario();
             }
         }
+    }
+
+    boolean isInitialGraphHealthCheckExpected() {
+        return requiresInitialHealthCheck(instance,isHealthyValidationExpected());
+    }
+    static boolean requiresInitialHealthCheck(GeneratedBoardInstance owner, boolean healthyPhase) {
+        // Initial graph correspondence is always checked. Temporal behavior is
+        // judged after its explicit startup recipe, never after a paint slice.
+        return healthyPhase && owner.getTemporalBehavior()==null;
     }
 
     boolean isHealthyValidationExpected() {

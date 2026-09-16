@@ -6132,7 +6132,7 @@ MouseOutHandler, MouseWheelHandler {
 	    throw new IllegalStateException("Generated board is logically unpowered without electrical isolation");
 	GeneratedBoardVerifier.verify(generatedBoardInstance, boardPowerController.getState(),
 		boardModificationController, elmList, generatedChallengeController == null ||
-		generatedChallengeController.isHealthyValidationExpected());
+		generatedChallengeController.isInitialGraphHealthCheckExpected());
 	if (generatedChallengeController != null)
 	    generatedChallengeController.verifyReadyState();
     }

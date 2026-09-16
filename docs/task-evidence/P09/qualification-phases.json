@@ -1,0 +1,132 @@
+{
+  "cleanMatrix": [
+    {
+      "name": "native",
+      "exit": 0,
+      "elapsedSeconds": 372.1768021583557
+    },
+    {
+      "name": "p07-layout",
+      "exit": 0,
+      "elapsedSeconds": 32.364203691482544
+    },
+    {
+      "name": "p07-rc",
+      "exit": 0,
+      "elapsedSeconds": 61.87304353713989
+    },
+    {
+      "name": "p07-q15",
+      "exit": 0,
+      "elapsedSeconds": 388.57442808151245
+    },
+    {
+      "name": "p07-q15negative",
+      "exit": 0,
+      "elapsedSeconds": 3.9792141914367676
+    },
+    {
+      "name": "p07-p07",
+      "exit": 0,
+      "elapsedSeconds": 3.8263988494873047
+    },
+    {
+      "name": "p07-negative",
+      "exit": 0,
+      "elapsedSeconds": 4.0188751220703125
+    },
+    {
+      "name": "p07-bench",
+      "exit": 0,
+      "elapsedSeconds": 4.489469766616821
+    },
+    {
+      "name": "p06-p06",
+      "exit": 0,
+      "elapsedSeconds": 3.954800844192505
+    },
+    {
+      "name": "p06-negative",
+      "exit": 0,
+      "elapsedSeconds": 3.874028205871582
+    },
+    {
+      "name": "p06-bench",
+      "exit": 0,
+      "elapsedSeconds": 5.975235462188721
+    },
+    {
+      "name": "player",
+      "exit": 0,
+      "elapsedSeconds": 35.959402322769165
+    }
+  ],
+  "cleanCompletion": {
+    "outcome": "PASS",
+    "inputsUnchanged": true,
+    "phases": [
+      {
+        "name": "matrix",
+        "exitCode": 0,
+        "elapsedSeconds": 921.1215550899506
+      },
+      {
+        "name": "families",
+        "exitCode": 0,
+        "elapsedSeconds": 91.71678519248962
+      }
+    ]
+  },
+  "integrated": {
+    "outcome": "PASS",
+    "sourceUnchanged": true,
+    "phases": [
+      {
+        "name": "native",
+        "exit": 0,
+        "elapsedSeconds": 73.90363574028015
+      },
+      {
+        "name": "build",
+        "exit": 0,
+        "elapsedSeconds": 124.55281686782837
+      },
+      {
+        "name": "layout",
+        "exit": 0,
+        "elapsedSeconds": 48.24609398841858
+      },
+      {
+        "name": "rc",
+        "exit": 0,
+        "elapsedSeconds": 81.62327909469604
+      },
+      {
+        "name": "q15",
+        "exit": 0,
+        "elapsedSeconds": 360.9713077545166
+      },
+      {
+        "name": "q15negative",
+        "exit": 0,
+        "elapsedSeconds": 4.091027021408081
+      },
+      {
+        "name": "bench",
+        "exit": 0,
+        "elapsedSeconds": 4.336812973022461
+      },
+      {
+        "name": "player",
+        "exit": 0,
+        "elapsedSeconds": 33.34178638458252
+      },
+      {
+        "name": "families",
+        "exit": 0,
+        "elapsedSeconds": 85.98367381095886
+      }
+    ],
+    "compiledPermutations": 5
+  }
+}

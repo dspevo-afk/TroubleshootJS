@@ -35,9 +35,10 @@ try:
    page.on('pageerror',lambda error:result['errors'].append(str(error)))
    page.on('response',lambda response:result['httpErrors'].append({'status':response.status,'url':response.url}) if response.status>=400 else None)
    page.on('console',lambda message:print('CONSOLE',message.type,message.text[:800],flush=True) if message.type=='error' else None)
-   flags={'p07':'tsjVerifyP07=true','negative':'tsjVerifyP07=true&tsjP07Fail=true','bench':'tsjVerifyP07=true&tsjP07Bench=true','layout':'tsjVerifyLayout=true&tsjVerifyGeometry=true','q15':'tsjVerifyQ15=true','q15negative':'tsjVerifyQ15=true&tsjQ15Fail=true'}
+   flags={'rc':'tsjVerifyRc=true','p07':'tsjVerifyP07=true','negative':'tsjVerifyP07=true&tsjP07Fail=true','bench':'tsjVerifyP07=true&tsjP07Bench=true','layout':'tsjVerifyLayout=true&tsjVerifyGeometry=true','q15':'tsjVerifyQ15=true','q15negative':'tsjVerifyQ15=true&tsjQ15Fail=true'}
    started=time.monotonic()
-   page.goto(base+'/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&'+flags[mode],wait_until='domcontentloaded',timeout=30000)
+   challenge='rc' if mode=='rc' else 'led'
+   page.goto(base+'/circuitjs.html?tsjChallenge='+challenge+'&seed=3&tsjDebug=true&'+flags[mode],wait_until='domcontentloaded',timeout=30000)
    print('START',mode,base,flush=True)
    # Keep the existing 600-second whole-verifier bound. Do not mistake a
    # synchronous developer matrix for a failed 10-second DOM polling request.
@@ -48,6 +49,10 @@ try:
    result['report']=json.loads(report) if report else None
    cleanup=page.locator('html').get_attribute('data-tsj-p07-cleanup')
    result['ownerCleanup']=json.loads(cleanup) if cleanup else None
+   if mode=='layout':
+    result['physicalEnvelope']=json.loads(page.locator('html').get_attribute('data-tsj-p09-report') or 'null')
+    assert result['physicalEnvelope']['assertions']>=40 and result['physicalEnvelope']['normalRejectedBeforeMutation']
+    assert result['physicalEnvelope']['twoLayerProduction'] is False and result['physicalEnvelope']['factoryLinksProduction'] is False
    if mode=='negative': assert result['ownerCleanup']=={'ownerRestored':True,'prototypeRetained':False}
    result['resources']=page.evaluate('performance.getEntriesByType("resource").map(x=>x.name).filter(x=>x.includes("cache.js"))')
    if mode=='bench':

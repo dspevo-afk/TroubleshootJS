@@ -15,6 +15,34 @@ final class SolverEventQueue {
         }
         void cancel() { cancelled = true; }
     }
+    /** An idle checkpoint preserves handles as well as their mutable cancellation state. */
+    static final class Snapshot {
+        private final SolverEventQueue owner;
+        private final ArrayList<Event> pending;
+        private final boolean[] eventCancelled;
+        private final long nextOrder;
+        private final double acceptedTime, dispatchTime;
+        private final boolean cancelled, failed;
+        private Snapshot(SolverEventQueue owner) {
+            this.owner=owner; pending=new ArrayList<Event>(owner.events);
+            eventCancelled=new boolean[pending.size()];
+            for(int i=0;i<pending.size();i++) eventCancelled[i]=pending.get(i).cancelled;
+            nextOrder=owner.nextOrder; acceptedTime=owner.acceptedTime;
+            dispatchTime=owner.dispatchTime; cancelled=owner.cancelled; failed=owner.failed;
+        }
+    }
+    Snapshot snapshot() {
+        if(dispatching) throw new IllegalStateException("Cannot checkpoint an event callback");
+        return new Snapshot(this);
+    }
+    void restore(Snapshot saved) {
+        if(dispatching || saved==null || saved.owner!=this)
+            throw new IllegalStateException("Invalid event checkpoint restoration");
+        events.clear(); events.addAll(saved.pending);
+        for(int i=0;i<events.size();i++) events.get(i).cancelled=saved.eventCancelled[i];
+        nextOrder=saved.nextOrder; acceptedTime=saved.acceptedTime;
+        dispatchTime=saved.dispatchTime; cancelled=saved.cancelled; failed=saved.failed;
+    }
     private final ArrayList<Event> events = new ArrayList<Event>();
     private final int capacity, dispatchLimit;
     private long nextOrder;

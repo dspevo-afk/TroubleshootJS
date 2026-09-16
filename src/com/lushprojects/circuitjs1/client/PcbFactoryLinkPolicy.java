@@ -40,7 +40,7 @@ final class PcbFactoryLinkPolicy {
             count++;
             if (!developerOnly || layout == null || !raised ||
                     !bindings.hasComponentBinding(id))
-                throw new IllegalArgumentException("Factory crossover requires a fresh developer-only construction and proof; normal use awaits P09");
+                throw new IllegalArgumentException("Factory crossover requires a fresh developer-only construction and proof; outside the P09 production envelope");
             VectorHelper.require(spec, physical, bindings.getSingleElement(id));
         }
         if (count > 0 && validateLayout(layout) != count)

@@ -34,9 +34,11 @@ final class GenerationRequest {
             ChallengeDescriptor.current(request.familyId, request.seed), composed, false, request.profile);
     }
     DifficultyProfile getDifficulty() { return difficulty; }
+    SupportedEnvelope getSupportedEnvelope() { return SupportedEnvelope.current(); }
     String canonical() {
-        return "tsj-generation-request/1;native;" + descriptor.toCanonical() +
+        return "tsj-generation-request/2;native;" + descriptor.toCanonical() +
             ";quickPlay=" + quickPlay + ";layout=" + SeededPcbLayoutGenerator.CURRENT_VERSION +
+            ";physicalEnvelope=" + getSupportedEnvelope().identity() +
             (difficulty == null ? "" : ";difficulty=" + difficulty + "@" + DifficultyProfile.VERSION + ";assessment=" + DifficultyAssessment.VERSION);
     }
     ChallengeDescriptor getDescriptor() { return descriptor; }

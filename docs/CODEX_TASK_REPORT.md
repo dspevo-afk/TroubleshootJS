@@ -1,3 +1,38 @@
+<!-- P09-CURRENT-START -->
+# Current handoff: P09 complete - qualified
+
+Repository: `TroubleshootJS`
+Branch: `codex/task43p-final-recovery`
+P08 base: `5a9e544c41a343f3943211cf83fba85b05cfcd29`
+Publication identity: the enclosing Git commit and final delivery receipt.
+
+`THT_SINGLE_FACE@1` now bounds normal installation, physical admission and
+publication without replacing actual geometry, copper/solver or diagnostic proof.
+Production mixed-layer/via/factory-link adoption is rejected for this epoch.
+Temporal startup health and scheduler snapshot restoration are repaired; no
+ordinary backwards-time, mutation, power or deterministic work guard was relaxed.
+
+Final clean native48, integrated native9, both production GWT5 builds, full RC,
+Q15 all11 and strict readers/22 malformed controls, forced negatives, nine normal
+families and actual menu/seed/ticket/face/pan/zoom/privacy inputs pass. P09 native58
+and compiled49 checks pass. Clean P06/P07 prototype regressions and mouse probes
+are source-identity qualified. Frozen structural held-out outcomes retain10 PASS
+and2 explicit rejections; these are not a random-playability population estimate.
+
+Evidence: [P09 README](task-evidence/P09/README.md), acceptance/source/build/phase
+receipts, native logs, browser reports, strict readers and curated screenshots.
+Reproduction: [P09 REPRODUCE](task-evidence/P09/REPRODUCE.md).
+
+All97 original files remain:94 byte-identical plus3 exact inverse-verified shared
+merges. Unrelated visual/FPS/packing/tray changes are not part of this commit.
+Next unstarted work: the separate post-P09 arbitrary-candidate-seed Quick Play
+admission gate. No Q30/Q60/Q100 or broader seed population is qualified here.
+<!-- P09-CURRENT-END -->
+
+---
+
+## Preserved historical handoff
+
 # Current checkpoint - P08 complete
 
 Scope: scalable physical validation and copper projection caches on P07 base

@@ -7,13 +7,14 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Branch observed during review:** `codex/task43p-final-recovery`<br>
-**Latest completed task:** **P08: Scalable physical validation and projection caches**<br>
-**P08 qualification:** The evidence-selected interval broad phase, immutable copper/view caches and exact solver-partition projection are qualified. Current brute-force parity and 2,022 adversarial assertions pass; 15/30/56/100 mixed inventories and dense contact work are measured. Full native46, both GWT5 builds and 13 compiled browser runs pass. P09 is next; normal large-board/layer-strategy adoption is not implied. [P08 evidence](task-evidence/P08/README.md).
-**P07 qualification (2026-09-15):** The required developer-only four-policy comparison and real plated-via/top-bottom probe bench are qualified. All 54 structural rows are retained; six prototype RB30 requests succeed, while the frozen 56/100 requests reject within bounds. Normal adoption remains deferred to P09. [P07 evidence](task-evidence/P07/README.md). P08 is now separately qualified.
-**P06 qualification (2026-09-15):** The real finite-link prototype, explicit insulated underpass, physical service/probes, bounded sparse policy and matched no-link comparisons are qualified. Normal adoption remains deferred to P09. See [P06 evidence](task-evidence/P06/README.md). P07 is now separately qualified.
+**Latest completed task:** **P09: Production physical envelope and layer-strategy qualification**<br>
+**P09 qualification (2026-09-16):** `THT_SINGLE_FACE@1` is enforced at normal installation/admission/publication with unchanged geometry/electrical/diagnostic requirements. Clean native48, integrated native9, both GWT5 builds, RC/Q15 and real normal menu/navigation/privacy checks pass. Frozen held-out structural results retain ten passes and two explicit rejections. Production two-layer/via/link adoption is rejected for this epoch. [Evidence and limits](task-evidence/P09/README.md).
+**P08 qualification:** The evidence-selected interval broad phase, immutable copper/view caches and exact solver-partition projection are qualified. Current brute-force parity and 2,022 adversarial assertions pass; 15/30/56/100 mixed inventories and dense contact work are measured. Full native46, both GWT5 builds and 13 compiled browser runs pass. P09 is now separately qualified; P08 itself does not imply normal large-board/layer-strategy adoption. [P08 evidence](task-evidence/P08/README.md).
+**P07 qualification (2026-09-15):** The required developer-only four-policy comparison and real plated-via/top-bottom probe bench are qualified. All 54 structural rows are retained; six prototype RB30 requests succeed, while the frozen 56/100 requests reject within bounds. Normal adoption is not qualified by P09. [P07 evidence](task-evidence/P07/README.md). P08 is now separately qualified.
+**P06 qualification (2026-09-15):** The real finite-link prototype, explicit insulated underpass, physical service/probes, bounded sparse policy and matched no-link comparisons are qualified. Normal adoption is not qualified by P09. See [P06 evidence](task-evidence/P06/README.md). P07 is now separately qualified.
 **P05 qualification (2026-09-15):** Bounded routing recovery is complete on the existing branch, with unrelated visual work preserved. See [P05 evidence](task-evidence/P05/README.md). P06 and P07 are now separately qualified; the post-P09 Quick Play gate remains unstarted.
 
-**Accepted alpha checkpoint:** **U04 / U05 / REL-A COMPLETE.** Typed sessions, initial computed EASY/MEDIUM profiles and limited low-voltage desktop alpha are qualified, with mandatory eleven-seed normal RB15 admission, the full website catalog, compatible purchased-part installation, Windows launcher recovery and exact meter endpoint fixes. Final GWT5/native33, Alpha38, Q15all11/66 copper readings, affected compiled/strict/negative gates and actual repair/retest/replay/privacy/focus flows pass. Human attempts and uncertainty remain qualitative evidence; no population difficulty or arbitrary-seed guarantee is claimed. The separately authorized visual pass is completed in its own commit, documented below. **Next unstarted roadmap milestone: P09.** [Evidence and limits](task-evidence/REL-A/README.md).
+**Accepted alpha checkpoint:** **U04 / U05 / REL-A COMPLETE.** Typed sessions, initial computed EASY/MEDIUM profiles and limited low-voltage desktop alpha are qualified, with mandatory eleven-seed normal RB15 admission, the full website catalog, compatible purchased-part installation, Windows launcher recovery and exact meter endpoint fixes. Final GWT5/native33, Alpha38, Q15all11/66 copper readings, affected compiled/strict/negative gates and actual repair/retest/replay/privacy/focus flows pass. Human attempts and uncertainty remain qualitative evidence; no population difficulty or arbitrary-seed guarantee is claimed. The separately authorized visual pass is completed in its own commit, documented below. **Next unstarted work: post-P09 Procedural Quick Play Admission Gate.** [Evidence and limits](task-evidence/REL-A/README.md).
 **Roadmap clarification (2026-09-14):** The post-P09 Procedural Quick Play Admission Gate now explicitly requires fresh arbitrary candidate signed-long seeds within qualified families/envelopes, bounded rejection/retry, exact accepted-seed replay, and population/layout-diversity evidence before normal-medium procedural qualification proceeds. This is a documentation/product-contract clarification only: REL-A remains curated/bounded, no generator or Quick Play production behavior is changed here, this clarification did not implement P05. P05 is now separately qualified below.
 
 **Completed post-release correction:** The authorized visual pass and fault-blind serviceability correction are qualified in the completion commit containing this update. All nine playable families have real supported part-service ownership. Fresh GWT33 build, Q15/native proof repair and actual menu/progress/measure/drag/shop/repair/retest flow pass; unaffected GWT32 and native31 results are explicitly reused under input audits. [Final evidence and limitations](task-evidence/visual-productization/final33/README.md). **P05 is now separately qualified; see its evidence below.**
@@ -661,7 +662,7 @@ Every enabled instrument declares electrical connection/stimulus, burden/loading
 
 ## 7.1 Status and authority
 
-T49, N00, A01-A11, R00, P01-P08, U01, E01, E03, Q15, U04, U05 and REL-A are accepted/completed: 29 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. P09 is the next unstarted milestone. P08 current isolated CLI runs satisfy unchanged ownership/cleanup gates; earlier unqualified launch attempts remain separately recorded.
+T49, N00, A01-A11, R00, P01-P09, U01, E01, E03, Q15, U04, U05 and REL-A are accepted/completed: 30 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. The post-P09 Procedural Quick Play Admission Gate is the next unstarted work. P08 current isolated CLI runs satisfy unchanged ownership/cleanup gates; earlier unqualified launch attempts remain separately recorded.
 
 A task-specific prompt authorizes a bounded scope. Follow current AGENTS.md for orchestration, ownership, review, publication and safety; R00 replaced its contradictory blanket compatibility wording under the owner's explicit instruction. A current correct requirement outranks an obsolete test. Do not start writers before relevant shared-interface investigations are reconciled.
 
@@ -680,7 +681,7 @@ preferred next eligible milestone. Future implementation needs its own authoriza
 than the old preferred order while satisfying their hard prerequisites: A10
 required A05/A07/A09/P02; A11 required A04/A08/A09. Their earlier placement does
 not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 → Q15 → U04 → U05 → REL-A is now complete.
-**Next roadmap milestone: P09.** P05 bounded recovery, P06 raised links, the required P07 two-layer comparison/prototype and P08 validation/cache scaling are qualified; pending visual work remains separately preserved.
+**Next work: post-P09 Procedural Quick Play Admission Gate.** P09 freezes the restricted normal physical envelope; its completion does not expand the curated seed population. Pending unrelated visual work remains separately preserved.
 
 | Wave | Preferred sequence |
 |---|---|
@@ -1335,7 +1336,9 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### P09 · Production physical envelope and layer-strategy qualification
 
-**Status:** UNSTARTED.
+**Status:** COMPLETE - QUALIFIED, 2026-09-16. The versioned single-declared-face THT envelope is enforced before live ownership transfer and revalidated with actual physical/electrical/diagnostic truth. Limited-two-layer production adoption is rejected for this epoch. No Q30/Q60/Q100 or procedural-population expansion is implied.
+
+**Qualification:** Clean native48 (P09 58 assertions), final integrated native9, both five-permutation GWT builds, compiled P09/RC/Q15 and forced negatives, nine normal families and actual navigation/probe inputs pass. Twenty calibration/regression layouts pass; twelve held-out inputs retain ten physical passes and two explicit rejections. The temporal health-order and scheduler-snapshot defects exposed by qualification are repaired without relaxed guards/budgets. [Evidence, reproduction and limits](task-evidence/P09/README.md).
 
 **Hard prerequisites:** [P05](#m-p05), [P06](#m-p06), [P07](#m-p07), [P08](#m-p08), [U01](#m-u01)
 
@@ -1364,7 +1367,7 @@ The shared current-only policy and validation rules apply to every card. There i
 <a id="post-p09-quick-play"></a>
 #### Mandatory post-P09 integration gate · Procedural Quick Play arbitrary-candidate-seed admission
 
-**Status:** UNSTARTED. This is a required integration/qualification gate, not a new catalog node. It does not authorize implementation before P09. P09 is the next unstarted roadmap milestone.
+**Status:** UNSTARTED. This is a required integration/qualification gate, not a new catalog node. P09 is complete; this is the next unstarted gate and was not implemented as part of P09.
 
 **Purpose:** Retire curated seed whitelists as the complete normal-player population for each family once the physical pipeline and that family are qualified for broader procedural admission. Preserve frozen cohorts as regression evidence rather than permanent gameplay limits.
 

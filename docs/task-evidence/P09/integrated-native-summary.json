@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "javaSuites": 9,
+  "rawSha256": "915616f4fdd13a614d90167ad1cc0b393d4c10a1c87c5cd41d7811d347ab3d3d",
+  "passMarkers": [
+    "PASS: dense PCB packing seeds=11 areaSum=20746824",
+    "PASS: visual workbench contracts assertions=150",
+    "PASS: physical serviceability contracts assertions=846",
+    "PASS: U04 session contracts assertions=2533",
+    "PASS: U05 difficulty contracts assertions=23",
+    "PASS: A07 execution contracts assertions=24868",
+    "PASS: A10 generation contracts assertions=190",
+    "PASS: A10 dependency contracts assertions=12",
+    "PASS: P09 physical envelope contracts assertions=58"
+  ],
+  "policyAssertions": 58,
+  "scope": "Focused final integrated contracts; unrelated visual code retained"
+}

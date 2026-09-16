@@ -69,6 +69,8 @@ final class PhysicalSpecificationDeveloperVerifier {
         Sort-Object Name | ForEach-Object { $_.FullName })
     $sourcePaths += $stub
     $testDefinitions = @(
+        # Schedule the largest short-budget construction cohort first; cases and budgets are unchanged.
+        @{ Name = 'QuickPlayContractTest'; Marker = 'Quick Play current seed envelopes and construction' },
         @{ Name = 'PcbCompactionContractTest'; Marker = 'PCB compaction contracts ' },
         @{ Name = 'VisualWorkbenchContractTest'; Marker = 'visual workbench contracts ' },
         @{ Name = 'Task43PhysicalEndpointContractTest'; Marker = 'Task43 current physical endpoint contracts ' },
@@ -78,7 +80,6 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'U05DifficultyContractTest'; Marker = 'U05 difficulty contracts ' },
         @{ Name = 'E03RelayContractTest'; Marker = 'E03 relay contracts ' },
         @{ Name = 'Q15ControlBoardContractTest'; Marker = 'Q15 control board contracts ' },
-        @{ Name = 'QuickPlayContractTest'; Marker = 'Quick Play current seed envelopes and construction' },
         @{ Name = 'ChallengeDescriptorContractTest'; Marker = 'Task46 ' },
         @{ Name = 'FunctionalBlockContractTest'; Marker = 'Task44 ' },
         @{ Name = 'ElectricalPortContractTest'; Marker = 'Task45 ' },
@@ -108,6 +109,8 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'P06FactoryLinkContractTest'; Marker = 'P06 factory-link contracts ' },
         @{ Name = 'P07TwoLayerContractTest'; Marker = 'P07 two-layer contracts ' },
         @{ Name = 'P08ScalabilityContractTest'; Marker = 'P08 scalable physical contracts ' },
+        @{ Name = 'P09EnvelopeCorpus'; Marker = 'P09 physical envelope corpus ' },
+        @{ Name = 'P09EnvelopeContractTest'; Marker = 'P09 physical envelope contracts ' },
         @{ Name = 'P07LayerCorpus'; Marker = 'P07 frozen layer corpus ' },
         @{ Name = 'P05RoutingCorpus'; Marker = 'P05 frozen corpus ' },
         @{ Name = 'P05GenerationCorpus'; Marker = 'P05 generation comparison ' },
@@ -153,7 +156,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         }
         # The NEW P07 54-row structural comparison has its own explicit ten-minute budget.
         # Existing suites retain their original one-minute bounds.
-        $testBudget = if ($testClass -eq 'P07LayerCorpus') { 600000 } else { 60000 }
+        $testBudget = if ($testClass -eq 'P07LayerCorpus') { 600000 } elseif ($testClass -eq 'P09EnvelopeCorpus') { 180000 } else { 60000 }
         $tested = Invoke-VerifierBoundedProcess $java $testArguments $testBudget
         Write-Host $tested.Stdout
         if ($tested.Stderr) { Write-Host $tested.Stderr }

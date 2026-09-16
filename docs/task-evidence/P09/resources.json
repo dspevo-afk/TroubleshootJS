@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "cleanBrowsers": 12,
+  "integratedBrowsers": 7,
+  "allRecordedOwnedBrowsersClosed": true,
+  "allRecordedListenerThreadsStopped": true,
+  "preserved": "All 97 original files and old uncertain resources left untouched; task scratch retained for recovery."
+}

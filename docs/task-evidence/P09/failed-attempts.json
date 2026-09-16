@@ -1,0 +1,115 @@
+{
+  "attempts": [
+    {
+      "name": "corpus-first.txt",
+      "rawSha256": "0e7ed39594ea1ecaeebe3b01fe7a3426c6fa2efa3168a52374c7cac23ebd21c1",
+      "tail": "make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the \nVerbose parameter. For a list of approved verbs, type Get-Verb.\nJDK: javac 1.8.0_502\n\nwarning: [options] bootstrap class path not set in conjunction with -source 1.7\nNote: Some input files use unchecked or unsafe operations.\nNote: Recompile with -Xlint:unchecked for details.\n1 warning\n\n\nException in thread \"main\" com.lushprojects.circuitjs1.client.SupportedEnvelope$Rejected: Unsupported physical envelope THT_SINGLE_BOTTOM@1 [LAYER_POLICY]: bottom copper required\n\tat com.lushprojects.circuitjs1.client.SupportedEnvelope.reject(SupportedEnvelope.java:107)\n\tat com.lushprojects.circuitjs1.client.SupportedEnvelope.requireBounds(SupportedEnvelope.java:70)\n\tat com.lushprojects.circuitjs1.client.P09EnvelopeCorpus.row(P09EnvelopeCorpus.java:50)\n\tat com.lushprojects.circuitjs1.client.P09EnvelopeCorpus.main(P09EnvelopeCorpus.java:17)\n\nCURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: P09EnvelopeCorpus, exit 1\nCLEANUP: current JVM contract classes and task-owned scratch removed."
+    },
+    {
+      "name": "contracts-first.txt",
+      "rawSha256": "6b9cbbe5d929edff61ea0b2a4143fa062ab311bc58334125979db00062efc846",
+      "tail": "WARNING: The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might \nmake them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the \nVerbose parameter. For a list of approved verbs, type Get-Verb.\nJDK: javac 1.8.0_502\n\nwarning: [options] bootstrap class path not set in conjunction with -source 1.7\nNote: Some input files use unchecked or unsafe operations.\nNote: Recompile with -Xlint:unchecked for details.\n1 warning\n\n\nException in thread \"main\" java.lang.IllegalArgumentException: This difficulty profile is unavailable\n\tat com.lushprojects.circuitjs1.client.DifficultyProfile.parseAvailable(DifficultyProfile.java:13)\n\tat com.lushprojects.circuitjs1.client.PlayerLaunchRequest.<init>(PlayerLaunchRequest.java:14)\n\tat com.lushprojects.circuitjs1.client.P09EnvelopeContractTest.main(P09EnvelopeContractTest.java:9)\n\nCURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: P09EnvelopeContractTest, exit 1\nCLEANUP: current JVM contract classes and task-owned scratch removed."
+    },
+    {
+      "name": "native-clean.txt",
+      "rawSha256": "34909dd2876f079bcc31cd13beca1023a3f730cf0f4fdafaa8185497e57aa5b3",
+      "tail": "Q15_SELECTION entropy=9007199254740993 selected=9007199254740993 replay=tsj-alpha/1/EASY/RB15_CONTROL/9007199254740993\nQ15_ROUTE seed=0 cohort=development design=RB15_NMOS_RESISTIVE_BIAS millis=793 routeMillis=701 attempts=17 expansions=2067534 score=56085.73518328226\nQ15_ROUTE seed=1 cohort=development design=RB15_BJT_RESISTIVE_BIAS millis=497 routeMillis=478 attempts=17 expansions=2469403 score=56094.39745633004\nQ15_ROUTE seed=2 cohort=development design=RB15_NMOS_RESISTIVE_BIAS millis=417 routeMillis=412 attempts=17 expansions=1960310 score=57536.420974711065\nQ15_ROUTE seed=3 cohort=development design=RB15_NMOS_RC_FILTER millis=2732 routeMillis=2650 attempts=98 expansions=12177385 score=55961.0394677611\nQ15_ROUTE seed=17 cohort=holdout design=RB15_NMOS_RC_FILTER millis=1806 routeMillis=1773 attempts=68 expansions=7953975 score=51766.42140915534\nQ15_ROUTE seed=42 cohort=holdout design=RB15_NMOS_RC_FILTER millis=1234 routeMillis=1207 attempts=38 expansions=4607580 score=55936.51071523159\nQ15_ROUTE seed=101 cohort=holdout design=RB15_BJT_RC_FILTER millis=1985 routeMillis=1962 attempts=60 expansions=7325194 score=59674.2070035671\nQ15_ROUTE seed=-1 cohort=holdout design=RB15_NMOS_RESISTIVE_BIAS millis=498 routeMillis=477 attempts=17 expansions=2057188 score=56675.95123705832\nQ15_ROUTE seed=9007199254740993 cohort=holdout design=RB15_NMOS_RC_FILTER millis=3432 routeMillis=3366 attempts=119 expansions=14786399 score=51627.565014450905\nQ15_ROUTE seed=-9223372036854775808 cohort=holdout design=RB15_BJT_RESISTIVE_BIAS millis=541 routeMillis=532 attempts=19 expansions=2078676 score=57629.42641189793\nQ15_ROUTE seed=9223372036854775807 cohort=holdout design=RB15_BJT_RESISTIVE_BIAS millis=558 routeMillis=543 attempts=19 expansions=2426675 score=57624.453171344\nQ15_EXACT_RECOVERY seed=-4518705223253195925 attempts=12 millis=1938\nQ15_EXACT_RECOVERY seed=-5365808313541656343 attempts=38 millis=5671\nPASS: Q15 control board contracts assertions=6863 designs=4\n\nCURRENT_CONTRACT_FAILURE: VERIFIER_INFRASTRUCTURE: VERIFIER_INFRASTRUCTURE: Bounded process '<JDK8>\\bin\\java.exe' exceeded 60000ms; logs retained at '<HOME>\\AppData\\Local\\Temp\\TroubleshootJS\\verify-process-490e8e91eefb44b3960ab66ffbf0903e'. Bounded-process evidence: '<HOME>\\AppData\\Local\\Temp\\TroubleshootJS\\verify-process-490e8e91eefb44b3960ab66ffbf0903e'.\nCLEANUP: current JVM contract classes and task-owned scratch removed."
+    },
+    {
+      "name": "native-final.txt",
+      "rawSha256": "7d83341830f5b3565f2ed55d45dba069c9e2ff99f4097b0ab0359fc08f67a896",
+      "tail": "Q15_SELECTION entropy=9007199254740993 selected=9007199254740993 replay=tsj-alpha/1/EASY/RB15_CONTROL/9007199254740993\nQ15_ROUTE seed=0 cohort=development design=RB15_NMOS_RESISTIVE_BIAS millis=1820 routeMillis=1563 attempts=17 expansions=2067534 score=56085.73518328226\nQ15_ROUTE seed=1 cohort=development design=RB15_BJT_RESISTIVE_BIAS millis=1009 routeMillis=960 attempts=17 expansions=2469403 score=56094.39745633004\nQ15_ROUTE seed=2 cohort=development design=RB15_NMOS_RESISTIVE_BIAS millis=822 routeMillis=781 attempts=17 expansions=1960310 score=57536.420974711065\nQ15_ROUTE seed=3 cohort=development design=RB15_NMOS_RC_FILTER millis=4731 routeMillis=4648 attempts=98 expansions=12177385 score=55961.0394677611\nQ15_ROUTE seed=17 cohort=holdout design=RB15_NMOS_RC_FILTER millis=3209 routeMillis=3145 attempts=68 expansions=7953975 score=51766.42140915534\nQ15_ROUTE seed=42 cohort=holdout design=RB15_NMOS_RC_FILTER millis=1821 routeMillis=1774 attempts=38 expansions=4607580 score=55936.51071523159\nQ15_ROUTE seed=101 cohort=holdout design=RB15_BJT_RC_FILTER millis=2861 routeMillis=2802 attempts=60 expansions=7325194 score=59674.2070035671\nQ15_ROUTE seed=-1 cohort=holdout design=RB15_NMOS_RESISTIVE_BIAS millis=842 routeMillis=812 attempts=17 expansions=2057188 score=56675.95123705832\nQ15_ROUTE seed=9007199254740993 cohort=holdout design=RB15_NMOS_RC_FILTER millis=5634 routeMillis=5563 attempts=119 expansions=14786399 score=51627.565014450905\nQ15_ROUTE seed=-9223372036854775808 cohort=holdout design=RB15_BJT_RESISTIVE_BIAS millis=849 routeMillis=816 attempts=19 expansions=2078676 score=57629.42641189793\nQ15_ROUTE seed=9223372036854775807 cohort=holdout design=RB15_BJT_RESISTIVE_BIAS millis=931 routeMillis=909 attempts=19 expansions=2426675 score=57624.453171344\nQ15_EXACT_RECOVERY seed=-4518705223253195925 attempts=12 millis=3250\nQ15_EXACT_RECOVERY seed=-5365808313541656343 attempts=38 millis=9003\nPASS: Q15 control board contracts assertions=6863 designs=4\n\nCURRENT_CONTRACT_FAILURE: VERIFIER_INFRASTRUCTURE: VERIFIER_INFRASTRUCTURE: Bounded process '<JDK8>\\bin\\java.exe' exceeded 60000ms; logs retained at '<HOME>\\AppData\\Local\\Temp\\TroubleshootJS\\verify-process-44fef7a6c3d54e8095344fe8a4b82d35'. Bounded-process evidence: '<HOME>\\AppData\\Local\\Temp\\TroubleshootJS\\verify-process-44fef7a6c3d54e8095344fe8a4b82d35'.\nCLEANUP: current JVM contract classes and task-owned scratch removed."
+    },
+    {
+      "name": "native-final-ordered.txt",
+      "rawSha256": "0b085713703a8e1544165302214dd8b0a9db1b950ad095c37b23bfe73114bfff",
+      "tail": "P05_GENERATION {\"seed\":\"-1\",\"outcome\":\"SUCCESS\",\"placements\":4,\"routes\":17,\"expansions\":2057188,\"area\":1894150,\"score\":56675.95123705832,\"elapsedMs\":751.919}\nP05_GENERATION {\"seed\":\"9007199254740993\",\"outcome\":\"SUCCESS\",\"placements\":24,\"routes\":119,\"expansions\":14786399,\"area\":1669284,\"score\":51627.565014450905,\"elapsedMs\":4996.2851}\nP05_GENERATION {\"seed\":\"-9223372036854775808\",\"outcome\":\"SUCCESS\",\"placements\":4,\"routes\":19,\"expansions\":2078676,\"area\":1937150,\"score\":57629.42641189793,\"elapsedMs\":739.4508}\nP05_GENERATION {\"seed\":\"9223372036854775807\",\"outcome\":\"SUCCESS\",\"placements\":4,\"routes\":19,\"expansions\":2426675,\"area\":1937150,\"score\":57624.453171344,\"elapsedMs\":831.0032}\nP05_GENERATION {\"seed\":\"-4518705223253195925\",\"outcome\":\"SUCCESS\",\"placements\":12,\"routes\":62,\"expansions\":8222673,\"area\":2543320,\"score\":72034.49173856033,\"elapsedMs\":2708.9417}\nP05_GENERATION {\"seed\":\"-5365808313541656343\",\"outcome\":\"SUCCESS\",\"placements\":38,\"routes\":193,\"expansions\":23943276,\"area\":1682040,\"score\":52929.29405417023,\"elapsedMs\":8035.1898}\nPASS: P05 generation comparison rows=13\n\nPASS: A02ReplayContractTest assertions=148\n\nPASS: ElectricalUnitPackageMapContractTest assertions=37\n\nPASS: A04ConstructionContractTest assertions=680\n\nPASS: A04PhysicalDeclarationContractTest assertions=5270\n\nCURRENT_CONTRACT_FAILURE: VERIFIER_INFRASTRUCTURE: VERIFIER_INFRASTRUCTURE: Bounded process '<TASK>\\pyenv\\Scripts\\python.exe' exceeded 60000ms; logs retained at '<HOME>\\AppData\\Local\\Temp\\TroubleshootJS\\verify-process-921ce34a7bdc447688375efdec2179e4'. Bounded-process evidence: '<HOME>\\AppData\\Local\\Temp\\TroubleshootJS\\verify-process-921ce34a7bdc447688375efdec2179e4'.\nCLEANUP: current JVM contract classes and task-owned scratch removed."
+    }
+  ],
+  "isolatedQuickPlayRerun": {
+    "rawSha256": "47ddb7a1da77109c25a04f4787a969d2f88309a66cfeae0ff06812eb65076579",
+    "status": "PASS"
+  },
+  "policy": "No failed run is counted as PASS. Old limits unchanged; Quick Play scheduling and Python launcher repairs are documented.",
+  "laterCausalFailures": [
+    {
+      "source": "resume-final-clean/browser-clean-rc/result.json",
+      "rawSha256": "85b2c1fcb6ff125cbe69a77dcb2c1cd18c26d16c9e012359600599491cb12152",
+      "result": {
+        "mode": "rc",
+        "outcome": "FAIL",
+        "errors": [],
+        "httpErrors": [],
+        "status": "FAIL:Board modification requires electrically unpowered generated board",
+        "elapsedSeconds": 37.29057460000331,
+        "browser": "153.0.4234.32",
+        "report": null,
+        "ownerCleanup": null,
+        "resources": [
+          "http://127.0.0.1:62150/circuitjs1/circuitjs1.nocache.js",
+          "http://127.0.0.1:62150/circuitjs1/746B475DDE985C20EDF8F59D6E8B54EA.cache.js"
+        ],
+        "failureMeter": "--- V",
+        "failure": "Traceback (most recent call last):\n  File \"<CANDIDATE>\\docs\\task-evidence\\P07\\verify_browser.py\", line 99, in <module>\n    assert status==expected, str(result)\n           ^^^^^^^^^^^^^^^^\nAssertionError: {'mode': 'rc', 'outcome': 'NOT_RUN', 'errors': [], 'httpErrors': [], 'status': 'FAIL:Board modification requires electrically unpowered generated board', 'elapsedSeconds': 37.29057460000331, 'browser': '153.0.4234.32', 'report': None, 'ownerCleanup': None, 'resources': ['http://127.0.0.1:62150/circuitjs1/circuitjs1.nocache.js', 'http://127.0.0.1:62150/circuitjs1/746B475DDE985C20EDF8F59D6E8B54EA.cache.js']}\n",
+        "cleanup": {
+          "serverThreadStopped": true,
+          "ownedSurvivors": []
+        }
+      },
+      "disposition": "Retained FAIL; repaired only in later final-source clean/integrated RC PASS receipts."
+    },
+    {
+      "source": "resume-review/browser-rc-snapshot-fixed/result.json",
+      "rawSha256": "196e0eee06e06dfeb10e58517bd560ec339fbd9a1e7f592497637399f9c0bcbd",
+      "result": {
+        "mode": "rc",
+        "outcome": "FAIL",
+        "errors": [],
+        "httpErrors": [],
+        "status": "FAIL:Production provider did not expose all terminals: C1",
+        "elapsedSeconds": 44.06337590000476,
+        "browser": "153.0.4234.32",
+        "report": null,
+        "ownerCleanup": null,
+        "resources": [
+          "http://127.0.0.1:55768/circuitjs1/circuitjs1.nocache.js",
+          "http://127.0.0.1:55768/circuitjs1/CCE9CB1EFFB9053E90C5EA997E39648D.cache.js"
+        ],
+        "failureMeter": "--- V",
+        "failure": "Traceback (most recent call last):\n  File \"<CANDIDATE>\\docs\\task-evidence\\P07\\verify_browser.py\", line 99, in <module>\n    assert status==expected, str(result)\n           ^^^^^^^^^^^^^^^^\nAssertionError: {'mode': 'rc', 'outcome': 'NOT_RUN', 'errors': [], 'httpErrors': [], 'status': 'FAIL:Production provider did not expose all terminals: C1', 'elapsedSeconds': 44.06337590000476, 'browser': '153.0.4234.32', 'report': None, 'ownerCleanup': None, 'resources': ['http://127.0.0.1:55768/circuitjs1/circuitjs1.nocache.js', 'http://127.0.0.1:55768/circuitjs1/CCE9CB1EFFB9053E90C5EA997E39648D.cache.js']}\n",
+        "cleanup": {
+          "serverThreadStopped": true,
+          "ownedSurvivors": []
+        }
+      },
+      "disposition": "Retained FAIL; repaired only in later final-source clean/integrated RC PASS receipts."
+    },
+    {
+      "source": "rc-verifier-diagnostic-results/browser-rc/result.json",
+      "rawSha256": "99b66eb092fd493cbef861818930dfb6a11a135376b62b9f74d407666fb367ef",
+      "result": {
+        "mode": "rc",
+        "outcome": "FAIL",
+        "errors": [],
+        "httpErrors": [],
+        "status": "FAIL:RC pilot update exception: java.lang.IllegalStateException: Invalid accepted-state event boundary",
+        "elapsedSeconds": 36.30126969999401,
+        "browser": "153.0.4234.32",
+        "report": null,
+        "ownerCleanup": null,
+        "resources": [
+          "http://127.0.0.1:64994/circuitjs1/circuitjs1.nocache.js",
+          "http://127.0.0.1:64994/circuitjs1/370439342B072C6DFCE4CC66300D2308.cache.js"
+        ],
+        "failureMeter": "--- V",
+        "failure": "Traceback (most recent call last):\n  File \"<TASK>\\rc-verifier-pilot\\docs\\task-evidence\\P07\\verify_browser.py\", line 99, in <module>\n    assert status==expected, str(result)\n           ^^^^^^^^^^^^^^^^\nAssertionError: {'mode': 'rc', 'outcome': 'NOT_RUN', 'errors': [], 'httpErrors': [], 'status': 'FAIL:RC pilot update exception: java.lang.IllegalStateException: Invalid accepted-state event boundary', 'elapsedSeconds': 36.30126969999401, 'browser': '153.0.4234.32', 'report': None, 'ownerCleanup': None, 'resources': ['http://127.0.0.1:64994/circuitjs1/circuitjs1.nocache.js', 'http://127.0.0.1:64994/circuitjs1/370439342B072C6DFCE4CC66300D2308.cache.js']}\n",
+        "cleanup": {
+          "serverThreadStopped": true,
+          "ownedSurvivors": []
+        }
+      },
+      "disposition": "Retained FAIL; repaired only in later final-source clean/integrated RC PASS receipts."
+    }
+  ],
+  "closeoutLimit": "No prior failure is recategorized as success. Frozen policies, ordinary backwards-time rejection and production work budgets remain unchanged."
+}

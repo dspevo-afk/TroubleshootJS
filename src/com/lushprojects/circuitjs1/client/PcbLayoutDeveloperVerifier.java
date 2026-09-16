@@ -12,10 +12,30 @@ class PcbLayoutDeveloperVerifier {
         verifyFamily("NPN_LOW_SIDE_SWITCH");
         verifyFamily("NMOS_LOW_SIDE_SWITCH");
         GeneratedBoardInstance current = sim.getGeneratedBoardInstance();
+        int envelopeChecks=P09EnvelopeChecks.verify(current)+P09EnvelopeChecks.verifyColdAdmission(sim);
+        verifyNormalEnvelopeRejection(sim);
+        com.google.gwt.dom.client.Document.get().getDocumentElement().setAttribute("data-tsj-p09-report",
+            "{\"envelope\":\""+SupportedEnvelope.current().identity()+"\",\"assertions\":"+envelopeChecks+
+            ",\"normalRejectedBeforeMutation\":true,\"twoLayerProduction\":false,\"factoryLinksProduction\":false}");
         PcbBoardLayout regenerated = generate(current.getCircuitFamilyId(), current.getSeed())
             .getPcbLayout();
         require(current.getPcbLayout().geometryFingerprint().equals(regenerated.geometryFingerprint()),
             "installed PCB geometry does not match deterministic regeneration");
+    }
+
+    private static void verifyNormalEnvelopeRejection(CirSim sim) {
+        GeneratedBoardInstance original=sim.getGeneratedBoardInstance(); Object graph=sim.elmList;
+        GeneratedBoardInstance bad=generate("LED_INDICATOR",0);
+        try {
+            bad.getBoard().addComponent(new BoardComponent("P09_UNPLACED","RESISTOR",PhysicalPackages.AXIAL_RESISTOR));
+            try { new FreshGeneratedRuntimeInstallation.Staged(sim,bad);
+                throw new IllegalStateException("Normal installation accepted incomplete physical inventory"); }
+            catch(SupportedEnvelope.Rejected expected) {
+                require(expected.reason==SupportedEnvelope.Reason.POPULATION,"Incorrect normal envelope rejection");
+            }
+            require(sim.getGeneratedBoardInstance()==original && sim.elmList==graph && !FreshGeneratedRuntimeInstallation.isInProgress(sim),
+                "Envelope rejection changed the live owner");
+        } finally { for(CircuitElm element:bad.getSimulationElements()) element.delete(); }
     }
 
     /** Compiled GWT exercises the same frozen order-only, rip-up and exhaustion witnesses. */

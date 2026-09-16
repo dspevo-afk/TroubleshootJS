@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "base": "5a9e544c41a343f3943211cf83fba85b05cfcd29",
+  "envelope": "THT_SINGLE_FACE@1",
+  "cleanNativeSuites": 48,
+  "integratedNativeSuites": 9,
+  "nativeP09Assertions": 58,
+  "cleanCompiledP09Assertions": 49,
+  "integratedCompiledP09Assertions": 49,
+  "q15Assertions": {
+    "clean": 613,
+    "integrated": 613
+  },
+  "strictQ15Readers": "PASS both variants, 22 malformed controls each",
+  "structuralCorpus": {
+    "calibrationRegressionPass": 20,
+    "heldOutPass": 10,
+    "heldOutRejected": 2
+  },
+  "publication": "Acceptance only; exact commit/push/email outcome is authoritative in Git and final delivery receipt.",
+  "scopeLimits": [
+    "No production two-layer/via/factory-link adoption",
+    "No procedural population expansion or Q30/Q60/Q100 qualification",
+    "No FPS, browser-memory, new-browser or modest-host certification",
+    "Player inputs prove menu/admission/face/pan/zoom/privacy; repair proof is compiled RC/Q15, not a new manual repair claim",
+    "Implementing-root review plus independent executable oracles; no new independent agent or human review"
+  ]
+}

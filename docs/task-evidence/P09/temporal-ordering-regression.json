@@ -1,0 +1,44 @@
+{
+  "cause": "Initial graph admission invoked static family healthy-output predicate before the owned temporal startup profile. Existing wall-bounded UI acceleration exposed the cold-start ordering bug.",
+  "observedBrowserFailure": {
+    "browser": "153.0.4234.32",
+    "cleanup": {
+      "ownedSurvivors": [],
+      "serverThreadStopped": true
+    },
+    "elapsedSeconds": 7.434683400002541,
+    "errors": [],
+    "failure": "Traceback (most recent call last):\n  File \"<PRESERVED>\\docs\\task-evidence\\P07\\verify_browser.py\", line 98, in <module>\n    assert status==expected, str(result)\n           ^^^^^^^^^^^^^^^^\nAssertionError: {'mode': 'q15', 'outcome': 'NOT_RUN', 'errors': [], 'httpErrors': [], 'status': 'FAIL:Healthy relay output is absent', 'elapsedSeconds': 7.434683400002541, 'browser': '153.0.4234.32', 'report': {'protocol': 'TSJ-Q15-1', 'status': 'RUNNING', 'cases': [], 'assertions': 4, 'supportAssertions': 0, 'cancellationMs': 0, 'elapsedMs': 1351, 'cleanupMs': 0, 'ownerRestored': False, 'operation': 'admission', 'activeSeed': '0', 'failure': None}, 'ownerCleanup': None, 'resources': ['http://127.0.0.1:56010/circuitjs1/circuitjs1.nocache.js', 'http://127.0.0.1:56010/circuitjs1/1AA68B174B0BC6DDFBCB9FDB979E8278.cache.js']}\n",
+    "failureMeter": "--- V",
+    "httpErrors": [],
+    "mode": "q15",
+    "outcome": "FAIL",
+    "ownerCleanup": null,
+    "report": {
+      "activeSeed": "0",
+      "assertions": 4,
+      "cancellationMs": 0,
+      "cases": [],
+      "cleanupMs": 0,
+      "elapsedMs": 1351,
+      "failure": null,
+      "operation": "admission",
+      "ownerRestored": false,
+      "protocol": "TSJ-Q15-1",
+      "status": "RUNNING",
+      "supportAssertions": 0
+    },
+    "resources": [
+      "http://127.0.0.1:56010/circuitjs1/circuitjs1.nocache.js",
+      "http://127.0.0.1:56010/circuitjs1/1AA68B174B0BC6DDFBCB9FDB979E8278.cache.js"
+    ],
+    "status": "FAIL:Healthy relay output is absent"
+  },
+  "predicateRed": {
+    "exit": 2,
+    "log": "WARNING: The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might \nmake them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the \nVerbose parameter. For a list of approved verbs, type Get-Verb.\nJDK: javac 1.8.0_502\n\nwarning: [options] bootstrap class path not set in conjunction with -source 1.7\nNote: Some input files use unchecked or unsafe operations.\nNote: Recompile with -Xlint:unchecked for details.\n1 warning\n\n\nException in thread \"main\" java.lang.IllegalStateException: Cold temporal output judged before startup profile: RC_DELAY\n\tat com.lushprojects.circuitjs1.client.P09EnvelopeChecks.verifyColdAdmission(P09EnvelopeChecks.java:16)\n\tat com.lushprojects.circuitjs1.client.P09EnvelopeContractTest.main(P09EnvelopeContractTest.java:7)\n\nCURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: P09EnvelopeContractTest, exit 1\nCLEANUP: current JVM contract classes and task-owned scratch removed.\n"
+  },
+  "preserved": "Do not replace or publish the pre-existing UI live-solver slice implementation.",
+  "repair": "Preserve initial graph correspondence and healthy-phase readiness; defer only family temporal health predicate until its complete profile finishes, before recording healthy success or applying the fault.",
+  "validation": "PASS: final clean 48 native suites; integrated 9 suites; clean and integrated RC/Q15/normal-family gates. See qualification-phases.json and browser reports."
+}

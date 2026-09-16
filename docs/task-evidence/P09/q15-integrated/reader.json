@@ -1,0 +1,6 @@
+{
+  "exit": 0,
+  "stdout": "PASS: Q15 eleven cases/four designs/three faults; forced cleanup; 22 reader negatives\n",
+  "stderr": "",
+  "readerSha256": "cbc64f81871a54b03b44470f470cb68cca4df5d8e356f15535d9ce777a72b586"
+}

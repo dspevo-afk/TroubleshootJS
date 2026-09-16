@@ -52,6 +52,28 @@ final class PhysicalPartRenderDeveloperVerifier {
             }
             PhysicalPartRenderGeometry geometry = renderer
                 .getInstalledGeometryForDeveloperVerification(componentId);
+            if (part == null) {
+                // Empty sockets retain board pads, not a phantom installed package.
+                require(slot != null && slot.getInstalledPart() == null &&
+                        runtime.getMutationProvider(componentId) != null,
+                    "Missing production part was not an explicit empty slot: " + componentId);
+                require(geometry == null && !renderer.drawInstalledForDeveloperVerification(
+                        sim, graphics, componentId), "Empty slot retained an installed body: " + componentId);
+                renderer.setSelectedComponentId(componentId);
+                require(renderer.getSelectedComponentId() == null,
+                    "Empty slot retained component selection: " + componentId);
+                int boardPads = 0;
+                for (PcbPadPlacement pad : renderer.getLayoutForProvider().getPads()) {
+                    if (!componentId.equals(instance.getBoard().getPad(pad.getPadId()).getComponentId())) continue;
+                    require(renderer.canInspectPad(sim, pad.getPadId()) &&
+                            renderer.getComponentLeadPoint(componentId, pad.getPadId()) == null,
+                        "Empty slot lost its board pad or retained a component lead: " + pad.getPadId());
+                    boardPads++;
+                }
+                require(boardPads == component.getPhysicalPackage().getTerminalCount(),
+                    "Empty slot lost declared board terminals: " + componentId);
+                continue;
+            }
             require(geometry != null && geometry.getTerminals().size() ==
                     component.getPhysicalPackage().getTerminalCount(),
                 "Production provider did not expose all terminals: " + componentId);

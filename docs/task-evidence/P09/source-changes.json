@@ -1,0 +1,108 @@
+{
+  "base": "5a9e544c41a343f3943211cf83fba85b05cfcd29",
+  "sourceTestScriptPaths": 18,
+  "qualificationRunners": 2,
+  "paths": {
+    "scripts/verify-current-contracts.ps1": {
+      "clean": "d4cfb9266e9598ea419f887293ff1af07286e2e79a44280fbb1c8743d2e06673",
+      "integrated": "4e63db5a341e14a44e51224845a1621b2fc1e6960d634f618dc3f92c44212a80",
+      "sharedOriginal": true
+    },
+    "src/com/lushprojects/circuitjs1/client/CirSim.java": {
+      "clean": "8e04fe25175954d905de3bbb349c6922f938cc49e0731fd6b820c20542b1cc8e",
+      "integrated": "c251bd9a4f465477f012ee7b7ef47f2277db469ab5e8c75d3352de28fca013c8",
+      "sharedOriginal": true
+    },
+    "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java": {
+      "clean": "12d6da0dff183d59bde7f8b515de6e7aae0a2c6c25bf8ce681a3d38ff6909ac1",
+      "integrated": "b1fdf418587b24fbbbc9cdc71dc0ee193c7a276d9e31dd4dd57982c0159b0988",
+      "sharedOriginal": true
+    },
+    "src/com/lushprojects/circuitjs1/client/FreshGeneratedRuntimeInstallation.java": {
+      "clean": "5c4f0b2d27ad86bea8d4bbfb753d8cd197e6c86aa218b2cad52d2753b38e3810",
+      "integrated": "5c4f0b2d27ad86bea8d4bbfb753d8cd197e6c86aa218b2cad52d2753b38e3810",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/GeneratedChallengeController.java": {
+      "clean": "63b10de1fbf1ab6605c8c36bf94186917f5b0ba479f0cd36fd8f5cccb7e39930",
+      "integrated": "63b10de1fbf1ab6605c8c36bf94186917f5b0ba479f0cd36fd8f5cccb7e39930",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticSolvabilityAdmission.java": {
+      "clean": "9e7b0564897487eb6c8af4b2e9621ee46ba3042bbabf48f2b28245b48c4da8a2",
+      "integrated": "9e7b0564897487eb6c8af4b2e9621ee46ba3042bbabf48f2b28245b48c4da8a2",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java": {
+      "clean": "5266b4d8b7c93f65623b48b0882de4a7ccef19dbfdb65e5f2434de0ad8c824e0",
+      "integrated": "5266b4d8b7c93f65623b48b0882de4a7ccef19dbfdb65e5f2434de0ad8c824e0",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java": {
+      "clean": "7c2123413332b7e7a272997b64179890f8fb40b1c1c37f9877104d9f93975fe3",
+      "integrated": "7c2123413332b7e7a272997b64179890f8fb40b1c1c37f9877104d9f93975fe3",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/P09EnvelopeChecks.java": {
+      "clean": "66f22935aa5124480eed6d9242ceb5bfcca1d24bf77127df0b77720e03b9053c",
+      "integrated": "66f22935aa5124480eed6d9242ceb5bfcca1d24bf77127df0b77720e03b9053c",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/PcbFactoryLinkPolicy.java": {
+      "clean": "286e175de8fc87209c16d7ae7e66a79dccd3ac3e6dfaf9d8f6f4c8770fd701b8",
+      "integrated": "286e175de8fc87209c16d7ae7e66a79dccd3ac3e6dfaf9d8f6f4c8770fd701b8",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/PcbLayoutDeveloperVerifier.java": {
+      "clean": "ffdf9be9a84baef2fd1b791d5525a0d17e728eaa9c420b9a763a6f79114bd918",
+      "integrated": "ffdf9be9a84baef2fd1b791d5525a0d17e728eaa9c420b9a763a6f79114bd918",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java": {
+      "clean": "165c1789265866017f75a390b545116597343ea0421ac4626c403fd5ca806cf2",
+      "integrated": "165c1789265866017f75a390b545116597343ea0421ac4626c403fd5ca806cf2",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/PhysicalPartRenderDeveloperVerifier.java": {
+      "clean": "bf7a21f6eab42d2bd5b47a86315e98298f1f07bcf102fddb2d4f8812b57dfcb8",
+      "integrated": "bf7a21f6eab42d2bd5b47a86315e98298f1f07bcf102fddb2d4f8812b57dfcb8",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/RcDelayDeveloperVerifier.java": {
+      "clean": "6ddeb3f27d0f139772ecf8837dc6f53a85b2c380b53dc5172084076e8090fc2e",
+      "integrated": "6ddeb3f27d0f139772ecf8837dc6f53a85b2c380b53dc5172084076e8090fc2e",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/SolverEventQueue.java": {
+      "clean": "ef8fbd31896e24729c27a4669f57eda723d5b426341e260c7d79ea5fc9368933",
+      "integrated": "ef8fbd31896e24729c27a4669f57eda723d5b426341e260c7d79ea5fc9368933",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/SupportedEnvelope.java": {
+      "clean": "b269d5bef997bd204ff111d6ff5b67ba16ffeed543fdf4781a91594dd4fe1706",
+      "integrated": "b269d5bef997bd204ff111d6ff5b67ba16ffeed543fdf4781a91594dd4fe1706",
+      "sharedOriginal": false
+    },
+    "tests/contracts/P09EnvelopeContractTest.java": {
+      "clean": "155ec8b4763d5842f9a9ad11355e0853f92f5a3e52aa8acb26b8a4863131ae3b",
+      "integrated": "155ec8b4763d5842f9a9ad11355e0853f92f5a3e52aa8acb26b8a4863131ae3b",
+      "sharedOriginal": false
+    },
+    "tests/contracts/P09EnvelopeCorpus.java": {
+      "clean": "8fe70dd0ad22420331734d580ecbc9792e456021e859d2f6280b4ccaaf67de01",
+      "integrated": "8fe70dd0ad22420331734d580ecbc9792e456021e859d2f6280b4ccaaf67de01",
+      "sharedOriginal": false
+    },
+    "docs/task-evidence/P07/verify_browser.py": {
+      "clean": "4ecbb9964dd19a2afb10480f0aa2c568422699a4f4b6d0e5499ad0359de5b461",
+      "integrated": "4ecbb9964dd19a2afb10480f0aa2c568422699a4f4b6d0e5499ad0359de5b461",
+      "sharedOriginal": false
+    },
+    "docs/task-evidence/P09/verify_families.py": {
+      "clean": "d845913bbf340a2ebbbdf82fb458c271f2b9c6f8281cc46ac36d63dfe72b0991",
+      "integrated": "d845913bbf340a2ebbbdf82fb458c271f2b9c6f8281cc46ac36d63dfe72b0991",
+      "sharedOriginal": false
+    }
+  },
+  "publication": "Use clean candidate blobs for shared code; keep unrelated integrated changes unstaged."
+}

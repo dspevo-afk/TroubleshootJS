@@ -227,10 +227,12 @@ final class CircuitSolverExecutor {
     static final class PrivateState {
         final Object owner, graph;
         final SolverEventQueue events;
+        final SolverEventQueue.Snapshot eventState;
         final int goodIterations;
         final boolean goodIteration, requiresAnalysis;
         PrivateState(Object owner, Object graph, SolverEventQueue events, int goodIterations, boolean goodIteration, boolean requiresAnalysis) {
             this.owner = owner; this.graph = graph; this.events = events;
+            this.eventState = events.snapshot();
             this.goodIterations = goodIterations; this.goodIteration = goodIteration; this.requiresAnalysis = requiresAnalysis;
         }
     }
@@ -242,6 +244,7 @@ final class CircuitSolverExecutor {
         if (privateOwner != null) return; // Exact private permit owns its separate restoration.
         requirePublicAccess(); boundary.retire(); boundOwner = null; boundGraph = null; bindCurrent();
         if (boundOwner == saved.owner && boundGraph == saved.graph) {
+            saved.events.restore(saved.eventState);
             events = saved.events; goodIterations = saved.goodIterations; goodIteration = saved.goodIteration;
             requiresAnalysis = saved.requiresAnalysis;
         }
@@ -267,6 +270,7 @@ final class CircuitSolverExecutor {
         boundary.requireIdle(); privateOwner = null; privateGraph = null; restoringPrivate = false; boundary.retire();
         bindCurrent();
         if (restored && boundOwner == saved.owner && boundGraph == saved.graph) {
+            saved.events.restore(saved.eventState);
             events = saved.events; goodIterations = saved.goodIterations; goodIteration = saved.goodIteration;
             requiresAnalysis = saved.requiresAnalysis;
         }

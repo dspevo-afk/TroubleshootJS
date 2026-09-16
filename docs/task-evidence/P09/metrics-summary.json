@@ -1,0 +1,140 @@
+{
+  "cohorts": {
+    "calibration": {
+      "rows": 9,
+      "pass": 9,
+      "outcomes": {
+        "BOUNDS_GEOMETRY_PASS": 9
+      },
+      "metrics": {
+        "area": {
+          "min": 213750,
+          "median": 604996,
+          "max": 1943614
+        },
+        "elapsedMs": {
+          "min": 7.9509,
+          "median": 93.2339,
+          "max": 861.976
+        },
+        "heapUsedBytes": {
+          "min": 47295904,
+          "median": 79199872,
+          "max": 123699648
+        },
+        "score": {
+          "min": 7171.509298245614,
+          "median": 17667.092570615165,
+          "max": 56085.73518328226
+        },
+        "segments": {
+          "min": 15,
+          "median": 49,
+          "max": 98
+        },
+        "uniqueLength": {
+          "min": 1420,
+          "median": 4678,
+          "max": 13090
+        },
+        "validationNs": {
+          "min": 291300,
+          "median": 406000,
+          "max": 1214000
+        }
+      }
+    },
+    "regression": {
+      "rows": 11,
+      "pass": 11,
+      "outcomes": {
+        "BOUNDS_GEOMETRY_PASS": 11
+      },
+      "metrics": {
+        "area": {
+          "min": 1669284,
+          "median": 1894150,
+          "max": 1944390
+        },
+        "elapsedMs": {
+          "min": 419.6237,
+          "median": 634.9525,
+          "max": 3811.2624
+        },
+        "heapUsedBytes": {
+          "min": 28968776,
+          "median": 74994216,
+          "max": 116409160
+        },
+        "score": {
+          "min": 51627.565014450905,
+          "median": 56094.39745633004,
+          "max": 59674.2070035671
+        },
+        "segments": {
+          "min": 75,
+          "median": 79,
+          "max": 87
+        },
+        "uniqueLength": {
+          "min": 9980,
+          "median": 13130,
+          "max": 14150
+        },
+        "validationNs": {
+          "min": 597100,
+          "median": 922900,
+          "max": 1237700
+        }
+      }
+    },
+    "held-out": {
+      "rows": 12,
+      "pass": 10,
+      "outcomes": {
+        "BOUNDS_GEOMETRY_PASS": 10,
+        "ENVELOPE_BOARD_SIZE": 1,
+        "ENVELOPE_ROUTE_BUDGET": 1
+      },
+      "metrics": {
+        "area": {
+          "min": 1689900,
+          "median": 1894150.0,
+          "max": 2068160
+        },
+        "elapsedMs": {
+          "min": 1098.5681,
+          "median": 2675.9881,
+          "max": 11496.6058
+        },
+        "heapUsedBytes": {
+          "min": 32313536,
+          "median": 122486924.0,
+          "max": 158493992
+        },
+        "score": {
+          "min": 51303.23654036238,
+          "median": 56709.51494146728,
+          "max": 63226.532094576345
+        },
+        "segments": {
+          "min": 74,
+          "median": 78.0,
+          "max": 91
+        },
+        "uniqueLength": {
+          "min": 11090,
+          "median": 12985.0,
+          "max": 14810
+        },
+        "validationNs": {
+          "min": 578400,
+          "median": 824150.0,
+          "max": 1174300
+        }
+      }
+    }
+  },
+  "units": "drawing units; validation nanoseconds; elapsed milliseconds; sampled whole-process JVM used heap bytes",
+  "limits": "No random-population, FPS or browser-memory claim. Passing held-out elapsed includes two exact generations."
+}

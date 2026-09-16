@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "originalFiles": 97,
+  "byteIdentical": 94,
+  "sharedInverseHashes": {
+    "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java": "c8134b0a4114254ee8648612eb75ca0843530b7cd73158bd34d71d8e1770d6b1",
+    "scripts/verify-current-contracts.ps1": "6300bc55dcb3c3d1609cfbe757b4de90f426282dd33352159e86cc773b26efc9",
+    "src/com/lushprojects/circuitjs1/client/CirSim.java": "04688c0dfa788cb0b90e97fece97cc13d06b971dbd71c5906bd39a6b27dacc02"
+  },
+  "sharedIntegratedHashes": {
+    "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java": "b1fdf418587b24fbbbc9cdc71dc0ee193c7a276d9e31dd4dd57982c0159b0988",
+    "scripts/verify-current-contracts.ps1": "4e63db5a341e14a44e51224845a1621b2fc1e6960d634f618dc3f92c44212a80",
+    "src/com/lushprojects/circuitjs1/client/CirSim.java": "c251bd9a4f465477f012ee7b7ef47f2277db469ab5e8c75d3352de28fca013c8"
+  },
+  "basis": "Current shared files equal the previously inverse-verified merge inputs; stored inverse blobs still exactly equal original bytes. All other originals freshly hashed."
+}

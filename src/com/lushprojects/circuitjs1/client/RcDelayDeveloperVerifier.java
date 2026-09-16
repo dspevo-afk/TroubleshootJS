@@ -62,31 +62,31 @@ final class RcDelayDeveloperVerifier {
         boolean expectedOpen = instance.getFaultBinding().getFault().getType() ==
             GeneratedFaultType.CAPACITOR_OPEN;
         BoardModificationController modifications = sim.getBoardModificationController();
-        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        setPower(sim, instance, BoardPowerState.UNPOWERED);
         sim.updateCircuit();
-        require(modifications.liftLead("C1", "C1.+") &&
+        require(readyModifications(sim, instance, modifications).liftLead("C1", "C1.+") &&
             !modifications.isComponentInstalled("C1"),
             "RC original positive lead did not lift");
         requireOriginalFaultInfrastructurePresent(sim, instance, original, "lifted");
         requireOriginalFaultResistance(sim, original, expectedOpen, "lifted");
         requireDetachedOriginalDoesNotBypassBoard(sim, instance, "lifted");
-        require(modifications.reconnectLead("C1", "C1.+") &&
+        require(readyModifications(sim, instance, modifications).reconnectLead("C1", "C1.+") &&
             modifications.isComponentInstalled("C1"),
             "RC original positive lead did not reconnect");
-        require(modifications.liftLead("C1", "C1.-") &&
+        require(readyModifications(sim, instance, modifications).liftLead("C1", "C1.-") &&
             !modifications.isComponentInstalled("C1"),
             "RC original negative lead did not lift");
         requireOriginalFaultInfrastructurePresent(sim, instance, original, "negative-lifted");
         requireOriginalFaultResistance(sim, original, expectedOpen, "negative-lifted");
         requireDetachedOriginalDoesNotBypassBoard(sim, instance, "negative-lifted");
-        require(modifications.reconnectLead("C1", "C1.-") &&
+        require(readyModifications(sim, instance, modifications).reconnectLead("C1", "C1.-") &&
             modifications.isComponentInstalled("C1"),
             "RC original negative lead did not reconnect");
 
-        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        setPower(sim, instance, BoardPowerState.UNPOWERED);
         sim.updateCircuit();
         String originalId = original.getId();
-        require(slots.removeInstalledPart() && !original.isInstalled(),
+        require(readySlots(sim, instance, slots).removeInstalledPart() && !original.isInstalled(),
             "RC original removal did not preserve its physical identity");
         requireOriginalFaultInfrastructurePresent(sim, instance, original, "loose");
         requireOriginalFaultResistance(sim, original, expectedOpen, "loose");
@@ -94,15 +94,15 @@ final class RcDelayDeveloperVerifier {
         require(challenge.getRepairStatus() != GeneratedRepairStatus.CORRECTLY_RESTORED,
             "RC missing capacitor passed the temporal functional check");
         PhysicalPartRenderDeveloperVerifier.verify(sim);
-        require(slots.install(originalId) && capability.getSlot().getInstalledPart() == original &&
+        require(readySlots(sim, instance, slots).install(originalId) && capability.getSlot().getInstalledPart() == original &&
             original.isFaulted(), "RC original removal/reinstall lost identity or fault ownership");
-        sim.setBoardPowerState(BoardPowerState.POWERED);
+        setPower(sim, instance, BoardPowerState.POWERED);
         require(challenge.getRepairStatus() != GeneratedRepairStatus.CORRECTLY_RESTORED,
             "RC reinstalled original faulted capacitor passed the temporal functional check");
 
-        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        setPower(sim, instance, BoardPowerState.UNPOWERED);
         sim.updateCircuit();
-        require(slots.removeInstalledPart() && slots.installNewFromCatalog(
+        require(readySlots(sim, instance, slots).removeInstalledPart() && readySlots(sim, instance, slots).installNewFromCatalog(
             CapacitorReplacementCatalog.WRONG_LOW), "RC low-value catalog installation failed");
         PhysicalCapacitorPart low = capability.getSlot().getInstalledPart();
         require(low.getSpecification() == capability.getCatalog().get(
@@ -111,28 +111,28 @@ final class RcDelayDeveloperVerifier {
             "RC catalog acquisition did not retain its immutable specification or allocate identity");
         requirePhysicalNameplate(low);
         String lowId = low.getId();
-        require(slots.removeInstalledPart() && slots.install(lowId) &&
+        require(readySlots(sim, instance, slots).removeInstalledPart() && readySlots(sim, instance, slots).install(lowId) &&
             capability.getSlot().getInstalledPart() == low &&
             low.getSpecification() == capability.getCatalog().get(
                 CapacitorReplacementCatalog.WRONG_LOW).getSpecification(),
             "RC catalog part removal/reinstall lost physical identity or specification");
-        sim.setBoardPowerState(BoardPowerState.POWERED);
+        setPower(sim, instance, BoardPowerState.POWERED);
         require(challenge.getRepairStatus() != GeneratedRepairStatus.CORRECTLY_RESTORED,
             "RC low-value replacement passed without a temporal delay");
 
-        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        setPower(sim, instance, BoardPowerState.UNPOWERED);
         sim.updateCircuit();
-        require(slots.removeInstalledPart() && slots.installNewFromCatalog(
+        require(readySlots(sim, instance, slots).removeInstalledPart() && readySlots(sim, instance, slots).installNewFromCatalog(
             CapacitorReplacementCatalog.WRONG_HIGH), "RC high-value catalog installation failed");
-        sim.setBoardPowerState(BoardPowerState.POWERED);
+        setPower(sim, instance, BoardPowerState.POWERED);
         require(challenge.getRepairStatus() != GeneratedRepairStatus.CORRECTLY_RESTORED,
             "RC high-value replacement passed without reaching its delayed state");
 
-        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        setPower(sim, instance, BoardPowerState.UNPOWERED);
         sim.updateCircuit();
-        require(slots.removeInstalledPart() && slots.installNewFromCatalog(
+        require(readySlots(sim, instance, slots).removeInstalledPart() && readySlots(sim, instance, slots).installNewFromCatalog(
             CapacitorReplacementCatalog.CORRECT), "RC correct catalog installation failed");
-        sim.setBoardPowerState(BoardPowerState.POWERED);
+        setPower(sim, instance, BoardPowerState.POWERED);
         require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED,
             "RC correct electrical replacement did not pass the real transient profile");
         verifyLiveDcDisplayDuringPowerTransition(sim);
@@ -141,11 +141,34 @@ final class RcDelayDeveloperVerifier {
         sim.setCircuitTitle("RC delay verification passed");
     }
 
+    private static BoardModificationController readyModifications(CirSim sim,
+            GeneratedBoardInstance owner, BoardModificationController modifications) {
+        GeneratedRuntimeDeveloperSettlement.settle(sim, owner, "RC before lead mutation");
+        require(sim.getBoardModificationController() == modifications, "RC mutation owner changed");
+        return modifications;
+    }
+
+    private static CapacitorSlotController readySlots(CirSim sim,
+            GeneratedBoardInstance owner, CapacitorSlotController slots) {
+        GeneratedRuntimeDeveloperSettlement.settle(sim, owner, "RC before slot mutation");
+        require(ReplaceableCapacitorBoardCapability.require(owner).getController() == slots,
+            "RC capacitor owner changed");
+        return slots;
+    }
+
+    private static void setPower(CirSim sim, GeneratedBoardInstance owner, BoardPowerState state) {
+        GeneratedRuntimeDeveloperSettlement.settle(sim, owner, "RC before power request");
+        sim.setBoardPowerState(state);
+        GeneratedRuntimeDeveloperSettlement.settle(sim, owner, "RC after power request");
+        require(sim.getBoardPowerController().getState() == state, "RC power request was not applied");
+    }
+
     private static boolean finite(double value) {
         return !Double.isNaN(value) && !Double.isInfinite(value);
     }
 
     private static void verifyLiveDcDisplayDuringPowerTransition(CirSim sim) {
+        GeneratedRuntimeDeveloperSettlement.settle(sim, "RC before live DC transition");
         require(sim.pcbWorkbenchController != null,
             "RC live DC verification has no PCB renderer");
         PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
@@ -233,7 +256,7 @@ final class RcDelayDeveloperVerifier {
             .getSimulationBindings().getEndpoint("J2.1");
         CircuitPostMeasurementEndpoint ground = (CircuitPostMeasurementEndpoint) instance
             .getSimulationBindings().getEndpoint("J2.2");
-        sim.setBoardPowerState(BoardPowerState.POWERED);
+        setPower(sim, instance, BoardPowerState.POWERED);
         sim.advanceGeneratedTemporalProfile(.750);
         double inputVoltage = voltage(vin, ground);
         double outputVoltage = voltage(output, ground);
@@ -241,7 +264,7 @@ final class RcDelayDeveloperVerifier {
             outputVoltage > inputVoltage * .30 && outputVoltage < inputVoltage * .60,
             "Detached original left a private bypass connected to the board: " + state +
             " vin=" + inputVoltage + " output=" + outputVoltage);
-        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        setPower(sim, instance, BoardPowerState.UNPOWERED);
         sim.advanceGeneratedTemporalProfile(.350);
     }
 

@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "exit": 0,
+  "stdout": "PASS: P09 scheduler snapshot contracts assertions=19\n",
+  "stderr": "",
+  "queueSha256": "ef8fbd31896e24729c27a4669f57eda723d5b426341e260c7d79ea5fc9368933",
+  "scope": "Root queue implementation; checkpoint behavior including proof-only event absence, not an extra requirement on discarded private Event.cancelled fields."
+}

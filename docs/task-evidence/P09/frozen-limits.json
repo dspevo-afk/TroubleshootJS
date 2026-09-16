@@ -1,0 +1,20 @@
+{
+  "source_sha256": "5d77500f4ceba5499ca0d81d0122773721e8649df353ec9cfa637682dbcbe8a1",
+  "calibration_sha256": "52d53e80f7087858e1e60478c99ae291edeb503604a002a46caf4f70e645d9d4",
+  "held_out": [
+    11,
+    23,
+    37,
+    59,
+    83,
+    127,
+    251,
+    509,
+    -11,
+    -23,
+    -127,
+    -509
+  ],
+  "held_out_executed": false,
+  "calibration_correction": "Initial policy incorrectly assumed all small families used bottom copper. First calibration row rejected before any held-out execution. Allow exactly the declared single face TOP or BOTTOM; mixed layers remain rejected."
+}

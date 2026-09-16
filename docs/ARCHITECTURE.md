@@ -12,6 +12,48 @@ instruments, valid repair behavior and answer privacy remain required. The
 [current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
 older evidence packets describe their own historical candidates.
 
+## Production physical qualification (P09)
+
+`SupportedEnvelope` is the versioned normal physical-policy registry. The current
+`THT_SINGLE_FACE@1` admits bounded top-mounted, unrotated catalog through-hole
+packages on exactly one declared copper face. Top and bottom are alternatives,
+not permission to mix layers. Board dimensions/aspect, catalog multiplicities,
+terminal/net counts and degree, placement domains, route cost, probe/land/trace
+floors and deterministic work limits are explicit. Vias, factory links, extra
+drills, covered traces, isolated domains, SMD and new pose mixes are not qualified
+for normal production. Existing P06/P07 developer prototypes remain separate.
+
+The immutable generation request declares this envelope (request canonical v2).
+Dependency epoch v9 includes the complete policy/resource fingerprint; a profile
+cannot weaken it or reuse a receipt across a changed interpretation. The staged
+installer checks before detaching the live graph, at physical admission and again
+at publication. Legacy normal live admission and normal composition installation
+also require the policy. These are necessary bounds, not cached physical PASS:
+full geometry, actual copper/solver correspondence and real diagnostic proof
+remain authoritative. A disconnected board can pass counts and still must fail.
+
+Initial temporal admission does not infer healthy output from a paint slice.
+Graph correspondence remains immediate, while the independent family health
+predicate runs after the full owned startup profile and before recording healthy
+success or applying the fault. Settlement still uses the separate healthy-phase
+state; UI acceleration cannot shorten a proof recipe.
+
+Solver snapshots own an immutable scheduler checkpoint as well as the original
+queue/event handle identities. Pending order, cancellation flags, accepted time
+and queue terminal state are restored only to the same graph/owner. Private
+proof events cannot leak into the restored public timeline. Ordinary backwards
+time, foreign checkpoints and reentrant dispatch still fail closed. This restores
+scheduler state, not arbitrary external side effects of callback actions.
+The RC verifier now waits for the existing bounded owned settlement between
+dependent public actions. Its empty-slot render proof requires absent installed
+body/leads and retained board pads; it cannot excuse a missing installed provider.
+
+The frozen structural corpus records every rejection and separates routing/access
+results from compiled electrical/gameplay proofs. Limited two-layer production
+adoption is rejected for this epoch. Neither P08 scaling nor a sixteen-part label
+qualifies arbitrary circuits or Q30/Q60/Q100. The post-P09 arbitrary-seed Quick
+Play population gate remains separate. See [P09 evidence](task-evidence/P09/README.md).
+
 ## Scalable physical validation and copper projections (P08)
 
 `PcbSpatialIndex` is a linear-storage, deterministic interval broad phase. It
@@ -46,7 +88,7 @@ on deliberately roomy validation-only trees, plus point fixtures and dense share
 copper. These measure validation, not production routing or playable large boards.
 Thread allocations and explicit index payload are distinguished from retained
 heap; JVM timings are not browser FPS. See [P08 evidence](task-evidence/P08/README.md).
-P09 layer-strategy/production-envelope qualification remains a separate milestone.
+P09 separately qualifies the restricted normal envelope; P08 itself makes no adoption claim.
 
 ## Two-layer routing and interaction comparison (P07)
 
@@ -85,7 +127,7 @@ actual via/underside mouse measurements, face isolation and owner restoration.
 Cuts remain immutable comparison snapshots; disagreement with the actual solver
 graph rejects. There is no live trace-cut repair feature or E08 claim.
 `GeneratedBoardInstance` rejects mixed-layer/via layouts outside developer-only
-construction until P09 qualifies normal adoption and affected diagnostic proofs.
+construction; P09 does not qualify mixed-layer/via normal adoption.
 
 The frozen RB30/56/100 comparisons are structural, not playable customer boards.
 A second layer helps some RB30 requests but does not rescue the tested 56/100
