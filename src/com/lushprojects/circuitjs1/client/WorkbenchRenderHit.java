@@ -2,7 +2,7 @@ package com.lushprojects.circuitjs1.client;
 
 /** A renderer reports identity, never an electrical endpoint or a gameplay command. */
 final class WorkbenchRenderHit {
-    enum Kind { PAD, LEAD, LOOSE_TERMINAL, COMPONENT, PART, SLOT, TRAY }
+    enum Kind { COPPER, PAD, LEAD, LOOSE_TERMINAL, COMPONENT, PART, SLOT, TRAY }
     final Object boardIdentity, attachment;
     final Kind kind;
     final String id, secondaryId;

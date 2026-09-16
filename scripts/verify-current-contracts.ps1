@@ -106,6 +106,8 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'P04RoutingContractTest'; Marker = 'P04 routing contracts ' },
         @{ Name = 'P05RoutingContractTest'; Marker = 'P05 routing contracts ' },
         @{ Name = 'P06FactoryLinkContractTest'; Marker = 'P06 factory-link contracts ' },
+        @{ Name = 'P07TwoLayerContractTest'; Marker = 'P07 two-layer contracts ' },
+        @{ Name = 'P07LayerCorpus'; Marker = 'P07 frozen layer corpus ' },
         @{ Name = 'P05RoutingCorpus'; Marker = 'P05 frozen corpus ' },
         @{ Name = 'P05GenerationCorpus'; Marker = 'P05 generation comparison ' },
         @{ Name = 'A02ReplayContractTest'; Marker = 'A02ReplayContractTest ' },
@@ -146,7 +148,10 @@ final class PhysicalSpecificationDeveloperVerifier {
         if ($testClass -eq 'A03IdentityContractTest') {
             $testArguments += (Join-Path $taskRoot 'parity')
         }
-        $tested = Invoke-VerifierBoundedProcess $java $testArguments 60000
+        # The NEW P07 54-row structural comparison has its own explicit ten-minute budget.
+        # Existing suites retain their original one-minute bounds.
+        $testBudget = if ($testClass -eq 'P07LayerCorpus') { 600000 } else { 60000 }
+        $tested = Invoke-VerifierBoundedProcess $java $testArguments $testBudget
         Write-Host $tested.Stdout
         if ($tested.Stderr) { Write-Host $tested.Stderr }
         $receipts.Add($tested.Stdout)

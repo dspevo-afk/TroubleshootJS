@@ -12,6 +12,50 @@ instruments, valid repair behavior and answer privacy remain required. The
 [current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
 older evidence packets describe their own historical candidates.
 
+## Two-layer routing and interaction comparison (P07)
+
+`PcbLayerRoutingPrototype` is an explicit developer-only, plated-through-hole
+comparison. Four policies share frozen netlists, packages and placements;
+normal generation still uses P05. Surface-only pads fail closed rather than
+acquiring an imaginary second land. This does not retire P01/P02 SMD geometry.
+The prototype reuses the router's exact per-face obstacle/escape/clearance
+predicates. Bounded A* carries face, direction and transition count, orders ties
+and nets deterministically, charges vias and secondary-face travel, and publishes
+only fully validated private candidates.
+
+Limits: two faces, three orders, 250,000 grid cells, 100,000 expansions per branch
+and one million total. Restricted routing allows two transitions per branch and
+eight board vias; fuller allows four/48. Via costs are 160/60; secondary-face step
+surcharges are 8/2. P06 count/density limits still govern declared fixed links.
+No automatic link insertion is claimed.
+
+`PcbTwoLayerRules` independently checks whole swept strokes, plated lands and
+clearances. Primary/secondary corridors constrain both faces and vias. The P02
+conductor builder owns physical islands and explicit plating; projected crossings
+do not join. Vias have typed exposed top/bottom lands and a plated barrel, not
+logical-net shortcuts. Their 2-unit drill and 6-unit land radii are drawing units,
+not manufacturing or mains safety ratings.
+
+`BoardCopperProbeTarget` captures the current copper snapshot and resolves an
+actual bound pad on that physical island. Floating copper cannot borrow an
+endpoint because a net label matches. Renderers report stable surface identity
+through `CopperProbeProjection`; the host requires current face, exposure,
+geometry and a rendered marker. Hidden, cut and stale surfaces reject. The
+instrument owner clears invalid contacts on physical projection changes. A flip
+changes the view, never terminal identity or electrical connectivity.
+
+The debug-gated P07 bench proves separate 5 V and 7 V loops in real CircuitJS,
+actual via/underside mouse measurements, face isolation and owner restoration.
+Cuts remain immutable comparison snapshots; disagreement with the actual solver
+graph rejects. There is no live trace-cut repair feature or E08 claim.
+`GeneratedBoardInstance` rejects mixed-layer/via layouts outside developer-only
+construction until P09 qualifies normal adoption and affected diagnostic proofs.
+
+The frozen RB30/56/100 comparisons are structural, not playable customer boards.
+A second layer helps some RB30 requests but does not rescue the tested 56/100
+requests within the bounds. Same-inventory area is unchanged; pixel target
+estimates are not human usability measurements. See [P07 evidence](task-evidence/P07/README.md).
+
 ## Raised factory-crossover prototype (P06)
 
 `PhysicalPackageGeometry` optionally owns an immutable `RaisedCrossoverGeometry`:

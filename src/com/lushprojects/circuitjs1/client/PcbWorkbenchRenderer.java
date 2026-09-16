@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Vector;
 
 /** Common PCB canvas, transform, selection, and provider orchestration. */
-class PcbWorkbenchRenderer implements PhysicalProbeProjection {
+class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjection {
     private static final int DRILL_RADIUS = 5;
     private static final int PARTS_PER_TRAY_PAGE = 3;
 
@@ -344,7 +344,41 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection {
             if (target != null)
                 return target;
         }
-        return null;
+        return findCopperProbeTarget(sim,screenX,screenY);
+    }
+
+    private ProbeTarget findCopperProbeTarget(CirSim sim,int x,int y) {
+        if(!viewport.contains(x,y) || !instance.isDeveloperOnlyFaultRoute() || isOccluded(x,y,null)) return null;
+        for(PcbBoardHole hole:layout.getHoles()) {
+            Rectangle drill=screenRectForProvider(new Rectangle(hole.x-hole.drillRadius,hole.y-hole.drillRadius,
+                2*hole.drillRadius,2*hole.drillRadius));
+            if(drill.contains(x,y)) return null;
+        }
+        PcbConductorGraph.Snapshot copper=instance.getCurrentConductorSnapshot();
+        PcbConductorGraph.Surface selected=null;
+        for(PcbConductorGraph.Surface surface:copper.getGraph().getSurfaces()) {
+            if(!canProbeCopper(surface.id) || !screenRectForProvider(surface.getBounds()).contains(x,y)) continue;
+            if(selected!=null && !copper.connected(selected.junctionId,surface.junctionId)) {
+                ambiguousTarget=true; return null;
+            }
+            if(selected==null || surface.edgeId==null && selected.edgeId!=null) selected=surface;
+        }
+        if(selected==null) return null;
+        ProbeTarget target=new BoardCopperProbeTarget(sim,instance,selected.id,this);
+        return target.isValid()?target:null;
+    }
+    public boolean canProbeCopper(String id) {
+        if(!instance.isDeveloperOnlyFaultRoute()) return false;
+        PcbConductorGraph.Snapshot copper=instance.getCurrentConductorSnapshot();
+        PcbConductorGraph.Surface surface=PcbCopperProbeAccess.surface(copper,id);
+        if(!PcbCopperProbeAccess.available(copper,surface,viewingFace)) return false;
+        Point point=screenPointForProvider(PcbCopperProbeAccess.marker(surface));
+        return !isOccluded(point.x,point.y,null);
+    }
+    public Point getCopperPoint(String id) {
+        if(!canProbeCopper(id)) return null;
+        return screenPointForProvider(PcbCopperProbeAccess.marker(
+            PcbCopperProbeAccess.surface(instance.getCurrentConductorSnapshot(),id)));
     }
 
     String findComponentId(int screenX, int screenY) {

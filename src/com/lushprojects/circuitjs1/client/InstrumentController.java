@@ -250,7 +250,8 @@ class InstrumentController {
         activeStrategy.refresh(this);
     }
 
-    void onLooseProjectionChanged() {
+    /** Refresh readings only when a physical target disappears (tray, face or copper revision). */
+    void onPhysicalProjectionChanged() {
         boolean redCleared = redProbe != null && !redProbe.isValid();
         boolean blackCleared = blackProbe != null && !blackProbe.isValid();
         if (!redCleared && !blackCleared)

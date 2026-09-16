@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "base": "d0829afcac984c8d9186cd55a1118eec0ff7b319",
+  "clean": {
+    "exit": 0,
+    "javaSuites": 45,
+    "independentOraclesAndReportProtocol": "PASS",
+    "p02Assertions": 3209,
+    "p06Assertions": 1705,
+    "p07Assertions": 48,
+    "p07CorpusRows": 54,
+    "p07PrototypeAccepted": 6,
+    "p05ReferenceAccepted": 1,
+    "receiptSha256": "368c5496cd5a131e3ed7ab152c0c0d4576fafd78fd12fc885a513c5856639545"
+  },
+  "integrated": {
+    "exit": 0,
+    "focusedSuites": [
+      "P02ConductorContractTest",
+      "P06FactoryLinkContractTest",
+      "P07TwoLayerContractTest",
+      "U01ViewportContractTest",
+      "VisualWorkbenchContractTest",
+      "DensePcbPackingContractTest",
+      "U04SessionContractTest",
+      "A07ExecutionContractTest"
+    ],
+    "fullMatrixRerun": false,
+    "receiptSha256": "865027416522e5a48c54ee9d06f86a0e5e61b5200eea2a40d38debe99cdcaa3e"
+  },
+  "regressionHistory": {
+    "unsupportedSmdBeforeGuard": "FAIL (expected red)",
+    "unsupportedSmdAfterGuard": "PASS",
+    "failedOldBuild02": "launcher failure, not qualification",
+    "staleBench02": "FAIL; fresh build03 and final benches PASS"
+  }
+}

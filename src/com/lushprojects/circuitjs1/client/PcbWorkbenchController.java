@@ -139,7 +139,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
                     if (!isCurrentOwner())
                         return;
                     if (simulation.instrumentController != null)
-                        simulation.instrumentController.onLooseProjectionChanged();
+                        simulation.instrumentController.onPhysicalProjectionChanged();
                 }
             });
         ticketPanel.setStyleName("tsj-component-panel");
@@ -378,7 +378,11 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         boolean handled = renderer.getViewport().inspect(x, y);
         renderer.updateProjection(); requestViewFrame(); return handled;
     }
-    private void viewChanged() { renderer.updateProjection(); requestViewFrame(); }
+    private void viewChanged() {
+        renderer.updateProjection();
+        sim.instrumentController.onPhysicalProjectionChanged();
+        requestViewFrame();
+    }
     void auditViewEvent(NativeEvent event) {
         if (!sim.troubleshootU01Verification) return;
         if ("mousemove".equals(event.getType()) && !panning && !renderer.getViewport().isInspecting()) return;

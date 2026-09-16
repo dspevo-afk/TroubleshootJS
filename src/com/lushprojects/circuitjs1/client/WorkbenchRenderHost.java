@@ -1,7 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
 /** Presentation attachment and stable-hit resolver. Electrical actions stay with existing owners. */
-final class WorkbenchRenderHost implements PhysicalProbeProjection {
+final class WorkbenchRenderHost implements PhysicalProbeProjection, CopperProbeProjection {
     private final CirSim sim;
     private final GeneratedBoardInstance instance;
     private final PcbWorkbenchRenderer physicalView;
@@ -64,6 +64,8 @@ final class WorkbenchRenderHost implements PhysicalProbeProjection {
         ProbeTarget target=null;
         if(hit.kind==WorkbenchRenderHit.Kind.PAD && canProbePad(hit.id))
             target=new BoardPadProbeTarget(sim,instance,hit.id,this);
+        else if(hit.kind==WorkbenchRenderHit.Kind.COPPER && canProbeCopper(hit.id))
+            target=new BoardCopperProbeTarget(sim,instance,hit.id,this);
         else if(hit.kind==WorkbenchRenderHit.Kind.LEAD && hit.secondaryId!=null && getComponentLeadPoint(hit.id,hit.secondaryId)!=null)
             target=new ComponentLeadProbeTarget(sim,instance,hit.id,hit.secondaryId,this);
         else if(hit.kind==WorkbenchRenderHit.Kind.LOOSE_TERMINAL && isLoosePartVisibleOnCurrentPage(hit.id)) {
@@ -75,6 +77,21 @@ final class WorkbenchRenderHost implements PhysicalProbeProjection {
         }
         return target!=null && target.isValid()?target:null;
     }
+    public boolean canProbeCopper(String id) {
+        if(active==null || !instance.isDeveloperOnlyFaultRoute()) return false;
+        WorkbenchPhysicalScene current=scene();
+        PcbConductorGraph.Surface surface=PcbCopperProbeAccess.surface(current.copper,id);
+        if(!PcbCopperProbeAccess.available(current.copper,surface,current.face)) return false;
+        Point point=PcbCopperProbeAccess.marker(surface);
+        for(WorkbenchPhysicalScene.Part part:current.parts)
+            if(part.mounted && part.side==current.face && part.body.rectangle().contains(point.x,point.y)) return false;
+        return active.marker(WorkbenchRenderHit.Kind.COPPER,id,null,-1)!=null;
+    }
+    public Point getCopperPoint(String id) {
+        if(active!=null) active.present(scene(),area);
+        return canProbeCopper(id)?active.marker(WorkbenchRenderHit.Kind.COPPER,id,null,-1):null;
+    }
+
     public boolean hasPad(String id) { return active!=null && scene().pad(id)!=null; }
     public boolean canProbePad(String id) {
         WorkbenchPhysicalScene current=scene();

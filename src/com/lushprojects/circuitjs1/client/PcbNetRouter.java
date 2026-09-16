@@ -302,17 +302,22 @@ final class PcbNetRouter {
         private final SeededPcbLayoutGenerator.AttemptObserver observer;
         private final PcbCopperLayer layer;
         private boolean emptyComponentFace=true;
+        boolean factoryUnderpasses=true;
         private String[][] horizontalReservation,verticalReservation,padAt;
 
         Router(PcbBoardLayout layout, TroubleshootBoard board, Rectangle outline,
                 int attempt, SeededPcbLayoutGenerator.AttemptObserver observer) {
+            this(layout,board,outline,attempt,observer,board.getPlacementConstraints().routingLayer);
+        }
+        Router(PcbBoardLayout layout,TroubleshootBoard board,Rectangle outline,int attempt,
+                SeededPcbLayoutGenerator.AttemptObserver observer,PcbCopperLayer selectedLayer) {
             this.layout = layout;
             work=new PcbRoutingWork(PcbRoutingWork.Limits.DEFAULT,board.getNetIds().size());
             this.board = board;
             this.outline = outline;
             this.attempt = attempt;
             this.observer = observer;
-            layer=board.getPlacementConstraints().routingLayer;
+            layer=selectedLayer;
             minX = outline.x + GRID;
             minY = outline.y + GRID;
             gridWidth = (outline.width - 2 * GRID) / GRID + 1;
@@ -490,7 +495,7 @@ final class PcbNetRouter {
             for(int i=0;i<collisionCourtyards.length;i++)
                 if(components[i].getMountingSide()==layer.getFace() &&
                         containsInclusive(collisionCourtyards[i],px,py) &&
-                        !components[i].permitsUnderpass(layer,traceStroke(px,py,px,py))) return false;
+                        !(factoryUnderpasses && components[i].permitsUnderpass(layer,traceStroke(px,py,px,py)))) return false;
             return true;
         }
         private int lowerBound(int distance,PcbPadPlacement end) {
@@ -563,8 +568,8 @@ final class PcbNetRouter {
                 boolean endEscape = endPad!=null && component.getComponentId().equals(
                     board.getPad(endPad.getPadId()).getComponentId()) &&
                     endPad.isInEscapeCorridor(physicalX, physicalY);
-                if (!startEscape && !endEscape && !component.permitsUnderpass(layer,
-                        traceStroke(physicalX,physicalY,physicalX,physicalY)))
+                if (!startEscape && !endEscape && !(factoryUnderpasses && component.permitsUnderpass(layer,
+                        traceStroke(physicalX,physicalY,physicalX,physicalY))))
                     return false;
             }
             return true;
@@ -604,7 +609,7 @@ final class PcbNetRouter {
                 boolean endEscape = component.getComponentId().equals(endComponentId) &&
                     courtyardIntersectionIsEscape(collisionCourtyards[index], endPad,
                         startPhysicalX, startPhysicalY, endPhysicalX, endPhysicalY);
-                if (!startEscape && !endEscape && !component.permitsUnderpass(layer, stroke))
+                if (!startEscape && !endEscape && !(factoryUnderpasses && component.permitsUnderpass(layer, stroke)))
                     return false;
             }
             return true;
@@ -763,6 +768,31 @@ final class PcbNetRouter {
         private int manhattan(int x, int y, int otherX, int otherY) {
             return Math.abs(x - otherX) + Math.abs(y - otherY);
         }
+
+        /** Shared exact per-face predicates for the developer-only layered search. */
+        boolean permitsLayerStep(int ax,int ay,int bx,int by,String net,
+                PcbPadPlacement start,PcbPadPlacement end) {
+            int x=gridX(ax),y=gridY(ay),nx=gridX(bx),ny=gridY(by);
+            if(x<0 || y<0 || nx<0 || ny<0 || x>=gridWidth || nx>=gridWidth ||
+                    y>=gridHeight || ny>=gridHeight) return false;
+            int direction=nx>x?1:nx<x?3:ny>y?2:0;
+            SearchNode current=new SearchNode(x,y,4,0,0,0);
+            return isLegalMove(current,nx,ny,direction,gridX(start.getX()),gridY(start.getY()),
+                end==null?-1:gridX(end.getX()),end==null?-1:gridY(end.getY()),start,end) &&
+                canTraverse(x,y,nx,ny,start,end,net) && canOccupy(nx,ny,net,start,end);
+        }
+        boolean ownsLayerCell(int px,int py,String net) {
+            int x=gridX(px),y=gridY(py);
+            return x>=0 && y>=0 && x<gridWidth && y<gridHeight &&
+                net.equals(occupiedNet[x][y]) && canJoinTree(x,y);
+        }
+        boolean freeLayerCell(int px,int py,String net) {
+            int x=gridX(px),y=gridY(py);
+            return x>=0 && y>=0 && x<gridWidth && y<gridHeight &&
+                (occupiedNet[x][y]==null || net.equals(occupiedNet[x][y])) &&
+                (clearanceNet[x][y]==null || net.equals(clearanceNet[x][y]));
+        }
+        void occupyLayerPath(Vector<Point> path,String net) { markCopper(path,net); }
 
         private int gridX(int x) {
             return (x - minX) % GRID == 0 ? (x - minX) / GRID : -1;

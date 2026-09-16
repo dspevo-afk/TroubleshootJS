@@ -30,6 +30,8 @@ final class CanvasWorkbenchBackend implements WorkbenchRenderBackend {
         ProbeTarget target=renderer.findProbeTarget(sim,x,y);
         if(target instanceof BoardPadProbeTarget)
             return hit(WorkbenchRenderHit.Kind.PAD,((BoardPadProbeTarget)target).getPadId(),null,-1);
+        if(target instanceof BoardCopperProbeTarget)
+            return hit(WorkbenchRenderHit.Kind.COPPER,((BoardCopperProbeTarget)target).getSurfaceId(),null,-1);
         if(target instanceof ComponentLeadProbeTarget) {
             ComponentLeadProbeTarget lead=(ComponentLeadProbeTarget)target;
             return hit(WorkbenchRenderHit.Kind.LEAD,lead.getComponentIdForDeveloperVerification(),lead.getPadIdForDeveloperVerification(),-1);
@@ -42,6 +44,11 @@ final class CanvasWorkbenchBackend implements WorkbenchRenderBackend {
     }
     public Point marker(WorkbenchRenderHit.Kind kind,String id,String secondaryId,int terminal) {
         if(scene==null)return null;
+        if(kind==WorkbenchRenderHit.Kind.COPPER) {
+            PcbConductorGraph.Surface s=PcbCopperProbeAccess.surface(scene.copper,id);
+            if(!PcbCopperProbeAccess.available(scene.copper,s,scene.face)) return null;
+            Point point=PcbCopperProbeAccess.marker(s); return project(point.x,point.y,true);
+        }
         if(kind==WorkbenchRenderHit.Kind.PAD) {
             WorkbenchPhysicalScene.Pad p=scene.pad(id);
             return p==null?null:project(p.x,p.y,true);

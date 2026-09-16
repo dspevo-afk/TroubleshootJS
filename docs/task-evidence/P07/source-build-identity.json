@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "base": "d0829afcac984c8d9186cd55a1118eec0ff7b319",
+  "sourceDigestEncoding": "SHA256 of sorted compact JSON mapping relative paths to file-byte SHA256",
+  "clean": {
+    "allSourceSha256": "de0701b24099b6444ad278358a4ba620d375600a50aa880e1bd9301d02f32028",
+    "sourceFiles": 1067,
+    "buildExit": 0,
+    "allFivePermutations": true,
+    "sourceDrift": [],
+    "nocacheSha256": "c2111dfc21891278a9649584ec6add5ac321fe4c1dbc973412db95d3bf129f47",
+    "declaredPermutations": {
+      "2757757802DEEB86ABDC4C799DC166A0.cache.js": "c46a81824a6834d89f03343af633aab8d92c678494101ba472f69085435a3a3c",
+      "34391AEA31EA3B5FAFC0013E203DA220.cache.js": "4ed934d4265c1ad812bee765c1cfdb9f15fd4d2122c7b9c7a8718290acca415f",
+      "868CFBB1BF39F1F50C1F7B84835ACF40.cache.js": "275e1a70354a16746b2d0eedb20e5788e10ca2d66ece0cb3a29b120db154867a",
+      "9690D63579BAA7EE75A79E8C108DE6C2.cache.js": "9cd06218c130df32201ec3801f14cd3fe5c145c2d61b498bf2b9e2b5013b2725",
+      "B89EA49689ECDDC6ABF96B2EF2959EAE.cache.js": "3be8c6f8294c9a1c67309f080c8e58518c4a7832a6345583c83164a1dff6e9b0"
+    }
+  },
+  "integrated": {
+    "allSourceSha256": "5db6590f4a78e1964db96e714bb40ba8b27375cb6974e9aea0ec256b0341d4e6",
+    "sourceFiles": 1068,
+    "buildExit": 0,
+    "allFivePermutations": true,
+    "sourceDrift": [],
+    "nocacheSha256": "52638197204b3c54f0a4788e3fb7dce9b5b5ee418ea0803b78f54fa9a7adb6c7",
+    "declaredPermutations": {
+      "04279E7EB599CDCC1267FEA8B2C8C623.cache.js": "52de863a2cf5130b39d6729f34bcc4929dd68d538e6a6cad4825066deda983a5",
+      "08968BCEF1A0E3A49FD4C529AC1DBC1D.cache.js": "17c8ebb9f247a2130386a10553a52bff1a83a6525d2d63df3ab1fd893fd28ca6",
+      "26907EB58C29C132B49ABAA20846ED8C.cache.js": "4e6ff0cac569da69146a17fd8cb5d794ed1429a2fa3e9d07bf9ea7135c6e5369",
+      "60151DB7A728FB4F274FFE5DE789D763.cache.js": "2be86174285092576d06025056d829be83fc0730d10c2d55300daf4e3d1aa44e",
+      "866EE8C6BEA7464736FE32DDDA9D2ADB.cache.js": "5c1fb2e6819d6184c003175d915d3c42786a9e30e67fefd2ab69c45452c53c33"
+    }
+  },
+  "publishableCodeFiles": {
+    "scripts/verify-current-contracts.ps1": "720e85025be69278a52da2128405d424c22f3a35d8d2fc76af9e27867056f038",
+    "src/com/lushprojects/circuitjs1/client/BoardCopperProbeTarget.java": "12b19c5ee663ef004aa151b4f917a74ddbc71856dfdb789bedc5aa1b99168f43",
+    "src/com/lushprojects/circuitjs1/client/CanvasWorkbenchBackend.java": "015358639d139e82a0698112238b81340844942b04543b5a111a53e87a4029a1",
+    "src/com/lushprojects/circuitjs1/client/CirSim.java": "38d5a401d7bd69080e157c4f49222c5b39d2eee7ffc4444303ec59cff7fe4a30",
+    "src/com/lushprojects/circuitjs1/client/CopperProbeProjection.java": "66572895867acf3a513a2655099fdb6a77c3844104619b32d630ae8e51f2f42f",
+    "src/com/lushprojects/circuitjs1/client/GeneratedBoardInstance.java": "55f186963ec31e28c15a15a2bd2a658a50e1652dbdab8b5f99beb27d6d2bc511",
+    "src/com/lushprojects/circuitjs1/client/InstrumentController.java": "1b43661a56375a3350927e08bd9f099460391b314d0b7028f4a5e07c9c03bfc6",
+    "src/com/lushprojects/circuitjs1/client/P07TwoLayerDeveloperVerifier.java": "f2a50c928fb798db1171765e33d534b16371dc6a03c7f712132002f0cdae11ef",
+    "src/com/lushprojects/circuitjs1/client/P07TwoLayerPrototype.java": "7728eae256727d9dbc45bc743c79b312ab89eb4f122198fc7881d14008efdb4d",
+    "src/com/lushprojects/circuitjs1/client/PcbCopperProbeAccess.java": "2da148c52ca956f3e688c001beb4ff9d9e744e80d113971c1201ef14abaabc37",
+    "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java": "4496ee41736ed7bdac8cf8aa48d4f979023505d1487993fce3d5c299cecbe6b7",
+    "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java": "e23847d088d816dff027579eb649cd2cb8c845c4e16647b444ee8e1bbd1cb055",
+    "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java": "f8af2d148d36b932af2e7272a33f9d520ff747870723f10771a1caff26dc9b15",
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchController.java": "b9be3e91191e0a42a22e9f4e7f0fbf899be320334e48bff5d1482ff8cadec14f",
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java": "a54b9a67f4172b5632e910e91c5c1bc7d86c3c1ed4323a24fbd2ef26e70c33bc",
+    "src/com/lushprojects/circuitjs1/client/WorkbenchRenderHit.java": "33a36650c2626e73ffc4427897784492389d444842bf94555e472ffa55822c22",
+    "src/com/lushprojects/circuitjs1/client/WorkbenchRenderHost.java": "09e39a0578921a8cc951c005f5a8b9c12a73c24116a30a371a352e0bd3f4ccd3",
+    "tests/contracts/P07LayerCorpus.java": "0c3af7b74bf03234c1ee746ac07e15dd67440488f0e2c1ae7422ac64f5e73035",
+    "tests/contracts/P07TwoLayerContractTest.java": "ee30a2939dabf6ea2da39cebdcb4a47d41c1078115b0764d212c8269ad988276"
+  },
+  "baseArchiveReview": {
+    "archiveFiles": 2476,
+    "endOfLineOnlyConversions": 2070,
+    "otherDifferences": [],
+    "comparison": "Git blob identity, permitting CRLF-to-LF normalization only"
+  }
+}

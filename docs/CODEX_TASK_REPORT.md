@@ -1,3 +1,46 @@
+# Current checkpoint - P07 complete (2026-09-15)
+
+Scope: required two-layer routing/viewing/interaction comparison on P06 base
+`d0829afcac984c8d9186cd55a1118eec0ff7b319`; branch `codex/task43p-final-recovery`.
+P08 is next and was not started. P09 normal adoption is still blocked.
+
+Implemented four bounded matched routing policies, explicit plated vias,
+independent both-face/domain checks and real exposed copper/via probe targets.
+The debug bench measures independent 5 V / 7 V loops through actual CircuitJS.
+A flip clears an inaccessible captured contact without changing pad identity.
+The router's supported envelope is explicitly plated-through-hole only; surface
+pads fail closed. No live trace-cut repair or automatic link insertion is claimed.
+
+Qualification: clean source passed all 45 maintained Java suites and independent
+oracles/report protocol, P07's 48 assertions and 54-row structural comparison,
+all five JDK8/GWT permutations, P07 positive/forced-negative/actual-mouse bench,
+layout validation, P06 positive/forced-negative, all 11 Q15 cases and its forced
+negative, and normal player/no-debug P07 privacy checks. The preserved working
+combination separately passed eight focused native suites, all five GWT
+permutations, P07 restoration/bench and normal player/privacy checks.
+
+Result: six of 48 prototype rows succeeded, all RB30; the six P05 references add
+one success. None of the frozen RB56/RB100 requests qualified. Same-inventory area
+is unchanged. This is feasibility evidence, not large-board or normal-play adoption.
+
+Preservation: 97 preexisting working files remain intact; 91 are byte-identical,
+and the six shared files retain their original content plus isolated P07 changes.
+The Canvas marker conflict kept both the loose-terminal and copper cases. Existing
+visual/FPS/packing/tray edits are excluded from the P07 publication. No independent
+subagent review was claimed; root review included physical-island/layer/ownership
+inspection, an observed red/green SMD boundary test, source/build identity checks,
+real mouse inputs and five inspected screenshots.
+
+Evidence: [P07 README](task-evidence/P07/README.md), [reproduction](task-evidence/P07/REPRODUCE.md),
+`acceptance.json`, native/browser results, source/build identity and all 54 comparison
+rows. Failed old launcher/stale-bench receipts remain historical failures, not PASS.
+All owned final browser/listener instances closed. Raw recovery/qualification
+records live in the unique OS-temp P07 and P07-resume namespaces. Commit/push
+identity is authoritative in Git and the final delivery receipt, not a self-hash
+embedded in this document. Previous checkpoints follow unchanged.
+
+---
+
 # TroubleshootJS - Current Task Report
 
 ## Current: P06 raised factory-crossover prototype complete

@@ -136,6 +136,7 @@ class GeneratedBoardInstance {
                  !suppliedDiagnosticSolvabilityContract.isDeveloperFixture()))
             throw new IllegalArgumentException(
                 "Supplied diagnostic contract must be an explicit developer fixture");
+        PcbTwoLayerRules.requireDeveloperAdmission(pcbLayout,developerOnlyFaultRoute);
         PcbFactoryLinkPolicy.validateConstruction(board, pcbLayout, physicalSpecifications,
             componentBindings, developerOnlyFaultRoute);
         ServiceableBoardConstruction.complete(board, simulationElements, componentBindings,

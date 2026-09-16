@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "milestone": "P07",
+  "status": "COMPLETE_DEVELOPER_PROTOTYPE",
+  "base": "d0829afcac984c8d9186cd55a1118eec0ff7b319",
+  "nextUnstarted": "P08",
+  "normalAdoption": false,
+  "liveCopperRepair": false,
+  "supportedRouterAttachments": [
+    "PLATED_THROUGH_HOLE"
+  ],
+  "clean": {
+    "nativeSuites": 45,
+    "p07Assertions": 48,
+    "structuralRows": 54,
+    "gwtPermutations": 5,
+    "browserRuns": 9,
+    "q15Cases": 11,
+    "physicalMouseMeasurements": 6,
+    "playerAndNoDebugGuard": "PASS"
+  },
+  "integrated": {
+    "focusedNativeSuites": [
+      "P02ConductorContractTest",
+      "P06FactoryLinkContractTest",
+      "P07TwoLayerContractTest",
+      "U01ViewportContractTest",
+      "VisualWorkbenchContractTest",
+      "DensePcbPackingContractTest",
+      "U04SessionContractTest",
+      "A07ExecutionContractTest"
+    ],
+    "gwtPermutations": 5,
+    "browserRuns": 3,
+    "preservedExistingFiles": 97,
+    "byteIdenticalUnsharedFiles": 91,
+    "sharedFilesOriginalContentRecovered": 6
+  },
+  "structuralResults": {
+    "prototypeAccepted": 6,
+    "prototypeRequests": 48,
+    "p05ReferenceAccepted": 1,
+    "p05ReferenceRequests": 6,
+    "allPrototypeSuccesses": "RB30",
+    "RB56Accepted": 0,
+    "RB100Accepted": 0,
+    "areaReductionDemonstrated": false
+  },
+  "review": "Root source, physics/ownership, red-green boundary, native/compiled/input and preservation review; no independent subagent review claimed",
+  "screenshotsInspected": 5,
+  "allFinalOwnedBrowserProcessesAndListenersClosed": true,
+  "existingVerifierBudgetsRelaxed": false,
+  "newP07CorpusTimeoutMs": 600000,
+  "limits": [
+    "one frozen seed per structural inventory/face; not a seed-population claim",
+    "readability at scale is a geometric target estimate, not a human study",
+    "no automatic link insertion or >2 layers",
+    "legacy CLI ownership deadline was not changed or requalified"
+  ]
+}
