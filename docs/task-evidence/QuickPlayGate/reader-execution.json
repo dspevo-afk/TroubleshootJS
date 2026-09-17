@@ -1,0 +1,6 @@
+{
+  "exit": 0,
+  "stdout": "PASS: Quick Play gate population/geometry/repair/retry reader; malformed controls=22\n",
+  "stderr": "",
+  "readerSha256": "f56fd1de7810ee78f2b38fb422ef553e461a7443060ae60b34cd0b9c201904a0"
+}

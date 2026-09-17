@@ -1,0 +1,17 @@
+{
+  "verify_admission.py": {
+    "executedFinalRaw": "2649f4e2d3eb36f78a3e44d6d56d91e022496507e795f0d32a3217c9f4febc69",
+    "publishedLF": "981fa42181994c2714f5f13cc544f07196450d753b3f22397daa4b8c3075fa2b",
+    "pythonASTIdentical": true
+  },
+  "verify_player.py": {
+    "executedFinalRaw": "8f635ecefab5135edcfff5fd3a2fcf37523c1b0cb58b582efe4aa4da5db44b43",
+    "publishedLF": "5e8367441c0f0048153d58f43ec0f4200b06312841d00fdaddb54d13c7d87598",
+    "pythonASTIdentical": true
+  },
+  "verify_routes.py": {
+    "executedFinalRaw": "c4933d2b34676b5bca5334f80528a88d3923c3ded764f7b02cfd38674380080c",
+    "publishedLF": "25701acdef42c498beb2f3c4e6956f85070818c8181b25251f4e9910475a5e18",
+    "pythonASTIdentical": true
+  }
+}

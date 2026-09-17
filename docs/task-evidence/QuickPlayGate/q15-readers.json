@@ -1,0 +1,14 @@
+[
+  {
+    "variant": "clean",
+    "exit": 0,
+    "stdout": "PASS: Q15 eleven cases/four designs/three faults; forced cleanup; 22 reader negatives\n",
+    "stderr": ""
+  },
+  {
+    "variant": "main",
+    "exit": 0,
+    "stdout": "PASS: Q15 eleven cases/four designs/three faults; forced cleanup; 22 reader negatives\n",
+    "stderr": ""
+  }
+]

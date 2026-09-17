@@ -1,0 +1,7 @@
+{
+  "beforeSha256": "6b871f8674c654c5605dc44c84f464d9c9cff36bdcd0a32f5024f5ec2fa0eefd",
+  "afterSha256": "c4933d2b34676b5bca5334f80528a88d3923c3ded764f7b02cfd38674380080c",
+  "observedFailure": "clean-browser/browser-a10/result.json",
+  "cause": "Harness read the wrong DOM attribute; A10 published PASS:a10 but the reader received null instead of data-tsj-a10-report.",
+  "productionChanged": false
+}

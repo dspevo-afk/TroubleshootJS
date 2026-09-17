@@ -9,20 +9,27 @@ final class GenerationRequest {
     private final boolean composition;
     private final boolean quickPlay;
     private final DifficultyProfile difficulty;
+    private final boolean candidateSearch;
 
     private GenerationRequest(ChallengeDescriptor descriptor, boolean composition, boolean quickPlay) {
         this(descriptor, composition, quickPlay, null);
     }
     private GenerationRequest(ChallengeDescriptor descriptor, boolean composition, boolean quickPlay, DifficultyProfile difficulty) {
+        this(descriptor, composition, quickPlay, difficulty, false);
+    }
+    private GenerationRequest(ChallengeDescriptor descriptor, boolean composition, boolean quickPlay,
+            DifficultyProfile difficulty, boolean search) {
         if (descriptor == null) throw new IllegalArgumentException("Missing generation descriptor");
         this.descriptor = descriptor;
         this.composition = composition;
         this.quickPlay = quickPlay;
         this.difficulty = difficulty;
+        this.candidateSearch = search;
     }
 
     static GenerationRequest leaf(String familyId, long seed, boolean quickPlay) {
-        return new GenerationRequest(ChallengeDescriptor.current(familyId, seed), false, quickPlay);
+        return new GenerationRequest(ChallengeDescriptor.current(familyId, seed), false, quickPlay, null,
+            quickPlay && QuickPlayAdmission.supports(familyId));
     }
     static GenerationRequest controlled(long seed) {
         return new GenerationRequest(BoundedAssemblyRequest.controlledDescriptor(seed), true, false);
@@ -31,14 +38,29 @@ final class GenerationRequest {
         if (request == null) throw new IllegalArgumentException("Missing player launch");
         boolean composed = ControlledIndicatorBlockContributions.FAMILY_ID.equals(request.familyId);
         return new GenerationRequest(composed ? BoundedAssemblyRequest.controlledDescriptor(request.seed) :
-            ChallengeDescriptor.current(request.familyId, request.seed), composed, false, request.profile);
+            ChallengeDescriptor.current(request.familyId, request.seed), composed, false, request.profile, request.candidateSearch);
     }
     DifficultyProfile getDifficulty() { return difficulty; }
+    int candidateCount() { return candidateSearch ? QuickPlayAdmission.MAX_CANDIDATES : 1; }
+    GenerationRequest candidate(int ordinal) {
+        if (ordinal < 0 || ordinal >= candidateCount()) throw new IllegalArgumentException("Unknown candidate");
+        if (!candidateSearch) return this;
+        long seed = QuickPlayAdmission.candidateSeed(descriptor.getRootSeed(), ordinal);
+        return new GenerationRequest(ChallengeDescriptor.current(descriptor.getDeviceIntent().getId(), seed),
+            false, quickPlay, difficulty, false);
+    }
+    String candidateManifest(int ordinal) {
+        GenerationRequest exact = candidate(ordinal);
+        // The existing generic scheduler sorts manifests. Prefix the bounded ordinal,
+        // not the signed seed's lexical value, to preserve the declared retry order.
+        return candidateSearch ? "candidate=0" + ordinal + ";" + exact.canonical() : exact.canonical();
+    }
     SupportedEnvelope getSupportedEnvelope() { return SupportedEnvelope.current(); }
     String canonical() {
-        return "tsj-generation-request/2;native;" + descriptor.toCanonical() +
+        return "tsj-generation-request/3;native;" + descriptor.toCanonical() +
             ";quickPlay=" + quickPlay + ";layout=" + SeededPcbLayoutGenerator.CURRENT_VERSION +
             ";physicalEnvelope=" + getSupportedEnvelope().identity() +
+            ";admission=" + QuickPlayAdmission.VERSION + ";search=" + candidateSearch +
             (difficulty == null ? "" : ";difficulty=" + difficulty + "@" + DifficultyProfile.VERSION + ";assessment=" + DifficultyAssessment.VERSION);
     }
     ChallengeDescriptor getDescriptor() { return descriptor; }
@@ -47,6 +69,7 @@ final class GenerationRequest {
     boolean isComposition() { return composition; }
 
     Prepared resolve(PlanCache cache) {
+        if (candidateSearch) throw new IllegalStateException("Resolve an exact candidate through the admission coordinator");
         if (cache == null) throw new IllegalArgumentException("Missing generation plan cache");
         String key = canonical();
         Prepared cached = cache.get(key);

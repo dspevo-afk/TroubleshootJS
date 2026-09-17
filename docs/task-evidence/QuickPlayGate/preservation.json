@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "originalFiles": 97,
+  "byteIdenticalOriginals": 93,
+  "shared": [
+    "scripts/verify-current-contracts.ps1",
+    "src/com/lushprojects/circuitjs1/client/CirSim.java",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+    "war/tsj-workbench-ui.js"
+  ],
+  "inverse": {
+    "scripts/verify-current-contracts.ps1": {
+      "original": "4e63db5a341e14a44e51224845a1621b2fc1e6960d634f618dc3f92c44212a80",
+      "normalizedInverse": "4e63db5a341e14a44e51224845a1621b2fc1e6960d634f618dc3f92c44212a80",
+      "normalizedOriginal": "4e63db5a341e14a44e51224845a1621b2fc1e6960d634f618dc3f92c44212a80"
+    },
+    "src/com/lushprojects/circuitjs1/client/CirSim.java": {
+      "original": "c251bd9a4f465477f012ee7b7ef47f2277db469ab5e8c75d3352de28fca013c8",
+      "normalizedInverse": "c251bd9a4f465477f012ee7b7ef47f2277db469ab5e8c75d3352de28fca013c8",
+      "normalizedOriginal": "c251bd9a4f465477f012ee7b7ef47f2277db469ab5e8c75d3352de28fca013c8"
+    },
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": {
+      "original": "3b8ee9cd905bc57164c1f0df490f8ea7d6baef5e50928aa358f14f9f941da0c9",
+      "normalizedInverse": "3b8ee9cd905bc57164c1f0df490f8ea7d6baef5e50928aa358f14f9f941da0c9",
+      "normalizedOriginal": "3b8ee9cd905bc57164c1f0df490f8ea7d6baef5e50928aa358f14f9f941da0c9"
+    },
+    "war/tsj-workbench-ui.js": {
+      "original": "987815061c3b5cdf9cb3220970b70cc28f6bfc3b9e971e70484d45a0a8cb1fe2",
+      "normalizedInverse": "987815061c3b5cdf9cb3220970b70cc28f6bfc3b9e971e70484d45a0a8cb1fe2",
+      "normalizedOriginal": "987815061c3b5cdf9cb3220970b70cc28f6bfc3b9e971e70484d45a0a8cb1fe2"
+    }
+  },
+  "scope": "Clean publication excludes unrelated visual/FPS/tray/packing deltas. Integrated coexistence is separately tested; its geometry and population are not substituted for the clean frozen corpus."
+}

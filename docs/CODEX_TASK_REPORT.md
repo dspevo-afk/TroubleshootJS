@@ -1,3 +1,37 @@
+<!-- QUICKPLAY-GATE-CURRENT-START -->
+# Current handoff: Procedural Quick Play gate complete
+
+Base: `83d3eb39eb3669b756a78588d95bdf155cecb172`.
+Branch: `codex/task43p-final-recovery`. Publication SHA is the enclosing Git commit
+and the final delivery receipt; this source document does not invent a self-hash.
+
+RB15_CONTROL/EASY now draws full-width candidate seeds and serially tries at most
+four ordinal candidates under shared unchanged budgets. It publishes only after
+actual healthy/faulty electrical, physical/correspondence, complete diagnostic and
+repair proof. Exact accepted replay uses current epoch2 and never retries.
+Layout12 varies functional-region arrangement from the first candidate; reference
+families remain curated. No new P09 bounds/layers/vias/links/Q30 qualification.
+
+Clean native51 with independent oracles, integrated focused12, both GWT5 builds,
+Q15 all11, RC, generation lifecycle/forced negatives and strict readers pass.
+Frozen holdout48:42 admitted,6 rejected,29 macro groups,six aspect bands; largest
+near-clone group4. Development24 retains20 admissions,3 rejects and1 timeout.
+Actual menu/random/retry/rejection/cancellation/isolated-owner/exact replay/privacy
+and all nine family entries pass. UI112, meter358 and entropy4103 tests pass.
+
+Evidence: [Quick Play gate](task-evidence/QuickPlayGate/README.md).
+Reproduction: [Commands and limits](task-evidence/QuickPlayGate/REPRODUCE.md).
+Root review plus independent executable oracles; no independent agent/human review.
+Player input proves the public flow; compiled diagnostics/Q15 provide repair proof.
+Original97 files retained:93 byte-identical and4 shared exact inverse merges.
+Unrelated visual/FPS/packing/tray changes remain outside this publication. Every
+selected task browser/listener closed; recovery scratch and uncertain old resources
+remain. Earlier harness failures and the development timeout are explicitly retained.
+Next unstarted milestone: U02. Do not implement later roadmap work in this task.
+<!-- QUICKPLAY-GATE-CURRENT-END -->
+
+---
+
 <!-- P09-CURRENT-START -->
 # Current handoff: P09 complete - qualified
 

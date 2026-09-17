@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "javaSuites": 12,
+  "rawSha256": "67d53babb23d02320fee3d2478ad2d02bf25967d77a83876c1c4a80975c42d5f",
+  "passMarkers": [
+    "PASS: dense PCB packing seeds=11 areaSum=21892260",
+    "PASS: visual workbench contracts assertions=150",
+    "PASS: physical serviceability contracts assertions=846",
+    "PASS: U04 session contracts assertions=2533",
+    "PASS: U05 difficulty contracts assertions=23",
+    "PASS: Q15 control board contracts assertions=6863 designs=4",
+    "PASS: A10 generation contracts assertions=190",
+    "PASS: A10 routing rejection contracts assertions=28",
+    "PASS: A10 dependency contracts assertions=12",
+    "PASS: Quick Play gate corpus rows=24 holdout=false",
+    "PASS: Quick Play gate contracts assertions=26834",
+    "PASS: P09 physical envelope contracts assertions=58"
+  ],
+  "scope": "Focused preserved-checkout contracts; independent full oracles not rerun here"
+}

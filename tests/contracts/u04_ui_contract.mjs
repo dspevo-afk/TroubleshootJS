@@ -68,7 +68,8 @@ const profile = f.d.querySelector('select'); profile.value = 'MEDIUM'; profile.d
 check(f.d.querySelectorAll('select')[1].value === 'control', 'family options follow public profile catalog');
 click(f, 'New board');
 check(f.calls.at(-1).name === 'random' && f.calls.at(-1).args[0] === 'control' && f.calls.at(-1).args[2] === 'MEDIUM', 'normal New board uses Java random admission, never exact launch');
-check(/^\d+$/.test(f.calls.at(-1).args[1]) && Number.isSafeInteger(Number(f.calls.at(-1).args[1])) && Number(f.calls.at(-1).args[1]) < 281474976710656, 'random admission receives exact decimal entropy within 48 bits');
+const entropyText = f.calls.at(-1).args[1];
+check(typeof entropyText === 'string' && /^-?(0|[1-9]\d*)$/.test(entropyText) && String(BigInt(entropyText)) === entropyText && BigInt(entropyText) >= -(1n << 63n) && BigInt(entropyText) < (1n << 63n), 'random admission receives canonical exact signed 64-bit decimal entropy');
 const seed = f.d.querySelector('input[type=text]'); seed.value = '-9223372036854775808'; seed.focus(); seed.setSelectionRange(1, 6);
 f.w.tsjProductRefresh(); f.w.tsjProductRefresh(); await f.flush();
 check(seed === f.d.querySelector('input[type=text]') && seed.value === '-9223372036854775808' && seed.selectionStart === 1, 'unchanged screen preserves field and selection');

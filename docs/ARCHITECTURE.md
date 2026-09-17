@@ -12,6 +12,36 @@ instruments, valid repair behavior and answer privacy remain required. The
 [current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
 older evidence packets describe their own historical candidates.
 
+## Procedural Quick Play admission and exact replay
+
+QuickPlayAdmission owns the separate post-P09 family/profile population policy.
+RB15_CONTROL/EASY now requests at most four exact ordinal candidates instead of
+mapping entropy to the eleven-seed regression cohort. Other reference families
+remain curated. The normal UI transports eight random bytes as a canonical signed
+long decimal string without a 64-bit JavaScript Number conversion. Candidate0 is
+the launch seed; an odd modular stride supplies the next three distinct candidates.
+
+GenerationRequest version3 separates search from exact resolution. GenerationJob
+keeps its canonical manifest ordering, shared90-second/640-unit/five-second bounds,
+and complete attempt ledger. Candidate-local diagnostic counts reset independently
+from aggregate work. Only typed expected rejection followed by successful original-
+owner restoration permits retry. Timeout, work exhaustion, cancellation, stale
+ownership, programming failure and failed cleanup end the launch without publishing.
+
+PlayerSession stores only the actual accepted seed as current replay. Epoch
+`tsj-alpha/2` always reconstructs a single exact board; old interpretations reject.
+Dependency epoch10 includes admission1 and layout12. P09 geometry, copper/solver
+correspondence, live healthy/faulty behavior and every diagnostic/repair hypothesis
+remain mandatory. Physical envelope bounds alone never authorize a population.
+
+The bottom-face placer varies whole functional-region order from its first attempt
+using existing named streams, not just cosmetic jitter or fallback layouts. Exact
+fresh-plan native replay and matched compiled geometry support the frozen24+48
+population. The holdout admits42, rejects6 and contains29 macro groups across6
+aspect bands; these observations do not guarantee arbitrary circuits or every seed.
+The remaining catalog reference families require separate population qualification.
+See [Quick Play gate evidence](task-evidence/QuickPlayGate/README.md).
+
 ## Production physical qualification (P09)
 
 `SupportedEnvelope` is the versioned normal physical-policy registry. The current

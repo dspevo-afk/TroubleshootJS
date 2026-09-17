@@ -110,6 +110,9 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'P07TwoLayerContractTest'; Marker = 'P07 two-layer contracts ' },
         @{ Name = 'P08ScalabilityContractTest'; Marker = 'P08 scalable physical contracts ' },
         @{ Name = 'P09EnvelopeCorpus'; Marker = 'P09 physical envelope corpus ' },
+        @{ Name = 'QuickPlayGateCorpus'; Marker = 'Quick Play gate corpus ' },
+        @{ Name = 'QuickPlayGateHoldoutCorpus'; Marker = 'Quick Play gate corpus ' },
+        @{ Name = 'QuickPlayGateContractTest'; Marker = 'Quick Play gate contracts ' },
         @{ Name = 'P09EnvelopeContractTest'; Marker = 'P09 physical envelope contracts ' },
         @{ Name = 'P07LayerCorpus'; Marker = 'P07 frozen layer corpus ' },
         @{ Name = 'P05RoutingCorpus'; Marker = 'P05 frozen corpus ' },
@@ -156,7 +159,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         }
         # The NEW P07 54-row structural comparison has its own explicit ten-minute budget.
         # Existing suites retain their original one-minute bounds.
-        $testBudget = if ($testClass -eq 'P07LayerCorpus') { 600000 } elseif ($testClass -eq 'P09EnvelopeCorpus') { 180000 } else { 60000 }
+        $testBudget = if ($testClass -eq 'P07LayerCorpus') { 600000 } elseif ($testClass -eq 'P09EnvelopeCorpus') { 180000 } elseif ($testClass -in @('QuickPlayGateCorpus','QuickPlayGateHoldoutCorpus')) { 600000 } else { 60000 }
         $tested = Invoke-VerifierBoundedProcess $java $testArguments $testBudget
         Write-Host $tested.Stdout
         if ($tested.Stderr) { Write-Host $tested.Stderr }

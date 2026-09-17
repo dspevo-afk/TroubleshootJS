@@ -1,0 +1,35 @@
+{
+  "cases": [
+    {
+      "seed": "-7564325972933069162",
+      "expected": "EXPECTED_REJECTION"
+    },
+    {
+      "seed": "-7564325972933069162",
+      "search": true,
+      "expected": "PASS"
+    },
+    {
+      "seed": "3836388846390129323",
+      "expected": "PASS",
+      "cohort": "replay-1"
+    },
+    {
+      "seed": "3836388846390129323",
+      "expected": "PASS",
+      "cohort": "replay-2"
+    },
+    {
+      "seed": "3",
+      "search": true,
+      "cancelAfter": 3,
+      "expected": "CANCELLED"
+    },
+    {
+      "seed": "-4708384106017907796",
+      "search": true,
+      "cancelAfter": 15,
+      "expected": "CANCELLED"
+    }
+  ]
+}

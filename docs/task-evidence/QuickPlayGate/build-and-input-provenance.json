@@ -1,0 +1,47 @@
+{
+  "clean": {
+    "build": {
+      "exit": 0,
+      "elapsedSeconds": 106.98753619194031,
+      "inputsUnchanged": true,
+      "compiled": {
+        "30282396F446D18C82044AD093565CAD.cache.js": "14cec9f49cfdcdc3e7ed89edcc95ba24eddf209be3fd05e21d24a9afce4622b8",
+        "8B7A1EC2D8D1C7C5527BB6760772031D.cache.js": "16c63821770681b61f12a312379bfb86fbf5866d8771c3ec1d1aa2433ca780d8",
+        "92A6B3081372C0D5029196EA711B2032.cache.js": "95b91f4cdadf01b3eaf44ce79a45cc97f828de988448635b90aa2af864abaa87",
+        "9F5A442480258CF38D3C4AA17169EE3F.cache.js": "5867ebc0ab8acd1e6e243c417d721ce764652a763a672c392ab95b3bd09e181c",
+        "DF9572747A81B0B2DE36451D46EEAF78.cache.js": "14abbcda22ea48c80bbe8baac9538c5f3b0a611245219d5c7598a14b800aae2d"
+      }
+    },
+    "inputCount": 1217,
+    "inputsFile": "clean-inputs.json.gz",
+    "nocacheSha256": "8af717c7b3ea99aa4b38f0c05fe045971db98c022df8efdcfe880729bc668f49"
+  },
+  "main": {
+    "build": {
+      "status": "PASS",
+      "inputsUnchanged": true,
+      "compiled": {
+        "204B62B60909FA727ACDFF00233A3CE1.cache.js": "da871b88aa56fad12e115d26b218c711e6f2d7c41549989f56f42c771063d5f8",
+        "2C867D56784374A965A177EDD91503F4.cache.js": "e91af16888a3b57eb6eff65bd5f68d02cecf2c91dbe1a7dfa97b538427f68860",
+        "35F1691245636DC1F51B5C7B327F9741.cache.js": "a2068279a03e618d7ba2c17953478dd3c0bec12668dd862b0bbd78370e7ed038",
+        "CC72B250E5C852113CCF96130F842DA4.cache.js": "de57ffa7555795b0b3e6baa9d80f26da67194e013a1c581fc800a3631fff9bee",
+        "E8258B178A58ED7DF9CEC54087D40DAF.cache.js": "6ff2af17b689f739cf82f90fd2c47354e87bdfffc52f8badcad46afdf15c5ddf"
+      },
+      "phases": [
+        {
+          "phase": "native",
+          "exit": 0,
+          "elapsedSeconds": 104.88755130767822
+        },
+        {
+          "phase": "build",
+          "exit": 0,
+          "elapsedSeconds": 80.97774243354797
+        }
+      ]
+    },
+    "inputCount": 1222,
+    "inputsFile": "main-inputs.json.gz",
+    "nocacheSha256": "219d319fed19d6abbf82da35e5943e694b58e79e69cc122a5fd36c9784974539"
+  }
+}

@@ -45,9 +45,14 @@ final class GenerationCoordinator {
     GenerationJob getJob() { return job; }
     int getYieldCount() { return yields; }
     int getProgressPercent() { return job == null ? 0 : GenerationProgress.percent(job.getStage(),
-        job.getStageWorkCount(GenerationJob.Stage.HYPOTHESES), expectedProofUnits,
+        job.getCandidateStageWorkCount(GenerationJob.Stage.HYPOTHESES), expectedProofUnits,
         job.getOutcome() == GenerationJob.Outcome.PASS); }
-    String getProgressLabel() { return GenerationProgress.label(job == null ? null : job.getStage()); }
+    int getCandidateCount() { return services == null ? 0 : services.selection.candidateCount(); }
+    String getProgressLabel() {
+        String label = GenerationProgress.label(job == null ? null : job.getStage());
+        return getCandidateCount() > 1 ? "Candidate " + Math.max(1, job.getCandidateIndex() + 1) +
+            " of " + getCandidateCount() + ": " + label : label;
+    }
     long getProgressElapsedMillis() { return Math.max(0, System.currentTimeMillis() - startedAt); }
     long getProgressAgeMillis() { return Math.max(0, System.currentTimeMillis() - lastProgressAt); }
 
@@ -243,7 +248,8 @@ final class GenerationCoordinator {
     }
 
     private final class Services implements GenerationJob.Services {
-        private final GenerationRequest request;
+        private final GenerationRequest selection;
+        private GenerationRequest request;
         private final Completion completion;
         private GeneratedBoardInstance original;
         private GeneratedChallengeController originalController;
@@ -258,18 +264,18 @@ final class GenerationCoordinator {
         private boolean notified, cleanupComplete;
 
         Services(GenerationRequest request, Completion completion) {
-            this.request = request; this.completion = completion;
+            this.selection = request; this.request = request.candidate(0); this.completion = completion;
             original = sim.getGeneratedBoardInstance();
             originalController = sim.getGeneratedChallengeController();
             originalGraph = sim.elmList;
         }
-        public int candidateCount() { return 1; }
-        public String manifest(int index) {
-            if (index != 0) throw new IllegalArgumentException("Unknown native candidate");
-            return request.canonical();
-        }
+        public int candidateCount() { return selection.candidateCount(); }
+        public String manifest(int index) { return selection.candidateManifest(index); }
         public void beginCandidate(int index) {
-            if (index != 0) throw new IllegalArgumentException("Unknown native candidate");
+            if (installation != null || candidate != null || proof != null || constructionSession != null)
+                throw new IllegalStateException("Previous candidate still owns resources");
+            request = selection.candidate(index);
+            expectedProofUnits = 0; cleanupComplete = false;
         }
         public String resolve() {
             try { prepared = request.resolve(plans); }
@@ -351,7 +357,7 @@ final class GenerationCoordinator {
                     difficulty = DifficultyAssessment.assess(candidate, sim.getGeneratedChallengeController().getDiagnosticProofReceipt());
                     difficulty.require(request.getDifficulty());
                 }
-                if (job.getStageWorkCount(GenerationJob.Stage.HYPOTHESES) !=
+                if (job.getCandidateStageWorkCount(GenerationJob.Stage.HYPOTHESES) !=
                         GeneratedDiagnosticProofService.requiredWorkUnits(candidate,
                             request.requiresExplicitCompletion()))
                     throw new IllegalStateException("Diagnostic operation count differs from its declared program");
@@ -419,6 +425,10 @@ final class GenerationCoordinator {
             if (failure instanceof RuntimeException) throw (RuntimeException)failure;
             if (failure != null) throw new IllegalStateException("Generation cleanup failed", failure);
             cleanupComplete = true;
+            // Restore succeeded before making the next exact candidate eligible.
+            // The protected original stays owned until the entire launch terminates.
+            installation = null; proof = null; candidate = null; constructionSession = null;
+            prepared = null; realizationManifest = null; difficulty = null;
         }
         public boolean isCurrent() {
             if (services != this) return false;

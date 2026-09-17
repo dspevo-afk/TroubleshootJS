@@ -1,0 +1,125 @@
+{
+  "base": "83d3eb39eb3669b756a78588d95bdf155cecb172",
+  "paths": {
+    "scripts/verify-current-contracts.ps1": {
+      "clean": "6ad8c46c3bba185ad62ea58646c92807a09ca0c48217feffa359b8b3b703437d",
+      "integrated": "61a96ac1ded5a907de4fcc5334ab420e90c5a63a22d58e48163ec8d1a84fe754",
+      "sharedOriginal": true
+    },
+    "src/com/lushprojects/circuitjs1/client/CirSim.java": {
+      "clean": "23e82341b2906663a1d89a4b86e556df254a631a55d52c11ed989a6ff7f8c86f",
+      "integrated": "8953d36c1e235edb6d18e40a56ecfa3492d7462ac9a00287c8fdb2b57e3ca96c",
+      "sharedOriginal": true
+    },
+    "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java": {
+      "clean": "c5997cacf11816a0d7e768689512b9bda41144a9d2169e8b787f0cfbe11628f7",
+      "integrated": "c5997cacf11816a0d7e768689512b9bda41144a9d2169e8b787f0cfbe11628f7",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java": {
+      "clean": "a7e6df02c3f65297c49b88622600b14a988db026c7e0ca43566a38000d01d6fb",
+      "integrated": "a7e6df02c3f65297c49b88622600b14a988db026c7e0ca43566a38000d01d6fb",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/GenerationJob.java": {
+      "clean": "5fa2cf99202128a653536e10f4d7aa0fd84e75715f0df972f83a9b933a3e21c3",
+      "integrated": "5fa2cf99202128a653536e10f4d7aa0fd84e75715f0df972f83a9b933a3e21c3",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java": {
+      "clean": "406929a89b9f942f37202d441f752051ddbe792b157e19ab1b4c9e85361328c9",
+      "integrated": "406929a89b9f942f37202d441f752051ddbe792b157e19ab1b4c9e85361328c9",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": {
+      "clean": "8623544da70e36803581c1ff7d1e46f7b432b1d35c8a7c8631ace4a07083038a",
+      "integrated": "8623544da70e36803581c1ff7d1e46f7b432b1d35c8a7c8631ace4a07083038a",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/PlayerLaunchRequest.java": {
+      "clean": "71ac27a134847f7540b16b2ba335c3059309fe7e434e6d884beac806cc565e33",
+      "integrated": "71ac27a134847f7540b16b2ba335c3059309fe7e434e6d884beac806cc565e33",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/PlayerSession.java": {
+      "clean": "023627bbe7163618206bae050b7d9db1f37765835f8437917e2c095480256f34",
+      "integrated": "023627bbe7163618206bae050b7d9db1f37765835f8437917e2c095480256f34",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java": {
+      "clean": "cf343f68a82ced2fb66e045078300289e95257b111288f287b4aea4b8a92f6ee",
+      "integrated": "cf343f68a82ced2fb66e045078300289e95257b111288f287b4aea4b8a92f6ee",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/QuickPlayDeveloperVerifier.java": {
+      "clean": "5a531952ee061d6d4bee2551e8ff45e253ff56dbd0387eb5bef1f38f5d5b8e83",
+      "integrated": "5a531952ee061d6d4bee2551e8ff45e253ff56dbd0387eb5bef1f38f5d5b8e83",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/QuickPlayFamilyRegistry.java": {
+      "clean": "86229802922d1e73e42b7da81beaeb76c1c1f41cc1c651c50240309f2445a60f",
+      "integrated": "86229802922d1e73e42b7da81beaeb76c1c1f41cc1c651c50240309f2445a60f",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": {
+      "clean": "c20d4a35c9d291031e1914d9fedb43953e48d4dd1327cc78ddaf69d8d44c49d8",
+      "integrated": "b803c4f0f24f0278147493abc0d8ad47ed6db5dfa606271b51a9748fe323bfc2",
+      "sharedOriginal": true
+    },
+    "tests/contracts/Q15ControlBoardContractTest.java": {
+      "clean": "ac0bdee8e70a03964dba83900be8c5cc604b3f1bf137855bce59b29440cf9fb3",
+      "integrated": "ac0bdee8e70a03964dba83900be8c5cc604b3f1bf137855bce59b29440cf9fb3",
+      "sharedOriginal": false
+    },
+    "war/tsj-workbench-ui.js": {
+      "clean": "4ad4f8f30762ac39f005abb6739bbabbe1b1c4832d04fe498c7485718416f99c",
+      "integrated": "b0778e0c04a31a6870e841235843e885e6a97134b469e78ea9e8d3d7a85f43d2",
+      "sharedOriginal": true
+    },
+    "src/com/lushprojects/circuitjs1/client/QuickPlayAdmission.java": {
+      "clean": "f41010a187031f1476bcd0c6ae8e91ce2cf7ee50df8fc68b164a0b3c6a0421bc",
+      "integrated": "f41010a187031f1476bcd0c6ae8e91ce2cf7ee50df8fc68b164a0b3c6a0421bc",
+      "sharedOriginal": false
+    },
+    "src/com/lushprojects/circuitjs1/client/QuickPlayGateDeveloperVerifier.java": {
+      "clean": "74e2142f9a5914ba84011f6de5f217d19da211ba5497ee3c1c532713f5f33aa0",
+      "integrated": "74e2142f9a5914ba84011f6de5f217d19da211ba5497ee3c1c532713f5f33aa0",
+      "sharedOriginal": false
+    },
+    "tests/contracts/QuickPlayGateContractTest.java": {
+      "clean": "bd83771e03bd11ca65000593b54c40fbc3fc9e04f4b84be110fbfbc7dc7e5755",
+      "integrated": "bd83771e03bd11ca65000593b54c40fbc3fc9e04f4b84be110fbfbc7dc7e5755",
+      "sharedOriginal": false
+    },
+    "tests/contracts/QuickPlayGateCorpus.java": {
+      "clean": "ea05cc4db08fe00b4a38a9bbea26a5d0c1b223248d8e842265ffc4960baa1438",
+      "integrated": "ea05cc4db08fe00b4a38a9bbea26a5d0c1b223248d8e842265ffc4960baa1438",
+      "sharedOriginal": false
+    },
+    "tests/contracts/QuickPlayGateHoldoutCorpus.java": {
+      "clean": "78ab28a932937dc271b874cab95c264094334d4fcc21615529c1fa3232c77b74",
+      "integrated": "78ab28a932937dc271b874cab95c264094334d4fcc21615529c1fa3232c77b74",
+      "sharedOriginal": false
+    },
+    "tests/contracts/quickplay_entropy_contract.mjs": {
+      "clean": "5e4cf48f52f5ba845ed7bb3c554c071f577f9c0c8441dc6fcd12635cd70c0f00",
+      "integrated": "5e4cf48f52f5ba845ed7bb3c554c071f577f9c0c8441dc6fcd12635cd70c0f00",
+      "sharedOriginal": false
+    },
+    "tests/contracts/quickplay_gate_evidence.py": {
+      "clean": "f56fd1de7810ee78f2b38fb422ef553e461a7443060ae60b34cd0b9c201904a0",
+      "integrated": "f56fd1de7810ee78f2b38fb422ef553e461a7443060ae60b34cd0b9c201904a0",
+      "sharedOriginal": false
+    },
+    "tests/contracts/u04_ui_contract.mjs": {
+      "clean": "ab50d8d5da76228f7ea38202c5d3cd6605035c9d5855ab300baa5767a779dc11",
+      "integrated": "ab50d8d5da76228f7ea38202c5d3cd6605035c9d5855ab300baa5767a779dc11",
+      "sharedOriginal": false
+    }
+  },
+  "qualificationRunners": [
+    "verify_admission.py",
+    "verify_routes.py",
+    "verify_player.py"
+  ]
+}

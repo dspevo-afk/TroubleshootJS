@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "readerNegatives": 22,
+  "cohorts": {
+    "development": {
+      "requested": 24,
+      "structuralAccepted": 21,
+      "admitted": 20,
+      "macroGroups": 16,
+      "largestGroup": 3,
+      "aspectBands": [
+        3,
+        5,
+        6,
+        7,
+        8
+      ],
+      "outcomes": {
+        "EXPECTED_REJECTION": 3,
+        "PASS": 20,
+        "TIMEOUT": 1
+      }
+    },
+    "holdout": {
+      "requested": 48,
+      "structuralAccepted": 42,
+      "admitted": 42,
+      "macroGroups": 29,
+      "largestGroup": 4,
+      "aspectBands": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "outcomes": {
+        "EXPECTED_REJECTION": 6,
+        "PASS": 42
+      }
+    }
+  },
+  "limits": "Frozen qualification sample, not a universal success guarantee or single-browser performance benchmark."
+}

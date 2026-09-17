@@ -2,23 +2,33 @@ package com.lushprojects.circuitjs1.client;
 
 /** Public replay identity. Parsing never normalizes an unknown seed, family or epoch. */
 final class PlayerLaunchRequest {
-    static final String EPOCH = "tsj-alpha/1";
+    static final String EPOCH = "tsj-alpha/2";
     final String familyId;
     final long seed;
     final DifficultyProfile profile;
+    final boolean candidateSearch;
 
     PlayerLaunchRequest(String familyId, String seedText, String profileText) {
+        this(familyId, seedText, profileText, false);
+    }
+    private PlayerLaunchRequest(String familyId, String seedText, String profileText, boolean search) {
         if (!PlayerFamilyCatalog.contains(familyId))
             throw new IllegalArgumentException("Unsupported board family");
         seed = parseSeed(seedText);
         profile = DifficultyProfile.parseAvailable(profileText);
         this.familyId = familyId;
+        if (search && !QuickPlayAdmission.supports(familyId, profile))
+            throw new IllegalArgumentException("This family/profile has no broad-seed qualification");
+        candidateSearch = search;
     }
 
     /** Entropy selection is explicit. Exact constructors and replay never call it. */
     static PlayerLaunchRequest random(String familyId, String entropyText, String profileText) {
+        DifficultyProfile profile = DifficultyProfile.parseAvailable(profileText);
+        if (Rb15Plan.FAMILY_ID.equals(familyId))
+            return new PlayerLaunchRequest(familyId, entropyText, profileText, true);
         long selected = PlayerFamilyCatalog.selectNormalPlayerSeed(familyId, parseSeed(entropyText));
-        return new PlayerLaunchRequest(familyId, Long.toString(selected), profileText);
+        return new PlayerLaunchRequest(familyId, Long.toString(selected), profile.name());
     }
 
     private static long parseSeed(String text) {
@@ -41,6 +51,22 @@ final class PlayerLaunchRequest {
         return new PlayerLaunchRequest(fields[3], fields[4], fields[2]);
     }
 
-    String replay() { return EPOCH + "/" + profile.name() + "/" + familyId + "/" + seed; }
+    PlayerLaunchRequest accepted(long acceptedSeed) {
+        int count = candidateSearch ? QuickPlayAdmission.MAX_CANDIDATES : 1;
+        for (int i = 0; i < count; i++) {
+            long expected = candidateSearch ? QuickPlayAdmission.candidateSeed(seed, i) : seed;
+            if (expected == acceptedSeed)
+                return candidateSearch ? new PlayerLaunchRequest(familyId, Long.toString(acceptedSeed), profile.name()) : this;
+        }
+        throw new IllegalStateException("Published seed does not belong to this launch");
+    }
+    boolean accepts(PlayerLaunchRequest exact) {
+        if (exact == null || exact.candidateSearch || !familyId.equals(exact.familyId) || profile != exact.profile) return false;
+        try { accepted(exact.seed); return true; } catch (IllegalStateException mismatch) { return false; }
+    }
+    String replay() {
+        if (candidateSearch) throw new IllegalStateException("A candidate search is not an accepted replay");
+        return EPOCH + "/" + profile.name() + "/" + familyId + "/" + seed;
+    }
     GenerationRequest generation() { return GenerationRequest.player(this); }
 }

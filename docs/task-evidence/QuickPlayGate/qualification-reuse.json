@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "audits": {
+    "build2-inputs.json": {
+      "originalManifestSha256": "08ec3ecdb1017784a642dde9e2d55f05e3175d73fdf96303d79c023dae9be07f",
+      "differences": {}
+    },
+    "native-final/inputs.json": {
+      "originalManifestSha256": "072b2992cb1640b6acbf0509eed6f92c239cc5a77a2750d3e24018142171994e",
+      "differences": {
+        "tests/contracts/u04_ui_contract.mjs": {
+          "before": "3a4a4b4246c258c79f8fff3fdffa4e205a2151ee7bd005a23ffd6e37877c6527",
+          "after": "ab50d8d5da76228f7ea38202c5d3cd6605035c9d5855ab300baa5767a779dc11"
+        }
+      }
+    },
+    "compiled-development/inputs.json": {
+      "originalManifestSha256": "10d5e8d8cb15adb6c1b782e4edc8e3284f71f5cc775e5c89214b45f00c722499",
+      "differences": {
+        "tests/contracts/QuickPlayGateCorpus.java": {
+          "before": "48befd5f9c6f044d5492d96444b177b4f1fa7d6e70f765339043a8ea5922f721",
+          "after": "ea05cc4db08fe00b4a38a9bbea26a5d0c1b223248d8e842265ffc4960baa1438"
+        },
+        "tests/contracts/u04_ui_contract.mjs": {
+          "before": "3a4a4b4246c258c79f8fff3fdffa4e205a2151ee7bd005a23ffd6e37877c6527",
+          "after": "ab50d8d5da76228f7ea38202c5d3cd6605035c9d5855ab300baa5767a779dc11"
+        }
+      }
+    },
+    "compiled-holdout/inputs.json": {
+      "originalManifestSha256": "072b2992cb1640b6acbf0509eed6f92c239cc5a77a2750d3e24018142171994e",
+      "differences": {
+        "tests/contracts/u04_ui_contract.mjs": {
+          "before": "3a4a4b4246c258c79f8fff3fdffa4e205a2151ee7bd005a23ffd6e37877c6527",
+          "after": "ab50d8d5da76228f7ea38202c5d3cd6605035c9d5855ab300baa5767a779dc11"
+        }
+      }
+    }
+  },
+  "reason": "Only stronger fresh-plan native replay and the authorized signed64 UI expectation changed after development. Only the UI expectation changed after the heldout run. No production input or numerical criterion changed after the frozen final build/holdout."
+}

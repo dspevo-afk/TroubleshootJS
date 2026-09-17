@@ -1,0 +1,200 @@
+{
+  "attempts": [
+    {
+      "source": "<TASK>\\browser-pilot1\\result.json",
+      "rawSha256": "e377b6719f11456431f5acbe31cf3cc93976565df0ee7839f6d13733eab2fe54",
+      "outcome": "FAIL",
+      "failure": "Traceback (most recent call last):\n  File \"<CANDIDATE>\\docs\\task-evidence\\QuickPlayGate\\verify_admission.py\", line 52, in <module>\n    assert row['status']=='COMPLETE' and row['ownerRestored'],row\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: {'requestedSeed': '3', 'mode': 'search', 'cancelAfter': 2, 'status': 'RUNNING', 'stage': 'HEALTHY', 'units': 2, 'elapsedMs': 1792, 'cohort': 'pilot', 'wallSeconds': 1.8019158999959473}\n",
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "cases": [
+        {
+          "requestedSeed": "-4708384106017907796",
+          "mode": "exact",
+          "cancelAfter": -1,
+          "status": "COMPLETE",
+          "stage": "PUBLISH",
+          "units": 83,
+          "elapsedMs": 25837,
+          "outcome": "PASS",
+          "jobMs": 25820,
+          "maxUnitMs": 1744,
+          "cancellationMs": 0,
+          "attempts": [
+            {
+              "manifest": "tsj-generation-request/3;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB15_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=-4708384106017907796;quickPlay=false;layout=12;physicalEnvelope=THT_SINGLE_FACE@1;admission=1;search=false;difficulty=EASY@1;assessment=1",
+              "stage": "PUBLISH",
+              "outcome": "PASS",
+              "ordinal": 0,
+              "units": 83,
+              "proofUnits": 75
+            }
+          ],
+          "board": {
+            "seed": "-4708384106017907796",
+            "design": "RB15_BJT_RESISTIVE_BIAS",
+            "fault": "RELAY_COIL_OPEN",
+            "width": 1382,
+            "height": 1485,
+            "routes": 12,
+            "expansions": 1538768,
+            "copperLength": 13330,
+            "parts": {
+              "LED1": [
+                286,
+                90
+              ],
+              "RLED": [
+                316,
+                260
+              ],
+              "K1": [
+                636,
+                110
+              ],
+              "D1": [
+                646,
+                380
+              ],
+              "RBLEED": [
+                636,
+                550
+              ],
+              "Q1": [
+                1006,
+                550
+              ],
+              "RPD": [
+                666,
+                750
+              ],
+              "RDRIVE": [
+                666,
+                890
+              ],
+              "C1": [
+                286,
+                1050
+              ],
+              "DREV": [
+                316,
+                1230
+              ],
+              "F1": [
+                276,
+                1370
+              ],
+              "RBIAS": [
+                666,
+                1030
+              ],
+              "RIN": [
+                646,
+                1190
+              ],
+              "J1": [
+                56,
+                90
+              ],
+              "J2": [
+                56,
+                330
+              ],
+              "J4": [
+                1226,
+                560
+              ]
+            }
+          },
+          "replay": "tsj-alpha/2/EASY/RB15_CONTROL/-4708384106017907796",
+          "hypotheses": 3,
+          "proofUnits": 75,
+          "ownerRestored": true,
+          "cleanupMs": 4,
+          "cohort": "pilot",
+          "wallSeconds": 25.91579559998354
+        },
+        {
+          "requestedSeed": "-7564325972933069162",
+          "mode": "exact",
+          "cancelAfter": -1,
+          "status": "COMPLETE",
+          "stage": "HEALTHY",
+          "units": 2,
+          "elapsedMs": 2370,
+          "outcome": "EXPECTED_REJECTION",
+          "jobMs": 2368,
+          "maxUnitMs": 2364,
+          "cancellationMs": 0,
+          "attempts": [
+            {
+              "manifest": "tsj-generation-request/3;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB15_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=-7564325972933069162;quickPlay=false;layout=12;physicalEnvelope=THT_SINGLE_FACE@1;admission=1;search=false;difficulty=EASY@1;assessment=1",
+              "stage": "HEALTHY",
+              "outcome": "EXPECTED_REJECTION",
+              "ordinal": 0,
+              "units": 2,
+              "proofUnits": 0
+            }
+          ],
+          "rejection": "com.lushprojects.circuitjs1.client.SupportedEnvelope$Rejected: Unsupported physical envelope THT_SINGLE_FACE@1 [ROUTE_BUDGET]: copper length or route quality cost exceeds the bound",
+          "ownerRestored": true,
+          "cleanupMs": 2,
+          "cohort": "pilot",
+          "wallSeconds": 2.399909600004321
+        },
+        {
+          "requestedSeed": "3",
+          "mode": "search",
+          "cancelAfter": 2,
+          "status": "RUNNING",
+          "stage": "HEALTHY",
+          "units": 2,
+          "elapsedMs": 1792,
+          "cohort": "pilot",
+          "wallSeconds": 1.8019158999959473
+        }
+      ],
+      "applicationStatus": null
+    },
+    {
+      "source": "<RESUMPTION>\\main-browser\\browser-player\\result.json",
+      "rawSha256": "df6d1ca226bdb83ffb1e242a31a5e9ec7892e8eba53627ef0a072b2c9638f58a",
+      "outcome": "FAIL",
+      "failure": "Traceback (most recent call last):\n  File \"<RESUMPTION>\\verify_player.py\", line 100, in <module>\n    assert 'Unsupported replay' in page.locator('[role=dialog]').inner_text()\n                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"<HOME>\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\playwright\\sync_api\\_generated.py\", line 17093, in inner_text\n    self._sync(self._impl_obj.inner_text(timeout=timeout))\n    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<HOME>\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\playwright\\_impl\\_sync_base.py\", line 115, in _sync\n    return task.result()\n           ~~~~~~~~~~~^^\n  File \"<HOME>\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\playwright\\_impl\\_locator.py\", line 476, in inner_text\n    return await self._frame.inner_text(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<3 lines>...\n    )\n    ^\n  File \"<HOME>\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\playwright\\_impl\\_frame.py\", line 712, in inner_text\n    return await self._channel.send(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n        \"innerText\", self._timeout, locals_to_params(locals())\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"<HOME>\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\playwright\\_impl\\_connection.py\", line 69, in send\n    return await self._connection.wrap_api_call(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<3 lines>...\n    )\n    ^\n  File \"<HOME>\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\playwright\\_impl\\_connection.py\", line 559, in wrap_api_call\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nplaywright._impl._errors.Error: Locator.inner_text: Error: strict mode violation: locator(\"[role=dialog]\") resolved to 6 elements:\n    1) <table role=\"dialog\" popover=\"auto\" cellspacing=\"0\" cellpadding=\"0\" id=\"tsj-native-tool-20\" aria-label=\"Bench power\" class=\"tsj-component-panel tsj-native-popover\">\u2026</table> aka locator(\"#tsj-native-tool-20\")\n    2) <table role=\"dialog\" popover=\"auto\" cellspacing=\"0\" cellpadding=\"0\" aria-label=\"Board view\" id=\"tsj-native-tool-21\" class=\"tsj-component-panel tsj-native-popover\">\u2026</table> aka locator(\"#tsj-native-tool-21\")\n    3) <table role=\"dialog\" popover=\"auto\" cellspacing=\"0\" cellpadding=\"0\" id=\"tsj-native-tool-22\" aria-label=\"Service ticket\" class=\"tsj-component-panel tsj-native-popover\">\u2026</table> aka locator(\"#tsj-native-tool-22\")\n    4) <table role=\"dialog\" popover=\"auto\" cellspacing=\"0\" cellpadding=\"0\" aria-hidden=\"true\" aria-label=\"Component\" id=\"tsj-native-tool-23\" class=\"tsj-component-panel tsj-native-popover\">\u2026</table> aka locator(\"#tsj-native-tool-23\")\n    5) <table role=\"dialog\" popover=\"auto\" cellspacing=\"0\" cellpadding=\"0\" aria-label=\"Parts Tray\" id=\"tsj-native-tool-24\" class=\"tsj-component-panel tsj-native-popover\">\u2026</table> aka locator(\"#tsj-native-tool-24\")\n    6) <section tabindex=\"-1\" role=\"dialog\" aria-modal=\"true\" class=\"tsj-ui-dialog\" aria-labelledby=\"tsj-product-heading\">\u2026</section> aka get_by_role(\"dialog\", name=\"TroubleshootJS \u00c2\u00b7 Desktop\")\n\nCall log:\n  - waiting for locator(\"[role=dialog]\")\n\n",
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "cases": [],
+      "applicationStatus": null
+    },
+    {
+      "source": "<RESUMPTION>\\clean-browser\\browser-a10\\result.json",
+      "rawSha256": "09afe0af07981eccf0adef2f0beb5673bde7014da8a4f8659272d1aaeca91f12",
+      "outcome": "FAIL",
+      "failure": "Traceback (most recent call last):\n  File \"<RESUMPTION>\\verify_routes.py\", line 109, in <module>\n    assert reader.returncode==0,reader.stdout+reader.stderr\n           ^^^^^^^^^^^^^^^^^^^^\nAssertionError: Traceback (most recent call last):\n  File \"<CANDIDATE>\\tests\\contracts\\a10_generation_report.py\", line 123, in <module>\n    print(json.dumps(validate(json.loads(args.report.read_text(encoding='utf-8-sig'))), indent=2))\n                     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<CANDIDATE>\\tests\\contracts\\a10_generation_report.py\", line 26, in validate\n    require(report.get('protocol') == 'TSJ-A10-GENERATION-1', 'Unknown protocol')\n            ^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'get'\n\n",
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "cases": [],
+      "applicationStatus": "PASS:a10"
+    },
+    {
+      "source": "<RESUMPTION>\\clean-final\\browser-player\\result.json",
+      "rawSha256": "bd24641649811303480fc899dbc8edb60823c7caacb6ca4bdb42b20df685b3c8",
+      "outcome": "FAIL",
+      "failure": "Traceback (most recent call last):\n  File \"<RESUMPTION>\\verify_player.py\", line 175, in <module>\n    assert result['exact-rejection']['candidateCounts']==[1],'Exact replay retried'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Exact replay retried\n",
+      "cleanup": {
+        "serverThreadStopped": true,
+        "ownedSurvivors": []
+      },
+      "cases": [],
+      "applicationStatus": null
+    }
+  ],
+  "developmentTimeoutRetainedInCorpus": true,
+  "policy": "No failed or timed-out application case is counted as admitted. Failed harness runs remain FAIL; later corrected selector/attribute runs have separate receipts."
+}

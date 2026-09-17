@@ -21,10 +21,6 @@ final class QuickPlayFamilyRegistry {
     private static final long[] LED_NORMAL_PLAYER_SEEDS = { 0, 2, 3, 4 };
     private static final long[] NPN_NORMAL_PLAYER_SEEDS = { 0, 1, 2 };
     private static final long[] NMOS_NORMAL_PLAYER_SEEDS = { 0, 1, 2 };
-    // Q15 qualified cohort, not a claim about arbitrary procedural seeds.
-    private static final long[] RB15_NORMAL_PLAYER_SEEDS = {
-        0, 1, 2, 3, 17, 42, 101, -1, 9007199254740993L, Long.MIN_VALUE, Long.MAX_VALUE
-    };
 
     private QuickPlayFamilyRegistry() { }
 
@@ -68,13 +64,14 @@ final class QuickPlayFamilyRegistry {
     }
 
     /**
-     * The current family generators have a small, validated seed envelope.
-     * Selection may vary those seeds, but generation remains deterministic.
+     * Procedural qualification preserves all entropy bits. Reference families keep
+     * their explicitly curated cohort; selecting a candidate never proves admission.
      */
     static long selectNormalPlayerSeed(String familyId, long selectionValue) {
         if (!isNormalPlayerEligible(familyId))
             throw new IllegalArgumentException("Quick Play family is not normal-player eligible: " +
                 familyId);
+        if (QuickPlayAdmission.supports(familyId)) return selectionValue;
         long[] normalPlayerSeeds = seedsFor(familyId);
         for (long seed : normalPlayerSeeds)
             if (seed == selectionValue)
@@ -86,7 +83,6 @@ final class QuickPlayFamilyRegistry {
     }
 
     private static long[] seedsFor(String familyId) {
-        if (Rb15Plan.FAMILY_ID.equals(familyId)) return RB15_NORMAL_PLAYER_SEEDS;
         if (RELAY_OUTPUT.equals(familyId)) return RELAY_NORMAL_PLAYER_SEEDS;
         if (LED_INDICATOR.equals(familyId)) return LED_NORMAL_PLAYER_SEEDS;
         if (NPN_LOW_SIDE_SWITCH.equals(familyId)) return NPN_NORMAL_PLAYER_SEEDS;

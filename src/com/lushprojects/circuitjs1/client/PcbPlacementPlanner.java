@@ -95,7 +95,8 @@ final class PcbPlacementPlanner {
         Vector<Region> regions=new Vector<Region>(groups.values());
         // Alternate regional order is bounded global feedback; no fixed region walls block nets.
         if (variant%2==1) Collections.reverse(regions);
-        if(candidate>=OUTLINE_CANDIDATES && constraints.routingLayer==PcbCopperLayer.BOTTOM) NamedRandomStreams.shuffle(regions,random);
+        // Seed whole functional regions from the first attempt, not only after failed canonical layouts.
+        if(constraints.routingLayer==PcbCopperLayer.BOTTOM) NamedRandomStreams.shuffle(regions,random);
         int left=40+(leftAnchored?anchorWidth:0), x=left,y=50,rowHeight=0;
         Vector<PcbFootprint> placed=new Vector<PcbFootprint>(); int evaluations=0;
         for (Region region : regions) {

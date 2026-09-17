@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "selectedBrowsers": 19,
+  "selectedBrowserOwnedSurvivors": [],
+  "allSelectedListenerThreadsStopped": true,
+  "failedHarnessCleanupAlsoPassed": true,
+  "scratchRetained": true,
+  "unrelatedOldResourcesUntouched": true
+}

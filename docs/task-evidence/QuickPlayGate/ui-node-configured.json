@@ -1,0 +1,14 @@
+[
+  {
+    "test": "u04_ui_contract.mjs",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: random admission receives exact decimal entropy within 48 bits\n    at check (file:///<CANDIDATE>/tests/contracts/u04_ui_contract.mjs:13:41)\n    at file:///<CANDIDATE>/tests/contracts/u04_ui_contract.mjs:71:1\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processTimers (node:internal/timers:568:9) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n"
+  },
+  {
+    "test": "bench_meter_contract.mjs",
+    "exit": 0,
+    "stdout": "bench meter contracts 358 PASS\n",
+    "stderr": ""
+  }
+]

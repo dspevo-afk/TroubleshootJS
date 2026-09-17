@@ -28,9 +28,13 @@ final class PlayerSession {
     }
 
     boolean prepared(int expected, PlayerLaunchRequest next, Object nextOwner) {
-        if (!accepts(expected) || screen != Screen.PREPARING || next != pending || nextOwner == null) return false;
+        return prepared(expected, next, next, nextOwner);
+    }
+    boolean prepared(int expected, PlayerLaunchRequest launched, PlayerLaunchRequest accepted, Object nextOwner) {
+        if (!accepts(expected) || screen != Screen.PREPARING || launched != pending || nextOwner == null ||
+                !launched.accepts(accepted)) return false;
         pending = null;
-        owner = nextOwner; request = next; screen = Screen.TICKET; message = ""; token++; return true;
+        owner = nextOwner; request = accepted; screen = Screen.TICKET; message = ""; token++; return true;
     }
 
     boolean failed(int expected, boolean cancelled, String publicMessage) {

@@ -1,0 +1,9 @@
+{
+  "before": "61d95ddc2dfa585cb6861759d7bc2fe4eba7456048cedec8d4472f7a2ae59870",
+  "after": "8f635ecefab5135edcfff5fd3a2fcf37523c1b0cb58b582efe4aa4da5db44b43",
+  "actualObservedSeconds": 0.07841839999309741,
+  "actualCounts": [],
+  "cause": "Exact rejection completed before the first progress poll; empty observation is not evidence of retry. Final ERROR, exact requested identity and unchanged isolated prior owner remain required. The complete attempt ledger is separately enforced by compiled exact canaries and native contracts.",
+  "productionChanged": false,
+  "failedReceipt": "clean-final/browser-player/result.json"
+}

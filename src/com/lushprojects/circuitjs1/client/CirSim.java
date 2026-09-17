@@ -435,6 +435,7 @@ MouseOutHandler, MouseWheelHandler {
 	boolean troubleshootA07ForcedFailure;
 	boolean troubleshootE03Verification, troubleshootE03ForcedFailure, troubleshootE03VerificationComplete;
 	boolean troubleshootQ15Verification, troubleshootQ15ForcedFailure, troubleshootQ15VerificationComplete;
+    boolean troubleshootQuickPlayGateVerification, troubleshootQuickPlayGateInstalled;
     boolean troubleshootAlphaVerification, troubleshootAlphaPilot, troubleshootAlphaForced, troubleshootAlphaComplete;
     boolean troubleshootRender0Verification, troubleshootRender0Forced, troubleshootRender0Complete;
     boolean troubleshootServiceVerification, troubleshootServiceForced, troubleshootServiceComplete;
@@ -635,6 +636,7 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootE01Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyE01", false);
             troubleshootE03Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyE03", false);
             troubleshootQ15Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyQ15", false);
+            troubleshootQuickPlayGateVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyQuickPlayGate", false);
             troubleshootAlphaVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyAlpha", false);
             troubleshootRender0Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyRender0", false);
             troubleshootRender0Forced = troubleshootRender0Verification && qp.getBooleanValue("tsjRender0Fail", false);
@@ -4875,7 +4877,7 @@ MouseOutHandler, MouseWheelHandler {
 	pcbWorkbenchController = (!troubleshootDebug || FreshGeneratedRuntimeInstallation.isInProgress(this) ||
 	    troubleshootTask41Verification || troubleshootTask43PVerification || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
-	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootU01Verification || troubleshootA10Verification ||
+	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootQuickPlayGateVerification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootU01Verification || troubleshootA10Verification ||
 	    troubleshootA01Measurement ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
@@ -5510,6 +5512,12 @@ MouseOutHandler, MouseWheelHandler {
                 }
             });
         }
+        if (!developerVerifierRunning && troubleshootQuickPlayGateVerification && !troubleshootQuickPlayGateInstalled &&
+                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() && generatedChallengeController!=null &&
+                generatedChallengeController.isReady() && isGeneratedRuntimeSettled()) {
+            troubleshootQuickPlayGateInstalled=true;
+            QuickPlayGateDeveloperVerifier.install(this);
+        }
         if (!developerVerifierRunning && troubleshootQ15Verification && !troubleshootQ15VerificationComplete &&
                 !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() && generatedChallengeController!=null &&
                 generatedChallengeController.isReady() && isGeneratedRuntimeSettled()) {
@@ -5722,7 +5730,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootTask40Verification || troubleshootTask41Verification ||
 		    troubleshootA01Measurement ||
 		    troubleshootTask46Verification || troubleshootTask47Verification ||
-		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootU01Verification || troubleshootA10Verification ||
+		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootQuickPlayGateVerification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootU01Verification || troubleshootA10Verification ||
 		    troubleshootTask43Verification || troubleshootTask43PVerification)) {
 		String failureMessage = e.getMessage();
 		if (troubleshootTask43PForcedFailure && failureMessage != null &&

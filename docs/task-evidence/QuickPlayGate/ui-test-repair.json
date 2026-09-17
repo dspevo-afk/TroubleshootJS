@@ -1,0 +1,27 @@
+{
+  "delta": "tests/contracts/u04_ui_contract.mjs",
+  "beforeSha256": "3a4a4b4246c258c79f8fff3fdffa4e205a2151ee7bd005a23ffd6e37877c6527",
+  "afterSha256": "ab50d8d5da76228f7ea38202c5d3cd6605035c9d5855ab300baa5767a779dc11",
+  "productionChanged": false,
+  "reason": "The authorized gate replaces48-bit entropy with full signed64 transport; old UI assertion contradicted it.",
+  "results": [
+    {
+      "name": "u04_ui_contract.mjs",
+      "exit": 0,
+      "stdout": "PASS U04 UI adapter contracts: 112 assertions. jsdom only; real GWT/browser input qualification remains separate.\n",
+      "stderr": ""
+    },
+    {
+      "name": "bench_meter_contract.mjs",
+      "exit": 0,
+      "stdout": "bench meter contracts 358 PASS\n",
+      "stderr": ""
+    },
+    {
+      "name": "quickplay_entropy_contract.mjs",
+      "exit": 0,
+      "stdout": "PASS: Quick Play signed entropy contracts vectors=4103\n",
+      "stderr": ""
+    }
+  ]
+}

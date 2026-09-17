@@ -1,0 +1,66 @@
+{
+  "status": "PASS",
+  "scope": "RB15_CONTROL / EASY arbitrary candidate admission; reference families remain curated",
+  "base": "83d3eb39eb3669b756a78588d95bdf155cecb172",
+  "native": {
+    "cleanSuites": 51,
+    "integratedFocusedSuites": 12,
+    "gateAssertions": 26834
+  },
+  "buildPermutations": {
+    "clean": 5,
+    "integrated": 5
+  },
+  "population": {
+    "development": {
+      "requested": 24,
+      "structuralAccepted": 21,
+      "admitted": 20,
+      "macroGroups": 16,
+      "largestGroup": 3,
+      "aspectBands": [
+        3,
+        5,
+        6,
+        7,
+        8
+      ],
+      "outcomes": {
+        "EXPECTED_REJECTION": 3,
+        "PASS": 20,
+        "TIMEOUT": 1
+      }
+    },
+    "holdout": {
+      "requested": 48,
+      "structuralAccepted": 42,
+      "admitted": 42,
+      "macroGroups": 29,
+      "largestGroup": 4,
+      "aspectBands": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "outcomes": {
+        "EXPECTED_REJECTION": 6,
+        "PASS": 42
+      }
+    }
+  },
+  "strictPopulationReaderNegatives": 22,
+  "q15": "All11 on both source variants; strict readers and22 malformed controls each",
+  "ui": "U04 112; bench-meter358; signed-entropy4103",
+  "budgets": "Four candidate ordinals share90s/640 units/5s active unit; no retry after timeout/cancel/programming/cleanup failure",
+  "normalInput": "Unmodified random New board plus controlled-entropy DOM retry, exact rejection, powered-off owner preservation, cancellation, old epoch rejection, exact accepted replay and face/pan/zoom/privacy",
+  "review": "Implementing-root review and independent executable oracles; no separate agent/human review",
+  "limits": [
+    "Clean qualification population is not the preserved checkout population",
+    "No universal success-rate, FPS or browser-memory guarantee",
+    "No new Q30/Q60/Q100, layers/vias/links, package/pose or difficulty qualification",
+    "No manual correct-repair claim: actual compiled diagnostics and Q15 supply repair proofs"
+  ]
+}

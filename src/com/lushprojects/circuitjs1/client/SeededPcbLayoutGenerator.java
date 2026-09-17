@@ -9,7 +9,7 @@ import java.util.Vector;
  */
 class SeededPcbLayoutGenerator {
     /** Current corrected layout algorithm; package geometry remains contract v3. */
-    static final int CURRENT_VERSION = 11;
+    static final int CURRENT_VERSION = 12;
     private static final int GRID = 10;
     private static final int MAX_ATTEMPTS = 80;
     private static final int TARGET_VIABLE_CANDIDATES = 5;

@@ -157,6 +157,32 @@ final class GenerationJob {
     private final String[] stageReceipts = new String[STAGE_COUNT];
     private final long[] stageElapsedMillis = new long[STAGE_COUNT];
     private final int[] stageWorkCounts = new int[STAGE_COUNT];
+    private final int[] candidateStageWorkCounts = new int[STAGE_COUNT];
+    private final ArrayList<Attempt> attempts = new ArrayList<Attempt>();
+    private int candidateStartedSteps;
+
+    static final class Attempt {
+        final int ordinal, workUnits, proofUnits;
+        final String manifest;
+        final Stage stage;
+        final Outcome outcome;
+        Attempt(int ordinal, String manifest, Stage stage, Outcome outcome, int workUnits, int proofUnits) {
+            this.ordinal=ordinal; this.manifest=manifest; this.stage=stage; this.outcome=outcome;
+            this.workUnits=workUnits; this.proofUnits=proofUnits;
+        }
+    }
+    java.util.List<Attempt> getAttempts() {
+        return Collections.unmodifiableList(new ArrayList<Attempt>(attempts));
+    }
+    int getCandidateStageWorkCount(Stage requestedStage) {
+        if (requestedStage == null) throw new IllegalArgumentException("Missing generation stage");
+        return candidateStageWorkCounts[requestedStage.ordinal()];
+    }
+    private void recordAttempt(Outcome result) {
+        if (candidateIndex < 0 || (!attempts.isEmpty() && attempts.get(attempts.size()-1).ordinal==candidateIndex)) return;
+        attempts.add(new Attempt(candidateIndex, currentManifest(), stage, result,
+            stepCount-candidateStartedSteps, candidateStageWorkCounts[Stage.HYPOTHESES.ordinal()]));
+    }
 
     GenerationJob(Services services, long maxJobMillis, int maxSteps, long maxStepMillis) {
         if (services == null)
@@ -225,6 +251,7 @@ final class GenerationJob {
             stepCount++;
             stageAttempted = true;
             stageWorkCounts[attempted.ordinal()]++;
+            candidateStageWorkCounts[attempted.ordinal()]++;
             boolean more = runStage(attempted);
             recordStageTelemetry(attempted, stageStarted, lastObservedMillis);
             telemetryRecorded = true;
@@ -534,6 +561,7 @@ final class GenerationJob {
         needsAbort = false;
         failure = null;
         outcome = Outcome.PASS;
+        recordAttempt(Outcome.PASS);
     }
 
     private boolean handleRejection(Rejected rejected) {
@@ -553,8 +581,8 @@ final class GenerationJob {
         }
         failure = rejected;
         needsAbort = true;
-        if (!finishAbort())
-            return false;
+        if (!finishAbort()) return false;
+        recordAttempt(Outcome.EXPECTED_REJECTION);
         if (nextCandidatePosition >= candidates.length) {
             candidateActive = false;
             outcome = Outcome.EXPECTED_REJECTION;
@@ -600,11 +628,13 @@ final class GenerationJob {
             services.abort();
             needsAbort = false;
             candidateActive = false;
+            if (outcome != Outcome.RUNNING) recordAttempt(outcome);
             return true;
         } catch (Throwable abortFailure) {
             addSuppressed(abortFailure, failure);
             failure = abortFailure;
             outcome = Outcome.INFRASTRUCTURE_FAILURE;
+            recordAttempt(outcome);
             needsAbort = false;
             completedElapsedMillis = elapsedAt(lastObservedMillis);
             return false;
@@ -613,6 +643,9 @@ final class GenerationJob {
 
     private void resetCandidateAttempt() {
         clearCandidateLineage();
+        candidateStartedSteps = stepCount - 1;
+        // RESOLVE entered before the candidate was initialized.
+        candidateStageWorkCounts[Stage.RESOLVE.ordinal()] = 1;
         stage = Stage.RESOLVE;
         abortAttempted = false;
         needsAbort = false;
@@ -622,6 +655,7 @@ final class GenerationJob {
     private void clearCandidateLineage() {
         for (int i = 0; i < STAGE_COUNT; i++) {
             stageReceipts[i] = null;
+            candidateStageWorkCounts[i] = 0;
         }
         proofStepCount = 0;
         physicalDependencies = null;

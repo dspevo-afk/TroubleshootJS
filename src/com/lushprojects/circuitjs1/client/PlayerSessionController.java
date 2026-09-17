@@ -50,7 +50,7 @@ final class PlayerSessionController {
                     profile == null ? PlayerFamilyCatalog.candidateProfile(family).name() : profile));
             } else if (query.getBooleanValue("tsjQuickPlay", false)) {
                 QuickPlaySelection selected = new QuickPlaySelector().select();
-                launch(new PlayerLaunchRequest(selected.getFamilyId(), Long.toString(selected.getSeed()),
+                launch(PlayerLaunchRequest.random(selected.getFamilyId(), Long.toString(selected.getSeed()),
                     PlayerFamilyCatalog.candidateProfile(selected.getFamilyId()).name()));
             } else if (query.getValue("tsjFixture") != null) notice = "Developer fixtures require the separate developer mode.";
         } catch (RuntimeException failure) { notice = "This replay is unsupported. Check its epoch, family, profile and exact seed."; }
@@ -66,11 +66,14 @@ final class PlayerSessionController {
             sim.generationCoordinator.start(request.generation(), new GenerationCoordinator.Completion() {
                 public void complete(GenerationJob job, GeneratedBoardInstance published) {
                     if (job.getOutcome() == GenerationJob.Outcome.PASS) {
-                        session.prepared(token, request, published);
+                        if (!request.familyId.equals(published.getCircuitFamilyId()))
+                            throw new IllegalStateException("Published family differs from the launch");
+                        session.prepared(token, request, request.accepted(published.getSeed()), published);
                     } else session.failed(token, job.getOutcome() == GenerationJob.Outcome.CANCELLED,
                         job.getOutcome() == GenerationJob.Outcome.CANCELLED ? "Board preparation cancelled." :
-                        "This exact board could not be prepared for this difficulty. Try another seed or board. " +
-                        "Replay: " + request.replay());
+                        request.candidateSearch ?
+                        "No candidate passed within this launch's limits. The previous board is retained. Launch seed: " + request.seed :
+                        "This exact board could not be prepared for this difficulty. Try another seed or board. Replay: " + request.replay());
                     sim.refreshChallengeInteractionState(); refresh(); sim.repaint();
                 }
             }, true);
@@ -203,7 +206,9 @@ final class PlayerSessionController {
         JSONArray families = new JSONArray();
         for (String id : PlayerFamilyCatalog.families()) {
             JSONObject family = new JSONObject(); put(family, "id", id); put(family, "name", PlayerFamilyCatalog.name(id));
-            put(family, "profile", PlayerFamilyCatalog.candidateProfile(id).name()); families.set(families.size(), family);
+            put(family, "profile", PlayerFamilyCatalog.candidateProfile(id).name());
+            family.put("procedural", JSONBoolean.getInstance(QuickPlayAdmission.supports(id)));
+            families.set(families.size(), family);
         }
         out.put("families", families);
         if (session.screen() == PlayerSession.Screen.PREPARING && sim.generationCoordinator.getJob() != null) {
@@ -213,6 +218,8 @@ final class PlayerSessionController {
             progress.put("paused", JSONBoolean.getInstance(generation.isProgressPaused()));
             progress.put("activeElapsedMs", new JSONNumber(generation.getProgressActiveMillis()));
             progress.put("percent", new JSONNumber(generation.getProgressPercent()));
+            progress.put("candidate", new JSONNumber(generation.getJob().getCandidateIndex() + 1));
+            progress.put("candidates", new JSONNumber(generation.getCandidateCount()));
             progress.put("phase", new JSONNumber(generation.getJob().getStage().ordinal() + 1));
             progress.put("phases", new JSONNumber(6));
             progress.put("units", new JSONNumber(generation.getJob().getStepCount()));

@@ -1,0 +1,25 @@
+{
+  "clean": {
+    "q15": "clean-browser/browser-q15",
+    "q15negative": "clean-browser/browser-q15negative",
+    "rc": "clean-browser/browser-rc",
+    "layout": "clean-browser/browser-layout",
+    "p07": "clean-browser/browser-p07",
+    "negative": "clean-browser/browser-negative",
+    "bench": "clean-browser/browser-bench",
+    "a10": "clean-final/browser-a10",
+    "a10negative": "clean-final/browser-a10negative",
+    "canaries": "clean-final/browser-canaries",
+    "player": "clean-player-final/browser-player",
+    "families": "clean-player-final/browser-families"
+  },
+  "main": {
+    "q15": "main-browser/browser-q15",
+    "q15negative": "main-browser/browser-q15negative",
+    "rc": "main-browser/browser-rc",
+    "layout": "main-browser/browser-layout",
+    "canaries": "main-browser/browser-canaries",
+    "player": "main-player-final/browser-player",
+    "families": "main-player-final/browser-families"
+  }
+}

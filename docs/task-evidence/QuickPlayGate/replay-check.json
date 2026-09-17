@@ -1,0 +1,5 @@
+{
+  "status": "PASS",
+  "cleanAndIntegratedRepeatedRealizationsEqual": true,
+  "scope": "Two fresh compiled admissions of the accepted seed per source variant compare all reported design/fault/geometry/copper/work fields; native corpus separately compares full geometry fingerprints."
+}

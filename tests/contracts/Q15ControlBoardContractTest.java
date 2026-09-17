@@ -33,7 +33,7 @@ public final class Q15ControlBoardContractTest {
                 "selected, generated and session seed identity agree");
             PcbBoardLayout layout=owner.getPcbLayout();
             long millis=(System.nanoTime()-start)/1000000;
-            layout.validateGeometry(board);
+            layout.validateGeometry(board); SupportedEnvelope.current().requireNormal(owner);
             require(layout.getComponents().size()==16 && layout.getPads().size()==36,"complete procedural realization");
             geometries.add(layout.geometryFingerprint());
             for(String pad:board.getPadIds()) {
@@ -61,8 +61,8 @@ public final class Q15ControlBoardContractTest {
                 GeneratedBoardInstance recovered=exact.generation().resolve(new GenerationRequest.PlanCache()).construct().instance;
                 recovered.getPcbLayout().validateGeometry(recovered.getBoard());
                 require(recovered.getSeed()==bad,"recovered hard replay retains its exact seed");
-                require(QuickPlayFamilyRegistry.selectNormalPlayerSeed(Rb15Plan.FAMILY_ID,bad)!=bad,
-                    "routing recovery does not admit a new normal-player seed");
+                require(QuickPlayFamilyRegistry.selectNormalPlayerSeed(Rb15Plan.FAMILY_ID,bad)==bad,
+                    "candidate selection preserves entropy but does not certify normal admission");
                 System.out.println("Q15_EXACT_RECOVERY seed="+bad+" attempts="+recovered.getPcbLayout().getGenerationPlacementAttempts()+
                     " millis="+(System.nanoTime()-start)/1000000);
                 for(CircuitElm element:recovered.getSimulationElements())element.delete();
@@ -104,26 +104,23 @@ public final class Q15ControlBoardContractTest {
             "support ablation samples the actual external load, not a solder wire");
     }
     private static void verifyRandomBoundary() {
-        // Independent unchanged admission envelope, including both formerly rejected hard replays.
-        long[] expected = {0,1,2,3,17,42,101,-1,9007199254740993L,Long.MIN_VALUE,Long.MAX_VALUE};
         long[] entropy = {Long.MIN_VALUE,Long.MAX_VALUE,-4518705223253195925L,-5365808313541656343L,
             -17,-1,0,1,2,3,17,42,101,9007199254740993L};
         HashSet<Long> selectedSeeds = new HashSet<Long>();
         for (long value : entropy) {
-            int index=(int)(value % expected.length); if(index<0)index+=expected.length;
-            long wanted=expected[index]; for(long seed:expected)if(seed==value)wanted=seed;
             QuickPlaySelection quick = new QuickPlaySelector(new QuickPlayFixedRandomSource(new long[]{7,value})).select();
             PlayerLaunchRequest button = PlayerLaunchRequest.random(Rb15Plan.FAMILY_ID,Long.toString(value),"EASY");
-            require(quick.getFamilyId().equals(Rb15Plan.FAMILY_ID) && quick.getSeed()==wanted && button.seed==wanted,
-                "Quick Play and New board share the independent qualified envelope mapping");
-            require(button.seed!=-4518705223253195925L && button.seed!=-5365808313541656343L,
-                "unqualified arbitrary holdouts cannot enter normal-player selection");
-            require(PlayerLaunchRequest.parse(button.replay()).replay().equals(button.replay()) &&
-                button.generation().getDescriptor().getRootSeed()==wanted,"random selection becomes exact replay and generation identity");
-            selectedSeeds.add(wanted);
-            System.out.println("Q15_SELECTION entropy="+value+" selected="+wanted+" replay="+button.replay());
+            require(quick.getFamilyId().equals(Rb15Plan.FAMILY_ID) && quick.getSeed()==value && button.seed==value,
+                "Quick Play and New board preserve exact arbitrary candidate entropy");
+            require(button.candidateSearch && button.generation().candidateCount()==4,"Random launch omitted bounded admission");
+            PlayerLaunchRequest exact=button.accepted(value);
+            require(PlayerLaunchRequest.parse(exact.replay()).replay().equals(exact.replay()) &&
+                exact.generation().getDescriptor().getRootSeed()==value && exact.generation().candidateCount()==1,
+                "Accepted identity replays the exact candidate without another search");
+            selectedSeeds.add(value);
+            System.out.println("Q15_SELECTION entropy="+value+" candidate="+value+" exact="+exact.replay());
         }
-        require(selectedSeeds.size()==expected.length,"selectors exercise every subsequently constructed qualified seed");
+        require(selectedSeeds.size()==entropy.length,"Full-width arbitrary input cohort collapsed");
     }
     private static void negatives(CirSim sim,GeneratedBoardInstance owner,Rb15Plan plan) throws Exception {
         GeneratedFaultCandidate valid=owner.getFaultCandidates().get(0);

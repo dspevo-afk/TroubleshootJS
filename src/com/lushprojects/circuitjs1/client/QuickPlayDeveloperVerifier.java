@@ -149,12 +149,19 @@ final class QuickPlayDeveloperVerifier {
                 ledSeeds : QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(familyId) ?
                 npnSeeds : QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(familyId) ?
                 nmosSeeds : QuickPlayFamilyRegistry.RELAY_OUTPUT.equals(familyId) ?
-                new long[] {0,1,2,3,4,5} : Rb15Plan.FAMILY_ID.equals(familyId) ?
-                new long[] {0,1,2,3,17,42,101,-1,9007199254740993L,Long.MIN_VALUE,Long.MAX_VALUE} : legacySeeds;
+                new long[] {0,1,2,3,4,5} : legacySeeds;
             for (long injectedValue : injectedValues) {
                 QuickPlaySelector selector = new QuickPlaySelector(new QuickPlayFixedRandomSource(
                     new long[] { familyIndex, injectedValue }));
                 QuickPlaySelection selection = selector.select();
+                if (Rb15Plan.FAMILY_ID.equals(familyId)) {
+                    require(selection.getSeed()==injectedValue &&
+                        GenerationRequest.leaf(familyId,injectedValue,true).candidateCount()==4,
+                        "Procedural selection remapped entropy or omitted bounded admission");
+                    // Full physical/electrical population is the separate Quick Play gate,
+                    // not a direct constructor pretending to certify a random candidate.
+                    continue;
+                }
                 GeneratedBoardInstance generated = selector.generate(selection);
                 require(familyId.equals(selection.getFamilyId()) &&
                     familyId.equals(generated.getCircuitFamilyId()) &&

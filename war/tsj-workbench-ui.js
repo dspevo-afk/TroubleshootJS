@@ -81,14 +81,27 @@
     return button(parent, text, function () { invoke(token, view, name, a, b, c); });
   }
   function randomSeed() {
-    // Six random bytes are exactly representable. Never convert user seeds to Number.
-    if (window.crypto && window.crypto.getRandomValues) {
-      var bytes = new Uint8Array(6), value = 0;
-      window.crypto.getRandomValues(bytes);
-      for (var i = 0; i < bytes.length; i++) value = value * 256 + bytes[i];
-      return String(value);
+    var bytes = new Uint8Array(8), i, j, carry;
+    if (window.crypto && window.crypto.getRandomValues) window.crypto.getRandomValues(bytes);
+    else for (i = 0; i < 8; i++) bytes[i] = Math.floor(Math.random() * 256);
+    var negative = (bytes[0] & 128) !== 0;
+    if (negative) {
+      carry = 1;
+      for (i = 7; i >= 0; i--) {
+        carry += 255 - bytes[i]; bytes[i] = carry & 255; carry >>>= 8;
+      }
     }
-    return String(Math.floor(Math.random() * 281474976710656));
+    // Exact base-256 to decimal conversion, never a 64-bit Number or BigInt dependency.
+    var decimal = '0';
+    for (i = 0; i < 8; i++) {
+      carry = bytes[i]; var digits = decimal.split('');
+      for (j = digits.length - 1; j >= 0; j--) {
+        carry += Number(digits[j]) * 256;
+        digits[j] = String(carry % 10); carry = Math.floor(carry / 10);
+      }
+      decimal = (carry ? String(carry) : '') + digits.join('');
+    }
+    return (negative ? '-' : '') + decimal;
   }
   function identity(parent) {
     var details = append(parent, 'details', undefined, 'tsj-product-identity');
@@ -205,7 +218,7 @@
       // the actual seed through its qualified envelope for this family/profile.
       invoke(token, view, 'random', family.value, randomSeed(), profile.value);
     }, 'tsj-product-button tsj-product-primary');
-    append(form, 'p', 'Choose a board from the current seed pool. Read its customer ticket before entering the workbench.', 'tsj-product-hint');
+    append(form, 'p', 'Procedural control boards try up to four fresh candidate seeds within shared preparation limits. Other reference families use curated seeds. Only a fully checked board reaches its customer ticket.', 'tsj-product-hint');
     var exact = append(form, 'details', undefined, 'tsj-product-exact');
     append(exact, 'summary', 'Enter an exact seed');
     var seed = field(exact, 'Exact seed (signed decimal integer)');

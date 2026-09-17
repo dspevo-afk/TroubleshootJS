@@ -1,0 +1,7 @@
+{
+  "beforeSha256": "71349387a778fae316c9fffbf2a706f441e6abe54b27c3a953430af0b2f1ad02",
+  "afterSha256": "61d95ddc2dfa585cb6861759d7bc2fe4eba7456048cedec8d4472f7a2ae59870",
+  "failure": "main-browser/browser-player/result.json",
+  "change": "Select only the actual aria-modal menu, not hidden native tool popovers.",
+  "productionChanged": false
+}

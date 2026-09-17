@@ -21,7 +21,7 @@ import java.util.Vector;
  */
 final class GenerationDependencyContext {
     /** Current interpretation epoch.  Caches are valid only in this runtime. */
-    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v9";
+    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v10";
     static final String CIRCUIT_DUMP_EPOCH =
         "circuitjs-source-load-model-inputs-no-transient-dump-v3";
     static final String POWER_REFERENCE_STORAGE_SEAM = "power-domain-contract-v1";
@@ -115,6 +115,7 @@ final class GenerationDependencyContext {
         appendField(out, "construction-provider-surface",
             ConstructionProviderRegistry.standard().canonicalFingerprint());
         appendField(out, "physical.supported-envelope", SupportedEnvelope.current().canonical());
+        appendField(out, "procedural.admission", QuickPlayAdmission.canonical());
         appendField(out, "epoch.geometry-contract", Integer.toString(PcbGeometryContractVersion.CURRENT));
         appendField(out, "epoch.layout-generator", Integer.toString(SeededPcbLayoutGenerator.CURRENT_VERSION));
         appendField(out, "epoch.physical-service", "all-current-packages-and-cable-contacts-v1");
