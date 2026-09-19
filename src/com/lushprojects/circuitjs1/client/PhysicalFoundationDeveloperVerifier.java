@@ -162,16 +162,16 @@ final class PhysicalFoundationDeveloperVerifier {
                     layout.getPad(padId) != null,
                 "physical terminal did not retain identity through footprint mapping: " + padId);
             if (endpointCounts.get(padId) == null)
-                require(terminalCount <= 4 && terminal == 1 &&
+                require(terminalCount <= 4 && terminal < 2 &&
                         part.getPackage().isInternallyConnected(
-                        part.getTerminal(0).getTerminalName(),
+                        part.getTerminal(1 - terminal).getTerminalName(),
                         physicalTerminal.getTerminalName()),
                     "PCB routing omitted a pad without declared package connectivity: " + padId);
         }
         if (terminalCount <= 4) {
             require(layout.getTraces().size() == terminalCount - 1 &&
-                    hasContact(endpointCounts, componentId + ".1") &&
-                    endpointCounts.get(componentId + ".2") == null,
+                    hasContact(endpointCounts, componentId + ".1") !=
+                    hasContact(endpointCounts, componentId + ".2"),
                 "physical canary declared internal pair was not routed through its package: " +
                     terminalCount);
             for (int terminal = 3; terminal <= terminalCount; terminal++)

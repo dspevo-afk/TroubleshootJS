@@ -1,0 +1,23 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PHYSICAL_MATRIX|LED_INDICATOR|EASY|20|20|20|20|20|11|19|0|20|1615
+PHYSICAL_MATRIX|DIODE_PROTECTED_INDICATOR|EASY|20|20|20|20|20|15|17|0|20|591
+PHYSICAL_MATRIX|PARALLEL_DUAL_INDICATOR|EASY|20|20|20|20|20|19|17|0|20|1025
+PHYSICAL_MATRIX|RC_DELAY|EASY|20|20|20|20|20|20|20|0|20|842
+PHYSICAL_MATRIX|NPN_LOW_SIDE_SWITCH|EASY|20|20|20|20|20|20|20|0|20|1249
+PHYSICAL_MATRIX|NMOS_LOW_SIDE_SWITCH|EASY|20|20|20|20|20|20|19|0|20|781
+PHYSICAL_MATRIX|RELAY_OUTPUT|EASY|20|20|20|20|20|19|20|0|20|5493
+PHYSICAL_MATRIX|RB15_CONTROL|EASY|20|20|20|20|20|20|20|0|20|56176
+PHYSICAL_MATRIX|COMPOSED_CONTROLLED_INDICATOR|MEDIUM|20|20|20|20|20|20|19|0|20|17093
+PASS: Quick Play physical matrix contracts pairs=9 assertions=1126
+
+PASS: Quick Play gate contracts assertions=26974
+
+PASS: focused current contracts; 2 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

@@ -1,12 +1,13 @@
 package com.lushprojects.circuitjs1.client;
 
-/** Every normal family uses bounded procedural candidates; no difficulty has a fixed fallback. */
+/** Every selectable family/profile pair uses bounded procedural candidates. */
 final class QuickPlayAdmission {
-    static final int VERSION = 3, MAX_CANDIDATES = 4;
+    static final int VERSION = 4, MAX_CANDIDATES = 4;
     private static final long STRIDE = 0x9e3779b97f4a7c15L;
     private QuickPlayAdmission() { }
     static boolean supports(String family, DifficultyProfile profile) {
-        return PlayerFamilyCatalog.contains(family) && profile != null && profile.isAvailable();
+        return PlayerFamilyCatalog.contains(family) && profile != null && profile.isAvailable() &&
+            profile == PlayerFamilyCatalog.candidateProfile(family);
     }
     static boolean supports(String family) {
         return PlayerFamilyCatalog.contains(family);
@@ -18,9 +19,9 @@ final class QuickPlayAdmission {
     }
     static String canonical() {
         return "quick-play-admission@" + VERSION +
-            ";families=all-current;profiles=all-available;referenceFamilies=none" +
+            ";families=all-current;profiles=menu-qualified;referenceFamilies=none" +
             ";envelope=" + SupportedEnvelope.current().identity() +
             ";candidates=4;order=ordinal;seed=entropy+golden-odd-stride-mod2^64" +
-            ";budgets=shared;exactReplayRetries=0";
+            ";budgets=shared;exactReplayRetries=0;recentPhysicalBoards=16;duplicate=reject-before-publish";
     }
 }

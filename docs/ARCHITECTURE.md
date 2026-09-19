@@ -14,15 +14,26 @@ older evidence packets describe their own historical candidates.
 
 ## Procedural Quick Play admission and exact replay
 
-QuickPlayAdmission version3 covers all nine current normal families at every available
-profile. Fresh signed-long entropy is never reduced to reference seed lists. Normal
+QuickPlayAdmission version4 covers the nine currently selectable family/profile pairs:
+eight EASY families and the composed MEDIUM family. Other available difficulty labels
+do not advertise electrical content that has not passed that profile. Fresh signed-long
+entropy is never reduced to reference seed lists. A bounded page-session root
+history prevents recent New Board launches from reusing an identity even if the
+entropy source repeats. Normal
 leaf/composed geometry reaches seeded placement and routing; authored full-board
 fixtures remain developer-only. Named streams vary actual positions and copper while
 preserving declared nets, packages, regions and connector roles. Normal copper uses the
 bottom face with real through-hole packages and unchanged P09 access/physical limits.
 
 A launch has at most four deterministic candidates sharing the existing90-second,
-640-unit and five-second bounds. Only typed expected rejection followed by successful
+640-unit and five-second bounds. `PhysicalBoardFingerprint` records exact full geometry
+for evidence and a stricter novelty identity that ignores the seed, fault, values,
+board translation, outline-only differences and route-tree segmentation while
+comparing the merged drawn copper. The generation coordinator rejects
+a repeated physical realization after complete validation and before publication.
+Its page-session history retains sixteen successful New Board signatures. Exact
+replay bypasses this novelty gate and remains a single exact candidate. Only typed
+expected rejection followed by successful
 owner restoration permits retry. Timeout, exhaustion, cancellation, stale ownership,
 programming error and cleanup failure never publish. Difficulty is computed from
 complete current diagnostic/repair evidence. EASY/MEDIUM are enabled; HARD/PSYCHOTIC
@@ -33,8 +44,14 @@ coordinate result belongs to the exact immutable request. Hypotheses may copy th
 geometry, but create fresh electrical/runtime and proof owners. Geometry is revalidated;
 foreign-request reuse fails before allocation. No electrical answer or repair proof is
 cached. Exact replay is tsj-alpha/3; old epochs reject. Interpretation11 includes
-admission3/layout13. Eight entropy bytes travel as canonical signed decimal text,
+admission4/layout13. Eight entropy bytes travel as canonical signed decimal text,
 never through a lossy JavaScript Number.
+
+`ControlledIndicatorPcbLayoutFactory` still contains an authored fixed reference
+layout, but has no production or test callers. The composed player path uses
+`BoundedGeneratedBoardAssembler` and the common seeded placement/routing session;
+the authored factory is outside player generation. Three stale leaf generator
+fields that constructed unused layout generators were removed.
 
 New loose catalog axial resistors may be unformed. Compatibility queries are pure;
 owned installation forms target geometry, validates mounted commit and compensates

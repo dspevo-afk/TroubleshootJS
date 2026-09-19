@@ -17,6 +17,7 @@ final class GenerationCoordinator {
     interface Completion { void complete(GenerationJob job, GeneratedBoardInstance published); }
     private final CirSim sim;
     private final GenerationRequest.PlanCache plans = new GenerationRequest.PlanCache();
+    private final QuickPlayBoardHistory recentBoards = new QuickPlayBoardHistory();
     private GenerationJob job;
     private Services services;
     private Timer continuation, watchdog;
@@ -382,12 +383,18 @@ final class GenerationCoordinator {
                 if (difficulty == null) throw new IllegalStateException("Missing difficulty admission evidence");
                 difficulty.require(request.getDifficulty());
             }
+            String physicalFingerprint = null;
+            if (selection.isCandidateSearch()) {
+                physicalFingerprint = PhysicalBoardFingerprint.novelty(candidate);
+                recentBoards.requireNovel(physicalFingerprint);
+            }
             if (request.isQuickPlay()) {
                 QuickPlaySelection selection = new QuickPlaySelection(request.getDescriptor().getDeviceIntent().getId(),
                     request.getDescriptor().getRootSeed());
                 sim.quickPlaySession = QuickPlaySession.forCandidate(selection, candidate);
             }
             installation.publish();
+            if (physicalFingerprint != null) recentBoards.published(physicalFingerprint);
         }
         public void abort() {
             Throwable failure = null;

@@ -218,7 +218,7 @@
       // the actual seed through its qualified envelope for this family/profile.
       invoke(token, view, 'random', family.value, randomSeed(), profile.value);
     }, 'tsj-product-button tsj-product-primary');
-    append(form, 'p', 'Procedural control boards try up to four fresh candidate seeds within shared preparation limits. Other reference families use curated seeds. Only a fully checked board reaches its customer ticket.', 'tsj-product-hint');
+    append(form, 'p', 'Every listed family uses procedural placement and routing. New boards try up to four candidate seeds within shared preparation limits; only a fully checked, distinct board reaches its customer ticket.', 'tsj-product-hint');
     var exact = append(form, 'details', undefined, 'tsj-product-exact');
     append(exact, 'summary', 'Enter an exact seed');
     var seed = field(exact, 'Exact seed (signed decimal integer)');

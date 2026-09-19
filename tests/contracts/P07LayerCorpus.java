@@ -55,8 +55,13 @@ public final class P07LayerCorpus {
                 String identity=P05RoutingCorpus.identity(fixture.board,placement);
                 for(PcbLayerRoutingPrototype.Policy policy:PcbLayerRoutingPrototype.Policy.values()) {
                     long started=System.nanoTime();
-                    PcbLayerRoutingPrototype.Result result=PcbLayerRoutingPrototype.route(fixture.board,placement,
-                        policy,P06FactoryLinkFixtures.OBSERVER);
+                    PcbLayerRoutingPrototype.Result result;
+                    try { result=PcbLayerRoutingPrototype.route(fixture.board,placement,
+                        policy,P06FactoryLinkFixtures.OBSERVER); }
+                    catch(IllegalArgumentException invalidBarrier) {
+                        if(!"P07 domain barrier has no separated corridor".equals(invalidBarrier.getMessage())) throw invalidBarrier;
+                        result=new PcbLayerRoutingPrototype.Result(null,"DOMAIN_BARRIER_REJECT",0,0,0);
+                    }
                     long elapsed=System.nanoTime()-started;
                     if(!identity.equals(P05RoutingCorpus.identity(fixture.board,placement))) throw new AssertionError("P07 input changed");
                     if(result.accepted() && !identity.equals(P05RoutingCorpus.identity(fixture.board,result.layout)))
@@ -72,6 +77,10 @@ public final class P07LayerCorpus {
                         new PcbTwoLayerRules(fixture.board,control).validate(control);
                     } catch(PcbNetRouter.Rejected failure) { outcome=failure.reason.toString(); }
                     catch(PcbBoardLayout.RouteQualityRejectedException failure) { outcome="QUALITY_LIMIT"; }
+                    catch(IllegalArgumentException failure) {
+                        if(!"P07 domain barrier has no separated corridor".equals(failure.getMessage())) throw failure;
+                        outcome="DOMAIN_BARRIER_REJECT";
+                    }
                     catch(IllegalStateException failure) {
                         if(!failure.getMessage().startsWith("P07 copper crosses")) throw failure;
                         outcome="DOMAIN_BARRIER_REJECT";

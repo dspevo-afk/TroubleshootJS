@@ -70,6 +70,7 @@ final class PhysicalSpecificationDeveloperVerifier {
     $sourcePaths += $stub
     $testDefinitions = @(
         @{ Name = 'ProceduralFamilyContractTest'; Marker = 'procedural family contracts ' },
+        @{ Name = 'QuickPlayPhysicalMatrixContractTest'; Marker = 'Quick Play physical matrix contracts ' },
         # Schedule the largest short-budget construction cohort first; cases and budgets are unchanged.
         @{ Name = 'QuickPlayContractTest'; Marker = 'Quick Play current seed envelopes and construction' },
         @{ Name = 'PcbCompactionContractTest'; Marker = 'PCB compaction contracts ' },
@@ -162,7 +163,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         }
         # The NEW P07 54-row structural comparison has its own explicit ten-minute budget.
         # Existing suites retain their original one-minute bounds.
-        $testBudget = if ($testClass -eq 'P07LayerCorpus') { 600000 } elseif ($testClass -eq 'P09EnvelopeCorpus') { 180000 } elseif ($testClass -in @('QuickPlayGateCorpus','QuickPlayGateHoldoutCorpus')) { 600000 } else { 60000 }
+        $testBudget = if ($testClass -eq 'P07LayerCorpus') { 600000 } elseif ($testClass -in @('P09EnvelopeCorpus','QuickPlayPhysicalMatrixContractTest')) { 180000 } elseif ($testClass -in @('QuickPlayGateCorpus','QuickPlayGateHoldoutCorpus')) { 600000 } else { 60000 }
         $tested = Invoke-VerifierBoundedProcess $java $testArguments $testBudget
         Write-Host $tested.Stdout
         if ($tested.Stderr) { Write-Host $tested.Stderr }

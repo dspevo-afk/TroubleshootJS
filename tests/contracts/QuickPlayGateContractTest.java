@@ -12,8 +12,9 @@ public final class QuickPlayGateContractTest {
         for(long seed:new long[]{0,1,-1,Long.MIN_VALUE,Long.MAX_VALUE,9007199254740993L})
             mediumSelection(seed);
         for(String family:PlayerFamilyCatalog.families())for(DifficultyProfile profile:DifficultyProfile.values())
-            check(QuickPlayAdmission.supports(family,profile)==profile.isAvailable(),
-                "A normal family or available difficulty retained a fixed-layout fallback");
+            check(QuickPlayAdmission.supports(family,profile)==
+                (profile==PlayerFamilyCatalog.candidateProfile(family)),
+                "Procedural admission advertised unavailable family/profile content");
         check(!QuickPlayAdmission.supports("UNKNOWN",DifficultyProfile.EASY) &&
             !QuickPlayAdmission.supports(Rb15Plan.FAMILY_ID,null),"Unknown family/profile admitted");
         boolean epoch2=false;try{PlayerLaunchRequest.parse("tsj-alpha/2/EASY/RELAY_OUTPUT/4");}
@@ -23,7 +24,7 @@ public final class QuickPlayGateContractTest {
             "Procedural Medium family omitted from broad-seed admission");
         boolean old=false; try {PlayerLaunchRequest.parse("tsj-alpha/1/EASY/RB15_CONTROL/0");} catch(IllegalArgumentException expected){old=true;}
         check(old,"Old interpretation silently accepted");
-        scheduler(); session();
+        scheduler(); session(); recentPhysicalBoards(); newBoardIdentity(); copperNormalization();
         System.out.println("PASS: Quick Play gate contracts assertions="+checks);
     }
     private static void selection(long seed) {
@@ -81,6 +82,66 @@ public final class QuickPlayGateContractTest {
         check(session.prepared(token,launch,accepted,owner),"Accepted candidate not installed");
         check(session.request()==accepted && session.owner()==owner,"Session retained launch rather than accepted seed");
         check(!session.prepared(token,launch,accepted,new Object()),"Stale completion changed session");
+    }
+    private static void recentPhysicalBoards() {
+        QuickPlayBoardHistory history = new QuickPlayBoardHistory();
+        history.published("layout-a");
+        boolean duplicate = false;
+        try { history.requireNovel("layout-a"); }
+        catch (GenerationJob.Rejected expected) { duplicate = true; }
+        check(duplicate && history.size() == 1,
+            "A second seed could publish the same physical board");
+        for (int i = 0; i < QuickPlayBoardHistory.CAPACITY; i++)
+            history.published("layout-" + i);
+        check(history.size() == QuickPlayBoardHistory.CAPACITY,
+            "Successful-board history is not bounded");
+        history.requireNovel("layout-a");
+        duplicate = false;
+        try { history.requireNovel("layout-0"); }
+        catch (GenerationJob.Rejected expected) { duplicate = true; }
+        check(duplicate, "Current recent-history entry was lost");
+    }
+    private static void newBoardIdentity() {
+        QuickPlayIdentityAllocator allocator = new QuickPlayIdentityAllocator();
+        PlayerLaunchRequest first = PlayerLaunchRequest.random(Rb15Plan.FAMILY_ID, "7", "EASY");
+        PlayerLaunchRequest second = allocator.allocate(first);
+        PlayerLaunchRequest third = allocator.allocate(first);
+        check(second.seed == 7 && third.seed != 7 && second.seed != third.seed,
+            "Repeated entropy reused a New Board identity");
+        check(third.generation().candidateCount() == 4 &&
+            PlayerLaunchRequest.parse(third.accepted(third.seed).replay()).seed == third.seed,
+            "Distinct New Board root lost exact replay");
+        PlayerLaunchRequest exact = PlayerLaunchRequest.parse(second.accepted(second.seed).replay());
+        check(allocator.allocate(exact) == exact &&
+            allocator.allocate(first).seed == QuickPlayAdmission.candidateSeed(third.seed, 1),
+            "Exact replay changed the new-board entropy cursor");
+        QuickPlayIdentityAllocator stuck = new QuickPlayIdentityAllocator();
+        HashSet<Long> roots = new HashSet<Long>();
+        for (int i = 0; i <= QuickPlayBoardHistory.CAPACITY; i++)
+            check(roots.add(Long.valueOf(stuck.allocate(first).seed)),
+                "Repeated entropy recycled a recent New Board root");
+    }
+    private static void copperNormalization() {
+        PcbBoardLayout whole = copperFixture();
+        whole.addTrace(new PcbTraceGeometry("N", new int[] {10, 110}, new int[] {20, 20}));
+        whole.addTrace(new PcbTraceGeometry("N", new int[] {50, 50}, new int[] {20, 80}));
+        PcbBoardLayout split = copperFixture();
+        split.addTrace(new PcbTraceGeometry("N", new int[] {10, 50}, new int[] {20, 20}));
+        split.addTrace(new PcbTraceGeometry("N", new int[] {50, 110}, new int[] {20, 20}));
+        split.addTrace(new PcbTraceGeometry("N", new int[] {50, 50}, new int[] {20, 80}));
+        check(PhysicalBoardFingerprint.copperUnion(whole, 0, 0).equals(
+                PhysicalBoardFingerprint.copperUnion(split, 0, 0)),
+            "Route-tree segmentation made identical physical copper look new");
+        PcbBoardLayout changed = copperFixture();
+        changed.addTrace(new PcbTraceGeometry("N", new int[] {10, 110}, new int[] {20, 20}));
+        changed.addTrace(new PcbTraceGeometry("N", new int[] {50, 50}, new int[] {20, 90}));
+        check(!PhysicalBoardFingerprint.copperUnion(whole, 0, 0).equals(
+                PhysicalBoardFingerprint.copperUnion(changed, 0, 0)),
+            "Distinct drawn copper collapsed to one novelty identity");
+    }
+    private static PcbBoardLayout copperFixture() {
+        return new PcbBoardLayout(400, 300, new Rectangle(0, 0, 200, 200),
+            new Rectangle(230, 0, 100, 200));
     }
     private static final class Service implements GenerationJob.Services {
         int current=-1,begins,aborts,published,proof;

@@ -40,44 +40,43 @@ class PcbLayoutDeveloperVerifier {
 
     /** Compiled GWT exercises the same frozen order-only, rip-up and exhaustion witnesses. */
     static void verifyBoundedRecovery() {
-        GeneratedBoardInstance fixture=generate("PARALLEL_DUAL_INDICATOR",-17);
-        try {
-            TroubleshootBoard board=fixture.getBoard();
-            PcbPlacementPlanner.Plan plan=new PcbPlacementPlanner(StandardPcbFootprintProviders.createRegistry()).plan(
-                board,board.getPlacementConstraints(),-17,1);
-            SeededPcbLayoutGenerator.AttemptObserver observer=new SeededPcbLayoutGenerator.AttemptObserver() {
-                public void check(int attempt) { }
-            };
-            PcbRoutingWork.Limits sequential=new PcbRoutingWork.Limits(1,0,0,0,PcbRoutingWork.Limits.MAX_EXPANSIONS);
-            PcbBoardLayout naive=plan.materialize();String failedNet=null;
-            try {PcbNetRouter.routeWithLimits(naive,board,plan.outline,1,observer,true,-17,0,null,sequential);
-                throw new IllegalStateException("P05 control unexpectedly routed");}
-            catch(PcbNetRouter.Rejected expected) {
-                require(expected.reason==PcbNetRouter.Reason.NO_PATH && naive.getTraces().isEmpty(),"P05 rejected candidate leaked copper");
-                failedNet=expected.blockedNet;
-            }
-            Vector<String> promoted=new Vector<String>();promoted.add(failedNet);
-            PcbBoardLayout ordered=plan.materialize();
-            PcbNetRouter.routeWithLimits(ordered,board,plan.outline,1,observer,true,-17,0,promoted,sequential);
-            require(ordered.getRoutingRecoveryStatistics().ripUpPasses==0,"P05 ordering proof used rip-up");
-            PcbRoutingWork.Limits local=new PcbRoutingWork.Limits(1,2,2,6,PcbRoutingWork.Limits.MAX_EXPANSIONS);
-            PcbBoardLayout recovered=plan.materialize(),repeat=plan.materialize();
-            PcbNetRouter.routeWithLimits(recovered,board,plan.outline,1,observer,true,-17,0,null,local);
-            PcbNetRouter.routeWithLimits(repeat,board,plan.outline,1,observer,true,-17,0,null,local);
-            PcbRoutingWork.Statistics work=recovered.getRoutingRecoveryStatistics();
-            require(work.orderingPasses==1 && work.ripUpPasses==1 && work.rippedNets==2 && work.reroutedNets==3,
-                "P05 compiled rip-up witness lost its bounded recovery");
-            require(recovered.geometryFingerprint().equals(repeat.geometryFingerprint()) &&
-                work.toCanonical().equals(repeat.getRoutingRecoveryStatistics().toCanonical()),"P05 compiled recovery is not deterministic");
-            ordered.validateRoutingGeometry(board);recovered.validateRoutingGeometry(board);
-            PcbBoardLayout capped=plan.materialize();
-            try {PcbNetRouter.routeWithLimits(capped,board,plan.outline,1,observer,true,-17,0,null,new PcbRoutingWork.Limits(1,0,0,0,1));
-                throw new IllegalStateException("P05 work cap was ignored");}
-            catch(PcbNetRouter.Rejected expected) {
-                require(expected.reason==PcbNetRouter.Reason.SEARCH_LIMIT && expected.statistics.expansions==1 &&
-                    capped.getTraces().isEmpty(),"P05 compiled exhaustion is not atomic and bounded");
-            }
-        } finally {for(CircuitElm element:fixture.getSimulationElements())element.delete();}
+        // Use the unrouted logical fixture. Normal player generation now adds
+        // bottom-face policy, while this frozen recovery witness is top-face.
+        TroubleshootBoard board=new ParallelDualIndicatorGenerator().createBoard();
+        PcbPlacementPlanner.Plan plan=new PcbPlacementPlanner(StandardPcbFootprintProviders.createRegistry()).plan(
+            board,board.getPlacementConstraints(),-17,1);
+        SeededPcbLayoutGenerator.AttemptObserver observer=new SeededPcbLayoutGenerator.AttemptObserver() {
+            public void check(int attempt) { }
+        };
+        PcbRoutingWork.Limits sequential=new PcbRoutingWork.Limits(1,0,0,0,PcbRoutingWork.Limits.MAX_EXPANSIONS);
+        PcbBoardLayout naive=plan.materialize();String failedNet=null;
+        try {PcbNetRouter.routeWithLimits(naive,board,plan.outline,1,observer,true,-17,0,null,sequential);
+            throw new IllegalStateException("P05 control unexpectedly routed");}
+        catch(PcbNetRouter.Rejected expected) {
+            require(expected.reason==PcbNetRouter.Reason.NO_PATH && naive.getTraces().isEmpty(),"P05 rejected candidate leaked copper");
+            failedNet=expected.blockedNet;
+        }
+        Vector<String> promoted=new Vector<String>();promoted.add(failedNet);
+        PcbBoardLayout ordered=plan.materialize();
+        PcbNetRouter.routeWithLimits(ordered,board,plan.outline,1,observer,true,-17,0,promoted,sequential);
+        require(ordered.getRoutingRecoveryStatistics().ripUpPasses==0,"P05 ordering proof used rip-up");
+        PcbRoutingWork.Limits local=new PcbRoutingWork.Limits(1,2,2,6,PcbRoutingWork.Limits.MAX_EXPANSIONS);
+        PcbBoardLayout recovered=plan.materialize(),repeat=plan.materialize();
+        PcbNetRouter.routeWithLimits(recovered,board,plan.outline,1,observer,true,-17,0,null,local);
+        PcbNetRouter.routeWithLimits(repeat,board,plan.outline,1,observer,true,-17,0,null,local);
+        PcbRoutingWork.Statistics work=recovered.getRoutingRecoveryStatistics();
+        require(work.orderingPasses==1 && work.ripUpPasses==1 && work.rippedNets==2 && work.reroutedNets==3,
+            "P05 compiled rip-up witness lost its bounded recovery");
+        require(recovered.geometryFingerprint().equals(repeat.geometryFingerprint()) &&
+            work.toCanonical().equals(repeat.getRoutingRecoveryStatistics().toCanonical()),"P05 compiled recovery is not deterministic");
+        ordered.validateRoutingGeometry(board);recovered.validateRoutingGeometry(board);
+        PcbBoardLayout capped=plan.materialize();
+        try {PcbNetRouter.routeWithLimits(capped,board,plan.outline,1,observer,true,-17,0,null,new PcbRoutingWork.Limits(1,0,0,0,1));
+            throw new IllegalStateException("P05 work cap was ignored");}
+        catch(PcbNetRouter.Rejected expected) {
+            require(expected.reason==PcbNetRouter.Reason.SEARCH_LIMIT && expected.statistics.expansions==1 &&
+                capped.getTraces().isEmpty(),"P05 compiled exhaustion is not atomic and bounded");
+        }
     }
 
     private static void verifyFamily(String familyId) {
@@ -93,11 +92,9 @@ class PcbLayoutDeveloperVerifier {
         PcbBoardLayout seed2Repeat = seed2RepeatBoard.getPcbLayout();
         PcbBoardLayout seed3 = seed3Board.getPcbLayout();
         PcbBoardLayout seed3Repeat = seed3RepeatBoard.getPcbLayout();
-        boolean planned = "LED_INDICATOR".equals(familyId) || "DIODE_PROTECTED_INDICATOR".equals(familyId) ||
-            "PARALLEL_DUAL_INDICATOR".equals(familyId);
-        verifyRouteQuality(seed0, seed0Board.getBoard(), planned);
-        verifyRouteQuality(seed2, seed2Board.getBoard(), planned);
-        verifyRouteQuality(seed3, seed3Board.getBoard(), planned);
+        verifyRouteQuality(seed0, seed0Board.getBoard());
+        verifyRouteQuality(seed2, seed2Board.getBoard());
+        verifyRouteQuality(seed3, seed3Board.getBoard());
         verifyLabels(seed0, seed0Board.getBoard());
         verifyLabels(seed2, seed2Board.getBoard());
         verifyLabels(seed3, seed3Board.getBoard());
@@ -128,7 +125,7 @@ class PcbLayoutDeveloperVerifier {
             familyId + " seeds 2 and 3 lack meaningful geometry variation");
     }
 
-    private static void verifyRouteQuality(PcbBoardLayout layout, TroubleshootBoard board, boolean planned) {
+    private static void verifyRouteQuality(PcbBoardLayout layout, TroubleshootBoard board) {
         layout.validateRouteQuality();
         verifyCopperClearance(layout);
         for (PcbTraceGeometry trace : layout.getTraces()) {
@@ -144,12 +141,13 @@ class PcbLayoutDeveloperVerifier {
         require(layout.getCompactnessMetric() >= .40,
             "PCB content is too sparse for its derived outline: " +
                 layout.getCompactnessMetric());
-        int expectedEdgeMargin = 26;
-        // Named RC/switch factories retain their explicit 26-unit template margin.
-        if (planned) for (PcbPlacementConstraints.Part part : board.getPlacementConstraints().getParts())
-            expectedEdgeMargin = Math.max(expectedEdgeMargin, part.accessMargin + 30);
-        require(layout.getLargestEdgeMargin() == expectedEdgeMargin,
-            "PCB margin disagrees with declared P03 service access: " + layout.getLargestEdgeMargin());
+        int minimumEdgeMargin = 26;
+        for (PcbPlacementConstraints.Part part : board.getPlacementConstraints().getParts())
+            minimumEdgeMargin = Math.max(minimumEdgeMargin, part.accessMargin + 30);
+        // The routed planner may add room for an actual lead/escape envelope.
+        // Compactness and the normal physical envelope independently cap size.
+        require(layout.getLargestEdgeMargin() >= minimumEdgeMargin,
+            "PCB margin omits declared P03 service access: " + layout.getLargestEdgeMargin());
         verifyRoutingCourtyards(layout, board);
         require(PcbTraceRules.MIN_CENTERLINE_CLEARANCE ==
                 PcbTraceRules.TRACE_WIDTH + PcbTraceRules.MIN_VISIBLE_CLEARANCE,
@@ -184,7 +182,9 @@ class PcbLayoutDeveloperVerifier {
             require(contact,"branch lacks real same-layer/same-net trunk contact"); return;
         }
         PcbPadPlacement pad = layout.getPad(padId);
-        if (pad.getEscapeLength() == 0)
+        // A plated through-hole land may be routed from the opposite face;
+        // the top-side package escape corridor does not constrain that copper.
+        if (pad.getEscapeLength() == 0 || trace.getLayer().getFace() != pad.getMountingSide())
             return;
         int[] x = trace.getXPoints();
         int[] y = trace.getYPoints();
@@ -255,6 +255,7 @@ class PcbLayoutDeveloperVerifier {
                 require(courtyard.width > body.width || courtyard.height > body.height,
                     "component courtyard regression lacks lead-span margin: " + componentId);
             for (PcbTraceGeometry trace : layout.getTraces()) {
+                if (trace.getLayer().getFace() != component.getMountingSide()) continue;
                 int[] x = trace.getXPoints();
                 int[] y = trace.getYPoints();
                 for (int index = 1; index < x.length; index++) {
@@ -376,19 +377,11 @@ class PcbLayoutDeveloperVerifier {
             "CONTROL_INPUT".equals(board.getPad("RPD.1").getNetId()) &&
             "CONTROL_INPUT".equals(board.getPad("Q1.G").getNetId()),
             "NMOS layout control pads do not share CONTROL_INPUT");
-        int count = 0;
-        boolean rpd = false;
-        boolean gate = false;
-        for (PcbTraceGeometry trace : layout.getTraces()) {
-            if (!"CONTROL_INPUT".equals(trace.getNetId()))
-                continue;
-            count++;
-            require("J2.1".equals(trace.getStartPadId()),
-                "NMOS control route does not start at J2.1");
-            rpd |= "RPD.1".equals(trace.getEndPadId());
-            gate |= "Q1.G".equals(trace.getEndPadId());
-        }
-        require(count == 2 && rpd && gate,
+        // A routed tree may start from any pad and terminate a branch on trunk
+        // copper. Check the resulting physical conductor, not route ordering.
+        PcbConductorGraph.Snapshot copper = layout.captureConductorGraph(board).pristine();
+        require(copper.padsConnected("J2.1", "RPD.1") &&
+                copper.padsConnected("J2.1", "Q1.G"),
             "NMOS visible copper does not join J2.1 to the gate network");
     }
 

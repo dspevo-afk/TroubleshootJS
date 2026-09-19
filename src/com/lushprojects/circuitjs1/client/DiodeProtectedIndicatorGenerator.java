@@ -6,11 +6,6 @@ import java.util.Vector;
 class DiodeProtectedIndicatorGenerator {
     static final String FAMILY_ID = "DIODE_PROTECTED_INDICATOR";
     static final String DIRECT_SERIES_VARIANT = "DIRECT_SERIES_DIODE";
-    private final SeededPcbLayoutGenerator PCB_LAYOUT_GENERATOR;
-
-    DiodeProtectedIndicatorGenerator() {
-        PCB_LAYOUT_GENERATOR = new SeededPcbLayoutGenerator();
-    }
     private static final double[] SUPPLY_VOLTAGES = { 5, 9, 12 };
     private static final double[] RESISTOR_VALUES = { 330, 680, 1000 };
 

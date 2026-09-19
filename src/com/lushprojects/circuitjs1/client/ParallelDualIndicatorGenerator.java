@@ -7,11 +7,6 @@ import java.util.Vector;
 class ParallelDualIndicatorGenerator {
     static final String DUAL_PARALLEL_BRANCHES_VARIANT = "DUAL_PARALLEL_BRANCHES";
     private static final String FAMILY_ID = "PARALLEL_DUAL_INDICATOR";
-    private final SeededPcbLayoutGenerator PCB_LAYOUT_GENERATOR;
-
-    ParallelDualIndicatorGenerator() {
-        PCB_LAYOUT_GENERATOR = new SeededPcbLayoutGenerator();
-    }
     private static final double[] SUPPLY_VOLTAGES = { 5, 9, 12 };
     private static final double[] R1_VALUES = { 330, 680, 1000 };
     private static final double[] R2_VALUES = { 680, 1500, 2200 };
@@ -321,7 +316,8 @@ class ParallelDualIndicatorGenerator {
         return led;
     }
 
-    private TroubleshootBoard createBoard() {
+    /** Unrouted logical fixture also used by the frozen P05 router witness. */
+    TroubleshootBoard createBoard() {
         TroubleshootBoard board = new TroubleshootBoard(FAMILY_ID);
         board.addNet(new BoardNet("VIN"));
         board.addNet(new BoardNet("BRANCH1_NODE"));

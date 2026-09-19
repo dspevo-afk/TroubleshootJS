@@ -1,5 +1,158 @@
+<!-- QUICKPLAY-UNIQUE-CURRENT-START -->
+# Current checkpoint: Quick Play procedural uniqueness qualification
+
+Base HEAD `0018f3d7456a12b02fe72299205531fe2e572267` on
+`codex/task43p-final-recovery`. Final publication identity is the enclosing commit.
+Scope: every selectable New Board family/profile, duplicate protection, exact replay,
+physical population coverage, live player acceptance and the current verifier gate.
+Unrelated visual/FPS/tray changes and untracked evidence remain preserved.
+
+## Reachable content and prior physical paths
+
+`PlayerFamilyCatalog.families()` and its per-family `candidateProfile`, the menu's
+profile filter, `PlayerLaunchRequest.random`, `GenerationRequest.player`,
+`QuickPlayFamilyRegistry` and the composed assembler establish the actual matrix.
+HARD and PSYCHOTIC are disabled. MEDIUM offers only the composed family; EASY
+offers the other eight. Every listed path calls shared seeded placement and routing.
+There is no normal fixed-layout retry. Older pre-`0018f3d` paths explain the
+reported repetition: RC, NPN, NMOS, relay and composed used authored physical
+layouts; the first three leaf families were only semi-procedural. RB15 already
+used shared placement/routing. At this task's base all nine had been routed to
+the shared generator, but successful New Board publications still had no
+post-validation duplicate check. Authored RC/NPN/NMOS layouts remain explicit
+developer fixtures, the relay factory delegates to the shared generator, and
+the uncalled authored composed factory is quarantined from player generation.
+
+| Runtime family | Selectable profile | Parts | Prior physical path | Valid / unique novelty | Placement / route / copper / macro / outline variety | Structural rejects / roots | Two-construction ms |
+|---|---|---:|---|---:|---:|---:|---:|
+| LED_INDICATOR | EASY | 3 | semi-procedural | 20 / 20 | 20 / 20 / 20 / 11 / 19 | 0 / 20 | 1,615 |
+| DIODE_PROTECTED_INDICATOR | EASY | 4 | semi-procedural | 20 / 20 | 20 / 20 / 20 / 15 / 17 | 0 / 20 | 591 |
+| PARALLEL_DUAL_INDICATOR | EASY | 5 | semi-procedural | 20 / 20 | 20 / 20 / 20 / 19 / 17 | 0 / 20 | 1,025 |
+| RC_DELAY | EASY | 6 | authored fixture | 20 / 20 | 20 / 20 / 20 / 20 / 20 | 0 / 20 | 842 |
+| NPN_LOW_SIDE_SWITCH | EASY | 7 | authored fixture | 20 / 20 | 20 / 20 / 20 / 20 / 20 | 0 / 20 | 1,249 |
+| NMOS_LOW_SIDE_SWITCH | EASY | 6 | authored fixture | 20 / 20 | 20 / 20 / 20 / 20 / 19 | 0 / 20 | 781 |
+| RELAY_OUTPUT | EASY | 9 | authored fixture | 20 / 20 | 20 / 20 / 20 / 19 / 20 | 0 / 20 | 5,493 |
+| RB15_CONTROL | EASY | 16 | shared procedural | 20 / 20 | 20 / 20 / 20 / 20 / 20 | 0 / 20 | 56,176 |
+| COMPOSED_CONTROLLED_INDICATOR | MEDIUM | 15 | authored fixture | 20 / 20 | 20 / 20 / 20 / 20 / 19 | 0 / 20 | 17,093 |
+
+The native matrix discovers these pairs from the menu catalog, uses twenty
+specified signed-long roots per pair (including both extremes), validates the
+normal physical envelope and geometry, proves the shared placer/router ran,
+parses each accepted replay descriptor, reconstructs through its exact path,
+and compares complete physical signatures. Macro variety records relative
+component ordering, not merely translation. All 180 valid structural candidates
+had distinct full and stricter novelty signatures; 0/180 structural attempts
+were rejected. Relay alone has 20/20 distinct placements, trace records and
+merged copper patterns.
+The timed column totals both in-memory constructions and validation per row's
+twenty seeds; it is not a live solver or UI time. The previous 144-case corpus
+used different sampling/instrumentation, so no matched before/after timing claim
+is possible. Browser admission timing is recorded separately below.
+
+## Generation, replay, guard and caches
+
+The menu allocates eight entropy bytes and transports the full signed decimal
+long. `QuickPlayIdentityAllocator` remembers sixteen recent New Board roots and
+advances a repeated entropy value by the current odd candidate stride until it
+finds a new root; exact replay never consumes or changes that history.
+Each launch has up to four candidate seeds in canonical ordinal/odd-stride
+order, within the unchanged shared 90-second, 640-unit and five-second limits.
+Named placement/routing streams derive from family and accepted root. Placement
+varies anchors, ordering and outline candidates; routing consumes the result
+plus its own seed for tree/recovery choices. The former authored route paths
+explained the historical repeated copper; there is no template fallback now.
+Existing family topology/value/fault streams remain seeded: relay driver choices,
+RC/switch values and bounded RB15/composed variants remain real electrical
+content, with full CircuitJS healthy/symptom/repair proof on player admission.
+
+`PhysicalBoardFingerprint.of` serializes family/topology, board outline,
+component type/package/variant/rotation/side/relative position, pad net/land,
+holes and sorted canonical trace geometry. The publication novelty signature
+is stricter: it omits seed, values, fault, names, net labels, overall translation
+and outline-only differences. It compares actual parts, pad geometry and copper
+on each face; collinear copper spans are merged so changing route-tree
+segmentation cannot evade the guard. After full diagnostic/difficulty proof and
+before live publication, the coordinator rejects a signature in its sixteen-successful-board
+page history as a typed candidate rejection. Only publication records history;
+the normal bounded retry advances to the next deterministic candidate. Exhaustion
+keeps the previous board and reports family, profile and launch seed. Exact
+replay bypasses novelty and has one candidate, so it can reproduce a recent
+board without changing the New Board sequence.
+
+The 16-entry `GenerationRequest.PlanCache` keys immutable plans by the exact
+canonical descriptor (root/family/difficulty/admission/layout/envelope); it
+does not cache a routed PCB, solver graph or proof. Composed sealed geometry is
+copied only for the same immutable request and revalidated. The copper view
+cache keys the current conductor snapshot, face, transform and policy; it
+cannot substitute a prior seed's physical graph. Neither cache was disabled.
+
+## Gates, observed player flow and limits
+
+Final-source native gate: PASS, all 55 Java suites plus independent
+seed/value/role and report oracles in `native-final.txt`. The focused
+final-source two-suite run separately passes the nine-pair matrix (1,126
+assertions) and Quick Play guard/session contracts (26,974 assertions).
+U04/U05/A10 pass in the complete gate. A first
+full run failed in old footprint assertions; the retained failure and focused
+recovery show that a declared internally connected pair may route through
+either pad, opposite-face through-hole copper need not follow a top-side escape,
+and a valid routed tree may start at another pad or end on trunk copper. The
+updated verifier retains independent raster connectivity, exact one-pad
+internal-pair contact, physical copper connectivity, route quality and compactness.
+The frozen P05 witness now constructs its original top-face logical fixture and
+passes 21,976 routing assertions, including atomic rejection and rip-up recovery.
+The P09 physical corpus records every candidate outcome under unchanged limits:
+9/11 regression and 9/12 held-out pass, with two regression route-budget rejects
+(17 and signed-long minimum) and three explicit held-out rejects. No rejected
+candidate is counted as a valid board. The separate RB15 raw candidate gate
+records 21/24 development and 43/48 hold-out physical passes; its eight
+rejections retain typed board-size or route-budget reasons. The developer-only
+P07 comparison reports all 54 rows, 11 prototype successes and explicit
+domain-barrier rejections for nonseparated corridors. The final JDK8/OBF GWT
+build passes five permutations (80.572 s compilation, 1.476 s linking).
+
+The production Edge player run passed 27/27 visible New Board launches: three
+successive boards for each of the nine selectable pairs, with no failed launch
+or page error. Every ticket reached a ready workbench. Real board-view controls
+showed top parts and bottom copper; thirty-six retained screenshots cover the
+first and third boards on both faces for every pair. Inspected LED, RC, relay,
+RB15 and composed boards have changed relative placement, connector arrangement
+and copper paths. Relay's three launches took 7.84, 8.13 and 10.08 seconds.
+Two saved-code replays (relay and composed) reproduced their exact accepted
+identities and allowed power isolation. Public snapshots disclosed no private
+verification metadata. Browser/server cleanup took 0.716 s and left no owned
+processes. Automatic command review blocked recursive deletion by policy of the
+`%TEMP%\TroubleshootJS-QuickPlayUnique-bf9c0507e5ce42ee9de28c9f73faadfe`
+browser profile. Its server owner was PID 7792, created 21:42:50 UTC on port
+58356; the server stopped and no owned process survived. The verified copied
+evidence is retained in the repository and that profile remains outside it.
+
+| Representative launch | Prior browser observation, two different seeds (s) | Current three new launches (s) |
+|---|---:|---:|
+| LED, small | 0.35–0.75 | 0.31–0.35 |
+| RC timing board | 42.90–46.06 | 29.78–30.17 |
+| Relay | 10.88–12.70 | 7.84–10.08 |
+| RB15, 16 parts | 20.71–44.53 | 12.15–13.45 |
+| Composed MEDIUM, 15 parts | 5.86–7.46 | 3.78–4.24 |
+
+Prior and current browser seeds differ, so these are observations rather than a
+matched speed benchmark. The full per-launch timings, candidate progress,
+replay identities and cleanup receipt are in
+[QuickPlayUnique](task-evidence/QuickPlayUnique/) `browser-result.json`; the
+sanitized GWT log, native results and screenshot pairs are alongside it.
+
+Structural population success is not a 180-board full electrical admission
+claim. Live browser runs exercise the complete CircuitJS diagnostic path.
+Twenty roots per pair and bounded recent history cannot prove all 2^64 seeds
+or global lifetime uniqueness. Unsupported future difficulties, Q30/Q60/Q100
+and new physical layer/package envelopes remain outside this task. Next
+unstarted roadmap milestone: U02.
+<!-- QUICKPLAY-UNIQUE-CURRENT-END -->
+
+## Prior task history
+
 <!-- PROCEDURAL-FAMILIES-CURRENT-START -->
-# Current handoff: all current normal families procedural; resistor shop repaired
+# Prior handoff: all current normal families procedural; resistor shop repaired
 
 Base: 8a807c4c4eaac4979b6d05d6edd22b95710d9ce6. Branch: codex/task43p-final-recovery.
 Publication identity is the enclosing commit. [Evidence](task-evidence/ProceduralFamilies/README.md).

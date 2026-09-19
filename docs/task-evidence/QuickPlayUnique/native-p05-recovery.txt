@@ -1,0 +1,21 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+P05_PROOF order-only=routing-work@1;outcome=SUCCESS;reason=null;netAttempts=4;branchSearches=6;orders=1;ripPasses=0;ripped=0;rerouted=0;expansions=35283;failures=0;rawSegments=423;conflicts=1121;order[0]=12:BRANCH1_NODE,3:GND,3:VIN,12:BRANCH2_NODE,tree=0;
+P05_PROOF rip-up=routing-work@1;outcome=SUCCESS;reason=null;netAttempts=7;branchSearches=11;orders=1;ripPasses=1;ripped=2;rerouted=3;expansions=71739;failures=0;rawSegments=632;conflicts=1964;order[0]=3:GND,3:VIN,12:BRANCH1_NODE,12:BRANCH2_NODE,tree=0;rip[BRANCH1_NODE]=[VIN, GND];recovered[BRANCH1_NODE];
+P05_OCCUPANCY shared-halo ownership, exact survivor, repeated rip-up, ghost-copper and stale-clearance negatives PASS
+P05_EXHAUSTION routing-work@1;outcome=EXHAUSTED;reason=NO_PATH;netAttempts=14;branchSearches=14;orders=5;ripPasses=2;ripped=2;rerouted=4;expansions=23390;failures=5;rawSegments=266;conflicts=735;order[0]=1:A,1:B,tree=0;rip[B]=[A];reject[NO_PATH:A];order[1]=1:A,1:B,tree=1;rip[B]=[A];reject[NO_PATH:A];order[2]=1:B,1:A,tree=2;reject[NO_PATH:A];order[3]=1:B,1:A,tree=3;reject[NO_PATH:A];order[4]=1:B,1:A,tree=4;reject[NO_PATH:A];
+P05_BUDGET routing-work@1;outcome=EXHAUSTED;reason=SEARCH_LIMIT;netAttempts=1;branchSearches=1;orders=1;ripPasses=0;ripped=0;rerouted=0;expansions=1;failures=1;rawSegments=0;conflicts=0;order[0]=1:A,1:B,tree=0;reject[SEARCH_LIMIT:A];
+
+Exception in thread "main" java.lang.IllegalArgumentException: Physical demand already declared
+	at com.lushprojects.circuitjs1.client.TroubleshootBoard.setPlacementConstraints(TroubleshootBoard.java:17)
+	at com.lushprojects.circuitjs1.client.PcbLayoutDeveloperVerifier.verifyBoundedRecovery(PcbLayoutDeveloperVerifier.java:50)
+	at com.lushprojects.circuitjs1.client.P05RoutingContractTest.main(P05RoutingContractTest.java:18)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: P05RoutingContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

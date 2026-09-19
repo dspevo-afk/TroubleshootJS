@@ -18,9 +18,10 @@ public final class ProceduralFamilyContractTest {
         CirSim sim=new CirSim(); sim.gridSize=16;sim.gridMask=~15;sim.gridRound=7;CircuitElm.sim=sim;
         for (String family:PlayerFamilyCatalog.families()) {
             for (DifficultyProfile profile:DifficultyProfile.values()) {
-                check(QuickPlayAdmission.supports(family,profile)==profile.isAvailable(),
-                    "Procedural policy must apply to every available difficulty");
-                if (!profile.isAvailable()) continue;
+                boolean selectable = profile == PlayerFamilyCatalog.candidateProfile(family);
+                check(QuickPlayAdmission.supports(family,profile)==selectable,
+                    "Procedural admission must match actual player content");
+                if (!selectable) continue;
                 for (long seed:SEEDS[0]) {
                     PlayerLaunchRequest r=PlayerLaunchRequest.random(family,Long.toString(seed),profile.name());
                     check(r.seed==seed && r.candidateSearch && r.generation().candidateCount()==4,

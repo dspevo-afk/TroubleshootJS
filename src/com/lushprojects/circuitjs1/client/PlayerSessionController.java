@@ -12,6 +12,7 @@ import com.google.gwt.user.client.Timer;
 final class PlayerSessionController {
     private final CirSim sim;
     final PlayerSession session = new PlayerSession();
+    private final QuickPlayIdentityAllocator newBoardIdentities = new QuickPlayIdentityAllocator();
     private String notice = "";
     private boolean bridgeReady;
     private int viewToken;
@@ -57,9 +58,10 @@ final class PlayerSessionController {
         refresh();
     }
 
-    private void launch(final PlayerLaunchRequest request) {
+    private void launch(PlayerLaunchRequest selected) {
         if (!sim.isGeneratedRuntimeSettled() || sim.generationCoordinator.isRunning())
             throw new IllegalStateException("The current board is busy");
+        final PlayerLaunchRequest request = newBoardIdentities.allocate(selected);
         final int token = session.begin(request);
         notice = ""; refresh();
         try {
@@ -72,7 +74,8 @@ final class PlayerSessionController {
                     } else session.failed(token, job.getOutcome() == GenerationJob.Outcome.CANCELLED,
                         job.getOutcome() == GenerationJob.Outcome.CANCELLED ? "Board preparation cancelled." :
                         request.candidateSearch ?
-                        "No candidate passed within this launch's limits. The previous board is retained. Launch seed: " + request.seed :
+                        "No unique valid board passed within this launch's limits. The previous board is retained. " +
+                        "Family: " + request.familyId + "; difficulty: " + request.profile + "; launch seed: " + request.seed :
                         "This exact board could not be prepared for this difficulty. Try another seed or board. Replay: " + request.replay());
                     sim.refreshChallengeInteractionState(); refresh(); sim.repaint();
                 }

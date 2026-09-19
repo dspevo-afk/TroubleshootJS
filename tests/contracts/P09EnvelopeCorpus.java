@@ -16,12 +16,23 @@ public final class P09EnvelopeCorpus {
                 .resolve(new GenerationRequest.PlanCache()).construct().instance;
             row("calibration",family,0,owner.getBoard(),owner.getPcbLayout(),start);
         }
+        int regressionPass=0,regressionReject=0;
         for(long seed:REGRESSION) {
             long start=System.nanoTime(); Rb15Plan plan=Rb15Plan.resolve(seed);
             TroubleshootBoard board=plan.board();
-            PcbBoardLayout layout=new SeededPcbLayoutGenerator().generate(board,plan.layoutSeed,plan.routingSeed);
-            row("regression",Rb15Plan.FAMILY_ID,seed,board,layout,start);
+            PcbBoardLayout attempted=null;
+            try {
+                attempted=new SeededPcbLayoutGenerator().generate(board,plan.layoutSeed,plan.routingSeed);
+                row("regression",Rb15Plan.FAMILY_ID,seed,board,attempted,start); regressionPass++;
+            } catch(PcbRoutingRejectedException rejected) {
+                rejected("regression",seed,"ROUTING_"+rejected.getKind(),start); regressionReject++;
+            } catch(SupportedEnvelope.Rejected rejected) {
+                rejected("regression",seed,"ENVELOPE_"+rejected.reason,start); regressionReject++;
+                rejectMetrics(seed,board,attempted);
+            }
         }
+        if(regressionPass+regressionReject!=REGRESSION.length || regressionPass<9)
+            throw new AssertionError("Regression candidate population collapsed");
         int heldPass=0,heldReject=0;
         for(long seed:HELD_OUT) {
             long start=System.nanoTime(); Rb15Plan plan=Rb15Plan.resolve(seed);
@@ -36,20 +47,25 @@ public final class P09EnvelopeCorpus {
                 if(!layout.geometryFingerprint().equals(repeat.geometryFingerprint())) throw new AssertionError("Held-out replay changed");
                 row("held-out",Rb15Plan.FAMILY_ID,seed,board,layout,start); heldPass++;
             } catch(PcbRoutingRejectedException rejected) {
-                rejected(seed,"ROUTING_"+rejected.getKind(),start); heldReject++;
+                rejected("held-out",seed,"ROUTING_"+rejected.getKind(),start); heldReject++;
             } catch(SupportedEnvelope.Rejected rejected) {
-                rejected(seed,"ENVELOPE_"+rejected.reason,start); heldReject++;
-                Rectangle r=attempted.getBoardOutline(); PcbRouteMetrics m=PcbRouteMetrics.measure(attempted.getTraces());
-                System.out.println("P09_REJECT_METRICS {\"seed\":\""+seed+"\",\"width\":"+r.width+",\"height\":"+r.height+
-                    ",\"uniqueLength\":"+m.uniqueLength+",\"score\":"+attempted.getRouteQualityScore(board)+"}");
+                rejected("held-out",seed,"ENVELOPE_"+rejected.reason,start); heldReject++;
+                rejectMetrics(seed,board,attempted);
             }
         }
         if(heldPass+heldReject!=HELD_OUT.length) throw new AssertionError("Missing held-out rows");
-        System.out.println("PASS: P09 physical envelope corpus rows=32 heldPass="+heldPass+" heldReject="+heldReject);
+        System.out.println("PASS: P09 physical envelope corpus rows=32 regressionPass="+regressionPass+
+            " regressionReject="+regressionReject+" heldPass="+heldPass+" heldReject="+heldReject);
     }
-    private static void rejected(long seed,String reason,long start) {
-        System.out.println("P09_ROW {\"cohort\":\"held-out\",\"seed\":\""+seed+"\",\"outcome\":\""+reason+
+    private static void rejected(String cohort,long seed,String reason,long start) {
+        System.out.println("P09_ROW {\"cohort\":\""+cohort+"\",\"seed\":\""+seed+"\",\"outcome\":\""+reason+
             "\",\"elapsedMs\":"+((System.nanoTime()-start)/1000000.0)+"}");
+    }
+    private static void rejectMetrics(long seed,TroubleshootBoard board,PcbBoardLayout attempted) {
+        if(attempted==null)return;
+        Rectangle r=attempted.getBoardOutline(); PcbRouteMetrics m=PcbRouteMetrics.measure(attempted.getTraces());
+        System.out.println("P09_REJECT_METRICS {\"seed\":\""+seed+"\",\"width\":"+r.width+",\"height\":"+r.height+
+            ",\"uniqueLength\":"+m.uniqueLength+",\"score\":"+attempted.getRouteQualityScore(board)+"}");
     }
     static void row(String cohort,String family,long seed,TroubleshootBoard board,PcbBoardLayout layout,long start) {
         SupportedEnvelope.current().requireBounds(board,layout);

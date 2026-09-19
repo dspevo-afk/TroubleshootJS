@@ -41,6 +41,7 @@ final class GenerationRequest {
             ChallengeDescriptor.current(request.familyId, request.seed), composed, false, request.profile, request.candidateSearch);
     }
     DifficultyProfile getDifficulty() { return difficulty; }
+    boolean isCandidateSearch() { return candidateSearch; }
     int candidateCount() { return candidateSearch ? QuickPlayAdmission.MAX_CANDIDATES : 1; }
     GenerationRequest candidate(int ordinal) {
         if (ordinal < 0 || ordinal >= candidateCount()) throw new IllegalArgumentException("Unknown candidate");
