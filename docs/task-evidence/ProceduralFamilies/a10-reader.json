@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "actualReportAccepted": true,
+  "attempts": 24,
+  "maxAttemptMillis": 3687,
+  "negativeReportsRejected": [
+    "unfinished-report",
+    "loosened-unit-limit",
+    "loosened-job-limit",
+    "missing-staged-construction",
+    "construction-exceeds-shared-budget",
+    "reduced-proof-population",
+    "benchmark-over-five-seconds",
+    "cached-proof",
+    "omitted-case",
+    "failed-cleanup"
+  ],
+  "readerSha256": "af629817ca56a988d4fbe36ad17bbb933f9c033a8a598b86f05fb6e3e321b858"
+}

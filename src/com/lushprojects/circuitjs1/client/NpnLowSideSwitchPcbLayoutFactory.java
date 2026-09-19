@@ -10,8 +10,7 @@ final class NpnLowSideSwitchPcbLayoutFactory {
             BoardPhysicalSpecifications specifications, long seed) {
         if (specifications == null)
             throw new IllegalArgumentException("Missing NPN physical specifications");
-        int variationMode = variationMode(seed);
-        return createLayout(board, specifications, variationMode, seed, null, null, null);
+        return ProceduralPcbLayout.generate(board, seed, QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH);
     }
 
     /** Developer-only finite matrix path; it never searches for a route. */

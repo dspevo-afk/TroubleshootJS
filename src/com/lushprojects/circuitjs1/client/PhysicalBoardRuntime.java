@@ -553,8 +553,17 @@ final class PhysicalBoardRuntime {
             return false;
         PhysicalGeometryRealization expected = targetPhysicalSlot.getGeometryRealization();
         PhysicalGeometryRealization actual = part.getGeometryRealization();
-        if (expected != null && (actual == null || !expected.isEquivalentTo(actual)))
-            return false;
+        if (expected != null) {
+            if (actual == null) {
+                // Catalog axial resistors are intentionally unformed while loose;
+                // their leads take the target slot's declared spacing on mount.
+                // Other packages, originals, and already-formed resistor parts
+                // retain exact geometry compatibility.
+                if (!PhysicalResistorPart.hasUnformedCatalogLeads(part))
+                    return false;
+            } else if (!expected.isEquivalentTo(actual))
+                return false;
+        }
 
         // A generated original retains its source slot's graph/fault binding
         // contract. Catalog-acquired parts remain portable between matching

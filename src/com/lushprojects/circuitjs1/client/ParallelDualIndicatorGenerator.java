@@ -293,7 +293,7 @@ class ParallelDualIndicatorGenerator {
             "Generated dual parallel indicator board, seed " + seed,
             componentBindings, powerBindings, connectionBindings,
             behaviorContract,
-            PCB_LAYOUT_GENERATOR.generate(board, seed), physicalSpecifications, faultBinding,
+            ProceduralPcbLayout.generate(board, seed, FAMILY_ID), physicalSpecifications, faultBinding,
             operationalStates, new GeneratedChallengeDefinition("PARALLEL_ONE_DARK", FAMILY_ID,
                 DUAL_PARALLEL_BRANCHES_VARIANT, seed, scenarios,
                 "Repair verified. Both indicators operating normally.", fault, faultBinding,

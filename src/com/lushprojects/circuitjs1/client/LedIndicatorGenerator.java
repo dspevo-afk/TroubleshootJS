@@ -232,7 +232,8 @@ class LedIndicatorGenerator {
         return new GeneratedBoardInstance(board, elements, seed, "LED_INDICATOR",
             DIRECT_SERIES_VARIANT, description, componentBindings, powerBindings,
             connectionBindings, behaviorContract,
-            PCB_LAYOUT_GENERATOR.generate(board, seed), physicalSpecifications, faultBinding,
+            ProceduralPcbLayout.generate(board, seed, "LED_INDICATOR"),
+            physicalSpecifications, faultBinding,
             operationalStates, new GeneratedChallengeDefinition("LED_INDICATOR_NO_LIGHT",
                 "LED_INDICATOR", DIRECT_SERIES_VARIANT, seed, scenarios, fault,
                 faultBinding, behaviorContract), new LedIndicatorFamilyState(),
@@ -267,6 +268,19 @@ class LedIndicatorGenerator {
     double getExpectedCurrent(double supplyVoltage, double resistorValue) {
         return (supplyVoltage - LED_FORWARD_VOLTAGE) / resistorValue;
     }
+
+    private long placementSeed(long seed) {
+        return new NamedRandomStreams(NamedRandomStreams.DERIVATION_VERSION, seed,
+            "LED_INDICATOR", 1).deviceSeed(
+                NamedRandomStreams.Concern.PLACEMENT, 1, "pcb-layout");
+    }
+
+    private long routingSeed(long seed) {
+        return new NamedRandomStreams(NamedRandomStreams.DERIVATION_VERSION, seed,
+            "LED_INDICATOR", 1).deviceSeed(
+                NamedRandomStreams.Concern.ROUTING, 1, "pcb-routing");
+    }
+
 
     /**
      * Keep the established public LED seed contract while reserving seed 4 as

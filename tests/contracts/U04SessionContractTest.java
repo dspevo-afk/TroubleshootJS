@@ -53,6 +53,7 @@ public final class U04SessionContractTest {
             session.screen() == PlayerSession.Screen.WORKBENCH, "pending completion cannot finish an adopted successor");
         check(PlayerFamilyCatalog.families().size() == 9, "all current normal families represented");
         verifyGenericShop();
+        verifyAllCatalogLabels();
         System.out.println("PASS: U04 session contracts assertions=" + assertions);
     }
 
@@ -72,15 +73,18 @@ public final class U04SessionContractTest {
             for (String id : owner.getBoard().getComponentIds()) physicalTypes.add(owner.getBoard().getComponent(id).getType());
             check(shop.categories().size() == physicalTypes.size(), "catalogs group every physical part type without destination duplicates");
             PlayerShopCatalog.Category resistors = shop.category("RESISTOR");
-            check("Resistors".equals(resistors.title) && resistors.entries().size() == 73,
-                "one complete E12 resistor catalog without destination duplicates");
+            check("Resistors".equals(resistors.title) && resistors.entries().size() >= 73 &&
+                    resistors.entries().size() % 73 == 0,
+                "complete E12 resistor catalogs for every actual procedural lead geometry");
             check(resistors.looseCount() == 0, "installed resistors are not counted as loose stock");
-            check("330 Ohm +/-5%".equals(resistors.label(find(resistors, "R_CATALOG_330", "SPAN_220"))) &&
-                "1000 Ohm +/-5%".equals(resistors.label(find(resistors, "R_CATALOG_1000", "SPAN_220"))) &&
-                "10000000 Ohm +/-5%".equals(resistors.label(find(resistors, "R_CATALOG_10000000", "SPAN_220"))),
-                "public catalog retains selected specifications across the value range");
+            int resistorOptionCount = resistors.entries().size();
+            check(resistors.label(find(resistors, "R_CATALOG_330", "SPAN_220")).startsWith("330 Ohm +/-5%") &&
+                resistors.label(find(resistors, "R_CATALOG_1000", "SPAN_220")).startsWith("1000 Ohm +/-5%") &&
+                resistors.label(find(resistors, "R_CATALOG_10000000", "SPAN_220")).startsWith("10000000 Ohm +/-5%"),
+                "public catalog retains selected specifications across the value range and procedural fit labels");
             resistors.entries().clear(); shop.categories().clear();
-            check(shop.categories().size() == physicalTypes.size() && resistors.entries().size() == 73 &&
+            check(shop.categories().size() == physicalTypes.size() &&
+                resistors.entries().size() == resistorOptionCount &&
                 partOrder.equals(runtime.getPartOrder()), "projection does not own or mutate catalog/inventory storage");
             reject(new Attempt() { public void run() { shop.category("RLOAD"); } });
             reject(new Attempt() { public void run() { shop.category("RESISTOR").entry("R_CATALOG_UNKNOWN"); } });
@@ -88,16 +92,54 @@ public final class U04SessionContractTest {
         GeneratedBoardInstance npn = new PlayerLaunchRequest("NPN_LOW_SIDE_SWITCH", "0", "EASY")
             .generation().resolve(new GenerationRequest.PlanCache()).construct().instance;
         PlayerShopCatalog.Category resistors = new PlayerShopCatalog(npn).category("RESISTOR");
-        check(resistors.entries().size() == 146, "two current lead geometries retain complete purchasable catalogs");
-        PlayerShopCatalog.Entry medium = find(resistors, "R_CATALOG_1000", "SPAN_240");
-        PlayerShopCatalog.Entry wide = find(resistors, "R_CATALOG_1000", "SPAN_260");
-        check(!medium.id.equals(wide.id) && "RLOAD".equals(medium.acquisitionComponent) &&
-            "RB".equals(wide.acquisitionComponent), "each public option resolves its real recipe and acquiring geometry");
-        check(resistors.label(medium).equals("1000 Ohm +/-5% - Medium lead spacing") &&
-            resistors.label(wide).equals("1000 Ohm +/-5% - Wide lead spacing"),
-            "physical fit options have public descriptions without destination names or implementation dimensions");
-        check(resistors.entry(medium.id) == medium && resistors.entry(wide.id) == wide,
-            "public specification handles retain distinct physical acquisition requests");
+        // Normal NPN geometry is now procedural. Inspect the independently owned
+        // slot geometry instead of asserting the retired template's 240/260 pair.
+        java.util.HashSet<String> variants = new java.util.HashSet<String>();
+        java.util.HashSet<String> handles = new java.util.HashSet<String>();
+        for (String component : new String[] {"RLOAD", "RB", "RPD"}) {
+            PhysicalGeometryRealization expected = npn.getPhysicalBoardRuntime()
+                .getSlot(component).getGeometryRealization();
+            String variant = expected.getVariantKey();
+            variants.add(variant);
+            PlayerShopCatalog.Entry entry = find(resistors, "R_CATALOG_1000", variant);
+            check(entry.geometry.isEquivalentTo(expected), "catalog preserves actual procedural slot geometry");
+            check(npn.getPhysicalBoardRuntime().getSlot(entry.acquisitionComponent)
+                    .getGeometryRealization().isEquivalentTo(expected),
+                "public option resolves a real compatible acquiring provider");
+            check(resistors.entry(entry.id) == entry &&
+                    resistors.label(entry).startsWith("1000 Ohm +/-5%") &&
+                    !resistors.label(entry).contains("SPAN_") &&
+                    !resistors.label(entry).contains(component),
+                "physical fit has a stable public handle without implementation coordinates");
+            handles.add(entry.id);
+        }
+        check(variants.size() >= 2 && handles.size() == variants.size() &&
+                resistors.entries().size() == 73 * variants.size(),
+            "distinct physical fits retain complete E12 catalogs and distinct handles");
+    }
+    private static void verifyAllCatalogLabels() {
+        CirSim sim = new CirSim(); sim.gridSize=16; sim.gridMask=~15; sim.gridRound=7; CircuitElm.sim=sim;
+        for (String family : PlayerFamilyCatalog.families()) {
+            GeneratedBoardInstance owner = new PlayerLaunchRequest(family, "3",
+                PlayerFamilyCatalog.candidateProfile(family).name()).generation()
+                .resolve(new GenerationRequest.PlanCache()).construct().instance;
+            PlayerShopCatalog catalog = new PlayerShopCatalog(owner);
+            for (PlayerShopCatalog.Category category : catalog.categories()) {
+                java.util.HashSet<String> labels = new java.util.HashSet<String>();
+                for (PlayerShopCatalog.Entry entry : category.entries()) {
+                    String label = category.label(entry);
+                    check(label.length() > 0 && labels.add(label), "every supported physical fit has a distinct public catalog label: " + family + "/" + label);
+                    check(category.entry(entry.id) == entry, "catalog label does not change acquisition identity");
+                }
+            }
+            if (family.equals("RB15_CONTROL")) {
+                PlayerShopCatalog.Category connectors = catalog.category("CONNECTOR");
+                java.util.HashSet<String> labels = new java.util.HashSet<String>();
+                for (PlayerShopCatalog.Entry entry : connectors.entries()) labels.add(connectors.label(entry));
+                check(labels.toString().contains("Standard connector layout") && labels.toString().contains("Mirrored connector layout"),
+                    "RB15 Shop supports both actual connector orientations instead of throwing");
+            }
+        }
     }
     private static PlayerShopCatalog.Entry find(PlayerShopCatalog.Category category, String catalogId, String variant) {
         for (PlayerShopCatalog.Entry entry : category.entries())

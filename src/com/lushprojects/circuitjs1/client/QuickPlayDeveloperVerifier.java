@@ -136,44 +136,19 @@ final class QuickPlayDeveloperVerifier {
      * here: this is the canary for accidental changes to the registry boundary.
      */
     private static void verifySelectionEnvelopes() {
-        Vector<String> families = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
-        long[] injectedValues = { Long.MIN_VALUE, Long.MAX_VALUE, -4518705223253195925L,
-            -5365808313541656343L, -17, -7, -1, 0, 1, 2, 3, 4, 17, 42, 101, 9007199254740993L };
-        long[] legacySeeds = { 0, 2, 3 };
-        long[] ledSeeds = { 0, 2, 3, 4 };
-        long[] npnSeeds = { 0, 1, 2 };
-        for (int familyIndex = 0; familyIndex < families.size(); familyIndex++) {
-            String familyId = families.elementAt(familyIndex);
-            long[] nmosSeeds = { 0, 1, 2 };
-            long[] expectedSeeds = QuickPlayFamilyRegistry.LED_INDICATOR.equals(familyId) ?
-                ledSeeds : QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(familyId) ?
-                npnSeeds : QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(familyId) ?
-                nmosSeeds : QuickPlayFamilyRegistry.RELAY_OUTPUT.equals(familyId) ?
-                new long[] {0,1,2,3,4,5} : legacySeeds;
-            for (long injectedValue : injectedValues) {
-                QuickPlaySelector selector = new QuickPlaySelector(new QuickPlayFixedRandomSource(
-                    new long[] { familyIndex, injectedValue }));
-                QuickPlaySelection selection = selector.select();
-                if (Rb15Plan.FAMILY_ID.equals(familyId)) {
-                    require(selection.getSeed()==injectedValue &&
-                        GenerationRequest.leaf(familyId,injectedValue,true).candidateCount()==4,
-                        "Procedural selection remapped entropy or omitted bounded admission");
-                    // Full physical/electrical population is the separate Quick Play gate,
-                    // not a direct constructor pretending to certify a random candidate.
-                    continue;
-                }
-                GeneratedBoardInstance generated = selector.generate(selection);
-                require(familyId.equals(selection.getFamilyId()) &&
-                    familyId.equals(generated.getCircuitFamilyId()) &&
-                    contains(expectedSeeds, selection.getSeed()) &&
-                    generated.getSeed() == selection.getSeed(),
-                    "Quick Play selection escaped the " + familyId + " seed envelope for " +
-                        injectedValue);
-                if (QuickPlayFamilyRegistry.DIODE_PROTECTED_INDICATOR.equals(familyId))
-                    require(generated.getFaultBinding().getFault().getType() !=
-                        GeneratedFaultType.DIODE_SHORT,
-                        "Quick Play diode selection admitted the developer-only short fault");
-            }
+        Vector<String> families=QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
+        long[] roots={Long.MIN_VALUE,Long.MAX_VALUE,-4518705223253195925L,
+            -5365808313541656343L,-17,-7,-1,0,1,2,3,4,17,42,101,9007199254740993L};
+        for(int familyIndex=0;familyIndex<families.size();familyIndex++)for(long root:roots) {
+            String family=families.get(familyIndex);
+            QuickPlaySelection selection=new QuickPlaySelector(new QuickPlayFixedRandomSource(
+                new long[]{familyIndex,root})).select();
+            require(family.equals(selection.getFamilyId()) && selection.getSeed()==root &&
+                QuickPlayFamilyRegistry.selectNormalPlayerSeed(family,root)==root &&
+                GenerationRequest.leaf(family,root,true).candidateCount()==4,
+                "Normal selection remapped entropy or bypassed bounded procedural admission");
+            // Selection is not qualification. The all-family physical corpus and
+            // actual compiled generation gates separately exercise admission.
         }
     }
 

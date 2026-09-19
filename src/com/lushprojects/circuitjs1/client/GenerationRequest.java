@@ -46,8 +46,10 @@ final class GenerationRequest {
         if (ordinal < 0 || ordinal >= candidateCount()) throw new IllegalArgumentException("Unknown candidate");
         if (!candidateSearch) return this;
         long seed = QuickPlayAdmission.candidateSeed(descriptor.getRootSeed(), ordinal);
-        return new GenerationRequest(ChallengeDescriptor.current(descriptor.getDeviceIntent().getId(), seed),
-            false, quickPlay, difficulty, false);
+        ChallengeDescriptor candidateDescriptor = composition ?
+            BoundedAssemblyRequest.controlledDescriptor(seed) :
+            ChallengeDescriptor.current(descriptor.getDeviceIntent().getId(), seed);
+        return new GenerationRequest(candidateDescriptor, composition, quickPlay, difficulty, false);
     }
     String candidateManifest(int ordinal) {
         GenerationRequest exact = candidate(ordinal);
@@ -95,9 +97,13 @@ final class GenerationRequest {
             this.request = request; this.plan = plan; this.rb15=rb15;
         }
         Construction construct() {
-            return construct(null);
+            return construct((PcbBoardLayout) null);
         }
         ConstructionSession beginConstruction() {return new ConstructionSession(this);}
+        private Construction construct(BoundedGeneratedBoardAssembler.PreparedLayout layout) {
+            BoundedGeneratedBoardAssembler.Result result = BoundedGeneratedBoardAssembler.assemblePreparedPlan(plan, layout);
+            return new Construction(result.getInstance(), result.getRealizationManifest().toCanonical());
+        }
         private Construction construct(PcbBoardLayout layout) {
             if(rb15 != null) return new Construction(new RelayOutputGenerator().generateResolved(rb15.seed,null,
                 layout==null?rb15:rb15.withRoutedLayout(layout)),rb15.canonical());
@@ -113,16 +119,23 @@ final class GenerationRequest {
     static final class ConstructionSession {
         private final Prepared prepared;
         private final SeededPcbLayoutGenerator.Session routing;
+        private final BoundedGeneratedBoardAssembler.LayoutSession compositionRouting;
         private Construction result;
         ConstructionSession(Prepared prepared) {
             this.prepared=prepared;
             Rb15Plan plan=prepared.rb15;
-            routing=plan==null?null:new SeededPcbLayoutGenerator().begin(plan.board(),plan.layoutSeed,plan.routingSeed);
+            routing=plan==null?null:new SeededPcbLayoutGenerator().begin(plan.board(),plan.layoutSeed,plan.routingSeed,prepared.request.getSupportedEnvelope());
+            compositionRouting=prepared.plan != null && prepared.plan.isControlledIndicator() ?
+                BoundedGeneratedBoardAssembler.beginLayout(prepared.plan) : null;
         }
         boolean advance() {
             if(result!=null)throw new IllegalStateException("Construction already completed");
+            if (compositionRouting != null) {
+                if (!compositionRouting.advance()) return false;
+                result=prepared.construct(compositionRouting.result()); return true;
+            }
             if(routing!=null && !routing.advance())return false;
-            result=prepared.construct(routing==null?null:routing.result());return true;
+            result=prepared.construct(routing==null?(PcbBoardLayout)null:routing.result());return true;
         }
         Construction result() {
             if(result==null)throw new IllegalStateException("Construction is incomplete");return result;

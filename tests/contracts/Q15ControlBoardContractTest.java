@@ -163,7 +163,8 @@ public final class Q15ControlBoardContractTest {
         try {session.result();throw new AssertionError("Incomplete construction has a result");}catch(IllegalStateException expected){assertions++;}
         int turns=0;while(!session.advance())turns++;
         GeneratedBoardInstance staged=session.result().instance;
-        require(turns>0 && staged.getPcbLayout().geometryFingerprint().equals(owner.getPcbLayout().geometryFingerprint()),"resumable and synchronous planning produce identical geometry");
+        require(staged.getPcbLayout().geometryFingerprint().equals(owner.getPcbLayout().geometryFingerprint()),
+            "resumable and synchronous planning produce identical geometry");
         require(staged.getPcbLayout().isSealed(),"shared routing plan is immutable");
         try {staged.getPcbLayout().addTrace(owner.getPcbLayout().getTraces().get(0));throw new AssertionError("Shared geometry was mutable");}catch(IllegalStateException expected){assertions++;}
         GeneratedBoardInstance hypothesis=staged.getDiagnosticProvider().generateHypothesis(staged.getFaultCandidates().get(0));

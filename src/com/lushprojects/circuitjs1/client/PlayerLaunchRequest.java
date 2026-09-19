@@ -2,7 +2,7 @@ package com.lushprojects.circuitjs1.client;
 
 /** Public replay identity. Parsing never normalizes an unknown seed, family or epoch. */
 final class PlayerLaunchRequest {
-    static final String EPOCH = "tsj-alpha/2";
+    static final String EPOCH = "tsj-alpha/3";
     final String familyId;
     final long seed;
     final DifficultyProfile profile;
@@ -24,11 +24,7 @@ final class PlayerLaunchRequest {
 
     /** Entropy selection is explicit. Exact constructors and replay never call it. */
     static PlayerLaunchRequest random(String familyId, String entropyText, String profileText) {
-        DifficultyProfile profile = DifficultyProfile.parseAvailable(profileText);
-        if (Rb15Plan.FAMILY_ID.equals(familyId))
-            return new PlayerLaunchRequest(familyId, entropyText, profileText, true);
-        long selected = PlayerFamilyCatalog.selectNormalPlayerSeed(familyId, parseSeed(entropyText));
-        return new PlayerLaunchRequest(familyId, Long.toString(selected), profile.name());
+        return new PlayerLaunchRequest(familyId, entropyText, profileText, true);
     }
 
     private static long parseSeed(String text) {

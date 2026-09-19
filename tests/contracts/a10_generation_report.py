@@ -103,8 +103,13 @@ def validate(report):
         for stage in stages:
             integer(stage.get('elapsedMs'), 0, 5000)
             integer(stage.get('work'), 1, 640)
-            require(stage['work'] == (PROOF_UNITS.get(row.get('family'))
-                    if stage['stage'] == 'HYPOTHESES' else 1), 'Current operation population changed')
+            if stage['stage'] == 'HEALTHY' and row.get('family') == 'controlled-indicator':
+                # Physical planning now advances in bounded turns before assembly.
+                # The actual proof population and the whole-job640 ceiling remain fixed.
+                integer(stage['work'], 1, 640 - PROOF_UNITS['controlled-indicator'] - 4)
+            else:
+                require(stage['work'] == (PROOF_UNITS.get(row.get('family'))
+                        if stage['stage'] == 'HYPOTHESES' else 1), 'Current operation population changed')
         require(sum(s['work'] for s in stages) == row['work'], 'Stage work does not reconcile')
     require(observed == {(f, str(s), r) for f in FAMILIES for s in range(4) for r in range(2)},
             'Missing or unexpected frozen manifest')

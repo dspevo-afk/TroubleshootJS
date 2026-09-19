@@ -6,7 +6,7 @@ import java.util.Vector;
 
 /** Role-supplied physical demands. No coordinates, selected fault or solver state. */
 final class PcbPlacementConstraints {
-    enum Anchor { NONE, LEFT, RIGHT }
+    enum Anchor { NONE, LEFT, RIGHT, EDGE }
     static final class Part {
         final String componentId, regionId, regionLabel, domainId;
         final Anchor anchor;
@@ -95,11 +95,10 @@ final class PcbPlacementConstraints {
     }
     static PcbPlacementConstraints standard(TroubleshootBoard board) {
         Vector<String> ids=board.getComponentIds(); Collections.sort(ids);
-        Vector<Part> parts=new Vector<Part>(); boolean anchored=false;
+        Vector<Part> parts=new Vector<Part>();
         for (String id : ids) {
             boolean connector=board.getComponent(id).getPhysicalPackage().isConnector();
-            Anchor anchor=connector && !anchored ? Anchor.RIGHT : Anchor.NONE;
-            anchored |= connector;
+            Anchor anchor=connector ? Anchor.EDGE : Anchor.NONE;
             parts.add(new Part(id,"circuit","Circuit","board",anchor,20));
         }
         return new PcbPlacementConstraints(parts,new Vector<Barrier>());

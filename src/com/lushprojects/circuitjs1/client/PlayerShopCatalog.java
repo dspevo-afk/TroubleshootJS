@@ -118,6 +118,10 @@ final class PlayerShopCatalog {
             if ("SPAN_230".equals(geometry.getVariantKey())) return "Narrow lead spacing";
             if ("SPAN_250".equals(geometry.getVariantKey())) return "Wide lead spacing";
         }
+        if (physicalPackage.isConnector()) {
+            if ("IDENTITY".equals(geometry.getGeometryTransformKey())) return "Standard connector layout";
+            if ("MIRROR_X".equals(geometry.getGeometryTransformKey())) return "Mirrored connector layout";
+        }
         throw new IllegalStateException("Catalog package options lack distinct public fit labels.");
     }
 }

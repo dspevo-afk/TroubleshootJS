@@ -11,8 +11,7 @@ final class RcDelayPcbLayoutFactory {
     private RcDelayPcbLayoutFactory() { }
 
     static PcbBoardLayout create(TroubleshootBoard board, long seed) {
-        int variationMode = variationMode(seed);
-        return createLayout(board, variationMode, seed, null, null);
+        return ProceduralPcbLayout.generate(board, seed, QuickPlayFamilyRegistry.RC_DELAY);
     }
 
     /** Developer-only finite matrix path; it never searches for a route. */

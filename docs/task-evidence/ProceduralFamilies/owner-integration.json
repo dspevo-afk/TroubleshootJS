@@ -1,0 +1,85 @@
+{
+  "status": "PASS",
+  "scope": "Owner checkout with unrelated visual/FPS/tray edits retained; not the clean publication checkout",
+  "buildExit": 0,
+  "allSourceHashesUnchanged": true,
+  "sourceFileCount": 735,
+  "scopedSourcesMatchPublication": true,
+  "build": "12D3B7F6B298782FEF3B419CEAD1587E",
+  "cases": [
+    {
+      "family": "RELAY_OUTPUT",
+      "seed": "0",
+      "replay": "tsj-alpha/3/EASY/RELAY_OUTPUT/0",
+      "seconds": 8.024499899998773,
+      "workbench": true
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "seed": "17",
+      "replay": "tsj-alpha/3/EASY/RELAY_OUTPUT/17",
+      "seconds": 10.263121300027706,
+      "workbench": true
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "seed": "0",
+      "replay": "tsj-alpha/3/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/0",
+      "seconds": 3.903617500036489,
+      "workbench": true
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "seed": "17",
+      "replay": "tsj-alpha/3/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/17",
+      "seconds": 4.852921000041533,
+      "workbench": true
+    }
+  ],
+  "exactReplays": [
+    {
+      "replay": "tsj-alpha/3/EASY/RELAY_OUTPUT/17",
+      "seconds": 10.345184500038158,
+      "exact": true
+    },
+    {
+      "replay": "tsj-alpha/3/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/17",
+      "seconds": 4.854963599995244,
+      "exact": true
+    }
+  ],
+  "shop": {
+    "before": 0,
+    "after": 1,
+    "sameBoard": true,
+    "isolated": true
+  },
+  "cancellation": {
+    "sameReplay": true,
+    "isolated": true
+  },
+  "oldEpochRejected": true,
+  "reportedRelay": {
+    "replay": "tsj-alpha/3/EASY/RELAY_OUTPUT/4",
+    "seconds": 8.754710900015198,
+    "workbench": true
+  },
+  "cleanup": {
+    "serverThreadStopped": true,
+    "ownedSurvivors": []
+  },
+  "differentSourceFiles": [
+    "src/com/lushprojects/circuitjs1/client/A07SolverDeveloperVerifier.java",
+    "src/com/lushprojects/circuitjs1/client/CanvasWorkbenchBackend.java",
+    "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+    "src/com/lushprojects/circuitjs1/client/CirSim.java",
+    "src/com/lushprojects/circuitjs1/client/GeneratedLiveTemporalSimulation.java",
+    "src/com/lushprojects/circuitjs1/client/LoosePartPose.java",
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchController.java",
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java",
+    "src/com/lushprojects/circuitjs1/client/PhysicalPartRenderContext.java",
+    "src/com/lushprojects/circuitjs1/client/WorkbenchRenderHost.java"
+  ],
+  "byteDifferencesIncludingLineEndings": 466,
+  "comparisonNote": "Semantic difference list ignores CRLF/LF-only differences; exact before/after build hashes and scoped byte equality were checked separately."
+}

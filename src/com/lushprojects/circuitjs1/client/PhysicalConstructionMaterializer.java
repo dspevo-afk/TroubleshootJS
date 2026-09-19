@@ -42,6 +42,8 @@ final class PhysicalConstructionMaterializer {
             board.addPowerInput(new ExternalBoardPowerInput(input.getInputId(),
                 input.getPositivePadId(), input.getReturnPadId(), input.getPositiveNetId(),
                 input.getReturnNetId()));
+        if (plan.isControlledIndicator())
+            board.setPlacementConstraints(controlledIndicatorPlacement(plan, declarations));
         board.validate();
 
         BoardPhysicalSpecifications specifications = new BoardPhysicalSpecifications();
@@ -53,6 +55,38 @@ final class PhysicalConstructionMaterializer {
                 input.getNominalVoltage()));
         specifications.seal();
         return new PhysicalConstructionMetadata(plan, spec, board, specifications, declarations);
+    }
+
+    private static PcbPlacementConstraints controlledIndicatorPlacement(
+            BoundedAssemblyPlan plan, PhysicalConstructionDeclarations declarations) {
+        Vector<PcbPlacementConstraints.Part> parts =
+            new Vector<PcbPlacementConstraints.Part>();
+        for (PhysicalConstructionPartDeclaration part : declarations.getBoardParts()) {
+            String owner = part.getOwnerKey();
+            String region = null, label = null;
+            if (DeviceAdapterContract.POWER_ADAPTER_KEY.equals(owner)) {
+                region = "power-input"; label = "Power input";
+            } else if (plan.getSupportBlockKey().equals(owner)) {
+                region = "power-indicator"; label = "Power indicator";
+            } else {
+                for (ControlledIndicatorChannel channel : plan.getChannels()) {
+                    if (owner.equals(channel.getDriverKey()) || owner.equals(channel.getLoadKey()) ||
+                            owner.equals(channel.getControlAdapterKey())) {
+                        region = channel.getKey(); label = "Channel " + channel.getLabel();
+                        break;
+                    }
+                }
+            }
+            if (region == null)
+                throw new IllegalStateException("Controlled-indicator part has no placement region: " +
+                    part.getComponentId() + " owner=" + owner);
+            PcbPlacementConstraints.Anchor anchor = part.getPhysicalPackage().isConnector() ?
+                PcbPlacementConstraints.Anchor.EDGE : PcbPlacementConstraints.Anchor.NONE;
+            parts.add(new PcbPlacementConstraints.Part(part.getComponentId(), region, label,
+                "low-voltage", anchor, 20));
+        }
+        return new PcbPlacementConstraints(parts,
+            new Vector<PcbPlacementConstraints.Barrier>(), PcbCopperLayer.BOTTOM);
     }
 
     private static void addEnvelopeNets(ElectricalRealizationSpec spec,

@@ -14,14 +14,6 @@ final class QuickPlayFamilyRegistry {
     static final String RC_DELAY = "RC_DELAY";
     static final String NPN_LOW_SIDE_SWITCH = "NPN_LOW_SIDE_SWITCH";
     static final String NMOS_LOW_SIDE_SWITCH = "NMOS_LOW_SIDE_SWITCH";
-    private static final long[] RELAY_NORMAL_PLAYER_SEEDS = { 0, 1, 2, 3, 4, 5 };
-    private static final long[] BASE_NORMAL_PLAYER_SEEDS = { 0, 2, 3 };
-    // Keep the established LED seeds 0/2/3 unchanged; seed 4 is the first
-    // normal envelope entry for the additional LED-owned fault route.
-    private static final long[] LED_NORMAL_PLAYER_SEEDS = { 0, 2, 3, 4 };
-    private static final long[] NPN_NORMAL_PLAYER_SEEDS = { 0, 1, 2 };
-    private static final long[] NMOS_NORMAL_PLAYER_SEEDS = { 0, 1, 2 };
-
     private QuickPlayFamilyRegistry() { }
 
     static Vector<String> getNormalPlayerFamilyIds() {
@@ -63,30 +55,10 @@ final class QuickPlayFamilyRegistry {
             familyId);
     }
 
-    /**
-     * Procedural qualification preserves all entropy bits. Reference families keep
-     * their explicitly curated cohort; selecting a candidate never proves admission.
-     */
+    /** Preserve full signed-long entropy; admission, not a whitelist, selects a playable board. */
     static long selectNormalPlayerSeed(String familyId, long selectionValue) {
         if (!isNormalPlayerEligible(familyId))
-            throw new IllegalArgumentException("Quick Play family is not normal-player eligible: " +
-                familyId);
-        if (QuickPlayAdmission.supports(familyId)) return selectionValue;
-        long[] normalPlayerSeeds = seedsFor(familyId);
-        for (long seed : normalPlayerSeeds)
-            if (seed == selectionValue)
-                return seed;
-        int index = (int) (selectionValue % normalPlayerSeeds.length);
-        if (index < 0)
-            index += normalPlayerSeeds.length;
-        return normalPlayerSeeds[index];
-    }
-
-    private static long[] seedsFor(String familyId) {
-        if (RELAY_OUTPUT.equals(familyId)) return RELAY_NORMAL_PLAYER_SEEDS;
-        if (LED_INDICATOR.equals(familyId)) return LED_NORMAL_PLAYER_SEEDS;
-        if (NPN_LOW_SIDE_SWITCH.equals(familyId)) return NPN_NORMAL_PLAYER_SEEDS;
-        if (NMOS_LOW_SIDE_SWITCH.equals(familyId)) return NMOS_NORMAL_PLAYER_SEEDS;
-        return BASE_NORMAL_PLAYER_SEEDS;
+            throw new IllegalArgumentException("Unknown normal-player family: " + familyId);
+        return selectionValue;
     }
 }

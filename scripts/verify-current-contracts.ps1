@@ -69,9 +69,11 @@ final class PhysicalSpecificationDeveloperVerifier {
         Sort-Object Name | ForEach-Object { $_.FullName })
     $sourcePaths += $stub
     $testDefinitions = @(
+        @{ Name = 'ProceduralFamilyContractTest'; Marker = 'procedural family contracts ' },
         # Schedule the largest short-budget construction cohort first; cases and budgets are unchanged.
         @{ Name = 'QuickPlayContractTest'; Marker = 'Quick Play current seed envelopes and construction' },
         @{ Name = 'PcbCompactionContractTest'; Marker = 'PCB compaction contracts ' },
+        @{ Name = 'DensePcbPackingContractTest'; Marker = 'dense PCB packing ' },
         @{ Name = 'VisualWorkbenchContractTest'; Marker = 'visual workbench contracts ' },
         @{ Name = 'Task43PhysicalEndpointContractTest'; Marker = 'Task43 current physical endpoint contracts ' },
         @{ Name = 'ArchitectureFootprintContractTest'; Marker = 'architecture footprint contracts ' },
@@ -104,6 +106,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'U01ViewportContractTest'; Marker = 'U01 viewport contracts ' },
         @{ Name = 'WorkbenchLiftedLeadAppearanceContractTest'; Marker = 'lifted lead appearance contracts ' },
         @{ Name = 'P03PlacementContractTest'; Marker = 'P03 placement contracts ' },
+        @{ Name = 'RouterQueueContractTest'; Marker = 'router queue parity ' },
         @{ Name = 'P04RoutingContractTest'; Marker = 'P04 routing contracts ' },
         @{ Name = 'P05RoutingContractTest'; Marker = 'P05 routing contracts ' },
         @{ Name = 'P06FactoryLinkContractTest'; Marker = 'P06 factory-link contracts ' },

@@ -156,7 +156,7 @@ class ResistorSlotController implements PhysicalSlotMutationProvider,
         return catalogPart(catalogEntryId, false);
     }
 
-    private PhysicalResistorPart catalogPart(String catalogEntryId, boolean install) {
+    private PhysicalResistorPart catalogPart(String catalogEntryId, final boolean install) {
         requireSafeMutation();
         final ReplaceableComponentSlot slot = capability.getSlot();
         if (install && !slot.isEmpty())
@@ -180,7 +180,10 @@ class ResistorSlotController implements PhysicalSlotMutationProvider,
                         playerNameplate.forPhysicalPartId(partId), element, null, openPath,
                         ResistorPartLocation.LOOSE, new PhysicalPartProvenance(
                         PhysicalPartProvenance.CATALOG_ACQUIRED, partId));
-                    slot.getPhysicalSlot().bindGeometryForAcquisition(part);
+                    // Scope acquisition validates before returning: bind direct
+                    // installs here, not after the acquisition transaction.
+                    if (install)
+                        slot.getPhysicalSlot().bindGeometryForAcquisition(part);
                     return part;
                 }
             });

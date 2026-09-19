@@ -14,33 +14,38 @@ older evidence packets describe their own historical candidates.
 
 ## Procedural Quick Play admission and exact replay
 
-QuickPlayAdmission owns the separate post-P09 family/profile population policy.
-RB15_CONTROL/EASY now requests at most four exact ordinal candidates instead of
-mapping entropy to the eleven-seed regression cohort. Other reference families
-remain curated. The normal UI transports eight random bytes as a canonical signed
-long decimal string without a 64-bit JavaScript Number conversion. Candidate0 is
-the launch seed; an odd modular stride supplies the next three distinct candidates.
+QuickPlayAdmission version3 covers all nine current normal families at every available
+profile. Fresh signed-long entropy is never reduced to reference seed lists. Normal
+leaf/composed geometry reaches seeded placement and routing; authored full-board
+fixtures remain developer-only. Named streams vary actual positions and copper while
+preserving declared nets, packages, regions and connector roles. Normal copper uses the
+bottom face with real through-hole packages and unchanged P09 access/physical limits.
 
-GenerationRequest version3 separates search from exact resolution. GenerationJob
-keeps its canonical manifest ordering, shared90-second/640-unit/five-second bounds,
-and complete attempt ledger. Candidate-local diagnostic counts reset independently
-from aggregate work. Only typed expected rejection followed by successful original-
-owner restoration permits retry. Timeout, work exhaustion, cancellation, stale
-ownership, programming failure and failed cleanup end the launch without publishing.
+A launch has at most four deterministic candidates sharing the existing90-second,
+640-unit and five-second bounds. Only typed expected rejection followed by successful
+owner restoration permits retry. Timeout, exhaustion, cancellation, stale ownership,
+programming error and cleanup failure never publish. Difficulty is computed from
+complete current diagnostic/repair evidence. EASY/MEDIUM are enabled; HARD/PSYCHOTIC
+and unimplemented family/profile content are not made playable by layout policy.
 
-PlayerSession stores only the actual accepted seed as current replay. Epoch
-`tsj-alpha/2` always reconstructs a single exact board; old interpretations reject.
-Dependency epoch10 includes admission1 and layout12. P09 geometry, copper/solver
-correspondence, live healthy/faulty behavior and every diagnostic/repair hypothesis
-remain mandatory. Physical envelope bounds alone never authorize a population.
+Controlled composition stages routing before electrical allocation. Its sealed
+coordinate result belongs to the exact immutable request. Hypotheses may copy that
+geometry, but create fresh electrical/runtime and proof owners. Geometry is revalidated;
+foreign-request reuse fails before allocation. No electrical answer or repair proof is
+cached. Exact replay is tsj-alpha/3; old epochs reject. Interpretation11 includes
+admission3/layout13. Eight entropy bytes travel as canonical signed decimal text,
+never through a lossy JavaScript Number.
 
-The bottom-face placer varies whole functional-region order from its first attempt
-using existing named streams, not just cosmetic jitter or fallback layouts. Exact
-fresh-plan native replay and matched compiled geometry support the frozen24+48
-population. The holdout admits42, rejects6 and contains29 macro groups across6
-aspect bands; these observations do not guarantee arbitrary circuits or every seed.
-The remaining catalog reference families require separate population qualification.
-See [Quick Play gate evidence](task-evidence/QuickPlayGate/README.md).
+New loose catalog axial resistors may be unformed. Compatibility queries are pure;
+owned installation forms target geometry, validates mounted commit and compensates
+that formation on abort. Direct catalog installs bind before acquisition validation.
+Originals, other packages and formed parts retain strict compatibility. Compaction
+retains a legal routed input when contraction would violate existing detour limits.
+
+Current evidence comprises 19 affected native suites, 144 structural cases, actual
+normal-menu/replay/cancel/shop flows and compiled A08/E03/A10. Earlier population counts
+below belong to their earlier source candidates, not this one.
+[Current evidence and limits](task-evidence/ProceduralFamilies/README.md).
 
 ## Production physical qualification (P09)
 
@@ -1460,6 +1465,13 @@ instance-scoped TOPOLOGY streams. The bounded device has five contributions:
 two drivers, two resolved resistor/LED loads and a supply-present indicator.
 Device adapters provide J1 board supply and J2/J3 independent control inputs.
 They share one board, one physical inventory and one active CircuitJS graph.
+The controlled board no longer uses an authored full-board PCB realization in normal
+construction. `PhysicalConstructionMaterializer` projects resolved device owners into
+semantic power/channel/support placement regions, marks physical connectors as
+edge-only demands, and `BoundedGeneratedBoardAssembler` delegates placement and
+routing to `SeededPcbLayoutGenerator`. Connector edge/position, package geometry,
+component placement, board outline and routed copper therefore participate in the
+seeded physical realization while the same accepted seed reproduces exactly.
 
 The role supports a 4.75-5.25 V supply, active-high control of at least 4.75 V,
 LOW at most 0.1 V, a 2 mA control capacity and a 20 mA sinking capacity for a

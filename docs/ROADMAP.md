@@ -7,8 +7,8 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Branch observed during review:** `codex/task43p-final-recovery`<br>
-**Latest completed task:** **Post-P09 Procedural Quick Play Admission Gate, RB15_CONTROL/EASY**<br>
-**Quick Play qualification:** Four bounded ordinal candidates share unchanged launch budgets; every published board has actual healthy/fault/physical/diagnostic/repair admission and an exact current replay. Frozen holdout48:42 admitted,6 rejected,29 macro groups and6 aspect bands. Clean native51, integrated focused12, both GWT5 builds and actual browser/reader/player gates pass. Other reference families remain curated. [Evidence and limits](task-evidence/QuickPlayGate/README.md).
+**Latest completed task:** **All-current-family procedural layouts and resistor shop/formation repair**<br>
+**Quick Play qualification:** All nine current families use fresh signed-long candidates and real placement/routing. Nineteen affected native suites, 144 structural cases, 18 actual launches, exact replay/cancellation/privacy/shop and compiled mutation/relay/generation gates pass. EASY/MEDIUM content eligibility remains; HARD/PSYCHOTIC are not unlocked. [Current evidence](task-evidence/ProceduralFamilies/README.md).
 **P09 qualification (2026-09-16):** `THT_SINGLE_FACE@1` is enforced at normal installation/admission/publication with unchanged geometry/electrical/diagnostic requirements. Clean native48, integrated native9, both GWT5 builds, RC/Q15 and real normal menu/navigation/privacy checks pass. Frozen held-out structural results retain ten passes and two explicit rejections. Production two-layer/via/link adoption is rejected for this epoch. [Evidence and limits](task-evidence/P09/README.md).
 **P08 qualification:** The evidence-selected interval broad phase, immutable copper/view caches and exact solver-partition projection are qualified. Current brute-force parity and 2,022 adversarial assertions pass; 15/30/56/100 mixed inventories and dense contact work are measured. Full native46, both GWT5 builds and 13 compiled browser runs pass. P09 is now separately qualified; P08 itself does not imply normal large-board/layer-strategy adoption. [P08 evidence](task-evidence/P08/README.md).
 **P07 qualification (2026-09-15):** The required developer-only four-policy comparison and real plated-via/top-bottom probe bench are qualified. All 54 structural rows are retained; six prototype RB30 requests succeed, while the frozen 56/100 requests reject within bounds. Normal adoption is not qualified by P09. [P07 evidence](task-evidence/P07/README.md). P08 is now separately qualified.
@@ -663,7 +663,7 @@ Every enabled instrument declares electrical connection/stimulus, burden/loading
 
 ## 7.1 Status and authority
 
-T49, N00, A01-A11, R00, P01-P09, U01, E01, E03, Q15, U04, U05 and REL-A are accepted/completed: 30 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. The non-catalog post-P09 Quick Play gate is qualified for RB15_CONTROL/EASY; U02 is next. Other reference families retain their curated population pending separate qualification. P08 current isolated CLI runs satisfy unchanged ownership/cleanup gates; earlier unqualified launch attempts remain separately recorded.
+T49, N00, A01-A11, R00, P01-P09, U01, E01, E03, Q15, U04, U05 and REL-A are accepted/completed: 30 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. The non-catalog post-P09 follow-up covers procedural layouts for all nine current normal families and resistor shop/formation; U02 is next. Only currently implemented EASY/MEDIUM content is qualified; unavailable difficulties remain deferred. P08 current isolated CLI runs satisfy unchanged ownership/cleanup gates; earlier unqualified launch attempts remain separately recorded.
 
 A task-specific prompt authorizes a bounded scope. Follow current AGENTS.md for orchestration, ownership, review, publication and safety; R00 replaced its contradictory blanket compatibility wording under the owner's explicit instruction. A current correct requirement outranks an obsolete test. Do not start writers before relevant shared-interface investigations are reconciled.
 
@@ -682,7 +682,7 @@ preferred next eligible milestone. Future implementation needs its own authoriza
 than the old preferred order while satisfying their hard prerequisites: A10
 required A05/A07/A09/P02; A11 required A04/A08/A09. Their earlier placement does
 not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 → Q15 → U04 → U05 → REL-A is now complete.
-**Next milestone: U02.** The post-P09 gate now qualifies bounded arbitrary-candidate-seed RB15_CONTROL/EASY admission; P09 physical limits remain unchanged. Other reference families are still curated. Pending unrelated visual work remains separately preserved.
+**Next milestone: U02.** The post-P09 follow-up replaces curated/fixed normal layout paths across all nine current families, preserving P09 limits, computed difficulty and exact replay. Current EASY/MEDIUM content is qualified, not future HARD/PSYCHOTIC content. Pending visual/FPS/tray work remains preserved.
 
 | Wave | Preferred sequence |
 |---|---|
@@ -1368,9 +1368,9 @@ The shared current-only policy and validation rules apply to every card. There i
 <a id="post-p09-quick-play"></a>
 #### Mandatory post-P09 integration gate · Procedural Quick Play arbitrary-candidate-seed admission
 
-**Status:** COMPLETE - QUALIFIED for RB15_CONTROL/EASY. This is a required non-catalog integration gate, not another catalog node. Four deterministic candidate ordinals share the original job/work/active-unit bounds; only complete normal admission publishes an exact current replay. The old eleven-seed cohort remains regression evidence, not the RB15 player population. Reference families remain curated until individually qualified.
+**Status:** COMPLETE - QUALIFIED for procedural layouts on all nine current normal families and their implemented EASY/MEDIUM routes. Four bounded candidates require complete current admission and exact replay; no normal reference-layout or curated-seed fallback remains. This is not new HARD/PSYCHOTIC content or proof that every family realizes every difficulty.
 
-**Qualification:** Predeclared development24 and holdout48 preserve every rejection and timeout. Holdout42 admissions,29 macro-layout groups,six aspect bands and a largest group of4 pass unchanged predeclared criteria. Full native51 and independent oracles, integrated focused12, both GWT5 builds, full Q15/RC/generation lifecycle regressions, strict readers/malformed controls, actual retry/cancellation/exact replay/privacy and nine-family entry pass. [Evidence and reproduction](task-evidence/QuickPlayGate/README.md).
+**Qualification:** The current isolated candidate passes 19 affected native suites, 144 structural cases with real relative arrangement/copper diversity, admitted-fault geometry replay,18 actual New Board launches, exact replay including relay4, cancellation, old-epoch rejection and Shop purchase. Compiled A08/E03/A10 and the negative canary pass. [Current evidence](task-evidence/ProceduralFamilies/README.md). Earlier RB15 development24/holdout48 and Medium12 campaigns describe their historical candidates, not the acceptance rate of this changed source.
 
 **Purpose:** Retire curated seed whitelists as the complete normal-player population for each family once the physical pipeline and that family are qualified for broader procedural admission. Preserve frozen cohorts as regression evidence rather than permanent gameplay limits.
 
@@ -1380,7 +1380,8 @@ The shared current-only policy and validation rules apply to every card. There i
 
 **Important negatives:** Unlimited retry; entropy remapped secretly to the old whitelist; failed candidates silently admitted; unsupported-envelope expansion mislabeled as arbitrary circuits; wall-clock race selecting the winner; accepted seed not replayable; held-out failures removed to improve the reported rate; diagnostic population silently shrunk; near-clone layouts counted as meaningful diversity.
 
-**Evidence boundary:** This gate changes current normal RB15_CONTROL/EASY seed admission after P09 qualification. Historical REL-A and the remaining reference-family populations are not retroactively upgraded. Other families, packages, poses, larger boards and layer policies need their own evidence. No universal arbitrary-circuit or per-seed success guarantee is implied.
+**Evidence boundary:** All current normal families use procedural placement/routing without weakening admission. Geometry selection is independent of difficulty labels; content/profile pairs still need computed evidence. EASY/MEDIUM are implemented; HARD/PSYCHOTIC, every hypothetical family/profile combination, larger boards and new physical policies are not qualified. No arbitrary-circuit, minimum-size or per-seed success guarantee is implied.
+
 
 <a id="m-u01"></a>
 

@@ -1,34 +1,38 @@
-<!-- QUICKPLAY-GATE-CURRENT-START -->
-# Current handoff: Procedural Quick Play gate complete
+<!-- PROCEDURAL-FAMILIES-CURRENT-START -->
+# Current handoff: all current normal families procedural; resistor shop repaired
 
-Base: `83d3eb39eb3669b756a78588d95bdf155cecb172`.
-Branch: `codex/task43p-final-recovery`. Publication SHA is the enclosing Git commit
-and the final delivery receipt; this source document does not invent a self-hash.
+Base: 8a807c4c4eaac4979b6d05d6edd22b95710d9ce6. Branch: codex/task43p-final-recovery.
+Publication identity is the enclosing commit. [Evidence](task-evidence/ProceduralFamilies/README.md).
 
-RB15_CONTROL/EASY now draws full-width candidate seeds and serially tries at most
-four ordinal candidates under shared unchanged budgets. It publishes only after
-actual healthy/faulty electrical, physical/correspondence, complete diagnostic and
-repair proof. Exact accepted replay uses current epoch2 and never retries.
-Layout12 varies functional-region arrangement from the first candidate; reference
-families remain curated. No new P09 bounds/layers/vias/links/Q30 qualification.
+All nine normal families use signed-long placement/routing with no curated selection or
+fixed full-board fallback. Replay: tsj-alpha/3; interpretation11/admission3/layout13.
+Electrical truth, computed difficulty, complete repair proofs and P09 limits remain.
+EASY/MEDIUM content is available; HARD/PSYCHOTIC and new difficulty-specific circuits
+are not implemented here.
 
-Clean native51 with independent oracles, integrated focused12, both GWT5 builds,
-Q15 all11, RC, generation lifecycle/forced negatives and strict readers pass.
-Frozen holdout48:42 admitted,6 rejected,29 macro groups,six aspect bands; largest
-near-clone group4. Development24 retains20 admissions,3 rejects and1 timeout.
-Actual menu/random/retry/rejection/cancellation/isolated-owner/exact replay/privacy
-and all nine family entries pass. UI112, meter358 and entropy4103 tests pass.
+Loose catalog resistors remain unformed until an owned install. Compatibility is pure;
+failed acquisition/formation restores exact part/slot/inventory/graph state. Wrong-value
+repair fails and correct repair passes CircuitJS retest. Direct replacement binds
+geometry before acquisition validation.
 
-Evidence: [Quick Play gate](task-evidence/QuickPlayGate/README.md).
-Reproduction: [Commands and limits](task-evidence/QuickPlayGate/REPRODUCE.md).
-Root review plus independent executable oracles; no independent agent/human review.
-Player input proves the public flow; compiled diagnostics/Q15 provide repair proof.
-Original97 files retained:93 byte-identical and4 shared exact inverse merges.
-Unrelated visual/FPS/packing/tray changes remain outside this publication. Every
-selected task browser/listener closed; recovery scratch and uncertain old resources
-remain. Earlier harness failures and the development timeout are explicitly retained.
-Next unstarted milestone: U02. Do not implement later roadmap work in this task.
-<!-- QUICKPLAY-GATE-CURRENT-END -->
+Controlled composition stages physical planning before electrical allocation and copies
+only exact-request-owned sealed geometry across fresh diagnostic electrical owners.
+Medium 17's five-second work-unit failure is fixed without raising budgets. Compaction
+retains a legal original route when a proposed contraction exceeds the detour limit.
+
+Fresh isolated qualification: 19 native suites, 1,173,968 reported assertions;144 structural
+cases; GWT5; compiled A08/E03/A10 plus negative canary;18 normal launches, two exact
+replays, relay4 replay, retained-owner cancellation, old-epoch rejection, privacy and
+actual Shop purchase. Final Edge permutation: F63F0B949660B0B120FDF246ECE5A01D.
+No owned browser survivors; native classes cleaned up. Full historical matrix/corpus
+readers NOT RUN. Structural samples are not a guarantee of every possible seed.
+
+Scoped publication excludes unrelated FPS/renderer/tray/visual work. The owner's game
+was separately rebuilt with that work retained. Next roadmap milestone: U02.
+<!-- PROCEDURAL-FAMILIES-CURRENT-END -->
+
+## Prior task history
+
 
 ---
 

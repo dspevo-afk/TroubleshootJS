@@ -3,7 +3,6 @@ package com.lushprojects.circuitjs1.client;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.PriorityQueue;
 import java.util.TreeMap;
 import java.util.Vector;
 
@@ -397,12 +396,7 @@ final class PcbNetRouter {
             // root, and prior state + 1 for a discovered predecessor.
             double[] bestCost = new double[gridWidth*gridHeight*5];
             int[] previous = new int[bestCost.length];
-            PriorityQueue<SearchNode> open = new PriorityQueue<SearchNode>(128,
-                new Comparator<SearchNode>() {
-                    public int compare(SearchNode first, SearchNode second) {
-                        return first.compareTo(second);
-                    }
-                });
+            SearchQueue open = new SearchQueue();
             int sequence = 0;
             previous[stateKey(startX,startY,noneDirection)] = -1;
             open.add(new SearchNode(startX, startY, noneDirection, 0,
@@ -818,6 +812,45 @@ final class PcbNetRouter {
                     Math.abs(secondX - firstX) + PcbTraceRules.TRACE_WIDTH,
                     PcbTraceRules.TRACE_WIDTH);
             throw new IllegalStateException("PCB router encountered a non-Manhattan move");
+        }
+
+        /** Typed heap avoids GWT's generic queue casts without changing A* ordering. */
+        private static final class SearchQueue {
+            private SearchNode[] values = new SearchNode[128];
+            private int size;
+            boolean isEmpty() { return size == 0; }
+            void add(SearchNode value) {
+                if (value == null) throw new IllegalArgumentException("Missing search node");
+                if (size == values.length) {
+                    SearchNode[] larger = new SearchNode[values.length * 2];
+                    System.arraycopy(values, 0, larger, 0, size);
+                    values = larger;
+                }
+                int at = size++;
+                while (at > 0) {
+                    int parent = (at - 1) >>> 1;
+                    SearchNode above = values[parent];
+                    if (value.compareTo(above) >= 0) break;
+                    values[at] = above; at = parent;
+                }
+                values[at] = value;
+            }
+            SearchNode poll() {
+                if (size == 0) return null;
+                SearchNode result = values[0], value = values[--size];
+                values[size] = null;
+                if (size > 0) {
+                    int at = 0, half = size >>> 1;
+                    while (at < half) {
+                        int child = (at << 1) + 1, right = child + 1;
+                        if (right < size && values[right].compareTo(values[child]) < 0) child = right;
+                        if (value.compareTo(values[child]) <= 0) break;
+                        values[at] = values[child]; at = child;
+                    }
+                    values[at] = value;
+                }
+                return result;
+            }
         }
 
         private static class SearchNode {

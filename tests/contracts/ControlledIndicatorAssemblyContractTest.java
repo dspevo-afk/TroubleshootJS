@@ -20,6 +20,7 @@ public final class ControlledIndicatorAssemblyContractTest {
 
     public static void main(String[] args) {
         for (long seed : SEEDS) verifySeed(seed);
+        verifyProceduralPlayerGeometry();
         verifyReorderInvariance();
         verifyUntypedOpenDrainRejected();
         verifyInvalidFaultTargetRejected();
@@ -138,6 +139,75 @@ public final class ControlledIndicatorAssemblyContractTest {
                     plan.getChannels().get(0).getDriverKey()).getProviderTypeId() +
                 ";b=" + plan.getBlocks().get(
                     plan.getChannels().get(1).getDriverKey()).getProviderTypeId());
+    }
+
+    private static void verifyProceduralPlayerGeometry() {
+        CirSim sim = new CirSim();
+        sim.gridSize = 16; sim.gridMask = ~15; sim.gridRound = 7; CircuitElm.sim = sim;
+        long[] seeds = { 0L, 1L, 2L, 3L, 17L, 42L, 101L, -1L,
+            Long.MIN_VALUE, Long.MAX_VALUE, -9007199254740993L, 9007199254740993L };
+        java.util.HashSet<String> geometries = new java.util.HashSet<String>();
+        java.util.HashSet<String> connectorLayouts = new java.util.HashSet<String>();
+        java.util.HashSet<String> macroLayouts = new java.util.HashSet<String>();
+        java.util.HashSet<String> faults = new java.util.HashSet<String>();
+        for (long seed : seeds) {
+            GeneratedBoardInstance board = new PlayerLaunchRequest(ControlledIndicatorBlockContributions.FAMILY_ID, Long.toString(seed),
+                DifficultyProfile.MEDIUM.name()).generation().resolve(new GenerationRequest.PlanCache())
+                .construct().instance;
+            PcbBoardLayout layout = board.getPcbLayout();
+            layout.validateGeometry(board.getBoard());
+            geometries.add(layout.geometryFingerprint());
+            faults.add(board.getChallengeDefinition().getFault().getId());
+            Rectangle outline = layout.getBoardOutline();
+            java.util.Vector<String> ids = board.getBoard().getComponentIds();
+            java.util.Collections.sort(ids);
+            StringBuilder macro = new StringBuilder();
+            macro.append(outline.width / 100).append('x').append(outline.height / 100).append('|');
+            for (String id : ids) {
+                PcbComponentPlacement placement = layout.getComponent(id);
+                macro.append(id).append('@').append(placement.getX() / 100).append(',')
+                    .append(placement.getY() / 100).append(';');
+            }
+            macroLayouts.add(macro.toString());
+            StringBuilder connector = new StringBuilder();
+            int connectorCount = 0;
+            for (String id : ids) {
+                if (!board.getBoard().getComponent(id).getPhysicalPackage().isConnector()) continue;
+                connectorCount++;
+                PcbComponentPlacement placement = layout.getComponent(id);
+                Rectangle envelope = placement.getRoutingCourtyard();
+                int left = envelope.x - outline.x;
+                int right = outline.x + outline.width - envelope.x - envelope.width;
+                require(Math.min(left, right) <= 90, "procedural connector remains at a board edge");
+                connector.append(id).append('@').append(left <= right ? 'L' : 'R')
+                    .append(':').append(placement.getY()).append(';');
+            }
+            require(connectorCount >= 3, "Medium board exposes all physical connectors to edge placement");
+            connectorLayouts.add(connector.toString());
+            for (CircuitElm element : board.getSimulationElements()) element.delete();
+        }
+        GeneratedBoardInstance firstReplay = new PlayerLaunchRequest(
+            ControlledIndicatorBlockContributions.FAMILY_ID, "1", DifficultyProfile.MEDIUM.name())
+            .generation().resolve(new GenerationRequest.PlanCache()).construct().instance;
+        GeneratedBoardInstance secondReplay = new PlayerLaunchRequest(
+            ControlledIndicatorBlockContributions.FAMILY_ID, "1", DifficultyProfile.MEDIUM.name())
+            .generation().resolve(new GenerationRequest.PlanCache()).construct().instance;
+        require(firstReplay.getPcbLayout().geometryFingerprint().equals(
+                secondReplay.getPcbLayout().geometryFingerprint()) &&
+                firstReplay.getChallengeDefinition().getFault().getId().equals(
+                secondReplay.getChallengeDefinition().getFault().getId()),
+            "same Medium seed reproduces exact layout and fault identity");
+        for (CircuitElm element : firstReplay.getSimulationElements()) element.delete();
+        for (CircuitElm element : secondReplay.getSimulationElements()) element.delete();
+
+        require(geometries.size() == seeds.length,
+            "selected distinct Medium seeds produce distinct complete PCB geometry");
+        require(macroLayouts.size() >= 8,
+            "Medium population has meaningful macro placement diversity, not coordinate jitter");
+        require(connectorLayouts.size() >= 4,
+            "Medium connector edge/position layout varies across seeds");
+        require(faults.size() >= 4,
+            "Medium seed sample varies actual fault identity");
     }
 
     private static boolean everyDecisionOwnerIsActual(BoundedAssemblyPlan plan) {

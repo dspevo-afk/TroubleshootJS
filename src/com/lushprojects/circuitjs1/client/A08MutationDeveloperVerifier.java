@@ -30,6 +30,7 @@ final class A08MutationDeveloperVerifier {
 
     private String run() {
         long started = System.currentTimeMillis();
+        resistorShopAndFormation();
         String resistor = CompositionMutationGateDeveloperVerifier.verify(sim);
         require(resistor.contains("real-overload-damage-preserved=true") &&
                 resistor.contains("original-fault-preserved=true") &&
@@ -52,6 +53,77 @@ final class A08MutationDeveloperVerifier {
             ",\"wallMs\":" + (System.currentTimeMillis() - started) +
             ",\"maxSettlementMs\":" + maxSettlementMillis + ",\"maxFailedMutationMs\":" + maxFailedMutationMillis +
             ",\"cases\":" + cases + "],\"failures\":" + failureRows + "]}";
+    }
+
+    private void resistorShopAndFormation() {
+        Task41SimulationSnapshot saved = Task41SimulationSnapshot.capture(sim);
+        try {
+            final GeneratedBoardInstance board = new LedIndicatorGenerator().generate(3);
+            FreshGeneratedRuntimeInstallation.install(sim, board, false);
+            sim.getGeneratedChallengeController().beginDeveloperVerificationScope();
+            final ReplaceableResistorBoardCapability cap = ReplaceableResistorBoardCapability.find(board);
+            final ResistorSlotController controller = cap.getController();
+            final PhysicalResistorPart original = cap.getSlot().getInstalledPart();
+            final String correct = board.getDiagnosticProvider().getCorrectCatalogId(board, controller.getComponentId());
+            int count=board.getPhysicalBoardRuntime().getPhysicalParts().size();
+            boolean blocked=false;
+            try { controller.acquireFromCatalog(correct); }
+            catch(BoardModificationRejectedException expected) { blocked=true; }
+            require(blocked && count==board.getPhysicalBoardRuntime().getPhysicalParts().size(),
+                "powered shop purchase changes nothing");
+            powerOff();
+            for(PhysicalMutationScope.FailureStage stage:new PhysicalMutationScope.FailureStage[]{
+                    PhysicalMutationScope.FailureStage.AFTER_INVENTORY_ACQUIRE,
+                    PhysicalMutationScope.FailureStage.AFTER_CANONICAL_REGISTER,
+                    PhysicalMutationScope.FailureStage.AFTER_STRESS_REGISTER,
+                    PhysicalMutationScope.FailureStage.AFTER_GRAPH_APPEND,
+                    PhysicalMutationScope.FailureStage.AFTER_COMMIT})
+                injected("unformed-resistor-shop","acquire",stage,1,new Runnable(){
+                    public void run(){controller.acquireFromCatalog(correct);}
+                });
+            final PhysicalResistorPart stock=(PhysicalResistorPart)controller.acquireFromCatalog(correct); settle();
+            require(PhysicalResistorPart.hasUnformedCatalogLeads(stock) &&
+                cap.getSlot().getInstalledPart()==original,"purchase creates unformed stock and retains original");
+            PhysicalResistorPart wrong=(PhysicalResistorPart)controller.acquireFromCatalog("R_CATALOG_10000000"); settle();
+            require(controller.removeInstalledPart(),"remove original"); settle();
+            require(controller.install(wrong.getId()),"install wrong-value stock"); settle();
+            sim.setBoardPowerState(BoardPowerState.POWERED); settle();
+            require(!sim.getGeneratedChallengeController().performCustomerRetest().isPassed(),
+                "wrong resistor fails actual electrical retest");
+            powerOff(); require(controller.removeInstalledPart(),"remove wrong resistor"); settle();
+            Observation before=new Observation(sim);
+            for(int i=0;i<20;i++)require(board.getPhysicalBoardRuntime().isPartInstallableAt(stock,
+                controller.getComponentId()),"unformed stock is installable");
+            before.assertSame(sim,"availability checks remain pure");
+            for(PhysicalMutationScope.FailureStage stage:new PhysicalMutationScope.FailureStage[]{
+                    PhysicalMutationScope.FailureStage.AFTER_PRIMARY_BINDING,
+                    PhysicalMutationScope.FailureStage.AFTER_ENDPOINT_RETARGET,
+                    PhysicalMutationScope.FailureStage.AFTER_ATTACHMENT,
+                    PhysicalMutationScope.FailureStage.AFTER_SLOT_MOUNT,
+                    PhysicalMutationScope.FailureStage.AFTER_GRAPH_RESTORE,
+                    PhysicalMutationScope.FailureStage.AFTER_COMMIT}) {
+                injected("unformed-resistor-install","install",stage,1,new Runnable(){
+                    public void run(){controller.install(stock.getId());}
+                });
+                require(stock.getGeometryRealization()==null && !stock.isInstalled(),
+                    "failed installation restores exact unformed stock");
+            }
+            require(controller.install(stock.getId()),"install purchased correct resistor"); settle();
+            PhysicalGeometryRealization formed=stock.getGeometryRealization();
+            require(formed!=null && formed.isEquivalentTo(cap.getSlot().getPhysicalSlot().getGeometryRealization()),
+                "successful install forms leads to the exact target");
+            require(controller.removeInstalledPart(),"remove formed resistor"); settle();
+            require(stock.getGeometryRealization()==formed,"removal preserves lead formation");
+            require(controller.install(stock.getId()),"reinstall formed resistor"); settle();
+            sim.setBoardPowerState(BoardPowerState.POWERED); settle();
+            require(sim.getGeneratedChallengeController().performCustomerRetest().isPassed(),
+                "purchased correct resistor passes actual electrical retest");
+            require(original.isFaulted() && !original.isInstalled(),"removed original retains its fault");
+            invariant(); record("resistor-shop-unformed-rollback-and-electrical-repair");
+        } finally {
+            PhysicalMutationScope.clearFailureHookForDeveloperVerification();
+            saved.restore(sim); saved.assertRestored(sim);
+        }
     }
 
     private void diode(long seed, boolean shorted) {

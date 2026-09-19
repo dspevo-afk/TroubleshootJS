@@ -85,7 +85,7 @@ final class PhysicalMutationIntent {
                 throw new IllegalArgumentException("Physical mutation candidate type does not fit slot");
             if (!runtime.isPartInstallableAt(requestedPart, slot.getComponentId()))
                 throw new IllegalArgumentException("Physical mutation candidate is not eligible for this slot");
-            validateGeometry(physicalSlot, requestedPart);
+            validateGeometry(physicalSlot, requestedPart, "install".equals(operation));
         }
         return new PhysicalMutationIntent(runtime, instance, modifications, slot, operation,
             padId, catalogEntryId, requestedPart);
@@ -101,11 +101,12 @@ final class PhysicalMutationIntent {
     }
 
     private static void validateGeometry(PhysicalBoardSlot physicalSlot,
-            PhysicalPart<?> part) {
+            PhysicalPart<?> part, boolean allowUnformed) {
         PhysicalGeometryRealization expected = physicalSlot.getGeometryRealization();
         if (expected == null)
             return;
         PhysicalGeometryRealization actual = part.getGeometryRealization();
+        if (allowUnformed && PhysicalResistorPart.hasUnformedCatalogLeads(part)) return;
         if (actual == null || !expected.isEquivalentTo(actual))
             throw new IllegalArgumentException(
                 "Replacement geometry must be bound to the exact board realization before mutation");
@@ -124,7 +125,7 @@ final class PhysicalMutationIntent {
             if (!slot.acceptsPart(requestedPart) ||
                     !runtime.isPartInstallableAt(requestedPart, componentId))
                 throw new IllegalStateException("Physical mutation candidate changed ownership");
-            validateGeometry(physicalSlot, requestedPart);
+            validateGeometry(physicalSlot, requestedPart, "install".equals(operation));
         }
     }
 
@@ -146,7 +147,7 @@ final class PhysicalMutationIntent {
                     currentInstalled != installedPart || runtime.getPart(acquiredPart.getId()) != acquiredPart ||
                     !runtime.getMutationProvider(componentId).ownsPart(acquiredPart.getId()))
                 throw new IllegalStateException("Catalog acquisition must retain the slot and create one loose inventory part");
-            validateGeometry(physicalSlot, acquiredPart);
+            validateGeometry(physicalSlot, acquiredPart, true);
             return;
         }
         if (requestedPart != null) {
@@ -155,7 +156,7 @@ final class PhysicalMutationIntent {
                     !runtime.isPartOwnedByRegisteredProvider(requestedPart) ||
                     !slot.acceptsPart(requestedPart))
                 throw new IllegalStateException("Physical mutation candidate is not mounted in its slot");
-            validateGeometry(physicalSlot, requestedPart);
+            validateGeometry(physicalSlot, requestedPart, false);
             return;
         }
         if (acquiredPart != null) {

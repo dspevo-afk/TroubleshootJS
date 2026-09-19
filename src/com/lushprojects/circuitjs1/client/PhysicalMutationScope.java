@@ -97,6 +97,7 @@ final class PhysicalMutationScope {
     private Integer acquiredPreviousSerial;
     private boolean acquiredInventoryExisted;
     private ProviderCompensation providerCompensation;
+    private ProviderCompensation geometryCompensation;
     private boolean committed;
     private boolean closed;
     private boolean validationPassed;
@@ -238,6 +239,12 @@ final class PhysicalMutationScope {
         requireOpen();
         if (!ownsPart(part))
             throw new IllegalArgumentException("Physical mutation install part is foreign");
+        if (physicalSlot.getGeometryRealization() != null &&
+                PhysicalResistorPart.hasUnformedCatalogLeads(part)) {
+            if (geometryCompensation != null)
+                throw new IllegalStateException("A mutation may form only one resistor");
+            geometryCompensation = ((PhysicalResistorPart) part).formLeadsForMutation(this);
+        }
         validateCandidateGeometry(part);
         slot.installForMutation(part, this);
         modifications.setDockingAttachmentsForMutation(this, slot, true);
@@ -319,7 +326,11 @@ final class PhysicalMutationScope {
         if (part == null || !slot.acceptsPart(part) || runtime.getPart(part.getId()) != part ||
                 !acquiredInventoryId.equals(runtime.getInventoryIdForPart(part.getId())))
             throw new IllegalStateException("Physical mutation acquisition lost inventory ownership");
-        validateCandidateGeometry(part);
+        // Shop acquisition creates unformed axial stock, not a mounted replacement.
+        // Direct catalog installation and all other packages keep exact geometry.
+        if (!"acquire".equals(intent.getOperation()) ||
+                !PhysicalResistorPart.hasUnformedCatalogLeads(part))
+            validateCandidateGeometry(part);
         checkpoint(FailureStage.AFTER_INVENTORY_ACQUIRE);
         return part;
     }
@@ -409,6 +420,7 @@ final class PhysicalMutationScope {
             failure.addSuppressed(new IllegalStateException("Acquisition changed more than one physical owner"));
         try {
             restorePart(failure, cleanupFailed);
+            restoreCandidateGeometry(failure, cleanupFailed);
             restoreProviderState(failure, cleanupFailed);
             restoreBindings(failure, cleanupFailed);
             restoreCanonicalElements(failure, cleanupFailed);
@@ -457,6 +469,17 @@ final class PhysicalMutationScope {
             PhysicalPart<?> transactionPart = acquiredPart != null ? acquiredPart :
                 intent.getRequestedPart();
             physicalSlot.restoreInstalledPartForMutation(installedPartBefore, transactionPart);
+        } catch (Throwable restoreFailure) {
+            failure.addSuppressed(restoreFailure);
+            cleanupFailed[0] = true;
+        }
+    }
+
+    private void restoreCandidateGeometry(Throwable failure, boolean[] cleanupFailed) {
+        if (geometryCompensation == null) return;
+        try {
+            geometryCompensation.compensate();
+            geometryCompensation = null;
         } catch (Throwable restoreFailure) {
             failure.addSuppressed(restoreFailure);
             cleanupFailed[0] = true;

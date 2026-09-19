@@ -56,7 +56,13 @@ final class PcbPlacementPlanner {
         if (board==null || constraints==null) throw new IllegalArgumentException("Missing placement inputs");
         constraints.validate(board);
         if (board.getComponentIds().isEmpty() || board.getComponentIds().size()>MAX_PARTS) throw new Rejected("PART_LIMIT");
-        int variant=(candidate % OUTLINE_CANDIDATES + OUTLINE_CANDIDATES) % OUTLINE_CANDIDATES;
+        int offset = constraints.routingLayer == PcbCopperLayer.BOTTOM ?
+            (int)((seed ^ (seed >>> 32)) & 0x7fffffffL) % OUTLINE_CANDIDATES : 0;
+        // Give the root-selected small-board shape several ordering attempts
+        // before changing aspect. Otherwise the easiest shape wins every seed.
+        int shapeAttempt=constraints.routingLayer==PcbCopperLayer.BOTTOM &&
+            board.getComponentIds().size()<=5 ? candidate/OUTLINE_CANDIDATES : candidate;
+        int variant=(shapeAttempt + offset) % OUTLINE_CANDIDATES;
         Random random=new Random(seed ^ (0x632be59bd9b4e019L*(candidate+1)));
         TreeMap<String,Region> groups=new TreeMap<String,Region>(); Vector<Item> anchors=new Vector<Item>();
         long demandArea=0,courtyardArea=0; int maxWidth=0,anchorWidth=0;
@@ -64,16 +70,17 @@ final class PcbPlacementPlanner {
             BoardComponent component=board.getComponent(declaration.componentId);
             // Edge-oriented packages choose their declared inward variant before translation.
             Rectangle reference=new Rectangle(0,0,4000,4000);
-            int origin=declaration.anchor==PcbPlacementConstraints.Anchor.RIGHT ? 3600 : 0;
+            PcbPlacementConstraints.Anchor resolvedAnchor=resolvedAnchor(declaration,seed,candidate);
+            int origin=resolvedAnchor==PcbPlacementConstraints.Anchor.RIGHT ? 3600 : 0;
             PcbFootprint source=registry.create(component,origin,0,random,reference).translated(0,0);
             Item item=new Item(source,declaration); Rectangle court=source.getPlacement().getRoutingCourtyard();
             courtyardArea+=(long)court.width*court.height;
             demandArea+=(long)(item.envelope.width+CHANNEL)*(item.envelope.height+CHANNEL);
             maxWidth=Math.max(maxWidth,item.envelope.width+CHANNEL);
-            if (declaration.anchor!=PcbPlacementConstraints.Anchor.NONE) {
+            if (resolvedAnchor!=PcbPlacementConstraints.Anchor.NONE) {
                 for (PcbPadPlacement pad : source.getPads()) if (pad.getEscapeLength()>0 &&
-                        (declaration.anchor==PcbPlacementConstraints.Anchor.RIGHT && pad.getEscapeDx()>0 ||
-                         declaration.anchor==PcbPlacementConstraints.Anchor.LEFT && pad.getEscapeDx()<0)) throw new Rejected("CONNECTOR_FACING_OUTWARD");
+                        (resolvedAnchor==PcbPlacementConstraints.Anchor.RIGHT && pad.getEscapeDx()>0 ||
+                         resolvedAnchor==PcbPlacementConstraints.Anchor.LEFT && pad.getEscapeDx()<0)) throw new Rejected("CONNECTOR_FACING_OUTWARD");
                 anchors.add(item); anchorWidth=Math.max(anchorWidth,item.envelope.width+CHANNEL);
             } else {
                 String key=declaration.domainId+"/"+declaration.regionId;
@@ -85,8 +92,15 @@ final class PcbPlacementPlanner {
         if (demandArea>MAX_AREA/2) throw new Rejected("DEMAND_LIMIT");
         anchorWidth=align(anchorWidth); maxWidth=align(maxWidth);
         boolean leftAnchored=false,rightAnchored=false;
-        for(Item item:anchors) { leftAnchored |= item.demand.anchor==PcbPlacementConstraints.Anchor.LEFT; rightAnchored |= item.demand.anchor==PcbPlacementConstraints.Anchor.RIGHT; }
-        double[] aspects={1.4,1.9,1.0,2.4,1.2,1.65};
+        for(Item item:anchors) {
+            PcbPlacementConstraints.Anchor side=resolvedAnchor(item.demand,seed,candidate);
+            leftAnchored |= side==PcbPlacementConstraints.Anchor.LEFT;
+            rightAnchored |= side==PcbPlacementConstraints.Anchor.RIGHT;
+        }
+        // Tiny circuits need both single-column and single-row candidates.
+        double[] aspects=constraints.routingLayer==PcbCopperLayer.BOTTOM &&
+                board.getComponentIds().size()<=5 ?
+            new double[]{1.0,2.4,3.6,5.0,3.0,4.2} : new double[]{1.4,1.9,1.0,2.4,1.2,1.65};
         int contentWidth=align((int)Math.ceil(Math.sqrt(demandArea*aspects[variant])));
         contentWidth=Math.max(maxWidth+CHANNEL,contentWidth);
         int width=align(contentWidth+(leftAnchored?anchorWidth:0)+(rightAnchored?anchorWidth:0)+80);
@@ -104,7 +118,16 @@ final class PcbPlacementPlanner {
             for (Item item : region.items) { regionArea+=(long)(item.envelope.width+CHANNEL)*(item.envelope.height+CHANNEL); widest=Math.max(widest,item.envelope.width); }
             int roomWidth=Math.min(contentWidth, Math.max(widest+2*region.margin,align((int)Math.sqrt(regionArea*aspects[variant])+2*region.margin)));
             order(region.items,topology,seed ^ (0x9e3779b97f4a7c15L*(candidate+1)));
-            if(candidate>=OUTLINE_CANDIDATES && constraints.routingLayer==PcbCopperLayer.BOTTOM) NamedRandomStreams.shuffle(region.items,random);
+            if (constraints.routingLayer == PcbCopperLayer.BOTTOM && region.items.size() > 1) {
+                // Keep topology-neighbor ordering, but vary its start and direction.
+                // Different roots must not all converge on the same ranked first part.
+                int rotateBy=random.nextInt(region.items.size());
+                // GWT 2.7 does not emulate Collections.rotate.
+                for(int turn=0;turn<rotateBy;turn++)
+                    region.items.add(0,region.items.remove(region.items.size()-1));
+                if (random.nextBoolean()) Collections.reverse(region.items);
+                if (candidate >= OUTLINE_CANDIDATES) NamedRandomStreams.shuffle(region.items,random);
+            }
             int rx=region.margin,ry=region.margin,rh=0,used=0;
             for (Item item : region.items) {
                 if (rx+item.envelope.width+region.margin>roomWidth && rx>region.margin) { rx=region.margin; ry+=rh+CHANNEL; rh=0; }
@@ -120,13 +143,33 @@ final class PcbPlacementPlanner {
             }
             x+=region.width+CHANNEL; rowHeight=Math.max(rowHeight,region.height);
         }
-        int anchorY=60;
-        for (Item item : anchors) {
-            int ax=item.demand.anchor==PcbPlacementConstraints.Anchor.RIGHT ? width-40-item.envelope.width : 40;
-            item.footprint=item.footprint.translated(align(ax-item.envelope.x),align(anchorY-item.envelope.y));
-            placed.add(item.footprint); anchorY+=item.envelope.height+CHANNEL+constraints.margin(item.demand.domainId)*2;
+        int leftStack=0,rightStack=0;
+        for (Item item:anchors) {
+            int span=item.envelope.height+CHANNEL+constraints.margin(item.demand.domainId)*2;
+            if (resolvedAnchor(item.demand,seed,candidate)==PcbPlacementConstraints.Anchor.RIGHT) rightStack+=span;
+            else leftStack+=span;
         }
-        int height=align(Math.max(y+rowHeight+50,anchorY+30));
+        // An edge anchor is not a fixed corner. Use the actual available edge
+        // span for seeded top/middle/bottom placement, not decorative jitter.
+        int leftFree=Math.max(0,y+rowHeight-50-leftStack);
+        int rightFree=Math.max(0,y+rowHeight-50-rightStack);
+        int leftAnchorY=50+anchorOffset(seed,candidate,false);
+        int rightAnchorY=50+anchorOffset(seed,candidate,true);
+        if (constraints.routingLayer==PcbCopperLayer.BOTTOM) {
+            leftAnchorY+=align(leftFree*random.nextInt(5)/4);
+            rightAnchorY+=align(rightFree*random.nextInt(5)/4);
+        }
+        for (Item item : anchors) {
+            PcbPlacementConstraints.Anchor side=resolvedAnchor(item.demand,seed,candidate);
+            int anchorY=side==PcbPlacementConstraints.Anchor.RIGHT ? rightAnchorY : leftAnchorY;
+            int ax=side==PcbPlacementConstraints.Anchor.RIGHT ? width-40-item.envelope.width : 40;
+            item.footprint=item.footprint.translated(align(ax-item.envelope.x),align(anchorY-item.envelope.y));
+            placed.add(item.footprint);
+            int next=anchorY+item.envelope.height+CHANNEL+constraints.margin(item.demand.domainId)*2;
+            if(side==PcbPlacementConstraints.Anchor.RIGHT) rightAnchorY=next; else leftAnchorY=next;
+        }
+        int anchorBottom=Math.max(leftAnchorY,rightAnchorY);
+        int height=align(Math.max(y+rowHeight+50,anchorBottom+30));
         if (height>MAX_EXTENT || (long)width*height>MAX_AREA || (long)width*height>demandArea*6+300000)
             throw new Rejected("OUTLINE_BUDGET");
         Rectangle outline=new Rectangle(20,20,width,height);
@@ -157,6 +200,27 @@ final class PcbPlacementPlanner {
         for (String id : members.keySet()) navigation.add(new PcbLayoutRegion(id,labels.get(id),members.get(id)));
         return new Plan(outline,placed,navigation,courtyardArea,demandArea,variant,evaluations);
     }
+
+    private static PcbPlacementConstraints.Anchor resolvedAnchor(PcbPlacementConstraints.Part part,
+            long seed, int candidate) {
+        if (part.anchor != PcbPlacementConstraints.Anchor.EDGE) return part.anchor;
+        long value = seed ^ (0x9e3779b97f4a7c15L * (candidate + 1L)) ^
+            (0xbf58476d1ce4e5b9L * part.componentId.hashCode());
+        value ^= value >>> 30;
+        value *= 0x94d049bb133111ebL;
+        value ^= value >>> 31;
+        return (value & 1L) == 0 ? PcbPlacementConstraints.Anchor.LEFT :
+            PcbPlacementConstraints.Anchor.RIGHT;
+    }
+
+    private static int anchorOffset(long seed, int candidate, boolean right) {
+        long value = seed ^ (right ? 0xd1b54a32d192ed03L : 0x8cb92baa3f3d8dd7L) ^
+            (0x632be59bd9b4e019L * (candidate + 1L));
+        value ^= value >>> 29;
+        int bucket = (int)(value & 7L);
+        return bucket * 10;
+    }
+
     static Rectangle envelope(PcbFootprint footprint,int margin) {
         Rectangle r=footprint.getPlacement().getSelectionEnvelope();
         Rectangle c=footprint.getPlacement().getRoutingCourtyard(); r=union(r,c);

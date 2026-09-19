@@ -170,7 +170,7 @@ class DiodeProtectedIndicatorGenerator {
         return new GeneratedBoardInstance(board, elements, seed, FAMILY_ID,
             DIRECT_SERIES_VARIANT, description, components, power, connections,
             behaviorContract,
-            PCB_LAYOUT_GENERATOR.generate(board, seed), specs, faultBinding, operational,
+            ProceduralPcbLayout.generate(board, seed, FAMILY_ID), specs, faultBinding, operational,
             new GeneratedChallengeDefinition("DIODE_INDICATOR_NO_LIGHT", FAMILY_ID,
                 DIRECT_SERIES_VARIANT, seed, scenarios, fault, faultBinding, behaviorContract),
             new DiodeProtectedIndicatorFamilyState(), physicalRuntime, null, includeDeveloperShort,

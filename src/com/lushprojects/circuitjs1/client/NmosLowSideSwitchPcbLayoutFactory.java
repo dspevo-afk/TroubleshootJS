@@ -10,8 +10,7 @@ final class NmosLowSideSwitchPcbLayoutFactory {
             BoardPhysicalSpecifications specifications, long seed) {
         if (specifications == null)
             throw new IllegalArgumentException("Missing NMOS physical specifications");
-        int variationMode = variationMode(seed);
-        return createLayout(board, specifications, variationMode, seed, null, null);
+        return ProceduralPcbLayout.generate(board, seed, QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH);
     }
 
     /** Developer-only finite matrix path; it never searches for a route. */

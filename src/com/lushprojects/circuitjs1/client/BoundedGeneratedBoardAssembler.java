@@ -91,6 +91,68 @@ final class BoundedGeneratedBoardAssembler {
     }
 
     /** A10 may reuse only the immutable resolved plan, never a runtime owner. */
+    /** A job-owned immutable routing result. It cannot carry a solver or proof owner. */
+    static final class PreparedLayout {
+        private final BoundedAssemblyRequest request;
+        private final PcbBoardLayout layout;
+        private PreparedLayout(BoundedAssemblyPlan plan, PcbBoardLayout layout) {
+            if (plan == null || !plan.isControlledIndicator() || layout == null)
+                throw new IllegalArgumentException("Missing controlled physical plan");
+            request = plan.getRequest();
+            long seed = request.getDescriptor().getRootSeed();
+            if (!layout.matchesGenerationSeeds(
+                    ProceduralPcbLayout.seed(ControlledIndicatorDeviceBehavior.FAMILY_ID, seed, NamedRandomStreams.Concern.PLACEMENT),
+                    ProceduralPcbLayout.seed(ControlledIndicatorDeviceBehavior.FAMILY_ID, seed, NamedRandomStreams.Concern.ROUTING)))
+                throw new IllegalArgumentException("Physical plan has different procedural inputs");
+            layout.seal();
+            this.layout = layout.copySealed();
+        }
+        private PcbBoardLayout materialize(BoundedAssemblyPlan plan, TroubleshootBoard board) {
+            if (plan == null || plan.getRequest() != request || !plan.isControlledIndicator())
+                throw new IllegalArgumentException("Physical plan belongs to a different composition request");
+            ProceduralPcbLayout.declare(board);
+            // The ordinary assembler validates this fresh copy against its board,
+            // and normal installation applies the envelope before publication.
+            // Repeating both checks here adds no independent proof or ownership.
+            return layout.copySealed();
+        }
+    }
+
+    /** Route before allocating electrical resources; one bounded placement per job turn. */
+    static final class LayoutSession {
+        private final BoundedAssemblyPlan plan;
+        private final SeededPcbLayoutGenerator.Session routing;
+        private PreparedLayout result;
+        private LayoutSession(BoundedAssemblyPlan plan) {
+            if (plan == null || !plan.isControlledIndicator())
+                throw new IllegalArgumentException("Staged physical planning requires a controlled composition");
+            this.plan = plan;
+            TroubleshootBoard board = PhysicalConstructionMaterializer.describe(plan).getBoard();
+            ProceduralPcbLayout.declare(board);
+            long seed = plan.getRequest().getDescriptor().getRootSeed();
+            routing = new SeededPcbLayoutGenerator().begin(board,
+                ProceduralPcbLayout.seed(ControlledIndicatorDeviceBehavior.FAMILY_ID, seed, NamedRandomStreams.Concern.PLACEMENT),
+                ProceduralPcbLayout.seed(ControlledIndicatorDeviceBehavior.FAMILY_ID, seed, NamedRandomStreams.Concern.ROUTING),
+                SupportedEnvelope.current());
+        }
+        boolean advance() {
+            if (result != null) throw new IllegalStateException("Physical plan already completed");
+            if (!routing.advance()) return false;
+            result = new PreparedLayout(plan, routing.result());
+            return true;
+        }
+        PreparedLayout result() {
+            if (result == null) throw new IllegalStateException("Physical plan is incomplete");
+            return result;
+        }
+    }
+    static LayoutSession beginLayout(BoundedAssemblyPlan plan) { return new LayoutSession(plan); }
+
+    static Result assemblePreparedPlan(BoundedAssemblyPlan plan, PreparedLayout layout) {
+        if (layout == null) throw new IllegalArgumentException("Missing completed physical plan");
+        return assemblePlan(plan, null, null, layout);
+    }
+
     static Result assemblePreparedPlan(BoundedAssemblyPlan plan) {
         if (plan == null) throw new IllegalArgumentException("Missing prepared generation plan");
         return assemblePlan(plan, null, null);
@@ -104,6 +166,15 @@ final class BoundedGeneratedBoardAssembler {
     static Result assembleForDiagnosticProof(BoundedAssemblyRequest request,
             String qualifiedTargetComponentId) {
         return assembleResolved(request, qualifiedTargetComponentId, null);
+    }
+
+    static Result assembleForDiagnosticProof(BoundedAssemblyRequest request,
+            String qualifiedTargetComponentId, PreparedLayout layout) {
+        if (layout == null) return assembleForDiagnosticProof(request, qualifiedTargetComponentId);
+        if (layout.request != request)
+            throw new IllegalArgumentException("Diagnostic layout belongs to a different request");
+        BoundedAssemblyPlan plan = BoundedAssemblyPlan.resolveForDiagnosticFault(request, qualifiedTargetComponentId);
+        return assemblePlan(plan, null, null, layout);
     }
 
     /** Convenience entry for focused developer tests. */
@@ -137,7 +208,14 @@ final class BoundedGeneratedBoardAssembler {
 
     private static Result assemblePlan(BoundedAssemblyPlan plan, FailureProbe probe,
             RealizationManifest expectedManifest) {
-        Context context = new Context(plan, probe);
+        return assemblePlan(plan, probe, expectedManifest, null);
+    }
+    private static Result assemblePlan(BoundedAssemblyPlan plan, FailureProbe probe,
+            RealizationManifest expectedManifest, PreparedLayout layout) {
+        if (layout != null && (plan == null || !plan.isControlledIndicator() ||
+                layout.request != plan.getRequest()))
+            throw new IllegalArgumentException("Physical plan belongs to a different composition request");
+        Context context = new Context(plan, probe, layout);
         try {
             context.begin(Stage.MAPPING);
             context.buildBoardAndSpecifications();
@@ -368,9 +446,12 @@ final class BoundedGeneratedBoardAssembler {
         private int mappedIdentityCount;
         private Stage currentStage;
 
-        Context(BoundedAssemblyPlan plan, FailureProbe probe) {
+        private final PreparedLayout preparedLayout;
+        Context(BoundedAssemblyPlan plan, FailureProbe probe) { this(plan, probe, null); }
+        Context(BoundedAssemblyPlan plan, FailureProbe probe, PreparedLayout layout) {
             this.plan = plan;
             this.probe = probe;
+            this.preparedLayout = layout;
         }
 
         void buildBoardAndSpecifications() {
@@ -437,10 +518,10 @@ final class BoundedGeneratedBoardAssembler {
         }
 
         private PcbBoardLayout createPlannedLayout() {
-            return plan.isControlledIndicator() ?
-                ControlledIndicatorPcbLayoutFactory.create(board, specifications, plan) :
-                PCB_LAYOUT_GENERATOR.generate(board,
-                    plan.getRequest().getDescriptor().getRootSeed());
+            if (preparedLayout != null) return preparedLayout.materialize(plan, board);
+            if (plan.isControlledIndicator()) return ProceduralPcbLayout.generate(board,
+                plan.getRequest().getDescriptor().getRootSeed(), ControlledIndicatorDeviceBehavior.FAMILY_ID);
+            return PCB_LAYOUT_GENERATOR.generate(board, plan.getRequest().getDescriptor().getRootSeed());
         }
 
         void bindMappingsAndLayout() {
@@ -554,7 +635,8 @@ final class BoundedGeneratedBoardAssembler {
 
         private void buildControlledInstance() {
             ControlledIndicatorDeviceBehavior behavior =
-                new ControlledIndicatorDeviceBehavior(plan, constructionReceipt);
+                new ControlledIndicatorDeviceBehavior(plan, constructionReceipt,
+                    preparedLayout == null ? new PreparedLayout(plan, layout) : preparedLayout);
             GeneratedBoardFamilyState familyState = behavior.createFamilyState();
             GeneratedScenarioCatalog<GeneratedObservedBehavior> scenarios =
                 behavior.createScenarioCatalog();

@@ -9,7 +9,7 @@ import java.util.Vector;
  */
 class SeededPcbLayoutGenerator {
     /** Current corrected layout algorithm; package geometry remains contract v3. */
-    static final int CURRENT_VERSION = 12;
+    static final int CURRENT_VERSION = 13;
     private static final int GRID = 10;
     private static final int MAX_ATTEMPTS = 80;
     private static final int TARGET_VIABLE_CANDIDATES = 5;
@@ -78,11 +78,20 @@ class SeededPcbLayoutGenerator {
     Session begin(TroubleshootBoard board,long seed,long routingSeed) {
         return new Session(board,seed,routingSeed,attemptObserver);
     }
+    PcbBoardLayout generate(TroubleshootBoard board, long seed, long routingSeed, SupportedEnvelope envelope) {
+        Session session = new Session(board,seed,routingSeed,attemptObserver,envelope);
+        while (!session.advance()) { }
+        return session.result();
+    }
+    Session begin(TroubleshootBoard board,long seed,long routingSeed,SupportedEnvelope envelope) {
+        return new Session(board,seed,routingSeed,attemptObserver,envelope);
+    }
     /** One placement and its bounded routing alternatives per generation work unit. */
     final class Session {
         private final TroubleshootBoard board;
         private final long seed,routingSeed;
         private final AttemptObserver observer;
+        private final SupportedEnvelope envelope;
         private final GenerationStatistics statistics=new GenerationStatistics();
         private PcbRoutingRejectedException lastFailure;
         private PcbBoardLayout bestLayout;
@@ -91,6 +100,10 @@ class SeededPcbLayoutGenerator {
         private int attempt,viableCandidates;
         private boolean complete;
         Session(TroubleshootBoard board,long seed,long routingSeed,AttemptObserver observer) {
+            this(board,seed,routingSeed,observer,null);
+        }
+        Session(TroubleshootBoard board,long seed,long routingSeed,AttemptObserver observer,SupportedEnvelope envelope) {
+            this.envelope=envelope;
             if(board==null)throw new IllegalArgumentException("Missing logical board for PCB generation");
             this.board=board;this.seed=seed;this.routingSeed=routingSeed;
             this.observer=observer==null?attemptObserver:observer;
@@ -103,6 +116,7 @@ class SeededPcbLayoutGenerator {
                 int variationMode = (int) ((seed % 4 + 4) % 4);
                 PcbBoardLayout candidate = generateAttempt(board, seed,
                     variationMode, attempt, observer,routingSeed,statistics);
+                if (envelope != null) envelope.requireBounds(board,candidate);
                 double score = candidate.getRouteQualityScore(board);
                 Rectangle bounds = candidate.getBoardOutline();
                 long area = (long)bounds.width * bounds.height;
@@ -115,6 +129,9 @@ class SeededPcbLayoutGenerator {
             } catch (CandidateRejected failure) {
                 lastFailure = PcbRoutingRejectedException.attemptRejected(
                     failure.getKind(), attempt, seed, failure.getMessage(),failure.recovery);
+            } catch (SupportedEnvelope.Rejected failure) {
+                lastFailure = PcbRoutingRejectedException.attemptRejected(
+                    PcbRoutingRejectedException.Kind.PLACEMENT, attempt, seed, failure.getMessage());
             } catch (PcbBoardLayout.RouteQualityRejectedException failure) {
                 lastFailure = PcbRoutingRejectedException.attemptRejected(
                     PcbRoutingRejectedException.Kind.ROUTING, attempt, seed,
@@ -181,12 +198,27 @@ class SeededPcbLayoutGenerator {
             statistics.routeMillis+=System.currentTimeMillis()-routingStarted;
         }
         PcbRoutingWork.Statistics recovery=layout.getRoutingRecoveryStatistics();
+        PcbPlacementCompactor.Routed compact=PcbPlacementCompactor.compactRouted(board,board.getPlacementConstraints(),plan,layout);
+        plan=compact.plan;layout=compact.layout;outline=plan.outline;
         layout.setRoutingRecoveryStatistics(recovery);
         placeSilkscreen(layout, board, outline);
         layout.validateGeometry(board);
         int edgeMargin=FINAL_EDGE_MARGIN;
         for(PcbPlacementConstraints.Part demand:board.getPlacementConstraints().getParts())
             edgeMargin=Math.max(edgeMargin,demand.accessMargin+30);
+        // Cropping visible ink must also retain unpainted escape/access corridors.
+        // Otherwise valid layouts with a low LED or a left-facing resistor are
+        // rejected after routing, biasing every root toward the same arrangement.
+        Rectangle occupied=layout.getOccupiedContentBounds();
+        for (PcbFootprint footprint:plan.footprints) {
+            PcbPlacementConstraints.Part demand=board.getPlacementConstraints().get(
+                footprint.getPlacement().getComponentId());
+            Rectangle access=PcbPlacementPlanner.envelope(footprint,demand.accessMargin);
+            edgeMargin=Math.max(edgeMargin,occupied.x-access.x+10);
+            edgeMargin=Math.max(edgeMargin,occupied.y-access.y+10);
+            edgeMargin=Math.max(edgeMargin,access.x+access.width-occupied.x-occupied.width+10);
+            edgeMargin=Math.max(edgeMargin,access.y+access.height-occupied.y-occupied.height+10);
+        }
         layout.compactToContent(FINAL_BOARD_X + variationMode * 10,
             FINAL_BOARD_Y + (variationMode % 2) * 10, edgeMargin);
         layout.positionPartsTrayDisjointFromBoard();

@@ -15,7 +15,7 @@ class PhysicalResistorPart implements PhysicalPart<ResistorNameplate>, Generated
     private final PhysicalPartTerminal[] terminals;
     private final CircuitPhysicalPartElectricalBacking backing;
     private final PhysicalPartMountState mountState = new PhysicalPartMountState();
-    private final PhysicalPartGeometryRealization geometryRealization =
+    private PhysicalPartGeometryRealization geometryRealization =
         new PhysicalPartGeometryRealization();
     private final PhysicalPartProvenance provenance;
     private final Vector<PhysicalPartCapability> capabilities =
@@ -99,6 +99,38 @@ class PhysicalResistorPart implements PhysicalPart<ResistorNameplate>, Generated
     public void bindGeometryRealization(PhysicalGeometryRealization realization) {
         geometryRealization.bind(getPackage(), realization);
     }
+    /** Only unused, loose catalog axial stock can choose its first lead formation. */
+    static boolean hasUnformedCatalogLeads(PhysicalPart<?> candidate) {
+        if (!(candidate instanceof PhysicalResistorPart)) return false;
+        PhysicalResistorPart part = (PhysicalResistorPart) candidate;
+        return part.getGeometryRealization() == null && !part.isInstalled() &&
+            part.getBoardSlot() == null && part.faultBinding == null &&
+            PhysicalPartProvenance.CATALOG_ACQUIRED.equals(part.provenance.getKind()) &&
+            PhysicalPackages.AXIAL_RESISTOR.isEquivalentTo(part.getPackage());
+    }
+
+    /** Formation belongs to the installation transaction, not an availability query. */
+    PhysicalMutationScope.ProviderCompensation formLeadsForMutation(final PhysicalMutationScope scope) {
+        if (scope == null || scope.isClosed() || !scope.ownsPart(this) ||
+                scope.getIntent().getRequestedPart() != this ||
+                !scope.owns(scope.getIntent().getSlot()) ||
+                !"install".equals(scope.getIntent().getOperation()) || !hasUnformedCatalogLeads(this))
+            throw new IllegalStateException("Lead formation requires the owned loose catalog resistor");
+        final PhysicalPartGeometryRealization before = geometryRealization;
+        final PhysicalPartGeometryRealization formed = new PhysicalPartGeometryRealization();
+        formed.bind(getPackage(), scope.getIntent().getPhysicalSlot().getGeometryRealization());
+        geometryRealization = formed;
+        return new PhysicalMutationScope.ProviderCompensation() {
+            public void compensate() {
+                if (scope.isClosed() || !scope.ownsPart(PhysicalResistorPart.this) ||
+                        !scope.owns(scope.getIntent().getSlot()) ||
+                        isInstalled() || getBoardSlot() != null || geometryRealization != formed)
+                    throw new IllegalStateException("Cannot restore a foreign or mounted resistor formation");
+                geometryRealization = before;
+            }
+        };
+    }
+
     public PhysicalPartMountState getMountState() { return mountState; }
     public PhysicalBoardSlot getBoardSlot() { return mountState.getSlot(); }
     public PhysicalPartProvenance getProvenance() { return provenance; }

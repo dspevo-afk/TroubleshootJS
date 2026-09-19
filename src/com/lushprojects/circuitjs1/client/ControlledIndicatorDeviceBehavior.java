@@ -28,12 +28,17 @@ final class ControlledIndicatorDeviceBehavior
     private static final double UNPOWERED_CURRENT = .000001;
 
     private final BoundedAssemblyPlan plan;
+    private final BoundedGeneratedBoardAssembler.PreparedLayout physicalPlan;
     private final ConstructionReceipt constructionReceipt;
     private final Map<String, ElectricalConstructionContext.ControlCommandHandle> commands;
     private final Map<String, ControlledIndicatorDriverObservation> driverProviders;
 
     ControlledIndicatorDeviceBehavior(BoundedAssemblyPlan plan,
-            ConstructionReceipt constructionReceipt) {
+            ConstructionReceipt constructionReceipt) { this(plan, constructionReceipt, null); }
+
+    ControlledIndicatorDeviceBehavior(BoundedAssemblyPlan plan,
+            ConstructionReceipt constructionReceipt, BoundedGeneratedBoardAssembler.PreparedLayout physicalPlan) {
+        this.physicalPlan = physicalPlan;
         if (plan == null || !plan.isControlledIndicator())
             throw new IllegalArgumentException("Controlled indicator plan is required");
         if (constructionReceipt == null || constructionReceipt.isAborted())
@@ -584,7 +589,7 @@ final class ControlledIndicatorDeviceBehavior
                 !plan.getDecisionOwners().containsValue(hypothesis.getFault().getTargetComponentId()))
             throw new IllegalArgumentException("Diagnostic hypothesis is outside this composed recipe");
         GeneratedBoardInstance result = BoundedGeneratedBoardAssembler.assembleForDiagnosticProof(
-            plan.getRequest(), hypothesis.getFault().getTargetComponentId()).getInstance();
+            plan.getRequest(), hypothesis.getFault().getTargetComponentId(), physicalPlan).getInstance();
         require(result.getBehaviorContract() instanceof ControlledIndicatorDeviceBehavior,
             "Diagnostic replay changed the composed behavior owner");
         ControlledIndicatorDeviceBehavior replay =

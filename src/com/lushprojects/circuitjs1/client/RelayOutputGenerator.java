@@ -17,7 +17,7 @@ final class RelayOutputGenerator {
     GeneratedBoardInstance generateResolved(long seed, GeneratedFaultType forced, Rb15Plan plan) {
         if(plan!=null && plan.seed!=seed)throw new IllegalArgumentException("Control-board seed disagrees with resolved plan");
         if(plan!=null && plan.getRoutedLayout()==null)
-            plan=plan.withRoutedLayout(new SeededPcbLayoutGenerator().generate(plan.board(),plan.layoutSeed,plan.routingSeed));
+            plan=plan.withRoutedLayout(new SeededPcbLayoutGenerator().generate(plan.board(),plan.layoutSeed,plan.routingSeed,SupportedEnvelope.current()));
         RelayDriverProvider driver = plan == null ? ((seed & 1) == 0 ? new RelayDriverProvider.Bjt() : new RelayDriverProvider.Nmos()) : plan.driver();
         String family = plan == null ? FAMILY_ID : Rb15Plan.FAMILY_ID;
         String loadSupply = plan == null ? "CONTACT_SUPPLY" : "CTRL_SUPPLY";

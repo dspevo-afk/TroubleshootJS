@@ -355,7 +355,8 @@ final class GenerationCoordinator {
                 proof.finish();
                 if (request.getDifficulty() != null) {
                     difficulty = DifficultyAssessment.assess(candidate, sim.getGeneratedChallengeController().getDiagnosticProofReceipt());
-                    difficulty.require(request.getDifficulty());
+                    if (difficulty.profile != request.getDifficulty())
+                        throw new GenerationJob.Rejected("The proved board does not match the requested difficulty");
                 }
                 if (job.getCandidateStageWorkCount(GenerationJob.Stage.HYPOTHESES) !=
                         GeneratedDiagnosticProofService.requiredWorkUnits(candidate,

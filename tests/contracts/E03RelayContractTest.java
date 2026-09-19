@@ -75,7 +75,7 @@ public final class E03RelayContractTest {
         }
         for(long value : new long[] {Long.MIN_VALUE,Long.MAX_VALUE,-1,0,1,2,3,4,5,9007199254740993L}) {
             long seed=QuickPlayFamilyRegistry.selectNormalPlayerSeed(QuickPlayFamilyRegistry.RELAY_OUTPUT,value);
-            check(seed>=0 && seed<=5);
+            check(seed==value); // Every signed-long root reaches procedural admission unchanged.
         }
         System.out.println("PASS: E03 relay contracts " + assertions + " assertions");
     }

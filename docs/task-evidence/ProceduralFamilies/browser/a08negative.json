@@ -1,0 +1,24 @@
+{
+  "mode": "a08negative",
+  "outcome": "PASS",
+  "errors": [],
+  "cases": [],
+  "status": "FAIL:a08:a08-explicit-failure-canary",
+  "attributes": {
+    "data-tsj-verification": "FAIL:a08:a08-explicit-failure-canary"
+  },
+  "resources": [
+    "http://127.0.0.1:59297/circuitjs1/circuitjs1.nocache.js",
+    "http://127.0.0.1:59297/circuitjs1/F63F0B949660B0B120FDF246ECE5A01D.cache.js"
+  ],
+  "console": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (File not found)"
+    }
+  ],
+  "cleanup": {
+    "serverThreadStopped": true,
+    "ownedSurvivors": []
+  }
+}

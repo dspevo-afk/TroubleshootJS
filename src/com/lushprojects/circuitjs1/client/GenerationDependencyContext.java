@@ -21,7 +21,7 @@ import java.util.Vector;
  */
 final class GenerationDependencyContext {
     /** Current interpretation epoch.  Caches are valid only in this runtime. */
-    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v10";
+    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v11";
     static final String CIRCUIT_DUMP_EPOCH =
         "circuitjs-source-load-model-inputs-no-transient-dump-v3";
     static final String POWER_REFERENCE_STORAGE_SEAM = "power-domain-contract-v1";

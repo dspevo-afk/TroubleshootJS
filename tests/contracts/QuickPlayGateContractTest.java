@@ -9,8 +9,18 @@ public final class QuickPlayGateContractTest {
     public static void main(String[] args) {
         for(long seed:new long[]{0,1,-1,Long.MIN_VALUE,Long.MAX_VALUE,9007199254740993L,-4518705223253195925L}) selection(seed);
         for(int i=0;i<1024;i++) selection(QuickPlayGateCorpus.seed(false,i));
-        check(!QuickPlayAdmission.supports("RC_DELAY",DifficultyProfile.EASY),"Reference layout must not claim diversity");
-        check(!QuickPlayAdmission.supports(Rb15Plan.FAMILY_ID,DifficultyProfile.MEDIUM),"Unqualified profile admitted");
+        for(long seed:new long[]{0,1,-1,Long.MIN_VALUE,Long.MAX_VALUE,9007199254740993L})
+            mediumSelection(seed);
+        for(String family:PlayerFamilyCatalog.families())for(DifficultyProfile profile:DifficultyProfile.values())
+            check(QuickPlayAdmission.supports(family,profile)==profile.isAvailable(),
+                "A normal family or available difficulty retained a fixed-layout fallback");
+        check(!QuickPlayAdmission.supports("UNKNOWN",DifficultyProfile.EASY) &&
+            !QuickPlayAdmission.supports(Rb15Plan.FAMILY_ID,null),"Unknown family/profile admitted");
+        boolean epoch2=false;try{PlayerLaunchRequest.parse("tsj-alpha/2/EASY/RELAY_OUTPUT/4");}
+        catch(IllegalArgumentException expected){epoch2=true;}
+        check(epoch2,"Previous physical interpretation silently reinterpreted");
+        check(QuickPlayAdmission.supports(ControlledIndicatorBlockContributions.FAMILY_ID, DifficultyProfile.MEDIUM),
+            "Procedural Medium family omitted from broad-seed admission");
         boolean old=false; try {PlayerLaunchRequest.parse("tsj-alpha/1/EASY/RB15_CONTROL/0");} catch(IllegalArgumentException expected){old=true;}
         check(old,"Old interpretation silently accepted");
         scheduler(); session();
@@ -41,6 +51,27 @@ public final class QuickPlayGateContractTest {
         rejected=false;try{request.resolve(new GenerationRequest.PlanCache());}catch(IllegalStateException expected){rejected=true;}
         check(rejected,"Search bypassed coordinator");
     }
+    private static void mediumSelection(long seed) {
+        PlayerLaunchRequest launch = PlayerLaunchRequest.random(
+            ControlledIndicatorBlockContributions.FAMILY_ID, Long.toString(seed), "MEDIUM");
+        GenerationRequest request = launch.generation();
+        check(launch.seed == seed && launch.candidateSearch && request.candidateCount() == 4,
+            "Medium entropy was collapsed to a curated seed");
+        HashSet<Long> seen = new HashSet<Long>();
+        for (int i = 0; i < request.candidateCount(); i++) {
+            GenerationRequest exact = request.candidate(i);
+            long value = exact.getDescriptor().getRootSeed();
+            check(exact.isComposition() && seen.add(value),
+                "Medium candidate lost composition or duplicated a seed");
+            check(i != 0 || value == seed, "Medium first candidate changed launch entropy");
+            PlayerLaunchRequest accepted = launch.accepted(value);
+            GenerationRequest replay = PlayerLaunchRequest.parse(accepted.replay()).generation();
+            check(!accepted.candidateSearch && replay.isComposition() && replay.candidateCount() == 1 &&
+                    replay.getDescriptor().getRootSeed() == value,
+                "Medium accepted replay changed or retried the exact board");
+        }
+    }
+
     private static void session() {
         PlayerSession session=new PlayerSession();
         PlayerLaunchRequest launch=PlayerLaunchRequest.random(Rb15Plan.FAMILY_ID,"7","EASY");

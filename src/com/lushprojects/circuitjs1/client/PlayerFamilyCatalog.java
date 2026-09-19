@@ -11,16 +11,8 @@ final class PlayerFamilyCatalog {
     }
     static boolean contains(String id) { return families().contains(id); }
     static long selectNormalPlayerSeed(String id, long entropy) {
-        if (QuickPlayFamilyRegistry.isNormalPlayerEligible(id))
-            return QuickPlayFamilyRegistry.selectNormalPlayerSeed(id, entropy);
-        if (!ControlledIndicatorBlockContributions.FAMILY_ID.equals(id))
-            throw new IllegalArgumentException("Unknown player family");
-        // Frozen composed-board alpha corpus. Qualification does not admit the
-        // rest of the procedural space; exact replay remains separately available.
-        long[] seeds = {0, 3};
-        for (long seed : seeds) if (seed == entropy) return seed;
-        int index = (int)(entropy % seeds.length);
-        return seeds[index < 0 ? index + seeds.length : index];
+        if (!contains(id)) throw new IllegalArgumentException("Unknown player family");
+        return entropy;
     }
     static String name(String id) {
         if (QuickPlayFamilyRegistry.LED_INDICATOR.equals(id)) return "Indicator board";
@@ -29,7 +21,7 @@ final class PlayerFamilyCatalog {
         if (QuickPlayFamilyRegistry.RC_DELAY.equals(id)) return "Timing board";
         if (QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(id)) return "BJT output driver";
         if (QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(id)) return "MOSFET output driver";
-        if (QuickPlayFamilyRegistry.RELAY_OUTPUT.equals(id)) return "Relay output reference";
+        if (QuickPlayFamilyRegistry.RELAY_OUTPUT.equals(id)) return "Relay output board";
         if (Rb15Plan.FAMILY_ID.equals(id)) return "Procedural control board";
         if (ControlledIndicatorBlockContributions.FAMILY_ID.equals(id)) return "Two-channel controller";
         throw new IllegalArgumentException("Unknown player family");

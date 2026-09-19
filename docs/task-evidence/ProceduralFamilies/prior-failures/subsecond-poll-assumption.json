@@ -1,0 +1,429 @@
+{
+  "mode": "normal",
+  "outcome": "FAIL",
+  "errors": [],
+  "cases": [
+    {
+      "family": "LED_INDICATOR",
+      "launchSeed": "0",
+      "profile": "EASY",
+      "state": {
+        "token": 3,
+        "screen": "TICKET",
+        "message": "",
+        "notice": "",
+        "epoch": "tsj-alpha/3",
+        "build": "F63F0B949660B0B120FDF246ECE5A01D",
+        "hasBoard": true,
+        "replay": "tsj-alpha/3/EASY/LED_INDICATOR/0",
+        "profile": "EASY",
+        "families": [
+          {
+            "id": "LED_INDICATOR",
+            "name": "Indicator board",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "DIODE_PROTECTED_INDICATOR",
+            "name": "Protected indicator",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "PARALLEL_DUAL_INDICATOR",
+            "name": "Dual indicator",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "RC_DELAY",
+            "name": "Timing board",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "NPN_LOW_SIDE_SWITCH",
+            "name": "BJT output driver",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "NMOS_LOW_SIDE_SWITCH",
+            "name": "MOSFET output driver",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "RELAY_OUTPUT",
+            "name": "Relay output board",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "RB15_CONTROL",
+            "name": "Procedural control board",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "COMPOSED_CONTROLLED_INDICATOR",
+            "name": "Two-channel controller",
+            "profile": "MEDIUM",
+            "procedural": true
+          }
+        ],
+        "complaint": "Indicator does not light.",
+        "retestInstruction": "Observe the indicator after repair.",
+        "ready": true,
+        "completed": false,
+        "isolated": false
+      },
+      "seconds": 0.3222434999770485,
+      "progressSamples": [
+        {
+          "label": "Candidate 1 of 4: Resolve circuit",
+          "paused": false,
+          "activeElapsedMs": 7,
+          "percent": 0,
+          "candidate": 0,
+          "candidates": 4,
+          "phase": 1,
+          "phases": 6,
+          "units": 0,
+          "elapsedMs": 2,
+          "lastUpdateAgeMs": 2
+        },
+        {
+          "label": "Candidate 1 of 4: Verify measurements and repairs",
+          "paused": false,
+          "activeElapsedMs": 165,
+          "percent": 54,
+          "candidate": 1,
+          "candidates": 4,
+          "phase": 4,
+          "phases": 6,
+          "units": 17,
+          "elapsedMs": 160,
+          "lastUpdateAgeMs": 0
+        }
+      ],
+      "workbench": true,
+      "privacy": true
+    },
+    {
+      "family": "LED_INDICATOR",
+      "launchSeed": "17",
+      "profile": "EASY",
+      "state": {
+        "token": 3,
+        "screen": "TICKET",
+        "message": "",
+        "notice": "",
+        "epoch": "tsj-alpha/3",
+        "build": "F63F0B949660B0B120FDF246ECE5A01D",
+        "hasBoard": true,
+        "replay": "tsj-alpha/3/EASY/LED_INDICATOR/17",
+        "profile": "EASY",
+        "families": [
+          {
+            "id": "LED_INDICATOR",
+            "name": "Indicator board",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "DIODE_PROTECTED_INDICATOR",
+            "name": "Protected indicator",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "PARALLEL_DUAL_INDICATOR",
+            "name": "Dual indicator",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "RC_DELAY",
+            "name": "Timing board",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "NPN_LOW_SIDE_SWITCH",
+            "name": "BJT output driver",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "NMOS_LOW_SIDE_SWITCH",
+            "name": "MOSFET output driver",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "RELAY_OUTPUT",
+            "name": "Relay output board",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "RB15_CONTROL",
+            "name": "Procedural control board",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "COMPOSED_CONTROLLED_INDICATOR",
+            "name": "Two-channel controller",
+            "profile": "MEDIUM",
+            "procedural": true
+          }
+        ],
+        "complaint": "Indicator does not light.",
+        "retestInstruction": "Observe the indicator after repair.",
+        "ready": true,
+        "completed": false,
+        "isolated": false
+      },
+      "seconds": 0.3289441000088118,
+      "progressSamples": [
+        {
+          "label": "Candidate 1 of 4: Resolve circuit",
+          "paused": false,
+          "activeElapsedMs": 6,
+          "percent": 0,
+          "candidate": 0,
+          "candidates": 4,
+          "phase": 1,
+          "phases": 6,
+          "units": 0,
+          "elapsedMs": 3,
+          "lastUpdateAgeMs": 3
+        },
+        {
+          "label": "Candidate 1 of 4: Verify measurements and repairs",
+          "paused": false,
+          "activeElapsedMs": 176,
+          "percent": 55,
+          "candidate": 1,
+          "candidates": 4,
+          "phase": 4,
+          "phases": 6,
+          "units": 22,
+          "elapsedMs": 173,
+          "lastUpdateAgeMs": 1
+        }
+      ],
+      "workbench": true,
+      "privacy": true
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "launchSeed": "0",
+      "profile": "EASY",
+      "state": {
+        "token": 3,
+        "screen": "TICKET",
+        "message": "",
+        "notice": "",
+        "epoch": "tsj-alpha/3",
+        "build": "F63F0B949660B0B120FDF246ECE5A01D",
+        "hasBoard": true,
+        "replay": "tsj-alpha/3/EASY/DIODE_PROTECTED_INDICATOR/0",
+        "profile": "EASY",
+        "families": [
+          {
+            "id": "LED_INDICATOR",
+            "name": "Indicator board",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "DIODE_PROTECTED_INDICATOR",
+            "name": "Protected indicator",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "PARALLEL_DUAL_INDICATOR",
+            "name": "Dual indicator",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "RC_DELAY",
+            "name": "Timing board",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "NPN_LOW_SIDE_SWITCH",
+            "name": "BJT output driver",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "NMOS_LOW_SIDE_SWITCH",
+            "name": "MOSFET output driver",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "RELAY_OUTPUT",
+            "name": "Relay output board",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "RB15_CONTROL",
+            "name": "Procedural control board",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "COMPOSED_CONTROLLED_INDICATOR",
+            "name": "Two-channel controller",
+            "profile": "MEDIUM",
+            "procedural": true
+          }
+        ],
+        "complaint": "Indicator does not light.",
+        "retestInstruction": "Observe the protected indicator after repair.",
+        "ready": true,
+        "completed": false,
+        "isolated": false
+      },
+      "seconds": 0.32770770002389327,
+      "progressSamples": [
+        {
+          "label": "Candidate 1 of 4: Resolve circuit",
+          "paused": false,
+          "activeElapsedMs": 4,
+          "percent": 0,
+          "candidate": 0,
+          "candidates": 4,
+          "phase": 1,
+          "phases": 6,
+          "units": 0,
+          "elapsedMs": 2,
+          "lastUpdateAgeMs": 2
+        },
+        {
+          "label": "Candidate 1 of 4: Verify measurements and repairs",
+          "paused": false,
+          "activeElapsedMs": 161,
+          "percent": 62,
+          "candidate": 1,
+          "candidates": 4,
+          "phase": 4,
+          "phases": 6,
+          "units": 17,
+          "elapsedMs": 159,
+          "lastUpdateAgeMs": 0
+        }
+      ],
+      "workbench": true,
+      "privacy": true
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "launchSeed": "17",
+      "profile": "EASY",
+      "state": {
+        "token": 3,
+        "screen": "TICKET",
+        "message": "",
+        "notice": "",
+        "epoch": "tsj-alpha/3",
+        "build": "F63F0B949660B0B120FDF246ECE5A01D",
+        "hasBoard": true,
+        "replay": "tsj-alpha/3/EASY/DIODE_PROTECTED_INDICATOR/17",
+        "profile": "EASY",
+        "families": [
+          {
+            "id": "LED_INDICATOR",
+            "name": "Indicator board",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "DIODE_PROTECTED_INDICATOR",
+            "name": "Protected indicator",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "PARALLEL_DUAL_INDICATOR",
+            "name": "Dual indicator",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "RC_DELAY",
+            "name": "Timing board",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "NPN_LOW_SIDE_SWITCH",
+            "name": "BJT output driver",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "NMOS_LOW_SIDE_SWITCH",
+            "name": "MOSFET output driver",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "RELAY_OUTPUT",
+            "name": "Relay output board",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "RB15_CONTROL",
+            "name": "Procedural control board",
+            "profile": "EASY",
+            "procedural": true
+          },
+          {
+            "id": "COMPOSED_CONTROLLED_INDICATOR",
+            "name": "Two-channel controller",
+            "profile": "MEDIUM",
+            "procedural": true
+          }
+        ],
+        "complaint": "Indicator does not light.",
+        "retestInstruction": "Observe the protected indicator after repair.",
+        "ready": true,
+        "completed": false,
+        "isolated": false
+      },
+      "seconds": 0.1618206999846734,
+      "progressSamples": [
+        {
+          "label": "Candidate 1 of 4: Resolve circuit",
+          "paused": false,
+          "activeElapsedMs": 4,
+          "percent": 0,
+          "candidate": 0,
+          "candidates": 4,
+          "phase": 1,
+          "phases": 6,
+          "units": 0,
+          "elapsedMs": 2,
+          "lastUpdateAgeMs": 2
+        }
+      ]
+    }
+  ],
+  "failure": "Traceback (most recent call last):\n  File \"$EVIDENCE\\verify_all.py\", line 73, in <module>\n    assert not samples or max(p['percent'] for p in samples)>0,row\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: {'family': 'DIODE_PROTECTED_INDICATOR', 'launchSeed': '17', 'profile': 'EASY', 'state': {'token': 3, 'screen': 'TICKET', 'message': '', 'notice': '', 'epoch': 'tsj-alpha/3', 'build': 'F63F0B949660B0B120FDF246ECE5A01D', 'hasBoard': True, 'replay': 'tsj-alpha/3/EASY/DIODE_PROTECTED_INDICATOR/17', 'profile': 'EASY', 'families': [{'id': 'LED_INDICATOR', 'name': 'Indicator board', 'profile': 'EASY', 'procedural': True}, {'id': 'DIODE_PROTECTED_INDICATOR', 'name': 'Protected indicator', 'profile': 'EASY', 'procedural': True}, {'id': 'PARALLEL_DUAL_INDICATOR', 'name': 'Dual indicator', 'profile': 'EASY', 'procedural': True}, {'id': 'RC_DELAY', 'name': 'Timing board', 'profile': 'EASY', 'procedural': True}, {'id': 'NPN_LOW_SIDE_SWITCH', 'name': 'BJT output driver', 'profile': 'EASY', 'procedural': True}, {'id': 'NMOS_LOW_SIDE_SWITCH', 'name': 'MOSFET output driver', 'profile': 'EASY', 'procedural': True}, {'id': 'RELAY_OUTPUT', 'name': 'Relay output board', 'profile': 'EASY', 'procedural': True}, {'id': 'RB15_CONTROL', 'name': 'Procedural control board', 'profile': 'EASY', 'procedural': True}, {'id': 'COMPOSED_CONTROLLED_INDICATOR', 'name': 'Two-channel controller', 'profile': 'MEDIUM', 'procedural': True}], 'complaint': 'Indicator does not light.', 'retestInstruction': 'Observe the protected indicator after repair.', 'ready': True, 'completed': False, 'isolated': False}, 'seconds': 0.1618206999846734, 'progressSamples': [{'label': 'Candidate 1 of 4: Resolve circuit', 'paused': False, 'activeElapsedMs': 4, 'percent': 0, 'candidate': 0, 'candidates': 4, 'phase': 1, 'phases': 6, 'units': 0, 'elapsedMs': 2, 'lastUpdateAgeMs': 2}]}\n",
+  "cleanup": {
+    "serverThreadStopped": true,
+    "ownedSurvivors": []
+  }
+}
