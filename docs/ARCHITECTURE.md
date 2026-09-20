@@ -12,6 +12,25 @@ instruments, valid repair behavior and answer privacy remain required. The
 [current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
 older evidence packets describe their own historical candidates.
 
+## Windows Quick Play preview lifecycle
+
+`Start TroubleshootJS.cmd` calls `start-preview.ps1` for the production Quick
+Play page. The launcher checks for an existing owned preview, archives only
+provably stale local state, and starts `preview.ps1` with a 60-second readiness
+allowance. The child computes execution-tree provenance before binding its
+loopback listener; this work can exceed the former 15-second allowance. Empty
+stderr after a readiness timeout yields an explicit timeout message and proven
+process/listener cleanup, rather than a null-method error. The CLI suppresses
+PowerShell's unapproved-verb import warning for this internal module.
+
+`stop-preview.ps1` first uses the full recorded PID, start, parent and command
+identity. When the short-lived launcher parent has exited, it also accepts a
+detached preview only after the recorded parent is positively absent, the
+current process matches its PID/start/command/script/port, the live loopback
+identity route independently confirms the same worktree/script/PID/start/port,
+and a final process query still matches. Exact stop and listener-absence proof
+precede state deletion. Ambiguous identity retains state and the process.
+
 ## Procedural Quick Play admission and exact replay
 
 QuickPlayAdmission version4 covers the nine currently selectable family/profile pairs:

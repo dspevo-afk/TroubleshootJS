@@ -8,7 +8,7 @@ $ErrorActionPreference = 'Stop'
 
 $modulePath = Join-Path $PSScriptRoot 'VerifierIsolation.psm1'
 try {
-    Import-Module $modulePath -Force -ErrorAction Stop
+    Import-Module $modulePath -Force -DisableNameChecking -ErrorAction Stop
 } catch {
     # A PowerShell non-terminating error can override an explicit exit 2 on
     # Windows PowerShell 5.1. Emit setup diagnostics directly to stderr; the
@@ -102,9 +102,78 @@ try {
     # Re-query the current PID and Win32_Process record. Exact -File/-Port
     # token boundaries, canonical paths, start identity, and the current
     # Process object are all required before termination.
-    $identity = Get-VerifierCurrentProcessIdentity $processId $startTicks `
-        $expectedParentProcessId $expectedCommandLine `
-        $previewScript $port '' '' $expectedParentProcessStartTicks
+    $identity = $null
+    try {
+        $identity = Get-VerifierCurrentProcessIdentity $processId $startTicks `
+            $expectedParentProcessId $expectedCommandLine `
+            $previewScript $port '' '' $expectedParentProcessStartTicks
+    } catch {
+        # A successful detached launch outlives its short-lived launcher.
+        # In that case, the recorded parent must be absent, while the current
+        # PID/start/command and the live preview route independently agree.
+        if ($null -ne (Get-VerifierCurrentProcessRecordById $expectedParentProcessId)) {
+            throw
+        }
+        $record = Get-VerifierCurrentProcessRecordById $processId
+        if ($null -eq $record -or
+                [int]$record.ParentProcessId -ne $expectedParentProcessId -or
+                [long]$record.ProcessStartTicks -ne $startTicks -or
+                -not (Test-VerifierCommandLineEquivalent `
+                    ([string]$record.CommandLine) $expectedCommandLine) -or
+                -not (Test-VerifierCommandLinePath `
+                    ([string]$record.CommandLine) $previewScript) -or
+                -not (Test-VerifierCommandLineSwitch `
+                    ([string]$record.CommandLine) '-Port' ([string]$port))) {
+            throw
+        }
+        $route = Invoke-WebRequest -UseBasicParsing `
+            -Uri "http://127.0.0.1:$port/__tsj/verify-identity" -TimeoutSec 2 `
+            -ErrorAction Stop
+        if ([int]$route.StatusCode -ne 200) { throw }
+        $proof = $route.Content | ConvertFrom-Json -ErrorAction Stop
+        $proofPort = 0
+        $proofProcessId = 0
+        $proofStartTicks = 0L
+        if ($null -eq $proof -or
+                [string]$proof.protocol -cne 'troubleshootjs-preview-identity-v1' -or
+                -not (Test-VerifierCanonicalWindowsPathValue `
+                    ([string]$proof.repositoryRoot) $repositoryRoot) -or
+                -not (Test-VerifierCanonicalWindowsPathValue `
+                    ([string]$proof.previewScript) $previewScript) -or
+                -not [int]::TryParse([string]$proof.previewPort,
+                    [Globalization.NumberStyles]::Integer,
+                    [Globalization.CultureInfo]::InvariantCulture, [ref]$proofPort) -or
+                -not [int]::TryParse([string]$proof.processId,
+                    [Globalization.NumberStyles]::Integer,
+                    [Globalization.CultureInfo]::InvariantCulture, [ref]$proofProcessId) -or
+                -not [long]::TryParse([string]$proof.processStartTicks,
+                    [Globalization.NumberStyles]::Integer,
+                    [Globalization.CultureInfo]::InvariantCulture,
+                    [ref]$proofStartTicks) -or
+                $proofPort -ne $port -or $proofProcessId -ne $processId -or
+                $proofStartTicks -ne $startTicks) {
+            Throw-VerifierInfrastructure 'Detached preview identity route did not match the recorded process; state was retained.'
+        }
+        $current = Get-VerifierCurrentProcessRecordById $processId
+        if ($null -eq $current -or
+                [int]$current.ParentProcessId -ne $expectedParentProcessId -or
+                [long]$current.ProcessStartTicks -ne $startTicks -or
+                -not (Test-VerifierCommandLineEquivalent `
+                    ([string]$current.CommandLine) $expectedCommandLine)) {
+            Throw-VerifierInfrastructure 'Detached preview process changed after route proof; state was retained.'
+        }
+        $identity = [pscustomobject]@{
+            Process = $current.Process
+            Record = [pscustomobject]@{
+                ProcessId = [int]$current.ProcessId
+                ParentProcessId = [int]$current.ParentProcessId
+                ProcessStartTicks = [long]$current.ProcessStartTicks
+                CommandLine = [string]$current.CommandLine
+                Name = [string]$current.Name
+                ExecutablePath = [string]$current.ExecutablePath
+            }
+        }
+    }
     $process = $identity.Process
     [void](Stop-VerifierVerifiedProcessExactly $process $startTicks 5000 $identity.Record)
     $process.Refresh()

@@ -1,5 +1,34 @@
+# Current checkpoint: Windows Quick Play preview launch recovery
+
+Base HEAD `5b07cdef23af774bcc34cbdb3fa3f4b76e517948` on
+`codex/task43p-final-recovery`. The user-reported launcher archived a stale
+local preview state, then hid its readiness timeout with a null `.Trim()` on
+empty stderr. A direct provenance calculation took 10.16 seconds; a subsequent
+normal launch took 14.94 seconds against the former 15-second allowance.
+
+`start-preview.ps1` now uses a 60-second startup allowance, reports an explicit
+timeout or child exit with null-safe diagnostics, and suppresses the internal
+module's unapproved-verb warning. `stop-preview.ps1` now closes a detached
+preview after exact current-process and live route identity checks, then proves
+listener absence before deleting state. The attached
+[evidence](task-evidence/PreviewLaunchRecovery/README.md) records the commands,
+negative canaries and two visible browser screenshots.
+
+Checks: forced one-second timeout PASS with no state/listener left; normal
+Windows PowerShell Quick Play launch PASS; visible ticket acceptance and board
+PASS with no browser errors; detached stop PASS on the launcher host; stale
+archived state rejected with expected exit 2 while active preview survived;
+focused Gate B stop/adoption probes, PowerShell parse and diff checks PASS. No Java
+production code changed, so a fresh JDK8/GWT build is not applicable here.
+The preview served existing compiled output and pre-existing uncommitted web
+edits; that visual check does not qualify those edits as a fresh source build.
+Task tab and preview are closed; port 8899 has no listener. Unrelated tracked
+Java/web/visual work and untracked files remain preserved. Next unstarted
+milestone: U02. The enclosing commit is this checkpoint's publication identity;
+push and notification results belong to the final task handoff.
+
 <!-- QUICKPLAY-UNIQUE-CURRENT-START -->
-# Current checkpoint: Quick Play procedural uniqueness qualification
+# Historical checkpoint: Quick Play procedural uniqueness qualification
 
 Base HEAD `0018f3d7456a12b02fe72299205531fe2e572267` on
 `codex/task43p-final-recovery`. Final publication identity is the enclosing commit.

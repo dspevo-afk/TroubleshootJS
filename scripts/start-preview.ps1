@@ -9,12 +9,12 @@ param(
     [ValidateRange(1, 65535)]
     [int]$Port = 8899,
     [ValidateRange(1, 60)]
-    [int]$StartupTimeoutSeconds = 15
+    [int]$StartupTimeoutSeconds = 60
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
-Import-Module (Join-Path $PSScriptRoot 'VerifierIsolation.psm1') -Force
+Import-Module (Join-Path $PSScriptRoot 'VerifierIsolation.psm1') -Force -DisableNameChecking
 
 $repositoryRoot = Get-VerifierCanonicalWindowsPath ([IO.Path]::GetFullPath((Split-Path -Parent $PSScriptRoot)))
 $previewScript = Get-VerifierCanonicalWindowsPath ([IO.Path]::GetFullPath((Join-Path $PSScriptRoot 'preview.ps1')))
@@ -617,7 +617,8 @@ do {
     Start-Sleep -Milliseconds 200
 } while ([DateTime]::UtcNow -lt $deadline)
 
-if (-not $process.HasExited) {
+$exitedBeforeReady = [bool]$process.HasExited
+if (-not $exitedBeforeReady) {
     try {
         stopOwnedProcess ([pscustomobject]@{
             State = [pscustomobject]@{
@@ -643,6 +644,11 @@ if (-not $process.HasExited) {
     removeState
 }
 $details = if (Test-Path -LiteralPath $stderrLog) {
-    (Get-Content -LiteralPath $stderrLog -Raw -ErrorAction SilentlyContinue).Trim()
+    [string](Get-Content -LiteralPath $stderrLog -Raw -ErrorAction SilentlyContinue)
 } else { '' }
-throw "TroubleshootJS preview failed to start on port $Port. $details"
+$details = ([string]$details).Trim()
+$diagnostics = if ($details) { " $details" } else { '' }
+if ($exitedBeforeReady) {
+    throw "TroubleshootJS preview exited before becoming ready on port $Port (exit code $($process.ExitCode)).$diagnostics"
+}
+throw "TroubleshootJS preview did not become ready before the startup timeout on port $Port ($StartupTimeoutSeconds s).$diagnostics"
