@@ -43,6 +43,7 @@ abstract class AbstractInstrumentModeStrategy implements InstrumentModeProvider 
         controller.setInstrumentDisplayForStrategy(initialDisplay);
     }
     public void onSimulationStepComplete(InstrumentController controller, boolean didAnalyze) { }
+    public void draw(InstrumentController controller, Graphics graphics) { }
 
     protected void resetState() {
         state.clearMeasurement();

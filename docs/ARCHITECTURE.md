@@ -1693,6 +1693,51 @@ update without consuming it first. Retained probes therefore get exactly one
 fresh loaded solve after a topology or power analysis, while ordinary repaints do
 not create recurring DC transactions.
 
+### Reference-aware voltage and solver-time instruments — U02/U03
+
+`MeasurementReferencePolicy` remains the first differential-voltage gate. A
+cross-reference result is returned as the typed, nonnumeric
+`VoltageMeasurementResult`; neither DC, AC nor scope can turn it into a false
+earth-referenced value. Numeric results carry a declared finite range and map
+overrange, unavailable, reference, sampling and arithmetic outcomes explicitly
+instead of retaining an earlier display.
+
+`AcVoltageInstrumentMode` uses the same real $10 MOhm$ input burden and
+transaction cleanup path as the voltage meter when the live graph permits an
+active measurement. A runtime may explicitly declare an existing high-impedance
+voltage-observation path; that exceptional path does not mutate a protected
+powered graph, but still advances CircuitJS for a finite acquisition and only
+uses accepted solver samples. AC RMS is AC-coupled: the timestamp-weighted mean
+is removed before RMS, so DC offset is not silently reported as AC. Its policy
+requires 16 samples spanning 20 ms within a 2.5 ms gap, declares 200 Hz
+bandwidth and a 1 kV range. The bounded 8,192-sample capture can retain that
+window at CircuitJS's finest accepted step.
+
+`SolverTimeObservationService` is the sole temporal publication boundary. Each
+differential subscription has bounded staging and committed rings tied to the
+current solver owner and graph. It samples only accepted solver steps, publishes
+staging only when the enclosing execution operation completes, and clears both
+old and partial data on cancellation, failure, power/topology/owner invalidation,
+stale endpoints, unsubscribe, or graph replacement. UI repaint never creates a
+sample. `SolverTimeWindow` enforces increasing finite solver timestamps and
+retains only its fixed-capacity chronological history.
+
+`SignalMeasurementAnalysis` is pure timestamped-window math. It evaluates
+minimum samples/duration, largest accepted gap, declared bandwidth and voltage
+range before reporting a result; its trapezoidal mean and squared-linear-segment
+integral support irregular solver steps. Frequency comes from interpolated
+mean-crossing periods, never component metadata or UI frame time, and rejects
+Nyquist/bandwidth failures rather than drawing a plausible alias.
+
+`OscilloscopeInstrumentMode` is a one-channel, passive high-impedance consumer
+of that service. It has four timebases, five voltage scales and rising/falling/
+either-edge triggers. Its native meter canvas draws only a valid accepted trace;
+explicit `WINDOW`, `GAP`, `BANDWIDTH`, `ALIASED`, `OVER RANGE`, `NO TRIGGER`,
+and `NO SIGNAL` states draw no invented waveform. The larger bounded history
+makes the smallest 1 ms/div span useful at fine steps; unsupported longer
+spans honestly remain `WINDOW`. The scope never paints behind the opaque meter
+or advances the solver from a draw pass.
+
 Component-side detachable bindings continue to resolve to the physical part
 currently installed in a slot. `ResistorSlotController` retargets those
 measurement endpoints together with the attachment wires during installation.

@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Branch observed during review:** `codex/task43p-final-recovery`<br>
-**Latest completed task:** **All-current-family procedural layouts and resistor shop/formation repair**<br>
+**Latest completed task:** **U02/U03 reference-aware meter acquisition and one-channel solver-time scope**<br>
 **Quick Play qualification:** All nine current families use fresh signed-long candidates and real placement/routing. Nineteen affected native suites, 144 structural cases, 18 actual launches, exact replay/cancellation/privacy/shop and compiled mutation/relay/generation gates pass. EASY/MEDIUM content eligibility remains; HARD/PSYCHOTIC are not unlocked. [Current evidence](task-evidence/ProceduralFamilies/README.md).
 **Quick Play uniqueness qualification (2026-09-19):** Every selectable family/profile has bounded procedural New Board candidates, recent-root and physical duplicate guards, and single-candidate exact replay. The menu-discovered 180-board matrix has 20 distinct placements and merged copper patterns per pair with no structural rejects. Final native55, GWT5, 27/27 visible New Board launches, two exact replays and face-view evidence pass. Current content spans 3–16 parts; HARD/PSYCHOTIC and larger families remain unqualified. [Audit, timings and limits](task-evidence/QuickPlayUnique/README.md).
 **P09 qualification (2026-09-16):** `THT_SINGLE_FACE@1` is enforced at normal installation/admission/publication with unchanged geometry/electrical/diagnostic requirements. Clean native48, integrated native9, both GWT5 builds, RC/Q15 and real normal menu/navigation/privacy checks pass. Frozen held-out structural results retain ten passes and two explicit rejections. Production two-layer/via/link adoption is rejected for this epoch. [Evidence and limits](task-evidence/P09/README.md).
@@ -16,7 +16,7 @@
 **P06 qualification (2026-09-15):** The real finite-link prototype, explicit insulated underpass, physical service/probes, bounded sparse policy and matched no-link comparisons are qualified. Normal adoption is not qualified by P09. See [P06 evidence](task-evidence/P06/README.md). P07 is now separately qualified.
 **P05 qualification (2026-09-15):** Bounded routing recovery is complete on the existing branch, with unrelated visual work preserved. See [P05 evidence](task-evidence/P05/README.md). P06 and P07 are now separately qualified; the post-P09 Quick Play gate is now separately qualified for RB15_CONTROL/EASY.
 
-**Accepted alpha checkpoint:** **U04 / U05 / REL-A COMPLETE.** Typed sessions, initial computed EASY/MEDIUM profiles and limited low-voltage desktop alpha are qualified, with mandatory eleven-seed normal RB15 admission, the full website catalog, compatible purchased-part installation, Windows launcher recovery and exact meter endpoint fixes. Final GWT5/native33, Alpha38, Q15all11/66 copper readings, affected compiled/strict/negative gates and actual repair/retest/replay/privacy/focus flows pass. Human attempts and uncertainty remain qualitative evidence; no population difficulty or arbitrary-seed guarantee is claimed. The separately authorized visual pass is completed in its own commit, documented below. **Next unstarted milestone: U02.** [Evidence and limits](task-evidence/REL-A/README.md).
+**Accepted alpha checkpoint:** **U04 / U05 / REL-A COMPLETE.** Typed sessions, initial computed EASY/MEDIUM profiles and limited low-voltage desktop alpha are qualified, with mandatory eleven-seed normal RB15 admission, the full website catalog, compatible purchased-part installation, Windows launcher recovery and exact meter endpoint fixes. Final GWT5/native33, Alpha38, Q15all11/66 copper readings, affected compiled/strict/negative gates and actual repair/retest/replay/privacy/focus flows pass. Human attempts and uncertainty remain qualitative evidence; no population difficulty or arbitrary-seed guarantee is claimed. The separately authorized visual pass is completed in its own commit, documented below. U02/U03 now add bounded solver-time AC/scope observation; **next unstarted milestone: U06.** [Evidence and limits](task-evidence/REL-A/README.md).
 **Roadmap clarification (2026-09-14):** The post-P09 Procedural Quick Play Admission Gate now explicitly requires fresh arbitrary candidate signed-long seeds within qualified families/envelopes, bounded rejection/retry, exact accepted-seed replay, and population/layout-diversity evidence before normal-medium procedural qualification proceeds. This is a documentation/product-contract clarification only: REL-A remains curated/bounded, no generator or Quick Play production behavior is changed here, this clarification did not implement P05. P05 is now separately qualified below.
 
 **Completed post-release correction:** The authorized visual pass and fault-blind serviceability correction are qualified in the completion commit containing this update. All nine playable families have real supported part-service ownership. Fresh GWT33 build, Q15/native proof repair and actual menu/progress/measure/drag/shop/repair/retest flow pass; unaffected GWT32 and native31 results are explicitly reused under input audits. [Final evidence and limitations](task-evidence/visual-productization/final33/README.md). **P05 is now separately qualified; see its evidence below.**
@@ -664,7 +664,7 @@ Every enabled instrument declares electrical connection/stimulus, burden/loading
 
 ## 7.1 Status and authority
 
-T49, N00, A01-A11, R00, P01-P09, U01, E01, E03, Q15, U04, U05 and REL-A are accepted/completed: 30 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. The non-catalog post-P09 follow-up covers procedural layouts for all nine current normal families and resistor shop/formation; U02 is next. Only currently implemented EASY/MEDIUM content is qualified; unavailable difficulties remain deferred. P08 current isolated CLI runs satisfy unchanged ownership/cleanup gates; earlier unqualified launch attempts remain separately recorded.
+T49, N00, A01-A11, R00, P01-P09, U01, E01, E03, Q15, U02, U03, U04, U05 and REL-A are accepted/completed: 32 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. The non-catalog post-P09 follow-up covers procedural layouts for all nine current normal families and resistor shop/formation; U02/U03 now provide the bounded solver-time meter/scope boundary and U06 is next. Only currently implemented EASY/MEDIUM content is qualified; unavailable difficulties remain deferred. P08 current isolated CLI runs satisfy unchanged ownership/cleanup gates; earlier unqualified launch attempts remain separately recorded.
 
 A task-specific prompt authorizes a bounded scope. Follow current AGENTS.md for orchestration, ownership, review, publication and safety; R00 replaced its contradictory blanket compatibility wording under the owner's explicit instruction. A current correct requirement outranks an obsolete test. Do not start writers before relevant shared-interface investigations are reconciled.
 
@@ -683,7 +683,7 @@ preferred next eligible milestone. Future implementation needs its own authoriza
 than the old preferred order while satisfying their hard prerequisites: A10
 required A05/A07/A09/P02; A11 required A04/A08/A09. Their earlier placement does
 not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 → Q15 → U04 → U05 → REL-A is now complete.
-**Next milestone: U02.** The post-P09 follow-up replaces curated/fixed normal layout paths across all nine current families, preserving P09 limits, computed difficulty and exact replay. Current EASY/MEDIUM content is qualified, not future HARD/PSYCHOTIC content. Pending visual/FPS/tray work remains preserved.
+**Next milestone: U06.** The post-P09 follow-up replaced curated/fixed normal layout paths across all nine current families, preserving P09 limits, computed difficulty and exact replay; U02/U03 add bounded solver-time meter/scope observation. Current EASY/MEDIUM content is qualified, not future HARD/PSYCHOTIC content. Pending visual/FPS/tray work remains preserved.
 
 | Wave | Preferred sequence |
 |---|---|
@@ -1424,7 +1424,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### U02 · Reference-aware measurements and shared observation boundary
 
-**Status:** UNSTARTED.
+**Status:** COMPLETE — typed differential DC/AC outcomes, real finite-load AC RMS acquisition, reference refusal, and shared accepted-step solver-time observation are qualified (2026-09-20). The U02 contracts cover irregular samples, DC-offset removal, clipping, reference failures, active-measurement cleanup, and stale-window invalidation; built-player evidence uses visible red/black probes on J1. [Evidence](task-evidence/U02-U03/README.md).
 
 **Hard prerequisites:** [A06](#m-a06), [A07](#m-a07), [A08](#m-a08), [U01](#m-u01)
 
@@ -1454,7 +1454,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### U03 · Oscilloscope and frequency with solver-time fidelity
 
-**Status:** UNSTARTED.
+**Status:** COMPLETE — a bounded one-channel high-impedance scope uses the U02 accepted solver-time stream, declared finite policies, time/volts/trigger controls, and frequency calculated from timestamped crossings (2026-09-20). Gaps, bandwidth limits, aliasing, overrange, no-trigger/no-signal, and insufficient-window states are explicit; topology, power, owner, and probe changes retire observations. [Evidence](task-evidence/U02-U03/README.md).
 
 **Hard prerequisites:** [U02](#m-u02), [A07](#m-a07)
 

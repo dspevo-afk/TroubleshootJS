@@ -1,32 +1,36 @@
-# Current checkpoint: Parts tray drag and completed-board return
+# Current checkpoint: U02/U03 reference-aware meter and solver-time scope
 
-Base HEAD `21ae5db58a6d33f59ac1c3b302b60e37495b2aab` on
-`codex/task43p-final-recovery`. The user-reported tray crossing cancelled a
-native canvas drag when the DOM drawer handle intercepted mouse input. The
-drawer now projects drag state immediately and passes pointer hits through
-its handle/scrollbar until release. Returning from a passed customer retest
-now restores power, instruments, selection, Shop and physical work under
-ordinary safety guards; the passed result remains latched and retest stays
-terminal. The previously uncommitted, directly related drawer implementation
-is included with the correction; unrelated solver, layout and evidence work
-remains unstaged. See [evidence](task-evidence/ReturnBoardTrayBugs/README.md).
+Base HEAD `8b371d98b923449fd143486a159e4bc519c84ce7` on
+`codex/task43p-final-recovery`; publication SHA will be recorded in the final
+handoff. U02 adds typed
+reference-aware voltage outcomes, real finite-load AC RMS acquisition and a
+shared accepted-solver-step observation boundary. U03 adds one passive
+high-impedance differential scope with bounded timestamped history, trigger,
+time/volts controls, frequency extraction, and explicit invalid/insufficient
+states. No draw path advances or fabricates CircuitJS data.
 
-Validation candidate tree `3d75dbf11c1852e53896f6b4160099ea3ec8b42d` was
-validated in a clean temporary checkout: final-source JDK8/GWT five-permutation
-build PASS; focused native VisualWorkbench/U04 suites PASS (150/2,683
-assertions); jsdom tray/U04 UI contracts PASS (22/112 assertions). Actual
-production preview Quick Play LED seed 3 PASS in both the shared workspace and
-the clean staged candidate: tray drag installed R1, retest passed, returned
-board power/meter/mutation/Shop worked. Five inspected screenshots show source,
-prior locked result, repaired drag, passed retest and returned board mutation.
-Full family and touch-input matrices were NOT RUN. Candidate preview on port
-8901 was stopped and its port released; pre-existing preview on 8899 remains
-untouched. The clean temporary checkout was removed. The task-owned jsdom
-scratch directory in OS temp remains because recursive removal was rejected
-by the command policy. Only report/evidence prose changed after the candidate gates;
-all compiled and tested inputs are unchanged. Next unstarted milestone: U02. The enclosing commit is this
-checkpoint's publication identity; push and notification results belong to
-the final handoff.
+Focused final-source checks PASS: U02 (28), U03 (12), A07 (24,868), and visual
+workbench (150) assertions. JS syntax checks pass; bench-meter contracts pass
+380 checks and U04 UI adapter contracts 113. Fresh JDK8/GWT five-permutation
+builds completed both in the integrated worktree (generated permutation caches
+at 2026-09-20 02:33:43) and in an isolated exact-staged-patch candidate (five
+caches at 02:43:21). Built production preview input PASS: after normal ticket acceptance,
+visible left/right J1 probes displayed `0 V RMS` in AC mode; scope displayed
+the real DC `NO SIGNAL` state and all three visible scale/trigger controls
+changed to `T 5 ms/div`, `V 5 V/div`, `TRIG ↓`. Two inspected screenshots are
+in [U02/U03 evidence](task-evidence/U02-U03/README.md).
+
+The browser fixture was a DC LED board, so it does not prove a periodic
+player-waveform trace; known timestamped waveform, alias, bandwidth, gap,
+reference, cleanup, and stale-operation cases are covered by focused contracts.
+An independent read-only U02/U03 review found the developer-restore scope
+subscription cleanup edge; it was fixed before the final focused checks and
+production build. Its zero-step stale-window concern is covered by the matching
+operation/owner invalidation path and the service's rejected-operation cleanup.
+The pre-existing port-8899 preview remains unowned and running. Pre-existing
+tracked P09/visual/solver/layout changes and untracked evidence remain
+preserved. Next unstarted milestone: U06. Commit, push, and email results
+belong to the final handoff.
 
 # Historical checkpoint: Hold Tab to view board underside
 

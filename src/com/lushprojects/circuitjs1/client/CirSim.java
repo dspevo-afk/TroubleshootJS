@@ -2696,6 +2696,8 @@ MouseOutHandler, MouseWheelHandler {
     }
     
     // analyze the circuit when something changes, so it can be simulated
+    final SolverTimeObservationService solverTimeObservations =
+        new SolverTimeObservationService(this);
     final CircuitSolverExecutor solverExecutor = new CircuitSolverExecutor(this);
 
     void analyzeCircuit() { solverExecutor.analyze(); }
@@ -4783,6 +4785,15 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     GeneratedBoardInstance generatedBoardInstance;
+	static final double VOLTAGE_MEASUREMENT_MAXIMUM_ABS = 1000;
+	static final double AC_VOLTAGE_CAPTURE_SECONDS = .05;
+	/* At CircuitJS's finest accepted step, this retains more than the 20 ms
+	 * RMS window below while staying within the observation service bound. */
+	static final int AC_VOLTAGE_SAMPLE_CAPACITY = SolverTimeObservationService.MAX_CAPACITY;
+	static final SignalMeasurementAnalysis.Policy AC_VOLTAGE_POLICY =
+	    new SignalMeasurementAnalysis.Policy(16, .02, .0025, 200,
+		VOLTAGE_MEASUREMENT_MAXIMUM_ABS, 1e-6,
+		SignalMeasurementAnalysis.Trigger.RISING);
 	GeneratedChallengeController generatedChallengeController;
 	BoardModificationController boardModificationController;
 	boolean activeMeasurementOverlay;
@@ -6161,6 +6172,7 @@ MouseOutHandler, MouseWheelHandler {
     private void applyGeneratedBoardPowerState(BoardPowerState state) {
 	if (!boardPowerController.setState(state))
 	    return;
+	solverTimeObservations.invalidate();
 	generatedBoardInstance.getPhysicalBoardRuntime().onBoardPowerStateChanged(state);
 	if (generatedChallengeController != null)
 	    generatedChallengeController.invalidateCustomerRetest();
@@ -6177,6 +6189,9 @@ MouseOutHandler, MouseWheelHandler {
         ExternalPowerSimulationBinding binding = owner.getExternalPowerBindings().getBinding(inputId);
         if (limitAmps != null) binding.setCurrentLimit(limitAmps);
         if (connected != null) boardPowerController.setSourceConnected(inputId, connected);
+	/* A source edit is a new observation epoch even before the next solver
+	 * operation notices the control signature. */
+	solverTimeObservations.invalidate();
         owner.getPhysicalBoardRuntime().onBoardPowerStateChanged(boardPowerController.getState());
         if (generatedChallengeController != null) generatedChallengeController.invalidateCustomerRetest();
         requestGeneratedBoardVerification();
@@ -6192,8 +6207,10 @@ MouseOutHandler, MouseWheelHandler {
     void setBoardPowerStateForGeneratedTemporalProfile(BoardPowerState state) {
 	if (generatedBoardInstance == null || activeMeasurementOverlay)
 	    throw new IllegalStateException("Cannot transition generated temporal profile now");
-	if (boardPowerController.setState(state))
+	if (boardPowerController.setState(state)) {
+	    solverTimeObservations.invalidate();
 	    generatedBoardInstance.getPhysicalBoardRuntime().onBoardPowerStateChanged(state);
+	}
 	updateBoardPowerButton();
     }
 
@@ -6321,22 +6338,106 @@ MouseOutHandler, MouseWheelHandler {
 
     double measureDcVoltage(CircuitPostMeasurementEndpoint red,
 	    CircuitPostMeasurementEndpoint black) {
-	if (!isGeneratedRuntimeSettled())
-	    return Double.NaN;
-	if (!containsElement(red.getElement()) || !containsElement(black.getElement()))
-	    return Double.NaN;
+	VoltageMeasurementResult result = measureDcVoltageResult(red, black);
+	return result.isNumeric() ? result.getValue() : Double.NaN;
+    }
+
+    VoltageMeasurementResult measureDcVoltageResult(CircuitPostMeasurementEndpoint red,
+	    CircuitPostMeasurementEndpoint black) {
+	if (!isGeneratedRuntimeSettled() || red == null || black == null ||
+		!containsElement(red.getElement()) || !containsElement(black.getElement()))
+	    return VoltageMeasurementResult.unavailable(null);
 	MeasurementReferencePolicy.Result reference = assessMeasurementReference(red, black);
-	if (!reference.admitsReading() && reference.getDecision() != MeasurementReferencePolicy.Decision.NOT_APPLICABLE)
-	    return Double.NaN;
+	if (!reference.admitsReading() &&
+		reference.getDecision() != MeasurementReferencePolicy.Decision.NOT_APPLICABLE)
+	    return VoltageMeasurementResult.reference(reference);
 	if (usesLiveDcVoltage(red, black))
-	    return red.getElement().getPostVoltage(red.getPostIndex()) -
-		black.getElement().getPostVoltage(black.getPostIndex());
+	    return VoltageMeasurementResult.numeric(red.getElement().getPostVoltage(red.getPostIndex()) -
+		black.getElement().getPostVoltage(black.getPostIndex()), reference,
+		VOLTAGE_MEASUREMENT_MAXIMUM_ABS);
 	final DcVoltageMeasurementStimulus stimulus = new DcVoltageMeasurementStimulus(red, black);
-	return runTemporaryActiveMeasurement(stimulus, new ActiveMeasurementResultReader() {
+	double value = runTemporaryActiveMeasurement(stimulus, new ActiveMeasurementResultReader() {
 	    public double readResult() {
 		return stimulus.getVoltage();
 	    }
 	});
+	return VoltageMeasurementResult.numeric(value, reference,
+	    VOLTAGE_MEASUREMENT_MAXIMUM_ABS);
+    }
+
+    VoltageMeasurementResult measureAcVoltage(CircuitPostMeasurementEndpoint red,
+	    CircuitPostMeasurementEndpoint black) {
+	if (!isGeneratedRuntimeSettled() || red == null || black == null ||
+		!containsElement(red.getElement()) || !containsElement(black.getElement()))
+	    return VoltageMeasurementResult.unavailable(null);
+	final MeasurementReferencePolicy.Result reference = assessMeasurementReference(red, black);
+	if (!reference.admitsReading() &&
+		reference.getDecision() != MeasurementReferencePolicy.Decision.NOT_APPLICABLE)
+	    return VoltageMeasurementResult.reference(reference);
+	/* A runtime can explicitly declare an endpoint pair safe for direct,
+	 * high-impedance voltage observation.  That is the same physical path used
+	 * by the existing live DC meter.  Do not turn that declaration into a
+	 * temporary graph mutation: protected powered relay/storage owners reject
+	 * active-meter settling by design.  The finite window below still consists
+	 * exclusively of accepted CircuitJS samples. */
+	if (usesLiveVoltageObservation(red, black))
+	    return measureLiveAcVoltage(red, black, reference);
+	final SolverTimeObservationService.Subscription samples =
+	    solverTimeObservations.subscribe(red, black, AC_VOLTAGE_SAMPLE_CAPACITY, true);
+	try {
+	    final VoltageMeasurementResult result[] = new VoltageMeasurementResult[1];
+	    final DcVoltageMeasurementStimulus stimulus = new DcVoltageMeasurementStimulus(red, black);
+	    runTemporaryActiveMeasurement(stimulus, new ActiveMeasurementResultReader() {
+		public double readResult() {
+		    /* Initial settle samples belong to the meter-connection transition,
+		     * not the declared finite RMS acquisition window. */
+		    samples.clear();
+		    solverExecutor.advanceFor(AC_VOLTAGE_CAPTURE_SECONDS);
+		    result[0] = VoltageMeasurementResult.signal(
+			SignalMeasurementAnalysis.measureAcRms(samples.snapshotWindow(),
+			    AC_VOLTAGE_POLICY), reference);
+		    return result[0].isNumeric() ? result[0].getValue() : Double.NaN;
+		}
+	    });
+	    return result[0] == null ? VoltageMeasurementResult.unavailable(reference) : result[0];
+	} finally {
+	    solverTimeObservations.unsubscribe(samples);
+	}
+    }
+
+    private VoltageMeasurementResult measureLiveAcVoltage(CircuitPostMeasurementEndpoint red,
+	    CircuitPostMeasurementEndpoint black, MeasurementReferencePolicy.Result reference) {
+	final SolverTimeObservationService.Subscription samples =
+	    solverTimeObservations.subscribe(red, black, AC_VOLTAGE_SAMPLE_CAPACITY, false);
+	try {
+	    samples.clear();
+	    solverExecutor.advanceFor(AC_VOLTAGE_CAPTURE_SECONDS);
+	    return VoltageMeasurementResult.signal(
+		SignalMeasurementAnalysis.measureAcRms(samples.snapshotWindow(), AC_VOLTAGE_POLICY),
+		reference);
+	} finally {
+	    solverTimeObservations.unsubscribe(samples);
+	}
+    }
+
+    SolverTimeObservationService.Subscription observeDifferentialVoltage(
+	    CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black) {
+	if (!isGeneratedRuntimeSettled() || red == null || black == null ||
+		!containsElement(red.getElement()) || !containsElement(black.getElement()))
+	    return null;
+	MeasurementReferencePolicy.Result reference = assessMeasurementReference(red, black);
+	if (!reference.admitsReading() &&
+		reference.getDecision() != MeasurementReferencePolicy.Decision.NOT_APPLICABLE)
+	    return null;
+	/* Scope samples are high-impedance/passive, but need the largest bounded
+	 * history so its smallest declared timebase remains useful at fine solver
+	 * time steps.  Longer requested spans explicitly report WINDOW. */
+	return solverTimeObservations.subscribe(red, black,
+	    SolverTimeObservationService.MAX_CAPACITY, false);
+    }
+
+    void stopObservingDifferentialVoltage(SolverTimeObservationService.Subscription samples) {
+	solverTimeObservations.unsubscribe(samples);
     }
 
     String getLastResistanceMeasurementDiagnosticsForDeveloperVerification() {
@@ -6427,6 +6528,17 @@ MouseOutHandler, MouseWheelHandler {
 	    CircuitPostMeasurementEndpoint black) {
 	return generatedBoardInstance != null && generatedBoardInstance.getPhysicalBoardRuntime()
 	    .usesLiveDcVoltage(red, black);
+    }
+
+    /**
+	 * Live DC declarations identify physical endpoint pairs that may be
+	 * observed without temporarily adding the normal 10 Mohm meter burden.
+	 * AC uses that identical high-impedance differential observation path; it
+	 * never invents a source, an earth reference, or a replacement waveform.
+	 */
+    private boolean usesLiveVoltageObservation(CircuitPostMeasurementEndpoint red,
+	    CircuitPostMeasurementEndpoint black) {
+	return usesLiveDcVoltage(red, black);
     }
 
     private double runTemporaryActiveMeasurement(ActiveMeasurementStimulus stimulus,

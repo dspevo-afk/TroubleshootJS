@@ -8,6 +8,8 @@ final class StandardInstrumentModeProviders {
         return new InstrumentModeRegistry(
             new NoneInstrumentMode(),
             new DcVoltageInstrumentMode(),
+            new AcVoltageInstrumentMode(),
+            new OscilloscopeInstrumentMode(),
             new ResistanceInstrumentMode("RESISTANCE", "OHM", 2, false),
             new ResistanceInstrumentMode("CONTINUITY", "CONT", 3, true),
             new DiodeTestInstrumentMode());

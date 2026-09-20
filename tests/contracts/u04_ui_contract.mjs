@@ -105,11 +105,18 @@ const catalogs = [{ id: resistorCategory, title: 'Resistors', entries: resistorE
   ...[['CAPACITOR', 'Capacitors', '10 uF, 25 V'], ['DIODE', 'Diodes', '1N4148'], ['LED', 'LEDs', 'Red LED'],
     ['NPN_TRANSISTOR', 'NPN transistors', 'General purpose NPN'], ['NMOS_TRANSISTOR', 'NMOS transistors', 'Logic level NMOS'],
     ['RELAY', 'Relays', '12 V coil']].map(([id, title, label]) => ({ id, title, entries: [{ id: 'spec-0', label }], looseCount: 0 }))];
+const benchMounts = [];
+f.w.tsjBenchInstruments = { mount(snapshot) {
+  benchMounts.push({ screen: snapshot.screen, overlayOpen: !!f.w.tsjWorkbenchOverlayOpen });
+} };
 const cards = () => [...f.d.querySelectorAll('.tsj-store-card')];
 const visibleCards = () => cards().filter(card => !card.hidden);
 const searchFor = value => { const search = f.d.querySelector('input[type=search]'); search.value = value; search.dispatchEvent(new f.w.Event('input')); return search; };
 await f.update({ screen: 'WORKBENCH', token: 4, isolated: true, catalogs, message: 'Customer retest did not pass. Continue troubleshooting.', notice: 'Previous ticket notice.', privateOriginal: 'PRIVATE-ORIGINAL', fault: 'PRIVATE-FAULT' });
 check(!f.w.tsjWorkbenchOverlayOpen && !f.d.querySelector('main').hasAttribute('inert'), 'workbench releases background');
+check(benchMounts.length >= 2 && benchMounts.at(-2).screen === 'WORKBENCH' && benchMounts.at(-2).overlayOpen &&
+  benchMounts.at(-1).screen === 'WORKBENCH' && !benchMounts.at(-1).overlayOpen,
+  'ticket-to-workbench transition re-syncs bench controls after the overlay gate opens');
 check(f.d.querySelector('main').getAttribute('aria-hidden') === 'false', 'preexisting aria-hidden restored exactly');
 check(f.d.querySelector('aside').getAttribute('inert') === 'kept' && f.d.querySelector('aside').getAttribute('aria-hidden') === 'true', 'preexisting inert/aria attributes preserved');
 click(f, 'Shop');

@@ -164,6 +164,10 @@
     invalidateView(); restoreBackground();
     overlay.classList.remove('is-open'); overlay.hidden = true;
     window.tsjWorkbenchOverlayOpen = false;
+    // The bench receives the WORKBENCH snapshot just before this transition.
+    // Re-sync after the overlay gate opens so its real instrument controls do
+    // not remain disabled from the ticket/preparation screen.
+    if (window.tsjBenchInstruments && snapshot) window.tsjBenchInstruments.mount(snapshot);
     if (returnFocus && returnFocus.isConnected && !returnFocus.disabled && !returnFocus.closest('[inert]')) returnFocus.focus();
     else if (controls.menu) controls.menu.focus();
     returnFocus = null;
@@ -389,8 +393,10 @@
   function resources(parent) {
     var sections = [
       ['Navigate the bench', 'Use Fit bench, Zoom + / −, and the top/bottom copper controls. The mouse wheel zooms; Shift-drag or middle-drag pans. Hold Space over the board for the inspection loupe; release it to return to the permanent view.'],
-      ['Place probes', 'Select DCV, Ohms, continuity or diode mode. Left click places the red probe; right click places the black probe. Selecting the active mode again exits it. Use accessible pads, terminals or exposed copper.'],
+      ['Place probes', 'Select DCV, AC V~, Ohms, continuity, diode or scope/frequency mode. Left click places the red probe; right click places the black probe. Selecting the active mode again exits it. Use accessible pads, terminals or exposed copper.'],
       ['DC voltage', 'Measure between two electrical endpoints with the required supplies on. The sign is red relative to black. Observe the instrument’s reference-domain and readiness messages.'],
+      ['AC voltage (V~)', 'AC RMS is a differential red-minus-black measurement. The red and black probe endpoints define the reference; interpret the result only as that differential measurement. Keep the required supplies on and follow any readiness, range or unsupported-measurement message.'],
+      ['Scope and frequency (Hz)', 'The scope uses a red/black differential reference and solver-time samples, not screen-frame timing. An insufficient or aliased display is not a measurement. Treat clipped, unavailable or unsupported views as inconclusive and follow the instrument message.'],
       ['Ohms and continuity', 'Disconnect all board supplies and allow stored energy to discharge. In-circuit readings include parallel paths: a low resistance or continuity tone does not by itself identify a failed part. Isolate a lead or remove a part when needed to distinguish paths.'],
       ['Diode mode', 'Use an isolated, discharged board. The instrument applies a test current; polarity and parallel paths affect the reading. Reverse the probes to compare directions. Follow any settling or unsupported-measurement message.'],
       ['Repair and verify', 'Isolate every supply and wait for discharge. Remove the part to the Parts Tray, acquire an appropriate loose replacement from Shop, select it and install it into the empty slot. Restore the relevant supplies and inputs, then run the customer retest. A part swap alone does not establish that the customer’s problem is fixed.']

@@ -12,19 +12,41 @@ class CircuitMeasurementAdapter implements CircuitMeasurementBoundary {
     }
 
     public double measureDcVoltage(ProbeTarget redProbe, ProbeTarget blackProbe) {
-        if (redProbe == null || blackProbe == null || !redProbe.isValid() || !blackProbe.isValid())
-            return Double.NaN;
-        CircuitMeasurementEndpoint red = redProbe.getMeasurementEndpoint();
-        CircuitMeasurementEndpoint black = blackProbe.getMeasurementEndpoint();
-        if (!(red instanceof CircuitPostMeasurementEndpoint) ||
-                !(black instanceof CircuitPostMeasurementEndpoint))
-            return Double.NaN;
-        MeasurementReferencePolicy.Result reference = sim.assessMeasurementReference(
-            (CircuitPostMeasurementEndpoint) red, (CircuitPostMeasurementEndpoint) black);
-        if (!reference.admitsReading() && reference.getDecision() != MeasurementReferencePolicy.Decision.NOT_APPLICABLE)
-            return Double.NaN;
-        return sim.measureDcVoltage((CircuitPostMeasurementEndpoint) red,
-            (CircuitPostMeasurementEndpoint) black);
+        VoltageMeasurementResult result = measureDcVoltageResult(redProbe, blackProbe);
+        return result.isNumeric() ? result.getValue() : Double.NaN;
+    }
+
+    public VoltageMeasurementResult measureDcVoltageResult(ProbeTarget redProbe,
+            ProbeTarget blackProbe) {
+        CircuitPostMeasurementEndpoint[] endpoints = endpoints(redProbe, blackProbe);
+        return endpoints == null ? VoltageMeasurementResult.unavailable(null) :
+            sim.measureDcVoltageResult(endpoints[0], endpoints[1]);
+    }
+
+    public VoltageMeasurementResult measureAcVoltage(ProbeTarget redProbe,
+            ProbeTarget blackProbe) {
+        CircuitPostMeasurementEndpoint[] endpoints = endpoints(redProbe, blackProbe);
+        return endpoints == null ? VoltageMeasurementResult.unavailable(null) :
+            sim.measureAcVoltage(endpoints[0], endpoints[1]);
+    }
+
+    public MeasurementReferencePolicy.Result assessDifferentialReference(ProbeTarget redProbe,
+            ProbeTarget blackProbe) {
+        CircuitPostMeasurementEndpoint[] endpoints = endpoints(redProbe, blackProbe);
+        return endpoints == null ? new MeasurementReferencePolicy.Result(
+            MeasurementReferencePolicy.Decision.UNPROVEN, "INVALID_PROBES") :
+            sim.assessMeasurementReference(endpoints[0], endpoints[1]);
+    }
+
+    public SolverTimeObservationService.Subscription observeDifferentialVoltage(
+            ProbeTarget redProbe, ProbeTarget blackProbe) {
+        CircuitPostMeasurementEndpoint[] endpoints = endpoints(redProbe, blackProbe);
+        return endpoints == null ? null : sim.observeDifferentialVoltage(endpoints[0], endpoints[1]);
+    }
+
+    public void stopObservingDifferentialVoltage(
+            SolverTimeObservationService.Subscription samples) {
+        sim.stopObservingDifferentialVoltage(samples);
     }
 
     public boolean usesLiveDcVoltage(ProbeTarget redProbe, ProbeTarget blackProbe) {

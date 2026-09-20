@@ -237,6 +237,10 @@ final class ArchitectureDeveloperVerifier {
         require(registry.get("NONE").getDeveloperCode() == 0,
             "instrument NONE code changed");
         require(registry.get("DC_VOLTAGE").getProbeRequirements().requiresTwoProbes() &&
+                registry.get("AC_VOLTAGE").getProbeRequirements().getRedPolarity() ==
+                    InstrumentProbePolarity.POSITIVE &&
+                registry.get("SCOPE").getProbeRequirements().getBlackPolarity() ==
+                    InstrumentProbePolarity.NEGATIVE &&
                 registry.get("RESISTANCE").getPowerPolicy() == InstrumentPowerPolicy.UNPOWERED_ONLY &&
                 registry.get("CONTINUITY").getPowerPolicy() == InstrumentPowerPolicy.UNPOWERED_ONLY &&
                 registry.get("DIODE").getProbeRequirements().getRedPolarity() ==
@@ -313,12 +317,16 @@ final class ArchitectureDeveloperVerifier {
                 sim.instrumentController.isPlayerVisibleModeButtonRegisteredForDeveloperVerification(
                     "DC_VOLTAGE") &&
                 sim.instrumentController.isPlayerVisibleModeButtonRegisteredForDeveloperVerification(
+                    "AC_VOLTAGE") &&
+                sim.instrumentController.isPlayerVisibleModeButtonRegisteredForDeveloperVerification(
+                    "SCOPE") &&
+                sim.instrumentController.isPlayerVisibleModeButtonRegisteredForDeveloperVerification(
                     "RESISTANCE") &&
                 sim.instrumentController.isPlayerVisibleModeButtonRegisteredForDeveloperVerification(
                     "CONTINUITY") &&
                 sim.instrumentController.isPlayerVisibleModeButtonRegisteredForDeveloperVerification(
                     "DIODE") &&
-                registry.getPlayerVisibleModes().size() == 4,
+                registry.getPlayerVisibleModes().size() == 6,
             "production visible instrument provider was not registered generically");
         sim.instrumentController.clearTargets();
         sim.instrumentController.clickPlayerVisibleModeButtonForDeveloperVerification(

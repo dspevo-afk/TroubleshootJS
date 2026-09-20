@@ -4,9 +4,9 @@
   var panel, grip, dial, note, observer, latest, scene = null, state = null;
   // A board owns its placement; menu/retest/flip refreshes do not reset it.
   var placements = new WeakMap();
-  var modes = ['NONE', 'DC_VOLTAGE', 'RESISTANCE', 'CONTINUITY', 'DIODE'];
-  var names = ['Off', 'DC voltage', 'Resistance', 'Continuity', 'Diode test'];
-  var angles = [-150, -55, 55, -120, 120];
+  var modes = ['NONE', 'DC_VOLTAGE', 'AC_VOLTAGE', 'RESISTANCE', 'CONTINUITY', 'DIODE', 'SCOPE'];
+  var names = ['Off', 'DC voltage', 'AC voltage RMS', 'Resistance', 'Continuity', 'Diode test', 'Oscilloscope'];
+  var angles = [-150, -55, 0, 55, -120, 120, 180];
   function add(parent, tag, text, cls) {
     var node = document.createElement(tag); node.textContent = text || '';
     if (cls) node.className = cls; parent.appendChild(node); return node;
@@ -17,19 +17,34 @@
     if (callback) node.addEventListener('click', callback);
     return node;
   }
+  function isMeterAvailable() {
+    // `ready` is emitted only for a current, semantically settled board.  Do
+    // not require an additional presentation field here: older/live refreshes
+    // may omit it while the same player session remains ready.
+    return !!(latest && latest.ready && !latest.completed &&
+      latest.screen === 'WORKBENCH' && !window.tsjWorkbenchOverlayOpen);
+  }
   function select(index) {
-    if (!latest || !window.tsjProduct || index < 0 || index >= modes.length) return;
+    if (!isMeterAvailable() || !window.tsjProduct || index < 0 || index >= modes.length) return;
     var result = window.tsjProduct.action(latest.token, 0, 'meter', modes[index], '', '');
     note.textContent = result || 'Click a mode, or turn the dial. Left / right click: red / black probe.';
     sync();
   }
+  function selectMode(id) { select(modes.indexOf(id)); }
   function sync() {
     if (!panel || !dial) return;
     var index = modes.indexOf(panel.getAttribute('data-mode')); if (index < 0) index = 0;
+    var available = isMeterAvailable();
     dial.style.setProperty('--dial-angle', angles[index] + 'deg');
     dial.setAttribute('aria-valuenow', String(index)); dial.setAttribute('aria-valuetext', names[index]);
-    dial.setAttribute('aria-disabled', String(!latest || !latest.ready || latest.completed));
-    panel.querySelector('.tsj-meter-off').setAttribute('aria-pressed', String(index === 0));
+    dial.setAttribute('aria-disabled', String(!available));
+    var off = panel.querySelector('.tsj-meter-off');
+    off.disabled = !available;
+    off.setAttribute('aria-pressed', String(index === 0));
+    Array.prototype.forEach.call(panel.querySelectorAll('.tsj-meter-future [data-instrument-mode]'), function (button) {
+      button.disabled = !available;
+      button.setAttribute('aria-pressed', String(button.getAttribute('data-instrument-mode') === modes[index]));
+    });
   }
   function style(name, value) {
     if (panel.style[name] !== value) panel.style[name] = value;
@@ -128,7 +143,7 @@
     // Let the native GWT-owned widget paint into the bench without reparenting it.
     var dock = panel.closest('.tsj-workbench-top-dock');
     if (dock && dock.parentElement) dock.parentElement.classList.add('tsj-bench-dock-layer');
-    panel.setAttribute('role', 'group'); panel.setAttribute('aria-label', 'Workbench multimeter');
+    panel.setAttribute('role', 'group'); panel.setAttribute('aria-label', 'Workbench meter and oscilloscope');
     var cell = panel.querySelector('tbody > tr > td');
     grip = control(cell, 'TSJ MM-90', 'Move multimeter: drag, or use arrow keys. Home resets its position.', null, 'tsj-meter-grip');
     add(cell, 'span', 'DIGITAL MULTIMETER', 'tsj-meter-brand');
@@ -141,17 +156,20 @@
       light.setAttribute('aria-pressed', String(on));
     }, 'tsj-meter-light'); light.setAttribute('aria-pressed', 'false');
     dial = add(cell, 'div', '', 'tsj-meter-dial'); dial.tabIndex = 0;
-    dial.setAttribute('role', 'slider'); dial.setAttribute('aria-label', 'Multimeter function selector');
-    dial.setAttribute('aria-valuemin', '0'); dial.setAttribute('aria-valuemax', '4');
+    dial.setAttribute('role', 'slider'); dial.setAttribute('aria-label', 'Meter and oscilloscope function selector');
+    dial.setAttribute('aria-valuemin', '0'); dial.setAttribute('aria-valuemax', String(modes.length - 1));
     dial.setAttribute('aria-orientation', 'horizontal');
     add(dial, 'span', '', 'tsj-meter-knob');
     control(cell, 'OFF', 'Turn multimeter off', function () { select(0); }, 'tsj-meter-off');
     var future = add(cell, 'div', '', 'tsj-meter-future');
-    [['V~','AC voltage'], ['A','Current'], ['mA','Milliamps'], ['µA','Microamps'],
-      ['CAP','Capacitance'], ['Hz','Frequency'], ['%','Duty cycle'], ['°C/°F','Temperature']].forEach(function (item) {
-      var b = control(future, item[0], item[1] + ' / not implemented', null, 'tsj-meter-placeholder'); b.disabled = true;
+    [['V~','AC voltage RMS', 'AC_VOLTAGE'], ['A','Current'], ['mA','Milliamps'], ['µA','Microamps'],
+      ['CAP','Capacitance'], ['Hz','Oscilloscope / frequency', 'SCOPE'], ['%','Duty cycle'], ['°C/°F','Temperature']].forEach(function (item) {
+      var b = control(future, item[0], item[1] + (item[2] ? '' : ' / not implemented'),
+        item[2] ? function () { selectMode(item[2]); } : null, 'tsj-meter-placeholder');
+      b.disabled = !item[2];
+      if (item[2]) b.setAttribute('data-instrument-mode', item[2]);
     });
-    add(cell, 'span', 'GRAY FUNCTIONS: NOT IMPLEMENTED', 'tsj-meter-future-label');
+    add(cell, 'span', 'ADDITIONAL FUNCTIONS: NOT IMPLEMENTED', 'tsj-meter-future-label');
     var jacks = add(cell, 'div', '', 'tsj-meter-jacks');
     [['10A','current'], ['COM','common'], ['V Ω','volts']].forEach(function (item) {
       var jack = add(jacks, 'span', item[0], 'tsj-meter-jack ' + item[1]); jack.setAttribute('aria-hidden', 'true');
@@ -177,7 +195,7 @@
         if (event.key === 'ArrowRight' || event.key === 'ArrowUp') { select((index+1)%modes.length); handled=true; }
         if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') { select((index+modes.length-1)%modes.length); handled=true; }
         if (event.key === 'Home') { select(0); handled=true; }
-        if (event.key === 'End') { select(4); handled=true; }
+        if (event.key === 'End') { select(modes.length - 1); handled=true; }
       } else if (event.target === grip) {
         if (event.key === 'Escape') { finishDrag(); handled=true; }
         if (event.key === 'Home' && state) { finishDrag(); state.position=null; layout(); handled=true; }

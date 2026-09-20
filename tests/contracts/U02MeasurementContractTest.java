@@ -1,0 +1,236 @@
+package com.lushprojects.circuitjs1.client;
+
+/** Current pure U02 measurement contracts. */
+public final class U02MeasurementContractTest {
+    private static int assertions;
+
+    public static void main(String[] args) {
+        samplesAreFiniteAndChronological();
+        rmsRemovesOffsetAndDcKeepsPolarity();
+        boundedRetentionIsChronological();
+        windowQualityAndOverRangeAreExplicit();
+        frequencyUsesIrregularSolverTime();
+        noSignalAndNoTriggerAreExplicit();
+        System.out.println("PASS: U02 measurement contracts assertions=" + assertions);
+    }
+
+    private static void samplesAreFiniteAndChronological() {
+        reject(new Runnable() { public void run() {
+            new SolverTimeSample(Double.NaN, 1);
+        }}, "nonfinite sample time rejected");
+        reject(new Runnable() { public void run() {
+            new SolverTimeSample(0, Double.POSITIVE_INFINITY);
+        }}, "nonfinite sample value rejected");
+        final SolverTimeWindow window = new SolverTimeWindow(4);
+        window.append(1, 2);
+        reject(new Runnable() { public void run() {
+            window.append(1, 3);
+        }}, "repeated solver time rejected");
+        reject(new Runnable() { public void run() {
+            window.append(.5, 3);
+        }}, "backward solver time rejected");
+    }
+
+    private static void rmsRemovesOffsetAndDcKeepsPolarity() {
+        SolverTimeWindow window = new SolverTimeWindow(4096);
+        double offset = 1.25;
+        double amplitude = 2.5;
+        double frequency = 5;
+        for (int i = 0; i <= 2000; i++) {
+            double time = i / 1000.0;
+            window.append(time, offset + amplitude * Math.sin(2 * Math.PI * frequency * time));
+        }
+        SignalMeasurementAnalysis.Policy policy = new SignalMeasurementAnalysis.Policy(
+            20, 1, .02, 25, 5);
+        SignalMeasurementAnalysis.Result ac =
+            SignalMeasurementAnalysis.measureAcRms(window, policy);
+        check(ac.getStatus() == SignalMeasurementAnalysis.Status.OK,
+            "offset sine AC RMS is usable");
+        check(close(ac.getValue(), amplitude / Math.sqrt(2), .002),
+            "AC RMS removes DC offset");
+        check(close(ac.getDcMean(), offset, .002),
+            "AC RMS reports signed DC mean");
+
+        SignalMeasurementAnalysis.Result dc =
+            SignalMeasurementAnalysis.measureDcMean(window, policy);
+        check(dc.getStatus() == SignalMeasurementAnalysis.Status.OK,
+            "DC mean is usable");
+        check(close(dc.getValue(), offset, .002),
+            "DC mean is signed and offset-aware");
+
+        SolverTimeWindow negative = new SolverTimeWindow(8);
+        negative.append(0, -3.5);
+        negative.append(1, -3.5);
+        SignalMeasurementAnalysis.Result negativeDc =
+            SignalMeasurementAnalysis.measureDcMean(negative);
+        check(negativeDc.getStatus() == SignalMeasurementAnalysis.Status.OK &&
+            close(negativeDc.getValue(), -3.5, 1e-12),
+            "negative DC polarity is preserved");
+    }
+
+    private static void boundedRetentionIsChronological() {
+        SolverTimeWindow window = new SolverTimeWindow(3);
+        for (int i = 0; i < 5; i++) window.append(i, 10 + i);
+        check(window.getCapacity() == 3 && window.size() == 3,
+            "ring retention is bounded");
+        check(window.get(0).getTime() == 2 && window.get(0).getValue() == 12,
+            "oldest retained sample is chronological");
+        check(window.get(1).getTime() == 3 && window.get(2).getTime() == 4,
+            "retained samples remain ordered");
+        SolverTimeSample[] copy = window.snapshot();
+        copy[0] = new SolverTimeSample(99, 99);
+        check(window.get(0).getTime() == 2,
+            "snapshot array is defensive");
+    }
+
+    private static void windowQualityAndOverRangeAreExplicit() {
+        SignalMeasurementAnalysis.Policy policy = new SignalMeasurementAnalysis.Policy(
+            4, .5, .1, 20, 5);
+        SolverTimeWindow shortWindow = new SolverTimeWindow(8);
+        shortWindow.append(0, 1);
+        shortWindow.append(.1, 1);
+        SignalMeasurementAnalysis.Result insufficient =
+            SignalMeasurementAnalysis.measureDcMean(shortWindow, policy);
+        check(insufficient.getStatus() == SignalMeasurementAnalysis.Status.INSUFFICIENT_WINDOW,
+            "sample and duration insufficiency is explicit");
+        check(insufficient.getWindowAssessment().getSampleStatus() ==
+                SolverTimeWindow.SampleStatus.INSUFFICIENT &&
+            insufficient.getWindowAssessment().getDurationStatus() ==
+                SolverTimeWindow.DurationStatus.INSUFFICIENT,
+            "sample and duration statuses are separately retained");
+
+        SolverTimeWindow gapWindow = new SolverTimeWindow(8);
+        gapWindow.append(0, 1);
+        gapWindow.append(.2, 1);
+        gapWindow.append(.3, 1);
+        gapWindow.append(.4, 1);
+        gapWindow.append(.5, 1);
+        gapWindow.append(.6, 1);
+        SignalMeasurementAnalysis.Result gap =
+            SignalMeasurementAnalysis.measureDcMean(gapWindow, policy);
+        check(gap.getStatus() == SignalMeasurementAnalysis.Status.GAP,
+            "maximum solver-time gap is explicit");
+        check(gap.getWindowAssessment().getMaxGapStatus() ==
+                SolverTimeWindow.MaxGapStatus.EXCEEDED,
+            "maximum-gap status is explicit");
+
+        SolverTimeWindow bandwidthWindow = new SolverTimeWindow(8);
+        bandwidthWindow.append(0, 1);
+        bandwidthWindow.append(.01, 1);
+        bandwidthWindow.append(.02, 1);
+        SignalMeasurementAnalysis.Policy bandwidthPolicy =
+            new SignalMeasurementAnalysis.Policy(2, .01, Double.NaN, 100, 5);
+        SignalMeasurementAnalysis.Result bandwidth =
+            SignalMeasurementAnalysis.measureDcMean(bandwidthWindow, bandwidthPolicy);
+        check(bandwidth.getStatus() == SignalMeasurementAnalysis.Status.BANDWIDTH_LIMITED,
+            "declared bandwidth limit is explicit");
+        check(bandwidth.getWindowAssessment().getBandwidthStatus() ==
+                SolverTimeWindow.BandwidthStatus.LIMITED,
+            "bandwidth status is explicit");
+
+        SolverTimeWindow over = new SolverTimeWindow(8);
+        over.append(0, 0);
+        over.append(.1, 6);
+        SignalMeasurementAnalysis.Result overRange =
+            SignalMeasurementAnalysis.measureDcMean(over, policy);
+        check(overRange.getStatus() == SignalMeasurementAnalysis.Status.OVER_RANGE,
+            "declared voltage overrange is explicit");
+        check(Double.isNaN(overRange.getValue()),
+            "overrange does not expose a numeric reading");
+    }
+
+    private static void frequencyUsesIrregularSolverTime() {
+        SolverTimeWindow window = new SolverTimeWindow(512);
+        double actualFrequency = 7;
+        double time = 0;
+        double[] increments = {.006, .011, .008, .014, .007, .010, .009};
+        int i = 0;
+        while (time < 1.8) {
+            window.append(time, .7 + 1.8 *
+                Math.sin(2 * Math.PI * actualFrequency * time));
+            time += increments[i++ % increments.length];
+        }
+        SignalMeasurementAnalysis.Policy policy = new SignalMeasurementAnalysis.Policy(
+            20, 1, .02, 20, 4, 1e-10, SignalMeasurementAnalysis.Trigger.RISING);
+        SignalMeasurementAnalysis.Result result =
+            SignalMeasurementAnalysis.measureFrequency(window, policy);
+        check(result.getStatus() == SignalMeasurementAnalysis.Status.OK,
+            "irregular solver-time frequency is usable");
+        check(close(result.getFrequencyHz(), actualFrequency, .04),
+            "frequency uses interpolated timestamped crossings");
+
+        SolverTimeSample[] samples = window.snapshot();
+        double assumedStep = (samples[samples.length - 1].getTime() -
+            samples[0].getTime()) / (samples.length - 1);
+        double firstRisingIndex = -1;
+        double secondRisingIndex = -1;
+        double mean = result.getDcMean();
+        for (int j = 1; j < samples.length; j++) {
+            double before = samples[j - 1].getValue() - mean;
+            double after = samples[j].getValue() - mean;
+            if (before < 0 && after >= 0) {
+                if (firstRisingIndex < 0) firstRisingIndex = j - 1;
+                else { secondRisingIndex = j - 1; break; }
+            }
+        }
+        double fixedStepFrequency = 1 / ((secondRisingIndex - firstRisingIndex) * assumedStep);
+        check(Math.abs(fixedStepFrequency - actualFrequency) > .04,
+            "fixed-timestep assumption disagrees with irregular timestamps");
+    }
+
+    private static void noSignalAndNoTriggerAreExplicit() {
+        SolverTimeWindow flat = new SolverTimeWindow(8);
+        flat.append(0, 2.2);
+        flat.append(.1, 2.2);
+        flat.append(.2, 2.2);
+        SignalMeasurementAnalysis.Result noSignal =
+            SignalMeasurementAnalysis.measureFrequency(flat);
+        check(noSignal.getStatus() == SignalMeasurementAnalysis.Status.NO_SIGNAL,
+            "flat signal is explicit");
+
+        SolverTimeWindow ramp = new SolverTimeWindow(8);
+        ramp.append(0, 0);
+        ramp.append(.1, 1);
+        ramp.append(.2, 2);
+        ramp.append(.3, 3);
+        SignalMeasurementAnalysis.Policy falling = new SignalMeasurementAnalysis.Policy(
+            2, .1, .2, Double.NaN, 5, 1e-10,
+            SignalMeasurementAnalysis.Trigger.FALLING);
+        SignalMeasurementAnalysis.Result noTrigger =
+            SignalMeasurementAnalysis.measureFrequency(ramp, falling);
+        check(noTrigger.getStatus() == SignalMeasurementAnalysis.Status.NO_TRIGGER,
+            "missing requested trigger is explicit");
+
+        SolverTimeWindow aliased = new SolverTimeWindow(32);
+        for (int i = 0; i <= 20; i++) {
+            double t = i * .01;
+            aliased.append(t, Math.sin(2 * Math.PI * 60 * t));
+        }
+        SignalMeasurementAnalysis.Policy aliasPolicy =
+            new SignalMeasurementAnalysis.Policy(3, .1, Double.NaN,
+                20, 2, 1e-10, SignalMeasurementAnalysis.Trigger.ANY);
+        SignalMeasurementAnalysis.Result alias =
+            SignalMeasurementAnalysis.measureFrequency(aliased, aliasPolicy);
+        check(alias.getStatus() == SignalMeasurementAnalysis.Status.ALIASED,
+            "timestamp bandwidth alias is explicit");
+    }
+
+    private static boolean close(double actual, double expected, double tolerance) {
+        return !Double.isNaN(actual) && Math.abs(actual - expected) <= tolerance;
+    }
+
+    private static void reject(Runnable action, String label) {
+        try {
+            action.run();
+        } catch (IllegalArgumentException expected) {
+            assertions++;
+            return;
+        }
+        throw new AssertionError(label);
+    }
+
+    private static void check(boolean condition, String label) {
+        assertions++;
+        if (!condition) throw new AssertionError(label);
+    }
+}

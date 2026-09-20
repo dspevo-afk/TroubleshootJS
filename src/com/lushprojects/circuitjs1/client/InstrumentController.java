@@ -3,6 +3,7 @@ package com.lushprojects.circuitjs1.client;
 import java.util.HashMap;
 import java.util.Vector;
 
+import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.dom.client.NativeEvent;
@@ -14,6 +15,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /** Common probe/UI lifecycle; all mode behavior is delegated to providers. */
 class InstrumentController {
     private static final int PROBE_MARKER_RADIUS = 5;
+    private static final int SCOPE_TRACE_WIDTH = 198;
+    private static final int SCOPE_TRACE_HEIGHT = 60;
     static final double DIODE_MINIMUM_CURRENT = .00001;
     static final double DIODE_COMPLIANCE_THRESHOLD = 2.95;
 
@@ -26,6 +29,11 @@ class InstrumentController {
     private final VerticalPanel meterPanel;
     private final Label readingLabel;
     private final Label continuityLabel;
+    private final Canvas scopeTraceCanvas;
+    private final Grid scopeControls;
+    private final Button scopeTimeButton;
+    private final Button scopeVoltageButton;
+    private final Button scopeTriggerButton;
     private final ContinuityFeedback continuityFeedback;
     private final InstrumentModeRegistry modeRegistry;
     private boolean interactionEnabled = true;
@@ -115,10 +123,43 @@ class InstrumentController {
         readingLabel = new Label(activeStrategy.getInitialDisplay());
         readingLabel.setStyleName("tsj-meter-display");
         meterPanel.add(readingLabel);
+        scopeTraceCanvas = Canvas.createIfSupported();
+        if (scopeTraceCanvas != null) {
+            scopeTraceCanvas.setCoordinateSpaceWidth(SCOPE_TRACE_WIDTH);
+            scopeTraceCanvas.setCoordinateSpaceHeight(SCOPE_TRACE_HEIGHT);
+            scopeTraceCanvas.setPixelSize(SCOPE_TRACE_WIDTH, SCOPE_TRACE_HEIGHT);
+            scopeTraceCanvas.setStyleName("tsj-scope-trace");
+            scopeTraceCanvas.getElement().setAttribute("role", "img");
+            scopeTraceCanvas.getElement().setAttribute("aria-label", "Oscilloscope: probes required");
+            scopeTraceCanvas.setVisible(false);
+            meterPanel.add(scopeTraceCanvas);
+        }
         continuityLabel = new Label("BEEP");
         continuityLabel.setStyleName("tsj-continuity-indicator");
         continuityLabel.setVisible(false);
         meterPanel.add(continuityLabel);
+        scopeControls = new Grid(1, 3);
+        scopeControls.setStyleName("tsj-scope-controls");
+        scopeTimeButton = new Button("TIME");
+        scopeVoltageButton = new Button("VOLTS");
+        scopeTriggerButton = new Button("TRIGGER");
+        scopeTimeButton.getElement().setAttribute("aria-label", "Cycle oscilloscope time per division");
+        scopeVoltageButton.getElement().setAttribute("aria-label", "Cycle oscilloscope volts per division");
+        scopeTriggerButton.getElement().setAttribute("aria-label", "Cycle oscilloscope trigger edge");
+        scopeControls.setWidget(0, 0, scopeTimeButton);
+        scopeControls.setWidget(0, 1, scopeVoltageButton);
+        scopeControls.setWidget(0, 2, scopeTriggerButton);
+        scopeControls.setVisible(false);
+        meterPanel.add(scopeControls);
+        scopeTimeButton.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) { cycleScopeControl(0); }
+        });
+        scopeVoltageButton.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) { cycleScopeControl(1); }
+        });
+        scopeTriggerButton.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) { cycleScopeControl(2); }
+        });
         panel.add(meterPanel);
         continuityFeedback = new BrowserContinuityFeedback();
     }
@@ -132,6 +173,9 @@ class InstrumentController {
         interactionEnabled = enabled;
         for (Button button : modeButtons.values())
             button.setEnabled(enabled);
+        scopeTimeButton.setEnabled(enabled);
+        scopeVoltageButton.setEnabled(enabled);
+        scopeTriggerButton.setEnabled(enabled);
         /*
          * A pending verification or temporary analysis only suspends player
          * input.  Keep the selected mode and probes so that settlement can
@@ -178,6 +222,11 @@ class InstrumentController {
     void restoreForDeveloperVerification(DeveloperState saved) {
         if (saved == null)
             throw new IllegalArgumentException("Missing instrument state snapshot");
+        /* The verifier may have selected a different strategy after capture.
+         * Let that live strategy release external resources (notably a scope
+         * subscription) before restoring the saved presentation/state. */
+        if (activeStrategy != null && activeStrategy != saved.activeStrategy)
+            activeStrategy.deactivate(this);
         activeStrategy = saved.activeStrategy;
         meterPanel.getElement().setAttribute("data-mode", activeStrategy.getId());
         redProbe = saved.redProbe;
@@ -205,6 +254,18 @@ class InstrumentController {
             modeButtons.get(id).setStyleName("chsel", activeStrategy.getId().equals(id));
         for (Button button : modeButtons.values())
             button.setEnabled(interactionEnabled);
+        scopeTimeButton.setEnabled(interactionEnabled);
+        scopeVoltageButton.setEnabled(interactionEnabled);
+        scopeTriggerButton.setEnabled(interactionEnabled);
+        scopeControls.setVisible(activeStrategy instanceof OscilloscopeInstrumentMode);
+        setScopePresentationVisible(activeStrategy instanceof OscilloscopeInstrumentMode);
+        if (activeStrategy instanceof OscilloscopeInstrumentMode) {
+            /* A verifier can temporarily select another strategy, whose
+             * deactivation retires the old scope subscription. Rebind through
+             * the normal strategy seam instead of restoring a stale cursor. */
+            activeStrategy.refresh(this);
+            updateReading();
+        }
     }
 
     void handlePointerInput(int button, int screenX, int screenY) {
@@ -440,6 +501,7 @@ class InstrumentController {
     }
 
     void draw(Graphics graphics) {
+        activeStrategy.draw(this, graphics);
         drawProbe(graphics, redProbe, Color.red);
         drawProbe(graphics, blackProbe, Color.black);
     }
@@ -472,6 +534,8 @@ class InstrumentController {
         boolean changed = activeStrategy != strategy;
         activeStrategy = strategy;
         meterPanel.getElement().setAttribute("data-mode", activeStrategy.getId());
+        scopeControls.setVisible(activeStrategy instanceof OscilloscopeInstrumentMode);
+        setScopePresentationVisible(activeStrategy instanceof OscilloscopeInstrumentMode);
         if (changed)
             activeStrategy.activate(this);
         for (String id : modeButtons.keySet())
@@ -480,6 +544,31 @@ class InstrumentController {
             activeStrategy.refresh(this);
         setContinuityFeedbackForStrategy(activeStrategy.getState().isContinuityDetected());
         sim.repaint();
+    }
+
+    private void setScopePresentationVisible(boolean visible) {
+        if (scopeTraceCanvas == null)
+            return;
+        scopeTraceCanvas.setVisible(visible);
+        if (!visible)
+            clearScopeTrace();
+    }
+
+    private void clearScopeTrace() {
+        if (scopeTraceCanvas == null)
+            return;
+        Graphics graphics = new Graphics(scopeTraceCanvas.getContext2d());
+        graphics.setColor("#0e171b");
+        graphics.fillRect(0, 0, SCOPE_TRACE_WIDTH, SCOPE_TRACE_HEIGHT);
+        scopeTraceCanvas.getElement().setAttribute("aria-label", "Oscilloscope: inactive");
+    }
+
+    private static boolean finite(double value) {
+        return !Double.isNaN(value) && !Double.isInfinite(value);
+    }
+
+    private static int clamp(int value, int minimum, int maximum) {
+        return Math.max(minimum, Math.min(maximum, value));
     }
 
     private void addVisibleModeButton(final InstrumentModeStrategy strategy) {
@@ -542,6 +631,96 @@ class InstrumentController {
         return measurementAdapter.measureDcVoltage(red, black);
     }
 
+    VoltageMeasurementResult measureDcVoltageResultForStrategy(ProbeTarget red,
+            ProbeTarget black) {
+        return measurementAdapter.measureDcVoltageResult(red, black);
+    }
+
+    VoltageMeasurementResult measureAcVoltageForStrategy(ProbeTarget red,
+            ProbeTarget black) {
+        return measurementAdapter.measureAcVoltage(red, black);
+    }
+
+    MeasurementReferencePolicy.Result assessDifferentialReferenceForStrategy(
+            ProbeTarget red, ProbeTarget black) {
+        return measurementAdapter.assessDifferentialReference(red, black);
+    }
+
+    SolverTimeObservationService.Subscription observeDifferentialVoltageForStrategy(
+            ProbeTarget red, ProbeTarget black) {
+        return measurementAdapter.observeDifferentialVoltage(red, black);
+    }
+
+    void stopObservingDifferentialVoltageForStrategy(
+            SolverTimeObservationService.Subscription samples) {
+        measurementAdapter.stopObservingDifferentialVoltage(samples);
+    }
+
+    void configureScopeControlsForStrategy(String time, String voltage, String trigger) {
+        scopeTimeButton.setText(time == null ? "TIME" : time);
+        scopeVoltageButton.setText(voltage == null ? "VOLTS" : voltage);
+        scopeTriggerButton.setText(trigger == null ? "TRIGGER" : trigger);
+    }
+
+    /**
+     * Paints a bounded, read-only projection of the active scope subscription
+     * into the native meter screen. It never advances or reads CircuitJS on
+     * its own; callers have already obtained accepted solver-time samples.
+     */
+    void renderScopeTraceForStrategy(SolverTimeSample[] samples, double viewStart,
+            double captureSeconds, double voltsPerDivision, String legend,
+            String status, boolean drawWaveform) {
+        if (scopeTraceCanvas == null)
+            return;
+        Graphics graphics = new Graphics(scopeTraceCanvas.getContext2d());
+        graphics.setColor("#0e171b");
+        graphics.fillRect(0, 0, SCOPE_TRACE_WIDTH, SCOPE_TRACE_HEIGHT);
+        graphics.setColor("#34515a");
+        graphics.setLineWidth(1);
+        final int graphTop = 11;
+        final int graphHeight = 37;
+        for (int i = 0; i <= 10; i++) {
+            int x = i * (SCOPE_TRACE_WIDTH - 1) / 10;
+            graphics.drawLine(x, graphTop, x, graphTop + graphHeight);
+        }
+        for (int i = 0; i <= 8; i++) {
+            int y = graphTop + i * graphHeight / 8;
+            graphics.drawLine(0, y, SCOPE_TRACE_WIDTH - 1, y);
+        }
+        graphics.setFont(new Font("monospace", Font.BOLD, 7));
+        graphics.setColor("#d5f7cc");
+        graphics.drawString(legend == null ? "SCOPE" : legend, 3, 8);
+        graphics.drawString(status == null ? "WINDOW" : status, 3, SCOPE_TRACE_HEIGHT - 3);
+        if (drawWaveform && samples != null && samples.length > 0 &&
+                finite(viewStart) && finite(captureSeconds) && captureSeconds > 0 &&
+                finite(voltsPerDivision) && voltsPerDivision > 0) {
+            double pixelsPerVolt = (graphHeight / 8.0) / voltsPerDivision;
+            int priorX = Integer.MIN_VALUE;
+            int priorY = 0;
+            graphics.setColor("#91ef7c");
+            graphics.setLineWidth(1.25);
+            for (int i = 0; i < samples.length; i++) {
+                SolverTimeSample sample = samples[i];
+                if (sample == null || !finite(sample.getTime()) || !finite(sample.getValue()) ||
+                        sample.getTime() < viewStart || sample.getTime() > viewStart + captureSeconds) {
+                    priorX = Integer.MIN_VALUE;
+                    continue;
+                }
+                int x = clamp((int)Math.round((sample.getTime() - viewStart) *
+                    (SCOPE_TRACE_WIDTH - 1) / captureSeconds), 0, SCOPE_TRACE_WIDTH - 1);
+                int y = clamp((int)Math.round(graphTop + graphHeight * .5 -
+                    sample.getValue() * pixelsPerVolt), graphTop, graphTop + graphHeight);
+                if (priorX != Integer.MIN_VALUE)
+                    graphics.drawLine(priorX, priorY, x, y);
+                priorX = x;
+                priorY = y;
+            }
+        }
+        scopeTraceCanvas.getElement().setAttribute("aria-label", "Oscilloscope: " +
+            (status == null ? "WINDOW" : status) + ". " +
+            (legend == null ? "" : legend));
+    }
+
     boolean usesLiveDcVoltageForStrategy(ProbeTarget red, ProbeTarget black) {
         return measurementAdapter.usesLiveDcVoltage(red, black);
     }
@@ -594,6 +773,18 @@ class InstrumentController {
 
     void finishActiveMeasurementForStrategy() {
         sim.finishActiveMeasurementBeforeInstrumentExit();
+    }
+
+    private void cycleScopeControl(int control) {
+        if (!isCurrentPlayerInteractionAllowed() || !(activeStrategy instanceof OscilloscopeInstrumentMode))
+            return;
+        OscilloscopeInstrumentMode scope = (OscilloscopeInstrumentMode) activeStrategy;
+        if (control == 0)
+            scope.cycleTimeScale(this);
+        else if (control == 1)
+            scope.cycleVoltageScale(this);
+        else
+            scope.cycleTrigger(this);
     }
 
     private InstrumentModeState getModeState(String id) {

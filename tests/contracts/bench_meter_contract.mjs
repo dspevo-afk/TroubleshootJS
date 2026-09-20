@@ -20,13 +20,65 @@ Object.defineProperty(panel, 'offsetParent', {get:()=>host});
 w.HTMLElement.prototype.setPointerCapture = function(id) { if(captureFails) throw Error('unavailable'); captured=id; };
 w.HTMLElement.prototype.hasPointerCapture = id => captured===id;
 w.HTMLElement.prototype.releasePointerCapture = id => { check(captured===id,'release exact captured pointer'); captured=null; releases++; };
-const calls=[]; w.tsjProduct = {action(...args) { calls.push(args); return ''; }};
+const calls=[], meterCalls=[];
+w.tsjProduct = {action(...args) {
+  calls.push(args);
+  if (args[2] === 'meter') {
+    meterCalls.push(args);
+    // The production bridge publishes the owner-selected mode on the native
+    // panel before the presentation adapter refreshes its ARIA state.
+    panel.setAttribute('data-mode', args[3]);
+  }
+  return '';
+}};
 w.eval(fs.readFileSync(new URL('../../war/tsj-bench-instruments.js',import.meta.url),'utf8'));
 const api = w.tsjBenchInstruments, owner = {}, other = {};
 const snapshot = {token:1,hasBoard:true,screen:'WORKBENCH',ready:true,completed:false};
 let view = {scale:.8,x:360,y:40,area:{x:0,y:0,width:1400,height:700},home:{x:-284,y:60,width:252,height:454}};
 api.mount(snapshot); api.project(owner,canvas,view);
 const grip=d.querySelector('.tsj-meter-grip'), display=d.querySelector('.tsj-meter-display');
+const dial=d.querySelector('.tsj-meter-dial');
+const acButton=d.querySelector('[data-instrument-mode="AC_VOLTAGE"]');
+const scopeButton=d.querySelector('[data-instrument-mode="SCOPE"]');
+const unsupportedButton=d.querySelector('.tsj-meter-future button:not([data-instrument-mode])');
+check(acButton && scopeButton,'visible V~ and Hz controls are present in the bench presentation');
+check(acButton.textContent==='V~' && scopeButton.textContent==='Hz','V~ and Hz keep their meter-face labels');
+check(acButton.getAttribute('aria-label')==='AC voltage RMS' && acButton.title==='AC voltage RMS' &&
+  scopeButton.getAttribute('aria-label')==='Oscilloscope / frequency' && scopeButton.title==='Oscilloscope / frequency',
+  'V~ and Hz expose truthful accessible names and tooltips');
+check(!acButton.disabled && !scopeButton.disabled && unsupportedButton.disabled,
+  'implemented V~/Hz controls are enabled while the ready workbench is live and other future functions remain disabled');
+check(dial.getAttribute('aria-disabled')==='false','ready workbench exposes an enabled meter selector');
+acButton.click();
+check(meterCalls.length===1 && meterCalls[0].join('|')==='1|0|meter|AC_VOLTAGE||',
+  'V~ dispatches the exact AC_VOLTAGE meter action through the product bridge');
+check(panel.dataset.mode==='AC_VOLTAGE' && dial.getAttribute('aria-valuenow')==='2' &&
+  dial.getAttribute('aria-valuetext')==='AC voltage RMS' && acButton.getAttribute('aria-pressed')==='true' &&
+  scopeButton.getAttribute('aria-pressed')==='false',
+  'AC_VOLTAGE publication synchronizes the dial and button accessibility state');
+scopeButton.click();
+check(meterCalls.length===2 && meterCalls[1].join('|')==='1|0|meter|SCOPE||',
+  'Hz dispatches the exact SCOPE meter action through the product bridge');
+check(panel.dataset.mode==='SCOPE' && dial.getAttribute('aria-valuenow')==='6' &&
+  dial.getAttribute('aria-valuetext')==='Oscilloscope' && acButton.getAttribute('aria-pressed')==='false' &&
+  scopeButton.getAttribute('aria-pressed')==='true',
+  'SCOPE publication synchronizes the dial and button accessibility state');
+const beforeUnsupported=meterCalls.length; unsupportedButton.click();
+check(meterCalls.length===beforeUnsupported,'disabled future functions cannot dispatch a meter action');
+function meterAvailability(state, expected, label) {
+  api.mount(state);
+  check(acButton.disabled===!expected && scopeButton.disabled===!expected,
+    label+' synchronizes native disabled state for V~ and Hz');
+  check(dial.getAttribute('aria-disabled')===String(!expected),
+    label+' synchronizes the selector aria-disabled state');
+  check(acButton.getAttribute('aria-pressed')==='false' && scopeButton.getAttribute('aria-pressed')==='true',
+    label+' preserves the published SCOPE selection in accessibility state');
+}
+meterAvailability({...snapshot,token:3,screen:'MENU',ready:false},false,'menu');
+meterAvailability({...snapshot,token:4,screen:'RETEST',ready:false},false,'retest');
+meterAvailability({...snapshot,token:5,screen:'WORKBENCH',completed:true},false,'completed workbench');
+meterAvailability(snapshot,true,'ready workbench restoration');
+calls.length=0;
 const position=()=>({x:Number(panel.dataset.benchWorldX),y:Number(panel.dataset.benchWorldY)});
 function box() { const s=Number(panel.style.getPropertyValue('--meter-scale')); return rect(parseFloat(panel.style.left)-1,parseFloat(panel.style.top)+18,252*s,454*s); }
 function point(type,target,x,y,id=1,button=0,isPrimary=true) {

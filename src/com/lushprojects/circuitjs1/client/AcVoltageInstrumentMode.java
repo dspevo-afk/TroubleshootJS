@@ -1,11 +1,12 @@
 package com.lushprojects.circuitjs1.client;
 
-final class DcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
+/** Differential, AC-coupled true-RMS meter backed by a finite 10 Mohm load. */
+final class AcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
     private boolean refreshPending;
     private VoltageMeasurementResult latest;
 
-    DcVoltageInstrumentMode() {
-        super("DC_VOLTAGE", "DC V", "--- V", 1,
+    AcVoltageInstrumentMode() {
+        super("AC_VOLTAGE", "AC V", "--- V RMS", 5,
             new InstrumentProbeRequirements(true, InstrumentProbePolarity.POSITIVE,
                 InstrumentProbePolarity.NEGATIVE),
             InstrumentPowerPolicy.POWERED_OR_UNPOWERED, true);
@@ -13,27 +14,29 @@ final class DcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
 
     public void refresh(InstrumentController controller) {
         latest = null;
-        getState().setPrimaryValue(Double.NaN);
         refreshPending = true;
+        getState().setPrimaryValue(Double.NaN);
         getState().setRefreshPending(true);
         getState().setDisplayText(getInitialDisplay());
         controller.setInstrumentDisplayForStrategy(getInitialDisplay());
     }
 
     public void measure(InstrumentController controller) {
-        if (controller.getRedProbeForStrategy() == null ||
-                controller.getBlackProbeForStrategy() == null) {
+        ProbeTarget red = controller.getRedProbeForStrategy();
+        ProbeTarget black = controller.getBlackProbeForStrategy();
+        if (red == null || black == null) {
+            /* Probe changes explicitly refresh this strategy. Do not keep a
+             * missing-probe request pending across every solver frame. */
+            refreshPending = false;
+            getState().setRefreshPending(false);
             getState().setPrimaryValue(Double.NaN);
             return;
         }
         if (!refreshPending)
             return;
-        boolean live = controller.usesLiveDcVoltageForStrategy(
-            controller.getRedProbeForStrategy(), controller.getBlackProbeForStrategy());
-        refreshPending = live;
-        getState().setRefreshPending(live);
-        latest = controller.measureDcVoltageResultForStrategy(
-            controller.getRedProbeForStrategy(), controller.getBlackProbeForStrategy());
+        refreshPending = false;
+        getState().setRefreshPending(false);
+        latest = controller.measureAcVoltageForStrategy(red, black);
         getState().setPrimaryValue(latest.isNumeric() ? latest.getValue() : Double.NaN);
         getState().incrementMeasurementCount();
         controller.validateTargetsForStrategy();
@@ -46,9 +49,7 @@ final class DcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
     }
 
     public void onSimulationStepComplete(InstrumentController controller, boolean didAnalyze) {
-        if ((didAnalyze || controller.usesLiveDcVoltageForStrategy(
-                controller.getRedProbeForStrategy(), controller.getBlackProbeForStrategy())) &&
-                refreshPending)
+        if (refreshPending)
             controller.updateReadingForStrategy();
     }
 
@@ -57,13 +58,25 @@ final class DcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
             return getInitialDisplay();
         switch (latest.getStatus()) {
         case OK:
+            return CircuitElm.getVoltageText(latest.getValue()) + " RMS";
         case NO_SIGNAL:
-            return CircuitElm.getVoltageText(latest.getValue());
+            return "0 V RMS";
         case OVER_RANGE:
-            return "OL V";
+            return "OL RMS";
         case REFERENCE_REJECTED:
         case REFERENCE_UNPROVEN:
-            return "REF? V";
+            return "REF? RMS";
+        case GAP:
+            return "GAP RMS";
+        case BANDWIDTH_LIMITED:
+            return "BW RMS";
+        case ALIASED:
+            return "ALIAS RMS";
+        case INSUFFICIENT_WINDOW:
+            return "WINDOW RMS";
+        case NUMERICAL_LIMITED:
+            return "MATH RMS";
+        case UNAVAILABLE:
         default:
             return getInitialDisplay();
         }

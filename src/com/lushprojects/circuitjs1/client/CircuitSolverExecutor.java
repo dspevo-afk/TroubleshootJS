@@ -58,22 +58,28 @@ final class CircuitSolverExecutor {
         Object owner = currentOwner();
         if (boundOwner != owner || boundGraph != sim.elmList) {
             boundary.bind(owner, sim.elmList);
+            sim.solverTimeObservations.invalidate();
             boundOwner = owner; boundGraph = sim.elmList; requiresAnalysis = true;
             events = new SolverEventQueue(1024, 1024, sim.t);
             goodIterations = 100; goodIteration = true;
-        } else if (!controlsCurrent()) { boundary.invalidate(); requiresAnalysis = true; }
+        } else if (!controlsCurrent()) {
+            boundary.invalidate(); sim.solverTimeObservations.invalidate(); requiresAnalysis = true;
+        }
         Observation priorSample = boundary.observation();
-        if (priorSample != null && priorSample.simulationTime != sim.t) boundary.invalidate();
+        if (priorSample != null && priorSample.simulationTime != sim.t) {
+            boundary.invalidate(); sim.solverTimeObservations.invalidate();
+        }
         observedControls = sim.generatedBoardInstance == null ? null :
             sim.generatedBoardInstance.getExternalPowerBindings().observeControls();
     }
     void invalidate() {
         if (restoringPrivate) return;
-        requirePublicAccess(); bindCurrent(); boundary.invalidate(); requiresAnalysis = true;
+        requirePublicAccess(); bindCurrent(); boundary.invalidate();
+        sim.solverTimeObservations.invalidate(); requiresAnalysis = true;
     }
     void retire() {
         if (restoringPrivate) return;
-        requirePublicAccess(); boundary.retire();
+        requirePublicAccess(); boundary.retire(); sim.solverTimeObservations.invalidate();
         boundOwner = null; boundGraph = null;
         events = new SolverEventQueue(1024, 1024, sim.t);
         goodIterations = 100; goodIteration = true;
@@ -90,7 +96,8 @@ final class CircuitSolverExecutor {
     }
     void analyze() { analyze(null); }
     void analyze(Object permit) {
-        access(permit); bindCurrent(); boundary.invalidate(); requiresAnalysis = true;
+        access(permit); bindCurrent(); boundary.invalidate();
+        sim.solverTimeObservations.invalidate(); requiresAnalysis = true;
         Operation operation = begin(permit, 1, true);
         Outcome result = Outcome.COMPLETE;
         try {
@@ -100,7 +107,7 @@ final class CircuitSolverExecutor {
         } catch (RuntimeException failure) {
             result = outcome(failure); throw failure;
         } catch (Error failure) { result = Outcome.NUMERICAL_FAILURE; throw failure;
-        } finally { boundary.finish(operation, result); }
+        } finally { finishOperation(operation, result); }
     }
     void advanceUi(boolean didAnalyze) {
         Operation operation = begin(null, STEP_LIMIT);
@@ -111,7 +118,7 @@ final class CircuitSolverExecutor {
         } catch (RuntimeException failure) {
             result = outcome(failure); throw failure;
         } catch (Error failure) { result = Outcome.NUMERICAL_FAILURE; throw failure;
-        } finally { boundary.finish(operation, result); }
+        } finally { finishOperation(operation, result); }
     }
     void advanceSteps(int count) { advanceSteps(null, count); }
     void advanceSteps(Object permit, int count) {
@@ -123,7 +130,7 @@ final class CircuitSolverExecutor {
         } catch (RuntimeException failure) {
             result = outcome(failure); throw failure;
         } catch (Error failure) { result = Outcome.NUMERICAL_FAILURE; throw failure;
-        } finally { boundary.finish(operation, result); }
+        } finally { finishOperation(operation, result); }
     }
     void advanceFor(double duration) { advanceFor(null, duration); }
     void advanceFor(Object permit, double duration) {
@@ -146,7 +153,7 @@ final class CircuitSolverExecutor {
         } catch (RuntimeException failure) {
             result = outcome(failure); throw failure;
         } catch (Error failure) { result = Outcome.NUMERICAL_FAILURE; throw failure;
-        } finally { boundary.finish(operation, result); }
+        } finally { finishOperation(operation, result); }
     }
     private Operation begin(Object permit, int count) { return begin(permit, count, false); }
     private Operation begin(Object permit, int count, boolean analyzing) {
@@ -190,6 +197,7 @@ final class CircuitSolverExecutor {
         requireFinite(sim.nodeVoltages); requireFinite(sim.circuitRightSide);
         events.dispatchAccepted(sim.t);
         boundary.accepted(operation, sim.t, wallTimeMillis());
+        sim.solverTimeObservations.accepted(operation);
     }
     void requireFinite(double[] values) {
         if (values == null) return;
@@ -221,6 +229,11 @@ final class CircuitSolverExecutor {
     private static Outcome outcome(RuntimeException failure) {
         return failure instanceof Failure ? ((Failure) failure).outcome : Outcome.NUMERICAL_FAILURE;
     }
+    private Outcome finishOperation(Operation operation, Outcome requested) {
+        Outcome result = boundary.finish(operation, requested);
+        sim.solverTimeObservations.finished(operation, result);
+        return result;
+    }
     SolverEventQueue events(Object permit) {
         access(permit); bindCurrent(); return events;
     }
@@ -242,7 +255,8 @@ final class CircuitSolverExecutor {
     }
     void snapshotRestored(PrivateState saved) {
         if (privateOwner != null) return; // Exact private permit owns its separate restoration.
-        requirePublicAccess(); boundary.retire(); boundOwner = null; boundGraph = null; bindCurrent();
+        requirePublicAccess(); boundary.retire(); sim.solverTimeObservations.invalidate();
+        boundOwner = null; boundGraph = null; bindCurrent();
         if (boundOwner == saved.owner && boundGraph == saved.graph) {
             saved.events.restore(saved.eventState);
             events = saved.events; goodIterations = saved.goodIterations; goodIteration = saved.goodIteration;
@@ -258,7 +272,8 @@ final class CircuitSolverExecutor {
         if (permit == null || graph == null || graph == sim.elmList)
             throw new IllegalArgumentException("Private execution needs detached graph ownership");
         PrivateState saved = new PrivateState(boundOwner, boundGraph, events, goodIterations, goodIteration, requiresAnalysis);
-        boundary.invalidate(); privateOwner = permit; privateGraph = graph;
+        boundary.invalidate(); sim.solverTimeObservations.invalidate();
+        privateOwner = permit; privateGraph = graph;
         return saved;
     }
     boolean ownsPrivate(Object permit, Vector<CircuitElm> graph) {
@@ -267,7 +282,8 @@ final class CircuitSolverExecutor {
     }
     void releasePrivate(Object permit, PrivateState saved, boolean restored) {
         if (privateOwner != permit) throw new Failure(Outcome.STALE_OWNER, "Private solver permit retired");
-        boundary.requireIdle(); privateOwner = null; privateGraph = null; restoringPrivate = false; boundary.retire();
+        boundary.requireIdle(); privateOwner = null; privateGraph = null; restoringPrivate = false;
+        boundary.retire(); sim.solverTimeObservations.invalidate();
         bindCurrent();
         if (restored && boundOwner == saved.owner && boundGraph == saved.graph) {
             saved.events.restore(saved.eventState);
@@ -333,7 +349,7 @@ final class CircuitSolverExecutor {
         private void finish(Outcome outcome) {
             if (done) return;
             continuation.cancel();
-            result = boundary.finish(operation, outcome); done = true; finishedAt = System.currentTimeMillis();
+            result = finishOperation(operation, outcome); done = true; finishedAt = System.currentTimeMillis();
             sample = result == Outcome.COMPLETE ? boundary.observation() : null;
             if (!deferCompletion) deliverDeferredCompletion(false);
         }

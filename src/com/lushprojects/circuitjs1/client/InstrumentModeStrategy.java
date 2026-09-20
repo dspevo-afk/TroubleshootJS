@@ -25,4 +25,5 @@ interface InstrumentModeStrategy {
     void measure(InstrumentController controller);
     void display(InstrumentController controller);
     void onSimulationStepComplete(InstrumentController controller, boolean didAnalyze);
+    void draw(InstrumentController controller, Graphics graphics);
 }
