@@ -5,7 +5,6 @@ final class AcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
     /* Reacquisition is governed by accepted CircuitJS time, not paint or wall
      * cadence.  One deferred transaction captures at most this same bounded
      * solver-time window before the next eligibility point. */
-    private static final double REACQUIRE_SOLVER_SECONDS = CirSim.AC_VOLTAGE_CAPTURE_SECONDS;
     private boolean refreshPending;
     private double nextCaptureAt = Double.NaN;
     private VoltageMeasurementResult latest;
@@ -47,10 +46,8 @@ final class AcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
             latest = controller.measureAcVoltageForStrategy(red, black);
             getState().setPrimaryValue(latest.isNumeric() ? latest.getValue() : Double.NaN);
             getState().incrementMeasurementCount();
-            if (shouldReacquire(latest))
-                nextCaptureAt = controller.getSimulationTimeForStrategy() + REACQUIRE_SOLVER_SECONDS;
-            else
-                nextCaptureAt = Double.NaN;
+            nextCaptureAt = VoltageMeasurementReacquisitionPolicy.nextDueAt(latest,
+                controller.getSimulationTimeForStrategy());
             controller.validateTargetsForStrategy();
         } catch (RuntimeException failure) {
             retireFailedAcquisition(controller);
@@ -72,28 +69,12 @@ final class AcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
             controller.requestDeferredMeasurementUpdateForStrategy(this);
             return;
         }
-        if (finite(nextCaptureAt) && controller.getSimulationTimeForStrategy() >= nextCaptureAt) {
+        if (VoltageMeasurementReacquisitionPolicy.isDue(nextCaptureAt,
+                controller.getSimulationTimeForStrategy())) {
             refreshPending = true;
             getState().setRefreshPending(true);
             controller.requestDeferredMeasurementUpdateForStrategy(this);
         }
-    }
-
-    private static boolean shouldReacquire(VoltageMeasurementResult result) {
-        if (result == null)
-            return false;
-        switch (result.getStatus()) {
-        case REFERENCE_REJECTED:
-        case REFERENCE_UNPROVEN:
-        case UNAVAILABLE:
-            return false;
-        default:
-            return true;
-        }
-    }
-
-    private static boolean finite(double value) {
-        return !Double.isNaN(value) && !Double.isInfinite(value);
     }
 
     /** A failed solver transaction must never leave a previously accepted RMS

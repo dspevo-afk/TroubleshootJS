@@ -1693,11 +1693,15 @@ exclusive solver ownership and `finally` cleanup, but does not inject a source
 or invoke the active-instrument residual-energy settling policy. Resistance,
 continuity, and diode measurements continue to require their existing active
 source, power-isolation, and residual-energy protections. `InstrumentController`
-requests one DC refresh for a probe, topology, part-location, or power change.
-An accepted-step callback only queues the update; `CirSim` drains it at the
-outer post-callback boundary, so a DC refresh cannot recursively reinsert a
-meter from a solver callback. Ordinary repaint remains unable to create a
-measurement transaction.
+requests an immediate DC refresh for a probe, topology, part-location, or power
+change. It also retains a non-reference, available DC result under the shared
+bounded reacquisition policy: after another 50 ms of accepted solver time, one
+later passive DMM transaction is eligible. The accepted-step callback only
+queues that update; `CirSim` drains it at the outer post-callback boundary, so
+a DC refresh cannot recursively reinsert a meter from a solver callback.
+Reference refusal/unproven and unavailable outcomes retire rather than poll;
+the next valid lifecycle change owns their replacement. Ordinary repaint remains
+unable to create a measurement transaction.
 
 ### Reference-aware voltage and solver-time instruments — U02/U03
 
@@ -1716,20 +1720,24 @@ shorter or inadequately observed capture is nonnumeric (`WINDOW RMS`), never a
 plausible RMS number. AC RMS is AC-coupled: the timestamp-weighted mean is
 removed before RMS, so DC offset is not silently reported as AC. Retained valid
 probes schedule at most one further 50 ms capture after the next 50 ms of
-accepted solver time. The callback merely queues the bounded passive transaction
-for the post-step boundary; it neither measures recursively nor lets paint,
-wall-clock cadence, or a UI frame advance CircuitJS. Probe removal, power,
-topology, owner, graph, and mode changes retire the pending acquisition state.
+accepted solver time. DC and AC share that eligibility policy, while AC alone
+uses the bounded 50 ms sample acquisition itself. The callback merely queues
+the bounded passive transaction for the post-step boundary; it neither measures
+recursively nor lets paint, wall-clock cadence, or a UI frame advance CircuitJS.
+Probe removal, power, topology, owner, graph, and mode changes retire the
+pending acquisition state.
 
 The declared 200 Hz AC bandwidth has a separate observed-content qualification,
 not just a sample-rate assertion. Timestamp spacing is first checked for
 acquisition adequacy. The AC analysis then derives mean crossings from the
-accepted CircuitJS samples; it requires enough alternating observed crossings to
-establish a finite-window RMS and rejects an observed crossing interval faster
-than the declared passband as `BW RMS`. No component/source-frequency metadata
-is consulted. This is a deliberately conservative qualification rather than an
-analog filter model: it does not claim to detect waveform content that the
-accepted samples did not reveal.
+accepted CircuitJS samples. For a numeric declared-band result it needs three
+alternating crossings and compares same-direction crossings (one full observed
+cycle) with the 5 ms period at 200 Hz. That avoids treating a finite-window
+mean's biased individual half-cycle as proof that a clean near-cutoff sine is
+out of band, while a complete observed faster cycle reports `BW RMS`. No
+component/source-frequency metadata is consulted. This is a deliberately
+conservative qualification rather than an analog filter model: it does not claim
+to detect waveform content that the accepted samples did not reveal.
 
 `SolverTimeObservationService` is the sole temporal publication boundary. Each
 differential subscription has bounded staging and committed rings tied to the

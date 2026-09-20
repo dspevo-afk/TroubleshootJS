@@ -180,6 +180,9 @@ final class RcDelayDeveloperVerifier {
                 !"--- V".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             "RC live DC path did not produce an initial powered display");
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        // Give the actual C1 graph enough accepted solver time to discharge;
+        // the retained probes do not move during this setup.
+        sim.advanceGeneratedTemporalProfile(.750);
         sim.updateCircuit();
         double unpoweredVoltage = sim.instrumentController.getLatestDcVoltageForDeveloperVerification();
         require(finite(unpoweredVoltage) && Math.abs(unpoweredVoltage - poweredVoltage) > .001,
@@ -191,14 +194,47 @@ final class RcDelayDeveloperVerifier {
                 !"--- V".equals(sim.instrumentController.getReadingForDeveloperVerification()) &&
                 Math.abs(firstPoweredVoltage - unpoweredVoltage) > .001,
             "RC live DC path did not update to the powered solver value");
+        int measurementsAfterPowerOn = sim.instrumentController
+            .getDcVoltageMeasurementCountForDeveloperVerification();
+        double nextReacquisitionAt = sim.t + CirSim.AC_VOLTAGE_CAPTURE_SECONDS;
         int placeholdersAfterPowerOn = sim.instrumentController
             .getDcVoltagePlaceholderDisplayCountForDeveloperVerification();
-        for (int cycle = 0; cycle < 8; cycle++) {
+        // The regular live solver can yield before consuming its configured
+        // frame budget.  The deadline is therefore solver time, never an
+        // assumed number of UI frames.  Before it, no second burden
+        // transaction may occur; once reached, one transaction must update
+        // without a probe, power, or topology mutation.
+        boolean reacquired = false;
+        double reacquiredPoweredVoltage = Double.NaN;
+        int measurementsAfterReacquisition = measurementsAfterPowerOn;
+        for (int cycle = 0; cycle < 64; cycle++) {
             sim.updateCircuit();
             require(!"--- V".equals(sim.instrumentController.getReadingForDeveloperVerification()) &&
                     finite(sim.instrumentController.getLatestDcVoltageForDeveloperVerification()),
                 "RC live DC display entered a placeholder during cycle " + cycle);
+            measurementsAfterReacquisition = sim.instrumentController
+                .getDcVoltageMeasurementCountForDeveloperVerification();
+            if (sim.t + 1e-9 < nextReacquisitionAt) {
+                require(measurementsAfterReacquisition == measurementsAfterPowerOn,
+                    "RC live DC meter reacquired before its bounded solver-time deadline");
+                continue;
+            }
+            reacquiredPoweredVoltage = sim.instrumentController
+                .getLatestDcVoltageForDeveloperVerification();
+            require(measurementsAfterReacquisition == measurementsAfterPowerOn + 1,
+                "RC live DC meter did not take exactly one burden transaction at its deadline: t=" +
+                sim.t + " due=" + nextReacquisitionAt + " measurements=" +
+                measurementsAfterReacquisition + " baseline=" + measurementsAfterPowerOn);
+            reacquired = true;
+            break;
         }
+        require(reacquired,
+            "RC live solver did not reach the bounded 50 ms DMM deadline: t=" + sim.t +
+                " due=" + nextReacquisitionAt + " measurements=" +
+                measurementsAfterReacquisition + " baseline=" + measurementsAfterPowerOn);
+        require(finite(reacquiredPoweredVoltage) &&
+                Math.abs(reacquiredPoweredVoltage - firstPoweredVoltage) > .010,
+            "RC live DC meter retained a stale capacitor voltage after solver-time reacquisition");
         require(sim.instrumentController.getDcVoltagePlaceholderDisplayCountForDeveloperVerification() ==
                 placeholdersAfterPowerOn,
             "RC live DC display flickered after the real power transition settled");

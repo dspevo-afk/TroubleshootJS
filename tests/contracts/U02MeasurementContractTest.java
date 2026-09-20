@@ -11,6 +11,8 @@ public final class U02MeasurementContractTest {
         windowQualityAndOverRangeAreExplicit();
         acBandwidthSeparatesSampleAdequacyFromSignalContent();
         acTemporalCoverageAndIrregularStepsAreQualified();
+        finiteWindowNearCutoffSinesRemainInBand();
+        voltageReacquisitionIsBoundedAndReferenceAware();
         frequencyUsesIrregularSolverTime();
         noSignalAndNoTriggerAreExplicit();
         System.out.println("PASS: U02 measurement contracts assertions=" + assertions);
@@ -239,6 +241,65 @@ public final class U02MeasurementContractTest {
             check(close(result.getDcMean(), offset, .008),
                 "AC coupling retains explicit DC offset reporting at " + frequency + " Hz");
         }
+    }
+
+    /**
+     * The actual 50 ms / 8,192-sample DMM capture retains only about
+     * 40.955 ms at 5 us accepted steps.  Exercise phase offsets at the
+     * declared boundary so finite-window mean bias cannot turn a clean 199 Hz
+     * sine into a false 200 Hz bandwidth rejection.
+     */
+    private static void finiteWindowNearCutoffSinesRemainInBand() {
+        SignalMeasurementAnalysis.Policy policy = new SignalMeasurementAnalysis.Policy(
+            16, .04, .0025, 200, 20, 1e-9, SignalMeasurementAnalysis.Trigger.ANY);
+        for (int phaseIndex = 0; phaseIndex < 32; phaseIndex++) {
+            SolverTimeWindow retained = new SolverTimeWindow(8192);
+            double phase = 2 * Math.PI * phaseIndex / 32.0;
+            for (int step = 0; step <= 10000; step++) {
+                double time = step * .000005;
+                retained.append(time, 3 * Math.sin(2 * Math.PI * 199 * time + phase));
+            }
+            SignalMeasurementAnalysis.Result result = SignalMeasurementAnalysis.measureAcRms(retained,
+                policy);
+            check(result.getWindowAssessment().getBandwidthStatus() ==
+                    SolverTimeWindow.BandwidthStatus.OK &&
+                    result.getStatus() == SignalMeasurementAnalysis.Status.OK &&
+                    result.getSignalBandwidthStatus() ==
+                        SignalMeasurementAnalysis.SignalBandwidthStatus.WITHIN_DECLARED_BAND,
+                "production-sized retained 199 Hz sine stays inside the 200 Hz policy at phase " +
+                phaseIndex);
+        }
+
+        SolverTimeWindow aboveCutoff = new SolverTimeWindow(8192);
+        for (int step = 0; step <= 10000; step++) {
+            double time = step * .000005;
+            aboveCutoff.append(time, 3 * Math.sin(2 * Math.PI * 201 * time + .37));
+        }
+        SignalMeasurementAnalysis.Result rejected = SignalMeasurementAnalysis.measureAcRms(aboveCutoff,
+            policy);
+        check(rejected.getStatus() == SignalMeasurementAnalysis.Status.BANDWIDTH_LIMITED &&
+                rejected.getSignalBandwidthStatus() ==
+                    SignalMeasurementAnalysis.SignalBandwidthStatus.EXCEEDS_DECLARED_BAND,
+            "production-sized retained 201 Hz sine is explicitly outside the 200 Hz policy");
+    }
+
+    private static void voltageReacquisitionIsBoundedAndReferenceAware() {
+        VoltageMeasurementResult numeric = VoltageMeasurementResult.numeric(3.2,
+            MeasurementReferencePolicy.notApplicable(), 1000);
+        double due = VoltageMeasurementReacquisitionPolicy.nextDueAt(numeric, 4.0);
+        check(Math.abs(due - (4.0 + CirSim.AC_VOLTAGE_CAPTURE_SECONDS)) < 1e-12 &&
+                !VoltageMeasurementReacquisitionPolicy.isDue(due,
+                    4.0 + CirSim.AC_VOLTAGE_CAPTURE_SECONDS - 1e-9) &&
+                VoltageMeasurementReacquisitionPolicy.isDue(due,
+                    4.0 + CirSim.AC_VOLTAGE_CAPTURE_SECONDS),
+            "retained finite-load voltage capture waits for bounded accepted solver time");
+        VoltageMeasurementResult rejected = VoltageMeasurementResult.reference(
+            new MeasurementReferencePolicy.Result(MeasurementReferencePolicy.Decision.REJECTED,
+                "ISOLATION_BOUNDARY"));
+        check(Double.isNaN(VoltageMeasurementReacquisitionPolicy.nextDueAt(rejected, 4.0)) &&
+                Double.isNaN(VoltageMeasurementReacquisitionPolicy.nextDueAt(
+                    VoltageMeasurementResult.unavailable(null), 4.0)),
+            "reference and unavailable voltage outcomes retire solver-time reacquisition");
     }
 
     private static void noSignalAndNoTriggerAreExplicit() {

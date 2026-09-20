@@ -1,0 +1,52 @@
+{
+  "protocol": "TSJ-U02-U03-REVIEW-REPAIR-1",
+  "status": "PASS",
+  "date": "2026-09-20",
+  "artifact": {
+    "build": "fresh JDK 8 OBF production compile; five GWT permutations",
+    "webDigest": "6d1b514863061a152a728180ba309c47c223495d2cf196086881c7088ff3f8e8",
+    "preview": "task-owned loopback preview on port 8910",
+    "previewCleanup": "exact PID/start/nonce identity revalidated before closure; no listener remained"
+  },
+  "retainedDc": {
+    "route": "tsjVerifyRc",
+    "verification": "PASS:rc",
+    "fixture": "actual RC C1, retained physical J2.1/J2.2 probes",
+    "assertions": [
+      "the capacitor is discharged and the board is powered once",
+      "no second finite 10 Mohm DMM transaction occurs before 50 ms of accepted solver time",
+      "one fresh finite-load reading occurs once the solver-time deadline is reached",
+      "the refreshed loaded voltage differs materially from the initial charge voltage"
+    ]
+  },
+  "temporalFixture": {
+    "periodic": {
+      "verification": "PASS:u02-u03",
+      "initialRmsVolts": 2.103076641350908,
+      "updatedRmsVolts": 4.2066368715920035,
+      "scopeFrequencyHz": 60.00000033902902,
+      "scopeSamples": 8192
+    },
+    "dc": {
+      "verification": "PASS:u02-u03",
+      "scopeSamples": 8192,
+      "manualVisualHold": {
+        "display": "SCOPE: NO SIGNAL",
+        "controls": ["T 1 ms/div", "V 1 V/div", "TRIG up"],
+        "trace": "real horizontal DC trace inspected before bounded cleanup"
+      }
+    },
+    "pulse": {
+      "verification": "PASS:u02-u03",
+      "scopeSamples": 8192,
+      "frequency": "unavailable as required by the one-shot fixture's internal FREQ? assertion"
+    },
+    "sharedCleanupAssertions": [
+      "fixture source remains outside logical board ownership",
+      "fixture state is restored",
+      "cancelled waveform publication is retired",
+      "rendering remains read-only",
+      "temporary meter burden is removed"
+    ]
+  }
+}

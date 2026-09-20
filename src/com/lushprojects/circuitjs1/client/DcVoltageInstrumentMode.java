@@ -2,6 +2,7 @@ package com.lushprojects.circuitjs1.client;
 
 final class DcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
     private boolean refreshPending;
+    private double nextCaptureAt = Double.NaN;
     private VoltageMeasurementResult latest;
 
     DcVoltageInstrumentMode() {
@@ -13,6 +14,7 @@ final class DcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
 
     public void refresh(InstrumentController controller) {
         latest = null;
+        nextCaptureAt = Double.NaN;
         getState().setPrimaryValue(Double.NaN);
         refreshPending = true;
         getState().setRefreshPending(true);
@@ -25,6 +27,7 @@ final class DcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
                 controller.getBlackProbeForStrategy() == null) {
             latest = null;
             refreshPending = false;
+            nextCaptureAt = Double.NaN;
             getState().setRefreshPending(false);
             getState().setPrimaryValue(Double.NaN);
             return;
@@ -33,11 +36,21 @@ final class DcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
             return;
         refreshPending = false;
         getState().setRefreshPending(false);
-        latest = controller.measureDcVoltageResultForStrategy(
-            controller.getRedProbeForStrategy(), controller.getBlackProbeForStrategy());
-        getState().setPrimaryValue(latest.isNumeric() ? latest.getValue() : Double.NaN);
-        getState().incrementMeasurementCount();
-        controller.validateTargetsForStrategy();
+        try {
+            latest = controller.measureDcVoltageResultForStrategy(
+                controller.getRedProbeForStrategy(), controller.getBlackProbeForStrategy());
+            getState().setPrimaryValue(latest.isNumeric() ? latest.getValue() : Double.NaN);
+            getState().incrementMeasurementCount();
+            nextCaptureAt = VoltageMeasurementReacquisitionPolicy.nextDueAt(latest,
+                controller.getSimulationTimeForStrategy());
+            controller.validateTargetsForStrategy();
+        } catch (RuntimeException failure) {
+            retireFailedAcquisition(controller);
+            throw failure;
+        } catch (Error failure) {
+            retireFailedAcquisition(controller);
+            throw failure;
+        }
     }
 
     public void display(InstrumentController controller) {
@@ -48,11 +61,30 @@ final class DcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
 
     public void onSimulationStepComplete(InstrumentController controller, boolean didAnalyze) {
         /* A power/topology lifecycle refresh may complete an accepted solver
-         * step without toggling the public analysis flag.  Queue exactly one
-         * post-step passive DMM capture either way; never call it recursively
-         * from this callback. */
+         * step without toggling the public analysis flag.  Retained probes
+         * also reacquire only after bounded accepted solver time, so a real
+         * changing DC state cannot freeze after the initial finite-load read.
+         * The callback only queues one outer-boundary transaction. */
         if (refreshPending)
             controller.requestDeferredMeasurementUpdateForStrategy(this);
+        else if (VoltageMeasurementReacquisitionPolicy.isDue(nextCaptureAt,
+                controller.getSimulationTimeForStrategy())) {
+            refreshPending = true;
+            getState().setRefreshPending(true);
+            controller.requestDeferredMeasurementUpdateForStrategy(this);
+        }
+    }
+
+    /** A failed finite-load transaction must not leave a predecessor voltage
+     * visible as though it represented the current accepted solver graph. */
+    private void retireFailedAcquisition(InstrumentController controller) {
+        latest = null;
+        refreshPending = false;
+        nextCaptureAt = Double.NaN;
+        getState().setRefreshPending(false);
+        getState().setPrimaryValue(Double.NaN);
+        getState().setDisplayText(getInitialDisplay());
+        controller.setInstrumentDisplayForStrategy(getInitialDisplay());
     }
 
     private String format(ProbeTarget red, ProbeTarget black) {

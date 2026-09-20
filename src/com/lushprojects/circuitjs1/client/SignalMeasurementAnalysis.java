@@ -394,8 +394,11 @@ final class SignalMeasurementAnalysis {
      * low-frequency AC RMS window.
      *
      * <p>This is a conservative rejection policy, rather than a simulated
-     * analog filter.  A pair of successive mean crossings closer than the
-     * half-period of the declared passband proves out-of-band content.  A
+     * analog filter.  Two same-direction mean crossings closer than the full
+     * period of the declared passband prove an observed out-of-band cycle.
+     * A finite-window mean can shift either one of its intervening half-cycle
+     * crossings, but for a stable periodic waveform it does not shorten that
+     * full same-direction interval.  A
      * waveform whose crossings never reveal such content is qualified only
      * with respect to observed crossing behavior; hidden sub-threshold or
      * unsampled components are not claimed to be measured.</p>
@@ -407,12 +410,12 @@ final class SignalMeasurementAnalysis {
         CrossingSet crossings = zeroCrossings(samples, mean, Trigger.ANY);
         if (crossings.count < 3)
             return SignalBandwidthStatus.UNRESOLVED;
-        double shortestAllowedHalfPeriod = 1 / (2 * policy.declaredBandwidthHz);
-        for (int i = 1; i < crossings.count; i++) {
-            double interval = crossings.times[i] - crossings.times[i - 1];
+        double shortestAllowedPeriod = 1 / policy.declaredBandwidthHz;
+        for (int i = 2; i < crossings.count; i++) {
+            double interval = crossings.times[i] - crossings.times[i - 2];
             if (!finite(interval) || interval <= 0)
                 return SignalBandwidthStatus.UNRESOLVED;
-            if (interval + 1e-12 < shortestAllowedHalfPeriod)
+            if (interval + 1e-12 < shortestAllowedPeriod)
                 return SignalBandwidthStatus.EXCEEDS_DECLARED_BAND;
         }
         return SignalBandwidthStatus.WITHIN_DECLARED_BAND;

@@ -1,39 +1,43 @@
-# Current checkpoint: U02/U03 independent-review repair
+# Current checkpoint: U02/U03 post-review follow-up repair
 
-Base HEAD `089d08391c9a778923f5a68cfc5d935858c164ee` on
-`codex/task43p-final-recovery`. This repair keeps the accepted solver-time
-observation architecture and closes the five independent-review blockers:
+Starting from published review-repair commit `f7a994d`, this candidate remains on
+`codex/task43p-final-recovery` and closes the two follow-up findings without
+starting U06:
 
-- every player-visible U02 DC/AC DMM result now carries the real temporary
-  `$10 MOhm$` differential burden after reference preflight; no live ideal-voltage
-  exception remains;
-- AC RMS is bounded, AC-coupled, observed-content-qualified at 200 Hz, and
-  reacquires after bounded accepted solver time without paint-driven simulation;
-- scope selection is separate from subscription (`PROBES` versus `REF?`), while
-  valid DC and one-shot traces render independently of frequency success;
-- owner/graph/power/topology/probe invalidation retires old acquisition and
-  waveform state; accepted/rejected operation publication and cleanup remain
-  bounded and solver-owned;
-- a debug-only real CircuitJS temporal fixture proves periodic AC/RMS/scope,
-  controls/trigger, DC trace, and one-shot trace in the compiled browser.
+- retained DC and AC DMM probes share a bounded, accepted-solver-time 50 ms
+  reacquisition policy. A solver callback only queues one deferred finite-load
+  transaction when due; it neither measures recursively nor advances the solver.
+  Reference-rejected, unproven, and unavailable results retire their cadence;
+  probe, topology, power, owner, board, and mode changes still invalidate it;
+- DC continues through the real temporary 10 MOhm differential DMM burden and
+  reference preflight; the follow-up does not restore an ideal-voltmeter path;
+- AC observed-band qualification now compares successive same-direction
+  crossings (a complete observed cycle), avoiding finite-window mean bias that
+  incorrectly rejected clean phase-shifted 199 Hz sine captures while still
+  rejecting observed 201 Hz and 500 Hz content under the 200 Hz policy.
 
-Final validation PASS: focused U02 (38), U03 (17), A07 (24,868), and visual
-workbench (150); JS syntax, bench-meter (380), and U04 UI (113); full maintained
-current-contract gate (57 Java suites); and a fresh JDK8 production GWT build of
-all five permutations (84.513 s compile, 1.557 s link). Compiled-browser
-inspection confirmed 60 Hz periodic RMS/trace/frequency and real time/voltage/
-trigger controls, a horizontal DC `NO SIGNAL` trace, a one-shot `FREQ?` trace,
-the actual high-impedance loaded DMM case, and rejected-reference `REF?` scope
-status. Raw periodic/DC/pulse receipts prove fixture-state restoration,
-cancelled-publication retirement, read-only rendering and temporary-meter
-cleanup. See [U02/U03 evidence](task-evidence/U02-U03/README.md).
+Validation PASS: focused U02 (73), U03 (17), A07 (24,868), and visual workbench
+(150); JS syntax, bench-meter (380), and U04 UI (113); full maintained
+current-contract gate (57 Java suites plus independent seed/value/role oracles
+and preview-listener checks); and fresh JDK8 OBF production GWT compilation of
+all five permutations (79.513 s compile, 1.368 s link). The compiled-browser
+check used the task-owned temporal fixture and manually inspected periodic RMS /
+60 Hz scope / scale / trigger behavior, a DC horizontal `SCOPE: NO SIGNAL` trace,
+and a one-shot trace with unavailable frequency. Its real RC verifier retained
+the physical C1 J2.1/J2.2 probes, waited for accepted solver time to reach the
+50 ms deadline, and proved exactly one fresh changed finite-load reading.
+See [U02/U03 evidence](task-evidence/U02-U03/README.md) and the machine-readable
+[browser receipt](task-evidence/U02-U03/review-repair-browser-results.json).
 
-Task-owned browser tab plus previews PID 2156/port 8903 and PID 21372/port 8904
-were revalidated against their launch command, closed, and confirmed to leave no
-listener. Unrelated tracked A07/solver/layout/generated-board/RB15 changes and
+Task-owned port-8910 previews and Browser tabs were revalidated against their
+launch identities, closed, and left no listener. The task-owned temporary jsdom
+runtime remains outside the repository because the local execution policy refused
+its verified removal; it contains only the offline test dependency and is not
+staged. Unrelated tracked A07/solver/layout/generated-board/RB15 changes and
 untracked RelaySeed4/visual-productization/contract-cache evidence remain
-preserved. U06 was not begun. The next unstarted milestone remains U06. The user
-explicitly requested no push.
+preserved. This report is the pending repair publication checkpoint; the requested
+push and its exact SHA will be recorded in the final handoff. U06 was not begun
+and remains the next unstarted milestone.
 
 # Historical checkpoint: Hold Tab to view board underside
 

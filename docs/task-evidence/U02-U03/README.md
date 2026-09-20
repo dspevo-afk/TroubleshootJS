@@ -2,7 +2,9 @@
 
 This repair requalified the U02 DMM and U03 scope contracts after independent
 review found an ideal-voltmeter bypass, stale AC capture, AC bandwidth ambiguity,
-and scope presentation defects. A fresh JDK8 production build compiled all five
+and scope presentation defects. A post-review follow-up also fixed retained DC
+reacquisition and the finite-window false rejection of a clean 199 Hz sine under
+the declared 200 Hz policy. A fresh JDK8 production build compiled all five
 permutations before the final browser check.
 
 ## Compiled-browser evidence
@@ -55,6 +57,19 @@ reading. The relay browser verifier reported `PASS:e03` (46 verifier assertions,
 161 mutation assertions), including selected cross-reference scope probes showing
 `REF?` without a subscription.
 
+The post-review task-owned compiled preview additionally reported `PASS:rc` for
+the real `C1` RC board. Its verifier discharges the actual capacitor, powers the
+board once, retains the same physical `J2.1`/`J2.2` probes, proves that no second
+finite-load DC transaction occurs before another 50 ms of accepted solver time,
+then proves exactly one fresh loaded reading after that deadline. The same fresh
+artifact reported `PASS:u02-u03` for periodic, DC, and one-shot fixtures. The
+periodic report recorded the 2.103076641350908 to 4.2066368715920035 V RMS
+change, 60.00000033902902 Hz timestamp-derived frequency, and 8,192 samples.
+During the bounded DC visual hold, manual inspection showed `SCOPE: NO SIGNAL`,
+the `T 1 ms/div` / `V 1 V/div` / `TRIG up` controls, and the real horizontal
+trace before normal fixture cleanup. The exact fresh receipts and resource
+cleanup result are in [review-repair-browser-results.json](review-repair-browser-results.json).
+
 ## Contract/build evidence
 
 The final focused command was:
@@ -63,13 +78,16 @@ The final focused command was:
 scripts/verify-current-contracts.ps1 -JavaHome .\.tools\jdk8-download\jdk8u502-b07 -Suite @('U02MeasurementContractTest','U03ObservationContractTest','A07ExecutionContractTest','VisualWorkbenchContractTest')
 ```
 
-It passed `U02MeasurementContractTest` (38), `U03ObservationContractTest` (17),
+It passed `U02MeasurementContractTest` (73), `U03ObservationContractTest` (17),
 `A07ExecutionContractTest` (24,868), and `VisualWorkbenchContractTest` (150).
 The U02 cases include supported irregular 50/60 Hz RMS, AC-coupled DC offset,
-an observed 500 Hz waveform rejected by the 200 Hz policy, insufficient temporal
-coverage, overrange, and the finite 10 Mohm burden. The U03 cases include a DC
-horizontal trace, one-shot `FREQ?` trace, periodic timestamp frequency, no
-unsafe-gap interpolation, `REF?`, subscription retirement, and bounded history.
+32 phase offsets of a 199 Hz sine through the actual 8,192-sample/5 us ring,
+explicit 201 Hz and 500 Hz rejection under the 200 Hz policy, insufficient
+temporal coverage, overrange, and the finite 10 Mohm burden. They also test the
+shared reacquisition deadline and retirement of reference/unavailable outcomes.
+The U03 cases include a DC horizontal trace, one-shot `FREQ?` trace, periodic
+timestamp frequency, no unsafe-gap interpolation, `REF?`, subscription
+retirement, and bounded history.
 
 `node --check war/tsj-workbench-ui.js`, `bench_meter_contract.mjs` (380 checks),
 and `u04_ui_contract.mjs` (113 checks) passed. The full maintained
@@ -84,13 +102,17 @@ passed the fresh five-permutation production GWT build.
   after reference policy admits the pair. The burden is removed before the
   canonical graph is exposed again; it does not enter exports, undo history,
   BoardPad/BoardNet identity, or logical board content.
-- AC RMS uses a bounded 50 ms acquisition, needs at least 40 ms/16 accepted
-  samples, and refreshes only at bounded accepted-solver-time eligibility. It is
-  not driven by rendering or wall-clock UI cadence.
+- Every retained non-reference, available U02 DC/AC probe pair is eligible for
+  at most one subsequent finite-load transaction only after another 50 ms of
+  accepted solver time. AC RMS also uses that bounded 50 ms acquisition and
+  needs at least 40 ms/16 accepted samples. Neither behavior is driven by
+  rendering or wall-clock UI cadence.
 - The 200 Hz policy is a conservative observed-crossing qualification, not a
-  modeled analog low-pass filter. It rejects detected faster alternating content
-  and reports a nonnumeric window when the capture cannot establish trustworthy
-  AC behavior; it cannot claim to reveal content absent from accepted samples.
+  modeled analog low-pass filter. It uses same-direction full observed cycles,
+  not a potentially mean-biased half-cycle, rejects detected faster alternating
+  content, and reports a nonnumeric window when the capture cannot establish
+  trustworthy AC behavior; it cannot claim to reveal content absent from
+  accepted samples.
 - Scope paths only draw accepted samples. Unsafe gaps break the trace, and a
   valid DC or transient trace may remain visible without a valid frequency.
   The fixture is developer-only and proves temporal behavior; it is not a new
