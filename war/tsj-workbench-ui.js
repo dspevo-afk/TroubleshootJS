@@ -263,6 +263,7 @@
     append(result, 'p', 'FUNCTION VERIFIED', 'tsj-product-eyebrow');
     append(result, 'h3', 'Ready to return to the customer.');
     append(result, 'p', 'The live board passed the customer’s functional checks.');
+    append(result, 'p', 'You can keep using this board. Later changes do not alter the recorded retest result.');
     append(result, 'p', snapshot.message);
     var actions = append(parent, 'div', undefined, 'tsj-product-actions');
     actionButton(actions, 'New board / Main menu', 'menu').classList.add('tsj-product-primary');
@@ -375,9 +376,9 @@
       if (!shopRows.length) append(controls.shopList, 'p', 'This board has no available components.');
       filterShop();
     }
-    var available = snapshot.screen === 'WORKBENCH' && snapshot.ready && snapshot.isolated && !snapshot.completed;
-    setText(controls.shopNote, snapshot.completed ? 'This board is complete. Start another board to acquire parts.' :
-      available ? 'Supplies isolated · Ready to add parts to your tray.' : 'Switch off every board supply and wait for settling before adding parts to your tray.');
+    var available = snapshot.screen === 'WORKBENCH' && snapshot.ready && snapshot.isolated;
+    setText(controls.shopNote, available ? 'Supplies isolated · Ready to add parts to your tray.' :
+      'Switch off every board supply and wait for settling before adding parts to your tray.');
     var looseCount = catalogs.reduce(function (total, catalog) { return total + catalog.looseCount; }, 0);
     setText(controls.shopTrayCount, 'Parts Tray · ' + looseCount + ' loose ' + (looseCount === 1 ? 'part' : 'parts'));
     shopRows.forEach(function (row) {
@@ -640,6 +641,7 @@
     }
     snapshot = next; mountShell();
     document.body.setAttribute('data-player-screen', snapshot.screen);
+    if (window.tsjTrayDrawer) window.tsjTrayDrawer.sync(snapshot);
     if (window.tsjBenchInstruments) window.tsjBenchInstruments.mount(snapshot);
     if ((snapshot.screen === 'PREPARING' || snapshot.screen === 'RETEST') && progressTimer === null)
       progressTimer = window.setInterval(schedule, 300);
@@ -647,7 +649,7 @@
       window.clearInterval(progressTimer); progressTimer = null;
     }
     controls.retest.disabled = snapshot.screen !== 'WORKBENCH' || !snapshot.ready || snapshot.completed;
-    controls.shop.disabled = snapshot.screen !== 'WORKBENCH' || snapshot.completed;
+    controls.shop.disabled = snapshot.screen !== 'WORKBENCH';
     controls.menu.disabled = snapshot.screen === 'PREPARING' || snapshot.screen === 'RETEST';
     setText(shellStatus, localMessage || snapshot.notice || snapshot.message);
     var page = auxiliary || (snapshot.screen === 'WORKBENCH' ? '' : snapshot.screen);

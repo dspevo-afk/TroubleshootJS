@@ -57,7 +57,8 @@ final class WorkbenchRenderHost implements PhysicalProbeProjection, CopperProbeP
     }
     String selectedPart(WorkbenchRenderHit hit) {
         WorkbenchPhysicalScene.Part part=accepts(hit)?scene().part(hit.id):null;
-        return hit!=null && hit.kind==WorkbenchRenderHit.Kind.PART && part!=null && !part.mounted && part.visibleInTray?hit.id:null;
+        return hit!=null && hit.kind==WorkbenchRenderHit.Kind.PART && part!=null && !part.mounted &&
+            (isProduction() ? physicalView.isLoosePartVisibleOnCurrentPage(hit.id) : part.visibleInTray)?hit.id:null;
     }
     ProbeTarget resolve(WorkbenchRenderHit hit) {
         if(!accepts(hit))return null;
@@ -116,6 +117,7 @@ final class WorkbenchRenderHost implements PhysicalProbeProjection, CopperProbeP
         return null;
     }
     public Point getLooseTerminalPoint(String id,int terminal) {
+        if (isProduction()) return physicalView.getLooseTerminalPoint(id, terminal);
         WorkbenchPhysicalScene current=scene();
         if (active != null) active.present(current, area);
         WorkbenchPhysicalScene.Part part=current.part(id);
@@ -123,7 +125,9 @@ final class WorkbenchRenderHost implements PhysicalProbeProjection, CopperProbeP
         for(WorkbenchPhysicalScene.Terminal t:part.terminals)if(t.index==terminal)return active.marker(WorkbenchRenderHit.Kind.LOOSE_TERMINAL,id,null,terminal);
         return null;
     }
-    public boolean isBoardPointVisible(Point point) { return active!=null && point!=null && area.contains(point.x,point.y); }
+    public boolean isBoardPointVisible(Point point) {
+        return active!=null && point!=null && (isProduction() ? physicalView.isBoardPointVisible(point) : area.contains(point.x,point.y));
+    }
     public Object captureInstalledTargetIdentity(String id,String padId) {
         WorkbenchPhysicalScene.Part part=scene().installed(id);
         return part==null?null:part.mountIdentity;
@@ -131,9 +135,11 @@ final class WorkbenchRenderHost implements PhysicalProbeProjection, CopperProbeP
     public boolean isInstalledTargetIdentityCurrent(String id,String padId,Object token) {
         return active!=null && token!=null && token==captureInstalledTargetIdentity(id,padId);
     }
-    public Object captureLooseProjectionToken() { return active==null?null:scene().looseIdentity; }
-    public boolean isLooseProjectionTokenCurrent(Object token) { return active!=null && token!=null && token==scene().looseIdentity; }
+    public Object captureLooseProjectionToken() { return active==null?null:isProduction()?physicalView.captureLooseProjectionToken():scene().looseIdentity; }
+    public boolean isLooseProjectionTokenCurrent(Object token) { return active!=null && token!=null &&
+        (isProduction()?physicalView.isLooseProjectionTokenCurrent(token):token==scene().looseIdentity); }
     public boolean isLoosePartVisibleOnCurrentPage(String id) {
+        if (isProduction()) return physicalView.isLoosePartVisibleOnCurrentPage(id);
         WorkbenchPhysicalScene.Part part=scene().part(id);
         return active!=null && part!=null && !part.mounted && part.visibleInTray;
     }

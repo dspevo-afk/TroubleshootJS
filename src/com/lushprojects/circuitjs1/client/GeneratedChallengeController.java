@@ -225,12 +225,8 @@ class GeneratedChallengeController {
 
     boolean isReady() { return state == GeneratedChallengeState.READY ||
         state == GeneratedChallengeState.COMPLETED; }
-    /**
-     * READY remains the only state in which player board interaction may
-     * change power, instruments, selection, or physical topology.  isReady()
-     * deliberately also includes COMPLETED for latched semantic operations.
-     */
-    boolean isPhysicalMutationAllowed() { return state == GeneratedChallengeState.READY; }
+    /** Completion records a passed job; the retained live board remains usable. */
+    boolean allowsWorkbenchInteraction() { return isReady(); }
     boolean isCompleted() { return state == GeneratedChallengeState.COMPLETED; }
     GeneratedChallengeState getState() { return state; }
     GeneratedFaultController getFaultController() { return faults; }

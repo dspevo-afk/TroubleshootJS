@@ -40,8 +40,7 @@ final class PhysicalPartRenderContext {
         this.physicalPackage = physicalPackage;
         this.trayIndex = trayIndex;
         this.loose = loose;
-        this.loosePose = loose ? LoosePartPose.forPart(physicalPackage, part,
-            renderer.getPartsTrayForProvider(), trayIndex) : null;
+        this.loosePose = loose ? renderer.getLoosePoseForProvider(physicalPackage, part, trayIndex) : null;
         this.developerCanaryBoard = developerCanaryBoard;
         this.developerCanaryPadPoints = developerCanaryPadPoints == null ? null :
             new HashMap<String, Point>(developerCanaryPadPoints);

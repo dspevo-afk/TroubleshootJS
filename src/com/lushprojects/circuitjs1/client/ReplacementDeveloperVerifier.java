@@ -61,9 +61,8 @@ class ReplacementDeveloperVerifier {
                 sim.getBoardModificationController(), BoardPowerState.POWERED, false) &&
             instance.getOperationalStates().isIlluminated("LED1"),
             "Correct replacement did not restore solver-backed solved repair");
-        // Finish all physical and instrument checks while the lifecycle is
-        // still READY.  COMPLETED is deliberately mutation-free, so these
-        // checks cannot follow the public customer retest.
+        // Keep the fixture's physical checks before the public retest so they
+        // cannot alter the board whose functional result this verifier records.
         verifyPassiveDcVoltageCases(sim, instance, correctResistance);
         verifyHealthyReplacementLiftedLeadVoltage(sim, instance, slots, correctPartId,
             correctResistance);

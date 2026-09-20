@@ -156,7 +156,9 @@ closingAcquire.click(); check(!f.calls.at(-1).accepted, 'closed/reopened Shop re
 check(visibleCards().length === 152 && f.d.querySelector('input[type=search]').value === '', 'reopening Shop starts with the full catalog');
 await f.update({ isolated: false }); check(cards().every(card => card.querySelector('button').disabled), 'powered board blocks all acquisition while retaining catalog browsing');
 await f.update({ isolated: true, ready: false }); check(cards().every(card => card.querySelector('button').disabled), 'unsettled board blocks all acquisition');
-await f.update({ ready: true, completed: true }); check(cards().every(card => card.querySelector('button').disabled), 'completion disables already-open Shop actions');
+await f.update({ ready: true, completed: true });
+check(cards().every(card => !card.querySelector('button').disabled),
+  'completed board permits acquisition while isolated and ready');
 await f.update({ completed: false });
 await f.update({ ready: true });
 searchFor('330');
@@ -181,7 +183,8 @@ check(f.d.body.classList.contains('tsj-high-contrast'), 'presentation setting ap
 check(!f.calls.some(call => /physics|tolerance|solver|voltage|settings/.test(call.name)), 'settings never call electrical bridge actions');
 await f.flush(); const count = f.snapshots(); await new Promise(resolve => setTimeout(resolve, 45)); check(f.snapshots() === count, 'no perpetual snapshot/rebuild timer after queued work drains');
 await f.update({ token: 6, screen: 'WORKBENCH', ready: true, completed: true });
-check(byText(f.d, 'Run customer retest').disabled && byText(f.d, 'Shop').disabled, 'completed board disables terminal retest and acquisition affordances');
+check(byText(f.d, 'Run customer retest').disabled && !byText(f.d, 'Shop').disabled,
+  'completed job keeps retest terminal while the returned board remains usable');
 await f.update({ completed: false, catalogs: [] }); click(f, 'Shop');
 check(cards().length === 0 && f.d.querySelector('.tsj-store-grid').textContent.includes('no available components') && f.d.querySelector('.tsj-store-tray').textContent === 'Parts Tray · 0 loose parts', 'an empty live catalog has no invented products or inventory');
 await f.update({ catalogs: [{ id: 'CAPACITOR', title: 'Capacitors', entries: [{ id: 'spec-live', label: '<img src=x onerror=alert(1)> 10 uF' }], looseCount: 1 }] });

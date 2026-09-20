@@ -54,6 +54,15 @@ final class LoosePartPose {
         if (trayIndex < 0 || trayIndex >= TRAY_PAGE_ROWS)
             throw new IllegalArgumentException("Loose part tray row is outside the current page");
 
+        int cellWidth = tray.width - TRAY_HORIZONTAL_MARGIN * 2;
+        int centerY = tray.y + TRAY_ROW_START + trayIndex * TRAY_ROW_PITCH;
+        return forCell(physicalPackage, part, new Rectangle(tray.x + TRAY_HORIZONTAL_MARGIN,
+            centerY - TRAY_CELL_HEIGHT / 2, cellWidth, TRAY_CELL_HEIGHT));
+    }
+
+    static LoosePartPose forCell(PhysicalPackage physicalPackage, PhysicalPart<?> part, Rectangle cell) {
+        if (physicalPackage == null || cell == null || cell.width <= 0 || cell.height <= 0)
+            throw new IllegalArgumentException("Invalid loose-part cell");
         PhysicalGeometryRealization realization = part == null ? null :
             part.getGeometryRealization();
         PhysicalPackageGeometry sourceGeometry;
@@ -88,14 +97,6 @@ final class LoosePartPose {
             sourceGeometry, polarityMirrored, quarterTurn, 1.0, new Point(0, 0));
         if (orientedSelection.width <= 0 || orientedSelection.height <= 0)
             throw new IllegalStateException("Loose package has no positive selection envelope");
-
-        int cellWidth = tray.width - TRAY_HORIZONTAL_MARGIN * 2;
-        if (cellWidth <= 0 || TRAY_CELL_HEIGHT <= 0)
-            throw new IllegalStateException("Parts tray cannot provide a positive loose cell");
-        int centerX = tray.x + tray.width / 2;
-        int centerY = tray.y + TRAY_ROW_START + trayIndex * TRAY_ROW_PITCH;
-        Rectangle cell = new Rectangle(tray.x + TRAY_HORIZONTAL_MARGIN,
-            centerY - TRAY_CELL_HEIGHT / 2, cellWidth, TRAY_CELL_HEIGHT);
 
         double scale = Math.min(1.0, Math.min(cell.width / (double) orientedSelection.width,
             cell.height / (double) orientedSelection.height));

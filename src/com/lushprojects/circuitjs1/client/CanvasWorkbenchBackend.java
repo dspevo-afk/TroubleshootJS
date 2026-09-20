@@ -44,6 +44,7 @@ final class CanvasWorkbenchBackend implements WorkbenchRenderBackend {
     }
     public Point marker(WorkbenchRenderHit.Kind kind,String id,String secondaryId,int terminal) {
         if(scene==null)return null;
+        if(kind==WorkbenchRenderHit.Kind.LOOSE_TERMINAL) return renderer.getLooseTerminalPoint(id, terminal);
         if(kind==WorkbenchRenderHit.Kind.COPPER) {
             PcbConductorGraph.Surface s=PcbCopperProbeAccess.surface(scene.copper,id);
             if(!PcbCopperProbeAccess.available(scene.copper,s,scene.face)) return null;
@@ -63,7 +64,7 @@ final class CanvasWorkbenchBackend implements WorkbenchRenderBackend {
         return null;
     }
     private WorkbenchRenderHit drop(int x,int y) {
-        if(projected(scene.tray,false).contains(x,y))return hit(WorkbenchRenderHit.Kind.TRAY,"parts-tray",null,-1);
+        if(renderer.trayContains(x,y))return hit(WorkbenchRenderHit.Kind.TRAY,"parts-tray",null,-1);
         WorkbenchRenderHit candidate=null;
         for(WorkbenchPhysicalScene.Slot slot:scene.slots)if(slot.side==scene.face && projected(slot.dropBounds,true).contains(x,y)) {
             if(candidate!=null)return null;

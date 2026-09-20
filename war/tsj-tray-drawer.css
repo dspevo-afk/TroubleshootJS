@@ -1,0 +1,16 @@
+/* No full-screen hit layer: actual parts remain on the native canvas. */
+.tsj-tray-drawer { position:fixed; z-index:10003; pointer-events:none; box-sizing:border-box; }
+.tsj-tray-drawer[hidden] { display:none !important; }
+body.tsj-workbench-ui .tsj-tray-handle { pointer-events:auto; position:absolute; inset:0 0 auto;
+  width:100%; height:24px; min-height:24px; padding:2px 16px; border:1px solid #605e50;
+  border-radius:8px 8px 0 0; color:#273d37; background:linear-gradient(#d7dfd8,#aab9b4);
+  font:bold 11px 'Trebuchet MS',sans-serif; letter-spacing:.09em; cursor:pointer;
+  box-shadow:0 -2px 5px #251b1855; }
+body.tsj-workbench-ui .tsj-tray-drawer.is-open .tsj-tray-handle { height:32px; font-size:12px; text-align:left; }
+.tsj-tray-scroll { pointer-events:auto; position:absolute; left:0; right:0; bottom:0; height:20px;
+  overflow-x:auto; overflow-y:hidden; background:#aebcb6; scrollbar-color:#485e58 #cad4ce; }
+.tsj-tray-scroll > div { height:1px; }
+.tsj-tray-scroll[hidden] { display:none; }
+.tsj-tray-drawer.is-dragging .tsj-tray-handle,
+.tsj-tray-drawer.is-dragging .tsj-tray-scroll { pointer-events:none; }
+.tsj-tray-handle:focus-visible, .tsj-tray-scroll:focus-visible { outline:3px solid #ffe9ab; outline-offset:-3px; }

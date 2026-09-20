@@ -40,6 +40,9 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
     private String selectedComponentId;
     private String selectedPartId;
     private int trayPage;
+    private PartsTrayViewport drawer;
+    private Object observedDrawerProjection;
+    private Object drawerProjection = new Object();
     private Object looseProjectionToken = new Object();
     private boolean looseProjectionInitialized;
     private int observedLooseProjectionPage;
@@ -102,7 +105,8 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
 
     void draw(Graphics graphics, Rectangle area) {
         updateTransform(area);
-        WorkbenchVisualTheme.wood(graphics, area, trayProjection);
+        WorkbenchVisualTheme.wood(graphics, area,
+            new PcbViewport.Transform(projection.scale, projection.x, projection.y, 0, false));
         graphics.context.save();
         Rectangle boardArea = viewport.getArea();
         graphics.clipRect(boardArea.x, boardArea.y, boardArea.width, boardArea.height);
@@ -255,7 +259,51 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
         }
     }
 
+    void enableTrayDrawer() {
+        if (drawer != null) return;
+        drawer = new PartsTrayViewport(); workbenchViewInitialized = false; updateProjection();
+    }
+    PartsTrayViewport getTrayDrawer() { return drawer; }
+    int loosePartCount() { return getLoosePartCount(); }
+    boolean trayContains(int x, int y) { return drawer == null ? trayArea.contains(x, y) : drawer.contains(x, y); }
+    boolean setTrayDrawer(boolean open, int scroll) {
+        if (drawer == null || !drawer.set(open, scroll)) return false;
+        drawerProjection = new Object(); updateProjection();
+        synchronizeLooseProjection(getAllLoosePhysicalParts());
+        return true;
+    }
+    LoosePartPose getLoosePoseForProvider(PhysicalPackage physical, PhysicalPart<?> part, int index) {
+        if (drawer == null) return LoosePartPose.forPart(physical, part, layout.getPartsTray(), index);
+        int actual = getAllLoosePhysicalParts().indexOf(part);
+        if (actual < 0) throw new IllegalArgumentException("Part is not in this drawer");
+        return LoosePartPose.forCell(physical, part, drawer.cell(actual));
+    }
+    private void drawDrawer(Graphics graphics) {
+        if (!drawer.isOpen()) return;
+        Rectangle bounds = drawer.bounds();
+        WorkbenchVisualTheme.metalTray(graphics, bounds, 1);
+        graphics.context.save();
+        graphics.clipRect(bounds.x, bounds.y + 34, bounds.width, Math.max(1, bounds.height - 54));
+        Vector<PhysicalPart<?>> all = getAllLoosePhysicalParts();
+        Vector<PhysicalPart<?>> parts = getVisibleLoosePhysicalParts();
+        if (all.isEmpty()) {
+            graphics.setFont(new Font(WorkbenchVisualTheme.FONT, 0, 14));
+            graphics.setColor(WorkbenchVisualTheme.TEXT);
+            graphics.drawString("Drop a removed part here. Shop replacements appear in this drawer.", 24, bounds.y + 86);
+        }
+        for (int index = 0; index < parts.size(); index++) {
+            PhysicalPart<?> part = parts.get(index);
+            PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, null, part, part.getPackage(), index, true);
+            PhysicalPartRenderer painter = requireRenderer(part.getPackage(), part);
+            PhysicalPartRenderGeometry geometry = painter.getLooseGeometry(context);
+            if (part.getId().equals(selectedPartId)) drawSelection(graphics, geometry);
+            painter.drawLoose(graphics, context, geometry, part.getId().equals(selectedPartId));
+        }
+        graphics.restore();
+    }
+
     private void drawTray(Graphics graphics) {
+        if (drawer != null) { drawDrawer(graphics); return; }
         Rectangle tray = trayArea;
         if (!tray.intersects(viewport.getArea())) return;
         WorkbenchVisualTheme.metalTray(graphics, tray, trayProjection.scale);
@@ -286,7 +334,7 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
         ambiguousTarget = false;
         if (viewportFixture != null) return viewport.contains(screenX, screenY) ? viewportFixture.target(screenX, screenY) : null;
         if (!viewport.contains(screenX, screenY) && !trayArea.contains(screenX, screenY)) return null;
-        if (viewport.contains(screenX, screenY)) {
+        if (viewport.contains(screenX, screenY) && !(drawer != null && trayContains(screenX, screenY))) {
         for (PcbBoardHole hole : layout.getHoles())
             if (PcbCopperAccess.blocksProbeAt(hole,screenRectForProvider(hole.getBounds()),screenX,screenY)) return null;
         // Board pads own the board-side probe envelope.  Resolve them before
@@ -304,7 +352,8 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
         }
         if (candidatePad != null) return new BoardPadProbeTarget(sim, instance, candidatePad, this);
         }
-        if (trayArea.contains(screenX, screenY)) {
+        if (trayContains(screenX, screenY)) {
+        if (drawer != null && !drawer.contentContains(screenX, screenY)) return null;
         Vector<PhysicalPart<?>> looseParts = getVisibleLoosePhysicalParts();
         for (int index = 0; index < looseParts.size(); index++) {
             PhysicalPart<?> part = looseParts.get(index);
@@ -380,7 +429,7 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
 
     String findComponentId(int screenX, int screenY) {
         if (viewportFixture != null) return null;
-        if (!viewport.contains(screenX, screenY)) return null;
+        if (!viewport.contains(screenX, screenY) || (drawer != null && trayContains(screenX, screenY))) return null;
         for (PcbComponentPlacement placement : layout.getComponents()) {
             if (isReplaceableSlotEmpty(placement.getComponentId()))
                 continue;
@@ -400,7 +449,7 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
     }
 
     String findPartId(int screenX, int screenY) {
-        if (!trayArea.contains(screenX, screenY)) return null;
+        if (!trayContains(screenX, screenY) || (drawer != null && !drawer.contentContains(screenX, screenY))) return null;
         Vector<PhysicalPart<?>> parts = getVisibleLoosePhysicalParts();
         for (int index = 0; index < parts.size(); index++) {
             PhysicalPart<?> part = parts.get(index);
@@ -454,7 +503,8 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
             PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, null, part,
                 part.getPackage(), index, true);
             PhysicalPartRenderer renderer = requireRenderer(part.getPackage(), part);
-            return renderer.getLooseGeometry(context).getTerminalPoint(terminal);
+            Point point = renderer.getLooseGeometry(context).getTerminalPoint(terminal);
+            return drawer != null && (point == null || !drawer.contentContains(point.x, point.y)) ? null : point;
         }
         return null;
     }
@@ -498,6 +548,11 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
         if (partId == null || trayPage < 0)
             return false;
         Vector<PhysicalPart<?>> all = getAllLoosePhysicalParts();
+        if (drawer != null) {
+            for (int index = 0; index < all.size(); index++)
+                if (partId.equals(all.get(index).getId())) return drawer.visible(index);
+            return false;
+        }
         int start = trayPage * PARTS_PER_TRAY_PAGE;
         if (start < 0 || start >= all.size())
             return false;
@@ -510,6 +565,11 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
 
     private Vector<PhysicalPart<?>> getVisibleLoosePhysicalParts(Vector<PhysicalPart<?>> all) {
         Vector<PhysicalPart<?>> result = new Vector<PhysicalPart<?>>();
+        if (drawer != null) {
+            drawer.resize(Math.max(1, canvasArea.width), Math.max(1, canvasArea.height), all.size());
+            for (int index = 0; index < all.size(); index++) if (drawer.visible(index)) result.add(all.get(index));
+            return result;
+        }
         int start = trayPage * PARTS_PER_TRAY_PAGE;
         for (int index = start; index < all.size() && index < start + PARTS_PER_TRAY_PAGE; index++)
             result.add(all.get(index));
@@ -623,12 +683,12 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
             Vector<PhysicalPart<?>> visible) {
         if (all == null || visible == null)
             return;
-        boolean changed = !looseProjectionInitialized ||
+        boolean changed = !looseProjectionInitialized || observedDrawerProjection != drawerProjection ||
             observedLooseProjectionPage != trayPage ||
             !sameLooseProjection(observedLooseProjection, visible);
         if (!changed)
             return;
-        observedLooseProjectionPage = trayPage;
+        observedLooseProjectionPage = trayPage; observedDrawerProjection = drawerProjection;
         observedLooseProjection = new Vector<PhysicalPart<?>>(visible);
         if (!looseProjectionInitialized) {
             looseProjectionInitialized = true;
@@ -724,6 +784,10 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
     private void clearSelectedPartIfHidden(Vector<PhysicalPart<?>> all) {
         if (selectedPartId == null || all == null)
             return;
+        if (drawer != null) {
+            for (PhysicalPart<?> part : all) if (part.getId().equals(selectedPartId)) return;
+            selectedPartId = null; return;
+        }
         int start = trayPage * PARTS_PER_TRAY_PAGE;
         int end = Math.min(all.size(), start + PARTS_PER_TRAY_PAGE);
         for (int index = start; index < end; index++)
@@ -906,7 +970,8 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
     }
 
     private Rectangle getWorkbenchBounds() {
-        return layout.getBoardOutline().union(layout.getPartsTray()).union(getMeterHome());
+        Rectangle bounds = layout.getBoardOutline().union(getMeterHome());
+        return drawer == null ? bounds.union(layout.getPartsTray()) : bounds;
     }
 
     void fitWorkbench() {
@@ -931,9 +996,16 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
         trayProjection = new PcbViewport.Transform(projection.scale, projection.x,
             projection.y, 0, false);
         trayArea = trayProjection.project(layout.getPartsTray());
+        if (drawer != null) {
+            drawer.resize(Math.max(1, canvasArea.width), Math.max(1, canvasArea.height), getLoosePartCount());
+            trayProjection = new PcbViewport.Transform(1, 0, 0, 0, false);
+            trayArea = drawer.isOpen() ? drawer.bounds() : new Rectangle(0, 0, 0, 0);
+        }
     }
     boolean wasTargetAmbiguous() { return ambiguousTarget; }
-    public boolean isBoardPointVisible(Point point) { return point != null && viewport.contains(point.x, point.y); }
+    public boolean isBoardPointVisible(Point point) {
+        return point != null && viewport.contains(point.x, point.y) && !(drawer != null && drawer.contains(point.x, point.y));
+    }
     private boolean isOccluded(int sx, int sy, String padOwner) {
         for (PcbComponentPlacement placement : layout.getComponents())
             if (!placement.getComponentId().equals(padOwner) && placement.getMountingSide() == viewingFace && isInstalledComponentMounted(placement.getComponentId()) &&

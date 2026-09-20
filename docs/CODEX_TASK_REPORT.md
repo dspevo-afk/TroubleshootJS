@@ -1,4 +1,34 @@
-# Current checkpoint: Hold Tab to view board underside
+# Current checkpoint: Parts tray drag and completed-board return
+
+Base HEAD `21ae5db58a6d33f59ac1c3b302b60e37495b2aab` on
+`codex/task43p-final-recovery`. The user-reported tray crossing cancelled a
+native canvas drag when the DOM drawer handle intercepted mouse input. The
+drawer now projects drag state immediately and passes pointer hits through
+its handle/scrollbar until release. Returning from a passed customer retest
+now restores power, instruments, selection, Shop and physical work under
+ordinary safety guards; the passed result remains latched and retest stays
+terminal. The previously uncommitted, directly related drawer implementation
+is included with the correction; unrelated solver, layout and evidence work
+remains unstaged. See [evidence](task-evidence/ReturnBoardTrayBugs/README.md).
+
+Validation candidate tree `3d75dbf11c1852e53896f6b4160099ea3ec8b42d` was
+validated in a clean temporary checkout: final-source JDK8/GWT five-permutation
+build PASS; focused native VisualWorkbench/U04 suites PASS (150/2,683
+assertions); jsdom tray/U04 UI contracts PASS (22/112 assertions). Actual
+production preview Quick Play LED seed 3 PASS in both the shared workspace and
+the clean staged candidate: tray drag installed R1, retest passed, returned
+board power/meter/mutation/Shop worked. Five inspected screenshots show source,
+prior locked result, repaired drag, passed retest and returned board mutation.
+Full family and touch-input matrices were NOT RUN. Candidate preview on port
+8901 was stopped and its port released; pre-existing preview on 8899 remains
+untouched. The clean temporary checkout was removed. The task-owned jsdom
+scratch directory in OS temp remains because recursive removal was rejected
+by the command policy. Only report/evidence prose changed after the candidate gates;
+all compiled and tested inputs are unchanged. Next unstarted milestone: U02. The enclosing commit is this
+checkpoint's publication identity; push and notification results belong to
+the final handoff.
+
+# Historical checkpoint: Hold Tab to view board underside
 
 Base HEAD `8ff4dc4aac2cba20362be54a47fb59f0a7808408` on
 `codex/task43p-final-recovery`. The requested Quick Play gesture uses the

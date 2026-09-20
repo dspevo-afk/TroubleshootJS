@@ -1905,6 +1905,14 @@ still dispatched through real CDP mouse events. Its CDP receive window is
 bounded independently from the route timeout so a slow diagnostic response
 cannot masquerade as a routing algorithm.
 
+The normal-player loose-parts projection uses `PartsTrayViewport` at the
+canvas bottom. It maps the same physical part identities and package geometry
+into horizontally scrollable screen cells; developer fixtures retain the
+disjoint layout tray as an independent oracle. The DOM handle and scrollbar
+control only opening and scrolling. During a part drag they pass pointer input
+through to the native canvas, including the crossing of the handle, while the
+GWT controller updates the drawer's drag state at press and release.
+
 `BoardSimulationBindings` maps stable pad IDs to resolvable
 `CircuitMeasurementEndpoint` instances. CircuitJS element/post references are
 valid current schematic bindings, and resolve dynamically after reanalysis.
@@ -2532,11 +2540,11 @@ so the visible C1/R2 charge and discharge complete at a usable cadence while
 remaining ordinary `CapacitorElm` physics. Once a challenge is completed, the
 generic controller no longer replays its temporal profile on later frames or
 on a repeated direct Finish Job request: only the exact `READY` state may run
-the functional repair profile. `COMPLETED` remains semantic-operation-ready
-but is a terminal, mutation-free state: board power, instruments, PCB
-selection, and physical topology changes are disabled, so manual physical
-actions cannot silently alter the finished job or replay a temporal profile.
-The player's actual live capacitor state is still retained.
+the functional repair profile. `COMPLETED` records the successful customer
+retest. Returning to the retained board permits power, instruments, PCB
+selection, part acquisition, and physical changes under their ordinary safety
+guards. Later changes affect the live electrical simulation but do not retract
+or rerun the recorded retest. The player's actual live capacitor state is retained.
 
 `BoardPowerState.UNPOWERED` remains external source isolation. Optional
 `ActiveMeasurementReadinessCapability` adds a separate, generic stored-energy
@@ -2752,9 +2760,10 @@ stored-energy discharge rather than duplicating RC physics.
 `GeneratedChallengeController` keeps live repair status, customer-retest
 result, Finish Job, and latched `COMPLETED` state separate. A normal player
 sees family-safe operation/retest controls in the service ticket. Retest is
-required before completion. After completion, NPN/NMOS semantic operation
-controls remain electrically live, while board power, instruments, PCB
-selection, and physical mutation controls are disabled and completion is not
+required before completion. After completion, returning to the board keeps
+semantic operations, power, instruments, PCB selection, and physical mutation
+available under the ordinary isolation and readiness guards. The passed job
+remains recorded; its retest control stays terminal and completion is not
 silently rechecked. Board power still uses `BoardPowerController` and remains
 independent from CircuitJS RUN/STOP.
 

@@ -196,9 +196,8 @@ class ResistorStressDamageDeveloperVerifier {
                 ",damage=").append(correctState.getAccumulatedDamage()).append(",service=").append(
                 correctState.getServiceTime()).append(",survived=true,backingStable=true,led=true}");
 
-            // Complete all reset/damage checks while the challenge is still
-            // READY.  COMPLETED is intentionally terminal and must not be
-            // followed by simulation or board-state mutations.
+            // Keep reset/damage checks before the public retest so the
+            // verifier records the behavior of the final repaired board.
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
             settle(sim);
             sim.resetAction();

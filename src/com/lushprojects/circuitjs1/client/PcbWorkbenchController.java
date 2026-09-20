@@ -176,12 +176,16 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         sidebar.add(panel);
         sidebar.add(partsPanel);
         attachedToSidebar = true;
+        // Normal players use the drawer. Detached/developer renderer fixtures
+        // retain their canonical tray projection as an independent geometry oracle.
+        if (sim.playerSessionController != null) renderer.enableTrayDrawer();
         viewListeners = installViewListeners(this, sim.cv.getElement());
         sim.registerAttachedPcbWorkbenchForDeveloperVerification(this);
     }
 
     void detachFromSidebar() {
         suspendBenchInstrument(benchInstrumentOwner);
+        suspendTrayDrawer(this);
         closeComponentMenu();
         closeInteractionNotice();
         cancelViewFrame(viewFrame); viewFrame = null;
@@ -216,10 +220,35 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
                 tabView(false); cancelViewGesture();
             }
             renderHost.draw(graphics, area);
+            presentTrayDrawer();
             presentBenchInstrument();
             drawPartDrag(graphics);
         }
     }
+
+    private void setTrayDrawer(boolean open, int scroll) {
+        if (!isCurrentOwner() || !attachedToSidebar || !renderHost.isProduction()) return;
+        if (draggedPart != null && !open) return;
+        if (draggedPart != null && renderer.getTrayDrawer() != null) scroll = renderer.getTrayDrawer().scroll();
+        if (renderer.setTrayDrawer(open, scroll)) { renderer.getViewport().dismiss(); requestViewFrame(); sim.repaint(); }
+    }
+    private void presentTrayDrawer() {
+        PartsTrayViewport tray = renderer.getTrayDrawer();
+        if (!attachedToSidebar || tray == null || !renderHost.isProduction()) return;
+        projectTrayDrawer(this, sim.cv.getElement(), tray.isOpen(), tray.scroll(), tray.contentWidth(),
+            tray.height(), renderer.loosePartCount(), draggedPart != null);
+    }
+    private static native void projectTrayDrawer(PcbWorkbenchController owner, com.google.gwt.dom.client.Element canvas,
+            boolean open, int scroll, int width, int height, int count, boolean dragging) /*-{
+        if (!$wnd.tsjTrayDrawer) return;
+        $wnd.tsjTrayDrawer.present(owner, canvas, {open:open, scroll:scroll, width:width, height:height, count:count, dragging:dragging},
+            $entry(function(show, offset) {
+                owner.@com.lushprojects.circuitjs1.client.PcbWorkbenchController::setTrayDrawer(ZI)(show, offset);
+            }));
+    }-*/;
+    private static native void suspendTrayDrawer(PcbWorkbenchController owner) /*-{
+        if ($wnd.tsjTrayDrawer) $wnd.tsjTrayDrawer.suspend(owner);
+    }-*/;
 
     /** Read-only presentation seam: no circuit, solution, or controller references cross it. */
     private void presentBenchInstrument() {
@@ -273,6 +302,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         sim.backcontext.setTransform(1, 0, 0, 1, 0, 0);
         Graphics graphics = new Graphics(sim.backcontext);
         renderHost.draw(graphics, sim.circuitArea);
+        presentTrayDrawer();
         presentBenchInstrument();
         drawPartDrag(graphics);
         sim.instrumentController.draw(graphics);
@@ -301,6 +331,9 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     boolean hasPendingViewFrameForDeveloperVerification() { return viewFrame != null; }
     void pointerMove(int x, int y) {
         if (!isCurrentOwner()) return;
+        PartsTrayViewport tray = renderer.getTrayDrawer();
+        if (tray != null && y >= renderer.getViewport().getArea().height - 22)
+            setTrayDrawer(true, tray.scroll());
         if (draggedPart != null) {
             dragX=x; dragY=y;
             if (Math.abs(x-dragStartX)+Math.abs(y-dragStartY)>8) partDragging=true;
@@ -313,7 +346,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     }
     boolean beginPan(int button, boolean shift, int x, int y) {
         if (!isCurrentPhysicalActionable() || !renderer.getViewport().contains(x, y) ||
-                renderer.getViewport().isInspecting()) return false;
+                renderer.trayContains(x, y) || renderer.getViewport().isInspecting()) return false;
         if (button != NativeEvent.BUTTON_MIDDLE && !(button == NativeEvent.BUTTON_LEFT && shift)) return false;
         panning = true; panX = x; panY = y; return true;
     }
@@ -325,8 +358,14 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         draggedPart=draggedFromComponent==null?instance.getPhysicalBoardRuntime().getPart(renderer.getSelectedPartId()):
             instance.getPhysicalBoardRuntime().getInstalledPart(draggedFromComponent);
         dragStartX=dragX=x; dragStartY=dragY=y;
+        // The drawer chrome must release pointer hits before the first move.
+        presentTrayDrawer();
     }
-    void cancelPartDrag() { draggedPart=null; draggedFromComponent=null; partDragging=false; }
+    void cancelPartDrag() {
+        boolean hadPart=draggedPart!=null;
+        draggedPart=null; draggedFromComponent=null; partDragging=false;
+        if (hadPart) presentTrayDrawer();
+    }
     private void drawPartDrag(Graphics graphics) {
         if (partDragging && draggedPart!=null && renderHost.isProduction())
             renderer.drawDraggedPart(graphics,draggedPart,draggedFromComponent,dragX-dragStartX,dragY-dragStartY);
@@ -373,6 +412,8 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     }
     void wheel(int delta, int x, int y) {
         if (!isCurrentPhysicalActionable() || sim.dialogIsShowing()) return;
+        PartsTrayViewport tray = renderer.getTrayDrawer();
+        if (tray != null && tray.contains(x, y)) { setTrayDrawer(true, tray.scroll() + delta * 60); return; }
         renderer.getViewport().zoom(Math.pow(1.12, Math.max(-3, Math.min(3, -delta))), x, y);
         renderer.updateProjection(); requestViewFrame();
     }
@@ -685,12 +726,16 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         Vector<PhysicalPart<?>> looseParts = getLooseParts(providers);
         if (looseParts.isEmpty())
             partsPanel.add(new Label("No loose parts."));
-        int pageSize = renderer.getPartsPerTrayPage();
-        int start = renderer.getTrayPage() * pageSize;
-        int end = Math.min(looseParts.size(), start + pageSize);
-        for (int index = start; index < end; index++)
-            addLoosePartButton(looseParts.get(index));
-        addPaginationControls();
+        if (renderer.getTrayDrawer() != null) {
+            partsPanel.add(new Label("Hover at the bottom edge for the physical tray. Scroll sideways for more parts."));
+            for (PhysicalPart<?> part : looseParts) addLoosePartButton(part);
+        } else {
+            int pageSize = renderer.getPartsPerTrayPage();
+            int start = renderer.getTrayPage() * pageSize;
+            int end = Math.min(looseParts.size(), start + pageSize);
+            for (int index = start; index < end; index++) addLoosePartButton(looseParts.get(index));
+            addPaginationControls();
+        }
 
         final String selectedPartId = renderer.getSelectedPartId();
         if (selectedPartId == null)

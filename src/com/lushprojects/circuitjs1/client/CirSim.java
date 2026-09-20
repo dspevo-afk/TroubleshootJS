@@ -6030,7 +6030,7 @@ MouseOutHandler, MouseWheelHandler {
 
 	boolean isChallengeInteractionEnabled() {
 	return (generatedChallengeController == null ||
-	    generatedChallengeController.isPhysicalMutationAllowed()) &&
+	    generatedChallengeController.allowsWorkbenchInteraction()) &&
 	    isGeneratedRuntimeSettled();
 	}
 

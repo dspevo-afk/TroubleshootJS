@@ -42,7 +42,38 @@ public final class VisualWorkbenchContractTest {
         initiallyHidden.setPaused(1000001, false);
         check(initiallyHidden.elapsedMillis(1090001)==90000, "the full 90-second budget still expires");
         alignment(PhysicalPackages.TO92_NPN); alignment(PhysicalPackages.TO92_NMOS);
+        drawer();
         System.out.println("PASS: visual workbench contracts assertions=" + assertions);
+    }
+    private static void drawer() {
+        PartsTrayViewport tray = new PartsTrayViewport();
+        for (int width : new int[] {320, 800, 1024, 1440}) {
+            tray.resize(width, 700, 40); tray.set(false, 0);
+            check(!tray.contains(10, 699) && !tray.visible(0), "closed drawer contributes no hit targets");
+            check(tray.set(true, 0), "bottom hover opens drawer");
+            check(tray.bounds().width == width && tray.bounds().y == 528, "full-width bottom drawer independent of board camera");
+            check(tray.visible(0) && !tray.visible(39), "horizontal visible inventory window");
+            check(tray.contains(10, 699) && !tray.contentContains(10, 699), "scrollbar is not a probe target");
+            check(!tray.contains(10, 527), "board outside drawer is not intercepted");
+            for (PhysicalPackage pkg : new PhysicalPackage[] {PhysicalPackages.AXIAL_RESISTOR,
+                    PhysicalPackages.THROUGH_HOLE_CONNECTOR_2, PhysicalPackages.RELAY_SPDT,
+                    PhysicalPackages.TO92_NMOS, PhysicalPackages.RADIAL_CERAMIC_CAPACITOR}) {
+                LoosePartPose pose = LoosePartPose.forCell(pkg, null, tray.cell(0));
+                Rectangle cell = tray.cell(0), body = pose.getSelectionEnvelope();
+                check(body.x >= cell.x && body.y >= cell.y && body.x+body.width <= cell.x+cell.width &&
+                    body.y+body.height <= cell.y+cell.height, "actual source package fits its horizontal cell");
+                for (int i=0;i<pkg.getTerminalCount();i++) {
+                    Point p = pose.getTerminalPoint(i);
+                    check(p.x >= cell.x && p.x <= cell.x+cell.width && p.y >= cell.y && p.y <= cell.y+cell.height,
+                        "real loose terminal stays in its cell");
+                }
+            }
+            tray.set(true, Integer.MAX_VALUE);
+            check(tray.scroll() == tray.contentWidth()-width && tray.visible(39) && !tray.visible(0), "scroll clamps and reaches the last item");
+            tray.resize(width, 700, 1);
+            check(tray.scroll() == 0 && tray.contentWidth() == width, "inventory shrink clears stale scroll offset");
+            tray.set(false, -1000); check(tray.scroll()==0 && !tray.visible(0), "close revokes visible inventory");
+        }
     }
     private static void alignment(PhysicalPackage pkg) {
         for (PhysicalPackage.GeometryVariant variant : pkg.getGeometryVariants()) {
