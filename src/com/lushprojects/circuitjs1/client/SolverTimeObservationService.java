@@ -25,16 +25,21 @@ final class SolverTimeObservationService {
         private Object owner;
         private Object graph;
         private Operation stagedOperation;
+        /* Changes whenever the service retires an observation epoch.  A
+         * consumer with dynamically resolved BoardPad endpoints must rebind
+         * rather than keep an old element/post cursor after mutation. */
+        private long generation;
         private boolean closed;
 
         private Subscription(CircuitPostMeasurementEndpoint red,
                 CircuitPostMeasurementEndpoint black, int capacity,
-                boolean collectDuringActiveMeasurement) {
+                boolean collectDuringActiveMeasurement, long generation) {
             if (red == null || black == null)
                 throw new IllegalArgumentException("Differential observation endpoints are required");
             this.red = red;
             this.black = black;
             this.collectDuringActiveMeasurement = collectDuringActiveMeasurement;
+            this.generation = generation;
             committed = new SolverTimeWindow(capacity);
             staging = new SolverTimeWindow(capacity);
         }
@@ -55,12 +60,21 @@ final class SolverTimeObservationService {
             return committed.getSampleCount();
         }
 
+        long getGeneration() {
+            return generation;
+        }
+
         void clear() {
             committed.clear();
             staging.clear();
             stagedOperation = null;
             owner = null;
             graph = null;
+        }
+
+        void clear(long currentGeneration) {
+            clear();
+            generation = currentGeneration;
         }
 
         void close() {
@@ -75,6 +89,7 @@ final class SolverTimeObservationService {
 
     private final CirSim sim;
     private final Vector<Subscription> subscriptions = new Vector<Subscription>();
+    private long generation;
 
     SolverTimeObservationService(CirSim sim) {
         if (sim == null)
@@ -88,7 +103,7 @@ final class SolverTimeObservationService {
         if (capacity < 2 || capacity > MAX_CAPACITY)
             throw new IllegalArgumentException("Invalid bounded solver-time observation capacity");
         Subscription subscription = new Subscription(red, black, capacity,
-            collectDuringActiveMeasurement);
+            collectDuringActiveMeasurement, generation);
         subscriptions.add(subscription);
         return subscription;
     }
@@ -102,13 +117,14 @@ final class SolverTimeObservationService {
 
     /** Retire every published and staged sample before topology/source ownership changes. */
     void invalidate() {
+        generation++;
         for (int i = subscriptions.size() - 1; i >= 0; i--) {
             Subscription subscription = subscriptions.elementAt(i);
             if (subscription.isClosed()) {
                 subscriptions.removeElementAt(i);
                 continue;
             }
-            subscription.clear();
+            subscription.clear(generation);
         }
     }
 

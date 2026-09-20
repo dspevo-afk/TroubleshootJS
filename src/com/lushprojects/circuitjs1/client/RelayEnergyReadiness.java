@@ -41,8 +41,6 @@ final class RelayEnergyReadiness implements ActiveMeasurementReadinessCapability
         if (!sim.solverExecutor.isCurrent(observed, owner)) return ActiveMeasurementReadiness.WAITING;
         return RelayOutputBehavior.isDischarged(owner) ? ActiveMeasurementReadiness.READY : ActiveMeasurementReadiness.DISCHARGE;
     }
-    public boolean usesLiveDcVoltage(CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black) { return true; }
-
     public MeasurementReferencePolicy.Result assessReference(MeasurementReferencePolicy.Mode mode,
             CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black) {
         if (sim == null || sim.getGeneratedBoardInstance() != owner)

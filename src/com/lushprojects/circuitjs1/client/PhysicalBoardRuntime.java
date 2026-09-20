@@ -449,16 +449,6 @@ final class PhysicalBoardRuntime {
         return result;
     }
 
-    boolean usesLiveDcVoltage(CircuitPostMeasurementEndpoint red,
-            CircuitPostMeasurementEndpoint black) {
-        for (PhysicalBoardRuntimeCapability capability : getCapabilities())
-            if (capability instanceof ActiveMeasurementReadinessCapability &&
-                    ((ActiveMeasurementReadinessCapability) capability).usesLiveDcVoltage(red,
-                        black))
-                return true;
-        return false;
-    }
-
     void resetForBoardReset() {
         for (PhysicalBoardRuntimeCapability capability : getCapabilities())
             if (capability instanceof PhysicalBoardRuntimeLifecycle)

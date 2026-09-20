@@ -10,7 +10,6 @@ interface CircuitMeasurementBoundary {
     SolverTimeObservationService.Subscription observeDifferentialVoltage(ProbeTarget redProbe,
         ProbeTarget blackProbe);
     void stopObservingDifferentialVoltage(SolverTimeObservationService.Subscription samples);
-    boolean usesLiveDcVoltage(ProbeTarget redProbe, ProbeTarget blackProbe);
     ActiveMeasurementReadiness getActiveMeasurementReadiness(ProbeTarget redProbe,
         ProbeTarget blackProbe);
     boolean isActiveMeasurementAllowed(ProbeTarget redProbe, ProbeTarget blackProbe);

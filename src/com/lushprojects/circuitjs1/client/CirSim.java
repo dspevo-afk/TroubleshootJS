@@ -424,6 +424,9 @@ MouseOutHandler, MouseWheelHandler {
     boolean troubleshootP07Verification, troubleshootP07Complete, troubleshootP07Forced, troubleshootP07Bench;
     boolean troubleshootU01Verification, troubleshootU01Complete, troubleshootU01ForcedFailure;
     int troubleshootU01Fixture;
+    boolean troubleshootU02U03Verification, troubleshootU02U03VerificationComplete,
+        troubleshootU02U03VisualHold;
+    String troubleshootTemporalFixture;
     boolean troubleshootA10Verification;
     boolean troubleshootA10VerificationComplete;
     boolean troubleshootA10ForcedFailure;
@@ -627,6 +630,12 @@ MouseOutHandler, MouseWheelHandler {
             troubleshootU01ForcedFailure = troubleshootU01Verification && qp.getBooleanValue("tsjU01Fail", false);
             if (troubleshootU01Verification && qp.getValue("tsjViewportFixture") != null)
                 troubleshootU01Fixture = Integer.parseInt(qp.getValue("tsjViewportFixture"));
+            troubleshootU02U03Verification = troubleshootDebug &&
+                qp.getBooleanValue("tsjVerifyU02U03", false);
+            troubleshootTemporalFixture = troubleshootU02U03Verification ?
+                qp.getValue("tsjTemporalFixture") : null;
+            troubleshootU02U03VisualHold = troubleshootU02U03Verification &&
+                qp.getBooleanValue("tsjTemporalVisualHold", false);
             troubleshootA10Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA10", false);
             troubleshootA10ForcedFailure = troubleshootA10Verification && qp.getBooleanValue("tsjA10Fail", false);
 	    troubleshootA08Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA08", false);
@@ -1854,6 +1863,10 @@ MouseOutHandler, MouseWheelHandler {
 			// Deferred meter work may consume this analysis only after the
 			// generated verification has made its current owner actionable.
 			instrumentController.onSimulationStepComplete(didAnalyze);
+			// The callback above only schedules meter work.  Drain it after the
+			// accepted solver callback has returned; never re-enter a voltage
+			// measurement directly from that callback.
+			instrumentController.completeDeferredMeasurementUpdateAfterSolverStep();
 	    } catch (Exception e) {
 		debugger();
 		console("exception in runCircuit " + e);
@@ -4787,11 +4800,14 @@ MouseOutHandler, MouseWheelHandler {
     GeneratedBoardInstance generatedBoardInstance;
 	static final double VOLTAGE_MEASUREMENT_MAXIMUM_ABS = 1000;
 	static final double AC_VOLTAGE_CAPTURE_SECONDS = .05;
-	/* At CircuitJS's finest accepted step, this retains more than the 20 ms
-	 * RMS window below while staying within the observation service bound. */
+	/* The 8,192-sample bounded window retains at least 40 ms at CircuitJS's
+	 * default 5 us accepted step.  A 50 ms acquisition intentionally provides
+	 * slack for coarser steps; a shorter retained fragment is WINDOW, never a
+	 * plausible RMS number. */
+	static final double AC_VOLTAGE_MINIMUM_SECONDS = .04;
 	static final int AC_VOLTAGE_SAMPLE_CAPACITY = SolverTimeObservationService.MAX_CAPACITY;
 	static final SignalMeasurementAnalysis.Policy AC_VOLTAGE_POLICY =
-	    new SignalMeasurementAnalysis.Policy(16, .02, .0025, 200,
+	    new SignalMeasurementAnalysis.Policy(16, AC_VOLTAGE_MINIMUM_SECONDS, .0025, 200,
 		VOLTAGE_MEASUREMENT_MAXIMUM_ABS, 1e-6,
 		SignalMeasurementAnalysis.Trigger.RISING);
 	GeneratedChallengeController generatedChallengeController;
@@ -5469,6 +5485,25 @@ MouseOutHandler, MouseWheelHandler {
                 developerVerifierRunning = true; troubleshootA07VerificationComplete = true;
                 publishBrowserVerificationResult("RUNNING:a07");
                 A07SolverDeveloperVerifier.start(this, troubleshootA07ForcedFailure);
+            }
+            if (!developerVerifierRunning && troubleshootU02U03Verification &&
+                    !troubleshootU02U03VerificationComplete &&
+                    !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+                    generatedChallengeController != null && generatedChallengeController.isReady() &&
+                    isGeneratedRuntimeSettled()) {
+                developerVerifierRunning = true;
+                troubleshootU02U03VerificationComplete = true;
+                publishBrowserVerificationResult("RUNNING:u02-u03");
+                U02U03TemporalDeveloperVerifier.start(this, troubleshootTemporalFixture,
+                    troubleshootU02U03VisualHold,
+                    new U02U03TemporalDeveloperVerifier.Completion() {
+                        public void finished(String report, Throwable failure) {
+                            developerVerifierRunning = false;
+                            U02U03TemporalDeveloperVerifier.publish(report, failure);
+                            publishBrowserVerificationResult(failure == null ? "PASS:u02-u03" :
+                                "FAIL:u02-u03:" + failure.getMessage());
+                        }
+                    });
             }
 	    if (!developerVerifierRunning && troubleshootE03Verification &&
 	        !troubleshootQ15Verification &&
@@ -6351,12 +6386,8 @@ MouseOutHandler, MouseWheelHandler {
 	if (!reference.admitsReading() &&
 		reference.getDecision() != MeasurementReferencePolicy.Decision.NOT_APPLICABLE)
 	    return VoltageMeasurementResult.reference(reference);
-	if (usesLiveDcVoltage(red, black))
-	    return VoltageMeasurementResult.numeric(red.getElement().getPostVoltage(red.getPostIndex()) -
-		black.getElement().getPostVoltage(black.getPostIndex()), reference,
-		VOLTAGE_MEASUREMENT_MAXIMUM_ABS);
 	final DcVoltageMeasurementStimulus stimulus = new DcVoltageMeasurementStimulus(red, black);
-	double value = runTemporaryActiveMeasurement(stimulus, new ActiveMeasurementResultReader() {
+	double value = runTemporaryPassiveVoltageMeasurement(stimulus, new ActiveMeasurementResultReader() {
 	    public double readResult() {
 		return stimulus.getVoltage();
 	    }
@@ -6374,20 +6405,12 @@ MouseOutHandler, MouseWheelHandler {
 	if (!reference.admitsReading() &&
 		reference.getDecision() != MeasurementReferencePolicy.Decision.NOT_APPLICABLE)
 	    return VoltageMeasurementResult.reference(reference);
-	/* A runtime can explicitly declare an endpoint pair safe for direct,
-	 * high-impedance voltage observation.  That is the same physical path used
-	 * by the existing live DC meter.  Do not turn that declaration into a
-	 * temporary graph mutation: protected powered relay/storage owners reject
-	 * active-meter settling by design.  The finite window below still consists
-	 * exclusively of accepted CircuitJS samples. */
-	if (usesLiveVoltageObservation(red, black))
-	    return measureLiveAcVoltage(red, black, reference);
 	final SolverTimeObservationService.Subscription samples =
 	    solverTimeObservations.subscribe(red, black, AC_VOLTAGE_SAMPLE_CAPACITY, true);
 	try {
 	    final VoltageMeasurementResult result[] = new VoltageMeasurementResult[1];
 	    final DcVoltageMeasurementStimulus stimulus = new DcVoltageMeasurementStimulus(red, black);
-	    runTemporaryActiveMeasurement(stimulus, new ActiveMeasurementResultReader() {
+	    runTemporaryPassiveVoltageMeasurement(stimulus, new ActiveMeasurementResultReader() {
 		public double readResult() {
 		    /* Initial settle samples belong to the meter-connection transition,
 		     * not the declared finite RMS acquisition window. */
@@ -6400,21 +6423,6 @@ MouseOutHandler, MouseWheelHandler {
 		}
 	    });
 	    return result[0] == null ? VoltageMeasurementResult.unavailable(reference) : result[0];
-	} finally {
-	    solverTimeObservations.unsubscribe(samples);
-	}
-    }
-
-    private VoltageMeasurementResult measureLiveAcVoltage(CircuitPostMeasurementEndpoint red,
-	    CircuitPostMeasurementEndpoint black, MeasurementReferencePolicy.Result reference) {
-	final SolverTimeObservationService.Subscription samples =
-	    solverTimeObservations.subscribe(red, black, AC_VOLTAGE_SAMPLE_CAPACITY, false);
-	try {
-	    samples.clear();
-	    solverExecutor.advanceFor(AC_VOLTAGE_CAPTURE_SECONDS);
-	    return VoltageMeasurementResult.signal(
-		SignalMeasurementAnalysis.measureAcRms(samples.snapshotWindow(), AC_VOLTAGE_POLICY),
-		reference);
 	} finally {
 	    solverTimeObservations.unsubscribe(samples);
 	}
@@ -6524,25 +6532,26 @@ MouseOutHandler, MouseWheelHandler {
 	    black, boardPowerController.getState(), boardPowerController.isElectricallyUnpowered());
     }
 
-    boolean usesLiveDcVoltage(CircuitPostMeasurementEndpoint red,
-	    CircuitPostMeasurementEndpoint black) {
-	return generatedBoardInstance != null && generatedBoardInstance.getPhysicalBoardRuntime()
-	    .usesLiveDcVoltage(red, black);
+    private double runTemporaryActiveMeasurement(ActiveMeasurementStimulus stimulus,
+	    ActiveMeasurementResultReader reader) {
+	return runTemporaryMeasurement(stimulus, reader, true);
     }
 
     /**
-	 * Live DC declarations identify physical endpoint pairs that may be
-	 * observed without temporarily adding the normal 10 Mohm meter burden.
-	 * AC uses that identical high-impedance differential observation path; it
-	 * never invents a source, an earth reference, or a replacement waveform.
+	 * A DMM voltage observation has a real finite input burden but does not
+	 * inject a source.  It therefore uses the same exclusive solver/cleanup
+	 * transaction as active instruments without invoking their residual-energy
+	 * settling policy.  Resistance, continuity, and diode tests continue to
+	 * use {@link #runTemporaryActiveMeasurement}, whose power isolation and
+	 * stored-energy requirements remain unchanged.
 	 */
-    private boolean usesLiveVoltageObservation(CircuitPostMeasurementEndpoint red,
-	    CircuitPostMeasurementEndpoint black) {
-	return usesLiveDcVoltage(red, black);
+    private double runTemporaryPassiveVoltageMeasurement(ActiveMeasurementStimulus stimulus,
+	    ActiveMeasurementResultReader reader) {
+	return runTemporaryMeasurement(stimulus, reader, false);
     }
 
-    private double runTemporaryActiveMeasurement(ActiveMeasurementStimulus stimulus,
-	    ActiveMeasurementResultReader reader) {
+    private double runTemporaryMeasurement(ActiveMeasurementStimulus stimulus,
+	    ActiveMeasurementResultReader reader, boolean activeStimulus) {
 	if (activeMeasurementOverlay)
 	    throw new IllegalStateException("A temporary measurement is already active or awaiting cleanup");
 	if (!isGeneratedRuntimeSettled())
@@ -6562,7 +6571,7 @@ MouseOutHandler, MouseWheelHandler {
 	    analyzeCircuit();
 	    runCircuit(true);
 	    runCircuit(true);
-	    if (measurementOwner != null)
+	    if (activeStimulus && measurementOwner != null)
 	        measurementOwner.getPhysicalBoardRuntime().settleActiveMeasurement(this, measurementOwner, true);
 	    injectTask43PMeasurementFailureForDeveloperVerification(
 		Task43PMeasurementFailureStage.READER);
@@ -6586,7 +6595,7 @@ MouseOutHandler, MouseWheelHandler {
 		throw new IllegalStateException("Temporary measurement elements remain in the board graph");
 	    analyzeCircuit();
 	    runCircuit(true);
-	    if (measurementOwner != null)
+	    if (activeStimulus && measurementOwner != null)
 	        measurementOwner.getPhysicalBoardRuntime().settleActiveMeasurement(this, measurementOwner, false);
 	    restored = stopMessage == null && isStimulusAbsentFromSolver(stimulus);
 	    if (!restored)
@@ -6679,6 +6688,17 @@ MouseOutHandler, MouseWheelHandler {
     boolean isActiveMeasurementSolverRestoredForDeveloperVerification() {
 	return activeMeasurementSolverRestored && lastActiveMeasurementStimulus != null &&
 	    isStimulusAbsentFromSolver(lastActiveMeasurementStimulus);
+    }
+
+    /**
+     * Exposes only the last temporary DMM burden for developer contracts.  A
+     * non-voltage transaction deliberately reports no value rather than
+     * borrowing a current from another instrument.
+     */
+    double getLastVoltageMeasurementBurdenCurrentForDeveloperVerification() {
+	if (!(lastActiveMeasurementStimulus instanceof DcVoltageMeasurementStimulus))
+	    return Double.NaN;
+	return ((DcVoltageMeasurementStimulus) lastActiveMeasurementStimulus).getInputCurrent();
     }
 
     void armTask43PMeasurementFailureForDeveloperVerification(

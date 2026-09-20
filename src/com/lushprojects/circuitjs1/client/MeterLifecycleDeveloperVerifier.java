@@ -12,6 +12,7 @@ class MeterLifecycleDeveloperVerifier {
         verifyLiftedLeadResistance(sim, instance, "R1.2");
         verifyLiftedLeadResistance(sim, instance, "R1.1");
         verifyRetainedLiftedLeadVoltage(sim, instance);
+        verifyHighSourceImpedanceDmmBurden(sim, instance);
         verifyPhysicalTargetInvalidation(sim, instance);
         sim.setCircuitTitle("Meter lifecycle verification passed");
     }
@@ -141,6 +142,94 @@ class MeterLifecycleDeveloperVerifier {
             "Reconnecting downstream R1 lead did not restore LED");
     }
 
+    /**
+     * Uses an installed 10 Mohm source resistance and a lifted physical lead
+     * so the player-facing voltage read must solve a real 10 Mohm/10 Mohm
+     * divider.  The unloaded lead is intentionally near VIN; accepting that
+     * value would expose an ideal-voltmeter bypass.
+     */
+    private static void verifyHighSourceImpedanceDmmBurden(CirSim sim,
+            GeneratedBoardInstance instance) {
+        PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
+        ResistorSlotController slots = sim.getResistorSlotController();
+        double vin = instance.getPhysicalSpecifications().getPowerInputNameplate("VIN_INPUT")
+            .getNominalVoltage();
+        double expectedVoltage = vin * DcVoltageMeasurementStimulus.INPUT_RESISTANCE /
+            (10000000 + DcVoltageMeasurementStimulus.INPUT_RESISTANCE);
+        double expectedCurrent = vin / (10000000 + DcVoltageMeasurementStimulus.INPUT_RESISTANCE);
+
+        sim.instrumentController.clearTargets();
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        settle(sim);
+        require(slots.removeInstalledPart(), "Could not remove correct R1 for DMM burden proof");
+        settle(sim);
+        require(slots.installNewFromCatalog("R_CATALOG_10000000"),
+            "Could not install 10 Mohm source resistance for DMM burden proof");
+        settle(sim);
+        require(sim.getBoardModificationController().liftLead("R1", "R1.2"),
+            "Could not lift high-impedance R1 lead for DMM burden proof");
+        settle(sim);
+        ProbeTarget liftedLead = hitLead(sim, renderer, "R1.2");
+        ProbeTarget ground = hitPad(sim, renderer, "J1.2");
+        CircuitPostMeasurementEndpoint leadEndpoint = endpoint(liftedLead);
+        CircuitPostMeasurementEndpoint groundEndpoint = endpoint(ground);
+
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        settle(sim);
+        double unloadedVoltage = leadEndpoint.getElement().getPostVoltage(
+            leadEndpoint.getPostIndex()) - groundEndpoint.getElement().getPostVoltage(
+            groundEndpoint.getPostIndex());
+        requireFinite(unloadedVoltage, "High-impedance unloaded lead was not solver-readable");
+        require(unloadedVoltage > expectedVoltage + vin * .20,
+            "High-impedance fixture did not distinguish unloaded voltage from DMM load: " +
+            unloadedVoltage + " vs " + expectedVoltage);
+
+        int elementsBefore = sim.elmList.size();
+        sim.instrumentController.activateDcVoltageModeForDeveloperVerification();
+        placeProbes(sim, liftedLead, ground);
+        double displayedDc = sim.instrumentController.getLatestDcVoltageForDeveloperVerification();
+        requireApproximately(expectedVoltage, displayedDc, .02,
+            "Player DC reading did not equal the loaded 10 Mohm divider solution");
+        require(Math.abs(displayedDc - unloadedVoltage) > vin * .20,
+            "Player DC reading bypassed the finite DMM burden");
+        requireApproximately(expectedCurrent,
+            Math.abs(sim.getLastVoltageMeasurementBurdenCurrentForDeveloperVerification()), 1e-9,
+            "DC DMM burden current did not equal the solved divider current");
+        require(!sim.activeMeasurementOverlay && sim.elmList.size() == elementsBefore &&
+            sim.isActiveMeasurementSolverRestoredForDeveloperVerification(),
+            "DC DMM burden proof left a temporary element or solver overlay");
+
+        /* AC mode sees a DC input as 0 RMS, but it must still connect the
+         * same finite input resistor during its solver-time capture. */
+        sim.instrumentController.clearTargets();
+        sim.instrumentController.activateAcVoltageModeForDeveloperVerification();
+        placeProbes(sim, liftedLead, ground);
+        requireApproximately(0, sim.instrumentController.getLatestAcVoltageForDeveloperVerification(),
+            .001, "Player AC reading did not retain the explicit AC-coupled DC convention");
+        requireApproximately(expectedCurrent,
+            Math.abs(sim.getLastVoltageMeasurementBurdenCurrentForDeveloperVerification()), 1e-9,
+            "AC DMM burden current did not equal the solved divider current");
+        require(!sim.activeMeasurementOverlay && sim.elmList.size() == elementsBefore &&
+            sim.isActiveMeasurementSolverRestoredForDeveloperVerification(),
+            "AC DMM burden proof left a temporary element or solver overlay");
+
+        sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        settle(sim);
+        require(sim.getBoardModificationController().reconnectLead("R1", "R1.2"),
+            "Could not reconnect high-impedance R1 after DMM burden proof");
+        settle(sim);
+        require(slots.removeInstalledPart(), "Could not remove high-impedance R1 after DMM burden proof");
+        settle(sim);
+        require(slots.installNewFromCatalog(catalogId(instance)),
+            "Could not restore correct R1 after DMM burden proof");
+        settle(sim);
+        sim.setBoardPowerState(BoardPowerState.POWERED);
+        settle(sim);
+        require(instance.getOperationalStates().isIlluminated("LED1"),
+            "Restoring correct R1 after DMM burden proof did not restore LED");
+    }
+
     private static void verifyPhysicalTargetInvalidation(CirSim sim, GeneratedBoardInstance instance) {
         PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
@@ -187,6 +276,13 @@ class MeterLifecycleDeveloperVerifier {
         sim.instrumentController.activateDcVoltageModeForDeveloperVerification();
         placeProbes(sim, red, black);
         return sim.instrumentController.getLatestDcVoltageForDeveloperVerification();
+    }
+
+    private static CircuitPostMeasurementEndpoint endpoint(ProbeTarget target) {
+        CircuitMeasurementEndpoint result = target == null ? null : target.getMeasurementEndpoint();
+        require(result instanceof CircuitPostMeasurementEndpoint,
+            "Physical DMM burden target did not resolve to a CircuitJS post");
+        return (CircuitPostMeasurementEndpoint) result;
     }
 
     private static void placeProbes(CirSim sim, ProbeTarget red, ProbeTarget black) {
@@ -327,6 +423,10 @@ class MeterLifecycleDeveloperVerifier {
             String message) {
         require(!Double.isNaN(actual) && !Double.isInfinite(actual) &&
             Math.abs(expected - actual) <= tolerance, message + ": " + actual);
+    }
+
+    private static void requireFinite(double value, String message) {
+        require(!Double.isNaN(value) && !Double.isInfinite(value), message);
     }
 
     private static void require(boolean condition, String message) {

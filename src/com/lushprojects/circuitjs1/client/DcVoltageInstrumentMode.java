@@ -23,15 +23,16 @@ final class DcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
     public void measure(InstrumentController controller) {
         if (controller.getRedProbeForStrategy() == null ||
                 controller.getBlackProbeForStrategy() == null) {
+            latest = null;
+            refreshPending = false;
+            getState().setRefreshPending(false);
             getState().setPrimaryValue(Double.NaN);
             return;
         }
         if (!refreshPending)
             return;
-        boolean live = controller.usesLiveDcVoltageForStrategy(
-            controller.getRedProbeForStrategy(), controller.getBlackProbeForStrategy());
-        refreshPending = live;
-        getState().setRefreshPending(live);
+        refreshPending = false;
+        getState().setRefreshPending(false);
         latest = controller.measureDcVoltageResultForStrategy(
             controller.getRedProbeForStrategy(), controller.getBlackProbeForStrategy());
         getState().setPrimaryValue(latest.isNumeric() ? latest.getValue() : Double.NaN);
@@ -46,10 +47,12 @@ final class DcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
     }
 
     public void onSimulationStepComplete(InstrumentController controller, boolean didAnalyze) {
-        if ((didAnalyze || controller.usesLiveDcVoltageForStrategy(
-                controller.getRedProbeForStrategy(), controller.getBlackProbeForStrategy())) &&
-                refreshPending)
-            controller.updateReadingForStrategy();
+        /* A power/topology lifecycle refresh may complete an accepted solver
+         * step without toggling the public analysis flag.  Queue exactly one
+         * post-step passive DMM capture either way; never call it recursively
+         * from this callback. */
+        if (refreshPending)
+            controller.requestDeferredMeasurementUpdateForStrategy(this);
     }
 
     private String format(ProbeTarget red, ProbeTarget black) {

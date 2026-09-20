@@ -49,11 +49,6 @@ class CircuitMeasurementAdapter implements CircuitMeasurementBoundary {
         sim.stopObservingDifferentialVoltage(samples);
     }
 
-    public boolean usesLiveDcVoltage(ProbeTarget redProbe, ProbeTarget blackProbe) {
-        CircuitPostMeasurementEndpoint[] endpoints = endpoints(redProbe, blackProbe);
-        return endpoints != null && sim.usesLiveDcVoltage(endpoints[0], endpoints[1]);
-    }
-
     public ActiveMeasurementReadiness getActiveMeasurementReadiness(ProbeTarget redProbe,
             ProbeTarget blackProbe) {
         CircuitPostMeasurementEndpoint[] endpoints = endpoints(redProbe, blackProbe);

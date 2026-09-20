@@ -1188,7 +1188,7 @@ block or board. Task 45 adds separate electrical metadata at the immutable port
 ID/attachment seam used by current bounded composition.
 
 `scripts/verify-current-contracts.ps1` compiles current client sources once and
-exercises 16 Java contract suites plus independent seed/value/role equations and
+exercises 57 Java contract suites plus independent seed/value/role equations and
 the browser report protocol. Its native tests do not establish solved behavior;
 the five-permutation JDK8/GWT build and `verify-a03-browser.ps1 -Gate Current`
 remain separate production gates. Explicit generic packages serve developer
@@ -1678,20 +1678,26 @@ as part of invalidation and show the mode-specific OHM placeholder. A power
 request during an active measurement is queued until the temporary overlay is
 removed and the normal solver state is restored.
 
-DC voltage uses a temporary passive `$10 MOhm$` `ResistorElm` between the red
-and black probe endpoints. `InstrumentController` requests one DC refresh for a
-probe, topology, part-location, or power change; `CirSim` installs the resistor,
-solves the actual circuit, samples `$V_{red} - V_{black}$`, and synchronously
-restores the canonical graph. This lets a floating lifted lead acquire its real
-meter-loaded voltage without deriving anything from board metadata or expected
-topology. The input resistor is never board metadata, export content, or undo
-history. Active overlays suppress their own simulation-step callbacks, so a DC
-refresh cannot recursively reinsert a meter during its transaction. The pending
-refresh remains owned by `InstrumentController.updateReading()` until that method
-starts the actual measurement transaction; a post-analysis callback requests the
-update without consuming it first. Retained probes therefore get exactly one
-fresh loaded solve after a topology or power analysis, while ordinary repaints do
-not create recurring DC transactions.
+Every player-visible U02 DMM voltage result, DC and AC alike, uses a temporary
+passive `$10 MOhm$` `ResistorElm` between the red and black probe endpoints.
+`MeasurementReferencePolicy` runs before that element is installed, so a
+cross-reference pair cannot be bridged even briefly by the meter burden.
+`CirSim` installs the burden, solves the actual CircuitJS graph, samples
+`$V_{red} - V_{black}$`, and synchronously restores the canonical graph. This
+lets a floating lifted lead acquire its real meter-loaded voltage without
+deriving anything from board metadata or expected topology. The input resistor
+is never board metadata, export content, or undo history.
+
+The finite burden uses a narrow passive-voltage transaction: it has the normal
+exclusive solver ownership and `finally` cleanup, but does not inject a source
+or invoke the active-instrument residual-energy settling policy. Resistance,
+continuity, and diode measurements continue to require their existing active
+source, power-isolation, and residual-energy protections. `InstrumentController`
+requests one DC refresh for a probe, topology, part-location, or power change.
+An accepted-step callback only queues the update; `CirSim` drains it at the
+outer post-callback boundary, so a DC refresh cannot recursively reinsert a
+meter from a solver callback. Ordinary repaint remains unable to create a
+measurement transaction.
 
 ### Reference-aware voltage and solver-time instruments — U02/U03
 
@@ -1702,16 +1708,28 @@ earth-referenced value. Numeric results carry a declared finite range and map
 overrange, unavailable, reference, sampling and arithmetic outcomes explicitly
 instead of retaining an earlier display.
 
-`AcVoltageInstrumentMode` uses the same real $10 MOhm$ input burden and
-transaction cleanup path as the voltage meter when the live graph permits an
-active measurement. A runtime may explicitly declare an existing high-impedance
-voltage-observation path; that exceptional path does not mutate a protected
-powered graph, but still advances CircuitJS for a finite acquisition and only
-uses accepted solver samples. AC RMS is AC-coupled: the timestamp-weighted mean
-is removed before RMS, so DC offset is not silently reported as AC. Its policy
-requires 16 samples spanning 20 ms within a 2.5 ms gap, declares 200 Hz
-bandwidth and a 1 kV range. The bounded 8,192-sample capture can retain that
-window at CircuitJS's finest accepted step.
+`AcVoltageInstrumentMode` uses that same real `$10 MOhm$` burden for every
+capture; there is no ideal/live-voltage exception for a U02 DMM reading. It
+acquires a bounded 50 ms solver-time window, requires 16 samples spanning at
+least 40 ms with no gap over 2.5 ms, and retains at most 8,192 samples. A
+shorter or inadequately observed capture is nonnumeric (`WINDOW RMS`), never a
+plausible RMS number. AC RMS is AC-coupled: the timestamp-weighted mean is
+removed before RMS, so DC offset is not silently reported as AC. Retained valid
+probes schedule at most one further 50 ms capture after the next 50 ms of
+accepted solver time. The callback merely queues the bounded passive transaction
+for the post-step boundary; it neither measures recursively nor lets paint,
+wall-clock cadence, or a UI frame advance CircuitJS. Probe removal, power,
+topology, owner, graph, and mode changes retire the pending acquisition state.
+
+The declared 200 Hz AC bandwidth has a separate observed-content qualification,
+not just a sample-rate assertion. Timestamp spacing is first checked for
+acquisition adequacy. The AC analysis then derives mean crossings from the
+accepted CircuitJS samples; it requires enough alternating observed crossings to
+establish a finite-window RMS and rejects an observed crossing interval faster
+than the declared passband as `BW RMS`. No component/source-frequency metadata
+is consulted. This is a deliberately conservative qualification rather than an
+analog filter model: it does not claim to detect waveform content that the
+accepted samples did not reveal.
 
 `SolverTimeObservationService` is the sole temporal publication boundary. Each
 differential subscription has bounded staging and committed rings tied to the
@@ -1723,20 +1741,37 @@ sample. `SolverTimeWindow` enforces increasing finite solver timestamps and
 retains only its fixed-capacity chronological history.
 
 `SignalMeasurementAnalysis` is pure timestamped-window math. It evaluates
-minimum samples/duration, largest accepted gap, declared bandwidth and voltage
-range before reporting a result; its trapezoidal mean and squared-linear-segment
-integral support irregular solver steps. Frequency comes from interpolated
-mean-crossing periods, never component metadata or UI frame time, and rejects
+minimum samples/duration, largest accepted gap, voltage range, sample-spacing
+adequacy, and (for AC RMS) observed-content bandwidth independently before
+reporting a result; its trapezoidal mean and squared-linear-segment integral
+support irregular solver steps. Frequency comes from interpolated mean-crossing
+periods, never component metadata or UI frame time, and rejects
 Nyquist/bandwidth failures rather than drawing a plausible alias.
 
 `OscilloscopeInstrumentMode` is a one-channel, passive high-impedance consumer
 of that service. It has four timebases, five voltage scales and rising/falling/
-either-edge triggers. Its native meter canvas draws only a valid accepted trace;
-explicit `WINDOW`, `GAP`, `BANDWIDTH`, `ALIASED`, `OVER RANGE`, `NO TRIGGER`,
-and `NO SIGNAL` states draw no invented waveform. The larger bounded history
-makes the smallest 1 ms/div span useful at fine steps; unsupported longer
-spans honestly remain `WINDOW`. The scope never paints behind the opaque meter
-or advances the solver from a draw pass.
+either-edge triggers. Selected probes are kept separately from the active
+subscription: missing probes show `SCOPE: PROBES`, while selected probes rejected
+by reference policy show `SCOPE: REF?` and create no subscription. Subscription
+generations force a rebind after topology, power, owner, graph, or endpoint
+change.
+
+Trace validity is independent of periodic-frequency success. A qualified DC
+capture draws its real horizontal trace with `NO SIGNAL`; a valid one-shot can
+draw with `FREQ?`; a periodic trace may additionally show timestamp-derived
+frequency. `WINDOW`, unsafe `GAP`, `BANDWIDTH`, `ALIASED`, `OVER RANGE`, and
+numeric failures remain explicit rather than invented. The renderer breaks a
+polyline at an unsafe accepted-sample gap, never interpolating a false trace or
+advancing CircuitJS from draw. The double-gated
+`tsjDebug=true&tsjVerifyU02U03=true` temporal fixture temporarily isolates the
+normal LED board, adds a real non-owned CircuitJS source, and snapshots/restores
+the exact graph, power, probes, instrument state, and solver ownership on every
+completion path. Its optional `tsjTemporalVisualHold=true` inspection interval
+is bounded to 15 seconds and then uses that same cleanup path; it is not a
+player route or an alternate simulation owner.
+The larger bounded history makes the smallest 1 ms/div span useful at fine
+steps; unsupported longer spans honestly remain `WINDOW`. The scope never
+advances the solver from a draw pass.
 
 Component-side detachable bindings continue to resolve to the physical part
 currently installed in a slot. `ResistorSlotController` retargets those

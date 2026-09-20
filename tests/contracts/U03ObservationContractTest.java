@@ -8,6 +8,8 @@ public final class U03ObservationContractTest {
         scopeProviderIsOneChannelDifferential();
         acceptedReceiptPublishesOnlyAfterCompletion();
         triggerAndAliasStatesStayExplicit();
+        traceValidityIsIndependentFromFrequencyValidity();
+        selectedRejectedReferenceRemainsVisible();
         voltageResultDoesNotCoerceUnavailableOrReferenceFailures();
         System.out.println("PASS: U03 observation contracts assertions=" + assertions);
     }
@@ -85,6 +87,66 @@ public final class U03ObservationContractTest {
                 MeasurementReferencePolicy.notApplicable(), 1000).getStatus() ==
                 VoltageMeasurementResult.Status.OVER_RANGE,
             "declared voltage clipping is explicit");
+    }
+
+    private static void traceValidityIsIndependentFromFrequencyValidity() {
+        SignalMeasurementAnalysis.Policy scopePolicy = new SignalMeasurementAnalysis.Policy(
+            16, .004, .0005, 250, 1000, 1e-9,
+            SignalMeasurementAnalysis.Trigger.RISING);
+        SolverTimeWindow dc = new SolverTimeWindow(128);
+        for (int i = 0; i <= 50; i++) dc.append(i * .0002, 2.4);
+        SignalMeasurementAnalysis.Result dcWaveform = SignalMeasurementAnalysis.measureDcMean(dc,
+            scopePolicy);
+        SignalMeasurementAnalysis.Result dcFrequency = SignalMeasurementAnalysis.measureFrequency(dc,
+            scopePolicy);
+        check(dcWaveform.getStatus() == SignalMeasurementAnalysis.Status.OK &&
+                dcFrequency.getStatus() == SignalMeasurementAnalysis.Status.NO_SIGNAL &&
+                OscilloscopeInstrumentMode.permitsWaveformRendering(dcWaveform, dcFrequency),
+            "a qualified DC sample window draws a horizontal trace without a frequency");
+
+        SolverTimeWindow pulse = new SolverTimeWindow(128);
+        for (int i = 0; i <= 50; i++) {
+            double time = i * .0002;
+            pulse.append(time, time >= .003 && time < .004 ? 4 : 0);
+        }
+        SignalMeasurementAnalysis.Result pulseWaveform = SignalMeasurementAnalysis.measureDcMean(pulse,
+            scopePolicy);
+        SignalMeasurementAnalysis.Result pulseFrequency = SignalMeasurementAnalysis.measureFrequency(pulse,
+            scopePolicy);
+        check(pulseWaveform.getStatus() == SignalMeasurementAnalysis.Status.OK &&
+                pulseFrequency.getStatus() == SignalMeasurementAnalysis.Status.INSUFFICIENT_WINDOW &&
+                OscilloscopeInstrumentMode.permitsWaveformRendering(pulseWaveform, pulseFrequency) &&
+                "FREQ?".equals(OscilloscopeInstrumentMode.scopeStatusForContract(
+                    pulseWaveform, pulseFrequency)),
+            "a real one-shot remains drawable while its frequency is explicitly unavailable");
+
+        SolverTimeWindow periodic = new SolverTimeWindow(1024);
+        for (int i = 0; i <= 600; i++) {
+            double time = i * .0002;
+            periodic.append(time, 3 * Math.sin(2 * Math.PI * 60 * time));
+        }
+        SignalMeasurementAnalysis.Result periodicWaveform = SignalMeasurementAnalysis.measureDcMean(
+            periodic, scopePolicy);
+        SignalMeasurementAnalysis.Result periodicFrequency = SignalMeasurementAnalysis.measureFrequency(
+            periodic, scopePolicy);
+        check(periodicWaveform.isOk() && periodicFrequency.isOk() &&
+                Math.abs(periodicFrequency.getValue() - 60) < .01 &&
+                OscilloscopeInstrumentMode.permitsWaveformRendering(periodicWaveform,
+                    periodicFrequency),
+            "periodic scope waveform and timestamp-derived frequency agree");
+        check(InstrumentController.isSafeScopeSegment(.002, .0022, .0005) &&
+                !InstrumentController.isSafeScopeSegment(.002, .003, .0005),
+            "scope projects accepted neighboring samples but never bridges an unsafe gap");
+    }
+
+    private static void selectedRejectedReferenceRemainsVisible() {
+        MeasurementReferencePolicy.Result rejected = new MeasurementReferencePolicy.Result(
+            MeasurementReferencePolicy.Decision.REJECTED, "ISOLATION_BOUNDARY");
+        check("SCOPE: REF?".equals(OscilloscopeInstrumentMode.displayTextForContract(true,
+                rejected, null, null)) &&
+                "SCOPE: PROBES".equals(OscilloscopeInstrumentMode.displayTextForContract(false,
+                    rejected, null, null)),
+            "selected rejected-reference probes remain REF? rather than being cleared to PROBES");
     }
 
     private static void check(boolean condition, String label) {

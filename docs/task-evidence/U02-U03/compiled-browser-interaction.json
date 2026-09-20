@@ -1,0 +1,39 @@
+{
+  "protocol": "TSJ-U02-U03-COMPILED-INTERACTION-1",
+  "route": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&running=true&tsjVerifyU02U03=true&tsjTemporalFixture=periodic&tsjTemporalVisualHold=true",
+  "fixtureVisibility": "The debug-only visual hold is bounded to 15 seconds and then uses the normal fixture cleanup path.",
+  "periodicBeforeClicks": {
+    "verification": "RUNNING:u02-u03",
+    "scopeStatus": "SCOPE: 60 Hz",
+    "controls": [
+      "T 1 ms/div",
+      "V 1 V/div",
+      "TRIG ↑"
+    ]
+  },
+  "actualPlayerClicks": [
+    "Cycle oscilloscope time per division",
+    "Cycle oscilloscope time per division",
+    "Cycle oscilloscope volts per division",
+    "Cycle oscilloscope trigger edge"
+  ],
+  "periodicAfterClicks": {
+    "verification": "RUNNING:u02-u03",
+    "scopeStatus": "SCOPE: WINDOW",
+    "controls": [
+      "T 20 ms/div",
+      "V 5 V/div",
+      "TRIG ↓"
+    ]
+  },
+  "dcVisualState": {
+    "scopeStatus": "SCOPE: NO SIGNAL",
+    "canvas": "Oscilloscope: NO SIGNAL. T 1 ms/div V 1 V/div TRIG ↑",
+    "canvasPixels": [198, 60]
+  },
+  "pulseVisualState": {
+    "scopeStatus": "SCOPE: FREQ?",
+    "canvas": "Oscilloscope: FREQ?. T 1 ms/div V 1 V/div TRIG ↑",
+    "canvasPixels": [198, 60]
+  }
+}

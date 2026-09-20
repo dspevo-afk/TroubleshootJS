@@ -35,4 +35,10 @@ class DcVoltageMeasurementStimulus implements ActiveMeasurementStimulus {
         return red.getElement().getPostVoltage(red.getPostIndex()) -
             black.getElement().getPostVoltage(black.getPostIndex());
     }
+
+    /** Last solved burden current; retained for developer integration proof
+     * after this temporary element has been removed from the player graph. */
+    double getInputCurrent() {
+        return inputResistor.getCurrent();
+    }
 }

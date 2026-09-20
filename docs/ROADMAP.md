@@ -679,7 +679,7 @@ preferred queue. The milestone cards remain authoritative for scope, hard
 prerequisites, acceptance and conditional capabilities; this section chooses the
 preferred next eligible milestone. Future implementation needs its own authorization.
 
-**Already complete:** T49, N00, A01-A11, R00, P01-P09, U01, E01, E03, Q15, U04, U05 and REL-A. A10 and A11 ran earlier
+**Already complete:** T49, N00, A01-A11, R00, P01-P09, U01, E01, E03, Q15, U02, U03, U04, U05 and REL-A. A10 and A11 ran earlier
 than the old preferred order while satisfying their hard prerequisites: A10
 required A05/A07/A09/P02; A11 required A04/A08/A09. Their earlier placement does
 not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 → Q15 → U04 → U05 → REL-A is now complete.
@@ -1424,7 +1424,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### U02 · Reference-aware measurements and shared observation boundary
 
-**Status:** COMPLETE — typed differential DC/AC outcomes, real finite-load AC RMS acquisition, reference refusal, and shared accepted-step solver-time observation are qualified (2026-09-20). The U02 contracts cover irregular samples, DC-offset removal, clipping, reference failures, active-measurement cleanup, and stale-window invalidation; built-player evidence uses visible red/black probes on J1. [Evidence](task-evidence/U02-U03/README.md).
+**Status:** COMPLETE — typed differential DC/AC outcomes, reference refusal, and shared accepted-step solver-time observation are qualified (2026-09-20). Every player-visible U02 DMM voltage path carries the real finite `$10 MOhm$` burden after reference preflight; there is no unloaded/live-voltage exception. AC RMS is bounded, AC-coupled, continuously reacquired by accepted solver time, and separately qualifies observed content against its declared 200 Hz passband. Contracts cover high-source-impedance loading, irregular samples, DC-offset removal, clipping, reference failures before a load is installed, cleanup, and stale acquisition invalidation; built-player evidence uses visible red/black probes plus a developer-only temporal CircuitJS fixture. [Evidence](task-evidence/U02-U03/README.md).
 
 **Hard prerequisites:** [A06](#m-a06), [A07](#m-a07), [A08](#m-a08), [U01](#m-u01)
 
@@ -1454,7 +1454,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### U03 · Oscilloscope and frequency with solver-time fidelity
 
-**Status:** COMPLETE — a bounded one-channel high-impedance scope uses the U02 accepted solver-time stream, declared finite policies, time/volts/trigger controls, and frequency calculated from timestamped crossings (2026-09-20). Gaps, bandwidth limits, aliasing, overrange, no-trigger/no-signal, and insufficient-window states are explicit; topology, power, owner, and probe changes retire observations. [Evidence](task-evidence/U02-U03/README.md).
+**Status:** COMPLETE — a bounded one-channel high-impedance scope uses the U02 accepted solver-time stream, declared finite policies, time/volts/trigger controls, and frequency calculated from timestamped crossings (2026-09-20). A valid DC or one-shot trace is drawable even when frequency is unavailable; reference-rejected selected probes show `REF?` without creating a subscription. Gaps, bandwidth limits, aliasing, overrange, no-trigger/no-signal, and insufficient-window states are explicit; topology, power, owner, graph, and probe changes retire observations. [Evidence](task-evidence/U02-U03/README.md).
 
 **Hard prerequisites:** [U02](#m-u02), [A07](#m-a07)
 

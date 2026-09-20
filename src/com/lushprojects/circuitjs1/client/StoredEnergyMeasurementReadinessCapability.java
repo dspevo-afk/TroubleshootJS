@@ -70,11 +70,6 @@ final class StoredEnergyMeasurementReadinessCapability implements
         return storageReadiness(red, black);
     }
 
-    public boolean usesLiveDcVoltage(CircuitPostMeasurementEndpoint red,
-            CircuitPostMeasurementEndpoint black) {
-        return isRelevant(red, black);
-    }
-
     private boolean isRelevant(CircuitPostMeasurementEndpoint red,
             CircuitPostMeasurementEndpoint black) {
         if (red == null || black == null)

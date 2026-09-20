@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Vector;
 
 import com.google.gwt.canvas.client.Canvas;
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.dom.client.NativeEvent;
@@ -40,6 +41,12 @@ class InstrumentController {
     private InstrumentModeStrategy activeStrategy;
     private ProbeTarget redProbe;
     private ProbeTarget blackProbe;
+    /* A solver-complete callback may request, but never run, another meter
+     * transaction.  The deferred turn keeps measurement ownership outside the
+     * just-finished solver operation and outside every paint path. */
+    private boolean deferredMeasurementUpdateQueued;
+    private int deferredMeasurementUpdateEpoch;
+    private InstrumentModeStrategy deferredMeasurementStrategy;
     private int dcVoltagePlaceholderDisplayCount;
     private int dcVoltageDisplayChangeCount;
 
@@ -353,6 +360,16 @@ class InstrumentController {
         updateReading();
     }
 
+    void activateAcVoltageModeForDeveloperVerification() {
+        setActiveMode("AC_VOLTAGE", true);
+        updateReading();
+    }
+
+    void activateScopeModeForDeveloperVerification() {
+        setActiveMode("SCOPE", true);
+        updateReading();
+    }
+
     String getReadingForDeveloperVerification() {
         return readingLabel.getText();
     }
@@ -367,6 +384,20 @@ class InstrumentController {
 
     double getLatestDcVoltageForDeveloperVerification() {
         return getModeState("DC_VOLTAGE").getPrimaryValue();
+    }
+
+    double getLatestAcVoltageForDeveloperVerification() {
+        return getModeState("AC_VOLTAGE").getPrimaryValue();
+    }
+
+    double getLatestScopeFrequencyForDeveloperVerification() {
+        return getModeState("SCOPE").getPrimaryValue();
+    }
+
+    SolverTimeObservationService.Subscription getScopeSubscriptionForDeveloperVerification() {
+        InstrumentModeStrategy strategy = modeRegistry.get("SCOPE");
+        return strategy instanceof OscilloscopeInstrumentMode ?
+            ((OscilloscopeInstrumentMode) strategy).getSubscriptionForDeveloperVerification() : null;
     }
 
     int getDcVoltageMeasurementCountForDeveloperVerification() {
@@ -529,8 +560,10 @@ class InstrumentController {
     private void setActiveStrategy(InstrumentModeStrategy strategy, boolean refresh) {
         if (strategy == null)
             throw new IllegalArgumentException("Missing instrument strategy");
-        if (activeStrategy != null && !activeStrategy.getId().equals(strategy.getId()))
+        if (activeStrategy != null && !activeStrategy.getId().equals(strategy.getId())) {
+            invalidateDeferredMeasurementUpdate();
             activeStrategy.deactivate(this);
+        }
         boolean changed = activeStrategy != strategy;
         activeStrategy = strategy;
         meterPanel.getElement().setAttribute("data-mode", activeStrategy.getId());
@@ -565,6 +598,13 @@ class InstrumentController {
 
     private static boolean finite(double value) {
         return !Double.isNaN(value) && !Double.isInfinite(value);
+    }
+
+    /** A trace never invents a segment across an unqualified solver-time gap. */
+    static boolean isSafeScopeSegment(double priorTime, double currentTime, double maximumGap) {
+        if (!finite(priorTime) || !finite(currentTime) || currentTime <= priorTime)
+            return false;
+        return !finite(maximumGap) || currentTime - priorTime <= maximumGap;
     }
 
     private static int clamp(int value, int minimum, int maximum) {
@@ -605,6 +645,63 @@ class InstrumentController {
 
     void updateReadingForStrategy() {
         updateReading();
+    }
+
+    /**
+     * Queue one bounded meter update after the current event-loop turn.  This
+     * is used by solver-time instruments after a completed accepted operation;
+     * it is intentionally not a recursive solver callback and never originates
+     * from draw/display code.
+     */
+    void requestDeferredMeasurementUpdateForStrategy(final InstrumentModeStrategy strategy) {
+        if (strategy == null || activeStrategy != strategy || deferredMeasurementUpdateQueued)
+            return;
+        deferredMeasurementUpdateQueued = true;
+        deferredMeasurementStrategy = strategy;
+        final int requestEpoch = ++deferredMeasurementUpdateEpoch;
+        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+            public void execute() {
+                runDeferredMeasurementUpdate(requestEpoch, strategy);
+            }
+        });
+    }
+
+    /**
+     * The accepted-step callback only queues meter work.  CirSim calls this
+     * after that callback has returned, at the outer update boundary, so a
+     * bounded voltage transaction never recursively runs from a solver
+     * callback.  The scheduled command above remains necessary for accepted
+     * operations completed outside an ordinary UI update.
+     */
+    void completeDeferredMeasurementUpdateAfterSolverStep() {
+        if (!deferredMeasurementUpdateQueued)
+            return;
+        runDeferredMeasurementUpdate(deferredMeasurementUpdateEpoch,
+            deferredMeasurementStrategy);
+    }
+
+    private void runDeferredMeasurementUpdate(int requestEpoch,
+            InstrumentModeStrategy requestedStrategy) {
+        if (!deferredMeasurementUpdateQueued || requestEpoch != deferredMeasurementUpdateEpoch ||
+                requestedStrategy == null || requestedStrategy != deferredMeasurementStrategy)
+            return;
+        deferredMeasurementUpdateQueued = false;
+        deferredMeasurementStrategy = null;
+        if (activeStrategy != requestedStrategy || !isCurrentPlayerInteractionAllowed() ||
+                sim.activeMeasurementOverlay || sim.solverExecutor.isUnavailable())
+            return;
+        updateReading();
+    }
+
+    private void invalidateDeferredMeasurementUpdate() {
+        deferredMeasurementUpdateQueued = false;
+        deferredMeasurementStrategy = null;
+        deferredMeasurementUpdateEpoch++;
+    }
+
+    /** Current CircuitJS time is read only to schedule a later bounded capture. */
+    double getSimulationTimeForStrategy() {
+        return sim.t;
     }
 
     void setInstrumentDisplayForStrategy(String text) {
@@ -669,7 +766,7 @@ class InstrumentController {
      */
     void renderScopeTraceForStrategy(SolverTimeSample[] samples, double viewStart,
             double captureSeconds, double voltsPerDivision, String legend,
-            String status, boolean drawWaveform) {
+            String status, double maximumGap, boolean drawWaveform) {
         if (scopeTraceCanvas == null)
             return;
         Graphics graphics = new Graphics(scopeTraceCanvas.getContext2d());
@@ -697,6 +794,7 @@ class InstrumentController {
             double pixelsPerVolt = (graphHeight / 8.0) / voltsPerDivision;
             int priorX = Integer.MIN_VALUE;
             int priorY = 0;
+            double priorTime = Double.NaN;
             graphics.setColor("#91ef7c");
             graphics.setLineWidth(1.25);
             for (int i = 0; i < samples.length; i++) {
@@ -710,19 +808,17 @@ class InstrumentController {
                     (SCOPE_TRACE_WIDTH - 1) / captureSeconds), 0, SCOPE_TRACE_WIDTH - 1);
                 int y = clamp((int)Math.round(graphTop + graphHeight * .5 -
                     sample.getValue() * pixelsPerVolt), graphTop, graphTop + graphHeight);
-                if (priorX != Integer.MIN_VALUE)
+                if (priorX != Integer.MIN_VALUE && isSafeScopeSegment(priorTime,
+                        sample.getTime(), maximumGap))
                     graphics.drawLine(priorX, priorY, x, y);
                 priorX = x;
                 priorY = y;
+                priorTime = sample.getTime();
             }
         }
         scopeTraceCanvas.getElement().setAttribute("aria-label", "Oscilloscope: " +
             (status == null ? "WINDOW" : status) + ". " +
             (legend == null ? "" : legend));
-    }
-
-    boolean usesLiveDcVoltageForStrategy(ProbeTarget red, ProbeTarget black) {
-        return measurementAdapter.usesLiveDcVoltage(red, black);
     }
 
     ActiveMeasurementReadiness getActiveMeasurementReadinessForStrategy(ProbeTarget red,

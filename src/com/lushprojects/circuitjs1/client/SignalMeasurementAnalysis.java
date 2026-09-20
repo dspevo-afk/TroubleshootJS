@@ -23,6 +23,21 @@ final class SignalMeasurementAnalysis {
 
     enum Trigger { RISING, FALLING, ANY }
 
+    /**
+     * Separates what the accepted timestamps can support from what the
+     * observed waveform actually demonstrated.  In particular, a dense set
+     * of samples can be adequate for a 200 Hz instrument while still proving
+     * that the input contains faster zero-crossing content that the declared
+     * passband does not qualify.
+     */
+    enum SignalBandwidthStatus {
+        NOT_APPLICABLE,
+        UNDECLARED,
+        WITHIN_DECLARED_BAND,
+        EXCEEDS_DECLARED_BAND,
+        UNRESOLVED
+    }
+
     /** Immutable caller-declared measurement policy. */
     static final class Policy {
         static final double UNDECLARED = Double.NaN;
@@ -100,14 +115,23 @@ final class SignalMeasurementAnalysis {
         private final double dcMean;
         private final double frequencyHz;
         private final SolverTimeWindow.Assessment window;
+        private final SignalBandwidthStatus signalBandwidthStatus;
 
         private Result(Status status, double value, double dcMean,
                 double frequencyHz, SolverTimeWindow.Assessment window) {
+            this(status, value, dcMean, frequencyHz, window,
+                SignalBandwidthStatus.NOT_APPLICABLE);
+        }
+
+        private Result(Status status, double value, double dcMean,
+                double frequencyHz, SolverTimeWindow.Assessment window,
+                SignalBandwidthStatus signalBandwidthStatus) {
             this.status = status;
             this.value = value;
             this.dcMean = dcMean;
             this.frequencyHz = frequencyHz;
             this.window = window;
+            this.signalBandwidthStatus = signalBandwidthStatus;
         }
 
         Status getStatus() {
@@ -165,6 +189,14 @@ final class SignalMeasurementAnalysis {
 
         SolverTimeWindow.BandwidthStatus getBandwidthStatus() {
             return window.getBandwidthStatus();
+        }
+
+        /**
+         * Timestamp/sample-spacing adequacy is exposed separately above;
+         * this reports the content qualification used by AC RMS.
+         */
+        SignalBandwidthStatus getSignalBandwidthStatus() {
+            return signalBandwidthStatus;
         }
     }
 
@@ -224,8 +256,22 @@ final class SignalMeasurementAnalysis {
         if (stats == null)
             return failure(Status.NUMERICAL_LIMITED, assessment);
         if (stats.acRms <= actual.signalThreshold)
-            return new Result(Status.NO_SIGNAL, 0, stats.mean, Double.NaN, assessment);
-        return new Result(Status.OK, stats.acRms, stats.mean, Double.NaN, assessment);
+            return new Result(Status.NO_SIGNAL, 0, stats.mean, Double.NaN, assessment,
+                actual.hasDeclaredBandwidth() ? SignalBandwidthStatus.WITHIN_DECLARED_BAND :
+                    SignalBandwidthStatus.UNDECLARED);
+
+        SignalBandwidthStatus signalBandwidth = assessObservedAcBandwidth(
+            window.snapshot(), stats.mean, actual);
+        if (signalBandwidth == SignalBandwidthStatus.EXCEEDS_DECLARED_BAND)
+            return failure(Status.BANDWIDTH_LIMITED, assessment, signalBandwidth);
+        /* A finite time-window RMS is only published when it contains enough
+         * observed alternating behavior to establish the AC-coupled reading.
+         * This makes low-frequency/one-shot captures honest rather than
+         * showing a plausible number from an arbitrarily short fragment. */
+        if (signalBandwidth == SignalBandwidthStatus.UNRESOLVED)
+            return failure(Status.INSUFFICIENT_WINDOW, assessment, signalBandwidth);
+        return new Result(Status.OK, stats.acRms, stats.mean, Double.NaN, assessment,
+            signalBandwidth);
     }
 
     static Result measureFrequency(SolverTimeWindow window) {
@@ -330,7 +376,46 @@ final class SignalMeasurementAnalysis {
 
     private static Result failure(Status status,
             SolverTimeWindow.Assessment assessment) {
-        return new Result(status, Double.NaN, Double.NaN, Double.NaN, assessment);
+        return failure(status, assessment, SignalBandwidthStatus.NOT_APPLICABLE);
+    }
+
+    private static Result failure(Status status,
+            SolverTimeWindow.Assessment assessment,
+            SignalBandwidthStatus signalBandwidthStatus) {
+        return new Result(status, Double.NaN, Double.NaN, Double.NaN, assessment,
+            signalBandwidthStatus);
+    }
+
+    /**
+     * Qualifies the input from accepted CircuitJS observations alone.  It is
+     * deliberately not a source-frequency lookup: all mean-centered crossing
+     * intervals are reconstructed from solver timestamps.  Three alternating
+     * crossings provide one complete observed cycle; fewer cannot establish a
+     * low-frequency AC RMS window.
+     *
+     * <p>This is a conservative rejection policy, rather than a simulated
+     * analog filter.  A pair of successive mean crossings closer than the
+     * half-period of the declared passband proves out-of-band content.  A
+     * waveform whose crossings never reveal such content is qualified only
+     * with respect to observed crossing behavior; hidden sub-threshold or
+     * unsampled components are not claimed to be measured.</p>
+     */
+    private static SignalBandwidthStatus assessObservedAcBandwidth(
+            SolverTimeSample[] samples, double mean, Policy policy) {
+        if (!policy.hasDeclaredBandwidth())
+            return SignalBandwidthStatus.UNDECLARED;
+        CrossingSet crossings = zeroCrossings(samples, mean, Trigger.ANY);
+        if (crossings.count < 3)
+            return SignalBandwidthStatus.UNRESOLVED;
+        double shortestAllowedHalfPeriod = 1 / (2 * policy.declaredBandwidthHz);
+        for (int i = 1; i < crossings.count; i++) {
+            double interval = crossings.times[i] - crossings.times[i - 1];
+            if (!finite(interval) || interval <= 0)
+                return SignalBandwidthStatus.UNRESOLVED;
+            if (interval + 1e-12 < shortestAllowedHalfPeriod)
+                return SignalBandwidthStatus.EXCEEDS_DECLARED_BAND;
+        }
+        return SignalBandwidthStatus.WITHIN_DECLARED_BAND;
     }
 
     /**

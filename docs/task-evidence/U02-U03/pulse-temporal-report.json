@@ -1,0 +1,23 @@
+{
+  "protocol": "TSJ-U02-U03-COMPILED-RECEIPT-1",
+  "route": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&running=true&tsjVerifyU02U03=true&tsjTemporalFixture=pulse",
+  "documentRoot": {
+    "data-tsj-verification": "PASS:u02-u03",
+    "data-tsj-u02-u03-temporal-report": "{\"protocol\":\"TSJ-U02-U03-TEMPORAL-1\",\"status\":\"PASS\",\"mode\":\"pulse\",\"initialRms\":null,\"updatedRms\":null,\"scopeFrequencyHz\":null,\"scopeSamples\":8192,\"boundedCapacity\":8192,\"fixtureSourceOutsideLogicalBoard\":true,\"fixtureStateRestored\":true,\"cancelledPublicationRetired\":true,\"renderReadOnly\":true,\"temporaryMeterClean\":true}"
+  },
+  "receipt": {
+    "protocol": "TSJ-U02-U03-TEMPORAL-1",
+    "status": "PASS",
+    "mode": "pulse",
+    "initialRms": null,
+    "updatedRms": null,
+    "scopeFrequencyHz": null,
+    "scopeSamples": 8192,
+    "boundedCapacity": 8192,
+    "fixtureSourceOutsideLogicalBoard": true,
+    "fixtureStateRestored": true,
+    "cancelledPublicationRetired": true,
+    "renderReadOnly": true,
+    "temporaryMeterClean": true
+  }
+}

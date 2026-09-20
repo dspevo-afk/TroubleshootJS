@@ -105,9 +105,6 @@ final class PowerDomainRuntimeCapability implements ActiveMeasurementReadinessCa
         default: return ActiveMeasurementReadiness.UNKNOWN;
         }
     }
-    public boolean usesLiveDcVoltage(CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black) {
-        return false;
-    }
     public MeasurementReferencePolicy.Result assessReference(MeasurementReferencePolicy.Mode mode,
             CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black) {
         if (!isCurrentOwner()) return new MeasurementReferencePolicy.Result(

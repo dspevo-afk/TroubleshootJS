@@ -9,6 +9,8 @@ public final class U02MeasurementContractTest {
         rmsRemovesOffsetAndDcKeepsPolarity();
         boundedRetentionIsChronological();
         windowQualityAndOverRangeAreExplicit();
+        acBandwidthSeparatesSampleAdequacyFromSignalContent();
+        acTemporalCoverageAndIrregularStepsAreQualified();
         frequencyUsesIrregularSolverTime();
         noSignalAndNoTriggerAreExplicit();
         System.out.println("PASS: U02 measurement contracts assertions=" + assertions);
@@ -176,6 +178,67 @@ public final class U02MeasurementContractTest {
         double fixedStepFrequency = 1 / ((secondRisingIndex - firstRisingIndex) * assumedStep);
         check(Math.abs(fixedStepFrequency - actualFrequency) > .04,
             "fixed-timestep assumption disagrees with irregular timestamps");
+    }
+
+    private static void acBandwidthSeparatesSampleAdequacyFromSignalContent() {
+        SignalMeasurementAnalysis.Policy policy = new SignalMeasurementAnalysis.Policy(
+            16, .05, .0025, 200, 20, 1e-9, SignalMeasurementAnalysis.Trigger.ANY);
+        SolverTimeWindow aboveBand = new SolverTimeWindow(512);
+        for (int i = 0; i <= 200; i++) {
+            double time = i * .0005;
+            aboveBand.append(time, 3 * Math.sin(2 * Math.PI * 500 * time));
+        }
+        SignalMeasurementAnalysis.Result result = SignalMeasurementAnalysis.measureAcRms(aboveBand,
+            policy);
+        check(result.getWindowAssessment().getBandwidthStatus() ==
+                SolverTimeWindow.BandwidthStatus.OK,
+            "fine accepted solver samples are adequate for the declared 200 Hz acquisition");
+        check(result.getSignalBandwidthStatus() ==
+                SignalMeasurementAnalysis.SignalBandwidthStatus.EXCEEDS_DECLARED_BAND,
+            "observed 500 Hz crossings are separately qualified as out of band");
+        check(result.getStatus() == SignalMeasurementAnalysis.Status.BANDWIDTH_LIMITED &&
+                Double.isNaN(result.getValue()),
+            "out-of-band AC RMS cannot become a valid numeric reading");
+    }
+
+    private static void acTemporalCoverageAndIrregularStepsAreQualified() {
+        SignalMeasurementAnalysis.Policy policy = new SignalMeasurementAnalysis.Policy(
+            16, .05, .0025, 200, 20, 1e-9, SignalMeasurementAnalysis.Trigger.ANY);
+        SolverTimeWindow tooShort = new SolverTimeWindow(128);
+        for (int i = 0; i <= 30; i++) {
+            double time = i * .001;
+            tooShort.append(time, 2 * Math.sin(2 * Math.PI * 60 * time));
+        }
+        SignalMeasurementAnalysis.Result shortResult = SignalMeasurementAnalysis.measureAcRms(tooShort,
+            policy);
+        check(shortResult.getStatus() == SignalMeasurementAnalysis.Status.INSUFFICIENT_WINDOW &&
+                Double.isNaN(shortResult.getValue()),
+            "a capture shorter than the declared AC window is explicitly nonnumeric");
+
+        double[] frequencies = { 50, 60 };
+        for (int f = 0; f < frequencies.length; f++) {
+            double frequency = frequencies[f];
+            double amplitude = 2.8;
+            double offset = .9;
+            SolverTimeWindow accepted = new SolverTimeWindow(1024);
+            double[] increments = { .00025, .00045, .00030, .00055, .00020, .00040 };
+            double time = 0;
+            int step = 0;
+            while (time <= .2000001) {
+                accepted.append(time, offset + amplitude * Math.sin(2 * Math.PI * frequency * time));
+                time += increments[step++ % increments.length];
+            }
+            SignalMeasurementAnalysis.Result result = SignalMeasurementAnalysis.measureAcRms(accepted,
+                policy);
+            check(result.getStatus() == SignalMeasurementAnalysis.Status.OK &&
+                    result.getSignalBandwidthStatus() ==
+                        SignalMeasurementAnalysis.SignalBandwidthStatus.WITHIN_DECLARED_BAND,
+                "supported " + frequency + " Hz sine remains a qualified AC RMS signal");
+            check(close(result.getValue(), amplitude / Math.sqrt(2), .008),
+                "irregular accepted timestamps retain accurate " + frequency + " Hz RMS");
+            check(close(result.getDcMean(), offset, .008),
+                "AC coupling retains explicit DC offset reporting at " + frequency + " Hz");
+        }
     }
 
     private static void noSignalAndNoTriggerAreExplicit() {

@@ -26,8 +26,26 @@ final class E03RelayMutationChecks {
                 }
                 CircuitPostMeasurementEndpoint load=(CircuitPostMeasurementEndpoint)owner.getSimulationBindings().getEndpoint("J4.1");
                 CircuitPostMeasurementEndpoint controlReturn=(CircuitPostMeasurementEndpoint)owner.getSimulationBindings().getEndpoint("J1.2");
+                int elementsBeforeRejectedVoltage = sim.elmList.size();
+                VoltageMeasurementResult rejectedDc = sim.measureDcVoltageResult(load,controlReturn);
+                VoltageMeasurementResult rejectedAc = sim.measureAcVoltage(load,controlReturn);
                 require(sim.assessMeasurementReference(load,controlReturn).getDecision()==MeasurementReferencePolicy.Decision.REJECTED &&
-                    Double.isNaN(sim.measureDcVoltage(load,controlReturn)),"isolated domains do not manufacture a voltage reference");
+                    rejectedDc.getStatus()==VoltageMeasurementResult.Status.REFERENCE_REJECTED &&
+                    rejectedAc.getStatus()==VoltageMeasurementResult.Status.REFERENCE_REJECTED &&
+                    Double.isNaN(sim.measureDcVoltage(load,controlReturn)) &&
+                    !sim.activeMeasurementOverlay && sim.elmList.size()==elementsBeforeRejectedVoltage,
+                    "isolated domains reject DC and AC before any DMM load can bridge them");
+                sim.instrumentController.clearTargets();
+                sim.instrumentController.activateScopeModeForDeveloperVerification();
+                sim.instrumentController.handlePointerInput(com.google.gwt.dom.client.NativeEvent.BUTTON_LEFT,
+                    new CircuitPostProbeTarget(sim, load.getElement(), load.getPostIndex()));
+                sim.instrumentController.handlePointerInput(com.google.gwt.dom.client.NativeEvent.BUTTON_RIGHT,
+                    new CircuitPostProbeTarget(sim, controlReturn.getElement(), controlReturn.getPostIndex()));
+                require("SCOPE: REF?".equals(sim.instrumentController.getReadingForDeveloperVerification()) &&
+                    sim.instrumentController.getScopeSubscriptionForDeveloperVerification()==null &&
+                    sim.elmList.size()==elementsBeforeRejectedVoltage,
+                    "scope preserves selected cross-reference probes as REF? without subscribing or bridging");
+                sim.instrumentController.exitInstrumentModeForDeveloperVerification();
                 require(!sim.getGeneratedChallengeController().performCustomerRetest().isPassed(),"unrepaired retest seed="+seed);
                 String id=owner.getFaultBinding().getFault().getTargetComponentId();
                 PhysicalPart<?> original=owner.getPhysicalBoardRuntime().getInstalledPart(id);

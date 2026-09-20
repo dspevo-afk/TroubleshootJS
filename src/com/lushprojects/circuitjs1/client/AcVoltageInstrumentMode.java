@@ -2,7 +2,12 @@ package com.lushprojects.circuitjs1.client;
 
 /** Differential, AC-coupled true-RMS meter backed by a finite 10 Mohm load. */
 final class AcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
+    /* Reacquisition is governed by accepted CircuitJS time, not paint or wall
+     * cadence.  One deferred transaction captures at most this same bounded
+     * solver-time window before the next eligibility point. */
+    private static final double REACQUIRE_SOLVER_SECONDS = CirSim.AC_VOLTAGE_CAPTURE_SECONDS;
     private boolean refreshPending;
+    private double nextCaptureAt = Double.NaN;
     private VoltageMeasurementResult latest;
 
     AcVoltageInstrumentMode() {
@@ -15,6 +20,7 @@ final class AcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
     public void refresh(InstrumentController controller) {
         latest = null;
         refreshPending = true;
+        nextCaptureAt = Double.NaN;
         getState().setPrimaryValue(Double.NaN);
         getState().setRefreshPending(true);
         getState().setDisplayText(getInitialDisplay());
@@ -28,6 +34,7 @@ final class AcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
             /* Probe changes explicitly refresh this strategy. Do not keep a
              * missing-probe request pending across every solver frame. */
             refreshPending = false;
+            nextCaptureAt = Double.NaN;
             getState().setRefreshPending(false);
             getState().setPrimaryValue(Double.NaN);
             return;
@@ -36,10 +43,22 @@ final class AcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
             return;
         refreshPending = false;
         getState().setRefreshPending(false);
-        latest = controller.measureAcVoltageForStrategy(red, black);
-        getState().setPrimaryValue(latest.isNumeric() ? latest.getValue() : Double.NaN);
-        getState().incrementMeasurementCount();
-        controller.validateTargetsForStrategy();
+        try {
+            latest = controller.measureAcVoltageForStrategy(red, black);
+            getState().setPrimaryValue(latest.isNumeric() ? latest.getValue() : Double.NaN);
+            getState().incrementMeasurementCount();
+            if (shouldReacquire(latest))
+                nextCaptureAt = controller.getSimulationTimeForStrategy() + REACQUIRE_SOLVER_SECONDS;
+            else
+                nextCaptureAt = Double.NaN;
+            controller.validateTargetsForStrategy();
+        } catch (RuntimeException failure) {
+            retireFailedAcquisition(controller);
+            throw failure;
+        } catch (Error failure) {
+            retireFailedAcquisition(controller);
+            throw failure;
+        }
     }
 
     public void display(InstrumentController controller) {
@@ -49,8 +68,44 @@ final class AcVoltageInstrumentMode extends AbstractInstrumentModeStrategy {
     }
 
     public void onSimulationStepComplete(InstrumentController controller, boolean didAnalyze) {
-        if (refreshPending)
-            controller.updateReadingForStrategy();
+        if (refreshPending) {
+            controller.requestDeferredMeasurementUpdateForStrategy(this);
+            return;
+        }
+        if (finite(nextCaptureAt) && controller.getSimulationTimeForStrategy() >= nextCaptureAt) {
+            refreshPending = true;
+            getState().setRefreshPending(true);
+            controller.requestDeferredMeasurementUpdateForStrategy(this);
+        }
+    }
+
+    private static boolean shouldReacquire(VoltageMeasurementResult result) {
+        if (result == null)
+            return false;
+        switch (result.getStatus()) {
+        case REFERENCE_REJECTED:
+        case REFERENCE_UNPROVEN:
+        case UNAVAILABLE:
+            return false;
+        default:
+            return true;
+        }
+    }
+
+    private static boolean finite(double value) {
+        return !Double.isNaN(value) && !Double.isInfinite(value);
+    }
+
+    /** A failed solver transaction must never leave a previously accepted RMS
+     * value visible as though it described the successor electrical state. */
+    private void retireFailedAcquisition(InstrumentController controller) {
+        latest = null;
+        refreshPending = false;
+        nextCaptureAt = Double.NaN;
+        getState().setRefreshPending(false);
+        getState().setPrimaryValue(Double.NaN);
+        getState().setDisplayText(getInitialDisplay());
+        controller.setInstrumentDisplayForStrategy(getInitialDisplay());
     }
 
     private String format(ProbeTarget red, ProbeTarget black) {

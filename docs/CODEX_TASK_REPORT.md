@@ -1,36 +1,39 @@
-# Current checkpoint: U02/U03 reference-aware meter and solver-time scope
+# Current checkpoint: U02/U03 independent-review repair
 
-Base HEAD `8b371d98b923449fd143486a159e4bc519c84ce7` on
-`codex/task43p-final-recovery`; publication SHA will be recorded in the final
-handoff. U02 adds typed
-reference-aware voltage outcomes, real finite-load AC RMS acquisition and a
-shared accepted-solver-step observation boundary. U03 adds one passive
-high-impedance differential scope with bounded timestamped history, trigger,
-time/volts controls, frequency extraction, and explicit invalid/insufficient
-states. No draw path advances or fabricates CircuitJS data.
+Base HEAD `089d08391c9a778923f5a68cfc5d935858c164ee` on
+`codex/task43p-final-recovery`. This repair keeps the accepted solver-time
+observation architecture and closes the five independent-review blockers:
 
-Focused final-source checks PASS: U02 (28), U03 (12), A07 (24,868), and visual
-workbench (150) assertions. JS syntax checks pass; bench-meter contracts pass
-380 checks and U04 UI adapter contracts 113. Fresh JDK8/GWT five-permutation
-builds completed both in the integrated worktree (generated permutation caches
-at 2026-09-20 02:33:43) and in an isolated exact-staged-patch candidate (five
-caches at 02:43:21). Built production preview input PASS: after normal ticket acceptance,
-visible left/right J1 probes displayed `0 V RMS` in AC mode; scope displayed
-the real DC `NO SIGNAL` state and all three visible scale/trigger controls
-changed to `T 5 ms/div`, `V 5 V/div`, `TRIG ↓`. Two inspected screenshots are
-in [U02/U03 evidence](task-evidence/U02-U03/README.md).
+- every player-visible U02 DC/AC DMM result now carries the real temporary
+  `$10 MOhm$` differential burden after reference preflight; no live ideal-voltage
+  exception remains;
+- AC RMS is bounded, AC-coupled, observed-content-qualified at 200 Hz, and
+  reacquires after bounded accepted solver time without paint-driven simulation;
+- scope selection is separate from subscription (`PROBES` versus `REF?`), while
+  valid DC and one-shot traces render independently of frequency success;
+- owner/graph/power/topology/probe invalidation retires old acquisition and
+  waveform state; accepted/rejected operation publication and cleanup remain
+  bounded and solver-owned;
+- a debug-only real CircuitJS temporal fixture proves periodic AC/RMS/scope,
+  controls/trigger, DC trace, and one-shot trace in the compiled browser.
 
-The browser fixture was a DC LED board, so it does not prove a periodic
-player-waveform trace; known timestamped waveform, alias, bandwidth, gap,
-reference, cleanup, and stale-operation cases are covered by focused contracts.
-An independent read-only U02/U03 review found the developer-restore scope
-subscription cleanup edge; it was fixed before the final focused checks and
-production build. Its zero-step stale-window concern is covered by the matching
-operation/owner invalidation path and the service's rejected-operation cleanup.
-The pre-existing port-8899 preview remains unowned and running. Pre-existing
-tracked P09/visual/solver/layout changes and untracked evidence remain
-preserved. Next unstarted milestone: U06. Commit, push, and email results
-belong to the final handoff.
+Final validation PASS: focused U02 (38), U03 (17), A07 (24,868), and visual
+workbench (150); JS syntax, bench-meter (380), and U04 UI (113); full maintained
+current-contract gate (57 Java suites); and a fresh JDK8 production GWT build of
+all five permutations (84.513 s compile, 1.557 s link). Compiled-browser
+inspection confirmed 60 Hz periodic RMS/trace/frequency and real time/voltage/
+trigger controls, a horizontal DC `NO SIGNAL` trace, a one-shot `FREQ?` trace,
+the actual high-impedance loaded DMM case, and rejected-reference `REF?` scope
+status. Raw periodic/DC/pulse receipts prove fixture-state restoration,
+cancelled-publication retirement, read-only rendering and temporary-meter
+cleanup. See [U02/U03 evidence](task-evidence/U02-U03/README.md).
+
+Task-owned browser tab plus previews PID 2156/port 8903 and PID 21372/port 8904
+were revalidated against their launch command, closed, and confirmed to leave no
+listener. Unrelated tracked A07/solver/layout/generated-board/RB15 changes and
+untracked RelaySeed4/visual-productization/contract-cache evidence remain
+preserved. U06 was not begun. The next unstarted milestone remains U06. The user
+explicitly requested no push.
 
 # Historical checkpoint: Hold Tab to view board underside
 

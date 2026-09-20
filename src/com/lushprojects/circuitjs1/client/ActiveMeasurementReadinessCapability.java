@@ -5,6 +5,4 @@ interface ActiveMeasurementReadinessCapability extends PhysicalBoardRuntimeCapab
     ActiveMeasurementReadiness getActiveMeasurementReadiness(CircuitPostMeasurementEndpoint red,
             CircuitPostMeasurementEndpoint black, BoardPowerState powerState,
             boolean electricallyUnpowered);
-    boolean usesLiveDcVoltage(CircuitPostMeasurementEndpoint red,
-            CircuitPostMeasurementEndpoint black);
 }

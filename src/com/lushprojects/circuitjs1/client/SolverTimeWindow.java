@@ -207,8 +207,11 @@ final class SolverTimeWindow {
 
     /**
      * Evaluates this data against a caller-declared sample, duration, gap, and
-     * signal-bandwidth policy.  NaN maximum-gap or bandwidth declarations mean
-     * that the caller did not declare a bound; no bound is inferred silently.
+     * acquisition support for a declared signal bandwidth.  NaN maximum-gap
+     * or bandwidth declarations mean that the caller did not declare a bound;
+     * no bound is inferred silently.  This assessment intentionally does not
+     * assert that the waveform itself is inside that band; instrument analysis
+     * must make that separate observed-signal decision.
      */
     Assessment assess(int minimumSamples, double minimumDuration,
             double maximumGap, double declaredBandwidthHz) {
