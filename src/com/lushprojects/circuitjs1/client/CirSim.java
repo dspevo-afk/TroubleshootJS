@@ -7604,9 +7604,25 @@ MouseOutHandler, MouseWheelHandler {
 
     public void onPreviewNativeEvent(NativePreviewEvent e) {
         if (isPcbWorkbenchVisible()) {
-            if (dialogIsShowing()) pcbWorkbenchController.cancelViewGesture();
+            if (dialogIsShowing()) {
+                pcbWorkbenchController.tabView(false);
+                pcbWorkbenchController.cancelViewGesture();
+            }
             int type = e.getTypeInt(), key = e.getNativeEvent().getKeyCode();
-            if (key == KEY_SPACE && (type & Event.ONKEYUP) != 0) {
+            if (key == KEY_TAB && (type & Event.ONKEYUP) != 0) {
+                if (pcbWorkbenchController.tabView(false)) {
+                    e.cancel(); pcbWorkbenchController.auditViewEvent(e.getNativeEvent());
+                }
+            } else if (key == KEY_TAB && (type & Event.ONKEYDOWN) != 0 &&
+                    !dialogIsShowing() && !e.getNativeEvent().getShiftKey() &&
+                    !e.getNativeEvent().getCtrlKey() && !e.getNativeEvent().getAltKey() &&
+                    !e.getNativeEvent().getMetaKey() &&
+                    (e.getNativeEvent().getEventTarget().equals(cv.getElement()) ||
+                        e.getNativeEvent().getEventTarget().equals(Document.get().getBody()))) {
+                if (pcbWorkbenchController.tabView(true)) {
+                    e.cancel(); pcbWorkbenchController.auditViewEvent(e.getNativeEvent());
+                }
+            } else if (key == KEY_SPACE && (type & Event.ONKEYUP) != 0) {
                 pcbWorkbenchController.space(false, mouseCursorX, mouseCursorY);
                 pcbWorkbenchController.auditViewEvent(e.getNativeEvent());
             } else if (key == KEY_SPACE && (type & Event.ONKEYDOWN) != 0 &&

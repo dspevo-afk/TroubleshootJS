@@ -539,6 +539,13 @@ whether each real pad is inspectable through this same resolver, independently
 of the initial overview scale. Developer surface fixtures remain separate from
 the player catalog and observe existing CircuitJS endpoints.
 
+`CirSim` routes an unmodified Tab key from the board canvas or page body to
+`PcbWorkbenchController`. The controller temporarily selects the bottom face
+while the key is held and restores the top face on release, focus loss, modal
+entry, interaction loss or detachment. The renderer remains the single owner of
+face projection, so hit targets and instrument projection follow the visible
+face. Tab on a focused control retains normal keyboard navigation.
+
 `PcbPlacementConstraints` carries immutable package access, connector anchors,
 public regions and isolated-domain barriers. `PcbPlacementPlanner` estimates
 actual footprint envelopes, tries six bounded outline/aspect variants, packs

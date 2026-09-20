@@ -1,4 +1,29 @@
-# Current checkpoint: Windows Quick Play preview launch recovery
+# Current checkpoint: Hold Tab to view board underside
+
+Base HEAD `8ff4dc4aac2cba20362be54a47fb59f0a7808408` on
+`codex/task43p-final-recovery`. The requested Quick Play gesture uses the
+existing face projection: pressing unmodified Tab from the board canvas or
+page body selects the bottom face; releasing it restores the front. Control
+focus keeps ordinary Tab navigation. Blur, lost visibility, modal entry,
+interaction loss, detachment and renderer replacement release a held view.
+No electrical graph, board identity or copper geometry changes.
+
+Checks: final-source JDK8/GWT five-permutation production compile PASS;
+focused native U01 viewport contract PASS (1,259 assertions); actual Quick
+Play preview and trusted Browser Tab keydown/keyup PASS (bottom then top);
+focused button Tab navigation PASS (Fit bench to Zoom +, front retained).
+Three inspected screenshots show the front, underside reference and restored
+front. The underside reference uses the existing View button because the
+Browser keypress API releases Tab before it returns; the trusted event audit
+records the transient keydown state directly. See
+[evidence](task-evidence/HoldTabView/README.md). The full native/browser
+matrix and hold-across-window-blur gesture were NOT RUN. The already running
+preview on port 8899 was not task-owned and remains untouched. Pre-existing
+tracked Java/web edits and untracked visual/tray evidence remain preserved.
+Next unstarted milestone: U02. The enclosing commit is this checkpoint's
+publication identity; push and notification results belong to the final handoff.
+
+# Historical checkpoint: Windows Quick Play preview launch recovery
 
 Base HEAD `5b07cdef23af774bcc34cbdb3fa3f4b76e517948` on
 `codex/task43p-final-recovery`. The user-reported launcher archived a stale

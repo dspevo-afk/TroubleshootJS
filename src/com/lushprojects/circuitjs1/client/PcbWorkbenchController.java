@@ -44,6 +44,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     private int viewFrameRequests, viewFramesPresented, viewFramesSkipped;
     private double lastViewRequestTime, maximumViewLatencyMs, maximumViewDrawMs;
     private boolean panning;
+    private boolean tabViewHeld;
     private int panX, panY;
     private final boolean quickPlay;
     private VerticalPanel sidebar;
@@ -184,6 +185,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         closeComponentMenu();
         closeInteractionNotice();
         cancelViewFrame(viewFrame); viewFrame = null;
+        tabView(false);
         cancelViewGesture();
         removeViewListeners(viewListeners); viewListeners = null;
         if (!attachedToSidebar)
@@ -210,7 +212,9 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
 
     void draw(Graphics graphics, Rectangle area) {
         if (isCurrentOwner()) {
-            if (sim.dialogIsShowing() || !sim.isChallengeInteractionEnabled()) cancelViewGesture();
+            if (sim.dialogIsShowing() || !sim.isChallengeInteractionEnabled()) {
+                tabView(false); cancelViewGesture();
+            }
             renderHost.draw(graphics, area);
             presentBenchInstrument();
             drawPartDrag(graphics);
@@ -378,6 +382,23 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         boolean handled = renderer.getViewport().inspect(x, y);
         renderer.updateProjection(); requestViewFrame(); return handled;
     }
+    boolean tabView(boolean down) {
+        if (!down) {
+            if (!tabViewHeld) return false;
+            tabViewHeld = false;
+            if (isCurrentOwner() && attachedToSidebar) {
+                renderer.setViewingFace(PcbBoardSide.TOP);
+                rebuildViewPanel(); viewChanged();
+            }
+            return true;
+        }
+        if (tabViewHeld) return true;
+        if (!isCurrentPhysicalActionable() || !attachedToSidebar || sim.dialogIsShowing()) return false;
+        tabViewHeld = true;
+        renderer.setViewingFace(PcbBoardSide.BOTTOM);
+        rebuildViewPanel(); viewChanged();
+        return true;
+    }
     private void viewChanged() {
         renderer.updateProjection();
         sim.instrumentController.onPhysicalProjectionChanged();
@@ -423,7 +444,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
                 renderer.setViewingFace(renderer.getViewingFace().opposite()); rebuildViewPanel();
             }}));
         viewPanel.add(zoom);
-        viewPanel.add(new Label("Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe."));
+        viewPanel.add(new Label("Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe. Hold Tab on the board: bottom view; release: top."));
         viewPanel.add(new Label(renderer.getViewingFace() == PcbBoardSide.TOP ? "Top side / top copper" : "Bottom side / bottom copper"));
         final ListBox components = new ListBox();
         components.getElement().setAttribute("aria-label", "Select component");
@@ -472,6 +493,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     private static native JavaScriptObject installViewListeners(PcbWorkbenchController owner,
             com.google.gwt.dom.client.Element canvas) /*-{
         var cancel = $entry(function(e) {
+            owner.@com.lushprojects.circuitjs1.client.PcbWorkbenchController::tabView(Z)(false);
             owner.@com.lushprojects.circuitjs1.client.PcbWorkbenchController::cancelViewGesture()();
             if(e) owner.@com.lushprojects.circuitjs1.client.PcbWorkbenchController::auditViewEvent(Lcom/google/gwt/dom/client/NativeEvent;)(e);
         });
@@ -531,6 +553,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     WorkbenchRenderHost getRenderHostForDeveloperVerification() { return renderHost; }
     void replaceRendererForDeveloperVerification(WorkbenchRenderBackend backend) {
         if (!sim.troubleshootDebug || !isCurrentOwner()) throw new IllegalStateException("Renderer canary is developer-only");
+        tabView(false);
         cancelViewGesture();
         if (backend == null) renderHost.restoreProduction(); else renderHost.replace(backend);
         sim.repaint();
