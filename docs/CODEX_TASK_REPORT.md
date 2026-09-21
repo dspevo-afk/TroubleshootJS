@@ -1,35 +1,39 @@
-# Current checkpoint: U02/U03 post-review follow-up repair
+# Current checkpoint: U02/U03 irregular-sampling cutoff repair
 
-Starting from published review-repair commit `f7a994d`, this candidate remains on
-`codex/task43p-final-recovery` and closes the two follow-up findings without
-starting U06:
+Starting from published `95a257b`, this candidate remains on
+`codex/task43p-final-recovery` and repairs the remaining U02 AC-boundary review
+finding without starting U06:
 
-- retained DC and AC DMM probes share a bounded, accepted-solver-time 50 ms
-  reacquisition policy. A solver callback only queues one deferred finite-load
-  transaction when due; it neither measures recursively nor advances the solver.
-  Reference-rejected, unproven, and unavailable results retire their cadence;
-  probe, topology, power, owner, board, and mode changes still invalidate it;
-- DC continues through the real temporary 10 MOhm differential DMM burden and
-  reference preflight; the follow-up does not restore an ideal-voltmeter path;
-- AC observed-band qualification now compares successive same-direction
-  crossings (a complete observed cycle), avoiding finite-window mean bias that
-  incorrectly rejected clean phase-shifted 199 Hz sine captures while still
-  rejecting observed 201 Hz and 500 Hz content under the 200 Hz policy.
+- AC signal-band qualification still uses only accepted CircuitJS samples and
+  same-direction full cycles, but each linear mean-crossing now carries a
+  bounded local monotone-PCHIP refinement discrepancy plus the represented
+  precision of its actual bracket endpoints. The upper median of conservative
+  periods requires a strict majority of repeated periods below 5 ms before a
+  200 Hz policy returns `BW RMS`; a lone uneven interpolation estimate is not
+  promoted to an out-of-band fact;
+- phase-varied 199/200/201/500 Hz tests now cover both reviewer cadences (the
+  repeating 500/250/1000/500/1000/250 us sequence and production-like 5 us
+  cadence with one 2.5 us step every 101 samples), plus an equivalent large
+  finite solver-time origin. Clean 199/200 Hz stay numeric; 201/500 Hz remain
+  explicit nonnumeric bandwidth refusals. The calculation is bounded and does
+  not use source metadata, component declarations, UI cadence, or paint;
+- retained DC/AC finite-load cadence, reference-before-load protection, scope
+  validity independent of frequency, and the pre-existing solver ownership /
+  cleanup boundaries remain unchanged.
 
-Validation PASS: focused U02 (73), U03 (17), A07 (24,868), and visual workbench
-(150); JS syntax, bench-meter (380), and U04 UI (113); full maintained
+Validation PASS: focused U02 (585), U03 (17), A07 (24,868), and visual workbench
+(150); JS syntax, bench-meter (380), and U04 UI (113); final-source full maintained
 current-contract gate (57 Java suites plus independent seed/value/role oracles
 and preview-listener checks); and fresh JDK8 OBF production GWT compilation of
-all five permutations (79.513 s compile, 1.368 s link). The compiled-browser
-check used the task-owned temporal fixture and manually inspected periodic RMS /
-60 Hz scope / scale / trigger behavior, a DC horizontal `SCOPE: NO SIGNAL` trace,
-and a one-shot trace with unavailable frequency. Its real RC verifier retained
-the physical C1 J2.1/J2.2 probes, waited for accepted solver time to reach the
-50 ms deadline, and proved exactly one fresh changed finite-load reading.
+all five permutations (81.268 s compile, 1.445 s link). A fresh task-owned
+compiled-browser temporal fixture passed periodic, DC, and pulse receipts. Its
+periodic source changed from 2.103076641350908 to 4.2066368715920035 V RMS with
+a 60.00000033902902 Hz scope trace; inspected held UI showed the waveform,
+scale/trigger controls, DC `SCOPE: NO SIGNAL`, and pulse `SCOPE: FREQ?` traces.
 See [U02/U03 evidence](task-evidence/U02-U03/README.md) and the machine-readable
-[browser receipt](task-evidence/U02-U03/review-repair-browser-results.json).
+[cutoff follow-up receipt](task-evidence/U02-U03/irregular-cutoff-followup.json).
 
-Task-owned port-8910 previews and Browser tabs were revalidated against their
+Task-owned port-8912 preview and Browser tabs were revalidated against their
 launch identities, closed, and left no listener. The task-owned temporary jsdom
 runtime remains outside the repository because the local execution policy refused
 its verified removal; it contains only the offline test dependency and is not

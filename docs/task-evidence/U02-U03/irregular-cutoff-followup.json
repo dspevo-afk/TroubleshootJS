@@ -1,0 +1,79 @@
+{
+  "protocol": "TSJ-U02-U03-IRREGULAR-CUTOFF-FOLLOWUP-1",
+  "status": "PASS",
+  "date": "2026-09-20",
+  "baseCommit": "95a257b1ba528d47a64ac10a91655197e34068f7",
+  "scope": "U02 irregular accepted-sample AC cutoff qualification; U06 not started",
+  "analysis": {
+    "declaredBandwidthHz": 200,
+    "minimumDurationSeconds": 0.04,
+    "maximumAcceptedGapSeconds": 0.0025,
+    "retainedCapacity": 8192,
+    "crossingPolicy": "same-direction full periods; local monotone-PCHIP root discrepancy plus endpoint representation precision; upper median requires a strict majority of conservative periods below 5 ms",
+    "sourceMetadataInspected": false,
+    "renderOrUiCadenceDrivesMeasurement": false
+  },
+  "nativeBoundaryMatrix": {
+    "phaseCount": 32,
+    "cadences": [
+      "500/250/1000/500/1000/250 us repeating accepted steps",
+      "5 us accepted steps with one 2.5 us step every 101 samples"
+    ],
+    "timeOriginsSeconds": [0, 1000000000],
+    "supportedHz": [199, 200],
+    "rejectedHz": [201, 500],
+    "result": "all supported cases Status.OK/WITHIN_DECLARED_BAND; all rejected cases BANDWIDTH_LIMITED/EXCEEDS_DECLARED_BAND with NaN reading",
+    "u02Assertions": 585
+  },
+  "finalSourceValidation": {
+    "focusedContracts": {
+      "U02MeasurementContractTest": 585,
+      "U03ObservationContractTest": 17,
+      "A07ExecutionContractTest": 24868,
+      "VisualWorkbenchContractTest": 150
+    },
+    "uiContracts": {
+      "bench_meter_contract.mjs": 380,
+      "u04_ui_contract.mjs": 113
+    },
+    "fullCurrentContracts": "PASS: 57 Java suites, independent seed/value/role oracles, and preview-listener checks",
+    "gwtProductionBuild": {
+      "jdk": "Temurin 8u502-b07",
+      "style": "OBF",
+      "permutations": 5,
+      "compileSeconds": 81.268,
+      "linkSeconds": 1.445
+    }
+  },
+  "compiledBrowser": {
+    "preview": {
+      "port": 8912,
+      "webDigest": "327dddb8629c10badcce6018d95e4c3336d5317f1ad788d3df6c01b21440b964",
+      "closedAndListenerCleared": true
+    },
+    "periodic": {
+      "verification": "PASS:u02-u03",
+      "initialRms": 2.103076641350908,
+      "updatedRms": 4.2066368715920035,
+      "scopeFrequencyHz": 60.00000033902902,
+      "scopeSamples": 8192
+    },
+    "dc": {
+      "verification": "PASS:u02-u03",
+      "scopeStatus": "SCOPE: NO SIGNAL",
+      "traceVisible": true
+    },
+    "pulse": {
+      "verification": "PASS:u02-u03",
+      "scopeStatus": "SCOPE: FREQ?",
+      "traceVisible": true
+    },
+    "controls": {
+      "before": "T 1 ms/div; V 1 V/div; TRIG up",
+      "after": "T 20 ms/div; V 5 V/div; TRIG down",
+      "result": "SCOPE: WINDOW rather than a fabricated trace"
+    },
+    "manualInspection": "Periodic trace/status, DC horizontal trace, pulse trace, controls, and cleanup were visually inspected in the compiled browser. The browser fixture does not replace the native irregular-frequency boundary matrix."
+  },
+  "limits": "This is a sample-derived repeated-content qualification, not an analog low-pass model. It cannot infer hidden or one-off high-frequency content that the accepted solver-time waveform does not establish as repeated."
+}

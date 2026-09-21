@@ -1732,12 +1732,21 @@ not just a sample-rate assertion. Timestamp spacing is first checked for
 acquisition adequacy. The AC analysis then derives mean crossings from the
 accepted CircuitJS samples. For a numeric declared-band result it needs three
 alternating crossings and compares same-direction crossings (one full observed
-cycle) with the 5 ms period at 200 Hz. That avoids treating a finite-window
-mean's biased individual half-cycle as proof that a clean near-cutoff sine is
-out of band, while a complete observed faster cycle reports `BW RMS`. No
-component/source-frequency metadata is consulted. This is a deliberately
-conservative qualification rather than an analog filter model: it does not claim
-to detect waveform content that the accepted samples did not reveal.
+cycle) with the 5 ms period at 200 Hz. A linear crossing time is not treated as
+exact: a bounded, four-neighbor monotone PCHIP refinement supplies its local
+sample-bracket uncertainty, including the represented precision of that
+bracket's endpoints. Each candidate full period is lengthened by the paired
+uncertainty, then the upper median requires a strict majority of repeated
+conservative periods to be below 5 ms before the meter reports `BW RMS`.
+This avoids both a finite-window mean's biased half-cycle and one uneven
+accepted interval falsely rejecting a clean near-cutoff sine. If no refinable
+complete period remains, the result is nonnumeric rather than exact-zero
+uncertainty.
+No component/source-frequency metadata is consulted. This is a deliberately
+conservative repeated-content qualification rather than an analog filter model:
+it does not claim to detect waveform content that the accepted samples did not
+reveal, nor does an isolated short interpolation estimate alone establish a
+bandwidth refusal.
 
 `SolverTimeObservationService` is the sole temporal publication boundary. Each
 differential subscription has bounded staging and committed rings tied to the

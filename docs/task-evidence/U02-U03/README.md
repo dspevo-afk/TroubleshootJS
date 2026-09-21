@@ -3,8 +3,9 @@
 This repair requalified the U02 DMM and U03 scope contracts after independent
 review found an ideal-voltmeter bypass, stale AC capture, AC bandwidth ambiguity,
 and scope presentation defects. A post-review follow-up also fixed retained DC
-reacquisition and the finite-window false rejection of a clean 199 Hz sine under
-the declared 200 Hz policy. A fresh JDK8 production build compiled all five
+reacquisition, the finite-window false rejection of a clean 199 Hz sine, and
+the irregular-sample false rejection of clean 199/200 Hz sines under the
+declared 200 Hz policy. A fresh JDK8 production build compiled all five
 permutations before the final browser check.
 
 ## Compiled-browser evidence
@@ -70,6 +71,20 @@ the `T 1 ms/div` / `V 1 V/div` / `TRIG up` controls, and the real horizontal
 trace before normal fixture cleanup. The exact fresh receipts and resource
 cleanup result are in [review-repair-browser-results.json](review-repair-browser-results.json).
 
+The irregular-cutoff follow-up rebuilt that same fixture from the final source
+and ran it through a separate task-owned preview. Its periodic receipt again
+reported the real 3 V-peak to 6 V-peak change (`2.103076641350908` to
+`4.2066368715920035 V RMS`) with `60.00000033902902 Hz` and 8,192 accepted
+samples. Fresh DC and pulse receipts both passed; visible held states showed a
+drawn DC `SCOPE: NO SIGNAL` trace and a drawn pulse `SCOPE: FREQ?` trace.
+Manual inspection also exercised the actual scope controls: `T 1 ms/div` /
+`V 1 V/div` / rising trigger became `T 20 ms/div` / `V 5 V/div` / falling
+trigger, and the coarser capture correctly displayed `SCOPE: WINDOW` rather
+than fabricating a trace. The browser fixture is an integration proof of the
+final compiled meter/scope path; the exact irregular 199/200/201/500 Hz
+boundary matrix is the native analysis contract below. See the reproducible
+[follow-up receipt](irregular-cutoff-followup.json).
+
 ## Contract/build evidence
 
 The final focused command was:
@@ -78,13 +93,19 @@ The final focused command was:
 scripts/verify-current-contracts.ps1 -JavaHome .\.tools\jdk8-download\jdk8u502-b07 -Suite @('U02MeasurementContractTest','U03ObservationContractTest','A07ExecutionContractTest','VisualWorkbenchContractTest')
 ```
 
-It passed `U02MeasurementContractTest` (73), `U03ObservationContractTest` (17),
+It passed `U02MeasurementContractTest` (585), `U03ObservationContractTest` (17),
 `A07ExecutionContractTest` (24,868), and `VisualWorkbenchContractTest` (150).
 The U02 cases include supported irregular 50/60 Hz RMS, AC-coupled DC offset,
 32 phase offsets of a 199 Hz sine through the actual 8,192-sample/5 us ring,
-explicit 201 Hz and 500 Hz rejection under the 200 Hz policy, insufficient
-temporal coverage, overrange, and the finite 10 Mohm burden. They also test the
-shared reacquisition deadline and retirement of reference/unavailable outcomes.
+and both reviewer cadences across 32 phases: a repeating
+500/250/1000/500/1000/250 us sequence and a 5 us cadence with one 2.5 us step
+every 101 samples. In each cadence 199/200 Hz remain qualified and 201/500 Hz
+are explicit nonnumeric bandwidth refusals. The same matrix is repeated after a
+large finite solver-time origin offset, proving that endpoint representation
+precision is bounded without an arbitrary absolute-time tolerance. The cases
+also cover insufficient temporal coverage, overrange, and the finite 10 Mohm
+burden, plus the shared reacquisition deadline and retirement of
+reference/unavailable outcomes.
 The U03 cases include a DC horizontal trace, one-shot `FREQ?` trace, periodic
 timestamp frequency, no unsafe-gap interpolation, `REF?`, subscription
 retirement, and bounded history.
@@ -107,12 +128,15 @@ passed the fresh five-permutation production GWT build.
   accepted solver time. AC RMS also uses that bounded 50 ms acquisition and
   needs at least 40 ms/16 accepted samples. Neither behavior is driven by
   rendering or wall-clock UI cadence.
-- The 200 Hz policy is a conservative observed-crossing qualification, not a
+- The 200 Hz policy is a conservative repeated-content qualification, not a
   modeled analog low-pass filter. It uses same-direction full observed cycles,
-  not a potentially mean-biased half-cycle, rejects detected faster alternating
-  content, and reports a nonnumeric window when the capture cannot establish
-  trustworthy AC behavior; it cannot claim to reveal content absent from
-  accepted samples.
+  local monotone-PCHIP crossing disagreement, endpoint timestamp precision, and
+  the upper median of conservative periods. `BW RMS` therefore needs a strict
+  majority of repeated observed cycles to establish faster content; an isolated
+  short interpolation estimate is not enough. Missing refinable full-cycle
+  evidence reports a nonnumeric state. The policy cannot claim to reveal
+  content absent from accepted samples or to characterize a one-off transient
+  as recurring bandwidth content.
 - Scope paths only draw accepted samples. Unsafe gaps break the trace, and a
   valid DC or transient trace may remain visible without a valid frequency.
   The fixture is developer-only and proves temporal behavior; it is not a new

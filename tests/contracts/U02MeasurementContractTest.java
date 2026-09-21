@@ -12,6 +12,8 @@ public final class U02MeasurementContractTest {
         acBandwidthSeparatesSampleAdequacyFromSignalContent();
         acTemporalCoverageAndIrregularStepsAreQualified();
         finiteWindowNearCutoffSinesRemainInBand();
+        irregularNearCutoffSinesRespectCrossingUncertainty();
+        irregularNearCutoffQualificationIsTimeOriginInvariant();
         voltageReacquisitionIsBoundedAndReferenceAware();
         frequencyUsesIrregularSolverTime();
         noSignalAndNoTriggerAreExplicit();
@@ -281,6 +283,103 @@ public final class U02MeasurementContractTest {
                 rejected.getSignalBandwidthStatus() ==
                     SignalMeasurementAnalysis.SignalBandwidthStatus.EXCEEDS_DECLARED_BAND,
             "production-sized retained 201 Hz sine is explicitly outside the 200 Hz policy");
+    }
+
+    /**
+     * A linearly interpolated crossing is an estimate, not an exact solver
+     * timestamp.  These are deliberately uneven accepted cadences that remain
+     * sample-adequate for the declared 200 Hz instrument.  They prove that
+     * crossing uncertainty is taken from the surrounding sample intervals,
+     * rather than hiding a false cutoff rejection behind a fixed epsilon.
+     */
+    private static void irregularNearCutoffSinesRespectCrossingUncertainty() {
+        SignalMeasurementAnalysis.Policy policy = new SignalMeasurementAnalysis.Policy(
+            16, .04, .0025, 200, 20, 1e-9, SignalMeasurementAnalysis.Trigger.ANY);
+        double[] coarseIrregular = { .000500, .000250, .001000, .000500, .001000, .000250 };
+        verifyIrregularNearCutoff(policy, coarseIrregular, false,
+            "500/250/1000/500/1000/250 us");
+        verifyIrregularNearCutoff(policy, null, true,
+            "5 us with one 2.5 us accepted step every 101 samples");
+    }
+
+    /**
+     * Crossing uncertainty is derived from a local sample bracket, not from
+     * the arbitrary absolute solver-time origin.  The same phase-varied
+     * cadence must therefore retain the same 199/200/201/500 Hz judgement
+     * after its accepted timestamps are offset by a large finite epoch.
+     */
+    private static void irregularNearCutoffQualificationIsTimeOriginInvariant() {
+        SignalMeasurementAnalysis.Policy policy = new SignalMeasurementAnalysis.Policy(
+            16, .04, .0025, 200, 20, 1e-9, SignalMeasurementAnalysis.Trigger.ANY);
+        double[] coarseIrregular = { .000500, .000250, .001000, .000500, .001000, .000250 };
+        verifyIrregularNearCutoff(policy, coarseIrregular, false,
+            "500/250/1000/500/1000/250 us at t=1e9", 1e9);
+        verifyIrregularNearCutoff(policy, null, true,
+            "5 us with one 2.5 us accepted step every 101 samples at t=1e9", 1e9);
+    }
+
+    private static void verifyIrregularNearCutoff(SignalMeasurementAnalysis.Policy policy,
+            double[] increments, boolean productionJitter, String cadence) {
+        verifyIrregularNearCutoff(policy, increments, productionJitter, cadence, 0);
+    }
+
+    private static void verifyIrregularNearCutoff(SignalMeasurementAnalysis.Policy policy,
+            double[] increments, boolean productionJitter, String cadence, double timeOrigin) {
+        double[] supported = { 199, 200 };
+        double[] outOfBand = { 201, 500 };
+        for (int phaseIndex = 0; phaseIndex < 32; phaseIndex++) {
+            double phase = 2 * Math.PI * phaseIndex / 32.0;
+            for (int frequencyIndex = 0; frequencyIndex < supported.length; frequencyIndex++) {
+                double frequency = supported[frequencyIndex];
+                SignalMeasurementAnalysis.Result result = SignalMeasurementAnalysis.measureAcRms(
+                    irregularNearCutoffWindow(frequency, phase, increments, productionJitter,
+                        timeOrigin), policy);
+                check(result.getWindowAssessment().getBandwidthStatus() ==
+                        SolverTimeWindow.BandwidthStatus.OK &&
+                        result.getStatus() == SignalMeasurementAnalysis.Status.OK &&
+                        result.getSignalBandwidthStatus() ==
+                            SignalMeasurementAnalysis.SignalBandwidthStatus.WITHIN_DECLARED_BAND,
+                    "irregular " + cadence + " capture accepts " + frequency +
+                    " Hz at phase " + phaseIndex + " status=" + result.getStatus() +
+                    " signal=" + result.getSignalBandwidthStatus());
+            }
+            for (int frequencyIndex = 0; frequencyIndex < outOfBand.length; frequencyIndex++) {
+                double frequency = outOfBand[frequencyIndex];
+                SignalMeasurementAnalysis.Result result = SignalMeasurementAnalysis.measureAcRms(
+                    irregularNearCutoffWindow(frequency, phase, increments, productionJitter,
+                        timeOrigin), policy);
+                check(result.getWindowAssessment().getBandwidthStatus() ==
+                        SolverTimeWindow.BandwidthStatus.OK &&
+                        result.getStatus() == SignalMeasurementAnalysis.Status.BANDWIDTH_LIMITED &&
+                        result.getSignalBandwidthStatus() ==
+                            SignalMeasurementAnalysis.SignalBandwidthStatus.EXCEEDS_DECLARED_BAND &&
+                        Double.isNaN(result.getValue()),
+                    "irregular " + cadence + " capture rejects " + frequency +
+                    " Hz at phase " + phaseIndex + " status=" + result.getStatus() +
+                    " signal=" + result.getSignalBandwidthStatus());
+            }
+        }
+    }
+
+    private static SolverTimeWindow irregularNearCutoffWindow(double frequency, double phase,
+            double[] increments, boolean productionJitter) {
+        return irregularNearCutoffWindow(frequency, phase, increments, productionJitter, 0);
+    }
+
+    private static SolverTimeWindow irregularNearCutoffWindow(double frequency, double phase,
+            double[] increments, boolean productionJitter, double timeOrigin) {
+        SolverTimeWindow retained = new SolverTimeWindow(8192);
+        double elapsed = 0;
+        int step = 0;
+        while (elapsed <= .0500000001) {
+            retained.append(timeOrigin + elapsed,
+                3 * Math.sin(2 * Math.PI * frequency * elapsed + phase));
+            if (productionJitter)
+                elapsed += step++ % 101 == 100 ? .0000025 : .000005;
+            else
+                elapsed += increments[step++ % increments.length];
+        }
+        return retained;
     }
 
     private static void voltageReacquisitionIsBoundedAndReferenceAware() {

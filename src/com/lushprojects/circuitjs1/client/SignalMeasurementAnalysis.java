@@ -1,5 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Arrays;
+
 /**
  * Pure analysis of a bounded {@link SolverTimeWindow}.
  *
@@ -212,13 +214,28 @@ final class SignalMeasurementAnalysis {
 
     private static final class CrossingSet {
         final double[] times;
+        final double[] interpolationUncertainties;
+        final int[] directions;
         final int count;
 
-        CrossingSet(double[] times, int count) {
+        CrossingSet(double[] times, double[] interpolationUncertainties,
+                int[] directions, int count) {
             this.times = times;
+            this.interpolationUncertainties = interpolationUncertainties;
+            this.directions = directions;
             this.count = count;
         }
     }
+
+    /* A full window can contain thousands of faster crossings.  The AC
+     * qualification stays bounded even in that case: adjacent same-direction
+     * periods are enough to certify repeated faster content. */
+    private static final int PCHIP_ROOT_ITERATIONS = 48;
+    /* GWT 2.7 does not emulate Math.ulp.  This is a small, conservative upper
+     * estimate of one IEEE-754 double spacing at a finite magnitude. */
+    private static final double DOUBLE_RELATIVE_PRECISION =
+        2.220446049250313e-16;
+    private static final double MINIMUM_DOUBLE_RESOLUTION = 4.9e-324;
 
     private SignalMeasurementAnalysis() { }
 
@@ -394,14 +411,16 @@ final class SignalMeasurementAnalysis {
      * low-frequency AC RMS window.
      *
      * <p>This is a conservative rejection policy, rather than a simulated
-     * analog filter.  Two same-direction mean crossings closer than the full
-     * period of the declared passband prove an observed out-of-band cycle.
-     * A finite-window mean can shift either one of its intervening half-cycle
-     * crossings, but for a stable periodic waveform it does not shorten that
-     * full same-direction interval.  A
-     * waveform whose crossings never reveal such content is qualified only
-     * with respect to observed crossing behavior; hidden sub-threshold or
-     * unsampled components are not claimed to be measured.</p>
+     * analog filter.  Same-direction mean crossings establish a full observed
+     * period, but their linear interpolation is not treated as exact.  A
+     * local monotone cubic refinement supplies a timestamp uncertainty from
+     * the actual bracketing samples.  A strict majority of those conservative
+     * periods must prove faster content before it becomes a bandwidth refusal;
+     * an isolated shorter-looking interpolation estimate is not treated as
+     * observed out-of-band content.  A waveform whose crossings never reveal
+     * such content is qualified only with respect to observed crossing
+     * behavior; hidden sub-threshold or unsampled components are not claimed
+     * to be measured.</p>
      */
     private static SignalBandwidthStatus assessObservedAcBandwidth(
             SolverTimeSample[] samples, double mean, Policy policy) {
@@ -411,13 +430,37 @@ final class SignalMeasurementAnalysis {
         if (crossings.count < 3)
             return SignalBandwidthStatus.UNRESOLVED;
         double shortestAllowedPeriod = 1 / policy.declaredBandwidthHz;
-        for (int i = 2; i < crossings.count; i++) {
-            double interval = crossings.times[i] - crossings.times[i - 2];
-            if (!finite(interval) || interval <= 0)
-                return SignalBandwidthStatus.UNRESOLVED;
-            if (interval + 1e-12 < shortestAllowedPeriod)
-                return SignalBandwidthStatus.EXCEEDS_DECLARED_BAND;
+        double[] conservativePeriods = new double[crossings.count];
+        int periodCount = 0;
+        int precedingRising = -1;
+        int precedingFalling = -1;
+        for (int i = 0; i < crossings.count; i++) {
+            int preceding = crossings.directions[i] > 0 ? precedingRising :
+                precedingFalling;
+            if (preceding >= 0 && finite(crossings.interpolationUncertainties[i]) &&
+                    finite(crossings.interpolationUncertainties[preceding])) {
+                double period = crossings.times[i] - crossings.times[preceding];
+                double uncertainty = 2 * (crossings.interpolationUncertainties[i] +
+                    crossings.interpolationUncertainties[preceding]);
+                double conservativePeriod = period + uncertainty;
+                if (!finite(period) || period <= 0 || !finite(conservativePeriod) ||
+                        conservativePeriod <= 0)
+                    return SignalBandwidthStatus.UNRESOLVED;
+                conservativePeriods[periodCount++] = conservativePeriod;
+            }
+            if (crossings.directions[i] > 0)
+                precedingRising = i;
+            else
+                precedingFalling = i;
         }
+        if (periodCount == 0)
+            return SignalBandwidthStatus.UNRESOLVED;
+        Arrays.sort(conservativePeriods, 0, periodCount);
+        /* The upper median requires a strict majority of observed full periods
+         * to be conclusively short.  This avoids allowing one uneven solver
+         * interval to turn an otherwise clean near-cutoff waveform into BW. */
+        if (conservativePeriods[periodCount / 2] < shortestAllowedPeriod)
+            return SignalBandwidthStatus.EXCEEDS_DECLARED_BAND;
         return SignalBandwidthStatus.WITHIN_DECLARED_BAND;
     }
 
@@ -474,12 +517,15 @@ final class SignalMeasurementAnalysis {
     private static CrossingSet zeroCrossings(SolverTimeSample[] samples,
             double mean, Trigger trigger) {
         double[] times = new double[samples.length - 1];
+        double[] interpolationUncertainties = new double[samples.length - 1];
+        int[] directions = new int[samples.length - 1];
         int count = 0;
         int i = 0;
         while (i < samples.length - 1) {
             double a = samples[i].getValue() - mean;
             double b = samples[i + 1].getValue() - mean;
-            if (!finite(a) || !finite(b)) return new CrossingSet(times, count);
+            if (!finite(a) || !finite(b))
+                return new CrossingSet(times, interpolationUncertainties, directions, count);
             if (a == 0) {
                 i++;
                 continue;
@@ -493,7 +539,12 @@ final class SignalMeasurementAnalysis {
                     if (opposite(a, right)) {
                         int direction = right > 0 ? 1 : -1;
                         if (matches(trigger, direction)) {
-                            times[count++] = samples[i + 1].getTime();
+                            times[count] = samples[i + 1].getTime();
+                            /* An exact-zero run has no unique surrounding
+                             * pair to refine.  Preserve it for frequency but
+                             * never grant it zero AC-band uncertainty. */
+                            interpolationUncertainties[count] = Double.NaN;
+                            directions[count++] = direction;
                         }
                     }
                 }
@@ -506,13 +557,155 @@ final class SignalMeasurementAnalysis {
                     double fraction = (-a) / (b - a);
                     double time = samples[i].getTime() + fraction *
                         (samples[i + 1].getTime() - samples[i].getTime());
-                    if (finite(time) && (count == 0 || time > times[count - 1]))
-                        times[count++] = time;
+                    if (finite(time) && (count == 0 || time > times[count - 1])) {
+                        times[count] = time;
+                        interpolationUncertainties[count] =
+                            pchipCrossingUncertainty(samples, i, mean, time);
+                        directions[count++] = direction;
+                    }
                 }
             }
             i++;
         }
-        return new CrossingSet(times, count);
+        return new CrossingSet(times, interpolationUncertainties, directions, count);
+    }
+
+    /**
+     * Estimates how much a linear crossing time can move when a monotone cubic
+     * interpolant is fit through the neighboring accepted samples.  It is a
+     * local, sample-derived resolution bound; it does not inspect a source
+     * declaration or assume a fixed solver timestep.
+     */
+    private static double pchipCrossingUncertainty(SolverTimeSample[] samples,
+            int leftIndex, double mean, double linearTime) {
+        double refinedTime = pchipCrossingTime(samples, leftIndex, mean);
+        if (!finite(refinedTime)) return Double.NaN;
+        double difference = Math.abs(refinedTime - linearTime);
+        /* Keep the guard far below this crossing's actual solver interval.
+         * It only prevents an exactly equal pair of floating-point
+         * interpolants from claiming impossible zero uncertainty.  It is
+         * based on the local bracket and the represented precision of its two
+         * endpoints, not an arbitrary multiple of the absolute time origin.
+         * The latter matters only when the supplied timestamps themselves
+         * cannot distinguish a smaller time increment. */
+        double bracket = samples[leftIndex + 1].getTime() -
+            samples[leftIndex].getTime();
+        if (!finite(bracket) || bracket <= 0) return Double.NaN;
+        double endpointPrecision = Math.max(
+            representedDoubleResolution(samples[leftIndex].getTime()),
+            representedDoubleResolution(samples[leftIndex + 1].getTime()));
+        double guard = Math.max(16 * representedDoubleResolution(bracket),
+            2 * endpointPrecision);
+        double uncertainty = difference + guard;
+        return finite(uncertainty) && uncertainty > 0 ? uncertainty : Double.NaN;
+    }
+
+    private static double representedDoubleResolution(double value) {
+        if (!finite(value)) return Double.NaN;
+        double resolution = Math.abs(value) * DOUBLE_RELATIVE_PRECISION;
+        return finite(resolution) && resolution > 0 ? resolution :
+            MINIMUM_DOUBLE_RESOLUTION;
+    }
+
+    /** Returns a monotone PCHIP root inside one sign-changing sample bracket. */
+    private static double pchipCrossingTime(SolverTimeSample[] samples,
+            int leftIndex, double mean) {
+        if (leftIndex < 1 || leftIndex + 2 >= samples.length)
+            return Double.NaN;
+        double x0 = samples[leftIndex - 1].getTime();
+        double x1 = samples[leftIndex].getTime();
+        double x2 = samples[leftIndex + 1].getTime();
+        double x3 = samples[leftIndex + 2].getTime();
+        double y0 = samples[leftIndex - 1].getValue() - mean;
+        double y1 = samples[leftIndex].getValue() - mean;
+        double y2 = samples[leftIndex + 1].getValue() - mean;
+        double y3 = samples[leftIndex + 2].getValue() - mean;
+        double h0 = x1 - x0;
+        double h1 = x2 - x1;
+        double h2 = x3 - x2;
+        if (!finite(x0) || !finite(x1) || !finite(x2) || !finite(x3) ||
+                !finite(y0) || !finite(y1) || !finite(y2) || !finite(y3) ||
+                !finite(h0) || !finite(h1) || !finite(h2) ||
+                h0 <= 0 || h1 <= 0 || h2 <= 0 || !opposite(y1, y2))
+            return Double.NaN;
+        double secant0 = (y1 - y0) / h0;
+        double secant1 = (y2 - y1) / h1;
+        double secant2 = (y3 - y2) / h2;
+        double slope1 = pchipSlope(h0, h1, secant0, secant1);
+        double slope2 = pchipSlope(h1, h2, secant1, secant2);
+        if (!finite(slope1) || !finite(slope2) ||
+                !pchipSegmentIsMonotone(y1, y2, slope1, slope2, h1))
+            return Double.NaN;
+        double low = 0;
+        double high = 1;
+        double lowValue = y1;
+        for (int iteration = 0; iteration < PCHIP_ROOT_ITERATIONS; iteration++) {
+            double middle = (low + high) * .5;
+            double value = pchipValue(y1, y2, slope1, slope2, h1, middle);
+            if (!finite(value)) return Double.NaN;
+            if (value == 0) {
+                low = middle;
+                high = middle;
+                break;
+            }
+            if (opposite(lowValue, value))
+                high = middle;
+            else {
+                low = middle;
+                lowValue = value;
+            }
+        }
+        double time = x1 + (low + high) * .5 * h1;
+        return finite(time) && time >= x1 && time <= x2 ? time : Double.NaN;
+    }
+
+    private static double pchipSlope(double leftGap, double rightGap,
+            double leftSecant, double rightSecant) {
+        if (!finite(leftSecant) || !finite(rightSecant) ||
+                leftSecant == 0 || rightSecant == 0 || !sameSign(leftSecant, rightSecant))
+            return 0;
+        double firstWeight = 2 * rightGap + leftGap;
+        double secondWeight = rightGap + 2 * leftGap;
+        double denominator = firstWeight / leftSecant + secondWeight / rightSecant;
+        if (!finite(denominator) || denominator == 0) return Double.NaN;
+        return (firstWeight + secondWeight) / denominator;
+    }
+
+    private static boolean pchipSegmentIsMonotone(double leftValue, double rightValue,
+            double leftSlope, double rightSlope, double gap) {
+        int direction = rightValue > leftValue ? 1 : -1;
+        double quadratic = 6 * leftValue + 3 * gap * leftSlope -
+            6 * rightValue + 3 * gap * rightSlope;
+        double linear = -6 * leftValue - 4 * gap * leftSlope +
+            6 * rightValue - 2 * gap * rightSlope;
+        double constant = gap * leftSlope;
+        double scale = Math.max(1, Math.max(Math.abs(leftValue),
+            Math.max(Math.abs(rightValue), Math.max(Math.abs(gap * leftSlope),
+                Math.abs(gap * rightSlope)))));
+        if (!matchesMonotoneDirection(constant, direction, scale) ||
+                !matchesMonotoneDirection(quadratic + linear + constant, direction, scale))
+            return false;
+        if (quadratic == 0) return true;
+        double turningPoint = -linear / (2 * quadratic);
+        return turningPoint <= 0 || turningPoint >= 1 ||
+            matchesMonotoneDirection(quadratic * turningPoint * turningPoint +
+                linear * turningPoint + constant, direction, scale);
+    }
+
+    private static boolean matchesMonotoneDirection(double derivativeNumerator,
+            int direction, double scale) {
+        return finite(derivativeNumerator) && direction * derivativeNumerator >=
+            -1e-12 * scale;
+    }
+
+    private static double pchipValue(double leftValue, double rightValue,
+            double leftSlope, double rightSlope, double gap, double position) {
+        double square = position * position;
+        double cube = square * position;
+        return (2 * cube - 3 * square + 1) * leftValue +
+            (cube - 2 * square + position) * gap * leftSlope +
+            (-2 * cube + 3 * square) * rightValue +
+            (cube - square) * gap * rightSlope;
     }
 
     private static boolean matches(Trigger trigger, int direction) {
@@ -523,6 +716,10 @@ final class SignalMeasurementAnalysis {
 
     private static boolean opposite(double a, double b) {
         return (a < 0 && b > 0) || (a > 0 && b < 0);
+    }
+
+    private static boolean sameSign(double a, double b) {
+        return (a < 0 && b < 0) || (a > 0 && b > 0);
     }
 
     private static boolean finite(double value) {
