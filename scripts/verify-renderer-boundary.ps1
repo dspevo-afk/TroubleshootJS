@@ -54,6 +54,7 @@ $requiredProviderTokens = @(
     'PhysicalPackages.THROUGH_HOLE_CONNECTOR_2',
     'PhysicalPackages.TO92_NPN',
     'PhysicalPackages.TO92_NMOS',
+    'PhysicalPackages.TO220_REGULATOR_4',
     'PhysicalPackages.DEV_CANARY_3',
     'PhysicalPackages.DEV_CANARY_6',
     'getLooseProbeProvider'

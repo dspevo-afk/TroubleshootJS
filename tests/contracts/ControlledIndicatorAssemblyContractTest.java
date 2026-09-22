@@ -21,6 +21,7 @@ public final class ControlledIndicatorAssemblyContractTest {
     public static void main(String[] args) {
         for (long seed : SEEDS) verifySeed(seed);
         verifyProceduralPlayerGeometry();
+        verifyInitialMetadataHandoffKeepsReplayFresh();
         verifyReorderInvariance();
         verifyUntypedOpenDrainRejected();
         verifyInvalidFaultTargetRejected();
@@ -224,6 +225,49 @@ public final class ControlledIndicatorAssemblyContractTest {
             if (!found) return false;
         }
         return true;
+    }
+
+    /**
+     * The initial routed construction may consume its job-local physical
+     * declarations once, while the retained layout must still construct a
+     * fresh board/runtime owner for each diagnostic hypothesis.
+     */
+    private static void verifyInitialMetadataHandoffKeepsReplayFresh() {
+        CirSim previous = CircuitElm.sim;
+        CirSim simulator = new CirSim();
+        simulator.gridSize = 16; simulator.gridMask = ~15; simulator.gridRound = 7;
+        CircuitElm.sim = simulator;
+        GeneratedBoardInstance initial = null;
+        GeneratedBoardInstance replay = null;
+        try {
+            BoundedAssemblyPlan plan = BoundedAssemblyPlan.resolve(
+                BoundedAssemblyRequest.forControlledIndicator(2L));
+            BoundedGeneratedBoardAssembler.LayoutSession session =
+                BoundedGeneratedBoardAssembler.beginLayout(plan);
+            while (!session.advance()) { }
+            BoundedGeneratedBoardAssembler.PreparedLayout layout = session.result();
+            PhysicalConstructionMetadata metadata = session.initialMetadata();
+            initial = BoundedGeneratedBoardAssembler.assemblePreparedPlan(plan, layout,
+                metadata).getInstance();
+            require(initial.getBoard() == metadata.getBoard() &&
+                    initial.getPcbLayout() != null,
+                "initial controlled construction consumes its routed physical metadata");
+
+            String target = plan.getDecisionOwners().get(plan.getFaultDecisionKey());
+            replay = BoundedGeneratedBoardAssembler.assembleForDiagnosticProof(
+                plan.getRequest(), target, layout).getInstance();
+            require(replay != initial && replay.getBoard() != initial.getBoard() &&
+                    replay.getPcbLayout().geometryFingerprint().equals(
+                        initial.getPcbLayout().geometryFingerprint()) &&
+                    target.equals(replay.getFaultBinding().getFault().getTargetComponentId()),
+                "diagnostic replay retains a fresh owner with the exact routed geometry");
+        } finally {
+            if (initial != null)
+                for (CircuitElm element : initial.getSimulationElements()) element.delete();
+            if (replay != null)
+                for (CircuitElm element : replay.getSimulationElements()) element.delete();
+            CircuitElm.sim = previous;
+        }
     }
 
     private static void verifyReorderInvariance() {

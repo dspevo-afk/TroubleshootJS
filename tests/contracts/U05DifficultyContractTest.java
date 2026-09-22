@@ -43,6 +43,8 @@ public final class U05DifficultyContractTest {
             "large proof-route and target-list counts cannot fabricate interaction");
         check(DifficultyAssessment.classify(16, 2, 3, 2, 1, 3, 4, 1, 0, true) == DifficultyProfile.MEDIUM,
             "proof-route category depth does not set the label");
+        check(DifficultyAssessment.classify(5, 2, 2, 1, 2, 2, 2, 4, 0, true) == DifficultyProfile.EASY,
+            "a certified two-observation route does not reclassify the catalogued easy parallel board");
         for (int badModes : new int[] {0, -1}) {
             rejected = false;
             try { DifficultyAssessment.classify(16, 2, 3, 1, 8, badModes, 4, 2, 0, false); }

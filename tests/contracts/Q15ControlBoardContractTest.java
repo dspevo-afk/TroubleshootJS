@@ -106,9 +106,14 @@ public final class Q15ControlBoardContractTest {
     private static void verifyRandomBoundary() {
         long[] entropy = {Long.MIN_VALUE,Long.MAX_VALUE,-4518705223253195925L,-5365808313541656343L,
             -17,-1,0,1,2,3,17,42,101,9007199254740993L};
+        int rb15FamilyIndex = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds().indexOf(
+            Rb15Plan.FAMILY_ID);
+        require(rb15FamilyIndex >= 0,
+            "Quick Play catalog retains the procedural control-board family");
         HashSet<Long> selectedSeeds = new HashSet<Long>();
         for (long value : entropy) {
-            QuickPlaySelection quick = new QuickPlaySelector(new QuickPlayFixedRandomSource(new long[]{7,value})).select();
+            QuickPlaySelection quick = new QuickPlaySelector(new QuickPlayFixedRandomSource(
+                new long[]{rb15FamilyIndex,value})).select();
             PlayerLaunchRequest button = PlayerLaunchRequest.random(Rb15Plan.FAMILY_ID,Long.toString(value),"EASY");
             require(quick.getFamilyId().equals(Rb15Plan.FAMILY_ID) && quick.getSeed()==value && button.seed==value,
                 "Quick Play and New board preserve exact arbitrary candidate entropy");

@@ -14,6 +14,7 @@ final class QuickPlayFamilyRegistry {
     static final String RC_DELAY = "RC_DELAY";
     static final String NPN_LOW_SIDE_SWITCH = "NPN_LOW_SIDE_SWITCH";
     static final String NMOS_LOW_SIDE_SWITCH = "NMOS_LOW_SIDE_SWITCH";
+    static final String SENSOR_CONTROL = "SENSOR_CONTROL";
     private QuickPlayFamilyRegistry() { }
 
     static Vector<String> getNormalPlayerFamilyIds() {
@@ -25,12 +26,14 @@ final class QuickPlayFamilyRegistry {
         result.add(NPN_LOW_SIDE_SWITCH);
         result.add(NMOS_LOW_SIDE_SWITCH);
         result.add(RELAY_OUTPUT);
+        result.add(SENSOR_CONTROL);
         result.add(Rb15Plan.FAMILY_ID);
         return result;
     }
 
     static boolean isNormalPlayerEligible(String familyId) {
-        return Rb15Plan.FAMILY_ID.equals(familyId) || RELAY_OUTPUT.equals(familyId) || LED_INDICATOR.equals(familyId) ||
+        return Rb15Plan.FAMILY_ID.equals(familyId) || SENSOR_CONTROL.equals(familyId) ||
+            RELAY_OUTPUT.equals(familyId) || LED_INDICATOR.equals(familyId) ||
             DIODE_PROTECTED_INDICATOR.equals(familyId) ||
             PARALLEL_DUAL_INDICATOR.equals(familyId) || RC_DELAY.equals(familyId) ||
             NPN_LOW_SIDE_SWITCH.equals(familyId) || NMOS_LOW_SIDE_SWITCH.equals(familyId);
@@ -51,6 +54,8 @@ final class QuickPlayFamilyRegistry {
             return new NpnLowSideSwitchGenerator().generate(seed);
         if (NMOS_LOW_SIDE_SWITCH.equals(familyId))
             return new NmosLowSideSwitchGenerator().generate(seed);
+        if (SENSOR_CONTROL.equals(familyId))
+            return new SensorControlGenerator().generate(seed);
         throw new IllegalArgumentException("Quick Play family is not normal-player eligible: " +
             familyId);
     }

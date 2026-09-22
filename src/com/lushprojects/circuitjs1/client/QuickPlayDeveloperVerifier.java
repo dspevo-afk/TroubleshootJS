@@ -55,7 +55,7 @@ final class QuickPlayDeveloperVerifier {
 
     private static void verifyEligibleFamilies() {
         Vector<String> families = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
-        require(families.size() == 8 &&
+        require(families.size() == 9 &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("LED_INDICATOR") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("DIODE_PROTECTED_INDICATOR") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("PARALLEL_DUAL_INDICATOR") &&
@@ -63,6 +63,7 @@ final class QuickPlayDeveloperVerifier {
             QuickPlayFamilyRegistry.isNormalPlayerEligible("NPN_LOW_SIDE_SWITCH") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("NMOS_LOW_SIDE_SWITCH") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("RELAY_OUTPUT") &&
+            QuickPlayFamilyRegistry.isNormalPlayerEligible(QuickPlayFamilyRegistry.SENSOR_CONTROL) &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible(Rb15Plan.FAMILY_ID),
             "Quick Play eligible-family registry changed");
         require(!QuickPlayFamilyRegistry.isNormalPlayerEligible("DIODE_SHORT") &&

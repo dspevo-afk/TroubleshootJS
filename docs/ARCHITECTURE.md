@@ -953,6 +953,40 @@ power assessment or the relay energy/reference owner. The current interpretation
 is dependency-v7/dump-model-v3; transient relay current is excluded, while model
 parameters and persistent faults remain included. [Qualification](task-evidence/E03/README.md).
 
+## E02 rails and E04 sensor controls
+
+`RailRegulationContract` is a data-only four-terminal rail role: INPUT, OUTPUT,
+RETURN and ENABLE. RETURN is the model's explicit local reference; it is not an
+implicit global ground. The declared linear and averaged implementations cover
+12 V, 5 V and 3.3 V roles. `LinearRegulatorElm` and
+`AveragedSwitchingRegulatorElm` both stamp a finite, input-derived Norton output
+branch into CircuitJS. The output therefore follows solved INPUT-minus-RETURN,
+ENABLE-minus-RETURN, dropout and finite output resistance/current limit; a short
+is solver-visible at the input. The averaged implementation differs only in
+bounded input-power accounting and never claims ripple, a switching frequency,
+or a waveform. `E02FiniteSourceElm` is likewise finite and serializable. The
+three E02 dump types are declaration data captured by the generation dependency
+identity, not hidden solver state. [Qualification](task-evidence/E02/README.md).
+
+`SensorControlGenerator` composes one selected 5 V E02 role with a finite raw
+input, sensor source, reference divider and loaded decision output. Even seeds
+select the direct threshold/linear-rail implementation; odd seeds select the
+hysteretic/averaged-rail implementation. `E04SensorControlModel.DecisionElement`
+owns the state boundary and serializes only its stable declaration, never a
+latched runtime answer. J1 remains the raw supply boundary, J2 the external
+sensor boundary, J3 the loaded output, and U1 maps the E02 four-terminal role to
+the TO-220 footprint. RBIAS, RREF and RFB are model-owned passive seams with
+real physical removal/replacement actions; U1 is a separately serviceable
+catalog component but is not an E04 fault candidate.
+
+`SensorControlDiagnosticProvider` exposes only ordinary LOW/MID/HIGH sensor
+operations, power transitions, and physical passive measurements. Its admitted
+population is exactly the three serviceable resistor-open loci RBIAS, RREF and
+RFB. Brownout/reference-loss behavior remains a bounded solver operating state
+and is tested as such, but missing-supply faults are not silently admitted as
+unseparable E04 hypotheses. The normal player flow uses the same public input,
+shop, board-power and customer-retest owners as proof. [Qualification](task-evidence/E04/README.md).
+
 ## Q15 small procedural control board
 
 `Rb15Plan` resolves the RB15_CONTROL intent into sixteen causal packages and
@@ -4400,3 +4434,48 @@ This is a trusted compiled-provider boundary, not an arbitrary executable-plugin
 sandbox. A10 adds resumable scheduling, cancellation, deterministic budgets and
 immutable-plan caching above this boundary; its current qualification is recorded
 at the top of this document. Proof receipts remain specific to their issuing owner.
+
+## D01 diagnostic partitions and value-only reuse
+
+`GeneratedDiagnosticContextKey` is derived from the complete immutable
+`GenerationDependencyContext`, including model/element declarations, source
+state, declared temporal cache recipe/model epoch, physical realization,
+diagnostic program and repair catalog. It is not a hash-only key and carries its
+current interpretation version. `GeneratedDiagnosticProofCache` stores only
+validated immutable evidence and partition values—never a solver, controller,
+graph, instrument state or published owner. A warm hit first repeats current
+structural admission and then issues a fresh owner/controller-bound receipt; a
+changed context cannot reuse a prior value artifact.
+
+  A cold serial publication and its warm reuse retain different operation
+  receipts by design: the HYPOTHESES stage reports the real full solver work on
+  a miss and one reuse unit on a hit. Qualification compares the complete
+  retained diagnostic value (context, partition, repair semantics and exact
+  samples) separately, so it does not erase that operational provenance.
+
+`GeneratedDiagnosticPartitionPlan` is built over the full canonical admitted
+population and rejects duplicate, missing, foreign, reordered or sampled
+evidence. It contains a static executable decision graph over retained values:
+`validateExecutableProgram()` checks the declared program and
+`validateEvidenceRoutes()` applies canonical samples in deterministic order.
+  It never reopens a graph, meter, solver, controller or owner for a second live
+  decision audit. `GeneratedDiagnosticObservationExecutor` performs the complete
+serial production program; that serial population remains the admission oracle.
+Every retained hypothesis still has serial observations and a genuine
+repair/retest witness.
+
+  RC healthy-reference readings remain bit-exact solved outputs in the proof
+  receipt, not cache inputs. The value-only cache context uses the declared
+  temporal recipe/model/cache epoch rather than bucketed volatile readings. The
+  coordinator separately retains the exact raw temporal dependency for a candidate
+  and rejects a change before proof or publication. Thus fresh equivalent owners
+  can reuse value evidence without a sampling edge becoming a new model identity,
+  while same-owner mutation still fails closed.
+
+The coordinator captures the key at its immutable manifest boundary, uses the
+existing resumable serial proof on a cold miss, and stores only after successful
+publication. A10's compiled verifier reports bounded cold/warm rows for RB15,
+the larger controlled-indicator fixture, and the E04 direct/hysteretic fixtures;
+  the independent report reader checks complete population, work, receipt and
+cache provenance rather than comparing noisy wall-clock speedups.
+[Qualification](task-evidence/D01/README.md).

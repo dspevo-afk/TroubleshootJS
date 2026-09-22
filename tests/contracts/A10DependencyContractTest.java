@@ -11,6 +11,8 @@ public final class A10DependencyContractTest {
         equalValuesCompareByCanonical();
         recipeChangesInvalidate();
         healthyReferenceChangesInvalidate();
+        cacheRecipeExcludesMeasuredReferences();
+        cacheRecipeChangesInvalidate();
         missingInitialStateFailsClosed();
         nonPositiveRecipeFailsClosed();
         scenarioMetadataInvalidates();
@@ -21,9 +23,9 @@ public final class A10DependencyContractTest {
         GeneratedTemporalDependency value = value(
             GeneratedTemporalDependency.FRESH_GENERATED_OWNER_COLD_V1, 5, .7,
             .100, .001, 1.25, 4.25);
-        String expected = frame("generated-temporal-dependency-v1") +
+        String expected = frame("generated-temporal-dependency-v3") +
             field("behavior.id", "RC_DELAY_TEMPORAL") +
-            field("behavior.version", "1") +
+            field("behavior.version", Integer.toString(GeneratedTemporalDependency.CURRENT_VERSION)) +
             field("initial-state.contract",
                 "owner=new-generated-board;graph=fresh;solver.t=0;solver.timeStepCount=0;" +
                 "solver.timeStepAccum=0;eventQueue=empty;requiresAnalysis=true") +
@@ -75,7 +77,8 @@ public final class A10DependencyContractTest {
             GeneratedTemporalDependency.FRESH_GENERATED_OWNER_COLD_V1, 5, .7,
             .125, .001, 1.25, 4.25);
         check(!baseline.equals(changed) &&
-                !baseline.canonical().equals(changed.canonical()),
+                !baseline.canonical().equals(changed.canonical()) &&
+                !baseline.cacheCanonical().equals(changed.cacheCanonical()),
             "recipe timing changes invalidate temporal identity");
     }
 
@@ -89,6 +92,30 @@ public final class A10DependencyContractTest {
         check(!baseline.equals(changed) &&
                 !baseline.canonical().equals(changed.canonical()),
             "healthy temporal reference changes invalidate identity");
+    }
+
+    private static void cacheRecipeExcludesMeasuredReferences() {
+        GeneratedTemporalDependency first = value(
+            GeneratedTemporalDependency.FRESH_GENERATED_OWNER_COLD_V1, 5, .7,
+            .100, .00139569024795446, .971697446750359, 2.2459873198903);
+        GeneratedTemporalDependency second = value(
+            GeneratedTemporalDependency.FRESH_GENERATED_OWNER_COLD_V1, 5, .7,
+            .100, .0013963756850487, .971697839713905, 2.24598732793481);
+        check(!first.equals(second),
+            "raw temporal proof evidence remains bit-exact");
+        check(first.cacheCanonical().equals(second.cacheCanonical()),
+            "fresh solver-reference outputs do not alter the declared cache recipe");
+    }
+
+    private static void cacheRecipeChangesInvalidate() {
+        GeneratedTemporalDependency baseline = value(
+            GeneratedTemporalDependency.FRESH_GENERATED_OWNER_COLD_V1, 5, .7,
+            .100, .0014, .9717, 2.2459);
+        GeneratedTemporalDependency changed = value(
+            GeneratedTemporalDependency.FRESH_GENERATED_OWNER_COLD_V1, 5, .7,
+            .125, .0014, .9717, 2.2459);
+        check(!baseline.cacheCanonical().equals(changed.cacheCanonical()),
+            "declared temporal recipe changes invalidate cache context");
     }
 
     private static void missingInitialStateFailsClosed() {
@@ -115,7 +142,8 @@ public final class A10DependencyContractTest {
     private static GeneratedTemporalDependency value(String initialState,
             double nominalSupply, double lateSample, double earlySample,
             double healthyResidual, double healthyEarly, double healthyLate) {
-        return new GeneratedTemporalDependency("RC_DELAY_TEMPORAL", 1, initialState,
+        return new GeneratedTemporalDependency("RC_DELAY_TEMPORAL",
+            GeneratedTemporalDependency.CURRENT_VERSION, initialState,
             "J2.1", "J2.2", nominalSupply, .120, 1.000, earlySample,
             lateSample, .750, .005, .25, .20, .25, .65, .15, .85, .45,
             .30, .15, healthyResidual, healthyEarly, healthyLate);

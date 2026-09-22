@@ -15,6 +15,7 @@ final class AlphaDeveloperVerifier {
             // Independent declared release corpus; every advertised random seed.
             final long[][] releaseSeeds = {{0,2,3,4}, {0,2,3}, {0,2,3}, {0,2,3},
                 {0,1,2}, {0,1,2}, {0,1,2,3,4,5},
+                {0,1,2},
                 {0,1,2,3,17,42,101,-1,9007199254740993L,Long.MIN_VALUE,Long.MAX_VALUE}, {0,3}};
             final StringBuilder cases = new StringBuilder();
             final StringBuilder slowUnits = new StringBuilder();

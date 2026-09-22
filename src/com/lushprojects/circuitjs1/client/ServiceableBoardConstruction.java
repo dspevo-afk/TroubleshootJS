@@ -21,6 +21,15 @@ final class ServiceableBoardConstruction {
             PhysicalPart<?> original = runtime.getInstalledPart(id);
             if (original == null) throw new IllegalStateException("Missing physical service part: " + id);
             PhysicalSpecification spec = original.getSpecification();
+            // E02/E04's TO-220 regulator is a four-terminal service owner,
+            // even though its initial declaration is still BasicPhysicalSpecification.
+            // Its board pads are persistent external endpoints; only the
+            // detachable leads may bridge those pads to the live regulator.
+            if (original.getPackage().isEquivalentTo(PhysicalPackages.TO220_REGULATOR_4) &&
+                    original.getTerminalCount() == 4) {
+                completeRegulator(board, elements, components, connections, runtime, original, id);
+                continue;
+            }
             if (spec instanceof BasicPhysicalSpecification || spec instanceof FactoryLinkSpecification) {
                 completeBasic(board, elements, components, connections, runtime, original, id);
                 continue;
@@ -68,6 +77,72 @@ final class ServiceableBoardConstruction {
             runtime.prepareServicePart(original, part);
             register(runtime, slot, part, leads);
         }
+    }
+
+    private static void completeRegulator(TroubleshootBoard board, Vector<CircuitElm> elements,
+            GeneratedComponentBindings components, GeneratedComponentConnectionBindings connections,
+            PhysicalBoardRuntime runtime, PhysicalPart<?> original, String id) {
+        if (!(components.getSingleElement(id) instanceof AbstractRailRegulatorElm))
+            throw mismatch(id);
+        AbstractRailRegulatorElm regulator =
+            (AbstractRailRegulatorElm)components.getSingleElement(id);
+        if (regulator.getPostCount() != 4 || regulator.getContract() == null)
+            throw mismatch(id);
+        Vector<GeneratedComponentConnectionBinding> declared =
+            connections.getForComponentOrEmpty(id);
+        if (!declared.isEmpty() && declared.size() != 4)
+            throw new IllegalStateException("Incomplete physical service declaration: " + id);
+        // The normal E04 path has no generated U1 lead declarations yet.  Move
+        // only the solver-owned regulator to an isolated service location;
+        // persistent board endpoints remain where the board placed them.
+        if (declared.isEmpty())
+            relocate(regulator, board, components, connections, elements);
+
+        PhysicalPartProvenance provenance = new PhysicalPartProvenance(
+            PhysicalPartProvenance.GENERATED_ORIGINAL, id);
+        PhysicalRegulatorPart part = new PhysicalRegulatorPart(original.getId(),
+            original.getSpecification(), original.getPlayerVisibleNameplate(), regulator,
+            regulator.getContract(), provenance);
+        WireElm[] leads = new WireElm[part.getTerminalCount()];
+        for (int terminal = 0; terminal < leads.length; terminal++) {
+            String terminalId = part.getPackage().getTerminalIds().get(terminal);
+            String padId = pad(board, id, terminalId);
+            CircuitMeasurementEndpoint boardEndpoint =
+                board.getSimulationBindings().getEndpoint(padId);
+            CircuitMeasurementEndpoint componentEndpoint =
+                part.getTerminalForBoardPad(padId);
+            if (boardEndpoint == null)
+                throw mismatch(id);
+            GeneratedComponentConnectionBinding binding = connections.getOrNull(padId);
+            WireElm wire;
+            if (binding == null) {
+                Point boardPoint = point(boardEndpoint), componentPoint = point(componentEndpoint);
+                wire = new WireElm(boardPoint.x, boardPoint.y);
+                wire.x2 = componentPoint.x; wire.y2 = componentPoint.y; wire.setPoints();
+                elements.add(wire);
+                connections.bind(id, padId, boardEndpoint, componentEndpoint, wire);
+            } else {
+                if (!(binding.getConnectionElement() instanceof WireElm)) throw mismatch(id);
+                wire = (WireElm)binding.getConnectionElement();
+                connections.completeConstructionEndpoint(padId, componentEndpoint);
+            }
+            Point boardPoint = point(boardEndpoint), componentPoint = point(componentEndpoint);
+            wire.x = boardPoint.x; wire.y = boardPoint.y;
+            wire.x2 = componentPoint.x; wire.y2 = componentPoint.y; wire.setPoints();
+            leads[terminal] = wire;
+        }
+
+        PhysicalBoardSlot slot = original.getBoardSlot();
+        runtime.prepareServicePart(original, part);
+        PhysicalPartInventory<PhysicalRegulatorPart> inventory =
+            new PhysicalPartInventory<PhysicalRegulatorPart>(runtime,
+                id + "_REPLACEMENTS", PhysicalRegulatorPart.class);
+        inventory.add(part);
+        runtime.registerCapability(new ReplaceableRegulatorBoardCapability(
+            key(runtime, ReplaceableRegulatorBoardCapability.ID, id),
+            new RegulatorComponentSlot(id, regulator.getContract(), part,
+                leads[0], leads[1], leads[2], leads[3], slot), inventory,
+            new RegulatorReplacementCatalog(regulator.getContract())));
     }
 
     private static void completeBasic(TroubleshootBoard board, Vector<CircuitElm> elements,

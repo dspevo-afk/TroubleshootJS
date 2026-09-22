@@ -32,6 +32,10 @@ final class PhysicalPackages {
         new String[] { "B", "C", "E" }, false, to92(new String[] { "B", "C", "E" }));
     static final PhysicalPackage TO92_NMOS = fixedPackage("TO92_NMOS",
         new String[] { "G", "D", "S" }, false, to92(new String[] { "G", "D", "S" }));
+    /** Four-lead through-hole regulator package; the exposed pins remain separate. */
+    static final PhysicalPackage TO220_REGULATOR_4 = fixedPackage(
+        "TO220_REGULATOR_4", new String[] { "INPUT", "OUTPUT", "RETURN", "ENABLE" },
+        false, to220Regulator());
     static final PhysicalPackage RADIAL_ELECTROLYTIC_CAPACITOR = fixedPackage(
         "RADIAL_ELECTROLYTIC_CAPACITOR", new String[] { "+", "-" }, false, electrolytic());
     static final PhysicalPackage RADIAL_CERAMIC_CAPACITOR = fixedPackage(
@@ -223,6 +227,25 @@ final class PhysicalPackages {
         terminals.add(terminal(terminalIds[2], 100, 90, 76, 70, 76, 64, 0, 1, 36));
         return geometry(130, 125, terminals, new Rectangle(28, 26, 64, 56),
             new Rectangle(18, 12, 84, 78), new Rectangle(5, 4, 120, 118));
+    }
+
+    /**
+     * A deterministic four-lead TO-220-like body for the bounded E02 models.
+     * The pins are intentionally all independent: RETURN is not an implicit
+     * ground and ENABLE is not hidden in the package body.
+     */
+    private static PhysicalPackageGeometry to220Regulator() {
+        Vector<PhysicalPackageGeometry.Terminal> terminals =
+            new Vector<PhysicalPackageGeometry.Terminal>();
+        // The shared procedural router is a 10-unit grid, so the canonical
+        // through-hole lands (not merely the package origin) must lie on it.
+        // Terminal identity/order remains the electrical authority.
+        terminals.add(terminal("INPUT", 50, 150, 50, 95, 50, 117, 0, 1, 50));
+        terminals.add(terminal("OUTPUT", 90, 150, 90, 95, 90, 117, 0, 1, 50));
+        terminals.add(terminal("RETURN", 130, 150, 130, 95, 130, 117, 0, 1, 50));
+        terminals.add(terminal("ENABLE", 170, 150, 170, 95, 170, 117, 0, 1, 50));
+        return geometry(220, 210, terminals, new Rectangle(25, 25, 170, 75),
+            new Rectangle(18, 18, 184, 90), new Rectangle(5, 5, 210, 200));
     }
 
     private static PhysicalPackageGeometry electrolytic() {

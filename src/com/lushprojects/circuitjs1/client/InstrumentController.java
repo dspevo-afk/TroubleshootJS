@@ -441,7 +441,12 @@ class InstrumentController {
     }
 
     void setDcVoltageProbesForDeveloperVerification(ProbeTarget red, ProbeTarget black) {
-        setActiveMode("DC_VOLTAGE", true);
+        /* A real player can move consecutive DC probes without first turning
+         * the meter off. Preserve the same left/right target interaction, but
+         * avoid refreshing an already-selected mode before clearTargets()
+         * immediately refreshes it below. */
+        if (!"DC_VOLTAGE".equals(activeStrategy.getId()))
+            setActiveMode("DC_VOLTAGE", true);
         clearTargets();
         handlePointerInput(NativeEvent.BUTTON_LEFT, red);
         handlePointerInput(NativeEvent.BUTTON_RIGHT, black);
@@ -499,6 +504,17 @@ class InstrumentController {
     void exitInstrumentModeForDeveloperVerification() {
         setActiveMode("NONE", true);
         updateReading();
+    }
+
+    /**
+     * D01 retains a real meter transaction for every sample, but consecutive
+     * program boundaries sometimes ask to exit an already-idle meter. Keep
+     * the ordinary exit behavior when a mode is active and avoid a no-op UI
+     * refresh only when it is already NONE.
+     */
+    void exitInstrumentModeIfActiveForDeveloperVerification() {
+        if (!"NONE".equals(activeStrategy.getId()))
+            exitInstrumentModeForDeveloperVerification();
     }
 
     void registerDeveloperInstrumentModeForVerification(InstrumentModeStrategy strategy) {

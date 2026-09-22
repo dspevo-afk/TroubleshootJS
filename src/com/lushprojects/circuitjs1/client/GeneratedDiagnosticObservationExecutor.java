@@ -1,5 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 /** Executes data-only provider observations through the real player/solver seams. */
@@ -43,8 +45,11 @@ final class GeneratedDiagnosticObservationExecutor {
         private final GeneratedBoardInstance instance;
         private final GeneratedChallengeController controller;
         private final Vector<CircuitElm> graph;
+        private final PcbWorkbenchRenderer renderer;
         private final Vector<GeneratedDiagnosticProgram.Step> steps;
         private final GeneratedDiagnosticExecutionTrace.Builder trace;
+        private final Map<String, BoardPadProbeTarget> probeTargets =
+            new HashMap<String, BoardPadProbeTarget>();
         private final Vector<GeneratedDiagnosticSample> samples =
             new Vector<GeneratedDiagnosticSample>();
         private int nextStep;
@@ -59,17 +64,18 @@ final class GeneratedDiagnosticObservationExecutor {
                 "Missing current production diagnostic execution context");
             program.validatePlan(instance.getDiagnosticProvider().getDiagnosticPlan());
             validateAvailability(instance, program);
-            steps = program.getSteps();
-            for (GeneratedDiagnosticProgram.Step step : steps)
-                if (step.red != null) {
-                    boardProbe(sim, instance, step.red);
-                    boardProbe(sim, instance, step.black);
-                }
             this.sim = sim;
             this.instance = instance;
             this.controller = sim.getGeneratedChallengeController();
             this.graph = sim.elmList;
+            this.renderer = sim.pcbWorkbenchController.getRenderer();
             this.trace = trace;
+            steps = program.getSteps();
+            for (GeneratedDiagnosticProgram.Step step : steps)
+                if (step.red != null) {
+                    boardProbe(step.red);
+                    boardProbe(step.black);
+                }
         }
 
         /** Executes exactly one canonical program step. */
@@ -79,7 +85,7 @@ final class GeneratedDiagnosticObservationExecutor {
             requireCurrentContext("observation-step");
             Throwable failure = null;
             try {
-                executeStep(sim, instance, steps.get(nextStep), samples, trace);
+                executeStep(steps.get(nextStep));
                 require(sim.getGeneratedBoardInstance() == instance &&
                     sim.getGeneratedChallengeController() == controller &&
                     !sim.activeMeasurementOverlay,
@@ -89,7 +95,8 @@ final class GeneratedDiagnosticObservationExecutor {
             }
             if (isCurrentContext()) {
                 try {
-                    closeInstrumentMode();
+                    if (failure != null || !keepsDcModeForNextStep())
+                        closeInstrumentMode();
                 } catch (Throwable cleanup) {
                     failure = retain(failure, cleanup);
                 }
@@ -158,10 +165,17 @@ final class GeneratedDiagnosticObservationExecutor {
                 sim.getGeneratedChallengeController() == controller && sim.elmList == graph;
         }
 
+        /** Keep one ordinary DC mode selected across consecutive real probe moves. */
+        private boolean keepsDcModeForNextStep() {
+            return nextStep + 1 < steps.size() &&
+                steps.get(nextStep).kind == GeneratedDiagnosticProgram.Kind.DC_VOLTAGE &&
+                steps.get(nextStep + 1).kind == GeneratedDiagnosticProgram.Kind.DC_VOLTAGE;
+        }
+
         private void closeInstrumentMode() {
             Throwable failure = null;
             try {
-                sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+                sim.instrumentController.exitInstrumentModeIfActiveForDeveloperVerification();
             } catch (Throwable cleanup) {
                 failure = cleanup;
             }
@@ -173,14 +187,11 @@ final class GeneratedDiagnosticObservationExecutor {
             }
             if (failure != null) throwFailure(failure);
         }
-    }
 
-    private static void executeStep(CirSim sim, GeneratedBoardInstance instance,
-            GeneratedDiagnosticProgram.Step step, Vector<GeneratedDiagnosticSample> samples,
-            GeneratedDiagnosticExecutionTrace.Builder trace) {
+        private void executeStep(GeneratedDiagnosticProgram.Step step) {
         switch (step.kind) {
         case INPUT:
-            sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+            sim.instrumentController.exitInstrumentModeIfActiveForDeveloperVerification();
             require(sim.getGeneratedChallengeController().invokePlayerOperation(step.id),
                 "Unavailable diagnostic player input: " + step.id);
             GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "diagnostic-input-" + step.id);
@@ -188,7 +199,7 @@ final class GeneratedDiagnosticObservationExecutor {
             break;
         case POWER:
         case PROFILE_POWER:
-            sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+            sim.instrumentController.exitInstrumentModeIfActiveForDeveloperVerification();
             if (step.kind == GeneratedDiagnosticProgram.Kind.PROFILE_POWER)
                 sim.setBoardPowerStateForGeneratedTemporalProfile(step.power);
             else {
@@ -200,7 +211,7 @@ final class GeneratedDiagnosticObservationExecutor {
             trace.recordInputPowerTransition(step.id);
             break;
         case WAIT:
-            sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+            sim.instrumentController.exitInstrumentModeIfActiveForDeveloperVerification();
             if (step.seconds > 0) sim.advanceGeneratedTemporalProfile(step.seconds);
             trace.recordTemporalWaitSample(step.id, step.seconds);
             break;
@@ -208,11 +219,11 @@ final class GeneratedDiagnosticObservationExecutor {
             GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "diagnostic-observation-settle");
             break;
         case DC_VOLTAGE:
-            addSample(samples, step.id, measureDc(sim, instance, step.red, step.black, trace));
+            addSample(samples, step.id, measureDc(step.red, step.black));
             break;
         default:
-            ProbeTarget red = boardProbe(sim, instance, step.red);
-            ProbeTarget black = boardProbe(sim, instance, step.black);
+            ProbeTarget red = boardProbe(step.red);
+            ProbeTarget black = boardProbe(step.black);
             ActiveMeasurementReadiness readiness = sim.instrumentController.getActiveMeasurementReadinessForStrategy(red, black);
             require(readiness.isReady(),
                 "Unavailable active diagnostic measurement: " + step.id + ":" + readiness);
@@ -235,6 +246,39 @@ final class GeneratedDiagnosticObservationExecutor {
                 addSample(samples, step.id + "_CURRENT", sim.getLastDiodeMeasurementCurrentForDeveloperVerification());
             } else throw new IllegalArgumentException("Unsupported diagnostic step");
             break;
+        }
+    }
+
+        private double measureDc(String redId, String blackId) {
+            ProbeTarget red = boardProbe(redId);
+            ProbeTarget black = boardProbe(blackId);
+            require(sim.isChallengeInteractionEnabled(),
+                "Production diagnostic DC sample requires settled player interaction: " + redId);
+            sim.instrumentController.setDcVoltageProbesForDeveloperVerification(red, black);
+            trace.recordMeterMode("DC_VOLTAGE");
+            double reading = sim.instrumentController.getLatestDcVoltageForDeveloperVerification();
+            require(!Double.isNaN(reading) && !Double.isInfinite(reading),
+                "Production diagnostic solver returned a non-finite DC sample: " + redId);
+            return reading;
+        }
+
+        /**
+         * Each cursor is bound to one private owner, graph and renderer. Cache
+         * only the physical probe wrapper; validate its live pad/endpoint at
+         * every use so a mutation or rerender cannot become stale evidence.
+         */
+        private ProbeTarget boardProbe(String padId) {
+            require(sim.pcbWorkbenchController.getRenderer() == renderer,
+                "Production diagnostic route lost its exact rendered board");
+            require(instance.getBoard().getPad(padId) != null && renderer.hasPad(padId),
+                "Production diagnostic route lacks rendered probe target: " + padId);
+            BoardPadProbeTarget target = probeTargets.get(padId);
+            if (target == null) {
+                target = new BoardPadProbeTarget(sim, instance, padId, renderer);
+                probeTargets.put(padId, target);
+            }
+            require(target.isValid(), "Production diagnostic probe target is not valid: " + padId);
+            return target;
         }
     }
 
@@ -284,30 +328,6 @@ final class GeneratedDiagnosticObservationExecutor {
             return GeneratedDiagnosticSample.overRange(sampleId);
         return new GeneratedDiagnosticSample(sampleId, reading,
             Math.max(.01, Math.abs(reading) * .02));
-    }
-
-    private static double measureDc(CirSim sim, GeneratedBoardInstance instance,
-            String redId, String blackId, GeneratedDiagnosticExecutionTrace.Builder trace) {
-        ProbeTarget red = boardProbe(sim, instance, redId);
-        ProbeTarget black = boardProbe(sim, instance, blackId);
-        require(sim.isChallengeInteractionEnabled(),
-            "Production diagnostic DC sample requires settled player interaction: " + redId);
-        sim.instrumentController.setDcVoltageProbesForDeveloperVerification(red, black);
-        trace.recordMeterMode("DC_VOLTAGE");
-        double reading = sim.instrumentController.getLatestDcVoltageForDeveloperVerification();
-        require(!Double.isNaN(reading) && !Double.isInfinite(reading),
-            "Production diagnostic solver returned a non-finite DC sample: " + redId);
-        return reading;
-    }
-
-    private static ProbeTarget boardProbe(CirSim sim, GeneratedBoardInstance instance,
-            String padId) {
-        PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
-        require(instance.getBoard().getPad(padId) != null && renderer.hasPad(padId),
-            "Production diagnostic route lacks rendered probe target: " + padId);
-        BoardPadProbeTarget target = new BoardPadProbeTarget(sim, instance, padId, renderer);
-        require(target.isValid(), "Production diagnostic probe target is not valid: " + padId);
-        return target;
     }
 
     private static void throwFailure(Throwable failure) {

@@ -112,8 +112,9 @@ final class SupportedEnvelope {
         PhysicalPackages.AXIAL_FUSE,PhysicalPackages.AXIAL_DIODE,PhysicalPackages.THROUGH_HOLE_LED,
         PhysicalPackages.TO92_NPN,PhysicalPackages.TO92_NMOS,PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR,
         PhysicalPackages.RADIAL_CERAMIC_CAPACITOR,PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,
-        PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2,PhysicalPackages.RELAY_SPDT};
-    private static final int[] PACKAGE_CAPS={8,1,2,3,2,2,1,2,4,1,1};
+        PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2,PhysicalPackages.RELAY_SPDT,
+        PhysicalPackages.TO220_REGULATOR_4};
+    private static final int[] PACKAGE_CAPS={8,1,2,3,2,2,1,2,4,1,1,1};
     private static int packageIndex(PhysicalPackage physical) {
         for(int i=0;i<PACKAGES.length;i++) if(PACKAGES[i]==physical) return i;
         return -1; // A forged equal ID does not qualify an untested footprint.

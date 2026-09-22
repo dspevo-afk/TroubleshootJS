@@ -20,6 +20,9 @@ final class DifficultyAssessment {
         GeneratedDiagnosticProgram program = board.getDiagnosticProvider().getObservationProgram();
         if (!receipt.getProgramIdentity().equals(program.canonical())) throw new IllegalArgumentException("Stale difficulty program");
         GeneratedDiagnosticObservationExecutor.validateAvailability(board, program);
+        GeneratedDiagnosticPartitionPlan partition = receipt.getPartitionPlan();
+        if (partition == null) throw new IllegalArgumentException("Difficulty proof has no adaptive partition");
+        partition.validateEvidenceRoutes(evidence);
         GeneratedDiagnosticSolvabilityEvidence first = evidence.firstElement();
         hypotheses = evidence.size(); components = board.getBoard().getComponentIds().size();
         physicalOwners = first.getAdmittedPhysicalOwnerCount();
@@ -71,7 +74,13 @@ final class DifficultyAssessment {
             comparisons[m][a][b] = same;
         }
         DiagnosticReduction reduction = new DiagnosticReduction(comparisons, repairs);
-        readings = reduction.readings; bestSingleRemaining = reduction.bestSingleRemaining;
+        // The certified partition bounds a legal execution route, while the
+        // reduction counts distinct player readings needed to distinguish
+        // repairs.  They are intentionally different: a static route may
+        // include a second measurement without changing the public difficulty
+        // band of an otherwise EASY board.
+        readings = reduction.readings;
+        bestSingleRemaining = reduction.bestSingleRemaining;
         profile = classify(components, physicalOwners, repairClasses, readings, minExecutedEvidenceDepth,
             meterModes, inputTransitions, declaredRailTargets, temporalSamples, parallelPaths);
     }

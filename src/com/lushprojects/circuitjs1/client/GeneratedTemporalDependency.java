@@ -8,7 +8,7 @@ package com.lushprojects.circuitjs1.client;
  * element, event, node-voltage, or array reference.</p>
  */
 final class GeneratedTemporalDependency {
-    static final int CURRENT_VERSION = 1;
+    static final int CURRENT_VERSION = 3;
     /**
      * The generated-board install boundary clears the graph, sets the solver
      * time and accumulated frame time to zero, creates an empty event queue,
@@ -29,6 +29,7 @@ final class GeneratedTemporalDependency {
     private final String outputEndpointId;
     private final String groundEndpointId;
     private final String canonical;
+    private final String cacheCanonical;
     private final int hash;
 
     GeneratedTemporalDependency(String behaviorId, int behaviorVersion,
@@ -98,39 +99,42 @@ final class GeneratedTemporalDependency {
             "Invalid temporal healthy late reference");
 
         StringBuilder value = new StringBuilder();
-        frame(value, "generated-temporal-dependency-v1");
-        appendField(value, "behavior.id", behaviorId);
-        appendField(value, "behavior.version", Integer.toString(behaviorVersion));
-        appendField(value, "initial-state.contract", initialStateContract);
-        appendField(value, "endpoint.output", outputEndpointId);
-        appendField(value, "endpoint.ground", groundEndpointId);
-        appendField(value, "nominal-supply.bits", hex(nominalSupplyBits));
-        appendField(value, "time.player-reselect.bits", hex(playerReselectBits));
-        appendField(value, "time.natural-discharge.bits", hex(naturalDischargeBits));
-        appendField(value, "time.early-sample.bits", hex(earlySampleBits));
-        appendField(value, "time.late-sample.bits", hex(lateSampleBits));
-        appendField(value, "time.max-solver-advance.bits", hex(maxSolverAdvanceBits));
-        appendField(value, "time.live-solver-advance.bits", hex(liveSolverAdvanceBits));
-        appendField(value, "threshold.residual.bits", hex(residualThresholdBits));
-        appendField(value, "threshold.healthy-rise-min.bits", hex(healthyRiseMinimumBits));
-        appendField(value, "threshold.healthy-late-min.bits", hex(healthyLateMinimumBits));
-        appendField(value, "threshold.healthy-early-max.bits", hex(healthyEarlyMaximumBits));
-        appendField(value, "threshold.classification-rise-min.bits",
+        StringBuilder cache = new StringBuilder();
+        frame(value, "generated-temporal-dependency-v3");
+        frame(cache, "generated-temporal-cache-recipe-v1");
+        appendBoth(value, cache, "behavior.id", behaviorId);
+        appendBoth(value, cache, "behavior.version", Integer.toString(behaviorVersion));
+        appendBoth(value, cache, "initial-state.contract", initialStateContract);
+        appendBoth(value, cache, "endpoint.output", outputEndpointId);
+        appendBoth(value, cache, "endpoint.ground", groundEndpointId);
+        appendBoth(value, cache, "nominal-supply.bits", hex(nominalSupplyBits));
+        appendBoth(value, cache, "time.player-reselect.bits", hex(playerReselectBits));
+        appendBoth(value, cache, "time.natural-discharge.bits", hex(naturalDischargeBits));
+        appendBoth(value, cache, "time.early-sample.bits", hex(earlySampleBits));
+        appendBoth(value, cache, "time.late-sample.bits", hex(lateSampleBits));
+        appendBoth(value, cache, "time.max-solver-advance.bits", hex(maxSolverAdvanceBits));
+        appendBoth(value, cache, "time.live-solver-advance.bits", hex(liveSolverAdvanceBits));
+        appendBoth(value, cache, "threshold.residual.bits", hex(residualThresholdBits));
+        appendBoth(value, cache, "threshold.healthy-rise-min.bits", hex(healthyRiseMinimumBits));
+        appendBoth(value, cache, "threshold.healthy-late-min.bits", hex(healthyLateMinimumBits));
+        appendBoth(value, cache, "threshold.healthy-early-max.bits", hex(healthyEarlyMaximumBits));
+        appendBoth(value, cache, "threshold.classification-rise-min.bits",
             hex(classificationRiseMinimumBits));
-        appendField(value, "threshold.classification-late-max.bits",
+        appendBoth(value, cache, "threshold.classification-late-max.bits",
             hex(classificationLateMaximumBits));
-        appendField(value, "threshold.classification-early-difference.bits",
+        appendBoth(value, cache, "threshold.classification-early-difference.bits",
             hex(classificationEarlyDifferenceBits));
-        appendField(value, "threshold.classification-healthy-early-difference.bits",
+        appendBoth(value, cache, "threshold.classification-healthy-early-difference.bits",
             hex(classificationHealthyEarlyDifferenceBits));
-        appendField(value, "threshold.classification-healthy-late-difference.bits",
+        appendBoth(value, cache, "threshold.classification-healthy-late-difference.bits",
             hex(classificationHealthyLateDifferenceBits));
         appendField(value, "reference.healthy-residual.bits", hex(healthyResidualBits));
         appendField(value, "reference.healthy-early.bits", hex(healthyEarlyBits));
         appendField(value, "reference.healthy-late.bits", hex(healthyLateBits));
-        if (value.length() > MAX_CANONICAL_LENGTH)
+        if (value.length() > MAX_CANONICAL_LENGTH || cache.length() > MAX_CANONICAL_LENGTH)
             throw new IllegalArgumentException("Temporal dependency exceeds its bound");
         canonical = value.toString();
+        cacheCanonical = cache.toString();
         hash = canonical.hashCode();
     }
 
@@ -155,7 +159,9 @@ final class GeneratedTemporalDependency {
         for (String key : new java.util.TreeSet<String>(parameters.keySet()))
             appendField(value, "parameter." + text(key, "Invalid temporal parameter key"),
                 text(parameters.get(key), "Invalid temporal parameter value"));
-        canonical = value.toString(); hash = canonical.hashCode();
+        canonical = value.toString();
+        cacheCanonical = canonical;
+        hash = canonical.hashCode();
     }
 
     String getBehaviorId() { return behaviorId; }
@@ -165,6 +171,14 @@ final class GeneratedTemporalDependency {
     String getGroundEndpointId() { return groundEndpointId; }
 
     String canonical() { return canonical; }
+
+    /**
+     * Identity for proof-cache lookup: declared model/recipe inputs only.
+     * Healthy reference readings are solved proof evidence, not cache inputs;
+     * the generation owner separately retains {@link #canonical()} for exact
+     * same-owner stale detection.
+     */
+    String cacheCanonical() { return cacheCanonical; }
 
     @Override
     public boolean equals(Object other) {
@@ -201,6 +215,12 @@ final class GeneratedTemporalDependency {
         frame(out, value);
         if (out.length() > MAX_CANONICAL_LENGTH)
             throw new IllegalArgumentException("Temporal dependency exceeds its bound");
+    }
+
+    private static void appendBoth(StringBuilder first, StringBuilder second,
+            String key, String value) {
+        appendField(first, key, value);
+        appendField(second, key, value);
     }
 
     private static void frame(StringBuilder out, String value) {

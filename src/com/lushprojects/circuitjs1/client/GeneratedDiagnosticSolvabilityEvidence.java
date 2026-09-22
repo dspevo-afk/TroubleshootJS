@@ -164,6 +164,16 @@ final class GeneratedDiagnosticSolvabilityEvidence {
     Vector<GeneratedDiagnosticSample> getSolverSamples() {
         return new Vector<GeneratedDiagnosticSample>(solverSamples);
     }
+    /**
+     * Static-proof helpers read retained samples by index without copying the
+     * complete observation vector at every partition comparison. The public
+     * accessor above remains defensive; these package-local value accessors do
+     * not expose the mutable vector itself.
+     */
+    int getStaticProofSampleCount() { return solverSamples.size(); }
+    GeneratedDiagnosticSample getStaticProofSample(int index) {
+        return solverSamples.get(index);
+    }
     Vector<String> getExecutedActionIds() { return copy(executedActionIds); }
     Vector<String> getExecutedRepairActionIds() { return copy(executedRepairActionIds); }
     Vector<String> getExecutedMeterModeIds() { return copy(executedMeterModeIds); }

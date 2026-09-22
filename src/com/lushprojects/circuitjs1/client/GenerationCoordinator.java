@@ -17,6 +17,10 @@ final class GenerationCoordinator {
     interface Completion { void complete(GenerationJob job, GeneratedBoardInstance published); }
     private final CirSim sim;
     private final GenerationRequest.PlanCache plans = new GenerationRequest.PlanCache();
+    /* D01 retains only completed, value-only proof artifacts.  It is owned by
+     * this simulator's generation lifecycle, never by a board or a solver. */
+    private final GeneratedDiagnosticProofCache diagnosticProofs =
+        new GeneratedDiagnosticProofCache();
     private final QuickPlayBoardHistory recentBoards = new QuickPlayBoardHistory();
     private GenerationJob job;
     private Services services;
@@ -61,6 +65,14 @@ final class GenerationCoordinator {
     long getProgressActiveMillis() { return foregroundClock == null ? 0 : foregroundClock.elapsedMillis(System.currentTimeMillis()); }
     int getPlanCacheHits() { return plans.getHits(); }
     int getPlanCacheMisses() { return plans.getMisses(); }
+    int getDiagnosticProofCacheHits() { return diagnosticProofs.getHits(); }
+    int getDiagnosticProofCacheMisses() { return diagnosticProofs.getMisses(); }
+    int getDiagnosticProofCacheSize() { return diagnosticProofs.size(); }
+    void clearDiagnosticProofCacheForDeveloperVerification() {
+        if (isRunning() || advancing)
+            throw new IllegalStateException("Diagnostic proof cache cannot change during generation");
+        diagnosticProofs.clear();
+    }
     long getCancellationLatencyMillis() { return cancellationLatency; }
     long getMaxAdvanceMillis() { return maxAdvanceMillis; }
     GeneratedDiagnosticProofService.CleanupAudit getCleanupAuditForDeveloperVerification() {
@@ -82,7 +94,13 @@ final class GenerationCoordinator {
 
     /** Developer driver of the exact same stage implementation, with explicit turns. */
     void startForDeveloperVerification(GenerationRequest request) {
-        start(request, null, true);
+        start(request, null, true, false);
+        if (watchdog != null) { watchdog.cancel(); watchdog = null; }
+        if (continuation != null) { continuation.cancel(); continuation = null; }
+    }
+    /** Developer-only manual turns using the normal cache-enabled stages. */
+    void startForDiagnosticCacheVerification(GenerationRequest request) {
+        start(request, null, true, true);
         if (watchdog != null) { watchdog.cancel(); watchdog = null; }
         if (continuation != null) { continuation.cancel(); continuation = null; }
     }
@@ -92,6 +110,15 @@ final class GenerationCoordinator {
     }
 
     void start(GenerationRequest request, Completion completion, boolean asynchronous) {
+        start(request, completion, asynchronous, true);
+    }
+
+    /**
+     * Developer verification keeps the serial proof oracle cold and explicit.
+     * Normal player generation alone may reuse a completed value artifact.
+     */
+    private void start(GenerationRequest request, Completion completion, boolean asynchronous,
+            boolean allowDiagnosticProofReuse) {
         if (request == null || advancing)
             throw new IllegalStateException("Generation cannot start inside an active stage");
         cancel();
@@ -102,7 +129,7 @@ final class GenerationCoordinator {
         foregroundBudget = asynchronous && !sim.troubleshootDebug;
         foregroundClock = new ForegroundGenerationClock(System.currentTimeMillis(),
             foregroundBudget && pageHidden());
-        services = new Services(request, completion);
+        services = new Services(request, completion, allowDiagnosticProofReuse);
         job = new GenerationJob(services, MAX_JOB_MILLIS, MAX_JOB_STEPS, MAX_STEP_MILLIS);
         yields = 0; cancelledAt = 0; cancellationLatency = 0; maxAdvanceMillis = 0;
         lastCleanupAudit = null;
@@ -252,6 +279,7 @@ final class GenerationCoordinator {
         private final GenerationRequest selection;
         private GenerationRequest request;
         private final Completion completion;
+        private final boolean allowDiagnosticProofReuse;
         private GeneratedBoardInstance original;
         private GeneratedChallengeController originalController;
         private Object originalGraph;
@@ -261,11 +289,19 @@ final class GenerationCoordinator {
         private GenerationRequest.ConstructionSession constructionSession;
         private FreshGeneratedRuntimeInstallation.Staged installation;
         private GeneratedDiagnosticProofService.Session proof;
+        private GeneratedDiagnosticProofReceipt proofReceipt;
+        private GeneratedDiagnosticContextKey proofContextKey;
+        private String dependencyContext;
+        private String rawTemporalDependencyCanonical;
+        private boolean proofCacheHit;
+        private boolean proofCachePublicationPending;
+        private GeneratedDiagnosticProofCache.Entry pendingProofCacheEntry;
         private DifficultyAssessment difficulty;
         private boolean notified, cleanupComplete;
 
-        Services(GenerationRequest request, Completion completion) {
+        Services(GenerationRequest request, Completion completion, boolean allowDiagnosticProofReuse) {
             this.selection = request; this.request = request.candidate(0); this.completion = completion;
+            this.allowDiagnosticProofReuse = allowDiagnosticProofReuse;
             original = sim.getGeneratedBoardInstance();
             originalController = sim.getGeneratedChallengeController();
             originalGraph = sim.elmList;
@@ -273,10 +309,14 @@ final class GenerationCoordinator {
         public int candidateCount() { return selection.candidateCount(); }
         public String manifest(int index) { return selection.candidateManifest(index); }
         public void beginCandidate(int index) {
-            if (installation != null || candidate != null || proof != null || constructionSession != null)
+            if (installation != null || candidate != null || proof != null || proofReceipt != null ||
+                    constructionSession != null)
                 throw new IllegalStateException("Previous candidate still owns resources");
             request = selection.candidate(index);
-            expectedProofUnits = 0; cleanupComplete = false;
+            expectedProofUnits = 0; cleanupComplete = false; proofContextKey = null;
+            dependencyContext = null; rawTemporalDependencyCanonical = null; proofCacheHit = false;
+            proofCachePublicationPending = false;
+            pendingProofCacheEntry = null;
         }
         public String resolve() {
             try { prepared = request.resolve(plans); }
@@ -340,12 +380,38 @@ final class GenerationCoordinator {
                 candidate.getSimulationElements().size();
         }
         public String physical() {
-            installation.validatePhysical();
-            return dependencies();
+            try {
+                installation.validatePhysical();
+            } catch (Throwable failure) {
+                throw new IllegalStateException(
+                    "Generated board failed physical admission validation", failure);
+            }
+            try {
+                return dependencies();
+            } catch (Throwable failure) {
+                throw new IllegalStateException(
+                    "Generated board failed dependency-context capture", failure);
+            }
         }
         public boolean proveNext() {
-            if (proof == null) {
+            if (proof == null && proofReceipt == null) {
                 installation.enterStep();
+                requireCurrentProofContext("diagnostic proof start");
+                if (allowDiagnosticProofReuse)
+                    proofReceipt = GeneratedDiagnosticProofService.reuseCachedIfPresent(sim,
+                        candidate, sim.getGeneratedChallengeController(), diagnosticProofs,
+                        proofContextKey);
+                if (proofReceipt != null) {
+                    proofCacheHit = true;
+                    expectedProofUnits = 1;
+                    requireCurrentProofContext("warm diagnostic proof completion");
+                    assessDifficulty();
+                    if (job.getCandidateStageWorkCount(GenerationJob.Stage.HYPOTHESES) !=
+                            declaredProofWorkUnits())
+                        throw new IllegalStateException(
+                            "Warm diagnostic operation count differs from its declared program");
+                    return false;
+                }
                 proof = GeneratedDiagnosticProofService.begin(sim, candidate,
                     sim.getGeneratedChallengeController(), new GeneratedDiagnosticProofService.Checkpoint() {
                         public void check() { job.checkpoint(); }
@@ -353,32 +419,54 @@ final class GenerationCoordinator {
             }
             boolean more = proof.step();
             if (!more) {
-                proof.finish();
-                if (request.getDifficulty() != null) {
-                    difficulty = DifficultyAssessment.assess(candidate, sim.getGeneratedChallengeController().getDiagnosticProofReceipt());
-                    if (difficulty.profile != request.getDifficulty())
-                        throw new GenerationJob.Rejected("The proved board does not match the requested difficulty");
+                proofReceipt = proof.finish(proofContextKey);
+                requireCurrentProofContext("serial diagnostic proof completion");
+                if (allowDiagnosticProofReuse) {
+                    /* Preflight the immutable artifact while this candidate is
+                     * still private.  The cache itself remains untouched until
+                     * after final publication below. */
+                    pendingProofCacheEntry = diagnosticProofs.prepare(proofContextKey,
+                        candidate, proofReceipt);
+                    proofCachePublicationPending = true;
                 }
+                assessDifficulty();
                 if (job.getCandidateStageWorkCount(GenerationJob.Stage.HYPOTHESES) !=
-                        GeneratedDiagnosticProofService.requiredWorkUnits(candidate,
-                            request.requiresExplicitCompletion()))
+                        declaredProofWorkUnits())
                     throw new IllegalStateException("Diagnostic operation count differs from its declared program");
             }
             return more;
         }
         public String symptom() {
             installation.enterStep();
+            if (proofReceipt == null)
+                throw new IllegalStateException("Generation has no completed diagnostic proof receipt");
+            if (job.getCandidateStageWorkCount(GenerationJob.Stage.HYPOTHESES) !=
+                    declaredProofWorkUnits())
+                throw new IllegalStateException("Diagnostic operation count differs from its declared program");
             sim.getGeneratedChallengeController().completeGenerationPresentation();
-            return "selected-fault-validated;complete-hypotheses=" + proof.getTotalCount() +
+            return "selected-fault-validated;complete-hypotheses=" +
+                proofReceipt.getEvidence().size() +
                 ";scenario-compatible;answer-private";
         }
         public String dependencies() {
             installation.enterStep();
-            return GenerationDependencyContext.capture(sim, candidate,
-                request.canonical(), realizationManifest).canonical();
+            GenerationDependencyContext context = GenerationDependencyContext.capture(sim, candidate,
+                request.canonical(), realizationManifest);
+            GeneratedDiagnosticContextKey currentKey = context.diagnosticKey();
+            String currentRawTemporalDependency = captureRawTemporalDependency();
+            if (proofContextKey != null && (!proofContextKey.equals(currentKey) ||
+                    rawTemporalDependencyCanonical == null ||
+                    !rawTemporalDependencyCanonical.equals(currentRawTemporalDependency)))
+                throw new GenerationJob.Stale(
+                    "Generation dependency context changed before proof publication");
+            proofContextKey = currentKey;
+            dependencyContext = context.canonical();
+            rawTemporalDependencyCanonical = currentRawTemporalDependency;
+            return dependencyContext;
         }
         public void publish(GenerationReceipt receipt) {
             if (receipt == null) throw new IllegalStateException("Missing generation proof receipt");
+            requireCurrentProofContext("generation publication");
             if (request.getDifficulty() != null) {
                 if (difficulty == null) throw new IllegalStateException("Missing difficulty admission evidence");
                 difficulty.require(request.getDifficulty());
@@ -395,6 +483,16 @@ final class GenerationCoordinator {
             }
             installation.publish();
             if (physicalFingerprint != null) recentBoards.published(physicalFingerprint);
+            /* A proof artifact becomes reusable only after the same candidate
+             * passed final dependency validation and its fresh publication.
+             * A failed/cancelled candidate never leaves a cache entry behind. */
+            if (proofCachePublicationPending) {
+                if (pendingProofCacheEntry == null)
+                    throw new IllegalStateException("Missing preflighted diagnostic cache entry");
+                diagnosticProofs.storePrepared(pendingProofCacheEntry);
+                proofCachePublicationPending = false;
+                pendingProofCacheEntry = null;
+            }
         }
         public void abort() {
             Throwable failure = null;
@@ -436,6 +534,10 @@ final class GenerationCoordinator {
             // Restore succeeded before making the next exact candidate eligible.
             // The protected original stays owned until the entire launch terminates.
             installation = null; proof = null; candidate = null; constructionSession = null;
+            proofReceipt = null; proofContextKey = null; dependencyContext = null;
+            rawTemporalDependencyCanonical = null;
+            proofCacheHit = false; proofCachePublicationPending = false;
+            pendingProofCacheEntry = null;
             prepared = null; realizationManifest = null; difficulty = null;
         }
         public boolean isCurrent() {
@@ -457,12 +559,62 @@ final class GenerationCoordinator {
         void releaseSavedOwners() {
             if (proof != null) lastCleanupAudit = proof.getCleanupAudit();
             original = null; originalController = null; originalGraph = null;
-            installation = null; proof = null; prepared = null; constructionSession = null;
+            installation = null; proof = null; proofReceipt = null; proofContextKey = null;
+            dependencyContext = null; rawTemporalDependencyCanonical = null;
+            proofCacheHit = false; proofCachePublicationPending = false;
+            pendingProofCacheEntry = null;
+            prepared = null; constructionSession = null;
             if (job.getOutcome() != GenerationJob.Outcome.PASS) candidate = null;
         }
         boolean hasSavedOwners() {
             return original != null || originalGraph != null || originalController != null ||
                 installation != null || proof != null || constructionSession != null;
+        }
+
+        private int declaredProofWorkUnits() {
+            return proofCacheHit ? 1 : GeneratedDiagnosticProofService.requiredWorkUnits(candidate,
+                request.requiresExplicitCompletion());
+        }
+
+        private void assessDifficulty() {
+            if (request.getDifficulty() == null) return;
+            difficulty = DifficultyAssessment.assess(candidate, proofReceipt);
+            if (difficulty.profile != request.getDifficulty())
+                throw new GenerationJob.Rejected("The proved board does not match the requested difficulty");
+        }
+
+        /**
+         * The same complete dependency capture must survive physical
+         * validation, a cold or warm diagnostic proof, and final publication.
+         * Cache entries are not allowed to turn a state change into a valid
+         * receipt merely because their lookup began earlier.
+         */
+        private void requireCurrentProofContext(String boundary) {
+            if (proofContextKey == null || dependencyContext == null ||
+                    rawTemporalDependencyCanonical == null)
+                throw new IllegalStateException("Missing generation dependency context at " + boundary);
+            GenerationDependencyContext current = GenerationDependencyContext.capture(sim, candidate,
+                request.canonical(), realizationManifest);
+            if (!proofContextKey.equals(current.diagnosticKey()) ||
+                    !dependencyContext.equals(current.canonical()) ||
+                    !rawTemporalDependencyCanonical.equals(captureRawTemporalDependency()))
+                throw new GenerationJob.Stale("Generation dependency context changed at " + boundary);
+        }
+
+        /**
+         * Cache lookup identifies declared model/recipe inputs. This exact,
+         * owner-bound reading identity separately guards a captured temporal
+         * reference from mutation between proof and publication.
+         */
+        private String captureRawTemporalDependency() {
+            if (candidate == null)
+                throw new IllegalStateException("Missing generated board for temporal dependency capture");
+            GeneratedTemporalBehavior temporal = candidate.getTemporalBehavior();
+            if (temporal == null) return "NONE";
+            GeneratedTemporalDependency dependency = temporal.getDependency(candidate);
+            if (dependency == null)
+                throw new IllegalStateException("Temporal behavior returned no raw dependency contract");
+            return dependency.canonical();
         }
     }
 }

@@ -63,6 +63,98 @@ final class GeneratedDiagnosticProofService {
         return session.finish();
     }
 
+    /** Serial reference proof with a caller-captured complete D01 context. */
+    private static GeneratedDiagnosticProofReceipt proveWithContext(CirSim sim,
+            GeneratedBoardInstance owner, GeneratedChallengeController controller,
+            GeneratedDiagnosticContextKey contextKey) {
+        if (contextKey == null)
+            throw new IllegalArgumentException("Missing complete diagnostic proof context");
+        Session session = begin(sim, owner, controller);
+        while (session.step()) { }
+        return session.finish(contextKey);
+    }
+
+    /**
+     * D01 entry point.  The ordinary {@link #prove} path remains the serial
+     * reference oracle.  A cache miss runs that exact path; only a complete
+     * value-only artifact can be reused on a hit, and the hit still performs
+     * current structural validation and controller publication.  A cold
+     * receipt is deliberately not stored here: its owner has not completed
+     * the caller's final publication transaction yet.
+     */
+    static GeneratedDiagnosticProofReceipt proveWithCache(CirSim sim,
+            GeneratedBoardInstance owner, GeneratedChallengeController controller,
+            GeneratedDiagnosticProofCache cache, GeneratedDiagnosticContextKey contextKey) {
+        requireTrustedContextKey(cache, contextKey);
+        GeneratedDiagnosticSolvabilityAdmission.validateStructural(owner);
+        GeneratedDiagnosticProofReceipt reused = reuseCachedIfPresent(sim, owner, controller,
+            cache, contextKey);
+        return reused == null ? proveWithContext(sim, owner, controller, contextKey) : reused;
+    }
+
+    /** Captures the complete context at the caller's immutable manifest seam. */
+    static GeneratedDiagnosticProofReceipt proveWithCache(CirSim sim,
+            GeneratedBoardInstance owner, GeneratedChallengeController controller,
+            GeneratedDiagnosticProofCache cache, String requestManifest,
+            String realizationManifest) {
+        GeneratedDiagnosticContextKey key = GeneratedDiagnosticContextKey.capture(sim, owner,
+            requestManifest, realizationManifest);
+        return proveWithCache(sim, owner, controller, cache, key);
+    }
+
+    /**
+     * Returns a newly issued owner-bound receipt on a warm hit, or null on a
+     * cold miss.  GenerationCoordinator uses this form so misses retain the
+     * existing resumable serial proof rather than turning an interactive turn
+     * into a synchronous exhaustive replay.
+     */
+    static GeneratedDiagnosticProofReceipt reuseCachedIfPresent(CirSim sim,
+            GeneratedBoardInstance owner, GeneratedChallengeController controller,
+            GeneratedDiagnosticProofCache cache, GeneratedDiagnosticContextKey contextKey) {
+        requireTrustedContextKey(cache, contextKey);
+        GeneratedDiagnosticSolvabilityAdmission.validateStructural(owner);
+        GeneratedDiagnosticProofCache.Entry cached = cache.get(contextKey);
+        return cached == null ? null : reuseCached(sim, owner, controller, contextKey, cached);
+    }
+
+    private static void requireTrustedContextKey(GeneratedDiagnosticProofCache cache,
+            GeneratedDiagnosticContextKey contextKey) {
+        if (cache == null || contextKey == null)
+            throw new IllegalArgumentException("D01 proof reuse requires a cache and complete context key");
+        if (!contextKey.isTrustedCapture())
+            throw new IllegalArgumentException(
+                "D01 proof reuse requires a captured generation dependency context key");
+    }
+
+    /**
+     * Reuses only a matching value artifact.  A fresh opaque controller
+     * attempt and owner-bound receipt are created for every warm publication.
+     */
+    private static GeneratedDiagnosticProofReceipt reuseCached(CirSim sim,
+            GeneratedBoardInstance owner, GeneratedChallengeController controller,
+            GeneratedDiagnosticContextKey contextKey,
+            GeneratedDiagnosticProofCache.Entry cached) {
+        requireInitialContext(sim, owner, controller);
+        cached.validateForReuse(contextKey, owner);
+        // This is intentionally repeated immediately before publication.  It
+        // prevents a cache artifact from becoming a global admission shortcut.
+        GeneratedDiagnosticSolvabilityAdmission.validateStructural(owner);
+        GeneratedDiagnosticSolvabilityAdmission.validate(sim, owner);
+        Object attempt = controller.beginDiagnosticAdmission();
+        try {
+            GeneratedDiagnosticProofReceipt receipt = cached.issueReceipt(owner, controller,
+                attempt, contextKey);
+            receipt.requireContextKey(contextKey);
+            controller.completeDiagnosticAdmission(receipt, attempt);
+            return receipt;
+        } catch (Throwable failure) {
+            try { controller.abortDiagnosticAdmission(attempt); }
+            catch (Throwable cleanup) { failure.addSuppressed(cleanup); }
+            throwFailure(failure);
+            return null;
+        }
+    }
+
     static Session begin(CirSim sim, GeneratedBoardInstance owner,
             GeneratedChallengeController controller) {
         return begin(sim, owner, controller, null);
@@ -90,9 +182,9 @@ final class GeneratedDiagnosticProofService {
     }
 
     /**
-     * Returns the structural proof work count for one owner. The five
-     * GenerationJob stage units (resolve, healthy, physical, symptom and
-     * publish) are deliberately outside this value.
+     * Returns the deterministic full serial-proof work count for one owner.
+     * The five GenerationJob stage units (resolve, healthy, physical, symptom
+     * and publish) are outside this proof population.
      */
     static int requiredWorkUnits(GeneratedBoardInstance owner, boolean explicitCompletion) {
         if (owner == null) throw new IllegalArgumentException("Missing diagnostic owner");
@@ -293,6 +385,7 @@ final class GeneratedDiagnosticProofService {
                 GeneratedChallengeController controller, Checkpoint checkpoint) {
             require(activeSession == null, "Another production proof session is active");
             requireInitialContext(sim, owner, controller);
+            GeneratedDiagnosticSolvabilityAdmission.validateStructural(owner);
             GeneratedDiagnosticSolvabilityAdmission.validate(sim, owner);
             provider = owner.getDiagnosticProvider();
             require(provider != null && provider.getProviderId() != null &&
@@ -349,8 +442,8 @@ final class GeneratedDiagnosticProofService {
                     restorationAttempted = true;
                     Throwable restoration = restoreOriginal();
                     if (restoration != null) throwFailure(restoration);
-                    nextHypothesis++;
                     clearActiveHypothesis();
+                    nextHypothesis++;
                     nextUnit = nextHypothesis < candidates.size() ?
                         Unit.REPLAY_INSTALL : Unit.COMPLETE;
                 }
@@ -425,11 +518,14 @@ final class GeneratedDiagnosticProofService {
             }
         }
 
+        /** Installs one disjoint replay for the next canonical hypothesis. */
         private void runReplayAndInstall() {
             checkpointAndRequireOwner();
             snapshot.beginProof(sim);
             requireCurrentOwner("step-start");
-            activeHypothesis = candidates.get(nextHypothesis);
+            GeneratedFaultCandidate hypothesis = candidates.get(nextHypothesis);
+            require(hypothesis != null, "Diagnostic replay has no canonical hypothesis");
+            activeHypothesis = hypothesis;
             GeneratedBoardInstance candidate = provider.generateHypothesis(activeHypothesis);
             /* Retain any non-null returned owner before admission rejects it;
              * even a developer-only replay may have allocated a private graph. */
@@ -483,20 +579,31 @@ final class GeneratedDiagnosticProofService {
         }
 
         private boolean runCandidateSettleAndPrepareObservations() {
+            if (!settleCandidateForObservations("production-diagnostic-candidate")) return false;
+            activeTrace = GeneratedDiagnosticExecutionTrace.builder();
+            observationCursor = GeneratedDiagnosticObservationExecutor.begin(
+                sim, activeCandidate, program, activeTrace);
+            checkpointAndRequireCandidate();
+            return true;
+        }
+
+        /** Settles one disposable candidate at the same pre-observation boundary. */
+        private boolean settleCandidateForObservations(String purpose) {
             checkpointAndRequireCandidate();
             if (activeCandidate.getTemporalBehavior() != null &&
                     !GeneratedRuntimeDeveloperSettlement.stepTemporalPreparation(sim, activeCandidate,
                         false, "production-diagnostic-candidate")) return false;
             GeneratedRuntimeDeveloperSettlement.settle(sim, activeCandidate,
-                "production-diagnostic-candidate");
+                purpose);
             checkpointAndRequireCandidate();
+            /* validateReplay() already bound the family, full fault population,
+             * program, layout, and repair semantics before this disjoint owner
+             * was installed.  Keep the live solver and executable-repair checks
+             * below, but do not rebuild the identical structural admission once
+             * for every controlled-board hypothesis. */
             GeneratedDiagnosticSolvabilityAdmission.validate(sim, activeCandidate);
             GeneratedFaultServiceabilityAdmission.validateExecutableRuntime(sim, activeCandidate,
                 activeCandidate.getFaultBinding());
-            checkpointAndRequireCandidate();
-            activeTrace = GeneratedDiagnosticExecutionTrace.builder();
-            observationCursor = GeneratedDiagnosticObservationExecutor.begin(
-                sim, activeCandidate, program, activeTrace);
             checkpointAndRequireCandidate();
             return true;
         }
@@ -514,13 +621,16 @@ final class GeneratedDiagnosticProofService {
 
         private void runObservationStep() {
             require(observationCursor != null, "Missing diagnostic observation cursor");
-            checkpointAndRequireCandidate();
+            /* Session.step() has already checked the working owner and the
+             * cursor checks the exact candidate/controller/graph both before
+             * and after its real meter operation.  Repeating the same clock
+             * and ownership walk around each retained observation adds no
+             * protection, but multiplies it across complete large programs. */
             boolean more = observationCursor.step();
             if (!more) {
                 activeSamples = observationCursor.finish();
                 observationCursor = null;
             }
-            checkpointAndRequireCandidate();
             if (!more) nextUnit = Unit.POWER_OFF_SETTLE;
         }
 
@@ -773,6 +883,10 @@ final class GeneratedDiagnosticProofService {
          * receipt. A partial session cannot issue evidence.
          */
         GeneratedDiagnosticProofReceipt finish() {
+            return finish(null);
+        }
+
+        GeneratedDiagnosticProofReceipt finish(GeneratedDiagnosticContextKey contextKey) {
             ensureOpen();
             Throwable failure = null;
             GeneratedDiagnosticProofReceipt receipt = null;
@@ -781,9 +895,14 @@ final class GeneratedDiagnosticProofService {
                 requireCurrentOwner("finish");
                 sim.generatedRuntimeInstallationInProgress = false;
                 checkpointAndRequireOwner();
+                /* The receipt builds and validates the immutable partition
+                 * against this full serial CircuitJS population before it can
+                 * be published. It is a static projection only: no second
+                 * owner mutation or solver replay can replace or shrink
+                 * hypotheses or repair witnesses. */
                 receipt = new GeneratedDiagnosticProofReceipt(owner, controller, attempt,
                     program, new Vector<GeneratedDiagnosticSolvabilityEvidence>(evidence),
-                    elapsedNow());
+                    elapsedNow(), null, contextKey, false);
                 /* The final checkpoint is immediately before controller publication. */
                 checkpointAndRequireOwner();
                 controller.completeDiagnosticAdmission(receipt, attempt);

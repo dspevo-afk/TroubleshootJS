@@ -49,6 +49,7 @@ final class P01PhysicalPoseChecks {
         return new PhysicalPackage[] { PhysicalPackages.AXIAL_RESISTOR,
             PhysicalPackages.AXIAL_DIODE, PhysicalPackages.THROUGH_HOLE_LED,
             PhysicalPackages.TO92_NPN, PhysicalPackages.TO92_NMOS,
+            PhysicalPackages.TO220_REGULATOR_4,
             PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR,
             PhysicalPackages.RADIAL_CERAMIC_CAPACITOR,
             PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,

@@ -444,6 +444,7 @@ MouseOutHandler, MouseWheelHandler {
     boolean troubleshootServiceVerification, troubleshootServiceForced, troubleshootServiceComplete;
     int troubleshootAlphaCase = -1;
     boolean troubleshootE01Verification, troubleshootE01VerificationComplete, troubleshootE01ForcedFailure;
+	boolean troubleshootE02Verification, troubleshootE02VerificationComplete, troubleshootE02ForcedFailure;
 	boolean troubleshootA06Verification;
 	boolean troubleshootA06VerificationComplete;
 	boolean troubleshootA06ForcedFailure;
@@ -643,6 +644,7 @@ MouseOutHandler, MouseWheelHandler {
 	    troubleshootA07Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA07", false);
 	    troubleshootA07ForcedFailure = troubleshootA07Verification && qp.getBooleanValue("tsjA07Fail", false);
 	    troubleshootE01Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyE01", false);
+	    troubleshootE02Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyE02", false);
             troubleshootE03Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyE03", false);
             troubleshootQ15Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyQ15", false);
             troubleshootQuickPlayGateVerification = troubleshootDebug && qp.getBooleanValue("tsjVerifyQuickPlayGate", false);
@@ -658,6 +660,7 @@ MouseOutHandler, MouseWheelHandler {
             troubleshootQ15ForcedFailure = troubleshootQ15Verification && qp.getBooleanValue("tsjQ15Fail", false);
             troubleshootE03ForcedFailure = troubleshootE03Verification && qp.getBooleanValue("tsjE03Fail", false);
         troubleshootE01ForcedFailure = troubleshootE01Verification && qp.getBooleanValue("tsjE01Fail", false);
+	    troubleshootE02ForcedFailure = troubleshootE02Verification && qp.getBooleanValue("tsjE02Fail", false);
 	    troubleshootA06Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA06", false);
 	    troubleshootA06ForcedFailure = troubleshootA06Verification && qp.getBooleanValue("tsjA06Fail", false);
 	    troubleshootA04Verification = troubleshootDebug &&
@@ -4904,7 +4907,7 @@ MouseOutHandler, MouseWheelHandler {
 	pcbWorkbenchController = (!troubleshootDebug || FreshGeneratedRuntimeInstallation.isInProgress(this) ||
 	    troubleshootTask41Verification || troubleshootTask43PVerification || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
-	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootQuickPlayGateVerification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootU01Verification || troubleshootA10Verification ||
+	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootQuickPlayGateVerification || troubleshootE03Verification || troubleshootE01Verification || troubleshootE02Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootU01Verification || troubleshootA10Verification ||
 	    troubleshootA01Measurement ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
@@ -5596,6 +5599,25 @@ MouseOutHandler, MouseWheelHandler {
                 throw new IllegalStateException("E01 verification failed",failure);
             } finally { developerVerifierRunning = false; }
         }
+	 if (!developerVerifierRunning && troubleshootE02Verification &&
+		 !troubleshootE02VerificationComplete &&
+		 !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+		 generatedChallengeController != null && generatedChallengeController.isReady() &&
+		 isGeneratedRuntimeSettled()) {
+	     developerVerifierRunning = true;
+	     troubleshootE02VerificationComplete = true;
+	     publishBrowserVerificationResult("RUNNING:e02");
+	     try {
+		 publishE02Evidence(E02RegulatorDeveloperVerifier.verify(this,
+		     troubleshootE02ForcedFailure));
+		 publishBrowserVerificationResult("PASS:e02");
+	     } catch (Throwable failure) {
+		 publishBrowserVerificationResult("FAIL:e02:" + failure.getMessage());
+		 if (failure instanceof Error) throw (Error)failure;
+		 if (failure instanceof RuntimeException) throw (RuntimeException)failure;
+		 throw new IllegalStateException("E02 verification failed", failure);
+	     } finally { developerVerifierRunning = false; }
+	 }
 	    if (!developerVerifierRunning && troubleshootA06Verification &&
                 !troubleshootA06VerificationComplete &&
                 !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
@@ -5887,6 +5909,10 @@ MouseOutHandler, MouseWheelHandler {
 
     private static native void publishE01Evidence(String evidence) /*-{
         $doc.documentElement.setAttribute("data-tsj-e01-report", evidence);
+    }-*/;
+
+    private static native void publishE02Evidence(String evidence) /*-{
+	$doc.documentElement.setAttribute("data-tsj-e02-report", evidence);
     }-*/;
 
     private static native void publishA06Evidence(String evidence) /*-{
@@ -8066,6 +8092,10 @@ MouseOutHandler, MouseWheelHandler {
         case 451: return new ProtectionFuseElm(x1, y1, x2, y2, f, st);
         case 452: return new ServiceRelayElm(x1, y1, x2, y2, f, st);
         case 453: return new BoundedExternalLoadElm(x1, y1, x2, y2, f, st);
+	case 454: return new LinearRegulatorElm(x1, y1, x2, y2, f, st);
+	case 455: return new AveragedSwitchingRegulatorElm(x1, y1, x2, y2, f, st);
+	case 456: return new E02FiniteSourceElm(x1, y1, x2, y2, f, st);
+	case 457: return new E04SensorControlModel.DecisionElement(x1, y1, x2, y2, f, st);
     	case 'w': return new WireElm(x1, y1, x2, y2, f, st);
     	case 'x': return new TextElm(x1, y1, x2, y2, f, st);
     	case 'z': return new ZenerElm(x1, y1, x2, y2, f, st);

@@ -1,0 +1,35 @@
+{
+  "schema": "quickplay-procedural-matrix-evidence-v1",
+  "outcome": "PASS",
+  "runner": "tests/browser/quickplay_procedural_acceptance.py",
+  "artifact": "rebuilt production GWT output",
+  "menuCases": 30,
+  "casesPerFamily": 3,
+  "families": {
+    "LED_INDICATOR": "EASY",
+    "DIODE_PROTECTED_INDICATOR": "EASY",
+    "PARALLEL_DUAL_INDICATOR": "EASY",
+    "RC_DELAY": "EASY",
+    "NPN_LOW_SIDE_SWITCH": "EASY",
+    "NMOS_LOW_SIDE_SWITCH": "EASY",
+    "RELAY_OUTPUT": "EASY",
+    "SENSOR_CONTROL": "EASY",
+    "RB15_CONTROL": "EASY",
+    "COMPOSED_CONTROLLED_INDICATOR": "MEDIUM"
+  },
+  "replays": [
+    {
+      "family": "RELAY_OUTPUT",
+      "powerIsolated": true
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "powerIsolated": true
+    }
+  ],
+  "publicMetadataAbsent": true,
+  "cleanup": {
+    "serverStopped": true,
+    "ownedSurvivors": []
+  }
+}

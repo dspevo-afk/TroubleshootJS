@@ -723,7 +723,9 @@ final class Task41DeveloperVerifier {
             if (QuickPlayFamilyRegistry.LED_INDICATOR.equals(familyId) ||
                     QuickPlayFamilyRegistry.PARALLEL_DUAL_INDICATOR.equals(familyId) ||
                     QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(familyId) ||
-                    QuickPlayFamilyRegistry.RELAY_OUTPUT.equals(familyId) || Rb15Plan.FAMILY_ID.equals(familyId))
+                    QuickPlayFamilyRegistry.RELAY_OUTPUT.equals(familyId) ||
+                    QuickPlayFamilyRegistry.SENSOR_CONTROL.equals(familyId) ||
+                    Rb15Plan.FAMILY_ID.equals(familyId))
                 require(actual == GeneratedDiagnosticOwnerDiversity.MULTI_OWNER_DIAGNOSTIC,
                     "Task 41 expected multi-owner family was classified as single-owner: " +
                         familyId);

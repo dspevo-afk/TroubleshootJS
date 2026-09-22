@@ -105,6 +105,12 @@ final class GenerationRequest {
             BoundedGeneratedBoardAssembler.Result result = BoundedGeneratedBoardAssembler.assemblePreparedPlan(plan, layout);
             return new Construction(result.getInstance(), result.getRealizationManifest().toCanonical());
         }
+        private Construction construct(BoundedGeneratedBoardAssembler.PreparedLayout layout,
+                PhysicalConstructionMetadata initialMetadata) {
+            BoundedGeneratedBoardAssembler.Result result =
+                BoundedGeneratedBoardAssembler.assemblePreparedPlan(plan, layout, initialMetadata);
+            return new Construction(result.getInstance(), result.getRealizationManifest().toCanonical());
+        }
         private Construction construct(PcbBoardLayout layout) {
             if(rb15 != null) return new Construction(new RelayOutputGenerator().generateResolved(rb15.seed,null,
                 layout==null?rb15:rb15.withRoutedLayout(layout)),rb15.canonical());
@@ -133,7 +139,8 @@ final class GenerationRequest {
             if(result!=null)throw new IllegalStateException("Construction already completed");
             if (compositionRouting != null) {
                 if (!compositionRouting.advance()) return false;
-                result=prepared.construct(compositionRouting.result()); return true;
+                result=prepared.construct(compositionRouting.result(),
+                    compositionRouting.initialMetadata()); return true;
             }
             if(routing!=null && !routing.advance())return false;
             result=prepared.construct(routing==null?(PcbBoardLayout)null:routing.result());return true;

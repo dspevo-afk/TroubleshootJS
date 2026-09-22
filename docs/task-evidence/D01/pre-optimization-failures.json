@@ -1,0 +1,11 @@
+{
+  "status": "FAIL",
+  "reason": "frozen five-second normal-corpus controlled-indicator ceiling",
+  "runs": [
+    {"phase": "live-original", "family": "controlled-indicator", "seed": "0", "elapsedMs": 5479, "coldProofMs": 4066},
+    {"phase": "staged-disposable-replay", "family": "controlled-indicator", "seed": "0", "elapsedMs": 5303, "coldProofMs": 4093},
+    {"phase": "static-plan-before-duplicate-structural-admission-removal", "family": "controlled-indicator", "seed": "2", "elapsedMs": 5380, "healthyMs": 1740, "coldProofMs": 3552},
+    {"phase": "static-plan-after-duplicate-structural-admission-removal", "family": "controlled-indicator", "seed": "2", "elapsedMs": 5215, "healthyMs": 1831, "coldProofMs": 3300}
+  ],
+  "interpretation": "The frozen threshold was unchanged. Static D01 removed adaptive solver replay; redundant structural admission and duplicate initial physical metadata construction were then removed while serial solver, repair, retest, routing and physical admission evidence remained mandatory."
+}

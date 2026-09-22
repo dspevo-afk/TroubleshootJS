@@ -43,7 +43,67 @@ final class GeneratedDiagnosticSolvabilityAdmission {
                         instance.getSimulationBindings().getEndpoint(targetId) == null)
                     throw new IllegalArgumentException("Diagnostic plan has no board probe target: " +
                         targetId);
+    }
+    }
+
+    /**
+     * Validates the provider and the complete global serviceability population
+     * without touching the rendered workbench.  This is the common admission
+     * predicate used before serial proof and before D01 cache reuse.
+     */
+    static void validateStructural(GeneratedBoardInstance instance) {
+        validate(instance);
+        GeneratedDiagnosticProvider provider = instance.getDiagnosticProvider();
+        if (provider == null || provider.getProviderId() == null ||
+                provider.getProviderId().length() == 0)
+            throw new IllegalArgumentException("Generated challenge has no identified diagnostic provider");
+        GeneratedDiagnosticPlan providerPlan = provider.getDiagnosticPlan();
+        GeneratedDiagnosticProgram providerProgram = provider.getObservationProgram();
+        if (providerPlan == null || providerProgram == null)
+            throw new IllegalArgumentException("Diagnostic provider has incomplete structural contract");
+        validatePlan(providerPlan);
+        providerProgram.validatePlan(providerPlan);
+        GeneratedDiagnosticSolvabilityContract contract =
+            instance.getDiagnosticSolvabilityContract();
+        if (contract.getPlans().size() != 1 ||
+                !GeneratedDiagnosticProgram.describePlan(providerPlan).equals(
+                    GeneratedDiagnosticProgram.describePlan(contract.getPlans().firstElement())))
+            throw new IllegalArgumentException("Provider plan differs from global diagnostic contract");
+
+        Vector<GeneratedFaultCandidate> admitted =
+            GeneratedFaultServiceabilityAdmission.getAdmittedCandidates(instance.getFaultCandidates());
+        if (admitted.isEmpty())
+            throw new IllegalArgumentException("Generated challenge has no structurally serviceable hypotheses");
+        GeneratedFaultServiceabilityAdmission.validateHypothesisPopulation(
+            instance.getFaultCandidates(), contract.getHypothesisKeys());
+        GeneratedFaultBinding selectedBinding = instance.getFaultBinding();
+        boolean selectedAdmitted = false;
+        for (GeneratedFaultCandidate candidate : admitted) {
+            GeneratedFaultServiceabilityAdmission.validateCandidate(candidate);
+            if (candidate.getBinding() == selectedBinding) selectedAdmitted = true;
+            GeneratedFaultServiceability serviceability = candidate.getServiceability();
+            GeneratedFaultLocus locus = serviceability.getLocus();
+            if (locus.getType() == GeneratedFaultLocusType.TRACE_SEGMENT)
+                throw new IllegalArgumentException("Diagnostic hypothesis has no installed physical owner: " +
+                    locus.getOwnerId());
+            BoardComponent component = instance.getBoard().getComponent(locus.getComponentId());
+            PhysicalBoardSlot slot = instance.getPhysicalBoardRuntime().getSlot(locus.getComponentId());
+            if (component == null || slot == null || slot.getInstalledPart() == null)
+                throw new IllegalArgumentException("Diagnostic hypothesis owner is not installed: " +
+                    locus.getOwnerId());
+            if (serviceability.getFaultClearingRepairActionIds().contains(
+                    WorkbenchOperation.CATALOG_INSTALL)) {
+                String catalogId = provider.getCorrectCatalogId(instance, locus.getComponentId());
+                if (catalogId == null || catalogId.length() == 0)
+                    throw new IllegalArgumentException("Diagnostic provider has no legal replacement for: " +
+                        locus.getComponentId());
+            }
         }
+        if (!selectedAdmitted)
+            throw new IllegalArgumentException("Selected diagnostic fault is outside the admitted population");
+        // Runtime capability/renderer checks remain at the installed executor
+        // boundary (`validateExecutableRuntime`); this structural predicate
+        // intentionally remains usable on a detached generated owner.
     }
 
     static void validate(CirSim sim, GeneratedBoardInstance instance) {

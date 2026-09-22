@@ -22,6 +22,7 @@ final class PlayerFamilyCatalog {
         if (QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(id)) return "BJT output driver";
         if (QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(id)) return "MOSFET output driver";
         if (QuickPlayFamilyRegistry.RELAY_OUTPUT.equals(id)) return "Relay output board";
+        if (QuickPlayFamilyRegistry.SENSOR_CONTROL.equals(id)) return "Sensor control board";
         if (Rb15Plan.FAMILY_ID.equals(id)) return "Procedural control board";
         if (ControlledIndicatorBlockContributions.FAMILY_ID.equals(id)) return "Two-channel controller";
         throw new IllegalArgumentException("Unknown player family");
@@ -31,7 +32,7 @@ final class PlayerFamilyCatalog {
         return ControlledIndicatorBlockContributions.FAMILY_ID.equals(id) ? DifficultyProfile.MEDIUM : DifficultyProfile.EASY;
     }
     static String fromRoute(String route) {
-        String[] names = {"led", "diode", "parallel", "rc", "npn", "nmos", "relay", "control-board", "controlled-indicator"};
+        String[] names = {"led", "diode", "parallel", "rc", "npn", "nmos", "relay", "sensor-control", "control-board", "controlled-indicator"};
         Vector<String> ids = families();
         for (int i = 0; i < names.length; i++) if (names[i].equals(route)) return ids.get(i);
         throw new IllegalArgumentException("Unsupported challenge route");

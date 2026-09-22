@@ -1,47 +1,56 @@
-# Current checkpoint: U02/U03 irregular-sampling cutoff repair
+# Current checkpoint: E02/E04/D01 rails, sensor control and static proof partitions
 
-Starting from published `95a257b`, this candidate remains on
-`codex/task43p-final-recovery` and repairs the remaining U02 AC-boundary review
-finding without starting U06:
+Starting from `030776ce`, this candidate remains on
+`codex/task43p-final-recovery` and completes the requested E02 → E04 → D01
+sequence without starting Q30:
 
-- AC signal-band qualification still uses only accepted CircuitJS samples and
-  same-direction full cycles, but each linear mean-crossing now carries a
-  bounded local monotone-PCHIP refinement discrepancy plus the represented
-  precision of its actual bracket endpoints. The upper median of conservative
-  periods requires a strict majority of repeated periods below 5 ms before a
-  200 Hz policy returns `BW RMS`; a lone uneven interpolation estimate is not
-  promoted to an out-of-band fact;
-- phase-varied 199/200/201/500 Hz tests now cover both reviewer cadences (the
-  repeating 500/250/1000/500/1000/250 us sequence and production-like 5 us
-  cadence with one 2.5 us step every 101 samples), plus an equivalent large
-  finite solver-time origin. Clean 199/200 Hz stay numeric; 201/500 Hz remain
-  explicit nonnumeric bandwidth refusals. The calculation is bounded and does
-  not use source metadata, component declarations, UI cadence, or paint;
-- retained DC/AC finite-load cadence, reference-before-load protection, scope
-  validity independent of frequency, and the pre-existing solver ownership /
-  cleanup boundaries remain unchanged.
+- E02 adds bounded, serializable linear and averaged four-terminal regulator
+  elements (INPUT/OUTPUT/RETURN/ENABLE), finite source/load/dropout behavior and
+  physical TO-220 mapping for the 12/5/3.3 V roles. The focused native contract
+  passes 238 assertions and the rebuilt browser verifier passes all six variants
+  (169 assertions);
+- E04 adds the sensor-control family with selected E02 rail, finite raw sensor
+  input, direct and hysteretic decision variants, exact passive resistor fault
+  loci, normal LOW/MID/HIGH player controls, and compatible-part service. Focused
+  contracts pass (E04 90; family 44). The visible production flow exercised the
+  unrepaired LOW/MID/HIGH symptom, isolated and removed RBIAS, purchased and
+  installed the compatible 10 kOhm replacement, restored power, and obtained
+  `Customer retest passed`; initial and repaired screenshots are retained;
+- D01 makes complete serial solver evidence authoritative, adds an immutable
+  value-only proof cache and fresh owner/controller receipts, and derives static
+  executable partition plans from the whole canonical retained population. Raw
+  temporal dependency remains a live-candidate invalidation boundary while only
+  declared temporal recipe/model/cache inputs identify reusable values. The
+  focused D01 contract passes 167 assertions; the compiled A10 receipt passes
+  3,104 assertions with 24 normal and eight D01 cold/warm rows, and its
+  independent Python reader passes.
 
-Validation PASS: focused U02 (585), U03 (17), A07 (24,868), and visual workbench
-(150); JS syntax, bench-meter (380), and U04 UI (113); final-source full maintained
-current-contract gate (57 Java suites plus independent seed/value/role oracles
-and preview-listener checks); and fresh JDK8 OBF production GWT compilation of
-all five permutations (81.268 s compile, 1.445 s link). A fresh task-owned
-compiled-browser temporal fixture passed periodic, DC, and pulse receipts. Its
-periodic source changed from 2.103076641350908 to 4.2066368715920035 V RMS with
-a 60.00000033902902 Hz scope trace; inspected held UI showed the waveform,
-scale/trigger controls, DC `SCOPE: NO SIGNAL`, and pulse `SCOPE: FREQ?` traces.
-See [U02/U03 evidence](task-evidence/U02-U03/README.md) and the machine-readable
-[cutoff follow-up receipt](task-evidence/U02-U03/irregular-cutoff-followup.json).
+Final validation PASS: focused E02/E04/Sensor/D01/A10/A10-dependency contracts
+(238/90/44/167/190/15), final-source full maintained current-contract gate
+(61 Java suites plus independent seed/value/role/report checks and cleanup
+PASS), current renderer-provider boundary, and a fresh JDK8 production GWT build
+(76.699 s compile; linker success). Fresh compiled E02 (169 assertions), E04
+(199 assertions for both direct/linear seed 0 and hysteretic/averaged seed 1)
+and D01/A10 (3,104 assertions) receipts pass. The slowest frozen
+controlled-indicator cold D01 receipt is 4,320 ms under the explicit unchanged
+5,000 ms `NORMAL_FROZEN_ATTEMPT` ceiling; its 2,842 ms HYPOTHESES stage contains
+2,824 ms serial reference plus 18 ms static-plan overhead. Separate D01 fixture
+rows use the explicit 90,000 ms `D01_JOB_BUDGET` (slowest: RB15 seed 0 at
+14,241 ms); the independent report reader passes. The retained compiled Quick
+Play matrix covers 30 current-menu cases, exact replay/power-isolation, privacy
+and owned-process cleanup; the final cache changes preserve the same solver
+calls, probe identities and player-owned interaction paths, while the current
+full native, E02/E04 and D01 compiled gates cover the rebuilt source.
 
-Task-owned port-8912 preview and Browser tabs were revalidated against their
-launch identities, closed, and left no listener. The task-owned temporary jsdom
-runtime remains outside the repository because the local execution policy refused
-its verified removal; it contains only the offline test dependency and is not
-staged. Unrelated tracked A07/solver/layout/generated-board/RB15 changes and
-untracked RelaySeed4/visual-productization/contract-cache evidence remain
-preserved. This report is the pending repair publication checkpoint; the requested
-push and its exact SHA will be recorded in the final handoff. U06 was not begun
-and remains the next unstarted milestone.
+Evidence: [E02](task-evidence/E02/README.md), [E04](task-evidence/E04/README.md),
+[D01](task-evidence/D01/README.md), [D01 A10 report](task-evidence/D01/a10-generation-report.json)
+and [compiled matrix receipt](task-evidence/D01/quickplay-procedural-matrix.json).
+The verified task-owned `preview.ps1 -Port 8929` process was stopped after the
+fresh receipts, and the temporary fresh verifier tabs were closed. Unrelated
+tracked A07/solver/layout/generated-board/RB15
+changes and untracked RelaySeed4/visual-productization/contract-cache evidence
+remain preserved. This checkpoint records the completed E02/E04/D01 candidate;
+Q30 is the next unstarted milestone.
 
 # Historical checkpoint: Hold Tab to view board underside
 

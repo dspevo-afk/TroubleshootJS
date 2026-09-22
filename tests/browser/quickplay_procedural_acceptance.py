@@ -73,7 +73,7 @@ try:
             page.wait_for_function("() => window.tsjProduct && document.body.getAttribute('data-player-screen') === 'MENU'", timeout=30000)
             snapshot = lambda: page.evaluate('window.tsjProduct.snapshot(false)')
             families = snapshot()['families']
-            assert len(families) == 9 and all(row['procedural'] for row in families)
+            assert len(families) == 10 and all(row['procedural'] for row in families)
 
             def click(label):
                 page.get_by_role('button', name=label, exact=True).click(timeout=15000)
@@ -129,7 +129,7 @@ try:
                     page.wait_for_function("() => document.body.getAttribute('data-player-screen') === 'MENU'", timeout=30000)
                     print('PASS', family['id'], family['profile'], ordinal, state['replay'], round(seconds, 2), flush=True)
 
-            assert len(result['cases']) == 27
+            assert len(result['cases']) == 30
             result['replays'] = []
             for family_id in ('RELAY_OUTPUT', 'COMPOSED_CONTROLLED_INDICATOR'):
                 replay = saved[family_id]

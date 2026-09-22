@@ -2296,6 +2296,7 @@ final class PhysicalPartRenderDeveloperVerifier {
             PhysicalPackages.THROUGH_HOLE_LED.isEquivalentTo(physicalPackage) ||
             PhysicalPackages.TO92_NPN.isEquivalentTo(physicalPackage) ||
             PhysicalPackages.TO92_NMOS.isEquivalentTo(physicalPackage) ||
+            PhysicalPackages.TO220_REGULATOR_4.isEquivalentTo(physicalPackage) ||
             PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR.isEquivalentTo(physicalPackage) ||
             PhysicalPackages.RADIAL_CERAMIC_CAPACITOR.isEquivalentTo(physicalPackage) ||
             PhysicalPackages.THROUGH_HOLE_CONNECTOR_2.isEquivalentTo(physicalPackage) ||

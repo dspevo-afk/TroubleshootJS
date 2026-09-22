@@ -51,7 +51,7 @@ public final class U04SessionContractTest {
         session.adopt(b, launch);
         check(!session.retested(test, a, true, "late") && session.owner() == b &&
             session.screen() == PlayerSession.Screen.WORKBENCH, "pending completion cannot finish an adopted successor");
-        check(PlayerFamilyCatalog.families().size() == 9, "all current normal families represented");
+        check(PlayerFamilyCatalog.families().size() == 10, "all current player families represented");
         verifyGenericShop();
         verifyAllCatalogLabels();
         System.out.println("PASS: U04 session contracts assertions=" + assertions);

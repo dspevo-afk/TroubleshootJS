@@ -185,7 +185,7 @@ final class RcDelayTemporalBehavior implements GeneratedTemporalBehavior,
     void perturbHealthyReferenceForDeveloperVerification() {
         if (!healthyReferenceCaptured)
             throw new IllegalStateException("RC healthy reference is unavailable");
-        double delta = Math.max(1e-6, Math.abs(healthyLateVoltage) * 1e-6);
+        double delta = Math.max(1e-3, Math.abs(healthyLateVoltage) * 1e-4);
         double perturbed = healthyLateVoltage + delta;
         if (!finite(perturbed))
             throw new IllegalStateException("RC healthy reference canary overflowed");

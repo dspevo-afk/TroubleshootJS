@@ -6,14 +6,17 @@ import java.util.Vector;
 final class A10GenerationDeveloperVerifier {
     private static int assertions, cancellations, unitCancellations, failures, lifecycleFailures;
     private static final long BENCHMARK_ATTEMPT_MILLIS = 5000;
+    private static final String NORMAL_BUDGET_SCOPE = "NORMAL_FROZEN_ATTEMPT";
+    private static final String D01_BUDGET_SCOPE = "D01_JOB_BUDGET";
     private static long cancellationMaxMs;
     private static String temporalRegression, temporalWork, observationCleanup;
     private static final Vector<String> metrics = new Vector<String>();
+    private static final Vector<String> d01Metrics = new Vector<String>();
     private A10GenerationDeveloperVerifier() { }
 
     static void verify(CirSim sim, boolean forceFailure) {
         assertions = cancellations = unitCancellations = failures = lifecycleFailures = 0; cancellationMaxMs = 0;
-        metrics.clear(); clearReport();
+        metrics.clear(); d01Metrics.clear(); clearReport();
         temporalRegression = "null";
         temporalWork = "null";
         observationCleanup = "null";
@@ -280,11 +283,9 @@ final class A10GenerationDeveloperVerifier {
                 }
                 require(changed, "real consumed dependency mutation executed " + mutation);
                 coordinator.advanceForDeveloperVerification();
-                require(coordinator.getJob().getOutcome() == GenerationJob.Outcome.STALE &&
-                    coordinator.getJob().getReceipt() == null &&
-                    coordinator.getJob().getFailure() != null &&
-                    "Generation dependency context changed".equals(coordinator.getJob().getFailure().getMessage()),
-                    "changed source/load/settings/scenario rejects at dependency comparison " + mutation);
+                require(isDependencyContextChange(coordinator.getJob()),
+                    "changed source/load/settings/scenario rejects at dependency comparison " + mutation +
+                    "; " + jobDiagnostic(coordinator));
                 require(sim.getGeneratedBoardInstance() == original && sim.elmList == originalGraph,
                     "changed dependency restores original");
                 failures++;
@@ -304,31 +305,117 @@ final class A10GenerationDeveloperVerifier {
 
             verifyTemporalRegression(sim, coordinator, original);
 
-            // Pilot seeds precede held-out seeds. Cold/warm are consecutive fresh
-            // constructions in one loaded application, as in A01 (not cache flushing).
+            GenerationRequest cacheRequest = GenerationRequest.leaf(
+                QuickPlayFamilyRegistry.LED_INDICATOR, 0, false);
+            coordinator.clearDiagnosticProofCacheForDeveloperVerification();
+            Task41SimulationSnapshot warmSnapshot = Task41SimulationSnapshot.capture(sim);
+            GeneratedBoardInstance warmedPublished = null;
+            int cacheBeforeWarm = coordinator.getDiagnosticProofCacheSize();
+            try {
+                coordinator.start(cacheRequest, null, false);
+                GenerationJob warmJob = coordinator.getJob();
+                if (warmJob.getOutcome() == GenerationJob.Outcome.PASS)
+                    warmedPublished = sim.getGeneratedBoardInstance();
+                require(warmJob.getOutcome() == GenerationJob.Outcome.PASS &&
+                    warmJob.getReceipt() != null && warmedPublished != null,
+                    "D01 warm-cache setup publishes a real LED owner");
+                require(coordinator.getDiagnosticProofCacheSize() == cacheBeforeWarm + 1,
+                    "D01 warm-cache setup stores only after publication");
+            } finally {
+                if (coordinator.isRunning()) coordinator.cancel();
+                disposePublishedProbe(sim, warmedPublished, original);
+                warmSnapshot.restore(sim); warmSnapshot.assertRestored(sim);
+            }
+
+            int warmedCacheSize = coordinator.getDiagnosticProofCacheSize();
+            int warmedCacheHits = coordinator.getDiagnosticProofCacheHits();
+            Task41SimulationSnapshot warmCancelSnapshot = Task41SimulationSnapshot.capture(sim);
+            try {
+                coordinator.startForDiagnosticCacheVerification(cacheRequest);
+                advanceTo(coordinator, GenerationJob.Stage.HYPOTHESES);
+                coordinator.advanceForDeveloperVerification();
+                require(coordinator.isRunning() && coordinator.getJob().getStage() == GenerationJob.Stage.SYMPTOM &&
+                    coordinator.getDiagnosticProofCacheHits() == warmedCacheHits + 1 &&
+                    coordinator.getJob().getStageWorkCount(GenerationJob.Stage.HYPOTHESES) == 1,
+                    "D01 warm cache hit completes its real proof stage before publication");
+                coordinator.cancel();
+                require(coordinator.getJob().getOutcome() == GenerationJob.Outcome.CANCELLED &&
+                    coordinator.getJob().getReceipt() == null &&
+                    coordinator.getDiagnosticProofCacheSize() == warmedCacheSize,
+                    "D01 warm cache cancellation does not mutate the existing cache");
+                requireOriginal(sim, original, originalController, originalGraph, originalAttached, copper);
+            } finally {
+                if (coordinator.isRunning()) coordinator.cancel();
+                warmCancelSnapshot.restore(sim); warmCancelSnapshot.assertRestored(sim);
+            }
+
+            coordinator.clearDiagnosticProofCacheForDeveloperVerification();
+            require(coordinator.getDiagnosticProofCacheSize() == 0,
+                "D01 cold cancellation starts from an isolated cache");
+            int coldCacheMisses = coordinator.getDiagnosticProofCacheMisses();
+            Task41SimulationSnapshot coldCancelSnapshot = Task41SimulationSnapshot.capture(sim);
+            try {
+                coordinator.startForDiagnosticCacheVerification(cacheRequest);
+                advanceTo(coordinator, GenerationJob.Stage.SYMPTOM);
+                GenerationJob coldJob = coordinator.getJob();
+                require(coldJob.isRunning() && coldJob.getReceipt() == null &&
+                    coldJob.getStageWorkCount(GenerationJob.Stage.HYPOTHESES) ==
+                        GeneratedDiagnosticProofService.requiredWorkUnits(
+                            sim.getGeneratedBoardInstance(), false) &&
+                    coordinator.getDiagnosticProofCacheMisses() == coldCacheMisses + 1 &&
+                    coordinator.getDiagnosticProofCacheSize() == 0,
+                    "D01 cold proof reaches post-proof pre-publication with no stored entry");
+                coordinator.cancel();
+                require(coordinator.getJob().getOutcome() == GenerationJob.Outcome.CANCELLED &&
+                    coordinator.getJob().getReceipt() == null &&
+                    coordinator.getDiagnosticProofCacheSize() == 0,
+                    "D01 cold cache cancellation discards the prepared entry");
+                requireOriginal(sim, original, originalController, originalGraph, originalAttached, copper);
+            } finally {
+                if (coordinator.isRunning()) coordinator.cancel();
+                coldCancelSnapshot.restore(sim); coldCancelSnapshot.assertRestored(sim);
+            }
+
+            // Pilot seeds precede held-out seeds. D01 starts this evidence
+            // corpus from an empty value-only cache, then proves each immediate
+            // repeat is a fresh-owner warm receipt rather than a second serial
+            // solver proof.
+            coordinator.clearDiagnosticProofCacheForDeveloperVerification();
             String[] families = { QuickPlayFamilyRegistry.LED_INDICATOR,
                 QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH, "controlled-indicator" };
             for (int corpus = 0; corpus < 2; corpus++) {
               for (String family : families) {
                 for (long seed = corpus * 2; seed < corpus * 2 + 2; seed++) {
-                    String firstIdentity = null;
+                    GeneratedDiagnosticProofReceipt firstDiagnosticReceipt = null;
                     for (int repeat = 0; repeat < 2; repeat++) {
                         Task41SimulationSnapshot snapshot = Task41SimulationSnapshot.capture(sim);
                         GeneratedBoardInstance published = null;
                         int hits = coordinator.getPlanCacheHits();
+                        int proofHits = coordinator.getDiagnosticProofCacheHits();
                         try {
                             coordinator.start("controlled-indicator".equals(family) ?
                                 GenerationRequest.controlled(seed) : GenerationRequest.leaf(family, seed, false), null, false);
                             GenerationJob job = coordinator.getJob();
                             if (job.getOutcome() == GenerationJob.Outcome.PASS)
                                 published = sim.getGeneratedBoardInstance();
+                            boolean proofCacheHit = coordinator.getDiagnosticProofCacheHits() > proofHits;
+                            GeneratedDiagnosticProofReceipt diagnosticReceipt =
+                                job.getOutcome() == GenerationJob.Outcome.PASS &&
+                                sim.getGeneratedChallengeController() != null ?
+                                sim.getGeneratedChallengeController().getDiagnosticProofReceipt() : null;
                             metrics.add("{\"family\":\"" + family + "\",\"seed\":\"" + seed +
                                 "\",\"corpus\":\"" + (seed < 2 ? "pilot" : "holdout") +
                                 "\",\"repeat\":" + repeat + ",\"elapsedMs\":" + job.getElapsedMillis() +
                                 ",\"outcome\":\"" + job.getOutcome().name() + "\",\"work\":" + job.getStepCount() +
                                 ",\"maxAdvanceMs\":" + coordinator.getMaxAdvanceMillis() +
+                                ",\"budgetScope\":\"" + NORMAL_BUDGET_SCOPE + "\"" +
+                                ",\"benchmarkAttemptMillis\":" + BENCHMARK_ATTEMPT_MILLIS +
                                 ",\"planCacheHit\":" + (coordinator.getPlanCacheHits() > hits) +
-                                ",\"proofCacheHit\":false,\"stages\":" + stages(job) + "}");
+                                ",\"proofCacheHit\":" + proofCacheHit +
+                                ",\"diagnostic\":" + diagnosticMetrics(diagnosticReceipt,
+                                    published, proofCacheHit,
+                                    job.getStageElapsedMillis(GenerationJob.Stage.HYPOTHESES)) +
+                                ",\"stages\":" + stages(job) + "}");
                             publish(report("RUNNING"));
                             require(job.getOutcome() == GenerationJob.Outcome.PASS && job.getReceipt() != null,
                                 "actual staged generation " + family + "/" + seed + ": " +
@@ -341,8 +428,15 @@ final class A10GenerationDeveloperVerifier {
                             require(receipt.getStageCount() == 6 &&
                                 sim.getGeneratedChallengeController().getDiagnosticProofReceipt() != null,
                                 "complete physical/electrical/diagnostic lineage");
-                            if (repeat == 0) firstIdentity = receipt.canonical();
-                            else require(firstIdentity.equals(receipt.canonical()), "cold/warm canonical receipt equality");
+                            require(proofCacheHit == (repeat == 1),
+                                "D01 cold/warm cache provenance is exact");
+                            int proofWork = job.getStageWorkCount(GenerationJob.Stage.HYPOTHESES);
+                            require(proofCacheHit ? proofWork == 1 : proofWork ==
+                                    GeneratedDiagnosticProofService.requiredWorkUnits(published, false),
+                                "D01 hypothesis work reports exact cold or warm proof provenance");
+                            if (repeat == 0) firstDiagnosticReceipt = diagnosticReceipt;
+                            else require(sameDiagnosticValue(firstDiagnosticReceipt, diagnosticReceipt),
+                                "cold/warm retained diagnostic value equality");
                         } finally {
                             if (coordinator.isRunning()) coordinator.cancel();
                             disposePublishedProbe(sim, published, original);
@@ -354,6 +448,10 @@ final class A10GenerationDeveloperVerifier {
             }
             require(sim.getGeneratedBoardInstance() == original && sim.elmList == originalGraph,
                 "generation corpus restored original");
+            verifyD01Benchmarks(sim, coordinator, original, originalController, originalGraph,
+                originalAttached, copper);
+            require(sim.getGeneratedBoardInstance() == original && sim.elmList == originalGraph,
+                "D01 benchmark cohort restored original");
         } finally {
             if (coordinator.isRunning()) coordinator.cancel();
             sim.setSimRunning(originalRunning);
@@ -364,6 +462,11 @@ final class A10GenerationDeveloperVerifier {
     private static String report(String status) {
         StringBuilder rows = new StringBuilder();
         for (String row : metrics) { if (rows.length() != 0) rows.append(','); rows.append(row); }
+        StringBuilder d01Rows = new StringBuilder();
+        for (String row : d01Metrics) {
+            if (d01Rows.length() != 0) d01Rows.append(',');
+            d01Rows.append(row);
+        }
         return "{\"protocol\":\"TSJ-A10-GENERATION-1\",\"status\":\"" + status + "\",\"assertions\":" +
             assertions + ",\"cancellations\":" + cancellations + ",\"rejected\":" + failures +
             ",\"unitCancellations\":" + unitCancellations +
@@ -381,7 +484,294 @@ final class A10GenerationDeveloperVerifier {
             ",\"temporalRegression\":" + temporalRegression +
             ",\"temporalWork\":" + temporalWork +
             ",\"observationCleanup\":" + observationCleanup +
-            ",\"browser\":" + browserEnvironment() + ",\"attempts\":[" + rows + "]}";
+            ",\"browser\":" + browserEnvironment() + ",\"attempts\":[" + rows + "]" +
+            ",\"d01Benchmarks\":[" + d01Rows + "]}";
+    }
+    /**
+     * D01 evidence counts the complete serial admission population and its
+     * statically validated adaptive partition for the selected fault. The
+     * cache stores only values; no second solver replay or owner is represented
+     * by the receipt.
+     */
+    private static String diagnosticMetrics(GeneratedDiagnosticProofReceipt receipt,
+            GeneratedBoardInstance owner, boolean proofCacheHit, long proofStageMillis) {
+        if (receipt == null) return "null";
+        Vector<GeneratedDiagnosticSolvabilityEvidence> evidence = receipt.getEvidence();
+        GeneratedDiagnosticPartitionPlan partition = receipt.getPartitionPlan();
+        require(owner != null && partition != null, "D01 receipt has an adaptive plan and owner");
+        int observations = 0;
+        int repairWitnesses = 0;
+        int adaptivePopulationObservations = 0;
+        String selectedHypothesis = owner.getFaultBinding().getFault().getHypothesisKey();
+        int adaptiveObservations = -1;
+        for (GeneratedDiagnosticSolvabilityEvidence value : evidence) {
+            observations += value.getSolverSamples().size();
+            if (value.isRepairReachable() && value.isCustomerRetestPassed() &&
+                    value.isStateIsolated())
+                repairWitnesses++;
+            int routeObservations = adaptiveRouteObservations(partition, value);
+            adaptivePopulationObservations += routeObservations;
+            if (selectedHypothesis.equals(value.getHypothesisKey()))
+                adaptiveObservations = routeObservations;
+        }
+        require(adaptiveObservations >= 1,
+            "D01 static adaptive plan covers the selected hypothesis");
+        int hypotheses = evidence.size();
+        int serialSolves = proofCacheHit ? 0 : hypotheses;
+        int adaptiveSolves = 0;
+        long serialReferenceMillis = proofCacheHit ? 0 : receipt.getElapsedMillis();
+        long coldProofMillis = proofCacheHit ? 0 : proofStageMillis;
+        long staticPlanOverheadMillis = coldProofMillis - serialReferenceMillis;
+        require(staticPlanOverheadMillis >= 0,
+            "D01 cold proof timing must include serial reference and static-plan overhead");
+        long warmReuseMillis = proofCacheHit ? proofStageMillis : 0;
+        return "{\"hypotheses\":" + hypotheses + ",\"observations\":" + observations +
+            ",\"serialObservations\":" + observations +
+            ",\"adaptiveObservations\":" + adaptiveObservations +
+            ",\"adaptivePopulationObservations\":" + adaptivePopulationObservations +
+            ",\"serialSolves\":" + serialSolves +
+            ",\"adaptiveSolves\":" + adaptiveSolves +
+            ",\"solves\":" + serialSolves +
+            ",\"hypothesisSolves\":" + serialSolves +
+            ",\"repairWitnesses\":" + repairWitnesses +
+            ",\"repairs\":" + repairWitnesses +
+            ",\"serialReferenceMs\":" + serialReferenceMillis +
+            ",\"coldProofMs\":" + coldProofMillis +
+            ",\"staticPlanOverheadMs\":" + staticPlanOverheadMillis +
+            ",\"warmReuseMs\":" + warmReuseMillis +
+            ",\"proofPath\":\"" + (proofCacheHit ? "VALUE_ONLY_REUSE" : "SERIAL_REFERENCE") + "\"" +
+            ",\"proofStageScope\":\"SERIAL_REFERENCE_PLUS_STATIC_ADAPTIVE_PLAN\"" +
+            ",\"adaptivePlanDepth\":" + partition.getMaximumObservationDepth() +
+            ",\"adaptivePlanLeaves\":" + partition.getLeafCount() +
+            ",\"adaptivePlanNodes\":" + partition.getNodeCount() + "}";
+    }
+    private static int adaptiveRouteObservations(GeneratedDiagnosticPartitionPlan partition,
+            GeneratedDiagnosticSolvabilityEvidence proof) {
+        GeneratedDiagnosticPartitionPlan.Cursor cursor = partition.beginCursor();
+        Vector<GeneratedDiagnosticSample> samples = proof.getSolverSamples();
+        while (!cursor.isComplete()) {
+            String expected = cursor.getNextSampleId();
+            GeneratedDiagnosticSample selected = null;
+            for (GeneratedDiagnosticSample sample : samples)
+                if (sample != null && expected.equals(sample.getSampleId())) {
+                    selected = sample; break;
+                }
+            require(selected != null, "D01 adaptive route sample is in the serial evidence");
+            cursor.accept(selected);
+        }
+        require(cursor.getResolvedHypothesisKeys().contains(proof.getHypothesisKey()),
+            "D01 adaptive route resolves to the retained hypothesis");
+        return cursor.getObservationCount();
+    }
+    private static void verifyD01Benchmarks(CirSim sim, GenerationCoordinator coordinator,
+            GeneratedBoardInstance original, GeneratedChallengeController originalController,
+            Object originalGraph, int originalAttached, String copper) {
+        coordinator.clearDiagnosticProofCacheForDeveloperVerification();
+        String[] families = { Rb15Plan.FAMILY_ID, "controlled-indicator",
+            QuickPlayFamilyRegistry.SENSOR_CONTROL, QuickPlayFamilyRegistry.SENSOR_CONTROL };
+        long[] seeds = { 0L, 0L, 0L, 1L };
+        for (int fixture = 0; fixture < families.length; fixture++) {
+            String family = families[fixture];
+            String publishedFamily = publishedFamilyForFixture(family);
+            long seed = seeds[fixture];
+            GenerationRequest request = Rb15Plan.FAMILY_ID.equals(family) ?
+                GenerationRequest.leaf(Rb15Plan.FAMILY_ID, seed, false) :
+                "controlled-indicator".equals(family) ? GenerationRequest.controlled(seed) :
+                GenerationRequest.leaf(QuickPlayFamilyRegistry.SENSOR_CONTROL, seed, false);
+            GeneratedDiagnosticProofReceipt firstDiagnosticReceipt = null;
+            for (int repeat = 0; repeat < 2; repeat++) {
+                Task41SimulationSnapshot snapshot = Task41SimulationSnapshot.capture(sim);
+                GeneratedBoardInstance published = null;
+                int planHits = coordinator.getPlanCacheHits();
+                int proofHits = coordinator.getDiagnosticProofCacheHits();
+                int proofMisses = coordinator.getDiagnosticProofCacheMisses();
+                int cacheSize = coordinator.getDiagnosticProofCacheSize();
+                try {
+                    coordinator.start(request, null, false);
+                    GenerationJob job = coordinator.getJob();
+                    if (job.getOutcome() == GenerationJob.Outcome.PASS)
+                        published = sim.getGeneratedBoardInstance();
+                    boolean planCacheHit = coordinator.getPlanCacheHits() > planHits;
+                    boolean proofCacheHit = coordinator.getDiagnosticProofCacheHits() > proofHits;
+                    GeneratedDiagnosticProofReceipt diagnosticReceipt =
+                        job.getOutcome() == GenerationJob.Outcome.PASS &&
+                        sim.getGeneratedChallengeController() != null ?
+                        sim.getGeneratedChallengeController().getDiagnosticProofReceipt() : null;
+                    require(job.getOutcome() == GenerationJob.Outcome.PASS &&
+                        job.getReceipt() != null && published != null &&
+                        publishedFamily.equals(published.getCircuitFamilyId()) &&
+                        diagnosticReceipt != null,
+                        "D01 benchmark completes " + family + " repeat " + repeat + ": " +
+                        (job.getFailure() == null ? "" : job.getFailure().getMessage()));
+                    Vector<GeneratedDiagnosticSolvabilityEvidence> evidence =
+                        diagnosticReceipt.getEvidence();
+                    int serialObservations = 0;
+                    for (GeneratedDiagnosticSolvabilityEvidence value : evidence)
+                        serialObservations += value.getSolverSamples().size();
+                    if (Rb15Plan.FAMILY_ID.equals(family)) {
+                        require(published.getBoard().getComponentIds().size() == 16 &&
+                            evidence.size() == 3 && serialObservations == 27,
+                            "D01 RB15 benchmark retains the complete 16-part/3-hypothesis population");
+                    } else if (QuickPlayFamilyRegistry.SENSOR_CONTROL.equals(family)) {
+                        require(evidence.size() == 3 && serialObservations == 108,
+                            "D01 E04 benchmark retains the complete 3-resistor/108-observation population");
+                        verifyE04DiagnosticPopulation(published, diagnosticReceipt, seed);
+                    } else {
+                        require(evidence.size() >= 4 && serialObservations > 100,
+                            "D01 larger evolving benchmark retains its complete hypothesis population");
+                    }
+                    verifyD01StageBudgetAndPublication(sim, coordinator, job, published,
+                        original, originalGraph);
+                    require(proofCacheHit == (repeat == 1) &&
+                        diagnosticReceipt.isWarmReuseForDeveloperVerification() == proofCacheHit,
+                        "D01 benchmark cache provenance is exact for " + family);
+                    require(coordinator.getDiagnosticProofCacheMisses() == proofMisses +
+                            (repeat == 0 ? 1 : 0) &&
+                        coordinator.getDiagnosticProofCacheSize() == cacheSize +
+                            (repeat == 0 ? 1 : 0),
+                        "D01 proof cache publication is exact for " + family + "/" + seed);
+                    int proofWork = job.getStageWorkCount(GenerationJob.Stage.HYPOTHESES);
+                    require(proofCacheHit ? proofWork == 1 : proofWork ==
+                            GeneratedDiagnosticProofService.requiredWorkUnits(published, false),
+                        "D01 benchmark reports exact cold/warm hypothesis work for " + family);
+                    require(job.getElapsedMillis() <= GenerationCoordinator.MAX_JOB_MILLIS &&
+                        coordinator.getMaxAdvanceMillis() <= GenerationCoordinator.MAX_STEP_MILLIS,
+                        "D01 benchmark remains inside job and unit budgets for " + family);
+                    require(job.getReceipt().getStageCount() == 6,
+                        "D01 benchmark retains all six generation stages for " + family);
+                    String diagnostic = diagnosticMetrics(diagnosticReceipt, published,
+                        proofCacheHit, job.getStageElapsedMillis(GenerationJob.Stage.HYPOTHESES));
+                    d01Metrics.add("{\"family\":\"" + family + "\",\"seed\":\"" + seed + "\"" +
+                        ",\"corpus\":\"d01\",\"repeat\":" + repeat +
+                        ",\"elapsedMs\":" + job.getElapsedMillis() +
+                        ",\"outcome\":\"" + job.getOutcome().name() +
+                        "\",\"work\":" + job.getStepCount() +
+                        ",\"maxAdvanceMs\":" + coordinator.getMaxAdvanceMillis() +
+                        ",\"budgetScope\":\"" + D01_BUDGET_SCOPE + "\"" +
+                        ",\"benchmarkAttemptMillis\":" + GenerationCoordinator.MAX_JOB_MILLIS +
+                        ",\"planCacheHit\":" + planCacheHit +
+                        ",\"proofCacheHit\":" + proofCacheHit +
+                        ",\"diagnostic\":" + diagnostic +
+                        ",\"stages\":" + stages(job) + "}");
+                    publish(report("RUNNING"));
+                    if (repeat == 0) firstDiagnosticReceipt = diagnosticReceipt;
+                    else require(sameDiagnosticValue(firstDiagnosticReceipt, diagnosticReceipt),
+                        "D01 cold/warm retained diagnostic value equality for " + family);
+                } finally {
+                    if (coordinator.isRunning()) coordinator.cancel();
+                    disposePublishedProbe(sim, published, original);
+                    snapshot.restore(sim); snapshot.assertRestored(sim);
+                    requireOriginal(sim, original, originalController, originalGraph,
+                        originalAttached, copper);
+                }
+            }
+        }
+    }
+
+    /** Benchmark reporting keeps the stable fixture alias while publication uses its canonical ID. */
+    private static String publishedFamilyForFixture(String family) {
+        return "controlled-indicator".equals(family) ?
+            ControlledIndicatorDeviceBehavior.FAMILY_ID : family;
+    }
+    private static void verifyE04DiagnosticPopulation(GeneratedBoardInstance owner,
+            GeneratedDiagnosticProofReceipt receipt, long seed) {
+        require(owner != null && receipt != null &&
+            QuickPlayFamilyRegistry.SENSOR_CONTROL.equals(owner.getCircuitFamilyId()) &&
+            owner.getSeed() == seed &&
+            (seed == 0L ? SensorControlGenerator.DIRECT_VARIANT :
+                SensorControlGenerator.HYSTERETIC_VARIANT).equals(owner.getTopologyVariantId()),
+            "D01 E04 benchmark retains the deterministic direct/hysteretic variant for seed " + seed);
+        Vector<GeneratedFaultCandidate> candidates = owner.getFaultCandidates();
+        Vector<String> expectedOwners = new Vector<String>();
+        expectedOwners.add("RBIAS"); expectedOwners.add("RFB"); expectedOwners.add("RREF");
+        Vector<String> expectedFaultIds = new Vector<String>();
+        expectedFaultIds.add("SENSOR_RBIAS_OPEN"); expectedFaultIds.add("SENSOR_RFB_OPEN");
+        expectedFaultIds.add("SENSOR_RREF_OPEN");
+        Vector<String> expectedKeys = GeneratedDiagnosticSolvabilityAdmission.getHypothesisKeys(candidates);
+        require(candidates.size() == 3 &&
+            GeneratedDiagnosticSolvabilityAdmission.getAdmittedCandidateCount(candidates) == 3 &&
+            owner.getAdmittedFaultPhysicalOwnerCount() == 3 &&
+            owner.getAdmittedFaultPhysicalOwnerIds().equals(expectedOwners) &&
+            owner.getDiagnosticSolvabilityContract().getFamilyId().equals(
+                QuickPlayFamilyRegistry.SENSOR_CONTROL) &&
+            owner.getDiagnosticSolvabilityContract().getTopologyVariantId().equals(
+                owner.getTopologyVariantId()) && owner.getDiagnosticSolvabilityContract().getSeed() == seed &&
+            owner.getDiagnosticSolvabilityContract().getAdmittedCandidateCount() == 3 &&
+            owner.getDiagnosticSolvabilityContract().getAdmittedPhysicalOwnerCount() == 3 &&
+            owner.getDiagnosticSolvabilityContract().getHypothesisKeys().equals(expectedKeys),
+            "D01 E04 admission retains exactly RBIAS/RREF/RFB and no supply/U1 candidate");
+        Vector<String> candidateOwners = new Vector<String>();
+        Vector<String> candidateIds = new Vector<String>();
+        for (GeneratedFaultCandidate candidate : candidates) {
+            GeneratedFaultServiceability serviceability = candidate.getServiceability();
+            require(candidate.isAdmitted() && candidate.getFault().getType() ==
+                    GeneratedFaultType.RESISTOR_OPEN &&
+                QuickPlayFamilyRegistry.SENSOR_CONTROL.equals(candidate.getFault().getCircuitFamilyId()) &&
+                serviceability != null && serviceability.getLocus() != null &&
+                serviceability.getLocus().getType() == GeneratedFaultLocusType.COMPONENT_INTERNAL &&
+                candidate.getFault().getTargetComponentId().equals(
+                    serviceability.getLocus().getComponentId()) &&
+                expectedOwners.contains(serviceability.getLocus().getOwnerId()) &&
+                !"U1".equals(serviceability.getLocus().getOwnerId()) &&
+                !"J1".equals(serviceability.getLocus().getOwnerId()),
+                "D01 E04 candidate has a physical resistor owner");
+            candidateOwners.add(serviceability.getLocus().getOwnerId());
+            candidateIds.add(candidate.getFault().getId());
+        }
+        require(candidateOwners.size() == 3 && candidateOwners.containsAll(expectedOwners) &&
+            candidateIds.size() == 3 && candidateIds.containsAll(expectedFaultIds),
+            "D01 E04 candidate owners cover all three physical resistors exactly");
+        GeneratedDiagnosticProvider provider = owner.getDiagnosticProvider();
+        Vector<GeneratedDiagnosticSolvabilityEvidence> evidence = receipt.getEvidence();
+        GeneratedDiagnosticPartitionPlan partition = receipt.getPartitionPlan();
+        require(provider != null && partition != null &&
+            receipt.getContextKey() != null &&
+            "sensor-control-diagnostic@1".equals(receipt.getProviderId()) &&
+            receipt.getProgramIdentity().equals(provider.getObservationProgram().canonical()) &&
+            partition.getHypothesisKeys().equals(expectedKeys) &&
+            partition.getProviderId().equals(provider.getProviderId()) &&
+            partition.getProgramIdentity().equals(provider.getObservationProgram().canonical()),
+            "D01 E04 receipt retains the owner-bound provider and complete partition identity");
+        GeneratedDiagnosticSolvabilityAdmission.validateStructural(owner);
+        partition.validateAgainst(owner.getFaultCandidates(), provider.getObservationProgram(), evidence);
+        require(evidence.size() == 3, "D01 E04 receipt covers exactly three hypotheses");
+        for (GeneratedDiagnosticSolvabilityEvidence value : evidence)
+            require(value.getFamilyId().equals(QuickPlayFamilyRegistry.SENSOR_CONTROL) &&
+                value.getSeed() == seed && value.getAdmittedCandidateCount() == 3 &&
+                value.getAdmittedPhysicalOwnerCount() == 3 &&
+                expectedKeys.contains(value.getHypothesisKey()) &&
+                value.getSolverSamples().size() == 36 && value.isRepairReachable() &&
+                value.isCustomerRetestPassed() && value.isStateIsolated() &&
+                value.hasUnaffectedFunctionRetestObservation() &&
+                "PASS".equals(value.getDeterministicResult()) &&
+                "NONE".equals(value.getDeterministicRejectionReason()) &&
+                value.getRepairSemantics() != null && value.getMeasuredExecutionDepth() > 0 &&
+                value.getExecutedRepairActionIds().contains(WorkbenchOperation.CATALOG_INSTALL) &&
+                value.getExecutedActionIds().contains(GeneratedBoardOperationIds.CUSTOMER_RETEST),
+                "D01 E04 serial proof evidence is complete and repair-reachable");
+    }
+    private static void verifyD01StageBudgetAndPublication(CirSim sim,
+            GenerationCoordinator coordinator, GenerationJob job, GeneratedBoardInstance published,
+            GeneratedBoardInstance original, Object originalGraph) {
+        int stageWork = 0;
+        for (GenerationJob.Stage stage : GenerationJob.Stage.values()) {
+            require(job.getStageWorkCount(stage) >= 1 &&
+                job.getStageElapsedMillis(stage) >= 0 &&
+                job.getStageElapsedMillis(stage) <= GenerationCoordinator.MAX_JOB_MILLIS,
+                "D01 generation stage is bounded and recorded: " + stage);
+            stageWork += job.getStageWorkCount(stage);
+        }
+        require(stageWork == job.getStepCount() && job.getStepCount() <= GenerationCoordinator.MAX_JOB_STEPS &&
+            job.getElapsedMillis() >= 0 && job.getElapsedMillis() <= GenerationCoordinator.MAX_JOB_MILLIS &&
+            coordinator.getMaxAdvanceMillis() <= GenerationCoordinator.MAX_STEP_MILLIS,
+            "D01 generation job remains inside its work and wall budgets");
+        require(sim.getGeneratedBoardInstance() == published && published != null &&
+            sim.elmList != originalGraph && published != original &&
+            !coordinator.retainsSavedOwnersForDeveloperVerification() &&
+            !coordinator.retainsObservationForDeveloperVerification(),
+            "D01 publication owns a fresh board without retaining saved or proof owners");
+        require(sim.getGeneratedBoardInstance() != original,
+            "D01 publication replaces the original board only after complete proof");
     }
     private static String stages(GenerationJob job) {
         StringBuilder result = new StringBuilder("[");
@@ -428,18 +818,18 @@ final class A10GenerationDeveloperVerifier {
                     coordinator.startForDeveloperVerification(request);
                     advanceTo(coordinator, GenerationJob.Stage.PUBLISH);
                     GeneratedBoardInstance candidate = sim.getGeneratedBoardInstance();
-                    require(dependencies.equals(GenerationDependencyContext.capture(sim, candidate,
-                        request.canonical(), request.canonical()).canonical()),
-                        "RC first/repeat consumed dependency identity is deterministic");
+                    String repeatedDependencies = GenerationDependencyContext.capture(sim, candidate,
+                        request.canonical(), request.canonical()).canonical();
+                    require(dependencies.equals(repeatedDependencies),
+                        "RC first/repeat consumed dependency identity is deterministic; " +
+                        firstDifference(dependencies, repeatedDependencies));
                     require(candidate.getTemporalBehavior() instanceof RcDelayTemporalBehavior,
                         "RC temporal canary reached the production model");
                     ((RcDelayTemporalBehavior)candidate.getTemporalBehavior())
                         .perturbHealthyReferenceForDeveloperVerification();
                     coordinator.advanceForDeveloperVerification();
                     GenerationJob job = coordinator.getJob();
-                    require(job.getOutcome() == GenerationJob.Outcome.STALE && job.getReceipt() == null &&
-                        job.getFailure() != null &&
-                        "Generation dependency context changed".equals(job.getFailure().getMessage()),
+                    require(isDependencyContextChange(job),
                         "altered retained temporal reference invalidates publication");
                     repeatMillis = job.getElapsedMillis(); repeatAdvance = coordinator.getMaxAdvanceMillis();
                 }
@@ -516,6 +906,130 @@ final class A10GenerationDeveloperVerifier {
             sim.getGeneratedChallengeController() == controller && sim.elmList == graph,
             "yielded or cleanup-pending production proof rejects overlap without mutation");
     }
+    /**
+     * A context mismatch can be observed either while the receipt lineage is
+     * revalidated or at the final publication boundary.  Both paths must be
+     * stale, receipt-free failures; the boundary suffix is useful provenance,
+     * not a different result.
+     */
+    private static boolean isDependencyContextChange(GenerationJob job) {
+        if (job == null || job.getOutcome() != GenerationJob.Outcome.STALE ||
+                job.getReceipt() != null || job.getFailure() == null)
+            return false;
+        String message = job.getFailure().getMessage();
+        return message != null && message.startsWith("Generation dependency context changed");
+    }
+
+    /**
+     * A cold serial proof and a warm value-only reuse intentionally have
+     * different GenerationReceipt operation lineage: their HYPOTHESES stage
+     * reports full serial work versus one reuse unit. Compare the retained
+     * value instead, while the surrounding checks continue to verify those
+     * distinct work counts and provenance.
+     */
+    private static boolean sameDiagnosticValue(GeneratedDiagnosticProofReceipt first,
+            GeneratedDiagnosticProofReceipt second) {
+        if (first == null || second == null || first.getContextKey() == null ||
+                second.getContextKey() == null || first.getPartitionPlan() == null ||
+                second.getPartitionPlan() == null ||
+                !first.getContextKey().equals(second.getContextKey()) ||
+                !first.getProviderId().equals(second.getProviderId()) ||
+                !first.getProgramIdentity().equals(second.getProgramIdentity()) ||
+                !first.getPartitionPlan().canonical().equals(second.getPartitionPlan().canonical()))
+            return false;
+        return sameEvidence(first.getEvidence(), second.getEvidence());
+    }
+
+    /** Exact immutable proof evidence comparison; live owners are not read. */
+    private static boolean sameEvidence(Vector<GeneratedDiagnosticSolvabilityEvidence> first,
+            Vector<GeneratedDiagnosticSolvabilityEvidence> second) {
+        if (first == null || second == null || first.size() != second.size()) return false;
+        for (int index = 0; index < first.size(); index++) {
+            GeneratedDiagnosticSolvabilityEvidence left = first.get(index);
+            GeneratedDiagnosticSolvabilityEvidence right = second.get(index);
+            if (left == null || right == null ||
+                    !left.getRouteId().equals(right.getRouteId()) ||
+                    !left.getFamilyId().equals(right.getFamilyId()) || left.getSeed() != right.getSeed() ||
+                    !left.getHypothesisKey().equals(right.getHypothesisKey()) ||
+                    left.getAdmittedCandidateCount() != right.getAdmittedCandidateCount() ||
+                    left.getAdmittedPhysicalOwnerCount() != right.getAdmittedPhysicalOwnerCount() ||
+                    left.getDeclaredPlanDepth() != right.getDeclaredPlanDepth() ||
+                    !left.getDeclaredTemplateIds().equals(right.getDeclaredTemplateIds()) ||
+                    !left.getDeclaredProbeTargetIds().equals(right.getDeclaredProbeTargetIds()) ||
+                    !left.getDeclaredInputPowerTransitions().equals(
+                        right.getDeclaredInputPowerTransitions()) ||
+                    !left.getDeclaredIsolationActionIds().equals(
+                        right.getDeclaredIsolationActionIds()) ||
+                    !left.getDeclaredRepairActionIds().equals(right.getDeclaredRepairActionIds()) ||
+                    !left.getDeclaredWorkflowActionIds().equals(right.getDeclaredWorkflowActionIds()) ||
+                    !left.getDeclaredPlayerOperationIds().equals(
+                        right.getDeclaredPlayerOperationIds()) ||
+                    !left.getDeclaredMeterModeIds().equals(right.getDeclaredMeterModeIds()) ||
+                    !left.getDeclaredTemporalWaitSampleIds().equals(
+                        right.getDeclaredTemporalWaitSampleIds()) ||
+                    !left.getDeclaredRailDomainIds().equals(right.getDeclaredRailDomainIds()) ||
+                    left.hasDeclaredParallelPathAmbiguity() !=
+                        right.hasDeclaredParallelPathAmbiguity() ||
+                    !left.getExecutedActionIds().equals(right.getExecutedActionIds()) ||
+                    !left.getExecutedRepairActionIds().equals(right.getExecutedRepairActionIds()) ||
+                    !left.getExecutedMeterModeIds().equals(right.getExecutedMeterModeIds()) ||
+                    !left.getExecutedInputPowerTransitions().equals(
+                        right.getExecutedInputPowerTransitions()) ||
+                    !left.getExecutedIsolationActionIds().equals(
+                        right.getExecutedIsolationActionIds()) ||
+                    !left.getExecutedTemporalWaitSamples().equals(
+                        right.getExecutedTemporalWaitSamples()) ||
+                    left.getMeasuredExecutionDepth() != right.getMeasuredExecutionDepth() ||
+                    left.getCompletedSemanticActions() != right.getCompletedSemanticActions() ||
+                    !left.getRepairSemantics().isEquivalentTo(right.getRepairSemantics()) ||
+                    left.hasUnaffectedFunctionRetestObservation() !=
+                        right.hasUnaffectedFunctionRetestObservation() ||
+                    !left.getEquivalentRepairClass().equals(right.getEquivalentRepairClass()) ||
+                    !left.getDeterministicResult().equals(right.getDeterministicResult()) ||
+                    !left.getDeterministicRejectionReason().equals(
+                        right.getDeterministicRejectionReason()) ||
+                    left.isRepairReachable() != right.isRepairReachable() ||
+                    left.isCustomerRetestPassed() != right.isCustomerRetestPassed() ||
+                    left.isStateIsolated() != right.isStateIsolated() ||
+                    !sameSamples(left.getSolverSamples(), right.getSolverSamples()))
+                return false;
+        }
+        return true;
+    }
+
+    private static boolean sameSamples(Vector<GeneratedDiagnosticSample> first,
+            Vector<GeneratedDiagnosticSample> second) {
+        if (first == null || second == null || first.size() != second.size()) return false;
+        for (int index = 0; index < first.size(); index++) {
+            GeneratedDiagnosticSample left = first.get(index);
+            GeneratedDiagnosticSample right = second.get(index);
+            if (left == null || right == null ||
+                    !left.getSampleId().equals(right.getSampleId()) ||
+                    left.getOutcome() != right.getOutcome()) return false;
+            if (!left.isOverRange() && (Double.doubleToLongBits(left.getValue()) !=
+                    Double.doubleToLongBits(right.getValue()) ||
+                    Double.doubleToLongBits(left.getComparisonTolerance()) !=
+                    Double.doubleToLongBits(right.getComparisonTolerance()))) return false;
+        }
+        return true;
+    }
+
+    /** A bounded failure diagnostic for otherwise opaque canonical contexts. */
+    private static String firstDifference(String first, String second) {
+        if (first == null || second == null)
+            return "missing-context first=" + (first == null) + ";second=" + (second == null);
+        int limit = Math.min(first.length(), second.length());
+        int index = 0;
+        while (index < limit && first.charAt(index) == second.charAt(index)) index++;
+        if (index == limit && first.length() == second.length()) return "identical-context";
+        int from = Math.max(0, index - 64);
+        int firstTo = Math.min(first.length(), index + 128);
+        int secondTo = Math.min(second.length(), index + 128);
+        return "context-diff-at=" + index + ";first-length=" + first.length() +
+            ";second-length=" + second.length() + ";first=" + first.substring(from, firstTo) +
+            ";second=" + second.substring(from, secondTo);
+    }
+
     private static void advanceTo(GenerationCoordinator coordinator, GenerationJob.Stage stage) {
         for (int i = 0; i < GenerationCoordinator.MAX_JOB_STEPS && coordinator.isRunning() &&
                 coordinator.getJob().getStage() != stage; i++) coordinator.advanceForDeveloperVerification();

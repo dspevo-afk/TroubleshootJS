@@ -121,13 +121,18 @@ final class BoundedGeneratedBoardAssembler {
     /** Route before allocating electrical resources; one bounded placement per job turn. */
     static final class LayoutSession {
         private final BoundedAssemblyPlan plan;
+        /* This value belongs only to the initial job construction.  The
+         * PreparedLayout below remains layout-only because diagnostic replay
+         * must allocate a fresh board and physical owner for every hypothesis. */
+        private final PhysicalConstructionMetadata initialPhysicalMetadata;
         private final SeededPcbLayoutGenerator.Session routing;
         private PreparedLayout result;
         private LayoutSession(BoundedAssemblyPlan plan) {
             if (plan == null || !plan.isControlledIndicator())
                 throw new IllegalArgumentException("Staged physical planning requires a controlled composition");
             this.plan = plan;
-            TroubleshootBoard board = PhysicalConstructionMaterializer.describe(plan).getBoard();
+            initialPhysicalMetadata = PhysicalConstructionMaterializer.describe(plan);
+            TroubleshootBoard board = initialPhysicalMetadata.getBoard();
             ProceduralPcbLayout.declare(board);
             long seed = plan.getRequest().getDescriptor().getRootSeed();
             routing = new SeededPcbLayoutGenerator().begin(board,
@@ -145,12 +150,30 @@ final class BoundedGeneratedBoardAssembler {
             if (result == null) throw new IllegalStateException("Physical plan is incomplete");
             return result;
         }
+        PhysicalConstructionMetadata initialMetadata() {
+            if (result == null) throw new IllegalStateException("Physical plan is incomplete");
+            return initialPhysicalMetadata;
+        }
     }
     static LayoutSession beginLayout(BoundedAssemblyPlan plan) { return new LayoutSession(plan); }
 
     static Result assemblePreparedPlan(BoundedAssemblyPlan plan, PreparedLayout layout) {
         if (layout == null) throw new IllegalArgumentException("Missing completed physical plan");
         return assemblePlan(plan, null, null, layout);
+    }
+
+    /**
+     * Consumes the immutable declaration/board value created for this exact
+     * job's routing pass. This is intentionally unavailable to diagnostic
+     * replay, which retains only {@link PreparedLayout} and always builds a
+     * fresh physical board/runtime owner.
+     */
+    static Result assemblePreparedPlan(BoundedAssemblyPlan plan, PreparedLayout layout,
+            PhysicalConstructionMetadata initialMetadata) {
+        if (layout == null || initialMetadata == null || initialMetadata.getPlan() != plan ||
+                initialMetadata.getSpec() != plan.getElectricalRealizationSpec())
+            throw new IllegalArgumentException("Initial physical metadata belongs to another assembly plan");
+        return assemblePlan(plan, null, null, layout, initialMetadata);
     }
 
     static Result assemblePreparedPlan(BoundedAssemblyPlan plan) {
@@ -212,10 +235,18 @@ final class BoundedGeneratedBoardAssembler {
     }
     private static Result assemblePlan(BoundedAssemblyPlan plan, FailureProbe probe,
             RealizationManifest expectedManifest, PreparedLayout layout) {
+        return assemblePlan(plan, probe, expectedManifest, layout, null);
+    }
+    private static Result assemblePlan(BoundedAssemblyPlan plan, FailureProbe probe,
+            RealizationManifest expectedManifest, PreparedLayout layout,
+            PhysicalConstructionMetadata initialMetadata) {
         if (layout != null && (plan == null || !plan.isControlledIndicator() ||
                 layout.request != plan.getRequest()))
             throw new IllegalArgumentException("Physical plan belongs to a different composition request");
-        Context context = new Context(plan, probe, layout);
+        if (initialMetadata != null && (layout == null || initialMetadata.getPlan() != plan ||
+                initialMetadata.getSpec() != plan.getElectricalRealizationSpec()))
+            throw new IllegalArgumentException("Initial physical metadata belongs to another assembly plan");
+        Context context = new Context(plan, probe, layout, initialMetadata);
         try {
             context.begin(Stage.MAPPING);
             context.buildBoardAndSpecifications();
@@ -447,15 +478,25 @@ final class BoundedGeneratedBoardAssembler {
         private Stage currentStage;
 
         private final PreparedLayout preparedLayout;
-        Context(BoundedAssemblyPlan plan, FailureProbe probe) { this(plan, probe, null); }
+        private final PhysicalConstructionMetadata initialPhysicalMetadata;
+        Context(BoundedAssemblyPlan plan, FailureProbe probe) { this(plan, probe, null, null); }
         Context(BoundedAssemblyPlan plan, FailureProbe probe, PreparedLayout layout) {
+            this(plan, probe, layout, null);
+        }
+        Context(BoundedAssemblyPlan plan, FailureProbe probe, PreparedLayout layout,
+                PhysicalConstructionMetadata initialMetadata) {
             this.plan = plan;
             this.probe = probe;
             this.preparedLayout = layout;
+            this.initialPhysicalMetadata = initialMetadata;
         }
 
         void buildBoardAndSpecifications() {
-            physicalMetadata = PhysicalConstructionMaterializer.describe(plan);
+            physicalMetadata = initialPhysicalMetadata == null ?
+                PhysicalConstructionMaterializer.describe(plan) : initialPhysicalMetadata;
+            if (physicalMetadata.getPlan() != plan ||
+                    physicalMetadata.getSpec() != plan.getElectricalRealizationSpec())
+                throw new IllegalArgumentException("Physical metadata belongs to another assembly plan");
             board = physicalMetadata.getBoard();
             specifications = physicalMetadata.getSpecifications();
         }

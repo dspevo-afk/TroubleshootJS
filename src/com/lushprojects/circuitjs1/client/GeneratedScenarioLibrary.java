@@ -91,6 +91,19 @@ final class GeneratedScenarioLibrary {
         return new GeneratedScenarioCatalog<GeneratedObservedBehavior>(candidates);
     }
 
+    static GeneratedScenarioCatalog<GeneratedObservedBehavior> sensorControl() {
+        Vector<GeneratedScenario<GeneratedObservedBehavior>> candidates =
+            new Vector<GeneratedScenario<GeneratedObservedBehavior>>();
+        SensorControlScenarioCompatibility compatibility =
+            new SensorControlScenarioCompatibility();
+        candidates.add(new GeneratedScenario<GeneratedObservedBehavior>(
+            "SENSOR_CONTROL_OUTPUT_NOT_TRACKING", "SENSOR_OUTPUT_NOT_TRACKING",
+            "The sensor-controlled output does not follow the sensor condition.",
+            GeneratedObservedBehavior.SENSOR_CONTROL_OUTPUT_NOT_TRACKING,
+            compatibility, compatibility));
+        return new GeneratedScenarioCatalog<GeneratedObservedBehavior>(candidates);
+    }
+
     private static class DarkIndicatorCompatibility
             implements GeneratedScenarioCompatibility<GeneratedObservedBehavior> {
         private final String ledId;

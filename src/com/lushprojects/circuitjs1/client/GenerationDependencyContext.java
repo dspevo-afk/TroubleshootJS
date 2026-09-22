@@ -21,9 +21,9 @@ import java.util.Vector;
  */
 final class GenerationDependencyContext {
     /** Current interpretation epoch.  Caches are valid only in this runtime. */
-    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v11";
+    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v15";
     static final String CIRCUIT_DUMP_EPOCH =
-        "circuitjs-source-load-model-inputs-no-transient-dump-v3";
+        "circuitjs-source-load-model-inputs-no-transient-dump-v4";
     static final String POWER_REFERENCE_STORAGE_SEAM = "power-domain-contract-v1";
     private static final String POWER_DYNAMIC_INPUT_POLICY =
         "excluded:SolverExecutionBoundary.Observation,rail-voltage-samples," +
@@ -122,6 +122,11 @@ final class GenerationDependencyContext {
         appendField(out, "epoch.diagnostic-program", Integer.toString(GeneratedDiagnosticProgram.VERSION));
         appendField(out, "epoch.diagnostic-solvability",
             Integer.toString(GeneratedDiagnosticSolvabilityContract.VERSION));
+        appendField(out, "epoch.diagnostic-partition",
+            Integer.toString(GeneratedDiagnosticPartitionPlan.VERSION));
+        appendField(out, "epoch.diagnostic-proof-cache",
+            Integer.toString(GeneratedDiagnosticProofCache.VERSION));
+        appendField(out, "epoch.temporal-context", "recipe-cache-plus-raw-owner-v1");
         appendField(out, "epoch.power-reference-storage", POWER_REFERENCE_STORAGE_SEAM);
 
         appendField(out, "board.id", board.getId());
@@ -153,6 +158,15 @@ final class GenerationDependencyContext {
     /** Returns the complete internal canonical value, including hidden inputs. */
     String canonical() {
         return canonical;
+    }
+
+    /**
+     * Returns the D01 cache key for this complete value.  The key wrapper
+     * retains only the canonical bytes; no live generation owner escapes the
+     * capture boundary.
+     */
+    GeneratedDiagnosticContextKey diagnosticKey() {
+        return GeneratedDiagnosticContextKey.from(this);
     }
 
     private static void appendScenarioDependencies(StringBuilder out,
@@ -491,9 +505,30 @@ final class GenerationDependencyContext {
         appendStringList(out, "diagnostic.contract.plans", planIdentities, true);
 
         Vector<String> candidateRecords = new Vector<String>();
+        Vector<String> repairCatalogRecords = new Vector<String>();
         for (GeneratedFaultCandidate candidate : candidates)
-            candidateRecords.add(candidateFingerprint(candidate));
+            {
+                candidateRecords.add(candidateFingerprint(candidate));
+                GeneratedFaultServiceability serviceability = candidate.getServiceability();
+                GeneratedFaultLocus locus = serviceability == null ? null : serviceability.getLocus();
+                String componentId = locus == null ? null : locus.getComponentId();
+                boolean catalogReplacementRequired = serviceability != null &&
+                    serviceability.getFaultClearingRepairActionIds().contains(
+                        WorkbenchOperation.CATALOG_INSTALL);
+                String catalogId = "NOT_REQUIRED";
+                if (catalogReplacementRequired) {
+                    require(componentId != null && componentId.length() != 0,
+                        "Diagnostic catalog repair has no component owner");
+                    catalogId = provider.getCorrectCatalogId(owner, componentId);
+                    require(catalogId != null && catalogId.length() != 0,
+                        "Diagnostic catalog repair has no resolved replacement");
+                }
+                repairCatalogRecords.add(candidate.getHypothesisKey() + "|" +
+                    (catalogReplacementRequired ? "CATALOG_REQUIRED|" : "NO_CATALOG|") +
+                    catalogId);
+            }
         appendStringList(out, "diagnostic.hypothesis-population", candidateRecords, true);
+        appendStringList(out, "diagnostic.provider-repair-catalog", repairCatalogRecords, true);
         appendField(out, "diagnostic.selected-fault", faultFingerprint(selectedBinding.getFault()));
         appendField(out, "diagnostic.selected-fault-applied",
             Boolean.toString(selectedBinding.isApplied()));
@@ -549,7 +584,11 @@ final class GenerationDependencyContext {
             Integer.toString(dependency.getBehaviorVersion()));
         appendField(out, "temporal.contract.initial-state",
             dependency.getInitialStateContract());
-        appendField(out, "temporal.contract.canonical", dependency.canonical());
+        // Healthy reference readings are solver outputs retained in the exact
+        // proof evidence. Cache identity uses the declared temporal recipe;
+        // GenerationCoordinator separately checks dependency.canonical() at
+        // same-owner proof and publication boundaries.
+        appendField(out, "temporal.contract.cache-recipe", dependency.cacheCanonical());
     }
 
     private static void appendPlan(StringBuilder out, String prefix,
@@ -613,9 +652,26 @@ final class GenerationDependencyContext {
         appendLocal(value, Boolean.toString(candidate.isCompatible()));
         appendLocal(value, Boolean.toString(candidate.isServiceable()));
         appendLocal(value, Boolean.toString(candidate.isAdmitted()));
-        appendLocal(value, serviceability == null ? null : serviceability.getCustomerRetestOperationId());
-        appendLocal(value, serviceability == null ? null :
-            Boolean.toString(serviceability.isAdmissible()));
+        appendLocal(value, serviceabilityFingerprint(serviceability));
+        return value.toString();
+    }
+
+    /** Every candidate's legal observations, isolation and repair route are
+     * part of a D01 context key; a matching count alone is never sufficient. */
+    private static String serviceabilityFingerprint(GeneratedFaultServiceability serviceability) {
+        if (serviceability == null) return "null";
+        StringBuilder value = new StringBuilder();
+        GeneratedFaultLocus locus = serviceability.getLocus();
+        appendLocal(value, locus == null ? null : locus.getType().name());
+        appendLocal(value, locus == null ? null : locus.getComponentId());
+        appendLocal(value, locus == null ? null : locus.getTerminalId());
+        appendLocal(value, locus == null ? null : locus.getPathId());
+        appendStringList(value, "observe", serviceability.getObservationActionIds(), false);
+        appendStringList(value, "isolate", serviceability.getIsolationActionIds(), false);
+        appendStringList(value, "repair", serviceability.getRepairActionIds(), false);
+        appendStringList(value, "workflow", serviceability.getWorkflowActionIds(), false);
+        appendLocal(value, serviceability.getCustomerRetestOperationId());
+        appendLocal(value, Boolean.toString(serviceability.isAdmissible()));
         return value.toString();
     }
 
@@ -959,6 +1015,10 @@ final class GenerationDependencyContext {
         case 451: // Fuse resistance, I-squared-t, persistent heat and blown state.
         case 453: // External load resistance and persistent stress state.
         case 450: // DC compliance settings; no transient state.
+        case 454: // Linear E02 regulator: bounded static rail-contract payload only.
+        case 455: // Averaged E02 regulator: bounded static rail-contract payload only.
+        case 456: // E02 finite source: current source voltage is a declared input.
+        case 457: // E04 decision: bounded threshold declaration; no live latch state.
         case 'd':
         case 'f':
         case 'g':
@@ -970,7 +1030,9 @@ final class GenerationDependencyContext {
             // Current generated boards: diode, MOSFET, ground, resistor,
             // switch, voltage source, wire, and LED.  Their dumps contain
             // only source/load/model inputs (the control switch position is
-            // an intentional mutable input captured here).
+            // an intentional mutable input captured here). E04's variable
+            // source mirrors its requested value into VoltageElm's maxVoltage
+            // field before this policy sees the dump.
             return joinDumpTokens(tokens);
         default:
             throw new IllegalStateException("No audited stable CircuitJS dump policy for type: " +
