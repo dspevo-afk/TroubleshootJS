@@ -36,6 +36,11 @@ final class PhysicalPackages {
     static final PhysicalPackage TO220_REGULATOR_4 = fixedPackage(
         "TO220_REGULATOR_4", new String[] { "INPUT", "OUTPUT", "RETURN", "ENABLE" },
         false, to220Regulator());
+    /** Five-terminal controller package used by the E04 decision component. */
+    static final PhysicalPackage E04_DECISION_CONTROL_5 = fixedPackage(
+        "E04_DECISION_CONTROL_5",
+        new String[] { "SENSOR", "REFERENCE", "RAIL", "OUTPUT", "RETURN" },
+        false, e04DecisionControl());
     static final PhysicalPackage RADIAL_ELECTROLYTIC_CAPACITOR = fixedPackage(
         "RADIAL_ELECTROLYTIC_CAPACITOR", new String[] { "+", "-" }, false, electrolytic());
     static final PhysicalPackage RADIAL_CERAMIC_CAPACITOR = fixedPackage(
@@ -246,6 +251,23 @@ final class PhysicalPackages {
         terminals.add(terminal("ENABLE", 170, 150, 170, 95, 170, 117, 0, 1, 50));
         return geometry(220, 210, terminals, new Rectangle(25, 25, 170, 75),
             new Rectangle(18, 18, 184, 90), new Rectangle(5, 5, 210, 200));
+    }
+
+    /** Compact, authoritative five-lead through-hole control package. */
+    private static PhysicalPackageGeometry e04DecisionControl() {
+        Vector<PhysicalPackageGeometry.Terminal> terminals =
+            new Vector<PhysicalPackageGeometry.Terminal>();
+        // The five pins follow the same compact, edge-escaping arrangement
+        // as the production multi-pin through-hole families.  Keeping the
+        // escape channels on one side gives the shared router room to expose
+        // every decision net without turning the control package decorative.
+        terminals.add(terminal("SENSOR", 30, 150, 30, 95, 30, 117, 0, 1, 50));
+        terminals.add(terminal("REFERENCE", 80, 150, 80, 95, 80, 117, 0, 1, 50));
+        terminals.add(terminal("RAIL", 130, 150, 130, 95, 130, 117, 0, 1, 50));
+        terminals.add(terminal("OUTPUT", 180, 150, 180, 95, 180, 117, 0, 1, 50));
+        terminals.add(terminal("RETURN", 230, 150, 230, 95, 230, 117, 0, 1, 50));
+        return geometry(260, 210, terminals, new Rectangle(25, 25, 210, 75),
+            new Rectangle(18, 18, 224, 90), new Rectangle(5, 5, 250, 200));
     }
 
     private static PhysicalPackageGeometry electrolytic() {

@@ -133,7 +133,7 @@ class ResistorSlotController implements PhysicalSlotMutationProvider,
         PhysicalMutationScope scope = newScope("install", part);
         try {
             scope.replacePrimaryBinding(part.getElement());
-	    scope.replaceAuxiliaryBinding(part.getSecondaryOpenPath().getSimulationElement());
+	    replaceAuxiliaryBinding(part, scope);
 	    retargetComponentLeadBindings(part, scope);
             scope.installPart(part);
             scope.restoreComponentGraph();
@@ -249,6 +249,15 @@ class ResistorSlotController implements PhysicalSlotMutationProvider,
                     binding.getPadId());
             scope.retargetEndpoint(binding, part.getPublicTerminal(terminal));
         }
+    }
+
+    private void replaceAuxiliaryBinding(PhysicalResistorPart part,
+            PhysicalMutationScope scope) {
+        ResistorSecondaryOpenPath path = part.getSecondaryOpenPath();
+        if (path == null)
+            scope.clearAuxiliaryBinding();
+        else
+            scope.replaceAuxiliaryBinding(path.getSimulationElement());
     }
 
     private boolean isSafeMutationAvailable() {

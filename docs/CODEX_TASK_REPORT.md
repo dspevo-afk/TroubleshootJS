@@ -1,56 +1,88 @@
-# Current checkpoint: E02/E04/D01 rails, sensor control and static proof partitions
+# Current checkpoint: repaired E02 regulation and E04 physical control ownership
 
-Starting from `030776ce`, this candidate remains on
-`codex/task43p-final-recovery` and completes the requested E02 → E04 → D01
-sequence without starting Q30:
+The repair is based on rejected candidate `e0a9d978` (parent `030776ce`) on
+`codex/task43p-final-recovery`. It repairs the independent-review blockers
+without changing D01's accepted cold-proof/cache architecture and without
+starting Q30.
 
-- E02 adds bounded, serializable linear and averaged four-terminal regulator
-  elements (INPUT/OUTPUT/RETURN/ENABLE), finite source/load/dropout behavior and
-  physical TO-220 mapping for the 12/5/3.3 V roles. The focused native contract
-  passes 238 assertions and the rebuilt browser verifier passes all six variants
-  (169 assertions);
-- E04 adds the sensor-control family with selected E02 rail, finite raw sensor
-  input, direct and hysteretic decision variants, exact passive resistor fault
-  loci, normal LOW/MID/HIGH player controls, and compatible-part service. Focused
-  contracts pass (E04 90; family 44). The visible production flow exercised the
-  unrepaired LOW/MID/HIGH symptom, isolated and removed RBIAS, purchased and
-  installed the compatible 10 kOhm replacement, restored power, and obtained
-  `Customer retest passed`; initial and repaired screenshots are retained;
-- D01 makes complete serial solver evidence authoritative, adds an immutable
-  value-only proof cache and fresh owner/controller receipts, and derives static
-  executable partition plans from the whole canonical retained population. Raw
-  temporal dependency remains a live-candidate invalidation boundary while only
-  declared temporal recipe/model/cache inputs identify reusable values. The
-  focused D01 contract passes 167 assertions; the compiled A10 receipt passes
-  3,104 assertions with 24 normal and eight D01 cold/warm rows, and its
-  independent Python reader passes.
+- E02 replaces the permanent `Vnom/Imax` output resistance with a solver-stamped
+  0.1 ohm regulated Norton branch and a separate nonlinear 0.200 A limiter. The
+  v2 rail contract declares a 90%-of-limit usable envelope and 5% regulation
+  tolerance. All linear/averaged 12/5/3.3 V roles retain causal input, dropout,
+  enable and local-return behavior, finite overloads and their respective power
+  accounting. Actual normal-load, pre-limit, onset and short readings are
+  retained in both native and compiled receipts.
+- E04 gives the live decision circuit a real visible five-terminal U2, adds the
+  external physical `RREF_LOW`, and adds `RFB_HYST` only to the hysteretic
+  variant. Each has pads, routed copper, live solver binding and catalog/service
+  ownership. A closed whole-graph census classifies every player-observable
+  element as a mapped component, component-internal support, external
+  infrastructure, PCB interconnect, pad connection or admitted fault helper;
+  an unexplained resistor fails construction. Direct boards contain nine parts
+  and hysteretic boards ten. Real unpowered remove/catalog/install regressions
+  now prove that U1, U2 and every external passive follow their distinct
+  replacement solver owners and exact posts/bindings while immutable board-side
+  endpoints remain fixed; the generic active-graph/inventory checks still apply.
+- D01 remains complete serial cold proof plus immutable value-only reuse, fresh
+  warm owner/controller receipts, final-owner structural validation, post-
+  publication cache insertion, deterministic static partitions, repair
+  equivalence and raw same-owner temporal invalidation. Only its dependency
+  interpretation/dump model advances from v15/v4 to v16/v5 so repaired E02/E04
+  artifacts cannot reuse obsolete proof values.
 
-Final validation PASS: focused E02/E04/Sensor/D01/A10/A10-dependency contracts
-(238/90/44/167/190/15), final-source full maintained current-contract gate
-(61 Java suites plus independent seed/value/role/report checks and cleanup
-PASS), current renderer-provider boundary, and a fresh JDK8 production GWT build
-(76.699 s compile; linker success). Fresh compiled E02 (169 assertions), E04
-(199 assertions for both direct/linear seed 0 and hysteretic/averaged seed 1)
-and D01/A10 (3,104 assertions) receipts pass. The slowest frozen
-controlled-indicator cold D01 receipt is 4,320 ms under the explicit unchanged
-5,000 ms `NORMAL_FROZEN_ATTEMPT` ceiling; its 2,842 ms HYPOTHESES stage contains
-2,824 ms serial reference plus 18 ms static-plan overhead. Separate D01 fixture
-rows use the explicit 90,000 ms `D01_JOB_BUDGET` (slowest: RB15 seed 0 at
-14,241 ms); the independent report reader passes. The retained compiled Quick
-Play matrix covers 30 current-menu cases, exact replay/power-isolation, privacy
-and owned-process cleanup; the final cache changes preserve the same solver
-calls, probe identities and player-owned interaction paths, while the current
-full native, E02/E04 and D01 compiled gates cover the rebuilt source.
+Fresh final-source validation is PASS: E02 1,429; E04 303; Sensor Control 268;
+D01 168; A10 generation 190; A10 dependency 15; serviceability 964; and U04
+session 3,423 assertions. The full maintained gate passed 61 Java suites plus
+the independent seed/value/role/report readers and cleanup. The renderer/
+provider boundary and explicit A10/A11 readers passed. A fresh JDK 8 production
+GWT build passed all five permutations (73.717 s compile, 1.390 s link). The
+rebuilt compiled receipts pass E02 1,321 assertions, E04 direct 260 and
+hysteretic 285 assertions with 149 mutation checks each, and A10 3,128
+assertions with 24 normal and eight D01 cold/warm rows.
+A final staged-index snapshot that omitted all seven preserved tracked edits
+also passed E02 1,429, E04 303, Sensor Control 268, D01 168, A10 190 and A10
+dependency 15. This proves the task-only commit does not rely on adjacent
+session work. The late dynamic service-validator strengthening does not change
+D01's source/model/physical/program identity or retained proof values; the
+current native A10/D01 suites and isolated staged run exercise that final code.
+
+The clean rebuilt Quick Play matrix passes 30 launches—three for each of the ten
+current family/profile pairs—plus exact replay, power isolation, privacy and
+owned cleanup. Historical 2026-09-19 nine-pair/180-board evidence remains
+historical. A final-source visible Sensor Control flow exercised LOW/MID/HIGH,
+the failing unrepaired retest, RBIAS removal, compatible shop acquisition and
+installation, restored power and a passing customer retest; its fresh Codex
+In-app Browser receipt records 21 visible inputs, post-install ownership
+validation, normal-route privacy and zero page errors, while current screenshots
+show U2 and its support network. A fresh ordinary-menu launch exposed all ten
+pairs and reached the Sensor Control workbench at replay
+`tsj-alpha/3/EASY/SENSOR_CONTROL/7302857472280055372` with zero page errors.
 
 Evidence: [E02](task-evidence/E02/README.md), [E04](task-evidence/E04/README.md),
-[D01](task-evidence/D01/README.md), [D01 A10 report](task-evidence/D01/a10-generation-report.json)
-and [compiled matrix receipt](task-evidence/D01/quickplay-procedural-matrix.json).
-The verified task-owned `preview.ps1 -Port 8929` process was stopped after the
-fresh receipts, and the temporary fresh verifier tabs were closed. Unrelated
-tracked A07/solver/layout/generated-board/RB15
-changes and untracked RelaySeed4/visual-productization/contract-cache evidence
-remain preserved. This checkpoint records the completed E02/E04/D01 candidate;
-Q30 is the next unstarted milestone.
+[D01](task-evidence/D01/README.md), [A10 report](task-evidence/D01/a10-generation-report.json)
+and [current matrix receipt](task-evidence/D01/quickplay-procedural-matrix.json).
+An independent staged-diff audit first caught construction-time owner pinning
+after catalog service. The corrected validator and regressions now follow the
+installed U1, U2 and passive owners while separately pinning immutable board
+endpoints. The same reviewer re-audited the final staged diff and found no
+remaining E02, E04 or D01 release blocker; all 38 staged paths were task-scoped
+and the staged whitespace check was clean.
+One earlier matrix attempt exposed an RC transient repeat error; an isolated
+repeat and the clean full rerun passed, so the failed receipt remains outside
+the repository scratch evidence rather than being represented as PASS. The
+first build invocation selected the host JDK 21 and failed before compilation;
+the required explicit repository JDK 8 invocation produced the passing build.
+A random visible Sensor Control launch rejected within its bounded candidate
+budget; the exact qualified seed then launched successfully through the same
+menu.
+
+All task-owned preview processes and verifier tabs are stopped; port 8899 is
+free. The task-owned browser scratch and both staged-tree snapshots were
+removed after their compact receipts were retained under `docs/task-evidence`.
+The pre-existing tracked A07/Alpha/CirSim/solver/runtime/snapshot edits and
+untracked RelaySeed4, visual-productization and contract-cache evidence remain
+preserved and unstaged. Q30 is the next unstarted milestone. Publication is
+intentionally disabled for this task; the enclosing commit is local only.
 
 # Historical checkpoint: Hold Tab to view board underside
 

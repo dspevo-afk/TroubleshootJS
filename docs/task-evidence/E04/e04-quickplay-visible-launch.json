@@ -1,0 +1,26 @@
+{
+  "protocol": "TSJ-E04-QUICKPLAY-LAUNCH-1",
+  "capturedUtc": "2026-09-23T09:31:43.5698171Z",
+  "route": "/circuitjs.html",
+  "headless": false,
+  "pageErrors": [],
+  "browser": "Codex In-app Browser",
+  "status": "PASS",
+  "catalogPairs": 10,
+  "easyPairs": 9,
+  "mediumPairs": 1,
+  "allProcedural": true,
+  "selectedFamily": "SENSOR_CONTROL",
+  "selectedProfile": "EASY",
+  "replay": "tsj-alpha/3/EASY/SENSOR_CONTROL/7302857472280055372",
+  "launchSeconds": 1.544,
+  "screen": "WORKBENCH",
+  "physicalComponentsConfirmed": [
+    "RBIAS",
+    "RREF_LOW",
+    "U1",
+    "U2"
+  ],
+  "privacy": true,
+  "browserClosed": true
+}

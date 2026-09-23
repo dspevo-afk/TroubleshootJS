@@ -1,5 +1,6 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Collections;
 import java.util.Vector;
 
 /**
@@ -43,26 +44,42 @@ final class SensorControlGenerator {
         E04SensorControlModel.SensorControlBindings modelEndpoints =
             model.getSensorControlBindings();
         model.prepareForPhysicalBoard();
-        TroubleshootBoard board = createBoard();
-        BoardPhysicalSpecifications specifications = createSpecifications(rail);
+        TroubleshootBoard board = createBoard(model.hasRegenerativeFeedback());
+        BoardPhysicalSpecifications specifications = createSpecifications(rail,
+            model.hasRegenerativeFeedback());
         Vector<CircuitElm> elements = model.getSimulationElements();
+        model.validateElementOwnership(elements, board);
 
         PassiveBuild rbias = createModelPassive("RBIAS",
             model.getBoardOwnedPassive("RBIAS"),
             modelEndpoints.getExternalSensorSourceEndpoint(),
-            modelEndpoints.getConditionedSensorEndpoint());
+            model.getPhysicalSensorBoardEndpoint());
         PassiveBuild rref = createModelPassive("RREF",
             model.getBoardOwnedPassive("RREF"),
             modelEndpoints.getRegulatorOutputBoardEndpoint(),
-            modelEndpoints.getReferenceEndpoint());
+            model.getPhysicalReferenceBoardEndpoint());
         PassiveBuild rfb = createModelPassive("RFB",
             model.getBoardOwnedPassive("RFB"),
-            modelEndpoints.getOutputDriveEndpoint(),
+            model.getPhysicalOutputBoardEndpoint(),
             modelEndpoints.getLoadedOutputEndpoint());
+        PassiveBuild rrefLow = createModelPassive("RREF_LOW",
+            model.getBoardSupportPassive("RREF_LOW"),
+            model.getPhysicalReferenceBoardEndpoint(),
+            model.getPhysicalReturnBoardEndpoint());
+        PassiveBuild rfbHysteresis = model.hasRegenerativeFeedback() ?
+            createModelPassive("RFB_HYST", model.getBoardSupportPassive("RFB_HYST"),
+                model.getPhysicalOutputBoardEndpoint(),
+                model.getPhysicalSensorBoardEndpoint()) : null;
         PassiveBuild[] passives = { rbias, rref, rfb };
         for (PassiveBuild passive : passives) {
             elements.add(passive.firstLead);
             elements.add(passive.secondLead);
+        }
+        elements.add(rrefLow.firstLead);
+        elements.add(rrefLow.secondLead);
+        if (rfbHysteresis != null) {
+            elements.add(rfbHysteresis.firstLead);
+            elements.add(rfbHysteresis.secondLead);
         }
 
         Vector<GeneratedFaultCandidate> candidates =
@@ -92,6 +109,17 @@ final class SensorControlGenerator {
         componentBindings.bindComponent("RFB", rfb.resistor);
         componentBindings.bindAuxiliaryComponentElement("RFB",
             rfb.openPath.getSimulationElement());
+        componentBindings.bindComponent("U2", model.getDecisionElement());
+        componentBindings.bindComponent("RREF_LOW", rrefLow.resistor);
+        if (rrefLow.openPath != null)
+            componentBindings.bindAuxiliaryComponentElement("RREF_LOW",
+                rrefLow.openPath.getSimulationElement());
+        if (rfbHysteresis != null) {
+            componentBindings.bindComponent("RFB_HYST", rfbHysteresis.resistor);
+            if (rfbHysteresis.openPath != null)
+                componentBindings.bindAuxiliaryComponentElement("RFB_HYST",
+                    rfbHysteresis.openPath.getSimulationElement());
+        }
         GeneratedComponentOperationalStates operationalStates =
             new GeneratedComponentOperationalStates();
 
@@ -100,17 +128,25 @@ final class SensorControlGenerator {
         bindPassivePads(bindings, rbias, "RBIAS");
         bindPassivePads(bindings, rref, "RREF");
         bindPassivePads(bindings, rfb, "RFB");
+        bindPassivePads(bindings, rrefLow, "RREF_LOW");
+        if (rfbHysteresis != null)
+            bindPassivePads(bindings, rfbHysteresis, "RFB_HYST");
         GeneratedComponentConnectionBindings connectionBindings =
             new GeneratedComponentConnectionBindings(board);
         bindPassiveConnections(connectionBindings, bindings, rbias, "RBIAS");
         bindPassiveConnections(connectionBindings, bindings, rref, "RREF");
         bindPassiveConnections(connectionBindings, bindings, rfb, "RFB");
+        bindPassiveConnections(connectionBindings, bindings, rrefLow, "RREF_LOW");
+        if (rfbHysteresis != null)
+            bindPassiveConnections(connectionBindings, bindings, rfbHysteresis, "RFB_HYST");
+        bindDecisionConnections(connectionBindings, bindings, model, elements);
 
         PhysicalBoardRuntime runtime = new PhysicalBoardRuntime(board);
         PhysicalBoardSlot j1Slot = runtime.createSlot("J1");
         PhysicalBoardSlot j2Slot = runtime.createSlot("J2");
         PhysicalBoardSlot j3Slot = runtime.createSlot("J3");
         PhysicalBoardSlot u1Slot = runtime.createSlot("U1");
+        PhysicalBoardSlot u2Slot = runtime.createSlot("U2");
         installFixedFoundation(runtime, j1Slot, "J1", specifications, bindings,
             modelEndpoints.getRawInputEndpoint().getElement());
         installFixedFoundation(runtime, j2Slot, "J2", specifications, bindings,
@@ -119,12 +155,19 @@ final class SensorControlGenerator {
             modelEndpoints.getLoadedOutputEndpoint().getElement());
         installFixedFoundation(runtime, u1Slot, "U1", specifications, bindings,
             model.getSelectedE02Regulator());
+        installDecisionControl(runtime, u2Slot, specifications, model,
+            connectionBindings);
         installResistor(runtime, componentBindings, connectionBindings, specifications,
             rbias, selectedBinding, fault, "RBIAS");
         installResistor(runtime, componentBindings, connectionBindings, specifications,
             rref, selectedBinding, fault, "RREF");
         installResistor(runtime, componentBindings, connectionBindings, specifications,
             rfb, selectedBinding, fault, "RFB");
+        installResistor(runtime, componentBindings, connectionBindings, specifications,
+            rrefLow, selectedBinding, fault, "RREF_LOW");
+        if (rfbHysteresis != null)
+            installResistor(runtime, componentBindings, connectionBindings, specifications,
+                rfbHysteresis, selectedBinding, fault, "RFB_HYST");
 
         GeneratedExternalPowerBindings powerBindings =
             new GeneratedExternalPowerBindings(board);
@@ -155,7 +198,58 @@ final class SensorControlGenerator {
             connectionBindings, behaviorContract, layout, specifications, selectedBinding,
             operationalStates, challenge, familyState, runtime, null, false, candidates, null,
             new SensorControlDiagnosticProvider(seed));
+        validateFinalElementOwnership(instance, model);
+        SensorControlGeneratedBoardValidator.requireStaticPhysicalOwners(instance);
         return instance;
+    }
+
+    /**
+     * The model census alone precedes detachable leads and service completion.
+     * Recheck the *published* graph: every added element must be either a
+     * physical pad connection, a bound physical part/helper, or a declared
+     * fault helper. An unclaimed solver element cannot become player-visible.
+     */
+    static void validateFinalElementOwnership(GeneratedBoardInstance instance,
+            E04SensorControlModel model) {
+        Vector<CircuitElm> modelElements = model.getSimulationElements();
+        model.validateElementOwnership(modelElements, instance.getBoard());
+        Vector<CircuitElm> published = instance.getSimulationElements();
+        Vector<CircuitElm> accounted = new Vector<CircuitElm>();
+        for (CircuitElm element : modelElements) {
+            if (!published.contains(element))
+                throw new IllegalStateException("E04 model element missing from published graph");
+            accounted.add(element);
+        }
+        for (GeneratedComponentConnectionBinding binding :
+                instance.getConnectionBindings().getAll()) {
+            CircuitElm lead = binding.getConnectionElement();
+            if (!(lead instanceof WireElm) || !published.contains(lead) ||
+                    instance.getBoard().getPad(binding.getPadId()) == null)
+                throw new IllegalStateException("E04 physical lead has no pad/solver owner: " +
+                    binding.getPadId());
+            if (!accounted.contains(lead)) accounted.add(lead);
+        }
+        for (String componentId : instance.getBoard().getComponentIds()) {
+            if (!instance.getComponentBindings().hasComponentBinding(componentId))
+                continue;
+            Vector<CircuitElm> parts = instance.getComponentBindings().getElements(componentId);
+            parts.addAll(instance.getComponentBindings().getAuxiliaryElements(componentId));
+            for (CircuitElm element : parts) {
+                if (!published.contains(element))
+                    throw new IllegalStateException("E04 physical backing missing: " + componentId);
+                if (!accounted.contains(element)) accounted.add(element);
+            }
+        }
+        for (GeneratedFaultCandidate candidate : instance.getFaultCandidates())
+            for (CircuitElm element : candidate.getPrivateSimulationElements()) {
+                if (!published.contains(element))
+                    throw new IllegalStateException("E04 declared fault helper missing");
+                if (!accounted.contains(element)) accounted.add(element);
+            }
+        for (CircuitElm element : published)
+            if (!accounted.contains(element))
+                throw new IllegalStateException("E04 unexplained final solver element: " +
+                    element.getClass().getName());
     }
 
     private GeneratedFaultCandidate select(Vector<GeneratedFaultCandidate> candidates,
@@ -187,13 +281,51 @@ final class SensorControlGenerator {
         bindings.bindPad("J2.1", endpoints.getExternalSensorSourceEndpoint());
         bindings.bindPad("J2.2", endpoints.getExternalSensorReturnEndpoint());
         bindings.bindPad("J3.1", endpoints.getLoadedOutputEndpoint());
-        bindings.bindPad("J3.2", endpoints.getReturnEndpoint());
+        // J3 is an external customer connector, so its return must remain on
+        // persistent board copper when U2's independently serviceable RETURN
+        // lead is lifted.  The semantic return endpoint belongs to the U2
+        // package and is deliberately detachable.
+        bindings.bindPad("J3.2", model.getPhysicalReturnBoardEndpoint());
         bindings.bindPad("U1.INPUT", endpoints.getRegulatorInputBoardEndpoint());
         bindings.bindPad("U1.OUTPUT", endpoints.getRegulatorOutputBoardEndpoint());
         bindings.bindPad("U1.RETURN", endpoints.getRegulatorReturnBoardEndpoint());
         bindings.bindPad("U1.ENABLE", endpoints.getRegulatorEnableBoardEndpoint());
+        bindings.bindPad("U2.SENSOR", model.getPhysicalSensorBoardEndpoint());
+        bindings.bindPad("U2.REFERENCE", model.getPhysicalReferenceBoardEndpoint());
+        bindings.bindPad("U2.RAIL", endpoints.getRegulatorOutputBoardEndpoint());
+        bindings.bindPad("U2.OUTPUT", model.getPhysicalOutputBoardEndpoint());
+        bindings.bindPad("U2.RETURN", model.getPhysicalReturnBoardEndpoint());
         RegulatorPhysicalMapping.mapComponentTerminals(board, "U1",
             model.getSelectedE02Regulator());
+    }
+
+    private void bindDecisionConnections(GeneratedComponentConnectionBindings connections,
+            BoardSimulationBindings bindings, E04SensorControlModel model,
+            Vector<CircuitElm> elements) {
+        E04SensorControlModel.DecisionElement decision = model.getDecisionElement();
+        bindDecisionConnection(connections, bindings, "U2.SENSOR", decision, 0,
+            model.getPhysicalSensorBoardEndpoint(), elements);
+        bindDecisionConnection(connections, bindings, "U2.REFERENCE", decision, 1,
+            model.getPhysicalReferenceBoardEndpoint(), elements);
+        bindDecisionConnection(connections, bindings, "U2.RAIL", decision, 2,
+            model.getSensorControlBindings().getRegulatorOutputBoardEndpoint(), elements);
+        bindDecisionConnection(connections, bindings, "U2.OUTPUT", decision, 3,
+            model.getPhysicalOutputBoardEndpoint(), elements);
+        bindDecisionConnection(connections, bindings, "U2.RETURN", decision, 4,
+            model.getPhysicalReturnBoardEndpoint(), elements);
+    }
+
+    private void bindDecisionConnection(GeneratedComponentConnectionBindings connections,
+            BoardSimulationBindings bindings, String padId,
+            E04SensorControlModel.DecisionElement decision, int postIndex,
+            CircuitPostMeasurementEndpoint boardEndpoint,
+            Vector<CircuitElm> elements) {
+        CircuitPostMeasurementEndpoint componentEndpoint =
+            new CircuitPostMeasurementEndpoint(decision, postIndex);
+        WireElm lead = link(boardEndpoint, componentEndpoint);
+        elements.add(lead);
+        connections.bind("U2", padId, bindings.getEndpoint(padId),
+            componentEndpoint, lead);
     }
 
     private void bindPassivePads(BoardSimulationBindings bindings, PassiveBuild passive,
@@ -207,7 +339,7 @@ final class SensorControlGenerator {
         connections.bind(componentId, componentId + ".1", bindings.getEndpoint(componentId + ".1"),
             new CircuitPostMeasurementEndpoint(passive.resistor, 0), passive.firstLead);
         connections.bind(componentId, componentId + ".2", bindings.getEndpoint(componentId + ".2"),
-            passive.openPath.getPublicTerminal(), passive.secondLead);
+            passive.getSecondComponentEndpoint(), passive.secondLead);
     }
 
     private void installFixedFoundation(PhysicalBoardRuntime runtime, PhysicalBoardSlot slot,
@@ -218,6 +350,37 @@ final class SensorControlGenerator {
             specifications.getNameplate(componentId), specifications.getPackage(componentId),
             bindings, backingElement, new PhysicalPartProvenance(
                 PhysicalPartProvenance.FIXED_GENERATED, componentId)));
+    }
+
+    private void installDecisionControl(PhysicalBoardRuntime runtime,
+            PhysicalBoardSlot slot, BoardPhysicalSpecifications specifications,
+            E04SensorControlModel model,
+            GeneratedComponentConnectionBindings connections) {
+        PhysicalSpecification specification = specifications.getSpecification("U2");
+        PhysicalNameplate nameplate = specifications.getNameplate("U2");
+        E04DecisionControlPart original = new E04DecisionControlPart("U2_ORIGINAL",
+            specification, nameplate, model.getDecisionElement(),
+            new PhysicalPartProvenance(PhysicalPartProvenance.GENERATED_ORIGINAL, "U2"));
+        PhysicalPartInventory<E04DecisionControlPart> inventory =
+            new PhysicalPartInventory<E04DecisionControlPart>(runtime,
+                "U2_REPLACEMENTS", E04DecisionControlPart.class);
+        inventory.add(original);
+        String[] padIds = { "U2.SENSOR", "U2.REFERENCE", "U2.RAIL",
+            "U2.OUTPUT", "U2.RETURN" };
+        WireElm[] attachments = new WireElm[padIds.length];
+        for (int index = 0; index < padIds.length; index++) {
+            CircuitElm element = connections.get("U2", padIds[index])
+                .getConnectionElement();
+            if (!(element instanceof WireElm))
+                throw new IllegalStateException(
+                    "E04 U2 terminal is not a detachable solver wire: " +
+                    padIds[index]);
+            attachments[index] = (WireElm) element;
+        }
+        E04DecisionControlSlot decisionSlot = new E04DecisionControlSlot("U2",
+            specification, original, attachments, slot);
+        runtime.registerCapability(new E04DecisionControlBoardCapability(
+            decisionSlot, inventory, original, model));
     }
 
     private void installResistor(PhysicalBoardRuntime runtime,
@@ -251,16 +414,17 @@ final class SensorControlGenerator {
             E04SensorControlModel.PassiveBinding binding,
             CircuitPostMeasurementEndpoint firstEndpoint,
             CircuitPostMeasurementEndpoint secondEndpoint) {
-        if (binding == null || binding.getElement() == null ||
-                binding.getFaultIsolation() == null || binding.getOpenPath() == null)
+        if (binding == null || binding.getElement() == null)
             throw new IllegalStateException("Missing E04 model-owned passive: " + id);
         WireElm firstLead = link(firstEndpoint,
             new CircuitPostMeasurementEndpoint(binding.getElement(), 0));
-        WireElm secondLead = link(binding.getOpenPath().getPublicTerminal(),
-            secondEndpoint);
+        CircuitPostMeasurementEndpoint componentSecondEndpoint = binding.getOpenPath() == null ?
+            new CircuitPostMeasurementEndpoint(binding.getElement(), 1) :
+            binding.getOpenPath().getPublicTerminal();
+        WireElm secondLead = link(componentSecondEndpoint, secondEndpoint);
         return new PassiveBuild(id, binding.getElement(),
             binding.getFaultIsolation(), binding.getOpenPath(), firstEndpoint,
-            secondEndpoint, firstLead, secondLead);
+            secondEndpoint, componentSecondEndpoint, firstLead, secondLead);
     }
 
     private WireElm link(CircuitPostMeasurementEndpoint first,
@@ -272,7 +436,7 @@ final class SensorControlGenerator {
         return wire;
     }
 
-    private TroubleshootBoard createBoard() {
+    private TroubleshootBoard createBoard(boolean hasFeedback) {
         TroubleshootBoard board = new TroubleshootBoard(FAMILY_ID);
         board.addNet(new BoardNet("CONTROL_RAIL"));
         board.addNet(new BoardNet("CONTROL_RETURN"));
@@ -291,12 +455,19 @@ final class SensorControlGenerator {
             PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2));
         board.addComponent(new BoardComponent("U1", "RAIL_REGULATOR",
             PhysicalPackages.TO220_REGULATOR_4));
+        board.addComponent(new BoardComponent("U2", "SENSOR_CONTROL_DECISION",
+            PhysicalPackages.E04_DECISION_CONTROL_5));
         board.addComponent(new BoardComponent("RBIAS", "SENSOR_SOURCE_RESISTOR",
             PhysicalPackages.AXIAL_RESISTOR));
         board.addComponent(new BoardComponent("RREF", "REFERENCE_HIGH_RESISTOR",
             PhysicalPackages.AXIAL_RESISTOR));
         board.addComponent(new BoardComponent("RFB", "OUTPUT_SERIES_RESISTOR",
             PhysicalPackages.AXIAL_RESISTOR));
+        board.addComponent(new BoardComponent("RREF_LOW", "REFERENCE_RETURN_RESISTOR",
+            PhysicalPackages.AXIAL_RESISTOR));
+        if (hasFeedback)
+            board.addComponent(new BoardComponent("RFB_HYST", "HYSTERESIS_FEEDBACK_RESISTOR",
+                PhysicalPackages.AXIAL_RESISTOR));
         addPad(board, "J1.1", "J1", "1", "RAW_INPUT");
         addPad(board, "J1.2", "J1", "2", "CONTROL_RETURN");
         addPad(board, "J2.1", "J2", "1", "SENSOR_SOURCE");
@@ -307,19 +478,54 @@ final class SensorControlGenerator {
         addPad(board, "U1.OUTPUT", "U1", "OUTPUT", "CONTROL_RAIL");
         addPad(board, "U1.RETURN", "U1", "RETURN", "CONTROL_RETURN");
         addPad(board, "U1.ENABLE", "U1", "ENABLE", "CONTROL_ENABLE");
+        addPad(board, "U2.SENSOR", "U2", "SENSOR", "CONDITIONED_SENSOR");
+        addPad(board, "U2.REFERENCE", "U2", "REFERENCE", "CONTROL_REFERENCE");
+        addPad(board, "U2.RAIL", "U2", "RAIL", "CONTROL_RAIL");
+        addPad(board, "U2.OUTPUT", "U2", "OUTPUT", "CONTROL_OUTPUT");
+        addPad(board, "U2.RETURN", "U2", "RETURN", "CONTROL_RETURN");
         addPad(board, "RBIAS.1", "RBIAS", "1", "SENSOR_SOURCE");
         addPad(board, "RBIAS.2", "RBIAS", "2", "CONDITIONED_SENSOR");
         addPad(board, "RREF.1", "RREF", "1", "CONTROL_RAIL");
         addPad(board, "RREF.2", "RREF", "2", "CONTROL_REFERENCE");
         addPad(board, "RFB.1", "RFB", "1", "CONTROL_OUTPUT");
         addPad(board, "RFB.2", "RFB", "2", "CONTROL_OUTPUT_LOAD");
+        addPad(board, "RREF_LOW.1", "RREF_LOW", "1", "CONTROL_REFERENCE");
+        addPad(board, "RREF_LOW.2", "RREF_LOW", "2", "CONTROL_RETURN");
+        if (hasFeedback) {
+            addPad(board, "RFB_HYST.1", "RFB_HYST", "1", "CONTROL_OUTPUT");
+            addPad(board, "RFB_HYST.2", "RFB_HYST", "2", "CONDITIONED_SENSOR");
+        }
         board.addPowerInput(new ExternalBoardPowerInput("CONTROL_RAIL_INPUT", "J1.1",
             "J1.2", "RAW_INPUT", "CONTROL_RETURN"));
+        installPhysicalDemand(board);
         board.validate();
         return board;
     }
 
-    private BoardPhysicalSpecifications createSpecifications(RailRegulationContract rail) {
+    /**
+     * E04 keeps the component bodies on the top side but routes its generated
+     * copper on the bottom side.  This is an owned board decision, not a
+     * relaxation of the generic router: the five U2 escape channels remain
+     * real through-hole pad geometry while the bottom plane can pass beneath
+     * the mapped control package and its serviceable support passives.
+     */
+    private void installPhysicalDemand(TroubleshootBoard board) {
+        Vector<String> componentIds = board.getComponentIds();
+        Collections.sort(componentIds);
+        Vector<PcbPlacementConstraints.Part> parts =
+            new Vector<PcbPlacementConstraints.Part>();
+        for (String componentId : componentIds) {
+            boolean connector = board.getComponent(componentId).getPhysicalPackage().isConnector();
+            parts.add(new PcbPlacementConstraints.Part(componentId, "circuit", "Circuit",
+                "board", connector ? PcbPlacementConstraints.Anchor.EDGE :
+                    PcbPlacementConstraints.Anchor.NONE, 20));
+        }
+        board.setPlacementConstraints(new PcbPlacementConstraints(parts,
+            new Vector<PcbPlacementConstraints.Barrier>(), PcbCopperLayer.BOTTOM));
+    }
+
+    private BoardPhysicalSpecifications createSpecifications(RailRegulationContract rail,
+            boolean hasFeedback) {
         BoardPhysicalSpecifications specifications = new BoardPhysicalSpecifications();
         specifications.addPhysicalDefinition("J1", new BasicPhysicalSpecification("J1_CONNECTOR"),
             new PhysicalNameplate("J1", "Control rail connector"),
@@ -333,12 +539,20 @@ final class SensorControlGenerator {
         specifications.addPhysicalDefinition("U1", new BasicPhysicalSpecification("U1_REGULATOR"),
             new PhysicalNameplate("U1", "5 V control rail regulator"),
             PhysicalPackages.TO220_REGULATOR_4);
+        specifications.addPhysicalDefinition("U2", new BasicPhysicalSpecification("U2_DECISION"),
+            new PhysicalNameplate("U2", "Sensor threshold decision controller"),
+            PhysicalPackages.E04_DECISION_CONTROL_5);
         StandardPhysicalDefinitionProviders.RESISTOR.add(specifications,
             new ResistorNameplate("RBIAS", 10000.0, 5, .25));
         StandardPhysicalDefinitionProviders.RESISTOR.add(specifications,
             new ResistorNameplate("RREF", 10000.0, 5, .25));
         StandardPhysicalDefinitionProviders.RESISTOR.add(specifications,
             new ResistorNameplate("RFB", 47.0, 5, .25));
+        StandardPhysicalDefinitionProviders.RESISTOR.add(specifications,
+            new ResistorNameplate("RREF_LOW", 10000.0, 5, .25));
+        if (hasFeedback)
+            StandardPhysicalDefinitionProviders.RESISTOR.add(specifications,
+                new ResistorNameplate("RFB_HYST", 22000.0, 5, .25));
         specifications.addPowerInputNameplate(new PowerInputNameplate(
             "CONTROL_RAIL_INPUT", rail.getNominalOutputVolts() + 2.0));
         return specifications;
@@ -386,22 +600,29 @@ final class SensorControlGenerator {
         final ResistorSecondaryOpenPath openPath;
         final CircuitPostMeasurementEndpoint firstEndpoint;
         final CircuitPostMeasurementEndpoint secondEndpoint;
+        final CircuitPostMeasurementEndpoint secondComponentEndpoint;
         final WireElm firstLead;
         final WireElm secondLead;
 
         PassiveBuild(String id, ResistorElm resistor, SwitchElm faultIsolation,
                 ResistorSecondaryOpenPath openPath,
                 CircuitPostMeasurementEndpoint firstEndpoint,
-                CircuitPostMeasurementEndpoint secondEndpoint, WireElm firstLead,
-                WireElm secondLead) {
+                CircuitPostMeasurementEndpoint secondEndpoint,
+                CircuitPostMeasurementEndpoint secondComponentEndpoint,
+                WireElm firstLead, WireElm secondLead) {
             this.id = id;
             this.resistor = resistor;
             this.faultIsolation = faultIsolation;
             this.openPath = openPath;
             this.firstEndpoint = firstEndpoint;
             this.secondEndpoint = secondEndpoint;
+            this.secondComponentEndpoint = secondComponentEndpoint;
             this.firstLead = firstLead;
             this.secondLead = secondLead;
+        }
+
+        CircuitPostMeasurementEndpoint getSecondComponentEndpoint() {
+            return secondComponentEndpoint;
         }
     }
 

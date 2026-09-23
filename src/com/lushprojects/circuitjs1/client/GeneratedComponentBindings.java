@@ -119,6 +119,15 @@ class GeneratedComponentBindings {
         auxiliaryComponentElements.put(componentId, elements);
     }
 
+    /** A valid physical part may have no auxiliary damage/open-path element. */
+    void clearAuxiliaryComponentElements(String componentId) {
+        if (constructionAborted)
+            throw new IllegalStateException("Construction bindings were revoked");
+        if (!componentElements.containsKey(componentId))
+            throw new IllegalArgumentException("Invalid auxiliary component clear: " + componentId);
+        auxiliaryComponentElements.remove(componentId);
+    }
+
     void replaceSingleElement(String componentId, CircuitElm element) {
         if (element == null || !componentElements.containsKey(componentId))
             throw new IllegalArgumentException("Invalid component replacement binding: " + componentId);

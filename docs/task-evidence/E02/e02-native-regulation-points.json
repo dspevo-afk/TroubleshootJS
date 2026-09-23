@@ -1,0 +1,449 @@
+{
+  "schema": "e02-native-regulator-v2",
+  "cases": [
+    {
+      "variant": "linear-12v",
+      "usableRegulatedCurrentFraction": 0.9,
+      "usableRegulatedCurrentAmps": 0.18000000000000002,
+      "regulatedVoltageToleranceVolts": 0.6000000000000001,
+      "minimumRegulatedOutputVolts": 11.4,
+      "light": {
+        "fraction": 0,
+        "demandFraction": 0,
+        "resistanceOhms": 1000,
+        "outputVolts": 11.998800119988001,
+        "outputAmps": 0.011998800119989994
+      },
+      "loadEnvelope": [
+        {
+          "fraction": 0.25,
+          "demandFraction": 0.225,
+          "resistanceOhms": 266.5666666666666,
+          "outputVolts": 11.995500000000002,
+          "outputAmps": 0.04499999999998394
+        },
+        {
+          "fraction": 0.5,
+          "demandFraction": 0.45,
+          "resistanceOhms": 133.23333333333332,
+          "outputVolts": 11.991000000000001,
+          "outputAmps": 0.08999999999998565
+        },
+        {
+          "fraction": 0.75,
+          "demandFraction": 0.675,
+          "resistanceOhms": 88.78888888888889,
+          "outputVolts": 11.9865,
+          "outputAmps": 0.13500000000000512
+        },
+        {
+          "fraction": 0.9,
+          "demandFraction": 0.81,
+          "resistanceOhms": 73.97407407407407,
+          "outputVolts": 11.9838,
+          "outputAmps": 0.16199999999999548
+        }
+      ],
+      "preLimitEnvelope": [
+        {
+          "fraction": 0.95,
+          "demandFraction": 0.95,
+          "resistanceOhms": 63.0578947368421,
+          "outputVolts": 11.981,
+          "outputAmps": 0.19000000000000128
+        },
+        {
+          "fraction": 0.99,
+          "demandFraction": 0.99,
+          "resistanceOhms": 60.5060606060606,
+          "outputVolts": 11.9802,
+          "outputAmps": 0.1980000000000004
+        }
+      ],
+      "limitOnset": {
+        "fraction": 1,
+        "demandFraction": 1,
+        "resistanceOhms": 59.9,
+        "outputVolts": 11.979999999999999,
+        "outputAmps": 0.2
+      },
+      "short": {
+        "fraction": 1,
+        "demandFraction": 1,
+        "resistanceOhms": 0.1,
+        "outputVolts": 0.020000001196,
+        "outputAmps": 0.20000001196
+      }
+    },
+    {
+      "variant": "linear-5v",
+      "usableRegulatedCurrentFraction": 0.9,
+      "usableRegulatedCurrentAmps": 0.18000000000000002,
+      "regulatedVoltageToleranceVolts": 0.25,
+      "minimumRegulatedOutputVolts": 4.75,
+      "light": {
+        "fraction": 0,
+        "demandFraction": 0,
+        "resistanceOhms": 1000,
+        "outputVolts": 4.999500049995,
+        "outputAmps": 0.004999500049995831
+      },
+      "loadEnvelope": [
+        {
+          "fraction": 0.25,
+          "demandFraction": 0.225,
+          "resistanceOhms": 111.0111111111111,
+          "outputVolts": 4.9955,
+          "outputAmps": 0.045000000000001705
+        },
+        {
+          "fraction": 0.5,
+          "demandFraction": 0.45,
+          "resistanceOhms": 55.45555555555555,
+          "outputVolts": 4.991,
+          "outputAmps": 0.09000000000000341
+        },
+        {
+          "fraction": 0.75,
+          "demandFraction": 0.675,
+          "resistanceOhms": 36.93703703703704,
+          "outputVolts": 4.9864999999999995,
+          "outputAmps": 0.13500000000000512
+        },
+        {
+          "fraction": 0.9,
+          "demandFraction": 0.81,
+          "resistanceOhms": 30.76419753086419,
+          "outputVolts": 4.9838000000000005,
+          "outputAmps": 0.16199999999999548
+        }
+      ],
+      "preLimitEnvelope": [
+        {
+          "fraction": 0.95,
+          "demandFraction": 0.95,
+          "resistanceOhms": 26.215789473684207,
+          "outputVolts": 4.981,
+          "outputAmps": 0.19000000000000128
+        },
+        {
+          "fraction": 0.99,
+          "demandFraction": 0.99,
+          "resistanceOhms": 25.15252525252525,
+          "outputVolts": 4.980200000000001,
+          "outputAmps": 0.19799999999999152
+        }
+      ],
+      "limitOnset": {
+        "fraction": 1,
+        "demandFraction": 1,
+        "resistanceOhms": 24.9,
+        "outputVolts": 4.9799999999999995,
+        "outputAmps": 0.2
+      },
+      "short": {
+        "fraction": 1,
+        "demandFraction": 1,
+        "resistanceOhms": 0.1,
+        "outputVolts": 0.020000000496000002,
+        "outputAmps": 0.20000000496
+      }
+    },
+    {
+      "variant": "linear-3v3",
+      "usableRegulatedCurrentFraction": 0.9,
+      "usableRegulatedCurrentAmps": 0.18000000000000002,
+      "regulatedVoltageToleranceVolts": 0.165,
+      "minimumRegulatedOutputVolts": 3.135,
+      "light": {
+        "fraction": 0,
+        "demandFraction": 0,
+        "resistanceOhms": 1000,
+        "outputVolts": 3.2996700329967004,
+        "outputAmps": 0.003299670032994584
+      },
+      "loadEnvelope": [
+        {
+          "fraction": 0.25,
+          "demandFraction": 0.225,
+          "resistanceOhms": 73.23333333333332,
+          "outputVolts": 3.2954999999999997,
+          "outputAmps": 0.045000000000001705
+        },
+        {
+          "fraction": 0.5,
+          "demandFraction": 0.45,
+          "resistanceOhms": 36.566666666666656,
+          "outputVolts": 3.2910000000000004,
+          "outputAmps": 0.08999999999999453
+        },
+        {
+          "fraction": 0.75,
+          "demandFraction": 0.675,
+          "resistanceOhms": 24.34444444444444,
+          "outputVolts": 3.2865,
+          "outputAmps": 0.13499999999999623
+        },
+        {
+          "fraction": 0.9,
+          "demandFraction": 0.81,
+          "resistanceOhms": 20.270370370370365,
+          "outputVolts": 3.2838,
+          "outputAmps": 0.16199999999999992
+        }
+      ],
+      "preLimitEnvelope": [
+        {
+          "fraction": 0.95,
+          "demandFraction": 0.95,
+          "resistanceOhms": 17.268421052631577,
+          "outputVolts": 3.281,
+          "outputAmps": 0.18999999999999684
+        },
+        {
+          "fraction": 0.99,
+          "demandFraction": 0.99,
+          "resistanceOhms": 16.566666666666663,
+          "outputVolts": 3.2802000000000002,
+          "outputAmps": 0.19799999999999596
+        }
+      ],
+      "limitOnset": {
+        "fraction": 1,
+        "demandFraction": 1,
+        "resistanceOhms": 16.399999999999995,
+        "outputVolts": 3.2800000000000002,
+        "outputAmps": 0.19999999999999574
+      },
+      "short": {
+        "fraction": 1,
+        "demandFraction": 1,
+        "resistanceOhms": 0.1,
+        "outputVolts": 0.020000000326,
+        "outputAmps": 0.20000000326
+      }
+    },
+    {
+      "variant": "averaged-switching-12v",
+      "usableRegulatedCurrentFraction": 0.9,
+      "usableRegulatedCurrentAmps": 0.18000000000000002,
+      "regulatedVoltageToleranceVolts": 0.6000000000000001,
+      "minimumRegulatedOutputVolts": 11.4,
+      "light": {
+        "fraction": 0,
+        "demandFraction": 0,
+        "resistanceOhms": 1000,
+        "outputVolts": 11.998800119988001,
+        "outputAmps": 0.011998800119989994
+      },
+      "loadEnvelope": [
+        {
+          "fraction": 0.25,
+          "demandFraction": 0.225,
+          "resistanceOhms": 266.5666666666666,
+          "outputVolts": 11.995500000000002,
+          "outputAmps": 0.04499999999998394
+        },
+        {
+          "fraction": 0.5,
+          "demandFraction": 0.45,
+          "resistanceOhms": 133.23333333333332,
+          "outputVolts": 11.991000000000001,
+          "outputAmps": 0.08999999999998565
+        },
+        {
+          "fraction": 0.75,
+          "demandFraction": 0.675,
+          "resistanceOhms": 88.78888888888889,
+          "outputVolts": 11.9865,
+          "outputAmps": 0.13500000000000512
+        },
+        {
+          "fraction": 0.9,
+          "demandFraction": 0.81,
+          "resistanceOhms": 73.97407407407407,
+          "outputVolts": 11.9838,
+          "outputAmps": 0.16199999999999548
+        }
+      ],
+      "preLimitEnvelope": [
+        {
+          "fraction": 0.95,
+          "demandFraction": 0.95,
+          "resistanceOhms": 63.0578947368421,
+          "outputVolts": 11.981,
+          "outputAmps": 0.19000000000000128
+        },
+        {
+          "fraction": 0.99,
+          "demandFraction": 0.99,
+          "resistanceOhms": 60.5060606060606,
+          "outputVolts": 11.9802,
+          "outputAmps": 0.1980000000000004
+        }
+      ],
+      "limitOnset": {
+        "fraction": 1,
+        "demandFraction": 1,
+        "resistanceOhms": 59.9,
+        "outputVolts": 11.979999999999999,
+        "outputAmps": 0.2
+      },
+      "short": {
+        "fraction": 1,
+        "demandFraction": 1,
+        "resistanceOhms": 0.1,
+        "outputVolts": 0.020000001196,
+        "outputAmps": 0.20000001196
+      }
+    },
+    {
+      "variant": "averaged-switching-5v",
+      "usableRegulatedCurrentFraction": 0.9,
+      "usableRegulatedCurrentAmps": 0.18000000000000002,
+      "regulatedVoltageToleranceVolts": 0.25,
+      "minimumRegulatedOutputVolts": 4.75,
+      "light": {
+        "fraction": 0,
+        "demandFraction": 0,
+        "resistanceOhms": 1000,
+        "outputVolts": 4.999500049995,
+        "outputAmps": 0.004999500049995831
+      },
+      "loadEnvelope": [
+        {
+          "fraction": 0.25,
+          "demandFraction": 0.225,
+          "resistanceOhms": 111.0111111111111,
+          "outputVolts": 4.9955,
+          "outputAmps": 0.045000000000001705
+        },
+        {
+          "fraction": 0.5,
+          "demandFraction": 0.45,
+          "resistanceOhms": 55.45555555555555,
+          "outputVolts": 4.991,
+          "outputAmps": 0.09000000000000341
+        },
+        {
+          "fraction": 0.75,
+          "demandFraction": 0.675,
+          "resistanceOhms": 36.93703703703704,
+          "outputVolts": 4.9864999999999995,
+          "outputAmps": 0.13500000000000512
+        },
+        {
+          "fraction": 0.9,
+          "demandFraction": 0.81,
+          "resistanceOhms": 30.76419753086419,
+          "outputVolts": 4.9838000000000005,
+          "outputAmps": 0.16199999999999548
+        }
+      ],
+      "preLimitEnvelope": [
+        {
+          "fraction": 0.95,
+          "demandFraction": 0.95,
+          "resistanceOhms": 26.215789473684207,
+          "outputVolts": 4.981,
+          "outputAmps": 0.19000000000000128
+        },
+        {
+          "fraction": 0.99,
+          "demandFraction": 0.99,
+          "resistanceOhms": 25.15252525252525,
+          "outputVolts": 4.980200000000001,
+          "outputAmps": 0.19799999999999152
+        }
+      ],
+      "limitOnset": {
+        "fraction": 1,
+        "demandFraction": 1,
+        "resistanceOhms": 24.9,
+        "outputVolts": 4.9799999999999995,
+        "outputAmps": 0.2
+      },
+      "short": {
+        "fraction": 1,
+        "demandFraction": 1,
+        "resistanceOhms": 0.1,
+        "outputVolts": 0.020000000496000002,
+        "outputAmps": 0.20000000496
+      }
+    },
+    {
+      "variant": "averaged-switching-3v3",
+      "usableRegulatedCurrentFraction": 0.9,
+      "usableRegulatedCurrentAmps": 0.18000000000000002,
+      "regulatedVoltageToleranceVolts": 0.165,
+      "minimumRegulatedOutputVolts": 3.135,
+      "light": {
+        "fraction": 0,
+        "demandFraction": 0,
+        "resistanceOhms": 1000,
+        "outputVolts": 3.2996700329967004,
+        "outputAmps": 0.003299670032994584
+      },
+      "loadEnvelope": [
+        {
+          "fraction": 0.25,
+          "demandFraction": 0.225,
+          "resistanceOhms": 73.23333333333332,
+          "outputVolts": 3.2954999999999997,
+          "outputAmps": 0.045000000000001705
+        },
+        {
+          "fraction": 0.5,
+          "demandFraction": 0.45,
+          "resistanceOhms": 36.566666666666656,
+          "outputVolts": 3.2910000000000004,
+          "outputAmps": 0.08999999999999453
+        },
+        {
+          "fraction": 0.75,
+          "demandFraction": 0.675,
+          "resistanceOhms": 24.34444444444444,
+          "outputVolts": 3.2865,
+          "outputAmps": 0.13499999999999623
+        },
+        {
+          "fraction": 0.9,
+          "demandFraction": 0.81,
+          "resistanceOhms": 20.270370370370365,
+          "outputVolts": 3.2838,
+          "outputAmps": 0.16199999999999992
+        }
+      ],
+      "preLimitEnvelope": [
+        {
+          "fraction": 0.95,
+          "demandFraction": 0.95,
+          "resistanceOhms": 17.268421052631577,
+          "outputVolts": 3.281,
+          "outputAmps": 0.18999999999999684
+        },
+        {
+          "fraction": 0.99,
+          "demandFraction": 0.99,
+          "resistanceOhms": 16.566666666666663,
+          "outputVolts": 3.2802000000000002,
+          "outputAmps": 0.19799999999999596
+        }
+      ],
+      "limitOnset": {
+        "fraction": 1,
+        "demandFraction": 1,
+        "resistanceOhms": 16.399999999999995,
+        "outputVolts": 3.2800000000000002,
+        "outputAmps": 0.19999999999999574
+      },
+      "short": {
+        "fraction": 1,
+        "demandFraction": 1,
+        "resistanceOhms": 0.1,
+        "outputVolts": 0.020000000326,
+        "outputAmps": 0.20000000326
+      }
+    }
+  ]
+}

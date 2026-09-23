@@ -14,7 +14,11 @@ import java.util.List;
  * this contract.</p>
  */
 final class RailRegulationContract {
-    static final int VERSION = 1;
+    static final int VERSION = 2;
+
+    /** Explicit standard profile for the six declared roles. */
+    private static final double STANDARD_USABLE_REGULATED_CURRENT_FRACTION = .90;
+    private static final double STANDARD_REGULATED_VOLTAGE_TOLERANCE_FRACTION = .05;
 
     static final String INPUT_TERMINAL = "INPUT";
     static final String OUTPUT_TERMINAL = "OUTPUT";
@@ -35,11 +39,13 @@ final class RailRegulationContract {
     private final double efficiency;
     private final boolean averagedSwitching;
     private final boolean switchingWaveformSupported;
+    private final double usableRegulatedCurrentFraction;
+    private final double regulatedVoltageToleranceVolts;
 
     /**
-     * Creates a bounded rail declaration.  The final overload is retained as
-     * an explicit guard for callers that might otherwise try to claim a
-     * switching waveform for an averaged model; true is always rejected.
+     * Creates a rail declaration with an explicit normal regulation envelope.
+     * The usable-current fraction is below the hard current-limit knee; the
+     * voltage tolerance is the maximum declared droop for that normal region.
      */
     RailRegulationContract(String variantId,
             String inputTerminalId, String outputTerminalId,
@@ -49,23 +55,9 @@ final class RailRegulationContract {
             double maximumOutputCurrentAmps, double outputResistanceOhms,
             double enableLowVolts, double enableHighVolts,
             double quiescentCurrentAmps, double efficiency,
-            boolean averagedSwitching) {
-        this(variantId, inputTerminalId, outputTerminalId, returnTerminalId,
-            enableTerminalId, nominalOutputVolts, minimumInputVolts,
-            maximumInputVolts, dropoutVolts, maximumOutputCurrentAmps,
-            outputResistanceOhms, enableLowVolts, enableHighVolts,
-            quiescentCurrentAmps, efficiency, averagedSwitching, false);
-    }
-
-    RailRegulationContract(String variantId,
-            String inputTerminalId, String outputTerminalId,
-            String returnTerminalId, String enableTerminalId,
-            double nominalOutputVolts, double minimumInputVolts,
-            double maximumInputVolts, double dropoutVolts,
-            double maximumOutputCurrentAmps, double outputResistanceOhms,
-            double enableLowVolts, double enableHighVolts,
-            double quiescentCurrentAmps, double efficiency,
-            boolean averagedSwitching, boolean switchingWaveformSupported) {
+            boolean averagedSwitching, boolean switchingWaveformSupported,
+            double usableRegulatedCurrentFraction,
+            double regulatedVoltageToleranceVolts) {
         this.variantId = requireId(variantId, "variantId");
         String input = requireId(inputTerminalId, "inputTerminalId");
         String output = requireId(outputTerminalId, "outputTerminalId");
@@ -86,11 +78,19 @@ final class RailRegulationContract {
         finitePositive(enableHighVolts, "enableHighVolts");
         finiteNonnegative(quiescentCurrentAmps, "quiescentCurrentAmps");
         finitePositive(efficiency, "efficiency");
+        finitePositive(usableRegulatedCurrentFraction,
+                "usableRegulatedCurrentFraction");
+        finiteNonnegative(regulatedVoltageToleranceVolts,
+                "regulatedVoltageToleranceVolts");
         if (maximumInputVolts < minimumInputVolts ||
                 maximumInputVolts <= nominalOutputVolts + dropoutVolts ||
                 minimumInputVolts < nominalOutputVolts + dropoutVolts ||
                 enableHighVolts <= enableLowVolts || efficiency > 1.0 ||
-                switchingWaveformSupported) {
+                switchingWaveformSupported ||
+                usableRegulatedCurrentFraction >= 1.0 ||
+                regulatedVoltageToleranceVolts >= nominalOutputVolts ||
+                maximumOutputCurrentAmps * usableRegulatedCurrentFraction *
+                    outputResistanceOhms > regulatedVoltageToleranceVolts) {
             throw new IllegalArgumentException("Unsupported rail regulation envelope");
         }
         ArrayList<String> terminals = new ArrayList<String>();
@@ -111,6 +111,8 @@ final class RailRegulationContract {
         this.efficiency = efficiency;
         this.averagedSwitching = averagedSwitching;
         this.switchingWaveformSupported = false;
+        this.usableRegulatedCurrentFraction = usableRegulatedCurrentFraction;
+        this.regulatedVoltageToleranceVolts = regulatedVoltageToleranceVolts;
     }
 
     static RailRegulationContract linear12V() {
@@ -146,7 +148,8 @@ final class RailRegulationContract {
         return new RailRegulationContract(id, INPUT_TERMINAL, OUTPUT_TERMINAL,
                 RETURN_TERMINAL, ENABLE_TERMINAL, nominal, minimumInput,
                 maximumInput, .8, current, .1, .8, 2.0, quiescent, 1.0,
-                false);
+                false, false, STANDARD_USABLE_REGULATED_CURRENT_FRACTION,
+                nominal * STANDARD_REGULATED_VOLTAGE_TOLERANCE_FRACTION);
     }
 
     private static RailRegulationContract averaged(String id, double nominal,
@@ -155,7 +158,8 @@ final class RailRegulationContract {
         return new RailRegulationContract(id, INPUT_TERMINAL, OUTPUT_TERMINAL,
                 RETURN_TERMINAL, ENABLE_TERMINAL, nominal, minimumInput,
                 maximumInput, .8, current, .1, .8, 2.0, quiescent,
-                efficiency, true);
+                efficiency, true, false, STANDARD_USABLE_REGULATED_CURRENT_FRACTION,
+                nominal * STANDARD_REGULATED_VOLTAGE_TOLERANCE_FRACTION);
     }
 
     String getVariantId() { return variantId; }
@@ -181,6 +185,18 @@ final class RailRegulationContract {
     double getEnableHighVolts() { return enableHighVolts; }
     double getQuiescentCurrentAmps() { return quiescentCurrentAmps; }
     double getEfficiency() { return efficiency; }
+    double getUsableRegulatedCurrentFraction() {
+        return usableRegulatedCurrentFraction;
+    }
+    double getUsableRegulatedCurrentAmps() {
+        return maximumOutputCurrentAmps * usableRegulatedCurrentFraction;
+    }
+    double getRegulatedVoltageToleranceVolts() {
+        return regulatedVoltageToleranceVolts;
+    }
+    double getMinimumRegulatedOutputVolts() {
+        return nominalOutputVolts - regulatedVoltageToleranceVolts;
+    }
     boolean isAveragedSwitching() { return averagedSwitching; }
     boolean isLinear() { return !averagedSwitching; }
 

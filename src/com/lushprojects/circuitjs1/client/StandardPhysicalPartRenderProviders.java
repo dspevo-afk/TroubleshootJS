@@ -31,6 +31,8 @@ final class StandardPhysicalPartRenderProviders {
             new FixedProvider(new NmosRenderer()));
         registry.register(PhysicalPackages.TO220_REGULATOR_4,
             new FixedProvider(new MultiTerminalRenderer()));
+        registry.register(PhysicalPackages.E04_DECISION_CONTROL_5,
+            new FixedProvider(new MultiTerminalRenderer()));
         registry.register(PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR,
             new FixedProvider(new ElectrolyticCapacitorRenderer()));
         registry.register(PhysicalPackages.RADIAL_CERAMIC_CAPACITOR,

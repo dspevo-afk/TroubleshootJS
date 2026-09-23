@@ -195,6 +195,42 @@ public final class E04SensorControlModel {
     }
 
     /**
+     * Explicit ownership class for every element in the E04 model graph.
+     *
+     * <p>This is intentionally an E04 boundary rather than a generic solver
+     * registry.  A generated physical component may own one primary element
+     * and its bounded fault/secondary-path helpers; source, return and board
+     * copper infrastructure remain separately identifiable.</p>
+     */
+    public enum ElementOwnershipKind {
+        MAPPED_COMPONENT,
+        EXTERNAL_INFRASTRUCTURE,
+        INTERNAL_SUPPORT,
+        BOARD_INTERCONNECT
+    }
+
+    /** Immutable ownership row used by the E04 physical admission contract. */
+    public static final class ElementOwnership {
+        private final CircuitElm element;
+        private final String ownerId;
+        private final ElementOwnershipKind kind;
+
+        ElementOwnership(CircuitElm element, String ownerId,
+                ElementOwnershipKind kind) {
+            if (element == null || ownerId == null || ownerId.length() == 0 ||
+                    kind == null)
+                throw new IllegalArgumentException("Invalid E04 element ownership");
+            this.element = element;
+            this.ownerId = ownerId;
+            this.kind = kind;
+        }
+
+        public CircuitElm getElement() { return element; }
+        public String getOwnerId() { return ownerId; }
+        public ElementOwnershipKind getKind() { return kind; }
+    }
+
+    /**
      * Package-private live solver targets owned by the E04 family.  These are
      * endpoint wrappers around the elements already installed in the fixture;
      * the binding view never creates a second source, load, or fault element.
@@ -404,6 +440,13 @@ public final class E04SensorControlModel {
     private static final double OPEN_RESISTANCE = 1e9;
     private static final double REFERENCE_MARGIN_VOLTS = .10;
     private static final double OUTPUT_HEADROOM_VOLTS = .15;
+    /*
+     * Real threshold-controller inputs are high impedance, not mathematically
+     * disconnected nodes.  Keeping this bounded inside U2 makes a loose
+     * catalog part finite in CircuitJS without inventing a board-level
+     * resistor or materially loading the external divider.
+     */
+    private static final double DECISION_INPUT_LEAKAGE_OHMS = 1e9;
     // Match the bounded E02 Norton update tolerance so the control source
     // does not force needless extra nonlinear trials on every rail settling
     // step while retaining sub-millivolt decision-output accuracy.
@@ -414,6 +457,8 @@ public final class E04SensorControlModel {
     private final Variant variant;
     private final Configuration configuration;
     private final Vector<CircuitElm> elements = new Vector<CircuitElm>();
+    private final LinkedHashMap<CircuitElm, ElementOwnership> elementOwnership =
+        new LinkedHashMap<CircuitElm, ElementOwnership>();
     private final Map<String, TerminalDescriptor> terminalMap;
     private final SensorControlBindings solverBindings;
 
@@ -434,16 +479,30 @@ public final class E04SensorControlModel {
     private final ResistorElm feedback;
     private final SwitchElm sensorSourceFaultIsolation;
     private final SwitchElm referenceHighFaultIsolation;
+    private final SwitchElm referenceLowFaultIsolation;
     private final SwitchElm outputResistanceFaultIsolation;
+    private final SwitchElm feedbackFaultIsolation;
     private final ResistorSecondaryOpenPath sensorSourceOpenPath;
     private final ResistorSecondaryOpenPath referenceHighOpenPath;
+    private final ResistorSecondaryOpenPath referenceLowOpenPath;
     private final ResistorSecondaryOpenPath outputResistanceOpenPath;
+    private final ResistorSecondaryOpenPath feedbackOpenPath;
     private final WireElm sensorSourceFirstLead;
     private final WireElm sensorSourceSecondLead;
     private final WireElm referenceHighFirstLead;
     private final WireElm referenceHighSecondLead;
+    private final WireElm referenceLowFirstLead;
+    private final WireElm referenceLowSecondLead;
     private final WireElm outputResistanceFirstLead;
     private final WireElm outputResistanceSecondLead;
+    private final WireElm feedbackFirstLead;
+    private final WireElm feedbackSecondLead;
+    private WireElm referenceLowGroundFixtureLead;
+    private WireElm decisionRailLead;
+    private WireElm decisionReturnFixtureLead;
+    private WireElm sensorBoardAnchor;
+    private WireElm referenceBoardAnchor;
+    private WireElm outputBoardAnchor;
     /* Fixture-only leads replaced by separately-owned, detachable U1 leads
        when this model is materialized as a physical board. */
     private WireElm regulatorInputFixtureLead;
@@ -451,9 +510,17 @@ public final class E04SensorControlModel {
     private WireElm regulatorReturnFixtureLead;
     private WireElm regulatorEnableFixtureLead;
     private final DecisionElement decision;
+    /*
+     * The generated element remains the canonical empty-slot backing, while
+     * physical service can install another electrically equivalent U2.  All
+     * player-observable reads must follow the actually installed decision
+     * element rather than retaining a hidden reference to the original part.
+     */
+    private DecisionElement activeDecision;
     private final GroundElm ground;
     private final boolean hasFeedback;
     private final Map<String, PassiveBinding> boardPassives;
+    private final Map<String, PassiveBinding> supportPassives;
     private boolean referenceAvailable;
     private boolean powered;
     private boolean disposed;
@@ -592,6 +659,7 @@ public final class E04SensorControlModel {
         referenceHigh = span(new ResistorElm(480, 160), 480, 256);
         referenceLow = span(new ResistorElm(608, 272), 608, 352);
         decision = new DecisionElement(672, 288, rail, variant, configuration);
+        activeDecision = decision;
         // Keep RFB's first post distinct from the decision output so its
         // physical lead is a real detachable connection, rather than a
         // zero-length visual binding at the same CircuitJS coordinate.
@@ -599,21 +667,29 @@ public final class E04SensorControlModel {
         outputLoad = span(new ResistorElm(1056, 288), 1056, 480);
         sensorSourceFaultIsolation = seriesSwitch(sensorSourceResistance);
         referenceHighFaultIsolation = seriesSwitch(referenceHigh);
+        // Supporting RREF_LOW is physically replaceable but is not one of
+        // the generated fault seams.  Keep its solver path direct so the
+        // support resistor does not add a parallel ideal-switch branch.
+        referenceLowFaultIsolation = null;
         outputResistanceFaultIsolation = seriesSwitch(outputResistance);
         sensorSourceOpenPath = ResistorSecondaryOpenPath.create(
             postEndpoint(sensorSourceFaultIsolation, 1));
         referenceHighOpenPath = ResistorSecondaryOpenPath.create(
             postEndpoint(referenceHighFaultIsolation, 1));
+        referenceLowOpenPath = null;
         outputResistanceOpenPath = ResistorSecondaryOpenPath.create(
             postEndpoint(outputResistanceFaultIsolation, 1));
         if (variant == Variant.HYSTERETIC_REGENERATIVE) {
-            // Its terminals must remain distinct from the pre-switch RFB and
-            // RBIAS posts.  Sharing either endpoint would put the physical
-            // switches in a zero-resistance loop around the feedback branch.
+            // Feedback is a mapped support resistor rather than an admitted
+            // fault seam; its direct posts remain the authoritative endpoints.
             feedback = span(new ResistorElm(800, 400), 800, 480);
+            feedbackFaultIsolation = null;
+            feedbackOpenPath = null;
             hasFeedback = true;
         } else {
             feedback = null;
+            feedbackFaultIsolation = null;
+            feedbackOpenPath = null;
             hasFeedback = false;
         }
 
@@ -645,7 +721,9 @@ public final class E04SensorControlModel {
         add(outputResistance); add(outputLoad);
         add(outputResistanceFaultIsolation);
         add(outputResistanceOpenPath.getSimulationElement());
-        if (feedback != null) add(feedback);
+        if (feedback != null) {
+            add(feedback);
+        }
         if (regulator == null) {
             wire(ground.getPost(0), railSource.getPost(0));
             wire(railSource.getPost(1), railSourceResistance.getPost(0));
@@ -664,12 +742,15 @@ public final class E04SensorControlModel {
         wire(ground.getPost(0), sensorSource.getPost(0));
         wire(ground.getPost(0), railLoad.getPost(1));
         wire(ground.getPost(0), sensorLoad.getPost(1));
-        wire(ground.getPost(0), referenceLow.getPost(1));
-        wire(ground.getPost(0), decision.getPost(4));
+        // The fixture retains a direct ground return for standalone solver
+        // behavior; physical-board preparation removes this lead so RREF_LOW
+        // is terminated only through its mapped detachable seam.
+        referenceLowGroundFixtureLead = wire(ground.getPost(0), referenceLow.getPost(1));
+        decisionReturnFixtureLead = wire(ground.getPost(0), decision.getPost(4));
         wire(ground.getPost(0), outputLoad.getPost(1));
         if (regulator == null)
             wire(railNode, railLoad.getPost(0));
-        wire(railNode, decision.getPost(2));
+        decisionRailLead = wire(railNode, decision.getPost(2));
         sensorSourceFirstLead = wire(sensorSource.getPost(1),
             sensorSourceResistance.getPost(0));
         sensorSourceSecondLead = wire(sensorSourceOpenPath.getPublicTerminal()
@@ -680,15 +761,22 @@ public final class E04SensorControlModel {
         referenceHighSecondLead = wire(referenceHighOpenPath.getPublicTerminal()
             .getElement().getPost(referenceHighOpenPath.getPublicTerminal().getPostIndex()),
             decision.getPost(1));
-        wire(decision.getPost(1), referenceLow.getPost(0));
+        referenceLowFirstLead = wire(decision.getPost(1), referenceLow.getPost(0));
+        // The standalone fixture's direct return is also the second lead
+        // removed during physical preparation; the board generator then
+        // contributes its own detachable return lead.
+        referenceLowSecondLead = referenceLowGroundFixtureLead;
         outputResistanceFirstLead = wire(decision.getPost(3),
             outputResistance.getPost(0));
         outputResistanceSecondLead = wire(outputResistanceOpenPath.getPublicTerminal()
             .getElement().getPost(outputResistanceOpenPath.getPublicTerminal().getPostIndex()),
             outputLoad.getPost(0));
         if (feedback != null) {
-            wire(decision.getPost(3), feedback.getPost(0));
-            wire(decision.getPost(0), feedback.getPost(1));
+            feedbackFirstLead = wire(decision.getPost(3), feedback.getPost(0));
+            feedbackSecondLead = wire(feedback.getPost(1), decision.getPost(0));
+        } else {
+            feedbackFirstLead = null;
+            feedbackSecondLead = null;
         }
 
         referenceAvailable = rail.hasReference();
@@ -731,6 +819,14 @@ public final class E04SensorControlModel {
         physicalPassives.put("RFB", new PassiveBinding("RFB",
             outputResistance, outputResistanceFaultIsolation, outputResistanceOpenPath));
         boardPassives = Collections.unmodifiableMap(physicalPassives);
+        LinkedHashMap<String, PassiveBinding> physicalSupportPassives =
+                new LinkedHashMap<String, PassiveBinding>();
+        physicalSupportPassives.put("RREF_LOW", new PassiveBinding("RREF_LOW",
+            referenceLow, referenceLowFaultIsolation, referenceLowOpenPath));
+        if (feedback != null)
+            physicalSupportPassives.put("RFB_HYST", new PassiveBinding("RFB_HYST",
+                feedback, feedbackFaultIsolation, feedbackOpenPath));
+        supportPassives = Collections.unmodifiableMap(physicalSupportPassives);
         solverBindings = new SensorControlBindings(
                 postEndpoint(sensorSource, 1),
                 postEndpoint(sensorSource, 0),
@@ -755,6 +851,48 @@ public final class E04SensorControlModel {
                 regulator == null ? null : postEndpoint(selectedRegulator,
                     AbstractRailRegulatorElm.ENABLE_POST),
                 Collections.unmodifiableMap(passives));
+
+        // The ownership table is intentionally assembled from the same live
+        // element instances returned by getSimulationElements().  It makes a
+        // physical declaration unable to smuggle in a second/ghost solver
+        // element while retaining an explicit distinction between board
+        // components, external controls and E04 support infrastructure.
+        markOwnership(ground, "CONTROL_RETURN", ElementOwnershipKind.EXTERNAL_INFRASTRUCTURE);
+        markOwnership(sensorSource, "J2", ElementOwnershipKind.EXTERNAL_INFRASTRUCTURE);
+        markOwnership(sensorSourceResistance, "RBIAS", ElementOwnershipKind.MAPPED_COMPONENT);
+        markOwnership(sensorSourceFaultIsolation, "RBIAS", ElementOwnershipKind.MAPPED_COMPONENT);
+        markOwnership(sensorSourceOpenPath.getSimulationElement(), "RBIAS",
+            ElementOwnershipKind.MAPPED_COMPONENT);
+        markOwnership(referenceHigh, "RREF", ElementOwnershipKind.MAPPED_COMPONENT);
+        markOwnership(referenceHighFaultIsolation, "RREF", ElementOwnershipKind.MAPPED_COMPONENT);
+        markOwnership(referenceHighOpenPath.getSimulationElement(), "RREF",
+            ElementOwnershipKind.MAPPED_COMPONENT);
+        markOwnership(referenceLow, "RREF_LOW", ElementOwnershipKind.MAPPED_COMPONENT);
+        markOwnership(outputResistance, "RFB", ElementOwnershipKind.MAPPED_COMPONENT);
+        markOwnership(outputResistanceFaultIsolation, "RFB", ElementOwnershipKind.MAPPED_COMPONENT);
+        markOwnership(outputResistanceOpenPath.getSimulationElement(), "RFB",
+            ElementOwnershipKind.MAPPED_COMPONENT);
+        markOwnership(decision, "U2", ElementOwnershipKind.MAPPED_COMPONENT);
+        if (selectedRegulator != null)
+            markOwnership(selectedRegulator, "U1", ElementOwnershipKind.MAPPED_COMPONENT);
+        if (regulatorInputSource != null)
+            markOwnership(regulatorInputSource, "J1", ElementOwnershipKind.EXTERNAL_INFRASTRUCTURE);
+        if (regulatorEnableSource != null)
+            markOwnership(regulatorEnableSource, "J1", ElementOwnershipKind.EXTERNAL_INFRASTRUCTURE);
+        if (railSource != null)
+            markOwnership(railSource, "J1", ElementOwnershipKind.EXTERNAL_INFRASTRUCTURE);
+        // The unregulated supply impedance belongs to the J1 external input,
+        // not to an invisible board resistor.  U2 encapsulates its finite
+        // rail draw and sensor input impedance; the customer load is beyond J3.
+        markOwnership(railSourceResistance, "J1",
+            ElementOwnershipKind.EXTERNAL_INFRASTRUCTURE);
+        markOwnership(railLoad, "U2", ElementOwnershipKind.INTERNAL_SUPPORT);
+        markOwnership(sensorLoad, "U2", ElementOwnershipKind.INTERNAL_SUPPORT);
+        markOwnership(referenceLow, "RREF_LOW", ElementOwnershipKind.MAPPED_COMPONENT);
+        markOwnership(outputLoad, "J3", ElementOwnershipKind.EXTERNAL_INFRASTRUCTURE);
+        if (feedback != null) {
+            markOwnership(feedback, "RFB_HYST", ElementOwnershipKind.MAPPED_COMPONENT);
+        }
     }
 
     public RailContract getRailContract() { return rail; }
@@ -769,6 +907,29 @@ public final class E04SensorControlModel {
     /** Package-private physical integration hook for the U1 board adapter. */
     AbstractRailRegulatorElm getSelectedE02Regulator() {
         return selectedRegulator;
+    }
+
+    /** Package-private physical integration hook for the mapped U2 decision. */
+    DecisionElement getDecisionElement() { return decision; }
+
+    /** Create an independent, solver-backed replacement for the visible U2. */
+    DecisionElement createReplacementDecisionElement(int x, int y) {
+        return new DecisionElement(x, y, rail, variant, configuration);
+    }
+
+    /** Current physical U2 owner followed by customer-behavior observations. */
+    DecisionElement getActiveDecisionElement() { return activeDecision; }
+
+    /** Transactional physical-service hook; callers must compensate on abort. */
+    void setActiveDecisionElement(DecisionElement replacement) {
+        if (replacement == null || replacement.variant != decision.variant ||
+                replacement.nominalRailVoltage != decision.nominalRailVoltage ||
+                replacement.minimumOperatingVoltage != decision.minimumOperatingVoltage ||
+                replacement.directThresholdOffsetVolts != decision.directThresholdOffsetVolts ||
+                replacement.risingThresholdOffsetVolts != decision.risingThresholdOffsetVolts ||
+                replacement.fallingThresholdOffsetVolts != decision.fallingThresholdOffsetVolts)
+            throw new IllegalArgumentException("Incompatible E04 decision replacement");
+        activeDecision = replacement;
     }
 
     /** Defensive copy suitable for a PrivateSolverContext or a board owner. */
@@ -789,7 +950,107 @@ public final class E04SensorControlModel {
      * the physical secondary-open path used by replacement parts.
      */
     PassiveBinding getBoardOwnedPassive(String componentId) {
-        return boardPassives.get(componentId);
+        PassiveBinding result = boardPassives.get(componentId);
+        return result == null ? supportPassives.get(componentId) : result;
+    }
+
+    /** E04 support passives are physical, but not admitted fault candidates. */
+    PassiveBinding getBoardSupportPassive(String componentId) {
+        return supportPassives.get(componentId);
+    }
+
+    /** Persistent board-side endpoint for the conditioned sensor net. */
+    CircuitPostMeasurementEndpoint getPhysicalSensorBoardEndpoint() {
+        requirePhysicalBoardPreparation();
+        return postEndpoint(sensorBoardAnchor, 1);
+    }
+
+    /** Persistent board-side endpoint for the reference divider net. */
+    CircuitPostMeasurementEndpoint getPhysicalReferenceBoardEndpoint() {
+        requirePhysicalBoardPreparation();
+        return postEndpoint(referenceBoardAnchor, 1);
+    }
+
+    /** Persistent board-side endpoint for the decision output net. */
+    CircuitPostMeasurementEndpoint getPhysicalOutputBoardEndpoint() {
+        requirePhysicalBoardPreparation();
+        return postEndpoint(outputBoardAnchor, 1);
+    }
+
+    /** Physical component's persistent return/copper endpoint. */
+    CircuitPostMeasurementEndpoint getPhysicalReturnBoardEndpoint() {
+        return postEndpoint(ground, 0);
+    }
+
+    /**
+     * Returns the complete E04 ownership census.  The returned rows retain
+     * the exact live element identity but the collection itself is detached.
+     */
+    public Vector<ElementOwnership> getElementOwnership() {
+        return new Vector<ElementOwnership>(elementOwnership.values());
+    }
+
+    /** Finds the current owner row for one live E04 element. */
+    public ElementOwnership getElementOwnership(CircuitElm element) {
+        return elementOwnership.get(element);
+    }
+
+    /**
+     * Fail-closed census check used before a physical adapter publishes its
+     * bindings.  A foreign/ghost element, missing row, duplicate row or
+     * incomplete list is rejected before live construction can proceed.
+     */
+    public void validateElementOwnership(Vector<CircuitElm> candidateElements) {
+        if (candidateElements == null || candidateElements.size() != elements.size() ||
+                elementOwnership.size() != elements.size())
+            throw new IllegalArgumentException("E04 element ownership census size mismatch");
+        LinkedHashMap<CircuitElm, Boolean> seen = new LinkedHashMap<CircuitElm, Boolean>();
+        for (CircuitElm element : candidateElements) {
+            ElementOwnership row = elementOwnership.get(element);
+            if (element == null || row == null || row.getElement() != element ||
+                    seen.put(element, Boolean.TRUE) != null)
+                throw new IllegalArgumentException("E04 element is foreign or duplicated");
+            if (element instanceof WireElm) {
+                if (row.getKind() != ElementOwnershipKind.BOARD_INTERCONNECT ||
+                        !"PCB_COPPER".equals(row.getOwnerId()))
+                    throw new IllegalArgumentException("E04 wire lacks interconnect ownership");
+            } else if (row.getKind() == ElementOwnershipKind.BOARD_INTERCONNECT) {
+                throw new IllegalArgumentException("E04 active element cannot be copper");
+            } else if (row.getKind() == ElementOwnershipKind.INTERNAL_SUPPORT) {
+                if (!"U2".equals(row.getOwnerId()) ||
+                        (element != railLoad && element != sensorLoad))
+                    throw new IllegalArgumentException("E04 internal support lacks mapped U2 owner");
+            } else if (row.getKind() == ElementOwnershipKind.EXTERNAL_INFRASTRUCTURE) {
+                if (!("J1".equals(row.getOwnerId()) &&
+                        (element == railSource || element == railSourceResistance ||
+                         element == regulatorInputSource || element == regulatorEnableSource)) &&
+                    !("J2".equals(row.getOwnerId()) && element == sensorSource) &&
+                    !("J3".equals(row.getOwnerId()) && element == outputLoad) &&
+                    !("CONTROL_RETURN".equals(row.getOwnerId()) && element == ground))
+                    throw new IllegalArgumentException("E04 undeclared external infrastructure");
+            } else if (row.getKind() != ElementOwnershipKind.MAPPED_COMPONENT ||
+                    "E04_INTERNAL".equals(row.getOwnerId())) {
+                throw new IllegalArgumentException("E04 element lacks a physical owner");
+            }
+        }
+        for (CircuitElm element : elements)
+            if (!seen.containsKey(element))
+                throw new IllegalArgumentException("E04 element is missing from ownership census");
+    }
+
+    /** Require every board-owned electrical element's declared owner to exist. */
+    public void validateElementOwnership(Vector<CircuitElm> candidateElements,
+            TroubleshootBoard board) {
+        validateElementOwnership(candidateElements);
+        if (board == null)
+            throw new IllegalArgumentException("Missing E04 physical board");
+        for (ElementOwnership row : elementOwnership.values()) {
+            if ((row.getKind() == ElementOwnershipKind.MAPPED_COMPONENT ||
+                    row.getKind() == ElementOwnershipKind.INTERNAL_SUPPORT) &&
+                    board.getComponent(row.getOwnerId()) == null)
+                throw new IllegalArgumentException("E04 electrical owner has no physical part: " +
+                    row.getOwnerId());
+        }
     }
 
     /**
@@ -806,6 +1067,16 @@ public final class E04SensorControlModel {
         removeElement(referenceHighSecondLead);
         removeElement(outputResistanceFirstLead);
         removeElement(outputResistanceSecondLead);
+        removeElement(referenceLowFirstLead);
+        removeElement(referenceLowSecondLead);
+        removeElement(feedbackFirstLead);
+        removeElement(feedbackSecondLead);
+        removeElement(referenceLowGroundFixtureLead);
+        removeElement(decisionRailLead);
+        removeElement(decisionReturnFixtureLead);
+        sensorBoardAnchor = boardAnchor(1280, 352, 1344, 352);
+        referenceBoardAnchor = boardAnchor(1280, 256, 1344, 256);
+        outputBoardAnchor = boardAnchor(1280, 288, 1344, 288);
         removeElement(regulatorInputFixtureLead);
         removeElement(regulatorOutputFixtureLead);
         removeElement(regulatorReturnFixtureLead);
@@ -971,13 +1242,19 @@ public final class E04SensorControlModel {
         return SensorCondition.SENSOR_MID;
     }
 
-    public ControlState getControlState() { return decision.controlState; }
-    public boolean isOutputHigh() { return decision.controlState == ControlState.HIGH; }
+    public ControlState getControlState() { return activeDecision.controlState; }
+    public boolean isOutputHigh() { return activeDecision.controlState == ControlState.HIGH; }
     public boolean isPowered() { return powered; }
     public boolean isReferenceAvailable() { return referenceAvailable; }
-    public double getSensorNodeVoltage() { return decision.getPostVoltage(0) - decision.getPostVoltage(4); }
-    public double getReferenceNodeVoltage() { return decision.getPostVoltage(1) - decision.getPostVoltage(4); }
-    public double getRailNodeVoltage() { return decision.getPostVoltage(2) - decision.getPostVoltage(4); }
+    public double getSensorNodeVoltage() {
+        return activeDecision.getPostVoltage(0) - activeDecision.getPostVoltage(4);
+    }
+    public double getReferenceNodeVoltage() {
+        return activeDecision.getPostVoltage(1) - activeDecision.getPostVoltage(4);
+    }
+    public double getRailNodeVoltage() {
+        return activeDecision.getPostVoltage(2) - activeDecision.getPostVoltage(4);
+    }
     public double getOutputVoltage() { return outputLoad.getPostVoltage(0) - outputLoad.getPostVoltage(1); }
     public double getOutputCurrent() { return outputLoad.getCurrent(); }
     public double getSensorSourceCurrent() { return sensorSourceResistance.getCurrent(); }
@@ -996,11 +1273,28 @@ public final class E04SensorControlModel {
         for (CircuitElm element : elements) element.delete();
     }
 
-    private void add(CircuitElm element) { elements.add(element); }
+    private void add(CircuitElm element) {
+        if (element == null)
+            throw new IllegalArgumentException("Missing E04 simulation element");
+        elements.add(element);
+        // No implicit ownership: the constructor must explicitly classify
+        // every material element before physical admission.
+    }
 
     private void removeElement(CircuitElm element) {
-        if (element != null && elements.remove(element))
+        if (element != null && elements.remove(element)) {
+            elementOwnership.remove(element);
             element.delete();
+        }
+    }
+
+    private void markOwnership(CircuitElm element, String ownerId,
+            ElementOwnershipKind kind) {
+        if (element == null)
+            return;
+        if (!elements.contains(element))
+            throw new IllegalStateException("E04 ownership element is not in live graph");
+        elementOwnership.put(element, new ElementOwnership(element, ownerId, kind));
     }
 
     private static void addPassive(Map<String, PassiveBinding> passives,
@@ -1023,7 +1317,19 @@ public final class E04SensorControlModel {
         // return/enable post electrically floating.
         wire.setPosition(from.x, from.y, to.x, to.y);
         elements.add(wire);
+        elementOwnership.put(wire, new ElementOwnership(wire,
+            "PCB_COPPER", ElementOwnershipKind.BOARD_INTERCONNECT));
         return wire;
+    }
+
+    private WireElm boardAnchor(int x1, int y1, int x2, int y2) {
+        return wire(new Point(x1, y1), new Point(x2, y2));
+    }
+
+    private void requirePhysicalBoardPreparation() {
+        if (!preparedForPhysicalBoard || sensorBoardAnchor == null ||
+                referenceBoardAnchor == null || outputBoardAnchor == null)
+            throw new IllegalStateException("E04 physical board anchors are not prepared");
     }
 
     private SwitchElm seriesSwitch(ResistorElm resistor) {
@@ -1087,9 +1393,11 @@ public final class E04SensorControlModel {
             validateRegulatorSelection(regulator,
                     Math.min(regulator.getMaximumInputVolts(),
                             regulator.getNominalOutputVolts() + 2.0));
-            double sourceResistance = regulator.getOutputResistanceOhms() +
-                    regulator.getNominalOutputVolts() /
-                    regulator.getMaximumOutputCurrentAmps();
+            // The adapter exposes E02's declared in-regulation impedance.
+            // Current limiting is a separate nonlinear solver characteristic;
+            // folding Vnom/Imax into this value would recreate the rejected
+            // permanent Thevenin droop interpretation in downstream consumers.
+            double sourceResistance = regulator.getOutputResistanceOhms();
             if (!finite(sourceResistance) || sourceResistance <= 0.0 ||
                     sourceResistance > 1000.0)
                 throw new IllegalArgumentException(
@@ -1113,9 +1421,7 @@ public final class E04SensorControlModel {
         }
 
         public double getSourceResistanceOhms() {
-            return regulator.getOutputResistanceOhms() +
-                    regulator.getNominalOutputVolts() /
-                    regulator.getMaximumOutputCurrentAmps();
+            return regulator.getOutputResistanceOhms();
         }
 
         /** E04 creates its reference divider from the selected rail output. */
@@ -1319,6 +1625,9 @@ public final class E04SensorControlModel {
         Point getPost(int n) { return posts[n]; }
 
         void stamp() {
+            sim.stampResistor(nodes[0], nodes[4], DECISION_INPUT_LEAKAGE_OHMS);
+            sim.stampResistor(nodes[1], nodes[4], DECISION_INPUT_LEAKAGE_OHMS);
+            sim.stampResistor(nodes[2], nodes[4], DECISION_INPUT_LEAKAGE_OHMS);
             // CircuitJS defines a source value as V(second)-V(first).  Keep
             // the family output positive with respect to its declared
             // return post.
@@ -1380,17 +1689,26 @@ public final class E04SensorControlModel {
 
         double getVoltageDiff() { return volts[3] - volts[4]; }
 
-        // Sensor, reference and rail inputs remain high impedance, while the
-        // modeled output source has a real return path.  Advertising only
-        // that pair keeps an opened RFB from leaving the live source node
-        // falsely unconnected during CircuitJS graph validation.
+        // Sensor, reference and rail inputs retain their bounded internal U2
+        // leakage paths.  The output source also has a real return path.
         boolean getConnection(int n1, int n2) {
-            return (n1 == 3 && n2 == 4) || (n1 == 4 && n2 == 3);
+            return (n1 == 4 && n2 >= 0 && n2 <= 3) ||
+                (n2 == 4 && n1 >= 0 && n1 <= 3);
         }
-        boolean hasGroundConnection(int n) { return n == 4; }
+        // RETURN is an ordinary package terminal, not an implicit global
+        // ground.  An installed U2 reaches ground through its mapped RETURN
+        // pad; a loose catalog U2 must remain a floating island so CircuitJS
+        // adds its normal finite island anchor during analysis.
+        boolean hasGroundConnection(int n) { return false; }
         @Override double getCurrentIntoNode(int n) {
+            if (n >= 0 && n <= 2)
+                return -(volts[n] - volts[4]) / DECISION_INPUT_LEAKAGE_OHMS;
             if (n == 3) return -current;
-            if (n == 4) return current;
+            if (n == 4)
+                return current + (volts[0] - volts[4]) /
+                    DECISION_INPUT_LEAKAGE_OHMS +
+                    (volts[1] - volts[4]) / DECISION_INPUT_LEAKAGE_OHMS +
+                    (volts[2] - volts[4]) / DECISION_INPUT_LEAKAGE_OHMS;
             return 0.0;
         }
     }

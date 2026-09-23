@@ -25,6 +25,8 @@ final class StandardPcbFootprintProviders {
         registry.register(PhysicalPackages.TO92_NMOS, new NmosProvider());
         registry.register(PhysicalPackages.TO220_REGULATOR_4,
             new MultiTerminalProvider(4, 4));
+        registry.register(PhysicalPackages.E04_DECISION_CONTROL_5,
+            new MultiTerminalProvider(5, 5));
         registry.register(PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR,
             new ElectrolyticCapacitorProvider());
         registry.register(PhysicalPackages.RADIAL_CERAMIC_CAPACITOR,

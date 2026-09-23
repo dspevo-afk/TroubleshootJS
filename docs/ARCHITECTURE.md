@@ -33,8 +33,8 @@ precede state deletion. Ambiguous identity retains state and the process.
 
 ## Procedural Quick Play admission and exact replay
 
-QuickPlayAdmission version4 covers the nine currently selectable family/profile pairs:
-eight EASY families and the composed MEDIUM family. Other available difficulty labels
+QuickPlayAdmission version4 covers ten currently selectable family/profile pairs:
+nine EASY families (including SENSOR_CONTROL) and the composed MEDIUM family. Other available difficulty labels
 do not advertise electrical content that has not passed that profile. Fresh signed-long
 entropy is never reduced to reference seed lists. A bounded page-session root
 history prevents recent New Board launches from reusing an identity even if the
@@ -62,8 +62,9 @@ Controlled composition stages routing before electrical allocation. Its sealed
 coordinate result belongs to the exact immutable request. Hypotheses may copy that
 geometry, but create fresh electrical/runtime and proof owners. Geometry is revalidated;
 foreign-request reuse fails before allocation. No electrical answer or repair proof is
-cached. Exact replay is tsj-alpha/3; old epochs reject. Interpretation11 includes
-admission4/layout13. Eight entropy bytes travel as canonical signed decimal text,
+cached. Exact replay is tsj-alpha/3; old epochs reject. Dependency interpretation
+v16 captures admission4/layout13 and the current dump-model v5. Eight entropy
+bytes travel as canonical signed decimal text,
 never through a lossy JavaScript Number.
 
 `ControlledIndicatorPcbLayoutFactory` still contains an authored fixed reference
@@ -78,10 +79,12 @@ that formation on abort. Direct catalog installs bind before acquisition validat
 Originals, other packages and formed parts retain strict compatibility. Compaction
 retains a legal routed input when contraction would violate existing detour limits.
 
-Current evidence comprises 19 affected native suites, 144 structural cases, actual
-normal-menu/replay/cancel/shop flows and compiled A08/E03/A10. Earlier population counts
-below belong to their earlier source candidates, not this one.
-[Current evidence and limits](task-evidence/ProceduralFamilies/README.md).
+The 19-suite/144-case evidence below belongs to the historical post-P09 source
+candidate. The current menu has ten family/profile pairs after SENSOR_CONTROL;
+its rebuilt procedural browser matrix passes three launches per pair, exact
+replay, privacy, power isolation and owned-process cleanup. See the
+[historical evidence](task-evidence/ProceduralFamilies/README.md) and the
+[current matrix receipt](task-evidence/D01/quickplay-procedural-matrix.json).
 
 ## Production physical qualification (P09)
 
@@ -578,7 +581,9 @@ bends and unique shared length; duplicate copper earns no extra score reward.
 Candidate statistics report expansions, raw segments and moves rejected by
 other-net occupancy/clearance. Existing legality is unchanged; the bounded P05 scheduler below owns recovery limits.
 
-The current layout epoch is 11 and dependency interpretation is v7. Dependency
+At the P03 qualification boundary the layout epoch was 11 and dependency
+interpretation was v7. The current layout epoch is 13 and the global dependency
+interpretation is v16. Dependency
 capture includes placement demands, canonical domain barriers, typed net roles
 and the route score version, including the declared routing layer. Historical layout artifacts reject through the
 existing current-version boundary. Circuit topology, values, fault selection,
@@ -949,8 +954,9 @@ the temporal DC meter reads the accepted live solution (high-impedance observati
 as on existing temporal boards). Unreferenced loose-part DC is unsupported;
 resistance and diode tests use real temporary sources. `PowerDomainContractProvider`
 lets the current dependency identity capture declarations from either the existing
-power assessment or the relay energy/reference owner. The current interpretation
-is dependency-v7/dump-model-v3; transient relay current is excluded, while model
+power assessment or the relay energy/reference owner. The E03 qualification
+interpretation was dependency-v7/dump-model-v3; the current global context is
+dependency-v16/dump-model-v5. Transient relay current is excluded, while model
 parameters and persistent faults remain included. [Qualification](task-evidence/E03/README.md).
 
 ## E02 rails and E04 sensor controls
@@ -960,11 +966,15 @@ RETURN and ENABLE. RETURN is the model's explicit local reference; it is not an
 implicit global ground. The declared linear and averaged implementations cover
 12 V, 5 V and 3.3 V roles. `LinearRegulatorElm` and
 `AveragedSwitchingRegulatorElm` both stamp a finite, input-derived Norton output
-branch into CircuitJS. The output therefore follows solved INPUT-minus-RETURN,
-ENABLE-minus-RETURN, dropout and finite output resistance/current limit; a short
-is solver-visible at the input. The averaged implementation differs only in
-bounded input-power accounting and never claims ripple, a switching frequency,
-or a waveform. `E02FiniteSourceElm` is likewise finite and serializable. The
+branch into CircuitJS. In the contract's explicit usable-current and voltage-
+tolerance envelope, its declared 0.1 ohm regulation branch remains near the
+target; a separate solver-stamped nonlinear current-limit branch bounds shorts
+at the declared current. The target follows solved INPUT-minus-RETURN,
+ENABLE-minus-RETURN and dropout, so it is not an independent ideal rail. The
+linear variant draws delivered current plus quiescent current; the averaged
+variant accounts for solved output power at its declared efficiency and never
+claims ripple, a switching frequency, or a waveform. `E02FiniteSourceElm` is
+likewise finite and serializable. The
 three E02 dump types are declaration data captured by the generation dependency
 identity, not hidden solver state. [Qualification](task-evidence/E02/README.md).
 
@@ -975,9 +985,26 @@ hysteretic/averaged-rail implementation. `E04SensorControlModel.DecisionElement`
 owns the state boundary and serializes only its stable declaration, never a
 latched runtime answer. J1 remains the raw supply boundary, J2 the external
 sensor boundary, J3 the loaded output, and U1 maps the E02 four-terminal role to
-the TO-220 footprint. RBIAS, RREF and RFB are model-owned passive seams with
-real physical removal/replacement actions; U1 is a separately serviceable
-catalog component but is not an E04 fault candidate.
+the TO-220 footprint. The solver-backed decision is U2, a five-terminal visible
+control part whose sensor, reference, rail, output and return pads bind to the
+same live solver element. RREF_LOW is an external physical divider resistor;
+RFB_HYST is an external physical regenerative resistor in the hysteretic
+variant only. Both have pads, copper, and service ownership. RBIAS, RREF and
+RFB are model-owned passive seams with real physical removal/replacement
+actions; U1 is a separately serviceable catalog component but is not an E04
+fault candidate. The E04 element census distinguishes mapped components,
+external input/output infrastructure, mapped-component internal loads and
+board interconnect; an unexplained electrical element is rejected before
+physical publication. Post-service validation resolves U1, U2 and each passive
+from the currently installed physical part, rather than pinning a slot to its
+construction-time solver object. U1's four connections must target the
+replacement regulator's exact posts; U2's five connections must target the
+replacement decision element; and occupied passive slots must follow the
+replacement resistor's current primary/auxiliary bindings while retaining the
+board's immutable pad-endpoint oracle. Empty slots retain their canonical
+disconnected seam identities. The generic board validator separately enforces
+canonical inventory membership and active-graph presence or absence across
+remove/catalog/install.
 
 `SensorControlDiagnosticProvider` exposes only ordinary LOW/MID/HIGH sensor
 operations, power transitions, and physical passive measurements. Its admitted
@@ -4441,7 +4468,8 @@ at the top of this document. Proof receipts remain specific to their issuing own
 `GenerationDependencyContext`, including model/element declarations, source
 state, declared temporal cache recipe/model epoch, physical realization,
 diagnostic program and repair catalog. It is not a hash-only key and carries its
-current interpretation version. `GeneratedDiagnosticProofCache` stores only
+current interpretation version (dependency-v16/dump-model-v5 after the E02/E04
+electrical and physical repair). `GeneratedDiagnosticProofCache` stores only
 validated immutable evidence and partition values—never a solver, controller,
 graph, instrument state or published owner. A warm hit first repeats current
 structural admission and then issues a fresh owner/controller-bound receipt; a

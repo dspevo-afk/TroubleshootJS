@@ -1,0 +1,74 @@
+{
+  "protocol": "TSJ-E04-NORMAL-PLAYER-1",
+  "capturedUtc": "2026-09-23T09:30:06.8511218Z",
+  "route": "?tsjChallenge=sensor-control&seed=0&difficulty=EASY&run=e04-player-final-dynamic",
+  "headless": false,
+  "visibleInputs": [
+    "Accept ticket and start",
+    "Service ticket",
+    "Set sensor LOW",
+    "Set sensor MID",
+    "Set sensor HIGH",
+    "Run customer retest (unrepaired)",
+    "Board view",
+    "Select component: RBIAS",
+    "Board Power: ON -> OFF",
+    "Component",
+    "Remove component",
+    "Shop",
+    "Filter: SENSOR_SOURCE_RESISTOR parts",
+    "Search: 10000 Ohm +/-5%",
+    "Add 10000 Ohm +/-5% to Parts Tray",
+    "Close Shop",
+    "Parts Tray",
+    "Select Part 10 - 10000 Ohm +/-5%",
+    "Install as Circuit / RBIAS",
+    "Board Power: OFF -> ON",
+    "Run customer retest (repaired)"
+  ],
+  "pageErrors": [],
+  "browser": "Codex In-app Browser",
+  "initial": {
+    "screen": "TICKET",
+    "replay": "tsj-alpha/3/EASY/SENSOR_CONTROL/0",
+    "catalogPairs": 10,
+    "easyPairs": 9,
+    "complaint": "The sensor-controlled output does not follow the sensor condition."
+  },
+  "privacyBefore": true,
+  "unrepaired": {
+    "message": "Customer retest did not pass. Continue troubleshooting.",
+    "completed": false
+  },
+  "removal": {
+    "component": "RBIAS",
+    "power": "OFF",
+    "looseSensorSourceParts": 1
+  },
+  "purchase": {
+    "catalog": "SENSOR_SOURCE_RESISTOR",
+    "value": "10000 Ohm +/-5%",
+    "looseSensorSourceParts": 2
+  },
+  "installation": {
+    "selectedPart": "Part 10 - 10000 Ohm +/-5%",
+    "target": "RBIAS",
+    "remainingLooseSensorSourceParts": 1,
+    "postInstallOwnershipValidation": true
+  },
+  "final": {
+    "message": "Customer retest passed. The reported behavior is resolved.",
+    "completed": true,
+    "sameReplay": true,
+    "power": "ON",
+    "physicalComponentsConfirmed": [
+      "RBIAS",
+      "RREF_LOW",
+      "U1",
+      "U2"
+    ]
+  },
+  "privacyAfter": true,
+  "status": "PASS",
+  "browserClosed": true
+}

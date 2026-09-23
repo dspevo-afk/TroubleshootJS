@@ -24,6 +24,7 @@ final class U04CatalogMutationVerifier {
         if (part instanceof PhysicalLedPart) return "led";
         if (part instanceof PhysicalRelayPart) return "relay";
         if (part instanceof PhysicalRegulatorPart) return "regulator";
+        if (part instanceof E04DecisionControlPart) return "e04-decision-control";
         if (part instanceof PhysicalServicePart) return ((PhysicalServicePart)part).isConnector() ? "connector" : "fuse";
         throw new AssertionError("Uncovered catalog part type");
     }

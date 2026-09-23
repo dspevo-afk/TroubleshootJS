@@ -224,6 +224,13 @@ final class PhysicalMutationScope {
         checkpoint(FailureStage.AFTER_AUXILIARY_BINDING);
     }
 
+    void clearAuxiliaryBinding() {
+        requireOpen();
+        instance.getComponentBindings().clearAuxiliaryComponentElements(
+            intent.getComponentId());
+        checkpoint(FailureStage.AFTER_AUXILIARY_BINDING);
+    }
+
     void retargetEndpoint(GeneratedComponentConnectionBinding binding,
             CircuitMeasurementEndpoint endpoint) {
         requireOpen();

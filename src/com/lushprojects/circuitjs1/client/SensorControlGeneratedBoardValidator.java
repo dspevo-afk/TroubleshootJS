@@ -4,11 +4,71 @@ import java.util.Vector;
 
 /** Structural and live-solver proof for the E04 sensor/control leaf. */
 final class SensorControlGeneratedBoardValidator implements GeneratedBoardValidator {
+    /** Initial construction-only correspondence, before player mutation. */
+    static void requireStaticPhysicalOwners(GeneratedBoardInstance instance) {
+        E04SensorControlModel model = state(instance).getModel();
+        BoardComponent u2 = instance.getBoard().getComponent("U2");
+        if (u2 == null || !PhysicalPackages.E04_DECISION_CONTROL_5.isEquivalentTo(
+                    u2.getPhysicalPackage()) || u2.getPadIds().size() != 5 ||
+                instance.getPhysicalSpecifications().getSpecification("U2") == null ||
+                instance.getComponentBindings().getSingleElement("U2") !=
+                    model.getDecisionElement())
+            throw new IllegalStateException("E04 solver decision lacks a physical U2 owner");
+        String[] terminals = { "SENSOR", "REFERENCE", "RAIL", "OUTPUT", "RETURN" };
+        String[] nets = { "CONDITIONED_SENSOR", "CONTROL_REFERENCE", "CONTROL_RAIL",
+            "CONTROL_OUTPUT", "CONTROL_RETURN" };
+        CircuitMeasurementEndpoint[] boardEndpoints = {
+            model.getPhysicalSensorBoardEndpoint(), model.getPhysicalReferenceBoardEndpoint(),
+            model.getSensorControlBindings().getRegulatorOutputBoardEndpoint(),
+            model.getPhysicalOutputBoardEndpoint(), model.getPhysicalReturnBoardEndpoint() };
+        for (int i = 0; i < terminals.length; i++) {
+            String pad = "U2." + terminals[i];
+            requirePadNet(instance, pad, nets[i]);
+            requireEndpoint(instance, pad, boardEndpoints[i]);
+            requireConnection(instance, "U2", pad, boardEndpoints[i],
+                new CircuitPostMeasurementEndpoint(model.getDecisionElement(), i));
+        }
+        requireSupportResistor(instance, model, "RREF_LOW", "CONTROL_REFERENCE",
+            "CONTROL_RETURN", model.getPhysicalReferenceBoardEndpoint(),
+            model.getPhysicalReturnBoardEndpoint());
+        if (model.hasRegenerativeFeedback())
+            requireSupportResistor(instance, model, "RFB_HYST", "CONTROL_OUTPUT",
+                "CONDITIONED_SENSOR", model.getPhysicalOutputBoardEndpoint(),
+                model.getPhysicalSensorBoardEndpoint());
+        else if (instance.getBoard().getComponent("RFB_HYST") != null)
+            throw new IllegalStateException("Direct E04 variant has ghost feedback hardware");
+    }
+
+    private static void requireSupportResistor(GeneratedBoardInstance instance,
+            E04SensorControlModel model, String id, String firstNet, String secondNet,
+            CircuitMeasurementEndpoint firstBoard, CircuitMeasurementEndpoint secondBoard) {
+        BoardComponent component = instance.getBoard().getComponent(id);
+        E04SensorControlModel.PassiveBinding passive = model.getBoardSupportPassive(id);
+        if (component == null || passive == null ||
+                !PhysicalPackages.AXIAL_RESISTOR.isEquivalentTo(component.getPhysicalPackage()) ||
+                component.getPadIds().size() != 2 ||
+                instance.getPhysicalSpecifications().getSpecification(id) == null ||
+                instance.getComponentBindings().getSingleElement(id) != passive.getElement())
+            throw new IllegalStateException("E04 solver passive lacks physical owner: " + id);
+        String[] pads = { id + ".1", id + ".2" };
+        CircuitMeasurementEndpoint[] boardEndpoints = { firstBoard, secondBoard };
+        String[] nets = { firstNet, secondNet };
+        for (int i = 0; i < pads.length; i++) {
+            requirePadNet(instance, pads[i], nets[i]);
+            requireEndpoint(instance, pads[i], boardEndpoints[i]);
+            GeneratedComponentConnectionBinding connection =
+                instance.getConnectionBindings().get(id, pads[i]);
+            if (!GeneratedComponentConnectionBindings.sameEndpoint(
+                    connection.getBoardEndpoint(), boardEndpoints[i]) ||
+                    !(connection.getConnectionElement() instanceof WireElm) ||
+                    !instance.getSimulationElements().contains(connection.getConnectionElement()))
+                throw new IllegalStateException("E04 physical support lead mismatch: " + pads[i]);
+        }
+    }
+
     public void verify(GeneratedBoardInstance instance, BoardPowerState powerState) {
         SensorControlFamilyState state = state(instance);
-        requireResistor(instance, "RBIAS");
-        requireResistor(instance, "RREF");
-        requireResistor(instance, "RFB");
+        requireDecisionControlMapping(instance, state.getModel());
         requirePadNet(instance, "J1.1", "RAW_INPUT");
         requirePadNet(instance, "J1.2", "CONTROL_RETURN");
         requirePadNet(instance, "J2.1", "SENSOR_SOURCE");
@@ -36,7 +96,7 @@ final class SensorControlGeneratedBoardValidator implements GeneratedBoardValida
         requireEndpoint(instance, "J3.1",
             endpoints.getLoadedOutputEndpoint());
         requireEndpoint(instance, "J3.2",
-            endpoints.getReturnEndpoint());
+            state.getModel().getPhysicalReturnBoardEndpoint());
         requirePhysicalPassiveMapping(instance, state, endpoints);
         requireRawPowerInput(instance);
         PhysicalRegulatorPart regulatorPart = requirePhysicalRegulatorPart(instance);
@@ -102,29 +162,157 @@ final class SensorControlGeneratedBoardValidator implements GeneratedBoardValida
         return post.getElement().getPostVoltage(post.getPostIndex());
     }
 
+    /** Follow the actually installed U2 while retaining immutable board-side copper. */
+    private static void requireDecisionControlMapping(GeneratedBoardInstance instance,
+            E04SensorControlModel model) {
+        BoardComponent component = instance.getBoard().getComponent("U2");
+        PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
+        PhysicalBoardSlot slot = runtime.getSlot("U2");
+        PhysicalPart<?> installed = runtime.getInstalledPart("U2");
+        E04SensorControlModel.DecisionElement expected;
+        if (installed == null) {
+            if (slot == null || slot.isOccupied())
+                throw new IllegalStateException("E04 U2 slot/part state disagrees");
+            expected = model.getDecisionElement();
+        } else {
+            if (!(installed instanceof E04DecisionControlPart) || slot == null ||
+                    !slot.isOccupied() || installed.getBoardSlot() != slot)
+                throw new IllegalStateException("E04 U2 has no physical decision owner");
+            expected = ((E04DecisionControlPart) installed).getElement();
+        }
+        if (component == null || slot == null || expected == null ||
+                !PhysicalPackages.E04_DECISION_CONTROL_5.isEquivalentTo(
+                    component.getPhysicalPackage()) || component.getPadIds().size() != 5 ||
+                instance.getPhysicalSpecifications().getSpecification("U2") == null ||
+                instance.getComponentBindings().getSingleElement("U2") != expected ||
+                model.getActiveDecisionElement() != expected)
+            throw new IllegalStateException("E04 live decision mapping disagrees with physical U2");
+
+        String[] terminals = { "SENSOR", "REFERENCE", "RAIL", "OUTPUT", "RETURN" };
+        String[] nets = { "CONDITIONED_SENSOR", "CONTROL_REFERENCE", "CONTROL_RAIL",
+            "CONTROL_OUTPUT", "CONTROL_RETURN" };
+        CircuitPostMeasurementEndpoint[] boardEndpoints = {
+            model.getPhysicalSensorBoardEndpoint(), model.getPhysicalReferenceBoardEndpoint(),
+            model.getSensorControlBindings().getRegulatorOutputBoardEndpoint(),
+            model.getPhysicalOutputBoardEndpoint(), model.getPhysicalReturnBoardEndpoint() };
+        for (int index = 0; index < terminals.length; index++) {
+            String padId = "U2." + terminals[index];
+            requirePadNet(instance, padId, nets[index]);
+            requireEndpoint(instance, padId, boardEndpoints[index]);
+            requireImmutableBoardEndpoint(instance, padId, boardEndpoints[index]);
+            requireConnection(instance, "U2", padId, boardEndpoints[index],
+                new CircuitPostMeasurementEndpoint(expected, index));
+        }
+    }
+
+    /**
+     * Preserve the model's semantic passive seam while following a legitimate
+     * empty slot or catalog replacement for the component-side element.
+     */
+    private static void requirePhysicalResistorMapping(GeneratedBoardInstance instance,
+            E04SensorControlModel model, String componentId, String firstNet,
+            String secondNet, CircuitPostMeasurementEndpoint firstBoard,
+            CircuitPostMeasurementEndpoint secondBoard, boolean requiresFaultSeam) {
+        E04SensorControlModel.PassiveBinding passive =
+            model.getBoardOwnedPassive(componentId);
+        BoardComponent component = instance.getBoard().getComponent(componentId);
+        PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
+        PhysicalBoardSlot slot = runtime.getSlot(componentId);
+        PhysicalPart<?> installed = runtime.getInstalledPart(componentId);
+        PhysicalResistorPart installedResistor = null;
+        CircuitMeasurementEndpoint firstComponent;
+        CircuitMeasurementEndpoint secondComponent;
+        ResistorSecondaryOpenPath expectedOpenPath;
+        ResistorElm expectedElement;
+
+        if (passive == null || component == null || slot == null ||
+                !PhysicalPackages.AXIAL_RESISTOR.isEquivalentTo(
+                    component.getPhysicalPackage()) || component.getPadIds().size() != 2 ||
+                instance.getPhysicalSpecifications().getSpecification(componentId) == null ||
+                (requiresFaultSeam && (passive.getFaultIsolation() == null ||
+                    passive.getOpenPath() == null)))
+            throw new IllegalStateException("E04 physical resistor seam is malformed: " +
+                componentId);
+
+        if (installed == null) {
+            if (slot.isOccupied())
+                throw new IllegalStateException("E04 resistor slot/part state disagrees: " +
+                    componentId);
+            expectedElement = passive.getElement();
+            firstComponent = passive.getFirstEndpoint();
+            secondComponent = passive.getSecondEndpoint();
+            expectedOpenPath = passive.getOpenPath();
+        } else {
+            if (!(installed instanceof PhysicalResistorPart) || !slot.isOccupied() ||
+                    installed.getBoardSlot() != slot)
+                throw new IllegalStateException("E04 resistor has no physical owner: " +
+                    componentId);
+            installedResistor = (PhysicalResistorPart) installed;
+            expectedElement = installedResistor.getElement();
+            firstComponent = installedResistor.getPublicTerminal(0);
+            secondComponent = installedResistor.getPublicTerminal(1);
+            expectedOpenPath = installedResistor.getSecondaryOpenPath();
+            if (installedResistor.isOriginal() &&
+                    (expectedElement != passive.getElement() ||
+                     !GeneratedComponentConnectionBindings.sameEndpoint(firstComponent,
+                        passive.getFirstEndpoint()) ||
+                     !GeneratedComponentConnectionBindings.sameEndpoint(secondComponent,
+                        passive.getSecondEndpoint())))
+                throw new IllegalStateException("E04 original resistor lost its model seam: " +
+                    componentId);
+        }
+
+        if (requireResistor(instance, componentId) != expectedElement)
+            throw new IllegalStateException("E04 resistor binding lost its installed owner: " +
+                componentId);
+        Vector<CircuitElm> auxiliary = instance.getComponentBindings()
+            .getAuxiliaryElements(componentId);
+        if ((expectedOpenPath == null && !auxiliary.isEmpty()) ||
+                (expectedOpenPath != null && (auxiliary.size() != 1 ||
+                    auxiliary.firstElement() != expectedOpenPath.getSimulationElement())))
+            throw new IllegalStateException("E04 resistor auxiliary binding is stale: " +
+                componentId);
+
+        String firstPad = componentId + ".1";
+        String secondPad = componentId + ".2";
+        requirePadNet(instance, firstPad, firstNet);
+        requirePadNet(instance, secondPad, secondNet);
+        requireEndpoint(instance, firstPad, firstBoard);
+        requireEndpoint(instance, secondPad, secondBoard);
+        requireImmutableBoardEndpoint(instance, firstPad, firstBoard);
+        requireImmutableBoardEndpoint(instance, secondPad, secondBoard);
+        requireConnection(instance, componentId, firstPad, firstBoard, firstComponent);
+        requireConnection(instance, componentId, secondPad, secondBoard, secondComponent);
+    }
+
     private static void requirePhysicalPassiveMapping(GeneratedBoardInstance instance,
             SensorControlFamilyState state,
             E04SensorControlModel.SensorControlBindings endpoints) {
-        String[] componentIds = { "RBIAS", "RREF", "RFB" };
+        E04SensorControlModel model = state.getModel();
+        String[] componentIds = { "RBIAS", "RREF", "RFB", "RREF_LOW" };
         CircuitPostMeasurementEndpoint[] firstBoard = {
             endpoints.getExternalSensorSourceEndpoint(), endpoints.getRegulatorOutputBoardEndpoint(),
-            endpoints.getOutputDriveEndpoint() };
+            model.getPhysicalOutputBoardEndpoint(), model.getPhysicalReferenceBoardEndpoint() };
         CircuitPostMeasurementEndpoint[] secondBoard = {
-            endpoints.getConditionedSensorEndpoint(), endpoints.getReferenceEndpoint(),
-            endpoints.getLoadedOutputEndpoint() };
+            model.getPhysicalSensorBoardEndpoint(), model.getPhysicalReferenceBoardEndpoint(),
+            endpoints.getLoadedOutputEndpoint(), model.getPhysicalReturnBoardEndpoint() };
+        String[] firstNets = { "SENSOR_SOURCE", "CONTROL_RAIL", "CONTROL_OUTPUT",
+            "CONTROL_REFERENCE" };
+        String[] secondNets = { "CONDITIONED_SENSOR", "CONTROL_REFERENCE",
+            "CONTROL_OUTPUT_LOAD", "CONTROL_RETURN" };
         for (int index = 0; index < componentIds.length; index++) {
             String componentId = componentIds[index];
-            E04SensorControlModel.PassiveBinding passive =
-                state.getModel().getBoardOwnedPassive(componentId);
-            if (passive == null || requireResistor(instance, componentId) != passive.getElement() ||
-                    passive.getFaultIsolation() == null || passive.getOpenPath() == null)
-                throw new IllegalStateException("E04 physical resistor seam is not model-owned: " +
-                    componentId);
-            requireConnection(instance, componentId, componentId + ".1",
-                firstBoard[index], passive.getFirstEndpoint());
-            requireConnection(instance, componentId, componentId + ".2",
-                secondBoard[index], passive.getSecondEndpoint());
+            requirePhysicalResistorMapping(instance, model, componentId,
+                firstNets[index], secondNets[index], firstBoard[index],
+                secondBoard[index], index < 3);
         }
+        if (model.hasRegenerativeFeedback())
+            requirePhysicalResistorMapping(instance, model, "RFB_HYST",
+                "CONTROL_OUTPUT", "CONDITIONED_SENSOR",
+                model.getPhysicalOutputBoardEndpoint(),
+                model.getPhysicalSensorBoardEndpoint(), false);
+        else if (instance.getBoard().getComponent("RFB_HYST") != null)
+            throw new IllegalStateException("Direct E04 variant has ghost feedback hardware");
     }
 
     private static void requireRegulatorMapping(GeneratedBoardInstance instance,
@@ -148,10 +336,14 @@ final class SensorControlGeneratedBoardValidator implements GeneratedBoardValida
             AbstractRailRegulatorElm.RETURN_POST,
             AbstractRailRegulatorElm.ENABLE_POST };
         CircuitPostMeasurementEndpoint[] expected = {
-            endpoints.getRegulatorInputEndpoint(),
-            endpoints.getRegulatorOutputEndpoint(),
-            endpoints.getRegulatorReturnEndpoint(),
-            endpoints.getRegulatorEnableEndpoint() };
+            new CircuitPostMeasurementEndpoint(regulator,
+                AbstractRailRegulatorElm.INPUT_POST),
+            new CircuitPostMeasurementEndpoint(regulator,
+                AbstractRailRegulatorElm.OUTPUT_POST),
+            new CircuitPostMeasurementEndpoint(regulator,
+                AbstractRailRegulatorElm.RETURN_POST),
+            new CircuitPostMeasurementEndpoint(regulator,
+                AbstractRailRegulatorElm.ENABLE_POST) };
         CircuitPostMeasurementEndpoint[] boardEndpoints = {
             endpoints.getRegulatorInputBoardEndpoint(),
             endpoints.getRegulatorOutputBoardEndpoint(),
@@ -171,16 +363,12 @@ final class SensorControlGeneratedBoardValidator implements GeneratedBoardValida
                 throw new IllegalStateException("E04 U1 pad is not bound to its exact regulator post: " +
                     padId);
             seen.add(Integer.valueOf(posts[index]));
+            requireEndpoint(instance, padId, boardEndpoints[index]);
+            requireImmutableBoardEndpoint(instance, padId, boardEndpoints[index]);
             requireConnection(instance, "U1", padId, boardEndpoints[index], expected[index]);
         }
         if (seen.size() != 4)
             throw new IllegalStateException("E04 U1 regulator post mapping is not one-to-one");
-        // The model retains the original selected rail identity for its
-        // contract and board-side oracle.  A catalog replacement owns the
-        // live U1 posts, while its output is still bridged only through the
-        // persistent downstream copper anchor.
-        if (endpoints.getRegulatorOutputBoardEndpoint() != boardEndpoints[1])
-            throw new IllegalStateException("E04 rail copper anchor changed during U1 service");
     }
 
     private static void requireEmptyRegulatorMapping(GeneratedBoardInstance instance,
@@ -208,9 +396,9 @@ final class SensorControlGeneratedBoardValidator implements GeneratedBoardValida
             if (connection == null || !GeneratedComponentConnectionBindings.sameEndpoint(
                     connection.getBoardEndpoint(), boardEndpoints[index]) ||
                     !GeneratedComponentConnectionBindings.sameEndpoint(
-                    connection.getComponentEndpoint(), expected) || containsIdentity(
+                    connection.getComponentEndpoint(), expected) || !containsIdentity(
                     instance.getSimulationElements(), connection.getConnectionElement()))
-                throw new IllegalStateException("E04 removed U1 retained a live copper bypass: " +
+                throw new IllegalStateException("E04 removed U1 lost its canonical lead identity: " +
                     terminal);
         }
     }
@@ -270,15 +458,26 @@ final class SensorControlGeneratedBoardValidator implements GeneratedBoardValida
             throw new IllegalStateException("E04 physical endpoint is not model-owned: " + padId);
     }
 
+    private static void requireImmutableBoardEndpoint(GeneratedBoardInstance instance,
+            String padId, CircuitMeasurementEndpoint expected) {
+        if (!GeneratedComponentConnectionBindings.sameEndpoint(
+                instance.getDeveloperBoardEndpointOracle().getEndpoint(padId), expected))
+            throw new IllegalStateException("E04 immutable board endpoint changed: " + padId);
+    }
+
     private static void requireConnection(GeneratedBoardInstance instance,
             String componentId, String padId, CircuitMeasurementEndpoint boardExpected,
             CircuitMeasurementEndpoint componentExpected) {
         GeneratedComponentConnectionBinding connection = instance.getConnectionBindings()
             .get(componentId, padId);
-        if (!GeneratedComponentConnectionBindings.sameEndpoint(connection.getBoardEndpoint(),
+        if (connection == null ||
+                !GeneratedComponentConnectionBindings.sameEndpoint(connection.getBoardEndpoint(),
                 boardExpected) || !GeneratedComponentConnectionBindings.sameEndpoint(
-                connection.getComponentEndpoint(), componentExpected))
-            throw new IllegalStateException("E04 physical resistor endpoint is not truthful: " +
+                connection.getComponentEndpoint(), componentExpected) ||
+                !(connection.getConnectionElement() instanceof WireElm) ||
+                !containsIdentity(instance.getSimulationElements(),
+                    connection.getConnectionElement()))
+            throw new IllegalStateException("E04 physical component endpoint is not truthful: " +
                 padId);
     }
 

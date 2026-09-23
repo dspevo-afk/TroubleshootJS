@@ -29,10 +29,10 @@ final class AveragedSwitchingRegulatorElm extends AbstractRailRegulatorElm {
 
     double modelInputCurrent(double inputVoltage, double outputVoltage,
             double deliveredOutputCurrent, double enableFraction) {
-        // Use the controlled branch's target power, not a nominal-voltage
-        // shortcut.  This includes the declared finite output resistance in
-        // the loss balance while remaining an average-power model.
-        double convertedPower = Math.max(0.0, getTargetVoltage()) *
+        // Average conversion follows the actual solved output power.  Using
+        // the target voltage here would create power during dropout or current
+        // limiting and would hide the causal load/output relationship.
+        double convertedPower = Math.max(0.0, outputVoltage) *
                 deliveredOutputCurrent;
         double conversionInput = convertedPower /
                 (inputVoltage * getContract().getEfficiency());

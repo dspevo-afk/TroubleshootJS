@@ -17,6 +17,7 @@ public final class E04SensorControlContractTest {
         verifyTerminalAndDirectThresholdBehavior();
         verifyDecisionDumpRoundTrip();
         verifyEndpointBindingsAndPassiveOwnership();
+        verifyElementOwnershipCensusAndGhostRejection();
         verifyLoadingAndReferenceInfluence();
         verifyHystereticAscendingDescendingBehavior();
         verifyBrownoutAndUnsupportedStates();
@@ -64,6 +65,13 @@ public final class E04SensorControlContractTest {
                                     RailRegulationContract.linear5V())),
                     24.1, true);
         }}, "E02 input above declared maximum");
+        E04SensorControlModel.RailContract adapted =
+                E04SensorControlModel.adaptE02Rail(
+                        RailRegulationContract.linear5V());
+        check(Math.abs(adapted.getSourceResistanceOhms() -
+                        RailRegulationContract.linear5V()
+                                .getOutputResistanceOhms()) <= 1e-12,
+                "E02 adapter retains declared regulation impedance without Vnom/Imax droop");
     }
 
     private static void verifyTerminalAndDirectThresholdBehavior() {
@@ -245,6 +253,82 @@ public final class E04SensorControlContractTest {
                     "restored reference changes solver-backed threshold behavior");
         } finally {
             h.close();
+        }
+    }
+
+    /** Every emitted E04 solver element has exactly one physical ownership row. */
+    private static void verifyElementOwnershipCensusAndGhostRejection() {
+        for (E04SensorControlModel.Variant variant :
+                new E04SensorControlModel.Variant[] {
+                    E04SensorControlModel.Variant.DIRECT_THRESHOLD,
+                    E04SensorControlModel.Variant.HYSTERETIC_REGENERATIVE }) {
+            final Harness h = new Harness(variant, 1e-4);
+            try {
+                Vector<CircuitElm> live = h.model.getSimulationElements();
+                Vector<E04SensorControlModel.ElementOwnership> rows =
+                    h.model.getElementOwnership();
+                h.model.validateElementOwnership(live);
+                check(!rows.isEmpty() && rows.size() == live.size(),
+                    "E04 ownership census has one row per live solver element");
+                int mapped = 0;
+                int external = 0;
+                int internal = 0;
+                int interconnect = 0;
+                boolean hasDecision = false;
+                boolean hasReferenceLow = false;
+                boolean hasFeedback = false;
+                for (CircuitElm element : live) {
+                    E04SensorControlModel.ElementOwnership row =
+                        h.model.getElementOwnership(element);
+                    check(row != null && row.getElement() == element,
+                        "every E04 simulation element has an exact identity row");
+                    check(!"E04_INTERNAL".equals(row.getOwnerId()) &&
+                            !"E04_BOARD_SUPPORT".equals(row.getOwnerId()),
+                        "no unassigned E04 ownership placeholder survives");
+                    if (row.getKind() == E04SensorControlModel.ElementOwnershipKind.MAPPED_COMPONENT)
+                        mapped++;
+                    else if (row.getKind() == E04SensorControlModel.ElementOwnershipKind.EXTERNAL_INFRASTRUCTURE) {
+                        external++;
+                        check("J1".equals(row.getOwnerId()) ||
+                                "J2".equals(row.getOwnerId()) ||
+                                "J3".equals(row.getOwnerId()) ||
+                                "CONTROL_RETURN".equals(row.getOwnerId()),
+                            "external support belongs to an explicit connector/return boundary");
+                    } else if (row.getKind() == E04SensorControlModel.ElementOwnershipKind.INTERNAL_SUPPORT) {
+                        internal++;
+                        check("U2".equals(row.getOwnerId()) && element instanceof ResistorElm,
+                            "both internal support loads are owned by physical U2");
+                    } else if (row.getKind() == E04SensorControlModel.ElementOwnershipKind.BOARD_INTERCONNECT) {
+                        interconnect++;
+                        check(element instanceof WireElm && "PCB_COPPER".equals(row.getOwnerId()),
+                            "topology wires declare their copper/interconnect owner");
+                    } else
+                        throw new AssertionError("Unknown E04 ownership category");
+                    if ("U2".equals(row.getOwnerId()) &&
+                            row.getKind() == E04SensorControlModel.ElementOwnershipKind.MAPPED_COMPONENT)
+                        hasDecision = true;
+                    if ("RREF_LOW".equals(row.getOwnerId())) hasReferenceLow = true;
+                    if ("RFB_HYST".equals(row.getOwnerId())) hasFeedback = true;
+                }
+                check(mapped > 0 && external > 0 && internal == 2 && interconnect > 0,
+                    "E04 census separates mapped components, external infrastructure, U2 loads and interconnect");
+                check(hasDecision && hasReferenceLow,
+                    "E04 census explicitly maps U2 decision and physical reference-low ownership");
+                check(hasFeedback == (variant ==
+                        E04SensorControlModel.Variant.HYSTERETIC_REGENERATIVE),
+                    "E04 census includes hysteresis ownership only for the hysteretic variant");
+
+                final Vector<CircuitElm> ghosted = new Vector<CircuitElm>(live);
+                final ResistorElm ghost = new ResistorElm(2048, 2048);
+                ghost.drag(2080, 2048);
+                ghosted.add(ghost);
+                reject(new Runnable() { public void run() {
+                    h.model.validateElementOwnership(ghosted);
+                }}, "foreign E04 physical ghost element");
+                ghost.delete();
+            } finally {
+                h.close();
+            }
         }
     }
 
