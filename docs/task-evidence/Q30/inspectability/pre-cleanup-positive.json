@@ -1,0 +1,106 @@
+{
+  "schema": 1,
+  "build": "p1-gwt-build-via.log",
+  "seeds": [
+    {
+      "schema": 1,
+      "status": "PASS",
+      "visualPass": true,
+      "family": "RB30_CONTROL",
+      "seed": "0",
+      "topology": "RB30_SEPARATE_DIRECT_A_BJT_B_BJT",
+      "physicalPolicy": "MEDIUM_BOARD@1",
+      "layoutSeed": "-5811592868239938363",
+      "routingSeed": "6323369344316473384",
+      "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+      "route": "P07_FULLER_TWO_LAYER",
+      "layout": {
+        "x": 50,
+        "y": 50,
+        "width": 3562,
+        "height": 1985
+      },
+      "packages": 33,
+      "pads": 82,
+      "topTargets": 82,
+      "bottomTargets": 82,
+      "topInspectable": 82,
+      "bottomInspectable": 82,
+      "padLimits": {
+        "TOP": [],
+        "BOTTOM": []
+      },
+      "overviewLimits": {
+        "TOP": [],
+        "BOTTOM": []
+      },
+      "face": "TOP",
+      "runtimeAssertions": 1496,
+      "ownerRestored": false,
+      "prototypeRetained": true,
+      "normalAdmission": false,
+      "copper": {
+        "topTrace": "copper/edge/100",
+        "bottomTrace": "copper/edge/125",
+        "viaSurface": "hole/18:p07-via/A_CMD/47/1TOP/hole/18:p07-via/A_CMD/47/1BOTTOM",
+        "viaPad": "RDA.1"
+      }
+    },
+    {
+      "schema": 1,
+      "status": "PASS",
+      "visualPass": true,
+      "family": "RB30_CONTROL",
+      "seed": "37",
+      "topology": "RB30_SHARED_HYSTERETIC_A_BJT_B_BJT",
+      "physicalPolicy": "MEDIUM_BOARD@1",
+      "layoutSeed": "3019656819951809608",
+      "routingSeed": "-19066876369174513",
+      "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+      "route": "P07_FULLER_TWO_LAYER",
+      "layout": {
+        "x": 40,
+        "y": 40,
+        "width": 3782,
+        "height": 1574
+      },
+      "packages": 33,
+      "pads": 82,
+      "topTargets": 82,
+      "bottomTargets": 82,
+      "topInspectable": 82,
+      "bottomInspectable": 82,
+      "padLimits": {
+        "TOP": [],
+        "BOTTOM": []
+      },
+      "overviewLimits": {
+        "TOP": [],
+        "BOTTOM": []
+      },
+      "face": "TOP",
+      "runtimeAssertions": 1496,
+      "ownerRestored": false,
+      "prototypeRetained": true,
+      "normalAdmission": false,
+      "copper": {
+        "topTrace": "copper/edge/100",
+        "bottomTrace": "copper/edge/124",
+        "viaSurface": "hole/18:p07-via/A_CMD/30/1TOP/hole/18:p07-via/A_CMD/30/1BOTTOM",
+        "viaPad": "RDA.1"
+      }
+    }
+  ],
+  "reuseComparison": {
+    "seed0": {
+      "fields": true,
+      "layout": true,
+      "copper": true
+    },
+    "seed37": {
+      "fields": true,
+      "layout": true,
+      "copper": true
+    }
+  }
+}

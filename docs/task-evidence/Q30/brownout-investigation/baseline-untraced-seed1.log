@@ -1,0 +1,31 @@
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+Q30_WHOLE_BOARD both-unloaded rail=4.999845913079208 outA=2.159999614209046E-6 outB=2.159999610738443E-6 coilA=2.2143102151187913E-7 coilB=1.0199586715676913E-11 regulatorInputAmps=0.0025522121742954417
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 13 iterations, timeStep = 5.0E-6
+Q30_WHOLE_BOARD a-loaded rail=4.995851350235158 outA=11.983356448776867 outB=2.1594004443771943E-6 coilA=0.039947422352136275 coilB=1.0191577493290124E-11 regulatorInputAmps=0.04249767037802759
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 20 iterations, timeStep = 5.0E-6
+Q30_WHOLE_BOARD both-loaded rail=4.991913766456294 outA=11.980033277870218 outB=11.980033277870218 coilA=0.03991591403951344 coilB=0.039408896061750825 regulatorInputAmps=0.08187344451128237
+node 11 unconnected
+Q30_WHOLE_BOARD main-isolated rail=0.0 outA=2.159999614209046E-6 outB=2.159999610738443E-6 coilA=0.0 coilB=0.0 regulatorInputAmps=-6.275060006116344E-28
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 20 iterations, timeStep = 5.0E-6
+Q30_WHOLE_BOARD load-isolated rail=4.991913766456294 outA=-1.7763568394002505E-15 outB=-1.7763568394002505E-15 coilA=0.03991591403951344 coilB=0.039408896061750825 regulatorInputAmps=0.08187344451128237
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 16 iterations, timeStep = 5.0E-6
+Q30_WHOLE_BOARD sensor-a-isolated rail=4.9959019853070785 outA=2.159400446786908E-6 outB=11.983356448776869 coilA=2.2139158272122518E-7 coilB=0.03944083026142228 regulatorInputAmps=0.041991320652530896
+node 11 unconnected
+converged after 9 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+Q30_WHOLE_BOARD main-4v rail=2.5669100440838784 outA=2.159999614209046E-6 outB=2.159999610738443E-6 coilA=1.9710196156945102E-7 coilB=5.3337635727340515E-12 regulatorInputAmps=0.0015966815233116145
+PASS: Q30 whole-board electrical pilot seed=1 assertions=11

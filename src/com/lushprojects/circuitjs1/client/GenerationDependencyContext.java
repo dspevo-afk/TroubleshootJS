@@ -242,13 +242,17 @@ final class GenerationDependencyContext {
 
         appendStringList(out, "board.nets", netIds, false);
         appendField(out,"routing.score",PcbRouteMetrics.SCORE_VERSION);
-        frame(out,"single-copper-layer"); frame(out,board.getPlacementConstraints().routingLayer.name());
-        for(PcbPlacementConstraints.Part demand:board.getPlacementConstraints().getParts()) {
+        PcbPlacementConstraints placementConstraints = board.getPlacementConstraints();
+        frame(out,"single-copper-layer"); frame(out,placementConstraints.routingLayer.name());
+        appendField(out, "physical.policy", placementConstraints.getPhysicalPolicyIdentity());
+        if (MediumBoardPhysicalPolicy.selected(placementConstraints))
+            appendField(out, "physical.policy.contract", MediumBoardPhysicalPolicy.canonical());
+        for(PcbPlacementConstraints.Part demand:placementConstraints.getParts()) {
             frame(out,"placement"); frame(out,demand.componentId); frame(out,demand.regionId);
             frame(out,demand.regionLabel); frame(out,demand.domainId);
             frame(out,demand.anchor.toString()); frame(out,Integer.toString(demand.accessMargin));
         }
-        for(PcbPlacementConstraints.Barrier barrier:board.getPlacementConstraints().getBarriers()) {
+        for(PcbPlacementConstraints.Barrier barrier:placementConstraints.getBarriers()) {
             frame(out,"barrier"); frame(out,barrier.firstDomain); frame(out,barrier.secondDomain);
             frame(out,Integer.toString(barrier.clearance));
         }

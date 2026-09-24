@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1000" viewBox="0 0 1500 1000" role="img" aria-labelledby="svg-title svg-description" shape-rendering="geometricPrecision">
+<title id="svg-title">Q30 structural rendering · BOTTOM face</title>
+<desc id="svg-description">Developer-only structural rendering of board geometry and routed copper; not an actual production workbench screenshot.</desc>
+<rect class="canvas" x="0" y="0" width="1500" height="1000" fill="#091318"/>
+<text class="page-title" x="34" y="32">Q30 structural geometry</text>
+<text class="page-subtitle" x="34" y="57">seed 0 · candidate 1 · BOTTOM face</text>
+<rect class="board-shadow" x="39" y="199.699" width="1128" height="628.602" rx="10" fill="#000000" opacity="0.45"/>
+<rect class="board" data-kind="board" x="34" y="192.699" width="1128" height="628.602" rx="10" fill="#102f2d" stroke="#b9e0d0" stroke-width="2"/>
+<rect class="board-outline" data-kind="board-outline" x="42" y="200.699" width="1112" height="612.602" rx="6" fill="none" stroke="#d8efe3" stroke-width="1" stroke-dasharray="7 5" opacity="0.9"/>
+<clipPath id="board-clip">
+<rect x="34" y="192.699" width="1128" height="628.602" rx="10"/>
+</clipPath>
+<g clip-path="url(#board-clip)">
+<path class="trace opposite-copper" data-kind="trace" data-index="16" data-face="TOP" d="M 824.423 604.061 L 837.09 604.061" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="18" data-face="TOP" d="M 1001.762 464.724 L 1001.762 452.057" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="21" data-face="TOP" d="M 688.253 534.392 L 716.754 534.392 L 716.754 604.061" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="25" data-face="TOP" d="M 906.759 743.399 L 935.26 743.399 L 935.26 711.731" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="32" data-face="TOP" d="M 780.089 461.557 L 780.089 509.058" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="36" data-face="TOP" d="M 723.087 626.229 L 735.754 626.229" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="39" data-face="TOP" d="M 859.258 705.398 L 824.423 705.398 L 824.423 756.066" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="42" data-face="TOP" d="M 694.586 619.895 L 694.586 632.562" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="46" data-face="TOP" d="M 824.423 474.224 L 808.59 474.224 L 808.59 426.723 L 849.757 426.723" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="49" data-face="TOP" d="M 865.591 499.558 L 814.923 499.558 L 814.923 474.224" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="51" data-face="TOP" d="M 887.759 610.395 L 887.759 578.727 L 878.258 578.727" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="52" data-face="TOP" d="M 808.59 572.394 L 843.424 572.394 L 843.424 610.395" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="56" data-face="TOP" d="M 979.595 486.891 L 979.595 338.053" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="59" data-face="TOP" d="M 970.094 372.888 L 970.094 474.224" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="60" data-face="TOP" d="M 1017.596 439.39 L 995.428 439.39" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="63" data-face="TOP" d="M 887.759 445.723 L 887.759 420.389 L 757.921 420.389" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="68" data-face="TOP" d="M 941.593 724.398 L 941.593 705.398 L 922.593 705.398" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="70" data-face="TOP" d="M 1068.264 581.894 L 1115.765 581.894" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="73" data-face="TOP" d="M 913.093 597.728 L 913.093 610.395" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="76" data-face="TOP" d="M 1103.098 512.225 L 1115.765 512.225" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="78" data-face="TOP" d="M 989.095 509.058 L 1017.596 509.058" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="80" data-face="TOP" d="M 795.923 347.554 L 795.923 334.887" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace opposite-copper" data-kind="trace" data-index="85" data-face="TOP" d="M 786.422 433.056 L 745.254 433.056 L 745.254 445.723" fill="none" stroke="#6686a2" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.54"/>
+<path class="trace visible-copper" data-kind="trace" data-index="0" data-face="BOTTOM" d="M 989.095 385.555 L 957.427 385.555 L 957.427 474.224" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="1" data-face="BOTTOM" d="M 764.255 509.058 L 764.255 467.891 L 957.427 467.891" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="2" data-face="BOTTOM" d="M 1115.765 458.39 L 957.427 458.39" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="3" data-face="BOTTOM" d="M 1115.765 600.894 L 1109.432 600.894 L 1109.432 458.39" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="4" data-face="BOTTOM" d="M 1115.765 531.226 L 1109.432 531.226" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="5" data-face="BOTTOM" d="M 827.59 797.234 L 830.757 797.234 L 830.757 467.891" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="6" data-face="BOTTOM" d="M 713.587 756.066 L 713.587 749.732 L 830.757 749.732" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="7" data-face="BOTTOM" d="M 852.924 578.727 L 830.757 578.727" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="8" data-face="BOTTOM" d="M 637.585 604.061 L 637.585 597.728 L 830.757 597.728" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="9" data-face="BOTTOM" d="M 745.254 572.394 L 745.254 597.728" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="10" data-face="BOTTOM" d="M 881.425 781.4 L 830.757 781.4" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="11" data-face="BOTTOM" d="M 1055.597 379.221 L 1055.597 458.39" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="12" data-face="BOTTOM" d="M 840.257 347.554 L 843.424 347.554 L 843.424 467.891" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="13" data-face="BOTTOM" d="M 966.928 718.065 L 830.757 718.065" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="14" data-face="BOTTOM" d="M 925.76 585.061 L 849.757 585.061 L 849.757 578.727" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="15" data-face="BOTTOM" d="M 748.421 619.895 L 748.421 604.061 L 824.423 604.061" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="17" data-face="BOTTOM" d="M 837.09 604.061 L 1001.762 604.061 L 1001.762 464.724" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="19" data-face="BOTTOM" d="M 1001.762 452.057 L 1001.762 385.555" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="20" data-face="BOTTOM" d="M 875.092 398.222 L 875.092 379.221 L 1001.762 379.221 L 1001.762 385.555" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="22" data-face="BOTTOM" d="M 716.754 604.061 L 748.421 604.061" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="23" data-face="BOTTOM" d="M 900.426 474.224 L 900.426 480.558 L 1001.762 480.558" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="24" data-face="BOTTOM" d="M 729.421 661.063 L 729.421 604.061" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="26" data-face="BOTTOM" d="M 935.26 711.731 L 935.26 604.061" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="27" data-face="BOTTOM" d="M 1096.765 338.053 L 1096.765 372.888 L 1001.762 372.888 L 1001.762 379.221" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="28" data-face="BOTTOM" d="M 852.924 347.554 L 852.924 379.221 L 875.092 379.221" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="29" data-face="BOTTOM" d="M 998.595 718.065 L 998.595 711.731 L 935.26 711.731" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="30" data-face="BOTTOM" d="M 957.427 585.061 L 957.427 604.061" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="31" data-face="BOTTOM" d="M 875.092 227.217 L 780.089 227.217 L 780.089 461.557" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="33" data-face="BOTTOM" d="M 846.591 265.218 L 846.591 227.217" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="34" data-face="BOTTOM" d="M 865.591 347.554 L 865.591 341.22 L 780.089 341.22" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="35" data-face="BOTTOM" d="M 612.25 534.392 L 612.25 626.229 L 723.087 626.229" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="37" data-face="BOTTOM" d="M 735.754 626.229 L 808.59 626.229 L 808.59 619.895" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="38" data-face="BOTTOM" d="M 726.254 756.066 L 726.254 762.399 L 707.253 762.399 L 707.253 626.229" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="40" data-face="BOTTOM" d="M 824.423 756.066 L 738.921 756.066" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="41" data-face="BOTTOM" d="M 694.586 604.061 L 694.586 619.895" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="43" data-face="BOTTOM" d="M 694.586 632.562 L 694.586 768.733 L 738.921 768.733 L 738.921 756.066" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="44" data-face="BOTTOM" d="M 944.76 781.4 L 944.76 749.732 L 849.757 749.732 L 849.757 743.399" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="45" data-face="BOTTOM" d="M 1014.429 718.065 L 1014.429 749.732 L 944.76 749.732" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="47" data-face="BOTTOM" d="M 849.757 426.723 L 928.926 426.723 L 928.926 398.222" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="48" data-face="BOTTOM" d="M 865.591 578.727 L 865.591 499.558" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="50" data-face="BOTTOM" d="M 871.925 638.896 L 871.925 610.395 L 887.759 610.395" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="53" data-face="BOTTOM" d="M 843.424 610.395 L 871.925 610.395" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="54" data-face="BOTTOM" d="M 1106.265 379.221 L 1106.265 331.72 L 1033.43 331.72 L 1033.43 338.053" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="55" data-face="BOTTOM" d="M 973.261 585.061 L 973.261 486.891 L 979.595 486.891" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="57" data-face="BOTTOM" d="M 979.595 338.053 L 1033.43 338.053" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="58" data-face="BOTTOM" d="M 928.926 227.217 L 928.926 372.888 L 970.094 372.888" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="61" data-face="BOTTOM" d="M 995.428 439.39 L 970.094 439.39" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="62" data-face="BOTTOM" d="M 675.586 505.892 L 675.586 528.059 L 80.235 528.059 L 80.235 556.56" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="64" data-face="BOTTOM" d="M 757.921 420.389 L 757.921 509.058 L 675.586 509.058" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="65" data-face="BOTTOM" d="M 609.084 458.39 L 73.901 458.39 L 73.901 575.56 L 80.235 575.56" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="66" data-face="BOTTOM" d="M 729.421 445.723 L 605.917 445.723 L 605.917 458.39" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="67" data-face="BOTTOM" d="M 982.761 718.065 L 982.761 724.398 L 941.593 724.398" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="69" data-face="BOTTOM" d="M 1068.264 642.062 L 1068.264 581.894" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="71" data-face="BOTTOM" d="M 1030.263 718.065 L 1030.263 642.062 L 1017.596 642.062" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="72" data-face="BOTTOM" d="M 941.593 585.061 L 941.593 597.728 L 913.093 597.728" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="74" data-face="BOTTOM" d="M 913.093 610.395 L 913.093 638.896 L 928.926 638.896" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="75" data-face="BOTTOM" d="M 1068.264 509.058 L 1103.098 509.058 L 1103.098 512.225" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="77" data-face="BOTTOM" d="M 989.095 585.061 L 989.095 509.058" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="79" data-face="BOTTOM" d="M 827.59 347.554 L 795.923 347.554" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="81" data-face="BOTTOM" d="M 795.923 334.887 L 795.923 265.218" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="82" data-face="BOTTOM" d="M 678.752 661.063 L 678.752 803.567 L 840.257 803.567 L 840.257 797.234" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="83" data-face="BOTTOM" d="M 624.917 505.892 L 624.917 458.39" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="84" data-face="BOTTOM" d="M 837.09 445.723 L 786.422 445.723 L 786.422 433.056" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<path class="trace visible-copper" data-kind="trace" data-index="86" data-face="BOTTOM" d="M 1115.765 439.39 L 1068.264 439.39" fill="none" stroke="#ffc34d" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="RREF_HB" data-region="sensor-b" x="1027.729" y="330.136" width="74.736" height="19.001" rx="4" fill="#477e88" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>RREF_HB; region sensor-b; structural courtyard</title>
+<text class="component-label" x="1065.097" y="342.017" text-anchor="middle" font-size="7" textLength="69.736" lengthAdjust="spacingAndGlyphs">RREF_HB</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="LED1" data-region="status" x="819.99" y="776.333" width="24.701" height="29.134" rx="4" fill="#986d3d" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>LED1; region status; structural courtyard</title>
+<text class="component-label" x="832.34" y="794.268" text-anchor="middle" font-size="9.906" textLength="19.701" lengthAdjust="spacingAndGlyphs">LED1</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="JLOAD" data-region="output-common" x="49.834" y="541.993" width="35.468" height="44.968" rx="4" fill="#a16645" fill-opacity="0.42" stroke="#e6f4ee" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>JLOAD; region output-common; structural courtyard</title>
+<text class="component-label" x="67.568" y="568.217" text-anchor="middle" font-size="11" textLength="30.468" lengthAdjust="spacingAndGlyphs">JLOAD</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="RREF_LA" data-region="sensor-a" x="875.725" y="773.483" width="74.736" height="19.001" rx="4" fill="#8c4f68" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>RREF_LA; region sensor-a; structural courtyard</title>
+<text class="component-label" x="913.093" y="785.363" text-anchor="middle" font-size="7" textLength="69.736" lengthAdjust="spacingAndGlyphs">RREF_LA</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="RREF_LB" data-region="sensor-b" x="1049.897" y="371.304" width="62.069" height="19.001" rx="4" fill="#477e88" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>RREF_LB; region sensor-b; structural courtyard</title>
+<text class="component-label" x="1080.931" y="383.185" text-anchor="middle" font-size="7" textLength="57.069" lengthAdjust="spacingAndGlyphs">RREF_LB</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="RDA" data-region="output-a" x="853.558" y="697.481" width="74.736" height="19.001" rx="4" fill="#76568c" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>RDA; region output-a; structural courtyard</title>
+<text class="component-label" x="890.925" y="709.361" text-anchor="middle" font-size="7" textLength="69.736" lengthAdjust="spacingAndGlyphs">RDA</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="RREF_HA" data-region="sensor-a" x="844.057" y="735.482" width="68.402" height="19.001" rx="4" fill="#8c4f68" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>RREF_HA; region sensor-a; structural courtyard</title>
+<text class="component-label" x="878.258" y="747.362" text-anchor="middle" font-size="7" textLength="63.402" lengthAdjust="spacingAndGlyphs">RREF_HA</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="QA" data-region="output-a" x="705.67" y="728.832" width="38.001" height="37.368" rx="4" fill="#76568c" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>QA; region output-a; structural courtyard</title>
+<text class="component-label" x="724.67" y="751.255" text-anchor="middle" font-size="11" textLength="33.001" lengthAdjust="spacingAndGlyphs">QA</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="RDB" data-region="output-b" x="866.225" y="630.979" width="68.402" height="19.001" rx="4" fill="#3e806f" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>RDB; region output-b; structural courtyard</title>
+<text class="component-label" x="900.426" y="642.859" text-anchor="middle" font-size="7" textLength="63.402" lengthAdjust="spacingAndGlyphs">RDB</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="QB" data-region="output-b" x="845.007" y="551.493" width="38.001" height="37.368" rx="4" fill="#3e806f" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>QB; region output-b; structural courtyard</title>
+<text class="component-label" x="864.008" y="573.917" text-anchor="middle" font-size="11" textLength="33.001" lengthAdjust="spacingAndGlyphs">QB</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="C5" data-region="regulation" x="981.178" y="376.054" width="25.334" height="28.501" rx="4" fill="#7d7540" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>C5; region regulation; structural courtyard</title>
+<text class="component-label" x="993.845" y="393.6" text-anchor="middle" font-size="9.69" textLength="20.334" lengthAdjust="spacingAndGlyphs">C5</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="KA" data-region="output-a" x="605.917" y="499.558" width="88.669" height="57.002" rx="4" fill="#76568c" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>KA; region output-a; structural courtyard</title>
+<text class="component-label" x="650.252" y="531.799" text-anchor="middle" font-size="11" textLength="83.669" lengthAdjust="spacingAndGlyphs">KA</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="KB" data-region="output-b" x="818.09" y="439.39" width="88.669" height="57.002" rx="4" fill="#3e806f" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>KB; region output-b; structural courtyard</title>
+<text class="component-label" x="862.424" y="471.631" text-anchor="middle" font-size="11" textLength="83.669" lengthAdjust="spacingAndGlyphs">KB</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="JSB" data-region="sensor-b" x="1110.698" y="497.658" width="35.468" height="44.968" rx="4" fill="#477e88" fill-opacity="0.42" stroke="#e6f4ee" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>JSB; region sensor-b; structural courtyard</title>
+<text class="component-label" x="1128.432" y="523.882" text-anchor="middle" font-size="11" textLength="30.468" lengthAdjust="spacingAndGlyphs">JSB</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="JSA" data-region="sensor-a" x="1110.698" y="567.327" width="35.468" height="44.968" rx="4" fill="#8c4f68" fill-opacity="0.42" stroke="#e6f4ee" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>JSA; region sensor-a; structural courtyard</title>
+<text class="component-label" x="1128.432" y="593.551" text-anchor="middle" font-size="11" textLength="30.468" lengthAdjust="spacingAndGlyphs">JSA</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="RPDB" data-region="output-b" x="739.554" y="564.477" width="74.736" height="19.001" rx="4" fill="#3e806f" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>RPDB; region output-b; structural courtyard</title>
+<text class="component-label" x="776.922" y="576.357" text-anchor="middle" font-size="7" textLength="69.736" lengthAdjust="spacingAndGlyphs">RPDB</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="JOB" data-region="output-b" x="718.02" y="436.223" width="35.468" height="22.167" rx="4" fill="#3e806f" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>JOB; region output-b; structural courtyard</title>
+<text class="component-label" x="735.754" y="449.869" text-anchor="middle" font-size="7.537" textLength="30.468" lengthAdjust="spacingAndGlyphs">JOB</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="JOA" data-region="output-a" x="597.683" y="448.89" width="35.468" height="22.167" rx="4" fill="#76568c" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>JOA; region output-a; structural courtyard</title>
+<text class="component-label" x="615.417" y="462.536" text-anchor="middle" font-size="7.537" textLength="30.468" lengthAdjust="spacingAndGlyphs">JOA</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="RPDA" data-region="output-a" x="631.884" y="596.144" width="68.402" height="19.001" rx="4" fill="#76568c" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>RPDA; region output-a; structural courtyard</title>
+<text class="component-label" x="666.085" y="608.025" text-anchor="middle" font-size="7" textLength="63.402" lengthAdjust="spacingAndGlyphs">RPDA</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="DREV" data-region="entry" x="869.391" y="219.3" width="65.235" height="19.001" rx="4" fill="#4d7192" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>DREV; region entry; structural courtyard</title>
+<text class="component-label" x="902.009" y="231.18" text-anchor="middle" font-size="7" textLength="60.235" lengthAdjust="spacingAndGlyphs">DREV</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="RSB" data-region="sensor-b" x="1011.896" y="501.141" width="62.069" height="19.001" rx="4" fill="#477e88" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>RSB; region sensor-b; structural courtyard</title>
+<text class="component-label" x="1042.93" y="513.022" text-anchor="middle" font-size="7" textLength="57.069" lengthAdjust="spacingAndGlyphs">RSB</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="RSA" data-region="sensor-a" x="1011.896" y="634.145" width="62.069" height="19.001" rx="4" fill="#8c4f68" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>RSA; region sensor-a; structural courtyard</title>
+<text class="component-label" x="1042.93" y="646.026" text-anchor="middle" font-size="7" textLength="57.069" lengthAdjust="spacingAndGlyphs">RSA</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="U2B" data-region="sensor-b" x="917.843" y="539.143" width="79.169" height="63.335" rx="4" fill="#477e88" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>U2B; region sensor-b; structural courtyard</title>
+<text class="component-label" x="957.427" y="574.55" text-anchor="middle" font-size="11" textLength="74.169" lengthAdjust="spacingAndGlyphs">U2B</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="U2A" data-region="sensor-a" x="959.011" y="672.147" width="79.169" height="63.335" rx="4" fill="#8c4f68" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>U2A; region sensor-a; structural courtyard</title>
+<text class="component-label" x="998.595" y="707.554" text-anchor="middle" font-size="11" textLength="74.169" lengthAdjust="spacingAndGlyphs">U2A</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="C12" data-region="entry" x="949.51" y="464.724" width="25.334" height="28.501" rx="4" fill="#4d7192" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>C12; region entry; structural courtyard</title>
+<text class="component-label" x="962.177" y="482.269" text-anchor="middle" font-size="9.69" textLength="20.334" lengthAdjust="spacingAndGlyphs">C12</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="J1" data-region="entry" x="1110.698" y="424.823" width="35.468" height="44.968" rx="4" fill="#4d7192" fill-opacity="0.42" stroke="#e6f4ee" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>J1; region entry; structural courtyard</title>
+<text class="component-label" x="1128.432" y="451.047" text-anchor="middle" font-size="11" textLength="30.468" lengthAdjust="spacingAndGlyphs">J1</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="CIN" data-region="regulation" x="753.171" y="500.825" width="34.834" height="34.834" rx="4" fill="#7d7540" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>CIN; region regulation; structural courtyard</title>
+<text class="component-label" x="770.588" y="521.982" text-anchor="middle" font-size="11" textLength="29.834" lengthAdjust="spacingAndGlyphs">CIN</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="F1" data-region="entry" x="1011.896" y="431.473" width="62.069" height="19.001" rx="4" fill="#4d7192" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>F1; region entry; structural courtyard</title>
+<text class="component-label" x="1042.93" y="443.353" text-anchor="middle" font-size="7" textLength="57.069" lengthAdjust="spacingAndGlyphs">F1</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="REN" data-region="regulation" x="790.222" y="257.301" width="62.069" height="19.001" rx="4" fill="#7d7540" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>REN; region regulation; structural courtyard</title>
+<text class="component-label" x="821.257" y="269.181" text-anchor="middle" font-size="7" textLength="57.069" lengthAdjust="spacingAndGlyphs">REN</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="U1" data-region="regulation" x="813.34" y="301.636" width="66.502" height="63.335" rx="4" fill="#7d7540" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>U1; region regulation; structural courtyard</title>
+<text class="component-label" x="846.591" y="337.043" text-anchor="middle" font-size="11" textLength="61.502" lengthAdjust="spacingAndGlyphs">U1</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="DA" data-region="output-a" x="742.721" y="611.978" width="71.569" height="19.001" rx="4" fill="#76568c" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>DA; region output-a; structural courtyard</title>
+<text class="component-label" x="778.505" y="623.858" text-anchor="middle" font-size="7" textLength="66.569" lengthAdjust="spacingAndGlyphs">DA</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="DB" data-region="output-b" x="869.391" y="390.305" width="65.235" height="19.001" rx="4" fill="#3e806f" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>DB; region output-b; structural courtyard</title>
+<text class="component-label" x="902.009" y="402.185" text-anchor="middle" font-size="7" textLength="60.235" lengthAdjust="spacingAndGlyphs">DB</text>
+<rect class="component-courtyard" data-kind="component-courtyard" data-id="RLED" data-region="status" x="673.052" y="653.146" width="62.069" height="19.001" rx="4" fill="#986d3d" fill-opacity="0.42" stroke="#b9d2cf" stroke-width="1.2" stroke-dasharray="4 3"/>
+<title>RLED; region status; structural courtyard</title>
+<text class="component-label" x="704.086" y="665.026" text-anchor="middle" font-size="7" textLength="57.069" lengthAdjust="spacingAndGlyphs">RLED</text>
+<circle class="pad-plated" data-kind="pad" data-index="0" data-id="QB.B" cx="878.258" cy="578.727" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="878.258" cy="578.727" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="1" data-id="QB.C" cx="865.591" cy="578.727" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="865.591" cy="578.727" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="2" data-id="DA.K" cx="748.421" cy="619.895" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="748.421" cy="619.895" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="3" data-id="KB.NO" cx="837.09" cy="445.723" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="837.09" cy="445.723" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="4" data-id="J1.1" cx="1115.765" cy="439.39" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1115.765" cy="439.39" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="5" data-id="U2A.RAIL" cx="998.595" cy="718.065" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="998.595" cy="718.065" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="6" data-id="J1.2" cx="1115.765" cy="458.39" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1115.765" cy="458.39" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="7" data-id="C5.2" cx="989.095" cy="385.555" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="989.095" cy="385.555" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="8" data-id="C5.1" cx="1001.762" cy="385.555" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1001.762" cy="385.555" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="9" data-id="RPDB.1" cx="808.59" cy="572.394" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="808.59" cy="572.394" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="10" data-id="QB.E" cx="852.924" cy="578.727" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="852.924" cy="578.727" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="11" data-id="RSB.1" cx="1068.264" cy="509.058" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1068.264" cy="509.058" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="12" data-id="F1.1" cx="1068.264" cy="439.39" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1068.264" cy="439.39" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="13" data-id="RSB.2" cx="1017.596" cy="509.058" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1017.596" cy="509.058" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="14" data-id="F1.2" cx="1017.596" cy="439.39" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1017.596" cy="439.39" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="15" data-id="DA.A" cx="808.59" cy="619.895" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="808.59" cy="619.895" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="16" data-id="KB.NC" cx="862.424" cy="445.723" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="862.424" cy="445.723" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="17" data-id="JOB.2" cx="729.421" cy="445.723" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="729.421" cy="445.723" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="18" data-id="KA.A2" cx="612.25" cy="534.392" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="612.25" cy="534.392" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="19" data-id="JOB.1" cx="745.254" cy="445.723" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="745.254" cy="445.723" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="20" data-id="KA.A1" cx="688.253" cy="534.392" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="688.253" cy="534.392" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="21" data-id="LED1.K" cx="827.59" cy="797.234" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="827.59" cy="797.234" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="22" data-id="C12.1" cx="970.094" cy="474.224" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="970.094" cy="474.224" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="23" data-id="JSB.2" cx="1115.765" cy="531.226" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1115.765" cy="531.226" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="24" data-id="U2A.OUTPUT" cx="982.761" cy="718.065" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="982.761" cy="718.065" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="25" data-id="JSB.1" cx="1115.765" cy="512.225" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1115.765" cy="512.225" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="26" data-id="U2B.REFERENCE" cx="973.261" cy="585.061" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="973.261" cy="585.061" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="27" data-id="C12.2" cx="957.427" cy="474.224" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="957.427" cy="474.224" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="28" data-id="RDB.1" cx="928.926" cy="638.896" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="928.926" cy="638.896" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="29" data-id="RREF_HB.1" cx="1096.765" cy="338.053" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1096.765" cy="338.053" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="30" data-id="RREF_LB.2" cx="1055.597" cy="379.221" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1055.597" cy="379.221" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="31" data-id="CIN.-" cx="764.255" cy="509.058" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="764.255" cy="509.058" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="32" data-id="RREF_HB.2" cx="1033.43" cy="338.053" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1033.43" cy="338.053" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="33" data-id="RDB.2" cx="871.925" cy="638.896" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="871.925" cy="638.896" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="34" data-id="KB.A2" cx="824.423" cy="474.224" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="824.423" cy="474.224" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="35" data-id="CIN.+" cx="780.089" cy="509.058" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="780.089" cy="509.058" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="36" data-id="KB.A1" cx="900.426" cy="474.224" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="900.426" cy="474.224" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="37" data-id="RREF_LB.1" cx="1106.265" cy="379.221" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1106.265" cy="379.221" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="38" data-id="QA.C" cx="726.254" cy="756.066" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="726.254" cy="756.066" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="39" data-id="JLOAD.2" cx="80.235" cy="575.56" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="80.235" cy="575.56" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="40" data-id="QA.B" cx="738.921" cy="756.066" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="738.921" cy="756.066" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="41" data-id="QA.E" cx="713.587" cy="756.066" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="713.587" cy="756.066" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="42" data-id="DB.K" cx="875.092" cy="398.222" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="875.092" cy="398.222" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="43" data-id="U1.INPUT" cx="865.591" cy="347.554" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="865.591" cy="347.554" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="44" data-id="JLOAD.1" cx="80.235" cy="556.56" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="80.235" cy="556.56" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="45" data-id="RSA.1" cx="1068.264" cy="642.062" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1068.264" cy="642.062" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="46" data-id="RPDA.1" cx="694.586" cy="604.061" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="694.586" cy="604.061" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="47" data-id="U2A.REFERENCE" cx="1014.429" cy="718.065" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1014.429" cy="718.065" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="48" data-id="RPDA.2" cx="637.585" cy="604.061" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="637.585" cy="604.061" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="49" data-id="RSA.2" cx="1017.596" cy="642.062" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1017.596" cy="642.062" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="50" data-id="DB.A" cx="928.926" cy="398.222" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="928.926" cy="398.222" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="51" data-id="U2B.RETURN" cx="925.76" cy="585.061" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="925.76" cy="585.061" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="52" data-id="U2A.RETURN" cx="966.928" cy="718.065" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="966.928" cy="718.065" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="53" data-id="JOA.2" cx="609.084" cy="458.39" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="609.084" cy="458.39" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="54" data-id="U2A.SENSOR" cx="1030.263" cy="718.065" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1030.263" cy="718.065" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="55" data-id="REN.1" cx="846.591" cy="265.218" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="846.591" cy="265.218" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="56" data-id="REN.2" cx="795.923" cy="265.218" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="795.923" cy="265.218" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="57" data-id="U2B.SENSOR" cx="989.095" cy="585.061" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="989.095" cy="585.061" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="58" data-id="RLED.1" cx="729.421" cy="661.063" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="729.421" cy="661.063" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="59" data-id="RLED.2" cx="678.752" cy="661.063" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="678.752" cy="661.063" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="60" data-id="JSA.1" cx="1115.765" cy="581.894" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1115.765" cy="581.894" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="61" data-id="JSA.2" cx="1115.765" cy="600.894" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="1115.765" cy="600.894" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="62" data-id="LED1.A" cx="840.257" cy="797.234" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="840.257" cy="797.234" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="63" data-id="KA.NO" cx="624.917" cy="505.892" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="624.917" cy="505.892" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="64" data-id="U1.OUTPUT" cx="852.924" cy="347.554" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="852.924" cy="347.554" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="65" data-id="JOA.1" cx="624.917" cy="458.39" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="624.917" cy="458.39" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="66" data-id="KA.COM" cx="675.586" cy="505.892" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="675.586" cy="505.892" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="67" data-id="U1.ENABLE" cx="827.59" cy="347.554" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="827.59" cy="347.554" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="68" data-id="RDA.2" cx="859.258" cy="705.398" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="859.258" cy="705.398" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="69" data-id="U1.RETURN" cx="840.257" cy="347.554" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="840.257" cy="347.554" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="70" data-id="RDA.1" cx="922.593" cy="705.398" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="922.593" cy="705.398" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="71" data-id="DREV.K" cx="875.092" cy="227.217" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="875.092" cy="227.217" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="72" data-id="U2B.RAIL" cx="957.427" cy="585.061" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="957.427" cy="585.061" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="73" data-id="KA.NC" cx="650.252" cy="505.892" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="650.252" cy="505.892" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="74" data-id="RREF_HA.2" cx="849.757" cy="743.399" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="849.757" cy="743.399" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="75" data-id="RREF_HA.1" cx="906.759" cy="743.399" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="906.759" cy="743.399" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="76" data-id="RPDB.2" cx="745.254" cy="572.394" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="745.254" cy="572.394" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="77" data-id="KB.COM" cx="887.759" cy="445.723" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="887.759" cy="445.723" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="78" data-id="U2B.OUTPUT" cx="941.593" cy="585.061" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="941.593" cy="585.061" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="79" data-id="RREF_LA.2" cx="881.425" cy="781.4" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="881.425" cy="781.4" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="80" data-id="RREF_LA.1" cx="944.76" cy="781.4" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="944.76" cy="781.4" r="1.5" fill="#0b1720"/>
+<circle class="pad-plated" data-kind="pad" data-index="81" data-id="DREV.A" cx="928.926" cy="227.217" r="3.8" fill="#c78d1b" stroke="#f4d66d" stroke-width="1.5"/>
+<circle class="pad-hole" data-kind="pad-hole" cx="928.926" cy="227.217" r="1.5" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="0" data-id="p07-via/A_CMD/47/1" cx="941.593" cy="724.398" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="941.593" cy="724.398" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="1" data-id="p07-via/A_COIL_LOW/29/1" cx="723.087" cy="626.229" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="723.087" cy="626.229" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="2" data-id="p07-via/A_COIL_LOW/29/2" cx="735.754" cy="626.229" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="735.754" cy="626.229" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="3" data-id="p07-via/A_DRIVE/31/1" cx="824.423" cy="756.066" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="824.423" cy="756.066" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="4" data-id="p07-via/A_DRIVE/32/1" cx="694.586" cy="619.895" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="694.586" cy="619.895" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="5" data-id="p07-via/A_DRIVE/32/2" cx="694.586" cy="632.562" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="694.586" cy="632.562" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="6" data-id="p07-via/A_RAW/48/1" cx="1068.264" cy="581.894" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="1068.264" cy="581.894" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="7" data-id="p07-via/B_CMD/50/1" cx="913.093" cy="597.728" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="913.093" cy="597.728" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="8" data-id="p07-via/B_CMD/50/2" cx="913.093" cy="610.395" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="913.093" cy="610.395" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="9" data-id="p07-via/B_COIL_LOW/35/1" cx="849.757" cy="426.723" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="849.757" cy="426.723" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="10" data-id="p07-via/B_COIL_LOW/36/1" cx="865.591" cy="499.558" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="865.591" cy="499.558" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="11" data-id="p07-via/B_DRIVE/37/1" cx="887.759" cy="610.395" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="887.759" cy="610.395" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="12" data-id="p07-via/B_DRIVE/38/1" cx="843.424" cy="610.395" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="843.424" cy="610.395" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="13" data-id="p07-via/B_RAW/51/1" cx="1103.098" cy="512.225" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="1103.098" cy="512.225" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="14" data-id="p07-via/B_REF/40/1" cx="979.595" cy="486.891" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="979.595" cy="486.891" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="15" data-id="p07-via/B_REF/40/2" cx="979.595" cy="338.053" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="979.595" cy="338.053" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="16" data-id="p07-via/B_SENSE/52/1" cx="989.095" cy="509.058" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="989.095" cy="509.058" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="17" data-id="p07-via/EN5/53/1" cx="795.923" cy="347.554" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="795.923" cy="347.554" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="18" data-id="p07-via/EN5/53/2" cx="795.923" cy="334.887" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="795.923" cy="334.887" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="19" data-id="p07-via/FUSED12/41/1" cx="970.094" cy="372.888" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="970.094" cy="372.888" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="20" data-id="p07-via/FUSED12/42/1" cx="995.428" cy="439.39" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="995.428" cy="439.39" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="21" data-id="p07-via/FUSED12/42/2" cx="970.094" cy="439.39" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="970.094" cy="439.39" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="22" data-id="p07-via/LOAD12/44/1" cx="757.921" cy="420.389" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="757.921" cy="420.389" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="23" data-id="p07-via/OUT_B/56/1" cx="786.422" cy="433.056" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="786.422" cy="433.056" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="24" data-id="p07-via/RAIL12/26/1" cx="780.089" cy="461.557" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="780.089" cy="461.557" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="25" data-id="p07-via/RAIL5/16/1" cx="824.423" cy="604.061" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="824.423" cy="604.061" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="26" data-id="p07-via/RAIL5/16/2" cx="837.09" cy="604.061" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="837.09" cy="604.061" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="27" data-id="p07-via/RAIL5/16/3" cx="1001.762" cy="464.724" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="1001.762" cy="464.724" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="28" data-id="p07-via/RAIL5/16/4" cx="1001.762" cy="452.057" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="1001.762" cy="452.057" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="29" data-id="p07-via/RAIL5/18/1" cx="716.754" cy="604.061" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="716.754" cy="604.061" r="1.76" fill="#0b1720"/>
+<circle class="via-plated" data-kind="via" data-index="30" data-id="p07-via/RAIL5/21/1" cx="935.26" cy="711.731" r="4.4" fill="#806e2f" stroke="#f7e08d" stroke-width="2"/>
+<circle class="via-hole" data-kind="via-hole" cx="935.26" cy="711.731" r="1.76" fill="#0b1720"/>
+</g>
+<rect class="legend-panel" data-kind="legend" x="1190" y="82" width="276" height="884" rx="12"/>
+<text class="legend-heading" x="1208" y="112">STRUCTURAL RENDERING</text>
+<text class="legend-face" x="1208" y="136">BOTTOM face · mirrored</text>
+<text class="legend-note" x="1208" y="157">Developer-only physical view</text>
+<text class="legend-note" x="1208" y="173">Not a production workbench screenshot</text>
+<text class="legend-section" x="1208" y="208">FACE / PLATING KEY</text>
+<line class="legend-swatch-line" x1="1208" y1="228" x2="1226" y2="228" stroke="#ffc34d"/>
+<text class="legend-label" x="1235" y="232">visible-face copper</text>
+<line class="legend-swatch-line" x1="1208" y1="250" x2="1226" y2="250" stroke="#6686a2"/>
+<text class="legend-label" x="1235" y="254">opposite-face copper</text>
+<circle class="legend-swatch-ring" cx="1217" cy="272" r="6" stroke="#f4d66d"/>
+<text class="legend-label" x="1235" y="276">plated through-hole pad</text>
+<circle class="legend-swatch-ring" cx="1217" cy="294" r="6" stroke="#f7e08d"/>
+<text class="legend-label" x="1235" y="298">plated via</text>
+<text class="legend-section" x="1208" y="340">REGION COURTYARDS</text>
+<rect class="legend-region-swatch" x="1208" y="353" width="14" height="12" rx="2" fill="#4d7192"/>
+<text class="legend-label" x="1228" y="364" font-size="10">entry</text>
+<rect class="legend-region-swatch" x="1208" y="373" width="14" height="12" rx="2" fill="#76568c"/>
+<text class="legend-label" x="1228" y="384" font-size="10">output-a</text>
+<rect class="legend-region-swatch" x="1208" y="393" width="14" height="12" rx="2" fill="#3e806f"/>
+<text class="legend-label" x="1228" y="404" font-size="10">output-b</text>
+<rect class="legend-region-swatch" x="1208" y="413" width="14" height="12" rx="2" fill="#a16645"/>
+<text class="legend-label" x="1228" y="424" font-size="10">output-common</text>
+<rect class="legend-region-swatch" x="1208" y="433" width="14" height="12" rx="2" fill="#7d7540"/>
+<text class="legend-label" x="1228" y="444" font-size="10">regulation</text>
+<rect class="legend-region-swatch" x="1208" y="453" width="14" height="12" rx="2" fill="#8c4f68"/>
+<text class="legend-label" x="1228" y="464" font-size="10">sensor-a</text>
+<rect class="legend-region-swatch" x="1208" y="473" width="14" height="12" rx="2" fill="#477e88"/>
+<text class="legend-label" x="1228" y="484" font-size="10">sensor-b</text>
+<rect class="legend-region-swatch" x="1208" y="493" width="14" height="12" rx="2" fill="#986d3d"/>
+<text class="legend-label" x="1228" y="504" font-size="10">status</text>
+<text class="footer-note" x="34" y="988">Structural rendering only · physical geometry and routed copper</text>
+</svg>

@@ -1,0 +1,555 @@
+diff --git a/src/com/lushprojects/circuitjs1/client/Rb30Plan.java b/src/com/lushprojects/circuitjs1/client/Rb30Plan.java
+index 6c09e51..4e1a122 100644
+--- a/src/com/lushprojects/circuitjs1/client/Rb30Plan.java
++++ b/src/com/lushprojects/circuitjs1/client/Rb30Plan.java
+@@ -9,9 +9,10 @@ import java.util.Vector;
+  */
+ final class Rb30Plan {
+     static final String FAMILY_ID = "RB30_CONTROL";
++    private static final int SCHEMA_VERSION = 2;
+ 
+     final long seed, layoutSeed, routingSeed;
+-    final boolean driverABjt, driverBBjt, sharedHystereticReference;
++    final boolean driverABjt, driverBBjt, localHystereticReference;
+     final String selectedFault;
+ 
+     private static final String[] FAULTS = {
+@@ -22,12 +23,13 @@ final class Rb30Plan {
+     private Rb30Plan(long seed) {
+         this.seed = seed;
+         NamedRandomStreams streams = new NamedRandomStreams(
+-            NamedRandomStreams.DERIVATION_VERSION, seed, FAMILY_ID, 1);
++            NamedRandomStreams.DERIVATION_VERSION, seed, FAMILY_ID,
++            SCHEMA_VERSION);
+         driverABjt = streams.openBlock("output-a",
+             NamedRandomStreams.Concern.TOPOLOGY, 1, "driver").nextInt(2) == 0;
+         driverBBjt = streams.openBlock("output-b",
+             NamedRandomStreams.Concern.TOPOLOGY, 1, "driver").nextInt(2) == 0;
+-        sharedHystereticReference = streams.openDevice(
++        localHystereticReference = streams.openDevice(
+             NamedRandomStreams.Concern.TOPOLOGY, 1,
+             "sensor-reference-arrangement").nextInt(2) == 0;
+         selectedFault = FAULTS[streams.openDevice(
+@@ -52,23 +54,24 @@ final class Rb30Plan {
+     }
+ 
+     String topology() {
+-        return "RB30_" + (sharedHystereticReference ?
+-            "SHARED_HYSTERETIC" : "SEPARATE_DIRECT") + "_A_" +
++        return "RB30_" + (localHystereticReference ?
++            "LOCAL_HYSTERETIC" : "SEPARATE_DIRECT") + "_A_" +
+             (driverABjt ? "BJT" : "NMOS") + "_B_" +
+             (driverBBjt ? "BJT" : "NMOS");
+     }
+ 
+     String canonical() {
+-        return "rb30-plan@1;seed=" + Long.toString(seed) +
++        return "rb30-plan@" + SCHEMA_VERSION + ";seed=" + Long.toString(seed) +
+             ";topology=" + topology() + ";layout=" + Long.toString(layoutSeed) +
+             ";routing=" + Long.toString(routingSeed) +
+             ";fault=" + selectedFault +
+-            ";packages=33;main=12V;regulator=5V-E02;coil=5V-E03" +
++            ";packages=" + (localHystereticReference ? 35 : 33) +
++            ";main=12V;regulator=5V-E02;coil=5V-E03" +
+             ";load=isolated-12V-180ohm-per-channel" +
+             ";sensors=two-E04-decisions;loadReference=isolated";
+     }
+ 
+-    /** One logical graph with exactly 33 real physical package identities. */
++    /** One logical graph with 33 direct or 35 local-hysteretic packages. */
+     TroubleshootBoard board() {
+         TroubleshootBoard board = new TroubleshootBoard(FAMILY_ID + "_BOARD");
+         for (String id : new String[] {
+@@ -80,12 +83,8 @@ final class Rb30Plan {
+                 "A_CMD", "A_DRIVE", "B_RAW", "B_SENSE",
+                 "B_CMD", "B_DRIVE" })
+             net(board, id, BoardNet.RoutingRole.CONTROL);
+-        if (sharedHystereticReference)
+-            net(board, "REF_SHARED", BoardNet.RoutingRole.CONTROL);
+-        else {
+-            net(board, "A_REF", BoardNet.RoutingRole.CONTROL);
+-            net(board, "B_REF", BoardNet.RoutingRole.CONTROL);
+-        }
++        net(board, "A_REF", BoardNet.RoutingRole.CONTROL);
++        net(board, "B_REF", BoardNet.RoutingRole.CONTROL);
+         for (String id : new String[] { "A_COIL_LOW", "B_COIL_LOW",
+                 "OUT_A", "OUT_B" })
+             net(board, id, BoardNet.RoutingRole.HIGH_CURRENT);
+@@ -117,26 +116,21 @@ final class Rb30Plan {
+         part(board, "REN", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+             "RAIL12", "EN5");
+ 
+-        sensor(board, "A", sharedHystereticReference ? "REF_SHARED" : "A_REF");
+-        sensor(board, "B", sharedHystereticReference ? "REF_SHARED" : "B_REF");
+-        if (sharedHystereticReference) {
+-            part(board, "RREF_H", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+-                "RAIL5", "REF_SHARED");
+-            part(board, "RREF_L", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+-                "REF_SHARED", "CTRL_RETURN");
++        sensor(board, "A", "A_REF");
++        sensor(board, "B", "B_REF");
++        for (String channel : new String[] { "A", "B" }) {
++            part(board, "RREF_H" + channel, "RESISTOR",
++                PhysicalPackages.AXIAL_RESISTOR,
++                "RAIL5", channel + "_REF");
++            part(board, "RREF_L" + channel, "RESISTOR",
++                PhysicalPackages.AXIAL_RESISTOR,
++                channel + "_REF", "CTRL_RETURN");
++        }
++        if (localHystereticReference) {
+             part(board, "RFB_A", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+                 "A_CMD", "A_SENSE");
+             part(board, "RFB_B", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+                 "B_CMD", "B_SENSE");
+-        } else {
+-            for (String channel : new String[] { "A", "B" }) {
+-                part(board, "RREF_H" + channel, "RESISTOR",
+-                    PhysicalPackages.AXIAL_RESISTOR,
+-                    "RAIL5", channel + "_REF");
+-                part(board, "RREF_L" + channel, "RESISTOR",
+-                    PhysicalPackages.AXIAL_RESISTOR,
+-                    channel + "_REF", "CTRL_RETURN");
+-            }
+         }
+ 
+         output(board, "A", driverA());
+@@ -175,7 +169,8 @@ final class Rb30Plan {
+             "JLOAD.2", "LOAD12", "LOAD_RETURN"));
+         board.setPlacementConstraints(placement(board));
+         board.validate();
+-        if (board.getComponentIds().size() != 33)
++        int expectedPackages = localHystereticReference ? 35 : 33;
++        if (board.getComponentIds().size() != expectedPackages)
+             throw new IllegalStateException("Q30 reference package accounting changed");
+         return board;
+     }
+@@ -238,8 +233,6 @@ final class Rb30Plan {
+                 id.equals("JSB") || id.equals("U2B") || id.equals("RSB") ||
+                 id.equals("RREFB") || id.equals("RFB_B") ||
+                 id.equals("RREF_HB") || id.equals("RREF_LB") ? "sensor-b" :
+-                id.equals("RREF_H") || id.equals("RREF_L") ?
+-                "sensor-reference" :
+                 id.equals("RLED") || id.equals("LED1") ? "status" :
+                 id.endsWith("A") || id.equals("JOA") ? "output-a" :
+                 id.endsWith("B") || id.equals("JOB") ? "output-b" :
+@@ -248,7 +241,6 @@ final class Rb30Plan {
+                 region.equals("regulation") ? "5 V regulation" :
+                 region.equals("sensor-a") ? "Sensor A" :
+                 region.equals("sensor-b") ? "Sensor B" :
+-                region.equals("sensor-reference") ? "Sensor reference" :
+                 region.equals("status") ? "Status" :
+                 region.equals("output-a") ? "Output A" :
+                 region.equals("output-b") ? "Output B" :
+diff --git a/src/com/lushprojects/circuitjs1/client/Rb30Generator.java b/src/com/lushprojects/circuitjs1/client/Rb30Generator.java
+index 0b1c871..49831f7 100644
+--- a/src/com/lushprojects/circuitjs1/client/Rb30Generator.java
++++ b/src/com/lushprojects/circuitjs1/client/Rb30Generator.java
+@@ -105,7 +105,7 @@ final class Rb30Generator {
+ 
+         E04SensorControlModel.RailContract decisionRail =
+             E04SensorControlModel.adaptE02Rail(rail);
+-        E04SensorControlModel.Variant variant = plan.sharedHystereticReference ?
++        E04SensorControlModel.Variant variant = plan.localHystereticReference ?
+             E04SensorControlModel.Variant.HYSTERETIC_REGENERATIVE :
+             E04SensorControlModel.Variant.DIRECT_THRESHOLD;
+         E04SensorControlModel.Configuration config =
+@@ -116,18 +116,15 @@ final class Rb30Generator {
+             decision("B", variant, decisionRail, config);
+         resistor("RSA", 10000, "A_RAW", "A_SENSE");
+         resistor("RSB", 10000, "B_RAW", "B_SENSE");
+-        if (plan.sharedHystereticReference) {
+-            resistor("RREF_H", 10000, "RAIL5", "REF_SHARED");
+-            resistor("RREF_L", 10000, "REF_SHARED", "CTRL_RETURN");
++        for (String channel : new String[] { "A", "B" }) {
++            resistor("RREF_H" + channel, 10000,
++                "RAIL5", channel + "_REF");
++            resistor("RREF_L" + channel, 10000,
++                channel + "_REF", "CTRL_RETURN");
++        }
++        if (plan.localHystereticReference) {
+             resistor("RFB_A", 22000, "A_CMD", "A_SENSE");
+             resistor("RFB_B", 22000, "B_CMD", "B_SENSE");
+-        } else {
+-            for (String channel : new String[] { "A", "B" }) {
+-                resistor("RREF_H" + channel, 10000,
+-                    "RAIL5", channel + "_REF");
+-                resistor("RREF_L" + channel, 10000,
+-                    channel + "_REF", "CTRL_RETURN");
+-            }
+         }
+ 
+         ServiceRelayElm relayA = output("A", plan.driverA());
+@@ -186,8 +183,7 @@ final class Rb30Generator {
+     }
+ 
+     private String planReference(String channel) {
+-        return a.board.getNet("REF_SHARED") != null ? "REF_SHARED" :
+-            channel + "_REF";
++        return channel + "_REF";
+     }
+ 
+     private ServiceRelayElm output(String channel, RelayDriverProvider driver) {
+@@ -213,7 +209,7 @@ final class Rb30Generator {
+         String id = "JO" + channel;
+         // The header's fixed backing is the external load, as in E03's J4:
+         // both header pads remain distinct and the load lives outside the
+-        // 33 physical board packages.  Its 180 ohms is CircuitJS stamped.
++        // Board package identities. Its 180 ohms is CircuitJS stamped.
+         multi(id, load, new int[] { 0, 1 },
+             "OUT_" + channel, "LOAD_RETURN");
+     }
+diff --git a/src/com/lushprojects/circuitjs1/client/Rb30TopologyValidator.java b/src/com/lushprojects/circuitjs1/client/Rb30TopologyValidator.java
+index 4607dd5..c560e30 100644
+--- a/src/com/lushprojects/circuitjs1/client/Rb30TopologyValidator.java
++++ b/src/com/lushprojects/circuitjs1/client/Rb30TopologyValidator.java
+@@ -12,9 +12,10 @@ final class Rb30TopologyValidator {
+         TroubleshootBoard board = candidate.board();
+         board.validate();
+         int count = board.getComponentIds().size();
+-        if (count < 20 || count > 40 ||
++        int expectedPackages = candidate.plan.localHystereticReference ? 35 : 33;
++        if (count != expectedPackages ||
+                 candidate.backing.size() != count)
+-            throw invalid("20-40 package construction/ownership census");
++            throw invalid("Q30 package construction/ownership census");
+         for (String id : board.getComponentIds()) {
+             CircuitElm backing = candidate.backing.get(id);
+             if (backing == null || !candidate.elements().contains(backing))
+@@ -67,21 +68,24 @@ final class Rb30TopologyValidator {
+                         BoundedExternalLoadElm))
+                 throw invalid("missing loaded E03 output " + channel);
+         }
+-        String reference = candidate.plan.sharedHystereticReference ?
+-            "REF_SHARED" : null;
+         for (String channel : new String[] { "A", "B" })
+             requireNet(board, "U2" + channel + ".REFERENCE",
+-                reference == null ? channel + "_REF" : reference);
+-        if (reference != null) {
++                channel + "_REF");
++        if (candidate.plan.localHystereticReference) {
+             if (board.getComponent("RFB_A") == null ||
+                     board.getComponent("RFB_B") == null ||
+-                    board.getComponent("RREF_H") == null ||
+-                    board.getComponent("RREF_L") == null)
+-                throw invalid("incomplete shared hysteretic arrangement");
+-        } else for (String channel : new String[] { "A", "B" })
++                    board.getComponent("RREF_HA") == null ||
++                    board.getComponent("RREF_LA") == null ||
++                    board.getComponent("RREF_HB") == null ||
++                    board.getComponent("RREF_LB") == null)
++                throw invalid("incomplete local hysteretic arrangement");
++        } else for (String channel : new String[] { "A", "B" }) {
+             if (board.getComponent("RREF_H" + channel) == null ||
+                     board.getComponent("RREF_L" + channel) == null)
+                 throw invalid("incomplete separate direct arrangement");
++            if (board.getComponent("RFB_" + channel) != null)
++                throw invalid("direct arrangement has regenerative feedback");
++        }
+         int decisionCount = 0, regulatorCount = 0, relayCount = 0;
+         for (CircuitElm element : candidate.elements()) {
+             if (element instanceof E04SensorControlModel.DecisionElement) decisionCount++;
+diff --git a/tests/contracts/Q30PlanContractTest.java b/tests/contracts/Q30PlanContractTest.java
+index cb9de81..f59aeef 100644
+--- a/tests/contracts/Q30PlanContractTest.java
++++ b/tests/contracts/Q30PlanContractTest.java
+@@ -3,27 +3,32 @@ package com.lushprojects.circuitjs1.client;
+ import java.util.HashSet;
+ import java.util.Set;
+ 
+-/** Independent package, structural choice and shared-domain canary for Q30. */
++/** Independent package, structural choice and local-domain canary for Q30. */
+ public final class Q30PlanContractTest {
+     private static int assertions;
+ 
+     public static void main(String[] args) {
+         Set<String> topologies = new HashSet<String>();
+         int bjtA = 0, nmosA = 0, bjtB = 0, nmosB = 0;
+-        int separate = 0, shared = 0;
++        int direct = 0, localHysteretic = 0;
+         for (long seed : new long[] { Long.MIN_VALUE, Long.MAX_VALUE, -101,
+                 -17, -1, 0, 1, 2, 3, 4, 5, 11, 19, 31, 47, 83,
+                 9007199254740993L }) {
+             Rb30Plan plan = Rb30Plan.resolve(seed);
+             Rb30Plan replay = Rb30Plan.resolve(seed);
+             check(plan.canonical().equals(replay.canonical()));
++            check(plan.canonical().startsWith("rb30-plan@2;"));
+             check(plan.layoutSeed == replay.layoutSeed &&
+                 plan.routingSeed == replay.routingSeed);
+             TroubleshootBoard board = plan.board();
+-            check(board.getComponentIds().size() == 33);
+-            check(board.getPadIds().size() >= 75 &&
+-                board.getPadIds().size() <= 90);
++            check(board.getComponentIds().size() ==
++                (plan.localHystereticReference ? 35 : 33));
++            check(board.getPadIds().size() ==
++                (plan.localHystereticReference ? 86 : 82));
+             check(board.getPowerInputIds().size() == 4);
++            check(board.getNet("REF_SHARED") == null);
++            check(board.getNet("A_REF") != null &&
++                board.getNet("B_REF") != null);
+             for (String netId : board.getNetIds())
+                 check(!board.getNet(netId).getPadIds().isEmpty());
+             PowerDomainContract domains = Rb30PowerDomains.create(plan);
+@@ -69,24 +74,34 @@ public final class Q30PlanContractTest {
+                 board.getPad("U2A.RAIL").getNetId()));
+             check(board.getPad("U2A.RAIL").getNetId().equals(
+                 board.getPad("U2B.RAIL").getNetId()));
+-            if (plan.sharedHystereticReference) {
+-                shared++;
+-                check(board.getPad("U2A.REFERENCE").getNetId().equals(
++            if (plan.localHystereticReference) {
++                localHysteretic++;
++                check(!board.getPad("U2A.REFERENCE").getNetId().equals(
+                     board.getPad("U2B.REFERENCE").getNetId()));
+                 check(board.getComponent("RFB_A") != null &&
+                     board.getComponent("RFB_B") != null);
+-                check(board.getComponent("RREF_HA") == null);
+-                check("sensor-reference".equals(board.getPlacementConstraints()
+-                    .get("RREF_H").regionId));
+-                check("sensor-reference".equals(board.getPlacementConstraints()
+-                    .get("RREF_L").regionId));
++                for (String channel : new String[] { "A", "B" }) {
++                    check(board.getComponent("RREF_H" + channel) != null);
++                    check(board.getComponent("RREF_L" + channel) != null);
++                    check(("sensor-" + channel.toLowerCase()).equals(
++                        board.getPlacementConstraints()
++                            .get("RREF_H" + channel).regionId));
++                    check(("sensor-" + channel.toLowerCase()).equals(
++                        board.getPlacementConstraints()
++                            .get("RREF_L" + channel).regionId));
++                }
++                check(plan.topology().contains("LOCAL_HYSTERETIC"));
+             } else {
+-                separate++;
++                direct++;
+                 check(!board.getPad("U2A.REFERENCE").getNetId().equals(
+                     board.getPad("U2B.REFERENCE").getNetId()));
+                 check(board.getComponent("RFB_A") == null &&
+                     board.getComponent("RFB_B") == null);
+-                check(board.getComponent("RREF_HA") != null);
++                for (String channel : new String[] { "A", "B" }) {
++                    check(board.getComponent("RREF_H" + channel) != null);
++                    check(board.getComponent("RREF_L" + channel) != null);
++                }
++                check(plan.topology().contains("SEPARATE_DIRECT"));
+             }
+             bjtA += plan.driverABjt ? 1 : 0;
+             nmosA += plan.driverABjt ? 0 : 1;
+@@ -95,11 +110,11 @@ public final class Q30PlanContractTest {
+             topologies.add(plan.topology());
+         }
+         check(bjtA > 0 && nmosA > 0 && bjtB > 0 && nmosB > 0);
+-        check(separate > 0 && shared > 0);
++        check(direct > 0 && localHysteretic > 0);
+         check(topologies.size() >= 4);
+         System.out.println("PASS: Q30 plan contracts " + assertions +
+             " assertions, topologies=" + topologies.size() +
+-            ", separate=" + separate + ", shared=" + shared);
++            ", direct=" + direct + ", localHysteretic=" + localHysteretic);
+     }
+ 
+     private static void check(boolean condition) {
+diff --git a/docs/task-evidence/Q30/Q30PhysicalPilot.java b/docs/task-evidence/Q30/Q30PhysicalPilot.java
+index d47b0bd..5dfc837 100644
+--- a/docs/task-evidence/Q30/Q30PhysicalPilot.java
++++ b/docs/task-evidence/Q30/Q30PhysicalPilot.java
+@@ -292,7 +292,7 @@ public final class Q30PhysicalPilot {
+     /**
+      * Task-owned copy of the root RB30 physical board declaration.  This keeps
+      * the route probe runnable from the accepted base, where Rb30Plan.java is
+-     * not present, while preserving its 33-package roles and named-stream
++     * not present, while preserving its direct/local-hysteretic roles and named-stream
+      * topology choices.  It remains a structural-only adapter: no solver
+      * elements or player-facing qualification are constructed here.
+      */
+@@ -303,7 +303,7 @@ public final class Q30PhysicalPilot {
+         final long routingSeed;
+         final boolean driverABjt;
+         final boolean driverBBjt;
+-        final boolean sharedHystereticReference;
++        final boolean localHystereticReference;
+         final RootPlacementVariant placementVariant;
+         final TroubleshootBoard board;
+         final PcbFootprintRegistry registry;
+@@ -317,12 +317,12 @@ public final class Q30PhysicalPilot {
+             this.seed = seed;
+             this.placementVariant = placementVariant;
+             NamedRandomStreams streams = new NamedRandomStreams(
+-                NamedRandomStreams.DERIVATION_VERSION, seed, FAMILY_ID, 1);
++                NamedRandomStreams.DERIVATION_VERSION, seed, FAMILY_ID, 2);
+             driverABjt = streams.openBlock("output-a",
+                 NamedRandomStreams.Concern.TOPOLOGY, 1, "driver").nextInt(2) == 0;
+             driverBBjt = streams.openBlock("output-b",
+                 NamedRandomStreams.Concern.TOPOLOGY, 1, "driver").nextInt(2) == 0;
+-            sharedHystereticReference = streams.openDevice(
++            localHystereticReference = streams.openDevice(
+                 NamedRandomStreams.Concern.TOPOLOGY, 1,
+                 "sensor-reference-arrangement").nextInt(2) == 0;
+             layoutSeed = streams.deviceSeed(NamedRandomStreams.Concern.PLACEMENT,
+@@ -337,13 +337,14 @@ public final class Q30PhysicalPilot {
+             addExternalInputs();
+             board.setPlacementConstraints(rootPlacement(board, placementVariant));
+             board.validate();
+-            if (board.getComponentIds().size() != 33)
++            int expectedPackages = localHystereticReference ? 35 : 33;
++            if (board.getComponentIds().size() != expectedPackages)
+                 throw new AssertionError("Root RB30 package accounting changed");
+         }
+ 
+         String topology() {
+-            return "RB30_" + (sharedHystereticReference ?
+-                "SHARED_HYSTERETIC" : "SEPARATE_DIRECT") + "_A_" +
++            return "RB30_" + (localHystereticReference ?
++                "LOCAL_HYSTERETIC" : "SEPARATE_DIRECT") + "_A_" +
+                 (driverABjt ? "BJT" : "NMOS") + "_B_" +
+                 (driverBBjt ? "BJT" : "NMOS");
+         }
+@@ -358,12 +359,8 @@ public final class Q30PhysicalPilot {
+                     "A_CMD", "A_DRIVE", "B_RAW", "B_SENSE",
+                     "B_CMD", "B_DRIVE" })
+                 net(id, BoardNet.RoutingRole.CONTROL);
+-            if (sharedHystereticReference)
+-                net("REF_SHARED", BoardNet.RoutingRole.CONTROL);
+-            else {
+-                net("A_REF", BoardNet.RoutingRole.CONTROL);
+-                net("B_REF", BoardNet.RoutingRole.CONTROL);
+-            }
++            net("A_REF", BoardNet.RoutingRole.CONTROL);
++            net("B_REF", BoardNet.RoutingRole.CONTROL);
+             for (String id : new String[] { "A_COIL_LOW", "B_COIL_LOW",
+                     "OUT_A", "OUT_B" })
+                 net(id, BoardNet.RoutingRole.HIGH_CURRENT);
+@@ -394,28 +391,23 @@ public final class Q30PhysicalPilot {
+             part("REN", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+                 "regulation", "RAIL12", "EN5");
+ 
+-            sensor("A", sharedHystereticReference ? "REF_SHARED" : "A_REF");
+-            sensor("B", sharedHystereticReference ? "REF_SHARED" : "B_REF");
+-            if (sharedHystereticReference) {
+-                part("RREF_H", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+-                    "sensor-reference", "RAIL5", "REF_SHARED");
+-                part("RREF_L", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+-                    "sensor-reference", "REF_SHARED", "CTRL_RETURN");
++            sensor("A", "A_REF");
++            sensor("B", "B_REF");
++            for (String channel : new String[] { "A", "B" }) {
++                part("RREF_H" + channel, "RESISTOR",
++                    PhysicalPackages.AXIAL_RESISTOR,
++                    "sensor-" + channel.toLowerCase(),
++                    "RAIL5", channel + "_REF");
++                part("RREF_L" + channel, "RESISTOR",
++                    PhysicalPackages.AXIAL_RESISTOR,
++                    "sensor-" + channel.toLowerCase(),
++                    channel + "_REF", "CTRL_RETURN");
++            }
++            if (localHystereticReference) {
+                 part("RFB_A", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+                     "sensor-a", "A_CMD", "A_SENSE");
+                 part("RFB_B", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+                     "sensor-b", "B_CMD", "B_SENSE");
+-            } else {
+-                for (String channel : new String[] { "A", "B" }) {
+-                    part("RREF_H" + channel, "RESISTOR",
+-                        PhysicalPackages.AXIAL_RESISTOR,
+-                        "sensor-" + channel.toLowerCase(),
+-                        "RAIL5", channel + "_REF");
+-                    part("RREF_L" + channel, "RESISTOR",
+-                        PhysicalPackages.AXIAL_RESISTOR,
+-                        "sensor-" + channel.toLowerCase(),
+-                        channel + "_REF", "CTRL_RETURN");
+-                }
+             }
+ 
+             output("A", driverABjt);
+@@ -510,13 +502,11 @@ public final class Q30PhysicalPilot {
+                     id.equals("U1") || id.equals("CIN") || id.equals("C5") ||
+                     id.equals("REN") ? "regulation" :
+                     id.equals("JSA") || id.equals("U2A") || id.equals("RSA") ||
+-                    id.equals("RREFA") || id.equals("RFB_A") ||
++                    id.equals("RFB_A") ||
+                     id.equals("RREF_HA") || id.equals("RREF_LA") ? "sensor-a" :
+                     id.equals("JSB") || id.equals("U2B") || id.equals("RSB") ||
+-                    id.equals("RREFB") || id.equals("RFB_B") ||
++                    id.equals("RFB_B") ||
+                     id.equals("RREF_HB") || id.equals("RREF_LB") ? "sensor-b" :
+-                    id.equals("RREF_H") || id.equals("RREF_L") ?
+-                    "sensor-reference" :
+                     id.equals("RLED") || id.equals("LED1") ? "status" :
+                     id.endsWith("A") || id.equals("JOA") ? "output-a" :
+                     id.endsWith("B") || id.equals("JOB") ? "output-b" :
+@@ -593,7 +583,7 @@ public final class Q30PhysicalPilot {
+     }
+ 
+     public static void main(String[] args) throws Exception {
+-        System.out.println("Q30_PILOT_BEGIN {\"schema\":1,\"scope\":\"developer-only physical/logical manifest; no solver/player qualification\",\"policy\":\"THT_SINGLE_FACE@1\",\"face\":\"BOTTOM\"}");
++        System.out.println("Q30_PILOT_BEGIN {\"schema\":2,\"scope\":\"developer-only physical/logical manifest; no solver/player qualification\",\"policy\":\"THT_SINGLE_FACE@1\",\"face\":\"BOTTOM\"}");
+         System.out.println("Q30_P09_LIMITS {\"maxParts\":16,\"maxPads\":40,\"maxNets\":16,\"maxNetDegree\":10,\"maxArea\":2250000,\"maxUniqueCopper\":16000,\"maxSegments\":160,\"normalAdmission\":\"REJECTED_FOR_Q30_POPULATION_OR_OTHER_UNQUALIFIED_BOUND\"}");
+         System.out.println("Q30_P07_FROZEN_REFERENCE {\"source\":\"P07LayerCorpus prior receipt\",\"family\":\"RB30\",\"seed\":3,\"policy\":\"P05_REFERENCE\",\"parts\":30,\"area\":5062500,\"bottomRoutes\":58,\"uniqueCopper\":20380,\"expansions\":811642,\"elapsedMs\":403.0,\"structuralOnly\":true}");
+ 
+@@ -701,7 +691,7 @@ public final class Q30PhysicalPilot {
+     }
+ 
+     private static void runRootPlanCorpus() throws Exception {
+-        System.out.println("Q30_ROOT_PILOT_BEGIN {\"schema\":1,\"source\":\"root Rb30Plan copied as task-owned adapter\",\"scope\":\"developer-only structural/physical route probe\",\"policy\":\"THT_SINGLE_FACE@1\",\"normalAdmission\":\"REJECTED\"}");
++        System.out.println("Q30_ROOT_PILOT_BEGIN {\"schema\":2,\"source\":\"root Rb30Plan copied as task-owned adapter\",\"scope\":\"developer-only structural/physical route probe\",\"policy\":\"THT_SINGLE_FACE@1\",\"normalAdmission\":\"REJECTED\"}");
+         Vector<RootRouteOutcome> outcomes = new Vector<RootRouteOutcome>();
+         for (long seed : REPRESENTATIVE) outcomes.add(runRoot("representative", seed));
+         for (long seed : HELD_OUT) outcomes.add(runRoot("held-out", seed));
+@@ -718,7 +708,7 @@ public final class Q30PhysicalPilot {
+     }
+ 
+     private static void runRootAdjustmentPilot() throws Exception {
+-        System.out.println("Q30_ROOT_ADJUSTMENT_BEGIN {\"schema\":1,\"source\":\"root Rb30Plan equivalent only\",\"scope\":\"generic placement-demand comparison\",\"policy\":\"THT_SINGLE_FACE@1\",\"netsUnchanged\":true,\"clearanceUnchanged\":true,\"routerBudgetUnchanged\":true,\"firstSeeds\":\"[0,3]\",\"heldOutIfAnyRoute\":\"[23,83]\"}");
++        System.out.println("Q30_ROOT_ADJUSTMENT_BEGIN {\"schema\":2,\"source\":\"root Rb30Plan equivalent only\",\"scope\":\"generic placement-demand comparison\",\"policy\":\"THT_SINGLE_FACE@1\",\"netsUnchanged\":true,\"clearanceUnchanged\":true,\"routerBudgetUnchanged\":true,\"firstSeeds\":\"[0,3]\",\"heldOutIfAnyRoute\":\"[23,83]\"}");
+         RootPlacementVariant[] variants = RootPlacementVariant.values();
+         long[] firstSeeds = { 0L, 3L };
+         long[] heldOutSeeds = { 23L, 83L };
+diff --git a/docs/task-evidence/Q30/Rb30GeneratorPilot.java b/docs/task-evidence/Q30/Rb30GeneratorPilot.java
+index c2bdd78..0bfc5c3 100644
+--- a/docs/task-evidence/Q30/Rb30GeneratorPilot.java
++++ b/docs/task-evidence/Q30/Rb30GeneratorPilot.java
+@@ -12,14 +12,15 @@ public final class Rb30GeneratorPilot {
+             verifyNmosHealth();
+             return;
+         }
+-        boolean direct = false, shared = false, bjt = false, nmos = false;
++        boolean direct = false, localHysteretic = false, bjt = false, nmos = false;
+         long[] seeds = { 0L, 1L, 2L, 3L, 4L, 5L,
+             Long.MIN_VALUE, Long.MAX_VALUE };
+         for (long seed : seeds) {
+             Rb30Plan plan = Rb30Plan.resolve(seed);
+             Rb30Generator.Candidate candidate = new Rb30Generator().construct(plan);
+             Rb30TopologyValidator.require(candidate);
+-            if (candidate.board().getComponentIds().size() != 33)
++            int expectedPackages = plan.localHystereticReference ? 35 : 33;
++            if (candidate.board().getComponentIds().size() != expectedPackages)
+                 throw new AssertionError("Reference package count changed");
+             if (candidate.board().getPowerInputIds().size() != 4)
+                 throw new AssertionError("Missing physical input domains");
+@@ -63,7 +64,7 @@ public final class Rb30GeneratorPilot {
+                     candidate.elements().remove(ghost);
+                 }
+             }
+-            if (plan.sharedHystereticReference) shared = true;
++            if (plan.localHystereticReference) localHysteretic = true;
+             else direct = true;
+             if (plan.driverABjt || plan.driverBBjt) bjt = true;
+             if (!plan.driverABjt || !plan.driverBBjt) nmos = true;
+@@ -72,7 +73,7 @@ public final class Rb30GeneratorPilot {
+                 candidate.board().getComponentIds().size() + " elements=" +
+                 candidate.elements().size());
+         }
+-        if (!direct || !shared || !bjt || !nmos)
++        if (!direct || !localHysteretic || !bjt || !nmos)
+             throw new AssertionError("Seed canary missed a structural choice");
+         Rb30Generator.Candidate electrical = new Rb30Generator().construct(
+             Rb30Plan.resolve(0));
+@@ -131,7 +132,7 @@ public final class Rb30GeneratorPilot {
+             for (long seed = 0; seed < 1024; seed++) {
+                 Rb30Plan plan = Rb30Plan.resolve(seed);
+                 if (plan.selectedFault.equals(faultId) && plan.driverABjt &&
+-                        plan.driverBBjt && !plan.sharedHystereticReference) {
++                        plan.driverBBjt && !plan.localHystereticReference) {
+                     selectedSeed = seed;
+                     break;
+                 }

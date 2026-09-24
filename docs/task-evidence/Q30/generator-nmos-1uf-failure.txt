@@ -1,0 +1,17 @@
+node 11 unconnected
+converged after 24 iterations, timeStep = 1.0E-5
+converged after 6 iterations, timeStep = 1.0E-5
+converged after 6 iterations, timeStep = 1.0E-5
+timestep down to 5.0E-6 at 6.0E-5
+converged after 5 iterations, timeStep = 5.0E-6
+FAIL RB30 NMOS seed=1 time=6.500000000000001E-5 regulatorInput=31.772216840555853 reason=IllegalArgumentException: Rail input exceeds declared envelope
+node 11 unconnected
+converged after 24 iterations, timeStep = 1.0E-5
+converged after 6 iterations, timeStep = 1.0E-5
+converged after 6 iterations, timeStep = 1.0E-5
+timestep down to 5.0E-6 at 6.0E-5
+converged after 5 iterations, timeStep = 5.0E-6
+FAIL RB30 NMOS seed=4 time=6.500000000000001E-5 regulatorInput=31.772216840557086 reason=IllegalArgumentException: Rail input exceeds declared envelope
+Exception in thread "main" java.lang.AssertionError: Unqualified Q30 NMOS healthy variant(s): 2
+	at com.lushprojects.circuitjs1.client.Rb30GeneratorPilot.verifyNmosHealth(Rb30GeneratorPilot.java:246)
+	at com.lushprojects.circuitjs1.client.Rb30GeneratorPilot.main(Rb30GeneratorPilot.java:12)

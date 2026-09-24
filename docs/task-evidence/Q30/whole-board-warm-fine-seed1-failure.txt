@@ -1,0 +1,29 @@
+Q30 exact seed 1 warm 12->4 V canary with production reset maxTimeStep=5e-6 s, minTimeStep=50e-12 s for startup, settling and transition.
+Result: FAIL; repeated timestep halving ended in nonconvergence at t=0.031854373703006936 s.
+Scratch CirSim lacks a browser stop UI, so its attempt to present the solver failure raised NullPointerException; the failure is the preceding nonconvergence.
+converged after 2 iterations, timeStep = 4.8828125E-9
+timestep down to 2.44140625E-9 at 0.03185436523437901
+converged after 13 iterations, timeStep = 2.44140625E-9
+converged after 2 iterations, timeStep = 2.44140625E-9
+timestep down to 1.220703125E-9 at 0.03185437011719151
+converged after 13 iterations, timeStep = 1.220703125E-9
+converged after 2 iterations, timeStep = 1.220703125E-9
+timestep down to 6.103515625E-10 at 0.03185437255859776
+converged after 13 iterations, timeStep = 6.103515625E-10
+timestep down to 3.0517578125E-10 at 0.03185437316894932
+converged after 12 iterations, timeStep = 3.0517578125E-10
+timestep down to 1.52587890625E-10 at 0.0318543734741251
+converged after 12 iterations, timeStep = 1.52587890625E-10
+timestep down to 7.62939453125E-11 at 0.03185437362671299
+converged after 12 iterations, timeStep = 7.62939453125E-11
+timestep down to 3.814697265625E-11 at 0.031854373703006936
+convergence failed after 5000 iterations
+Q30_WHOLE_FAILURE warm-main-4v time=0.031854373703006936 input=4.607493529840047 rail=3.8001512760620075 reason=null
+Exception in thread "main" java.lang.NullPointerException
+	at com.lushprojects.circuitjs1.client.CirSim.LS(CirSim.java:8464)
+	at com.lushprojects.circuitjs1.client.CirSim.stop(CirSim.java:3083)
+	at com.lushprojects.circuitjs1.client.CirSim.runCircuitOwned(CirSim.java:3392)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.advanceFor(CircuitSolverExecutor.java:144)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.advanceFor(CircuitSolverExecutor.java:135)
+	at com.lushprojects.circuitjs1.client.Q30WholeBoardElectricalPilot.observeWarmBrownout(Q30WholeBoardElectricalPilot.java:194)
+	at com.lushprojects.circuitjs1.client.Q30WholeBoardElectricalPilot.main(Q30WholeBoardElectricalPilot.java:75)

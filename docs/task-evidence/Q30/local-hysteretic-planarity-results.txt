@@ -1,0 +1,12 @@
+Q30_PLANARITY_RESULT seed=0 topology=RB30_LOCAL_HYSTERETIC_A_BJT_B_BJT components=35 nets=25 edges=86 planar=True
+Q30_PLANARITY_RESULT seed=1 topology=RB30_LOCAL_HYSTERETIC_A_BJT_B_BJT components=35 nets=25 edges=86 planar=True
+Q30_PLANARITY_RESULT seed=3 topology=RB30_SEPARATE_DIRECT_A_NMOS_B_NMOS components=33 nets=25 edges=82 planar=True
+Q30_PLANARITY_RESULT seed=17 topology=RB30_LOCAL_HYSTERETIC_A_NMOS_B_BJT components=35 nets=25 edges=86 planar=True
+Q30_PLANARITY_RESULT seed=42 topology=RB30_LOCAL_HYSTERETIC_A_BJT_B_NMOS components=35 nets=25 edges=86 planar=True
+Q30_PLANARITY_RESULT seed=-1 topology=RB30_LOCAL_HYSTERETIC_A_BJT_B_NMOS components=35 nets=25 edges=86 planar=True
+Q30_PLANARITY_RESULT seed=11 topology=RB30_LOCAL_HYSTERETIC_A_BJT_B_NMOS components=35 nets=25 edges=86 planar=True
+Q30_PLANARITY_RESULT seed=23 topology=RB30_SEPARATE_DIRECT_A_BJT_B_NMOS components=33 nets=25 edges=82 planar=True
+Q30_PLANARITY_RESULT seed=37 topology=RB30_LOCAL_HYSTERETIC_A_BJT_B_NMOS components=35 nets=25 edges=86 planar=True
+Q30_PLANARITY_RESULT seed=59 topology=RB30_SEPARATE_DIRECT_A_BJT_B_BJT components=33 nets=25 edges=82 planar=True
+Q30_PLANARITY_RESULT seed=83 topology=RB30_LOCAL_HYSTERETIC_A_NMOS_B_BJT components=35 nets=25 edges=86 planar=True
+Q30_PLANARITY_RESULT seed=-23 topology=RB30_LOCAL_HYSTERETIC_A_BJT_B_NMOS components=35 nets=25 edges=86 planar=True

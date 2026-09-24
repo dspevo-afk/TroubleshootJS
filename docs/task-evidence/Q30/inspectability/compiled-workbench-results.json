@@ -1,0 +1,221 @@
+{
+  "schema": 2,
+  "build": "p1-gwt-build-final-source.log",
+  "previewPort": 8901,
+  "positive": [
+    {
+      "seed": "0",
+      "query": "tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Bench=true&tsjQ30Seed=0",
+      "report": {
+        "schema": 1,
+        "status": "PASS",
+        "visualPass": true,
+        "family": "RB30_CONTROL",
+        "seed": "0",
+        "topology": "RB30_SEPARATE_DIRECT_A_BJT_B_BJT",
+        "physicalPolicy": "MEDIUM_BOARD@1",
+        "layoutSeed": "-5811592868239938363",
+        "routingSeed": "6323369344316473384",
+        "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+        "route": "P07_FULLER_TWO_LAYER",
+        "layout": {
+          "x": 50,
+          "y": 50,
+          "width": 3562,
+          "height": 1985
+        },
+        "packages": 33,
+        "pads": 82,
+        "topTargets": 82,
+        "bottomTargets": 82,
+        "topInspectable": 82,
+        "bottomInspectable": 82,
+        "padLimits": {
+          "TOP": [],
+          "BOTTOM": []
+        },
+        "overviewLimits": {
+          "TOP": [],
+          "BOTTOM": []
+        },
+        "face": "TOP",
+        "runtimeAssertions": 1497,
+        "ownerRestored": false,
+        "prototypeRetained": true,
+        "normalAdmission": false,
+        "copper": {
+          "topTrace": "copper/edge/100",
+          "bottomTrace": "copper/edge/125",
+          "viaSurface": "hole/18:p07-via/A_CMD/47/1TOP/hole/18:p07-via/A_CMD/47/1BOTTOM",
+          "viaPad": "RDA.1"
+        }
+      },
+      "cleanup": {
+        "ownerRestored": false,
+        "prototypeRetained": true
+      },
+      "targetCounts": {
+        "family": "RB30_CONTROL",
+        "top": 82,
+        "bottom": 82,
+        "topInspectable": 82,
+        "bottomInspectable": 82,
+        "topPadLimits": [],
+        "bottomPadLimits": [],
+        "topOverviewLimits": [],
+        "bottomOverviewLimits": [],
+        "face": "TOP"
+      }
+    },
+    {
+      "seed": "37",
+      "query": "tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Bench=true&tsjQ30Seed=37",
+      "report": {
+        "schema": 1,
+        "status": "PASS",
+        "visualPass": true,
+        "family": "RB30_CONTROL",
+        "seed": "37",
+        "topology": "RB30_SHARED_HYSTERETIC_A_BJT_B_BJT",
+        "physicalPolicy": "MEDIUM_BOARD@1",
+        "layoutSeed": "3019656819951809608",
+        "routingSeed": "-19066876369174513",
+        "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+        "route": "P07_FULLER_TWO_LAYER",
+        "layout": {
+          "x": 40,
+          "y": 40,
+          "width": 3782,
+          "height": 1574
+        },
+        "packages": 33,
+        "pads": 82,
+        "topTargets": 82,
+        "bottomTargets": 82,
+        "topInspectable": 82,
+        "bottomInspectable": 82,
+        "padLimits": {
+          "TOP": [],
+          "BOTTOM": []
+        },
+        "overviewLimits": {
+          "TOP": [],
+          "BOTTOM": []
+        },
+        "face": "TOP",
+        "runtimeAssertions": 1497,
+        "ownerRestored": false,
+        "prototypeRetained": true,
+        "normalAdmission": false,
+        "copper": {
+          "topTrace": "copper/edge/100",
+          "bottomTrace": "copper/edge/124",
+          "viaSurface": "hole/18:p07-via/A_CMD/30/1TOP/hole/18:p07-via/A_CMD/30/1BOTTOM",
+          "viaPad": "RDA.1"
+        }
+      },
+      "cleanup": {
+        "ownerRestored": false,
+        "prototypeRetained": true
+      },
+      "targetCounts": {
+        "family": "RB30_CONTROL",
+        "top": 82,
+        "bottom": 82,
+        "topInspectable": 82,
+        "bottomInspectable": 82,
+        "topPadLimits": [],
+        "bottomPadLimits": [],
+        "topOverviewLimits": [],
+        "bottomOverviewLimits": [],
+        "face": "TOP"
+      }
+    }
+  ],
+  "negative": {
+    "seed": "bad-seed",
+    "query": "tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Bench=true&tsjQ30Seed=bad-seed",
+    "report": {
+      "schema": 1,
+      "status": "FAIL",
+      "visualPass": false,
+      "seed": "bad-seed",
+      "phase": "seed",
+      "blocker": "Q30 seed is not canonical: bad-seed",
+      "ownerRestored": true,
+      "prototypeRetained": false,
+      "normalAdmission": false
+    },
+    "cleanup": {
+      "ownerRestored": true,
+      "prototypeRetained": false
+    }
+  },
+  "combinedFlags": {
+    "query": "tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyP07=true&tsjP07Bench=true&tsjVerifyQ30=true&tsjQ30Bench=true&tsjQ30Seed=0",
+    "q30": {
+      "schema": 1,
+      "status": "PASS",
+      "visualPass": true,
+      "family": "RB30_CONTROL",
+      "seed": "0",
+      "topology": "RB30_SEPARATE_DIRECT_A_BJT_B_BJT",
+      "physicalPolicy": "MEDIUM_BOARD@1",
+      "layoutSeed": "-5811592868239938363",
+      "routingSeed": "6323369344316473384",
+      "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+      "route": "P07_FULLER_TWO_LAYER",
+      "layout": {
+        "x": 50,
+        "y": 50,
+        "width": 3562,
+        "height": 1985
+      },
+      "packages": 33,
+      "pads": 82,
+      "topTargets": 82,
+      "bottomTargets": 82,
+      "topInspectable": 82,
+      "bottomInspectable": 82,
+      "padLimits": {
+        "TOP": [],
+        "BOTTOM": []
+      },
+      "overviewLimits": {
+        "TOP": [],
+        "BOTTOM": []
+      },
+      "face": "TOP",
+      "runtimeAssertions": 1497,
+      "ownerRestored": false,
+      "prototypeRetained": true,
+      "normalAdmission": false,
+      "copper": {
+        "topTrace": "copper/edge/100",
+        "bottomTrace": "copper/edge/125",
+        "viaSurface": "hole/18:p07-via/A_CMD/47/1TOP/hole/18:p07-via/A_CMD/47/1BOTTOM",
+        "viaPad": "RDA.1"
+      }
+    },
+    "cleanup": {
+      "ownerRestored": false,
+      "prototypeRetained": true
+    },
+    "p07Report": null
+  },
+  "visibleInput": {
+    "seed0": [
+      "View bottom copper",
+      "Zoom +",
+      "Shift-drag pan",
+      "Fit bench",
+      "View top copper",
+      "DC V: left J1.1, right J1.2 = 11.996 V"
+    ],
+    "seed37": [
+      "View bottom copper"
+    ]
+  },
+  "screenshotSourceBuild": "p1-gwt-build-via.log",
+  "screenshotReuseBoundary": "Final-source changes only Q30 failure cleanup, seed failure reporting, policy identity assertion, and combined debug flag precedence. Renderer, layout, route, pad and copper hit paths are unchanged; final positive seed0/37 layout and copper IDs match screenshot build."
+}

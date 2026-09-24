@@ -1,0 +1,172 @@
+diff --git a/docs/task-evidence/Q30/Q30PhysicalPilot.java b/docs/task-evidence/Q30/Q30PhysicalPilot.java
+--- a/docs/task-evidence/Q30/Q30PhysicalPilot.java
++++ b/docs/task-evidence/Q30/Q30PhysicalPilot.java
+@@ -601,6 +601,10 @@
+             runRootPlanCorpus();
+             return;
+         }
++        if (args.length > 0 && "--two-layer".equals(args[0])) {
++            runTwoLayerComparison(args);
++            return;
++        }
+         if (args.length > 0 && "--root-adjustments".equals(args[0])) {
+             runRootAdjustmentPilot();
+             return;
+@@ -698,6 +702,142 @@
+         if (seed == 3L || seed == 23L)
+             compareP07(result);
+         return result;
++    }
++
++    private static void runTwoLayerComparison(String[] args) throws Exception {
++        int count = args.length > 2 ? Integer.parseInt(args[2]) : 1;
++        if (count < 1 || count > PcbPlacementPlanner.OUTLINE_CANDIDATES)
++            throw new IllegalArgumentException("Invalid candidate count");
++        long[] seeds = args.length > 1 && !"all".equals(args[1]) ?
++            new long[] { Long.parseLong(args[1]) } :
++            new long[] { 0L, 1L, 3L, 17L, 42L, -1L,
++                11L, 23L, 37L, 59L, 83L, -23L };
++        System.out.println("Q30_TWO_LAYER_BEGIN {\"scope\":\"unapplied structural comparison\",\"source\":\"root-plan-equivalent 33-package pilot\",\"candidatesPerSeed\":" + count + ",\"p07MaxExpansions\":" + PcbLayerRoutingPrototype.MAX_EXPANSIONS + ",\"p07MaxBranchExpansions\":" + PcbLayerRoutingPrototype.MAX_BRANCH_EXPANSIONS + ",\"factoryLinks\":false}");
++        for (long seed : seeds) {
++            RootPlanManifest manifest = new RootPlanManifest(seed);
++            PcbPlacementPlanner planner = new PcbPlacementPlanner(manifest.registry);
++            int degree = 0;
++            for (String net : manifest.board.getNetIds())
++                degree = Math.max(degree, manifest.board.getNet(net).getPadIds().size());
++            for (int candidate = 0; candidate < count; candidate++) {
++                PcbPlacementPlanner.Plan plan;
++                long started = System.nanoTime();
++                try {
++                    plan = planner.plan(manifest.board,
++                        manifest.board.getPlacementConstraints(), manifest.layoutSeed, candidate);
++                } catch (PcbPlacementPlanner.Rejected rejected) {
++                    System.out.println("Q30_TWO_LAYER_PLACEMENT {\"seed\":\"" + seed +
++                        "\",\"candidate\":" + candidate + ",\"outcome\":\"" + rejected.reason +
++                        "\",\"elapsedMs\":" + (System.nanoTime()-started)/1000000.0 + "}");
++                    continue;
++                }
++                PcbBoardLayout placement = plan.materialize();
++                long area = (long)plan.outline.width * plan.outline.height;
++                long signature = 1469598103934665603L;
++                for (PcbComponentPlacement part : placement.getComponents()) {
++                    signature = (signature ^ part.getComponentId().hashCode()) * 1099511628211L;
++                    signature = (signature ^ part.getX()) * 1099511628211L;
++                    signature = (signature ^ part.getY()) * 1099511628211L;
++                }
++                System.out.println("Q30_TWO_LAYER_PLACEMENT {\"seed\":\"" + seed +
++                    "\",\"candidate\":" + candidate + ",\"outcome\":\"PLACED\"" +
++                    ",\"topology\":\"" + manifest.topology() + "\",\"parts\":" +
++                    manifest.board.getComponentIds().size() + ",\"pads\":" +
++                    manifest.board.getPadIds().size() + ",\"nets\":" +
++                    manifest.board.getNetIds().size() + ",\"maxNetDegree\":" + degree +
++                    ",\"layoutSeed\":\"" + manifest.layoutSeed + "\",\"routingSeed\":\"" +
++                    rootRoutingSeed(manifest,candidate) + "\",\"placementSignature\":\"" +
++                    signature + "\",\"width\":" + plan.outline.width + ",\"height\":" +
++                    plan.outline.height + ",\"area\":" + area + ",\"elapsedMs\":" +
++                    (System.nanoTime()-started)/1000000.0 + "}");
++                compareRoute(manifest, placement, candidate, "P05_SINGLE_FACE", null, signature, area);
++                for (PcbLayerRoutingPrototype.Policy policy : new PcbLayerRoutingPrototype.Policy[] {
++                        PcbLayerRoutingPrototype.Policy.ONE_LAYER,
++                        PcbLayerRoutingPrototype.Policy.RESTRICTED_TWO_LAYER,
++                        PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER })
++                    compareRoute(manifest, placement, candidate, "P07_"+policy, policy, signature, area);
++            }
++        }
++        System.out.println("Q30_TWO_LAYER_END");
++    }
++
++    private static void compareRoute(RootPlanManifest manifest, PcbBoardLayout placement,
++            int candidate, String policyName, PcbLayerRoutingPrototype.Policy policy,
++            long signature, long area) {
++        PcbBoardLayout routed = null;
++        String outcome = "UNKNOWN", failedNet = "";
++        int expansions = 0;
++        long started = System.nanoTime();
++        try {
++            if (policy == null) {
++                routed = placement.copyForRouting();
++                PcbNetRouter.route(routed,manifest.board,routed.getBoardOutline(),candidate,
++                    OBSERVER,true,rootRoutingSeed(manifest,candidate),0,null);
++                outcome = "SUCCESS";
++            } else {
++                PcbLayerRoutingPrototype.Result result = PcbLayerRoutingPrototype.route(
++                    manifest.board,placement,policy,OBSERVER);
++                routed = result.layout;
++                outcome = result.outcome;
++                expansions = result.expansions;
++                int colon = outcome.indexOf(':');
++                if (colon >= 0) { failedNet = outcome.substring(0,colon); outcome = outcome.substring(colon+1); }
++            }
++            if (routed != null) {
++                routed.validateRoutingGeometry(manifest.board);
++                routed.validateRouteQuality();
++                expansions = routed.getRoutingExpansions();
++            }
++        } catch (PcbNetRouter.Rejected rejected) {
++            outcome = rejected.reason.toString();
++            failedNet = rejected.blockedNet == null ? "" : rejected.blockedNet;
++            if (routed != null) expansions = routed.getRoutingExpansions();
++            routed = null;
++        } catch (PcbBoardLayout.RouteQualityRejectedException rejected) {
++            outcome = "QUALITY_" + rejected.getKind(); routed = null;
++        } catch (RuntimeException rejected) {
++            outcome = "INVALID_" + rejected.getClass().getSimpleName();
++            failedNet = rejected.getMessage() == null ? "" : rejected.getMessage();
++            routed = null;
++        }
++        int top = 0, bottom = 0, topSegments = 0, bottomSegments = 0;
++        long topLength = 0, bottomLength = 0, unique = 0;
++        int vias = 0, bends = 0, segments = 0;
++        double score = 0.0;
++        if (routed != null) {
++            for (PcbTraceGeometry trace : routed.getTraces()) {
++                int[] x = trace.getXPoints(), y = trace.getYPoints();
++                long length = 0;
++                int pieceCount = 0;
++                for (int i=1;i<x.length;i++) {
++                    long piece = Math.abs(x[i]-x[i-1]) + Math.abs(y[i]-y[i-1]);
++                    if (piece > 0) pieceCount++;
++                    length += piece;
++                }
++                if (trace.getLayer() == PcbCopperLayer.TOP) {
++                    top++; topLength += length; topSegments += pieceCount;
++                } else {
++                    bottom++; bottomLength += length; bottomSegments += pieceCount;
++                }
++            }
++            vias = routed.getHoles().size();
++            PcbRouteMetrics metrics = PcbRouteMetrics.measure(routed.getTraces());
++            unique = metrics.uniqueLength; bends = metrics.bends; segments = metrics.segments;
++            score = routed.getRouteQualityScore(manifest.board);
++        }
++        System.out.println("Q30_TWO_LAYER_ROUTE {\"seed\":\"" + manifest.seed +
++            "\",\"candidate\":" + candidate + ",\"placementSignature\":\"" + signature +
++            "\",\"policy\":\"" + policyName + "\",\"outcome\":\"" + escape(outcome) +
++            "\",\"failedNet\":\"" + escape(failedNet) + "\",\"topTraces\":" + top +
++            ",\"bottomTraces\":" + bottom + ",\"topSegments\":" + topSegments +
++            ",\"bottomSegments\":" + bottomSegments + ",\"topLength\":" + topLength +
++            ",\"bottomLength\":" + bottomLength + ",\"vias\":" + vias +
++            ",\"segments\":" + segments + ",\"bends\":" + bends +
++            ",\"uniqueCopper\":" + unique + ",\"qualityScore\":" + score +
++            ",\"expansions\":" + expansions + ",\"area\":" + area +
++            ",\"validConnectivityShortClearance\":" + (routed != null) +
++            ",\"genuineTwoLayer\":" + (top > 0 && bottom > 0 && vias > 0) +
++            ",\"elapsedMs\":" + (System.nanoTime()-started)/1000000.0 + "}");
+     }
+ 
+     private static void runRootPlanCorpus() throws Exception {
+diff --git a/src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java b/src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java
+--- a/src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java
++++ b/src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java
+@@ -138,7 +138,10 @@
+                 Vector<String> ids=board.getNet(net).getPadIds(); Collections.sort(ids);
+                 if(ids.size()<2) continue;
+                 PcbPadPlacement root=layout.getPad(ids.get(0));
+-                for(int i=1;i<ids.size();i++) branch(net,layout.getPad(ids.get(i)),root);
++                for(int i=1;i<ids.size();i++) {
++                    try { branch(net,layout.getPad(ids.get(i)),root); }
++                    catch(Exhausted failure) { throw new Exhausted(net+":"+failure.getMessage()); }
++                }
+             }
+         }
+         boolean[] goals(String net,PcbPadPlacement root) {

@@ -1,0 +1,10 @@
+node 11 unconnected
+Q30_WHOLE_FAILURE cold-fine-4v time=0.0 input=0.4989114263354732 rail=-0.0035899072393567153 enable=0.49397170924224765 coilA=7.181177534085472E-5 coilB=1.5545777944600698E-7 reason=Negative E02 rail output is unsupported
+Exception in thread "main" java.lang.IllegalArgumentException: Negative E02 rail output is unsupported
+	at com.lushprojects.circuitjs1.client.AbstractRailRegulatorElm.validateOperatingPoint(AbstractRailRegulatorElm.java:467)
+	at com.lushprojects.circuitjs1.client.AbstractRailRegulatorElm.doStep(AbstractRailRegulatorElm.java:127)
+	at com.lushprojects.circuitjs1.client.CirSim.runCircuitOwned(CirSim.java:3344)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.advanceFor(CircuitSolverExecutor.java:144)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.advanceFor(CircuitSolverExecutor.java:135)
+	at com.lushprojects.circuitjs1.client.Q30WholeBoardElectricalPilot.observe(Q30WholeBoardElectricalPilot.java:140)
+	at com.lushprojects.circuitjs1.client.Q30WholeBoardElectricalPilot.main(Q30WholeBoardElectricalPilot.java:41)

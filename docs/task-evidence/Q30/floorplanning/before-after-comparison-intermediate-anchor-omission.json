@@ -1,0 +1,562 @@
+{
+  "after": {
+    "comparisonInput": "docs/task-evidence/Q30/floorplanning/after-intermediate-anchor-omission/floorplan-comparison.json",
+    "comparisonInputSha256": "b217e0b929eea5ee5d4916fc10b3816f4509fa5325bc900e061169b6f8befd7c",
+    "corpus": {
+      "attemptCount": 72,
+      "candidateCount": 6,
+      "placementCount": 72,
+      "rejectedCount": 0,
+      "rejectedReasons": {},
+      "rowsFile": "q30-current-exact-root.jsonl",
+      "seedCount": 12
+    },
+    "measurement": {
+      "label": "after-intermediate-anchor-omission",
+      "plannerLabel": "after-anchor-omission-superseded",
+      "status": "intermediate"
+    },
+    "provenance": {
+      "measurementLabel": "after-intermediate-anchor-omission",
+      "measurementStatus": "intermediate",
+      "plannerLabel": "after-anchor-omission-superseded",
+      "q30CandidatesPerSeed": 6,
+      "q30FloorplanPatchSha256": "e0032548a266bd7e29090762c4b19fc61468c552319f6c5a8bfa44f9899643ec",
+      "q30InspectInput": "q30-current-inspect.raw.txt",
+      "q30InspectSha256": "7783e2d7fafa1fa36b7a26e32d3d54859add522c1839ee0d3e1f446d02ace010",
+      "q30PlacementSource": "RootPlanManifest.EXACT_ROOT -> Rb30Plan.resolve(seed).board()",
+      "q30PlanSourceSha256": "538bdd61849b8ef837710d089513bfa67e985d2d119464fe50e4c9de55547488",
+      "q30PlannerInput": "tsj-q30-planner-after-anchor-omission-superseded.java",
+      "q30PlannerSourceMode": "explicit-snapshot",
+      "q30PlannerSourceSha256": "57485c39bd0af5f66cd1218ae98a76086dc75444c5c4f1c41a7abdd39762e9b5",
+      "q30RejectedAttempts": 0,
+      "q30RejectedReasons": {},
+      "q30Seeds": [
+        -23,
+        -1,
+        0,
+        1,
+        3,
+        11,
+        17,
+        23,
+        37,
+        42,
+        59,
+        83
+      ],
+      "q30SourceSha256": "ad00c38bc19bc8c2413a69ee95d10b8f12a1d7ef008e84b6a99516be0e72046b",
+      "syntheticFixtureSourceSha256": "4a312fa13bb9448cadc751a11b3f41bb0d051e74b7553cad67689216aa16c575",
+      "syntheticRawInput": "thirtythree-raw.txt",
+      "syntheticRawSha256": "df0a9c56cc6a73689934903dd3d40502ffc3a85c0646bdf29257b619dcd707fc",
+      "syntheticSuccessfulSeeds": [
+        0,
+        1,
+        11,
+        23,
+        37,
+        59,
+        83
+      ]
+    }
+  },
+  "before": {
+    "comparisonInput": "docs/task-evidence/Q30/floorplanning/before-head/floorplan-comparison.json",
+    "comparisonInputSha256": "0e854aae2454c86a50b426fda183947c125b7a25a9dd2df45fedfc7dd23f0f48",
+    "corpus": {
+      "attemptCount": 72,
+      "candidateCount": 6,
+      "placementCount": 72,
+      "rejectedCount": 0,
+      "rejectedReasons": {},
+      "rowsFile": "q30-current-exact-root.jsonl",
+      "seedCount": 12
+    },
+    "measurement": {
+      "label": "historical-before-head-pre-q30-pilot-update",
+      "plannerLabel": "historical-before-head-pre-q30-pilot-update",
+      "status": "historical"
+    },
+    "provenance": {
+      "measurementLabel": "historical-before-head-pre-q30-pilot-update",
+      "measurementStatus": "historical",
+      "plannerLabel": "historical-before-head-pre-q30-pilot-update",
+      "q30CandidatesPerSeed": 6,
+      "q30FloorplanPatchSha256": "e0032548a266bd7e29090762c4b19fc61468c552319f6c5a8bfa44f9899643ec",
+      "q30InspectInput": "q30-current-inspect.raw.txt",
+      "q30InspectSha256": "bb9c69ec541457d6d6ed98ffad7de632fa0da7c84b72c66b9d776c37f8993159",
+      "q30PlacementSource": "RootPlanManifest.EXACT_ROOT -> Rb30Plan.resolve(seed).board()",
+      "q30PlanSourceSha256": "538bdd61849b8ef837710d089513bfa67e985d2d119464fe50e4c9de55547488",
+      "q30PlannerInput": "tsj-q30-planner-before-pre-q30-pilot-update.java",
+      "q30PlannerSourceMode": "explicit-snapshot",
+      "q30PlannerSourceSha256": "4d0a6349fb9562b13a4306f55a86d74536ae808a35554b7a9b50021ba003281c",
+      "q30RejectedAttempts": 0,
+      "q30RejectedReasons": {},
+      "q30Seeds": [
+        -23,
+        -1,
+        0,
+        1,
+        3,
+        11,
+        17,
+        23,
+        37,
+        42,
+        59,
+        83
+      ],
+      "q30SourceSha256": "ad00c38bc19bc8c2413a69ee95d10b8f12a1d7ef008e84b6a99516be0e72046b",
+      "syntheticFixtureSourceSha256": "4a312fa13bb9448cadc751a11b3f41bb0d051e74b7553cad67689216aa16c575",
+      "syntheticRawInput": "thirtythree-raw.txt",
+      "syntheticRawSha256": "df0a9c56cc6a73689934903dd3d40502ffc3a85c0646bdf29257b619dcd707fc",
+      "syntheticSuccessfulSeeds": [
+        0,
+        1,
+        11,
+        23,
+        37,
+        59,
+        83
+      ]
+    }
+  },
+  "beforeAfterTable": [
+    {
+      "afterCount": 72,
+      "afterMedian": 33.0,
+      "afterMinusBefore": 0.0,
+      "afterOverBefore": 1.0,
+      "beforeCount": 72,
+      "beforeMedian": 33.0,
+      "metric": "structure.parts",
+      "structuredCount": 7,
+      "structuredMedian": 33
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 82.0,
+      "afterMinusBefore": 0.0,
+      "afterOverBefore": 1.0,
+      "beforeCount": 72,
+      "beforeMedian": 82.0,
+      "metric": "structure.pads",
+      "structuredCount": 7,
+      "structuredMedian": 96
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 25.0,
+      "afterMinusBefore": 0.0,
+      "afterOverBefore": 1.0,
+      "beforeCount": 72,
+      "beforeMedian": 25.0,
+      "metric": "structure.nets",
+      "structuredCount": 7,
+      "structuredMedian": 24
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 6.0,
+      "afterMinusBefore": 0.0,
+      "afterOverBefore": 1.0,
+      "beforeCount": 72,
+      "beforeMedian": 6.0,
+      "metric": "structure.connectors",
+      "structuredCount": 7,
+      "structuredMedian": 9
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 7839600.0,
+      "afterMinusBefore": 2700200.0,
+      "afterOverBefore": 1.525392069113126,
+      "beforeCount": 72,
+      "beforeMedian": 5139400.0,
+      "metric": "area.boardArea",
+      "structuredCount": 7,
+      "structuredMedian": 3542000
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 589652.0,
+      "afterMinusBefore": 0.0,
+      "afterOverBefore": 1.0,
+      "beforeCount": 72,
+      "beforeMedian": 589652.0,
+      "metric": "area.courtyardArea",
+      "structuredCount": 7,
+      "structuredMedian": 693000
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 0.07508848199672667,
+      "afterMinusBefore": -0.039627261490101956,
+      "afterOverBefore": 0.6545612634707645,
+      "beforeCount": 72,
+      "beforeMedian": 0.11471574348682863,
+      "metric": "area.courtyardFraction",
+      "structuredCount": 7,
+      "structuredMedian": 0.1956521739130435
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 2.137152209492635,
+      "afterMinusBefore": 1.0991309005124221,
+      "afterOverBefore": 2.058871230295113,
+      "beforeCount": 72,
+      "beforeMedian": 1.038021308980213,
+      "metric": "area.boardAspect",
+      "structuredCount": 7,
+      "structuredMedian": 1.4935064935064934
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 2.3968581355806906,
+      "afterMinusBefore": 1.3093846748588223,
+      "afterOverBefore": 2.204061268759284,
+      "beforeCount": 72,
+      "beforeMedian": 1.0874734607218683,
+      "metric": "area.courtyardEnvelopeAspect",
+      "structuredCount": 7,
+      "structuredMedian": 1.3097345132743363
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 23605.0,
+      "afterMinusBefore": -4290.0,
+      "afterOverBefore": 0.8462089980283205,
+      "beforeCount": 72,
+      "beforeMedian": 27895.0,
+      "metric": "locality.netHplTotal",
+      "structuredCount": 7,
+      "structuredMedian": 12360
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 28515.0,
+      "afterMinusBefore": -5585.0,
+      "afterOverBefore": 0.8362170087976539,
+      "beforeCount": 72,
+      "beforeMedian": 34100.0,
+      "metric": "locality.netMstTotal",
+      "structuredCount": 7,
+      "structuredMedian": 18210
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 861.875,
+      "afterMinusBefore": -238.125,
+      "afterOverBefore": 0.7835227272727273,
+      "beforeCount": 72,
+      "beforeMedian": 1100.0,
+      "metric": "locality.componentPairDistanceMedian",
+      "structuredCount": 7,
+      "structuredMedian": 700.0
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 219.0,
+      "afterMinusBefore": 0.0,
+      "afterOverBefore": 1.0,
+      "beforeCount": 72,
+      "beforeMedian": 219.0,
+      "metric": "locality.electricallyAdjacentPadPairCount",
+      "structuredCount": 7,
+      "structuredMedian": 465
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 965.1085040010851,
+      "afterMinusBefore": -204.52619919526205,
+      "afterOverBefore": 0.8251366870046364,
+      "beforeCount": 72,
+      "beforeMedian": 1169.6347031963471,
+      "metric": "locality.electricallyAdjacentPadDistanceMean",
+      "structuredCount": 7,
+      "structuredMedian": 791.8279569892474
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 1981.9999999999995,
+      "afterMinusBefore": -326.25,
+      "afterOverBefore": 0.8586591573703022,
+      "beforeCount": 72,
+      "beforeMedian": 2308.2499999999995,
+      "metric": "locality.electricallyAdjacentPadDistanceP95",
+      "structuredCount": 7,
+      "structuredMedian": 1570.0
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 16.0,
+      "afterMinusBefore": 0.0,
+      "afterOverBefore": 1.0,
+      "beforeCount": 72,
+      "beforeMedian": 16.0,
+      "metric": "locality.maxNetFanout",
+      "structuredCount": 7,
+      "structuredMedian": 24
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 2925.0,
+      "afterMinusBefore": -405.0,
+      "afterOverBefore": 0.8783783783783784,
+      "beforeCount": 72,
+      "beforeMedian": 3330.0,
+      "metric": "locality.maxFanoutNetHplMean",
+      "structuredCount": 7,
+      "structuredMedian": 2150.0
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 2925.0,
+      "afterMinusBefore": -405.0,
+      "afterOverBefore": 0.8783783783783784,
+      "beforeCount": 72,
+      "beforeMedian": 3330.0,
+      "metric": "locality.maxFanoutNetHplP95",
+      "structuredCount": 7,
+      "structuredMedian": 2150
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 8435.0,
+      "afterMinusBefore": -890.0,
+      "afterOverBefore": 0.9045576407506702,
+      "beforeCount": 72,
+      "beforeMedian": 9325.0,
+      "metric": "locality.netRoleMetrics.SUPPLY.hplTotal",
+      "structuredCount": 7,
+      "structuredMedian": 4000
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 2980.0,
+      "afterMinusBefore": -31.25,
+      "afterOverBefore": 0.9896222498962225,
+      "beforeCount": 72,
+      "beforeMedian": 3011.25,
+      "metric": "locality.netRoleMetrics.SUPPLY.hplP95",
+      "structuredCount": 7,
+      "structuredMedian": 2055.0
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 11.0,
+      "afterMinusBefore": 0.0,
+      "afterOverBefore": 1.0,
+      "beforeCount": 72,
+      "beforeMedian": 11.0,
+      "metric": "locality.netRoleMetrics.SUPPLY.maxFanout",
+      "structuredCount": 7,
+      "structuredMedian": 16
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 5520.0,
+      "afterMinusBefore": -340.0,
+      "afterOverBefore": 0.9419795221843004,
+      "beforeCount": 72,
+      "beforeMedian": 5860.0,
+      "metric": "locality.netRoleMetrics.RETURN.hplTotal",
+      "structuredCount": 7,
+      "structuredMedian": 2150
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 2954.75,
+      "afterMinusBefore": -346.0,
+      "afterOverBefore": 0.8951753389381201,
+      "beforeCount": 72,
+      "beforeMedian": 3300.75,
+      "metric": "locality.netRoleMetrics.RETURN.hplP95",
+      "structuredCount": 7,
+      "structuredMedian": 2150
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 16.0,
+      "afterMinusBefore": 0.0,
+      "afterOverBefore": 1.0,
+      "beforeCount": 72,
+      "beforeMedian": 16.0,
+      "metric": "locality.netRoleMetrics.RETURN.maxFanout",
+      "structuredCount": 7,
+      "structuredMedian": 24
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 0.228310502283105,
+      "afterMinusBefore": 0.0,
+      "afterOverBefore": 1.0,
+      "beforeCount": 72,
+      "beforeMedian": 0.228310502283105,
+      "metric": "locality.sameRegionPairFraction",
+      "structuredCount": 7,
+      "structuredMedian": 0.21481481481481482
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 0.28,
+      "afterMinusBefore": 0.0,
+      "afterOverBefore": 1.0,
+      "beforeCount": 72,
+      "beforeMedian": 0.28,
+      "metric": "locality.regionCrossingNetFraction",
+      "structuredCount": 7,
+      "structuredMedian": 0.125
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 18.0,
+      "afterMinusBefore": 0.0,
+      "afterOverBefore": 1.0,
+      "beforeCount": 72,
+      "beforeMedian": 18.0,
+      "metric": "locality.regionTransitionCount",
+      "structuredCount": 7,
+      "structuredMedian": 12
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 41.5,
+      "afterMinusBefore": -33.0,
+      "afterOverBefore": 0.5570469798657718,
+      "beforeCount": 72,
+      "beforeMedian": 74.5,
+      "metric": "crossing.estimatedRatsnestCrossings",
+      "structuredCount": 7,
+      "structuredMedian": 35
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 62.0,
+      "afterMinusBefore": -35.0,
+      "afterOverBefore": 0.6391752577319587,
+      "beforeCount": 72,
+      "beforeMedian": 97.0,
+      "metric": "crossing.netBoundingBoxOverlapPairs",
+      "structuredCount": 7,
+      "structuredMedian": 56
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 235.0,
+      "afterMinusBefore": -610.0,
+      "afterOverBefore": 0.2781065088757396,
+      "beforeCount": 72,
+      "beforeMedian": 845.0,
+      "metric": "connector.nearestSameNetPadDistanceMedian",
+      "structuredCount": 7,
+      "structuredMedian": 245.0
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 2489.0,
+      "afterMinusBefore": 581.5000000000005,
+      "afterOverBefore": 1.304849279161206,
+      "beforeCount": 72,
+      "beforeMedian": 1907.4999999999995,
+      "metric": "connector.nearestSameNetPadDistanceP95",
+      "structuredCount": 7,
+      "structuredMedian": 451.5
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 0.5833333333333334,
+      "afterMinusBefore": 0.0,
+      "afterOverBefore": 1.0,
+      "beforeCount": 72,
+      "beforeMedian": 0.5833333333333334,
+      "metric": "connector.crossRegionIncidenceFraction",
+      "structuredCount": 7,
+      "structuredMedian": 0.5
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 0.0,
+      "afterMinusBefore": 0.0,
+      "afterOverBefore": null,
+      "beforeCount": 72,
+      "beforeMedian": 0.0,
+      "metric": "area.courtyardOverlapPairs",
+      "structuredCount": 7,
+      "structuredMedian": 0
+    },
+    {
+      "afterCount": 72,
+      "afterMedian": 55.0,
+      "afterMinusBefore": 11.0,
+      "afterOverBefore": 1.25,
+      "beforeCount": 72,
+      "beforeMedian": 44.0,
+      "metric": "area.minimumCourtyardEdgeClearance",
+      "structuredCount": 7,
+      "structuredMedian": 70
+    }
+  ],
+  "inputHashes": {
+    "afterComparisonSha256": "b217e0b929eea5ee5d4916fc10b3816f4509fa5325bc900e061169b6f8befd7c",
+    "afterInspectSha256": "7783e2d7fafa1fa36b7a26e32d3d54859add522c1839ee0d3e1f446d02ace010",
+    "afterPlannerSourceSha256": "57485c39bd0af5f66cd1218ae98a76086dc75444c5c4f1c41a7abdd39762e9b5",
+    "beforeComparisonSha256": "0e854aae2454c86a50b426fda183947c125b7a25a9dd2df45fedfc7dd23f0f48",
+    "beforeInspectSha256": "bb9c69ec541457d6d6ed98ffad7de632fa0da7c84b72c66b9d776c37f8993159",
+    "beforePlannerSourceSha256": "4d0a6349fb9562b13a4306f55a86d74536ae808a35554b7a9b50021ba003281c",
+    "shared": {
+      "q30CandidatesPerSeed": 6,
+      "q30FloorplanPatchSha256": "e0032548a266bd7e29090762c4b19fc61468c552319f6c5a8bfa44f9899643ec",
+      "q30PlacementSource": "RootPlanManifest.EXACT_ROOT -> Rb30Plan.resolve(seed).board()",
+      "q30PlanSourceSha256": "538bdd61849b8ef837710d089513bfa67e985d2d119464fe50e4c9de55547488",
+      "q30Seeds": [
+        -23,
+        -1,
+        0,
+        1,
+        3,
+        11,
+        17,
+        23,
+        37,
+        42,
+        59,
+        83
+      ],
+      "q30SourceSha256": "ad00c38bc19bc8c2413a69ee95d10b8f12a1d7ef008e84b6a99516be0e72046b",
+      "syntheticFixtureSourceSha256": "4a312fa13bb9448cadc751a11b3f41bb0d051e74b7553cad67689216aa16c575",
+      "syntheticRawSha256": "df0a9c56cc6a73689934903dd3d40502ffc3a85c0646bdf29257b619dcd707fc",
+      "syntheticSuccessfulSeeds": [
+        0,
+        1,
+        11,
+        23,
+        37,
+        59,
+        83
+      ]
+    }
+  },
+  "kind": "Q30-P1 floorplan diagnosis; stable planner before/after",
+  "limits": [
+    "This table isolates placement geometry and does not prove routed copper, solver behavior, player inspectability, normal admission, or diagnosis.",
+    "A planner source snapshot is the only intentionally varied input; Q30 source and Rb30Plan hashes must remain equal, but unrelated source dependencies are still governed by the worktree snapshot.",
+    "Metrics remain geometric proxies and are not a single quality score; interpretation must account for rejected-attempt counts and the different synthetic control graph.",
+    "Structured fixture values are a control distribution with seven validated seeds, not a matched Q30 electrical graph; they are included to expose scale and metric behavior."
+  ],
+  "measurement": {
+    "label": "before-after-planner-comparison",
+    "status": "comparison"
+  },
+  "methodology": {
+    "afterSource": "The AFTER run must be supplied explicitly after floorplan_impl signals a stable planner; its planner source hash is recorded separately.",
+    "aggregation": "Each Q30 table value is the median over accepted placement rows; the structuredMedian column is the median over every validated successful 33-part control row. Rejected Q30 attempts remain in corpus counts and rejection reasons.",
+    "beforeSource": "The BEFORE snapshot is produced by git show HEAD:src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java and passed as an explicit planner source input.",
+    "delta": "afterMinusBefore is afterMedian - beforeMedian; afterOverBefore is afterMedian / beforeMedian when the baseline is nonzero.",
+    "metricDefinitions": "The two input receipts carry the complete metric definitions and limits; this table reuses their Q30 summary medians and the shared structured fixture summary. Per-region, channel, role, and connector diagnostics remain in each run's Q30 summary and JSONL rows.",
+    "plannerIsolation": "The harness copies the complete source tree into unique OS temp scratch; when PlannerSource is supplied, that file replaces only scratch src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java before JDK8 compilation.",
+    "population": "Both runs use the same 12 signed seeds and candidates 0..5; every requested attempt is retained and no best-row filtering is applied.",
+    "sharedFixture": "The comparison fails unless Q30 source, actual Rb30Plan source, exporter patch, synthetic raw/source, seed set, and candidate population match."
+  },
+  "schema": 1
+}

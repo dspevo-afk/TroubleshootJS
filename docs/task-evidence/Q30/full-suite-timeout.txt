@@ -1,0 +1,21 @@
+Q30 integrated-source maintained current-contract attempt, 2026-09-23
+Command: scripts/verify-current-contracts.ps1 -JavaHome <JDK8_HOME>
+Result: BLOCKED / exit 1 / VERIFIER_INFRASTRUCTURE bounded Java child exceeded 60000 ms.
+Phase: procedural family corpus reader; stdout was still progressing.
+Last complete summary: RB15_CONTROL held-out, 8/8 accepted.
+Last complete row: COMPOSED_CONTROLLED_INDICATOR representative seed 4 accepted.
+Next row began for COMPOSED_CONTROLLED_INDICATOR seed 17 but was not recorded.
+The verifier cleaned task-owned current-contract classes/scratch after failure.
+No assertion failure was reported. This attempt is not a passing gate.
+Earlier full 62-suite pass preceded JLOAD placement and the provider-local
+two-relay service integration; focused E03/E04/Q30 plan/relay service passed
+after those edits. A later full attempt is required for final-source PASS.
+
+Second unchanged full attempt after the separate floorplan search completed:
+BLOCKED / exit 1 / same 60000 ms bounded Java child timeout in the
+procedural family corpus. Last complete summary: RB15_CONTROL representative
+8/8 accepted. Last complete row: RB15_CONTROL held-out seed
+936927718510540323 accepted. Verifier cleanup PASS. No assertion failure.
+The second attempt made less progress within the same bound. The exact cause
+of host throughput variation was not established. Per repository guidance,
+the unchanged full command was not repeated a third time.

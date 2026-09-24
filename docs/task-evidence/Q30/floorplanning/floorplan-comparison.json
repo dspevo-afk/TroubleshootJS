@@ -1,0 +1,1257 @@
+{
+  "corpora": {
+    "q30CurrentExactRoot": {
+      "attemptCount": 72,
+      "candidateCount": 6,
+      "placementCount": 72,
+      "rejectedCount": 0,
+      "rejectedReasons": {},
+      "rowsFile": "q30-current-exact-root.jsonl",
+      "seedCount": 12,
+      "summary": {
+        "area.boardArea": {
+          "count": 72,
+          "max": 8072600,
+          "mean": 7856045.833333333,
+          "median": 7839600.0,
+          "min": 7644700
+        },
+        "area.boardHeight": {
+          "count": 72,
+          "max": 2230,
+          "mean": 1920.8333333333333,
+          "median": 1915.0,
+          "min": 1630
+        },
+        "area.boardWidth": {
+          "count": 72,
+          "max": 4710,
+          "mean": 4126.805555555556,
+          "median": 4095.0,
+          "min": 3600
+        },
+        "area.courtyardArea": {
+          "count": 72,
+          "max": 596852,
+          "mean": 590035.3333333334,
+          "median": 589652.0,
+          "min": 581252
+        },
+        "area.courtyardFraction": {
+          "count": 72,
+          "max": 0.07726839625084149,
+          "mean": 0.07512114340332725,
+          "median": 0.07508848199672667,
+          "min": 0.07315047334329845
+        },
+        "area.courtyardOutsideCount": {
+          "count": 72,
+          "max": 0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0
+        },
+        "area.courtyardOverlapArea": {
+          "count": 72,
+          "max": 0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0
+        },
+        "area.courtyardOverlapPairs": {
+          "count": 72,
+          "max": 0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0
+        },
+        "area.minimumCourtyardEdgeClearance": {
+          "count": 72,
+          "max": 74,
+          "mean": 54.43055555555556,
+          "median": 55.0,
+          "min": 30
+        },
+        "connector.count": {
+          "count": 72,
+          "max": 6,
+          "mean": 6.0,
+          "median": 6.0,
+          "min": 6
+        },
+        "connector.crossRegionIncidenceFraction": {
+          "count": 72,
+          "max": 0.5833333333333334,
+          "mean": 0.5833333333333334,
+          "median": 0.5833333333333334,
+          "min": 0.5833333333333334
+        },
+        "connector.meanBoardEdgeMargin": {
+          "count": 72,
+          "max": 446.6666666666667,
+          "mean": 346.7824074074074,
+          "median": 350.83333333333337,
+          "min": 198.33333333333334
+        },
+        "connector.minimumBoardEdgeMargin": {
+          "count": 72,
+          "max": 170,
+          "mean": 168.05555555555554,
+          "median": 170.0,
+          "min": 100
+        },
+        "connector.nearestSameNetPadDistanceMean": {
+          "count": 72,
+          "max": 852.5,
+          "mean": 626.9444444444445,
+          "median": 631.25,
+          "min": 463.3333333333333
+        },
+        "connector.nearestSameNetPadDistanceMedian": {
+          "count": 72,
+          "max": 425.0,
+          "mean": 245.90277777777777,
+          "median": 235.0,
+          "min": 205.0
+        },
+        "connector.padCount": {
+          "count": 72,
+          "max": 12,
+          "mean": 12.0,
+          "median": 12.0,
+          "min": 12
+        },
+        "crossing.estimatedRatsnestCrossings": {
+          "count": 72,
+          "max": 68,
+          "mean": 42.15277777777778,
+          "median": 40.5,
+          "min": 26
+        },
+        "crossing.netBoundingBoxOverlapPairs": {
+          "count": 72,
+          "max": 101,
+          "mean": 62.19444444444444,
+          "median": 61.0,
+          "min": 45
+        },
+        "crossing.ratsnestSegmentCount": {
+          "count": 72,
+          "max": 58,
+          "mean": 57.333333333333336,
+          "median": 57.0,
+          "min": 57
+        },
+        "locality.componentPairCount": {
+          "count": 72,
+          "max": 219,
+          "mean": 213.33333333333334,
+          "median": 219.0,
+          "min": 202
+        },
+        "locality.componentPairDistanceMean": {
+          "count": 72,
+          "max": 1083.7899543378996,
+          "mean": 965.7029809716132,
+          "median": 957.96600207966,
+          "min": 874.7772277227723
+        },
+        "locality.componentPairDistanceMedian": {
+          "count": 72,
+          "max": 1002.5,
+          "mean": 861.1979166666666,
+          "median": 860.0,
+          "min": 770.0
+        },
+        "locality.netHplMean": {
+          "count": 72,
+          "max": 1249.5454545454545,
+          "mean": 1035.372749231445,
+          "median": 1015.6818181818182,
+          "min": 874.7826086956521
+        },
+        "locality.netHplMedian": {
+          "count": 72,
+          "max": 1060.0,
+          "mean": 687.9861111111111,
+          "median": 715.0,
+          "min": 420
+        },
+        "locality.netHplTotal": {
+          "count": 72,
+          "max": 27740,
+          "mean": 23452.36111111111,
+          "median": 23310.0,
+          "min": 20120
+        },
+        "locality.netMstMean": {
+          "count": 72,
+          "max": 1420.0,
+          "mean": 1248.5861330698287,
+          "median": 1239.7826086956522,
+          "min": 1095.6521739130435
+        },
+        "locality.netMstMedian": {
+          "count": 72,
+          "max": 1085.0,
+          "mean": 732.3611111111111,
+          "median": 750.0,
+          "min": 420
+        },
+        "locality.netMstTotal": {
+          "count": 72,
+          "max": 32140,
+          "mean": 28286.805555555555,
+          "median": 28185.0,
+          "min": 25200
+        },
+        "locality.regionCrossingNetCount": {
+          "count": 72,
+          "max": 8,
+          "mean": 7.333333333333333,
+          "median": 7.0,
+          "min": 7
+        },
+        "locality.regionCrossingNetFraction": {
+          "count": 72,
+          "max": 0.3333333333333333,
+          "mean": 0.2977777777777778,
+          "median": 0.28,
+          "min": 0.28
+        },
+        "locality.regionPairEdgeCounts.entry|entry": {
+          "count": 72,
+          "max": 5,
+          "mean": 5.0,
+          "median": 5.0,
+          "min": 5
+        },
+        "locality.regionPairEdgeCounts.entry|output-a": {
+          "count": 72,
+          "max": 4,
+          "mean": 4.0,
+          "median": 4.0,
+          "min": 4
+        },
+        "locality.regionPairEdgeCounts.entry|output-b": {
+          "count": 72,
+          "max": 4,
+          "mean": 4.0,
+          "median": 4.0,
+          "min": 4
+        },
+        "locality.regionPairEdgeCounts.entry|regulation": {
+          "count": 72,
+          "max": 9,
+          "mean": 9.0,
+          "median": 9.0,
+          "min": 9
+        },
+        "locality.regionPairEdgeCounts.entry|sensor-a": {
+          "count": 72,
+          "max": 6,
+          "mean": 5.333333333333333,
+          "median": 6.0,
+          "min": 4
+        },
+        "locality.regionPairEdgeCounts.entry|sensor-b": {
+          "count": 72,
+          "max": 6,
+          "mean": 5.333333333333333,
+          "median": 6.0,
+          "min": 4
+        },
+        "locality.regionPairEdgeCounts.entry|sensor-reference": {
+          "count": 24,
+          "max": 2,
+          "mean": 2.0,
+          "median": 2.0,
+          "min": 2
+        },
+        "locality.regionPairEdgeCounts.entry|status": {
+          "count": 72,
+          "max": 2,
+          "mean": 2.0,
+          "median": 2.0,
+          "min": 2
+        },
+        "locality.regionPairEdgeCounts.output-a|output-a": {
+          "count": 72,
+          "max": 9,
+          "mean": 9.0,
+          "median": 9.0,
+          "min": 9
+        },
+        "locality.regionPairEdgeCounts.output-a|output-b": {
+          "count": 72,
+          "max": 10,
+          "mean": 10.0,
+          "median": 10.0,
+          "min": 10
+        },
+        "locality.regionPairEdgeCounts.output-a|output-common": {
+          "count": 72,
+          "max": 2,
+          "mean": 2.0,
+          "median": 2.0,
+          "min": 2
+        },
+        "locality.regionPairEdgeCounts.output-a|regulation": {
+          "count": 72,
+          "max": 10,
+          "mean": 10.0,
+          "median": 10.0,
+          "min": 10
+        },
+        "locality.regionPairEdgeCounts.output-a|sensor-a": {
+          "count": 72,
+          "max": 11,
+          "mean": 10.0,
+          "median": 11.0,
+          "min": 8
+        },
+        "locality.regionPairEdgeCounts.output-a|sensor-b": {
+          "count": 72,
+          "max": 10,
+          "mean": 8.666666666666666,
+          "median": 10.0,
+          "min": 6
+        },
+        "locality.regionPairEdgeCounts.output-a|sensor-reference": {
+          "count": 24,
+          "max": 4,
+          "mean": 4.0,
+          "median": 4.0,
+          "min": 4
+        },
+        "locality.regionPairEdgeCounts.output-a|status": {
+          "count": 72,
+          "max": 4,
+          "mean": 4.0,
+          "median": 4.0,
+          "min": 4
+        },
+        "locality.regionPairEdgeCounts.output-b|output-b": {
+          "count": 72,
+          "max": 9,
+          "mean": 9.0,
+          "median": 9.0,
+          "min": 9
+        },
+        "locality.regionPairEdgeCounts.output-b|output-common": {
+          "count": 72,
+          "max": 2,
+          "mean": 2.0,
+          "median": 2.0,
+          "min": 2
+        },
+        "locality.regionPairEdgeCounts.output-b|regulation": {
+          "count": 72,
+          "max": 10,
+          "mean": 10.0,
+          "median": 10.0,
+          "min": 10
+        },
+        "locality.regionPairEdgeCounts.output-b|sensor-a": {
+          "count": 72,
+          "max": 10,
+          "mean": 8.666666666666666,
+          "median": 10.0,
+          "min": 6
+        },
+        "locality.regionPairEdgeCounts.output-b|sensor-b": {
+          "count": 72,
+          "max": 11,
+          "mean": 10.0,
+          "median": 11.0,
+          "min": 8
+        },
+        "locality.regionPairEdgeCounts.output-b|sensor-reference": {
+          "count": 24,
+          "max": 4,
+          "mean": 4.0,
+          "median": 4.0,
+          "min": 4
+        },
+        "locality.regionPairEdgeCounts.output-b|status": {
+          "count": 72,
+          "max": 4,
+          "mean": 4.0,
+          "median": 4.0,
+          "min": 4
+        },
+        "locality.regionPairEdgeCounts.regulation|regulation": {
+          "count": 72,
+          "max": 8,
+          "mean": 8.0,
+          "median": 8.0,
+          "min": 8
+        },
+        "locality.regionPairEdgeCounts.regulation|sensor-a": {
+          "count": 72,
+          "max": 13,
+          "mean": 11.333333333333334,
+          "median": 13.0,
+          "min": 8
+        },
+        "locality.regionPairEdgeCounts.regulation|sensor-b": {
+          "count": 72,
+          "max": 13,
+          "mean": 11.333333333333334,
+          "median": 13.0,
+          "min": 8
+        },
+        "locality.regionPairEdgeCounts.regulation|sensor-reference": {
+          "count": 24,
+          "max": 5,
+          "mean": 5.0,
+          "median": 5.0,
+          "min": 5
+        },
+        "locality.regionPairEdgeCounts.regulation|status": {
+          "count": 72,
+          "max": 5,
+          "mean": 5.0,
+          "median": 5.0,
+          "min": 5
+        },
+        "locality.regionPairEdgeCounts.sensor-a|sensor-a": {
+          "count": 72,
+          "max": 9,
+          "mean": 8.0,
+          "median": 9.0,
+          "min": 6
+        },
+        "locality.regionPairEdgeCounts.sensor-a|sensor-b": {
+          "count": 72,
+          "max": 13,
+          "mean": 10.666666666666666,
+          "median": 13.0,
+          "min": 6
+        },
+        "locality.regionPairEdgeCounts.sensor-a|sensor-reference": {
+          "count": 24,
+          "max": 5,
+          "mean": 5.0,
+          "median": 5.0,
+          "min": 5
+        },
+        "locality.regionPairEdgeCounts.sensor-a|status": {
+          "count": 72,
+          "max": 5,
+          "mean": 4.333333333333333,
+          "median": 5.0,
+          "min": 3
+        },
+        "locality.regionPairEdgeCounts.sensor-b|sensor-b": {
+          "count": 72,
+          "max": 9,
+          "mean": 8.0,
+          "median": 9.0,
+          "min": 6
+        },
+        "locality.regionPairEdgeCounts.sensor-b|sensor-reference": {
+          "count": 24,
+          "max": 5,
+          "mean": 5.0,
+          "median": 5.0,
+          "min": 5
+        },
+        "locality.regionPairEdgeCounts.sensor-b|status": {
+          "count": 72,
+          "max": 5,
+          "mean": 4.333333333333333,
+          "median": 5.0,
+          "min": 3
+        },
+        "locality.regionPairEdgeCounts.sensor-reference|sensor-reference": {
+          "count": 24,
+          "max": 1,
+          "mean": 1.0,
+          "median": 1.0,
+          "min": 1
+        },
+        "locality.regionPairEdgeCounts.sensor-reference|status": {
+          "count": 24,
+          "max": 2,
+          "mean": 2.0,
+          "median": 2.0,
+          "min": 2
+        },
+        "locality.regionPairEdgeCounts.status|status": {
+          "count": 72,
+          "max": 1,
+          "mean": 1.0,
+          "median": 1.0,
+          "min": 1
+        },
+        "locality.regionTransitionCount": {
+          "count": 72,
+          "max": 22,
+          "mean": 19.333333333333332,
+          "median": 18.0,
+          "min": 18
+        },
+        "locality.sameRegionPairFraction": {
+          "count": 72,
+          "max": 0.228310502283105,
+          "mean": 0.22646442726464425,
+          "median": 0.228310502283105,
+          "min": 0.22277227722772278
+        },
+        "structure.connectorPads": {
+          "count": 72,
+          "max": 12,
+          "mean": 12.0,
+          "median": 12.0,
+          "min": 12
+        },
+        "structure.connectors": {
+          "count": 72,
+          "max": 6,
+          "mean": 6.0,
+          "median": 6.0,
+          "min": 6
+        },
+        "structure.nets": {
+          "count": 72,
+          "max": 25,
+          "mean": 24.666666666666668,
+          "median": 25.0,
+          "min": 24
+        },
+        "structure.pads": {
+          "count": 72,
+          "max": 82,
+          "mean": 82.0,
+          "median": 82.0,
+          "min": 82
+        },
+        "structure.parts": {
+          "count": 72,
+          "max": 33,
+          "mean": 33.0,
+          "median": 33.0,
+          "min": 33
+        },
+        "structure.regionCounts.entry": {
+          "count": 72,
+          "max": 4,
+          "mean": 4.0,
+          "median": 4.0,
+          "min": 4
+        },
+        "structure.regionCounts.output-a": {
+          "count": 72,
+          "max": 6,
+          "mean": 6.0,
+          "median": 6.0,
+          "min": 6
+        },
+        "structure.regionCounts.output-b": {
+          "count": 72,
+          "max": 6,
+          "mean": 6.0,
+          "median": 6.0,
+          "min": 6
+        },
+        "structure.regionCounts.output-common": {
+          "count": 72,
+          "max": 1,
+          "mean": 1.0,
+          "median": 1.0,
+          "min": 1
+        },
+        "structure.regionCounts.regulation": {
+          "count": 72,
+          "max": 4,
+          "mean": 4.0,
+          "median": 4.0,
+          "min": 4
+        },
+        "structure.regionCounts.sensor-a": {
+          "count": 72,
+          "max": 5,
+          "mean": 4.666666666666667,
+          "median": 5.0,
+          "min": 4
+        },
+        "structure.regionCounts.sensor-b": {
+          "count": 72,
+          "max": 5,
+          "mean": 4.666666666666667,
+          "median": 5.0,
+          "min": 4
+        },
+        "structure.regionCounts.sensor-reference": {
+          "count": 24,
+          "max": 2,
+          "mean": 2.0,
+          "median": 2.0,
+          "min": 2
+        },
+        "structure.regionCounts.status": {
+          "count": 72,
+          "max": 2,
+          "mean": 2.0,
+          "median": 2.0,
+          "min": 2
+        }
+      }
+    },
+    "synthetic33Successful": {
+      "placementCount": 7,
+      "policy": "FULLER_TWO_LAYER",
+      "routeSummary": {
+        "attempts": 7,
+        "outcomes": {
+          "SUCCESS": 7
+        },
+        "successes": 7,
+        "successfulRouteMetrics": {
+          "bottomLength": {
+            "count": 7,
+            "max": 12720,
+            "mean": 12102.857142857143,
+            "median": 12050,
+            "min": 11790
+          },
+          "bottomSegments": {
+            "count": 7,
+            "max": 121,
+            "mean": 115.42857142857143,
+            "median": 115,
+            "min": 110
+          },
+          "expansions": {
+            "count": 7,
+            "max": 438245,
+            "mean": 157158.2857142857,
+            "median": 117737,
+            "min": 94755
+          },
+          "routeMs": {
+            "count": 7,
+            "max": 931,
+            "mean": 428.85714285714283,
+            "median": 366,
+            "min": 305
+          },
+          "topLength": {
+            "count": 7,
+            "max": 8220,
+            "mean": 7942.857142857143,
+            "median": 8160,
+            "min": 7390
+          },
+          "topSegments": {
+            "count": 7,
+            "max": 76,
+            "mean": 66.28571428571429,
+            "median": 65,
+            "min": 61
+          },
+          "vias": {
+            "count": 7,
+            "max": 33,
+            "mean": 26.142857142857142,
+            "median": 25,
+            "min": 20
+          }
+        }
+      },
+      "rowsFile": "synthetic-33-success.jsonl",
+      "seedCount": 7,
+      "summary": {
+        "area.boardArea": {
+          "count": 7,
+          "max": 3542000,
+          "mean": 3542000.0,
+          "median": 3542000,
+          "min": 3542000
+        },
+        "area.boardHeight": {
+          "count": 7,
+          "max": 1540,
+          "mean": 1540.0,
+          "median": 1540,
+          "min": 1540
+        },
+        "area.boardWidth": {
+          "count": 7,
+          "max": 2300,
+          "mean": 2300.0,
+          "median": 2300,
+          "min": 2300
+        },
+        "area.courtyardArea": {
+          "count": 7,
+          "max": 693000,
+          "mean": 693000.0,
+          "median": 693000,
+          "min": 693000
+        },
+        "area.courtyardFraction": {
+          "count": 7,
+          "max": 0.1956521739130435,
+          "mean": 0.1956521739130435,
+          "median": 0.1956521739130435,
+          "min": 0.1956521739130435
+        },
+        "area.courtyardOutsideCount": {
+          "count": 7,
+          "max": 0,
+          "mean": 0.0,
+          "median": 0,
+          "min": 0
+        },
+        "area.courtyardOverlapArea": {
+          "count": 7,
+          "max": 0,
+          "mean": 0.0,
+          "median": 0,
+          "min": 0
+        },
+        "area.courtyardOverlapPairs": {
+          "count": 7,
+          "max": 0,
+          "mean": 0.0,
+          "median": 0,
+          "min": 0
+        },
+        "area.minimumCourtyardEdgeClearance": {
+          "count": 7,
+          "max": 70,
+          "mean": 70.0,
+          "median": 70,
+          "min": 70
+        },
+        "connector.count": {
+          "count": 7,
+          "max": 9,
+          "mean": 9.0,
+          "median": 9,
+          "min": 9
+        },
+        "connector.crossRegionIncidenceFraction": {
+          "count": 7,
+          "max": 0.5,
+          "mean": 0.5,
+          "median": 0.5,
+          "min": 0.5
+        },
+        "connector.meanBoardEdgeMargin": {
+          "count": 7,
+          "max": 315.0,
+          "mean": 312.69841269841265,
+          "median": 312.77777777777777,
+          "min": 310.55555555555554
+        },
+        "connector.minimumBoardEdgeMargin": {
+          "count": 7,
+          "max": 90,
+          "mean": 90.0,
+          "median": 90,
+          "min": 90
+        },
+        "connector.nearestSameNetPadDistanceMean": {
+          "count": 7,
+          "max": 272.22222222222223,
+          "mean": 269.04761904761904,
+          "median": 270.0,
+          "min": 265.0
+        },
+        "connector.nearestSameNetPadDistanceMedian": {
+          "count": 7,
+          "max": 250.0,
+          "mean": 244.28571428571428,
+          "median": 245.0,
+          "min": 235.0
+        },
+        "connector.padCount": {
+          "count": 7,
+          "max": 18,
+          "mean": 18.0,
+          "median": 18,
+          "min": 18
+        },
+        "crossing.estimatedRatsnestCrossings": {
+          "count": 7,
+          "max": 41,
+          "mean": 34.714285714285715,
+          "median": 35,
+          "min": 27
+        },
+        "crossing.netBoundingBoxOverlapPairs": {
+          "count": 7,
+          "max": 61,
+          "mean": 56.0,
+          "median": 56,
+          "min": 51
+        },
+        "crossing.ratsnestSegmentCount": {
+          "count": 7,
+          "max": 72,
+          "mean": 72.0,
+          "median": 72,
+          "min": 72
+        },
+        "locality.componentPairCount": {
+          "count": 7,
+          "max": 405,
+          "mean": 405.0,
+          "median": 405,
+          "min": 405
+        },
+        "locality.componentPairDistanceMean": {
+          "count": 7,
+          "max": 784.5185185185185,
+          "mean": 780.2398589065257,
+          "median": 779.1604938271605,
+          "min": 777.4074074074074
+        },
+        "locality.componentPairDistanceMedian": {
+          "count": 7,
+          "max": 700.0,
+          "mean": 700.0,
+          "median": 700.0,
+          "min": 700.0
+        },
+        "locality.netHplMean": {
+          "count": 7,
+          "max": 516.25,
+          "mean": 514.8809523809524,
+          "median": 515.0,
+          "min": 513.3333333333334
+        },
+        "locality.netHplMedian": {
+          "count": 7,
+          "max": 255.0,
+          "mean": 244.28571428571428,
+          "median": 245.0,
+          "min": 235.0
+        },
+        "locality.netHplTotal": {
+          "count": 7,
+          "max": 12390,
+          "mean": 12357.142857142857,
+          "median": 12360,
+          "min": 12320
+        },
+        "locality.netMstMean": {
+          "count": 7,
+          "max": 760.8333333333334,
+          "mean": 758.9880952380953,
+          "median": 758.75,
+          "min": 757.0833333333334
+        },
+        "locality.netMstMedian": {
+          "count": 7,
+          "max": 255.0,
+          "mean": 244.28571428571428,
+          "median": 245.0,
+          "min": 235.0
+        },
+        "locality.netMstTotal": {
+          "count": 7,
+          "max": 18260,
+          "mean": 18215.714285714286,
+          "median": 18210,
+          "min": 18170
+        },
+        "locality.regionCrossingNetCount": {
+          "count": 7,
+          "max": 3,
+          "mean": 3.0,
+          "median": 3,
+          "min": 3
+        },
+        "locality.regionCrossingNetFraction": {
+          "count": 7,
+          "max": 0.125,
+          "mean": 0.125,
+          "median": 0.125,
+          "min": 0.125
+        },
+        "locality.regionPairEdgeCounts.CH0|CH0": {
+          "count": 7,
+          "max": 19,
+          "mean": 19.0,
+          "median": 19,
+          "min": 19
+        },
+        "locality.regionPairEdgeCounts.CH0|CH1": {
+          "count": 7,
+          "max": 33,
+          "mean": 33.0,
+          "median": 33,
+          "min": 33
+        },
+        "locality.regionPairEdgeCounts.CH0|CH2": {
+          "count": 7,
+          "max": 33,
+          "mean": 33.0,
+          "median": 33,
+          "min": 33
+        },
+        "locality.regionPairEdgeCounts.CH0|CH3": {
+          "count": 7,
+          "max": 33,
+          "mean": 33.0,
+          "median": 33,
+          "min": 33
+        },
+        "locality.regionPairEdgeCounts.CH0|POWER": {
+          "count": 7,
+          "max": 30,
+          "mean": 30.0,
+          "median": 30,
+          "min": 30
+        },
+        "locality.regionPairEdgeCounts.CH1|CH1": {
+          "count": 7,
+          "max": 19,
+          "mean": 19.0,
+          "median": 19,
+          "min": 19
+        },
+        "locality.regionPairEdgeCounts.CH1|CH2": {
+          "count": 7,
+          "max": 33,
+          "mean": 33.0,
+          "median": 33,
+          "min": 33
+        },
+        "locality.regionPairEdgeCounts.CH1|CH3": {
+          "count": 7,
+          "max": 33,
+          "mean": 33.0,
+          "median": 33,
+          "min": 33
+        },
+        "locality.regionPairEdgeCounts.CH1|POWER": {
+          "count": 7,
+          "max": 30,
+          "mean": 30.0,
+          "median": 30,
+          "min": 30
+        },
+        "locality.regionPairEdgeCounts.CH2|CH2": {
+          "count": 7,
+          "max": 19,
+          "mean": 19.0,
+          "median": 19,
+          "min": 19
+        },
+        "locality.regionPairEdgeCounts.CH2|CH3": {
+          "count": 7,
+          "max": 33,
+          "mean": 33.0,
+          "median": 33,
+          "min": 33
+        },
+        "locality.regionPairEdgeCounts.CH2|POWER": {
+          "count": 7,
+          "max": 30,
+          "mean": 30.0,
+          "median": 30,
+          "min": 30
+        },
+        "locality.regionPairEdgeCounts.CH3|CH3": {
+          "count": 7,
+          "max": 19,
+          "mean": 19.0,
+          "median": 19,
+          "min": 19
+        },
+        "locality.regionPairEdgeCounts.CH3|POWER": {
+          "count": 7,
+          "max": 30,
+          "mean": 30.0,
+          "median": 30,
+          "min": 30
+        },
+        "locality.regionPairEdgeCounts.POWER|POWER": {
+          "count": 7,
+          "max": 11,
+          "mean": 11.0,
+          "median": 11,
+          "min": 11
+        },
+        "locality.regionTransitionCount": {
+          "count": 7,
+          "max": 12,
+          "mean": 12.0,
+          "median": 12,
+          "min": 12
+        },
+        "locality.sameRegionPairFraction": {
+          "count": 7,
+          "max": 0.21481481481481482,
+          "mean": 0.21481481481481482,
+          "median": 0.21481481481481482,
+          "min": 0.21481481481481482
+        },
+        "structure.connectorPads": {
+          "count": 7,
+          "max": 18,
+          "mean": 18.0,
+          "median": 18,
+          "min": 18
+        },
+        "structure.connectors": {
+          "count": 7,
+          "max": 9,
+          "mean": 9.0,
+          "median": 9,
+          "min": 9
+        },
+        "structure.nets": {
+          "count": 7,
+          "max": 24,
+          "mean": 24.0,
+          "median": 24,
+          "min": 24
+        },
+        "structure.pads": {
+          "count": 7,
+          "max": 96,
+          "mean": 96.0,
+          "median": 96,
+          "min": 96
+        },
+        "structure.parts": {
+          "count": 7,
+          "max": 33,
+          "mean": 33.0,
+          "median": 33,
+          "min": 33
+        },
+        "structure.regionCounts.CH0": {
+          "count": 7,
+          "max": 7,
+          "mean": 7.0,
+          "median": 7,
+          "min": 7
+        },
+        "structure.regionCounts.CH1": {
+          "count": 7,
+          "max": 7,
+          "mean": 7.0,
+          "median": 7,
+          "min": 7
+        },
+        "structure.regionCounts.CH2": {
+          "count": 7,
+          "max": 7,
+          "mean": 7.0,
+          "median": 7,
+          "min": 7
+        },
+        "structure.regionCounts.CH3": {
+          "count": 7,
+          "max": 7,
+          "mean": 7.0,
+          "median": 7,
+          "min": 7
+        },
+        "structure.regionCounts.POWER": {
+          "count": 7,
+          "max": 5,
+          "mean": 5.0,
+          "median": 5,
+          "min": 5
+        }
+      }
+    }
+  },
+  "fixtureProvenance": {
+    "measurementLabel": "intermediate-concurrent-planner-edit",
+    "measurementStatus": "intermediate",
+    "plannerLabel": "working-tree-planner-under-edit",
+    "q30CandidatesPerSeed": 6,
+    "q30FloorplanPatchSha256": "e0032548a266bd7e29090762c4b19fc61468c552319f6c5a8bfa44f9899643ec",
+    "q30InspectInput": "q30-current-inspect.raw.txt",
+    "q30InspectSha256": "bf3b0da1d9271c77150b69258c973f86602c8b04ad1b9458179ab7b59d741ff3",
+    "q30PlacementSource": "RootPlanManifest.EXACT_ROOT -> Rb30Plan.resolve(seed).board()",
+    "q30PlanSourceSha256": "538bdd61849b8ef837710d089513bfa67e985d2d119464fe50e4c9de55547488",
+    "q30PlannerInput": "working-tree-planner-under-edit",
+    "q30PlannerSourceMode": "not-captured",
+    "q30PlannerSourceSha256": "not-recorded-intermediate",
+    "q30RejectedAttempts": 0,
+    "q30RejectedReasons": {},
+    "q30Seeds": [
+      -23,
+      -1,
+      0,
+      1,
+      3,
+      11,
+      17,
+      23,
+      37,
+      42,
+      59,
+      83
+    ],
+    "q30SourceSha256": "a0d3dc0be0fa9d16fdf8b4095a80215fbfc81c3d80cda9db19cf9b53788065e6",
+    "syntheticFixtureSourceSha256": "4a312fa13bb9448cadc751a11b3f41bb0d051e74b7553cad67689216aa16c575",
+    "syntheticRawInput": "thirtythree-raw.txt",
+    "syntheticRawSha256": "df0a9c56cc6a73689934903dd3d40502ffc3a85c0646bdf29257b619dcd707fc",
+    "syntheticSuccessfulSeeds": [
+      0,
+      1,
+      11,
+      23,
+      37,
+      59,
+      83
+    ]
+  },
+  "kind": "Q30-P1 floorplan diagnosis; structural developer evidence",
+  "limits": [
+    "Q30 rows are physical placements and do not prove a route, solver behavior, player inspectability, or normal admission.",
+    "The synthetic rows use a different graph, package inventory, pad count, region arrangement, and direct authored coordinates; they are a structured control, not a matched Q30 replacement.",
+    "Ratsnest crossings and net-box overlaps are lower-level geometric proxies. They do not certify copper crossings, clearance, or route feasibility.",
+    "Q30 connector identity follows the root manifest's four connector packages plus two output headers; synthetic connector identity follows JIN, CH<n>_JS, and CH<n>_JOUT.",
+    "Successful synthetic rows are retained as every count=33 success row present in the supplied raw receipt; no single favorable seed is selected."
+  ],
+  "measurement": {
+    "label": "intermediate-concurrent-planner-edit",
+    "plannerLabel": "working-tree-planner-under-edit",
+    "status": "intermediate"
+  },
+  "medianComparison": {
+    "area.boardArea": {
+      "q30Median": 7839600.0,
+      "syntheticMedian": 3542000,
+      "syntheticMinusQ30": -4297600.0,
+      "syntheticOverQ30": 0.45180876575335477
+    },
+    "area.courtyardArea": {
+      "q30Median": 589652.0,
+      "syntheticMedian": 693000,
+      "syntheticMinusQ30": 103348.0,
+      "syntheticOverQ30": 1.175269480982003
+    },
+    "area.courtyardFraction": {
+      "q30Median": 0.07508848199672667,
+      "syntheticMedian": 0.1956521739130435,
+      "syntheticMinusQ30": 0.12056369191631681,
+      "syntheticOverQ30": 2.6056216440967943
+    },
+    "area.courtyardOverlapPairs": {
+      "q30Median": 0.0,
+      "syntheticMedian": 0,
+      "syntheticMinusQ30": 0.0,
+      "syntheticOverQ30": null
+    },
+    "area.minimumCourtyardEdgeClearance": {
+      "q30Median": 55.0,
+      "syntheticMedian": 70,
+      "syntheticMinusQ30": 15.0,
+      "syntheticOverQ30": 1.2727272727272727
+    },
+    "connector.crossRegionIncidenceFraction": {
+      "q30Median": 0.5833333333333334,
+      "syntheticMedian": 0.5,
+      "syntheticMinusQ30": -0.08333333333333337,
+      "syntheticOverQ30": 0.8571428571428571
+    },
+    "connector.nearestSameNetPadDistanceMedian": {
+      "q30Median": 235.0,
+      "syntheticMedian": 245.0,
+      "syntheticMinusQ30": 10.0,
+      "syntheticOverQ30": 1.0425531914893618
+    },
+    "crossing.estimatedRatsnestCrossings": {
+      "q30Median": 40.5,
+      "syntheticMedian": 35,
+      "syntheticMinusQ30": -5.5,
+      "syntheticOverQ30": 0.8641975308641975
+    },
+    "crossing.netBoundingBoxOverlapPairs": {
+      "q30Median": 61.0,
+      "syntheticMedian": 56,
+      "syntheticMinusQ30": -5.0,
+      "syntheticOverQ30": 0.9180327868852459
+    },
+    "locality.componentPairDistanceMedian": {
+      "q30Median": 860.0,
+      "syntheticMedian": 700.0,
+      "syntheticMinusQ30": -160.0,
+      "syntheticOverQ30": 0.813953488372093
+    },
+    "locality.netHplTotal": {
+      "q30Median": 23310.0,
+      "syntheticMedian": 12360,
+      "syntheticMinusQ30": -10950.0,
+      "syntheticOverQ30": 0.5302445302445302
+    },
+    "locality.netMstTotal": {
+      "q30Median": 28185.0,
+      "syntheticMedian": 18210,
+      "syntheticMinusQ30": -9975.0,
+      "syntheticOverQ30": 0.6460883448642896
+    },
+    "locality.regionCrossingNetFraction": {
+      "q30Median": 0.28,
+      "syntheticMedian": 0.125,
+      "syntheticMinusQ30": -0.15500000000000003,
+      "syntheticOverQ30": 0.4464285714285714
+    },
+    "locality.regionTransitionCount": {
+      "q30Median": 18.0,
+      "syntheticMedian": 12,
+      "syntheticMinusQ30": -6.0,
+      "syntheticOverQ30": 0.6666666666666666
+    },
+    "locality.sameRegionPairFraction": {
+      "q30Median": 0.228310502283105,
+      "syntheticMedian": 0.21481481481481482,
+      "syntheticMinusQ30": -0.01349568746829019,
+      "syntheticOverQ30": 0.940888888888889
+    },
+    "structure.connectors": {
+      "q30Median": 6.0,
+      "syntheticMedian": 9,
+      "syntheticMinusQ30": 3.0,
+      "syntheticOverQ30": 1.5
+    },
+    "structure.nets": {
+      "q30Median": 25.0,
+      "syntheticMedian": 24,
+      "syntheticMinusQ30": -1.0,
+      "syntheticOverQ30": 0.96
+    },
+    "structure.pads": {
+      "q30Median": 82.0,
+      "syntheticMedian": 96,
+      "syntheticMinusQ30": 14.0,
+      "syntheticOverQ30": 1.170731707317073
+    },
+    "structure.parts": {
+      "q30Median": 33.0,
+      "syntheticMedian": 33,
+      "syntheticMinusQ30": 0.0,
+      "syntheticOverQ30": 1.0
+    }
+  },
+  "methodology": {
+    "bboxOverlapProxy": "Pairs of distinct net pad bounding boxes with positive-area overlap.",
+    "componentPairDistance": "For component pairs sharing a net, Manhattan distance between component bounds centers.",
+    "connectorEdgeMargin": "Minimum axis clearance from a connector pad center to the board outline.",
+    "connectorLocality": "For each connector pad, nearest pad on the same electrical net from another component.",
+    "courtyard": "Sum and pairwise positive-area overlap of exported routing courtyards; touching edges are not overlaps.",
+    "crossingProxy": "Proper interior intersections between straight-line MST segments from different nets; this is a geometry proxy, not routed copper.",
+    "q30Population": "All actual exact-root placements for every requested seed and candidate; no best-row filtering.",
+    "q30Source": "Current Q30PhysicalPilot RootPlanManifest.EXACT_ROOT delegates to Rb30Plan.resolve(seed).board().",
+    "ratsnestHpl": "For each net, pad bounding-box half-perimeter (Manhattan dx+dy), summed across nets.",
+    "ratsnestMst": "Deterministic Manhattan minimum spanning tree lower-bound over each net's pad coordinates.",
+    "regionMapping": "Q30 uses RootPlanManifest.rootPlacement() region expression; synthetic uses Q30TwoLayerScaling.fixture() POWER/CH<n> domains.",
+    "regionTransitions": "For each net, the number of unique regions minus one; this is a region-incidence proxy, not ordered trace transitions.",
+    "syntheticPopulation": "Every count=33 FULLER_TWO_LAYER row marked SUCCESS and validMixedLayer=true in thirtythree-raw.txt.",
+    "units": "Board coordinates and areas are the pilot's integer coordinate units; distances use Manhattan units."
+  },
+  "schema": 1
+}

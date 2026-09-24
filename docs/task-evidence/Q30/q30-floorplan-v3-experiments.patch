@@ -1,0 +1,384 @@
+diff --git a/docs/task-evidence/Q30/Q30PhysicalPilot.java b/docs/task-evidence/Q30/Q30PhysicalPilot.java
+index d47b0bd..a79d54e 100644
+--- a/docs/task-evidence/Q30/Q30PhysicalPilot.java
++++ b/docs/task-evidence/Q30/Q30PhysicalPilot.java
+@@ -30,7 +30,12 @@ public final class Q30PhysicalPilot {
+         EXACT_ROOT,
+         NO_CONNECTOR_ANCHORS,
+         COLLAPSED_REGIONS,
+-        WIDER_ACCESS_MARGIN
++        WIDER_ACCESS_MARGIN,
++        CHANNEL_ZONES,
++        CHANNEL_ZONES_POWER_SPLIT,
++        SENSOR_CONNECTORS_RIGHT,
++        MANUAL_CHANNELS,
++        COMPACT_MANUAL
+     }
+ 
+     private static final class PartSpec {
+@@ -528,10 +533,11 @@ public final class Q30PhysicalPilot {
+                         PcbPlacementConstraints.Anchor.NONE;
+                 if (variant == RootPlacementVariant.NO_CONNECTOR_ANCHORS)
+                     anchor = PcbPlacementConstraints.Anchor.NONE;
+-                String regionId = variant == RootPlacementVariant.COLLAPSED_REGIONS ?
+-                    "rb30-all" : region;
+-                String regionLabel = variant == RootPlacementVariant.COLLAPSED_REGIONS ?
+-                    "RB30 all packages" : region;
++                if (variant == RootPlacementVariant.SENSOR_CONNECTORS_RIGHT &&
++                        (id.equals("JSA") || id.equals("JSB")))
++                    anchor = PcbPlacementConstraints.Anchor.RIGHT;
++                String regionId = placementRegion(region, variant);
++                String regionLabel = regionId;
+                 int accessMargin = variant == RootPlacementVariant.WIDER_ACCESS_MARGIN ?
+                     40 : 20;
+                 parts.add(new PcbPlacementConstraints.Part(id, regionId, regionLabel,
+@@ -540,6 +546,25 @@ public final class Q30PhysicalPilot {
+             return new PcbPlacementConstraints(parts,
+                 new Vector<PcbPlacementConstraints.Barrier>(), PcbCopperLayer.BOTTOM);
+         }
++
++        private String placementRegion(String region, RootPlacementVariant variant) {
++            if (variant == RootPlacementVariant.COLLAPSED_REGIONS)
++                return "rb30-all";
++            if (variant == RootPlacementVariant.CHANNEL_ZONES ||
++                    variant == RootPlacementVariant.CHANNEL_ZONES_POWER_SPLIT) {
++                if (region.equals("sensor-a") || region.equals("output-a"))
++                    return "channel-a";
++                if (region.equals("sensor-b") || region.equals("output-b"))
++                    return "channel-b";
++                if (variant == RootPlacementVariant.CHANNEL_ZONES_POWER_SPLIT) {
++                    if (region.equals("entry") || region.equals("regulation") ||
++                            region.equals("sensor-reference")) return "power";
++                    return region;
++                }
++                return "power-status";
++            }
++            return region;
++        }
+     }
+ 
+     private static final class RouteOutcome {
+@@ -605,6 +630,46 @@ public final class Q30PhysicalPilot {
+             runRootAdjustmentPilot();
+             return;
+         }
++        if (args.length > 0 && "--root-inspect".equals(args[0])) {
++            inspectRootPlan(0L, 0, RootPlacementVariant.EXACT_ROOT);
++            return;
++        }
++        if (args.length > 0 && "--root-inspect-collapsed".equals(args[0])) {
++            inspectRootPlan(0L, 0, RootPlacementVariant.COLLAPSED_REGIONS);
++            return;
++        }
++        if (args.length > 0 && "--root-routing-sweep".equals(args[0])) {
++            runRootRoutingSeedSweep(0L, 0, RootPlacementVariant.EXACT_ROOT);
++            return;
++        }
++        if (args.length > 0 && "--root-manual".equals(args[0])) {
++            runRoot("manual", 0L, RootPlacementVariant.MANUAL_CHANNELS);
++            return;
++        }
++        if (args.length > 0 && "--root-manual-routing-sweep".equals(args[0])) {
++            runRootRoutingSeedSweep(0L, 0, RootPlacementVariant.MANUAL_CHANNELS);
++            return;
++        }
++        if (args.length > 0 && "--root-manual-routing-sweep5".equals(args[0])) {
++            runRootRoutingSeedSweep(0L, 5, RootPlacementVariant.MANUAL_CHANNELS);
++            return;
++        }
++        if (args.length > 0 && "--root-manual-inspect".equals(args[0])) {
++            inspectRootPlan(0L, 0, RootPlacementVariant.MANUAL_CHANNELS);
++            return;
++        }
++        if (args.length > 0 && "--root-manual-attempt-sweep".equals(args[0])) {
++            runRootAttemptSweep(0L, 0);
++            return;
++        }
++        if (args.length > 0 && "--root-sensor-right".equals(args[0])) {
++            runRoot("sensor-right", 0L, RootPlacementVariant.SENSOR_CONNECTORS_RIGHT);
++            return;
++        }
++        if (args.length > 0 && "--root-compact-manual".equals(args[0])) {
++            runRoot("compact-manual", 0L, RootPlacementVariant.COMPACT_MANUAL);
++            return;
++        }
+ 
+         Vector<RouteOutcome> outcomes = new Vector<RouteOutcome>();
+         for (long seed : REPRESENTATIVE) outcomes.add(run("representative", seed));
+@@ -765,6 +830,266 @@ public final class Q30PhysicalPilot {
+             ",\"normalAdmission\":\"REJECTED\",\"structuralOnly\":true}");
+     }
+ 
++    private static void inspectRootPlan(long seed, int candidate,
++            RootPlacementVariant variant) {
++        RootPlanManifest manifest = new RootPlanManifest(seed, variant);
++        PcbPlacementPlanner planner = new PcbPlacementPlanner(manifest.registry);
++        PcbPlacementPlanner.Plan plan = planner.plan(manifest.board,
++            manifest.board.getPlacementConstraints(), manifest.layoutSeed, candidate);
++        if (variant == RootPlacementVariant.MANUAL_CHANNELS ||
++                variant == RootPlacementVariant.COMPACT_MANUAL)
++            plan = manualChannelPlan(manifest, plan);
++        System.out.println("Q30_ROOT_INSPECT {\"seed\":\"" + seed +
++            "\",\"candidate\":" + candidate + "\",\"variant\":\"" +
++            variant + "\",\"outline\":\"" + rectangle(plan.outline) + "\"}");
++        for (PcbFootprint footprint : plan.footprints) {
++            PcbComponentPlacement placement = footprint.getPlacement();
++            System.out.println("Q30_ROOT_PART {\"id\":\"" +
++                placement.getComponentId() + "\",\"bounds\":\"" +
++                rectangle(placement.getBounds()) + "\",\"courtyard\":\"" +
++                rectangle(placement.getRoutingCourtyard()) + "\",\"pads\":\"" +
++                padSummary(footprint.getPads()) + "\"}");
++        }
++        for (String netId : manifest.board.getNetIds()) {
++            BoardNet net = manifest.board.getNet(netId);
++            int minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE;
++            int maxX = Integer.MIN_VALUE, maxY = Integer.MIN_VALUE;
++            StringBuilder pads = new StringBuilder();
++            for (String padId : net.getPadIds()) {
++                PcbPadPlacement pad = findPad(plan, padId);
++                minX = Math.min(minX, pad.getX()); minY = Math.min(minY, pad.getY());
++                maxX = Math.max(maxX, pad.getX()); maxY = Math.max(maxY, pad.getY());
++                if (pads.length() > 0) pads.append(',');
++                pads.append(padId).append('@').append(pad.getX()).append('/').append(pad.getY());
++            }
++            System.out.println("Q30_ROOT_NET {\"id\":\"" + netId +
++                "\",\"role\":\"" + net.getRoutingRole() + "\",\"pads\":\"" +
++                pads + "\",\"box\":\"" + minX + "," + minY + "," + maxX +
++                "," + maxY + "\"}");
++        }
++    }
++
++    private static PcbPadPlacement findPad(PcbPlacementPlanner.Plan plan,
++            String padId) {
++        for (PcbFootprint footprint : plan.footprints)
++            for (PcbPadPlacement pad : footprint.getPads())
++                if (pad.getPadId().equals(padId)) return pad;
++        throw new IllegalStateException("Missing layout pad " + padId);
++    }
++
++    private static String rectangle(Rectangle value) {
++        return value.x + "," + value.y + "," + value.width + "," + value.height;
++    }
++
++    private static String padSummary(Vector<PcbPadPlacement> pads) {
++        StringBuilder result = new StringBuilder();
++        for (PcbPadPlacement pad : pads) {
++            if (result.length() > 0) result.append(';');
++            result.append(pad.getPadId()).append('@').append(pad.getX()).append(',')
++                .append(pad.getY()).append(" escape=").append(pad.getEscapeDx())
++                .append(',').append(pad.getEscapeDy()).append(',')
++                .append(pad.getEscapeLength());
++        }
++        return result.toString();
++    }
++
++    private static void runRootRoutingSeedSweep(long seed, int candidate,
++            RootPlacementVariant variant) throws Exception {
++        RootPlanManifest manifest = new RootPlanManifest(seed, variant);
++        PcbPlacementPlanner planner = new PcbPlacementPlanner(manifest.registry);
++        PcbPlacementPlanner.Plan plan = planner.plan(manifest.board,
++            manifest.board.getPlacementConstraints(), manifest.layoutSeed, candidate);
++        if (variant == RootPlacementVariant.MANUAL_CHANNELS ||
++                variant == RootPlacementVariant.COMPACT_MANUAL)
++            plan = manualChannelPlan(manifest, plan);
++        long[] salts = new long[] { 0L, 1L, 2L, 3L, 4L, 5L, 6L, 7L,
++            0x632be59bd9b4e019L, 0x9e3779b97f4a7c15L, 0xbf58476d1ce4e5b9L,
++            0x94d049bb133111ebL, 0xd1b54a32d192ed03L, 0x8cb92baa3f3d8dd7L,
++            0x123456789abcdefL, 0xfedcba987654321L };
++        for (long salt : salts) {
++            PcbBoardLayout layout = plan.materialize();
++            String outcome = "ROUTED";
++            String detail = "";
++            try {
++                PcbNetRouter.route(layout, manifest.board, plan.outline, candidate,
++                    OBSERVER, true, rootRoutingSeed(manifest, candidate) ^ salt,
++                    0, null);
++                layout.validateRoutingGeometry(manifest.board);
++                layout.validateRouteQuality();
++            } catch (PcbNetRouter.Rejected rejected) {
++                outcome = "ROUTING_" + rejected.reason;
++                detail = rejected.blockedNet == null ? "" : rejected.blockedNet;
++            } catch (PcbBoardLayout.RouteQualityRejectedException rejected) {
++                outcome = "QUALITY_" + rejected.getKind();
++            }
++            System.out.println("Q30_ROOT_ROUTING_SEED {\"seed\":\"" + seed +
++                "\",\"candidate\":" + candidate + "\",\"salt\":\"" +
++                Long.toHexString(salt) + "\",\"outcome\":\"" + outcome +
++                "\",\"detail\":\"" + escape(detail) + "\"}");
++            if ("ROUTED".equals(outcome)) break;
++        }
++    }
++
++    private static void runRootAttemptSweep(long seed, int candidate)
++            throws Exception {
++        RootPlanManifest manifest = new RootPlanManifest(seed,
++            RootPlacementVariant.MANUAL_CHANNELS);
++        PcbPlacementPlanner planner = new PcbPlacementPlanner(manifest.registry);
++        PcbPlacementPlanner.Plan plan = planner.plan(manifest.board,
++            manifest.board.getPlacementConstraints(), manifest.layoutSeed, candidate);
++        plan = manualChannelPlan(manifest, plan);
++        for (int attempt = 8; attempt < 16; attempt++) {
++            PcbBoardLayout layout = plan.materialize();
++            String outcome = "ROUTED";
++            String detail = "";
++            try {
++                PcbNetRouter.route(layout, manifest.board, plan.outline, attempt,
++                    OBSERVER, true, rootRoutingSeed(manifest, candidate), 0, null);
++                layout.validateRoutingGeometry(manifest.board);
++                layout.validateRouteQuality();
++            } catch (PcbNetRouter.Rejected rejected) {
++                outcome = "ROUTING_" + rejected.reason;
++                detail = rejected.blockedNet == null ? "" : rejected.blockedNet;
++            } catch (PcbBoardLayout.RouteQualityRejectedException rejected) {
++                outcome = "QUALITY_" + rejected.getKind();
++            }
++            System.out.println("Q30_ROOT_ATTEMPT {\"attempt\":" + attempt +
++                ",\"outcome\":\"" + outcome + "\",\"detail\":\"" +
++                escape(detail) + "\"}");
++            if ("ROUTED".equals(outcome)) break;
++        }
++    }
++
++    private static PcbPlacementPlanner.Plan manualChannelPlan(
++            RootPlanManifest manifest, PcbPlacementPlanner.Plan source) {
++        TreeMap<String, PcbFootprint> byId = new TreeMap<String, PcbFootprint>();
++        for (PcbFootprint footprint : source.footprints)
++            byId.put(footprint.getPlacement().getComponentId(), footprint);
++        TreeMap<String, Point> points = new TreeMap<String, Point>();
++        boolean compact = manifest.placementVariant == RootPlacementVariant.COMPACT_MANUAL;
++        if (compact) {
++            points.put("J1", new Point(40, 100));
++            points.put("F1", new Point(250, 140));
++            points.put("DREV", new Point(550, 140));
++            points.put("C12", new Point(850, 110));
++            points.put("CIN", new Point(1000, 110));
++            points.put("U1", new Point(1180, 100));
++            points.put("C5", new Point(1430, 120));
++            points.put("REN", new Point(1560, 140));
++            points.put("RLED", new Point(1800, 140));
++            points.put("LED1", new Point(2100, 110));
++            points.put("JSA", new Point(40, 550));
++            points.put("RSA", new Point(250, 550));
++            points.put("U2A", new Point(550, 500));
++            points.put("RREF_HA", new Point(900, 500));
++            points.put("RREF_LA", new Point(900, 780));
++            points.put("RDA", new Point(1200, 550));
++            points.put("RPDA", new Point(1500, 550));
++            points.put("QA", new Point(1770, 500));
++            points.put("DA", new Point(1940, 520));
++            points.put("KA", new Point(2220, 680));
++            points.put("JOA", new Point(2570, 520));
++            points.put("JSB", new Point(40, 1150));
++            points.put("RSB", new Point(250, 1150));
++            points.put("U2B", new Point(550, 1100));
++            points.put("RREF_HB", new Point(900, 1100));
++            points.put("RREF_LB", new Point(900, 1380));
++            points.put("RDB", new Point(1200, 1150));
++            points.put("RPDB", new Point(1500, 1150));
++            points.put("QB", new Point(1770, 1100));
++            points.put("DB", new Point(1940, 1120));
++            points.put("KB", new Point(2220, 1280));
++            points.put("JOB", new Point(2570, 1120));
++            points.put("JLOAD", new Point(2600, 900));
++        } else {
++            points.put("J1", new Point(70, 120));
++            points.put("F1", new Point(300, 160));
++            points.put("DREV", new Point(650, 160));
++            points.put("C12", new Point(1000, 130));
++            points.put("CIN", new Point(1200, 130));
++            points.put("U1", new Point(1400, 120));
++            points.put("C5", new Point(1700, 140));
++            points.put("REN", new Point(2000, 170));
++        points.put("RLED", new Point(2400, 170));
++            points.put("LED1", new Point(2750, 140));
++            points.put("JSA", new Point(70, 650));
++            points.put("RSA", new Point(300, 650));
++            points.put("U2A", new Point(700, 620));
++            points.put("RREF_HA", new Point(1100, 620));
++            points.put("RREF_LA", new Point(1100, 880));
++            points.put("RDA", new Point(1500, 650));
++            points.put("RPDA", new Point(1900, 650));
++            points.put("QA", new Point(2300, 600));
++            points.put("DA", new Point(2600, 620));
++            points.put("KA", new Point(2850, 800));
++            points.put("JOA", new Point(3200, 620));
++            points.put("JSB", new Point(70, 1300));
++            points.put("RSB", new Point(300, 1300));
++            points.put("U2B", new Point(700, 1270));
++            points.put("RREF_HB", new Point(1100, 1270));
++            points.put("RREF_LB", new Point(1100, 1530));
++            points.put("RDB", new Point(1500, 1300));
++            points.put("RPDB", new Point(1900, 1300));
++            points.put("QB", new Point(2300, 1250));
++            points.put("DB", new Point(2600, 1270));
++            points.put("KB", new Point(2850, 1450));
++            points.put("JOB", new Point(3200, 1270));
++            points.put("JLOAD", new Point(3500, 980));
++        }
++        Vector<PcbFootprint> placed = new Vector<PcbFootprint>();
++        for (String id : manifest.board.getComponentIds()) {
++            PcbFootprint footprint = byId.get(id);
++            Point point = points.get(id);
++            if (footprint == null || point == null)
++                throw new IllegalStateException("Missing manual Q30 position " + id);
++            placed.add(footprint.translated(point.x, point.y));
++        }
++        Rectangle outline = compact ? new Rectangle(20, 20, 2850, 1600) :
++            new Rectangle(20, 20, 3700, 2100);
++        manualDiagnostics(manifest, outline, placed);
++        PcbPlacementPlanner.validate(manifest.board,
++            manifest.board.getPlacementConstraints(), outline, placed);
++        return new PcbPlacementPlanner.Plan(outline, placed, source.regions,
++            source.courtyardArea, source.demandArea, source.candidate,
++            source.evaluations);
++    }
++
++    private static void manualDiagnostics(RootPlanManifest manifest,
++            Rectangle outline, Vector<PcbFootprint> placed) {
++        for (int i = 0; i < placed.size(); i++) {
++            PcbFootprint first = placed.get(i);
++            PcbPlacementConstraints.Part firstDemand = manifest.board
++                .getPlacementConstraints().get(first.getPlacement().getComponentId());
++            Rectangle firstEnvelope = PcbPlacementPlanner.envelope(first,
++                firstDemand.accessMargin);
++            if (firstEnvelope.x < outline.x + 10 || firstEnvelope.y < outline.y + 10 ||
++                    firstEnvelope.x + firstEnvelope.width > outline.x + outline.width - 10 ||
++                    firstEnvelope.y + firstEnvelope.height > outline.y + outline.height - 10)
++                System.out.println("Q30_MANUAL_DIAGNOSTIC outside=" +
++                    first.getPlacement().getComponentId() + " envelope=" +
++                    rectangle(firstEnvelope));
++            for (int j = i + 1; j < placed.size(); j++) {
++                PcbFootprint second = placed.get(j);
++                PcbPlacementConstraints.Part secondDemand = manifest.board
++                    .getPlacementConstraints().get(second.getPlacement().getComponentId());
++                Rectangle secondEnvelope = PcbPlacementPlanner.envelope(second,
++                    secondDemand.accessMargin);
++                if (firstEnvelope.intersects(secondEnvelope))
++                    System.out.println("Q30_MANUAL_DIAGNOSTIC overlap=" +
++                        first.getPlacement().getComponentId() + "/" +
++                        second.getPlacement().getComponentId() + " first=" +
++                        rectangle(firstEnvelope) + " second=" + rectangle(secondEnvelope));
++                for (PcbPadPlacement pad : first.getPads()) {
++                    int ex = pad.getX() + pad.getEscapeDx() * pad.getEscapeLength();
++                    int ey = pad.getY() + pad.getEscapeDy() * pad.getEscapeLength();
++                    if (second.getPlacement().getRoutingCourtyard().contains(ex, ey))
++                        System.out.println("Q30_MANUAL_DIAGNOSTIC escape=" +
++                            pad.getPadId() + " in=" + second.getPlacement().getComponentId());
++                }
++            }
++        }
++    }
++
+     private static RootRouteOutcome runRoot(String cohort, long seed) throws Exception {
+         return runRoot(cohort, seed, RootPlacementVariant.EXACT_ROOT);
+     }
+@@ -781,6 +1106,9 @@ public final class Q30PhysicalPilot {
+                 plan = planner.plan(result.manifest.board,
+                     result.manifest.board.getPlacementConstraints(),
+                     result.manifest.layoutSeed, candidate);
++                if (variant == RootPlacementVariant.MANUAL_CHANNELS ||
++                        variant == RootPlacementVariant.COMPACT_MANUAL)
++                    plan = manualChannelPlan(result.manifest, plan);
+                 result.placementCandidates++;
+             } catch (PcbPlacementPlanner.Rejected rejected) {
+                 lastOutcome = "PLACEMENT_" + rejected.reason;

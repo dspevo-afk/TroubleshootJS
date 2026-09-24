@@ -1,0 +1,190 @@
+{
+  "placements": 72,
+  "policies": {
+    "P05_SINGLE_FACE": {
+      "outcomes": {
+        "NO_PATH": 2,
+        "SEARCH_LIMIT": 70
+      },
+      "rows": 72,
+      "successCandidates": [],
+      "successSeeds": [],
+      "totalExpansions": 71829676,
+      "totalRouteElapsedMs": 18389.6323
+    },
+    "P07_FULLER_TWO_LAYER": {
+      "outcomes": {
+        "BRANCH_SEARCH_LIMIT": 50,
+        "NO_PATH": 6,
+        "SUCCESS": 6,
+        "TOTAL_SEARCH_LIMIT": 10
+      },
+      "rows": 72,
+      "successCandidates": [
+        {
+          "area": 5610000,
+          "bottomLength": 30510,
+          "bottomSegments": 113,
+          "bottomTraces": 66,
+          "candidate": 1,
+          "elapsedMs": 1006.7812,
+          "expansions": 500236,
+          "genuineTwoLayer": true,
+          "qualityScore": 184760.19290965216,
+          "seed": "0",
+          "topLength": 5970,
+          "topSegments": 37,
+          "topTraces": 27,
+          "topology": "RB30_SEPARATE_DIRECT_A_BJT_B_BJT",
+          "uniqueCopper": 36480,
+          "validConnectivityShortClearance": true,
+          "vias": 37
+        },
+        {
+          "area": 5292000,
+          "bottomLength": 29630,
+          "bottomSegments": 134,
+          "bottomTraces": 70,
+          "candidate": 4,
+          "elapsedMs": 2231.9904,
+          "expansions": 852884,
+          "genuineTwoLayer": true,
+          "qualityScore": 175728.11114338486,
+          "seed": "23",
+          "topLength": 4660,
+          "topSegments": 33,
+          "topTraces": 27,
+          "topology": "RB30_SEPARATE_DIRECT_A_NMOS_B_NMOS",
+          "uniqueCopper": 34290,
+          "validConnectivityShortClearance": true,
+          "vias": 42
+        },
+        {
+          "area": 5115000,
+          "bottomLength": 32090,
+          "bottomSegments": 125,
+          "bottomTraces": 63,
+          "candidate": 5,
+          "elapsedMs": 1874.9332,
+          "expansions": 986289,
+          "genuineTwoLayer": true,
+          "qualityScore": 181815.44459422602,
+          "seed": "23",
+          "topLength": 7860,
+          "topSegments": 46,
+          "topTraces": 29,
+          "topology": "RB30_SEPARATE_DIRECT_A_NMOS_B_NMOS",
+          "uniqueCopper": 39950,
+          "validConnectivityShortClearance": true,
+          "vias": 38
+        },
+        {
+          "area": 4658000,
+          "bottomLength": 31310,
+          "bottomSegments": 122,
+          "bottomTraces": 67,
+          "candidate": 4,
+          "elapsedMs": 1690.3001,
+          "expansions": 917447,
+          "genuineTwoLayer": true,
+          "qualityScore": 169259.072277096,
+          "seed": "37",
+          "topLength": 5650,
+          "topSegments": 42,
+          "topTraces": 27,
+          "topology": "RB30_SHARED_HYSTERETIC_A_BJT_B_BJT",
+          "uniqueCopper": 36960,
+          "validConnectivityShortClearance": true,
+          "vias": 40
+        },
+        {
+          "area": 5115600,
+          "bottomLength": 27960,
+          "bottomSegments": 120,
+          "bottomTraces": 66,
+          "candidate": 2,
+          "elapsedMs": 1302.6284,
+          "expansions": 711048,
+          "genuineTwoLayer": true,
+          "qualityScore": 175806.69712949448,
+          "seed": "59",
+          "topLength": 3890,
+          "topSegments": 30,
+          "topTraces": 24,
+          "topology": "RB30_SHARED_HYSTERETIC_A_BJT_B_NMOS",
+          "uniqueCopper": 31850,
+          "validConnectivityShortClearance": true,
+          "vias": 36
+        },
+        {
+          "area": 4834800,
+          "bottomLength": 27590,
+          "bottomSegments": 136,
+          "bottomTraces": 74,
+          "candidate": 5,
+          "elapsedMs": 1353.8091,
+          "expansions": 513914,
+          "genuineTwoLayer": true,
+          "qualityScore": 165081.99819273714,
+          "seed": "83",
+          "topLength": 6580,
+          "topSegments": 36,
+          "topTraces": 28,
+          "topology": "RB30_SEPARATE_DIRECT_A_BJT_B_NMOS",
+          "uniqueCopper": 34170,
+          "validConnectivityShortClearance": true,
+          "vias": 46
+        }
+      ],
+      "successSeeds": [
+        "0",
+        "23",
+        "37",
+        "59",
+        "83"
+      ],
+      "totalExpansions": 49856007,
+      "totalRouteElapsedMs": 117513.8688
+    },
+    "P07_ONE_LAYER": {
+      "outcomes": {
+        "BRANCH_QUALITY_LIMIT": 41,
+        "BRANCH_SEARCH_LIMIT": 7,
+        "NO_PATH": 24
+      },
+      "rows": 72,
+      "successCandidates": [],
+      "successSeeds": [],
+      "totalExpansions": 26226797,
+      "totalRouteElapsedMs": 13432.7312
+    },
+    "P07_RESTRICTED_TWO_LAYER": {
+      "outcomes": {
+        "BRANCH_QUALITY_LIMIT": 8,
+        "BRANCH_SEARCH_LIMIT": 18,
+        "NO_PATH": 44,
+        "TOTAL_SEARCH_LIMIT": 2
+      },
+      "rows": 72,
+      "successCandidates": [],
+      "successSeeds": [],
+      "totalExpansions": 39721408,
+      "totalRouteElapsedMs": 60459.6398
+    }
+  },
+  "routeRows": 288,
+  "seeds": [
+    "0",
+    "1",
+    "3",
+    "17",
+    "42",
+    "-1",
+    "11",
+    "23",
+    "37",
+    "59",
+    "83",
+    "-23"
+  ]
+}

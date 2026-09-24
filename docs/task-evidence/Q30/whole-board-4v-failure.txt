@@ -1,0 +1,47 @@
+node 11 unconnected
+converged after 25 iterations, timeStep = 1.0E-4
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+Q30_WHOLE_BOARD both-unloaded rail=4.999801863566652 outA=2.159999614209046E-6 outB=2.159999610738443E-6 coilA=1.0199504768548806E-11 coilB=1.019950529590474E-11 regulatorInputAmps=0.0029927073063007693
+node 11 unconnected
+converged after 25 iterations, timeStep = 1.0E-4
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 13 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+Q30_WHOLE_BOARD a-loaded rail=4.99586529968214 outA=11.983356448776867 outB=2.1594004443771943E-6 coilA=0.0394408212744108 coilB=1.0191625987587828E-11 regulatorInputAmps=0.042358176903326814
+node 11 unconnected
+converged after 25 iterations, timeStep = 1.0E-4
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 13 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+Q30_WHOLE_BOARD both-loaded rail=4.991942418900751 outA=11.980033277870218 outB=11.980033277870218 coilA=0.039409295798596485 coilB=0.03940929579859649 regulatorInputAmps=0.08158692077440799
+node 11 unconnected
+Q30_WHOLE_BOARD main-isolated rail=0.0 outA=2.159999614209046E-6 outB=2.159999610738443E-6 coilA=0.0 coilB=0.0 regulatorInputAmps=-2.9589921432501545E-27
+node 11 unconnected
+converged after 25 iterations, timeStep = 1.0E-4
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 13 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+Q30_WHOLE_BOARD load-isolated rail=4.991942418900751 outA=-1.7763568394002505E-15 outB=-1.7763568394002505E-15 coilA=0.039409295798596485 coilB=0.03940929579859649 regulatorInputAmps=0.08158692077440799
+node 11 unconnected
+converged after 25 iterations, timeStep = 1.0E-4
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 13 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+Q30_WHOLE_BOARD sensor-a-isolated rail=4.99586529968214 outA=2.159400446786908E-6 outB=11.983356448776869 coilA=1.0191630706035677E-11 coilB=0.0394408212744108 regulatorInputAmps=0.042358176903326814
+node 11 unconnected
+Q30_WHOLE_FAILURE main-4v time=0.0 input=0.4989114269613438 rail=-1.565862387261389E-5 enable=0.49397170986228056 coilA=1.5738477669908775E-7 coilB=1.5738477669908889E-7 reason=Negative E02 rail output is unsupported
+Exception in thread "main" java.lang.IllegalArgumentException: Negative E02 rail output is unsupported
+	at com.lushprojects.circuitjs1.client.AbstractRailRegulatorElm.validateOperatingPoint(AbstractRailRegulatorElm.java:466)
+	at com.lushprojects.circuitjs1.client.AbstractRailRegulatorElm.doStep(AbstractRailRegulatorElm.java:127)
+	at com.lushprojects.circuitjs1.client.CirSim.runCircuitOwned(CirSim.java:3343)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.advanceFor(CircuitSolverExecutor.java:144)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.advanceFor(CircuitSolverExecutor.java:135)
+	at com.lushprojects.circuitjs1.client.Q30WholeBoardElectricalPilot.observe(Q30WholeBoardElectricalPilot.java:101)
+	at com.lushprojects.circuitjs1.client.Q30WholeBoardElectricalPilot.main(Q30WholeBoardElectricalPilot.java:24)

@@ -168,48 +168,106 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         if (targetSidebar == null)
             throw new IllegalArgumentException("Missing workbench sidebar");
         sidebar = targetSidebar;
-        if (benchPowerPanel == null) benchPowerPanel = new BenchPowerPanel(sim, instance);
-        sidebar.add(benchPowerPanel);
-        benchPowerPanel.start();
-        sidebar.add(viewPanel);
-        sidebar.add(ticketPanel);
-        sidebar.add(panel);
-        sidebar.add(partsPanel);
-        attachedToSidebar = true;
-        // Normal players use the drawer. Detached/developer renderer fixtures
-        // retain their canonical tray projection as an independent geometry oracle.
-        if (sim.playerSessionController != null) renderer.enableTrayDrawer();
-        viewListeners = installViewListeners(this, sim.cv.getElement());
-        sim.registerAttachedPcbWorkbenchForDeveloperVerification(this);
+        try {
+            if (benchPowerPanel == null) benchPowerPanel = new BenchPowerPanel(sim, instance);
+            sidebar.add(benchPowerPanel);
+            benchPowerPanel.start();
+            sidebar.add(viewPanel);
+            sidebar.add(ticketPanel);
+            sidebar.add(panel);
+            sidebar.add(partsPanel);
+            attachedToSidebar = true;
+            // Normal players use the drawer. Detached/developer renderer fixtures
+            // retain their canonical tray projection as an independent geometry oracle.
+            if (sim.playerSessionController != null) renderer.enableTrayDrawer();
+            viewListeners = installViewListeners(this, sim.cv.getElement());
+            sim.registerAttachedPcbWorkbenchForDeveloperVerification(this);
+        } catch (Throwable failure) {
+            try {
+                detachFromSidebar();
+            } catch (Throwable cleanup) {
+                if (cleanup != failure) failure.addSuppressed(cleanup);
+            }
+            rethrowAttachFailure(failure);
+        }
     }
 
     void detachFromSidebar() {
-        suspendBenchInstrument(benchInstrumentOwner);
-        suspendTrayDrawer(this);
-        closeComponentMenu();
-        closeInteractionNotice();
-        cancelViewFrame(viewFrame); viewFrame = null;
-        tabView(false);
-        cancelViewGesture();
-        removeViewListeners(viewListeners); viewListeners = null;
-        if (!attachedToSidebar)
-            return;
-        sidebar.remove(ticketPanel);
-        sidebar.remove(panel);
-        sidebar.remove(partsPanel);
-        sidebar.remove(viewPanel);
-        benchPowerPanel.stop(); sidebar.remove(benchPowerPanel);
+        Throwable failure = null;
+        try { suspendBenchInstrument(benchInstrumentOwner); }
+        catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+        try { suspendTrayDrawer(this); }
+        catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+        try { closeComponentMenu(); }
+        catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+        try { closeInteractionNotice(); }
+        catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+        try { cancelViewFrame(viewFrame); }
+        catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+        viewFrame = null;
+        try { tabView(false); }
+        catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+        try { cancelViewGesture(); }
+        catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+        try { removeViewListeners(viewListeners); }
+        catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+        viewListeners = null;
+        VerticalPanel attachedSidebar = sidebar;
+        if (attachedSidebar != null) {
+            try { attachedSidebar.remove(ticketPanel); }
+            catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+            try { attachedSidebar.remove(panel); }
+            catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+            try { attachedSidebar.remove(partsPanel); }
+            catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+            try { attachedSidebar.remove(viewPanel); }
+            catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+            try {
+                if (benchPowerPanel != null) attachedSidebar.remove(benchPowerPanel);
+            } catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+        }
+        try {
+            if (benchPowerPanel != null) benchPowerPanel.stop();
+        } catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
         attachedToSidebar = false;
-        sim.unregisterAttachedPcbWorkbenchForDeveloperVerification(this);
+        try { sim.unregisterAttachedPcbWorkbenchForDeveloperVerification(this); }
+        catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
         sidebar = null;
+        rethrowDetachFailure(failure);
     }
 
     void disposeForDeveloperVerification() {
-        detachFromSidebar();
-        renderHost.detach();
-        ticketPanel.clear();
-        panel.clear();
-        partsPanel.clear();
+        Throwable failure = null;
+        try { detachFromSidebar(); }
+        catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+        try { renderHost.detach(); }
+        catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+        try { ticketPanel.clear(); }
+        catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+        try { panel.clear(); }
+        catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+        try { partsPanel.clear(); }
+        catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+        rethrowDetachFailure(failure);
+    }
+
+    private static Throwable retainDetachFailure(Throwable primary, Throwable cleanup) {
+        if (primary == null) return cleanup;
+        if (cleanup != null && cleanup != primary) primary.addSuppressed(cleanup);
+        return primary;
+    }
+
+    private static void rethrowAttachFailure(Throwable failure) {
+        if (failure instanceof Error) throw (Error)failure;
+        if (failure instanceof RuntimeException) throw (RuntimeException)failure;
+        throw new IllegalStateException("PCB workbench attach failed", failure);
+    }
+
+    private static void rethrowDetachFailure(Throwable failure) {
+        if (failure == null) return;
+        if (failure instanceof Error) throw (Error)failure;
+        if (failure instanceof RuntimeException) throw (RuntimeException)failure;
+        throw new IllegalStateException("PCB workbench detach failed", failure);
     }
 
     boolean isAttachedToSidebarForDeveloperVerification() { return attachedToSidebar; }

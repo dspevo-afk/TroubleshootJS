@@ -1,0 +1,144 @@
+PHYSICAL_MATRIX|LED_INDICATOR|EASY|20|20|20|20|20|11|19|0|20|951
+PHYSICAL_MATRIX|DIODE_PROTECTED_INDICATOR|EASY|20|20|20|20|20|15|17|0|20|484
+PHYSICAL_MATRIX|PARALLEL_DUAL_INDICATOR|EASY|20|20|20|20|20|19|17|0|20|902
+PHYSICAL_MATRIX|RC_DELAY|EASY|20|20|20|20|20|20|20|0|20|685
+PHYSICAL_MATRIX|NPN_LOW_SIDE_SWITCH|EASY|20|20|20|20|20|20|20|0|20|980
+PHYSICAL_MATRIX|NMOS_LOW_SIDE_SWITCH|EASY|20|20|20|20|20|20|19|0|20|657
+PHYSICAL_MATRIX|RELAY_OUTPUT|EASY|20|20|20|20|20|19|20|0|20|4610
+PHYSICAL_MATRIX|SENSOR_CONTROL|EASY|20|20|20|20|20|20|20|0|20|13028
+PHYSICAL_MATRIX|RB15_CONTROL|EASY|20|20|20|20|20|20|20|0|20|52252
+PHYSICAL_MATRIX|COMPOSED_CONTROLLED_INDICATOR|MEDIUM|20|20|20|20|20|20|19|0|20|15797
+PASS: Quick Play physical matrix contracts pairs=10 assertions=1251
+
+QUICKPLAY_NATIVE method=verifyEligibleFamilies millis=0
+QUICKPLAY_NATIVE method=verifyDeterministicFamilySelection millis=3898
+QUICKPLAY_NATIVE method=verifySelectionEnvelopes millis=3
+QUICKPLAY_NATIVE method=verifyNaturalLedSeedEnvelope millis=10
+QUICKPLAY_NATIVE method=verifyNaturalNpnSeedEnvelope millis=113
+QUICKPLAY_NATIVE method=verifyNaturalNmosSeedEnvelope millis=54
+PASS: Quick Play current seed envelopes and construction
+
+PCB_COMPACTION family=LED_INDICATOR before=325600 after=272800
+PCB_COMPACTION family=DIODE_PROTECTED_INDICATOR before=456000 after=366000
+PCB_COMPACTION family=PARALLEL_DUAL_INDICATOR before=648000 after=477400
+PCB_COMPACTION family=RC_DELAY before=620400 after=508200
+PCB_COMPACTION family=NPN_LOW_SIDE_SWITCH before=837500 after=699600
+PCB_COMPACTION family=NMOS_LOW_SIDE_SWITCH before=737800 after=514600
+PCB_COMPACTION family=RELAY_OUTPUT before=1093400 after=877800
+PCB_COMPACTION family=SENSOR_CONTROL before=1192800 after=1041600
+PCB_COMPACTION family=RB15_CONTROL before=2452800 after=2111400
+PCB_COMPACTION family=COMPOSED_CONTROLLED_INDICATOR before=2009600 after=1817600
+PASS: PCB compaction contracts assertions=475 reducedFamilies=10
+
+PASS: Task43 current physical endpoint contracts assertions=320 legacyFamilies=6 controlledSignedSeeds=4
+
+SERVICE_COVERAGE LED_INDICATOR parts=3
+SERVICE_COVERAGE DIODE_PROTECTED_INDICATOR parts=4
+SERVICE_COVERAGE PARALLEL_DUAL_INDICATOR parts=5
+SERVICE_COVERAGE RC_DELAY parts=6
+SERVICE_COVERAGE NPN_LOW_SIDE_SWITCH parts=7
+SERVICE_COVERAGE NMOS_LOW_SIDE_SWITCH parts=6
+SERVICE_COVERAGE RELAY_OUTPUT parts=9
+SERVICE_COVERAGE SENSOR_CONTROL parts=9
+SERVICE_COVERAGE RB15_CONTROL parts=16
+SERVICE_COVERAGE COMPOSED_CONTROLLED_INDICATOR parts=15
+PASS: physical serviceability contracts assertions=964
+
+E02_NATIVE_REPORT {"schema":"e02-native-regulator-v2","cases":[{"variant":"linear-12v","usableRegulatedCurrentFraction":0.9,"usableRegulatedCurrentAmps":0.18000000000000002,"regulatedVoltageToleranceVolts":0.6000000000000001,"minimumRegulatedOutputVolts":11.4,"light":{"fraction":0.0,"demandFraction":0.0,"resistanceOhms":1000.0,"outputVolts":11.998800119988001,"outputAmps":0.011998800119989994},"loadEnvelope":[{"fraction":0.25,"demandFraction":0.225,"resistanceOhms":266.5666666666666,"outputVolts":11.995500000000002,"outputAmps":0.04499999999998394},{"fraction":0.5,"demandFraction":0.45,"resistanceOhms":133.23333333333332,"outputVolts":11.991000000000001,"outputAmps":0.08999999999998565},{"fraction":0.75,"demandFraction":0.675,"resistanceOhms":88.78888888888889,"outputVolts":11.9865,"outputAmps":0.13500000000000512},{"fraction":0.9,"demandFraction":0.81,"resistanceOhms":73.97407407407407,"outputVolts":11.9838,"outputAmps":0.16199999999999548}],"preLimitEnvelope":[{"fraction":0.95,"demandFraction":0.95,"resistanceOhms":63.0578947368421,"outputVolts":11.981,"outputAmps":0.19000000000000128},{"fraction":0.99,"demandFraction":0.99,"resistanceOhms":60.5060606060606,"outputVolts":11.9802,"outputAmps":0.1980000000000004}],"limitOnset":{"fraction":1.0,"demandFraction":1.0,"resistanceOhms":59.9,"outputVolts":11.979999999999999,"outputAmps":0.2},"short":{"fraction":1.0,"demandFraction":1.0,"resistanceOhms":0.1,"outputVolts":0.020000001196,"outputAmps":0.20000001196}},{"variant":"linear-5v","usableRegulatedCurrentFraction":0.9,"usableRegulatedCurrentAmps":0.18000000000000002,"regulatedVoltageToleranceVolts":0.25,"minimumRegulatedOutputVolts":4.75,"light":{"fraction":0.0,"demandFraction":0.0,"resistanceOhms":1000.0,"outputVolts":4.999500049995,"outputAmps":0.004999500049995831},"loadEnvelope":[{"fraction":0.25,"demandFraction":0.225,"resistanceOhms":111.0111111111111,"outputVolts":4.9955,"outputAmps":0.045000000000001705},{"fraction":0.5,"demandFraction":0.45,"resistanceOhms":55.45555555555555,"outputVolts":4.991,"outputAmps":0.09000000000000341},{"fraction":0.75,"demandFraction":0.675,"resistanceOhms":36.93703703703704,"outputVolts":4.9864999999999995,"outputAmps":0.13500000000000512},{"fraction":0.9,"demandFraction":0.81,"resistanceOhms":30.76419753086419,"outputVolts":4.9838000000000005,"outputAmps":0.16199999999999548}],"preLimitEnvelope":[{"fraction":0.95,"demandFraction":0.95,"resistanceOhms":26.215789473684207,"outputVolts":4.981,"outputAmps":0.19000000000000128},{"fraction":0.99,"demandFraction":0.99,"resistanceOhms":25.15252525252525,"outputVolts":4.980200000000001,"outputAmps":0.19799999999999152}],"limitOnset":{"fraction":1.0,"demandFraction":1.0,"resistanceOhms":24.9,"outputVolts":4.9799999999999995,"outputAmps":0.2},"short":{"fraction":1.0,"demandFraction":1.0,"resistanceOhms":0.1,"outputVolts":0.020000000496000002,"outputAmps":0.20000000496}},{"variant":"linear-3v3","usableRegulatedCurrentFraction":0.9,"usableRegulatedCurrentAmps":0.18000000000000002,"regulatedVoltageToleranceVolts":0.165,"minimumRegulatedOutputVolts":3.135,"light":{"fraction":0.0,"demandFraction":0.0,"resistanceOhms":1000.0,"outputVolts":3.2996700329967004,"outputAmps":0.003299670032994584},"loadEnvelope":[{"fraction":0.25,"demandFraction":0.225,"resistanceOhms":73.23333333333332,"outputVolts":3.2954999999999997,"outputAmps":0.045000000000001705},{"fraction":0.5,"demandFraction":0.45,"resistanceOhms":36.566666666666656,"outputVolts":3.2910000000000004,"outputAmps":0.08999999999999453},{"fraction":0.75,"demandFraction":0.675,"resistanceOhms":24.34444444444444,"outputVolts":3.2865,"outputAmps":0.13499999999999623},{"fraction":0.9,"demandFraction":0.81,"resistanceOhms":20.270370370370365,"outputVolts":3.2838,"outputAmps":0.16199999999999992}],"preLimitEnvelope":[{"fraction":0.95,"demandFraction":0.95,"resistanceOhms":17.268421052631577,"outputVolts":3.281,"outputAmps":0.18999999999999684},{"fraction":0.99,"demandFraction":0.99,"resistanceOhms":16.566666666666663,"outputVolts":3.2802000000000002,"outputAmps":0.19799999999999596}],"limitOnset":{"fraction":1.0,"demandFraction":1.0,"resistanceOhms":16.399999999999995,"outputVolts":3.2800000000000002,"outputAmps":0.19999999999999574},"short":{"fraction":1.0,"demandFraction":1.0,"resistanceOhms":0.1,"outputVolts":0.020000000326,"outputAmps":0.20000000326}},{"variant":"averaged-switching-12v","usableRegulatedCurrentFraction":0.9,"usableRegulatedCurrentAmps":0.18000000000000002,"regulatedVoltageToleranceVolts":0.6000000000000001,"minimumRegulatedOutputVolts":11.4,"light":{"fraction":0.0,"demandFraction":0.0,"resistanceOhms":1000.0,"outputVolts":11.998800119988001,"outputAmps":0.011998800119989994},"loadEnvelope":[{"fraction":0.25,"demandFraction":0.225,"resistanceOhms":266.5666666666666,"outputVolts":11.995500000000002,"outputAmps":0.04499999999998394},{"fraction":0.5,"demandFraction":0.45,"resistanceOhms":133.23333333333332,"outputVolts":11.991000000000001,"outputAmps":0.08999999999998565},{"fraction":0.75,"demandFraction":0.675,"resistanceOhms":88.78888888888889,"outputVolts":11.9865,"outputAmps":0.13500000000000512},{"fraction":0.9,"demandFraction":0.81,"resistanceOhms":73.97407407407407,"outputVolts":11.9838,"outputAmps":0.16199999999999548}],"preLimitEnvelope":[{"fraction":0.95,"demandFraction":0.95,"resistanceOhms":63.0578947368421,"outputVolts":11.981,"outputAmps":0.19000000000000128},{"fraction":0.99,"demandFraction":0.99,"resistanceOhms":60.5060606060606,"outputVolts":11.9802,"outputAmps":0.1980000000000004}],"limitOnset":{"fraction":1.0,"demandFraction":1.0,"resistanceOhms":59.9,"outputVolts":11.979999999999999,"outputAmps":0.2},"short":{"fraction":1.0,"demandFraction":1.0,"resistanceOhms":0.1,"outputVolts":0.020000001196,"outputAmps":0.20000001196}},{"variant":"averaged-switching-5v","usableRegulatedCurrentFraction":0.9,"usableRegulatedCurrentAmps":0.18000000000000002,"regulatedVoltageToleranceVolts":0.25,"minimumRegulatedOutputVolts":4.75,"light":{"fraction":0.0,"demandFraction":0.0,"resistanceOhms":1000.0,"outputVolts":4.999500049995,"outputAmps":0.004999500049995831},"loadEnvelope":[{"fraction":0.25,"demandFraction":0.225,"resistanceOhms":111.0111111111111,"outputVolts":4.9955,"outputAmps":0.045000000000001705},{"fraction":0.5,"demandFraction":0.45,"resistanceOhms":55.45555555555555,"outputVolts":4.991,"outputAmps":0.09000000000000341},{"fraction":0.75,"demandFraction":0.675,"resistanceOhms":36.93703703703704,"outputVolts":4.9864999999999995,"outputAmps":0.13500000000000512},{"fraction":0.9,"demandFraction":0.81,"resistanceOhms":30.76419753086419,"outputVolts":4.9838000000000005,"outputAmps":0.16199999999999548}],"preLimitEnvelope":[{"fraction":0.95,"demandFraction":0.95,"resistanceOhms":26.215789473684207,"outputVolts":4.981,"outputAmps":0.19000000000000128},{"fraction":0.99,"demandFraction":0.99,"resistanceOhms":25.15252525252525,"outputVolts":4.980200000000001,"outputAmps":0.19799999999999152}],"limitOnset":{"fraction":1.0,"demandFraction":1.0,"resistanceOhms":24.9,"outputVolts":4.9799999999999995,"outputAmps":0.2},"short":{"fraction":1.0,"demandFraction":1.0,"resistanceOhms":0.1,"outputVolts":0.020000000496000002,"outputAmps":0.20000000496}},{"variant":"averaged-switching-3v3","usableRegulatedCurrentFraction":0.9,"usableRegulatedCurrentAmps":0.18000000000000002,"regulatedVoltageToleranceVolts":0.165,"minimumRegulatedOutputVolts":3.135,"light":{"fraction":0.0,"demandFraction":0.0,"resistanceOhms":1000.0,"outputVolts":3.2996700329967004,"outputAmps":0.003299670032994584},"loadEnvelope":[{"fraction":0.25,"demandFraction":0.225,"resistanceOhms":73.23333333333332,"outputVolts":3.2954999999999997,"outputAmps":0.045000000000001705},{"fraction":0.5,"demandFraction":0.45,"resistanceOhms":36.566666666666656,"outputVolts":3.2910000000000004,"outputAmps":0.08999999999999453},{"fraction":0.75,"demandFraction":0.675,"resistanceOhms":24.34444444444444,"outputVolts":3.2865,"outputAmps":0.13499999999999623},{"fraction":0.9,"demandFraction":0.81,"resistanceOhms":20.270370370370365,"outputVolts":3.2838,"outputAmps":0.16199999999999992}],"preLimitEnvelope":[{"fraction":0.95,"demandFraction":0.95,"resistanceOhms":17.268421052631577,"outputVolts":3.281,"outputAmps":0.18999999999999684},{"fraction":0.99,"demandFraction":0.99,"resistanceOhms":16.566666666666663,"outputVolts":3.2802000000000002,"outputAmps":0.19799999999999596}],"limitOnset":{"fraction":1.0,"demandFraction":1.0,"resistanceOhms":16.399999999999995,"outputVolts":3.2800000000000002,"outputAmps":0.19999999999999574},"short":{"fraction":1.0,"demandFraction":1.0,"resistanceOhms":0.1,"outputVolts":0.020000000326,"outputAmps":0.20000000326}}]}
+PASS: E02 regulator contracts 1429 assertions
+
+PASS: E04 sensor-control contracts 316 assertions
+
+PASS: Q30 plan contracts 1397 assertions, topologies=7, separate=9, shared=8
+
+PASS: Q30 relay services seed=0 ids=RB30_RELAY_SERVICE_KA,RB30_RELAY_SERVICE_KB
+PASS: Q30 relay services seed=1 ids=RB30_RELAY_SERVICE_KA,RB30_RELAY_SERVICE_KB
+PASS: Q30 relay services seed=-9223372036854775808 ids=RB30_RELAY_SERVICE_KA,RB30_RELAY_SERVICE_KB
+PASS: Q30 relay services seed=9223372036854775807 ids=RB30_RELAY_SERVICE_KA,RB30_RELAY_SERVICE_KB
+PASS: Q30 relay services seed=9007199254740993 ids=RB30_RELAY_SERVICE_KA,RB30_RELAY_SERVICE_KB
+PASS: Q30 relay service contracts 110 assertions
+
+PASS: medium physical policy contracts assertions=30 receipt=MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=24924;routes=6;routingWork=16/4477207;p05=3/0;p07=3/2;selectedAttempt=1;ranked=[1, 0, 4, 3, 2, 5];placementScores=[1{total=1174959;electrical=133240;region=9547;connector=6490;corridor=1771;outline=8014200;courtyard=588452;demand=2057591}, 0{total=1220742;electrical=134700;region=9245;connector=7370;corridor=4291;outline=7787500;courtyard=593252;demand=2070391}, 4{total=1261692;electrical=140950;region=11195;connector=7920;corridor=2591;outline=8025600;courtyard=596852;demand=2079991}, 3{total=1302337;electrical=144570;region=9725;connector=7770;corridor=4139;outline=7918400;courtyard=595652;demand=2076791}, 2{total=1335860;electrical=149820;region=11565;connector=8750;corridor=2350;outline=7691600;courtyard=589652;demand=2060791}, 5{total=1390704;electrical=153490;region=11125;connector=8390;corridor=4794;outline=7779200;courtyard=586052;demand=2051191}];selectedScore=1174959;selectedQualityMilli=182336088;routeOutcomes=[P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@1=SUCCESS, P07_FULLER_TWO_LAYER@0=SUCCESS, P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:FUSED12:BRANCH_SEARCH_LIMIT];failure=null
+
+PASS: medium board floorplanning contracts assertions=3632 components=33 pads=82 netMst=27630 netEdges=57 outline=4450x1750 jloadOutput=13620 jloadOther=14860
+
+PASS: A10 generation contracts assertions=190
+
+PASS: A10 routing rejection contracts assertions=28
+
+PASS: A10 dependency contracts assertions=15
+
+PASS: P02 conductor contracts 3209 assertions; 40 independent lattice cases; 48 shared-copper permutations; 16 SMD poses
+
+PASS: U01 viewport contracts assertions=1259
+
+PASS: U02 measurement contracts assertions=585
+
+P03_CORPUS {"mode":"authored-inventory-grid","board":"RB15","seed":"0","status":"PASS","reason":"","placed":15,"courtyardArea":347100,"demandArea":1292900,"outlineArea":8998000,"elapsedMs":11.1314}
+P03_CORPUS {"mode":"hierarchical-v1","board":"RB15","seed":"0","placed":15,"courtyardArea":347100,"demandArea":1292900,"outlineArea":2373000,"width":2100,"height":1130,"rejectedCandidates":0,"evaluations":126,"elapsedMs":31.3462}
+P03_CORPUS {"mode":"authored-inventory-grid","board":"RB15","seed":"3","status":"PASS","reason":"","placed":15,"courtyardArea":347100,"demandArea":1292900,"outlineArea":8998000,"elapsedMs":1.2039}
+P03_CORPUS {"mode":"hierarchical-v1","board":"RB15","seed":"3","placed":15,"courtyardArea":347100,"demandArea":1292900,"outlineArea":2373000,"width":2100,"height":1130,"rejectedCandidates":0,"evaluations":126,"elapsedMs":15.8567}
+P03_CORPUS {"mode":"authored-inventory-grid","board":"RB15","seed":"-17","status":"PASS","reason":"","placed":15,"courtyardArea":347100,"demandArea":1292900,"outlineArea":8998000,"elapsedMs":1.0894}
+P03_CORPUS {"mode":"hierarchical-v1","board":"RB15","seed":"-17","placed":15,"courtyardArea":347100,"demandArea":1292900,"outlineArea":2478000,"width":2100,"height":1180,"rejectedCandidates":0,"evaluations":126,"elapsedMs":13.3531}
+P03_CORPUS {"mode":"authored-inventory-grid","board":"RB30","seed":"0","status":"PASS","reason":"","placed":30,"courtyardArea":710800,"demandArea":2625400,"outlineArea":14985000,"elapsedMs":2.1578}
+P03_CORPUS {"mode":"hierarchical-v1","board":"RB30","seed":"0","placed":30,"courtyardArea":710800,"demandArea":2625400,"outlineArea":9131700,"width":4990,"height":1830,"rejectedCandidates":0,"evaluations":3853,"elapsedMs":150.278}
+P03_CORPUS {"mode":"authored-inventory-grid","board":"RB30","seed":"3","status":"PASS","reason":"","placed":30,"courtyardArea":710800,"demandArea":2625400,"outlineArea":14985000,"elapsedMs":2.587}
+P03_CORPUS {"mode":"hierarchical-v1","board":"RB30","seed":"3","placed":30,"courtyardArea":710800,"demandArea":2625400,"outlineArea":9131700,"width":4990,"height":1830,"rejectedCandidates":0,"evaluations":3921,"elapsedMs":131.0785}
+P03_CORPUS {"mode":"authored-inventory-grid","board":"RB30","seed":"-17","status":"PASS","reason":"","placed":30,"courtyardArea":710800,"demandArea":2625400,"outlineArea":14985000,"elapsedMs":1.361}
+P03_CORPUS {"mode":"hierarchical-v1","board":"RB30","seed":"-17","placed":30,"courtyardArea":710800,"demandArea":2625400,"outlineArea":9131700,"width":4990,"height":1830,"rejectedCandidates":0,"evaluations":3846,"elapsedMs":129.2733}
+P03_CORPUS {"mode":"authored-inventory-grid","board":"RB56","seed":"0","status":"PASS","reason":"","placed":56,"courtyardArea":1485200,"demandArea":5174600,"outlineArea":36593000,"elapsedMs":4.3526}
+P03_CORPUS {"mode":"hierarchical-v1","board":"RB56","seed":"0","placed":56,"courtyardArea":1485200,"demandArea":5174600,"outlineArea":25615200,"width":8210,"height":3120,"rejectedCandidates":0,"evaluations":7119,"elapsedMs":354.8464}
+P03_CORPUS {"mode":"authored-inventory-grid","board":"RB56","seed":"3","status":"PASS","reason":"","placed":56,"courtyardArea":1485200,"demandArea":5174600,"outlineArea":36593000,"elapsedMs":3.1375}
+P03_CORPUS {"mode":"hierarchical-v1","board":"RB56","seed":"3","placed":56,"courtyardArea":1485200,"demandArea":5174600,"outlineArea":25615200,"width":8210,"height":3120,"rejectedCandidates":0,"evaluations":7232,"elapsedMs":321.8953}
+P03_CORPUS {"mode":"authored-inventory-grid","board":"RB56","seed":"-17","status":"PASS","reason":"","placed":56,"courtyardArea":1485200,"demandArea":5174600,"outlineArea":36593000,"elapsedMs":2.9612}
+P03_CORPUS {"mode":"hierarchical-v1","board":"RB56","seed":"-17","placed":56,"courtyardArea":1485200,"demandArea":5174600,"outlineArea":25615200,"width":8210,"height":3120,"rejectedCandidates":0,"evaluations":7112,"elapsedMs":313.6496}
+P03_CORPUS {"mode":"authored-inventory-grid","board":"RB100","seed":"0","status":"REJECT","reason":"OUTLINE_BUDGET","placed":100,"courtyardArea":2590100,"demandArea":9140300,"outlineArea":72615000,"elapsedMs":1.3862}
+P03_CORPUS {"mode":"hierarchical-v1","board":"RB100","seed":"0","placed":100,"courtyardArea":2590100,"demandArea":9140300,"outlineArea":57942500,"width":12250,"height":4730,"rejectedCandidates":0,"evaluations":12648,"elapsedMs":875.5437}
+P03_CORPUS {"mode":"authored-inventory-grid","board":"RB100","seed":"3","status":"REJECT","reason":"OUTLINE_BUDGET","placed":100,"courtyardArea":2590100,"demandArea":9140300,"outlineArea":72615000,"elapsedMs":0.7766}
+P03_CORPUS {"mode":"hierarchical-v1","board":"RB100","seed":"3","placed":100,"courtyardArea":2590100,"demandArea":9140300,"outlineArea":57942500,"width":12250,"height":4730,"rejectedCandidates":0,"evaluations":12648,"elapsedMs":858.4479}
+P03_CORPUS {"mode":"authored-inventory-grid","board":"RB100","seed":"-17","status":"REJECT","reason":"OUTLINE_BUDGET","placed":100,"courtyardArea":2590100,"demandArea":9140300,"outlineArea":72615000,"elapsedMs":0.814}
+P03_CORPUS {"mode":"hierarchical-v1","board":"RB100","seed":"-17","placed":100,"courtyardArea":2590100,"demandArea":9140300,"outlineArea":57942500,"width":12250,"height":4730,"rejectedCandidates":0,"evaluations":12692,"elapsedMs":868.8251}
+PASS: P03 placement contracts assertions=864267
+
+P04_CORPUS {"family":"led","seed":"0","attempts":1,"rawSegments":204,"canonicalSegments":17,"expansions":17616,"length":2040,"uniqueLength":2040,"reusedLength":0,"bends":12,"congestionRejections":281,"elapsedMs":77.0091}
+P04_CORPUS {"family":"led","seed":"3","attempts":1,"rawSegments":200,"canonicalSegments":17,"expansions":17565,"length":2000,"uniqueLength":2000,"reusedLength":0,"bends":12,"congestionRejections":293,"elapsedMs":18.8486}
+P04_CORPUS {"family":"led","seed":"-17","attempts":1,"rawSegments":168,"canonicalSegments":18,"expansions":20172,"length":1680,"uniqueLength":1680,"reusedLength":0,"bends":12,"congestionRejections":352,"elapsedMs":16.8587}
+P04_CORPUS {"family":"diode","seed":"0","attempts":1,"rawSegments":309,"canonicalSegments":23,"expansions":126430,"length":3090,"uniqueLength":3090,"reusedLength":0,"bends":16,"congestionRejections":2685,"elapsedMs":80.3197}
+P04_CORPUS {"family":"diode","seed":"3","attempts":1,"rawSegments":355,"canonicalSegments":26,"expansions":182677,"length":3550,"uniqueLength":3550,"reusedLength":0,"bends":18,"congestionRejections":4507,"elapsedMs":263.599}
+P04_CORPUS {"family":"diode","seed":"-17","attempts":1,"rawSegments":267,"canonicalSegments":24,"expansions":177638,"length":2670,"uniqueLength":2670,"reusedLength":0,"bends":16,"congestionRejections":4063,"elapsedMs":173.6135}
+P04_CORPUS {"family":"parallel","seed":"0","attempts":1,"rawSegments":422,"canonicalSegments":33,"expansions":216317,"length":4220,"uniqueLength":4220,"reusedLength":0,"bends":21,"congestionRejections":4688,"elapsedMs":224.8312}
+P04_CORPUS {"family":"parallel","seed":"3","attempts":1,"rawSegments":300,"canonicalSegments":31,"expansions":23087,"length":3000,"uniqueLength":3000,"reusedLength":0,"bends":16,"congestionRejections":407,"elapsedMs":21.3977}
+REJECT parallel -17 0 Unable to route net GND from J1.2@160,210 to LED1.K@360,140
+P04_CORPUS {"family":"parallel","seed":"-17","attempts":2,"rawSegments":377,"canonicalSegments":31,"expansions":71739,"length":3770,"uniqueLength":3770,"reusedLength":0,"bends":21,"congestionRejections":1964,"elapsedMs":151.9393}
+PASS: P04 routing contracts assertions=6408 branches=6
+
+P05_PROOF order-only=routing-work@1;outcome=SUCCESS;reason=null;netAttempts=4;branchSearches=6;orders=1;ripPasses=0;ripped=0;rerouted=0;expansions=35283;failures=0;rawSegments=423;conflicts=1121;order[0]=12:BRANCH1_NODE,3:GND,3:VIN,12:BRANCH2_NODE,tree=0;
+P05_PROOF rip-up=routing-work@1;outcome=SUCCESS;reason=null;netAttempts=7;branchSearches=11;orders=1;ripPasses=1;ripped=2;rerouted=3;expansions=71739;failures=0;rawSegments=632;conflicts=1964;order[0]=3:GND,3:VIN,12:BRANCH1_NODE,12:BRANCH2_NODE,tree=0;rip[BRANCH1_NODE]=[VIN, GND];recovered[BRANCH1_NODE];
+P05_OCCUPANCY shared-halo ownership, exact survivor, repeated rip-up, ghost-copper and stale-clearance negatives PASS
+P05_EXHAUSTION routing-work@1;outcome=EXHAUSTED;reason=NO_PATH;netAttempts=14;branchSearches=14;orders=5;ripPasses=2;ripped=2;rerouted=4;expansions=23390;failures=5;rawSegments=266;conflicts=735;order[0]=1:A,1:B,tree=0;rip[B]=[A];reject[NO_PATH:A];order[1]=1:A,1:B,tree=1;rip[B]=[A];reject[NO_PATH:A];order[2]=1:B,1:A,tree=2;reject[NO_PATH:A];order[3]=1:B,1:A,tree=3;reject[NO_PATH:A];order[4]=1:B,1:A,tree=4;reject[NO_PATH:A];
+P05_BUDGET routing-work@1;outcome=EXHAUSTED;reason=SEARCH_LIMIT;netAttempts=1;branchSearches=1;orders=1;ripPasses=0;ripped=0;rerouted=0;expansions=1;failures=1;rawSegments=0;conflicts=0;order[0]=1:A,1:B,tree=0;reject[SEARCH_LIMIT:A];
+PASS: P05 routing contracts assertions=21976
+
+P07_SMALL linked=false policy=ONE_LAYER outcome=SUCCESS expansions=8315 vias=0 length=1040
+P07_SMALL linked=false policy=SPARSE_LINK outcome=SUCCESS expansions=8315 vias=0 length=1040
+P07_SMALL linked=false policy=RESTRICTED_TWO_LAYER outcome=SUCCESS expansions=3405 vias=2 length=700
+P07_SMALL linked=false policy=FULLER_TWO_LAYER outcome=SUCCESS expansions=670 vias=2 length=700
+P07_SMALL linked=true policy=ONE_LAYER outcome=LEFT:BRANCH_QUALITY_LIMIT expansions=13160 vias=0 length=0
+P07_SMALL linked=true policy=SPARSE_LINK outcome=SUCCESS expansions=57 vias=0 length=540
+P07_SMALL linked=true policy=RESTRICTED_TWO_LAYER outcome=SUCCESS expansions=57 vias=0 length=540
+P07_SMALL linked=true policy=FULLER_TWO_LAYER outcome=SUCCESS expansions=57 vias=0 length=540
+PASS: P07 two-layer contracts assertions=48
+
+P08_SCALE profile=points-15 components=15 segments=7 lands=30 exactContacts=14 referenceContacts=666 broadPhaseBoxTests=142 references=37 indexNodes=37 indexPrimitiveBytes=1776 exactClearance=0 referenceClearance=21 fastMedianNanos=170100 referenceMedianNanos=167400 fastAllocatedBytes=207144 referenceAllocatedBytes=204256 fullValidationMedianNanos=729700 cached1000Nanos=191500 uncached1000Nanos=5244700 retainedViewBuilds=1
+P08_SCALE profile=points-30 components=30 segments=15 lands=60 exactContacts=30 referenceContacts=2775 broadPhaseBoxTests=343 references=75 indexNodes=75 indexPrimitiveBytes=3600 exactClearance=0 referenceClearance=105 fastMedianNanos=288000 referenceMedianNanos=304600 fastAllocatedBytes=419216 referenceAllocatedBytes=427144 fullValidationMedianNanos=1611600 cached1000Nanos=68400 uncached1000Nanos=4760200 retainedViewBuilds=1
+P08_SCALE profile=points-56 components=56 segments=28 lands=112 exactContacts=56 referenceContacts=9730 broadPhaseBoxTests=756 references=140 indexNodes=140 indexPrimitiveBytes=6720 exactClearance=0 referenceClearance=378 fastMedianNanos=478400 referenceMedianNanos=563500 fastAllocatedBytes=787312 referenceAllocatedBytes=842984 fullValidationMedianNanos=2127700 cached1000Nanos=64100 uncached1000Nanos=6013500 retainedViewBuilds=1
+P08_SCALE profile=points-100 components=100 segments=50 lands=200 exactContacts=100 referenceContacts=31125 broadPhaseBoxTests=1490 references=250 indexNodes=250 indexPrimitiveBytes=12000 exactClearance=0 referenceClearance=1225 fastMedianNanos=1106500 referenceMedianNanos=1635800 fastAllocatedBytes=1431280 referenceAllocatedBytes=1476888 fullValidationMedianNanos=2681600 cached1000Nanos=82300 uncached1000Nanos=10687700 retainedViewBuilds=1
+P08_SCALE profile=mixed-RB15 components=15 segments=71 lands=66 exactContacts=92 referenceContacts=9316 broadPhaseBoxTests=1178 references=137 indexNodes=137 indexPrimitiveBytes=6576 exactClearance=0 referenceClearance=2262 fastMedianNanos=454500 referenceMedianNanos=675200 fastAllocatedBytes=1081472 referenceAllocatedBytes=1244000 fullValidationMedianNanos=760100 cached1000Nanos=295500 uncached1000Nanos=26794700 retainedViewBuilds=1
+P08_SCALE profile=mixed-RB30 components=30 segments=146 lands=144 exactContacts=204 referenceContacts=41905 broadPhaseBoxTests=2793 references=290 indexNodes=290 indexPrimitiveBytes=13920 exactClearance=0 referenceClearance=9853 fastMedianNanos=1113200 referenceMedianNanos=1812800 fastAllocatedBytes=2351872 referenceAllocatedBytes=3172896 fullValidationMedianNanos=1754000 cached1000Nanos=114500 uncached1000Nanos=34921100 retainedViewBuilds=1
+P08_SCALE profile=mixed-RB56 components=56 segments=300 lands=328 exactContacts=436 referenceContacts=196878 broadPhaseBoxTests=7447 references=628 indexNodes=628 indexPrimitiveBytes=30144 exactClearance=0 referenceClearance=42989 fastMedianNanos=2780500 referenceMedianNanos=6049900 fastAllocatedBytes=5066624 referenceAllocatedBytes=8907680 fullValidationMedianNanos=6348000 cached1000Nanos=313900 uncached1000Nanos=108889400 retainedViewBuilds=1
+P08_SCALE profile=mixed-RB100 components=100 segments=535 lands=586 exactContacts=778 referenceContacts=627760 broadPhaseBoxTests=14160 references=1121 indexNodes=1121 indexPrimitiveBytes=53808 exactClearance=0 referenceClearance=139615 fastMedianNanos=6934100 referenceMedianNanos=15254500 fastAllocatedBytes=9076984 referenceAllocatedBytes=22144880 fullValidationMedianNanos=9437800 cached1000Nanos=476500 uncached1000Nanos=178168700 retainedViewBuilds=1
+P08_DENSE segments=128 exactContacts=8128 referenceContacts=8128 broadPhaseBoxTests=16384 references=128 indexPrimitiveBytes=6144 fastNanos=803600 referenceNanos=544500 fastAllocatedBytes=886616 referenceAllocatedBytes=794464
+PASS: P08 scalable physical contracts assertions=2022
+
+P09_POLICY THT_SINGLE_FACE@1;edge=128..2048;aspect=3;area=2250000;parts=16;pads=40;nets=16;degree=10;domains=1;barriers=0;mount=TOP;rotation=DEG_0;attachment=PLATED_THROUGH_HOLE;layer=single-declared-TOP-or-BOTTOM;vias=0;links=0;extraDrills=0;padFloor=26;probeFloor=30;traceExposure=EXPOSED;traceFloor=9;clearanceFloor=6;traceActual=9;clearanceActual=6;segments=160;uniqueCopper=16000;score=unique-copper-tree-v1:70000.0;placements=80;routeAttempts=800;expansions=160000000;AXIAL_RESISTOR=8;AXIAL_FUSE=1;AXIAL_DIODE=2;THROUGH_HOLE_LED=3;TO92_NPN=2;TO92_NMOS=2;RADIAL_ELECTROLYTIC_CAPACITOR=1;RADIAL_CERAMIC_CAPACITOR=2;THROUGH_HOLE_CONNECTOR_2=4;THROUGH_HOLE_OUTPUT_HEADER_2=1;RELAY_SPDT=1;TO220_REGULATOR_4=1;E04_DECISION_CONTROL_5=1;gridCells=700000;searchPerCell=20;routeOrders=5;ripPasses=2;victims=2;reroutes=6;requestExpansions=1000000;jobMillis=90000;unitMillis=5000;jobUnits=640;view=U01-side-aware-pan-zoom;hiddenCopperSelectable=false;inspectionZoomRequired=true;qualification=geometry+live-correspondence+diagnostic-proof;proceduralPopulation=NOT_QUALIFIED
+PASS: P09 physical envelope contracts assertions=58

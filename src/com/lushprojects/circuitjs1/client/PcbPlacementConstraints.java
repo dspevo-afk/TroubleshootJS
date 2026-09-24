@@ -6,6 +6,10 @@ import java.util.Vector;
 
 /** Role-supplied physical demands. No coordinates, selected fault or solver state. */
 final class PcbPlacementConstraints {
+    /** The qualified one-face identity used by every existing caller. */
+    static final String DEFAULT_PHYSICAL_POLICY_ID = "THT_SINGLE_FACE";
+    static final int DEFAULT_PHYSICAL_POLICY_VERSION = 1;
+
     enum Anchor { NONE, LEFT, RIGHT, EDGE }
     static final class Part {
         final String componentId, regionId, regionLabel, domainId;
@@ -35,13 +39,24 @@ final class PcbPlacementConstraints {
     private final TreeMap<String,Part> parts = new TreeMap<String,Part>();
     private final Vector<Barrier> barriers;
     final PcbCopperLayer routingLayer;
+    final String physicalPolicyId;
+    final int physicalPolicyVersion;
     PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers) {
         this(declarations,barriers,PcbCopperLayer.TOP);
     }
     PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers,PcbCopperLayer routingLayer) {
+        this(declarations,barriers,routingLayer,DEFAULT_PHYSICAL_POLICY_ID,
+            DEFAULT_PHYSICAL_POLICY_VERSION);
+    }
+    PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers,
+            PcbCopperLayer routingLayer, String policyId, int policyVersion) {
         if (declarations == null || barriers == null) throw new IllegalArgumentException("Missing placement declarations");
         if(routingLayer==null) throw new IllegalArgumentException("Missing single copper layer");
+        if (empty(policyId) || policyVersion < 1)
+            throw new IllegalArgumentException("Invalid physical placement policy identity");
         this.routingLayer=routingLayer;
+        this.physicalPolicyId=policyId;
+        this.physicalPolicyVersion=policyVersion;
         this.barriers=new Vector<Barrier>(barriers);
         for (Part part : declarations) {
             if (part == null || parts.put(part.componentId, part) != null) throw new IllegalArgumentException("Duplicate placement part");
@@ -58,6 +73,16 @@ final class PcbPlacementConstraints {
             if(a.firstDomain.equals(b.firstDomain)&&a.secondDomain.equals(b.secondDomain))
                 throw new IllegalArgumentException("Duplicate physical domain barrier");
         }
+    }
+    String getPhysicalPolicyId() { return physicalPolicyId; }
+    int getPhysicalPolicyVersion() { return physicalPolicyVersion; }
+    String getPhysicalPolicyIdentity() {
+        return physicalPolicyId + "@" + physicalPolicyVersion;
+    }
+    String physicalPolicyIdentity() { return getPhysicalPolicyIdentity(); }
+    boolean usesDefaultPhysicalPolicy() {
+        return DEFAULT_PHYSICAL_POLICY_ID.equals(physicalPolicyId) &&
+            DEFAULT_PHYSICAL_POLICY_VERSION == physicalPolicyVersion;
     }
     Part get(String id) { return parts.get(id); }
     Vector<Part> getParts() { return new Vector<Part>(parts.values()); }

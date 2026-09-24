@@ -86,6 +86,11 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'E04SensorControlContractTest'; Marker = 'E04 sensor-control contracts ' },
         @{ Name = 'SensorControlFamilyContractTest'; Marker = 'SensorControl family contracts ' },
         @{ Name = 'Q15ControlBoardContractTest'; Marker = 'Q15 control board contracts ' },
+        @{ Name = 'Q30PlanContractTest'; Marker = 'Q30 plan contracts ' },
+        @{ Name = 'Q30RelayServiceContractTest'; Marker = 'Q30 relay service contracts ' },
+        @{ Name = 'Rb30PhysicalMetadataContractTest'; Marker = 'Q30 physical metadata contracts ' },
+        @{ Name = 'MediumBoardPhysicalPolicyContractTest'; Marker = 'medium physical policy contracts ' },
+        @{ Name = 'MediumBoardFloorplanningContractTest'; Marker = 'medium board floorplanning contracts ' },
         @{ Name = 'ChallengeDescriptorContractTest'; Marker = 'Task46 ' },
         @{ Name = 'FunctionalBlockContractTest'; Marker = 'Task44 ' },
         @{ Name = 'ElectricalPortContractTest'; Marker = 'Task45 ' },
@@ -162,6 +167,84 @@ final class PhysicalSpecificationDeveloperVerifier {
     foreach ($definition in $testDefinitions) {
         $testClass = $definition.Name
         if ($Suite.Count -gt 0 -and $Suite -notcontains $testClass) { continue }
+        if ($testClass -eq 'ProceduralFamilyContractTest') {
+            # This unchanged 16-seed-per-family oracle can exceed the existing
+            # one-minute child bound as the family catalog grows. Run each
+            # family/cohort in its own bounded JVM and require every listed
+            # case, preserving all assertions and the original child budget.
+            $proceduralClass = 'com.lushprojects.circuitjs1.client.ProceduralFamilyContractTest'
+            $listed = Invoke-VerifierBoundedProcess $java @('-ea', '-cp', $classPath,
+                $proceduralClass, '--list-families') 60000
+            if (-not $listed.TerminationProven -or $listed.ExitCode -ne 0) {
+                throw ('Procedural family catalog enumeration failed, exit ' + $listed.ExitCode)
+            }
+            $familyFrames = @([regex]::Matches($listed.Stdout,
+                '(?m)^PROCEDURAL_FAMILIES\|([A-Z0-9_,]+)\r?$'))
+            if ($familyFrames.Count -ne 1) { throw 'Missing unique procedural family catalog frame' }
+            $families = @($familyFrames[0].Groups[1].Value -split ',')
+            $expectedFamilies = @('LED_INDICATOR', 'DIODE_PROTECTED_INDICATOR',
+                'PARALLEL_DUAL_INDICATOR', 'RC_DELAY', 'NPN_LOW_SIDE_SWITCH',
+                'NMOS_LOW_SIDE_SWITCH', 'RELAY_OUTPUT', 'SENSOR_CONTROL',
+                'RB15_CONTROL', 'COMPOSED_CONTROLLED_INDICATOR')
+            if ($families.Count -ne $expectedFamilies.Count -or
+                    [String]::Join(',', $families) -ne
+                    [String]::Join(',', $expectedFamilies)) {
+                throw 'Invalid procedural family catalog enumeration'
+            }
+            $cohortSeeds = @{
+                '0' = @('0', '1', '4', '17', '42', '-1',
+                    '-9223372036854775808', '9223372036854775807')
+                '1' = @('936927718510540323', '-6751984890832468710',
+                    '4374486180868546127', '-1470617604193128648',
+                    '9007199254740993', '-9007199254740993',
+                    '281474976710656', '-4194978729361594021')
+            }
+            $proceduralReceipts = New-Object Collections.Generic.List[string]
+            foreach ($family in $families) {
+                foreach ($cohort in @(0, 1)) {
+                    $tested = Invoke-VerifierBoundedProcess $java @('-ea', '-cp', $classPath,
+                        $proceduralClass, '--family', $family, '--cohort',
+                        [string]$cohort) 60000
+                    Write-Host $tested.Stdout
+                    if ($tested.Stderr) { Write-Host $tested.Stderr }
+                    $rows = @($tested.Stdout -split '\r?\n' | Where-Object {
+                        $_.StartsWith('PROCEDURAL_ROW|')
+                    })
+                    $summaries = @($tested.Stdout -split '\r?\n' | Where-Object {
+                        $_.StartsWith('PROCEDURAL_SUMMARY|')
+                    })
+                    $summary = 'PROCEDURAL_SUMMARY|' + $family + '|' + $cohort + '|'
+                    if (-not $tested.TerminationProven -or $tested.ExitCode -ne 0 -or
+                            $tested.Stdout -notmatch ('(?m)^PASS: ' +
+                                [regex]::Escape($definition.Marker)) -or
+                            $rows.Count -ne 8 -or $summaries.Count -ne 1 -or
+                            -not $summaries[0].StartsWith($summary)) {
+                        throw ('Procedural family cohort did not provide a qualified result: ' +
+                            $family + '/' + $cohort + ', exit ' + $tested.ExitCode)
+                    }
+                    for ($rowIndex = 0; $rowIndex -lt 8; $rowIndex++) {
+                        $fields = $rows[$rowIndex] -split '\|'
+                        if ($fields.Count -lt 5 -or $fields[1] -ne [string]$cohort -or
+                                $fields[2] -ne $family -or
+                                $fields[3] -ne $cohortSeeds[[string]$cohort][$rowIndex]) {
+                            throw ('Procedural family seed/order mismatch: ' +
+                                $family + '/' + $cohort + '/' + $rowIndex)
+                        }
+                    }
+                    $proceduralReceipts.Add($tested.Stdout)
+                    $receipts.Add($tested.Stdout)
+                }
+            }
+            $outputs[$testClass] = [String]::Join([Environment]::NewLine,
+                $proceduralReceipts)
+            $proceduralCoverage = 'PASS: procedural family partition coverage families=' +
+                $families.Count + ' cohorts=' + $proceduralReceipts.Count +
+                ' rows=' + ($proceduralReceipts.Count * 8) +
+                ' childBudgetMs=60000'
+            Write-Host $proceduralCoverage
+            $receipts.Add($proceduralCoverage)
+            continue
+        }
         $testArguments = @('-ea', '-cp', $classPath,
             ('com.lushprojects.circuitjs1.client.' + $testClass))
         if ($testClass -eq 'A03IdentityContractTest') {

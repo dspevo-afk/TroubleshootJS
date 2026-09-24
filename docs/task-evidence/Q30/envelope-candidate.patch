@@ -1,0 +1,689 @@
+diff --git a/src/com/lushprojects/circuitjs1/client/BoundedGeneratedBoardAssembler.java b/src/com/lushprojects/circuitjs1/client/BoundedGeneratedBoardAssembler.java
+index 6cad452..05fc33e 100644
+--- a/src/com/lushprojects/circuitjs1/client/BoundedGeneratedBoardAssembler.java
++++ b/src/com/lushprojects/circuitjs1/client/BoundedGeneratedBoardAssembler.java
+@@ -138,7 +138,7 @@ final class BoundedGeneratedBoardAssembler {
+             routing = new SeededPcbLayoutGenerator().begin(board,
+                 ProceduralPcbLayout.seed(ControlledIndicatorDeviceBehavior.FAMILY_ID, seed, NamedRandomStreams.Concern.PLACEMENT),
+                 ProceduralPcbLayout.seed(ControlledIndicatorDeviceBehavior.FAMILY_ID, seed, NamedRandomStreams.Concern.ROUTING),
+-                SupportedEnvelope.current());
++                SupportedEnvelope.forFamily(ControlledIndicatorDeviceBehavior.FAMILY_ID));
+         }
+         boolean advance() {
+             if (result != null) throw new IllegalStateException("Physical plan already completed");
+diff --git a/src/com/lushprojects/circuitjs1/client/FreshGeneratedRuntimeInstallation.java b/src/com/lushprojects/circuitjs1/client/FreshGeneratedRuntimeInstallation.java
+index eebadaf..d5c54fe 100644
+--- a/src/com/lushprojects/circuitjs1/client/FreshGeneratedRuntimeInstallation.java
++++ b/src/com/lushprojects/circuitjs1/client/FreshGeneratedRuntimeInstallation.java
+@@ -79,7 +79,7 @@ final class FreshGeneratedRuntimeInstallation {
+             if (sim == null || candidate == null || active != null ||
+                     !sim.isGeneratedRuntimeSettled() || candidate.isDeveloperOnlyFaultRoute())
+                 throw new IllegalStateException("Staged installation requires a settled normal owner");
+-            SupportedEnvelope.current().requireNormal(candidate);
++            SupportedEnvelope.forBoard(candidate).requireNormal(candidate);
+             this.sim = sim; this.candidate = candidate;
+             original = sim.getGeneratedBoardInstance();
+             originalGraph = sim.elmList;
+@@ -163,7 +163,7 @@ final class FreshGeneratedRuntimeInstallation {
+         }
+         void validatePhysical() {
+             enterStep();
+-            SupportedEnvelope.current().requireNormal(candidate);
++            SupportedEnvelope.forBoard(candidate).requireNormal(candidate);
+             candidate.getBoard().validate();
+             candidate.getPhysicalBoardRuntime().validateCommittedState(candidate,
+                 sim.getBoardModificationController(), sim.elmList);
+@@ -272,7 +272,7 @@ final class FreshGeneratedRuntimeInstallation {
+                 (sim.getGeneratedChallengeController() == null ||
+                 !sim.getGeneratedChallengeController().isReady())))
+             throw new IllegalStateException("Fresh installation requires a settled generated owner");
+-        if (normalAdmission) SupportedEnvelope.current().requireNormal(candidate);
++        if (normalAdmission) SupportedEnvelope.forBoard(candidate).requireNormal(candidate);
+         GeneratedBoardInstance original = sim.getGeneratedBoardInstance();
+         if (original != null)
+             requireDisjoint(original, candidate);
+@@ -335,7 +335,7 @@ final class FreshGeneratedRuntimeInstallation {
+                 }
+                 candidate.getPhysicalBoardRuntime().validateCommittedState(candidate,
+                     sim.getBoardModificationController(), sim.elmList);
+-                SupportedEnvelope.current().requireNormal(candidate);
++                SupportedEnvelope.forBoard(candidate).requireNormal(candidate);
+                 candidate.getPcbLayout().validateGeometry(candidate.getBoard());
+                 PcbConductorProjection.audit(candidate, sim.elmList);
+             }
+diff --git a/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticSolvabilityAdmission.java b/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticSolvabilityAdmission.java
+index 9e79aca..c150eaa 100644
+--- a/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticSolvabilityAdmission.java
++++ b/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticSolvabilityAdmission.java
+@@ -25,7 +25,7 @@ final class GeneratedDiagnosticSolvabilityAdmission {
+             GeneratedChallengeController ownerController) {
+         validate(sim, instance);
+         if (instance.isDeveloperOnlyFaultRoute() || isInternalProofRunning()) return;
+-        SupportedEnvelope.current().requireNormal(instance);
++        SupportedEnvelope.forBoard(instance).requireNormal(instance);
+         GeneratedDiagnosticProofService.prove(sim, instance, ownerController);
+     }
+ 
+diff --git a/src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java b/src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java
+index 2472df8..234052a 100644
+--- a/src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java
++++ b/src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java
+@@ -358,6 +358,7 @@ final class GenerationCoordinator {
+                 job.checkpoint();
+                 if (candidate == null || candidate.getPcbLayout() == null)
+                     throw new IllegalStateException("Native generation returned incomplete physical ownership");
++                request.getSupportedEnvelope().requireRequest(request, candidate);
+                 int proofUnits = GeneratedDiagnosticProofService.requiredWorkUnits(candidate,
+                     request.requiresExplicitCompletion());
+                 expectedProofUnits = proofUnits;
+diff --git a/src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java b/src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java
+index 54ffcbb..a1df537 100644
+--- a/src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java
++++ b/src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java
+@@ -116,8 +116,9 @@ final class GenerationDependencyContext {
+         appendField(out, "epoch.provider-registry", "construction-providers-v1");
+         appendField(out, "construction-provider-surface",
+             ConstructionProviderRegistry.standard().canonicalFingerprint());
+-        appendField(out, "physical.supported-envelope", SupportedEnvelope.current().canonical());
+-        appendField(out, "procedural.admission", QuickPlayAdmission.canonical());
++        SupportedEnvelope envelope = SupportedEnvelope.forBoard(owner);
++        appendField(out, "physical.supported-envelope", envelope.canonical());
++        appendField(out, "procedural.admission", QuickPlayAdmission.canonical(envelope));
+         appendField(out, "epoch.geometry-contract", Integer.toString(PcbGeometryContractVersion.CURRENT));
+         appendField(out, "epoch.layout-generator", Integer.toString(SeededPcbLayoutGenerator.CURRENT_VERSION));
+         appendField(out, "epoch.physical-service", "all-current-packages-and-cable-contacts-v1");
+diff --git a/src/com/lushprojects/circuitjs1/client/GenerationRequest.java b/src/com/lushprojects/circuitjs1/client/GenerationRequest.java
+index a2c8bb9..7994f08 100644
+--- a/src/com/lushprojects/circuitjs1/client/GenerationRequest.java
++++ b/src/com/lushprojects/circuitjs1/client/GenerationRequest.java
+@@ -58,7 +58,12 @@ final class GenerationRequest {
+         // not the signed seed's lexical value, to preserve the declared retry order.
+         return candidateSearch ? "candidate=0" + ordinal + ";" + exact.canonical() : exact.canonical();
+     }
+-    SupportedEnvelope getSupportedEnvelope() { return SupportedEnvelope.current(); }
++    /** The request's provider owns the physical policy; composition has its own provider id. */
++    private String physicalFamilyId() {
++        return composition ? ControlledIndicatorBlockContributions.FAMILY_ID :
++            descriptor.getDeviceIntent().getId();
++    }
++    SupportedEnvelope getSupportedEnvelope() { return SupportedEnvelope.forFamily(physicalFamilyId()); }
+     String canonical() {
+         return "tsj-generation-request/3;native;" + descriptor.toCanonical() +
+             ";quickPlay=" + quickPlay + ";layout=" + SeededPcbLayoutGenerator.CURRENT_VERSION +
+diff --git a/src/com/lushprojects/circuitjs1/client/ProceduralPcbLayout.java b/src/com/lushprojects/circuitjs1/client/ProceduralPcbLayout.java
+index 0fa9913..dcae26f 100644
+--- a/src/com/lushprojects/circuitjs1/client/ProceduralPcbLayout.java
++++ b/src/com/lushprojects/circuitjs1/client/ProceduralPcbLayout.java
+@@ -24,6 +24,6 @@ final class ProceduralPcbLayout {
+         declare(board);
+         return new SeededPcbLayoutGenerator().generate(board,
+             seed(family, root, NamedRandomStreams.Concern.PLACEMENT),
+-            seed(family, root, NamedRandomStreams.Concern.ROUTING), SupportedEnvelope.current());
++            seed(family, root, NamedRandomStreams.Concern.ROUTING), SupportedEnvelope.forFamily(family));
+     }
+ }
+diff --git a/src/com/lushprojects/circuitjs1/client/QuickPlayAdmission.java b/src/com/lushprojects/circuitjs1/client/QuickPlayAdmission.java
+index 46a3fb7..473e248 100644
+--- a/src/com/lushprojects/circuitjs1/client/QuickPlayAdmission.java
++++ b/src/com/lushprojects/circuitjs1/client/QuickPlayAdmission.java
+@@ -18,9 +18,14 @@ final class QuickPlayAdmission {
+         return entropy + STRIDE * ordinal;
+     }
+     static String canonical() {
++        return canonical(SupportedEnvelope.resolve(SupportedEnvelope.ID,
++            SupportedEnvelope.VERSION));
++    }
++    static String canonical(SupportedEnvelope envelope) {
++        if (envelope == null) throw new IllegalArgumentException("Missing physical admission policy");
+         return "quick-play-admission@" + VERSION +
+             ";families=all-current;profiles=menu-qualified;referenceFamilies=none" +
+-            ";envelope=" + SupportedEnvelope.current().identity() +
++            ";envelope=" + envelope.identity() +
+             ";candidates=4;order=ordinal;seed=entropy+golden-odd-stride-mod2^64" +
+             ";budgets=shared;exactReplayRetries=0;recentPhysicalBoards=16;duplicate=reject-before-publish";
+     }
+diff --git a/src/com/lushprojects/circuitjs1/client/QuickPlayFamilyRegistry.java b/src/com/lushprojects/circuitjs1/client/QuickPlayFamilyRegistry.java
+index 8facf5b..0dcd0ef 100644
+--- a/src/com/lushprojects/circuitjs1/client/QuickPlayFamilyRegistry.java
++++ b/src/com/lushprojects/circuitjs1/client/QuickPlayFamilyRegistry.java
+@@ -15,6 +15,8 @@ final class QuickPlayFamilyRegistry {
+     static final String NPN_LOW_SIDE_SWITCH = "NPN_LOW_SIDE_SWITCH";
+     static final String NMOS_LOW_SIDE_SWITCH = "NMOS_LOW_SIDE_SWITCH";
+     static final String SENSOR_CONTROL = "SENSOR_CONTROL";
++    /** Provider-local future family identity; it is intentionally not menu eligible. */
++    static final String RB30_CONTROL = "RB30_CONTROL";
+     private QuickPlayFamilyRegistry() { }
+ 
+     static Vector<String> getNormalPlayerFamilyIds() {
+@@ -39,6 +41,21 @@ final class QuickPlayFamilyRegistry {
+             NPN_LOW_SIDE_SWITCH.equals(familyId) || NMOS_LOW_SIDE_SWITCH.equals(familyId);
+     }
+ 
++    /**
++     * Select the physical policy owned by a provider.  Future providers may
++     * expose a policy here before they are added to the normal-player catalog.
++     * Generic admission code consumes this result and does not branch on a
++     * family identity.
++     */
++    static SupportedEnvelope envelopeForFamily(String familyId) {
++        if (RB30_CONTROL.equals(familyId))
++            return SupportedEnvelope.resolve(SupportedEnvelope.ID, SupportedEnvelope.Q30_VERSION);
++        if (isNormalPlayerEligible(familyId) ||
++                ControlledIndicatorBlockContributions.FAMILY_ID.equals(familyId))
++            return SupportedEnvelope.current();
++        return null;
++    }
++
+     static GeneratedBoardInstance generate(String familyId, long seed) {
+         if (Rb15Plan.FAMILY_ID.equals(familyId)) return new RelayOutputGenerator().generateResolved(seed,null,Rb15Plan.resolve(seed));
+         if (RELAY_OUTPUT.equals(familyId)) return new RelayOutputGenerator().generate(seed);
+diff --git a/src/com/lushprojects/circuitjs1/client/QuickPlayGateDeveloperVerifier.java b/src/com/lushprojects/circuitjs1/client/QuickPlayGateDeveloperVerifier.java
+index 4f527dc..ad5cbb2 100644
+--- a/src/com/lushprojects/circuitjs1/client/QuickPlayGateDeveloperVerifier.java
++++ b/src/com/lushprojects/circuitjs1/client/QuickPlayGateDeveloperVerifier.java
+@@ -71,7 +71,7 @@ final class QuickPlayGateDeveloperVerifier {
+                         require(job.getReceipt()!=null && job.getReceipt().getStageCount()==6,"Incomplete admission receipt");
+                         require(PlayerLaunchRequest.parse(accepted.replay()).seed==owner.getSeed() &&
+                             accepted.generation().candidateCount()==1,"Accepted replay is not exact");
+-                        SupportedEnvelope.current().requireNormal(owner);
++                        SupportedEnvelope.forBoard(owner).requireNormal(owner);
+                         owner.getPcbLayout().validateGeometry(owner.getBoard());
+                         PcbConductorProjection.audit(owner,sim.elmList);
+                         require(sim.getGeneratedChallengeController().getDiagnosticProofReceipt()!=null,"Missing actual diagnostic/repair proof");
+diff --git a/src/com/lushprojects/circuitjs1/client/RelayOutputGenerator.java b/src/com/lushprojects/circuitjs1/client/RelayOutputGenerator.java
+index 0412633..440bf4e 100644
+--- a/src/com/lushprojects/circuitjs1/client/RelayOutputGenerator.java
++++ b/src/com/lushprojects/circuitjs1/client/RelayOutputGenerator.java
+@@ -16,10 +16,11 @@ final class RelayOutputGenerator {
+ 
+     GeneratedBoardInstance generateResolved(long seed, GeneratedFaultType forced, Rb15Plan plan) {
+         if(plan!=null && plan.seed!=seed)throw new IllegalArgumentException("Control-board seed disagrees with resolved plan");
++        String family = plan == null ? FAMILY_ID : Rb15Plan.FAMILY_ID;
+         if(plan!=null && plan.getRoutedLayout()==null)
+-            plan=plan.withRoutedLayout(new SeededPcbLayoutGenerator().generate(plan.board(),plan.layoutSeed,plan.routingSeed,SupportedEnvelope.current()));
++            plan=plan.withRoutedLayout(new SeededPcbLayoutGenerator().generate(plan.board(),plan.layoutSeed,plan.routingSeed,
++                SupportedEnvelope.forFamily(family)));
+         RelayDriverProvider driver = plan == null ? ((seed & 1) == 0 ? new RelayDriverProvider.Bjt() : new RelayDriverProvider.Nmos()) : plan.driver();
+-        String family = plan == null ? FAMILY_ID : Rb15Plan.FAMILY_ID;
+         String loadSupply = plan == null ? "CONTACT_SUPPLY" : "CTRL_SUPPLY";
+         String loadReturn = plan == null ? "CONTACT_RETURN" : "CTRL_RETURN";
+         Assembly a = new Assembly(plan == null ? new TroubleshootBoard("RELAY_OUTPUT_BOARD") : plan.board());
+diff --git a/src/com/lushprojects/circuitjs1/client/SupportedEnvelope.java b/src/com/lushprojects/circuitjs1/client/SupportedEnvelope.java
+index c2ac5ef..5f3466e 100644
+--- a/src/com/lushprojects/circuitjs1/client/SupportedEnvelope.java
++++ b/src/com/lushprojects/circuitjs1/client/SupportedEnvelope.java
+@@ -5,134 +5,239 @@ import java.util.TreeSet;
+ /** Physical admission limits, NOT a substitute for geometry or live CircuitJS proof. */
+ final class SupportedEnvelope {
+     static final String ID="THT_SINGLE_FACE";
++    /** P09's qualified normal-player policy. */
+     static final int VERSION=1;
+-    private static final SupportedEnvelope CURRENT=new SupportedEnvelope();
++    /** Q30's structural candidate policy; it remains unqualified until Q30 corpus proof. */
++    static final int Q30_VERSION=2;
++    static final int VERSION_2=Q30_VERSION;
++
++    /* Keep the P09 constants source-compatible and unchanged. */
+     static final int MIN_EDGE=128, MAX_EDGE=2048, MAX_ASPECT=3;
+     static final long MAX_AREA=2250000L, MAX_COPPER_LENGTH=16000L;
+     static final int MAX_PARTS=16, MAX_PADS=40, MAX_NETS=16, MAX_NET_DEGREE=10;
+     static final int MAX_SEGMENTS=160, MIN_PAD=26, MIN_PROBE=30;
+     static final double MAX_ROUTE_SCORE=70000;
+     static final int MAX_PLACEMENTS=80, MAX_ROUTE_ATTEMPTS=800, MAX_EXPANSIONS=160000000;
++
++    /* Tentative Q30 bounds are deliberately named separately from P09 bounds. */
++    static final int Q30_MIN_PARTS=20, Q30_MAX_PARTS=40;
++    static final int Q30_MIN_EDGE=128, Q30_MAX_EDGE=2250, Q30_MAX_ASPECT=3;
++    static final long Q30_MAX_AREA=5062500L, Q30_MAX_COPPER_LENGTH=20380L;
++    static final int Q30_MAX_PADS=96, Q30_MAX_NETS=32, Q30_MAX_NET_DEGREE=20;
++    static final int Q30_MAX_SEGMENTS=320;
++    static final double Q30_MAX_ROUTE_SCORE=140000;
++
++    private static final PhysicalPackage[] P09_PACKAGES={PhysicalPackages.AXIAL_RESISTOR,
++        PhysicalPackages.AXIAL_FUSE,PhysicalPackages.AXIAL_DIODE,PhysicalPackages.THROUGH_HOLE_LED,
++        PhysicalPackages.TO92_NPN,PhysicalPackages.TO92_NMOS,PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR,
++        PhysicalPackages.RADIAL_CERAMIC_CAPACITOR,PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,
++        PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2,PhysicalPackages.RELAY_SPDT,
++        PhysicalPackages.TO220_REGULATOR_4,PhysicalPackages.E04_DECISION_CONTROL_5};
++    private static final int[] P09_PACKAGE_CAPS={8,1,2,3,2,2,1,2,4,1,1,1,1};
++
++    /* The candidate keeps the same qualified package vocabulary while allowing
++     * the heterogeneous RB30 population to repeat those packages.  It does not
++     * add SMD, links, vias, or a family-specific geometry exception. */
++    private static final int[] Q30_PACKAGE_CAPS={16,2,8,8,8,8,8,8,8,4,4,4,4};
++
++    private static final SupportedEnvelope CURRENT=new SupportedEnvelope(
++        VERSION,true,MIN_EDGE,MAX_EDGE,MAX_ASPECT,MAX_AREA,MAX_COPPER_LENGTH,
++        1,MAX_PARTS,MAX_PADS,MAX_NETS,MAX_NET_DEGREE,MAX_SEGMENTS,MIN_PAD,MIN_PROBE,
++        MAX_ROUTE_SCORE,MAX_PLACEMENTS,MAX_ROUTE_ATTEMPTS,MAX_EXPANSIONS,
++        P09_PACKAGES,P09_PACKAGE_CAPS);
++    private static final SupportedEnvelope Q30_CANDIDATE=new SupportedEnvelope(
++        Q30_VERSION,false,Q30_MIN_EDGE,Q30_MAX_EDGE,Q30_MAX_ASPECT,Q30_MAX_AREA,
++        Q30_MAX_COPPER_LENGTH,Q30_MIN_PARTS,Q30_MAX_PARTS,Q30_MAX_PADS,Q30_MAX_NETS,
++        Q30_MAX_NET_DEGREE,Q30_MAX_SEGMENTS,MIN_PAD,MIN_PROBE,Q30_MAX_ROUTE_SCORE,
++        MAX_PLACEMENTS,MAX_ROUTE_ATTEMPTS,MAX_EXPANSIONS,P09_PACKAGES,Q30_PACKAGE_CAPS);
++
++    private final int version;
++    private final boolean qualified;
++    private final int minEdge,maxEdge,maxAspect,minParts,maxParts,maxPads,maxNets,maxNetDegree;
++    private final long maxArea,maxCopperLength;
++    private final int maxSegments,minPad,minProbe,maxPlacements,maxRouteAttempts,maxExpansions;
++    private final double maxRouteScore;
++    private final PhysicalPackage[] packages;
++    private final int[] packageCaps;
++
+     enum Reason { UNKNOWN_ENVELOPE, MISSING_LAYOUT, BOARD_SIZE, POPULATION, PACKAGE_MIX,
+         POSE, DOMAINS, NET_DEGREE, LAYER_POLICY, HOLE_POLICY, LINK_POLICY,
+-        ACCESS_FLOOR, ROUTE_BUDGET, WORK_BUDGET, DEVELOPER_ONLY }
++        ACCESS_FLOOR, ROUTE_BUDGET, WORK_BUDGET, DEVELOPER_ONLY, UNQUALIFIED,
++        REQUEST_POLICY }
+     static final class Rejected extends GenerationJob.Rejected {
+         final Reason reason;
+         Rejected(Reason reason,String detail) {
+-            super("Unsupported physical envelope "+ID+"@"+VERSION+" ["+reason+"]: "+detail);
++            this(VERSION,reason,detail);
++        }
++        Rejected(int version,Reason reason,String detail) {
++            super("Unsupported physical envelope "+ID+"@"+version+" ["+reason+"]: "+detail);
+             this.reason=reason;
+         }
+     }
+-    private SupportedEnvelope() { }
++
++    private SupportedEnvelope(int version,boolean qualified,int minEdge,int maxEdge,int maxAspect,
++            long maxArea,long maxCopperLength,int minParts,int maxParts,int maxPads,int maxNets,
++            int maxNetDegree,int maxSegments,int minPad,int minProbe,double maxRouteScore,
++            int maxPlacements,int maxRouteAttempts,int maxExpansions,
++            PhysicalPackage[] packages,int[] packageCaps) {
++        this.version=version; this.qualified=qualified; this.minEdge=minEdge; this.maxEdge=maxEdge;
++        this.maxAspect=maxAspect; this.maxArea=maxArea; this.maxCopperLength=maxCopperLength;
++        this.minParts=minParts; this.maxParts=maxParts; this.maxPads=maxPads; this.maxNets=maxNets;
++        this.maxNetDegree=maxNetDegree; this.maxSegments=maxSegments; this.minPad=minPad;
++        this.minProbe=minProbe; this.maxRouteScore=maxRouteScore; this.maxPlacements=maxPlacements;
++        this.maxRouteAttempts=maxRouteAttempts; this.maxExpansions=maxExpansions;
++        this.packages=packages.clone(); this.packageCaps=packageCaps.clone();
++        if (this.packages.length!=this.packageCaps.length)
++            throw new IllegalArgumentException("Envelope package vocabulary/cap mismatch");
++    }
++
++    private SupportedEnvelope() { throw new AssertionError("Use a versioned envelope"); }
++
+     static SupportedEnvelope current() { return CURRENT; }
+     static SupportedEnvelope resolve(String id,int version) {
+-        if(!ID.equals(id) || version!=VERSION) reject(Reason.UNKNOWN_ENVELOPE,"unknown id/version");
+-        return CURRENT;
++        if(!ID.equals(id) || (version!=VERSION && version!=Q30_VERSION))
++            reject(Reason.UNKNOWN_ENVELOPE,"unknown id/version");
++        return version==VERSION ? CURRENT : Q30_CANDIDATE;
+     }
+-    String identity() { return ID+"@"+VERSION; }
+-    void requireNormal(GeneratedBoardInstance owner) {
++
++    /** Resolve the policy declared by a provider family without embedding family rules here. */
++    static SupportedEnvelope forFamily(String familyId) {
++        SupportedEnvelope result=QuickPlayFamilyRegistry.envelopeForFamily(familyId);
++        if(result==null) reject(Reason.UNKNOWN_ENVELOPE,"no provider policy for family: "+familyId);
++        return result;
++    }
++
++    static SupportedEnvelope forBoard(GeneratedBoardInstance owner) {
+         if(owner==null) reject(Reason.MISSING_LAYOUT,"missing generated owner");
+-        if(owner.isDeveloperOnlyFaultRoute()) reject(Reason.DEVELOPER_ONLY,"prototype is not normal admission");
++        return forFamily(owner.getCircuitFamilyId());
++    }
++
++    String identity() { return ID+"@"+version; }
++    int getVersion() { return version; }
++    boolean isQualified() { return qualified; }
++    int getMinParts() { return minParts; }
++    int getMaxParts() { return maxParts; }
++    long getMaxArea() { return maxArea; }
++    long getMaxCopperLength() { return maxCopperLength; }
++    boolean allowsVias() { return false; }
++    boolean allowsLinks() { return false; }
++
++    /** Check that the request-selected policy and board/provider policy agree. */
++    void requireRequest(GenerationRequest request,GeneratedBoardInstance owner) {
++        if(request==null || owner==null) rejectForVersion(Reason.REQUEST_POLICY,"missing request or board");
++        SupportedEnvelope requestPolicy=request.getSupportedEnvelope();
++        SupportedEnvelope boardPolicy=forBoard(owner);
++        if(this!=requestPolicy || requestPolicy!=boardPolicy)
++            rejectForVersion(Reason.REQUEST_POLICY,"request and board select different physical policies");
++        String requestedFamily=request.isComposition() ?
++            ControlledIndicatorBlockContributions.FAMILY_ID :
++            request.getDescriptor().getDeviceIntent().getId();
++        if(!requestedFamily.equals(owner.getCircuitFamilyId()))
++            rejectForVersion(Reason.REQUEST_POLICY,"request family does not own the board policy");
++    }
++
++    void requireNormal(GeneratedBoardInstance owner) {
++        if(owner==null) rejectForVersion(Reason.MISSING_LAYOUT,"missing generated owner");
++        if(owner.isDeveloperOnlyFaultRoute()) rejectForVersion(Reason.DEVELOPER_ONLY,"prototype is not normal admission");
++        if(forBoard(owner)!=this) rejectForVersion(Reason.REQUEST_POLICY,"selected policy does not own this board");
++        if(!qualified) rejectForVersion(Reason.UNQUALIFIED,"versioned envelope has no Q30 corpus qualification");
+         requireBounds(owner.getBoard(),owner.getPcbLayout());
+     }
+     void requireBoardSize(Rectangle r) {
+-        if(r==null || r.width<MIN_EDGE || r.height<MIN_EDGE || r.width>MAX_EDGE || r.height>MAX_EDGE ||
+-                (long)r.width*r.height>MAX_AREA || (long)Math.max(r.width,r.height)>MAX_ASPECT*(long)Math.min(r.width,r.height))
+-            reject(Reason.BOARD_SIZE,"outline size, area or aspect exceeds the qualified bound");
++        if(r==null || r.width<minEdge || r.height<minEdge || r.width>maxEdge || r.height>maxEdge ||
++                (long)r.width*r.height>maxArea || (long)Math.max(r.width,r.height)>maxAspect*(long)Math.min(r.width,r.height))
++            rejectForVersion(Reason.BOARD_SIZE,"outline size, area or aspect exceeds the qualified bound");
+     }
+     void requireAccess(PcbPadPlacement pad) {
+         if(pad==null || pad.getAttachment()!=PcbTerminalAttachment.PLATED_THROUGH_HOLE ||
+                 pad.getMountingSide()!=PcbBoardSide.TOP || !PcbCopperAccess.canProbe(pad,PcbBoardSide.BOTTOM))
+-            reject(Reason.ACCESS_FLOOR,"every terminal needs an exposed through-hole solder target");
++            rejectForVersion(Reason.ACCESS_FLOOR,"every terminal needs an exposed through-hole solder target");
+         Rectangle land=pad.getPadBounds(), probe=pad.getProbeBounds();
+-        if(land.width<MIN_PAD || land.height<MIN_PAD || probe.width<MIN_PROBE || probe.height<MIN_PROBE)
+-            reject(Reason.ACCESS_FLOOR,"pad/probe target is below the physical access floor");
++        if(land.width<minPad || land.height<minPad || probe.width<minProbe || probe.height<minProbe)
++            rejectForVersion(Reason.ACCESS_FLOOR,"pad/probe target is below the physical access floor");
+     }
+     /** Necessary bounds only. Callers MUST still validate geometry, correspondence and diagnostics. */
+     void requireBounds(TroubleshootBoard board,PcbBoardLayout layout) {
+-        if(board==null || layout==null) reject(Reason.MISSING_LAYOUT,"no board/layout");
++        if(board==null || layout==null) rejectForVersion(Reason.MISSING_LAYOUT,"no board/layout");
+         requireBoardSize(layout.getBoardOutline());
+         int parts=board.getComponentIds().size(), pads=board.getPadIds().size(), nets=board.getNetIds().size();
+-        if(parts<1 || parts>MAX_PARTS || pads<1 || pads>MAX_PADS || nets<1 || nets>MAX_NETS ||
++        if(parts<minParts || parts>maxParts || pads<1 || pads>maxPads || nets<1 || nets>maxNets ||
+                 layout.getComponents().size()!=parts || layout.getPads().size()!=pads)
+-            reject(Reason.POPULATION,"component, pad or net inventory exceeds the declared bounds");
+-        int[] counts=new int[PACKAGES.length];
++            rejectForVersion(Reason.POPULATION,"component, pad or net inventory exceeds the declared bounds");
++        int[] counts=new int[packages.length];
+         for(PcbComponentPlacement part:layout.getComponents()) {
+             if(part.getPhysicalGeometry().getRaisedCrossover()!=null)
+-                reject(Reason.LINK_POLICY,"zero factory links are qualified for production");
++                rejectForVersion(Reason.LINK_POLICY,"zero factory links are qualified for production");
+             int index=packageIndex(part.getPhysicalPackage());
+-            if(index<0 || ++counts[index]>PACKAGE_CAPS[index])
+-                reject(Reason.PACKAGE_MIX,"unqualified package or package multiplicity");
++            if(index<0 || ++counts[index]>packageCaps[index])
++                rejectForVersion(Reason.PACKAGE_MIX,"unqualified package or package multiplicity");
+             if(part.getMountingSide()!=PcbBoardSide.TOP || part.getRotation()!=PcbRotation.DEG_0)
+-                reject(Reason.POSE,"only the qualified top-mounted catalog variants are admitted");
++                rejectForVersion(Reason.POSE,"only the qualified top-mounted catalog variants are admitted");
+         }
+         PcbPlacementConstraints demands=board.getPlacementConstraints();
+-        if(demands.routingLayer==null) reject(Reason.LAYER_POLICY,"one declared copper face is required");
++        if(demands.routingLayer==null) rejectForVersion(Reason.LAYER_POLICY,"one declared copper face is required");
+         TreeSet<String> domains=new TreeSet<String>();
+         for(PcbPlacementConstraints.Part demand:demands.getParts()) domains.add(demand.domainId);
+         if(domains.size()!=1 || !demands.getBarriers().isEmpty())
+-            reject(Reason.DOMAINS,"isolated placement domains are not yet qualified");
+-        for(String id:board.getNetIds()) if(board.getNet(id).getPadIds().size()>MAX_NET_DEGREE)
+-            reject(Reason.NET_DEGREE,"net terminal degree exceeds the bound");
++            rejectForVersion(Reason.DOMAINS,"isolated placement domains are not yet qualified");
++        for(String id:board.getNetIds()) if(board.getNet(id).getPadIds().size()>maxNetDegree)
++            rejectForVersion(Reason.NET_DEGREE,"net terminal degree exceeds the bound");
+         for(PcbPadPlacement pad:layout.getPads()) requireAccess(pad);
+-        if(!layout.getHoles().isEmpty()) reject(Reason.HOLE_POLICY,"no vias or extra drills are qualified");
++        if(!layout.getHoles().isEmpty()) rejectForVersion(Reason.HOLE_POLICY,"no vias or extra drills are qualified");
+         requireRoutes(board,layout);
+         requireWork(layout);
+     }
+     private void requireRoutes(TroubleshootBoard board,PcbBoardLayout layout) {
+         if(PcbTraceRules.TRACE_WIDTH<9 || PcbTraceRules.MIN_VISIBLE_CLEARANCE<6 ||
+                 PcbTraceRules.MIN_CENTERLINE_CLEARANCE<PcbTraceRules.TRACE_WIDTH+6)
+-            reject(Reason.ACCESS_FLOOR,"display/clearance floor cannot be disabled by a profile");
++            rejectForVersion(Reason.ACCESS_FLOOR,"display/clearance floor cannot be disabled by a profile");
+         long segments=0;
+         for(PcbTraceGeometry trace:layout.getTraces()) {
+             if(trace.getLayer()!=board.getPlacementConstraints().routingLayer)
+-                reject(Reason.LAYER_POLICY,"copper differs from the one declared routing face");
++                rejectForVersion(Reason.LAYER_POLICY,"copper differs from the one declared routing face");
+             if(trace.getExposure()!=PcbCopperAccess.Exposure.EXPOSED)
+-                reject(Reason.ACCESS_FLOOR,"covered trace surfaces are not qualified for normal inspection");
++                rejectForVersion(Reason.ACCESS_FLOOR,"covered trace surfaces are not qualified for normal inspection");
+             segments+=trace.getXPoints().length-1;
+-            if(segments>MAX_SEGMENTS) reject(Reason.ROUTE_BUDGET,"too many routed segments");
++            if(segments>maxSegments) rejectForVersion(Reason.ROUTE_BUDGET,"too many routed segments");
+         }
+         PcbRouteMetrics metrics=PcbRouteMetrics.measure(layout.getTraces());
+-        if(metrics.uniqueLength>MAX_COPPER_LENGTH || !(layout.getRouteQualityScore(board)<=MAX_ROUTE_SCORE))
+-            reject(Reason.ROUTE_BUDGET,"copper length or route quality cost exceeds the bound");
++        if(metrics.uniqueLength>maxCopperLength || !(layout.getRouteQualityScore(board)<=maxRouteScore))
++            rejectForVersion(Reason.ROUTE_BUDGET,"copper length or route quality cost exceeds the bound");
+     }
+     private void requireWork(PcbBoardLayout layout) {
+-        if(layout.getGenerationPlacementAttempts()<0 || layout.getGenerationPlacementAttempts()>MAX_PLACEMENTS ||
+-                layout.getGenerationRoutingAttempts()<0 || layout.getGenerationRoutingAttempts()>MAX_ROUTE_ATTEMPTS ||
+-                layout.getGenerationRoutingExpansions()<0 || layout.getGenerationRoutingExpansions()>MAX_EXPANSIONS)
+-            reject(Reason.WORK_BUDGET,"generation work exceeds existing deterministic limits");
++        if(layout.getGenerationPlacementAttempts()<0 || layout.getGenerationPlacementAttempts()>maxPlacements ||
++                layout.getGenerationRoutingAttempts()<0 || layout.getGenerationRoutingAttempts()>maxRouteAttempts ||
++                layout.getGenerationRoutingExpansions()<0 || layout.getGenerationRoutingExpansions()>maxExpansions)
++            rejectForVersion(Reason.WORK_BUDGET,"generation work exceeds existing deterministic limits");
+         PcbRoutingWork.Statistics work=layout.getRoutingRecoveryStatistics();
+         if(work!=null && (work.outcome!=PcbRoutingWork.Outcome.SUCCESS || work.expansions<0 ||
+                 work.expansions>PcbRoutingWork.Limits.MAX_EXPANSIONS || work.orderingPasses>PcbRoutingWork.Limits.MAX_ORDERINGS ||
+                 work.ripUpPasses>PcbRoutingWork.Limits.MAX_RIP_PASSES || work.reroutedNets>PcbRoutingWork.Limits.MAX_REROUTED_NETS))
+-            reject(Reason.WORK_BUDGET,"route recovery is incomplete or exceeds its bounded work");
++            rejectForVersion(Reason.WORK_BUDGET,"route recovery is incomplete or exceeds its bounded work");
+     }
+     private static void reject(Reason reason,String detail) { throw new Rejected(reason,detail); }
+-    private static final PhysicalPackage[] PACKAGES={PhysicalPackages.AXIAL_RESISTOR,
+-        PhysicalPackages.AXIAL_FUSE,PhysicalPackages.AXIAL_DIODE,PhysicalPackages.THROUGH_HOLE_LED,
+-        PhysicalPackages.TO92_NPN,PhysicalPackages.TO92_NMOS,PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR,
+-        PhysicalPackages.RADIAL_CERAMIC_CAPACITOR,PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,
+-        PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2,PhysicalPackages.RELAY_SPDT,
+-        PhysicalPackages.TO220_REGULATOR_4,PhysicalPackages.E04_DECISION_CONTROL_5};
+-    private static final int[] PACKAGE_CAPS={8,1,2,3,2,2,1,2,4,1,1,1,1};
+-    private static int packageIndex(PhysicalPackage physical) {
+-        for(int i=0;i<PACKAGES.length;i++) if(PACKAGES[i]==physical) return i;
++    private void rejectForVersion(Reason reason,String detail) {
++        throw new Rejected(version,reason,detail);
++    }
++    private int packageIndex(PhysicalPackage physical) {
++        for(int i=0;i<packages.length;i++) if(packages[i]==physical) return i;
+         return -1; // A forged equal ID does not qualify an untested footprint.
+     }
+     String canonical() {
+         StringBuilder out=new StringBuilder(identity());
+-        out.append(";edge=").append(MIN_EDGE).append("..").append(MAX_EDGE).append(";aspect=").append(MAX_ASPECT)
+-            .append(";area=").append(MAX_AREA).append(";parts=").append(MAX_PARTS).append(";pads=").append(MAX_PADS)
+-            .append(";nets=").append(MAX_NETS).append(";degree=").append(MAX_NET_DEGREE)
++        out.append(";edge=").append(minEdge).append("..").append(maxEdge).append(";aspect=").append(maxAspect)
++            .append(";area=").append(maxArea);
++        if(minParts==1) out.append(";parts=").append(maxParts);
++        else out.append(";parts=").append(minParts).append("..").append(maxParts);
++        out.append(";pads=").append(maxPads).append(";nets=").append(maxNets).append(";degree=").append(maxNetDegree)
+             .append(";domains=1;barriers=0;mount=TOP;rotation=DEG_0;attachment=PLATED_THROUGH_HOLE;layer=single-declared-TOP-or-BOTTOM;vias=0;links=0;extraDrills=0")
+-            .append(";padFloor=").append(MIN_PAD).append(";probeFloor=").append(MIN_PROBE)
++            .append(";padFloor=").append(minPad).append(";probeFloor=").append(minProbe)
+             .append(";traceExposure=EXPOSED;traceFloor=9;clearanceFloor=6;traceActual=").append(PcbTraceRules.TRACE_WIDTH)
+-            .append(";clearanceActual=").append(PcbTraceRules.MIN_VISIBLE_CLEARANCE)
+-            .append(";segments=").append(MAX_SEGMENTS).append(";uniqueCopper=").append(MAX_COPPER_LENGTH)
+-            .append(";score=").append(PcbRouteMetrics.SCORE_VERSION).append(':').append(MAX_ROUTE_SCORE)
+-            .append(";placements=").append(MAX_PLACEMENTS).append(";routeAttempts=").append(MAX_ROUTE_ATTEMPTS)
+-            .append(";expansions=").append(MAX_EXPANSIONS);
+-        for(int i=0;i<PACKAGES.length;i++) out.append(';').append(PACKAGES[i].getId()).append('=').append(PACKAGE_CAPS[i]);
++            .append(";clearanceActual=").append(PcbTraceRules.MIN_VISIBLE_CLEARANCE).append(";segments=").append(maxSegments)
++            .append(";uniqueCopper=").append(maxCopperLength).append(";score=").append(PcbRouteMetrics.SCORE_VERSION).append(':').append(maxRouteScore)
++            .append(";placements=").append(maxPlacements).append(";routeAttempts=").append(maxRouteAttempts)
++            .append(";expansions=").append(maxExpansions);
++        for(int i=0;i<packages.length;i++) out.append(';').append(packages[i].getId()).append('=').append(packageCaps[i]);
+         out.append(";gridCells=").append(PcbRoutingWork.MAX_GRID_CELLS)
+             .append(";searchPerCell=").append(PcbRoutingWork.SEARCH_EXPANSIONS_PER_CELL)
+             .append(";routeOrders=").append(PcbRoutingWork.Limits.MAX_ORDERINGS)
+@@ -144,7 +249,9 @@ final class SupportedEnvelope {
+             .append(";unitMillis=").append(GenerationCoordinator.MAX_STEP_MILLIS)
+             .append(";jobUnits=").append(GenerationCoordinator.MAX_JOB_STEPS)
+             .append(";view=U01-side-aware-pan-zoom;hiddenCopperSelectable=false;inspectionZoomRequired=true")
+-            .append(";qualification=geometry+live-correspondence+diagnostic-proof;proceduralPopulation=NOT_QUALIFIED");
++            .append(";qualification=").append(qualified ?
++                "geometry+live-correspondence+diagnostic-proof" : "UNQUALIFIED-Q30-CORPUS")
++            .append(";proceduralPopulation=NOT_QUALIFIED");
+         return out.toString();
+     }
+ }
+diff --git a/tests/contracts/Q30EnvelopeContractTest.java b/tests/contracts/Q30EnvelopeContractTest.java
+new file mode 100644
+index 0000000..b0aa5e2
+--- /dev/null
++++ b/tests/contracts/Q30EnvelopeContractTest.java
+@@ -0,0 +1,160 @@
++package com.lushprojects.circuitjs1.client;
++
++import java.util.Vector;
++
++/** Versioned physical-policy checks for the future RB30 provider boundary. */
++public final class Q30EnvelopeContractTest {
++    private static int checks;
++
++    public static void main(String[] args) {
++        CirSim sim = new CirSim();
++        sim.gridSize = 16;
++        sim.gridMask = ~15;
++        sim.gridRound = 7;
++        CircuitElm.sim = sim;
++        GeneratedBoardInstance owner = GenerationRequest.leaf(
++            QuickPlayFamilyRegistry.LED_INDICATOR, 0, false)
++            .resolve(new GenerationRequest.PlanCache()).construct().instance;
++        try {
++            verifyVersionedPolicies(owner);
++            verifyProviderSelection();
++            verifyP09Negatives(owner);
++            verifyRequestOwnership(owner);
++        } finally {
++            for (CircuitElm element : owner.getSimulationElements()) element.delete();
++        }
++        System.out.println("PASS: Q30 envelope contracts assertions=" + checks);
++    }
++
++    private static void verifyVersionedPolicies(GeneratedBoardInstance owner) {
++        SupportedEnvelope v1 = SupportedEnvelope.current();
++        SupportedEnvelope v2 = SupportedEnvelope.resolve(SupportedEnvelope.ID,
++            SupportedEnvelope.Q30_VERSION);
++        require(v1 == SupportedEnvelope.resolve(SupportedEnvelope.ID,
++            SupportedEnvelope.VERSION), "P09 registry identity changed");
++        require(v1.getVersion() == 1 && v1.isQualified(), "P09 qualification changed");
++        require(v1.getMaxParts() == 16 && v1.getMaxArea() == 2250000L &&
++            v1.getMaxCopperLength() == 16000L, "P09 numeric limits changed");
++        require(v1.canonical().contains(";parts=16;") &&
++            !v1.canonical().contains(";parts=1..16;"), "P09 population canonical changed");
++        require(v2 != v1 && v2.getVersion() == SupportedEnvelope.Q30_VERSION &&
++            !v2.isQualified(), "Q30 candidate was silently qualified");
++        require(v2.getMinParts() == 20 && v2.getMaxParts() == 40,
++            "Q30 candidate part range changed");
++        require(v2.getMaxArea() == 5062500L && v2.getMaxCopperLength() == 20380L,
++            "Q30 candidate scale evidence changed");
++        require(v2.canonical().contains(";parts=20..40;") &&
++            v2.canonical().contains(";qualification=UNQUALIFIED-Q30-CORPUS"),
++            "Q30 candidate qualification is not explicit");
++        require(!v1.allowsVias() && !v1.allowsLinks() && !v2.allowsVias() &&
++            !v2.allowsLinks(), "single-face link/hole policy broadened");
++        require(owner.getCircuitFamilyId().equals(QuickPlayFamilyRegistry.LED_INDICATOR),
++            "fixture family changed");
++        checks += 11;
++    }
++
++    private static void verifyProviderSelection() {
++        SupportedEnvelope v2 = SupportedEnvelope.forFamily(QuickPlayFamilyRegistry.RB30_CONTROL);
++        require(v2 == SupportedEnvelope.resolve(SupportedEnvelope.ID,
++            SupportedEnvelope.Q30_VERSION), "RB30 provider did not select v2");
++        require(!QuickPlayFamilyRegistry.isNormalPlayerEligible(
++            QuickPlayFamilyRegistry.RB30_CONTROL), "RB30 became normal-player eligible");
++        require(!QuickPlayFamilyRegistry.getNormalPlayerFamilyIds().contains(
++            QuickPlayFamilyRegistry.RB30_CONTROL), "RB30 entered the normal family menu");
++        checks += 3;
++    }
++
++    private static void verifyP09Negatives(final GeneratedBoardInstance owner) {
++        final SupportedEnvelope v1 = SupportedEnvelope.current();
++        final TroubleshootBoard board = owner.getBoard();
++        final PcbBoardLayout layout = owner.getPcbLayout();
++
++        PcbComponentPlacement originalComponent = layout.getComponents().firstElement();
++        PhysicalPackage sourcePackage = originalComponent.getPhysicalPackage();
++        PhysicalPackage forgedPackage = new PhysicalPackage(sourcePackage.getId(),
++            sourcePackage.getTerminalIds(), new Vector<String>(), sourcePackage.isConnector(),
++            sourcePackage.getGeometry(), sourcePackage.getGeometryVariants(),
++            sourcePackage.getDefaultLooseGeometryVariantKey(),
++            sourcePackage.getGeometryVariantSelection(), sourcePackage.getAllowedRotations(),
++            sourcePackage.getAllowedMountingSides());
++        final PcbComponentPlacement forgedPlacement = PcbComponentPlacement.fromPhysicalGeometry(
++            originalComponent.getComponentId(), originalComponent.getPose(), forgedPackage,
++            originalComponent.getPhysicalGeometry());
++        rejects(SupportedEnvelope.Reason.PACKAGE_MIX, new Runnable() {
++            public void run() {
++                v1.requireBounds(board, P09EnvelopeChecks.copy(layout, forgedPlacement, null, false));
++            }
++        });
++
++        final PcbCopperLayer declared = board.getPlacementConstraints().routingLayer;
++        final PcbCopperLayer other = declared == PcbCopperLayer.TOP ?
++            PcbCopperLayer.BOTTOM : PcbCopperLayer.TOP;
++        final PcbTraceGeometry trace = layout.getTraces().firstElement();
++        final PcbBoardLayout wrongLayer = P09EnvelopeChecks.copy(layout, null, null, false);
++        Vector<PcbTraceGeometry> layerTraces = new Vector<PcbTraceGeometry>(wrongLayer.getTraces());
++        layerTraces.set(0, new PcbTraceGeometry(trace.getSourceId(), trace.getNetId(),
++            trace.getStartPadId(), trace.getEndPadId(), other, trace.getExposure(),
++            trace.getXPoints(), trace.getYPoints()));
++        wrongLayer.replaceTraces(layerTraces);
++        rejects(SupportedEnvelope.Reason.LAYER_POLICY, new Runnable() {
++            public void run() { v1.requireBounds(board, wrongLayer); }
++        });
++
++        final PcbBoardLayout withVia = P09EnvelopeChecks.copy(layout, null, null, false);
++        withVia.addHole(PcbTwoLayerRules.via("q30-unqualified-via",
++            board.getNetIds().firstElement(), 60, 60));
++        rejects(SupportedEnvelope.Reason.HOLE_POLICY, new Runnable() {
++            public void run() { v1.requireBounds(board, withVia); }
++        });
++
++        final PcbPadPlacement pad = layout.getPads().firstElement();
++        final PcbBoardLayout invalidCount = P09EnvelopeChecks.copy(layout, null, null, false);
++        invalidCount.addPad(new PcbPadPlacement("q30-forged-pad", pad.getX(), pad.getY(),
++            pad.getEscapeDx(), pad.getEscapeDy(), pad.getEscapeLength(), pad.getPadBounds(),
++            pad.getProbeBounds(), pad.getAttachment(), pad.getMountingSide(), pad.getExposure()));
++        rejects(SupportedEnvelope.Reason.POPULATION, new Runnable() {
++            public void run() { v1.requireBounds(board, invalidCount); }
++        });
++
++        rejects(SupportedEnvelope.Reason.POPULATION, new Runnable() {
++            public void run() { SupportedEnvelope.resolve(SupportedEnvelope.ID,
++                SupportedEnvelope.Q30_VERSION).requireBounds(board, layout); }
++        });
++        checks += 5;
++    }
++
++    private static void verifyRequestOwnership(final GeneratedBoardInstance owner) {
++        final SupportedEnvelope v1 = SupportedEnvelope.current();
++        final SupportedEnvelope v2 = SupportedEnvelope.resolve(SupportedEnvelope.ID,
++            SupportedEnvelope.Q30_VERSION);
++        final GenerationRequest p09 = GenerationRequest.leaf(
++            QuickPlayFamilyRegistry.LED_INDICATOR, 0, false);
++        final GenerationRequest rb30 = GenerationRequest.leaf(
++            QuickPlayFamilyRegistry.RB30_CONTROL, 0, false);
++        v1.requireRequest(p09, owner);
++        checks++;
++        rejects(SupportedEnvelope.Reason.REQUEST_POLICY, new Runnable() {
++            public void run() { v2.requireRequest(p09, owner); }
++        });
++        rejects(SupportedEnvelope.Reason.REQUEST_POLICY, new Runnable() {
++            public void run() { v1.requireRequest(rb30, owner); }
++        });
++        rejects(SupportedEnvelope.Reason.REQUEST_POLICY, new Runnable() {
++            public void run() { v2.requireRequest(rb30, owner); }
++        });
++        checks += 3;
++    }
++
++    private static void rejects(SupportedEnvelope.Reason reason, Runnable action) {
++        try {
++            action.run();
++            throw new AssertionError("Accepted negative " + reason);
++        } catch (SupportedEnvelope.Rejected expected) {
++            require(expected.reason == reason, "wrong rejection reason: " + expected.reason);
++        }
++    }
++
++    private static void require(boolean value, String message) {
++        if (!value) throw new AssertionError(message);
++    }
++}

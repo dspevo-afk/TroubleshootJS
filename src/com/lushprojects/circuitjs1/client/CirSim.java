@@ -422,6 +422,8 @@ MouseOutHandler, MouseWheelHandler {
     boolean troubleshootP02ForcedFailure;
     boolean troubleshootP06Verification, troubleshootP06Complete, troubleshootP06Forced, troubleshootP06Bench;
     boolean troubleshootP07Verification, troubleshootP07Complete, troubleshootP07Forced, troubleshootP07Bench;
+    boolean troubleshootQ30Verification, troubleshootQ30Complete, troubleshootQ30Bench;
+    String troubleshootQ30Seed;
     boolean troubleshootU01Verification, troubleshootU01Complete, troubleshootU01ForcedFailure;
     int troubleshootU01Fixture;
     boolean troubleshootU02U03Verification, troubleshootU02U03VerificationComplete,
@@ -627,6 +629,13 @@ MouseOutHandler, MouseWheelHandler {
             troubleshootP07Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyP07", false);
             troubleshootP07Forced = troubleshootP07Verification && qp.getBooleanValue("tsjP07Fail", false);
             troubleshootP07Bench = troubleshootP07Verification && qp.getBooleanValue("tsjP07Bench", false);
+            troubleshootQ30Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyQ30", false);
+            troubleshootQ30Bench = troubleshootQ30Verification && qp.getBooleanValue("tsjQ30Bench", false);
+            if (troubleshootQ30Verification) {
+                troubleshootQ30Seed = qp.getValue("tsjQ30Seed");
+                if (troubleshootQ30Seed == null)
+                    troubleshootQ30Seed = qp.getValue("seed");
+            }
             troubleshootU01Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyU01", false);
             troubleshootU01ForcedFailure = troubleshootU01Verification && qp.getBooleanValue("tsjU01Fail", false);
             if (troubleshootU01Verification && qp.getValue("tsjViewportFixture") != null)
@@ -1861,6 +1870,7 @@ MouseOutHandler, MouseWheelHandler {
             runP02ConductorVerificationIfReady();
             runP06FactoryLinkVerificationIfReady();
             runP07TwoLayerVerificationIfReady();
+            runQ30DeveloperWorkbenchIfReady();
             runU01ViewportVerificationIfReady();
             runA10GenerationVerificationIfReady();
 			// Deferred meter work may consume this analysis only after the
@@ -4907,7 +4917,7 @@ MouseOutHandler, MouseWheelHandler {
 	pcbWorkbenchController = (!troubleshootDebug || FreshGeneratedRuntimeInstallation.isInProgress(this) ||
 	    troubleshootTask41Verification || troubleshootTask43PVerification || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
-	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootQuickPlayGateVerification || troubleshootE03Verification || troubleshootE01Verification || troubleshootE02Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootU01Verification || troubleshootA10Verification ||
+	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootQuickPlayGateVerification || troubleshootE03Verification || troubleshootE01Verification || troubleshootE02Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootQ30Verification || troubleshootU01Verification || troubleshootA10Verification ||
 	    troubleshootA01Measurement ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
@@ -5110,7 +5120,8 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     private void runP07TwoLayerVerificationIfReady() {
-        if (!developerVerifierRunning && troubleshootP07Verification && !troubleshootP07Complete &&
+        if (!developerVerifierRunning && !troubleshootQ30Verification &&
+                troubleshootP07Verification && !troubleshootP07Complete &&
                 !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
                 generatedChallengeController != null && generatedChallengeController.isReady() &&
                 isGeneratedRuntimeSettled()) {
@@ -5119,6 +5130,24 @@ MouseOutHandler, MouseWheelHandler {
             try {
                 P07TwoLayerDeveloperVerifier.verify(this, troubleshootP07Forced, troubleshootP07Bench);
                 publishBrowserVerificationResult("PASS:p07");
+            } catch (Throwable failure) {
+                publishBrowserVerificationResult("FAIL:" + failure.getMessage());
+                PhysicalMutationScope.rethrow(failure);
+            } finally { developerVerifierRunning = false; }
+        }
+    }
+
+    private void runQ30DeveloperWorkbenchIfReady() {
+        if (!developerVerifierRunning && troubleshootQ30Verification && !troubleshootQ30Complete &&
+                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+                generatedChallengeController != null && generatedChallengeController.isReady() &&
+                isGeneratedRuntimeSettled()) {
+            developerVerifierRunning = true; troubleshootQ30Complete = true;
+            publishBrowserVerificationResult("RUNNING:q30");
+            try {
+                boolean retained = Q30DeveloperWorkbenchVerifier.verify(this,
+                    troubleshootQ30Seed, troubleshootQ30Bench);
+                publishBrowserVerificationResult(retained ? "PASS:q30" : "PASS_RUNTIME:q30");
             } catch (Throwable failure) {
                 publishBrowserVerificationResult("FAIL:" + failure.getMessage());
                 PhysicalMutationScope.rethrow(failure);

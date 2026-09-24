@@ -1,0 +1,40 @@
+Q30-P1 FLOORPLAN AFTER-INTERMEDIATE ANCHOR-OMISSION RECEIPT
+====================================
+
+Status: INTERMEDIATE (superseded; anchor-only region omission)
+Measurement label: after-intermediate-anchor-omission
+Planner source: explicit snapshot of the pre-anchor-fix planner; retained for audit only
+Worktree branch: codex/q30-multirail-qualification
+Worktree HEAD: e0c368855a3891acd4673e94ce9afa732390e2bf
+
+Snapshot provenance
+-------------------
+Planner snapshot SHA-256: 57485c39bd0af5f66cd1218ae98a76086dc75444c5c4f1c41a7abdd39762e9b5
+Q30PhysicalPilot.java SHA-256: ad00c38bc19bc8c2413a69ee95d10b8f12a1d7ef008e84b6a99516be0e72046b
+Rb30Plan.java SHA-256:           538bdd61849b8ef837710d089513bfa67e985d2d119464fe50e4c9de55547488
+Q30 exporter patch SHA-256:      e0032548a266bd7e29090762c4b19fc61468c552319f6c5a8bfa44f9899643ec
+Synthetic source SHA-256:        4a312fa13bb9448cadc751a11b3f41bb0d051e74b7553cad67689216aa16c575
+Synthetic raw SHA-256:           df0a9c56cc6a73689934903dd3d40502ffc3a85c0646bdf29257b619dcd707fc
+Q30 inspect SHA-256:             7783e2d7fafa1fa36b7a26e32d3d54859add522c1839ee0d3e1f446d02ace010
+
+Command shape
+-------------
+$worktree = (Get-Location).Path
+$afterSnapshot = Join-Path $env:TEMP 'tsj-q30-planner-after-anchor-omission-<guid>.java'
+Copy-Item (Join-Path $worktree 'src\com\lushprojects\circuitjs1\client\PcbPlacementPlanner.java') $afterSnapshot
+.\docs\task-evidence\Q30\floorplanning\run_floorplan_metrics.ps1 `
+  -SourceRoot $worktree -JavaHome '<JDK8_HOME>' `
+  -GwtHome (Join-Path $worktree '.tools\gwt-2.7.0') `
+  -PlannerSource $afterSnapshot -PlannerLabel after-anchor-omission-superseded `
+  -MeasurementLabel after-intermediate-anchor-omission -MeasurementStatus intermediate `
+  -Seed all -CandidateCount 6 `
+  -OutputDir (Join-Path $worktree 'docs\task-evidence\Q30\floorplanning\after-intermediate-anchor-omission')
+
+Validation
+----------
+Compile: PASS, JDK 8 source/target 7; javac exited 0 with recorded bootstrap/unchecked warnings.
+Inspect: PASS, all 72 signed seed/candidate invocations completed.
+Corpus: 72 attempts, 72 accepted placements, 0 rejected; 33 parts per row.
+Synthetic: 7 validated FULLER_TWO_LAYER count=33 successes, same fixture receipt as BEFORE.
+Cleanup: PASS; the exact temp snapshot was verified under the OS temp root and removed after the run.
+Disposition: INTERMEDIATE ONLY; superseded after anchor-region coverage was corrected in the planner.

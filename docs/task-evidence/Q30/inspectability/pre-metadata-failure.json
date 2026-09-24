@@ -1,0 +1,17 @@
+{
+  "context": "First compiled Q30-P1 production-preview attempt; seed 0; developer-only bench",
+  "urlQuery": "tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Bench=true&tsjQ30Seed=0",
+  "report": {
+    "schema": 1,
+    "status": "FAIL",
+    "seed": "0",
+    "topology": "RB30_SEPARATE_DIRECT_A_BJT_B_BJT",
+    "route": "P07_FULLER_TWO_LAYER",
+    "blocker": "Resistor package has non-resistor metadata: RSB",
+    "normalAdmission": false
+  },
+  "cleanup": {
+    "ownerRestored": true,
+    "prototypeRetained": false
+  }
+}

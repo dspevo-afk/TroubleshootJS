@@ -1,0 +1,14 @@
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 16 iterations, timeStep = 5.0E-6
+Q30_WHOLE_BOARD before-warm-4v rail=4.991964385193778 outA=11.980033277870218 outB=11.980033277870218 coilA=0.03940930137283502 coilB=0.039409301372834986 regulatorInputAmps=0.08136725784496769
+node 11 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+Q30_WHOLE_BOARD warm-main-4v rail=2.56691622167726 outA=2.159999614209046E-6 outB=2.159999610738443E-6 coilA=5.333780045071667E-12 coilB=5.333776847278022E-12 regulatorInputAmps=0.001596486767476532
+node 11 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 16 iterations, timeStep = 5.0E-6
+Q30_WHOLE_BOARD recovered-12v rail=4.991964385181061 outA=11.980033277870218 outB=11.980033277870218 coilA=0.039409301436418284 coilB=0.039409301436418256 regulatorInputAmps=0.0813672579721369

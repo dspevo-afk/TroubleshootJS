@@ -2421,7 +2421,56 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### Q30 · Normal 20-40-part multi-rail procedural qualification
 
-**Status:** UNSTARTED.
+**Status:** BLOCKED — not accepted. A 33-package Q30 construction pilot passed
+focused electrical and identity checks. A focused E04 undervoltage recovery
+hysteresis repair resolves the exact-board production-timestep warm brownout
+failure on four tested seeds, with cold 4 V, recovery and no-main isolation
+proofs; an earlier coarse 100 µs cold-start stress case failed before the
+repair and has not been retested. The accepted P09
+single-face policy routes 0/12 baseline seeds and rejects every board by
+inventory. The baseline developer-only P07 fuller router completed 6/72
+placements; the Q30-P1 generic floorplanner raises that to 54/72 and the
+provider-selected medium policy routes all 12 sampled seeds, including six
+held-out. Final-source compiled production-workbench inspection passes for a
+representative and held-out seed, and the maintained JDK 8 native suite passes
+66 Java suites plus independent oracles and cleanup.
+No Q30 family is admitted for normal play. Diagnostic, live service and
+compiled-player qualification remain unproved.
+See [Q30 evidence](task-evidence/Q30/README.md).
+
+#### Q30-P1 — Medium-board floorplanning and two-layer physical policy
+
+**Status:** PASS — physical medium-board gate ready for independent review. This
+is an internal, non-catalog Q30 sub-gate; it adds no milestone ID or dependency
+edge and does not complete Q30. It was discovered during Q30 qualification:
+the 33-package electrical candidate is valid, but single-face routing completed
+0/72 matched placements and the existing fuller two-layer prototype completed
+only 6/72. A structured connected 33-part fixture completed 10/10 under that
+same fuller router, and structured fixtures continued to route well beyond 33
+parts. Package count alone does not explain the actual board's poor yield.
+
+This gate qualifies a generic, bounded functional floorplanner that uses declared
+regions, electrical connectivity, power and return distribution, repeated
+chains, connector role, package size, access and routing corridors. The evidence
+compares actual Q30 placements with the structured fixture using pad locality,
+ratsnest, region, crossing, density and courtyard measurements. The generator
+ranks six deterministic placements cheaply before routing a bounded subset.
+The current P09 one-face policy remains for accepted small boards. The versioned,
+provider-selected medium policy uses penalized second-face copper and real vias
+without raising the 48-via prototype cap or inserting factory links; its
+identity enters exact request/replay/dependency identity.
+
+This sub-gate passes only when a matched representative and held-out actual-Q30
+corpus shows materially better procedural routing yield, defensible via/copper/
+area/work distribution, physical correspondence on both faces, and usable
+inspection at the workbench, while affected small-board generation remains
+qualified. Do not invent a success threshold or admit a sparse set of lucky
+placements. If yield or inspectability remains poor, retain BLOCKED with the
+measured limiting factor. Even a Q30-P1 pass leaves Q30 diagnosis, service,
+repair/retest, compiled player, replay and performance requirements outstanding.
+[Physical investigation](task-evidence/Q30/two-layer-investigation/README.md)
+and [floorplanning evidence](task-evidence/Q30/floorplanning/README.md)
+record the measured candidate and limits.
 
 **Hard prerequisites:** [Q15](#m-q15), [E02](#m-e02), [E03](#m-e03), [E04](#m-e04), [D01](#m-d01), [P09](#m-p09), [Procedural Quick Play Admission Gate](#post-p09-quick-play), [U02](#m-u02)
 

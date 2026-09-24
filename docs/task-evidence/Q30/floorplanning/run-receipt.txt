@@ -1,0 +1,89 @@
+Q30-P1 FLOORPLAN METRICS RUN RECEIPT
+====================================
+
+Status: INTERMEDIATE (preserved working-tree corpus; not a stable before/after input)
+Run timestamp: 2026-09-24 00:02 America/New_York
+Worktree branch: codex/q30-multirail-qualification
+Worktree HEAD: e0c368855a3891acd4673e94ce9afa732390e2bf
+Scope: docs/task-evidence/Q30/floorplanning only; no production file was edited by the harness.
+Planner state: PcbPlacementPlanner.java was under concurrent edit; its source hash was not captured for this run.
+Use: This corpus is retained and labeled intermediate; use before-head/ and after-stable/ for the stable comparison.
+
+Command shape (portable form)
+-----------------------------
+$worktree = (Get-Location).Path
+$jdk8 = '<JDK8_HOME>'
+$gwt = Join-Path $worktree '.tools\gwt-2.7.0'
+.\docs\task-evidence\Q30\floorplanning\run_floorplan_metrics.ps1 `
+  -SourceRoot $worktree -JavaHome $jdk8 -GwtHome $gwt `
+  -Seed all -CandidateCount 6 `
+  -OutputDir (Join-Path $worktree 'docs\task-evidence\Q30\floorplanning')
+
+Inputs and provenance
+---------------------
+Q30PhysicalPilot.java SHA-256: a0d3dc0be0fa9d16fdf8b4095a80215fbfc81c3d80cda9db19cf9b53788065e6 (intermediate run source)
+Rb30Plan.java SHA-256:           538bdd61849b8ef837710d089513bfa67e985d2d119464fe50e4c9de55547488
+Q30 exporter patch SHA-256:      e0032548a266bd7e29090762c4b19fc61468c552319f6c5a8bfa44f9899643ec
+Synthetic source SHA-256:        4a312fa13bb9448cadc751a11b3f41bb0d051e74b7553cad67689216aa16c575
+Synthetic raw SHA-256:           df0a9c56cc6a73689934903dd3d40502ffc3a85c0646bdf29257b619dcd707fc
+Q30 raw inspect SHA-256:         bf3b0da1d9271c77150b69258c973f86602c8b04ad1b9458179ab7b59d741ff3
+Q30 placement source:            RootPlanManifest.EXACT_ROOT -> Rb30Plan.resolve(seed).board()
+Seeds:                           0, 1, 3, 17, 42, -1, 11, 23, 37, 59, 83, -23
+Candidate range:                0..5
+
+Run phases
+----------
+Compile: PASS. Read-only JDK 8 (Temurin 1.8.0_502), source/target 7, current source tree plus the developer pilot and verifier stub. javac exited 0; javac.txt records the bootstrap-classpath and unchecked-operation warnings.
+Inspect: PASS. 72 seed/candidate invocations completed and produced 72 exact-root inspect blocks.
+Extraction: PASS. Python standard-library parser produced the JSON comparison and both JSONL row files.
+Cleanup: PASS. The harness removed its unique OS-temp scratch after the successful run. Removal is guarded by resolved containment under the OS temp directory and the task-owned tsj-q30-floorplan- prefix.
+Reusable reduced invocation: PASS. `-Seed 0 -CandidateCount 1` completed in approximately 10.2 seconds, produced 1 Q30 row plus the seven synthetic rows, and its separately verified task-owned output directory was removed.
+
+Corpus results
+--------------
+Q30 attempts: 72
+Q30 accepted placements: 72
+Q30 rejected attempts: 0
+Q30 accepted row count: 72
+Q30 part count per accepted row: 33
+Synthetic count=33 FULLER_TWO_LAYER valid successes: 7
+Synthetic success seeds: 0, 1, 11, 23, 37, 59, 83
+
+Selected medians (Q30 n=72; synthetic n=7)
+---------------------------------------------
+metric                                      Q30       synthetic
+parts                                       33        33
+pads                                        82        96
+nets                                        25        24
+connectors                                  6         9
+boardArea                                   7839600   3542000
+courtyardArea                               589652    693000
+courtyardFraction                           0.0750885 0.195652
+netHplTotal                                 23310     12360
+netMstTotal                                 28185     18210
+componentPairDistanceMedian                 860       700
+sameRegionPairFraction                      0.228311  0.214815
+regionCrossingNetFraction                   0.28      0.125
+regionTransitionCount                      18        12
+estimatedRatsnestCrossings                  40.5      35
+netBoundingBoxOverlapPairs                  61        56
+connectorNearestSameNetPadDistanceMedian   235       245
+connectorCrossRegionIncidenceFraction       0.583333  0.5
+courtyardOverlapPairs                       0         0
+minimumCourtyardEdgeClearance               55        70
+
+Artifacts
+---------
+floorplan-comparison.json: machine-readable provenance, methodology, limits, distributions, and median comparison.
+q30-current-exact-root.jsonl: one measured row for each of the 72 accepted Q30 placements.
+q30-current-inspect.raw.txt: unfiltered inspect stream for all 72 attempts.
+synthetic-33-success.jsonl: all seven qualifying synthetic rows with route receipt fields.
+measure_floorplans.py: parser and metric implementation.
+run_floorplan_metrics.ps1: isolated JDK8 compile/export/parse harness.
+inspect-args.patch: temporary-only exporter argument and rejection handling patch.
+javac.txt: compile diagnostics.
+SHA256SUMS.txt: hashes for the delivered artifacts (excluding the manifest itself).
+
+Interpretation limits
+---------------------
+The current Q30 rows are physical placement geometry only. They do not prove route feasibility, solver behavior, player inspectability, normal admission, or diagnostic solvability. The synthetic fixture has a different graph, package inventory, pad count, connector identity, regions, and authored coordinates. Its route fields are retained only as fixture provenance. Crossing values are straight-line ratsnest proxies, not copper validation. Historical copied-manifest receipts remain baseline-equivalent context and are not mixed into this actual-plan run.

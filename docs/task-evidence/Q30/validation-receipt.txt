@@ -1,0 +1,147 @@
+Q30 validation receipt | 2026-09-23
+Base HEAD: e0c368855a3891acd4673e94ce9afa732390e2bf
+Worktree: isolated codex/q30-multirail-qualification
+Status: BLOCKED / NOT QUALIFIED / no normal-player registration
+Chronology: the whole-board failures and 117.610 s build below precede the
+focused E04 repair. Current-source post-repair results are in the final
+section of this receipt and brownout-investigation/README.md.
+
+Focused command:
+  .\scripts\verify-current-contracts.ps1 -JavaHome <JDK8_HOME> -Suite @('E03RelayContractTest','E04SensorControlContractTest','Q30PlanContractTest','Q30RelayServiceContractTest')
+  exit 0 after JLOAD placement and two-relay service integration;
+  E03 PASS 161, E04 PASS 303, Q30 plan PASS 1397,
+  Q30 relay service PASS 110 assertions; cleanup PASS
+
+Maintained command:
+  .\scripts\verify-current-contracts.ps1 -JavaHome <JDK8_HOME>
+  exit 0 before the latest Q30 placement/service edits; PASS 62 Java suites,
+  independent seed/value/role oracles,
+  report protocol, and cleanup. Includes E02, E03, E04, D01, A10,
+  P09, Quick Play, U02, physical serviceability, U04 and Q30 plan.
+  Existing family inputs are unchanged by the later Q30 placement/service
+  changes; affected focused suites were rerun afterward.
+  Fresh integrated-source full attempt: exit 1 after procedural family corpus
+  Java child exceeded 60000 ms; last complete summary was RB15 held-out 8/8,
+  with COMPOSED_CONTROLLED_INDICATOR representative rows still progressing.
+  Cleanup PASS; no assertion failure. See full-suite-timeout.txt.
+  Final-source full PASS PENDING.
+  A second unchanged full attempt after the separate floorplan search ended
+  repeated the 60000 ms child timeout in the procedural family corpus;
+  cleanup PASS, no assertion failure. See full-suite-timeout.txt. The
+  unchanged full command was not repeated a third time.
+
+Focused affected-regression command:
+  .\scripts\verify-current-contracts.ps1 -JavaHome <JDK8_HOME> -Suite @('E02RegulatorContractTest','E03RelayContractTest','E04SensorControlContractTest','D01DiagnosticContractTest','A10GenerationContractTest','A10DependencyContractTest','P09EnvelopeContractTest','P09EnvelopeCorpus','QuickPlayPhysicalMatrixContractTest','QuickPlayGateContractTest','QuickPlayGateCorpus','QuickPlayGateHoldoutCorpus','U02MeasurementContractTest','PhysicalServiceabilityContractTest','U04SessionContractTest','Q30PlanContractTest','Q30RelayServiceContractTest')
+  exit 0; PASS 17 Java suites and cleanup. Selected markers:
+  E02 1429, E03 161, E04 303, D01 168, A10 generation 190,
+  A10 dependency 15, U02 585, serviceability 964, U04 3423,
+  Q30 plan 1397, Q30 relay 110 assertions; P09 envelope 58 and corpus
+  32 rows; Quick Play physical matrix 10 pairs/1251 assertions,
+  development corpus 24 rows, holdout corpus 48 rows,
+  gate contract 26978 assertions. This is focused coverage;
+  full matrix plus independent oracles remain BLOCKED by the timeout above.
+
+Additional focused final-source command:
+  .\scripts\verify-current-contracts.ps1 -JavaHome <JDK8_HOME> -Suite @('QuickPlayContractTest','A10RoutingContractTest','Task43PhysicalEndpointContractTest')
+  exit 0; PASS 3 Java suites and cleanup. Quick Play current seed envelopes
+  and construction passed; Task43 physical endpoints passed 320 assertions;
+  A10 routing rejection passed 28 assertions. This does not replace the
+  blocked full matrix or qualify Q30 routing.
+
+Production command:
+  .\scripts\build.ps1 -JavaHome <JDK8_HOME> -Style OBF -Target Compile
+  exit 0 after JLOAD placement and two-relay service integration;
+  GWT five permutations; compile 117.610 s; link 2.643 s.
+
+Generator pilot command:
+  .\docs\task-evidence\Q30\run-generator-pilot.ps1 -JavaHome <JDK8_HOME> -GwtHome <GWT_HOME>
+  exit 0; eight 33-package / 202-element constructions; five selected
+  solver fault/restoration cases; healthy NMOS seeds 1-5. Scratch-only
+  native CirSim logging bridge. Not D01 or player admission.
+
+Whole-board solver pilot commands:
+  .\docs\task-evidence\Q30\run-generator-pilot.ps1 -JavaHome <JDK8_HOME> -GwtHome <GWT_HOME> -Pilot WholeBoard -WholeBoardMode 'skip-brownout seed=<seed>'
+  seeds 0, 1, 3, 11: exit 0, PASS 10 assertions each; exact 33-package graph,
+  unloaded/A-loaded/both-loaded, isolated main/load/sensor A and declared
+  reference checks. Receipt: whole-board-variants-pass.txt.
+  .\docs\task-evidence\Q30\run-generator-pilot.ps1 -JavaHome <JDK8_HOME> -GwtHome <GWT_HOME> -Pilot WholeBoard
+  seed 0 cold 4 V case: exit nonzero; negative E02 output trial at time zero.
+  Receipt: whole-board-4v-failure.txt. No contract tolerance was changed.
+  .\docs\task-evidence\Q30\run-generator-pilot.ps1 -JavaHome <JDK8_HOME> -GwtHome <GWT_HOME> -Pilot WholeBoard -WholeBoardMode 'warm-brownout seed=<seed>'
+  Seeds 0, 3, 11: PASS 11 assertions each, rail 2.567-2.571 V, outputs off.
+  Seed 1: FAIL, E02 input 68.006 V/output 70.107 V unsupported transient.
+  Receipt: whole-board-warm-brownout-variants.txt. Population partial-power
+  qualification therefore FAILS.
+  Seed 1 traced at 0.1 ms increments: last accepted sample at t=0.0318125 s
+  had Vin=4.934 V, rail=4.126 V, coils still ~39 mA; the next Newton trial
+  at the same time jumped to the unsupported E02 input/output. Receipt:
+  whole-board-warm-seed1-trace.txt. Cause not yet proved.
+  Seed 1 at production reset maxTimeStep 5 us throughout startup and
+  transition: FAIL; the solver halved to 38 ps and failed convergence at
+  t=0.0318543737 s.
+  The scratch-only null UI then caused a secondary NullPointerException in
+  CirSim.stop. Receipt: whole-board-warm-fine-seed1-failure.txt.
+  Production-reset-timestep cohort seeds 0, 1, 3, 11: 0/4 PASS.
+  Seeds 1, 3 and 11 failed after 5000 solver iterations near rail 3.8 V;
+  seed 0 hit the solver deadline after 159077 trials. Receipt:
+  whole-board-warm-fine-variants.txt. The 3.8 V level coincides with the
+  E04 consumer brownout boundary; cause remains a genuine integration
+  finding, not an accepted E04/E02 contract change.
+
+Physical pilot command:
+  .\docs\task-evidence\Q30\run-physical-pilot.ps1 -JavaHome <JDK8_HOME> -GwtHome <GWT_HOME>
+  exit 0 for the probe program; Q30_ROOT_PILOT_SUMMARY rows=12,
+  routePass=0, routeFail=12, hardRouterObstacles=2,
+  normalAdmission=REJECTED, structuralOnly=true.
+  This is after JLOAD was moved to the right edge; receipt:
+  routing-jload-right-pilot-receipt.txt.
+  This is a failed Q30 acceptance gate, despite a successful probe execution.
+  Separate bounded provider-local manual-channel floorplan: seed 0 six valid
+  placements, 0/6 routes, each SEARCH_LIMIT at 1000000 expansions. Selected
+  outline area 7770000, conflicts 15245. No production patch integrated.
+  See q30-floorplan-v3-receipt.txt and sanitized exploratory patch.
+  Unapplied schema-2 local-hysteretic proposal: focused Q30 plan 1556
+  assertions PASS; incidence graph 12/12 planar; physical route 0/12.
+  Patch git apply --check PASS, unapplied. See local-hysteretic-* evidence.
+
+Q30 whole-board diagnostic/service/replay/browser/performance: NOT RUN.
+Qualified population: 0; no cold/warm p50 or p95 exists.
+No stage, commit or push performed.
+git diff --check: exit 0. git diff --cached --check: exit 0 on empty index.
+
+Current-source electrical and routing investigation checkpoint:
+  Root cause of the earlier production-timestep warm 12->4 V failures:
+  E04 HIGH/BROWNOUT output and relay-load chatter around 3.79956-3.80104 V;
+  E02 remained in its ordinary 10 S regulation branch with target about
+  3.80749 V. See brownout-investigation/README.md and Newton trace logs.
+  E04 falling trip remains 3.8 V; bounded 50 mV recovery hysteresis on a
+  5 V declaration makes rising recovery 3.85 V. No E02 source, solver
+  tolerance, timestep or iteration budget was changed.
+  Final-source exact-board pilot, production 5 us maximum / 50 ps minimum
+  timestep: cold 4 V, warm 12->4 V, recovery 4->12 V, and no-main with
+  sensor/load sources present PASS on seeds 0, 1, 3, held-out 11. Brownout
+  rail 2.56690-2.57110 V and outputs off; recovered rail
+  4.99186-4.99196 V and both outputs on. The earlier 100 us cold-start
+  failure was pre-repair and was not retested; it remains unqualified.
+  Focused maintained E02/E04 native contracts PASS 1429/316 assertions
+  with cleanup. Final-source JDK 8/GWT build PASS five permutations;
+  compile 113.096 s, link 1.726 s. The post-repair full 62-suite matrix
+  was NOT RUN; prior full-suite timeouts remain non-PASS.
+  Matched 33-package current-manifest physical experiment: 12 signed-long
+  seeds x six identical placements x four route policies = 288 requests.
+  P05 single-face 0/72; P07 one-layer 0/72; P07 restricted two-layer 0/72;
+  P07 fuller two-layer 6/72 across five seeds and both sensor arrangements.
+  Six successful routes use both faces, 36-46 plated vias, 31850-39950
+  unique copper units and 4658000-5610000 area, all outside P09.
+  Rejection distribution and full rows: two-layer-investigation/README.md,
+  matched-288.json and summary.json. The comparison patch is UNAPPLIED.
+  Separate connected synthetic structural scaling: P07 fuller 10/10 at
+  33 and 80 packages, 9/10 at 90, largest observed single success 180
+  packages (2/3 at the upper bound); restricted 0/61 tested requests.
+  The 180-package board is structural only, 537 pads/48 vias/15134000 area;
+  it gives no normal-player practical ceiling. See
+  two-layer-investigation/scaling/README.md and raw rows.
+  No Q30 normal admission, D01 proof, production service/repair, compiled
+  replay/player run, qualified corpus timing or p50/p95 was established.
+  P09 and generic router remain unchanged. No factory links were inserted.
+  Q30 remains BLOCKED and unregistered. No stage, commit or push performed.

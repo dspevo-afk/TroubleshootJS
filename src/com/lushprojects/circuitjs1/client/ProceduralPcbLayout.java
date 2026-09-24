@@ -16,8 +16,16 @@ final class ProceduralPcbLayout {
         if (demand.routingLayer == PcbCopperLayer.BOTTOM) return;
         // Retain declared parts, regions, anchors and isolation barriers. No net is
         // merged or invented here. All copper is on the qualified exposed face.
-        board.setPlacementConstraints(new PcbPlacementConstraints(
-            demand.getParts(), demand.getBarriers(), PcbCopperLayer.BOTTOM));
+        board.setPlacementConstraints(toBottomRoutingConstraints(demand));
+    }
+
+    /** Converts the declared routing face without changing the selected policy. */
+    static PcbPlacementConstraints toBottomRoutingConstraints(
+            PcbPlacementConstraints demand) {
+        if (demand == null) throw new IllegalArgumentException("Missing physical demand");
+        return new PcbPlacementConstraints(demand.getParts(), demand.getBarriers(),
+            PcbCopperLayer.BOTTOM, demand.getPhysicalPolicyId(),
+            demand.getPhysicalPolicyVersion());
     }
 
     static PcbBoardLayout generate(TroubleshootBoard board, long root, String family) {

@@ -1,0 +1,3 @@
+Q30_FULL_OWNER seed=0 PASS components=33 copperEdges=290 copperJunctions=309
+Q30_FULL_OWNER seed=37 PASS components=33 copperEdges=284 copperJunctions=293
+PASS: Q30 physical metadata contracts 1713 assertions, topologies=7

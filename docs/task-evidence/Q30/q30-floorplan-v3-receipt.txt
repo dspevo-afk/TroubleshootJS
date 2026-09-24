@@ -1,0 +1,70 @@
+Q30 floorplan v3 bounded physical placement receipt
+Date: 2026-09-23
+Accepted base: e0c368855a3891acd4673e94ce9afa732390e2bf
+Worktree: task-owned clean detached worktree with root Q30 files copied in
+Scope: provider-local placement and connector/order experiments only
+
+The probe is structural-only. It preserves the copied RB30 manifest inventory:
+33 packages, 82 pads, 25 nets, max net degree 16, one declared BOTTOM face,
+and the existing PcbNetRouter defaults. It does not claim P03/P05/P09 or Q30
+qualification and does not modify generic router limits, clearance, package
+count, net membership, or the production graph.
+
+Commands
+========
+The following command form was used for each run (JDK8/GWT paths are read-only):
+
+  & .\docs\task-evidence\Q30\run-physical-pilot.ps1 -JavaHome '<JDK8>' -GwtHome '<GWT2.7>' -PilotArguments @('--root-plan')
+
+The final manual run used --root-manual. The other bounded probes used
+--root-routing-sweep, --root-manual-attempt-sweep, and --root-sensor-right.
+
+Results:
+1. Copied root exact placement, seed 0 separate-direct BJT/BJT: 0/6 route
+   candidates, all ROUTING_SEARCH_LIMIT. The root's 12-seed receipt remains
+   0/12 under the same unchanged route policy.
+
+2. Exact seed 0 candidate 0, 16 finite routingSeed salts: 0/16 routes; every
+   result was SEARCH_LIMIT. Routing seed/order variation alone did not expose a
+   route.
+
+3. Manual channel floorplan, seed 0 separate-direct BJT/BJT, final corrected
+   placement: all 6 placement candidates valid; 0/6 routes. Every candidate
+   was ROUTING_SEARCH_LIMIT. Final selected candidate metrics were:
+     outline 3700 x 2100, area 7,770,000
+     expansions 1,000,000
+     orders 3, rip passes 2, rerouted nets 6
+     congestion conflicts 15,245
+   This reduced conflicts from the earlier manual arrangement while retaining
+   a hard search-limit failure.
+
+4. Same manual seed 0 candidate 0 with attempts 8 through 15: 0/8 routes,
+   all SEARCH_LIMIT. The reported blocked net varied among RAIL5, A_RAW,
+   A_REF, and CTRL_RETURN.
+
+5. SENSOR_CONNECTORS_RIGHT provider-local anchor variant, seed 0: 0/6
+   routes, all SEARCH_LIMIT; 1,000,000 expansions and 25,530 conflicts in
+   the selected candidate.
+
+The first compact manual sketch was rejected by the existing placement
+validator because its envelopes overlapped; it was not counted as a route
+attempt. It is retained only in the exploratory diff for auditability.
+
+Conclusion
+==========
+No clean positive one-face route was found within the finite provider-local
+experiment set. The strongest useful result is the valid manual seed-0
+separate-direct layout with lower congestion but unchanged search exhaustion.
+The evidence supports a bounded physical blocker under the existing P05/P09
+router envelope; changing global limits, clearance, package/net inventory, or
+adding family-specific router behavior would be required to search beyond this
+blocker and is outside this assignment.
+
+Artifacts
+=========
+  q30-floorplan-v3-experiments.patch
+    Diff from the root's copied Q30PhysicalPilot.java, including the bounded
+    probes and manual placement coordinates. It is exploratory and has no
+    production acceptance patch because no route passed.
+  q30-floorplan-v3-receipt.txt
+    This receipt.

@@ -1,0 +1,61 @@
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 13 iterations, timeStep = 5.0E-6
+Q30_WHOLE_BOARD before-warm-4v rail=4.99186314766611 outA=11.980033277870218 outB=11.980033277870218 coilA=0.03991550899194344 coilB=0.03991550899194344 regulatorInputAmps=0.08237963170648976
+node 11 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+timestep down to 2.5E-6 at 0.031835000000004006
+converged after 13 iterations, timeStep = 2.5E-6
+converged after 3 iterations, timeStep = 2.5E-6
+timestep down to 1.25E-6 at 0.03184000000000401
+converged after 13 iterations, timeStep = 1.25E-6
+timestep down to 6.25E-7 at 0.03184125000000401
+converged after 13 iterations, timeStep = 6.25E-7
+timestep down to 3.125E-7 at 0.03184187500000401
+converged after 13 iterations, timeStep = 3.125E-7
+timestep down to 1.5625E-7 at 0.03184218750000401
+converged after 13 iterations, timeStep = 1.5625E-7
+converged after 3 iterations, timeStep = 1.5625E-7
+timestep down to 7.8125E-8 at 0.03184250000000401
+converged after 13 iterations, timeStep = 7.8125E-8
+converged after 3 iterations, timeStep = 7.8125E-8
+timestep down to 3.90625E-8 at 0.03184265625000401
+converged after 13 iterations, timeStep = 3.90625E-8
+timestep down to 1.953125E-8 at 0.031842695312504006
+converged after 13 iterations, timeStep = 1.953125E-8
+converged after 2 iterations, timeStep = 1.953125E-8
+timestep down to 9.765625E-9 at 0.031842734375004005
+converged after 13 iterations, timeStep = 9.765625E-9
+converged after 2 iterations, timeStep = 9.765625E-9
+timestep down to 4.8828125E-9 at 0.03184275390625401
+converged after 11 iterations, timeStep = 4.8828125E-9
+timestep down to 2.44140625E-9 at 0.03184275878906651
+converged after 13 iterations, timeStep = 2.44140625E-9
+converged after 2 iterations, timeStep = 2.44140625E-9
+timestep down to 1.220703125E-9 at 0.031842763671879014
+converged after 13 iterations, timeStep = 1.220703125E-9
+converged after 2 iterations, timeStep = 1.220703125E-9
+timestep down to 6.103515625E-10 at 0.03184276611328526
+converged after 13 iterations, timeStep = 6.103515625E-10
+converged after 2 iterations, timeStep = 6.103515625E-10
+timestep down to 3.0517578125E-10 at 0.03184276733398838
+converged after 13 iterations, timeStep = 3.0517578125E-10
+converged after 2 iterations, timeStep = 3.0517578125E-10
+timestep down to 1.52587890625E-10 at 0.03184276794433994
+converged after 13 iterations, timeStep = 1.52587890625E-10
+converged after 2 iterations, timeStep = 1.52587890625E-10
+timestep down to 7.62939453125E-11 at 0.03184276824951573
+converged after 12 iterations, timeStep = 7.62939453125E-11
+converged after 2 iterations, timeStep = 7.62939453125E-11
+timestep down to 3.814697265625E-11 at 0.031842768402103615
+convergence failed after 5000 iterations
+Q30_WHOLE_FAILURE warm-main-4v time=0.031842768402103615 input=4.607543747803526 rail=3.7992213990191974 reason=null
+Exception in thread "main" java.lang.NullPointerException
+	at com.lushprojects.circuitjs1.client.CirSim.LS(CirSim.java:8467)
+	at com.lushprojects.circuitjs1.client.CirSim.stop(CirSim.java:3083)
+	at com.lushprojects.circuitjs1.client.CirSim.runCircuitOwned(CirSim.java:3395)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.advanceFor(CircuitSolverExecutor.java:144)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.advanceFor(CircuitSolverExecutor.java:135)
+	at com.lushprojects.circuitjs1.client.Q30WholeBoardElectricalPilot.observeWarmBrownout(Q30WholeBoardElectricalPilot.java:203)
+	at com.lushprojects.circuitjs1.client.Q30WholeBoardElectricalPilot.main(Q30WholeBoardElectricalPilot.java:42)

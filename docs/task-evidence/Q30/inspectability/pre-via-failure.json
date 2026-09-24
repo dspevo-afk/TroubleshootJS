@@ -1,0 +1,38 @@
+{
+  "build": "p1-gwt-build-phase.log",
+  "previewPort": 8901,
+  "query": "tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Bench=true&tsjQ30Seed=<seed>",
+  "attempts": [
+    {
+      "seed": "0",
+      "topology": "RB30_SEPARATE_DIRECT_A_BJT_B_BJT",
+      "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+      "status": "FAIL",
+      "phase": "copper-face-proof",
+      "blocker": "Q30 production hit did not resolve top plated via land: p07-via/A_CMD/47/1",
+      "topOverviewTargets": 82,
+      "bottomOverviewTargets": 82,
+      "topPadLimits": [],
+      "bottomPadLimits": [],
+      "topOverviewLimits": [],
+      "bottomOverviewLimits": [],
+      "ownerRestored": true,
+      "prototypeRetained": false
+    },
+    {
+      "seed": "37",
+      "topology": "RB30_SHARED_HYSTERETIC_A_BJT_B_BJT",
+      "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+      "status": "FAIL",
+      "phase": "copper-face-proof",
+      "blocker": "Q30 production hit did not resolve top plated via land: p07-via/A_CMD/30/1",
+      "topOverviewTargets": 82,
+      "bottomOverviewTargets": 82,
+      "topPadLimits": [],
+      "bottomPadLimits": [],
+      "ownerRestored": true,
+      "prototypeRetained": false
+    }
+  ],
+  "interpretation": "All plated/exposed package pads resolve from both fitted faces, but the verifier's first via marker does not resolve through the production hit path at overview scale. Local inspection and candidate selection remain to be checked."
+}

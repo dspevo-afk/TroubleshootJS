@@ -21,6 +21,7 @@ public final class E04SensorControlContractTest {
         verifyLoadingAndReferenceInfluence();
         verifyHystereticAscendingDescendingBehavior();
         verifyBrownoutAndUnsupportedStates();
+        verifyBrownoutRecoveryHysteresis();
         verifyE02RegulatorIntegration();
         verifyTimestepStability();
         System.out.println("PASS: E04 sensor-control contracts " + assertions +
@@ -399,6 +400,69 @@ public final class E04SensorControlContractTest {
                     h.model.getSensorCondition() ==
                     E04SensorControlModel.SensorCondition.SENSOR_UNSUPPORTED,
                     "overrange sensor stimulus is explicitly unsupported");
+        } finally {
+            h.close();
+        }
+    }
+
+    /** Solved rail, not a requested source setting, controls both trip points. */
+    private static void verifyBrownoutRecoveryHysteresis() {
+        Harness h = new Harness(E04SensorControlModel.Variant.DIRECT_THRESHOLD,
+                5e-6);
+        try {
+            h.setSensorVoltage(4.5);
+            h.settle();
+            check(h.model.getControlState() == E04SensorControlModel.ControlState.HIGH,
+                    "healthy decision precedes brownout hysteresis");
+            for (int cycle = 0; cycle < 2; cycle++) {
+                h.model.setRailVoltage(3.79);
+                h.settle();
+                check(h.model.getRailNodeVoltage() < 3.8 &&
+                        h.model.getControlState() ==
+                            E04SensorControlModel.ControlState.BROWNOUT &&
+                        h.model.getOutputVoltage() < .1,
+                        "falling rail trips at declared 3.8 V minimum");
+                h.model.setRailVoltage(3.83);
+                h.settle();
+                check(h.model.getRailNodeVoltage() > 3.8 &&
+                        h.model.getRailNodeVoltage() < 3.85 &&
+                        h.model.getControlState() ==
+                            E04SensorControlModel.ControlState.BROWNOUT,
+                        "brownout remains off within 50 mV recovery band");
+                h.model.setRailVoltage(3.88);
+                h.settle();
+                check(h.model.getRailNodeVoltage() > 3.85 &&
+                        h.model.getControlState() == E04SensorControlModel.ControlState.HIGH,
+                        "rising rail recovers above 3.85 V");
+                h.model.setRailVoltage(3.83);
+                h.settle();
+                check(h.model.getRailNodeVoltage() > 3.8 &&
+                        h.model.getControlState() == E04SensorControlModel.ControlState.HIGH,
+                        "healthy output stays on inside recovery band");
+            }
+            E04SensorControlModel.DecisionElement decision =
+                (E04SensorControlModel.DecisionElement) h.model
+                    .getSensorControlBindings().getConditionedSensorEndpoint()
+                    .getElement();
+            decision.reset();
+            check(h.model.getControlState() ==
+                    E04SensorControlModel.ControlState.UNSETTLED,
+                    "reset clears the transient decision latch");
+            h.analyze();
+            h.settle();
+            check(h.model.getControlState() ==
+                    E04SensorControlModel.ControlState.BROWNOUT,
+                    "reset at 3.83 V requires the 3.85 V startup threshold");
+            h.model.setRailVoltage(3.88);
+            h.settle();
+            check(h.model.getControlState() == E04SensorControlModel.ControlState.HIGH,
+                    "reset decision recovers through rising threshold");
+            h.model.setReferenceAvailable(false);
+            h.analyze();
+            h.settle();
+            check(h.model.getControlState() ==
+                    E04SensorControlModel.ControlState.REFERENCE_LOST,
+                    "reference loss remains explicit after brownout recovery");
         } finally {
             h.close();
         }

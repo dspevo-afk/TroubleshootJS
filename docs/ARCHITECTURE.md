@@ -550,9 +550,12 @@ face projection, so hit targets and instrument projection follow the visible
 face. Tab on a focused control retains normal keyboard navigation.
 
 `PcbPlacementConstraints` carries immutable package access, connector anchors,
-public regions and isolated-domain barriers. `PcbPlacementPlanner` estimates
-actual footprint envelopes, tries six bounded outline/aspect variants, packs
-domain/region groups, and refines placements with weighted pad connectivity.
+public regions, isolated-domain barriers and a versioned physical-policy
+selection. `PcbPlacementPlanner` estimates actual footprint envelopes and tries
+six bounded outline/aspect variants. Accepted small boards retain regional
+packing and weighted-pad refinement. For inventories of at least 20 packages,
+the planner uses the same declared graph and region/connector demands to form
+bounded functional lanes, place large/edge parts first and leave routing room.
 `PcbAccessPlanner` requires every terminal escape to reach one connected free
 channel. Final compaction preserves access margins and revalidates the plan.
 The workbench envelope can grow to accommodate separate tray chrome; it is not
@@ -1981,6 +1984,15 @@ six bounded outline/aspect candidates from actual package, courtyard, escape
 and access demand. It packs declared domains and functional regions, reserves
 inward-facing connector anchors, then refines positions against the existing
 `TopologyPlacementGraph`. Two-pad links retain their stronger attraction.
+For a provider-selected `MEDIUM_BOARD@1` candidate, the generator ranks six
+placements by electrical span, region and connector locality, corridor
+obstruction and normalized area before routing at most three with the existing
+one-face router and then the unchanged P07 fuller two-layer router. A successful
+one-face route remains preferred unless the two-layer quality improves
+materially. This candidate is structural and developer-only: it does not relax
+P09 normal admission or register Q30 in the player catalog. The selected policy
+and its contract enter the board/dependency identity; Q30's provider plan
+records the policy with its exact placement and routing seeds.
 `PcbAccessPlanner` requires every escape to reach one shared free channel;
 final compaction preserves access margins and revalidates those constraints.
 Stable IDs such as `R1.1`, `LED1.K`, and `D1.A` are copied into the resulting

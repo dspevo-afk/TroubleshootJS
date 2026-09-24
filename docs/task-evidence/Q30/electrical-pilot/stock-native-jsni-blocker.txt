@@ -1,0 +1,13 @@
+Q30_COMPOSITION elements=107 regulator=1 decisions=2 relays=2 bjt=1 nmos=1
+Q30_REFERENCE admitted=ADMITTED rejected=REJECTED reason=ISOLATION_BOUNDARY earth=UNPROVEN
+Q30_READING label=unloaded rail=4.999899978606034 inputV=11.999798778626156 sourceI=0.0020122137384426253 direct=LOW hystereticSensor=0.4999950000045459 hystereticRef=2.4999374896155695 hystereticOut=0.0 coilA=1.019979500164295E-11 coilB=2.2143400492199257E-7 contactA=1.1999994355202656E-8 contactB=1.1999994355202656E-8 contactSourceI=4.7999986207969414E-8 isoA=0 isoB=0
+Q30_READING label=channel-a-loaded rail=4.995955931866724 inputV=11.99585473228125 sourceI=0.04145267718749679 direct=HIGH hystereticSensor=0.4999950000045459 hystereticRef=2.497965476105981 hystereticOut=0.0 coilA=0.03944125626195577 coilB=2.213945645038619E-7 contactA=0.02551562831596989 contactB=1.1997442795370932E-8 contactSourceI=0.02551565830957614 isoA=0 isoB=0
+Exception in thread "main" java.lang.UnsatisfiedLinkError: com.lushprojects.circuitjs1.client.CirSim.console(Ljava/lang/String;)V
+	at com.lushprojects.circuitjs1.client.CirSim.console(Native Method)
+	at com.lushprojects.circuitjs1.client.CirSim.runCircuitOwned(CirSim.java:3404)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.advanceOne(CircuitSolverExecutor.java:218)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.advanceSteps(CircuitSolverExecutor.java:128)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.advanceSteps(CircuitSolverExecutor.java:123)
+	at com.lushprojects.circuitjs1.client.Q30ElectricalPilot$Fixture.analyzeAndSettle(Q30ElectricalPilot.java:412)
+	at com.lushprojects.circuitjs1.client.Q30ElectricalPilot$Fixture.verifyElectricalIntegration(Q30ElectricalPilot.java:317)
+	at com.lushprojects.circuitjs1.client.Q30ElectricalPilot.main(Q30ElectricalPilot.java:24)

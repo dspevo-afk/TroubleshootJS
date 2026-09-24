@@ -1,4 +1,186 @@
-# Current checkpoint: repaired E02 regulation and E04 physical control ownership
+# Current checkpoint: Q30-P1 physical sub-gate PASS; full Q30 BLOCKED
+
+The Q30-P1 candidate is in the isolated `codex/q30-multirail-qualification`
+branch, started from accepted base `e0c368855a3891acd4673e94ce9afa732390e2bf`.
+The ordinary checkout and its unrelated edits remain untouched. The internal,
+non-catalog Q30-P1 physical sub-gate is **PASS, ready for independent review**.
+Full Q30 remains **BLOCKED and unregistered** for normal play; Q30 diagnosis,
+service, repair/retest, compiled player, exact replay and 20–40-part admission
+have not passed.
+
+The actual 33-package, 82-pad plan is unchanged. A generic semantic medium-board
+floorplanner now generates six deterministic placements per seed, with bounded
+cheap ranking. Matched Q30 routing over 12 seeds × six placements × the same
+four policies rises from 6/72 to 54/72 accepted fuller two-layer routes; P05,
+P07 one-layer and restricted two-layer remain 0/72. The provider-selected
+`MEDIUM_BOARD@1` policy routes all 12 sampled seeds, including all six held-out,
+with 17–34 vias (median 29), median selected area 6,454,500 and median
+aggregate routing work 4,069,854 expansions. It ranks six placements, routes
+at most three P05 and three P07 attempts, retains the existing per-route search
+limits and 48-via cap, and uses no factory links. Post-route compaction now
+validates escape access before cropping, fixing the held-out seed-83 rejection.
+The accepted small-board P09 policy is unchanged. See the machine-readable
+[matched and selected receipts](task-evidence/Q30/two-layer-investigation/README.md).
+
+The [floorplan comparison](task-evidence/Q30/floorplanning/README.md) measures
+the original and improved actual Q30 placements against the successful
+structured 33-part fixture. Median Q30 net MST drops 34,100→28,025, estimated
+crossings 74.5→41, and electrical pad-pair mean distance 1,169.635→952.968.
+Median raw area grows 5,139,400→7,839,600; connector-distance p95 worsens.
+These structural measurements do not certify player inspection. Exact selected
+seed-0 and held-out seed-37 geometry exports agree with selected-policy route
+statistics, but static face drawings are not production screenshots.
+
+The final-source JDK 8/GWT build compiled five permutations and linked. The
+developer-only compiled production workbench verifier passed representative
+seed 0 and held-out seed 37: each had 33 packages, 82/82 inspectable pad
+targets on both faces, selected P07 two-layer copper, a plated via with the
+same live solver endpoint on both lands, and 1,497 runtime assertions. The
+in-app Browser used visible face controls, zoom, pan and left/right probe clicks;
+the seed-0 DC meter read 11.996 V at J1.1/J1.2. Five production screenshots
+and exact compiled receipts are in the [inspection evidence](task-evidence/Q30/inspectability/README.md).
+Earlier compiled failures in provider metadata, null-family-state preflight
+and overview via hit sampling remain recorded there with the fixes. A final
+invalid-seed failure retained the previous owner, and combined P07/Q30 debug
+flags selected Q30 alone. Independent review found the failure-only stale
+power-binding risk closed after an identity-guarded detach; a source control
+that itself throws during disconnect remains a reported cleanup limitation.
+
+The independent E04 brownout repair remains covered by four-seed exact-board
+production-timestep cold/warm/recovery/no-main evidence and focused E02/E04
+contracts. The [final-source maintained native run](task-evidence/Q30/p1-native-full.log)
+passed with exit 0: 66 Java suites, including Q30 metadata, medium policy and
+floorplanning, P02/P03/P05/P07/P08/P09, Quick Play, U01/U02, A10 and E02/E04;
+independent seed/value/role oracles and report protocol also passed. Its
+[receipt](task-evidence/Q30/p1-native-full-receipt.txt) and log record verified
+task-scratch cleanup. The prior two full-suite procedural-family child timeouts
+were not passes; the final runner partitioned the unchanged 160 family/seed
+cases into 20 bounded children at the same 60-second child budget. The
+task-owned preview PID 22924 was stopped through its identity-checked owner
+script, and port 8901 was positively released. The earlier failed compiled
+attempts and the source-control disconnect fault-injection limit remain in the
+inspection evidence rather than being labeled PASS.
+
+Next action: review this P1 checkpoint, then continue the original Q30
+diagnostic, service, repair/retest, replay, performance and held-out 20–40-part
+admission work. Keep the medium policy out of normal admission until those
+gates pass. P1 has not proved a normal-player Q30 flow. Publish only the
+accepted P1 checkpoint after integrated diff and evidence review.
+
+# Historical checkpoint: initial Q30 physical blockage
+
+Q30 was attempted in isolated branch `codex/q30-multirail-qualification` at
+accepted base `e0c368855a3891acd4673e94ce9afa732390e2bf`. The ordinary
+`codex/task43p-final-recovery` checkout contains unrelated tracked and
+untracked changes and was left untouched. No Q30 change is staged, committed,
+or pushed. Q30 is **not accepted or available in normal play**.
+
+Changed files: new provider-local `Rb30Plan`, `Rb30PowerDomains`,
+`Rb30Generator`, `Rb30TopologyValidator`, `Rb30DecisionService`,
+`Rb30RelayService`; a declaration-equivalence accessor and a bounded
+undervoltage recovery hysteresis in `E04SensorControlModel`, with a focused
+E04 contract; Q30 plan and two-relay service contracts with current-suite
+listing; this report, roadmap status, and
+[Q30 evidence](task-evidence/Q30/README.md). The versioned envelope,
+local-hysteretic sensor and developer-only two-layer comparison patches are
+**unapplied**. No generic routing, probing, runtime, workbench or
+normal-admission branch was changed.
+
+The intent has 33 real packages, 82 pads, 24–25 nets, two BJT/NMOS-capable
+output channels, two structurally distinct sensor/reference arrangements, a
+causal E02 12-to-5 V rail, and separately referenced finite external load
+infrastructure. Its construction pilot assembled 202 solver elements and
+restored five selected solver fault cases. The plan contract passed 1,397
+assertions. A separate 107-element E02/E03/E04 electrical integration pilot
+passed 38 assertions for loading, partial input power, sensor-source isolation
+and a cross-domain reference rejection. These are bounded pilots, not whole-
+board diagnostic or player proofs.
+An additional exact 33-package CircuitJS pilot passed ten assertions each on
+seeds 0, 1, 3 and held-out 11, including BJT/NMOS choices and both reference
+arrangements. Regulator input current rose from about 3 to 42 to 82 mA across
+unloaded, A-loaded and both-loaded cases; isolating main power with other
+sources present left the 5 V rail at zero. A new exact-board trace found that
+the prior production-timestep warm 12→4 V failures were E04 HIGH↔BROWNOUT
+chatter as the rail crossed 3.79956–3.80104 V; the E02 target remained about
+3.80749 V in its ordinary 10 S regulation branch. E04 now trips at the
+declared 3.8 V falling level and recovers at 3.85 V on the 5 V rail, a bounded
+undervoltage comparator band that prevents its own load relief from
+immediately re-enabling both ideal outputs. Production-timestep exact-board
+cold 4 V, warm 12→4 V, recovery 4→12 V and no-main/sensors-and-load-present
+checks PASS on seeds 0, 1, 3 and held-out 11. The brownout rail is
+2.56690–2.57110 V with both outputs off; recovered rail is
+4.99186–4.99196 V with both outputs on. No E02 tolerance or reverse-power
+contract changed. The earlier coarse 100 µs cold 4 V pilot FAILED 4/4 after
+a −0.291 V Newton overshoot and −15.66 µV off-state trial; this stress
+setting was not retested after repair. Its result is not a settled backfeed
+reading. See [brownout traces](task-evidence/Q30/brownout-investigation/README.md).
+Both relay channels now have distinct provider-local service/catalog
+identities; the 110-assertion construction contract passes, but production
+mutation remains unproved.
+
+**Remaining blocker:** the current 33-package root-plan-equivalent manifest
+routes 0/12 seeds under unchanged P05/P09 single-face policy; all exceed the
+accepted P09 package/pad/net/area/degree envelope. A matched developer-only
+12-seed × six-placement × four-policy experiment then routed 0/72 with P05
+single-face, P07 one-layer and P07 restricted two-layer, but 6/72 under P07
+fuller two-layer across five seeds, including both sensor arrangements. Every
+success uses real top and bottom copper and passes physical geometry,
+connectivity and clearance, yet requires 36–46 vias, 31,850–39,950 unique
+copper units and an area of 4.658–5.610 million. None meets P09 or proves
+normal-player inspectability. The shared-hysteretic graph has a one-face
+nonplanarity witness; separate-direct was planar but still routed 0/72 under
+one-face policy. See [matched routing](task-evidence/Q30/two-layer-investigation/README.md).
+
+In a separate connected synthetic control-board scaling fixture, P07 fuller
+two-layer routed 10/10 at 33 parts and 10/10 at 80; 90 passed 9/10 and the
+largest single success was 180 parts (2/3) at the upper test bound. Restricted
+passed 0/61. That 180-part board has 537 pads, degree-129 return, 48 vias and
+15.134-million area, far outside gameplay scale. The global router maximum
+and normal-player practical ceiling remain unmeasured. The contrast with
+actual Q30's 6/72 at 33 parts points to topology/floorplan and routing-cost
+sensitivity, not a hard 33-part ceiling. See [scaling](task-evidence/Q30/two-layer-investigation/scaling/README.md)
+and [architectural decision](task-evidence/Q30/two-layer-investigation/DECISION.md).
+The unapplied 35-package local-hysteretic variant remains a separately
+documented topology option; it has no routed corpus. Factory links were not
+used. P09 normal two-layer/via/link policy was not changed.
+
+Pre-repair affected-regression gates PASS 17 Java suites with cleanup:
+E02/E03/E04, D01, A10 generation/dependency, U02, physical serviceability,
+U04, Q30 plan/relay service, P09 policy and corpus, and Quick Play physical
+matrix, development/held-out corpus and gate contract.
+An additional pre-repair focused run passed Quick Play current seed
+construction, A10 routing rejection and Task43 physical endpoints, for 20
+selected suites total, with cleanup. The earlier maintained
+JDK 8 current-contract suite PASS (62 Java suites plus
+independent seed/value/role/report readers and cleanup), including E02/E03/E04,
+D01, A10, P09/Quick Play, U02, serviceability and U04. The full suite preceded
+the latest Q30 placement/service edits; existing family inputs were unchanged
+and the 20 selected suites were rerun after those edits, before the E04
+brownout repair. Two fresh integrated-source
+full attempts timed out in the procedural family corpus Java child at the
+verifier's 60-second bound; neither is a regression PASS. The unchanged full
+command was not repeated a third time. After the E04 repair, focused
+E02/E04 native contracts PASS 1,429/316 assertions with cleanup. The
+post-repair full matrix is NOT RUN. The final-source JDK 8/GWT production
+build PASS (five permutations, 113.096 s compile and 1.726 s link). Q30 normal
+admission, D01 fault proof, production mutations, compiled replay/player
+repair/retest, screenshots and qualified-corpus cold/warm p50/p95 are NOT RUN
+because no Q30 board is admitted for normal play. Six developer-only P07
+routes exist but do not meet P09. Failure distribution, commands, raw pilot
+receipts, extension ledger and limits are in the Q30 evidence README.
+
+The task-owned isolated worktree remains for review; no persistent preview or
+browser process was launched. Task-owned OS-temp pilot compilation
+directories remain: their exact paths and reparse boundaries were verified,
+but automatic command policy rejected recursive cleanup. The next Q30
+dependency is a versioned medium-board physical policy and a routable,
+inspectable held-out 20–40-part population. The pre-repair coarse 100 µs
+cold-start stress failure is separately retained and unqualified. Only after
+physical admission should Q30 diagnosis, service,
+compiled-player and performance gates be qualified. Q60 remains unstarted
+behind Q30.
+
+# Historical checkpoint: repaired E02 regulation and E04 physical control ownership
 
 The repair is based on rejected candidate `e0a9d978` (parent `030776ce`) on
 `codex/task43p-final-recovery`. It repairs the independent-review blockers

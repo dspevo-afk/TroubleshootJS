@@ -1,0 +1,43 @@
+node 11 unconnected
+RAIL t=0.0 dt=5.0E-6 iter=0 vin=0.0 vout=0.0 enable=0.0 target=0.0 drop=0.0 requested=0.0 delivered=0.0 g=1.0E-6 dtarget_dvin=0.0 dtarget_den=0.0 iin=0.0 diin_dvin=0.0 diin_dvout=0.0 diin_den=0.0
+SETTER t=0.0 dt=5.0E-6 iter=0 element=LinearRegulatorElm
+DECISION t=0.0 dt=5.0E-6 iter=0 id=9792 sensor=0.0 ref=0.0 rail=0.0 before=UNSETTLED/false after=BROWNOUT/false output=NaN->0.0
+DECISION t=0.0 dt=5.0E-6 iter=0 id=10048 sensor=0.0 ref=0.0 rail=0.0 before=UNSETTLED/false after=BROWNOUT/false output=NaN->0.0
+SETTER t=0.0 dt=5.0E-6 iter=1 element=LimitedDcSupplyElm
+RAIL t=0.0 dt=5.0E-6 iter=1 vin=3.7873799639714266E-8 vout=0.0 enable=3.749742919399058E-8 target=0.0 drop=0.0 requested=0.0 delivered=0.0 g=1.0E-6 dtarget_dvin=0.0 dtarget_den=0.0 iin=0.0 diin_dvin=0.0 diin_dvout=0.0 diin_den=0.0
+DECISION t=0.0 dt=5.0E-6 iter=1 id=9792 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+DECISION t=0.0 dt=5.0E-6 iter=1 id=10048 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+SETTER t=0.0 dt=5.0E-6 iter=2 element=LimitedDcSupplyElm
+RAIL t=0.0 dt=5.0E-6 iter=2 vin=3.530707760317901E-7 vout=0.0 enable=3.4957453707222313E-7 target=0.0 drop=0.0 requested=0.0 delivered=0.0 g=1.0E-6 dtarget_dvin=0.0 dtarget_den=0.0 iin=0.0 diin_dvin=0.0 diin_dvout=0.0 diin_den=0.0
+DECISION t=0.0 dt=5.0E-6 iter=2 id=9792 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+DECISION t=0.0 dt=5.0E-6 iter=2 id=10048 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+SETTER t=0.0 dt=5.0E-6 iter=3 element=LimitedDcSupplyElm
+RAIL t=0.0 dt=5.0E-6 iter=3 vin=1.4516798811285502E-4 vout=0.0 enable=1.437306816645129E-4 target=0.0 drop=0.0 requested=0.0 delivered=0.0 g=1.0E-6 dtarget_dvin=0.0 dtarget_den=0.0 iin=0.0 diin_dvin=0.0 diin_dvout=0.0 diin_den=0.0
+DECISION t=0.0 dt=5.0E-6 iter=3 id=9792 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+DECISION t=0.0 dt=5.0E-6 iter=3 id=10048 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+SETTER t=0.0 dt=5.0E-6 iter=4 element=LimitedDcSupplyElm
+RAIL t=0.0 dt=5.0E-6 iter=4 vin=1.456724394605268E-4 vout=0.0 enable=1.4423013869770162E-4 target=0.0 drop=0.0 requested=0.0 delivered=0.0 g=1.0E-6 dtarget_dvin=0.0 dtarget_den=0.0 iin=0.0 diin_dvin=0.0 diin_dvout=0.0 diin_den=0.0
+DECISION t=0.0 dt=5.0E-6 iter=4 id=9792 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+DECISION t=0.0 dt=5.0E-6 iter=4 id=10048 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+SETTER t=0.0 dt=5.0E-6 iter=5 element=LimitedDcSupplyElm
+RAIL t=0.0 dt=5.0E-6 iter=5 vin=1.4567244524578505E-4 vout=0.0 enable=1.442301433087963E-4 target=0.0 drop=0.0 requested=0.0 delivered=0.0 g=1.0E-6 dtarget_dvin=0.0 dtarget_den=0.0 iin=0.0 diin_dvin=0.0 diin_dvout=0.0 diin_den=0.0
+DECISION t=0.0 dt=5.0E-6 iter=5 id=9792 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+DECISION t=0.0 dt=5.0E-6 iter=5 id=10048 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+SETTER t=0.0 dt=5.0E-6 iter=6 element=LimitedDcSupplyElm
+RAIL t=0.0 dt=5.0E-6 iter=6 vin=1.4567244524579058E-4 vout=0.0 enable=1.4423014390779515E-4 target=0.0 drop=0.0 requested=0.0 delivered=0.0 g=1.0E-6 dtarget_dvin=0.0 dtarget_den=0.0 iin=0.0 diin_dvin=0.0 diin_dvout=0.0 diin_den=0.0
+DECISION t=0.0 dt=5.0E-6 iter=6 id=9792 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+DECISION t=0.0 dt=5.0E-6 iter=6 id=10048 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+SETTER t=0.0 dt=5.0E-6 iter=7 element=LimitedDcSupplyElm
+RAIL t=0.0 dt=5.0E-6 iter=7 vin=1.4567244524578806E-4 vout=0.0 enable=1.4423014390994217E-4 target=0.0 drop=0.0 requested=0.0 delivered=0.0 g=1.0E-6 dtarget_dvin=0.0 dtarget_den=0.0 iin=0.0 diin_dvin=0.0 diin_dvout=0.0 diin_den=0.0
+DECISION t=0.0 dt=5.0E-6 iter=7 id=9792 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+DECISION t=0.0 dt=5.0E-6 iter=7 id=10048 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+SETTER t=0.0 dt=5.0E-6 iter=8 element=LimitedDcSupplyElm
+RAIL t=0.0 dt=5.0E-6 iter=8 vin=1.456724452457877E-4 vout=0.0 enable=1.4423014391208916E-4 target=0.0 drop=0.0 requested=0.0 delivered=0.0 g=1.0E-6 dtarget_dvin=0.0 dtarget_den=0.0 iin=0.0 diin_dvin=0.0 diin_dvout=0.0 diin_den=0.0
+DECISION t=0.0 dt=5.0E-6 iter=8 id=9792 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+DECISION t=0.0 dt=5.0E-6 iter=8 id=10048 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+RAIL t=0.0 dt=5.0E-6 iter=9 vin=1.4567244524579017E-4 vout=0.0 enable=1.4423014390779515E-4 target=0.0 drop=0.0 requested=0.0 delivered=0.0 g=1.0E-6 dtarget_dvin=0.0 dtarget_den=0.0 iin=0.0 diin_dvin=0.0 diin_dvout=0.0 diin_den=0.0
+DECISION t=0.0 dt=5.0E-6 iter=9 id=9792 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+DECISION t=0.0 dt=5.0E-6 iter=9 id=10048 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+converged after 9 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+Q30_WHOLE_BOARD cold-fine-4v rail=2.566916219325501 outA=2.159999614209046E-6 outB=2.159999610738443E-6 coilA=5.333780040290575E-12 coilB=5.333776822947702E-12 regulatorInputAmps=0.0015964867698589394

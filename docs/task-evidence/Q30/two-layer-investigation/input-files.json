@@ -1,0 +1,13 @@
+{
+  "acceptedBaseHead": "e0c368855a3891acd4673e94ce9afa732390e2bf",
+  "sha256": {
+    "docs/task-evidence/Q30/Q30PhysicalPilot.java": "ee080737d7ec0527f9ee44e148a89b32ca9e765696fca07456539356b28426e2",
+    "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java": "17d327dcf3ea69ba8d75a090693d037b92f3c1895a41790e335a1dac29ed405e",
+    "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java": "733774f6062ee95a40d08e1cb8bb698e161284f5af628e395a4beefa1d5a56e5",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "9cf5d5afc27de91ddf2ceea4ee61329a5f44c68d0b9c8f75c7285c2c4653ee97",
+    "src/com/lushprojects/circuitjs1/client/PcbTraceRules.java": "50f987db1090a31bfe37d6329a939b64b1cd34ce0cd0e60d170380734155a6b8",
+    "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java": "45b1e115fdb2243ea60b6b64592e898d5e7b17e0b9a6e555c30c8092ac38f80a",
+    "src/com/lushprojects/circuitjs1/client/Rb30Plan.java": "f9d290da3928912944e7a43237fd9ff8586d0fdb66dfaf0043ef6ff33bc67e28"
+  },
+  "source": "Q30 worktree snapshot plus its uncommitted Q30 candidate"
+}

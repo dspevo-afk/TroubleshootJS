@@ -1,0 +1,4 @@
+node 11 unconnected
+converged after 9 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+Q30_WHOLE_BOARD cold-fine-4v rail=2.5669100440838784 outA=2.159999614209046E-6 outB=2.159999610738443E-6 coilA=1.9710196156945102E-7 coilB=5.3337635727340515E-12 regulatorInputAmps=0.0015966815233116145

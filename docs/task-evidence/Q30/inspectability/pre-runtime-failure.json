@@ -1,0 +1,29 @@
+{
+  "build": "p1-gwt-build-accepted.log",
+  "previewPort": 8901,
+  "query": "tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Bench=true&tsjQ30Seed=<seed>",
+  "attempts": [
+    {
+      "seed": "0",
+      "topology": "RB30_SEPARATE_DIRECT_A_BJT_B_BJT",
+      "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+      "status": "FAIL",
+      "blocker": "(TypeError) : Cannot read properties of null (reading 'om')",
+      "reportOwnerRestored": false,
+      "cleanupOwnerRestored": true,
+      "prototypeRetained": false
+    },
+    {
+      "seed": "37",
+      "topology": "RB30_SHARED_HYSTERETIC_A_BJT_B_BJT",
+      "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+      "status": "FAIL",
+      "blocker": "(TypeError) : Cannot read properties of null (reading 'om')",
+      "reportOwnerRestored": false,
+      "cleanupOwnerRestored": true,
+      "prototypeRetained": false
+    }
+  ],
+  "console": "exception in runCircuit com.google.gwt.core.client.JavaScriptException: (TypeError) : Cannot read properties of null (reading 'om')",
+  "note": "The CirSim frame catch covers verifier execution too; the console label does not localize this exception to the electrical solver."
+}

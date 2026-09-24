@@ -1,0 +1,39 @@
+node 11 unconnected
+RAIL t=0.0 dt=1.0E-4 iter=0 vin=0.0 vout=0.0 enable=0.0 target=0.0 drop=0.0 requested=0.0 delivered=0.0 g=1.0E-6 dtarget_dvin=0.0 dtarget_den=0.0 iin=0.0 diin_dvin=0.0 diin_dvout=0.0 diin_den=0.0
+SETTER t=0.0 dt=1.0E-4 iter=0 element=LinearRegulatorElm
+DECISION t=0.0 dt=1.0E-4 iter=0 id=9792 sensor=0.0 ref=0.0 rail=0.0 before=UNSETTLED/false after=BROWNOUT/false output=NaN->0.0
+DECISION t=0.0 dt=1.0E-4 iter=0 id=10048 sensor=0.0 ref=0.0 rail=0.0 before=UNSETTLED/false after=BROWNOUT/false output=NaN->0.0
+SETTER t=0.0 dt=1.0E-4 iter=1 element=LimitedDcSupplyElm
+RAIL t=0.0 dt=1.0E-4 iter=1 vin=8.005193909409471E-7 vout=0.0 enable=7.925938751448649E-7 target=0.0 drop=0.0 requested=0.0 delivered=0.0 g=1.0E-6 dtarget_dvin=0.0 dtarget_den=0.0 iin=0.0 diin_dvin=0.0 diin_dvout=0.0 diin_den=0.0
+DECISION t=0.0 dt=1.0E-4 iter=1 id=9792 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+DECISION t=0.0 dt=1.0E-4 iter=1 id=10048 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+SETTER t=0.0 dt=1.0E-4 iter=2 element=LimitedDcSupplyElm
+RAIL t=0.0 dt=1.0E-4 iter=2 vin=6.200057976682468E-5 vout=0.0 enable=6.138671273866149E-5 target=0.0 drop=0.0 requested=0.0 delivered=0.0 g=1.0E-6 dtarget_dvin=0.0 dtarget_den=0.0 iin=0.0 diin_dvin=0.0 diin_dvout=0.0 diin_den=0.0
+DECISION t=0.0 dt=1.0E-4 iter=2 id=9792 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+DECISION t=0.0 dt=1.0E-4 iter=2 id=10048 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+SETTER t=0.0 dt=1.0E-4 iter=3 element=LimitedDcSupplyElm
+RAIL t=0.0 dt=1.0E-4 iter=3 vin=0.004528459391955253 vout=0.0 enable=0.004483623160762029 target=0.0 drop=0.0 requested=0.0 delivered=0.0 g=1.0E-6 dtarget_dvin=0.0 dtarget_den=0.0 iin=0.0 diin_dvin=0.0 diin_dvout=0.0 diin_den=0.0
+DECISION t=0.0 dt=1.0E-4 iter=3 id=9792 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+DECISION t=0.0 dt=1.0E-4 iter=3 id=10048 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+SETTER t=0.0 dt=1.0E-4 iter=4 element=LimitedDcSupplyElm
+RAIL t=0.0 dt=1.0E-4 iter=4 vin=0.27743255019605895 vout=0.0 enable=0.27468569326325903 target=0.0 drop=0.0 requested=0.0 delivered=0.0 g=1.0E-6 dtarget_dvin=0.0 dtarget_den=0.0 iin=0.0 diin_dvin=0.0 diin_dvout=0.0 diin_den=0.0
+DECISION t=0.0 dt=1.0E-4 iter=4 id=9792 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+DECISION t=0.0 dt=1.0E-4 iter=4 id=10048 sensor=4.99995000025 ref=0.0 rail=0.0 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+SETTER t=0.0 dt=1.0E-4 iter=5 element=LimitedDcSupplyElm
+RAIL t=0.0 dt=1.0E-4 iter=5 vin=2.089407283027375 vout=1.4237517541958842E-25 enable=2.0687200822053216 target=1.2894072830273748 drop=0.0 requested=1.2894072830273748 delivered=0.0 g=10.0 dtarget_dvin=1.0 dtarget_den=0.0 iin=0.001 diin_dvin=10.0 diin_dvout=-10.0 diin_den=0.0
+DECISION t=0.0 dt=1.0E-4 iter=5 id=9792 sensor=4.99995000025 ref=7.118723177363538E-26 rail=1.4237517541958842E-25 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+DECISION t=0.0 dt=1.0E-4 iter=5 id=10048 sensor=4.99995000025 ref=7.118723177363536E-26 rail=1.4237517541958842E-25 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+SETTER t=0.0 dt=1.0E-4 iter=6 element=LimitedDcSupplyElm
+RAIL t=0.0 dt=1.0E-4 iter=6 vin=0.5084241594180037 vout=-0.2909909486737104 enable=0.5033902568495087 target=0.0 drop=0.0 requested=0.2909909486737104 delivered=0.0 g=1.0E-6 dtarget_dvin=0.0 dtarget_den=0.0 iin=0.0 diin_dvin=0.0 diin_dvout=0.0 diin_den=0.0
+DECISION t=0.0 dt=1.0E-4 iter=6 id=9792 sensor=4.99995000025 ref=-0.1454947468631209 rail=-0.2909909486737104 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+DECISION t=0.0 dt=1.0E-4 iter=6 id=10048 sensor=4.99995000025 ref=-0.14549474686312086 rail=-0.2909909486737104 before=BROWNOUT/false after=BROWNOUT/false output=0.0->0.0
+SETTER t=0.0 dt=1.0E-4 iter=7 element=LimitedDcSupplyElm
+Q30_WHOLE_FAILURE cold-fine-4v time=0.0 input=0.4989114269613438 rail=-1.565862387261389E-5 enable=0.49397170986228056 coilA=1.5738477669908775E-7 coilB=1.5738477669908889E-7 reason=Negative E02 rail output is unsupported
+Exception in thread "main" java.lang.IllegalArgumentException: Negative E02 rail output is unsupported
+	at com.lushprojects.circuitjs1.client.AbstractRailRegulatorElm.validateOperatingPoint(AbstractRailRegulatorElm.java:467)
+	at com.lushprojects.circuitjs1.client.AbstractRailRegulatorElm.doStep(AbstractRailRegulatorElm.java:127)
+	at com.lushprojects.circuitjs1.client.CirSim.runCircuitOwned(CirSim.java:3344)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.advanceFor(CircuitSolverExecutor.java:144)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.advanceFor(CircuitSolverExecutor.java:135)
+	at com.lushprojects.circuitjs1.client.Q30WholeBoardElectricalPilot.observe(Q30WholeBoardElectricalPilot.java:140)
+	at com.lushprojects.circuitjs1.client.Q30WholeBoardElectricalPilot.main(Q30WholeBoardElectricalPilot.java:41)

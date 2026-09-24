@@ -138,7 +138,10 @@ final class PcbLayerRoutingPrototype {
                 Vector<String> ids=board.getNet(net).getPadIds(); Collections.sort(ids);
                 if(ids.size()<2) continue;
                 PcbPadPlacement root=layout.getPad(ids.get(0));
-                for(int i=1;i<ids.size();i++) branch(net,layout.getPad(ids.get(i)),root);
+                for(int i=1;i<ids.size();i++) {
+                    try { branch(net,layout.getPad(ids.get(i)),root); }
+                    catch(Exhausted failure) { throw new Exhausted(net+":"+failure.getMessage()); }
+                }
             }
         }
         boolean[] goals(String net,PcbPadPlacement root) {

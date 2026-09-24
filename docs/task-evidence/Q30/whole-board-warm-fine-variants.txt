@@ -1,0 +1,20 @@
+Q30 exact 33-package warm 12->4 V canary, production reset maxTimeStep 5 us / minTimeStep 50 ps throughout startup and transition. All four tested seeds FAIL.
+seed=0
+Q30_WHOLE_BOARD before-warm-4v rail=4.991964385193614 outA=11.980033277870218 outB=11.980033277870218 coilA=0.039409301373652936 coilB=0.039409301373652894 regulatorInputAmps=0.08136725784660194
+Q30_WHOLE_FAILURE warm-main-4v time=0.03186617279052997 input=4.607267451884592 rail=3.799978696660384 reason=Solver deadline reached or wall clock regressed; accepted=1106; trials=159077
+Exception in thread "main" com.lushprojects.circuitjs1.client.SolverExecutionBoundary$Failure: Solver deadline reached or wall clock regressed; accepted=1106; trials=159077
+seed=1
+Q30_WHOLE_BOARD before-warm-4v rail=4.991913766456124 outA=11.980033277870218 outB=11.980033277870218 coilA=0.03991591404041286 coilB=0.03940889606256804 regulatorInputAmps=0.08187344451298767
+convergence failed after 5000 iterations
+Q30_WHOLE_FAILURE warm-main-4v time=0.031854373703006936 input=4.607493529840047 rail=3.8001512760620075 reason=null
+Exception in thread "main" java.lang.NullPointerException
+seed=3
+Q30_WHOLE_BOARD before-warm-4v rail=4.991938685273182 outA=11.980033277870218 outB=11.980033277870218 coilA=0.03991611343941356 coilB=0.03940909559105442 regulatorInputAmps=0.08162425669095677
+convergence failed after 5000 iterations
+Q30_WHOLE_FAILURE warm-main-4v time=0.031859736709598734 input=4.607475410090444 rail=3.80015109566696 reason=null
+Exception in thread "main" java.lang.NullPointerException
+seed=11
+Q30_WHOLE_BOARD before-warm-4v rail=4.99186314766611 outA=11.980033277870218 outB=11.980033277870218 coilA=0.03991550899194344 coilB=0.03991550899194344 regulatorInputAmps=0.08237963170648976
+convergence failed after 5000 iterations
+Q30_WHOLE_FAILURE warm-main-4v time=0.031842768402103615 input=4.607543747803526 rail=3.7992213990191974 reason=null
+Exception in thread "main" java.lang.NullPointerException

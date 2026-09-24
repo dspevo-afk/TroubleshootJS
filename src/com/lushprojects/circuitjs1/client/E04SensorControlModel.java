@@ -1510,6 +1510,11 @@ public final class E04SensorControlModel {
      */
     static final class DecisionElement extends CircuitElm {
         private static final int DUMP_TYPE = 457;
+        // An undervoltage decision with an ideal output source needs a
+        // distinct recovery point: removing the driven load raises its own
+        // rail.  One percent of nominal is a bounded 50 mV band on E02's
+        // 5 V rail; the falling limit remains the declared minimum.
+        private static final double BROWNOUT_RECOVERY_FRACTION = .01;
         private final Point[] posts = new Point[5];
         private final Variant variant;
         private final double nominalRailVoltage;
@@ -1562,6 +1567,13 @@ public final class E04SensorControlModel {
 
         int getDumpType() { return DUMP_TYPE; }
 
+        void reset() {
+            super.reset();
+            high = false;
+            controlState = ControlState.UNSETTLED;
+            lastOutput = Double.NaN;
+        }
+
         String dump() {
             return super.dump() + " " + variant.ordinal() + " " +
                 nominalRailVoltage + " " + minimumOperatingVoltage + " " +
@@ -1580,6 +1592,16 @@ public final class E04SensorControlModel {
                     !finite(fallingThresholdOffsetVolts) ||
                     risingThresholdOffsetVolts <= fallingThresholdOffsetVolts)
                 throw new IllegalArgumentException("Invalid E04 decision declaration");
+        }
+
+        /** Let another physical owner enforce the accepted E04 replacement contract. */
+        boolean hasSameDeclaration(DecisionElement other) {
+            return other != null && variant == other.variant &&
+                nominalRailVoltage == other.nominalRailVoltage &&
+                minimumOperatingVoltage == other.minimumOperatingVoltage &&
+                directThresholdOffsetVolts == other.directThresholdOffsetVolts &&
+                risingThresholdOffsetVolts == other.risingThresholdOffsetVolts &&
+                fallingThresholdOffsetVolts == other.fallingThresholdOffsetVolts;
         }
 
         private static Variant parseVariant(StringTokenizer st) {
@@ -1646,7 +1668,11 @@ public final class E04SensorControlModel {
                     !finite(railVoltage)) {
                 high = false;
                 controlState = ControlState.UNSUPPORTED;
-            } else if (railVoltage < minimumOperatingVoltage) {
+            } else if (railVoltage < minimumOperatingVoltage +
+                    (controlState == ControlState.BROWNOUT ?
+                        Math.min(nominalRailVoltage * BROWNOUT_RECOVERY_FRACTION,
+                            nominalRailVoltage - minimumOperatingVoltage) :
+                        0.0)) {
                 high = false;
                 controlState = ControlState.BROWNOUT;
             } else if (referenceVoltage <= REFERENCE_MARGIN_VOLTS ||

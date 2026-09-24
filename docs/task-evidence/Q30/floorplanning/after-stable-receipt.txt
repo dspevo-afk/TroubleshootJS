@@ -1,0 +1,39 @@
+Q30-P1 FLOORPLAN AFTER-STABLE RECEIPT (ANCHOR FIX)
+==================================================
+
+Status: PASS (stable planner measurement)
+Measurement label: after-final-anchor-fixed
+Planner source: explicit task-owned snapshot of the planner after anchor-region coverage was fixed
+Worktree branch: codex/q30-multirail-qualification
+
+Snapshot provenance
+-------------------
+Planner snapshot Git blob SHA-1: ab64675cb2b51f8d7714cc1e7de9fd0d7a748414
+Planner snapshot SHA-256: bcc264566b6267c77722d1d96dc60bffd0f26dc339ed88ab29b0ac4dc86bcb60
+Q30PhysicalPilot.java SHA-256: 31c47dd9f5bd08ee946ebf2b541e3f3ab3709d1a9277d7d1d335618e647ed5fc
+Rb30Plan.java SHA-256:           538bdd61849b8ef837710d089513bfa67e985d2d119464fe50e4c9de55547488
+Q30 exporter patch SHA-256:      e0032548a266bd7e29090762c4b19fc61468c552319f6c5a8bfa44f9899643ec
+Synthetic source SHA-256:        4a312fa13bb9448cadc751a11b3f41bb0d051e74b7553cad67689216aa16c575
+Synthetic raw SHA-256:           df0a9c56cc6a73689934903dd3d40502ffc3a85c0646bdf29257b619dcd707fc
+Q30 inspect SHA-256:             4bc1934077023422741afa493f8ededae584baf612e4dc35a81eea116b85f00f
+
+Command shape
+-------------
+$worktree = (Get-Location).Path
+$afterSnapshot = Join-Path $env:TEMP 'tsj-q30-planner-after-final-<guid>.java'
+Copy-Item (Join-Path $worktree 'src\com\lushprojects\circuitjs1\client\PcbPlacementPlanner.java') $afterSnapshot
+.\docs\task-evidence\Q30\floorplanning\run_floorplan_metrics.ps1 `
+  -SourceRoot $worktree -JavaHome '<JDK8_HOME>' `
+  -GwtHome (Join-Path $worktree '.tools\gwt-2.7.0') `
+  -PlannerSource $afterSnapshot -PlannerLabel after-final-anchor-fixed `
+  -MeasurementLabel after-final-anchor-fixed -MeasurementStatus after `
+  -Seed all -CandidateCount 6 `
+  -OutputDir (Join-Path $worktree 'docs\task-evidence\Q30\floorplanning\after-stable')
+
+Validation
+----------
+Compile: PASS, JDK 8 source/target 7; javac exited 0 with recorded bootstrap/unchecked warnings.
+Inspect: PASS, all 72 signed seed/candidate invocations completed.
+Corpus: 72 attempts, 72 accepted placements, 0 rejected; 33 parts per row.
+Synthetic: 7 validated FULLER_TWO_LAYER count=33 successes, same fixture receipt as BEFORE.
+Cleanup: PASS; the exact temp snapshot was verified under the OS temp root and removed after the run.

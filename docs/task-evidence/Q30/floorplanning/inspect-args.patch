@@ -1,0 +1,17 @@
+diff --git a/docs/task-evidence/Q30/Q30PhysicalPilot.java b/docs/task-evidence/Q30/Q30PhysicalPilot.java
+--- a/docs/task-evidence/Q30/Q30PhysicalPilot.java
++++ b/docs/task-evidence/Q30/Q30PhysicalPilot.java
+@@ -640,4 +640,12 @@
+         if (args.length > 0 && "--root-inspect".equals(args[0])) {
+-            inspectRootPlan(0L, 0, RootPlacementVariant.EXACT_ROOT);
++            long inspectSeed = args.length > 1 ? Long.parseLong(args[1]) : 0L;
++            int inspectCandidate = args.length > 2 ? Integer.parseInt(args[2]) : 0;
++            try {
++                inspectRootPlan(inspectSeed, inspectCandidate, RootPlacementVariant.EXACT_ROOT);
++            } catch (PcbPlacementPlanner.Rejected rejected) {
++                System.out.println("Q30_ROOT_INSPECT_REJECT {\"seed\":\"" + inspectSeed +
++                    "\",\"candidate\":" + inspectCandidate + ",\"reason\":\"" +
++                    rejected.reason + "\"}");
++            }
+             return;
+         }
