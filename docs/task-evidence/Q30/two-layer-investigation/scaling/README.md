@@ -134,7 +134,10 @@ batch receipts.
 
 ## Exact Q30 control
 
-The concurrent matched Q30 investigation uses the **root-plan-equivalent
+This is the pre-P1 control; later generic medium floorplanning raised fuller
+routing on the actual Q30 candidate to 54/72. The P1
+[review repair](../../p1-review-repair/README.md) is awaiting independent
+acceptance. The concurrent matched Q30 investigation used the **root-plan-equivalent
 33-package pilot**, 82 pads, 24/25 nets, degree 15/16 and 72 placement
 candidates over 12 seeds. With unchanged P07 policies, restricted succeeds
 0/72 and fuller succeeds **6/72 on five seeds**, using 36–46 vias. Its six

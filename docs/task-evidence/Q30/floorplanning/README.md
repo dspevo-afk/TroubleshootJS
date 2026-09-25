@@ -2,6 +2,12 @@
 
 This directory contains reproducible developer-only placement measurements for Q30-P1. The machine-readable comparison measures the actual Q30 exact-root placements against the successful structured 33-part two-layer fixture. It reports placement geometry and routing proxies; it does not claim Q30 admission, solver behavior, player inspectability, or diagnostic qualification.
 
+These hashes and measurements identify the original P1 candidate. An
+independent review later found a generic opposing-edge-anchor NaN defect and
+the [review repair](../p1-review-repair/README.md) added a finite-hint guard
+and 20-part regression. Fresh compiled Q30 seed-0/37 receipts match the
+original candidate's layout and copper identities.
+
 ## Final matched comparison
 
 The stable comparison is [before-after-comparison.json](before-after-comparison.json). It compares:

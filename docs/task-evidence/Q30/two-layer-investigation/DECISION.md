@@ -1,6 +1,9 @@
 # Q30 routing investigation decision
 
-This is a developer-only architectural finding. [The matched Q30 run](README.md)
+This is the **pre-P1 developer-only baseline**, retained as an architectural
+finding. P1 later improved the same fuller route comparison from 6/72 to 54/72
+with generic medium floorplanning; its [review repair](../p1-review-repair/README.md)
+is awaiting independent acceptance. [The matched Q30 run](README.md)
 holds each 33-package placement fixed across four policies. [The scaling run](scaling/README.md)
 uses a different, regular connected control-board graph. Neither changes P09 or
 admits Q30 to normal play.
@@ -69,8 +72,8 @@ admits Q30 to normal play.
     compiled normal-player diagnosis/repair/retest, replay identity, and
     representative inspectability/performance evidence.
 
-**Recommendation:** keep Q30 unregistered and P09 unchanged. Improve Q30's
-floorplan and routing cost/yield first, then qualify a versioned medium
+**Recommendation at that checkpoint:** keep Q30 unregistered and P09 unchanged.
+Improve Q30's floorplan and routing cost/yield, then qualify a versioned medium
 two-layer policy against a held-out procedural corpus and normal-player UI.
 The electrical brownout repair is independent and documented in
 [`brownout-investigation`](../brownout-investigation/README.md).

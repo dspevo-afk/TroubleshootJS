@@ -408,6 +408,8 @@ final class PcbPlacementPlanner {
                 hint.xFraction=Math.max(.55,.88-.06*Math.min(right,5));
             else if(right==Double.POSITIVE_INFINITY)
                 hint.xFraction=Math.min(.45,.12+.06*Math.min(left,5));
+            else if(left==0.0 && right==0.0)
+                hint.xFraction=.5;
             else hint.xFraction=left/(left+right);
             if(hint.xFraction<.08)hint.xFraction=.08;
             if(hint.xFraction>.92)hint.xFraction=.92;
@@ -421,6 +423,9 @@ final class PcbPlacementPlanner {
             hint.yFraction=yWeight==0 ? .5 : ySum/yWeight;
             if(hint.yFraction<.10)hint.yFraction=.10;
             if(hint.yFraction>.90)hint.yFraction=.90;
+            if(Double.isNaN(hint.xFraction)||Double.isInfinite(hint.xFraction)||
+                    Double.isNaN(hint.yFraction)||Double.isInfinite(hint.yFraction))
+                throw new Rejected("MEDIUM_REGION_HINT_NONFINITE");
         }
         return result;
     }

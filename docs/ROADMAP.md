@@ -2440,9 +2440,15 @@ See [Q30 evidence](task-evidence/Q30/README.md).
 
 #### Q30-P1 — Medium-board floorplanning and two-layer physical policy
 
-**Status:** PASS — physical medium-board gate ready for independent review. This
-is an internal, non-catalog Q30 sub-gate; it adds no milestone ID or dependency
-edge and does not complete Q30. It was discovered during Q30 qualification:
+**Status:** Repair candidate passes the required gates; independent acceptance
+is pending. Review of commit `98c3a75` rejected a generic floorplanner defect:
+opposing edge anchors in one semantic region produced a non-finite hint and
+could reject valid medium placements. The generic finite-hint repair and a
+20-part regression now pass the focused and full native suites, five-permutation
+GWT build and compiled Q30 workbench checks. This is an internal, non-catalog
+Q30 sub-gate; it adds no milestone ID or dependency edge and does not complete
+Q30. [Review repair evidence](task-evidence/Q30/p1-review-repair/README.md).
+It was discovered during Q30 qualification:
 the 33-package electrical candidate is valid, but single-face routing completed
 0/72 matched placements and the existing fuller two-layer prototype completed
 only 6/72. A structured connected 33-part fixture completed 10/10 under that

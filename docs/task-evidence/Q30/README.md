@@ -1,9 +1,13 @@
 # Q30 multi-rail procedural qualification — blocked
 
-**Current status:** Q30 remains unregistered and unaccepted. Its internal
-Q30-P1 physical sub-gate is **PASS, ready for independent review**: the
-unchanged fuller two-layer router accepts **54/72** matched placements after
-generic medium-board floorplanning, versus **6/72** before; the provider-selected
+**Current status:** Q30 remains unregistered and unaccepted. Independent review
+rejected Q30-P1 commit `98c3a75` because ordinary opposing edge connectors in
+one region could produce a NaN placement hint. The generic repair and 20-part
+regression now pass all required reruns; **P1 is ready for another independent
+review, not independently accepted**. [Repair evidence](p1-review-repair/README.md).
+The earlier P1 physical results remain: the unchanged fuller two-layer router
+accepts **54/72** matched placements after generic medium-board floorplanning,
+versus **6/72** before; the provider-selected
 bounded policy accepts **12/12** seeds, including six held-out seeds. Final-source
 JDK 8/GWT and two compiled production-workbench boards pass, with 82/82 pad
 targets on both faces, real via/endpoint checks, and visible Browser face,
@@ -24,8 +28,8 @@ remains independent of the physical work.
 | --- | --- |
 | Matched actual board | 54/72 P07 fuller successes across all 12 seeds, up from 6/72. P05 and the other two P07 policies remain 0/72. Exact inputs and failure rows are preserved in the matched receipt. |
 | Provider-selected policy | 12/12 seeds, including 6/6 held-out; six deterministic placements, at most three P05 and three P07 routes; 17–34 plated vias (median 29), selected area median 6,454,500, aggregate expansions median 4,069,854. No factory links, router-budget increase or normal admission. |
-| Compiled workbench | PASS for seed 0 and held-out 37 on final-source JDK 8/GWT build: 33 packages, 82 pad targets on each face, real top/bottom copper and via endpoint, 1,497 assertions per board. Five screenshots and visible face/zoom/pan/probe input are recorded. This is developer-only inspection, not player diagnosis. |
-| Regression gate | PASS: final-source JDK 8 maintained native suite, 66 Java suites, independent seed/value/role oracles, report protocol, and verified scratch cleanup. The two historical full-suite timeouts remain failures at their original checkpoint. See [full log](p1-native-full.log) and [receipt](p1-native-full-receipt.txt). |
+| Compiled workbench | PASS for seed 0 and held-out 37 on the repair-source JDK 8/GWT build: 33 packages, 82 pad targets on each face, real top/bottom copper and via endpoint, 1,497 assertions per board. Fresh receipts match prior board/layout/copper identities. Historical screenshots and visible input remain recorded, and fresh seed-37 face controls passed. This is developer-only inspection, not player diagnosis. |
+| Regression gate | PASS on the repair source: six focused contracts, then the complete JDK 8 maintained native suite with 66 Java suites, independent seed/value/role oracles, report protocol and verified scratch cleanup. The two historical full-suite timeouts remain failures at their original checkpoint. See [repair log and receipts](p1-review-repair/README.md). |
 
 ## Base, scope, and design
 
@@ -73,7 +77,11 @@ KA/KB capability, inventory, workbench and catalog identities. The new
 construction contract checks both declarations; there is still no installed
 Q30 normal-player mutation flow or repair/retest proof.
 
-## Evidence and limits
+## Earlier Q30 investigation evidence and limits
+
+The table and analysis in this section are preserved as the **pre-P1
+investigation checkpoint**. Their historical route yields and pending gates
+were superseded by the P1 and review-repair results above where stated.
 
 | Check | Result and boundary |
 | --- | --- |
@@ -85,16 +93,16 @@ Q30 normal-player mutation flow or repair/retest proof.
 | Warm 12 V to 4 V and recovery | **PASS 4/4 after a focused E04 brownout recovery-hysteresis repair**, at the production 5 µs/50 ps timestep on seeds 0, 1, 3 and held-out 11. The rail fell causally to 2.56690–2.57110 V, both outputs turned off, and 4→12 V recovery restored rail 4.99186–4.99196 V and both outputs. Before repair, all four fine-timestep cases failed as the E04 outputs chattered HIGH↔BROWNOUT across 3.8 V; the earlier coarse seed-1 68/70 V reading was an unaccepted Newton trial. The E04 falling trip remains 3.8 V and rising recovery is 3.85 V on the 5 V declaration. See `brownout-investigation/README.md` and its before/after logs. |
 | Independent integration pilot | PASS: 38 assertions on a separate 107-element graph using 470-ohm external loads. E02 rail was 4.9999 V unloaded, 4.9920 V with both channels on; regulator source current rose from 2.012 mA to 81.336 mA. Losing sensor A source turned its coil off while B remained active; 4 V main input browned out both. An isolated cross-domain reference was rejected. See `electrical-pilot/`. Its topology and loading are not the 33-package candidate. |
 | Physical 33-package root-plan-equivalent probe | **FAIL: 0/12 routes** under unchanged `THT_SINGLE_FACE@1`, six placement candidates per seed. Eleven final outcomes were `ROUTING_SEARCH_LIMIT`, one `ROUTING_NO_PATH`; six seeds had at least one hard `NO_PATH` candidate. Six representative seeds were 0, 1, 3, 17, 42, -1; held-out seeds were 11, 23, 37, 59, 83, -23. The pilot has its own manifest matching the root plan's package/net inventory; it is not a complete generated-instance test. See `routing-final-pilot-receipt.txt`. |
-| Right-side load connector experiment | **FAIL: 0/12 routes** after moving only `JLOAD` to the right edge in the root plan and equivalent physical pilot. Under the same single-face clearance and search budget, eleven final outcomes were `ROUTING_SEARCH_LIMIT`, one was `ROUTING_NO_PATH`, and two seeds had at least one hard no-path candidate. This reduced hard obstacles but did not produce a board. See `routing-jload-right-pilot-receipt.txt`; it is the current placement result. |
-| Matched P07 two-layer experiment | **PARTIAL structural route:** the current 33-package right-side-JLOAD manifest was tested on 12 seeds × six identical placement candidates × four policies (288 rows). P05 single-face, P07 one-layer and P07 restricted two-layer each routed 0/72; P07 fuller two-layer routed 6/72 placements across five seeds, including both sensor arrangements. All six used real top and bottom copper, validated connectivity/clearance, and required 36–46 plated vias and 31,850–39,950 unique copper units. None meets P09 or proves normal inspectability. See `two-layer-investigation/README.md`; its developer pilot patch is **unapplied**. |
-| Two-layer component-count scaling | **Structural only:** a separate connected multi-channel through-hole fixture passed fuller two-layer routing 10/10 at 33 parts and 10/10 at 80; 90 passed 9/10. The largest single success in the bounded sweep was 180 parts (2/3) at the upper test bound, not a global router maximum. Restricted two-layer passed 0/61 tested requests. At 80 every success used the 48-via cap; the 180-part outline had 15,134,000 area, far outside gameplay scale. Exact Q30 at 33 remained 6/72 under fuller. See `two-layer-investigation/scaling/README.md` and the [architectural decision](two-layer-investigation/DECISION.md). |
+| Right-side load connector experiment | **FAIL: 0/12 routes at that checkpoint** after moving only `JLOAD` to the right edge in the root plan and equivalent physical pilot. Under the same single-face clearance and search budget, eleven final outcomes were `ROUTING_SEARCH_LIMIT`, one was `ROUTING_NO_PATH`, and two seeds had at least one hard no-path candidate. This reduced hard obstacles but did not produce a board. See `routing-jload-right-pilot-receipt.txt`; this predates P1 floorplanning. |
+| Matched P07 two-layer experiment | **PARTIAL historical structural route:** the then-current 33-package right-side-JLOAD manifest was tested on 12 seeds × six identical placement candidates × four policies (288 rows). P05 single-face, P07 one-layer and P07 restricted two-layer each routed 0/72; P07 fuller two-layer routed 6/72 placements across five seeds, including both sensor arrangements. All six used real top and bottom copper, validated connectivity/clearance, and required 36–46 plated vias and 31,850–39,950 unique copper units. None met P09 or proved normal inspectability. See `two-layer-investigation/README.md`; its developer pilot patch is **unapplied**. |
+| Two-layer component-count scaling | **Historical structural only:** a separate connected multi-channel through-hole fixture passed fuller two-layer routing 10/10 at 33 parts and 10/10 at 80; 90 passed 9/10. The largest single success in the bounded sweep was 180 parts (2/3) at the upper test bound, not a global router maximum. Restricted two-layer passed 0/61 tested requests. At 80 every success used the 48-via cap; the 180-part outline had 15,134,000 area, far outside gameplay scale. Exact Q30 at 33 was 6/72 before P1 floorplanning. See `two-layer-investigation/scaling/README.md` and the [architectural decision](two-layer-investigation/DECISION.md). |
 | Provider-local floorplan experiment | **FAIL:** seed 0 separate-direct manual channel placement produced six valid candidates and 0/6 routes, all at the unchanged 1,000,000-expansion search limit. The selected outline was 3,700 × 2,100 (area 7,770,000), well beyond the proposed medium envelope. Sixteen routing salts and eight more manual attempts also produced no route. See `q30-floorplan-v3-receipt.txt` and its sanitized exploratory patch. This floorplan was not integrated into the generator. |
 | Unapplied local hysteretic sensor proposal | **PARTIAL:** an explicit schema-2 patch replaces the nonplanar shared reference with independent A/B dividers and two real feedback resistors. Direct candidates remain 33 packages/82 pads; local hysteretic candidates have 35/86, all with 25 nets. A 12-seed incidence graph oracle found all variants planar, the proposal's JDK 8 plan test passed 1,556 assertions, but the unchanged physical pilot still routed 0/12. See `local-hysteretic-proposal.patch`, `local-hysteretic-graph.txt`, `local-hysteretic-planarity-results.txt` and `local-hysteretic-routing-receipt.txt`. This patch is **not applied** to the Q30 source or electrical receipts. |
 | Placement sensitivity | FAIL: no success for exact placement, removed connector anchors, collapsed regions, or wider access margins on the initial ceramic-capacitor manifest (two seeds per variant). That obsolete 1-uF manifest is not an electrically accepted design. See `routing-pilot-receipt.txt`. |
-| Existing content | Earlier PASS: 62-suite maintained JDK 8 current-contract matrix, including E02, E03, E04, D01, A10, P09, Quick Play, U02, physical serviceability and U04; independent seed/value/role/report readers and cleanup. It preceded the latest Q30 and E04 edits. Two fresh full attempts before the E04 repair exceeded the procedural corpus child's 60-second verifier bound; both are BLOCKED, not PASS. Twenty selected suites passed before the E04 repair; focused E02/E04 passed afterward. See `full-suite-timeout.txt` and `brownout-investigation/native-focused.log`. EASY/MEDIUM content retains its previous qualification, with a fresh full regression pending. |
+| Existing content | Earlier PASS: 62-suite maintained JDK 8 current-contract matrix, including E02, E03, E04, D01, A10, P09, Quick Play, U02, physical serviceability and U04; independent seed/value/role/report readers and cleanup. It preceded the later Q30 and E04 edits. Two full attempts before the E04 repair exceeded the procedural corpus child's 60-second verifier bound; both were BLOCKED, not PASS. Twenty selected suites passed before the E04 repair; focused E02/E04 passed afterward. See `full-suite-timeout.txt` and `brownout-investigation/native-focused.log`. Fresh complete P1 and review-repair runs are recorded above. |
 | Production compile | PASS after the E04 repair: `scripts/build.ps1`, JDK 8/GWT, five permutations, 113.096 s compile and 1.726 s link. This compiles the unregistered candidate; it does not publish Q30. See `brownout-investigation/gwt-build.log`. |
 | Q30 diagnosis/service/compiled player | NOT RUN: no Q30 normal admission. The four-seed main-isolation backfeed negative is bounded; a broader backfeed corpus, flat-netlist impostor and unproved-hypothesis rejection, complete probe correspondence, removal/catalog/replacement/lead operations, and player diagnosis/repair/retest remain unproved. |
-| Qualified corpus timing | NOT APPLICABLE: zero qualified boards, so no honest cold/warm generation p50 or p95, proof-count distribution, matrix distribution, navigation/probing screenshots, or compiled replay identity can be reported. Pilot routing attempts are in the receipt and are not substituted for generation timings. |
+| Qualified corpus timing | NOT APPLICABLE: zero qualified normal-player boards, so no honest cold/warm generation p50 or p95, proof-count distribution, matrix distribution or compiled normal-player replay identity can be reported. Later P1 developer-workbench screenshots do not replace those requirements. Pilot routing attempts are not substituted for generation timings. |
 
 The pre-repair focused affected-regression command passed 17 Java suites
 and cleanup: E02/E03/E04, D01, A10 generation/dependency, U02,
@@ -107,7 +115,8 @@ construction, A10 routing rejection (28 assertions), and Task43 physical
 endpoint ownership (320 assertions), with cleanup. Across these two focused
 runs, 20 selected suites passed. After the E04 repair, focused E02 and E04
 suites passed 1,429 and 316 assertions respectively, with cleanup. The full
-post-repair matrix remains NOT RUN; the prior two full attempts timed out.
+post-repair matrix had not yet run at this checkpoint; the prior two full
+attempts timed out. The P1 and review-repair full suites later passed.
 
 The right-side-connector 33-package attempts occupied 4,427,500–5,628,000
 outline area units, with 15–16 maximum net degree. Each failed route spent 919,886–1,000,000
@@ -116,8 +125,8 @@ allows at most 16 packages, 40 pads, 16 nets, degree 10, area 2,250,000,
 16,000 unique copper units and one declared face with no vias or links. It
 rejects every Q30 pilot board even before electrical/player qualification.
 The P07 structural-only 30-part reference was a different netlist and exceeded
-P09 area/copper limits. The new matched Q30 experiment provides direct route
-evidence for the current manifest: 6/72 fuller two-layer successes, with high
+P09 area/copper limits. That matched Q30 experiment provided direct route
+evidence for the then-current placements: 6/72 fuller two-layer successes, with high
 via/copper cost; restricted two-layer and both one-face algorithms routed none.
 The shared-hysteretic component/net incidence graph has a nonplanarity witness in
 `routing-pilot-receipt.txt`; the separate-direct graph is planar by that test,
@@ -140,7 +149,7 @@ did not yield a routed board, and its own electrical brownout behavior has not
 been separately proved. Both exploratory patches pass `git apply --check` against this
 isolated worktree but are not production changes.
 
-## Extension cost and next dependency
+## Earlier extension cost and dependency
 
 Reused generic owners: `TroubleshootBoard`, named seed streams, the E02
 regulator/source contracts, E03 relay/driver providers, E04 decision element,
@@ -154,16 +163,14 @@ recovery hysteresis with reset, each covered by focused tests;
 the candidate envelope patch would require generic admission call-site edits
 and remains unapplied.
 
-The exact-board production-timestep E02/E04 brownout transition now converges
-on four tested seeds. Q30 still needs a versioned medium-board physical policy
-backed by routability and inspectability. The current P09 limits do not admit
-the candidate; P07 fuller two-layer reaches only 6/72 current placements and
-requires 36–46 vias. A better floorplan, routing policy, or both need
-qualification before normal admission. Only after that should the family be
-registered and D01 hypotheses, physical service,
-compiled replay, normal-player repair and cold/warm performance be qualified.
-No family-specific router exception or silent layer-policy expansion is part of
-this worktree.
+At this earlier checkpoint the exact-board production-timestep E02/E04 brownout
+transition converged on four tested seeds, but Q30 still needed a versioned
+medium-board physical policy. P1 subsequently added an internally tested medium
+policy and improved fuller routing from 6/72 to 54/72; independent acceptance
+is still pending after the review repair. Current P09 limits
+still do not admit Q30. D01 hypotheses, physical service, compiled normal-player
+repair/retest, replay and cold/warm performance remain unqualified. No
+family-specific router exception or silent P09 expansion was introduced.
 
 ## Reproduction
 

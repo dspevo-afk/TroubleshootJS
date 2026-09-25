@@ -1,0 +1,144 @@
+{
+  "schema": 1,
+  "build": "gwt-build.log",
+  "previewPort": 8902,
+  "positive": [
+    {
+      "seed": "0",
+      "query": "tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Bench=true&tsjQ30Seed=0",
+      "report": {
+        "bottomInspectable": 82,
+        "bottomTargets": 82,
+        "copper": {
+          "bottomTrace": "copper/edge/125",
+          "topTrace": "copper/edge/100",
+          "viaPad": "RDA.1",
+          "viaSurface": "hole/18:p07-via/A_CMD/47/1TOP/hole/18:p07-via/A_CMD/47/1BOTTOM"
+        },
+        "face": "TOP",
+        "family": "RB30_CONTROL",
+        "layout": {
+          "height": 1985,
+          "width": 3562,
+          "x": 50,
+          "y": 50
+        },
+        "layoutSeed": "-5811592868239938363",
+        "normalAdmission": false,
+        "overviewLimits": {
+          "BOTTOM": [],
+          "TOP": []
+        },
+        "ownerRestored": false,
+        "packages": 33,
+        "padLimits": {
+          "BOTTOM": [],
+          "TOP": []
+        },
+        "pads": 82,
+        "physicalPolicy": "MEDIUM_BOARD@1",
+        "prototypeRetained": true,
+        "route": "P07_FULLER_TWO_LAYER",
+        "routingSeed": "6323369344316473384",
+        "runtimeAssertions": 1497,
+        "schema": 1,
+        "seed": "0",
+        "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+        "status": "PASS",
+        "topInspectable": 82,
+        "topTargets": 82,
+        "topology": "RB30_SEPARATE_DIRECT_A_BJT_B_BJT",
+        "visualPass": true
+      },
+      "cleanup": {
+        "ownerRestored": false,
+        "prototypeRetained": true
+      },
+      "targetCounts": {
+        "bottom": 82,
+        "bottomInspectable": 82,
+        "bottomOverviewLimits": [],
+        "bottomPadLimits": [],
+        "face": "TOP",
+        "family": "RB30_CONTROL",
+        "top": 82,
+        "topInspectable": 82,
+        "topOverviewLimits": [],
+        "topPadLimits": []
+      },
+      "previousReceiptIdentityMatch": true
+    },
+    {
+      "seed": "37",
+      "query": "tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Bench=true&tsjQ30Seed=37",
+      "report": {
+        "bottomInspectable": 82,
+        "bottomTargets": 82,
+        "copper": {
+          "bottomTrace": "copper/edge/124",
+          "topTrace": "copper/edge/100",
+          "viaPad": "RDA.1",
+          "viaSurface": "hole/18:p07-via/A_CMD/30/1TOP/hole/18:p07-via/A_CMD/30/1BOTTOM"
+        },
+        "face": "TOP",
+        "family": "RB30_CONTROL",
+        "layout": {
+          "height": 1574,
+          "width": 3782,
+          "x": 40,
+          "y": 40
+        },
+        "layoutSeed": "3019656819951809608",
+        "normalAdmission": false,
+        "overviewLimits": {
+          "BOTTOM": [],
+          "TOP": []
+        },
+        "ownerRestored": false,
+        "packages": 33,
+        "padLimits": {
+          "BOTTOM": [],
+          "TOP": []
+        },
+        "pads": 82,
+        "physicalPolicy": "MEDIUM_BOARD@1",
+        "prototypeRetained": true,
+        "route": "P07_FULLER_TWO_LAYER",
+        "routingSeed": "-19066876369174513",
+        "runtimeAssertions": 1497,
+        "schema": 1,
+        "seed": "37",
+        "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+        "status": "PASS",
+        "topInspectable": 82,
+        "topTargets": 82,
+        "topology": "RB30_SHARED_HYSTERETIC_A_BJT_B_BJT",
+        "visualPass": true
+      },
+      "cleanup": {
+        "ownerRestored": false,
+        "prototypeRetained": true
+      },
+      "targetCounts": {
+        "bottom": 82,
+        "bottomInspectable": 82,
+        "bottomOverviewLimits": [],
+        "bottomPadLimits": [],
+        "face": "TOP",
+        "family": "RB30_CONTROL",
+        "top": 82,
+        "topInspectable": 82,
+        "topOverviewLimits": [],
+        "topPadLimits": []
+      },
+      "previousReceiptIdentityMatch": true
+    }
+  ],
+  "visibleInput": {
+    "seed": "37",
+    "action": "View bottom copper, then View top copper",
+    "bottomCaptionVisible": true,
+    "topCaptionRestored": true
+  },
+  "previewStop": "PID 15060 stopped; port 8902 positively released"
+}

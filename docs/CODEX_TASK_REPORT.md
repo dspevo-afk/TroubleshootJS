@@ -1,9 +1,17 @@
-# Current checkpoint: Q30-P1 physical sub-gate PASS; full Q30 BLOCKED
+# Current checkpoint: Q30-P1 review repair validated; full Q30 BLOCKED
 
 The Q30-P1 candidate is in the isolated `codex/q30-multirail-qualification`
 branch, started from accepted base `e0c368855a3891acd4673e94ce9afa732390e2bf`.
-The ordinary checkout and its unrelated edits remain untouched. The internal,
-non-catalog Q30-P1 physical sub-gate is **PASS, ready for independent review**.
+The ordinary checkout and its unrelated edits remain untouched. Independent
+review **rejected** P1 commit `98c3a75bb10529f527aebb103345c3092b8de0cc`:
+two ordinary edge connectors in one semantic region could make
+`mediumRegionHints` calculate `0/0`, sending NaN into placement scoring.
+The generic repair chooses a neutral finite midpoint for that case and rejects
+any later non-finite x/y hint explicitly. A new heterogeneous 20-package
+standard-constraints regression reproduced the failure before the fix and now
+passes six deterministic candidates, including a proved opposite-edge case,
+with exact geometry replay. **All required repair gates pass; independent
+acceptance is pending.** [Repair evidence](task-evidence/Q30/p1-review-repair/README.md).
 Full Q30 remains **BLOCKED and unregistered** for normal play; Q30 diagnosis,
 service, repair/retest, compiled player, exact replay and 20–40-part admission
 have not passed.
@@ -31,7 +39,7 @@ These structural measurements do not certify player inspection. Exact selected
 seed-0 and held-out seed-37 geometry exports agree with selected-policy route
 statistics, but static face drawings are not production screenshots.
 
-The final-source JDK 8/GWT build compiled five permutations and linked. The
+The original P1 final-source JDK 8/GWT build compiled five permutations and linked. The
 developer-only compiled production workbench verifier passed representative
 seed 0 and held-out seed 37: each had 33 packages, 82/82 inspectable pad
 targets on both faces, selected P07 two-layer copper, a plated via with the
@@ -61,11 +69,23 @@ script, and port 8901 was positively released. The earlier failed compiled
 attempts and the source-control disconnect fault-injection limit remain in the
 inspection evidence rather than being labeled PASS.
 
-Next action: review this P1 checkpoint, then continue the original Q30
+The review repair was rerun on the changed source: six focused suites passed
+with verified cleanup; the complete maintained native runner passed 66 Java
+suites, independent oracles and cleanup; the JDK 8/GWT build compiled all five
+permutations and linked. Fresh compiled workbench checks of seed 0 and held-out
+37 each passed 1,497 assertions, with the same board/layout/copper identity as
+the pre-repair receipts, 82/82 inspectable pads on both faces and no normal
+admission. Visible seed-37 controls switched to bottom copper and back. The
+task-owned preview PID 15060 was stopped and port 8902 released. The full
+commands, logs and receipts are in the [repair evidence](task-evidence/Q30/p1-review-repair/README.md).
+An attempted removal of six superseded intermediate captures was rejected by
+automatic command policy; they remain historical evidence, and no other files
+were removed.
+
+Next action: independently review this P1 repair, then continue the original Q30
 diagnostic, service, repair/retest, replay, performance and held-out 20–40-part
 admission work. Keep the medium policy out of normal admission until those
-gates pass. P1 has not proved a normal-player Q30 flow. Publish only the
-accepted P1 checkpoint after integrated diff and evidence review.
+gates pass. P1 has not proved a normal-player Q30 flow.
 
 # Historical checkpoint: initial Q30 physical blockage
 

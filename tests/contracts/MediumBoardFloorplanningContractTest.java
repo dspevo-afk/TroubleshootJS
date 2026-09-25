@@ -22,6 +22,7 @@ public final class MediumBoardFloorplanningContractTest {
     private MediumBoardFloorplanningContractTest() { }
 
     public static void main(String[] args) {
+        checkGenericOpposingEdgeAnchors();
         Rb30Plan firstPlan = Rb30Plan.resolve(0L);
         TroubleshootBoard board = firstPlan.board();
         PcbPlacementPlanner.Plan first = place(board, firstPlan.layoutSeed, 0);
@@ -51,6 +52,96 @@ public final class MediumBoardFloorplanningContractTest {
             " netEdges=" + locality.edgeCount + " outline=" + first.outline.width +
             "x" + first.outline.height + " jloadOutput=" + jload.outputNearestTotal +
             " jloadOther=" + jload.otherNearestTotal);
+    }
+
+    /** Ordinary placement demands may anchor both sides of one semantic region. */
+    private static void checkGenericOpposingEdgeAnchors() {
+        TroubleshootBoard board = genericTwentyPartBoard();
+        PcbPlacementConstraints constraints = board.getPlacementConstraints();
+        check(board.getComponentIds().size() == 20,
+            "generic fixture exercises the medium inventory path");
+        PcbPlacementConstraints.Part input = constraints.get("JIN");
+        PcbPlacementConstraints.Part output = constraints.get("JOUT");
+        check(input.anchor == PcbPlacementConstraints.Anchor.EDGE &&
+            output.anchor == PcbPlacementConstraints.Anchor.EDGE &&
+            input.regionId.equals(output.regionId) &&
+            input.domainId.equals(output.domainId),
+            "ordinary constraints put both edge connectors in one region");
+
+        int opposing = 0;
+        for (int candidate = 0; candidate < PcbPlacementPlanner.OUTLINE_CANDIDATES;
+                candidate++) {
+            PcbPlacementPlanner.Plan placed = new PcbPlacementPlanner(
+                StandardPcbFootprintProviders.createRegistry()).plan(
+                    board, constraints, 0L, candidate);
+            PcbPlacementPlanner.Plan replay = new PcbPlacementPlanner(
+                StandardPcbFootprintProviders.createRegistry()).plan(
+                    board, constraints, 0L, candidate);
+            check(placed.footprints.size() == 20 && placed.evaluations > 0,
+                "all generic medium packages receive scored placements: " + candidate);
+            check(placed.outline.equals(replay.outline) &&
+                placed.materialize().geometryFingerprint().equals(
+                    replay.materialize().geometryFingerprint()),
+                "generic medium candidate replays exact geometry: " + candidate);
+            PcbFootprint leftOrRightInput = null, leftOrRightOutput = null;
+            for (PcbFootprint footprint : placed.footprints) {
+                String id = footprint.getPlacement().getComponentId();
+                if ("JIN".equals(id)) leftOrRightInput = footprint;
+                if ("JOUT".equals(id)) leftOrRightOutput = footprint;
+                check(inside(placed.outline,
+                    footprint.getPlacement().getRoutingCourtyard()),
+                    "generic medium geometry stays finite and inside outline: " + id);
+            }
+            check(leftOrRightInput != null && leftOrRightOutput != null,
+                "both generic edge connectors are placed: " + candidate);
+            long midpoint = (long) placed.outline.x + placed.outline.width / 2;
+            long inputX = (long) leftOrRightInput.getPlacement().getX() +
+                leftOrRightInput.getPlacement().getWidth() / 2;
+            long outputX = (long) leftOrRightOutput.getPlacement().getX() +
+                leftOrRightOutput.getPlacement().getWidth() / 2;
+            boolean opposite = (inputX < midpoint && outputX > midpoint) ||
+                (inputX > midpoint && outputX < midpoint);
+            if (opposite) opposing++;
+            if (candidate == 0) check(inputX > midpoint && outputX < midpoint,
+                "seed 0 candidate 0 resolves same-region JIN right and JOUT left");
+        }
+        check(opposing > 0,
+            "six deterministic generic candidates include opposing same-region anchors");
+    }
+
+    private static TroubleshootBoard genericTwentyPartBoard() {
+        TroubleshootBoard board = new TroubleshootBoard("MEDIUM_GENERIC_EDGE_REGION");
+        board.addNet(new BoardNet("SUPPLY", BoardNet.RoutingRole.SUPPLY));
+        board.addNet(new BoardNet("RETURN", BoardNet.RoutingRole.RETURN));
+        for (int channel = 1; channel <= 8; channel++)
+            board.addNet(new BoardNet("S" + channel));
+        for (String connector : new String[] { "JIN", "JOUT" }) {
+            board.addComponent(new BoardComponent(connector, "CONNECTOR",
+                PhysicalPackages.THROUGH_HOLE_CONNECTOR_2));
+            board.addPad(new BoardPad(connector + ".1", connector, "1", "SUPPLY"));
+            board.addPad(new BoardPad(connector + ".2", connector, "2", "RETURN"));
+        }
+        for (int channel = 1; channel <= 8; channel++) {
+            String resistor = "R" + channel, capacitor = "C" + channel;
+            String signal = "S" + channel;
+            board.addComponent(new BoardComponent(resistor, "RESISTOR",
+                PhysicalPackages.AXIAL_RESISTOR));
+            board.addPad(new BoardPad(resistor + ".1", resistor, "1", "SUPPLY"));
+            board.addPad(new BoardPad(resistor + ".2", resistor, "2", signal));
+            board.addComponent(new BoardComponent(capacitor, "CAPACITOR",
+                PhysicalPackages.RADIAL_CERAMIC_CAPACITOR));
+            board.addPad(new BoardPad(capacitor + ".1", capacitor, "1", signal));
+            board.addPad(new BoardPad(capacitor + ".2", capacitor, "2", "RETURN"));
+        }
+        for (int channel = 1; channel <= 2; channel++) {
+            String diode = "D" + channel;
+            board.addComponent(new BoardComponent(diode, "DIODE",
+                PhysicalPackages.AXIAL_DIODE));
+            board.addPad(new BoardPad(diode + ".A", diode, "A", "RETURN"));
+            board.addPad(new BoardPad(diode + ".K", diode, "K", "S" + channel));
+        }
+        board.validate();
+        return board;
     }
 
     private static PcbPlacementPlanner.Plan place(TroubleshootBoard board, long seed,
