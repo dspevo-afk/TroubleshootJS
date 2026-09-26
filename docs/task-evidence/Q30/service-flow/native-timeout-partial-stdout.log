@@ -1,0 +1,3 @@
+PASS: Q30 service flow seed=0 fault=DREV_OPEN target=DREV fingerprintHash=9be0e8ac
+PASS: Q30 service flow seed=0 fault=REN_OPEN target=REN fingerprintHash=9be0e8ac
+PASS: Q30 service flow seed=0 fault=SENSOR_A_OPEN target=RSA fingerprintHash=9be0e8ac

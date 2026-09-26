@@ -1,0 +1,58 @@
+{
+  "previewSourceDigest": "9f21cc68ed6488734ddc8f20d48152c17ea9b4b36bfb6b40e7f9d15d82314c90",
+  "previewWebDigest": "9fce14f38cf45310bd520b3ab0e44346b930977d7e591c726cbb0b4b5dec0b47",
+  "service": null,
+  "workbench": {
+    "bottomInspectable": 82,
+    "bottomTargets": 82,
+    "constructionMillis": 7,
+    "copper": {
+      "bottomTrace": "copper/edge/125",
+      "topTrace": "copper/edge/100",
+      "viaPad": "RDA.1",
+      "viaSurface": "hole/18:p07-via/A_CMD/47/1TOP/hole/18:p07-via/A_CMD/47/1BOTTOM"
+    },
+    "face": "TOP",
+    "family": "RB30_CONTROL",
+    "hypothesisCount": 5,
+    "layout": {
+      "height": 1985,
+      "width": 3562,
+      "x": 50,
+      "y": 50
+    },
+    "layoutSeed": "-5811592868239938363",
+    "normalAdmission": false,
+    "overviewLimits": {
+      "BOTTOM": [],
+      "TOP": []
+    },
+    "ownerRestored": false,
+    "packages": 33,
+    "padLimits": {
+      "BOTTOM": [],
+      "TOP": []
+    },
+    "pads": 82,
+    "physicalPolicy": "MEDIUM_BOARD@1",
+    "prototypeRetained": true,
+    "qualificationMillis": 31827,
+    "route": "P07_FULLER_TWO_LAYER",
+    "routingMillis": 21170,
+    "routingSeed": "6323369344316473384",
+    "runtimeAssertions": 377,
+    "schema": 1,
+    "seed": "0",
+    "selectedFault": "DREV_OPEN",
+    "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+    "serviceMillis": 0,
+    "solverAdaptive": true,
+    "solverMaxTimeStep": 0.000005,
+    "solverMinTimeStep": 5e-11,
+    "status": "PASS",
+    "topInspectable": 82,
+    "topTargets": 82,
+    "topology": "RB30_SEPARATE_DIRECT_A_BJT_B_BJT",
+    "visualPass": true
+  }
+}

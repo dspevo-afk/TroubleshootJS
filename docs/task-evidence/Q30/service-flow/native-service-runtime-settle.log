@@ -1,0 +1,536 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: Q30 service flow seed=0 fault=DREV_OPEN target=DREV fingerprintHash=9be0e8ac
+PASS: Q30 service flow seed=0 fault=REN_OPEN target=REN fingerprintHash=9be0e8ac
+PASS: Q30 service flow seed=0 fault=SENSOR_A_OPEN target=RSA fingerprintHash=9be0e8ac
+PASS: Q30 service flow seed=0 fault=DRIVE_A_OPEN target=RDA fingerprintHash=9be0e8ac
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 1.0E-4
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 13 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 11 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 19 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+timestep down to 5.0E-5 at 0.21279999999999288
+converged after 2 iterations, timeStep = 5.0E-5
+converged after 2 iterations, timeStep = 5.0E-5
+converged after 4 iterations, timeStep = 5.0E-5
+converged after 2 iterations, timeStep = 5.0E-5
+converged after 2 iterations, timeStep = 5.0E-5
+converged after 2 iterations, timeStep = 5.0E-5
+timestep up = 1.0E-4 at 0.21309999999999285
+timestep down to 5.0E-5 at 0.21369999999999278
+converged after 1 iterations, timeStep = 5.0E-5
+timestep down to 2.5E-5 at 0.21374999999999278
+converged after 1 iterations, timeStep = 2.5E-5
+converged after 2 iterations, timeStep = 2.5E-5
+converged after 9 iterations, timeStep = 2.5E-5
+converged after 3 iterations, timeStep = 2.5E-5
+converged after 3 iterations, timeStep = 2.5E-5
+converged after 2 iterations, timeStep = 2.5E-5
+converged after 2 iterations, timeStep = 2.5E-5
+converged after 2 iterations, timeStep = 2.5E-5
+timestep up = 5.0E-5 at 0.21394999999999276
+converged after 2 iterations, timeStep = 5.0E-5
+converged after 2 iterations, timeStep = 5.0E-5
+converged after 2 iterations, timeStep = 5.0E-5
+timestep up = 1.0E-4 at 0.21409999999999274
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 6 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 22 iterations, timeStep = 1.0E-4
+converged after 11 iterations, timeStep = 1.0E-4
+converged after 7 iterations, timeStep = 1.0E-4
+converged after 14 iterations, timeStep = 1.0E-4
+converged after 7 iterations, timeStep = 1.0E-4
+converged after 7 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 7 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 7 iterations, timeStep = 1.0E-4
+converged after 10 iterations, timeStep = 1.0E-4
+converged after 7 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 11 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 25 iterations, timeStep = 1.0E-4
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 13 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 11 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 20 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+timestep down to 5.0E-5 at 0.8063999999999275
+converged after 11 iterations, timeStep = 5.0E-5
+converged after 5 iterations, timeStep = 5.0E-5
+converged after 4 iterations, timeStep = 5.0E-5
+converged after 6 iterations, timeStep = 5.0E-5
+converged after 4 iterations, timeStep = 5.0E-5
+converged after 7 iterations, timeStep = 5.0E-5
+converged after 5 iterations, timeStep = 5.0E-5
+converged after 4 iterations, timeStep = 5.0E-5
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 10 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 25 iterations, timeStep = 1.0E-4
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 13 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 11 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+node 7 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 1.0E-4
+node 7 unconnected
+node 11 unconnected
+node 7 unconnected
+node 11 unconnected
+node 29 unconnected
+node 31 unconnected
+node 7 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 20 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+node 7 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 1.0E-4
+node 7 unconnected
+node 11 unconnected
+node 7 unconnected
+node 11 unconnected
+node 29 unconnected
+node 31 unconnected
+node 11 unconnected
+node 29 unconnected
+node 31 unconnected
+node 11 unconnected
+node 29 unconnected
+node 31 unconnected
+converged after 20 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 29 unconnected
+node 31 unconnected
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 7 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+converged after 7 iterations, timeStep = 1.0E-4
+converged after 7 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 29 unconnected
+node 31 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 29 unconnected
+node 31 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 29 unconnected
+node 31 unconnected
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 29 unconnected
+node 31 unconnected
+node 11 unconnected
+node 29 unconnected
+node 31 unconnected
+converged after 10 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 29 unconnected
+node 31 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 29 unconnected
+node 31 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 29 unconnected
+node 31 unconnected
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 25 iterations, timeStep = 1.0E-4
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 13 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 11 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+node 36 unconnected
+node 39 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 20 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+node 36 unconnected
+node 39 unconnected
+node 11 unconnected
+node 36 unconnected
+node 39 unconnected
+node 11 unconnected
+node 36 unconnected
+node 39 unconnected
+converged after 20 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 36 unconnected
+node 39 unconnected
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 7 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+converged after 7 iterations, timeStep = 1.0E-4
+converged after 7 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 36 unconnected
+node 39 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 36 unconnected
+node 39 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 36 unconnected
+node 39 unconnected
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 36 unconnected
+node 39 unconnected
+node 11 unconnected
+node 36 unconnected
+node 39 unconnected
+converged after 10 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 36 unconnected
+node 39 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 36 unconnected
+node 39 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 36 unconnected
+node 39 unconnected
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 25 iterations, timeStep = 1.0E-4
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 13 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 11 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 21 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 11 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+Exception in thread "main" java.lang.AssertionError: Q30 relay discharge readiness cap=2.5022086988710943 cap=2.042997076670631 cap=1.2429890882230854
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.check(Q30ServiceFlowContractTest.java:405)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.setPower(Q30ServiceFlowContractTest.java:338)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifyServiceFlow(Q30ServiceFlowContractTest.java:197)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifySeed(Q30ServiceFlowContractTest.java:106)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.main(Q30ServiceFlowContractTest.java:41)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: Q30ServiceFlowContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

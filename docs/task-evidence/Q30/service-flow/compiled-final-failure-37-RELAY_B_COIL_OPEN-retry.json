@@ -1,0 +1,4 @@
+{
+  "service": "{\"status\":\"FAIL\",\"normalAdmission\":false,\"d01Admission\":false,\"seed\":\"37\",\"phase\":\"discharge-chunk-1\",\"elapsedMillis\":12804,\"blocker\":\"java.lang.IllegalStateException: Q30 service phase discharge-chunk-1: com.lushprojects.circuitjs1.client.SolverExecutionBoundary$Failure: One CircuitJS accepted-step attempt exceeded its wall budget\"}",
+  "workbench": "{\"schema\":1,\"status\":\"FAIL\",\"visualPass\":false,\"seed\":\"37\",\"topology\":\"RB30_SHARED_HYSTERETIC_A_BJT_B_BJT\",\"physicalPolicy\":\"MEDIUM_BOARD@1\",\"route\":\"P07_FULLER_TWO_LAYER\",\"phase\":\"diagnostic-service-retest\",\"blocker\":\"Q30 service phase discharge-chunk-1: com.lushprojects.circuitjs1.client.SolverExecutionBoundary$Failure: One CircuitJS accepted-step attempt exceeded its wall budget\",\"ownerRestored\":true,\"prototypeRetained\":false,\"normalAdmission\":false}"
+}

@@ -7,7 +7,9 @@ param(
 )
 
 # Maintained current seed, identity, geometry, recipe and construction contracts.
-# Compiles the real client source once; the actual GWT solver/player gates remain separate.
+# Compiles the real client source once; only the Q30/full-suite JVM path uses an
+# exact scratch replacement for CirSim's JSNI console logger. The actual GWT
+# solver/player gates remain separate.
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $taskRoot = ''
@@ -52,7 +54,8 @@ try {
     # The accepted Task35 developer verifier contains a generic reference
     # comparison accepted by GWT but rejected by javac8. Exclude only that
     # unrelated verifier, with a fail-closed replacement: invoking it fails.
-    # All current production classes are compiled byte-for-byte from the checkout.
+    # All current production source comes from the checkout, except for the
+    # exact single-method CirSim.console scratch shim selected below.
     $stub = Join-Path $taskRoot 'PhysicalSpecificationDeveloperVerifier.java'
     [IO.File]::WriteAllText($stub, @'
 package com.lushprojects.circuitjs1.client;
@@ -63,11 +66,40 @@ final class PhysicalSpecificationDeveloperVerifier {
     }
 }
 '@, (New-Object Text.UTF8Encoding($false)))
+    $needsQ30NativeLoggerBridge = $Suite.Count -eq 0 -or
+        $Suite -contains 'Q30ServiceFlowContractTest'
+    $nativeLoggerShim = ''
+    if ($needsQ30NativeLoggerBridge) {
+        # CircuitJS's unconnected-node and convergence diagnostics use JSNI.
+        # Keep those diagnostics visible on the JVM and preserve every solver
+        # method/model by changing only the exact logger declaration in a
+        # task-owned source copy. Never edit the checked-in production source.
+        $cirSimSource = Join-Path $repositoryRoot 'src/com/lushprojects/circuitjs1/client/CirSim.java'
+        $cirSimText = [IO.File]::ReadAllText($cirSimSource)
+        $loggerPattern = 'public static native void console\(String text\)\s*/\*\-\{\s*console\.log\(text\);\s*\}\-\*/;'
+        $loggerRegex = New-Object Text.RegularExpressions.Regex($loggerPattern)
+        $loggerMatches = $loggerRegex.Matches($cirSimText)
+        if ($loggerMatches.Count -ne 1) {
+            throw ('Expected exactly one CirSim JSNI console logger, found ' +
+                $loggerMatches.Count)
+        }
+        $nativeLoggerShim = Join-Path $taskRoot 'CirSim.java'
+        $loggerShimText = $loggerRegex.Replace($cirSimText,
+            'public static void console(String text) { System.err.println(text); }', 1)
+        if ($loggerShimText -eq $cirSimText) {
+            throw 'CirSim JSNI logger replacement did not change the scratch source.'
+        }
+        [IO.File]::WriteAllText($nativeLoggerShim, $loggerShimText,
+            (New-Object Text.UTF8Encoding($false)))
+        Write-Host 'NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.'
+    }
     $clientSource = Join-Path $repositoryRoot 'src/com/lushprojects/circuitjs1/client'
     $sourcePaths = @(Get-ChildItem -LiteralPath $clientSource -Filter '*.java' |
-        Where-Object { $_.Name -ne 'PhysicalSpecificationDeveloperVerifier.java' } |
+        Where-Object { $_.Name -ne 'PhysicalSpecificationDeveloperVerifier.java' -and
+            (-not $needsQ30NativeLoggerBridge -or $_.Name -ne 'CirSim.java') } |
         Sort-Object Name | ForEach-Object { $_.FullName })
     $sourcePaths += $stub
+    if ($needsQ30NativeLoggerBridge) { $sourcePaths += $nativeLoggerShim }
     $testDefinitions = @(
         @{ Name = 'ProceduralFamilyContractTest'; Marker = 'procedural family contracts ' },
         @{ Name = 'QuickPlayPhysicalMatrixContractTest'; Marker = 'Quick Play physical matrix contracts ' },
@@ -88,6 +120,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'Q15ControlBoardContractTest'; Marker = 'Q15 control board contracts ' },
         @{ Name = 'Q30PlanContractTest'; Marker = 'Q30 plan contracts ' },
         @{ Name = 'Q30RelayServiceContractTest'; Marker = 'Q30 relay service contracts ' },
+        @{ Name = 'Q30ServiceFlowContractTest'; Marker = 'Q30 service flow contracts ' },
         @{ Name = 'Rb30PhysicalMetadataContractTest'; Marker = 'Q30 physical metadata contracts ' },
         @{ Name = 'MediumBoardPhysicalPolicyContractTest'; Marker = 'medium physical policy contracts ' },
         @{ Name = 'MediumBoardFloorplanningContractTest'; Marker = 'medium board floorplanning contracts ' },
@@ -247,6 +280,108 @@ final class PhysicalSpecificationDeveloperVerifier {
         }
         $testArguments = @('-ea', '-cp', $classPath,
             ('com.lushprojects.circuitjs1.client.' + $testClass))
+        if ($testClass -eq 'Q30ServiceFlowContractTest') {
+            # Keep every seed/fault service path inside its own original child
+            # budget. Start with the relay case for each seed so its physical
+            # energy guard is diagnosed before the remaining four hypotheses.
+            $q30Seeds = @('0', '37')
+            $q30Faults = @('RELAY_B_COIL_OPEN', 'DREV_OPEN', 'REN_OPEN',
+                'SENSOR_A_OPEN', 'DRIVE_A_OPEN')
+            $q30CaseReceipts = New-Object Collections.Generic.List[string]
+            $q30CaseFailures = New-Object Collections.Generic.List[string]
+            $q30Seen = @{}
+            foreach ($q30Seed in $q30Seeds) {
+                foreach ($q30Fault in $q30Faults) {
+                    $caseArguments = @($testArguments) + @('--seed', $q30Seed,
+                        '--fault', $q30Fault)
+                    $tested = Invoke-VerifierBoundedProcess $java $caseArguments 60000
+                    Write-Host $tested.Stdout
+                    if ($tested.Stderr) { Write-Host $tested.Stderr }
+                    $passRows = @($tested.Stdout -split '\r?\n' | Where-Object {
+                        $_ -cmatch '^PASS: Q30 service flow seed='
+                    })
+                    $finalMarkers = @($tested.Stdout -split '\r?\n' | Where-Object {
+                        $_ -cmatch '^PASS: Q30 service flow contracts '
+                    })
+                    $rowPattern = '(?m)^PASS: Q30 service flow seed=' +
+                        [regex]::Escape($q30Seed) + ' fault=' +
+                        [regex]::Escape($q30Fault) +
+                        ' target=[A-Z0-9_]+ fingerprintHash=[0-9a-fA-F]{1,8}$'
+                    $finalPattern = '(?m)^PASS: Q30 service flow contracts \d+ assertions seed=' +
+                        [regex]::Escape($q30Seed) + ' fault=' +
+                        [regex]::Escape($q30Fault) + '\r?$'
+                    $caseKey = $q30Seed + '|' + $q30Fault
+                    if ($q30Seen.ContainsKey($caseKey)) {
+                        throw ('Duplicate Q30 service case receipt: ' + $caseKey)
+                    }
+                    $rowQualified = $passRows.Count -eq 1 -and
+                        [regex]::IsMatch($passRows[0], $rowPattern)
+                    $finalQualified = $finalMarkers.Count -eq 1 -and
+                        [regex]::IsMatch($finalMarkers[0], $finalPattern)
+                    $caseIssues = New-Object Collections.Generic.List[string]
+                    if (-not $tested.TerminationProven) { $caseIssues.Add('termination unproven') }
+                    if ($tested.ExitCode -ne 0) { $caseIssues.Add('exit=' + $tested.ExitCode) }
+                    if (-not $rowQualified) { $caseIssues.Add('exact PASS row missing or ambiguous') }
+                    if (-not $finalQualified) { $caseIssues.Add('exact final marker missing or ambiguous') }
+                    $caseOutcome = if ($caseIssues.Count -eq 0) { 'PASS' } else { 'FAIL' }
+                    $caseReason = if ($caseIssues.Count -eq 0) { 'qualified' } else {
+                        [String]::Join(', ', $caseIssues)
+                    }
+                    $q30Seen[$caseKey] = $caseOutcome
+                    if ($caseOutcome -eq 'FAIL') {
+                        $q30CaseFailures.Add($caseKey)
+                        Write-Host ('Q30_CASE_FAIL|' + $caseKey + '|' + $caseReason)
+                    }
+                    $caseReceipt = 'Q30_CASE|' + $caseKey + '|outcome=' +
+                        $caseOutcome + '|reason=' + $caseReason + [Environment]::NewLine +
+                        'STDOUT_BEGIN' + [Environment]::NewLine + $tested.Stdout +
+                        [Environment]::NewLine + 'STDOUT_END' + [Environment]::NewLine +
+                        'STDERR_BEGIN' + [Environment]::NewLine + $tested.Stderr +
+                        [Environment]::NewLine + 'STDERR_END'
+                    $q30CaseReceipts.Add($caseReceipt)
+                    $receipts.Add($caseReceipt)
+                }
+            }
+            foreach ($q30Seed in $q30Seeds) {
+                foreach ($q30Fault in $q30Faults) {
+                    $caseKey = $q30Seed + '|' + $q30Fault
+                    if (-not $q30Seen.ContainsKey($caseKey)) {
+                        throw ('Missing Q30 service case from complete census: ' + $caseKey)
+                    }
+                }
+            }
+            if ($q30Seen.Count -ne 10) {
+                throw ('Q30 service census expected exactly ten attempted cases, found ' + $q30Seen.Count)
+            }
+            $q30PassedCount = 0
+            foreach ($outcome in $q30Seen.Values) {
+                if ($outcome -eq 'PASS') { $q30PassedCount++ }
+            }
+            $q30CensusPrefix = if ($q30CaseFailures.Count -eq 0) { 'PASS:' } else { 'FAIL:' }
+            $q30FailedText = if ($q30CaseFailures.Count -eq 0) { 'none' } else {
+                [String]::Join(',', $q30CaseFailures)
+            }
+            $q30Census = $q30CensusPrefix + ' Q30 service flow census attempted=10 passed=' +
+                $q30PassedCount + ' failed=' + $q30CaseFailures.Count +
+                ' failedCases=' + $q30FailedText + ' seeds=0,37 faults=5 ' +
+                'order=RELAY_B_COIL_OPEN,DREV_OPEN,REN_OPEN,SENSOR_A_OPEN,DRIVE_A_OPEN ' +
+                'childBudgetMs=60000'
+            Write-Host $q30Census
+            $q30CaseReceipts.Add($q30Census)
+            $receipts.Add($q30Census)
+            $outputs[$testClass] = [String]::Join([Environment]::NewLine,
+                $q30CaseReceipts)
+            if ($ReceiptOutputPath -and $q30CaseFailures.Count -gt 0) {
+                [IO.File]::WriteAllText([IO.Path]::GetFullPath($ReceiptOutputPath),
+                    [String]::Join([Environment]::NewLine, $receipts),
+                    (New-Object Text.UTF8Encoding($false)))
+            }
+            if ($q30CaseFailures.Count -gt 0) {
+                throw ('Q30 service census failed cases: ' +
+                    [String]::Join(',', $q30CaseFailures))
+            }
+            continue
+        }
         if ($testClass -eq 'A03IdentityContractTest') {
             $testArguments += (Join-Path $taskRoot 'parity')
         }

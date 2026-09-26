@@ -1,0 +1,1545 @@
+- iframe
+- iframe
+- table:
+  - rowgroup:
+    - row:
+      - cell
+    - row "MULTIMETER DC V AC V SCOPE OHM CONT DIODE 802.47 mV":
+      - cell "MULTIMETER DC V AC V SCOPE OHM CONT DIODE 802.47 mV":
+        - table:
+          - rowgroup:
+            - row "MULTIMETER":
+              - cell "MULTIMETER":
+                - generic: MULTIMETER
+            - row "DC V AC V SCOPE OHM CONT DIODE":
+              - cell "DC V AC V SCOPE OHM CONT DIODE":
+                - table:
+                  - rowgroup:
+                    - row "DC V AC V":
+                      - cell "DC V":
+                        - button "DC V"
+                      - cell "AC V":
+                        - button "AC V"
+                    - row "SCOPE OHM":
+                      - cell "SCOPE":
+                        - button "SCOPE"
+                      - cell "OHM":
+                        - button "OHM"
+                    - row "CONT DIODE":
+                      - cell "CONT":
+                        - button "CONT"
+                      - cell "DIODE":
+                        - button "DIODE"
+            - row "802.47 mV":
+              - cell "802.47 mV":
+                - generic: 802.47 mV
+            - row:
+              - cell
+            - row:
+              - cell
+            - row:
+              - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row "Open controlled indicator":
+      - cell "Open controlled indicator":
+        - button "Open controlled indicator"
+    - 'row "Board Power: ON"':
+      - 'cell "Board Power: ON"':
+        - 'button "Board Power: ON"'
+    - row "New control board":
+      - cell "New control board":
+        - button "New control board"
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row "Bench power":
+      - cell "Bench power":
+        - table "Bench power":
+          - rowgroup:
+            - row "BENCH POWER":
+              - cell "BENCH POWER":
+                - generic: BENCH POWER
+            - 'row "Supply 1 (+12V): 12 V, 0 A"':
+              - 'cell "Supply 1 (+12V): 12 V, 0 A"':
+                - generic: "Supply 1 (+12V): 12 V, 0 A"
+            - row "Disconnect Supply 1 (+12V)":
+              - cell "Disconnect Supply 1 (+12V)":
+                - button "Disconnect Supply 1 (+12V)"
+            - 'row "Limit: 250 mA"':
+              - 'cell "Limit: 250 mA"':
+                - combobox "Supply 1 (+12V) current limit":
+                  - 'option "Limit: 1 mA"'
+                  - 'option "Limit: 10 mA"'
+                  - 'option "Limit: 25 mA"'
+                  - 'option "Limit: 100 mA"'
+                  - 'option "Limit: 250 mA" [selected]'
+                  - 'option "Limit: 500 mA"'
+            - 'row "Supply 2 (+5V): 5 V, 5 nA"':
+              - 'cell "Supply 2 (+5V): 5 V, 5 nA"':
+                - generic: "Supply 2 (+5V): 5 V, 5 nA"
+            - row "Disconnect Supply 2 (+5V)":
+              - cell "Disconnect Supply 2 (+5V)":
+                - button "Disconnect Supply 2 (+5V)"
+            - 'row "Limit: 250 mA"':
+              - 'cell "Limit: 250 mA"':
+                - combobox "Supply 2 (+5V) current limit":
+                  - 'option "Limit: 1 mA"'
+                  - 'option "Limit: 10 mA"'
+                  - 'option "Limit: 25 mA"'
+                  - 'option "Limit: 100 mA"'
+                  - 'option "Limit: 250 mA" [selected]'
+                  - 'option "Limit: 500 mA"'
+            - 'row "Supply 3 (+5V): 5 V, 5 nA"':
+              - 'cell "Supply 3 (+5V): 5 V, 5 nA"':
+                - generic: "Supply 3 (+5V): 5 V, 5 nA"
+            - row "Disconnect Supply 3 (+5V)":
+              - cell "Disconnect Supply 3 (+5V)":
+                - button "Disconnect Supply 3 (+5V)"
+            - 'row "Limit: 250 mA"':
+              - 'cell "Limit: 250 mA"':
+                - combobox "Supply 3 (+5V) current limit":
+                  - 'option "Limit: 1 mA"'
+                  - 'option "Limit: 10 mA"'
+                  - 'option "Limit: 25 mA"'
+                  - 'option "Limit: 100 mA"'
+                  - 'option "Limit: 250 mA" [selected]'
+                  - 'option "Limit: 500 mA"'
+            - 'row "Supply 4 (+12V): 12 V, 24 nA"':
+              - 'cell "Supply 4 (+12V): 12 V, 24 nA"':
+                - generic: "Supply 4 (+12V): 12 V, 24 nA"
+            - row "Disconnect Supply 4 (+12V)":
+              - cell "Disconnect Supply 4 (+12V)":
+                - button "Disconnect Supply 4 (+12V)"
+            - 'row "Limit: 250 mA"':
+              - 'cell "Limit: 250 mA"':
+                - combobox "Supply 4 (+12V) current limit":
+                  - 'option "Limit: 1 mA"'
+                  - 'option "Limit: 10 mA"'
+                  - 'option "Limit: 25 mA"'
+                  - 'option "Limit: 100 mA"'
+                  - 'option "Limit: 250 mA" [selected]'
+                  - 'option "Limit: 500 mA"'
+            - row "Each output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.":
+              - cell "Each output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.":
+                - generic: Each output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.
+    - row "Board view":
+      - cell "Board view":
+        - table "Board view":
+          - rowgroup:
+            - row "BOARD VIEW":
+              - cell "BOARD VIEW":
+                - generic: BOARD VIEW
+            - row "Fit bench":
+              - cell "Fit bench":
+                - table:
+                  - rowgroup:
+                    - row "Fit bench":
+                      - cell "Fit bench":
+                        - button "Fit bench"
+            - row "Zoom + Zoom - View bottom copper":
+              - cell "Zoom + Zoom - View bottom copper":
+                - table:
+                  - rowgroup:
+                    - row "Zoom +":
+                      - cell "Zoom +":
+                        - button "Zoom +"
+                    - row "Zoom -":
+                      - cell "Zoom -":
+                        - button "Zoom -"
+                    - row "View bottom copper":
+                      - cell "View bottom copper":
+                        - button "View bottom copper"
+            - 'row "Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe. Hold Tab on the board: bottom view; release: top."':
+              - 'cell "Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe. Hold Tab on the board: bottom view; release: top."':
+                - generic: "Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe. Hold Tab on the board: bottom view; release: top."
+            - row "Top side / top copper":
+              - cell "Top side / top copper":
+                - generic: Top side / top copper
+            - row "Select component":
+              - cell "Select component":
+                - combobox "Select component":
+                  - option "Select component" [selected]
+                  - option "C12"
+                  - option "C5"
+                  - option "CIN"
+                  - option "DA"
+                  - option "DB"
+                  - option "DREV"
+                  - option "F1"
+                  - option "J1"
+                  - option "JLOAD"
+                  - option "JOA"
+                  - option "JOB"
+                  - option "JSA"
+                  - option "JSB"
+                  - option "KA"
+                  - option "KB"
+                  - option "LED1"
+                  - option "QA"
+                  - option "QB"
+                  - option "RDA"
+                  - option "RDB"
+                  - option "REN"
+                  - option "RLED"
+                  - option "RPDA"
+                  - option "RPDB"
+                  - option "RREF_HA"
+                  - option "RREF_HB"
+                  - option "RREF_LA"
+                  - option "RREF_LB"
+                  - option "RSA"
+                  - option "RSB"
+                  - option "U1"
+                  - option "U2A"
+                  - option "U2B"
+            - row "DREV terminal K":
+              - cell "DREV terminal K":
+                - combobox "Probe terminal":
+                  - option "Probe terminal"
+                  - option "C12 terminal 1"
+                  - option "C12 terminal 2"
+                  - option "C5 terminal 1"
+                  - option "C5 terminal 2"
+                  - option "CIN terminal +"
+                  - option "CIN terminal -"
+                  - option "DA terminal A"
+                  - option "DA terminal K"
+                  - option "DB terminal A"
+                  - option "DB terminal K"
+                  - option "DREV terminal A"
+                  - option "DREV terminal K" [selected]
+                  - option "F1 terminal 1"
+                  - option "F1 terminal 2"
+                  - option "J1 terminal 1"
+                  - option "J1 terminal 2"
+                  - option "JLOAD terminal 1"
+                  - option "JLOAD terminal 2"
+                  - option "JOA terminal 1"
+                  - option "JOA terminal 2"
+                  - option "JOB terminal 1"
+                  - option "JOB terminal 2"
+                  - option "JSA terminal 1"
+                  - option "JSA terminal 2"
+                  - option "JSB terminal 1"
+                  - option "JSB terminal 2"
+                  - option "KA terminal A1"
+                  - option "KA terminal A2"
+                  - option "KA terminal COM"
+                  - option "KA terminal NC"
+                  - option "KA terminal NO"
+                  - option "KB terminal A1"
+                  - option "KB terminal A2"
+                  - option "KB terminal COM"
+                  - option "KB terminal NC"
+                  - option "KB terminal NO"
+                  - option "LED1 terminal A"
+                  - option "LED1 terminal K"
+                  - option "QA terminal B"
+                  - option "QA terminal C"
+                  - option "QA terminal E"
+                  - option "QB terminal B"
+                  - option "QB terminal C"
+                  - option "QB terminal E"
+                  - option "RDA terminal 1"
+                  - option "RDA terminal 2"
+                  - option "RDB terminal 1"
+                  - option "RDB terminal 2"
+                  - option "REN terminal 1"
+                  - option "REN terminal 2"
+                  - option "RLED terminal 1"
+                  - option "RLED terminal 2"
+                  - option "RPDA terminal 1"
+                  - option "RPDA terminal 2"
+                  - option "RPDB terminal 1"
+                  - option "RPDB terminal 2"
+                  - option "RREF_HA terminal 1"
+                  - option "RREF_HA terminal 2"
+                  - option "RREF_HB terminal 1"
+                  - option "RREF_HB terminal 2"
+                  - option "RREF_LA terminal 1"
+                  - option "RREF_LA terminal 2"
+                  - option "RREF_LB terminal 1"
+                  - option "RREF_LB terminal 2"
+                  - option "RSA terminal 1"
+                  - option "RSA terminal 2"
+                  - option "RSB terminal 1"
+                  - option "RSB terminal 2"
+                  - option "U1 terminal INPUT"
+                  - option "U1 terminal OUTPUT"
+                  - option "U1 terminal RETURN"
+                  - option "U1 terminal ENABLE"
+                  - option "U2A terminal SENSOR"
+                  - option "U2A terminal REFERENCE"
+                  - option "U2A terminal RAIL"
+                  - option "U2A terminal OUTPUT"
+                  - option "U2A terminal RETURN"
+                  - option "U2B terminal SENSOR"
+                  - option "U2B terminal REFERENCE"
+                  - option "U2B terminal RAIL"
+                  - option "U2B terminal OUTPUT"
+                  - option "U2B terminal RETURN"
+            - row "Place red probe Place black probe":
+              - cell "Place red probe Place black probe":
+                - table:
+                  - rowgroup:
+                    - row "Place red probe":
+                      - cell "Place red probe":
+                        - button "Place red probe" [active]
+                    - row "Place black probe":
+                      - cell "Place black probe":
+                        - button "Place black probe"
+            - row:
+              - cell:
+                - status
+    - row "Service ticket":
+      - cell "Service ticket":
+        - table "Service ticket":
+          - rowgroup:
+            - row "Service Ticket":
+              - cell "Service Ticket":
+                - generic: Service Ticket
+            - row "One or both loads fail to follow their sensor inputs. Check each channel separately and together.":
+              - cell "One or both loads fail to follow their sensor inputs. Check each channel separately and together.":
+                - generic: One or both loads fail to follow their sensor inputs. Check each channel separately and together.
+            - 'row "Customer retest: Check that each external load follows its own sensor, including both loads together."':
+              - 'cell "Customer retest: Check that each external load follows its own sensor, including both loads together."':
+                - generic: "Customer retest: Check that each external load follows its own sensor, including both loads together."
+            - row "Set both sensors LOW":
+              - cell "Set both sensors LOW":
+                - button "Set both sensors LOW"
+            - row "Set sensor A HIGH, B LOW":
+              - cell "Set sensor A HIGH, B LOW":
+                - button "Set sensor A HIGH, B LOW"
+            - row "Set sensor A LOW, B HIGH":
+              - cell "Set sensor A LOW, B HIGH":
+                - button "Set sensor A LOW, B HIGH"
+            - row "Set both sensors HIGH":
+              - cell "Set both sensors HIGH":
+                - button "Set both sensors HIGH"
+            - row "Retest Customer":
+              - cell "Retest Customer":
+                - button "Retest Customer"
+    - row:
+      - cell
+    - row "Parts Tray":
+      - cell "Parts Tray":
+        - table "Parts Tray":
+          - rowgroup:
+            - row "Replacement Catalog":
+              - cell "Replacement Catalog":
+                - generic: Replacement Catalog
+            - row "Generic silicon diode":
+              - cell "Generic silicon diode":
+                - combobox [disabled]:
+                  - option "Generic silicon diode" [selected]
+                  - option "Generic silicon diode (reversed)"
+            - row "Install new diode":
+              - cell "Install new diode":
+                - button "Install new diode" [disabled]
+            - row "Turn board power off.":
+              - cell "Turn board power off.":
+                - generic: Turn board power off.
+            - row "REN service resistor replacement resistors":
+              - cell "REN service resistor replacement resistors":
+                - generic: REN service resistor replacement resistors
+            - row "10 Ohm +/-5%":
+              - cell "10 Ohm +/-5%":
+                - combobox [disabled]:
+                  - option "10 Ohm +/-5%" [selected]
+                  - option "12 Ohm +/-5%"
+                  - option "15 Ohm +/-5%"
+                  - option "18 Ohm +/-5%"
+                  - option "22 Ohm +/-5%"
+                  - option "27 Ohm +/-5%"
+                  - option "33 Ohm +/-5%"
+                  - option "39 Ohm +/-5%"
+                  - option "47 Ohm +/-5%"
+                  - option "56 Ohm +/-5%"
+                  - option "68 Ohm +/-5%"
+                  - option "82 Ohm +/-5%"
+                  - option "100 Ohm +/-5%"
+                  - option "120 Ohm +/-5%"
+                  - option "150 Ohm +/-5%"
+                  - option "180 Ohm +/-5%"
+                  - option "220 Ohm +/-5%"
+                  - option "270 Ohm +/-5%"
+                  - option "330 Ohm +/-5%"
+                  - option "390 Ohm +/-5%"
+                  - option "470 Ohm +/-5%"
+                  - option "560 Ohm +/-5%"
+                  - option "680 Ohm +/-5%"
+                  - option "820 Ohm +/-5%"
+                  - option "1000 Ohm +/-5%"
+                  - option "1200 Ohm +/-5%"
+                  - option "1500 Ohm +/-5%"
+                  - option "1800 Ohm +/-5%"
+                  - option "2200 Ohm +/-5%"
+                  - option "2700 Ohm +/-5%"
+                  - option "3300 Ohm +/-5%"
+                  - option "3900 Ohm +/-5%"
+                  - option "4700 Ohm +/-5%"
+                  - option "5600 Ohm +/-5%"
+                  - option "6800 Ohm +/-5%"
+                  - option "8200 Ohm +/-5%"
+                  - option "10000 Ohm +/-5%"
+                  - option "12000 Ohm +/-5%"
+                  - option "15000 Ohm +/-5%"
+                  - option "18000 Ohm +/-5%"
+                  - option "22000 Ohm +/-5%"
+                  - option "27000 Ohm +/-5%"
+                  - option "33000 Ohm +/-5%"
+                  - option "39000 Ohm +/-5%"
+                  - option "47000 Ohm +/-5%"
+                  - option "56000 Ohm +/-5%"
+                  - option "68000 Ohm +/-5%"
+                  - option "82000 Ohm +/-5%"
+                  - option "100000 Ohm +/-5%"
+                  - option "120000 Ohm +/-5%"
+                  - option "150000 Ohm +/-5%"
+                  - option "180000 Ohm +/-5%"
+                  - option "220000 Ohm +/-5%"
+                  - option "270000 Ohm +/-5%"
+                  - option "330000 Ohm +/-5%"
+                  - option "390000 Ohm +/-5%"
+                  - option "470000 Ohm +/-5%"
+                  - option "560000 Ohm +/-5%"
+                  - option "680000 Ohm +/-5%"
+                  - option "820000 Ohm +/-5%"
+                  - option "1000000 Ohm +/-5%"
+                  - option "1200000 Ohm +/-5%"
+                  - option "1500000 Ohm +/-5%"
+                  - option "1800000 Ohm +/-5%"
+                  - option "2200000 Ohm +/-5%"
+                  - option "2700000 Ohm +/-5%"
+                  - option "3300000 Ohm +/-5%"
+                  - option "3900000 Ohm +/-5%"
+                  - option "4700000 Ohm +/-5%"
+                  - option "5600000 Ohm +/-5%"
+                  - option "6800000 Ohm +/-5%"
+                  - option "8200000 Ohm +/-5%"
+                  - option "10000000 Ohm +/-5%"
+            - row "Install new resistor in REN service resistor":
+              - cell "Install new resistor in REN service resistor":
+                - button "Install new resistor in REN service resistor" [disabled]
+            - row "Sensor controller replacement catalog":
+              - cell "Sensor controller replacement catalog":
+                - generic: Sensor controller replacement catalog
+            - row "Compatible five-terminal sensor threshold controller":
+              - cell "Compatible five-terminal sensor threshold controller":
+                - combobox [disabled]:
+                  - option "Compatible five-terminal sensor threshold controller" [selected]
+            - row "Install new sensor controller":
+              - cell "Install new sensor controller":
+                - button "Install new sensor controller" [disabled]
+            - row "RSA service resistor replacement resistors":
+              - cell "RSA service resistor replacement resistors":
+                - generic: RSA service resistor replacement resistors
+            - row "10 Ohm +/-5%":
+              - cell "10 Ohm +/-5%":
+                - combobox [disabled]:
+                  - option "10 Ohm +/-5%" [selected]
+                  - option "12 Ohm +/-5%"
+                  - option "15 Ohm +/-5%"
+                  - option "18 Ohm +/-5%"
+                  - option "22 Ohm +/-5%"
+                  - option "27 Ohm +/-5%"
+                  - option "33 Ohm +/-5%"
+                  - option "39 Ohm +/-5%"
+                  - option "47 Ohm +/-5%"
+                  - option "56 Ohm +/-5%"
+                  - option "68 Ohm +/-5%"
+                  - option "82 Ohm +/-5%"
+                  - option "100 Ohm +/-5%"
+                  - option "120 Ohm +/-5%"
+                  - option "150 Ohm +/-5%"
+                  - option "180 Ohm +/-5%"
+                  - option "220 Ohm +/-5%"
+                  - option "270 Ohm +/-5%"
+                  - option "330 Ohm +/-5%"
+                  - option "390 Ohm +/-5%"
+                  - option "470 Ohm +/-5%"
+                  - option "560 Ohm +/-5%"
+                  - option "680 Ohm +/-5%"
+                  - option "820 Ohm +/-5%"
+                  - option "1000 Ohm +/-5%"
+                  - option "1200 Ohm +/-5%"
+                  - option "1500 Ohm +/-5%"
+                  - option "1800 Ohm +/-5%"
+                  - option "2200 Ohm +/-5%"
+                  - option "2700 Ohm +/-5%"
+                  - option "3300 Ohm +/-5%"
+                  - option "3900 Ohm +/-5%"
+                  - option "4700 Ohm +/-5%"
+                  - option "5600 Ohm +/-5%"
+                  - option "6800 Ohm +/-5%"
+                  - option "8200 Ohm +/-5%"
+                  - option "10000 Ohm +/-5%"
+                  - option "12000 Ohm +/-5%"
+                  - option "15000 Ohm +/-5%"
+                  - option "18000 Ohm +/-5%"
+                  - option "22000 Ohm +/-5%"
+                  - option "27000 Ohm +/-5%"
+                  - option "33000 Ohm +/-5%"
+                  - option "39000 Ohm +/-5%"
+                  - option "47000 Ohm +/-5%"
+                  - option "56000 Ohm +/-5%"
+                  - option "68000 Ohm +/-5%"
+                  - option "82000 Ohm +/-5%"
+                  - option "100000 Ohm +/-5%"
+                  - option "120000 Ohm +/-5%"
+                  - option "150000 Ohm +/-5%"
+                  - option "180000 Ohm +/-5%"
+                  - option "220000 Ohm +/-5%"
+                  - option "270000 Ohm +/-5%"
+                  - option "330000 Ohm +/-5%"
+                  - option "390000 Ohm +/-5%"
+                  - option "470000 Ohm +/-5%"
+                  - option "560000 Ohm +/-5%"
+                  - option "680000 Ohm +/-5%"
+                  - option "820000 Ohm +/-5%"
+                  - option "1000000 Ohm +/-5%"
+                  - option "1200000 Ohm +/-5%"
+                  - option "1500000 Ohm +/-5%"
+                  - option "1800000 Ohm +/-5%"
+                  - option "2200000 Ohm +/-5%"
+                  - option "2700000 Ohm +/-5%"
+                  - option "3300000 Ohm +/-5%"
+                  - option "3900000 Ohm +/-5%"
+                  - option "4700000 Ohm +/-5%"
+                  - option "5600000 Ohm +/-5%"
+                  - option "6800000 Ohm +/-5%"
+                  - option "8200000 Ohm +/-5%"
+                  - option "10000000 Ohm +/-5%"
+            - row "Install new resistor in RSA service resistor":
+              - cell "Install new resistor in RSA service resistor":
+                - button "Install new resistor in RSA service resistor" [disabled]
+            - row "Sensor controller replacement catalog":
+              - cell "Sensor controller replacement catalog":
+                - generic: Sensor controller replacement catalog
+            - row "Compatible five-terminal sensor threshold controller":
+              - cell "Compatible five-terminal sensor threshold controller":
+                - combobox [disabled]:
+                  - option "Compatible five-terminal sensor threshold controller" [selected]
+            - row "Install new sensor controller":
+              - cell "Install new sensor controller":
+                - button "Install new sensor controller" [disabled]
+            - row "RDA service resistor replacement resistors":
+              - cell "RDA service resistor replacement resistors":
+                - generic: RDA service resistor replacement resistors
+            - row "10 Ohm +/-5%":
+              - cell "10 Ohm +/-5%":
+                - combobox [disabled]:
+                  - option "10 Ohm +/-5%" [selected]
+                  - option "12 Ohm +/-5%"
+                  - option "15 Ohm +/-5%"
+                  - option "18 Ohm +/-5%"
+                  - option "22 Ohm +/-5%"
+                  - option "27 Ohm +/-5%"
+                  - option "33 Ohm +/-5%"
+                  - option "39 Ohm +/-5%"
+                  - option "47 Ohm +/-5%"
+                  - option "56 Ohm +/-5%"
+                  - option "68 Ohm +/-5%"
+                  - option "82 Ohm +/-5%"
+                  - option "100 Ohm +/-5%"
+                  - option "120 Ohm +/-5%"
+                  - option "150 Ohm +/-5%"
+                  - option "180 Ohm +/-5%"
+                  - option "220 Ohm +/-5%"
+                  - option "270 Ohm +/-5%"
+                  - option "330 Ohm +/-5%"
+                  - option "390 Ohm +/-5%"
+                  - option "470 Ohm +/-5%"
+                  - option "560 Ohm +/-5%"
+                  - option "680 Ohm +/-5%"
+                  - option "820 Ohm +/-5%"
+                  - option "1000 Ohm +/-5%"
+                  - option "1200 Ohm +/-5%"
+                  - option "1500 Ohm +/-5%"
+                  - option "1800 Ohm +/-5%"
+                  - option "2200 Ohm +/-5%"
+                  - option "2700 Ohm +/-5%"
+                  - option "3300 Ohm +/-5%"
+                  - option "3900 Ohm +/-5%"
+                  - option "4700 Ohm +/-5%"
+                  - option "5600 Ohm +/-5%"
+                  - option "6800 Ohm +/-5%"
+                  - option "8200 Ohm +/-5%"
+                  - option "10000 Ohm +/-5%"
+                  - option "12000 Ohm +/-5%"
+                  - option "15000 Ohm +/-5%"
+                  - option "18000 Ohm +/-5%"
+                  - option "22000 Ohm +/-5%"
+                  - option "27000 Ohm +/-5%"
+                  - option "33000 Ohm +/-5%"
+                  - option "39000 Ohm +/-5%"
+                  - option "47000 Ohm +/-5%"
+                  - option "56000 Ohm +/-5%"
+                  - option "68000 Ohm +/-5%"
+                  - option "82000 Ohm +/-5%"
+                  - option "100000 Ohm +/-5%"
+                  - option "120000 Ohm +/-5%"
+                  - option "150000 Ohm +/-5%"
+                  - option "180000 Ohm +/-5%"
+                  - option "220000 Ohm +/-5%"
+                  - option "270000 Ohm +/-5%"
+                  - option "330000 Ohm +/-5%"
+                  - option "390000 Ohm +/-5%"
+                  - option "470000 Ohm +/-5%"
+                  - option "560000 Ohm +/-5%"
+                  - option "680000 Ohm +/-5%"
+                  - option "820000 Ohm +/-5%"
+                  - option "1000000 Ohm +/-5%"
+                  - option "1200000 Ohm +/-5%"
+                  - option "1500000 Ohm +/-5%"
+                  - option "1800000 Ohm +/-5%"
+                  - option "2200000 Ohm +/-5%"
+                  - option "2700000 Ohm +/-5%"
+                  - option "3300000 Ohm +/-5%"
+                  - option "3900000 Ohm +/-5%"
+                  - option "4700000 Ohm +/-5%"
+                  - option "5600000 Ohm +/-5%"
+                  - option "6800000 Ohm +/-5%"
+                  - option "8200000 Ohm +/-5%"
+                  - option "10000000 Ohm +/-5%"
+            - row "Install new resistor in RDA service resistor":
+              - cell "Install new resistor in RDA service resistor":
+                - button "Install new resistor in RDA service resistor" [disabled]
+            - row "KA relay replacement catalog":
+              - cell "KA relay replacement catalog":
+                - generic: KA relay replacement catalog
+            - row "5 V coil / SPDT / 24 V DC, 0.5 A contacts":
+              - cell "5 V coil / SPDT / 24 V DC, 0.5 A contacts":
+                - combobox [disabled]:
+                  - option "5 V coil / SPDT / 24 V DC, 0.5 A contacts" [selected]
+                  - option "12 V coil / SPDT / 24 V DC, 0.5 A contacts"
+            - row "Install new relay":
+              - cell "Install new relay":
+                - button "Install new relay" [disabled]
+            - row "KB relay replacement catalog":
+              - cell "KB relay replacement catalog":
+                - generic: KB relay replacement catalog
+            - row "5 V coil / SPDT / 24 V DC, 0.5 A contacts":
+              - cell "5 V coil / SPDT / 24 V DC, 0.5 A contacts":
+                - combobox [disabled]:
+                  - option "5 V coil / SPDT / 24 V DC, 0.5 A contacts" [selected]
+                  - option "12 V coil / SPDT / 24 V DC, 0.5 A contacts"
+            - row "Install new relay":
+              - cell "Install new relay":
+                - button "Install new relay" [disabled]
+            - row "Capacitor Replacement Catalog":
+              - cell "Capacitor Replacement Catalog":
+                - generic: Capacitor Replacement Catalog
+            - row "10 nF 25 V":
+              - cell "10 nF 25 V":
+                - combobox [disabled]:
+                  - option "10 nF 25 V" [selected]
+                  - option "100 nF 25 V"
+                  - option "1 uF 25 V"
+            - row "Install new capacitor":
+              - cell "Install new capacitor":
+                - button "Install new capacitor" [disabled]
+            - row "Capacitor Replacement Catalog":
+              - cell "Capacitor Replacement Catalog":
+                - generic: Capacitor Replacement Catalog
+            - row "10 nF 25 V":
+              - cell "10 nF 25 V":
+                - combobox [disabled]:
+                  - option "10 nF 25 V" [selected]
+                  - option "100 nF 25 V"
+                  - option "1 uF 25 V"
+            - row "Install new capacitor":
+              - cell "Install new capacitor":
+                - button "Install new capacitor" [disabled]
+            - row "Capacitor Replacement Catalog":
+              - cell "Capacitor Replacement Catalog":
+                - generic: Capacitor Replacement Catalog
+            - row "33 uF 16 V":
+              - cell "33 uF 16 V":
+                - combobox [disabled]:
+                  - option "33 uF 16 V" [selected]
+                  - option "1 uF 16 V"
+                  - option "220 uF 16 V"
+            - row "Install new capacitor":
+              - cell "Install new capacitor":
+                - button "Install new capacitor" [disabled]
+            - row "Replacement Catalog":
+              - cell "Replacement Catalog":
+                - generic: Replacement Catalog
+            - row "Generic silicon diode":
+              - cell "Generic silicon diode":
+                - combobox [disabled]:
+                  - option "Generic silicon diode" [selected]
+                  - option "Generic silicon diode (reversed)"
+            - row "Install new diode":
+              - cell "Install new diode":
+                - button "Install new diode" [disabled]
+            - row "Replacement Catalog":
+              - cell "Replacement Catalog":
+                - generic: Replacement Catalog
+            - row "Generic silicon diode":
+              - cell "Generic silicon diode":
+                - combobox [disabled]:
+                  - option "Generic silicon diode" [selected]
+                  - option "Generic silicon diode (reversed)"
+            - row "Install new diode":
+              - cell "Install new diode":
+                - button "Install new diode" [disabled]
+            - row "Replacement Catalog":
+              - cell "Replacement Catalog":
+                - generic: Replacement Catalog
+            - row "250 mA fuse":
+              - cell "250 mA fuse":
+                - combobox [disabled]:
+                  - option "250 mA fuse" [selected]
+            - row "Install new fuse":
+              - cell "Install new fuse":
+                - button "Install new fuse" [disabled]
+            - row "Replacement Catalog":
+              - cell "Replacement Catalog":
+                - generic: Replacement Catalog
+            - row "2-pin terminal connector":
+              - cell "2-pin terminal connector":
+                - combobox [disabled]:
+                  - option "2-pin terminal connector" [selected]
+            - row "Install new connector":
+              - cell "Install new connector":
+                - button "Install new connector" [disabled]
+            - row "Replacement Catalog":
+              - cell "Replacement Catalog":
+                - generic: Replacement Catalog
+            - row "2-pin terminal connector":
+              - cell "2-pin terminal connector":
+                - combobox [disabled]:
+                  - option "2-pin terminal connector" [selected]
+            - row "Install new connector":
+              - cell "Install new connector":
+                - button "Install new connector" [disabled]
+            - row "Replacement Catalog":
+              - cell "Replacement Catalog":
+                - generic: Replacement Catalog
+            - row "2-pin output header":
+              - cell "2-pin output header":
+                - combobox [disabled]:
+                  - option "2-pin output header" [selected]
+            - row "Install new connector":
+              - cell "Install new connector":
+                - button "Install new connector" [disabled]
+            - row "Replacement Catalog":
+              - cell "Replacement Catalog":
+                - generic: Replacement Catalog
+            - row "2-pin output header":
+              - cell "2-pin output header":
+                - combobox [disabled]:
+                  - option "2-pin output header" [selected]
+            - row "Install new connector":
+              - cell "Install new connector":
+                - button "Install new connector" [disabled]
+            - row "Replacement Catalog":
+              - cell "Replacement Catalog":
+                - generic: Replacement Catalog
+            - row "2-pin terminal connector":
+              - cell "2-pin terminal connector":
+                - combobox [disabled]:
+                  - option "2-pin terminal connector" [selected]
+            - row "Install new connector":
+              - cell "Install new connector":
+                - button "Install new connector" [disabled]
+            - row "Replacement Catalog":
+              - cell "Replacement Catalog":
+                - generic: Replacement Catalog
+            - row "2-pin terminal connector":
+              - cell "2-pin terminal connector":
+                - combobox [disabled]:
+                  - option "2-pin terminal connector" [selected]
+            - row "Install new connector":
+              - cell "Install new connector":
+                - button "Install new connector" [disabled]
+            - row "LED Replacement Catalog":
+              - cell "LED Replacement Catalog":
+                - generic: LED Replacement Catalog
+            - row "Generic red LED":
+              - cell "Generic red LED":
+                - combobox [disabled]:
+                  - option "Generic red LED" [selected]
+                  - option "Generic red LED (reversed)"
+            - row "Install new LED":
+              - cell "Install new LED":
+                - button "Install new LED" [disabled]
+            - row "Remove LED1 before installing a replacement.":
+              - cell "Remove LED1 before installing a replacement.":
+                - generic: Remove LED1 before installing a replacement.
+            - row "Resistor Replacement Catalog":
+              - cell "Resistor Replacement Catalog":
+                - generic: Resistor Replacement Catalog
+            - row "10 Ohm +/-5%":
+              - cell "10 Ohm +/-5%":
+                - combobox [disabled]:
+                  - option "10 Ohm +/-5%" [selected]
+                  - option "12 Ohm +/-5%"
+                  - option "15 Ohm +/-5%"
+                  - option "18 Ohm +/-5%"
+                  - option "22 Ohm +/-5%"
+                  - option "27 Ohm +/-5%"
+                  - option "33 Ohm +/-5%"
+                  - option "39 Ohm +/-5%"
+                  - option "47 Ohm +/-5%"
+                  - option "56 Ohm +/-5%"
+                  - option "68 Ohm +/-5%"
+                  - option "82 Ohm +/-5%"
+                  - option "100 Ohm +/-5%"
+                  - option "120 Ohm +/-5%"
+                  - option "150 Ohm +/-5%"
+                  - option "180 Ohm +/-5%"
+                  - option "220 Ohm +/-5%"
+                  - option "270 Ohm +/-5%"
+                  - option "330 Ohm +/-5%"
+                  - option "390 Ohm +/-5%"
+                  - option "470 Ohm +/-5%"
+                  - option "560 Ohm +/-5%"
+                  - option "680 Ohm +/-5%"
+                  - option "820 Ohm +/-5%"
+                  - option "1000 Ohm +/-5%"
+                  - option "1200 Ohm +/-5%"
+                  - option "1500 Ohm +/-5%"
+                  - option "1800 Ohm +/-5%"
+                  - option "2200 Ohm +/-5%"
+                  - option "2700 Ohm +/-5%"
+                  - option "3300 Ohm +/-5%"
+                  - option "3900 Ohm +/-5%"
+                  - option "4700 Ohm +/-5%"
+                  - option "5600 Ohm +/-5%"
+                  - option "6800 Ohm +/-5%"
+                  - option "8200 Ohm +/-5%"
+                  - option "10000 Ohm +/-5%"
+                  - option "12000 Ohm +/-5%"
+                  - option "15000 Ohm +/-5%"
+                  - option "18000 Ohm +/-5%"
+                  - option "22000 Ohm +/-5%"
+                  - option "27000 Ohm +/-5%"
+                  - option "33000 Ohm +/-5%"
+                  - option "39000 Ohm +/-5%"
+                  - option "47000 Ohm +/-5%"
+                  - option "56000 Ohm +/-5%"
+                  - option "68000 Ohm +/-5%"
+                  - option "82000 Ohm +/-5%"
+                  - option "100000 Ohm +/-5%"
+                  - option "120000 Ohm +/-5%"
+                  - option "150000 Ohm +/-5%"
+                  - option "180000 Ohm +/-5%"
+                  - option "220000 Ohm +/-5%"
+                  - option "270000 Ohm +/-5%"
+                  - option "330000 Ohm +/-5%"
+                  - option "390000 Ohm +/-5%"
+                  - option "470000 Ohm +/-5%"
+                  - option "560000 Ohm +/-5%"
+                  - option "680000 Ohm +/-5%"
+                  - option "820000 Ohm +/-5%"
+                  - option "1000000 Ohm +/-5%"
+                  - option "1200000 Ohm +/-5%"
+                  - option "1500000 Ohm +/-5%"
+                  - option "1800000 Ohm +/-5%"
+                  - option "2200000 Ohm +/-5%"
+                  - option "2700000 Ohm +/-5%"
+                  - option "3300000 Ohm +/-5%"
+                  - option "3900000 Ohm +/-5%"
+                  - option "4700000 Ohm +/-5%"
+                  - option "5600000 Ohm +/-5%"
+                  - option "6800000 Ohm +/-5%"
+                  - option "8200000 Ohm +/-5%"
+                  - option "10000000 Ohm +/-5%"
+            - row "Install new resistor":
+              - cell "Install new resistor":
+                - button "Install new resistor" [disabled]
+            - row "Resistor Replacement Catalog":
+              - cell "Resistor Replacement Catalog":
+                - generic: Resistor Replacement Catalog
+            - row "10 Ohm +/-5%":
+              - cell "10 Ohm +/-5%":
+                - combobox [disabled]:
+                  - option "10 Ohm +/-5%" [selected]
+                  - option "12 Ohm +/-5%"
+                  - option "15 Ohm +/-5%"
+                  - option "18 Ohm +/-5%"
+                  - option "22 Ohm +/-5%"
+                  - option "27 Ohm +/-5%"
+                  - option "33 Ohm +/-5%"
+                  - option "39 Ohm +/-5%"
+                  - option "47 Ohm +/-5%"
+                  - option "56 Ohm +/-5%"
+                  - option "68 Ohm +/-5%"
+                  - option "82 Ohm +/-5%"
+                  - option "100 Ohm +/-5%"
+                  - option "120 Ohm +/-5%"
+                  - option "150 Ohm +/-5%"
+                  - option "180 Ohm +/-5%"
+                  - option "220 Ohm +/-5%"
+                  - option "270 Ohm +/-5%"
+                  - option "330 Ohm +/-5%"
+                  - option "390 Ohm +/-5%"
+                  - option "470 Ohm +/-5%"
+                  - option "560 Ohm +/-5%"
+                  - option "680 Ohm +/-5%"
+                  - option "820 Ohm +/-5%"
+                  - option "1000 Ohm +/-5%"
+                  - option "1200 Ohm +/-5%"
+                  - option "1500 Ohm +/-5%"
+                  - option "1800 Ohm +/-5%"
+                  - option "2200 Ohm +/-5%"
+                  - option "2700 Ohm +/-5%"
+                  - option "3300 Ohm +/-5%"
+                  - option "3900 Ohm +/-5%"
+                  - option "4700 Ohm +/-5%"
+                  - option "5600 Ohm +/-5%"
+                  - option "6800 Ohm +/-5%"
+                  - option "8200 Ohm +/-5%"
+                  - option "10000 Ohm +/-5%"
+                  - option "12000 Ohm +/-5%"
+                  - option "15000 Ohm +/-5%"
+                  - option "18000 Ohm +/-5%"
+                  - option "22000 Ohm +/-5%"
+                  - option "27000 Ohm +/-5%"
+                  - option "33000 Ohm +/-5%"
+                  - option "39000 Ohm +/-5%"
+                  - option "47000 Ohm +/-5%"
+                  - option "56000 Ohm +/-5%"
+                  - option "68000 Ohm +/-5%"
+                  - option "82000 Ohm +/-5%"
+                  - option "100000 Ohm +/-5%"
+                  - option "120000 Ohm +/-5%"
+                  - option "150000 Ohm +/-5%"
+                  - option "180000 Ohm +/-5%"
+                  - option "220000 Ohm +/-5%"
+                  - option "270000 Ohm +/-5%"
+                  - option "330000 Ohm +/-5%"
+                  - option "390000 Ohm +/-5%"
+                  - option "470000 Ohm +/-5%"
+                  - option "560000 Ohm +/-5%"
+                  - option "680000 Ohm +/-5%"
+                  - option "820000 Ohm +/-5%"
+                  - option "1000000 Ohm +/-5%"
+                  - option "1200000 Ohm +/-5%"
+                  - option "1500000 Ohm +/-5%"
+                  - option "1800000 Ohm +/-5%"
+                  - option "2200000 Ohm +/-5%"
+                  - option "2700000 Ohm +/-5%"
+                  - option "3300000 Ohm +/-5%"
+                  - option "3900000 Ohm +/-5%"
+                  - option "4700000 Ohm +/-5%"
+                  - option "5600000 Ohm +/-5%"
+                  - option "6800000 Ohm +/-5%"
+                  - option "8200000 Ohm +/-5%"
+                  - option "10000000 Ohm +/-5%"
+            - row "Install new resistor":
+              - cell "Install new resistor":
+                - button "Install new resistor" [disabled]
+            - row "Resistor Replacement Catalog":
+              - cell "Resistor Replacement Catalog":
+                - generic: Resistor Replacement Catalog
+            - row "10 Ohm +/-5%":
+              - cell "10 Ohm +/-5%":
+                - combobox [disabled]:
+                  - option "10 Ohm +/-5%" [selected]
+                  - option "12 Ohm +/-5%"
+                  - option "15 Ohm +/-5%"
+                  - option "18 Ohm +/-5%"
+                  - option "22 Ohm +/-5%"
+                  - option "27 Ohm +/-5%"
+                  - option "33 Ohm +/-5%"
+                  - option "39 Ohm +/-5%"
+                  - option "47 Ohm +/-5%"
+                  - option "56 Ohm +/-5%"
+                  - option "68 Ohm +/-5%"
+                  - option "82 Ohm +/-5%"
+                  - option "100 Ohm +/-5%"
+                  - option "120 Ohm +/-5%"
+                  - option "150 Ohm +/-5%"
+                  - option "180 Ohm +/-5%"
+                  - option "220 Ohm +/-5%"
+                  - option "270 Ohm +/-5%"
+                  - option "330 Ohm +/-5%"
+                  - option "390 Ohm +/-5%"
+                  - option "470 Ohm +/-5%"
+                  - option "560 Ohm +/-5%"
+                  - option "680 Ohm +/-5%"
+                  - option "820 Ohm +/-5%"
+                  - option "1000 Ohm +/-5%"
+                  - option "1200 Ohm +/-5%"
+                  - option "1500 Ohm +/-5%"
+                  - option "1800 Ohm +/-5%"
+                  - option "2200 Ohm +/-5%"
+                  - option "2700 Ohm +/-5%"
+                  - option "3300 Ohm +/-5%"
+                  - option "3900 Ohm +/-5%"
+                  - option "4700 Ohm +/-5%"
+                  - option "5600 Ohm +/-5%"
+                  - option "6800 Ohm +/-5%"
+                  - option "8200 Ohm +/-5%"
+                  - option "10000 Ohm +/-5%"
+                  - option "12000 Ohm +/-5%"
+                  - option "15000 Ohm +/-5%"
+                  - option "18000 Ohm +/-5%"
+                  - option "22000 Ohm +/-5%"
+                  - option "27000 Ohm +/-5%"
+                  - option "33000 Ohm +/-5%"
+                  - option "39000 Ohm +/-5%"
+                  - option "47000 Ohm +/-5%"
+                  - option "56000 Ohm +/-5%"
+                  - option "68000 Ohm +/-5%"
+                  - option "82000 Ohm +/-5%"
+                  - option "100000 Ohm +/-5%"
+                  - option "120000 Ohm +/-5%"
+                  - option "150000 Ohm +/-5%"
+                  - option "180000 Ohm +/-5%"
+                  - option "220000 Ohm +/-5%"
+                  - option "270000 Ohm +/-5%"
+                  - option "330000 Ohm +/-5%"
+                  - option "390000 Ohm +/-5%"
+                  - option "470000 Ohm +/-5%"
+                  - option "560000 Ohm +/-5%"
+                  - option "680000 Ohm +/-5%"
+                  - option "820000 Ohm +/-5%"
+                  - option "1000000 Ohm +/-5%"
+                  - option "1200000 Ohm +/-5%"
+                  - option "1500000 Ohm +/-5%"
+                  - option "1800000 Ohm +/-5%"
+                  - option "2200000 Ohm +/-5%"
+                  - option "2700000 Ohm +/-5%"
+                  - option "3300000 Ohm +/-5%"
+                  - option "3900000 Ohm +/-5%"
+                  - option "4700000 Ohm +/-5%"
+                  - option "5600000 Ohm +/-5%"
+                  - option "6800000 Ohm +/-5%"
+                  - option "8200000 Ohm +/-5%"
+                  - option "10000000 Ohm +/-5%"
+            - row "Install new resistor":
+              - cell "Install new resistor":
+                - button "Install new resistor" [disabled]
+            - row "Resistor Replacement Catalog":
+              - cell "Resistor Replacement Catalog":
+                - generic: Resistor Replacement Catalog
+            - row "10 Ohm +/-5%":
+              - cell "10 Ohm +/-5%":
+                - combobox [disabled]:
+                  - option "10 Ohm +/-5%" [selected]
+                  - option "12 Ohm +/-5%"
+                  - option "15 Ohm +/-5%"
+                  - option "18 Ohm +/-5%"
+                  - option "22 Ohm +/-5%"
+                  - option "27 Ohm +/-5%"
+                  - option "33 Ohm +/-5%"
+                  - option "39 Ohm +/-5%"
+                  - option "47 Ohm +/-5%"
+                  - option "56 Ohm +/-5%"
+                  - option "68 Ohm +/-5%"
+                  - option "82 Ohm +/-5%"
+                  - option "100 Ohm +/-5%"
+                  - option "120 Ohm +/-5%"
+                  - option "150 Ohm +/-5%"
+                  - option "180 Ohm +/-5%"
+                  - option "220 Ohm +/-5%"
+                  - option "270 Ohm +/-5%"
+                  - option "330 Ohm +/-5%"
+                  - option "390 Ohm +/-5%"
+                  - option "470 Ohm +/-5%"
+                  - option "560 Ohm +/-5%"
+                  - option "680 Ohm +/-5%"
+                  - option "820 Ohm +/-5%"
+                  - option "1000 Ohm +/-5%"
+                  - option "1200 Ohm +/-5%"
+                  - option "1500 Ohm +/-5%"
+                  - option "1800 Ohm +/-5%"
+                  - option "2200 Ohm +/-5%"
+                  - option "2700 Ohm +/-5%"
+                  - option "3300 Ohm +/-5%"
+                  - option "3900 Ohm +/-5%"
+                  - option "4700 Ohm +/-5%"
+                  - option "5600 Ohm +/-5%"
+                  - option "6800 Ohm +/-5%"
+                  - option "8200 Ohm +/-5%"
+                  - option "10000 Ohm +/-5%"
+                  - option "12000 Ohm +/-5%"
+                  - option "15000 Ohm +/-5%"
+                  - option "18000 Ohm +/-5%"
+                  - option "22000 Ohm +/-5%"
+                  - option "27000 Ohm +/-5%"
+                  - option "33000 Ohm +/-5%"
+                  - option "39000 Ohm +/-5%"
+                  - option "47000 Ohm +/-5%"
+                  - option "56000 Ohm +/-5%"
+                  - option "68000 Ohm +/-5%"
+                  - option "82000 Ohm +/-5%"
+                  - option "100000 Ohm +/-5%"
+                  - option "120000 Ohm +/-5%"
+                  - option "150000 Ohm +/-5%"
+                  - option "180000 Ohm +/-5%"
+                  - option "220000 Ohm +/-5%"
+                  - option "270000 Ohm +/-5%"
+                  - option "330000 Ohm +/-5%"
+                  - option "390000 Ohm +/-5%"
+                  - option "470000 Ohm +/-5%"
+                  - option "560000 Ohm +/-5%"
+                  - option "680000 Ohm +/-5%"
+                  - option "820000 Ohm +/-5%"
+                  - option "1000000 Ohm +/-5%"
+                  - option "1200000 Ohm +/-5%"
+                  - option "1500000 Ohm +/-5%"
+                  - option "1800000 Ohm +/-5%"
+                  - option "2200000 Ohm +/-5%"
+                  - option "2700000 Ohm +/-5%"
+                  - option "3300000 Ohm +/-5%"
+                  - option "3900000 Ohm +/-5%"
+                  - option "4700000 Ohm +/-5%"
+                  - option "5600000 Ohm +/-5%"
+                  - option "6800000 Ohm +/-5%"
+                  - option "8200000 Ohm +/-5%"
+                  - option "10000000 Ohm +/-5%"
+            - row "Install new resistor":
+              - cell "Install new resistor":
+                - button "Install new resistor" [disabled]
+            - row "Resistor Replacement Catalog":
+              - cell "Resistor Replacement Catalog":
+                - generic: Resistor Replacement Catalog
+            - row "10 Ohm +/-5%":
+              - cell "10 Ohm +/-5%":
+                - combobox [disabled]:
+                  - option "10 Ohm +/-5%" [selected]
+                  - option "12 Ohm +/-5%"
+                  - option "15 Ohm +/-5%"
+                  - option "18 Ohm +/-5%"
+                  - option "22 Ohm +/-5%"
+                  - option "27 Ohm +/-5%"
+                  - option "33 Ohm +/-5%"
+                  - option "39 Ohm +/-5%"
+                  - option "47 Ohm +/-5%"
+                  - option "56 Ohm +/-5%"
+                  - option "68 Ohm +/-5%"
+                  - option "82 Ohm +/-5%"
+                  - option "100 Ohm +/-5%"
+                  - option "120 Ohm +/-5%"
+                  - option "150 Ohm +/-5%"
+                  - option "180 Ohm +/-5%"
+                  - option "220 Ohm +/-5%"
+                  - option "270 Ohm +/-5%"
+                  - option "330 Ohm +/-5%"
+                  - option "390 Ohm +/-5%"
+                  - option "470 Ohm +/-5%"
+                  - option "560 Ohm +/-5%"
+                  - option "680 Ohm +/-5%"
+                  - option "820 Ohm +/-5%"
+                  - option "1000 Ohm +/-5%"
+                  - option "1200 Ohm +/-5%"
+                  - option "1500 Ohm +/-5%"
+                  - option "1800 Ohm +/-5%"
+                  - option "2200 Ohm +/-5%"
+                  - option "2700 Ohm +/-5%"
+                  - option "3300 Ohm +/-5%"
+                  - option "3900 Ohm +/-5%"
+                  - option "4700 Ohm +/-5%"
+                  - option "5600 Ohm +/-5%"
+                  - option "6800 Ohm +/-5%"
+                  - option "8200 Ohm +/-5%"
+                  - option "10000 Ohm +/-5%"
+                  - option "12000 Ohm +/-5%"
+                  - option "15000 Ohm +/-5%"
+                  - option "18000 Ohm +/-5%"
+                  - option "22000 Ohm +/-5%"
+                  - option "27000 Ohm +/-5%"
+                  - option "33000 Ohm +/-5%"
+                  - option "39000 Ohm +/-5%"
+                  - option "47000 Ohm +/-5%"
+                  - option "56000 Ohm +/-5%"
+                  - option "68000 Ohm +/-5%"
+                  - option "82000 Ohm +/-5%"
+                  - option "100000 Ohm +/-5%"
+                  - option "120000 Ohm +/-5%"
+                  - option "150000 Ohm +/-5%"
+                  - option "180000 Ohm +/-5%"
+                  - option "220000 Ohm +/-5%"
+                  - option "270000 Ohm +/-5%"
+                  - option "330000 Ohm +/-5%"
+                  - option "390000 Ohm +/-5%"
+                  - option "470000 Ohm +/-5%"
+                  - option "560000 Ohm +/-5%"
+                  - option "680000 Ohm +/-5%"
+                  - option "820000 Ohm +/-5%"
+                  - option "1000000 Ohm +/-5%"
+                  - option "1200000 Ohm +/-5%"
+                  - option "1500000 Ohm +/-5%"
+                  - option "1800000 Ohm +/-5%"
+                  - option "2200000 Ohm +/-5%"
+                  - option "2700000 Ohm +/-5%"
+                  - option "3300000 Ohm +/-5%"
+                  - option "3900000 Ohm +/-5%"
+                  - option "4700000 Ohm +/-5%"
+                  - option "5600000 Ohm +/-5%"
+                  - option "6800000 Ohm +/-5%"
+                  - option "8200000 Ohm +/-5%"
+                  - option "10000000 Ohm +/-5%"
+            - row "Install new resistor":
+              - cell "Install new resistor":
+                - button "Install new resistor" [disabled]
+            - row "Resistor Replacement Catalog":
+              - cell "Resistor Replacement Catalog":
+                - generic: Resistor Replacement Catalog
+            - row "10 Ohm +/-5%":
+              - cell "10 Ohm +/-5%":
+                - combobox [disabled]:
+                  - option "10 Ohm +/-5%" [selected]
+                  - option "12 Ohm +/-5%"
+                  - option "15 Ohm +/-5%"
+                  - option "18 Ohm +/-5%"
+                  - option "22 Ohm +/-5%"
+                  - option "27 Ohm +/-5%"
+                  - option "33 Ohm +/-5%"
+                  - option "39 Ohm +/-5%"
+                  - option "47 Ohm +/-5%"
+                  - option "56 Ohm +/-5%"
+                  - option "68 Ohm +/-5%"
+                  - option "82 Ohm +/-5%"
+                  - option "100 Ohm +/-5%"
+                  - option "120 Ohm +/-5%"
+                  - option "150 Ohm +/-5%"
+                  - option "180 Ohm +/-5%"
+                  - option "220 Ohm +/-5%"
+                  - option "270 Ohm +/-5%"
+                  - option "330 Ohm +/-5%"
+                  - option "390 Ohm +/-5%"
+                  - option "470 Ohm +/-5%"
+                  - option "560 Ohm +/-5%"
+                  - option "680 Ohm +/-5%"
+                  - option "820 Ohm +/-5%"
+                  - option "1000 Ohm +/-5%"
+                  - option "1200 Ohm +/-5%"
+                  - option "1500 Ohm +/-5%"
+                  - option "1800 Ohm +/-5%"
+                  - option "2200 Ohm +/-5%"
+                  - option "2700 Ohm +/-5%"
+                  - option "3300 Ohm +/-5%"
+                  - option "3900 Ohm +/-5%"
+                  - option "4700 Ohm +/-5%"
+                  - option "5600 Ohm +/-5%"
+                  - option "6800 Ohm +/-5%"
+                  - option "8200 Ohm +/-5%"
+                  - option "10000 Ohm +/-5%"
+                  - option "12000 Ohm +/-5%"
+                  - option "15000 Ohm +/-5%"
+                  - option "18000 Ohm +/-5%"
+                  - option "22000 Ohm +/-5%"
+                  - option "27000 Ohm +/-5%"
+                  - option "33000 Ohm +/-5%"
+                  - option "39000 Ohm +/-5%"
+                  - option "47000 Ohm +/-5%"
+                  - option "56000 Ohm +/-5%"
+                  - option "68000 Ohm +/-5%"
+                  - option "82000 Ohm +/-5%"
+                  - option "100000 Ohm +/-5%"
+                  - option "120000 Ohm +/-5%"
+                  - option "150000 Ohm +/-5%"
+                  - option "180000 Ohm +/-5%"
+                  - option "220000 Ohm +/-5%"
+                  - option "270000 Ohm +/-5%"
+                  - option "330000 Ohm +/-5%"
+                  - option "390000 Ohm +/-5%"
+                  - option "470000 Ohm +/-5%"
+                  - option "560000 Ohm +/-5%"
+                  - option "680000 Ohm +/-5%"
+                  - option "820000 Ohm +/-5%"
+                  - option "1000000 Ohm +/-5%"
+                  - option "1200000 Ohm +/-5%"
+                  - option "1500000 Ohm +/-5%"
+                  - option "1800000 Ohm +/-5%"
+                  - option "2200000 Ohm +/-5%"
+                  - option "2700000 Ohm +/-5%"
+                  - option "3300000 Ohm +/-5%"
+                  - option "3900000 Ohm +/-5%"
+                  - option "4700000 Ohm +/-5%"
+                  - option "5600000 Ohm +/-5%"
+                  - option "6800000 Ohm +/-5%"
+                  - option "8200000 Ohm +/-5%"
+                  - option "10000000 Ohm +/-5%"
+            - row "Install new resistor":
+              - cell "Install new resistor":
+                - button "Install new resistor" [disabled]
+            - row "Resistor Replacement Catalog":
+              - cell "Resistor Replacement Catalog":
+                - generic: Resistor Replacement Catalog
+            - row "10 Ohm +/-5%":
+              - cell "10 Ohm +/-5%":
+                - combobox [disabled]:
+                  - option "10 Ohm +/-5%" [selected]
+                  - option "12 Ohm +/-5%"
+                  - option "15 Ohm +/-5%"
+                  - option "18 Ohm +/-5%"
+                  - option "22 Ohm +/-5%"
+                  - option "27 Ohm +/-5%"
+                  - option "33 Ohm +/-5%"
+                  - option "39 Ohm +/-5%"
+                  - option "47 Ohm +/-5%"
+                  - option "56 Ohm +/-5%"
+                  - option "68 Ohm +/-5%"
+                  - option "82 Ohm +/-5%"
+                  - option "100 Ohm +/-5%"
+                  - option "120 Ohm +/-5%"
+                  - option "150 Ohm +/-5%"
+                  - option "180 Ohm +/-5%"
+                  - option "220 Ohm +/-5%"
+                  - option "270 Ohm +/-5%"
+                  - option "330 Ohm +/-5%"
+                  - option "390 Ohm +/-5%"
+                  - option "470 Ohm +/-5%"
+                  - option "560 Ohm +/-5%"
+                  - option "680 Ohm +/-5%"
+                  - option "820 Ohm +/-5%"
+                  - option "1000 Ohm +/-5%"
+                  - option "1200 Ohm +/-5%"
+                  - option "1500 Ohm +/-5%"
+                  - option "1800 Ohm +/-5%"
+                  - option "2200 Ohm +/-5%"
+                  - option "2700 Ohm +/-5%"
+                  - option "3300 Ohm +/-5%"
+                  - option "3900 Ohm +/-5%"
+                  - option "4700 Ohm +/-5%"
+                  - option "5600 Ohm +/-5%"
+                  - option "6800 Ohm +/-5%"
+                  - option "8200 Ohm +/-5%"
+                  - option "10000 Ohm +/-5%"
+                  - option "12000 Ohm +/-5%"
+                  - option "15000 Ohm +/-5%"
+                  - option "18000 Ohm +/-5%"
+                  - option "22000 Ohm +/-5%"
+                  - option "27000 Ohm +/-5%"
+                  - option "33000 Ohm +/-5%"
+                  - option "39000 Ohm +/-5%"
+                  - option "47000 Ohm +/-5%"
+                  - option "56000 Ohm +/-5%"
+                  - option "68000 Ohm +/-5%"
+                  - option "82000 Ohm +/-5%"
+                  - option "100000 Ohm +/-5%"
+                  - option "120000 Ohm +/-5%"
+                  - option "150000 Ohm +/-5%"
+                  - option "180000 Ohm +/-5%"
+                  - option "220000 Ohm +/-5%"
+                  - option "270000 Ohm +/-5%"
+                  - option "330000 Ohm +/-5%"
+                  - option "390000 Ohm +/-5%"
+                  - option "470000 Ohm +/-5%"
+                  - option "560000 Ohm +/-5%"
+                  - option "680000 Ohm +/-5%"
+                  - option "820000 Ohm +/-5%"
+                  - option "1000000 Ohm +/-5%"
+                  - option "1200000 Ohm +/-5%"
+                  - option "1500000 Ohm +/-5%"
+                  - option "1800000 Ohm +/-5%"
+                  - option "2200000 Ohm +/-5%"
+                  - option "2700000 Ohm +/-5%"
+                  - option "3300000 Ohm +/-5%"
+                  - option "3900000 Ohm +/-5%"
+                  - option "4700000 Ohm +/-5%"
+                  - option "5600000 Ohm +/-5%"
+                  - option "6800000 Ohm +/-5%"
+                  - option "8200000 Ohm +/-5%"
+                  - option "10000000 Ohm +/-5%"
+            - row "Install new resistor":
+              - cell "Install new resistor":
+                - button "Install new resistor" [disabled]
+            - row "Resistor Replacement Catalog":
+              - cell "Resistor Replacement Catalog":
+                - generic: Resistor Replacement Catalog
+            - row "10 Ohm +/-5%":
+              - cell "10 Ohm +/-5%":
+                - combobox [disabled]:
+                  - option "10 Ohm +/-5%" [selected]
+                  - option "12 Ohm +/-5%"
+                  - option "15 Ohm +/-5%"
+                  - option "18 Ohm +/-5%"
+                  - option "22 Ohm +/-5%"
+                  - option "27 Ohm +/-5%"
+                  - option "33 Ohm +/-5%"
+                  - option "39 Ohm +/-5%"
+                  - option "47 Ohm +/-5%"
+                  - option "56 Ohm +/-5%"
+                  - option "68 Ohm +/-5%"
+                  - option "82 Ohm +/-5%"
+                  - option "100 Ohm +/-5%"
+                  - option "120 Ohm +/-5%"
+                  - option "150 Ohm +/-5%"
+                  - option "180 Ohm +/-5%"
+                  - option "220 Ohm +/-5%"
+                  - option "270 Ohm +/-5%"
+                  - option "330 Ohm +/-5%"
+                  - option "390 Ohm +/-5%"
+                  - option "470 Ohm +/-5%"
+                  - option "560 Ohm +/-5%"
+                  - option "680 Ohm +/-5%"
+                  - option "820 Ohm +/-5%"
+                  - option "1000 Ohm +/-5%"
+                  - option "1200 Ohm +/-5%"
+                  - option "1500 Ohm +/-5%"
+                  - option "1800 Ohm +/-5%"
+                  - option "2200 Ohm +/-5%"
+                  - option "2700 Ohm +/-5%"
+                  - option "3300 Ohm +/-5%"
+                  - option "3900 Ohm +/-5%"
+                  - option "4700 Ohm +/-5%"
+                  - option "5600 Ohm +/-5%"
+                  - option "6800 Ohm +/-5%"
+                  - option "8200 Ohm +/-5%"
+                  - option "10000 Ohm +/-5%"
+                  - option "12000 Ohm +/-5%"
+                  - option "15000 Ohm +/-5%"
+                  - option "18000 Ohm +/-5%"
+                  - option "22000 Ohm +/-5%"
+                  - option "27000 Ohm +/-5%"
+                  - option "33000 Ohm +/-5%"
+                  - option "39000 Ohm +/-5%"
+                  - option "47000 Ohm +/-5%"
+                  - option "56000 Ohm +/-5%"
+                  - option "68000 Ohm +/-5%"
+                  - option "82000 Ohm +/-5%"
+                  - option "100000 Ohm +/-5%"
+                  - option "120000 Ohm +/-5%"
+                  - option "150000 Ohm +/-5%"
+                  - option "180000 Ohm +/-5%"
+                  - option "220000 Ohm +/-5%"
+                  - option "270000 Ohm +/-5%"
+                  - option "330000 Ohm +/-5%"
+                  - option "390000 Ohm +/-5%"
+                  - option "470000 Ohm +/-5%"
+                  - option "560000 Ohm +/-5%"
+                  - option "680000 Ohm +/-5%"
+                  - option "820000 Ohm +/-5%"
+                  - option "1000000 Ohm +/-5%"
+                  - option "1200000 Ohm +/-5%"
+                  - option "1500000 Ohm +/-5%"
+                  - option "1800000 Ohm +/-5%"
+                  - option "2200000 Ohm +/-5%"
+                  - option "2700000 Ohm +/-5%"
+                  - option "3300000 Ohm +/-5%"
+                  - option "3900000 Ohm +/-5%"
+                  - option "4700000 Ohm +/-5%"
+                  - option "5600000 Ohm +/-5%"
+                  - option "6800000 Ohm +/-5%"
+                  - option "8200000 Ohm +/-5%"
+                  - option "10000000 Ohm +/-5%"
+            - row "Install new resistor":
+              - cell "Install new resistor":
+                - button "Install new resistor" [disabled]
+            - row "Resistor Replacement Catalog":
+              - cell "Resistor Replacement Catalog":
+                - generic: Resistor Replacement Catalog
+            - row "10 Ohm +/-5%":
+              - cell "10 Ohm +/-5%":
+                - combobox [disabled]:
+                  - option "10 Ohm +/-5%" [selected]
+                  - option "12 Ohm +/-5%"
+                  - option "15 Ohm +/-5%"
+                  - option "18 Ohm +/-5%"
+                  - option "22 Ohm +/-5%"
+                  - option "27 Ohm +/-5%"
+                  - option "33 Ohm +/-5%"
+                  - option "39 Ohm +/-5%"
+                  - option "47 Ohm +/-5%"
+                  - option "56 Ohm +/-5%"
+                  - option "68 Ohm +/-5%"
+                  - option "82 Ohm +/-5%"
+                  - option "100 Ohm +/-5%"
+                  - option "120 Ohm +/-5%"
+                  - option "150 Ohm +/-5%"
+                  - option "180 Ohm +/-5%"
+                  - option "220 Ohm +/-5%"
+                  - option "270 Ohm +/-5%"
+                  - option "330 Ohm +/-5%"
+                  - option "390 Ohm +/-5%"
+                  - option "470 Ohm +/-5%"
+                  - option "560 Ohm +/-5%"
+                  - option "680 Ohm +/-5%"
+                  - option "820 Ohm +/-5%"
+                  - option "1000 Ohm +/-5%"
+                  - option "1200 Ohm +/-5%"
+                  - option "1500 Ohm +/-5%"
+                  - option "1800 Ohm +/-5%"
+                  - option "2200 Ohm +/-5%"
+                  - option "2700 Ohm +/-5%"
+                  - option "3300 Ohm +/-5%"
+                  - option "3900 Ohm +/-5%"
+                  - option "4700 Ohm +/-5%"
+                  - option "5600 Ohm +/-5%"
+                  - option "6800 Ohm +/-5%"
+                  - option "8200 Ohm +/-5%"
+                  - option "10000 Ohm +/-5%"
+                  - option "12000 Ohm +/-5%"
+                  - option "15000 Ohm +/-5%"
+                  - option "18000 Ohm +/-5%"
+                  - option "22000 Ohm +/-5%"
+                  - option "27000 Ohm +/-5%"
+                  - option "33000 Ohm +/-5%"
+                  - option "39000 Ohm +/-5%"
+                  - option "47000 Ohm +/-5%"
+                  - option "56000 Ohm +/-5%"
+                  - option "68000 Ohm +/-5%"
+                  - option "82000 Ohm +/-5%"
+                  - option "100000 Ohm +/-5%"
+                  - option "120000 Ohm +/-5%"
+                  - option "150000 Ohm +/-5%"
+                  - option "180000 Ohm +/-5%"
+                  - option "220000 Ohm +/-5%"
+                  - option "270000 Ohm +/-5%"
+                  - option "330000 Ohm +/-5%"
+                  - option "390000 Ohm +/-5%"
+                  - option "470000 Ohm +/-5%"
+                  - option "560000 Ohm +/-5%"
+                  - option "680000 Ohm +/-5%"
+                  - option "820000 Ohm +/-5%"
+                  - option "1000000 Ohm +/-5%"
+                  - option "1200000 Ohm +/-5%"
+                  - option "1500000 Ohm +/-5%"
+                  - option "1800000 Ohm +/-5%"
+                  - option "2200000 Ohm +/-5%"
+                  - option "2700000 Ohm +/-5%"
+                  - option "3300000 Ohm +/-5%"
+                  - option "3900000 Ohm +/-5%"
+                  - option "4700000 Ohm +/-5%"
+                  - option "5600000 Ohm +/-5%"
+                  - option "6800000 Ohm +/-5%"
+                  - option "8200000 Ohm +/-5%"
+                  - option "10000000 Ohm +/-5%"
+            - row "Install new resistor":
+              - cell "Install new resistor":
+                - button "Install new resistor" [disabled]
+            - row "Regulator Replacement Catalog":
+              - cell "Regulator Replacement Catalog":
+                - generic: Regulator Replacement Catalog
+            - row "linear-5v":
+              - cell "linear-5v":
+                - combobox [disabled]:
+                  - option "linear-5v" [selected]
+            - row "Install new regulator":
+              - cell "Install new regulator":
+                - button "Install new regulator" [disabled]
+            - row "Parts Tray":
+              - cell "Parts Tray":
+                - generic: Parts Tray
+            - row "No loose parts.":
+              - cell "No loose parts.":
+                - generic: No loose parts.

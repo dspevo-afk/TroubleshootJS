@@ -3,8 +3,8 @@
 This repairs the blocking finding against commit
 `98c3a75bb10529f527aebb103345c3092b8de0cc` on the isolated
 `codex/q30-multirail-qualification` branch. Q30-P1 is a developer-only
-physical sub-gate and is **ready for another independent review**, not
-independently accepted. Full Q30 remains **BLOCKED**, unregistered and absent
+physical sub-gate and is **independently PASS / ACCEPTED** at
+`fac582c1150273c01d09bc704dd796c1bf49a135`. Full Q30 remains **BLOCKED**, unregistered and absent
 from normal-player admission. P09 and the qualified small-board envelope are
 unchanged.
 

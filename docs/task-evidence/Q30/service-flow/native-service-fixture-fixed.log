@@ -1,0 +1,23 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+
+Exception in thread "main" java.lang.UnsatisfiedLinkError: com.lushprojects.circuitjs1.client.CirSim.console(Ljava/lang/String;)V
+	at com.lushprojects.circuitjs1.client.CirSim.console(Native Method)
+	at com.lushprojects.circuitjs1.client.CirSim.findUnconnectedNodes(CirSim.java:2619)
+	at com.lushprojects.circuitjs1.client.CirSim.analyzeCircuitOwned(CirSim.java:2790)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.analyze(CircuitSolverExecutor.java:104)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.analyze(CircuitSolverExecutor.java:97)
+	at com.lushprojects.circuitjs1.client.CirSim.analyzeCircuit(CirSim.java:2729)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.settleElectrical(Q30ServiceFlowContractTest.java:353)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifyServiceFlow(Q30ServiceFlowContractTest.java:176)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifySeed(Q30ServiceFlowContractTest.java:109)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.main(Q30ServiceFlowContractTest.java:41)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: Q30ServiceFlowContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

@@ -10,6 +10,21 @@ import java.util.Vector;
  * the enlarged production envelope still need qualification.
  */
 final class Rb30Generator {
+    private static final class FaultDescriptor {
+        final String id, owner;
+        final GeneratedFaultType type;
+        FaultDescriptor(String id, GeneratedFaultType type, String owner) {
+            this.id = id; this.type = type; this.owner = owner;
+        }
+    }
+    private static final FaultDescriptor[] FAULT_DESCRIPTORS = {
+        new FaultDescriptor("DREV_OPEN", GeneratedFaultType.DIODE_OPEN, "DREV"),
+        new FaultDescriptor("REN_OPEN", GeneratedFaultType.RESISTOR_OPEN, "REN"),
+        new FaultDescriptor("SENSOR_A_OPEN", GeneratedFaultType.RESISTOR_OPEN, "RSA"),
+        new FaultDescriptor("DRIVE_A_OPEN", GeneratedFaultType.RESISTOR_OPEN, "RDA"),
+        new FaultDescriptor("RELAY_B_COIL_OPEN", GeneratedFaultType.RELAY_COIL_OPEN, "KB")
+    };
+
     static final class Candidate {
         final Rb30Plan plan;
         final RelayOutputGenerator.Assembly assembly;
@@ -67,11 +82,27 @@ final class Rb30Generator {
     private final Vector<CircuitElm> internalSupport = new Vector<CircuitElm>();
     private final TreeMap<String, ResistorSecondaryOpenPath> resistorOpenPaths =
         new TreeMap<String, ResistorSecondaryOpenPath>();
+    private final TreeMap<String, SwitchElm> resistorFaultOpens =
+        new TreeMap<String, SwitchElm>();
     private SwitchElm reverseOpen;
+    private String selectedFaultId;
+    private boolean constructionStarted;
     private int serial;
 
     Candidate construct(Rb30Plan plan) {
+        return construct(plan, null);
+    }
+
+    /** Developer-only forced hypothesis selection; the complete population is retained. */
+    Candidate construct(Rb30Plan plan, String requestedFaultId) {
         if (plan == null) throw new IllegalArgumentException("Missing Q30 plan");
+        selectedFaultId = requestedFaultId == null || requestedFaultId.length() == 0 ?
+            plan.selectedFault : requestedFaultId;
+        if (!isFaultId(selectedFaultId))
+            throw new IllegalArgumentException("Unknown Q30 fault hypothesis: " + selectedFaultId);
+        if (constructionStarted)
+            throw new IllegalStateException("Each Q30 generator owns one candidate construction");
+        constructionStarted = true;
         a = new RelayOutputGenerator.Assembly(plan.board());
         for (String net : a.board.getNetIds())
             a.net(net, a.board.getNet(net).getRoutingRole());
@@ -90,7 +121,7 @@ final class Rb30Generator {
         fuse.i2t = .1875;
         two("F1", fuse, "RAW12", "FUSED12");
         diode("DREV", "FUSED12", "RAIL12");
-        reverseOpen = installReverseOpenPath();
+        reverseOpen = installReverseOpenPath(selectedFaultId.equals("DREV_OPEN"));
         capacitor("C12", 1e-6, "FUSED12", "CTRL_RETURN");
         capacitor("CIN", 2.2e-5, "RAIL12", "CTRL_RETURN");
 
@@ -144,13 +175,12 @@ final class Rb30Generator {
         a.requireCompleteManifest();
         Vector<GeneratedFaultCandidate> candidates = faults(plan, relayB);
         GeneratedFaultBinding selected = selected(candidates,
-            plan.selectedFault);
+            selectedFaultId);
         GeneratedFaultEngine.clearAll(candidates);
         if (backing.size() != a.board.getComponentIds().size())
             throw new IllegalStateException("Q30 physical backing census incomplete");
         PhysicalBoardRuntime runtime = installPhysicalOwners(decisionA,
-            decisionB, decisionRail, variant, config, selected,
-            candidates.get(0).getBinding());
+            decisionB, decisionRail, variant, config, selected);
         Rb30DecisionService serviceA = decisionService(runtime, "U2A");
         Rb30DecisionService serviceB = decisionService(runtime, "U2B");
         Rb30RelayService relayServiceA = relayService(runtime, "KA");
@@ -163,6 +193,12 @@ final class Rb30Generator {
             new TreeMap<String, CircuitElm>(backing));
         Rb30TopologyValidator.require(candidate);
         return candidate;
+    }
+
+    private boolean isFaultId(String id) {
+        for (FaultDescriptor descriptor : FAULT_DESCRIPTORS)
+            if (descriptor.id.equals(id)) return true;
+        return false;
     }
 
     private void source(String componentId, String inputId, double volts,
@@ -216,6 +252,7 @@ final class Rb30Generator {
         // 33 physical board packages.  Its 180 ohms is CircuitJS stamped.
         multi(id, load, new int[] { 0, 1 },
             "OUT_" + channel, "LOAD_RETURN");
+        a.connections.declareConnectorHarness(id, load, 0, load, 1);
     }
 
     private void resistor(String id, double ohms, String first, String second) {
@@ -227,21 +264,27 @@ final class Rb30Generator {
     }
 
     private void installResistorOpenPath(String id, ResistorElm resistor) {
-        ResistorSecondaryOpenPath path = ResistorSecondaryOpenPath.create(
-            new CircuitPostMeasurementEndpoint(resistor, 1));
-        resistorOpenPaths.put(id, path);
-        CircuitElm fault = path.getSimulationElement();
+        SwitchElm fault = new SwitchElm(resistor.getPost(1).x,
+            resistor.getPost(1).y);
+        fault.drag(resistor.getPost(1).x + 32, resistor.getPost(1).y);
+        resistorFaultOpens.put(id, fault);
         a.elements.add(fault);
-        internalSupport.add(fault);
-        WireElm link = a.wire(resistor.getPost(1), fault.getPost(0));
-        internalSupport.add(link);
+        WireElm faultLink = a.wire(resistor.getPost(1), fault.getPost(0));
+        internalSupport.add(faultLink);
+        // The secondary path begins at the generated-fault switch output.
+        // Its post 0 shares that coordinate; no bridging wire may bypass it.
+        ResistorSecondaryOpenPath path = ResistorSecondaryOpenPath.create(
+            new CircuitPostMeasurementEndpoint(fault, 1));
+        resistorOpenPaths.put(id, path);
+        a.elements.add(path.getSimulationElement());
+        internalSupport.add(path.getSimulationElement());
         WireElm lead = lead(id, "2");
         lead.x = path.getPublicTerminal().getElement().getPost(1).x;
         lead.y = path.getPublicTerminal().getElement().getPost(1).y;
         lead.setPoints();
         a.connections.completeConstructionEndpoint(id + ".2",
             path.getPublicTerminal());
-        a.components.bindAuxiliaryComponentElement(id, fault);
+        a.components.bindAuxiliaryComponentElement(id, path.getSimulationElement());
     }
 
     private void capacitor(String id, double farads, String first, String second) {
@@ -259,22 +302,22 @@ final class Rb30Generator {
         two(id, diode, anode, cathode);
     }
 
-    private SwitchElm installReverseOpenPath() {
+    private SwitchElm installReverseOpenPath(boolean routeFault) {
         DiodeElm diode = (DiodeElm) backing.get("DREV");
         Point cathode = diode.getPost(1);
         SwitchElm fault = new SwitchElm(cathode.x, cathode.y);
         fault.drag(cathode.x + 32, cathode.y);
         a.elements.add(fault);
-        internalSupport.add(fault);
-        WireElm diodeLink = a.wire(cathode, fault.getPost(0));
-        internalSupport.add(diodeLink);
-        WireElm cathodeLead = lead("DREV", "K");
-        cathodeLead.x = fault.getPost(1).x;
-        cathodeLead.y = fault.getPost(1).y;
-        cathodeLead.setPoints();
-        a.connections.completeConstructionEndpoint("DREV.K",
-            new CircuitPostMeasurementEndpoint(fault, 1));
-        a.components.bindAuxiliaryComponentElement("DREV", fault);
+        if (routeFault) {
+            WireElm diodeLink = a.wire(cathode, fault.getPost(0));
+            internalSupport.add(diodeLink);
+            WireElm cathodeLead = lead("DREV", "K");
+            cathodeLead.x = fault.getPost(1).x;
+            cathodeLead.y = fault.getPost(1).y;
+            cathodeLead.setPoints();
+            a.connections.completeConstructionEndpoint("DREV.K",
+                new CircuitPostMeasurementEndpoint(fault, 1));
+        }
         return fault;
     }
 
@@ -291,8 +334,7 @@ final class Rb30Generator {
                 GeneratedFaultType.RESISTOR_OPEN, id,
                 Rb30Plan.FAMILY_ID, plan.seed);
             candidates.add(new GeneratedFaultCandidate(new GeneratedFaultBinding(
-                fault, new SwitchOpenFaultEffect((SwitchElm)
-                    resistorOpenPaths.get(id).getSimulationElement())), true));
+                fault, new SwitchOpenFaultEffect(resistorFaultOpens.get(id))), true));
         }
         GeneratedFault relayFault = new GeneratedFault("RELAY_B_COIL_OPEN",
             GeneratedFaultType.RELAY_COIL_OPEN, "KB", Rb30Plan.FAMILY_ID,
@@ -351,8 +393,7 @@ final class Rb30Generator {
             E04SensorControlModel.RailContract rail,
             E04SensorControlModel.Variant variant,
             E04SensorControlModel.Configuration config,
-            GeneratedFaultBinding selected,
-            GeneratedFaultBinding reverseFault) {
+            GeneratedFaultBinding selected) {
         PhysicalBoardRuntime runtime = new PhysicalBoardRuntime(a.board);
         for (String id : a.board.getComponentIds()) {
             BoardComponent component = a.board.getComponent(id);
@@ -362,7 +403,9 @@ final class Rb30Generator {
                 continue;
             }
             if (id.equals("DREV")) {
-                installDiodeService(runtime, id, reverseFault);
+                installDiodeService(runtime, id,
+                    selected.getFault().getTargetComponentId().equals(id) ?
+                        selected : null);
                 continue;
             }
             if (id.equals("KA") || id.equals("KB")) {
@@ -593,6 +636,77 @@ final class Rb30Generator {
     private PhysicalPartProvenance provenance(String id) {
         return new PhysicalPartProvenance(
             PhysicalPartProvenance.FIXED_GENERATED, id);
+    }
+
+    /** Default seeded Q30 route. This remains a developer-only generated instance. */
+    GeneratedBoardInstance generate(long seed) {
+        Rb30Plan plan = Rb30Plan.resolve(seed);
+        Candidate candidate = construct(plan);
+        return assemble(candidate, route(candidate));
+    }
+
+    /** Replays one exact member of the canonical five-fault population. */
+    GeneratedBoardInstance generateForHypothesis(long seed, String hypothesisKey) {
+        if (hypothesisKey == null || hypothesisKey.length() == 0)
+            throw new IllegalArgumentException("Missing Q30 hypothesis key");
+        Rb30Plan plan = Rb30Plan.resolve(seed);
+        String faultId = faultIdForHypothesis(plan, hypothesisKey);
+        Candidate candidate = new Rb30Generator().construct(plan, faultId);
+        return assemble(candidate, route(candidate));
+    }
+
+    static String faultIdForHypothesis(Rb30Plan plan, String hypothesisKey) {
+        if (plan == null || hypothesisKey == null || hypothesisKey.length() == 0)
+            throw new IllegalArgumentException("Missing Q30 hypothesis identity");
+        for (FaultDescriptor descriptor : FAULT_DESCRIPTORS) {
+            GeneratedFault expected = new GeneratedFault(descriptor.id,
+                descriptor.type, descriptor.owner, Rb30Plan.FAMILY_ID, plan.seed);
+            if (hypothesisKey.equals(expected.getHypothesisKey()))
+                return descriptor.id;
+        }
+        throw new IllegalArgumentException("Unknown Q30 hypothesis key");
+    }
+
+    private PcbBoardLayout route(Candidate candidate) {
+        MediumBoardPhysicalPolicy.Result result =
+            new SeededPcbLayoutGenerator().generateWithPolicyResult(
+                candidate.board(), candidate.plan.layoutSeed,
+                candidate.plan.routingSeed);
+        if (result == null || !result.accepted() || result.getLayout() == null)
+            throw new IllegalStateException("Q30 physical layout rejected seed " +
+                Long.toString(candidate.plan.seed));
+        return result.getLayout();
+    }
+
+    GeneratedBoardInstance assemble(Candidate candidate, PcbBoardLayout layout) {
+        if (candidate == null || layout == null || candidate.plan == null ||
+                !layout.matchesGenerationSeeds(candidate.plan.layoutSeed,
+                    candidate.plan.routingSeed))
+            throw new IllegalArgumentException("Q30 assembly requires its exact routed layout");
+        layout.validateGeometry(candidate.board());
+        Rb30TopologyValidator.require(candidate);
+        Rb30Behavior behavior = new Rb30Behavior(candidate);
+        GeneratedFault fault = candidate.selectedFault.getFault();
+        GeneratedChallengeDefinition challenge = new GeneratedChallengeDefinition(
+            "RB30_OUTPUT_NOT_TRACKING", Rb30Plan.FAMILY_ID,
+            candidate.plan.topology(), candidate.plan.seed, behavior.scenarios(),
+            "Repair verified. Both sensor-controlled loads follow their inputs.",
+            fault, candidate.selectedFault, behavior);
+        Rb30DiagnosticProvider diagnostics = new Rb30DiagnosticProvider(
+            candidate.plan, layout);
+        GeneratedBoardInstance instance = new GeneratedBoardInstance(
+            candidate.board(), candidate.elements(), candidate.plan.seed,
+            Rb30Plan.FAMILY_ID, candidate.plan.topology(),
+            "Generated two-channel sensor control board, seed " +
+                Long.toString(candidate.plan.seed),
+            candidate.assembly.components, candidate.assembly.power,
+            candidate.assembly.connections, behavior, layout,
+            candidate.assembly.specifications, candidate.selectedFault,
+            new GeneratedComponentOperationalStates(), challenge, behavior,
+            candidate.runtime, behavior, true, candidate.faultCandidates, null,
+            diagnostics);
+        GeneratedDiagnosticSolvabilityAdmission.validateStructural(instance);
+        return instance;
     }
 
     private int nextX() { return 8000 + serial++ * 256; }

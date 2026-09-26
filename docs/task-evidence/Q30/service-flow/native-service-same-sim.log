@@ -1,0 +1,51 @@
+WARNING: The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might
+make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the
+Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+
+node 11 unconnected
+node 56 unconnected
+node 58 unconnected
+converged after 25 iterations, timeStep = 1.0E-4
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 13 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 56 unconnected
+node 58 unconnected
+converged after 11 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 8 iterations, timeStep = 1.0E-4
+converged after 9 iterations, timeStep = 1.0E-4
+converged after 6 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 56 unconnected
+node 58 unconnected
+converged after 12 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 56 unconnected
+node 58 unconnected
+converged after 13 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 56 unconnected
+node 58 unconnected
+converged after 14 iterations, timeStep = 1.0E-4
+node 11 unconnected
+node 56 unconnected
+node 58 unconnected
+Exception in thread "main" java.lang.IllegalStateException: Healthy Q30 failed four input conditions: input=0 rail=4.99982574784576 outputA=11.999999999999998 outputB=11.999999999999996 input=1 rail=4.99589585411184 outputA=11.999999999999998 outputB=11.999999999999995 input=2 rail=4.995902461816684 outputA=11.999999999999998 outputB=12.0
+	at com.lushprojects.circuitjs1.client.Rb30Behavior.exercise(Rb30Behavior.java:146)
+	at com.lushprojects.circuitjs1.client.Rb30Behavior.prepareHealthyProfile(Rb30Behavior.java:212)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifyServiceFlow(Q30ServiceFlowContractTest.java:174)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifySeed(Q30ServiceFlowContractTest.java:106)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.main(Q30ServiceFlowContractTest.java:41)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: Q30ServiceFlowContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

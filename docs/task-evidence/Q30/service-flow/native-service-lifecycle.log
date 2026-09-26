@@ -1,0 +1,232 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+Exception in thread "main" java.lang.NullPointerException
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.setApplied(GeneratedFaultController.java:33)
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.apply(GeneratedFaultController.java:15)
+	at com.lushprojects.circuitjs1.client.GeneratedChallengeController.afterGeneratedVerification(GeneratedChallengeController.java:176)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifyServiceFlow(Q30ServiceFlowContractTest.java:220)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifySeed(Q30ServiceFlowContractTest.java:150)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.main(Q30ServiceFlowContractTest.java:53)
+
+Q30_CASE_FAIL|0|RELAY_B_COIL_OPEN|exit=1, exact PASS row missing or ambiguous, exact final marker missing or ambiguous
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+Exception in thread "main" java.lang.NullPointerException
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.setApplied(GeneratedFaultController.java:33)
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.apply(GeneratedFaultController.java:15)
+	at com.lushprojects.circuitjs1.client.GeneratedChallengeController.afterGeneratedVerification(GeneratedChallengeController.java:176)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifyServiceFlow(Q30ServiceFlowContractTest.java:220)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifySeed(Q30ServiceFlowContractTest.java:150)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.main(Q30ServiceFlowContractTest.java:53)
+
+Q30_CASE_FAIL|0|DREV_OPEN|exit=1, exact PASS row missing or ambiguous, exact final marker missing or ambiguous
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+Exception in thread "main" java.lang.NullPointerException
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.setApplied(GeneratedFaultController.java:33)
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.apply(GeneratedFaultController.java:15)
+	at com.lushprojects.circuitjs1.client.GeneratedChallengeController.afterGeneratedVerification(GeneratedChallengeController.java:176)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifyServiceFlow(Q30ServiceFlowContractTest.java:220)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifySeed(Q30ServiceFlowContractTest.java:150)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.main(Q30ServiceFlowContractTest.java:53)
+
+Q30_CASE_FAIL|0|REN_OPEN|exit=1, exact PASS row missing or ambiguous, exact final marker missing or ambiguous
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+Exception in thread "main" java.lang.NullPointerException
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.setApplied(GeneratedFaultController.java:33)
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.apply(GeneratedFaultController.java:15)
+	at com.lushprojects.circuitjs1.client.GeneratedChallengeController.afterGeneratedVerification(GeneratedChallengeController.java:176)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifyServiceFlow(Q30ServiceFlowContractTest.java:220)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifySeed(Q30ServiceFlowContractTest.java:150)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.main(Q30ServiceFlowContractTest.java:53)
+
+Q30_CASE_FAIL|0|SENSOR_A_OPEN|exit=1, exact PASS row missing or ambiguous, exact final marker missing or ambiguous
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+Exception in thread "main" java.lang.NullPointerException
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.setApplied(GeneratedFaultController.java:33)
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.apply(GeneratedFaultController.java:15)
+	at com.lushprojects.circuitjs1.client.GeneratedChallengeController.afterGeneratedVerification(GeneratedChallengeController.java:176)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifyServiceFlow(Q30ServiceFlowContractTest.java:220)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifySeed(Q30ServiceFlowContractTest.java:150)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.main(Q30ServiceFlowContractTest.java:53)
+
+Q30_CASE_FAIL|0|DRIVE_A_OPEN|exit=1, exact PASS row missing or ambiguous, exact final marker missing or ambiguous
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+Exception in thread "main" java.lang.NullPointerException
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.setApplied(GeneratedFaultController.java:33)
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.apply(GeneratedFaultController.java:15)
+	at com.lushprojects.circuitjs1.client.GeneratedChallengeController.afterGeneratedVerification(GeneratedChallengeController.java:176)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifyServiceFlow(Q30ServiceFlowContractTest.java:220)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifySeed(Q30ServiceFlowContractTest.java:150)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.main(Q30ServiceFlowContractTest.java:53)
+
+Q30_CASE_FAIL|37|RELAY_B_COIL_OPEN|exit=1, exact PASS row missing or ambiguous, exact final marker missing or ambiguous
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+Exception in thread "main" java.lang.NullPointerException
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.setApplied(GeneratedFaultController.java:33)
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.apply(GeneratedFaultController.java:15)
+	at com.lushprojects.circuitjs1.client.GeneratedChallengeController.afterGeneratedVerification(GeneratedChallengeController.java:176)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifyServiceFlow(Q30ServiceFlowContractTest.java:220)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifySeed(Q30ServiceFlowContractTest.java:150)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.main(Q30ServiceFlowContractTest.java:53)
+
+Q30_CASE_FAIL|37|DREV_OPEN|exit=1, exact PASS row missing or ambiguous, exact final marker missing or ambiguous
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+Exception in thread "main" java.lang.NullPointerException
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.setApplied(GeneratedFaultController.java:33)
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.apply(GeneratedFaultController.java:15)
+	at com.lushprojects.circuitjs1.client.GeneratedChallengeController.afterGeneratedVerification(GeneratedChallengeController.java:176)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifyServiceFlow(Q30ServiceFlowContractTest.java:220)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifySeed(Q30ServiceFlowContractTest.java:150)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.main(Q30ServiceFlowContractTest.java:53)
+
+Q30_CASE_FAIL|37|REN_OPEN|exit=1, exact PASS row missing or ambiguous, exact final marker missing or ambiguous
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+Exception in thread "main" java.lang.NullPointerException
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.setApplied(GeneratedFaultController.java:33)
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.apply(GeneratedFaultController.java:15)
+	at com.lushprojects.circuitjs1.client.GeneratedChallengeController.afterGeneratedVerification(GeneratedChallengeController.java:176)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifyServiceFlow(Q30ServiceFlowContractTest.java:220)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifySeed(Q30ServiceFlowContractTest.java:150)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.main(Q30ServiceFlowContractTest.java:53)
+
+Q30_CASE_FAIL|37|SENSOR_A_OPEN|exit=1, exact PASS row missing or ambiguous, exact final marker missing or ambiguous
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+Exception in thread "main" java.lang.NullPointerException
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.setApplied(GeneratedFaultController.java:33)
+	at com.lushprojects.circuitjs1.client.GeneratedFaultController.apply(GeneratedFaultController.java:15)
+	at com.lushprojects.circuitjs1.client.GeneratedChallengeController.afterGeneratedVerification(GeneratedChallengeController.java:176)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifyServiceFlow(Q30ServiceFlowContractTest.java:220)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.verifySeed(Q30ServiceFlowContractTest.java:150)
+	at com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest.main(Q30ServiceFlowContractTest.java:53)
+
+Q30_CASE_FAIL|37|DRIVE_A_OPEN|exit=1, exact PASS row missing or ambiguous, exact final marker missing or ambiguous
+FAIL: Q30 service flow census attempted=10 passed=0 failed=10 failedCases=0|RELAY_B_COIL_OPEN,0|DREV_OPEN,0|REN_OPEN,0|SENSOR_A_OPEN,0|DRIVE_A_OPEN,37|RELAY_B_COIL_OPEN,37|DREV_OPEN,37|REN_OPEN,37|SENSOR_A_OPEN,37|DRIVE_A_OPEN seeds=0,37 faults=5 order=RELAY_B_COIL_OPEN,DREV_OPEN,REN_OPEN,SENSOR_A_OPEN,DRIVE_A_OPEN childBudgetMs=60000
+CURRENT_CONTRACT_FAILURE: Q30 service census failed cases: 0|RELAY_B_COIL_OPEN,0|DREV_OPEN,0|REN_OPEN,0|SENSOR_A_OPEN,0|DRIVE_A_OPEN,37|RELAY_B_COIL_OPEN,37|DREV_OPEN,37|REN_OPEN,37|SENSOR_A_OPEN,37|DRIVE_A_OPEN
+CLEANUP: current JVM contract classes and task-owned scratch removed.

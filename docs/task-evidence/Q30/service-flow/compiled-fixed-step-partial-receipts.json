@@ -1,0 +1,1284 @@
+{
+  "rows": [
+    {
+      "seed": "0",
+      "fault": "RELAY_B_COIL_OPEN",
+      "previewSourceDigest": "ef64fbc13aaef1ad462ed6e79335afe9f98a3abbe49c8b95b0fce2c43e8fa262",
+      "previewWebDigest": "e8d3fef51b28d47549199f3d9b7bdb55779021b5e07332cdd805b6484e709d5b",
+      "service": {
+        "d01Admission": false,
+        "elapsedMillis": 65715,
+        "fault": "RELAY_B_COIL_OPEN",
+        "hypotheses": 5,
+        "leadService": "NOT_SUPPORTED",
+        "normalAdmission": false,
+        "originalRetest": false,
+        "repairedRetest": true,
+        "samples": [
+          {
+            "id": "SENSORS_LOW_DREV_K",
+            "tolerance": 0.22685940860143153,
+            "value": 11.342970430071576
+          },
+          {
+            "id": "SENSORS_LOW_REN_2",
+            "tolerance": 0.2243910987753677,
+            "value": 11.219554938768384
+          },
+          {
+            "id": "SENSORS_LOW_RAIL5",
+            "tolerance": 0.09999691766898426,
+            "value": 4.999845883449213
+          },
+          {
+            "id": "SENSORS_LOW_RSA_2",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_LOW_RDA_1",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_LOW_RDA_2",
+            "tolerance": 0.01,
+            "value": 5.048852518217142e-9
+          },
+          {
+            "id": "SENSORS_LOW_KB_A2",
+            "tolerance": 0.01,
+            "value": 0.0925887748468616
+          },
+          {
+            "id": "SENSORS_LOW_OUTPUT_A",
+            "tolerance": 0.01,
+            "value": 0.0000021599607344544422
+          },
+          {
+            "id": "SENSORS_LOW_OUTPUT_B",
+            "tolerance": 0.01,
+            "value": 0.0000021599607338899155
+          },
+          {
+            "id": "SENSORS_A_ONLY_DREV_K",
+            "tolerance": 0.2234744680888213,
+            "value": 11.173723404441064
+          },
+          {
+            "id": "SENSORS_A_ONLY_REN_2",
+            "tolerance": 0.22104299461508364,
+            "value": 11.052149730754182
+          },
+          {
+            "id": "SENSORS_A_ONLY_RAIL5",
+            "tolerance": 0.09991803911353342,
+            "value": 4.995901955676671
+          },
+          {
+            "id": "SENSORS_A_ONLY_RSA_2",
+            "tolerance": 0.09989910140309242,
+            "value": 4.994955070154621
+          },
+          {
+            "id": "SENSORS_A_ONLY_RDA_1",
+            "tolerance": 0.0969180401481192,
+            "value": 4.84590200740596
+          },
+          {
+            "id": "SENSORS_A_ONLY_RDA_2",
+            "tolerance": 0.013900667139072348,
+            "value": 0.6950333569536173
+          },
+          {
+            "id": "SENSORS_A_ONLY_KB_A2",
+            "tolerance": 0.01,
+            "value": 0.0925497269138298
+          },
+          {
+            "id": "SENSORS_A_ONLY_OUTPUT_A",
+            "tolerance": 0.23966712299216944,
+            "value": 11.983356149608472
+          },
+          {
+            "id": "SENSORS_A_ONLY_OUTPUT_B",
+            "tolerance": 0.01,
+            "value": 0.00000215936157563597
+          },
+          {
+            "id": "SENSORS_B_ONLY_DREV_K",
+            "tolerance": 0.22685940486686287,
+            "value": 11.342970243343144
+          },
+          {
+            "id": "SENSORS_B_ONLY_REN_2",
+            "tolerance": 0.22439109673783045,
+            "value": 11.219554836891522
+          },
+          {
+            "id": "SENSORS_B_ONLY_RAIL5",
+            "tolerance": 0.0999969176503376,
+            "value": 4.99984588251688
+          },
+          {
+            "id": "SENSORS_B_ONLY_RSA_2",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_B_ONLY_RDA_1",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_B_ONLY_RDA_2",
+            "tolerance": 0.01,
+            "value": 5.048852517294123e-9
+          },
+          {
+            "id": "SENSORS_B_ONLY_KB_A2",
+            "tolerance": 0.01,
+            "value": 0.01792827554937666
+          },
+          {
+            "id": "SENSORS_B_ONLY_OUTPUT_A",
+            "tolerance": 0.01,
+            "value": 0.0000021599607344544422
+          },
+          {
+            "id": "SENSORS_B_ONLY_OUTPUT_B",
+            "tolerance": 0.01,
+            "value": 0.0000021599607338899155
+          },
+          {
+            "id": "SENSORS_HIGH_DREV_K",
+            "tolerance": 0.22347446772253807,
+            "value": 11.173723386126904
+          },
+          {
+            "id": "SENSORS_HIGH_REN_2",
+            "tolerance": 0.2210429942524232,
+            "value": 11.05214971262116
+          },
+          {
+            "id": "SENSORS_HIGH_RAIL5",
+            "tolerance": 0.09991803909493012,
+            "value": 4.995901954746507
+          },
+          {
+            "id": "SENSORS_HIGH_RSA_2",
+            "tolerance": 0.09989910140309242,
+            "value": 4.994955070154621
+          },
+          {
+            "id": "SENSORS_HIGH_RDA_1",
+            "tolerance": 0.09691804012951208,
+            "value": 4.845902006475604
+          },
+          {
+            "id": "SENSORS_HIGH_RDA_2",
+            "tolerance": 0.013900667138887213,
+            "value": 0.6950333569443606
+          },
+          {
+            "id": "SENSORS_HIGH_KB_A2",
+            "tolerance": 0.01,
+            "value": 0.017928275559154237
+          },
+          {
+            "id": "SENSORS_HIGH_OUTPUT_A",
+            "tolerance": 0.23966712299216944,
+            "value": 11.983356149608472
+          },
+          {
+            "id": "SENSORS_HIGH_OUTPUT_B",
+            "tolerance": 0.01,
+            "value": 0.00000215936157563597
+          },
+          {
+            "id": "MAIN_12V",
+            "tolerance": 0.23995799663655404,
+            "value": 11.997899831827702
+          }
+        ],
+        "seed": "0",
+        "status": "PASS",
+        "unrepairedRetest": false
+      },
+      "workbench": {
+        "bottomInspectable": 82,
+        "bottomTargets": 82,
+        "constructionMillis": 7,
+        "copper": {
+          "bottomTrace": "copper/edge/125",
+          "topTrace": "copper/edge/100",
+          "viaPad": "RDA.1",
+          "viaSurface": "hole/18:p07-via/A_CMD/47/1TOP/hole/18:p07-via/A_CMD/47/1BOTTOM"
+        },
+        "face": "TOP",
+        "family": "RB30_CONTROL",
+        "hypothesisCount": 5,
+        "layout": {
+          "height": 1985,
+          "width": 3562,
+          "x": 50,
+          "y": 50
+        },
+        "layoutSeed": "-5811592868239938363",
+        "normalAdmission": false,
+        "overviewLimits": {
+          "BOTTOM": [],
+          "TOP": []
+        },
+        "ownerRestored": false,
+        "packages": 33,
+        "padLimits": {
+          "BOTTOM": [],
+          "TOP": []
+        },
+        "pads": 82,
+        "physicalPolicy": "MEDIUM_BOARD@1",
+        "prototypeRetained": true,
+        "qualificationMillis": 30049,
+        "route": "P07_FULLER_TWO_LAYER",
+        "routingMillis": 20336,
+        "routingSeed": "6323369344316473384",
+        "runtimeAssertions": 377,
+        "schema": 1,
+        "seed": "0",
+        "selectedFault": "RELAY_B_COIL_OPEN",
+        "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+        "serviceMillis": 0,
+        "status": "PASS",
+        "topInspectable": 82,
+        "topTargets": 82,
+        "topology": "RB30_SEPARATE_DIRECT_A_BJT_B_BJT",
+        "visualPass": true
+      }
+    },
+    {
+      "seed": "0",
+      "fault": "DREV_OPEN",
+      "previewSourceDigest": "ef64fbc13aaef1ad462ed6e79335afe9f98a3abbe49c8b95b0fce2c43e8fa262",
+      "previewWebDigest": "e8d3fef51b28d47549199f3d9b7bdb55779021b5e07332cdd805b6484e709d5b",
+      "service": {
+        "d01Admission": false,
+        "elapsedMillis": 38903,
+        "fault": "DREV_OPEN",
+        "hypotheses": 5,
+        "leadService": "PASS",
+        "normalAdmission": false,
+        "originalRetest": false,
+        "repairedRetest": true,
+        "samples": [
+          {
+            "id": "SENSORS_LOW_DREV_K",
+            "tolerance": 0.01615660520763557,
+            "value": 0.8078302603817785
+          },
+          {
+            "id": "SENSORS_LOW_REN_2",
+            "tolerance": 0.015980649269770084,
+            "value": 0.7990324634885042
+          },
+          {
+            "id": "SENSORS_LOW_RAIL5",
+            "tolerance": 0.01,
+            "value": 0.0000019557853444828496
+          },
+          {
+            "id": "SENSORS_LOW_RSA_2",
+            "tolerance": 0.01,
+            "value": -6.858676439798005e-19
+          },
+          {
+            "id": "SENSORS_LOW_RDA_1",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_LOW_RDA_2",
+            "tolerance": 0.01,
+            "value": 9.003209812815199e-15
+          },
+          {
+            "id": "SENSORS_LOW_KB_A2",
+            "tolerance": 0.01,
+            "value": 0.0000018084550630469005
+          },
+          {
+            "id": "SENSORS_LOW_OUTPUT_A",
+            "tolerance": 0.01,
+            "value": 0.0000021599607344544422
+          },
+          {
+            "id": "SENSORS_LOW_OUTPUT_B",
+            "tolerance": 0.01,
+            "value": 0.0000021599607338899155
+          },
+          {
+            "id": "SENSORS_A_ONLY_DREV_K",
+            "tolerance": 0.016109779159110656,
+            "value": 0.8054889579555329
+          },
+          {
+            "id": "SENSORS_A_ONLY_REN_2",
+            "tolerance": 0.015934333187366083,
+            "value": 0.796716659368304
+          },
+          {
+            "id": "SENSORS_A_ONLY_RAIL5",
+            "tolerance": 0.01,
+            "value": 7.57351841993099e-8
+          },
+          {
+            "id": "SENSORS_A_ONLY_RSA_2",
+            "tolerance": 0.09989910140309242,
+            "value": 4.994955070154621
+          },
+          {
+            "id": "SENSORS_A_ONLY_RDA_1",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_A_ONLY_RDA_2",
+            "tolerance": 0.01,
+            "value": 3.449689491214819e-16
+          },
+          {
+            "id": "SENSORS_A_ONLY_KB_A2",
+            "tolerance": 0.01,
+            "value": 6.92912455857373e-8
+          },
+          {
+            "id": "SENSORS_A_ONLY_OUTPUT_A",
+            "tolerance": 0.01,
+            "value": 0.0000021599607344544422
+          },
+          {
+            "id": "SENSORS_A_ONLY_OUTPUT_B",
+            "tolerance": 0.01,
+            "value": 0.0000021599607338899155
+          },
+          {
+            "id": "SENSORS_B_ONLY_DREV_K",
+            "tolerance": 0.016062936254963644,
+            "value": 0.8031468127481822
+          },
+          {
+            "id": "SENSORS_B_ONLY_REN_2",
+            "tolerance": 0.01588800043290864,
+            "value": 0.7944000216454319
+          },
+          {
+            "id": "SENSORS_B_ONLY_RAIL5",
+            "tolerance": 0.01,
+            "value": 2.9640125396102653e-9
+          },
+          {
+            "id": "SENSORS_B_ONLY_RSA_2",
+            "tolerance": 0.01,
+            "value": 5.24265861831286e-19
+          },
+          {
+            "id": "SENSORS_B_ONLY_RDA_1",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_B_ONLY_RDA_2",
+            "tolerance": 0.01,
+            "value": 1.3644846902459925e-17
+          },
+          {
+            "id": "SENSORS_B_ONLY_KB_A2",
+            "tolerance": 0.01,
+            "value": 2.7699531459250652e-9
+          },
+          {
+            "id": "SENSORS_B_ONLY_OUTPUT_A",
+            "tolerance": 0.01,
+            "value": 0.0000021599607344544422
+          },
+          {
+            "id": "SENSORS_B_ONLY_OUTPUT_B",
+            "tolerance": 0.01,
+            "value": 0.0000021599607338899155
+          },
+          {
+            "id": "SENSORS_HIGH_DREV_K",
+            "tolerance": 0.016016685939928693,
+            "value": 0.8008342969964347
+          },
+          {
+            "id": "SENSORS_HIGH_REN_2",
+            "tolerance": 0.0158422538138825,
+            "value": 0.792112690694125
+          },
+          {
+            "id": "SENSORS_HIGH_RAIL5",
+            "tolerance": 0.01,
+            "value": 1.1848792425773432e-10
+          },
+          {
+            "id": "SENSORS_HIGH_RSA_2",
+            "tolerance": 0.09989910140309242,
+            "value": 4.994955070154621
+          },
+          {
+            "id": "SENSORS_HIGH_RDA_1",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_HIGH_RDA_2",
+            "tolerance": 0.01,
+            "value": 5.397055576529109e-19
+          },
+          {
+            "id": "SENSORS_HIGH_KB_A2",
+            "tolerance": 0.01,
+            "value": 1.0840636286693008e-10
+          },
+          {
+            "id": "SENSORS_HIGH_OUTPUT_A",
+            "tolerance": 0.01,
+            "value": 0.0000021599607344544422
+          },
+          {
+            "id": "SENSORS_HIGH_OUTPUT_B",
+            "tolerance": 0.01,
+            "value": 0.0000021599607338899155
+          },
+          {
+            "id": "MAIN_12V",
+            "tolerance": 0.23999999877992173,
+            "value": 11.999999938996089
+          }
+        ],
+        "seed": "0",
+        "status": "PASS",
+        "unrepairedRetest": false
+      },
+      "workbench": {
+        "bottomInspectable": 82,
+        "bottomTargets": 82,
+        "constructionMillis": 7,
+        "copper": {
+          "bottomTrace": "copper/edge/125",
+          "topTrace": "copper/edge/100",
+          "viaPad": "RDA.1",
+          "viaSurface": "hole/18:p07-via/A_CMD/47/1TOP/hole/18:p07-via/A_CMD/47/1BOTTOM"
+        },
+        "face": "TOP",
+        "family": "RB30_CONTROL",
+        "hypothesisCount": 5,
+        "layout": {
+          "height": 1985,
+          "width": 3562,
+          "x": 50,
+          "y": 50
+        },
+        "layoutSeed": "-5811592868239938363",
+        "normalAdmission": false,
+        "overviewLimits": {
+          "BOTTOM": [],
+          "TOP": []
+        },
+        "ownerRestored": false,
+        "packages": 33,
+        "padLimits": {
+          "BOTTOM": [],
+          "TOP": []
+        },
+        "pads": 82,
+        "physicalPolicy": "MEDIUM_BOARD@1",
+        "prototypeRetained": true,
+        "qualificationMillis": 30944,
+        "route": "P07_FULLER_TWO_LAYER",
+        "routingMillis": 20261,
+        "routingSeed": "6323369344316473384",
+        "runtimeAssertions": 377,
+        "schema": 1,
+        "seed": "0",
+        "selectedFault": "DREV_OPEN",
+        "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+        "serviceMillis": 0,
+        "status": "PASS",
+        "topInspectable": 82,
+        "topTargets": 82,
+        "topology": "RB30_SEPARATE_DIRECT_A_BJT_B_BJT",
+        "visualPass": true
+      }
+    },
+    {
+      "seed": "0",
+      "fault": "REN_OPEN",
+      "previewSourceDigest": "ef64fbc13aaef1ad462ed6e79335afe9f98a3abbe49c8b95b0fce2c43e8fa262",
+      "previewWebDigest": "e8d3fef51b28d47549199f3d9b7bdb55779021b5e07332cdd805b6484e709d5b",
+      "service": {
+        "d01Admission": false,
+        "elapsedMillis": 35677,
+        "fault": "REN_OPEN",
+        "hypotheses": 5,
+        "leadService": "PASS",
+        "normalAdmission": false,
+        "originalRetest": false,
+        "repairedRetest": true,
+        "samples": [
+          {
+            "id": "SENSORS_LOW_DREV_K",
+            "tolerance": 0.2321153847514305,
+            "value": 11.605769237571526
+          },
+          {
+            "id": "SENSORS_LOW_REN_2",
+            "tolerance": 0.01,
+            "value": 2.9511463111789117e-15
+          },
+          {
+            "id": "SENSORS_LOW_RAIL5",
+            "tolerance": 0.01,
+            "value": 9.188485369097739e-10
+          },
+          {
+            "id": "SENSORS_LOW_RSA_2",
+            "tolerance": 0.01,
+            "value": -6.304614340234703e-26
+          },
+          {
+            "id": "SENSORS_LOW_RDA_1",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_LOW_RDA_2",
+            "tolerance": 0.01,
+            "value": 4.22992407168644e-18
+          },
+          {
+            "id": "SENSORS_LOW_KB_A2",
+            "tolerance": 0.01,
+            "value": 8.49631220235319e-10
+          },
+          {
+            "id": "SENSORS_LOW_OUTPUT_A",
+            "tolerance": 0.01,
+            "value": 0.0000021599607344544422
+          },
+          {
+            "id": "SENSORS_LOW_OUTPUT_B",
+            "tolerance": 0.01,
+            "value": 0.0000021599607338899155
+          },
+          {
+            "id": "SENSORS_A_ONLY_DREV_K",
+            "tolerance": 0.2321474663723768,
+            "value": 11.60737331861884
+          },
+          {
+            "id": "SENSORS_A_ONLY_REN_2",
+            "tolerance": 0.01,
+            "value": -2.0350252642666835e-15
+          },
+          {
+            "id": "SENSORS_A_ONLY_RAIL5",
+            "tolerance": 0.01,
+            "value": 3.5960546134617133e-11
+          },
+          {
+            "id": "SENSORS_A_ONLY_RSA_2",
+            "tolerance": 0.09989910140309242,
+            "value": 4.994955070154621
+          },
+          {
+            "id": "SENSORS_A_ONLY_RDA_1",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_A_ONLY_RDA_2",
+            "tolerance": 0.01,
+            "value": 1.6554457011450925e-19
+          },
+          {
+            "id": "SENSORS_A_ONLY_KB_A2",
+            "tolerance": 0.01,
+            "value": 3.36061425544609e-11
+          },
+          {
+            "id": "SENSORS_A_ONLY_OUTPUT_A",
+            "tolerance": 0.01,
+            "value": 0.0000021599607344544422
+          },
+          {
+            "id": "SENSORS_A_ONLY_OUTPUT_B",
+            "tolerance": 0.01,
+            "value": 0.0000021599607338899155
+          },
+          {
+            "id": "SENSORS_B_ONLY_DREV_K",
+            "tolerance": 0.2321693701058426,
+            "value": 11.60846850529213
+          },
+          {
+            "id": "SENSORS_B_ONLY_REN_2",
+            "tolerance": 0.01,
+            "value": 8.046008085462143e-16
+          },
+          {
+            "id": "SENSORS_B_ONLY_RAIL5",
+            "tolerance": 0.01,
+            "value": 1.4223762150104446e-12
+          },
+          {
+            "id": "SENSORS_B_ONLY_RSA_2",
+            "tolerance": 0.01,
+            "value": 4.185439364851699e-21
+          },
+          {
+            "id": "SENSORS_B_ONLY_RDA_1",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_B_ONLY_RDA_2",
+            "tolerance": 0.01,
+            "value": 6.4788447644446135e-21
+          },
+          {
+            "id": "SENSORS_B_ONLY_KB_A2",
+            "tolerance": 0.01,
+            "value": 1.3152279173313098e-12
+          },
+          {
+            "id": "SENSORS_B_ONLY_OUTPUT_A",
+            "tolerance": 0.01,
+            "value": 0.0000021599607344544422
+          },
+          {
+            "id": "SENSORS_B_ONLY_OUTPUT_B",
+            "tolerance": 0.01,
+            "value": 0.0000021599607338899155
+          },
+          {
+            "id": "SENSORS_HIGH_DREV_K",
+            "tolerance": 0.2321847539814222,
+            "value": 11.60923769907111
+          },
+          {
+            "id": "SENSORS_HIGH_REN_2",
+            "tolerance": 0.01,
+            "value": 1.920468304997912e-15
+          },
+          {
+            "id": "SENSORS_HIGH_RAIL5",
+            "tolerance": 0.01,
+            "value": 5.5666873751108924e-14
+          },
+          {
+            "id": "SENSORS_HIGH_RSA_2",
+            "tolerance": 0.09989910140309242,
+            "value": 4.994955070154621
+          },
+          {
+            "id": "SENSORS_HIGH_RDA_1",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_HIGH_RDA_2",
+            "tolerance": 0.01,
+            "value": 2.562588830985065e-22
+          },
+          {
+            "id": "SENSORS_HIGH_KB_A2",
+            "tolerance": 0.01,
+            "value": 5.2022260727486144e-14
+          },
+          {
+            "id": "SENSORS_HIGH_OUTPUT_A",
+            "tolerance": 0.01,
+            "value": 0.0000021599607344544422
+          },
+          {
+            "id": "SENSORS_HIGH_OUTPUT_B",
+            "tolerance": 0.01,
+            "value": 0.0000021599607338899155
+          },
+          {
+            "id": "MAIN_12V",
+            "tolerance": 0.2399999867407217,
+            "value": 11.999999337036083
+          }
+        ],
+        "seed": "0",
+        "status": "PASS",
+        "unrepairedRetest": false
+      },
+      "workbench": {
+        "bottomInspectable": 82,
+        "bottomTargets": 82,
+        "constructionMillis": 7,
+        "copper": {
+          "bottomTrace": "copper/edge/125",
+          "topTrace": "copper/edge/100",
+          "viaPad": "RDA.1",
+          "viaSurface": "hole/18:p07-via/A_CMD/47/1TOP/hole/18:p07-via/A_CMD/47/1BOTTOM"
+        },
+        "face": "TOP",
+        "family": "RB30_CONTROL",
+        "hypothesisCount": 5,
+        "layout": {
+          "height": 1985,
+          "width": 3562,
+          "x": 50,
+          "y": 50
+        },
+        "layoutSeed": "-5811592868239938363",
+        "normalAdmission": false,
+        "overviewLimits": {
+          "BOTTOM": [],
+          "TOP": []
+        },
+        "ownerRestored": false,
+        "packages": 33,
+        "padLimits": {
+          "BOTTOM": [],
+          "TOP": []
+        },
+        "pads": 82,
+        "physicalPolicy": "MEDIUM_BOARD@1",
+        "prototypeRetained": true,
+        "qualificationMillis": 30191,
+        "route": "P07_FULLER_TWO_LAYER",
+        "routingMillis": 20415,
+        "routingSeed": "6323369344316473384",
+        "runtimeAssertions": 377,
+        "schema": 1,
+        "seed": "0",
+        "selectedFault": "REN_OPEN",
+        "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+        "serviceMillis": 0,
+        "status": "PASS",
+        "topInspectable": 82,
+        "topTargets": 82,
+        "topology": "RB30_SEPARATE_DIRECT_A_BJT_B_BJT",
+        "visualPass": true
+      }
+    },
+    {
+      "seed": "0",
+      "fault": "SENSOR_A_OPEN",
+      "previewSourceDigest": "ef64fbc13aaef1ad462ed6e79335afe9f98a3abbe49c8b95b0fce2c43e8fa262",
+      "previewWebDigest": "e8d3fef51b28d47549199f3d9b7bdb55779021b5e07332cdd805b6484e709d5b",
+      "service": {
+        "d01Admission": false,
+        "elapsedMillis": 39027,
+        "fault": "SENSOR_A_OPEN",
+        "hypotheses": 5,
+        "leadService": "PASS",
+        "normalAdmission": false,
+        "originalRetest": false,
+        "repairedRetest": true,
+        "samples": [
+          {
+            "id": "SENSORS_LOW_DREV_K",
+            "tolerance": 0.226859408601428,
+            "value": 11.342970430071398
+          },
+          {
+            "id": "SENSORS_LOW_REN_2",
+            "tolerance": 0.224391100431454,
+            "value": 11.2195550215727
+          },
+          {
+            "id": "SENSORS_LOW_RAIL5",
+            "tolerance": 0.09999691766898426,
+            "value": 4.999845883449213
+          },
+          {
+            "id": "SENSORS_LOW_RSA_2",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_LOW_RDA_1",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_LOW_RDA_2",
+            "tolerance": 0.01,
+            "value": 5.048852518217416e-9
+          },
+          {
+            "id": "SENSORS_LOW_KB_A2",
+            "tolerance": 0.09999294624474164,
+            "value": 4.999647312237082
+          },
+          {
+            "id": "SENSORS_LOW_OUTPUT_A",
+            "tolerance": 0.01,
+            "value": 0.0000021599607344544422
+          },
+          {
+            "id": "SENSORS_LOW_OUTPUT_B",
+            "tolerance": 0.01,
+            "value": 0.0000021599607338899155
+          },
+          {
+            "id": "SENSORS_A_ONLY_DREV_K",
+            "tolerance": 0.226859408601428,
+            "value": 11.342970430071398
+          },
+          {
+            "id": "SENSORS_A_ONLY_REN_2",
+            "tolerance": 0.2243910987755335,
+            "value": 11.219554938776676
+          },
+          {
+            "id": "SENSORS_A_ONLY_RAIL5",
+            "tolerance": 0.0999969176689843,
+            "value": 4.999845883449215
+          },
+          {
+            "id": "SENSORS_A_ONLY_RSA_2",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_A_ONLY_RDA_1",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_A_ONLY_RDA_2",
+            "tolerance": 0.01,
+            "value": 5.048852518217415e-9
+          },
+          {
+            "id": "SENSORS_A_ONLY_KB_A2",
+            "tolerance": 0.09999294624474164,
+            "value": 4.999647312237082
+          },
+          {
+            "id": "SENSORS_A_ONLY_OUTPUT_A",
+            "tolerance": 0.01,
+            "value": 0.0000021599607344544422
+          },
+          {
+            "id": "SENSORS_A_ONLY_OUTPUT_B",
+            "tolerance": 0.01,
+            "value": 0.0000021599607338899155
+          },
+          {
+            "id": "SENSORS_B_ONLY_DREV_K",
+            "tolerance": 0.2234744680893379,
+            "value": 11.173723404466894
+          },
+          {
+            "id": "SENSORS_B_ONLY_REN_2",
+            "tolerance": 0.2210429946150044,
+            "value": 11.05214973075022
+          },
+          {
+            "id": "SENSORS_B_ONLY_RAIL5",
+            "tolerance": 0.0999180391135541,
+            "value": 4.995901955677705
+          },
+          {
+            "id": "SENSORS_B_ONLY_RSA_2",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_B_ONLY_RDA_1",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_B_ONLY_RDA_2",
+            "tolerance": 0.01,
+            "value": 5.044948025779302e-9
+          },
+          {
+            "id": "SENSORS_B_ONLY_KB_A2",
+            "tolerance": 0.01,
+            "value": 0.0657981547003622
+          },
+          {
+            "id": "SENSORS_B_ONLY_OUTPUT_A",
+            "tolerance": 0.01,
+            "value": 0.0000021593615746702857
+          },
+          {
+            "id": "SENSORS_B_ONLY_OUTPUT_B",
+            "tolerance": 0.23966712299216947,
+            "value": 11.983356149608474
+          },
+          {
+            "id": "SENSORS_HIGH_DREV_K",
+            "tolerance": 0.22347446808124335,
+            "value": 11.173723404062168
+          },
+          {
+            "id": "SENSORS_HIGH_REN_2",
+            "tolerance": 0.2210429946075716,
+            "value": 11.05214973037858
+          },
+          {
+            "id": "SENSORS_HIGH_RAIL5",
+            "tolerance": 0.09991803911323008,
+            "value": 4.995901955661504
+          },
+          {
+            "id": "SENSORS_HIGH_RSA_2",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_HIGH_RDA_1",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_HIGH_RDA_2",
+            "tolerance": 0.01,
+            "value": 5.044948025766922e-9
+          },
+          {
+            "id": "SENSORS_HIGH_KB_A2",
+            "tolerance": 0.01,
+            "value": 0.06579815476581993
+          },
+          {
+            "id": "SENSORS_HIGH_OUTPUT_A",
+            "tolerance": 0.01,
+            "value": 0.0000021593615746702857
+          },
+          {
+            "id": "SENSORS_HIGH_OUTPUT_B",
+            "tolerance": 0.23966712299216947,
+            "value": 11.983356149608474
+          },
+          {
+            "id": "MAIN_12V",
+            "tolerance": 0.23995799664578168,
+            "value": 11.997899832289084
+          }
+        ],
+        "seed": "0",
+        "status": "PASS",
+        "unrepairedRetest": false
+      },
+      "workbench": {
+        "bottomInspectable": 82,
+        "bottomTargets": 82,
+        "constructionMillis": 7,
+        "copper": {
+          "bottomTrace": "copper/edge/125",
+          "topTrace": "copper/edge/100",
+          "viaPad": "RDA.1",
+          "viaSurface": "hole/18:p07-via/A_CMD/47/1TOP/hole/18:p07-via/A_CMD/47/1BOTTOM"
+        },
+        "face": "TOP",
+        "family": "RB30_CONTROL",
+        "hypothesisCount": 5,
+        "layout": {
+          "height": 1985,
+          "width": 3562,
+          "x": 50,
+          "y": 50
+        },
+        "layoutSeed": "-5811592868239938363",
+        "normalAdmission": false,
+        "overviewLimits": {
+          "BOTTOM": [],
+          "TOP": []
+        },
+        "ownerRestored": false,
+        "packages": 33,
+        "padLimits": {
+          "BOTTOM": [],
+          "TOP": []
+        },
+        "pads": 82,
+        "physicalPolicy": "MEDIUM_BOARD@1",
+        "prototypeRetained": true,
+        "qualificationMillis": 29149,
+        "route": "P07_FULLER_TWO_LAYER",
+        "routingMillis": 19968,
+        "routingSeed": "6323369344316473384",
+        "runtimeAssertions": 377,
+        "schema": 1,
+        "seed": "0",
+        "selectedFault": "SENSOR_A_OPEN",
+        "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+        "serviceMillis": 0,
+        "status": "PASS",
+        "topInspectable": 82,
+        "topTargets": 82,
+        "topology": "RB30_SEPARATE_DIRECT_A_BJT_B_BJT",
+        "visualPass": true
+      }
+    },
+    {
+      "seed": "0",
+      "fault": "DRIVE_A_OPEN",
+      "previewSourceDigest": "ef64fbc13aaef1ad462ed6e79335afe9f98a3abbe49c8b95b0fce2c43e8fa262",
+      "previewWebDigest": "e8d3fef51b28d47549199f3d9b7bdb55779021b5e07332cdd805b6484e709d5b",
+      "service": {
+        "d01Admission": false,
+        "elapsedMillis": 40001,
+        "fault": "DRIVE_A_OPEN",
+        "hypotheses": 5,
+        "leadService": "PASS",
+        "normalAdmission": false,
+        "originalRetest": false,
+        "repairedRetest": true,
+        "samples": [
+          {
+            "id": "SENSORS_LOW_DREV_K",
+            "tolerance": 0.226859408601428,
+            "value": 11.342970430071398
+          },
+          {
+            "id": "SENSORS_LOW_REN_2",
+            "tolerance": 0.22439109877553357,
+            "value": 11.219554938776678
+          },
+          {
+            "id": "SENSORS_LOW_RAIL5",
+            "tolerance": 0.09999691766898426,
+            "value": 4.999845883449213
+          },
+          {
+            "id": "SENSORS_LOW_RSA_2",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_LOW_RDA_1",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_LOW_RDA_2",
+            "tolerance": 0.01,
+            "value": 5.049351885583433e-7
+          },
+          {
+            "id": "SENSORS_LOW_KB_A2",
+            "tolerance": 0.0999929462447416,
+            "value": 4.99964731223708
+          },
+          {
+            "id": "SENSORS_LOW_OUTPUT_A",
+            "tolerance": 0.01,
+            "value": 0.0000021599607344544422
+          },
+          {
+            "id": "SENSORS_LOW_OUTPUT_B",
+            "tolerance": 0.01,
+            "value": 0.0000021599607338899155
+          },
+          {
+            "id": "SENSORS_A_ONLY_DREV_K",
+            "tolerance": 0.2268594086014261,
+            "value": 11.342970430071304
+          },
+          {
+            "id": "SENSORS_A_ONLY_REN_2",
+            "tolerance": 0.2243910987754773,
+            "value": 11.219554938773864
+          },
+          {
+            "id": "SENSORS_A_ONLY_RAIL5",
+            "tolerance": 0.09999691766898426,
+            "value": 4.999845883449213
+          },
+          {
+            "id": "SENSORS_A_ONLY_RSA_2",
+            "tolerance": 0.09989910140309242,
+            "value": 4.994955070154621
+          },
+          {
+            "id": "SENSORS_A_ONLY_RDA_1",
+            "tolerance": 0.0969969187044074,
+            "value": 4.84984593522037
+          },
+          {
+            "id": "SENSORS_A_ONLY_RDA_2",
+            "tolerance": 0.01,
+            "value": 5.049351885583155e-7
+          },
+          {
+            "id": "SENSORS_A_ONLY_KB_A2",
+            "tolerance": 0.09999294624474146,
+            "value": 4.999647312237073
+          },
+          {
+            "id": "SENSORS_A_ONLY_OUTPUT_A",
+            "tolerance": 0.01,
+            "value": 0.0000021599607344544422
+          },
+          {
+            "id": "SENSORS_A_ONLY_OUTPUT_B",
+            "tolerance": 0.01,
+            "value": 0.0000021599607338899155
+          },
+          {
+            "id": "SENSORS_B_ONLY_DREV_K",
+            "tolerance": 0.2234744680893379,
+            "value": 11.173723404466894
+          },
+          {
+            "id": "SENSORS_B_ONLY_REN_2",
+            "tolerance": 0.22104299522475224,
+            "value": 11.052149761237612
+          },
+          {
+            "id": "SENSORS_B_ONLY_RAIL5",
+            "tolerance": 0.09991803911353342,
+            "value": 4.995901955676671
+          },
+          {
+            "id": "SENSORS_B_ONLY_RSA_2",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_B_ONLY_RDA_1",
+            "tolerance": 0.01,
+            "value": 0
+          },
+          {
+            "id": "SENSORS_B_ONLY_RDA_2",
+            "tolerance": 0.01,
+            "value": 5.045447006962533e-7
+          },
+          {
+            "id": "SENSORS_B_ONLY_KB_A2",
+            "tolerance": 0.01,
+            "value": 0.06579815470453529
+          },
+          {
+            "id": "SENSORS_B_ONLY_OUTPUT_A",
+            "tolerance": 0.01,
+            "value": 0.0000021593615746702857
+          },
+          {
+            "id": "SENSORS_B_ONLY_OUTPUT_B",
+            "tolerance": 0.23966712299216947,
+            "value": 11.983356149608474
+          },
+          {
+            "id": "SENSORS_HIGH_DREV_K",
+            "tolerance": 0.22347446808124335,
+            "value": 11.173723404062168
+          },
+          {
+            "id": "SENSORS_HIGH_REN_2",
+            "tolerance": 0.22104299521712303,
+            "value": 11.052149760856151
+          },
+          {
+            "id": "SENSORS_HIGH_RAIL5",
+            "tolerance": 0.09991803911323008,
+            "value": 4.995901955661504
+          },
+          {
+            "id": "SENSORS_HIGH_RSA_2",
+            "tolerance": 0.09989910140309242,
+            "value": 4.994955070154621
+          },
+          {
+            "id": "SENSORS_HIGH_RDA_1",
+            "tolerance": 0.09691804014787264,
+            "value": 4.845902007393631
+          },
+          {
+            "id": "SENSORS_HIGH_RDA_2",
+            "tolerance": 0.01,
+            "value": 5.04544700695204e-7
+          },
+          {
+            "id": "SENSORS_HIGH_KB_A2",
+            "tolerance": 0.01,
+            "value": 0.06579815476576516
+          },
+          {
+            "id": "SENSORS_HIGH_OUTPUT_A",
+            "tolerance": 0.01,
+            "value": 0.0000021593615746702857
+          },
+          {
+            "id": "SENSORS_HIGH_OUTPUT_B",
+            "tolerance": 0.23966712299216947,
+            "value": 11.983356149608474
+          },
+          {
+            "id": "MAIN_12V",
+            "tolerance": 0.23995799664578168,
+            "value": 11.997899832289084
+          }
+        ],
+        "seed": "0",
+        "status": "PASS",
+        "unrepairedRetest": false
+      },
+      "workbench": {
+        "bottomInspectable": 82,
+        "bottomTargets": 82,
+        "constructionMillis": 7,
+        "copper": {
+          "bottomTrace": "copper/edge/125",
+          "topTrace": "copper/edge/100",
+          "viaPad": "RDA.1",
+          "viaSurface": "hole/18:p07-via/A_CMD/47/1TOP/hole/18:p07-via/A_CMD/47/1BOTTOM"
+        },
+        "face": "TOP",
+        "family": "RB30_CONTROL",
+        "hypothesisCount": 5,
+        "layout": {
+          "height": 1985,
+          "width": 3562,
+          "x": 50,
+          "y": 50
+        },
+        "layoutSeed": "-5811592868239938363",
+        "normalAdmission": false,
+        "overviewLimits": {
+          "BOTTOM": [],
+          "TOP": []
+        },
+        "ownerRestored": false,
+        "packages": 33,
+        "padLimits": {
+          "BOTTOM": [],
+          "TOP": []
+        },
+        "pads": 82,
+        "physicalPolicy": "MEDIUM_BOARD@1",
+        "prototypeRetained": true,
+        "qualificationMillis": 29360,
+        "route": "P07_FULLER_TWO_LAYER",
+        "routingMillis": 20126,
+        "routingSeed": "6323369344316473384",
+        "runtimeAssertions": 377,
+        "schema": 1,
+        "seed": "0",
+        "selectedFault": "DRIVE_A_OPEN",
+        "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+        "serviceMillis": 0,
+        "status": "PASS",
+        "topInspectable": 82,
+        "topTargets": 82,
+        "topology": "RB30_SEPARATE_DIRECT_A_BJT_B_BJT",
+        "visualPass": true
+      }
+    }
+  ]
+}

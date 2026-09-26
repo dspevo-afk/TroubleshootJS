@@ -1,0 +1,11 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+CURRENT_CONTRACT_FAILURE: VERIFIER_INFRASTRUCTURE: VERIFIER_INFRASTRUCTURE: Bounded process '<JDK8>\bin\java.exe' exceeded 60000ms; logs retained at '<task-temp>\TroubleshootJS\verify-process-b755a5dccae347cc860d70831a4b3bc8'. Bounded-process evidence: '<task-temp>\TroubleshootJS\verify-process-b755a5dccae347cc860d70831a4b3bc8'.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

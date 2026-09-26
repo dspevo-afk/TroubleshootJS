@@ -2434,14 +2434,20 @@ provider-selected medium policy routes all 12 sampled seeds, including six
 held-out. Final-source compiled production-workbench inspection passes for a
 representative and held-out seed, and the maintained JDK 8 native suite passes
 66 Java suites plus independent oracles and cleanup.
-No Q30 family is admitted for normal play. Diagnostic, live service and
-compiled-player qualification remain unproved.
+No Q30 family is admitted for normal play. The bounded actual diagnosis/service
+continuation is PASS: all five faults on seeds 0 and 37 pass native and compiled
+observation, physical service and four-input customer retest. The final native
+rerun passes 4,249 assertions after the full native67 gate, GWT5 passes, all
+20 fault pairs are distinguishable, and a real visible meter/lift/replace/retest
+flow passes. This remains developer-only evidence, not D01 admission or the
+required 20–40-part structural corpus. Medium admission, broader repair/replay,
+normal-player privacy and cold/warm performance remain blocked/unstarted.
 See [Q30 evidence](task-evidence/Q30/README.md).
 
 #### Q30-P1 — Medium-board floorplanning and two-layer physical policy
 
-**Status:** Repair candidate passes the required gates; independent acceptance
-is pending. Review of commit `98c3a75` rejected a generic floorplanner defect:
+**Status:** PASS — independently accepted at
+`fac582c1150273c01d09bc704dd796c1bf49a135`. Review of commit `98c3a75` rejected a generic floorplanner defect:
 opposing edge anchors in one semantic region produced a non-finite hint and
 could reject valid medium placements. The generic finite-hint repair and a
 20-part regression now pass the focused and full native suites, five-permutation

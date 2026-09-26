@@ -91,6 +91,61 @@ final class Rb30TopologyValidator {
         if (decisionCount != 2 || regulatorCount != 1 || relayCount != 2)
             throw invalid("duplicate or missing live functional role");
         requireElementCensus(candidate);
+        requireFaultOwners(candidate);
+    }
+
+    /** Verify all five answer-blind options have distinct executable physical owners. */
+    private static void requireFaultOwners(Rb30Generator.Candidate candidate) {
+        String[] ids = { "DREV_OPEN", "REN_OPEN", "SENSOR_A_OPEN",
+            "DRIVE_A_OPEN", "RELAY_B_COIL_OPEN" };
+        String[] owners = { "DREV", "REN", "RSA", "RDA", "KB" };
+        if (candidate.faultCandidates == null || candidate.faultCandidates.size() != ids.length)
+            throw invalid("Q30 must retain exactly five fault candidates");
+        boolean selectedFound = false;
+        for (int index = 0; index < ids.length; index++) {
+            GeneratedFaultCandidate fault = candidate.faultCandidates.get(index);
+            if (fault == null || !ids[index].equals(fault.getFault().getId()) ||
+                    !owners[index].equals(fault.getFault().getTargetComponentId()) ||
+                    !fault.isAdmitted())
+                throw invalid("noncanonical or unserviceable fault candidate: " + ids[index]);
+            PhysicalBoardSlot slot = candidate.runtime.getSlot(owners[index]);
+            PhysicalBoardInstallationProvider.Scoped declaration =
+                candidate.runtime.getScopedMutationCapability(owners[index]);
+            WorkbenchPartsProvider parts =
+                candidate.runtime.getWorkbenchPartsProvider(owners[index]);
+            if (slot == null || slot.getInstalledPart() == null ||
+                    declaration == null || declaration.getMutationSlot() == null ||
+                    declaration.getMutationSlot().getPhysicalSlot() != slot ||
+                    parts == null || parts.getCatalogEntries().isEmpty())
+                throw invalid("fault owner has no installed scoped catalog service: " +
+                    owners[index]);
+            PhysicalMutationSlot scope = declaration.getMutationSlot();
+            if (scope == null || scope.getPhysicalSlot() != slot ||
+                    !owners[index].equals(scope.getComponentId()))
+                throw invalid("fault owner has stale mutation slot: " + owners[index]);
+            for (CircuitElm helper : fault.getPrivateSimulationElements()) {
+                for (String componentId : candidate.board().getComponentIds())
+                    if (candidate.assembly.components.isElementBoundToComponent(
+                            componentId, helper))
+                        throw invalid("private fault helper is also component-bound: " +
+                            componentId);
+            }
+            if (fault.getBinding() == candidate.selectedFault) {
+                selectedFound = true;
+                PhysicalPart<?> installed = slot.getInstalledPart();
+                if (!(installed instanceof GeneratedFaultOwningPart) ||
+                        !((GeneratedFaultOwningPart) installed).ownsGeneratedFault(
+                            candidate.selectedFault))
+                    throw invalid("selected fault has a stale physical owner: " + owners[index]);
+            } else if (slot.getInstalledPart() instanceof GeneratedFaultOwningPart &&
+                    ((GeneratedFaultOwningPart) slot.getInstalledPart()).ownsGeneratedFault(
+                        candidate.selectedFault)) {
+                throw invalid("selected fault has multiple physical owners");
+            }
+            GeneratedFaultServiceabilityAdmission.validateCandidate(fault);
+        }
+        if (!selectedFound)
+            throw invalid("selected fault is not an owned member of the population");
     }
 
     /** Every published solver element has a declared physical or external owner. */

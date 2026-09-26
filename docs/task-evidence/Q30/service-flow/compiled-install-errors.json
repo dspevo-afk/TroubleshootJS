@@ -1,0 +1,242 @@
+[
+  {
+    "level": "log",
+    "message": "converged after 7 iterations, timeStep = 0.000005",
+    "timestamp": "2026-09-26T01:11:57.171Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "converged after 21 iterations, timeStep = 0.000005",
+    "timestamp": "2026-09-26T01:11:57.171Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 4 unconnected",
+    "timestamp": "2026-09-26T01:11:57.171Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 4 unconnected",
+    "timestamp": "2026-09-26T01:11:57.171Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 4 unconnected",
+    "timestamp": "2026-09-26T01:11:57.171Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 4 unconnected",
+    "timestamp": "2026-09-26T01:11:57.171Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 8 unconnected",
+    "timestamp": "2026-09-26T01:11:57.171Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 9 unconnected",
+    "timestamp": "2026-09-26T01:11:57.171Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 8 unconnected",
+    "timestamp": "2026-09-26T01:11:57.171Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 9 unconnected",
+    "timestamp": "2026-09-26T01:11:57.171Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 8 unconnected",
+    "timestamp": "2026-09-26T01:11:57.171Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 9 unconnected",
+    "timestamp": "2026-09-26T01:11:57.171Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "converged after 7 iterations, timeStep = 0.000005",
+    "timestamp": "2026-09-26T01:11:57.171Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 11 unconnected",
+    "timestamp": "2026-09-26T01:11:57.171Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 56 unconnected",
+    "timestamp": "2026-09-26T01:11:57.171Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 58 unconnected",
+    "timestamp": "2026-09-26T01:11:57.171Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "converged after 25 iterations, timeStep = 0.000005",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "converged after 6 iterations, timeStep = 0.000005",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "converged after 16 iterations, timeStep = 0.000005",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 11 unconnected",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 56 unconnected",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 58 unconnected",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "converged after 10 iterations, timeStep = 0.000005",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 11 unconnected",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 56 unconnected",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 58 unconnected",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "converged after 16 iterations, timeStep = 0.000005",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 11 unconnected",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 56 unconnected",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 58 unconnected",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "converged after 19 iterations, timeStep = 0.000005",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 11 unconnected",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 56 unconnected",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 58 unconnected",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "converged after 19 iterations, timeStep = 0.000005",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 11 unconnected",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 56 unconnected",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "node 58 unconnected",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "exception in runCircuit java.lang.IllegalStateException: Generated board verification failed for RB30_CONTROL/RB30_SEPARATE_DIRECT_A_BJT_B_BJT, seed 0: Healthy Q30 failed four input conditions",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  },
+  {
+    "level": "log",
+    "message": "exception in runCircuit java.lang.IllegalStateException: Q30 challenge is not ready",
+    "timestamp": "2026-09-26T01:11:57.172Z",
+    "url": "circuitjs1-0.js"
+  }
+]

@@ -1993,6 +1993,46 @@ materially. This candidate is structural and developer-only: it does not relax
 P09 normal admission or register Q30 in the player catalog. The selected policy
 and its contract enter the board/dependency identity; Q30's provider plan
 records the policy with its exact placement and routing seeds.
+
+The developer-only Q30 challenge now carries the actual five-candidate fault
+population. `Rb30Behavior` owns sensor operations and the four-condition
+customer function recipe; readings come from live CircuitJS endpoints.
+`Rb30DiagnosticProvider` declares 37 DC observations and exact hypothesis
+replay using the sealed medium layout. `Rb30Generator` keeps generated resistor
+fault switches separate from component-bound secondary damage paths, so a
+removed original retains its fault while replacement uses the existing
+physical service owners. Scoped relay and decision adapters retain their
+individual slot ownership. Output connectors declare their external load
+harnesses so service construction preserves the actual 180 ohm CircuitJS loads.
+Q30's optional relay service predicate checks all five live board pads against
+their local control/load returns and the installed target coil current. It
+retains the strict 50 mV / 1 uA boundaries while allowing isolated upstream
+capacitors to retain charge. The default E03 whole-board discharge predicate
+and instrument energy checks are unchanged. Live repair-status queries only
+observe the current graph; explicit retests and temporal profiles drive the
+complete four-condition recipe. `Q30ServiceDeveloperVerifier` exercises those
+production observations and workbench operations; it issues no D01 admission
+receipt. D01 and the two-layer developer admission guard remain unchanged,
+and Q30 remains absent from the normal catalog.
+
+The Q30 developer entry selects CircuitJS adaptive stepping with a 5 us maximum
+and 50 ps minimum after capturing its predecessor snapshot; it reports those
+actual settings and restores them with the snapshot on owned cleanup. This
+qualification configuration also enters the temporal dependency and native
+service fixture. It does not change CircuitJS's shared models or work budgets.
+After the healthy four-condition proof, the profile drives both sensors LOW
+before fault application, then HIGH for fault verification. This establishes a
+real electrical initial state for the regenerative variant: opening RSA after
+it has latched HIGH can otherwise hide the fault at a HIGH-only observation.
+No decision state is reset directly. Developer settlement uses the shared
+ready-and-settled boundary; native contracts mirror both preparation callbacks.
+The staged developer service verifier binds its timer work and failure cleanup
+to the exact owner, graph, challenge and modification controller. It uses the
+production observation cursor and physical capabilities, with explicit absence
+of relay lead lifting. The retained developer sidebar is widened for its real
+controls. Ordinary CircuitJS UI stepping remains active; Q30 adds only 0.1 ms
+per live frame, while explicit input profiles retain their full 30 ms interval.
+
 `PcbAccessPlanner` requires every escape to reach one shared free channel;
 final compaction preserves access margins and revalidates those constraints.
 Stable IDs such as `R1.1`, `LED1.K`, and `D1.A` are copied into the resulting

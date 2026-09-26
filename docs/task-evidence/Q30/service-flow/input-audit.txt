@@ -1,0 +1,16 @@
+Input audit: final candidate versus full native67 run
+Only the named changed inputs differ; all other modified production/test/runner inputs match.
+Other checkout production/test/runner files remain at the accepted base.
+Changed inputs require the fresh native Q30 run and final GWT/compiled gates below.
+UNCHANGED src/com/lushprojects/circuitjs1/client/CirSim.java
+CHANGED src/com/lushprojects/circuitjs1/client/Q30DeveloperWorkbenchVerifier.java
+CHANGED src/com/lushprojects/circuitjs1/client/Q30ServiceDeveloperVerifier.java
+CHANGED src/com/lushprojects/circuitjs1/client/Rb30Behavior.java
+UNCHANGED src/com/lushprojects/circuitjs1/client/Rb30DiagnosticProvider.java
+UNCHANGED src/com/lushprojects/circuitjs1/client/Rb30Generator.java
+UNCHANGED src/com/lushprojects/circuitjs1/client/Rb30RelayService.java
+UNCHANGED src/com/lushprojects/circuitjs1/client/Rb30TopologyValidator.java
+UNCHANGED src/com/lushprojects/circuitjs1/client/ReplaceableRelayCapability.java
+CHANGED tests/contracts/Q30ServiceFlowContractTest.java
+UNCHANGED tests/contracts/Rb30PhysicalMetadataContractTest.java
+UNCHANGED scripts/verify-current-contracts.ps1

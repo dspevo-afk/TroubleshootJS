@@ -16,6 +16,14 @@ final class Rb30RelayService implements PhysicalBoardRuntimeCapability,
     static final String CAPABILITY_PREFIX = "RB30_RELAY_SERVICE_";
     static final String WORKBENCH_PREFIX = "RB30_RELAY_WORKBENCH_";
     static final String CATALOG_PREFIX = "RB30_RELAY_STOCK_";
+    private static final double DISCHARGED_VOLTS = .05;
+    private static final ReplaceableRelayCapability.DischargeGuard DISCHARGE_GUARD =
+        new ReplaceableRelayCapability.DischargeGuard() {
+            public boolean isDischarged(GeneratedBoardInstance owner,
+                    String componentId) {
+                return Rb30RelayService.isDischarged(owner, componentId);
+            }
+        };
 
     private final String componentId;
     private final String capabilityId;
@@ -34,7 +42,73 @@ final class Rb30RelayService implements PhysicalBoardRuntimeCapability,
         workbenchId = WORKBENCH_PREFIX + componentId;
         fiveVoltCatalogId = CATALOG_PREFIX + componentId + "_5V";
         twelveVoltCatalogId = CATALOG_PREFIX + componentId + "_12V";
-        e03 = new ReplaceableRelayCapability(physical, original, attachments);
+        e03 = new ReplaceableRelayCapability(physical, original, attachments,
+            DISCHARGE_GUARD);
+    }
+
+    /** Q30 relay service is gated by energy at this relay's five physical pins. */
+    static boolean isDischarged(GeneratedBoardInstance owner,
+            String componentId) {
+        if (owner == null || !Rb30Plan.FAMILY_ID.equals(owner.getCircuitFamilyId()) ||
+                !("KA".equals(componentId) || "KB".equals(componentId)))
+            return false;
+        BoardComponent component = owner.getBoard().getComponent(componentId);
+        if (component == null || !PhysicalPackages.RELAY_SPDT.isEquivalentTo(
+                component.getPhysicalPackage()) ||
+                owner.getPhysicalBoardRuntime().getSlot(componentId) == null)
+            return false;
+
+        Vector<CircuitElm> elements = owner.getSimulationElements();
+        double controlReturn = padVoltage(owner, elements, "J1.2");
+        double loadReturn = padVoltage(owner, elements, "JLOAD.2");
+        double[] pinVoltages = new double[RelaySpecification.TERMINALS.length];
+        for (int index = 0; index < pinVoltages.length; index++) {
+            String terminal = RelaySpecification.TERMINALS[index];
+            double reference = index < 2 ? controlReturn : loadReturn;
+            pinVoltages[index] = padVoltage(owner, elements,
+                componentId + "." + terminal) - reference;
+        }
+
+        double coilCurrent = 0;
+        PhysicalPart<?> installed = owner.getPhysicalBoardRuntime()
+            .getInstalledPart(componentId);
+        if (installed != null) {
+            if (!(installed instanceof PhysicalRelayPart)) return false;
+            ServiceRelayElm relay = ((PhysicalRelayPart) installed).getElement();
+            if (!elements.contains(relay)) return false;
+            coilCurrent = relay.coilCurrent;
+        }
+        return safeReadings(pinVoltages, coilCurrent);
+    }
+
+    /** Values are each terminal's voltage relative to its own local return. */
+    static boolean safeReadings(double[] terminalVolts, double coilAmps) {
+        if (terminalVolts == null ||
+                terminalVolts.length != RelaySpecification.TERMINALS.length ||
+                !PowerDomainContract.finite(coilAmps) ||
+                Math.abs(coilAmps) >= RelayOutputBehavior.DISCHARGED_AMPS)
+            return false;
+        for (int index = 0; index < terminalVolts.length; index++)
+            if (!PowerDomainContract.finite(terminalVolts[index]) ||
+                    Math.abs(terminalVolts[index]) >= DISCHARGED_VOLTS)
+                return false;
+        return true;
+    }
+
+    private static double padVoltage(GeneratedBoardInstance owner,
+            Vector<CircuitElm> elements, String padId) {
+        if (owner.getBoard().getPad(padId) == null) return Double.NaN;
+        CircuitMeasurementEndpoint endpoint = owner.getSimulationBindings()
+            .getEndpoint(padId);
+        if (!(endpoint instanceof CircuitPostMeasurementEndpoint))
+            return Double.NaN;
+        CircuitPostMeasurementEndpoint post =
+            (CircuitPostMeasurementEndpoint) endpoint;
+        CircuitElm element = post.getElement();
+        if (!elements.contains(element) || post.getPostIndex() < 0 ||
+                post.getPostIndex() >= element.getPostCount())
+            return Double.NaN;
+        return element.getPostVoltage(post.getPostIndex());
     }
 
     public String getCapabilityId() { return capabilityId; }

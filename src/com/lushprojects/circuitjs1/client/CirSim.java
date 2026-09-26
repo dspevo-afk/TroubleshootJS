@@ -776,6 +776,10 @@ MouseOutHandler, MouseWheelHandler {
 	    VERTICALPANELWIDTH = 166;
 	if (VERTICALPANELWIDTH < 128)
 	    VERTICALPANELWIDTH = 128;
+	// A retained Q30 developer challenge has the real service catalogs and
+	// input buttons. Keep their hit targets inside the debug sidebar.
+	if (troubleshootQ30Bench)
+	    VERTICALPANELWIDTH = Math.min(360, width / 2);
 	// Normal workbench controls occupy the top dock; its canvas keeps the full width.
 	if (!troubleshootDebug)
 	    VERTICALPANELWIDTH = 0;

@@ -4,14 +4,23 @@ import java.util.Vector;
 
 /** Relay-specific five-terminal adapter over the A08 mutation transaction. */
 final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability, PhysicalBoardInstallationProvider.Scoped, WorkbenchPartsProvider {
+    interface DischargeGuard {
+        boolean isDischarged(GeneratedBoardInstance owner, String componentId);
+    }
     static final String ID="REPLACEABLE_RELAY";
     static final String COIL_5V="RELAY_5V", COIL_12V="RELAY_12V";
     private final RelaySlot slot;
     private final PhysicalPartInventory<PhysicalRelayPart> inventory;
+    private final DischargeGuard dischargeGuard;
     ReplaceableRelayCapability(PhysicalBoardSlot physical,PhysicalRelayPart original,WireElm[] attachments) {
+        this(physical, original, attachments, null);
+    }
+    ReplaceableRelayCapability(PhysicalBoardSlot physical,PhysicalRelayPart original,
+            WireElm[] attachments, DischargeGuard dischargeGuard) {
         slot=new RelaySlot(physical,original,attachments);
         inventory=new PhysicalPartInventory<PhysicalRelayPart>(physical.getRuntime(),physical.getComponentId()+"_RELAYS",PhysicalRelayPart.class);
         inventory.add(original);
+        this.dischargeGuard = dischargeGuard;
     }
     public String getCapabilityId() { return ID; }
     public String getComponentId() { return slot.getComponentId(); }
@@ -59,7 +68,8 @@ final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability
             sim.getBoardModificationController()==modifications && sim.isChallengeInteractionEnabled() &&
             !sim.activeMeasurementOverlay && sim.getBoardPowerController().isElectricallyUnpowered() &&
             !owner.getPhysicalBoardRuntime().isMutationInProgress() && !owner.getPhysicalBoardRuntime().isMutationQuarantined() &&
-            RelayOutputBehavior.isDischarged(owner);}
+            (dischargeGuard == null ? RelayOutputBehavior.isDischarged(owner) :
+                dischargeGuard.isDischarged(owner, getComponentId()));}
         public boolean isAvailable(WorkbenchOperation op,WorkbenchCapabilityContext context){
             if(!supports(op)||!safe())return false;
             if(WorkbenchOperation.REMOVE.equals(op.getId())) return !slot.isEmpty() && (op.getPart()==null||op.getPart()==slot.getInstalledPart());

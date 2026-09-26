@@ -3,8 +3,22 @@
 **Current status:** Q30 remains unregistered and unaccepted. Independent review
 rejected Q30-P1 commit `98c3a75` because ordinary opposing edge connectors in
 one region could produce a NaN placement hint. The generic repair and 20-part
-regression now pass all required reruns; **P1 is ready for another independent
-review, not independently accepted**. [Repair evidence](p1-review-repair/README.md).
+regression passed all required reruns; **P1 is independently PASS / ACCEPTED at
+`fac582c1150273c01d09bc704dd796c1bf49a135`**. [Repair evidence](p1-review-repair/README.md).
+
+## Actual diagnosis and service continuation
+
+The bounded continuation connects all five actual fault hypotheses to the
+production observation executor, existing physical service capabilities and
+a four-condition customer retest. It includes exact hypothesis replay, original
+fault ownership after reinstall, and a scoped relay discharge guard.
+[Current validation, failures and limits](service-flow/README.md) records the
+complete seed-0/37 census and visible player checks. Full Q30 stays BLOCKED;
+medium-board D01 admission, the 20–40-part corpus, broader repair/replay and
+cold/warm performance remain unfinished. Q60 is not started.
+
+## Accepted P1 physical checkpoint
+
 The earlier P1 physical results remain: the unchanged fuller two-layer router
 accepts **54/72** matched placements after generic medium-board floorplanning,
 versus **6/72** before; the provider-selected
@@ -13,8 +27,8 @@ JDK 8/GWT and two compiled production-workbench boards pass, with 82/82 pad
 targets on both faces, real via/endpoint checks, and visible Browser face,
 zoom, pan and DC-probe input. The final-source maintained JDK 8 native suite
 passed 66 Java suites, independent oracles, report protocol and cleanup.
-D01 fault proof, complete service, player repair/retest, normal admission and performance
-qualification remain unproved. See the [floorplan diagnosis](floorplanning/README.md),
+At that P1 checkpoint, D01 fault proof, complete service, player repair/retest,
+normal admission and performance qualification were unproved. See the [floorplan diagnosis](floorplanning/README.md),
 [two-layer before/after receipts](two-layer-investigation/README.md), and
 [compiled inspection](inspectability/README.md). Earlier compiled failures and
 their repairs are retained in the inspection evidence.
@@ -24,7 +38,7 @@ The earlier evidence table below records the **pre-P1 Q30 blockage**. Its
 candidate's route yield. The separate [brownout repair](brownout-investigation/README.md)
 remains independent of the physical work.
 
-| Current Q30-P1 check | Result and limit |
+| Accepted Q30-P1 check | Result and limit |
 | --- | --- |
 | Matched actual board | 54/72 P07 fuller successes across all 12 seeds, up from 6/72. P05 and the other two P07 policies remain 0/72. Exact inputs and failure rows are preserved in the matched receipt. |
 | Provider-selected policy | 12/12 seeds, including 6/6 held-out; six deterministic placements, at most three P05 and three P07 routes; 17–34 plated vias (median 29), selected area median 6,454,500, aggregate expansions median 4,069,854. No factory links, router-budget increase or normal admission. |
@@ -32,6 +46,9 @@ remains independent of the physical work.
 | Regression gate | PASS on the repair source: six focused contracts, then the complete JDK 8 maintained native suite with 66 Java suites, independent seed/value/role oracles, report protocol and verified scratch cleanup. The two historical full-suite timeouts remain failures at their original checkpoint. See [repair log and receipts](p1-review-repair/README.md). |
 
 ## Base, scope, and design
+
+The sections below retain the original pilot evidence and its limits. The
+continuation above and its linked receipts are the current service checkpoint.
 
 All Q30 work started from accepted commit
 `e0c368855a3891acd4673e94ce9afa732390e2bf` in a separate worktree. The
@@ -167,7 +184,7 @@ At this earlier checkpoint the exact-board production-timestep E02/E04 brownout
 transition converged on four tested seeds, but Q30 still needed a versioned
 medium-board physical policy. P1 subsequently added an internally tested medium
 policy and improved fuller routing from 6/72 to 54/72; independent acceptance
-is still pending after the review repair. Current P09 limits
+was pending at that checkpoint and is now recorded above. Current P09 limits
 still do not admit Q30. D01 hypotheses, physical service, compiled normal-player
 repair/retest, replay and cold/warm performance remain unqualified. No
 family-specific router exception or silent P09 expansion was introduced.

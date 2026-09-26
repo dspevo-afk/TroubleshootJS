@@ -1,4 +1,51 @@
-# Current checkpoint: Q30-P1 review repair validated; full Q30 BLOCKED
+# Current checkpoint: Q30 actual service slice complete; full Q30 BLOCKED
+
+Q30-P1 is independently **PASS / ACCEPTED** at
+`fac582c1150273c01d09bc704dd796c1bf49a135`. This continuation's candidate is on
+`codex/q30-multirail-qualification`, with that accepted commit as its parent;
+`task-evidence/Q30/service-flow/candidate-inputs.sha256` identifies its final
+production/test/runner inputs. Full Q30 remains **BLOCKED and unregistered**.
+
+The bounded slice connects all five actual hypotheses to production diagnostic
+observations, physical service and a four-input customer retest. It preserves
+original-part faults through reinstall, fixes the external output-load harness,
+and scopes relay discharge checks to real target-pin voltage/coil current.
+The developer entry explicitly selects adaptive CircuitJS 5 us / 50 ps stepping.
+Healthy preparation finishes at real LOW inputs before fault application, then
+faulted preparation drives HIGH, covering the held-out regenerative latch.
+P09, MEDIUM_BOARD@1, the 48-via cap, shared models and solver budgets are unchanged.
+
+Validation: PASS full maintained native67 plus independent oracles, report and
+non-live listener checks; PASS final three affected suites (4,249 assertions,
+10/10 service cases) after an explicit input-reuse audit; PASS actual final-source
+JDK8/GWT5 (85.395 s compile / 1.405 s link); PASS same-build compiled 10/10
+(37 samples each, all 20 fault pairs distinguishable); PASS independent reader
+and seven rejection canaries; PASS real visible meter, unrepaired retest,
+lift/reconnect, replacement and repaired retest with four inspected screenshots.
+[Evidence, attempts and limits](task-evidence/Q30/service-flow/README.md).
+
+Root reviewed the integrated diff; independent source reviews found no remaining
+blocker in this bounded scope. A separate reviewer ran the receipt canaries.
+Native readiness is a UI adapter, not compiled lifecycle proof. The developer
+service timer requires no concurrent manual Reset/power/input; same-owner
+cancellation/input locking is a follow-up. Its early workbench timing excludes
+service; service receipts carry their own elapsed time. No full D01, corpus,
+normal-player admission or cold/warm performance PASS is claimed.
+
+Resources: final preview PID 37052 (creation ticks 639259887579316188) stopped
+with identity verification and positive release of port 8903. Native/reader
+scratch cleanup and final live-tab cleanup pass. Three earlier crashed Browser
+tabs have unproved cleanup because Browser blocks their crash URLs. The dirty
+ordinary checkout is untouched; only intended isolated-worktree changes belong
+to this candidate. Earlier failures and historical checkpoints remain preserved.
+
+This checkpoint accompanies the qualified service implementation commit;
+publication SHA and notification outcome belong to its completion handoff.
+The next unstarted Q30 work is production medium-board D01 solvability/admission, broader
+20–40-part corpus and repair/replay qualification, then cold/warm performance
+and normal-player acceptance. **Q60 is unstarted.**
+
+# Historical checkpoint: Q30-P1 review repair validated; full Q30 BLOCKED
 
 The Q30-P1 candidate is in the isolated `codex/q30-multirail-qualification`
 branch, started from accepted base `e0c368855a3891acd4673e94ce9afa732390e2bf`.

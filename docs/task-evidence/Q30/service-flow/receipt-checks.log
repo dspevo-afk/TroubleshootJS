@@ -1,0 +1,11 @@
+COMMAND: python -B docs/task-evidence/Q30/service-flow/check_receipts_canaries.py docs/task-evidence/Q30/service-flow/compiled-service-receipts.json
+PASS: compiled Q30 complete population rows=10 samplesPerRow=37 distinctPairs=20; normal/D01 admission=false
+PASS: reader rejects missing case
+PASS: reader rejects duplicate case
+PASS: reader rejects boolean measurement
+PASS: reader rejects understated tolerance
+PASS: reader rejects mixed build
+PASS: reader rejects wrong output truth
+PASS: reader rejects indistinguishable hypotheses
+PASS: seven negative reader canaries; exact task-owned scratch files removed
+EXIT: 0

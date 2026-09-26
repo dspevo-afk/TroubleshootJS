@@ -6,11 +6,12 @@ import java.util.Vector;
  * Installs one real Q30 assembly in the production PCB workbench for visual
  * developer inspection.  This route is deliberately separate from normal
  * challenge admission: it uses the provider's live CircuitJS assembly, the
- * selected medium physical policy, and an explicit developer diagnostic
- * fixture contract.
+ * selected medium physical policy, and the actual provider challenge. It
+ * remains a developer qualification route, without normal admission.
  */
 final class Q30DeveloperWorkbenchVerifier {
     private static int checks;
+    private static long qualificationStarted, constructionMillis, routingMillis, serviceMillis;
 
     private static void require(boolean ok, String why) {
         checks++;
@@ -22,6 +23,8 @@ final class Q30DeveloperWorkbenchVerifier {
                 !sim.developerVerifierRunning)
             throw new IllegalStateException("Q30 requires explicit developer verification");
         checks = 0;
+        qualificationStarted = System.currentTimeMillis();
+        constructionMillis = routingMillis = serviceMillis = 0;
         final long seed;
         try {
             seed = parseSeed(requestedSeed);
@@ -69,14 +72,19 @@ final class Q30DeveloperWorkbenchVerifier {
             phase = "plan";
             plan = Rb30Plan.resolve(seed);
             phase = "candidate-construction";
-            Rb30Generator.Candidate candidate = new Rb30Generator().construct(plan);
+            long phaseStarted = System.currentTimeMillis();
+            Rb30Generator.Candidate candidate = new Rb30Generator().construct(plan,
+                com.google.gwt.user.client.Window.Location.getParameter("tsjQ30Fault"));
+            constructionMillis = System.currentTimeMillis() - phaseStarted;
             require(MediumBoardPhysicalPolicy.selected(
                 candidate.board().getPlacementConstraints()),
                 "candidate did not select the medium physical policy");
 
             phase = "route-selection";
+            phaseStarted = System.currentTimeMillis();
             routed = new SeededPcbLayoutGenerator().generateWithPolicyResult(
                 candidate.board(), plan.layoutSeed, plan.routingSeed);
+            routingMillis = System.currentTimeMillis() - phaseStarted;
             if (!routed.accepted())
                 throw new IllegalStateException("Q30 medium policy rejected seed " +
                     Long.toString(seed) + ": " + String.valueOf(routed.getFailure()));
@@ -93,13 +101,6 @@ final class Q30DeveloperWorkbenchVerifier {
                 "medium policy selected " + String.valueOf(statistics.selectedRoutePolicy) +
                     "; Q30 requires " + MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER);
 
-            phase = "developer-contract";
-            GeneratedChallengeBehaviorContract behavior = behaviorContract();
-            Vector<GeneratedFaultCandidate> developerFaults =
-                new Vector<GeneratedFaultCandidate>();
-            GeneratedDiagnosticSolvabilityContract diagnostic =
-                GeneratedDiagnosticSolvabilityContract.forDeveloperFixture(
-                    Rb30Plan.FAMILY_ID, plan.topology(), seed, developerFaults);
             /*
              * The assembly owns every element, endpoint and physical service
              * binding.  The constructor remains the authority for
@@ -107,15 +108,8 @@ final class Q30DeveloperWorkbenchVerifier {
              * verifier does not bypass or weaken those checks.
              */
             phase = "generated-board-constructor";
-            owner = new GeneratedBoardInstance(candidate.assembly.board,
-                candidate.assembly.elements, seed, Rb30Plan.FAMILY_ID,
-                plan.topology(), "Q30 developer workbench; live solver board",
-                candidate.assembly.components, candidate.assembly.power,
-                candidate.assembly.connections, behavior, layout,
-                candidate.assembly.specifications, null,
-                new GeneratedComponentOperationalStates(), null, null,
-                candidate.runtime, null, true, developerFaults,
-                diagnostic);
+            owner = new Rb30Generator().assemble(candidate, layout);
+            GeneratedDiagnosticSolvabilityAdmission.validateStructural(owner);
 
             phase = "fresh-owner-preflight";
             requireQ30Disjoint(originalOwner, owner);
@@ -132,10 +126,17 @@ final class Q30DeveloperWorkbenchVerifier {
             sim.undoStack = q30Undo;
             sim.redoStack = q30Redo;
             phase = "generated-runtime-install";
-            sim.installGeneratedBoardForDeveloperVerification(owner);
+            // This stiff relay/regulator qualification uses ordinary CircuitJS
+            // adaptive stepping. Never inherit the predecessor circuit's flags.
+            // The captured snapshot restores these settings on owned cleanup.
+            sim.timeStep = sim.maxTimeStep = 5e-6;
+            sim.minTimeStep = 50e-12;
+            sim.adjustTimeStep = true;
+            sim.installGeneratedChallengeForDeveloperVerification(owner);
             sim.setSimRunning(true);
             phase = "solver-settle";
             settle(sim);
+            require(sim.getGeneratedChallengeController().isReady(), "challenge is not ready");
             phase = "live-binding-check";
             verifyLiveBindings(owner);
 
@@ -188,7 +189,7 @@ final class Q30DeveloperWorkbenchVerifier {
                 sim.updateCircuit();
                 publishTargets(owner, renderer, topTargets, bottomTargets,
                     topInspectable, bottomInspectable);
-                publishReport(owner, plan, owner.getPcbLayout(),
+                publishReport(sim, owner, plan, owner.getPcbLayout(),
                     statistics, renderer, false, true, "PASS", true,
                     topTargets, bottomTargets, topInspectable, bottomInspectable,
                     topPadLimits, bottomPadLimits, topOverviewLimits,
@@ -213,7 +214,7 @@ final class Q30DeveloperWorkbenchVerifier {
         if (failure == null && !keepBench) {
             try {
                 phase = "runtime-report";
-                publishReport(owner, plan, owner.getPcbLayout(),
+                publishReport(sim, owner, plan, owner.getPcbLayout(),
                     routed.getStatistics(), renderer, restored, false,
                     "PASS_RUNTIME", false, topTargets, bottomTargets,
                     topInspectable, bottomInspectable, topPadLimits,
@@ -260,86 +261,59 @@ final class Q30DeveloperWorkbenchVerifier {
             }
             rethrow(failure);
         }
+        if (retained && "true".equals(com.google.gwt.user.client.Window.Location.getParameter("tsjQ30Service")))
+            scheduleService(sim, saved, owner, originalOwner, q30Elements,
+                q30Adjustables, q30Undo, q30Redo, plan, routed);
         return retained;
     }
 
-    /**
-     * The generic fresh-installation preflight assumes every owner has a
-     * normal challenge family state.  The Q30 bench intentionally has no
-     * challenge definition or family state, so keep the same identity and
-     * physical-owner checks without asking that developer fixture for a
-     * customer operation catalog.
-     */
-    private static void requireQ30Disjoint(GeneratedBoardInstance original,
-            GeneratedBoardInstance candidate) {
-        require(original != null, "fresh-owner preflight has no original owner");
-        require(candidate != null && original != candidate,
-            "fresh installation reused the current owner");
-        require(original.getBoard() != candidate.getBoard(),
-            "fresh installation reused the board owner");
-        require(original.getPhysicalBoardRuntime() != candidate.getPhysicalBoardRuntime(),
-            "fresh installation reused the physical runtime");
-        require(original.getSimulationBindings() != candidate.getSimulationBindings(),
-            "fresh installation reused simulation bindings");
-        require(original.getComponentBindings() != candidate.getComponentBindings(),
-            "fresh installation reused component bindings");
-        require(original.getConnectionBindings() != candidate.getConnectionBindings(),
-            "fresh installation reused connection bindings");
-        require(original.getExternalPowerBindings() != candidate.getExternalPowerBindings(),
-            "fresh installation reused external power bindings");
-        if (original.getPcbLayout() != null)
-            require(original.getPcbLayout() != candidate.getPcbLayout(),
-                "fresh installation reused PCB layout state");
-        if (original.getOperationalStates() != null)
-            require(original.getOperationalStates() != candidate.getOperationalStates(),
-                "fresh installation reused operational state");
-        if (original.getTemporalBehavior() != null)
-            require(original.getTemporalBehavior() != candidate.getTemporalBehavior(),
-                "fresh installation reused temporal behavior");
-        if (original.getChallengeDefinition() != null)
-            require(original.getChallengeDefinition() != candidate.getChallengeDefinition(),
-                "fresh installation reused challenge definition");
-        if (original.getFaultBinding() != null)
-            require(original.getFaultBinding() != candidate.getFaultBinding(),
-                "fresh installation reused a fault owner");
-        require(original.getBehaviorContract() != candidate.getBehaviorContract(),
-            "fresh installation reused a behavior owner");
-        if (original.getDiagnosticProvider() != null)
-            require(original.getDiagnosticProvider() != candidate.getDiagnosticProvider(),
-                "fresh installation reused a diagnostic provider");
-        if (candidate.getOperationalStates() != null)
-            candidate.getOperationalStates().requireOwnedBy(candidate.getSimulationElements());
-        if (candidate.getChallengeDefinition() != null) {
-            require(candidate.getChallengeDefinition().getBehaviorContract() ==
-                candidate.getBehaviorContract(),
-                "fresh definition references a foreign behavior owner");
-            require(candidate.getChallengeDefinition().getFaultBinding() ==
-                candidate.getFaultBinding(),
-                "fresh definition references a foreign fault owner");
-        }
-        if (candidate.getFamilyState() != null)
-            candidate.getFamilyState().requireOwnedBy(candidate);
-        if (candidate.getTemporalBehavior() != null)
-            candidate.getTemporalBehavior().requireOwnedBy(candidate);
-        Vector<CircuitElm> originalElements = original.getSimulationElements();
-        for (CircuitElm element : candidate.getSimulationElements())
-            require(!originalElements.contains(element),
-                "fresh installation reused a solver element");
-        for (PhysicalPart<?> part : candidate.getPhysicalBoardRuntime().getPhysicalParts())
-            for (PhysicalPart<?> old : original.getPhysicalBoardRuntime().getPhysicalParts()) {
-                require(old != part && old.getMountState() != part.getMountState(),
-                    "fresh installation reused a physical part");
-                for (PhysicalPartTerminal terminal : part.getTerminals())
-                    for (PhysicalPartTerminal prior : old.getTerminals())
-                        require(terminal != prior && terminal.getEndpoint() != prior.getEndpoint(),
-                            "fresh installation reused a terminal endpoint");
+    /** Keep asynchronous qualification cleanup tied to its exact saved owner. */
+    private static void scheduleService(final CirSim sim, final Task41SimulationSnapshot saved,
+            final GeneratedBoardInstance owner, final GeneratedBoardInstance originalOwner,
+            final Vector<CircuitElm> elements, final Vector<Adjustable> adjustables,
+            final Vector<String> undo, final Vector<String> redo, final Rb30Plan plan,
+            final MediumBoardPhysicalPolicy.Result routed) {
+        final BoardModificationController modifications = sim.getBoardModificationController();
+        final GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
+        Q30ServiceDeveloperVerifier.Completion completion = new Q30ServiceDeveloperVerifier.Completion() {
+            public void complete(Throwable failure, long elapsedMillis) {
+                if (sim.getGeneratedBoardInstance() != owner || sim.elmList != elements ||
+                        sim.getBoardModificationController() != modifications ||
+                        sim.getGeneratedChallengeController() != challenge)
+                    return; // A stale attempt cannot restore or publish over its successor.
+                serviceMillis = elapsedMillis;
+                if (failure == null) return;
+                boolean wasVerifying = sim.developerVerifierRunning;
+                boolean restored = false;
+                try {
+                    sim.developerVerifierRunning = true;
+                    // Stale qualification must never replace a successor board.
+                    if (sim.getGeneratedBoardInstance() == owner && sim.elmList == elements &&
+                            sim.getBoardModificationController() == modifications &&
+                            sim.getGeneratedChallengeController() == challenge) {
+                        CleanupResult result = cleanup(sim, saved, owner, originalOwner,
+                            elements, adjustables, undo, redo);
+                        restored = result.restored;
+                        failure = retain(failure, result.failure);
+                    }
+                    boolean stillRetained = sim.getGeneratedBoardInstance() == owner;
+                    publishCleanup(restored, stillRetained);
+                    publishFailure(owner.getSeed(), plan, routed, failure,
+                        "diagnostic-service-retest", restored, stillRetained);
+                } finally {
+                    sim.developerVerifierRunning = wasVerifying;
+                }
             }
-        for (PhysicalBoardRuntimeCapability capability :
-                candidate.getPhysicalBoardRuntime().getCapabilities())
-            require(!original.getPhysicalBoardRuntime().getCapabilities().contains(capability),
-                "fresh installation reused a physical capability");
+        };
+        try { Q30ServiceDeveloperVerifier.schedule(sim, owner, completion); }
+        catch (Throwable failure) { completion.complete(failure, 0); }
     }
 
+    /** Full challenge owners now use the shared disjoint-installation contract. */
+    private static void requireQ30Disjoint(GeneratedBoardInstance original,
+            GeneratedBoardInstance candidate) {
+        FreshGeneratedRuntimeInstallation.requireDisjoint(original, candidate);
+    }
     private static long parseSeed(String requestedSeed) {
         if (requestedSeed == null)
             return 0L;
@@ -558,33 +532,6 @@ final class Q30DeveloperWorkbenchVerifier {
         if (primary == null) return cleanup;
         if (cleanup != null && cleanup != primary) primary.addSuppressed(cleanup);
         return primary;
-    }
-
-    private static GeneratedChallengeBehaviorContract behaviorContract() {
-        return new GeneratedChallengeBehaviorContract() {
-            public void verifyHealthy(GeneratedBoardInstance instance,
-                    BoardPowerState powerState) {
-                verifyLiveBindings(instance);
-            }
-
-            public void verifyFaulted(GeneratedBoardInstance instance,
-                    BoardModificationController modifications,
-                    BoardPowerState powerState) {
-                verifyLiveBindings(instance);
-            }
-
-            public GeneratedRepairStatus getRepairStatus(GeneratedBoardInstance instance,
-                    BoardModificationController modifications,
-                    BoardPowerState powerState, boolean activeMeasurementOverlay) {
-                return GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
-            }
-
-            public boolean isFunctionallyRepaired(GeneratedBoardInstance instance,
-                    BoardModificationController modifications,
-                    BoardPowerState powerState, boolean activeMeasurementOverlay) {
-                return false;
-            }
-        };
     }
 
     /** Verify the actual pad-to-CircuitJS endpoint ownership and live readings. */
@@ -953,16 +900,10 @@ final class Q30DeveloperWorkbenchVerifier {
     }
 
     private static void settle(CirSim sim) {
-        for (int attempt = 0; attempt < 80; attempt++) {
-            sim.updateCircuit();
-            if (sim.stopMessage != null)
-                throw new IllegalStateException("Q30 solver stopped: " + sim.stopMessage);
-            if (sim.isGeneratedRuntimeSettled()) return;
-        }
-        throw new IllegalStateException("Q30 bounded solver settlement exhausted");
+        GeneratedRuntimeDeveloperSettlement.settle(sim, "Q30 workbench");
     }
 
-    private static void publishReport(GeneratedBoardInstance owner, Rb30Plan plan,
+    private static void publishReport(CirSim sim, GeneratedBoardInstance owner, Rb30Plan plan,
             PcbBoardLayout layout, MediumBoardPhysicalPolicy.Statistics statistics,
             PcbWorkbenchRenderer renderer, boolean restored, boolean retained,
             String status, boolean visualPass, int topTargets, int bottomTargets,
@@ -1005,6 +946,15 @@ final class Q30DeveloperWorkbenchVerifier {
             .append(",\"ownerRestored\":").append(restored)
             .append(",\"prototypeRetained\":").append(retained)
             .append(",\"normalAdmission\":false")
+            .append(",\"solverMaxTimeStep\":").append(sim.maxTimeStep)
+            .append(",\"solverMinTimeStep\":").append(sim.minTimeStep)
+            .append(",\"solverAdaptive\":").append(sim.adjustTimeStep)
+            .append(",\"hypothesisCount\":").append(owner.getFaultCandidates().size())
+            .append(",\"selectedFault\":\"").append(owner.getFaultBinding().getFault().getId()).append('"')
+            .append(",\"constructionMillis\":").append(constructionMillis)
+            .append(",\"routingMillis\":").append(routingMillis)
+            .append(",\"serviceMillis\":").append(serviceMillis)
+            .append(",\"qualificationMillis\":").append(System.currentTimeMillis() - qualificationStarted)
             .append(",\"copper\":")
             .append(copperMetadata == null ? "null" : copperMetadata.toJson())
             .append('}');

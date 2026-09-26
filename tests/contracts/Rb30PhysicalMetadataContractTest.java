@@ -106,23 +106,8 @@ public final class Rb30PhysicalMetadataContractTest {
             check(MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER.equals(
                 routed.getStatistics().selectedRoutePolicy));
 
-            phase = "developer diagnostic fixture";
-            Vector<GeneratedFaultCandidate> developerFaults =
-                new Vector<GeneratedFaultCandidate>();
-            GeneratedDiagnosticSolvabilityContract diagnostic =
-                GeneratedDiagnosticSolvabilityContract.forDeveloperFixture(
-                    Rb30Plan.FAMILY_ID, plan.topology(), seed, developerFaults);
-
             phase = "GeneratedBoardInstance construction";
-            GeneratedBoardInstance instance = new GeneratedBoardInstance(
-                candidate.assembly.board, candidate.assembly.elements, seed,
-                Rb30Plan.FAMILY_ID, plan.topology(),
-                "Q30 metadata contract; live solver board",
-                candidate.assembly.components, candidate.assembly.power,
-                candidate.assembly.connections, developerBehavior(), layout,
-                candidate.assembly.specifications, null,
-                new GeneratedComponentOperationalStates(), null, null,
-                candidate.runtime, null, true, developerFaults, diagnostic);
+            GeneratedBoardInstance instance = new Rb30Generator().assemble(candidate, layout);
             check(instance.isDeveloperOnlyFaultRoute());
             check(instance.getPhysicalBoardRuntime().getPhysicalParts().size() ==
                 candidate.board().getComponentIds().size());
@@ -175,32 +160,6 @@ public final class Rb30PhysicalMetadataContractTest {
             throw new AssertionError("Q30 full owner seed=" + seed +
                 " failed in " + phase + ": " + failure, failure);
         }
-    }
-
-    private static GeneratedChallengeBehaviorContract developerBehavior() {
-        return new GeneratedChallengeBehaviorContract() {
-            public void verifyHealthy(GeneratedBoardInstance instance,
-                    BoardPowerState powerState) { }
-
-            public void verifyFaulted(GeneratedBoardInstance instance,
-                    BoardModificationController modifications,
-                    BoardPowerState powerState) { }
-
-            public GeneratedRepairStatus getRepairStatus(
-                    GeneratedBoardInstance instance,
-                    BoardModificationController modifications,
-                    BoardPowerState powerState,
-                    boolean activeMeasurementOverlay) {
-                return GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
-            }
-
-            public boolean isFunctionallyRepaired(GeneratedBoardInstance instance,
-                    BoardModificationController modifications,
-                    BoardPowerState powerState,
-                    boolean activeMeasurementOverlay) {
-                return false;
-            }
-        };
     }
 
     private static void check(boolean condition) {
