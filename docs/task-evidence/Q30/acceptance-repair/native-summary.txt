@@ -1,0 +1,287 @@
+PASS: staged family registration contracts 15 assertions
+PASS: generated power control observation contracts assertions=16
+PASS: procedural family contracts assertions=54
+PASS: procedural family contracts assertions=47
+PASS: procedural family contracts assertions=50
+PASS: procedural family contracts assertions=47
+PASS: procedural family contracts assertions=56
+PASS: procedural family contracts assertions=47
+PASS: procedural family contracts assertions=52
+PASS: procedural family contracts assertions=47
+PASS: procedural family contracts assertions=54
+PASS: procedural family contracts assertions=47
+PASS: procedural family contracts assertions=54
+PASS: procedural family contracts assertions=47
+PASS: procedural family contracts assertions=54
+PASS: procedural family contracts assertions=47
+PASS: procedural family contracts assertions=54
+PASS: procedural family contracts assertions=47
+PASS: procedural family contracts assertions=54
+PASS: procedural family contracts assertions=47
+PASS: procedural family contracts assertions=63
+PASS: procedural family contracts assertions=47
+PASS: procedural family contracts assertions=74
+PASS: procedural family contracts assertions=75
+PASS: procedural family partition coverage families=11 cohorts=22 rows=176 exactSeedRows=160 rootRows=16 smallCohortBudgetMs=60000 q30RootCohortBudgetMs=300000
+PASS: Quick Play physical matrix contracts pairs=10 assertions=1285
+PASS: Quick Play physical matrix contracts pairs=1 assertions=140
+PASS: physical matrix partition coverage families=11 accepted=220 exactReplays=220 smallChildBudgetMs=180000 mediumChildBudgetMs=600000
+PASS: Quick Play current seed envelopes and construction
+PASS: PCB compaction contracts assertions=696 reducedFamilies=11
+PASS: dense PCB packing seeds=11 assertions=1024 reduced=11 areaSum=21350458
+PASS: visual workbench contracts assertions=150
+PASS: Task43 current physical endpoint contracts assertions=320 legacyFamilies=6 controlledSignedSeeds=4
+PASS: architecture footprint contracts assertions=46 routedPackages=4 deterministicRepeats=4 familyRegressions=6
+PASS: physical serviceability contracts assertions=1427
+PASS: U04 session contracts assertions=3918
+PASS: U05 difficulty contracts assertions=30
+PASS: E03 relay contracts 161 assertions
+PASS: E02 regulator contracts 1441 assertions
+PASS: E04 sensor-control contracts 316 assertions
+PASS: SensorControl family contracts 268 assertions
+PASS: Q15 control board contracts assertions=6864 designs=4
+PASS: Q30 plan contracts 2256 assertions, topologyAxes=7, representativeRows=24, heldOutRows=24, separate=9, shared=8
+PASS: Q30 relay services seed=0 ids=RB30_RELAY_SERVICE_KA,RB30_RELAY_SERVICE_KB
+PASS: Q30 relay services seed=1 ids=RB30_RELAY_SERVICE_KA,RB30_RELAY_SERVICE_KB
+PASS: Q30 relay services seed=-9223372036854775808 ids=RB30_RELAY_SERVICE_KA,RB30_RELAY_SERVICE_KB
+PASS: Q30 relay services seed=9223372036854775807 ids=RB30_RELAY_SERVICE_KA,RB30_RELAY_SERVICE_KB
+PASS: Q30 relay services seed=9007199254740993 ids=RB30_RELAY_SERVICE_KA,RB30_RELAY_SERVICE_KB
+PASS: Q30 relay service contracts 110 assertions
+PASS: Q30 service flow seed=7 fault=RELAY_B_COIL_OPEN target=KB fingerprintHash=eb660264
+PASS: Q30 service flow contracts 257 assertions seed=7 fault=RELAY_B_COIL_OPEN
+PASS: Q30 service flow seed=7 fault=DREV_OPEN target=DREV fingerprintHash=eb660264
+PASS: Q30 service flow contracts 239 assertions seed=7 fault=DREV_OPEN
+PASS: Q30 service flow seed=7 fault=REN_OPEN target=REN fingerprintHash=eb660264
+PASS: Q30 service flow contracts 239 assertions seed=7 fault=REN_OPEN
+PASS: Q30 service flow seed=7 fault=SENSOR_A_OPEN target=RSA fingerprintHash=eb660264
+PASS: Q30 service flow contracts 239 assertions seed=7 fault=SENSOR_A_OPEN
+PASS: Q30 service flow seed=7 fault=DRIVE_A_OPEN target=RDA fingerprintHash=eb660264
+PASS: Q30 service flow contracts 239 assertions seed=7 fault=DRIVE_A_OPEN
+PASS: Q30 service flow seed=13 fault=RELAY_B_COIL_OPEN target=KB fingerprintHash=c62982a5
+PASS: Q30 service flow contracts 265 assertions seed=13 fault=RELAY_B_COIL_OPEN
+PASS: Q30 service flow seed=13 fault=DREV_OPEN target=DREV fingerprintHash=c62982a5
+PASS: Q30 service flow contracts 247 assertions seed=13 fault=DREV_OPEN
+PASS: Q30 service flow seed=13 fault=REN_OPEN target=REN fingerprintHash=c62982a5
+PASS: Q30 service flow contracts 247 assertions seed=13 fault=REN_OPEN
+PASS: Q30 service flow seed=13 fault=SENSOR_A_OPEN target=RSA fingerprintHash=c62982a5
+PASS: Q30 service flow contracts 247 assertions seed=13 fault=SENSOR_A_OPEN
+PASS: Q30 service flow seed=13 fault=DRIVE_A_OPEN target=RDA fingerprintHash=c62982a5
+PASS: Q30 service flow contracts 247 assertions seed=13 fault=DRIVE_A_OPEN
+PASS: Q30 service flow seed=4 fault=RELAY_B_COIL_OPEN target=KB fingerprintHash=d1bce7
+PASS: Q30 service flow contracts 265 assertions seed=4 fault=RELAY_B_COIL_OPEN
+PASS: Q30 service flow seed=4 fault=DREV_OPEN target=DREV fingerprintHash=d1bce7
+PASS: Q30 service flow contracts 247 assertions seed=4 fault=DREV_OPEN
+PASS: Q30 service flow seed=4 fault=REN_OPEN target=REN fingerprintHash=d1bce7
+PASS: Q30 service flow contracts 247 assertions seed=4 fault=REN_OPEN
+PASS: Q30 service flow seed=4 fault=SENSOR_A_OPEN target=RSA fingerprintHash=d1bce7
+PASS: Q30 service flow contracts 247 assertions seed=4 fault=SENSOR_A_OPEN
+PASS: Q30 service flow seed=4 fault=DRIVE_A_OPEN target=RDA fingerprintHash=d1bce7
+PASS: Q30 service flow contracts 247 assertions seed=4 fault=DRIVE_A_OPEN
+PASS: Q30 service flow seed=14 fault=RELAY_B_COIL_OPEN target=KB fingerprintHash=c63b1d7c
+PASS: Q30 service flow contracts 257 assertions seed=14 fault=RELAY_B_COIL_OPEN
+PASS: Q30 service flow seed=14 fault=DREV_OPEN target=DREV fingerprintHash=c63b1d7c
+PASS: Q30 service flow contracts 239 assertions seed=14 fault=DREV_OPEN
+PASS: Q30 service flow seed=14 fault=REN_OPEN target=REN fingerprintHash=c63b1d7c
+PASS: Q30 service flow contracts 239 assertions seed=14 fault=REN_OPEN
+PASS: Q30 service flow seed=14 fault=SENSOR_A_OPEN target=RSA fingerprintHash=c63b1d7c
+PASS: Q30 service flow contracts 239 assertions seed=14 fault=SENSOR_A_OPEN
+PASS: Q30 service flow seed=14 fault=DRIVE_A_OPEN target=RDA fingerprintHash=c63b1d7c
+PASS: Q30 service flow contracts 239 assertions seed=14 fault=DRIVE_A_OPEN
+PASS: Q30 service flow seed=43 fault=RELAY_B_COIL_OPEN target=KB fingerprintHash=a1af4e22
+PASS: Q30 service flow contracts 261 assertions seed=43 fault=RELAY_B_COIL_OPEN
+PASS: Q30 service flow seed=43 fault=DREV_OPEN target=DREV fingerprintHash=a1af4e22
+PASS: Q30 service flow contracts 243 assertions seed=43 fault=DREV_OPEN
+PASS: Q30 service flow seed=43 fault=REN_OPEN target=REN fingerprintHash=a1af4e22
+PASS: Q30 service flow contracts 243 assertions seed=43 fault=REN_OPEN
+PASS: Q30 service flow seed=43 fault=SENSOR_A_OPEN target=RSA fingerprintHash=a1af4e22
+PASS: Q30 service flow contracts 243 assertions seed=43 fault=SENSOR_A_OPEN
+PASS: Q30 service flow seed=43 fault=DRIVE_A_OPEN target=RDA fingerprintHash=a1af4e22
+PASS: Q30 service flow contracts 243 assertions seed=43 fault=DRIVE_A_OPEN
+PASS: Q30 service flow seed=3 fault=RELAY_B_COIL_OPEN target=KB fingerprintHash=74f12966
+PASS: Q30 service flow contracts 265 assertions seed=3 fault=RELAY_B_COIL_OPEN
+PASS: Q30 service flow seed=3 fault=DREV_OPEN target=DREV fingerprintHash=74f12966
+PASS: Q30 service flow contracts 247 assertions seed=3 fault=DREV_OPEN
+PASS: Q30 service flow seed=3 fault=REN_OPEN target=REN fingerprintHash=74f12966
+PASS: Q30 service flow contracts 247 assertions seed=3 fault=REN_OPEN
+PASS: Q30 service flow seed=3 fault=SENSOR_A_OPEN target=RSA fingerprintHash=74f12966
+PASS: Q30 service flow contracts 247 assertions seed=3 fault=SENSOR_A_OPEN
+PASS: Q30 service flow seed=3 fault=DRIVE_A_OPEN target=RDA fingerprintHash=74f12966
+PASS: Q30 service flow contracts 247 assertions seed=3 fault=DRIVE_A_OPEN
+PASS: Q30 service flow seed=10 fault=RELAY_B_COIL_OPEN target=KB fingerprintHash=d734dfac
+PASS: Q30 service flow contracts 257 assertions seed=10 fault=RELAY_B_COIL_OPEN
+PASS: Q30 service flow seed=10 fault=DREV_OPEN target=DREV fingerprintHash=d734dfac
+PASS: Q30 service flow contracts 239 assertions seed=10 fault=DREV_OPEN
+PASS: Q30 service flow seed=10 fault=REN_OPEN target=REN fingerprintHash=d734dfac
+PASS: Q30 service flow contracts 239 assertions seed=10 fault=REN_OPEN
+PASS: Q30 service flow seed=10 fault=SENSOR_A_OPEN target=RSA fingerprintHash=d734dfac
+PASS: Q30 service flow contracts 239 assertions seed=10 fault=SENSOR_A_OPEN
+PASS: Q30 service flow seed=10 fault=DRIVE_A_OPEN target=RDA fingerprintHash=d734dfac
+PASS: Q30 service flow contracts 239 assertions seed=10 fault=DRIVE_A_OPEN
+PASS: Q30 service flow seed=64 fault=RELAY_B_COIL_OPEN target=KB fingerprintHash=3108bc26
+PASS: Q30 service flow contracts 261 assertions seed=64 fault=RELAY_B_COIL_OPEN
+PASS: Q30 service flow seed=64 fault=DREV_OPEN target=DREV fingerprintHash=3108bc26
+PASS: Q30 service flow contracts 243 assertions seed=64 fault=DREV_OPEN
+PASS: Q30 service flow seed=64 fault=REN_OPEN target=REN fingerprintHash=3108bc26
+PASS: Q30 service flow contracts 243 assertions seed=64 fault=REN_OPEN
+PASS: Q30 service flow seed=64 fault=SENSOR_A_OPEN target=RSA fingerprintHash=3108bc26
+PASS: Q30 service flow contracts 243 assertions seed=64 fault=SENSOR_A_OPEN
+PASS: Q30 service flow seed=64 fault=DRIVE_A_OPEN target=RDA fingerprintHash=3108bc26
+PASS: Q30 service flow contracts 243 assertions seed=64 fault=DRIVE_A_OPEN
+PASS: Q30 service flow census attempted=40 passed=40 failed=0 failedCases=none seeds=7,13,4,14,43,3,10,64 faults=5 order=RELAY_B_COIL_OPEN,DREV_OPEN,REN_OPEN,SENSOR_A_OPEN,DRIVE_A_OPEN childBudgetMs=60000
+PASS: Q30 temporal work contracts 83 assertions profileUnits=5 retestUnits=5
+PASS: diagnostic service preparation contracts 18 assertions policy=action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner
+PASS: Q30 production solver step sensitivity assertions=1459 seed=7 support=COMPACT_33 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=28466
+PASS: Q30 production solver step sensitivity assertions=1704 seed=7 support=COMPACT_33 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=26222
+PASS: Q30 production solver step sensitivity assertions=1704 seed=7 support=COMPACT_33 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=27231
+PASS: Q30 production solver step sensitivity assertions=1704 seed=7 support=COMPACT_33 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=28074
+PASS: Q30 production solver step sensitivity assertions=1704 seed=7 support=COMPACT_33 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=30365
+PASS: Q30 production solver step sensitivity assertions=1496 seed=13 support=FILTERED_37 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=32003
+PASS: Q30 production solver step sensitivity assertions=1762 seed=13 support=FILTERED_37 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=28545
+PASS: Q30 production solver step sensitivity assertions=1762 seed=13 support=FILTERED_37 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=32695
+PASS: Q30 production solver step sensitivity assertions=1762 seed=13 support=FILTERED_37 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=31352
+PASS: Q30 production solver step sensitivity assertions=1762 seed=13 support=FILTERED_37 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=34809
+PASS: Q30 production solver step sensitivity assertions=1496 seed=4 support=FILTERED_37 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=34129
+PASS: Q30 production solver step sensitivity assertions=1762 seed=4 support=FILTERED_37 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=31171
+PASS: Q30 production solver step sensitivity assertions=1762 seed=4 support=FILTERED_37 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=34514
+PASS: Q30 production solver step sensitivity assertions=1762 seed=4 support=FILTERED_37 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=34504
+PASS: Q30 production solver step sensitivity assertions=1762 seed=4 support=FILTERED_37 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=36797
+PASS: Q30 production solver step sensitivity assertions=1459 seed=14 support=COMPACT_33 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=29841
+PASS: Q30 production solver step sensitivity assertions=1704 seed=14 support=COMPACT_33 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=26605
+PASS: Q30 production solver step sensitivity assertions=1704 seed=14 support=COMPACT_33 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=29202
+PASS: Q30 production solver step sensitivity assertions=1704 seed=14 support=COMPACT_33 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=29095
+PASS: Q30 production solver step sensitivity assertions=1704 seed=14 support=COMPACT_33 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=31917
+PASS: Q30 production solver step sensitivity assertions=1478 seed=43 support=STANDARD_35 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=31257
+PASS: Q30 production solver step sensitivity assertions=1734 seed=43 support=STANDARD_35 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=28520
+PASS: Q30 production solver step sensitivity assertions=1734 seed=43 support=STANDARD_35 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=30695
+PASS: Q30 production solver step sensitivity assertions=1734 seed=43 support=STANDARD_35 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=30773
+PASS: Q30 production solver step sensitivity assertions=1734 seed=43 support=STANDARD_35 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=33221
+PASS: Q30 production solver step sensitivity assertions=1496 seed=3 support=FILTERED_37 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=33392
+PASS: Q30 production solver step sensitivity assertions=1762 seed=3 support=FILTERED_37 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=30367
+PASS: Q30 production solver step sensitivity assertions=1762 seed=3 support=FILTERED_37 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=34144
+PASS: Q30 production solver step sensitivity assertions=1762 seed=3 support=FILTERED_37 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=33092
+PASS: Q30 production solver step sensitivity assertions=1762 seed=3 support=FILTERED_37 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=36171
+PASS: Q30 production solver step sensitivity assertions=1459 seed=10 support=COMPACT_33 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=28224
+PASS: Q30 production solver step sensitivity assertions=1704 seed=10 support=COMPACT_33 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=25883
+PASS: Q30 production solver step sensitivity assertions=1704 seed=10 support=COMPACT_33 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=28805
+PASS: Q30 production solver step sensitivity assertions=1704 seed=10 support=COMPACT_33 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=28192
+PASS: Q30 production solver step sensitivity assertions=1704 seed=10 support=COMPACT_33 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=28874
+PASS: Q30 production solver step sensitivity assertions=1478 seed=64 support=STANDARD_35 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=30113
+PASS: Q30 production solver step sensitivity assertions=1734 seed=64 support=STANDARD_35 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=26915
+PASS: Q30 production solver step sensitivity assertions=1734 seed=64 support=STANDARD_35 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=30382
+PASS: Q30 production solver step sensitivity assertions=1734 seed=64 support=STANDARD_35 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=29792
+PASS: Q30 production solver step sensitivity assertions=1734 seed=64 support=STANDARD_35 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=33100
+PASS: Q30 normal corpus contracts outcome=REJECTED routeOutcome=REJECTED normalAdmission=REJECTED_ROUTE cleanup=true assertions=20 seed=0
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3707 seed=1
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3707 seed=15
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3711 seed=14
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3707 seed=44
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3707 seed=8
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3711 seed=10
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3707 seed=12
+PASS: Q30 normal corpus contracts outcome=REJECTED routeOutcome=REJECTED normalAdmission=REJECTED_ROUTE cleanup=true assertions=20 seed=48
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3848 seed=35
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3852 seed=6
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3852 seed=18
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3848 seed=43
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3848 seed=93
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3848 seed=20
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3852 seed=64
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3980 seed=56
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3980 seed=13
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3984 seed=4
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3980 seed=11
+PASS: Q30 normal corpus contracts outcome=REJECTED routeOutcome=REJECTED normalAdmission=REJECTED_ROUTE cleanup=true assertions=20 seed=2
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3980 seed=3
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3980 seed=19
+PASS: Q30 normal corpus contracts outcome=REJECTED routeOutcome=REJECTED normalAdmission=REJECTED_ROUTE cleanup=true assertions=20 seed=9
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3707 seed=7
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3707 seed=42
+PASS: Q30 normal corpus contracts outcome=REJECTED routeOutcome=REJECTED normalAdmission=REJECTED_ROUTE cleanup=true assertions=20 seed=24
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3707 seed=21
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3707 seed=75
+PASS: Q30 normal corpus contracts outcome=REJECTED routeOutcome=REJECTED normalAdmission=REJECTED_ROUTE cleanup=true assertions=20 seed=22
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3707 seed=105
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3711 seed=27
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3848 seed=53
+PASS: Q30 normal corpus contracts outcome=REJECTED routeOutcome=REJECTED normalAdmission=REJECTED_ROUTE cleanup=true assertions=20 seed=50
+PASS: Q30 normal corpus contracts outcome=REJECTED routeOutcome=REJECTED normalAdmission=REJECTED_ROUTE cleanup=true assertions=20 seed=16
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3848 seed=25
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3848 seed=60
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3848 seed=100
+PASS: Q30 normal corpus contracts outcome=REJECTED routeOutcome=REJECTED normalAdmission=REJECTED_ROUTE cleanup=true assertions=20 seed=59
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3848 seed=84
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3980 seed=70
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3980 seed=41
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3980 seed=45
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3980 seed=23
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3980 seed=5
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3980 seed=38
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3980 seed=40
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3980 seed=26
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3707 seed=-9223372036854775808
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3980 seed=9223372036854775807
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3707 seed=9007199254740993
+PASS: q30 generation request contracts 446 assertions
+PASS: Q30 generation measurement budget contracts 25 assertions
+PASS: Q30 normal execution policy contracts 325 assertions
+PASS: Q30 catalog identity contracts assertions=13
+PASS: Q30 catalog transfer contracts 219 assertions elapsedMillis=4877
+PASS: Q30 physical metadata contracts 1989 assertions, topologies=7
+PASS: medium physical policy contracts assertions=27 receipt=MEDIUM_BOARD@1;outcome=REJECTED;selected=null;placements=6;placementRejects=0;placementEvaluations=25057;routes=6;routingWork=16/4216455;p05=3/0;p07=3/0;selectedAttempt=-1;ranked=[4, 3, 1, 0, 5, 2];placementScores=[4{total=1166718;electrical=130940;region=8660;connector=6920;corridor=2685;outline=8106000;courtyard=603836;demand=2109598}, 3{total=1211278;electrical=138180;region=8900;connector=6570;corridor=1675;outline=8019000;courtyard=600236;demand=2099998}, 1{total=1228493;electrical=136240;region=10852;connector=6770;corridor=3647;outline=8108800;courtyard=593036;demand=2080798}, 0{total=1262710;electrical=144360;region=9185;connector=7960;corridor=1064;outline=7867200;courtyard=599036;demand=2096798}, 5{total=1282165;electrical=143400;region=10065;connector=7070;corridor=3476;outline=7900200;courtyard=593036;demand=2080798}, 2{total=1303048;electrical=145400;region=9685;connector=8950;corridor=3080;outline=7771500;courtyard=594236;demand=2083998}];selectedScore=-1;selectedQualityMilli=-1;routeOutcomes=[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@3=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=REJECTED:DISCONNECTED_ESCAPE_CHANNEL, P07_FULLER_TWO_LAYER@3=REJECTED:DISCONNECTED_ESCAPE_CHANNEL, P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:A_COIL_LOW:BRANCH_SEARCH_LIMIT];failure=PCB routing candidate rejected at attempt 12: P07_FULLER_TWO_LAYER:A_COIL_LOW:BRANCH_SEARCH_LIMIT
+PASS: medium normal admission contracts 9 assertions
+PASS: medium board floorplanning contracts assertions=76556 historicalFixture=rb30-p1-physical-seed0@1;board=RB30_CONTROL_BOARD;topology=RB30_SEPARATE_DIRECT_A_BJT_B_BJT;layout=-5811592868239938363;packages=33;pads=82;status=RLED+LED1;inputPullDowns=none historicalNetMst=27630 historicalNetEdges=57 currentRecipes=33/35/37
+PASS: Task46 410 assertions, 36 negative cases; pure descriptor/constraints/named-stream corpus
+PASS: Task44 9 groups, 247 assertions; no simulator dependency
+PASS: Task45 202 assertions
+PASS: current resistive assembly contracts 241 assertions
+PASS: current controlled-indicator contracts 256 assertions
+PASS: current switched-low-side compatibility 16 assertions
+PASS: current value synthesis 188 assertions
+PASS: A05 role providers 280 assertions
+PASS: E01 source contracts 96015 assertions
+PASS: A06 power contracts assertions=152
+PASS: A07 execution contracts assertions=24868
+PASS: A09 diagnostic contracts assertions=322 replays=44
+PASS: D01 diagnostic contracts assertions=168
+PASS: A10 generation contracts assertions=190
+PASS: A10 routing rejection contracts assertions=28
+PASS: A10 dependency contracts assertions=15
+PASS: A11 provider conformance
+PASS: A03IdentityContractTest assertions=30
+PASS: A02CandidateContractTest
+PASS: A02GeometryContractTest 32 assertions
+PASS: P01 physical pose contracts assertions=8605 poses=44
+PASS: P02 conductor contracts 3209 assertions; 40 independent lattice cases; 48 shared-copper permutations; 16 SMD poses
+PASS: U01 viewport contracts assertions=1259
+PASS: U02 measurement contracts assertions=585
+PASS: U03 observation contracts assertions=17
+PASS: lifted lead appearance contracts assertions=337 poses=80
+PASS: P03 placement contracts assertions=864267
+PASS: router queue parity assertions=262586 cohorts=3 operations=150000
+PASS: P04 routing contracts assertions=6408 branches=6
+PASS: P05 routing contracts assertions=21976
+PASS: P06 factory-link contracts assertions=1705
+PASS: P07 two-layer contracts assertions=48
+PASS: Pcb layer routing resumption contracts assertions=2203
+PASS: P08 scalable physical contracts assertions=2022
+PASS: P09 physical envelope corpus rows=32 regressionPass=9 regressionReject=2 heldPass=9 heldReject=3
+PASS: Quick Play gate corpus rows=24 holdout=false
+PASS: Quick Play gate corpus rows=48 holdout=true
+PASS: Quick Play gate contracts assertions=27057
+PASS: P09 physical envelope contracts assertions=58
+PASS: P07 frozen layer corpus rows=54 successes=11
+PASS: P05 frozen corpus rows=70 successes=18
+PASS: P05 generation comparison rows=13
+PASS: A02ReplayContractTest assertions=148
+PASS: ElectricalUnitPackageMapContractTest assertions=37
+PASS: A04ConstructionContractTest assertions=680
+PASS: A04PhysicalDeclarationContractTest assertions=5270
+PASS: Task46 independent seed oracle 22 vectors; literal TSV/Java correspondence exact
+PASS: A11 provider boundaries/report assertions=125
+PASS: A09 independent diagnostic contracts assertions=143
+PASS: current value synthesis oracle 9 seeds; bounded6/schema2 repeated-channel equations exact
+PASS: A05 independent role selection oracle 6 seeds
+PASS: A04 report contracts assertions=474
+PASS: preview listener identity contracts assertions=23 live=False
+PASS: current contracts; 80 Java suites, independent seed/value/role oracles and report protocol.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

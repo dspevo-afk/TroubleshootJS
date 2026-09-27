@@ -1,0 +1,9 @@
+{
+  "gate": "native",
+  "startedUtc": "2026-09-27T04:56:30.7439437Z",
+  "finishedUtc": "2026-09-27T05:05:29.9258170Z",
+  "elapsedSeconds": 539.1809155,
+  "exitCode": 2,
+  "status": "FAIL",
+  "log": "native.log"
+}

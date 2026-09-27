@@ -39,20 +39,20 @@ public final class Q30NormalExecutionPolicyContractTest {
                 "the small-board allowance also binds normal cache and receipt lineage");
         }
         require(GenerationCoordinator.MAX_JOB_STEPS == 640 && GenerationCoordinator.MAX_STEP_MILLIS == 5000L,
-            "the longer whole-job allowance does not widen either independent work guard");
+            "normal content retains both independent work guards");
         for (long seed : new long[] {13L, Long.MIN_VALUE, Long.MAX_VALUE, 9007199254740993L}) {
             GenerationRequest exact = medium(seed);
             GenerationExecutionPolicy policy = exact.getExecutionPolicy();
             policy.requireRequest(exact);
-            require(policy == GenerationExecutionPolicy.NORMAL_MEDIUM && policy.maximumJobMillis == 300000L,
-                "the registered normal-medium request carries the reviewed hard deadline");
+            require(policy == GenerationExecutionPolicy.NORMAL_MEDIUM && policy.maximumJobMillis == 90000L,
+                "normal medium retains the frozen 90-second cumulative deadline");
             require(exact.requiresExplicitCompletion() && !exact.isPrivateDiagnosticQualification(),
                 "normal requests require real customer completion without verifier capability");
             require(exact.candidateCount() == 1 && exact.candidate(0) == exact &&
                 exact.getDescriptor().getRootSeed() == seed, "exact replay cannot substitute another seed");
             require(exact.canonical().contains(policy.canonical()) &&
                 exact.canonical().contains(Long.toString(seed)), "policy and exact seed bind cache/receipt lineage");
-            require(!exact.canonical().equals(GenerationRequest.forQ30Qualification(seed).canonical()),
+            require(!exact.canonical().equals(GenerationRequest.forFamilyQualification(Rb30Plan.FAMILY_ID, seed).canonical()),
                 "private measurements cannot share normal request proof identities");
         }
         GenerationRequest search = PlayerLaunchRequest.random(Rb30Plan.FAMILY_ID,
@@ -69,14 +69,14 @@ public final class Q30NormalExecutionPolicyContractTest {
         catch (IllegalArgumentException expected) { rejected = true; }
         require(rejected, "a small request cannot claim a medium allowance");
         rejected = false;
-        try { GenerationExecutionPolicy.NORMAL_MEDIUM.requireRequest(GenerationRequest.forQ30Qualification(13)); }
+        try { GenerationExecutionPolicy.NORMAL_MEDIUM.requireRequest(GenerationRequest.forFamilyQualification(Rb30Plan.FAMILY_ID, 13)); }
         catch (IllegalArgumentException expected) { rejected = true; }
         require(rejected, "private measurement capability is not a normal-medium capability");
         Constructor<GenerationExecutionPolicy> constructor = GenerationExecutionPolicy.class.getDeclaredConstructor(
             String.class, String.class, long.class);
         constructor.setAccessible(true);
         GenerationExecutionPolicy forged = constructor.newInstance("NORMAL_MEDIUM_EXECUTION@0",
-            MediumBoardNormalAdmission.IDENTITY, 300000L);
+            MediumBoardNormalAdmission.IDENTITY, 90000L);
         rejected = false;
         try { forged.requireRequest(medium(13)); }
         catch (IllegalArgumentException expected) { rejected = true; }
@@ -98,8 +98,8 @@ public final class Q30NormalExecutionPolicyContractTest {
         try {
             for (GenerationRequest request : new GenerationRequest[] {
                     GenerationRequest.leaf("LED_INDICATOR", 3L, false), medium(13),
-                    GenerationRequest.forQ30Qualification(13) }) {
-                long wrong = request.getExecutionPolicy() == GenerationExecutionPolicy.NORMAL_MEDIUM ? 90000L : 300000L;
+                    GenerationRequest.forFamilyQualification(Rb30Plan.FAMILY_ID, 13) }) {
+                long wrong = 300000L;
                 boolean rejected = false;
                 try { start.invoke(coordinator, request, null, false, true, wrong, false, null); }
                 catch (InvocationTargetException expected) {
@@ -119,6 +119,14 @@ public final class Q30NormalExecutionPolicyContractTest {
             }
             require(unsupportedRejected && coordinator.getJob() == sentinel && sentinel.isRunning() && service.aborts == 0,
                 "unsupported leaf identity rejects before cancelling an active coordinator job");
+            boolean blocked = false;
+            try { coordinator.start(medium(13), null, false); }
+            catch (IllegalArgumentException expected) { blocked = true; }
+            require(blocked && coordinator.getJob() == sentinel && sentinel.isRunning() && service.aborts == 0,
+                "registered but unqualified content cannot cancel a predecessor or begin normal publication");
+            require(coordinator.getDiagnosticProofCacheSize() == 0 &&
+                coordinator.getDiagnosticMeasurementProofCacheSize() == 0 && sim.elmList.isEmpty(),
+                "blocked publication leaves both caches and the live graph unchanged");
         } finally { job.set(coordinator, null); }
     }
 

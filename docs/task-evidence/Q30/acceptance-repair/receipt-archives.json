@@ -1,0 +1,12 @@
+{
+  "coordinator": {
+    "readerExitCode": 0,
+    "uncompressedSha256": "16fb28c1a18882cb71c61b6bae26cca18621630e6f5d077678aa11caf028d078",
+    "compressedBytes": 686072
+  },
+  "scope-loss": {
+    "readerExitCode": 0,
+    "uncompressedSha256": "2cb3c4d0d7dc653b93f69edfb797d9b15c4d598b31893944d93a5b2e06166099",
+    "compressedBytes": 1566
+  }
+}

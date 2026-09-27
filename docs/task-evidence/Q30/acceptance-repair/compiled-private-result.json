@@ -1,0 +1,257 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<repo>",
+  "startedUtc": "2026-09-27T05:13:05.660962+00:00",
+  "outcome": "PASS",
+  "cases": [
+    {
+      "schema": 1,
+      "case": {
+        "index": 1,
+        "name": "coordinator-seed13",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=13",
+        "stateAttribute": "data-tsj-q30-coordinator-state",
+        "expectedState": "PASS:complete",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-q30-coordinator-report"
+      },
+      "url": "http://127.0.0.1:56591/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=13",
+      "startedUtc": "2026-09-27T05:13:06.776526+00:00",
+      "finishedUtc": "2026-09-27T05:15:42.432755+00:00",
+      "operationSeconds": 155.65622319999966,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:complete",
+      "lastObservedState": "PASS:complete",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 1643551,
+      "reportSha256": "ca11abcad7f93664942b36bb0b28ccaba94085fe880aeb9bdc1151ee72347228",
+      "reportFile": "cases/001-coordinator-seed13.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 2,
+        "name": "coordinator-seed7",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=7",
+        "stateAttribute": "data-tsj-q30-coordinator-state",
+        "expectedState": "PASS:complete",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-q30-coordinator-report"
+      },
+      "url": "http://127.0.0.1:56591/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=7",
+      "startedUtc": "2026-09-27T05:15:42.444717+00:00",
+      "finishedUtc": "2026-09-27T05:18:10.003603+00:00",
+      "operationSeconds": 147.55888300000152,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:complete",
+      "lastObservedState": "PASS:complete",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 1491225,
+      "reportSha256": "865a51337682697641b4c8267d11336d2b6e516b503ba6a086ab4a346563bed1",
+      "reportFile": "cases/002-coordinator-seed7.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 3,
+        "name": "coordinator-seed64",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=64",
+        "stateAttribute": "data-tsj-q30-coordinator-state",
+        "expectedState": "PASS:complete",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-q30-coordinator-report"
+      },
+      "url": "http://127.0.0.1:56591/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=64",
+      "startedUtc": "2026-09-27T05:18:10.005212+00:00",
+      "finishedUtc": "2026-09-27T05:20:25.426596+00:00",
+      "operationSeconds": 135.42137879999973,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:complete",
+      "lastObservedState": "PASS:complete",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 1545684,
+      "reportSha256": "4783ab6886e67ea58c6523ab69245472c26e20a16e1bad91328c8f52e973bf87",
+      "reportFile": "cases/003-coordinator-seed64.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 4,
+        "name": "scope-loss-seed13",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=13&tsjQ30CoordinatorScopeLoss=true",
+        "stateAttribute": "data-tsj-q30-coordinator-state",
+        "expectedState": "FAIL:scope-loss",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 180.0,
+        "reportAttribute": "data-tsj-q30-coordinator-report"
+      },
+      "url": "http://127.0.0.1:56591/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=13&tsjQ30CoordinatorScopeLoss=true",
+      "startedUtc": "2026-09-27T05:20:25.428120+00:00",
+      "finishedUtc": "2026-09-27T05:20:54.093469+00:00",
+      "operationSeconds": 28.66534639999918,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "FAIL:scope-loss",
+      "lastObservedState": "FAIL:scope-loss",
+      "timedOut": false,
+      "expectedFailureCanary": true,
+      "expectedFailureStateWasNotAnUnexpectedError": true,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 3327,
+      "reportSha256": "9c0f23a83d297db1d9e56afda014173813998fe6b50c2e3f2abf573ceb0ae83c",
+      "reportFile": "cases/004-scope-loss-seed13.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    }
+  ],
+  "caseCount": 4,
+  "errors": [],
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "e4d6d43d2aca3977fabf5ab8e8743dc1f523a67c037d392e906cd40c300b35b4",
+    "afterSha256": "e4d6d43d2aca3977fabf5ab8e8743dc1f523a67c037d392e906cd40c300b35b4",
+    "sourceSha256Before": "1694d3e02b0adba2e44e409181012c48b20a5f8f50fc2bb4932bf752cd4e848d",
+    "sourceSha256After": "1694d3e02b0adba2e44e409181012c48b20a5f8f50fc2bb4932bf752cd4e848d",
+    "webSha256Before": "f41210af27cab817bf7e9cb3eb663a6fe753e875ecb8ca4eac19f597da907000",
+    "webSha256After": "f41210af27cab817bf7e9cb3eb663a6fe753e875ecb8ca4eac19f597da907000",
+    "runnerBeforeSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+    "runnerAfterSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+    "fileCountBefore": 1524,
+    "fileCountAfter": 1524,
+    "seconds": 0.3377545999992435
+  },
+  "identity": {
+    "schema": 1,
+    "runner": {
+      "pid": 16352,
+      "created": "2026-09-27T05:13:05.5079400Z",
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+    },
+    "edgeProcessesBeforeCases": [
+      {
+        "pid": 4992,
+        "parent": 2752,
+        "created": "2026-09-27T05:13:06.2384060Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 1788,
+        "parent": 4992,
+        "created": "2026-09-27T05:13:06.2933900Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 17152,
+        "parent": 4992,
+        "created": "2026-09-27T05:13:06.3555500Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 14572,
+        "parent": 4992,
+        "created": "2026-09-27T05:13:06.3592570Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 3536,
+        "parent": 4992,
+        "created": "2026-09-27T05:13:06.3808660Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 2648,
+        "parent": 4992,
+        "created": "2026-09-27T05:13:06.4359810Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 9096,
+        "parent": 4992,
+        "created": "2026-09-27T05:13:06.4395650Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "profile": "<task-temp>\\coordinator-final\\profile",
+    "port": 56591,
+    "baseUrl": "http://127.0.0.1:56591"
+  },
+  "operationStartedUtc": "2026-09-27T05:13:06.776513+00:00",
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 0.7956219000006968,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "finishedUtc": "2026-09-27T05:20:55.227867+00:00"
+}

@@ -1,0 +1,10 @@
+PASS: staged family registration contracts 15 assertions
+
+QUICKPLAY_NATIVE method=verifyEligibleFamilies millis=0
+QUICKPLAY_NATIVE method=verifyDeterministicFamilySelection millis=4238
+QUICKPLAY_NATIVE method=verifySelectionEnvelopes millis=4
+QUICKPLAY_NATIVE method=verifyFullCatalogSelectionAndStagedRequests millis=15
+QUICKPLAY_NATIVE method=verifyNaturalLedSeedEnvelope millis=9
+QUICKPLAY_NATIVE method=verifyNaturalNpnSeedEnvelope millis=110
+QUICKPLAY_NATIVE method=verifyNaturalNmosSeedEnvelope millis=52
+PASS: Quick Play current seed envelopes and construction

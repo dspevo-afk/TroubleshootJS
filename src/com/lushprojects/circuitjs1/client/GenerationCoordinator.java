@@ -7,8 +7,8 @@ import java.util.Map;
 /** One serial generation owner per CirSim; browser turns never race candidates. */
 final class GenerationCoordinator {
     // Temporal profiles yield between their existing completed solver calls.
-    // Qualified request execution contracts select the whole-job allowance;
-    // the small-board default and independent per-unit/work guards stay fixed.
+    // All normal request contracts retain the same cumulative allowance and
+    // independent per-unit/work guards. Private measurement is separate.
     static final long MAX_JOB_MILLIS = 90000;
     static final long MAX_DIAGNOSTIC_MEASUREMENT_JOB_MILLIS = 300000;
     static final long MAX_STEP_MILLIS = 5000;
@@ -28,7 +28,7 @@ final class GenerationCoordinator {
      * this simulator's generation lifecycle, never by a board or a solver. */
     private final GeneratedDiagnosticProofCache diagnosticProofs =
         new GeneratedDiagnosticProofCache();
-    /* The Q30 coordinator timing probe has its own value-only cache.  Its
+    /* Private coordinator timing probes have their own value-only cache.  Their
      * deliberately extended wall window must never warm normal player proof
      * admission or evict an ordinary completed artifact. */
     private final GeneratedDiagnosticProofCache diagnosticMeasurementProofs =
@@ -182,6 +182,7 @@ final class GenerationCoordinator {
         GenerationExecutionPolicy policy = request.getExecutionPolicy();
         if (policy == null) throw new IllegalArgumentException("Missing generation execution contract");
         policy.requireRequest(request);
+        PlayerFamilyCatalog.requireNormalPlayerEnabled(request.getFamilyId());
         return policy.maximumJobMillis;
     }
 
@@ -632,7 +633,10 @@ final class GenerationCoordinator {
                 throw new GenerationJob.Stale(
                     "Private diagnostic measurement scope changed before publication");
             requireCurrentProofContext("generation publication");
-            if (!measurementOnly) request.getExecutionPolicy().requireOwner(candidate);
+            if (!measurementOnly) {
+                PlayerFamilyCatalog.requireNormalPlayerEnabled(request.getFamilyId());
+                request.getExecutionPolicy().requireOwner(candidate);
+            }
             if (request.getDifficulty() != null) {
                 if (difficulty == null) throw new IllegalStateException("Missing difficulty admission evidence");
                 difficulty.require(request.getDifficulty());

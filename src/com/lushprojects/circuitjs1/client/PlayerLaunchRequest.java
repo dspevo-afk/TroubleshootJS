@@ -12,7 +12,7 @@ final class PlayerLaunchRequest {
         this(familyId, seedText, profileText, false);
     }
     private PlayerLaunchRequest(String familyId, String seedText, String profileText, boolean search) {
-        if (!PlayerFamilyCatalog.contains(familyId))
+        if (!PlayerFamilyCatalog.isRegistered(familyId))
             throw new IllegalArgumentException("Unsupported board family");
         seed = parseSeed(seedText);
         profile = DifficultyProfile.parseAvailable(profileText);

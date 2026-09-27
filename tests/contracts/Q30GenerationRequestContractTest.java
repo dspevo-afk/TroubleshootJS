@@ -28,7 +28,7 @@ public final class Q30GenerationRequestContractTest {
 
     private static void verifyPrivatePlanCacheAndExactSeeds() {
         GenerationRequest.PlanCache cache = new GenerationRequest.PlanCache();
-        GenerationRequest minimum = GenerationRequest.forQ30Qualification(Long.MIN_VALUE);
+        GenerationRequest minimum = GenerationRequest.forFamilyQualification(Rb30Plan.FAMILY_ID, Long.MIN_VALUE);
         require(minimum.requiresExplicitCompletion(),
             "private normal qualification uses the player explicit customer-retest boundary");
         require(minimum.isPrivateDiagnosticQualification() &&
@@ -38,8 +38,8 @@ public final class Q30GenerationRequestContractTest {
             "private Q30 qualification keeps its distinct request budget and physical contract");
         String minimumCanonical = minimum.canonical();
         GenerationRequest.Prepared first = minimum.resolve(cache);
-        GenerationRequest.Prepared repeated = GenerationRequest.forQ30Qualification(
-            Long.MIN_VALUE).resolve(cache);
+        GenerationRequest.Prepared repeated = GenerationRequest.forFamilyQualification(
+            Rb30Plan.FAMILY_ID, Long.MIN_VALUE).resolve(cache);
         require(first == repeated, "identical private request reuses only its immutable prepared plan");
         require(minimumCanonical.equals(repeated.canonical()),
             "repeated qualification canonical is deterministic");
@@ -52,7 +52,7 @@ public final class Q30GenerationRequestContractTest {
             minimumCanonical.contains("physicalAdmission=" + MediumBoardNormalAdmission.IDENTITY),
             "qualification request is isolated from normal player cache identities");
 
-        GenerationRequest maximum = GenerationRequest.forQ30Qualification(Long.MAX_VALUE);
+        GenerationRequest maximum = GenerationRequest.forFamilyQualification(Rb30Plan.FAMILY_ID, Long.MAX_VALUE);
         GenerationRequest.Prepared different = maximum.resolve(cache);
         require(different != first && different.canonical().contains(
             "root-seed=9223372036854775807"), "signed-long maximum resolves distinctly");
@@ -137,7 +137,7 @@ public final class Q30GenerationRequestContractTest {
         CircuitElm.sim = sim;
         GeneratedBoardInstance owner = null;
         try {
-            GenerationRequest.Prepared prepared = GenerationRequest.forQ30Qualification(13L)
+            GenerationRequest.Prepared prepared = GenerationRequest.forFamilyQualification(Rb30Plan.FAMILY_ID, 13L)
                 .resolve(new GenerationRequest.PlanCache());
             GenerationRequest.ConstructionSession session = prepared.beginConstruction();
             int steps = 0;

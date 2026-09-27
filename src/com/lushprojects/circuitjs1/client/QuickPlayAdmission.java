@@ -6,11 +6,14 @@ final class QuickPlayAdmission {
     private static final long STRIDE = 0x9e3779b97f4a7c15L;
     private QuickPlayAdmission() { }
     static boolean supports(String family, DifficultyProfile profile) {
-        return PlayerFamilyCatalog.contains(family) && profile != null && profile.isAvailable() &&
-            profile == PlayerFamilyCatalog.candidateProfile(family);
+        return supports(family, profile, PlayerFamilyCatalog.newRegistrationBoundary());
+    }
+    static boolean supports(String family, DifficultyProfile profile,
+            PlayerFamilyCatalog.RegistrationBoundary registration) {
+        return registration != null && registration.supportsQuickPlay(family, profile);
     }
     static boolean supports(String family) {
-        return PlayerFamilyCatalog.contains(family);
+        return PlayerFamilyCatalog.isRegistered(family);
     }
     static long candidateSeed(long entropy, int ordinal) {
         if (ordinal < 0 || ordinal >= MAX_CANDIDATES)

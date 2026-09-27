@@ -732,17 +732,17 @@ class SeededPcbLayoutGenerator {
 
     private void placeSilkscreen(PcbBoardLayout layout, TroubleshootBoard board,
             Rectangle outline) {
-        String title;
-        if (board.getId().equals("RB15_CONTROL_BOARD"))
-            title = "TSJ CONTROL BOARD";
-        else if (board.getId().equals("RB30_CONTROL_BOARD"))
-            title = "TSJ MULTI-RAIL CONTROL";
-        else if (board.getId().equals("DIODE_PROTECTED_INDICATOR"))
-            title = "TSJ DIODE INDICATOR";
-        else if (board.getId().equals("PARALLEL_DUAL_INDICATOR"))
-            title = "TSJ PARALLEL INDICATORS";
-        else
-            title = "TSJ LED INDICATOR";
+        String title = board.getSilkscreenTitle();
+        if (title == null) {
+            if (board.getId().equals("RB15_CONTROL_BOARD"))
+                title = "TSJ CONTROL BOARD";
+            else if (board.getId().equals("DIODE_PROTECTED_INDICATOR"))
+                title = "TSJ DIODE INDICATOR";
+            else if (board.getId().equals("PARALLEL_DUAL_INDICATOR"))
+                title = "TSJ PARALLEL INDICATORS";
+            else
+                title = "TSJ LED INDICATOR";
+        }
         int componentLeft = outline.x + outline.width;
         int componentTop = outline.y + outline.height;
         for (PcbComponentPlacement component : layout.getComponents()) {

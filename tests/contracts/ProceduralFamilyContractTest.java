@@ -34,7 +34,9 @@ public final class ProceduralFamilyContractTest {
             selectedCohort = Integer.parseInt(args[3]);
         }
         CirSim sim=new CirSim(); sim.gridSize=16;sim.gridMask=~15;sim.gridRound=7;CircuitElm.sim=sim;
-        for (String family:PlayerFamilyCatalog.families()) {
+        // Registered but blocked families retain their structural oracle;
+        // this test never authorizes player publication.
+        for (String family:PlayerFamilyCatalog.registeredFamilies()) {
             if (selectedFamily != null && !selectedFamily.equals(family)) continue;
             for (DifficultyProfile profile:DifficultyProfile.values()) {
                 boolean selectable = profile == PlayerFamilyCatalog.candidateProfile(family);
@@ -64,7 +66,7 @@ public final class ProceduralFamilyContractTest {
         System.out.println("PASS: procedural family contracts assertions="+assertions);
     }
     private static String familyList() {
-        Vector<String> families=PlayerFamilyCatalog.families();
+        Vector<String> families=PlayerFamilyCatalog.registeredFamilies();
         StringBuilder result=new StringBuilder();
         for (int i=0;i<families.size();i++) {
             if (i>0) result.append(',');

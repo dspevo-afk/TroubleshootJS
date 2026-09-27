@@ -1,0 +1,14 @@
+{
+  "gate": "native",
+  "startedUtc": "2026-09-27T05:25:06.1373648Z",
+  "finishedUtc": "2026-09-27T06:22:07.6349283Z",
+  "elapsedSeconds": 3421.4966198,
+  "exitCode": 0,
+  "status": "PASS",
+  "log": "native.log",
+  "elapsedScope": "Whole maintained command, including cleanup; cleanup duration is not separately reported.",
+  "cleanup": "PASS: maintained isolation owner removed its JVM classes and task-owned scratch.",
+  "receiptSha256": "82730c3748019be0ba5527939156a3eed4cc72ac963618956d6f1fdecc6174e3",
+  "receiptCompressedBytes": 113775,
+  "javaSuites": 80
+}

@@ -55,7 +55,7 @@ final class Q30CoordinatorQualificationVerifier {
         Task41SimulationSnapshot snapshot = sim.getGeneratedBoardInstance() == null ?
             Task41SimulationSnapshot.captureForFreshInstallation(sim) :
             Task41SimulationSnapshot.capture(sim);
-        GenerationRequest request = GenerationRequest.forQ30Qualification(seed);
+        GenerationRequest request = GenerationRequest.forFamilyQualification(Rb30Plan.FAMILY_ID, seed);
         Runner runner = new Runner(sim, seed,
             requestedSeed == null ? "0" : requestedSeed, request, snapshot,
             sim.generationCoordinator);

@@ -1,0 +1,278 @@
+{
+  "outcomes": {
+    "cold": {
+      "PASS": 3
+    },
+    "warm": {
+      "PASS": 3
+    }
+  },
+  "latency": {
+    "cold": {
+      "elapsedMs": {
+        "p50": 119996,
+        "p95": 126904,
+        "count": 3
+      },
+      "wallElapsedMs": {
+        "p50": 120002,
+        "p95": 126910,
+        "count": 3
+      },
+      "routingElapsedMs": {
+        "p50": 19935,
+        "p95": 20603,
+        "count": 3
+      },
+      "proofElapsedMs": {
+        "p50": 94376,
+        "p95": 98702,
+        "count": 3
+      },
+      "stages": {
+        "RESOLVE": {
+          "p50": 1,
+          "p95": 1,
+          "count": 3
+        },
+        "HEALTHY": {
+          "p50": 26813,
+          "p95": 27678,
+          "count": 3
+        },
+        "PHYSICAL": {
+          "p50": 56,
+          "p95": 65,
+          "count": 3
+        },
+        "HYPOTHESES": {
+          "p50": 92537,
+          "p95": 96836,
+          "count": 3
+        },
+        "SYMPTOM": {
+          "p50": 6,
+          "p95": 6,
+          "count": 3
+        },
+        "PUBLISH": {
+          "p50": 55,
+          "p95": 66,
+          "count": 3
+        }
+      },
+      "workLabels": {
+        "CANDIDATE_HEALTHY_SETTLE": {
+          "p50": 23253,
+          "p95": 24380,
+          "count": 3
+        },
+        "CANDIDATE_SETTLE": {
+          "p50": 5529,
+          "p95": 5666,
+          "count": 3
+        },
+        "CUSTOMER_RETEST": {
+          "p50": 19321,
+          "p95": 20278,
+          "count": 3
+        },
+        "CUSTOMER_RETEST_COMPLETION": {
+          "p50": 32,
+          "p95": 33,
+          "count": 3
+        },
+        "EVIDENCE_RESTORE_PRIMARY": {
+          "p50": 87,
+          "p95": 92,
+          "count": 3
+        },
+        "OBSERVATION_STEP:DC_VOLTAGE": {
+          "p50": 1075,
+          "p95": 1222,
+          "count": 3
+        },
+        "OBSERVATION_STEP:INPUT": {
+          "p50": 17104,
+          "p95": 17795,
+          "count": 3
+        },
+        "OBSERVATION_STEP:POWER": {
+          "p50": 136,
+          "p95": 142,
+          "count": 3
+        },
+        "OBSERVATION_STEP:SETTLE": {
+          "p50": 180,
+          "p95": 219,
+          "count": 3
+        },
+        "OBSERVATION_STEP:WAIT": {
+          "p50": 1,
+          "p95": 1,
+          "count": 3
+        },
+        "POWER_OFF_SETTLE": {
+          "p50": 5170,
+          "p95": 6523,
+          "count": 3
+        },
+        "POWER_ON_SETTLE": {
+          "p50": 273,
+          "p95": 375,
+          "count": 3
+        },
+        "REMOVE_SETTLE": {
+          "p50": 250,
+          "p95": 265,
+          "count": 3
+        },
+        "REPAIR_STATUS_SETTLE": {
+          "p50": 19326,
+          "p95": 20552,
+          "count": 3
+        },
+        "REPLACE_SETTLE": {
+          "p50": 267,
+          "p95": 285,
+          "count": 3
+        },
+        "REPLAY_INSTALL": {
+          "p50": 424,
+          "p95": 471,
+          "count": 3
+        }
+      }
+    },
+    "warm": {
+      "elapsedMs": {
+        "p50": 26957,
+        "p95": 28017,
+        "count": 3
+      },
+      "wallElapsedMs": {
+        "p50": 26964,
+        "p95": 28024,
+        "count": 3
+      },
+      "routingElapsedMs": {
+        "p50": 19741,
+        "p95": 20508,
+        "count": 3
+      },
+      "proofElapsedMs": {
+        "p50": 0,
+        "p95": 0,
+        "count": 3
+      },
+      "stages": {
+        "RESOLVE": {
+          "p50": 0,
+          "p95": 1,
+          "count": 3
+        },
+        "HEALTHY": {
+          "p50": 26467,
+          "p95": 27530,
+          "count": 3
+        },
+        "PHYSICAL": {
+          "p50": 49,
+          "p95": 54,
+          "count": 3
+        },
+        "HYPOTHESES": {
+          "p50": 21,
+          "p95": 21,
+          "count": 3
+        },
+        "SYMPTOM": {
+          "p50": 6,
+          "p95": 7,
+          "count": 3
+        },
+        "PUBLISH": {
+          "p50": 54,
+          "p95": 60,
+          "count": 3
+        }
+      },
+      "workLabels": {}
+    }
+  },
+  "pairCount": 30,
+  "canaries": 0,
+  "build": [
+    "1694d3e02b0adba2e44e409181012c48b20a5f8f50fc2bb4932bf752cd4e848d",
+    "f41210af27cab817bf7e9cb3eb663a6fe753e875ecb8ca4eac19f597da907000"
+  ],
+  "failures": [],
+  "defaultMaxJobMillis": 90000,
+  "measurementMaxJobMillis": 300000,
+  "interpretation": "Private measurement only. n=3 nearest-rank p95 equals sample maximum; no population tail or SLO claim.",
+  "rows": [
+    {
+      "seed": "13",
+      "cold": {
+        "outcome": "PASS",
+        "elapsedMs": 126904,
+        "wallElapsedMs": 126910,
+        "routingElapsedMs": 20603,
+        "proofElapsedMs": 98702,
+        "cleanupElapsedMs": 3,
+        "maxJobMillis": 300000
+      },
+      "warm": {
+        "outcome": "PASS",
+        "elapsedMs": 28017,
+        "wallElapsedMs": 28024,
+        "routingElapsedMs": 20508,
+        "proofElapsedMs": 0,
+        "cleanupElapsedMs": 2,
+        "maxJobMillis": 300000
+      }
+    },
+    {
+      "seed": "7",
+      "cold": {
+        "outcome": "PASS",
+        "elapsedMs": 119996,
+        "wallElapsedMs": 120002,
+        "routingElapsedMs": 19935,
+        "proofElapsedMs": 92662,
+        "cleanupElapsedMs": 3,
+        "maxJobMillis": 300000
+      },
+      "warm": {
+        "outcome": "PASS",
+        "elapsedMs": 26957,
+        "wallElapsedMs": 26964,
+        "routingElapsedMs": 19741,
+        "proofElapsedMs": 0,
+        "cleanupElapsedMs": 3,
+        "maxJobMillis": 300000
+      }
+    },
+    {
+      "seed": "64",
+      "cold": {
+        "outcome": "PASS",
+        "elapsedMs": 114754,
+        "wallElapsedMs": 114761,
+        "routingElapsedMs": 12659,
+        "proofElapsedMs": 94376,
+        "cleanupElapsedMs": 3,
+        "maxJobMillis": 300000
+      },
+      "warm": {
+        "outcome": "PASS",
+        "elapsedMs": 20055,
+        "wallElapsedMs": 20061,
+        "routingElapsedMs": 12452,
+        "proofElapsedMs": 0,
+        "cleanupElapsedMs": 3,
+        "maxJobMillis": 300000
+      }
+    }
+  ]
+}

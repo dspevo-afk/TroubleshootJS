@@ -5,7 +5,7 @@ public final class PhysicalServiceabilityContractTest {
     private static int assertions;
     public static void main(String[] args) {
         CirSim sim = new CirSim(); sim.gridSize = 16; sim.gridMask = ~15; sim.gridRound = 7; CircuitElm.sim = sim;
-        for (String family : PlayerFamilyCatalog.families()) {
+        for (String family : PlayerFamilyCatalog.registeredFamilies()) {
             // Q30 seed 0 is a retained route rejection; seed 13 is a qualified accepted route.
             GeneratedBoardInstance instance = construct(family,
                 Rb30Plan.FAMILY_ID.equals(family) ? 13L : 0L);

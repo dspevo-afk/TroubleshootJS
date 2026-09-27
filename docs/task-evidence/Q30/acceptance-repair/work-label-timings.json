@@ -1,0 +1,317 @@
+{
+  "scope": "Final-source private cold measurement; all original hypotheses, observations, settlement and repair/retest profiles retained. Label times are measured active work, not cumulative deadline authorization.",
+  "rows": [
+    {
+      "seed": "13",
+      "proofElapsedMs": 98702,
+      "summedLabelMillis": 96805,
+      "completedUnits": 390,
+      "labels": [
+        {
+          "label": "REPLAY_INSTALL",
+          "units": 5,
+          "elapsedMs": 471,
+          "maxUnitMs": 99
+        },
+        {
+          "label": "CANDIDATE_HEALTHY_SETTLE",
+          "units": 25,
+          "elapsedMs": 24380,
+          "maxUnitMs": 1193
+        },
+        {
+          "label": "CANDIDATE_SETTLE",
+          "units": 25,
+          "elapsedMs": 5666,
+          "maxUnitMs": 1380
+        },
+        {
+          "label": "OBSERVATION_STEP:INPUT",
+          "units": 20,
+          "elapsedMs": 17795,
+          "maxUnitMs": 1552
+        },
+        {
+          "label": "OBSERVATION_STEP:WAIT",
+          "units": 20,
+          "elapsedMs": 1,
+          "maxUnitMs": 1
+        },
+        {
+          "label": "OBSERVATION_STEP:DC_VOLTAGE",
+          "units": 185,
+          "elapsedMs": 1222,
+          "maxUnitMs": 12
+        },
+        {
+          "label": "OBSERVATION_STEP:POWER",
+          "units": 5,
+          "elapsedMs": 142,
+          "maxUnitMs": 30
+        },
+        {
+          "label": "OBSERVATION_STEP:SETTLE",
+          "units": 5,
+          "elapsedMs": 180,
+          "maxUnitMs": 37
+        },
+        {
+          "label": "POWER_OFF_SETTLE",
+          "units": 25,
+          "elapsedMs": 5170,
+          "maxUnitMs": 2141
+        },
+        {
+          "label": "REMOVE_SETTLE",
+          "units": 5,
+          "elapsedMs": 265,
+          "maxUnitMs": 55
+        },
+        {
+          "label": "REPLACE_SETTLE",
+          "units": 5,
+          "elapsedMs": 285,
+          "maxUnitMs": 61
+        },
+        {
+          "label": "POWER_ON_SETTLE",
+          "units": 5,
+          "elapsedMs": 273,
+          "maxUnitMs": 77
+        },
+        {
+          "label": "REPAIR_STATUS_SETTLE",
+          "units": 25,
+          "elapsedMs": 20552,
+          "maxUnitMs": 1227
+        },
+        {
+          "label": "CUSTOMER_RETEST",
+          "units": 25,
+          "elapsedMs": 20278,
+          "maxUnitMs": 1239
+        },
+        {
+          "label": "CUSTOMER_RETEST_COMPLETION",
+          "units": 5,
+          "elapsedMs": 33,
+          "maxUnitMs": 7
+        },
+        {
+          "label": "EVIDENCE_RESTORE_PRIMARY",
+          "units": 5,
+          "elapsedMs": 92,
+          "maxUnitMs": 20
+        }
+      ]
+    },
+    {
+      "seed": "7",
+      "proofElapsedMs": 92662,
+      "summedLabelMillis": 90778,
+      "completedUnits": 390,
+      "labels": [
+        {
+          "label": "REPLAY_INSTALL",
+          "units": 5,
+          "elapsedMs": 400,
+          "maxUnitMs": 84
+        },
+        {
+          "label": "CANDIDATE_HEALTHY_SETTLE",
+          "units": 25,
+          "elapsedMs": 23253,
+          "maxUnitMs": 1236
+        },
+        {
+          "label": "CANDIDATE_SETTLE",
+          "units": 25,
+          "elapsedMs": 5070,
+          "maxUnitMs": 1160
+        },
+        {
+          "label": "OBSERVATION_STEP:INPUT",
+          "units": 20,
+          "elapsedMs": 16366,
+          "maxUnitMs": 1394
+        },
+        {
+          "label": "OBSERVATION_STEP:WAIT",
+          "units": 20,
+          "elapsedMs": 1,
+          "maxUnitMs": 1
+        },
+        {
+          "label": "OBSERVATION_STEP:DC_VOLTAGE",
+          "units": 185,
+          "elapsedMs": 1026,
+          "maxUnitMs": 7
+        },
+        {
+          "label": "OBSERVATION_STEP:POWER",
+          "units": 5,
+          "elapsedMs": 122,
+          "maxUnitMs": 27
+        },
+        {
+          "label": "OBSERVATION_STEP:SETTLE",
+          "units": 5,
+          "elapsedMs": 219,
+          "maxUnitMs": 60
+        },
+        {
+          "label": "POWER_OFF_SETTLE",
+          "units": 25,
+          "elapsedMs": 4879,
+          "maxUnitMs": 1495
+        },
+        {
+          "label": "REMOVE_SETTLE",
+          "units": 5,
+          "elapsedMs": 228,
+          "maxUnitMs": 48
+        },
+        {
+          "label": "REPLACE_SETTLE",
+          "units": 5,
+          "elapsedMs": 237,
+          "maxUnitMs": 51
+        },
+        {
+          "label": "POWER_ON_SETTLE",
+          "units": 5,
+          "elapsedMs": 217,
+          "maxUnitMs": 46
+        },
+        {
+          "label": "REPAIR_STATUS_SETTLE",
+          "units": 25,
+          "elapsedMs": 19326,
+          "maxUnitMs": 1282
+        },
+        {
+          "label": "CUSTOMER_RETEST",
+          "units": 25,
+          "elapsedMs": 19321,
+          "maxUnitMs": 1276
+        },
+        {
+          "label": "CUSTOMER_RETEST_COMPLETION",
+          "units": 5,
+          "elapsedMs": 31,
+          "maxUnitMs": 7
+        },
+        {
+          "label": "EVIDENCE_RESTORE_PRIMARY",
+          "units": 5,
+          "elapsedMs": 82,
+          "maxUnitMs": 18
+        }
+      ]
+    },
+    {
+      "seed": "64",
+      "proofElapsedMs": 94376,
+      "summedLabelMillis": 92506,
+      "completedUnits": 390,
+      "labels": [
+        {
+          "label": "REPLAY_INSTALL",
+          "units": 5,
+          "elapsedMs": 424,
+          "maxUnitMs": 86
+        },
+        {
+          "label": "CANDIDATE_HEALTHY_SETTLE",
+          "units": 25,
+          "elapsedMs": 22635,
+          "maxUnitMs": 992
+        },
+        {
+          "label": "CANDIDATE_SETTLE",
+          "units": 25,
+          "elapsedMs": 5529,
+          "maxUnitMs": 1343
+        },
+        {
+          "label": "OBSERVATION_STEP:INPUT",
+          "units": 20,
+          "elapsedMs": 17104,
+          "maxUnitMs": 1523
+        },
+        {
+          "label": "OBSERVATION_STEP:WAIT",
+          "units": 20,
+          "elapsedMs": 0,
+          "maxUnitMs": 0
+        },
+        {
+          "label": "OBSERVATION_STEP:DC_VOLTAGE",
+          "units": 185,
+          "elapsedMs": 1075,
+          "maxUnitMs": 7
+        },
+        {
+          "label": "OBSERVATION_STEP:POWER",
+          "units": 5,
+          "elapsedMs": 136,
+          "maxUnitMs": 30
+        },
+        {
+          "label": "OBSERVATION_STEP:SETTLE",
+          "units": 5,
+          "elapsedMs": 180,
+          "maxUnitMs": 37
+        },
+        {
+          "label": "POWER_OFF_SETTLE",
+          "units": 25,
+          "elapsedMs": 6523,
+          "maxUnitMs": 2061
+        },
+        {
+          "label": "REMOVE_SETTLE",
+          "units": 5,
+          "elapsedMs": 250,
+          "maxUnitMs": 51
+        },
+        {
+          "label": "REPLACE_SETTLE",
+          "units": 5,
+          "elapsedMs": 267,
+          "maxUnitMs": 56
+        },
+        {
+          "label": "POWER_ON_SETTLE",
+          "units": 5,
+          "elapsedMs": 375,
+          "maxUnitMs": 117
+        },
+        {
+          "label": "REPAIR_STATUS_SETTLE",
+          "units": 25,
+          "elapsedMs": 19066,
+          "maxUnitMs": 1155
+        },
+        {
+          "label": "CUSTOMER_RETEST",
+          "units": 25,
+          "elapsedMs": 18823,
+          "maxUnitMs": 1141
+        },
+        {
+          "label": "CUSTOMER_RETEST_COMPLETION",
+          "units": 5,
+          "elapsedMs": 32,
+          "maxUnitMs": 7
+        },
+        {
+          "label": "EVIDENCE_RESTORE_PRIMARY",
+          "units": 5,
+          "elapsedMs": 87,
+          "maxUnitMs": 19
+        }
+      ]
+    }
+  ]
+}

@@ -6,22 +6,24 @@
 **Drop-in destination:** `docs/ROADMAP.md`<br>
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
-**Branch observed during review:** `codex/task43p-final-recovery`<br>
-**Latest completed task:** **Q30 bounded 33/35/37-part multi-rail qualification**<br>
+**Historical review branch:** `codex/task43p-final-recovery`<br>
+**Current task:** **Q30 acceptance repair — BLOCKED / NOT ACCEPTED**<br>
 **Historical post-P09 Quick Play qualification:** The nine families then current used fresh signed-long candidates and real placement/routing. Nineteen affected native suites, 144 structural cases, 18 actual launches, exact replay/cancellation/privacy/shop and compiled mutation/relay/generation gates passed. EASY/MEDIUM content eligibility remains; HARD/PSYCHOTIC are not unlocked. [Evidence at that checkpoint](task-evidence/ProceduralFamilies/README.md).
 **Quick Play uniqueness qualification (2026-09-19):** Every family/profile selectable at that checkpoint had bounded procedural New Board candidates, recent-root and physical duplicate guards, and single-candidate exact replay. The then-menu-discovered nine-pair, 180-board matrix had 20 distinct placements and merged copper patterns per pair with no structural rejects. Final native55, GWT5, 27/27 visible New Board launches, two exact replays and face-view evidence passed. That content spanned 3–16 parts; HARD/PSYCHOTIC and larger families remain unqualified. This historical matrix did not include the later SENSOR_CONTROL family; that checkpoint's catalog had ten family/profile pairs. [Historical audit, timings and limits](task-evidence/QuickPlayUnique/README.md).
 **Historical ten-pair catalog verification (2026-09-23):** The rebuilt production browser matrix passed three launches for each family/profile pair then current, including SENSOR_CONTROL/EASY, plus exact replay, power isolation, privacy and owned cleanup. A visible ordinary menu launch of an exact Sensor Control seed reached the Customer ticket, and a separate visible repair flow reached a passing customer retest. This remains fresh evidence for the ten-pair catalog at that checkpoint, not a rewrite of the 2026-09-19 nine-pair/180-board qualification. [Current matrix receipt](task-evidence/D01/quickplay-procedural-matrix.json) and [Sensor Control evidence](task-evidence/E04/README.md).
-**Current eleven-pair catalog state (2026-09-26):** Q30 is the eleventh
-cataloged family/profile pair. Its bounded 33/35/37-part normal-medium family
-passes the final native, strict-reader and normal-player gates; the ten-pair
-matrix above remains historical coverage for the pre-Q30 catalog.
+**Q30 review correction (2026-09-27):** The completion claim in `97e0727`
+is rejected. Its 300-second production allowance was not authorized; the
+frozen cumulative limit remains 90 seconds, with 640 shared units and five
+seconds per active operation. The implemented Q30 family and its evidence
+are preserved, but normal-player acceptance is blocked. U06, U07, Q60 and
+later milestones must not start. See the [repair checkpoint](CODEX_TASK_REPORT.md).
 **P09 qualification (2026-09-16):** `THT_SINGLE_FACE@1` is enforced at normal installation/admission/publication with unchanged geometry/electrical/diagnostic requirements. Clean native48, integrated native9, both GWT5 builds, RC/Q15 and real normal menu/navigation/privacy checks pass. Frozen held-out structural results retain ten passes and two explicit rejections. Production two-layer/via/link adoption is rejected for this epoch. [Evidence and limits](task-evidence/P09/README.md).
 **P08 qualification:** The evidence-selected interval broad phase, immutable copper/view caches and exact solver-partition projection are qualified. Current brute-force parity and 2,022 adversarial assertions pass; 15/30/56/100 mixed inventories and dense contact work are measured. Full native46, both GWT5 builds and 13 compiled browser runs pass. P09 is now separately qualified; P08 itself does not imply normal large-board/layer-strategy adoption. [P08 evidence](task-evidence/P08/README.md).
 **P07 qualification (2026-09-15):** The required developer-only four-policy comparison and real plated-via/top-bottom probe bench are qualified. All 54 structural rows are retained; six prototype RB30 requests succeed, while the frozen 56/100 requests reject within bounds. Normal adoption is not qualified by P09. [P07 evidence](task-evidence/P07/README.md). P08 is now separately qualified.
 **P06 qualification (2026-09-15):** The real finite-link prototype, explicit insulated underpass, physical service/probes, bounded sparse policy and matched no-link comparisons are qualified. Normal adoption is not qualified by P09. See [P06 evidence](task-evidence/P06/README.md). P07 is now separately qualified.
 **P05 qualification (2026-09-15):** Bounded routing recovery is complete on the existing branch, with unrelated visual work preserved. See [P05 evidence](task-evidence/P05/README.md). P06 and P07 are now separately qualified; the post-P09 Quick Play gate is now separately qualified for RB15_CONTROL/EASY.
 
-**Accepted alpha checkpoint:** **U04 / U05 / REL-A COMPLETE.** Typed sessions, initial computed EASY/MEDIUM profiles and limited low-voltage desktop alpha are qualified, with mandatory eleven-seed normal RB15 admission, the full website catalog, compatible purchased-part installation, Windows launcher recovery and exact meter endpoint fixes. Final GWT5/native33, Alpha38, Q15all11/66 copper readings, affected compiled/strict/negative gates and actual repair/retest/replay/privacy/focus flows pass. Human attempts and uncertainty remain qualitative evidence; no population difficulty or arbitrary-seed guarantee is claimed. The separately authorized visual pass is completed in its own commit, documented below. U02/U03 add bounded solver-time AC/scope observation; E02/E04/D01 now qualify rails, sensor control and static proof partitions; Q30 is now COMPLETE / PASS for its bounded 33/35/37-part family; **next unstarted preferred milestones: U06, then U07.** [Evidence and limits](task-evidence/REL-A/README.md).
+**Accepted alpha checkpoint:** **U04 / U05 / REL-A COMPLETE.** Typed sessions, initial computed EASY/MEDIUM profiles and limited low-voltage desktop alpha are qualified, with mandatory eleven-seed normal RB15 admission, the full website catalog, compatible purchased-part installation, Windows launcher recovery and exact meter endpoint fixes. Final GWT5/native33, Alpha38, Q15all11/66 copper readings, affected compiled/strict/negative gates and actual repair/retest/replay/privacy/focus flows pass. Human attempts and uncertainty remain qualitative evidence; no population difficulty or arbitrary-seed guarantee is claimed. The separately authorized visual pass is completed in its own commit, documented below. U02/U03 add bounded solver-time AC/scope observation; E02/E04/D01 now qualify rails, sensor control and static proof partitions; Q30 is BLOCKED / NOT ACCEPTED; **U06 and U07 remain unstarted pending Q30.** [Evidence and limits](task-evidence/REL-A/README.md).
 **Roadmap clarification (2026-09-14):** The post-P09 Procedural Quick Play Admission Gate now explicitly requires fresh arbitrary candidate signed-long seeds within qualified families/envelopes, bounded rejection/retry, exact accepted-seed replay, and population/layout-diversity evidence before normal-medium procedural qualification proceeds. This is a documentation/product-contract clarification only: REL-A remains curated/bounded, no generator or Quick Play production behavior is changed here, this clarification did not implement P05. P05 is now separately qualified below.
 
 **Completed post-release correction:** The authorized visual pass and fault-blind serviceability correction are qualified in the completion commit containing this update. All nine playable families have real supported part-service ownership. Fresh GWT33 build, Q15/native proof repair and actual menu/progress/measure/drag/shop/repair/retest flow pass; unaffected GWT32 and native31 results are explicitly reused under input audits. [Final evidence and limitations](task-evidence/visual-productization/final33/README.md). **P05 is now separately qualified; see its evidence below.**
@@ -270,7 +272,7 @@ For this first fixture the sensor/interlock is an externally player-operated low
 
 A low-voltage board with a 12 V source, 5 V regulated/control rail, two sensor channels, two output drivers, indication and real connectors. The allocation is 4 entry/protection parts, 4 regulator/filter parts, 8 sensor-conditioning parts, 10 dual-driver/output parts, 2 status parts and 2 additional connectors: **30 physical packages**.
 
-Required structural variants include alternative BJT/MOSFET driver populations and at least two accepted sensor/reference arrangements. The 5 V rail must be produced by the modeled regulator, not an unrelated external ideal rail. The current Q30 candidate is bounded to 33/35/37-part normal procedural variants, including partial-power and loading cases; final qualification passes for this bounded candidate. This does not claim arbitrary support across 20–40 parts, and it is not satisfied by merely instantiating RB15 twice with no interaction.
+Required structural variants include alternative BJT/MOSFET driver populations and at least two accepted sensor/reference arrangements. The 5 V rail must be produced by the modeled regulator, not an unrelated external ideal rail. The preserved Q30 implementation has 33/35/37-part procedural variants, including partial-power and loading cases; Q30 is BLOCKED / NOT ACCEPTED and normal publication is disabled. This does not claim arbitrary support across 20–40 parts, and it is not satisfied by merely instantiating RB15 twice with no interaction.
 
 ## 4.5 RB56: the 50-60-part appliance/control north star
 
@@ -669,11 +671,11 @@ Every enabled instrument declares electrical connection/stimulus, burden/loading
 
 ## 7.1 Status and authority
 
-T49, N00, A01-A11, R00, P01-P09, U01, E01-E04, Q15, U02, U03, U04, U05, D01 and REL-A were recorded accepted/completed at the E02/E04/D01 publication: 35 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. The historical non-catalog post-P09 follow-up covered procedural layouts for the nine then-current normal families and resistor shop/formation; SENSOR_CONTROL subsequently made ten family/profile pairs and required its own fresh catalog evidence. U02/U03 provide the bounded solver-time meter/scope boundary. The current catalog now has eleven entries including Q30, which is COMPLETE / PASS for the bounded 33/35/37-part family; the preferred next unstarted milestones are U06 then U07. Only currently implemented EASY/MEDIUM content is qualified; unavailable difficulties remain deferred. P08 current isolated CLI runs satisfy unchanged ownership/cleanup gates; earlier unqualified launch attempts remain separately recorded.
+T49, N00, A01-A11, R00, P01-P09, U01, E01-E04, Q15, U02, U03, U04, U05, D01 and REL-A were recorded accepted/completed at the E02/E04/D01 publication: 35 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. The historical non-catalog post-P09 follow-up covered procedural layouts for the nine then-current normal families and resistor shop/formation; SENSOR_CONTROL subsequently made ten family/profile pairs and required its own fresh catalog evidence. U02/U03 provide the bounded solver-time meter/scope boundary. Q30 remains implemented but BLOCKED / NOT ACCEPTED; U06 and U07 remain unstarted pending its acceptance. Only currently implemented EASY/MEDIUM content is qualified; unavailable difficulties remain deferred. P08 current isolated CLI runs satisfy unchanged ownership/cleanup gates; earlier unqualified launch attempts remain separately recorded.
 
 A task-specific prompt authorizes a bounded scope. Follow current AGENTS.md for orchestration, ownership, review, publication and safety; R00 replaced its contradictory blanket compatibility wording under the owner's explicit instruction. A current correct requirement outranks an obsolete test. Do not start writers before relevant shared-interface investigations are reconciled.
 
-The hard prerequisites on the cards are authoritative. The phase map is a readable sequence, not a second conflicting dependency system. Conditional capabilities are resolved per Section 8. All future foundation expansion descends from R00; this prevents another active writer from extending the old contract while it is being retired. Q30 is now COMPLETE / PASS for its bounded candidate; repository publication remains a separate workflow step.
+The hard prerequisites on the cards are authoritative. The phase map is a readable sequence, not a second conflicting dependency system. Conditional capabilities are resolved per Section 8. All future foundation expansion descends from R00; this prevents another active writer from extending the old contract while it is being retired. Q30 is BLOCKED / NOT ACCEPTED; the repair does not authorize later milestones.
 
 ## 7.2 Preferred Execution Order
 
@@ -684,11 +686,11 @@ preferred queue. The milestone cards remain authoritative for scope, hard
 prerequisites, acceptance and conditional capabilities; this section chooses the
 preferred next eligible milestone. Future implementation needs its own authorization.
 
-**Already complete:** T49, N00, A01-A11, R00, P01-P09, U01, E01-E04, Q15, U02, U03, U04, U05, D01, Q30 and REL-A. A10 and A11 ran earlier
+**Already complete:** T49, N00, A01-A11, R00, P01-P09, U01, E01-E04, Q15, U02, U03, U04, U05, D01 and REL-A. A10 and A11 ran earlier
 than the old preferred order while satisfying their hard prerequisites: A10
 required A05/A07/A09/P02; A11 required A04/A08/A09. Their earlier placement does
-not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 → Q15 → U04 → U05 → REL-A → U02/U03 → E02 → E04 → D01 → Q30 is now complete.
-**Latest completed milestone: Q30.** Its bounded 33/35/37-part family passes all eight topology axes, normal-player gates, native05, and combined P09 strict readers. The post-P09 follow-up replaced curated/fixed normal layout paths across the nine families then current, preserving P09 limits, computed difficulty and exact replay; E04 subsequently added SENSOR_CONTROL. U02/U03 add bounded solver-time meter/scope observation. Current EASY/MEDIUM content is qualified, not future HARD/PSYCHOTIC content. **Next preferred unstarted milestones: U06, then U07.** Q60 remains UNSTARTED with no implementation started; pending visual/FPS/tray work remains preserved.
+not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 → Q15 → U04 → U05 → REL-A → U02/U03 → E02 → E04 → D01 is complete. Q30 remains BLOCKED / NOT ACCEPTED.
+**Current milestone: Q30 — BLOCKED / NOT ACCEPTED.** The generic-generation and 90-second acceptance repair preserves the working family. Historical normal-player passes under a 300-second policy do not satisfy the frozen budget. U06, U07, Q60 and later milestones remain unstarted. Pending visual/FPS/tray work remains preserved.
 
 | Wave | Preferred sequence |
 |---|---|
@@ -2425,34 +2427,45 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### Q30 · Normal 20-40-part multi-rail procedural qualification
 
-**Status:** COMPLETE / PASS for the bounded candidate. The Q30 catalog entry is
-implemented, and the normal-medium execution policy uses its reviewed 300,000 ms
-cumulative allowance with the existing shared work-unit and per-unit limits.
+**Status:** BLOCKED / NOT ACCEPTED. Independent review rejected `97e0727` for
+device-specific generic generation logic and the unauthorized increase from
+90 to 300 seconds. The repair restores the 90,000 ms production limit;
+640 shared work units and 5,000 ms per active operation remain unchanged.
+Private 90–300-second measurement does not authorize normal-player content.
+Family-owned staged capabilities now keep Q30 plan, route and construction
+knowledge out of the generic request/coordinator. Normal Q30 publication is
+disabled while the remaining acceptance requirements are unresolved.
 Historical physical checkpoints record the E04 recovery repair, the P1 generic
 floorplanner and the provider-selected medium routing policy: the P1 fuller
 router improved from 6/72 to 54/72, and the selected policy routed 12/12
 sampled seeds including six held-out. Those accepted checkpoints remain
 historical evidence and retain their recorded failures and limits.
 
-The current candidate defines bounded 33/35/37-part RB30 variants across eight
+The preserved implementation defines bounded 33/35/37-part RB30 variants across eight
 topology axes: separate/direct and shared/hysteretic reference arrangements,
-each with the A/B BJT/NMOS driver combinations. Native05 passes 78 Java suites
+each with the A/B BJT/NMOS driver combinations. Historical native05 passed 78 Java suites
 with independent oracles, 40/40 service rows and 40/40 finer-step comparison
 rows across all eight axes and five faults. Its structural census passes 51
 rows, 42 accepted and 9 route rejects, with zero failed rows and 17 rejection
-or receipt canaries. All qualified variants remain within the original 20–40-part
-target, with representative and held-out corpus rows.
+or receipt canaries. The 24 representative and 24 held-out rows cover those
+three sizes, plus three signed-long boundary rows. This is useful topology
+evidence, but sizes 20–32 and 38–40 remain unproved. The original deliverable
+below is unchanged; this repair does not redefine it around a narrower cluster.
 Genuine D01 proof receipts cover five disjoint hypotheses with live observation,
 repair/customer retest, cold/warm execution, cleanup and rejection canaries.
-The current normal-player gates pass: modern22 is 33/33 with 3/3 replays, and
-manual22 passes the visible diagnosis/service/retest path with input and cleanup
-audits. Combined P09 final22 passes 72 population cases (24 development and 48
-holdout), six controlled cases and 46 corruption canaries. Cold/warm timing
-summaries use n=3 samples and are evidence for this candidate, not universal
-runtime guarantees.
+Historical modern22 recorded 33/33 launches and 3/3 replays under the rejected
+300-second policy; manual22 recorded the visible diagnosis/service/retest
+path. These remain behavioral evidence, not proof of the 90-second budget.
+Combined P09 final22's 72 population cases are small-board regression, not a
+Q30-scale corpus. Fresh rebuilt private cold totals are 126.904, 119.996 and
+114.754 seconds for seeds 13, 7 and 64, including 98.702, 92.662 and 94.376
+seconds of diagnostic proof. Every proof alone exceeds the production limit.
+An n=3 maximum does not establish a population p95. Repair results and limits
+are recorded in the [repair evidence](task-evidence/Q30/acceptance-repair/README.md).
 
-Q30 is COMPLETE / PASS for this bounded candidate. This card does not claim
-arbitrary circuits across a 20–40-part range. Q60 remains UNSTARTED with no implementation started.
+Q30 remains blocked for measured performance and unproved broader size
+coverage under its unchanged original scope. U06, U07, Q60 and later
+milestones remain UNSTARTED.
 See [Q30 evidence](task-evidence/Q30/README.md).
 
 #### Q30-P1 — Medium-board floorplanning and two-layer physical policy
@@ -2507,9 +2520,9 @@ record the measured candidate and limits.
 
 **Exact deliverable:** Approximately 30-part heterogeneous multi-rail control
 board plus a held-out 20-40-part corpus, repeated output channels and
-structurally different implementations of shared roles. The qualified current
-implementation uses 33/35/37-part variants across eight topology axes; this
-records the bounded outcome without replacing the original acceptance target.
+structurally different implementations of shared roles. The preserved
+implementation currently uses 33/35/37-part variants across eight topology
+axes; those measurements do not replace the original acceptance target.
 
 **Acceptance:** Generation, routing, domain behavior, partial power, normal diagnostics and repair meet the frozen budget; no generic layer gains device-specific branches; selected layer strategy is inspectable and comprehensible.
 

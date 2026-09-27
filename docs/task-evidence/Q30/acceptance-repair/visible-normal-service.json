@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "replay": "tsj-alpha/3/EASY/LED_INDICATOR/3",
+  "inputMethod": "Visible normal-player controls and physical left/right clicks; no injected controller calls",
+  "candidate": "Final rebuilt source; see input-audit.json and build-final-result.json",
+  "steps": [
+    {
+      "operation": "Exact LED seed3 replay accepted; unrepaired customer retest",
+      "observed": "        - status: Customer retest did not pass. Continue troubleshooting."
+    },
+    {
+      "operation": "DC V, right click J1 GND and left click R1 left lead",
+      "reading": "                - generic: 12 V"
+    },
+    {
+      "operation": "Left click R1 right lead",
+      "reading": "                - generic: 1.346 V"
+    },
+    {
+      "operation": "Power off, remove original R1; buy 1000 Ohm +/-5% through Shop; install purchased Part4; repower and customer retest",
+      "observed": "    - status: Customer retest passed. The reported behavior is resolved.\n- dialog \"Customer retest passed\":\n    - heading \"Customer retest passed\" [level=2]\n  - status: Customer retest passed. The reported behavior is resolved.\n  - paragraph: The live board passed the customer’s functional checks.\n  - paragraph: Customer retest passed. The reported behavior is resolved."
+    },
+    {
+      "operation": "Replay challenge, accept ticket, repeat customer retest",
+      "observed": "        - status: Customer retest did not pass. Continue troubleshooting.\n            - row \"--- V\":\n              - cell \"--- V\":\n                - generic: \"--- V\"\n  - button \"Show or hide parts tray\": ▲ PARTS TRAY · 0 parts"
+    },
+    {
+      "operation": "Power off and return to menu",
+      "observed": "Board Power OFF before leaving"
+    }
+  ]
+}

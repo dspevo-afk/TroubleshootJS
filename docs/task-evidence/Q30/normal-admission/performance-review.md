@@ -1,4 +1,13 @@
-# Q30 measured execution envelope review
+# Current status: Q30 BLOCKED / NOT ACCEPTED
+
+Independent review rejected the completion claim in `97e0727`. The
+300-second normal-player budget was not authorized; the production limit
+remains 90 seconds. The working implementation and historical receipts below
+are preserved. Their PASS labels certify only their recorded scopes and
+inputs, not current Q30 acceptance. U06, U07, Q60 and later work remain
+unstarted. See the [acceptance repair](../acceptance-repair/README.md).
+
+# Historical Q30 measured execution envelope review
 
 ## Final qualified-family gate status
 

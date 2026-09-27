@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "scope": "Developer service bench only; no normal-player admission",
+  "seed": "13",
+  "fault": "DRIVE_A_OPEN",
+  "candidate": "Final rebuilt source; see input-audit.json and build-final-result.json",
+  "inputMethod": "Actual visible buttons and terminal selectors; no injected controller calls",
+  "steps": [
+    {
+      "operation": "Unrepaired retest click",
+      "transportResult": "Error: Error: Timed out running CDP command \"Input.dispatchMouseEvent\" for tab 2\nwaiting on click for selector internal:role=button[name=\"Retest Customer\"s]\nLocator diagnostics: {\"kind\":\"action_failed\",\"action\":\"click\",\"locator\":\"internal:role=button[name=\\\"Retest Customer\\\"s]\",\"matchCount\":1,\"matches\":[{\"ariaLabel\":null,\"disabled\":false,\"role\":null,\"tag\":\"button\",\"text\":\"Retest Customer\",\"type\":\"button\",\"visible\":true}],\"visibleCount\":1,\"truncated\":false}"
+    },
+    {
+      "operation": "Observed after unrepaired retest click",
+      "observed": "            - row \"Customer retest did not pass. Continue troubleshooting.\":\n              - cell \"Customer retest did not pass. Continue troubleshooting.\":\n                - generic: Customer retest did not pass. Continue troubleshooting."
+    },
+    {
+      "operation": "Sensor A HIGH/B LOW; visible terminal selectors place black at J1.2, red at RDA.1",
+      "observed": "                - generic: 4.85 V"
+    },
+    {
+      "operation": "Visible control moves red to RDA.2",
+      "observed": "                - generic: 0 V"
+    },
+    {
+      "operation": "Power OFF, exit active DC V mode, select RDA and lift lead1",
+      "observed": "            - 'row \"State: Lead Lifted\"':\n              - 'cell \"State: Lead Lifted\"':\n                - generic: \"State: Lead Lifted\"\n            - row \"Reconnect lead 1\":\n              - cell \"Reconnect lead 1\":\n                - button \"Reconnect lead 1\""
+    },
+    {
+      "operation": "Repaired retest click",
+      "transportResult": "Error: Error: Timed out running CDP command \"Input.dispatchMouseEvent\" for tab 2\nwaiting on click for selector internal:role=button[name=\"Retest Customer\"s]"
+    },
+    {
+      "operation": "Reconnect original lead, remove RDA, choose 1000 Ohm +/-5%, install, repower and retest",
+      "observed": "            - row \"Customer retest passed. The reported behavior is resolved.\":\n              - cell \"Customer retest passed. The reported behavior is resolved.\":\n                - generic: Customer retest passed. The reported behavior is resolved."
+    },
+    {
+      "operation": "Power off all supplies before closure",
+      "observed": "    - 'row \"Board Power: OFF\"':\n      - 'cell \"Board Power: OFF\"':\n        - 'button \"Board Power: OFF\" [active]'\n            - row \"Connect Supply 1 (+12V)\":\n              - cell \"Connect Supply 1 (+12V)\":\n                - button \"Connect Supply 1 (+12V)\"\n            - row \"Connect Supply 2 (+5V)\":\n              - cell \"Connect Supply 2 (+5V)\":\n                - button \"Connect Supply 2 (+5V)\"\n            - row \"Connect Supply 3 (+5V)\":\n              - cell \"Connect Supply 3 (+5V)\":\n                - button \"Connect Supply 3 (+5V)\"\n            - row \"Connect Supply 4 (+12V)\":\n              - cell \"Connect Supply 4 (+12V)\":\n                - button \"Connect Supply 4 (+12V)\""
+    }
+  ],
+  "limitations": [
+    "Both retest clicks hit a transport timeout after delivery; subsequent visible state confirmed the completed actions.",
+    "This service check is not timing evidence or a CDP-wrapper certification.",
+    "An earlier pre-final-build manual run also had one readiness timeout and one missed overview probe click; that run was superseded by this fresh flow."
+  ]
+}

@@ -7,7 +7,7 @@ final class GenerationExecutionPolicy {
     static final GenerationExecutionPolicy SMALL_BOARD = new GenerationExecutionPolicy(
         "SMALL_BOARD_EXECUTION@1", SupportedEnvelope.current().identity(), GenerationCoordinator.MAX_JOB_MILLIS);
     static final GenerationExecutionPolicy NORMAL_MEDIUM = new GenerationExecutionPolicy(
-        "NORMAL_MEDIUM_EXECUTION@1", MediumBoardNormalAdmission.IDENTITY, 300000L);
+        "NORMAL_MEDIUM_EXECUTION@2", MediumBoardNormalAdmission.IDENTITY, GenerationCoordinator.MAX_JOB_MILLIS);
 
     private final String identity;
     private final String physicalIdentity;

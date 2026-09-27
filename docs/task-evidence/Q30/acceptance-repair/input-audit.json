@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "scope": "src/tests/scripts/war plus build.xml and AGENTS.md; excludes pre-existing Python bytecode",
+  "count": 1682,
+  "sha256": "265174f09fc7ac751c7b7feda66bb9842d9473634312a56c5cb48f05eb5ab1f4",
+  "status": "PASS",
+  "base": "97e072767a54292e964958185c17798e18b107ae",
+  "before": "After final build and final test edits, before rebuilt compiled/visible/native gates",
+  "after": "After native completion",
+  "changedFiles": [],
+  "reusedHistoricalGateResults": false,
+  "manifestUncompressedSha256": "d51eafd95c3b9938c1cb486fdaebbfd2117d0a531b1651f91da4ec30e3954621",
+  "manifestCompressedBytes": 81677,
+  "readerInputs": [
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/check_coordinator.py",
+      "sha256": "c3bc1c2c1ba385b962dbd92366ca784ff774198d00b856978a5f0fa443ff0c0a",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/check_corpus.py",
+      "sha256": "eea6db263b966c120ae345d73ef056ffe26a80548531431cf30513df83eee34f",
+      "unchangedFromBase": true
+    }
+  ]
+}

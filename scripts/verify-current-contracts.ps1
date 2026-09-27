@@ -124,6 +124,8 @@ final class PhysicalSpecificationDeveloperVerifier {
     $sourcePaths += $stub
     if ($needsQ30NativeLoggerBridge) { $sourcePaths += $nativeLoggerShim }
     $testDefinitions = @(
+        @{ Name = 'StagedFamilyRegistrationContractTest'; Marker = 'staged family registration contracts ' },
+        @{ Name = 'GeneratedExternalPowerBindingsControlObservationContractTest'; Marker = 'generated power control observation contracts assertions=' },
         @{ Name = 'ProceduralFamilyContractTest'; Marker = 'procedural family contracts ' },
         @{ Name = 'QuickPlayPhysicalMatrixContractTest'; Marker = 'Quick Play physical matrix contracts ' },
         # Schedule the largest short-budget construction cohort first; cases and budgets are unchanged.

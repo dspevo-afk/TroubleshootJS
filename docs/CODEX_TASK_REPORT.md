@@ -1,4 +1,77 @@
-# Current checkpoint: Q30 qualified-family acceptance COMPLETE — PASS
+# Current checkpoint: Q30 acceptance repair — BLOCKED / NOT ACCEPTED
+
+Review target/base `97e072767a54292e964958185c17798e18b107ae`, parent
+`16a922b2b757dfcd1cbc3a0230ab2b97ac2fbb50`, branch
+`codex/q30-multirail-qualification`. The independent review rejects the prior
+completion claim: generic request/construction acquired Q30 knowledge and the
+normal-player cumulative deadline changed from 90 to 300 seconds without human
+authorization. This repair preserves the working electrical, physical,
+diagnostic, service and replay implementation and all historical evidence.
+U06, U07, Q60 and later milestones remain unstarted.
+
+The authorized production contract is 90,000 ms cumulative, 640 shared work
+units and 5,000 ms per active operation. Private diagnostic measurement may use
+90–300 seconds only with its existing separate cache, developer scope and
+cleanup. The final rebuilt private sample reports 114.754–126.904 seconds cold
+total and 92.662–98.702 seconds proof. Every cold proof alone exceeds 90 seconds;
+this is failed production-budget evidence, although the private measurement
+gate passed. Three samples do not estimate a population tail. No normal Q30
+launch is accepted. See [compact repair evidence](task-evidence/Q30/acceptance-repair/README.md).
+
+The family-owned staged capability now owns Q30 planning, canonical identity,
+routing, accepted-route construction and realization metadata. Generic request
+and coordinator code have no Q30 plan/generator/route knowledge. Board metadata
+owns its silkscreen title. Registration is separate from normal eligibility:
+eleven registered families retain structural contracts; ten remain enabled.
+The coordinator rejects disabled content before changing a predecessor.
+
+Fresh gates: focused contracts and registration canary PASS; actual final-source
+JDK8/GWT build PASS (79.443 s, exit 0); three compiled private cold/warm cases and
+scope-loss, strict readers, cache isolation and cleanup PASS. The normal compiled
+gate passes 30 launches, two exact replays and blocked Q30 replay. Visible normal
+LED and developer-only Q30 diagnosis/service/replacement/retest flows PASS;
+five screenshots were inspected. Q30 retest-click transport timeouts are retained
+with subsequent visible outcomes. The unfiltered native matrix PASSed all 80
+Java suites and independent oracles, exit 0 in 3,421.497 s including cleanup.
+Service and finer-step comparisons each pass 40/40. The independent corpus
+reader validates all 51 rows (42 accepted / nine rejected) and 17 corruption
+canaries. The final input audit confirms 1,682 consumed files unchanged,
+candidate digest `265174f09fc7ac751c7b7feda66bb9842d9473634312a56c5cb48f05eb5ab1f4`.
+The first native attempt failed a stale enabled-catalog assertion; the corrected oracle
+passes its focused canary, and the failed receipt is preserved. An initial build
+wrapper's null exit-code receipt is invalid; the external-process rerun above
+provides the valid build result.
+
+The structural corpus contains 24 representative and 24 held-out rows at
+33/35/37 packages plus three signed-long boundary rows. It supplies useful
+topology diversity inside the requested band, but no evidence for sizes
+20–32 or 38–40. The original approximately-30-part plus held-out 20–40-part
+deliverable is unchanged; broader scale acceptance remains unproved. The
+separate P09 72-row corpus is small-board regression, not Q30-scale evidence.
+
+Preserved changes/resources: the Desktop checkout remains on `e0c3688` with
+its seven pre-existing tracked modifications and untracked evidence. Work is
+in the existing Q30 worktree, whose initial tracked state was clean; its
+pre-existing `tests/contracts/__pycache__/` stays unstaged. Task scratch is a
+unique owned OS-temp directory; no gate remains active. Recursive removal was
+rejected by automatic approval review as "blocked by policy", with no further
+reason. The inactive directory is retained; this administrative cleanup is
+BLOCKED, separate from passing native/browser runtime cleanup. Its exact leaf
+name and checks are in the [cleanup receipt](task-evidence/Q30/acceptance-repair/resource-cleanup.json).
+Visible boards were powered off, the task tab closed and owned preview stopped.
+No historical evidence is deleted. Retention
+recommendation: keep compact final receipts, input hashes, summaries, failures
+that explain limits and 2–5 inspected screenshots; keep intermediate captures
+in owned OS-temp scratch and remove them only after verified cleanup. Any
+pruning of already committed evidence needs separate owner authorization.
+
+Publication scope is this reviewed acceptance-boundary repair; its containing
+commit identifies the source candidate. The retained temporary directory can be
+removed separately when allowed. Next milestone work remains Q30 acceptance.
+Q30 remains BLOCKED for measured performance and unproved broader scale;
+U06, U07, Q60 and later milestones remain unstarted.
+
+# Historical checkpoint: rejected Q30 qualified-family acceptance claim
 
 Base/HEAD `16a922b2b757dfcd1cbc3a0230ab2b97ac2fbb50`, branch
 `codex/q30-multirail-qualification`. Q30 gates are COMPLETE for the declared

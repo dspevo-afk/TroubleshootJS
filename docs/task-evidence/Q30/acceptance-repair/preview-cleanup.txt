@@ -1,0 +1,2 @@
+Both final visible boards powered off; owned in-app tab closed.
+Stopped TroubleshootJS preview PID 11024 and positively released port 8901.

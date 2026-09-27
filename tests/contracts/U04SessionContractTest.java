@@ -52,7 +52,11 @@ public final class U04SessionContractTest {
         session.adopt(b, launch);
         check(!session.retested(test, a, true, "late") && session.owner() == b &&
             session.screen() == PlayerSession.Screen.WORKBENCH, "pending completion cannot finish an adopted successor");
-        check(PlayerFamilyCatalog.families().size() == 11, "all current player families represented");
+        check(PlayerFamilyCatalog.families().size() == 10 &&
+            !PlayerFamilyCatalog.families().contains(Rb30Plan.FAMILY_ID),
+            "blocked Q30 is absent from the normal-player menu");
+        check(PlayerFamilyCatalog.registeredFamilies().size() == 11,
+            "all implemented families retain their structural and catalog contracts");
         verifyGenericShop();
         verifyAllCatalogLabels();
         System.out.println("PASS: U04 session contracts assertions=" + assertions);
@@ -120,7 +124,7 @@ public final class U04SessionContractTest {
     }
     private static void verifyAllCatalogLabels() {
         CirSim sim = new CirSim(); sim.gridSize=16; sim.gridMask=~15; sim.gridRound=7; CircuitElm.sim=sim;
-        for (String family : PlayerFamilyCatalog.families()) {
+        for (String family : PlayerFamilyCatalog.registeredFamilies()) {
             GeneratedBoardInstance owner = constructPlayer(family,
                 Rb30Plan.FAMILY_ID.equals(family) ? 13L : 3L);
             PlayerShopCatalog catalog = new PlayerShopCatalog(owner);

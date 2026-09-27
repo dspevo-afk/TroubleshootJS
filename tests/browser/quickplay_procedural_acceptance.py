@@ -22,11 +22,9 @@ EXPECTED_CATALOG = (
     ('SENSOR_CONTROL', 'EASY'),
     ('RB15_CONTROL', 'EASY'),
     ('COMPOSED_CONTROLLED_INDICATOR', 'MEDIUM'),
-    ('RB30_CONTROL', 'MEDIUM'),
 )
-SMALL_BOARD_OBSERVATION_SECONDS = 115  # Existing 90-second cap plus 25 seconds to observe.
-NORMAL_MEDIUM_JOB_MILLIS = 300000       # Qualified immutable MEDIUM_BOARD_NORMAL@1 request.
-NORMAL_MEDIUM_MARGIN_SECONDS = 25
+NORMAL_JOB_MILLIS = 90000
+OBSERVATION_MARGIN_SECONDS = 25
 
 root, output = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve()
 output.mkdir(parents=True, exist_ok=False)
@@ -98,17 +96,14 @@ try:
                 page.get_by_role('button', name=label, exact=True).click(timeout=15000)
 
             def observation_bound_seconds(family):
-                if family['id'] == 'RB30_CONTROL':
-                    return NORMAL_MEDIUM_JOB_MILLIS / 1000 + NORMAL_MEDIUM_MARGIN_SECONDS
-                return SMALL_BOARD_OBSERVATION_SECONDS
+                return NORMAL_JOB_MILLIS / 1000 + OBSERVATION_MARGIN_SECONDS
 
             def prepare(family, row):
                 start = time.monotonic()
                 samples = []
                 bound = observation_bound_seconds(family)
                 row['observationBoundSeconds'] = bound
-                row['selectedJobBudgetMillis'] = (
-                    NORMAL_MEDIUM_JOB_MILLIS if family['id'] == 'RB30_CONTROL' else 90000)
+                row['selectedJobBudgetMillis'] = NORMAL_JOB_MILLIS
                 while time.monotonic() - start < bound:
                     state = snapshot()
                     if state.get('progress'):
@@ -164,9 +159,12 @@ try:
                                         'data-tsj-q30-d01-report', 'data-tsj-q30-d01-state'):
                             assert page.locator('html').get_attribute(private) is None, private
                         row['privateMetadataAbsent'] = True
-                        page.screenshot(path=str(output / (family['id'].lower() + '-' + str(ordinal) + '-top.png')))
+                        capture = ordinal == 0 and family['id'] in ('LED_INDICATOR', 'COMPOSED_CONTROLLED_INDICATOR')
+                        if capture:
+                            page.screenshot(path=str(output / (family['id'].lower() + '-top.png')))
                         click('Board view'); click('View bottom copper'); click('Board view')
-                        page.screenshot(path=str(output / (family['id'].lower() + '-' + str(ordinal) + '-bottom.png')))
+                        if capture:
+                            page.screenshot(path=str(output / (family['id'].lower() + '-bottom.png')))
                         click('Board view'); click('View top copper'); click('Board view')
                         click('Main menu')
                         page.wait_for_function("() => document.body.getAttribute('data-player-screen') === 'MENU'", timeout=30000)
@@ -181,10 +179,10 @@ try:
                         save('progress.json', result)
                         raise
 
-            assert len(result['cases']) == 33 and all(row['outcome'] == 'PASS' for row in result['cases'])
+            assert len(result['cases']) == 30 and all(row['outcome'] == 'PASS' for row in result['cases'])
             result['replays'] = []
             family_by_id = {row['id']: row for row in families}
-            for family_id in ('RELAY_OUTPUT', 'COMPOSED_CONTROLLED_INDICATOR', 'RB30_CONTROL'):
+            for family_id in ('RELAY_OUTPUT', 'COMPOSED_CONTROLLED_INDICATOR'):
                 replay = saved[family_id]
                 family = family_by_id[family_id]
                 row = {'family': family_id, 'profile': family['profile'],
@@ -213,8 +211,26 @@ try:
                     row['failure'] = repr(failure)
                     save('progress.json', result)
                     raise
-            assert len(result['replays']) == 3 and all(
+            assert len(result['replays']) == 2 and all(
                 row['outcome'] == 'PASS' for row in result['replays'])
+            # A registered research family is not accepted player content.
+            # Exercise the real replay form with an existing isolated board.
+            before_blocked = snapshot()
+            page.get_by_text('Open a saved replay code', exact=True).click()
+            page.get_by_label('Open current replay', exact=True).fill(
+                'tsj-alpha/3/MEDIUM/RB30_CONTROL/13')
+            click('Prepare replay')
+            page.wait_for_function(
+                "() => window.tsjProduct.snapshot(false).screen === 'ERROR'", timeout=15000)
+            blocked = snapshot()
+            assert blocked['hasBoard'] and blocked['isolated']
+            assert blocked['replay'] == before_blocked['replay']
+            assert 'progress' not in blocked
+            result['blockedFamilyReplay'] = {
+                'family': 'RB30_CONTROL', 'outcome': 'EXPECTED_BLOCKED',
+                'screen': blocked['screen'], 'predecessorReplay': blocked['replay'],
+                'predecessorIsolated': blocked['isolated'], 'noGenerationStarted': True,
+            }
             assert not result['errors'], result['errors']
             result['outcome'] = 'PASS'
         finally:

@@ -149,6 +149,7 @@ final class Rb30Plan {
     /** One logical graph with its selected real physical package inventory. */
     TroubleshootBoard board() {
         TroubleshootBoard board = new TroubleshootBoard(FAMILY_ID + "_BOARD");
+        board.setSilkscreenTitle("TSJ MULTI-RAIL CONTROL");
         for (String id : new String[] {
                 "RAW12", "FUSED12", "RAIL12", "EN5", "RAIL5", "LOAD12"
             }) net(board, id, BoardNet.RoutingRole.SUPPLY);

@@ -13,6 +13,13 @@ class TroubleshootBoard {
         new HashMap<String, ExternalBoardPowerInput>();
     private final BoardSimulationBindings simulationBindings = new BoardSimulationBindings(this);
     private PcbPlacementConstraints placementConstraints;
+    private String silkscreenTitle;
+    void setSilkscreenTitle(String title) {
+        if (title == null || title.trim().length() == 0 || silkscreenTitle != null)
+            throw new IllegalArgumentException("Missing or duplicate board silkscreen title");
+        silkscreenTitle = title;
+    }
+    String getSilkscreenTitle() { return silkscreenTitle; }
     void setPlacementConstraints(PcbPlacementConstraints constraints) {
         if (constraints == null || placementConstraints != null) throw new IllegalArgumentException("Physical demand already declared");
         constraints.validate(this); placementConstraints=constraints;

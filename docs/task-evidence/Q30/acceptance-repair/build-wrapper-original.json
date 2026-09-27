@@ -1,0 +1,9 @@
+{
+  "gate": "build",
+  "startedUtc": "2026-09-27T04:42:15.3997869Z",
+  "finishedUtc": "2026-09-27T04:43:36.5183789Z",
+  "elapsedSeconds": 81.1176308,
+  "exitCode": null,
+  "status": "FAIL",
+  "log": "build.log"
+}

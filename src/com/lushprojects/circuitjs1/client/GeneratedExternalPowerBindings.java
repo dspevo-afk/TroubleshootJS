@@ -141,16 +141,17 @@ class GeneratedExternalPowerBindings {
 
     /** Allocation-free validation of the exact control states captured at operation entry. */
     final class ControlObservation {
-        private final String[] ids;
         private final ExternalPowerSimulationBinding[] bindings;
+        private final int bindingCount;
         private final long[] revisions;
         private final boolean[] connected, controlled;
         private ControlObservation() {
             Vector<String> inputIds = board.getPowerInputIds();
-            ids = new String[inputIds.size()]; bindings = new ExternalPowerSimulationBinding[ids.length];
-            revisions = new long[ids.length]; connected = new boolean[ids.length]; controlled = new boolean[ids.length];
-            for (int i = 0; i < ids.length; i++) {
-                ids[i] = inputIds.get(i); bindings[i] = powerBindings.get(ids[i]);
+            bindings = new ExternalPowerSimulationBinding[inputIds.size()];
+            revisions = new long[bindings.length]; connected = new boolean[bindings.length]; controlled = new boolean[bindings.length];
+            bindingCount = powerBindings.size();
+            for (int i = 0; i < bindings.length; i++) {
+                bindings[i] = powerBindings.get(inputIds.get(i));
                 ExternalPowerSimulationBinding binding = bindings[i];
                 if (binding != null) {
                     revisions[i] = binding.getConnectionRevision();
@@ -159,10 +160,12 @@ class GeneratedExternalPowerBindings {
             }
         }
         boolean isCurrent() {
-            if (constructionAborted || powerBindings.size() != ids.length) return false;
-            for (int i = 0; i < ids.length; i++) {
-                ExternalPowerSimulationBinding binding = powerBindings.get(ids[i]);
-                if (binding != bindings[i] || binding == null || binding.getConnectionRevision() != revisions[i] ||
+            // bindPowerInput only appends unique IDs; clearing occurs only with this owner's abort.
+            if (constructionAborted || bindingCount != bindings.length ||
+                    powerBindings.size() != bindingCount) return false;
+            for (int i = 0; i < bindings.length; i++) {
+                ExternalPowerSimulationBinding binding = bindings[i];
+                if (binding == null || binding.getConnectionRevision() != revisions[i] ||
                         binding.hasControl() != controlled[i] || binding.isConnected() != connected[i]) return false;
             }
             return true;

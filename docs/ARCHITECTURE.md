@@ -33,9 +33,11 @@ precede state deletion. Ambiguous identity retains state and the process.
 
 ## Procedural Quick Play admission and exact replay
 
-QuickPlayAdmission version4 covers eleven currently cataloged family/profile pairs:
-nine EASY synchronous leaf families (including SENSOR_CONTROL), the composed MEDIUM
-family, and the Q30 multi-rail MEDIUM family. Other available difficulty labels do
+QuickPlayAdmission version4 supports the registered family/profile request
+identities. The normal menu exposes ten enabled pairs: nine EASY synchronous
+leaf families (including SENSOR_CONTROL) and the composed MEDIUM family.
+The Q30 multi-rail MEDIUM provider remains registered but is blocked for normal
+publication pending its acceptance repair. Other available difficulty labels do
 not advertise electrical content that has not passed that profile. Fresh signed-long
 entropy is never reduced to reference seed lists. A bounded page-session root
 history prevents recent New Board launches from reusing an identity even if the
@@ -48,11 +50,12 @@ and unchanged P09 access/physical limits. Q30 uses its separately versioned
 medium-board admission token and qualified MEDIUM_BOARD@1 routing policy; it does
 not enlarge P09.
 
-A small or composed launch has at most four deterministic candidates sharing the
-existing 90-second, 640-unit and five-second bounds. The staged Q30 normal-medium
-request uses `NORMAL_MEDIUM_EXECUTION@1` with the independently reviewed
-300-second cumulative job allowance while retaining those 640 shared units,
-five-second per-unit limit, four-candidate bound and exact-replay rule.
+Every normal launch has at most four deterministic candidates sharing the
+existing 90-second, 640-unit and five-second bounds. The staged normal-medium
+policy is `NORMAL_MEDIUM_EXECUTION@2`, with the same 90,000 ms cumulative limit.
+The earlier 300-second production policy was not authorized and is retired.
+Q30 remains registered for private qualification, but normal publication is
+blocked pending acceptance of its performance and original scale scope.
 `PhysicalBoardFingerprint` records exact full geometry for evidence and a stricter
 novelty identity that ignores the seed, fault, values,
 board translation, outline-only differences and route-tree segmentation while
@@ -66,8 +69,9 @@ programming error and cleanup failure never publish. Difficulty is computed from
 complete current diagnostic/repair evidence. Qualified EASY and composed-MEDIUM
 content is enabled; HARD/PSYCHOTIC and unimplemented family/profile content are
 not made playable by layout policy. Q30's catalog registration is implemented,
-and the bounded 33/35/37-part candidate passes its normal-player and final
-qualification gates across all eight topology axes.
+but the bounded 33/35/37-part candidate is not accepted normal-player content.
+Historical passes under the rejected 300-second policy do not qualify the
+authorized 90-second production limit.
 
 Controlled composition stages routing before electrical allocation. Its sealed
 coordinate result belongs to the exact immutable request. Hypotheses may copy that
@@ -95,13 +99,12 @@ The 19-suite/144-case evidence below belongs to the historical post-P09 source
 candidate. The rebuilt procedural browser matrix covers the ten families that
 preceded Q30 registration and passes three launches per pair, exact replay,
 privacy, power isolation and owned-process cleanup. The current source catalog
-has eleven entries, including the implemented Q30 candidate. Its current
-normal-player and final qualification gates pass for the bounded 33/35/37-part
-candidate. See the
+has eleven registered entries, including the implemented Q30 candidate,
+and ten enabled normal-player entries. Q30 acceptance remains blocked. See the
 [historical evidence](task-evidence/ProceduralFamilies/README.md)
 and the [historical ten-family matrix](task-evidence/D01/quickplay-procedural-matrix.json).
-The [current eleven-family matrix](task-evidence/Q30/normal-admission/browser-modern-22-root-result.json)
-records the final normal-player launches and replays.
+The [historical eleven-family matrix](task-evidence/Q30/normal-admission/browser-modern-22-root-result.json)
+records historical launches and replays under the rejected Q30 deadline.
 
 ## Production physical qualification (P09)
 
@@ -371,10 +374,9 @@ not a time estimate. A narrow public snapshot excludes catalog construction
 outside Shop. The adapter refreshes preparation/retest status without advancing
 simulation. Player preparation pauses while its tab is hidden and resumes the
 same job: `ForegroundGenerationClock` excludes only hidden idle time, retaining
-all accumulated active time within the request's execution policy. Small and
-composed requests use 90 seconds; the staged Q30 normal-medium request uses its
-reviewed 300-second allowance. Developer
-verification keeps wall-time budgets. The continuation/watchdog is revoked at
+all accumulated active time within the request's 90-second execution policy.
+Developer verification keeps wall-time budgets. Only the isolated private
+diagnostic measurement path may request an extended allowance. The continuation/watchdog is revoked at
 terminal completion, and completion is delivered even if UI restoration throws.
 
 `PcbPlacementCompactor` removes only empty routing-courtyard bands before
@@ -547,8 +549,8 @@ or an independent-domain count.
 
 Initial conservative MEDIUM requires at least two distinguishing readings,
 multiple repair owners/classes, and temporal or parallel-path interaction.
-The composed controller and Q30 multi-rail board are the current MEDIUM
-candidates; the nine synchronous leaf families are EASY candidates even when
+The composed controller and registered Q30 multi-rail implementation are MEDIUM
+candidates; Q30 normal publication remains blocked. The nine synchronous leaf families are EASY candidates even when
 they have more packages. Every admission must prove the requested band. HARD
 and PSYCHOTIC remain unavailable. Human trials
 and the qualified corpus bound the calibration; mathematical counters cannot
@@ -708,11 +710,10 @@ The restore boundary makes one immediate cleanup retry during abort; a recovered
 one-shot exit failure still fails that attempt and preserves its original error.
 Persistent failure retains the cursor for a later closed-session retry.
 
-Runtime budgets for small and composed requests retain a 90-second cumulative job,
-640 deterministic work units and a five-second active operation. The staged Q30
-normal-medium request carries its reviewed 300-second cumulative allowance through
-`NORMAL_MEDIUM_EXECUTION@1`; it does not widen the shared 640-unit or five-second
-per-unit guards. CircuitJS retains its separate 500 ms accepted-step and five-second
+Runtime budgets for every normal request retain a 90-second cumulative job,
+640 deterministic work units and a five-second active operation.
+`NORMAL_MEDIUM_EXECUTION@2` binds medium physical admission to that same
+90-second limit; a normal request cannot use the private measurement allowance. CircuitJS retains its separate 500 ms accepted-step and five-second
 temporal-operation ceilings. The coordinator batches at most 16 cheap units or 8 ms
 per turn; an existing synchronous operation completes within its own bound. The
 frozen 24-attempt performance corpus still requires each complete serial-reference
@@ -2055,8 +2056,9 @@ leaf IDs from `QuickPlayFamilyRegistry`, the composed controlled-indicator ID, a
 `RB30_CONTROL`. Its versioned `PLAYER_FAMILY_EXECUTION@1` declaration binds each
 family to its profile, execution policy and physical-admission identity. The
 catalog entry is registration state, not a normal publication receipt; the
-current normal-player and final qualification gates pass for the bounded
-33/35/37-part candidate across all eight topology axes.
+Q30 normal-player entry is disabled. Its 33/35/37-part implementation and
+private qualification remain available; the broader scale and production
+performance claims are not accepted.
 
 Normal-medium qualification has a separate `GeneratedPhysicalAdmission` seam.
 `MediumBoardNormalAdmission` binds an accepted bounded P07 route to immutable
@@ -2073,15 +2075,26 @@ schema-2 reports record `registered=true`/`normalCatalogRegistered=true`,
 the bounded service-readiness policy described below; the physical owner still
 checks real residual voltage and coil current.
 
-`GenerationRequest.player` and `GenerationRequest.stagedQuickPlay` route
-`RB30_CONTROL` through `NORMAL_MEDIUM_EXECUTION@1`, whose 300,000 ms whole-job
-allowance is bound to `MEDIUM_BOARD_NORMAL@1`. `GenerationCoordinator` validates
-that immutable request capability before cancelling a predecessor and validates the
-actual attached physical admission before publication. Small and composed requests
-retain `SMALL_BOARD_EXECUTION@1` and the 90,000 ms allowance; all requests retain
-the shared 640-unit and 5,000 ms per-unit limits. `DifficultyAssessment` v2 derives
-the selected profile from admitted diagnostic evidence, including actual owners,
-readings, repair classes and legal witness actions.
+`StagedFamilyCapability` is the typed family-owned construction boundary.
+`PlayerFamilyCatalog` registers the capability separately from normal-player
+eligibility. `GenerationRequest` selects it by family ID and retains only its
+opaque resolved plan; its job-owned session delegates routing, accepted-route
+construction and realization identity. `Rb30PlayerFamilyCapability` owns the
+RB30 plan, canonical plan/route identity, medium admission and constructor.
+Private qualification uses the same provider and construction semantics through
+`forFamilyQualification`; no RB30 plan or route type enters the generic request
+or coordinator. Board-owned silkscreen metadata carries the multi-rail title.
+
+Registration and valid request identity do not grant normal publication.
+The catalog's enabled projection supplies the menu, while registered identities
+remain available for private qualification and structural/replay contracts.
+The coordinator checks normal eligibility before canceling a predecessor and
+again before publication, alongside the actual physical admission. Q30 is
+registered but disabled. Small/composed requests retain
+`SMALL_BOARD_EXECUTION@1`; medium requests use `NORMAL_MEDIUM_EXECUTION@2`.
+Both are limited to 90,000 ms, 640 shared units and 5,000 ms per unit.
+`DifficultyAssessment` v2 still derives the selected profile from actual proof,
+including owners, readings, repair classes and legal witness actions.
 
 The separate `QuickPlayGateDeveloperVerifier` can supply an instance-scoped,
 one-shot P09 negative at the coordinator's PHYSICAL phase. It first validates
@@ -2126,9 +2139,8 @@ customer-retest completion rule. Its complete five-hypothesis D01 declaration is
 390 units; the direct non-explicit proof includes its completion profile (410).
 A private coordinator measurement entry requires an immutable qualification
 request, debug scope and an active verifier before canceling or changing work.
-It can select a 90–300-second job limit for private measurement while small and
-composed ordinary generation retains 90 seconds and the staged Q30 normal-medium
-request carries its reviewed 300-second policy. All retain 640 work units and a
+It can select a 90–300-second job limit for private measurement while every
+normal production request retains 90 seconds. All retain 640 work units and a
 five-second unit limit. Its value-only proof cache is separate from the ordinary
 cache; scope is rechecked before private publication. The verifier retires both
 cold and warm probe owners, restores its

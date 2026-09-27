@@ -9,7 +9,7 @@ public final class Q30GenerationMeasurementBudgetContractTest {
 
     public static void main(String[] args) {
         verifyNormalBudgetsRemainFixed();
-        GenerationRequest privateRequest = GenerationRequest.forQ30Qualification(13L);
+        GenerationRequest privateRequest = GenerationRequest.forFamilyQualification(Rb30Plan.FAMILY_ID, 13L);
         require(privateRequest.isPrivateDiagnosticQualification() &&
             privateRequest.requiresExplicitCompletion(),
             "only the immutable private request carries measurement capability");

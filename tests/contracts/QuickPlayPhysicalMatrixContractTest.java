@@ -97,7 +97,9 @@ public final class QuickPlayPhysicalMatrixContractTest {
     }
 
     private static Vector<String> selectedFamilies(String[] args) {
-        Vector<String> catalog = PlayerFamilyCatalog.families();
+        // Keep the implemented-family physical corpus even when normal
+        // publication of one of those families is blocked.
+        Vector<String> catalog = PlayerFamilyCatalog.registeredFamilies();
         check(catalog.size() == CATALOG_FAMILIES.length,
             "Player family catalog size changed: expected " + CATALOG_FAMILIES.length +
             " but found " + catalog.size());

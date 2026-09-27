@@ -1,0 +1,17 @@
+{
+  "status": "BLOCKED_TEMP_REMOVAL",
+  "taskDirectoryName": "TroubleshootJS-Q30-repair-7039bb9cd9204bf8a845fbd940c2a91c",
+  "activeTaskProcesses": 0,
+  "reparsePoints": 0,
+  "removed": false,
+  "limitation": "Automatic approval review rejected the recursive removal command before execution: blocked by policy. No further reason was supplied; the directory is preserved.",
+  "previewPid": 11024,
+  "previewPort": 8901,
+  "previewStoppedAndPortReleased": true,
+  "visibleBoardsPoweredOff": true,
+  "ownedBrowserTabsClosed": true,
+  "nativeOwnedScratchCleanup": "PASS",
+  "compiledRunnerCleanup": "PASS",
+  "historicalEvidenceRemoved": false,
+  "preExistingBytecodePreserved": true
+}
