@@ -1,0 +1,71 @@
+[
+  {
+    "seed": "13",
+    "requestExact": true,
+    "proofFields": {
+      "status": true,
+      "family": true,
+      "topology": true,
+      "providerId": true,
+      "programIdentity": true,
+      "contextCanonical": true,
+      "contextTrusted": true,
+      "partitionCanonical": true,
+      "partitionNodeCount": true,
+      "partitionLeafCount": true,
+      "hypothesisCount": true,
+      "actualSampleCount": true,
+      "workUnits": true,
+      "explicitCompletion": true,
+      "evidence": true
+    },
+    "baselineMs": 127588,
+    "optimizedMs": 113630
+  },
+  {
+    "seed": "7",
+    "requestExact": true,
+    "proofFields": {
+      "status": true,
+      "family": true,
+      "topology": true,
+      "providerId": true,
+      "programIdentity": true,
+      "contextCanonical": true,
+      "contextTrusted": true,
+      "partitionCanonical": true,
+      "partitionNodeCount": true,
+      "partitionLeafCount": true,
+      "hypothesisCount": true,
+      "actualSampleCount": true,
+      "workUnits": true,
+      "explicitCompletion": true,
+      "evidence": true
+    },
+    "baselineMs": 120720,
+    "optimizedMs": 106251
+  },
+  {
+    "seed": "64",
+    "requestExact": true,
+    "proofFields": {
+      "status": true,
+      "family": true,
+      "topology": true,
+      "providerId": true,
+      "programIdentity": true,
+      "contextCanonical": true,
+      "contextTrusted": true,
+      "partitionCanonical": true,
+      "partitionNodeCount": true,
+      "partitionLeafCount": true,
+      "hypothesisCount": true,
+      "actualSampleCount": true,
+      "workUnits": true,
+      "explicitCompletion": true,
+      "evidence": true
+    },
+    "baselineMs": 115450,
+    "optimizedMs": 103046
+  }
+]

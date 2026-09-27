@@ -1,0 +1,215 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<repo>",
+  "startedUtc": "2026-09-27T19:57:52.376452+00:00",
+  "outcome": "PASS",
+  "cases": [
+    {
+      "schema": 1,
+      "case": {
+        "index": 1,
+        "name": "sparse-factor-seed13",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=13",
+        "stateAttribute": "data-tsj-q30-coordinator-state",
+        "expectedState": "PASS:complete",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-q30-coordinator-report"
+      },
+      "url": "http://127.0.0.1:53313/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=13",
+      "startedUtc": "2026-09-27T19:57:54.873075+00:00",
+      "finishedUtc": "2026-09-27T20:00:16.649971+00:00",
+      "operationSeconds": 141.77689100000134,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:complete",
+      "lastObservedState": "PASS:complete",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 1643550,
+      "reportSha256": "2ce463324c01ec9c4a6fb39d6ab2bd36f7ec562a4820171ffee322d666df3ab5",
+      "reportFile": "cases/001-sparse-factor-seed13.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 2,
+        "name": "sparse-factor-seed7",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=7",
+        "stateAttribute": "data-tsj-q30-coordinator-state",
+        "expectedState": "PASS:complete",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-q30-coordinator-report"
+      },
+      "url": "http://127.0.0.1:53313/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=7",
+      "startedUtc": "2026-09-27T20:00:16.661487+00:00",
+      "finishedUtc": "2026-09-27T20:02:29.748407+00:00",
+      "operationSeconds": 133.08691749999707,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:complete",
+      "lastObservedState": "PASS:complete",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 1491225,
+      "reportSha256": "d74d0cdbf9a5bf71165406853b31531a8d07ebfcb7df32bbd0a13d60c49e3c39",
+      "reportFile": "cases/002-sparse-factor-seed7.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 3,
+        "name": "sparse-factor-seed64",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=64",
+        "stateAttribute": "data-tsj-q30-coordinator-state",
+        "expectedState": "PASS:complete",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-q30-coordinator-report"
+      },
+      "url": "http://127.0.0.1:53313/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=64",
+      "startedUtc": "2026-09-27T20:02:29.749850+00:00",
+      "finishedUtc": "2026-09-27T20:04:33.048142+00:00",
+      "operationSeconds": 123.2982869999978,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:complete",
+      "lastObservedState": "PASS:complete",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 1545682,
+      "reportSha256": "e06740c089163cc450d1cfb3e07763243abb7323af7cb395c5a90e580592a02c",
+      "reportFile": "cases/003-sparse-factor-seed64.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    }
+  ],
+  "caseCount": 3,
+  "errors": [],
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "2c3c1db084e98ee5bb4bf9b2a91c5f67aec13df3eb823fce103fc361c699db1c",
+    "afterSha256": "2c3c1db084e98ee5bb4bf9b2a91c5f67aec13df3eb823fce103fc361c699db1c",
+    "sourceSha256Before": "a320ec4071bb451ab60b704c1b53eed593b3bef1d953b4e723b7096bb69fcb3b",
+    "sourceSha256After": "a320ec4071bb451ab60b704c1b53eed593b3bef1d953b4e723b7096bb69fcb3b",
+    "webSha256Before": "42e32f846778297f3b71ea762a323a8751e14958066349de7806f6ac8aa36cfd",
+    "webSha256After": "42e32f846778297f3b71ea762a323a8751e14958066349de7806f6ac8aa36cfd",
+    "runnerBeforeSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+    "runnerAfterSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+    "fileCountBefore": 1524,
+    "fileCountAfter": 1524,
+    "seconds": 0.34143139999650884
+  },
+  "identity": {
+    "schema": 1,
+    "runner": {
+      "pid": 2524,
+      "created": "2026-09-27T19:57:52.2191200Z",
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+    },
+    "edgeProcessesBeforeCases": [
+      {
+        "pid": 10476,
+        "parent": 7772,
+        "created": "2026-09-27T19:57:54.3625850Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 17768,
+        "parent": 10476,
+        "created": "2026-09-27T19:57:54.3736430Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 9988,
+        "parent": 10476,
+        "created": "2026-09-27T19:57:54.4367930Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 17464,
+        "parent": 10476,
+        "created": "2026-09-27T19:57:54.4404060Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 16428,
+        "parent": 10476,
+        "created": "2026-09-27T19:57:54.4633550Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 10984,
+        "parent": 10476,
+        "created": "2026-09-27T19:57:54.5204370Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 9764,
+        "parent": 10476,
+        "created": "2026-09-27T19:57:54.5242840Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "profile": "<task-temp>\\sparse-factor\\profile",
+    "port": 53313,
+    "baseUrl": "http://127.0.0.1:53313"
+  },
+  "operationStartedUtc": "2026-09-27T19:57:54.873060+00:00",
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 0.8211491999973077,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "finishedUtc": "2026-09-27T20:04:34.212330+00:00"
+}

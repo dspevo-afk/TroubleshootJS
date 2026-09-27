@@ -1,0 +1,1 @@
+FAIL: temporary profiling build, exit 2, 6.699 seconds. GWT 2.7 reports SolverKernelProfile.java:217: System.nanoTime() is undefined in the emulated System class. The JVM fallback was changed to System.currentTimeMillis(); browser profiling retains performance.now(). No successful compilation or runtime claim is made for this attempt.

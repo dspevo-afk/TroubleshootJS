@@ -1,0 +1,39 @@
+{
+  "status": "BLOCKED",
+  "phase": "administrative scratch removal after completed runtime gates",
+  "actionExecuted": false,
+  "reason": "Automatic approval review rejected the bounded PowerShell removal command: blocked by policy. No more specific reason was supplied; no alternate deletion mechanism was attempted.",
+  "taskScratch": {
+    "leaf": "TroubleshootJS-q30-continue-702794a957cc4d669603fdb78e1a455a",
+    "retained": true,
+    "readOnlyPrecheck": "PASS",
+    "ownershipMarkerMatched": true,
+    "immediateChildOfOsTemp": true,
+    "containedEntries": 1322,
+    "bytes": 125013281,
+    "reparsePoints": 0,
+    "liveMatchingProcesses": []
+  },
+  "failedBuildScratch": {
+    "parentRelativeToOsTemp": "TroubleshootJS",
+    "leaf": "build-process-cf1860b9e9b84fd884f3cba5a9a64ea7",
+    "retained": true,
+    "ownershipEvidence": "The current task's initial profiling build log records retaining this exact directory after the GWT timer fallback compile failure.",
+    "recursivePrecheck": "NOT RUN: included in the rejected command"
+  },
+  "runtimeCleanup": {
+    "native": "PASS: maintained runner removed owned JVM classes and scratch",
+    "browserGates": "PASS: owned profiles' browser processes and local servers stopped; no owned survivors",
+    "visibleBoardsPoweredOff": true,
+    "taskTabClosed": true,
+    "remainingBrowserTabs": 0,
+    "previewPid": 10004,
+    "previewStartTicks": "639261365718806411",
+    "previewExecutable": "powershell.exe",
+    "previewPort": 8901,
+    "previewStopExitCode": 0,
+    "previewPortPositivelyReleased": true,
+    "previewStateAbsent": true
+  },
+  "preserved": "Pre-existing tests/contracts/__pycache__, unrelated Desktop checkout, prior-task retained scratch and normal documented build output"
+}

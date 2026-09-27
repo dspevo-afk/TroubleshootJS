@@ -1,4 +1,96 @@
-# Current checkpoint: Q30 acceptance repair — BLOCKED / NOT ACCEPTED
+# Current checkpoint: Q30 solver optimization accepted; Q30 BLOCKED
+
+Branch `codex/q30-multirail-qualification`; base
+`745d537de5b18bd7ec2ae769fc00d3696e5af6bd`. The containing intermediate commit
+accepts only finite-zero-factor elimination in the existing Crout kernel,
+expanded independent numerical fixtures, and its evidence. Q30 stays disabled.
+Frozen 90,000-ms cumulative / 640-unit / 5,000-ms operation contracts, full
+settlement/proofs, generic ownership, exact seed/replay and cleanup are unchanged.
+
+Fresh independent source review: no blocker within numeric-equivalence scope
+(signed-zero bit preservation is not claimed). Four focused native suites PASS,
+48.747 s including cleanup, with 93,541 A07 assertions. Actual isolated control
+JDK8/GWT build PASS, five permutations, 84.403 s. Optimized build evidence reused
+only after all 1,524 consumed source/web files matched the final manifest.
+
+Fresh counterbalanced cold comparison: B13/A13/A7/B7/B64/A64/A13/B13. Four pairs
+save 11.155–14.706 s (median paired saving 12.868 s). Repeated seed-13 ranges:
+control 2.437 s, optimized 0.296 s. Every exact request, electrical observation,
+proof field except elapsed time, service/retest result and work count matches.
+All eight maintained compiled runs, strict readers, 37 corruption canaries,
+private-cache isolation and owned process/server cleanup PASS. This supports
+runtime attribution on this host, not a population tail or normal admission.
+All optimized cold requests still fail 90 seconds (103.287–114.309 s).
+[Review, methods, commands and receipts](task-evidence/Q30/intermediate-optimization/README.md).
+
+Scale remains 33/35/37; counts 20–32, 34, 36 and 38–40 are unimplemented.
+Full final acceptance matrices are NOT RUN while hard gates fail. Next:
+monotonic stage profiling, measured optimization in contributor order, then
+purposeful family scale and fresh acceptance when eligible. U06/U07/Q60 and
+later milestones remain unstarted. The user authorized this intermediate commit
+and continuing Q30, explicitly **no push**; no completion email is sent.
+
+Resources: all eight browser/server jobs and native/build wrappers finished.
+Current task scratch is inactive and retained for continued profiling.
+Prior administrative cleanup remains policy-blocked separately from runtime
+cleanup; exact retained leaves are in acceptance-continuation/resource-cleanup.json.
+The unrelated Desktop checkout and pre-existing tests/contracts/__pycache__/
+remain untouched. Only intended source/oracle/docs/evidence are in this commit.
+
+# Historical checkpoint: Q30 acceptance continuation — BLOCKED / NOT ACCEPTED
+
+Base/HEAD `745d537de5b18bd7ec2ae769fc00d3696e5af6bd` (accepted ownership/budget
+repair), branch `codex/q30-multirail-qualification`. Scope: measured cold-path
+investigation, bounded solver optimization and exact scale audit. Q30 remains
+disabled; the 90,000-ms cumulative, 640-unit and 5,000-ms active-operation
+contracts and family-generic request/coordinator ownership are unchanged.
+That historical pass stopped without commit, push or completion email.
+
+Fresh baseline seeds 13/7/64 took 127.588/120.720/115.450 seconds cold. Sampled
+kernel instrumentation measured factorization at about 63% of sampled kernel
+time; the temporary hooks were removed. Skipping finite zero row factors in
+Crout reduces the same cold cases to **113.630/106.251/103.046 seconds**, with
+86.107/79.834/83.305 seconds of proof. Median improves 12.0%, but all complete
+requests still fail 90 seconds. These are private 300-second measurements,
+not normal admission. All five hypotheses/390 proof units, exact requests,
+canonical partitions, every electrical sample and repair/retest evidence
+match baseline. Numeric equivalence is checked; signed-zero bit preservation
+is not claimed. No new cache or mutable graph reuse was added.
+
+Actual package counts remain **33/35/37**. Counts **20–32, 34, 36 and 38–40**
+are unimplemented; purposeful smaller/larger recipes were audited but not
+qualified. Broad 20–40 support and its screenshots remain unproved. No
+requirement was narrowed, no inert padding added and no later milestone begun.
+
+Fresh gates: final actual JDK8/GWT five-permutation build PASS, exit 0 in
+79.594 s; A07 execution/oracle PASS (93,541 assertions); 17 focused native
+suites PASS (73.306 s including cleanup); three cold/warm compiled reports,
+strict reader/37 corruption canaries and cache isolation PASS within private
+measurement scope. Normal-player regression PASS: all ten enabled families,
+30 launches, two replays, privacy/power isolation and blocked Q30 replay.
+Visible normal menu/LED and private Q30 diagnosis, power-off lift/removal,
+replacement and repaired retest PASS with one retained click-transport timeout
+followed by visible success. Four screenshots inspected; crowded Q30 overview
+labels remain a limit. Full native/service/finer-step/expanded-corpus matrices
+and normal Q30 acceptance are NOT RUN, not inherited PASSes. Final audit checks
+all 1,524 consumed source/web files unchanged from the optimized run. Source
+digest: `a320ec4071bb451ab60b704c1b53eed593b3bef1d953b4e723b7096bb69fcb3b`.
+[Evidence, commands, review and limits](task-evidence/Q30/acceptance-continuation/README.md).
+
+Worktree: intended source/oracle/docs/evidence changes remain uncommitted and
+unstaged; the verifier restoration retains its exact HEAD Git blob. Root
+reviewed the diff; independent numerical review found no correctness blocker
+within its documented scope. The unrelated Desktop checkout and pre-existing
+`tests/contracts/__pycache__/` are preserved. Runtime/browser/preview cleanup
+PASS; no gate remains active. Automatic approval review rejected removal of
+the verified task scratch and profiling-failure scratch as "blocked by policy"
+without a more specific reason. Those inactive directories are retained;
+administrative cleanup is BLOCKED separately from runtime cleanup.
+[Exact retained leaves and checks](task-evidence/Q30/acceptance-continuation/resource-cleanup.json).
+Next work remains Q30 performance and purposeful broad-scale recipes, followed
+by fresh full acceptance. U06, U07, Q60 and later milestones remain unstarted.
+
+# Historical checkpoint: Q30 acceptance repair — BLOCKED / NOT ACCEPTED
 
 Review target/base `97e072767a54292e964958185c17798e18b107ae`, parent
 `16a922b2b757dfcd1cbc3a0230ab2b97ac2fbb50`, branch

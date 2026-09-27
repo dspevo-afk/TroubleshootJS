@@ -1,0 +1,10 @@
+{
+  "filesCompared": 1132,
+  "rawByteDifferences": [
+    "src/com/lushprojects/circuitjs1/client/CirSim.java"
+  ],
+  "onlyReviewedBranchDifferent": true,
+  "optimizedInputManifest": "../acceptance-continuation/sparse-factor/input-manifest.json.gz",
+  "optimizedAuditFiles": 1524,
+  "optimizedAuditChanged": []
+}

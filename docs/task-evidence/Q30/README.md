@@ -7,6 +7,18 @@ are preserved. Their PASS labels certify only their recorded scopes and
 inputs, not current Q30 acceptance. U06, U07, Q60 and later work remain
 unstarted. See the [acceptance repair](acceptance-repair/README.md).
 
+The [acceptance continuation](acceptance-continuation/README.md) measures
+factorization as the dominant solver cost and tests finite zero-product
+elimination. Cold median improves from 120.720 to 106.251 seconds; all three
+complete private requests still exceed 90 seconds. Actual sizes remain
+33/35/37, with 20–32, 34, 36 and 38–40 unimplemented. Normal Q30 remains
+disabled. The prior continuation stopped without commit or push.
+
+The [intermediate checkpoint](intermediate-optimization/README.md) accepts the
+optimization after fresh independent review, focused regressions and four
+counterbalanced cold pairs with exact proof parity. Q30 remains BLOCKED;
+measured performance and purposeful scale work continue. No push is authorized.
+
 # Historical Q30 multi-rail procedural qualification — complete / PASS
 
 **Current candidate status (2026-09-26):** The Q30 catalog entry is implemented

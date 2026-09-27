@@ -1,0 +1,25 @@
+{
+  "exitCode": 0,
+  "finalUninstrumentedSource": true,
+  "suites": [
+    "StagedFamilyRegistrationContractTest",
+    "GeneratedExternalPowerBindingsControlObservationContractTest",
+    "Q30PlanContractTest",
+    "Q30TemporalWorkContractTest",
+    "DiagnosticServicePreparationContractTest",
+    "Q30GenerationRequestContractTest",
+    "Q30GenerationMeasurementBudgetContractTest",
+    "Q30NormalExecutionPolicyContractTest",
+    "Q30CatalogIdentityContractTest",
+    "E02RegulatorContractTest",
+    "E03RelayContractTest",
+    "E04SensorControlContractTest",
+    "A10GenerationContractTest",
+    "A10DependencyContractTest",
+    "D01DiagnosticContractTest",
+    "A09DiagnosticContractTest",
+    "MediumBoardNormalAdmissionContractTest"
+  ],
+  "phase": "focused native regression including maintained cleanup",
+  "seconds": 73.3057966
+}

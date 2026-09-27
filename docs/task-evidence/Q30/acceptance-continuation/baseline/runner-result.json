@@ -1,0 +1,215 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<repo>",
+  "startedUtc": "2026-09-27T19:29:49.415790+00:00",
+  "outcome": "PASS",
+  "cases": [
+    {
+      "schema": 1,
+      "case": {
+        "index": 1,
+        "name": "baseline-seed13",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=13",
+        "stateAttribute": "data-tsj-q30-coordinator-state",
+        "expectedState": "PASS:complete",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-q30-coordinator-report"
+      },
+      "url": "http://127.0.0.1:53328/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=13",
+      "startedUtc": "2026-09-27T19:29:54.269883+00:00",
+      "finishedUtc": "2026-09-27T19:32:31.082495+00:00",
+      "operationSeconds": 156.81260730000213,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:complete",
+      "lastObservedState": "PASS:complete",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 1643551,
+      "reportSha256": "c21cac093801a3b5372c174ac53ee901b19dcdeea9fdb5a58b56f728a3d1b722",
+      "reportFile": "cases/001-baseline-seed13.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 2,
+        "name": "baseline-seed7",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=7",
+        "stateAttribute": "data-tsj-q30-coordinator-state",
+        "expectedState": "PASS:complete",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-q30-coordinator-report"
+      },
+      "url": "http://127.0.0.1:53328/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=7",
+      "startedUtc": "2026-09-27T19:32:31.094339+00:00",
+      "finishedUtc": "2026-09-27T19:35:00.197847+00:00",
+      "operationSeconds": 149.10350409999955,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:complete",
+      "lastObservedState": "PASS:complete",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 1491226,
+      "reportSha256": "413ea5a747af83d920519c9ddad23b2e16f143ba2f6f7caa2a82ed7350bef22f",
+      "reportFile": "cases/002-baseline-seed7.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 3,
+        "name": "baseline-seed64",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=64",
+        "stateAttribute": "data-tsj-q30-coordinator-state",
+        "expectedState": "PASS:complete",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-q30-coordinator-report"
+      },
+      "url": "http://127.0.0.1:53328/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=64",
+      "startedUtc": "2026-09-27T19:35:00.199408+00:00",
+      "finishedUtc": "2026-09-27T19:37:16.567634+00:00",
+      "operationSeconds": 136.368223700003,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:complete",
+      "lastObservedState": "PASS:complete",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 1545685,
+      "reportSha256": "7c792f5a85239feb5d39ce114f35d04a05bae49ed7812ef0d5058e30cd2b8ffd",
+      "reportFile": "cases/003-baseline-seed64.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    }
+  ],
+  "caseCount": 3,
+  "errors": [],
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "e4d6d43d2aca3977fabf5ab8e8743dc1f523a67c037d392e906cd40c300b35b4",
+    "afterSha256": "e4d6d43d2aca3977fabf5ab8e8743dc1f523a67c037d392e906cd40c300b35b4",
+    "sourceSha256Before": "1694d3e02b0adba2e44e409181012c48b20a5f8f50fc2bb4932bf752cd4e848d",
+    "sourceSha256After": "1694d3e02b0adba2e44e409181012c48b20a5f8f50fc2bb4932bf752cd4e848d",
+    "webSha256Before": "f41210af27cab817bf7e9cb3eb663a6fe753e875ecb8ca4eac19f597da907000",
+    "webSha256After": "f41210af27cab817bf7e9cb3eb663a6fe753e875ecb8ca4eac19f597da907000",
+    "runnerBeforeSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+    "runnerAfterSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+    "fileCountBefore": 1524,
+    "fileCountAfter": 1524,
+    "seconds": 0.3498498999979347
+  },
+  "identity": {
+    "schema": 1,
+    "runner": {
+      "pid": 18084,
+      "created": "2026-09-27T19:29:48.8689660Z",
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+    },
+    "edgeProcessesBeforeCases": [
+      {
+        "pid": 6124,
+        "parent": 2620,
+        "created": "2026-09-27T19:29:53.6783980Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 17788,
+        "parent": 6124,
+        "created": "2026-09-27T19:29:53.6974260Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 18872,
+        "parent": 6124,
+        "created": "2026-09-27T19:29:53.7610140Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 6468,
+        "parent": 6124,
+        "created": "2026-09-27T19:29:53.7647930Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 1692,
+        "parent": 6124,
+        "created": "2026-09-27T19:29:53.7864220Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 13720,
+        "parent": 6124,
+        "created": "2026-09-27T19:29:53.8453320Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 8300,
+        "parent": 6124,
+        "created": "2026-09-27T19:29:53.8492310Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "profile": "<task-temp>\\baseline\\profile",
+    "port": 53328,
+    "baseUrl": "http://127.0.0.1:53328"
+  },
+  "operationStartedUtc": "2026-09-27T19:29:54.269870+00:00",
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 0.9744843000007677,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "finishedUtc": "2026-09-27T19:37:17.893636+00:00"
+}

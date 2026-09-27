@@ -1,0 +1,9 @@
+{
+  "gate": "scripts/build.ps1 JDK8/GWT five-permutation compile",
+  "label": "profile-build-fixed",
+  "startedUtc": "2026-09-27T19:49:39.0171546Z",
+  "finishedUtc": "2026-09-27T19:51:00.9340482Z",
+  "elapsedSeconds": 81.9114245,
+  "exitCode": 0,
+  "status": "PASS"
+}

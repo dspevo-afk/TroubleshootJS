@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Q30 acceptance repair — BLOCKED / NOT ACCEPTED**<br>
+**Current task:** **Q30 acceptance continuation — BLOCKED / NOT ACCEPTED**<br>
 **Historical post-P09 Quick Play qualification:** The nine families then current used fresh signed-long candidates and real placement/routing. Nineteen affected native suites, 144 structural cases, 18 actual launches, exact replay/cancellation/privacy/shop and compiled mutation/relay/generation gates passed. EASY/MEDIUM content eligibility remains; HARD/PSYCHOTIC are not unlocked. [Evidence at that checkpoint](task-evidence/ProceduralFamilies/README.md).
 **Quick Play uniqueness qualification (2026-09-19):** Every family/profile selectable at that checkpoint had bounded procedural New Board candidates, recent-root and physical duplicate guards, and single-candidate exact replay. The then-menu-discovered nine-pair, 180-board matrix had 20 distinct placements and merged copper patterns per pair with no structural rejects. Final native55, GWT5, 27/27 visible New Board launches, two exact replays and face-view evidence passed. That content spanned 3–16 parts; HARD/PSYCHOTIC and larger families remain unqualified. This historical matrix did not include the later SENSOR_CONTROL family; that checkpoint's catalog had ten family/profile pairs. [Historical audit, timings and limits](task-evidence/QuickPlayUnique/README.md).
 **Historical ten-pair catalog verification (2026-09-23):** The rebuilt production browser matrix passed three launches for each family/profile pair then current, including SENSOR_CONTROL/EASY, plus exact replay, power isolation, privacy and owned cleanup. A visible ordinary menu launch of an exact Sensor Control seed reached the Customer ticket, and a separate visible repair flow reached a passing customer retest. This remains fresh evidence for the ten-pair catalog at that checkpoint, not a rewrite of the 2026-09-19 nine-pair/180-board qualification. [Current matrix receipt](task-evidence/D01/quickplay-procedural-matrix.json) and [Sensor Control evidence](task-evidence/E04/README.md).
@@ -17,6 +17,19 @@ frozen cumulative limit remains 90 seconds, with 640 shared units and five
 seconds per active operation. The implemented Q30 family and its evidence
 are preserved, but normal-player acceptance is blocked. U06, U07, Q60 and
 later milestones must not start. See the [repair checkpoint](CODEX_TASK_REPORT.md).
+**Q30 continuation (2026-09-27):** Measured solver factorization dominates the
+cold proof. A bounded zero-product optimization lowers the three-seed cold
+median from 120.720 to 106.251 seconds, with maximum 113.630 seconds. Every
+case still fails the frozen 90-second target. Actual sizes remain 33/35/37;
+20–32, 34, 36 and 38–40 are unimplemented;
+normal Q30 remains disabled and no later milestone starts.
+[Evidence and exact limits](task-evidence/Q30/acceptance-continuation/README.md).
+The [intermediate optimization](task-evidence/Q30/intermediate-optimization/README.md)
+is now accepted after independent review, fresh focused regressions and four
+counterbalanced pairs. Savings are 11.155–14.706 seconds with exact proof parity;
+all optimized cold runs still fail 90 seconds. Q30 remains BLOCKED while
+measured performance and purposeful scale work continue. No push is authorized.
+
 **P09 qualification (2026-09-16):** `THT_SINGLE_FACE@1` is enforced at normal installation/admission/publication with unchanged geometry/electrical/diagnostic requirements. Clean native48, integrated native9, both GWT5 builds, RC/Q15 and real normal menu/navigation/privacy checks pass. Frozen held-out structural results retain ten passes and two explicit rejections. Production two-layer/via/link adoption is rejected for this epoch. [Evidence and limits](task-evidence/P09/README.md).
 **P08 qualification:** The evidence-selected interval broad phase, immutable copper/view caches and exact solver-partition projection are qualified. Current brute-force parity and 2,022 adversarial assertions pass; 15/30/56/100 mixed inventories and dense contact work are measured. Full native46, both GWT5 builds and 13 compiled browser runs pass. P09 is now separately qualified; P08 itself does not imply normal large-board/layer-strategy adoption. [P08 evidence](task-evidence/P08/README.md).
 **P07 qualification (2026-09-15):** The required developer-only four-policy comparison and real plated-via/top-bottom probe bench are qualified. All 54 structural rows are retained; six prototype RB30 requests succeed, while the frozen 56/100 requests reject within bounds. Normal adoption is not qualified by P09. [P07 evidence](task-evidence/P07/README.md). P08 is now separately qualified.
@@ -2457,11 +2470,18 @@ Historical modern22 recorded 33/33 launches and 3/3 replays under the rejected
 300-second policy; manual22 recorded the visible diagnosis/service/retest
 path. These remain behavioral evidence, not proof of the 90-second budget.
 Combined P09 final22's 72 population cases are small-board regression, not a
-Q30-scale corpus. Fresh rebuilt private cold totals are 126.904, 119.996 and
+Q30-scale corpus. The accepted repair's rebuilt private cold totals were 126.904, 119.996 and
 114.754 seconds for seeds 13, 7 and 64, including 98.702, 92.662 and 94.376
-seconds of diagnostic proof. Every proof alone exceeds the production limit.
+seconds of diagnostic proof. At that checkpoint every proof alone exceeded the production limit.
 An n=3 maximum does not establish a population p95. Repair results and limits
 are recorded in the [repair evidence](task-evidence/Q30/acceptance-repair/README.md).
+The subsequent [acceptance continuation](task-evidence/Q30/acceptance-continuation/README.md)
+profiles the solver and eliminates finite zero products without changing proof,
+order or policy. Matched cold totals improve to 113.630, 106.251 and 103.046
+seconds, with 86.107, 79.834 and 83.305 seconds of proof. All totals still fail
+90 seconds. Exact current package counts remain 33/35/37; counts 20–32, 34,
+36 and 38–40 are unimplemented. These are private measurements, not normal
+acceptance or evidence of broad 20–40 support.
 
 Q30 remains blocked for measured performance and unproved broader size
 coverage under its unchanged original scope. U06, U07, Q60 and later

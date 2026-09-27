@@ -1,0 +1,72 @@
+{
+  "status": "PASS_WITH_RECORDED_TRANSPORT_LIMIT",
+  "scope": "Visible normal replay/menu and private seed13 DRIVE_A_OPEN diagnosis/service; not normal Q30 admission or broad scale",
+  "inputMethod": "Actual visible buttons, menus and terminal selectors; no injected controller calls",
+  "steps": [
+    {
+      "operation": "Open production preview and enter Main menu; select MEDIUM",
+      "observed": "Only Two-channel controller is offered; Q30 absent. EASY menu lists nine families.",
+      "screenshot": "01-normal-medium-menu.png"
+    },
+    {
+      "operation": "Prepare replay tsj-alpha/3/EASY/LED_INDICATOR/3 through the normal menu; accept ticket; Run customer retest",
+      "observed": "Customer retest did not pass. Continue troubleshooting."
+    },
+    {
+      "operation": "Power off the normal board before leaving",
+      "observed": "    - 'row \"Board Power: OFF\"':\n      - 'cell \"Board Power: OFF\"':\n        - 'button \"Board Power: OFF\"'"
+    },
+    {
+      "operation": "Initial private bench navigation included tsjQ30Service=true",
+      "observed": "Automated service verifier was active; this is excluded from manual player-input evidence."
+    },
+    {
+      "operation": "Unrepaired Q30 customer retest click",
+      "transportResult": "delivered"
+    },
+    {
+      "operation": "Observed unrepaired Q30 result",
+      "observed": "            - row \"Customer retest did not pass. Continue troubleshooting.\":\n              - cell \"Customer retest did not pass. Continue troubleshooting.\":\n                - generic: Customer retest did not pass. Continue troubleshooting."
+    },
+    {
+      "operation": "Set sensor A HIGH/B LOW, DC V, black J1.2 and red RDA.1 using visible terminal controls",
+      "observed": "4.85 V"
+    },
+    {
+      "operation": "Move red probe to RDA.2",
+      "observed": "                - generic: 0 V"
+    },
+    {
+      "operation": "Power OFF, toggle DC V off, select RDA and lift lead 1",
+      "observed": "            - 'row \"State: Lead Lifted\"':\n              - 'cell \"State: Lead Lifted\"':\n                - generic: \"State: Lead Lifted\"\n            - row \"Reconnect lead 1\":\n              - cell \"Reconnect lead 1\":\n                - button \"Reconnect lead 1\""
+    },
+    {
+      "operation": "Reconnect original lead, remove RDA, select 1000 Ohm +/-5%, install new resistor",
+      "observed": "            - row \"RDA service resistor - Removed resistor\":\n              - cell \"RDA service resistor - Removed resistor\":\n                - button \"RDA service resistor - Removed resistor\""
+    },
+    {
+      "operation": "Repaired Q30 retest click",
+      "transportResult": "Error: Error: Timed out running CDP command \"Input.dispatchMouseEvent\" for tab 1\nwaiting on click for selector internal:role=button[name=\"Retest Customer\"s]"
+    },
+    {
+      "operation": "Observe after repaired retest click transport timeout",
+      "observed": "            - row \"Repair verified. Both sensor-controlled loads follow their inputs.\":\n              - cell \"Repair verified. Both sensor-controlled loads follow their inputs.\":\n                - generic: Repair verified. Both sensor-controlled loads follow their inputs.\n            - row \"Customer retest passed. The reported behavior is resolved.\":\n              - cell \"Customer retest passed. The reported behavior is resolved.\":\n                - generic: Customer retest passed. The reported behavior is resolved."
+    },
+    {
+      "operation": "Power off all Q30 supplies before tab closure",
+      "observed": "    - 'row \"Board Power: OFF\"':\n      - 'cell \"Board Power: OFF\"':\n        - 'button \"Board Power: OFF\"'\n                - button \"Connect Supply 1 (+12V)\"\n                - button \"Connect Supply 2 (+5V)\"\n                - button \"Connect Supply 3 (+5V)\"\n                - button \"Connect Supply 4 (+12V)\""
+    }
+  ],
+  "screenshots": [
+    "01-normal-medium-menu.png",
+    "02-normal-unrepaired.png",
+    "03-q30-unrepaired.png",
+    "04-q30-repaired.png"
+  ],
+  "limitations": [
+    "Repaired retest click reported a CDP transport timeout after delivery; subsequent visible text and screenshot confirmed completion.",
+    "Initial bench URL triggered automated service verification; that preliminary page was powered off and replaced before manual evidence.",
+    "Q30 overview labels remain crowded; visible terminal controls were usable.",
+    "Only 37-package Q30 seed13 is manually inspected; broad20–40 sizes remain unimplemented."
+  ]
+}

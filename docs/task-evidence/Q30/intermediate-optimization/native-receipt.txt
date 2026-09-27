@@ -1,0 +1,13 @@
+PASS: Q30 temporal work contracts 83 assertions profileUnits=5 retestUnits=5
+
+PASS: Q30 generation measurement budget contracts 25 assertions
+
+PASS: Q30 normal execution policy contracts 325 assertions
+
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+PASS: A07 execution contracts assertions=93541

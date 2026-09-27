@@ -7987,7 +7987,11 @@ MouseOutHandler, MouseWheelHandler {
 		if (coefficient == 0) continue;
 		for (i = k+1; i != n; i++) {
                     double[] row = a[i];
-                    double value = row[j] - row[k]*coefficient;
+                    // Finite zero factors cannot contribute to this column.
+                    // Preserve the order of every nonzero Crout subtraction.
+                    double factor = row[k];
+                    if (factor == 0) continue;
+                    double value = row[j] - factor*coefficient;
                     requireFiniteStamp(value);
                     row[j] = value;
 		}

@@ -1,0 +1,13 @@
+{
+  "reason": "Byte-exact patch artifacts archived as data; preserves diff context whitespace without treating it as new source whitespace",
+  "rows": [
+    {
+      "file": "kernel-instrumentation.patch.gz",
+      "uncompressedSha256": "8f68809c7de0d13fb12deb83e158b8a29e9d4779e41965d117aa3f98729dc5a8"
+    },
+    {
+      "file": "sparse-factor.patch.gz",
+      "uncompressedSha256": "7b96a7d10a48be19a5da5676fc5b112d4f278995cee58043a5bd2045ece346e7"
+    }
+  ]
+}

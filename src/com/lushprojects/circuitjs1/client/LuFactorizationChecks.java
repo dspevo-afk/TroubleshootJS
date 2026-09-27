@@ -4,16 +4,24 @@ package com.lushprojects.circuitjs1.client;
 final class LuFactorizationChecks {
     static int run() {
         int assertions = 0;
-        for (int size : new int[] { 1, 2, 3, 8, 24, 64 }) {
-            for (int fixture = 0; fixture < 6; fixture++) {
+        for (int size : new int[] { 1, 2, 3, 8, 24, 64, 81 }) {
+            for (int fixture = 0; fixture < 9; fixture++) {
                 double[][] before = new double[size][size];
                 for (int i = 0; i < size; i++) for (int j = 0; j < size; j++) {
                     int code = (i * 31 + j * 17 + fixture * 7) % 19 - 9;
                     boolean sameIsland = i / 3 == j / 3;
                     before[i][j] = fixture == 0 || (fixture < 4 && sameIsland) ? code / 7.0 : 0;
+                    // Connected sparse systems, not just disconnected islands:
+                    // a band, an arrowhead and sparsely bridged local blocks.
+                    if (fixture == 6 && Math.abs(i - j) <= 2)
+                        before[i][j] = code / 7.0;
+                    if (fixture == 7 && (i == 0 || j == 0))
+                        before[i][j] = code / 7.0;
+                    if (fixture == 8 && (sameIsland || (i * 7 + j * 11) % 31 == 0))
+                        before[i][j] = code / 7.0;
                     if (i == j) before[i][j] += size + 2;
                 }
-                if (fixture == 2 && size > 1) {
+                if ((fixture == 2 || fixture == 8) && size > 1) {
                     double[] first = before[0]; before[0] = before[size - 1]; before[size - 1] = first;
                 }
                 // An all-zero row, dependent rows and pivot ties retain the

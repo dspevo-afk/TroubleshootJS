@@ -1,0 +1,690 @@
+{
+  "base": "745d537de5b18bd7ec2ae769fc00d3696e5af6bd",
+  "measurementOnly": true,
+  "normalAcceptance": false,
+  "sampleSizeNote": "n=3 supports a median and observed maximum, not a population p95",
+  "rows": [
+    {
+      "seed": "13",
+      "status": "PASS",
+      "cleanupComplete": true,
+      "restored": true,
+      "measurementCacheCleared": true,
+      "cold": {
+        "run": "cold",
+        "outcome": "PASS",
+        "maxJobMillis": 300000,
+        "elapsedMs": 113630,
+        "wallElapsedMs": 113637,
+        "maxAdvanceMs": 1871,
+        "maxManualUnitMs": 1871,
+        "manualAdvanceCalls": 464,
+        "totalWork": 464,
+        "hypothesisWork": 390,
+        "routingElapsedMs": 20572,
+        "proofElapsedMs": 86107,
+        "proofCacheHitDelta": 0,
+        "proofCacheMissDelta": 1,
+        "proofCacheSize": 1,
+        "planCacheHitDelta": 0,
+        "planCacheMissDelta": 1,
+        "stages": [
+          {
+            "name": "RESOLVE",
+            "work": 1,
+            "elapsedMs": 0
+          },
+          {
+            "name": "HEALTHY",
+            "work": 70,
+            "elapsedMs": 27005
+          },
+          {
+            "name": "PHYSICAL",
+            "work": 1,
+            "elapsedMs": 65
+          },
+          {
+            "name": "HYPOTHESES",
+            "work": 390,
+            "elapsedMs": 84250
+          },
+          {
+            "name": "SYMPTOM",
+            "work": 1,
+            "elapsedMs": 7
+          },
+          {
+            "name": "PUBLISH",
+            "work": 1,
+            "elapsedMs": 62
+          }
+        ],
+        "diagnosticWorkTimings": [
+          {
+            "label": "REPLAY_INSTALL",
+            "units": 5,
+            "elapsedMs": 527,
+            "maxUnitMs": 121
+          },
+          {
+            "label": "CANDIDATE_HEALTHY_SETTLE",
+            "units": 25,
+            "elapsedMs": 20953,
+            "maxUnitMs": 987
+          },
+          {
+            "label": "CANDIDATE_SETTLE",
+            "units": 25,
+            "elapsedMs": 5007,
+            "maxUnitMs": 1252
+          },
+          {
+            "label": "OBSERVATION_STEP:INPUT",
+            "units": 20,
+            "elapsedMs": 15445,
+            "maxUnitMs": 1334
+          },
+          {
+            "label": "OBSERVATION_STEP:WAIT",
+            "units": 20,
+            "elapsedMs": 0,
+            "maxUnitMs": 0
+          },
+          {
+            "label": "OBSERVATION_STEP:DC_VOLTAGE",
+            "units": 185,
+            "elapsedMs": 1187,
+            "maxUnitMs": 8
+          },
+          {
+            "label": "OBSERVATION_STEP:POWER",
+            "units": 5,
+            "elapsedMs": 141,
+            "maxUnitMs": 30
+          },
+          {
+            "label": "OBSERVATION_STEP:SETTLE",
+            "units": 5,
+            "elapsedMs": 203,
+            "maxUnitMs": 63
+          },
+          {
+            "label": "POWER_OFF_SETTLE",
+            "units": 25,
+            "elapsedMs": 4481,
+            "maxUnitMs": 1871
+          },
+          {
+            "label": "REMOVE_SETTLE",
+            "units": 5,
+            "elapsedMs": 265,
+            "maxUnitMs": 54
+          },
+          {
+            "label": "REPLACE_SETTLE",
+            "units": 5,
+            "elapsedMs": 280,
+            "maxUnitMs": 60
+          },
+          {
+            "label": "POWER_ON_SETTLE",
+            "units": 5,
+            "elapsedMs": 236,
+            "maxUnitMs": 50
+          },
+          {
+            "label": "REPAIR_STATUS_SETTLE",
+            "units": 25,
+            "elapsedMs": 17647,
+            "maxUnitMs": 1072
+          },
+          {
+            "label": "CUSTOMER_RETEST",
+            "units": 25,
+            "elapsedMs": 17724,
+            "maxUnitMs": 1029
+          },
+          {
+            "label": "CUSTOMER_RETEST_COMPLETION",
+            "units": 5,
+            "elapsedMs": 33,
+            "maxUnitMs": 7
+          },
+          {
+            "label": "EVIDENCE_RESTORE_PRIMARY",
+            "units": 5,
+            "elapsedMs": 92,
+            "maxUnitMs": 20
+          }
+        ],
+        "cleanupComplete": true,
+        "ownerRestored": true,
+        "cleanupElapsedMs": 3,
+        "cleanupRetryCount": 0
+      },
+      "warm": {
+        "run": "warm",
+        "outcome": "PASS",
+        "maxJobMillis": 300000,
+        "elapsedMs": 27399,
+        "wallElapsedMs": 27406,
+        "maxAdvanceMs": 1137,
+        "maxManualUnitMs": 1137,
+        "manualAdvanceCalls": 75,
+        "totalWork": 75,
+        "hypothesisWork": 1,
+        "routingElapsedMs": 20723,
+        "proofElapsedMs": 0,
+        "proofCacheHitDelta": 1,
+        "proofCacheMissDelta": 0,
+        "proofCacheSize": 1,
+        "planCacheHitDelta": 1,
+        "planCacheMissDelta": 0,
+        "stages": [
+          {
+            "name": "RESOLVE",
+            "work": 1,
+            "elapsedMs": 0
+          },
+          {
+            "name": "HEALTHY",
+            "work": 70,
+            "elapsedMs": 26868
+          },
+          {
+            "name": "PHYSICAL",
+            "work": 1,
+            "elapsedMs": 85
+          },
+          {
+            "name": "HYPOTHESES",
+            "work": 1,
+            "elapsedMs": 21
+          },
+          {
+            "name": "SYMPTOM",
+            "work": 1,
+            "elapsedMs": 6
+          },
+          {
+            "name": "PUBLISH",
+            "work": 1,
+            "elapsedMs": 59
+          }
+        ],
+        "diagnosticWorkTimings": [],
+        "cleanupComplete": true,
+        "ownerRestored": true,
+        "cleanupElapsedMs": 2,
+        "cleanupRetryCount": 0
+      }
+    },
+    {
+      "seed": "7",
+      "status": "PASS",
+      "cleanupComplete": true,
+      "restored": true,
+      "measurementCacheCleared": true,
+      "cold": {
+        "run": "cold",
+        "outcome": "PASS",
+        "maxJobMillis": 300000,
+        "elapsedMs": 106251,
+        "wallElapsedMs": 106257,
+        "maxAdvanceMs": 1308,
+        "maxManualUnitMs": 1308,
+        "manualAdvanceCalls": 468,
+        "totalWork": 468,
+        "hypothesisWork": 390,
+        "routingElapsedMs": 20018,
+        "proofElapsedMs": 79834,
+        "proofCacheHitDelta": 0,
+        "proofCacheMissDelta": 1,
+        "proofCacheSize": 1,
+        "planCacheHitDelta": 0,
+        "planCacheMissDelta": 1,
+        "stages": [
+          {
+            "name": "RESOLVE",
+            "work": 1,
+            "elapsedMs": 0
+          },
+          {
+            "name": "HEALTHY",
+            "work": 74,
+            "elapsedMs": 25878
+          },
+          {
+            "name": "PHYSICAL",
+            "work": 1,
+            "elapsedMs": 56
+          },
+          {
+            "name": "HYPOTHESES",
+            "work": 390,
+            "elapsedMs": 77994
+          },
+          {
+            "name": "SYMPTOM",
+            "work": 1,
+            "elapsedMs": 6
+          },
+          {
+            "name": "PUBLISH",
+            "work": 1,
+            "elapsedMs": 53
+          }
+        ],
+        "diagnosticWorkTimings": [
+          {
+            "label": "REPLAY_INSTALL",
+            "units": 5,
+            "elapsedMs": 428,
+            "maxUnitMs": 100
+          },
+          {
+            "label": "CANDIDATE_HEALTHY_SETTLE",
+            "units": 25,
+            "elapsedMs": 19736,
+            "maxUnitMs": 990
+          },
+          {
+            "label": "CANDIDATE_SETTLE",
+            "units": 25,
+            "elapsedMs": 4427,
+            "maxUnitMs": 1065
+          },
+          {
+            "label": "OBSERVATION_STEP:INPUT",
+            "units": 20,
+            "elapsedMs": 14229,
+            "maxUnitMs": 1189
+          },
+          {
+            "label": "OBSERVATION_STEP:WAIT",
+            "units": 20,
+            "elapsedMs": 1,
+            "maxUnitMs": 1
+          },
+          {
+            "label": "OBSERVATION_STEP:DC_VOLTAGE",
+            "units": 185,
+            "elapsedMs": 1017,
+            "maxUnitMs": 7
+          },
+          {
+            "label": "OBSERVATION_STEP:POWER",
+            "units": 5,
+            "elapsedMs": 122,
+            "maxUnitMs": 26
+          },
+          {
+            "label": "OBSERVATION_STEP:SETTLE",
+            "units": 5,
+            "elapsedMs": 168,
+            "maxUnitMs": 37
+          },
+          {
+            "label": "POWER_OFF_SETTLE",
+            "units": 25,
+            "elapsedMs": 4423,
+            "maxUnitMs": 1308
+          },
+          {
+            "label": "REMOVE_SETTLE",
+            "units": 5,
+            "elapsedMs": 231,
+            "maxUnitMs": 49
+          },
+          {
+            "label": "REPLACE_SETTLE",
+            "units": 5,
+            "elapsedMs": 285,
+            "maxUnitMs": 72
+          },
+          {
+            "label": "POWER_ON_SETTLE",
+            "units": 5,
+            "elapsedMs": 212,
+            "maxUnitMs": 45
+          },
+          {
+            "label": "REPAIR_STATUS_SETTLE",
+            "units": 25,
+            "elapsedMs": 16330,
+            "maxUnitMs": 1065
+          },
+          {
+            "label": "CUSTOMER_RETEST",
+            "units": 25,
+            "elapsedMs": 16236,
+            "maxUnitMs": 1033
+          },
+          {
+            "label": "CUSTOMER_RETEST_COMPLETION",
+            "units": 5,
+            "elapsedMs": 30,
+            "maxUnitMs": 6
+          },
+          {
+            "label": "EVIDENCE_RESTORE_PRIMARY",
+            "units": 5,
+            "elapsedMs": 81,
+            "maxUnitMs": 18
+          }
+        ],
+        "cleanupComplete": true,
+        "ownerRestored": true,
+        "cleanupElapsedMs": 3,
+        "cleanupRetryCount": 0
+      },
+      "warm": {
+        "run": "warm",
+        "outcome": "PASS",
+        "maxJobMillis": 300000,
+        "elapsedMs": 26215,
+        "wallElapsedMs": 26220,
+        "maxAdvanceMs": 1114,
+        "maxManualUnitMs": 1114,
+        "manualAdvanceCalls": 79,
+        "totalWork": 79,
+        "hypothesisWork": 1,
+        "routingElapsedMs": 19977,
+        "proofElapsedMs": 0,
+        "proofCacheHitDelta": 1,
+        "proofCacheMissDelta": 0,
+        "proofCacheSize": 1,
+        "planCacheHitDelta": 1,
+        "planCacheMissDelta": 0,
+        "stages": [
+          {
+            "name": "RESOLVE",
+            "work": 1,
+            "elapsedMs": 0
+          },
+          {
+            "name": "HEALTHY",
+            "work": 74,
+            "elapsedMs": 25726
+          },
+          {
+            "name": "PHYSICAL",
+            "work": 1,
+            "elapsedMs": 45
+          },
+          {
+            "name": "HYPOTHESES",
+            "work": 1,
+            "elapsedMs": 22
+          },
+          {
+            "name": "SYMPTOM",
+            "work": 1,
+            "elapsedMs": 6
+          },
+          {
+            "name": "PUBLISH",
+            "work": 1,
+            "elapsedMs": 52
+          }
+        ],
+        "diagnosticWorkTimings": [],
+        "cleanupComplete": true,
+        "ownerRestored": true,
+        "cleanupElapsedMs": 3,
+        "cleanupRetryCount": 0
+      }
+    },
+    {
+      "seed": "64",
+      "status": "PASS",
+      "cleanupComplete": true,
+      "restored": true,
+      "measurementCacheCleared": true,
+      "cold": {
+        "run": "cold",
+        "outcome": "PASS",
+        "maxJobMillis": 300000,
+        "elapsedMs": 103046,
+        "wallElapsedMs": 103053,
+        "maxAdvanceMs": 1745,
+        "maxManualUnitMs": 1745,
+        "manualAdvanceCalls": 446,
+        "totalWork": 446,
+        "hypothesisWork": 390,
+        "routingElapsedMs": 12635,
+        "proofElapsedMs": 83305,
+        "proofCacheHitDelta": 0,
+        "proofCacheMissDelta": 1,
+        "proofCacheSize": 1,
+        "planCacheHitDelta": 0,
+        "planCacheMissDelta": 1,
+        "stages": [
+          {
+            "name": "RESOLVE",
+            "work": 1,
+            "elapsedMs": 0
+          },
+          {
+            "name": "HEALTHY",
+            "work": 52,
+            "elapsedMs": 19331
+          },
+          {
+            "name": "PHYSICAL",
+            "work": 1,
+            "elapsedMs": 58
+          },
+          {
+            "name": "HYPOTHESES",
+            "work": 390,
+            "elapsedMs": 81451
+          },
+          {
+            "name": "SYMPTOM",
+            "work": 1,
+            "elapsedMs": 6
+          },
+          {
+            "name": "PUBLISH",
+            "work": 1,
+            "elapsedMs": 56
+          }
+        ],
+        "diagnosticWorkTimings": [
+          {
+            "label": "REPLAY_INSTALL",
+            "units": 5,
+            "elapsedMs": 429,
+            "maxUnitMs": 89
+          },
+          {
+            "label": "CANDIDATE_HEALTHY_SETTLE",
+            "units": 25,
+            "elapsedMs": 20037,
+            "maxUnitMs": 878
+          },
+          {
+            "label": "CANDIDATE_SETTLE",
+            "units": 25,
+            "elapsedMs": 4972,
+            "maxUnitMs": 1206
+          },
+          {
+            "label": "OBSERVATION_STEP:INPUT",
+            "units": 20,
+            "elapsedMs": 15159,
+            "maxUnitMs": 1353
+          },
+          {
+            "label": "OBSERVATION_STEP:WAIT",
+            "units": 20,
+            "elapsedMs": 1,
+            "maxUnitMs": 1
+          },
+          {
+            "label": "OBSERVATION_STEP:DC_VOLTAGE",
+            "units": 185,
+            "elapsedMs": 1064,
+            "maxUnitMs": 7
+          },
+          {
+            "label": "OBSERVATION_STEP:POWER",
+            "units": 5,
+            "elapsedMs": 133,
+            "maxUnitMs": 28
+          },
+          {
+            "label": "OBSERVATION_STEP:SETTLE",
+            "units": 5,
+            "elapsedMs": 178,
+            "maxUnitMs": 37
+          },
+          {
+            "label": "POWER_OFF_SETTLE",
+            "units": 25,
+            "elapsedMs": 5440,
+            "maxUnitMs": 1745
+          },
+          {
+            "label": "REMOVE_SETTLE",
+            "units": 5,
+            "elapsedMs": 252,
+            "maxUnitMs": 53
+          },
+          {
+            "label": "REPLACE_SETTLE",
+            "units": 5,
+            "elapsedMs": 268,
+            "maxUnitMs": 55
+          },
+          {
+            "label": "POWER_ON_SETTLE",
+            "units": 5,
+            "elapsedMs": 349,
+            "maxUnitMs": 107
+          },
+          {
+            "label": "REPAIR_STATUS_SETTLE",
+            "units": 25,
+            "elapsedMs": 16509,
+            "maxUnitMs": 969
+          },
+          {
+            "label": "CUSTOMER_RETEST",
+            "units": 25,
+            "elapsedMs": 16514,
+            "maxUnitMs": 979
+          },
+          {
+            "label": "CUSTOMER_RETEST_COMPLETION",
+            "units": 5,
+            "elapsedMs": 31,
+            "maxUnitMs": 7
+          },
+          {
+            "label": "EVIDENCE_RESTORE_PRIMARY",
+            "units": 5,
+            "elapsedMs": 89,
+            "maxUnitMs": 20
+          }
+        ],
+        "cleanupComplete": true,
+        "ownerRestored": true,
+        "cleanupElapsedMs": 3,
+        "cleanupRetryCount": 0
+      },
+      "warm": {
+        "run": "warm",
+        "outcome": "PASS",
+        "maxJobMillis": 300000,
+        "elapsedMs": 19643,
+        "wallElapsedMs": 19649,
+        "maxAdvanceMs": 1257,
+        "maxManualUnitMs": 1257,
+        "manualAdvanceCalls": 57,
+        "totalWork": 57,
+        "hypothesisWork": 1,
+        "routingElapsedMs": 12602,
+        "proofElapsedMs": 0,
+        "proofCacheHitDelta": 1,
+        "proofCacheMissDelta": 0,
+        "proofCacheSize": 1,
+        "planCacheHitDelta": 1,
+        "planCacheMissDelta": 0,
+        "stages": [
+          {
+            "name": "RESOLVE",
+            "work": 1,
+            "elapsedMs": 0
+          },
+          {
+            "name": "HEALTHY",
+            "work": 52,
+            "elapsedMs": 19239
+          },
+          {
+            "name": "PHYSICAL",
+            "work": 1,
+            "elapsedMs": 50
+          },
+          {
+            "name": "HYPOTHESES",
+            "work": 1,
+            "elapsedMs": 23
+          },
+          {
+            "name": "SYMPTOM",
+            "work": 1,
+            "elapsedMs": 6
+          },
+          {
+            "name": "PUBLISH",
+            "work": 1,
+            "elapsedMs": 56
+          }
+        ],
+        "diagnosticWorkTimings": [],
+        "cleanupComplete": true,
+        "ownerRestored": true,
+        "cleanupElapsedMs": 3,
+        "cleanupRetryCount": 0
+      }
+    }
+  ],
+  "cold": {
+    "elapsedMs": {
+      "median": 106251,
+      "maximum": 113630,
+      "count": 3
+    },
+    "routingElapsedMs": {
+      "median": 20018,
+      "maximum": 20572,
+      "count": 3
+    },
+    "proofElapsedMs": {
+      "median": 83305,
+      "maximum": 86107,
+      "count": 3
+    }
+  },
+  "warm": {
+    "elapsedMs": {
+      "median": 26215,
+      "maximum": 27399,
+      "count": 3
+    },
+    "routingElapsedMs": {
+      "median": 19977,
+      "maximum": 20723,
+      "count": 3
+    },
+    "proofElapsedMs": {
+      "median": 0,
+      "maximum": 0,
+      "count": 3
+    }
+  }
+}

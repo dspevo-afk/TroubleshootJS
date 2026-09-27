@@ -1,0 +1,9 @@
+{
+  "gate": "scripts/build.ps1 JDK8/GWT five-permutation compile",
+  "label": "sparse-factor-build",
+  "startedUtc": "2026-09-27T19:56:18.7109378Z",
+  "finishedUtc": "2026-09-27T19:57:40.1155276Z",
+  "elapsedSeconds": 81.3995616,
+  "exitCode": 0,
+  "status": "PASS"
+}

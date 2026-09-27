@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "consumedManifest": "sparse-factor/input-manifest.json.gz",
+  "files": 1524,
+  "changed": [],
+  "sourceSha256": "a320ec4071bb451ab60b704c1b53eed593b3bef1d953b4e723b7096bb69fcb3b",
+  "webSha256": "42e32f846778297f3b71ea762a323a8751e14958066349de7806f6ac8aa36cfd",
+  "boundary": "Every compiled source/web input from the optimized measurement matches final rebuilt bytes; focused/native/browser checks executed with the same production and oracle source. Documentation changes are outside consumed inputs."
+}

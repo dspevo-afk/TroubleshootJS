@@ -1,0 +1,334 @@
+{
+  "base": "745d537de5b18bd7ec2ae769fc00d3696e5af6bd",
+  "measurementOnly": true,
+  "normalAcceptance": false,
+  "sampleSizeNote": "n=1 is a diagnostic profile, not a population latency estimate or a production timing pass",
+  "rows": [
+    {
+      "seed": "13",
+      "status": "PASS",
+      "cleanupComplete": true,
+      "restored": true,
+      "measurementCacheCleared": true,
+      "cold": {
+        "run": "cold",
+        "outcome": "PASS",
+        "maxJobMillis": 300000,
+        "elapsedMs": 127576,
+        "wallElapsedMs": 127584,
+        "maxAdvanceMs": 2079,
+        "maxManualUnitMs": 2079,
+        "manualAdvanceCalls": 464,
+        "totalWork": 464,
+        "hypothesisWork": 390,
+        "routingElapsedMs": 20764,
+        "proofElapsedMs": 99154,
+        "proofCacheHitDelta": 0,
+        "proofCacheMissDelta": 1,
+        "proofCacheSize": 1,
+        "planCacheHitDelta": 0,
+        "planCacheMissDelta": 1,
+        "stages": [
+          {
+            "name": "RESOLVE",
+            "work": 1,
+            "elapsedMs": 0
+          },
+          {
+            "name": "HEALTHY",
+            "work": 70,
+            "elapsedMs": 27910
+          },
+          {
+            "name": "PHYSICAL",
+            "work": 1,
+            "elapsedMs": 64
+          },
+          {
+            "name": "HYPOTHESES",
+            "work": 390,
+            "elapsedMs": 97287
+          },
+          {
+            "name": "SYMPTOM",
+            "work": 1,
+            "elapsedMs": 7
+          },
+          {
+            "name": "PUBLISH",
+            "work": 1,
+            "elapsedMs": 62
+          }
+        ],
+        "diagnosticWorkTimings": [
+          {
+            "label": "REPLAY_INSTALL",
+            "units": 5,
+            "elapsedMs": 564,
+            "maxUnitMs": 123
+          },
+          {
+            "label": "CANDIDATE_HEALTHY_SETTLE",
+            "units": 25,
+            "elapsedMs": 24471,
+            "maxUnitMs": 1205
+          },
+          {
+            "label": "CANDIDATE_SETTLE",
+            "units": 25,
+            "elapsedMs": 5744,
+            "maxUnitMs": 1414
+          },
+          {
+            "label": "OBSERVATION_STEP:INPUT",
+            "units": 20,
+            "elapsedMs": 17794,
+            "maxUnitMs": 1585
+          },
+          {
+            "label": "OBSERVATION_STEP:WAIT",
+            "units": 20,
+            "elapsedMs": 0,
+            "maxUnitMs": 0
+          },
+          {
+            "label": "OBSERVATION_STEP:DC_VOLTAGE",
+            "units": 185,
+            "elapsedMs": 1230,
+            "maxUnitMs": 9
+          },
+          {
+            "label": "OBSERVATION_STEP:POWER",
+            "units": 5,
+            "elapsedMs": 142,
+            "maxUnitMs": 29
+          },
+          {
+            "label": "OBSERVATION_STEP:SETTLE",
+            "units": 5,
+            "elapsedMs": 185,
+            "maxUnitMs": 39
+          },
+          {
+            "label": "POWER_OFF_SETTLE",
+            "units": 25,
+            "elapsedMs": 5096,
+            "maxUnitMs": 2079
+          },
+          {
+            "label": "REMOVE_SETTLE",
+            "units": 5,
+            "elapsedMs": 269,
+            "maxUnitMs": 56
+          },
+          {
+            "label": "REPLACE_SETTLE",
+            "units": 5,
+            "elapsedMs": 291,
+            "maxUnitMs": 61
+          },
+          {
+            "label": "POWER_ON_SETTLE",
+            "units": 5,
+            "elapsedMs": 251,
+            "maxUnitMs": 56
+          },
+          {
+            "label": "REPAIR_STATUS_SETTLE",
+            "units": 25,
+            "elapsedMs": 20472,
+            "maxUnitMs": 1268
+          },
+          {
+            "label": "CUSTOMER_RETEST",
+            "units": 25,
+            "elapsedMs": 20619,
+            "maxUnitMs": 1235
+          },
+          {
+            "label": "CUSTOMER_RETEST_COMPLETION",
+            "units": 5,
+            "elapsedMs": 34,
+            "maxUnitMs": 7
+          },
+          {
+            "label": "EVIDENCE_RESTORE_PRIMARY",
+            "units": 5,
+            "elapsedMs": 96,
+            "maxUnitMs": 22
+          }
+        ],
+        "solverKernelProfile": {
+          "protocol": "TSJ-Q30-SOLVER-KERNEL-1",
+          "samplingStrideAcceptedSteps": 64,
+          "temporalProfileCalls": 99,
+          "analysisCount": 99,
+          "analysisSeconds": 0.31840000002086144,
+          "batchPreparationCount": 4750,
+          "batchPreparationSeconds": 0.10570000002533209,
+          "acceptedSteps": 606019,
+          "sampledAcceptedSteps": 9470,
+          "trials": 1347344,
+          "sampledTrials": 21030,
+          "factorizations": 741325,
+          "sampledFactorizations": 11560,
+          "solves": 741325,
+          "sampledSolves": 11560,
+          "dimensionObservations": 4849,
+          "minimumSolverElements": 267,
+          "maximumSolverElements": 269,
+          "minimumFullMatrixSize": 82,
+          "maximumFullMatrixSize": 92,
+          "minimumReducedMatrixSize": 70,
+          "maximumReducedMatrixSize": 81,
+          "sampledguardSeconds": 0.01439999997615818,
+          "sampledguardCalls": 39970,
+          "sampledmatrixCopySeconds": 0.09230000002682222,
+          "sampledmatrixCopyCalls": 21030,
+          "sampledmodelSeconds": 0.08890000010281812,
+          "sampledmodelCalls": 30500,
+          "sampledfactorSeconds": 0.9863999997899572,
+          "sampledfactorCalls": 11560,
+          "sampledsolveSeconds": 0.12289999995380652,
+          "sampledsolveCalls": 11560,
+          "sampledpublishSeconds": 0.15219999997317504,
+          "sampledpublishCalls": 11560,
+          "sampledwireAcceptedSeconds": 0.11120000002533209,
+          "sampledwireAcceptedCalls": 9470
+        },
+        "cleanupComplete": true,
+        "ownerRestored": true,
+        "cleanupElapsedMs": 3,
+        "cleanupRetryCount": 0
+      },
+      "warm": {
+        "run": "warm",
+        "outcome": "PASS",
+        "maxJobMillis": 300000,
+        "elapsedMs": 28067,
+        "wallElapsedMs": 28074,
+        "maxAdvanceMs": 1155,
+        "maxManualUnitMs": 1155,
+        "manualAdvanceCalls": 75,
+        "totalWork": 75,
+        "hypothesisWork": 1,
+        "routingElapsedMs": 20570,
+        "proofElapsedMs": 0,
+        "proofCacheHitDelta": 1,
+        "proofCacheMissDelta": 0,
+        "proofCacheSize": 1,
+        "planCacheHitDelta": 1,
+        "planCacheMissDelta": 0,
+        "stages": [
+          {
+            "name": "RESOLVE",
+            "work": 1,
+            "elapsedMs": 1
+          },
+          {
+            "name": "HEALTHY",
+            "work": 70,
+            "elapsedMs": 27552
+          },
+          {
+            "name": "PHYSICAL",
+            "work": 1,
+            "elapsedMs": 58
+          },
+          {
+            "name": "HYPOTHESES",
+            "work": 1,
+            "elapsedMs": 21
+          },
+          {
+            "name": "SYMPTOM",
+            "work": 1,
+            "elapsedMs": 6
+          },
+          {
+            "name": "PUBLISH",
+            "work": 1,
+            "elapsedMs": 60
+          }
+        ],
+        "diagnosticWorkTimings": [],
+        "solverKernelProfile": {
+          "protocol": "TSJ-Q30-SOLVER-KERNEL-1",
+          "samplingStrideAcceptedSteps": 64,
+          "temporalProfileCalls": 6,
+          "analysisCount": 6,
+          "analysisSeconds": 0.01800000000745058,
+          "batchPreparationCount": 282,
+          "batchPreparationSeconds": 0.00580000001192093,
+          "acceptedSteps": 36000,
+          "sampledAcceptedSteps": 563,
+          "trials": 79129,
+          "sampledTrials": 1240,
+          "factorizations": 43129,
+          "sampledFactorizations": 677,
+          "solves": 43129,
+          "sampledSolves": 677,
+          "dimensionObservations": 288,
+          "minimumSolverElements": 267,
+          "maximumSolverElements": 267,
+          "minimumFullMatrixSize": 85,
+          "maximumFullMatrixSize": 86,
+          "minimumReducedMatrixSize": 70,
+          "maximumReducedMatrixSize": 75,
+          "sampledguardSeconds": 0.0011000000089406966,
+          "sampledguardCalls": 2366,
+          "sampledmatrixCopySeconds": 0.004999999985098839,
+          "sampledmatrixCopyCalls": 1240,
+          "sampledmodelSeconds": 0.004800000034272671,
+          "sampledmodelCalls": 1803,
+          "sampledfactorSeconds": 0.05790000012516984,
+          "sampledfactorCalls": 677,
+          "sampledsolveSeconds": 0.007799999974668034,
+          "sampledsolveCalls": 677,
+          "sampledpublishSeconds": 0.007299999937415129,
+          "sampledpublishCalls": 677,
+          "sampledwireAcceptedSeconds": 0.0067999999821186105,
+          "sampledwireAcceptedCalls": 563
+        },
+        "cleanupComplete": true,
+        "ownerRestored": true,
+        "cleanupElapsedMs": 3,
+        "cleanupRetryCount": 0
+      }
+    }
+  ],
+  "cold": {
+    "elapsedMs": {
+      "median": 127576,
+      "maximum": 127576,
+      "count": 1
+    },
+    "routingElapsedMs": {
+      "median": 20764,
+      "maximum": 20764,
+      "count": 1
+    },
+    "proofElapsedMs": {
+      "median": 99154,
+      "maximum": 99154,
+      "count": 1
+    }
+  },
+  "warm": {
+    "elapsedMs": {
+      "median": 28067,
+      "maximum": 28067,
+      "count": 1
+    },
+    "routingElapsedMs": {
+      "median": 20570,
+      "maximum": 20570,
+      "count": 1
+    },
+    "proofElapsedMs": {
+      "median": 0,
+      "maximum": 0,
+      "count": 1
+    }
+  }
+}

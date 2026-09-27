@@ -1,0 +1,25 @@
+{
+  "os": {
+    "Caption": "Microsoft Windows 11 Home",
+    "Version": "10.0.26200",
+    "TotalVisibleMemorySize": 33282968
+  },
+  "productionBudgetMs": 90000,
+  "runner": "tests/browser/compiled_attribute_acceptance.py",
+  "jdk": "OpenJDK 8u502",
+  "headless": true,
+  "baselineSeeds": [
+    "13",
+    "7",
+    "64"
+  ],
+  "viewport": "1440x1000",
+  "cpu": {
+    "Name": "AMD Ryzen 7 7700 8-Core Processor              ",
+    "NumberOfCores": 8,
+    "NumberOfLogicalProcessors": 16
+  },
+  "collectedUtc": "2026-09-27T19:36:37.6606019Z",
+  "browser": "154.0.4258.37",
+  "privateMeasurementBudgetMs": 300000
+}
