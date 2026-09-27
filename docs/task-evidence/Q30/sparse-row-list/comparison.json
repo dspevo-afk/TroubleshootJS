@@ -1,0 +1,225 @@
+{
+  "status": "PRIVATE_MEASUREMENT_NOT_NORMAL_ACCEPTANCE",
+  "complete": false,
+  "order": [
+    [
+      "R",
+      "7"
+    ],
+    [
+      "B",
+      "7"
+    ],
+    [
+      "B",
+      "13"
+    ],
+    [
+      "R",
+      "13"
+    ],
+    [
+      "R",
+      "64"
+    ],
+    [
+      "B",
+      "64"
+    ]
+  ],
+  "rows": [
+    {
+      "arm": "R",
+      "label": "rowlist-01-R7",
+      "seed": "7",
+      "profile": false,
+      "exitCode": 0,
+      "hostMonotonicSeconds": 142.51882899999327,
+      "wallMinusMonotonicSeconds": 3.6835699575021863e-06,
+      "runnerOutcome": "PASS",
+      "cleanup": {
+        "status": "PASS",
+        "seconds": 0.9876126000017393,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "reportKeys": [
+        "schema",
+        "status",
+        "phase",
+        "seed",
+        "requestedSeed",
+        "request",
+        "normalAdmission",
+        "measurementOnly",
+        "coordinatorQualificationPassed",
+        "normalCatalogRegistered",
+        "playerPublished",
+        "normalPlayerLaunch",
+        "predecessorOwnerPresent",
+        "restored",
+        "cleanupComplete",
+        "cleanupPending",
+        "cleanupRetryCount",
+        "totalElapsedMs",
+        "phaseElapsedMs",
+        "maxJobMillis",
+        "defaultMaxJobMillis",
+        "measurementMaxJobMillis",
+        "maxUnitMillis",
+        "maxJobSteps",
+        "manualAdvancesPerTimer",
+        "measurementCacheCleared",
+        "measurementCacheInitialSize",
+        "measurementCacheSizeBeforeClear",
+        "measurementCacheSizeAfterClear",
+        "measurementCacheHitsBefore",
+        "measurementCacheHitsAfter",
+        "measurementCacheMissesBefore",
+        "measurementCacheMissesAfter",
+        "normalCacheSizeBefore",
+        "normalCacheSizeAfter",
+        "normalCacheHitsBefore",
+        "normalCacheHitsAfter",
+        "normalCacheMissesBefore",
+        "normalCacheMissesAfter",
+        "cold",
+        "warm"
+      ],
+      "cold": {
+        "elapsedMs": 112399,
+        "proofElapsedMs": 85645,
+        "routingElapsedMs": 20012,
+        "totalWork": 468,
+        "hypothesisWork": 390,
+        "cleanupComplete": true,
+        "profileKeys": []
+      },
+      "warm": {
+        "elapsedMs": 26778,
+        "proofElapsedMs": 0,
+        "routingElapsedMs": 20165,
+        "totalWork": 79,
+        "hypothesisWork": 1,
+        "cleanupComplete": true,
+        "profileKeys": []
+      }
+    },
+    {
+      "arm": "B",
+      "label": "rowlist-02-B7",
+      "seed": "7",
+      "profile": false,
+      "exitCode": 0,
+      "hostMonotonicSeconds": 137.85200900000928,
+      "wallMinusMonotonicSeconds": 4.587942385114729e-06,
+      "runnerOutcome": "PASS",
+      "cleanup": {
+        "status": "PASS",
+        "seconds": 1.0173879000067245,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "reportKeys": [
+        "schema",
+        "status",
+        "phase",
+        "seed",
+        "requestedSeed",
+        "request",
+        "normalAdmission",
+        "measurementOnly",
+        "coordinatorQualificationPassed",
+        "normalCatalogRegistered",
+        "playerPublished",
+        "normalPlayerLaunch",
+        "predecessorOwnerPresent",
+        "restored",
+        "cleanupComplete",
+        "cleanupPending",
+        "cleanupRetryCount",
+        "totalElapsedMs",
+        "phaseElapsedMs",
+        "maxJobMillis",
+        "defaultMaxJobMillis",
+        "measurementMaxJobMillis",
+        "maxUnitMillis",
+        "maxJobSteps",
+        "manualAdvancesPerTimer",
+        "measurementCacheCleared",
+        "measurementCacheInitialSize",
+        "measurementCacheSizeBeforeClear",
+        "measurementCacheSizeAfterClear",
+        "measurementCacheHitsBefore",
+        "measurementCacheHitsAfter",
+        "measurementCacheMissesBefore",
+        "measurementCacheMissesAfter",
+        "normalCacheSizeBefore",
+        "normalCacheSizeAfter",
+        "normalCacheHitsBefore",
+        "normalCacheHitsAfter",
+        "normalCacheMissesBefore",
+        "normalCacheMissesAfter",
+        "cold",
+        "warm"
+      ],
+      "cold": {
+        "elapsedMs": 107655,
+        "proofElapsedMs": 80702,
+        "routingElapsedMs": 20338,
+        "totalWork": 468,
+        "hypothesisWork": 390,
+        "cleanupComplete": true,
+        "profileKeys": []
+      },
+      "warm": {
+        "elapsedMs": 26794,
+        "proofElapsedMs": 0,
+        "routingElapsedMs": 20406,
+        "totalWork": 79,
+        "hypothesisWork": 1,
+        "cleanupComplete": true,
+        "profileKeys": []
+      }
+    }
+  ],
+  "pairs": [
+    {
+      "seed": "7",
+      "exactRequest": true,
+      "proofFieldParity": {
+        "status": true,
+        "family": true,
+        "topology": true,
+        "warmReuseReceipt": true,
+        "providerId": true,
+        "programIdentity": true,
+        "contextCanonical": true,
+        "contextTrusted": true,
+        "partitionCanonical": true,
+        "partitionNodeCount": true,
+        "partitionLeafCount": true,
+        "hypothesisCount": true,
+        "actualSampleCount": true,
+        "workUnits": true,
+        "explicitCompletion": true,
+        "evidence": true
+      },
+      "exactWork": true,
+      "controlColdMs": 107655,
+      "candidateColdMs": 112399,
+      "coldSavedMs": -4744,
+      "controlProofMs": 80702,
+      "candidateProofMs": 85645,
+      "proofSavedMs": -4943
+    }
+  ],
+  "medianPairedSavedMs": -4744,
+  "allPairsImproved": false,
+  "maxAbsoluteHostClockDriftSeconds": 4.587942385114729e-06,
+  "normalDeadlineMs": 90000,
+  "fullAcceptanceMatrix": "NOT RUN",
+  "q30Status": "BLOCKED"
+}

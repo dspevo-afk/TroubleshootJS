@@ -14,10 +14,20 @@ control confirms 106.447 s, exact proof parity and successful cleanup; the index
 is 9.863 s slower. The isolated profile finds 40.0% of sampled LU phase time in
 pivot/search/swap/mask repair and 19.3% in scaling/index construction. Only
 18/712 consecutive input pairs match exactly, so no matrix cache was added.
-Per-row sparse lists are the next bounded candidate under development. The slower
-prototype has been removed from production source; its exact patch, checks,
-failed timing and profiler fixture are retained. Q30 remains BLOCKED. [Stage profile](task-evidence/Q30/stage-profile/README.md),
-[failed pilot](task-evidence/Q30/sparse-index/README.md).
+The subsequent per-row sparse-list candidate passes four native suites
+(50.961 s, 281,121 A07 assertions), actual five-permutation GWT build
+(82.492 s), and compiled A07 plus its strict reader/three corruption canaries.
+It also FAILS its first cold timing pilot: seed 7 takes 112.399 s with
+85.645 s proof and 20.012 s routing. A separate fresh accepted-source control
+confirms 107.655 s cold and 80.702 s proof, with exact request/proof/work parity
+and successful cleanup. The row-list candidate is 4.744 s slower; the four
+remaining rows are NOT RUN. Its patch and receipts are retained and its two
+source changes have been removed. Accepted production source remains 7a30a3f.
+The packed-index prototype has already been removed from production source;
+its exact patch, checks, failed timing and profiler fixture are retained.
+Q30 remains BLOCKED. [Stage profile](task-evidence/Q30/stage-profile/README.md),
+[failed packed-index pilot](task-evidence/Q30/sparse-index/README.md),
+[failed row-list pilot](task-evidence/Q30/sparse-row-list/README.md).
 
 Branch `codex/q30-multirail-qualification`; base
 `745d537de5b18bd7ec2ae769fc00d3696e5af6bd`. The accepted intermediate commit above
@@ -53,10 +63,11 @@ Resources: all eight intermediate browser/server jobs and their wrappers finishe
 The new indexed pilot and A07 browser/server cleanup pass; a fresh accepted-build
 control also finished with maintained PID/creation-time/profile ownership and
 successful cleanup receipts. The isolated profiler build and browser run passed
-their gates; one auxiliary timer-call counter is limited as documented. No
-browser/build job is active at this checkpoint. Root source was restored before
-the new row-list candidate; the root WAR still belongs to the rejected experiment
-and must be rebuilt before use.
+their gates; one auxiliary timer-call counter is limited as documented.
+The row-list pilot browser/server completed with cleanup PASS and no survivors.
+The fresh accepted-reference control also completed with cleanup PASS.
+No browser/build is active. Root source is restored, but its WAR still belongs
+to the rejected row-list candidate and must be rebuilt before use.
 Current task scratch is retained for continued profiling and a new isolated fixture.
 Prior administrative cleanup remains policy-blocked separately from runtime
 cleanup; exact retained leaves are in acceptance-continuation/resource-cleanup.json.
