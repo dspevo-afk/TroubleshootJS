@@ -1,80 +1,73 @@
-# Current checkpoint: Q30 solver optimization accepted; Q30 BLOCKED
+# Current checkpoint: Q30 intermediate optimization accepted; Q30 BLOCKED
 
-Local intermediate commit secured: `7a30a3fdcfa1dc9092d546edcb01bfa9ed435a36`
-(`Optimize Q30 solver qualification path`); no push. The isolated
-monotonic stage profile now passes with exact proof parity: 106.350 s total,
-79.421 s solver stepping, 20.070 s routing, 0.826 s placement, 1.224 s analysis,
-0.075 s physical admission and 0.377 s construction. All scopes balance and
-cleanup passes. Sampled LU remains 61.5% of kernel time, with 82.55% zero row
-probes. The exact sparse-index prototype passes focused native, GWT and compiled
-A07 correctness gates, but FAILS its first timing pilot: seed 7 takes 116.310 s
-(89.419 s proof), versus the accepted 106.942 s (80.262 s proof). The remaining
-predeclared timing pairs are NOT RUN after that stop condition. A fresh accepted
-control confirms 106.447 s, exact proof parity and successful cleanup; the index
-is 9.863 s slower. The isolated profile finds 40.0% of sampled LU phase time in
-pivot/search/swap/mask repair and 19.3% in scaling/index construction. Only
-18/712 consecutive input pairs match exactly, so no matrix cache was added.
-The subsequent per-row sparse-list candidate passes four native suites
-(50.961 s, 281,121 A07 assertions), actual five-permutation GWT build
-(82.492 s), and compiled A07 plus its strict reader/three corruption canaries.
-It also FAILS its first cold timing pilot: seed 7 takes 112.399 s with
-85.645 s proof and 20.012 s routing. A separate fresh accepted-source control
-confirms 107.655 s cold and 80.702 s proof, with exact request/proof/work parity
-and successful cleanup. The row-list candidate is 4.744 s slower; the four
-remaining rows are NOT RUN. Its patch and receipts are retained and its two
-source changes have been removed. Accepted production source remains 7a30a3f.
-The packed-index prototype has already been removed from production source;
-its exact patch, checks, failed timing and profiler fixture are retained.
-Q30 remains BLOCKED. [Stage profile](task-evidence/Q30/stage-profile/README.md),
-[failed packed-index pilot](task-evidence/Q30/sparse-index/README.md),
-[failed row-list pilot](task-evidence/Q30/sparse-row-list/README.md).
+Branch `codex/q30-multirail-qualification`; local evidence HEAD
+`18f57afc7cb8aaa18cf3cf6e5bf7766a3f1255b4`. Accepted production optimization:
+`7a30a3fdcfa1dc9092d546edcb01bfa9ed435a36`
+(`Optimize Q30 solver qualification path`). Initial base was
+`745d537de5b18bd7ec2ae769fc00d3696e5af6bd`. No push or completion email.
 
-Branch `codex/q30-multirail-qualification`; base
-`745d537de5b18bd7ec2ae769fc00d3696e5af6bd`. The accepted intermediate commit above
-contains only finite-zero-factor elimination in the existing Crout kernel,
-expanded independent numerical fixtures, and its evidence. Q30 stays disabled.
-Frozen 90,000-ms cumulative / 640-unit / 5,000-ms operation contracts, full
-settlement/proofs, generic ownership, exact seed/replay and cleanup are unchanged.
+The initial uncommitted finite-zero-factor optimization was independently
+reviewed and secured. Four fresh native suites PASS, 93,541 A07 assertions;
+actual control GWT build PASS, optimized build reused after all 1,524 consumed
+inputs matched. Eight fresh counterbalanced cold runs preserve exact requests,
+full electrical proof, work counts and cache/cleanup boundaries. Four pairs
+save 11.155–14.706 s (median 12.868 s); seed-13 repeat ranges are 2.437 s for
+control and 0.296 s optimized. Numeric equality is proved, not signed-zero bit
+identity. Every optimized run still exceeds 90 s (103.287–114.309 s).
+[Intermediate review and evidence](task-evidence/Q30/intermediate-optimization/README.md).
 
-Fresh independent source review: no blocker within numeric-equivalence scope
-(signed-zero bit preservation is not claimed). Four focused native suites PASS,
-48.747 s including cleanup, with 93,541 A07 assertions. Actual isolated control
-JDK8/GWT build PASS, five permutations, 84.403 s. Optimized build evidence reused
-only after all 1,524 consumed source/web files matched the final manifest.
+Monotonic accepted-source profile explains 106.350 s: solver stepping 79.421 s,
+routing 20.070 s, placement 0.826 s, analysis/setup 1.224 s, construction
+0.377 s and physical admission 0.075 s, plus orchestration/cleanup/residual.
+It separates all hypothesis, diagnostic, service, repair, retest and completion
+work and retained routing failures. Five hypotheses, 185 observations and
+390 proof units are unchanged. [Stage breakdown](task-evidence/Q30/stage-profile/README.md).
 
-Fresh counterbalanced cold comparison: B13/A13/A7/B7/B64/A64/A13/B13. Four pairs
-save 11.155–14.706 s (median paired saving 12.868 s). Repeated seed-13 ranges:
-control 2.437 s, optimized 0.296 s. Every exact request, electrical observation,
-proof field except elapsed time, service/retest result and work count matches.
-All eight maintained compiled runs, strict readers, 37 corruption canaries,
-private-cache isolation and owned process/server cleanup PASS. This supports
-runtime attribution on this host, not a population tail or normal admission.
-All optimized cold requests still fail 90 seconds (103.287–114.309 s).
-[Review, methods, commands and receipts](task-evidence/Q30/intermediate-optimization/README.md).
+Two subsequent solver experiments passed focused correctness but regressed
+timing and were removed. Packed index: 116.310 s versus fresh control 106.447 s.
+Row lists: 112.399 s versus fresh control 107.655 s. Both retain exact patches,
+native/GWT/compiled A07 gates, strict readers, proof parity and cleanup receipts.
+Their remaining comparison rows were stopped, not reported as PASS.
+[Packed index](task-evidence/Q30/sparse-index/README.md),
+[row lists](task-evidence/Q30/sparse-row-list/README.md).
 
-Scale remains 33/35/37; counts 20–32, 34, 36 and 38–40 are unimplemented.
-Full final acceptance matrices are NOT RUN while hard gates fail. Next:
-monotonic stage profiling, measured optimization in contributor order, then
-purposeful family scale and fresh acceptance when eligible. U06/U07/Q60 and
-later milestones remain unstarted. The user authorized this intermediate commit
-and continuing Q30, explicitly **no push**; no completion email is sent.
+The refined accepted-source profiler PASSes build (81.334 s), compiled seed 7,
+strict reader/37 corruption canaries, exact request/physical/electrical context,
+work and cleanup. Cold monotonic time is 106.731 s. Sampled LU ranks Crout
+updates, numeric row copying and scaling highest; short phase samples have
+quantization/JIT limits and cannot be extrapolated as total runtime. P07 A*
+takes 15.595 s, lower-bound BFS 1.002 s, goals 0.395 s. Setup/final admission
+are small. [Refined profile](task-evidence/Q30/route-and-lu-profile/README.md).
 
-Resources: all eight intermediate browser/server jobs and their wrappers finished.
-The new indexed pilot and A07 browser/server cleanup pass; a fresh accepted-build
-control also finished with maintained PID/creation-time/profile ownership and
-successful cleanup receipts. The isolated profiler build and browser run passed
-their gates; one auxiliary timer-call counter is limited as documented.
-The row-list pilot browser/server completed with cleanup PASS and no survivors.
-The fresh accepted-reference control also completed with cleanup PASS.
-No browser/build is active. Root source is restored, but its WAR still belongs
-to the rejected row-list candidate and must be rebuilt before use.
-Current task scratch is retained for continued profiling and a new isolated fixture.
-Prior administrative cleanup remains policy-blocked separately from runtime
-cleanup; exact retained leaves are in acceptance-continuation/resource-cleanup.json.
-The unrelated Desktop checkout and pre-existing tests/contracts/__pycache__/
-remain untouched. The accepted code checkpoint contains only intended source/oracle/docs/evidence.
-This later profile checkpoint adds documentation and evidence; new candidate
-source is excluded until its focused gates and timing comparison pass.
+Current unaccepted candidate: per-column references to nonzero lower rows,
+preserving coefficient hoisting and arithmetic order, row-reference pivots,
+finite-zero scaling skip and unconditional reference cleanup. Implementation
+is in progress; no gates or timing PASS claimed. Full finite-input scanning
+remains. No mutable numerical/proof cache is introduced. Root owns acceptance.
+[Predeclared gates](task-evidence/Q30/sparse-column-references/README.md).
+
+Q30 stays disabled and BLOCKED. Frozen limits are 90,000 ms cumulative,
+640 shared units and 5,000 ms per operation. Private measurement/cache isolation,
+generic StagedFamilyCapability/request/coordinator ownership, exact signed-long
+replay, canonical ordering, all settling/proofs and physical admission remain.
+Scale is still 33/35/37; 20–32, 34, 36 and 38–40 are unimplemented. A discrete
+20/21-part single-channel and two-channel support expansion are design options,
+not qualification. [Scale audit](task-evidence/Q30/scale-design.md).
+
+Full final acceptance matrices are NOT RUN while timing/scale fail. Next:
+validate the measured LU candidate, then address A* costs if needed; implement
+purposeful scale only when current variants approach/pass the production budget.
+U06/U07/Q60 and later milestones remain unstarted.
+
+Resources: all completed browser/server jobs have maintained ownership receipts,
+cleanup PASS and no survivors. No browser/build is active at this checkpoint.
+Root WAR still contains the rejected row-list build; rebuild before use. The
+accepted-reference and isolated profiler fixtures are retained for continued
+work. Earlier administrative scratch deletion remains policy-blocked separately
+from runtime cleanup; exact leaves are in acceptance-continuation/resource-cleanup.json.
+Preserve the unrelated dirty Desktop checkout and pre-existing
+`tests/contracts/__pycache__/`. Current new production files are unaccepted and
+must not be staged with profiler evidence until their own gates pass.
 
 # Historical checkpoint: Q30 acceptance continuation — BLOCKED / NOT ACCEPTED
 

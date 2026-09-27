@@ -1,0 +1,162 @@
+{
+  "status": "PROFILE_PASS_NOT_NORMAL_ACCEPTANCE",
+  "monotonicColdMs": 106730.60000000894,
+  "legacyColdMs": 106724,
+  "freshControlColdMs": 107655,
+  "proofMs": 80263,
+  "routingMs": 20042,
+  "requestAndProofExact": true,
+  "proofParity": {
+    "status": true,
+    "family": true,
+    "topology": true,
+    "warmReuseReceipt": true,
+    "providerId": true,
+    "programIdentity": true,
+    "contextCanonical": true,
+    "contextTrusted": true,
+    "partitionCanonical": true,
+    "partitionNodeCount": true,
+    "partitionLeafCount": true,
+    "hypothesisCount": true,
+    "actualSampleCount": true,
+    "workUnits": true,
+    "explicitCompletion": true,
+    "evidence": true
+  },
+  "geometryInContextCanonicalExact": true,
+  "totalWork": 468,
+  "proofUnits": 390,
+  "luSelectedFactors": 712,
+  "luPhaseSampledMs": {
+    "luPhaseFiniteInputScanMs": 9.099999889731407,
+    "luPhaseCroutUpdatesMs": 36.599999874830246,
+    "luPhasePivotSearchMs": 13.899999797344208,
+    "luPhasePivotNumericRowSwapMs": 19.10000015795231,
+    "luPhaseScaleMs": 15.90000006556511
+  },
+  "luPhaseSampledShares": {
+    "luPhaseFiniteInputScanMs": 0.09619450222381087,
+    "luPhaseCroutUpdatesMs": 0.3868921771442738,
+    "luPhasePivotSearchMs": 0.14693445907899494,
+    "luPhasePivotNumericRowSwapMs": 0.20190275054202894,
+    "luPhaseScaleMs": 0.16807611101089143
+  },
+  "routeTimings": [
+    {
+      "name": "P07.routeSession.setup",
+      "calls": 3,
+      "inclusiveMs": 0.20000000298023224,
+      "exclusiveMs": 0.20000000298023224
+    },
+    {
+      "name": "P07.routeCandidate.copy",
+      "calls": 7,
+      "inclusiveMs": 0.4000000059604645,
+      "exclusiveMs": 0.4000000059604645
+    },
+    {
+      "name": "P07.rules.construct",
+      "calls": 7,
+      "inclusiveMs": 0.9000000059604645,
+      "exclusiveMs": 0.9000000059604645
+    },
+    {
+      "name": "P07.routerIndexes.construct",
+      "calls": 7,
+      "inclusiveMs": 4.399999991059303,
+      "exclusiveMs": 4.399999991059303
+    },
+    {
+      "name": "P07.search.construct",
+      "calls": 7,
+      "inclusiveMs": 5.499999985098839,
+      "exclusiveMs": 0.19999998807907104
+    },
+    {
+      "name": "P07.ordering-prepare",
+      "calls": 7,
+      "inclusiveMs": 1.1000000089406967,
+      "exclusiveMs": 1.1000000089406967
+    },
+    {
+      "name": "P07.net-prepare",
+      "calls": 95,
+      "inclusiveMs": 0.800000011920929,
+      "exclusiveMs": 0.800000011920929
+    },
+    {
+      "name": "P07.branch.goals",
+      "calls": 270,
+      "inclusiveMs": 395.40000005066395,
+      "exclusiveMs": 395.40000005066395
+    },
+    {
+      "name": "P07.branch.lowerBound",
+      "calls": 270,
+      "inclusiveMs": 1001.8999999463558,
+      "exclusiveMs": 1001.8999999463558
+    },
+    {
+      "name": "P07.branch-prepare",
+      "calls": 270,
+      "inclusiveMs": 1402,
+      "exclusiveMs": 4.700000002980232
+    },
+    {
+      "name": "P07.astar-expansion-work",
+      "calls": 318,
+      "inclusiveMs": 15594.800000116229,
+      "exclusiveMs": 15594.800000116229
+    },
+    {
+      "name": "P07.publisher-work",
+      "calls": 267,
+      "inclusiveMs": 11.199999898672104,
+      "exclusiveMs": 11.199999898672104
+    },
+    {
+      "name": "P07.sample.neighborPredicates",
+      "calls": 1224,
+      "inclusiveMs": 2.099999964237213,
+      "exclusiveMs": 2.099999964237213
+    },
+    {
+      "name": "P07.sample.viaPredicates",
+      "calls": 272,
+      "inclusiveMs": 1.4000000208616257,
+      "exclusiveMs": 1.4000000208616257
+    },
+    {
+      "name": "P07.validate.routeGeometry",
+      "calls": 2,
+      "inclusiveMs": 20.200000002980232,
+      "exclusiveMs": 20.200000002980232
+    },
+    {
+      "name": "P07.validate.routeRules",
+      "calls": 2,
+      "inclusiveMs": 6.600000008940697,
+      "exclusiveMs": 6.600000008940697
+    },
+    {
+      "name": "P07.validate.routeQuality",
+      "calls": 2,
+      "inclusiveMs": 0.19999998807907104,
+      "exclusiveMs": 0.19999998807907104
+    },
+    {
+      "name": "P07.search-completion",
+      "calls": 2,
+      "inclusiveMs": 27.399999991059303,
+      "exclusiveMs": 0.3999999910593033
+    },
+    {
+      "name": "P07.finishRoutedPlan",
+      "calls": 2,
+      "inclusiveMs": 96.6000000089407,
+      "exclusiveMs": 96.6000000089407
+    }
+  ],
+  "normalAcceptance": false
+}

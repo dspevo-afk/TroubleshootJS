@@ -1,0 +1,9 @@
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "route-profile-build",
+  "exitCode": 0,
+  "startedUtc": "2026-09-27T22:46:31.0156322Z",
+  "finishedUtc": "2026-09-27T22:47:52.3538478Z",
+  "elapsedSeconds": 81.3336939,
+  "status": "PASS"
+}
