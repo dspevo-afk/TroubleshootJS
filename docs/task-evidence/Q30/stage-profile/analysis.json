@@ -1,0 +1,105 @@
+{
+  "status": "PROFILE_PASS_NOT_NORMAL_ACCEPTANCE",
+  "requestAndProofExact": true,
+  "workExact": true,
+  "monotonicJobMs": 106350.40000000596,
+  "exclusiveScopeSumIncludingCleanupMs": 104047.50000032783,
+  "unaccountedIncludingClockBoundaryDifferenceMs": 2302.899999678135,
+  "proofUnitsByLabel": {
+    "REPLAY_INSTALL": {
+      "calls": 5,
+      "inclusiveMs": 408.29999999701977,
+      "exclusiveMs": 122.59999999403954
+    },
+    "CANDIDATE_HEALTHY_SETTLE": {
+      "calls": 25,
+      "inclusiveMs": 19803.699999973178,
+      "exclusiveMs": 0.10000000894069672
+    },
+    "CANDIDATE_SETTLE": {
+      "calls": 25,
+      "inclusiveMs": 4370.5000000447035,
+      "exclusiveMs": 12.600000008940697
+    },
+    "OBSERVATION_STEP:INPUT": {
+      "calls": 20,
+      "inclusiveMs": 14241.499999985099,
+      "exclusiveMs": 119.49999998509884
+    },
+    "OBSERVATION_STEP:WAIT": {
+      "calls": 20,
+      "inclusiveMs": 0.09999999403953552,
+      "exclusiveMs": 0.09999999403953552
+    },
+    "OBSERVATION_STEP:DC_VOLTAGE": {
+      "calls": 185,
+      "inclusiveMs": 998.9000001251698,
+      "exclusiveMs": 27.60000029206276
+    },
+    "OBSERVATION_STEP:POWER": {
+      "calls": 5,
+      "inclusiveMs": 119.20000000298023,
+      "exclusiveMs": 108.0
+    },
+    "OBSERVATION_STEP:SETTLE": {
+      "calls": 5,
+      "inclusiveMs": 157.7999999821186,
+      "exclusiveMs": 0.3999999910593033
+    },
+    "POWER_OFF_SETTLE": {
+      "calls": 25,
+      "inclusiveMs": 4359.299999982119,
+      "exclusiveMs": 4.199999958276749
+    },
+    "REMOVE_SETTLE": {
+      "calls": 5,
+      "inclusiveMs": 224.8000000268221,
+      "exclusiveMs": 66.40000002086163
+    },
+    "REPLACE_SETTLE": {
+      "calls": 5,
+      "inclusiveMs": 234.1000000089407,
+      "exclusiveMs": 68.50000001490116
+    },
+    "POWER_ON_SETTLE": {
+      "calls": 5,
+      "inclusiveMs": 207.90000000596046,
+      "exclusiveMs": 45.69999998807907
+    },
+    "REPAIR_STATUS_SETTLE": {
+      "calls": 25,
+      "inclusiveMs": 16336.900000020862,
+      "exclusiveMs": 4.200000062584877
+    },
+    "CUSTOMER_RETEST": {
+      "calls": 25,
+      "inclusiveMs": 16491.600000038743,
+      "exclusiveMs": 5.700000032782555
+    },
+    "CUSTOMER_RETEST_COMPLETION": {
+      "calls": 5,
+      "inclusiveMs": 29.50000001490116,
+      "exclusiveMs": 29.50000001490116
+    },
+    "EVIDENCE_RESTORE_PRIMARY": {
+      "calls": 5,
+      "inclusiveMs": 0.4000000059604645,
+      "exclusiveMs": 0.4000000059604645
+    }
+  },
+  "hypothesisInclusiveMs": {
+    "h0": 15912.499999955297,
+    "h1": 14324.10000012815,
+    "h2": 13882.799999982119,
+    "h3": 14030.800000146031,
+    "h4": 19834.29999999702
+  },
+  "sampledKernelSeconds": 1.287500000000006,
+  "factorShareOfSampledKernel": 0.6147572813334989,
+  "structureZeroProbeFraction": 0.8255139659181683,
+  "structureLowerNonzeroFraction": 0.11918671226336362,
+  "uninstrumentedColdMs": 106942,
+  "instrumentedColdMs": 106345,
+  "observedElapsedDeltaMs": -597,
+  "overheadLimit": "One paired host observation; no measurable material slowdown, not an isolated overhead estimate"
+}

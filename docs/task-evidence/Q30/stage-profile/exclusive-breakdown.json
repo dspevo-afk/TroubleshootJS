@@ -1,0 +1,15 @@
+{
+  "plan_resolution": 0.20000000298023224,
+  "placement": 826.1999999880791,
+  "routing": 20069.500000059605,
+  "physical_admission": 74.59999999403954,
+  "construction": 377.20000000298023,
+  "circuitjs_analyze_setup": 1223.7999998480082,
+  "solver_stepping": 79420.9999999553,
+  "settlement_orchestration": 1270.8000000566244,
+  "diagnostic_hypothesis_overhead": 642.30000038445,
+  "proof_cleanup": 82.10000002384186,
+  "other_stage_overhead": 57.1000000089407,
+  "outer_cleanup_separate": 2.7000000029802322,
+  "unscoped_job_residual": 2305.599999681115
+}

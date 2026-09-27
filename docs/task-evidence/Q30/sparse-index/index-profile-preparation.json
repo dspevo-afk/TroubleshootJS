@@ -1,0 +1,174 @@
+{
+  "head": "7a30a3fdcfa1dc9092d546edcb01bfa9ed435a36",
+  "fixture": "<task-temp>/index-profile",
+  "copiedInputs": 1181,
+  "copiedRoots": [
+    "tracked src",
+    "tracked static war (war/circuitjs1 excluded)",
+    "tracked scripts"
+  ],
+  "excluded": [
+    ".git",
+    "caches",
+    "prebuilt war/circuitjs1",
+    "history/evidence",
+    "build output",
+    "private data"
+  ],
+  "gwtJars": [
+    {
+      "name": "asm-5.0.3.jar",
+      "sha256": "71c4f78e437b8fdcd9cc0dfd2abea8c089eb677005a6a5cff320206cc52b46cc"
+    },
+    {
+      "name": "asm-analysis-5.0.3.jar",
+      "sha256": "e8fa2a63462c96557dcd36c25525e1264b77366ff851cf0b94eb7592b290849d"
+    },
+    {
+      "name": "asm-commons-5.0.3.jar",
+      "sha256": "18c1e092230233c9d29e46f21943d769bdb48130cc279e4b0e663f423948c2da"
+    },
+    {
+      "name": "asm-tree-5.0.3.jar",
+      "sha256": "347a7a9400f9964e87c91d3980e48eebdc8d024bc3b36f7f22189c662853a51c"
+    },
+    {
+      "name": "asm-util-5.0.3.jar",
+      "sha256": "2768edbfa2681b5077f08151de586a6d66b916703cda3ab297e58b41ae8f2362"
+    },
+    {
+      "name": "gwt-dev-2.7.0.jar",
+      "sha256": "c7321e367fc24e5c7ad97b74d1cf2980c45fbd7cbe1fd412f8a8ba128f685135"
+    },
+    {
+      "name": "gwt-user-2.7.0.jar",
+      "sha256": "d3721bcdd7c6855a524801212dd74548967d8fb65cbc212a20890732ff2c6948"
+    },
+    {
+      "name": "validation-api-1.0.0.GA-sources.jar",
+      "sha256": "a394d52a9b7fe2bb14f0718d2b3c8308ffe8f37e911956012398d55c9f9f9b54"
+    },
+    {
+      "name": "validation-api-1.0.0.GA.jar",
+      "sha256": "e459f313ebc6db2483f8ceaad39af07086361b474fa92e40f442e8de5d9895dc"
+    }
+  ],
+  "candidateSources": {
+    "src/com/lushprojects/circuitjs1/client/CirSim.java": "6df646c303da45dfcfcf549e0556dadb2a99dc0f4bc2179ee2b25516d2d453ab",
+    "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java": "60ea80a0de053155aa9da24c1dfeba314422afc8858ca26732f05a942d33f265"
+  },
+  "stageProfilePatch": "<task-temp>/stage-profile-final.patch",
+  "stagePatchApplyReturnCode": 1,
+  "stagePatchRejectsAfterManualMerge": [],
+  "luProfileFinalizer": "<task-temp>/prepare_index_profile_lu.py",
+  "profiledSourceSha256": {
+    "CirSim.java": "755f8d31d0c20dd602249e02e51fe659c38a9f65f3e0d285c4ff6bbc992bd1e9",
+    "SolverKernelProfile.java": "ca75f497f2005dd6493f454d3b963eef6cef792994fcec088b99cada3cfb2c3e"
+  },
+  "profiling": {
+    "optInQuery": "tsjQ30KernelProfile=true",
+    "clock": "performance.now only; disabled if unavailable",
+    "luPhaseFactorStride": 1024,
+    "phasesMs": [
+      "mask reset",
+      "finite input scan",
+      "Crout update traversal",
+      "pivot search/swap/mask refresh",
+      "zero handling/scaling/index build"
+    ],
+    "repeatInputPairStride": 1024,
+    "repeatInputMeaning": "capture selected factor input before mutation; compare it with immediately next profiled factor input; never reuse a factorization",
+    "repeatInputInvalidatedOn": [
+      "analysis/new graph",
+      "profile-scope end"
+    ]
+  },
+  "finalSourceFiles": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+      "candidateSha256": "e3f2219de7f4c796994dc2b2913fc4a2615b882c02c196d41faf7b5bd3941fa4",
+      "profileSha256": "82a478b22e03deb06d47d408d8c52d45baae0222b30b4adc152983aae362ac44"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "candidateSha256": "6df646c303da45dfcfcf549e0556dadb2a99dc0f4bc2179ee2b25516d2d453ab",
+      "profileSha256": "755f8d31d0c20dd602249e02e51fe659c38a9f65f3e0d285c4ff6bbc992bd1e9"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/FreshGeneratedRuntimeInstallation.java",
+      "candidateSha256": "759c9fddbe667247bcca26ac789801188e9d5ebdf28041637a30a9d9a2599665",
+      "profileSha256": "061553646fce580676d953586df95584359ff3681a31879694ebf9950821d338"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "candidateSha256": "eacf91be952de4438cc0721e4ff21fd551fc69ee1d52c0435d9ed9becfaee8ac",
+      "profileSha256": "12ad7fddb947a50f6567c2db70a8378b9bad05c1114430f47bfb43f569be110d"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GeneratedRuntimeDeveloperSettlement.java",
+      "candidateSha256": "75049728a8c340c42620a544b33d94f3fa82c0040179aedb33f882151a895cb9",
+      "profileSha256": "888fb1121d6eb71f994fcd6525e4c9095059b4ffe2265f4b46c87e0a5d286e19"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+      "candidateSha256": "9296105f4843cb4b6439e3f349873b0aee94bbce146a88d014329c5b14162a4d",
+      "profileSha256": "e18d1f8a400011a0d1ff58ff2d8fed17378d2747ac525e56eabaaa7d1bfb21dc"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationJob.java",
+      "candidateSha256": "340d584f744dd3338c9ad1a567116dca9cd79b73d41326e716c7dd95cc741bef",
+      "profileSha256": "7617faa4e21666b6db934a0403d0245913e38a625238475bd59c5a7b581270c0"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationRequest.java",
+      "candidateSha256": "80af05982ebacc13b4ae9a593495499aa2805be035be5906619aade8d5c6354b",
+      "profileSha256": "b50021611b767b33badf552a4639b043a7c6a87e9bae4da96c40d3a080808f2d"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java",
+      "candidateSha256": "43f5aa1cfa85401aa048b2394261e266bab2697bef4f66fbf01cabb0fc86040c",
+      "profileSha256": "66414ff59aa6f4dff67604bc5e5f5fdba876c11d6b221f86222a910f43674a5c"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30StageProfile.java",
+      "candidateSha256": null,
+      "profileSha256": "22f9243d5e42ed5ea74ec073fda0c605e9341f58f7855896d82d55dde8d52622"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb30DiagnosticProvider.java",
+      "candidateSha256": "aaac322010e5fe1da934f5097f3557f03e07c5a96eb5173fde552ddc6c3ee230",
+      "profileSha256": "8d85b94d93d4a3aece776d006fb1d15beb39033c166c27347f43b40306d4103e"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb30Generator.java",
+      "candidateSha256": "eee0e3af0dba0e563d734eded4023a9815ffc5fe1b01270352724a8a5eef3b0d",
+      "profileSha256": "533fa1b0c54d6971f4894179c2e3fd53e34309f932eccf11a4669a0b71ea0076"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb30PlayerFamilyCapability.java",
+      "candidateSha256": "b0ed95c8b17d511e3eb2def7f15a775113f28d7eea907d9e1a92d4fa06690ad4",
+      "profileSha256": "329b559116eadd5fbfcbb942a8cf8ec8ace7f770c2b30ddf6cf4f28915116fd6"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "candidateSha256": "e7910f09d401dd2453f1fcda2f972a022663824892cb69653a5d5a3a0d012fa5",
+      "profileSha256": "987223bc41ee02a786129d2e53de5ddb0aa6c55a1afcc59d1a316af5ed4b07d8"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/SolverKernelProfile.java",
+      "candidateSha256": null,
+      "profileSha256": "ca75f497f2005dd6493f454d3b963eef6cef792994fcec088b99cada3cfb2c3e"
+    }
+  ],
+  "patchChecks": {
+    "forward": {
+      "exitCode": 0,
+      "diagnostic": "<stdin>:18: trailing whitespace.\n    \n<stdin>:33: trailing whitespace.\n    \n<stdin>:49: trailing whitespace.\n    \n<stdin>:65: trailing whitespace.\n    \n<stdin>:102: trailing whitespace.\n    \nwarning: squelched 23 whitespace errors\nwarning: 28 lines add whitespace errors.\n"
+    },
+    "reverse": {
+      "exitCode": 0,
+      "diagnostic": ""
+    }
+  },
+  "reproduction": "Apply rejected-pilot.patch.gz to7a30a3f, then apply index-profile.patch.gz using git apply --ignore-space-change; no production profiling hooks."
+}

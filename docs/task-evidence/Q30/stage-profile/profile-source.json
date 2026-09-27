@@ -1,0 +1,81 @@
+{
+  "base": "7a30a3fdcfa1dc9092d546edcb01bfa9ed435a36",
+  "changed": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "beforeSha256": "c5b47f4aae54910ac81bee2115498b586afc858be74f589f0453093c8a8fc6b1",
+      "profileSha256": "9eef0a92b231c644d7b232a6bdce6d5c83231ca70254bd9f06a9c49f48cbe19a"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+      "beforeSha256": "e3f2219de7f4c796994dc2b2913fc4a2615b882c02c196d41faf7b5bd3941fa4",
+      "profileSha256": "3dbab9fec94c89d4b46b09de0e45c911343b666bd51e98d7134dc5de1688f0dd"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/FreshGeneratedRuntimeInstallation.java",
+      "beforeSha256": "759c9fddbe667247bcca26ac789801188e9d5ebdf28041637a30a9d9a2599665",
+      "profileSha256": "f547540c911c7fd4efd8a871c1d9f93257dffd62305a67b1f235266433cbf120"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "beforeSha256": "eacf91be952de4438cc0721e4ff21fd551fc69ee1d52c0435d9ed9becfaee8ac",
+      "profileSha256": "9375223cefe0119eeb2c1a9e1a4e8b1300bd79ce7fea491a92e01bb6c3c44fdc"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GeneratedRuntimeDeveloperSettlement.java",
+      "beforeSha256": "75049728a8c340c42620a544b33d94f3fa82c0040179aedb33f882151a895cb9",
+      "profileSha256": "b953a2cab4a7f947f5a6ec07accae1d480a87c48071351ca56109ac811ceced9"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+      "beforeSha256": "9296105f4843cb4b6439e3f349873b0aee94bbce146a88d014329c5b14162a4d",
+      "profileSha256": "2df5a7e4d79bff981a8f6520cf88aab3acc0e8c6f6310e6a2aea7f665327e5dd"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationJob.java",
+      "beforeSha256": "340d584f744dd3338c9ad1a567116dca9cd79b73d41326e716c7dd95cc741bef",
+      "profileSha256": "48a74e827910631a5571bd25a5cd88b5475657e673c702b0f42ceea450bdd45e"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationRequest.java",
+      "beforeSha256": "80af05982ebacc13b4ae9a593495499aa2805be035be5906619aade8d5c6354b",
+      "profileSha256": "83a3aed544779bf9e547862dd4115221dde8aed25adf91f97be471a216b38995"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java",
+      "beforeSha256": "43f5aa1cfa85401aa048b2394261e266bab2697bef4f66fbf01cabb0fc86040c",
+      "profileSha256": "74be5e8d98479da779b6bfc24262d0d45440a4047ae7408b0d097d440eaede37"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30StageProfile.java",
+      "beforeSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "profileSha256": "afe7b848066b4568fe79364ff1613d86d1feb955b492cf292450d0df7f4f1910"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb30DiagnosticProvider.java",
+      "beforeSha256": "aaac322010e5fe1da934f5097f3557f03e07c5a96eb5173fde552ddc6c3ee230",
+      "profileSha256": "f7c7a51d54bd2fdc3b76cce1bc4cf82de72ff1c151bd6f31665dbafec9d4ae87"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb30Generator.java",
+      "beforeSha256": "eee0e3af0dba0e563d734eded4023a9815ffc5fe1b01270352724a8a5eef3b0d",
+      "profileSha256": "57e9fe93455cca107039105cb183ba7375752b679478f9a481b8cd9a1b5fa111"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb30PlayerFamilyCapability.java",
+      "beforeSha256": "b0ed95c8b17d511e3eb2def7f15a775113f28d7eea907d9e1a92d4fa06690ad4",
+      "profileSha256": "4510fc096114d018f31256e6a94dfb83f3595079d14338ea843e7f82a8cc5935"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "beforeSha256": "e7910f09d401dd2453f1fcda2f972a022663824892cb69653a5d5a3a0d012fa5",
+      "profileSha256": "735a062a77c079f3dd5a95dc7ff453318ce7c76c73ba5f832f8233f220da9b5a"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/SolverKernelProfile.java",
+      "beforeSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "profileSha256": "51656ef112623b9e83e8b14b6ef5ed5e58e469e2ff2bd024fc711b7446622d9b"
+    }
+  ],
+  "patchSha256": "954a22aae788c4eb37ea1ddb2161a7143d98b9466f9d28d9cae8eb31aa78b473"
+}

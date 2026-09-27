@@ -1,0 +1,56 @@
+{
+  "head": "7a30a3fdcfa1dc9092d546edcb01bfa9ed435a36",
+  "fixture": "<task-temp>/stage-profile",
+  "copiedInputs": 1181,
+  "copiedRoots": [
+    "tracked src",
+    "tracked static war (war/circuitjs1 excluded)",
+    "tracked scripts"
+  ],
+  "excluded": [
+    ".git",
+    "unit caches",
+    "historical evidence",
+    "build outputs",
+    "private data",
+    "war/circuitjs1 prebuilt output"
+  ],
+  "gwtJars": [
+    {
+      "name": "asm-5.0.3.jar",
+      "sha256": "71c4f78e437b8fdcd9cc0dfd2abea8c089eb677005a6a5cff320206cc52b46cc"
+    },
+    {
+      "name": "asm-analysis-5.0.3.jar",
+      "sha256": "e8fa2a63462c96557dcd36c25525e1264b77366ff851cf0b94eb7592b290849d"
+    },
+    {
+      "name": "asm-commons-5.0.3.jar",
+      "sha256": "18c1e092230233c9d29e46f21943d769bdb48130cc279e4b0e663f423948c2da"
+    },
+    {
+      "name": "asm-tree-5.0.3.jar",
+      "sha256": "347a7a9400f9964e87c91d3980e48eebdc8d024bc3b36f7f22189c662853a51c"
+    },
+    {
+      "name": "asm-util-5.0.3.jar",
+      "sha256": "2768edbfa2681b5077f08151de586a6d66b916703cda3ab297e58b41ae8f2362"
+    },
+    {
+      "name": "gwt-dev-2.7.0.jar",
+      "sha256": "c7321e367fc24e5c7ad97b74d1cf2980c45fbd7cbe1fd412f8a8ba128f685135"
+    },
+    {
+      "name": "gwt-user-2.7.0.jar",
+      "sha256": "d3721bcdd7c6855a524801212dd74548967d8fb65cbc212a20890732ff2c6948"
+    },
+    {
+      "name": "validation-api-1.0.0.GA-sources.jar",
+      "sha256": "a394d52a9b7fe2bb14f0718d2b3c8308ffe8f37e911956012398d55c9f9f9b54"
+    },
+    {
+      "name": "validation-api-1.0.0.GA.jar",
+      "sha256": "e459f313ebc6db2483f8ceaad39af07086361b474fa92e40f442e8de5d9895dc"
+    }
+  ]
+}

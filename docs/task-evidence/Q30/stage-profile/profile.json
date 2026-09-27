@@ -1,0 +1,896 @@
+{
+  "cold": {
+    "solverKernelProfile": {
+      "protocol": "TSJ-Q30-SOLVER-KERNEL-1",
+      "clock": "performance.now",
+      "clockAvailable": true,
+      "enabled": true,
+      "samplingStrideAcceptedSteps": 64,
+      "structureStrideSampledFactors": 16,
+      "structureFactors": 726,
+      "structureLowerSlots": 1803347,
+      "structureLowerNonzero": 214935,
+      "structureScannedRows": 7064233,
+      "structureNonzeroUpdates": 1232610,
+      "structureProbeSeconds": 0.00880000004172325,
+      "temporalProfileCalls": 100,
+      "analysisCount": 100,
+      "analysisSeconds": 0.26520000000298033,
+      "batchPreparationCount": 4828,
+      "batchPreparationSeconds": 0.09079999984800824,
+      "acceptedSteps": 616000,
+      "sampledAcceptedSteps": 9625,
+      "trials": 1345510,
+      "sampledTrials": 21234,
+      "factorizations": 729510,
+      "sampledFactorizations": 11609,
+      "solves": 729510,
+      "sampledSolves": 11609,
+      "dimensionObservations": 4928,
+      "minimumSolverElements": 246,
+      "maximumSolverElements": 248,
+      "minimumFullMatrixSize": 78,
+      "maximumFullMatrixSize": 88,
+      "minimumReducedMatrixSize": 67,
+      "maximumReducedMatrixSize": 77,
+      "sampledguardSeconds": 0.01130000013113023,
+      "sampledguardCalls": 40484,
+      "sampledmatrixCopySeconds": 0.07779999962449073,
+      "sampledmatrixCopyCalls": 21234,
+      "sampledmodelSeconds": 0.06690000036358845,
+      "sampledmodelCalls": 30859,
+      "sampledfactorSeconds": 0.7914999997168836,
+      "sampledfactorCalls": 11609,
+      "sampledsolveSeconds": 0.1016000000536443,
+      "sampledsolveCalls": 11609,
+      "sampledpublishSeconds": 0.13760000021755714,
+      "sampledpublishCalls": 11609,
+      "sampledwireAcceptedSeconds": 0.10079999989271175,
+      "sampledwireAcceptedCalls": 9625
+    },
+    "monotonicJobElapsedMs": 106350.40000000596,
+    "stageProfile": {
+      "protocol": "TSJ-Q30-STAGE-1",
+      "clock": "performance.now",
+      "clockAvailable": true,
+      "enabled": true,
+      "openScopes": 0,
+      "overflowScopes": 0,
+      "mismatchedScopes": 0,
+      "timings": [
+        {
+          "name": "plan.prepared-resolution",
+          "calls": 1,
+          "inclusiveMs": 0,
+          "exclusiveMs": 0
+        },
+        {
+          "name": "stage.plan-resolution",
+          "calls": 1,
+          "inclusiveMs": 0.20000000298023224,
+          "exclusiveMs": 0.20000000298023224
+        },
+        {
+          "name": "placement.attempt",
+          "calls": 6,
+          "inclusiveMs": 826.1999999880791,
+          "exclusiveMs": 826.1999999880791
+        },
+        {
+          "name": "construction-session.advance",
+          "calls": 65,
+          "inclusiveMs": 20987.200000047684,
+          "exclusiveMs": 1.2000000029802322
+        },
+        {
+          "name": "stage.healthy-and-construction",
+          "calls": 74,
+          "inclusiveMs": 25855.700000077486,
+          "exclusiveMs": 36.20000000298023
+        },
+        {
+          "name": "routing.one-face-route",
+          "calls": 3,
+          "inclusiveMs": 2963.2000000029802,
+          "exclusiveMs": 2963.2000000029802
+        },
+        {
+          "name": "routing.attempt",
+          "calls": 8,
+          "inclusiveMs": 4078.600000023842,
+          "exclusiveMs": 1.3000000268220901
+        },
+        {
+          "name": "routing.two-layer-slice",
+          "calls": 54,
+          "inclusiveMs": 17105.000000029802,
+          "exclusiveMs": 17105.000000029802
+        },
+        {
+          "name": "construction.accepted-route-owner",
+          "calls": 1,
+          "inclusiveMs": 90.29999999701977,
+          "exclusiveMs": 90.29999999701977
+        },
+        {
+          "name": "solver.matrix-stamp",
+          "calls": 502,
+          "inclusiveMs": 130.49999986588955,
+          "exclusiveMs": 130.49999986588955
+        },
+        {
+          "name": "solver.analyze-setup",
+          "calls": 502,
+          "inclusiveMs": 1218.8999998867512,
+          "exclusiveMs": 1088.4000000208616
+        },
+        {
+          "name": "solver.analyze-operation",
+          "calls": 502,
+          "inclusiveMs": 1223.7999998480082,
+          "exclusiveMs": 4.899999961256981
+        },
+        {
+          "name": "solver.ui-step-operation",
+          "calls": 623,
+          "inclusiveMs": 146.70000000298023,
+          "exclusiveMs": 146.70000000298023
+        },
+        {
+          "name": "solver.temporal-operation",
+          "calls": 168,
+          "inclusiveMs": 79274.29999995232,
+          "exclusiveMs": 79274.29999995232
+        },
+        {
+          "name": "settlement.temporal-preparation",
+          "calls": 60,
+          "inclusiveMs": 28920.000000044703,
+          "exclusiveMs": 421.2000000625849
+        },
+        {
+          "name": "settlement.circuitjs",
+          "calls": 56,
+          "inclusiveMs": 1073.600000038743,
+          "exclusiveMs": 849.5999999940395
+        },
+        {
+          "name": "physical.validate-committed-state",
+          "calls": 2,
+          "inclusiveMs": 63.49999998509884,
+          "exclusiveMs": 63.49999998509884
+        },
+        {
+          "name": "stage.physical-admission",
+          "calls": 1,
+          "inclusiveMs": 45,
+          "exclusiveMs": 11.100000008940697
+        },
+        {
+          "name": "proof.fresh-hypothesis-construction",
+          "calls": 5,
+          "inclusiveMs": 285.70000000298023,
+          "exclusiveMs": 285.70000000298023
+        },
+        {
+          "name": "proof.h0.REPLAY_INSTALL",
+          "calls": 1,
+          "inclusiveMs": 83.09999999403954,
+          "exclusiveMs": 24.700000002980232
+        },
+        {
+          "name": "stage.hypothesis-work",
+          "calls": 390,
+          "inclusiveMs": 78093.40000024438,
+          "exclusiveMs": 26.80000001192093
+        },
+        {
+          "name": "proof.h0.CANDIDATE_HEALTHY_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 4306.9000000059605,
+          "exclusiveMs": 0
+        },
+        {
+          "name": "proof.h0.CANDIDATE_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 873.8999999910593,
+          "exclusiveMs": 2.4000000059604645
+        },
+        {
+          "name": "proof.h0.OBSERVATION_STEP:INPUT",
+          "calls": 4,
+          "inclusiveMs": 3733.5999999940395,
+          "exclusiveMs": 24.900000005960464
+        },
+        {
+          "name": "proof.h0.OBSERVATION_STEP:WAIT",
+          "calls": 4,
+          "inclusiveMs": 0,
+          "exclusiveMs": 0
+        },
+        {
+          "name": "proof.h0.OBSERVATION_STEP:DC_VOLTAGE",
+          "calls": 37,
+          "inclusiveMs": 205.59999999403954,
+          "exclusiveMs": 6
+        },
+        {
+          "name": "proof.h0.OBSERVATION_STEP:POWER",
+          "calls": 1,
+          "inclusiveMs": 25.200000002980232,
+          "exclusiveMs": 22.900000005960464
+        },
+        {
+          "name": "proof.h0.OBSERVATION_STEP:SETTLE",
+          "calls": 1,
+          "inclusiveMs": 32.69999998807907,
+          "exclusiveMs": 0
+        },
+        {
+          "name": "proof.h0.POWER_OFF_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 12.799999982118607,
+          "exclusiveMs": 0.9999999701976776
+        },
+        {
+          "name": "proof.h0.REMOVE_SETTLE",
+          "calls": 1,
+          "inclusiveMs": 47.29999999701977,
+          "exclusiveMs": 14.399999991059303
+        },
+        {
+          "name": "proof.h0.REPLACE_SETTLE",
+          "calls": 1,
+          "inclusiveMs": 49.5,
+          "exclusiveMs": 14.400000005960464
+        },
+        {
+          "name": "proof.h0.POWER_ON_SETTLE",
+          "calls": 1,
+          "inclusiveMs": 45.30000001192093,
+          "exclusiveMs": 9.900000005960464
+        },
+        {
+          "name": "proof.h0.REPAIR_STATUS_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 3283.1000000089407,
+          "exclusiveMs": 1.100000038743019
+        },
+        {
+          "name": "proof.h0.CUSTOMER_RETEST",
+          "calls": 5,
+          "inclusiveMs": 3207.0999999940395,
+          "exclusiveMs": 1.5
+        },
+        {
+          "name": "proof.h0.CUSTOMER_RETEST_COMPLETION",
+          "calls": 1,
+          "inclusiveMs": 6.299999997019768,
+          "exclusiveMs": 6.299999997019768
+        },
+        {
+          "name": "proof.h0.EVIDENCE_RESTORE_PRIMARY",
+          "calls": 1,
+          "inclusiveMs": 0.09999999403953552,
+          "exclusiveMs": 0.09999999403953552
+        },
+        {
+          "name": "proof.cleanup.dispose-candidate",
+          "calls": 5,
+          "inclusiveMs": 18,
+          "exclusiveMs": 18
+        },
+        {
+          "name": "proof.cleanup.restore-original",
+          "calls": 5,
+          "inclusiveMs": 82.10000002384186,
+          "exclusiveMs": 64.10000002384186
+        },
+        {
+          "name": "proof.h1.REPLAY_INSTALL",
+          "calls": 1,
+          "inclusiveMs": 81.29999999701977,
+          "exclusiveMs": 24.099999994039536
+        },
+        {
+          "name": "proof.h1.CANDIDATE_HEALTHY_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 3856.2000000029802,
+          "exclusiveMs": 0.10000000894069672
+        },
+        {
+          "name": "proof.h1.CANDIDATE_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 794.4000000208616,
+          "exclusiveMs": 2.3999999910593033
+        },
+        {
+          "name": "proof.h1.OBSERVATION_STEP:INPUT",
+          "calls": 4,
+          "inclusiveMs": 2646.5,
+          "exclusiveMs": 25.099999994039536
+        },
+        {
+          "name": "proof.h1.OBSERVATION_STEP:WAIT",
+          "calls": 4,
+          "inclusiveMs": 0,
+          "exclusiveMs": 0
+        },
+        {
+          "name": "proof.h1.OBSERVATION_STEP:DC_VOLTAGE",
+          "calls": 37,
+          "inclusiveMs": 196.40000002086163,
+          "exclusiveMs": 6.000000149011612
+        },
+        {
+          "name": "proof.h1.OBSERVATION_STEP:POWER",
+          "calls": 1,
+          "inclusiveMs": 24.100000008940697,
+          "exclusiveMs": 21.900000005960464
+        },
+        {
+          "name": "proof.h1.OBSERVATION_STEP:SETTLE",
+          "calls": 1,
+          "inclusiveMs": 31.69999998807907,
+          "exclusiveMs": 0.19999998807907104
+        },
+        {
+          "name": "proof.h1.POWER_OFF_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 12.500000014901161,
+          "exclusiveMs": 0.6000000089406967
+        },
+        {
+          "name": "proof.h1.REMOVE_SETTLE",
+          "calls": 1,
+          "inclusiveMs": 45.6000000089407,
+          "exclusiveMs": 13.900000005960464
+        },
+        {
+          "name": "proof.h1.REPLACE_SETTLE",
+          "calls": 1,
+          "inclusiveMs": 45.900000005960464,
+          "exclusiveMs": 13.400000005960464
+        },
+        {
+          "name": "proof.h1.POWER_ON_SETTLE",
+          "calls": 1,
+          "inclusiveMs": 40.29999999701977,
+          "exclusiveMs": 9
+        },
+        {
+          "name": "proof.h1.REPAIR_STATUS_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 3163.300000011921,
+          "exclusiveMs": 0.9000000059604645
+        },
+        {
+          "name": "proof.h1.CUSTOMER_RETEST",
+          "calls": 5,
+          "inclusiveMs": 3380.100000038743,
+          "exclusiveMs": 1.0000000447034836
+        },
+        {
+          "name": "proof.h1.CUSTOMER_RETEST_COMPLETION",
+          "calls": 1,
+          "inclusiveMs": 5.700000002980232,
+          "exclusiveMs": 5.700000002980232
+        },
+        {
+          "name": "proof.h1.EVIDENCE_RESTORE_PRIMARY",
+          "calls": 1,
+          "inclusiveMs": 0.10000000894069672,
+          "exclusiveMs": 0.10000000894069672
+        },
+        {
+          "name": "proof.h2.REPLAY_INSTALL",
+          "calls": 1,
+          "inclusiveMs": 80.5,
+          "exclusiveMs": 23.099999994039536
+        },
+        {
+          "name": "proof.h2.CANDIDATE_HEALTHY_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 3908.399999976158,
+          "exclusiveMs": 0
+        },
+        {
+          "name": "proof.h2.CANDIDATE_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 1052.300000011921,
+          "exclusiveMs": 2.2999999970197678
+        },
+        {
+          "name": "proof.h2.OBSERVATION_STEP:INPUT",
+          "calls": 4,
+          "inclusiveMs": 2275.8999999910593,
+          "exclusiveMs": 22.899999976158142
+        },
+        {
+          "name": "proof.h2.OBSERVATION_STEP:WAIT",
+          "calls": 4,
+          "inclusiveMs": 0,
+          "exclusiveMs": 0
+        },
+        {
+          "name": "proof.h2.OBSERVATION_STEP:DC_VOLTAGE",
+          "calls": 37,
+          "inclusiveMs": 199.89999997615814,
+          "exclusiveMs": 5.499999985098839
+        },
+        {
+          "name": "proof.h2.OBSERVATION_STEP:POWER",
+          "calls": 1,
+          "inclusiveMs": 23.299999997019768,
+          "exclusiveMs": 21.099999994039536
+        },
+        {
+          "name": "proof.h2.OBSERVATION_STEP:SETTLE",
+          "calls": 1,
+          "inclusiveMs": 29.299999997019768,
+          "exclusiveMs": 0
+        },
+        {
+          "name": "proof.h2.POWER_OFF_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 12.5,
+          "exclusiveMs": 0.5999999940395355
+        },
+        {
+          "name": "proof.h2.REMOVE_SETTLE",
+          "calls": 1,
+          "inclusiveMs": 43.900000005960464,
+          "exclusiveMs": 12.500000014901161
+        },
+        {
+          "name": "proof.h2.REPLACE_SETTLE",
+          "calls": 1,
+          "inclusiveMs": 46.900000005960464,
+          "exclusiveMs": 12.900000005960464
+        },
+        {
+          "name": "proof.h2.POWER_ON_SETTLE",
+          "calls": 1,
+          "inclusiveMs": 38.5,
+          "exclusiveMs": 8.5
+        },
+        {
+          "name": "proof.h2.REPAIR_STATUS_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 3072.1000000089407,
+          "exclusiveMs": 0.6000000238418579
+        },
+        {
+          "name": "proof.h2.CUSTOMER_RETEST",
+          "calls": 5,
+          "inclusiveMs": 3093.000000014901,
+          "exclusiveMs": 1.1000000089406967
+        },
+        {
+          "name": "proof.h2.CUSTOMER_RETEST_COMPLETION",
+          "calls": 1,
+          "inclusiveMs": 6.200000002980232,
+          "exclusiveMs": 6.200000002980232
+        },
+        {
+          "name": "proof.h2.EVIDENCE_RESTORE_PRIMARY",
+          "calls": 1,
+          "inclusiveMs": 0.09999999403953552,
+          "exclusiveMs": 0.09999999403953552
+        },
+        {
+          "name": "proof.h3.REPLAY_INSTALL",
+          "calls": 1,
+          "inclusiveMs": 80.70000000298023,
+          "exclusiveMs": 24.5
+        },
+        {
+          "name": "proof.h3.CANDIDATE_HEALTHY_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 3854.0999999791384,
+          "exclusiveMs": 0
+        },
+        {
+          "name": "proof.h3.CANDIDATE_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 757.3000000417233,
+          "exclusiveMs": 2.2000000178813934
+        },
+        {
+          "name": "proof.h3.OBSERVATION_STEP:INPUT",
+          "calls": 4,
+          "inclusiveMs": 2514.2000000029802,
+          "exclusiveMs": 22.900000020861626
+        },
+        {
+          "name": "proof.h3.OBSERVATION_STEP:WAIT",
+          "calls": 4,
+          "inclusiveMs": 0.09999999403953552,
+          "exclusiveMs": 0.09999999403953552
+        },
+        {
+          "name": "proof.h3.OBSERVATION_STEP:DC_VOLTAGE",
+          "calls": 37,
+          "inclusiveMs": 196.2000000923872,
+          "exclusiveMs": 5.400000095367432
+        },
+        {
+          "name": "proof.h3.OBSERVATION_STEP:POWER",
+          "calls": 1,
+          "inclusiveMs": 22.900000005960464,
+          "exclusiveMs": 20.700000002980232
+        },
+        {
+          "name": "proof.h3.OBSERVATION_STEP:SETTLE",
+          "calls": 1,
+          "inclusiveMs": 31.600000008940697,
+          "exclusiveMs": 0.10000000894069672
+        },
+        {
+          "name": "proof.h3.POWER_OFF_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 12.299999982118607,
+          "exclusiveMs": 0.699999988079071
+        },
+        {
+          "name": "proof.h3.REMOVE_SETTLE",
+          "calls": 1,
+          "inclusiveMs": 43.1000000089407,
+          "exclusiveMs": 12.600000008940697
+        },
+        {
+          "name": "proof.h3.REPLACE_SETTLE",
+          "calls": 1,
+          "inclusiveMs": 45,
+          "exclusiveMs": 13.700000002980232
+        },
+        {
+          "name": "proof.h3.POWER_ON_SETTLE",
+          "calls": 1,
+          "inclusiveMs": 41.900000005960464,
+          "exclusiveMs": 9.5
+        },
+        {
+          "name": "proof.h3.REPAIR_STATUS_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 3215.4000000059605,
+          "exclusiveMs": 0.9000000059604645
+        },
+        {
+          "name": "proof.h3.CUSTOMER_RETEST",
+          "calls": 5,
+          "inclusiveMs": 3210.4000000059605,
+          "exclusiveMs": 1.199999988079071
+        },
+        {
+          "name": "proof.h3.CUSTOMER_RETEST_COMPLETION",
+          "calls": 1,
+          "inclusiveMs": 5.600000008940697,
+          "exclusiveMs": 5.600000008940697
+        },
+        {
+          "name": "proof.h3.EVIDENCE_RESTORE_PRIMARY",
+          "calls": 1,
+          "inclusiveMs": 0,
+          "exclusiveMs": 0
+        },
+        {
+          "name": "proof.h4.REPLAY_INSTALL",
+          "calls": 1,
+          "inclusiveMs": 82.70000000298023,
+          "exclusiveMs": 26.200000002980232
+        },
+        {
+          "name": "proof.h4.CANDIDATE_HEALTHY_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 3878.1000000089407,
+          "exclusiveMs": 0
+        },
+        {
+          "name": "proof.h4.CANDIDATE_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 892.5999999791384,
+          "exclusiveMs": 3.2999999970197678
+        },
+        {
+          "name": "proof.h4.OBSERVATION_STEP:INPUT",
+          "calls": 4,
+          "inclusiveMs": 3071.2999999970198,
+          "exclusiveMs": 23.69999998807907
+        },
+        {
+          "name": "proof.h4.OBSERVATION_STEP:WAIT",
+          "calls": 4,
+          "inclusiveMs": 0,
+          "exclusiveMs": 0
+        },
+        {
+          "name": "proof.h4.OBSERVATION_STEP:DC_VOLTAGE",
+          "calls": 37,
+          "inclusiveMs": 200.80000004172325,
+          "exclusiveMs": 4.700000062584877
+        },
+        {
+          "name": "proof.h4.OBSERVATION_STEP:POWER",
+          "calls": 1,
+          "inclusiveMs": 23.69999998807907,
+          "exclusiveMs": 21.399999991059303
+        },
+        {
+          "name": "proof.h4.OBSERVATION_STEP:SETTLE",
+          "calls": 1,
+          "inclusiveMs": 32.5,
+          "exclusiveMs": 0.09999999403953552
+        },
+        {
+          "name": "proof.h4.POWER_OFF_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 4309.20000000298,
+          "exclusiveMs": 1.2999999970197678
+        },
+        {
+          "name": "proof.h4.REMOVE_SETTLE",
+          "calls": 1,
+          "inclusiveMs": 44.900000005960464,
+          "exclusiveMs": 13
+        },
+        {
+          "name": "proof.h4.REPLACE_SETTLE",
+          "calls": 1,
+          "inclusiveMs": 46.79999999701977,
+          "exclusiveMs": 14.099999994039536
+        },
+        {
+          "name": "proof.h4.POWER_ON_SETTLE",
+          "calls": 1,
+          "inclusiveMs": 41.8999999910593,
+          "exclusiveMs": 8.799999982118607
+        },
+        {
+          "name": "proof.h4.REPAIR_STATUS_SETTLE",
+          "calls": 5,
+          "inclusiveMs": 3602.999999985099,
+          "exclusiveMs": 0.699999988079071
+        },
+        {
+          "name": "proof.h4.CUSTOMER_RETEST",
+          "calls": 5,
+          "inclusiveMs": 3600.999999985099,
+          "exclusiveMs": 0.8999999910593033
+        },
+        {
+          "name": "proof.h4.CUSTOMER_RETEST_COMPLETION",
+          "calls": 1,
+          "inclusiveMs": 5.700000002980232,
+          "exclusiveMs": 5.700000002980232
+        },
+        {
+          "name": "proof.h4.EVIDENCE_RESTORE_PRIMARY",
+          "calls": 1,
+          "inclusiveMs": 0.10000000894069672,
+          "exclusiveMs": 0.10000000894069672
+        },
+        {
+          "name": "stage.symptom",
+          "calls": 1,
+          "inclusiveMs": 5.799999997019768,
+          "exclusiveMs": 5.799999997019768
+        },
+        {
+          "name": "stage.publish",
+          "calls": 1,
+          "inclusiveMs": 44.70000000298023,
+          "exclusiveMs": 15.100000008940697
+        },
+        {
+          "name": "cleanup.verifier-owner",
+          "calls": 1,
+          "inclusiveMs": 2.7000000029802322,
+          "exclusiveMs": 2.7000000029802322
+        }
+      ],
+      "counts": {
+        "routing.one-face-rejection": 3,
+        "routing.two-layer-rejection": 1
+      }
+    }
+  },
+  "warm": {
+    "solverKernelProfile": {
+      "protocol": "TSJ-Q30-SOLVER-KERNEL-1",
+      "clock": "performance.now",
+      "clockAvailable": true,
+      "enabled": true,
+      "samplingStrideAcceptedSteps": 64,
+      "structureStrideSampledFactors": 16,
+      "structureFactors": 42,
+      "structureLowerSlots": 104370,
+      "structureLowerNonzero": 13098,
+      "structureScannedRows": 447460,
+      "structureNonzeroUpdates": 80288,
+      "structureProbeSeconds": 0.00010000000894069671,
+      "temporalProfileCalls": 6,
+      "analysisCount": 6,
+      "analysisSeconds": 0.015000000029802322,
+      "batchPreparationCount": 282,
+      "batchPreparationSeconds": 0.0051999999582767464,
+      "acceptedSteps": 36000,
+      "sampledAcceptedSteps": 563,
+      "trials": 78288,
+      "sampledTrials": 1232,
+      "factorizations": 42288,
+      "sampledFactorizations": 669,
+      "solves": 42288,
+      "sampledSolves": 669,
+      "dimensionObservations": 288,
+      "minimumSolverElements": 246,
+      "maximumSolverElements": 246,
+      "minimumFullMatrixSize": 82,
+      "maximumFullMatrixSize": 82,
+      "minimumReducedMatrixSize": 71,
+      "maximumReducedMatrixSize": 71,
+      "sampledguardSeconds": 0.00040000000596046445,
+      "sampledguardCalls": 2358,
+      "sampledmatrixCopySeconds": 0.004699999958276747,
+      "sampledmatrixCopyCalls": 1232,
+      "sampledmodelSeconds": 0.003900000005960463,
+      "sampledmodelCalls": 1795,
+      "sampledfactorSeconds": 0.04859999990463262,
+      "sampledfactorCalls": 669,
+      "sampledsolveSeconds": 0.005900000065565105,
+      "sampledsolveCalls": 669,
+      "sampledpublishSeconds": 0.008000000089406963,
+      "sampledpublishCalls": 669,
+      "sampledwireAcceptedSeconds": 0.004100000023841856,
+      "sampledwireAcceptedCalls": 563
+    },
+    "monotonicJobElapsedMs": 26167.59999999404,
+    "stageProfile": {
+      "protocol": "TSJ-Q30-STAGE-1",
+      "clock": "performance.now",
+      "clockAvailable": true,
+      "enabled": true,
+      "openScopes": 0,
+      "overflowScopes": 0,
+      "mismatchedScopes": 0,
+      "timings": [
+        {
+          "name": "plan.prepared-resolution",
+          "calls": 1,
+          "inclusiveMs": 0.09999999403953552,
+          "exclusiveMs": 0.09999999403953552
+        },
+        {
+          "name": "stage.plan-resolution",
+          "calls": 1,
+          "inclusiveMs": 0.20000000298023224,
+          "exclusiveMs": 0.10000000894069672
+        },
+        {
+          "name": "placement.attempt",
+          "calls": 6,
+          "inclusiveMs": 831.6999999880791,
+          "exclusiveMs": 831.6999999880791
+        },
+        {
+          "name": "construction-session.advance",
+          "calls": 65,
+          "inclusiveMs": 20856.699999973178,
+          "exclusiveMs": 0.19999998807907104
+        },
+        {
+          "name": "stage.healthy-and-construction",
+          "calls": 74,
+          "inclusiveMs": 25629.60000000894,
+          "exclusiveMs": 28.80000002682209
+        },
+        {
+          "name": "routing.one-face-route",
+          "calls": 3,
+          "inclusiveMs": 2952.500000014901,
+          "exclusiveMs": 2952.500000014901
+        },
+        {
+          "name": "routing.attempt",
+          "calls": 8,
+          "inclusiveMs": 4068.7000000029802,
+          "exclusiveMs": 0.7999999970197678
+        },
+        {
+          "name": "routing.two-layer-slice",
+          "calls": 54,
+          "inclusiveMs": 17001.4999999851,
+          "exclusiveMs": 17001.4999999851
+        },
+        {
+          "name": "construction.accepted-route-owner",
+          "calls": 1,
+          "inclusiveMs": 70,
+          "exclusiveMs": 70
+        },
+        {
+          "name": "solver.matrix-stamp",
+          "calls": 8,
+          "inclusiveMs": 2.400000035762787,
+          "exclusiveMs": 2.400000035762787
+        },
+        {
+          "name": "solver.analyze-setup",
+          "calls": 8,
+          "inclusiveMs": 19.80000004172325,
+          "exclusiveMs": 17.400000005960464
+        },
+        {
+          "name": "solver.analyze-operation",
+          "calls": 8,
+          "inclusiveMs": 19.900000035762787,
+          "exclusiveMs": 0.09999999403953552
+        },
+        {
+          "name": "solver.ui-step-operation",
+          "calls": 3,
+          "inclusiveMs": 2.500000014901161,
+          "exclusiveMs": 2.500000014901161
+        },
+        {
+          "name": "solver.temporal-operation",
+          "calls": 9,
+          "inclusiveMs": 4648.499999970198,
+          "exclusiveMs": 4648.499999970198
+        },
+        {
+          "name": "settlement.temporal-preparation",
+          "calls": 10,
+          "inclusiveMs": 4732.5,
+          "exclusiveMs": 64.3999999910593
+        },
+        {
+          "name": "settlement.circuitjs",
+          "calls": 1,
+          "inclusiveMs": 11.600000008940697,
+          "exclusiveMs": 8.799999997019768
+        },
+        {
+          "name": "physical.validate-committed-state",
+          "calls": 2,
+          "inclusiveMs": 79.29999999701977,
+          "exclusiveMs": 79.29999999701977
+        },
+        {
+          "name": "stage.physical-admission",
+          "calls": 1,
+          "inclusiveMs": 37.5,
+          "exclusiveMs": 7
+        },
+        {
+          "name": "stage.hypothesis-work",
+          "calls": 1,
+          "inclusiveMs": 21.299999997019768,
+          "exclusiveMs": 21.299999997019768
+        },
+        {
+          "name": "stage.symptom",
+          "calls": 1,
+          "inclusiveMs": 5.5999999940395355,
+          "exclusiveMs": 5.5999999940395355
+        },
+        {
+          "name": "stage.publish",
+          "calls": 1,
+          "inclusiveMs": 72.8999999910593,
+          "exclusiveMs": 24.099999994039536
+        },
+        {
+          "name": "cleanup.verifier-owner",
+          "calls": 1,
+          "inclusiveMs": 2.5,
+          "exclusiveMs": 2.5
+        }
+      ],
+      "counts": {
+        "routing.one-face-rejection": 3,
+        "routing.two-layer-rejection": 1
+      }
+    }
+  }
+}

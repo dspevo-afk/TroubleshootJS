@@ -1,8 +1,27 @@
 # Current checkpoint: Q30 solver optimization accepted; Q30 BLOCKED
 
+Local intermediate commit secured: `7a30a3fdcfa1dc9092d546edcb01bfa9ed435a36`
+(`Optimize Q30 solver qualification path`); no push. The isolated
+monotonic stage profile now passes with exact proof parity: 106.350 s total,
+79.421 s solver stepping, 20.070 s routing, 0.826 s placement, 1.224 s analysis,
+0.075 s physical admission and 0.377 s construction. All scopes balance and
+cleanup passes. Sampled LU remains 61.5% of kernel time, with 82.55% zero row
+probes. The exact sparse-index prototype passes focused native, GWT and compiled
+A07 correctness gates, but FAILS its first timing pilot: seed 7 takes 116.310 s
+(89.419 s proof), versus the accepted 106.942 s (80.262 s proof). The remaining
+predeclared timing pairs are NOT RUN after that stop condition. A fresh accepted
+control confirms 106.447 s, exact proof parity and successful cleanup; the index
+is 9.863 s slower. The isolated profile finds 40.0% of sampled LU phase time in
+pivot/search/swap/mask repair and 19.3% in scaling/index construction. Only
+18/712 consecutive input pairs match exactly, so no matrix cache was added.
+Per-row sparse lists are the next bounded candidate under development. The slower
+prototype has been removed from production source; its exact patch, checks,
+failed timing and profiler fixture are retained. Q30 remains BLOCKED. [Stage profile](task-evidence/Q30/stage-profile/README.md),
+[failed pilot](task-evidence/Q30/sparse-index/README.md).
+
 Branch `codex/q30-multirail-qualification`; base
-`745d537de5b18bd7ec2ae769fc00d3696e5af6bd`. The containing intermediate commit
-accepts only finite-zero-factor elimination in the existing Crout kernel,
+`745d537de5b18bd7ec2ae769fc00d3696e5af6bd`. The accepted intermediate commit above
+contains only finite-zero-factor elimination in the existing Crout kernel,
 expanded independent numerical fixtures, and its evidence. Q30 stays disabled.
 Frozen 90,000-ms cumulative / 640-unit / 5,000-ms operation contracts, full
 settlement/proofs, generic ownership, exact seed/replay and cleanup are unchanged.
@@ -30,12 +49,21 @@ purposeful family scale and fresh acceptance when eligible. U06/U07/Q60 and
 later milestones remain unstarted. The user authorized this intermediate commit
 and continuing Q30, explicitly **no push**; no completion email is sent.
 
-Resources: all eight browser/server jobs and native/build wrappers finished.
-Current task scratch is inactive and retained for continued profiling.
+Resources: all eight intermediate browser/server jobs and their wrappers finished.
+The new indexed pilot and A07 browser/server cleanup pass; a fresh accepted-build
+control also finished with maintained PID/creation-time/profile ownership and
+successful cleanup receipts. The isolated profiler build and browser run passed
+their gates; one auxiliary timer-call counter is limited as documented. No
+browser/build job is active at this checkpoint. Root source was restored before
+the new row-list candidate; the root WAR still belongs to the rejected experiment
+and must be rebuilt before use.
+Current task scratch is retained for continued profiling and a new isolated fixture.
 Prior administrative cleanup remains policy-blocked separately from runtime
 cleanup; exact retained leaves are in acceptance-continuation/resource-cleanup.json.
 The unrelated Desktop checkout and pre-existing tests/contracts/__pycache__/
-remain untouched. Only intended source/oracle/docs/evidence are in this commit.
+remain untouched. The accepted code checkpoint contains only intended source/oracle/docs/evidence.
+This later profile checkpoint adds documentation and evidence; new candidate
+source is excluded until its focused gates and timing comparison pass.
 
 # Historical checkpoint: Q30 acceptance continuation — BLOCKED / NOT ACCEPTED
 

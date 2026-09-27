@@ -1,0 +1,50 @@
+{
+  "status": "PROFILE_TIMINGS_VALID_WITH_COUNTER_LIMIT",
+  "monotonicColdMs": 118129.60000000894,
+  "legacyColdMs": 118123,
+  "pilotColdMs": 116310,
+  "proofMs": 90941,
+  "routingMs": 20109,
+  "requestAndProofExact": true,
+  "proofParity": {
+    "status": true,
+    "family": true,
+    "topology": true,
+    "warmReuseReceipt": true,
+    "providerId": true,
+    "programIdentity": true,
+    "contextCanonical": true,
+    "contextTrusted": true,
+    "partitionCanonical": true,
+    "partitionNodeCount": true,
+    "partitionLeafCount": true,
+    "hypothesisCount": true,
+    "actualSampleCount": true,
+    "workUnits": true,
+    "explicitCompletion": true,
+    "evidence": true
+  },
+  "totalWork": 468,
+  "proofUnits": 390,
+  "phaseSelectedFactors": 712,
+  "phaseMs": {
+    "luMaskResetMs": 0.10000000894069672,
+    "luFiniteInputScanMs": 7.299999967217445,
+    "luCroutUpdateTraversalMs": 30.59999990463257,
+    "luPivotSearchSwapMaskMs": 37.39999997615814,
+    "luScalingIndexBuildMs": 18.000000044703484
+  },
+  "phaseShares": {
+    "luMaskResetMs": 0.0010706639084153535,
+    "luFiniteInputScanMs": 0.07815845797541913,
+    "luCroutUpdateTraversalMs": 0.32762312566224344,
+    "luPivotSearchSwapMaskMs": 0.4004282656909992,
+    "luScalingIndexBuildMs": 0.19271948676292286
+  },
+  "repeatSamplePairs": 712,
+  "exactSameInputsIncludingSignedZero": 18,
+  "sameInputFraction": 0.025280898876404494,
+  "sampleReadCopyCompareMs": 14.899999886751175,
+  "clockCounterLimit": "luPhaseClockReads overcounts once per endLuPhase; raw field retained, not used as an exact clock-read count. Actual duration subtraction is unaffected.",
+  "normalAcceptance": false
+}

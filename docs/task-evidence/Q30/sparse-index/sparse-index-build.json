@@ -1,0 +1,9 @@
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "sparse-index-build",
+  "exitCode": 0,
+  "startedUtc": "2026-09-27T21:44:30.7853182Z",
+  "finishedUtc": "2026-09-27T21:45:51.1155535Z",
+  "elapsedSeconds": 80.326509,
+  "status": "PASS"
+}
