@@ -1,0 +1,176 @@
+{
+  "status": "PROFILE_PASS_NOT_NORMAL_ACCEPTANCE",
+  "monotonicColdMs": 96358.70000000298,
+  "legacyColdMs": 96352,
+  "freshControlColdMs": 97498,
+  "proofMs": 68124,
+  "routingMs": 22419,
+  "requestAndProofExact": true,
+  "proofParity": {
+    "status": true,
+    "family": true,
+    "topology": true,
+    "warmReuseReceipt": true,
+    "providerId": true,
+    "programIdentity": true,
+    "contextCanonical": true,
+    "contextTrusted": true,
+    "partitionCanonical": true,
+    "partitionNodeCount": true,
+    "partitionLeafCount": true,
+    "hypothesisCount": true,
+    "actualSampleCount": true,
+    "workUnits": true,
+    "explicitCompletion": true,
+    "evidence": true
+  },
+  "geometryInContextCanonicalExact": true,
+  "totalWork": 468,
+  "proofUnits": 390,
+  "luSelectedFactors": 712,
+  "luPhaseSampledMs": {
+    "luPhaseWorkspaceResetCleanupMs": 3.0000000596046448,
+    "luPhaseFiniteInputScanMs": 6.999999955296516,
+    "luPhaseCroutUpdatesMs": 21.600000128149986,
+    "luPhasePivotSearchMs": 16.099999830126762,
+    "luPhasePivotNumericRowSwapMs": 5.4000000059604645,
+    "luPhaseScaleAndAppendMs": 14.500000029802322
+  },
+  "luPhaseSampledShares": {
+    "luPhaseWorkspaceResetCleanupMs": 0.04437869910070811,
+    "luPhaseFiniteInputScanMs": 0.10355029518299859,
+    "luPhaseCroutUpdatesMs": 0.31952662907238455,
+    "luPhasePivotSearchMs": 0.23816567792895554,
+    "luPhasePivotNumericRowSwapMs": 0.07988165688234122,
+    "luPhaseScaleAndAppendMs": 0.21449704183261198
+  },
+  "routeTimings": [
+    {
+      "name": "P07.routeSession.setup",
+      "calls": 3,
+      "inclusiveMs": 0.40000002086162567,
+      "exclusiveMs": 0.40000002086162567
+    },
+    {
+      "name": "P07.routeCandidate.copy",
+      "calls": 7,
+      "inclusiveMs": 0.10000000894069672,
+      "exclusiveMs": 0.10000000894069672
+    },
+    {
+      "name": "P07.rules.construct",
+      "calls": 7,
+      "inclusiveMs": 1.2000000029802322,
+      "exclusiveMs": 1.2000000029802322
+    },
+    {
+      "name": "P07.routerIndexes.construct",
+      "calls": 7,
+      "inclusiveMs": 6.600000008940697,
+      "exclusiveMs": 6.600000008940697
+    },
+    {
+      "name": "P07.search.construct",
+      "calls": 7,
+      "inclusiveMs": 8.299999982118607,
+      "exclusiveMs": 0.4999999701976776
+    },
+    {
+      "name": "P07.ordering-prepare",
+      "calls": 7,
+      "inclusiveMs": 1.5999999791383743,
+      "exclusiveMs": 1.5999999791383743
+    },
+    {
+      "name": "P07.net-prepare",
+      "calls": 95,
+      "inclusiveMs": 0.699999988079071,
+      "exclusiveMs": 0.699999988079071
+    },
+    {
+      "name": "P07.branch.goals",
+      "calls": 270,
+      "inclusiveMs": 439.70000010728836,
+      "exclusiveMs": 439.70000010728836
+    },
+    {
+      "name": "P07.branch.lowerBound",
+      "calls": 270,
+      "inclusiveMs": 1106.8000000566244,
+      "exclusiveMs": 1106.8000000566244
+    },
+    {
+      "name": "P07.branch-prepare",
+      "calls": 270,
+      "inclusiveMs": 1552.5000001341105,
+      "exclusiveMs": 5.999999970197678
+    },
+    {
+      "name": "P07.astar-expansion-work",
+      "calls": 318,
+      "inclusiveMs": 17543.899999931455,
+      "exclusiveMs": 17543.899999931455
+    },
+    {
+      "name": "P07.publisher-work",
+      "calls": 267,
+      "inclusiveMs": 13.599999904632568,
+      "exclusiveMs": 13.599999904632568
+    },
+    {
+      "name": "P07.sample.queuePop",
+      "calls": 12969,
+      "inclusiveMs": 25.30000004172325,
+      "exclusiveMs": 25.30000004172325
+    },
+    {
+      "name": "P07.sample.neighborPredicates",
+      "calls": 44795,
+      "inclusiveMs": 45.90000006556511,
+      "exclusiveMs": 45.90000006556511
+    },
+    {
+      "name": "P07.sample.pathViaFits",
+      "calls": 9757,
+      "inclusiveMs": 17.19999997317791,
+      "exclusiveMs": 17.19999997317791
+    },
+    {
+      "name": "P07.sample.viaFits",
+      "calls": 7205,
+      "inclusiveMs": 50.90000021457672,
+      "exclusiveMs": 50.90000021457672
+    },
+    {
+      "name": "P07.validate.routeGeometry",
+      "calls": 2,
+      "inclusiveMs": 26.600000008940697,
+      "exclusiveMs": 26.600000008940697
+    },
+    {
+      "name": "P07.validate.routeRules",
+      "calls": 2,
+      "inclusiveMs": 10,
+      "exclusiveMs": 10
+    },
+    {
+      "name": "P07.validate.routeQuality",
+      "calls": 2,
+      "inclusiveMs": 0.8999999910593033,
+      "exclusiveMs": 0.8999999910593033
+    },
+    {
+      "name": "P07.search-completion",
+      "calls": 2,
+      "inclusiveMs": 37.69999998807907,
+      "exclusiveMs": 0.19999998807907104
+    },
+    {
+      "name": "P07.finishRoutedPlan",
+      "calls": 2,
+      "inclusiveMs": 119,
+      "exclusiveMs": 119
+    }
+  ],
+  "normalAcceptance": false
+}

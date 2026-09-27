@@ -1,0 +1,98 @@
+{
+  "acceptedSourceCommit": "0b29680c7daa62123732b91e3c1157e8ba0d6abd",
+  "fixture": "<task-temp>/route-profile/fixture",
+  "changedFiles": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+      "acceptedSha256": "e3f2219de7f4c796994dc2b2913fc4a2615b882c02c196d41faf7b5bd3941fa4",
+      "profileSha256": "3dbab9fec94c89d4b46b09de0e45c911343b666bd51e98d7134dc5de1688f0dd"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "acceptedSha256": "63da367edf792db1b2764d2e43da5bc286f5805f2822b5240165ad8326efe9db",
+      "profileSha256": "45e523d48a5604976f531046e6644c2d0a75d30393f4cdd279b6b0218c560eec"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/FreshGeneratedRuntimeInstallation.java",
+      "acceptedSha256": "759c9fddbe667247bcca26ac789801188e9d5ebdf28041637a30a9d9a2599665",
+      "profileSha256": "f547540c911c7fd4efd8a871c1d9f93257dffd62305a67b1f235266433cbf120"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "acceptedSha256": "eacf91be952de4438cc0721e4ff21fd551fc69ee1d52c0435d9ed9becfaee8ac",
+      "profileSha256": "9375223cefe0119eeb2c1a9e1a4e8b1300bd79ce7fea491a92e01bb6c3c44fdc"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GeneratedRuntimeDeveloperSettlement.java",
+      "acceptedSha256": "75049728a8c340c42620a544b33d94f3fa82c0040179aedb33f882151a895cb9",
+      "profileSha256": "b953a2cab4a7f947f5a6ec07accae1d480a87c48071351ca56109ac811ceced9"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+      "acceptedSha256": "9296105f4843cb4b6439e3f349873b0aee94bbce146a88d014329c5b14162a4d",
+      "profileSha256": "2df5a7e4d79bff981a8f6520cf88aab3acc0e8c6f6310e6a2aea7f665327e5dd"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationJob.java",
+      "acceptedSha256": "340d584f744dd3338c9ad1a567116dca9cd79b73d41326e716c7dd95cc741bef",
+      "profileSha256": "48a74e827910631a5571bd25a5cd88b5475657e673c702b0f42ceea450bdd45e"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationRequest.java",
+      "acceptedSha256": "80af05982ebacc13b4ae9a593495499aa2805be035be5906619aade8d5c6354b",
+      "profileSha256": "83a3aed544779bf9e547862dd4115221dde8aed25adf91f97be471a216b38995"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "acceptedSha256": "f3221c8c4b34eeb3720dd3852f99df08224239e05c01d148204272f9cf9936b6",
+      "profileSha256": "8cb6133cf1e92681c44dee1b93600ae1060ab10a0ca3d9cbcf8ac528336cb1dc"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java",
+      "acceptedSha256": "43f5aa1cfa85401aa048b2394261e266bab2697bef4f66fbf01cabb0fc86040c",
+      "profileSha256": "74be5e8d98479da779b6bfc24262d0d45440a4047ae7408b0d097d440eaede37"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30StageProfile.java",
+      "acceptedSha256": null,
+      "profileSha256": "8c743c39393321c3a4cc1dbca8708d1103dc3ba53af718f9f977ebea2c791fc9"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb30DiagnosticProvider.java",
+      "acceptedSha256": "aaac322010e5fe1da934f5097f3557f03e07c5a96eb5173fde552ddc6c3ee230",
+      "profileSha256": "f7c7a51d54bd2fdc3b76cce1bc4cf82de72ff1c151bd6f31665dbafec9d4ae87"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb30Generator.java",
+      "acceptedSha256": "eee0e3af0dba0e563d734eded4023a9815ffc5fe1b01270352724a8a5eef3b0d",
+      "profileSha256": "57e9fe93455cca107039105cb183ba7375752b679478f9a481b8cd9a1b5fa111"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb30PlayerFamilyCapability.java",
+      "acceptedSha256": "b0ed95c8b17d511e3eb2def7f15a775113f28d7eea907d9e1a92d4fa06690ad4",
+      "profileSha256": "4510fc096114d018f31256e6a94dfb83f3595079d14338ea843e7f82a8cc5935"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "acceptedSha256": "e7910f09d401dd2453f1fcda2f972a022663824892cb69653a5d5a3a0d012fa5",
+      "profileSha256": "207c98ac782189542de5b9092db7c7268c4dd80ded3f63bdf25d26aed4376663"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/SolverKernelProfile.java",
+      "acceptedSha256": null,
+      "profileSha256": "f806fc7277b52672a20e650527ce0bb1a4f16c0371a7142b51dd6bd8741833a1"
+    }
+  ],
+  "patchChecks": {
+    "forward": {
+      "exitCode": 0,
+      "diagnostic": "<stdin>:18: trailing whitespace.\n    \n<stdin>:33: trailing whitespace.\n    \n<stdin>:49: trailing whitespace.\n    \n<stdin>:65: trailing whitespace.\n    \n<stdin>:100: trailing whitespace.\n    \nwarning: squelched 24 whitespace errors\nwarning: 29 lines add whitespace errors.\n"
+    },
+    "reverse": {
+      "exitCode": 0,
+      "diagnostic": ""
+    }
+  },
+  "patchSha256": "0a2a92f6d953d6e9f066d2a2ab90ae6c74f608887917bf2eaf6747a6fd6e4888",
+  "reproduction": "Apply instrumentation.patch.gz to0b29680 with git apply --ignore-space-change, then maintained JDK8/GWT build. No production hooks."
+}

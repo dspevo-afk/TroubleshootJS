@@ -1,0 +1,9 @@
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "accepted-kernel-profile-build",
+  "exitCode": 0,
+  "startedUtc": "2026-09-27T23:29:51.4683009Z",
+  "finishedUtc": "2026-09-27T23:31:21.4817036Z",
+  "elapsedSeconds": 90.0090282,
+  "status": "PASS"
+}

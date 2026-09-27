@@ -1,6 +1,6 @@
 # Current checkpoint: Q30 intermediate optimization accepted; Q30 BLOCKED
 
-Branch `codex/q30-multirail-qualification`; local HEAD
+Branch `codex/q30-multirail-qualification`; accepted production HEAD
 `0b29680c7daa62123732b91e3c1157e8ba0d6abd`
 (`Optimize sparse LU row traversal and pivoting`). Initial accepted optimization:
 `7a30a3fdcfa1dc9092d546edcb01bfa9ed435a36`
@@ -69,9 +69,17 @@ The bounded prior-via ancestry experiment passed native/build/proof parity but
 was rejected: 86.816 s versus fresh control 86.458 s, only 0.204 s route savings.
 Its source/test delta was removed; remaining four timing rows are NOT RUN.
 [Retained trial](task-evidence/Q30/bounded-via-ancestry/README.md).
-Next: finish the revised isolated profiler for the accepted solver/routing path;
-purposeful scale implementation is in isolated scratch now that existing
-variants approach the budget. No scale implementation/qualification is claimed.
+
+Updated accepted-source profile/build/strict proof PASS: 96.359 s monotonic,
+66.219 s solver stepping, 22.542 s routing including validators. A fresh
+uninstrumented control also slowed to 97.498 s versus earlier 86.458 s. This
+unexplained variation is retained and reinforces the missing headroom gate.
+All exact steps/trials/factors/proofs/work/cleanup match. LU still dominates
+sampled kernel time; refined routing samples point to via geometry checks.
+[Current profile and limits](task-evidence/Q30/accepted-kernel-profile/README.md).
+Next: validate immutable geometry-bound reuse if its independent oracle passes;
+review remaining LU work. Purposeful scale, strict readers, replay epoch and a
+normal-deadline verifier are in isolated scratch; none is integrated/qualified.
 U06/U07/Q60 and later milestones remain unstarted.
 
 Resources: all completed browser/server jobs have maintained ownership receipts,

@@ -1,0 +1,36 @@
+{
+  "exclusiveMilliseconds": {
+    "planResolution": 0.19999998807907104,
+    "placement": 857.1000000089407,
+    "construction": 471.4000000208616,
+    "otherStageWork": 72.40000002086163,
+    "routingIncludingFinalValidation": 22541.699999943376,
+    "analyzeSetup": 1445.3000000715256,
+    "solverStepping": 66219.40000012517,
+    "settlementOrchestration": 1480.700000077486,
+    "physicalAdmission": 90.69999998807907,
+    "proofOrchestration": 774.7999996840954,
+    "proofCleanup": 93.6000000089407,
+    "unscopedEventLoopAndClockBoundaryResidual": 2311.400000065565
+  },
+  "inclusiveProofPurposeMilliseconds": {
+    "REPLAY_INSTALL": 498.50000001490116,
+    "CANDIDATE_HEALTHY_SETTLE": 16339.600000053644,
+    "CANDIDATE_SETTLE": 3845.600000023842,
+    "OBSERVATION_STEP:INPUT": 12146.600000023842,
+    "OBSERVATION_STEP:WAIT": 0.09999999403953552,
+    "OBSERVATION_STEP:DC_VOLTAGE": 1155.9999999254942,
+    "OBSERVATION_STEP:POWER": 141.30000001192093,
+    "OBSERVATION_STEP:SETTLE": 178.79999999701977,
+    "POWER_OFF_SETTLE": 3734.4999999552965,
+    "REMOVE_SETTLE": 258.1000000089407,
+    "REPLACE_SETTLE": 260.5,
+    "POWER_ON_SETTLE": 259.2000000178814,
+    "REPAIR_STATUS_SETTLE": 13816.100000053644,
+    "CUSTOMER_RETEST": 13448.999999985099,
+    "CUSTOMER_RETEST_COMPLETION": 35.29999998211861,
+    "EVIDENCE_RESTORE_PRIMARY": 0.29999998211860657
+  },
+  "separateVerifierCleanupMilliseconds": 3.5,
+  "notes": "Sampled route timings overlap A* and are excluded. Residual is not all idle time. Inclusive proof purposes overlap solver work."
+}
