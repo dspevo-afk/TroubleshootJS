@@ -4,60 +4,202 @@ package com.lushprojects.circuitjs1.client;
 final class LuFactorizationChecks {
     static int run() {
         int assertions = 0;
-        for (int size : new int[] { 1, 2, 3, 8, 24, 64, 81 }) {
-            for (int fixture = 0; fixture < 9; fixture++) {
-                double[][] before = new double[size][size];
-                for (int i = 0; i < size; i++) for (int j = 0; j < size; j++) {
-                    int code = (i * 31 + j * 17 + fixture * 7) % 19 - 9;
-                    boolean sameIsland = i / 3 == j / 3;
-                    before[i][j] = fixture == 0 || (fixture < 4 && sameIsland) ? code / 7.0 : 0;
-                    // Connected sparse systems, not just disconnected islands:
-                    // a band, an arrowhead and sparsely bridged local blocks.
-                    if (fixture == 6 && Math.abs(i - j) <= 2)
-                        before[i][j] = code / 7.0;
-                    if (fixture == 7 && (i == 0 || j == 0))
-                        before[i][j] = code / 7.0;
-                    if (fixture == 8 && (sameIsland || (i * 7 + j * 11) % 31 == 0))
-                        before[i][j] = code / 7.0;
-                    if (i == j) before[i][j] += size + 2;
-                }
-                if ((fixture == 2 || fixture == 8) && size > 1) {
-                    double[] first = before[0]; before[0] = before[size - 1]; before[size - 1] = first;
-                }
-                // An all-zero row, dependent rows and pivot ties retain the
-                // historical singular/epsilon-pivot behavior.
-                if (fixture == 4) for (int j = 0; j < size; j++) before[size - 1][j] = 0;
-                if (fixture == 5 && size > 1)
-                    for (int j = 0; j < size; j++) before[size - 1][j] = before[0][j];
-                double[][] expected = copy(before), actual = copy(before);
-                int[] expectedPivots = new int[size], actualPivots = new int[size];
-                boolean expectedResult = originalFactor(expected, size, expectedPivots);
-                require(CirSim.lu_factor(actual, size, actualPivots) == expectedResult); assertions++;
-                if (!expectedResult) continue;
-                double[] rhs = new double[size], actualRhs = new double[size];
-                for (int i = 0; i < size; i++) {
-                    require(expectedPivots[i] == actualPivots[i]); assertions++;
-                    rhs[i] = actualRhs[i] = (i * 13 % 17) - 8;
-                    for (int j = 0; j < size; j++) {
-                        require(expected[i][j] == actual[i][j]); assertions++;
-                    }
-                }
-                originalSolve(expected, size, expectedPivots, rhs);
-                CirSim.lu_solve(actual, size, actualPivots, actualRhs);
-                for (int i = 0; i < size; i++) {
-                    require(SolverExecutionBoundary.finite(rhs[i]) && rhs[i] == actualRhs[i]); assertions++;
-                }
-            }
+        CirSim.LuFactorizationWorkspace workspace = new CirSim.LuFactorizationWorkspace();
+        for (int size : new int[] { 0, 1, 2, 3, 8, 24, 31, 32, 33, 63, 64, 65, 81 }) {
+            for (int fixture = 0; fixture < 12; fixture++)
+                assertions += compareWithOriginal(makeFixture(size, fixture), workspace,
+                        "size " + size + " fixture " + fixture);
         }
+        int[] alternatingSizes = { 33, 2, 65, 3, 31, 1, 81, 8 };
+        int[] alternatingFixtures = { 6, 0, 8, 2, 1, 9, 3, 11 };
+        for (int i = 0; i < alternatingSizes.length; i++)
+            assertions += compareWithOriginal(makeFixture(alternatingSizes[i], alternatingFixtures[i]),
+                    workspace, "alternating workspace reuse " + i);
+
+        // This pivot at column one swaps rows whose earlier-column entries are
+        // already indexed. The later pivot checks that those row references stay valid.
+        double[][] latePivot = {
+            { 10, 0, 1, 0 },
+            { 1, 1, 1, 0 },
+            { 2, 2, 1, 0 },
+            { 3, 10, 5, 1 }
+        };
+        assertions += compareWithOriginal(latePivot, workspace, "late cross-column pivots");
+        double[][] lateExpected = copy(latePivot);
+        int[] latePivots = new int[latePivot.length];
+        require(originalFactor(lateExpected, latePivot.length, latePivots), "late-pivot fixture is singular");
+        require(latePivots[1] == 3 && latePivots[2] == 3,
+                "late-pivot fixture did not exercise the intended row swaps");
+        assertions += 2;
+
+        // Underflow after a nonzero input factor must be computed and then
+        // omitted from the next lower-column row list; signed zero remains numeric-equivalent.
+        assertions += compareWithOriginal(new double[][] {
+            { 1.0e308, 1 }, { Double.MIN_VALUE, 2 }
+        }, workspace, "underflow-created zero");
+        double[][] underflow = { { 1.0e308, 1 }, { Double.MIN_VALUE, 2 } };
+        int[] underflowPivots = new int[2];
+        require(CirSim.lu_factor(underflow, 2, underflowPivots, workspace),
+                "underflow fixture unexpectedly singular");
+        require(underflow[1][0] == 0.0, "underflow fixture did not create a zero multiplier");
+        assertions += 2 + workspaceClearAssertions(workspace);
+
+        // A negative finite multiplier with a negative-zero row entry exercises
+        // the zero scaling skip without claiming signed-zero bit identity.
+        assertions += compareWithOriginal(new double[][] {
+            { -2, 1 }, { -0.0, 1 }
+        }, workspace, "negative multiplier and negative zero");
+
+        // Reuse after a singular early return, a nonfinite input rejection, and
+        // an overflow that occurs after a row reference has been recorded.
+        double[][] singular = { { 1, 2 }, { 0, 0 } };
+        int[] singularPivots = new int[2];
+        require(!CirSim.lu_factor(singular, 2, singularPivots, workspace),
+                "all-zero row was not treated as singular");
+        assertions += 1 + workspaceClearAssertions(workspace);
         for (double bad : new double[] { Double.NaN, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY }) {
+            boolean rejectedThreeArgumentApi = false;
+            try {
+                CirSim.lu_factor(new double[][] { { 1, 0 }, { 0, bad } }, 2, new int[2]);
+            } catch (SolverExecutionBoundary.Failure expected) {
+                rejectedThreeArgumentApi = expected.outcome == SolverExecutionBoundary.Outcome.NUMERICAL_FAILURE;
+            }
+            require(rejectedThreeArgumentApi,
+                    "three-argument LU API did not reject a nonfinite input as a numerical failure");
+            assertions++;
+
             boolean rejected = false;
-            try { CirSim.lu_factor(new double[][] { { 1, 0 }, { 0, bad } }, 2, new int[2]); }
+            try {
+                CirSim.lu_factor(new double[][] { { 1, 0 }, { 0, bad } }, 2,
+                        new int[2], workspace);
+            }
             catch (SolverExecutionBoundary.Failure expected) {
                 rejected = expected.outcome == SolverExecutionBoundary.Outcome.NUMERICAL_FAILURE;
             }
-            require(rejected); assertions++;
+            require(rejected, "nonfinite LU input was not rejected as a numerical failure");
+            assertions += 1 + workspaceClearAssertions(workspace);
+        }
+
+        boolean overflowRejected = false;
+        try {
+            CirSim.lu_factor(new double[][] {
+                { 1.0e308, 1.0e308 }, { 1.0e308, -1.0e308 }
+            }, 2, new int[2], workspace);
+        } catch (SolverExecutionBoundary.Failure expected) {
+            overflowRejected = expected.outcome == SolverExecutionBoundary.Outcome.NUMERICAL_FAILURE;
+        }
+        require(overflowRejected, "finite-input LU overflow was not rejected");
+        assertions += 1 + workspaceClearAssertions(workspace);
+        assertions += compareWithOriginal(new double[][] { { 3, 1 }, { 1, 2 } },
+                workspace, "valid factorization after failures");
+
+        assertions += checkInvertMatrix();
+        return assertions;
+    }
+
+    private static double[][] makeFixture(int size, int fixture) {
+        double[][] before = new double[size][size];
+        if (fixture == 9) {
+            for (int i = 0; i < size; i++) before[i][i] = i == 0 ? 1 : 2;
+            if (size > 1) before[1][0] = -1;
+            return before;
+        }
+        if (fixture == 10) {
+            for (int i = 0; i < size; i++) {
+                before[i][i] = (i & 1) == 0 ? size + 2 : -(size + 2);
+                for (int j = 0; j < size; j++)
+                    if (i != j && ((i + j) & 1) == 0) before[i][j] = -0.0;
+            }
+            return before;
+        }
+        if (fixture == 11) {
+            for (int i = 0; i < size; i++) before[i][i] = 1;
+            if (size > 1) before[1][0] = Double.MIN_VALUE;
+            if (size > 2) before[2][1] = -Double.MIN_VALUE;
+            return before;
+        }
+        for (int i = 0; i < size; i++) for (int j = 0; j < size; j++) {
+            int code = (i * 31 + j * 17 + fixture * 7) % 19 - 9;
+            boolean sameIsland = i / 3 == j / 3;
+            before[i][j] = fixture == 0 || (fixture < 4 && sameIsland) ? code / 7.0 : 0;
+            // Connected sparse systems, not just disconnected islands:
+            // a band, an arrowhead and sparsely bridged local blocks.
+            if (fixture == 6 && Math.abs(i - j) <= 2)
+                before[i][j] = code / 7.0;
+            if (fixture == 7 && (i == 0 || j == 0))
+                before[i][j] = code / 7.0;
+            if (fixture == 8 && (sameIsland || (i * 7 + j * 11) % 31 == 0))
+                before[i][j] = code / 7.0;
+            if (i == j) before[i][j] += size + 2;
+        }
+        if ((fixture == 2 || fixture == 8) && size > 1) {
+            double[] first = before[0]; before[0] = before[size - 1]; before[size - 1] = first;
+        }
+        // An all-zero row and dependent rows retain historical singular behavior.
+        if (fixture == 4 && size > 0)
+            for (int j = 0; j < size; j++) before[size - 1][j] = 0;
+        if (fixture == 5 && size > 1)
+            for (int j = 0; j < size; j++) before[size - 1][j] = before[0][j];
+        return before;
+    }
+
+    private static int compareWithOriginal(double[][] before,
+            CirSim.LuFactorizationWorkspace workspace, String description) {
+        int assertions = 0;
+        int size = before.length;
+        double[][] expected = copy(before), actual = copy(before);
+        int[] expectedPivots = new int[size], actualPivots = new int[size];
+        boolean expectedResult = originalFactor(expected, size, expectedPivots);
+        boolean actualResult = CirSim.lu_factor(actual, size, actualPivots, workspace);
+        require(actualResult == expectedResult, description + ": singular result differs from oracle");
+        assertions++;
+        assertions += workspaceClearAssertions(workspace);
+        if (!expectedResult) return assertions;
+        double[] rhs = new double[size], actualRhs = new double[size];
+        for (int i = 0; i < size; i++) {
+            require(expectedPivots[i] == actualPivots[i], description + ": pivot differs from oracle");
+            rhs[i] = actualRhs[i] = (i * 13 % 17) - 8;
+            assertions++;
+            for (int j = 0; j < size; j++) {
+                require(expected[i][j] == actual[i][j], description + ": factor differs from oracle");
+                assertions++;
+            }
+        }
+        originalSolve(expected, size, expectedPivots, rhs);
+        CirSim.lu_solve(actual, size, actualPivots, actualRhs);
+        for (int i = 0; i < size; i++) {
+            require(SolverExecutionBoundary.finite(rhs[i]) && rhs[i] == actualRhs[i],
+                    description + ": solution differs from oracle");
+            assertions++;
         }
         return assertions;
+    }
+
+    private static int workspaceClearAssertions(CirSim.LuFactorizationWorkspace workspace) {
+        require(workspace.allCountsZeroForChecks(), "LU workspace retained row counts after return");
+        require(workspace.allRowReferencesNullForChecks(), "LU workspace retained row references after return");
+        return 2;
+    }
+
+    private static int checkInvertMatrix() {
+        double[][] input = { { 0, 2, 1 }, { 1, 1, 0 }, { 2, 0, 1 } };
+        double[][] expectedFactors = copy(input);
+        int[] expectedPivots = new int[3];
+        require(originalFactor(expectedFactors, 3, expectedPivots), "inverse fixture is singular");
+        double[][] expectedInverse = new double[3][3];
+        for (int column = 0; column < 3; column++) {
+            double[] rhs = new double[] { 0, 0, 0 };
+            rhs[column] = 1;
+            originalSolve(expectedFactors, 3, expectedPivots, rhs);
+            for (int row = 0; row < 3; row++) expectedInverse[row][column] = rhs[row];
+        }
+        double[][] actual = copy(input);
+        double[][] outerArray = actual;
+        CirSim.invertMatrix(actual, 3);
+        require(actual == outerArray, "invertMatrix replaced the caller's outer matrix array");
+        for (int i = 0; i < 3; i++) for (int j = 0; j < 3; j++)
+            require(expectedInverse[i][j] == actual[i][j], "invertMatrix differs from independent inverse oracle");
+        return 2 + 9;
     }
 
     private static double[][] copy(double[][] matrix) {
@@ -66,8 +208,8 @@ final class LuFactorizationChecks {
             for (int j = 0; j < matrix.length; j++) result[i][j] = matrix[i][j];
         return result;
     }
-    private static void require(boolean condition) {
-        if (!condition) throw new AssertionError("Crout factor/pivot/solution differs from original algorithm");
+    private static void require(boolean condition, String message) {
+        if (!condition) throw new AssertionError(message);
     }
 
     // Original CirSim.lu_factor from f41e80f, including tie order and tiny pivot.

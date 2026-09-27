@@ -1,7 +1,7 @@
 # Current checkpoint: Q30 intermediate optimization accepted; Q30 BLOCKED
 
 Branch `codex/q30-multirail-qualification`; local evidence HEAD
-`18f57afc7cb8aaa18cf3cf6e5bf7766a3f1255b4`. Accepted production optimization:
+`d079528ba27d93bef691aa6b189b533ec427a459`. Initial accepted optimization:
 `7a30a3fdcfa1dc9092d546edcb01bfa9ed435a36`
 (`Optimize Q30 solver qualification path`). Initial base was
 `745d537de5b18bd7ec2ae769fc00d3696e5af6bd`. No push or completion email.
@@ -39,12 +39,20 @@ quantization/JIT limits and cannot be extrapolated as total runtime. P07 A*
 takes 15.595 s, lower-bound BFS 1.002 s, goals 0.395 s. Setup/final admission
 are small. [Refined profile](task-evidence/Q30/route-and-lu-profile/README.md).
 
-Current unaccepted candidate: per-column references to nonzero lower rows,
+Second accepted intermediate: per-column references to nonzero lower rows,
 preserving coefficient hoisting and arithmetic order, row-reference pivots,
-finite-zero scaling skip and unconditional reference cleanup. Implementation
-is in progress; no gates or timing PASS claimed. Full finite-input scanning
-remains. No mutable numerical/proof cache is introduced. Root owns acceptance.
-[Predeclared gates](task-evidence/Q30/sparse-column-references/README.md).
+finite-zero scaling skip and unconditional reference cleanup. Four native
+suites PASS (47.584 s, 271,331 A07 assertions); final-source actual GWT5 PASS
+(80.496 s); compiled A07/strict reader/three negative canaries PASS. Six fresh
+counterbalanced private runs preserve exact request, complete proof/context,
+all work, private-cache isolation and cleanup. Seeds 7/13/64 improve from
+106.647/114.733/103.935 s to 86.809/93.243/82.580 s. Median paired savings:
+21.355 s. Routing differs only 10–115 ms; most savings are in solver proof.
+Independent review found no correctness blocker. Full finite-input scanning
+remains; no mutable numerical/proof cache is introduced. Source/web inputs
+match all candidate runs and a frozen reference copy. This source/evidence
+delta is accepted for a local checkpoint; it does not accept Q30.
+[Gates, attribution and limits](task-evidence/Q30/sparse-column-references/README.md).
 
 Q30 stays disabled and BLOCKED. Frozen limits are 90,000 ms cumulative,
 640 shared units and 5,000 ms per operation. Private measurement/cache isolation,
@@ -54,20 +62,22 @@ Scale is still 33/35/37; 20–32, 34, 36 and 38–40 are unimplemented. A discre
 20/21-part single-channel and two-channel support expansion are design options,
 not qualification. [Scale audit](task-evidence/Q30/scale-design.md).
 
-Full final acceptance matrices are NOT RUN while timing/scale fail. Next:
-validate the measured LU candidate, then address A* costs if needed; implement
-purposeful scale only when current variants approach/pass the production budget.
+Full final acceptance matrices are NOT RUN while timing/scale fail. Seed 13
+still exceeds 90 s; the smaller margins do not establish corpus acceptance.
+Next: validate a bounded prior-via ancestry optimization for measured A* work,
+then implement purposeful scale as current variants approach the budget.
 U06/U07/Q60 and later milestones remain unstarted.
 
 Resources: all completed browser/server jobs have maintained ownership receipts,
 cleanup PASS and no survivors. No browser/build is active at this checkpoint.
-Root WAR still contains the rejected row-list build; rebuild before use. The
-accepted-reference and isolated profiler fixtures are retained for continued
+Root WAR matches the accepted column-reference candidate. The accepted-reference,
+columnref-reference and isolated profiler fixtures are retained for continued
 work. Earlier administrative scratch deletion remains policy-blocked separately
 from runtime cleanup; exact leaves are in acceptance-continuation/resource-cleanup.json.
 Preserve the unrelated dirty Desktop checkout and pre-existing
-`tests/contracts/__pycache__/`. Current new production files are unaccepted and
-must not be staged with profiler evidence until their own gates pass.
+`tests/contracts/__pycache__/`. The routing candidate is frozen only in task-owned
+scratch, with no production changes or validation claim yet. No resources from
+the unrelated Desktop checkout were modified.
 
 # Historical checkpoint: Q30 acceptance continuation — BLOCKED / NOT ACCEPTED
 

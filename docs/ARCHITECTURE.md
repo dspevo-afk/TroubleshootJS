@@ -336,12 +336,18 @@ nonfinite-stamp and overflow canaries accompany the existing solver/model,
 ownership, callback and cleanup gates.
 
 Crout factorization accumulates each column in the original ascending order of
-terms, skipping a zero coefficient only after all inputs and computed factors
-are proven finite. Pivot selection, tiny-pivot handling and substitution remain
-unchanged. This reduces zero products between disconnected tray islands without
-removing their electrical models. `LuFactorizationChecks` retains the original
-algorithm as an independent JVM/GWT oracle for exact factors, pivot choices and
-solutions across dense, sparse, disconnected, singular and row-swapped fixtures.
+terms. Each CirSim owns reusable scratch lists of numeric rows with nonzero
+finalized lower-column entries. Pivoting exchanges unique row references, so
+these lists follow the values without index repair; all matrix references and
+counts are cleared in `finally` after every factorization exit. Standalone calls
+use their own scratch. Full finite-input scanning, arithmetic guards, pivot
+selection, tiny-pivot handling and substitution remain unchanged. Zero factors,
+coefficients and finite zero scaling products need no numeric update. This
+reduces work between disconnected tray islands without removing their models.
+`LuFactorizationChecks` retains the original algorithm as an independent JVM/GWT
+oracle for numerically exact factors, pivots and solutions, including late
+pivots, underflow, inversion and failure recovery. Signed-zero bit identity is
+not promised. Scratch capacity survives reuse; mutable matrix state does not.
 
 The production workbench uses a shared camera for the PCB and its adjacent metal
 Parts Tray. The PCB flips inside its outline while the tray remains on the bench.

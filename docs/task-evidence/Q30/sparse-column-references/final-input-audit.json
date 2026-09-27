@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "sourceSha256": "7f07fee8219ff26686b531f33e57b156a04340268aad939081184b862decae30",
+  "webSha256": "6c902db8657d282930b52c4ee8c1ee7df4ba099286f95379486ba8da93a13fd5",
+  "currentSourceAndWebMatchAllCandidateRuns": true,
+  "frozenReferenceCopyMatches": true,
+  "reference": "<task-temp>/columnref-reference",
+  "untrackedPythonCacheExcluded": true
+}

@@ -238,6 +238,8 @@ MouseOutHandler, MouseWheelHandler {
     SwitchElm heldSwitchElm;
     double circuitMatrix[][], circuitRightSide[], lastNodeVoltages[], nodeVoltages[],
 	origRightSide[], origMatrix[][];
+    private final LuFactorizationWorkspace luFactorizationWorkspace =
+	new LuFactorizationWorkspace();
     RowInfo circuitRowInfo[];
     int circuitPermute[];
     boolean simRunning;
@@ -2845,7 +2847,8 @@ MouseOutHandler, MouseWheelHandler {
 	if (!circuitNonLinear) {
 	    if (a01MeasurementRunning)
 		a01FactorizationCount++;
-	    if (!lu_factor(circuitMatrix, circuitMatrixSize, circuitPermute)) {
+	    if (!lu_factor(circuitMatrix, circuitMatrixSize, circuitPermute,
+		    luFactorizationWorkspace)) {
 		stop("Singular matrix!", null);
 		return;
 	    }
@@ -3382,7 +3385,7 @@ MouseOutHandler, MouseWheelHandler {
 		    if (a01MeasurementRunning)
 			a01FactorizationCount++;
 		    if (!lu_factor(circuitMatrix, circuitMatrixSize,
-				  circuitPermute)) {
+			  circuitPermute, luFactorizationWorkspace)) {
 			stop("Singular matrix!", null);
 			return;
 		    }
@@ -7953,90 +7956,148 @@ MouseOutHandler, MouseWheelHandler {
     	}
     }
     
+    // Scratch row references are valid only while a factorization is in progress.
+    // Reused capacity is cleared in lu_factor's finally block on every exit.
+    static final class LuFactorizationWorkspace {
+        private double[][][] lowerRows = new double[0][][];
+        private int[] lowerRowCounts = new int[0];
+        private int capacity;
+        private int activeSize;
+
+        private void reset(int size) {
+            clear();
+            if (size < 0) throw new IllegalArgumentException("negative LU size");
+            if (size > capacity) {
+                if (size != 0 && size > Integer.MAX_VALUE / size)
+                    throw new IllegalArgumentException("LU workspace capacity overflow");
+                double[][][] rows = new double[size][][];
+                for (int i = 0; i < size; i++) rows[i] = new double[size][];
+                lowerRows = rows;
+                lowerRowCounts = new int[size];
+                capacity = size;
+            }
+            activeSize = size;
+        }
+
+        private void append(int column, double[] row) {
+            int count = lowerRowCounts[column];
+            lowerRows[column][count] = row;
+            lowerRowCounts[column] = count + 1;
+        }
+
+        private void clear() {
+            for (int column = 0; column < activeSize; column++) {
+                int count = lowerRowCounts[column];
+                for (int i = 0; i < count; i++) lowerRows[column][i] = null;
+                lowerRowCounts[column] = 0;
+            }
+            activeSize = 0;
+        }
+
+        boolean allCountsZeroForChecks() {
+            for (int column = 0; column < capacity; column++)
+                if (lowerRowCounts[column] != 0) return false;
+            return true;
+        }
+
+        boolean allRowReferencesNullForChecks() {
+            for (int column = 0; column < capacity; column++)
+                for (int i = 0; i < capacity; i++)
+                    if (lowerRows[column][i] != null) return false;
+            return true;
+        }
+    }
+
     // factors a matrix into upper and lower triangular matrices by
     // gaussian elimination.  On entry, a[0..n-1][0..n-1] is the
     // matrix to be factored.  ipvt[] returns an integer vector of pivot
     // indices, used in the lu_solve() routine.
     static boolean lu_factor(double a[][], int n, int ipvt[]) {
-	int i,j,k;
-	
-	// check for a possible singular matrix by scanning for rows that
-	// are all zeroes
-	for (i = 0; i != n; i++) { 
-	    boolean row_all_zeros = true;
-            double[] row = a[i];
-	    for (j = 0; j != n; j++) {
-		requireFiniteStamp(row[j]);
-		if (row[j] != 0) {
-		    row_all_zeros = false;
-		}
-	    }
-	    // if all zeros, it's a singular matrix
-	    if (row_all_zeros)
-		return false;
-	}
-	
-        // Crout's method, updating each column in ascending k order. Each
-        // entry receives exactly the original sequence of subtractions.
-        // A zero column coefficient contributes nothing to any row; avoiding
-        // those products matters for real disconnected Parts Tray islands.
-        // Inputs and every factor stay finite, including before zero skips.
-	for (j = 0; j != n; j++) {
-	    for (k = 0; k != j; k++) {
-		double coefficient = a[k][j];
-		if (coefficient == 0) continue;
-		for (i = k+1; i != n; i++) {
-                    double[] row = a[i];
-                    // Finite zero factors cannot contribute to this column.
-                    // Preserve the order of every nonzero Crout subtraction.
-                    double factor = row[k];
-                    if (factor == 0) continue;
-                    double value = row[j] - factor*coefficient;
-                    requireFiniteStamp(value);
-                    row[j] = value;
-		}
-	    }
+        return lu_factor(a, n, ipvt, new LuFactorizationWorkspace());
+    }
 
-	    // calculate lower triangular elements for this column
-	    double largest = 0;
-	    int largestRow = -1;
-	    for (i = j; i != n; i++) {
-		double q = a[i][j];
-		double x = Math.abs(q);
-		if (x >= largest) {
-		    largest = x;
-		    largestRow = i;
-		}
-	    }
-	    
-	    // pivoting
-	    if (j != largestRow) {
-                double[] pivot = a[largestRow], current = a[j];
-                for (k = 0; k != n; k++) {
-                    double value = pivot[k]; pivot[k] = current[k]; current[k] = value;
+    static boolean lu_factor(double a[][], int n, int ipvt[],
+            LuFactorizationWorkspace workspace) {
+        if (workspace == null) throw new IllegalArgumentException("null LU workspace");
+        try {
+            workspace.reset(n);
+            int i,j,k;
+
+            // check for a possible singular matrix by scanning for rows that
+            // are all zeroes
+            for (i = 0; i != n; i++) {
+                boolean row_all_zeros = true;
+                double[] row = a[i];
+                for (j = 0; j != n; j++) {
+                    requireFiniteStamp(row[j]);
+                    if (row[j] != 0) row_all_zeros = false;
                 }
-	    }
+                // if all zeros, it's a singular matrix
+                if (row_all_zeros) return false;
+            }
 
-	    // keep track of row interchanges
-	    ipvt[j] = largestRow;
+            // Revisit only rows whose finalized lower-column value is nonzero.
+            // Iterating k outside each row preserves the historical arithmetic order.
+            for (j = 0; j != n; j++) {
+                for (k = 0; k != j; k++) {
+                    double coefficient = a[k][j];
+                    if (coefficient == 0) continue;
+                    double[][] rows = workspace.lowerRows[k];
+                    int count = workspace.lowerRowCounts[k];
+                    for (int entry = 0; entry < count; entry++) {
+                        double[] row = rows[entry];
+                        double value = row[j] - row[k] * coefficient;
+                        requireFiniteStamp(value);
+                        row[j] = value;
+                    }
+                }
 
-	    // avoid zeros
-	    if (a[j][j] == 0.0) {
-		System.out.println("avoided zero");
-		a[j][j]=1e-18;
-	    }
+                // calculate lower triangular elements for this column
+                double largest = 0;
+                int largestRow = -1;
+                for (i = j; i != n; i++) {
+                    double q = a[i][j];
+                    double x = Math.abs(q);
+                    if (x >= largest) {
+                        largest = x;
+                        largestRow = i;
+                    }
+                }
 
-	    if (j != n-1) {
-		double mult = 1.0/a[j][j];
-		requireFiniteStamp(mult);
-		for (i = j+1; i != n; i++) {
-                    double[] row = a[i];
-                    double value = row[j] * mult;
-                    requireFiniteStamp(value); row[j] = value;
-		}
-	    }
-	}
-	return true;
+                // Pivoting moves complete numeric rows; prior-column indexes
+                // remain valid because both rows are below every earlier pivot.
+                if (j != largestRow) {
+                    double[] row = a[largestRow];
+                    a[largestRow] = a[j];
+                    a[j] = row;
+                }
+
+                // keep track of row interchanges
+                ipvt[j] = largestRow;
+
+                // avoid zeros
+                if (a[j][j] == 0.0) {
+                    System.out.println("avoided zero");
+                    a[j][j] = 1e-18;
+                }
+
+                if (j != n-1) {
+                    double mult = 1.0/a[j][j];
+                    requireFiniteStamp(mult);
+                    for (i = j+1; i != n; i++) {
+                        double[] row = a[i];
+                        if (row[j] == 0) continue;
+                        double value = row[j] * mult;
+                        requireFiniteStamp(value);
+                        row[j] = value;
+                        if (value != 0) workspace.append(j, row);
+                    }
+                }
+            }
+            return true;
+        } finally {
+            workspace.clear();
+        }
     }
 
     // Solves the set of n linear equations using a LU factorization

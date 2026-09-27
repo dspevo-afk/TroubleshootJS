@@ -29,6 +29,11 @@ is now accepted after independent review, fresh focused regressions and four
 counterbalanced pairs. Savings are 11.155–14.706 seconds with exact proof parity;
 all optimized cold runs still fail 90 seconds. Q30 remains BLOCKED while
 measured performance and purposeful scale work continue. No push is authorized.
+The subsequently accepted [column row-reference optimization](task-evidence/Q30/sparse-column-references/README.md)
+reduces three fresh paired cold cases by 19.838–21.490 seconds. Candidate
+times are 86.809, 93.243 and 82.580 seconds; seed 13 still fails 90 seconds.
+These private measurements preserve full proof parity and do not establish
+normal-corpus acceptance or sufficient margin. Scale remains 33/35/37.
 
 **P09 qualification (2026-09-16):** `THT_SINGLE_FACE@1` is enforced at normal installation/admission/publication with unchanged geometry/electrical/diagnostic requirements. Clean native48, integrated native9, both GWT5 builds, RC/Q15 and real normal menu/navigation/privacy checks pass. Frozen held-out structural results retain ten passes and two explicit rejections. Production two-layer/via/link adoption is rejected for this epoch. [Evidence and limits](task-evidence/P09/README.md).
 **P08 qualification:** The evidence-selected interval broad phase, immutable copper/view caches and exact solver-partition projection are qualified. Current brute-force parity and 2,022 adversarial assertions pass; 15/30/56/100 mixed inventories and dense contact work are measured. Full native46, both GWT5 builds and 13 compiled browser runs pass. P09 is now separately qualified; P08 itself does not imply normal large-board/layer-strategy adoption. [P08 evidence](task-evidence/P08/README.md).
@@ -2482,6 +2487,12 @@ seconds, with 86.107, 79.834 and 83.305 seconds of proof. All totals still fail
 90 seconds. Exact current package counts remain 33/35/37; counts 20–32, 34,
 36 and 38–40 are unimplemented. These are private measurements, not normal
 acceptance or evidence of broad 20–40 support.
+
+The accepted column row-reference intermediate optimization has fresh native,
+GWT and compiled solver checks plus six counterbalanced private cold runs.
+Times for seeds 7/13/64 are 86.809/93.243/82.580 seconds, with exact proof/work
+parity against their controls. One still exceeds 90 seconds; no full-corpus
+normal acceptance or broad scale claim follows from this small comparison.
 
 Q30 remains blocked for measured performance and unproved broader size
 coverage under its unchanged original scope. U06, U07, Q60 and later
