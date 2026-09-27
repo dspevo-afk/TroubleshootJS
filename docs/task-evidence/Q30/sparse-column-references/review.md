@@ -33,3 +33,13 @@ can differ in independent row visitation order; both algorithms reject the
 numerical failure, and caller restoration must still pass compiled A07.
 
 This is a scoped correctness review, not a timing or Q30-acceptance PASS.
+
+A subsequent independent read-only evidence audit found no material gap. It
+compared all 1,524 manifest entries for each arm against the frozen candidate
+and control trees before routing integration; source changes were exactly the
+two intended Java files. All six input audits, cleanup receipts, exact requests,
+equal proof key sets and all proof values except elapsed time matched. Work
+was 468/390, 464/390 and 446/390. Private caches started empty with one cold miss;
+the normal cache stayed at size one with unchanged counters. It independently
+checked the timing arithmetic and attribution limits. No additional tests or
+builds were run for this audit, and no normal-admission claim follows.

@@ -1,7 +1,8 @@
 # Current checkpoint: Q30 intermediate optimization accepted; Q30 BLOCKED
 
-Branch `codex/q30-multirail-qualification`; local evidence HEAD
-`d079528ba27d93bef691aa6b189b533ec427a459`. Initial accepted optimization:
+Branch `codex/q30-multirail-qualification`; local HEAD
+`0b29680c7daa62123732b91e3c1157e8ba0d6abd`
+(`Optimize sparse LU row traversal and pivoting`). Initial accepted optimization:
 `7a30a3fdcfa1dc9092d546edcb01bfa9ed435a36`
 (`Optimize Q30 solver qualification path`). Initial base was
 `745d537de5b18bd7ec2ae769fc00d3696e5af6bd`. No push or completion email.
@@ -64,19 +65,25 @@ not qualification. [Scale audit](task-evidence/Q30/scale-design.md).
 
 Full final acceptance matrices are NOT RUN while timing/scale fail. Seed 13
 still exceeds 90 s; the smaller margins do not establish corpus acceptance.
-Next: validate a bounded prior-via ancestry optimization for measured A* work,
-then implement purposeful scale as current variants approach the budget.
+The bounded prior-via ancestry experiment passed native/build/proof parity but
+was rejected: 86.816 s versus fresh control 86.458 s, only 0.204 s route savings.
+Its source/test delta was removed; remaining four timing rows are NOT RUN.
+[Retained trial](task-evidence/Q30/bounded-via-ancestry/README.md).
+Next: finish the revised isolated profiler for the accepted solver/routing path;
+purposeful scale implementation is in isolated scratch now that existing
+variants approach the budget. No scale implementation/qualification is claimed.
 U06/U07/Q60 and later milestones remain unstarted.
 
 Resources: all completed browser/server jobs have maintained ownership receipts,
 cleanup PASS and no survivors. No browser/build is active at this checkpoint.
-Root WAR matches the accepted column-reference candidate. The accepted-reference,
+Root WAR is the rejected routing trial; rebuild before use. The accepted-reference,
 columnref-reference and isolated profiler fixtures are retained for continued
 work. Earlier administrative scratch deletion remains policy-blocked separately
 from runtime cleanup; exact leaves are in acceptance-continuation/resource-cleanup.json.
 Preserve the unrelated dirty Desktop checkout and pre-existing
-`tests/contracts/__pycache__/`. The routing candidate is frozen only in task-owned
-scratch, with no production changes or validation claim yet. No resources from
+`tests/contracts/__pycache__/`. Production source matches accepted 0b29680.
+Only evidence/docs changes are pending; profiler and scale edits are isolated.
+No resources from
 the unrelated Desktop checkout were modified.
 
 # Historical checkpoint: Q30 acceptance continuation — BLOCKED / NOT ACCEPTED

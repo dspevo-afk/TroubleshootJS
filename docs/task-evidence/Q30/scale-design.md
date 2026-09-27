@@ -1,9 +1,12 @@
-# Q30 scale design audit — not implemented or qualified
+# Q30 scale design audit — implementation in isolated scratch, not qualified
 
 Performance remains the first hard gate. Current qualified structures still
 count 33/35/37 packages; this audit supplies no scale PASS and changes no recipe,
 fault catalog, corpus, deadline or work allowance. Read-only Luna/MAX review
 inspected the accepted 7a30 source; no tests or builds were run for this design.
+After accepted solver optimization 0b29680, current private cold cases are
+82.580–93.243 s, approaching the fixed budget. Implementation is now authorized
+in isolated scratch while the routing comparison keeps production inputs fixed.
 
 A scalable discrete family can use the existing package/model vocabulary with
 this count formula:
@@ -41,6 +44,15 @@ Do not drop hypotheses, observations or raise the work cap to fit that design.
 
 The smaller implementation path uses current discrete models and purposeful
 support options instead of new integrated relay modules or connector packages.
+Optional functional axes add C12 (+1), regulated-rail indication (+2), input-rail
+indication (+2), one 100 nF filter per channel (+1 each), one output LED/resistor
+pair per channel (+2 each), and a 100 kohm 5 V rail bleeder (+1). Two-resistor
+direct references give bases 20 and 30 for one and two channels. Those choices
+span 20–29 and 30–42 arithmetically; generated plans must remain within 20–40.
+This arithmetic is not electrical qualification. The input/output indicators
+use 10 kohm current limiting; their loading and observable purpose need proof.
+The bleeder discharges C5 only, not other rail or relay domains. Output fuses
+and series shunts are deferred: their ratings/loading need additional contracts.
 It still requires explicit population/support axes in Rb30Plan, construction
 and catalog changes in Rb30Generator, variant-aware topology/behavior/diagnostic
 and power-domain owners, and independent plan/corpus/service verification.

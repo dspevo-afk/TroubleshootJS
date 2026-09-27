@@ -1,0 +1,15 @@
+PASS: Q30 generation measurement budget contracts 25 assertions
+
+PASS: Q30 normal execution policy contracts 325 assertions
+
+P07_SMALL linked=false policy=ONE_LAYER outcome=SUCCESS expansions=8315 vias=0 length=1040
+P07_SMALL linked=false policy=SPARSE_LINK outcome=SUCCESS expansions=8315 vias=0 length=1040
+P07_SMALL linked=false policy=RESTRICTED_TWO_LAYER outcome=SUCCESS expansions=3405 vias=2 length=700
+P07_SMALL linked=false policy=FULLER_TWO_LAYER outcome=SUCCESS expansions=670 vias=2 length=700
+P07_SMALL linked=true policy=ONE_LAYER outcome=LEFT:BRANCH_QUALITY_LIMIT expansions=13160 vias=0 length=0
+P07_SMALL linked=true policy=SPARSE_LINK outcome=SUCCESS expansions=57 vias=0 length=540
+P07_SMALL linked=true policy=RESTRICTED_TWO_LAYER outcome=SUCCESS expansions=57 vias=0 length=540
+P07_SMALL linked=true policy=FULLER_TWO_LAYER outcome=SUCCESS expansions=57 vias=0 length=540
+PASS: P07 two-layer contracts assertions=80
+
+PASS: Pcb layer routing resumption contracts assertions=2203
