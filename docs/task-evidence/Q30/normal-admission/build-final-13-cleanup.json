@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "directory": "<task-temp>/TroubleshootJS/build-process-7b9b4ed6a50c4bdd898536abcb2116bf",
+  "processReferencesAbsent": true,
+  "files": [
+    {
+      "name": "stderr.log",
+      "length": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "stdout.log",
+      "length": 768,
+      "sha256": "6dbfe0f44770c481fb9f4660d83427bf53a0bdc103d345d8d31d4938a71214e8"
+    }
+  ],
+  "directoryAbsent": true
+}

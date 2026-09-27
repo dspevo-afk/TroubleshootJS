@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "readerNegatives": 46,
+  "cohorts": {
+    "development": {
+      "requested": 24,
+      "structuralAccepted": 24,
+      "admitted": 24,
+      "macroGroups": 24,
+      "largestGroup": 1,
+      "aspectBands": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "outcomes": {
+        "PASS": 24
+      }
+    },
+    "holdout": {
+      "requested": 48,
+      "structuralAccepted": 48,
+      "admitted": 48,
+      "macroGroups": 48,
+      "largestGroup": 1,
+      "aspectBands": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "outcomes": {
+        "PASS": 48
+      }
+    }
+  },
+  "controlledNegativeCases": 6,
+  "limits": "Frozen qualification sample plus a separately disclosed controlled-copy P09 negative; no natural rejection distribution claim or universal success guarantee."
+}

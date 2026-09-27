@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "id": "q30-p09-controlled-negative-01",
+  "declaredUtc": "2026-09-26T22:13:54.930186+00:00",
+  "status": "PREDECLARED_NOT_RUN",
+  "purpose": "Current Q30 controlled-negative lifecycle canary; supplements but does not replace the frozen 24/48 native and compiled admission population.",
+  "disclosure": {
+    "kind": "CONTROLLED_COPY_P09_ENVELOPE_REJECTION",
+    "naturalRejectionClaim": false,
+    "mechanism": "At candidate ordinal zero only, first prove the real generated original geometry passes SupportedEnvelope.requireBounds, then make a detached PcbBoardLayout copy whose outline width is MAX_EDGE+1 (2049) and pass that copy to the same SupportedEnvelope.requireBounds predicate. The invalid copy is never installed or published; the ordinary typed rejection, cleanup, and canonical retry path handles the result.",
+    "scope": "Instance-scoped developer-verification overload only; normal generation receives no callback and retains its existing production policy and budgets.",
+    "historicalSpec": "docs/task-evidence/QuickPlayGate/canary-cases.json remains unchanged; this explicit current spec preserves its disclosed root and cancellation roots while identifying its rejection as controlled."
+  },
+  "caseOrder": [
+    "p09-controlled-exact",
+    "p09-controlled-search-retry",
+    "p09-replay-1",
+    "p09-replay-2",
+    "p09-cancel-healthy",
+    "p09-cancel-hypotheses"
+  ],
+  "cases": [
+    {
+      "caseId": "p09-controlled-exact",
+      "cohort": "controlled-negative-current",
+      "seed": "-7564325972933069162",
+      "search": false,
+      "cancelAfter": -1,
+      "controlledNegative": true,
+      "expected": "EXPECTED_REJECTION",
+      "expectedStage": "PHYSICAL",
+      "expectedAttemptOutcomes": [
+        "EXPECTED_REJECTION"
+      ],
+      "expectedAttemptStages": [
+        "PHYSICAL"
+      ]
+    },
+    {
+      "caseId": "p09-controlled-search-retry",
+      "cohort": "controlled-negative-current",
+      "seed": "-7564325972933069162",
+      "search": true,
+      "cancelAfter": -1,
+      "controlledNegative": true,
+      "expected": "PASS",
+      "expectedStage": "PUBLISH",
+      "expectedAttemptOutcomes": [
+        "EXPECTED_REJECTION",
+        "PASS"
+      ],
+      "expectedAttemptStages": [
+        "PHYSICAL",
+        "PUBLISH"
+      ],
+      "expectedAcceptedSeed": "3836388846390129323"
+    },
+    {
+      "caseId": "p09-replay-1",
+      "cohort": "controlled-negative-current",
+      "seed": "3836388846390129323",
+      "search": false,
+      "cancelAfter": -1,
+      "expected": "PASS",
+      "expectedStage": "PUBLISH",
+      "expectedAttemptOutcomes": [
+        "PASS"
+      ],
+      "expectedAttemptStages": [
+        "PUBLISH"
+      ],
+      "replayGroup": "p09-controlled-successor-replay"
+    },
+    {
+      "caseId": "p09-replay-2",
+      "cohort": "controlled-negative-current",
+      "seed": "3836388846390129323",
+      "search": false,
+      "cancelAfter": -1,
+      "expected": "PASS",
+      "expectedStage": "PUBLISH",
+      "expectedAttemptOutcomes": [
+        "PASS"
+      ],
+      "expectedAttemptStages": [
+        "PUBLISH"
+      ],
+      "replayGroup": "p09-controlled-successor-replay"
+    },
+    {
+      "caseId": "p09-cancel-healthy",
+      "cohort": "controlled-negative-current",
+      "seed": "3",
+      "search": true,
+      "cancelAfter": 3,
+      "expected": "CANCELLED",
+      "expectedStage": "HEALTHY"
+    },
+    {
+      "caseId": "p09-cancel-hypotheses",
+      "cohort": "controlled-negative-current",
+      "seed": "-4708384106017907796",
+      "search": true,
+      "cancelAfter": 15,
+      "expected": "CANCELLED",
+      "expectedStage": "HYPOTHESES"
+    }
+  ],
+  "budgets": {
+    "jobMs": 90000,
+    "maxUnits": 640,
+    "maxUnitMs": 5000,
+    "cancellationMs": 500,
+    "candidateLimit": 4,
+    "productionBudgetsChanged": false
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "endedUtc": "2026-09-27T01:53:33.091592+00:00",
+  "caseCount": 6,
+  "inputCount": 394,
+  "inputMismatches": [],
+  "resultOutcome": "PASS",
+  "cleanup": {
+    "serverThreadStopped": true,
+    "ownedSurvivors": []
+  }
+}

@@ -1,0 +1,82 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: Q30 temporal work contracts 83 assertions profileUnits=5 retestUnits=5
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+
+PASS: diagnostic service preparation contracts 18 assertions policy=action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner
+
+PASS: q30 generation request contracts 339 assertions
+
+Q30_FULL_OWNER seed=3 PASS components=37 copperEdges=356 copperJunctions=363
+Q30_FULL_OWNER seed=37 PASS components=37 copperEdges=357 copperJunctions=364
+PASS: Q30 physical metadata contracts 1989 assertions, topologies=7
+
+
+Exception in thread "main" java.lang.AssertionError: seed 83 fuller route keeps a previously valid escape channel
+	at com.lushprojects.circuitjs1.client.MediumBoardPhysicalPolicyContractTest.check(MediumBoardPhysicalPolicyContractTest.java:130)
+	at com.lushprojects.circuitjs1.client.MediumBoardPhysicalPolicyContractTest.main(MediumBoardPhysicalPolicyContractTest.java:114)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: MediumBoardPhysicalPolicyContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

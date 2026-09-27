@@ -1,0 +1,100 @@
+[
+  {
+    "case": "smoke",
+    "expectedExitCode": 0,
+    "exitCode": 0,
+    "outputCreated": true,
+    "matched": true,
+    "outcome": "PASS",
+    "cleanup": "PASS",
+    "inputAudit": "PASS",
+    "semanticExpectationMatched": true,
+    "caseOutcomes": [
+      "PASS",
+      "PASS"
+    ],
+    "operationSeconds": [
+      0.7812289000721648,
+      0.4960871000075713
+    ]
+  },
+  {
+    "case": "reject",
+    "expectedExitCode": 1,
+    "exitCode": 1,
+    "outputCreated": true,
+    "matched": true,
+    "outcome": "FAIL",
+    "cleanup": "PASS",
+    "inputAudit": "PASS",
+    "semanticExpectationMatched": true,
+    "caseOutcomes": [
+      "FAIL"
+    ],
+    "operationSeconds": [
+      0.7644487000070512
+    ]
+  },
+  {
+    "case": "timeout",
+    "expectedExitCode": 1,
+    "exitCode": 1,
+    "outputCreated": true,
+    "matched": true,
+    "outcome": "FAIL",
+    "cleanup": "PASS",
+    "inputAudit": "PASS",
+    "semanticExpectationMatched": true,
+    "caseOutcomes": [
+      "TIMEOUT"
+    ],
+    "operationSeconds": [
+      1.001041500014253
+    ]
+  },
+  {
+    "case": "tiny-timeout",
+    "expectedExitCode": 1,
+    "exitCode": 1,
+    "outputCreated": true,
+    "matched": true,
+    "outcome": "FAIL",
+    "cleanup": "PASS",
+    "inputAudit": "PASS",
+    "semanticExpectationMatched": true,
+    "caseOutcomes": [
+      "TIMEOUT"
+    ],
+    "operationSeconds": [
+      0.004089000052772462
+    ]
+  },
+  {
+    "case": "url-negative",
+    "expectedExitCode": 2,
+    "exitCode": 2,
+    "outputCreated": false,
+    "matched": true
+  },
+  {
+    "case": "null-negative",
+    "expectedExitCode": 2,
+    "exitCode": 2,
+    "outputCreated": false,
+    "matched": true
+  },
+  {
+    "case": "budget-negative",
+    "expectedExitCode": 2,
+    "exitCode": 2,
+    "outputCreated": false,
+    "matched": true
+  },
+  {
+    "case": "null-value-negative",
+    "expectedExitCode": 2,
+    "exitCode": 2,
+    "outputCreated": false,
+    "matched": true
+  }
+]

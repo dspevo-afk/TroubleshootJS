@@ -1,6 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
 import java.util.HashSet;
+import java.util.Vector;
 
 /** Independent selection/session and real scheduler boundary falsifiers. */
 public final class QuickPlayGateContractTest {
@@ -11,6 +12,8 @@ public final class QuickPlayGateContractTest {
         for(int i=0;i<1024;i++) selection(QuickPlayGateCorpus.seed(false,i));
         for(long seed:new long[]{0,1,-1,Long.MIN_VALUE,Long.MAX_VALUE,9007199254740993L})
             mediumSelection(seed);
+        for(long seed:new long[]{Long.MIN_VALUE,-9007199254740993L,0,9007199254740993L,Long.MAX_VALUE})
+            normalMediumSelection(seed);
         for(String family:PlayerFamilyCatalog.families())for(DifficultyProfile profile:DifficultyProfile.values())
             check(QuickPlayAdmission.supports(family,profile)==
                 (profile==PlayerFamilyCatalog.candidateProfile(family)),
@@ -22,6 +25,9 @@ public final class QuickPlayGateContractTest {
         check(epoch2,"Previous physical interpretation silently reinterpreted");
         check(QuickPlayAdmission.supports(ControlledIndicatorBlockContributions.FAMILY_ID, DifficultyProfile.MEDIUM),
             "Procedural Medium family omitted from broad-seed admission");
+        check(QuickPlayAdmission.supports(Rb30Plan.FAMILY_ID, DifficultyProfile.MEDIUM),
+            "Normal Q30 MEDIUM family omitted from broad-seed admission");
+        stagedCatalogSelection();
         boolean old=false; try {PlayerLaunchRequest.parse("tsj-alpha/1/EASY/RB15_CONTROL/0");} catch(IllegalArgumentException expected){old=true;}
         check(old,"Old interpretation silently accepted");
         scheduler(); session(); recentPhysicalBoards(); newBoardIdentity(); copperNormalization();
@@ -70,6 +76,74 @@ public final class QuickPlayGateContractTest {
             check(!accepted.candidateSearch && replay.isComposition() && replay.candidateCount() == 1 &&
                     replay.getDescriptor().getRootSeed() == value,
                 "Medium accepted replay changed or retried the exact board");
+        }
+    }
+    private static void normalMediumSelection(long seed) {
+        PlayerLaunchRequest launch = PlayerLaunchRequest.random(Rb30Plan.FAMILY_ID,
+            Long.toString(seed), "MEDIUM");
+        GenerationRequest request = launch.generation();
+        check(launch.seed == seed && launch.candidateSearch && request.candidateCount() == 4 &&
+            request.getDescriptor().getRootSeed() == seed &&
+            request.getExecutionPolicy() == GenerationExecutionPolicy.NORMAL_MEDIUM &&
+            MediumBoardNormalAdmission.IDENTITY.equals(
+                request.getRequiredPhysicalAdmissionIdentity()),
+            "Normal Q30 selection remapped entropy or lost its physical/execution capability");
+        HashSet<Long> seen = new HashSet<Long>();
+        for (int i = 0; i < request.candidateCount(); i++) {
+            GenerationRequest candidate = request.candidate(i);
+            long expected = QuickPlayAdmission.candidateSeed(seed, i);
+            check(candidate.getDescriptor().getRootSeed() == expected &&
+                candidate.getExecutionPolicy() == GenerationExecutionPolicy.NORMAL_MEDIUM &&
+                seen.add(Long.valueOf(expected)),
+                "Normal Q30 candidates changed order or repeated exact signed-long seeds");
+            PlayerLaunchRequest accepted = launch.accepted(expected);
+            PlayerLaunchRequest exact = PlayerLaunchRequest.parse(accepted.replay());
+            check(!exact.candidateSearch && exact.profile == DifficultyProfile.MEDIUM &&
+                exact.seed == expected && exact.generation().candidateCount() == 1 &&
+                exact.generation().getExecutionPolicy() == GenerationExecutionPolicy.NORMAL_MEDIUM &&
+                MediumBoardNormalAdmission.IDENTITY.equals(
+                    exact.generation().getRequiredPhysicalAdmissionIdentity()),
+                "Normal Q30 replay did not preserve an exact single medium candidate");
+        }
+    }
+    private static void stagedCatalogSelection() {
+        Vector<String> catalog = PlayerFamilyCatalog.families();
+        Vector<String> expected = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
+        expected.add(ControlledIndicatorBlockContributions.FAMILY_ID);
+        expected.add(Rb30Plan.FAMILY_ID);
+        check(catalog.size() == 11 && catalog.equals(expected),
+            "Current menu catalog lost an existing selector index or omitted a staged family");
+        int leafCount = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds().size();
+        for (int i = 0; i < catalog.size(); i++) {
+            String family = catalog.get(i);
+            long seed = (i & 1) == 0 ? Long.MIN_VALUE : 9007199254740993L;
+            QuickPlaySelection selected = new QuickPlaySelector(new QuickPlayFixedRandomSource(
+                new long[] { i, seed })).select();
+            GenerationRequest staged = GenerationRequest.stagedQuickPlay(selected);
+            check(family.equals(selected.getFamilyId()) && selected.getSeed() == seed &&
+                staged.isQuickPlay() && staged.getDescriptor().getRootSeed() == seed &&
+                staged.getDifficulty() == PlayerFamilyCatalog.candidateProfile(family) &&
+                staged.candidateCount() == QuickPlayAdmission.MAX_CANDIDATES,
+                "Full menu selection did not reach its staged request factory: " + family);
+            if (i < leafCount) {
+                check(QuickPlayFamilyRegistry.isNormalPlayerEligible(family),
+                    "Existing synchronous leaf route left its registry");
+            } else {
+                boolean rejected = false;
+                try { new QuickPlaySelector(new QuickPlayFixedRandomSource(
+                    new long[] { i, seed })).generate(selected); }
+                catch (IllegalArgumentException expectedFailure) { rejected = true; }
+                check(rejected && !QuickPlayFamilyRegistry.isNormalPlayerEligible(family),
+                    "Staged catalog family crossed the synchronous generator boundary");
+            }
+            if (Rb30Plan.FAMILY_ID.equals(family))
+                check(staged.getExecutionPolicy() == GenerationExecutionPolicy.NORMAL_MEDIUM &&
+                    MediumBoardNormalAdmission.IDENTITY.equals(
+                        staged.getRequiredPhysicalAdmissionIdentity()),
+                    "Staged Quick Play Q30 did not retain normal-medium admission");
+            else
+                check(staged.getExecutionPolicy() == GenerationExecutionPolicy.SMALL_BOARD,
+                    "Small or composed family received the Q30 execution allowance");
         }
     }
 

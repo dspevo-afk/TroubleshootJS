@@ -1,0 +1,18 @@
+[
+  {
+    "directory": "tsj-q30-p09-12-0c0cdb8218924bb687cc1165cc611673",
+    "status": "PASS",
+    "directoryAbsent": true,
+    "processReferences": 0,
+    "listeners": 0,
+    "completedUtc": "2026-09-26T21:39:28.9603359Z"
+  },
+  {
+    "directory": "tsj-q30-p09-12-oldcanary-84c40634201b46c2afd295605fddf038",
+    "status": "PASS",
+    "directoryAbsent": true,
+    "processReferences": 0,
+    "listeners": 0,
+    "completedUtc": "2026-09-26T21:39:33.2864377Z"
+  }
+]

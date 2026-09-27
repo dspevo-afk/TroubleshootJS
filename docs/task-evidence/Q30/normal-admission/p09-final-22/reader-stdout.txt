@@ -1,0 +1,1 @@
+PASS: Quick Play gate population/geometry/repair/retry reader; malformed controls=46

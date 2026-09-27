@@ -1,0 +1,1 @@
+EXPECTED NEGATIVE VERIFIED: injected Q30 coordinator scope loss canceled the owned cold job and restored its predecessor; rows=1 sameBuild=True actualDeadlineMs=300000 defaultProductionDeadlineMs=90000; corruptionCanaries=13; this is not a successful Q30 qualification

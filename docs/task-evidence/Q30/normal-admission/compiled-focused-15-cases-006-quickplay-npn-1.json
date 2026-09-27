@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 6,
+    "name": "quickplay-npn-1",
+    "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=4&tsjQuickPlayTestSeed=1",
+    "stateAttribute": "data-tsj-verification",
+    "expectedState": "PASS:quick-play",
+    "expectedPrefix": null,
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 120.0,
+    "reportAttribute": null
+  },
+  "url": "http://127.0.0.1:56796/circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=4&tsjQuickPlayTestSeed=1",
+  "startedUtc": "2026-09-26T22:24:19.212887+00:00",
+  "finishedUtc": "2026-09-26T22:24:30.249812+00:00",
+  "operationSeconds": 11.036922200000845,
+  "outcome": "PASS",
+  "terminalReached": true,
+  "stateMatch": true,
+  "observedState": "PASS:quick-play",
+  "lastObservedState": "PASS:quick-play",
+  "timedOut": false,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": false,
+  "reportJsonValid": null,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 0,
+  "reportSha256": null,
+  "reportFile": null,
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    }
+  ],
+  "listenerCleanupErrors": [],
+  "navigationError": null
+}

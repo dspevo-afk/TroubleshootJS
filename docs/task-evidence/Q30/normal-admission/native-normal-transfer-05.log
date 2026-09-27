@@ -1,0 +1,26 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: Q30 catalog identity contracts assertions=13
+
+Q30_CATALOG_TRANSFER_CLEANUP ownerDeleted=true graphEmpty=true powerDisconnected=true controllerDisposed=false slotsRestored=false resetInvoked=false
+
+Exception in thread "main" java.lang.ExceptionInInitializerError
+	at com.lushprojects.circuitjs1.client.PcbWorkbenchController.<init>(PcbWorkbenchController.java:27)
+	at com.lushprojects.circuitjs1.client.Q30CatalogTransferContractTest$TransferContext.installOwner(Q30CatalogTransferContractTest.java:128)
+	at com.lushprojects.circuitjs1.client.Q30CatalogTransferContractTest$TransferContext.run(Q30CatalogTransferContractTest.java:99)
+	at com.lushprojects.circuitjs1.client.Q30CatalogTransferContractTest.main(Q30CatalogTransferContractTest.java:20)
+Caused by: java.lang.UnsupportedOperationException: ERROR: GWT.create() is only usable in client code!  It cannot be called, for example, from server code.  If you are running a unit test, check that your test case extends GWTTestCase and that GWT.create() is not called from within an initializer or constructor.
+	at com.google.gwt.core.shared.GWT.createImpl(GWT.java:77)
+	at com.google.gwt.core.client.GWT.create(GWT.java:86)
+	at com.google.gwt.user.client.ui.UIObject.<clinit>(UIObject.java:195)
+	... 4 more
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: Q30CatalogTransferContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

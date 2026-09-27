@@ -87,7 +87,7 @@ public final class D01DiagnosticContractTest {
             String expectedEpoch = "tsj-generation-dependencies-v16";
             require(canonical.startsWith("V" + expectedEpoch.length() + ":" +
                     expectedEpoch + ";") &&
-                    canonical.indexOf("circuitjs-source-load-model-inputs-no-transient-dump-v5") >= 0,
+                    canonical.indexOf("circuitjs-source-load-model-inputs-no-transient-dump-v6") >= 0,
                 "repaired E02/E04 model interpretation invalidates older proof values");
             require(canonical.indexOf("diagnostic.hypothesis-population") >= 0 &&
                     canonical.indexOf("diagnostic.provider-repair-catalog") >= 0,

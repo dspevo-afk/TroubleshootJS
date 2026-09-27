@@ -1,0 +1,212 @@
+{
+  "outcomes": {
+    "cold": {
+      "PASS": 3
+    },
+    "warm": {
+      "PASS": 3
+    }
+  },
+  "latency": {
+    "cold": {
+      "elapsedMs": {
+        "p50": 150440,
+        "p95": 160335,
+        "count": 3
+      },
+      "wallElapsedMs": {
+        "p50": 150451,
+        "p95": 160346,
+        "count": 3
+      },
+      "routingElapsedMs": {
+        "p50": 20407,
+        "p95": 21344,
+        "count": 3
+      },
+      "proofElapsedMs": {
+        "p50": 124529,
+        "p95": 129423,
+        "count": 3
+      },
+      "stages": {
+        "RESOLVE": {
+          "p50": 0,
+          "p95": 1,
+          "count": 3
+        },
+        "HEALTHY": {
+          "p50": 28867,
+          "p95": 30348,
+          "count": 3
+        },
+        "PHYSICAL": {
+          "p50": 58,
+          "p95": 64,
+          "count": 3
+        },
+        "HYPOTHESES": {
+          "p50": 122687,
+          "p95": 127565,
+          "count": 3
+        },
+        "SYMPTOM": {
+          "p50": 10,
+          "p95": 11,
+          "count": 3
+        },
+        "PUBLISH": {
+          "p50": 78,
+          "p95": 86,
+          "count": 3
+        }
+      },
+      "workLabels": {
+        "CANDIDATE_HEALTHY_SETTLE": {
+          "p50": 30428,
+          "p95": 32048,
+          "count": 3
+        },
+        "CANDIDATE_SETTLE": {
+          "p50": 7382,
+          "p95": 7469,
+          "count": 3
+        },
+        "CUSTOMER_RETEST": {
+          "p50": 25401,
+          "p95": 26743,
+          "count": 3
+        },
+        "CUSTOMER_RETEST_COMPLETION": {
+          "p50": 50,
+          "p95": 51,
+          "count": 3
+        },
+        "EVIDENCE_RESTORE_PRIMARY": {
+          "p50": 127,
+          "p95": 132,
+          "count": 3
+        },
+        "OBSERVATION_STEP:DC_VOLTAGE": {
+          "p50": 1331,
+          "p95": 1576,
+          "count": 3
+        },
+        "OBSERVATION_STEP:INPUT": {
+          "p50": 23038,
+          "p95": 23655,
+          "count": 3
+        },
+        "OBSERVATION_STEP:POWER": {
+          "p50": 174,
+          "p95": 182,
+          "count": 3
+        },
+        "OBSERVATION_STEP:SETTLE": {
+          "p50": 229,
+          "p95": 241,
+          "count": 3
+        },
+        "OBSERVATION_STEP:WAIT": {
+          "p50": 1,
+          "p95": 1,
+          "count": 3
+        },
+        "POWER_OFF_SETTLE": {
+          "p50": 6724,
+          "p95": 7996,
+          "count": 3
+        },
+        "POWER_ON_SETTLE": {
+          "p50": 397,
+          "p95": 483,
+          "count": 3
+        },
+        "REMOVE_SETTLE": {
+          "p50": 317,
+          "p95": 337,
+          "count": 3
+        },
+        "REPAIR_STATUS_SETTLE": {
+          "p50": 25145,
+          "p95": 26975,
+          "count": 3
+        },
+        "REPLACE_SETTLE": {
+          "p50": 334,
+          "p95": 390,
+          "count": 3
+        },
+        "REPLAY_INSTALL": {
+          "p50": 554,
+          "p95": 615,
+          "count": 3
+        }
+      }
+    },
+    "warm": {
+      "elapsedMs": {
+        "p50": 33829,
+        "p95": 35407,
+        "count": 3
+      },
+      "wallElapsedMs": {
+        "p50": 33839,
+        "p95": 35420,
+        "count": 3
+      },
+      "routingElapsedMs": {
+        "p50": 24197,
+        "p95": 25087,
+        "count": 3
+      },
+      "proofElapsedMs": {
+        "p50": 0,
+        "p95": 0,
+        "count": 3
+      },
+      "stages": {
+        "RESOLVE": {
+          "p50": 0,
+          "p95": 1,
+          "count": 3
+        },
+        "HEALTHY": {
+          "p50": 33255,
+          "p95": 34812,
+          "count": 3
+        },
+        "PHYSICAL": {
+          "p50": 62,
+          "p95": 77,
+          "count": 3
+        },
+        "HYPOTHESES": {
+          "p50": 29,
+          "p95": 30,
+          "count": 3
+        },
+        "SYMPTOM": {
+          "p50": 10,
+          "p95": 11,
+          "count": 3
+        },
+        "PUBLISH": {
+          "p50": 78,
+          "p95": 85,
+          "count": 3
+        }
+      },
+      "workLabels": {}
+    }
+  },
+  "pairCount": 30,
+  "canaries": 37,
+  "build": [
+    "7620cf1777a3b9cf9d1ce4b26ed9bff2ba6d04a51ae841ae5ff30786df7a5743",
+    "e56e0a5948029fa1a56ca6c0c7c3bea27e6917520a86e26851daeb3dc131afaa"
+  ],
+  "failures": [],
+  "defaultMaxJobMillis": 90000,
+  "measurementMaxJobMillis": 300000
+}

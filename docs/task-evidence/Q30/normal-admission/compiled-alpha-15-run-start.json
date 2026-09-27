@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<worktree>",
+  "startedUtc": "2026-09-26T22:25:16.265152+00:00",
+  "outcome": "NOT_RUN",
+  "cases": [],
+  "caseCount": 2,
+  "errors": []
+}

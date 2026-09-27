@@ -1,0 +1,1 @@
+FAIL:alpha:public-shop-acquire/NPN_LOW_SIDE_SWITCH/SPAN_260 owner=true power=UNPOWERED isolated=true settled=true state=READY: java.lang.AssertionError: Alpha: independent fixture has two different real resistor fits

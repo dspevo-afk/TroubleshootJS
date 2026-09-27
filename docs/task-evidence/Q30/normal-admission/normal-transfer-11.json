@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "steps": [
+    {
+      "operation": "About this alpha",
+      "text": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTroubleshootJS · Desktop alpha\n\nTHE ELECTRONICS REPAIR GAME\n\nTroubleshoot!\n\nA customer. A faulty board. A bench full of possibilities.\n\nExamine\nMeasure\nIsolate\nRepair\nRetest\nStart a service job\nDifficulty\nEASY\nMEDIUM\nHARD — unavailable\nPSYCHOTIC — unavailable\nBoard family\nIndicator board\nProtected indicator\nDual indicator\nTiming board\nBJT output driver\nMOSFET output driver\nRelay output board\nSensor control board\nProcedural control board\nNEW BOARD\n\nEvery listed family uses procedural placement and routing. New boards try up to four candidate seeds within shared preparation limits; only a fully checked, distinct board reaches its customer ticket.\n\nEnter an exact seed\nOpen a saved replay code\nResources\nSettings\nAbout this alpha\nAbout this desktop alpha\n\nSelected low-voltage families include a 16-part procedural control board and multi-rail control boards with 33, 35 or 37 parts. The 3-part indicator and 4-part protected indicator are introductory practice boards.\n\nEASY and MEDIUM candidates are checked before play. HARD and PSYCHOTIC are unavailable. Only the listed board families are supported. Mains circuits and general multilayer routing are not supported. Session saves are not available.\n\nReplay and bug-report identity"
+    },
+    {
+      "operation": "Shop acquisition while recently powered off",
+      "result": "1k resistor and two controller parts acquired; early relay acquisition rejected with isolation/busy status; no relay added"
+    },
+    {
+      "operation": "Install Part38 as RDA; customer retest",
+      "result": "RESULTS PASS"
+    },
+    {
+      "operation": "Install Part39 marked SENSOR_CONTROL U2A into Sensor B/U2B",
+      "result": "Installed and tray count decreased; post-completion retest disabled by existing completed-job rule",
+      "limitation": "Baseline retest had already completed this job; a fresh replay will test transfers before completion."
+    },
+    {
+      "operation": "Fresh replay before job completion: replace RDA1k, install acquired U2Acontroller39 inU2B",
+      "result": "Both installed; no customer completion yet"
+    },
+    {
+      "operation": "PowerOFF; inspectKBservice and DCV KB.A1/J1.2",
+      "result": "Remove disabled; stable58.093mV above50mVthreshold",
+      "status": "INVESTIGATING"
+    },
+    {
+      "operation": "Wait for discharge; reselectKA thenKB",
+      "result": "DCreading42.6pV; Removeenabledafterreselection",
+      "limitation": "Cached Component buttonavailability did not refresh bydrawerreopen alone"
+    },
+    {
+      "operation": "Install12VrelayPart40inKB, cross-channelcontroller39inU2B andnew1kRDA; powerON; retest",
+      "result": "Customer retest did not pass. Continue troubleshooting."
+    },
+    {
+      "operation": "Discharge158.738nV; reselectKB; remove12VPart40; acquire5VPart41; installKB; powerON; retest",
+      "result": {
+        "privateAttrs": [],
+        "provenance": [
+          [
+            "data-tsj-preview-identity-protocol",
+            "troubleshootjs-execution-provenance-v1"
+          ],
+          [
+            "data-tsj-preview-source-digest",
+            "888ec5a7810ff54887c470fa1e9c6f1d75e3010bfdf3c43731c7d10e8cad2ca5"
+          ],
+          [
+            "data-tsj-preview-script-digest",
+            "ce9593e50b93cff1671d2ec3d7373a233f4e74d37c671a1e488a5530bdd0f88b"
+          ],
+          [
+            "data-tsj-preview-web-digest",
+            "8d58cd0dc3afc35a044c7d76771e94cd432457b66e7e6885c715174eff626515"
+          ],
+          [
+            "data-tsj-preview-execution-digest",
+            "375600a76e4121192fe8d1c4c838bdecd65569645ec8dc2ca0ebe345cc54f178"
+          ],
+          [
+            "data-tsj-preview-file-count",
+            "1542"
+          ]
+        ],
+        "screen": "RESULTS",
+        "status": [
+          "Customer retest passed. The reported behavior is resolved.",
+          "Click a mode, or turn the dial. Left / right click: red / black probe.",
+          "",
+          "Customer retest passed. The reported behavior is resolved."
+        ],
+        "url": "http://127.0.0.1:8904/circuitjs.html"
+      }
+    }
+  ],
+  "limits": [
+    "Exact source inventory ownership and graph endpoints are checked separately by the native capability fixture; its complete result is recorded in native logs.",
+    "Post-completion controls preserve recorded results; final combined trial used a fresh replay before completing.",
+    "Relay Remove button can retain stale disabled availability until component reselection after real discharge.",
+    "Retest input acknowledgements timed out after delivery; subsequent DOM establishes each actual result."
+  ],
+  "cleanup": "PowerOFF, Mainmenu, owned tab45 closed"
+}

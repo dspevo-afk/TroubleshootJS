@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "pointer": ".tools/q30-host-smoke-14b-path.txt",
+  "name": "q30-host-smoke-14b",
+  "directory": "tsj-q30-host-smoke-14b-0aa8a649d3a142ff95eb11c86ae92fd9",
+  "priorReceipt": "compiled-host14-cleanup.json",
+  "priorAmbiguousPreflightRetained": true,
+  "priorAmbiguousPreflightAttempts": 2,
+  "priorObservedRunnerPid": 32872,
+  "identityMarkerPass": true,
+  "profileExistsBeforeDeletion": true,
+  "profileMatch": true,
+  "tempContainmentPass": true,
+  "resultCleanupPass": true,
+  "outcome": "PASS",
+  "caseCount": 2,
+  "port": 51821,
+  "recheckProof": {
+    "recordedReferenceCount": 8,
+    "currentLiveRecordedPidCount": 1,
+    "currentMatchingRecordedIdentityCount": 0,
+    "runner": {
+      "pid": 32872,
+      "present": false,
+      "creationMatch": false,
+      "executableMatch": false,
+      "matchingRecordedIdentity": false
+    },
+    "pidReuseEvidence": [
+      {
+        "pid": 37628,
+        "recordedKind": "edge",
+        "expectedCreationUtc": "2026-09-26T22:13:55.8466390Z",
+        "actualCreationUtc": "2026-09-26T22:24:41.6502028Z",
+        "creationMatch": false,
+        "expectedExecutable": "msedge.exe",
+        "actualExecutable": "python.exe",
+        "executableMatch": false,
+        "matchingRecordedIdentity": false
+      }
+    ],
+    "profileOrTargetPathReferenceCount": 0,
+    "profileOrTargetPathReferencesAbsent": true,
+    "portConnections": 0,
+    "portConnectionsAbsent": true,
+    "reparseTreePass": true,
+    "reparseDescendantCountBeforeDeletion": 256,
+    "creationAndExecutableChecksPass": true
+  },
+  "deletionMethod": "Remove-VerifierOwnedTree",
+  "deletionAttempted": true,
+  "directoryAbsent": true,
+  "processTerminationAttempted": false,
+  "excluded": [
+    "q30-modern-01",
+    "tests/contracts/__pycache__"
+  ]
+}

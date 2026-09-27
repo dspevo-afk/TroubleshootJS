@@ -1,0 +1,1 @@
+{"error":"native corpus log contains a failed child at line 12957: Exception in thread \"main\" java.lang.NoSuchMethodException: com.lushprojects.circuitjs1.client.GenerationCoordinator.start(com.lushprojects.circuitjs1.client.GenerationRequest, com.lushprojects.circuitjs1.client.GenerationCoordinator$Comple","readerStatus":"FAIL"}

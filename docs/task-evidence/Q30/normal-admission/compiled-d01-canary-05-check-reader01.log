@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_d01.py", line 760, in <module>
+    pairs = check_document(json.load(handle), args.seeds, args.require_warm)
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_d01.py", line 679, in check_document
+    expected_proof_units, work_contract_version = validate_q30_work_contract(report, seed)
+                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_d01.py", line 340, in validate_q30_work_contract
+    context_epoch, context = _framed_fields(report["contextCanonical"], context=True)
+                             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_d01.py", line 65, in _framed_fields
+    epoch, offset = _context_frame(value, 0)
+                    ~~~~~~~~~~~~~~^^^^^^^^^^
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_d01.py", line 56, in _context_frame
+    assert value.startswith("V", offset), "malformed dependency-context frame"
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: malformed dependency-context frame

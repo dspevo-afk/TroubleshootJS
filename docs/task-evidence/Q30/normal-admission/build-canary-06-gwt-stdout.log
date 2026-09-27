@@ -1,0 +1,330 @@
+Compiling module com.lushprojects.circuitjs1.circuitjs1
+   Ignored 1 unit with compilation errors in first pass.
+Compile with -strict or with -logLevel set to TRACE or DEBUG to see all errors.
+   Finding entry point classes
+      Tracing compile failure path for type 'com.lushprojects.circuitjs1.client.circuitjs1'
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/circuitjs1.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/CirSim.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GenerationCoordinator cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/CircuitPostProbeTarget.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ActiveMeasurementStimulus.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/QuickPlaySession.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GeneratedBoardInstance cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ScopePopupMenu.java'
+            [ERROR] com.lushprojects.circuitjs1.client.Scope cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/WireElm.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/Scope.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedBoardInstance.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ScopeElm.java'
+            [ERROR] com.lushprojects.circuitjs1.client.Scope cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedChallengeController.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/NmosSlotController.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ImportFromDropboxDialog.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java'
+            [ERROR] Line 104: Cannot invoke clone() on the array type long[]
+            [ERROR] Line 348: Cannot invoke clone() on the array type long[]
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ResistanceMeasurementStimulus.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ImportFromDropbox.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/BoardModificationController.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PlayerSessionController.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GenerationRequest.java'
+            [ERROR] com.lushprojects.circuitjs1.client.BoundedGeneratedBoardAssembler.PreparedLayout cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ScrollValuePopup.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/DiodeSlotController.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/LoadFile.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PcbWorkbenchController.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/CircuitNode.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/InstrumentController.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/SliderDialog.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/CircuitElm.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/WorkbenchRelayFeedback.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/NpnSlotController.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/Scrollbar.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/BoardPowerController.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GeneratedExternalPowerBindings cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/CapacitorSlotController.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/CircuitPostMeasurementEndpoint.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ResistorStressDamageSystem.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/SolverTimeObservationService.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/LedSlotController.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/Adjustable.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/SwitchElm.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/EditDialog.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ResistorSlotController.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/QuickPlaySelector.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GeneratedBoardInstance cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ScopePropertiesDialog.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedBoardFamilyState.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GeneratedBoardOperationCatalog cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedChallengeDefinition.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GeneratedScenarioCatalog cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedComponentBindings.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedChallengeBehaviorContract.java'
+            [ERROR] com.lushprojects.circuitjs1.client.BoardModificationController cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedComponentOperationalStates.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalBoardRuntime cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedCustomerRetestProfile.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedPhysicalAdmission.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GeneratedBoardInstance cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PhysicalBoardRuntime.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedExternalPowerBindings.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedFaultCandidate.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedBoardOperationCatalog.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PcbConductorGraph.java'
+            [ERROR] com.lushprojects.circuitjs1.client.TroubleshootBoard cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProvider.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GeneratedBoardInstance cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticSolvabilityContract.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GeneratedBoardInstance cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedTemporalBehavior.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java'
+            [ERROR] com.lushprojects.circuitjs1.client.TroubleshootBoard cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedComponentConnectionBindings.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/BoardSimulationBindings.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitPostMeasurementEndpoint cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedFaultBinding.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/TroubleshootBoard.java'
+            [ERROR] com.lushprojects.circuitjs1.client.BoardSimulationBindings cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PcbConductorState.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PcbConductorGraph.Snapshot cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedFaultController.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedScenario.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofReceipt.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalSlotMutationProvider.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationSlot cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/CatalogAcquisitionProvider.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalPart cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ReplaceableNmosBoardCapability.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/WorkbenchOperation.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalPart cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PhysicalMutationScope.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalNmosPart.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GeneratedFaultBinding cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/WorkbenchCapabilityContext.java'
+            [ERROR] com.lushprojects.circuitjs1.client.WorkbenchOperation cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPart.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalBoardSlot cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalMutationSlot.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationScope cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/DifficultyAssessment.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GeneratedDiagnosticProofReceipt cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofCache.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GeneratedChallengeController cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticContextKey.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ResistorElm.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/DCVoltageElm.java'
+            [ERROR] com.lushprojects.circuitjs1.client.VoltageElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GroundElm.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedComponentConnectionBinding.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PlayerSession.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PlayerLaunchRequest cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/QuickPlayIdentityAllocator.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PlayerLaunchRequest cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PlayerLaunchRequest.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GenerationRequest cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/SupportedEnvelope.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GeneratedBoardInstance cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/Rb15Plan.java'
+            [ERROR] com.lushprojects.circuitjs1.client.RelayDriverProvider cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/Rb30Plan.java'
+            [ERROR] com.lushprojects.circuitjs1.client.RelayDriverProvider cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalDiodePart.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GeneratedFaultBinding cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ReplaceableDiodeBoardCapability.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/BenchPowerPanel.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/WorkbenchCapabilityStrategy.java'
+            [ERROR] com.lushprojects.circuitjs1.client.WorkbenchOperation cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/WorkbenchPartsProvider.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalPart cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/WorkbenchRenderBackend.java'
+            [ERROR] com.lushprojects.circuitjs1.client.WorkbenchPhysicalScene cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/WorkbenchRenderHost.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/CircuitNodeLink.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/InstrumentModeProvider.java'
+            [ERROR] com.lushprojects.circuitjs1.client.InstrumentModeStrategy cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/InstrumentModeStrategy.java'
+            [ERROR] com.lushprojects.circuitjs1.client.InstrumentController cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/InstrumentModeRegistry.java'
+            [ERROR] com.lushprojects.circuitjs1.client.InstrumentModeStrategy cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/CircuitMeasurementBoundary.java'
+            [ERROR] com.lushprojects.circuitjs1.client.SolverTimeObservationService.Subscription cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalNpnPart.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GeneratedFaultBinding cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ReplaceableNpnBoardCapability.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ReplaceableCapacitorBoardCapability.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalCapacitorPart.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CapacitorElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ReplaceableResistorBoardCapability.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalResistorPart.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationScope cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalLedPart.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GeneratedFaultBinding cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ReplaceableLedBoardCapability.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/LEDElm.java'
+            [ERROR] com.lushprojects.circuitjs1.client.DiodeElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPartIdentityFactory.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalPart cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/WorkbenchCapabilityRegistry.java'
+            [ERROR] com.lushprojects.circuitjs1.client.WorkbenchCapabilityStrategy cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalMutationReceipt.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationIntent cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalBoardSlot.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalBoardRuntime cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/ExternalPowerSimulationBinding.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedBoardOperation.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PcbLayoutRegion.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PcbBoardLayout cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ElectricalConstructionContext.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedFaultEffect.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java'
+            [ERROR] com.lushprojects.circuitjs1.client.TroubleshootBoard cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticPartitionPlan.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GeneratedFaultCandidate cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/NmosComponentSlot.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationScope cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPartInventory.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalBoardRuntime cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PhysicalMutationIntent.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalBoardRuntime cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPartCapability.java'
+            [ERROR] com.lushprojects.circuitjs1.client.WorkbenchCapabilityStrategy cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/CircuitPhysicalPartElectricalBacking.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPartElectricalBacking.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/NMosfetElm.java'
+            [ERROR] com.lushprojects.circuitjs1.client.MosfetElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPartMountState.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalBoardSlot cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedFaultOwningPart.java'
+            [ERROR] com.lushprojects.circuitjs1.client.GeneratedFaultBinding cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPartRenderMetadata.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalPartRenderProbeProvider cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/VoltageElm.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/RelayDriverProvider.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/DiodeElm.java'
+            [ERROR] com.lushprojects.circuitjs1.client.Diode cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/DiodeComponentSlot.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationScope cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/WorkbenchPhysicalScene.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PcbConductorGraph.Snapshot cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/WorkbenchPhysicalSceneSource.java'
+            [ERROR] com.lushprojects.circuitjs1.client.BoardModificationController cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/CanvasWorkbenchBackend.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPartRenderRegistry.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalPartRenderer cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/LoosePartPose.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalPart cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PhysicalPartRenderer.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/U01ViewportFixture.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PcbCopperViewCache.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PcbConductorGraph.Snapshot cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PhysicalPartRenderContext.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PcbWorkbenchRenderer cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/NTransistorElm.java'
+            [ERROR] com.lushprojects.circuitjs1.client.TransistorElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/NpnComponentSlot.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationScope cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/CapacitorComponentSlot.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationScope cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/CapacitorElm.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/ReplaceableComponentSlot.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationScope cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/ResistorSecondaryOpenPath.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/LedComponentSlot.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationScope cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/LimitedDcSupplyElm.java'
+            [ERROR] com.lushprojects.circuitjs1.client.DCVoltageElm cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/DiodeModel.java'
+            [ERROR] com.lushprojects.circuitjs1.client.Editable cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/TransistorModel.java'
+            [ERROR] com.lushprojects.circuitjs1.client.Editable cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPartTypeAdapter.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalPart cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/MosfetElm.java'
+            [ERROR] com.lushprojects.circuitjs1.client.Diode cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PhysicalPartRenderProbeProvider.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/Diode.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+         [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPartRenderProvider.java'
+            [ERROR] com.lushprojects.circuitjs1.client.PhysicalPartRenderer cannot be resolved to a type
+         [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/TransistorElm.java'
+            [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type

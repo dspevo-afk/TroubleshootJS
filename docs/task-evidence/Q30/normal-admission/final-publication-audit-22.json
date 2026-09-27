@@ -1,0 +1,93 @@
+{
+  "schema": "q30-final-publication-audit-v1",
+  "createdUtc": "2026-09-27T03:31:22.663Z",
+  "repositoryHead": "16a922b2b757dfcd1cbc3a0230ab2b97ac2fbb50",
+  "status": "PASS",
+  "scope": {
+    "modifiedTrackedTextFiles": 64,
+    "untrackedIntendedSourceTestFiles": 18,
+    "normalAdmissionFiles": 1123,
+    "totalDistinctInputFiles": 1205,
+    "groupCountsAndDigests": {
+      "modifiedTrackedText": {
+        "fileCount": 64,
+        "sortedPathBytesSha256": "87d6282e76e994887278947d4af443612474ea6ad3ef29886d4112ba58f31e4e"
+      },
+      "untrackedSourceTests": {
+        "fileCount": 18,
+        "sortedPathBytesSha256": "cd8c04ced43c49991fec56734bf6c86cb7387ec338cb3041689ac4de624b1906"
+      },
+      "normalAdmission": {
+        "fileCount": 1123,
+        "sortedPathBytesSha256": "d4226e9362165d20105f7dc870c3787dfbac69c51dcf77db1a5764c32147df7e"
+      }
+    },
+    "overlapsBetweenGroups": 0,
+    "includedSourceInputAudit": {
+      "path": "docs/task-evidence/Q30/normal-admission/final-source-input-audit-22.json",
+      "present": true,
+      "includedInNormalAdmissionDigest": true
+    },
+    "outputAuditExcludedFromItsOwnInputBoundary": "docs/task-evidence/Q30/normal-admission/final-publication-audit-22.json",
+    "ignoredInventoryExcludedFromInputBoundary": ".tools/q30-final-publication-input-inventory-22.json",
+    "ignoredToolsExcluded": true,
+    "retainedPycacheExcluded": {
+      "path": "tests/contracts/__pycache__/alpha_evidence_contract.cpython-313.pyc",
+      "exists": true,
+      "expectedBytes": 36855,
+      "expectedSha256": "287493fb893c9ba5db0c8c407272c8313a1a35876837afc65ace37ee68e1e4701b",
+      "actualBytes": 47306,
+      "actualSha256": "d4c5fd3635bd524bd0f1160869995c02c064f91ace9eb5ec49121adb2ea94387",
+      "matchesExpected": false
+    },
+    "oldPreflightPreserved": {
+      "path": "docs/task-evidence/Q30/normal-admission/final-evidence-preflight-22.json",
+      "status": "FINDINGS_RECORDED",
+      "statusRemainsFindingsRecorded": true
+    }
+  },
+  "digest": {
+    "algorithm": "SHA-256",
+    "canonicalEncoding": "UTF-8 without BOM",
+    "rowFormat": "normalized repository-relative path<TAB>base-10 byte count<TAB>lowercase file SHA-256<LF>",
+    "sortOrder": "ordinal ascending by normalized repository-relative path",
+    "finalLfIncluded": true,
+    "combinedDistinctInputFileCount": 1205,
+    "combinedSha256": "fa27f70e7423a443598ec1f09ee92895ccf46f733f6e12381aa7fdd953fa874d",
+    "inventoryFile": {
+      "path": ".tools/q30-final-publication-input-inventory-22.json",
+      "fileCount": 1205,
+      "sha256": "0abe388d4d9338abb21e879176571834f16ef6327e9f4e073496d43f20a3af68"
+    }
+  },
+  "checks": {
+    "json": {
+      "filesChecked": 703,
+      "parseErrorCount": 0,
+      "errors": []
+    },
+    "size": {
+      "thresholdBytes": 5000000,
+      "thresholdDescription": "strictly greater than 5,000,000 bytes (5 MB decimal)",
+      "oversizedFileCount": 0,
+      "oversizedFiles": []
+    },
+    "personalAbsolutePaths": {
+      "candidateFileCount": 0,
+      "candidates": [],
+      "normalAndEscapedBackslashesChecked": true,
+      "escapedForwardSlashesNormalized": true,
+      "unixPathsRequireAbsoluteRootBoundary": true
+    },
+    "suspiciousLogPrivateData": {
+      "logFilesScanned": 228,
+      "indicatorCount": 0,
+      "indicators": []
+    }
+  },
+  "auditSelf": {
+    "excludedFromInputDigest": true,
+    "selfSha256StoredOutsideAudit": true,
+    "mustBeRecomputedAfterWrite": true
+  }
+}

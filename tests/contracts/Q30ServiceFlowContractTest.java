@@ -30,7 +30,8 @@ public final class Q30ServiceFlowContractTest {
 
     public static void main(String[] args) {
         long started = System.nanoTime();
-        long[] seeds = { 0L, 37L };
+        // Accepted epoch3 rows; the maintained runner supplies the full eight-axis census.
+        long[] seeds = { 7L, 3L };
         int selectedHypothesis = -1;
         long selectedSeed = 0L;
         String selectedFault = null;
@@ -38,10 +39,10 @@ public final class Q30ServiceFlowContractTest {
             if (args.length != 4 || !"--seed".equals(args[0]) ||
                     !"--fault".equals(args[2]))
                 throw new IllegalArgumentException(
-                    "Usage: [--seed 0|37 --fault DREV_OPEN|REN_OPEN|SENSOR_A_OPEN|DRIVE_A_OPEN|RELAY_B_COIL_OPEN]");
-            if ("0".equals(args[1])) selectedSeed = 0L;
-            else if ("37".equals(args[1])) selectedSeed = 37L;
-            else throw new IllegalArgumentException("Unsupported Q30 service seed: " + args[1]);
+                    "Usage: [--seed <canonical-signed-long> --fault DREV_OPEN|REN_OPEN|SENSOR_A_OPEN|DRIVE_A_OPEN|RELAY_B_COIL_OPEN]");
+            selectedSeed = Long.parseLong(args[1]);
+            if (!Long.toString(selectedSeed).equals(args[1]))
+                throw new IllegalArgumentException("Noncanonical Q30 service seed: " + args[1]);
             selectedFault = args[3];
             selectedHypothesis = hypothesisIndex(selectedFault);
             seeds = new long[] { selectedSeed };
@@ -448,13 +449,26 @@ public final class Q30ServiceFlowContractTest {
         sim.solverExecutor.advanceSteps(8);
     }
 
-    private static void configureSimulator(CirSim sim) {
+    static void configureSimulator(CirSim sim) {
+        configureSimulator(sim, 5e-6);
+    }
+
+    static void configureSimulator(CirSim sim, double maxStep) {
+        if (!Double.isFinite(maxStep) || maxStep <= 0)
+            throw new IllegalArgumentException("Invalid Q30 solver maximum step");
+        // Production circuitjs1.onModuleLoad() creates this shared English
+        // fallback table before constructing CirSim. Native fixtures skip the
+        // entry point, so initialize the same table rather than masking a real
+        // solver stop with an NPE inside CirSim.LS().
+        CirSim.localizationMap = new HashMap<String, String>();
         sim.gridSize = 16;
         sim.gridMask = ~15;
         sim.gridRound = 7;
-        // Explicit Q30 qualification settings, also selected by the compiled
-        // developer entry. Fresh CirSim's adaptive flag otherwise defaults false.
-        sim.maxTimeStep = 5e-6;
+        // Explicit Q30 qualification settings. The paired solver-sensitivity
+        // contract varies only this maximum; adaptive stepping and its lower
+        // bound remain fixed. Fresh CirSim's adaptive flag defaults false.
+        sim.timeStep = maxStep;
+        sim.maxTimeStep = maxStep;
         sim.minTimeStep = 50e-12;
         sim.adjustTimeStep = true;
     }
@@ -489,7 +503,7 @@ public final class Q30ServiceFlowContractTest {
     }
 
     /** Native fixture follows production solver invalidation without GWT repaint. */
-    private static final class NativeServiceCirSim extends CirSim {
+    static class NativeServiceCirSim extends CirSim {
         boolean nativeProfilesReady;
         @Override void needAnalyze() {
             if (elmList != null && CircuitElm.sim == this) solverExecutor.invalidate();

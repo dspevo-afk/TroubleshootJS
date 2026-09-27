@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "rows": 3,
+  "signedLongExtremesExact": true,
+  "aboveJavascriptIntegerRangeExact": true,
+  "indicesPreserved": true,
+  "exitCode": 0,
+  "cleanup": "PASS",
+  "fullMatrix": "NOT_RUN"
+}

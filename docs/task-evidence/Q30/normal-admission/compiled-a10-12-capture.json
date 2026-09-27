@@ -1,0 +1,32 @@
+{
+  "verification": "PASS:a10",
+  "provenance": [
+    [
+      "data-tsj-preview-identity-protocol",
+      "troubleshootjs-execution-provenance-v1"
+    ],
+    [
+      "data-tsj-preview-source-digest",
+      "df00cf5944e05bc4131b53c017ef43307e19f3069ce3f6ec5b7383ad9a33e8c6"
+    ],
+    [
+      "data-tsj-preview-script-digest",
+      "b8af5fcb261eaf92c8100a8be2030591bbe36c71670bc29a678950d51fab1d3b"
+    ],
+    [
+      "data-tsj-preview-web-digest",
+      "e7d87a1f0f7dbb69312d5d7e74c8c52064835b9fec96495a2b0b851ff822e8d6"
+    ],
+    [
+      "data-tsj-preview-execution-digest",
+      "97f76d267602f0517b589c076c3d13416caadfbb94df3a59205bed3456a04394"
+    ],
+    [
+      "data-tsj-preview-file-count",
+      "1542"
+    ]
+  ],
+  "length": 33342,
+  "capturedUtc": "2026-09-26T20:04:35.098Z",
+  "inspectionLimitation": "Intermediate DOM inspection timed out during synchronous verifier work; final DOM report read complete."
+}

@@ -1,0 +1,335 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+[java-version:stderr] openjdk version "1.8.0_502"
+[java-version:stderr] OpenJDK Runtime Environment (Temurin)(build 1.8.0_502-b07)
+[java-version:stderr] OpenJDK 64-Bit Server VM (Temurin)(build 25.502-b07, mixed mode)
+[gwt-compile:stdout] Compiling module com.lushprojects.circuitjs1.circuitjs1
+[gwt-compile:stdout]    Ignored 1 unit with compilation errors in first pass.
+[gwt-compile:stdout] Compile with -strict or with -logLevel set to TRACE or DEBUG to see all errors.
+[gwt-compile:stdout]    Finding entry point classes
+[gwt-compile:stdout]       Tracing compile failure path for type 'com.lushprojects.circuitjs1.client.circuitjs1'
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/circuitjs1.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/CirSim.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GenerationCoordinator cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/CircuitPostProbeTarget.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ActiveMeasurementStimulus.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/QuickPlaySession.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GeneratedBoardInstance cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ScopePopupMenu.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.Scope cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/WireElm.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/Scope.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedBoardInstance.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ScopeElm.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.Scope cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedChallengeController.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/NmosSlotController.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ImportFromDropboxDialog.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java'
+[gwt-compile:stdout]             [ERROR] Line 104: Cannot invoke clone() on the array type long[]
+[gwt-compile:stdout]             [ERROR] Line 348: Cannot invoke clone() on the array type long[]
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ResistanceMeasurementStimulus.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ImportFromDropbox.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/BoardModificationController.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PlayerSessionController.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GenerationRequest.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.BoundedGeneratedBoardAssembler.PreparedLayout cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ScrollValuePopup.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/DiodeSlotController.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/LoadFile.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PcbWorkbenchController.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/CircuitNode.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/InstrumentController.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/SliderDialog.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/CircuitElm.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/WorkbenchRelayFeedback.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/NpnSlotController.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/Scrollbar.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/BoardPowerController.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GeneratedExternalPowerBindings cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/CapacitorSlotController.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/CircuitPostMeasurementEndpoint.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ResistorStressDamageSystem.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/SolverTimeObservationService.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/LedSlotController.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/Adjustable.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/SwitchElm.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/EditDialog.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ResistorSlotController.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/QuickPlaySelector.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GeneratedBoardInstance cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ScopePropertiesDialog.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedBoardFamilyState.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GeneratedBoardOperationCatalog cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedChallengeDefinition.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GeneratedScenarioCatalog cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedComponentBindings.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedChallengeBehaviorContract.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.BoardModificationController cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedComponentOperationalStates.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalBoardRuntime cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedCustomerRetestProfile.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedPhysicalAdmission.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GeneratedBoardInstance cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PhysicalBoardRuntime.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedExternalPowerBindings.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedFaultCandidate.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedBoardOperationCatalog.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PcbConductorGraph.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.TroubleshootBoard cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProvider.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GeneratedBoardInstance cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticSolvabilityContract.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GeneratedBoardInstance cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedTemporalBehavior.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.TroubleshootBoard cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedComponentConnectionBindings.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/BoardSimulationBindings.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitPostMeasurementEndpoint cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedFaultBinding.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/TroubleshootBoard.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.BoardSimulationBindings cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PcbConductorState.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PcbConductorGraph.Snapshot cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedFaultController.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedScenario.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofReceipt.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalSlotMutationProvider.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationSlot cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/CatalogAcquisitionProvider.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalPart cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ReplaceableNmosBoardCapability.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/WorkbenchOperation.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalPart cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PhysicalMutationScope.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalNmosPart.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GeneratedFaultBinding cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/WorkbenchCapabilityContext.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.WorkbenchOperation cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPart.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalBoardSlot cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalMutationSlot.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationScope cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/DifficultyAssessment.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GeneratedDiagnosticProofReceipt cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofCache.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GeneratedChallengeController cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticContextKey.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ResistorElm.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/DCVoltageElm.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.VoltageElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GroundElm.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedComponentConnectionBinding.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PlayerSession.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PlayerLaunchRequest cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/QuickPlayIdentityAllocator.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PlayerLaunchRequest cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PlayerLaunchRequest.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GenerationRequest cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/SupportedEnvelope.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GeneratedBoardInstance cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/Rb15Plan.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.RelayDriverProvider cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/Rb30Plan.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.RelayDriverProvider cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalDiodePart.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GeneratedFaultBinding cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ReplaceableDiodeBoardCapability.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/BenchPowerPanel.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/WorkbenchCapabilityStrategy.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.WorkbenchOperation cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/WorkbenchPartsProvider.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalPart cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/WorkbenchRenderBackend.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.WorkbenchPhysicalScene cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/WorkbenchRenderHost.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/CircuitNodeLink.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/InstrumentModeProvider.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.InstrumentModeStrategy cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/InstrumentModeStrategy.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.InstrumentController cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/InstrumentModeRegistry.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.InstrumentModeStrategy cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/CircuitMeasurementBoundary.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.SolverTimeObservationService.Subscription cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalNpnPart.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GeneratedFaultBinding cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ReplaceableNpnBoardCapability.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ReplaceableCapacitorBoardCapability.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalCapacitorPart.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CapacitorElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ReplaceableResistorBoardCapability.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalResistorPart.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationScope cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalLedPart.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GeneratedFaultBinding cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ReplaceableLedBoardCapability.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/LEDElm.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.DiodeElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPartIdentityFactory.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalPart cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/WorkbenchCapabilityRegistry.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.WorkbenchCapabilityStrategy cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalMutationReceipt.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationIntent cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalBoardSlot.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalBoardRuntime cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/ExternalPowerSimulationBinding.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GeneratedBoardOperation.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PcbLayoutRegion.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PcbBoardLayout cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/ElectricalConstructionContext.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedFaultEffect.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.TroubleshootBoard cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticPartitionPlan.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GeneratedFaultCandidate cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/NmosComponentSlot.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationScope cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPartInventory.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalBoardRuntime cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PhysicalMutationIntent.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalBoardRuntime cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPartCapability.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.WorkbenchCapabilityStrategy cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/CircuitPhysicalPartElectricalBacking.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPartElectricalBacking.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/NMosfetElm.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.MosfetElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPartMountState.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalBoardSlot cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/GeneratedFaultOwningPart.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.GeneratedFaultBinding cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPartRenderMetadata.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalPartRenderProbeProvider cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/VoltageElm.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/RelayDriverProvider.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/DiodeElm.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.Diode cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/DiodeComponentSlot.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationScope cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/WorkbenchPhysicalScene.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PcbConductorGraph.Snapshot cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/WorkbenchPhysicalSceneSource.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.BoardModificationController cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/CanvasWorkbenchBackend.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPartRenderRegistry.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalPartRenderer cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/LoosePartPose.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalPart cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PhysicalPartRenderer.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/U01ViewportFixture.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PcbCopperViewCache.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PcbConductorGraph.Snapshot cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PhysicalPartRenderContext.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PcbWorkbenchRenderer cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/NTransistorElm.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.TransistorElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/NpnComponentSlot.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationScope cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/CapacitorComponentSlot.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationScope cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/CapacitorElm.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/ReplaceableComponentSlot.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationScope cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/ResistorSecondaryOpenPath.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/LedComponentSlot.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalMutationScope cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/LimitedDcSupplyElm.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.DCVoltageElm cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/DiodeModel.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.Editable cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/TransistorModel.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.Editable cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPartTypeAdapter.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalPart cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/MosfetElm.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.Diode cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/PhysicalPartRenderProbeProvider.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/Diode.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CirSim cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<task-temp>/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73/src/com/lushprojects/circuitjs1/client/PhysicalPartRenderProvider.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.PhysicalPartRenderer cannot be resolved to a type
+[gwt-compile:stdout]          [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/TransistorElm.java'
+[gwt-compile:stdout]             [ERROR] com.lushprojects.circuitjs1.client.CircuitElm cannot be resolved to a type
+BUILD_INFRASTRUCTURE: GWT Compile failed with exit code 1. Logs retained at '<task-temp>\TroubleshootJS\build-process-3773ef51d74c4d27b031d969bf5c4ba4'.

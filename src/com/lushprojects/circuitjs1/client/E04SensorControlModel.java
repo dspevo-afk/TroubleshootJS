@@ -1604,6 +1604,16 @@ public final class E04SensorControlModel {
                 fallingThresholdOffsetVolts == other.fallingThresholdOffsetVolts;
         }
 
+        /** Stable identity of the immutable declaration, excluding solver state and pose. */
+        String declarationIdentity() {
+            return "E04_DECISION@1|variant=" + variant.name() +
+                "|nominal=" + Double.toString(nominalRailVoltage) +
+                "|minimum=" + Double.toString(minimumOperatingVoltage) +
+                "|direct=" + Double.toString(directThresholdOffsetVolts) +
+                "|rising=" + Double.toString(risingThresholdOffsetVolts) +
+                "|falling=" + Double.toString(fallingThresholdOffsetVolts);
+        }
+
         private static Variant parseVariant(StringTokenizer st) {
             if (st == null || !st.hasMoreTokens())
                 throw new IllegalArgumentException("Missing E04 decision variant");

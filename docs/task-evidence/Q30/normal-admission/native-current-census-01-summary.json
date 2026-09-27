@@ -1,0 +1,2544 @@
+{
+  "censusCompletenessSelfTests": [
+    {
+      "basis": "removed one actual receipt row in memory",
+      "expectedRows": 40,
+      "name": "service 40-row census completeness",
+      "observedRows": 40,
+      "observedSuiteStatus": "FAIL",
+      "removedRowStatus": "FAIL",
+      "status": "PASS"
+    },
+    {
+      "basis": "removed one actual receipt row in memory",
+      "expectedRows": 40,
+      "name": "sensitivity 40-row census completeness",
+      "observedRows": 40,
+      "observedSuiteStatus": "FAIL",
+      "removedRowStatus": "FAIL",
+      "status": "PASS"
+    }
+  ],
+  "corruptionSelfTests": [
+    {
+      "basis": "removed one actual passing receipt row in memory",
+      "name": "service missing-row",
+      "observedRowStatus": "FAIL",
+      "status": "PASS"
+    },
+    {
+      "basis": "duplicated one actual passing receipt row in memory",
+      "name": "service duplicate-row",
+      "observedRowStatus": "FAIL",
+      "status": "PASS"
+    },
+    {
+      "basis": "changed termination metadata on an actual passing receipt row in memory",
+      "name": "sensitivity termination",
+      "observedRowStatus": "FAIL",
+      "status": "PASS"
+    },
+    {
+      "basis": "changed current candidate markers to the retired 10 us profile in an actual passing receipt row",
+      "name": "sensitivity legacy 10us rejection",
+      "observedRowStatus": "FAIL",
+      "status": "PASS"
+    }
+  ],
+  "currentSensitivityProfile": {
+    "candidateKind": "PRODUCTION_5_US",
+    "productionCandidateMaximumStepSeconds": "5.00000000e-06",
+    "referenceMaximumStepSeconds": "2.50000000e-06"
+  },
+  "expectedRowsPerSuite": 40,
+  "expectedTotalRows": 80,
+  "faultOrder": [
+    "RELAY_B_COIL_OPEN",
+    "DREV_OPEN",
+    "REN_OPEN",
+    "SENSOR_A_OPEN",
+    "DRIVE_A_OPEN"
+  ],
+  "fullMatrixStatus": "NOT RUN",
+  "observedTotalRows": 80,
+  "overallIssues": [],
+  "requestedSeeds": [
+    "7",
+    "13",
+    "4",
+    "14",
+    "43",
+    "3",
+    "10",
+    "64"
+  ],
+  "runnerScope": "selected-census",
+  "runnerScopeSelfTests": [
+    {
+      "name": "selected marker accepted only in selected-census scope",
+      "status": "PASS"
+    },
+    {
+      "name": "selected marker rejected by default full scope",
+      "status": "PASS"
+    },
+    {
+      "name": "missing runner marker rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "wrong focused suite count rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "full marker cannot be relabeled as selected-census",
+      "status": "PASS"
+    },
+    {
+      "name": "selected marker cannot satisfy full scope",
+      "status": "PASS"
+    }
+  ],
+  "schema": "q30-native-service-audit-v1",
+  "selectedCensusStatus": "PASS",
+  "sensitivity": {
+    "census": [
+      {
+        "attempted": 40,
+        "childBudgetMs": 60000,
+        "failed": 0,
+        "passed": 40,
+        "raw": "Q30_SENSITIVITY_CENSUS attempted=40 passed=40 failed=0 childBudgetMs=60000"
+      }
+    ],
+    "censusIssues": [],
+    "cleanupAudit": {
+      "acceptedRunnerSuccessMarkers": 1,
+      "cleanupFailureMarkers": [],
+      "cleanupSuccessMarkers": 1,
+      "passed": true,
+      "runnerFailureMarkers": [],
+      "runnerScope": "selected-census",
+      "runnerScopeIssues": [],
+      "runnerSuccessMarkers": 1,
+      "timeoutPolicy": "A row is TIMEOUT only when receipt metadata explicitly records timeout=True and termination=True; unattributed timeout text alone remains a failed run.",
+      "unattributedTimeoutDiagnostics": []
+    },
+    "cleanupSummary": {
+      "failedOrUnrunRows": [],
+      "failedRowsWithCleanupEvidence": [],
+      "successfulCleanupMeasurements": [
+        {
+          "elapsedMillis": 0,
+          "key": "7/DREV_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/DREV_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/DREV_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/DREV_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/DREV_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/REN_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/REN_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/REN_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/REN_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/REN_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/SENSOR_A_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/SENSOR_A_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/SENSOR_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/SENSOR_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/SENSOR_A_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/DRIVE_A_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/DRIVE_A_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/DRIVE_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/DRIVE_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/DRIVE_A_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/RELAY_B_COIL_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/RELAY_B_COIL_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/RELAY_B_COIL_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/RELAY_B_COIL_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "7/RELAY_B_COIL_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/DREV_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/DREV_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/DREV_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/DREV_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/DREV_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/REN_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/REN_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/REN_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/REN_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/REN_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/SENSOR_A_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/SENSOR_A_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/SENSOR_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/SENSOR_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/SENSOR_A_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/DRIVE_A_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/DRIVE_A_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/DRIVE_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/DRIVE_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/DRIVE_A_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/RELAY_B_COIL_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/RELAY_B_COIL_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/RELAY_B_COIL_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/RELAY_B_COIL_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "13/RELAY_B_COIL_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/DREV_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/DREV_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/DREV_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/DREV_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/DREV_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/REN_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/REN_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/REN_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/REN_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/REN_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/SENSOR_A_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/SENSOR_A_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/SENSOR_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/SENSOR_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/SENSOR_A_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/DRIVE_A_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/DRIVE_A_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/DRIVE_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/DRIVE_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/DRIVE_A_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/RELAY_B_COIL_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/RELAY_B_COIL_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/RELAY_B_COIL_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/RELAY_B_COIL_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "4/RELAY_B_COIL_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/DREV_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/DREV_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/DREV_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/DREV_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/DREV_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/REN_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/REN_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/REN_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/REN_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/REN_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/SENSOR_A_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/SENSOR_A_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/SENSOR_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/SENSOR_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/SENSOR_A_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/DRIVE_A_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/DRIVE_A_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/DRIVE_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/DRIVE_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/DRIVE_A_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/RELAY_B_COIL_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/RELAY_B_COIL_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/RELAY_B_COIL_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/RELAY_B_COIL_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "14/RELAY_B_COIL_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/DREV_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/DREV_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/DREV_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/DREV_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/DREV_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/REN_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/REN_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/REN_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/REN_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/REN_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/SENSOR_A_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/SENSOR_A_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/SENSOR_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/SENSOR_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/SENSOR_A_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/DRIVE_A_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/DRIVE_A_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/DRIVE_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/DRIVE_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/DRIVE_A_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/RELAY_B_COIL_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/RELAY_B_COIL_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/RELAY_B_COIL_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/RELAY_B_COIL_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "43/RELAY_B_COIL_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/DREV_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/DREV_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/DREV_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/DREV_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/DREV_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/REN_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/REN_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/REN_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/REN_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/REN_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/SENSOR_A_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/SENSOR_A_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/SENSOR_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/SENSOR_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/SENSOR_A_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/DRIVE_A_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/DRIVE_A_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/DRIVE_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/DRIVE_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/DRIVE_A_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/RELAY_B_COIL_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/RELAY_B_COIL_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/RELAY_B_COIL_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/RELAY_B_COIL_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "3/RELAY_B_COIL_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/DREV_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/DREV_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/DREV_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/DREV_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/DREV_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/REN_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/REN_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/REN_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/REN_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/REN_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/SENSOR_A_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/SENSOR_A_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/SENSOR_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/SENSOR_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/SENSOR_A_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/DRIVE_A_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/DRIVE_A_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/DRIVE_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/DRIVE_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/DRIVE_A_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/RELAY_B_COIL_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/RELAY_B_COIL_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/RELAY_B_COIL_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/RELAY_B_COIL_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "10/RELAY_B_COIL_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/DREV_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/DREV_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/DREV_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/DREV_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/DREV_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/REN_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/REN_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/REN_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/REN_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/REN_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/SENSOR_A_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/SENSOR_A_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/SENSOR_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/SENSOR_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/SENSOR_A_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/DRIVE_A_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/DRIVE_A_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/DRIVE_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/DRIVE_A_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/DRIVE_A_OPEN",
+          "operation": "seedCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/RELAY_B_COIL_OPEN",
+          "operation": "referenceCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/RELAY_B_COIL_OPEN",
+          "operation": "productionCandidateCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/RELAY_B_COIL_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/RELAY_B_COIL_OPEN",
+          "operation": "ownerCleanupMillis"
+        },
+        {
+          "elapsedMillis": 0,
+          "key": "64/RELAY_B_COIL_OPEN",
+          "operation": "seedCleanupMillis"
+        }
+      ],
+      "successfulRowCount": 40
+    },
+    "expectedRowCount": 40,
+    "operationTimings": {
+      "failedRowTimings": [],
+      "percentileMethod": "linear interpolation over sorted successful-row durations",
+      "successfulProductionOperation": {
+        "maximumStepSeconds": "5.00000000e-06",
+        "successfulCount": 40,
+        "successfulP50Millis": 8975.0,
+        "successfulP95Millis": 10347.4
+      },
+      "successfulReferenceOperation": {
+        "maximumStepSeconds": "2.50000000e-06",
+        "successfulCount": 40,
+        "successfulP50Millis": 17227.5,
+        "successfulP95Millis": 20041.8
+      }
+    },
+    "receiptOrderIssues": [],
+    "rows": [
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "DREV_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=7 fault=DREV_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 8270,
+          "referenceElapsedMillis": 15968
+        },
+        "seed": "7",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "REN_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=7 fault=REN_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 7364,
+          "referenceElapsedMillis": 14452
+        },
+        "seed": "7",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "SENSOR_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=7 fault=SENSOR_A_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 8017,
+          "referenceElapsedMillis": 15245
+        },
+        "seed": "7",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "DRIVE_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=7 fault=DRIVE_A_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 8135,
+          "referenceElapsedMillis": 15500
+        },
+        "seed": "7",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "RELAY_B_COIL_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=7 fault=RELAY_B_COIL_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 9066,
+          "referenceElapsedMillis": 17322
+        },
+        "seed": "7",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "DREV_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=13 fault=DREV_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 9127,
+          "referenceElapsedMillis": 18125
+        },
+        "seed": "13",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "REN_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=13 fault=REN_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 8242,
+          "referenceElapsedMillis": 16316
+        },
+        "seed": "13",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "SENSOR_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=13 fault=SENSOR_A_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 9652,
+          "referenceElapsedMillis": 18953
+        },
+        "seed": "13",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "DRIVE_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=13 fault=DRIVE_A_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 9137,
+          "referenceElapsedMillis": 17805
+        },
+        "seed": "13",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "RELAY_B_COIL_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=13 fault=RELAY_B_COIL_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 10393,
+          "referenceElapsedMillis": 20247
+        },
+        "seed": "13",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "DREV_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=4 fault=DREV_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 9350,
+          "referenceElapsedMillis": 18736
+        },
+        "seed": "4",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "REN_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=4 fault=REN_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 8277,
+          "referenceElapsedMillis": 16448
+        },
+        "seed": "4",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "SENSOR_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=4 fault=SENSOR_A_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 9648,
+          "referenceElapsedMillis": 19072
+        },
+        "seed": "4",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "DRIVE_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=4 fault=DRIVE_A_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 9661,
+          "referenceElapsedMillis": 18953
+        },
+        "seed": "4",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "RELAY_B_COIL_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=4 fault=RELAY_B_COIL_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 10745,
+          "referenceElapsedMillis": 20031
+        },
+        "seed": "4",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "DREV_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=14 fault=DREV_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 8258,
+          "referenceElapsedMillis": 16201
+        },
+        "seed": "14",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "REN_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=14 fault=REN_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 7386,
+          "referenceElapsedMillis": 14639
+        },
+        "seed": "14",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "SENSOR_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=14 fault=SENSOR_A_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 8285,
+          "referenceElapsedMillis": 16165
+        },
+        "seed": "14",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "DRIVE_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=14 fault=DRIVE_A_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 8083,
+          "referenceElapsedMillis": 15922
+        },
+        "seed": "14",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "RELAY_B_COIL_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=14 fault=RELAY_B_COIL_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 9256,
+          "referenceElapsedMillis": 18038
+        },
+        "seed": "14",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "DREV_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=43 fault=DREV_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 9287,
+          "referenceElapsedMillis": 17986
+        },
+        "seed": "43",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "REN_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=43 fault=REN_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 8250,
+          "referenceElapsedMillis": 16279
+        },
+        "seed": "43",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "SENSOR_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=43 fault=SENSOR_A_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 9311,
+          "referenceElapsedMillis": 17378
+        },
+        "seed": "43",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "DRIVE_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=43 fault=DRIVE_A_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 9226,
+          "referenceElapsedMillis": 17133
+        },
+        "seed": "43",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "RELAY_B_COIL_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=43 fault=RELAY_B_COIL_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 10160,
+          "referenceElapsedMillis": 19058
+        },
+        "seed": "43",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "DREV_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=3 fault=DREV_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 9307,
+          "referenceElapsedMillis": 18334
+        },
+        "seed": "3",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "REN_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=3 fault=REN_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 8325,
+          "referenceElapsedMillis": 16491
+        },
+        "seed": "3",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "SENSOR_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=3 fault=SENSOR_A_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 9479,
+          "referenceElapsedMillis": 18597
+        },
+        "seed": "3",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "DRIVE_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=3 fault=DRIVE_A_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 9179,
+          "referenceElapsedMillis": 18073
+        },
+        "seed": "3",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "RELAY_B_COIL_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=3 fault=RELAY_B_COIL_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 10345,
+          "referenceElapsedMillis": 20260
+        },
+        "seed": "3",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "DREV_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=10 fault=DREV_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 8369,
+          "referenceElapsedMillis": 16681
+        },
+        "seed": "10",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "REN_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=10 fault=REN_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 7427,
+          "referenceElapsedMillis": 14725
+        },
+        "seed": "10",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "SENSOR_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=10 fault=SENSOR_A_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 8402,
+          "referenceElapsedMillis": 16598
+        },
+        "seed": "10",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "DRIVE_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=10 fault=DRIVE_A_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 8346,
+          "referenceElapsedMillis": 16463
+        },
+        "seed": "10",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "RELAY_B_COIL_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=10 fault=RELAY_B_COIL_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 8851,
+          "referenceElapsedMillis": 16995
+        },
+        "seed": "10",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "DREV_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=64 fault=DREV_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 8912,
+          "referenceElapsedMillis": 17856
+        },
+        "seed": "64",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "REN_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=64 fault=REN_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 8115,
+          "referenceElapsedMillis": 16105
+        },
+        "seed": "64",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "SENSOR_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=64 fault=SENSOR_A_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 9038,
+          "referenceElapsedMillis": 17958
+        },
+        "seed": "64",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "DRIVE_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=64 fault=DRIVE_A_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 8637,
+          "referenceElapsedMillis": 17130
+        },
+        "seed": "64",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": {
+          "ownerCleanupMillis": [
+            0,
+            0
+          ],
+          "productionCandidateCleanupMillis": 0,
+          "referenceCleanupMillis": 0,
+          "seedCleanupMillis": 0
+        },
+        "elapsedMillis": null,
+        "failureEvidence": null,
+        "fault": "RELAY_B_COIL_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_SENSITIVITY_CASE seed=64 fault=RELAY_B_COIL_OPEN exit=0 termination=True qualified=True",
+        "operationTimingsMillis": {
+          "productionCandidateElapsedMillis": 9971,
+          "referenceElapsedMillis": 19659
+        },
+        "seed": "64",
+        "status": "PASS"
+      }
+    ],
+    "status": "PASS",
+    "unexpectedReceiptRows": []
+  },
+  "sensitivityFaultOrder": [
+    "DREV_OPEN",
+    "REN_OPEN",
+    "SENSOR_A_OPEN",
+    "DRIVE_A_OPEN",
+    "RELAY_B_COIL_OPEN"
+  ],
+  "service": {
+    "census": [
+      {
+        "attempted": 40,
+        "childBudgetMs": 60000,
+        "failed": 0,
+        "failedCases": "none",
+        "faults": 5,
+        "order": [
+          "RELAY_B_COIL_OPEN",
+          "DREV_OPEN",
+          "REN_OPEN",
+          "SENSOR_A_OPEN",
+          "DRIVE_A_OPEN"
+        ],
+        "passed": 40,
+        "raw": "PASS: Q30 service flow census attempted=40 passed=40 failed=0 failedCases=none seeds=7,13,4,14,43,3,10,64 faults=5 order=RELAY_B_COIL_OPEN,DREV_OPEN,REN_OPEN,SENSOR_A_OPEN,DRIVE_A_OPEN childBudgetMs=60000",
+        "seeds": [
+          "7",
+          "13",
+          "4",
+          "14",
+          "43",
+          "3",
+          "10",
+          "64"
+        ],
+        "status": "PASS"
+      }
+    ],
+    "censusIssues": [],
+    "cleanupAudit": {
+      "acceptedRunnerSuccessMarkers": 1,
+      "cleanupFailureMarkers": [],
+      "cleanupSuccessMarkers": 1,
+      "passed": true,
+      "runnerFailureMarkers": [],
+      "runnerScope": "selected-census",
+      "runnerScopeIssues": [],
+      "runnerSuccessMarkers": 1,
+      "timeoutPolicy": "A row is TIMEOUT only when receipt metadata explicitly records timeout=True and termination=True; unattributed timeout text alone remains a failed run.",
+      "unattributedTimeoutDiagnostics": []
+    },
+    "expectedRowCount": 40,
+    "operationTimings": {
+      "failedRowTimings": [],
+      "operation": "route-replay-and-service",
+      "percentileMethod": "linear interpolation over sorted successful-row durations",
+      "successfulCount": 40,
+      "successfulP50Millis": 17133.0,
+      "successfulP95Millis": 21619.25
+    },
+    "receiptOrderIssues": [],
+    "rows": [
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 19103,
+        "failureEvidence": null,
+        "fault": "RELAY_B_COIL_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|7|RELAY_B_COIL_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "7",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 16111,
+        "failureEvidence": null,
+        "fault": "DREV_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|7|DREV_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "7",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 14943,
+        "failureEvidence": null,
+        "fault": "REN_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|7|REN_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "7",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 15192,
+        "failureEvidence": null,
+        "fault": "SENSOR_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|7|SENSOR_A_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "7",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 15605,
+        "failureEvidence": null,
+        "fault": "DRIVE_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|7|DRIVE_A_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "7",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 19372,
+        "failureEvidence": null,
+        "fault": "RELAY_B_COIL_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|13|RELAY_B_COIL_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "13",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 16995,
+        "failureEvidence": null,
+        "fault": "DREV_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|13|DREV_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "13",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 16119,
+        "failureEvidence": null,
+        "fault": "REN_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|13|REN_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "13",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 17142,
+        "failureEvidence": null,
+        "fault": "SENSOR_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|13|SENSOR_A_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "13",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 17370,
+        "failureEvidence": null,
+        "fault": "DRIVE_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|13|DRIVE_A_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "13",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 24073,
+        "failureEvidence": null,
+        "fault": "RELAY_B_COIL_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|4|RELAY_B_COIL_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "4",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 21595,
+        "failureEvidence": null,
+        "fault": "DREV_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|4|DREV_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "4",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 19678,
+        "failureEvidence": null,
+        "fault": "REN_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|4|REN_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "4",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 20800,
+        "failureEvidence": null,
+        "fault": "SENSOR_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|4|SENSOR_A_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "4",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 20994,
+        "failureEvidence": null,
+        "fault": "DRIVE_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|4|DRIVE_A_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "4",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 19838,
+        "failureEvidence": null,
+        "fault": "RELAY_B_COIL_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|14|RELAY_B_COIL_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "14",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 17878,
+        "failureEvidence": null,
+        "fault": "DREV_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|14|DREV_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "14",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 17194,
+        "failureEvidence": null,
+        "fault": "REN_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|14|REN_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "14",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 17151,
+        "failureEvidence": null,
+        "fault": "SENSOR_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|14|SENSOR_A_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "14",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 17124,
+        "failureEvidence": null,
+        "fault": "DRIVE_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|14|DRIVE_A_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "14",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 19193,
+        "failureEvidence": null,
+        "fault": "RELAY_B_COIL_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|43|RELAY_B_COIL_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "43",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 16403,
+        "failureEvidence": null,
+        "fault": "DREV_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|43|DREV_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "43",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 15831,
+        "failureEvidence": null,
+        "fault": "REN_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|43|REN_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "43",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 16198,
+        "failureEvidence": null,
+        "fault": "SENSOR_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|43|SENSOR_A_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "43",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 15785,
+        "failureEvidence": null,
+        "fault": "DRIVE_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|43|DRIVE_A_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "43",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 22080,
+        "failureEvidence": null,
+        "fault": "RELAY_B_COIL_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|3|RELAY_B_COIL_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "3",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 19184,
+        "failureEvidence": null,
+        "fault": "DREV_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|3|DREV_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "3",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 18191,
+        "failureEvidence": null,
+        "fault": "REN_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|3|REN_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "3",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 19569,
+        "failureEvidence": null,
+        "fault": "SENSOR_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|3|SENSOR_A_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "3",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 19245,
+        "failureEvidence": null,
+        "fault": "DRIVE_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|3|DRIVE_A_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "3",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 17156,
+        "failureEvidence": null,
+        "fault": "RELAY_B_COIL_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|10|RELAY_B_COIL_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "10",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 14393,
+        "failureEvidence": null,
+        "fault": "DREV_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|10|DREV_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "10",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 13282,
+        "failureEvidence": null,
+        "fault": "REN_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|10|REN_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "10",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 13354,
+        "failureEvidence": null,
+        "fault": "SENSOR_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|10|SENSOR_A_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "10",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 13303,
+        "failureEvidence": null,
+        "fault": "DRIVE_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|10|DRIVE_A_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "10",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 16351,
+        "failureEvidence": null,
+        "fault": "RELAY_B_COIL_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|64|RELAY_B_COIL_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "64",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 14197,
+        "failureEvidence": null,
+        "fault": "DREV_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|64|DREV_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "64",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 13596,
+        "failureEvidence": null,
+        "fault": "REN_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|64|REN_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "64",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 13828,
+        "failureEvidence": null,
+        "fault": "SENSOR_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|64|SENSOR_A_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "64",
+        "status": "PASS"
+      },
+      {
+        "cleanupTimingsMillis": null,
+        "elapsedMillis": 13623,
+        "failureEvidence": null,
+        "fault": "DRIVE_A_OPEN",
+        "issues": [],
+        "metadataLine": "Q30_CASE|64|DRIVE_A_OPEN|outcome=PASS|reason=qualified",
+        "operationTimingsMillis": null,
+        "seed": "64",
+        "status": "PASS"
+      }
+    ],
+    "status": "PASS",
+    "unexpectedReceiptRows": []
+  },
+  "status": "PASS_SELECTED_CENSUS",
+  "summaryLabel": "selected-census=PASS; full-matrix=NOT RUN"
+}

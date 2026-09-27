@@ -38,6 +38,10 @@ public final class U05DifficultyContractTest {
             check(DifficultyAssessment.classify(parts, 2, 3, 2, 8, 2, 4, 2, 0, true) == DifficultyProfile.MEDIUM,
                 "parallel-path interaction independent of package count");
         }
+        rejected = false;
+        try { DifficultyAssessment.classify(21, 2, 3, 2, 8, 2, 4, 2, 0, true); }
+        catch (IllegalArgumentException expected) { rejected = true; }
+        check(rejected, "synthetic difficulty classification remains inside its 20-part calibration envelope");
         check(!DifficultyProfile.HARD.isAvailable() && !DifficultyProfile.PSYCHOTIC.isAvailable(), "advanced bands remain unavailable");
         check(DifficultyAssessment.classify(16, 2, 3, 2, 100, 3, 100, 100, 0, false) == DifficultyProfile.EASY,
             "large proof-route and target-list counts cannot fabricate interaction");
@@ -56,6 +60,25 @@ public final class U05DifficultyContractTest {
         check(easy.seed == medium.seed && easy.generation().getDescriptor().toCanonical().equals(medium.generation().getDescriptor().toCanonical()),
             "profile changes admission only, electrical generation inputs remain exact");
         check(!easy.generation().canonical().equals(medium.generation().canonical()), "requested profile participates in proof dependencies");
+        PlayerLaunchRequest q30 = PlayerLaunchRequest.random(Rb30Plan.FAMILY_ID,
+            "9007199254740993", "MEDIUM");
+        GenerationRequest q30Search = q30.generation();
+        check(q30.seed == 9007199254740993L && q30.candidateSearch &&
+            q30.profile == DifficultyProfile.MEDIUM && q30Search.candidateCount() == 4 &&
+            q30Search.getExecutionPolicy() == GenerationExecutionPolicy.NORMAL_MEDIUM &&
+            MediumBoardNormalAdmission.IDENTITY.equals(
+                q30Search.getRequiredPhysicalAdmissionIdentity()) &&
+            q30Search.canonical().contains("difficulty=MEDIUM@" + DifficultyProfile.VERSION) &&
+            q30Search.canonical().contains("assessment=" + DifficultyAssessment.VERSION),
+            "Q30 MEDIUM label requires its current proof epoch and versioned normal physical admission");
+        for (int ordinal = 0; ordinal < q30Search.candidateCount(); ordinal++) {
+            GenerationRequest candidate = q30Search.candidate(ordinal);
+            check(candidate.getDescriptor().getRootSeed() ==
+                    QuickPlayAdmission.candidateSeed(q30.seed, ordinal) &&
+                candidate.getExecutionPolicy() == GenerationExecutionPolicy.NORMAL_MEDIUM &&
+                candidate.getDifficulty() == DifficultyProfile.MEDIUM,
+                "Q30 difficulty assessment input follows each exact bounded candidate");
+        }
         System.out.println("PASS: U05 difficulty contracts assertions=" + assertions);
     }
     private static boolean[][][] observations(int[][] values) {

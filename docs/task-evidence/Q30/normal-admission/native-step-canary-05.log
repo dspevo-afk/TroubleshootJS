@@ -1,0 +1,209 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: Q30 temporal work contracts 79 assertions profileUnits=5 retestUnits=5
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 9 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=initial-electrical-settle boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=initial-electrical-settle boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=healthy-preparation boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=healthy-preparation boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=fault-profile-preparation boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=fault-profile-preparation boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=faulted-four-input-profile boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=faulted-four-input-profile boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=unrepaired-customer-retest boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=unrepaired-customer-retest boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=service-power-off-wait boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=service-power-off-wait boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=reinstalled-original-customer-retest boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=reinstalled-original-customer-retest boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=service-power-off-wait boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=service-power-off-wait boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=repaired-customer-retest boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=repaired-customer-retest boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_OWNER_CLEANUP seed=4 fault=RELAY_B_COIL_OPEN declaredMaximumStepSeconds=5.00000000e-06 stepRole=PRODUCTION_5_US_REFERENCE cleanup=true elapsedMillis=0
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=initial-electrical-settle boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.50000000e-05 configuredMaximumStepSeconds=1.50000000e-05 actualCurrentStepSeconds=1.50000000e-05 observedMinimumStepSeconds=1.50000000e-05 observedMaximumStepSeconds=1.50000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=initial-electrical-settle boundary=END stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.50000000e-05 configuredMaximumStepSeconds=1.50000000e-05 actualCurrentStepSeconds=1.50000000e-05 observedMinimumStepSeconds=1.50000000e-05 observedMaximumStepSeconds=1.50000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=healthy-preparation boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.50000000e-05 configuredMaximumStepSeconds=1.50000000e-05 actualCurrentStepSeconds=1.50000000e-05 observedMinimumStepSeconds=1.50000000e-05 observedMaximumStepSeconds=1.50000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_OWNER_CLEANUP seed=4 fault=RELAY_B_COIL_OPEN declaredMaximumStepSeconds=1.50000000e-05 stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED cleanup=true elapsedMillis=0
+Q30_STEP_OWNER_CLEANUP seed=4 fault=DREV_OPEN declaredMaximumStepSeconds=5.00000000e-06 stepRole=PRODUCTION_5_US_REFERENCE cleanup=true elapsedMillis=0
+Q30_STEP_SEED_CLEANUP seed=4 cleanup=true elapsedMillis=0
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 11 iterations, timeStep = 5.0E-6
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 9 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 9 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+node 56 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 23 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 9 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+node 56 unconnected
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+converged after 23 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 24 iterations, timeStep = 1.5E-5
+converged after 6 iterations, timeStep = 1.5E-5
+node 11 unconnected
+node 11 unconnected
+Exception in thread "main" java.lang.IllegalArgumentException: Rail input exceeds declared envelope
+	at com.lushprojects.circuitjs1.client.AbstractRailRegulatorElm.validateOperatingPoint(AbstractRailRegulatorElm.java:484)
+	at com.lushprojects.circuitjs1.client.AbstractRailRegulatorElm.doStep(AbstractRailRegulatorElm.java:127)
+	at com.lushprojects.circuitjs1.client.CirSim.runCircuitOwned(CirSim.java:3357)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.advanceFor(CircuitSolverExecutor.java:144)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.advanceFor(CircuitSolverExecutor.java:135)
+	at com.lushprojects.circuitjs1.client.CirSim.advanceGeneratedTemporalSolver(CirSim.java:6344)
+	at com.lushprojects.circuitjs1.client.CirSim.advanceGeneratedTemporalProfile(CirSim.java:6321)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest$SensitivityCirSim.advanceGeneratedTemporalProfile(Q30SolverStepSensitivityContractTest.java:845)
+	at com.lushprojects.circuitjs1.client.Rb30Behavior.setInputs(Rb30Behavior.java:89)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.runOwner(Q30SolverStepSensitivityContractTest.java:287)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.verifySeed(Q30SolverStepSensitivityContractTest.java:144)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.main(Q30SolverStepSensitivityContractTest.java:74)
+
+Q30_SENSITIVITY_CENSUS attempted=1 passed=0 failed=1 childBudgetMs=60000
+CURRENT_CONTRACT_FAILURE: Q30 solver sensitivity failed cases: 4/RELAY_B_COIL_OPEN
+CLEANUP: current JVM contract classes and task-owned scratch removed.

@@ -1,0 +1,28 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+FLOORPLAN_LOCALITY candidate=0 placementSeed=-5811592868239938363 components=35 mst=29320 nearest=J1:170,JSA:210,JSB:240,JOA:210,JOB:360,JLOAD:3350
+FLOORPLAN_LOCALITY candidate=1 placementSeed=-5811592868239938363 components=35 mst=30320 nearest=J1:150,JSA:210,JSB:210,JOA:370,JOB:220,JLOAD:1410
+FLOORPLAN_LOCALITY candidate=2 placementSeed=-5811592868239938363 components=35 mst=32350 nearest=J1:170,JSA:230,JSB:230,JOA:200,JOB:270,JLOAD:3240
+FLOORPLAN_LOCALITY candidate=3 placementSeed=-5811592868239938363 components=35 mst=29990 nearest=J1:180,JSA:230,JSB:230,JOA:190,JOB:320,JLOAD:2330
+FLOORPLAN_LOCALITY candidate=4 placementSeed=-5811592868239938363 components=35 mst=33910 nearest=J1:160,JSA:210,JSB:210,JOA:220,JOB:230,JLOAD:1990
+FLOORPLAN_LOCALITY candidate=5 placementSeed=-5811592868239938363 components=35 mst=30550 nearest=J1:150,JSA:210,JSB:210,JOA:230,JOB:230,JLOAD:2210
+FLOORPLAN_RANK rank=0 routedSubset=true 1{total=1157665;electrical=127880;region=11872;connector=5140;corridor=3758;outline=8413200;courtyard=613172;demand=2175991}
+FLOORPLAN_RANK rank=1 routedSubset=true 3{total=1233312;electrical=138690;region=9955;connector=7210;corridor=2465;outline=8322400;courtyard=619172;demand=2191991}
+FLOORPLAN_RANK rank=2 routedSubset=true 0{total=1243157;electrical=139690;region=9085;connector=9220;corridor=1919;outline=8144500;courtyard=617972;demand=2188791}
+FLOORPLAN_RANK rank=3 routedSubset=false 5{total=1272645;electrical=141810;region=10327;connector=7170;corridor=3569;outline=8221800;courtyard=613172;demand=2175991}
+FLOORPLAN_RANK rank=4 routedSubset=false 4{total=1305398;electrical=142820;region=11325;connector=6540;corridor=5588;outline=8410200;courtyard=625172;demand=2207991}
+FLOORPLAN_RANK rank=5 routedSubset=false 2{total=1324553;electrical=147090;region=9925;connector=9160;corridor=3526;outline=8064000;courtyard=615572;demand=2182391}
+
+Exception in thread "main" java.lang.AssertionError: connector has a nearby same-net pad: JOB distance=360
+	at com.lushprojects.circuitjs1.client.MediumBoardFloorplanningContractTest.check(MediumBoardFloorplanningContractTest.java:435)
+	at com.lushprojects.circuitjs1.client.MediumBoardFloorplanningContractTest.checkConnectorLocality(MediumBoardFloorplanningContractTest.java:245)
+	at com.lushprojects.circuitjs1.client.MediumBoardFloorplanningContractTest.main(MediumBoardFloorplanningContractTest.java:43)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: MediumBoardFloorplanningContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

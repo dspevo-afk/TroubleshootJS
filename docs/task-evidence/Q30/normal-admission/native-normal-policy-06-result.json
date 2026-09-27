@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "outcome": "PASS",
+  "exitCode": 0,
+  "assertions": 323,
+  "scope": "focused Q30NormalExecutionPolicyContractTest only; full native matrix NOT RUN",
+  "inputCount": 1248,
+  "inputAudit": "PASS",
+  "changedInputs": [],
+  "scratchCleanup": "PASS",
+  "recordedUtc": "2026-09-27T00:11:29.871648+00:00"
+}

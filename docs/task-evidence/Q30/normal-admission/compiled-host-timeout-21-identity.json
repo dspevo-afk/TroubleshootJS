@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "runner": {
+    "pid": 28820,
+    "created": "2026-09-27T00:38:30.0091060Z",
+    "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+  },
+  "edgeProcessesBeforeCases": [
+    {
+      "pid": 35612,
+      "parent": 24288,
+      "created": "2026-09-27T00:38:30.7332110Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 33660,
+      "parent": 35612,
+      "created": "2026-09-27T00:38:30.7445160Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 35324,
+      "parent": 35612,
+      "created": "2026-09-27T00:38:30.8142530Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 16660,
+      "parent": 35612,
+      "created": "2026-09-27T00:38:30.8179740Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 27136,
+      "parent": 35612,
+      "created": "2026-09-27T00:38:30.8382710Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 1752,
+      "parent": 35612,
+      "created": "2026-09-27T00:38:30.8975460Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 8588,
+      "parent": 35612,
+      "created": "2026-09-27T00:38:30.9015330Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    }
+  ],
+  "profile": "<task-temp>\\profile",
+  "port": 60431,
+  "baseUrl": "http://127.0.0.1:60431"
+}

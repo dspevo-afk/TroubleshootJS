@@ -1,0 +1,23 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+<worktree>\tests\contracts\MediumBoardNormalAdmissionContractTest.java:47: error: local variable plan is accessed from within inner class; needs to be declared final
+                        plan.layoutSeed ^ 1L, plan.routingSeed);
+                        ^
+<worktree>\tests\contracts\MediumBoardNormalAdmissionContractTest.java:47: error: local variable plan is accessed from within inner class; needs to be declared final
+                        plan.layoutSeed ^ 1L, plan.routingSeed);
+                                              ^
+<worktree>\tests\contracts\MediumBoardNormalAdmissionContractTest.java:55: error: local variable plan is accessed from within inner class; needs to be declared final
+                        plan.layoutSeed, plan.routingSeed);
+                        ^
+<worktree>\tests\contracts\MediumBoardNormalAdmissionContractTest.java:55: error: local variable plan is accessed from within inner class; needs to be declared final
+                        plan.layoutSeed, plan.routingSeed);
+                                         ^
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+4 errors
+1 warning
+
+CURRENT_CONTRACT_FAILURE: Current production-class compilation failed, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

@@ -112,7 +112,7 @@ class SeededPcbLayoutGenerator {
     Session begin(TroubleshootBoard board,long seed,long routingSeed,SupportedEnvelope envelope) {
         return new Session(board,seed,routingSeed,attemptObserver,envelope);
     }
-    /** One placement and its bounded routing alternatives per generation work unit. */
+    /** Advances one placement attempt or one retained route slice per generation work unit. */
     final class Session {
         private final TroubleshootBoard board;
         private final long seed,routingSeed;
@@ -128,6 +128,10 @@ class SeededPcbLayoutGenerator {
         private final boolean mediumPolicy;
         private Vector<MediumBoardPhysicalPolicy.PlacementCandidate> mediumPlacements;
         private int mediumPlacementAttempt, mediumRouteAttempt, mediumRouteStage;
+        private PcbLayerRoutingPrototype.Session mediumTwoLayerRoute;
+        private MediumBoardPhysicalPolicy.PlacementCandidate mediumTwoLayerCandidate;
+        private long mediumTwoLayerElapsedMillis;
+        private int mediumTwoLayerCheckpoint=-1;
         private int mediumPlacementRejections, mediumOneFaceAttempts,
             mediumOneFaceSuccesses, mediumTwoLayerAttempts, mediumTwoLayerSuccesses;
         private long mediumPlacementEvaluations;
@@ -214,6 +218,11 @@ class SeededPcbLayoutGenerator {
     }
 
     private boolean advanceMedium(Session session) {
+        if (session.mediumTwoLayerRoute != null) {
+            int routeCheckpoint=session.mediumTwoLayerCheckpoint;
+            session.observer.check(routeCheckpoint);
+            return advanceMediumTwoLayerRoute(session);
+        }
         int checkpoint = session.attempt++;
         session.observer.check(checkpoint);
         if (session.mediumRouteStage == 0)
@@ -276,45 +285,46 @@ class SeededPcbLayoutGenerator {
             MediumBoardPhysicalPolicy.PlacementCandidate candidate =
                 session.mediumPlacements.get(candidateIndex);
             session.mediumRouteAttempt++;
+            if (twoLayer) {
+                session.mediumTwoLayerCandidate=candidate;
+                session.mediumTwoLayerElapsedMillis=0;
+                session.mediumTwoLayerCheckpoint=checkpoint;
+                PcbBoardLayout placement=candidate.plan.materialize();
+                long started=System.currentTimeMillis();
+                session.mediumTwoLayerRoute=PcbLayerRoutingPrototype.begin(session.board,
+                    placement,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,session.observer);
+                session.mediumTwoLayerElapsedMillis+=System.currentTimeMillis()-started;
+                return advanceMediumTwoLayerRoute(session);
+            }
             try {
                 PcbBoardLayout layout;
-                if (twoLayer) {
-                    session.mediumTwoLayerAttempts++;
-                    layout = routeMediumTwoLayer(session.board, session.seed,
-                        session.routingSeed, candidate, session.observer, session.statistics);
-                } else {
-                    session.mediumOneFaceAttempts++;
-                    int variationMode = (int) ((session.seed % 4 + 4) % 4);
-                    layout = routePlan(session.board, session.seed, variationMode,
-                        candidate.attempt, session.observer, session.routingSeed,
-                        session.statistics, candidate.plan, false);
-                }
+                session.mediumOneFaceAttempts++;
+                int variationMode = (int) ((session.seed % 4 + 4) % 4);
+                layout = routePlan(session.board, session.seed, variationMode,
+                    candidate.attempt, session.observer, session.routingSeed,
+                    session.statistics, candidate.plan, false);
                 if (envelopeFor(session) != null)
                     envelopeFor(session).requireBounds(session.board, layout);
                 considerMediumLayout(session, candidate, layout, twoLayer);
-                session.mediumRouteOutcomes.add((twoLayer ?
-                    MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER :
-                    MediumBoardPhysicalPolicy.P05_ONE_FACE) + "@" + candidate.attempt +
+                session.mediumRouteOutcomes.add(MediumBoardPhysicalPolicy.P05_ONE_FACE + "@" + candidate.attempt +
                     "=SUCCESS");
             } catch (CandidateRejected failure) {
                 session.lastFailure = PcbRoutingRejectedException.attemptRejected(
                     failure.getKind(), checkpoint, session.seed, failure.getMessage(),
                     failure.recovery);
-                session.mediumRouteOutcomes.add(routeFailure(twoLayer, candidate, failure.getMessage()));
+                session.mediumRouteOutcomes.add(routeFailure(false, candidate, failure.getMessage()));
             } catch (SupportedEnvelope.Rejected failure) {
                 session.lastFailure = PcbRoutingRejectedException.attemptRejected(
                     PcbRoutingRejectedException.Kind.PLACEMENT, checkpoint, session.seed,
                     failure.getMessage());
-                session.mediumRouteOutcomes.add(routeFailure(twoLayer, candidate, failure.getMessage()));
+                session.mediumRouteOutcomes.add(routeFailure(false, candidate, failure.getMessage()));
             } catch (PcbBoardLayout.RouteQualityRejectedException failure) {
                 session.lastFailure = PcbRoutingRejectedException.attemptRejected(
                     PcbRoutingRejectedException.Kind.ROUTING, checkpoint, session.seed,
                     failure.getMessage());
-                session.mediumRouteOutcomes.add(routeFailure(twoLayer, candidate, failure.getMessage()));
+                session.mediumRouteOutcomes.add(routeFailure(false, candidate, failure.getMessage()));
             }
-            if (twoLayer) session.mediumTwoLayerSuccesses = countMediumSuccesses(
-                session.mediumRouteOutcomes, MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER);
-            else session.mediumOneFaceSuccesses = countMediumSuccesses(
+            session.mediumOneFaceSuccesses = countMediumSuccesses(
                 session.mediumRouteOutcomes, MediumBoardPhysicalPolicy.P05_ONE_FACE);
             return false;
         }
@@ -328,6 +338,50 @@ class SeededPcbLayoutGenerator {
                 session.mediumOneFaceSuccesses > 0)
             return finishMediumSuccess(session);
         return finishMediumFailure(session);
+    }
+
+    private boolean advanceMediumTwoLayerRoute(Session session) {
+        long started=System.currentTimeMillis();
+        boolean complete=session.mediumTwoLayerRoute.advanceSlice();
+        session.mediumTwoLayerElapsedMillis+=System.currentTimeMillis()-started;
+        if(!complete) return false;
+
+        PcbLayerRoutingPrototype.Result result=session.mediumTwoLayerRoute.result();
+        MediumBoardPhysicalPolicy.PlacementCandidate candidate=session.mediumTwoLayerCandidate;
+        int routeCheckpoint=session.mediumTwoLayerCheckpoint;
+        session.mediumTwoLayerRoute=null;
+        session.mediumTwoLayerCandidate=null;
+        session.mediumTwoLayerCheckpoint=-1;
+        session.mediumTwoLayerAttempts++;
+        session.statistics.routes+=result.orderings;
+        session.statistics.expansions+=result.expansions;
+        session.statistics.routeMillis+=session.mediumTwoLayerElapsedMillis;
+        session.mediumTwoLayerElapsedMillis=0;
+        try {
+            PcbBoardLayout layout=finishMediumTwoLayerRoute(session.board,session.seed,candidate,result);
+            if (envelopeFor(session) != null)
+                envelopeFor(session).requireBounds(session.board, layout);
+            considerMediumLayout(session, candidate, layout, true);
+            session.mediumRouteOutcomes.add(MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER + "@" +
+                candidate.attempt + "=SUCCESS");
+        } catch (CandidateRejected failure) {
+            session.lastFailure = PcbRoutingRejectedException.attemptRejected(
+                failure.getKind(), routeCheckpoint, session.seed, failure.getMessage(),failure.recovery);
+            session.mediumRouteOutcomes.add(routeFailure(true, candidate, failure.getMessage()));
+        } catch (SupportedEnvelope.Rejected failure) {
+            session.lastFailure = PcbRoutingRejectedException.attemptRejected(
+                PcbRoutingRejectedException.Kind.PLACEMENT, routeCheckpoint, session.seed,
+                failure.getMessage());
+            session.mediumRouteOutcomes.add(routeFailure(true, candidate, failure.getMessage()));
+        } catch (PcbBoardLayout.RouteQualityRejectedException failure) {
+            session.lastFailure = PcbRoutingRejectedException.attemptRejected(
+                PcbRoutingRejectedException.Kind.ROUTING, routeCheckpoint, session.seed,
+                failure.getMessage());
+            session.mediumRouteOutcomes.add(routeFailure(true, candidate, failure.getMessage()));
+        }
+        session.mediumTwoLayerSuccesses = countMediumSuccesses(
+            session.mediumRouteOutcomes, MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER);
+        return false;
     }
 
     private static int mediumPlacementIndex(Session session, int placementAttempt) {
@@ -471,16 +525,9 @@ class SeededPcbLayoutGenerator {
 
     private SupportedEnvelope envelopeFor(Session session) { return session.envelope; }
 
-    private PcbBoardLayout routeMediumTwoLayer(TroubleshootBoard board, long seed,
-            long routingSeed, MediumBoardPhysicalPolicy.PlacementCandidate candidate,
-            AttemptObserver observer, GenerationStatistics statistics) {
-        PcbBoardLayout placement = candidate.plan.materialize();
-        long started = System.currentTimeMillis();
-        PcbLayerRoutingPrototype.Result result = PcbLayerRoutingPrototype.route(board,
-            placement, PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER, observer);
-        statistics.routes += result.orderings;
-        statistics.expansions += result.expansions;
-        statistics.routeMillis += System.currentTimeMillis() - started;
+    private PcbBoardLayout finishMediumTwoLayerRoute(TroubleshootBoard board,long seed,
+            MediumBoardPhysicalPolicy.PlacementCandidate candidate,
+            PcbLayerRoutingPrototype.Result result) {
         if (!result.accepted())
             throw new CandidateRejected(PcbRoutingRejectedException.Kind.ROUTING,
                 "P07_FULLER_TWO_LAYER:" + result.outcome);
@@ -688,6 +735,8 @@ class SeededPcbLayoutGenerator {
         String title;
         if (board.getId().equals("RB15_CONTROL_BOARD"))
             title = "TSJ CONTROL BOARD";
+        else if (board.getId().equals("RB30_CONTROL_BOARD"))
+            title = "TSJ MULTI-RAIL CONTROL";
         else if (board.getId().equals("DIODE_PROTECTED_INDICATOR"))
             title = "TSJ DIODE INDICATOR";
         else if (board.getId().equals("PARALLEL_DUAL_INDICATOR"))

@@ -12,6 +12,10 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
     static final String SENSORS_B_ONLY = "SENSORS_B_ONLY";
     static final String SENSORS_HIGH = "SENSORS_HIGH";
     static final double SAMPLE_SECONDS = .030;
+    static final double SOLVER_MAX_STEP_SECONDS = 5e-6;
+    static final double SOLVER_MIN_STEP_SECONDS = 50e-12;
+    private static final int PROFILE_WORK_UNITS = 5;
+    private static final int RETEST_WORK_UNITS = 5;
     private final TroubleshootBoard board;
     private final GeneratedExternalPowerBindings power;
     private final GeneratedBoardOperationCatalog operations = new GeneratedBoardOperationCatalog();
@@ -35,18 +39,16 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
             "Low-voltage DC, two 180 ohm external loads; all serviced leads reconnected.",
             new GeneratedCustomerRetestProfile.Executor() {
                 public GeneratedCustomerRetestResult execute(CirSim sim, GeneratedBoardInstance owner) {
-                    if (!GeneratedCustomerRetestSupport.isReadyForPoweredObservation(sim, owner))
-                        return GeneratedCustomerRetestSupport.failure();
-                    return exercise(sim, owner) ? GeneratedCustomerRetestSupport.success() :
-                        GeneratedCustomerRetestSupport.failure();
+                    return GeneratedWork.complete(beginCustomerRetest(sim, owner));
                 }
             });
         operations.add(new GeneratedBoardOperation(GeneratedBoardOperationIds.CUSTOMER_RETEST,
-            "Retest Customer", new GeneratedBoardOperation.Executor() {
-                public GeneratedCustomerRetestResult execute(CirSim sim, GeneratedBoardInstance owner) {
-                    requireCurrent(sim, owner);
-                    return retest.execute(sim, owner);
+            "Retest Customer", new GeneratedBoardOperation.ResumableExecutor() {
+                GeneratedWork<GeneratedCustomerRetestResult> begin(CirSim sim,
+                        GeneratedBoardInstance owner) {
+                    return beginCustomerRetest(sim, owner);
                 }
+                int getWorkUnits(GeneratedBoardInstance owner) { return RETEST_WORK_UNITS; }
             }));
     }
 
@@ -120,37 +122,6 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         return on ? volts >= 10.8 && volts <= 12.6 : Math.abs(volts) <= .05;
     }
 
-    private boolean exercise(CirSim sim, GeneratedBoardInstance owner) {
-        return exercise(sim, owner, false);
-    }
-
-    private boolean exercise(CirSim sim, GeneratedBoardInstance owner, boolean requireHealthy) {
-        requireCurrent(sim, owner);
-        int prior = input;
-        Object graph = sim.elmList;
-        boolean passed = true;
-        StringBuilder failures = new StringBuilder();
-        try {
-            // Always exercise every condition, including after an earlier functional failure.
-            for (int condition = 0; condition < 4; condition++) {
-                setInputs(sim, owner, condition);
-                boolean matched = healthy(owner, condition);
-                passed &= matched;
-                if (requireHealthy && !matched)
-                    failures.append(" input=").append(condition).append(" rail=")
-                        .append(voltage(owner, "U1.OUTPUT", "U1.RETURN"))
-                        .append(" outputA=").append(voltage(owner, "JOA.1", "JOA.2"))
-                        .append(" outputB=").append(voltage(owner, "JOB.1", "JOB.2"));
-            }
-            if (requireHealthy && !passed)
-                throw new IllegalStateException("Healthy Q30 failed four input conditions:" + failures);
-            return passed;
-        } finally {
-            if (sim.getGeneratedBoardInstance() == owner && sim.elmList == graph)
-                setInputs(sim, owner, prior);
-        }
-    }
-
     public boolean isFaultedTargetInstalled(GeneratedBoardInstance owner, String id) {
         return GeneratedBoardFamilyPolicy.isFaultedTargetInstalled(owner, id);
     }
@@ -160,7 +131,7 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
     // UI-frame increment small on this larger graph; explicit profiles retain
     // their full 30 ms settling interval and unchanged solver budgets.
     public double getLiveSolverAdvanceSeconds() { return .0001; }
-    public int getProfileWorkUnits() { return 1; }
+    public int getProfileWorkUnits() { return PROFILE_WORK_UNITS; }
 
     public GeneratedTemporalDependency getDependency(GeneratedBoardInstance owner) {
         requireOwnedBy(owner);
@@ -169,8 +140,10 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         values.put("fault-preparation", "healthy-four-conditions-then-LOW-apply-fault-then-HIGH");
         values.put("sample-seconds", Double.toString(SAMPLE_SECONDS));
         values.put("qualification-solver", "CircuitJS-adaptive");
-        values.put("qualification-maximum-step-seconds", "0.000005");
-        values.put("qualification-minimum-step-seconds", "0.00000000005");
+        values.put("qualification-maximum-step-seconds", Double.toString(SOLVER_MAX_STEP_SECONDS));
+        values.put("qualification-minimum-step-seconds", Double.toString(SOLVER_MIN_STEP_SECONDS));
+        values.put("profile-work-units", Integer.toString(PROFILE_WORK_UNITS));
+        values.put("customer-retest-work-units", Integer.toString(RETEST_WORK_UNITS));
         values.put("rail-range-volts", "4.75..5.25");
         values.put("on-range-volts", "10.8..12.6");
         values.put("off-maximum-volts", "0.05");
@@ -178,56 +151,547 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         values.put("topology", owner.getTopologyVariantId());
         values.put("physical-policy", MediumBoardPhysicalPolicy.identity());
         values.put("seed", Long.toString(owner.getSeed()));
-        return new GeneratedTemporalDependency("RB30_TWO_CHANNEL_FUNCTION", 1,
+        return new GeneratedTemporalDependency("RB30_TWO_CHANNEL_FUNCTION", 2,
             GeneratedTemporalDependency.FRESH_GENERATED_OWNER_COLD_V1,
             "JOA.1", "JOA.2", values);
     }
 
     public GeneratedWork<GeneratedRepairStatus> beginProfile(final CirSim sim,
             final GeneratedBoardInstance owner, final Profile profile) {
-        requireCurrent(sim, owner);
-        final Object graph = sim.elmList;
-        return new GeneratedWork<GeneratedRepairStatus>() {
-            private boolean done, cancelled;
-            private GeneratedRepairStatus result;
-            boolean step() {
-                if (cancelled) throw new IllegalStateException("Q30 profile cancelled");
-                if (done) return false;
-                requireCurrent(sim, owner);
-                if (sim.elmList != graph) throw new IllegalStateException("Q30 profile lost its graph");
-                if (profile == Profile.HEALTHY) {
-                    prepareHealthyProfile(sim, owner);
-                    result = GeneratedRepairStatus.CORRECTLY_RESTORED;
-                } else if (profile == Profile.FAULTED) {
-                    prepareFaultedProfile(sim, owner);
-                    result = GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
-                } else result = GeneratedCustomerRetestSupport.isReadyForPoweredObservation(sim, owner) &&
-                    exercise(sim, owner) ? GeneratedRepairStatus.CORRECTLY_RESTORED :
-                    GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
-                done = true;
-                return false;
-            }
-            GeneratedRepairStatus finish() {
-                if (!done || cancelled) throw new IllegalStateException("Q30 profile incomplete");
-                return result;
-            }
-            void cancel() { if (!done) cancelled = true; }
-            int getWorkUnits() { return 1; }
-        };
+        return new ProfileWork(sim, owner, profile);
     }
 
     public void prepareHealthyProfile(CirSim sim, GeneratedBoardInstance owner) {
-        exercise(sim, owner, true);
-        // Establish the same real pre-fault electrical state on both variants.
-        // Opening a sensor resistor while HIGH can leave the regenerative
-        // feedback path latched HIGH, hiding the symptom at the HIGH test point.
-        // Drive LOW before the controller applies the fault; never reset the
-        // decision element's internal state or alter its feedback model.
-        setInputs(sim, owner, 0);
+        GeneratedRepairStatus status = GeneratedWork.complete(
+            beginProfile(sim, owner, Profile.HEALTHY));
+        if (status != GeneratedRepairStatus.CORRECTLY_RESTORED)
+            throw new IllegalStateException("Healthy Q30 profile did not complete");
     }
     public void prepareFaultedProfile(CirSim sim, GeneratedBoardInstance owner) {
-        setInputs(sim, owner, 3);
-        observed = healthy(owner, 3) ? null : GeneratedObservedBehavior.RELAY_LOAD_NOT_SWITCHING;
+        GeneratedWork.complete(beginProfile(sim, owner, Profile.FAULTED));
+    }
+
+    private GeneratedWork<GeneratedCustomerRetestResult> beginCustomerRetest(
+            final CirSim sim, final GeneratedBoardInstance owner) {
+        if (sim == null || owner == null || sim.getGeneratedBoardInstance() != owner ||
+                sim.getBoardPowerController() == null ||
+                !GeneratedCustomerRetestSupport.isReadyForPoweredObservation(sim, owner))
+            return failedCustomerRetestWork();
+        final GeneratedWork<GeneratedRepairStatus> profile =
+            beginProfile(sim, owner, Profile.REPAIR);
+        return new GeneratedWork<GeneratedCustomerRetestResult>() {
+            private boolean cancelled;
+            private boolean complete;
+            private GeneratedCustomerRetestResult result;
+            boolean step() {
+                if (cancelled) throw new IllegalStateException("Q30 customer retest cancelled");
+                return profile.step();
+            }
+            GeneratedCustomerRetestResult finish() {
+                if (cancelled) throw new IllegalStateException("Q30 customer retest cancelled");
+                if (complete) return result;
+                GeneratedRepairStatus status = profile.finish();
+                result = status == GeneratedRepairStatus.CORRECTLY_RESTORED ?
+                    GeneratedCustomerRetestSupport.success() : GeneratedCustomerRetestSupport.failure();
+                complete = true;
+                return result;
+            }
+            void cancel() {
+                if (cancelled || complete) return;
+                profile.cancel();
+                cancelled = true;
+            }
+            int getWorkUnits() { return RETEST_WORK_UNITS; }
+        };
+    }
+
+    private GeneratedWork<GeneratedCustomerRetestResult> failedCustomerRetestWork() {
+        return new GeneratedWork<GeneratedCustomerRetestResult>() {
+            private boolean complete, cancelled;
+            boolean step() {
+                if (cancelled) throw new IllegalStateException("Q30 customer retest cancelled");
+                complete = true;
+                return false;
+            }
+            GeneratedCustomerRetestResult finish() {
+                if (cancelled || !complete) throw new IllegalStateException("Q30 customer retest incomplete");
+                return GeneratedCustomerRetestSupport.failure();
+            }
+            void cancel() { if (!complete) cancelled = true; }
+            int getWorkUnits() { return RETEST_WORK_UNITS; }
+        };
+    }
+
+    /** One guarded unit performs at most one CircuitJS advance of SAMPLE_SECONDS. */
+    private final class ProfileWork extends GeneratedWork<GeneratedRepairStatus> {
+        private final CirSim ownerSim;
+        private final GeneratedBoardInstance owner;
+        private final Profile profile;
+        private final Object graph;
+        private final Vector<CircuitElm> graphElements;
+        private final GeneratedChallengeController challenge;
+        private final GeneratedBoardFamilyState familyState;
+        private final GeneratedDiagnosticProvider provider;
+        private final GeneratedTemporalBehavior temporal;
+        private final GeneratedFaultBinding faultBinding;
+        private final GeneratedChallengeDefinition definition;
+        private final TroubleshootBoard ownerBoard;
+        private final BoardSimulationBindings simulationBindings;
+        private final PhysicalBoardRuntime runtime;
+        private final Object mutationReceipt;
+        private final BoardPowerController powerController;
+        private final GeneratedExternalPowerBindings powerBindings;
+        private final BoardModificationController modifications;
+        private final GeneratedExternalPowerBindings.ControlObservation controlObservation;
+        private final GeneratedExternalPowerBindings.SavedControls savedControls;
+        private final Vector<String> powerInputIds;
+        private final ExternalPowerSimulationBinding[] powerInputBindings;
+        private final boolean[] powerInputInitiallyControlled, powerInputInitiallyConnected;
+        private final long[] powerInputRevisions;
+        private final LimitedDcSupplyElm[] powerInputSupplies;
+        private final double[] powerInputLimits;
+        private final BoardPowerState powerState;
+        private final boolean physicalState;
+        private final LimitedDcSupplyElm sensorA, sensorB;
+        private final double sensorALimit, sensorBLimit;
+        private final double expectedMaximumStep, expectedMinimumStep;
+        private final boolean expectedAdaptiveStep;
+        private final int priorInput;
+        private int expectedInput;
+        private double expectedA, expectedB;
+        private int phase;
+        private boolean passed = true;
+        private boolean blocked;
+        private boolean complete, cancelled;
+        private GeneratedObservedBehavior localObserved;
+        private GeneratedRepairStatus result;
+        private final StringBuilder failures = new StringBuilder();
+
+        ProfileWork(CirSim sim, GeneratedBoardInstance instance, Profile profile) {
+            if (profile == null) throw new IllegalArgumentException("Missing Q30 profile");
+            Rb30Behavior.this.requireCurrent(sim, instance);
+            if (profile == Profile.HEALTHY && input != 3)
+                throw new IllegalStateException("Healthy Q30 proof requires the fresh HIGH input state");
+            ownerSim = sim;
+            owner = instance;
+            this.profile = profile;
+            graph = sim.elmList;
+            graphElements = new Vector<CircuitElm>(sim.elmList);
+            challenge = sim.getGeneratedChallengeController();
+            familyState = instance.getFamilyState();
+            provider = instance.getDiagnosticProvider();
+            temporal = instance.getTemporalBehavior();
+            faultBinding = instance.getFaultBinding();
+            definition = instance.getChallengeDefinition();
+            ownerBoard = instance.getBoard();
+            simulationBindings = instance.getSimulationBindings();
+            runtime = instance.getPhysicalBoardRuntime();
+            powerController = sim.getBoardPowerController();
+            powerBindings = instance.getExternalPowerBindings();
+            modifications = sim.getBoardModificationController();
+            if (powerController == null || powerBindings == null || modifications == null ||
+                    runtime == null || powerController.getBindingsForDeveloperVerification() != powerBindings ||
+                    modifications.getInstanceForRuntimeValidation() != instance || runtime.isMutationInProgress())
+                throw new IllegalStateException("Q30 profile has incomplete or busy owner state");
+            mutationReceipt = runtime.getLastMutationReceipt();
+            powerState = powerController.getState();
+            physicalState = modifications.isFullyRestored();
+            controlObservation = powerBindings.observeControls();
+            savedControls = powerBindings.saveControls();
+            powerInputIds = new Vector<String>(ownerBoard.getPowerInputIds());
+            powerInputBindings = new ExternalPowerSimulationBinding[powerInputIds.size()];
+            powerInputInitiallyControlled = new boolean[powerInputIds.size()];
+            powerInputInitiallyConnected = new boolean[powerInputIds.size()];
+            powerInputRevisions = new long[powerInputIds.size()];
+            powerInputSupplies = new LimitedDcSupplyElm[powerInputIds.size()];
+            powerInputLimits = new double[powerInputIds.size()];
+            for (int i = 0; i < powerInputIds.size(); i++) {
+                ExternalPowerSimulationBinding binding = powerBindings.getBinding(powerInputIds.get(i));
+                powerInputBindings[i] = binding;
+                powerInputInitiallyControlled[i] = binding.hasControl();
+                powerInputInitiallyConnected[i] = binding.isConnected();
+                powerInputRevisions[i] = binding.getConnectionRevision();
+                powerInputSupplies[i] = binding.getLimitedSupply();
+                powerInputLimits[i] = powerInputSupplies[i] == null ? Double.NaN :
+                    powerInputSupplies[i].getLimitAmps();
+            }
+            sensorA = powerBindings.getBinding("SENSOR_A").getLimitedSupply();
+            sensorB = powerBindings.getBinding("SENSOR_B").getLimitedSupply();
+            if (sensorA == null || sensorB == null || !instance.getSimulationElements().contains(sensorA) ||
+                    !instance.getSimulationElements().contains(sensorB))
+                throw new IllegalStateException("Q30 profile lost its sensor source owner");
+            sensorALimit = sensorA.getLimitAmps();
+            sensorBLimit = sensorB.getLimitAmps();
+            priorInput = input;
+            expectedInput = input;
+            expectedA = sensorA.maxVoltage;
+            expectedB = sensorB.maxVoltage;
+            if (expectedA != ((input & 1) != 0 ? 5 : 0) ||
+                    expectedB != ((input & 2) != 0 ? 5 : 0))
+                throw new IllegalStateException("Q30 input state disagrees with its live sources");
+            if (profile == Profile.HEALTHY) {
+                // Apply the same declared CircuitJS recipe before the first healthy sample.
+                sim.timeStep = sim.maxTimeStep = SOLVER_MAX_STEP_SECONDS;
+                sim.minTimeStep = SOLVER_MIN_STEP_SECONDS;
+                sim.adjustTimeStep = true;
+            }
+            expectedMaximumStep = sim.maxTimeStep;
+            expectedMinimumStep = sim.minTimeStep;
+            expectedAdaptiveStep = sim.adjustTimeStep;
+            blocked = profile == Profile.REPAIR &&
+                !GeneratedCustomerRetestSupport.isReadyForPoweredObservation(sim, instance);
+            requireCurrent("begin");
+        }
+
+        boolean step() {
+            if (cancelled) throw new IllegalStateException("Q30 profile cancelled");
+            if (complete || phase >= PROFILE_WORK_UNITS) return false;
+            requireCurrent("unit " + phase + " before");
+            if (!blocked) {
+                if (profile == Profile.HEALTHY) {
+                    if (phase < 4) observeCondition(phase);
+                    else if (passed) applyInput(0);
+                } else if (profile == Profile.FAULTED) {
+                    if (phase == 0) {
+                        applyInput(3);
+                        localObserved = healthy(owner, 3) ? null :
+                            GeneratedObservedBehavior.RELAY_LOAD_NOT_SWITCHING;
+                    }
+                } else if (phase < 4) {
+                    observeCondition(phase);
+                } else if (input != priorInput) {
+                    applyInput(priorInput);
+                }
+            }
+            phase++;
+            requireCurrent("unit " + (phase - 1) + " after");
+            return phase < PROFILE_WORK_UNITS;
+        }
+
+        private void observeCondition(int condition) {
+            applyInput(condition);
+            boolean matched = healthy(owner, condition);
+            passed &= matched;
+            if (!matched && profile == Profile.HEALTHY) appendFailureSnapshot(condition);
+        }
+
+        private void appendFailureSnapshot(int condition) {
+            failures.append(" input=").append(condition).append(" inputName=")
+                .append(inputName(condition));
+            appendVoltage(" rail_U1_OUTPUT_to_U1_RETURN_V", owner,
+                "U1.OUTPUT", "U1.RETURN");
+            appendVoltage(" regulatorInput_U1_INPUT_to_J1_2_V", owner,
+                "U1.INPUT", "J1.2");
+            appendVoltage(" regulatorReturn_U1_RETURN_to_J1_2_V", owner,
+                "U1.RETURN", "J1.2");
+            appendVoltage(" main12V_J1_1_to_J1_2_V", owner, "J1.1", "J1.2");
+            appendChannelFailureSnapshot("A");
+            appendChannelFailureSnapshot("B");
+        }
+
+        private void appendChannelFailureSnapshot(String channel) {
+            String upper = channel.toUpperCase();
+            String sourceId = "SENSOR_" + upper;
+            String inputConnector = "JS" + upper;
+            String u2 = "U2" + upper;
+            String q = "Q" + upper;
+            String rDrive = "RD" + upper;
+            String relayId = "K" + upper;
+
+            failures.append(" channel=").append(upper);
+            appendVoltage(" sensorSourceV", owner, inputConnector + ".1",
+                inputConnector + ".2");
+            failures.append(" sensorCommandV=")
+                .append(sourceCommand(owner, sourceId));
+            failures.append(" sensorSourceCurrentA=")
+                .append(installedPartCurrent(owner, inputConnector));
+            appendVoltage(" sensorNodeV", owner, u2 + ".SENSOR", u2 + ".RETURN");
+            appendVoltage(" referenceNodeV", owner, u2 + ".REFERENCE", u2 + ".RETURN");
+            appendVoltage(" controllerRailV", owner, u2 + ".RAIL", u2 + ".RETURN");
+            double command = safeVoltage(owner, u2 + ".OUTPUT", u2 + ".RETURN");
+            failures.append(" commandNodeV=").append(number(command))
+                .append(" decisionOutputState=").append(decisionOutputState(command))
+                .append(" decisionOutputCurrentA=")
+                .append(decisionOutputCurrent(owner, u2));
+            String referenceHigh = owner.getBoard().getComponent("RREF_H") != null ?
+                "RREF_H" : "RREF_H" + upper;
+            String referenceLow = owner.getBoard().getComponent("RREF_L") != null ?
+                "RREF_L" : "RREF_L" + upper;
+            failures.append(" referencePullupCurrentA=")
+                .append(installedPartCurrent(owner, referenceHigh))
+                .append(" referencePulldownCurrentA=")
+                .append(installedPartCurrent(owner, referenceLow));
+            failures.append(" driveResistorCurrentA=")
+                .append(installedPartCurrent(owner, rDrive));
+            appendDriverTerminals(channel, q);
+            appendVoltage(" coilV", owner, relayId + ".A1", relayId + ".A2");
+            failures.append(" coilCurrentA=").append(relayCurrent(owner, relayId))
+                .append(" relayContactOpen=").append(relayContactOpen(owner, relayId))
+                .append(" relayPosition=").append(relayPosition(owner, relayId));
+        }
+
+        private void appendDriverTerminals(String channel, String componentId) {
+            PhysicalPart<?> part = owner.getPhysicalBoardRuntime()
+                .getInstalledPart(componentId);
+            if (part == null) {
+                failures.append(" driver=unavailable");
+                return;
+            }
+            Vector<String> terminals = part.getPackage().getTerminalIds();
+            failures.append(" driverCurrentA=").append(installedPartCurrent(owner, componentId));
+            for (String terminal : terminals)
+                appendVoltage(" driver" + terminal + "V", owner,
+                    componentId + "." + terminal, "J1.2");
+        }
+
+        private String inputName(int value) {
+            if (value == 0) return "LOW";
+            if (value == 1) return "A_ONLY";
+            if (value == 2) return "B_ONLY";
+            if (value == 3) return "HIGH";
+            return "UNKNOWN";
+        }
+
+        private void appendVoltage(StringBuilder target, String label,
+                GeneratedBoardInstance owner, String positive, String negative) {
+            target.append(label).append('=').append(number(safeVoltage(owner,
+                positive, negative)));
+        }
+
+        private void appendVoltage(String label, GeneratedBoardInstance instance,
+                String positive, String negative) {
+            appendVoltage(failures, label, instance, positive, negative);
+        }
+
+        private double safeVoltage(GeneratedBoardInstance owner,
+                String positive, String negative) {
+            try { return voltage(owner, positive, negative); }
+            catch (RuntimeException unavailable) { return Double.NaN; }
+        }
+
+        private String sourceCommand(GeneratedBoardInstance owner, String inputId) {
+            try {
+                LimitedDcSupplyElm source = owner.getExternalPowerBindings()
+                    .getBinding(inputId).getLimitedSupply();
+                return source == null ? "unavailable" : number(source.maxVoltage);
+            } catch (RuntimeException unavailable) { return "unavailable"; }
+        }
+
+        private String installedPartCurrent(GeneratedBoardInstance owner,
+                String componentId) {
+            try {
+                PhysicalPart<?> part = owner.getPhysicalBoardRuntime()
+                    .getInstalledPart(componentId);
+                if (part == null || part.getElectricalBacking() == null)
+                    return "unavailable";
+                Vector<CircuitElm> elements = part.getElectricalBacking().getCircuitElements();
+                if (elements.isEmpty()) return "unavailable";
+                return number(elements.firstElement().getCurrent());
+            } catch (RuntimeException unavailable) { return "unavailable"; }
+        }
+
+        private String decisionOutputCurrent(GeneratedBoardInstance owner,
+                String componentId) {
+            try {
+                PhysicalPart<?> part = owner.getPhysicalBoardRuntime()
+                    .getInstalledPart(componentId);
+                if (!(part instanceof E04DecisionControlPart)) return "unavailable";
+                return number(((E04DecisionControlPart) part).getElement()
+                    .getCurrentIntoNode(3));
+            } catch (RuntimeException unavailable) { return "unavailable"; }
+        }
+
+        private String decisionOutputState(double outputVolts) {
+            if (!PowerDomainContract.finite(outputVolts)) return "UNAVAILABLE";
+            if (Math.abs(outputVolts) <= .05) return "LOW";
+            if (outputVolts >= 1.0) return "HIGH";
+            return "INTERMEDIATE";
+        }
+
+        private String relayCurrent(GeneratedBoardInstance owner, String componentId) {
+            try {
+                PhysicalPart<?> part = owner.getPhysicalBoardRuntime()
+                    .getInstalledPart(componentId);
+                if (!(part instanceof PhysicalRelayPart)) return "unavailable";
+                return number(((PhysicalRelayPart) part).getElement().coilCurrent);
+            } catch (RuntimeException unavailable) { return "unavailable"; }
+        }
+
+        private String relayContactOpen(GeneratedBoardInstance owner, String componentId) {
+            try {
+                PhysicalPart<?> part = owner.getPhysicalBoardRuntime()
+                    .getInstalledPart(componentId);
+                if (!(part instanceof PhysicalRelayPart)) return "unavailable";
+                return Boolean.toString(((PhysicalRelayPart) part).getElement().contactOpen);
+            } catch (RuntimeException unavailable) { return "unavailable"; }
+        }
+
+        private String relayPosition(GeneratedBoardInstance owner, String componentId) {
+            try {
+                PhysicalPart<?> part = owner.getPhysicalBoardRuntime()
+                    .getInstalledPart(componentId);
+                if (!(part instanceof PhysicalRelayPart)) return "unavailable";
+                return Integer.toString(((PhysicalRelayPart) part).getElement().i_position);
+            } catch (RuntimeException unavailable) { return "unavailable"; }
+        }
+
+        private String number(double value) {
+            return PowerDomainContract.finite(value) ? Double.toString(value) : "NaN";
+        }
+
+        private void applyInput(int value) {
+            if (value < 0 || value > 3) throw new IllegalArgumentException("Unsupported Q30 input state");
+            requireCurrent("input " + value + " before");
+            expectedInput = value;
+            expectedA = (value & 1) != 0 ? 5 : 0;
+            expectedB = (value & 2) != 0 ? 5 : 0;
+            sensorA.configure(expectedA, sensorALimit);
+            sensorB.configure(expectedB, sensorBLimit);
+            input = value;
+            ownerSim.advanceGeneratedTemporalProfile(SAMPLE_SECONDS);
+            requireCurrent("input " + value + " after");
+        }
+
+        GeneratedRepairStatus finish() {
+            if (cancelled || phase < PROFILE_WORK_UNITS)
+                throw new IllegalStateException("Q30 profile is incomplete");
+            requireCurrent("finish");
+            if (profile == Profile.HEALTHY) {
+                if (!passed)
+                    throw new IllegalStateException("Healthy Q30 failed four input conditions:" + failures);
+                result = GeneratedRepairStatus.CORRECTLY_RESTORED;
+            } else if (profile == Profile.FAULTED) {
+                observed = localObserved;
+                result = GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
+            } else {
+                result = !blocked && passed ? GeneratedRepairStatus.CORRECTLY_RESTORED :
+                    GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
+            }
+            complete = true;
+            return result;
+        }
+
+        void cancel() {
+            if (cancelled || complete) return;
+            Throwable cleanupFailure = null;
+            if (input != priorInput) {
+                if (powerController.getState() == BoardPowerState.UNPOWERED) {
+                    if (canRestorePriorInput()) restoreInputCommandWhileUnpowered();
+                } else if (canRestorePriorInput()) {
+                    try { applyInput(priorInput); }
+                    catch (Throwable failure) { cleanupFailure = failure; }
+                }
+            }
+            cancelled = true;
+            if (cleanupFailure instanceof Error) throw (Error) cleanupFailure;
+            if (cleanupFailure instanceof RuntimeException) throw (RuntimeException) cleanupFailure;
+            if (cleanupFailure != null)
+                throw new IllegalStateException("Q30 prior-input cleanup failed", cleanupFailure);
+        }
+
+        int getWorkUnits() { return PROFILE_WORK_UNITS; }
+
+        private void requireCurrent(String stage) {
+            if (!isCurrentOwnerIdentity() || powerController.getState() != powerState ||
+                    modifications.isFullyRestored() != physicalState ||
+                    !controlObservation.isCurrent() || !savedControls.matches() ||
+                    input != expectedInput || sensorA.maxVoltage != expectedA ||
+                    sensorB.maxVoltage != expectedB || sensorA.getLimitAmps() != sensorALimit ||
+                    sensorB.getLimitAmps() != sensorBLimit || !solverRecipeIsCurrent())
+                throw new IllegalStateException("Q30 profile lost owner or controls at " + stage);
+        }
+
+        private boolean solverRecipeIsCurrent() {
+            return ownerSim.maxTimeStep == expectedMaximumStep &&
+                ownerSim.minTimeStep == expectedMinimumStep &&
+                ownerSim.adjustTimeStep == expectedAdaptiveStep;
+        }
+
+        private boolean canRestorePriorInput() {
+            try {
+                if (!isCurrentOwnerIdentity() || modifications.isFullyRestored() != physicalState ||
+                        !sensorCommandsAreCurrent() || !solverRecipeIsCurrent()) return false;
+                BoardPowerState currentPower = powerController.getState();
+                if (currentPower == BoardPowerState.UNPOWERED)
+                    return powerController.isElectricallyUnpowered() &&
+                        (powerState == BoardPowerState.UNPOWERED ? controlsAreUnchanged() :
+                            isExactSinglePowerOffTransition());
+                return currentPower == powerState && controlsAreUnchanged();
+            } catch (Throwable ignored) { return false; }
+        }
+
+        private boolean controlsAreUnchanged() {
+            return controlObservation.isCurrent() && savedControls.matches();
+        }
+
+        /**
+         * A cancellation may restore only its own input source setpoints after
+         * the user's single exact board-power disconnect transition. Keep this
+         * exception narrow: all original external bindings must remain
+         * identical, every input must have been connected, and each connection
+         * revision must reflect exactly that one transition.
+         */
+        private boolean isExactSinglePowerOffTransition() {
+            if (powerState != BoardPowerState.POWERED ||
+                    powerController.getState() != BoardPowerState.UNPOWERED ||
+                    !powerController.isElectricallyUnpowered() || !powerBindings.areAllDisconnected() ||
+                    powerInputIds.isEmpty()) return false;
+            for (int i = 0; i < powerInputIds.size(); i++) {
+                ExternalPowerSimulationBinding binding = powerBindings.getBinding(powerInputIds.get(i));
+                if (binding != powerInputBindings[i] || !powerInputInitiallyControlled[i] ||
+                        !powerInputInitiallyConnected[i] || !binding.hasControl() || binding.isConnected() ||
+                        powerInputRevisions[i] == Long.MAX_VALUE ||
+                        binding.getConnectionRevision() != powerInputRevisions[i] + 1 ||
+                        binding.getLimitedSupply() != powerInputSupplies[i]) return false;
+                LimitedDcSupplyElm supply = powerInputSupplies[i];
+                if (supply != null && supply.getLimitAmps() != powerInputLimits[i]) return false;
+                if (supply == null && !Double.isNaN(powerInputLimits[i])) return false;
+            }
+            return true;
+        }
+
+        private boolean sensorCommandsAreCurrent() {
+            return input == expectedInput && sensorA.maxVoltage == expectedA &&
+                sensorB.maxVoltage == expectedB && sensorA.getLimitAmps() == sensorALimit &&
+                sensorB.getLimitAmps() == sensorBLimit &&
+                powerBindings.getBinding("SENSOR_A").getLimitedSupply() == sensorA &&
+                powerBindings.getBinding("SENSOR_B").getLimitedSupply() == sensorB;
+        }
+
+        /** No solver or external-power command is touched while the board is off. */
+        private void restoreInputCommandWhileUnpowered() {
+            double a = (priorInput & 1) != 0 ? 5 : 0;
+            double b = (priorInput & 2) != 0 ? 5 : 0;
+            sensorA.maxVoltage = a;
+            sensorB.maxVoltage = b;
+            input = priorInput;
+            expectedInput = priorInput;
+            expectedA = a;
+            expectedB = b;
+        }
+
+        private boolean isCurrentOwnerIdentity() {
+            return CircuitElm.sim == ownerSim && ownerSim.getGeneratedBoardInstance() == owner &&
+                ownerSim.elmList == graph && graphElementsUnchanged() &&
+                ownerSim.getGeneratedChallengeController() == challenge &&
+                ownerSim.getBoardPowerController() == powerController &&
+                ownerSim.getBoardModificationController() == modifications &&
+                ownerSim.getBoardModificationController().getInstanceForRuntimeValidation() == owner &&
+                ownerSim.getBoardPowerController().getBindingsForDeveloperVerification() == powerBindings &&
+                owner.getBoard() == ownerBoard && owner.getSimulationBindings() == simulationBindings &&
+                owner.getExternalPowerBindings() == powerBindings && owner.getPhysicalBoardRuntime() == runtime &&
+                runtime.getLastMutationReceipt() == mutationReceipt && !runtime.isMutationInProgress() &&
+                owner.getFamilyState() == familyState && owner.getDiagnosticProvider() == provider &&
+                owner.getTemporalBehavior() == temporal && owner.getFaultBinding() == faultBinding &&
+                owner.getChallengeDefinition() == definition && !ownerSim.activeMeasurementOverlay;
+        }
+
+        private boolean graphElementsUnchanged() {
+            if (ownerSim.elmList.size() != graphElements.size()) return false;
+            for (int i = 0; i < graphElements.size(); i++)
+                if (ownerSim.elmList.get(i) != graphElements.get(i)) return false;
+            return true;
+        }
     }
     public void verifyHealthy(GeneratedBoardInstance owner, BoardPowerState state) {
         if (state != BoardPowerState.POWERED || !healthy(owner, input))

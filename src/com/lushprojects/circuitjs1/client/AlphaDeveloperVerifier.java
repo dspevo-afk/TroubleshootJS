@@ -130,6 +130,103 @@ final class AlphaDeveloperVerifier {
                     (state != BoardPowerState.UNPOWERED || sim.getBoardPowerController().isElectricallyUnpowered()),
                     "public power action reached its requested isolation state");
             }
+            void verifyLoosePhysicalPart(PhysicalPart<?> part, PhysicalPart<?> installedReference) {
+                PhysicalGeometryRealization realization = part.getGeometryRealization();
+                boolean unformedCatalogStock = PhysicalResistorPart.hasUnformedCatalogLeads(part);
+                require(part.getPackage() != null && (realization != null || unformedCatalogStock),
+                    "loose physical package is bound or explicitly valid unformed catalog stock");
+                if (unformedCatalogStock)
+                    require(realization == null, "catalog resistor remains unformed until installation");
+
+                Rectangle tray = owner.getPcbLayout().getPartsTray();
+                LoosePartPose pose = LoosePartPose.forPart(part.getPackage(), part, tray, 0);
+                Rectangle cell = pose.getTrayCell();
+                Rectangle selection = pose.getSelectionEnvelope();
+                Rectangle body = pose.getBodyBounds();
+                PhysicalPackageGeometry expectedSource = realization == null ?
+                    part.getPackage().getGeometry() : realization.getPhysicalGeometry();
+                require(pose.getSourceRealization() == realization &&
+                    pose.getSourceGeometry() == expectedSource && positive(body) &&
+                    positive(selection) && contains(tray, cell) && contains(cell, selection) &&
+                    containsRendered(selection, body),
+                    "loose package pose projects its canonical body into the Parts Tray");
+                for (int terminal = 0; terminal < part.getTerminalCount(); terminal++) {
+                    Point point = pose.getTerminalPoint(terminal);
+                    Rectangle probe = pose.getProbeBounds(terminal);
+                    require(point != null && inside(selection, point) && positive(probe) &&
+                        containsRendered(selection, probe),
+                        "loose package pose exposes terminal " + terminal + " body/probe geometry");
+                }
+                verifyLoosePoseNegatives(part, installedReference, tray);
+            }
+            void verifyLoosePoseNegatives(PhysicalPart<?> part, PhysicalPart<?> installedReference,
+                    Rectangle tray) {
+                boolean malformedRejected = false;
+                try {
+                    LoosePartPose.forCell(part.getPackage(), part,
+                        new Rectangle(tray.x, tray.y, 0, tray.height));
+                } catch (IllegalArgumentException expected) {
+                    malformedRejected = true;
+                }
+                require(malformedRejected, "loose pose rejects a non-positive tray cell");
+                failuresChecked++;
+
+                PhysicalPart<?> formed = installedReference;
+                if (formed == null || formed.getGeometryRealization() == null) {
+                    for (PhysicalPart<?> candidate : owner.getPhysicalBoardRuntime().getPhysicalParts()) {
+                        if (candidate.isInstalled() && candidate.getGeometryRealization() != null) {
+                            formed = candidate;
+                            break;
+                        }
+                    }
+                }
+                require(formed != null && formed.getPackage() != null &&
+                    formed.getGeometryRealization() != null,
+                    "a formed physical reference exists for foreign-geometry rejection");
+                PhysicalPackage foreignPackage = formed.getPackage().isEquivalentTo(
+                    PhysicalPackages.AXIAL_RESISTOR) ? PhysicalPackages.AXIAL_DIODE :
+                    PhysicalPackages.AXIAL_RESISTOR;
+                boolean foreignRejected = false;
+                try {
+                    LoosePartPose.forPart(foreignPackage, formed, tray, 0);
+                } catch (IllegalStateException expected) {
+                    foreignRejected = expected.getMessage() != null &&
+                        expected.getMessage().indexOf("does not fit its package") >= 0;
+                }
+                require(foreignRejected,
+                    "loose pose rejects a formed part with a foreign package geometry");
+                failuresChecked++;
+            }
+            boolean positive(Rectangle rectangle) {
+                return rectangle != null && rectangle.width > 0 && rectangle.height > 0;
+            }
+            boolean contains(Rectangle outer, Rectangle inner) {
+                return positive(outer) && positive(inner) && inner.x >= outer.x &&
+                    inner.y >= outer.y && (long)inner.x + inner.width <=
+                    (long)outer.x + outer.width && (long)inner.y + inner.height <=
+                    (long)outer.y + outer.height;
+            }
+            boolean containsRendered(Rectangle outer, Rectangle inner) {
+                return positive(outer) && positive(inner) &&
+                    (long)inner.x >= (long)outer.x - 1 &&
+                    (long)inner.y >= (long)outer.y - 1 &&
+                    (long)inner.x + inner.width <= (long)outer.x + outer.width + 1 &&
+                    (long)inner.y + inner.height <= (long)outer.y + outer.height + 1;
+            }
+            boolean inside(Rectangle bounds, Point point) {
+                return positive(bounds) && point != null && point.x >= bounds.x &&
+                    point.y >= bounds.y && point.x <= bounds.x + bounds.width &&
+                    point.y <= bounds.y + bounds.height;
+            }
+            boolean sameElements(Vector<CircuitElm> expected, Vector<CircuitElm> actual) {
+                if (expected == null || actual == null || expected.size() != actual.size())
+                    return false;
+                for (CircuitElm element : expected) if (!actual.contains(element)) return false;
+                return true;
+            }
+            String geometryVariant(PhysicalGeometryRealization realization) {
+                return realization == null ? "<unformed>" : realization.getVariantKey();
+            }
             void catalogAndRepair() {
                 operation = "unrepaired-retest";
                 GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
@@ -167,7 +264,8 @@ final class AlphaDeveloperVerifier {
                         "acquisition retains installed part and creates a loose part");
                     require(owner.getComponentBindings().getElements(catalog.getComponentId()).equals(bindings), "acquisition never retargets installed electrical bindings");
                     for (CircuitElm e : part.getElectricalBacking().getCircuitElements()) require(sim.elmList.contains(e), "loose part is backed by the active CircuitJS graph");
-                    require(part.getGeometryRealization() != null, "loose physical package is inspectable"); acquisitions++;
+                    verifyLoosePhysicalPart(part, installed);
+                    acquisitions++;
                     operation = "physical-service/" + catalog.getComponentId();
                     verifyServicePosition(provider, installed, part);
                     String mutationType = U04CatalogMutationVerifier.type(part);
@@ -266,7 +364,37 @@ final class AlphaDeveloperVerifier {
                 if (serviceCases.length() > 0) serviceCases.append(',');
                 serviceCases.append("{\"family\":").append(quote(family())).append(",\"seed\":").append(quote(Long.toString(seed())))
                     .append(",\"component\":").append(quote(id)).append(",\"type\":").append(quote(U04CatalogMutationVerifier.type(original)))
-                    .append(",\"removeReplaceReinstall\":true}");
+                    .append(",\"removeReplaceReinstall\":true");
+                if (original instanceof PhysicalResistorPart &&
+                        (("NPN_LOW_SIDE_SWITCH".equals(family()) && seed() == 0) ||
+                            "COMPOSED_CONTROLLED_INDICATOR".equals(family()))) {
+                    PhysicalBoardSlot slot = runtime.getSlot(id);
+                    require(slot != null && slot.getGeometryRealization() != null &&
+                        slot.getPadIds().size() == 2,
+                        "shop source resistor has two actual board pads and canonical slot geometry");
+                    serviceCases.append(",\"slotGeometry\":{\"variant\":")
+                        .append(quote(slot.getGeometryRealization().getVariantKey()))
+                        .append(",\"pads\":[");
+                    for (int terminal = 1; terminal <= 2; terminal++) {
+                        BoardPad logical = null;
+                        for (String padId : slot.getPadIds()) {
+                            BoardPad candidate = owner.getBoard().getPad(padId);
+                            if (candidate != null && Integer.toString(terminal).equals(
+                                    candidate.getTerminalId())) logical = candidate;
+                        }
+                        require(logical != null && id.equals(logical.getComponentId()),
+                            "shop source pad belongs to its reported component and terminal");
+                        PcbPadPlacement pad = owner.getPcbLayout().getPad(logical.getId());
+                        require(pad != null, "shop source pad has an actual PCB placement");
+                        if (terminal > 1) serviceCases.append(',');
+                        serviceCases.append("{\"id\":").append(quote(logical.getId()))
+                            .append(",\"terminal\":").append(quote(logical.getTerminalId()))
+                            .append(",\"x\":").append(pad.getX())
+                            .append(",\"y\":").append(pad.getY()).append('}');
+                    }
+                    serviceCases.append("]}");
+                }
+                serviceCases.append('}');
             }
             void verifyPublicShop(PlayerSessionController product) {
                 PhysicalBoardRuntime runtime = owner.getPhysicalBoardRuntime();
@@ -286,7 +414,11 @@ final class AlphaDeveloperVerifier {
                         PhysicalPart<?> added = runtime.getPart(runtime.getPartOrder().lastElement());
                         require(added instanceof PhysicalResistorPart && !added.isInstalled() &&
                             ((PhysicalResistorPart)added).getSpecification().getNominalResistanceOhms() == 330 &&
-                            added.getGeometryRealization().isEquivalentTo(entry.geometry), "public choice retains electrical specification and physical fit");
+                            added.getGeometryRealization() == null &&
+                            PhysicalResistorPart.hasUnformedCatalogLeads(added) &&
+                            entry.geometry.getPhysicalPackage().isEquivalentTo(added.getPackage()),
+                            "public choice retains electrical specification and valid unformed stock");
+                        verifyLoosePhysicalPart(added, original);
                         require(runtime.getWorkbenchPartsProvider(entry.acquisitionComponent).getPart(added.getId()) == added &&
                             runtime.getInstalledPart(entry.acquisitionComponent) == original &&
                             owner.getComponentBindings().getElements(entry.acquisitionComponent).equals(bindings),
@@ -298,7 +430,7 @@ final class AlphaDeveloperVerifier {
                         acquisitions++;
                         boolean fitNegatives = "NPN_LOW_SIDE_SWITCH".equals(family()) &&
                             "SPAN_260".equals(entry.geometry.getVariantKey());
-                        if (fitNegatives) verifyShopFitRejections(product, lease, added);
+                        if (fitNegatives) verifyShopFitRejections(product, lease, added, entry);
                         if (shopCases.length() > 0) shopCases.append(',');
                         shopCases.append("{\"family\":").append(quote(family())).append(",\"seed\":").append(quote(Long.toString(seed())))
                             .append(",\"variant\":").append(quote(entry.geometry.getVariantKey()))
@@ -307,7 +439,8 @@ final class AlphaDeveloperVerifier {
                     }
                 } finally { product.closeView(lease); }
             }
-            void verifyShopFitRejections(PlayerSessionController product, int lease, PhysicalPart<?> wideResistor) {
+            void verifyShopFitRejections(PlayerSessionController product, int lease,
+                    PhysicalPart<?> wideResistor, PlayerShopCatalog.Entry wideEntry) {
                 PhysicalBoardRuntime runtime = owner.getPhysicalBoardRuntime();
                 PlayerShopCatalog.Category npns = new PlayerShopCatalog(owner).category("NPN_TRANSISTOR");
                 PlayerShopCatalog.Entry entry = npns.entries().firstElement();
@@ -323,24 +456,86 @@ final class AlphaDeveloperVerifier {
                     runtime.getInstalledPart(entry.acquisitionComponent) == originalTransistor,
                     "wrong-type negative uses current canonical loose inventory and preserves installed transistor");
                 acquisitions++;
-                PhysicalSlotMutationProvider target = runtime.getMutationProvider("RLOAD");
-                PhysicalPart<?> original = runtime.getInstalledPart("RLOAD");
-                require("SPAN_240".equals(original.getGeometryRealization().getVariantKey()) &&
-                    "SPAN_260".equals(wideResistor.getGeometryRealization().getVariantKey()),
-                    "independent fixture has two different real resistor fits");
-                require(target.removeInstalledPart(), "prepare empty target for fit/type negatives"); settle();
+                PhysicalSlotMutationProvider wideProvider = runtime.getMutationProvider(
+                    wideEntry.acquisitionComponent);
+                PhysicalPart<?> wideOriginal = runtime.getInstalledPart(wideEntry.acquisitionComponent);
+                require(wideProvider != null && wideOriginal != null &&
+                    PhysicalResistorPart.hasUnformedCatalogLeads(wideResistor) &&
+                    "SPAN_260".equals(wideEntry.geometry.getVariantKey()),
+                    "independent fixture declares a portable unformed wide resistor source=" +
+                    wideEntry.acquisitionComponent + " entryFit=" + geometryVariant(wideEntry.geometry) +
+                    " actual=" + geometryVariant(wideResistor.getGeometryRealization()));
+                BoardPowerState sourcePower = sim.getBoardPowerController().getState();
+                Vector<CircuitElm> sourceActive = new Vector<CircuitElm>(sim.elmList);
+                Vector<CircuitElm> sourceBindings = owner.getComponentBindings().getElements(
+                    wideEntry.acquisitionComponent);
+                require(wideProvider.removeInstalledPart(), "prepare source slot for lead formation"); settle();
+                require(wideProvider.install(wideResistor.getId()),
+                    "source installation forms the catalog resistor at its declared fit"); settle();
+                require(wideResistor.getGeometryRealization() != null &&
+                    wideResistor.getGeometryRealization().isEquivalentTo(wideEntry.geometry),
+                    "source installation retains the exact declared realization source=" +
+                    wideEntry.acquisitionComponent + " entryFit=" + geometryVariant(wideEntry.geometry) +
+                    " actual=" + geometryVariant(wideResistor.getGeometryRealization()));
+                require(wideProvider.removeInstalledPart(), "formed wide resistor returns to tray"); settle();
+                require(wideProvider.install(wideOriginal.getId()), "restore source slot original"); settle();
+                require(sourcePower == BoardPowerState.UNPOWERED &&
+                    sim.getBoardPowerController().getState() == sourcePower &&
+                    sameElements(sourceActive, sim.elmList) &&
+                    sourceBindings.equals(owner.getComponentBindings().getElements(
+                        wideEntry.acquisitionComponent)) &&
+                    runtime.getInstalledPart(wideEntry.acquisitionComponent) == wideOriginal,
+                    "source formation restores owner, electrical bindings, graph and power state");
+
+                PhysicalBoardSlot targetSlot = null;
+                PhysicalSlotMutationProvider target = null;
+                PhysicalPart<?> original = null;
+                for (PhysicalBoardSlot candidate : runtime.getSlots()) {
+                    if (candidate == null || wideEntry.acquisitionComponent.equals(
+                            candidate.getComponentId())) continue;
+                    PhysicalSlotMutationProvider candidateProvider = runtime.getMutationProvider(
+                        candidate.getComponentId());
+                    PhysicalPart<?> candidatePart = candidate.getInstalledPart();
+                    PhysicalGeometryRealization candidateGeometry = candidate.getGeometryRealization();
+                    if (candidateProvider == null || !(candidatePart instanceof PhysicalResistorPart) ||
+                            candidateGeometry == null || wideResistor.getGeometryRealization() == null ||
+                            candidateGeometry.isEquivalentTo(wideResistor.getGeometryRealization()))
+                        continue;
+                    targetSlot = candidate;
+                    target = candidateProvider;
+                    original = candidatePart;
+                    break;
+                }
+                String sourceFit = wideEntry.acquisitionComponent + "/" +
+                    geometryVariant(wideResistor.getGeometryRealization());
+                String targetFit = targetSlot == null ? "<none>" : targetSlot.getComponentId() + "/" +
+                    geometryVariant(targetSlot.getGeometryRealization());
+                require(targetSlot != null && target != null && original != null &&
+                    !targetSlot.getGeometryRealization().isEquivalentTo(
+                        wideResistor.getGeometryRealization()),
+                    "independent fixture has two different real resistor fits source=" + sourceFit +
+                    " target=" + targetFit);
+                String targetComponent = targetSlot.getComponentId();
+                require(target.removeInstalledPart(), "prepare empty target for fit/type negatives at " +
+                    targetFit); settle();
                 Vector<CircuitElm> active = new Vector<CircuitElm>(sim.elmList);
-                Vector<CircuitElm> bindings = owner.getComponentBindings().getElements("RLOAD");
+                Vector<CircuitElm> bindings = owner.getComponentBindings().getElements(targetComponent);
                 Vector<String> parts = runtime.getPartOrder();
-                require(!runtime.isPartInstallableAt(wideResistor, "RLOAD") && !target.install(wideResistor.getId()),
-                    "current loose resistor rejects mismatched target geometry");
-                require(!runtime.isPartInstallableAt(transistor, "RLOAD") && !target.install(transistor.getId()),
-                    "current loose transistor rejects resistor target type");
-                require(runtime.getInstalledPart("RLOAD") == null && !wideResistor.isInstalled() &&
+                boolean wrongFitEligible = runtime.isPartInstallableAt(wideResistor, targetComponent);
+                boolean wrongFitInstalled = target.install(wideResistor.getId());
+                require(!wrongFitEligible && !wrongFitInstalled,
+                    "current loose resistor rejects mismatched target geometry source=" + sourceFit +
+                    " target=" + targetFit);
+                boolean wrongTypeEligible = runtime.isPartInstallableAt(transistor, targetComponent);
+                boolean wrongTypeInstalled = target.install(transistor.getId());
+                require(!wrongTypeEligible && !wrongTypeInstalled,
+                    "current loose transistor rejects resistor target type target=" + targetFit);
+                require(runtime.getInstalledPart(targetComponent) == null && !wideResistor.isInstalled() &&
                     !transistor.isInstalled() && parts.equals(runtime.getPartOrder()) && active.equals(sim.elmList) &&
-                    bindings.equals(owner.getComponentBindings().getElements("RLOAD")),
-                    "rejected physical fits preserve inventory, graph, bindings and empty target");
-                require(target.install(original.getId()), "restore exact original after fit/type negatives"); settle();
+                    bindings.equals(owner.getComponentBindings().getElements(targetComponent)),
+                    "rejected physical fits preserve inventory, graph, bindings and empty target=" + targetFit);
+                require(target.install(original.getId()), "restore exact original after fit/type negatives at " +
+                    targetFit); settle();
             }
             void rejectionAndCancellation() {
                 Object graph = sim.elmList; GeneratedBoardInstance protectedOwner = sim.getGeneratedBoardInstance();
@@ -370,7 +565,8 @@ final class AlphaDeveloperVerifier {
                     .append(",\"repairPassed\":").append(!pilot).append('}');
             }
             String report(String status, long elapsed, long cleanup, boolean restored, Throwable failure) {
-                return "{\"protocol\":\"TSJ-ALPHA-1\",\"status\":" + quote(status) + ",\"pilot\":" + pilot + ",\"cases\":[" + cases +
+                return "{\"protocol\":" + quote("TSJ-ALPHA-" + DifficultyAssessment.VERSION) +
+                    ",\"status\":" + quote(status) + ",\"pilot\":" + pilot + ",\"cases\":[" + cases +
                     "],\"assertions\":" + assertions + ",\"acquisitions\":" + acquisitions + ",\"staleCallbacks\":" + staleCallbacks +
                     ",\"mutationChecks\":" + mutationChecks + ",\"mutationProviders\":" + providerJson() +
                     ",\"mutationCases\":[" + mutationCases + "]" +

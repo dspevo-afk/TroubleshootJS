@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "targetCount": 1,
+  "deletedCount": 1,
+  "deletionMethod": "Remove-VerifierOwnedTree",
+  "pointerFilesPreserved": true,
+  "excluded": [
+    "q30-modern-01",
+    "tests/contracts/__pycache__"
+  ],
+  "records": [
+    {
+      "status": "PASS",
+      "pointer": ".tools/q30-focused-17-path.txt",
+      "name": "q30-focused-17",
+      "directory": "tsj-q30-focused-17-b6809b9455f74c8a825da46a6872de93",
+      "identityMarkerPass": true,
+      "profileExistsBeforeDeletion": true,
+      "profileMatch": true,
+      "tempContainmentPass": true,
+      "resultCleanupPass": true,
+      "inputAudit": "PASS",
+      "outcome": "PASS",
+      "caseCount": 2,
+      "casePassCount": 2,
+      "caseFailCount": 0,
+      "port": 65097,
+      "runnerPid": 25068,
+      "recordedProcessCount": 8,
+      "currentLiveRecordedPidCount": 0,
+      "currentMatchingRecordedIdentityCount": 0,
+      "pidReuseCount": 0,
+      "ambiguousRecordedIdentityCount": 0,
+      "profileOrTargetPathReferenceCount": 0,
+      "portConnections": 0,
+      "reparseTreePass": true,
+      "reparseDescendantCountBeforeDeletion": 258,
+      "deletionAttempted": true,
+      "directoryAbsent": true,
+      "processTerminationAttempted": false,
+      "sourcePointerPreserved": true
+    }
+  ]
+}

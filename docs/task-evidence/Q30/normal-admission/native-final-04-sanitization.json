@@ -1,0 +1,17 @@
+{
+  "file": "docs/task-evidence/Q30/normal-admission/native-final-04.log",
+  "originalSha256": "6968b2766367e441abc114f84cb56e7db9b605f43379d39dd101ee2d2a98be5f",
+  "sanitizedSha256": "6968b2766367e441abc114f84cb56e7db9b605f43379d39dd101ee2d2a98be5f",
+  "originalBytes": 1216175,
+  "sanitizedBytes": 1216175,
+  "originalLines": 12963,
+  "sanitizedLines": 12963,
+  "worktreeReplacements": 0,
+  "taskTempReplacements": 0,
+  "userHomeReplacements": 0,
+  "pathLikeHitsAfterSanitization": 0,
+  "associatedReceiptFiles": [],
+  "sanitizedPathsOnly": true,
+  "resultJsonUntouched": true,
+  "inputManifestUntouched": true
+}

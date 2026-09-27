@@ -1,0 +1,36 @@
+{
+  "copiedFiles": [],
+  "fileCount": 0,
+  "skippedHashEqualSpec": {
+    "source": "spec.json",
+    "destination": "compiled-host-budget-negative-21-spec.json",
+    "destinationSha256": "790df86a8532358cd4455ee3e048bfbcbef66faf4ef0b39211397a870a25b145",
+    "reason": "expected-no-output-directory; source-run-target-absent"
+  },
+  "profileExcluded": true,
+  "cacheExcluded": true,
+  "sanitizedPathsOnly": true,
+  "sourceDirectory": "<task-temp>/tsj-q30-host-budget-negative-21-4f7e96499ecb4172a93e7c6cbc522b7f",
+  "destinationDirectory": "docs/task-evidence/Q30/normal-admission",
+  "expectedCommandOutcome": "PASS",
+  "expectedExitCode": 2,
+  "actualExitCode": 2,
+  "commandMatched": true,
+  "expectedClassification": "expected-input-schema-rejection",
+  "outputCreated": false,
+  "targetDirectoryPresent": false,
+  "observedError": "ERROR cases[1].timeoutSeconds must be greater than 0 and no more than 900 seconds",
+  "runLog": {
+    "path": "compiled-host-budget-negative-21-run.log",
+    "sha256": "8121600df877f7a217208a672c5fb42e9efcacd7150e7eb0d3907f238262640e",
+    "bytes": 83,
+    "lines": 2,
+    "rawPersonalPathHits": 0
+  },
+  "existingSpec": {
+    "path": "compiled-host-budget-negative-21-spec.json",
+    "sha256": "790df86a8532358cd4455ee3e048bfbcbef66faf4ef0b39211397a870a25b145",
+    "bytes": 292,
+    "lines": 12
+  }
+}

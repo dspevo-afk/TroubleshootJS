@@ -120,6 +120,10 @@ final class GeneratedDiagnosticObservationExecutor {
 
         boolean isComplete() { return complete; }
 
+        String nextStepKindForDeveloperVerification() {
+            return complete ? "COMPLETE" : steps.get(nextStep).kind.name();
+        }
+
         /** Returns the observations only after the entire program completed. */
         Vector<GeneratedDiagnosticSample> finish() {
             ensureOpen();

@@ -1,0 +1,30 @@
+{
+  "schema": "q30-final-source-input-audit-v1",
+  "checkedUtc": "2026-09-27T03:23:40.636930+00:00",
+  "parentHead": "16a922b2b757dfcd1cbc3a0230ab2b97ac2fbb50",
+  "status": "PASS",
+  "manifests": {
+    "build-final-21-inputs.json": {
+      "manifestSha256": "96958fa5dbb97a6d7c988398c6b75411b7bb9425ab4e75a515ee9a5c27a3f5e7",
+      "expectedCount": 1133,
+      "actualCount": 1133,
+      "mismatches": [],
+      "pass": true
+    },
+    "web-final-21-inputs.json": {
+      "manifestSha256": "b7e9ee901ca67c6cb1a778df0e422e1d6d83bc016d47ad7f746227c7982dc1e4",
+      "expectedCount": 392,
+      "actualCount": 392,
+      "mismatches": [],
+      "pass": true
+    },
+    "native-final-05-inputs-after.json": {
+      "manifestSha256": "5782b2b573f7e067b5e33d144f82fdf05f4aca69e9238256c6ff632dd8f002aa",
+      "expectedCount": 1248,
+      "actualCount": 1248,
+      "mismatches": [],
+      "pass": true
+    }
+  },
+  "scope": "Final prepublication confirmation that GWT21 production source/web and native05 consumed inputs remain unchanged. Documentation/evidence edits are outside these consumed boundaries."
+}

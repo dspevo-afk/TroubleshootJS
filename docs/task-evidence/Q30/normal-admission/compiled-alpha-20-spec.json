@@ -1,0 +1,20 @@
+{
+  "cases": [
+    {
+      "name": "alpha-full41",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 900,
+      "expectedState": "PASS:alpha",
+      "reportAttribute": "data-tsj-alpha-report"
+    },
+    {
+      "name": "alpha-explicit-negative",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaFail=true",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "reportAttribute": "data-tsj-alpha-report",
+      "expectedPrefix": "FAIL:alpha:"
+    }
+  ]
+}

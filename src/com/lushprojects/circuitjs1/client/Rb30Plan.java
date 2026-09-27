@@ -9,18 +9,58 @@ import java.util.Vector;
  */
 final class Rb30Plan {
     static final String FAMILY_ID = "RB30_CONTROL";
+    static final int PLAN_VERSION = 3;
 
     final long seed, layoutSeed, routingSeed;
     final boolean driverABjt, driverBBjt, sharedHystereticReference;
     final String selectedFault;
+    final SupportVariant supportVariant;
+
+    /** Functional support configurations; ordering is part of the seed contract. */
+    enum SupportVariant {
+        STANDARD_35("RB30_STANDARD_STATUS@2", 35, true, false),
+        COMPACT_33("RB30_COMPACT_NO_STATUS@2", 33, false, false),
+        FILTERED_37("RB30_FILTERED_SENSOR_INPUTS@2", 37, true, true);
+
+        private final String identity;
+        private final int packageCount;
+        private final boolean statusIndicator;
+        private final boolean sensorInputFilters;
+
+        SupportVariant(String identity, int packageCount,
+                boolean statusIndicator, boolean sensorInputFilters) {
+            this.identity = identity;
+            this.packageCount = packageCount;
+            this.statusIndicator = statusIndicator;
+            this.sensorInputFilters = sensorInputFilters;
+        }
+
+        String identity() { return identity; }
+        int packageCount() { return packageCount; }
+        boolean hasStatusIndicator() { return statusIndicator; }
+        boolean hasSensorInputFilters() { return sensorInputFilters; }
+
+        private static SupportVariant fromSeedChoice(int choice) {
+            switch (choice) {
+                case 0: return STANDARD_35;
+                case 1: return COMPACT_33;
+                case 2: return FILTERED_37;
+                default:
+                    throw new IllegalArgumentException("Unknown Q30 support choice");
+            }
+        }
+    }
 
     private static final String[] FAULTS = {
         "DREV_OPEN", "REN_OPEN", "SENSOR_A_OPEN", "DRIVE_A_OPEN",
         "RELAY_B_COIL_OPEN"
     };
 
-    private Rb30Plan(long seed) {
+    private Rb30Plan(long seed, SupportVariant explicitSupport) {
         this.seed = seed;
+        // Keep the accepted topology, fault, placement and routing stream
+        // derivations intact. The new support choice is an independent named
+        // concern and cannot shift any existing draw.
         NamedRandomStreams streams = new NamedRandomStreams(
             NamedRandomStreams.DERIVATION_VERSION, seed, FAMILY_ID, 1);
         driverABjt = streams.openBlock("output-a",
@@ -37,9 +77,36 @@ final class Rb30Plan {
             1, "board");
         routingSeed = streams.deviceSeed(NamedRandomStreams.Concern.ROUTING,
             1, "copper");
+        supportVariant = explicitSupport == null ?
+            SupportVariant.fromSeedChoice(streams.openDevice(
+                NamedRandomStreams.Concern.SUPPORT, 1,
+                "support-configuration").nextInt(3)) : explicitSupport;
     }
 
-    static Rb30Plan resolve(long seed) { return new Rb30Plan(seed); }
+    /** Seed-selected current Q30 plan, including the version-2 support choice. */
+    static Rb30Plan resolve(long seed) { return new Rb30Plan(seed, null); }
+
+    /** Pin a support profile for a named regression or frozen corpus row. */
+    static Rb30Plan withSupport(long seed, SupportVariant supportVariant) {
+        if (supportVariant == null)
+            throw new IllegalArgumentException("Missing Q30 support variant");
+        return new Rb30Plan(seed, supportVariant);
+    }
+
+    /** The standard 35-package Q30 recipe with all pre-existing seed streams. */
+    static Rb30Plan reference(long seed) {
+        return withSupport(seed, SupportVariant.STANDARD_35);
+    }
+
+    boolean hasStatusIndicator() {
+        return supportVariant.hasStatusIndicator();
+    }
+
+    boolean hasSensorInputFilters() {
+        return supportVariant.hasSensorInputFilters();
+    }
+
+    int physicalPackageCount() { return supportVariant.packageCount(); }
 
     RelayDriverProvider driverA() {
         return driverABjt ? new RelayDriverProvider.Bjt() :
@@ -51,25 +118,35 @@ final class Rb30Plan {
             new RelayDriverProvider.Nmos();
     }
 
-    String topology() {
+    /** Eight driver/reference axes, independent of the support profile. */
+    String topologyAxis() {
         return "RB30_" + (sharedHystereticReference ?
             "SHARED_HYSTERETIC" : "SEPARATE_DIRECT") + "_A_" +
             (driverABjt ? "BJT" : "NMOS") + "_B_" +
             (driverBBjt ? "BJT" : "NMOS");
     }
 
+    /** Full structural identity also distinguishes the seeded support profile. */
+    String topology() {
+        return topologyAxis() + "_" + supportVariant.name();
+    }
+
     String canonical() {
-        return "rb30-plan@1;seed=" + Long.toString(seed) +
-            ";topology=" + topology() + ";layout=" + Long.toString(layoutSeed) +
+        return "rb30-plan@" + PLAN_VERSION + ";seed=" + Long.toString(seed) +
+            ";topology=" + topologyAxis() + ";support=" +
+            supportVariant.identity() + ";layout=" + Long.toString(layoutSeed) +
             ";routing=" + Long.toString(routingSeed) +
             ";physicalPolicy=" + MediumBoardPhysicalPolicy.identity() +
             ";fault=" + selectedFault +
-            ";packages=33;main=12V;regulator=5V-E02;coil=5V-E03" +
+            ";packages=" + physicalPackageCount() +
+            ";main=12V;regulator=5V-E02;coil=5V-E03" +
             ";load=isolated-12V-180ohm-per-channel" +
-            ";sensors=two-E04-decisions;loadReference=isolated";
+            ";sensors=two-E04-decisions" +
+            ";sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN)," +
+            "RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated";
     }
 
-    /** One logical graph with exactly 33 real physical package identities. */
+    /** One logical graph with its selected real physical package inventory. */
     TroubleshootBoard board() {
         TroubleshootBoard board = new TroubleshootBoard(FAMILY_ID + "_BOARD");
         for (String id : new String[] {
@@ -90,8 +167,10 @@ final class Rb30Plan {
         for (String id : new String[] { "A_COIL_LOW", "B_COIL_LOW",
                 "OUT_A", "OUT_B" })
             net(board, id, BoardNet.RoutingRole.HIGH_CURRENT);
-        for (String id : new String[] { "NC_A", "NC_B", "LED_FEED" })
+        for (String id : new String[] { "NC_A", "NC_B" })
             net(board, id, BoardNet.RoutingRole.SIGNAL);
+        if (hasStatusIndicator())
+            net(board, "LED_FEED", BoardNet.RoutingRole.SIGNAL);
 
         // Four entry/protection packages. The upstream and downstream
         // capacitors occupy different electrical nets, not a duplicated load.
@@ -120,6 +199,18 @@ final class Rb30Plan {
 
         sensor(board, "A", sharedHystereticReference ? "REF_SHARED" : "A_REF");
         sensor(board, "B", sharedHystereticReference ? "REF_SHARED" : "B_REF");
+        part(board, "RPIN_A", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+            "A_RAW", "CTRL_RETURN");
+        part(board, "RPIN_B", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+            "B_RAW", "CTRL_RETURN");
+        if (hasSensorInputFilters()) {
+            part(board, "CFLT_A", "CAPACITOR",
+                PhysicalPackages.RADIAL_CERAMIC_CAPACITOR,
+                "A_SENSE", "CTRL_RETURN");
+            part(board, "CFLT_B", "CAPACITOR",
+                PhysicalPackages.RADIAL_CERAMIC_CAPACITOR,
+                "B_SENSE", "CTRL_RETURN");
+        }
         if (sharedHystereticReference) {
             part(board, "RREF_H", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
                 "RAIL5", "REF_SHARED");
@@ -142,10 +233,12 @@ final class Rb30Plan {
 
         output(board, "A", driverA());
         output(board, "B", driverB());
-        part(board, "RLED", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
-            "RAIL5", "LED_FEED");
-        part(board, "LED1", "LED", PhysicalPackages.THROUGH_HOLE_LED,
-            "LED_FEED", "CTRL_RETURN");
+        if (hasStatusIndicator()) {
+            part(board, "RLED", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+                "RAIL5", "LED_FEED");
+            part(board, "LED1", "LED", PhysicalPackages.THROUGH_HOLE_LED,
+                "LED_FEED", "CTRL_RETURN");
+        }
 
         // Sensor and load connectors remain physical, service-owned packages.
         // The two 180 ohm loads and their finite 12 V source are external
@@ -176,8 +269,8 @@ final class Rb30Plan {
             "JLOAD.2", "LOAD12", "LOAD_RETURN"));
         board.setPlacementConstraints(placement(board));
         board.validate();
-        if (board.getComponentIds().size() != 33)
-            throw new IllegalStateException("Q30 reference package accounting changed");
+        if (board.getComponentIds().size() != physicalPackageCount())
+            throw new IllegalStateException("Q30 support package accounting changed");
         return board;
     }
 
@@ -234,13 +327,17 @@ final class Rb30Plan {
                 id.equals("U1") || id.equals("CIN") || id.equals("C5") ||
                 id.equals("REN") ? "regulation" :
                 id.equals("JSA") || id.equals("U2A") || id.equals("RSA") ||
+                id.equals("RPIN_A") ||
                 id.equals("RREFA") || id.equals("RFB_A") ||
                 id.equals("RREF_HA") || id.equals("RREF_LA") ? "sensor-a" :
                 id.equals("JSB") || id.equals("U2B") || id.equals("RSB") ||
+                id.equals("RPIN_B") ||
                 id.equals("RREFB") || id.equals("RFB_B") ||
                 id.equals("RREF_HB") || id.equals("RREF_LB") ? "sensor-b" :
                 id.equals("RREF_H") || id.equals("RREF_L") ?
                 "sensor-reference" :
+                id.equals("CFLT_A") ? "sensor-a" :
+                id.equals("CFLT_B") ? "sensor-b" :
                 id.equals("RLED") || id.equals("LED1") ? "status" :
                 id.endsWith("A") || id.equals("JOA") ? "output-a" :
                 id.endsWith("B") || id.equals("JOB") ? "output-b" :

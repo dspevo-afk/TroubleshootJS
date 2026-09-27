@@ -79,7 +79,7 @@ final class FreshGeneratedRuntimeInstallation {
             if (sim == null || candidate == null || active != null ||
                     !sim.isGeneratedRuntimeSettled() || candidate.isDeveloperOnlyFaultRoute())
                 throw new IllegalStateException("Staged installation requires a settled normal owner");
-            SupportedEnvelope.current().requireNormal(candidate);
+            candidate.requireNormalPhysicalAdmission();
             this.sim = sim; this.candidate = candidate;
             original = sim.getGeneratedBoardInstance();
             originalGraph = sim.elmList;
@@ -163,7 +163,7 @@ final class FreshGeneratedRuntimeInstallation {
         }
         void validatePhysical() {
             enterStep();
-            SupportedEnvelope.current().requireNormal(candidate);
+            candidate.requireNormalPhysicalAdmission();
             candidate.getBoard().validate();
             candidate.getPhysicalBoardRuntime().validateCommittedState(candidate,
                 sim.getBoardModificationController(), sim.elmList);
@@ -272,7 +272,7 @@ final class FreshGeneratedRuntimeInstallation {
                 (sim.getGeneratedChallengeController() == null ||
                 !sim.getGeneratedChallengeController().isReady())))
             throw new IllegalStateException("Fresh installation requires a settled generated owner");
-        if (normalAdmission) SupportedEnvelope.current().requireNormal(candidate);
+        if (normalAdmission) candidate.requireNormalPhysicalAdmission();
         GeneratedBoardInstance original = sim.getGeneratedBoardInstance();
         if (original != null)
             requireDisjoint(original, candidate);
@@ -335,7 +335,7 @@ final class FreshGeneratedRuntimeInstallation {
                 }
                 candidate.getPhysicalBoardRuntime().validateCommittedState(candidate,
                     sim.getBoardModificationController(), sim.elmList);
-                SupportedEnvelope.current().requireNormal(candidate);
+                candidate.requireNormalPhysicalAdmission();
                 candidate.getPcbLayout().validateGeometry(candidate.getBoard());
                 PcbConductorProjection.audit(candidate, sim.elmList);
             }

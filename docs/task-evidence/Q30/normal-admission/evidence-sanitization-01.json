@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 1,
+  "scope": {
+    "directory": "docs/task-evidence/Q30/normal-admission",
+    "includedExtensions": [
+      ".json",
+      ".log",
+      ".txt"
+    ],
+    "excludedFilenamePrefix": "native-final-03",
+    "excludedOtherExtensions": [
+      ".md",
+      ".py",
+      ".png",
+      ".js"
+    ],
+    "activeExcludedFiles": [
+      "native-final-03-inputs.json",
+      "native-final-03.log"
+    ]
+  },
+  "sanitization": {
+    "changedFileCount": 27,
+    "replacementCounts": {
+      "<worktree>": 245,
+      "<jdk8>": 0,
+      "<task-temp>": 140,
+      "<user-home>": 0
+    },
+    "changedFiles": [
+      {
+        "path": "browser-modern-01-identity.json",
+        "beforeSha256": "ea9b3033cf4789a94b090846dc0025e35cace5f42b3f9db6c470133a752c93f3",
+        "afterSha256": "23dda66626129afcf3f1f9aed5f82d1a521c4901d95452f7dbbe04fbd1c57a74",
+        "replacementCounts": {
+          "<task-temp>": 1
+        }
+      },
+      {
+        "path": "build-canary-01.log",
+        "beforeSha256": "597a3e0cf66d8fc10624a6ca167a7a123c9a91b50d0d50111c4899683e5a7f58",
+        "afterSha256": "ea78aaa918e6f1d7ff8befa7887b240d8cc5eaa16bd6c83ccaeda5a8981e07ab",
+        "replacementCounts": {
+          "<worktree>": 1
+        }
+      },
+      {
+        "path": "build-canary-02.log",
+        "beforeSha256": "0dbbf31bca4fa3c3fe26ca4aaa224b296a49fe9ad25f70c2d530a6ec4e4b9dba",
+        "afterSha256": "5c3463585436b9e0d8deaf45c299e433811e263dd97d0ec8159f4ac7c05ed082",
+        "replacementCounts": {
+          "<worktree>": 1
+        }
+      },
+      {
+        "path": "build-canary-03.log",
+        "beforeSha256": "d5bbf0087f71d0bfd54577cb7e3cb1953c03e8569c092fcfc6722a77c1ea8bd2",
+        "afterSha256": "9804e72155dc553f0419ea68b5b5c7224e2c25a931893bda23108e97c49813e0",
+        "replacementCounts": {
+          "<worktree>": 1
+        }
+      },
+      {
+        "path": "build-canary-04.log",
+        "beforeSha256": "0ab9ed47e408f1f4917ce3ba47d45b58224610ca0884f75452f8912eed89b746",
+        "afterSha256": "31a964ff95e8b3c4e99c120016a27f18f8e8310bcf338d5fe8a8346f8aba1573",
+        "replacementCounts": {
+          "<worktree>": 1
+        }
+      },
+      {
+        "path": "build-canary-05.log",
+        "beforeSha256": "3f6c2f2759583fdca994d1e71fd0f3f14e26a6b678724987fa88da45e989bf97",
+        "afterSha256": "2f90f720473c535a0baa4b3513731f17f147c3dc9917e07ef8ed5f0901df2ed0",
+        "replacementCounts": {
+          "<worktree>": 1
+        }
+      },
+      {
+        "path": "build-canary-06-gwt-stdout.log",
+        "beforeSha256": "134f1b5e483f09556770d692e501ea0c1064d9f147fb87af29d0d7fed9c32c4c",
+        "afterSha256": "3fbe849d6d8678944296914c79913d8578f4bcd48bae0a73fc0ace15ffc8e732",
+        "replacementCounts": {
+          "<worktree>": 93,
+          "<task-temp>": 69
+        }
+      },
+      {
+        "path": "build-canary-06.log",
+        "beforeSha256": "05148aa1b309f387b85e94530f8ea40b72ccad4b6b1736e719243a8d5653f06d",
+        "afterSha256": "a6079d1c15575caf06ac4d513aa1f48e0c0bf1ab83004103e3da3391798ef30d",
+        "replacementCounts": {
+          "<worktree>": 93,
+          "<task-temp>": 70
+        }
+      },
+      {
+        "path": "build-canary-07.log",
+        "beforeSha256": "a2b3a29fffec2681b121b91c70606a6946f48238b9488ee5b5b874089f28b12c",
+        "afterSha256": "95df51da1102185c7d538175e5309e6f79611ba9f8e73b06bb21b17e9cbf68c7",
+        "replacementCounts": {
+          "<worktree>": 1
+        }
+      },
+      {
+        "path": "build-canary-08.log",
+        "beforeSha256": "4da46c48fcc7e79a5b651a167ad75c59ad0694d6f0e41091e2ed9335d2bc56df",
+        "afterSha256": "e171104855c0cc12221caa2842eb0ed29490a3aa2ee4dec878594cf7bc5f0d49",
+        "replacementCounts": {
+          "<worktree>": 1
+        }
+      },
+      {
+        "path": "build-canary-09.log",
+        "beforeSha256": "ec74515910a372953e5f0aed0bc87a41803234e5eeebf229862160ae0fd76c0a",
+        "afterSha256": "aa4c516593f458a19a04984e68aa70bfcb1183ead53ff547ff0638e7f39160eb",
+        "replacementCounts": {
+          "<worktree>": 1
+        }
+      },
+      {
+        "path": "build-canary-10.log",
+        "beforeSha256": "cf07980384649074470e5611633454297b9d61808fca5a6e4f1a13eaa1fb4485",
+        "afterSha256": "604de7299a07f59bcf4fd511061e9281d077dae0ba0c3a81a46e138fd889be20",
+        "replacementCounts": {
+          "<worktree>": 1
+        }
+      },
+      {
+        "path": "build-final-11.log",
+        "beforeSha256": "4f2c8d04fb36bd03393148d197c4b6bb989e1fc788542aa93b3221a572866660",
+        "afterSha256": "5e87f5eade828eda5af1922d4fecc91248a87142bf72add2946095d0c495bc69",
+        "replacementCounts": {
+          "<worktree>": 1
+        }
+      },
+      {
+        "path": "compiled-coordinator-09-seed13-reader.log",
+        "beforeSha256": "0101ea441770e6e1e5d0fe9a82abe19b26f8189517ed1599f96096db1cce9404",
+        "afterSha256": "7f9fd71a8357b33f6a7a55c35642a5a86ee34e48842c04be8c8334dcdef86fa4",
+        "replacementCounts": {
+          "<worktree>": 4
+        }
+      },
+      {
+        "path": "compiled-d01-canary-04-check.log",
+        "beforeSha256": "5392e463be55d52d150f78b926b79fc7809923dd2658ca5e00b16b2f2beebb47",
+        "afterSha256": "dcf0342e27703aa8df673d2f1f97076288e4a898a1a208a3a1c84ed77250ee21",
+        "replacementCounts": {
+          "<worktree>": 2
+        }
+      },
+      {
+        "path": "compiled-d01-canary-05-check-reader01.log",
+        "beforeSha256": "7b377e3f4e2c84cbb166e07ae5957474392334fd0c0b37c24c9769f3b3dfc49d",
+        "afterSha256": "f66e091d77bc9c1fd8d0670b60c85b77b8d46d8622f65c6e55d57f335256a07b",
+        "replacementCounts": {
+          "<worktree>": 5
+        }
+      },
+      {
+        "path": "compiled-d01-canary-05-check-reader02.log",
+        "beforeSha256": "ba59302fbae8cd81f029804d161a254c87a1f6bcabebbb1976b5b08a509adfd9",
+        "afterSha256": "3babdd2bf06bf71b6cc06d8795a811c22f1c1bdef9caeb033bbd5479b8cca501",
+        "replacementCounts": {
+          "<worktree>": 4
+        }
+      },
+      {
+        "path": "compiled-d01-canary-05-check-reader03.log",
+        "beforeSha256": "b9dd2a4f179dbeefc9e95fb5bf4aeb7ce28c591bb87b8ec89372ffb552a8f666",
+        "afterSha256": "23e97af8ce2bbc951f9dd80f609f78ae0dd38c5b1ff421490140cfd6b8bf73b2",
+        "replacementCounts": {
+          "<worktree>": 4
+        }
+      },
+      {
+        "path": "compiled-d01-canary-05-check-reader04.log",
+        "beforeSha256": "fd108510160c22ded2e9375626d457fefbc968ff20c47cc9ed2edd46c51d3c95",
+        "afterSha256": "9f87f475db3990b0da6a0891926af87bc997eeaa9f18387a4be979b48c59986e",
+        "replacementCounts": {
+          "<worktree>": 6
+        }
+      },
+      {
+        "path": "native-eligibility-01.log",
+        "beforeSha256": "5f535e86cc05fffd1408b8f555d9781aa1c4018b15d28b24e8656eac94f08fc3",
+        "afterSha256": "41dc397e7f2beb52a3625f6f2a4ab09583fd3aaea2cf569e0b4514e46402164e",
+        "replacementCounts": {
+          "<worktree>": 4
+        }
+      },
+      {
+        "path": "native-failure-diagnostics-01.log",
+        "beforeSha256": "c1ac222e24f592ebc68058a9b3fd97f01cd521b9d73887be83f64783110804fc",
+        "afterSha256": "831122393fb211baa6a35811b7d5207edc81ea086f31b4224fc49b7a4d982efd",
+        "replacementCounts": {
+          "<worktree>": 11
+        }
+      },
+      {
+        "path": "native-failure-diagnostics-02.log",
+        "beforeSha256": "e8424c0dbc64c6acff9a0a16315889d66253da505a66bad5e7a6024492db1127",
+        "afterSha256": "337540bccbc5701d8413307501d783d2c6fa5646a7be4a1c8c8bb054b922b553",
+        "replacementCounts": {
+          "<worktree>": 1
+        }
+      },
+      {
+        "path": "native-model-request-01.log",
+        "beforeSha256": "3b5c226ed86d248e0665d770177ef2df76d1987daa71c883361e1ae81215d516",
+        "afterSha256": "e48e0903853dd4f3b73b0ca7aeef4f8d475b0775278257ef54ea05b8d0c23821",
+        "replacementCounts": {
+          "<worktree>": 3
+        }
+      },
+      {
+        "path": "native-model-request-02.log",
+        "beforeSha256": "dfdd1adf26a5d539a3a5e862a1c3f4500c70b6cf3770e519414551692133fa8a",
+        "afterSha256": "66c0bb4b1c7d09b1724d64ce4ccb86cc3f484ad08be153083016b2240a7b4756",
+        "replacementCounts": {
+          "<worktree>": 1
+        }
+      },
+      {
+        "path": "native-model-request-03.log",
+        "beforeSha256": "b9638d8f75c2e2aa70167e1955b3ae4a90ec06b543946a82322f6b2c52546575",
+        "afterSha256": "6d4e81375c6fabf35b390f60ece53ef0526b4f9fa262a6b3e56f76f168cd6f45",
+        "replacementCounts": {
+          "<worktree>": 1
+        }
+      },
+      {
+        "path": "native-step-canary-02.log",
+        "beforeSha256": "b30857a4b9a4a31999a6e42d49b4081bb3025f0dde2b1d85dcb26606d7739801",
+        "afterSha256": "69d1e1a2a83aefcdf65d3cd3004e1b3cfd3021c7ed4b88c1e99a3a7be14f8560",
+        "replacementCounts": {
+          "<worktree>": 2
+        }
+      },
+      {
+        "path": "native-step-canary-04.log",
+        "beforeSha256": "3c818305b7486d95c5f8b5ad41971ea8b5b09bee87b00acf60c7ea50f21f3f6d",
+        "afterSha256": "874a12afc22513933553db231ca11bec795fc9c1589f3cd27af3b8ba8e608a16",
+        "replacementCounts": {
+          "<worktree>": 1
+        }
+      }
+    ]
+  },
+  "verification": {
+    "eligiblePreexistingFileCount": 202,
+    "remainingPersonalPathHitCount": 0,
+    "remainingPersonalPathHitFiles": [],
+    "excludedActivePersonalPathHitCount": 0,
+    "excludedActivePersonalPathHitFiles": [],
+    "changedJsonFilesParse": true,
+    "changedJsonFileCount": 1,
+    "allEligibleJsonParse": false,
+    "preexistingInvalidJsonFilesUntouched": [
+      {
+        "path": "native-pulldown-canary-01-corpus-summary.json",
+        "errorType": "JSONDecodeError"
+      }
+    ],
+    "nativeInputHashValuesUnchanged": true,
+    "nativeInputHashValueCount": 26394,
+    "credentialAssignmentPatternCount": 0,
+    "credentialsSearchedWithRg": true
+  }
+}

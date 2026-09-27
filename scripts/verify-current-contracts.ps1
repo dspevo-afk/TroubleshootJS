@@ -3,7 +3,15 @@ param(
     [string]$JavaHome = $env:JAVA_HOME,
     [string]$PythonExe = 'python',
     [string]$ReceiptOutputPath = '',
-    [string[]]$Suite = @()
+    [string[]]$Suite = @(),
+    [long[]]$Q30ServiceSeeds = @(7,13,4,14,43,3,10,64),
+    [long[]]$Q30SensitivitySeeds = @(7,13,4,14,43,3,10,64),
+    [ValidateSet('DREV_OPEN','REN_OPEN','SENSOR_A_OPEN','DRIVE_A_OPEN','RELAY_B_COIL_OPEN')]
+    [string[]]$Q30SensitivityFaults = @('DREV_OPEN','REN_OPEN','SENSOR_A_OPEN','DRIVE_A_OPEN','RELAY_B_COIL_OPEN'),
+    [long[]]$Q30CorpusSeeds = @(0,1,15,14,44,8,10,12,48,35,6,18,43,93,20,64,
+        56,13,4,11,2,3,19,9,7,42,24,21,75,22,105,27,53,50,16,25,60,100,59,84,
+        70,41,45,23,5,38,40,26,[long]::MinValue,[long]::MaxValue,9007199254740993L),
+    [long[]]$QuickPlayGateSeeds = @()
 )
 
 # Maintained current seed, identity, geometry, recipe and construction contracts.
@@ -15,6 +23,17 @@ $ErrorActionPreference = 'Stop'
 $taskRoot = ''
 $resultCode = 2
 try {
+    if ($PSBoundParameters.ContainsKey('QuickPlayGateSeeds')) {
+        $fixtureSuites = @($Suite)
+        if ($fixtureSuites.Count -ne 1 -or $fixtureSuites[0] -cne 'QuickPlayGateCorpus') {
+            throw '-QuickPlayGateSeeds is allowed only with exactly -Suite QuickPlayGateCorpus.'
+        }
+        $distinctFixtureSeeds = @($QuickPlayGateSeeds | Select-Object -Unique)
+        if ($QuickPlayGateSeeds.Count -lt 1 -or $QuickPlayGateSeeds.Count -gt 128 -or
+                $distinctFixtureSeeds.Count -ne $QuickPlayGateSeeds.Count) {
+            throw '-QuickPlayGateSeeds requires 1-128 distinct signed-long values.'
+        }
+    }
     Import-Module (Join-Path $PSScriptRoot 'VerifierIsolation.psm1') -Force
     $repositoryRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
     if ([String]::IsNullOrWhiteSpace($JavaHome)) {
@@ -67,7 +86,11 @@ final class PhysicalSpecificationDeveloperVerifier {
 }
 '@, (New-Object Text.UTF8Encoding($false)))
     $needsQ30NativeLoggerBridge = $Suite.Count -eq 0 -or
-        $Suite -contains 'Q30ServiceFlowContractTest'
+        $Suite -contains 'Q30ServiceFlowContractTest' -or
+        $Suite -contains 'Q30TemporalWorkContractTest' -or
+        $Suite -contains 'DiagnosticServicePreparationContractTest' -or
+        $Suite -contains 'Q30CatalogTransferContractTest' -or
+        $Suite -contains 'Q30SolverStepSensitivityContractTest'
     $nativeLoggerShim = ''
     if ($needsQ30NativeLoggerBridge) {
         # CircuitJS's unconnected-node and convergence diagnostics use JSNI.
@@ -121,8 +144,18 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'Q30PlanContractTest'; Marker = 'Q30 plan contracts ' },
         @{ Name = 'Q30RelayServiceContractTest'; Marker = 'Q30 relay service contracts ' },
         @{ Name = 'Q30ServiceFlowContractTest'; Marker = 'Q30 service flow contracts ' },
+        @{ Name = 'Q30TemporalWorkContractTest'; Marker = 'Q30 temporal work contracts ' },
+        @{ Name = 'DiagnosticServicePreparationContractTest'; Marker = 'diagnostic service preparation contracts ' },
+        @{ Name = 'Q30SolverStepSensitivityContractTest'; Marker = 'Q30 production solver step sensitivity ' },
+        @{ Name = 'Q30NormalCorpusContractTest'; Marker = 'Q30 normal corpus contracts ' },
+        @{ Name = 'Q30GenerationRequestContractTest'; Marker = 'q30 generation request contracts ' },
+        @{ Name = 'Q30GenerationMeasurementBudgetContractTest'; Marker = 'Q30 generation measurement budget contracts ' },
+        @{ Name = 'Q30NormalExecutionPolicyContractTest'; Marker = 'Q30 normal execution policy contracts ' },
+        @{ Name = 'Q30CatalogIdentityContractTest'; Marker = 'Q30 catalog identity contracts ' },
+        @{ Name = 'Q30CatalogTransferContractTest'; Marker = 'Q30 catalog transfer contracts ' },
         @{ Name = 'Rb30PhysicalMetadataContractTest'; Marker = 'Q30 physical metadata contracts ' },
         @{ Name = 'MediumBoardPhysicalPolicyContractTest'; Marker = 'medium physical policy contracts ' },
+        @{ Name = 'MediumBoardNormalAdmissionContractTest'; Marker = 'medium normal admission contracts ' },
         @{ Name = 'MediumBoardFloorplanningContractTest'; Marker = 'medium board floorplanning contracts ' },
         @{ Name = 'ChallengeDescriptorContractTest'; Marker = 'Task46 ' },
         @{ Name = 'FunctionalBlockContractTest'; Marker = 'Task44 ' },
@@ -156,6 +189,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'P05RoutingContractTest'; Marker = 'P05 routing contracts ' },
         @{ Name = 'P06FactoryLinkContractTest'; Marker = 'P06 factory-link contracts ' },
         @{ Name = 'P07TwoLayerContractTest'; Marker = 'P07 two-layer contracts ' },
+        @{ Name = 'PcbLayerRoutingResumptionContractTest'; Marker = 'Pcb layer routing resumption contracts ' },
         @{ Name = 'P08ScalabilityContractTest'; Marker = 'P08 scalable physical contracts ' },
         @{ Name = 'P09EnvelopeCorpus'; Marker = 'P09 physical envelope corpus ' },
         @{ Name = 'QuickPlayGateCorpus'; Marker = 'Quick Play gate corpus ' },
@@ -200,11 +234,57 @@ final class PhysicalSpecificationDeveloperVerifier {
     foreach ($definition in $testDefinitions) {
         $testClass = $definition.Name
         if ($Suite.Count -gt 0 -and $Suite -notcontains $testClass) { continue }
+        if ($testClass -eq 'QuickPlayPhysicalMatrixContractTest') {
+            # Preserve the original ten-family aggregate allowance. The added
+            # medium census has 48 roots maximum plus 20 exact replays; its
+            # separately reviewed 600s test cap does not change player budgets.
+            $smallFamilies = @('LED_INDICATOR', 'DIODE_PROTECTED_INDICATOR',
+                'PARALLEL_DUAL_INDICATOR', 'RC_DELAY', 'NPN_LOW_SIDE_SWITCH',
+                'NMOS_LOW_SIDE_SWITCH', 'RELAY_OUTPUT', 'SENSOR_CONTROL',
+                'RB15_CONTROL', 'COMPOSED_CONTROLLED_INDICATOR')
+            $physicalGroups = @(
+                @{ Args = @('--small-catalog'); Families = $smallFamilies; Budget = 180000 },
+                @{ Args = @('--family', 'RB30_CONTROL'); Families = @('RB30_CONTROL'); Budget = 600000 }
+            )
+            $physicalOutputs = New-Object Collections.Generic.List[string]
+            foreach ($group in $physicalGroups) {
+                $arguments = @('-ea', '-cp', $classPath,
+                    'com.lushprojects.circuitjs1.client.QuickPlayPhysicalMatrixContractTest') + $group.Args
+                $tested = Invoke-VerifierBoundedProcess $java $arguments $group.Budget
+                Write-Host $tested.Stdout
+                if ($tested.Stderr) { Write-Host $tested.Stderr }
+                $receipts.Add($tested.Stdout)
+                $physicalOutputs.Add($tested.Stdout)
+                $matrixRows = @($tested.Stdout -split '\r?\n' | Where-Object { $_.StartsWith('PHYSICAL_MATRIX|') })
+                $completion = '(?m)^PASS: Quick Play physical matrix contracts pairs=' + $group.Families.Count + ' assertions='
+                if (-not $tested.TerminationProven -or $tested.ExitCode -ne 0 -or
+                        $tested.Stdout -notmatch $completion -or $matrixRows.Count -ne $group.Families.Count) {
+                    throw ('Physical matrix group failed or incomplete: ' + [String]::Join(',', $group.Families) +
+                        ', exit ' + $tested.ExitCode)
+                }
+                for ($rowIndex = 0; $rowIndex -lt $matrixRows.Count; $rowIndex++) {
+                    $fields = $matrixRows[$rowIndex] -split '\|'
+                    $family = $group.Families[$rowIndex]
+                    $profile = if ($family -in @('COMPOSED_CONTROLLED_INDICATOR','RB30_CONTROL')) { 'MEDIUM' } else { 'EASY' }
+                    if ($fields.Count -ne 13 -or $fields[1] -ne $family -or $fields[2] -ne $profile -or
+                            $fields[3] -ne '20' -or $fields[4] -ne '20' -or
+                            [int]$fields[11] -gt 48 -or [int]$fields[11] -lt 20) {
+                        throw ('Physical matrix family/count identity changed: ' + $family)
+                    }
+                }
+            }
+            $outputs[$testClass] = [String]::Join([Environment]::NewLine, $physicalOutputs)
+            $coverage = 'PASS: physical matrix partition coverage families=11 accepted=220 exactReplays=220 smallChildBudgetMs=180000 mediumChildBudgetMs=600000'
+            Write-Host $coverage
+            $receipts.Add($coverage)
+            continue
+        }
         if ($testClass -eq 'ProceduralFamilyContractTest') {
-            # This unchanged 16-seed-per-family oracle can exceed the existing
-            # one-minute child bound as the family catalog grows. Run each
-            # family/cohort in its own bounded JVM and require every listed
-            # case, preserving all assertions and the original child budget.
+            # The prior ten families retain their exact-seed oracle and 60s
+            # cohort cap. Q30 separately checks the same 16 values as public
+            # roots: at most four candidates plus one exact accepted replay.
+            # Its reviewed 300s cohort cap covers at most 40 constructions;
+            # production budgets and the independent raw Q30 corpus are unchanged.
             $proceduralClass = 'com.lushprojects.circuitjs1.client.ProceduralFamilyContractTest'
             $listed = Invoke-VerifierBoundedProcess $java @('-ea', '-cp', $classPath,
                 $proceduralClass, '--list-families') 60000
@@ -218,7 +298,7 @@ final class PhysicalSpecificationDeveloperVerifier {
             $expectedFamilies = @('LED_INDICATOR', 'DIODE_PROTECTED_INDICATOR',
                 'PARALLEL_DUAL_INDICATOR', 'RC_DELAY', 'NPN_LOW_SIDE_SWITCH',
                 'NMOS_LOW_SIDE_SWITCH', 'RELAY_OUTPUT', 'SENSOR_CONTROL',
-                'RB15_CONTROL', 'COMPOSED_CONTROLLED_INDICATOR')
+                'RB15_CONTROL', 'COMPOSED_CONTROLLED_INDICATOR', 'RB30_CONTROL')
             if ($families.Count -ne $expectedFamilies.Count -or
                     [String]::Join(',', $families) -ne
                     [String]::Join(',', $expectedFamilies)) {
@@ -234,19 +314,23 @@ final class PhysicalSpecificationDeveloperVerifier {
             }
             $proceduralReceipts = New-Object Collections.Generic.List[string]
             foreach ($family in $families) {
+                $rootMode = $family -ceq 'RB30_CONTROL'
+                $cohortBudget = if ($rootMode) { 300000 } else { 60000 }
+                $rowPrefix = if ($rootMode) { 'PROCEDURAL_ROOT_ROW|' } else { 'PROCEDURAL_ROW|' }
+                $summaryPrefix = if ($rootMode) { 'PROCEDURAL_ROOT_SUMMARY|' } else { 'PROCEDURAL_SUMMARY|' }
                 foreach ($cohort in @(0, 1)) {
                     $tested = Invoke-VerifierBoundedProcess $java @('-ea', '-cp', $classPath,
                         $proceduralClass, '--family', $family, '--cohort',
-                        [string]$cohort) 60000
+                        [string]$cohort) $cohortBudget
                     Write-Host $tested.Stdout
                     if ($tested.Stderr) { Write-Host $tested.Stderr }
                     $rows = @($tested.Stdout -split '\r?\n' | Where-Object {
-                        $_.StartsWith('PROCEDURAL_ROW|')
+                        $_.StartsWith($rowPrefix)
                     })
                     $summaries = @($tested.Stdout -split '\r?\n' | Where-Object {
-                        $_.StartsWith('PROCEDURAL_SUMMARY|')
+                        $_.StartsWith($summaryPrefix)
                     })
-                    $summary = 'PROCEDURAL_SUMMARY|' + $family + '|' + $cohort + '|'
+                    $summary = $summaryPrefix + $family + '|' + $cohort + '|'
                     if (-not $tested.TerminationProven -or $tested.ExitCode -ne 0 -or
                             $tested.Stdout -notmatch ('(?m)^PASS: ' +
                                 [regex]::Escape($definition.Marker)) -or
@@ -255,6 +339,14 @@ final class PhysicalSpecificationDeveloperVerifier {
                         throw ('Procedural family cohort did not provide a qualified result: ' +
                             $family + '/' + $cohort + ', exit ' + $tested.ExitCode)
                     }
+                    $attempts = @($tested.Stdout -split '\r?\n' | Where-Object {
+                        $_.StartsWith('PROCEDURAL_ROOT_ATTEMPT|')
+                    })
+                    $replays = @($tested.Stdout -split '\r?\n' | Where-Object {
+                        $_.StartsWith('PROCEDURAL_ROOT_REPLAY|')
+                    })
+                    $checkedAttempts = 0
+                    $acceptedRoots = 0
                     for ($rowIndex = 0; $rowIndex -lt 8; $rowIndex++) {
                         $fields = $rows[$rowIndex] -split '\|'
                         if ($fields.Count -lt 5 -or $fields[1] -ne [string]$cohort -or
@@ -263,6 +355,50 @@ final class PhysicalSpecificationDeveloperVerifier {
                             throw ('Procedural family seed/order mismatch: ' +
                                 $family + '/' + $cohort + '/' + $rowIndex)
                         }
+                        if ($rootMode) {
+                            $rootSeed = $cohortSeeds[[string]$cohort][$rowIndex]
+                            $attemptPrefix = 'PROCEDURAL_ROOT_ATTEMPT|' + $cohort + '|' + $family + '|' + $rootSeed + '|'
+                            $rootAttempts = @($attempts | Where-Object { $_.StartsWith($attemptPrefix) })
+                            if ($fields.Count -ne 12 -or $fields[4] -cnotin @('ACCEPT', 'REJECTED') -or
+                                    $rootAttempts.Count -lt 1 -or $rootAttempts.Count -gt 4) {
+                                throw ('Invalid Q30 root census row: ' + $rows[$rowIndex])
+                            }
+                            for ($ordinal = 0; $ordinal -lt $rootAttempts.Count; $ordinal++) {
+                                $attempt = $rootAttempts[$ordinal] -split '\|', 8
+                                $expectedSeed = [bigint]::Parse($rootSeed) +
+                                    [bigint]::Parse('-7046029254386353131') * $ordinal
+                                while ($expectedSeed -lt [long]::MinValue) {
+                                    $expectedSeed += [bigint]::Parse('18446744073709551616')
+                                }
+                                while ($expectedSeed -gt [long]::MaxValue) {
+                                    $expectedSeed -= [bigint]::Parse('18446744073709551616')
+                                }
+                                $expectedOutcome = if ($fields[4] -ceq 'ACCEPT' -and
+                                    $ordinal -eq $rootAttempts.Count - 1) { 'ACCEPT' } else { 'REJECT' }
+                                if ($attempt.Count -ne 8 -or $attempt[4] -cne [string]$ordinal -or
+                                        $attempt[5] -cne $expectedSeed.ToString([Globalization.CultureInfo]::InvariantCulture) -or
+                                        ($expectedOutcome -ceq 'ACCEPT' -and $attempt[6] -cne 'ACCEPT') -or
+                                        ($expectedOutcome -ceq 'REJECT' -and $attempt[6] -cnotin @('ROUTE_REJECT', 'ENVELOPE_REJECT'))) {
+                                    throw ('Q30 candidate identity/order/outcome mismatch: ' + $rootAttempts[$ordinal])
+                                }
+                            }
+                            $checkedAttempts += $rootAttempts.Count
+                            if ($fields[4] -ceq 'ACCEPT') {
+                                $acceptedRoots++
+                                $lastAttempt = $rootAttempts[-1] -split '\|', 8
+                                $replay = 'PROCEDURAL_ROOT_REPLAY|' + $cohort + '|' + $family + '|' + $rootSeed + '|' + $fields[5] + '|PASS'
+                                if ($fields[5] -cne $lastAttempt[5] -or $fields[6] -cne $lastAttempt[4] -or
+                                        @($replays | Where-Object { $_ -ceq $replay }).Count -ne 1) {
+                                    throw ('Q30 accepted root lacks its exact candidate replay: ' + $rootSeed)
+                                }
+                            } elseif ($rootAttempts.Count -ne 4 -or $fields[5] -cne 'none' -or $fields[6] -cne '-1') {
+                                throw ('Q30 rejected root did not exhaust exactly four candidates: ' + $rootSeed)
+                            }
+                        }
+                    }
+                    if ($rootMode -and ($checkedAttempts -ne $attempts.Count -or
+                            $replays.Count -ne $acceptedRoots -or $acceptedRoots -lt 6)) {
+                        throw 'Q30 root attempt/replay population is incomplete or contains foreign rows'
                     }
                     $proceduralReceipts.Add($tested.Stdout)
                     $receipts.Add($tested.Stdout)
@@ -273,18 +409,145 @@ final class PhysicalSpecificationDeveloperVerifier {
             $proceduralCoverage = 'PASS: procedural family partition coverage families=' +
                 $families.Count + ' cohorts=' + $proceduralReceipts.Count +
                 ' rows=' + ($proceduralReceipts.Count * 8) +
-                ' childBudgetMs=60000'
+                ' exactSeedRows=160 rootRows=16 smallCohortBudgetMs=60000 q30RootCohortBudgetMs=300000'
             Write-Host $proceduralCoverage
             $receipts.Add($proceduralCoverage)
             continue
         }
         $testArguments = @('-ea', '-cp', $classPath,
             ('com.lushprojects.circuitjs1.client.' + $testClass))
+        if ($testClass -eq 'QuickPlayGateCorpus' -and
+                $PSBoundParameters.ContainsKey('QuickPlayGateSeeds')) {
+            $testArguments += '--fixture-census'
+            foreach ($seedValue in $QuickPlayGateSeeds) {
+                $testArguments += $seedValue.ToString([Globalization.CultureInfo]::InvariantCulture)
+            }
+        }
+        if ($testClass -eq 'Q30NormalCorpusContractTest') {
+            if ($Q30CorpusSeeds.Count -lt 1 -or $Q30CorpusSeeds.Count -gt 64 -or
+                    @($Q30CorpusSeeds | Select-Object -Unique).Count -ne $Q30CorpusSeeds.Count) {
+                throw 'Q30 corpus requires 1-64 distinct exact signed-long seeds.'
+            }
+            $corpusFailures = New-Object Collections.Generic.List[string]
+            $corpusOutputs = New-Object Collections.Generic.List[string]
+            $acceptedRows = 0
+            $rejectedRows = 0
+            foreach ($seedValue in $Q30CorpusSeeds) {
+                $seedText = $seedValue.ToString([Globalization.CultureInfo]::InvariantCulture)
+                $tested = Invoke-VerifierBoundedProcess $java (@($testArguments) +
+                    @('--seed', $seedText)) 60000
+                Write-Host $tested.Stdout
+                if ($tested.Stderr) { Write-Host $tested.Stderr }
+                $jsonLines = @($tested.Stdout -split '\r?\n' | Where-Object {
+                    $_.StartsWith('Q30_CORPUS_JSON:')
+                })
+                $marker = '(?m)^PASS: Q30 normal corpus contracts .* seed=' +
+                    [regex]::Escape($seedText) + '\r?$'
+                $qualified = $tested.TerminationProven -and $tested.ExitCode -eq 0 -and
+                    $jsonLines.Count -eq 1 -and [regex]::IsMatch($tested.Stdout, $marker)
+                if ($qualified) {
+                    try {
+                        $row = $jsonLines[0].Substring('Q30_CORPUS_JSON:'.Length) | ConvertFrom-Json
+                        $qualified = $row.seed -ceq $seedText -and $row.cleanup -eq $true -and
+                            $row.outcome -cin @('ACCEPTED', 'REJECTED')
+                        if ($qualified -and $row.outcome -ceq 'ACCEPTED') { $acceptedRows++ }
+                        if ($qualified -and $row.outcome -ceq 'REJECTED') { $rejectedRows++ }
+                    } catch { $qualified = $false }
+                }
+                if (-not $qualified) { $corpusFailures.Add($seedText) }
+                $rowReceipt = 'Q30_CORPUS_CASE seed=' + $seedText + ' exit=' +
+                    $tested.ExitCode + ' termination=' + $tested.TerminationProven +
+                    ' rowContract=' + $qualified + [Environment]::NewLine +
+                    $tested.Stdout + [Environment]::NewLine + $tested.Stderr
+                $receipts.Add($rowReceipt)
+                $corpusOutputs.Add($rowReceipt)
+            }
+            $corpusSummary = 'Q30_CORPUS_CENSUS attempted=' + $Q30CorpusSeeds.Count +
+                ' accepted=' + $acceptedRows + ' rejected=' + $rejectedRows +
+                ' failed=' + $corpusFailures.Count + ' childBudgetMs=60000'
+            Write-Host $corpusSummary
+            $receipts.Add($corpusSummary)
+            $corpusOutputs.Add($corpusSummary)
+            $outputs[$testClass] = [String]::Join([Environment]::NewLine, $corpusOutputs)
+            if ($ReceiptOutputPath -and $corpusFailures.Count -gt 0) {
+                [IO.File]::WriteAllText([IO.Path]::GetFullPath($ReceiptOutputPath),
+                    [String]::Join([Environment]::NewLine, $receipts),
+                    (New-Object Text.UTF8Encoding($false)))
+            }
+            if ($corpusFailures.Count -gt 0) {
+                throw ('Q30 corpus failed row contracts: ' + [String]::Join(',', $corpusFailures))
+            }
+            continue
+        }
+        if ($testClass -eq 'Q30SolverStepSensitivityContractTest') {
+            if ($Q30SensitivitySeeds.Count -lt 1 -or $Q30SensitivitySeeds.Count -gt 32 -or
+                    @($Q30SensitivitySeeds | Select-Object -Unique).Count -ne $Q30SensitivitySeeds.Count -or
+                    $Q30SensitivityFaults.Count -lt 1 -or
+                    @($Q30SensitivityFaults | Select-Object -Unique).Count -ne $Q30SensitivityFaults.Count) {
+                throw 'Q30 sensitivity requires distinct seeds and fault cases.'
+            }
+            $sensitivityFailures = New-Object Collections.Generic.List[string]
+            $sensitivityOutputs = New-Object Collections.Generic.List[string]
+            $sensitivityPassed = 0
+            foreach ($exactSeed in $Q30SensitivitySeeds) {
+                $seedText = $exactSeed.ToString([Globalization.CultureInfo]::InvariantCulture)
+                foreach ($faultId in $Q30SensitivityFaults) {
+                    $tested = Invoke-VerifierBoundedProcess $java (@($testArguments) +
+                        @('--seed', $seedText, '--fault', $faultId)) 60000
+                    Write-Host $tested.Stdout
+                    if ($tested.Stderr) { Write-Host $tested.Stderr }
+                    $pairRows = @($tested.Stdout -split '\r?\n' | Where-Object {
+                        $_.StartsWith('Q30_STEP_PAIR ')
+                    })
+                    $pairPattern = '^Q30_STEP_PAIR seed=' + [regex]::Escape($seedText) +
+                        ' support=[A-Z0-9_]+ fault=' + [regex]::Escape($faultId) + ' '
+                    $finalPattern = '(?m)^PASS: Q30 production solver step sensitivity assertions=\d+ seed=' +
+                        [regex]::Escape($seedText) + ' support=[A-Z0-9_]+ faults=1 ' +
+                        'referenceMaximumStepSeconds=2\.50000000e-06 ' +
+                        'productionCandidateMaximumStepSeconds=5\.00000000e-06 ' +
+                        'candidateKind=PRODUCTION_5_US elapsedMillis=\d+\r?$'
+                    $qualified = $tested.TerminationProven -and $tested.ExitCode -eq 0 -and
+                        $pairRows.Count -eq 1 -and [regex]::IsMatch($pairRows[0], $pairPattern) -and
+                        [regex]::IsMatch($tested.Stdout, $finalPattern)
+                    if ($qualified) { $sensitivityPassed++ }
+                    else { $sensitivityFailures.Add($seedText + '/' + $faultId) }
+                    $caseReceipt = 'Q30_SENSITIVITY_CASE seed=' + $seedText + ' fault=' +
+                        $faultId + ' exit=' + $tested.ExitCode + ' termination=' +
+                        $tested.TerminationProven + ' qualified=' + $qualified +
+                        [Environment]::NewLine + $tested.Stdout + [Environment]::NewLine + $tested.Stderr
+                    $receipts.Add($caseReceipt)
+                    $sensitivityOutputs.Add($caseReceipt)
+                }
+            }
+            $sensitivitySummary = 'Q30_SENSITIVITY_CENSUS attempted=' +
+                ($Q30SensitivitySeeds.Count * $Q30SensitivityFaults.Count) +
+                ' passed=' + $sensitivityPassed + ' failed=' + $sensitivityFailures.Count +
+                ' childBudgetMs=60000'
+            Write-Host $sensitivitySummary
+            $receipts.Add($sensitivitySummary)
+            $sensitivityOutputs.Add($sensitivitySummary)
+            $outputs[$testClass] = [String]::Join([Environment]::NewLine, $sensitivityOutputs)
+            if ($ReceiptOutputPath -and $sensitivityFailures.Count -gt 0) {
+                [IO.File]::WriteAllText([IO.Path]::GetFullPath($ReceiptOutputPath),
+                    [String]::Join([Environment]::NewLine, $receipts),
+                    (New-Object Text.UTF8Encoding($false)))
+            }
+            if ($sensitivityFailures.Count -gt 0) {
+                throw ('Q30 solver sensitivity failed cases: ' + [String]::Join(',', $sensitivityFailures))
+            }
+            continue
+        }
         if ($testClass -eq 'Q30ServiceFlowContractTest') {
             # Keep every seed/fault service path inside its own original child
             # budget. Start with the relay case for each seed so its physical
             # energy guard is diagnosed before the remaining four hypotheses.
-            $q30Seeds = @('0', '37')
+            if ($Q30ServiceSeeds.Count -lt 1 -or $Q30ServiceSeeds.Count -gt 32 -or
+                    @($Q30ServiceSeeds | Select-Object -Unique).Count -ne $Q30ServiceSeeds.Count) {
+                throw 'Q30 service seeds require 1-32 distinct exact signed-long values.'
+            }
+            $q30Seeds = @($Q30ServiceSeeds | ForEach-Object {
+                $_.ToString([Globalization.CultureInfo]::InvariantCulture)
+            })
             $q30Faults = @('RELAY_B_COIL_OPEN', 'DREV_OPEN', 'REN_OPEN',
                 'SENSOR_A_OPEN', 'DRIVE_A_OPEN')
             $q30CaseReceipts = New-Object Collections.Generic.List[string]
@@ -350,8 +613,10 @@ final class PhysicalSpecificationDeveloperVerifier {
                     }
                 }
             }
-            if ($q30Seen.Count -ne 10) {
-                throw ('Q30 service census expected exactly ten attempted cases, found ' + $q30Seen.Count)
+            $q30ExpectedCount = $q30Seeds.Count * $q30Faults.Count
+            if ($q30Seen.Count -ne $q30ExpectedCount) {
+                throw ('Q30 service census expected ' + $q30ExpectedCount +
+                    ' attempted cases, found ' + $q30Seen.Count)
             }
             $q30PassedCount = 0
             foreach ($outcome in $q30Seen.Values) {
@@ -361,9 +626,11 @@ final class PhysicalSpecificationDeveloperVerifier {
             $q30FailedText = if ($q30CaseFailures.Count -eq 0) { 'none' } else {
                 [String]::Join(',', $q30CaseFailures)
             }
-            $q30Census = $q30CensusPrefix + ' Q30 service flow census attempted=10 passed=' +
+            $q30Census = $q30CensusPrefix + ' Q30 service flow census attempted=' +
+                $q30ExpectedCount + ' passed=' +
                 $q30PassedCount + ' failed=' + $q30CaseFailures.Count +
-                ' failedCases=' + $q30FailedText + ' seeds=0,37 faults=5 ' +
+                ' failedCases=' + $q30FailedText + ' seeds=' +
+                [String]::Join(',', $q30Seeds) + ' faults=5 ' +
                 'order=RELAY_B_COIL_OPEN,DREV_OPEN,REN_OPEN,SENSOR_A_OPEN,DRIVE_A_OPEN ' +
                 'childBudgetMs=60000'
             Write-Host $q30Census

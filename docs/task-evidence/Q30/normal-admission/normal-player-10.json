@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "seed": "13",
+  "steps": [
+    {
+      "operation": "normal menu MEDIUM and exact replay prepare",
+      "replay": "tsj-alpha/3/MEDIUM/RB30_CONTROL/13",
+      "observedResult": "TICKET",
+      "elapsedObservationMs": 160482,
+      "snapshot": "- table:\n  - rowgroup:\n    - banner:\n      - strong: TroubleshootJS\n      - generic: ELECTRONICS WORKBENCH\n      - generic: ALPHA\n    - navigation:\n      - button:\n        - generic: Main menu\n      - button [disabled]:\n        - generic: Shop\n      - button:\n        - generic: Resources\n      - button:\n        - generic: Settings\n      - button [disabled]:\n        - generic: Run customer retest\n    - rowgroup:\n      - button: TSJ MM-90\n      - generic: DIGITAL MULTIMETER\n      - button [disabled]: HOLD\n      - button [disabled]: RANGE\n      - button [disabled]: MIN/MAX\n      - button: LIGHT\n      - slider [disabled]\n      - button [disabled] [pressed]: \"OFF\"\n      - button [disabled]: V~\n      - button [disabled]: A\n      - button [disabled]: mA\n      - button [disabled]: µA\n      - button [disabled]: CAP\n      - button [disabled]: Hz\n      - button [disabled]: \"%\"\n      - button [disabled]: °C/°F\n      - generic: \"ADDITIONAL FUNCTIONS: NOT IMPLEMENTED\"\n      - generic: 10A\n      - generic: COM\n      - generic: V Ω\n      - status: \"Click a mode, or turn the dial. Left / right click: red / black probe.\"\n      - row:\n        - cell:\n          - table:\n            - rowgroup:\n              - row:\n                - cell:\n                  - button: DC V\n                - cell\n              - row:\n                - cell\n                - cell:\n                  - button: OHM\n              - row:\n                - cell:\n                  - button: CONT\n                - cell:\n                  - button: DIODE\n      - generic: \"--- V\"\n    - row:\n      - cell:\n        - button: \"Board Power: ON\"\n    - row:\n      - cell:\n        - button:\n          - generic: Supplies\n    - row:\n      - cell:\n        - button:\n          - generic: View\n    - row:\n      - cell:\n        - button:\n          - generic: Ticket\n    - row:\n      - cell:\n        - button:\n          - generic: Parts tray\n- dialog \"Customer ticket\":\n  - banner:\n    - heading \"Customer ticket\" [level=2]\n  - article:\n    - paragraph: SERVICE JOB\n    - heading \"Customer complaint\" [level=3]\n    - paragraph: One or both loads fail to follow their sensor inputs. Check each channel separately and together.\n    - heading \"Functional retest\" [level=3]\n    - paragraph: Check that each external load follows its own sensor, including both loads together.\n  - paragraph: Examine the board and use the instruments to identify a repair. Switch off every supply and wait for stored energy to discharge before changing parts.\n  - button \"Accept ticket and start\" [active]\n  - button \"Main menu\"\n  - button \"Resources\"\n  - generic \"Replay and bug-report identity\""
+    },
+    {
+      "operation": "Accept ticket; Run customer retest",
+      "result": "Customer retest did not pass. Continue troubleshooting.",
+      "clickTransport": "Timed out after delivery; subsequent DOM confirmed retest failure and WORKBENCH"
+    },
+    {
+      "operation": "Set sensor A HIGH/B LOW; DC V; black J1.2/red RDA.1",
+      "visibleMeter": "4.85 V"
+    },
+    {
+      "operation": "DC V; black J1.2/red RDA.2",
+      "visibleMeter": "0 V"
+    },
+    {
+      "operation": "Board Power OFF; RDA lift lead1",
+      "result": "State: Lead Lifted; Reconnect lead1 offered"
+    },
+    {
+      "operation": "Reinstall original Part21 as RDA; power ON; customer retest",
+      "result": "Retest remains failed; 0V at RDA.2",
+      "clickTransport": "Timed out after delivery; result observed"
+    },
+    {
+      "operation": "Acquire narrow-lead 1000 Ohm +/-5% resistor; select Part38",
+      "result": "Install as Output A / RDA offered; original Part21 remains separate"
+    },
+    {
+      "operation": "Install new Part38 as RDA; powerON; retest",
+      "result": "RESULTS: Customer retest passed. The reported behavior is resolved.",
+      "visibleMeter": "4.797 V",
+      "clickTransport": "Timed out after delivery; result observed"
+    },
+    {
+      "operation": "Open result replay identity",
+      "replay": "tsj-alpha/3/MEDIUM/RB30_CONTROL/13",
+      "interpretation": "tsj-alpha/3 / 5094031E26C80BE3E1491F49464261E8"
+    },
+    {
+      "operation": "Replay this challenge",
+      "result": "TICKET",
+      "elapsedObservationMs": 39570
+    },
+    {
+      "operation": "Accept exact replay; customer retest",
+      "result": "WORKBENCH, unrepaired retest FAIL, zero loose parts, probes cleared",
+      "clickTransport": "Timed out after delivery; result observed"
+    },
+    {
+      "operation": "PowerOFF; Main menu",
+      "result": "Returned to menu before tab closure"
+    }
+  ],
+  "privacy": {
+    "privateAttributes": [],
+    "provenance": [
+      [
+        "data-tsj-preview-identity-protocol",
+        "troubleshootjs-execution-provenance-v1"
+      ],
+      [
+        "data-tsj-preview-source-digest",
+        "eb8f50445c797e64ac2b384c22b57f9285f58975c8a629f94afac8c54d09f57a"
+      ],
+      [
+        "data-tsj-preview-script-digest",
+        "2fd65ee9dbbcfc3315f8fcb2055141d8946f2ca700f8dfc6a3b38a9e53717f74"
+      ],
+      [
+        "data-tsj-preview-web-digest",
+        "1a94ef73f6b3a611be255e6658f699d41b091523390be476486dffbdc6f53715"
+      ],
+      [
+        "data-tsj-preview-execution-digest",
+        "9eeeffca45ec856c34e0d16df40218dc6886ab8772dfce420e615b19c8b8a822"
+      ],
+      [
+        "data-tsj-preview-file-count",
+        "1542"
+      ]
+    ],
+    "url": "http://127.0.0.1:8904/circuitjs.html",
+    "visibleText": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest passed. The reported behavior is resolved.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nADDITIONAL FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n4.797 V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray\nCustomer retest passed\n\nCustomer retest passed. The reported behavior is resolved.\n\nFUNCTION VERIFIED\n\nReady to return to the customer.\n\nThe live board passed the customer’s functional checks.\n\nYou can keep using this board. Later changes do not alter the recorded retest result.\n\nCustomer retest passed. The reported behavior is resolved.\n\nNew board / Main menu\nReplay this challenge\nReturn to board\nReplay and bug-report identity"
+  },
+  "limits": [
+    "DOM observed preparation times are upper bounds, not phase timings.",
+    "Retest clicks completed in the app but exceeded the Browser input acknowledgement timeout; outcomes were read after each click.",
+    "Native and compiled receipt checks separately establish ownership/electrical coverage."
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "name": "reject",
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "outputCreated": true,
+      "actualOutcome": "FAIL",
+      "cleanup": {
+        "status": "PASS",
+        "seconds": 0.973062300006859,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "cases": [
+        {
+          "outcome": "FAIL",
+          "state": "PASS:challenge"
+        }
+      ],
+      "status": "PASS_EXPECTED_FAILURE"
+    },
+    {
+      "name": "timeout",
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "outputCreated": true,
+      "actualOutcome": "FAIL",
+      "cleanup": {
+        "status": "PASS",
+        "seconds": 1.0729351000627503,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "cases": [
+        {
+          "outcome": "TIMEOUT",
+          "state": null
+        }
+      ],
+      "status": "PASS_EXPECTED_FAILURE"
+    },
+    {
+      "name": "url-negative",
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "outputCreated": false,
+      "actualOutcome": null,
+      "cleanup": "NOT_APPLICABLE_NO_LAUNCH",
+      "cases": [],
+      "status": "PASS_EXPECTED_FAILURE"
+    }
+  ]
+}

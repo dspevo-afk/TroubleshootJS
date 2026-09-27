@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "outcome": "FAIL",
+  "exitCode": 2,
+  "inputCount": 1248,
+  "inputAudit": "PASS",
+  "changedInputs": [],
+  "completedServiceCases": 40,
+  "completedSensitivityCases": 40,
+  "completedStructuralRows": 51,
+  "structuralAccepted": 42,
+  "structuralRejected": 9,
+  "failurePhase": "Q30NormalExecutionPolicyContractTest.preMutationGuards",
+  "failure": "Reflective GenerationCoordinator.start lookup omitted the new controlled P09 callback parameter",
+  "fullReceiptAvailable": false,
+  "independentCorpusReader": "FAIL: refuses a full log containing failed child",
+  "scratchCleanup": "PASS",
+  "failureAndCleanupLines": [
+    "Exception in thread \"main\" java.lang.NoSuchMethodException: com.lushprojects.circuitjs1.client.GenerationCoordinator.start(com.lushprojects.circuitjs1.client.GenerationRequest, com.lushprojects.circuitjs1.client.GenerationCoordinator$Completion, boolean, boolean, long, boolean)",
+    "CLEANUP: current JVM contract classes and task-owned scratch removed."
+  ],
+  "recordedUtc": "2026-09-26T23:53:36.156726+00:00"
+}

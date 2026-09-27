@@ -82,6 +82,89 @@ final class PcbTwoLayerRules {
             throw new IllegalArgumentException("Two-layer routing requires developer-only construction outside the P09 production envelope");
     }
 
+    /**
+     * Physical rules for the separately versioned normal-medium admission.
+     * This does not modify P09's single-face envelope or developer routing.
+     */
+    static void requireNormalMediumGeometry(TroubleshootBoard board,
+            PcbBoardLayout layout, int maximumVias) {
+        if (board == null || layout == null || maximumVias < 0)
+            throw new IllegalArgumentException("Normal medium physical admission requires a board and layout");
+        PcbPlacementConstraints demands = board.getPlacementConstraints();
+        if (!MediumBoardPhysicalPolicy.selected(demands))
+            throw new IllegalArgumentException("Normal medium physical admission requires MEDIUM_BOARD@1 constraints");
+        board.validate();
+        demands.validate(board);
+        int parts = board.getComponentIds().size();
+        int pads = board.getPadIds().size();
+        if (parts < 20 || parts > 40 || layout.getComponents().size() != parts ||
+                pads < parts * 2 || pads > parts * 5 || layout.getPads().size() != pads ||
+                board.getNetIds().isEmpty() || board.getNetIds().size() > pads)
+            throw new IllegalArgumentException("Normal medium physical population is outside 20..40 supported footprints");
+        for (PcbComponentPlacement placement : layout.getComponents()) {
+            PhysicalPackage physical = placement.getPhysicalPackage();
+            if (!isSupportedProductionPackage(physical) || physical.isDeveloperGeneric() ||
+                    placement.getPhysicalGeometry().getRaisedCrossover() != null)
+                throw new IllegalArgumentException("Normal medium physical admission rejected an unsupported footprint or factory link");
+        }
+
+        layout.validateGeometry(board);
+        if (PcbFactoryLinkPolicy.validateLayout(layout) != 0)
+            throw new IllegalArgumentException("Normal medium physical admission does not allow factory links");
+        if (PcbTraceRules.TRACE_WIDTH < 9 || PcbTraceRules.MIN_VISIBLE_CLEARANCE < 6 ||
+                PcbTraceRules.MIN_CENTERLINE_CLEARANCE < PcbTraceRules.TRACE_WIDTH + 6)
+            throw new IllegalArgumentException("Normal medium trace access floors are not enabled");
+
+        boolean top = false, bottom = false;
+        for (PcbTraceGeometry trace : layout.getTraces()) {
+            if (trace.getExposure() != PcbCopperAccess.Exposure.EXPOSED)
+                throw new IllegalArgumentException("Normal medium copper must remain exposed for inspection");
+            top |= trace.getLayer() == PcbCopperLayer.TOP;
+            bottom |= trace.getLayer() == PcbCopperLayer.BOTTOM;
+        }
+        if (!top || !bottom)
+            throw new IllegalArgumentException("Normal medium admission requires routed copper on both faces");
+
+        int vias = 0;
+        for (PcbBoardHole hole : layout.getHoles()) {
+            if (hole.kind != PcbBoardHole.Kind.VIA)
+                throw new IllegalArgumentException("Normal medium admission does not allow extra drills");
+            vias++;
+        }
+        if (vias < 1 || vias > maximumVias)
+            throw new IllegalArgumentException("Normal medium via count is outside the qualified P07 bound");
+
+        for (PcbPadPlacement pad : layout.getPads()) {
+            Rectangle land = pad.getPadBounds(), probe = pad.getProbeBounds();
+            if (pad.getAttachment() != PcbTerminalAttachment.PLATED_THROUGH_HOLE ||
+                    !PcbCopperAccess.canProbe(pad, PcbBoardSide.TOP) ||
+                    !PcbCopperAccess.canProbe(pad, PcbBoardSide.BOTTOM) ||
+                    land.width < SupportedEnvelope.MIN_PAD ||
+                    land.height < SupportedEnvelope.MIN_PAD ||
+                    probe.width < SupportedEnvelope.MIN_PROBE ||
+                    probe.height < SupportedEnvelope.MIN_PROBE)
+                throw new IllegalArgumentException("Normal medium terminal lacks the qualified two-face probe access floor");
+        }
+
+        new PcbTwoLayerRules(board, layout).validate(layout);
+    }
+
+    private static boolean isSupportedProductionPackage(PhysicalPackage physical) {
+        return physical == PhysicalPackages.RELAY_SPDT ||
+            physical == PhysicalPackages.AXIAL_RESISTOR ||
+            physical == PhysicalPackages.AXIAL_FUSE ||
+            physical == PhysicalPackages.AXIAL_DIODE ||
+            physical == PhysicalPackages.THROUGH_HOLE_LED ||
+            physical == PhysicalPackages.TO92_NPN ||
+            physical == PhysicalPackages.TO92_NMOS ||
+            physical == PhysicalPackages.TO220_REGULATOR_4 ||
+            physical == PhysicalPackages.E04_DECISION_CONTROL_5 ||
+            physical == PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR ||
+            physical == PhysicalPackages.RADIAL_CERAMIC_CAPACITOR ||
+            physical == PhysicalPackages.THROUGH_HOLE_CONNECTOR_2 ||
+            physical == PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2;
+    }
+
     static PcbBoardHole via(String id,String net,int x,int y) {
         return new PcbBoardHole(id,PcbBoardHole.Kind.VIA,net,x,y,VIA_DRILL,VIA_LAND,
             PcbCopperLayer.TOP,PcbCopperLayer.BOTTOM,PcbCopperAccess.Exposure.EXPOSED);

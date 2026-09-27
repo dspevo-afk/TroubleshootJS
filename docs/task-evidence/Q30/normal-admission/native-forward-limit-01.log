@@ -1,0 +1,19 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+
+converged after 12 iterations, timeStep = 1.0E-4
+converged after 12 iterations, timeStep = 1.0E-4
+Exception in thread "main" java.lang.AssertionError: real input overvoltage remains rejected without a trial exemption
+	at com.lushprojects.circuitjs1.client.E02RegulatorContractTest.check(E02RegulatorContractTest.java:1061)
+	at com.lushprojects.circuitjs1.client.E02RegulatorContractTest.verifyForwardLimitTopologyTrials(E02RegulatorContractTest.java:315)
+	at com.lushprojects.circuitjs1.client.E02RegulatorContractTest.main(E02RegulatorContractTest.java:105)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: E02RegulatorContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

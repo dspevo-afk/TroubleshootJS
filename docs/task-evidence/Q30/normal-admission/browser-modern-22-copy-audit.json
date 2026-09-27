@@ -1,0 +1,903 @@
+{
+  "schema": "browser-modern-22-artifact-copy-audit-v1",
+  "sourceRunDirectory": "<task-temp>",
+  "destinationDirectory": "docs/task-evidence/Q30/normal-admission",
+  "copiedFiles": [
+    {
+      "source": "browser-modern-22-root-result.json",
+      "destination": "browser-modern-22-root-result.json",
+      "sourceSha256": "93edbfe742f5f7714deb065a183803126e9ed1bf634dc87d37f19ef3431ec83a",
+      "destinationSha256": "f39d27315253643252a738c9bf9f50b5ed9c51afba056ee21dd8180885c1a18f",
+      "sourceBytes": 2180,
+      "destinationBytes": 1333,
+      "byteExact": false,
+      "pathSubstitutions": {
+        "driverOutput": 2,
+        "runDirectory": 3,
+        "taskTempParent": 0,
+        "worktree": 1,
+        "userHome": 0
+      },
+      "destinationPersonalPathFindings": 0,
+      "destinationState": "copied-sanitized"
+    },
+    {
+      "source": "browser-modern-22-inputs-before.json",
+      "destination": "browser-modern-22-inputs-before.json",
+      "sourceSha256": "4c2de99d4634bb3aaaf5a67bf48edf5659d519841e5cd152b59f08ec8d788fd4",
+      "destinationSha256": "4c2de99d4634bb3aaaf5a67bf48edf5659d519841e5cd152b59f08ec8d788fd4",
+      "sourceBytes": 249190,
+      "destinationBytes": 249190,
+      "byteExact": true,
+      "pathSubstitutions": {
+        "driverOutput": 0,
+        "runDirectory": 0,
+        "taskTempParent": 0,
+        "worktree": 0,
+        "userHome": 0
+      },
+      "destinationPersonalPathFindings": 0,
+      "destinationState": "copied-byte-exact"
+    },
+    {
+      "source": "browser-modern-22-inputs-after.json",
+      "destination": "browser-modern-22-inputs-after.json",
+      "sourceSha256": "527c9c74e7e54706279bfb0bcaea870106e56dbca245a9787489a770c84795b6",
+      "destinationSha256": "527c9c74e7e54706279bfb0bcaea870106e56dbca245a9787489a770c84795b6",
+      "sourceBytes": 249147,
+      "destinationBytes": 249147,
+      "byteExact": true,
+      "pathSubstitutions": {
+        "driverOutput": 0,
+        "runDirectory": 0,
+        "taskTempParent": 0,
+        "worktree": 0,
+        "userHome": 0
+      },
+      "destinationPersonalPathFindings": 0,
+      "destinationState": "copied-byte-exact"
+    },
+    {
+      "source": "browser-modern-22.log",
+      "destination": "browser-modern-22-stream.log",
+      "sourceSha256": "2b79274018b748e46f25a3829a978e5cf48519f788b517aac432e5150bb2a02c",
+      "destinationSha256": "2b79274018b748e46f25a3829a978e5cf48519f788b517aac432e5150bb2a02c",
+      "sourceBytes": 3072,
+      "destinationBytes": 3072,
+      "byteExact": true,
+      "pathSubstitutions": {
+        "driverOutput": 0,
+        "runDirectory": 0,
+        "taskTempParent": 0,
+        "worktree": 0,
+        "userHome": 0
+      },
+      "destinationPersonalPathFindings": 0,
+      "destinationState": "copied-byte-exact"
+    },
+    {
+      "source": "browser-driver-output/identity.json",
+      "destination": "browser-modern-22-identity.json",
+      "sourceSha256": "96bbf65dec967bc972d6a84a951922540861b818a96d4e4844e4cd8a404a07a5",
+      "destinationSha256": "026e295d71db3910f8d87a141b1f4b8dde4dd07210b879cb6ba9472df0d62039",
+      "sourceBytes": 436,
+      "destinationBytes": 280,
+      "byteExact": false,
+      "pathSubstitutions": {
+        "driverOutput": 1,
+        "runDirectory": 0,
+        "taskTempParent": 0,
+        "worktree": 0,
+        "userHome": 0
+      },
+      "destinationPersonalPathFindings": 0,
+      "destinationState": "copied-sanitized"
+    },
+    {
+      "source": "browser-driver-output/owned-processes.json",
+      "destination": "browser-modern-22-owned-processes.json",
+      "sourceSha256": "1c06333d87c3cce3707562a661e6af373cd1b6f3cfd4a0de6e941feb5c05fabc",
+      "destinationSha256": "1c06333d87c3cce3707562a661e6af373cd1b6f3cfd4a0de6e941feb5c05fabc",
+      "sourceBytes": 1337,
+      "destinationBytes": 1337,
+      "byteExact": true,
+      "pathSubstitutions": {
+        "driverOutput": 0,
+        "runDirectory": 0,
+        "taskTempParent": 0,
+        "worktree": 0,
+        "userHome": 0
+      },
+      "destinationPersonalPathFindings": 0,
+      "destinationState": "copied-byte-exact"
+    },
+    {
+      "source": "browser-driver-output/progress.json",
+      "destination": "browser-modern-22-progress.json",
+      "sourceSha256": "8c5a966c8297c92ecf67ed85599e2ef1d00b3beebd6246ca9800b596368422de",
+      "destinationSha256": "8c5a966c8297c92ecf67ed85599e2ef1d00b3beebd6246ca9800b596368422de",
+      "sourceBytes": 19556,
+      "destinationBytes": 19556,
+      "byteExact": true,
+      "pathSubstitutions": {
+        "driverOutput": 0,
+        "runDirectory": 0,
+        "taskTempParent": 0,
+        "worktree": 0,
+        "userHome": 0
+      },
+      "destinationPersonalPathFindings": 0,
+      "destinationState": "copied-byte-exact"
+    },
+    {
+      "source": "browser-driver-output/result.json",
+      "destination": "browser-modern-22-result.json",
+      "sourceSha256": "3744dfb609e80d7d836cbbe48019d2ff3f6f5a3c0d304b588707743e16eb30b0",
+      "destinationSha256": "3744dfb609e80d7d836cbbe48019d2ff3f6f5a3c0d304b588707743e16eb30b0",
+      "sourceBytes": 19665,
+      "destinationBytes": 19665,
+      "byteExact": true,
+      "pathSubstitutions": {
+        "driverOutput": 0,
+        "runDirectory": 0,
+        "taskTempParent": 0,
+        "worktree": 0,
+        "userHome": 0
+      },
+      "destinationPersonalPathFindings": 0,
+      "destinationState": "copied-byte-exact"
+    }
+  ],
+  "screenshots": {
+    "count": 66,
+    "allByteExact": true,
+    "directory": "browser-modern-22-screenshots",
+    "files": [
+      {
+        "source": "browser-driver-output/composed_controlled_indicator-0-bottom.png",
+        "destination": "browser-modern-22-screenshots/composed_controlled_indicator-0-bottom.png",
+        "sourceSha256": "a1def50b5bc02276ac71992e1a5161effbecbf8e6b370b62a4910c558a569831",
+        "destinationSha256": "a1def50b5bc02276ac71992e1a5161effbecbf8e6b370b62a4910c558a569831",
+        "sourceBytes": 234749,
+        "destinationBytes": 234749,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/composed_controlled_indicator-0-top.png",
+        "destination": "browser-modern-22-screenshots/composed_controlled_indicator-0-top.png",
+        "sourceSha256": "9f6b4db9fd2afc8c1a401dc7deb90a43914880306f7773a2a909e4919eb48308",
+        "destinationSha256": "9f6b4db9fd2afc8c1a401dc7deb90a43914880306f7773a2a909e4919eb48308",
+        "sourceBytes": 253121,
+        "destinationBytes": 253121,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/composed_controlled_indicator-1-bottom.png",
+        "destination": "browser-modern-22-screenshots/composed_controlled_indicator-1-bottom.png",
+        "sourceSha256": "cb7451ebf439867536245bc8e64d296993d9bcef9ece861a072d72d6044d6b8e",
+        "destinationSha256": "cb7451ebf439867536245bc8e64d296993d9bcef9ece861a072d72d6044d6b8e",
+        "sourceBytes": 164553,
+        "destinationBytes": 164553,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/composed_controlled_indicator-1-top.png",
+        "destination": "browser-modern-22-screenshots/composed_controlled_indicator-1-top.png",
+        "sourceSha256": "0c1fab7cefc01a047a05c50300b576750762e8920f63bf50a0d937566a977070",
+        "destinationSha256": "0c1fab7cefc01a047a05c50300b576750762e8920f63bf50a0d937566a977070",
+        "sourceBytes": 183932,
+        "destinationBytes": 183932,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/composed_controlled_indicator-2-bottom.png",
+        "destination": "browser-modern-22-screenshots/composed_controlled_indicator-2-bottom.png",
+        "sourceSha256": "fc9c18630b76b2576755159e47207cc3c0ccdbc2c154c53a4c2e077843cf801f",
+        "destinationSha256": "fc9c18630b76b2576755159e47207cc3c0ccdbc2c154c53a4c2e077843cf801f",
+        "sourceBytes": 197145,
+        "destinationBytes": 197145,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/composed_controlled_indicator-2-top.png",
+        "destination": "browser-modern-22-screenshots/composed_controlled_indicator-2-top.png",
+        "sourceSha256": "f610d8e7da4afacb7933b326613b90e10a10816b0f95b34515689ada98153df5",
+        "destinationSha256": "f610d8e7da4afacb7933b326613b90e10a10816b0f95b34515689ada98153df5",
+        "sourceBytes": 218717,
+        "destinationBytes": 218717,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/diode_protected_indicator-0-bottom.png",
+        "destination": "browser-modern-22-screenshots/diode_protected_indicator-0-bottom.png",
+        "sourceSha256": "dc393e6440a02029e0e60cdf176fdd30c25743cfe3cfdca7a886d85be3f9659b",
+        "destinationSha256": "dc393e6440a02029e0e60cdf176fdd30c25743cfe3cfdca7a886d85be3f9659b",
+        "sourceBytes": 173360,
+        "destinationBytes": 173360,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/diode_protected_indicator-0-top.png",
+        "destination": "browser-modern-22-screenshots/diode_protected_indicator-0-top.png",
+        "sourceSha256": "e845685738c58cb2461851fd7bd4749b07a96d5b6dd81515fd17eb2d646c3609",
+        "destinationSha256": "e845685738c58cb2461851fd7bd4749b07a96d5b6dd81515fd17eb2d646c3609",
+        "sourceBytes": 186786,
+        "destinationBytes": 186786,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/diode_protected_indicator-1-bottom.png",
+        "destination": "browser-modern-22-screenshots/diode_protected_indicator-1-bottom.png",
+        "sourceSha256": "f56dd044f75f4c1018dbf06f4d74273be250c3bf731c2a61996266f057e98a19",
+        "destinationSha256": "f56dd044f75f4c1018dbf06f4d74273be250c3bf731c2a61996266f057e98a19",
+        "sourceBytes": 183898,
+        "destinationBytes": 183898,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/diode_protected_indicator-1-top.png",
+        "destination": "browser-modern-22-screenshots/diode_protected_indicator-1-top.png",
+        "sourceSha256": "d53762361caf14df7387449271047a24ebd6e352b72f695294c69958d1a60dc4",
+        "destinationSha256": "d53762361caf14df7387449271047a24ebd6e352b72f695294c69958d1a60dc4",
+        "sourceBytes": 193972,
+        "destinationBytes": 193972,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/diode_protected_indicator-2-bottom.png",
+        "destination": "browser-modern-22-screenshots/diode_protected_indicator-2-bottom.png",
+        "sourceSha256": "7679415ae79699526ae6a56dcaf474277c6ecb5949ebf76413998a780dc90244",
+        "destinationSha256": "7679415ae79699526ae6a56dcaf474277c6ecb5949ebf76413998a780dc90244",
+        "sourceBytes": 197063,
+        "destinationBytes": 197063,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/diode_protected_indicator-2-top.png",
+        "destination": "browser-modern-22-screenshots/diode_protected_indicator-2-top.png",
+        "sourceSha256": "53b0d1565364c3b1fc86ea4e1c3fead5057ed998a305d5418c989339cb38e67c",
+        "destinationSha256": "53b0d1565364c3b1fc86ea4e1c3fead5057ed998a305d5418c989339cb38e67c",
+        "sourceBytes": 205436,
+        "destinationBytes": 205436,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/led_indicator-0-bottom.png",
+        "destination": "browser-modern-22-screenshots/led_indicator-0-bottom.png",
+        "sourceSha256": "6cb46f588c9d640f88eccdea49b1a841ada73abbd5a4e245e02e2cc5b76512ff",
+        "destinationSha256": "6cb46f588c9d640f88eccdea49b1a841ada73abbd5a4e245e02e2cc5b76512ff",
+        "sourceBytes": 192061,
+        "destinationBytes": 192061,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/led_indicator-0-top.png",
+        "destination": "browser-modern-22-screenshots/led_indicator-0-top.png",
+        "sourceSha256": "fd6a735b77959979b2bcf345616edb0597cd31b90caed17f605f26ee8e3f8263",
+        "destinationSha256": "fd6a735b77959979b2bcf345616edb0597cd31b90caed17f605f26ee8e3f8263",
+        "sourceBytes": 201508,
+        "destinationBytes": 201508,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/led_indicator-1-bottom.png",
+        "destination": "browser-modern-22-screenshots/led_indicator-1-bottom.png",
+        "sourceSha256": "df663e4351fa8356f55c59957afe0494f0dea8e2b34bc3c4d2633a033100abc5",
+        "destinationSha256": "df663e4351fa8356f55c59957afe0494f0dea8e2b34bc3c4d2633a033100abc5",
+        "sourceBytes": 191464,
+        "destinationBytes": 191464,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/led_indicator-1-top.png",
+        "destination": "browser-modern-22-screenshots/led_indicator-1-top.png",
+        "sourceSha256": "0882ebec88bcd014ed0fffa1d19ea7d8f5e5dd381ae1f73df0b651da5e4cbaf7",
+        "destinationSha256": "0882ebec88bcd014ed0fffa1d19ea7d8f5e5dd381ae1f73df0b651da5e4cbaf7",
+        "sourceBytes": 201047,
+        "destinationBytes": 201047,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/led_indicator-2-bottom.png",
+        "destination": "browser-modern-22-screenshots/led_indicator-2-bottom.png",
+        "sourceSha256": "4b28489192165d1c9e249d9aefe6aa25639fb46d34c8ec23e8b6d5264485269e",
+        "destinationSha256": "4b28489192165d1c9e249d9aefe6aa25639fb46d34c8ec23e8b6d5264485269e",
+        "sourceBytes": 198830,
+        "destinationBytes": 198830,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/led_indicator-2-top.png",
+        "destination": "browser-modern-22-screenshots/led_indicator-2-top.png",
+        "sourceSha256": "f9b2c9d206485bb7207b749075020548aaa6a6cf13884ac3ce4a848760e0ca51",
+        "destinationSha256": "f9b2c9d206485bb7207b749075020548aaa6a6cf13884ac3ce4a848760e0ca51",
+        "sourceBytes": 207838,
+        "destinationBytes": 207838,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/nmos_low_side_switch-0-bottom.png",
+        "destination": "browser-modern-22-screenshots/nmos_low_side_switch-0-bottom.png",
+        "sourceSha256": "3343a33e3944e9e88abdf9370e7ee22536a05b7a2c740c041f4674bffd0bacc1",
+        "destinationSha256": "3343a33e3944e9e88abdf9370e7ee22536a05b7a2c740c041f4674bffd0bacc1",
+        "sourceBytes": 165121,
+        "destinationBytes": 165121,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/nmos_low_side_switch-0-top.png",
+        "destination": "browser-modern-22-screenshots/nmos_low_side_switch-0-top.png",
+        "sourceSha256": "f92c947ea3eddc324545874dc8715f9c253f79eb152e8f6e266bc7e1ea2e9bca",
+        "destinationSha256": "f92c947ea3eddc324545874dc8715f9c253f79eb152e8f6e266bc7e1ea2e9bca",
+        "sourceBytes": 182416,
+        "destinationBytes": 182416,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/nmos_low_side_switch-1-bottom.png",
+        "destination": "browser-modern-22-screenshots/nmos_low_side_switch-1-bottom.png",
+        "sourceSha256": "4e7b8204d5b94b7ffc61ea477334035ce4e1e4ca50dcdc1ffde77f8f60f2341c",
+        "destinationSha256": "4e7b8204d5b94b7ffc61ea477334035ce4e1e4ca50dcdc1ffde77f8f60f2341c",
+        "sourceBytes": 162532,
+        "destinationBytes": 162532,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/nmos_low_side_switch-1-top.png",
+        "destination": "browser-modern-22-screenshots/nmos_low_side_switch-1-top.png",
+        "sourceSha256": "864b85a94a9afdd05a31b967f70f4a861cfa2925d12c2257c82e40d6479920e4",
+        "destinationSha256": "864b85a94a9afdd05a31b967f70f4a861cfa2925d12c2257c82e40d6479920e4",
+        "sourceBytes": 175693,
+        "destinationBytes": 175693,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/nmos_low_side_switch-2-bottom.png",
+        "destination": "browser-modern-22-screenshots/nmos_low_side_switch-2-bottom.png",
+        "sourceSha256": "ac2f18f6caf5aabfa4f04ca4f1e52e6f79b482059be532b68a082d7c4aa7e6ff",
+        "destinationSha256": "ac2f18f6caf5aabfa4f04ca4f1e52e6f79b482059be532b68a082d7c4aa7e6ff",
+        "sourceBytes": 167806,
+        "destinationBytes": 167806,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/nmos_low_side_switch-2-top.png",
+        "destination": "browser-modern-22-screenshots/nmos_low_side_switch-2-top.png",
+        "sourceSha256": "ef746e62b1f8cdf1efeba2db45a69f3a77f78d0cf9d9e8c1d41aa184bd864def",
+        "destinationSha256": "ef746e62b1f8cdf1efeba2db45a69f3a77f78d0cf9d9e8c1d41aa184bd864def",
+        "sourceBytes": 183841,
+        "destinationBytes": 183841,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/npn_low_side_switch-0-bottom.png",
+        "destination": "browser-modern-22-screenshots/npn_low_side_switch-0-bottom.png",
+        "sourceSha256": "30db28ea3d2361a7fc24fa0352417316ab2c4efe1158195372db118a1c68f355",
+        "destinationSha256": "30db28ea3d2361a7fc24fa0352417316ab2c4efe1158195372db118a1c68f355",
+        "sourceBytes": 160087,
+        "destinationBytes": 160087,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/npn_low_side_switch-0-top.png",
+        "destination": "browser-modern-22-screenshots/npn_low_side_switch-0-top.png",
+        "sourceSha256": "be7981037ec3c61f0ac8b32f5540673b19b3f167f44108b3473d028cbbb59680",
+        "destinationSha256": "be7981037ec3c61f0ac8b32f5540673b19b3f167f44108b3473d028cbbb59680",
+        "sourceBytes": 175528,
+        "destinationBytes": 175528,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/npn_low_side_switch-1-bottom.png",
+        "destination": "browser-modern-22-screenshots/npn_low_side_switch-1-bottom.png",
+        "sourceSha256": "05672c523dcf9eb0c426d861b679f9a9ee5a8b3d651990dc84d3f33749791f17",
+        "destinationSha256": "05672c523dcf9eb0c426d861b679f9a9ee5a8b3d651990dc84d3f33749791f17",
+        "sourceBytes": 175206,
+        "destinationBytes": 175206,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/npn_low_side_switch-1-top.png",
+        "destination": "browser-modern-22-screenshots/npn_low_side_switch-1-top.png",
+        "sourceSha256": "ead90b0a315bc5cd302d70a752311eb5cfaaf33223151706e54ba0b793d1a51a",
+        "destinationSha256": "ead90b0a315bc5cd302d70a752311eb5cfaaf33223151706e54ba0b793d1a51a",
+        "sourceBytes": 187486,
+        "destinationBytes": 187486,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/npn_low_side_switch-2-bottom.png",
+        "destination": "browser-modern-22-screenshots/npn_low_side_switch-2-bottom.png",
+        "sourceSha256": "14ad0b713016909971cf848b2bbdcc052ac2701697abe8881af7da7b900db493",
+        "destinationSha256": "14ad0b713016909971cf848b2bbdcc052ac2701697abe8881af7da7b900db493",
+        "sourceBytes": 161858,
+        "destinationBytes": 161858,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/npn_low_side_switch-2-top.png",
+        "destination": "browser-modern-22-screenshots/npn_low_side_switch-2-top.png",
+        "sourceSha256": "3882cd3af06b501f09e2c065071027add1adcb942d9310ee3d07d1b088badc5e",
+        "destinationSha256": "3882cd3af06b501f09e2c065071027add1adcb942d9310ee3d07d1b088badc5e",
+        "sourceBytes": 177421,
+        "destinationBytes": 177421,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/parallel_dual_indicator-0-bottom.png",
+        "destination": "browser-modern-22-screenshots/parallel_dual_indicator-0-bottom.png",
+        "sourceSha256": "5b49d859d3669e80a88232fc46f635354837503b83eeb4139c31dfc9b71aff5d",
+        "destinationSha256": "5b49d859d3669e80a88232fc46f635354837503b83eeb4139c31dfc9b71aff5d",
+        "sourceBytes": 188384,
+        "destinationBytes": 188384,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/parallel_dual_indicator-0-top.png",
+        "destination": "browser-modern-22-screenshots/parallel_dual_indicator-0-top.png",
+        "sourceSha256": "a8b4cadf0bf9d21ac6481db648c97c063df94fe543b1f8f21397a6bb46829567",
+        "destinationSha256": "a8b4cadf0bf9d21ac6481db648c97c063df94fe543b1f8f21397a6bb46829567",
+        "sourceBytes": 199897,
+        "destinationBytes": 199897,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/parallel_dual_indicator-1-bottom.png",
+        "destination": "browser-modern-22-screenshots/parallel_dual_indicator-1-bottom.png",
+        "sourceSha256": "df166f08f84fee0a3ea2e9be5745c4594f290e34fff699eb955e55e9072b5b1f",
+        "destinationSha256": "df166f08f84fee0a3ea2e9be5745c4594f290e34fff699eb955e55e9072b5b1f",
+        "sourceBytes": 192757,
+        "destinationBytes": 192757,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/parallel_dual_indicator-1-top.png",
+        "destination": "browser-modern-22-screenshots/parallel_dual_indicator-1-top.png",
+        "sourceSha256": "f161e94be7f28f49cc11b278f10d51928e3e4c7466613c3cba42e5ad03d6c49e",
+        "destinationSha256": "f161e94be7f28f49cc11b278f10d51928e3e4c7466613c3cba42e5ad03d6c49e",
+        "sourceBytes": 203980,
+        "destinationBytes": 203980,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/parallel_dual_indicator-2-bottom.png",
+        "destination": "browser-modern-22-screenshots/parallel_dual_indicator-2-bottom.png",
+        "sourceSha256": "35e9f010bc7cf69d97a6ec7dd67e1dc819ea1634aa2ae63a7e6a2960bd38e835",
+        "destinationSha256": "35e9f010bc7cf69d97a6ec7dd67e1dc819ea1634aa2ae63a7e6a2960bd38e835",
+        "sourceBytes": 191919,
+        "destinationBytes": 191919,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/parallel_dual_indicator-2-top.png",
+        "destination": "browser-modern-22-screenshots/parallel_dual_indicator-2-top.png",
+        "sourceSha256": "550a1c74334cac5a0e1048202b09c0e20b4ebe06d81bd9e415385d73ae436a88",
+        "destinationSha256": "550a1c74334cac5a0e1048202b09c0e20b4ebe06d81bd9e415385d73ae436a88",
+        "sourceBytes": 204353,
+        "destinationBytes": 204353,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/rb15_control-0-bottom.png",
+        "destination": "browser-modern-22-screenshots/rb15_control-0-bottom.png",
+        "sourceSha256": "94bf339b187d0953dc0803375bec0470f5eaca210a53342fff44c07623c90c27",
+        "destinationSha256": "94bf339b187d0953dc0803375bec0470f5eaca210a53342fff44c07623c90c27",
+        "sourceBytes": 180566,
+        "destinationBytes": 180566,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/rb15_control-0-top.png",
+        "destination": "browser-modern-22-screenshots/rb15_control-0-top.png",
+        "sourceSha256": "0ce782ee0815f443b23306503f8e0390b6fac7ad834fa5140ccad388432d9003",
+        "destinationSha256": "0ce782ee0815f443b23306503f8e0390b6fac7ad834fa5140ccad388432d9003",
+        "sourceBytes": 201431,
+        "destinationBytes": 201431,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/rb15_control-1-bottom.png",
+        "destination": "browser-modern-22-screenshots/rb15_control-1-bottom.png",
+        "sourceSha256": "6f30993a016d9bae5ff2d9cae2d8e3b311b420a967b32f70513d267cc5cc2cfd",
+        "destinationSha256": "6f30993a016d9bae5ff2d9cae2d8e3b311b420a967b32f70513d267cc5cc2cfd",
+        "sourceBytes": 143276,
+        "destinationBytes": 143276,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/rb15_control-1-top.png",
+        "destination": "browser-modern-22-screenshots/rb15_control-1-top.png",
+        "sourceSha256": "3f14606d7b6160d1f206da20edafc66396fe13f942ff8eb037033f3c4ef8d13b",
+        "destinationSha256": "3f14606d7b6160d1f206da20edafc66396fe13f942ff8eb037033f3c4ef8d13b",
+        "sourceBytes": 159614,
+        "destinationBytes": 159614,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/rb15_control-2-bottom.png",
+        "destination": "browser-modern-22-screenshots/rb15_control-2-bottom.png",
+        "sourceSha256": "d36d7f0c96148a32c972cfba5c69ff557bd47116b4d33ea23e9968117423c0b2",
+        "destinationSha256": "d36d7f0c96148a32c972cfba5c69ff557bd47116b4d33ea23e9968117423c0b2",
+        "sourceBytes": 150438,
+        "destinationBytes": 150438,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/rb15_control-2-top.png",
+        "destination": "browser-modern-22-screenshots/rb15_control-2-top.png",
+        "sourceSha256": "dbf2ef9b9fdb54a9d836b74897b1ac70fcf140e6a9de6622b3b3072d095dc887",
+        "destinationSha256": "dbf2ef9b9fdb54a9d836b74897b1ac70fcf140e6a9de6622b3b3072d095dc887",
+        "sourceBytes": 169142,
+        "destinationBytes": 169142,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/rb30_control-0-bottom.png",
+        "destination": "browser-modern-22-screenshots/rb30_control-0-bottom.png",
+        "sourceSha256": "21cc790855eb065a10cb2f32bfef81c0dc908817c0a8a50071c5de6ae448cee8",
+        "destinationSha256": "21cc790855eb065a10cb2f32bfef81c0dc908817c0a8a50071c5de6ae448cee8",
+        "sourceBytes": 338574,
+        "destinationBytes": 338574,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/rb30_control-0-top.png",
+        "destination": "browser-modern-22-screenshots/rb30_control-0-top.png",
+        "sourceSha256": "cc3ad085d6d6e2f3279241aee6ad3678a328df1b294479aecd6e1b045ec07b8b",
+        "destinationSha256": "cc3ad085d6d6e2f3279241aee6ad3678a328df1b294479aecd6e1b045ec07b8b",
+        "sourceBytes": 374264,
+        "destinationBytes": 374264,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/rb30_control-1-bottom.png",
+        "destination": "browser-modern-22-screenshots/rb30_control-1-bottom.png",
+        "sourceSha256": "1ff2504410361c7f229056df203688d48c65b5edb897d507ba6c9401bb80033d",
+        "destinationSha256": "1ff2504410361c7f229056df203688d48c65b5edb897d507ba6c9401bb80033d",
+        "sourceBytes": 345921,
+        "destinationBytes": 345921,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/rb30_control-1-top.png",
+        "destination": "browser-modern-22-screenshots/rb30_control-1-top.png",
+        "sourceSha256": "edc21968826f2605b1907bf73e8a55079e8d168b8e5a1275eca0d2dd0919509c",
+        "destinationSha256": "edc21968826f2605b1907bf73e8a55079e8d168b8e5a1275eca0d2dd0919509c",
+        "sourceBytes": 379112,
+        "destinationBytes": 379112,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/rb30_control-2-bottom.png",
+        "destination": "browser-modern-22-screenshots/rb30_control-2-bottom.png",
+        "sourceSha256": "53e1ff45107a57ee5fa8b19d86eaddd652d5e5693ec8ae28c38c37a8cb98751d",
+        "destinationSha256": "53e1ff45107a57ee5fa8b19d86eaddd652d5e5693ec8ae28c38c37a8cb98751d",
+        "sourceBytes": 216933,
+        "destinationBytes": 216933,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/rb30_control-2-top.png",
+        "destination": "browser-modern-22-screenshots/rb30_control-2-top.png",
+        "sourceSha256": "ee3b653d310bd6dd351a14188bd6414f1357398063e5fd24ed825cd4548af655",
+        "destinationSha256": "ee3b653d310bd6dd351a14188bd6414f1357398063e5fd24ed825cd4548af655",
+        "sourceBytes": 251330,
+        "destinationBytes": 251330,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/rc_delay-0-bottom.png",
+        "destination": "browser-modern-22-screenshots/rc_delay-0-bottom.png",
+        "sourceSha256": "7a3f6492476306022361e1bb749ce2133e72e3919292bb5bad242a51f87cec76",
+        "destinationSha256": "7a3f6492476306022361e1bb749ce2133e72e3919292bb5bad242a51f87cec76",
+        "sourceBytes": 165136,
+        "destinationBytes": 165136,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/rc_delay-0-top.png",
+        "destination": "browser-modern-22-screenshots/rc_delay-0-top.png",
+        "sourceSha256": "a15758b4e676b0b4e0c506ff68c3ca72e0fd20ee0adc2f47231149f9b61c9fc4",
+        "destinationSha256": "a15758b4e676b0b4e0c506ff68c3ca72e0fd20ee0adc2f47231149f9b61c9fc4",
+        "sourceBytes": 179296,
+        "destinationBytes": 179296,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/rc_delay-1-bottom.png",
+        "destination": "browser-modern-22-screenshots/rc_delay-1-bottom.png",
+        "sourceSha256": "54e6f923585dc7e44a5f267888a211398e81da05d27531eeafc95567ccdb915b",
+        "destinationSha256": "54e6f923585dc7e44a5f267888a211398e81da05d27531eeafc95567ccdb915b",
+        "sourceBytes": 164353,
+        "destinationBytes": 164353,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/rc_delay-1-top.png",
+        "destination": "browser-modern-22-screenshots/rc_delay-1-top.png",
+        "sourceSha256": "78caf7c1a88147254f8fd9fe17505d686cdea214b0e01ad882620454751293f6",
+        "destinationSha256": "78caf7c1a88147254f8fd9fe17505d686cdea214b0e01ad882620454751293f6",
+        "sourceBytes": 176347,
+        "destinationBytes": 176347,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/rc_delay-2-bottom.png",
+        "destination": "browser-modern-22-screenshots/rc_delay-2-bottom.png",
+        "sourceSha256": "f43f933f88ee80720629a68b11e71d476ac8a39c86bf4ab046138d3524f34848",
+        "destinationSha256": "f43f933f88ee80720629a68b11e71d476ac8a39c86bf4ab046138d3524f34848",
+        "sourceBytes": 165896,
+        "destinationBytes": 165896,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/rc_delay-2-top.png",
+        "destination": "browser-modern-22-screenshots/rc_delay-2-top.png",
+        "sourceSha256": "5a55917d44a8408c0920f6b7697b5b21c8dec17333019d091449a5d5858c53bb",
+        "destinationSha256": "5a55917d44a8408c0920f6b7697b5b21c8dec17333019d091449a5d5858c53bb",
+        "sourceBytes": 178910,
+        "destinationBytes": 178910,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/relay_output-0-bottom.png",
+        "destination": "browser-modern-22-screenshots/relay_output-0-bottom.png",
+        "sourceSha256": "7e4c705c8909ad6f3a6f540aaf2d3ae825fda9bfa98340f0155785dde7fb972a",
+        "destinationSha256": "7e4c705c8909ad6f3a6f540aaf2d3ae825fda9bfa98340f0155785dde7fb972a",
+        "sourceBytes": 156388,
+        "destinationBytes": 156388,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/relay_output-0-top.png",
+        "destination": "browser-modern-22-screenshots/relay_output-0-top.png",
+        "sourceSha256": "1b85dfca1cd8b043df2a24f91ee0beff7d324c738a523aa1d8f522a4b60bf000",
+        "destinationSha256": "1b85dfca1cd8b043df2a24f91ee0beff7d324c738a523aa1d8f522a4b60bf000",
+        "sourceBytes": 170042,
+        "destinationBytes": 170042,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/relay_output-1-bottom.png",
+        "destination": "browser-modern-22-screenshots/relay_output-1-bottom.png",
+        "sourceSha256": "de314697a1f534046fc10b44e8875350fabab09adf1fc8990b5af50bf46c51e8",
+        "destinationSha256": "de314697a1f534046fc10b44e8875350fabab09adf1fc8990b5af50bf46c51e8",
+        "sourceBytes": 173498,
+        "destinationBytes": 173498,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/relay_output-1-top.png",
+        "destination": "browser-modern-22-screenshots/relay_output-1-top.png",
+        "sourceSha256": "abfb1b86e69e6d33409fcb3ba3ada23d910f0a57175ba8faeb12b08b5189a6c4",
+        "destinationSha256": "abfb1b86e69e6d33409fcb3ba3ada23d910f0a57175ba8faeb12b08b5189a6c4",
+        "sourceBytes": 185144,
+        "destinationBytes": 185144,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/relay_output-2-bottom.png",
+        "destination": "browser-modern-22-screenshots/relay_output-2-bottom.png",
+        "sourceSha256": "c82756e82cff204d63db2e9413fab2f174d438226c8733163f6d4302bfd26e99",
+        "destinationSha256": "c82756e82cff204d63db2e9413fab2f174d438226c8733163f6d4302bfd26e99",
+        "sourceBytes": 163042,
+        "destinationBytes": 163042,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/relay_output-2-top.png",
+        "destination": "browser-modern-22-screenshots/relay_output-2-top.png",
+        "sourceSha256": "4a5cb8f1bbafe14bb9cbca02c26280454807daa0360df5b90e5226a4cbec70c4",
+        "destinationSha256": "4a5cb8f1bbafe14bb9cbca02c26280454807daa0360df5b90e5226a4cbec70c4",
+        "sourceBytes": 178550,
+        "destinationBytes": 178550,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/sensor_control-0-bottom.png",
+        "destination": "browser-modern-22-screenshots/sensor_control-0-bottom.png",
+        "sourceSha256": "41a283925977cb477273088dc4b82a959b2669e933897b6376945d52ecf59c40",
+        "destinationSha256": "41a283925977cb477273088dc4b82a959b2669e933897b6376945d52ecf59c40",
+        "sourceBytes": 178853,
+        "destinationBytes": 178853,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/sensor_control-0-top.png",
+        "destination": "browser-modern-22-screenshots/sensor_control-0-top.png",
+        "sourceSha256": "1bbfeda47e6179b78966cc118d7883748bb9d46b45a0a7c688833628151dd733",
+        "destinationSha256": "1bbfeda47e6179b78966cc118d7883748bb9d46b45a0a7c688833628151dd733",
+        "sourceBytes": 191802,
+        "destinationBytes": 191802,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/sensor_control-1-bottom.png",
+        "destination": "browser-modern-22-screenshots/sensor_control-1-bottom.png",
+        "sourceSha256": "8f00ff1d03c4dbeae17ba286ea2e12efec376e6a3c2f536e1f0c6edf836df403",
+        "destinationSha256": "8f00ff1d03c4dbeae17ba286ea2e12efec376e6a3c2f536e1f0c6edf836df403",
+        "sourceBytes": 141843,
+        "destinationBytes": 141843,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/sensor_control-1-top.png",
+        "destination": "browser-modern-22-screenshots/sensor_control-1-top.png",
+        "sourceSha256": "48d7189a97c1db32770813a848e5181bf13108238a013e918552562333dadb11",
+        "destinationSha256": "48d7189a97c1db32770813a848e5181bf13108238a013e918552562333dadb11",
+        "sourceBytes": 153191,
+        "destinationBytes": 153191,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/sensor_control-2-bottom.png",
+        "destination": "browser-modern-22-screenshots/sensor_control-2-bottom.png",
+        "sourceSha256": "1f06452e03aca8e27cdb903b04a64abdd40d20d72be2d403e0c5f23dcfdc6a04",
+        "destinationSha256": "1f06452e03aca8e27cdb903b04a64abdd40d20d72be2d403e0c5f23dcfdc6a04",
+        "sourceBytes": 150793,
+        "destinationBytes": 150793,
+        "byteExact": true
+      },
+      {
+        "source": "browser-driver-output/sensor_control-2-top.png",
+        "destination": "browser-modern-22-screenshots/sensor_control-2-top.png",
+        "sourceSha256": "f8f4d718ce22ded6ff5b8a89a8e6a5aca410de5ba5aef668e765fb3c7c3c90a3",
+        "destinationSha256": "f8f4d718ce22ded6ff5b8a89a8e6a5aca410de5ba5aef668e765fb3c7c3c90a3",
+        "sourceBytes": 163494,
+        "destinationBytes": 163494,
+        "byteExact": true
+      }
+    ]
+  },
+  "wrapperVerification": {
+    "existingEvidence": "browser-modern-22-wrapper-inputs.json",
+    "existingEvidenceSha256": "13358a072a92691b02a8ed4bf33cb90eb327d3eecd37fdf351a0d0dfe5c182a4",
+    "browserScriptExpectedSha256": "47295e13a9fc83201842154c0a3023489700db0f4d354557a236e6282320fb8c",
+    "browserScriptActualSha256": "47295e13a9fc83201842154c0a3023489700db0f4d354557a236e6282320fb8c",
+    "browserScriptMatch": true,
+    "commonScriptExpectedSha256": "300f498c07717b5c0590f01e44710e58782766feb153088973f381a7d9069b42",
+    "commonScriptActualSha256": "300f498c07717b5c0590f01e44710e58782766feb153088973f381a7d9069b42",
+    "commonScriptMatch": true,
+    "browserInputsBeforeSha256": "d97a18e7ed8b9272b658a537c218a8f1ddff4a10f3e58ec1c51996f13c90c9ba",
+    "browserInputsAfterSha256": "d97a18e7ed8b9272b658a537c218a8f1ddff4a10f3e58ec1c51996f13c90c9ba",
+    "rootResultBeforeSha256": "d97a18e7ed8b9272b658a537c218a8f1ddff4a10f3e58ec1c51996f13c90c9ba",
+    "rootResultAfterSha256": "d97a18e7ed8b9272b658a537c218a8f1ddff4a10f3e58ec1c51996f13c90c9ba",
+    "browserCommonInputsUnchanged": true
+  },
+  "automatedRun": {
+    "rootResult": "browser-modern-22-root-result.json",
+    "rootResultSha256": "93edbfe742f5f7714deb065a183803126e9ed1bf634dc87d37f19ef3431ec83a",
+    "status": "PASS",
+    "processExitCode": 0,
+    "wrapperCheckCount": 12,
+    "wrapperChecksPassed": 12,
+    "resultOutcome": "PASS",
+    "caseCount": 33,
+    "allCasesPass": true,
+    "errorCount": 0,
+    "replayCount": 3,
+    "allReplaysPass": true,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "coldQ30CasesSeconds": [
+      {
+        "family": "RB30_CONTROL",
+        "profile": "MEDIUM",
+        "ordinal": 0,
+        "outcome": "PASS",
+        "elapsedSeconds": 121.01408199999992,
+        "seconds": 121.01414520000003,
+        "observedCandidates": [
+          0,
+          1
+        ]
+      },
+      {
+        "family": "RB30_CONTROL",
+        "profile": "MEDIUM",
+        "ordinal": 1,
+        "outcome": "PASS",
+        "elapsedSeconds": 152.25202439999998,
+        "seconds": 152.25214230000006,
+        "observedCandidates": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "family": "RB30_CONTROL",
+        "profile": "MEDIUM",
+        "ordinal": 2,
+        "outcome": "PASS",
+        "elapsedSeconds": 106.7601193999999,
+        "seconds": 106.76018419999991,
+        "observedCandidates": [
+          0,
+          1
+        ]
+      }
+    ],
+    "actualReplayTimings": [
+      {
+        "family": "RELAY_OUTPUT",
+        "profile": "EASY",
+        "replay": "tsj-alpha/3/EASY/RELAY_OUTPUT/4850224583931519464",
+        "outcome": "PASS",
+        "elapsedSeconds": 7.4838260000001355,
+        "seconds": 7.483846999999969,
+        "observedCandidates": [
+          0,
+          1
+        ],
+        "isolated": true
+      },
+      {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "profile": "MEDIUM",
+        "replay": "tsj-alpha/3/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/-8299893164569314894",
+        "outcome": "PASS",
+        "elapsedSeconds": 3.4062340999998924,
+        "seconds": 3.406248499999947,
+        "observedCandidates": [
+          0,
+          1
+        ],
+        "isolated": true
+      },
+      {
+        "family": "RB30_CONTROL",
+        "profile": "MEDIUM",
+        "replay": "tsj-alpha/3/MEDIUM/RB30_CONTROL/2182719284949821902",
+        "outcome": "PASS",
+        "elapsedSeconds": 20.241534499999943,
+        "seconds": 20.24156439999979,
+        "observedCandidates": [
+          0,
+          1
+        ],
+        "isolated": true
+      }
+    ],
+    "evidenceMode": "automated browser driver output; no manual-flow claim",
+    "progressFile": "browser-modern-22-progress.json",
+    "progressOutcome": "NOT_RUN",
+    "progressCaseCount": 33
+  },
+  "inputs": {
+    "before": "browser-modern-22-inputs-before.json",
+    "beforeSha256": "4c2de99d4634bb3aaaf5a67bf48edf5659d519841e5cd152b59f08ec8d788fd4",
+    "after": "browser-modern-22-inputs-after.json",
+    "afterSha256": "527c9c74e7e54706279bfb0bcaea870106e56dbca245a9787489a770c84795b6",
+    "browserBeforeFileCount": 393,
+    "browserAfterFileCount": 393,
+    "browserCommonSha256": "d97a18e7ed8b9272b658a537c218a8f1ddff4a10f3e58ec1c51996f13c90c9ba"
+  },
+  "retainedStreamLog": {
+    "file": "browser-modern-22-stream.log",
+    "sha256": "2b79274018b748e46f25a3829a978e5cf48519f788b517aac432e5150bb2a02c",
+    "byteExact": true
+  },
+  "cleanup": {
+    "status": "PASS",
+    "method": "Remove-VerifierOwnedTree",
+    "exactTarget": "browser-modern-22-run-35f3fe0da6b644b1bfd78e1c9b337f45",
+    "exactTargetRemoved": true,
+    "preservedParent": true,
+    "preservedNative05Preparation": true,
+    "native05PreparationSha256": "0b9979c93a00c7597fec1f0ed67e449825795ecc6bc9158275f2cc0ef453cd10",
+    "resolvedContainmentVerified": true,
+    "ancestorAndTreeReparsePointCount": 0,
+    "treeEntriesBeforeRemoval": 379,
+    "driverIdentityPid": 16476,
+    "driverIdentityPresent": false,
+    "recordedOwnerCount": 7,
+    "exactRecordedOwnerMatches": 0,
+    "port": 61083,
+    "portListeningBeforeRemoval": false,
+    "processReferencesBeforeRemoval": 0,
+    "removedUtc": "2026-09-27T02:12:25.857Z",
+    "wrapperPointerSha256": "5944b742866c8944916c7a49a45a0fd09423af17fe93d55bbd4fc38a6cb96389",
+    "driverPointerSha256": "c88a698ab708f8957679fbce4fd3cbc19e223b3a7364c766d5a815f87d841aab"
+  }
+}

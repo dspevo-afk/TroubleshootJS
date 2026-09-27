@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_coordinator.py", line 1319, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_coordinator.py", line 1268, in main
+    result = check_document(document, args.seeds, args.self_test)
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_coordinator.py", line 1100, in check_document
+    result = validate_row(wrapper, seed)
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_coordinator.py", line 908, in validate_row
+    cold = validate_run(report["cold"], "cold", expected_seed, request)
+                                                               ^^^^^^^
+NameError: name 'request' is not defined

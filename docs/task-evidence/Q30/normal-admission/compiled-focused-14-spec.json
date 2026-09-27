@@ -1,0 +1,83 @@
+{
+  "cases": [
+    {
+      "name": "alpha-led0",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaCase=0",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedState": "PASS:alpha",
+      "reportAttribute": "data-tsj-alpha-report"
+    },
+    {
+      "name": "alpha-npn0-shop",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaCase=13",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedState": "PASS:alpha",
+      "reportAttribute": "data-tsj-alpha-report"
+    },
+    {
+      "name": "quickplay-led-3",
+      "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=0&tsjQuickPlayTestSeed=3",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedState": "PASS:quick-play"
+    },
+    {
+      "name": "quickplay-rc-3",
+      "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=3&tsjQuickPlayTestSeed=3",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedState": "PASS:quick-play"
+    },
+    {
+      "name": "quickplay-npn-0",
+      "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=4&tsjQuickPlayTestSeed=0",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedState": "PASS:quick-play"
+    },
+    {
+      "name": "quickplay-npn-1",
+      "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=4&tsjQuickPlayTestSeed=1",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedState": "PASS:quick-play"
+    },
+    {
+      "name": "quickplay-npn-2",
+      "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=4&tsjQuickPlayTestSeed=2",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedState": "PASS:quick-play"
+    },
+    {
+      "name": "quickplay-nmos-0",
+      "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=5&tsjQuickPlayTestSeed=0",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedState": "PASS:quick-play"
+    },
+    {
+      "name": "quickplay-nmos-1",
+      "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=5&tsjQuickPlayTestSeed=1",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedState": "PASS:quick-play"
+    },
+    {
+      "name": "quickplay-nmos-2",
+      "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=5&tsjQuickPlayTestSeed=2",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedState": "PASS:quick-play"
+    },
+    {
+      "name": "quickplay-explicit-precedence",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=0&tsjQuickPlayTestSeed=3",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedState": "PASS:quick-play-explicit"
+    }
+  ]
+}

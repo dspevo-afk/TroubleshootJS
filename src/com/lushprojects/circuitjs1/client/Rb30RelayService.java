@@ -132,10 +132,12 @@ final class Rb30RelayService implements PhysicalBoardRuntimeCapability,
 
     public Vector<WorkbenchCatalogEntry> getCatalogEntries() {
         Vector<WorkbenchCatalogEntry> result = new Vector<WorkbenchCatalogEntry>();
+        RelaySpecification fiveVolt = new RelaySpecification(5);
+        RelaySpecification twelveVolt = new RelaySpecification(12);
         result.add(new WorkbenchCatalogEntry(fiveVoltCatalogId,
-            new RelaySpecification(5).label()));
+            fiveVolt.label(), fiveVolt.getSpecificationId()));
         result.add(new WorkbenchCatalogEntry(twelveVoltCatalogId,
-            new RelaySpecification(12).label()));
+            twelveVolt.label(), twelveVolt.getSpecificationId()));
         return result;
     }
 

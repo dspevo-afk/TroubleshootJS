@@ -15,6 +15,7 @@ final class Rb30DecisionService
     private final E04SensorControlModel.RailContract rail;
     private final E04SensorControlModel.Variant variant;
     private final E04SensorControlModel.Configuration configuration;
+    private final String catalogSpecificationKey;
     private E04SensorControlModel.DecisionElement activeDecision;
     private Rb30DecisionController controller;
 
@@ -41,6 +42,7 @@ final class Rb30DecisionService
         if (!original.getElement().hasSameDeclaration(
                 createReplacementDecisionElement(0, 0)))
             throw new IllegalArgumentException("Q30 original decision declaration differs");
+        catalogSpecificationKey = catalogSpecificationKey(original);
         this.activeDecision = original.getElement();
     }
 
@@ -85,8 +87,16 @@ final class Rb30DecisionService
         Vector<WorkbenchCatalogEntry> result =
             new Vector<WorkbenchCatalogEntry>();
         result.add(new WorkbenchCatalogEntry(getCatalogId(),
-            "Compatible five-terminal sensor threshold controller"));
+            "Compatible five-terminal sensor threshold controller",
+            catalogSpecificationKey));
         return result;
+    }
+
+    private static String catalogSpecificationKey(E04DecisionControlPart original) {
+        String specificationId = original.getSpecification().getSpecificationId();
+        if (!specificationId.equals(original.getElement().declarationIdentity()))
+            throw new IllegalArgumentException("Q30 decision specification identity differs from declaration");
+        return specificationId;
     }
 
     public Vector<PhysicalPart<?>> getLooseParts() {
@@ -177,7 +187,6 @@ final class Rb30DecisionController
             return slot.isEmpty() && hasCatalogEntry(operation.getCatalogEntryId());
         if (WorkbenchOperation.INSTALL.equals(id))
             return operation.getPart() instanceof E04DecisionControlPart &&
-                capability.ownsPart(operation.getPart().getId()) &&
                 instance.getPhysicalBoardRuntime().isPartInstallableAt(
                     operation.getPart(), getComponentId());
         if (WorkbenchOperation.REMOVE.equals(id))
@@ -244,7 +253,6 @@ final class Rb30DecisionController
         if (!capability.getSlot().isEmpty()) return false;
         PhysicalPart<?> candidate = instance.getPhysicalBoardRuntime().getPart(partId);
         if (!(candidate instanceof E04DecisionControlPart) ||
-                !capability.ownsPart(partId) ||
                 !instance.getPhysicalBoardRuntime().isPartInstallableAt(
                     candidate, getComponentId()))
             return false;

@@ -28,6 +28,7 @@ class GeneratedBoardInstance {
     private final boolean developerOnlyFaultRoute;
     private final GeneratedDiagnosticSolvabilityContract diagnosticSolvabilityContract;
     private final GeneratedDiagnosticProvider diagnosticProvider;
+    private final GeneratedPhysicalAdmission physicalAdmission;
 
     GeneratedBoardInstance(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
             long seed, String circuitFamilyId, String topologyVariantId, String description,
@@ -131,12 +132,40 @@ class GeneratedBoardInstance {
             boolean developerOnlyFaultRoute, Vector<GeneratedFaultCandidate> faultCandidates,
             GeneratedDiagnosticSolvabilityContract suppliedDiagnosticSolvabilityContract,
             GeneratedDiagnosticProvider diagnosticProvider) {
+        this(board, simulationElements, seed, circuitFamilyId, topologyVariantId, description,
+            componentBindings, externalPowerBindings, connectionBindings, behaviorContract,
+            pcbLayout, physicalSpecifications, faultBinding, operationalStates,
+            challengeDefinition, familyState, physicalRuntime, temporalBehavior,
+            developerOnlyFaultRoute, faultCandidates, suppliedDiagnosticSolvabilityContract,
+            diagnosticProvider, null);
+    }
+
+    GeneratedBoardInstance(TroubleshootBoard board, Vector<CircuitElm> simulationElements,
+            long seed, String circuitFamilyId, String topologyVariantId, String description,
+            GeneratedComponentBindings componentBindings,
+            GeneratedExternalPowerBindings externalPowerBindings,
+            GeneratedComponentConnectionBindings connectionBindings,
+            GeneratedChallengeBehaviorContract behaviorContract, PcbBoardLayout pcbLayout,
+            BoardPhysicalSpecifications physicalSpecifications, GeneratedFaultBinding faultBinding,
+            GeneratedComponentOperationalStates operationalStates,
+            GeneratedChallengeDefinition challengeDefinition, GeneratedBoardFamilyState familyState,
+            PhysicalBoardRuntime physicalRuntime, GeneratedTemporalBehavior temporalBehavior,
+            boolean developerOnlyFaultRoute, Vector<GeneratedFaultCandidate> faultCandidates,
+            GeneratedDiagnosticSolvabilityContract suppliedDiagnosticSolvabilityContract,
+            GeneratedDiagnosticProvider diagnosticProvider,
+            GeneratedPhysicalAdmission physicalAdmission) {
         if (suppliedDiagnosticSolvabilityContract != null &&
                 (!developerOnlyFaultRoute ||
                  !suppliedDiagnosticSolvabilityContract.isDeveloperFixture()))
             throw new IllegalArgumentException(
                 "Supplied diagnostic contract must be an explicit developer fixture");
-        PcbTwoLayerRules.requireDeveloperAdmission(pcbLayout,developerOnlyFaultRoute);
+        if (physicalAdmission == null) {
+            PcbTwoLayerRules.requireDeveloperAdmission(pcbLayout,developerOnlyFaultRoute);
+        } else {
+            if (developerOnlyFaultRoute)
+                throw new IllegalArgumentException("Normal physical admission cannot be developer-only");
+            physicalAdmission.requireConstruction(board, pcbLayout);
+        }
         PcbFactoryLinkPolicy.validateConstruction(board, pcbLayout, physicalSpecifications,
             componentBindings, developerOnlyFaultRoute);
         ServiceableBoardConstruction.complete(board, simulationElements, componentBindings,
@@ -182,6 +211,7 @@ class GeneratedBoardInstance {
         this.temporalBehavior = temporalBehavior;
         this.developerOnlyFaultRoute = developerOnlyFaultRoute;
         this.diagnosticProvider = diagnosticProvider;
+        this.physicalAdmission = physicalAdmission;
         this.diagnosticSolvabilityContract = suppliedDiagnosticSolvabilityContract == null ?
             GeneratedDiagnosticSolvabilityContract.forGeneratedBoard(
                 circuitFamilyId, topologyVariantId, seed, this.faultCandidates,
@@ -192,10 +222,23 @@ class GeneratedBoardInstance {
         if (suppliedDiagnosticSolvabilityContract != null)
             suppliedDiagnosticSolvabilityContract.validateDeveloperFixture(this);
         if (pcbLayout != null) pcbLayout.seal();
+        if (physicalAdmission != null)
+            physicalAdmission.requireNormal(this);
         board.getSimulationBindings().markDeveloperVerificationReady();
     }
 
     GeneratedDiagnosticProvider getDiagnosticProvider() { return diagnosticProvider; }
+    GeneratedPhysicalAdmission getPhysicalAdmission() { return physicalAdmission; }
+
+    /** Uses the attached versioned seam, or the unchanged P09 envelope for legacy owners. */
+    void requireNormalPhysicalAdmission() {
+        if (developerOnlyFaultRoute)
+            throw new IllegalArgumentException("Developer-only boards are not normal physical admission");
+        if (physicalAdmission == null)
+            SupportedEnvelope.current().requireNormal(this);
+        else
+            physicalAdmission.requireNormal(this);
+    }
 
     TroubleshootBoard getBoard() {
         return board;

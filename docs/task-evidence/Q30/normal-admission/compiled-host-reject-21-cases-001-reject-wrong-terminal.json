@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 1,
+    "name": "reject-wrong-terminal",
+    "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyChallenge=true",
+    "stateAttribute": "data-tsj-verification",
+    "expectedState": "PASS:alpha",
+    "expectedPrefix": null,
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 30.0,
+    "reportAttribute": null
+  },
+  "url": "http://127.0.0.1:64035/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyChallenge=true",
+  "startedUtc": "2026-09-27T00:38:27.879553+00:00",
+  "finishedUtc": "2026-09-27T00:38:28.644005+00:00",
+  "operationSeconds": 0.7644487000070512,
+  "outcome": "FAIL",
+  "terminalReached": true,
+  "stateMatch": false,
+  "observedState": "PASS:challenge",
+  "lastObservedState": "PASS:challenge",
+  "timedOut": false,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": false,
+  "reportJsonValid": null,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 0,
+  "reportSha256": null,
+  "reportFile": null,
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [],
+  "listenerCleanupErrors": [],
+  "navigationError": null
+}

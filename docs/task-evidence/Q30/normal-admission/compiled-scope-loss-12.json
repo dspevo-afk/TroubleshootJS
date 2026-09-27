@@ -1,0 +1,125 @@
+{
+  "rows": [
+    {
+      "length": 3327,
+      "previewExecutionDigest": "97f76d267602f0517b589c076c3d13416caadfbb94df3a59205bed3456a04394",
+      "previewScriptDigest": "b8af5fcb261eaf92c8100a8be2030591bbe36c71670bc29a678950d51fab1d3b",
+      "previewSourceDigest": "df00cf5944e05bc4131b53c017ef43307e19f3069ce3f6ec5b7383ad9a33e8c6",
+      "previewWebDigest": "e7d87a1f0f7dbb69312d5d7e74c8c52064835b9fec96495a2b0b851ff822e8d6",
+      "report": {
+        "schema": 2,
+        "status": "FAIL",
+        "phase": "scope-loss",
+        "seed": "13",
+        "requestedSeed": "13",
+        "request": "tsj-generation-request/4;native;qualification-only;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=13;quickPlay=false;layout=13;qualification=true;explicitCompletion=true;planEpoch=3;plan=rb30-plan@3;seed=13;topology=RB30_SEPARATE_DIRECT_A_NMOS_B_BJT;support=RB30_FILTERED_SENSOR_INPUTS@2;layout=-8526998057890890386;routing=7912193663056532433;physicalPolicy=MEDIUM_BOARD@1;fault=DRIVE_A_OPEN;packages=37;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;physicalPolicy=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1",
+        "normalAdmission": false,
+        "measurementOnly": true,
+        "coordinatorQualificationPassed": false,
+        "normalCatalogRegistered": true,
+        "playerPublished": false,
+        "normalPlayerLaunch": false,
+        "predecessorOwnerPresent": true,
+        "restored": true,
+        "cleanupComplete": true,
+        "cleanupPending": false,
+        "cleanupRetryCount": 0,
+        "totalElapsedMs": 33260,
+        "phaseElapsedMs": 33260,
+        "maxJobMillis": 300000,
+        "defaultMaxJobMillis": 90000,
+        "measurementMaxJobMillis": 300000,
+        "maxUnitMillis": 5000,
+        "maxJobSteps": 640,
+        "manualAdvancesPerTimer": 1,
+        "measurementCacheCleared": true,
+        "measurementCacheInitialSize": 0,
+        "measurementCacheSizeBeforeClear": 0,
+        "measurementCacheSizeAfterClear": 0,
+        "measurementCacheHitsBefore": 0,
+        "measurementCacheHitsAfter": 0,
+        "measurementCacheMissesBefore": 0,
+        "measurementCacheMissesAfter": 0,
+        "normalCacheSizeBefore": 1,
+        "normalCacheSizeAfter": 1,
+        "normalCacheHitsBefore": 0,
+        "normalCacheHitsAfter": 0,
+        "normalCacheMissesBefore": 1,
+        "normalCacheMissesAfter": 1,
+        "scopeLossCanaryQuery": "tsjQ30CoordinatorScopeLoss=true",
+        "scopeLossCanaryRequested": true,
+        "scopeLossCanaryInjected": true,
+        "scopeLossCanaryStage": "HYPOTHESES",
+        "scopeLossCanaryProofUnitsBeforeLoss": 0,
+        "scopeLossCanaryFlagRestored": true,
+        "scopeLossDetected": true,
+        "coordinatorRunningAfterScopeLoss": false,
+        "savedOwnersAfterScopeLoss": false,
+        "observationRetainedAfterScopeLoss": false,
+        "cold": {
+          "run": "cold",
+          "outcome": "CANCELLED",
+          "maxJobMillis": 300000,
+          "elapsedMs": 33245,
+          "wallElapsedMs": 33257,
+          "maxAdvanceMs": 1456,
+          "maxManualUnitMs": 1456,
+          "manualAdvanceCalls": 72,
+          "totalWork": 72,
+          "hypothesisWork": 0,
+          "routingElapsedMs": 0,
+          "proofElapsedMs": 0,
+          "proofCacheHitDelta": 0,
+          "proofCacheMissDelta": 0,
+          "proofCacheSize": 0,
+          "planCacheHitDelta": 0,
+          "planCacheMissDelta": 1,
+          "stages": [
+            {
+              "name": "RESOLVE",
+              "work": 1,
+              "elapsedMs": 0
+            },
+            {
+              "name": "HEALTHY",
+              "work": 70,
+              "elapsedMs": 32803
+            },
+            {
+              "name": "PHYSICAL",
+              "work": 1,
+              "elapsedMs": 83
+            },
+            {
+              "name": "HYPOTHESES",
+              "work": 0,
+              "elapsedMs": 0
+            },
+            {
+              "name": "SYMPTOM",
+              "work": 0,
+              "elapsedMs": 0
+            },
+            {
+              "name": "PUBLISH",
+              "work": 0,
+              "elapsedMs": 0
+            }
+          ],
+          "diagnosticWorkTimings": [],
+          "cleanupComplete": true,
+          "ownerRestored": true,
+          "cleanupElapsedMs": 2,
+          "cleanupRetryCount": 0
+        },
+        "warm": {
+          "outcome": "NOT_RUN"
+        },
+        "failurePhase": "scope-loss",
+        "failure": "java.lang.IllegalStateException: Injected Q30 coordinator scope loss"
+      },
+      "state": "FAIL:scope-loss",
+      "seed": "13"
+    }
+  ]
+}

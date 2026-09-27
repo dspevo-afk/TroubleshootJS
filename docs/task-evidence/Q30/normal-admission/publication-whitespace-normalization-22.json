@@ -1,0 +1,987 @@
+{
+  "schema": "q30-publication-whitespace-normalization-v1",
+  "createdUtc": "2026-09-27T03:33:39.548353+00:00",
+  "status": "PASS",
+  "initialStagedDiffCheckExitCode": 2,
+  "reason": "Git whitespace check found doubled Windows CR endings in generated specifications, trailing spaces in raw PowerShell warning lines, and surplus final blank lines in captured artifacts. Preserve byte-exact originals while making the reviewable files pass the required whitespace gate.",
+  "transformation": "CRCRLF and CRLF to LF; remove only end-of-line space/tab/CR and extra blank lines at EOF. No nonblank content, JSON value or Python AST change.",
+  "productionSourceChanged": false,
+  "archive": {
+    "path": "docs/task-evidence/Q30/normal-admission/publication-original-bytes-22.zip",
+    "sha256": "dc5f85e2ae8d45d03851d1d3fa1a042f977d92aeffba0d09249bdea94d5b36cf",
+    "bytes": 251063,
+    "originalFileEntries": 17,
+    "whitespaceCheckOutputEntries": 1,
+    "allOriginalHashesVerified": true
+  },
+  "previousAudits": "Earlier input/copy/publication audits retain the original byte hashes. The exact originals are recoverable from this archive; this record maps each original to the readable normalized file.",
+  "files": [
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/compiled-host-reject-14-spec.json",
+      "archiveEntry": "compiled-host-reject-14-spec.json",
+      "originalBytes": 301,
+      "originalSha256": "a6edd2023d2ed445e9f47f7acaa7389b52ac95ae31b4d6cd54f0449a2df94251",
+      "normalizedBytes": 279,
+      "normalizedSha256": "ee35f4d051160352fd083646f21b5c5642580f516419039c8ce85ece3991a8a9",
+      "semanticCheck": "all nonblank line contents equal after trailing-whitespace removal; JSON values identical",
+      "initialWhitespaceFindings": [
+        {
+          "line": 1,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 2,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 3,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 4,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 5,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 6,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 7,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 8,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 9,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 10,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 11,
+          "reason": "trailing whitespace."
+        }
+      ]
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/compiled-host-reject-15-spec.json",
+      "archiveEntry": "compiled-host-reject-15-spec.json",
+      "originalBytes": 301,
+      "originalSha256": "a6edd2023d2ed445e9f47f7acaa7389b52ac95ae31b4d6cd54f0449a2df94251",
+      "normalizedBytes": 279,
+      "normalizedSha256": "ee35f4d051160352fd083646f21b5c5642580f516419039c8ce85ece3991a8a9",
+      "semanticCheck": "all nonblank line contents equal after trailing-whitespace removal; JSON values identical",
+      "initialWhitespaceFindings": [
+        {
+          "line": 1,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 2,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 3,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 4,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 5,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 6,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 7,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 8,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 9,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 10,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 11,
+          "reason": "trailing whitespace."
+        }
+      ]
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/compiled-host-reject-16-spec.json",
+      "archiveEntry": "compiled-host-reject-16-spec.json",
+      "originalBytes": 301,
+      "originalSha256": "a6edd2023d2ed445e9f47f7acaa7389b52ac95ae31b4d6cd54f0449a2df94251",
+      "normalizedBytes": 279,
+      "normalizedSha256": "ee35f4d051160352fd083646f21b5c5642580f516419039c8ce85ece3991a8a9",
+      "semanticCheck": "all nonblank line contents equal after trailing-whitespace removal; JSON values identical",
+      "initialWhitespaceFindings": [
+        {
+          "line": 1,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 2,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 3,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 4,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 5,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 6,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 7,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 8,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 9,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 10,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 11,
+          "reason": "trailing whitespace."
+        }
+      ]
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/compiled-host-reject-21-spec.json",
+      "archiveEntry": "compiled-host-reject-21-spec.json",
+      "originalBytes": 301,
+      "originalSha256": "a6edd2023d2ed445e9f47f7acaa7389b52ac95ae31b4d6cd54f0449a2df94251",
+      "normalizedBytes": 279,
+      "normalizedSha256": "ee35f4d051160352fd083646f21b5c5642580f516419039c8ce85ece3991a8a9",
+      "semanticCheck": "all nonblank line contents equal after trailing-whitespace removal; JSON values identical",
+      "initialWhitespaceFindings": [
+        {
+          "line": 1,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 2,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 3,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 4,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 5,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 6,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 7,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 8,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 9,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 10,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 11,
+          "reason": "trailing whitespace."
+        }
+      ]
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/compiled-host-smoke-14-spec.json",
+      "archiveEntry": "compiled-host-smoke-14-spec.json",
+      "originalBytes": 675,
+      "originalSha256": "20f13fbea761112446e7593efc39652b192ac151d2d21cac5aeb0188f58bfbb0",
+      "normalizedBytes": 637,
+      "normalizedSha256": "7b3a891244b393eded3d66b893bcfee8ffc3999eeec17b3f5b7e2015b079c5c5",
+      "semanticCheck": "all nonblank line contents equal after trailing-whitespace removal; JSON values identical",
+      "initialWhitespaceFindings": [
+        {
+          "line": 1,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 2,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 3,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 4,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 5,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 6,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 7,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 8,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 9,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 10,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 11,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 12,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 13,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 14,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 15,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 16,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 17,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 18,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 19,
+          "reason": "trailing whitespace."
+        }
+      ]
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/compiled-host-smoke-14b-spec.json",
+      "archiveEntry": "compiled-host-smoke-14b-spec.json",
+      "originalBytes": 647,
+      "originalSha256": "d9305a5387169a673da9579bad8cafe6ea15df7b89857be393f2f8ad07cdf3bc",
+      "normalizedBytes": 609,
+      "normalizedSha256": "265e97112e091a32227ed8d39bb75bb7e99b92226c8af8c411f2ff629aa9f42d",
+      "semanticCheck": "all nonblank line contents equal after trailing-whitespace removal; JSON values identical",
+      "initialWhitespaceFindings": [
+        {
+          "line": 1,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 2,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 3,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 4,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 5,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 6,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 7,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 8,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 9,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 10,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 11,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 12,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 13,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 14,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 15,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 16,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 17,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 18,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 19,
+          "reason": "trailing whitespace."
+        }
+      ]
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/compiled-host-smoke-15-spec.json",
+      "archiveEntry": "compiled-host-smoke-15-spec.json",
+      "originalBytes": 647,
+      "originalSha256": "d9305a5387169a673da9579bad8cafe6ea15df7b89857be393f2f8ad07cdf3bc",
+      "normalizedBytes": 609,
+      "normalizedSha256": "265e97112e091a32227ed8d39bb75bb7e99b92226c8af8c411f2ff629aa9f42d",
+      "semanticCheck": "all nonblank line contents equal after trailing-whitespace removal; JSON values identical",
+      "initialWhitespaceFindings": [
+        {
+          "line": 1,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 2,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 3,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 4,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 5,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 6,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 7,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 8,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 9,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 10,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 11,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 12,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 13,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 14,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 15,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 16,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 17,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 18,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 19,
+          "reason": "trailing whitespace."
+        }
+      ]
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/compiled-host-smoke-16-spec.json",
+      "archiveEntry": "compiled-host-smoke-16-spec.json",
+      "originalBytes": 647,
+      "originalSha256": "d9305a5387169a673da9579bad8cafe6ea15df7b89857be393f2f8ad07cdf3bc",
+      "normalizedBytes": 609,
+      "normalizedSha256": "265e97112e091a32227ed8d39bb75bb7e99b92226c8af8c411f2ff629aa9f42d",
+      "semanticCheck": "all nonblank line contents equal after trailing-whitespace removal; JSON values identical",
+      "initialWhitespaceFindings": [
+        {
+          "line": 1,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 2,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 3,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 4,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 5,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 6,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 7,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 8,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 9,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 10,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 11,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 12,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 13,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 14,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 15,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 16,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 17,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 18,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 19,
+          "reason": "trailing whitespace."
+        }
+      ]
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/compiled-host-smoke-21-spec.json",
+      "archiveEntry": "compiled-host-smoke-21-spec.json",
+      "originalBytes": 647,
+      "originalSha256": "d9305a5387169a673da9579bad8cafe6ea15df7b89857be393f2f8ad07cdf3bc",
+      "normalizedBytes": 609,
+      "normalizedSha256": "265e97112e091a32227ed8d39bb75bb7e99b92226c8af8c411f2ff629aa9f42d",
+      "semanticCheck": "all nonblank line contents equal after trailing-whitespace removal; JSON values identical",
+      "initialWhitespaceFindings": [
+        {
+          "line": 1,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 2,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 3,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 4,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 5,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 6,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 7,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 8,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 9,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 10,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 11,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 12,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 13,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 14,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 15,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 16,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 17,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 18,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 19,
+          "reason": "trailing whitespace."
+        }
+      ]
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/compiled-host-timeout-14-spec.json",
+      "archiveEntry": "compiled-host-timeout-14-spec.json",
+      "originalBytes": 277,
+      "originalSha256": "2913af97f66c1b584e6f9c4db8e7bfa75a962d25d82f20141e0178087c7c0498",
+      "normalizedBytes": 255,
+      "normalizedSha256": "490429cf314ee51f368e3830e8bb22838a76f9852ebe9f40ca7a8d43f6b3b6ad",
+      "semanticCheck": "all nonblank line contents equal after trailing-whitespace removal; JSON values identical",
+      "initialWhitespaceFindings": [
+        {
+          "line": 1,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 2,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 3,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 4,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 5,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 6,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 7,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 8,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 9,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 10,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 11,
+          "reason": "trailing whitespace."
+        }
+      ]
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/compiled-host-timeout-15-spec.json",
+      "archiveEntry": "compiled-host-timeout-15-spec.json",
+      "originalBytes": 277,
+      "originalSha256": "2913af97f66c1b584e6f9c4db8e7bfa75a962d25d82f20141e0178087c7c0498",
+      "normalizedBytes": 255,
+      "normalizedSha256": "490429cf314ee51f368e3830e8bb22838a76f9852ebe9f40ca7a8d43f6b3b6ad",
+      "semanticCheck": "all nonblank line contents equal after trailing-whitespace removal; JSON values identical",
+      "initialWhitespaceFindings": [
+        {
+          "line": 1,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 2,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 3,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 4,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 5,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 6,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 7,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 8,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 9,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 10,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 11,
+          "reason": "trailing whitespace."
+        }
+      ]
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/compiled-host-timeout-16-spec.json",
+      "archiveEntry": "compiled-host-timeout-16-spec.json",
+      "originalBytes": 277,
+      "originalSha256": "2913af97f66c1b584e6f9c4db8e7bfa75a962d25d82f20141e0178087c7c0498",
+      "normalizedBytes": 255,
+      "normalizedSha256": "490429cf314ee51f368e3830e8bb22838a76f9852ebe9f40ca7a8d43f6b3b6ad",
+      "semanticCheck": "all nonblank line contents equal after trailing-whitespace removal; JSON values identical",
+      "initialWhitespaceFindings": [
+        {
+          "line": 1,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 2,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 3,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 4,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 5,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 6,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 7,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 8,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 9,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 10,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 11,
+          "reason": "trailing whitespace."
+        }
+      ]
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/compiled-host-timeout-21-spec.json",
+      "archiveEntry": "compiled-host-timeout-21-spec.json",
+      "originalBytes": 277,
+      "originalSha256": "2913af97f66c1b584e6f9c4db8e7bfa75a962d25d82f20141e0178087c7c0498",
+      "normalizedBytes": 255,
+      "normalizedSha256": "490429cf314ee51f368e3830e8bb22838a76f9852ebe9f40ca7a8d43f6b3b6ad",
+      "semanticCheck": "all nonblank line contents equal after trailing-whitespace removal; JSON values identical",
+      "initialWhitespaceFindings": [
+        {
+          "line": 1,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 2,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 3,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 4,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 5,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 6,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 7,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 8,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 9,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 10,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 11,
+          "reason": "trailing whitespace."
+        }
+      ]
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/compiled-p09-12-oldcanary.log",
+      "archiveEntry": "compiled-p09-12-oldcanary.log",
+      "originalBytes": 2463,
+      "originalSha256": "8031bab4a1597943c1d8219ed0d76b9356dbbc7559e80f17308efa8e10b11328",
+      "normalizedBytes": 2454,
+      "normalizedSha256": "5e43433fcf686219e7f0962ecf3ebd1232d72a7067c9d416f459f5475ca1396c",
+      "semanticCheck": "all nonblank line contents equal after trailing-whitespace removal",
+      "initialWhitespaceFindings": [
+        {
+          "line": 8,
+          "reason": "new blank line at EOF."
+        }
+      ]
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/native-final-05-receipt.txt",
+      "archiveEntry": "native-final-05-receipt.txt",
+      "originalBytes": 1886265,
+      "originalSha256": "adcf69b08db0e017b92f77876cafd059785420629264a2c38e8e9d90c57f1270",
+      "normalizedBytes": 1872497,
+      "normalizedSha256": "ea0c12ec646a2653f6d6dc05442389b2ef3329fc939a28acd82286e3e00ea9cd",
+      "semanticCheck": "all nonblank line contents equal after trailing-whitespace removal",
+      "initialWhitespaceFindings": [
+        {
+          "line": 17248,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 17249,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 17253,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 17254,
+          "reason": "trailing whitespace."
+        }
+      ]
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/native-final-05.log",
+      "archiveEntry": "native-final-05.log",
+      "originalBytes": 1884282,
+      "originalSha256": "780611e6b052c1d2bb958df967cdb5ff70090575656d0d0782ef9652e672b64f",
+      "normalizedBytes": 1867147,
+      "normalizedSha256": "babf78a4da0203ff2860cd2f67147c7c05c2a2fb6c050addb7fa378987bd850a",
+      "semanticCheck": "all nonblank line contents equal after trailing-whitespace removal",
+      "initialWhitespaceFindings": [
+        {
+          "line": 1,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 2,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 17107,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 17108,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 17112,
+          "reason": "trailing whitespace."
+        },
+        {
+          "line": 17113,
+          "reason": "trailing whitespace."
+        }
+      ]
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/remaining-gates-22-wrapper/p09-final-22.py",
+      "archiveEntry": "remaining-gates-22-wrapper/p09-final-22.py",
+      "originalBytes": 17608,
+      "originalSha256": "91bbab920a0ed86816c921558e9cedebdbaf0be1c7e6a63eb55d924e89804cda",
+      "normalizedBytes": 17320,
+      "normalizedSha256": "17cfd10d1db647117598862f205296dfc2ef8b21bf216ed014134f27580b5ba9",
+      "semanticCheck": "all nonblank line contents equal after trailing-whitespace removal; Python AST identical",
+      "initialWhitespaceFindings": [
+        {
+          "line": 283,
+          "reason": "new blank line at EOF."
+        }
+      ]
+    }
+  ]
+}

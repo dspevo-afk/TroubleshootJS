@@ -1,0 +1,79 @@
+{
+  "postCopySanitization": {"auditFile": "completed-evidence-privacy-sanitization.json", "affectedDestinations": 4, "destinationHashesReflectSanitizedBytes": true, "sourceHashesRemainCopyTimeValues": true},
+ "copiedFiles": [
+    {
+      "source": "cases/001-timeout-canary.json",
+      "destination": "compiled-host-timeout-14-cases-001-timeout-canary.json",
+      "sourceSha256": "3266efd665cb2709ee16896307e9bf68ef032073e4535d173c99cda4cdefb28b",
+      "destinationSha256": "f8dd4d57f709cc377cddf2d356c96d043acc013ac1598ff767c9d16092381439"
+    },
+    {
+      "source": "identity.json",
+      "destination": "compiled-host-timeout-14-identity.json",
+      "sourceSha256": "7fd3b7b2552ec701f50198a4960f9e48e606414643957a1a95606a915ab2a91a",
+      "destinationSha256": "7b1ef82c66410b4f4cbf30c8702f6dc95b37c99ef3df7d93242a10ebb58d704d", "destinationBytes": 1800
+    },
+    {
+      "source": "input-manifest-after.json",
+      "destination": "compiled-host-timeout-14-input-manifest-after.json",
+      "sourceSha256": "98500ac20ffac27c0392f9e9e84b95b2e7c91b81bf58b6169235c230dad8e32e",
+      "destinationSha256": "f08a7124cb0cd271c161fe79a242523435442b9a7e5a3a8b26b309743905bdf2"
+    },
+    {
+      "source": "input-manifest-before.json",
+      "destination": "compiled-host-timeout-14-input-manifest-before.json",
+      "sourceSha256": "9b5620d30416d988571127962920d26889b0b15654a5597de371449105169a32",
+      "destinationSha256": "4c3c483db98d8c6f4999f36043f751b514399279d163fcbcc00cb99b467eeaec"
+    },
+    {
+      "source": "owned-processes-before-close.json",
+      "destination": "compiled-host-timeout-14-owned-processes-before-close.json",
+      "sourceSha256": "9f4b86ede578223cc54ec4c3a29b928c99829f7844067f913c6ede249c796750",
+      "destinationSha256": "6f5eef6cdba03ae1555a509d04e49a475f9a071baa084aa8469646b39e3e24b7"
+    },
+    {
+      "source": "owned-processes-before.json",
+      "destination": "compiled-host-timeout-14-owned-processes-before.json",
+      "sourceSha256": "cffac9adf80622d8e85735c8e848371ae28a8a9fab78fefe5075716aabc6a6ae",
+      "destinationSha256": "a2551010ee670ed9ef0c7c73dc22c045d8c4cd2c45bafde5030cdba43a23f92b"
+    },
+    {
+      "source": "progress.json",
+      "destination": "compiled-host-timeout-14-progress.json",
+      "sourceSha256": "65b797544f535e10a4d0ff3e0c4d643364f39e724906f5f82b5d119288dd0c05",
+      "destinationSha256": "5ee7a8ec4c5d1ec4968a4df48e440d6987dd1a6879369c459c459dee05c22241", "destinationBytes": 3917
+    },
+    {
+      "source": "result.json",
+      "destination": "compiled-host-timeout-14-result.json",
+      "sourceSha256": "133cd524e470593ded83d985a5f9daa14b35c44bd49dd1d4524d0f093eddfcb0",
+      "destinationSha256": "8840f301f5a6def4038352d5122d04319355e81b08e87cb151a3a53a01972e76", "destinationBytes": 4656
+    },
+    {
+      "source": "run-start.json",
+      "destination": "compiled-host-timeout-14-run-start.json",
+      "sourceSha256": "06403da05cd638f6e5b43be28872d3be75ac0b89a7036ce83af1a2fdd802a054",
+      "destinationSha256": "b159c2373169fa28e69a8ee8b23a9388d80e80bef047b76fdcef23c57d616dbe", "destinationBytes": 231
+    },
+    {
+      "source": "runner-after.json",
+      "destination": "compiled-host-timeout-14-runner-after.json",
+      "sourceSha256": "fba7c931ce3dd8c4f7360921ad9c6f0e073fa17d9bbf4f38f0f49c8369223528",
+      "destinationSha256": "c57273b7eea622690114191a0837444f503755237c0ffad1309109ff94eae0a5"
+    },
+    {
+      "source": "runner-before.json",
+      "destination": "compiled-host-timeout-14-runner-before.json",
+      "sourceSha256": "fba7c931ce3dd8c4f7360921ad9c6f0e073fa17d9bbf4f38f0f49c8369223528",
+      "destinationSha256": "c57273b7eea622690114191a0837444f503755237c0ffad1309109ff94eae0a5"
+    },
+    {
+      "source": "spec.json",
+      "destination": "compiled-host-timeout-14-spec.json",
+      "sourceSha256": "aecfeff397a07f67a6de84c39220f29041815d6b51e34776e0468623f0b99c4c",
+      "destinationSha256": "2913af97f66c1b584e6f9c4db8e7bfa75a962d25d82f20141e0178087c7c0498"
+    }
+  ],
+  "profileExcluded": true,
+  "sourceDirectory": "<task-temp>/tsj-q30-host-timeout-14-8822070fc6cb4f7fb1b8627fb6d2b7d0"
+}

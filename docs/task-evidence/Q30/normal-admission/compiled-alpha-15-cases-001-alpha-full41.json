@@ -1,0 +1,113 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 1,
+    "name": "alpha-full41",
+    "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true",
+    "stateAttribute": "data-tsj-verification",
+    "expectedState": "PASS:alpha",
+    "expectedPrefix": null,
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 600.0,
+    "reportAttribute": "data-tsj-alpha-report"
+  },
+  "url": "http://127.0.0.1:65267/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true",
+  "startedUtc": "2026-09-26T22:25:17.507818+00:00",
+  "finishedUtc": "2026-09-26T22:34:58.163647+00:00",
+  "operationSeconds": 580.655823100009,
+  "outcome": "FAIL",
+  "terminalReached": true,
+  "stateMatch": false,
+  "observedState": "FAIL:alpha:cross-target-catalog-mutations owner=true power=UNPOWERED isolated=true settled=true state=READY: java.lang.AssertionError: U04 catalog mutation: composed board lacks a loose source resistor, compatible NMOS-driven load and alternate target",
+  "lastObservedState": "FAIL:alpha:cross-target-catalog-mutations owner=true power=UNPOWERED isolated=true settled=true state=READY: java.lang.AssertionError: U04 catalog mutation: composed board lacks a loose source resistor, compatible NMOS-driven load and alternate target",
+  "timedOut": false,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": true,
+  "reportJsonValid": true,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 128382,
+  "reportSha256": "d9f57bfb807414327c38325f286ceadee570a5094d67df8b1412aa2d4e2b2992",
+  "reportFile": "cases/001-alpha-full41.report.json",
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    }
+  ],
+  "listenerCleanupErrors": [],
+  "navigationError": null
+}

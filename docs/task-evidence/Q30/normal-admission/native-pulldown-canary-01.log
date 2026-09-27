@@ -1,0 +1,532 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: Q30 plan contracts 2256 assertions, topologyAxes=7, representativeRows=24, heldOutRows=24, separate=9, shared=8
+
+PASS: diagnostic service preparation contracts 17 assertions policy=action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner
+
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=initial-electrical-settle boundary=BEGIN stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=initial-electrical-settle boundary=END stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=healthy-preparation boundary=BEGIN stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=healthy-preparation boundary=END stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=fault-profile-preparation boundary=BEGIN stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=fault-profile-preparation boundary=END stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=faulted-four-input-profile boundary=BEGIN stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=faulted-four-input-profile boundary=END stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=unrepaired-customer-retest boundary=BEGIN stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=unrepaired-customer-retest boundary=END stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=service-power-off-wait boundary=BEGIN stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=service-power-off-wait boundary=END stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=reinstalled-original-customer-retest boundary=BEGIN stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=reinstalled-original-customer-retest boundary=END stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=service-power-off-wait boundary=BEGIN stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=service-power-off-wait boundary=END stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=repaired-customer-retest boundary=BEGIN stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=repaired-customer-retest boundary=END stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_OWNER_CLEANUP seed=3 fault=REN_OPEN declaredMaximumStepSeconds=2.50000000e-06 stepRole=FINER_2_5_US_REFERENCE cleanup=true elapsedMillis=0
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=initial-electrical-settle boundary=BEGIN stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=initial-electrical-settle boundary=END stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=healthy-preparation boundary=BEGIN stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=healthy-preparation boundary=END stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=fault-profile-preparation boundary=BEGIN stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=fault-profile-preparation boundary=END stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=faulted-four-input-profile boundary=BEGIN stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=faulted-four-input-profile boundary=END stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=unrepaired-customer-retest boundary=BEGIN stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=unrepaired-customer-retest boundary=END stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=service-power-off-wait boundary=BEGIN stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=service-power-off-wait boundary=END stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=reinstalled-original-customer-retest boundary=BEGIN stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=reinstalled-original-customer-retest boundary=END stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=service-power-off-wait boundary=BEGIN stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=service-power-off-wait boundary=END stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=repaired-customer-retest boundary=BEGIN stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=repaired-customer-retest boundary=END stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_OWNER_CLEANUP seed=3 fault=REN_OPEN declaredMaximumStepSeconds=5.00000000e-06 stepRole=PRODUCTION_5_US cleanup=true elapsedMillis=0
+Q30_STEP_PAIR seed=3 support=FILTERED_37 fault=REN_OPEN referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US maxDeltaVolts=1.61318044e-05 toleranceVolts=0.0108732476 phase=faulted sample=SENSORS_LOW/U1.OUTPUT-J1.2 referenceElapsedMillis=16686 productionCandidateElapsedMillis=8335 referenceSimSeconds=1.16019250 productionCandidateSimSeconds=1.16036000 referenceCleanupMillis=0 productionCandidateCleanupMillis=0 cleanup=true
+Q30_STEP_SEED seed=3 support=FILTERED_37 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US routeTopology=RB30_SHARED_HYSTERETIC_A_NMOS_B_BJT_FILTERED_37 routeAndPairsElapsedMillis=32105
+Q30_STEP_OWNER_CLEANUP seed=3 fault=DREV_OPEN declaredMaximumStepSeconds=2.50000000e-06 stepRole=FINER_2_5_US_REFERENCE cleanup=true elapsedMillis=0
+Q30_STEP_SEED_CLEANUP seed=3 cleanup=true elapsedMillis=0
+PASS: Q30 production solver step sensitivity assertions=1762 seed=3 support=FILTERED_37 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=32105
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 2.5E-6
+converged after 9 iterations, timeStep = 2.5E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 2.5E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 2.5E-6
+converged after 15 iterations, timeStep = 2.5E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 2.5E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 2.5E-6
+node 11 unconnected
+node 20 unconnected
+converged after 12 iterations, timeStep = 2.5E-6
+converged after 20 iterations, timeStep = 2.5E-6
+converged after 12 iterations, timeStep = 2.5E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+converged after 6 iterations, timeStep = 2.5E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 13 iterations, timeStep = 2.5E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 7 iterations, timeStep = 2.5E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 2.5E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 10 iterations, timeStep = 2.5E-6
+converged after 15 iterations, timeStep = 2.5E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 2.5E-6
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 22 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 12 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 7 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 22 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=initial-electrical-settle boundary=BEGIN stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=initial-electrical-settle boundary=END stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=healthy-preparation boundary=BEGIN stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=healthy-preparation boundary=END stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=fault-profile-preparation boundary=BEGIN stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=fault-profile-preparation boundary=END stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=faulted-four-input-profile boundary=BEGIN stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=faulted-four-input-profile boundary=END stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=unrepaired-customer-retest boundary=BEGIN stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=unrepaired-customer-retest boundary=END stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=service-power-off-wait boundary=BEGIN stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=service-power-off-wait boundary=END stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=reinstalled-original-customer-retest boundary=BEGIN stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=reinstalled-original-customer-retest boundary=END stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=service-power-off-wait boundary=BEGIN stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=service-power-off-wait boundary=END stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=repaired-customer-retest boundary=BEGIN stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=repaired-customer-retest boundary=END stepRole=FINER_2_5_US_REFERENCE declaredMaximumStepSeconds=2.50000000e-06 configuredMaximumStepSeconds=2.50000000e-06 actualCurrentStepSeconds=2.50000000e-06 observedMinimumStepSeconds=2.50000000e-06 observedMaximumStepSeconds=2.50000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_OWNER_CLEANUP seed=13 fault=REN_OPEN declaredMaximumStepSeconds=2.50000000e-06 stepRole=FINER_2_5_US_REFERENCE cleanup=true elapsedMillis=0
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=initial-electrical-settle boundary=BEGIN stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=initial-electrical-settle boundary=END stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=healthy-preparation boundary=BEGIN stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=healthy-preparation boundary=END stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=fault-profile-preparation boundary=BEGIN stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=fault-profile-preparation boundary=END stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=faulted-four-input-profile boundary=BEGIN stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=faulted-four-input-profile boundary=END stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=unrepaired-customer-retest boundary=BEGIN stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=unrepaired-customer-retest boundary=END stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=service-power-off-wait boundary=BEGIN stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=service-power-off-wait boundary=END stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=reinstalled-original-customer-retest boundary=BEGIN stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=reinstalled-original-customer-retest boundary=END stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=service-power-off-wait boundary=BEGIN stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=service-power-off-wait boundary=END stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=repaired-customer-retest boundary=BEGIN stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=repaired-customer-retest boundary=END stepRole=PRODUCTION_5_US declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_OWNER_CLEANUP seed=13 fault=REN_OPEN declaredMaximumStepSeconds=5.00000000e-06 stepRole=PRODUCTION_5_US cleanup=true elapsedMillis=0
+Q30_STEP_PAIR seed=13 support=FILTERED_37 fault=REN_OPEN referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US maxDeltaVolts=1.95556375e-06 toleranceVolts=0.0100505922 phase=faulted sample=SENSORS_LOW/U1.OUTPUT-J1.2 referenceElapsedMillis=16264 productionCandidateElapsedMillis=8220 referenceSimSeconds=1.16019250 productionCandidateSimSeconds=1.16036000 referenceCleanupMillis=0 productionCandidateCleanupMillis=0 cleanup=true
+Q30_STEP_SEED seed=13 support=FILTERED_37 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US routeTopology=RB30_SEPARATE_DIRECT_A_NMOS_B_BJT_FILTERED_37 routeAndPairsElapsedMillis=29189
+Q30_STEP_OWNER_CLEANUP seed=13 fault=DREV_OPEN declaredMaximumStepSeconds=2.50000000e-06 stepRole=FINER_2_5_US_REFERENCE cleanup=true elapsedMillis=0
+Q30_STEP_SEED_CLEANUP seed=13 cleanup=true elapsedMillis=0
+PASS: Q30 production solver step sensitivity assertions=1762 seed=13 support=FILTERED_37 faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=29189
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 2.5E-6
+converged after 9 iterations, timeStep = 2.5E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 2.5E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 2.5E-6
+converged after 15 iterations, timeStep = 2.5E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 2.5E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 2.5E-6
+node 11 unconnected
+node 20 unconnected
+converged after 12 iterations, timeStep = 2.5E-6
+converged after 20 iterations, timeStep = 2.5E-6
+converged after 12 iterations, timeStep = 2.5E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+converged after 6 iterations, timeStep = 2.5E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 13 iterations, timeStep = 2.5E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 7 iterations, timeStep = 2.5E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 2.5E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 10 iterations, timeStep = 2.5E-6
+converged after 15 iterations, timeStep = 2.5E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 2.5E-6
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 12 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 7 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+
+Q30_SENSITIVITY_CENSUS attempted=2 passed=2 failed=0 childBudgetMs=60000
+Q30_CORPUS_JSON:{"schema":1,"planEpoch":3,"seed":"3","outcome":"ACCEPTED","routeOutcome":"SUCCESS","normalAdmissionOutcome":"ACCEPTED","normalAdmissionReason":null,"topologyAxis":"RB30_SHARED_HYSTERETIC_A_NMOS_B_BJT","support":"FILTERED_37","partCount":37,"contractValidated":true,"cleanup":true,"hypothesisCount":5,"observationCount":37,"physicalFingerprintHash":"74f12966","layoutFingerprintHash":"d090ff12","coldConstructionNanos":52205900,"coldAdmissionAssemblyNanos":50565500,"coldGenerationNanos":102771400,"coldRouteNanos":5750986501,"coldPlacementAdvanceNanos":235358001,"coldRoutingAdvanceNanos":5515503697,"coldPlacementAdvances":6,"coldRoutingAdvances":78,"warmConstructionNanos":3831901,"warmAdmissionAssemblyNanos":28948800,"warmGenerationNanos":32780701,"warmRouteNanos":5419901300,"warmPlacementAdvanceNanos":163499699,"warmRoutingAdvanceNanos":5256262606,"cleanupNanos":491800,"normalStructuralReplayNanos":286691500,"totalNanos":11655531400,"routeTimingMethod":"first six session advances=placement; remaining advances=routing","proofPhase":"NOT_RUN_BY_NORMAL_CORPUS_CONTRACT","coldRouteCanonical":"MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=27949;routes=6;routingWork=20/4477972;p05=3/0;p07=3/1;selectedAttempt=2;ranked=[3, 1, 2, 4, 0, 5];placementScores=[3{total=1111078;electrical=124000;region=11745;connector=4650;corridor=2726;outline=8616300;courtyard=627572;demand=2243231}, 1{total=1211315;electrical=133630;region=11792;connector=6120;corridor=3919;outline=8467200;courtyard=633572;demand=2259231}, 2{total=1297667;electrical=143170;region=10960;connector=7360;corridor=4421;outline=8372000;courtyard=631172;demand=2252831}, 4{total=1311391;electrical=145270;region=11320;connector=7880;corridor=3788;outline=8327700;courtyard=632372;demand=2256031}, 0{total=1414249;electrical=154390;region=9527;connector=8590;corridor=6503;outline=8571500;courtyard=628772;demand=2246431}, 5{total=1418164;electrical=152350;region=11557;connector=6680;corridor=8475;outline=8486400;courtyard=627572;demand=2243231}];selectedScore=1297667;selectedQualityMilli=227310722;routeOutcomes=[P05_ONE_FACE@3=REJECTED:Unable to route net RAIL12 from REN.1@960,1230 to CIN.+@730,900, P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:B_CMD:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:B_DRIVE:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@2=SUCCESS];failure=null","warmRouteCanonical":"MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=27949;routes=6;routingWork=20/4477972;p05=3/0;p07=3/1;selectedAttempt=2;ranked=[3, 1, 2, 4, 0, 5];placementScores=[3{total=1111078;electrical=124000;region=11745;connector=4650;corridor=2726;outline=8616300;courtyard=627572;demand=2243231}, 1{total=1211315;electrical=133630;region=11792;connector=6120;corridor=3919;outline=8467200;courtyard=633572;demand=2259231}, 2{total=1297667;electrical=143170;region=10960;connector=7360;corridor=4421;outline=8372000;courtyard=631172;demand=2252831}, 4{total=1311391;electrical=145270;region=11320;connector=7880;corridor=3788;outline=8327700;courtyard=632372;demand=2256031}, 0{total=1414249;electrical=154390;region=9527;connector=8590;corridor=6503;outline=8571500;courtyard=628772;demand=2246431}, 5{total=1418164;electrical=152350;region=11557;connector=6680;corridor=8475;outline=8486400;courtyard=627572;demand=2243231}];selectedScore=1297667;selectedQualityMilli=227310722;routeOutcomes=[P05_ONE_FACE@3=REJECTED:Unable to route net RAIL12 from REN.1@960,1230 to CIN.+@730,900, P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:B_CMD:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:B_DRIVE:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@2=SUCCESS];failure=null","coldRouteOutcomes":["P05_ONE_FACE@3=REJECTED:Unable to route net RAIL12 from REN.1@960,1230 to CIN.+@730,900","P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET","P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET","P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:B_CMD:BRANCH_SEARCH_LIMIT","P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:B_DRIVE:BRANCH_SEARCH_LIMIT","P07_FULLER_TWO_LAYER@2=SUCCESS"],"warmRouteOutcomes":["P05_ONE_FACE@3=REJECTED:Unable to route net RAIL12 from REN.1@960,1230 to CIN.+@730,900","P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET","P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET","P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:B_CMD:BRANCH_SEARCH_LIMIT","P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:B_DRIVE:BRANCH_SEARCH_LIMIT","P07_FULLER_TWO_LAYER@2=SUCCESS"],"routeRejection":null,"validationFailure":null}
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3980 seed=3
+
+Q30_CORPUS_JSON:{"schema":1,"planEpoch":3,"seed":"13","outcome":"ACCEPTED","routeOutcome":"SUCCESS","normalAdmissionOutcome":"ACCEPTED","normalAdmissionReason":null,"topologyAxis":"RB30_SEPARATE_DIRECT_A_NMOS_B_BJT","support":"FILTERED_37","partCount":37,"contractValidated":true,"cleanup":true,"hypothesisCount":5,"observationCount":37,"physicalFingerprintHash":"c62982a5","layoutFingerprintHash":"41afa1d9","coldConstructionNanos":52788101,"coldAdmissionAssemblyNanos":46570700,"coldGenerationNanos":99358801,"coldRouteNanos":4365194200,"coldPlacementAdvanceNanos":258350100,"coldRoutingAdvanceNanos":4106760400,"coldPlacementAdvances":6,"coldRoutingAdvances":55,"warmConstructionNanos":3036101,"warmAdmissionAssemblyNanos":23694501,"warmGenerationNanos":26730602,"warmRouteNanos":3795399401,"warmPlacementAdvanceNanos":121864401,"warmRoutingAdvanceNanos":3673443400,"cleanupNanos":461800,"normalStructuralReplayNanos":207289199,"totalNanos":8531266300,"routeTimingMethod":"first six session advances=placement; remaining advances=routing","proofPhase":"NOT_RUN_BY_NORMAL_CORPUS_CONTRACT","coldRouteCanonical":"MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=27948;routes=6;routingWork=15/4328211;p05=3/0;p07=3/2;selectedAttempt=5;ranked=[5, 1, 4, 3, 2, 0];placementScores=[5{total=1300223;electrical=145990;region=12167;connector=6350;corridor=2842;outline=8553600;courtyard=629972;demand=2249631}, 1{total=1312543;electrical=145990;region=11015;connector=8840;corridor=3025;outline=8353800;courtyard=627572;demand=2243231}, 4{total=1340740;electrical=150910;region=10185;connector=6880;corridor=3338;outline=8506800;courtyard=629972;demand=2249631}, 3{total=1346668;electrical=151500;region=9935;connector=7880;corridor=3043;outline=8262000;courtyard=627572;demand=2243231}, 2{total=1364615;electrical=148930;region=13780;connector=6050;corridor=5852;outline=8653600;courtyard=629972;demand=2249631}, 0{total=1366983;electrical=152750;region=9362;connector=7350;corridor=4340;outline=8467200;courtyard=632372;demand=2256031}];selectedScore=1300223;selectedQualityMilli=198370490;routeOutcomes=[P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@5=SUCCESS, P07_FULLER_TWO_LAYER@1=REJECTED:DISCONNECTED_ESCAPE_CHANNEL, P07_FULLER_TWO_LAYER@4=SUCCESS];failure=null","warmRouteCanonical":"MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=27948;routes=6;routingWork=15/4328211;p05=3/0;p07=3/2;selectedAttempt=5;ranked=[5, 1, 4, 3, 2, 0];placementScores=[5{total=1300223;electrical=145990;region=12167;connector=6350;corridor=2842;outline=8553600;courtyard=629972;demand=2249631}, 1{total=1312543;electrical=145990;region=11015;connector=8840;corridor=3025;outline=8353800;courtyard=627572;demand=2243231}, 4{total=1340740;electrical=150910;region=10185;connector=6880;corridor=3338;outline=8506800;courtyard=629972;demand=2249631}, 3{total=1346668;electrical=151500;region=9935;connector=7880;corridor=3043;outline=8262000;courtyard=627572;demand=2243231}, 2{total=1364615;electrical=148930;region=13780;connector=6050;corridor=5852;outline=8653600;courtyard=629972;demand=2249631}, 0{total=1366983;electrical=152750;region=9362;connector=7350;corridor=4340;outline=8467200;courtyard=632372;demand=2256031}];selectedScore=1300223;selectedQualityMilli=198370490;routeOutcomes=[P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@5=SUCCESS, P07_FULLER_TWO_LAYER@1=REJECTED:DISCONNECTED_ESCAPE_CHANNEL, P07_FULLER_TWO_LAYER@4=SUCCESS];failure=null","coldRouteOutcomes":["P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET","P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET","P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET","P07_FULLER_TWO_LAYER@5=SUCCESS","P07_FULLER_TWO_LAYER@1=REJECTED:DISCONNECTED_ESCAPE_CHANNEL","P07_FULLER_TWO_LAYER@4=SUCCESS"],"warmRouteOutcomes":["P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET","P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET","P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET","P07_FULLER_TWO_LAYER@5=SUCCESS","P07_FULLER_TWO_LAYER@1=REJECTED:DISCONNECTED_ESCAPE_CHANNEL","P07_FULLER_TWO_LAYER@4=SUCCESS"],"routeRejection":null,"validationFailure":null}
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3980 seed=13
+
+Q30_CORPUS_CENSUS attempted=2 accepted=2 rejected=0 failed=0 childBudgetMs=60000
+
+Exception in thread "main" java.lang.AssertionError: Q30 full owner seed=0 failed in medium route: java.lang.AssertionError: Q30 physical metadata assertion 1519
+	at com.lushprojects.circuitjs1.client.Rb30PhysicalMetadataContractTest.verifyFullOwnerConstruction(Rb30PhysicalMetadataContractTest.java:182)
+	at com.lushprojects.circuitjs1.client.Rb30PhysicalMetadataContractTest.main(Rb30PhysicalMetadataContractTest.java:98)
+Caused by: java.lang.AssertionError: Q30 physical metadata assertion 1519
+	at com.lushprojects.circuitjs1.client.Rb30PhysicalMetadataContractTest.check(Rb30PhysicalMetadataContractTest.java:190)
+	at com.lushprojects.circuitjs1.client.Rb30PhysicalMetadataContractTest.verifyFullOwnerConstruction(Rb30PhysicalMetadataContractTest.java:123)
+	... 1 more
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: Rb30PhysicalMetadataContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

@@ -12,7 +12,7 @@ final class Rb30TopologyValidator {
         TroubleshootBoard board = candidate.board();
         board.validate();
         int count = board.getComponentIds().size();
-        if (count < 20 || count > 40 ||
+        if (count != candidate.plan.physicalPackageCount() || count < 20 || count > 40 ||
                 candidate.backing.size() != count)
             throw invalid("20-40 package construction/ownership census");
         for (String id : board.getComponentIds()) {
@@ -49,6 +49,20 @@ final class Rb30TopologyValidator {
                 candidate.decisionA == candidate.decisionB)
             throw invalid("missing two independent E04 decisions");
         for (String channel : new String[] { "A", "B" }) {
+            CircuitElm rawPullDown = candidate.backing.get("RPIN_" + channel);
+            if (!(rawPullDown instanceof ResistorElm) ||
+                    ((ResistorElm) rawPullDown).getResistance() != 1000.0)
+                throw invalid("missing 1 kOhm raw sensor pull-down " + channel);
+            requireNet(board, "RPIN_" + channel + ".1", channel + "_RAW");
+            requireNet(board, "RPIN_" + channel + ".2", "CTRL_RETURN");
+            if (candidate.plan.hasSensorInputFilters()) {
+                CircuitElm filter = candidate.backing.get("CFLT_" + channel);
+                if (!(filter instanceof CapacitorElm) ||
+                        ((CapacitorElm) filter).capacitance != 100e-9)
+                    throw invalid("missing physical sensor input filter " + channel);
+                requireNet(board, "CFLT_" + channel + ".1", channel + "_SENSE");
+                requireNet(board, "CFLT_" + channel + ".2", "CTRL_RETURN");
+            }
             requireNet(board, "U2" + channel + ".SENSOR", channel + "_SENSE");
             requireNet(board, "U2" + channel + ".RAIL", "RAIL5");
             requireNet(board, "U2" + channel + ".OUTPUT", channel + "_CMD");

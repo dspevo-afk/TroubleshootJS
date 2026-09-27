@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "targetCount": 1,
+  "deletedCount": 1,
+  "deletionMethod": "Remove-VerifierOwnedTree",
+  "pointerFilesPreserved": true,
+  "excluded": [
+    "q30-modern-01",
+    "tests/contracts/__pycache__"
+  ],
+  "records": [
+    {
+      "status": "PASS",
+      "pointer": ".tools/q30-regressions-21-path.txt",
+      "name": "q30-regressions-21",
+      "directory": "tsj-q30-regressions-21-0d34b99f323842bfa5f1f83675219644",
+      "identityMarkerPass": true,
+      "profileExistsBeforeDeletion": true,
+      "profileMatch": true,
+      "tempContainmentPass": true,
+      "resultCleanupPass": true,
+      "inputAudit": "PASS",
+      "outcome": "PASS",
+      "expectedClassification": "12-case-regression-matrix",
+      "caseCount": 12,
+      "casePassCount": 12,
+      "caseFailCount": 0,
+      "caseTimeoutCount": 0,
+      "expectedFailureCanaryPass": 2,
+      "port": 54304,
+      "runnerPid": 37292,
+      "recordedProcessCount": 8,
+      "currentLiveRecordedPidCount": 0,
+      "currentMatchingRecordedIdentityCount": 0,
+      "pidReuseCount": 0,
+      "ambiguousRecordedIdentityCount": 0,
+      "profileOrTargetPathReferenceCount": 0,
+      "portConnections": 0,
+      "reparseTreePass": true,
+      "reparseDescendantCountBeforeDeletion": 0,
+      "deletionAttempted": true,
+      "directoryAbsent": true,
+      "processTerminationAttempted": false,
+      "sourcePointerPreserved": true
+    }
+  ]
+}

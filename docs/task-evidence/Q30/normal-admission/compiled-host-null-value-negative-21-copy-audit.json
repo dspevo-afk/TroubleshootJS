@@ -1,0 +1,36 @@
+{
+  "copiedFiles": [],
+  "fileCount": 0,
+  "skippedHashEqualSpec": {
+    "source": "spec.json",
+    "destination": "compiled-host-null-value-negative-21-spec.json",
+    "destinationSha256": "f9429d7fddecdcaa610596b63a937a5c875d474e1edf86150aea5572ec1877cf",
+    "reason": "expected-no-output-directory; source-run-target-absent"
+  },
+  "profileExcluded": true,
+  "cacheExcluded": true,
+  "sanitizedPathsOnly": true,
+  "sourceDirectory": "<task-temp>/tsj-q30-host-null-value-negative-21-41a3310918444c78a839d31a1878c828",
+  "destinationDirectory": "docs/task-evidence/Q30/normal-admission",
+  "expectedCommandOutcome": "PASS",
+  "expectedExitCode": 2,
+  "actualExitCode": 2,
+  "commandMatched": true,
+  "expectedClassification": "expected-input-schema-rejection",
+  "outputCreated": false,
+  "targetDirectoryPresent": false,
+  "observedError": "ERROR cases[1].expectedState must be a non-empty string",
+  "runLog": {
+    "path": "compiled-host-null-value-negative-21-run.log",
+    "sha256": "4ecf2b385e4b0ed91f98d35b424b789092dedc22aceb99354eb28080fa095c4d",
+    "bytes": 57,
+    "lines": 2,
+    "rawPersonalPathHits": 0
+  },
+  "existingSpec": {
+    "path": "compiled-host-null-value-negative-21-spec.json",
+    "sha256": "f9429d7fddecdcaa610596b63a937a5c875d474e1edf86150aea5572ec1877cf",
+    "bytes": 280,
+    "lines": 12
+  }
+}

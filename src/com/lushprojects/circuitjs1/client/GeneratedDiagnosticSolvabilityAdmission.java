@@ -25,7 +25,7 @@ final class GeneratedDiagnosticSolvabilityAdmission {
             GeneratedChallengeController ownerController) {
         validate(sim, instance);
         if (instance.isDeveloperOnlyFaultRoute() || isInternalProofRunning()) return;
-        SupportedEnvelope.current().requireNormal(instance);
+        instance.requireNormalPhysicalAdmission();
         GeneratedDiagnosticProofService.prove(sim, instance, ownerController);
     }
 

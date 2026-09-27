@@ -47,6 +47,21 @@ public final class Rb30PhysicalMetadataContractTest {
                     check(candidate.backing.get(id) instanceof ResistorElm);
                     check(metadata.getNominalResistanceOhms() ==
                         ((ResistorElm) candidate.backing.get(id)).getResistance());
+                    if (id.equals("RPIN_A") || id.equals("RPIN_B")) {
+                        String channel = id.substring("RPIN_".length());
+                        check(metadata.getNominalResistanceOhms() == 1000.0);
+                        check(metadata.getTolerancePercent() == 5.0);
+                        check(metadata.getRatedWattage() == .25);
+                        check(((ResistorElm) candidate.backing.get(id))
+                            .getResistance() == 1000.0);
+                        check(candidate.runtime.getSlot(id) != null);
+                        check(candidate.runtime.getSlot(id).getInstalledPart() ==
+                            installed);
+                        check((channel + "_RAW").equals(
+                            board.getPad(id + ".1").getNetId()));
+                        check("CTRL_RETURN".equals(
+                            board.getPad(id + ".2").getNetId()));
+                    }
                 } else if ("DIODE".equals(component.getType())) {
                     diodes++;
                     check(installed.getSpecification() instanceof DiodeNameplate);
@@ -55,6 +70,13 @@ public final class Rb30PhysicalMetadataContractTest {
                     check(installed.getSpecification() instanceof LedNameplate);
                 } else if ("CAPACITOR".equals(component.getType())) {
                     check(installed.getSpecification() instanceof CapacitorSpecification);
+                    if (id.startsWith("CFLT_")) {
+                        check(((CapacitorSpecification) installed.getSpecification())
+                            .getCapacitanceFarads() == 100e-9);
+                        check("100 nF / 25 V".equals(((CapacitorSpecification)
+                            installed.getSpecification()).getNameplate().getMarking()));
+                        check(((CapacitorElm) candidate.backing.get(id)).getCapacitance() == 100e-9);
+                    }
                     if (component.getPhysicalPackage().isEquivalentTo(
                             PhysicalPackages.RADIAL_CERAMIC_CAPACITOR))
                         ceramicCapacitors++;
@@ -65,15 +87,15 @@ public final class Rb30PhysicalMetadataContractTest {
                 StandardPhysicalPartRenderProviders.createRegistry().requireRenderer(
                     component.getPhysicalPackage(), installed);
             }
-            check(resistors == 12);
+            check(resistors == (plan.hasStatusIndicator() ? 14 : 13));
             check(diodes == 3);
-            check(leds == 1);
-            check(ceramicCapacitors == 2);
+            check(leds == (plan.hasStatusIndicator() ? 1 : 0));
+            check(ceramicCapacitors == (plan.hasSensorInputFilters() ? 4 : 2));
             check(electrolyticCapacitors == 1);
             topologyCount++;
         }
         check(topologyCount == 7);
-        verifyFullOwnerConstruction(sim, 0L);
+        verifyFullOwnerConstruction(sim, 3L);
         verifyFullOwnerConstruction(sim, 37L);
         System.out.println("PASS: Q30 physical metadata contracts " + assertions +
             " assertions, topologies=" + topologyCount);
@@ -98,6 +120,8 @@ public final class Rb30PhysicalMetadataContractTest {
             MediumBoardPhysicalPolicy.Result routed =
                 new SeededPcbLayoutGenerator().generateWithPolicyResult(
                     candidate.board(), plan.layoutSeed, plan.routingSeed);
+            if (!routed.accepted()) throw new AssertionError(
+                "Positive owner fixture has no accepted route: " + routed.toCanonical());
             check(routed.accepted());
             PcbBoardLayout layout = routed.getLayout();
             check(layout != null);

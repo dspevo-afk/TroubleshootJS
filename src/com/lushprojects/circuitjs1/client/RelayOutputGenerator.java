@@ -62,7 +62,7 @@ final class RelayOutputGenerator {
             new String[] { "DRIVE", "CTRL_RETURN" }, new int[] { 0, 1 }, pull, false);
 
         CircuitElm q = driver.create(2400, 400);
-        a.specifications.addPhysicalDefinition("Q1", driver.getSpecification(),
+        a.specifications.addPhysicalDefinition("Q1", driver.getSpecification("Q1"),
             new PhysicalNameplate("Q1", "Low-side " + driver.getId() + " driver", "Part", driver.getId()), driver.getPackage());
         a.part("Q1", driver.getId(), driver.getPackage(), driver.getTerminals(),
             new String[] { "DRIVE", "COIL_LOW", "CTRL_RETURN" }, driver.getPosts(), q, false);
@@ -129,10 +129,10 @@ final class RelayOutputGenerator {
             ResistorPartLocation.INSTALLED, new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED, "RPD")));
         PhysicalNameplate qLabel = new PhysicalNameplate("Q1_ORIGINAL", "Low-side " + driver.getId() + " driver", "Part", driver.getId());
         PhysicalBoardSlot qSlot = runtime.createSlot("Q1");
-        if (q instanceof NTransistorElm) qSlot.install(new PhysicalNpnPart("Q1_ORIGINAL", (NpnSpecification)driver.getSpecification(),
+        if (q instanceof NTransistorElm) qSlot.install(new PhysicalNpnPart("Q1_ORIGINAL", (NpnSpecification)driver.getSpecification("Q1"),
             qLabel, (NTransistorElm)q, null, NpnPartLocation.INSTALLED,
             new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED, "Q1")));
-        else qSlot.install(new PhysicalNmosPart("Q1_ORIGINAL", (NmosSpecification)driver.getSpecification(), qLabel,
+        else qSlot.install(new PhysicalNmosPart("Q1_ORIGINAL", (NmosSpecification)driver.getSpecification("Q1"), qLabel,
             (NMosfetElm)q, null, NmosPartLocation.INSTALLED, new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED, "Q1")));
         runtime.createSlot("D1").install(new PhysicalDiodePart("D1_ORIGINAL", diodeSpec, diodeSpec, diode, null, true,
             DiodePartLocation.INSTALLED, new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED, "D1")));

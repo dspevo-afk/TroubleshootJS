@@ -1,0 +1,52 @@
+[
+  {
+    "name": "default-full-suite",
+    "exitCode": 2,
+    "outcome": "EXPECTED_REJECTION",
+    "output": [
+      "CURRENT_CONTRACT_FAILURE: -QuickPlayGateSeeds is allowed only with exactly -Suite QuickPlayGateCorpus."
+    ],
+    "javaNotReached": true,
+    "scratchNotCreated": true
+  },
+  {
+    "name": "wrong-suite",
+    "exitCode": 2,
+    "outcome": "EXPECTED_REJECTION",
+    "output": [
+      "CURRENT_CONTRACT_FAILURE: -QuickPlayGateSeeds is allowed only with exactly -Suite QuickPlayGateCorpus."
+    ],
+    "javaNotReached": true,
+    "scratchNotCreated": true
+  },
+  {
+    "name": "empty-seeds",
+    "exitCode": 2,
+    "outcome": "EXPECTED_REJECTION",
+    "output": [
+      "CURRENT_CONTRACT_FAILURE: -QuickPlayGateSeeds requires 1-128 distinct signed-long values."
+    ],
+    "javaNotReached": true,
+    "scratchNotCreated": true
+  },
+  {
+    "name": "too-many-seeds",
+    "exitCode": 2,
+    "outcome": "EXPECTED_REJECTION",
+    "output": [
+      "CURRENT_CONTRACT_FAILURE: -QuickPlayGateSeeds requires 1-128 distinct signed-long values."
+    ],
+    "javaNotReached": true,
+    "scratchNotCreated": true
+  },
+  {
+    "name": "duplicate-seeds",
+    "exitCode": 2,
+    "outcome": "EXPECTED_REJECTION",
+    "output": [
+      "CURRENT_CONTRACT_FAILURE: -QuickPlayGateSeeds requires 1-128 distinct signed-long values."
+    ],
+    "javaNotReached": true,
+    "scratchNotCreated": true
+  }
+]

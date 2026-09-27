@@ -1,23 +1,66 @@
-# Q30 multi-rail procedural qualification — blocked
+# Q30 multi-rail procedural qualification — complete / PASS
 
-**Current status:** Q30 remains unregistered and unaccepted. Independent review
-rejected Q30-P1 commit `98c3a75` because ordinary opposing edge connectors in
-one region could produce a NaN placement hint. The generic repair and 20-part
-regression passed all required reruns; **P1 is independently PASS / ACCEPTED at
-`fac582c1150273c01d09bc704dd796c1bf49a135`**. [Repair evidence](p1-review-repair/README.md).
+**Current candidate status (2026-09-26):** The Q30 catalog entry is implemented
+in the candidate source, and the bounded 33/35/37-part family is **COMPLETE /
+PASS** for final qualification on candidate parent
+`16a922b2b757dfcd1cbc3a0230ab2b97ac2fbb50`. The normal-medium execution policy
+uses its reviewed 300,000 ms cumulative allowance with the existing shared
+work-unit and per-unit limits. Q60 remains UNSTARTED; no Q60 implementation has
+started.
 
-## Actual diagnosis and service continuation
+## Current candidate qualification evidence
+
+The bounded current candidate covers 33/35/37-part RB30 variants across eight
+topology axes: separate/direct and shared/hysteretic reference arrangements,
+each with the A/B BJT/NMOS driver combinations. Native05 passes 78 Java suites
+with independent oracles, 40/40 service rows and 40/40 finer-step comparison
+rows across all eight axes and five faults. Its structural census passes 51
+rows: 42 accepted, 9 route rejects and zero failed rows, with 17 rejection or
+receipt canaries. These 33/35/37 variants remain within the original 20–40-part
+target, with representative and held-out rows. Cleanup passes with 1,248
+audited inputs and three unchanged reader inputs.
+
+The current D01 evidence uses genuine diagnostic proof receipts with five
+disjoint hypothesis owners, live observations, repair/customer retest, cold and
+warm execution, cleanup, and rejection canaries. Normal-player evidence passes
+on the current GWT21 candidate: modern22 is 33/33 with 3/3 replays, and manual22
+passes visible diagnosis, typed QA/QB, RDA service and cross-channel sensor
+service (U2A stock installed as U2B), wrong-12 V failure,
+correct-5 V repair, fault replay and empty-tray/probe cleanup with input and
+preview-cleanup audits. Combined P09 final22 also passes: 72 population cases
+(24 development and 48 holdout), six controlled cases and 46 corruption
+canaries. The cold/warm timing summaries use n=3 samples and are evidence for
+this candidate, not universal runtime guarantees. The complete final result and
+reader artifacts are [here](normal-admission/p09-final-22/reader-result.json)
+and [here](normal-admission/p09-final-22/p09-final-22-result.json).
+
+See the [normal-admission evidence and current gate map](normal-admission/README.md).
+
+## Historical accepted service checkpoint (`16a922b2b757dfcd1cbc3a0230ab2b97ac2fbb50`)
+
+The following bounded service block is retained as historical evidence at the
+accepted candidate SHA. Its earlier failures and cleanup limitations remain
+part of the record; they do not replace the current final qualification gates.
+
+This bounded slice is independently **PASS / ACCEPTED** at
+`16a922b2b757dfcd1cbc3a0230ab2b97ac2fbb50`. Independent seed-37 native
+relay/sensor children passed 257/239 assertions, and the independent receipt
+reader and seven rejection canaries passed. An independent ten-case wrapper
+attempt exceeded its 150-second outer limit; this was not an application
+assertion failure. The maintained committed runner completed all ten cases.
+Three earlier crashed Browser tabs retain a historical unverified-cleanup
+limitation, separate from the successful final-preview/live-tab cleanup.
 
 The bounded continuation connects all five actual fault hypotheses to the
 production observation executor, existing physical service capabilities and
 a four-condition customer retest. It includes exact hypothesis replay, original
 fault ownership after reinstall, and a scoped relay discharge guard.
 [Current validation, failures and limits](service-flow/README.md) records the
-complete seed-0/37 census and visible player checks. Full Q30 stays BLOCKED;
-medium-board D01 admission, the 20–40-part corpus, broader repair/replay and
-cold/warm performance remain unfinished. Q60 is not started.
+complete seed-0/37 census and visible player checks from that checkpoint. At
+that time full Q30 stayed BLOCKED; the current final qualification evidence is
+summarized above and is COMPLETE / PASS.
 
-## Accepted P1 physical checkpoint
+## Historical accepted P1 physical checkpoint (`fac582c1150273c01d09bc704dd796c1bf49a135`)
 
 The earlier P1 physical results remain: the unchanged fuller two-layer router
 accepts **54/72** matched placements after generic medium-board floorplanning,
@@ -45,7 +88,7 @@ remains independent of the physical work.
 | Compiled workbench | PASS for seed 0 and held-out 37 on the repair-source JDK 8/GWT build: 33 packages, 82 pad targets on each face, real top/bottom copper and via endpoint, 1,497 assertions per board. Fresh receipts match prior board/layout/copper identities. Historical screenshots and visible input remain recorded, and fresh seed-37 face controls passed. This is developer-only inspection, not player diagnosis. |
 | Regression gate | PASS on the repair source: six focused contracts, then the complete JDK 8 maintained native suite with 66 Java suites, independent seed/value/role oracles, report protocol and verified scratch cleanup. The two historical full-suite timeouts remain failures at their original checkpoint. See [repair log and receipts](p1-review-repair/README.md). |
 
-## Base, scope, and design
+## Historical candidate implementation notes
 
 The sections below retain the original pilot evidence and its limits. The
 continuation above and its linked receipts are the current service checkpoint.

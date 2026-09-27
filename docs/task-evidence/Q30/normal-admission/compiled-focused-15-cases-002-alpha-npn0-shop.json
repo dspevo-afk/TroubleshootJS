@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 2,
+    "name": "alpha-npn0-shop",
+    "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaCase=13",
+    "stateAttribute": "data-tsj-verification",
+    "expectedState": "PASS:alpha",
+    "expectedPrefix": null,
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 120.0,
+    "reportAttribute": "data-tsj-alpha-report"
+  },
+  "url": "http://127.0.0.1:56796/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaCase=13",
+  "startedUtc": "2026-09-26T22:23:10.985157+00:00",
+  "finishedUtc": "2026-09-26T22:23:14.004163+00:00",
+  "operationSeconds": 3.0190046000061557,
+  "outcome": "PASS",
+  "terminalReached": true,
+  "stateMatch": true,
+  "observedState": "PASS:alpha",
+  "lastObservedState": "PASS:alpha",
+  "timedOut": false,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": true,
+  "reportJsonValid": true,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 16918,
+  "reportSha256": "6fc1fa318e04696176310079887a515767a30a5aba7bf37ea64f4484ab4fd897",
+  "reportFile": "cases/002-alpha-npn0-shop.report.json",
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [],
+  "listenerCleanupErrors": [],
+  "navigationError": null
+}

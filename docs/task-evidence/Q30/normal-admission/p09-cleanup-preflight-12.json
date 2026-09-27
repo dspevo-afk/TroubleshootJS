@@ -1,0 +1,24 @@
+[
+  {
+    "marker": ".tools/q30-p09-12-path.txt",
+    "directory": "tsj-q30-p09-12-0c0cdb8218924bb687cc1165cc611673",
+    "pid": 38424,
+    "port": 54854,
+    "processReferences": 0,
+    "listeners": 0,
+    "physicalContainmentAndTree": "PASS",
+    "controlledEvidenceCopied": true,
+    "checkedUtc": "2026-09-26T21:39:06.5847242Z"
+  },
+  {
+    "marker": ".tools/q30-p09-12-oldcanary-path.txt",
+    "directory": "tsj-q30-p09-12-oldcanary-84c40634201b46c2afd295605fddf038",
+    "pid": 24140,
+    "port": 55980,
+    "processReferences": 0,
+    "listeners": 0,
+    "physicalContainmentAndTree": "PASS",
+    "controlledEvidenceCopied": true,
+    "checkedUtc": "2026-09-26T21:39:08.9733256Z"
+  }
+]

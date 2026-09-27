@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "targetCount": 1,
+  "deletedCount": 1,
+  "deletionMethod": "Remove-VerifierOwnedTree",
+  "pointerFilesPreserved": true,
+  "retainedHashEqualDuplicateArtifacts": [
+    "compiled-alpha-17-cases-spec.json"
+  ],
+  "excluded": [
+    "q30-modern-01",
+    "tests/contracts/__pycache__"
+  ],
+  "records": [
+    {
+      "status": "PASS",
+      "pointer": ".tools/q30-alpha-17-path.txt",
+      "name": "q30-alpha-17",
+      "directory": "tsj-q30-alpha-17-6afe0cea93544f96b37b60c6bcd94e64",
+      "identityMarkerPass": true,
+      "profileExistsBeforeDeletion": true,
+      "profileMatch": true,
+      "tempContainmentPass": true,
+      "resultCleanupPass": true,
+      "inputAudit": "PASS",
+      "outcome": "FAIL",
+      "caseCount": 2,
+      "casePassCount": 1,
+      "caseFailCount": 1,
+      "unexpectedFailureCases": [
+        "alpha-full41"
+      ],
+      "failureDescription": "Unexpected U04 state-oracle assertion in full41 census",
+      "expectedFailureCanaryPass": 1,
+      "port": 54593,
+      "runnerPid": 22596,
+      "recordedProcessCount": 8,
+      "currentLiveRecordedPidCount": 0,
+      "currentMatchingRecordedIdentityCount": 0,
+      "pidReuseCount": 0,
+      "ambiguousRecordedIdentityCount": 0,
+      "profileOrTargetPathReferenceCount": 0,
+      "portConnections": 0,
+      "reparseTreePass": true,
+      "reparseDescendantCountBeforeDeletion": 326,
+      "deletionAttempted": true,
+      "directoryAbsent": true,
+      "processTerminationAttempted": false,
+      "sourcePointerPreserved": true
+    }
+  ]
+}

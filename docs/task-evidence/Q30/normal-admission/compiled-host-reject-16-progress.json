@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<worktree>",
+  "startedUtc": "2026-09-26T22:50:58.790558+00:00",
+  "outcome": "NOT_RUN",
+  "cases": [
+    {
+      "schema": 1,
+      "case": {
+        "index": 1,
+        "name": "reject-wrong-terminal",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyChallenge=true",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "PASS:alpha",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 30.0,
+        "reportAttribute": null
+      },
+      "url": "http://127.0.0.1:51034/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyChallenge=true",
+      "startedUtc": "2026-09-26T22:51:00.015089+00:00",
+      "finishedUtc": "2026-09-26T22:51:00.796748+00:00",
+      "operationSeconds": 0.7816546999383718,
+      "outcome": "FAIL",
+      "terminalReached": true,
+      "stateMatch": false,
+      "observedState": "PASS:challenge",
+      "lastObservedState": "PASS:challenge",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": false,
+      "reportJsonValid": null,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 0,
+      "reportSha256": null,
+      "reportFile": null,
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    }
+  ],
+  "caseCount": 1,
+  "errors": [],
+  "inputAudit": {
+    "status": "BEFORE_CAPTURED",
+    "beforeSha256": "f2fa743fa20f2c59aa97f4eaab3d8f33225ac3000518dd3ffe471c743f123cbe",
+    "sourceSha256": "ebb4b3e467ff2bed15121cd4270197f950d84f4b1761b486144d9e0218e9de2c",
+    "webSha256": "f9e408f3fc9e6de9088dd40d39917093534ae2a78b9af0b6474066771fbfa915",
+    "fileCount": 1522
+  },
+  "identity": {
+    "schema": 1,
+    "runner": {
+      "pid": 38752,
+      "created": "2026-09-26T22:50:58.6555490Z",
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+    },
+    "edgeProcessesBeforeCases": [
+      {
+        "pid": 36628,
+        "parent": 37736,
+        "created": "2026-09-26T22:50:59.3837960Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 33976,
+        "parent": 36628,
+        "created": "2026-09-26T22:50:59.3948770Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 38444,
+        "parent": 36628,
+        "created": "2026-09-26T22:50:59.5130960Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 28140,
+        "parent": 36628,
+        "created": "2026-09-26T22:50:59.5170790Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 31556,
+        "parent": 36628,
+        "created": "2026-09-26T22:50:59.5400630Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 33724,
+        "parent": 36628,
+        "created": "2026-09-26T22:50:59.6035640Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 21860,
+        "parent": 36628,
+        "created": "2026-09-26T22:50:59.6080840Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "profile": "<task-temp>\\tsj-q30-host-reject-16-df7002fab9104170aa6f9204b33ba53d\\profile",
+    "port": 51034,
+    "baseUrl": "http://127.0.0.1:51034"
+  },
+  "operationStartedUtc": "2026-09-26T22:51:00.015066+00:00"
+}

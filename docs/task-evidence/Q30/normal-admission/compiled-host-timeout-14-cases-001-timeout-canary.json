@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 1,
+    "name": "timeout-canary",
+    "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true",
+    "stateAttribute": "data-tsj-deliberately-absent",
+    "expectedState": "PASS:absent",
+    "expectedPrefix": null,
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 1.0,
+    "reportAttribute": null
+  },
+  "url": "http://127.0.0.1:53194/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true",
+  "startedUtc": "2026-09-26T22:14:27.069325+00:00",
+  "finishedUtc": "2026-09-26T22:14:28.070411+00:00",
+  "operationSeconds": 1.0010821999749169,
+  "outcome": "TIMEOUT",
+  "terminalReached": false,
+  "stateMatch": false,
+  "observedState": null,
+  "lastObservedState": null,
+  "timedOut": true,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": false,
+  "reportJsonValid": null,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 0,
+  "reportSha256": null,
+  "reportFile": null,
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [],
+  "navigationError": null
+}

@@ -5,7 +5,7 @@ import java.util.Vector;
 /** Immutable, private aggregate over a complete current diagnostic proof.
  * No selected fault or owner determines the profile. Physics/tolerances are inputs only. */
 final class DifficultyAssessment {
-    static final int VERSION = 1;
+    static final int VERSION = 2;
     final int components, hypotheses, repairClasses, physicalOwners, readings, bestSingleRemaining;
     final int minExecutedEvidenceDepth, maxExecutedEvidenceDepth, minWitnessActions, maxWitnessActions;
     final int meterModes, inputTransitions, declaredRailTargets, temporalSamples;
@@ -14,6 +14,7 @@ final class DifficultyAssessment {
     final String programIdentity;
 
     private DifficultyAssessment(GeneratedBoardInstance board, GeneratedDiagnosticProofReceipt receipt) {
+        board.requireNormalPhysicalAdmission();
         receipt.requireAssessmentOwner(board);
         Vector<GeneratedDiagnosticSolvabilityEvidence> evidence = receipt.getEvidence();
         if (evidence.isEmpty() || evidence.size() > 12) throw new IllegalArgumentException("Uncalibrated hypothesis population");
@@ -81,7 +82,7 @@ final class DifficultyAssessment {
         // band of an otherwise EASY board.
         readings = reduction.readings;
         bestSingleRemaining = reduction.bestSingleRemaining;
-        profile = classify(components, physicalOwners, repairClasses, readings, minExecutedEvidenceDepth,
+        profile = classifyAdmittedEvidence(components, physicalOwners, repairClasses, readings, minExecutedEvidenceDepth,
             meterModes, inputTransitions, declaredRailTargets, temporalSamples, parallelPaths);
     }
 
@@ -94,6 +95,15 @@ final class DifficultyAssessment {
             int modes, int inputs, int railTargets, int temporal, boolean parallel) {
         if (parts < 1 || parts > 20 || owners < 1 || repairs < 1 || readings < 0 || depth < 1 || modes < 1)
             throw new IllegalArgumentException("Outside the calibrated small-board envelope");
+        return classifyAdmittedEvidence(parts, owners, repairs, readings, depth, modes, inputs,
+            railTargets, temporal, parallel);
+    }
+    private static DifficultyProfile classifyAdmittedEvidence(int parts, int owners, int repairs,
+            int readings, int depth, int modes, int inputs, int railTargets, int temporal,
+            boolean parallel) {
+        if (parts < 1 || parts > 40 || owners < 1 || repairs < 1 || readings < 0 ||
+                depth < 1 || modes < 1)
+            throw new IllegalArgumentException("Outside the admitted physical board envelope");
         // Initial alpha bands: a simple DC measurement/repair versus interacting
         // input, timing or parallel-path reasoning across multiple possible owners.
         // The component envelope limits scope; it never adds difficulty points.

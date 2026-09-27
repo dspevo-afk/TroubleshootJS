@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "positive": {
+    "actualExitCode": 0,
+    "utf8StdoutCaptured": true,
+    "utf8StderrCaptured": true,
+    "log": "<task-temp>\\helper-canary-positive.log"
+  },
+  "negative": {
+    "actualExitCode": 7,
+    "utf8StdoutCaptured": true,
+    "utf8StderrCaptured": true,
+    "log": "<task-temp>\\helper-canary-negative.log"
+  },
+  "crlfNativeMarkers": {
+    "fullPassCount": 1,
+    "cleanupCount": 1,
+    "status": "PASS",
+    "sample": "literal CRLF"
+  }
+}

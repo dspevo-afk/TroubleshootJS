@@ -1,0 +1,86 @@
+{
+  "schema": "q30-final-publication-audit-v2",
+  "createdUtc": "2026-09-27T03:40:53.196798+00:00",
+  "reviewOwner": "root",
+  "repositoryHead": "16a922b2b757dfcd1cbc3a0230ab2b97ac2fbb50",
+  "status": "PASS",
+  "scope": {
+    "totalDistinctInputFiles": 1211,
+    "groupCounts": {
+      "modifiedTrackedText": 64,
+      "normalAdmission": 1129,
+      "untrackedSourceTests": 18
+    },
+    "auditSelfExcluded": "docs/task-evidence/Q30/normal-admission/final-publication-audit-23.json",
+    "ignoredInventoryExcluded": ".tools/q30-final-publication-input-inventory-23.json"
+  },
+  "digest": {
+    "algorithm": "SHA-256 of UTF-8 without BOM; rows sorted by ordinal normalized repository-relative path; each row is path<TAB>base-10-byte-count<TAB>lowercase-file-SHA256<LF>, including a final LF.",
+    "combinedSha256": "dc9606fc16ecc13c4287169eac8d61d39b04e1e6b189e3a4bc6352d537d59dc3",
+    "inventoryFile": {
+      "path": ".tools/q30-final-publication-input-inventory-23.json",
+      "sha256": "901a5020cb452a9f3192ec1c71327ad67af105f4880afac5b3e5e0539209c266",
+      "fileCount": 1211
+    }
+  },
+  "reuse": {
+    "priorAudit": "final-publication-audit-22.json",
+    "priorAuditSha256": "16a634d967fd02c922afbe4c70dd0619457b2859afd3801716902c56f9d42d2e",
+    "unchangedBaseInputs": 1186,
+    "changedBaseInputs": [
+      "docs/CODEX_TASK_REPORT.md",
+      "docs/task-evidence/Q30/normal-admission/attempts.md",
+      "docs/task-evidence/Q30/normal-admission/compiled-host-reject-14-spec.json",
+      "docs/task-evidence/Q30/normal-admission/compiled-host-reject-15-spec.json",
+      "docs/task-evidence/Q30/normal-admission/compiled-host-reject-16-spec.json",
+      "docs/task-evidence/Q30/normal-admission/compiled-host-reject-21-spec.json",
+      "docs/task-evidence/Q30/normal-admission/compiled-host-smoke-14-spec.json",
+      "docs/task-evidence/Q30/normal-admission/compiled-host-smoke-14b-spec.json",
+      "docs/task-evidence/Q30/normal-admission/compiled-host-smoke-15-spec.json",
+      "docs/task-evidence/Q30/normal-admission/compiled-host-smoke-16-spec.json",
+      "docs/task-evidence/Q30/normal-admission/compiled-host-smoke-21-spec.json",
+      "docs/task-evidence/Q30/normal-admission/compiled-host-timeout-14-spec.json",
+      "docs/task-evidence/Q30/normal-admission/compiled-host-timeout-15-spec.json",
+      "docs/task-evidence/Q30/normal-admission/compiled-host-timeout-16-spec.json",
+      "docs/task-evidence/Q30/normal-admission/compiled-host-timeout-21-spec.json",
+      "docs/task-evidence/Q30/normal-admission/compiled-p09-12-oldcanary.log",
+      "docs/task-evidence/Q30/normal-admission/native-final-05-receipt.txt",
+      "docs/task-evidence/Q30/normal-admission/native-final-05.log",
+      "docs/task-evidence/Q30/normal-admission/remaining-gates-22-wrapper/p09-final-22.py"
+    ],
+    "addedInputs": [
+      "docs/task-evidence/Q30/normal-admission/final-publication-audit-22.json",
+      "docs/task-evidence/Q30/normal-admission/publication-corpus-reader-22.json",
+      "docs/task-evidence/Q30/normal-admission/publication-native-readers-22.json",
+      "docs/task-evidence/Q30/normal-admission/publication-original-bytes-22.zip",
+      "docs/task-evidence/Q30/normal-admission/publication-service-reader-22.json",
+      "docs/task-evidence/Q30/normal-admission/publication-whitespace-normalization-22.json"
+    ],
+    "missingBaseInputs": [],
+    "boundary": "Prior privacy checks reused only for unchanged byte hashes. Root rechecked the exact normalization/archive mapping and scanned every changed or new text input; archived original inputs match the previously audited hashes. All current nonempty JSON files were reparsed; the known empty historical artifact is explicitly excluded from usable evidence."
+  },
+  "checks": {
+    "nonemptyJsonFilesParsed": 707,
+    "nonemptyJsonErrors": 0,
+    "emptyHistoricalJsonArtifacts": [
+      {
+        "path": "docs/task-evidence/Q30/normal-admission/native-pulldown-canary-01-corpus-summary.json",
+        "bytes": 0,
+        "usableEvidence": false,
+        "scope": "Retained historical failed canary; explicitly documented in attempts.md. This is not valid JSON or a passing result."
+      }
+    ],
+    "oversizedFiles": 0,
+    "sizeThresholdBytes": 5000000,
+    "deltaTextFilesScanned": 24,
+    "deltaPersonalPathMatches": 0,
+    "deltaCredentialOrEncodedCommandMatches": 0,
+    "archiveOriginalFilesHashVerified": 17,
+    "archiveCheckOutputPrivacyScanned": true,
+    "originalAndNormalizedSemanticsEqual": true,
+    "stagedWhitespaceExitCode": 0,
+    "unstagedTrackedChanges": 0,
+    "excludedPycacheUnchanged": true
+  },
+  "evidenceReaders": "publication-native-readers-22.json records PASS for full 51-row corpus and 80 service/sensitivity rows after normalization. Production inputs remain unchanged."
+}

@@ -1,0 +1,19 @@
+{
+  "cases": [
+    {
+      "name": "challenge-positive",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyChallenge=true",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedState": "PASS:challenge"
+    },
+    {
+      "name": "alpha-explicit-negative",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaFail=true",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedState": "FAIL:alpha:alpha-explicit-failure-canary",
+      "reportAttribute": "data-tsj-alpha-report"
+    }
+  ]
+}

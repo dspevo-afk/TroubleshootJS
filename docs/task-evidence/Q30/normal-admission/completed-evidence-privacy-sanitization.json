@@ -1,0 +1,807 @@
+{
+  "schema": "completed-evidence-privacy-sanitization-v1",
+  "scope": "docs/task-evidence/Q30/normal-admission",
+  "head": "16a922b2b757dfcd1cbc3a0230ab2b97ac2fbb50",
+  "status": "PASS",
+  "completedEvidenceFilesChanged": 44,
+  "replacementTotals": {
+    "worktree": 33.0,
+    "taskTemp": 33.0,
+    "userHome": 0.0
+  },
+  "files": [
+    {
+      "file": "compiled-coordinator-21-identity.json",
+      "sha256Before": "8404f45bd8c249c4039dfc15c4480bee59dca81774483d90d0f5d949f4347a4c",
+      "sha256After": "983734b5b1e2241f8f952929a8cc65c53ca281a5a94bcc61b59028652e50e4c8",
+      "bytesBefore": 1830,
+      "bytesAfter": 1746,
+      "sourceSha256Preserved": "8404f45bd8c249c4039dfc15c4480bee59dca81774483d90d0f5d949f4347a4c",
+      "worktreeSubstitutions": 0,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-coordinator-21-progress.json",
+      "sha256Before": "2e2ce25db3fca75470048e494079554176510c93d0e5d4ee0b2eab31f97f7c95",
+      "sha256After": "85b670e5790bdf9138fb163ba470a7a4ea62977717e53751ee80197ecb5cf61f",
+      "bytesBefore": 7496,
+      "bytesAfter": 7342,
+      "sourceSha256Preserved": "2e2ce25db3fca75470048e494079554176510c93d0e5d4ee0b2eab31f97f7c95",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-coordinator-21-result.json",
+      "sha256Before": "eb523dcc9665e5f11c73151e23ab6b45c6a2463ece166ef72966a220bf352997",
+      "sha256After": "5245ca3c251b20c73ac7fe547f8b2bd31b439344034c8b75a1fa9d0351e3e8d8",
+      "bytesBefore": 8221,
+      "bytesAfter": 8067,
+      "sourceSha256Preserved": "eb523dcc9665e5f11c73151e23ab6b45c6a2463ece166ef72966a220bf352997",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-coordinator-21-run-start.json",
+      "sha256Before": "c17d40b77340e49aa559271e2b64a7496eef8003b7b52b80d9f9195bf5223433",
+      "sha256After": "68228f86b2c9df7a00d16cec3200c35c90a75dddf08c3614231eab1b8e220512",
+      "bytesBefore": 291,
+      "bytesAfter": 221,
+      "sourceSha256Preserved": "c17d40b77340e49aa559271e2b64a7496eef8003b7b52b80d9f9195bf5223433",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 0,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-d01-21-identity.json",
+      "sha256Before": "d632a35340213b4901e6ff20b3ddc43169cdaec360a6aa71e5bceedbbc2922bf",
+      "sha256After": "9eb3e3bba974400a0cdea7f9bb6a660aa374e759c4572e2d0a4eb3d05cbf4fb2",
+      "bytesBefore": 1822,
+      "bytesAfter": 1746,
+      "sourceSha256Preserved": "d632a35340213b4901e6ff20b3ddc43169cdaec360a6aa71e5bceedbbc2922bf",
+      "worktreeSubstitutions": 0,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-d01-21-progress.json",
+      "sha256Before": "c2997ca85ce5e95d2a3587b276b98370fe41f9cfd9bf88ce9996d1ff3e89d3e1",
+      "sha256After": "32cd7d4b05640e9372f6b72cade0289123ee7dbac0424cb9f4e004aa701ea71b",
+      "bytesBefore": 7522,
+      "bytesAfter": 7376,
+      "sourceSha256Preserved": "c2997ca85ce5e95d2a3587b276b98370fe41f9cfd9bf88ce9996d1ff3e89d3e1",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-d01-21-result.json",
+      "sha256Before": "701645398cb3709b51cf234de977991b671da8396804d87329a55a76dd615178",
+      "sha256After": "fa81f2fb09fc6742c6c79d3b63e37ec2ef6768b83172420eaf32e9f802d6dbc7",
+      "bytesBefore": 8246,
+      "bytesAfter": 8100,
+      "sourceSha256Preserved": "701645398cb3709b51cf234de977991b671da8396804d87329a55a76dd615178",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-d01-21-run-start.json",
+      "sha256Before": "5aca647b594a0ce73a7ff8550924958f09328e5cae685d75d70992b950cf769a",
+      "sha256After": "2c8af9aaa09ad3b4c8f18aa0ec2b6ce70063788d65dc9804905e7ac10c5fac06",
+      "bytesBefore": 291,
+      "bytesAfter": 221,
+      "sourceSha256Preserved": "5aca647b594a0ce73a7ff8550924958f09328e5cae685d75d70992b950cf769a",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 0,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-reject-14-identity.json",
+      "sha256Before": "4821b31d42ba1025e4a86127e83a26b5a09eea1bbf4ce9b0b04e6fad5e8d52be",
+      "sha256After": "d865f35ef677cad2823ec9ddd8e1cc03d83d1a2346e0900e724016fed36b2e4c",
+      "bytesBefore": 1883,
+      "bytesAfter": 1799,
+      "sourceSha256Preserved": "5e9f43954156200d547f3f27121def68d0bbbaab3bb51bcfd5c916d5e55f5288",
+      "worktreeSubstitutions": 0,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-reject-14-progress.json",
+      "sha256Before": "a37ba50a363a4fe85a12e1093a6c81a19b5124e0a0531737bf00a7b6ef64d565",
+      "sha256After": "7abcf3917ac995bdf0828c73daffe9921a8cfb1cb07e73ff26e2c3eeb2366d8f",
+      "bytesBefore": 4139,
+      "bytesAfter": 3985,
+      "sourceSha256Preserved": "0e70f718b49f7e166525aa87533fce52fc463603164716db3b8c0c199cc7c988",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-reject-14-result.json",
+      "sha256Before": "ea6862c2affab3312ecdaa6290028edb2cc22f451d4e71d4ef7f99dc4e856fa1",
+      "sha256After": "d30de94d5236c6c40d988c10328b781e8ce61ca80bed9944d3314788f0c82e58",
+      "bytesBefore": 4878,
+      "bytesAfter": 4724,
+      "sourceSha256Preserved": "5dd00c2eace13d554dcca447a64abd038e9e4403f4b8e17b3027046ffd94c3f5",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-reject-14-run-start.json",
+      "sha256Before": "0c73a5e19049faa49fe791ef9eb5c9f0505a4a20473a3aa01b4fe0c0f6696bb2",
+      "sha256After": "109663a2f181d66668e1d03b3f44e10a15b1b449aa1fbe27eefdd334ddb90728",
+      "bytesBefore": 301,
+      "bytesAfter": 231,
+      "sourceSha256Preserved": "542561f4f450f88dd8b7b1e11df88a8ab00ee9f41812a1404f1f9d6f2e6586b9",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 0,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-reject-21-identity.json",
+      "sha256Before": "8601963684321e3f980121a9cd4d6fe5775e784c3d172091c3acc5b34b3ea085",
+      "sha256After": "89aff3f5120521bda83b8f727b071050d1ce3b8355d05b832db57e7448f002e2",
+      "bytesBefore": 1829,
+      "bytesAfter": 1745,
+      "sourceSha256Preserved": "8601963684321e3f980121a9cd4d6fe5775e784c3d172091c3acc5b34b3ea085",
+      "worktreeSubstitutions": 0,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-reject-21-progress.json",
+      "sha256Before": "4ffce55e76629a5c5f65cce6d00e98099161bc790e52e2928384122282ceef75",
+      "sha256After": "dcb7e271fb520c4bb50a2011fd690e49e4160b39443e0ca8e6dab1dfeaa50b18",
+      "bytesBefore": 4060,
+      "bytesAfter": 3906,
+      "sourceSha256Preserved": "4ffce55e76629a5c5f65cce6d00e98099161bc790e52e2928384122282ceef75",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-reject-21-result.json",
+      "sha256Before": "47d25ef64fe21c2cc883d69f1c3fac153f4e47e9477f07ac20f3fca2485bccb8",
+      "sha256After": "bef1d0a5cf9e66f66550202958dbee13a3f52f912b782e82a7d744ecb0fed3e9",
+      "bytesBefore": 4785,
+      "bytesAfter": 4631,
+      "sourceSha256Preserved": "47d25ef64fe21c2cc883d69f1c3fac153f4e47e9477f07ac20f3fca2485bccb8",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-reject-21-run-start.json",
+      "sha256Before": "e4a537b5ebd0bd73aa270e5d80cf62209e68c4cc78bb40ed673c8abaf6d5b5e1",
+      "sha256After": "5748902fa34b585e1d1c1c9f4f8413224ef752daa65e54d22bf4d6610c2162de",
+      "bytesBefore": 291,
+      "bytesAfter": 221,
+      "sourceSha256Preserved": "e4a537b5ebd0bd73aa270e5d80cf62209e68c4cc78bb40ed673c8abaf6d5b5e1",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 0,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-smoke-14-identity.json",
+      "sha256Before": "2d3fc27f264ae0c8c52473e7a6ec50a7c0a225068b76aef6ecb9ecb456e5d4e8",
+      "sha256After": "15415490259be66b9abeb0cbbedc7e85daccd93792c5fe1d1cbb23f2b2901e75",
+      "bytesBefore": 1884,
+      "bytesAfter": 1801,
+      "sourceSha256Preserved": "7e353d7c24da2f2e47528970012b55ae88b77df5a042c84f28036b0911107119",
+      "worktreeSubstitutions": 0,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-smoke-14-progress.json",
+      "sha256Before": "6be4eaca8f429f744e1284e245ad948a1aef455a343111d814236c6e2007e8ff",
+      "sha256After": "486786b674e1356a3b5a54743b0dcba8db9fda1b4e13411b33f9c9d0666e5bf6",
+      "bytesBefore": 6318,
+      "bytesAfter": 6165,
+      "sourceSha256Preserved": "803c8dd56a17efec277b6b4994b341711c4b19995f59ea0b37f347cdf19be9c3",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-smoke-14-result.json",
+      "sha256Before": "8e3183da033911ddc0f816b243860b871fef19f31891f07682092f8bb93e07d3",
+      "sha256After": "82348742dff8668b72849ae85028fb52a4c4699e073a47c7d2eb9ad4d4735057",
+      "bytesBefore": 7057,
+      "bytesAfter": 6904,
+      "sourceSha256Preserved": "149071b5c2b371497bb3f982b1adbab711d9578a20f1bd1dc819276586659f13",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-smoke-14-run-start.json",
+      "sha256Before": "5d6ed25e20327a387daf6dec13b607498d275cb4700af98ee84a301b3a68eaf0",
+      "sha256After": "7579ff5f86fd6f70815e1f47ce7259cedf03eeeb4ade54a3f6414c46bf68f82c",
+      "bytesBefore": 301,
+      "bytesAfter": 231,
+      "sourceSha256Preserved": "c820f0f2e0ca5f6d2fa58323f2b09dd269c4c791954a04b45fbcdc2bc9241878",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 0,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-smoke-14b-identity.json",
+      "sha256Before": "69f83b7c1bc241df329c588063f5c59645441ca4d8c32bdc62294d33196c45aa",
+      "sha256After": "bba1083de634f9da89747c4ab6bb852708a99d4134fc21b54d285caaee97f14c",
+      "bytesBefore": 1885,
+      "bytesAfter": 1801,
+      "sourceSha256Preserved": "9c07c2c5983282080b660cd400fad24a3cd9c19756ec81a89b05942217b33bf5",
+      "worktreeSubstitutions": 0,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-smoke-14b-progress.json",
+      "sha256Before": "2d22156eb286b060c452fd5a815ae52ccdb41cf7a27b9a908ff993ef0fc758ce",
+      "sha256After": "254d3a4d618e579b3040a180307e2729fd0c73aa27086bd96d3b3629c7da9bb6",
+      "bytesBefore": 5967,
+      "bytesAfter": 5813,
+      "sourceSha256Preserved": "ecc99049e6628cc27275a60b3fd107f595a52ff29b2c8c4ed256e3d64ee9d9aa",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-smoke-14b-result.json",
+      "sha256Before": "a9ceca5286f08d63342f2245598907567be8021228ba6b555516d8b94d042737",
+      "sha256After": "d3d97c1c7ae90a8fed6d0a08f48da53a09320ededb9f38886c2a447498d0b45e",
+      "bytesBefore": 6706,
+      "bytesAfter": 6552,
+      "sourceSha256Preserved": "37b555cd638aa9706d1c8f96adea5ea272c0ff7b49cef6c3b6b771f5da87f7d9",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-smoke-14b-run-start.json",
+      "sha256Before": "fd986cef3f6770055948345fcf2c03b6e37ca89540604c5f0fc437e2a18cbde2",
+      "sha256After": "e5be3603df8ed5774113784510d80db1203e3eef446e9c04006eb25d856391e6",
+      "bytesBefore": 301,
+      "bytesAfter": 231,
+      "sourceSha256Preserved": "0b97c68171d86fb509b10e22754691f579dfba07d76c40faef8551192bb7732a",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 0,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-smoke-21-identity.json",
+      "sha256Before": "093c8e325ee63240b9f8cc5ea2c8c20cecc814d17230c30058b78c3799633d33",
+      "sha256After": "627ea6b00a0f650824d44d409ebd0a2a95e57feb51f23f5b9e9da1c579878ec5",
+      "bytesBefore": 1828,
+      "bytesAfter": 1745,
+      "sourceSha256Preserved": "093c8e325ee63240b9f8cc5ea2c8c20cecc814d17230c30058b78c3799633d33",
+      "worktreeSubstitutions": 0,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-smoke-21-progress.json",
+      "sha256Before": "a680d4964e1febfe2ec9b9891dcc1e5e3848332e32fb7e9930970559f5f4d151",
+      "sha256After": "cc37de0e16b5fd87a9057b4a712f0925f6772dcca180f94ad4aff61a10fefbf2",
+      "bytesBefore": 5879,
+      "bytesAfter": 5726,
+      "sourceSha256Preserved": "a680d4964e1febfe2ec9b9891dcc1e5e3848332e32fb7e9930970559f5f4d151",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-smoke-21-result.json",
+      "sha256Before": "12ad956ce52bf125aef66765f4dd4ae0df834467175463a51ea59d77a5fc03c5",
+      "sha256After": "49fb1714bcbd59695613b847a9ee1fd3726e40083b03809459336620132ae1f6",
+      "bytesBefore": 6603,
+      "bytesAfter": 6450,
+      "sourceSha256Preserved": "12ad956ce52bf125aef66765f4dd4ae0df834467175463a51ea59d77a5fc03c5",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-smoke-21-run-start.json",
+      "sha256Before": "68b141b54be80a4918b80d7645a7f06d22705688bd38cbb9df407efc4b4525bc",
+      "sha256After": "68493b056f98a58a667d39b19c4377677e77cc5d27b8c44f7d91fa78a8b41b1e",
+      "bytesBefore": 291,
+      "bytesAfter": 221,
+      "sourceSha256Preserved": "68b141b54be80a4918b80d7645a7f06d22705688bd38cbb9df407efc4b4525bc",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 0,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-timeout-14-identity.json",
+      "sha256Before": "fbb7757426cfbea220a74b2443066868cd4741f68b99bdb9dcab53c198a12d15",
+      "sha256After": "7b1ef82c66410b4f4cbf30c8702f6dc95b37c99ef3df7d93242a10ebb58d704d",
+      "bytesBefore": 1885,
+      "bytesAfter": 1800,
+      "sourceSha256Preserved": "7fd3b7b2552ec701f50198a4960f9e48e606414643957a1a95606a915ab2a91a",
+      "worktreeSubstitutions": 0,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-timeout-14-progress.json",
+      "sha256Before": "0dd58fa6f6d3cc52590efb7942903e1e53fdc3a4f8b0909445c5199d654f145d",
+      "sha256After": "5ee7a8ec4c5d1ec4968a4df48e440d6987dd1a6879369c459c459dee05c22241",
+      "bytesBefore": 4072,
+      "bytesAfter": 3917,
+      "sourceSha256Preserved": "65b797544f535e10a4d0ff3e0c4d643364f39e724906f5f82b5d119288dd0c05",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-timeout-14-result.json",
+      "sha256Before": "5d7042254c43acd26db81d6ab6471c903dc14427c7a317cf59e603dcdfe1fc9e",
+      "sha256After": "8840f301f5a6def4038352d5122d04319355e81b08e87cb151a3a53a01972e76",
+      "bytesBefore": 4811,
+      "bytesAfter": 4656,
+      "sourceSha256Preserved": "133cd524e470593ded83d985a5f9daa14b35c44bd49dd1d4524d0f093eddfcb0",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-timeout-14-run-start.json",
+      "sha256Before": "0dabb0c00ee6c03ea794ff68d7f61507a35d1b3a79cb09c7728184d0418d21d7",
+      "sha256After": "b159c2373169fa28e69a8ee8b23a9388d80e80bef047b76fdcef23c57d616dbe",
+      "bytesBefore": 301,
+      "bytesAfter": 231,
+      "sourceSha256Preserved": "06403da05cd638f6e5b43be28872d3be75ac0b89a7036ce83af1a2fdd802a054",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 0,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-timeout-21-identity.json",
+      "sha256Before": "8a3ac4e47568d7ae5783b3b7a0c9f21edad26ba9cbf503d1b5fe32d83dd498a4",
+      "sha256After": "0f74c509ffe52d090458b05b1c9f357b6b5dac901bfb7d1d16d401ae537678df",
+      "bytesBefore": 1829,
+      "bytesAfter": 1744,
+      "sourceSha256Preserved": "8a3ac4e47568d7ae5783b3b7a0c9f21edad26ba9cbf503d1b5fe32d83dd498a4",
+      "worktreeSubstitutions": 0,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-timeout-21-progress.json",
+      "sha256Before": "244b40509f1b89fdf40c6e4d9e993a7ff03ec5ce3afefebe553b89fe5f882516",
+      "sha256After": "e1815473a6f3cfdcdb8188562236c643504cffcce5f09a670a15dec602c468f9",
+      "bytesBefore": 3990,
+      "bytesAfter": 3835,
+      "sourceSha256Preserved": "244b40509f1b89fdf40c6e4d9e993a7ff03ec5ce3afefebe553b89fe5f882516",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-timeout-21-result.json",
+      "sha256Before": "45c9d7f2d7a6764d556c4248fd80a7c165bfab8d598c3c04a333523dc908b856",
+      "sha256After": "626afdcb9d6e3343ee9d5b049959358a9c99bff1dbe44f5908a9e5ece7391a11",
+      "bytesBefore": 4714,
+      "bytesAfter": 4559,
+      "sourceSha256Preserved": "45c9d7f2d7a6764d556c4248fd80a7c165bfab8d598c3c04a333523dc908b856",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-timeout-21-run-start.json",
+      "sha256Before": "37fe1aa99f43610e71f271509efa1d830109e9ac511ded5edbb13d4ec72e9eb7",
+      "sha256After": "a83d2ea52bf57a93e21bcf30fe1476a07da9f3a9873ea79da61c630c926661ea",
+      "bytesBefore": 291,
+      "bytesAfter": 221,
+      "sourceSha256Preserved": "37fe1aa99f43610e71f271509efa1d830109e9ac511ded5edbb13d4ec72e9eb7",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 0,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-tiny-timeout-21-identity.json",
+      "sha256Before": "59ad5e8bad1866e2a057d886e8e479e6f033a4deedabe4a591d91a3a74ea416f",
+      "sha256After": "3afd25fe3c8d4cee8a1915d3c8b4516c554dd81310bfe44a59490c01bba1fbdd",
+      "bytesBefore": 1836,
+      "bytesAfter": 1746,
+      "sourceSha256Preserved": "59ad5e8bad1866e2a057d886e8e479e6f033a4deedabe4a591d91a3a74ea416f",
+      "worktreeSubstitutions": 0,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-tiny-timeout-21-progress.json",
+      "sha256Before": "dc929312d3e6366525888a0fd22ab62c1fcf371fadbfdd78ed3e9d57b5093b30",
+      "sha256After": "73e89e04b8b850a26871654de31cccc6472a4aaf6bbad3427fb09c1220c68f0c",
+      "bytesBefore": 4416,
+      "bytesAfter": 4256,
+      "sourceSha256Preserved": "dc929312d3e6366525888a0fd22ab62c1fcf371fadbfdd78ed3e9d57b5093b30",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-tiny-timeout-21-result.json",
+      "sha256Before": "b3612e17b8db7d5df552d90fd78c0533b0f6a11dea04b8e5336f16161ae5f766",
+      "sha256After": "f6dee01d45a79050c567f4360738a1b31bc85decde82da02cea1e25d69b73a2a",
+      "bytesBefore": 5140,
+      "bytesAfter": 4980,
+      "sourceSha256Preserved": "b3612e17b8db7d5df552d90fd78c0533b0f6a11dea04b8e5336f16161ae5f766",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-host-tiny-timeout-21-run-start.json",
+      "sha256Before": "ed6028012d0bb17fced515d94b8f9d864f58ff96dc316fe1353ad9be1d357f5f",
+      "sha256After": "3594d99be2bf2b04a5fefb79285f32817725b8f51ef412f53bb51d710ec84085",
+      "bytesBefore": 291,
+      "bytesAfter": 221,
+      "sourceSha256Preserved": "ed6028012d0bb17fced515d94b8f9d864f58ff96dc316fe1353ad9be1d357f5f",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 0,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-regressions-21-identity.json",
+      "sha256Before": "a5816f59e6a899e2d0e401f9260136b988f55ab7e48e3c67af9863d65484c14a",
+      "sha256After": "5e315fc70b6bc297ab3d707e682a049419d43d73962e53594e15fd0afd75461f",
+      "bytesBefore": 1830,
+      "bytesAfter": 1746,
+      "sourceSha256Preserved": "a5816f59e6a899e2d0e401f9260136b988f55ab7e48e3c67af9863d65484c14a",
+      "worktreeSubstitutions": 0,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-regressions-21-progress.json",
+      "sha256Before": "7ca17886fb579f681c60f352f4f9630a3a9155e216027ad664dcbd0b924d144b",
+      "sha256After": "596025d19a1bc973c754a9781cb4937cb6f04ad9c639457050cc702f75239597",
+      "bytesBefore": 24249,
+      "bytesAfter": 24095,
+      "sourceSha256Preserved": "7ca17886fb579f681c60f352f4f9630a3a9155e216027ad664dcbd0b924d144b",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-regressions-21-result.json",
+      "sha256Before": "d1a1f4104a03e8891ab3599c0e08c4e7628b627d62316375235d3abf7f31b0cb",
+      "sha256After": "a99f0614ec71ca9c6463e6e469e6ae370d237406d12baf8d6166ccdb2b89afab",
+      "bytesBefore": 24973,
+      "bytesAfter": 24819,
+      "sourceSha256Preserved": "d1a1f4104a03e8891ab3599c0e08c4e7628b627d62316375235d3abf7f31b0cb",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 1,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    },
+    {
+      "file": "compiled-regressions-21-run-start.json",
+      "sha256Before": "3574e989fe575e0b517e9453c4312f65b1e22ffaf42b5b570983c7ca6212773c",
+      "sha256After": "8ec6367f05ea5627ae01cd10d34d87b147e380c07dff4e2b78410d27cab147f8",
+      "bytesBefore": 292,
+      "bytesAfter": 222,
+      "sourceSha256Preserved": "3574e989fe575e0b517e9453c4312f65b1e22ffaf42b5b570983c7ca6212773c",
+      "worktreeSubstitutions": 1,
+      "taskTempSubstitutions": 0,
+      "userHomeSubstitutions": 0,
+      "jsonValid": true
+    }
+  ],
+  "copyAudits": [
+    {
+      "file": "compiled-coordinator-21-copy-audit.json",
+      "sha256After": "9f83bee42159cb7b835cf359178b9f803a4c9bcf9ac7f36ea6747c6faf9df18e",
+      "affectedDestinations": 4,
+      "sourceHashFieldsPreserved": true,
+      "postCopySanitizationMetadataPresent": true
+    },
+    {
+      "file": "compiled-d01-21-copy-audit.json",
+      "sha256After": "27532182ba706f7442c2801f85062c9570bab61aab2b14b68a8a027224a77242",
+      "affectedDestinations": 4,
+      "sourceHashFieldsPreserved": true,
+      "postCopySanitizationMetadataPresent": true
+    },
+    {
+      "file": "compiled-host-reject-14-copy-audit.json",
+      "sha256After": "e2ea834d7b0dc7fe084b6774841130b0d5606c18e83aed6716887376bb3c53c9",
+      "affectedDestinations": 4,
+      "sourceHashFieldsPreserved": true,
+      "postCopySanitizationMetadataPresent": true
+    },
+    {
+      "file": "compiled-host-reject-21-copy-audit.json",
+      "sha256After": "7e2df8d6ea0449145bfa744ee6f9ebe2916d0e78a83d9394bd3e9c83547f6082",
+      "affectedDestinations": 4,
+      "sourceHashFieldsPreserved": true,
+      "postCopySanitizationMetadataPresent": true
+    },
+    {
+      "file": "compiled-host-smoke-14-copy-audit.json",
+      "sha256After": "63bd4b15140f4e59f1a26f22726e7d04645f8ee1cbb3b5ab231c81a6ac7b5eeb",
+      "affectedDestinations": 4,
+      "sourceHashFieldsPreserved": true,
+      "postCopySanitizationMetadataPresent": true
+    },
+    {
+      "file": "compiled-host-smoke-14b-copy-audit.json",
+      "sha256After": "2eff734683c3746a93dddb0286912e9118b2e717f30e8ecc1cadaaac0c8f0ec9",
+      "affectedDestinations": 4,
+      "sourceHashFieldsPreserved": true,
+      "postCopySanitizationMetadataPresent": true
+    },
+    {
+      "file": "compiled-host-smoke-21-copy-audit.json",
+      "sha256After": "70cf71d285595ceb78284eb7bdd1da30bc0825a3002fa33216b6ec420d8ec046",
+      "affectedDestinations": 4,
+      "sourceHashFieldsPreserved": true,
+      "postCopySanitizationMetadataPresent": true
+    },
+    {
+      "file": "compiled-host-timeout-14-copy-audit.json",
+      "sha256After": "d58f6ce7eaa8f344e1e7450166ad2ac0c9877c97fa663e8246a8d74ffbdcf865",
+      "affectedDestinations": 4,
+      "sourceHashFieldsPreserved": true,
+      "postCopySanitizationMetadataPresent": true
+    },
+    {
+      "file": "compiled-host-timeout-21-copy-audit.json",
+      "sha256After": "6c3aad24482fd4d8a06795264f93768eea4258649dd2e91e8fc58c1a053edfa9",
+      "affectedDestinations": 4,
+      "sourceHashFieldsPreserved": true,
+      "postCopySanitizationMetadataPresent": true
+    },
+    {
+      "file": "compiled-host-tiny-timeout-21-copy-audit.json",
+      "sha256After": "dea63f4948a8d63c60d68ddc9587e6a04f65d16d9c92d5922aba3aef6db7323c",
+      "affectedDestinations": 4,
+      "sourceHashFieldsPreserved": true,
+      "postCopySanitizationMetadataPresent": true
+    },
+    {
+      "file": "compiled-regressions-21-copy-audit.json",
+      "sha256After": "a687e9111c1eeb8083fafa834f812e6748e74d98a9639e8f0d28b4d104febc72",
+      "affectedDestinations": 4,
+      "sourceHashFieldsPreserved": true,
+      "postCopySanitizationMetadataPresent": true
+    }
+  ],
+  "rawCaseReports": {
+    "count": 10,
+    "allByteExact": true,
+    "files": [
+      {
+        "file": "compiled-coordinator-21-cases-001-coordinator-seed13.report.json",
+        "sha256Before": "6b84cc878c688358f0e6cba108bf9b0664a79d287280f4489facb0cdc2652805",
+        "sha256After": "6b84cc878c688358f0e6cba108bf9b0664a79d287280f4489facb0cdc2652805",
+        "bytesAfter": 1643552,
+        "byteExact": true
+      },
+      {
+        "file": "compiled-coordinator-21-cases-002-coordinator-seed7.report.json",
+        "sha256Before": "9212455b34adbfc7c7c5d508ded050c3b52e4c9b1f9ea12eb25545fd7ddf66c9",
+        "sha256After": "9212455b34adbfc7c7c5d508ded050c3b52e4c9b1f9ea12eb25545fd7ddf66c9",
+        "bytesAfter": 1491225,
+        "byteExact": true
+      },
+      {
+        "file": "compiled-coordinator-21-cases-003-coordinator-seed64.report.json",
+        "sha256Before": "33f2802547d7877c13c9c7dd231da9606f72eb62f2b7fdf978409b053a8067de",
+        "sha256After": "33f2802547d7877c13c9c7dd231da9606f72eb62f2b7fdf978409b053a8067de",
+        "bytesAfter": 1545686,
+        "byteExact": true
+      },
+      {
+        "file": "compiled-d01-21-cases-001-d01-seed13.report.json",
+        "sha256Before": "62102d481c8cc67cb8eec581cd70cc3e638d63cf331b291ef2d02bb83713bc22",
+        "sha256After": "62102d481c8cc67cb8eec581cd70cc3e638d63cf331b291ef2d02bb83713bc22",
+        "bytesAfter": 825440,
+        "byteExact": true
+      },
+      {
+        "file": "compiled-d01-21-cases-002-d01-seed7.report.json",
+        "sha256Before": "8d5ea58ecc73c5d48a66f58674914b4258b5521b9607ed16b636f7fd7c0a9772",
+        "sha256After": "8d5ea58ecc73c5d48a66f58674914b4258b5521b9607ed16b636f7fd7c0a9772",
+        "bytesAfter": 749290,
+        "byteExact": true
+      },
+      {
+        "file": "compiled-host-smoke-14-cases-002-alpha-explicit-negative.report.json",
+        "sha256Before": "5f79359ba7c6f997011e028f20a4e595c2464c8ddc6a4724e32c8b8542d142c2",
+        "sha256After": "5f79359ba7c6f997011e028f20a4e595c2464c8ddc6a4724e32c8b8542d142c2",
+        "bytesAfter": 552,
+        "byteExact": true
+      },
+      {
+        "file": "compiled-host-smoke-14b-cases-002-alpha-explicit-negative.report.json",
+        "sha256Before": "5f79359ba7c6f997011e028f20a4e595c2464c8ddc6a4724e32c8b8542d142c2",
+        "sha256After": "5f79359ba7c6f997011e028f20a4e595c2464c8ddc6a4724e32c8b8542d142c2",
+        "bytesAfter": 552,
+        "byteExact": true
+      },
+      {
+        "file": "compiled-host-smoke-21-cases-002-alpha-explicit-negative.report.json",
+        "sha256Before": "71ae9713d79ede5119c533b7cc40f8d6ce2560d9ab87fd7d84fc016ac1818462",
+        "sha256After": "71ae9713d79ede5119c533b7cc40f8d6ce2560d9ab87fd7d84fc016ac1818462",
+        "bytesAfter": 552,
+        "byteExact": true
+      },
+      {
+        "file": "compiled-regressions-21-cases-001-coordinator-scope-loss.report.json",
+        "sha256Before": "6fc92917327642ff618ebc3bbbf776b1490c1800b21b8c31645cf55501ec9230",
+        "sha256After": "6fc92917327642ff618ebc3bbbf776b1490c1800b21b8c31645cf55501ec9230",
+        "bytesAfter": 3327,
+        "byteExact": true
+      },
+      {
+        "file": "compiled-regressions-21-cases-002-a10-positive.report.json",
+        "sha256Before": "c6e7631cf7fc62c60a07be046ff9cad2cce478ed1663c9fdd6b6eaa92596d10d",
+        "sha256After": "c6e7631cf7fc62c60a07be046ff9cad2cce478ed1663c9fdd6b6eaa92596d10d",
+        "bytesAfter": 33341,
+        "byteExact": true
+      }
+    ]
+  },
+  "scan": {
+    "status": "PASS_WITH_EXCLUSIONS",
+    "scannedTextFiles": 946,
+    "excludedActiveP09OrNew22Files": 6,
+    "remainingFindings": [],
+    "readFailures": [],
+    "patterns": [
+      "Windows home paths in raw or JSON-escaped form",
+      "assigned worktree name",
+      "Windows Temp and POSIX /tmp paths"
+    ]
+  },
+  "exclusions": [
+    "active compiled-p09-21 artifacts pending root-directed interruption capture",
+    "all new22 artifacts",
+    "host-canaries-21 is read-only for this assignment"
+  ],
+  "notes": [
+    "Completed path fields in the 44 named JSON files were replaced with <worktree>, <task-temp>, and <user-home> placeholders while preserving surrounding JSON text.",
+    "The 11 associated copy audits retain sourceSha256 values; destinationSha256/destinationBytes now match sanitized destinations and copy-time history is annotated.",
+    "Raw case report files were not written; their current SHA-256 values match the associated copy-audit destination hashes.",
+    "The scan skipped active P09-21 and all new22 files and did not alter host-canaries-21."
+  ],
+  "interruptedP09": {
+    "copyAudit": "compiled-p09-21-copy-audit.json",
+    "copyAuditSha256": "1c6b184c8110cc0eb30eb4249b9f798d3972d2a92019e4cdc93f8871d027606c",
+    "artifacts": [
+      {
+        "source": "cases.json",
+        "destination": "compiled-p09-21-cases.json",
+        "sourceSha256": "d14e06d2f0564d263ce3c0edf81a9b829d903f5dc980e89c31939a7a589103e5",
+        "destinationSha256": "d14e06d2f0564d263ce3c0edf81a9b829d903f5dc980e89c31939a7a589103e5",
+        "sourceBytes": 1626361,
+        "destinationBytes": 1626361,
+        "byteExact": true,
+        "pathSubstitutions": {
+          "worktree": 0,
+          "taskTemp": 0,
+          "userHome": 0
+        }
+      },
+      {
+        "source": "identity.json",
+        "destination": "compiled-p09-21-identity.json",
+        "sourceSha256": "f920afef2f4e65b6ded67dc636b3f9dcf5876b53f4acb8be5c7e7c4ef183aea1",
+        "destinationSha256": "de26c22fb6b7f734e1222247eb9f2dfa4a9287105944bed9d4975e1246b1396d",
+        "sourceBytes": 369,
+        "destinationBytes": 223,
+        "byteExact": false,
+        "pathSubstitutions": {
+          "worktree": 1,
+          "taskTemp": 1,
+          "userHome": 0
+        }
+      },
+      {
+        "source": "owned-processes.json",
+        "destination": "compiled-p09-21-owned-processes.json",
+        "sourceSha256": "ee0204b0ad38a39ae6b002db33a16937279e8f3399843c34f3211c909c7fa86a",
+        "destinationSha256": "7bf4bfa84d09b50b32778caf923996cd333b5bb13b8541bfc1b070d9771f63d9",
+        "sourceBytes": 9943,
+        "destinationBytes": 9335,
+        "byteExact": false,
+        "pathSubstitutions": {
+          "worktree": 0,
+          "taskTemp": 8,
+          "userHome": 0
+        }
+      }
+    ],
+    "interruptionRecord": "compiled-p09-21-interruption.json",
+    "interruptionRecordSha256": "3feabddabd602670ce0a83eb7793ac870a5c103932c0005627187edd92a146b3",
+    "interruptionStatus": "INTERRUPTED",
+    "completedSavedRows": 38,
+    "savedPassRows": 38,
+    "fullPopulationPass": false,
+    "terminalResultPresent": false,
+    "shutdownDuringInterruption": "UNVERIFIED",
+    "cleanup": {
+      "status": "PASS",
+      "method": "Remove-VerifierOwnedTree",
+      "resolvedContainmentVerified": true,
+      "rootAndTreeReparsePointCount": 0,
+      "treeEntryCountBeforeRemoval": 306,
+      "exactTaskTempRemoved": true,
+      "pathHandoffFileRetained": true
+    },
+    "currentOwnership": {
+      "recordedOldOwnerCount": 7,
+      "oldExactProcessesPresent": 0,
+      "port59503Listening": false,
+      "processesReferencingTaskDirectory": 0,
+      "creationTimeComparedAsUtc": true,
+      "executablePathCompared": true
+    }
+  },
+  "finalReaudit": {
+    "status": "PASS_WITH_EXCLUSIONS",
+    "scannedTextFiles": 956,
+    "skippedNew22Files": 3,
+    "remainingFindings": [],
+    "readFailures": [],
+    "hostCanaries21ReadOnly": true,
+    "activeP09ExistingFilesReadOnly": true,
+    "skippedNew22Names": [
+      "compiled-p09-22-inputs.json",
+      "compiled-p09-22-memory-observations.jsonl",
+      "compiled-p09-22-run.log"
+    ]
+  }
+}

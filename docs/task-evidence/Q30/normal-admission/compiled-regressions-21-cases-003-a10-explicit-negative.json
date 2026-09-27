@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 3,
+    "name": "a10-explicit-negative",
+    "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyA10=true&tsjA10Fail=true",
+    "stateAttribute": "data-tsj-verification",
+    "expectedState": null,
+    "expectedPrefix": "FAIL:a10",
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 120.0,
+    "reportAttribute": null
+  },
+  "url": "http://127.0.0.1:54304/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyA10=true&tsjA10Fail=true",
+  "startedUtc": "2026-09-27T00:41:36.890778+00:00",
+  "finishedUtc": "2026-09-27T00:41:37.551345+00:00",
+  "operationSeconds": 0.6605644999071956,
+  "outcome": "PASS",
+  "terminalReached": true,
+  "stateMatch": true,
+  "observedState": "FAIL:a10-explicit-failure-canary",
+  "lastObservedState": "FAIL:a10-explicit-failure-canary",
+  "timedOut": false,
+  "expectedFailureCanary": true,
+  "expectedFailureStateWasNotAnUnexpectedError": true,
+  "reportObserved": false,
+  "reportJsonValid": null,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 0,
+  "reportSha256": null,
+  "reportFile": null,
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [],
+  "listenerCleanupErrors": [],
+  "navigationError": null
+}

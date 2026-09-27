@@ -1,0 +1,31 @@
+{
+  "provenance": [
+    [
+      "data-tsj-preview-identity-protocol",
+      "troubleshootjs-execution-provenance-v1"
+    ],
+    [
+      "data-tsj-preview-source-digest",
+      "df00cf5944e05bc4131b53c017ef43307e19f3069ce3f6ec5b7383ad9a33e8c6"
+    ],
+    [
+      "data-tsj-preview-script-digest",
+      "b8af5fcb261eaf92c8100a8be2030591bbe36c71670bc29a678950d51fab1d3b"
+    ],
+    [
+      "data-tsj-preview-web-digest",
+      "e7d87a1f0f7dbb69312d5d7e74c8c52064835b9fec96495a2b0b851ff822e8d6"
+    ],
+    [
+      "data-tsj-preview-execution-digest",
+      "97f76d267602f0517b589c076c3d13416caadfbb94df3a59205bed3456a04394"
+    ],
+    [
+      "data-tsj-preview-file-count",
+      "1542"
+    ]
+  ],
+  "report": null,
+  "text": "\n\nMULTIMETER\n\n\nDC V\tAC V\nSCOPE\tOHM\nCONT\tDIODE\n\n\n--- V\n\n\n\n\n\n\n\nOpen controlled indicator\nBoard Power: ON\nNew control board\n\n\n\n\n\n\n\n\n\n\n\nBENCH POWER\n\n\nSupply 1 (+12V): 12 V, 106.542 μA\n\nDisconnect Supply 1 (+12V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nEach output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.\n\n\nBOARD VIEW\n\n\nFit bench\n\n\nZoom +\nZoom -\nView bottom copper\n\n\nWheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe. Hold Tab on the board: bottom view; release: top.\n\n\nTop side / top copper\n\n\nSelect component\nJ1\nLED1\nR1\n\n\nProbe terminal\nJ1 terminal 1\nJ1 terminal 2\nLED1 terminal A\nLED1 terminal K\nR1 terminal 1\nR1 terminal 2\n\n\nPlace red probe\nPlace black probe\n\n\n\n\nService Ticket\n\n\nIndicator does not light.\n\n\nCustomer retest: Observe the indicator after repair.\n\nRetest Customer\n\n\n\nResistor Replacement Catalog\n\n\n10 Ohm +/-5%\n12 Ohm +/-5%\n15 Ohm +/-5%\n18 Ohm +/-5%\n22 Ohm +/-5%\n27 Ohm +/-5%\n33 Ohm +/-5%\n39 Ohm +/-5%\n47 Ohm +/-5%\n56 Ohm +/-5%\n68 Ohm +/-5%\n82 Ohm +/-5%\n100 Ohm +/-5%\n120 Ohm +/-5%\n150 Ohm +/-5%\n180 Ohm +/-5%\n220 Ohm +/-5%\n270 Ohm +/-5%\n330 Ohm +/-5%\n390 Ohm +/-5%\n470 Ohm +/-5%\n560 Ohm +/-5%\n680 Ohm +/-5%\n820 Ohm +/-5%\n1000 Ohm +/-5%\n1200 Ohm +/-5%\n1500 Ohm +/-5%\n1800 Ohm +/-5%\n2200 Ohm +/-5%\n2700 Ohm +/-5%\n3300 Ohm +/-5%\n3900 Ohm +/-5%\n4700 Ohm +/-5%\n5600 Ohm +/-5%\n6800 Ohm +/-5%\n8200 Ohm +/-5%\n10000 Ohm +/-5%\n12000 Ohm +/-5%\n15000 Ohm +/-5%\n18000 Ohm +/-5%\n22000 Oh",
+  "verification": "FAIL:a10-explicit-failure-canary"
+}

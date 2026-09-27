@@ -1,0 +1,35 @@
+Q30_SENSITIVITY_CASE seed=4 fault=RELAY_B_COIL_OPEN exit=1 termination=True qualified=False
+Q30_STEP_STAMP_FAILURE seed=4 fault=RELAY_B_COIL_OPEN maxStep=5.0E-6 exception=java.lang.NullPointerException message=null
+java.lang.NullPointerException
+	at com.lushprojects.circuitjs1.client.CirSim.stampNonLinear(CirSim.java:3239)
+	at com.lushprojects.circuitjs1.client.Diode.stamp(Diode.java:136)
+	at com.lushprojects.circuitjs1.client.DiodeElm.stamp(DiodeElm.java:149)
+	at com.lushprojects.circuitjs1.client.CirSim.stampCircuit(CirSim.java:2829)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest$SensitivityCirSim.stampCircuit(Q30SolverStepSensitivityContractTest.java:702)
+	at com.lushprojects.circuitjs1.client.CirSim.analyzeCircuitOwned(CirSim.java:2797)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.analyze(CircuitSolverExecutor.java:104)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.analyze(CircuitSolverExecutor.java:97)
+	at com.lushprojects.circuitjs1.client.CirSim.analyzeCircuit(CirSim.java:2730)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.settleElectrical(Q30SolverStepSensitivityContractTest.java:432)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.runOwner(Q30SolverStepSensitivityContractTest.java:243)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.verifySeed(Q30SolverStepSensitivityContractTest.java:135)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.main(Q30SolverStepSensitivityContractTest.java:73)
+Q30_STEP_OWNER_CLEANUP seed=4 fault=RELAY_B_COIL_OPEN maxStep=5.00000000e-06 cleanup=true elapsedMillis=0
+Q30_STEP_OWNER_CLEANUP seed=4 fault=DREV_OPEN maxStep=0.00000000 cleanup=true elapsedMillis=0
+Q30_STEP_OWNER_CLEANUP seed=4 fault=RELAY_B_COIL_OPEN maxStep=0.00000000 cleanup=true elapsedMillis=0
+Q30_STEP_SEED_CLEANUP seed=4 cleanup=true elapsedMillis=0
+
+node 11 unconnected
+Exception in thread "main" java.lang.NullPointerException
+	at com.lushprojects.circuitjs1.client.CirSim.setSimRunning(CirSim.java:1757)
+	at com.lushprojects.circuitjs1.client.CirSim.stop(CirSim.java:3100)
+	at com.lushprojects.circuitjs1.client.CirSim.analyzeCircuitOwned(CirSim.java:2799)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.analyze(CircuitSolverExecutor.java:104)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.analyze(CircuitSolverExecutor.java:97)
+	at com.lushprojects.circuitjs1.client.CirSim.analyzeCircuit(CirSim.java:2730)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.settleElectrical(Q30SolverStepSensitivityContractTest.java:432)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.runOwner(Q30SolverStepSensitivityContractTest.java:243)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.verifySeed(Q30SolverStepSensitivityContractTest.java:135)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.main(Q30SolverStepSensitivityContractTest.java:73)
+
+Q30_SENSITIVITY_CENSUS attempted=1 passed=0 failed=1 childBudgetMs=60000

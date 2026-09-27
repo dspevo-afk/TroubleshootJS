@@ -19,7 +19,7 @@ final class QuickPlaySession {
     }
 
     private static QuickPlaySession create(QuickPlaySelector selector) {
-        QuickPlaySelection selection = selector.select();
+        QuickPlaySelection selection = selector.selectSynchronousLeaf();
         return new QuickPlaySession(selection, selector.generate(selection));
     }
 

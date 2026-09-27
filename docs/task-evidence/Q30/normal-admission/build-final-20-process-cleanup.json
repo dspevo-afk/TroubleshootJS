@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "target": "<task-temp>/TroubleshootJS/build-process-9a94dec98de143cdbeff19db5d3675ec",
+  "deletionMethod": "Remove-VerifierOwnedTree",
+  "deletionAttempted": true,
+  "directoryAbsent": true,
+  "processTerminationAttempted": false,
+  "identityLeafPass": true,
+  "parentUnderTemp": true,
+  "targetUnderParent": true,
+  "ownedPathPass": true,
+  "reparseTreePass": true,
+  "reparseDescendantCountBeforeDeletion": 2,
+  "exactExpectedChildren": true,
+  "expectedChildren": [
+    "stdout.log",
+    "stderr.log"
+  ],
+  "sourceHashesMatch": true,
+  "processPathReferenceCount": 0,
+  "identityMetadataPresent": false,
+  "cleanupMetadataPresent": false,
+  "buildOutcome": "FAIL",
+  "buildExitCode": 2,
+  "buildPhase": "GWT compilation",
+  "excluded": [
+    "build21",
+    "q30-modern-01",
+    "tests/contracts/__pycache__"
+  ]
+}

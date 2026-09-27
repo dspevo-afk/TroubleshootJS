@@ -1,4 +1,302 @@
-# Current checkpoint: Q30 actual service slice complete; full Q30 BLOCKED
+# Current checkpoint: Q30 qualified-family acceptance COMPLETE — PASS
+
+Base/HEAD `16a922b2b757dfcd1cbc3a0230ab2b97ac2fbb50`, branch
+`codex/q30-multirail-qualification`. Q30 gates are COMPLETE for the declared
+33/35/37-package family across all eight topology axes. This qualified sample
+is not a universal guarantee for arbitrary 20–40-part circuits. This checkpoint
+records prepublication acceptance; root owns publication. Q60 is unstarted;
+next preferred milestones are U06 then U07. Historical failures and limits
+remain below. [Current evidence](task-evidence/Q30/normal-admission/README.md).
+
+Current evidence:
+
+- GWT21 final source/build and all reused runtime gates PASS with unchanged
+  inputs. Alpha21 full41 plus strict reader, host21, regressions21, D01-21 and
+  coordinator21 retain their recorded PASS results and reuse boundaries. The
+  [final source-input audit](task-evidence/Q30/normal-admission/final-source-input-audit-22.json)
+  confirms 1,133 build, 392 web and 1,248 native inputs unchanged.
+- Unfiltered native05 PASSed all 78 Java suites and independent oracles. Run
+  interval: `2026-09-27T02:18:14.6666262Z`–`2026-09-27T03:15:26.4869934Z`.
+  The 51-row structural corpus has 42 accepted routes, nine retained route
+  rejections and zero failures; 17 corruption canaries pass. Service and finer
+  step comparisons each pass 40/40. The root audit reports all 12 checks true,
+  with 1,248 native inputs and three reader inputs unchanged.
+- Combined [P09 final22 root result](task-evidence/Q30/normal-admission/p09-final-22/p09-final-22-result.json)
+  and [reader result](task-evidence/Q30/normal-admission/p09-final-22/reader-result.json)
+  PASS with actual exit0. The same-candidate gate verifies native05, compiled22
+  and controlled22; all 24 development and 48 holdout rows pass with geometry
+  matches, six controlled outcomes pass, and 46 malformed controls reject.
+  Inputs and server/process cleanup checks pass.
+- Modern22 PASSes 33/33 normal launches and 3/3 replays with no errors.
+  Manual22 PASSes typed QA/QB/RDA/U2B service and correct repair on seed13; the
+  intentionally wrong 12 V relay fails, and replay of the original fault fails
+  with empty tray and cleared probes. Five screenshots, final 1,133/392 input
+  audit and manual cleanup pass.
+- Coordinator21 remains private measurement evidence. Its `normalAdmission=false`
+  and `playerPublished=false` flags are not normal-player results; the normal
+  browser/manual gates above provide separate production-flow evidence.
+- Native05 evidence-copy sanitization and exact temporary child/parent cleanup
+  are complete; see the [copy audit](task-evidence/Q30/normal-admission/native-final-05-copy-audit.json).
+  No build or browser is active. Preserve the
+  historical P09-21 interruption (38/72 PASS rows, no aggregate result,
+  shutdown UNVERIFIED). The compiled-P09-22 run log retains one unattributed
+  initial console404. The canonical corpus table remains unchanged.
+- Historical automated approval rejection for Modern01 temporary cleanup and
+  excluded bytecode cleanup remains recorded. Current Python bytecode is
+  47,306 bytes, SHA-256
+  `d4c5fd3635bd524bd0f1160869995c02c064f91ace9eb5ec49121adb2ea94387`, excluded
+  from staging; this differs from the old 36,855-byte record.
+- Publication formatting initially failed the staged whitespace check on 17
+  captured evidence files. Their exact original bytes are preserved in the
+  [archive](task-evidence/Q30/normal-admission/publication-original-bytes-22.zip);
+  [normalization mapping](task-evidence/Q30/normal-admission/publication-whitespace-normalization-22.json)
+  records identical nonblank content, JSON values and Python AST where applicable.
+  The [post-normalization readers](task-evidence/Q30/normal-admission/publication-native-readers-22.json)
+  pass all 51 structural rows and 80 service/sensitivity rows. Production inputs
+  are unchanged; earlier byte hashes refer to the archived originals.
+
+# Historical checkpoint: pre-Alpha19 status — 2026-09-26
+
+Implemented: separate MEDIUM_BOARD_NORMAL@1 physical token, real five-owner D01,
+11-family catalog, staged Q30 and actual-proof difficulty v2. Reviewed300000ms
+normal-medium allowance; small/composed90000ms,640shared units,5000ms/unit,
+four candidates,48vias and routing caps unchanged. Private proof/cache isolated.
+Semantic shop identity supports source-owned cross-slot parts with endpoint guards.
+QA/QB now have provider-owned typed metadata through existing central adapters;
+CircuitJS elements/values/posts unchanged. Loose removed backing stays probeable,
+with all leads electrically disconnected. Source reviews are source-only PASS.
+
+Prerequisite evidence: raw51 corpus42accepted/9retained rejects, all8axes and
+33/35/37supports;40service+40finer-step cases; GWT05 real D01/readiness/negative
+canaries; GWT09 cold/fresh-warm13/7/64 all5hypotheses/185readings/390cold units,
+30faultpairs/37corruptions. Coldp50/p95=150.440/160.335s, warm33.829/35.407s
+(n3 limits). These remain explicitly pre-final prerequisites.
+
+GWT13 retained compiler FAIL at the QuickPlay verifier's non-final `search`
+capture; GWT14 then PASSed five permutations in77.108s/link1.289s. GWT15
+PASSed five permutations in82.611s/link1.361s with1133 build inputs and392 web
+files unchanged. Current GWT16 also PASSes five permutations in79.122s/link1.355s;
+its1133 build inputs and392 web files are frozen. Driver03 PASS5suites including
+all37Q30positions/1427assertions.
+A10 PASS3128assertions,24normal+8D01rows, strictreader, cleanup and4ms maxcancel;
+explicit failure canary expectedFAIL/no success report. Coordinator12 seed13
+cold/warm165306/36074ms PASS, all5/185readings/10pairs/37corruptions. Scope-loss
+expectedcancel, predecessor restoration and13corruptions PASS. Current full
+coordinator cohort remains pending.
+
+Retained GWT15 host validation PASSes six declared canaries: smoke exit0, reject/1s
+timeout/sub-millisecond timeout expected exit1, and external-URL/null-schema
+negatives expected exit2 before launch. Cleanup and input audits PASS for every
+launched case. The independent actual Alpha-negative reader PASSes. Retained Focused15
+PASSes all11 cases, including both Alpha cases and all9 QuickPlay cases. The
+completed Alpha15 aggregate is FAIL, not a timeout: it reached case39 after
+580.656s and failed U04 cross-target catalog mutations after 39 cases, 12,734
+assertions and 415 acquisitions; owner restoration (3ms), host cleanup and
+input audit PASS. Root fixed the Alpha-negative path so eligibility and provider
+installation both execute. The worker-owned U04 composed-fixture correction and
+current-epoch q30_alpha_reader_census correction are in progress; the later
+GWT16 focused/host results are recorded below. The legacy Alpha2 reader still
+reflects nine mutation providers/310
+rows plus its shop-geometry census, while current first39 evidence includes the
+E04/regulator 397-row matrix, NPN0 SPAN220/260 coverage and three composed0
+variants; the legacy epoch remains preserved. The outer Alpha host capture rose
+from600 to900s for bounded headroom only; production job budgets are unchanged.
+Independent source review found wrong-fit and wrong-type cases plus an assertion
+short-circuit before the actual target.install call. Semantic unequal canonical
+geometry is intentional; the rejected literal-RB260/RLOAD220 requirement is out
+of scope. No production behavior change or full Alpha/Q30 acceptance is claimed.
+
+Current GWT16 host validation PASSes all eight declared canaries with their
+expected codes/outcomes: smoke exit0; reject, 1s timeout and sub-ms timeout
+expected exit1; and URL, null-schema, invalid-901s and sole-null-schema
+negatives expected exit2. Focused16 finishes FAIL after13 cases: Alpha0,
+Alpha13 and all9 QuickPlay cases PASS; composed39/40 FAIL in10.755/10.375s at
+the same U04 no-cross-target fixture. The actual diagnostic loose stock is
+source-formed; GWT17 below records the U04 correction with input audit and host
+cleanup PASS.
+Full Alpha16 is NOT RUN. Current protocol-2 reader units cover49 malformed,
+2 cross-version and2 unknown cases; the historical actual protocol-1 reader
+retains38+2+2. The focused16 geometry helper PASSes NPN0 SPAN220/260 and
+composed0/3 SPAN220/240/260, but no full actual protocol-2 reader PASS is
+claimed. GWT17 result is recorded below.
+
+GWT17 then PASSes five permutations in78.718s/link1.341s with1133 inputs and
+392 web files unchanged; only the U04 verifier differs from GWT16. Focused17
+PASSes composed39/40 in11.550/11.069s, with input audit and host cleanup PASS.
+The U04 correction reflects old10ohm stock already formed by earlier service,
+searches all candidates and real3-slot triples, uses a fresh catalog
+source-owned portable-stock fallback, performs real target formation and
+restores power. Full Alpha16 remains NOT RUN. Native04 session70557 then
+FAILed exit2; [native-final-04-result.json](task-evidence/Q30/normal-admission/native-final-04-result.json)
+records 1248 unchanged input hashes and scratch cleanup PASS. Its raw51 corpus
+finished42 accepted/9 routing rejects, while service40 and sensitivity40 PASS.
+The next `Q30NormalExecutionPolicyContractTest.preMutationGuards` failed because
+the old six-argument reflection could not find `GenerationCoordinator.start`
+after the controlled P09 hook signature changed. The strict corpus reader
+correctly FAILed because the full-native log contains that failed child; no
+corpus-reader PASS is claimed. The tests-only seventh-null-argument reflection
+fix is delivered; production and GWT17 remain unchanged. Alpha17 is **FAIL**
+at active case40 after40 completed cases, 13,367 assertions, 434 acquisitions
+and397 mutations at successful catalog-formation state equality; cleanup,
+input audit and the explicit negative PASS. The raw difference is unknown;
+an NPN transient is only a hypothesis, so this is diagnostic evidence. The
+[Alpha17 result](task-evidence/Q30/normal-admission/compiled-alpha-17-result.json),
+sanitized artifacts, copy audit and cleanup receipt are retained. Two duplicate
+spec removals are policy-blocked by audit and will not be retried. Diagnostic
+U04 attempt05 failed `javac Vector<String>.canonical`; build18 is NOT RUN by its
+conditional guard. The fixed helper is under focused native-normal-policy06;
+GWT19 is RUNNING as session54091, and neither result is claimed. Full native05
+remains mandatory and NOT RUN.
+
+P09 controlled15 actually PASSes six declared cases: typed PHYSICAL rejection
+in1.557s, search14.108s, exact replays12.276/12.292s, and cancellations
+0.759/3.070s. Cleanup and input audits PASS; 394 GWT15 web/driver/spec inputs
+are unchanged and the source edits were not consumed. One unattributed console
+404 is retained; there are no JS or HTTP response errors. The strict-reader
+preflight initially failed because it required injected search control and then
+treated search as uninjected; the correction excludes only that injected tuple.
+The actual controlled6 plus historical GWT12 native/compiled72 now pass the
+46-malformed reader set. Its mixed scope is not a final same-candidate gate, and
+fresh P09 population/native evidence remains pending. An independent bounded
+re-review PASSed with no new P1/P2 findings.
+
+Native01 FAIL raw Q30 cohort; reviewed public-root oracle retains original10
+cohorts and uses16fixed Q30roots/four canonical candidates with unchanged floors.
+Native02 FAIL missing typed QA/QB metadata after broad generation checks passed.
+Native03 FAIL floorplan after all22cohorts,220physical+220replay,40service,
+40finer-step and51rawcorpus42accepted/9rejects completed. Exact scratch cleanup
+PASS; nofullreceipt. Strict raw51 reader PASS17corruptions. Separate tail01 PASS46
+later suites; it is not a substitute for a clean unfiltered full run.
+
+Floorplan-locality01/02 FAIL retained: forcedreference35 JOB360>300; restored
+current compact33 MST29220>28000. Independent P1 audit identified changed recipe
+inputs. Frozen literal historical P1 graph now preserves all old bounds, geometry,
+access, replay and JLOAD oracles without current Rb30Plan dependencies. Generic20
+fixture unchanged; current33/35/37 receive all18candidate checks. Focused
+native-floorplan-p09-03 PASS3suites/exit0/cleanup: floorplan76556assertions and
+original historicalMST27630. All1248 native inputs audited unchanged afterward.
+
+Fresh GWT12 P09 browser population PASS72/72, process/server cleanup PASS, no JS
+exceptions or captured HTTP response failures (one unattributed console404 retained).
+Corrected native72 exactly match every compiled seed/shape/component coordinate.
+Native gate now applies existing P09 envelope during bounded candidate selection,
+as production does; old raw post-selection checks caused apparent mismatches.
+Raw P09EnvelopeCorpus remains unchanged. The full/final same-candidate P09 canary
+reader is still pending.
+The unchanged old layout12 rejection canary actually FAILs: its seed now passes
+layout13; remaining5cases NOTRUN. Failure/firstrow/cleanup are retained.
+
+Optional native fixture tooling accepts1..128 distinct exact seeds only with
+explicit QuickPlayGateCorpus selection; default fixed24/48/fullsuite unchanged.
+Five actual PowerShell invalid-parameter canaries PASS as expectedexit2 before
+Java/scratch. Positive actualhost rows preserve MIN/MAX/2^53+1 exactly; exit0,
+cleanupPASS. Separate128-root spec predeclared before discovery, disjoint from72;
+p09-fixture-census-01 completed128/128 physicalPASS, zero rejections, exit0 and
+cleanupPASS under the unchanged600000ms budget. All rows are retained; no natural
+negative fixture was obtained. The separately labeled controlled invalid-layout
+canary now supplies six actual P09 predicate/retry/replay/cancellation cases;
+fresh same-candidate population/native coverage remains pending.
+Population results and physical thresholds remain unchanged.
+
+Fresh Alpha12 FAILs at first LED seed0 catalog R1: obsolete assertion demanded a
+bound realization for valid unformed loose axial stock. Source audit confirms the
+player uses canonical LoosePartPose geometry; the verifier correction checks that
+actual adapter. QuickPlay12 LED seed3 FAILs an obsolete completed-board removal
+rejection assertion: completed boards intentionally remain interactive since
+8b371d9. The correction will verify real removal/reinstallation and latched result.
+Both failures are retained. GWT14 focused runtime later passed Alpha LED0 and
+all nine QuickPlay cases but failed Alpha case13 on a stale span fixture. The
+GWT15 focused run passed all11 cases; Alpha15 then completed FAIL at case39
+after580.656s on U04 cross-target catalog mutations, with owner restore,
+cleanup and input audits PASS. Current GWT16 focused execution still fails
+composed39/40 on the same U04 fixture; Full Alpha16 is not run.
+D01 seed13 GWT12 lost browser transport after four of five cold hypotheses at
+242559ms. Two Page.getFrameTree timeouts and a screenshot timeout prevented a
+terminal receipt; operation outcome and owner restoration are UNVERIFIED. The
+owned tab closed and the browser tab list is empty. The interruption is retained;
+GWT15 host canaries do not supply a D01 receipt; a bounded rerun remains pending.
+
+Remaining: finish the final same-candidate P09 reader plus fresh P09
+population/native coverage; complete the current protocol-2 Alpha reader, then
+run Full Alpha16 and its41-plus-negative reader; supported
+compiledQuickPlay hooks; complete same-
+preview Q30 coordinator cohort; fresh modern33launches/11families+3replays and real
+visible QA/QB service/measurement/wrongrelay/correctrepair/replay flow; finish
+focused native-normal-policy06 and GWT19, rerun final compiled gates, then run
+mandatory unfiltered native05 plus independent readers/oracles;
+input/path/diff audits,
+docs, explicit stage/commit/push, remoteSHA verification and Gmail. Historical
+GWT10/11 visible and modern01 PASS remain pre-fix evidence only.
+
+Resources: preview10 PID38552 stopped and port8904 positively released. Preview11
+and Preview12 are stopped; Preview12 PID37364 port8904 is positively released;
+IAB tabs are closed. Both fresh P09 profiles removed through maintained
+owned-tree cleanup after process/port/physical containment checks. Native focused
+and transport/census scratch cleanups PASS.
+Old modern01 temp/profile (.tools/q30-modern-01-path.txt) and task-created Alpha
+__pycache__ file remain after automatic approval review rejected their exact
+removals with only “blocked by policy.” No bypass; bytecode excluded from staging.
+User has an asynchronous choice to remove them manually or retain them; no answer
+yet. Three old crashed tabs remain a historical unverified-cleanup limitation.
+Nonblocking relay UI requires component reselection after actual discharge.
+
+# Prior intermediate checkpoint: Q30 admission and router canaries
+
+The bounded diagnosis, physical-service and customer-retest slice is independently
+**PASS / ACCEPTED** at `16a922b2b757dfcd1cbc3a0230ab2b97ac2fbb50`
+(`Connect Q30 diagnosis, physical service and customer retest`). The isolated
+`codex/q30-multirail-qualification` worktree started clean at that published SHA.
+Q30-P1 remains independently accepted at `fac582c1150273c01d09bc704dd796c1bf49a135`.
+
+The authorized continuation is legitimate production D01 admission, an explicit
+representative/held-out 20–40-part corpus, repair/replay and cold/warm performance,
+followed by normal-player registration and visible acceptance only if those
+gates pass. Full Q30 remains **BLOCKED and unregistered**. Q60 is unstarted.
+The current intermediate compiled D01 canary passes for normal seed 0: five
+disjoint hypotheses, 185 actual measurements, physical replacement/customer
+retest, fresh-owner warm value-cache reuse and all five negative cases. Its
+independent reader and 17 corruption canaries pass. Cold proof took 165.95 seconds
+(active work 162.97 seconds); this has not passed the normal generation deadline.
+The structural corpus passes 51 row contracts: 49 accepted, two routing rejections,
+no failures, with independent census/corruption checks and scratch cleanup.
+All-owner/topology live service and final-source performance remain open.
+D01's normal-owner requirement, P09, MEDIUM_BOARD@1 and routing budgets remain
+binding. Both 25-us and 15-us solver trials failed the regulator input envelope
+on seed 4 and were rejected; production uses 5 us. The wider 10-us experiment
+also fails the declared regulator input envelope and is rejected. Its complete
+40-case census has 22 paired passes and 18 failures, with exact scratch cleanup.
+The production 5-us reference additionally
+fails seeds 13/4 / REN_OPEN after correct replacement (negative regulator output)
+and seed 3's initial healthy B-only condition (both outputs active). These are
+open correctness blockers; successful experimental pairs do not qualify them.
+The new resumable-router coordinator canary stays within the 5-second unit limit
+(maximum 1,761 ms), then reaches the unchanged 90-second total limit after 140
+of 395 proof units. HEALTHY construction/preparation is 43,656 ms, partial proof
+45,612 ms; exact restoration/cleanup passes. No successful latency is inferred.
+Bounded temporal profiles and guarded power-off source rollback pass 83 native
+assertions. The focused router/request/token suites pass, and accepted seeds 0/4
+plus rejected 35 match the frozen route/layout/rejection receipts. Full 51-row
+post-refactor equality and the final-source D01/service matrix remain pending.
+No budget has been increased.
+Private qualification now requires the same explicit customer-retest completion
+as normal play. Full Q30 remains BLOCKED; no normal catalog registration changed.
+Independent review accepted the five real service owners, 37 observations, exact
+physical replay, original-part fault ownership, four-input retest, relay discharge
+guard and wrong-12-V negative. Its native seed-37 relay and sensor children passed
+257 and 239 assertions respectively; its independent receipt/canary reader passed.
+The attempted complete ten-case independent wrapper rerun exceeded that wrapper's
+150-second outer limit, not an application assertion. The committed maintained
+runner completed the ten-case census. Three earlier crashed Browser tabs retain
+unverified historical cleanup; this is not a final-preview cleanup failure.
+
+Resources: previews 01, 02 and 03 were stopped through exact identity checks with
+positive release of port 8904; task Browser tabs 30, 31 and 32 are closed and the
+last task-tab listing was empty. Native scratch cleanup passes. Preserve unrelated
+ordinary-checkout changes and historical evidence. Root owns integration and
+publication; workers have separate files. No commit or push of this continuation.
+See `task-evidence/Q30/normal-admission/attempts.md` for failed attempts and limits.
+
+# Historical checkpoint: Q30 actual service slice complete; full Q30 BLOCKED
 
 Q30-P1 is independently **PASS / ACCEPTED** at
 `fac582c1150273c01d09bc704dd796c1bf49a135`. This continuation's candidate is on

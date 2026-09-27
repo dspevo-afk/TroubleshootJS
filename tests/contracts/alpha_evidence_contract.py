@@ -13,19 +13,91 @@ COHORT = {
     "NPN_LOW_SIDE_SWITCH": [0, 1, 2],
     "NMOS_LOW_SIDE_SWITCH": [0, 1, 2],
     "RELAY_OUTPUT": [0, 1, 2, 3, 4, 5],
+    "SENSOR_CONTROL": [0, 1, 2],
     "RB15_CONTROL": [0, 1, 2, 3, 17, 42, 101, -1, 9007199254740993,
                      -9223372036854775808, 9223372036854775807],
     "COMPOSED_CONTROLLED_INDICATOR": [0, 3],
 }
-EXPECTED = {(family, str(seed)) for family, seeds in COHORT.items() for seed in seeds}
-TERMINALS = {"resistor": 2, "diode": 2, "led": 2, "capacitor": 2, "npn": 3, "nmos": 3, "relay": 5,
-             "connector": 2, "fuse": 2}
-SERVICE_POSITIONS = dict(zip(COHORT, [3, 4, 5, 6, 7, 6, 9, 16, 15]))
+LEGACY_COHORT = {
+    "LED_INDICATOR": [0, 2, 3, 4],
+    "DIODE_PROTECTED_INDICATOR": [0, 2, 3],
+    "PARALLEL_DUAL_INDICATOR": [0, 2, 3],
+    "RC_DELAY": [0, 2, 3],
+    "NPN_LOW_SIDE_SWITCH": [0, 1, 2],
+    "NMOS_LOW_SIDE_SWITCH": [0, 1, 2],
+    "RELAY_OUTPUT": [0, 1, 2, 3, 4, 5],
+    "RB15_CONTROL": [0, 1, 2, 3, 17, 42, 101, -1, 9007199254740993,
+                     -9223372036854775808, 9223372036854775807],
+    "COMPOSED_CONTROLLED_INDICATOR": [0, 3],
+}
+COHORT_BY_PROTOCOL = {
+    "TSJ-ALPHA-1": LEGACY_COHORT,
+    "TSJ-ALPHA-2": COHORT,
+}
+EXPECTED_BY_PROTOCOL = {
+    protocol: {(family, str(seed)) for family, seeds in cohort.items() for seed in seeds}
+    for protocol, cohort in COHORT_BY_PROTOCOL.items()
+}
+EXPECTED = EXPECTED_BY_PROTOCOL["TSJ-ALPHA-2"]
+LEGACY_TERMINALS = {"resistor": 2, "diode": 2, "led": 2, "capacitor": 2, "npn": 3, "nmos": 3, "relay": 5,
+                    "connector": 2, "fuse": 2}
+# These are the production package terminal counts: the E04 decision-control
+# package has five posts and the TO-220 regulator package has four.
+CURRENT_TERMINALS = dict(LEGACY_TERMINALS,
+                         **{"e04-decision-control": 5, "regulator": 4})
+TERMINALS_BY_PROTOCOL = {
+    "TSJ-ALPHA-1": LEGACY_TERMINALS,
+    "TSJ-ALPHA-2": CURRENT_TERMINALS,
+}
+# The non-sensor service contract remains the historical provider allowlist.
+TERMINALS = LEGACY_TERMINALS
+SENSOR_CONTROL_SERVICE_TYPES = {
+    "U2": "e04-decision-control",
+    "RBIAS": "resistor",
+    "RREF": "resistor",
+    "RFB": "resistor",
+    "RREF_LOW": "resistor",
+    "RFB_HYST": "resistor",
+    "J1": "connector",
+    "J2": "connector",
+    "J3": "connector",
+    "U1": "regulator",
+}
+SENSOR_CONTROL_COMPONENTS = frozenset(SENSOR_CONTROL_SERVICE_TYPES)
+SENSOR_CONTROL_DIRECT_COMPONENTS = SENSOR_CONTROL_COMPONENTS - {"RFB_HYST"}
+SENSOR_CONTROL_COMPONENTS_BY_SEED = {
+    "0": SENSOR_CONTROL_DIRECT_COMPONENTS,
+    "1": SENSOR_CONTROL_COMPONENTS,
+    "2": SENSOR_CONTROL_DIRECT_COMPONENTS,
+}
+SERVICE_POSITIONS = dict(zip(LEGACY_COHORT, [3, 4, 5, 6, 7, 6, 9, 16, 15]))
+FEATURE_SCHEMA_BY_PROTOCOL = {
+    "TSJ-ALPHA-1": "difficulty/1",
+    "TSJ-ALPHA-2": "difficulty/2",
+}
+SERVICE_POSITIONS_BY_PROTOCOL = {}
+for protocol, cohort in COHORT_BY_PROTOCOL.items():
+    positions = {
+        (family, str(seed)): SERVICE_POSITIONS[family]
+        for family, seeds in cohort.items()
+        if family != "SENSOR_CONTROL"
+        for seed in seeds
+    }
+    if protocol == "TSJ-ALPHA-2":
+        # The deterministic sensor variant adds one serviceable hysteresis resistor
+        # for odd seeds; the release corpus contains direct seeds 0 and 2 and
+        # hysteretic seed 1.
+        positions.update({
+            ("SENSOR_CONTROL", "0"): 9,
+            ("SENSOR_CONTROL", "1"): 10,
+            ("SENSOR_CONTROL", "2"): 9,
+        })
+    SERVICE_POSITIONS_BY_PROTOCOL[protocol] = positions
 
 
-def mutation_matrix():
+def mutation_matrix(terminals_by_provider):
     expected = set()
-    for provider, terminals in TERMINALS.items():
+    for provider, terminals in terminals_by_provider.items():
         expected.add((provider, "acquire", "OWNER_CHANGE", 1, "REJECTED"))
         stages = {
             "acquire": ["INVENTORY_ACQUIRE", "CANONICAL_REGISTER", "GRAPH_APPEND", "COMMIT"],
@@ -46,7 +118,22 @@ def mutation_matrix():
     return expected
 
 
-EXPECTED_MUTATIONS = mutation_matrix()
+EXPECTED_MUTATIONS_BY_PROTOCOL = {
+    protocol: mutation_matrix(terminals)
+    for protocol, terminals in TERMINALS_BY_PROTOCOL.items()
+}
+EXPECTED_MUTATIONS = EXPECTED_MUTATIONS_BY_PROTOCOL["TSJ-ALPHA-2"]
+SHOP_GEOMETRY_SOURCES = {
+    ("NPN_LOW_SIDE_SWITCH", "0"),
+    ("COMPOSED_CONTROLLED_INDICATOR", "0"),
+    ("COMPOSED_CONTROLLED_INDICATOR", "3"),
+}
+AXIAL_RESISTOR_PAD_SPACING = {
+    # PhysicalPackages.axialResistorVariant places pads at x=30 and x=span-30.
+    "SPAN_220": 160,
+    "SPAN_240": 180,
+    "SPAN_260": 200,
+}
 
 
 def validate_cross_targets(groups):
@@ -103,8 +190,41 @@ def require(ok, message):
         raise ValueError(message)
 
 
+def feature_schema_for_protocol(protocol):
+    require(type(protocol) is str and protocol in FEATURE_SCHEMA_BY_PROTOCOL,
+            "Unknown alpha report protocol")
+    return FEATURE_SCHEMA_BY_PROTOCOL[protocol]
+
+
 def integer(value, minimum=0, maximum=2**53 - 1):
     return type(value) is int and minimum <= value <= maximum
+
+
+def validate_shop_slot_geometry(component, geometry):
+    require(type(component) is str and component and type(geometry) is dict and
+            set(geometry) == {"variant", "pads"},
+            "Malformed Shop source slot geometry")
+    variant = geometry.get("variant")
+    require(variant in AXIAL_RESISTOR_PAD_SPACING,
+            "Unknown Shop source resistor geometry variant")
+    pads = geometry.get("pads")
+    require(type(pads) is list and len(pads) == 2,
+            "Shop source resistor must expose exactly two physical pads")
+    for index, terminal in enumerate(("1", "2")):
+        pad = pads[index]
+        require(type(pad) is dict and set(pad) == {"id", "terminal", "x", "y"} and
+                type(pad.get("id")) is str and pad["id"] and
+                pad.get("terminal") == terminal and
+                integer(pad.get("x")) and integer(pad.get("y")),
+                "Malformed Shop source resistor pad identity or coordinate")
+    require(pads[0]["id"] != pads[1]["id"],
+            "Shop source resistor pads must have distinct identities")
+    dx = abs(pads[1]["x"] - pads[0]["x"])
+    dy = abs(pads[1]["y"] - pads[0]["y"])
+    require((dx == 0) != (dy == 0) and
+            dx + dy == AXIAL_RESISTOR_PAD_SPACING[variant],
+            "Shop source resistor span disagrees with canonical package pads")
+    return variant
 
 
 def read(path):
@@ -114,7 +234,13 @@ def read(path):
 
 
 def validate(report, negative=False):
-    require(type(report) is dict and report.get("protocol") == "TSJ-ALPHA-1", "Protocol")
+    require(type(report) is dict, "Report")
+    protocol = report.get("protocol")
+    feature_schema = feature_schema_for_protocol(protocol)
+    expected = EXPECTED_BY_PROTOCOL[protocol]
+    service_positions = SERVICE_POSITIONS_BY_PROTOCOL[protocol]
+    mutation_terminals = TERMINALS_BY_PROTOCOL[protocol]
+    expected_mutations = EXPECTED_MUTATIONS_BY_PROTOCOL[protocol]
     require(report.get("pilot") is False, "A pilot cannot qualify a release")
     require(report.get("ownerRestored") is True, "Cleanup did not restore the owner")
     for key in ["assertions", "acquisitions", "staleCallbacks", "negativeChecks", "mutationChecks", "cancellationMs", "elapsedMs", "cleanupMs", "activeCase"]:
@@ -126,27 +252,100 @@ def validate(report, negative=False):
         require("alpha-explicit-failure-canary" in str(report.get("failure")), "Wrong failure")
         return
     require(report.get("status") == "PASS" and report.get("failure") is None, "Terminal PASS missing")
-    require(len(report["cases"]) == len(EXPECTED) and report["activeCase"] == len(EXPECTED), "Incomplete corpus")
+    require(len(report["cases"]) == len(expected) and report["activeCase"] == len(expected), "Incomplete corpus")
     require(report.get("operation") == "catalog-and-repair", "Final operation")
-    require(report["assertions"] >= 400 and report["acquisitions"] > len(EXPECTED) and
-            report["staleCallbacks"] >= len(EXPECTED) and report["negativeChecks"] >= len(EXPECTED), "Missing boundary coverage")
-    require(type(report.get("mutationProviders")) is list and len(report["mutationProviders"]) == len(TERMINALS) and
-            set(report["mutationProviders"]) == set(TERMINALS), "Missing actual acquisition/installation compensation providers")
-    require(type(report.get("mutationCases")) is list and len(report["mutationCases"]) == report["mutationChecks"] == len(EXPECTED_MUTATIONS),
+    require(report["assertions"] >= 400 and report["acquisitions"] > len(expected) and
+            report["staleCallbacks"] >= len(expected) and report["negativeChecks"] >= len(expected), "Missing boundary coverage")
+    require(type(report.get("mutationProviders")) is list and len(report["mutationProviders"]) == len(mutation_terminals) and
+            set(report["mutationProviders"]) == set(mutation_terminals), "Missing actual acquisition/installation compensation providers")
+    require(type(report.get("mutationCases")) is list and len(report["mutationCases"]) == report["mutationChecks"] == len(expected_mutations),
             "Missing actual acquisition/installation compensation cases")
     observed_mutations = set()
     for row in report["mutationCases"]:
         require(type(row) is dict and integer(row.get("occurrence"), 1, 5), "Malformed mutation evidence")
         key = tuple(row.get(field) for field in ["provider", "operation", "stage", "occurrence", "status"])
-        require(key in EXPECTED_MUTATIONS and key not in observed_mutations, "Missing/duplicate/wrong mutation outcome")
+        require(key in expected_mutations and key not in observed_mutations, "Missing/duplicate/wrong mutation outcome")
         observed_mutations.add(key)
-    require(observed_mutations == EXPECTED_MUTATIONS, "Incomplete mutation coverage")
-    expected_shop = {("NPN_LOW_SIDE_SWITCH", "0", "SPAN_240"),
-                     ("NPN_LOW_SIDE_SWITCH", "0", "SPAN_260"),
-                     ("COMPOSED_CONTROLLED_INDICATOR", "0", "SPAN_220"),
-                     ("COMPOSED_CONTROLLED_INDICATOR", "3", "SPAN_220")}
-    require(type(report.get("shopCases")) is list and len(report["shopCases"]) == 4,
-            "Missing public Shop specification/physical-fit requests")
+    require(observed_mutations == expected_mutations, "Incomplete mutation coverage")
+    validate_cross_targets(report.get("crossTargetCases"))
+    require(type(report.get("serviceCases")) is list, "Missing all-position physical service evidence")
+    service = {key: set() for key in expected}
+    shop_source_variants = {key: set() for key in SHOP_GEOMETRY_SOURCES}
+    for row in report["serviceCases"]:
+        require(type(row) is dict, "Malformed service evidence")
+        key = (row.get("family"), row.get("seed"))
+        component = row.get("component")
+        require(key in service and type(component) is str and component and component not in service[key],
+                "Foreign/duplicate physical service position")
+        if key[0] == "SENSOR_CONTROL":
+            require(protocol == "TSJ-ALPHA-2" and
+                    component in SENSOR_CONTROL_SERVICE_TYPES and
+                    row.get("type") == SENSOR_CONTROL_SERVICE_TYPES[component],
+                    "Unknown Sensor Control service component/type")
+        else:
+            require(row.get("type") in TERMINALS,
+                    "Physical service type is outside the release-provider allowlist")
+        if protocol == "TSJ-ALPHA-2" and key in SHOP_GEOMETRY_SOURCES:
+            if key[0] == "NPN_LOW_SIDE_SWITCH":
+                expected_type = {
+                    "RLOAD": "resistor", "RB": "resistor", "RPD": "resistor",
+                    "Q1": "npn", "J1": "connector", "J2": "connector",
+                    "LED1": "led",
+                }.get(component)
+                require(expected_type is not None and row.get("type") == expected_type,
+                        "Current NPN Shop source has an unknown/mistyped physical service position")
+            else:
+                require("/component/" in component,
+                        "Current composed Shop source lacks a namespaced component identity")
+                local_component = component.rsplit("/component/", 1)[1]
+                if local_component.startswith("R"):
+                    require(row.get("type") == "resistor",
+                            "Current composed resistor position has the wrong service type")
+                elif local_component == "LED1":
+                    require(row.get("type") == "led",
+                            "Current composed LED position has the wrong service type")
+                elif local_component == "Q1":
+                    require(row.get("type") in {"npn", "nmos"},
+                            "Current composed transistor position has the wrong service type")
+                elif local_component.startswith("J"):
+                    require(row.get("type") == "connector",
+                            "Current composed connector position has the wrong service type")
+                else:
+                    raise ValueError("Unknown current composed Shop source component")
+            if row.get("type") == "resistor":
+                variant = validate_shop_slot_geometry(component, row.get("slotGeometry"))
+                shop_source_variants[key].add(variant)
+            else:
+                require("slotGeometry" not in row,
+                        "Unexpected resistor geometry on a non-resistor service position")
+        require(row.get("removeReplaceReinstall") is True,
+                "Physical position was not removed, replaced and reinstalled")
+        service[key].add(component)
+    for (family, seed), positions in service.items():
+        require(len(positions) == service_positions[(family, seed)], "Missing service positions: " + family + "/" + seed)
+        if family == "SENSOR_CONTROL":
+            require(positions == SENSOR_CONTROL_COMPONENTS_BY_SEED[seed],
+                    "Wrong Sensor Control service positions: " + seed)
+    if protocol == "TSJ-ALPHA-1":
+        expected_shop = {("NPN_LOW_SIDE_SWITCH", "0", "SPAN_240"),
+                         ("NPN_LOW_SIDE_SWITCH", "0", "SPAN_260"),
+                         ("COMPOSED_CONTROLLED_INDICATOR", "0", "SPAN_220"),
+                         ("COMPOSED_CONTROLLED_INDICATOR", "3", "SPAN_220")}
+        require(type(report.get("shopCases")) is list and len(report["shopCases"]) == 4,
+                "Missing historical public Shop specification/physical-fit requests")
+    else:
+        expected_shop = set()
+        for source in SHOP_GEOMETRY_SOURCES:
+            variants = shop_source_variants[source]
+            require(len(variants) >= 2,
+                    "Current Shop source lacks multiple independently serviceable resistor geometries")
+            if source == ("NPN_LOW_SIDE_SWITCH", "0"):
+                require("SPAN_260" in variants,
+                        "Current NPN Shop wide-fit rejection fixture is missing")
+            expected_shop.update((source[0], source[1], variant) for variant in variants)
+        require(type(report.get("shopCases")) is list and
+                len(report["shopCases"]) == len(expected_shop),
+                "Missing current public Shop choices for actual resistor slot geometries")
     observed_shop = set()
     for row in report["shopCases"]:
         require(type(row) is dict, "Malformed public Shop evidence")
@@ -160,25 +359,11 @@ def validate(report, negative=False):
                 "Public Shop request did not create the selected electrical value")
         observed_shop.add(key)
     require(observed_shop == expected_shop, "Incomplete public Shop physical-fit choices")
-    validate_cross_targets(report.get("crossTargetCases"))
-    require(type(report.get("serviceCases")) is list, "Missing all-position physical service evidence")
-    service = {key: set() for key in EXPECTED}
-    for row in report["serviceCases"]:
-        require(type(row) is dict, "Malformed service evidence")
-        key = (row.get("family"), row.get("seed"))
-        component = row.get("component")
-        require(key in service and type(component) is str and component and component not in service[key],
-                "Foreign/duplicate physical service position")
-        require(row.get("type") in TERMINALS and row.get("removeReplaceReinstall") is True,
-                "Physical position was not removed, replaced and reinstalled")
-        service[key].add(component)
-    for (family, seed), positions in service.items():
-        require(len(positions) == SERVICE_POSITIONS[family], "Missing service positions: " + family + "/" + seed)
     found = set()
     for case in report["cases"]:
         require(type(case) is dict, "Malformed case")
         key = (case.get("family"), case.get("seed"))
-        require(key in EXPECTED and key not in found, "Foreign, rounded or duplicate seed")
+        require(key in expected and key not in found, "Foreign, rounded or duplicate seed")
         found.add(key)
         profile = "MEDIUM" if key[0] == "COMPOSED_CONTROLLED_INDICATOR" else "EASY"
         require(case.get("requested") == case.get("computed") == profile, "Unproved profile")
@@ -186,7 +371,8 @@ def validate(report, negative=False):
         require(integer(case.get("admissionMs"), 1, 90000) and integer(case.get("maxUnitMs"), 0, 5000) and
                 integer(case.get("workUnits"), 6, 640), "Admission budget violation")
         features = case.get("features", "").split(";")
-        require(features[0] == "difficulty/1" and len(features) == 15, "Feature version/schema")
+        require(features[0] == feature_schema and len(features) == 15,
+                "Feature version/schema does not match alpha protocol")
         fields = dict(piece.split("=", 1) for piece in features[1:])
         require(len(fields) == 14 and fields.get("profile") == profile, "Duplicate/mismatched features")
         for field in ["parts", "hypotheses", "repairs", "owners", "readings", "singleRemaining", "modes", "inputs", "railTargets", "temporal"]:
@@ -202,7 +388,7 @@ def validate(report, negative=False):
             require(int(fields["readings"]) >= 2 and int(fields["singleRemaining"]) >= 2 and
                     int(fields["owners"]) >= 2 and int(fields["repairs"]) >= 2 and
                     (int(fields["temporal"]) > 0 or fields["parallel"] == "true"), "One-probe or noninteracting MEDIUM")
-    require(found == EXPECTED, "Missing release seed")
+    require(found == expected, "Missing release seed")
 
 
 def malformed_canaries(report):
@@ -221,9 +407,9 @@ def malformed_canaries(report):
                  lambda x: x["serviceCases"].pop(),
                  lambda x: x["serviceCases"].append(x["serviceCases"][0]),
                  lambda x: x["serviceCases"][0].update(removeReplaceReinstall=False),
-                 lambda x: x["mutationCases"].pop(), lambda x: x["mutationCases"][0].update(status="ISOLATED"),
-                 lambda x: x["shopCases"].pop(), lambda x: x["shopCases"].append(x["shopCases"][0]),
-                 lambda x: x["shopCases"][0].update(variant="SPAN_220"),
+                  lambda x: x["mutationCases"].pop(), lambda x: x["mutationCases"][0].update(status="ISOLATED"),
+                  lambda x: x["shopCases"].pop(), lambda x: x["shopCases"].append(x["shopCases"][0]),
+                  lambda x: x["shopCases"][0].update(variant="SPAN_UNKNOWN"),
                  lambda x: x["shopCases"][0].update(sourcePreserved=False),
                  lambda x: x["shopCases"][0].update(measuredOhms=1000),
                  lambda x: x["shopCases"][1].update(fitAndTypeRejections=False),
@@ -236,6 +422,83 @@ def malformed_canaries(report):
                  lambda x: next(row for row in x["crossTargetCases"][0]["cases"] if row["operation"] == "cross-stress").update(samePart=False),
                  lambda x: next(row for row in x["mutationCases"] if row["stage"] == "AFTER_EMPTY_SLOT_REBIND").update(status="ISOLATED"),
                  lambda x: next(row for row in x["crossTargetCases"][0]["cases"] if row["operation"] == "cross-remove" and row["stage"] == "AFTER_EMPTY_SLOT_REBIND").update(status="ISOLATED")]
+    if report.get("protocol") == "TSJ-ALPHA-2":
+        def unknown_sensor_component_without_type(bad):
+            row = next(row for row in bad["serviceCases"]
+                       if row.get("family") == "SENSOR_CONTROL" and row.get("seed") == "0" and
+                       row.get("component") == "U2")
+            row["component"] = "UNKNOWN"
+            row.pop("type", None)
+
+        def missing_sensor_component_type(bad):
+            row = next(row for row in bad["serviceCases"]
+                       if row.get("family") == "SENSOR_CONTROL" and row.get("seed") == "0" and
+                       row.get("component") == "U2")
+            row.pop("type")
+
+        def same_count_wrong_sensor_position(bad):
+            row = next(row for row in bad["serviceCases"]
+                       if row.get("family") == "SENSOR_CONTROL" and row.get("seed") == "0" and
+                       row.get("component") == "RFB")
+            row["component"] = "RFB_HYST"
+
+        def wrong_current_shop_slot_variant(bad):
+            row = next(row for row in bad["serviceCases"]
+                       if (row.get("family"), row.get("seed")) in SHOP_GEOMETRY_SOURCES and
+                       row.get("type") == "resistor")
+            geometry = row["slotGeometry"]
+            geometry["variant"] = next(variant for variant in AXIAL_RESISTOR_PAD_SPACING
+                                       if variant != geometry["variant"])
+
+        def wrong_current_shop_slot_spacing(bad):
+            row = next(row for row in bad["serviceCases"]
+                       if (row.get("family"), row.get("seed")) in SHOP_GEOMETRY_SOURCES and
+                       row.get("type") == "resistor")
+            pads = row["slotGeometry"]["pads"]
+            if pads[0]["x"] != pads[1]["x"]:
+                pads[1]["x"] += 1
+            else:
+                pads[1]["y"] += 1
+
+        def duplicate_current_shop_identity(bad):
+            first = bad["shopCases"][0]
+            duplicate = next(row for row in reversed(bad["shopCases"])
+                             if row is not first and
+                             (row.get("family"), row.get("seed"), row.get("variant")) !=
+                             (first.get("family"), first.get("seed"), first.get("variant")))
+            for field in ["family", "seed", "variant"]:
+                duplicate[field] = first[field]
+
+        def wrong_current_mutation_provider(bad):
+            index = bad["mutationProviders"].index("regulator")
+            bad["mutationProviders"][index] = "unknown-provider"
+
+        def wrong_current_mutation_outcome(bad):
+            row = next(row for row in bad["mutationCases"]
+                       if row.get("provider") == "e04-decision-control" and
+                       row.get("operation") == "install" and
+                       row.get("stage") == "AFTER_ENDPOINT_RETARGET" and
+                       row.get("occurrence") == 5)
+            row["status"] = "ISOLATED"
+
+        mutations.extend([
+            lambda x: x.update(cases=[case for case in x["cases"]
+                                       if not (case.get("family") == "SENSOR_CONTROL" and case.get("seed") == "2")]),
+            lambda x: x.update(serviceCases=[row for row in x["serviceCases"]
+                                             if not (row.get("family") == "SENSOR_CONTROL" and
+                                                     row.get("seed") == "1" and row.get("component") == "RFB_HYST")]),
+            unknown_sensor_component_without_type,
+            missing_sensor_component_type,
+            same_count_wrong_sensor_position,
+            lambda x: next(row for row in x["serviceCases"]
+                           if (row.get("family"), row.get("seed")) in SHOP_GEOMETRY_SOURCES and
+                           row.get("type") == "resistor").pop("slotGeometry"),
+            wrong_current_shop_slot_variant,
+            wrong_current_shop_slot_spacing,
+            duplicate_current_shop_identity,
+            wrong_current_mutation_provider,
+            wrong_current_mutation_outcome,
+        ])
     for mutation in mutations:
         bad = copy.deepcopy(report)
         mutation(bad)
@@ -247,6 +510,44 @@ def malformed_canaries(report):
     return len(mutations)
 
 
+def protocol_feature_canaries(report):
+    """Reject known cross-version pairs and unknown report/feature versions."""
+    protocol = report["protocol"]
+    feature_schema_for_protocol(protocol)
+    other_protocol, other_feature = next(
+        (candidate, candidate_feature)
+        for candidate, candidate_feature in FEATURE_SCHEMA_BY_PROTOCOL.items()
+        if candidate != protocol)
+
+    def reject(name, bad):
+        try:
+            validate(bad)
+        except (ValueError, TypeError):
+            return
+        raise AssertionError("Protocol/feature version corruption accepted: " + name)
+
+    cross_version = copy.deepcopy(report)
+    cross_version["protocol"] = other_protocol
+    reject("cross-version report protocol", cross_version)
+
+    cross_feature = copy.deepcopy(report)
+    first_case_features = cross_feature["cases"][0]["features"].split(";", 1)
+    first_case_features[0] = other_feature
+    cross_feature["cases"][0]["features"] = ";".join(first_case_features)
+    reject("cross-version difficulty feature", cross_feature)
+
+    unknown_protocol = copy.deepcopy(report)
+    unknown_protocol["protocol"] = "TSJ-ALPHA-99"
+    reject("unknown report protocol", unknown_protocol)
+
+    unknown_feature = copy.deepcopy(report)
+    first_case_features = unknown_feature["cases"][0]["features"].split(";", 1)
+    first_case_features[0] = "difficulty/99"
+    unknown_feature["cases"][0]["features"] = ";".join(first_case_features)
+    reject("unknown difficulty feature", unknown_feature)
+    return 2, 2
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--report", required=True)
@@ -256,4 +557,5 @@ if __name__ == "__main__":
     validate(accepted)
     validate(read(args.negative), negative=True)
     count = malformed_canaries(accepted)
-    print(f"PASS: alpha compiled corpus={len(EXPECTED)} malformed-canaries={count}; human trials are separate")
+    cross_version, unknown_versions = protocol_feature_canaries(accepted)
+    print(f"PASS: alpha compiled corpus={len(EXPECTED_BY_PROTOCOL[accepted['protocol']])} malformed-canaries={count} protocol-feature-cross-version-canaries={cross_version} unknown-version-canaries={unknown_versions}; human trials are separate")

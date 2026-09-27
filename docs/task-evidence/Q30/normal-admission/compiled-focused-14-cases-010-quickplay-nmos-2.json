@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 10,
+    "name": "quickplay-nmos-2",
+    "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=5&tsjQuickPlayTestSeed=2",
+    "stateAttribute": "data-tsj-verification",
+    "expectedState": "PASS:quick-play",
+    "expectedPrefix": null,
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 120.0,
+    "reportAttribute": null
+  },
+  "url": "http://127.0.0.1:56978/circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=5&tsjQuickPlayTestSeed=2",
+  "startedUtc": "2026-09-26T22:16:30.796050+00:00",
+  "finishedUtc": "2026-09-26T22:16:41.355529+00:00",
+  "operationSeconds": 10.55947529990226,
+  "outcome": "PASS",
+  "terminalReached": true,
+  "stateMatch": true,
+  "observedState": "PASS:quick-play",
+  "lastObservedState": "PASS:quick-play",
+  "timedOut": false,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": false,
+  "reportJsonValid": null,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 0,
+  "reportSha256": null,
+  "reportFile": null,
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [],
+  "navigationError": null
+}

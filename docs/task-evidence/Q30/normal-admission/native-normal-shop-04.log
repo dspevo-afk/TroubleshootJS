@@ -1,0 +1,26 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: U04 session contracts assertions=3909
+
+PASS: E04 sensor-control contracts 316 assertions
+
+PASS: Q30 plan contracts 2256 assertions, topologyAxes=7, representativeRows=24, heldOutRows=24, separate=9, shared=8
+
+PASS: q30 generation request contracts 446 assertions
+
+PASS: Q30 normal execution policy contracts 323 assertions
+
+
+Exception in thread "main" java.lang.IllegalStateException: Catalog has no physical package geometry.
+	at com.lushprojects.circuitjs1.client.PlayerShopCatalog$Category.add(PlayerShopCatalog.java:63)
+	at com.lushprojects.circuitjs1.client.Q30CatalogIdentityContractTest.verifyRelayAliases(Q30CatalogIdentityContractTest.java:42)
+	at com.lushprojects.circuitjs1.client.Q30CatalogIdentityContractTest.main(Q30CatalogIdentityContractTest.java:25)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: Q30CatalogIdentityContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

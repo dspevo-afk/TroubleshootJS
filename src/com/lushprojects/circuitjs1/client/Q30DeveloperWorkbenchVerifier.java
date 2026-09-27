@@ -327,9 +327,6 @@ final class Q30DeveloperWorkbenchVerifier {
         }
         if (!Long.toString(seed).equals(requestedSeed))
             throw new IllegalArgumentException("Q30 seed is not canonical: " + requestedSeed);
-        if (seed != 0L && seed != 37L)
-            throw new IllegalArgumentException("Q30 developer bench supports seed 0 or 37: " +
-                Long.toString(seed));
         return seed;
     }
 

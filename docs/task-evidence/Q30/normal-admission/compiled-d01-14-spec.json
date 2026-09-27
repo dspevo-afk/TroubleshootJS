@@ -1,0 +1,28 @@
+{
+  "cases": [
+    {
+      "name": "d01-seed13",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=13",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "reportAttribute": "data-tsj-q30-d01-report",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ]
+    },
+    {
+      "name": "d01-seed7",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=7",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "reportAttribute": "data-tsj-q30-d01-report",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ]
+    }
+  ]
+}

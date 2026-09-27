@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 2,
+    "name": "d01-seed7",
+    "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=7",
+    "stateAttribute": "data-tsj-q30-d01-state",
+    "expectedState": "PASS",
+    "expectedPrefix": null,
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 600.0,
+    "reportAttribute": "data-tsj-q30-d01-report"
+  },
+  "url": "http://127.0.0.1:55170/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=7",
+  "startedUtc": "2026-09-27T00:47:15.681555+00:00",
+  "finishedUtc": "2026-09-27T00:50:40.773602+00:00",
+  "operationSeconds": 205.09204399993178,
+  "outcome": "PASS",
+  "terminalReached": true,
+  "stateMatch": true,
+  "observedState": "PASS",
+  "lastObservedState": "PASS",
+  "timedOut": false,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": true,
+  "reportJsonValid": true,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 749290,
+  "reportSha256": "8d5ea58ecc73c5d48a66f58674914b4258b5521b9607ed16b636f7fd7c0a9772",
+  "reportFile": "cases/002-d01-seed7.report.json",
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [
+    {
+      "attribute": "data-tsj-q30-d01-state",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-q30-d01-state",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-q30-d01-state",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-q30-d01-state",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    }
+  ],
+  "listenerCleanupErrors": [],
+  "navigationError": null
+}

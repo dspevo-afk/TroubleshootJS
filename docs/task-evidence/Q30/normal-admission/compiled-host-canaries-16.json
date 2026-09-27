@@ -1,0 +1,70 @@
+[
+  {
+    "exitCode": 0,
+    "matched": true,
+    "outputCreated": true,
+    "case": "smoke",
+    "cleanup": "PASS",
+    "inputAudit": "PASS",
+    "outcome": "PASS",
+    "expectedExitCode": 0
+  },
+  {
+    "exitCode": 1,
+    "matched": true,
+    "outputCreated": true,
+    "case": "reject",
+    "cleanup": "PASS",
+    "inputAudit": "PASS",
+    "outcome": "FAIL",
+    "expectedExitCode": 1
+  },
+  {
+    "exitCode": 1,
+    "matched": true,
+    "outputCreated": true,
+    "case": "timeout",
+    "cleanup": "PASS",
+    "inputAudit": "PASS",
+    "outcome": "FAIL",
+    "expectedExitCode": 1
+  },
+  {
+    "exitCode": 1,
+    "matched": true,
+    "outputCreated": true,
+    "case": "tiny-timeout",
+    "cleanup": "PASS",
+    "inputAudit": "PASS",
+    "outcome": "FAIL",
+    "expectedExitCode": 1
+  },
+  {
+    "expectedExitCode": 2,
+    "exitCode": 2,
+    "outputCreated": false,
+    "matched": true,
+    "case": "url-negative"
+  },
+  {
+    "expectedExitCode": 2,
+    "exitCode": 2,
+    "outputCreated": false,
+    "matched": true,
+    "case": "null-negative"
+  },
+  {
+    "expectedExitCode": 2,
+    "exitCode": 2,
+    "outputCreated": false,
+    "matched": true,
+    "case": "budget-negative"
+  },
+  {
+    "expectedExitCode": 2,
+    "exitCode": 2,
+    "outputCreated": false,
+    "matched": true,
+    "case": "null-value-negative"
+  }
+]

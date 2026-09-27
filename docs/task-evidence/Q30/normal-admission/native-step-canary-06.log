@@ -1,0 +1,342 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=initial-electrical-settle boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=initial-electrical-settle boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=healthy-preparation boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=healthy-preparation boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=fault-profile-preparation boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=fault-profile-preparation boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=faulted-four-input-profile boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=faulted-four-input-profile boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=unrepaired-customer-retest boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=unrepaired-customer-retest boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=service-power-off-wait boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=service-power-off-wait boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=reinstalled-original-customer-retest boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=reinstalled-original-customer-retest boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=service-power-off-wait boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=service-power-off-wait boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=repaired-customer-retest boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=repaired-customer-retest boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_OWNER_CLEANUP seed=4 fault=RELAY_B_COIL_OPEN declaredMaximumStepSeconds=5.00000000e-06 stepRole=PRODUCTION_5_US_REFERENCE cleanup=true elapsedMillis=0
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=initial-electrical-settle boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=initial-electrical-settle boundary=END stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=healthy-preparation boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=healthy-preparation boundary=END stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=fault-profile-preparation boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=fault-profile-preparation boundary=END stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=faulted-four-input-profile boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=faulted-four-input-profile boundary=END stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=unrepaired-customer-retest boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=unrepaired-customer-retest boundary=END stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=service-power-off-wait boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=service-power-off-wait boundary=END stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=reinstalled-original-customer-retest boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=reinstalled-original-customer-retest boundary=END stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=service-power-off-wait boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=service-power-off-wait boundary=END stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=repaired-customer-retest boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=4 fault=RELAY_B_COIL_OPEN profile=repaired-customer-retest boundary=END stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_OWNER_CLEANUP seed=4 fault=RELAY_B_COIL_OPEN declaredMaximumStepSeconds=1.00000000e-05 stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED cleanup=true elapsedMillis=0
+Q30_STEP_PAIR seed=4 support=FILTERED_35 fault=RELAY_B_COIL_OPEN referenceMaximumStepSeconds=5.00000000e-06 experimentalCandidateMaximumStepSeconds=1.00000000e-05 candidateKind=EXPERIMENTAL_NOT_PROMOTED maxDeltaVolts=3.75573996e-07 toleranceVolts=0.0100004042 phase=customer-retest sample=SENSORS_LOW/RSA.2-J1.2 referenceElapsedMillis=11605 experimentalCandidateElapsedMillis=5832 referenceSimSeconds=1.16036000 experimentalCandidateSimSeconds=1.16072000 referenceCleanupMillis=0 experimentalCandidateCleanupMillis=0 cleanup=true
+Q30_STEP_SEED seed=4 support=FILTERED_35 referenceMaximumStepSeconds=5.00000000e-06 experimentalCandidateMaximumStepSeconds=1.00000000e-05 candidateKind=EXPERIMENTAL_NOT_PROMOTED routeTopology=RB30_SEPARATE_DIRECT_A_BJT_B_NMOS_FILTERED_35 routeAndPairsElapsedMillis=22469
+Q30_STEP_OWNER_CLEANUP seed=4 fault=DREV_OPEN declaredMaximumStepSeconds=5.00000000e-06 stepRole=PRODUCTION_5_US_REFERENCE cleanup=true elapsedMillis=0
+Q30_STEP_SEED_CLEANUP seed=4 cleanup=true elapsedMillis=0
+PASS: Q30 experimental solver step sensitivity assertions=1730 seed=4 support=FILTERED_35 faults=1 referenceMaximumStepSeconds=5.00000000e-06 experimentalCandidateMaximumStepSeconds=1.00000000e-05 candidateKind=EXPERIMENTAL_NOT_PROMOTED elapsedMillis=22469
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 11 iterations, timeStep = 5.0E-6
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 9 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 9 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+node 56 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 23 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 9 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+node 56 unconnected
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+converged after 23 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 24 iterations, timeStep = 1.0E-5
+node 11 unconnected
+node 11 unconnected
+converged after 15 iterations, timeStep = 1.0E-5
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-5
+converged after 14 iterations, timeStep = 1.0E-5
+converged after 10 iterations, timeStep = 1.0E-5
+node 11 unconnected
+converged after 19 iterations, timeStep = 1.0E-5
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-5
+timestep down to 5.0E-6 at 0.13073999999998998
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 2 iterations, timeStep = 5.0E-6
+converged after 2 iterations, timeStep = 5.0E-6
+converged after 2 iterations, timeStep = 5.0E-6
+timestep up = 1.0E-5 at 0.13093999999999018
+node 11 unconnected
+converged after 11 iterations, timeStep = 1.0E-5
+converged after 15 iterations, timeStep = 1.0E-5
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-5
+converged after 11 iterations, timeStep = 1.0E-5
+node 11 unconnected
+converged after 15 iterations, timeStep = 1.0E-5
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-5
+converged after 10 iterations, timeStep = 1.0E-5
+node 11 unconnected
+converged after 15 iterations, timeStep = 1.0E-5
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-5
+converged after 11 iterations, timeStep = 1.0E-5
+node 11 unconnected
+converged after 15 iterations, timeStep = 1.0E-5
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-5
+converged after 10 iterations, timeStep = 1.0E-5
+node 11 unconnected
+converged after 15 iterations, timeStep = 1.0E-5
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 1.0E-5
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+node 56 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 23 iterations, timeStep = 1.0E-5
+converged after 6 iterations, timeStep = 1.0E-5
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-5
+converged after 9 iterations, timeStep = 1.0E-5
+converged after 11 iterations, timeStep = 1.0E-5
+node 11 unconnected
+converged after 15 iterations, timeStep = 1.0E-5
+node 11 unconnected
+converged after 12 iterations, timeStep = 1.0E-5
+converged after 10 iterations, timeStep = 1.0E-5
+node 11 unconnected
+converged after 15 iterations, timeStep = 1.0E-5
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 1.0E-5
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+node 56 unconnected
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+converged after 23 iterations, timeStep = 1.0E-5
+converged after 6 iterations, timeStep = 1.0E-5
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+converged after 12 iterations, timeStep = 1.0E-5
+converged after 20 iterations, timeStep = 1.0E-5
+timestep down to 5.0E-6 at 1.05132999999842
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 3 iterations, timeStep = 5.0E-6
+converged after 2 iterations, timeStep = 5.0E-6
+converged after 2 iterations, timeStep = 5.0E-6
+converged after 2 iterations, timeStep = 5.0E-6
+timestep up = 1.0E-5 at 1.0515299999984213
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+converged after 15 iterations, timeStep = 1.0E-5
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+converged after 12 iterations, timeStep = 1.0E-5
+converged after 14 iterations, timeStep = 1.0E-5
+converged after 10 iterations, timeStep = 1.0E-5
+node 11 unconnected
+node 50 unconnected
+node 53 unconnected
+converged after 19 iterations, timeStep = 1.0E-5
+
+Q30_SENSITIVITY_CENSUS attempted=1 passed=1 failed=0 childBudgetMs=60000
+PASS: focused current contracts; 1 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

@@ -1,0 +1,113 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 1,
+    "name": "alpha-full41",
+    "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true",
+    "stateAttribute": "data-tsj-verification",
+    "expectedState": "PASS:alpha",
+    "expectedPrefix": null,
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 900.0,
+    "reportAttribute": "data-tsj-alpha-report"
+  },
+  "url": "http://127.0.0.1:54593/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true",
+  "startedUtc": "2026-09-26T23:54:28.511106+00:00",
+  "finishedUtc": "2026-09-27T00:04:14.337225+00:00",
+  "operationSeconds": 585.8261145000579,
+  "outcome": "FAIL",
+  "terminalReached": true,
+  "stateMatch": false,
+  "observedState": "FAIL:alpha:cross-target-catalog-mutations owner=true power=UNPOWERED isolated=true settled=true state=READY: java.lang.AssertionError: U04 catalog mutation: catalog formation changed electrical, attachment, inventory, serial or fault state",
+  "lastObservedState": "FAIL:alpha:cross-target-catalog-mutations owner=true power=UNPOWERED isolated=true settled=true state=READY: java.lang.AssertionError: U04 catalog mutation: catalog formation changed electrical, attachment, inventory, serial or fault state",
+  "timedOut": false,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": true,
+  "reportJsonValid": true,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 141290,
+  "reportSha256": "a447694dd316784497919f357b56ac22ebe4fe5284197de7ba53c4d02897383e",
+  "reportFile": "cases/001-alpha-full41.report.json",
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    },
+    {
+      "attribute": "data-tsj-verification",
+      "type": "TimeoutError",
+      "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+    }
+  ],
+  "listenerCleanupErrors": [],
+  "navigationError": null
+}

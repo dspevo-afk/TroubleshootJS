@@ -1,0 +1,14 @@
+PASS alpha-led0 2.003
+PASS alpha-npn0-shop 3.106
+FAIL alpha-composed-39 10.755
+FAIL alpha-composed-40 10.375
+PASS quickplay-led-3 10.898
+PASS quickplay-rc-3 43.778
+PASS quickplay-npn-0 11.356
+PASS quickplay-npn-1 11.403
+PASS quickplay-npn-2 11.038
+PASS quickplay-nmos-0 11.136
+PASS quickplay-nmos-1 10.876
+PASS quickplay-nmos-2 11.01
+PASS quickplay-explicit-precedence 0.568
+FINISHED FAIL cases 13

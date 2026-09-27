@@ -1,0 +1,21 @@
+{
+  "status": "INTERRUPTED",
+  "reason": "Host Windows resource errors 1450/1455 prevented process spawning before user reboot; no completed result",
+  "completedSavedRows": 38,
+  "fullPopulationPass": false,
+  "controlled21": "NOT RUN",
+  "terminalResultPresent": false,
+  "bootUtc": "2026-09-27T01:27:39.5000000Z",
+  "recordedUtc": "2026-09-27T01:33:28.4199804Z",
+  "oldOwnedProcessCount": 7,
+  "oldExactProcessesPresent": 0,
+  "oldServerPid": 22092,
+  "oldServerPort": 59503,
+  "oldPortListening": false,
+  "shutdownDuringInterruption": "UNVERIFIED",
+  "currentOldProcessAbsence": "All recorded process creation times predate the verified reboot; no exact matching processes",
+  "scratchDirectory": "RETAINED pending copied-evidence audit",
+  "freePhysicalKb": 24602612,
+  "totalPhysicalKb": 33282968,
+  "freeVirtualKb": 56998000
+}

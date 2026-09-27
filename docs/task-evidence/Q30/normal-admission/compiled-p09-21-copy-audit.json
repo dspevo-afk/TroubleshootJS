@@ -1,0 +1,79 @@
+{
+  "schema": "interrupted-p09-21-artifact-copy-audit-v1",
+  "sourceDirectory": "<task-temp>/tsj-q30-p09-21-e6a3c9c917b9441b8567bbd003fcd388",
+  "destinationDirectory": "docs/task-evidence/Q30/normal-admission",
+  "copiedFiles": [
+    {
+      "source": "cases.json",
+      "destination": "compiled-p09-21-cases.json",
+      "sourceSha256": "d14e06d2f0564d263ce3c0edf81a9b829d903f5dc980e89c31939a7a589103e5",
+      "destinationSha256": "d14e06d2f0564d263ce3c0edf81a9b829d903f5dc980e89c31939a7a589103e5",
+      "sourceBytes": 1626361,
+      "destinationBytes": 1626361,
+      "byteExact": true,
+      "pathSubstitutions": {
+        "worktree": 0,
+        "taskTemp": 0,
+        "userHome": 0
+      },
+      "destinationState": "copied-byte-exact"
+    },
+    {
+      "source": "identity.json",
+      "destination": "compiled-p09-21-identity.json",
+      "sourceSha256": "f920afef2f4e65b6ded67dc636b3f9dcf5876b53f4acb8be5c7e7c4ef183aea1",
+      "destinationSha256": "de26c22fb6b7f734e1222247eb9f2dfa4a9287105944bed9d4975e1246b1396d",
+      "sourceBytes": 369,
+      "destinationBytes": 223,
+      "byteExact": false,
+      "pathSubstitutions": {
+        "worktree": 1,
+        "taskTemp": 1,
+        "userHome": 0
+      },
+      "destinationState": "copied-sanitized"
+    },
+    {
+      "source": "owned-processes.json",
+      "destination": "compiled-p09-21-owned-processes.json",
+      "sourceSha256": "ee0204b0ad38a39ae6b002db33a16937279e8f3399843c34f3211c909c7fa86a",
+      "destinationSha256": "7bf4bfa84d09b50b32778caf923996cd333b5bb13b8541bfc1b070d9771f63d9",
+      "sourceBytes": 9943,
+      "destinationBytes": 9335,
+      "byteExact": false,
+      "pathSubstitutions": {
+        "worktree": 0,
+        "taskTemp": 8,
+        "userHome": 0
+      },
+      "destinationState": "copied-sanitized"
+    }
+  ],
+  "interruption": {
+    "status": "INTERRUPTED",
+    "reason": "Host Windows resource errors 1450/1455 prevented process spawning before user reboot; no completed result",
+    "completedSavedRows": 38,
+    "savedPassRows": 38,
+    "fullPopulationPass": false,
+    "terminalResultPresent": false,
+    "shutdownDuringInterruption": "UNVERIFIED",
+    "interruptionRecord": "compiled-p09-21-interruption.json"
+  },
+  "currentOwnership": {
+    "recordedOldOwnerCount": 7,
+    "oldExactProcessesPresent": 0,
+    "port59503Listening": false,
+    "processesReferencingTaskDirectory": 0,
+    "creationTimeComparedAsUtc": true,
+    "executablePathCompared": true
+  },
+  "cleanup": {
+    "status": "PASS",
+    "method": "Remove-VerifierOwnedTree",
+    "resolvedContainmentVerified": true,
+    "rootAndTreeReparsePointCount": 0,
+    "treeEntryCountBeforeRemoval": 306,
+    "exactTaskTempRemoved": true,
+    "pathHandoffFileRetained": true
+  }
+}

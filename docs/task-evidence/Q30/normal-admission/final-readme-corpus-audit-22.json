@@ -1,0 +1,32 @@
+{
+  "schema": "q30-final-readme-corpus-audit-v1",
+  "startedUtc": "2026-09-27T03:28:15.012439+00:00",
+  "actualExitCode": 0,
+  "elapsedSeconds": 0.11551890000009735,
+  "command": [
+    "python",
+    "-B",
+    "docs/task-evidence/Q30/normal-admission/check_corpus.py",
+    "--readme",
+    "docs/task-evidence/Q30/normal-admission/README.md",
+    "--log",
+    "docs/task-evidence/Q30/normal-admission/native-final-05.log"
+  ],
+  "inputHashesBefore": {
+    "docs/task-evidence/Q30/normal-admission/check_corpus.py": "eea6db263b966c120ae345d73ef056ffe26a80548531431cf30513df83eee34f",
+    "docs/task-evidence/Q30/normal-admission/README.md": "1bd275661f2016402790fa9efb7a3ad28f4ba8bce3712615205f172befe15b5b",
+    "docs/task-evidence/Q30/normal-admission/native-final-05.log": "780611e6b052c1d2bb958df967cdb5ff70090575656d0d0782ef9652e672b64f"
+  },
+  "inputHashesAfter": {
+    "docs/task-evidence/Q30/normal-admission/check_corpus.py": "eea6db263b966c120ae345d73ef056ffe26a80548531431cf30513df83eee34f",
+    "docs/task-evidence/Q30/normal-admission/README.md": "1bd275661f2016402790fa9efb7a3ad28f4ba8bce3712615205f172befe15b5b",
+    "docs/task-evidence/Q30/normal-admission/native-final-05.log": "780611e6b052c1d2bb958df967cdb5ff70090575656d0d0782ef9652e672b64f"
+  },
+  "inputsUnchanged": true,
+  "readerStatus": "PASS",
+  "rowCount": 51,
+  "stdoutSha256": "5441cee1f913fcf2e3f05b4f4ed4c7dfa2445ac85271ce9cb0ff9dc9a2766bdb",
+  "stderr": "",
+  "purpose": "Recheck the strict structural corpus against the final documentation after README status edits. The native source and numerical outputs remain the accepted native05 inputs.",
+  "status": "PASS"
+}

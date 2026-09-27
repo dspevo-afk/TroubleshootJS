@@ -1,0 +1,10 @@
+{
+  "startedUtc": "2026-09-26T21:43:53.690953+00:00",
+  "nativeInputManifest": "native-floorplan-p09-03-inputs.json",
+  "nativeInputManifestSha256": "ac2fe3125ed1a91b4f0b9f482fdd1846896ed88a9d6276762be393b280e07d3c",
+  "all1248InputsUnchanged": true,
+  "predeclaredSpecSha256": "e20246d09827f14c96ffbefc161933392c758ba219c77d77d488dcb6f64c1fc3",
+  "rootCount": 128,
+  "disjointFromQualification72": true,
+  "budgetMs": 600000
+}

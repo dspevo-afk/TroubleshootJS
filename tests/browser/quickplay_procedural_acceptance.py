@@ -11,6 +11,23 @@ import sys
 import time
 import traceback
 
+EXPECTED_CATALOG = (
+    ('LED_INDICATOR', 'EASY'),
+    ('DIODE_PROTECTED_INDICATOR', 'EASY'),
+    ('PARALLEL_DUAL_INDICATOR', 'EASY'),
+    ('RC_DELAY', 'EASY'),
+    ('NPN_LOW_SIDE_SWITCH', 'EASY'),
+    ('NMOS_LOW_SIDE_SWITCH', 'EASY'),
+    ('RELAY_OUTPUT', 'EASY'),
+    ('SENSOR_CONTROL', 'EASY'),
+    ('RB15_CONTROL', 'EASY'),
+    ('COMPOSED_CONTROLLED_INDICATOR', 'MEDIUM'),
+    ('RB30_CONTROL', 'MEDIUM'),
+)
+SMALL_BOARD_OBSERVATION_SECONDS = 115  # Existing 90-second cap plus 25 seconds to observe.
+NORMAL_MEDIUM_JOB_MILLIS = 300000       # Qualified immutable MEDIUM_BOARD_NORMAL@1 request.
+NORMAL_MEDIUM_MARGIN_SECONDS = 25
+
 root, output = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve()
 output.mkdir(parents=True, exist_ok=False)
 
@@ -73,21 +90,48 @@ try:
             page.wait_for_function("() => window.tsjProduct && document.body.getAttribute('data-player-screen') === 'MENU'", timeout=30000)
             snapshot = lambda: page.evaluate('window.tsjProduct.snapshot(false)')
             families = snapshot()['families']
-            assert len(families) == 10 and all(row['procedural'] for row in families)
+            catalog = [(row['id'], row['profile']) for row in families]
+            assert catalog == list(EXPECTED_CATALOG), catalog
+            assert all(row['procedural'] for row in families)
 
             def click(label):
                 page.get_by_role('button', name=label, exact=True).click(timeout=15000)
 
-            def prepare():
+            def observation_bound_seconds(family):
+                if family['id'] == 'RB30_CONTROL':
+                    return NORMAL_MEDIUM_JOB_MILLIS / 1000 + NORMAL_MEDIUM_MARGIN_SECONDS
+                return SMALL_BOARD_OBSERVATION_SECONDS
+
+            def prepare(family, row):
                 start = time.monotonic()
                 samples = []
-                while time.monotonic() - start < 115:
+                bound = observation_bound_seconds(family)
+                row['observationBoundSeconds'] = bound
+                row['selectedJobBudgetMillis'] = (
+                    NORMAL_MEDIUM_JOB_MILLIS if family['id'] == 'RB30_CONTROL' else 90000)
+                while time.monotonic() - start < bound:
                     state = snapshot()
                     if state.get('progress'):
                         samples.append(state['progress'])
                     if state['screen'] in ('TICKET', 'ERROR'):
+                        row.update({
+                            'screen': state['screen'],
+                            'replay': state.get('replay'),
+                            'ready': state.get('ready', False),
+                            'elapsedSeconds': time.monotonic() - start,
+                            'observedCandidates': sorted({s['candidate'] for s in samples}),
+                            'maxObservedUnits': max((s['units'] for s in samples), default=0),
+                            'outcome': 'ERROR' if state['screen'] == 'ERROR' else 'TICKET',
+                        })
                         return state, time.monotonic() - start, samples
                     page.wait_for_timeout(150)
+                row.update({
+                    'screen': state.get('screen'),
+                    'elapsedSeconds': time.monotonic() - start,
+                    'observedCandidates': sorted({s['candidate'] for s in samples}),
+                    'maxObservedUnits': max((s['units'] for s in samples), default=0),
+                    'outcome': 'TIMEOUT',
+                })
                 raise AssertionError('Board preparation exceeded external observation bound')
 
             def select(family):
@@ -98,55 +142,79 @@ try:
             for family in families:
                 replays = set()
                 for ordinal in range(3):
-                    select(family)
-                    click('New board')
-                    state, seconds, samples = prepare()
                     row = {'family': family['id'], 'profile': family['profile'],
-                           'ordinal': ordinal, 'seconds': seconds,
-                           'screen': state['screen'], 'replay': state.get('replay'),
-                           'ready': state.get('ready', False),
-                           'observedCandidates': sorted({s['candidate'] for s in samples}),
-                           'maxObservedUnits': max((s['units'] for s in samples), default=0)}
+                           'ordinal': ordinal, 'outcome': 'STARTED'}
                     result['cases'].append(row)
                     save('progress.json', result)
-                    assert state['screen'] == 'TICKET', row
-                    assert state['replay'].startswith('tsj-alpha/3/' + family['profile'] + '/' + family['id'] + '/'), row
-                    assert state['replay'] not in replays, row
-                    replays.add(state['replay'])
-                    saved[family['id']] = state['replay']
+                    try:
+                        select(family)
+                        click('New board')
+                        state, seconds, samples = prepare(family, row)
+                        assert state['screen'] == 'TICKET', row
+                        assert state['replay'].startswith('tsj-alpha/3/' + family['profile'] + '/' + family['id'] + '/'), row
+                        assert state['replay'] not in replays, row
+                        replays.add(state['replay'])
+                        saved[family['id']] = state['replay']
+                        click('Accept ticket and start')
+                        page.wait_for_function("() => document.body.getAttribute('data-player-screen') === 'WORKBENCH'", timeout=30000)
+                        page.wait_for_function('() => window.tsjProduct.snapshot(false).ready', timeout=30000)
+                        row['ready'] = True
+                        for private in ('data-tsj-verification', 'data-tsj-a08-report', 'data-tsj-quickplay-gate',
+                                        'data-tsj-q30-coordinator-report', 'data-tsj-q30-coordinator-state',
+                                        'data-tsj-q30-d01-report', 'data-tsj-q30-d01-state'):
+                            assert page.locator('html').get_attribute(private) is None, private
+                        row['privateMetadataAbsent'] = True
+                        page.screenshot(path=str(output / (family['id'].lower() + '-' + str(ordinal) + '-top.png')))
+                        click('Board view'); click('View bottom copper'); click('Board view')
+                        page.screenshot(path=str(output / (family['id'].lower() + '-' + str(ordinal) + '-bottom.png')))
+                        click('Board view'); click('View top copper'); click('Board view')
+                        click('Main menu')
+                        page.wait_for_function("() => document.body.getAttribute('data-player-screen') === 'MENU'", timeout=30000)
+                        row['outcome'] = 'PASS'
+                        row['seconds'] = seconds
+                        save('progress.json', result)
+                        print('PASS', family['id'], family['profile'], ordinal, state['replay'], round(seconds, 2), flush=True)
+                    except BaseException as failure:
+                        if row.get('outcome') not in ('ERROR', 'TIMEOUT'):
+                            row['outcome'] = 'FAIL'
+                        row['failure'] = repr(failure)
+                        save('progress.json', result)
+                        raise
+
+            assert len(result['cases']) == 33 and all(row['outcome'] == 'PASS' for row in result['cases'])
+            result['replays'] = []
+            family_by_id = {row['id']: row for row in families}
+            for family_id in ('RELAY_OUTPUT', 'COMPOSED_CONTROLLED_INDICATOR', 'RB30_CONTROL'):
+                replay = saved[family_id]
+                family = family_by_id[family_id]
+                row = {'family': family_id, 'profile': family['profile'],
+                       'replay': replay, 'outcome': 'STARTED'}
+                result['replays'].append(row)
+                save('progress.json', result)
+                try:
+                    page.get_by_text('Open a saved replay code', exact=True).click()
+                    page.get_by_label('Open current replay', exact=True).fill(replay)
+                    click('Prepare replay')
+                    state, seconds, samples = prepare(family, row)
+                    assert state['screen'] == 'TICKET' and state['replay'] == replay, row
                     click('Accept ticket and start')
-                    page.wait_for_function("() => document.body.getAttribute('data-player-screen') === 'WORKBENCH'", timeout=30000)
                     page.wait_for_function('() => window.tsjProduct.snapshot(false).ready', timeout=30000)
-                    row['ready'] = True
-                    for private in ('data-tsj-verification', 'data-tsj-a08-report', 'data-tsj-quickplay-gate'):
-                        assert page.locator('html').get_attribute(private) is None, private
-                    row['privateMetadataAbsent'] = True
-                    page.screenshot(path=str(output / (family['id'].lower() + '-' + str(ordinal) + '-top.png')))
-                    click('Board view'); click('View bottom copper'); click('Board view')
-                    page.screenshot(path=str(output / (family['id'].lower() + '-' + str(ordinal) + '-bottom.png')))
-                    click('Board view'); click('View top copper'); click('Board view')
+                    click('Board Power: ON')
+                    page.wait_for_function('() => window.tsjProduct.snapshot(false).isolated', timeout=30000)
+                    row.update({'seconds': seconds, 'isolated': True,
+                                'observedCandidates': sorted({s['candidate'] for s in samples}),
+                                'outcome': 'PASS'})
+                    save('progress.json', result)
                     click('Main menu')
                     page.wait_for_function("() => document.body.getAttribute('data-player-screen') === 'MENU'", timeout=30000)
-                    print('PASS', family['id'], family['profile'], ordinal, state['replay'], round(seconds, 2), flush=True)
-
-            assert len(result['cases']) == 30
-            result['replays'] = []
-            for family_id in ('RELAY_OUTPUT', 'COMPOSED_CONTROLLED_INDICATOR'):
-                replay = saved[family_id]
-                page.get_by_text('Open a saved replay code', exact=True).click()
-                page.get_by_label('Open current replay', exact=True).fill(replay)
-                click('Prepare replay')
-                state, seconds, samples = prepare()
-                assert state['screen'] == 'TICKET' and state['replay'] == replay
-                click('Accept ticket and start')
-                page.wait_for_function('() => window.tsjProduct.snapshot(false).ready', timeout=30000)
-                click('Board Power: ON')
-                page.wait_for_function('() => window.tsjProduct.snapshot(false).isolated', timeout=30000)
-                result['replays'].append({'family': family_id, 'replay': replay,
-                                          'seconds': seconds, 'isolated': True,
-                                          'observedCandidates': sorted({s['candidate'] for s in samples})})
-                click('Main menu')
-                page.wait_for_function("() => document.body.getAttribute('data-player-screen') === 'MENU'", timeout=30000)
+                except BaseException as failure:
+                    if row.get('outcome') not in ('ERROR', 'TIMEOUT'):
+                        row['outcome'] = 'FAIL'
+                    row['failure'] = repr(failure)
+                    save('progress.json', result)
+                    raise
+            assert len(result['replays']) == 3 and all(
+                row['outcome'] == 'PASS' for row in result['replays'])
             assert not result['errors'], result['errors']
             result['outcome'] = 'PASS'
         finally:

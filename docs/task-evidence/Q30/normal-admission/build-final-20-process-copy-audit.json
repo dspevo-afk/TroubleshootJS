@@ -1,0 +1,42 @@
+{
+  "copiedFiles": [
+    {
+      "source": "stdout.log",
+      "destination": "build-final-20-process-stdout.log",
+      "sourceSha256": "b1f832ef6c0358b10d40ac407ca75724f6618f9c06422daf7071688bb7c4f691",
+      "destinationSha256": "10de0ed27f00b67983a3987730b26ba991054ea3d94cd1917e97495989937619",
+      "sourceBytes": 788,
+      "destinationBytes": 724,
+      "sourceLines": 7,
+      "destinationLines": 7,
+      "worktreeReplacements": 1,
+      "taskTempReplacements": 0,
+      "userHomeReplacements": 0,
+      "destinationState": "rewritten-sanitized-owned-copy"
+    },
+    {
+      "source": "stderr.log",
+      "destination": "build-final-20-process-stderr.log",
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destinationSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourceBytes": 0,
+      "destinationBytes": 0,
+      "sourceLines": 0,
+      "destinationLines": 0,
+      "worktreeReplacements": 0,
+      "taskTempReplacements": 0,
+      "userHomeReplacements": 0,
+      "destinationState": "rewritten-sanitized-owned-copy"
+    }
+  ],
+  "fileCount": 2,
+  "sourceDirectory": "<task-temp>/TroubleshootJS/build-process-9a94dec98de143cdbeff19db5d3675ec",
+  "identityMetadataPresent": false,
+  "cleanupMetadataPresent": false,
+  "sanitizedPathsOnly": true,
+  "resultOutcome": "FAIL",
+  "resultExitCode": 2,
+  "resultPhase": "GWT compilation",
+  "resultEvidence": "build-final-20-result.json",
+  "processRootRetainedForPreflight": true
+}

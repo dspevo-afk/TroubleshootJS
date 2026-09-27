@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "assertions": 3128,
+  "normalRows": 24,
+  "d01Rows": 8,
+  "cancellationMaxMs": 4,
+  "cleanup": "PASS",
+  "forcedNegative": "PASS_EXPECTED_FAILURE_NO_REPORT",
+  "buildInputCount": 1133,
+  "buildInputsUnchanged": true,
+  "capturedUtc": "2026-09-26T20:06:00.199758+00:00"
+}

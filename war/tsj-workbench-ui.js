@@ -114,8 +114,8 @@
   function support(parent) {
     var note = append(parent, 'section', undefined, 'tsj-product-support');
     append(note, 'h3', 'About this desktop alpha');
-    append(note, 'p', 'Selected low-voltage boards in the 5–20-part range, including a 16-part procedural control board with routed bottom copper. The 3-part indicator and 4-part protected indicator are introductory practice boards.');
-    append(note, 'p', 'EASY and MEDIUM candidates are checked before play. HARD and PSYCHOTIC are unavailable. Mains circuits, larger boards and general multilayer routing are not supported. Session saves are not available.');
+    append(note, 'p', 'Selected low-voltage families include a 16-part procedural control board and multi-rail control boards with 33, 35 or 37 parts. The 3-part indicator and 4-part protected indicator are introductory practice boards.');
+    append(note, 'p', 'EASY and MEDIUM candidates are checked before play. HARD and PSYCHOTIC are unavailable. Only the listed board families are supported. Mains circuits and general multilayer routing are not supported. Session saves are not available.');
   }
 
   function invalidateView() {

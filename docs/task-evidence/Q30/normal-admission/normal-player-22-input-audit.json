@@ -1,0 +1,96 @@
+{
+  "schema": "normal-player-22-input-audit-v1",
+  "status": "PASS",
+  "checkedUtc": "2026-09-27T02:24:13.2200617Z",
+  "currentHead": "16a922b2b757dfcd1cbc3a0230ab2b97ac2fbb50",
+  "finalBuild": "GWT21",
+  "buildInputs": {
+    "manifest": "build-final-21-inputs.json",
+    "manifestSha256": "96958fa5dbb97a6d7c988398c6b75411b7bb9425ab4e75a515ee9a5c27a3f5e7",
+    "expectedBaseCommit": "16a922b2b757dfcd1cbc3a0230ab2b97ac2fbb50",
+    "manifestInputCount": 1133,
+    "currentFilesMatched": 1133,
+    "missingCount": 0,
+    "mismatchCount": 0,
+    "actualSortedPathHashMapSha256": "dd09e2ecb4211861a52a843feea73ef1c8e83d07aabb1f84d05445092245883a",
+    "missingPaths": [],
+    "mismatches": []
+  },
+  "webInputs": {
+    "manifest": "web-final-21-inputs.json",
+    "manifestSha256": "b7e9ee901ca67c6cb1a778df0e422e1d6d83bc016d47ad7f746227c7982dc1e4",
+    "expectedInputCount": 392,
+    "currentFilesMatched": 392,
+    "missingCount": 0,
+    "mismatchCount": 0,
+    "actualSortedPathHashMapSha256": "25219e761843d6d742301a39b733e35f61bb093867599627cb5484209be23375",
+    "buildInputsUnchanged": true,
+    "missingPaths": [],
+    "mismatches": []
+  },
+  "manualEvidence": {
+    "record": "normal-player-22.json",
+    "prePromotionSha256": "8848fd066c7b8261633cf05a93f92fd43338f470b6a780e6dd0534af73b651e1",
+    "behaviorStatus": "PASS",
+    "verifiedBooleanFields": 13,
+    "falseVerifiedFields": [],
+    "measuredRdaDrop": "4.85 V lead1; 0 V lead2 to J1 ground with A high/B low",
+    "stepsCount": 70,
+    "stepsSha256": "42b866ef4134944fa76a2fae3b2ce751f579eefce2ccbc8192d5aaf96cb2b751",
+    "limitationsCount": 7,
+    "limitationsSha256": "90bc0e07eb7207b06e365bad559e032da91c02bbf78c47e454d8f15e56accd10",
+    "cdpRetestTimeoutCount": 5,
+    "purchaseTransientRetained": true,
+    "purchaseTransientObservation": "Rejected while residual energy/board busy; tray stayed at 5. Shop text said supplies isolated/ready, but controller rejected purchase. No stock created.",
+    "dischargeDisplayLimitationRetained": true,
+    "dischargeDisplayObservation": "Reading initially remained at 1.576 V in snapshots; re-placing the visible probe showed 7.113 mV before removal. No hidden state or controller injection used.",
+    "finalStatus": "PASS",
+    "finalSha256": "f02ce849b2b6a14a15d259861cbc35f8da9e02ca6c3e570ef7658fe2ea86836e",
+    "evidenceFinalizedUtc": "2026-09-27T02:24:56.2638190Z"
+  },
+  "screenshots": {
+    "count": 5,
+    "allPresent": true,
+    "allHashRecorded": true,
+    "visualReview": "Root reported all five saved/viewed; this audit checks file presence and hashes only.",
+    "files": [
+      {
+        "file": "normal-player-22-01-diagnosis.png",
+        "bytes": 83887,
+        "sha256": "34209c1b75692bb722afc2b86cee8cbb43fc36d613ceeba15ab650bd569625dd"
+      },
+      {
+        "file": "normal-player-22-02-typed-service.png",
+        "bytes": 92636,
+        "sha256": "f82e3e92537aa96c1b77c1349be9f20ba9a78dc09060b499b9f0d4fa13a2bcd5"
+      },
+      {
+        "file": "normal-player-22-03-wrong-relay.png",
+        "bytes": 82295,
+        "sha256": "131d43840f43310d0ebd87b1a0ee0287c74f21e500499f8803e63d42e67952d7"
+      },
+      {
+        "file": "normal-player-22-04-repaired.png",
+        "bytes": 71117,
+        "sha256": "93f0619a8f1399d616cf544cdbab7fd10473f3b0fc63e9c19cfb57fe0b2f0ddd"
+      },
+      {
+        "file": "normal-player-22-05-replay-reset.png",
+        "bytes": 88177,
+        "sha256": "c165192ec9f713b33de5cd19fccc74d3e8d5855c3c76bc1eba954d791e144b4f"
+      }
+    ]
+  },
+  "previewCleanupAudit": {
+    "file": "preview-22-cleanup.json",
+    "status": "PASS",
+    "processIdentityAbsent": true,
+    "portClosed": true
+  },
+  "privacy": {
+    "manualPathFindings": 0,
+    "previewStopLogPathFindings": 0,
+    "sanitized": false
+  },
+  "promotionEligible": true
+}

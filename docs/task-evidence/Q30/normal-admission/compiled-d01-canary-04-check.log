@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_d01.py", line 760, in <module>
+    pairs = check_document(json.load(handle), args.seeds, args.require_warm)
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_d01.py", line 665, in check_document
+    assert f";seed={seed};" in report["realizationManifest"], "realization seed mismatch"
+                               ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'realizationManifest'

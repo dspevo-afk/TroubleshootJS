@@ -1,0 +1,13 @@
+{
+  "file": "docs/task-evidence/Q30/normal-admission/build-final-15.log",
+  "originalSha256": "504d57af0af4da1fab2f2ce9248e7f375552f553bde5b4fd65e2f9424edcc65f",
+  "sanitizedSha256": "99e8252e22a7cb3f8220e4566ff1b0b5fe3c2e68961e5cce7723748152d6594e",
+  "originalBytes": 1250,
+  "sanitizedBytes": 1185,
+  "originalLines": 16,
+  "sanitizedLines": 16,
+  "worktreeReplacements": 1,
+  "taskTempReplacements": 0,
+  "personalPathHitsAfterSanitization": 0,
+  "sanitizedPathsOnly": true
+}

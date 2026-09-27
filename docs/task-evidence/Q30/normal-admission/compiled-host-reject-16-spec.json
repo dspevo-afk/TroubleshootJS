@@ -1,0 +1,11 @@
+{
+  "cases": [
+    {
+      "name": "reject-wrong-terminal",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyChallenge=true",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 30,
+      "expectedState": "PASS:alpha"
+    }
+  ]
+}

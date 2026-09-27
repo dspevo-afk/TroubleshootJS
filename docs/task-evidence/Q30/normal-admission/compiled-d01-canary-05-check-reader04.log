@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_d01.py", line 816, in <module>
+    pairs = check_document(json.load(handle), args.seeds, args.require_warm)
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_d01.py", line 735, in check_document
+    expected_proof_units, work_contract_version = validate_q30_work_contract(report, seed)
+                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_d01.py", line 380, in validate_q30_work_contract
+    validate_current_realization_manifest(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        report["realizationManifest"], seed, report["topology"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        context.get("physical.admission.canonical"))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_d01.py", line 199, in validate_current_realization_manifest
+    board_records = _admission_component_records(admission_canonical)
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_d01.py", line 172, in _admission_component_records
+    admission_records = _parse_length_records(admission_canonical[len(prefix):])
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_d01.py", line 138, in _parse_length_records
+    assert colon > offset and canonical[offset:colon].isdigit(), \
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: malformed physical-admission field name length

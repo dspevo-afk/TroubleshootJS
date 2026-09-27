@@ -1,0 +1,20 @@
+{
+  "cases": [
+    {
+      "name": "alpha-composed-39",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaCase=39",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedState": "PASS:alpha",
+      "reportAttribute": "data-tsj-alpha-report"
+    },
+    {
+      "name": "alpha-composed-40",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaCase=40",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedState": "PASS:alpha",
+      "reportAttribute": "data-tsj-alpha-report"
+    }
+  ]
+}

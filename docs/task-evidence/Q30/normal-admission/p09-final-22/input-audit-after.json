@@ -1,0 +1,71 @@
+{
+  "captured": "after strict-reader completion",
+  "files": {
+    "nativePointer": {
+      "path": ".tools/q30-native-22-wrapper-path.txt",
+      "sha256Before": "60b0a4977603c18695733d0ebab25638e23edf690c306b73814eb601dec9e5c3",
+      "sha256After": "60b0a4977603c18695733d0ebab25638e23edf690c306b73814eb601dec9e5c3",
+      "unchanged": true
+    },
+    "nativeFullLog": {
+      "path": "native-final-05.log",
+      "sha256Before": "780611e6b052c1d2bb958df967cdb5ff70090575656d0d0782ef9652e672b64f",
+      "sha256After": "780611e6b052c1d2bb958df967cdb5ff70090575656d0d0782ef9652e672b64f",
+      "unchanged": true
+    },
+    "nativeRootResult": {
+      "path": "native-final-05-root-result.json",
+      "sha256Before": "b9e32a4908eae8dae7435139c5eb4a4ef10aa5cc0d507d0c0981c4ad780fae6e",
+      "sha256After": "b9e32a4908eae8dae7435139c5eb4a4ef10aa5cc0d507d0c0981c4ad780fae6e",
+      "unchanged": true
+    },
+    "compiledCases": {
+      "path": "docs/task-evidence/Q30/normal-admission/compiled-p09-22-cases.json",
+      "sha256Before": "893a1290b482a72880a4b097b9f18f7efb3f2aaaf5e617f333fe874478611ed5",
+      "sha256After": "893a1290b482a72880a4b097b9f18f7efb3f2aaaf5e617f333fe874478611ed5",
+      "unchanged": true
+    },
+    "compiledRootResult": {
+      "path": "docs/task-evidence/Q30/normal-admission/compiled-p09-22-root-result.json",
+      "sha256Before": "d644952893f53e9be0a71979877f437cb39e3575b2273a334179ece04c44a0ac",
+      "sha256After": "d644952893f53e9be0a71979877f437cb39e3575b2273a334179ece04c44a0ac",
+      "unchanged": true
+    },
+    "controlledCases": {
+      "path": "docs/task-evidence/Q30/normal-admission/compiled-p09-controlled-22-cases.json",
+      "sha256Before": "047b50ab6b847ea31eb46194298feae73879e572cec78e3a82794af9dbad20e9",
+      "sha256After": "047b50ab6b847ea31eb46194298feae73879e572cec78e3a82794af9dbad20e9",
+      "unchanged": true
+    },
+    "controlledRootResult": {
+      "path": "docs/task-evidence/Q30/normal-admission/compiled-p09-controlled-22-root-result.json",
+      "sha256Before": "08583507354f01097c0a6f016ec02c8a35ab991f9c25fb81d88c968b43312344",
+      "sha256After": "08583507354f01097c0a6f016ec02c8a35ab991f9c25fb81d88c968b43312344",
+      "unchanged": true
+    },
+    "nativeSource": {
+      "path": "tests/contracts/QuickPlayGateCorpus.java",
+      "sha256Before": "821b197c8d1f8c82ed88ffcf29a7f975acf857f5eca3dc98fb2db4073a438f42",
+      "sha256After": "821b197c8d1f8c82ed88ffcf29a7f975acf857f5eca3dc98fb2db4073a438f42",
+      "unchanged": true
+    },
+    "holdoutSource": {
+      "path": "tests/contracts/QuickPlayGateHoldoutCorpus.java",
+      "sha256Before": "78ab28a932937dc271b874cab95c264094334d4fcc21615529c1fa3232c77b74",
+      "sha256After": "78ab28a932937dc271b874cab95c264094334d4fcc21615529c1fa3232c77b74",
+      "unchanged": true
+    },
+    "runnerScript": {
+      "path": "scripts/verify-current-contracts.ps1",
+      "sha256Before": "a8c1c2b1e5919530b37339d729ca7d84a2f988f002d13001956c0c1278dcf190",
+      "sha256After": "a8c1c2b1e5919530b37339d729ca7d84a2f988f002d13001956c0c1278dcf190",
+      "unchanged": true
+    },
+    "strictReader": {
+      "path": "tests/contracts/quickplay_gate_evidence.py",
+      "sha256Before": "b985c8876be00581ada9495a1ca41132fde06394c17bec8060d81553c30ea9f8",
+      "sha256After": "b985c8876be00581ada9495a1ca41132fde06394c17bec8060d81553c30ea9f8",
+      "unchanged": true
+    }
+  }
+}

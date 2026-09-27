@@ -1,0 +1,12 @@
+{
+  "cases": [
+    {
+      "name": "challenge-positive",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyChallenge=true",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedState": null,
+      "expectedPrefix": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+Compiling module com.lushprojects.circuitjs1.circuitjs1
+   Ignored 1 unit with compilation errors in first pass.
+Compile with -strict or with -logLevel set to TRACE or DEBUG to see all errors.
+   Tracing compile failure path for type 'com.lushprojects.circuitjs1.client.QuickPlayGateDeveloperVerifier'
+      [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/QuickPlayGateDeveloperVerifier.java'
+         [ERROR] Line 85: Cannot refer to the non-final local variable search defined in an enclosing scope
+   [ERROR] Hint: Check the inheritance chain from your module; it may not be inheriting a required module or a module may not be adding its source path entries properly

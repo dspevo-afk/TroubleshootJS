@@ -1191,7 +1191,7 @@ MouseOutHandler, MouseWheelHandler {
                 new QuickPlaySelector();
             QuickPlaySelection selection = selector.select();
             publishQuickPlaySelectionForDeveloperVerification(selection);
-            startGeneration(GenerationRequest.leaf(selection.getFamilyId(), selection.getSeed(), true));
+            startGeneration(GenerationRequest.stagedQuickPlay(selection));
 	}
 	if (troubleshootStressVerification)
 	    installStressDeveloperBridge();
@@ -5146,6 +5146,16 @@ MouseOutHandler, MouseWheelHandler {
                 !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
                 generatedChallengeController != null && generatedChallengeController.isReady() &&
                 isGeneratedRuntimeSettled()) {
+            if ("true".equals(Window.Location.getParameter("tsjQ30Coordinator"))) {
+                Q30CoordinatorQualificationVerifier.start(this, troubleshootQ30Seed);
+                troubleshootQ30Complete = true;
+                return;
+            }
+            if ("true".equals(Window.Location.getParameter("tsjQ30D01"))) {
+                Q30DiagnosticAdmissionVerifier.start(this, troubleshootQ30Seed);
+                troubleshootQ30Complete = true;
+                return;
+            }
             developerVerifierRunning = true; troubleshootQ30Complete = true;
             publishBrowserVerificationResult("RUNNING:q30");
             try {

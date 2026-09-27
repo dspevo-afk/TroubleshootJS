@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 2,
+    "name": "alpha-explicit-negative",
+    "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaFail=true",
+    "stateAttribute": "data-tsj-verification",
+    "expectedState": null,
+    "expectedPrefix": "FAIL:alpha:",
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 120.0,
+    "reportAttribute": "data-tsj-alpha-report"
+  },
+  "url": "http://127.0.0.1:59035/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaFail=true",
+  "startedUtc": "2026-09-27T00:38:24.739594+00:00",
+  "finishedUtc": "2026-09-27T00:38:25.235683+00:00",
+  "operationSeconds": 0.4960871000075713,
+  "outcome": "PASS",
+  "terminalReached": true,
+  "stateMatch": true,
+  "observedState": "FAIL:alpha:start owner=false power=POWERED isolated=false settled=true state=READY: java.lang.AssertionError: alpha-explicit-failure-canary",
+  "lastObservedState": "FAIL:alpha:start owner=false power=POWERED isolated=false settled=true state=READY: java.lang.AssertionError: alpha-explicit-failure-canary",
+  "timedOut": false,
+  "expectedFailureCanary": true,
+  "expectedFailureStateWasNotAnUnexpectedError": true,
+  "reportObserved": true,
+  "reportJsonValid": true,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 552,
+  "reportSha256": "71ae9713d79ede5119c533b7cc40f8d6ce2560d9ab87fd7d84fc016ac1818462",
+  "reportFile": "cases/002-alpha-explicit-negative.report.json",
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [],
+  "listenerCleanupErrors": [],
+  "navigationError": null
+}

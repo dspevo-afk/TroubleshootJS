@@ -1,0 +1,16 @@
+{
+  "recordedUtc": "2026-09-26T21:40:42.532464+00:00",
+  "purpose": "Fixture-census host transport positive canary; not part of negative fixture discovery population",
+  "seeds": [
+    "-9223372036854775808",
+    "9223372036854775807",
+    "9007199254740993"
+  ],
+  "files": {
+    "scripts/verify-current-contracts.ps1": "a8c1c2b1e5919530b37339d729ca7d84a2f988f002d13001956c0c1278dcf190",
+    "tests/contracts/QuickPlayGateCorpus.java": "821b197c8d1f8c82ed88ffcf29a7f975acf857f5eca3dc98fb2db4073a438f42"
+  },
+  "expectedRows": 3,
+  "expectedSeedAndIndexPreservation": true,
+  "priorNegativeCanaries": "p09-fixture-host-negative-01.json"
+}

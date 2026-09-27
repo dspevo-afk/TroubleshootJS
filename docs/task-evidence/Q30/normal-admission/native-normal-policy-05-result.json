@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "outcome": "FAIL",
+  "exitCode": 2,
+  "phase": "javac diagnostic helper compilation",
+  "failure": "Vector<String> after has no canonical member in U04 firstVectorDifference",
+  "scratchCleanup": "PASS",
+  "recordedUtc": "2026-09-27T00:10:40.221640+00:00"
+}

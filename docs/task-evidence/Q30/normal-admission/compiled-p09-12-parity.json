@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "rows": 72,
+  "development": 24,
+  "holdout": 48,
+  "compared": [
+    "seed",
+    "cohort",
+    "outcome",
+    "width",
+    "height",
+    "design",
+    "parts"
+  ],
+  "nativeLogSha256": "6a0ae282ba34bd13252e8acc4e6000c41584bf9c3beadfb53f0db440e6dcd069",
+  "scope": "Exact native/browser discrete geometry parity; full P09 canary reader pending",
+  "nativeReceiptSha256": "2a95acdbabbc35614edbd0e543474a354216ebdc99fbf2ba44ba6c005fa099a6",
+  "nativeExitCode": 0,
+  "nativeCleanup": "PASS",
+  "nativeFocusedSuites": 3
+}

@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_d01.py", line 804, in <module>
+    pairs = check_document(json.load(handle), args.seeds, args.require_warm)
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_d01.py", line 723, in check_document
+    expected_proof_units, work_contract_version = validate_q30_work_contract(report, seed)
+                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_d01.py", line 353, in validate_q30_work_contract
+    context_epoch, context = _framed_fields(report["contextCanonical"], context=True)
+                             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<worktree>\docs\task-evidence\Q30\normal-admission\check_d01.py", line 74, in _framed_fields
+    assert value[offset] == "F", "canonical field record marker is missing"
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: canonical field record marker is missing

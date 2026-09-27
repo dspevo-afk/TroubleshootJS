@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "from": "build-final-17-inputs.json",
+  "to": "build-final-21-inputs.json",
+  "comparedFiles": 1133,
+  "changed": [
+    "src/com/lushprojects/circuitjs1/client/U04CatalogMutationVerifier.java"
+  ],
+  "added": [],
+  "removed": []
+}

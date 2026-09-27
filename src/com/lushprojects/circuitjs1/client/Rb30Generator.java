@@ -5,9 +5,9 @@ import java.util.TreeMap;
 import java.util.Vector;
 
 /**
- * Provider-local Q30 electrical construction pilot.  This is deliberately not
- * registered for player admission: physical service, diagnostic hypotheses and
- * the enlarged production envelope still need qualification.
+ * Provider-local Q30 electrical construction shared by developer inspection
+ * and the qualified normal route. Normal admission also requires accepted
+ * physical routing and the complete production diagnostic proof.
  */
 final class Rb30Generator {
     private static final class FaultDescriptor {
@@ -147,6 +147,12 @@ final class Rb30Generator {
             decision("B", variant, decisionRail, config);
         resistor("RSA", 10000, "A_RAW", "A_SENSE");
         resistor("RSB", 10000, "B_RAW", "B_SENSE");
+        resistor("RPIN_A", 1000, "A_RAW", "CTRL_RETURN");
+        resistor("RPIN_B", 1000, "B_RAW", "CTRL_RETURN");
+        if (plan.hasSensorInputFilters()) {
+            capacitor("CFLT_A", 100e-9, "A_SENSE", "CTRL_RETURN");
+            capacitor("CFLT_B", 100e-9, "B_SENSE", "CTRL_RETURN");
+        }
         if (plan.sharedHystereticReference) {
             resistor("RREF_H", 10000, "RAIL5", "REF_SHARED");
             resistor("RREF_L", 10000, "REF_SHARED", "CTRL_RETURN");
@@ -163,12 +169,14 @@ final class Rb30Generator {
 
         ServiceRelayElm relayA = output("A", plan.driverA());
         ServiceRelayElm relayB = output("B", plan.driverB());
-        resistor("RLED", 3300, "RAIL5", "LED_FEED");
-        LEDElm led = new LEDElm(nextX(), 400);
-        led.drag(led.x + 80, 400);
-        led.modelName = "default-led";
-        led.setup();
-        two("LED1", led, "LED_FEED", "CTRL_RETURN");
+        if (plan.hasStatusIndicator()) {
+            resistor("RLED", 3300, "RAIL5", "LED_FEED");
+            LEDElm led = new LEDElm(nextX(), 400);
+            led.drag(led.x + 80, 400);
+            led.modelName = "default-led";
+            led.setup();
+            two("LED1", led, "LED_FEED", "CTRL_RETURN");
+        }
 
         externalLoad("A");
         externalLoad("B");
@@ -232,6 +240,10 @@ final class Rb30Generator {
         resistor("RPD" + channel, 100000,
             channel + "_DRIVE", "CTRL_RETURN");
         CircuitElm transistor = driver.create(nextX(), 400);
+        a.specifications.addPhysicalDefinition("Q" + channel,
+            driver.getSpecification("Q" + channel),
+            new PhysicalNameplate("Q" + channel, "Low-side " + driver.getId() + " driver",
+                "Part", driver.getId()), driver.getPackage());
         multi("Q" + channel, transistor, driver.getPosts(),
             channel + "_DRIVE", channel + "_COIL_LOW", "CTRL_RETURN");
         diode("D" + channel, channel + "_COIL_LOW", "RAIL5");
@@ -249,7 +261,7 @@ final class Rb30Generator {
         String id = "JO" + channel;
         // The header's fixed backing is the external load, as in E03's J4:
         // both header pads remain distinct and the load lives outside the
-        // 33 physical board packages.  Its 180 ohms is CircuitJS stamped.
+        // physical board packages. Its 180 ohms is CircuitJS stamped.
         multi(id, load, new int[] { 0, 1 },
             "OUT_" + channel, "LOAD_RETURN");
         a.connections.declareConnectorHarness(id, load, 0, load, 1);
@@ -418,7 +430,13 @@ final class Rb30Generator {
             }
             PhysicalSpecification spec;
             PhysicalNameplate label;
-            if (a.specifications.getSpecification(id) != null) {
+            E04SensorControlModel.DecisionElement decision =
+                id.equals("U2A") ? decisionA : id.equals("U2B") ? decisionB : null;
+            if (decision != null) {
+                spec = new BasicPhysicalSpecification(decision.declarationIdentity());
+                label = new PhysicalNameplate(id, component.getType() + " " + id);
+                a.specifications.addPhysicalDefinition(id, spec, label, physical);
+            } else if (a.specifications.getSpecification(id) != null) {
                 spec = a.specifications.getSpecification(id);
                 label = a.specifications.getNameplate(id);
             } else if (isResistorComponent(component, physical)) {
@@ -448,7 +466,7 @@ final class Rb30Generator {
                     throw new IllegalStateException("Q30 ceramic capacitor has no capacitor backing: " + id);
                 double farads = ((CapacitorElm) element).getCapacitance();
                 CapacitorNameplate markings = new CapacitorNameplate(
-                    "Ceramic capacitor", "1 uF / 25 V");
+                    "Ceramic capacitor", farads == 100e-9 ? "100 nF / 25 V" : "1 uF / 25 V");
                 spec = new CapacitorSpecification(id, farads, 10, 25,
                     PhysicalPackages.RADIAL_CERAMIC_CAPACITOR, markings);
                 label = markings.forPhysicalPartId(id);
@@ -460,9 +478,7 @@ final class Rb30Generator {
                 a.specifications.addPhysicalDefinition(id, spec, label, physical);
             }
             PhysicalBoardSlot slot = runtime.createSlot(id);
-            if (id.equals("U2A") || id.equals("U2B")) {
-                E04SensorControlModel.DecisionElement decision =
-                    id.equals("U2A") ? decisionA : decisionB;
+            if (decision != null) {
                 E04DecisionControlPart original = new E04DecisionControlPart(
                     id + "_ORIGINAL", spec, label, decision, provenance(id));
                 WireElm[] attachments = new WireElm[5];
@@ -645,6 +661,45 @@ final class Rb30Generator {
         return assemble(candidate, route(candidate));
     }
 
+    /** Private qualification entry. Physical eligibility does not register player content. */
+    GeneratedBoardInstance generateNormalForQualification(long seed) {
+        return constructNormalForQualification(seed).instance;
+    }
+
+    GenerationRequest.Construction constructNormalForQualification(long seed) {
+        Rb30Plan plan = Rb30Plan.resolve(seed);
+        SeededPcbLayoutGenerator.Session routing = new SeededPcbLayoutGenerator().begin(
+            plan.board(), plan.layoutSeed, plan.routingSeed, null);
+        while (!routing.advance()) { }
+        return constructFromAcceptedRoute(plan, routing.mediumResult());
+    }
+
+    /** Constructs live CircuitJS state only after the private medium route is accepted. */
+    GenerationRequest.Construction constructFromAcceptedRoute(Rb30Plan plan,
+            MediumBoardPhysicalPolicy.Result routed) {
+        if (plan == null || routed == null || !routed.accepted() ||
+                routed.getLayout() == null)
+            throw new IllegalArgumentException("Q30 owner construction requires an accepted medium route");
+        Candidate candidate = construct(plan);
+        try {
+            GeneratedPhysicalAdmission admission = MediumBoardNormalAdmission.fromAcceptedRoute(
+                candidate.board(), routed, plan.layoutSeed, plan.routingSeed);
+            GeneratedBoardInstance instance = assembleNormal(candidate, routed.getLayout(), admission);
+            return new GenerationRequest.Construction(instance, plan.canonical());
+        } catch (Throwable failure) {
+            // Only unpublished, newly allocated CircuitJS state is disposed here.
+            try { candidate.assembly.power.setConnected(false); }
+            catch (Throwable cleanup) { failure.addSuppressed(cleanup); }
+            for (CircuitElm element : candidate.elements()) {
+                try { element.delete(); }
+                catch (Throwable cleanup) { failure.addSuppressed(cleanup); }
+            }
+            if (failure instanceof RuntimeException) throw (RuntimeException) failure;
+            if (failure instanceof Error) throw (Error) failure;
+            throw new IllegalStateException("Q30 normal construction failed", failure);
+        }
+    }
+
     /** Replays one exact member of the canonical five-fault population. */
     GeneratedBoardInstance generateForHypothesis(long seed, String hypothesisKey) {
         if (hypothesisKey == null || hypothesisKey.length() == 0)
@@ -679,6 +734,18 @@ final class Rb30Generator {
     }
 
     GeneratedBoardInstance assemble(Candidate candidate, PcbBoardLayout layout) {
+        return assemble(candidate, layout, null);
+    }
+
+    GeneratedBoardInstance assembleNormal(Candidate candidate, PcbBoardLayout layout,
+            GeneratedPhysicalAdmission admission) {
+        if (admission == null)
+            throw new IllegalArgumentException("Normal Q30 requires physical eligibility evidence");
+        return assemble(candidate, layout, admission);
+    }
+
+    private GeneratedBoardInstance assemble(Candidate candidate, PcbBoardLayout layout,
+            GeneratedPhysicalAdmission admission) {
         if (candidate == null || layout == null || candidate.plan == null ||
                 !layout.matchesGenerationSeeds(candidate.plan.layoutSeed,
                     candidate.plan.routingSeed))
@@ -693,7 +760,7 @@ final class Rb30Generator {
             "Repair verified. Both sensor-controlled loads follow their inputs.",
             fault, candidate.selectedFault, behavior);
         Rb30DiagnosticProvider diagnostics = new Rb30DiagnosticProvider(
-            candidate.plan, layout);
+            candidate.plan, layout, admission);
         GeneratedBoardInstance instance = new GeneratedBoardInstance(
             candidate.board(), candidate.elements(), candidate.plan.seed,
             Rb30Plan.FAMILY_ID, candidate.plan.topology(),
@@ -703,8 +770,8 @@ final class Rb30Generator {
             candidate.assembly.connections, behavior, layout,
             candidate.assembly.specifications, candidate.selectedFault,
             new GeneratedComponentOperationalStates(), challenge, behavior,
-            candidate.runtime, behavior, true, candidate.faultCandidates, null,
-            diagnostics);
+            candidate.runtime, behavior, admission == null, candidate.faultCandidates, null,
+            diagnostics, admission);
         GeneratedDiagnosticSolvabilityAdmission.validateStructural(instance);
         return instance;
     }

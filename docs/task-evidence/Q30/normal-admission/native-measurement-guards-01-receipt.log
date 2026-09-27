@@ -1,0 +1,7 @@
+PASS: q30 generation request contracts 339 assertions
+
+PASS: Q30 generation measurement budget contracts 25 assertions
+
+PASS: D01 diagnostic contracts assertions=168
+
+PASS: A10 generation contracts assertions=190

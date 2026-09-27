@@ -1,0 +1,31 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+QUICKPLAY_NATIVE method=verifyEligibleFamilies millis=0
+QUICKPLAY_NATIVE method=verifyDeterministicFamilySelection millis=4678
+QUICKPLAY_NATIVE method=verifySelectionEnvelopes millis=32
+QUICKPLAY_NATIVE method=verifyFullCatalogSelectionAndStagedRequests millis=14
+QUICKPLAY_NATIVE method=verifyNaturalLedSeedEnvelope millis=9
+QUICKPLAY_NATIVE method=verifyNaturalNpnSeedEnvelope millis=110
+QUICKPLAY_NATIVE method=verifyNaturalNmosSeedEnvelope millis=50
+PASS: Quick Play current seed envelopes and construction
+
+PASS: U05 difficulty contracts assertions=30
+
+PASS: q30 generation request contracts 446 assertions
+
+PASS: Q30 generation measurement budget contracts 25 assertions
+
+PASS: Q30 normal execution policy contracts 323 assertions
+
+PASS: A10 generation contracts assertions=190
+
+PASS: Quick Play gate contracts assertions=27062
+
+PASS: focused current contracts; 7 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

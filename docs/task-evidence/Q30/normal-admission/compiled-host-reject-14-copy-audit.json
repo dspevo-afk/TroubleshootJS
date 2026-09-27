@@ -1,0 +1,85 @@
+{
+  "postCopySanitization": {"auditFile": "completed-evidence-privacy-sanitization.json", "affectedDestinations": 4, "destinationHashesReflectSanitizedBytes": true, "sourceHashesRemainCopyTimeValues": true},
+ "copiedFiles": [
+    {
+      "source": "cases/001-reject-wrong-terminal.json",
+      "destination": "compiled-host-reject-14-cases-001-reject-wrong-terminal.json",
+      "sourceSha256": "320039b0627cebc20a65ef88118e0cfbf7c311fa3df5268b0a0c0e686129dcde",
+      "destinationSha256": "ec7212a990738f05100118f2be1af2805b1562734685f17c31126f15a38d1770"
+    },
+    {
+      "source": "cases/001-reject-wrong-terminal.state.txt",
+      "destination": "compiled-host-reject-14-cases-001-reject-wrong-terminal.state.txt",
+      "sourceSha256": "0cfe10527d04b345d2c487da34e67cfbdba476f4880ce5f71cd6dfc9f8ef12af",
+      "destinationSha256": "0cfe10527d04b345d2c487da34e67cfbdba476f4880ce5f71cd6dfc9f8ef12af"
+    },
+    {
+      "source": "identity.json",
+      "destination": "compiled-host-reject-14-identity.json",
+      "sourceSha256": "5e9f43954156200d547f3f27121def68d0bbbaab3bb51bcfd5c916d5e55f5288",
+      "destinationSha256": "d865f35ef677cad2823ec9ddd8e1cc03d83d1a2346e0900e724016fed36b2e4c", "destinationBytes": 1799
+    },
+    {
+      "source": "input-manifest-after.json",
+      "destination": "compiled-host-reject-14-input-manifest-after.json",
+      "sourceSha256": "8b51156b484e8581e7ad9be0eea8717fad7c0bbcbf355272f2f708b818ac689e",
+      "destinationSha256": "c594485ddcd75419c2db9cba12940176c19c1776fea6e5606cbdc9da1f3c29e2"
+    },
+    {
+      "source": "input-manifest-before.json",
+      "destination": "compiled-host-reject-14-input-manifest-before.json",
+      "sourceSha256": "4fa7bc4a297edd3677b507ee3ec6c96cdb380d87c18933bbd60f8f0a9681c30b",
+      "destinationSha256": "8d09073dfabb215a642fac043bc01cf13296467c060069f3923dcb7252996277"
+    },
+    {
+      "source": "owned-processes-before-close.json",
+      "destination": "compiled-host-reject-14-owned-processes-before-close.json",
+      "sourceSha256": "718424f2def62f114b09c6f11f91c5f7e6efac30cc7342eb806712410257170f",
+      "destinationSha256": "a766fd6481c9c7e17fdba3f30c233534f9a95fc04553ae979699a2ec78a82394"
+    },
+    {
+      "source": "owned-processes-before.json",
+      "destination": "compiled-host-reject-14-owned-processes-before.json",
+      "sourceSha256": "59eeac6d6fb6271cd76fea728a951579f1f8959c7ed670938e4e6f4b7ea86362",
+      "destinationSha256": "92dfcf99d61c2764be4cc3a44ea0d86e5d6cad2d2089d93a35bb61f36dc53b3d"
+    },
+    {
+      "source": "progress.json",
+      "destination": "compiled-host-reject-14-progress.json",
+      "sourceSha256": "0e70f718b49f7e166525aa87533fce52fc463603164716db3b8c0c199cc7c988",
+      "destinationSha256": "7abcf3917ac995bdf0828c73daffe9921a8cfb1cb07e73ff26e2c3eeb2366d8f", "destinationBytes": 3985
+    },
+    {
+      "source": "result.json",
+      "destination": "compiled-host-reject-14-result.json",
+      "sourceSha256": "5dd00c2eace13d554dcca447a64abd038e9e4403f4b8e17b3027046ffd94c3f5",
+      "destinationSha256": "d30de94d5236c6c40d988c10328b781e8ce61ca80bed9944d3314788f0c82e58", "destinationBytes": 4724
+    },
+    {
+      "source": "run-start.json",
+      "destination": "compiled-host-reject-14-run-start.json",
+      "sourceSha256": "542561f4f450f88dd8b7b1e11df88a8ab00ee9f41812a1404f1f9d6f2e6586b9",
+      "destinationSha256": "109663a2f181d66668e1d03b3f44e10a15b1b449aa1fbe27eefdd334ddb90728", "destinationBytes": 231
+    },
+    {
+      "source": "runner-after.json",
+      "destination": "compiled-host-reject-14-runner-after.json",
+      "sourceSha256": "fba7c931ce3dd8c4f7360921ad9c6f0e073fa17d9bbf4f38f0f49c8369223528",
+      "destinationSha256": "c57273b7eea622690114191a0837444f503755237c0ffad1309109ff94eae0a5"
+    },
+    {
+      "source": "runner-before.json",
+      "destination": "compiled-host-reject-14-runner-before.json",
+      "sourceSha256": "fba7c931ce3dd8c4f7360921ad9c6f0e073fa17d9bbf4f38f0f49c8369223528",
+      "destinationSha256": "c57273b7eea622690114191a0837444f503755237c0ffad1309109ff94eae0a5"
+    },
+    {
+      "source": "spec.json",
+      "destination": "compiled-host-reject-14-spec.json",
+      "sourceSha256": "9c874d6624102ef29235e5f55731203725997bad208143d9546ea4cd55589239",
+      "destinationSha256": "a6edd2023d2ed445e9f47f7acaa7389b52ac95ae31b4d6cd54f0449a2df94251"
+    }
+  ],
+  "profileExcluded": true,
+  "sourceDirectory": "<task-temp>/tsj-q30-host-reject-14-a59df9662db44ff5a3e1aa48c0514a2f"
+}

@@ -12,6 +12,7 @@ public final class U04SessionContractTest {
             check(replay.replay().equals(request.replay()), "canonical replay round trip");
             check(replay.generation().canonical().contains("difficulty=MEDIUM@1"), "request reaches admission");
         }
+        verifyQ30PlayerRequestAndOwner();
         for (final String invalid : new String[] {"01", "+1", "-0", "1.0", "1e3", " 1", "1 ", "9223372036854775808", "-9223372036854775809", "", "NaN"})
             reject(new Attempt() { public void run() { new PlayerLaunchRequest("LED_INDICATOR", invalid, "EASY"); }});
         for (final String profile : new String[] {"HARD", "PSYCHOTIC", "easy", "", "quick-play"})
@@ -51,7 +52,7 @@ public final class U04SessionContractTest {
         session.adopt(b, launch);
         check(!session.retested(test, a, true, "late") && session.owner() == b &&
             session.screen() == PlayerSession.Screen.WORKBENCH, "pending completion cannot finish an adopted successor");
-        check(PlayerFamilyCatalog.families().size() == 10, "all current player families represented");
+        check(PlayerFamilyCatalog.families().size() == 11, "all current player families represented");
         verifyGenericShop();
         verifyAllCatalogLabels();
         System.out.println("PASS: U04 session contracts assertions=" + assertions);
@@ -120,9 +121,8 @@ public final class U04SessionContractTest {
     private static void verifyAllCatalogLabels() {
         CirSim sim = new CirSim(); sim.gridSize=16; sim.gridMask=~15; sim.gridRound=7; CircuitElm.sim=sim;
         for (String family : PlayerFamilyCatalog.families()) {
-            GeneratedBoardInstance owner = new PlayerLaunchRequest(family, "3",
-                PlayerFamilyCatalog.candidateProfile(family).name()).generation()
-                .resolve(new GenerationRequest.PlanCache()).construct().instance;
+            GeneratedBoardInstance owner = constructPlayer(family,
+                Rb30Plan.FAMILY_ID.equals(family) ? 13L : 3L);
             PlayerShopCatalog catalog = new PlayerShopCatalog(owner);
             for (PlayerShopCatalog.Category category : catalog.categories()) {
                 java.util.HashSet<String> labels = new java.util.HashSet<String>();
@@ -140,6 +140,54 @@ public final class U04SessionContractTest {
                     "RB15 Shop supports both actual connector orientations instead of throwing");
             }
         }
+    }
+    private static void verifyQ30PlayerRequestAndOwner() {
+        for (final String seed : new String[] {"9007199254740993",
+                "-9007199254740993", "-9223372036854775808", "9223372036854775807"}) {
+            PlayerLaunchRequest launch = PlayerLaunchRequest.random(Rb30Plan.FAMILY_ID,
+                seed, "MEDIUM");
+            GenerationRequest search = launch.generation();
+            check(launch.seed == Long.parseLong(seed) && launch.candidateSearch &&
+                launch.profile == DifficultyProfile.MEDIUM && search.candidateCount() == 4 &&
+                search.getDescriptor().getRootSeed() == Long.parseLong(seed) &&
+                search.getExecutionPolicy() == GenerationExecutionPolicy.NORMAL_MEDIUM &&
+                MediumBoardNormalAdmission.IDENTITY.equals(
+                    search.getRequiredPhysicalAdmissionIdentity()),
+                "Q30 public launch preserves exact seed and admitted MEDIUM capability");
+
+            long acceptedSeed = search.candidate(3).getDescriptor().getRootSeed();
+            PlayerLaunchRequest accepted = launch.accepted(acceptedSeed);
+            PlayerSession session = new PlayerSession();
+            Object owner = new Object();
+            int token = session.begin(launch);
+            check(session.prepared(token, launch, accepted, owner) &&
+                session.request() == accepted && session.owner() == owner,
+                "Q30 candidate acceptance retains its exact normal-player owner");
+
+            PlayerLaunchRequest replay = PlayerLaunchRequest.parse(accepted.replay());
+            GenerationRequest exact = replay.generation();
+            check(!replay.candidateSearch && replay.familyId.equals(Rb30Plan.FAMILY_ID) &&
+                replay.seed == acceptedSeed && replay.profile == DifficultyProfile.MEDIUM &&
+                replay.replay().equals(accepted.replay()) && exact.candidateCount() == 1 &&
+                exact.getDescriptor().getRootSeed() == acceptedSeed &&
+                exact.getExecutionPolicy() == GenerationExecutionPolicy.NORMAL_MEDIUM &&
+                MediumBoardNormalAdmission.IDENTITY.equals(
+                    exact.getRequiredPhysicalAdmissionIdentity()),
+                "Q30 public replay preserves the accepted exact board without retry");
+        }
+    }
+    private static GeneratedBoardInstance constructPlayer(String family, long seed) {
+        GenerationRequest request = new PlayerLaunchRequest(family, Long.toString(seed),
+            PlayerFamilyCatalog.candidateProfile(family).name()).generation();
+        GenerationRequest.Prepared prepared = request.resolve(new GenerationRequest.PlanCache());
+        if (!Rb30Plan.FAMILY_ID.equals(family)) return prepared.construct().instance;
+        GenerationRequest.ConstructionSession session = prepared.beginConstruction();
+        int steps = 0;
+        while (!session.advance()) {
+            if (++steps > GenerationCoordinator.MAX_JOB_STEPS)
+                throw new AssertionError("Normal Q30 physical route exceeded the unchanged step bound");
+        }
+        return session.result().instance;
     }
     private static PlayerShopCatalog.Entry find(PlayerShopCatalog.Category category, String catalogId, String variant) {
         for (PlayerShopCatalog.Entry entry : category.entries())

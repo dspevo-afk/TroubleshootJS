@@ -1,0 +1,36 @@
+{
+  "copiedFiles": [],
+  "fileCount": 0,
+  "skippedHashEqualSpec": {
+    "source": "spec.json",
+    "destination": "compiled-host-url-negative-21-spec.json",
+    "destinationSha256": "ef412e9ac64367570fc4aa6e3fc56875b07c5b3914f299382dc58047e8b6f63d",
+    "reason": "expected-no-output-directory; source-run-target-absent"
+  },
+  "profileExcluded": true,
+  "cacheExcluded": true,
+  "sanitizedPathsOnly": true,
+  "sourceDirectory": "<task-temp>/tsj-q30-host-url-negative-21-476b76b44cc441c3a4978d38159ac64c",
+  "destinationDirectory": "docs/task-evidence/Q30/normal-admission",
+  "expectedCommandOutcome": "PASS",
+  "expectedExitCode": 2,
+  "actualExitCode": 2,
+  "commandMatched": true,
+  "expectedClassification": "expected-input-schema-rejection",
+  "outputCreated": false,
+  "targetDirectoryPresent": false,
+  "observedError": "ERROR case.path must name circuitjs.html with an optional query",
+  "runLog": {
+    "path": "compiled-host-url-negative-21-run.log",
+    "sha256": "89430760ab00e0c29668682e739db958a5ad75fe943c26685cc2bcc67da3ea86",
+    "bytes": 65,
+    "lines": 2,
+    "rawPersonalPathHits": 0
+  },
+  "existingSpec": {
+    "path": "compiled-host-url-negative-21-spec.json",
+    "sha256": "ef412e9ac64367570fc4aa6e3fc56875b07c5b3914f299382dc58047e8b6f63d",
+    "bytes": 255,
+    "lines": 12
+  }
+}

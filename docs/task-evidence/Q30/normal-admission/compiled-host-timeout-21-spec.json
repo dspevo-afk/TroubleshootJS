@@ -1,0 +1,11 @@
+{
+  "cases": [
+    {
+      "name": "timeout-canary",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true",
+      "stateAttribute": "data-tsj-deliberately-absent",
+      "timeoutSeconds": 1,
+      "expectedState": "PASS:absent"
+    }
+  ]
+}

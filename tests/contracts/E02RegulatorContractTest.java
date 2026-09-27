@@ -102,6 +102,8 @@ public final class E02RegulatorContractTest {
         check(new AveragedSwitchingRegulatorElm(0, 0).getPostCount() == 4);
         verifyDumpRoundTrip();
         verifyUnsupportedOperatingRegions();
+        verifyForwardLimitTopologyTrials(false, linear5);
+        verifyForwardLimitTopologyTrials(true, averaged5);
         verifyReturnReference();
         verifyRealSolverVariants();
         verifyTimestepSensitivity();
@@ -259,6 +261,62 @@ public final class E02RegulatorContractTest {
         }
         check(backfeedRejected,
                 "output backfeed above the declared absolute device envelope is rejected");
+    }
+
+    private static void verifyForwardLimitTopologyTrials(boolean averaged,
+            RailRegulationContract contract) {
+        Harness harness = new Harness(averaged, contract);
+        try {
+            harness.fixture.load.setResistance(1.0);
+            harness.analyzeAndSettle();
+            AbstractRailRegulatorElm regulator = harness.fixture.regulator;
+            check(regulator.isCurrentLimited() && regulator.getOutputVoltage() > 0 &&
+                    regulator.getOutputVoltage() < 1,
+                "forward-trial fixture starts in the real current-limit branch");
+            regulator.volts[AbstractRailRegulatorElm.OUTPUT_POST] =
+                regulator.volts[AbstractRailRegulatorElm.RETURN_POST] - 1e12;
+            harness.sim.converged = true;
+            regulator.doStep();
+            check(!harness.sim.converged,
+                "large forward current-limit trial requests another Newton iteration");
+            harness.analyzeAndSettle();
+            check(Math.abs(regulator.getOutputVoltage() -
+                        contract.getMaximumOutputCurrentAmps()) < 1e-5 &&
+                    Math.abs(regulator.getOutputCurrent() -
+                        contract.getMaximumOutputCurrentAmps()) < 1e-5,
+                "real one-ohm load recovers its independent V=I*R current-limit solution");
+            harness.fixture.load.setResistance(1000);
+            harness.analyzeAndSettle();
+            check(Math.abs(regulator.getOutputVoltage() -
+                    contract.getNominalOutputVolts()) < .01,
+                "light load restores the regulated output after forward-trial recovery");
+        } finally { harness.close(); }
+
+        boolean negativeRejected = false;
+        harness = new Harness(averaged, contract);
+        try {
+            E02FiniteSourceElm negative = connectOutputSource(harness, 2.0, .1);
+            // Reverse the actual source terminals while retaining both wires.
+            negative.setPosition(negative.x2, negative.y2, negative.x, negative.y);
+            harness.analyzeAndSettle();
+        } catch (IllegalArgumentException expected) {
+            negativeRejected = expected.getMessage().contains("Negative E02 rail output");
+        } finally { harness.close(); }
+        check(negativeRejected, "persistent real negative output source remains rejected");
+
+        boolean overvoltageRejected = false;
+        RailRegulationContract lowerInputCeiling = new RailRegulationContract(
+            "forward-trial-input-ceiling", "INPUT", "OUTPUT", "RETURN", "ENABLE",
+            5, 5.8, 12, .8, .2, .1, .8, 2, averaged ? .003 : .001,
+            averaged ? .90 : 1.0, averaged, false, .90, .25);
+        harness = new Harness(averaged, lowerInputCeiling);
+        try {
+            harness.fixture.input.setVoltage(18);
+            harness.analyzeAndSettle();
+        } catch (IllegalArgumentException expected) {
+            overvoltageRejected = expected.getMessage().contains("Rail input exceeds declared envelope");
+        } finally { harness.close(); }
+        check(overvoltageRejected, "real input overvoltage remains rejected without a trial exemption");
     }
 
     private static E02FiniteSourceElm connectOutputSource(Harness harness,

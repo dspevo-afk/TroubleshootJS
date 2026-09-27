@@ -1,0 +1,11 @@
+{
+  "cases": [
+    {
+      "name": "external-url-rejected",
+      "path": "https://example.com/circuitjs.html",
+      "stateAttribute": "data-tsj-deliberately-absent",
+      "timeoutSeconds": 1,
+      "expectedState": "PASS:absent"
+    }
+  ]
+}

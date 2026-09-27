@@ -463,7 +463,13 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
             throw new IllegalArgumentException("Negative E02 enable source is unsupported");
         if (outputVoltage < -UNSUPPORTED_VOLTAGE_TOLERANCE &&
                 !changed(lastTarget, target) && !boundedTrial)
-            throw new IllegalArgumentException("Negative E02 rail output is unsupported");
+            throw new IllegalArgumentException("Negative E02 rail output is unsupported:" +
+                " input=" + inputVoltage + " rawOutput=" + getOutputVoltage() +
+                " evaluationOutput=" + outputVoltage + " enable=" + enableVoltage +
+                " target=" + target + " lastTarget=" + lastTarget +
+                " lastOutputDrop=" + lastOutputDrop + " boundedTrial=" + boundedTrial +
+                " time=" + sim.t + " timeStep=" + sim.timeStep +
+                " subIteration=" + sim.subIterations);
         // With the source or enable absent, an isolated regulator output is a
         // high-impedance reverse-leakage node.  Passive instruments and board
         // topology changes may therefore move it outside the *regulated*
@@ -481,7 +487,12 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
                 contract.getMaximumInputVolts());
         if (inputVoltage > contract.getMaximumInputVolts() +
                 UNSUPPORTED_VOLTAGE_TOLERANCE)
-            throw new IllegalArgumentException("Rail input exceeds declared envelope");
+            throw new IllegalArgumentException("Rail input exceeds declared envelope:" +
+                " input=" + inputVoltage + " maximum=" + contract.getMaximumInputVolts() +
+                " rawOutput=" + getOutputVoltage() + " evaluationOutput=" + outputVoltage +
+                " enable=" + enableVoltage + " target=" + target +
+                " boundedTrial=" + boundedTrial + " time=" + sim.t +
+                " timeStep=" + sim.timeStep + " subIteration=" + sim.subIterations);
         double outputCurrent = outputCurrentForDrop(target - outputVoltage,
                 target > 0.0);
         // A source/enable mutation can leave the previous rail voltage in the
@@ -600,12 +611,13 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
             // reverse Newton jump when a load is removed.
             drop = knee;
         }
-        // Also bound reverse/off-state moves.  Physical remove/install graph
-        // rebuilds may initially present stale node voltages many orders of
-        // magnitude outside the accepted solution; visiting finite tangents
-        // lets the passive bleed restore the node before envelope validation.
-        if ((!outputActive || drop < 0.0 || previous < 0.0) &&
-                Math.abs(drop - previous) > MAX_NEWTON_DROP_STEP_VOLTS)
+        // Bound moves on every branch, including successive forward
+        // current-limit trials. Its nearly flat tangent can jump far beyond
+        // the accepted solution when an enable path is reconnected. Visiting
+        // finite tangents changes no operating-point law or envelope: a
+        // persistent unsupported voltage still reaches validation, while a
+        // stale unaccepted trial can converge through CircuitJS normally.
+        if (Math.abs(drop - previous) > MAX_NEWTON_DROP_STEP_VOLTS)
             drop = previous + (drop > previous ? MAX_NEWTON_DROP_STEP_VOLTS :
                     -MAX_NEWTON_DROP_STEP_VOLTS);
         return drop;

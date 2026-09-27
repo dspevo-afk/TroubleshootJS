@@ -1,0 +1,23 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+<worktree>\src\com\lushprojects\circuitjs1\client\Q30CoordinatorQualificationVerifier.java:286: error: method capture in class ProofValue cannot be applied to given types;
+                proof = ProofValue.capture(sim.getGeneratedChallengeController()
+                                  ^
+  required: GeneratedDiagnosticProofReceipt
+  found: GeneratedDiagnosticProofReceipt,GeneratedBoardInstance
+  reason: actual and formal argument lists differ in length
+<worktree>\src\com\lushprojects\circuitjs1\client\Q30CoordinatorQualificationVerifier.java:544: error: cannot find symbol
+                cleanupRecord.cleanupRetryCount = cleanupRetryCount;
+                             ^
+  symbol:   variable cleanupRetryCount
+  location: variable cleanupRecord of type RunRecord
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+2 errors
+1 warning
+
+CURRENT_CONTRACT_FAILURE: Current production-class compilation failed, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

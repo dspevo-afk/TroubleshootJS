@@ -9,6 +9,7 @@ final class PlayerShopCatalog {
         final String id;
         final String catalogId;
         final String label;
+        final String specificationKey;
         final String acquisitionComponent;
         final PhysicalGeometryRealization geometry;
 
@@ -17,6 +18,7 @@ final class PlayerShopCatalog {
             id = publicId;
             catalogId = entry.getId();
             label = entry.getDisplayName();
+            specificationKey = entry.getSpecificationKey();
             acquisitionComponent = component;
             this.geometry = geometry;
         }
@@ -37,9 +39,14 @@ final class PlayerShopCatalog {
         int looseCount() { return looseIds.size(); }
 
         String label(Entry selected) {
-            for (Entry entry : entries)
-                if (entry != selected && entry.catalogId.equals(selected.catalogId))
+            for (Entry entry : entries) {
+                if (entry == selected || !entry.label.equals(selected.label)) continue;
+                if (!entry.specificationKey.equals(selected.specificationKey))
+                    throw new IllegalStateException(
+                        "Catalog has indistinguishable public labels for distinct specifications.");
+                if (!entry.geometry.isEquivalentTo(selected.geometry))
                     return selected.label + " - " + fitLabel(selected.geometry);
+            }
             return selected.label;
         }
 
@@ -57,7 +64,8 @@ final class PlayerShopCatalog {
             for (WorkbenchCatalogEntry row : provider.getCatalogEntries()) {
                 Entry existing = null;
                 for (Entry entry : entries)
-                    if (entry.catalogId.equals(row.getId()) && entry.geometry.isEquivalentTo(geometry)) existing = entry;
+                    if (entry.specificationKey.equals(row.getSpecificationKey()) &&
+                            entry.geometry.isEquivalentTo(geometry)) existing = entry;
                 if (existing == null) entries.add(new Entry("spec-" + (entries.size() + 1),
                     row, provider.getComponentId(), geometry));
                 else if (!existing.label.equals(row.getDisplayName()))

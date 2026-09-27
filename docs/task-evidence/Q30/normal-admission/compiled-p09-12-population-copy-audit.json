@@ -1,0 +1,36 @@
+{
+  "copies": [
+    {
+      "source": "identity.json",
+      "destination": "compiled-p09-12-population-identity.json",
+      "sourceSha256": "897654effaa9d3e5d0b111130ea66ea69c373a44fd05b82d9d28324c16a922f8",
+      "destinationSha256": "746fa1614963b80d54090c1565533adacba89971b753f88570831f5657ffc5da",
+      "sanitizedPathsOnly": true
+    },
+    {
+      "source": "result.json",
+      "destination": "compiled-p09-12-population-result.json",
+      "sourceSha256": "df1a6fff607e006493199fe395c18164ac0fb317867af382e34d64cc28ccb463",
+      "destinationSha256": "a6727a066a07671e7e1337b22698ddd22e809dbe1bcedea25fa88c7c380d927f",
+      "sanitizedPathsOnly": true
+    },
+    {
+      "source": "cases.json",
+      "destination": "compiled-p09-12-population-cases.json",
+      "sourceSha256": "d8c59258095c7fbbbe1ec2fe09560b35bf248c874e5379b5898c0c74f35b3761",
+      "destinationSha256": "9247d8bf2901023c7b25901748fa432c1a4adf0f6b57a64442adc12e8620be63",
+      "sanitizedPathsOnly": true
+    },
+    {
+      "source": "owned-processes.json",
+      "destination": "compiled-p09-12-population-owned-processes.json",
+      "sourceSha256": "4956591d3547c4ded629c97b398b15a2c801663c66dba4602726d31e3fc39221",
+      "destinationSha256": "39929a16087dd1da3198c518888d16dd11ae49102048e3653f2024ea37c1ce9d",
+      "sanitizedPathsOnly": true
+    }
+  ],
+  "logBeforeSha256": "3f56643741e35f8d8aebed12d0bebe4ba559902be2b5f94d1fb7f22bd5802a0e",
+  "logAfterSha256": "3f56643741e35f8d8aebed12d0bebe4ba559902be2b5f94d1fb7f22bd5802a0e",
+  "profilesCopied": false,
+  "result": "PASS runner72/72, process/server cleanup; native parity and canaries pending"
+}

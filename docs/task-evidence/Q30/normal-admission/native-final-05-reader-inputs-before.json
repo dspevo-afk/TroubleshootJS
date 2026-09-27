@@ -1,0 +1,11 @@
+{
+  "capturedUtc": "2026-09-27T03:15:20.3679500Z",
+  "purpose": "Reader scripts and frozen README hashed immediately before strict readers.",
+  "count": 3,
+  "sha256": "a370cc666928018efbbd4fc48471e0dc7a6b0e8fdaf06c7557d3c184f41134ea",
+  "files": {
+    "docs/task-evidence/Q30/normal-admission/check_corpus.py": "eea6db263b966c120ae345d73ef056ffe26a80548531431cf30513df83eee34f",
+    "docs/task-evidence/Q30/normal-admission/check_native_service.py": "92c0a72b32489533907235387a5008ef399ad66f983fe28ddf1d219f409068ec",
+    "docs/task-evidence/Q30/normal-admission/README.md": "3a11f721652c54608f135cda0f9a89e5d3fed75a7d7f6045826c1a7dcb16b0ee"
+  }
+}

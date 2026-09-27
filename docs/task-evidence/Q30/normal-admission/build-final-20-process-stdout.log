@@ -1,0 +1,7 @@
+Compiling module com.lushprojects.circuitjs1.circuitjs1
+   Ignored 1 unit with compilation errors in first pass.
+Compile with -strict or with -logLevel set to TRACE or DEBUG to see all errors.
+   Tracing compile failure path for type 'com.lushprojects.circuitjs1.client.U04CatalogMutationVerifier'
+      [ERROR] Errors in 'file:/<worktree>/src/com/lushprojects/circuitjs1/client/U04CatalogMutationVerifier.java'
+         [ERROR] Line 493: No source code is available for type java.util.StringTokenizer; did you forget to inherit a required module?
+   [ERROR] Hint: Check the inheritance chain from your module; it may not be inheriting a required module or a module may not be adding its source path entries properly

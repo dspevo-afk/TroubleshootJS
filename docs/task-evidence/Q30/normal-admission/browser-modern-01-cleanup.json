@@ -1,0 +1,13 @@
+{
+  "status": "BLOCKED_DIRECTORY_REMOVAL",
+  "directory": "<task-temp>/tsj-q30-modern-01-2acff259f672497c8154e22ef8274696",
+  "ownerPid": 12380,
+  "ownerCreated": "2026-09-26T19:29:11.8352990Z",
+  "port": 52935,
+  "processReferencesAbsent": true,
+  "listenerAbsent": true,
+  "reparseBoundariesAbsent": true,
+  "exactOwnedDirectoryRemoved": false,
+  "reason": "Automatic approval review rejected both verified computed-path and exact literal-path PowerShell deletion; tool returned blocked by policy with no further reason. No alternative deletion mechanism attempted.",
+  "checkedUtc": "2026-09-26T19:45:31.5377901Z"
+}

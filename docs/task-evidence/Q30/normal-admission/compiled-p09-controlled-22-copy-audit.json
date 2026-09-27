@@ -1,0 +1,156 @@
+{
+  "schema": "controlled-p09-22-artifact-copy-audit-v1",
+  "sourceDirectory": "<task-temp>/tsj-q30-p09-controlled-22-0bb72cf945094dbaa088cd02ccebec8a",
+  "destinationDirectory": "docs/task-evidence/Q30/normal-admission",
+  "copiedFiles": [
+    {
+      "source": "cases.json",
+      "destination": "compiled-p09-controlled-22-cases.json",
+      "sourceSha256": "047b50ab6b847ea31eb46194298feae73879e572cec78e3a82794af9dbad20e9",
+      "destinationSha256": "047b50ab6b847ea31eb46194298feae73879e572cec78e3a82794af9dbad20e9",
+      "sourceBytes": 375324,
+      "destinationBytes": 375324,
+      "byteExact": true,
+      "pathSubstitutions": {
+        "userHome": 0,
+        "worktree": 0,
+        "taskTemp": 0
+      },
+      "pathOccurrencesBeforeSanitization": {
+        "escapedUserHome": 0,
+        "normalUserHome": 0,
+        "escapedWorktree": 0,
+        "normalWorktree": 0,
+        "escapedTaskTemp": 0,
+        "normalTaskTemp": 0
+      },
+      "destinationPersonalPathFindings": 0,
+      "destinationState": "copied-byte-exact"
+    },
+    {
+      "source": "result.json",
+      "destination": "compiled-p09-controlled-22-result.json",
+      "sourceSha256": "818667d1f4620de9659d8649a58af91bcbb6ce3d2f3c2ce8cd6a52777c532ed2",
+      "destinationSha256": "818667d1f4620de9659d8649a58af91bcbb6ce3d2f3c2ce8cd6a52777c532ed2",
+      "sourceBytes": 376871,
+      "destinationBytes": 376871,
+      "byteExact": true,
+      "pathSubstitutions": {
+        "userHome": 0,
+        "worktree": 0,
+        "taskTemp": 0
+      },
+      "pathOccurrencesBeforeSanitization": {
+        "escapedUserHome": 0,
+        "normalUserHome": 0,
+        "escapedWorktree": 0,
+        "normalWorktree": 0,
+        "escapedTaskTemp": 0,
+        "normalTaskTemp": 0
+      },
+      "destinationPersonalPathFindings": 0,
+      "destinationState": "copied-byte-exact"
+    },
+    {
+      "source": "identity.json",
+      "destination": "compiled-p09-controlled-22-identity.json",
+      "sourceSha256": "748592417ddd24db882d1902edd47f8bd6189a987854ba5018c4de0212bc6606",
+      "destinationSha256": "268a353c41721ab4827fd9ef5578217298a83819b81b66952b4d6655d11d5f7e",
+      "sourceBytes": 379,
+      "destinationBytes": 222,
+      "byteExact": false,
+      "pathSubstitutions": {
+        "userHome": 0,
+        "worktree": 1,
+        "taskTemp": 1
+      },
+      "pathOccurrencesBeforeSanitization": {
+        "escapedUserHome": 2,
+        "normalUserHome": 0,
+        "escapedWorktree": 1,
+        "normalWorktree": 0,
+        "escapedTaskTemp": 1,
+        "normalTaskTemp": 0
+      },
+      "destinationPersonalPathFindings": 0,
+      "destinationState": "copied-sanitized"
+    },
+    {
+      "source": "owned-processes.json",
+      "destination": "compiled-p09-controlled-22-owned-processes.json",
+      "sourceSha256": "b0ff470d75da99d424075a28d9da4ba263a2d8b3dd60db9ad98c7cebbc737548",
+      "destinationSha256": "bc3d9b9adbda987881320860f9e9d3c9395ff56f37346f145a299b95cd2563a9",
+      "sourceBytes": 11294,
+      "destinationBytes": 10511,
+      "byteExact": false,
+      "pathSubstitutions": {
+        "userHome": 0,
+        "worktree": 0,
+        "taskTemp": 9
+      },
+      "pathOccurrencesBeforeSanitization": {
+        "escapedUserHome": 9,
+        "normalUserHome": 0,
+        "escapedWorktree": 0,
+        "normalWorktree": 0,
+        "escapedTaskTemp": 9,
+        "normalTaskTemp": 0
+      },
+      "destinationPersonalPathFindings": 0,
+      "destinationState": "copied-sanitized"
+    }
+  ],
+  "controlledRun": {
+    "rootResult": "compiled-p09-controlled-22-root-result.json",
+    "rootResultSha256": "08583507354f01097c0a6f016ec02c8a35ab991f9c25fb81d88c968b43312344",
+    "status": "PASS",
+    "exitCode": 0,
+    "resultOutcome": "PASS",
+    "caseCount": 6,
+    "inputCount": 394,
+    "inputMismatches": 0,
+    "caseFileRows": 6,
+    "resultRows": 6,
+    "outcomes": [
+      "EXPECTED_REJECTION",
+      "PASS",
+      "PASS",
+      "PASS",
+      "CANCELLED",
+      "CANCELLED"
+    ],
+    "errors": 0,
+    "httpErrors": 0,
+    "browserVersion": "154.0.4258.37",
+    "serverThreadStopped": true,
+    "ownedSurvivors": 0,
+    "identityPid": 8364,
+    "taskPort": 61123,
+    "ownerCreatedUnixSeconds": "1790473963.49467",
+    "recordedOwnerCount": 8
+  },
+  "retainedRunLog": {
+    "file": "compiled-p09-controlled-22-run.log",
+    "sha256": "b4015475a8d1b25c22541847edf6ee937403bd9105bc8fc9a3a5133a41758c1c",
+    "lineCount": 8,
+    "console404Count": 1,
+    "initialConsole404Retained": true,
+    "initialConsole404Attribution": "unattributed",
+    "suppressed": false,
+    "firstLine": "CONSOLE error Failed to load resource: the server responded with a status of 404 (File not found)"
+  },
+  "cleanup": {
+    "status": "PASS",
+    "method": "Remove-VerifierOwnedTree",
+    "exactTaskTempRemoved": true,
+    "resolvedContainmentVerified": true,
+    "rootAndTreeReparsePointCount": 0,
+    "treeEntriesBeforeRemoval": 242,
+    "recordedOwnerCount": 8,
+    "exactOwnerProcessesPresentBeforeRemoval": 0,
+    "taskPort": 61123,
+    "taskPortListeningBeforeRemoval": false,
+    "processReferencesBeforeRemoval": 0,
+    "removalVerifiedUtc": "2026-09-27T02:00:17.683Z"
+  }
+}

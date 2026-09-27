@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 1,
+    "name": "alpha-led0",
+    "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaCase=0",
+    "stateAttribute": "data-tsj-verification",
+    "expectedState": "PASS:alpha",
+    "expectedPrefix": null,
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 120.0,
+    "reportAttribute": "data-tsj-alpha-report"
+  },
+  "url": "http://127.0.0.1:56796/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaCase=0",
+  "startedUtc": "2026-09-26T22:23:08.985326+00:00",
+  "finishedUtc": "2026-09-26T22:23:10.973951+00:00",
+  "operationSeconds": 1.9886197000741959,
+  "outcome": "PASS",
+  "terminalReached": true,
+  "stateMatch": true,
+  "observedState": "PASS:alpha",
+  "lastObservedState": "PASS:alpha",
+  "timedOut": false,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": true,
+  "reportJsonValid": true,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 12263,
+  "reportSha256": "f2a69c1d5c93d79df46dcbe64784c1a66743aa9fe15005d412392b1f89a613f4",
+  "reportFile": "cases/001-alpha-led0.report.json",
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [],
+  "listenerCleanupErrors": [],
+  "navigationError": null
+}

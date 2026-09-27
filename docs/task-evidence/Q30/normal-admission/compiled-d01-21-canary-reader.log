@@ -1,0 +1,1 @@
+PASS: baseline pairs=20; corrupted-receipt rejection canaries=49; schema-bound catalog claim flip=PASS

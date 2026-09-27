@@ -1,0 +1,16 @@
+{
+  "executionStatus": "PASS",
+  "exitCode": 0,
+  "cleanup": "PASS",
+  "rows": 128,
+  "physicalPass": 128,
+  "typedPhysicalRejections": 0,
+  "unexpectedFailures": 0,
+  "negativeFixtureCoverage": "NOT_OBTAINED",
+  "selectedFixture": null,
+  "rowOperationMillisSum": 360437,
+  "maximumRowOperationMillis": 12783,
+  "logSha256": "820314a34de181a835d4b909d07b58040a952f96d059736187febc6f23a480b1",
+  "specSha256": "e20246d09827f14c96ffbefc161933392c758ba219c77d77d488dcb6f64c1fc3",
+  "scope": "Complete bounded physical-only discovery sample; not electrical admission or evidence of universal success. No roots dropped or expected outcomes changed."
+}

@@ -10,9 +10,9 @@ public final class PcbCompactionContractTest {
         CirSim sim = new CirSim(); sim.gridSize=16; sim.gridMask=~15; sim.gridRound=7; CircuitElm.sim=sim;
         int smaller = 0;
         for (String family : PlayerFamilyCatalog.families()) {
-            GeneratedBoardInstance instance = new PlayerLaunchRequest(family, "0",
-                PlayerFamilyCatalog.candidateProfile(family).name()).generation()
-                .resolve(new GenerationRequest.PlanCache()).construct().instance;
+            // Q30 seed 0 is a retained route rejection; seed 13 is a qualified accepted route.
+            GeneratedBoardInstance instance = construct(family,
+                Rb30Plan.FAMILY_ID.equals(family) ? 13L : 0L);
             TroubleshootBoard board = instance.getBoard();
             PcbPlacementPlanner planner = new PcbPlacementPlanner(StandardPcbFootprintProviders.createRegistry());
             PcbPlacementPlanner.Plan original = planner.plan(board, board.getPlacementConstraints(), 0, 0);
@@ -30,6 +30,20 @@ public final class PcbCompactionContractTest {
         }
         check(smaller > 0, "real playable placement has less empty area");
         System.out.println("PASS: PCB compaction contracts assertions="+assertions+" reducedFamilies="+smaller);
+    }
+    private static GeneratedBoardInstance construct(String family, long seed) {
+        GenerationRequest request = new PlayerLaunchRequest(family, Long.toString(seed),
+            PlayerFamilyCatalog.candidateProfile(family).name()).generation();
+        GenerationRequest.Prepared prepared = request.resolve(new GenerationRequest.PlanCache());
+        if (request.getExecutionPolicy() != GenerationExecutionPolicy.NORMAL_MEDIUM)
+            return prepared.construct().instance;
+        GenerationRequest.ConstructionSession session = prepared.beginConstruction();
+        int steps = 0;
+        while (!session.advance()) {
+            if (++steps > GenerationCoordinator.MAX_JOB_STEPS)
+                throw new AssertionError("Normal Q30 route exceeded the unchanged shared step bound");
+        }
+        return session.result().instance;
     }
     private static String fingerprint(PcbPlacementPlanner.Plan plan) {
         StringBuilder value=new StringBuilder(); value.append(plan.outline.width).append('x').append(plan.outline.height);

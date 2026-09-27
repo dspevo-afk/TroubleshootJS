@@ -1,0 +1,9 @@
+{
+  "status": "FAIL",
+  "phase": "strict controlled-canary reader preflight",
+  "observedError": "ValueError: Controlled P09 provenance polluted an uninjected canary",
+  "cause": "Reader requires search.controlledNegative equal exact.controlledNegative, then incorrectly includes search in the uninjected-canary exclusion loop.",
+  "readerSha256": "49853411064e1106a01a6d9469f26120f40385b2657acf6310f9f6ae42b521e8",
+  "recordedUtc": "2026-09-26T22:38:51.020315+00:00",
+  "applicationResult": "All6 declared controlled cases completed as expected; this record is a reader failure, not an application gate PASS."
+}

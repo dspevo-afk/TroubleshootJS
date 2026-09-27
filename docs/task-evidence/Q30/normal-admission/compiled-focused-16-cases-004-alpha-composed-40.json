@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 4,
+    "name": "alpha-composed-40",
+    "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaCase=40",
+    "stateAttribute": "data-tsj-verification",
+    "expectedState": "PASS:alpha",
+    "expectedPrefix": null,
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 120.0,
+    "reportAttribute": "data-tsj-alpha-report"
+  },
+  "url": "http://127.0.0.1:65146/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaCase=40",
+  "startedUtc": "2026-09-26T22:51:26.772699+00:00",
+  "finishedUtc": "2026-09-26T22:51:37.147843+00:00",
+  "operationSeconds": 10.375139500014484,
+  "outcome": "FAIL",
+  "terminalReached": true,
+  "stateMatch": false,
+  "observedState": "FAIL:alpha:cross-target-catalog-mutations owner=true power=UNPOWERED isolated=true settled=true state=READY: java.lang.AssertionError: U04 catalog mutation: composed board lacks a loose source resistor, compatible NMOS-driven load and alternate target; current source candidates=tsj-realization-v1/controlled-indicator@1/channel-a-driver/npn-low-side-driver@1/npn-low-side-driver@1/component/RB{slot=AXIAL_RESISTOR|variant=SPAN_240|transform=IDENTITY|version=3|geometry=240x70,loose=AXIAL_RESISTOR|variant=SPAN_240|transform=IDENTITY|version=3|geometry=240x70};tsj-realization-v1/controlled-indicator@1/channel-b-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RG{slot=AXIAL_RESISTOR|variant=SPAN_260|transform=IDENTITY|version=3|geometry=260x70,loose=AXIAL_RESISTOR|variant=SPAN_260|transform=IDENTITY|version=3|geometry=260x70}; resistor targets=tsj-realization-v1/controlled-indicator@1/channel-a-driver/npn-low-side-driver@1/npn-low-side-driver@1/component/RB{slot=AXIAL_RESISTOR|variant=SPAN_240|transform=IDENTITY|version=3|geometry=240x70,installed=tsj-realization-v1/controlled-indicator@1/channel-a-driver/npn-low-side-driver@1/npn-low-side-driver@1/component/RB/part/original};tsj-realization-v1/controlled-indicator@1/channel-a-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD{slot=AXIAL_RESISTOR|variant=SPAN_260|transform=IDENTITY|version=3|geometry=260x70,installed=tsj-realization-v1/controlled-indicator@1/channel-a-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD/part/original};tsj-realization-v1/controlled-indicator@1/channel-b-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RG{slot=AXIAL_RESISTOR|variant=SPAN_260|transform=IDENTITY|version=3|geometry=260x70,installed=tsj-realization-v1/controlled-indicator@1/channel-b-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RG/part/original};tsj-realization-v1/controlled-indicator@1/channel-b-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD{slot=AXIAL_RESISTOR|variant=SPAN_240|transform=IDENTITY|version=3|geometry=240x70,installed=tsj-realization-v1/controlled-indicator@1/channel-b-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD/part/original};tsj-realization-v1/controlled-indicator@1/channel-a-driver/npn-low-side-driver@1/npn-low-side-driver@1/component/RPD{slot=AXIAL_RESISTOR|variant=SPAN_260|transform=IDENTITY|version=3|geometry=260x70,installed=tsj-realization-v1/controlled-indicator@1/channel-a-driver/npn-low-side-driver@1/npn-low-side-driver@1/component/RPD};tsj-realization-v1/controlled-indicator@1/channel-b-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RPD{slot=AXIAL_RESISTOR|variant=SPAN_220|transform=IDENTITY|version=3|geometry=220x70,installed=tsj-realization-v1/controlled-indicator@1/channel-b-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RPD};tsj-realization-v1/controlled-indicator@1/supply-indicator/supply-present-indicator@1/supply-present-indicator@1/component/RSUP{slot=AXIAL_RESISTOR|variant=SPAN_220|transform=IDENTITY|version=3|geometry=220x70,installed=tsj-realization-v1/controlled-indicator@1/supply-indicator/supply-present-indicator@1/supply-present-indicator@1/component/RSUP}",
+  "lastObservedState": "FAIL:alpha:cross-target-catalog-mutations owner=true power=UNPOWERED isolated=true settled=true state=READY: java.lang.AssertionError: U04 catalog mutation: composed board lacks a loose source resistor, compatible NMOS-driven load and alternate target; current source candidates=tsj-realization-v1/controlled-indicator@1/channel-a-driver/npn-low-side-driver@1/npn-low-side-driver@1/component/RB{slot=AXIAL_RESISTOR|variant=SPAN_240|transform=IDENTITY|version=3|geometry=240x70,loose=AXIAL_RESISTOR|variant=SPAN_240|transform=IDENTITY|version=3|geometry=240x70};tsj-realization-v1/controlled-indicator@1/channel-b-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RG{slot=AXIAL_RESISTOR|variant=SPAN_260|transform=IDENTITY|version=3|geometry=260x70,loose=AXIAL_RESISTOR|variant=SPAN_260|transform=IDENTITY|version=3|geometry=260x70}; resistor targets=tsj-realization-v1/controlled-indicator@1/channel-a-driver/npn-low-side-driver@1/npn-low-side-driver@1/component/RB{slot=AXIAL_RESISTOR|variant=SPAN_240|transform=IDENTITY|version=3|geometry=240x70,installed=tsj-realization-v1/controlled-indicator@1/channel-a-driver/npn-low-side-driver@1/npn-low-side-driver@1/component/RB/part/original};tsj-realization-v1/controlled-indicator@1/channel-a-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD{slot=AXIAL_RESISTOR|variant=SPAN_260|transform=IDENTITY|version=3|geometry=260x70,installed=tsj-realization-v1/controlled-indicator@1/channel-a-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD/part/original};tsj-realization-v1/controlled-indicator@1/channel-b-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RG{slot=AXIAL_RESISTOR|variant=SPAN_260|transform=IDENTITY|version=3|geometry=260x70,installed=tsj-realization-v1/controlled-indicator@1/channel-b-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RG/part/original};tsj-realization-v1/controlled-indicator@1/channel-b-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD{slot=AXIAL_RESISTOR|variant=SPAN_240|transform=IDENTITY|version=3|geometry=240x70,installed=tsj-realization-v1/controlled-indicator@1/channel-b-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD/part/original};tsj-realization-v1/controlled-indicator@1/channel-a-driver/npn-low-side-driver@1/npn-low-side-driver@1/component/RPD{slot=AXIAL_RESISTOR|variant=SPAN_260|transform=IDENTITY|version=3|geometry=260x70,installed=tsj-realization-v1/controlled-indicator@1/channel-a-driver/npn-low-side-driver@1/npn-low-side-driver@1/component/RPD};tsj-realization-v1/controlled-indicator@1/channel-b-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RPD{slot=AXIAL_RESISTOR|variant=SPAN_220|transform=IDENTITY|version=3|geometry=220x70,installed=tsj-realization-v1/controlled-indicator@1/channel-b-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RPD};tsj-realization-v1/controlled-indicator@1/supply-indicator/supply-present-indicator@1/supply-present-indicator@1/component/RSUP{slot=AXIAL_RESISTOR|variant=SPAN_220|transform=IDENTITY|version=3|geometry=220x70,installed=tsj-realization-v1/controlled-indicator@1/supply-indicator/supply-present-indicator@1/supply-present-indicator@1/component/RSUP}",
+  "timedOut": false,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": true,
+  "reportJsonValid": true,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 29215,
+  "reportSha256": "9196fe8d5a031271790b8bce0bcb0262458a32e4160791b6195797e820a7dc2f",
+  "reportFile": "cases/004-alpha-composed-40.report.json",
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [],
+  "listenerCleanupErrors": [],
+  "navigationError": null
+}

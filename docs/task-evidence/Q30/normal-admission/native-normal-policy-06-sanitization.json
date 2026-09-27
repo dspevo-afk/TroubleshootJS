@@ -1,0 +1,13 @@
+{
+  "source": "docs/task-evidence/Q30/normal-admission/native-normal-policy-06.log",
+  "originalSha256": "f9b609267883d5c993e8685a9baa079dd8f2c369b077f6679367065aa31c8353",
+  "sanitizedSha256": "f9b609267883d5c993e8685a9baa079dd8f2c369b077f6679367065aa31c8353",
+  "originalBytes": 748,
+  "sanitizedBytes": 748,
+  "originalLines": 12,
+  "sanitizedLines": 12,
+  "worktreeReplacements": 0,
+  "taskTempReplacements": 0,
+  "rawPersonalPathHitsAfterSanitization": 0,
+  "sanitizedPathsOnly": true
+}

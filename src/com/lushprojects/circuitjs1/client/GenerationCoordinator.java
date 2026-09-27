@@ -1,25 +1,37 @@
 package com.lushprojects.circuitjs1.client;
 
 import com.google.gwt.user.client.Timer;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /** One serial generation owner per CirSim; browser turns never race candidates. */
 final class GenerationCoordinator {
     // Temporal profiles yield between their existing completed solver calls.
-    // Pilot evidence rerates this whole-job guard independently from A01's
-    // 30s aggregate corpus; the frozen benchmark retains 5s per full attempt.
+    // Qualified request execution contracts select the whole-job allowance;
+    // the small-board default and independent per-unit/work guards stay fixed.
     static final long MAX_JOB_MILLIS = 90000;
+    static final long MAX_DIAGNOSTIC_MEASUREMENT_JOB_MILLIS = 300000;
     static final long MAX_STEP_MILLIS = 5000;
-    // Current two-channel proof has 4 hypotheses and 132 samples in each.
-    // Count its individual operations, not a whole hypothesis as one unit.
+    // Charge individual proof operations, not a whole hypothesis as one unit.
     static final int MAX_JOB_STEPS = 640;
     private static final int MAX_UNITS_PER_TURN = 16;
     private static final long TURN_TARGET_MILLIS = 8;
     interface Completion { void complete(GenerationJob job, GeneratedBoardInstance published); }
+    interface ControlledP09NegativeForDeveloperVerification {
+        void verifyAndReject(GeneratedBoardInstance candidate, int candidateOrdinal);
+        boolean verified(GeneratedBoardInstance candidate, int candidateOrdinal,
+            SupportedEnvelope.Rejected rejection);
+    }
     private final CirSim sim;
     private final GenerationRequest.PlanCache plans = new GenerationRequest.PlanCache();
     /* D01 retains only completed, value-only proof artifacts.  It is owned by
      * this simulator's generation lifecycle, never by a board or a solver. */
     private final GeneratedDiagnosticProofCache diagnosticProofs =
+        new GeneratedDiagnosticProofCache();
+    /* The Q30 coordinator timing probe has its own value-only cache.  Its
+     * deliberately extended wall window must never warm normal player proof
+     * admission or evict an ordinary completed artifact. */
+    private final GeneratedDiagnosticProofCache diagnosticMeasurementProofs =
         new GeneratedDiagnosticProofCache();
     private final QuickPlayBoardHistory recentBoards = new QuickPlayBoardHistory();
     private GenerationJob job;
@@ -32,6 +44,11 @@ final class GenerationCoordinator {
     private boolean advancing;
     private int yields;
     private long cancelledAt, cancellationLatency, maxAdvanceMillis;
+    private long lastRoutingElapsedMillis, lastProofElapsedMillis;
+    private final Map<String, long[]> diagnosticMeasurementWorkTimings =
+        new LinkedHashMap<String, long[]>();
+    private Map<String, long[]> lastDiagnosticMeasurementWorkTimings =
+        new LinkedHashMap<String, long[]>();
     private GeneratedDiagnosticProofService.CleanupAudit lastCleanupAudit;
     enum TurnFailure { ENTER, PAUSE }
     private static TurnFailure injectedTurnFailure;
@@ -68,6 +85,14 @@ final class GenerationCoordinator {
     int getDiagnosticProofCacheHits() { return diagnosticProofs.getHits(); }
     int getDiagnosticProofCacheMisses() { return diagnosticProofs.getMisses(); }
     int getDiagnosticProofCacheSize() { return diagnosticProofs.size(); }
+    int getDiagnosticMeasurementProofCacheHits() { return diagnosticMeasurementProofs.getHits(); }
+    int getDiagnosticMeasurementProofCacheMisses() { return diagnosticMeasurementProofs.getMisses(); }
+    int getDiagnosticMeasurementProofCacheSize() { return diagnosticMeasurementProofs.size(); }
+    void clearDiagnosticMeasurementProofCacheForDeveloperVerification() {
+        if (isRunning() || advancing)
+            throw new IllegalStateException("Diagnostic measurement cache cannot change during generation");
+        diagnosticMeasurementProofs.clear();
+    }
     void clearDiagnosticProofCacheForDeveloperVerification() {
         if (isRunning() || advancing)
             throw new IllegalStateException("Diagnostic proof cache cannot change during generation");
@@ -75,11 +100,19 @@ final class GenerationCoordinator {
     }
     long getCancellationLatencyMillis() { return cancellationLatency; }
     long getMaxAdvanceMillis() { return maxAdvanceMillis; }
+    long getLastRoutingElapsedMillisForDeveloperVerification() { return lastRoutingElapsedMillis; }
+    long getLastProofElapsedMillisForDeveloperVerification() { return lastProofElapsedMillis; }
+    Map<String, long[]> getLastDiagnosticMeasurementWorkTimingsForDeveloperVerification() {
+        return copyWorkTimings(lastDiagnosticMeasurementWorkTimings);
+    }
     GeneratedDiagnosticProofService.CleanupAudit getCleanupAuditForDeveloperVerification() {
         return lastCleanupAudit;
     }
     boolean retainsSavedOwnersForDeveloperVerification() {
         return services != null && services.hasSavedOwners();
+    }
+    boolean retainsControlledP09NegativeForDeveloperVerification() {
+        return services != null && services.controlledP09Negative != null;
     }
     boolean retainsObservationForDeveloperVerification() {
         return services != null && services.proof != null &&
@@ -94,13 +127,44 @@ final class GenerationCoordinator {
 
     /** Developer driver of the exact same stage implementation, with explicit turns. */
     void startForDeveloperVerification(GenerationRequest request) {
-        start(request, null, true, false);
+        start(request, null, true, false, normalMaximumJobMillis(request), false, null);
+        if (watchdog != null) { watchdog.cancel(); watchdog = null; }
+        if (continuation != null) { continuation.cancel(); continuation = null; }
+    }
+    /** One-shot controlled P09 negative available only inside the developer verifier. */
+    void startForDeveloperVerification(GenerationRequest request,
+            ControlledP09NegativeForDeveloperVerification controlledP09Negative) {
+        if (controlledP09Negative == null || !sim.troubleshootDebug ||
+                !sim.developerVerifierRunning)
+            throw new IllegalStateException(
+                "Controlled P09 negative requires an active developer-verification scope");
+        start(request, null, true, false, normalMaximumJobMillis(request), false,
+            controlledP09Negative);
         if (watchdog != null) { watchdog.cancel(); watchdog = null; }
         if (continuation != null) { continuation.cancel(); continuation = null; }
     }
     /** Developer-only manual turns using the normal cache-enabled stages. */
     void startForDiagnosticCacheVerification(GenerationRequest request) {
-        start(request, null, true, true);
+        start(request, null, true, true, normalMaximumJobMillis(request), false, null);
+        if (watchdog != null) { watchdog.cancel(); watchdog = null; }
+        if (continuation != null) { continuation.cancel(); continuation = null; }
+    }
+    /**
+     * Private measurement entry point.  Validate every capability before the
+     * normal start path can cancel a job or change simulator state.
+     */
+    void startForDiagnosticCacheVerification(GenerationRequest request,
+            long maximumJobMillis) {
+        if (request == null || !request.isPrivateDiagnosticQualification())
+            throw new IllegalArgumentException(
+                "Diagnostic cache measurement requires an immutable private qualification request");
+        if (!sim.troubleshootDebug || !sim.developerVerifierRunning)
+            throw new IllegalStateException(
+                "Diagnostic cache measurement requires debug and developer-verifier scope");
+        if (maximumJobMillis < MAX_JOB_MILLIS ||
+                maximumJobMillis > MAX_DIAGNOSTIC_MEASUREMENT_JOB_MILLIS)
+            throw new IllegalArgumentException("Diagnostic measurement deadline is outside 90000..300000 ms");
+        start(request, null, true, true, maximumJobMillis, true, null);
         if (watchdog != null) { watchdog.cancel(); watchdog = null; }
         if (continuation != null) { continuation.cancel(); continuation = null; }
     }
@@ -110,7 +174,15 @@ final class GenerationCoordinator {
     }
 
     void start(GenerationRequest request, Completion completion, boolean asynchronous) {
-        start(request, completion, asynchronous, true);
+        start(request, completion, asynchronous, true, normalMaximumJobMillis(request), false, null);
+    }
+
+    private static long normalMaximumJobMillis(GenerationRequest request) {
+        if (request == null) throw new IllegalArgumentException("Missing generation request");
+        GenerationExecutionPolicy policy = request.getExecutionPolicy();
+        if (policy == null) throw new IllegalArgumentException("Missing generation execution contract");
+        policy.requireRequest(request);
+        return policy.maximumJobMillis;
     }
 
     /**
@@ -118,9 +190,24 @@ final class GenerationCoordinator {
      * Normal player generation alone may reuse a completed value artifact.
      */
     private void start(GenerationRequest request, Completion completion, boolean asynchronous,
-            boolean allowDiagnosticProofReuse) {
+            boolean allowDiagnosticProofReuse, long maximumJobMillis,
+            boolean measurementOnly,
+            ControlledP09NegativeForDeveloperVerification controlledP09Negative) {
         if (request == null || advancing)
             throw new IllegalStateException("Generation cannot start inside an active stage");
+        if (request.isPrivateDiagnosticQualification() != measurementOnly)
+            throw new IllegalStateException(
+                "Private qualification requests require the diagnostic measurement entry point");
+        if (measurementOnly && (!sim.troubleshootDebug || !sim.developerVerifierRunning ||
+                maximumJobMillis < MAX_JOB_MILLIS ||
+                maximumJobMillis > MAX_DIAGNOSTIC_MEASUREMENT_JOB_MILLIS))
+            throw new IllegalStateException("Diagnostic measurement scope or deadline changed before start");
+        if (controlledP09Negative != null &&
+                (measurementOnly || !sim.troubleshootDebug || !sim.developerVerifierRunning))
+            throw new IllegalStateException(
+                "Controlled P09 negative escaped its developer-verification scope");
+        if (!measurementOnly && maximumJobMillis != normalMaximumJobMillis(request))
+            throw new IllegalStateException("Normal generation deadline differs from its execution contract");
         cancel();
         if (services != null && services.hasSavedOwners())
             throw new IllegalStateException("Previous generation has incomplete cleanup");
@@ -129,9 +216,14 @@ final class GenerationCoordinator {
         foregroundBudget = asynchronous && !sim.troubleshootDebug;
         foregroundClock = new ForegroundGenerationClock(System.currentTimeMillis(),
             foregroundBudget && pageHidden());
-        services = new Services(request, completion, allowDiagnosticProofReuse);
-        job = new GenerationJob(services, MAX_JOB_MILLIS, MAX_JOB_STEPS, MAX_STEP_MILLIS);
+        GeneratedDiagnosticProofCache proofCache = measurementOnly ?
+            diagnosticMeasurementProofs : diagnosticProofs;
+        if (measurementOnly) diagnosticMeasurementWorkTimings.clear();
+        services = new Services(request, completion, allowDiagnosticProofReuse,
+            proofCache, measurementOnly, controlledP09Negative);
+        job = new GenerationJob(services, maximumJobMillis, MAX_JOB_STEPS, MAX_STEP_MILLIS);
         yields = 0; cancelledAt = 0; cancellationLatency = 0; maxAdvanceMillis = 0;
+        lastRoutingElapsedMillis = 0; lastProofElapsedMillis = 0;
         lastCleanupAudit = null;
         startedAt = lastProgressAt = System.currentTimeMillis(); expectedProofUnits = 0;
         sim.setGenerationBusy(true, "Preparing board...");
@@ -254,6 +346,10 @@ final class GenerationCoordinator {
         final Services finished = services;
         final GenerationJob terminal = job;
         finished.notified = true;
+        lastRoutingElapsedMillis = finished.getRoutingElapsedMillis();
+        lastProofElapsedMillis = finished.getProofElapsedMillis();
+        lastDiagnosticMeasurementWorkTimings = copyWorkTimings(
+            diagnosticMeasurementWorkTimings);
         if (continuation != null) { continuation.cancel(); continuation = null; }
         if (watchdog != null) { watchdog.cancel(); watchdog = null; }
         if (cancelledAt != 0) cancellationLatency = Math.max(0, System.currentTimeMillis() - cancelledAt);
@@ -275,11 +371,35 @@ final class GenerationCoordinator {
         }
     }
 
+    private static Map<String, long[]> copyWorkTimings(Map<String, long[]> source) {
+        Map<String, long[]> copy = new LinkedHashMap<String, long[]>();
+        for (Map.Entry<String, long[]> entry : source.entrySet()) {
+            long[] values = entry.getValue();
+            long[] copied = new long[values.length];
+            System.arraycopy(values, 0, copied, 0, values.length);
+            copy.put(entry.getKey(), copied);
+        }
+        return copy;
+    }
+
+    private void recordMeasurementWorkTiming(String label, long elapsedMillis) {
+        long[] timing = diagnosticMeasurementWorkTimings.get(label);
+        if (timing == null) {
+            timing = new long[3];
+            diagnosticMeasurementWorkTimings.put(label, timing);
+        }
+        timing[0]++;
+        timing[1] += Math.max(0, elapsedMillis);
+        timing[2] = Math.max(timing[2], Math.max(0, elapsedMillis));
+    }
+
     private final class Services implements GenerationJob.Services {
         private final GenerationRequest selection;
         private GenerationRequest request;
         private final Completion completion;
         private final boolean allowDiagnosticProofReuse;
+        private final GeneratedDiagnosticProofCache proofCache;
+        private final boolean measurementOnly;
         private GeneratedBoardInstance original;
         private GeneratedChallengeController originalController;
         private Object originalGraph;
@@ -297,14 +417,29 @@ final class GenerationCoordinator {
         private boolean proofCachePublicationPending;
         private GeneratedDiagnosticProofCache.Entry pendingProofCacheEntry;
         private DifficultyAssessment difficulty;
+        private ControlledP09NegativeForDeveloperVerification controlledP09Negative;
         private boolean notified, cleanupComplete;
 
-        Services(GenerationRequest request, Completion completion, boolean allowDiagnosticProofReuse) {
+        Services(GenerationRequest request, Completion completion, boolean allowDiagnosticProofReuse,
+                GeneratedDiagnosticProofCache proofCache, boolean measurementOnly,
+                ControlledP09NegativeForDeveloperVerification controlledP09Negative) {
+            if (proofCache == null)
+                throw new IllegalArgumentException("Missing diagnostic proof cache owner");
             this.selection = request; this.request = request.candidate(0); this.completion = completion;
             this.allowDiagnosticProofReuse = allowDiagnosticProofReuse;
+            this.proofCache = proofCache;
+            this.measurementOnly = measurementOnly;
+            this.controlledP09Negative = controlledP09Negative;
             original = sim.getGeneratedBoardInstance();
             originalController = sim.getGeneratedChallengeController();
             originalGraph = sim.elmList;
+        }
+        long getRoutingElapsedMillis() {
+            return candidate == null || candidate.getPcbLayout() == null ? 0 :
+                Math.max(0, candidate.getPcbLayout().getGenerationRoutingMillis());
+        }
+        long getProofElapsedMillis() {
+            return proof == null ? 0 : Math.max(0, proof.getElapsedMillis());
         }
         public int candidateCount() { return selection.candidateCount(); }
         public String manifest(int index) { return selection.candidateManifest(index); }
@@ -358,6 +493,7 @@ final class GenerationCoordinator {
                 job.checkpoint();
                 if (candidate == null || candidate.getPcbLayout() == null)
                     throw new IllegalStateException("Native generation returned incomplete physical ownership");
+                if (!measurementOnly) request.getExecutionPolicy().requireOwner(candidate);
                 int proofUnits = GeneratedDiagnosticProofService.requiredWorkUnits(candidate,
                     request.requiresExplicitCompletion());
                 expectedProofUnits = proofUnits;
@@ -380,6 +516,22 @@ final class GenerationCoordinator {
                 candidate.getSimulationElements().size();
         }
         public String physical() {
+            if (controlledP09Negative != null) {
+                if (!sim.troubleshootDebug || !sim.developerVerifierRunning)
+                    throw new IllegalStateException(
+                        "Controlled P09 negative lost its developer-verification scope");
+                int ordinal = job.getCandidateIndex();
+                try {
+                    controlledP09Negative.verifyAndReject(candidate, ordinal);
+                } catch (SupportedEnvelope.Rejected rejection) {
+                    if (!controlledP09Negative.verified(candidate, ordinal, rejection))
+                        throw new IllegalStateException(
+                            "Controlled P09 hook raised an unverified envelope rejection", rejection);
+                    throw new GenerationJob.Rejected(
+                        "Controlled P09 negative at candidate ordinal " + ordinal +
+                        ": " + rejection.reason, rejection);
+                }
+            }
             try {
                 installation.validatePhysical();
             } catch (Throwable failure) {
@@ -399,7 +551,7 @@ final class GenerationCoordinator {
                 requireCurrentProofContext("diagnostic proof start");
                 if (allowDiagnosticProofReuse)
                     proofReceipt = GeneratedDiagnosticProofService.reuseCachedIfPresent(sim,
-                        candidate, sim.getGeneratedChallengeController(), diagnosticProofs,
+                        candidate, sim.getGeneratedChallengeController(), proofCache,
                         proofContextKey);
                 if (proofReceipt != null) {
                     proofCacheHit = true;
@@ -417,7 +569,16 @@ final class GenerationCoordinator {
                         public void check() { job.checkpoint(); }
                     });
             }
-            boolean more = proof.step();
+            String measurementWorkLabel = measurementOnly ?
+                proof.nextWorkLabelForDeveloperVerification() : null;
+            long measurementWorkStarted = measurementOnly ? System.currentTimeMillis() : 0;
+            boolean more;
+            try { more = proof.step(); }
+            finally {
+                if (measurementOnly)
+                    recordMeasurementWorkTiming(measurementWorkLabel,
+                        System.currentTimeMillis() - measurementWorkStarted);
+            }
             if (!more) {
                 proofReceipt = proof.finish(proofContextKey);
                 requireCurrentProofContext("serial diagnostic proof completion");
@@ -425,7 +586,7 @@ final class GenerationCoordinator {
                     /* Preflight the immutable artifact while this candidate is
                      * still private.  The cache itself remains untouched until
                      * after final publication below. */
-                    pendingProofCacheEntry = diagnosticProofs.prepare(proofContextKey,
+                    pendingProofCacheEntry = proofCache.prepare(proofContextKey,
                         candidate, proofReceipt);
                     proofCachePublicationPending = true;
                 }
@@ -466,7 +627,12 @@ final class GenerationCoordinator {
         }
         public void publish(GenerationReceipt receipt) {
             if (receipt == null) throw new IllegalStateException("Missing generation proof receipt");
+            if (measurementOnly && (!sim.troubleshootDebug || !sim.developerVerifierRunning ||
+                    !request.isPrivateDiagnosticQualification()))
+                throw new GenerationJob.Stale(
+                    "Private diagnostic measurement scope changed before publication");
             requireCurrentProofContext("generation publication");
+            if (!measurementOnly) request.getExecutionPolicy().requireOwner(candidate);
             if (request.getDifficulty() != null) {
                 if (difficulty == null) throw new IllegalStateException("Missing difficulty admission evidence");
                 difficulty.require(request.getDifficulty());
@@ -489,7 +655,7 @@ final class GenerationCoordinator {
             if (proofCachePublicationPending) {
                 if (pendingProofCacheEntry == null)
                     throw new IllegalStateException("Missing preflighted diagnostic cache entry");
-                diagnosticProofs.storePrepared(pendingProofCacheEntry);
+                proofCache.storePrepared(pendingProofCacheEntry);
                 proofCachePublicationPending = false;
                 pendingProofCacheEntry = null;
             }
@@ -564,6 +730,7 @@ final class GenerationCoordinator {
             proofCacheHit = false; proofCachePublicationPending = false;
             pendingProofCacheEntry = null;
             prepared = null; constructionSession = null;
+            controlledP09Negative = null;
             if (job.getOutcome() != GenerationJob.Outcome.PASS) candidate = null;
         }
         boolean hasSavedOwners() {

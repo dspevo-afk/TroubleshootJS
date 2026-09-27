@@ -1,0 +1,27 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+FLOORPLAN_LOCALITY candidate=0 placementSeed=-5811592868239938363 components=33 mst=29220 nearest=J1:170,JSA:220,JSB:230,JOA:190,JOB:190,JLOAD:2890
+FLOORPLAN_LOCALITY candidate=1 placementSeed=-5811592868239938363 components=33 mst=29960 nearest=J1:160,JSA:210,JSB:210,JOA:230,JOB:230,JLOAD:2020
+FLOORPLAN_LOCALITY candidate=2 placementSeed=-5811592868239938363 components=33 mst=31680 nearest=J1:170,JSA:220,JSB:240,JOA:180,JOB:260,JLOAD:3150
+FLOORPLAN_LOCALITY candidate=3 placementSeed=-5811592868239938363 components=33 mst=28220 nearest=J1:170,JSA:230,JSB:240,JOA:170,JOB:410,JLOAD:2300
+FLOORPLAN_LOCALITY candidate=4 placementSeed=-5811592868239938363 components=33 mst=27470 nearest=J1:150,JSA:240,JSB:240,JOA:390,JOB:340,JLOAD:2120
+FLOORPLAN_LOCALITY candidate=5 placementSeed=-5811592868239938363 components=33 mst=31360 nearest=J1:160,JSA:240,JSB:240,JOA:250,JOB:180,JLOAD:2130
+FLOORPLAN_RANK rank=0 routedSubset=true 4{total=1166718;electrical=130940;region=8660;connector=6920;corridor=2685;outline=8106000;courtyard=603836;demand=2109598}
+FLOORPLAN_RANK rank=1 routedSubset=true 3{total=1211278;electrical=138180;region=8900;connector=6570;corridor=1675;outline=8019000;courtyard=600236;demand=2099998}
+FLOORPLAN_RANK rank=2 routedSubset=true 1{total=1228493;electrical=136240;region=10852;connector=6770;corridor=3647;outline=8108800;courtyard=593036;demand=2080798}
+FLOORPLAN_RANK rank=3 routedSubset=false 0{total=1262710;electrical=144360;region=9185;connector=7960;corridor=1064;outline=7867200;courtyard=599036;demand=2096798}
+FLOORPLAN_RANK rank=4 routedSubset=false 5{total=1282165;electrical=143400;region=10065;connector=7070;corridor=3476;outline=7900200;courtyard=593036;demand=2080798}
+FLOORPLAN_RANK rank=5 routedSubset=false 2{total=1303048;electrical=145400;region=9685;connector=8950;corridor=3080;outline=7771500;courtyard=594236;demand=2083998}
+
+Exception in thread "main" java.lang.AssertionError: Q30 electrical net locality stays below the fixed MST bound: 29220
+	at com.lushprojects.circuitjs1.client.MediumBoardFloorplanningContractTest.check(MediumBoardFloorplanningContractTest.java:437)
+	at com.lushprojects.circuitjs1.client.MediumBoardFloorplanningContractTest.main(MediumBoardFloorplanningContractTest.java:48)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: MediumBoardFloorplanningContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

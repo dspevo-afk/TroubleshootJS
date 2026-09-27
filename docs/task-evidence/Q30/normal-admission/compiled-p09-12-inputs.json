@@ -1,0 +1,24 @@
+{
+  "startedUtc": "2026-09-26T21:18:50.838325+00:00",
+  "buildAudits": [
+    {
+      "manifest": "build-final-12-inputs.json",
+      "sha256": "1d1fcb7dccd2998cfa6737ceb7643b1f8c43a879cb565061b9f3885b5179b2d3",
+      "files": 1133,
+      "unchanged": true
+    },
+    {
+      "manifest": "web-final-12-inputs.json",
+      "sha256": "ee0976c02787588c42bd134610971ef70d9b2178e23d9e2e2a3102493fadac75",
+      "files": 392,
+      "unchanged": true
+    }
+  ],
+  "files": {
+    "docs/task-evidence/QuickPlayGate/verify_admission.py": "2649f4e2d3eb36f78a3e44d6d56d91e022496507e795f0d32a3217c9f4febc69",
+    "docs/task-evidence/QuickPlayGate/canary-cases.json": "4cf23e12ebcc38175268e3333584ff167db6fd2ff4ab22901893cf0eb993a4f8",
+    "tests/contracts/quickplay_gate_evidence.py": "ffc5569bfee52c1e7eb06a7ddf677e4645dcf0f06f749ebbf551fd9e7dd93727",
+    "docs/task-evidence/Q30/normal-admission/compiled-p09-12-spec.json": "d1abab6930a05eecade2385ae5c114ffa96709b16b769b726d027391927b44ea",
+    "docs/task-evidence/Q30/normal-admission/native-tail-01.log": "8897ad5178c68620d70b7e5587eb9ba5579be1d48eb5a4a92d5c9722cfc1dd05"
+  }
+}

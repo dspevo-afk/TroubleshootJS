@@ -1,0 +1,166 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<worktree>",
+  "startedUtc": "2026-09-26T22:12:49.155697+00:00",
+  "outcome": "NOT_RUN",
+  "cases": [
+    {
+      "schema": 1,
+      "case": {
+        "index": 1,
+        "name": "challenge-positive",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyChallenge=true",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "PASS:challenge",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 120.0,
+        "reportAttribute": null
+      },
+      "url": "http://127.0.0.1:64864/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyChallenge=true",
+      "startedUtc": "2026-09-26T22:12:50.409122+00:00",
+      "finishedUtc": "2026-09-26T22:12:51.216796+00:00",
+      "operationSeconds": 0.8076698000077158,
+      "outcome": "FAIL",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:challenge",
+      "lastObservedState": "PASS:challenge",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": false,
+      "reportJsonValid": null,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 0,
+      "reportSha256": null,
+      "reportFile": null,
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (File not found)",
+          "location": {
+            "url": "http://127.0.0.1:64864/favicon.ico",
+            "lineNumber": 0,
+            "columnNumber": 0
+          }
+        }
+      ],
+      "attributeReadErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 2,
+        "name": "alpha-explicit-negative",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaFail=true",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "FAIL:alpha:alpha-explicit-failure-canary",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 120.0,
+        "reportAttribute": "data-tsj-alpha-report"
+      },
+      "url": "http://127.0.0.1:64864/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaFail=true",
+      "startedUtc": "2026-09-26T22:12:51.217740+00:00",
+      "finishedUtc": "2026-09-26T22:12:51.734495+00:00",
+      "operationSeconds": 0.5167512999614701,
+      "outcome": "FAIL",
+      "terminalReached": true,
+      "stateMatch": false,
+      "observedState": "FAIL:alpha:start owner=false power=POWERED isolated=false settled=true state=READY: java.lang.AssertionError: alpha-explicit-failure-canary",
+      "lastObservedState": "FAIL:alpha:start owner=false power=POWERED isolated=false settled=true state=READY: java.lang.AssertionError: alpha-explicit-failure-canary",
+      "timedOut": false,
+      "expectedFailureCanary": true,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 552,
+      "reportSha256": "5f79359ba7c6f997011e028f20a4e595c2464c8ddc6a4724e32c8b8542d142c2",
+      "reportFile": "cases/002-alpha-explicit-negative.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "navigationError": null
+    }
+  ],
+  "caseCount": 2,
+  "errors": [],
+  "inputAudit": {
+    "status": "BEFORE_CAPTURED",
+    "beforeSha256": "af010bf2c5335cff390163035985b3fbc239ae1bef9a7fc182151d60266fe0e6",
+    "sourceSha256": "57e3a814716173a86893019520d8933d6bee1262ce6da832f6685cc5a061d95f",
+    "webSha256": "29f1522c1d5830951dcfdb89f6c63efb98077429d3129b1aa9d47c76d06a4634",
+    "fileCount": 1522
+  },
+  "identity": {
+    "schema": 1,
+    "runner": {
+      "pid": 23820,
+      "created": "2026-09-26T22:12:49.0163210Z",
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+    },
+    "edgeProcessesBeforeCases": [
+      {
+        "pid": 35260,
+        "parent": 32656,
+        "created": "2026-09-26T22:12:49.7527710Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 30132,
+        "parent": 35260,
+        "created": "2026-09-26T22:12:49.7711050Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 37056,
+        "parent": 35260,
+        "created": "2026-09-26T22:12:49.8860780Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 35236,
+        "parent": 35260,
+        "created": "2026-09-26T22:12:49.8909720Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 37544,
+        "parent": 35260,
+        "created": "2026-09-26T22:12:49.9106380Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 36716,
+        "parent": 35260,
+        "created": "2026-09-26T22:12:49.9841120Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 35496,
+        "parent": 35260,
+        "created": "2026-09-26T22:12:49.9895110Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "profile": "<task-temp>\\profile",
+    "port": 64864,
+    "baseUrl": "http://127.0.0.1:64864"
+  },
+  "operationStartedUtc": "2026-09-26T22:12:50.409106+00:00"
+}

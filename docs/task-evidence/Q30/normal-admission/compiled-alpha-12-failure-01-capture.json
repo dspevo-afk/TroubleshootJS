@@ -1,0 +1,10 @@
+{
+  "attribute": "data-tsj-alpha-report",
+  "length": 595,
+  "previewExecutionDigest": "119defa1425630ec43d3420fd495f04aec659462cdc9186d702d464f4b738669",
+  "previewScriptDigest": "a468c68fae0a8f5ebe67dc8c316d5911bad568b4257f4b4f15e9ad5ff2c4ab2a",
+  "previewSourceDigest": "df00cf5944e05bc4131b53c017ef43307e19f3069ce3f6ec5b7383ad9a33e8c6",
+  "previewWebDigest": "e7d87a1f0f7dbb69312d5d7e74c8c52064835b9fec96495a2b0b851ff822e8d6",
+  "state": null,
+  "verification": "FAIL:alpha:catalog-acquire/R1 owner=true power=UNPOWERED isolated=true settled=true state=READY: java.lang.AssertionError: Alpha: loose physical package is inspectable"
+}

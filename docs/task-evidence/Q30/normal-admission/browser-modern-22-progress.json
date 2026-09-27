@@ -1,0 +1,681 @@
+{
+  "outcome": "NOT_RUN",
+  "cases": [
+    {
+      "family": "LED_INDICATOR",
+      "profile": "EASY",
+      "ordinal": 0,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/LED_INDICATOR/-5799677796316255547",
+      "ready": true,
+      "elapsedSeconds": 0.5424709000001258,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 50,
+      "privateMetadataAbsent": true,
+      "seconds": 0.5424866000000748
+    },
+    {
+      "family": "LED_INDICATOR",
+      "profile": "EASY",
+      "ordinal": 1,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/LED_INDICATOR/-9069021026841856029",
+      "ready": true,
+      "elapsedSeconds": 0.3231299999999919,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 53,
+      "privateMetadataAbsent": true,
+      "seconds": 0.323136599999998
+    },
+    {
+      "family": "LED_INDICATOR",
+      "profile": "EASY",
+      "ordinal": 2,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/LED_INDICATOR/-6513957460797828313",
+      "ready": true,
+      "elapsedSeconds": 0.1704072999998516,
+      "observedCandidates": [
+        0
+      ],
+      "maxObservedUnits": 0,
+      "privateMetadataAbsent": true,
+      "seconds": 0.17041429999994762
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "profile": "EASY",
+      "ordinal": 0,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/DIODE_PROTECTED_INDICATOR/7923470973309892559",
+      "ready": true,
+      "elapsedSeconds": 0.16333149999991292,
+      "observedCandidates": [
+        0
+      ],
+      "maxObservedUnits": 0,
+      "privateMetadataAbsent": true,
+      "seconds": 0.1633372999999665
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "profile": "EASY",
+      "ordinal": 1,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/DIODE_PROTECTED_INDICATOR/5612419502545432141",
+      "ready": true,
+      "elapsedSeconds": 0.16381449999994402,
+      "observedCandidates": [
+        0
+      ],
+      "maxObservedUnits": 0,
+      "privateMetadataAbsent": true,
+      "seconds": 0.16381989999990765
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "profile": "EASY",
+      "ordinal": 2,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/DIODE_PROTECTED_INDICATOR/-5065072575115770707",
+      "ready": true,
+      "elapsedSeconds": 0.16308509999998932,
+      "observedCandidates": [
+        0
+      ],
+      "maxObservedUnits": 0,
+      "privateMetadataAbsent": true,
+      "seconds": 0.16309129999990546
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "profile": "EASY",
+      "ordinal": 0,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/PARALLEL_DUAL_INDICATOR/-4871492824133374696",
+      "ready": true,
+      "elapsedSeconds": 0.48265969999988556,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 57,
+      "privateMetadataAbsent": true,
+      "seconds": 0.48266629999989163
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "profile": "EASY",
+      "ordinal": 1,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/PARALLEL_DUAL_INDICATOR/-7564193710099149604",
+      "ready": true,
+      "elapsedSeconds": 0.4990551000000778,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 70,
+      "privateMetadataAbsent": true,
+      "seconds": 0.49906179999993583
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "profile": "EASY",
+      "ordinal": 2,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/PARALLEL_DUAL_INDICATOR/-5565369702939839191",
+      "ready": true,
+      "elapsedSeconds": 0.48216339999999036,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 92,
+      "privateMetadataAbsent": true,
+      "seconds": 0.48217060000001766
+    },
+    {
+      "family": "RC_DELAY",
+      "profile": "EASY",
+      "ordinal": 0,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/RC_DELAY/2609815964738457177",
+      "ready": true,
+      "elapsedSeconds": 27.543183,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 78,
+      "privateMetadataAbsent": true,
+      "seconds": 27.54320299999995
+    },
+    {
+      "family": "RC_DELAY",
+      "profile": "EASY",
+      "ordinal": 1,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/RC_DELAY/-4498577365395759553",
+      "ready": true,
+      "elapsedSeconds": 27.42615569999998,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 78,
+      "privateMetadataAbsent": true,
+      "seconds": 27.42617509999991
+    },
+    {
+      "family": "RC_DELAY",
+      "profile": "EASY",
+      "ordinal": 2,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/RC_DELAY/-4872209801132552817",
+      "ready": true,
+      "elapsedSeconds": 27.291714500000126,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 78,
+      "privateMetadataAbsent": true,
+      "seconds": 27.291735400000107
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "profile": "EASY",
+      "ordinal": 0,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/NPN_LOW_SIDE_SWITCH/82490091850856161",
+      "ready": true,
+      "elapsedSeconds": 0.6334036000000651,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 62,
+      "privateMetadataAbsent": true,
+      "seconds": 0.6334099000000606
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "profile": "EASY",
+      "ordinal": 1,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/NPN_LOW_SIDE_SWITCH/2011196994644103043",
+      "ready": true,
+      "elapsedSeconds": 0.7993428000002041,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 54,
+      "privateMetadataAbsent": true,
+      "seconds": 0.7993503000000146
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "profile": "EASY",
+      "ordinal": 2,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/NPN_LOW_SIDE_SWITCH/9093512589065974350",
+      "ready": true,
+      "elapsedSeconds": 0.8407099000000926,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 54,
+      "privateMetadataAbsent": true,
+      "seconds": 0.8407163000001674
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "profile": "EASY",
+      "ordinal": 0,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/NMOS_LOW_SIDE_SWITCH/-6749251293221921692",
+      "ready": true,
+      "elapsedSeconds": 0.509260999999924,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 54,
+      "privateMetadataAbsent": true,
+      "seconds": 0.5092675999999301
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "profile": "EASY",
+      "ordinal": 1,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/NMOS_LOW_SIDE_SWITCH/7312073465720984077",
+      "ready": true,
+      "elapsedSeconds": 0.4901554999999007,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 54,
+      "privateMetadataAbsent": true,
+      "seconds": 0.49016229999983807
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "profile": "EASY",
+      "ordinal": 2,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/NMOS_LOW_SIDE_SWITCH/-1071873893093261499",
+      "ready": true,
+      "elapsedSeconds": 0.5026895000000877,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 54,
+      "privateMetadataAbsent": true,
+      "seconds": 0.5026978000000781
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "profile": "EASY",
+      "ordinal": 0,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/RELAY_OUTPUT/-2676941160537815841",
+      "ready": true,
+      "elapsedSeconds": 8.467562499999985,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 77,
+      "privateMetadataAbsent": true,
+      "seconds": 8.467579699999987
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "profile": "EASY",
+      "ordinal": 1,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/RELAY_OUTPUT/8032542256072034282",
+      "ready": true,
+      "elapsedSeconds": 6.902889499999901,
+      "observedCandidates": [
+        1
+      ],
+      "maxObservedUnits": 77,
+      "privateMetadataAbsent": true,
+      "seconds": 6.902908900000057
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "profile": "EASY",
+      "ordinal": 2,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/RELAY_OUTPUT/4850224583931519464",
+      "ready": true,
+      "elapsedSeconds": 6.7925526999999875,
+      "observedCandidates": [
+        1
+      ],
+      "maxObservedUnits": 77,
+      "privateMetadataAbsent": true,
+      "seconds": 6.792571399999815
+    },
+    {
+      "family": "SENSOR_CONTROL",
+      "profile": "EASY",
+      "ordinal": 0,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/SENSOR_CONTROL/-6379664909284299987",
+      "ready": true,
+      "elapsedSeconds": 13.638458599999922,
+      "observedCandidates": [
+        1
+      ],
+      "maxObservedUnits": 152,
+      "privateMetadataAbsent": true,
+      "seconds": 13.638466499999822
+    },
+    {
+      "family": "SENSOR_CONTROL",
+      "profile": "EASY",
+      "ordinal": 1,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/SENSOR_CONTROL/8849648153983788553",
+      "ready": true,
+      "elapsedSeconds": 4.132512599999927,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 152,
+      "privateMetadataAbsent": true,
+      "seconds": 4.132519999999886
+    },
+    {
+      "family": "SENSOR_CONTROL",
+      "profile": "EASY",
+      "ordinal": 2,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/SENSOR_CONTROL/-4550975114509476338",
+      "ready": true,
+      "elapsedSeconds": 1.8339699000000564,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 104,
+      "privateMetadataAbsent": true,
+      "seconds": 1.8339789999999994
+    },
+    {
+      "family": "RB15_CONTROL",
+      "profile": "EASY",
+      "ordinal": 0,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/RB15_CONTROL/146076849194868228",
+      "ready": true,
+      "elapsedSeconds": 12.24974599999996,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 82,
+      "privateMetadataAbsent": true,
+      "seconds": 12.24977059999992
+    },
+    {
+      "family": "RB15_CONTROL",
+      "profile": "EASY",
+      "ordinal": 1,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/RB15_CONTROL/-1387556366515083486",
+      "ready": true,
+      "elapsedSeconds": 11.793814699999984,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 79,
+      "privateMetadataAbsent": true,
+      "seconds": 11.793839900000194
+    },
+    {
+      "family": "RB15_CONTROL",
+      "profile": "EASY",
+      "ordinal": 2,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/EASY/RB15_CONTROL/5614684645980754252",
+      "ready": true,
+      "elapsedSeconds": 16.07520629999999,
+      "observedCandidates": [
+        1
+      ],
+      "maxObservedUnits": 94,
+      "privateMetadataAbsent": true,
+      "seconds": 16.075401700000157
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "profile": "MEDIUM",
+      "ordinal": 0,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/-703927690117700854",
+      "ready": true,
+      "elapsedSeconds": 3.734813099999883,
+      "observedCandidates": [
+        1
+      ],
+      "maxObservedUnits": 606,
+      "privateMetadataAbsent": true,
+      "seconds": 3.734828099999959
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "profile": "MEDIUM",
+      "ordinal": 1,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/462300049766104578",
+      "ready": true,
+      "elapsedSeconds": 3.812932499999988,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 618,
+      "privateMetadataAbsent": true,
+      "seconds": 3.8129480000000058
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "profile": "MEDIUM",
+      "ordinal": 2,
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/-8299893164569314894",
+      "ready": true,
+      "elapsedSeconds": 3.3951785000001564,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 615,
+      "privateMetadataAbsent": true,
+      "seconds": 3.3951913000000786
+    },
+    {
+      "family": "RB30_CONTROL",
+      "profile": "MEDIUM",
+      "ordinal": 0,
+      "outcome": "PASS",
+      "observationBoundSeconds": 325.0,
+      "selectedJobBudgetMillis": 300000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/MEDIUM/RB30_CONTROL/-9117173623817868551",
+      "ready": true,
+      "elapsedSeconds": 121.01408199999992,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 444,
+      "privateMetadataAbsent": true,
+      "seconds": 121.01414520000003
+    },
+    {
+      "family": "RB30_CONTROL",
+      "profile": "MEDIUM",
+      "ordinal": 1,
+      "outcome": "PASS",
+      "observationBoundSeconds": 325.0,
+      "selectedJobBudgetMillis": 300000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/MEDIUM/RB30_CONTROL/3252255761485186317",
+      "ready": true,
+      "elapsedSeconds": 152.25202439999998,
+      "observedCandidates": [
+        0,
+        1,
+        2
+      ],
+      "maxObservedUnits": 571,
+      "privateMetadataAbsent": true,
+      "seconds": 152.25214230000006
+    },
+    {
+      "family": "RB30_CONTROL",
+      "profile": "MEDIUM",
+      "ordinal": 2,
+      "outcome": "PASS",
+      "observationBoundSeconds": 325.0,
+      "selectedJobBudgetMillis": 300000,
+      "screen": "TICKET",
+      "replay": "tsj-alpha/3/MEDIUM/RB30_CONTROL/2182719284949821902",
+      "ready": true,
+      "elapsedSeconds": 106.7601193999999,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 443,
+      "privateMetadataAbsent": true,
+      "seconds": 106.76018419999991
+    }
+  ],
+  "errors": [],
+  "replays": [
+    {
+      "family": "RELAY_OUTPUT",
+      "profile": "EASY",
+      "replay": "tsj-alpha/3/EASY/RELAY_OUTPUT/4850224583931519464",
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "ready": true,
+      "elapsedSeconds": 7.4838260000001355,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 77,
+      "seconds": 7.483846999999969,
+      "isolated": true
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "profile": "MEDIUM",
+      "replay": "tsj-alpha/3/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/-8299893164569314894",
+      "outcome": "PASS",
+      "observationBoundSeconds": 115,
+      "selectedJobBudgetMillis": 90000,
+      "screen": "TICKET",
+      "ready": true,
+      "elapsedSeconds": 3.4062340999998924,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 614,
+      "seconds": 3.406248499999947,
+      "isolated": true
+    },
+    {
+      "family": "RB30_CONTROL",
+      "profile": "MEDIUM",
+      "replay": "tsj-alpha/3/MEDIUM/RB30_CONTROL/2182719284949821902",
+      "outcome": "PASS",
+      "observationBoundSeconds": 325.0,
+      "selectedJobBudgetMillis": 300000,
+      "screen": "TICKET",
+      "ready": true,
+      "elapsedSeconds": 20.241534499999943,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 51,
+      "seconds": 20.24156439999979,
+      "isolated": true
+    }
+  ]
+}

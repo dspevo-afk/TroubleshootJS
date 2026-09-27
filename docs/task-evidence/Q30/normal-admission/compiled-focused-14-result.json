@@ -1,0 +1,579 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<worktree>",
+  "startedUtc": "2026-09-26T22:14:37.388983+00:00",
+  "outcome": "FAIL",
+  "cases": [
+    {
+      "schema": 1,
+      "case": {
+        "index": 1,
+        "name": "alpha-led0",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaCase=0",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "PASS:alpha",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 120.0,
+        "reportAttribute": "data-tsj-alpha-report"
+      },
+      "url": "http://127.0.0.1:56978/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaCase=0",
+      "startedUtc": "2026-09-26T22:14:38.568377+00:00",
+      "finishedUtc": "2026-09-26T22:14:40.553950+00:00",
+      "operationSeconds": 1.9855662999907508,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:alpha",
+      "lastObservedState": "PASS:alpha",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 12263,
+      "reportSha256": "1c156be5793d51866c600f6d9ce9089455eff84447086a42ba74c8452b63a054",
+      "reportFile": "cases/001-alpha-led0.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 2,
+        "name": "alpha-npn0-shop",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaCase=13",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "PASS:alpha",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 120.0,
+        "reportAttribute": "data-tsj-alpha-report"
+      },
+      "url": "http://127.0.0.1:56978/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaCase=13",
+      "startedUtc": "2026-09-26T22:14:40.564470+00:00",
+      "finishedUtc": "2026-09-26T22:14:42.310022+00:00",
+      "operationSeconds": 1.7455487999832258,
+      "outcome": "FAIL",
+      "terminalReached": true,
+      "stateMatch": false,
+      "observedState": "FAIL:alpha:public-shop-acquire/NPN_LOW_SIDE_SWITCH/SPAN_260 owner=true power=UNPOWERED isolated=true settled=true state=READY: java.lang.AssertionError: Alpha: independent fixture has two different real resistor fits",
+      "lastObservedState": "FAIL:alpha:public-shop-acquire/NPN_LOW_SIDE_SWITCH/SPAN_260 owner=true power=UNPOWERED isolated=true settled=true state=READY: java.lang.AssertionError: Alpha: independent fixture has two different real resistor fits",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 811,
+      "reportSha256": "7906d8a09c7c72dc443d7940c3faa9b2fffddf117b55d5193888bc01f23bd8c7",
+      "reportFile": "cases/002-alpha-npn0-shop.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 3,
+        "name": "quickplay-led-3",
+        "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=0&tsjQuickPlayTestSeed=3",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "PASS:quick-play",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 120.0,
+        "reportAttribute": null
+      },
+      "url": "http://127.0.0.1:56978/circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=0&tsjQuickPlayTestSeed=3",
+      "startedUtc": "2026-09-26T22:14:42.311077+00:00",
+      "finishedUtc": "2026-09-26T22:14:52.849522+00:00",
+      "operationSeconds": 10.538442399934866,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:quick-play",
+      "lastObservedState": "PASS:quick-play",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": false,
+      "reportJsonValid": null,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 0,
+      "reportSha256": null,
+      "reportFile": null,
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 4,
+        "name": "quickplay-rc-3",
+        "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=3&tsjQuickPlayTestSeed=3",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "PASS:quick-play",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 120.0,
+        "reportAttribute": null
+      },
+      "url": "http://127.0.0.1:56978/circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=3&tsjQuickPlayTestSeed=3",
+      "startedUtc": "2026-09-26T22:14:52.850546+00:00",
+      "finishedUtc": "2026-09-26T22:15:35.943660+00:00",
+      "operationSeconds": 43.093111200025305,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:quick-play",
+      "lastObservedState": "PASS:quick-play",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": false,
+      "reportJsonValid": null,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 0,
+      "reportSha256": null,
+      "reportFile": null,
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        }
+      ],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 5,
+        "name": "quickplay-npn-0",
+        "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=4&tsjQuickPlayTestSeed=0",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "PASS:quick-play",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 120.0,
+        "reportAttribute": null
+      },
+      "url": "http://127.0.0.1:56978/circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=4&tsjQuickPlayTestSeed=0",
+      "startedUtc": "2026-09-26T22:15:35.944626+00:00",
+      "finishedUtc": "2026-09-26T22:15:47.105538+00:00",
+      "operationSeconds": 11.16090889996849,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:quick-play",
+      "lastObservedState": "PASS:quick-play",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": false,
+      "reportJsonValid": null,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 0,
+      "reportSha256": null,
+      "reportFile": null,
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        }
+      ],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 6,
+        "name": "quickplay-npn-1",
+        "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=4&tsjQuickPlayTestSeed=1",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "PASS:quick-play",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 120.0,
+        "reportAttribute": null
+      },
+      "url": "http://127.0.0.1:56978/circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=4&tsjQuickPlayTestSeed=1",
+      "startedUtc": "2026-09-26T22:15:47.106658+00:00",
+      "finishedUtc": "2026-09-26T22:15:57.997268+00:00",
+      "operationSeconds": 10.890607200097293,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:quick-play",
+      "lastObservedState": "PASS:quick-play",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": false,
+      "reportJsonValid": null,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 0,
+      "reportSha256": null,
+      "reportFile": null,
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 7,
+        "name": "quickplay-npn-2",
+        "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=4&tsjQuickPlayTestSeed=2",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "PASS:quick-play",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 120.0,
+        "reportAttribute": null
+      },
+      "url": "http://127.0.0.1:56978/circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=4&tsjQuickPlayTestSeed=2",
+      "startedUtc": "2026-09-26T22:15:57.998414+00:00",
+      "finishedUtc": "2026-09-26T22:16:08.934939+00:00",
+      "operationSeconds": 10.936521700001322,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:quick-play",
+      "lastObservedState": "PASS:quick-play",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": false,
+      "reportJsonValid": null,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 0,
+      "reportSha256": null,
+      "reportFile": null,
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        }
+      ],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 8,
+        "name": "quickplay-nmos-0",
+        "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=5&tsjQuickPlayTestSeed=0",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "PASS:quick-play",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 120.0,
+        "reportAttribute": null
+      },
+      "url": "http://127.0.0.1:56978/circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=5&tsjQuickPlayTestSeed=0",
+      "startedUtc": "2026-09-26T22:16:08.936169+00:00",
+      "finishedUtc": "2026-09-26T22:16:19.873830+00:00",
+      "operationSeconds": 10.93765719991643,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:quick-play",
+      "lastObservedState": "PASS:quick-play",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": false,
+      "reportJsonValid": null,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 0,
+      "reportSha256": null,
+      "reportFile": null,
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 9,
+        "name": "quickplay-nmos-1",
+        "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=5&tsjQuickPlayTestSeed=1",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "PASS:quick-play",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 120.0,
+        "reportAttribute": null
+      },
+      "url": "http://127.0.0.1:56978/circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=5&tsjQuickPlayTestSeed=1",
+      "startedUtc": "2026-09-26T22:16:19.875241+00:00",
+      "finishedUtc": "2026-09-26T22:16:30.794798+00:00",
+      "operationSeconds": 10.919553800020367,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:quick-play",
+      "lastObservedState": "PASS:quick-play",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": false,
+      "reportJsonValid": null,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 0,
+      "reportSha256": null,
+      "reportFile": null,
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        }
+      ],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 10,
+        "name": "quickplay-nmos-2",
+        "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=5&tsjQuickPlayTestSeed=2",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "PASS:quick-play",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 120.0,
+        "reportAttribute": null
+      },
+      "url": "http://127.0.0.1:56978/circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=5&tsjQuickPlayTestSeed=2",
+      "startedUtc": "2026-09-26T22:16:30.796050+00:00",
+      "finishedUtc": "2026-09-26T22:16:41.355529+00:00",
+      "operationSeconds": 10.55947529990226,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:quick-play",
+      "lastObservedState": "PASS:quick-play",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": false,
+      "reportJsonValid": null,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 0,
+      "reportSha256": null,
+      "reportFile": null,
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 11,
+        "name": "quickplay-explicit-precedence",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=0&tsjQuickPlayTestSeed=3",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "PASS:quick-play-explicit",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 120.0,
+        "reportAttribute": null
+      },
+      "url": "http://127.0.0.1:56978/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=0&tsjQuickPlayTestSeed=3",
+      "startedUtc": "2026-09-26T22:16:41.356905+00:00",
+      "finishedUtc": "2026-09-26T22:16:41.822393+00:00",
+      "operationSeconds": 0.46548490005079657,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:quick-play-explicit",
+      "lastObservedState": "PASS:quick-play-explicit",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": false,
+      "reportJsonValid": null,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 0,
+      "reportSha256": null,
+      "reportFile": null,
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "navigationError": null
+    }
+  ],
+  "caseCount": 11,
+  "errors": [],
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "af010bf2c5335cff390163035985b3fbc239ae1bef9a7fc182151d60266fe0e6",
+    "afterSha256": "af010bf2c5335cff390163035985b3fbc239ae1bef9a7fc182151d60266fe0e6",
+    "sourceSha256Before": "57e3a814716173a86893019520d8933d6bee1262ce6da832f6685cc5a061d95f",
+    "sourceSha256After": "57e3a814716173a86893019520d8933d6bee1262ce6da832f6685cc5a061d95f",
+    "webSha256Before": "29f1522c1d5830951dcfdb89f6c63efb98077429d3129b1aa9d47c76d06a4634",
+    "webSha256After": "29f1522c1d5830951dcfdb89f6c63efb98077429d3129b1aa9d47c76d06a4634",
+    "runnerBeforeSha256": "cde1157c01aa2df04b00f22211de11f33b03aa9ec26ba25f9649880f0c111338",
+    "runnerAfterSha256": "cde1157c01aa2df04b00f22211de11f33b03aa9ec26ba25f9649880f0c111338",
+    "fileCountBefore": 1522,
+    "fileCountAfter": 1522,
+    "seconds": 0.3385442999424413
+  },
+  "identity": {
+    "schema": 1,
+    "runner": {
+      "pid": 7664,
+      "created": "2026-09-26T22:14:37.2156590Z",
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+    },
+    "edgeProcessesBeforeCases": [
+      {
+        "pid": 18348,
+        "parent": 38308,
+        "created": "2026-09-26T22:14:37.9984560Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 26124,
+        "parent": 18348,
+        "created": "2026-09-26T22:14:38.0094880Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 34412,
+        "parent": 18348,
+        "created": "2026-09-26T22:14:38.0811050Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 16836,
+        "parent": 18348,
+        "created": "2026-09-26T22:14:38.0849580Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 32144,
+        "parent": 18348,
+        "created": "2026-09-26T22:14:38.1064800Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 35992,
+        "parent": 18348,
+        "created": "2026-09-26T22:14:38.1748680Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 34776,
+        "parent": 18348,
+        "created": "2026-09-26T22:14:38.1787600Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "profile": "<task-temp>\\tsj-q30-focused-14-ee273298092f49ed840c62e00820ecc2\\profile",
+    "port": 56978,
+    "baseUrl": "http://127.0.0.1:56978"
+  },
+  "operationStartedUtc": "2026-09-26T22:14:38.568364+00:00",
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 1.0152038000524044,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "finishedUtc": "2026-09-26T22:16:43.177320+00:00"
+}

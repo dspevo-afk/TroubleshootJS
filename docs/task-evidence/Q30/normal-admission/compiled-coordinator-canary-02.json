@@ -1,0 +1,96 @@
+{
+  "rows": [
+    {
+      "seed": "0",
+      "previewExecutionDigest": "e3a9b938537e1b5d9b31fcfccdacc2b4fd790a408f56bfcc39bc083889f2181f",
+      "previewScriptDigest": "adba860fdd42b847190a6db620d2242edde34c6221a4fade537bce90f511fb88",
+      "previewSourceDigest": "62e16d6acee1514dd92e65b0387e4e234a29eed2b42986022934719ffdd89760",
+      "previewWebDigest": "98f6fa18cb30f290f424baca4f4c637a5bc443254fbfdc0a0891047980d1eba8",
+      "visibilityAtCapture": "visible",
+      "report": {
+        "schema": 1,
+        "status": "FAIL",
+        "phase": "cold",
+        "seed": "0",
+        "requestedSeed": "0",
+        "request": "tsj-generation-request/4;native;qualification-only;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=0;quickPlay=false;layout=13;qualification=true;explicitCompletion=true;planEpoch=2;plan=rb30-plan@2;seed=0;topology=RB30_SEPARATE_DIRECT_A_BJT_B_BJT;support=RB30_COMPACT_NO_STATUS@1;layout=-5811592868239938363;routing=6323369344316473384;physicalPolicy=MEDIUM_BOARD@1;fault=SENSOR_A_OPEN;packages=31;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;loadReference=isolated;physicalPolicy=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1",
+        "normalAdmission": false,
+        "coordinatorQualificationPassed": false,
+        "normalCatalogRegistered": false,
+        "playerPublished": false,
+        "normalPlayerLaunch": false,
+        "predecessorOwnerPresent": true,
+        "restored": true,
+        "cleanupComplete": true,
+        "cleanupPending": false,
+        "cleanupRetryCount": 0,
+        "totalElapsedMs": 90547,
+        "phaseElapsedMs": 90547,
+        "maxJobMillis": 90000,
+        "maxUnitMillis": 5000,
+        "maxJobSteps": 640,
+        "manualAdvancesPerTimer": 1,
+        "diagnosticCacheCleared": true,
+        "diagnosticCacheSizeBeforeClear": 1,
+        "diagnosticCacheSizeAfterClear": 0,
+        "cold": {
+          "run": "cold",
+          "outcome": "TIMEOUT",
+          "elapsedMs": 90516,
+          "wallElapsedMs": 90545,
+          "maxAdvanceMs": 1761,
+          "maxManualUnitMs": 1762,
+          "manualAdvanceCalls": 245,
+          "totalWork": 245,
+          "hypothesisWork": 140,
+          "proofCacheHitDelta": 0,
+          "proofCacheMissDelta": 1,
+          "proofCacheSize": 0,
+          "planCacheHitDelta": 0,
+          "planCacheMissDelta": 1,
+          "stages": [
+            {
+              "name": "RESOLVE",
+              "work": 1,
+              "elapsedMs": 0
+            },
+            {
+              "name": "HEALTHY",
+              "work": 103,
+              "elapsedMs": 43656
+            },
+            {
+              "name": "PHYSICAL",
+              "work": 1,
+              "elapsedMs": 69
+            },
+            {
+              "name": "HYPOTHESES",
+              "work": 140,
+              "elapsedMs": 45612
+            },
+            {
+              "name": "SYMPTOM",
+              "work": 0,
+              "elapsedMs": 0
+            },
+            {
+              "name": "PUBLISH",
+              "work": 0,
+              "elapsedMs": 0
+            }
+          ],
+          "cleanupComplete": true,
+          "ownerRestored": true,
+          "cleanupElapsedMs": 2,
+          "cleanupRetryCount": 0
+        },
+        "warm": {
+          "outcome": "NOT_RUN"
+        },
+        "failurePhase": "cold",
+        "failure": "java.lang.IllegalStateException: Coordinator outcome was TIMEOUT: Generation wall budget exhausted"
+      }
+    }
+  ]
+}

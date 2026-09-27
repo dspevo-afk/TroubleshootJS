@@ -1,0 +1,6 @@
+{
+  "schema": 1,
+  "outcome": "NOT RUN",
+  "reason": "Preceding focused native compilation failed; build command was conditional on native success",
+  "recordedUtc": "2026-09-27T00:10:40.222056+00:00"
+}

@@ -1,0 +1,18 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+<worktree>\src\com\lushprojects\circuitjs1\client\Rb30Behavior.java:266: error: method requireCurrent in class Rb30Behavior.ProfileWork cannot be applied to given types;
+            requireCurrent(sim, instance);
+            ^
+  required: String
+  found: CirSim,GeneratedBoardInstance
+  reason: actual and formal argument lists differ in length
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 error
+1 warning
+
+CURRENT_CONTRACT_FAILURE: Current production-class compilation failed, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

@@ -1,0 +1,14 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: medium physical policy contracts assertions=27 receipt=MEDIUM_BOARD@1;outcome=REJECTED;selected=null;placements=6;placementRejects=0;placementEvaluations=25057;routes=6;routingWork=16/4216455;p05=3/0;p07=3/0;selectedAttempt=-1;ranked=[4, 3, 1, 0, 5, 2];placementScores=[4{total=1166718;electrical=130940;region=8660;connector=6920;corridor=2685;outline=8106000;courtyard=603836;demand=2109598}, 3{total=1211278;electrical=138180;region=8900;connector=6570;corridor=1675;outline=8019000;courtyard=600236;demand=2099998}, 1{total=1228493;electrical=136240;region=10852;connector=6770;corridor=3647;outline=8108800;courtyard=593036;demand=2080798}, 0{total=1262710;electrical=144360;region=9185;connector=7960;corridor=1064;outline=7867200;courtyard=599036;demand=2096798}, 5{total=1282165;electrical=143400;region=10065;connector=7070;corridor=3476;outline=7900200;courtyard=593036;demand=2080798}, 2{total=1303048;electrical=145400;region=9685;connector=8950;corridor=3080;outline=7771500;courtyard=594236;demand=2083998}];selectedScore=-1;selectedQualityMilli=-1;routeOutcomes=[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@3=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=REJECTED:DISCONNECTED_ESCAPE_CHANNEL, P07_FULLER_TWO_LAYER@3=REJECTED:DISCONNECTED_ESCAPE_CHANNEL, P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:A_COIL_LOW:BRANCH_SEARCH_LIMIT];failure=PCB routing candidate rejected at attempt 12: P07_FULLER_TWO_LAYER:A_COIL_LOW:BRANCH_SEARCH_LIMIT
+
+PASS: medium normal admission contracts 9 assertions
+
+PASS: focused current contracts; 2 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

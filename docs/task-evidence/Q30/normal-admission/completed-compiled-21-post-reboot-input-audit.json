@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "recordedUtc": "2026-09-27T01:45:36.575086+00:00",
+  "scope": "Post-reboot reuse audit for already completed GWT21 compiled gates; source/web/actual host driver only, does not turn partial P09 or pending gates into PASS",
+  "status": "PASS",
+  "audits": [
+    {
+      "manifest": "compiled-alpha-21-input-manifest-after.json",
+      "manifestSha256": "669bbac10f2efc55a0e9ea1293fd1785dc51db26ed7716b5b442d4d521a10c8e",
+      "files": 1522,
+      "runner": "tests/browser/compiled_attribute_acceptance.py",
+      "runnerSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+      "changed": [],
+      "status": "PASS"
+    },
+    {
+      "manifest": "compiled-coordinator-21-input-manifest-after.json",
+      "manifestSha256": "beb23b07a547d882a23d916238a4257d5fff954d5057f430464a43baf84e5cc7",
+      "files": 1522,
+      "runner": "tests/browser/compiled_attribute_acceptance.py",
+      "runnerSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+      "changed": [],
+      "status": "PASS"
+    },
+    {
+      "manifest": "compiled-d01-21-input-manifest-after.json",
+      "manifestSha256": "138ef10a813b4880fa1fb1d39907786bb02635003a71de18061052fd0cda5c11",
+      "files": 1522,
+      "runner": "tests/browser/compiled_attribute_acceptance.py",
+      "runnerSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+      "changed": [],
+      "status": "PASS"
+    },
+    {
+      "manifest": "compiled-host-reject-21-input-manifest-after.json",
+      "manifestSha256": "7ec123e1ba33f8100cf105609995eceea52c81cd81ef42fb89612ecc8cc0ad1b",
+      "files": 1522,
+      "runner": "tests/browser/compiled_attribute_acceptance.py",
+      "runnerSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+      "changed": [],
+      "status": "PASS"
+    },
+    {
+      "manifest": "compiled-host-smoke-21-input-manifest-after.json",
+      "manifestSha256": "f00df187dc9c7e25ca08de58578b8984da730a89473dd1afdec12a3248665d69",
+      "files": 1522,
+      "runner": "tests/browser/compiled_attribute_acceptance.py",
+      "runnerSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+      "changed": [],
+      "status": "PASS"
+    },
+    {
+      "manifest": "compiled-host-timeout-21-input-manifest-after.json",
+      "manifestSha256": "12f8265b97836c43cb1c1d81cfdce7c28c6caee00098441d7990e21b26126d61",
+      "files": 1522,
+      "runner": "tests/browser/compiled_attribute_acceptance.py",
+      "runnerSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+      "changed": [],
+      "status": "PASS"
+    },
+    {
+      "manifest": "compiled-host-tiny-timeout-21-input-manifest-after.json",
+      "manifestSha256": "abcd209b6e7ab5293f395f38fc61e5ba12676cf568ad6a3975d89888bd6d1d90",
+      "files": 1522,
+      "runner": "tests/browser/compiled_attribute_acceptance.py",
+      "runnerSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+      "changed": [],
+      "status": "PASS"
+    },
+    {
+      "manifest": "compiled-regressions-21-input-manifest-after.json",
+      "manifestSha256": "682b6845fd9db4acf1965f8bab503b895be2bf84d30343b0333b56f3c8939d42",
+      "files": 1522,
+      "runner": "tests/browser/compiled_attribute_acceptance.py",
+      "runnerSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+      "changed": [],
+      "status": "PASS"
+    }
+  ]
+}

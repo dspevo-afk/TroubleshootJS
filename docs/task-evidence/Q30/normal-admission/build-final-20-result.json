@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "outcome": "FAIL",
+  "exitCode": 2,
+  "phase": "GWT compilation",
+  "reason": "U04 helper imported java.util.StringTokenizer, unavailable to GWT; corrected to existing package-local tokenizer for21",
+  "recordedUtc": "2026-09-27T00:27:10.007218+00:00"
+}

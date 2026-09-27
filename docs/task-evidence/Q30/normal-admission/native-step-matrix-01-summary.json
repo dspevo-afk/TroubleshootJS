@@ -1,0 +1,343 @@
+{
+  "candidate": "EXPERIMENTAL_10_US_REJECTED",
+  "productionMaximumStepSeconds": 5e-06,
+  "attempted": 40,
+  "passed": 22,
+  "failed": 18,
+  "rows": [
+    {
+      "seed": "0",
+      "fault": "DREV_OPEN",
+      "exit": "1",
+      "termination": "True",
+      "qualified": "False",
+      "exception": "java.lang.IllegalArgumentException: Rail input exceeds declared envelope",
+      "lastProfile": "Q30_STEP_PROFILE seed=0 fault=DREV_OPEN profile=fault-profile-preparation boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true",
+      "failure": "Q30_STEP_FAILURE seed=0 fault=DREV_OPEN stage=temporal-advance phase=NONE profile=fault-profile-preparation durationSeconds=0.0300000000 declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 U1_INPUT_to_U1_RETURN_V=34.8730963 U1_INPUT_to_J1_2_V=34.8730963 U1_RETURN_to_J1_2_V=0.00000000 regulatorModelInput_V=34.8730963 E02_maximumInput_V=24.0000000 diagnosticFailure=none originalException=java.lang.IllegalArgumentException:Rail input exceeds declared envelope"
+    },
+    {
+      "seed": "0",
+      "fault": "REN_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "0",
+      "fault": "SENSOR_A_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "0",
+      "fault": "DRIVE_A_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "0",
+      "fault": "RELAY_B_COIL_OPEN",
+      "exit": "1",
+      "termination": "True",
+      "qualified": "False",
+      "exception": "java.lang.IllegalArgumentException: Rail input exceeds declared envelope",
+      "lastProfile": "Q30_STEP_PROFILE seed=0 fault=RELAY_B_COIL_OPEN profile=fault-profile-preparation boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true",
+      "failure": "Q30_STEP_FAILURE seed=0 fault=RELAY_B_COIL_OPEN stage=temporal-advance phase=NONE profile=fault-profile-preparation durationSeconds=0.0300000000 declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 U1_INPUT_to_U1_RETURN_V=24.0314159 U1_INPUT_to_J1_2_V=24.0314159 U1_RETURN_to_J1_2_V=0.00000000 regulatorModelInput_V=24.0314159 E02_maximumInput_V=24.0000000 diagnosticFailure=none originalException=java.lang.IllegalArgumentException:Rail input exceeds declared envelope"
+    },
+    {
+      "seed": "13",
+      "fault": "DREV_OPEN",
+      "exit": "1",
+      "termination": "True",
+      "qualified": "False",
+      "exception": "java.lang.IllegalArgumentException: Rail input exceeds declared envelope",
+      "lastProfile": "Q30_STEP_PROFILE seed=13 fault=DREV_OPEN profile=repaired-customer-retest boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true",
+      "failure": "Q30_STEP_FAILURE seed=13 fault=DREV_OPEN stage=temporal-advance phase=customer-retest profile=repaired-customer-retest durationSeconds=0.0300000000 declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 U1_INPUT_to_U1_RETURN_V=25.6976386 U1_INPUT_to_J1_2_V=25.6976386 U1_RETURN_to_J1_2_V=0.00000000 regulatorModelInput_V=25.6976386 E02_maximumInput_V=24.0000000 diagnosticFailure=none originalException=java.lang.IllegalArgumentException:Rail input exceeds declared envelope"
+    },
+    {
+      "seed": "13",
+      "fault": "REN_OPEN",
+      "exit": "1",
+      "termination": "True",
+      "qualified": "False",
+      "exception": "java.lang.IllegalArgumentException: Negative E02 rail output is unsupported",
+      "lastProfile": "Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=service-power-off-wait boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true",
+      "failure": ""
+    },
+    {
+      "seed": "13",
+      "fault": "SENSOR_A_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "13",
+      "fault": "DRIVE_A_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "13",
+      "fault": "RELAY_B_COIL_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "4",
+      "fault": "DREV_OPEN",
+      "exit": "1",
+      "termination": "True",
+      "qualified": "False",
+      "exception": "java.lang.IllegalArgumentException: Rail input exceeds declared envelope",
+      "lastProfile": "Q30_STEP_PROFILE seed=4 fault=DREV_OPEN profile=repaired-customer-retest boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true",
+      "failure": "Q30_STEP_FAILURE seed=4 fault=DREV_OPEN stage=temporal-advance phase=customer-retest profile=repaired-customer-retest durationSeconds=0.0300000000 declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 U1_INPUT_to_U1_RETURN_V=25.6976386 U1_INPUT_to_J1_2_V=25.6976386 U1_RETURN_to_J1_2_V=0.00000000 regulatorModelInput_V=25.6976386 E02_maximumInput_V=24.0000000 diagnosticFailure=none originalException=java.lang.IllegalArgumentException:Rail input exceeds declared envelope"
+    },
+    {
+      "seed": "4",
+      "fault": "REN_OPEN",
+      "exit": "1",
+      "termination": "True",
+      "qualified": "False",
+      "exception": "java.lang.IllegalArgumentException: Negative E02 rail output is unsupported",
+      "lastProfile": "Q30_STEP_PROFILE seed=4 fault=REN_OPEN profile=service-power-off-wait boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true",
+      "failure": ""
+    },
+    {
+      "seed": "4",
+      "fault": "SENSOR_A_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "4",
+      "fault": "DRIVE_A_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "4",
+      "fault": "RELAY_B_COIL_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "14",
+      "fault": "DREV_OPEN",
+      "exit": "1",
+      "termination": "True",
+      "qualified": "False",
+      "exception": "java.lang.IllegalArgumentException: Rail input exceeds declared envelope",
+      "lastProfile": "Q30_STEP_PROFILE seed=14 fault=DREV_OPEN profile=repaired-customer-retest boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true",
+      "failure": "Q30_STEP_FAILURE seed=14 fault=DREV_OPEN stage=temporal-advance phase=customer-retest profile=repaired-customer-retest durationSeconds=0.0300000000 declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 U1_INPUT_to_U1_RETURN_V=25.7067765 U1_INPUT_to_J1_2_V=25.7067765 U1_RETURN_to_J1_2_V=0.00000000 regulatorModelInput_V=25.7067765 E02_maximumInput_V=24.0000000 diagnosticFailure=none originalException=java.lang.IllegalArgumentException:Rail input exceeds declared envelope"
+    },
+    {
+      "seed": "14",
+      "fault": "REN_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "14",
+      "fault": "SENSOR_A_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "14",
+      "fault": "DRIVE_A_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "14",
+      "fault": "RELAY_B_COIL_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "43",
+      "fault": "DREV_OPEN",
+      "exit": "1",
+      "termination": "True",
+      "qualified": "False",
+      "exception": "java.lang.IllegalArgumentException: Rail input exceeds declared envelope",
+      "lastProfile": "Q30_STEP_PROFILE seed=43 fault=DREV_OPEN profile=fault-profile-preparation boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true",
+      "failure": "Q30_STEP_FAILURE seed=43 fault=DREV_OPEN stage=temporal-advance phase=NONE profile=fault-profile-preparation durationSeconds=0.0300000000 declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 U1_INPUT_to_U1_RETURN_V=34.8506785 U1_INPUT_to_J1_2_V=34.8506785 U1_RETURN_to_J1_2_V=0.00000000 regulatorModelInput_V=34.8506785 E02_maximumInput_V=24.0000000 diagnosticFailure=none originalException=java.lang.IllegalArgumentException:Rail input exceeds declared envelope"
+    },
+    {
+      "seed": "43",
+      "fault": "REN_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "43",
+      "fault": "SENSOR_A_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "43",
+      "fault": "DRIVE_A_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "43",
+      "fault": "RELAY_B_COIL_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "3",
+      "fault": "DREV_OPEN",
+      "exit": "1",
+      "termination": "True",
+      "qualified": "False",
+      "exception": "java.lang.IllegalStateException: Healthy Q30 failed four input conditions: input=2 rail=4.991938685255928 outputA=11.980033277870218 outputB=11.980033277870218",
+      "lastProfile": "Q30_STEP_PROFILE seed=3 fault=DREV_OPEN profile=healthy-preparation boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true",
+      "failure": ""
+    },
+    {
+      "seed": "3",
+      "fault": "REN_OPEN",
+      "exit": "1",
+      "termination": "True",
+      "qualified": "False",
+      "exception": "java.lang.IllegalStateException: Healthy Q30 failed four input conditions: input=2 rail=4.991938685255928 outputA=11.980033277870218 outputB=11.980033277870218",
+      "lastProfile": "Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=healthy-preparation boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true",
+      "failure": ""
+    },
+    {
+      "seed": "3",
+      "fault": "SENSOR_A_OPEN",
+      "exit": "1",
+      "termination": "True",
+      "qualified": "False",
+      "exception": "java.lang.IllegalStateException: Healthy Q30 failed four input conditions: input=2 rail=4.991938685255928 outputA=11.980033277870218 outputB=11.980033277870218",
+      "lastProfile": "Q30_STEP_PROFILE seed=3 fault=SENSOR_A_OPEN profile=healthy-preparation boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true",
+      "failure": ""
+    },
+    {
+      "seed": "3",
+      "fault": "DRIVE_A_OPEN",
+      "exit": "1",
+      "termination": "True",
+      "qualified": "False",
+      "exception": "java.lang.IllegalStateException: Healthy Q30 failed four input conditions: input=2 rail=4.991938685255928 outputA=11.980033277870218 outputB=11.980033277870218",
+      "lastProfile": "Q30_STEP_PROFILE seed=3 fault=DRIVE_A_OPEN profile=healthy-preparation boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true",
+      "failure": ""
+    },
+    {
+      "seed": "3",
+      "fault": "RELAY_B_COIL_OPEN",
+      "exit": "1",
+      "termination": "True",
+      "qualified": "False",
+      "exception": "java.lang.IllegalStateException: Healthy Q30 failed four input conditions: input=2 rail=4.991938685255928 outputA=11.980033277870218 outputB=11.980033277870218",
+      "lastProfile": "Q30_STEP_PROFILE seed=3 fault=RELAY_B_COIL_OPEN profile=healthy-preparation boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true",
+      "failure": ""
+    },
+    {
+      "seed": "10",
+      "fault": "DREV_OPEN",
+      "exit": "1",
+      "termination": "True",
+      "qualified": "False",
+      "exception": "java.lang.IllegalArgumentException: Rail input exceeds declared envelope",
+      "lastProfile": "Q30_STEP_PROFILE seed=10 fault=DREV_OPEN profile=fault-profile-preparation boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true",
+      "failure": "Q30_STEP_FAILURE seed=10 fault=DREV_OPEN stage=temporal-advance phase=NONE profile=fault-profile-preparation durationSeconds=0.0300000000 declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 U1_INPUT_to_U1_RETURN_V=24.0672132 U1_INPUT_to_J1_2_V=24.0672132 U1_RETURN_to_J1_2_V=0.00000000 regulatorModelInput_V=24.0672132 E02_maximumInput_V=24.0000000 diagnosticFailure=none originalException=java.lang.IllegalArgumentException:Rail input exceeds declared envelope"
+    },
+    {
+      "seed": "10",
+      "fault": "REN_OPEN",
+      "exit": "1",
+      "termination": "True",
+      "qualified": "False",
+      "exception": "java.lang.AssertionError: correct physical catalog repair passes actual customer retest",
+      "lastProfile": "Q30_STEP_PROFILE seed=10 fault=REN_OPEN profile=repaired-customer-retest boundary=END stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true",
+      "failure": ""
+    },
+    {
+      "seed": "10",
+      "fault": "SENSOR_A_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "10",
+      "fault": "DRIVE_A_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "10",
+      "fault": "RELAY_B_COIL_OPEN",
+      "exit": "1",
+      "termination": "True",
+      "qualified": "False",
+      "exception": "java.lang.IllegalArgumentException: Rail input exceeds declared envelope",
+      "lastProfile": "Q30_STEP_PROFILE seed=10 fault=RELAY_B_COIL_OPEN profile=fault-profile-preparation boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true",
+      "failure": "Q30_STEP_FAILURE seed=10 fault=RELAY_B_COIL_OPEN stage=temporal-advance phase=NONE profile=fault-profile-preparation durationSeconds=0.0300000000 declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 U1_INPUT_to_U1_RETURN_V=24.9567764 U1_INPUT_to_J1_2_V=24.9567764 U1_RETURN_to_J1_2_V=0.00000000 regulatorModelInput_V=24.9567764 E02_maximumInput_V=24.0000000 diagnosticFailure=none originalException=java.lang.IllegalArgumentException:Rail input exceeds declared envelope"
+    },
+    {
+      "seed": "64",
+      "fault": "DREV_OPEN",
+      "exit": "1",
+      "termination": "True",
+      "qualified": "False",
+      "exception": "java.lang.IllegalArgumentException: Rail input exceeds declared envelope",
+      "lastProfile": "Q30_STEP_PROFILE seed=64 fault=DREV_OPEN profile=repaired-customer-retest boundary=BEGIN stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=1.00000000e-05 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true",
+      "failure": "Q30_STEP_FAILURE seed=64 fault=DREV_OPEN stage=temporal-advance phase=customer-retest profile=repaired-customer-retest durationSeconds=0.0300000000 declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 U1_INPUT_to_U1_RETURN_V=25.7050205 U1_INPUT_to_J1_2_V=25.7050205 U1_RETURN_to_J1_2_V=0.00000000 regulatorModelInput_V=25.7050205 E02_maximumInput_V=24.0000000 diagnosticFailure=none originalException=java.lang.IllegalArgumentException:Rail input exceeds declared envelope"
+    },
+    {
+      "seed": "64",
+      "fault": "REN_OPEN",
+      "exit": "1",
+      "termination": "True",
+      "qualified": "False",
+      "exception": "java.lang.AssertionError: correct physical catalog repair passes actual customer retest",
+      "lastProfile": "Q30_STEP_PROFILE seed=64 fault=REN_OPEN profile=repaired-customer-retest boundary=END stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED declaredMaximumStepSeconds=1.00000000e-05 configuredMaximumStepSeconds=1.00000000e-05 actualCurrentStepSeconds=1.00000000e-05 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=1.00000000e-05 minimumTimeStepSeconds=5.00000000e-11 adaptive=true",
+      "failure": ""
+    },
+    {
+      "seed": "64",
+      "fault": "SENSOR_A_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "64",
+      "fault": "DRIVE_A_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    },
+    {
+      "seed": "64",
+      "fault": "RELAY_B_COIL_OPEN",
+      "exit": "0",
+      "termination": "True",
+      "qualified": "True"
+    }
+  ]
+}

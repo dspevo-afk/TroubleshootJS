@@ -1,0 +1,2 @@
+PASS: frozen route/layout/rejection equality rows=3 corruptionCanaries=6
+Timing and charged routing slice counts are intentionally compared separately.

@@ -1,0 +1,584 @@
+{
+  "schema": "native-final-05-copy-audit-v1",
+  "createdUtc": "2026-09-27T03:26:00.307Z",
+  "head": "16a922b2b757dfcd1cbc3a0230ab2b97ac2fbb50",
+  "sourceBoundary": {
+    "nativeChild": "<task-temp>/native-final-05-child",
+    "nativeChildFileCount": 9,
+    "parentWrapper": "<task-temp>/remaining-gates-wrapper",
+    "parentWrapperTopLevelFileCount": 9,
+    "parentWrapperChildCount": 9,
+    "sourceReparsePoints": 0
+  },
+  "result": {
+    "status": "PASS",
+    "nativeStartedUtc": "2026-09-27T02:18:14.6666262Z",
+    "nativeFinishedUtc": "2026-09-27T03:15:26.4869934Z",
+    "processExitCodes": {
+      "nativeRunner": 0,
+      "nativeServiceReader": 0,
+      "corpusReader": 0
+    },
+    "checks": [
+      {
+        "name": "expectedBaselineDifferences",
+        "passed": true
+      },
+      {
+        "name": "runnerExitZero",
+        "passed": true
+      },
+      {
+        "name": "fullPassMarkerExactlyOnce",
+        "passed": true
+      },
+      {
+        "name": "cleanupExactlyOnce",
+        "passed": true
+      },
+      {
+        "name": "noFailureMarkers",
+        "passed": true
+      },
+      {
+        "name": "receiptNonempty",
+        "passed": true
+      },
+      {
+        "name": "nativeServiceReaderExitZero",
+        "passed": true
+      },
+      {
+        "name": "nativeServiceReaderPass",
+        "passed": true
+      },
+      {
+        "name": "corpusReaderExitZero",
+        "passed": true
+      },
+      {
+        "name": "nativeInputsUnchanged",
+        "passed": true
+      },
+      {
+        "name": "nativeManifestUnchanged",
+        "passed": true
+      },
+      {
+        "name": "readerInputsUnchanged",
+        "passed": true
+      }
+    ],
+    "runnerSummary": {
+      "exitCode": 0,
+      "fullPassMarkerCount": 1,
+      "cleanupMarkerCount": 1,
+      "failureMarkerCount": 0,
+      "cleanupFailureMarkerCount": 0,
+      "qualified": true
+    },
+    "serviceReaderSummary": {
+      "status": "PASS",
+      "observedTotalRows": 80,
+      "serviceRows": 40,
+      "sensitivityRows": 40
+    },
+    "corpusReaderSummary": {
+      "readerStatus": "PASS",
+      "rowsValidated": 51,
+      "manifestSeedCount": 51,
+      "accepted": 42,
+      "rejected": 9,
+      "corruptionCanariesPassed": 17
+    },
+    "finalP09Helper": {
+      "exitCode": 0,
+      "status": "PASS",
+      "sourceSha256": "6B2CA139E3610FA79EF2BE2C56FE05DF6B543581921071E5FAA4A7605F70FD96",
+      "expectedSha256": "6B2CA139E3610FA79EF2BE2C56FE05DF6B543581921071E5FAA4A7605F70FD96",
+      "shaMatchesExpected": true,
+      "sanitizedCopySha256": "91bbab920a0ed86816c921558e9cedebdbaf0be1c7e6a63eb55d924e89804cda"
+    }
+  },
+  "copies": [
+    {
+      "source": "<native-final-05-child>/native-final-05-corpus-reader.log",
+      "destination": "docs/task-evidence/Q30/normal-admission/native-final-05-corpus-reader.log",
+      "role": "native-final-05-child-output",
+      "sourceBytes": 57058,
+      "sourceSha256": "5441cee1f913fcf2e3f05b4f4ed4c7dfa2445ac85271ce9cb0ff9dc9a2766bdb",
+      "destinationBytes": 57058,
+      "destinationSha256": "5441cee1f913fcf2e3f05b4f4ed4c7dfa2445ac85271ce9cb0ff9dc9a2766bdb",
+      "pathReplacementCount": 0,
+      "replacementCategories": {
+        "taskTemp": 0,
+        "worktree": 0,
+        "userHome": 0,
+        "genericWindows": 0,
+        "genericUnix": 0
+      },
+      "destinationPersonalAbsolutePathMatches": 0,
+      "suspiciousLogIndicatorCount": 0
+    },
+    {
+      "source": "<native-final-05-child>/native-final-05-inputs-after.json",
+      "destination": "docs/task-evidence/Q30/normal-admission/native-final-05-inputs-after.json",
+      "role": "native-final-05-child-output",
+      "sourceBytes": 173970,
+      "sourceSha256": "5782b2b573f7e067b5e33d144f82fdf05f4aca69e9238256c6ff632dd8f002aa",
+      "destinationBytes": 173970,
+      "destinationSha256": "5782b2b573f7e067b5e33d144f82fdf05f4aca69e9238256c6ff632dd8f002aa",
+      "pathReplacementCount": 0,
+      "replacementCategories": {
+        "taskTemp": 0,
+        "worktree": 0,
+        "userHome": 0,
+        "genericWindows": 0,
+        "genericUnix": 0
+      },
+      "destinationPersonalAbsolutePathMatches": 0,
+      "suspiciousLogIndicatorCount": 0
+    },
+    {
+      "source": "<native-final-05-child>/native-final-05-inputs-before.json",
+      "destination": "docs/task-evidence/Q30/normal-admission/native-final-05-inputs-before.json",
+      "role": "native-final-05-child-output",
+      "sourceBytes": 174728,
+      "sourceSha256": "03b88a26102c9890d95de15cfbeeeb074447fcc7b0279ee8810888f417d0a009",
+      "destinationBytes": 174728,
+      "destinationSha256": "03b88a26102c9890d95de15cfbeeeb074447fcc7b0279ee8810888f417d0a009",
+      "pathReplacementCount": 0,
+      "replacementCategories": {
+        "taskTemp": 0,
+        "worktree": 0,
+        "userHome": 0,
+        "genericWindows": 0,
+        "genericUnix": 0
+      },
+      "destinationPersonalAbsolutePathMatches": 0,
+      "suspiciousLogIndicatorCount": 0
+    },
+    {
+      "source": "<native-final-05-child>/native-final-05-reader-inputs-after.json",
+      "destination": "docs/task-evidence/Q30/normal-admission/native-final-05-reader-inputs-after.json",
+      "role": "native-final-05-child-output",
+      "sourceBytes": 567,
+      "sourceSha256": "d73ad356606170bfb920841d65b17b0d7c08a3f92cdd3f117f6568e4b2d28179",
+      "destinationBytes": 567,
+      "destinationSha256": "d73ad356606170bfb920841d65b17b0d7c08a3f92cdd3f117f6568e4b2d28179",
+      "pathReplacementCount": 0,
+      "replacementCategories": {
+        "taskTemp": 0,
+        "worktree": 0,
+        "userHome": 0,
+        "genericWindows": 0,
+        "genericUnix": 0
+      },
+      "destinationPersonalAbsolutePathMatches": 0,
+      "suspiciousLogIndicatorCount": 0
+    },
+    {
+      "source": "<native-final-05-child>/native-final-05-reader-inputs-before.json",
+      "destination": "docs/task-evidence/Q30/normal-admission/native-final-05-reader-inputs-before.json",
+      "role": "native-final-05-child-output",
+      "sourceBytes": 659,
+      "sourceSha256": "727a3982866fec04d3ba800f8d29ed05eb6bd950fc40261f93358fa6e4cb3220",
+      "destinationBytes": 659,
+      "destinationSha256": "727a3982866fec04d3ba800f8d29ed05eb6bd950fc40261f93358fa6e4cb3220",
+      "pathReplacementCount": 0,
+      "replacementCategories": {
+        "taskTemp": 0,
+        "worktree": 0,
+        "userHome": 0,
+        "genericWindows": 0,
+        "genericUnix": 0
+      },
+      "destinationPersonalAbsolutePathMatches": 0,
+      "suspiciousLogIndicatorCount": 0
+    },
+    {
+      "source": "<native-final-05-child>/native-final-05-root-result.json",
+      "destination": "docs/task-evidence/Q30/normal-admission/native-final-05-root-result.json",
+      "role": "native-final-05-child-output",
+      "sourceBytes": 66117,
+      "sourceSha256": "b9e32a4908eae8dae7435139c5eb4a4ef10aa5cc0d507d0c0981c4ad780fae6e",
+      "destinationBytes": 65147,
+      "destinationSha256": "a28b666034474935722def09856434b32f850fd73640676585c11d0a1fba4c39",
+      "pathReplacementCount": 9,
+      "replacementCategories": {
+        "taskTemp": 6,
+        "worktree": 2,
+        "userHome": 1,
+        "genericWindows": 0,
+        "genericUnix": 0
+      },
+      "destinationPersonalAbsolutePathMatches": 0,
+      "suspiciousLogIndicatorCount": 0
+    },
+    {
+      "source": "<native-final-05-child>/native-final-05-service-reader.log",
+      "destination": "docs/task-evidence/Q30/normal-admission/native-final-05-service-reader.log",
+      "role": "native-final-05-child-output",
+      "sourceBytes": 0,
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destinationBytes": 0,
+      "destinationSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pathReplacementCount": 0,
+      "replacementCategories": {
+        "taskTemp": 0,
+        "worktree": 0,
+        "userHome": 0,
+        "genericWindows": 0,
+        "genericUnix": 0
+      },
+      "destinationPersonalAbsolutePathMatches": 0,
+      "suspiciousLogIndicatorCount": 0
+    },
+    {
+      "source": "<native-final-05-child>/native-final-05-service-report.json",
+      "destination": "docs/task-evidence/Q30/normal-admission/native-final-05-service-report.json",
+      "role": "native-final-05-child-output",
+      "sourceBytes": 76479,
+      "sourceSha256": "9669adda148868d7c15af5578b57622109b039d0d4bebaacc139cbc566ade88b",
+      "destinationBytes": 76479,
+      "destinationSha256": "9669adda148868d7c15af5578b57622109b039d0d4bebaacc139cbc566ade88b",
+      "pathReplacementCount": 0,
+      "replacementCategories": {
+        "taskTemp": 0,
+        "worktree": 0,
+        "userHome": 0,
+        "genericWindows": 0,
+        "genericUnix": 0
+      },
+      "destinationPersonalAbsolutePathMatches": 0,
+      "suspiciousLogIndicatorCount": 0
+    },
+    {
+      "source": "<native-final-05-child>/native-final-05.log",
+      "destination": "docs/task-evidence/Q30/normal-admission/native-final-05.log",
+      "role": "native-final-05-child-output",
+      "sourceBytes": 1884282,
+      "sourceSha256": "780611e6b052c1d2bb958df967cdb5ff70090575656d0d0782ef9652e672b64f",
+      "destinationBytes": 1884282,
+      "destinationSha256": "780611e6b052c1d2bb958df967cdb5ff70090575656d0d0782ef9652e672b64f",
+      "pathReplacementCount": 0,
+      "replacementCategories": {
+        "taskTemp": 0,
+        "worktree": 0,
+        "userHome": 0,
+        "genericWindows": 0,
+        "genericUnix": 0
+      },
+      "destinationPersonalAbsolutePathMatches": 0,
+      "suspiciousLogIndicatorCount": 0
+    },
+    {
+      "source": "<remaining-gates-wrapper>/browser-modern-22.ps1",
+      "destination": "docs/task-evidence/Q30/normal-admission/remaining-gates-22-wrapper/browser-modern-22.ps1",
+      "role": "remaining-gates wrapper execution/preflight metadata",
+      "sourceBytes": 9329,
+      "sourceSha256": "47295e13a9fc83201842154c0a3023489700db0f4d354557a236e6282320fb8c",
+      "destinationBytes": 9329,
+      "destinationSha256": "47295e13a9fc83201842154c0a3023489700db0f4d354557a236e6282320fb8c",
+      "pathReplacementCount": 0,
+      "replacementCategories": {
+        "taskTemp": 0,
+        "worktree": 0,
+        "userHome": 0,
+        "genericWindows": 0,
+        "genericUnix": 0
+      },
+      "destinationPersonalAbsolutePathMatches": 0,
+      "suspiciousLogIndicatorCount": 0
+    },
+    {
+      "source": "<remaining-gates-wrapper>/controlled-p09-22.ps1",
+      "destination": "docs/task-evidence/Q30/normal-admission/remaining-gates-22-wrapper/controlled-p09-22.ps1",
+      "role": "prepared-unused controlled wrapper; NOT RUN",
+      "sourceBytes": 10368,
+      "sourceSha256": "4c3cad7b31ff5f9ab2df93dc6a2c654634050cb0ef126390c2722c281d89c725",
+      "destinationBytes": 10368,
+      "destinationSha256": "4c3cad7b31ff5f9ab2df93dc6a2c654634050cb0ef126390c2722c281d89c725",
+      "pathReplacementCount": 0,
+      "replacementCategories": {
+        "taskTemp": 0,
+        "worktree": 0,
+        "userHome": 0,
+        "genericWindows": 0,
+        "genericUnix": 0
+      },
+      "destinationPersonalAbsolutePathMatches": 0,
+      "suspiciousLogIndicatorCount": 0
+    },
+    {
+      "source": "<remaining-gates-wrapper>/helper-canary-negative.log",
+      "destination": "docs/task-evidence/Q30/normal-admission/remaining-gates-22-wrapper/helper-canary-negative.log",
+      "role": "remaining-gates wrapper execution/preflight metadata",
+      "sourceBytes": 43,
+      "sourceSha256": "04d722d2ad02d5bff604ab16abfc778f706bc81d80c008c770da43fd1009a032",
+      "destinationBytes": 43,
+      "destinationSha256": "04d722d2ad02d5bff604ab16abfc778f706bc81d80c008c770da43fd1009a032",
+      "pathReplacementCount": 0,
+      "replacementCategories": {
+        "taskTemp": 0,
+        "worktree": 0,
+        "userHome": 0,
+        "genericWindows": 0,
+        "genericUnix": 0
+      },
+      "destinationPersonalAbsolutePathMatches": 0,
+      "suspiciousLogIndicatorCount": 0
+    },
+    {
+      "source": "<remaining-gates-wrapper>/helper-canary-positive.log",
+      "destination": "docs/task-evidence/Q30/normal-admission/remaining-gates-22-wrapper/helper-canary-positive.log",
+      "role": "remaining-gates wrapper execution/preflight metadata",
+      "sourceBytes": 36,
+      "sourceSha256": "aebe8d8668537a594546f089e96e5ad065294ae655c96a8ffb8f0a6b451880e7",
+      "destinationBytes": 36,
+      "destinationSha256": "aebe8d8668537a594546f089e96e5ad065294ae655c96a8ffb8f0a6b451880e7",
+      "pathReplacementCount": 0,
+      "replacementCategories": {
+        "taskTemp": 0,
+        "worktree": 0,
+        "userHome": 0,
+        "genericWindows": 0,
+        "genericUnix": 0
+      },
+      "destinationPersonalAbsolutePathMatches": 0,
+      "suspiciousLogIndicatorCount": 0
+    },
+    {
+      "source": "<remaining-gates-wrapper>/helper-canary-summary.json",
+      "destination": "docs/task-evidence/Q30/normal-admission/remaining-gates-22-wrapper/helper-canary-summary.json",
+      "role": "remaining-gates wrapper execution/preflight metadata",
+      "sourceBytes": 695,
+      "sourceSha256": "36ed5f8da3bddb1c9686724dcb778c735a618e0aafd434d6b117d7e215122c1d",
+      "destinationBytes": 497,
+      "destinationSha256": "061af3fbb8937b2d475313c3b2157274ce66084d77453897dcafd008df12ea54",
+      "pathReplacementCount": 2,
+      "replacementCategories": {
+        "taskTemp": 2,
+        "worktree": 0,
+        "userHome": 0,
+        "genericWindows": 0,
+        "genericUnix": 0
+      },
+      "destinationPersonalAbsolutePathMatches": 0,
+      "suspiciousLogIndicatorCount": 0
+    },
+    {
+      "source": "<remaining-gates-wrapper>/native-final-05.ps1",
+      "destination": "docs/task-evidence/Q30/normal-admission/remaining-gates-22-wrapper/native-final-05.ps1",
+      "role": "remaining-gates wrapper execution/preflight metadata",
+      "sourceBytes": 12304,
+      "sourceSha256": "0b9979c93a00c7597fec1f0ed67e449825795ecc6bc9158275f2cc0ef453cd10",
+      "destinationBytes": 12277,
+      "destinationSha256": "a9e752901c96747dc979750a8b0bc30ee38b55ed537707fe4acf2880b4c0c529",
+      "pathReplacementCount": 1,
+      "replacementCategories": {
+        "taskTemp": 0,
+        "worktree": 1,
+        "userHome": 0,
+        "genericWindows": 0,
+        "genericUnix": 0
+      },
+      "destinationPersonalAbsolutePathMatches": 0,
+      "suspiciousLogIndicatorCount": 0
+    },
+    {
+      "source": "<remaining-gates-wrapper>/p09-final-22.py",
+      "destination": "docs/task-evidence/Q30/normal-admission/remaining-gates-22-wrapper/p09-final-22.py",
+      "role": "final P09 helper source metadata",
+      "sourceBytes": 17605,
+      "sourceSha256": "6b2ca139e3610fa79ef2be2c56fe05df6b543581921071e5faa4a7605f70fd96",
+      "destinationBytes": 17608,
+      "destinationSha256": "91bbab920a0ed86816c921558e9cedebdbaf0be1c7e6a63eb55d924e89804cda",
+      "pathReplacementCount": 3,
+      "replacementCategories": {
+        "taskTemp": 0,
+        "worktree": 0,
+        "userHome": 0,
+        "genericWindows": 0,
+        "genericUnix": 3
+      },
+      "destinationPersonalAbsolutePathMatches": 0,
+      "suspiciousLogIndicatorCount": 0
+    },
+    {
+      "source": "<remaining-gates-wrapper>/Q30GateWrapper.Common.ps1",
+      "destination": "docs/task-evidence/Q30/normal-admission/remaining-gates-22-wrapper/Q30GateWrapper.Common.ps1",
+      "role": "remaining-gates wrapper execution/preflight metadata",
+      "sourceBytes": 6750,
+      "sourceSha256": "300f498c07717b5c0590f01e44710e58782766feb153088973f381a7d9069b42",
+      "destinationBytes": 6750,
+      "destinationSha256": "300f498c07717b5c0590f01e44710e58782766feb153088973f381a7d9069b42",
+      "pathReplacementCount": 0,
+      "replacementCategories": {
+        "taskTemp": 0,
+        "worktree": 0,
+        "userHome": 0,
+        "genericWindows": 0,
+        "genericUnix": 0
+      },
+      "destinationPersonalAbsolutePathMatches": 0,
+      "suspiciousLogIndicatorCount": 0
+    },
+    {
+      "source": "<remaining-gates-wrapper>/README.md",
+      "destination": "docs/task-evidence/Q30/normal-admission/remaining-gates-22-wrapper/README.md",
+      "role": "remaining-gates wrapper execution/preflight metadata",
+      "sourceBytes": 4459,
+      "sourceSha256": "f126386c6e46f37eec4db285b3043b95205298e33e2e4c4cce7592423053026d",
+      "destinationBytes": 4459,
+      "destinationSha256": "f126386c6e46f37eec4db285b3043b95205298e33e2e4c4cce7592423053026d",
+      "pathReplacementCount": 0,
+      "replacementCategories": {
+        "taskTemp": 0,
+        "worktree": 0,
+        "userHome": 0,
+        "genericWindows": 0,
+        "genericUnix": 0
+      },
+      "destinationPersonalAbsolutePathMatches": 0,
+      "suspiciousLogIndicatorCount": 0
+    }
+  ],
+  "existingReceiptAndSidecars": [
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/native-final-05-receipt.txt",
+      "bytes": 1886265,
+      "sha256": "adcf69b08db0e017b92f77876cafd059785420629264a2c38e8e9d90c57f1270",
+      "personalPathMatches": 0,
+      "changed": false
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/native-final-05-receipt.txt.manifest-controlled-alt.txt",
+      "bytes": 200418,
+      "sha256": "d2512231b7863fe68161d3faec915c62b7c2c8e08fcda077fe143e732964a342",
+      "personalPathMatches": 0,
+      "changed": false
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/native-final-05-receipt.txt.manifest-controlled.txt",
+      "bytes": 199403,
+      "sha256": "e885b094ec13991eb5bf7838c3379f8f4a010d5bb38ec55f27d968853d6eb36e",
+      "personalPathMatches": 0,
+      "changed": false
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/native-final-05-receipt.txt.manifest-resistive.txt",
+      "bytes": 27965,
+      "sha256": "46098b444722755e64a1f09f472d129d6849ba8b6dcb3f587e7e359884e64423",
+      "personalPathMatches": 0,
+      "changed": false
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/native-final-05-receipt.txt.roles.txt",
+      "bytes": 701,
+      "sha256": "89f99bcd09c8871cef1b307c20f59932d1f29eb9ed3ea84f42483655535f5125",
+      "personalPathMatches": 0,
+      "changed": false
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/native-final-05-receipt.txt.seeds.txt",
+      "bytes": 4738,
+      "sha256": "7bbf6739c314c6d9e9229d626ab0d7f7354a75e1e52a40660c67b23a9bcaa705",
+      "personalPathMatches": 0,
+      "changed": false
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/native-final-05-receipt.txt.values.txt",
+      "bytes": 6835,
+      "sha256": "521f61ec6d7700f3affd52577d92ecb00446831027e278138c81c1d1b6e12555",
+      "personalPathMatches": 0,
+      "changed": false
+    },
+    {
+      "path": "docs/task-evidence/Q30/normal-admission/native-final-05-receipt.txt.vectors.txt",
+      "bytes": 18813,
+      "sha256": "365db32f26a8d341f4b7da812c20f73ef13153be6c438d45b138b05cd05d55a6",
+      "personalPathMatches": 0,
+      "changed": false
+    }
+  ],
+  "metadata": {
+    "parentWrapperEvidenceDirectory": "docs/task-evidence/Q30/normal-admission/remaining-gates-22-wrapper",
+    "controlledWrapper": {
+      "source": "<remaining-gates-wrapper>/controlled-p09-22.ps1",
+      "destination": "docs/task-evidence/Q30/normal-admission/remaining-gates-22-wrapper/controlled-p09-22.ps1",
+      "status": "prepared-only; NOT RUN",
+      "sourceSha256": "4c3cad7b31ff5f9ab2df93dc6a2c654634050cb0ef126390c2722c281d89c725",
+      "destinationSha256": "4c3cad7b31ff5f9ab2df93dc6a2c654634050cb0ef126390c2722c281d89c725"
+    },
+    "nativeOwnershipSnapshot": {
+      "relativePath": ".tools/q30-native-final-05-process-ownership.json",
+      "inspectedForExactIdentityOnly": true,
+      "copied": false,
+      "publishable": false,
+      "processes": [
+        {
+          "label": "native-final-05 verifier runner",
+          "pid": 17956,
+          "creationUtc": "2026-09-27T02:18:21.684548Z",
+          "executable": "<WindowsPowerShell>",
+          "invocationLabel": "scripts/verify-current-contracts.ps1 native final gate",
+          "commandLineSha256": "e7d6e43c5e0a79dd7b763946fd056e3a1fb5d671d3e9892ff001f7cd73d0a0c8",
+          "exactIdentityAbsent": true
+        },
+        {
+          "label": "native-final-05 launcher",
+          "pid": 4080,
+          "creationUtc": "2026-09-27T02:18:14.246377Z",
+          "executable": "<CodexRuntimePowerShell>",
+          "invocationLabel": "native-final-05 wrapper launcher",
+          "commandLineSha256": "36c6ce3a88bddba1a595ae436d6d64f0ed9cb1af2ffb0bcae59de0383cc1c26b",
+          "exactIdentityAbsent": true
+        }
+      ],
+      "rawCommandLineCopied": false,
+      "encodedCommandLineRetained": false,
+      "commandLineMarkerScanInCopiedHelperLogs": "0 encoded markers; 0 raw command-line assignments"
+    },
+    "processReferencesToTemp": {
+      "checked": true,
+      "count": 0,
+      "noneRemaining": true,
+      "lastCheckedUtc": "2026-09-27T03:24:40.758Z"
+    },
+    "sanitization": {
+      "replacementsLimitedToPrivateAbsolutePaths": true,
+      "destinationPersonalAbsolutePathMatches": 0,
+      "ownershipCommandLineStoredAs": "SHA256 only"
+    },
+    "commandLineLeakScan": {
+      "copiedLogCount": 5,
+      "encodedCommandLineMarkers": 0,
+      "rawCommandLineAssignments": 0,
+      "rawOwnershipSnapshotCopied": false
+    }
+  },
+  "cleanup": {
+    "nativeChild": {
+      "target": "<task-temp>/native-final-05-child",
+      "method": "scripts/VerifierIsolation.psm1 Remove-VerifierOwnedTree",
+      "containmentVerified": true,
+      "noReparseVerified": true,
+      "removed": true,
+      "removalStatus": "removed by maintained owned-tree verifier",
+      "removedUtc": "2026-09-27T03:24:40.933Z"
+    },
+    "parentWrapper": {
+      "target": "<task-temp>/remaining-gates-wrapper",
+      "method": "scripts/VerifierIsolation.psm1 Remove-VerifierOwnedTree",
+      "containmentVerified": true,
+      "noReparseVerified": true,
+      "removed": true,
+      "removalStatus": "removed by maintained owned-tree verifier",
+      "verifiedFileCount": 9,
+      "verifiedDirectoryCount": 0,
+      "processReferencesAtRemoval": 0,
+      "removedUtc": "2026-09-27T03:25:10.788Z"
+    }
+  }
+}

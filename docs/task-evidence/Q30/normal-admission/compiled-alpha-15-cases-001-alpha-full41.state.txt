@@ -1,0 +1,1 @@
+FAIL:alpha:cross-target-catalog-mutations owner=true power=UNPOWERED isolated=true settled=true state=READY: java.lang.AssertionError: U04 catalog mutation: composed board lacks a loose source resistor, compatible NMOS-driven load and alternate target

@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "scope": "Temporary orchestration wrapper preparation; not an application gate",
+  "files": {
+    "Q30GateWrapper.Common.ps1": "300f498c07717b5c0590f01e44710e58782766feb153088973f381a7d9069b42",
+    "browser-modern-22.ps1": "47295e13a9fc83201842154c0a3023489700db0f4d354557a236e6282320fb8c",
+    "native-final-05.ps1": "0b9979c93a00c7597fec1f0ed67e449825795ecc6bc9158275f2cc0ef453cd10"
+  },
+  "realHostCanaries": {
+    "status": "PASS",
+    "positive": {
+      "actualExitCode": 0,
+      "utf8StdoutCaptured": true,
+      "utf8StderrCaptured": true,
+      "log": "helper-canary-positive.log"
+    },
+    "negative": {
+      "actualExitCode": 7,
+      "utf8StdoutCaptured": true,
+      "utf8StderrCaptured": true,
+      "log": "helper-canary-negative.log"
+    },
+    "crlfNativeMarkers": {
+      "fullPassCount": 1,
+      "cleanupCount": 1,
+      "status": "PASS",
+      "sample": "literal CRLF"
+    }
+  },
+  "pureAndParserChecks": "PASS reported by preparation worker: empty/changed input maps, literal CRLF PASS/cleanup markers and four-script static parse",
+  "controlledWrapper": "NOT USED; root invoked maintained Python driver directly",
+  "sourceChanges": "None"
+}

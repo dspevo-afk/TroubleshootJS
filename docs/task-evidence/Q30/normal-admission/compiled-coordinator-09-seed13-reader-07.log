@@ -1,0 +1,23 @@
+FAIL: coordinator receipt rejected: row 0: 'owner'
+cold outcomes: PASS=1 EXPECTED_REJECTION=0 FAIL=0 NOT_RUN=0 MISSING=0
+cold successful measurement-only complete-row elapsed ms: n=0 p50=None p95=None
+cold successful measurement-only complete-row wall ms: n=0 p50=None p95=None
+cold successful measurement-only active routing ms: n=0 p50=None p95=None
+cold successful measurement-only diagnostic proof ms: n=0 p50=None p95=None
+cold successful measurement-only stage RESOLVE ms: n=0 p50=None p95=None
+cold successful measurement-only stage HEALTHY ms: n=0 p50=None p95=None
+cold successful measurement-only stage PHYSICAL ms: n=0 p50=None p95=None
+cold successful measurement-only stage HYPOTHESES ms: n=0 p50=None p95=None
+cold successful measurement-only stage SYMPTOM ms: n=0 p50=None p95=None
+cold successful measurement-only stage PUBLISH ms: n=0 p50=None p95=None
+warm outcomes: PASS=1 EXPECTED_REJECTION=0 FAIL=0 NOT_RUN=0 MISSING=0
+warm successful measurement-only complete-row elapsed ms: n=0 p50=None p95=None
+warm successful measurement-only complete-row wall ms: n=0 p50=None p95=None
+warm successful measurement-only active routing ms: n=0 p50=None p95=None
+warm successful measurement-only diagnostic proof ms: n=0 p50=None p95=None
+warm successful measurement-only stage RESOLVE ms: n=0 p50=None p95=None
+warm successful measurement-only stage HEALTHY ms: n=0 p50=None p95=None
+warm successful measurement-only stage PHYSICAL ms: n=0 p50=None p95=None
+warm successful measurement-only stage HYPOTHESES ms: n=0 p50=None p95=None
+warm successful measurement-only stage SYMPTOM ms: n=0 p50=None p95=None
+warm successful measurement-only stage PUBLISH ms: n=0 p50=None p95=None

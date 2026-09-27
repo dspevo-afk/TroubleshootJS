@@ -18,6 +18,7 @@ final class QuickPlayDeveloperVerifier {
                 "Finish Job") >= 0,
             "Quick Play workbench did not expose the Finish Job boundary");
         verifyEligibleFamilies();
+        verifyFullCatalogSelectionAndStagedRequests();
         require(selection.getFamilyId().equals(instance.getCircuitFamilyId()) &&
             selection.getSeed() == instance.getSeed() && instance.getSeed() ==
             instance.getChallengeDefinition().getSelectionSeed(),
@@ -33,7 +34,7 @@ final class QuickPlayDeveloperVerifier {
         verifyUnrepairedFinishDoesNotAdvance(sim, challenge);
         verifySeedOneNpnScenario(sim, challenge, instance);
         verifyCorrectRepairCanFinish(sim, challenge, instance);
-        verifyCompletedPhysicalMutationIsRejected(sim, challenge, instance);
+        verifyCompletedPhysicalMutationRemainsLive(sim, challenge, instance);
         verifyCompletedSemanticOperationsRemainLive(sim, challenge, instance);
         verifyNormalPlayerPrivacy(sim);
         sim.publishQuickPlayVerificationReportForDeveloperVerification(
@@ -67,8 +68,11 @@ final class QuickPlayDeveloperVerifier {
             QuickPlayFamilyRegistry.isNormalPlayerEligible(Rb15Plan.FAMILY_ID),
             "Quick Play eligible-family registry changed");
         require(!QuickPlayFamilyRegistry.isNormalPlayerEligible("DIODE_SHORT") &&
-            !QuickPlayFamilyRegistry.isNormalPlayerEligible("TASK_37_FUTURE"),
-            "Quick Play registry admitted a developer or future family");
+            !QuickPlayFamilyRegistry.isNormalPlayerEligible("TASK_37_FUTURE") &&
+            !QuickPlayFamilyRegistry.isNormalPlayerEligible(
+                ControlledIndicatorBlockContributions.FAMILY_ID) &&
+            !QuickPlayFamilyRegistry.isNormalPlayerEligible(Rb30Plan.FAMILY_ID),
+            "Quick Play synchronous registry admitted an unsupported family");
     }
 
     private static void verifyFreshSessionBoundary() {
@@ -116,6 +120,8 @@ final class QuickPlayDeveloperVerifier {
     }
 
     private static void verifyDeterministicFamilySelection() {
+        // This is the retained nine-family synchronous leaf construction oracle.
+        // Full catalog selection and staged family admission are checked separately.
         Vector<String> families = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
         for (int i = 0; i < families.size(); i++) {
             QuickPlaySelector selector = new QuickPlaySelector(new QuickPlayFixedRandomSource(
@@ -127,6 +133,71 @@ final class QuickPlayDeveloperVerifier {
                 generated.getSeed() == selection.getSeed() &&
                 generated.getFaultBinding().getFault().getType() != GeneratedFaultType.DIODE_SHORT,
                 "Quick Play family did not generate through its deterministic normal route");
+        }
+    }
+
+    /**
+     * The menu selects from the full catalog, but staged families cannot fall
+     * through the synchronous leaf generator. Both normal request factories
+     * retain the declared profile, exact seed, bounded candidates and policy.
+     */
+    private static void verifyFullCatalogSelectionAndStagedRequests() {
+        Vector<String> catalog = PlayerFamilyCatalog.families();
+        Vector<String> expected = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
+        expected.add(ControlledIndicatorBlockContributions.FAMILY_ID);
+        expected.add(Rb30Plan.FAMILY_ID);
+        require(catalog.size() == 11 && catalog.equals(expected),
+            "Quick Play catalog order or normal family census changed");
+
+        long[] roots = { Long.MIN_VALUE, 9007199254740993L, Long.MAX_VALUE };
+        for (int familyIndex = 0; familyIndex < catalog.size(); familyIndex++) {
+            String family = catalog.elementAt(familyIndex);
+            DifficultyProfile profile = PlayerFamilyCatalog.candidateProfile(family);
+            require(QuickPlayAdmission.supports(family, profile),
+                "Current catalog family has no admitted profile: " + family);
+            for (long root : roots) {
+                QuickPlaySelection selection = new QuickPlaySelector(
+                    new QuickPlayFixedRandomSource(new long[] { familyIndex, root })).select();
+                require(family.equals(selection.getFamilyId()) && selection.getSeed() == root,
+                    "Full catalog selection changed family order or signed-long seed: " + family);
+
+                GenerationRequest staged = GenerationRequest.stagedQuickPlay(selection);
+                require(staged.isQuickPlay() && staged.getDifficulty() == profile &&
+                    staged.candidateCount() == QuickPlayAdmission.MAX_CANDIDATES &&
+                    staged.getDescriptor().getRootSeed() == root,
+                    "Selected menu family did not enter bounded staged Quick Play: " + family);
+
+                PlayerLaunchRequest player = PlayerLaunchRequest.random(family,
+                    Long.toString(root), profile.name());
+                GenerationRequest normal = player.generation();
+                boolean normalMedium = Rb30Plan.FAMILY_ID.equals(family);
+                require(player.seed == root && player.candidateSearch &&
+                    normal.getDifficulty() == profile && !normal.isQuickPlay() &&
+                    normal.candidateCount() == QuickPlayAdmission.MAX_CANDIDATES &&
+                    normal.getDescriptor().getRootSeed() == root &&
+                    normal.getExecutionPolicy() == (normalMedium ?
+                        GenerationExecutionPolicy.NORMAL_MEDIUM :
+                        GenerationExecutionPolicy.SMALL_BOARD) &&
+                    normal.getRequiredPhysicalAdmissionIdentity().equals(normalMedium ?
+                        MediumBoardNormalAdmission.IDENTITY : SupportedEnvelope.current().identity()),
+                    "Normal player request lost profile, seed, or physical capability: " + family);
+
+                if (familyIndex < QuickPlayFamilyRegistry.getNormalPlayerFamilyIds().size()) {
+                    require(QuickPlayFamilyRegistry.isNormalPlayerEligible(family),
+                        "Synchronous leaf disappeared from its construction registry");
+                } else {
+                    require(!QuickPlayFamilyRegistry.isNormalPlayerEligible(family) &&
+                        staged.isComposition() ==
+                            ControlledIndicatorBlockContributions.FAMILY_ID.equals(family),
+                        "Staged family crossed the synchronous leaf boundary: " + family);
+                    boolean rejected = false;
+                    try { new QuickPlaySelector(new QuickPlayFixedRandomSource(
+                        new long[] { familyIndex, root })).generate(selection); }
+                    catch (IllegalArgumentException expectedFailure) { rejected = true; }
+                    require(rejected,
+                        "Synchronous Quick Play generation accepted staged family: " + family);
+                }
+            }
         }
     }
 
@@ -335,7 +406,7 @@ final class QuickPlayDeveloperVerifier {
         finishRepaired(sim, instance, challenge);
     }
 
-    private static void verifyCompletedPhysicalMutationIsRejected(CirSim sim,
+    private static void verifyCompletedPhysicalMutationRemainsLive(CirSim sim,
             GeneratedChallengeController challenge, GeneratedBoardInstance instance) {
         require(challenge.isCompleted() && challenge.isReady(),
             "Quick Play correct repair did not enter latched completed state");
@@ -348,63 +419,113 @@ final class QuickPlayDeveloperVerifier {
         require(slot != null && slot.getInstalledPart() != null,
             "Completed Quick Play target has no installed physical part: " + componentId);
         PhysicalPart<?> installed = slot.getInstalledPart();
+        GeneratedCustomerRetestResult passedRetest = challenge.getCustomerRetestResult();
+        require(passedRetest != null && passedRetest.isPassed(),
+            "Completed Quick Play mutation proof has no passed customer retest to preserve");
         BoardModificationController modifications = sim.getBoardModificationController();
         ComponentPhysicalState componentState = modifications.getComponentState(componentId);
         boolean fullyRestored = modifications.isFullyRestored();
         Vector<GeneratedComponentConnectionBinding> bindings =
             instance.getConnectionBindings().getForComponent(componentId);
         boolean[] connected = new boolean[bindings.size()];
+        CircuitMeasurementEndpoint[] componentEndpoints =
+            new CircuitMeasurementEndpoint[bindings.size()];
         for (int index = 0; index < bindings.size(); index++)
-            connected[index] = modifications.isLeadConnected(componentId,
-                bindings.get(index).getPadId());
+        {
+            GeneratedComponentConnectionBinding binding = bindings.get(index);
+            connected[index] = modifications.isLeadConnected(componentId, binding.getPadId());
+            componentEndpoints[index] = binding.getComponentEndpoint();
+        }
         Vector<PhysicalPart> physicalParts = new Vector<PhysicalPart>(runtime.getPhysicalParts());
+        // dumpCircuit includes solver transient values; the canonical mutation
+        // oracle here is the settled active graph and its endpoint ownership.
         Vector<CircuitElm> topology = new Vector<CircuitElm>(sim.elmList);
-        String circuit = sim.dumpCircuit();
         int undo = sim.undoStack.size();
         int redo = sim.redoStack.size();
         boolean unsaved = sim.unsavedChanges;
         require(sim.getBoardPowerController().getState() == BoardPowerState.POWERED,
             "Completed Quick Play mutation proof did not start powered");
+        require(componentState == ComponentPhysicalState.INSTALLED && fullyRestored,
+            "Completed Quick Play mutation proof did not start fully installed");
+        for (int index = 0; index < bindings.size(); index++)
+            require(connected[index] && componentEndpoints[index] != null &&
+                    containsElementIdentity(sim.elmList, bindings.get(index).getConnectionElement()),
+                "Completed Quick Play mutation proof did not start with every lead connected");
         try {
             sim.setBoardPowerStateForGeneratedTemporalProfile(BoardPowerState.UNPOWERED);
+            settle(sim, instance);
             require(sim.getBoardPowerController().getState() == BoardPowerState.UNPOWERED,
                 "Completed Quick Play mutation proof could not enter developer power-off state");
-            boolean rejected = false;
-            try {
-                if (provider.removeInstalledPart())
-                    throw new IllegalStateException(
-                        "Completed Quick Play physical removal unexpectedly succeeded");
-                rejected = true;
-            } catch (BoardModificationRejectedException expected) {
-                rejected = true;
-            }
-            require(rejected, "Completed Quick Play physical removal was not rejected");
+            require(provider.removeInstalledPart(),
+                "Completed Quick Play physical removal was rejected");
+            settle(sim, instance);
+            require(challenge.isCompleted() && challenge.isReady() &&
+                    challenge.getCustomerRetestResult() == passedRetest && passedRetest.isPassed(),
+                "Completed Quick Play physical removal invalidated the passed customer retest");
+            GeneratedRuntimeInvariant.verify(sim, instance, modifications, sim.elmList);
+            require(slot.getInstalledPart() == null && runtime.getInstalledPart(componentId) == null &&
+                    !installed.isInstalled() && installed.getBoardSlot() == null &&
+                    modifications.getComponentState(componentId) == ComponentPhysicalState.REMOVED &&
+                    !modifications.isFullyRestored() && physicalParts.equals(runtime.getPhysicalParts()) &&
+                    !sameElementIdentities(topology, sim.elmList),
+                "Completed Quick Play physical removal did not change the live board");
+            for (int index = 0; index < bindings.size(); index++)
+                require(!modifications.isLeadConnected(componentId, bindings.get(index).getPadId()) &&
+                        !containsElementIdentity(sim.elmList, bindings.get(index).getConnectionElement()),
+                    "Completed Quick Play physical removal did not disconnect every lead");
+            require(provider.install(installed.getId()),
+                "Completed Quick Play physical removal could not reinstall the original part");
+            settle(sim, instance);
+            require(challenge.isCompleted() && challenge.isReady() &&
+                    challenge.getCustomerRetestResult() == passedRetest && passedRetest.isPassed(),
+                "Completed Quick Play original-part reinstall invalidated the passed customer retest");
+            GeneratedRuntimeInvariant.verify(sim, instance, modifications, sim.elmList);
             require(slot.getInstalledPart() == installed && runtime.getInstalledPart(componentId) == installed &&
                     installed.isInstalled() && installed.getBoardSlot() == slot &&
                     componentState == modifications.getComponentState(componentId) &&
                     fullyRestored == modifications.isFullyRestored() &&
-                    physicalParts.equals(runtime.getPhysicalParts()),
-                "Completed Quick Play physical removal changed board state");
-            for (int index = 0; index < bindings.size(); index++)
+                    physicalParts.equals(runtime.getPhysicalParts()) &&
+                    sameElementIdentities(topology, sim.elmList),
+                "Completed Quick Play original-part reinstall did not restore the board");
+            for (int index = 0; index < bindings.size(); index++) {
+                GeneratedComponentConnectionBinding binding = bindings.get(index);
                 require(connected[index] == modifications.isLeadConnected(componentId,
-                        bindings.get(index).getPadId()),
-                    "Completed Quick Play physical removal changed lead state");
+                        binding.getPadId()) &&
+                        instance.getConnectionBindings().get(componentId,
+                            binding.getPadId()) == binding &&
+                        containsElementIdentity(sim.elmList, binding.getConnectionElement()) &&
+                        GeneratedComponentConnectionBindings.sameEndpoint(componentEndpoints[index],
+                            binding.getComponentEndpoint()),
+                    "Completed Quick Play original-part reinstall changed lead state");
+            }
         } finally {
             sim.setBoardPowerStateForGeneratedTemporalProfile(BoardPowerState.POWERED);
         }
+        settle(sim, instance);
+        GeneratedRuntimeInvariant.verify(sim, instance, modifications, sim.elmList);
         require(sim.getBoardPowerController().getState() == BoardPowerState.POWERED &&
+                challenge.isCompleted() && challenge.isReady() &&
+                challenge.getCustomerRetestResult() == passedRetest && passedRetest.isPassed() &&
                 slot.getInstalledPart() == installed && runtime.getInstalledPart(componentId) == installed &&
                 installed.isInstalled() && installed.getBoardSlot() == slot &&
                 componentState == modifications.getComponentState(componentId) &&
                 fullyRestored == modifications.isFullyRestored() &&
-                physicalParts.equals(runtime.getPhysicalParts()) && sim.elmList.equals(topology) &&
-                circuit.equals(sim.dumpCircuit()) && undo == sim.undoStack.size() &&
-                redo == sim.redoStack.size() && unsaved == sim.unsavedChanges,
+                physicalParts.equals(runtime.getPhysicalParts()) &&
+                sameElementIdentities(topology, sim.elmList) &&
+                undo == sim.undoStack.size() && redo == sim.redoStack.size() &&
+                unsaved == sim.unsavedChanges,
             "Completed Quick Play physical mutation proof did not restore powered state unchanged");
-        for (int index = 0; index < bindings.size(); index++)
+        for (int index = 0; index < bindings.size(); index++) {
+            GeneratedComponentConnectionBinding binding = bindings.get(index);
             require(connected[index] == modifications.isLeadConnected(componentId,
-                    bindings.get(index).getPadId()),
+                    binding.getPadId()) &&
+                    instance.getConnectionBindings().get(componentId,
+                        binding.getPadId()) == binding &&
+                    containsElementIdentity(sim.elmList, binding.getConnectionElement()) &&
+                    GeneratedComponentConnectionBindings.sameEndpoint(componentEndpoints[index],
+                        binding.getComponentEndpoint()),
                 "Completed Quick Play restoration changed lead state");
+        }
     }
 
     private static void verifyCompletedSemanticOperationsRemainLive(CirSim sim,
@@ -522,10 +643,9 @@ final class QuickPlayDeveloperVerifier {
     }
 
     /**
-     * Completion keeps semantic customer operations available, but physical
-     * interaction is terminal.  A second direct Finish Job call must still be
-     * a strict no-op; in particular, it cannot enter RcDelayTemporalBehavior
-     * and replay the real power-cycle profile.
+     * Completion keeps the retained workbench live, while a second direct
+     * Finish Job call remains a strict no-op; in particular, it cannot enter
+     * RcDelayTemporalBehavior and replay the real power-cycle profile.
      */
     private static void verifyCompletedRcFinishIsNoOp(CirSim sim,
             GeneratedChallengeController challenge, GeneratedBoardInstance instance) {
@@ -616,6 +736,25 @@ final class QuickPlayDeveloperVerifier {
 
     private static boolean contains(long[] values, long expected) {
         for (long value : values)
+            if (value == expected)
+                return true;
+        return false;
+    }
+
+    /** Compare the canonical active graph by element identity, independent of list order. */
+    private static boolean sameElementIdentities(Vector<CircuitElm> expected,
+            Vector<CircuitElm> actual) {
+        if (expected == null || actual == null || expected.size() != actual.size())
+            return false;
+        for (CircuitElm element : expected)
+            if (!containsElementIdentity(actual, element))
+                return false;
+        return true;
+    }
+
+    private static boolean containsElementIdentity(Vector<CircuitElm> values,
+            CircuitElm expected) {
+        for (CircuitElm value : values)
             if (value == expected)
                 return true;
         return false;

@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "consumedInputs": 1133,
+  "changed": [],
+  "scope": "GWT11 source/static web inputs, before current compiled verifier"
+}

@@ -2,6 +2,7 @@ package com.lushprojects.circuitjs1.client;
 
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.Vector;
 
 /** Predeclared calibration, then held-out physical-only qualification. */
 public final class P09EnvelopeCorpus {
@@ -9,7 +10,7 @@ public final class P09EnvelopeCorpus {
     static final long[] HELD_OUT={11,23,37,59,83,127,251,509,-11,-23,-127,-509};
     public static void main(String[] args) {
         CirSim sim=new CirSim(); sim.gridSize=16; sim.gridMask=~15; sim.gridRound=7; CircuitElm.sim=sim;
-        for(String family:PlayerFamilyCatalog.families()) {
+        for(String family:p09CalibrationFamilies()) {
             long start=System.nanoTime();
             GeneratedBoardInstance owner=new PlayerLaunchRequest(family,"0",
                 PlayerFamilyCatalog.candidateProfile(family).name()).generation()
@@ -56,6 +57,16 @@ public final class P09EnvelopeCorpus {
         if(heldPass+heldReject!=HELD_OUT.length) throw new AssertionError("Missing held-out rows");
         System.out.println("PASS: P09 physical envelope corpus rows=32 regressionPass="+regressionPass+
             " regressionReject="+regressionReject+" heldPass="+heldPass+" heldReject="+heldReject);
+    }
+    /**
+     * This corpus is specifically the existing P09 single-face contract.
+     * Q30 uses MEDIUM_BOARD_NORMAL@1 and is covered by Q30NormalCorpusContractTest
+     * plus the full-catalog physical matrix; it must not be reclassified here.
+     */
+    private static Vector<String> p09CalibrationFamilies() {
+        Vector<String> result=QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
+        result.add(ControlledIndicatorBlockContributions.FAMILY_ID);
+        return result;
     }
     private static void rejected(String cohort,long seed,String reason,long start) {
         System.out.println("P09_ROW {\"cohort\":\""+cohort+"\",\"seed\":\""+seed+"\",\"outcome\":\""+reason+

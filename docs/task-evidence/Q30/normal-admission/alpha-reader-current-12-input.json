@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "reader": "tests/contracts/alpha_evidence_contract.py",
+  "sha256": "d6971bc965e282dfbf2d52659c823df810f4e5c6e6429eda022154c986918f29",
+  "protocol1Cases": 38,
+  "protocol2Cases": 41,
+  "sensorServicePositions": {
+    "0": 9,
+    "1": 10,
+    "2": 9
+  },
+  "syntheticParserEvidenceOnly": true,
+  "freshCompiledGate": "PENDING"
+}

@@ -195,6 +195,13 @@ final class GeneratedDiagnosticProofService {
         int fixedUnits = owner.getTemporalBehavior() == null ? FIXED_HYPOTHESIS_UNIT_COUNT :
             TEMPORAL_FIXED_HYPOTHESIS_UNIT_COUNT;
         int perHypothesis = fixedUnits + program.getSteps().size();
+        if (provider instanceof GeneratedDiagnosticServicePreparation.Provider) {
+            GeneratedDiagnosticServicePreparation.Policy servicePreparation =
+                ((GeneratedDiagnosticServicePreparation.Provider) provider)
+                    .getServicePreparationPolicy();
+            if (servicePreparation != null)
+                perHypothesis += servicePreparation.getWorkUnits() - 1;
+        }
         if (owner.getTemporalBehavior() != null) {
             int profileUnits = owner.getTemporalBehavior().getProfileWorkUnits();
             GeneratedBoardOperation retest = owner.getOperationCatalog().find(
@@ -303,6 +310,7 @@ final class GeneratedDiagnosticProofService {
         private final GeneratedDiagnosticProvider provider;
         private final GeneratedDiagnosticPlan plan;
         private final GeneratedDiagnosticProgram program;
+        private final GeneratedDiagnosticServicePreparation.Policy servicePreparationPolicy;
         private final Vector<GeneratedFaultCandidate> candidates;
         private final Vector<CircuitElm> primaryGraph;
         private final Vector<GeneratedDiagnosticSolvabilityEvidence> evidence =
@@ -329,6 +337,7 @@ final class GeneratedDiagnosticProofService {
         private GeneratedFaultCandidate activeHypothesis;
         private GeneratedDiagnosticExecutionTrace.Builder activeTrace;
         private GeneratedDiagnosticObservationExecutor.Cursor observationCursor;
+        private GeneratedDiagnosticServicePreparation.Cursor servicePreparationCursor;
         private Vector<GeneratedDiagnosticSample> activeSamples;
         private GeneratedCustomerRetestResult activeRetest;
         private GeneratedWork<Void> pendingRetestCompletion;
@@ -393,6 +402,10 @@ final class GeneratedDiagnosticProofService {
                 "Production proof has no identified diagnostic provider");
             plan = provider.getDiagnosticPlan();
             program = provider.getObservationProgram();
+            servicePreparationPolicy = provider instanceof
+                    GeneratedDiagnosticServicePreparation.Provider ?
+                ((GeneratedDiagnosticServicePreparation.Provider) provider)
+                    .getServicePreparationPolicy() : null;
             require(program != null, "Production diagnostic provider has no executable observations");
             program.validatePlan(plan);
             require(owner.getDiagnosticSolvabilityContract().getPlans().size() == 1 &&
@@ -453,6 +466,7 @@ final class GeneratedDiagnosticProofService {
                 if (failure != null) {
                     failure = retain(failure, clearRetestCompletionState());
                     failure = retain(failure, cancelObservationCursor());
+                    failure = retain(failure, cancelServicePreparationCursor());
                     if (!restorationAttempted)
                         failure = retain(failure, restoreOriginal());
                 }
@@ -485,8 +499,7 @@ final class GeneratedDiagnosticProofService {
                 runObservationStep();
                 return;
             case POWER_OFF_SETTLE:
-                runPowerOffAndSettle();
-                nextUnit = Unit.REMOVE_SETTLE;
+                runPowerOffServicePreparation();
                 return;
             case REMOVE_SETTLE:
                 runRemoveAndSettle();
@@ -644,6 +657,39 @@ final class GeneratedDiagnosticProofService {
                 "production-diagnostic-repair-start");
             checkpointAndRequireCandidate();
             activeTrace.recordCompletedSemanticAction();
+        }
+
+        /**
+         * Performs the existing unpowered settle once, then spends one
+         * declared service-readiness work unit per session step. A provider
+         * without the optional policy retains the historical single phase.
+         */
+        private void runPowerOffServicePreparation() {
+            if (servicePreparationPolicy == null) {
+                runPowerOffAndSettle();
+                nextUnit = Unit.REMOVE_SETTLE;
+                return;
+            }
+            if (servicePreparationCursor == null) {
+                runPowerOffAndSettle();
+                String componentId = activeCandidate.getFaultLocus().getComponentId();
+                PhysicalBoardRuntime runtime = activeCandidate.getPhysicalBoardRuntime();
+                PhysicalPart<?> target = runtime == null ? null :
+                    runtime.getInstalledPart(componentId);
+                require(target != null && target.isInstalled(),
+                    "Diagnostic service preparation lost its installed REMOVE target");
+                servicePreparationCursor = GeneratedDiagnosticServicePreparation.begin(
+                    sim, activeCandidate, activeCandidateController, componentId, target,
+                    servicePreparationPolicy, new GeneratedDiagnosticServicePreparation.Checkpoint() {
+                        public void check() { checkpointAndRequireCandidate(); }
+                    });
+            }
+            boolean more = servicePreparationCursor.step();
+            if (!more) {
+                servicePreparationCursor.finish();
+                servicePreparationCursor = null;
+                nextUnit = Unit.REMOVE_SETTLE;
+            }
         }
 
         private void runRemoveAndSettle() {
@@ -867,6 +913,13 @@ final class GeneratedDiagnosticProofService {
         boolean hasPendingPrivateCleanup() { return privateCleanupPending; }
         boolean retainsObservationForDeveloperVerification() { return observationCursor != null; }
 
+        /** Read-only phase label for timing the unchanged serial reference proof. */
+        String nextWorkLabelForDeveloperVerification() {
+            return nextUnit == Unit.OBSERVATION_STEP && observationCursor != null ?
+                nextUnit.name() + ":" + observationCursor.nextStepKindForDeveloperVerification() :
+                nextUnit.name();
+        }
+
         /** Marks a paused proof owner as installation-in-progress without retaining the guard. */
         void pause() {
             if (!closed && ownsWorkingOwner())
@@ -947,6 +1000,7 @@ final class GeneratedDiagnosticProofService {
                         "Production diagnostic proof retained pending cleanup after owner succession");
                 Throwable retry = clearRetestCompletionState();
                 retry = retain(retry, cancelObservationCursor());
+                retry = retain(retry, cancelServicePreparationCursor());
                 retry = retain(retry, restoreOriginal());
                 retry = retain(retry, endInternalProof());
                 if (retry != null) throwFailure(retry);
@@ -958,6 +1012,7 @@ final class GeneratedDiagnosticProofService {
             }
             Throwable failure = clearRetestCompletionState();
             failure = retain(failure, cancelObservationCursor());
+            failure = retain(failure, cancelServicePreparationCursor());
             failure = retain(failure, restoreOriginal());
             failure = retain(failure, abortAdmission());
             failure = retain(failure, endInternalProof());
@@ -1147,7 +1202,27 @@ final class GeneratedDiagnosticProofService {
             }
         }
 
+        private Throwable cancelServicePreparationCursor() {
+            if (servicePreparationCursor == null) return null;
+            GeneratedDiagnosticServicePreparation.Cursor cursor = servicePreparationCursor;
+            if (!isCurrentCandidate(activeCandidate)) {
+                privateCleanupPending = true;
+                return new IllegalStateException(
+                    "Production diagnostic proof refused to clean service preparation over a successor owner");
+            }
+            try {
+                cursor.cancel();
+                servicePreparationCursor = null;
+                return null;
+            } catch (Throwable failure) {
+                privateCleanupPending = true;
+                return failure;
+            }
+        }
+
         private void clearActiveHypothesis() {
+            require(servicePreparationCursor == null,
+                "Production diagnostic proof retained a service-preparation cursor after restore");
             activeHypothesis = null;
             activeTrace = null;
             activeSamples = null;
@@ -1169,6 +1244,7 @@ final class GeneratedDiagnosticProofService {
                 rememberPrivateOwnerForCleanup();
             failure = retain(failure, clearRetestCompletionState());
             failure = retain(failure, cancelObservationCursor());
+            failure = retain(failure, cancelServicePreparationCursor());
             if (failure != null) {
                 if (candidate != null) privateCleanupPending = true;
                 return failure;

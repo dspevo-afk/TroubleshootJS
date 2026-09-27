@@ -1,0 +1,244 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<worktree>",
+  "startedUtc": "2026-09-26T23:54:27.233220+00:00",
+  "outcome": "FAIL",
+  "cases": [
+    {
+      "schema": 1,
+      "case": {
+        "index": 1,
+        "name": "alpha-full41",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "PASS:alpha",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 900.0,
+        "reportAttribute": "data-tsj-alpha-report"
+      },
+      "url": "http://127.0.0.1:54593/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true",
+      "startedUtc": "2026-09-26T23:54:28.511106+00:00",
+      "finishedUtc": "2026-09-27T00:04:14.337225+00:00",
+      "operationSeconds": 585.8261145000579,
+      "outcome": "FAIL",
+      "terminalReached": true,
+      "stateMatch": false,
+      "observedState": "FAIL:alpha:cross-target-catalog-mutations owner=true power=UNPOWERED isolated=true settled=true state=READY: java.lang.AssertionError: U04 catalog mutation: catalog formation changed electrical, attachment, inventory, serial or fault state",
+      "lastObservedState": "FAIL:alpha:cross-target-catalog-mutations owner=true power=UNPOWERED isolated=true settled=true state=READY: java.lang.AssertionError: U04 catalog mutation: catalog formation changed electrical, attachment, inventory, serial or fault state",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 141290,
+      "reportSha256": "a447694dd316784497919f357b56ac22ebe4fe5284197de7ba53c4d02897383e",
+      "reportFile": "cases/001-alpha-full41.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-verification",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        }
+      ],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 2,
+        "name": "alpha-explicit-negative",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaFail=true",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": null,
+        "expectedPrefix": "FAIL:alpha:",
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 120.0,
+        "reportAttribute": "data-tsj-alpha-report"
+      },
+      "url": "http://127.0.0.1:54593/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaFail=true",
+      "startedUtc": "2026-09-27T00:04:14.338682+00:00",
+      "finishedUtc": "2026-09-27T00:04:15.121459+00:00",
+      "operationSeconds": 0.7827755999751389,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "FAIL:alpha:start owner=false power=POWERED isolated=false settled=true state=READY: java.lang.AssertionError: alpha-explicit-failure-canary",
+      "lastObservedState": "FAIL:alpha:start owner=false power=POWERED isolated=false settled=true state=READY: java.lang.AssertionError: alpha-explicit-failure-canary",
+      "timedOut": false,
+      "expectedFailureCanary": true,
+      "expectedFailureStateWasNotAnUnexpectedError": true,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 552,
+      "reportSha256": "5f79359ba7c6f997011e028f20a4e595c2464c8ddc6a4724e32c8b8542d142c2",
+      "reportFile": "cases/002-alpha-explicit-negative.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    }
+  ],
+  "caseCount": 2,
+  "errors": [],
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "ba5809bda302cb1b6f76ec71408d679f572aaa4e35a0d051b91df4ee4ce9be7b",
+    "afterSha256": "ba5809bda302cb1b6f76ec71408d679f572aaa4e35a0d051b91df4ee4ce9be7b",
+    "sourceSha256Before": "a8bddd812952c5fbd9a35aa2265a1e7de4de4af5b7ec92657b6b93c304096d75",
+    "sourceSha256After": "a8bddd812952c5fbd9a35aa2265a1e7de4de4af5b7ec92657b6b93c304096d75",
+    "webSha256Before": "f00b7b8afcbac7e7d0a3d0369ddad0de001171ca8e99d3109dfd010c739b4db3",
+    "webSha256After": "f00b7b8afcbac7e7d0a3d0369ddad0de001171ca8e99d3109dfd010c739b4db3",
+    "runnerBeforeSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+    "runnerAfterSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+    "fileCountBefore": 1522,
+    "fileCountAfter": 1522,
+    "seconds": 0.3939542999723926
+  },
+  "identity": {
+    "schema": 1,
+    "runner": {
+      "pid": 22596,
+      "created": "2026-09-26T23:54:27.0935880Z",
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+    },
+    "edgeProcessesBeforeCases": [
+      {
+        "pid": 38044,
+        "parent": 35172,
+        "created": "2026-09-26T23:54:27.8692090Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 4876,
+        "parent": 38044,
+        "created": "2026-09-26T23:54:27.8897980Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 23944,
+        "parent": 38044,
+        "created": "2026-09-26T23:54:27.9617490Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 15352,
+        "parent": 38044,
+        "created": "2026-09-26T23:54:27.9655040Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 16220,
+        "parent": 38044,
+        "created": "2026-09-26T23:54:27.9960640Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 11380,
+        "parent": 38044,
+        "created": "2026-09-26T23:54:28.0616510Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 4840,
+        "parent": 38044,
+        "created": "2026-09-26T23:54:28.0751290Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "profile": "<task-temp>\\tsj-q30-alpha-17-6afe0cea93544f96b37b60c6bcd94e64\\profile",
+    "port": 54593,
+    "baseUrl": "http://127.0.0.1:54593"
+  },
+  "operationStartedUtc": "2026-09-26T23:54:28.511094+00:00",
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 1.4167700000107288,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "finishedUtc": "2026-09-27T00:04:16.933203+00:00"
+}

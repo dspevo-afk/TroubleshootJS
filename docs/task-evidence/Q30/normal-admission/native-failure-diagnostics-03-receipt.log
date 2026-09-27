@@ -1,0 +1,159 @@
+PASS: diagnostic service preparation contracts 17 assertions policy=action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner
+
+Q30_SENSITIVITY_CASE seed=13 fault=REN_OPEN exit=1 termination=True qualified=False
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=initial-electrical-settle boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=initial-electrical-settle boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=healthy-preparation boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=healthy-preparation boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=fault-profile-preparation boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=fault-profile-preparation boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=faulted-four-input-profile boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=faulted-four-input-profile boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=unrepaired-customer-retest boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=unrepaired-customer-retest boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=service-power-off-wait boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=service-power-off-wait boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=reinstalled-original-customer-retest boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=reinstalled-original-customer-retest boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=service-power-off-wait boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=13 fault=REN_OPEN profile=service-power-off-wait boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_FAILURE seed=13 fault=REN_OPEN stage=advanceSteps(8) phase=catalog-replacement capturePhase=NONE profile=NONE requestedSteps=8 simulationTimeStartSeconds=1.04028000 simulationTimeSeconds=1.04030000 simulationTimeElapsedSeconds=2.00000000e-05 durationSeconds=NaN declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 configuredMinimumStepSeconds=5.00000000e-11 adaptive=true commandedInputs=3 SENSOR_A_maxVoltage_V=5.00000000 SENSOR_B_maxVoltage_V=5.00000000 U1_INPUT_to_U1_RETURN_V=11.2731346 U1_INPUT_to_J1_2_V=11.2731346 U1_OUTPUT_to_U1_RETURN_V=-44.2598983 U1_OUTPUT_to_J1_2_V=-44.2598983 U1_RETURN_to_J1_2_V=0.00000000 J1_1_to_J1_2_V=11.7162535 JOA_1_to_JOA_2_V=-1.77635684e-15 JOB_1_to_JOB_2_V=-1.77635684e-15 regulatorModelInput_V=11.2731346 E02_maximumInput_V=24.0000000 stopMessage=none diagnosticFailure=none originalException=java.lang.IllegalArgumentException:Negative E02 rail output is unsupported: input=11.273134602135617 rawOutput=-44.25989828095445 evaluationOutput=-44.25989828095445 enable=11.161519408055065 target=5.0 lastTarget=5.0 lastOutputDrop=0.5122436538176993 boundedTrial=false time=1.0403000000025815 timeStep=5.0E-6 subIteration=3
+Q30_STEP_OWNER_CLEANUP seed=13 fault=REN_OPEN declaredMaximumStepSeconds=5.00000000e-06 stepRole=PRODUCTION_5_US_REFERENCE cleanup=true elapsedMillis=0
+Q30_STEP_OWNER_CLEANUP seed=13 fault=DREV_OPEN declaredMaximumStepSeconds=5.00000000e-06 stepRole=PRODUCTION_5_US_REFERENCE cleanup=true elapsedMillis=0
+Q30_STEP_OWNER_CLEANUP seed=13 fault=REN_OPEN declaredMaximumStepSeconds=1.00000000e-05 stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED cleanup=true elapsedMillis=0
+Q30_STEP_SEED_CLEANUP seed=13 cleanup=true elapsedMillis=0
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 12 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 9 iterations, timeStep = 5.0E-6
+Exception in thread "main" java.lang.IllegalArgumentException: Negative E02 rail output is unsupported: input=11.273134602135617 rawOutput=-44.25989828095445 evaluationOutput=-44.25989828095445 enable=11.161519408055065 target=5.0 lastTarget=5.0 lastOutputDrop=0.5122436538176993 boundedTrial=false time=1.0403000000025815 timeStep=5.0E-6 subIteration=3
+	at com.lushprojects.circuitjs1.client.AbstractRailRegulatorElm.validateOperatingPoint(AbstractRailRegulatorElm.java:467)
+	at com.lushprojects.circuitjs1.client.AbstractRailRegulatorElm.doStep(AbstractRailRegulatorElm.java:127)
+	at com.lushprojects.circuitjs1.client.CirSim.runCircuitOwned(CirSim.java:3357)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.advanceOne(CircuitSolverExecutor.java:218)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.advanceSteps(CircuitSolverExecutor.java:128)
+	at com.lushprojects.circuitjs1.client.CircuitSolverExecutor.advanceSteps(CircuitSolverExecutor.java:123)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.settleElectrical(Q30SolverStepSensitivityContractTest.java:531)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.settleMutation(Q30SolverStepSensitivityContractTest.java:501)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.runOwner(Q30SolverStepSensitivityContractTest.java:374)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.verifySeed(Q30SolverStepSensitivityContractTest.java:142)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.main(Q30SolverStepSensitivityContractTest.java:74)
+
+Q30_SENSITIVITY_CASE seed=3 fault=REN_OPEN exit=1 termination=True qualified=False
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=initial-electrical-settle boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=initial-electrical-settle boundary=END stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_PROFILE seed=3 fault=REN_OPEN profile=healthy-preparation boundary=BEGIN stepRole=PRODUCTION_5_US_REFERENCE declaredMaximumStepSeconds=5.00000000e-06 configuredMaximumStepSeconds=5.00000000e-06 actualCurrentStepSeconds=5.00000000e-06 observedMinimumStepSeconds=5.00000000e-06 observedMaximumStepSeconds=5.00000000e-06 minimumTimeStepSeconds=5.00000000e-11 adaptive=true
+Q30_STEP_OWNER_CLEANUP seed=3 fault=REN_OPEN declaredMaximumStepSeconds=5.00000000e-06 stepRole=PRODUCTION_5_US_REFERENCE cleanup=true elapsedMillis=0
+Q30_STEP_OWNER_CLEANUP seed=3 fault=DREV_OPEN declaredMaximumStepSeconds=5.00000000e-06 stepRole=PRODUCTION_5_US_REFERENCE cleanup=true elapsedMillis=0
+Q30_STEP_OWNER_CLEANUP seed=3 fault=REN_OPEN declaredMaximumStepSeconds=1.00000000e-05 stepRole=EXPERIMENTAL_CANDIDATE_NOT_PROMOTED cleanup=true elapsedMillis=0
+Q30_STEP_SEED_CLEANUP seed=3 cleanup=true elapsedMillis=0
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 11 iterations, timeStep = 5.0E-6
+Exception in thread "main" java.lang.IllegalStateException: Healthy Q30 failed four input conditions: input=2 inputName=B_ONLY rail_U1_OUTPUT_to_U1_RETURN_V=4.991938685255928 regulatorInput_U1_INPUT_to_J1_2_V=11.109422780600545 regulatorReturn_U1_RETURN_to_J1_2_V=0.0 main12V_J1_1_to_J1_2_V=11.995918237185947 channel=A sensorSourceV=4.071554698085976 sensorCommandV=0.0 sensorSourceCurrentA=2.407155369808597E-5 sensorNodeV=4.312270235066835 referenceNodeV=2.4959443831841326 controllerRailV=4.991938685255928 commandNodeV=4.8419386852561 decisionOutputState=HIGH decisionOutputCurrentA=-7.201582562769985E-5 referencePullupCurrentA=2.4959943020717954E-4 referencePulldownCurrentA=2.4959443831841326E-4 driveResistorCurrentA=4.7939986982734165E-5 driverCurrentA=0.03991611033013075 driverGV=4.7939986982733656 driverDV=0.002424457868848343 driverSV=0.0 coilV=4.98951422738708 coilCurrentA=0.03991611382750362 relayContactOpen=false relayPosition=1 channel=B sensorSourceV=4.999999752859406 sensorCommandV=5.0 sensorSourceCurrentA=-4.942811879287684E-6 sensorNodeV=4.950571634066529 referenceNodeV=2.4959443831841326 controllerRailV=4.991938685255928 commandNodeV=4.8419386852561 decisionOutputState=HIGH decisionOutputCurrentA=-0.004141988870635699 referencePullupCurrentA=2.4959943020717954E-4 referencePulldownCurrentA=2.4959443831841326E-4 driveResistorCurrentA=0.004146926731945268 driverCurrentA=0.0 driverBV=0.6950119533108324 driverCV=0.0658016930286855 driverEV=0.0 coilV=4.926136992227242 coilCurrentA=0.03940909537549789 relayContactOpen=false relayPosition=1
+	at com.lushprojects.circuitjs1.client.Rb30Behavior$ProfileWork.finish(Rb30Behavior.java:561)
+	at com.lushprojects.circuitjs1.client.Rb30Behavior$ProfileWork.finish(Rb30Behavior.java:226)
+	at com.lushprojects.circuitjs1.client.GeneratedWork.complete(GeneratedWork.java:18)
+	at com.lushprojects.circuitjs1.client.Rb30Behavior.prepareHealthyProfile(Rb30Behavior.java:165)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.runOwner(Q30SolverStepSensitivityContractTest.java:284)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.verifySeed(Q30SolverStepSensitivityContractTest.java:142)
+	at com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest.main(Q30SolverStepSensitivityContractTest.java:74)
+
+Q30_SENSITIVITY_CENSUS attempted=2 passed=0 failed=2 childBudgetMs=60000

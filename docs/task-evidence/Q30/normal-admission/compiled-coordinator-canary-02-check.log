@@ -1,0 +1,7 @@
+cold outcomes: PASS=0 EXPECTED_REJECTION=0 FAIL=1 NOT_RUN=0 MISSING=0
+FAIL: coordinator receipt rejected: row 0: coordinator report did not complete successfully
+cold successful complete-row elapsed ms: n=0 p50=None p95=None
+cold successful complete-row wall ms: n=0 p50=None p95=None
+warm outcomes: PASS=0 EXPECTED_REJECTION=0 FAIL=0 NOT_RUN=1 MISSING=0
+warm successful complete-row elapsed ms: n=0 p50=None p95=None
+warm successful complete-row wall ms: n=0 p50=None p95=None

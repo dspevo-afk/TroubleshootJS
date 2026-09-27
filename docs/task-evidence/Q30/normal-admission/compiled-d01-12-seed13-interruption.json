@@ -1,0 +1,19 @@
+{
+  "status": "BLOCKED_BROWSER_TRANSPORT",
+  "seed": "13",
+  "build": "GWT12",
+  "lastReadable": {
+    "state": "RUNNING:coldProof",
+    "completedHypotheses": 4,
+    "totalHypotheses": 5,
+    "elapsedMs": 242559
+  },
+  "observedWallMs": 315941,
+  "errors": [
+    "Page.getFrameTree timed out twice",
+    "Page.captureScreenshot timed out"
+  ],
+  "terminalReportCaptured": false,
+  "ownerRestoration": "UNVERIFIED",
+  "limits": "No application PASS/FAIL inferred from browser transport loss; do not use as completed D01 evidence."
+}

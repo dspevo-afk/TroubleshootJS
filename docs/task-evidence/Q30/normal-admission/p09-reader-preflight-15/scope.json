@@ -1,0 +1,10 @@
+{
+  "scope": "Reader preflight: historical GWT12 native+compiled72 and actual GWT15 controlled6. Not final same-candidate acceptance.",
+  "sourceInputs": [
+    "../compiled-p09-12-native-corrected.json",
+    "../compiled-p09-12-population-cases.json",
+    "../compiled-p09-controlled-15-inputs.json"
+  ],
+  "compiledGwt15InputAudit": "PASS",
+  "recordedUtc": "2026-09-26T22:38:51.410215+00:00"
+}

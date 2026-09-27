@@ -1,0 +1,14 @@
+{
+  "recordedUtc": "2026-09-26T21:47:47.9648393Z",
+  "processId": 34008,
+  "processStartTicks": 639260559019357043,
+  "parentId": 8516,
+  "parentStartTicks": 639260558985971614,
+  "port": 8904,
+  "source-digest": "df00cf5944e05bc4131b53c017ef43307e19f3069ce3f6ec5b7383ad9a33e8c6",
+  "script-digest": "a468c68fae0a8f5ebe67dc8c316d5911bad568b4257f4b4f15e9ad5ff2c4ab2a",
+  "web-digest": "e7d87a1f0f7dbb69312d5d7e74c8c52064835b9fec96495a2b0b851ff822e8d6",
+  "execution-digest": "119defa1425630ec43d3420fd495f04aec659462cdc9186d702d464f4b738669",
+  "file-count": "1542",
+  "note": "Same GWT12 production source/build/web; native-only verifier script changes refresh preview execution identity. Previous preview10 stopped before this launch."
+}

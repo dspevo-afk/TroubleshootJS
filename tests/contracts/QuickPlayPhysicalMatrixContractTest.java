@@ -9,13 +9,28 @@ public final class QuickPlayPhysicalMatrixContractTest {
     private static int checks;
     private static final int TARGET = 20;
     private static final int MAX_ROOTS = 48;
+    private static final int SMALL_CATALOG_FAMILY_COUNT = 10;
+    private static final String[] CATALOG_FAMILIES = {
+        QuickPlayFamilyRegistry.LED_INDICATOR,
+        QuickPlayFamilyRegistry.DIODE_PROTECTED_INDICATOR,
+        QuickPlayFamilyRegistry.PARALLEL_DUAL_INDICATOR,
+        QuickPlayFamilyRegistry.RC_DELAY,
+        QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH,
+        QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH,
+        QuickPlayFamilyRegistry.RELAY_OUTPUT,
+        QuickPlayFamilyRegistry.SENSOR_CONTROL,
+        Rb15Plan.FAMILY_ID,
+        ControlledIndicatorBlockContributions.FAMILY_ID,
+        Rb30Plan.FAMILY_ID
+    };
 
     public static void main(String[] args) {
+        Vector<String> families = selectedFamilies(args);
         CirSim sim = new CirSim();
         sim.gridSize = 16; sim.gridMask = ~15; sim.gridRound = 7;
         CircuitElm.sim = sim;
         int pairs = 0;
-        for (String family : PlayerFamilyCatalog.families()) {
+        for (String family : families) {
             DifficultyProfile profile = PlayerFamilyCatalog.candidateProfile(family);
             check(profile.isAvailable() && QuickPlayAdmission.supports(family, profile),
                 "Menu family has no procedural admission: " + family);
@@ -33,7 +48,7 @@ public final class QuickPlayPhysicalMatrixContractTest {
                 long started = System.currentTimeMillis();
                 try {
                     GeneratedBoardInstance board = generate(family, profile, seed);
-                    SupportedEnvelope.current().requireNormal(board);
+                    board.requireNormalPhysicalAdmission();
                     board.getPcbLayout().validateGeometry(board.getBoard());
                     String signature = PhysicalBoardFingerprint.of(board);
                     String placement = placement(board);
@@ -77,13 +92,50 @@ public final class QuickPlayPhysicalMatrixContractTest {
                 '|' + roots + '|' + elapsed);
             pairs++;
         }
-        check(pairs == PlayerFamilyCatalog.families().size(), "Menu matrix was not exhausted");
+        check(pairs == families.size(), "Selected menu matrix was not exhausted");
         System.out.println("PASS: Quick Play physical matrix contracts pairs=" + pairs + " assertions=" + checks);
+    }
+
+    private static Vector<String> selectedFamilies(String[] args) {
+        Vector<String> catalog = PlayerFamilyCatalog.families();
+        check(catalog.size() == CATALOG_FAMILIES.length,
+            "Player family catalog size changed: expected " + CATALOG_FAMILIES.length +
+            " but found " + catalog.size());
+        for (int i = 0; i < CATALOG_FAMILIES.length; i++)
+            check(CATALOG_FAMILIES[i].equals(catalog.get(i)),
+                "Player family catalog order changed at index " + i);
+
+        Vector<String> selected = new Vector<String>();
+        if (args.length == 0) {
+            selected.addAll(catalog);
+        } else if (args.length == 1 && "--small-catalog".equals(args[0])) {
+            for (int i = 0; i < SMALL_CATALOG_FAMILY_COUNT; i++) selected.add(catalog.get(i));
+        } else if (args.length == 2 && "--family".equals(args[0]) &&
+                catalog.contains(args[1])) {
+            selected.add(args[1]);
+        } else {
+            throw new IllegalArgumentException("Usage: QuickPlayPhysicalMatrixContractTest " +
+                "[--small-catalog | --family <catalog-family-id>]");
+        }
+
+        check(!selected.isEmpty(), "Selected family list is empty");
+        for (String family : selected)
+            check(catalog.contains(family), "Selected family is outside the current catalog: " + family);
+        if (args.length == 0)
+            check(selected.equals(catalog), "Default selection must cover the full catalog");
+        if (args.length == 1 && "--small-catalog".equals(args[0])) {
+            check(selected.size() == SMALL_CATALOG_FAMILY_COUNT,
+                "Small catalog must contain the prior nine leaves and composed family");
+            for (int i = 0; i < SMALL_CATALOG_FAMILY_COUNT; i++)
+                check(selected.get(i).equals(catalog.get(i)),
+                    "Small catalog selection changed at index " + i);
+        }
+        return selected;
     }
 
     private static GeneratedBoardInstance generate(String family, DifficultyProfile profile, long seed) {
         PlayerLaunchRequest launch = PlayerLaunchRequest.random(family, Long.toString(seed), profile.name());
-        return launch.generation().candidate(0).resolve(new GenerationRequest.PlanCache()).construct().instance;
+        return construct(launch.generation().candidate(0));
     }
 
     private static GeneratedBoardInstance replay(String family, DifficultyProfile profile, long seed) {
@@ -91,7 +143,20 @@ public final class QuickPlayPhysicalMatrixContractTest {
         PlayerLaunchRequest exact = PlayerLaunchRequest.parse(launch.accepted(seed).replay());
         check(!exact.candidateSearch && exact.seed == seed && exact.familyId.equals(family) &&
             exact.profile == profile, "Accepted replay descriptor changed identity");
-        return exact.generation().resolve(new GenerationRequest.PlanCache()).construct().instance;
+        return construct(exact.generation());
+    }
+
+    private static GeneratedBoardInstance construct(GenerationRequest request) {
+        GenerationRequest.Prepared prepared = request.resolve(new GenerationRequest.PlanCache());
+        if (request.getExecutionPolicy() != GenerationExecutionPolicy.NORMAL_MEDIUM)
+            return prepared.construct().instance;
+        GenerationRequest.ConstructionSession session = prepared.beginConstruction();
+        int steps = 0;
+        while (!session.advance()) {
+            if (++steps > GenerationCoordinator.MAX_JOB_STEPS)
+                throw new AssertionError("Normal Q30 route exceeded the unchanged shared step bound");
+        }
+        return session.result().instance;
     }
 
     private static long root(int ordinal) {

@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "reader": "tests/contracts/alpha_evidence_contract.py",
+  "source": "compiled-host-smoke-15/cases/002-alpha-explicit-negative.report.json",
+  "scope": "actual forced Alpha negative only; full Alpha corpus separate"
+}

@@ -1,0 +1,65 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: Q30 catalog identity contracts assertions=13
+
+Q30_CATALOG_TRANSFER_CLEANUP ownerDeleted=true graphEmpty=true powerDisconnected=true capabilityRegistryCleared=true slotsRestored=true resetInvoked=false
+
+node 11 unconnected
+node 11 unconnected
+node 58 unconnected
+node 61 unconnected
+node 11 unconnected
+node 52 unconnected
+node 55 unconnected
+node 58 unconnected
+node 63 unconnected
+node 66 unconnected
+node 11 unconnected
+node 52 unconnected
+node 55 unconnected
+node 11 unconnected
+node 52 unconnected
+node 55 unconnected
+node 58 unconnected
+node 63 unconnected
+node 66 unconnected
+node 11 unconnected
+node 58 unconnected
+node 61 unconnected
+node 11 unconnected
+node 58 unconnected
+node 61 unconnected
+node 64 unconnected
+node 11 unconnected
+node 23 unconnected
+node 63 unconnected
+node 66 unconnected
+node 69 unconnected
+node 11 unconnected
+node 23 unconnected
+node 63 unconnected
+node 66 unconnected
+node 11 unconnected
+node 23 unconnected
+node 63 unconnected
+node 66 unconnected
+node 69 unconnected
+node 11 unconnected
+node 58 unconnected
+node 61 unconnected
+node 64 unconnected
+Exception in thread "main" java.lang.NullPointerException
+	at com.lushprojects.circuitjs1.client.CirSim.resetAction(CirSim.java:3550)
+	at com.lushprojects.circuitjs1.client.Q30CatalogTransferContractTest$TransferContext.resetAndVerifyOwner(Q30CatalogTransferContractTest.java:420)
+	at com.lushprojects.circuitjs1.client.Q30CatalogTransferContractTest$TransferContext.run(Q30CatalogTransferContractTest.java:101)
+	at com.lushprojects.circuitjs1.client.Q30CatalogTransferContractTest.main(Q30CatalogTransferContractTest.java:18)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: Q30CatalogTransferContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

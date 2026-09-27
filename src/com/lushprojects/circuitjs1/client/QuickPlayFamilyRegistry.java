@@ -3,8 +3,8 @@ package com.lushprojects.circuitjs1.client;
 import java.util.Vector;
 
 /**
- * Normal-player family boundary for Quick Play. The registry deliberately
- * excludes developer-only fault variants and future families.
+ * Synchronous leaf-generation boundary for Quick Play. Staged catalog entries
+ * are owned by PlayerFamilyCatalog and are not generated through this registry.
  */
 final class QuickPlayFamilyRegistry {
     static final String RELAY_OUTPUT = "RELAY_OUTPUT";

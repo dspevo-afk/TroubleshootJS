@@ -38,28 +38,57 @@ try:
    spec=json.loads(specPath.read_text(encoding='utf-8-sig'))
    result['cases']=[]
    result['browser']=context.browser.version if context.browser else None
-   result['scope']='Actual normal admission classifications; expected rejection is not a playable board.'
+   result['specId']=spec.get('id','unspecified')
+   result['scope']='Current Q30 admission plus explicitly disclosed controlled-copy P09 negatives; no natural rejection distribution claim.'
    page.goto(base+'/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQuickPlayGate=true',wait_until='domcontentloaded',timeout=30000)
    page.wait_for_function("() => window.tsjQuickPlayGate && JSON.parse(document.documentElement.getAttribute('data-tsj-quickplay-gate') || '{}').status === 'READY'",timeout=60000)
    for index,case in enumerate(spec['cases']):
     began=time.monotonic()
     seed=str(case['seed']); search=bool(case.get('search',False)); cancel=int(case.get('cancelAfter',-1))
-    page.evaluate('(c) => window.tsjQuickPlayGate.run(c.seed,c.search,c.cancelAfter)',{'seed':seed,'search':search,'cancelAfter':cancel})
+    controlled=bool(case.get('controlledNegative',False))
+    page.evaluate('(c) => window.tsjQuickPlayGate.run(c.seed,c.search,c.cancelAfter,c.controlledNegative)',
+     {'seed':seed,'search':search,'cancelAfter':cancel,'controlledNegative':controlled})
     page.wait_for_function("() => ['COMPLETE','FAIL'].includes(JSON.parse(document.documentElement.getAttribute('data-tsj-quickplay-gate') || '{}').status)",timeout=115000)
     row=json.loads(page.locator('html').get_attribute('data-tsj-quickplay-gate'))
-    row['cohort']=case.get('cohort','pilot'); row['wallSeconds']=time.monotonic()-began
+    if 'caseId' in case: row['caseId']=case['caseId']
+    row['cohort']=case.get('cohort','pilot')
+    if 'replayGroup' in case: row['replayGroup']=case['replayGroup']
+    row['wallSeconds']=time.monotonic()-began
     result['cases'].append(row); save('cases.json',result['cases'])
     print('CASE',index+1,'/',len(spec['cases']),seed,row.get('outcome'),round(row['wallSeconds'],3),flush=True)
     assert row['status']=='COMPLETE' and row['ownerRestored'] and row['sequence']==index+1,row
     assert row['requestedSeed']==seed and row['units']<=640 and len(row['attempts'])<=(4 if search else 1),row
+    assert row['jobMs']<=90000 and row['maxUnitMs']<=5000,row
     if 'expected' in case: assert row['outcome']==case['expected'],row
+    if 'expectedAcceptedSeed' in case:
+     assert row.get('board',{}).get('seed')==case['expectedAcceptedSeed'],row
+    if 'expectedAttemptOutcomes' in case:
+     assert [a['outcome'] for a in row['attempts']]==case['expectedAttemptOutcomes'],row
+    if 'expectedAttemptStages' in case:
+     assert [a['stage'] for a in row['attempts']]==case['expectedAttemptStages'],row
+    if 'expectedStage' in case:
+     actualStage=row['attempts'][-1]['stage']
+     assert actualStage==case['expectedStage'],(case,row)
     if cancel>=0: assert row['outcome']=='CANCELLED',row
+    if controlled:
+     control=row.get('controlledNegative')
+     assert control and control['kind']=='CONTROLLED_COPY_P09_ENVELOPE_REJECTION',row
+     assert control['applied'] and control['predicateRejected'] and control['reason']=='BOARD_SIZE',row
+     assert control['requestedSeed']==seed and control['appliedOrdinal']==0 and control['consumedCount']==1,row
+     assert control['invalidCopyWidth']==2049 and control['invalidCopyChangedGeometry'],row
+     assert control['originalGeometryFingerprintBefore']==control['originalGeometryFingerprintAfter'],row
+     assert control['originalLayoutIdentityUnchanged'] and control['malformedCopyNotInstalled'],row
+     assert control['originalBoundsPassed'] and control['candidatePrivateAtApply'],row
+     assert control['protectedPowerDisconnectedAtApply'] and control['scopeActiveAtApply'],row
+     assert control['coordinatorCallbackReleased'] and control['protectedOwnerRestored'],row
+    else: assert 'controlledNegative' not in row,row
     if row['outcome']=='PASS':
      def signed(n):
       n=n&((1<<64)-1)
       return n-(1<<64) if n>>63 else n
      candidates=[str(signed(int(seed)+0x9e3779b97f4a7c15*i)) for i in range(4 if search else 1)]
      assert row['board']['seed'] in candidates and row['replay'].endswith('/'+row['board']['seed'])
+     assert type(row['board'].get('geometryFingerprint')) is str and row['board']['geometryFingerprint'],row
      assert row['hypotheses']==3 and row['proofUnits']>0 and row['attempts'][-1]['outcome']=='PASS',row
      if case.get('native'):
       for key in ['width','height','design','parts']: assert row['board'][key]==case['native'][key],(key,row,case)

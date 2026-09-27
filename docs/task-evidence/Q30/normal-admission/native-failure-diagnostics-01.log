@@ -1,0 +1,56 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+<worktree>\src\com\lushprojects\circuitjs1\client\Rb30Behavior.java:447: error: Illegal static declaration in inner class Rb30Behavior.ProfileWork
+        private static String inputName(int value) {
+                              ^
+  modifier 'static' is only allowed in constant variable declarations
+<worktree>\src\com\lushprojects\circuitjs1\client\Rb30Behavior.java:455: error: Illegal static declaration in inner class Rb30Behavior.ProfileWork
+        private static void appendVoltage(StringBuilder target, String label,
+                            ^
+  modifier 'static' is only allowed in constant variable declarations
+<worktree>\src\com\lushprojects\circuitjs1\client\Rb30Behavior.java:466: error: Illegal static declaration in inner class Rb30Behavior.ProfileWork
+        private static double safeVoltage(GeneratedBoardInstance owner,
+                              ^
+  modifier 'static' is only allowed in constant variable declarations
+<worktree>\src\com\lushprojects\circuitjs1\client\Rb30Behavior.java:472: error: Illegal static declaration in inner class Rb30Behavior.ProfileWork
+        private static String sourceCommand(GeneratedBoardInstance owner, String inputId) {
+                              ^
+  modifier 'static' is only allowed in constant variable declarations
+<worktree>\src\com\lushprojects\circuitjs1\client\Rb30Behavior.java:480: error: Illegal static declaration in inner class Rb30Behavior.ProfileWork
+        private static String installedPartCurrent(GeneratedBoardInstance owner,
+                              ^
+  modifier 'static' is only allowed in constant variable declarations
+<worktree>\src\com\lushprojects\circuitjs1\client\Rb30Behavior.java:493: error: Illegal static declaration in inner class Rb30Behavior.ProfileWork
+        private static String decisionOutputCurrent(GeneratedBoardInstance owner,
+                              ^
+  modifier 'static' is only allowed in constant variable declarations
+<worktree>\src\com\lushprojects\circuitjs1\client\Rb30Behavior.java:504: error: Illegal static declaration in inner class Rb30Behavior.ProfileWork
+        private static String decisionOutputState(double outputVolts) {
+                              ^
+  modifier 'static' is only allowed in constant variable declarations
+<worktree>\src\com\lushprojects\circuitjs1\client\Rb30Behavior.java:511: error: Illegal static declaration in inner class Rb30Behavior.ProfileWork
+        private static String relayCurrent(GeneratedBoardInstance owner, String componentId) {
+                              ^
+  modifier 'static' is only allowed in constant variable declarations
+<worktree>\src\com\lushprojects\circuitjs1\client\Rb30Behavior.java:520: error: Illegal static declaration in inner class Rb30Behavior.ProfileWork
+        private static String relayContactOpen(GeneratedBoardInstance owner, String componentId) {
+                              ^
+  modifier 'static' is only allowed in constant variable declarations
+<worktree>\src\com\lushprojects\circuitjs1\client\Rb30Behavior.java:529: error: Illegal static declaration in inner class Rb30Behavior.ProfileWork
+        private static String relayPosition(GeneratedBoardInstance owner, String componentId) {
+                              ^
+  modifier 'static' is only allowed in constant variable declarations
+<worktree>\src\com\lushprojects\circuitjs1\client\Rb30Behavior.java:538: error: Illegal static declaration in inner class Rb30Behavior.ProfileWork
+        private static String number(double value) {
+                              ^
+  modifier 'static' is only allowed in constant variable declarations
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+11 errors
+1 warning
+
+CURRENT_CONTRACT_FAILURE: Current production-class compilation failed, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

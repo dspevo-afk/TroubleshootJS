@@ -113,11 +113,17 @@ final class A10GenerationDeveloperVerifier {
             require(sim.getGeneratedBoardInstance() == original && sim.elmList == originalGraph,
                 "supersession restores original before a new candidate begins");
             coordinator.cancel();
-            coordinator.start(GenerationRequest.leaf("unsupported-generation-family", 0, false), null, false);
-            require(coordinator.getJob().getOutcome() == GenerationJob.Outcome.EXPECTED_REJECTION &&
-                coordinator.getJob().getStage() == GenerationJob.Stage.RESOLVE &&
-                coordinator.getJob().getStepCount() == 1 && coordinator.getJob().getReceipt() == null,
-                "unsupported native request rejects before electrical allocation");
+            GenerationJob beforeUnsupported = coordinator.getJob();
+            boolean unsupportedRejected = false;
+            try {
+                coordinator.start(GenerationRequest.leaf("unsupported-generation-family", 0, false), null, false);
+            } catch (ChallengeContractException expected) {
+                unsupportedRejected = expected.getCode() == ChallengeContractException.Code.UNSUPPORTED_ID;
+            }
+            require(unsupportedRejected && coordinator.getJob() == beforeUnsupported &&
+                beforeUnsupported.getOutcome() == GenerationJob.Outcome.CANCELLED &&
+                beforeUnsupported.getReceipt() == null,
+                "unsupported native request rejects before replacing the coordinator job or electrical allocation");
             requireOriginal(sim, original, originalController, originalGraph, originalAttached, copper);
             // The preparation transaction owns even a failure before a private
             // graph is installed. Every boundary must restore the exact owner.

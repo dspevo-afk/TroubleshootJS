@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<worktree>",
+  "startedUtc": "2026-09-26T22:22:52.950348+00:00",
+  "outcome": "NOT_RUN",
+  "cases": [
+    {
+      "schema": 1,
+      "case": {
+        "index": 1,
+        "name": "timeout-canary",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true",
+        "stateAttribute": "data-tsj-deliberately-absent",
+        "expectedState": "PASS:absent",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 1.0,
+        "reportAttribute": null
+      },
+      "url": "http://127.0.0.1:55665/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true",
+      "startedUtc": "2026-09-26T22:22:54.138323+00:00",
+      "finishedUtc": "2026-09-26T22:22:55.139699+00:00",
+      "operationSeconds": 1.0013712999643758,
+      "outcome": "TIMEOUT",
+      "terminalReached": false,
+      "stateMatch": false,
+      "observedState": null,
+      "lastObservedState": null,
+      "timedOut": true,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": false,
+      "reportJsonValid": null,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 0,
+      "reportSha256": null,
+      "reportFile": null,
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    }
+  ],
+  "caseCount": 1,
+  "errors": [],
+  "inputAudit": {
+    "status": "BEFORE_CAPTURED",
+    "beforeSha256": "6dcd996aec24cc43cdf4df3e2a4d509fe666b2d9c3a1fbee0d755825f5417db9",
+    "sourceSha256": "64031786c706947cfa7580c3909ead69d3e6e262ccb161453c0abced9d7295e1",
+    "webSha256": "1f48faab0862d1207ea483df0a4e8a56db18bc07ec0c05cae6be0aeb053f812a",
+    "fileCount": 1522
+  },
+  "identity": {
+    "schema": 1,
+    "runner": {
+      "pid": 10460,
+      "created": "2026-09-26T22:22:52.8128890Z",
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+    },
+    "edgeProcessesBeforeCases": [
+      {
+        "pid": 35368,
+        "parent": 34476,
+        "created": "2026-09-26T22:22:53.5327710Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 38752,
+        "parent": 35368,
+        "created": "2026-09-26T22:22:53.5442900Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 24388,
+        "parent": 35368,
+        "created": "2026-09-26T22:22:53.6287340Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 36368,
+        "parent": 35368,
+        "created": "2026-09-26T22:22:53.6324980Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 33856,
+        "parent": 35368,
+        "created": "2026-09-26T22:22:53.6465820Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 23440,
+        "parent": 35368,
+        "created": "2026-09-26T22:22:53.7217510Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 14164,
+        "parent": 35368,
+        "created": "2026-09-26T22:22:53.7266570Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "profile": "<task-temp>\\tsj-q30-host-timeout-15-90baf95279174c9eb2422b24ecc3b5a7\\profile",
+    "port": 55665,
+    "baseUrl": "http://127.0.0.1:55665"
+  },
+  "operationStartedUtc": "2026-09-26T22:22:54.138311+00:00"
+}

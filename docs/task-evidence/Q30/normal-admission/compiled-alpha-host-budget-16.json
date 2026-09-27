@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "declaredUtc": "2026-09-26T22:36:24.463773+00:00",
+  "scope": "Outer host capture for the aggregate 41-case compiled Alpha corpus; application job budgets unchanged",
+  "beforeSeconds": 600,
+  "afterSeconds": 900,
+  "evidence": "GWT15 aggregate reached case39 after580.656seconds and failed an actual cross-target fixture assertion;39case receipts completed. Two composed cases remain to run after correction.",
+  "rationale": "Provide bounded capture headroom for the whole corpus, including its remaining two cases and normal runtime variation. Individual production admissions still enforce their existing deadlines and work limits.",
+  "priorAttempt": "FAIL retained; not a timeout and not counted as successful corpus evidence",
+  "applicationBudgetsChanged": false
+}

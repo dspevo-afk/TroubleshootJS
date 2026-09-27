@@ -1,0 +1,25 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+QUICKPLAY_NATIVE method=verifyEligibleFamilies millis=4
+QUICKPLAY_NATIVE method=verifyDeterministicFamilySelection millis=5867
+QUICKPLAY_NATIVE method=verifySelectionEnvelopes millis=45
+QUICKPLAY_NATIVE method=verifyFullCatalogSelectionAndStagedRequests millis=31
+QUICKPLAY_NATIVE method=verifyNaturalLedSeedEnvelope millis=9
+QUICKPLAY_NATIVE method=verifyNaturalNpnSeedEnvelope millis=110
+QUICKPLAY_NATIVE method=verifyNaturalNmosSeedEnvelope millis=50
+PASS: Quick Play current seed envelopes and construction
+
+
+Exception in thread "main" java.lang.AssertionError: every supported physical fit has a distinct public catalog label: RB30_CONTROL/5 V coil / SPDT / 24 V DC, 0.5 A contacts
+	at com.lushprojects.circuitjs1.client.U04SessionContractTest.check(U04SessionContractTest.java:198)
+	at com.lushprojects.circuitjs1.client.U04SessionContractTest.verifyAllCatalogLabels(U04SessionContractTest.java:131)
+	at com.lushprojects.circuitjs1.client.U04SessionContractTest.main(U04SessionContractTest.java:57)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: U04SessionContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

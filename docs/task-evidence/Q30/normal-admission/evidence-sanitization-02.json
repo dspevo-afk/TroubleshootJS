@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 2,
+  "scope": {
+    "directory": "docs/task-evidence/Q30/normal-admission",
+    "ownedFiles": [
+      "native-final-03.log",
+      "native-final-03-receipt.txt",
+      "native-tail-01.log",
+      "native-tail-01-receipt.txt",
+      "native-floorplan-locality-01.log",
+      "native-floorplan-locality-02.log"
+    ],
+    "newRecord": "evidence-sanitization-02.json",
+    "priorRecord": "evidence-sanitization-01.json",
+    "inputManifestsUntouched": [
+      "compiled-p09-12-inputs.json",
+      "native-final-03-inputs.json",
+      "native-tail-01-inputs.json"
+    ],
+    "otherFilesUntouched": true
+  },
+  "sanitization": {
+    "changedFileCount": 0,
+    "replacementCounts": {
+      "<worktree>": 0,
+      "<task-temp>": 0,
+      "<jdk8>": 0,
+      "<user-home>": 0
+    },
+    "changedFiles": [],
+    "finding": "The owned completed evidence files contained no personal worktree or task-temp prefixes and no credential assignment patterns; no content replacement was required."
+  },
+  "fileAudit": [
+    {
+      "path": "native-final-03.log",
+      "exists": true,
+      "bytesBefore": 1220875,
+      "bytesAfter": 1220875,
+      "linesBefore": 13101,
+      "linesAfter": 13101,
+      "beforeSha256": "7ea432e587d88f3a1952daf408612244cef893d2e51bfc3a829ac0085084ed0b",
+      "afterSha256": "7ea432e587d88f3a1952daf408612244cef893d2e51bfc3a829ac0085084ed0b",
+      "replacementCounts": {
+        "<worktree>": 0,
+        "<task-temp>": 0
+      },
+      "personalPathHits": 0,
+      "credentialPatternHits": 0
+    },
+    {
+      "path": "native-final-03-receipt.txt",
+      "exists": false,
+      "untouched": true
+    },
+    {
+      "path": "native-tail-01.log",
+      "exists": true,
+      "bytesBefore": 649125,
+      "bytesAfter": 649125,
+      "linesBefore": 3961,
+      "linesAfter": 3961,
+      "beforeSha256": "8897ad5178c68620d70b7e5587eb9ba5579be1d48eb5a4a92d5c9722cfc1dd05",
+      "afterSha256": "8897ad5178c68620d70b7e5587eb9ba5579be1d48eb5a4a92d5c9722cfc1dd05",
+      "replacementCounts": {
+        "<worktree>": 0,
+        "<task-temp>": 0
+      },
+      "personalPathHits": 0,
+      "credentialPatternHits": 0
+    },
+    {
+      "path": "native-tail-01-receipt.txt",
+      "exists": true,
+      "bytesBefore": 644935,
+      "bytesAfter": 644935,
+      "linesBefore": 3950,
+      "linesAfter": 3950,
+      "beforeSha256": "a6e2731dfe711ae70843de6e99626b713263bae1e561d4a0616e7ed789ec1904",
+      "afterSha256": "a6e2731dfe711ae70843de6e99626b713263bae1e561d4a0616e7ed789ec1904",
+      "replacementCounts": {
+        "<worktree>": 0,
+        "<task-temp>": 0
+      },
+      "personalPathHits": 0,
+      "credentialPatternHits": 0
+    },
+    {
+      "path": "native-floorplan-locality-01.log",
+      "exists": true,
+      "bytesBefore": 3124,
+      "bytesAfter": 3124,
+      "linesBefore": 28,
+      "linesAfter": 28,
+      "beforeSha256": "82971272409b2a0f61a841adefee7d35ac0285976042f3966ec11965b5d9b369",
+      "afterSha256": "82971272409b2a0f61a841adefee7d35ac0285976042f3966ec11965b5d9b369",
+      "replacementCounts": {
+        "<worktree>": 0,
+        "<task-temp>": 0
+      },
+      "personalPathHits": 0,
+      "credentialPatternHits": 0
+    },
+    {
+      "path": "native-floorplan-locality-02.log",
+      "exists": true,
+      "bytesBefore": 2989,
+      "bytesAfter": 2989,
+      "linesBefore": 27,
+      "linesAfter": 27,
+      "beforeSha256": "53b2d576173b6cf4fdf7365081492a26c11cbe3619feb3e81d1f8f94ee4f8cf3",
+      "afterSha256": "53b2d576173b6cf4fdf7365081492a26c11cbe3619feb3e81d1f8f94ee4f8cf3",
+      "replacementCounts": {
+        "<worktree>": 0,
+        "<task-temp>": 0
+      },
+      "personalPathHits": 0,
+      "credentialPatternHits": 0
+    }
+  ],
+  "machineLineAudit": {
+    "hashDefinition": {
+      "orderedLineBytesSha256": "SHA-256 of the concatenated raw matching line records, including their CRLF terminators",
+      "orderedLineTextSha256": "SHA-256 of the concatenated raw matching line text, excluding line terminators",
+      "lineHashSequenceSha256": "SHA-256 of UTF-8 text containing each matching line text SHA-256 in file order, one per LF-delimited line"
+    },
+    "audits": [
+      {
+        "file": "native-tail-01.log",
+        "markerPrefix": "GATE_ROW ",
+        "count": 72,
+        "firstLine": 3728,
+        "lastLine": 3801,
+        "orderedLineTextBytes": 27603,
+        "orderedLineRecordBytes": 27747,
+        "orderedLineTextSha256Before": "e4f41da10f1784a5eb2d2225421375faa081a361440fccef9843d3f0395ed73f",
+        "orderedLineTextSha256After": "e4f41da10f1784a5eb2d2225421375faa081a361440fccef9843d3f0395ed73f",
+        "orderedLineBytesSha256Before": "a71e228dfd8b2f84832e3bc42ed1e8ac51bf0f727c33b1b20753a56788c44f07",
+        "orderedLineBytesSha256After": "a71e228dfd8b2f84832e3bc42ed1e8ac51bf0f727c33b1b20753a56788c44f07",
+        "lineHashSequenceSha256Before": "46403063f94646b84fd1baeed676ee0deadeb6709267ed4cc7cd3e15c24f3477",
+        "lineHashSequenceSha256After": "46403063f94646b84fd1baeed676ee0deadeb6709267ed4cc7cd3e15c24f3477",
+        "unchanged": true
+      },
+      {
+        "file": "native-final-03.log",
+        "markerPrefix": "Q30_CORPUS",
+        "count": 52,
+        "firstLine": 12798,
+        "lastLine": 12951,
+        "orderedLineTextBytes": 240879,
+        "orderedLineRecordBytes": 240983,
+        "orderedLineTextSha256Before": "e87e22e83382a70e50d6e66b072bdb1089e7a217fbbddb5931e2c526b6d5088b",
+        "orderedLineTextSha256After": "e87e22e83382a70e50d6e66b072bdb1089e7a217fbbddb5931e2c526b6d5088b",
+        "orderedLineBytesSha256Before": "be91f0bf96541536d9c18858580ed341063f27c02dc856fc8282d0d7f68d92aa",
+        "orderedLineBytesSha256After": "be91f0bf96541536d9c18858580ed341063f27c02dc856fc8282d0d7f68d92aa",
+        "lineHashSequenceSha256Before": "f61f5b20391f457effe256c1b7f12b0a14778c913e0c7d1be7d7e65cc50f3db7",
+        "lineHashSequenceSha256After": "f61f5b20391f457effe256c1b7f12b0a14778c913e0c7d1be7d7e65cc50f3db7",
+        "unchanged": true
+      },
+      {
+        "file": "native-final-03.log",
+        "markerPrefix": "Q30_SERVICE",
+        "count": 0,
+        "firstLine": null,
+        "lastLine": null,
+        "orderedLineTextBytes": 0,
+        "orderedLineRecordBytes": 0,
+        "orderedLineTextSha256Before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "orderedLineTextSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "orderedLineBytesSha256Before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "orderedLineBytesSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lineHashSequenceSha256Before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lineHashSequenceSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "unchanged": true
+      },
+      {
+        "file": "native-final-03.log",
+        "markerPrefix": "Q30_SENSITIVITY",
+        "count": 1,
+        "firstLine": 12797,
+        "lastLine": 12797,
+        "orderedLineTextBytes": 74,
+        "orderedLineRecordBytes": 76,
+        "orderedLineTextSha256Before": "3a45dcb87ac8dd9e44ce39c42c166324d21c2630b817c4c8f8502a74906bde1a",
+        "orderedLineTextSha256After": "3a45dcb87ac8dd9e44ce39c42c166324d21c2630b817c4c8f8502a74906bde1a",
+        "orderedLineBytesSha256Before": "c7b8f57bd09b36d40ad056572aaef1076ac47abfee1c5afdff15ad49db9a002a",
+        "orderedLineBytesSha256After": "c7b8f57bd09b36d40ad056572aaef1076ac47abfee1c5afdff15ad49db9a002a",
+        "lineHashSequenceSha256Before": "a5ecb3c9e34640f8bebff229f89f8bcde44e1def2b00ceb5d900f8dffc77a137",
+        "lineHashSequenceSha256After": "a5ecb3c9e34640f8bebff229f89f8bcde44e1def2b00ceb5d900f8dffc77a137",
+        "unchanged": true
+      }
+    ]
+  },
+  "p09InputAudit": {
+    "manifest": "compiled-p09-12-inputs.json",
+    "manifestBytes": 1143,
+    "manifestSha256": "66fa3c415d8470f502d07c36c816f720775c92bf586bc0471afaa22b5e187e5f",
+    "recordedNativeTail01Sha256": "8897ad5178c68620d70b7e5587eb9ba5579be1d48eb5a4a92d5c9722cfc1dd05",
+    "observedNativeTail01Sha256Before": "8897ad5178c68620d70b7e5587eb9ba5579be1d48eb5a4a92d5c9722cfc1dd05",
+    "observedNativeTail01Sha256After": "8897ad5178c68620d70b7e5587eb9ba5579be1d48eb5a4a92d5c9722cfc1dd05",
+    "orderedGateRowCount": 72,
+    "manifestModified": false,
+    "recordedHashMatchesBefore": true,
+    "recordedHashMatchesAfter": true
+  },
+  "verification": {
+    "jsonParses": true,
+    "personalPathHitsInOwnedFiles": 0,
+    "credentialPatternHitsInOwnedFiles": 0,
+    "orderedMachineRowsUnchanged": true,
+    "tests": "NOT RUN: leaf assignment explicitly prohibited tests"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "status": "PASS_COMPILED_POPULATION",
+  "fullCombinedP09Gate": "NOT RUN: native05 and strict combined reader pending",
+  "browser": "154.0.4258.37",
+  "caseCount": 72,
+  "accepted": 72,
+  "errors": [],
+  "httpErrors": [],
+  "allOwnersRestored": true,
+  "cohorts": {
+    "development": {
+      "cases": 24,
+      "failures": 0,
+      "wallSeconds": {
+        "p50": 13.33845100000002,
+        "p95": 20.10603659999998,
+        "max": 21.114893100000018
+      },
+      "jobMs": {
+        "p50": 13324,
+        "p95": 20091,
+        "max": 21101
+      },
+      "maxUnitMs": {
+        "p50": 1104,
+        "p95": 1321,
+        "max": 1341
+      },
+      "units": {
+        "p50": 87,
+        "p95": 112,
+        "max": 114
+      }
+    },
+    "holdout": {
+      "cases": 48,
+      "failures": 0,
+      "wallSeconds": {
+        "p50": 13.252692500000194,
+        "p95": 21.754642599999897,
+        "max": 24.13917820000006
+      },
+      "jobMs": {
+        "p50": 13237,
+        "p95": 21741,
+        "max": 24126
+      },
+      "maxUnitMs": {
+        "p50": 1086,
+        "p95": 1322,
+        "max": 1327
+      },
+      "units": {
+        "p50": 87,
+        "p95": 116,
+        "max": 123
+      }
+    }
+  },
+  "limits": "Fixed P09 small-board population; controlled rejection cases separate. Initial unattributed console404 retained in log; no page/HTTP errors in completed result. Does not certify Q30 performance or universal seed success."
+}

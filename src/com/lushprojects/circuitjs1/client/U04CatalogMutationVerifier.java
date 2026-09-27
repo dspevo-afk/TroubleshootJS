@@ -269,35 +269,61 @@ final class U04CatalogMutationVerifier {
         for (PhysicalBoardRuntimeCapability capability : runtime.getCapabilities())
             if (capability instanceof ReplaceableResistorBoardCapability)
                 capabilities.add((ReplaceableResistorBoardCapability) capability);
+        Vector<ReplaceableResistorBoardCapability> freshSources =
+            new Vector<ReplaceableResistorBoardCapability>();
         for (ReplaceableResistorBoardCapability source : capabilities) {
             if (!isDriverResistorTarget(source))
                 continue;
-            PhysicalResistorPart part = findTenOhmLooseResistor(source);
             PhysicalResistorPart sourceOriginal = source.getSlot().getInstalledPart();
-            if (part == null || sourceOriginal == null || source.getController() == null)
+            if (sourceOriginal == null || source.getController() == null)
                 continue;
             for (ReplaceableResistorBoardCapability targetOne : capabilities) {
+                PhysicalGeometryRealization targetOneGeometry = targetOne.getSlot()
+                    .getPhysicalSlot().getGeometryRealization();
                 if (targetOne == source || !isNmosLoadResistorTarget(targetOne) ||
                         targetOne.getController() == null ||
                         targetOne.getSlot().getInstalledPart() == null ||
-                        !sameGeometry(part.getGeometryRealization(),
-                            targetOne.getSlot().getPhysicalSlot().getGeometryRealization()))
+                        targetOneGeometry == null)
                     continue;
                 for (ReplaceableResistorBoardCapability targetTwo : capabilities) {
+                    PhysicalGeometryRealization targetTwoGeometry = targetTwo.getSlot()
+                        .getPhysicalSlot().getGeometryRealization();
                     if (targetTwo == source || targetTwo == targetOne ||
                             targetTwo.getController() == null ||
                             targetTwo.getSlot().getInstalledPart() == null ||
-                            !sameGeometry(part.getGeometryRealization(),
-                                targetTwo.getSlot().getPhysicalSlot().getGeometryRealization()))
+                        !sameGeometry(targetOneGeometry, targetTwoGeometry))
                         continue;
-                    return new CrossTargetFixture(source, sourceOriginal, part,
+                    // Every source-owned 10 Ohm candidate is considered.  A
+                    // previously exercised candidate may already be formed
+                    // to its own source slot, while a later catalog purchase
+                    // remains valid portable stock for this target fit.
+                    PhysicalResistorPart part = findTenOhmLooseResistor(source,
+                        targetOneGeometry);
+                    if (part == null && !freshSources.contains(source)) {
+                        freshSources.add(source);
+                        part = acquireFreshTenOhm(source);
+                    }
+                    if (part == null)
+                        continue;
+                    CrossTargetFixture fixture = new CrossTargetFixture(source, sourceOriginal, part,
                         targetOne, targetOne.getSlot().getInstalledPart(), targetTwo,
                         targetTwo.getSlot().getInstalledPart());
+                    if (part.getGeometryRealization() == null)
+                        formCatalogPartThroughTarget(source, part, targetOne,
+                            fixture.targetOneOriginal, targetOneGeometry);
+                    require(sameGeometry(targetOneGeometry, part.getGeometryRealization()),
+                        "cross fixture formed target " + targetOne.getComponentId() +
+                        " with geometry " + part.getGeometryRealization() +
+                        "; declared target geometry=" + targetOneGeometry +
+                        "; source owner=" + source.getComponentId());
+                    return fixture;
                 }
             }
         }
         throw new AssertionError("U04 catalog mutation: composed board lacks a loose source resistor, " +
-            "compatible NMOS-driven load and alternate target");
+            "compatible NMOS-driven load and alternate target; current source candidates=" +
+            describeTenOhmSources(capabilities) + "; resistor targets=" +
+            describeResistorTargets(capabilities));
     }
 
     private boolean isDriverResistorTarget(ReplaceableResistorBoardCapability capability) {
@@ -342,12 +368,183 @@ final class U04CatalogMutationVerifier {
     }
 
     private PhysicalResistorPart findTenOhmLooseResistor(
-            ReplaceableResistorBoardCapability capability) {
-        for (PhysicalResistorPart candidate : capability.getInventory().getLooseParts())
-            if (candidate != null && !candidate.isOriginal() &&
-                    candidate.getSpecification().getNominalResistanceOhms() == 10.0)
+            ReplaceableResistorBoardCapability capability,
+            PhysicalGeometryRealization targetGeometry) {
+        for (PhysicalResistorPart candidate : capability.getInventory().getLooseParts()) {
+            if (candidate == null || candidate.isOriginal() ||
+                    candidate.getSpecification().getNominalResistanceOhms() != 10.0)
+                continue;
+            PhysicalGeometryRealization actual = candidate.getGeometryRealization();
+            if ((actual == null && PhysicalResistorPart.hasUnformedCatalogLeads(candidate)) ||
+                    (actual != null && sameGeometry(targetGeometry, actual)))
                 return candidate;
+        }
         return null;
+    }
+
+    private PhysicalResistorPart acquireFreshTenOhm(
+            ReplaceableResistorBoardCapability source) {
+        String catalogId = null;
+        for (ResistorCatalogEntry entry : source.getCatalog().getEntries())
+            if (entry.getSpecification().getNominalResistanceOhms() == 10.0) {
+                catalogId = entry.getId();
+                break;
+            }
+        require(catalogId != null,
+            "source " + source.getComponentId() + " has no real 10 Ohm catalog entry");
+        BoardPowerState savedPower = sim.getBoardPowerController().getState();
+        try {
+            ensureUnpowered();
+            PhysicalPart<?> acquired = ((CatalogAcquisitionProvider)source.getController())
+                .acquireFromCatalog(catalogId);
+            settle();
+            require(acquired instanceof PhysicalResistorPart,
+                "source " + source.getComponentId() + " returned a real resistor for " + catalogId);
+            PhysicalResistorPart result = (PhysicalResistorPart) acquired;
+            PhysicalBoardRuntime runtime = sim.getGeneratedBoardInstance().getPhysicalBoardRuntime();
+            require(result.getSpecification().getNominalResistanceOhms() == 10.0 &&
+                    PhysicalResistorPart.hasUnformedCatalogLeads(result) &&
+                    runtime.getPart(result.getId()) == result &&
+                    source.getPart(result.getId()) == result && source.ownsPart(result.getId()) &&
+                    runtime.getWorkbenchPartsProviderForPart(result.getId()) == source,
+                "source " + source.getComponentId() + " returned portable source-owned 10 Ohm stock");
+            return result;
+        } finally {
+            ensureUnpowered();
+            if (savedPower == BoardPowerState.POWERED) {
+                sim.setBoardPowerState(BoardPowerState.POWERED);
+                settle();
+            } else {
+                sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+                settle();
+            }
+        }
+    }
+
+    private String describeTenOhmSources(
+            Vector<ReplaceableResistorBoardCapability> capabilities) {
+        StringBuilder result = new StringBuilder();
+        for (ReplaceableResistorBoardCapability capability : capabilities) {
+            if (!isDriverResistorTarget(capability))
+                continue;
+            if (result.length() > 0)
+                result.append(';');
+            result.append(capability.getComponentId()).append("{slot=")
+                .append(capability.getSlot().getPhysicalSlot().getGeometryRealization())
+                .append(",loose=");
+            boolean first = true;
+            for (PhysicalResistorPart candidate : capability.getInventory().getLooseParts()) {
+                if (candidate == null || candidate.isOriginal() ||
+                        candidate.getSpecification().getNominalResistanceOhms() != 10.0)
+                    continue;
+                if (!first)
+                    result.append('|');
+                result.append(candidate.getGeometryRealization());
+                first = false;
+            }
+            if (first)
+                result.append("none");
+            result.append('}');
+        }
+        return result.toString();
+    }
+
+    private boolean sameFormationCanonicalDump(CircuitElm beforeElement,
+            CircuitElm afterElement, String beforeDump, String afterDump) {
+        if (beforeElement instanceof NTransistorElm || afterElement instanceof NTransistorElm) {
+            if (beforeElement.getClass() != afterElement.getClass())
+                return false;
+            return sameTransistorDumpForFormation(beforeDump, afterDump);
+        }
+        return beforeDump.equals(afterDump);
+    }
+
+    /**
+     * A successful formation may leave the live NPN junction voltages at
+     * slightly different finite solver values after the board is isolated.
+     * Every serialized transistor field other than those two live values is
+     * still part of the exact formation oracle.
+     */
+    private boolean sameTransistorDumpForFormation(String beforeDump, String afterDump) {
+        Vector<String> before = dumpTokens(beforeDump);
+        Vector<String> after = dumpTokens(afterDump);
+        if (before.size() != 11 || after.size() != 11)
+            return false;
+        for (int index = 0; index < before.size(); index++) {
+            if (index == 7 || index == 8)
+                continue;
+            if (!before.get(index).equals(after.get(index)))
+                return false;
+        }
+        double beforeFirstJunction = parseFiniteDumpValue(before.get(7));
+        double beforeSecondJunction = parseFiniteDumpValue(before.get(8));
+        double afterFirstJunction = parseFiniteDumpValue(after.get(7));
+        double afterSecondJunction = parseFiniteDumpValue(after.get(8));
+        return finiteDumpValue(beforeFirstJunction) && finiteDumpValue(beforeSecondJunction) &&
+            finiteDumpValue(afterFirstJunction) && finiteDumpValue(afterSecondJunction);
+    }
+
+    private Vector<String> dumpTokens(String dump) {
+        Vector<String> result = new Vector<String>();
+        if (dump == null)
+            return result;
+        StringTokenizer tokenizer = new StringTokenizer(dump, " ");
+        while (tokenizer.hasMoreTokens())
+            result.add(tokenizer.nextToken());
+        return result;
+    }
+
+    private double parseFiniteDumpValue(String value) {
+        try {
+            return Double.parseDouble(value);
+        } catch (RuntimeException malformed) {
+            return Double.NaN;
+        }
+    }
+
+    private boolean finiteDumpValue(double value) {
+        return !Double.isNaN(value) && !Double.isInfinite(value);
+    }
+
+    private boolean formationDumpCanariesChecked;
+
+    private void verifyFormationDumpCanaries() {
+        if (formationDumpCanariesChecked)
+            return;
+        formationDumpCanariesChecked = true;
+        String before = "t 16000 16000 16080 16000 0 1 2.9493369103320677e-31 " +
+            "2.752067730968951e-38 100 default";
+        String after = "t 16000 16000 16080 16000 0 1 2.9493366253179973e-31 " +
+            "-2.949336622368664e-38 100 default";
+        require(sameTransistorDumpForFormation(before, after),
+            "formation comparator rejected the confirmed finite NPN junction drift");
+        require(!sameTransistorDumpForFormation(replaceDumpToken(after, 1, "16001"), before),
+            "formation comparator accepted a transistor coordinate change");
+        require(!sameTransistorDumpForFormation(replaceDumpToken(after, 5, "1"), before),
+            "formation comparator accepted a transistor flags change");
+        require(!sameTransistorDumpForFormation(replaceDumpToken(after, 6, "-1"), before),
+            "formation comparator accepted a transistor polarity change");
+        require(!sameTransistorDumpForFormation(replaceDumpToken(after, 9, "101"), before),
+            "formation comparator accepted a transistor beta/value change");
+        require(!sameTransistorDumpForFormation(replaceDumpToken(after, 10, "other"), before),
+            "formation comparator accepted a transistor model change");
+        require(!sameTransistorDumpForFormation(replaceDumpToken(after, 7, "NaN"), before),
+            "formation comparator accepted a nonfinite junction value");
+        require(!sameTransistorDumpForFormation(before.substring(0, before.lastIndexOf(' ')),
+                after), "formation comparator accepted a malformed transistor dump");
+    }
+
+    private String replaceDumpToken(String dump, int index, String replacement) {
+        Vector<String> tokens = dumpTokens(dump);
+        require(index >= 0 && index < tokens.size(), "formation canary token index is in range");
+        tokens.set(index, replacement);
+        StringBuilder result = new StringBuilder();
+        for (String token : tokens) {
+            if (result.length() > 0)
+                result.append(' ');
+            result.append(token);
+        }
+        return result.toString();
     }
 
     private PhysicalResistorPart findLowestLooseResistor(
@@ -374,9 +571,113 @@ final class U04CatalogMutationVerifier {
             PhysicalGeometryRealization expected) {
         for (PhysicalPart<?> candidate : runtime.getPhysicalParts())
             if (candidate instanceof PhysicalResistorPart && !candidate.isInstalled() &&
+                    candidate.getGeometryRealization() != null &&
                     !sameGeometry(expected, candidate.getGeometryRealization()))
                 return (PhysicalResistorPart) candidate;
+
+        // A loose catalog resistor with null geometry is portable stock, not a
+        // wrong-fit negative.  If an incompatible real source slot exists,
+        // form one through that slot's owner so this canary still exercises
+        // the production geometry predicate without binding geometry directly.
+        for (PhysicalBoardRuntimeCapability capability : runtime.getCapabilities()) {
+            if (!(capability instanceof ReplaceableResistorBoardCapability))
+                continue;
+            ReplaceableResistorBoardCapability source =
+                (ReplaceableResistorBoardCapability) capability;
+            PhysicalGeometryRealization sourceGeometry = source.getSlot().getPhysicalSlot()
+                .getGeometryRealization();
+            PhysicalResistorPart sourceOriginal = source.getSlot().getInstalledPart();
+            if (sourceGeometry == null || sameGeometry(expected, sourceGeometry) ||
+                    sourceOriginal == null || source.getController() == null)
+                continue;
+            for (PhysicalResistorPart candidate : source.getInventory().getLooseParts()) {
+                if (candidate == null || candidate.isOriginal() ||
+                        !PhysicalResistorPart.hasUnformedCatalogLeads(candidate))
+                    continue;
+                formCatalogPartThroughTarget(source, candidate, source, sourceOriginal,
+                    sourceGeometry);
+                require(candidate.getGeometryRealization() != null &&
+                        !sameGeometry(expected, candidate.getGeometryRealization()),
+                    "wrong-geometry fixture source " + source.getComponentId() +
+                    " formed " + candidate.getGeometryRealization() +
+                    " but target expects " + expected);
+                return candidate;
+            }
+        }
         return null;
+    }
+
+    /** Forms portable stock through a real target adapter, then restores it loose. */
+    private void formCatalogPartThroughTarget(ReplaceableResistorBoardCapability source,
+            PhysicalResistorPart part, ReplaceableResistorBoardCapability target,
+            PhysicalResistorPart targetOriginal, PhysicalGeometryRealization expected) {
+        require(source != null && part != null && target != null && targetOriginal != null &&
+                expected != null, "catalog formation requires real source and target declarations");
+        if (part.getGeometryRealization() != null) {
+            require(sameGeometry(expected, part.getGeometryRealization()),
+                "target " + target.getComponentId() + " has a preformed loose part with " +
+                part.getGeometryRealization() + "; declared geometry=" + expected +
+                "; source owner=" + source.getComponentId());
+            return;
+        }
+        require(PhysicalResistorPart.hasUnformedCatalogLeads(part),
+            "source " + source.getComponentId() +
+            " supplied unformed stock that is not valid catalog axial stock");
+        PhysicalBoardRuntime runtime = sim.getGeneratedBoardInstance().getPhysicalBoardRuntime();
+        require(runtime.getPart(part.getId()) == part && source.getPart(part.getId()) == part &&
+                source.ownsPart(part.getId()) &&
+                runtime.getWorkbenchPartsProviderForPart(part.getId()) == source &&
+                target.getController() != null && target.getSlot().getInstalledPart() == targetOriginal &&
+                targetOriginal.isInstalled(),
+            "catalog formation lost source owner or target original; source=" +
+            source.getComponentId() + "; target=" + target.getComponentId());
+        Observation before = new Observation();
+        BoardPowerState savedPower = sim.getBoardPowerController().getState();
+        try {
+            ensureUnpowered();
+            require(target.getController().removeInstalledPart(),
+                "target " + target.getComponentId() + " removal reached the real adapter");
+            settle();
+            require(target.getController().install(part.getId()),
+                "target " + target.getComponentId() + " formed catalog stock through the real adapter");
+            settle();
+            require(target.getSlot().getInstalledPart() == part && part.isInstalled() &&
+                    sameGeometry(expected, part.getGeometryRealization()),
+                "target " + target.getComponentId() + " formed catalog stock with geometry " +
+                part.getGeometryRealization() + "; declared geometry=" + expected +
+                "; source owner=" + source.getComponentId());
+            require(target.getController().removeInstalledPart(),
+                "target " + target.getComponentId() + " returned formed stock to loose state");
+            settle();
+            require(target.getController().install(targetOriginal.getId()),
+                "target " + target.getComponentId() + " restored its original through the real adapter");
+            settle();
+        } finally {
+            ensureUnpowered();
+            restoreTarget(target, targetOriginal);
+            if (savedPower == BoardPowerState.POWERED) {
+                sim.setBoardPowerState(BoardPowerState.POWERED);
+                settle();
+            } else {
+                sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+                settle();
+            }
+            before.assertSameExceptGeometry(part);
+        }
+    }
+
+    private String describeResistorTargets(Vector<ReplaceableResistorBoardCapability> capabilities) {
+        StringBuilder result = new StringBuilder();
+        for (ReplaceableResistorBoardCapability capability : capabilities) {
+            if (result.length() > 0)
+                result.append(';');
+            result.append(capability.getComponentId()).append("{slot=")
+                .append(capability.getSlot().getPhysicalSlot().getGeometryRealization())
+                .append(",installed=")
+                .append(capability.getSlot().getInstalledPart() == null ? "none" :
+                    capability.getSlot().getInstalledPart().getId()).append('}');
+        }
+        return result.toString();
     }
 
     private void rejectCandidate(String stage, ResistorSlotController target,
@@ -852,19 +1153,34 @@ final class U04CatalogMutationVerifier {
         final Vector<CircuitElm> active = new Vector<CircuitElm>(graph);
         final Vector<CircuitElm> canonical = board.getSimulationElements();
         final Vector<Object> identities = new Vector<Object>();
+        final Vector<String> canonicalDumps = new Vector<String>();
+        final Vector<String> bindingStates = new Vector<String>();
+        final Vector<String> partStates = new Vector<String>();
+        final Vector<String> serialStates = new Vector<String>();
+        final Vector<String> inventoryStates = new Vector<String>();
+        final String stateHeader;
         final String state;
         Observation() {
             PhysicalBoardRuntime runtime = board.getPhysicalBoardRuntime();
             StringBuilder values = new StringBuilder();
-            values.append(sim.getBoardPowerController().getState()).append('|').append(sim.t)
+            StringBuilder header = new StringBuilder();
+            header.append(sim.getBoardPowerController().getState()).append('|').append(sim.t)
                 .append('|').append(board.getFaultBinding().isApplied());
             if (board.getFaultBinding().getEffect() instanceof NmosfetDsShortFaultEffect)
-                values.append('|').append(((NmosfetDsShortFaultEffect)board.getFaultBinding().getEffect()).isBoardPathEnabled());
-            for (CircuitElm element : canonical) values.append('|').append(element.dump());
+                header.append('|').append(((NmosfetDsShortFaultEffect)board.getFaultBinding().getEffect()).isBoardPathEnabled());
+            stateHeader = header.toString();
+            values.append(stateHeader);
+            for (CircuitElm element : canonical) {
+                String dump = element.dump();
+                canonicalDumps.add(dump);
+                values.append('|').append(dump);
+            }
             for (GeneratedComponentConnectionBinding binding : board.getConnectionBindings().getAll()) {
                 identities.add(binding); identities.add(binding.getBoardEndpoint()); identities.add(binding.getComponentEndpoint());
-                values.append('|').append(binding.getPadId()).append(':')
-                    .append(modifications.isLeadConnected(binding.getComponentId(), binding.getPadId()));
+                String bindingState = binding.getPadId() + ":" +
+                    modifications.isLeadConnected(binding.getComponentId(), binding.getPadId());
+                bindingStates.add(bindingState);
+                values.append('|').append(bindingState);
             }
             for (PhysicalPart<?> part : runtime.getPhysicalParts()) {
                 identities.add(part); identities.add(part.getMountState()); identities.add(part.getBoardSlot());
@@ -872,8 +1188,10 @@ final class U04CatalogMutationVerifier {
                 for (PhysicalPartTerminal terminal : part.getTerminals()) {
                     identities.add(terminal); identities.add(terminal.getEndpoint());
                 }
-                values.append('|').append(part.getId()).append(':').append(part.isInstalled()).append(':')
-                    .append(part.isFaulted()).append(':').append(runtime.getInventoryIdForPart(part.getId()));
+                String partState = part.getId() + ":" + part.isInstalled() + ":" +
+                    part.isFaulted() + ":" + runtime.getInventoryIdForPart(part.getId());
+                partStates.add(partState);
+                values.append('|').append(partState);
             }
             for (String id : board.getBoard().getComponentIds()) {
                 identities.add(runtime.getSlot(id)); identities.add(runtime.getInstalledPart(id));
@@ -881,10 +1199,15 @@ final class U04CatalogMutationVerifier {
                     identities.addAll(board.getComponentBindings().getElements(id));
                     identities.addAll(board.getComponentBindings().getAuxiliaryElements(id));
                 }
-                values.append('|').append(id).append(':').append(runtime.getNextPartSerial(id + "_CATALOG_PART"));
+                String serialState = id + ":" + runtime.getNextPartSerial(id + "_CATALOG_PART");
+                serialStates.add(serialState);
+                values.append('|').append(serialState);
             }
-            for (String id : runtime.getInventoryIds())
-                values.append('|').append(id).append(':').append(runtime.getInventoryPartIds(id));
+            for (String id : runtime.getInventoryIds()) {
+                String inventoryState = id + ":" + runtime.getInventoryPartIds(id);
+                inventoryStates.add(inventoryState);
+                values.append('|').append(inventoryState);
+            }
             state = values.toString();
         }
         void assertSame() {
@@ -894,6 +1217,143 @@ final class U04CatalogMutationVerifier {
             require(active.equals(after.active) && canonical.equals(after.canonical) && identities.equals(after.identities),
                 "exact graph, part, binding, endpoint, geometry and mount identities survive failure");
             require(state.equals(after.state), "electrical, attachment, inventory, serial and fault state survive failure");
+        }
+
+        /**
+         * Successful first installation intentionally changes one loose
+         * catalog resistor from unformed to formed.  All other observed state
+         * remains an exact restoration of the source/target fixture.
+         */
+        void assertSameExceptGeometry(PhysicalResistorPart formedPart) {
+            Observation after = new Observation();
+            require(board == after.board && challenge == after.challenge &&
+                    modifications == after.modifications && graph == after.graph,
+                "catalog formation changed the current owners");
+            require(active.equals(after.active) && canonical.equals(after.canonical) &&
+                    withoutGeometry(formedPart).equals(after.withoutGeometry(formedPart)),
+                "catalog formation changed graph, part, binding, endpoint or mount identity");
+            // Production settlement may advance solver time while the board
+            // is being isolated and restored.  Electrical, attachment,
+            // inventory, serial and fault fields remain exact below.
+            verifyFormationDumpCanaries();
+            require(formationStateEquivalent(after),
+                "catalog formation changed electrical, attachment, inventory, serial or fault state; " +
+                "first difference=" + firstStateDifference(after));
+        }
+
+        private boolean formationStateEquivalent(Observation after) {
+            if (!withoutSimulationTime(stateHeader).equals(
+                    withoutSimulationTime(after.stateHeader)))
+                return false;
+            if (firstCanonicalDifference(after) != null)
+                return false;
+            return bindingStates.equals(after.bindingStates) &&
+                partStates.equals(after.partStates) &&
+                serialStates.equals(after.serialStates) &&
+                inventoryStates.equals(after.inventoryStates);
+        }
+
+        private String firstStateDifference(Observation after) {
+            String beforeHeader = withoutSimulationTime(stateHeader);
+            String afterHeader = withoutSimulationTime(after.stateHeader);
+            if (!beforeHeader.equals(afterHeader))
+                return "header before=" + abbreviate(beforeHeader) +
+                    " after=" + abbreviate(afterHeader);
+            String difference = firstCanonicalDifference(after);
+            if (difference != null) return difference;
+            difference = firstVectorDifference("binding", bindingStates, after.bindingStates);
+            if (difference != null) return difference;
+            difference = firstVectorDifference("part", partStates, after.partStates);
+            if (difference != null) return difference;
+            difference = firstVectorDifference("serial", serialStates, after.serialStates);
+            if (difference != null) return difference;
+            difference = firstVectorDifference("inventory", inventoryStates, after.inventoryStates);
+            if (difference != null) return difference;
+            return firstTokenDifference(withoutSimulationTime(state),
+                withoutSimulationTime(after.state));
+        }
+
+        private String firstCanonicalDifference(Observation after) {
+            if (canonicalDumps.size() != after.canonicalDumps.size())
+                return "canonical count before=" + canonicalDumps.size() +
+                    " after=" + after.canonicalDumps.size();
+            for (int index = 0; index < canonicalDumps.size(); index++) {
+                if (!sameFormationCanonicalDump(canonical.get(index), after.canonical.get(index),
+                        canonicalDumps.get(index), after.canonicalDumps.get(index)))
+                    return "canonical[" + index + "] class=" +
+                        canonical.get(index).getClass().getName() + " before=" +
+                        abbreviate(canonicalDumps.get(index)) + " after=" +
+                        abbreviate(after.canonicalDumps.get(index));
+            }
+            return null;
+        }
+
+        private String firstVectorDifference(String label, Vector<String> before,
+                Vector<String> after) {
+            if (before.size() != after.size())
+                return label + " count before=" + before.size() + " after=" + after.size();
+            for (int index = 0; index < before.size(); index++) {
+                if (!before.get(index).equals(after.get(index))) {
+                    return label + "[" + index + "]" +
+                        " before=" + abbreviate(before.get(index)) +
+                        " after=" + abbreviate(after.get(index));
+                }
+            }
+            return null;
+        }
+
+        private String firstTokenDifference(String before, String after) {
+            int beforeStart = 0;
+            int afterStart = 0;
+            int token = 0;
+            while (true) {
+                int beforeEnd = before.indexOf('|', beforeStart);
+                int afterEnd = after.indexOf('|', afterStart);
+                String beforeToken = before.substring(beforeStart,
+                    beforeEnd < 0 ? before.length() : beforeEnd);
+                String afterToken = after.substring(afterStart,
+                    afterEnd < 0 ? after.length() : afterEnd);
+                if (!beforeToken.equals(afterToken))
+                    return "serialized token[" + token + "] before=" +
+                        abbreviate(beforeToken) + " after=" + abbreviate(afterToken);
+                if (beforeEnd < 0 || afterEnd < 0)
+                    break;
+                beforeStart = beforeEnd + 1;
+                afterStart = afterEnd + 1;
+                token++;
+            }
+            return "serialized state length before=" + before.length() +
+                " after=" + after.length();
+        }
+
+        private String abbreviate(String value) {
+            if (value == null) return "null";
+            return value.length() <= 240 ? value : value.substring(0, 240) + "...";
+        }
+
+        private String withoutSimulationTime(String value) {
+            int firstSeparator = value.indexOf('|');
+            int secondSeparator = value.indexOf('|', firstSeparator + 1);
+            if (firstSeparator < 0 || secondSeparator < 0)
+                return value;
+            return value.substring(0, firstSeparator) + value.substring(secondSeparator);
+        }
+
+        private Vector<Object> withoutGeometry(PhysicalResistorPart formedPart) {
+            Vector<Object> result = new Vector<Object>(identities);
+            int partIndex = -1;
+            for (int index = 0; index < result.size(); index++) {
+                if (result.get(index) == formedPart) {
+                    partIndex = index;
+                    break;
+                }
+            }
+            require(partIndex >= 0 && partIndex + 3 < result.size() &&
+                    result.get(partIndex + 1) == formedPart.getMountState() &&
+                    result.get(partIndex + 2) == formedPart.getBoardSlot(),
+                "catalog formation observation lost the formed part identity");
+            result.remove(partIndex + 3);
+            return result;
         }
     }
 }

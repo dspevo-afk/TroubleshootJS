@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 1,
+    "name": "sub-millisecond-deadline",
+    "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true",
+    "stateAttribute": "data-tsj-deliberately-absent",
+    "expectedState": "PASS:absent",
+    "expectedPrefix": null,
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 0.0005,
+    "reportAttribute": null
+  },
+  "url": "http://127.0.0.1:53273/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true",
+  "startedUtc": "2026-09-26T22:22:58.032270+00:00",
+  "finishedUtc": "2026-09-26T22:22:58.036551+00:00",
+  "operationSeconds": 0.004278399981558323,
+  "outcome": "TIMEOUT",
+  "terminalReached": false,
+  "stateMatch": false,
+  "observedState": null,
+  "lastObservedState": null,
+  "timedOut": true,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": false,
+  "reportJsonValid": null,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 0,
+  "reportSha256": null,
+  "reportFile": null,
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [
+    {
+      "attribute": "data-tsj-deliberately-absent",
+      "type": "DeadlineExpired",
+      "message": "case deadline elapsed"
+    }
+  ],
+  "listenerCleanupErrors": [],
+  "navigationError": {
+    "type": "TimeoutError",
+    "message": "Page.goto: Timeout 1ms exceeded.\nCall log:\n  - navigating to \"http://127.0.0.1:53273/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true\", waiting until \"domcontentloaded\"\n"
+  }
+}

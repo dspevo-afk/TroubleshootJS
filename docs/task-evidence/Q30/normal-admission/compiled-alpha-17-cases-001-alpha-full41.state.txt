@@ -1,0 +1,1 @@
+FAIL:alpha:cross-target-catalog-mutations owner=true power=UNPOWERED isolated=true settled=true state=READY: java.lang.AssertionError: U04 catalog mutation: catalog formation changed electrical, attachment, inventory, serial or fault state

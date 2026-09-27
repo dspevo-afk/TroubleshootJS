@@ -1,0 +1,33 @@
+{
+  "copies": [
+    {
+      "source": "identity.json",
+      "destination": "compiled-p09-12-oldcanary-identity.json",
+      "sourceSha256": "a535ff40f84e6151eeac29027719c6fdff705fb2859fa7353ad428fd81216c8c",
+      "destinationSha256": "42c36b18e75aa42446c320bc8e05963692f9d0f594e96a907f502a4a79bf82db"
+    },
+    {
+      "source": "result.json",
+      "destination": "compiled-p09-12-oldcanary-result.json",
+      "sourceSha256": "b35d8105950ec7f4658b0382824ba77823c0a0d32826616066e05af0e976104e",
+      "destinationSha256": "d436b8a9a03f0aa196f0b5f885e3ec9fc78f6a9717b6433f2814fa8e3eeac63f"
+    },
+    {
+      "source": "cases.json",
+      "destination": "compiled-p09-12-oldcanary-cases.json",
+      "sourceSha256": "8aa76850593726f3f6be1192bb2cd8213bd4120c8c9be772514a4b6e024ee364",
+      "destinationSha256": "2c837e4049e76d3feb52b7c49b3cbbf910e1801543aa9e14ddcc238c70de4bc6"
+    },
+    {
+      "source": "owned-processes.json",
+      "destination": "compiled-p09-12-oldcanary-owned-processes.json",
+      "sourceSha256": "66b205f9ff3077983c757ad69e80461abb11823871aa3bd52316f94e81fe02db",
+      "destinationSha256": "874bf7a8992081686e73d6be47e1b81d66a220f302bb45e997bfb948be737225"
+    }
+  ],
+  "logBeforeSha256": "0c9738f348e0358f6b13998a10bc95dfe51990f9ca6bc4033bd379011a796fb4",
+  "logAfterSha256": "8031bab4a1597943c1d8219ed0d76b9356dbbc7559e80f17308efa8e10b11328",
+  "sanitizedPathsOnly": true,
+  "profilesCopied": false,
+  "outcome": "FAIL historical expected rejection now PASS; remaining5 cases NOT RUN; cleanup PASS"
+}

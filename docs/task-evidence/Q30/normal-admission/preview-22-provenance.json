@@ -1,0 +1,33 @@
+{
+  "recordedUtc": "2026-09-27T02:01:55.063228+00:00",
+  "scope": "Production preview for final real visible player flow; started while automated matrix finishes, no manual challenge launched yet",
+  "identity": {
+    "protocol": "troubleshootjs-preview-identity-v1",
+    "repositoryRoot": "<worktree>",
+    "previewScript": "<worktree>\\scripts\\preview.ps1",
+    "webRoot": "<worktree>\\war",
+    "sourceRoot": "<worktree>\\src",
+    "scriptRoot": "<worktree>\\scripts",
+    "sourceDigest": "bc15b06e8dec88841237c4ee55679b0ababb39d3b67702545e97b463d769adcc",
+    "scriptDigest": "a468c68fae0a8f5ebe67dc8c316d5911bad568b4257f4b4f15e9ad5ff2c4ab2a",
+    "webDigest": "3f3311515ed032c7bdeaaba9ae3e3cef259e8e9a40b33810ee14b8a71d163e34",
+    "executionDigest": "1d35bfad89f4a919623383878a6a6e5f6bcd6605e57fb8f2ffc83a056f9c6627",
+    "executionFileCount": 1542,
+    "previewPort": 8904,
+    "processId": 18588,
+    "processStartTicks": 639260712456492813,
+    "verifierRunId": "",
+    "verifierNonce": ""
+  },
+  "ownership": {
+    "repositoryRoot": "<worktree>",
+    "previewScript": "<worktree>\\scripts\\preview.ps1",
+    "processId": 18588,
+    "processStartTicks": 639260712456492813,
+    "processParentProcessId": 19228,
+    "processParentProcessStartTicks": 639260712423914134,
+    "processCommandLine": "\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" \"-NoProfile\" \"-ExecutionPolicy\" \"Bypass\" \"-File\" \"<worktree>\\scripts\\preview.ps1\" \"-Port\" \"8904\"",
+    "port": 8904
+  },
+  "sourceFileSha256": "72144688419ab2483508b3a06a39c66be16346eb53a699e9597e296e1bfb47e2"
+}

@@ -1,0 +1,15 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+GATE_ROW {"seed":"-9223372036854775808","cohort":"fixture","index":0,"outcome":"PASS","width":1532,"height":1374,"design":"RB15_BJT_RESISTIVE_BIAS","parts":{"Q1":[1036,229],"LED1":[676,1059],"K1":[656,609],"RPD":[1036,429],"J1":[56,509],"J2":[56,749],"RBIAS":[316,229],"RDRIVE":[676,79],"J4":[1376,359],"F1":[276,1139],"D1":[676,229],"C1":[286,919],"RIN":[276,79],"RBLEED":[666,459],"DREV":[316,1259],"RLED":[666,919]},"millis":4281}
+GATE_ROW {"seed":"9223372036854775807","cohort":"fixture","index":1,"outcome":"PASS","width":1792,"height":1069,"design":"RB15_BJT_RESISTIVE_BIAS","parts":{"Q1":[1026,349],"LED1":[816,909],"K1":[1076,99],"RPD":[696,579],"J1":[56,419],"J2":[56,659],"RBIAS":[316,79],"RDRIVE":[676,369],"J4":[1636,119],"F1":[276,909],"D1":[1266,369],"C1":[646,929],"RIN":[276,239],"RBLEED":[696,79],"DREV":[316,769],"RLED":[806,769]},"millis":5343}
+GATE_ROW {"seed":"9007199254740993","cohort":"fixture","index":2,"outcome":"PASS","width":1582,"height":1105,"design":"RB15_NMOS_RC_FILTER","parts":{"Q1":[996,519],"LED1":[286,739],"K1":[1006,99],"RPD":[646,79],"J1":[56,129],"J2":[56,369],"RDRIVE":[686,389],"J4":[1426,919],"F1":[276,79],"D1":[1026,369],"C1":[286,259],"C2":[666,919],"RIN":[656,739],"RBLEED":[646,509],"DREV":[316,409],"RLED":[316,949]},"millis":1641}
+PASS: Quick Play gate corpus rows=3 cohort=fixture
+
+PASS: focused current contracts; 1 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

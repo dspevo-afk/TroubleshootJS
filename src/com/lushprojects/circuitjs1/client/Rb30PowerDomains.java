@@ -23,7 +23,8 @@ final class Rb30PowerDomains {
                 "OUT_B".equals(id) || "NC_A".equals(id) ||
                 "NC_B".equals(id);
             boolean storage = "FUSED12".equals(id) || "RAIL12".equals(id) ||
-                "RAIL5".equals(id);
+                "RAIL5".equals(id) || (plan.hasSensorInputFilters() &&
+                    ("A_SENSE".equals(id) || "B_SENSE".equals(id)));
             rails.add(new PowerDomainContract.Rail(id,
                 load ? "LOAD_RETURN" : "CTRL_RETURN",
                 storage ? PowerDomainContract.StorageRequirement.OBSERVATION_REQUIRED :

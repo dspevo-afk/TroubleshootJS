@@ -1,0 +1,12 @@
+PASS alpha-led0 1.989
+PASS alpha-npn0-shop 3.019
+PASS quickplay-led-3 10.448
+PASS quickplay-rc-3 43.448
+PASS quickplay-npn-0 11.308
+PASS quickplay-npn-1 11.037
+PASS quickplay-npn-2 10.805
+PASS quickplay-nmos-0 11.144
+PASS quickplay-nmos-1 10.993
+PASS quickplay-nmos-2 10.972
+PASS quickplay-explicit-precedence 0.503
+FINISHED PASS cases 11

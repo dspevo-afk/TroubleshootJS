@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "recordedUtc": "2026-09-26T23:11:45.189592+00:00",
+  "scope": "Source review reuse boundary only; runtime final gates remain separate",
+  "baseline": "build-final-12-inputs.json",
+  "current": "build-final-17-inputs.json",
+  "allBuildChangesSince12": [
+    "src/com/lushprojects/circuitjs1/client/AlphaDeveloperVerifier.java",
+    "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+    "src/com/lushprojects/circuitjs1/client/QuickPlayDeveloperVerifier.java",
+    "src/com/lushprojects/circuitjs1/client/QuickPlayGateDeveloperVerifier.java",
+    "src/com/lushprojects/circuitjs1/client/U04CatalogMutationVerifier.java"
+  ],
+  "unchangedReviewedInputs": {
+    "src/com/lushprojects/circuitjs1/client/GenerationExecutionPolicy.java": "15ffe7a5d4356bb2645345615d42f2a5f89ec69af424fc6456d9293dd3ce4cc5",
+    "src/com/lushprojects/circuitjs1/client/GeneratedPhysicalAdmission.java": "4ee4a4b0aac8ce947c66ecdc83368d6e16c5515a9e0de0e0484c01a715205654",
+    "src/com/lushprojects/circuitjs1/client/MediumBoardNormalAdmission.java": "76ebcd919e3c9c51b1292d303ee08b2a30a73a3e77c6ffc01b2513bff0b29662",
+    "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java": "eacf91be952de4438cc0721e4ff21fd551fc69ee1d52c0435d9ed9becfaee8ac",
+    "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticSolvabilityAdmission.java": "071fc1e334b04b68525f93d612af5b1e34a0f33df64c0acad0b62fa07aacca00",
+    "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticObservationExecutor.java": "a280f4935aa3a3463aca6e2601e06da3cf6e49e455e7478b2cfb7fcadf5a6000",
+    "src/com/lushprojects/circuitjs1/client/FreshGeneratedRuntimeInstallation.java": "759c9fddbe667247bcca26ac789801188e9d5ebdf28041637a30a9d9a2599665"
+  }
+}

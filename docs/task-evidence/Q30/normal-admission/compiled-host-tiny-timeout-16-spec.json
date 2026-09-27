@@ -1,0 +1,11 @@
+{
+  "cases": [
+    {
+      "name": "sub-millisecond-deadline",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true",
+      "stateAttribute": "data-tsj-deliberately-absent",
+      "timeoutSeconds": 0.0005,
+      "expectedState": "PASS:absent"
+    }
+  ]
+}

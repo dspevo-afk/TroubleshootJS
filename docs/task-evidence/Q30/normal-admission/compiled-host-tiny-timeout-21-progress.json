@@ -1,0 +1,125 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<worktree>",
+  "startedUtc": "2026-09-27T00:38:33.878505+00:00",
+  "outcome": "NOT_RUN",
+  "cases": [
+    {
+      "schema": 1,
+      "case": {
+        "index": 1,
+        "name": "sub-millisecond-deadline",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true",
+        "stateAttribute": "data-tsj-deliberately-absent",
+        "expectedState": "PASS:absent",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 0.0005,
+        "reportAttribute": null
+      },
+      "url": "http://127.0.0.1:52729/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true",
+      "startedUtc": "2026-09-27T00:38:35.001367+00:00",
+      "finishedUtc": "2026-09-27T00:38:35.005462+00:00",
+      "operationSeconds": 0.004089000052772462,
+      "outcome": "TIMEOUT",
+      "terminalReached": false,
+      "stateMatch": false,
+      "observedState": null,
+      "lastObservedState": null,
+      "timedOut": true,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": false,
+      "reportJsonValid": null,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 0,
+      "reportSha256": null,
+      "reportFile": null,
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [
+        {
+          "attribute": "data-tsj-deliberately-absent",
+          "type": "DeadlineExpired",
+          "message": "case deadline elapsed"
+        }
+      ],
+      "listenerCleanupErrors": [],
+      "navigationError": {
+        "type": "TimeoutError",
+        "message": "Page.goto: Timeout 1ms exceeded.\nCall log:\n  - navigating to \"http://127.0.0.1:52729/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true\", waiting until \"domcontentloaded\"\n"
+      }
+    }
+  ],
+  "caseCount": 1,
+  "errors": [],
+  "inputAudit": {
+    "status": "BEFORE_CAPTURED",
+    "beforeSha256": "205b125fc92302f85f7102f74977e770c36557cc9b20840f85d109e674a5014a",
+    "sourceSha256": "ad46583b8580ba1cf46b63e83530e26a61fa49fb7e936cb94f281ae154f522e2",
+    "webSha256": "9a4575953e339e00b636b827969181c9876216caf287a6ed80a066f68ecc4ecd",
+    "fileCount": 1522
+  },
+  "identity": {
+    "schema": 1,
+    "runner": {
+      "pid": 33312,
+      "created": "2026-09-27T00:38:33.7449250Z",
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+    },
+    "edgeProcessesBeforeCases": [
+      {
+        "pid": 37528,
+        "parent": 33644,
+        "created": "2026-09-27T00:38:34.4495060Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 32360,
+        "parent": 37528,
+        "created": "2026-09-27T00:38:34.4608310Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 20924,
+        "parent": 37528,
+        "created": "2026-09-27T00:38:34.5311060Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 34304,
+        "parent": 37528,
+        "created": "2026-09-27T00:38:34.5348430Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 36692,
+        "parent": 37528,
+        "created": "2026-09-27T00:38:34.5545320Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 24244,
+        "parent": 37528,
+        "created": "2026-09-27T00:38:34.6231530Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 23984,
+        "parent": 37528,
+        "created": "2026-09-27T00:38:34.6271410Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "profile": "<task-temp>\\profile",
+    "port": 52729,
+    "baseUrl": "http://127.0.0.1:52729"
+  },
+  "operationStartedUtc": "2026-09-27T00:38:35.001355+00:00"
+}

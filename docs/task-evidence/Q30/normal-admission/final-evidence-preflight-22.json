@@ -1,0 +1,90 @@
+{
+  "schema": "q30-final-evidence-preflight-v1",
+  "createdUtc": "2026-09-27T02:32:22.201Z",
+  "repositoryHead": "16a922b2b757dfcd1cbc3a0230ab2b97ac2fbb50",
+  "status": "FINDINGS_RECORDED",
+  "scope": {
+    "includedModifiedTrackedTextFiles": 64,
+    "includedUntrackedNormalAdmissionEvidenceFiles": 1085,
+    "includedUntrackedSourceTestFiles": 18,
+    "excludedFromPublication": [
+      "tests/contracts/__pycache__/alpha_evidence_contract.cpython-313.pyc",
+      ".tools/q30-native-final-05-process-ownership.json"
+    ],
+    "auditOutputExcludedFromItsOwnInputBoundary": "docs/task-evidence/Q30/normal-admission/final-evidence-preflight-22.json",
+    "unrelatedUntrackedPathCount": 0,
+    "inputBoundary": {
+      "totalFiles": 1167,
+      "combinedSortedPathSizeSha256": "07566fd9509ccadf2ca14cc103b8545869cc8e31bd2a14ad9c510536ba3da054",
+      "groups": {
+        "modifiedTrackedText": {
+          "fileCount": 64,
+          "pathSizeHashSha256": "1b48eb6d266c7832aa5d1828ee59f6ebda2e0a1de7d75863a6987b9359becf95"
+        },
+        "untrackedNormalAdmissionEvidence": {
+          "fileCount": 1085,
+          "pathSizeHashSha256": "bb6eb3ccf0d70a84e33d2f445ad4d2ce6cf4c5766ec648cb2857bb494e702982"
+        },
+        "untrackedSourceTests": {
+          "fileCount": 18,
+          "pathSizeHashSha256": "232447fc0f324150760d38f8065f16e12a8b3e82903c070154a0dde984951a54"
+        }
+      }
+    },
+    "postScanStatusChanged": true,
+    "postScanStatusChangedNote": "A later input-boundary reconstruction differed from the captured inventory; the original digest is preserved and later changes are outside this scan.",
+    "postScanRescanPerformed": false
+  },
+  "checks": {
+    "json": {
+      "filesParsed": 686,
+      "parseErrorCount": 0,
+      "errors": []
+    },
+    "size": {
+      "thresholdBytes": 5242880,
+      "oversizedFileCount": 0,
+      "oversizedFiles": []
+    },
+    "personalAbsolutePaths": {
+      "candidateFileCount": 0,
+      "candidates": [],
+      "unixHomeMatchRequiresAbsolutePathBoundary": true,
+      "nonPathSlashTokenCandidatesExcluded": 1,
+      "note": "A boundary-aware check excluded one slash-delimited prose token; it was not an absolute path."
+    },
+    "uncontrolledLogs": {
+      "logFilesScanned": 221,
+      "suspiciousIndicatorCount": 0,
+      "indicators": []
+    }
+  },
+  "retention": {
+    "pycache": {
+      "relativePath": "tests/contracts/__pycache__/alpha_evidence_contract.cpython-313.pyc",
+      "excludedFromPublication": true,
+      "expected": {
+        "exists": true,
+        "bytes": 36855,
+        "sha256": "287493fb893c9ba5db0c8c407272c8313a1a35876837afc65ace37ee68e1e4701b"
+      },
+      "actual": {
+        "exists": true,
+        "bytes": 47306,
+        "sha256": "d4c5fd3635bd524bd0f1160869995c02c064f91ace9eb5ec49121adb2ea94387"
+      },
+      "matchesExpected": false
+    },
+    "oldModern01Temp": {
+      "pointerPresent": true,
+      "targetStillExists": true,
+      "cleanupAttempted": false
+    },
+    "native05ProcessOwnershipSnapshot": {
+      "relativePath": ".tools/q30-native-final-05-process-ownership.json",
+      "statusListed": false,
+      "inspected": false,
+      "publishable": false
+    }
+  }
+}

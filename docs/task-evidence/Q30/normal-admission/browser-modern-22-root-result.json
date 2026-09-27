@@ -1,0 +1,40 @@
+{
+  "gate": "browser-modern-22",
+  "status": "PASS",
+  "startedUtc": "2026-09-27T01:53:48.6643996Z",
+  "finishedUtc": "2026-09-27T02:04:46.6245539Z",
+  "repoRoot": "<worktree>",
+  "runDirectory": "<task-temp>",
+  "driverOutputDirectory": "<task-temp>/browser-driver-output",
+  "resultJsonPath": "<task-temp>/browser-driver-output\\result.json",
+  "processExitCode": 0,
+  "inputAudit": {
+    "beforeSha256": "d97a18e7ed8b9272b658a537c218a8f1ddff4a10f3e58ec1c51996f13c90c9ba",
+    "beforePath": "<task-temp>\\browser-modern-22-inputs-before.json",
+    "afterSha256": "d97a18e7ed8b9272b658a537c218a8f1ddff4a10f3e58ec1c51996f13c90c9ba",
+    "afterPath": "<task-temp>\\browser-modern-22-inputs-after.json"
+  },
+  "checks": {
+    "webManifestMatchedBefore": true,
+    "buildManifestMatchedBefore": true,
+    "driverExitZero": true,
+    "resultPass": true,
+    "thirtyThreeCasesPass": true,
+    "catalogAndUniqueReplays": true,
+    "threeSavedReplaysPass": true,
+    "noPageErrors": true,
+    "cleanupPass": true,
+    "browserInputsUnchanged": true,
+    "buildInputsUnchanged": true,
+    "manifestFilesUnchanged": true
+  },
+  "errors": [],
+  "driverSummary": {
+    "outcome": "PASS",
+    "caseCount": 33,
+    "replayCount": 3,
+    "errors": 0,
+    "serverStopped": true,
+    "ownedSurvivors": 0
+  }
+}

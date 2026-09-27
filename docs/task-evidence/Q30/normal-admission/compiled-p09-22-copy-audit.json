@@ -1,0 +1,119 @@
+{
+  "schema": "interrupted-p09-22-artifact-copy-audit-v1",
+  "sourceDirectory": "<task-temp>/tsj-q30-p09-22-19ed76c77ac04bbbb57a67f23bdcfac5",
+  "destinationDirectory": "docs/task-evidence/Q30/normal-admission",
+  "copiedFiles": [
+    {
+      "source": "cases.json",
+      "destination": "compiled-p09-22-cases.json",
+      "sourceSha256": "893a1290b482a72880a4b097b9f18f7efb3f2aaaf5e617f333fe874478611ed5",
+      "destinationSha256": "893a1290b482a72880a4b097b9f18f7efb3f2aaaf5e617f333fe874478611ed5",
+      "sourceBytes": 3080773,
+      "destinationBytes": 3080773,
+      "byteExact": true,
+      "pathSubstitutions": {
+        "worktree": 0,
+        "taskTemp": 0,
+        "userHome": 0
+      },
+      "destinationState": "copied-byte-exact"
+    },
+    {
+      "source": "result.json",
+      "destination": "compiled-p09-22-result.json",
+      "sourceSha256": "c77ec4ff7eac915e2008b54ac19a076ac12a4e9c0b740314b65a1215c2cb5ebc",
+      "destinationSha256": "c77ec4ff7eac915e2008b54ac19a076ac12a4e9c0b740314b65a1215c2cb5ebc",
+      "sourceBytes": 3096928,
+      "destinationBytes": 3096928,
+      "byteExact": true,
+      "pathSubstitutions": {
+        "worktree": 0,
+        "taskTemp": 0,
+        "userHome": 0
+      },
+      "destinationState": "copied-byte-exact"
+    },
+    {
+      "source": "identity.json",
+      "destination": "compiled-p09-22-identity.json",
+      "sourceSha256": "143d96a697186dbda75e53753bfdafc981b871728a4df7d2c42e14adfa113f8e",
+      "destinationSha256": "01a6b02e900be99cfc2ff3d96c665711756bad3982a09303f9731617b1af68b1",
+      "sourceBytes": 369,
+      "destinationBytes": 223,
+      "byteExact": false,
+      "pathSubstitutions": {
+        "worktree": 1,
+        "taskTemp": 1,
+        "userHome": 0
+      },
+      "destinationState": "copied-sanitized"
+    },
+    {
+      "source": "owned-processes.json",
+      "destination": "compiled-p09-22-owned-processes.json",
+      "sourceSha256": "c5e22620a0fd1e0f55c707110c781a877145115574fd86b74c16cd2784441aab",
+      "destinationSha256": "38b5f0d53af05ebc96df59d77485021f3c39637c330b1170a860279d60199c59",
+      "sourceBytes": 12512,
+      "destinationBytes": 11752,
+      "byteExact": false,
+      "pathSubstitutions": {
+        "worktree": 0,
+        "taskTemp": 10,
+        "userHome": 0
+      },
+      "destinationState": "copied-sanitized"
+    }
+  ],
+  "population": {
+    "rootResult": "compiled-p09-22-root-result.json",
+    "rootResultSha256": "d644952893f53e9be0a71979877f437cb39e3575b2273a334179ece04c44a0ac",
+    "status": "PASS",
+    "exitCode": 0,
+    "resultOutcome": "PASS",
+    "caseCount": 72,
+    "inputCount": 394,
+    "inputMismatchCount": 0,
+    "resultJsonOutcome": "PASS",
+    "caseFileRows": 72,
+    "caseFilePassRows": 72,
+    "resultCaseRows": 72,
+    "errors": 0,
+    "httpErrors": 0,
+    "browserVersion": "154.0.4258.37",
+    "identityStartedUnixSeconds": "1790472775.6759841",
+    "rootResultEndedUtc": "2026-09-26T21:49:49.139623-04:00",
+    "serverThreadStopped": true,
+    "ownedSurvivors": 0
+  },
+  "retainedRunLog": {
+    "file": "compiled-p09-22-run.log",
+    "sha256": "f99f07763c7c035fbfb17c5f61afb727bf9cafebb62760247796e0c3ab9521e6",
+    "lineCount": 74,
+    "console404Count": 1,
+    "initialConsole404Retained": true,
+    "initialConsole404Attribution": "unattributed",
+    "suppressed": false
+  },
+  "currentOwnership": {
+    "recordedOwnerCount": 9,
+    "exactOwnerProcessesPresent": 0,
+    "port": 55199,
+    "portListening": false,
+    "processesReferencingExactTaskDirectory": 0,
+    "createdComparedAsUtc": true,
+    "executableCompared": true
+  },
+  "cleanup": {
+    "status": "PASS",
+    "method": "Remove-VerifierOwnedTree",
+    "exactTaskTempRemoved": true,
+    "resolvedContainmentVerified": true,
+    "rootAndTreeReparsePointCount": 0,
+    "treeEntriesBeforeRemoval": 311,
+    "exactOwnerProcessesPresentBeforeRemoval": 0,
+    "taskPort": 55199,
+    "taskPortListeningBeforeRemoval": false,
+    "processReferencesBeforeRemoval": 0,
+    "removalVerifiedUtc": "2026-09-27T01:56:57.726Z"
+  }
+}

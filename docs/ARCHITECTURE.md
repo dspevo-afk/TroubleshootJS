@@ -33,20 +33,28 @@ precede state deletion. Ambiguous identity retains state and the process.
 
 ## Procedural Quick Play admission and exact replay
 
-QuickPlayAdmission version4 covers ten currently selectable family/profile pairs:
-nine EASY families (including SENSOR_CONTROL) and the composed MEDIUM family. Other available difficulty labels
-do not advertise electrical content that has not passed that profile. Fresh signed-long
+QuickPlayAdmission version4 covers eleven currently cataloged family/profile pairs:
+nine EASY synchronous leaf families (including SENSOR_CONTROL), the composed MEDIUM
+family, and the Q30 multi-rail MEDIUM family. Other available difficulty labels do
+not advertise electrical content that has not passed that profile. Fresh signed-long
 entropy is never reduced to reference seed lists. A bounded page-session root
 history prevents recent New Board launches from reusing an identity even if the
 entropy source repeats. Normal
-leaf/composed geometry reaches seeded placement and routing; authored full-board
-fixtures remain developer-only. Named streams vary actual positions and copper while
-preserving declared nets, packages, regions and connector roles. Normal copper uses the
-bottom face with real through-hole packages and unchanged P09 access/physical limits.
+leaf/composed/multi-rail geometry reaches seeded placement and routing; authored
+full-board fixtures remain developer-only. Named streams vary actual positions and
+copper while preserving declared nets, packages, regions and connector roles.
+Small and composed boards use bottom-face copper with real through-hole packages
+and unchanged P09 access/physical limits. Q30 uses its separately versioned
+medium-board admission token and qualified MEDIUM_BOARD@1 routing policy; it does
+not enlarge P09.
 
-A launch has at most four deterministic candidates sharing the existing90-second,
-640-unit and five-second bounds. `PhysicalBoardFingerprint` records exact full geometry
-for evidence and a stricter novelty identity that ignores the seed, fault, values,
+A small or composed launch has at most four deterministic candidates sharing the
+existing 90-second, 640-unit and five-second bounds. The staged Q30 normal-medium
+request uses `NORMAL_MEDIUM_EXECUTION@1` with the independently reviewed
+300-second cumulative job allowance while retaining those 640 shared units,
+five-second per-unit limit, four-candidate bound and exact-replay rule.
+`PhysicalBoardFingerprint` records exact full geometry for evidence and a stricter
+novelty identity that ignores the seed, fault, values,
 board translation, outline-only differences and route-tree segmentation while
 comparing the merged drawn copper. The generation coordinator rejects
 a repeated physical realization after complete validation and before publication.
@@ -55,15 +63,19 @@ replay bypasses this novelty gate and remains a single exact candidate. Only typ
 expected rejection followed by successful
 owner restoration permits retry. Timeout, exhaustion, cancellation, stale ownership,
 programming error and cleanup failure never publish. Difficulty is computed from
-complete current diagnostic/repair evidence. EASY/MEDIUM are enabled; HARD/PSYCHOTIC
-and unimplemented family/profile content are not made playable by layout policy.
+complete current diagnostic/repair evidence. Qualified EASY and composed-MEDIUM
+content is enabled; HARD/PSYCHOTIC and unimplemented family/profile content are
+not made playable by layout policy. Q30's catalog registration is implemented,
+and the bounded 33/35/37-part candidate passes its normal-player and final
+qualification gates across all eight topology axes.
 
 Controlled composition stages routing before electrical allocation. Its sealed
 coordinate result belongs to the exact immutable request. Hypotheses may copy that
 geometry, but create fresh electrical/runtime and proof owners. Geometry is revalidated;
-foreign-request reuse fails before allocation. No electrical answer or repair proof is
-cached. Exact replay is tsj-alpha/3; old epochs reject. Dependency interpretation
-v16 captures admission4/layout13 and the current dump-model v5. Eight entropy
+foreign-request reuse fails before allocation. This geometry cache contains no
+electrical readings or repair proof; D01 proof-value reuse has its own identity
+and fresh-owner validation. Exact replay is tsj-alpha/3; old epochs reject. Dependency interpretation
+v16 captures admission4/layout13 and the current dump-model v6. Eight entropy
 bytes travel as canonical signed decimal text,
 never through a lossy JavaScript Number.
 
@@ -80,11 +92,16 @@ Originals, other packages and formed parts retain strict compatibility. Compacti
 retains a legal routed input when contraction would violate existing detour limits.
 
 The 19-suite/144-case evidence below belongs to the historical post-P09 source
-candidate. The current menu has ten family/profile pairs after SENSOR_CONTROL;
-its rebuilt procedural browser matrix passes three launches per pair, exact
-replay, privacy, power isolation and owned-process cleanup. See the
-[historical evidence](task-evidence/ProceduralFamilies/README.md) and the
-[current matrix receipt](task-evidence/D01/quickplay-procedural-matrix.json).
+candidate. The rebuilt procedural browser matrix covers the ten families that
+preceded Q30 registration and passes three launches per pair, exact replay,
+privacy, power isolation and owned-process cleanup. The current source catalog
+has eleven entries, including the implemented Q30 candidate. Its current
+normal-player and final qualification gates pass for the bounded 33/35/37-part
+candidate. See the
+[historical evidence](task-evidence/ProceduralFamilies/README.md)
+and the [historical ten-family matrix](task-evidence/D01/quickplay-procedural-matrix.json).
+The [current eleven-family matrix](task-evidence/Q30/normal-admission/browser-modern-22-root-result.json)
+records the final normal-player launches and replays.
 
 ## Production physical qualification (P09)
 
@@ -354,7 +371,9 @@ not a time estimate. A narrow public snapshot excludes catalog construction
 outside Shop. The adapter refreshes preparation/retest status without advancing
 simulation. Player preparation pauses while its tab is hidden and resumes the
 same job: `ForegroundGenerationClock` excludes only hidden idle time, retaining
-all accumulated active time within the existing 90-second limit. Developer
+all accumulated active time within the request's execution policy. Small and
+composed requests use 90 seconds; the staged Q30 normal-medium request uses its
+reviewed 300-second allowance. Developer
 verification keeps wall-time budgets. The continuation/watchdog is revoked at
 terminal completion, and completion is delivered even if UI restoration throws.
 
@@ -432,8 +451,14 @@ runtime's registered catalogs. Acquisition requests identify the category and
 specification; destination component names are not shopping categories. The
 projection chooses an existing acquiring provider and counts real loose identities
 without creating another inventory. Installation is a later physical action.
-Deduplication includes the exact package geometry as well as the canonical
-catalog recipe. NPN boards can have different resistor lead spacings, so their
+Deduplication includes exact package geometry and the catalog's explicit
+specification key; legacy rows default that key to their catalog ID. Display
+labels never establish electrical equivalence. Provider-local relay aliases
+share their typed relay specification key. Q30 decision parts use the six
+immutable fields of the E04 decision declaration as their specification
+identity, independently of component, slot, part and inventory identities.
+Compatible cross-slot installation retains the source inventory owner and uses
+the existing runtime/physical-mutation checks at the destination. NPN boards can have different resistor lead spacings, so their
 distinct purchasable fits remain available under one Resistors category. Public
 fit labels describe lead spacing without inventing real-world dimensions or
 using destination names. Ephemeral specification handles resolve back to the
@@ -499,8 +524,9 @@ shortcut. Compiled off-grid wire, resistor, open-path, diode and loaded-voltage
 fixtures check both directions, and the Q15 corpus checks three continuous copper
 pairs in both directions on every qualified seed.
 
-`DifficultyAssessment` runs over the complete exact-owner diagnostic receipt
-before publication and is included in generation dependencies. Physics,
+`DifficultyAssessment` v2 runs over the complete exact-owner diagnostic receipt
+and its admitted physical owner before publication and is included in generation
+dependencies. Physics,
 tolerances, markings and instruments are identical across profiles. It aggregates
 all repair classes, owners and certified solver observations without selecting
 the injected fault as an assistance hint. `DiagnosticReduction` searches bounded
@@ -521,9 +547,10 @@ or an independent-domain count.
 
 Initial conservative MEDIUM requires at least two distinguishing readings,
 multiple repair owners/classes, and temporal or parallel-path interaction.
-The two-channel controller is the current candidate; the other eight families
-are EASY candidates even when they have more packages. Every admission must
-prove the requested band. HARD and PSYCHOTIC remain unavailable. Human trials
+The composed controller and Q30 multi-rail board are the current MEDIUM
+candidates; the nine synchronous leaf families are EASY candidates even when
+they have more packages. Every admission must prove the requested band. HARD
+and PSYCHOTIC remain unavailable. Human trials
 and the qualified corpus bound the calibration; mathematical counters cannot
 establish subjective difficulty by themselves. The current report records
 acceptance status, evidence and limits.
@@ -681,14 +708,17 @@ The restore boundary makes one immediate cleanup retry during abort; a recovered
 one-shot exit failure still fails that attempt and preserves its original error.
 Persistent failure retains the cursor for a later closed-session retry.
 
-Runtime budgets distinguish a 90-second cumulative job from a five-second active
-operation and 640 deterministic work units. CircuitJS retains its separate 500 ms
-accepted-step and five-second temporal-operation ceilings. The coordinator batches
-at most 16 cheap units or 8 ms per turn; an existing synchronous operation completes
-within its own bound. The frozen 24-attempt performance corpus still requires each
-complete serial-reference attempt to finish within five seconds. Active operation
-duration and cancellation-handler cleanup are reported separately from queued input
-delay; these are not a universal 500 ms UI-response guarantee.
+Runtime budgets for small and composed requests retain a 90-second cumulative job,
+640 deterministic work units and a five-second active operation. The staged Q30
+normal-medium request carries its reviewed 300-second cumulative allowance through
+`NORMAL_MEDIUM_EXECUTION@1`; it does not widen the shared 640-unit or five-second
+per-unit guards. CircuitJS retains its separate 500 ms accepted-step and five-second
+temporal-operation ceilings. The coordinator batches at most 16 cheap units or 8 ms
+per turn; an existing synchronous operation completes within its own bound. The
+frozen 24-attempt performance corpus still requires each complete serial-reference
+attempt to finish within five seconds. Active operation duration and
+cancellation-handler cleanup are reported separately from queued input delay; these
+are not a universal 500 ms UI-response guarantee.
 Temporal executor calls group up to 128 accepted CircuitJS steps to amortize UI
 batch bookkeeping. They stop on the same first accepted solver time and retain
 every trial/accepted-step ownership, source, finite-value, deadline and event check.
@@ -980,6 +1010,12 @@ claims ripple, a switching frequency, or a waveform. `E02FiniteSourceElm` is
 likewise finite and serializable. The
 three E02 dump types are declaration data captured by the generation dependency
 identity, not hidden solver state. [Qualification](task-evidence/E02/README.md).
+
+The shared regulator limits Newton trial-drop movement to 0.5 V on every
+branch, including forward current limiting after an enable-path repair. This
+convergence bound leaves the operating-point law and voltage envelope intact;
+persistent unsupported voltages still fail validation. The model interpretation
+is recorded by circuit-dump dependency epoch v6.
 
 `SensorControlGenerator` composes one selected 5 V E02 role with a finite raw
 input, sensor source, reference divider and loaded decision output. Even seeds
@@ -1989,13 +2025,15 @@ placements by electrical span, region and connector locality, corridor
 obstruction and normalized area before routing at most three with the existing
 one-face router and then the unchanged P07 fuller two-layer router. A successful
 one-face route remains preferred unless the two-layer quality improves
-materially. This candidate is structural and developer-only: it does not relax
-P09 normal admission or register Q30 in the player catalog. The selected policy
-and its contract enter the board/dependency identity; Q30's provider plan
-records the policy with its exact placement and routing seeds.
+materially. This candidate is structural; by itself it does not relax P09
+normal admission or constitute final normal admission. The current catalog
+registration is a separate identity
+boundary; Q30's provider plan records the selected policy with its exact placement
+and routing seeds, while the normal physical token and full diagnostic proof still
+gate publication.
 
-The developer-only Q30 challenge now carries the actual five-candidate fault
-population. `Rb30Behavior` owns sensor operations and the four-condition
+The Q30 provider now carries the actual five-candidate fault population.
+`Rb30Behavior` owns sensor operations and the four-condition
 customer function recipe; readings come from live CircuitJS endpoints.
 `Rb30DiagnosticProvider` declares 37 DC observations and exact hypothesis
 replay using the sealed medium layout. `Rb30Generator` keeps generated resistor
@@ -2012,14 +2050,101 @@ and instrument energy checks are unchanged. Live repair-status queries only
 observe the current graph; explicit retests and temporal profiles drive the
 complete four-condition recipe. `Q30ServiceDeveloperVerifier` exercises those
 production observations and workbench operations; it issues no D01 admission
-receipt. D01 and the two-layer developer admission guard remain unchanged,
-and Q30 remains absent from the normal catalog.
+receipt. `PlayerFamilyCatalog` now catalogs eleven entries: the nine synchronous
+leaf IDs from `QuickPlayFamilyRegistry`, the composed controlled-indicator ID, and
+`RB30_CONTROL`. Its versioned `PLAYER_FAMILY_EXECUTION@1` declaration binds each
+family to its profile, execution policy and physical-admission identity. The
+catalog entry is registration state, not a normal publication receipt; the
+current normal-player and final qualification gates pass for the bounded
+33/35/37-part candidate across all eight topology axes.
 
-The Q30 developer entry selects CircuitJS adaptive stepping with a 5 us maximum
-and 50 ps minimum after capturing its predecessor snapshot; it reports those
-actual settings and restores them with the snapshot on owned cleanup. This
-qualification configuration also enters the temporal dependency and native
-service fixture. It does not change CircuitJS's shared models or work budgets.
+Normal-medium qualification has a separate `GeneratedPhysicalAdmission` seam.
+`MediumBoardNormalAdmission` binds an accepted bounded P07 route to immutable
+board declarations, exact seeds and geometry, supported footprints, exposed
+copper, two-face probes and the existing 48-via limit. It retains no mutable
+owner or graph. Fresh installation and diagnostic structural validation call
+the attached physical contract; owners without one still use unchanged P09.
+Physical eligibility is separate from D01 proof and final player publication.
+The production D01 service still requires normal, disjoint hypothesis owners.
+`Q30DiagnosticAdmissionVerifier` and `Q30CoordinatorQualificationVerifier`
+exercise private staged normal owners and restore their predecessor; their
+schema-2 reports record `registered=true`/`normalCatalogRegistered=true`,
+`normalAdmission=false` and `playerPublished=false`. The current provider uses
+the bounded service-readiness policy described below; the physical owner still
+checks real residual voltage and coil current.
+
+`GenerationRequest.player` and `GenerationRequest.stagedQuickPlay` route
+`RB30_CONTROL` through `NORMAL_MEDIUM_EXECUTION@1`, whose 300,000 ms whole-job
+allowance is bound to `MEDIUM_BOARD_NORMAL@1`. `GenerationCoordinator` validates
+that immutable request capability before cancelling a predecessor and validates the
+actual attached physical admission before publication. Small and composed requests
+retain `SMALL_BOARD_EXECUTION@1` and the 90,000 ms allowance; all requests retain
+the shared 640-unit and 5,000 ms per-unit limits. `DifficultyAssessment` v2 derives
+the selected profile from admitted diagnostic evidence, including actual owners,
+readings, repair classes and legal witness actions.
+
+The separate `QuickPlayGateDeveloperVerifier` can supply an instance-scoped,
+one-shot P09 negative at the coordinator's PHYSICAL phase. It first validates
+the real candidate, then submits a detached layout copy with width 2049 to the
+same envelope predicate. The invalid copy never replaces the candidate layout.
+Only its verified `SupportedEnvelope.Rejected` becomes a retryable job rejection;
+ordinary launches supply no callback. Debug and active-verifier guards apply at
+start and execution, and owner release clears the callback. The report labels
+this controlled negative separately from the natural population and records
+original geometry, private ownership, retry identity and cleanup.
+
+`Rb30Plan` version 3 independently derives a support arrangement: 33 packages
+without the optional status indicator, the 35-package reference, or 37 packages
+with real 100-nF sensor filters. Each raw sensor input has a real 1-kohm
+pull-down: the declared external source cannot sink feedback current, so this
+path makes LOW physically defined while preserving series sensor isolation.
+Driver, reference, fault and geometry concerns
+remain independent. Filter storage enters the power-domain declarations. The
+reference fixture uses the corrected 35 packages; it is not the whole medium
+support claim.
+
+`RelayDriverProvider` supplies the selected transistor's typed specification
+under its actual component ID. Q30 registers QA/QB before physical ownership
+is completed; the shared `ServiceableBoardConstruction` adapter then provides
+the existing NPN/NMOS inventory and mutation capabilities. Provider model values,
+packages and CircuitJS post maps remain authoritative. Removal disconnects the
+three lead wires while retaining the loose part's solver backing for probing;
+installation retargets those wires to the selected replacement.
+
+The Q30 healthy recipe owns its declared CircuitJS adaptive step settings;
+existing installation/proof snapshots restore the predecessor's settings on
+cleanup. The device recipe uses the original 5-us maximum and 50-ps minimum.
+The 25-us trial failed the regulator input envelope and was rejected. This configuration
+enters the temporal dependency. It does not change shared models or work budgets.
+An input restore advances time only when the recipe actually changed that input.
+The temporal recipe v2 declares five profile and five customer-retest work units.
+Each cursor unit advances at most one 30-ms observation, with the same synchronous
+callers draining that cursor. It captures the graph, mutation receipt, power,
+external controls, sensor commands and solver settings; stale work cannot restore
+inputs or repower a successor. Private qualification uses normal play's explicit
+customer-retest completion rule. Its complete five-hypothesis D01 declaration is
+390 units; the direct non-explicit proof includes its completion profile (410).
+A private coordinator measurement entry requires an immutable qualification
+request, debug scope and an active verifier before canceling or changing work.
+It can select a 90–300-second job limit for private measurement while small and
+composed ordinary generation retains 90 seconds and the staged Q30 normal-medium
+request carries its reviewed 300-second policy. All retain 640 work units and a
+five-second unit limit. Its value-only proof cache is separate from the ordinary
+cache; scope is rechecked before private publication. The verifier retires both
+cold and warm probe owners, restores its
+predecessor and clears the measurement cache. Reports identify this measurement
+mode and record actual job, route and proof-operation timing separately. These
+reports do not qualify a production deadline or register normal content.
+
+Normal Q30 provider v3 replaces five unconditional discharge waits per hypothesis
+with a generic provider-declared service policy. After power-off settlement,
+five charged units check availability of REMOVE for the exact installed part.
+Only an unavailable operation advances CircuitJS, by at most 50 ms per unit;
+remaining units recheck without advancing. The workbench repeats its existing
+physical guard at dispatch. The policy and its limits enter the dependency
+identity; providers without a policy retain their existing proof path. The
+cursor captures current owner, graph, physical part, source controls, solver
+recipe and mutation receipt, and retains failed cleanup for an exact retry.
 After the healthy four-condition proof, the profile drives both sensors LOW
 before fault application, then HIGH for fault verification. This establishes a
 real electrical initial state for the regenerative variant: opening RSA after
@@ -2032,6 +2157,13 @@ production observation cursor and physical capabilities, with explicit absence
 of relay lead lifting. The retained developer sidebar is widened for its real
 controls. Ordinary CircuitJS UI stepping remains active; Q30 adds only 0.1 ms
 per live frame, while explicit input profiles retain their full 30 ms interval.
+
+The generic P07 router retains its queue, net/branch position and path publication
+across bounded 32,768-operation slices. The synchronous entry drains the same
+session. Medium construction returns between slices through the existing
+generation work boundary, charging every advance without resetting the job clock.
+Candidate order, branch/search budgets, via caps and canonical routing statistics
+remain unchanged; frozen-corpus equality and compiled timing qualify the refactor.
 
 `PcbAccessPlanner` requires every escape to reach one shared free channel;
 final compaction preserves access margins and revalidates those constraints.

@@ -25,7 +25,7 @@ final class GenerationDependencyContext {
     // change the meaning of an otherwise similar serial proof value.
     static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v16";
     static final String CIRCUIT_DUMP_EPOCH =
-        "circuitjs-source-load-model-inputs-no-transient-dump-v5";
+        "circuitjs-source-load-model-inputs-no-transient-dump-v6";
     static final String POWER_REFERENCE_STORAGE_SEAM = "power-domain-contract-v1";
     private static final String POWER_DYNAMIC_INPUT_POLICY =
         "excluded:SolverExecutionBoundary.Observation,rail-voltage-samples," +
@@ -117,6 +117,19 @@ final class GenerationDependencyContext {
         appendField(out, "construction-provider-surface",
             ConstructionProviderRegistry.standard().canonicalFingerprint());
         appendField(out, "physical.supported-envelope", SupportedEnvelope.current().canonical());
+        GeneratedPhysicalAdmission physicalAdmission = owner.getPhysicalAdmission();
+        if (physicalAdmission != null) {
+            appendField(out, "physical.admission.identity", physicalAdmission.identity());
+            appendField(out, "physical.admission.canonical", physicalAdmission.canonical());
+        }
+        if (provider instanceof GeneratedDiagnosticServicePreparation.Provider) {
+            GeneratedDiagnosticServicePreparation.Policy servicePreparation =
+                ((GeneratedDiagnosticServicePreparation.Provider) provider)
+                    .getServicePreparationPolicy();
+            if (servicePreparation != null)
+                appendField(out, "diagnostic.service-preparation.policy",
+                    servicePreparation.canonical());
+        }
         appendField(out, "procedural.admission", QuickPlayAdmission.canonical());
         appendField(out, "epoch.geometry-contract", Integer.toString(PcbGeometryContractVersion.CURRENT));
         appendField(out, "epoch.layout-generator", Integer.toString(SeededPcbLayoutGenerator.CURRENT_VERSION));

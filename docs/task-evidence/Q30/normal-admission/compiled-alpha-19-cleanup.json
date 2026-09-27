@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "targetCount": 1,
+  "deletedCount": 1,
+  "deletionMethod": "Remove-VerifierOwnedTree",
+  "pointerFilesPreserved": true,
+  "skippedHashEqualSpec": {
+    "source": "spec.json",
+    "destination": "compiled-alpha-19-spec.json",
+    "sourceSha256": "24b380f090b3f4b5bde953136b3803147abecea01fda58636626e35024646a33",
+    "destinationSha256": "24b380f090b3f4b5bde953136b3803147abecea01fda58636626e35024646a33",
+    "reason": "preexisting-hash-equal-before-copy"
+  },
+  "excluded": [
+    "q30-modern-01",
+    "tests/contracts/__pycache__"
+  ],
+  "records": [
+    {
+      "status": "PASS",
+      "pointer": ".tools/q30-alpha-19-path.txt",
+      "name": "q30-alpha-19",
+      "directory": "tsj-q30-alpha-19-b6f82a3b755f4cb492e23cce4526489b",
+      "identityMarkerPass": true,
+      "profileExistsBeforeDeletion": true,
+      "profileMatch": true,
+      "tempContainmentPass": true,
+      "resultCleanupPass": true,
+      "inputAudit": "PASS",
+      "outcome": "FAIL",
+      "caseCount": 2,
+      "unexpectedFailureCases": [
+        "alpha-full41"
+      ],
+      "failureDescription": "Unexpected full41 failure with raw NPN transient difference preserved in state/report",
+      "expectedFailureCanaryPass": 1,
+      "port": 65394,
+      "runnerPid": 5620,
+      "recordedProcessCount": 8,
+      "currentLiveRecordedPidCount": 0,
+      "currentMatchingRecordedIdentityCount": 0,
+      "pidReuseCount": 0,
+      "ambiguousRecordedIdentityCount": 0,
+      "profileOrTargetPathReferenceCount": 0,
+      "portConnections": 0,
+      "reparseTreePass": true,
+      "reparseDescendantCountBeforeDeletion": 326,
+      "deletionAttempted": true,
+      "directoryAbsent": true,
+      "processTerminationAttempted": false,
+      "sourcePointerPreserved": true
+    }
+  ]
+}
