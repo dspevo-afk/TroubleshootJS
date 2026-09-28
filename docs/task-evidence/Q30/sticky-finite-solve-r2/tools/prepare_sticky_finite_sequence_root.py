@@ -40,4 +40,3 @@ target=s/'run_sticky_finite_r2_sequence.py'
 assert not target.exists()
 target.write_text(t,encoding='utf-8',newline='\n')
 print(target)
-

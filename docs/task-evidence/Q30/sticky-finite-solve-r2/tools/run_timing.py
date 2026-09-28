@@ -27,4 +27,3 @@ if reports:
 (scratch/(label+'-summary.json')).write_text(json.dumps(result,indent=2),encoding='utf-8')
 print(json.dumps(result),flush=True)
 sys.exit(proc.returncode)
-

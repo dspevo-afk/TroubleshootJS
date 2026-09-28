@@ -1,11 +1,10 @@
 # Current checkpoint: Q30 BLOCKED / NOT ACCEPTED
 
 Branch `codex/q30-multirail-qualification`. Local HEAD/source checkpoint
-`57929125daf6322006fe7da871b2edc7cca9590d`
-(`Short-circuit owned LU zero-row scans`) adds the accepted private early exit
-to the previous accepted local source
-`e285675d6f8f689cd7e73d09543f6cd37de8987f`
-(`Avoid redundant finite checks in nonlinear LU`). No push or completion email.
+`ba107090e4899ca9d3a2413259c78d042d20dae1`
+(`Skip finite zero products in LU solve`) adds the accepted finite-RHS solve
+optimization to the previous local source `5792912`
+(`Short-circuit owned LU zero-row scans`). No push or completion email.
 Normal Q30 publication remains disabled. U06/U07/Q60 and later milestones are
 unstarted; full final acceptance matrices remain NOT RUN while hard gates fail.
 The 90,000-ms cumulative, 640-work and 5,000-ms active-operation limits remain
@@ -152,7 +151,12 @@ remains outside the existing numerical oracle. Root repaired missing canary
 artifacts and incorrect runner references before accepting the packet, then
 audited all 260 inventoried files, 13 exact raw browser reports, both 1,339-input
 source reconstructions, and both actual staged source blobs. The final inventory
-is `e1d1f560e133e38673b3e11ba5e733525ed843b4b32281152c8a4c191906af24`.
+is `c3e98e85bc97fb230f8b0b2fbed9dc5333e927dff1f87ecfb66689125b7a02a3`.
+The source commit was mistakenly issued after cached whitespace checking flagged
+three extra EOF blank lines in archived helper scripts. A separate documentation
+correction removes those blank lines, records the transformation while preserving
+original source hashes, refreshes the inventory, and reruns cached diff checking.
+No production source or measured artifact changes in that correction.
 [Accepted sticky-finite evidence](task-evidence/Q30/sticky-finite-solve-r2/README.md).
 
 The next isolated whole-factor probe changes no numerical operation. Its first
@@ -161,7 +165,7 @@ GWT JSON construction on the JVM. R1 is preserved. R2 changes only that test:
 native timing/cleanup checks remain, and exact serialized scope/counters are
 required by the real browser metadata reader. Native8, production GWT5,
 compiled A07/disabled-normal and exact A07/three corruptions all PASS. Fresh
-off/profile measurement remains NOT RUN at this commit; no profiler is integrated.
+off/profile measurement is now running; no profiler is integrated.
 
 Uncommitted plan-4 scale work remains NOT ACCEPTED. Purposeful one/two-channel
 topologies and support blocks replace count padding; current replay is /4 with
@@ -220,7 +224,8 @@ browser/server cleanup. All eight sticky-finite r2 timing runs and final-source
 gates have finished with owned cleanup. The final r7 native/GWT, boundary and
 positive host sequences have finished with owned cleanup. The manual Browser
 tab is closed; maintained preview stop verified PID 23468 and port 34917 release.
-One heavy operation runs at a time. Substantial task-temp
+The isolated factor timing sequence is running, with one heavy operation at a
+time. Substantial task-temp
 source/evidence copies remain.
 Automatic approval review previously blocked recursive deletion of two older
 copies and one copied generated-WAR tree; no retry is planned. Their exact
@@ -232,8 +237,7 @@ the sampler evidence and report; it integrated no sampler. This checkpoint also
 corrects that packet's table heading from hypotheses to hypothesis work units,
 updates its inventory and re-audits all 51 artifacts. Measurements are unchanged.
 
-Next: finish and commit the accepted sticky-finite intermediate checkpoint,
-then measure the remaining factor cost against routing. Repair and prove
+Next: complete the factor-cost comparison against routing. Repair and prove
 D01 lifecycle canaries, obtain normal cold timing with margin and scale coverage,
 and only then run the complete final acceptance matrix. Q30 stays BLOCKED.
 

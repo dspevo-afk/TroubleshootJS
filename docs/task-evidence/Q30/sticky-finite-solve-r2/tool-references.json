@@ -7,10 +7,11 @@
       "sourceSha256": "981e5aed0e18240f4fef6accab0541ed3b6ed421b41a641e0929be1d18bc4507"
     },
     {
-      "packetSha256": "8bb84c0562500759b76a135dfdabd9f595404d58207921bc93e4424f680a3d19",
+      "packetSha256": "fb9d2dbcd0db0022e7fa9dd375566d86b86bc6ec86c2176d6d038586eddaf893",
       "path": "tools/prepare_sticky_finite_sequence_root.py",
       "redactions": 0,
-      "sourceSha256": "8bb84c0562500759b76a135dfdabd9f595404d58207921bc93e4424f680a3d19"
+      "sourceSha256": "8bb84c0562500759b76a135dfdabd9f595404d58207921bc93e4424f680a3d19",
+      "normalization": "Remove extra final blank lines from archived inspection copy; original source SHA retained."
     },
     {
       "packetSha256": "4b61c43d06b7c5cc39a53d948a6ae61e177ff62c2d105416b37942b1619dd32e",
@@ -25,10 +26,11 @@
       "sourceSha256": "175712f8e056d55ae17554c7eb5ea8da8c87060be70e20e706b518c94e3fa133"
     },
     {
-      "packetSha256": "509905a0a1af56f457038f7ee4f402093e9c34ade0f9f641425d307598235419",
+      "packetSha256": "e95ec10bad92d9cf2231d0b7b44f142309b900e47de1c787b029c78b48da7c0c",
       "path": "tools/prepare_sticky_finite_gate_runner.py",
       "redactions": 0,
-      "sourceSha256": "509905a0a1af56f457038f7ee4f402093e9c34ade0f9f641425d307598235419"
+      "sourceSha256": "509905a0a1af56f457038f7ee4f402093e9c34ade0f9f641425d307598235419",
+      "normalization": "Remove extra final blank lines from archived inspection copy; original source SHA retained."
     },
     {
       "packetSha256": "67430d7c56d872d115a7c38732bf60101cff52e8bf40f7af075213debc8e7e3b",
@@ -63,8 +65,9 @@
     {
       "path": "tools/run_timing.py",
       "sourceSha256": "a7ef67c63397a28c1781b40746507fc0fa129f030742b8c6201350f099a9765f",
-      "packetSha256": "a7ef67c63397a28c1781b40746507fc0fa129f030742b8c6201350f099a9765f",
-      "redactions": 0
+      "packetSha256": "9d5fb80840b3a53f8076f8311250e4eba808c74cb009bdb07225792c48b014ec",
+      "redactions": 0,
+      "normalization": "Remove extra final blank lines from archived inspection copy; original source SHA retained."
     },
     {
       "path": "tools/run_current_solver_canaries.py",

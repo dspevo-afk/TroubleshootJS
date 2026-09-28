@@ -2016,9 +2016,9 @@
     },
     {
       "path": "tool-references.json",
-      "bytes": 4469,
-      "sha256": "6e8dc355e8db024207ac3eff51e2f4c05a09e8c4cb5664de8ba3801ae603f658",
-      "sourceSha256": "6e8dc355e8db024207ac3eff51e2f4c05a09e8c4cb5664de8ba3801ae603f658",
+      "bytes": 4823,
+      "sha256": "9f4e0f3f2fc3f76b0b2779f1854d6cd067a59af7df44b37d883b52902f13882f",
+      "sourceSha256": "9f4e0f3f2fc3f76b0b2779f1854d6cd067a59af7df44b37d883b52902f13882f",
       "redactions": 0,
       "transformed": false
     },
@@ -2039,20 +2039,22 @@
       "transformed": true
     },
     {
-      "bytes": 1647,
+      "bytes": 1646,
       "path": "tools/prepare_sticky_finite_gate_runner.py",
       "redactions": 0,
-      "sha256": "509905a0a1af56f457038f7ee4f402093e9c34ade0f9f641425d307598235419",
+      "sha256": "e95ec10bad92d9cf2231d0b7b44f142309b900e47de1c787b029c78b48da7c0c",
       "sourceSha256": "509905a0a1af56f457038f7ee4f402093e9c34ade0f9f641425d307598235419",
-      "transformed": false
+      "transformed": true,
+      "normalization": "Remove extra final blank lines from archived inspection copy; original source SHA retained."
     },
     {
-      "bytes": 3605,
+      "bytes": 3604,
       "path": "tools/prepare_sticky_finite_sequence_root.py",
       "redactions": 0,
-      "sha256": "8bb84c0562500759b76a135dfdabd9f595404d58207921bc93e4424f680a3d19",
+      "sha256": "fb9d2dbcd0db0022e7fa9dd375566d86b86bc6ec86c2176d6d038586eddaf893",
       "sourceSha256": "8bb84c0562500759b76a135dfdabd9f595404d58207921bc93e4424f680a3d19",
-      "transformed": false
+      "transformed": true,
+      "normalization": "Remove extra final blank lines from archived inspection copy; original source SHA retained."
     },
     {
       "bytes": 1483,
@@ -2104,11 +2106,12 @@
     },
     {
       "path": "tools/run_timing.py",
-      "bytes": 2015,
-      "sha256": "a7ef67c63397a28c1781b40746507fc0fa129f030742b8c6201350f099a9765f",
+      "bytes": 2014,
+      "sha256": "9d5fb80840b3a53f8076f8311250e4eba808c74cb009bdb07225792c48b014ec",
       "sourceSha256": "a7ef67c63397a28c1781b40746507fc0fa129f030742b8c6201350f099a9765f",
       "redactions": 0,
-      "transformed": false
+      "transformed": true,
+      "normalization": "Remove extra final blank lines from archived inspection copy; original source SHA retained."
     },
     {
       "bytes": 21229,

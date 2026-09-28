@@ -23,4 +23,3 @@ target=s/'run_sticky_finite_r2_gates.py'
 assert not target.exists()
 target.write_text(text,encoding='utf-8',newline='\n')
 print(target)
-
