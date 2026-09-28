@@ -1,0 +1,33 @@
+{
+  "status": "STOPPED_FAILURE",
+  "scope": "focused LU pivot/lower collection trial; not Q30 acceptance",
+  "sourceAuditSha256": "09f2b38b543ee944d26d0a139a306b8125b1b432bba2008ed02183686e008baa",
+  "planSha256": "7ba6ef68fefbe59282a719771483bf2ffd6e8b5d9a971cec87b4a6769971c4b3",
+  "steps": [
+    {
+      "name": "native6",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\native-pivot-lower-fusion.ps1",
+        "-SourceRoot",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\scratch\\pivot-lower-fusion-r1-preparation\\candidate",
+        "-Label",
+        "native-pivot-lower-fusion-r1"
+      ],
+      "exitCode": 2,
+      "elapsedSeconds": 33.07814719999442
+    }
+  ],
+  "controlEvidenceReuse": {
+    "status": "PASS",
+    "boundary": "All 1339 source-fixture inputs and all 1525 consumed runtime source/web inputs unchanged from the accepted sticky-finite candidate. Reuse its native/GWT/A07/disabled-normal evidence; every timing row still starts a fresh browser and cold private cache.",
+    "runtimeInputCount": 1525,
+    "sourceSha256": "7059ae2a344a27ce01899a96b497546603cefdc61e8108c442aa501962cce1e6",
+    "webSha256": "939986d503dcccee7adf3863a1392df743a9e3e676c1892709dec109a652cf1c",
+    "priorGwtReceiptSha256": "728f345452d7b849fd75dfa3c2636c8837cbac296c0a6d7609ea9201332e7e53",
+    "priorManifestSha256": "7f087fc825b8e883770ca0d10964b1b7e14189a0959d36485442e95157f29f89"
+  },
+  "failure": "native6"
+}

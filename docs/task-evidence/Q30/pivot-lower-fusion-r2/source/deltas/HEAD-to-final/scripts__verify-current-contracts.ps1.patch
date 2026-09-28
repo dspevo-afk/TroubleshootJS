@@ -1,0 +1,10 @@
+--- a/scripts/verify-current-contracts.ps1
++++ b/scripts/verify-current-contracts.ps1
+@@ -171,6 +171,7 @@
+         @{ Name = 'A06PowerContractTest'; Marker = 'A06 power contracts ' },
+         @{ Name = 'A07ExecutionContractTest'; Marker = 'A07 execution contracts ' },
+         @{ Name = 'Q30OwnedLuZeroRowContractTest'; Marker = 'Q30 owned LU zero-row contracts ' },
++        @{ Name = 'Q30LuPivotCollectionContractTest'; Marker = 'Q30 LU pivot collection contracts ' },
+         @{ Name = 'A09DiagnosticContractTest'; Marker = 'A09 diagnostic contracts ' },
+         @{ Name = 'D01DiagnosticContractTest'; Marker = 'D01 diagnostic contracts ' },
+         @{ Name = 'A10GenerationContractTest'; Marker = 'A10 generation contracts ' },

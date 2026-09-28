@@ -1,0 +1,18 @@
+{
+  "executedSequenceRunner": {
+    "executed": true,
+    "path": "procedures/inspection/run_pivot_lower_fusion_r2_sequence.py",
+    "sha256": "f882f3fac1d5f551528f6bfe470cd9c76b15a20984c2496e9c65dfea71e62de8"
+  },
+  "genericSequenceRunner": {
+    "executed": false,
+    "note": "Preserved helper variant; the eight-row sequence used the R2 runner above.",
+    "path": "procedures/inspection/run_pivot_lower_fusion_sequence.py"
+  },
+  "policy": "Inspection-only source scripts are LF-normalized; trailing spaces/tabs are stripped per line; terminal blank lines are removed and exactly one LF is added; personal absolute paths are replaced. Original and stored SHA-256 values are in inventory.json. Exact source/report gzip payloads are not normalized.",
+  "preReviewRunner": {
+    "executed": false,
+    "path": "procedures/inspection/run_pivot_lower_fusion_r2_sequence.pre-review-not-run.py",
+    "sha256": "2d3733dbcfa0463fb74605a4bc4d4d8ff59bc5383382bc9009679a6e77c8ea5b"
+  }
+}

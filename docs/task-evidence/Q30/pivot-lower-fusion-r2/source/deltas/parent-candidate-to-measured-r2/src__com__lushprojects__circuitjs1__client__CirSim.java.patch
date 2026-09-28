@@ -1,0 +1,73 @@
+--- a/src/com/lushprojects/circuitjs1/client/CirSim.java
++++ b/src/com/lushprojects/circuitjs1/client/CirSim.java
+@@ -8081,12 +8081,19 @@
+             // calculate lower triangular elements for this column
+             double largest = 0;
+             int largestRow = -1;
++            int selectedLowerSlot = -1;
+             for (i = k; i != n; i++) {
+                 double q = a[i][k];
+                 double x = Math.abs(q);
++                int candidateLowerSlot = -1;
++                if (i > k && q != 0) {
++                    candidateLowerSlot = workspace.lowerRowCount;
++                    workspace.appendLowerRow(a[i]);
++                }
+                 if (x >= largest) {
+                     largest = x;
+                     largestRow = i;
++                    selectedLowerSlot = candidateLowerSlot;
+                 }
+             }
+ 
+@@ -8094,6 +8101,20 @@
+                 double[] row = a[largestRow];
+                 a[largestRow] = a[k];
+                 a[k] = row;
++                if (selectedLowerSlot >= 0) {
++                    // The chosen row moved to k. Replace its slot with the old
++                    // row k, which now occupies the chosen row's lower position.
++                    double[] oldPivotRow = a[largestRow];
++                    if (oldPivotRow[k] != 0) {
++                        workspace.lowerRows[selectedLowerSlot] = oldPivotRow;
++                    } else {
++                        for (int lower = selectedLowerSlot;
++                                lower < workspace.lowerRowCount - 1; lower++)
++                            workspace.lowerRows[lower] = workspace.lowerRows[lower + 1];
++                        workspace.lowerRows[workspace.lowerRowCount - 1] = null;
++                        workspace.lowerRowCount--;
++                    }
++                }
+             }
+ 
+             // keep track of row interchanges
+@@ -8108,20 +8129,24 @@
+             if (k != n-1) {
+                 double mult = 1.0/a[k][k];
+                 requireFiniteStamp(mult);
+-                for (i = k+1; i != n; i++) {
+-                    double[] row = a[i];
+-                    if (row[k] == 0) continue;
++                double[][] rows = workspace.lowerRows;
++                int candidateCount = workspace.lowerRowCount;
++                int scaledCount = 0;
++                for (int entry = 0; entry < candidateCount; entry++) {
++                    double[] row = rows[entry];
+                     double value = row[k] * mult;
+                     requireFiniteStamp(value);
+                     row[k] = value;
+-                    if (value != 0) workspace.appendLowerRow(row);
++                    if (value != 0) rows[scaledCount++] = row;
+                 }
++                for (int entry = scaledCount; entry < candidateCount; entry++)
++                    rows[entry] = null;
++                workspace.lowerRowCount = scaledCount;
+ 
+                 double[] pivotRow = a[k];
+                 for (j = k+1; j != n; j++)
+                     if (pivotRow[j] != 0) workspace.appendUpperColumn(j);
+ 
+-                double[][] rows = workspace.lowerRows;
+                 int rowCount = workspace.lowerRowCount;
+                 int upperCount = workspace.upperColumnCount;
+                 int[] columns = workspace.upperColumns;

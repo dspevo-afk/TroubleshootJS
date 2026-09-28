@@ -1,0 +1,143 @@
+{
+  "interpretation": "candidate-minus-control; negative is candidate faster",
+  "pairs": [
+    {
+      "candidate": {
+        "elapsedMs": 97161,
+        "hypothesisWork": 390,
+        "proofElapsedMs": 68533,
+        "routingElapsedMs": 22519,
+        "totalWork": 490
+      },
+      "candidateLabel": "pivot-lower-fusion-02-candidate-10014",
+      "candidateMinusControlMs": {
+        "elapsedMs": -1418,
+        "proofElapsedMs": -1388,
+        "routingElapsedMs": 89
+      },
+      "cleanupPass": true,
+      "control": {
+        "elapsedMs": 98579,
+        "hypothesisWork": 390,
+        "proofElapsedMs": 69921,
+        "routingElapsedMs": 22430,
+        "totalWork": 490
+      },
+      "controlLabel": "pivot-lower-fusion-01-control-10014",
+      "order": [
+        "control",
+        "candidate"
+      ],
+      "pair": 1,
+      "reportPayloadSha256": {
+        "candidate": "ef1453a89beb1b469a3ca55abad9d038a4e827e9f6d076d597e7fb85a01b95e9",
+        "control": "c4f7d87d7620bae3ae5bd54e8d61fa540d07993462d108220c0c0f8e1098352f"
+      },
+      "seed": "10014"
+    },
+    {
+      "candidate": {
+        "elapsedMs": 75610,
+        "hypothesisWork": 390,
+        "proofElapsedMs": 55989,
+        "routingElapsedMs": 14519,
+        "totalWork": 462
+      },
+      "candidateLabel": "pivot-lower-fusion-03-candidate-7",
+      "candidateMinusControlMs": {
+        "elapsedMs": -413,
+        "proofElapsedMs": -374,
+        "routingElapsedMs": -21
+      },
+      "cleanupPass": true,
+      "control": {
+        "elapsedMs": 76023,
+        "hypothesisWork": 390,
+        "proofElapsedMs": 56363,
+        "routingElapsedMs": 14540,
+        "totalWork": 462
+      },
+      "controlLabel": "pivot-lower-fusion-04-control-7",
+      "order": [
+        "candidate",
+        "control"
+      ],
+      "pair": 2,
+      "reportPayloadSha256": {
+        "candidate": "8856c3deaf22ffc47a93639b68e0c3d2c045bc6335f4786aa501bb8f9c91022c",
+        "control": "9384c3c3f35d4fb17b14737f5e0f222420b65fc8389d118047025f5c6ef91a92"
+      },
+      "seed": "7"
+    },
+    {
+      "candidate": {
+        "elapsedMs": 23809,
+        "hypothesisWork": 230,
+        "proofElapsedMs": 16082,
+        "routingElapsedMs": 5812,
+        "totalWork": 276
+      },
+      "candidateLabel": "pivot-lower-fusion-06-candidate-10387",
+      "candidateMinusControlMs": {
+        "elapsedMs": 222,
+        "proofElapsedMs": 159,
+        "routingElapsedMs": 49
+      },
+      "cleanupPass": true,
+      "control": {
+        "elapsedMs": 23587,
+        "hypothesisWork": 230,
+        "proofElapsedMs": 15923,
+        "routingElapsedMs": 5763,
+        "totalWork": 276
+      },
+      "controlLabel": "pivot-lower-fusion-05-control-10387",
+      "order": [
+        "control",
+        "candidate"
+      ],
+      "pair": 3,
+      "reportPayloadSha256": {
+        "candidate": "829e1016712b9cdb5374daf94721ae66b83627cd2228ae4ac64102a6d060c1bb",
+        "control": "bf8dc4e68020b6af5988af7354e0271b6fa65c81ed6dfa133b4f1bb60d95b698"
+      },
+      "seed": "10387"
+    },
+    {
+      "candidate": {
+        "elapsedMs": 97412,
+        "hypothesisWork": 390,
+        "proofElapsedMs": 68706,
+        "routingElapsedMs": 22540,
+        "totalWork": 490
+      },
+      "candidateLabel": "pivot-lower-fusion-07-candidate-10014",
+      "candidateMinusControlMs": {
+        "elapsedMs": -1175,
+        "proofElapsedMs": -1144,
+        "routingElapsedMs": -2
+      },
+      "cleanupPass": true,
+      "control": {
+        "elapsedMs": 98587,
+        "hypothesisWork": 390,
+        "proofElapsedMs": 69850,
+        "routingElapsedMs": 22542,
+        "totalWork": 490
+      },
+      "controlLabel": "pivot-lower-fusion-08-control-10014",
+      "order": [
+        "candidate",
+        "control"
+      ],
+      "pair": 4,
+      "reportPayloadSha256": {
+        "candidate": "18a03f6bbf14b22ad75c8f45d56bae976068191d3552c9042d6e592f20e18c0e",
+        "control": "a984aec0e92188011f996539c6c83576d8a6052cab193d2cc3cad85e5ad83770"
+      },
+      "seed": "10014"
+    }
+  ],
+  "status": "FOCUSED_PAIRS_PASS_PENDING_ROOT_ACCEPTANCE",
+  "units": "ms"
+}

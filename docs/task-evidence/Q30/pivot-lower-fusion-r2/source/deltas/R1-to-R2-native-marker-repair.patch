@@ -1,0 +1,11 @@
+--- a/R1-Q30LuPivotCollectionContractTest.java
++++ b/R2-Q30LuPivotCollectionContractTest.java
+@@ -28,7 +28,7 @@
+     }
+ 
+     public static void main(String[] args) {
+-        System.out.println("Q30 LU pivot collection contracts " + run());
++        System.out.println("PASS: Q30 LU pivot collection contracts " + run());
+     }
+ 
+     public static int run() {

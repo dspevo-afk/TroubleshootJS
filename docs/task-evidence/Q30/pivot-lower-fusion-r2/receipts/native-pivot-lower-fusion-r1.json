@@ -1,0 +1,14 @@
+{
+  "status": "FAIL",
+  "exitCode": 2,
+  "elapsedSeconds": 32.8542845,
+  "phase": "focused native owned-path oracle/general solver/temporal/measurement budget/normal policy including maintained cleanup",
+  "suites": [
+    "A07ExecutionContractTest",
+    "Q30OwnedLuZeroRowContractTest",
+    "Q30LuPivotCollectionContractTest",
+    "Q30TemporalWorkContractTest",
+    "Q30GenerationMeasurementBudgetContractTest",
+    "Q30NormalExecutionPolicyContractTest"
+  ]
+}

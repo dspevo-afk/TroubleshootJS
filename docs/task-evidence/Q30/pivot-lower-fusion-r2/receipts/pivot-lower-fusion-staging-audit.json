@@ -1,0 +1,26 @@
+{
+  "status": "SELECTIVE_STAGING_AND_FINAL_SOURCE_EQUALITY_PASS",
+  "sourceInputs": 1339,
+  "trackedBlobInputs": 1330,
+  "pinnedJars": 9,
+  "files": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "blob": "008f5ea0d36837fe36a48b62d25bb3aa4b5dca5f",
+      "sha256": "c75fa32de8f6175424675aa590604ceca10fb1b335c63640e638a92b3bf0ff32"
+    },
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "blob": "43f556f1bfaf77823800d0c383bcd6c4bda4074d",
+      "sha256": "0dda5fa6411c89435799a17acfb09ae2cca3de08f58d41f04ccb326a6aca4183"
+    },
+    {
+      "path": "tests/contracts/Q30LuPivotCollectionContractTest.java",
+      "blob": "4510ca417a6396f7c87631cf99c81777ebedeebf",
+      "sha256": "15b81b3acabba38c4010a675899685e6adf696d19f8d72e7d244f790f3b95d14"
+    }
+  ],
+  "tree": "565ba26abfe0a8025681922ff061bbe1ea758cd1",
+  "baseHead": "2b152c25c556eea8c7fb4582c5459c17c69821b3",
+  "scope": "Only reviewed LU kernel/new focused test/registration staged; all 1339 consumed final-source inputs match the passing fixture. Unaccepted plan4/normal hook remain unstaged."
+}

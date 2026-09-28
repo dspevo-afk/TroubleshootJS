@@ -1,0 +1,81 @@
+{
+  "status": "FINAL_SOURCE_GATES_PASS_PENDING_ROOT_INPUT_EQUALITY",
+  "scope": "exact proposed final source gates followed by working-source production build; no normal acceptance",
+  "steps": [
+    {
+      "label": "index-native",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\native-pivot-lower-fusion.ps1",
+        "-SourceRoot",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\pivot-lower-fusion-final-source",
+        "-Label",
+        "native-pivot-lower-fusion-index"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 37.23882009999943
+    },
+    {
+      "label": "index-gwt",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\build-run.ps1",
+        "-SourceRoot",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\pivot-lower-fusion-final-source",
+        "-Label",
+        "pivot-lower-fusion-index-gwt"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 79.90453149999666
+    },
+    {
+      "label": "index-compiled-a07",
+      "command": [
+        "<TASK_TEMP>\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+        "-B",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\run_staged_solver_canary.py",
+        "<TASK_TEMP>\\.codex\\worktrees\\q30-multirail-qualification\\TroubleshootJS",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\pivot-lower-fusion-final-source",
+        "pivot-lower-fusion-index-canary"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.4409222999966005
+    },
+    {
+      "label": "index-strict-a07",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\read_a07.ps1",
+        "-Repo",
+        "<TASK_TEMP>\\.codex\\worktrees\\q30-multirail-qualification\\TroubleshootJS",
+        "-Report",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\pivot-lower-fusion-index-canary\\cases\\001-pivot-lower-fusion-index-canary-a07.report.json"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.5744546000059927
+    },
+    {
+      "label": "root-gwt",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\build-run.ps1",
+        "-SourceRoot",
+        "<TASK_TEMP>\\.codex\\worktrees\\q30-multirail-qualification\\TroubleshootJS",
+        "-Label",
+        "pivot-lower-fusion-root-gwt"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 77.70366389999981
+    }
+  ],
+  "elapsedSeconds": 200.86558240000159
+}

@@ -1,0 +1,9 @@
+# Pivot/lower harness review
+
+Reviewed the frozen r1/r2 fixture, gate and sequence generators, plan, unchanged timing/strict-reader helpers, and the r2 runtime-binding repair. The r2 audit limits production change to `CirSim.java`; the new contract test and its native registration are the only test/driver additions. R2 changes only the test’s missing `PASS:` prefix relative to r1. The r1 native exit-2 failure is preserved; its output says 388 assertions completed before the maintained marker check failed. The r2 gate receipt records native6, GWT5, compiled A07/disabled-normal canaries, and exact A07 negative-reader checks all passing. This is focused-gate evidence, not timing or Q30 acceptance.
+
+The control reuse check matches all 1339 source-fixture files and the accepted 1525-input runtime manifest, including 392 web inputs. I found and reported a missing link between that gate manifest and timing rows. The updated r2 sequence pins five host input-identity fields for both control and candidate to their gate-tested runtime digests, and verifies the same identity on every row; its source audit and host runner are checked before/after execution. I reviewed the updated runner SHA-256 `f882f3fac1d5f551528f6bfe470cd9c76b15a20984c2496e9c65dfea71e62de8` and the binding receipt.
+
+The plan has eight counterbalanced rows over seeds 10014, 7 and 10387 (40/37/20/40 packages). Each row uses a new host output/profile and monotonic host timing without the profiler query. Every completed pair runs the pinned strict current-plan reader on both arms and requires report equality outside declared timings. Early stop retains prior failures and unrun rows. No proof, deadline or normal-player policy is relaxed; the browser’s 600-second host timeout is outer capture only.
+
+This review establishes harness/source properties only; the root timing receipt is authoritative for performance results. No harness blocker remains after the runtime-binding repair.

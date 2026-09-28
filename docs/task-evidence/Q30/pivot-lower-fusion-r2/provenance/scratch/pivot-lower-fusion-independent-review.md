@@ -1,0 +1,9 @@
+# Pivot/lower fusion independent review
+
+No blocker found in the bounded source review. The candidate source SHA-256 is `c0b9d9bc7ff72d0e5021500c331e40dfcd03974ee3517c39d757d05302b1cfc3`; the r2 focused test SHA-256 is `15b81b3acabba38c4010a675899685e6adf696d19f8d72e7d244f790f3b95d14`. In the prepared source pair, production differences are limited to `CirSim.java`; the control-to-candidate diff is within `lu_factorAfterInputScan` (candidate lines 8080–8167).
+
+The pivot selection retains `>=` and later-row tie behavior. Collected lower rows are appended in row order. After a pivot swap, the selected row is removed from that list and the old pivot row replaces its slot when nonzero, or the slot is shifted out when zero. Scaling writes rows in the same ascending order as the control; underflowed multipliers are retained through the write and removed during compaction. The retained list then drives upper updates in order. The control already skips rows whose lower coefficient is zero, so collection does not newly omit zero-arithmetic or alter signed-zero behavior relative to this base. Both LU entry points still clear workspace in `finally` (lines 8025–8043 and 8051–8071), including exceptional exits during scaling/update.
+
+The focused oracle compares factors/RHS bitwise via `sameBits` and covers n=0/1, dense/sparse inputs, later-row ties, a zero trailing pivot column, both selected-slot swap repairs, underflow, reciprocal and update overflow partial matrices, and workspace reuse after failure. The unchanged broad `LuFactorizationChecks.compareWithOriginal` uses `==`, so it treats ±0 as numerically equal; that limitation is inherited and no signed-zero regression was introduced by this patch. The new test's `main` now emits the maintained `PASS:` prefix.
+
+Parent reports native r2/A07 PASS; I did not run gates or build. This review establishes source-level invariants only; timing and GWT results remain parent-owned.

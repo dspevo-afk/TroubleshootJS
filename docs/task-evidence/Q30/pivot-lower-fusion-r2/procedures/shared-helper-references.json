@@ -1,0 +1,30 @@
+{
+  "sharedTimingHelpers": [
+    {
+      "byteIdentical": false,
+      "executedSourceSha256": "a7ef67c63397a28c1781b40746507fc0fa129f030742b8c6201350f099a9765f",
+      "inspectionComparison": "LF-normalized plus exactly one terminal blank line ignored",
+      "name": "run_timing.py",
+      "referencePath": "docs/task-evidence/Q30/sticky-finite-solve-r2/tools/run_timing.py",
+      "referenceSha256": "9d5fb80840b3a53f8076f8311250e4eba808c74cb009bdb07225792c48b014ec"
+    },
+    {
+      "byteIdentical": true,
+      "executedSourceSha256": "67430d7c56d872d115a7c38732bf60101cff52e8bf40f7af075213debc8e7e3b",
+      "inspectionComparison": "byte-identical",
+      "name": "validate_current_q30_timing_pair.py",
+      "referencePath": "docs/task-evidence/Q30/sticky-finite-solve-r2/tools/validate_current_q30_timing_pair.py",
+      "referenceSha256": "67430d7c56d872d115a7c38732bf60101cff52e8bf40f7af075213debc8e7e3b"
+    }
+  ],
+  "strictReaderReferences": [
+    {
+      "path": "docs/task-evidence/Q30/owned-zero-row-scan/procedure/readers/check_coordinator.py",
+      "sha256": "247ded434bcdbdba6f78e7edf8f9c8b3671aaf8465bfabb29c875d5b2512bddb"
+    },
+    {
+      "path": "docs/task-evidence/Q30/owned-zero-row-scan/procedure/readers/check_d01.py",
+      "sha256": "f58847541571cdf829835d05c200bac6ea0079dab065d90ebdf7f44914241929"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "status": "PRE_SEQUENCE_BINDING_REPAIR_NOT_RUN",
+  "reason": "Independent review found first timing row was not bound to gate-tested compiled WAR. Both arms now require complete tested runtime digests/count on every row, plus unchanged source and per-run before/after audits.",
+  "beforeRunnerSha256": "2d3733dbcfa0463fb74605a4bc4d4d8ff59bc5383382bc9009679a6e77c8ea5b",
+  "afterRunnerSha256": "f882f3fac1d5f551528f6bfe470cd9c76b15a20984c2496e9c65dfea71e62de8",
+  "gateSha256": "2e6e85562c53397d3ec29866af89876f35500e897e9afa804b9d94585bc67401",
+  "candidateCanaryReceiptSha256": "d02df636bd268130ac8073b22dff17722fe25e150f59f2bba01db5119b607738",
+  "expectedRuntimeInputs": {
+    "control": {
+      "beforeSha256": "ec508f9622b345900515ae9937a051db8e60e47dc2dc3677111f0afc72d7b214",
+      "sourceSha256Before": "7059ae2a344a27ce01899a96b497546603cefdc61e8108c442aa501962cce1e6",
+      "webSha256Before": "939986d503dcccee7adf3863a1392df743a9e3e676c1892709dec109a652cf1c",
+      "runnerBeforeSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+      "fileCountBefore": 1525
+    },
+    "candidate": {
+      "beforeSha256": "53f869e8164f6b8edc3b75ba1e6a299a984de5c88829b60b04a9ca59e76787a9",
+      "sourceSha256Before": "cb257f2158d02ece1fb0a3f7ac7386ec9a14e43100be1ad337d2e344aae0828e",
+      "webSha256Before": "e7377863185fc8208cb356474b39d14c9a82a35f5470bd7824d68113e1c03961",
+      "runnerBeforeSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+      "fileCountBefore": 1525
+    }
+  }
+}

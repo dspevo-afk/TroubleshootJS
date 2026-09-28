@@ -1,0 +1,76 @@
+{
+  "status": "FOCUSED_GATES_PASS_NOT_ACCEPTANCE",
+  "scope": "focused LU pivot/lower collection trial; not Q30 acceptance",
+  "sourceAuditSha256": "0d27e176dc46afb4db91316570f4674e52b51ce2b462c64f6b6a37b98cbec197",
+  "planSha256": "7ba6ef68fefbe59282a719771483bf2ffd6e8b5d9a971cec87b4a6769971c4b3",
+  "steps": [
+    {
+      "name": "native6",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\native-pivot-lower-fusion.ps1",
+        "-SourceRoot",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\scratch\\pivot-lower-fusion-r2-preparation\\candidate",
+        "-Label",
+        "native-pivot-lower-fusion-r2"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 33.28860949999944
+    },
+    {
+      "name": "gwt5",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\build-run.ps1",
+        "-SourceRoot",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\scratch\\pivot-lower-fusion-r2-preparation\\candidate",
+        "-Label",
+        "pivot-lower-fusion-r2-gwt"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 78.9844305000006
+    },
+    {
+      "name": "compiled-a07-disabled-normal",
+      "command": [
+        "<TASK_TEMP>\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+        "-B",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\run_current_solver_canaries.py",
+        "<TASK_TEMP>\\.codex\\worktrees\\q30-multirail-qualification\\TroubleshootJS",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\scratch\\pivot-lower-fusion-r2-preparation\\candidate",
+        "pivot-lower-fusion-r2-canaries"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 6.179257300012978
+    },
+    {
+      "name": "exact-a07-reader-three-corruptions",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\read_a07.ps1",
+        "-Repo",
+        "<TASK_TEMP>\\.codex\\worktrees\\q30-multirail-qualification\\TroubleshootJS",
+        "-Report",
+        "<TASK_TEMP>\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\pivot-lower-fusion-r2-canaries\\cases\\001-pivot-lower-fusion-r2-canaries-a07.report.json"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.5521927000081632
+    }
+  ],
+  "controlEvidenceReuse": {
+    "status": "PASS",
+    "boundary": "All 1339 source-fixture inputs and all 1525 consumed runtime source/web inputs unchanged from the accepted sticky-finite candidate. Reuse its native/GWT/A07/disabled-normal evidence; every timing row still starts a fresh browser and cold private cache.",
+    "runtimeInputCount": 1525,
+    "sourceSha256": "7059ae2a344a27ce01899a96b497546603cefdc61e8108c442aa501962cce1e6",
+    "webSha256": "939986d503dcccee7adf3863a1392df743a9e3e676c1892709dec109a652cf1c",
+    "priorGwtReceiptSha256": "728f345452d7b849fd75dfa3c2636c8837cbac296c0a6d7609ea9201332e7e53",
+    "priorManifestSha256": "7f087fc825b8e883770ca0d10964b1b7e14189a0959d36485442e95157f29f89"
+  }
+}

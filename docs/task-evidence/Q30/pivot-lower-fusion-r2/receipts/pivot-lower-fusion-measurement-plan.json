@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "status": "PREDECLARED",
+  "scope": "Isolated generic LU pivot-search/lower-row collection experiment; no profiler or policy change; not Q30 acceptance.",
+  "sequence": [
+    {"label":"pivot-lower-fusion-01-control-10014","arm":"control","seed":"10014"},
+    {"label":"pivot-lower-fusion-02-candidate-10014","arm":"candidate","seed":"10014"},
+    {"label":"pivot-lower-fusion-03-candidate-7","arm":"candidate","seed":"7"},
+    {"label":"pivot-lower-fusion-04-control-7","arm":"control","seed":"7"},
+    {"label":"pivot-lower-fusion-05-control-10387","arm":"control","seed":"10387"},
+    {"label":"pivot-lower-fusion-06-candidate-10387","arm":"candidate","seed":"10387"},
+    {"label":"pivot-lower-fusion-07-candidate-10014","arm":"candidate","seed":"10014"},
+    {"label":"pivot-lower-fusion-08-control-10014","arm":"control","seed":"10014"}
+  ],
+  "preconditions": "Independent source review; unchanged numerical oracle and focused positive, negative, pivot-order, underflow and workspace-cleanup checks; actual candidate JDK8/GWT build and compiled A07/disabled-normal canaries. Reuse the accepted sticky-finite control build only after a complete consumed-source and compiled-web identity audit. Candidate source-only fixture differs in production only at CirSim's factor implementation, with its new test/registration recorded separately.",
+  "isolation": "Every row starts a fresh browser process/context and empty private cold proof cache. Warm reports remain separate. Same host/runner, no concurrent heavy build/test/measurement. Private 90-300 second measurement does not authorize normal 90000ms generation.",
+  "earlyStop": "Stop immediately for any source/build/oracle/host/report/parity/cleanup failure. Stop after the first pair if the candidate cold result regresses by 5% or more, or improves by less than 1%; preserve the pair as rejected or inconclusive rather than silently dropping it. This experimental continuation rule does not change any product acceptance threshold.",
+  "validation": "Bind all source inputs and compiled web assets before/after. Require the exact unprofiled seed request, complete non-timing electrical/physical/proof/cache/work parity, all host error arrays empty, strict current-plan reader plus corruption cases on each arm, and verified owned cleanup. Preserve arithmetic/pivot order, finite guards, settling, all hypotheses, construction, routing, admission, service/retest semantics and exact signed-long replay.",
+  "interpretation": "Use counterbalanced paired cold/proof differences and repeated 40-package within-arm ranges to judge attributable benefit. Count reductions alone are not speedups; single pairs for 20/35 packages are not population guarantees. Q30 remains BLOCKED unless the full predeclared normal corpus, scale and all acceptance requirements pass with margin. No later milestone, deadline increase, proof reduction or publication is authorized."
+}

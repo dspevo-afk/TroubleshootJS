@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "scope": "actual root final-source build versus measured/canary-tested r2 candidate; every consumed input and entire WAR compared byte-for-byte",
+  "inputCount": 1525,
+  "sourceSha256": "cb257f2158d02ece1fb0a3f7ac7386ec9a14e43100be1ad337d2e344aae0828e",
+  "webSha256": "e7377863185fc8208cb356474b39d14c9a82a35f5470bd7824d68113e1c03961",
+  "completeWarFiles": 392,
+  "consumedInputMismatches": [],
+  "extraWarFiles": [],
+  "missingWarFiles": [],
+  "warByteDifferences": [],
+  "rootBuild": {
+    "gate": "maintained JDK8/GWT five-permutation build",
+    "label": "pivot-lower-fusion-root-gwt",
+    "exitCode": 0,
+    "startedUtc": "2026-09-28T10:46:25.4891372Z",
+    "finishedUtc": "2026-09-28T10:47:42.9977508Z",
+    "elapsedSeconds": 77.5040673,
+    "status": "PASS"
+  }
+}
