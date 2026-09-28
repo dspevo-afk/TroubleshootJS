@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 46.8871502,
+  "phase": "focused native solver/sampler cadence and boundaries/temporal/budget regression including maintained cleanup",
+  "suites": [
+    "A07ExecutionContractTest",
+    "Q30LuRepetitionProfileContractTest",
+    "Q30TemporalWorkContractTest",
+    "Q30GenerationMeasurementBudgetContractTest",
+    "Q30NormalExecutionPolicyContractTest",
+    "Q30MatrixCensusProbe"
+  ]
+}

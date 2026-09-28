@@ -1,9 +1,9 @@
 # Current checkpoint: Q30 BLOCKED / NOT ACCEPTED
 
-Branch `codex/q30-multirail-qualification`; local HEAD
-`b23acecea4b53325f88f6374960355beb47389e5`
-(`Fail browser acceptance on attribute-read errors`). The next local checkpoint
-secures the validated routing delta. No push or completion email. Normal Q30
+Branch `codex/q30-multirail-qualification`; accepted source checkpoint
+`86aa58bc6d7f8909d1519a57da6ab1d094a23c48`
+(`Optimize Q30 routing queue and neighbor traversal`). The validated routing
+delta and runner fix are committed locally. No push or completion email. Normal Q30
 publication stays disabled; U06/U07/Q60 and later milestones are unstarted.
 Full final acceptance matrices are NOT RUN while hard gates fail.
 
@@ -91,12 +91,31 @@ positive/negative expectations with owned cleanup. An audit of 25 prior timing
 receipts found no such host errors. This fix does not erase the 40-part D01
 failure. [Runner fix](task-evidence/Q30/attribute-read-failure/README.md).
 
-A private, no-reuse LU sampler is still under review. Its first draft sampled
-1,021 calls apart instead of adjacent pairs and mislabeled GWT 2.7's wall clock
-as monotonic. Both defects are being repaired before measurement, with a narrow
-coordinator execution window to exclude successor work. No numerical cache
-exists. Historical rejected-index evidence had only 18/712 exact adjacent
-matches; it is not evidence for the current plan-4 source.
+The current private LU sampler is validated measurement evidence, not an integrated
+optimization. Final native6 PASS 46.887 s, GWT5 PASS 78.185 s, compiled A07 and
+disabled-normal canaries PASS, including the exact reader/three corruptions.
+Native r1/r2 and GWT r1 failures and their repairs are preserved. Temporal
+coverage now explicitly checks one/two-channel input, work, settling and cleanup;
+the test remains uncommitted with its dependent plan-4 implementation.
+
+Fresh seed-7 profile/query-off control cold times are 83.571/82.683 s, proof
+63.418/62.407 s, routing 14.565/14.774 s. Both host/input/cleanup audits PASS;
+current-plan4 strict readers pass with 43 negative canaries each and full report
+parity outside explicit timing/profile fields. All five hypotheses and 390 proof
+units remain. Twelve sampler-metadata mutations are rejected. Cold sampling
+observes 745,131 factors, 729 adjacent pairs and only 14 exact matches (1.92%);
+factor caching is not implemented. Sizes are 71–81, mostly 75. The 21.6-ms
+copy/compare bracket excludes per-call/codegen overhead; one pair cannot attribute
+the +0.888-s difference or establish normal acceptance. Browser timing uses
+performance.now; native sampler timing is explicitly unavailable.
+
+The logical one-step 20/37/40-part matrix census finds bipartite support blocks
+35+8 / 46+12 / 49+14; these are not installed/proof dimensions or qualification.
+Root independently audits inventory, compressed payloads, personal-path removal
+and all 1,292 source/test/script input reconstructions from the source checkpoint
+plus 29 exact overlays. The bundle preserves failures and unaccepted source
+provenance without staging the plan-4 implementation.
+[Current LU measurement](task-evidence/Q30/current-lu-repetition/README.md).
 
 Frozen contracts remain 90,000 ms cumulative, 640 work units, 5,000 ms per
 operation; isolated private 90–300 s measurement; generic request/coordinator
@@ -111,12 +130,21 @@ OS-temp. Automatic approval review blocked administrative scratch deletion
 separately from runtime cleanup: earlier exact leaves are recorded in
 acceptance-continuation/resource-cleanup.json; the additional retained copy is
 lu-repetition-profile-candidate/source/war. No deletion retry is authorized or
-planned; a fresh source-only sampler fixture will be created. Unrelated Desktop
+planned; the fresh source-only sampler fixture is created. Unrelated Desktop
 checkout edits and pre-existing test __pycache__ remain preserved. Plan-4 source,
 tests, driver, verifier hook/readers/evidence remain unstaged and uncommitted.
 
-Next: secure routing locally; finish the corrected low-intrusion LU measurement
-and investigate structural solver costs; repair private D01 route responsiveness.
+Next: review and measure a private factor entry that removes only repeated finite
+input predicates after the validated restore/checked-stamp path; two independent
+source audits found no current producer-coverage gap. A predeclared fresh A/B
+experiment spans 20/37/40 parts and repeats seed 7. Initial native4 PASS 45.839 s;
+candidate/control GWT5 PASS 78.646/79.319 s. Both actual compiled checks FAIL the
+same new factor-overflow canary; input audits, disabled-normal checks and owned
+cleanup PASS. Timing remains NOT RUN. Repair the common fixture's phase before
+continuing; the required factor/solve/publication assertions stay fixed. Keep all
+zero-row, arithmetic, general-API, solve and publication checks. Review the repaired private D01
+resumable draft's terminal-result cleanup and verifier-flag ownership before
+runtime gates.
 Then prove normal cold timing with margin and scale before any final matrix.
 
 # Historical checkpoint: Q30 acceptance continuation — BLOCKED / NOT ACCEPTED

@@ -1,0 +1,130 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: Q30 temporal work contracts 161 assertions oneChannelHealthyFaultedRetestUnits=3/3/3 twoChannelHealthyFaultedRetestUnits=5/5/5
+
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+
+PASS: Q30 generation measurement budget contracts 25 assertions
+
+PASS: Q30 normal execution policy contracts 299 assertions
+
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+PASS: A07 execution contracts assertions=271503
+
+PASS: Q30 LU repetition profile contracts sampler=adjacent
+
+Q30_MATRIX_CENSUS seed=7 canonical=rb30-plan@4;seed=7;topology=RB30_CH2_SHARED_HYSTERETIC_A_BJT_B_BJT;support=C12:true,S5:false,S12:false,filters:3,outputIndicators:1,bleeder5:false;layout=-1194938301906846876;routing=8563653456340676275;physicalPolicy=MEDIUM_BOARD@1;fault=RELAY_B_COIL_OPEN;packages=37;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated packages=37 channels=2 elements=224 wires=175 modelElements=49 posts=463 internalNodes=10 declaredVoltageSources=18 analyzedVoltageSources=18 circuitNodesIncludingReference=46 fullMnaSize=63 reducedLuSize=58 postStepSeconds=5.0E-6 postStepJacobianComponents=[r46c46,r12c12] diagnosticLuFactorComponents=[r46c46,r12c12] diagnosticLuNanos=374800 classes=[BoundedExternalLoadElm:2,CapacitorElm:5,DecisionElement:2,DiodeElm:3,GroundElm:1,LEDElm:1,LimitedDcSupplyElm:4,LinearRegulatorElm:1,NTransistorElm:2,ProtectionFuseElm:1,ResistorElm:14,ServiceRelayElm:2,SwitchElm:11,WireElm:175]
+Q30_MATRIX_CENSUS seed=10387 canonical=rb30-plan@4;seed=10387;topology=RB30_CH1_SHARED_DIRECT_A_BJT;support=C12:false,S5:false,S12:false,filters:0,outputIndicators:0,bleeder5:false;layout=-3255522771404521770;routing=-6535911948543126759;physicalPolicy=MEDIUM_BOARD@1;fault=RELAY_A_COIL_OPEN;packages=20;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=1;sensors=1-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN);loadReference=isolated packages=20 channels=1 elements=126 wires=95 modelElements=31 posts=260 internalNodes=6 declaredVoltageSources=15 analyzedVoltageSources=15 circuitNodesIncludingReference=33 fullMnaSize=47 reducedLuSize=43 postStepSeconds=5.0E-6 postStepJacobianComponents=[r35c35,r8c8] diagnosticLuFactorComponents=[r35c35,r8c8] diagnosticLuNanos=115800 classes=[BoundedExternalLoadElm:1,CapacitorElm:2,DecisionElement:1,DiodeElm:2,GroundElm:1,LimitedDcSupplyElm:3,LinearRegulatorElm:1,NTransistorElm:1,ProtectionFuseElm:1,ResistorElm:7,ServiceRelayElm:1,SwitchElm:10,WireElm:95]
+Q30_MATRIX_CENSUS seed=10014 canonical=rb30-plan@4;seed=10014;topology=RB30_CH2_SEPARATE_DIRECT_A_BJT_B_NMOS;support=C12:false,S5:true,S12:false,filters:1,outputIndicators:3,bleeder5:true;layout=-3262450690658810933;routing=-5851812364560090390;physicalPolicy=MEDIUM_BOARD@1;fault=REN_OPEN;packages=40;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated packages=40 channels=2 elements=239 wires=187 modelElements=52 posts=493 internalNodes=12 declaredVoltageSources=18 analyzedVoltageSources=18 circuitNodesIncludingReference=51 fullMnaSize=68 reducedLuSize=63 postStepSeconds=5.0E-6 postStepJacobianComponents=[r49c49,r14c14] diagnosticLuFactorComponents=[r49c49,r14c14] diagnosticLuNanos=248200 classes=[BoundedExternalLoadElm:2,CapacitorElm:3,DecisionElement:2,DiodeElm:3,GroundElm:1,LEDElm:3,LimitedDcSupplyElm:4,LinearRegulatorElm:1,NMosfetElm:1,NTransistorElm:1,ProtectionFuseElm:1,ResistorElm:17,ServiceRelayElm:2,SwitchElm:11,WireElm:187]
+PASS: Q30 matrix census probe seeds=3 constructionOnly=true fixedStepsPerSeed=1 qualification=NOT_RUN
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+
+PASS: focused current contracts; 6 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

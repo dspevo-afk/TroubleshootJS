@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "status": "PREDECLARED",
+  "candidate": "current plan4 + accepted finite/right-looking LU/routing, with query-gated read-only sampler",
+  "sequence": [
+    {
+      "label": "lu-repetition-current-01-profile-7",
+      "seed": "7",
+      "mode": "profile"
+    },
+    {
+      "label": "lu-repetition-current-02-off-7",
+      "seed": "7",
+      "mode": "query-off control"
+    }
+  ],
+  "scope": "Private diagnostic coordinator cold/warm measurement; no normal acceptance and no numerical reuse.",
+  "sample": "Every 1021st nonlinear LU call inside a verified synchronous coordinator advance starts a full value snapshot; the immediately following scoped factor call compares all entries. Pause/analysis/owner/size/failure/end abort pending pairs.",
+  "timing": "performance.now brackets sample copy/compare only; excludes counter/modulo/window/codegen costs. Host uses time.monotonic and measures wall-minus-monotonic drift. Existing app report wall times retain their original meaning.",
+  "requirements": [
+    "native solver/sampler/temporal/budget gates",
+    "actual maintained JDK8/GWT5 build",
+    "query-off compiled A07 strict and negative checks",
+    "fresh Edge context/process for each mode",
+    "all host-error arrays empty, input audit and owned cleanup PASS",
+    "raw profile report retained, remove only two profile metadata fields for strict current plan4 reader",
+    "full request/owner/physical/proof/work/cache parity between both modes, excluding timing and new profile fields"
+  ],
+  "limits": "One seed assesses feasibility and instrumentation; no population speed estimate or acceptance margin. Do not implement a factor cache from historical or sampled evidence alone."
+}

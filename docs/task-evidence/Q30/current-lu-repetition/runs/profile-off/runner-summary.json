@@ -1,0 +1,31 @@
+{
+  "label": "lu-repetition-current-02-off-7",
+  "mode": "off",
+  "exitCode": 0,
+  "hostMonotonicSeconds": 106.10690800000157,
+  "wallMinusMonotonicSeconds": 3.897657734341919e-06,
+  "runnerOutcome": "PASS",
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 0.9943919000070309,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "cold": {
+    "elapsedMs": 82683,
+    "proofElapsedMs": 62407,
+    "routingElapsedMs": 14774,
+    "totalWork": 462,
+    "hypothesisWork": 390,
+    "cleanupComplete": true
+  },
+  "warm": {
+    "elapsedMs": 20071,
+    "proofElapsedMs": 0,
+    "routingElapsedMs": 14670,
+    "totalWork": 73,
+    "hypothesisWork": 1,
+    "cleanupComplete": true
+  }
+}

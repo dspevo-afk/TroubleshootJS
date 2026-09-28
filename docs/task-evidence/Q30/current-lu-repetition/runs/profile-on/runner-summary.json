@@ -1,0 +1,90 @@
+{
+  "label": "lu-repetition-current-01-profile-7",
+  "mode": "profile",
+  "exitCode": 0,
+  "hostMonotonicSeconds": 107.05187550000846,
+  "wallMinusMonotonicSeconds": 4.144385457038879e-06,
+  "runnerOutcome": "PASS",
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 1.062447999996948,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "cold": {
+    "elapsedMs": 83571,
+    "proofElapsedMs": 63418,
+    "routingElapsedMs": 14565,
+    "totalWork": 462,
+    "hypothesisWork": 390,
+    "cleanupComplete": true,
+    "luRepetitionProfile": {
+      "phase": "cold",
+      "scope": "nonlinear runCircuitOwned LU inputs inside verified coordinator advance windows",
+      "positionIndexing": "1-based counted factor calls inside the verified work scope; resets each phase",
+      "workScopeWindows": 462,
+      "sampleIntervalFactorCalls": 1021,
+      "factorCalls": 745131,
+      "sampledStarts": 729,
+      "compareAttempts": 729,
+      "completedPairs": 729,
+      "matchedPairs": 14,
+      "differentPairs": 715,
+      "abortedPendingPairs": 0,
+      "sampledMatrixInputs": 1458,
+      "comparedEntries": 4107869,
+      "signedZeroDifferenceEntries": 0,
+      "signedZeroDifferencePairs": 0,
+      "minimumMatrixSize": 71,
+      "maximumMatrixSize": 81,
+      "sampledSizeGroups": {
+        "71": 96,
+        "72": 2,
+        "73": 212,
+        "75": 852,
+        "76": 182,
+        "81": 114
+      },
+      "probeOverheadMillis": 21.600000128149986,
+      "probeOverheadScope": "sample capture/compare work inside brackets; excludes per-factor window/counter/modulo and compilation effects",
+      "probeClock": "performance.now",
+      "probeClockErrors": 0
+    }
+  },
+  "warm": {
+    "elapsedMs": 20088,
+    "proofElapsedMs": 0,
+    "routingElapsedMs": 14676,
+    "totalWork": 73,
+    "hypothesisWork": 1,
+    "cleanupComplete": true,
+    "luRepetitionProfile": {
+      "phase": "warm",
+      "scope": "nonlinear runCircuitOwned LU inputs inside verified coordinator advance windows",
+      "positionIndexing": "1-based counted factor calls inside the verified work scope; resets each phase",
+      "workScopeWindows": 73,
+      "sampleIntervalFactorCalls": 1021,
+      "factorCalls": 43112,
+      "sampledStarts": 42,
+      "compareAttempts": 42,
+      "completedPairs": 42,
+      "matchedPairs": 0,
+      "differentPairs": 42,
+      "abortedPendingPairs": 0,
+      "sampledMatrixInputs": 84,
+      "comparedEntries": 236250,
+      "signedZeroDifferenceEntries": 0,
+      "signedZeroDifferencePairs": 0,
+      "minimumMatrixSize": 75,
+      "maximumMatrixSize": 75,
+      "sampledSizeGroups": {
+        "75": 84
+      },
+      "probeOverheadMillis": 1.0000000149011612,
+      "probeOverheadScope": "sample capture/compare work inside brackets; excludes per-factor window/counter/modulo and compilation effects",
+      "probeClock": "performance.now",
+      "probeClockErrors": 0
+    }
+  }
+}

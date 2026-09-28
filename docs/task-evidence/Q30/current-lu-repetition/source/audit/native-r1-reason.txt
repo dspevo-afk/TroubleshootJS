@@ -1,0 +1,1 @@
+Native r1 FAIL in preexisting plan4 temporal fixture; cleanup PASS. Sampler clock-origin/per-entry-long fixes are separate reviewed measurement-quality changes. No application profile run from this source.

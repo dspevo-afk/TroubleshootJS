@@ -1,0 +1,9 @@
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "lu-repetition-current-gwt",
+  "exitCode": 2,
+  "startedUtc": "2026-09-28T04:08:27.6488501Z",
+  "finishedUtc": "2026-09-28T04:08:33.4425221Z",
+  "elapsedSeconds": 5.789339,
+  "status": "FAIL"
+}
