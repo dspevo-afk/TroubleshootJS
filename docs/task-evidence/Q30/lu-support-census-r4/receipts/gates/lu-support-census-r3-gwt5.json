@@ -1,0 +1,9 @@
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "lu-support-census-r3-gwt5",
+  "exitCode": 0,
+  "startedUtc": "2026-09-28T15:34:39.4043973Z",
+  "finishedUtc": "2026-09-28T15:36:02.7602883Z",
+  "elapsedSeconds": 83.3516118,
+  "status": "PASS"
+}

@@ -1,0 +1,114 @@
+{
+  "status": "PASS_HELPER_SOURCE_CANARY_ONLY",
+  "metadataSelftest": {
+    "status": "PASS",
+    "positivePhases": [
+      "cold",
+      "warm"
+    ],
+    "positiveDriftDisposition": "ACCEPTED_STRUCTURAL_METADATA_NOT_OPTIMIZATION",
+    "positiveDriftSummary": {
+      "supportDriftFree": false,
+      "stablePartitionSamples": 1,
+      "samplesWithSupportDrift": 1,
+      "unknownFallback": true,
+      "exactEvidence": false
+    },
+    "negativeCaseCount": 17,
+    "negativeCases": [
+      {
+        "case": "numeric long",
+        "status": "REJECTED_AS_EXPECTED",
+        "error": "cold.selectedFactorCalls must be a decimal string"
+      },
+      {
+        "case": "leading-zero long",
+        "status": "REJECTED_AS_EXPECTED",
+        "error": "cold.eligibleFactorCalls has a leading zero"
+      },
+      {
+        "case": "invalid valid flag",
+        "status": "REJECTED_AS_EXPECTED",
+        "error": "cold support census is not valid"
+      },
+      {
+        "case": "incomplete scope",
+        "status": "REJECTED_AS_EXPECTED",
+        "error": "cold support census scope is incomplete"
+      },
+      {
+        "case": "incomplete capture",
+        "status": "REJECTED_AS_EXPECTED",
+        "error": "cold support census capture is incomplete"
+      },
+      {
+        "case": "failed factor",
+        "status": "REJECTED_AS_EXPECTED",
+        "error": "cold.failedFactorCalls must be zero"
+      },
+      {
+        "case": "sample count mismatch",
+        "status": "REJECTED_AS_EXPECTED",
+        "error": "cold.samples length differs from selected factor count"
+      },
+      {
+        "case": "component member mutation",
+        "status": "REJECTED_AS_EXPECTED",
+        "error": "cold.samples[0].snapshot.currentGraph.components[1].rows do not match rowComponent"
+      },
+      {
+        "case": "boolean component index",
+        "status": "REJECTED_AS_EXPECTED",
+        "error": "cold.samples[0].snapshot.currentGraph.components[1].rows[0] must be an integer; booleans are not integers"
+      },
+      {
+        "case": "float component index",
+        "status": "REJECTED_AS_EXPECTED",
+        "error": "cold.samples[0].snapshot.originalGraph.components[1].columns[0] must be an integer; booleans are not integers"
+      },
+      {
+        "case": "empty component",
+        "status": "REJECTED_AS_EXPECTED",
+        "error": "cold.samples[0].snapshot.currentGraph.components[2].rows and .columns cannot both be empty"
+      },
+      {
+        "case": "pivot outside domain",
+        "status": "REJECTED_AS_EXPECTED",
+        "error": "cold.samples[0].ipvtPrefix[2] is below its minimum"
+      },
+      {
+        "case": "replay metric mutation",
+        "status": "REJECTED_AS_EXPECTED",
+        "error": "cold.samples[0].opportunity.localUpperCandidates disagrees with independent ipvt replay"
+      },
+      {
+        "case": "stable partition mutation",
+        "status": "REJECTED_AS_EXPECTED",
+        "error": "cold.samples[0].snapshot.stableOriginalComponents disagrees with graph partitions"
+      },
+      {
+        "case": "query marker mutation",
+        "status": "REJECTED_AS_EXPECTED",
+        "error": "full report support-census query marker is missing or changed"
+      },
+      {
+        "case": "unsupported exact claim",
+        "status": "REJECTED_AS_EXPECTED",
+        "error": "cold.samples[0].opportunity.exact cannot be claimed without the fallback observation hook"
+      },
+      {
+        "case": "missing ipvt trace",
+        "status": "REJECTED_AS_EXPECTED",
+        "error": "cold.samples[0].ipvtTraceComplete must be true"
+      }
+    ]
+  },
+  "rawPriorControlModeValid": true,
+  "syntheticOnPlacementAndProjectionValid": true,
+  "modeNegativeCases": [
+    "wrong final snapshot",
+    "extra field",
+    "false mode"
+  ],
+  "limits": "No host/actual census data consumed; final compiled profile still required."
+}

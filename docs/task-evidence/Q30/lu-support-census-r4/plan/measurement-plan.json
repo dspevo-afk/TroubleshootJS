@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "status": "PREDECLARED",
+  "purpose": "PRIVATE_LU_SUPPORT_CENSUS",
+  "seed": "10014",
+  "requestedPackageCount": 40,
+  "productionAcceptance": false,
+  "sourceAuditPath": "lu-support-census-r2-preparation/source-audit-r4.json",
+  "sourceAuditSha256": "d021ec847e38fc792e7dbc095e2de8a012930010ede1aff1888e0c9f7a3d94d0",
+  "baselineAuditSha256": "0d27e176dc46afb4db91316570f4674e52b51ce2b462c64f6b6a37b98cbec197",
+  "source": {
+    "control": "scratch/pivot-lower-fusion-r2-preparation/candidate",
+    "candidate": "lu-support-census-r2-preparation/candidate"
+  },
+  "runtime": {
+    "control": {
+      "schema": 1,
+      "roots": [
+        "src",
+        "war"
+      ],
+      "fileCount": 1525,
+      "sourceFileCount": 1133,
+      "webFileCount": 392,
+      "sha256": "53f869e8164f6b8edc3b75ba1e6a299a984de5c88829b60b04a9ca59e76787a9",
+      "sourceSha256": "cb257f2158d02ece1fb0a3f7ac7386ec9a14e43100be1ad337d2e344aae0828e",
+      "webSha256": "e7377863185fc8208cb356474b39d14c9a82a35f5470bd7824d68113e1c03961"
+    },
+    "candidate": {
+      "schema": 1,
+      "roots": [
+        "src",
+        "war"
+      ],
+      "fileCount": 1526,
+      "sourceFileCount": 1134,
+      "webFileCount": 392,
+      "sha256": "f7ea79156a7f313b4221e71870fc8cd0ff7fb7f48edd84151ad954e1461fdf15",
+      "sourceSha256": "c247281c076f6e6e1cab891232d052429e5a0e3c1c5989f0f028676a7ec26531",
+      "webSha256": "7c6fd8378338b33b9789477e0de05bd243979714577f0caac8135682186cd67c"
+    }
+  },
+  "applicationQuery": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=10014",
+  "supportQuery": "tsjQ30SupportCensus=true",
+  "sequence": [
+    {
+      "label": "lu-support-census-r4-01-off-10014",
+      "arm": "control",
+      "supportEnabled": false,
+      "seed": "10014"
+    },
+    {
+      "label": "lu-support-census-r4-02-on-10014",
+      "arm": "candidate",
+      "supportEnabled": true,
+      "seed": "10014"
+    },
+    {
+      "label": "lu-support-census-r4-03-off-10014",
+      "arm": "control",
+      "supportEnabled": false,
+      "seed": "10014"
+    }
+  ],
+  "requirements": [
+    "Use one fresh owned browser/host row for each OFF/ON/OFF run and preserve every raw report.",
+    "Require exact seed 10014, Q30 coordinator PASS:complete, package count 40, and unchanged source/runtime identities.",
+    "Controls omit the support query and all support-census snapshots; ON carries only the seven allowlisted support paths.",
+    "Run strict current-plan readers with their 43 corruption canaries on every raw row before parity projection.",
+    "Validate candidate cold/warm support metadata independently before removing any allowlisted fields.",
+    "Stop immediately on source, host, report, metadata, reader, parity, or cleanup failure; preserve the failed row and all diagnostics."
+  ],
+  "interpretation": "This is a structural support census only. Candidate counts and graph/IPVT facts are not elapsed time, numeric work, allocation, or an optimization proof. OFF/ON/OFF timing fields remain observed host/application diagnostics and are not a speed claim. The unavailable fallback observation keeps exact=false.",
+  "limits": {
+    "normalMaxJobMillis": 90000,
+    "privateMeasurementMaxJobMillis": 300000,
+    "maxUnitMillis": 5000,
+    "maxJobSteps": 640,
+    "oneSeedOnly": true
+  },
+  "clockBoundary": "Host operation/wrapper durations are monotonic. Existing coordinator cold/proof/routing milliseconds use its wall-clock path; do not claim these are monotonic partitions. Earlier separate stage-profile evidence supplies the monotonic partition."
+}

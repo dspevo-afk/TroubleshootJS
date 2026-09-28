@@ -1,0 +1,45 @@
+{
+  "status": "PASS_FOCUSED_PRIVATE_CENSUS_GATES_NOT_ACCEPTANCE",
+  "files": [
+    {
+      "path": "lu-support-census-r4-native7.json",
+      "sha256": "50a3d68fc26e7f4315e1fb1a35f0c654c0aeaca5092322fd3724fa12ce5d84b0"
+    },
+    {
+      "path": "lu-support-census-r3-gwt5.json",
+      "sha256": "619e8f9261146756934541ff0eecc5df405eeaf13b1f003fa4413403e9930a5e"
+    },
+    {
+      "path": "lu-support-census-r3-canaries-summary.json",
+      "sha256": "c84385d769698f30fb19a6a211a2d34c531b5bd7d55be053c286286f017e2792"
+    },
+    {
+      "path": "lu-support-census-r3-canaries/result.json",
+      "sha256": "b1eb7376aebd50d65c0b46db95bfdd71c102dd9db1c56056136807099dd22cc5"
+    },
+    {
+      "path": "lu-support-census-r3-a07-reader.log",
+      "sha256": "44d24b9e9a389a6f682363c51ef04ef37694276dbe30f6ac328ade766286b3f7"
+    },
+    {
+      "path": "lu-support-census-r3-canaries/cases/002-lu-support-census-r3-canaries-disabled.report.json",
+      "sha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66"
+    },
+    {
+      "path": "lu-support-census-r2-preparation/source-audit-r4.json",
+      "sha256": "d021ec847e38fc792e7dbc095e2de8a012930010ede1aff1888e0c9f7a3d94d0"
+    }
+  ],
+  "actualLuAssertions": 328,
+  "collectorAssertions": 4224,
+  "existingLuOracleAssertions": 388,
+  "sourceInputs": 1343,
+  "runtimeInputs": 1526,
+  "reuseBoundary": "Native-test/driver-only changes after corrected GWT and compiled canaries; src/war byte hashes unchanged. Sequence driver independently revalidates current source/runtime.",
+  "retainedFailures": [
+    "lu-support-census-r2-gwt5.json",
+    "lu-support-census-r3-native7.json"
+  ],
+  "censusMeasurement": "NOT_RUN",
+  "normalAcceptance": "BLOCKED"
+}

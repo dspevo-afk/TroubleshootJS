@@ -1,0 +1,22 @@
+{
+  "status": "INTERRUPTED_SOURCE_ONLY_DRAFT_ROOT_TAKEOVER",
+  "files": [
+    {
+      "path": "prepare_lu_support_census_sequence_root.py",
+      "sha256": "ac1a7b278ed2d99d430b92e44e1519470cfddb5ec84fe84189e3e65737c6a1fb"
+    },
+    {
+      "path": "run_lu_support_census_timing.py",
+      "sha256": "f5029916720c985a88eb80b18ced3ff60ab5e7966240a1a715e95929a170f4ba"
+    },
+    {
+      "path": "validate_lu_support_census_pair_root.py",
+      "sha256": "ed4d5bf9886819c68c55f5c1a1b036f925f2104b967dd1d621ebe53ee2952493"
+    }
+  ],
+  "reviewFindings": [
+    "OFF baseline has no census fields; draft falsely required false flag",
+    "Timing summary falsely listed all seven fields on every report",
+    "Gate/reader identities need binding; no sequence driver delivered"
+  ]
+}

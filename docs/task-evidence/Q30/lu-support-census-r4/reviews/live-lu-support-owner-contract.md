@@ -1,0 +1,25 @@
+# Live LU support owner contract (bounded source review)
+
+Verdict: **GO for a bounded generic prototype; not GO for optimization acceptance.** Current dynamic matrix-cell writes are auditable through `stampMatrix`, and the two exceptional paths named in the prior review can be closed with localized owner handling. The prototype must retain the existing nonlinear full-scan fallback whenever ownership cannot be certified. The census does not establish a performance win.
+
+## Minimal owner contract
+
+Create a fresh owner only after `stampCircuit` has completed simplification and `requireFiniteMatrix` successfully. Bind it to the analysis generation, reduced `circuitMatrixSize`, `circuitMatrix` and `origMatrix` references, and the current `circuitRowInfo` mapping. Seed a union-find over `2n` row/column vertices by unioning `(row i, column j)` for every nonzero entry in reduced `origMatrix`. This is a conservative support graph, not a numeric snapshot.
+
+While that owner is active, `stampMatrix` must union the successfully mapped matrix coordinate after mapping/constant-row handling and before a later accumulated-value finite check can throw. Include zero-valued and cancelling stamps: extra edges only merge components and reduce pruning. A RHS-only `ROW_CONST` stamp adds no matrix edge. If matrix ownership, dimensions, mapping, or writer status is uncertain, mark the owner unusable and take the existing full nonlinear path. At factor entry, require the certificate to be bound to the current owned arrays/generation after `origMatrix` restoration and `doStep`; do not route general `lu_factor(double[][])` or `invertMatrix` callers through it.
+
+## Current source closure and lifecycle
+
+* `CirSim.stampMatrix` (`src/com/lushprojects/circuitjs1/client/CirSim.java:3188-3208`) is the runtime model writer: it validates, applies `mapRow`/`mapCol`, sends `ROW_CONST` columns to RHS, then adds to the mapped cell. The source-wide cell-write search found no other current nonlinear `doStep` writer.
+* The sole raw matrix-cell assignment is `A07SolverDeveloperVerifier.ProbeResistor.stamp` (`src/com/lushprojects/circuitjs1/client/A07SolverDeveloperVerifier.java:505-508`), the deliberate `matrix-baseline-nonfinite` canary. It runs while the construction matrix is being stamped, before simplification and before any owner should be published. If analysis succeeds, seeding from final reduced `origMatrix` includes its result; if it remains nonfinite, `stampCircuit` fails its finite check before certification. Preserve this canary; do not route its NaN through the finite-checked runtime stamp API.
+* `stampCircuit` allocates/replaces arrays (`CirSim.java:2814-2823`), simplifies/replaces `circuitMatrix` (`:2958-2966`), and copies final reduced values to `origMatrix` (`:2961-2965`). Invalidate before rebuild; publish a fresh owner only after successful simplification and finite validation. The timestep-up rebuild at `runCircuitOwned:3333-3338` uses this same path. Nonlinear trial reset restores cells from `origMatrix` and calls `doStep` (`:3354-3364`); that is where monotonic stamp unions remain valid across trials.
+* Invalidate on `stop` (`CirSim.java:3102-3109`) and the empty/missing-matrix early return (`:3287-3289`). The owner must never survive a failed analysis, a null matrix, or a successor graph.
+* `Task41SimulationSnapshot` captures matrix references and contents (`:229-240`), restores references (`:598-603`) and then restores contents (`:720-725`). Both transactional and best-effort restore call `restoreGraphAndRuntimeState` (`:487`, `:534`). That single method is the integration seam: invalidate before assignments; to preserve reuse, capture a detached certificate copy and install a *new* owner copy after arrays/contents are restored. Never keep the mutable union-find shared with either the snapshot or simulator. Simpler invalidation alone is safe but forces fallback on the restored analysis until rebuild.
+
+The arrays remain package-visible, so this is an audited current writer contract rather than a compile-enforced encapsulation boundary. A future raw `doStep` writer must either be brought under the owner API or make the certificate unusable; it cannot be silently accepted.
+
+## Cost and limits
+
+Initialization is `O(n²)` over `origMatrix` once per successful analysis (it can share the existing reduced-matrix traversal); each mapped stamp adds an amortized `O(α(n))` union and the disjoint-set storage is `O(n)`. No per-trial full support scan is needed. The existing all-zero-row preflight remains `O(n²)`, and this owner work predicts no wall-time improvement. The supplied 181-sample census has no stable original partition, 49–58 added support edges and 30–36 cross-original edges per selected sample; a monotonic union across an analysis can only coarsen its groups, so actual pruning under the proposed owner remains unmeasured.
+
+This verdict only clears the owner/lifecycle seam for a bounded prototype with fallback. It does not certify pivot/tie/sentinel semantics, host behavior, numerical parity, or performance.

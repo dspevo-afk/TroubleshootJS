@@ -1,0 +1,17 @@
+# Q30 LU support census R4 — private structural evidence
+
+Status: PRIVATE_CENSUS_VALIDATED_NOT_OPTIMIZATION_ACCEPTANCE. Normal-player Q30 remains BLOCKED. This packet is a structural census, not optimization acceptance.
+
+The frozen sequence used seed 10014 in OFF/ON/OFF order. Cold application elapsed values were 99,209, 99,041, and 98,243 ms. The controls span 966 ms; ON differs from the first and second controls by -168 and +798 ms, inside the control range. Every row had 490 cold work units and 390 hypothesis units. Warm elapsed values were 32,080, 29,938, and 28,785 ms with 101 work units and one hypothesis unit per row. Cleanup passed for all three. Application elapsed fields retain the solver's existing wall-clock semantics; host operation duration is monotonic. These values support no speed or zero-overhead claim.
+
+Sampling selected every 4096th eligible LU factor call without adding clocks inside LU. It retained 181 cold samples from 742391 eligible calls and 11 warm samples from 46334. Cold matrix dimensions were 80 (11 samples), 82 (28 samples), 84 (106 samples), 85 (22 samples), 90 (14 samples). Multiple current components occurred in all 181 cold and 11 warm samples. Stable original partitions and drift-free support samples were both zero. Sampled support added 49–58 edges and found 30–36 edges across original components.
+
+Pivot, Lower, and Upper outside-current-component fractions were 0.35293, 0.35504, and 0.36142. The domains overlap; these structural counts are not elapsed time, nonzero arithmetic, exhaustive coverage, or evidence that rows can be skipped. No cross-group pivots or post-factor sentinel risks were observed, but fallback observation was unavailable and every sample remained exact=false. The root decision is NO-GO for a static original-matrix partition or block restriction.
+
+Native7 passed with 4,224 collector assertions, 328 actual-LU assertions, and 388 existing LU-oracle assertions. Corrected GWT5, compiled canaries, strict readers, both parity comparisons, and the three owned cleanups passed. The first clone build and first native marker run remain recorded as failures alongside their corrected receipts. Root preflight status is PASS_FOCUSED_PRIVATE_CENSUS_GATES_NOT_ACCEPTANCE; it does not establish normal acceptance.
+
+Source audits r2/r3/r4, current exact source overlays, the actual-LU test and prior review snapshot, and the minimal committed pivot-lower-fusion R2 lineage needed to reconstruct its measured candidate are included. Parent audit 0d27e176dc46afb4db91316570f4674e52b51ce2b462c64f6b6a37b98cbec197 and the separately stored parent source-pair audit retain distinct identities. Inventory and source/overlay-map.json bind each path, source hash, stored hash, and transform. No full candidate tree, generated WAR, JAR, cache, fixture bundle, or browser profile is included.
+
+Normal limits remain 90,000 ms cumulative, 640 shared work units, and 5,000 ms per active operation. The private sequence used its separate 300,000 ms measurement ceiling. No production solver algorithm changed and no optimization was integrated. U06/U07 and later milestones remain unstarted. Packet audit is pending root review.
+
+Large JSON/log receipts are stored as deterministic gzip with unchanged decompressed bytes. The compression ledger records each restore path and payload hash; decompress and remove the final `.gz` suffix to restore those files. The original uncompressed inventory is retained in task scratch under its recorded hash.

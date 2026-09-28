@@ -1,0 +1,15 @@
+{
+  "status": "FAIL",
+  "exitCode": 2,
+  "elapsedSeconds": 46.4425324,
+  "phase": "focused private LU support census, actual LU, independent pivot oracle and execution/temporal/measurement/normal-budget contracts including maintained cleanup",
+  "suites": [
+    "Q30LuSupportCensusContractTest",
+    "Q30LuSupportCensusActualLuContractTest",
+    "Q30LuPivotCollectionContractTest",
+    "A07ExecutionContractTest",
+    "Q30TemporalWorkContractTest",
+    "Q30GenerationMeasurementBudgetContractTest",
+    "Q30NormalExecutionPolicyContractTest"
+  ]
+}

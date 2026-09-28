@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 1,
+    "name": "lu-support-census-r3-canaries-a07",
+    "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyA07=true&tsjDebug=true&running=true",
+    "stateAttribute": "data-tsj-verification",
+    "expectedState": "PASS:a07",
+    "expectedPrefix": null,
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 600.0,
+    "reportAttribute": "data-tsj-a07-report"
+  },
+  "url": "http://127.0.0.1:60645/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyA07=true&tsjDebug=true&running=true",
+  "startedUtc": "2026-09-28T15:36:57.381126+00:00",
+  "finishedUtc": "2026-09-28T15:36:58.662852+00:00",
+  "operationSeconds": 1.2817224999889731,
+  "outcome": "PASS",
+  "terminalReached": true,
+  "stateMatch": true,
+  "observedState": "PASS:a07",
+  "lastObservedState": "PASS:a07",
+  "timedOut": false,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": true,
+  "reportJsonValid": true,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 80898,
+  "reportSha256": "9c8ad0f9524dafb4ee63b89eb9ee6b6c4e32af459ef50f285e5ee2685617a636",
+  "reportFile": "cases/001-lu-support-census-r3-canaries-a07.report.json",
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [],
+  "listenerCleanupErrors": [],
+  "navigationError": null
+}

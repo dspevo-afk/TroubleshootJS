@@ -1,0 +1,825 @@
+{
+  "schema": "tsj-q30-lu-support-census-r4-pack-resume/1",
+  "status": "VERIFIED_TASK_CREATED_PARTIAL_OUTPUT",
+  "firstAttemptPartialFileCount": 164,
+  "filesRemovedBeforeResume": [
+    "source/history/r2-wired-draft/exact-diff.patch",
+    "source/parent/pivot-lower-fusion-r2/source__deltas__parent-candidate-to-measured-r2__scripts__verify-current-contracts.ps1.patch",
+    "procedures/inspection/package_lu_support_census_r4.py"
+  ],
+  "existingFilesBeforeResume": [
+    {
+      "path": "canaries/r3/cases/001-lu-support-census-r3-canaries-a07.json",
+      "bytes": 1393,
+      "sha256": "94cad243e7930d02d105e6b5d1014e2fec52b3be0e1cc36f8ca003ec2131b404"
+    },
+    {
+      "path": "canaries/r3/cases/001-lu-support-census-r3-canaries-a07.report.json.gz",
+      "bytes": 9373,
+      "sha256": "d43569c1bd3ba82840be87157e02fd823e63dfcb779d67b724263ae8c621b38d"
+    },
+    {
+      "path": "canaries/r3/cases/001-lu-support-census-r3-canaries-a07.state.txt",
+      "bytes": 8,
+      "sha256": "d2b4740b4a36aece77f74f8fd73c9b787c86efaa450eea01b931149a19c22ff2"
+    },
+    {
+      "path": "canaries/r3/cases/002-lu-support-census-r3-canaries-disabled.json",
+      "bytes": 1577,
+      "sha256": "53192461065251a289fda4586e5cde3764504fdd5bd0b1867fe144c507317ff1"
+    },
+    {
+      "path": "canaries/r3/cases/002-lu-support-census-r3-canaries-disabled.report.json.gz",
+      "bytes": 224,
+      "sha256": "906cf3202821fd05498c7457b939ee54e4fb29f9024efc0ea8694efa764f76dc"
+    },
+    {
+      "path": "canaries/r3/cases/002-lu-support-census-r3-canaries-disabled.state.txt",
+      "bytes": 31,
+      "sha256": "95abc8986af9d28c5de9c0245e91d8ca7197e8e54d53bae8a8c03a1738b0ee9f"
+    },
+    {
+      "path": "canaries/r3/identity.json",
+      "bytes": 1776,
+      "sha256": "04b542926763f6d788824ffdcedc6d7312658ded3fc3cb615284cffaab8b147f"
+    },
+    {
+      "path": "canaries/r3/input-manifest-after.json",
+      "bytes": 291499,
+      "sha256": "baad46abb7f9940f6a99c386e55f1c59edb4f4d57eb3d0651e5e6bbd6a1cd13e"
+    },
+    {
+      "path": "canaries/r3/input-manifest-before.json",
+      "bytes": 291499,
+      "sha256": "5e4b1cddde94debdc35aa97fec79ee1d3a96dd5975ceecb4efddf952a63a05ea"
+    },
+    {
+      "path": "canaries/r3/owned-processes-before-close.json",
+      "bytes": 1482,
+      "sha256": "adc320c7d1c61b67b02a06e0bcfdb8a20bc8d97b0bb86c40fc39b78a8c7d0414"
+    },
+    {
+      "path": "canaries/r3/owned-processes-before.json",
+      "bytes": 1297,
+      "sha256": "8615b4a64f12100be76dfe929f7b6164eda9e4e153aadd04ba74212b90eebf68"
+    },
+    {
+      "path": "canaries/r3/progress.json",
+      "bytes": 5880,
+      "sha256": "a0353d90c940a9da3ea495e310f86e3cf3f83655dd1a4ed27ad94ae504f44244"
+    },
+    {
+      "path": "canaries/r3/result.json",
+      "bytes": 6604,
+      "sha256": "1ee9c1111853bff133fcd569447f156775fdd4a631505d98e5cd8c793d9a20c5"
+    },
+    {
+      "path": "canaries/r3/run-start.json",
+      "bytes": 267,
+      "sha256": "90fbb4c8dd53f16b9ff5f5a41cba2d1b0cb9a6cb072679f59941fbc267d60cd2"
+    },
+    {
+      "path": "canaries/r3/runner-after.json",
+      "bytes": 146,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823"
+    },
+    {
+      "path": "canaries/r3/runner-before.json",
+      "bytes": 146,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823"
+    },
+    {
+      "path": "canaries/r3/spec.json",
+      "bytes": 871,
+      "sha256": "30ebb1d5173a87981aef408d55edc903d849aa35519fbc85e085ab2f97bda819"
+    },
+    {
+      "path": "interpretation/root-interpretation.json",
+      "bytes": 6650,
+      "sha256": "fd59c8140cdafe92093df2f7985eb8d00ea6f4d088b40a034e99449df374733e"
+    },
+    {
+      "path": "plan/execution-binding.json",
+      "bytes": 5650,
+      "sha256": "607a5a7fc841b901650486c73a2c477ed8998c6dad20be2ffaf88aa800c3b9ba"
+    },
+    {
+      "path": "plan/measurement-plan.json",
+      "bytes": 3619,
+      "sha256": "e7a7af380a86d73a8befa21adc94d77be2c4bd63812e631542d208ec3be39b19"
+    },
+    {
+      "path": "procedures/history/lu-support-census-r3-driver-before-marker-repair.ps1",
+      "bytes": 66784,
+      "sha256": "44eeb7b5e1338407c924aeee768e52f732570173ac3be6c821338ea66b759b84"
+    },
+    {
+      "path": "procedures/history/native-lu-support-census.ps1",
+      "bytes": 1306,
+      "sha256": "60cb691e66e12cd6f6bd35a5340023e1115692a893a75deb96b025b0e249cc01"
+    },
+    {
+      "path": "procedures/inspection/canary_census_sequence_helpers_root.py",
+      "bytes": 2645,
+      "sha256": "5b792e534538cf6ed77c0d705aa5dd7c2de30f1ad903ff845474ee1b0ec56ba0"
+    },
+    {
+      "path": "procedures/inspection/check_lu_sampler_metadata_canaries.py",
+      "bytes": 2846,
+      "sha256": "a776cfa51880a2a13d87e4cf5be7daa28ee1897213cbf522d13cdb13f27c1342"
+    },
+    {
+      "path": "procedures/inspection/finalize_census_sequence_root.py",
+      "bytes": 4341,
+      "sha256": "a4370bea9152bc1011b9be421bf4e3817e94a6c5f8d3f9c7d84acd086f5d91e1"
+    },
+    {
+      "path": "procedures/inspection/lu-support-census-metadata-validator.md",
+      "bytes": 5602,
+      "sha256": "e1163120e8d55640b176477523d7a90248473214d6a7fc76c57bb335e804a7c5"
+    },
+    {
+      "path": "procedures/inspection/lu-support-census-metadata-validator.py",
+      "bytes": 31902,
+      "sha256": "2646c9dd98b6ffc66bd9d21ed443bdd43ff3adb9b3adb8a3af9676be101352d6"
+    },
+    {
+      "path": "procedures/inspection/native-lu-support-census.ps1",
+      "bytes": 1306,
+      "sha256": "60cb691e66e12cd6f6bd35a5340023e1115692a893a75deb96b025b0e249cc01"
+    },
+    {
+      "path": "procedures/inspection/prepare_lu_support_census_sequence_root.py",
+      "bytes": 17070,
+      "sha256": "e21957cb4e5c8a1e9c509cac452df319fee8a1c5601dd4b024a396f86d3c1593"
+    },
+    {
+      "path": "procedures/inspection/run_lu_support_census_sequence_root.py",
+      "bytes": 4478,
+      "sha256": "c97f297211bd0e11a98917738a9d4d579f49f9a4e2e5569d980f3dbea870d5ba"
+    },
+    {
+      "path": "procedures/inspection/run_lu_support_census_timing.py",
+      "bytes": 8260,
+      "sha256": "af27a53c1e784770c61146330e1bcf87a60ec24c83338f495317e5a23c0411ac"
+    },
+    {
+      "path": "procedures/inspection/validate_lu_support_census_pair_root.py",
+      "bytes": 14995,
+      "sha256": "ed48e6ce091a6f5ee160d54833d1b59ac744d567a34c14c61fb7a37b776d1509"
+    },
+    {
+      "path": "provenance/packaging-attempts/attempt-1-failure.txt",
+      "bytes": 1468,
+      "sha256": "f1648c97d7dcafd023f335fbe87a7a6cd48f7f2146a35dd6287dca53f2676347"
+    },
+    {
+      "path": "receipts/gates/lu-sampler-metadata-canaries.json",
+      "bytes": 2494,
+      "sha256": "a4a4850853716795848026863c8164a0149980a94155ae6a5413de38c2860d25"
+    },
+    {
+      "path": "receipts/gates/lu-support-census-metadata-r2-root-selftest.json",
+      "bytes": 3428,
+      "sha256": "9306937c1d8feac85ad09fa9cc7653db4f0309d209179bcfc4faa9f63d967abb"
+    },
+    {
+      "path": "receipts/gates/lu-support-census-r2-gwt5.json",
+      "bytes": 273,
+      "sha256": "70bea17fe4c4c5dba4a0fda16a47776d85cb36deed88acbffaa9933f5ea610fe"
+    },
+    {
+      "path": "receipts/gates/lu-support-census-r2-gwt5.log",
+      "bytes": 50138,
+      "sha256": "abcbb664d15112513bb373f7e2b95be09a03fc431586ef786e7a5414ea58fb85"
+    },
+    {
+      "path": "receipts/gates/lu-support-census-r3-a07-reader.log",
+      "bytes": 75,
+      "sha256": "44d24b9e9a389a6f682363c51ef04ef37694276dbe30f6ac328ade766286b3f7"
+    },
+    {
+      "path": "receipts/gates/lu-support-census-r3-canaries-spec.json",
+      "bytes": 871,
+      "sha256": "30ebb1d5173a87981aef408d55edc903d849aa35519fbc85e085ab2f97bda819"
+    },
+    {
+      "path": "receipts/gates/lu-support-census-r3-canaries-summary.json",
+      "bytes": 238,
+      "sha256": "c84385d769698f30fb19a6a211a2d34c531b5bd7d55be053c286286f017e2792"
+    },
+    {
+      "path": "receipts/gates/lu-support-census-r3-canaries.log",
+      "bytes": 120,
+      "sha256": "d325e985817b78881e1a09ce505b30d57e44edcf60977706c94b85742b2e6637"
+    },
+    {
+      "path": "receipts/gates/lu-support-census-r3-gwt5.json",
+      "bytes": 274,
+      "sha256": "619e8f9261146756934541ff0eecc5df405eeaf13b1f003fa4413403e9930a5e"
+    },
+    {
+      "path": "receipts/gates/lu-support-census-r3-gwt5.log",
+      "bytes": 1239,
+      "sha256": "7c1b6650b71f0354e30f7fa767476d97044db118aec6699ac949a01f26fe1d8e"
+    },
+    {
+      "path": "receipts/gates/lu-support-census-r3-native7.json",
+      "bytes": 563,
+      "sha256": "aac7293585371edbfd83cb23c723069b5535553b0c048a566790a870036b79cf"
+    },
+    {
+      "path": "receipts/gates/lu-support-census-r3-native7.log",
+      "bytes": 4581,
+      "sha256": "e8e479ed23c5dd006914200be7c5a89933a509287f44634f4439f71ad5bf43eb"
+    },
+    {
+      "path": "receipts/gates/lu-support-census-r4-native7-receipt.txt",
+      "bytes": 677,
+      "sha256": "63711e75571b017fe89614c18d56163967cc313ae3b4daf36dc0b8b76556f6f8"
+    },
+    {
+      "path": "receipts/gates/lu-support-census-r4-native7.json",
+      "bytes": 563,
+      "sha256": "50a3d68fc26e7f4315e1fb1a35f0c654c0aeaca5092322fd3724fa12ce5d84b0"
+    },
+    {
+      "path": "receipts/gates/lu-support-census-r4-native7.log",
+      "bytes": 4633,
+      "sha256": "e2d37f79511e091ea675d0d1fd5b1be3cb5b146a01b966acef045679da2a44d0"
+    },
+    {
+      "path": "receipts/gates/lu-support-census-sequence-root-source-canary.json",
+      "bytes": 3986,
+      "sha256": "8f884310a3ad55880c80cc835741c0180d3c78ecd114b5889fd9536b685f5566"
+    },
+    {
+      "path": "receipts/pair-validation/census-r4-pair-1.log",
+      "bytes": 740912,
+      "sha256": "077064d0b28c2d1f5674076d1f561b1b0526b6356296c414a79380c091aceab7"
+    },
+    {
+      "path": "receipts/pair-validation/census-r4-pair-2.log",
+      "bytes": 740912,
+      "sha256": "69a07d73a974bd186f3f6b0ceeb9f8cf4ea4f9f082b6eb50506b990ccae9ea71"
+    },
+    {
+      "path": "receipts/root-gate-preflight.json",
+      "bytes": 1765,
+      "sha256": "e66f323e5488ebee3a3f026d190b2c6f38e72a262801b13ce824ff4cbfb808a4"
+    },
+    {
+      "path": "receipts/sequence-result.json",
+      "bytes": 8519,
+      "sha256": "64bc892024ae0f7f4d04fce8ef706c67bb58fce2880ea4cd93fc26937c19e20c"
+    },
+    {
+      "path": "receipts/strict-canaries/lu-support-census-r4-01-off-10014-strict-reader-census-r4-pair-1-off.txt",
+      "bytes": 3310,
+      "sha256": "1e43c7078e6b63610e1e75d04b391d446d9906eee504046772078307a5876c5b"
+    },
+    {
+      "path": "receipts/strict-canaries/lu-support-census-r4-01-off-10014-strict-wrapper-census-r4-pair-1-off.json",
+      "bytes": 1806070,
+      "sha256": "b2ab124e88eb07557bf53adc964b37c8051b2c0318d686fbc224847f3e45f925"
+    },
+    {
+      "path": "receipts/strict-canaries/lu-support-census-r4-02-on-10014-strict-reader-census-r4-pair-1-on.txt",
+      "bytes": 3310,
+      "sha256": "71e3dca314792318baaa46b868aabdde72f7f80b6e7fae3492ae0fc9f2961930"
+    },
+    {
+      "path": "receipts/strict-canaries/lu-support-census-r4-02-on-10014-strict-reader-census-r4-pair-2-on.txt",
+      "bytes": 3310,
+      "sha256": "71e3dca314792318baaa46b868aabdde72f7f80b6e7fae3492ae0fc9f2961930"
+    },
+    {
+      "path": "receipts/strict-canaries/lu-support-census-r4-02-on-10014-strict-wrapper-census-r4-pair-1-on.json",
+      "bytes": 12025647,
+      "sha256": "879640cc72cd710dd7cf4de60a1a3e86db5f15adc740c01d609dbb8bead0d5ad"
+    },
+    {
+      "path": "receipts/strict-canaries/lu-support-census-r4-02-on-10014-strict-wrapper-census-r4-pair-2-on.json",
+      "bytes": 12025647,
+      "sha256": "879640cc72cd710dd7cf4de60a1a3e86db5f15adc740c01d609dbb8bead0d5ad"
+    },
+    {
+      "path": "receipts/strict-canaries/lu-support-census-r4-03-off-10014-strict-reader-census-r4-pair-2-off.txt",
+      "bytes": 3312,
+      "sha256": "764fa19850ca3b7e0acc8acaea0ddd30977ffb210d403b0b2340eea08cec6574"
+    },
+    {
+      "path": "receipts/strict-canaries/lu-support-census-r4-03-off-10014-strict-wrapper-census-r4-pair-2-off.json",
+      "bytes": 1806072,
+      "sha256": "8143af09129d0793d33100317923d10fd1b1fe9f1554521e5294636058948786"
+    },
+    {
+      "path": "reviews/generic-wire-observation-contract.md",
+      "bytes": 5950,
+      "sha256": "4a16125faa32453fa9d394e9f24ae99317e016134efdb656d2bcc16e0f05cc9e"
+    },
+    {
+      "path": "reviews/live-lu-support-owner-contract.md",
+      "bytes": 5086,
+      "sha256": "7f0bf7db9223f50b57698cf669408ab0d6992fdaa3cd030249c5e4e0718605f5"
+    },
+    {
+      "path": "reviews/lu-support-census-metadata-independent-review.md",
+      "bytes": 5609,
+      "sha256": "910d50e7af47303a719eb656364dc5f4cad60f71c0e6a081decf60c386b000af"
+    },
+    {
+      "path": "reviews/lu-support-census-r1-independent-review.md",
+      "bytes": 5540,
+      "sha256": "30b7b6b15dc73ce851b5ac21be0073e3a9da0742effa723aa159e2aeaa8db03c"
+    },
+    {
+      "path": "reviews/lu-support-census-r2-independent-review.md",
+      "bytes": 6623,
+      "sha256": "4086432f9472934e01372dcecdd78fdefbdeb4e1674fd4080ae29eec7e91d322"
+    },
+    {
+      "path": "reviews/lu-support-census-r2-root-finalization-review.md",
+      "bytes": 5800,
+      "sha256": "4b5fe1a7c605172b5ab5cf2abf99deffbac2ef44f3dc430a3d7547606c584438"
+    },
+    {
+      "path": "reviews/lu-support-next-step-constraints.md",
+      "bytes": 4396,
+      "sha256": "e39999c25944f418ae4709082b703c78ef12311c86735d2624217766cf4b5d28"
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/cases/001-lu-support-census-r4-01-off-10014.report.json.gz",
+      "bytes": 251088,
+      "sha256": "fee4254770d6ac558d6e7558a1f3182af3c93ba3735293011449f2609945f5a0"
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/identity.json",
+      "bytes": 1777,
+      "sha256": "9ad19fcd0fcc723992ac4e1796f5a781ebb4ff68f6299c10481dd84c79e8d703"
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/input-manifest-after.json",
+      "bytes": 291302,
+      "sha256": "f781a408a6523f280ebcfc138ba5727991722f002c104e6030412638f488b97c"
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/input-manifest-before.json",
+      "bytes": 291302,
+      "sha256": "cd072b3c25fda4168b459ed8c0c480f84a68b52047a539805c86ec28807f63c0"
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/lu-support-census-r4-01-off-10014-driver.log",
+      "bytes": 1762,
+      "sha256": "d36a981eabfb70478ed8572e29191cece0b71df82ba2e77fcd44fe9d84526532"
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/lu-support-census-r4-01-off-10014-spec.json",
+      "bytes": 398,
+      "sha256": "0b1af58a70af19bed0f5c3902f57dc7ae9bf622da940efd1c9a2590a1ed0881c"
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/lu-support-census-r4-01-off-10014-summary.json",
+      "bytes": 2161,
+      "sha256": "c3d55047c5bfbb2bc72e9c13596c220c0fff0ad81b6fb5bf5210302374d7bf0b"
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/lu-support-census-r4-01-off-10014.log",
+      "bytes": 71,
+      "sha256": "f2d2e7636170e85bebb1946f627021c1ff247629af71ef2f6211caa1377f03ca"
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/owned-processes-before-close.json",
+      "bytes": 1664,
+      "sha256": "b6a2d6d807046aff9ba5c16e555f354d591dcb8bdcab6034cd344e23628d629d"
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/owned-processes-before.json",
+      "bytes": 1295,
+      "sha256": "d9ca57209f7f8224cd0ac3f0192ddda12051ad0122ef87dc838db50e0f510a30"
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/progress.json",
+      "bytes": 4232,
+      "sha256": "c68827a6ff14a44ab79e28a7b5e16d888b7619aa2c7a05c13ca29c25baa92035"
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/receipts/lu-support-census-r4-01-off-10014-strict-reader-census-r4-pair-1-off.txt",
+      "bytes": 3310,
+      "sha256": "1e43c7078e6b63610e1e75d04b391d446d9906eee504046772078307a5876c5b"
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/receipts/lu-support-census-r4-01-off-10014-strict-wrapper-census-r4-pair-1-off.json",
+      "bytes": 1806070,
+      "sha256": "b2ab124e88eb07557bf53adc964b37c8051b2c0318d686fbc224847f3e45f925"
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/result.json",
+      "bytes": 4955,
+      "sha256": "19afda642897cb4beb3f1557d5b47f142f6701e920f69297fec001b98967d584"
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/run-start.json",
+      "bytes": 277,
+      "sha256": "f65bf9b70b3f31f92c97d870a0b2a2d66f80ded67eaba904d42de8b32dbf08eb"
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/runner-after.json",
+      "bytes": 146,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823"
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/runner-before.json",
+      "bytes": 146,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823"
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/spec.json",
+      "bytes": 398,
+      "sha256": "0b1af58a70af19bed0f5c3902f57dc7ae9bf622da940efd1c9a2590a1ed0881c"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/cases/001-lu-support-census-r4-02-on-10014.report.json.gz",
+      "bytes": 287977,
+      "sha256": "6b99bd42245045ef50f9d8cdc3ce730f47760e5a5d086003dc8f5d958a03521e"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/identity.json",
+      "bytes": 1777,
+      "sha256": "1a51c2b90f5fb5e5c5bc97aed2b928f8ca03ae1b3a1897e50e3a49a8f224d167"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/input-manifest-after.json",
+      "bytes": 291499,
+      "sha256": "44b7f42fb58bc56158eef197535ade08bb27ec6f75f3ee4c518e6cfcceb93fcc"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/input-manifest-before.json",
+      "bytes": 291499,
+      "sha256": "0d8ab7a4e72991ca5014113b097a6482ddbb384a4a5b05211fa72ca4f051b138"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/lu-support-census-r4-02-on-10014-driver.log",
+      "bytes": 2047,
+      "sha256": "631ea2285b9a2b3b20012a1327abef12c03e8f6ae9d90eab09f2c8e78a7a0ceb"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/lu-support-census-r4-02-on-10014-spec.json",
+      "bytes": 422,
+      "sha256": "2b4628fff0de860da9594c9d21cc806a65b14ad4e9201fed3450c4771994b1e3"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/lu-support-census-r4-02-on-10014-summary.json",
+      "bytes": 2509,
+      "sha256": "8527d36ed997fa9009f6d99e76c0b7d05b637df38383e770738936b5cda6eb0b"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/lu-support-census-r4-02-on-10014.log",
+      "bytes": 70,
+      "sha256": "d48a8bfecf7cc0375328b6216e940c1ff90a336b841867c159daef23ff856d87"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/owned-processes-before-close.json",
+      "bytes": 1665,
+      "sha256": "e112dbac7c2dc2ba5d4b0a92b872edbb89301350663ebd78b49be08c686552e4"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/owned-processes-before.json",
+      "bytes": 1295,
+      "sha256": "ca61efcd3c85e8d00b2aa4a0c2b7e3eb8d236e130450c40a3ce6db2dcf136df2"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/progress.json",
+      "bytes": 4271,
+      "sha256": "e374507dbe336382cd81c00a636033325a1b25cff913b17529e1e717323dc657"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/receipts/lu-support-census-r4-02-on-10014-strict-reader-census-r4-pair-1-on.txt",
+      "bytes": 3310,
+      "sha256": "71e3dca314792318baaa46b868aabdde72f7f80b6e7fae3492ae0fc9f2961930"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/receipts/lu-support-census-r4-02-on-10014-strict-reader-census-r4-pair-2-on.txt",
+      "bytes": 3310,
+      "sha256": "71e3dca314792318baaa46b868aabdde72f7f80b6e7fae3492ae0fc9f2961930"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/receipts/lu-support-census-r4-02-on-10014-strict-wrapper-census-r4-pair-1-on.json",
+      "bytes": 12025647,
+      "sha256": "879640cc72cd710dd7cf4de60a1a3e86db5f15adc740c01d609dbb8bead0d5ad"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/receipts/lu-support-census-r4-02-on-10014-strict-wrapper-census-r4-pair-2-on.json",
+      "bytes": 12025647,
+      "sha256": "879640cc72cd710dd7cf4de60a1a3e86db5f15adc740c01d609dbb8bead0d5ad"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/receipts/lu-support-census-r4-02-on-10014-vs-lu-support-census-r4-01-off-10014-support-census-parity-census-r4-pair-1.json",
+      "bytes": 4435122,
+      "sha256": "2103883f511d3a2cdaeb2ca868b1e67af0f409d0f28096e9443beed7ea5ac918"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/receipts/lu-support-census-r4-02-on-10014-vs-lu-support-census-r4-03-off-10014-support-census-parity-census-r4-pair-2.json",
+      "bytes": 4435122,
+      "sha256": "84dbfafffbff64185c51a576bfdd47627d75ed3d454d4d1a373a0a429ee88976"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/result.json",
+      "bytes": 4995,
+      "sha256": "9541a21a6c616e0dec4437a333aff3f1f60f9a259f5318c3002940b4a8de4294"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/run-start.json",
+      "bytes": 267,
+      "sha256": "55fe23cade79b500d1f37b9f4f28dd1035be99cee31868ab1daaa0477414bdfe"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/runner-after.json",
+      "bytes": 146,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/runner-before.json",
+      "bytes": 146,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823"
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/spec.json",
+      "bytes": 422,
+      "sha256": "2b4628fff0de860da9594c9d21cc806a65b14ad4e9201fed3450c4771994b1e3"
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/cases/001-lu-support-census-r4-03-off-10014.report.json.gz",
+      "bytes": 251086,
+      "sha256": "5cb2653c632cb5006b62b70f218b962cc6dc5a72e68b168b693c3869986f76d2"
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/identity.json",
+      "bytes": 1779,
+      "sha256": "41f3e80ae6c6fe22044550900f9a8da98607a196d075273e45c50c94a45cafca"
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/input-manifest-after.json",
+      "bytes": 291302,
+      "sha256": "5f4f34fe2c67a84126762d6f74f67e5ed9a41f214f0aa50c26002f79957351be"
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/input-manifest-before.json",
+      "bytes": 291302,
+      "sha256": "547f323009cff47c798bacc0f2376518001f263b86cb6c0af77bf4d69738ab6d"
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/lu-support-census-r4-03-off-10014-driver.log",
+      "bytes": 1760,
+      "sha256": "b416d2630e3acb6395e36875abb2a360cdfc9a0e1c82867bede56700782f679a"
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/lu-support-census-r4-03-off-10014-spec.json",
+      "bytes": 398,
+      "sha256": "18a9e248f2a680a4c50a55c051ce7019803bc2d0ce46b750d2568208acea18f0"
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/lu-support-census-r4-03-off-10014-summary.json",
+      "bytes": 2159,
+      "sha256": "f26e51424cc821b0c95e9df75920d3613fcf102170d657b8e17eb39f6763882b"
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/lu-support-census-r4-03-off-10014.log",
+      "bytes": 70,
+      "sha256": "054ddd144c5a53349cf8e5950b228da82f130a1a22160d14aeb43bd028881eed"
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/owned-processes-before-close.json",
+      "bytes": 1664,
+      "sha256": "b9fb413f1a691c093315384c9dd4c0c7f301198d751e9b9be9728dd746f1bba5"
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/owned-processes-before.json",
+      "bytes": 1296,
+      "sha256": "0fa94df7bfa0a80ad1155480e9b9b4d33e965cea3cb3afdd88ab9476e12a6790"
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/progress.json",
+      "bytes": 4235,
+      "sha256": "684d1ab58b7034af0ffee2303a653b3beae9c4fe922317140e69e9a83ad0cf80"
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/receipts/lu-support-census-r4-03-off-10014-strict-reader-census-r4-pair-2-off.txt",
+      "bytes": 3312,
+      "sha256": "764fa19850ca3b7e0acc8acaea0ddd30977ffb210d403b0b2340eea08cec6574"
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/receipts/lu-support-census-r4-03-off-10014-strict-wrapper-census-r4-pair-2-off.json",
+      "bytes": 1806072,
+      "sha256": "8143af09129d0793d33100317923d10fd1b1fe9f1554521e5294636058948786"
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/result.json",
+      "bytes": 4959,
+      "sha256": "87db659a685ae632734b00f3c2fcc250655a2bd98ba94015f0b8a865a158825e"
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/run-start.json",
+      "bytes": 277,
+      "sha256": "d5cd80fe5b2547682435cbc6a9f8036944d8817b82ab1b13b8d53e130997a88b"
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/runner-after.json",
+      "bytes": 146,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823"
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/runner-before.json",
+      "bytes": 146,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823"
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/spec.json",
+      "bytes": 398,
+      "sha256": "18a9e248f2a680a4c50a55c051ce7019803bc2d0ce46b750d2568208acea18f0"
+    },
+    {
+      "path": "source/audits/source-audit-r2.json.gz",
+      "bytes": 143530,
+      "sha256": "760f298c0ad8ec8fc4cd4335a12129b2ca8c453381fa8dd3ee9152794f2e35ba"
+    },
+    {
+      "path": "source/audits/source-audit-r3.json.gz",
+      "bytes": 143729,
+      "sha256": "dd35868de656091e6584424c6b8cae472ae1c3dbd271f2ff2f9d6a34246fd993"
+    },
+    {
+      "path": "source/audits/source-audit-r4.json.gz",
+      "bytes": 143799,
+      "sha256": "7fb975172a14880871f69ba365fe1e043f173a13b28e49f3efe17bf36349de84"
+    },
+    {
+      "path": "source/audits/source-audit.json.gz",
+      "bytes": 143478,
+      "sha256": "8e4d8d55d2a12804f435700b488155611a3af1cd95879159ae50f8b286560a06"
+    },
+    {
+      "path": "source/history/actual-lu-test/actual-lu-test.java.gz",
+      "bytes": 4995,
+      "sha256": "fd7f54705f7d755b50712a146ae31ccbec777240b4678e4abec51fb48ecdfc48"
+    },
+    {
+      "path": "source/history/actual-lu-test/prior-root-review/README.md",
+      "bytes": 2001,
+      "sha256": "83b00a486bc7c89707fe22352c37f76955b828724633d9fdaeac0a69e78c3f2c"
+    },
+    {
+      "path": "source/history/actual-lu-test/prior-root-review/source-manifest.json",
+      "bytes": 1952,
+      "sha256": "a1227fa727fc7758c8d99541b651263a00a1dd08463f1b554851c7cf996e5cf9"
+    },
+    {
+      "path": "source/history/actual-lu-test/prior-root-review/tests/contracts/Q30LuSupportCensusActualLuContractTest.java",
+      "bytes": 21153,
+      "sha256": "7cf499d9b175a390f6267cf27b6319dca68871f6affd3c7e108e8d76c0499f52"
+    },
+    {
+      "path": "source/history/actual-lu-test/README.md",
+      "bytes": 2501,
+      "sha256": "374e3951725c3a40d75b0b58f4833386cae0c27060f8d178de1f252bc3b9f7b9"
+    },
+    {
+      "path": "source/history/actual-lu-test/source-manifest.json",
+      "bytes": 2323,
+      "sha256": "9d07b6e5fcac0395566fdcf8e04d0102fdc88765a24cdf39a1db477441d5c6dc"
+    },
+    {
+      "path": "source/history/interrupted-worker-handoff/prepare_lu_support_census_sequence_root.py",
+      "bytes": 15519,
+      "sha256": "0b2b55b57fb33a5d790485c444ddb737faf223e6f8e95c875e752f9fc9f838fc"
+    },
+    {
+      "path": "source/history/interrupted-worker-handoff/receipt.json",
+      "bytes": 778,
+      "sha256": "fa896eeb79efc659c45a2adf86fa4019ee7c4a9191b21924d015e9fe901a674f"
+    },
+    {
+      "path": "source/history/interrupted-worker-handoff/run_lu_support_census_timing.py",
+      "bytes": 8041,
+      "sha256": "78a3a1af484a2f639e4dba9a07163840006fd3d1d6ca971e8ae0f8e1da4a5179"
+    },
+    {
+      "path": "source/history/interrupted-worker-handoff/validate_lu_support_census_pair_root.py",
+      "bytes": 15322,
+      "sha256": "66a44ed18527bd2885cb077eb0b7bffaf705bd0018566e3381446254497377ca"
+    },
+    {
+      "path": "source/history/metadata-r1-preserved/LEDGER.md",
+      "bytes": 545,
+      "sha256": "962b175e0199b1824949dfdda24673dc4ae08132069e03cde7c5b005f496ea44"
+    },
+    {
+      "path": "source/history/metadata-r1-preserved/lu-support-census-metadata-validator.md",
+      "bytes": 4220,
+      "sha256": "306799d3d6fb837fa0c8c5704dd8d84122004756c01bfe54f679fb76cdc6ad93"
+    },
+    {
+      "path": "source/history/metadata-r1-preserved/lu-support-census-metadata-validator.py",
+      "bytes": 28514,
+      "sha256": "7b4d2189c981f012210d1ac6cd794373ee829fcba7c464e913c1a116ed5cc40f"
+    },
+    {
+      "path": "source/history/pre-gwt-clone-fix/Q30LuSupportCensus.java.gz",
+      "bytes": 6718,
+      "sha256": "84ffd3b7cbc33bdb26bfea55f58e5169e1360cd24e2ffdf67462416a2046aca2"
+    },
+    {
+      "path": "source/history/pre-gwt-clone-fix/source-manifest.json",
+      "bytes": 2625,
+      "sha256": "cf08ea0ec3e56e08cfe3e31e03c0a1d92e4b1d53e491256429eea7e538e12590"
+    },
+    {
+      "path": "source/history/r2-wired-draft/exact-diff.patch.gz",
+      "bytes": 14794,
+      "sha256": "6f6e073b08c9ced01ff4ba31f7eaf0e83f0a7450d9dfb6ce140e36f2448d3904"
+    },
+    {
+      "path": "source/history/r2-wired-draft/overlays/src__com__lushprojects__circuitjs1__client__CirSim.java.gz",
+      "bytes": 74826,
+      "sha256": "1382f643e7da124f6e0341666fcfa4ea33911badf412da083f1748707eb53e2d"
+    },
+    {
+      "path": "source/history/r2-wired-draft/overlays/src__com__lushprojects__circuitjs1__client__Q30CoordinatorQualificationVerifier.java.gz",
+      "bytes": 14007,
+      "sha256": "f942b2a90b251a2bccaffd1a688cfba3754e1eeb09022010ad975d95d3368d2b"
+    },
+    {
+      "path": "source/history/r2-wired-draft/overlays/src__com__lushprojects__circuitjs1__client__Q30LuSupportCensus.java.gz",
+      "bytes": 6744,
+      "sha256": "8c1f110bf527e2e1f89689fcce279e53757f08e8f9b4e8f074adb0680d031fd0"
+    },
+    {
+      "path": "source/history/r2-wired-draft/overlays/tests__contracts__Q30LuSupportCensusContractTest.java.gz",
+      "bytes": 4430,
+      "sha256": "4aa60f5a2de02c147d35ad35603f6cfb8c25d65c648cc9b5590dc75665acaf46"
+    },
+    {
+      "path": "source/history/r2-wired-draft/README.md",
+      "bytes": 6115,
+      "sha256": "a6ada1e61c4d9f15efc32f0e854243c1ff56221790a37559eb62d25ace38542f"
+    },
+    {
+      "path": "source/history/r2-wired-draft/source-manifest.json",
+      "bytes": 2779,
+      "sha256": "b1b0eea88eeb71c12f1fbc757289cff722fb33689babe13a69f02062fe8efe17"
+    },
+    {
+      "path": "source/parent/pivot-lower-fusion-r2/source__base-and-reader-references.json",
+      "bytes": 1637,
+      "sha256": "be60997a9b69b754436243e13ad2e32ef185c6ccc8c808627b75549eda60a245"
+    },
+    {
+      "path": "source/parent/pivot-lower-fusion-r2/source__parent__packet-inventory.json",
+      "bytes": 90082,
+      "sha256": "c3e98e85bc97fb230f8b0b2fbed9dc5333e927dff1f87ecfb66689125b7a02a3"
+    },
+    {
+      "path": "source/parent/pivot-lower-fusion-r2/source__parent__source-pair-audit.json",
+      "bytes": 829984,
+      "sha256": "80110e21c0d5f4baf31460d3e0a12e12d9fc5cdecc1e83d49319fbc226a3c82a"
+    },
+    {
+      "path": "source/parent/pivot-lower-fusion-r2/source__provenance.json",
+      "bytes": 3031,
+      "sha256": "4ca6403c87a85b5e4c816c886dbfe09bd5cf4f854890548328e55e0f97645c69"
+    },
+    {
+      "path": "source/r4-overlays/scripts__verify-current-contracts.ps1.gz",
+      "bytes": 14478,
+      "sha256": "27af32559ee213c387e4afe7793d141ffb9705ac8194eac858ba8b4362788b44"
+    },
+    {
+      "path": "source/r4-overlays/src__com__lushprojects__circuitjs1__client__CirSim.java.gz",
+      "bytes": 74826,
+      "sha256": "1382f643e7da124f6e0341666fcfa4ea33911badf412da083f1748707eb53e2d"
+    },
+    {
+      "path": "source/r4-overlays/src__com__lushprojects__circuitjs1__client__Q30CoordinatorQualificationVerifier.java.gz",
+      "bytes": 14007,
+      "sha256": "f942b2a90b251a2bccaffd1a688cfba3754e1eeb09022010ad975d95d3368d2b"
+    },
+    {
+      "path": "source/r4-overlays/src__com__lushprojects__circuitjs1__client__Q30LuSupportCensus.java.gz",
+      "bytes": 6744,
+      "sha256": "8c1f110bf527e2e1f89689fcce279e53757f08e8f9b4e8f074adb0680d031fd0"
+    },
+    {
+      "path": "source/r4-overlays/tests__contracts__Q30LuSupportCensusActualLuContractTest.java.gz",
+      "bytes": 4995,
+      "sha256": "fd7f54705f7d755b50712a146ae31ccbec777240b4678e4abec51fb48ecdfc48"
+    },
+    {
+      "path": "source/r4-overlays/tests__contracts__Q30LuSupportCensusContractTest.java.gz",
+      "bytes": 4430,
+      "sha256": "4aa60f5a2de02c147d35ad35603f6cfb8c25d65c648cc9b5590dc75665acaf46"
+    }
+  ],
+  "inventoryCreated": false,
+  "inventoryPriorState": "NOT_CREATED",
+  "checkpointExcludes": "This checkpoint JSON file itself; all other current packet files are listed by path, byte count, and SHA-256."
+}

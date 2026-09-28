@@ -1,0 +1,68 @@
+{
+  "status": "ROOT_FINALIZED_SOURCE_ONLY_NOT_VALIDATED",
+  "baselineSourceAuditSha256": "0d27e176dc46afb4db91316570f4674e52b51ce2b462c64f6b6a37b98cbec197",
+  "files": [
+    {
+      "path": "exact-diff.patch",
+      "bytes": 80242,
+      "sha256": "1efb0300669f7e3ff766592384200ebdbb4b9b05ee669ab89ba376384b713169"
+    },
+    {
+      "path": "exact-diff.patch.gz",
+      "bytes": 14764,
+      "sha256": "a59785cfda430911c0dad3b35f729462246f139f4e8cfbce29e70fc6f04dbaec"
+    },
+    {
+      "path": "overlays/CirSim.expected.sha256",
+      "bytes": 66,
+      "sha256": "6ce94f8b20e827964162835fb000f620058ab3299a1b0ab70cf9f5a254738396"
+    },
+    {
+      "path": "overlays/CirSim.java.patch",
+      "bytes": 5509,
+      "sha256": "cd81232c53c6b18de1393c904bdf3a82fd9754a55336094ea4e6f401603925c4"
+    },
+    {
+      "path": "overlays/Q30CoordinatorQualificationVerifier.expected.sha256",
+      "bytes": 66,
+      "sha256": "bba4137dea6838e8ceed02f9ac963f2969d408de4881c4a5928bb190de38f691"
+    },
+    {
+      "path": "overlays/Q30CoordinatorQualificationVerifier.java.patch",
+      "bytes": 16268,
+      "sha256": "bbf3206e06a87c5f0f3fd9411ea38f8237097d747e6e35ea3f6051e392cd1466"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6115,
+      "sha256": "a6ada1e61c4d9f15efc32f0e854243c1ff56221790a37559eb62d25ace38542f"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "bytes": 351440,
+      "sha256": "1c89d9a1cd1d9c89fcdb4ff97672b27a41b314b2cc0edf5bd78852c970f72061"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java",
+      "bytes": 83046,
+      "sha256": "e610de476df73c4f303e28182bffe8e4bae2893e62db69e10341be7df9c777e1"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30LuSupportCensus.java",
+      "bytes": 33942,
+      "sha256": "eb82b1afd90267fb09fd44ff1c17cee5e012277b048d0a955208a05366a6e50a"
+    },
+    {
+      "path": "tests/contracts/Q30LuSupportCensusContractTest.java",
+      "bytes": 23443,
+      "sha256": "d314d2c6d25179b60264763278072fa8de15415b1f953140f0cff469ca1f6350"
+    }
+  ],
+  "overlays": [
+    "src/com/lushprojects/circuitjs1/client/CirSim.java",
+    "src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java",
+    "src/com/lushprojects/circuitjs1/client/Q30LuSupportCensus.java",
+    "tests/contracts/Q30LuSupportCensusContractTest.java"
+  ],
+  "notes": "Worker handoff, R1/R2 reviews and source-binding rejection retained. No sourcebase mutation; original factor kernel unchanged."
+}

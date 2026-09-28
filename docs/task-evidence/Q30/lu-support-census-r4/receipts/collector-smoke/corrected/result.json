@@ -1,0 +1,13 @@
+{
+  "status": "PASS_COLLECTOR_SMOKE_ONLY",
+  "manifestSha256": "cf08ea0ec3e56e08cfe3e31e03c0a1d92e4b1d53e491256429eea7e538e12590",
+  "sourceHashes": {
+    "src/com/lushprojects/circuitjs1/client/Q30LuSupportCensus.java": "eb82b1afd90267fb09fd44ff1c17cee5e012277b048d0a955208a05366a6e50a",
+    "tests/contracts/Q30LuSupportCensusContractTest.java": "d314d2c6d25179b60264763278072fa8de15415b1f953140f0cff469ca1f6350"
+  },
+  "compileExit": 0,
+  "runExit": 0,
+  "elapsedMonotonicSeconds": 0.4402111999806948,
+  "scope": "Isolated pure JDK8 collector smoke; not actual LU wiring/GWT/browser/normal acceptance.",
+  "output": "PASS: Q30 LU support-census contracts assertions=4224\n"
+}

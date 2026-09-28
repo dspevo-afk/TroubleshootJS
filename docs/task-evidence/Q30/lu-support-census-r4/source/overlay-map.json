@@ -1,0 +1,63 @@
+{
+  "schema": "tsj-q30-lu-support-census-r4-source-lineage/1",
+  "pinnedEvidenceCommit": "7739c8fadc3321de3c52d16851595ada839bb562",
+  "parentFusionR2Packet": "docs/task-evidence/Q30/pivot-lower-fusion-r2",
+  "parentFusionR2BaseHead": "2b152c25c556eea8c7fb4582c5459c17c69821b3",
+  "parentMeasuredSourceAuditSha256": "0d27e176dc46afb4db91316570f4674e52b51ce2b462c64f6b6a37b98cbec197",
+  "parentStoredSourceAuditSha256": "84b52b384972d28863cd235a7d0fe24a5721f397f229f420dc9c49388ab85f82",
+  "parentStoredSourcePairAuditSha256": "80110e21c0d5f4baf31460d3e0a12e12d9fc5cdecc1e83d49319fbc226a3c82a",
+  "censusR2ParentSourceAuditSha256": "0d27e176dc46afb4db91316570f4674e52b51ce2b462c64f6b6a37b98cbec197",
+  "censusR2StoredSourceAuditSha256": "8539108571c9fef83e7bbffa3de9924fa5a411228c8b1362a5a8b8f216b5e4a5",
+  "censusR2SourceAuditSha256": "526c5215fbf7b4c7d9b9ee86c31e82301e73d04e13ebfef1b027d7e755d25619",
+  "censusR3SourceAuditSha256": "2b3b912c1bfe397a8aa6728d06b8b90580037d5fac1f433e54b0e295c1e15ff8",
+  "censusR4SourceAuditSha256": "d021ec847e38fc792e7dbc095e2de8a012930010ede1aff1888e0c9f7a3d94d0",
+  "runtimeInputCount": 1526,
+  "runtimeSha256": "f7ea79156a7f313b4221e71870fc8cd0ff7fb7f48edd84151ad954e1461fdf15",
+  "runtimeUnchangedFromGWTAndCanaries": true,
+  "exactR4SourceOverlays": [
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "storedAt": "source/r4-overlays/scripts__verify-current-contracts.ps1.gz",
+      "bytes": 66772,
+      "sha256": "9188973c00bb9d2322e02e3655ce955dd75e70c1b1e744b8fdfd433c364bc518",
+      "transform": "gzip-mtime-0-exact-source-overlay"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "storedAt": "source/r4-overlays/src__com__lushprojects__circuitjs1__client__CirSim.java.gz",
+      "bytes": 351440,
+      "sha256": "1c89d9a1cd1d9c89fcdb4ff97672b27a41b314b2cc0edf5bd78852c970f72061",
+      "transform": "gzip-mtime-0-exact-source-overlay"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java",
+      "storedAt": "source/r4-overlays/src__com__lushprojects__circuitjs1__client__Q30CoordinatorQualificationVerifier.java.gz",
+      "bytes": 83046,
+      "sha256": "e610de476df73c4f303e28182bffe8e4bae2893e62db69e10341be7df9c777e1",
+      "transform": "gzip-mtime-0-exact-source-overlay"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30LuSupportCensus.java",
+      "storedAt": "source/r4-overlays/src__com__lushprojects__circuitjs1__client__Q30LuSupportCensus.java.gz",
+      "bytes": 34140,
+      "sha256": "1c2aeaa150a766f4e6dcddacaa9f8865b58274f9e160294d90b8073646bfd5b5",
+      "transform": "gzip-mtime-0-exact-source-overlay"
+    },
+    {
+      "path": "tests/contracts/Q30LuSupportCensusContractTest.java",
+      "storedAt": "source/r4-overlays/tests__contracts__Q30LuSupportCensusContractTest.java.gz",
+      "bytes": 23443,
+      "sha256": "d314d2c6d25179b60264763278072fa8de15415b1f953140f0cff469ca1f6350",
+      "transform": "gzip-mtime-0-exact-source-overlay"
+    },
+    {
+      "path": "tests/contracts/Q30LuSupportCensusActualLuContractTest.java",
+      "storedAt": "source/r4-overlays/tests__contracts__Q30LuSupportCensusActualLuContractTest.java.gz",
+      "bytes": 23695,
+      "sha256": "a30ddfc294a12d3a3aa6dc3076fd286080b32705d5d5379d93bf32e6e1bdefb3",
+      "transform": "gzip-mtime-0-exact-source-overlay"
+    }
+  ],
+  "sourceAuditR2R3R4StoredSeparately": true,
+  "fullCandidateTreeGeneratedWarCacheAndBrowserProfileCopied": false
+}

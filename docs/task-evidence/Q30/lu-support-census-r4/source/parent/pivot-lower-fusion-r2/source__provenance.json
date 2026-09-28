@@ -1,0 +1,67 @@
+{
+  "baseHead": "2b152c25c556eea8c7fb4582c5459c17c69821b3",
+  "diffsAreCanonicalLfReviewCopies": true,
+  "exactFinalBlobsAreGzipPayloads": true,
+  "finalBlobs": [
+    {
+      "baseSha256": "82023675beb4093bdc95abe7456614773b1011c319cb72202c2db2a250a95bfd",
+      "bytes": 347018,
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "sha256": "c75fa32de8f6175424675aa590604ceca10fb1b335c63640e638a92b3bf0ff32"
+    },
+    {
+      "baseSha256": null,
+      "bytes": 12105,
+      "path": "tests/contracts/Q30LuPivotCollectionContractTest.java",
+      "sha256": "15b81b3acabba38c4010a675899685e6adf696d19f8d72e7d244f790f3b95d14"
+    },
+    {
+      "baseSha256": "fca0e673c9236582de686f64f7bda32e8e83ed61ed7101785894334bf888c7d3",
+      "bytes": 51123,
+      "path": "scripts/verify-current-contracts.ps1",
+      "sha256": "0dda5fa6411c89435799a17acfb09ae2cca3de08f58d41f04ccb326a6aca4183"
+    }
+  ],
+  "finalIndexTree": "565ba26abfe0a8025681922ff061bbe1ea758cd1",
+  "measuredR2Candidate": {
+    "baseInputCount": 1339,
+    "changedPaths": [
+      "scripts/verify-current-contracts.ps1",
+      "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "tests/contracts/Q30LuPivotCollectionContractTest.java"
+    ],
+    "exactOverlayHashes": {
+      "scripts/verify-current-contracts.ps1": "357abf8cb72ab67038d67a2ebfc07118b1d166ae789b4e0f3b37e53cdd0fc589",
+      "src/com/lushprojects/circuitjs1/client/CirSim.java": "c0b9d9bc7ff72d0e5021500c331e40dfcd03974ee3517c39d757d05302b1cfc3",
+      "tests/contracts/Q30LuPivotCollectionContractTest.java": "15b81b3acabba38c4010a675899685e6adf696d19f8d72e7d244f790f3b95d14"
+    },
+    "inputCount": 1340,
+    "parentMapMatchesControlArm": true,
+    "sourceAuditSha256": "0d27e176dc46afb4db91316570f4674e52b51ce2b462c64f6b6a37b98cbec197"
+  },
+  "parentCandidateInputMap": {
+    "candidateInputCount": 1339,
+    "packetInventorySha256": "c3e98e85bc97fb230f8b0b2fbed9dc5333e927dff1f87ecfb66689125b7a02a3",
+    "sourcePairAuditSha256": "80110e21c0d5f4baf31460d3e0a12e12d9fc5cdecc1e83d49319fbc226a3c82a"
+  },
+  "parentSourceReference": {
+    "commit": "ba107090e4899ca9d3a2413259c78d042d20dae1",
+    "path": "docs/task-evidence/Q30/sticky-finite-solve-r2/sources/candidate-CirSim.java.gz",
+    "uncompressedSha256": "2658e94560fd9e1f0e9157a54be773bd9568d9350fa6ce56c39acaa7cf87e0b1"
+  },
+  "r1ToR2MarkerRepair": {
+    "r1Sha256": "7ed22987745acb2e9425d8dec8c863724f492f4eead84903115cbd413233915a",
+    "r2Sha256": "15b81b3acabba38c4010a675899685e6adf696d19f8d72e7d244f790f3b95d14",
+    "scope": "maintained PASS: marker only; assertions/solver unchanged"
+  },
+  "strictReaderReferences": [
+    {
+      "path": "docs/task-evidence/Q30/owned-zero-row-scan/procedure/readers/check_coordinator.py",
+      "sha256": "247ded434bcdbdba6f78e7edf8f9c8b3671aaf8465bfabb29c875d5b2512bddb"
+    },
+    {
+      "path": "docs/task-evidence/Q30/owned-zero-row-scan/procedure/readers/check_d01.py",
+      "sha256": "f58847541571cdf829835d05c200bac6ea0079dab065d90ebdf7f44914241929"
+    }
+  ]
+}

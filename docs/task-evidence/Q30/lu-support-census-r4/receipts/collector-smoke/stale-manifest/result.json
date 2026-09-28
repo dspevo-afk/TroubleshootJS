@@ -1,0 +1,14 @@
+{
+  "status": "NOT_RUN_SOURCE_BINDING_REJECTED",
+  "reason": "Draft changed while author was still revising; manifest/current source mismatch stopped preparation before any javac or java launch.",
+  "compileStarted": false,
+  "runStarted": false,
+  "filesPresent": [
+    "classes",
+    "Q30LuSupportCensus.java"
+  ],
+  "observedHashes": {
+    "src/com/lushprojects/circuitjs1/client/Q30LuSupportCensus.java": "67402923f4669fc92703b69be04552490837a5caec3116724505d822ec6a04e3",
+    "tests/contracts/Q30LuSupportCensusContractTest.java": "eeda9eb4aebb3d06c3c2dc2163beab436d10d69ddf4f1c13ad19bce82e5076a3"
+  }
+}

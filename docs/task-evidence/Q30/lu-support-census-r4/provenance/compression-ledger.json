@@ -1,0 +1,433 @@
+{
+  "schema": "tsj-q30-lu-support-census-r4-compression/1",
+  "artifacts": [
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/cases/001-lu-support-census-r4-01-off-10014.report.json.gz",
+      "payloadBytes": 1748507,
+      "payloadSha256": "3d82372591d4283d2d9b701545dd12aee0eb2cb80de49ed8550ae5c4c8344580",
+      "storedBytes": 251088,
+      "storedSha256": "fee4254770d6ac558d6e7558a1f3182af3c93ba3735293011449f2609945f5a0",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/cases/001-lu-support-census-r4-02-on-10014.report.json.gz",
+      "payloadBytes": 3294473,
+      "payloadSha256": "6286ef66a90d72e0bdada312e880863fa7cb62ea2e8d94b33a162a71e4c79af8",
+      "storedBytes": 287977,
+      "storedSha256": "6b99bd42245045ef50f9d8cdc3ce730f47760e5a5d086003dc8f5d958a03521e",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/cases/001-lu-support-census-r4-03-off-10014.report.json.gz",
+      "payloadBytes": 1748509,
+      "payloadSha256": "a5ba61e5832e1661021c26e4edacb0f1feb82a0756554e4a7bd1379aa1fbfde4",
+      "storedBytes": 251086,
+      "storedSha256": "5cb2653c632cb5006b62b70f218b962cc6dc5a72e68b168b693c3869986f76d2",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "canaries/r3/cases/001-lu-support-census-r3-canaries-a07.report.json.gz",
+      "payloadBytes": 80898,
+      "payloadSha256": "9c8ad0f9524dafb4ee63b89eb9ee6b6c4e32af459ef50f285e5ee2685617a636",
+      "storedBytes": 9373,
+      "storedSha256": "d43569c1bd3ba82840be87157e02fd823e63dfcb779d67b724263ae8c621b38d",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "canaries/r3/cases/002-lu-support-census-r3-canaries-disabled.report.json.gz",
+      "payloadBytes": 344,
+      "payloadSha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+      "storedBytes": 224,
+      "storedSha256": "906cf3202821fd05498c7457b939ee54e4fb29f9024efc0ea8694efa764f76dc",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/audits/source-audit.json.gz",
+      "payloadBytes": 563544,
+      "payloadSha256": "8539108571c9fef83e7bbffa3de9924fa5a411228c8b1362a5a8b8f216b5e4a5",
+      "storedBytes": 143478,
+      "storedSha256": "8e4d8d55d2a12804f435700b488155611a3af1cd95879159ae50f8b286560a06",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/audits/source-audit-r2.json.gz",
+      "payloadBytes": 563635,
+      "payloadSha256": "526c5215fbf7b4c7d9b9ee86c31e82301e73d04e13ebfef1b027d7e755d25619",
+      "storedBytes": 143530,
+      "storedSha256": "760f298c0ad8ec8fc4cd4335a12129b2ca8c453381fa8dd3ee9152794f2e35ba",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/audits/source-audit-r3.json.gz",
+      "payloadBytes": 563973,
+      "payloadSha256": "2b3b912c1bfe397a8aa6728d06b8b90580037d5fac1f433e54b0e295c1e15ff8",
+      "storedBytes": 143729,
+      "storedSha256": "dd35868de656091e6584424c6b8cae472ae1c3dbd271f2ff2f9d6a34246fd993",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/audits/source-audit-r4.json.gz",
+      "payloadBytes": 564073,
+      "payloadSha256": "d021ec847e38fc792e7dbc095e2de8a012930010ede1aff1888e0c9f7a3d94d0",
+      "storedBytes": 143799,
+      "storedSha256": "7fb975172a14880871f69ba365fe1e043f173a13b28e49f3efe17bf36349de84",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/history/r2-wired-draft/exact-diff.patch.gz",
+      "payloadBytes": 80446,
+      "payloadSha256": "895ffdeef59fc4a7c5eb6bb99acb0706d9a9e3e62f86ffcdc5e17f64e91766fc",
+      "storedBytes": 14794,
+      "storedSha256": "6f6e073b08c9ced01ff4ba31f7eaf0e83f0a7450d9dfb6ce140e36f2448d3904",
+      "gzipMtimeZero": false
+    },
+    {
+      "path": "source/history/r2-wired-draft/overlays/src__com__lushprojects__circuitjs1__client__CirSim.java.gz",
+      "payloadBytes": 351440,
+      "payloadSha256": "1c89d9a1cd1d9c89fcdb4ff97672b27a41b314b2cc0edf5bd78852c970f72061",
+      "storedBytes": 74826,
+      "storedSha256": "1382f643e7da124f6e0341666fcfa4ea33911badf412da083f1748707eb53e2d",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/history/r2-wired-draft/overlays/src__com__lushprojects__circuitjs1__client__Q30CoordinatorQualificationVerifier.java.gz",
+      "payloadBytes": 83046,
+      "payloadSha256": "e610de476df73c4f303e28182bffe8e4bae2893e62db69e10341be7df9c777e1",
+      "storedBytes": 14007,
+      "storedSha256": "f942b2a90b251a2bccaffd1a688cfba3754e1eeb09022010ad975d95d3368d2b",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/history/r2-wired-draft/overlays/src__com__lushprojects__circuitjs1__client__Q30LuSupportCensus.java.gz",
+      "payloadBytes": 34140,
+      "payloadSha256": "1c2aeaa150a766f4e6dcddacaa9f8865b58274f9e160294d90b8073646bfd5b5",
+      "storedBytes": 6744,
+      "storedSha256": "8c1f110bf527e2e1f89689fcce279e53757f08e8f9b4e8f074adb0680d031fd0",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/history/r2-wired-draft/overlays/tests__contracts__Q30LuSupportCensusContractTest.java.gz",
+      "payloadBytes": 23443,
+      "payloadSha256": "d314d2c6d25179b60264763278072fa8de15415b1f953140f0cff469ca1f6350",
+      "storedBytes": 4430,
+      "storedSha256": "4aa60f5a2de02c147d35ad35603f6cfb8c25d65c648cc9b5590dc75665acaf46",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/history/actual-lu-test/actual-lu-test.java.gz",
+      "payloadBytes": 23695,
+      "payloadSha256": "a30ddfc294a12d3a3aa6dc3076fd286080b32705d5d5379d93bf32e6e1bdefb3",
+      "storedBytes": 4995,
+      "storedSha256": "fd7f54705f7d755b50712a146ae31ccbec777240b4678e4abec51fb48ecdfc48",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/history/pre-gwt-clone-fix/Q30LuSupportCensus.java.gz",
+      "payloadBytes": 33942,
+      "payloadSha256": "eb82b1afd90267fb09fd44ff1c17cee5e012277b048d0a955208a05366a6e50a",
+      "storedBytes": 6718,
+      "storedSha256": "84ffd3b7cbc33bdb26bfea55f58e5169e1360cd24e2ffdf67462416a2046aca2",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/r4-overlays/scripts__verify-current-contracts.ps1.gz",
+      "payloadBytes": 66772,
+      "payloadSha256": "9188973c00bb9d2322e02e3655ce955dd75e70c1b1e744b8fdfd433c364bc518",
+      "storedBytes": 14478,
+      "storedSha256": "27af32559ee213c387e4afe7793d141ffb9705ac8194eac858ba8b4362788b44",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/r4-overlays/src__com__lushprojects__circuitjs1__client__CirSim.java.gz",
+      "payloadBytes": 351440,
+      "payloadSha256": "1c89d9a1cd1d9c89fcdb4ff97672b27a41b314b2cc0edf5bd78852c970f72061",
+      "storedBytes": 74826,
+      "storedSha256": "1382f643e7da124f6e0341666fcfa4ea33911badf412da083f1748707eb53e2d",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/r4-overlays/src__com__lushprojects__circuitjs1__client__Q30CoordinatorQualificationVerifier.java.gz",
+      "payloadBytes": 83046,
+      "payloadSha256": "e610de476df73c4f303e28182bffe8e4bae2893e62db69e10341be7df9c777e1",
+      "storedBytes": 14007,
+      "storedSha256": "f942b2a90b251a2bccaffd1a688cfba3754e1eeb09022010ad975d95d3368d2b",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/r4-overlays/src__com__lushprojects__circuitjs1__client__Q30LuSupportCensus.java.gz",
+      "payloadBytes": 34140,
+      "payloadSha256": "1c2aeaa150a766f4e6dcddacaa9f8865b58274f9e160294d90b8073646bfd5b5",
+      "storedBytes": 6744,
+      "storedSha256": "8c1f110bf527e2e1f89689fcce279e53757f08e8f9b4e8f074adb0680d031fd0",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/r4-overlays/tests__contracts__Q30LuSupportCensusContractTest.java.gz",
+      "payloadBytes": 23443,
+      "payloadSha256": "d314d2c6d25179b60264763278072fa8de15415b1f953140f0cff469ca1f6350",
+      "storedBytes": 4430,
+      "storedSha256": "4aa60f5a2de02c147d35ad35603f6cfb8c25d65c648cc9b5590dc75665acaf46",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/r4-overlays/tests__contracts__Q30LuSupportCensusActualLuContractTest.java.gz",
+      "payloadBytes": 23695,
+      "payloadSha256": "a30ddfc294a12d3a3aa6dc3076fd286080b32705d5d5379d93bf32e6e1bdefb3",
+      "storedBytes": 4995,
+      "storedSha256": "fd7f54705f7d755b50712a146ae31ccbec777240b4678e4abec51fb48ecdfc48",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/parent/pivot-lower-fusion-r2/source__measured-r2-overlays__scripts__verify-current-contracts.ps1.gz",
+      "payloadBytes": 66537,
+      "payloadSha256": "357abf8cb72ab67038d67a2ebfc07118b1d166ae789b4e0f3b37e53cdd0fc589",
+      "storedBytes": 14439,
+      "storedSha256": "e3422186062d2aad35a000f241f610ae6522bd5ced653114010648ec06951009",
+      "gzipMtimeZero": false
+    },
+    {
+      "path": "source/parent/pivot-lower-fusion-r2/source__measured-r2-overlays__src__com__lushprojects__circuitjs1__client__CirSim.java.gz",
+      "payloadBytes": 347271,
+      "payloadSha256": "c0b9d9bc7ff72d0e5021500c331e40dfcd03974ee3517c39d757d05302b1cfc3",
+      "storedBytes": 74223,
+      "storedSha256": "8b3526c40995ea831b0e8e81d5cb5a3c84abd9bdad68ba14b46a8411f9025216",
+      "gzipMtimeZero": false
+    },
+    {
+      "path": "source/parent/pivot-lower-fusion-r2/source__measured-r2-overlays__tests__contracts__Q30LuPivotCollectionContractTest.java.gz",
+      "payloadBytes": 12105,
+      "payloadSha256": "15b81b3acabba38c4010a675899685e6adf696d19f8d72e7d244f790f3b95d14",
+      "storedBytes": 2828,
+      "storedSha256": "463b974998f60cc284f33853bf17a8b4d3c7c9650fec976dc6a0390494aa0f58",
+      "gzipMtimeZero": false
+    },
+    {
+      "path": "source/parent/pivot-lower-fusion-r2/source__deltas__parent-candidate-to-measured-r2__scripts__verify-current-contracts.ps1.patch.gz",
+      "payloadBytes": 737,
+      "payloadSha256": "38f9262736035a85f25915e96bec53d6102882e15174b0fae63ec66a82c34512",
+      "storedBytes": 264,
+      "storedSha256": "cfd3e4de82b91655d33a452c965c99bdcda3ccfa3fd271753f770ea2def02c16",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/parent/pivot-lower-fusion-r2/source__deltas__parent-candidate-to-measured-r2__src__com__lushprojects__circuitjs1__client__CirSim.java.patch.gz",
+      "payloadBytes": 3313,
+      "payloadSha256": "e2cba5f2c9898af24b43b500ed5fccea407555e2b0fa5d7f9bda399fe987c9bf",
+      "storedBytes": 904,
+      "storedSha256": "eaf82d5fc397dcb29699c11e6a967ab08294db373bb741da935e77c9ac20cb3e",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/parent/pivot-lower-fusion-r2/source__deltas__parent-candidate-to-measured-r2__tests__contracts__Q30LuPivotCollectionContractTest.java.patch.gz",
+      "payloadBytes": 12438,
+      "payloadSha256": "5cdc9cf7ff269fdc9cf5724c62343afe2049ebec9a118dd5212f301e0bcbccae",
+      "storedBytes": 2885,
+      "storedSha256": "2f2ff1a18aa0efda3f80f1bb3c90a6b0f5e5da2b7af4a9e5a966907d3d329c1c",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "canaries/r3/input-manifest-after.json.gz",
+      "restorePath": "canaries/r3/input-manifest-after.json",
+      "payloadBytes": 291499,
+      "payloadSha256": "baad46abb7f9940f6a99c386e55f1c59edb4f4d57eb3d0651e5e6bbd6a1cd13e",
+      "storedBytes": 80109,
+      "storedSha256": "12e134cd7d79236d992f8d3fcda320f3e0f699d877274a0b9f77e8827460ed6f",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "canaries/r3/input-manifest-before.json.gz",
+      "restorePath": "canaries/r3/input-manifest-before.json",
+      "payloadBytes": 291499,
+      "payloadSha256": "5e4b1cddde94debdc35aa97fec79ee1d3a96dd5975ceecb4efddf952a63a05ea",
+      "storedBytes": 80109,
+      "storedSha256": "d312e1b30b6e71652ae7746b05b90b1d1fa05b9aaf3107b714818a70f92296dd",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "receipts/pair-validation/census-r4-pair-1.log.gz",
+      "restorePath": "receipts/pair-validation/census-r4-pair-1.log",
+      "payloadBytes": 740912,
+      "payloadSha256": "077064d0b28c2d1f5674076d1f561b1b0526b6356296c414a79380c091aceab7",
+      "storedBytes": 19287,
+      "storedSha256": "a5896a0362e63c3c3dede54187ef16fc5a3f1883e1afdf6b5d8f75c2e9b86ca1",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "receipts/pair-validation/census-r4-pair-2.log.gz",
+      "restorePath": "receipts/pair-validation/census-r4-pair-2.log",
+      "payloadBytes": 740912,
+      "payloadSha256": "69a07d73a974bd186f3f6b0ceeb9f8cf4ea4f9f082b6eb50506b990ccae9ea71",
+      "storedBytes": 19289,
+      "storedSha256": "8ec45685a41537a50d637cee8ca0750f63b23aae8cb62b10a24c0cabbe356003",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "receipts/strict-canaries/lu-support-census-r4-01-off-10014-strict-wrapper-census-r4-pair-1-off.json.gz",
+      "restorePath": "receipts/strict-canaries/lu-support-census-r4-01-off-10014-strict-wrapper-census-r4-pair-1-off.json",
+      "payloadBytes": 1806070,
+      "payloadSha256": "b2ab124e88eb07557bf53adc964b37c8051b2c0318d686fbc224847f3e45f925",
+      "storedBytes": 252560,
+      "storedSha256": "b63ffc328cc7d95a68bcbfb4ccb9bd74b13e6880dbe924fc4943c811577e1e7f",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "receipts/strict-canaries/lu-support-census-r4-02-on-10014-strict-wrapper-census-r4-pair-1-on.json.gz",
+      "restorePath": "receipts/strict-canaries/lu-support-census-r4-02-on-10014-strict-wrapper-census-r4-pair-1-on.json",
+      "payloadBytes": 12025647,
+      "payloadSha256": "879640cc72cd710dd7cf4de60a1a3e86db5f15adc740c01d609dbb8bead0d5ad",
+      "storedBytes": 412219,
+      "storedSha256": "b82b886fb2834669e2e1d3d846fa10b3ae0e69dfbd77d9e50038f31b36e3f3ac",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "receipts/strict-canaries/lu-support-census-r4-02-on-10014-strict-wrapper-census-r4-pair-2-on.json.gz",
+      "restorePath": "receipts/strict-canaries/lu-support-census-r4-02-on-10014-strict-wrapper-census-r4-pair-2-on.json",
+      "payloadBytes": 12025647,
+      "payloadSha256": "879640cc72cd710dd7cf4de60a1a3e86db5f15adc740c01d609dbb8bead0d5ad",
+      "storedBytes": 412219,
+      "storedSha256": "b82b886fb2834669e2e1d3d846fa10b3ae0e69dfbd77d9e50038f31b36e3f3ac",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "receipts/strict-canaries/lu-support-census-r4-03-off-10014-strict-wrapper-census-r4-pair-2-off.json.gz",
+      "restorePath": "receipts/strict-canaries/lu-support-census-r4-03-off-10014-strict-wrapper-census-r4-pair-2-off.json",
+      "payloadBytes": 1806072,
+      "payloadSha256": "8143af09129d0793d33100317923d10fd1b1fe9f1554521e5294636058948786",
+      "storedBytes": 252559,
+      "storedSha256": "321516eedae288d3843205ace85d80b6b7c1a02295f82c55d5f030750de64663",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/input-manifest-after.json.gz",
+      "restorePath": "runs/lu-support-census-r4-01-off-10014/input-manifest-after.json",
+      "payloadBytes": 291302,
+      "payloadSha256": "f781a408a6523f280ebcfc138ba5727991722f002c104e6030412638f488b97c",
+      "storedBytes": 80051,
+      "storedSha256": "a2527cc058a74d6058a1fac87a0d68dfaa75396c9cd16d81a2b0cb10d72b6c0c",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/input-manifest-before.json.gz",
+      "restorePath": "runs/lu-support-census-r4-01-off-10014/input-manifest-before.json",
+      "payloadBytes": 291302,
+      "payloadSha256": "cd072b3c25fda4168b459ed8c0c480f84a68b52047a539805c86ec28807f63c0",
+      "storedBytes": 80052,
+      "storedSha256": "803c133f24ab1a2a8ccab453c1e6fd82803cb805977043f2a612905108698875",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "runs/lu-support-census-r4-01-off-10014/receipts/lu-support-census-r4-01-off-10014-strict-wrapper-census-r4-pair-1-off.json.gz",
+      "restorePath": "runs/lu-support-census-r4-01-off-10014/receipts/lu-support-census-r4-01-off-10014-strict-wrapper-census-r4-pair-1-off.json",
+      "payloadBytes": 1806070,
+      "payloadSha256": "b2ab124e88eb07557bf53adc964b37c8051b2c0318d686fbc224847f3e45f925",
+      "storedBytes": 252560,
+      "storedSha256": "b63ffc328cc7d95a68bcbfb4ccb9bd74b13e6880dbe924fc4943c811577e1e7f",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/input-manifest-after.json.gz",
+      "restorePath": "runs/lu-support-census-r4-02-on-10014/input-manifest-after.json",
+      "payloadBytes": 291499,
+      "payloadSha256": "44b7f42fb58bc56158eef197535ade08bb27ec6f75f3ee4c518e6cfcceb93fcc",
+      "storedBytes": 80109,
+      "storedSha256": "81b21542d072cdc15d6e0140ff7eb9f2551d08fa33c57bf014f8bd430aa35a89",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/input-manifest-before.json.gz",
+      "restorePath": "runs/lu-support-census-r4-02-on-10014/input-manifest-before.json",
+      "payloadBytes": 291499,
+      "payloadSha256": "0d8ab7a4e72991ca5014113b097a6482ddbb384a4a5b05211fa72ca4f051b138",
+      "storedBytes": 80109,
+      "storedSha256": "9d14721de7cdfb76495ae3951967df91413eca8f4a1e823d0c711d334d4e0fec",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/receipts/lu-support-census-r4-02-on-10014-strict-wrapper-census-r4-pair-1-on.json.gz",
+      "restorePath": "runs/lu-support-census-r4-02-on-10014/receipts/lu-support-census-r4-02-on-10014-strict-wrapper-census-r4-pair-1-on.json",
+      "payloadBytes": 12025647,
+      "payloadSha256": "879640cc72cd710dd7cf4de60a1a3e86db5f15adc740c01d609dbb8bead0d5ad",
+      "storedBytes": 412219,
+      "storedSha256": "b82b886fb2834669e2e1d3d846fa10b3ae0e69dfbd77d9e50038f31b36e3f3ac",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/receipts/lu-support-census-r4-02-on-10014-strict-wrapper-census-r4-pair-2-on.json.gz",
+      "restorePath": "runs/lu-support-census-r4-02-on-10014/receipts/lu-support-census-r4-02-on-10014-strict-wrapper-census-r4-pair-2-on.json",
+      "payloadBytes": 12025647,
+      "payloadSha256": "879640cc72cd710dd7cf4de60a1a3e86db5f15adc740c01d609dbb8bead0d5ad",
+      "storedBytes": 412219,
+      "storedSha256": "b82b886fb2834669e2e1d3d846fa10b3ae0e69dfbd77d9e50038f31b36e3f3ac",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/receipts/lu-support-census-r4-02-on-10014-vs-lu-support-census-r4-01-off-10014-support-census-parity-census-r4-pair-1.json.gz",
+      "restorePath": "runs/lu-support-census-r4-02-on-10014/receipts/lu-support-census-r4-02-on-10014-vs-lu-support-census-r4-01-off-10014-support-census-parity-census-r4-pair-1.json",
+      "payloadBytes": 4435122,
+      "payloadSha256": "2103883f511d3a2cdaeb2ca868b1e67af0f409d0f28096e9443beed7ea5ac918",
+      "storedBytes": 67326,
+      "storedSha256": "6fc7495d331f1948f0deca1b9b8aa27395de4944e1c46b7d26100edfdb81b82d",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "runs/lu-support-census-r4-02-on-10014/receipts/lu-support-census-r4-02-on-10014-vs-lu-support-census-r4-03-off-10014-support-census-parity-census-r4-pair-2.json.gz",
+      "restorePath": "runs/lu-support-census-r4-02-on-10014/receipts/lu-support-census-r4-02-on-10014-vs-lu-support-census-r4-03-off-10014-support-census-parity-census-r4-pair-2.json",
+      "payloadBytes": 4435122,
+      "payloadSha256": "84dbfafffbff64185c51a576bfdd47627d75ed3d454d4d1a373a0a429ee88976",
+      "storedBytes": 67328,
+      "storedSha256": "5b83dfac93b43f9ba7d8386be9f4b830b72c78e81a6c6645888b3384587046a8",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/input-manifest-after.json.gz",
+      "restorePath": "runs/lu-support-census-r4-03-off-10014/input-manifest-after.json",
+      "payloadBytes": 291302,
+      "payloadSha256": "5f4f34fe2c67a84126762d6f74f67e5ed9a41f214f0aa50c26002f79957351be",
+      "storedBytes": 80051,
+      "storedSha256": "9e36593269121375a5aba6db327604640f4719ada061a83590e3acd6fb528988",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/input-manifest-before.json.gz",
+      "restorePath": "runs/lu-support-census-r4-03-off-10014/input-manifest-before.json",
+      "payloadBytes": 291302,
+      "payloadSha256": "547f323009cff47c798bacc0f2376518001f263b86cb6c0af77bf4d69738ab6d",
+      "storedBytes": 80052,
+      "storedSha256": "9f92d8ce625ded7d865908a89f34badc264b1170f0ea89a25cb423a2d7ffd64b",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "runs/lu-support-census-r4-03-off-10014/receipts/lu-support-census-r4-03-off-10014-strict-wrapper-census-r4-pair-2-off.json.gz",
+      "restorePath": "runs/lu-support-census-r4-03-off-10014/receipts/lu-support-census-r4-03-off-10014-strict-wrapper-census-r4-pair-2-off.json",
+      "payloadBytes": 1806072,
+      "payloadSha256": "8143af09129d0793d33100317923d10fd1b1fe9f1554521e5294636058948786",
+      "storedBytes": 252559,
+      "storedSha256": "321516eedae288d3843205ace85d80b6b7c1a02295f82c55d5f030750de64663",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/parent/pivot-lower-fusion-r2/source__parent__source-pair-audit.json.gz",
+      "restorePath": "source/parent/pivot-lower-fusion-r2/source__parent__source-pair-audit.json",
+      "payloadBytes": 829984,
+      "payloadSha256": "80110e21c0d5f4baf31460d3e0a12e12d9fc5cdecc1e83d49319fbc226a3c82a",
+      "storedBytes": 215269,
+      "storedSha256": "75f4381e83f1e3158fc1a94f218407501931fe9e6a3b8fc6ecfcfb98a812836f",
+      "gzipMtimeZero": true
+    },
+    {
+      "path": "source/parent/pivot-lower-fusion-r2/stored-parent-source-audit.json.gz",
+      "restorePath": "source/parent/pivot-lower-fusion-r2/stored-parent-source-audit.json",
+      "payloadBytes": 563558,
+      "payloadSha256": "84b52b384972d28863cd235a7d0fe24a5721f397f229f420dc9c49388ab85f82",
+      "storedBytes": 143911,
+      "storedSha256": "a786eae07f29759ee3028650f1f51642ea0c0f25ce3ae6002e8d478186545a79",
+      "gzipMtimeZero": true
+    }
+  ],
+  "largePayloadCompaction": {
+    "priorInventorySha256": "a71f8ea5b27b2dd91cbcfa6f07e77655d2ece8f7df6d67b5c2de3115566dbcd0",
+    "thresholdBytes": 262144,
+    "payloadsPreservedExactly": true,
+    "reason": "Large structured proof and comparison receipts are data; retain exact payloads while keeping the reviewed diff bounded."
+  }
+}

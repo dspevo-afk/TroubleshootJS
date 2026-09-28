@@ -1,0 +1,12 @@
+{
+  "cases": [
+    {
+      "name": "lu-support-census-r4-01-off-10014",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=10014",
+      "stateAttribute": "data-tsj-q30-coordinator-state",
+      "expectedState": "PASS:complete",
+      "reportAttribute": "data-tsj-q30-coordinator-report",
+      "timeoutSeconds": 600
+    }
+  ]
+}

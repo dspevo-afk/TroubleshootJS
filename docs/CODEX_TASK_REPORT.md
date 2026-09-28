@@ -1,7 +1,112 @@
 # Current checkpoint: Q30 BLOCKED / NOT ACCEPTED
 
-Branch `codex/q30-multirail-qualification`; prepared from documentation HEAD `144b382`
-(`Record inconclusive Q30 LU guard experiment`). Accepted production source remains `ffe9132`
+Branch `codex/q30-multirail-qualification`; prepared from documentation HEAD
+`7739c8f`. Accepted production source remains `ffe9132`
+(`Collect LU lower rows during pivot search`). No push or completion email.
+Normal-player Q30 publication remains disabled. U06/U07/Q60 and later are
+unstarted. Full final acceptance matrices are NOT RUN while hard gates fail.
+
+Frozen limits remain 90,000 ms cumulative, 640 shared work units and 5,000 ms
+per active operation. Private 90–300-second measurements remain isolated.
+No solver settling, hypothesis, proof, physical admission, replay, candidate
+order, family ownership, service/repair/retest, cache or cleanup requirement
+changed. Private fixtures include the preserved unaccepted plan-4 scale
+proposal and disabled-normal hook; they do not establish normal admission.
+
+The requested FIRST independent review, focused gates and fresh counterbalanced
+comparison were secured at `7a30a3f`: original savings 11.155–14.706 s with full
+non-timing parity; all cold rows still exceeded 90 s.
+[Initial checkpoint](task-evidence/Q30/intermediate-optimization/README.md).
+The latest accepted LU fusion passed native/GWT/compiled, independent review,
+pure-source export and four paired comparisons. Forty-package gains were
+1.418/1.175 s; the 20-package row regressed 0.222 s. The inherited signed-zero
+boundary remains; no universal bit identity with historical Crout is claimed.
+[Accepted fusion](task-evidence/Q30/pivot-lower-fusion-r2/README.md).
+
+Profiling established the remaining owners:
+
+| Evidence | Result and practical limit |
+| --- | --- |
+| [Monotonic stage partition](task-evidence/Q30/stage-profile/README.md) | Of 106.350 s: solver stepping 79.421 s, routing 20.070 s, analyze 1.224 s, placement 0.826 s, construction 0.377 s, physical admission 0.075 s, settling orchestration 1.271 s, proof cleanup 0.082 s. Plan, proof purposes, retries and repeated work are separately retained. |
+| [10-ms CPU profile](task-evidence/Q30/cpu-profile-10ms-r1/README.md) | LU factor/solve/owned-loop sampled self deltas 26.940/7.674/11.446 s; these are not disjoint wall stages. The profiled cold row slowed by 2.682–2.794 s. |
+| [Publication sampling](task-evidence/Q30/solver-publication-profile-r1/README.md) | Rough expansions publication 10.913 s, owned wire refresh 6.914 s, bookkeeping 1.690 s; coarse 0.1-ms samples, unknown rollback cost, no deferral authorization. |
+| [P07 via memo trial](task-evidence/Q30/p07-static-via-r1/README.md) | Routing gains 2.947/4.187 s, but total-cold minimum gain 2.631 s was smaller than control variability 6.077 s. Stopped INCONCLUSIVE and NOT INTEGRATED. |
+
+The [private LU support census](task-evidence/Q30/lu-support-census-r4/README.md)
+is now audited: fresh cold OFF/ON/OFF 99.209/99.041/98.243 s; proof
+69.800/70.087/69.211 s; routing 23.113/22.827/22.754 s. Both full parity
+comparisons, 43 strict corruptions per arm and cleanup PASS. All cold rows
+retain 490 work units and 390 hypothesis units. ON lies inside the 966-ms
+control range: no speed or zero-overhead claim. Application fields retain
+wall-clock semantics; whole-host timing is monotonic, separate from cleanup.
+
+The census selected 181/742,391 cold factors and 11/46,334 warm factors,
+dimensions 80/82/84/85/90. All have multiple balanced current components;
+none retains the original partition. Cold added support edges 49–58 and
+cross-original edges 30–36 rule out static original-matrix partition reuse.
+Outside-component pivot/lower/upper domains are 35.29/35.50/36.14 percent;
+they overlap and are not nonzero work or seconds saved. Fallback observation
+remains unavailable and every exact flag is false.
+
+Census native7 PASS (44.894 s; collector 4,224, actual LU 328 and pivot oracle
+388 assertions), actual GWT5 PASS (83.352 s), compiled A07/disabled-normal
+PASS (5.886 s; cleanup 0.911 s), and metadata/strict negative checks PASS.
+Earlier stale-manifest, unsupported-clone GWT and native-marker failures remain.
+Root packet audit PASS: 179 artifacts, five exact reports, source map 1,343,
+inventory `8efb8e14c1c4b1cfc32759a9f73dc901cc4cfbe6773a60805f90448c772edc88`.
+Two packaging-receipt attribution errors were corrected; prior inventories remain.
+Large immutable receipts are exact gzip payloads with a reconstruction ledger.
+No census instrumentation is integrated.
+
+Next candidate is an isolated generic live-support LU prototype. A fresh owner
+unions original support with every successful mapped stamp, including zero and
+cancelling stamps. Analysis replacement, stop and snapshot restore invalidate it.
+Certified domains restrict scans only; global pivots/ties, arithmetic, finite
+checks and zero-pivot full fallback remain. Generic wire-current deferral was
+rejected under current callback contracts. No prototype source is integrated.
+
+Prototype focused native9 PASS (56.037 s): structural tracker 1,661, numerical
+factorization 2,148, plus unchanged execution/temporal/budget/policy/generation
+contracts. Actual GWT5 PASS (100.522 s); compiled A07/disabled-normal PASS
+(7.584 s; cleanup 1.350 s), strict reader plus three negatives PASS.
+Source audit `ce1b55ca0b463746b19976871a5be1401972c294bf0cc881070bdd36284b7ba4`
+binds 1,343 inputs; all are unchanged after build. Runtime has 1,526 inputs.
+Static root/independent wiring review passed within its stated owner contract.
+The 512-size eligibility boundary is not directly exercised; unsupported cases
+use full LU. Prototype timing is NOT RUN and optimization acceptance is open.
+
+Retained prototype failures: preflight exit 2 (1.516 s) before compilation for
+a pending test registration; first native9 exit 2 (53.430 s) at the new historical
+dense-oracle signed-zero assertion. An unchanged accepted-source witness PASS
+(42.148 s, 23 assertions) proves the inherited +0/-0 difference. The new oracle
+comparison now permits only that numerical zero equivalence; all current full-LU
+factor/pivot/solve bits and independent nonzero factor bits remain exact. Existing
+LuFactorizationChecks and its assertions are unchanged. Earlier source review
+also corrected class binding, restore identity and eligibility coverage.
+
+Scale remains NOT ACCEPTED. Uncommitted plan-4 uses purposeful one/two-channel
+subsystems over 20–40, 77 representative/held-out roots and 18 axes. Structural
+native6, independent plan oracle and ten service plus ten finer-step cases PASS;
+full electrical/normal corpus NOT RUN. Earlier normal seed 7 failed at 90,066.6 ms
+and 378/390 hypothesis units with cleanup PASS. No normal Q30 admission passes.
+[Preserved scale proposal](task-evidence/Q30/scale-plan-4/README.md).
+
+Resources: all completed native/build/host resources have owned cleanup; no
+heavy process is active. Manual preview port 34917 and tabs are closed. Task-temp
+fixtures/evidence remain; previously rejected recursive cleanup is not retried.
+Desktop work, caches, plan-4 sources/tests/readers and normal verifier hook/API
+remain unstaged. No broad cleanup, remote action or global setting changes.
+
+Next: secure this census checkpoint locally, freeze the bounded prototype timing
+plan, and run fresh counterbalanced comparisons with full proof/replay equality.
+Keep all tracking overhead in the measurement. Only proceed toward normal full
+acceptance after cold timing has margin, required scale coverage and focused
+gates pass. Q30 remains BLOCKED.
+
+# Historical checkpoint: census measured; live-support prototype proposed
+
+Branch `codex/q30-multirail-qualification`; prepared from documentation HEAD `7739c8f`
+(`Record Q30 publication profile and routing trial`). Accepted production source remains `ffe9132`
 (`Collect LU lower rows during pivot search`). No push or completion email.
 Normal-player Q30 publication remains disabled. U06/U07/Q60 and later are
 unstarted. Full final acceptance matrices are NOT RUN while hard gates fail.
@@ -93,6 +198,53 @@ Original clocks, limits, corpus, solver and proof behavior are unchanged. These
 coordinator timings use the existing wall-clock path; host operation duration
 is monotonic. The earlier separate stage profile supplies the monotonic partition.
 
+Private LU support census: root source review corrected active-prefix shape,
+primitive hot selection, trace retention, exception identity and explicit
+active/lost-scope incompleteness. An isolated JDK8 collector smoke passed
+4,224 assertions (0.440 s); this is not real-LU/host acceptance. Actual GWT2.7
+then failed (exit 2; 5.982 s) because array clone calls are unsupported. The
+failure is retained; four defensive copies now use System.arraycopy. Corrected
+GWT5 PASS (83.352 s). Compiled A07/disabled-normal PASS (5.886 s;
+cleanup 0.911 s), with the maintained strict reader and three negatives PASS. Current private collector SHA-256
+`1c2aeaa150a766f4e6dcddacaa9f8865b58274f9e160294d90b8073646bfd5b5`;
+manifest `b1b0eea88eeb71c12f1fbc757289cff722fb33689babe13a69f02062fe8efe17`.
+Native7 PASS (44.894 s), including collector 4,224, actual-LU 328 and
+existing independent pivot-oracle 388 assertions, with owned cleanup. The
+actual-LU test now checks independent pivots and a known solution, false and
+throwing factors, partial allocations and conservative sentinel reporting.
+An earlier native exit-2 marker-registration failure is retained (46.443 s);
+only two driver markers changed. All 1,526 src/war runtime hashes are unchanged
+from the passing GWT/canaries; source audit-r4 has 1,343 inputs, digest
+`d021ec847e38fc792e7dbc095e2de8a012930010ede1aff1888e0c9f7a3d94d0`.
+Fresh cold OFF/ON/OFF completed: 99,209 / 99,041 / 98,243 ms; proof
+69,800 / 70,087 / 69,211 ms and routing 23,113 / 22,827 / 22,754 ms. Both
+full non-timing parity comparisons and all 43 strict corruptions per arm PASS;
+all rows retain 490 work units and 390 hypothesis units, with cleanup PASS.
+The profiled cold row is inside the 966-ms control range; no speed or zero-
+overhead claim. Whole-host monotonic times are 134.907 / 132.359 / 130.478 s;
+cleanup 1.209 / 0.870 / 1.054 s. Existing application fields are wall-clock
+measurements; they do not replace the earlier monotonic stage partition.
+
+The census selected 181 of 742,391 cold factors and 11 of 46,334 warm factors.
+Every sample has multiple balanced current components, with dimensions
+80/82/84/85/90. Main blocks have 63–67 rows; the second block has 17–18,
+with some separate 2/3-row auxiliary blocks. Every sample differs from the
+original partition: cold support additions 49–58 and cross-original edges
+30–36. Static original-matrix partition reuse is therefore rejected. Current-
+component outside-domain counts are 35.29% pivot, 35.50% lower and 36.14%
+upper; these overlap and are neither nonzero work nor seconds saved. No sampled
+cross-group pivot or sentinel risk occurred, but fallback observation remains
+unavailable and every exact flag is false. Any prototype needs a sound generic
+support owner and unchanged global pivot/tie/fallback/cleanup semantics.
+
+Revised metadata checks reject 17 corruptions; the root helper check passed
+three mode/placement negatives and exact comparison-copy projection. Earlier
+draft overclaims and reader/control-field mistakes are preserved. Sequence
+SHA-256: `64bc892024ae0f7f4d04fce8ef706c67bb58fce2880ea4cd93fc26937c19e20c`.
+Evidence packet assembly is pending; no census code is integrated.
+Earlier draft reviews and a pre-compiler source-binding rejection remain.
+No census code is integrated and no structural optimization is justified yet.
+
 Scale remains NOT ACCEPTED. The uncommitted plan-4 proposal spans 20–40 through
 purposeful one/two-channel subsystems, with 77 roots across representative and
 held-out cohorts and 18 axes. Structural native6, independent plan oracle and
@@ -108,7 +260,9 @@ remain. No D01 draft is integrated. Other rejected/inconclusive experiments and
 their exact boundaries remain in the historical checkpoint and linked packets.
 
 Resources/preserved work: completed hosts verified owned cleanup. The private
-P07 timing sequence has ended; no heavy process is active. Manual tabs and
+P07 timing sequence and private census GWT/native builds have ended. The
+private census OFF/ON/OFF sequence has also ended; all owned cleanup passed.
+No heavy process remains active. Manual tabs and
 preview port 34917 are closed. Task-temp fixtures and
 evidence remain; previously blocked recursive cleanup is not retried. Desktop
 work, pre-existing caches, unaccepted plan-4 sources/tests/readers and the normal
@@ -116,9 +270,14 @@ verifier hook/API remain unstaged. Publication and stopped guard packets have
 passed root audit, as has the stopped P07 packet. No broad cleanup,
 remote action or global setting changes.
 
-Next: finish source review and focused gates for the isolated private
-matrix-support census to quantify structural LU opportunities;
-it cannot influence factorization or supply an acceptance result. No unproven static
+Next: audit and secure the private matrix-support evidence. Independent owner
+review permits a bounded generic prototype: mapped runtime matrix stamps are
+the current writer boundary, and snapshot restore invalidates the certificate.
+Root has prepared isolated kernel/lifecycle wiring; structural and numeric tests
+are being authored. No prototype build or timing has run and no source is
+integrated. Generic wire-current deferral is rejected under current callback
+contracts. The
+measured census cannot influence factorization or supply an acceptance result. No unproven static
 matrix partition or callback deferral is authorized by the measurements. Run the
 complete final matrix only after normal cold timing has margin, required scale
 coverage passes and focused gates pass. Q30 remains BLOCKED.

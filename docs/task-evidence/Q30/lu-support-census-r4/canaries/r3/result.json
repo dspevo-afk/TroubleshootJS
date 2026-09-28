@@ -1,0 +1,174 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<TASK_PATH>\\lu-support-census-r2-preparation\\candidate",
+  "startedUtc": "2026-09-28T15:36:54.677532+00:00",
+  "outcome": "PASS",
+  "cases": [
+    {
+      "schema": 1,
+      "case": {
+        "index": 1,
+        "name": "lu-support-census-r3-canaries-a07",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyA07=true&tsjDebug=true&running=true",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "PASS:a07",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-a07-report"
+      },
+      "url": "http://127.0.0.1:60645/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyA07=true&tsjDebug=true&running=true",
+      "startedUtc": "2026-09-28T15:36:57.381126+00:00",
+      "finishedUtc": "2026-09-28T15:36:58.662852+00:00",
+      "operationSeconds": 1.2817224999889731,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:a07",
+      "lastObservedState": "PASS:a07",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 80898,
+      "reportSha256": "9c8ad0f9524dafb4ee63b89eb9ee6b6c4e32af459ef50f285e5ee2685617a636",
+      "reportFile": "cases/001-lu-support-census-r3-canaries-a07.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 2,
+        "name": "lu-support-census-r3-canaries-disabled",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30NormalAcceptance=true&tsjQ30Seed=13",
+        "stateAttribute": "data-tsj-q30-normal-acceptance-state",
+        "expectedState": "BLOCKED:normal-catalog-disabled",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL",
+          "BLOCKED"
+        ],
+        "timeoutSeconds": 30.0,
+        "reportAttribute": "data-tsj-q30-normal-acceptance-report"
+      },
+      "url": "http://127.0.0.1:60645/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30NormalAcceptance=true&tsjQ30Seed=13",
+      "startedUtc": "2026-09-28T15:36:58.663849+00:00",
+      "finishedUtc": "2026-09-28T15:36:59.137506+00:00",
+      "operationSeconds": 0.4736521999875549,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "BLOCKED:normal-catalog-disabled",
+      "lastObservedState": "BLOCKED:normal-catalog-disabled",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 344,
+      "reportSha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+      "reportFile": "cases/002-lu-support-census-r3-canaries-disabled.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    }
+  ],
+  "caseCount": 2,
+  "errors": [],
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "f7ea79156a7f313b4221e71870fc8cd0ff7fb7f48edd84151ad954e1461fdf15",
+    "afterSha256": "f7ea79156a7f313b4221e71870fc8cd0ff7fb7f48edd84151ad954e1461fdf15",
+    "sourceSha256Before": "c247281c076f6e6e1cab891232d052429e5a0e3c1c5989f0f028676a7ec26531",
+    "sourceSha256After": "c247281c076f6e6e1cab891232d052429e5a0e3c1c5989f0f028676a7ec26531",
+    "webSha256Before": "7c6fd8378338b33b9789477e0de05bd243979714577f0caac8135682186cd67c",
+    "webSha256After": "7c6fd8378338b33b9789477e0de05bd243979714577f0caac8135682186cd67c",
+    "runnerBeforeSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+    "runnerAfterSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+    "fileCountBefore": 1526,
+    "fileCountAfter": 1526,
+    "seconds": 0.3503991999896243
+  },
+  "identity": {
+    "schema": 1,
+    "runner": {
+      "pid": 23244,
+      "created": "2026-09-28T15:36:54.5508210Z",
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+    },
+    "edgeProcessesBeforeCases": [
+      {
+        "pid": 14940,
+        "parent": 25572,
+        "created": "2026-09-28T15:36:56.6883040Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 22796,
+        "parent": 14940,
+        "created": "2026-09-28T15:36:56.7312260Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 21976,
+        "parent": 14940,
+        "created": "2026-09-28T15:36:56.8353460Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 3076,
+        "parent": 14940,
+        "created": "2026-09-28T15:36:56.8392180Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 22372,
+        "parent": 14940,
+        "created": "2026-09-28T15:36:56.8622970Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 17188,
+        "parent": 14940,
+        "created": "2026-09-28T15:36:56.9248090Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 19896,
+        "parent": 14940,
+        "created": "2026-09-28T15:36:56.9286290Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "profile": "<TASK_PATH>\\lu-support-census-r3-canaries\\profile",
+    "port": 60645,
+    "baseUrl": "http://127.0.0.1:60645"
+  },
+  "operationStartedUtc": "2026-09-28T15:36:57.381109+00:00",
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 0.9109438000014052,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "finishedUtc": "2026-09-28T15:37:00.399879+00:00"
+}

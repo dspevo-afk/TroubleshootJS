@@ -1,0 +1,10 @@
+Q30 LU support census R4 evidence packet — packaging attempt 1
+
+Observed packer error (exact first-line error captured from tool output):
+PACKET BUILD FAILED: missing committed reference docs/task-evidence/Q30/pivot-lower-fusion-r2/source/deltas/parent-candidate-to-measured-r2/src__com__lushprojects__circuitjs1__client__CirSim.java.patch
+
+A Python traceback followed in the tool output, but the original invocation did not tee or redirect its full output, so a full traceback receipt was not captured. Preserve this limitation rather than reconstructing a traceback.
+
+Separate later diagnostic, not asserted as the cause of the packer failure: a PowerShell git show probe for a commit:path containing the long parent diff name reported a failed-to-stat / filename-too-long message; a git cat-file existence probe for that path succeeded. The packer is being changed to resolve the committed object ID with git rev-parse --verify and retrieve bytes by object ID with git cat-file blob.
+
+The first partial packet contained 164 files and had no inventory.json or inventory.sha256. Before resume, three individually verified task-created files were removed: the plaintext R2 draft diff duplicate, the plaintext parent verify-current-contracts diff, and the earlier generated copy of this packer. Their exact source bytes remain represented by the compressed diff and the updated packer will be regenerated in the final packet. No other partial packet file was removed.

@@ -1,0 +1,228 @@
+{
+  "status": "PRIVATE_CENSUS_VALIDATED_NOT_OPTIMIZATION_ACCEPTANCE",
+  "rawReportSha256": "6286ef66a90d72e0bdada312e880863fa7cb62ea2e8d94b33a162a71e4c79af8",
+  "sequenceSha256": "64bc892024ae0f7f4d04fce8ef706c67bb58fce2880ea4cd93fc26937c19e20c",
+  "timings": [
+    {
+      "label": "lu-support-census-r4-01-off-10014",
+      "cold": {
+        "elapsedMs": 99209,
+        "wallElapsedMs": 99217,
+        "proofElapsedMs": 69800,
+        "routingElapsedMs": 23113,
+        "totalWork": 490,
+        "hypothesisWork": 390,
+        "cleanupComplete": true
+      },
+      "warm": {
+        "elapsedMs": 32080,
+        "wallElapsedMs": 32088,
+        "proofElapsedMs": 0,
+        "routingElapsedMs": 25997,
+        "totalWork": 101,
+        "hypothesisWork": 1,
+        "cleanupComplete": true
+      },
+      "hostMonotonicSeconds": 134.90749280000455,
+      "cleanupSeconds": 1.2085790000273846
+    },
+    {
+      "label": "lu-support-census-r4-02-on-10014",
+      "cold": {
+        "elapsedMs": 99041,
+        "wallElapsedMs": 99057,
+        "proofElapsedMs": 70087,
+        "routingElapsedMs": 22827,
+        "totalWork": 490,
+        "hypothesisWork": 390,
+        "cleanupComplete": true
+      },
+      "warm": {
+        "elapsedMs": 29938,
+        "wallElapsedMs": 29946,
+        "proofElapsedMs": 0,
+        "routingElapsedMs": 23135,
+        "totalWork": 101,
+        "hypothesisWork": 1,
+        "cleanupComplete": true
+      },
+      "hostMonotonicSeconds": 132.35883649997413,
+      "cleanupSeconds": 0.8697198999871034
+    },
+    {
+      "label": "lu-support-census-r4-03-off-10014",
+      "cold": {
+        "elapsedMs": 98243,
+        "wallElapsedMs": 98252,
+        "proofElapsedMs": 69211,
+        "routingElapsedMs": 22754,
+        "totalWork": 490,
+        "hypothesisWork": 390,
+        "cleanupComplete": true
+      },
+      "warm": {
+        "elapsedMs": 28785,
+        "wallElapsedMs": 28792,
+        "proofElapsedMs": 0,
+        "routingElapsedMs": 22640,
+        "totalWork": 101,
+        "hypothesisWork": 1,
+        "cleanupComplete": true
+      },
+      "hostMonotonicSeconds": 130.4779419999977,
+      "cleanupSeconds": 1.0540032999997493
+    }
+  ],
+  "controlColdRangeMs": 966,
+  "profileColdMinusEachControlMs": [
+    -168,
+    798
+  ],
+  "clockBoundary": "Application cold/proof/routing fields retain existing coordinator wall-clock semantics. Host whole-operation durations are monotonic; no new disjoint monotonic stage partition claimed.",
+  "cold": {
+    "eligibleFactorCalls": "742391",
+    "selectedFactorCalls": "181",
+    "groups": {
+      "84": {
+        "samples": 106,
+        "componentShapes": {
+          "18x18,66x66": 64,
+          "18x18,2x2,64x64": 42
+        }
+      },
+      "82": {
+        "samples": 28,
+        "componentShapes": {
+          "18x18,64x64": 28
+        }
+      },
+      "85": {
+        "samples": 22,
+        "componentShapes": {
+          "18x18,67x67": 8,
+          "18x18,3x3,64x64": 14
+        }
+      },
+      "80": {
+        "samples": 11,
+        "componentShapes": {
+          "17x17,63x63": 11
+        }
+      },
+      "90": {
+        "samples": 14,
+        "componentShapes": {
+          "18x18,3x3,3x3,66x66": 14
+        }
+      }
+    },
+    "multipleCurrentComponentSamples": 181,
+    "stableOriginalPartitionSamples": 0,
+    "supportDriftFreeSamples": 0,
+    "supportAdded": {
+      "min": 49,
+      "max": 58
+    },
+    "supportRemoved": {
+      "min": 0,
+      "max": 0
+    },
+    "crossOriginalEdges": {
+      "min": 30,
+      "max": 36
+    },
+    "crossGroupPivotSamples": 0,
+    "zeroPivotRiskSamples": 0,
+    "postFactorSentinelSamples": 0,
+    "exactSamples": 0,
+    "fallbackObservation": "UNAVAILABLE",
+    "separateOverlappingDomains": {
+      "Pivot": {
+        "full": 647084,
+        "local": 418709,
+        "outsideCurrentComponent": 228375,
+        "outsideFraction": 0.35292944965414075
+      },
+      "Lower": {
+        "full": 631874,
+        "local": 407536,
+        "outsideCurrentComponent": 224338,
+        "outsideFraction": 0.3550359723615784
+      },
+      "Upper": {
+        "full": 631874,
+        "local": 403499,
+        "outsideCurrentComponent": 228375,
+        "outsideFraction": 0.3614249043321928
+      }
+    },
+    "interpretation": "Only sampled current matrix component-label domains; pivot/lower overlap and these are not nonzero updates, execution time, exhaustive coverage or proof of safe skipping."
+  },
+  "warm": {
+    "eligibleFactorCalls": "46334",
+    "selectedFactorCalls": "11",
+    "groups": {
+      "84": {
+        "samples": 8,
+        "componentShapes": {
+          "18x18,66x66": 8
+        }
+      },
+      "82": {
+        "samples": 3,
+        "componentShapes": {
+          "18x18,64x64": 3
+        }
+      }
+    },
+    "multipleCurrentComponentSamples": 11,
+    "stableOriginalPartitionSamples": 0,
+    "supportDriftFreeSamples": 0,
+    "supportAdded": {
+      "min": 49,
+      "max": 52
+    },
+    "supportRemoved": {
+      "min": 0,
+      "max": 0
+    },
+    "crossOriginalEdges": {
+      "min": 30,
+      "max": 30
+    },
+    "crossGroupPivotSamples": 0,
+    "zeroPivotRiskSamples": 0,
+    "postFactorSentinelSamples": 0,
+    "exactSamples": 0,
+    "fallbackObservation": "UNAVAILABLE",
+    "separateOverlappingDomains": {
+      "Pivot": {
+        "full": 38769,
+        "local": 25809,
+        "outsideCurrentComponent": 12960,
+        "outsideFraction": 0.33428770409347675
+      },
+      "Lower": {
+        "full": 37851,
+        "local": 25126,
+        "outsideCurrentComponent": 12725,
+        "outsideFraction": 0.33618662650920716
+      },
+      "Upper": {
+        "full": 37851,
+        "local": 24891,
+        "outsideCurrentComponent": 12960,
+        "outsideFraction": 0.3423951811048585
+      }
+    },
+    "interpretation": "Only sampled current matrix component-label domains; pivot/lower overlap and these are not nonzero updates, execution time, exhaustive coverage or proof of safe skipping."
+  },
+  "normalAcceptance": "BLOCKED",
+  "limits": {
+    "cumulativeMillis": 90000,
+    "sharedWorkUnits": 640,
+    "activeOperationMillis": 5000,
+    "privateMeasurementMillis": 300000
+  },
+  "decision": "No static original-matrix partition or block restriction is authorized by this sample census. Any implementation needs generic per-factor sound support, original global pivot/tie/fallback/finite behavior and owner/cleanup proof plus focused and fresh cold comparisons."
+}

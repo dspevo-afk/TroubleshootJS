@@ -1,0 +1,31 @@
+{
+  "artifact": "Q30_LU_SUPPORT_CENSUS_ACTUAL_LU_TEST_R2",
+  "status": "SOURCE_ONLY_READY_FOR_ROOT_REGISTRATION",
+  "success_marker_prefix": "PASS: Q30 actual-LU support-census contracts assertions=",
+  "test": {
+    "path": "tests/contracts/Q30LuSupportCensusActualLuContractTest.java",
+    "sha256": "7cf499d9b175a390f6267cf27b6319dca68871f6affd3c7e108e8d76c0499f52"
+  },
+  "dependencies": {
+    "measured_cirsim_path": "scratch/pivot-lower-fusion-r2-preparation/candidate/src/com/lushprojects/circuitjs1/client/CirSim.java",
+    "measured_cirsim_sha256": "c0b9d9bc7ff72d0e5021500c331e40dfcd03974ee3517c39d757d05302b1cfc3",
+    "support_draft_path": "scratch/lu-support-census-r2-wired-draft/src/com/lushprojects/circuitjs1/client/Q30LuSupportCensus.java",
+    "support_sha256_at_assignment": "fb03adeaa0d6fbf1f3d4ef7f82611a354da4e7940702831f490d3eed9d99960a",
+    "support_sha256_observed": "1c2aeaa150a766f4e6dcddacaa9f8865b58274f9e160294d90b8073646bfd5b5",
+    "support_manifest_sha256_observed": "b1b0eea88eeb71c12f1fbc757289cff722fb33689babe13a69f02062fe8efe17",
+    "existing_lu_contract_path": "tests/contracts/Q30LuPivotCollectionContractTest.java",
+    "existing_lu_contract_sha256": "15b81b3acabba38c4010a675899685e6adf696d19f8d72e7d244f790f3b95d14"
+  },
+  "coverage": [
+    "actual general and reflected private owned LU on independent clones",
+    "active n=3 with full 5-by-5 matrices and inactive sentinel tails",
+    "[A,B,A] row/[B,A,A] column support graph with finite interleaved values",
+    "bitwise factors, pivots, solutions, original matrix, and row identity constraints",
+    "successful, false zero-row, and numerical-failure throw outcomes",
+    "collector success, failed/incomplete, sentinel-risk, no-hook exact=false, cadence-8, and cold/warm isolation"
+  ],
+  "execution": {
+    "status": "NOT_RUN",
+    "root_action": "Register with the future fixed collector/CirSim overlay and run the maintained native gates."
+  }
+}
