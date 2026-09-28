@@ -1,0 +1,65 @@
+{
+  "canaries": {
+    "cleanupSeconds": 0.9044874,
+    "elapsedSeconds": 4.9573771,
+    "status": "PASS",
+    "strictNegatives": 3
+  },
+  "candidateMinusControlMs": {
+    "elapsed": 82,
+    "proof": 25,
+    "routing": 10
+  },
+  "completedRows": 2,
+  "continuationRule": "first-pair resource rule: at least 1% reduction in both cold total and proof time; not a production threshold",
+  "cpuContextSha256": "2a82d2dc19193733506d649f322887a6b1aa500e1e80d5b25c7a44bd5dfce8b2",
+  "gwtGate": {
+    "elapsedSeconds": 80.0983884,
+    "permutations": 5,
+    "status": "PASS"
+  },
+  "integrated": false,
+  "interpretation": "INCONCLUSIVE_NO_VALIDATED_RUNTIME_BENEFIT",
+  "inventoryExcludes": [
+    "inventory.json",
+    "inventory.sha256"
+  ],
+  "nativeGate": {
+    "elapsedSeconds": 46.3477359,
+    "status": "PASS"
+  },
+  "normalBudgetsMs": {
+    "maxJob": 90000,
+    "maxSteps": 640,
+    "maxUnit": 5000
+  },
+  "normalQ30Acceptance": "BLOCKED_NOT_ACCEPTED",
+  "notRunRows": 6,
+  "packet": "Q30/lu-update-guard-r1",
+  "parentAuditMap": {
+    "mode": "exact-payload",
+    "packetEncoding": "plain",
+    "sha256": "84b52b384972d28863cd235a7d0fe24a5721f397f229f420dc9c49388ab85f82"
+  },
+  "rawCompletedReportCount": 4,
+  "rootDecisionGeneratorSha256": "b2e787dc2d7a9ad715adb51802278cb688288b9f8051cb105474875b743a56d2",
+  "rootDecisionSha256": "8e5fac0f228d47d87e666b9d68719c3f1bb7ab7da86466768bf8200ec4785380",
+  "runtimeInputs": {
+    "candidate": 1525,
+    "control": 1525
+  },
+  "schema": 1,
+  "sequence": "control/candidate seed 10014 size 40; first pair only",
+  "sourceAudit": {
+    "baselineSha256": "0d27e176dc46afb4db91316570f4674e52b51ce2b462c64f6b6a37b98cbec197",
+    "candidateCirSimSha256": "5ac82d6eb62c0f32fb7525039ea1a41d91fc198998bf4664f306aeb42e0bdb75",
+    "candidateInputs": 1340,
+    "changedSourceFiles": [
+      "src/com/lushprojects/circuitjs1/client/CirSim.java"
+    ],
+    "controlInputs": 1340,
+    "preparedSha256": "3e17f6af0134751a9391503e6309c9b9f60a80a5a873c88a531c6dac2baf3d04"
+  },
+  "status": "STOPPED_INCONCLUSIVE_FIRST_PAIR_RULE",
+  "strictCorruptionsPerArm": 43
+}
