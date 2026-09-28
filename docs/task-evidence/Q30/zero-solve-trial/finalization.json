@@ -1,0 +1,44 @@
+{
+  "schema": "q30-zero-solve-finalization@1",
+  "status": "REJECTED_EARLY_STOP_NO_USEFUL_FIRST_PAIR_GAIN",
+  "productionIntegration": "NONE",
+  "baseline": "a57ffc30b04d306daf0355e44d218de4175bb9ea",
+  "candidate": "conditional zero-coefficient skip in LU substitution; retain multiply/subtract when referenced RHS is nonfinite",
+  "comparisonPlan": "plans/zero-solve-comparison-plan-original.json.gz",
+  "repairedComparisonPlan": "plans/zero-solve-comparison-plan-r3.json.gz",
+  "completedRuns": [
+    {"role": "candidate", "label": "zero-solve-r3-01-Z7", "variant": "Z", "seed": "7", "outcome": "PASS", "coldMs": 94810, "proofMs": 66837, "routingMs": 22089, "cleanupSeconds": 1.023774},
+    {"role": "control", "label": "zero-solve-r3-02-F7", "variant": "F", "seed": "7", "outcome": "PASS", "coldMs": 89794, "proofMs": 62441, "routingMs": 21783, "cleanupSeconds": 0.8219468}
+  ],
+  "candidateMinusControl": {"coldMs": 5016, "proofMs": 4396, "routingMs": 306},
+  "parity": {
+    "status": "PASS",
+    "exactRequest": true,
+    "completeOwnerPhysicalAndProofParityExcludingTiming": true,
+    "strictReaders": 2,
+    "negativeCanaries": 37,
+    "candidateSourceSha256": "f8b60c37eeb8e5386e126ea281545d98a9a9ebd17352b87d24556b40894add26",
+    "candidateWebSha256": "09f77ef40218f8d09e36f6f183800eff218ee0216445e89c19ba0a48b24d20d4",
+    "controlSourceSha256": "e5bee82740aa9ccc163a90b6615cb6058005e57dfe9229d6110dbdeb6f1f5527",
+    "controlWebSha256": "2d8dcfa3e29ad208e124c43c416f9f6f2368492985e03834285a62e362ee8e85"
+  },
+  "gateEvidence": {
+    "repairedNative": {"status": "PASS", "elapsedSeconds": 48.5587746, "exitCode": 0, "a07Assertions": 271837, "temporalAssertions": 83, "generationBudgetAssertions": 25, "normalPolicyAssertions": 325, "receipt": "gates/native-r3.json.gz"},
+    "repairedGwt": {"status": "PASS", "elapsedSeconds": 85.5935064, "permutations": 5, "receipt": "gates/gwt-r3.json.gz"},
+    "compiledA07": {"status": "PASS", "elapsedSeconds": 1.283089, "negativeCanaries": 3, "receipt": "runs/A07/compiled-a07-report.json.gz"},
+    "correctedFixtureNative": {"status": "PASS", "elapsedSeconds": 47.7924081, "receipt": "gates/native-r2.json.gz", "note": "Before inverse-propagation review and repair"},
+    "correctedFixtureGwt": {"status": "PASS", "elapsedSeconds": 88.778205, "permutations": 5, "receipt": "gates/gwt-r2.json.gz", "note": "Before inverse-propagation review and repair"}
+  },
+  "plannedSequence": [["Z", "7"], ["F", "7"], ["F", "13"], ["Z", "13"], ["Z", "64"], ["F", "64"], ["F", "7"], ["Z", "7"]],
+  "notRun": [
+    {"variant": "F", "seed": "13", "status": "NOT RUN"},
+    {"variant": "Z", "seed": "13", "status": "NOT RUN"},
+    {"variant": "Z", "seed": "64", "status": "NOT RUN"},
+    {"variant": "F", "seed": "64", "status": "NOT RUN"},
+    {"variant": "F", "seed": "7", "status": "NOT RUN"},
+    {"variant": "Z", "seed": "7", "status": "NOT RUN"}
+  ],
+  "populationConclusion": "NOT ESTABLISHED: a single paired run does not establish a population-wide performance regression; the predeclared early-stop rule rejects further timing after no useful initial paired improvement.",
+  "numericContract": "Finite numeric equality with signed-zero equivalence; no bitwise signed-zero identity claim. NaN and signed infinity propagation must match the independent historical originalSolve oracle.",
+  "cleanup": {"candidate": "PASS", "control": "PASS", "compiledA07": "PASS"}
+}

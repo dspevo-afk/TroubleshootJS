@@ -1,10 +1,10 @@
 # Current checkpoint: Q30 BLOCKED / NOT ACCEPTED
 
 Branch `codex/q30-multirail-qualification`; checkpoint parent
-`a57ffc30b04d306daf0355e44d218de4175bb9ea` (`Optimize finite solver validation`).
+`d825d0f6df667f470d5a8bcad74f1d607b206cfc` (`Optimize LU trailing-matrix updates`).
 Accepted solver lineage is `0b29680c7daa62123732b91e3c1157e8ba0d6abd`
 plus the validated finite-predicate delta and the right-looking LU delta secured
-in this checkpoint (parent HEAD above).
+in this checkpoint.
 No push or completion email. Normal Q30 remains disabled; U06/U07/Q60 and later
 milestones remain unstarted. Full final matrices are NOT RUN while hard gates fail.
 
@@ -116,9 +116,15 @@ compiled D01 application PASS in 53.228 s. Its strict cold+warm reader now
 PASSes ten fault pairs after correcting nested field framing and plan-derived
 cleanup binding counts; 64 actual-receipt corruption and seven synthetic power
 context canaries PASS. The earlier failed reads remain retained. This is one
-focused 20-package proof fixture, not full scale or normal timing acceptance.
+focused 20-package proof fixture. The frozen 40-package representative (10014)
+also PASSes compiled D01 (208.587 s), strict cold+warm ten-pair read and 62
+corruption plus seven synthetic power canaries; owned cleanup PASS in 1.354 s.
+Audit finds six recovered 10-second attribute-read timeouts in the 40-package
+host case. Its electrical receipt/reader PASS is retained, but host polling is
+FAIL/limited despite the runner aggregate saying PASS; this is not clean browser
+or timing evidence. Neither fixture establishes full scale or normal acceptance.
 
-Two further isolated measured-hotspot trials are in progress. Zero-coefficient
+The isolated zero-coefficient trial is rejected. Zero-coefficient
 triangular solve fails its first native gate (50.925 s, exit 2, cleanup PASS)
 because a pivoted oracle fixture does not retain its asserted sparse zeros;
 the assertion is retained and a block-structured pivot fixture now proves the
@@ -127,11 +133,38 @@ assertions and cleanup). Its isolated GWT5 build PASSes in 88.778 s, but
 independent review finds a real numerical-failure propagation regression:
 zero times a nonfinite solved value can be suppressed during transformer
 inversion. A finite-referenced-value guard and independent inverse regression
-are being prepared in scratch; timing remains NOT RUN and no root integration
-is permitted from the failed version. Routing queue/neighbor-allocation source
-is frozen in scratch, with gates NOT RUN. A separate
-catalog-enabled normal-qualification fixture is being prepared in OS-temp;
-root production stays disabled, and no positive normal 90-second run has occurred.
+now preserve historical nonfinite propagation. The repaired trial passes native4
+(48.559 s, 271,837 solver assertions), GWT5 (85.594 s), compiled A07/three
+negative canaries, but is REJECTED after its first fresh cold pair: 94.810 s
+versus 89.794 s control, with 4.396 s more proof time and full proof/physical/work
+parity plus 37 negative canaries PASS. Both cleanups PASS. The remaining six
+predeclared runs are NOT RUN under the early-stop rule; one pair is not a
+population slowdown estimate. Neither version was integrated into root.
+[Rejected trial and retained failures](task-evidence/Q30/zero-solve-trial/README.md).
+Routing queue/neighbor-allocation source is frozen in scratch and independently
+reviewed without blockers. Three native route/order/resumption/physical suites
+PASS (33.442 s, including cleanup). GWT5 (90.645 s) and compiled A07/three
+negative canaries PASS. Three fresh pairs preserve exact proof/physical/work
+parity, 37 negative canaries each and clean host polling. Routing savings are
+4.703/4.955/3.139 s. Seed-64 also shows a 5.010 s difference in unchanged proof
+work, so the entire cold gain is not attributed to routing. The reversed
+seed-7 pair remains active; this trial is not integrated or accepted yet. A separate
+catalog-enabled normal-qualification fixture is isolated in OS-temp with exactly
+one eligibility flag changed. Its GWT5 build PASSes (90.105 s). The first
+fresh normal-policy seed-7 run FAILs at the actual cumulative deadline:
+90,066.6 ms monotonic, 378/390 hypothesis units and 448 total work units.
+Recorded healthy/physical/hypothesis work takes 26,184/80/61,585 ms; route/proof
+summary fields are unset on timeout and must not be interpreted as zero cost.
+Maximum advance is 1,264.3 ms. Application cleanup and predecessor restoration
+PASS in 1.3 ms; host-owned cleanup PASS in 0.830 s with no survivors. This is
+an application TIMEOUT, not a host timeout. Remaining focused normal cases are
+NOT RUN while performance work resumes. Production stays disabled.
+A private, no-reuse sampler is being prepared to measure adjacent unchanged
+nonlinear LU inputs within one analyzed owner. No numerical cache is implemented.
+Its initial copied WAR contained build output; automatic approval review blocked
+removing that copied folder before execution. The copy is preserved. A fresh
+source-only build directory will be created after the two instrumented files
+freeze; no sampler build or runtime measurement has happened.
 
 Frozen contracts: 90,000 ms cumulative, 640 units, 5,000 ms per operation;
 isolated private 90–300 s measurement; family-generic request/coordinator and
@@ -139,18 +172,20 @@ StagedFamilyCapability ownership; exact signed-long replay/candidate ordering;
 complete physical/electrical/diagnostic/service/retest proofs and cleanup.
 
 Resources: completed browser/server jobs report owned cleanup PASS and no
-survivors. The focused 40-package D01 browser gate is active; completed
+survivors. The isolated routing bookkeeping cold comparison is active; completed
 native/build/browser gates have stopped. Root WAR matches right-looking LU,
 finite predicate and plan-4 source. Isolated timing does not qualify
 the unaccepted plan-4 worktree. Frozen
 accepted/control and trial fixtures remain in unique OS-temp scratch. Earlier
 administrative scratch deletion is policy-blocked separately from runtime
-cleanup (exact leaves in acceptance-continuation/resource-cleanup.json).
+cleanup (exact earlier leaves in acceptance-continuation/resource-cleanup.json).
+The additional retained task copy is lu-repetition-profile-candidate/source/war;
+its deletion was rejected as blocked by policy before any command ran.
 Preserve unrelated Desktop checkout edits and pre-existing test `__pycache__`.
 Plan-4 source/tests/driver/replay/readers/evidence are uncommitted and unstaged;
 the validated finite predicate/evidence is secured in the parent HEAD. Right-looking
 LU, its independent regression and evidence are the only optimization source
-delta staged for this checkpoint; the normal-verifier hook stays unstaged.
+delta committed at HEAD; the normal-verifier hook stays unstaged.
 No push is authorized.
 Next: resolve focused electrical gates, build final source, measure isolated
 solver trials, then prove scale and normal cold timing before any final matrix.
