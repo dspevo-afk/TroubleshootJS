@@ -1,0 +1,206 @@
+{
+  "status": "PASS_COARSE_PRIVATE_ATTRIBUTION_ONLY",
+  "Q30": "BLOCKED_NOT_ACCEPTED",
+  "sequenceSha256": "bf51f691b124d6e1b12ccc86bb27c89b079abb579b5b5685c7b723722b6f310b",
+  "rawReportSha256": "0ea044148de11dc3c848cf893d8bd386d62e65e7a849e0415a521002ea022a94",
+  "coldControlMs": [
+    99614,
+    97835
+  ],
+  "coldProfileMs": 97853,
+  "withinControlRangeMs": 1779,
+  "profileInsideControlRange": true,
+  "profileMinusControlsMs": [
+    -1761,
+    18
+  ],
+  "profiles": {
+    "cold": {
+      "eligible": 1958499,
+      "selected": 3823,
+      "sampledElapsedMs": 38.20000010728836,
+      "phases": [
+        {
+          "name": "applySolvedRightSide",
+          "eligible": 742391,
+          "selected": 1449,
+          "completed": 1449,
+          "failed": 0,
+          "elapsedMs": 21.299999967217445,
+          "zeroDurationCount": 1237,
+          "rawDurationCount": 64,
+          "rawDurationsDropped": 1385,
+          "zeroFraction": 0.8536922015182885,
+          "roughExpandedMs": 10912.993979063165,
+          "expansionLimit": "periodic sample mean times eligible count; coarse inference with timer quantization, not exact total; fewer than64 selected remains unestimated"
+        },
+        {
+          "name": "rollbackVoltagePublication",
+          "eligible": 10,
+          "selected": 0,
+          "completed": 0,
+          "failed": 0,
+          "elapsedMs": 0,
+          "zeroDurationCount": 0,
+          "rawDurationCount": 0,
+          "rawDurationsDropped": 0,
+          "zeroFraction": null,
+          "roughExpandedMs": null,
+          "expansionLimit": "periodic sample mean times eligible count; coarse inference with timer quantization, not exact total; fewer than64 selected remains unestimated"
+        },
+        {
+          "name": "wireRefreshImmediateAcceptedStep",
+          "eligible": 0,
+          "selected": 0,
+          "completed": 0,
+          "failed": 0,
+          "elapsedMs": 0,
+          "zeroDurationCount": 0,
+          "rawDurationCount": 0,
+          "rawDurationsDropped": 0,
+          "zeroFraction": null,
+          "roughExpandedMs": null,
+          "expansionLimit": "periodic sample mean times eligible count; coarse inference with timer quantization, not exact total; fewer than64 selected remains unestimated"
+        },
+        {
+          "name": "wireRefreshDelayedOwnedAcceptedStep",
+          "eligible": 607426,
+          "selected": 1186,
+          "completed": 1186,
+          "failed": 0,
+          "elapsedMs": 13.500000104308128,
+          "zeroDurationCount": 1051,
+          "rawDurationCount": 64,
+          "rawDurationsDropped": 1122,
+          "zeroFraction": 0.8861720067453626,
+          "roughExpandedMs": 6914.208316491964,
+          "expansionLimit": "periodic sample mean times eligible count; coarse inference with timer quantization, not exact total; fewer than64 selected remains unestimated"
+        },
+        {
+          "name": "wireRefreshDeferredUiBatch",
+          "eligible": 623,
+          "selected": 1,
+          "completed": 1,
+          "failed": 0,
+          "elapsedMs": 0.09999999403953552,
+          "zeroDurationCount": 0,
+          "rawDurationCount": 1,
+          "rawDurationsDropped": 0,
+          "zeroFraction": 0.0,
+          "roughExpandedMs": null,
+          "expansionLimit": "periodic sample mean times eligible count; coarse inference with timer quantization, not exact total; fewer than64 selected remains unestimated"
+        },
+        {
+          "name": "acceptedStepBookkeeping",
+          "eligible": 608049,
+          "selected": 1187,
+          "completed": 1187,
+          "failed": 0,
+          "elapsedMs": 3.3000000417232513,
+          "zeroDurationCount": 1154,
+          "rawDurationCount": 64,
+          "rawDurationsDropped": 1123,
+          "zeroFraction": 0.9721988205560236,
+          "roughExpandedMs": 1690.4479573460667,
+          "expansionLimit": "periodic sample mean times eligible count; coarse inference with timer quantization, not exact total; fewer than64 selected remains unestimated"
+        }
+      ]
+    },
+    "warm": {
+      "eligible": 118460,
+      "selected": 230,
+      "sampledElapsedMs": 2.3999999910593033,
+      "phases": [
+        {
+          "name": "applySolvedRightSide",
+          "eligible": 46334,
+          "selected": 90,
+          "completed": 90,
+          "failed": 0,
+          "elapsedMs": 1.2000000327825546,
+          "zeroDurationCount": 78,
+          "rawDurationCount": 64,
+          "rawDurationsDropped": 26,
+          "zeroFraction": 0.8666666666666667,
+          "roughExpandedMs": 617.7866835438543,
+          "expansionLimit": "periodic sample mean times eligible count; coarse inference with timer quantization, not exact total; fewer than64 selected remains unestimated"
+        },
+        {
+          "name": "rollbackVoltagePublication",
+          "eligible": 0,
+          "selected": 0,
+          "completed": 0,
+          "failed": 0,
+          "elapsedMs": 0,
+          "zeroDurationCount": 0,
+          "rawDurationCount": 0,
+          "rawDurationsDropped": 0,
+          "zeroFraction": null,
+          "roughExpandedMs": null,
+          "expansionLimit": "periodic sample mean times eligible count; coarse inference with timer quantization, not exact total; fewer than64 selected remains unestimated"
+        },
+        {
+          "name": "wireRefreshImmediateAcceptedStep",
+          "eligible": 0,
+          "selected": 0,
+          "completed": 0,
+          "failed": 0,
+          "elapsedMs": 0,
+          "zeroDurationCount": 0,
+          "rawDurationCount": 0,
+          "rawDurationsDropped": 0,
+          "zeroFraction": null,
+          "roughExpandedMs": null,
+          "expansionLimit": "periodic sample mean times eligible count; coarse inference with timer quantization, not exact total; fewer than64 selected remains unestimated"
+        },
+        {
+          "name": "wireRefreshDelayedOwnedAcceptedStep",
+          "eligible": 36060,
+          "selected": 70,
+          "completed": 70,
+          "failed": 0,
+          "elapsedMs": 0.8999999612569809,
+          "zeroDurationCount": 61,
+          "rawDurationCount": 64,
+          "rawDurationsDropped": 6,
+          "zeroFraction": 0.8714285714285714,
+          "roughExpandedMs": 463.62855147038186,
+          "expansionLimit": "periodic sample mean times eligible count; coarse inference with timer quantization, not exact total; fewer than64 selected remains unestimated"
+        },
+        {
+          "name": "wireRefreshDeferredUiBatch",
+          "eligible": 3,
+          "selected": 0,
+          "completed": 0,
+          "failed": 0,
+          "elapsedMs": 0,
+          "zeroDurationCount": 0,
+          "rawDurationCount": 0,
+          "rawDurationsDropped": 0,
+          "zeroFraction": null,
+          "roughExpandedMs": null,
+          "expansionLimit": "periodic sample mean times eligible count; coarse inference with timer quantization, not exact total; fewer than64 selected remains unestimated"
+        },
+        {
+          "name": "acceptedStepBookkeeping",
+          "eligible": 36063,
+          "selected": 70,
+          "completed": 70,
+          "failed": 0,
+          "elapsedMs": 0.29999999701976776,
+          "zeroDurationCount": 67,
+          "rawDurationCount": 64,
+          "rawDurationsDropped": 6,
+          "zeroFraction": 0.9571428571428572,
+          "roughExpandedMs": 154.5557127503412,
+          "expansionLimit": "periodic sample mean times eligible count; coarse inference with timer quantization, not exact total; fewer than64 selected remains unestimated"
+        }
+      ]
+    }
+  },
+  "quantization": "Retained positive intervals cluster around0.1ms. Most selected calls are zero-duration. Sparse systematic samples are not a randomized independent sample; no confidence interval or exact overhead claim.",
+  "scope": "applySolvedRightSide includes validation/current assignment/voltage callbacks. Accepted bookkeeping excludes earlier t/timeStepAccum work and pauses around immediate wire refresh. Delayed-owned and deferred-UI wire refresh separate. Run freezes before verifier retirement cleanup.",
+  "unknown": "Ten cold rollback calls unselected; cost unknown, not zero. Immediate wire path not exercised. One cold deferred-UI sample insufficient for expansion.",
+  "decision": "Publication and owned-step wire refresh exceed bookkeeping in this coarse sample. Preserve callback semantics; investigate repeated typed lookup costs conditionally. LU remains largest supported contributor from separate CPU/factor evidence. No new optimization validated by this profile.",
+  "acceptance": "All three cold rows exceed90000ms. No full final matrix or normal acceptance. No production budgets/proofs/replay/cache/cancellation changes."
+}

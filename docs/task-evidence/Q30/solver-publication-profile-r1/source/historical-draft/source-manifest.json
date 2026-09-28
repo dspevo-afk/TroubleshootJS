@@ -1,0 +1,46 @@
+{
+  "schema": "tsj-q30-solver-publication-profile/1",
+  "status": "SOURCE_ONLY_DRAFT",
+  "base": {
+    "candidate": "scratch/pivot-lower-fusion-r2-preparation/candidate",
+    "identity": "complete1340inputmap",
+    "sha256": "0d27e176dc46afb4db91316570f4674e52b51ce2b462c64f6b6a37b98cbec197",
+    "files": {
+      "src/com/lushprojects/circuitjs1/client/CirSim.java": "c0b9d9bc7ff72d0e5021500c331e40dfcd03974ee3517c39d757d05302b1cfc3",
+      "src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java": "43f5aa1cfa85401aa048b2394261e266bab2697bef4f66fbf01cabb0fc86040c"
+    }
+  },
+  "overlays": {
+    "src/com/lushprojects/circuitjs1/client/CirSim.java": {
+      "baseSha256": "c0b9d9bc7ff72d0e5021500c331e40dfcd03974ee3517c39d757d05302b1cfc3",
+      "sha256": "8a80dc660c42531f16bbf132df8e7d452469b57ee426edf887af9865bb65e9e2"
+    },
+    "src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java": {
+      "baseSha256": "43f5aa1cfa85401aa048b2394261e266bab2697bef4f66fbf01cabb0fc86040c",
+      "sha256": "0923d722da643ea7b3174775b1c076f89c8b1abdc402e936b4de8032c3b04bdd"
+    },
+    "src/com/lushprojects/circuitjs1/client/Q30SolverPublicationProfile.java": {
+      "baseSha256": null,
+      "sha256": "6b11cbcb7913a254a712edaff290eb64e5c8c21744f9ed2e094f102d70796afe"
+    },
+    "tests/contracts/Q30SolverPublicationProfileContractTest.java": {
+      "baseSha256": null,
+      "sha256": "14f1d2460b8544e3923c1f736ca797d2e44e1abe893456ad9f45c3d93b046da9"
+    },
+    "README.md": {
+      "baseSha256": null,
+      "sha256": "fcf916b174c1174ebbbbc5b12b7733e9e92e5d6328081eb44881602791057c88"
+    }
+  },
+  "exactDiffGzip": {
+    "path": "exact-diff.patch.gz",
+    "sha256": "5c7921baa2d947e0b3767f327d14f83e5a4e7c690a4138510015c20d72212f95",
+    "scope": "the two modified source overlays plus the new profiler, native contract, and README; source-manifest.json is excluded to avoid a self-referential digest"
+  },
+  "validation": {
+    "build": "NOT_RUN",
+    "nativeContract": "NOT_RUN",
+    "browser": "NOT_RUN",
+    "driverRegistration": "ROOT_OWNS"
+  }
+}

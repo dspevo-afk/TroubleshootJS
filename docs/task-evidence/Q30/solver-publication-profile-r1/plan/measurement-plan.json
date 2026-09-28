@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "status": "PREDECLARED",
+  "purpose": "PRIVATE_SOLVER_PUBLICATION_COST_PROFILE",
+  "seed": "10014",
+  "requestedPackageCount": 40,
+  "productionAcceptance": false,
+  "sourceAuditSha256": "c448dc841e8796ba9c55c53ec4473d52c3fb8eefbba4e136ec1eb427796b1674",
+  "baseSourceAuditSha256": "0d27e176dc46afb4db91316570f4674e52b51ce2b462c64f6b6a37b98cbec197",
+  "source": {
+    "control": "scratch/pivot-lower-fusion-r2-preparation/candidate",
+    "profile": "solver-publication-profile-r1-preparation/candidate"
+  },
+  "runtime": {
+    "control": {
+      "sha256": "53f869e8164f6b8edc3b75ba1e6a299a984de5c88829b60b04a9ca59e76787a9",
+      "fileCount": 1525
+    },
+    "profile": {
+      "sha256": "073993f2caebff15e4bb1222588c282aa99de5ba8fd76bec2e943a0fc11cc33f",
+      "fileCount": 1526
+    }
+  },
+  "applicationQuery": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=10014",
+  "profileQuery": "tsjQ30PublicationProfile=true",
+  "sampleInterval": 512,
+  "maxRetainedDurationsPerPhase": 64,
+  "sequence": [
+    {
+      "label": "publication-profile-r1-01-control-10014",
+      "profile": false
+    },
+    {
+      "label": "publication-profile-r1-02-profile-10014",
+      "profile": true
+    },
+    {
+      "label": "publication-profile-r1-03-control-10014",
+      "profile": false
+    }
+  ],
+  "requirements": [
+    "One fresh owned browser per row; unchanged frozen source/runtime before and after.",
+    "Private measurement cache cleared before cold; warm reported separately; no normal cache reuse.",
+    "Both complete report parity comparisons and unchanged strict readers/corruptions must pass.",
+    "Profile metadata and duplicate snapshots validated before removing allowlisted profile fields in comparison copies.",
+    "Preserve every candidate, hypothesis, settling step, physical admission, service/repair/retest and cleanup.",
+    "Stop on source/host/reader/cleanup failure and preserve original failed evidence."
+  ],
+  "interpretation": "Selected performance.now intervals are observed sums, not exact total costs. 0.1ms timer quantization and periodic sampling may bias small phase estimates. OFF/ON/OFF bounds observed disturbance but does not isolate compiler-code-shape versus timing overhead. One seed provides ranking only, no population performance or production acceptance.",
+  "limits": {
+    "normalMaxJobMillis": 90000,
+    "maxJobSteps": 640,
+    "maxUnitMillis": 5000,
+    "privateMeasurementMillis": 300000
+  }
+}

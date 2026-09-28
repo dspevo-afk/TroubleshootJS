@@ -1,0 +1,172 @@
+{
+  "boardSize": 40,
+  "coldMeasurementsMs": {
+    "candidate": [
+      94963,
+      94727
+    ],
+    "control": [
+      97594,
+      103671
+    ]
+  },
+  "compiledReviewSha256": "d7949bb2155b3a7c376820c83de4d496016167d7de091b31fc50339ebcbf8b6c",
+  "completed": [
+    "p07-static-via-r1-01-control-10014",
+    "p07-static-via-r1-02-candidate-10014",
+    "p07-static-via-r1-03-candidate-10014",
+    "p07-static-via-r1-04-control-10014"
+  ],
+  "completedRows": 4,
+  "executionBindingSha256": "23d94867199cc0e30e88574dd0a3c7c75e4c7fb2ee96e3c78b20defaf3174a9c",
+  "freshSeed": "10014",
+  "gates": {
+    "canaries": {
+      "cleanupSeconds": 0.9373738,
+      "elapsedSeconds": 5.8790401,
+      "reuse": "bounded unchanged-runtime reuse",
+      "status": "PASS"
+    },
+    "gwt": {
+      "elapsedSeconds": 79.6266713,
+      "permutations": 5,
+      "reuse": "bounded unchanged-runtime reuse",
+      "status": "PASS"
+    },
+    "native": {
+      "r2Executed": {
+        "candidateElapsedSeconds": 48.2694296,
+        "receiptLabels": [
+          "p07-static-via-r1-reference-native",
+          "p07-static-via-r1-candidate-native6"
+        ],
+        "referenceElapsedSeconds": 31.3616333,
+        "status": "PASS"
+      },
+      "r3Validated": {
+        "candidateElapsedSeconds": 48.9047122,
+        "receiptLabels": [
+          "p07-static-via-r3-reference-native",
+          "p07-static-via-r3-candidate-native6"
+        ],
+        "referenceElapsedSeconds": 31.3228815,
+        "status": "PASS"
+      }
+    }
+  },
+  "integrated": false,
+  "interpretation": "INCONCLUSIVE_TOTAL_COLD_GAIN_UNDER_PREDECLARED_REPEAT_RULE",
+  "inventoryExcludes": [
+    "inventory.json",
+    "inventory.sha256",
+    "prepared fixture trees",
+    "browser profiles",
+    "GWT caches",
+    "WAR/JAR trees",
+    "uncontrolled logs"
+  ],
+  "measurementPlanSha256": "03541ee3e506dc01fece0969687f5889cb2ffd068013b71fdadde0b7e0832708",
+  "normalBudgetsMs": {
+    "maxJob": 90000,
+    "maxSteps": 640,
+    "maxUnit": 5000
+  },
+  "notRun": [
+    "p07-static-via-r1-05-candidate-7",
+    "p07-static-via-r1-06-control-7",
+    "p07-static-via-r1-07-control-10387",
+    "p07-static-via-r1-08-candidate-10387"
+  ],
+  "notRunRows": 4,
+  "oracle": {
+    "r1": "0353be36d212e56505f677d84479155038c44b5ae754110e2570d28815d8e1ed",
+    "r3": "ece7290e6b0c638439af9b9fbc6fd62e39a596982388e9990d01f687f3c6dc0d"
+  },
+  "oracleHistory": {
+    "initialFalsePassAccepted": false,
+    "r1": "initial weak draft; NOT RUN",
+    "r2": "executed PASS; ABA T/T/T coverage insufficient",
+    "r3": "validated T/F/T repair"
+  },
+  "packet": "Q30/p07-static-via-r1",
+  "pairedGainsMs": {
+    "cold": [
+      2631,
+      8944
+    ],
+    "proof": [
+      -351,
+      1303
+    ],
+    "routing": [
+      2947,
+      4187
+    ]
+  },
+  "parentAuditMap": {
+    "mode": "exact-payload",
+    "packetEncoding": "plain",
+    "path": "repo/docs/task-evidence/Q30/pivot-lower-fusion-r2/provenance/scratch/pivot-lower-fusion-r2-preparation/source-audit.json",
+    "sha256": "84b52b384972d28863cd235a7d0fe24a5721f397f229f420dc9c49388ab85f82"
+  },
+  "parity": {
+    "cleanupRows": 4,
+    "cleanupStatus": "PASS",
+    "rawCanaryReportCount": 2,
+    "rawCompletedReportCount": 4,
+    "status": "PASS",
+    "strictCorruptionsPerArm": 43
+  },
+  "q30": "BLOCKED",
+  "repeatRangesMs": {
+    "controlCold": 6077,
+    "controlRouting": 1228
+  },
+  "rootDecisionSha256": "b73209a3bb66874b6e45dbdef4064f80b3ef233f377966b7d3bf77f8b260c9cb",
+  "runtimeInputs": {
+    "candidate": {
+      "fileCount": 1525,
+      "sha256": "b892062e26eeab733cf5d03d271cf43d77edd71e8d235c8c235396cf6112a34e"
+    },
+    "control": {
+      "fileCount": 1525,
+      "sha256": "53f869e8164f6b8edc3b75ba1e6a299a984de5c88829b60b04a9ca59e76787a9"
+    },
+    "controlCandidateByteIdentical": false,
+    "r2ToR3TestOnlyRevision": true,
+    "r3ReuseBoundary": "PASS_UNCHANGED_RUNTIME_ONLY"
+  },
+  "schema": 1,
+  "sequenceSha256": "8f30ec371811200c065b625904aa258cfadbaebcee9a099003139e4a50afd9a0",
+  "sourceAudit": {
+    "betweenArmChangedInputs": [
+      "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java"
+    ],
+    "candidateOverlaySha256": "93da7656198ed962c6ec83d1d5f271004a85dc3bf972a3a0479c8a28ed6ef658",
+    "changedRuntimeSourceFiles": [
+      "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java"
+    ],
+    "lineage": "Measured fusion-r2 candidate plus one P07 runtime source overlay; prepared arm counts include fixture-only harness additions.",
+    "originalMeasuredAuditSha256": "0d27e176dc46afb4db91316570f4674e52b51ce2b462c64f6b6a37b98cbec197",
+    "originalMeasuredInputs": 1340,
+    "preparedArmInputs": {
+      "candidate": 1341,
+      "control": 1341
+    },
+    "preparedR2Sha256": "34b2b0814ad03f2efff492fd71239987d416173b057337ed2afaf536581e7232",
+    "preparedR3Sha256": "4b24af0d0cfbd64a3755fb37b7fe9295b722aba77868858570969ea3c1b1f671",
+    "sharedHarnessChanges": [
+      "scripts/verify-current-contracts.ps1",
+      "tests/contracts/P07StaticViaLegalityOracleContractTest.java"
+    ]
+  },
+  "status": "STOPPED_INCONCLUSIVE_REPEAT_RULE",
+  "stopRule": {
+    "maximumWithinArmColdRangeMs": 6077,
+    "maximumWithinArmRoutingRangeMs": 1228,
+    "minimumPairedColdGainMs": 2631,
+    "minimumPairedRoutingGainMs": 2947,
+    "productionThreshold": false,
+    "status": "APPLIED"
+  }
+}

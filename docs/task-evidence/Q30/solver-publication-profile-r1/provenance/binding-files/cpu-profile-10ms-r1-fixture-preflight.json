@@ -1,0 +1,16 @@
+{
+  "status": "PASS_UNCHANGED_SOURCE_AND_RUNTIME_ONLY",
+  "sourceInputs": 1340,
+  "sourceAuditSha256": "0d27e176dc46afb4db91316570f4674e52b51ce2b462c64f6b6a37b98cbec197",
+  "runtime": {
+    "sha256": "53f869e8164f6b8edc3b75ba1e6a299a984de5c88829b60b04a9ca59e76787a9",
+    "sourceSha256": "cb257f2158d02ece1fb0a3f7ac7386ec9a14e43100be1ad337d2e344aae0828e",
+    "webSha256": "e7377863185fc8208cb356474b39d14c9a82a35f5470bd7824d68113e1c03961",
+    "fileCount": 1525,
+    "sourceFileCount": 1133,
+    "webFileCount": 392
+  },
+  "auditSeconds": 5.210766800009878,
+  "reuse": "The same complete accepted-fusion R2 private fixture passed native6, actual JDK8/GWT5, compiled A07 and disabled-normal gates. This audit verifies unchanged consumed inputs; it is not another execution of those gates.",
+  "pending": "Real selected CPU-host transport canaries, driver review, fresh measurements and full strict comparisons remain required. No Q30 normal acceptance."
+}

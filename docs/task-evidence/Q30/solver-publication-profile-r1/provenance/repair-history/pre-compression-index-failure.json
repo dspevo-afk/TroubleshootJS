@@ -1,0 +1,8 @@
+{
+  "status": "FAIL_PACKAGING_INDEX_CHECK",
+  "inventorySha256": "9f067f401824956e31d0e92a993d99c494806a0e75492ffa973bef036804b7d1",
+  "firstStage": "Git Windows long-path limitation; retried successfully with command-scoped core.longpaths=true, no persistent config change",
+  "indexContentAudit": "All148blobs matched expected bytes before whitespace check",
+  "cachedWhitespace": "FAIL: stored plaintext unified diff context has space-before-tab and blank EOF. Preserve exact patch payload via gzip; do not alter source or suppress checks.",
+  "indexNowEmpty": true
+}

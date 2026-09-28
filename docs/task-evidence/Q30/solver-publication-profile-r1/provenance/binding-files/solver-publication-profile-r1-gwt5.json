@@ -1,0 +1,9 @@
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "solver-publication-profile-r1-gwt5",
+  "exitCode": 0,
+  "startedUtc": "2026-09-28T13:25:44.4791199Z",
+  "finishedUtc": "2026-09-28T13:27:08.0537120Z",
+  "elapsedSeconds": 83.5700442,
+  "status": "PASS"
+}

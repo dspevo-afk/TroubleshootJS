@@ -1,0 +1,60 @@
+{
+  "status": "EXACT_DIFF_PAYLOADS_STORED_AS_DETERMINISTIC_GZIP",
+  "preCompressionInventorySha256": "9f067f401824956e31d0e92a993d99c494806a0e75492ffa973bef036804b7d1",
+  "preCompressionInventoryPreservedInTaskTemp": "publication-profile-r1-inventory-before-diff-compression.json",
+  "indexFailureReceipt": "provenance/repair-history/pre-compression-index-failure.json",
+  "indexFailureReceiptSha256": "6f437c5c34e593fe1d00d0f698993a051964bb6b2ddfe9bbed49148d3409089c",
+  "patches": [
+    {
+      "previousArtifact": "source/deltas/r2-measured-to-r1-profile/scripts__verify-current-contracts.ps1.patch",
+      "previousPayloadBytes": 777,
+      "previousPayloadSha256": "f07b26446ce1ecd149e030adb09c5ee71d64b22001ad4829b23564a6e3e7c906",
+      "storedArtifact": "source/deltas/r2-measured-to-r1-profile/scripts__verify-current-contracts.ps1.patch.gz",
+      "storedBytes": 285,
+      "storedSha256": "68ca711409dbad039dcd119e66a1926fd6108c6ee1ec2d10ff7a6b67a6fe6839",
+      "decompressedPayloadBytes": 777,
+      "decompressedPayloadSha256": "f07b26446ce1ecd149e030adb09c5ee71d64b22001ad4829b23564a6e3e7c906"
+    },
+    {
+      "previousArtifact": "source/deltas/r2-measured-to-r1-profile/src__com__lushprojects__circuitjs1__client__CirSim.java.patch",
+      "previousPayloadBytes": 9612,
+      "previousPayloadSha256": "aef12cd2a4abf82a1f78ad23379ed9889ce22ca30b709ca5d13041570b9d8d4d",
+      "storedArtifact": "source/deltas/r2-measured-to-r1-profile/src__com__lushprojects__circuitjs1__client__CirSim.java.patch.gz",
+      "storedBytes": 2250,
+      "storedSha256": "8839ec0fd62777cabebf08baf77ab51e72f4682c3d1ba3d82fece8794234f8ed",
+      "decompressedPayloadBytes": 9612,
+      "decompressedPayloadSha256": "aef12cd2a4abf82a1f78ad23379ed9889ce22ca30b709ca5d13041570b9d8d4d"
+    },
+    {
+      "previousArtifact": "source/deltas/r2-measured-to-r1-profile/src__com__lushprojects__circuitjs1__client__Q30CoordinatorQualificationVerifier.java.patch",
+      "previousPayloadBytes": 10802,
+      "previousPayloadSha256": "4c341190d4a2b6646ce27c5e2465dd4b7ed55f3ad09cfe0d0997600e9905fa6e",
+      "storedArtifact": "source/deltas/r2-measured-to-r1-profile/src__com__lushprojects__circuitjs1__client__Q30CoordinatorQualificationVerifier.java.patch.gz",
+      "storedBytes": 2680,
+      "storedSha256": "edd3c685421ce8223b1487223b4de894f9de1cdc93941cce9a7d2b344d062ada",
+      "decompressedPayloadBytes": 10802,
+      "decompressedPayloadSha256": "4c341190d4a2b6646ce27c5e2465dd4b7ed55f3ad09cfe0d0997600e9905fa6e"
+    },
+    {
+      "previousArtifact": "source/deltas/r2-measured-to-r1-profile/src__com__lushprojects__circuitjs1__client__Q30SolverPublicationProfile.java.patch",
+      "previousPayloadBytes": 17980,
+      "previousPayloadSha256": "19f37755c8aa4a8e74351d8133c0ca6ec8f782b370e8d99a97e74acb3baa89c2",
+      "storedArtifact": "source/deltas/r2-measured-to-r1-profile/src__com__lushprojects__circuitjs1__client__Q30SolverPublicationProfile.java.patch.gz",
+      "storedBytes": 3704,
+      "storedSha256": "d9d916608a457f58d992c557a1f23bad872184f1105a2144395b4b32d9f53675",
+      "decompressedPayloadBytes": 17980,
+      "decompressedPayloadSha256": "19f37755c8aa4a8e74351d8133c0ca6ec8f782b370e8d99a97e74acb3baa89c2"
+    },
+    {
+      "previousArtifact": "source/deltas/r2-measured-to-r1-profile/tests__contracts__Q30SolverPublicationProfileContractTest.java.patch",
+      "previousPayloadBytes": 18649,
+      "previousPayloadSha256": "e3942daa453ceeb7601fd7a8d9691a361063d297e9664dfc0139d45c21cd59ff",
+      "storedArtifact": "source/deltas/r2-measured-to-r1-profile/tests__contracts__Q30SolverPublicationProfileContractTest.java.patch.gz",
+      "storedBytes": 3360,
+      "storedSha256": "0ebbd4a39e95a86e3736e6a7b5172bee8b986e3858006cff41ad0ec7aaacc7c9",
+      "decompressedPayloadBytes": 18649,
+      "decompressedPayloadSha256": "e3942daa453ceeb7601fd7a8d9691a361063d297e9664dfc0139d45c21cd59ff"
+    }
+  ],
+  "unchanged": "Each .patch.gz decompresses byte-for-byte to the prior generated diff. Source overlays, application reports, run data, gates, and timing values are unchanged."
+}

@@ -1,7 +1,7 @@
 # Current checkpoint: Q30 BLOCKED / NOT ACCEPTED
 
-Branch `codex/q30-multirail-qualification`; prepared from documentation HEAD `fc8ebd8`
-(`Record Q30 cold CPU profile`). Accepted production source remains `ffe9132`
+Branch `codex/q30-multirail-qualification`; prepared from documentation HEAD `144b382`
+(`Record inconclusive Q30 LU guard experiment`). Accepted production source remains `ffe9132`
 (`Collect LU lower rows during pivot search`). No push or completion email.
 Normal-player Q30 publication remains disabled. U06/U07/Q60 and later are
 unstarted. Full final acceptance matrices are NOT RUN while hard gates fail.
@@ -30,7 +30,7 @@ Profiling explains the remaining work, without adding overlapping timers:
 | Original monotonic 106.350-s partition | Solver stepping 79.421 s; routing 20.070 s; analyze 1.224 s; placement 0.826 s; construction 0.377 s; physical admission 0.075 s; settling orchestration 1.271 s; proof cleanup 0.082 s. Plan, proof purposes, retries and repeated work are separately recorded in [stage evidence](task-evidence/Q30/stage-profile/README.md). |
 | Routing profile | Cold control/profile/control 98.580/97.199/96.985 s. P07 slices 21.139 s, with 19.924 s remaining after disjoint measured children; that residual includes A*, publisher and state-machine work. All required failed/successful attempts remain. [Audited packet](task-evidence/Q30/route-stage-profile-r1/README.md). |
 | External 10-ms CPU profile | Fresh control/profile/control 97.811/100.493/97.699 s. Both full parity comparisons PASS. Observed slowdown 2.682–2.794 s; exact overhead not isolated. Direct sampled LU factor/solve/owned-loop self deltas are 26.940/7.674/11.446 s, not additive wall-stage totals. Navigation and a possible short warm tail are included. [Audited packet](task-evidence/Q30/cpu-profile-10ms-r1/README.md). |
-| Private publication profile | Fresh control/profile/control 99.614/97.853/97.835 s; both full parity comparisons, strict readers, 31 metadata corruptions per snapshot and cleanup PASS. Rough sample expansions: publication 10.913 s, owned-step wire refresh 6.914 s, bookkeeping 1.690 s. Most selected durations round to zero at the 0.1-ms timer quantum. Rollback cost is unobserved; one UI-wire sample cannot support expansion. Packet audit pending. |
+| Private publication profile | Fresh control/profile/control 99.614/97.853/97.835 s; both full parity comparisons, strict readers, 31 metadata corruptions per snapshot and cleanup PASS. Rough sample expansions: publication 10.913 s, owned-step wire refresh 6.914 s, bookkeeping 1.690 s. Most selected durations round to zero at the 0.1-ms timer quantum. Rollback cost is unobserved; one UI-wire sample cannot support expansion. [Audited packet](task-evidence/Q30/solver-publication-profile-r1/README.md). |
 
 The CPU packet has 186 audited artifacts/five exact reports, inventory
 `5beb50e9eede530b0bf054551d215f7f7d0ba451ffaa7b5ecea593c78687c583`.
@@ -41,6 +41,13 @@ The publication fixture passed native5 (47.385 s; collector 1,634 assertions),
 actual GWT5 (83.570 s), A07/disabled-normal (5.928 s; cleanup 0.942 s) and three
 strict negatives. Its initial relative-output-path exit-2 rejection is retained.
 Publication instrumentation remains isolated; no voltage/current calls are batched.
+Root publication packet audit PASS: 147 artifacts, five exact raw reports and
+five reconstructible source overlays; inventory
+`c6efc3b9998c0e0613dcb92cf4c4fb52d03178e1264b5cee1e10c00d65dec382`.
+Source-reference and wording repairs are retained; an initial root audit-script
+map-key error was corrected without changing measured source. The final index
+check caught whitespace in stored unified-diff context; all five diff payloads
+were preserved byte-exact under deterministic gzip and the failure retained.
 
 Latest optimization trial: one inline LU update finite guard. Native6 (46.348 s),
 actual GWT5 (80.098 s), compiled A07/disabled-normal (4.957 s; cleanup 0.904 s),
@@ -57,6 +64,35 @@ six-row NOT RUN list; inventory
 This trial rule does not alter any production acceptance threshold or reduce
 the required qualification corpus.
 
+Latest routing trial: P07 static via legality memo, overlay SHA-256
+`93da7656198ed962c6ec83d1d5f271004a85dc3bf972a3a0479c8a28ed6ef658`.
+Independent source reviews found the per-Search static/live split and checked-int
+key sound. Fresh R3 uncached reference/candidate native checks PASS (31.323 /
+48.905 s); all 1,540,386 oracle bytes match, including an asymmetric same-cell
+net-switch witness, repeated cache hits, both live copper faces, holes, via cap,
+route fingerprints and work. Existing P07/resumption/physical/budget/policy checks
+remain. Earlier noncontrastive test coverage and source-preparation newline
+assertion corrections are retained; no application failure was hidden.
+Actual GWT5 PASS (79.627 s), compiled A07/disabled-normal PASS (5.879 s; cleanup
+0.937 s), three reader negatives and five-permutation memo mechanism inspection
+PASS. A test-only R3 edit leaves all 1,525 compiled runtime inputs byte-identical;
+that explicit audit bounds GWT/canary reuse. Fresh control/candidate/candidate/
+control cold totals were 97.594/94.963/94.727/103.671 s; routing was
+22.949/20.002/19.990/24.177 s. Both full parity comparisons and cleanup PASS.
+The minimum cold gain (2.631 s) is smaller than control variability (6.077 s),
+so the predeclared repeat rule stopped the trial as INCONCLUSIVE. Routing
+gains were consistent, but no total cold benefit is accepted. Four remaining
+37/20-package timing rows are NOT RUN. All completed cold rows exceed 90 s.
+The source remains isolated and NOT INTEGRATED. Root packet audit PASS:
+189 artifacts, six exact raw reports, the four-row NOT RUN list and both
+executed oracle revisions; inventory
+`3474597252ddae937879343ac3303dbb9997793b25de9fb32508825c495a95cf`.
+Generated revision/timing/count labels were corrected against raw receipts;
+the original metadata remains preserved. [Stopped P07 trial](task-evidence/Q30/p07-static-via-r1/README.md).
+Original clocks, limits, corpus, solver and proof behavior are unchanged. These
+coordinator timings use the existing wall-clock path; host operation duration
+is monotonic. The earlier separate stage profile supplies the monotonic partition.
+
 Scale remains NOT ACCEPTED. The uncommitted plan-4 proposal spans 20–40 through
 purposeful one/two-channel subsystems, with 77 roots across representative and
 held-out cohorts and 18 axes. Structural native6, independent plan oracle and
@@ -71,16 +107,17 @@ reader negatives passing. Prior failures and polling/exception-injection limits
 remain. No D01 draft is integrated. Other rejected/inconclusive experiments and
 their exact boundaries remain in the historical checkpoint and linked packets.
 
-Resources/preserved work: completed hosts verified owned cleanup; no heavy process
-is active. Manual tabs and preview port 34917 are closed. Task-temp fixtures and
+Resources/preserved work: completed hosts verified owned cleanup. The private
+P07 timing sequence has ended; no heavy process is active. Manual tabs and
+preview port 34917 are closed. Task-temp fixtures and
 evidence remain; previously blocked recursive cleanup is not retried. Desktop
 work, pre-existing caches, unaccepted plan-4 sources/tests/readers and the normal
-verifier hook/API remain unstaged. The publication packet is being prepared
-separately; the stopped guard packet has passed root audit. No broad cleanup, remote action or global setting changes.
+verifier hook/API remain unstaged. Publication and stopped guard packets have
+passed root audit, as has the stopped P07 packet. No broad cleanup,
+remote action or global setting changes.
 
-Next: audit the publication packet and review the P07 static-via memo proposal
-against an independent uncached oracle before measuring it. A source-only private
-matrix-support census is being prepared to quantify structural LU opportunities;
+Next: finish source review and focused gates for the isolated private
+matrix-support census to quantify structural LU opportunities;
 it cannot influence factorization or supply an acceptance result. No unproven static
 matrix partition or callback deferral is authorized by the measurements. Run the
 complete final matrix only after normal cold timing has margin, required scale

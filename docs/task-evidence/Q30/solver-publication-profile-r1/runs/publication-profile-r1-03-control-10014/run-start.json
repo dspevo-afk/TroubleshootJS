@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<TASK_PATH>\\scratch\\pivot-lower-fusion-r2-preparation\\candidate",
+  "startedUtc": "2026-09-28T13:37:43.213555+00:00",
+  "outcome": "NOT_RUN",
+  "cases": [],
+  "caseCount": 1,
+  "errors": []
+}

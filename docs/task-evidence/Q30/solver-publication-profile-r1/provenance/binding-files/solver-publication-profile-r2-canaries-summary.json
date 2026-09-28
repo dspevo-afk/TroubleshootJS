@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 5.9284740000002785,
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 0.9421590999991167,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "r1AuditOriginalSha256": "c448dc841e8796ba9c55c53ec4473d52c3fb8eefbba4e136ec1eb427796b1674",
+  "r2MeasuredAuditOriginalSha256": "0d27e176dc46afb4db91316570f4674e52b51ce2b462c64f6b6a37b98cbec197",
+  "r2MeasuredAuditStoredSha256": "84b52b384972d28863cd235a7d0fe24a5721f397f229f420dc9c49388ab85f82",
+  "r2MeasuredSourceInputs": 1340,
+  "r1ProfileSourceInputs": 1342,
+  "generatedWarCopied": false,
+  "scope": "Apply these five overlays to the 1,340-input measured R2 candidate in the committed pivot-lower-fusion-r2 source map. The parent 1,339-input map and its three R2 overlay diffs are cross-referenced below; no full fixture/WAR/JAR tree is copied.",
+  "overlays": [
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "baselineSha256": "357abf8cb72ab67038d67a2ebfc07118b1d166ae789b4e0f3b37e53cdd0fc589",
+      "baselineBytes": 66537,
+      "candidateSha256": "ade1169c9c96c9b44db495a041053f30d314218a1fe813d87e71183f2439fdad",
+      "candidateBytes": 66654,
+      "exactOverlayGzip": "source/overlays/scripts/verify-current-contracts.ps1.gz",
+      "reviewDiff": "source/deltas/r2-measured-to-r1-profile/scripts__verify-current-contracts.ps1.patch.gz"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "baselineSha256": "c0b9d9bc7ff72d0e5021500c331e40dfcd03974ee3517c39d757d05302b1cfc3",
+      "baselineBytes": 347271,
+      "candidateSha256": "8a80dc660c42531f16bbf132df8e7d452469b57ee426edf887af9865bb65e9e2",
+      "candidateBytes": 353033,
+      "exactOverlayGzip": "source/overlays/src/com/lushprojects/circuitjs1/client/CirSim.java.gz",
+      "reviewDiff": "source/deltas/r2-measured-to-r1-profile/src__com__lushprojects__circuitjs1__client__CirSim.java.patch.gz"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java",
+      "baselineSha256": "43f5aa1cfa85401aa048b2394261e266bab2697bef4f66fbf01cabb0fc86040c",
+      "baselineBytes": 73103,
+      "candidateSha256": "0923d722da643ea7b3174775b1c076f89c8b1abdc402e936b4de8032c3b04bdd",
+      "candidateBytes": 77165,
+      "exactOverlayGzip": "source/overlays/src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java.gz",
+      "reviewDiff": "source/deltas/r2-measured-to-r1-profile/src__com__lushprojects__circuitjs1__client__Q30CoordinatorQualificationVerifier.java.patch.gz"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30SolverPublicationProfile.java",
+      "baselineSha256": null,
+      "baselineBytes": 0,
+      "candidateSha256": "6b11cbcb7913a254a712edaff290eb64e5c8c21744f9ed2e094f102d70796afe",
+      "candidateBytes": 17408,
+      "exactOverlayGzip": "source/overlays/src/com/lushprojects/circuitjs1/client/Q30SolverPublicationProfile.java.gz",
+      "reviewDiff": "source/deltas/r2-measured-to-r1-profile/src__com__lushprojects__circuitjs1__client__Q30SolverPublicationProfile.java.patch.gz"
+    },
+    {
+      "path": "tests/contracts/Q30SolverPublicationProfileContractTest.java",
+      "baselineSha256": null,
+      "baselineBytes": 0,
+      "candidateSha256": "14f1d2460b8544e3923c1f736ca797d2e44e1abe893456ad9f45c3d93b046da9",
+      "candidateBytes": 18222,
+      "exactOverlayGzip": "source/overlays/tests/contracts/Q30SolverPublicationProfileContractTest.java.gz",
+      "reviewDiff": "source/deltas/r2-measured-to-r1-profile/tests__contracts__Q30SolverPublicationProfileContractTest.java.patch.gz"
+    }
+  ]
+}

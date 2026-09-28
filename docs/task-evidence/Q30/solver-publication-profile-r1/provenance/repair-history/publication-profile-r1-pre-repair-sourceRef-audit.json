@@ -1,0 +1,15 @@
+{
+  "status": "FAIL_SOURCE_REFERENCE_AUDIT_ONLY",
+  "preRepairInventorySha256": "c9384a3aab97de0bbf9855af4e1d3cfea780a857dd68eee99e4575995e3ba183",
+  "failedCheck": "The five generated unified-diff artifacts had sourceRef pointing at candidate source files while the recorded source digest was the generated patch bytes. Stored payload hashes and evidence bytes were unchanged.",
+  "repair": "Set these five generated-diff sourceRefs to generated:package_solver_publication_profile_r1.py; keep their sourceBytes/sourceSha256 as the actual diff bytes.",
+  "affectedArtifacts": [
+    "source/deltas/r2-measured-to-r1-profile/scripts__verify-current-contracts.ps1.patch",
+    "source/deltas/r2-measured-to-r1-profile/src__com__lushprojects__circuitjs1__client__CirSim.java.patch",
+    "source/deltas/r2-measured-to-r1-profile/src__com__lushprojects__circuitjs1__client__Q30CoordinatorQualificationVerifier.java.patch",
+    "source/deltas/r2-measured-to-r1-profile/src__com__lushprojects__circuitjs1__client__Q30SolverPublicationProfile.java.patch",
+    "source/deltas/r2-measured-to-r1-profile/tests__contracts__Q30SolverPublicationProfileContractTest.java.patch"
+  ],
+  "storedArtifactPayloadsChanged": false,
+  "reconstructedFrom": "current packet inventory.json with only the five sourceRef fields restored to their pre-repair values"
+}

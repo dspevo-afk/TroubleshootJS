@@ -1,0 +1,40 @@
+{
+  "status": "METADATA_ONLY_SOURCE_REFERENCE_REPAIR",
+  "previousInventorySha256": "c9384a3aab97de0bbf9855af4e1d3cfea780a857dd68eee99e4575995e3ba183",
+  "previousInventoryReconstructedAndPreservedInTaskTemp": true,
+  "affectedArtifacts": [
+    "source/deltas/r2-measured-to-r1-profile/scripts__verify-current-contracts.ps1.patch",
+    "source/deltas/r2-measured-to-r1-profile/src__com__lushprojects__circuitjs1__client__CirSim.java.patch",
+    "source/deltas/r2-measured-to-r1-profile/src__com__lushprojects__circuitjs1__client__Q30CoordinatorQualificationVerifier.java.patch",
+    "source/deltas/r2-measured-to-r1-profile/src__com__lushprojects__circuitjs1__client__Q30SolverPublicationProfile.java.patch",
+    "source/deltas/r2-measured-to-r1-profile/tests__contracts__Q30SolverPublicationProfileContractTest.java.patch"
+  ],
+  "sourceRefCorrections": [
+    {
+      "artifact": "source/deltas/r2-measured-to-r1-profile/scripts__verify-current-contracts.ps1.patch",
+      "beforeSourceRef": "scratch/solver-publication-profile-r1-preparation/candidate/scripts/verify-current-contracts.ps1",
+      "afterSourceRef": "generated:package_solver_publication_profile_r1.py"
+    },
+    {
+      "artifact": "source/deltas/r2-measured-to-r1-profile/src__com__lushprojects__circuitjs1__client__CirSim.java.patch",
+      "beforeSourceRef": "scratch/solver-publication-profile-r1-preparation/candidate/src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "afterSourceRef": "generated:package_solver_publication_profile_r1.py"
+    },
+    {
+      "artifact": "source/deltas/r2-measured-to-r1-profile/src__com__lushprojects__circuitjs1__client__Q30CoordinatorQualificationVerifier.java.patch",
+      "beforeSourceRef": "scratch/solver-publication-profile-r1-preparation/candidate/src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java",
+      "afterSourceRef": "generated:package_solver_publication_profile_r1.py"
+    },
+    {
+      "artifact": "source/deltas/r2-measured-to-r1-profile/src__com__lushprojects__circuitjs1__client__Q30SolverPublicationProfile.java.patch",
+      "beforeSourceRef": "scratch/solver-publication-profile-r1-preparation/candidate/src/com/lushprojects/circuitjs1/client/Q30SolverPublicationProfile.java",
+      "afterSourceRef": "generated:package_solver_publication_profile_r1.py"
+    },
+    {
+      "artifact": "source/deltas/r2-measured-to-r1-profile/tests__contracts__Q30SolverPublicationProfileContractTest.java.patch",
+      "beforeSourceRef": "scratch/solver-publication-profile-r1-preparation/candidate/tests/contracts/Q30SolverPublicationProfileContractTest.java",
+      "afterSourceRef": "generated:package_solver_publication_profile_r1.py"
+    }
+  ],
+  "correction": "These generated unified diffs now identify as generated artifacts. Their source byte length/hash describe the patch content itself; exact candidate source blobs remain separately stored and hash-verified. No evidence payload bytes changed."
+}

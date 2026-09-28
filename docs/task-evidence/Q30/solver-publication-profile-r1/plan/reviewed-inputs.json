@@ -1,0 +1,27 @@
+{
+  "status": "ROOT_REVIEWED_SOURCE_ONLY",
+  "overlays": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "bytes": 353033,
+      "sha256": "8a80dc660c42531f16bbf132df8e7d452469b57ee426edf887af9865bb65e9e2"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java",
+      "bytes": 77165,
+      "sha256": "0923d722da643ea7b3174775b1c076f89c8b1abdc402e936b4de8032c3b04bdd"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30SolverPublicationProfile.java",
+      "bytes": 17408,
+      "sha256": "6b11cbcb7913a254a712edaff290eb64e5c8c21744f9ed2e094f102d70796afe"
+    },
+    {
+      "path": "tests/contracts/Q30SolverPublicationProfileContractTest.java",
+      "bytes": 18222,
+      "sha256": "14f1d2460b8544e3923c1f736ca797d2e44e1abe893456ad9f45c3d93b046da9"
+    }
+  ],
+  "review": "Final solver call order, private lifecycle and collector arithmetic inspected; pause/resume, duplicate finish, monotonic clock and pinned JSONBoolean API repairs verified. Native, GWT and real host gates still NOT RUN.",
+  "limitations": "Accepted bookkeeping starts after t/timeStepAccum updates. Selected timings are sampled coarse costs, not exact totals. Collector freezes before verifier retirement cleanup. No source integrated."
+}

@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 47.3848714,
+  "phase": "focused private publication clock/freeze and execution/temporal/measurement/normal-budget contracts including maintained cleanup",
+  "suites": [
+    "Q30SolverPublicationProfileContractTest",
+    "A07ExecutionContractTest",
+    "Q30TemporalWorkContractTest",
+    "Q30GenerationMeasurementBudgetContractTest",
+    "Q30NormalExecutionPolicyContractTest"
+  ]
+}

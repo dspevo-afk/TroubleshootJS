@@ -1,0 +1,26 @@
+{
+  "pinnedCommit": "fc8ebd807a4eb13db5079ce7cfbac0a3a5c9dd12",
+  "files": [
+    {
+      "requestedBindingPath": "tests/browser/compiled_attribute_acceptance.py",
+      "requestedSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+      "committedSourceRef": "repo/fc8ebd807a4eb13db5079ce7cfbac0a3a5c9dd12/tests/browser/compiled_attribute_acceptance.py",
+      "storedAt": "procedures/inspection/compiled_attribute_acceptance.py",
+      "byteIdentical": true
+    },
+    {
+      "requestedBindingPath": "docs/task-evidence/Q30/scale-plan-4/check_coordinator.py",
+      "requestedSha256": "247ded434bcdbdba6f78e7edf8f9c8b3671aaf8465bfabb29c875d5b2512bddb",
+      "committedSourceRef": "repo/fc8ebd807a4eb13db5079ce7cfbac0a3a5c9dd12/docs/task-evidence/Q30/owned-zero-row-scan/procedure/readers/check_coordinator.py",
+      "storedAt": null,
+      "byteIdentical": true
+    },
+    {
+      "requestedBindingPath": "docs/task-evidence/Q30/scale-plan-4/check_d01.py",
+      "requestedSha256": "f58847541571cdf829835d05c200bac6ea0079dab065d90ebdf7f44914241929",
+      "committedSourceRef": "repo/fc8ebd807a4eb13db5079ce7cfbac0a3a5c9dd12/docs/task-evidence/Q30/owned-zero-row-scan/procedure/readers/check_d01.py",
+      "storedAt": null,
+      "byteIdentical": true
+    }
+  ]
+}

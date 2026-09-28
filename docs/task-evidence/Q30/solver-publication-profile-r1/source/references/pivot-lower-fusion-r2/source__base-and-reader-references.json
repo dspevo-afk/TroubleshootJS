@@ -1,0 +1,34 @@
+{
+  "baseHead": "2b152c25c556eea8c7fb4582c5459c17c69821b3",
+  "finalTree": "565ba26abfe0a8025681922ff061bbe1ea758cd1",
+  "measuredCandidate": {
+    "baseInputCount": 1339,
+    "exactOverlayPaths": [
+      "scripts/verify-current-contracts.ps1",
+      "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "tests/contracts/Q30LuPivotCollectionContractTest.java"
+    ],
+    "inputCount": 1340,
+    "sourceAuditSha256": "0d27e176dc46afb4db91316570f4674e52b51ce2b462c64f6b6a37b98cbec197"
+  },
+  "parentSource": {
+    "candidateInputCount": 1339,
+    "cirSimPath": "docs/task-evidence/Q30/sticky-finite-solve-r2/sources/candidate-CirSim.java.gz",
+    "cirSimUncompressedSha256": "2658e94560fd9e1f0e9157a54be773bd9568d9350fa6ce56c39acaa7cf87e0b1",
+    "commit": "ba107090e4899ca9d3a2413259c78d042d20dae1",
+    "completeCandidateInputMapPath": "docs/task-evidence/Q30/sticky-finite-solve-r2/sources/source-pair-audit.json",
+    "completeCandidateInputMapSha256": "80110e21c0d5f4baf31460d3e0a12e12d9fc5cdecc1e83d49319fbc226a3c82a",
+    "packetInventoryPath": "docs/task-evidence/Q30/sticky-finite-solve-r2/packet-inventory.json",
+    "packetInventorySha256": "c3e98e85bc97fb230f8b0b2fbed9dc5333e927dff1f87ecfb66689125b7a02a3"
+  },
+  "strictReaders": [
+    {
+      "path": "docs/task-evidence/Q30/owned-zero-row-scan/procedure/readers/check_coordinator.py",
+      "sha256": "247ded434bcdbdba6f78e7edf8f9c8b3671aaf8465bfabb29c875d5b2512bddb"
+    },
+    {
+      "path": "docs/task-evidence/Q30/owned-zero-row-scan/procedure/readers/check_d01.py",
+      "sha256": "f58847541571cdf829835d05c200bac6ea0079dab065d90ebdf7f44914241929"
+    }
+  ]
+}

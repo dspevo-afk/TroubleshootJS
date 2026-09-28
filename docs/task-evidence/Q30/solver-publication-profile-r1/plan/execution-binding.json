@@ -1,0 +1,96 @@
+{
+  "status": "FROZEN_READY_FOR_PRIVATE_MEASUREMENT",
+  "driverSha256": "ec26d5b4b62212c2755b4e6cff5f5730fe68f28c8e14286081cd068cfdf450ed",
+  "files": [
+    {
+      "path": "solver-publication-profile-r1-measurement-plan.json",
+      "sha256": "fde03ff81e05ed9c8caca2fce948f7a0a8def117ae88bf58605d76758fc37529",
+      "bytes": 2514
+    },
+    {
+      "path": "solver-publication-profile-reviewed-inputs.json",
+      "sha256": "f5715639dc785dbb60f94d168a6bf427b8092def3f6f5d7905f4f9b58b2d6bed",
+      "bytes": 1346
+    },
+    {
+      "path": "solver-publication-profile-r1-preparation/source-audit.json",
+      "sha256": "c448dc841e8796ba9c55c53ec4473d52c3fb8eefbba4e136ec1eb427796b1674",
+      "bytes": 550341
+    },
+    {
+      "path": "scratch/pivot-lower-fusion-r2-preparation/source-audit.json",
+      "sha256": "0d27e176dc46afb4db91316570f4674e52b51ce2b462c64f6b6a37b98cbec197",
+      "bytes": 563568
+    },
+    {
+      "path": "run_publication_profile_timing.py",
+      "sha256": "9818926899d2dbd0c97b9afeb7dae38703ca6ac7cf220dfca5a9d28cbc46d6f1",
+      "bytes": 2020
+    },
+    {
+      "path": "validate_publication_profile_pair_root.py",
+      "sha256": "c56a9afdd50c851577771939bbeb4b395617c2a25ec4e6f3645e7250845224b4",
+      "bytes": 16304
+    },
+    {
+      "path": "validate_current_q30_timing_pair.py",
+      "sha256": "67430d7c56d872d115a7c38732bf60101cff52e8bf40f7af075213debc8e7e3b",
+      "bytes": 21229
+    },
+    {
+      "path": "solver-publication-profile-metadata-validator.py",
+      "sha256": "2504b4e478636bb60b98e195c94a371de89734a563ca6e7bd392670c71771dfd",
+      "bytes": 16931
+    },
+    {
+      "path": "solver-publication-profile-r1-native5.json",
+      "sha256": "35688356c5384d235bc87f4c0157c5cbd40fb62620477399c59910e80698f31d",
+      "bytes": 454
+    },
+    {
+      "path": "solver-publication-profile-r1-gwt5.json",
+      "sha256": "4794b3626b066ef28205cca56fca3f934580e918aa54dfb1ca647df590e4b86f",
+      "bytes": 283
+    },
+    {
+      "path": "solver-publication-profile-r2-canaries-summary.json",
+      "sha256": "6befc6d65eb87061b54a786ef705ebed48f3c486cc4ca18ee6e5166c84fe73b8",
+      "bytes": 239
+    },
+    {
+      "path": "solver-publication-profile-r2-canaries/result.json",
+      "sha256": "4f701c80f42b2506d94a791d235e6b1fb9cfe982043ed090375ee3349c0e0a68",
+      "bytes": 6828
+    },
+    {
+      "path": "solver-publication-profile-r2-a07-reader.log",
+      "sha256": "44d24b9e9a389a6f682363c51ef04ef37694276dbe30f6ac328ade766286b3f7",
+      "bytes": 75
+    },
+    {
+      "path": "cpu-profile-10ms-r1-fixture-preflight.json",
+      "sha256": "5dc8df9e28dbef4f4352d54f6a5b72aaf3cf499e6011280ac1fbd5edc1a63bc3",
+      "bytes": 956
+    }
+  ],
+  "repoFiles": [
+    {
+      "path": "tests/browser/compiled_attribute_acceptance.py",
+      "sha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+      "bytes": 30624
+    },
+    {
+      "path": "docs/task-evidence/Q30/scale-plan-4/check_coordinator.py",
+      "sha256": "247ded434bcdbdba6f78e7edf8f9c8b3671aaf8465bfabb29c875d5b2512bddb",
+      "bytes": 89432
+    },
+    {
+      "path": "docs/task-evidence/Q30/scale-plan-4/check_d01.py",
+      "sha256": "f58847541571cdf829835d05c200bac6ea0079dab065d90ebdf7f44914241929",
+      "bytes": 82383
+    }
+  ],
+  "gates": "Native5, actual JDK8/GWT5, compiled A07/disabled normal, strict A07 plus three corruption canaries PASS. Baseline gates reused only under all-source/runtime equality audit.",
+  "failurePreserved": "r1 canary invocation supplied relative output path: exit2 before launch, no host receipt. Corrected absolute path r2 passes; no app or gate source changed.",
+  "limits": "Private profile, no normal acceptance, no source integration. Metadata and pair readers are reviewed but await actual profile report validation."
+}
