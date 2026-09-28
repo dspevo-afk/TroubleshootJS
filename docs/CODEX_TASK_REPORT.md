@@ -1,7 +1,7 @@
 # Current checkpoint: Q30 BLOCKED / NOT ACCEPTED
 
 Branch `codex/q30-multirail-qualification`; checkpoint base
-`3c61c792c9502b6c202e44782bdd9948dcd0bdb7` (archive-format correction).
+`2fa7dd7bec46690dce246b29eaa4d810efee2afb` (factor evidence checkpoint).
 Accepted numerical source is `ba107090e4899ca9d3a2413259c78d042d20dae1`,
 `Skip finite zero products in LU solve`. No push or completion email.
 Normal Q30 publication remains disabled. U06/U07/Q60 and later are unstarted.
@@ -72,8 +72,53 @@ hashes. [Factor evidence](task-evidence/Q30/factor-profile/README.md), inventory
 `14ebed8a7d27a8001015281f1257d3fe79f2bfe1c5518a0024f0192c204f0cc5`.
 The summary's package count comes from the request echo and audited plan/topology
 assertions; it is not a separate report enumeration. The old V8 profile has no
-per-loop positions and uses an earlier kernel. A source-only sparse work census
-is being prepared; no further optimization has been selected or integrated.
+per-loop positions and uses an earlier kernel. An isolated sparse work census
+has passed native9 (33.763 s), GWT5 (78.203 s), compiled A07/disabled-normal and
+three exact-reader negatives. Its 1,343-input fixture selects every eighth of
+the existing timer-selected calls, preserves ordinary arithmetic, and adds no
+new clock or matrix traversal. Mechanical comparison and independent source
+review PASS; the new 92-assertion contract covers oracle parity, cadence, zero-row
+rejection and partial numerical-failure cleanup. Upper scan counts use the
+expected loop width, exact for valid square matrices; malformed short-row
+mid-scan failures are outside that count claim. Fresh private off/profile cold
+times are 98.747/98.217 s; proof 69.986/69.555 s and routing 22.589/22.472 s.
+Complete non-timing parity, source/host/cleanup checks, 155 metadata corruptions
+and both strict readers with 43 corruptions each PASS. The 181 cold samples all
+succeeded: 631,958 lower probes found 71,815 nonzero entries, while empty-lower
+pivots account for only 21,659 of 631,958 upper probes (3.43%). All 11 warm samples
+also succeeded. These are operation counts, not phase durations or a speedup;
+the 530-ms off/on difference does not establish zero probe overhead. Root audited
+all 91 packet files, seven gzip payloads, four exact raw reports and the complete
+1,343-input reconstruction from its 1,342-input parent plus three overlays.
+Stale stored-hash fields and nested escaped personal paths found during packet
+review were repaired before staging. [Census evidence](task-evidence/Q30/factor-work-census-r1/README.md),
+inventory `729af22c4f4eeb57f1b3034bb0b777685f71cde15ee71769efda6bcfc1d4f993`.
+An isolated pivot-search/lower-row collection prototype follows this evidence. Its r1
+native gate FAILed in 32.854 s because the new test's success line lacked the
+maintained `PASS:` prefix, after all 388 assertions completed. R2 changes only
+that output prefix and passes native6 (33.080 s), GWT5 (78.775 s), compiled
+A07/disabled-normal and strict negatives; the failed receipt is retained.
+Independent source review found no blocker. A harness review required each timing
+row to match the tested compiled runtime; that binding was added for both arms
+before execution. Control reuse has a complete
+unchanged 1,339-source/1,525-runtime-input audit. The predeclared eight-row cold
+trial spans 20/37/40 packages with counterbalanced repeated 40-package runs.
+All eight fresh rows and four complete non-timing/strict-reader comparisons PASS.
+The two 40-package control/candidate pairs take 98.579/97.161 and 98.587/97.412 s;
+their 1.418/1.175-s gains exceed the observed 0.008/0.251-s within-arm ranges.
+Proof accounts for 1.388/1.144 s of those gains; routing is not improved.
+The 37-package pair improves 0.413 s, while the 20-package pair regresses 0.222 s.
+This supports a modest benefit for the repeated 40-package seed, not a broad
+speedup or normal acceptance. The predeclared plan's prose mislabeled seed 7
+as 35 packages; its unchanged seed actually requests 37. Preserve that original
+plan/hash and this correction. The final source edge review found no blocker:
+current owners allocate distinct rows; general aliased-row inputs could differ
+only in the sign of an underflowed zero, which the existing numerical oracle
+treats as equal. This is a static review, not a new alias test. The change is
+integrated in the working source but remains unstaged. Its 1,339-input proposed
+final-source export excludes unaccepted plan-4 and normal-verifier changes;
+native6 passes in 37.033 s, and final-source GWT/A07/root-runtime checks are
+running. Acceptance and the source commit remain pending those checks.
 
 Scale: the uncommitted plan-4 family and 77-root proposal remain NOT ACCEPTED.
 Purposeful one/two-channel topologies and functional support blocks cover
@@ -96,23 +141,43 @@ no-click 20-part case completes cold/warm proof, then correctly reports FAIL/no
 admission at `visiblePowerBoundary`; host/cleanup PASS (44.300 s, cleanup 0.824 s).
 A separate delayed click during service proof fails owner/control checks and is
 retained; it is not successful construction-boundary evidence. Two r7 screenshot
-requests timed out, so no screenshots are claimed. Actual post-DONE scope-loss
-and native hook-removal exception qualification remain outstanding. Isolated r9
+requests timed out, so no screenshots are claimed. At r8, actual post-DONE
+scope-loss and native hook-removal exception qualification were outstanding. Isolated r9
 adds an explicit post-DONE scope-withdrawal canary with a labeled 10-ms poll;
 ordinary successor polling remains 1,000 ms. Independent source review found no
-blocker; focused native/GWT gates are running on its frozen 1,340-input fixture.
-No resumable D01 draft is integrated into root.
+blocker; native5 (34.286 s) and GWT5 (79.842 s) PASS on its frozen 1,340-input
+fixture. Actual Browser scope withdrawal FAILed its predecessor-state assertion:
+the exact successor stayed RUNNING before/after lease close and every cleanup
+receipt passed, but the predecessor physical state was no longer current. The
+raw report and strict-reader failure are preserved. Source permits legitimate
+successor installation before close; the report does not identify the exact
+transition in that run. Isolated r10 instead compares the current live state
+synchronously before/after close with callback-local identity tokens, retaining
+the earlier predecessor snapshot as context. Independent source review found no
+blocker. Its frozen 1,340-input fixture passes native5 (33.923 s), GWT5 (79.767 s)
+and the actual Browser post-DONE scope-withdrawal canary. The exact successor
+remains RUNNING before/after lease close; current-state witnesses match and all
+hook, map, lease and callback release receipts pass. The strict reader and seven
+corruptions of that actual report PASS. D01 correctly remains FAIL/no-admission.
+This explicitly uses a 10-ms canary poll, not a claim about ordinary 1-second
+latency. Native hook-removal exception injection remains NOT RUN; no screenshots
+or headless-wrapper certification are claimed. No resumable D01 draft is
+integrated into root.
 
 Resources/preserved work: all completed maintained host runs released their owned
 browser/server resources. Manual tabs are closed; preview stop revalidated PID
-7564 and released port 34917. Only the isolated r9 gate sequence is running. Task-temp source
-and evidence copies remain. Previously blocked recursive cleanup is not retried;
+20332 and released port 34917 after the r10 canary (the first stop invocation
+used an unsupported parameter and was corrected). The isolated lower-collection
+r2 cold sequence has completed with owned cleanup PASS. Its final-source gate
+sequence is the only heavy run active.
+Task-temp source and evidence copies remain.
+Previously blocked recursive cleanup is not retried;
 its exact resources/reasons remain in historical checkpoints. Desktop checkout
 work, pre-existing cache files, and all unaccepted plan-4 source/tests/readers,
 normal-verifier hook/API and scale evidence remain preserved and unstaged.
 
-Next: attribute the remaining factor phases before selecting another optimization,
-measure routing's major helpers, and finish D01 lifecycle qualification.
+Next: finish the lower-collection final-source gates and secure its bounded
+result, measure routing's major helpers, and finish D01 lifecycle qualification.
 Only after normal cold timing with margin, required scale and focused gates pass
 may the full final acceptance matrix run. Q30 remains BLOCKED.
 

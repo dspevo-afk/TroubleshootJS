@@ -1,0 +1,42 @@
+{
+  "files": [
+    {
+      "bytes": 3755,
+      "path": "../factor-profile/README.md",
+      "sha256": "7743bef6c0ad05e54d2555cc1f29457cccf2c30094d645294dfd94346a8cb002"
+    },
+    {
+      "bytes": 32829,
+      "path": "../factor-profile/inventory.json",
+      "sha256": "14ebed8a7d27a8001015281f1257d3fe79f2bfe1c5518a0024f0192c204f0cc5"
+    },
+    {
+      "bytes": 82,
+      "path": "../factor-profile/inventory.sha256",
+      "sha256": "9731a131d3177251bdeaa489fec14631a18be268a5d95f580f29915d4c5782df"
+    },
+    {
+      "bytes": 895,
+      "path": "../factor-profile/source/base-reference.json",
+      "sha256": "69953cd5dc015662b44920a25a069c47ec480cfd08f162f6016ed26bc34e035a"
+    },
+    {
+      "bytes": 71678,
+      "path": "../factor-profile/source/input-hash-inventory.json.gz",
+      "sha256": "8693d921e4fa04e81dfadad2b6a65806e1352aced4dcba3f55358d8951ed8347"
+    },
+    {
+      "bytes": 73668,
+      "path": "../factor-profile/source/source-audit.json.gz",
+      "sha256": "ff66b2a886d8400f188efc873e86788ee35bbdbccea48eed724f24b98ed2a5d9"
+    },
+    {
+      "bytes": 60686,
+      "path": "../factor-profile/provenance/archive-transforms.json",
+      "sha256": "fd8cea6bf6d1aed8501c8814c9ebb43af4277164488247fde3d7f429b2544232"
+    }
+  ],
+  "inventoryInputCount": 1342,
+  "packet": "../factor-profile",
+  "schema": 1
+}

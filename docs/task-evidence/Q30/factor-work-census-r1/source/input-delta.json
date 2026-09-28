@@ -1,0 +1,35 @@
+{
+  "candidateInputCount": 1343,
+  "candidateSourceAuditSha256": "e61464def6a1da12d3dd4c9b067aa779c9c701b49eef7c3b9b7e97323070b5d6",
+  "changedOrAdded": [
+    {
+      "candidateSha256": "379880e2a17cc7846751c613ab5807c6b05d6a45b94ce3165d928be4d0903c8e",
+      "parentSha256": "69c476ef13a24f3e8b2f5e9ab340e89abeb1b1ce74f89173b5494bc64f0a0b3b",
+      "path": "scripts/verify-current-contracts.ps1",
+      "storedOverlay": "source/overlays/scripts/verify-current-contracts.ps1.gz"
+    },
+    {
+      "candidateSha256": "18a67830ea731145d8f765f16b37bccb3ef13c39798f0e387f40b303b307b479",
+      "parentSha256": "3e80f72b736084f5ab1fd67978a1221d57a8846360c1637652c787b8b4c2b698",
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "storedOverlay": "source/overlays/src/com/lushprojects/circuitjs1/client/CirSim.java.gz"
+    },
+    {
+      "candidateSha256": "c3defce392e264989b047aafb2afe4b9fd84ce84923e3a864da8d635704ea5f9",
+      "parentSha256": null,
+      "path": "tests/contracts/Q30LuFactorWorkCensusContractTest.java",
+      "storedOverlay": "source/overlays/tests/contracts/Q30LuFactorWorkCensusContractTest.java.gz"
+    }
+  ],
+  "identicalPathCount": 1340,
+  "independentOracle": {
+    "path": "../factor-profile/source/overlays/src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java.gz",
+    "role": "unchanged originalFactor/originalSolve oracle referenced by the candidate contract test",
+    "sha256": "d558d7d10706cb1da22d20f795ece6448e714be5d16315ad51a125c70b429c6c"
+  },
+  "parentInventoryInputCount": 1342,
+  "parentInventorySha256": "14ebed8a7d27a8001015281f1257d3fe79f2bfe1c5518a0024f0192c204f0cc5",
+  "parentPacket": "../factor-profile",
+  "reconstruction": "Start from the exact 1,342-input candidate inventory in the committed factor-profile packet; apply these three overlays. The resulting 1,343 relative-path input map matches the prepared source audit.",
+  "schema": 1
+}

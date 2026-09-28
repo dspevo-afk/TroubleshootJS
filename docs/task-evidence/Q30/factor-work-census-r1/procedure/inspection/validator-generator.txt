@@ -1,0 +1,395 @@
+#!/usr/bin/env python3
+"""Generate a strict factor-work-census pair validator from frozen evidence inputs.
+
+This preparer does not read run results, launch tests, or run the generated validator.
+"""
+import argparse
+import ast
+import hashlib
+import json
+import re
+from pathlib import Path
+
+
+EXPECTED_TEMPLATE_SHA256 = "386da5bf31947bc3c8a4e92a3c1713e7a0bc1f529ea5f89f1acd7dcad4adcb03"
+PROFILE_SOURCE_PATHS = (
+    "src/com/lushprojects/circuitjs1/client/CirSim.java",
+    "src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java",
+    "tests/contracts/Q30LuRepetitionProfileContractTest.java",
+    "tests/contracts/Q30LuSolveProfileContractTest.java",
+    "tests/contracts/Q30LuFactorProfileContractTest.java",
+    "tests/contracts/Q30LuFactorWorkCensusContractTest.java",
+)
+
+
+def need(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def sha256(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def canonical_sha(value, label):
+    need(isinstance(value, str) and re.fullmatch(r"[0-9a-fA-F]{64}", value) is not None,
+         label + " must be a 64-digit SHA-256 hex string")
+    return value.lower()
+
+
+def replace_once(source, old, new, label):
+    count = source.count(old)
+    need(count == 1, "{} anchor count {}, expected 1".format(label, count))
+    return source.replace(old, new, 1)
+
+
+def replace_assignment(source, name, value):
+    tree = ast.parse(source)
+    nodes = []
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and any(
+                isinstance(target, ast.Name) and target.id == name
+                for target in node.targets):
+            nodes.append(node)
+    need(len(nodes) == 1, "expected one top-level assignment for " + name)
+    node = nodes[0]
+    lines = source.splitlines(keepends=True)
+    replacement = name + " = " + repr(value) + "\n"
+    lines[node.lineno - 1:node.end_lineno] = [replacement]
+    return "".join(lines)
+
+
+def load_plan_and_audit(args):
+    template_raw = args.template.read_bytes()
+    need(sha256(template_raw) == EXPECTED_TEMPLATE_SHA256,
+         "factor-profile validator template hash changed")
+    audit_raw = args.source_audit.read_bytes()
+    audit_digest = canonical_sha(args.source_audit_sha256, "source audit SHA-256")
+    need(sha256(audit_raw) == audit_digest, "source audit SHA-256 does not match its frozen value")
+    audit = json.loads(audit_raw.decode("utf-8"))
+    need(isinstance(audit, dict) and isinstance(audit.get("inputs"), list),
+         "source audit inputs are missing")
+    need(len(audit["inputs"]) == args.source_input_count == 1343,
+         "factor-work source audit must contain the frozen 1343 inputs")
+    source_dir = args.source_path.resolve()
+    need(source_dir.is_dir(), "factor source path is not a directory")
+    input_paths = {}
+    for entry in audit["inputs"]:
+        need(isinstance(entry, dict) and isinstance(entry.get("path"), str),
+             "source audit entry is malformed")
+        rel = Path(entry["path"])
+        need(not rel.is_absolute() and ".." not in rel.parts,
+             "source audit path escapes its fixture: " + entry["path"])
+        target = (source_dir / rel).resolve()
+        need(source_dir == target or source_dir in target.parents,
+             "resolved source audit path escapes its fixture: " + entry["path"])
+        raw = target.read_bytes()
+        need(len(raw) == entry.get("bytes") and sha256(raw) == entry.get("sha256"),
+             "factor fixture source differs from its audit: " + entry["path"])
+        input_paths[entry["path"]] = entry["sha256"].lower()
+    missing = [path for path in PROFILE_SOURCE_PATHS if path not in input_paths]
+    need(not missing, "source audit omitted profiled implementation/contracts: " + ", ".join(missing))
+    need(len(input_paths) == len(audit["inputs"]), "source audit contains duplicate input paths")
+
+    plan_raw = args.plan.read_bytes()
+    plan_digest = canonical_sha(args.plan_sha256, "measurement plan SHA-256")
+    need(sha256(plan_raw) == plan_digest, "measurement plan SHA-256 does not match its frozen value")
+    plan = json.loads(plan_raw.decode("utf-8"))
+    need(plan.get("schema") == 1 and plan.get("status") == "PREDECLARED",
+         "factor-work measurement plan is not frozen PREDECLARED schema 1")
+    need(plan.get("seed") == args.seed and plan.get("requestedPackageCount") == 40 and
+         args.package_count == 40,
+         "factor-work plan must bind seed 10014 and requested package count 40")
+    expected_sequence = (
+        {"label": args.off_label, "mode": "off", "seed": args.seed},
+        {"label": args.profile_label, "mode": "profile", "seed": args.seed},
+    )
+    need(plan.get("sequence") == list(expected_sequence),
+         "factor-work plan sequence differs from exact off-then-profile labels")
+    need(args.seed == "10014", "this single-seed validator is fixed to seed 10014")
+
+    runner_raw = args.runner.read_bytes()
+    runner_digest = canonical_sha(args.runner_sha256, "runner SHA-256")
+    need(sha256(runner_raw) == runner_digest, "factor-work runner SHA-256 does not match its frozen value")
+    factor_raw = args.factor_metadata_validator.read_bytes()
+    factor_digest = canonical_sha(args.factor_metadata_sha256,
+                                  "factor metadata validator SHA-256")
+    need(sha256(factor_raw) == factor_digest,
+         "factor metadata validator SHA-256 does not match its frozen value")
+    factor_source = factor_raw.decode("utf-8")
+    factor_tree = ast.parse(factor_source)
+    factor_assignments = [node for node in factor_tree.body
+                          if isinstance(node, ast.Assign) and any(
+                              isinstance(target, ast.Name) and target.id == "LU_FACTOR_TIMING_SCOPE"
+                              for target in node.targets)]
+    need(len(factor_assignments) == 1, "factor metadata module must define one timing-scope constant")
+    old_scope = ast.literal_eval(factor_assignments[0].value)
+    expected_old_scope = (
+        "actual lu_factorNonlinearOwned(profile) call for every selected "
+        "SAMPLE_START/SAMPLE_COMPARE, including owner-mismatched compares; includes "
+        "workspace reset, zero-row preflight, LU arithmetic, and workspace clear; "
+        "excludes sample copy/compare and lu_solve; overlaps zeroRowPreflightMillis")
+    need(old_scope == expected_old_scope,
+         "factor metadata timing scope is not the exact pre-census scope")
+    scope_text = args.expanded_factor_scope
+    need(isinstance(scope_text, str) and scope_text and "\n" not in scope_text,
+         "expanded factor timing scope must be one exact nonempty source string")
+    cirsim_text = (source_dir / PROFILE_SOURCE_PATHS[0]).read_text(encoding="utf-8")
+    need(cirsim_text.count(scope_text) == 1,
+         "expanded factor timing scope does not match the audited CirSim source exactly once")
+    adapted_factor_source = replace_assignment(factor_source, "LU_FACTOR_TIMING_SCOPE", scope_text)
+    adapted_factor_raw = adapted_factor_source.encode("utf-8")
+    adapted_factor_digest = sha256(adapted_factor_raw)
+    adapted_tree = ast.parse(adapted_factor_source)
+    exports = {node.name for node in adapted_tree.body if isinstance(node, ast.FunctionDef)}
+    need({"validate", "negative_canaries"} <= exports,
+         "factor metadata module must export validate(profile) and negative_canaries(profile)")
+    census_raw = args.census_metadata_validator.read_bytes()
+    census_digest = canonical_sha(args.census_metadata_sha256,
+                                  "factor-work census metadata validator SHA-256")
+    need(sha256(census_raw) == census_digest,
+         "factor-work census metadata validator SHA-256 does not match its frozen value")
+    census_tree = ast.parse(census_raw.decode("utf-8"))
+    census_exports = {node.name for node in census_tree.body if isinstance(node, ast.FunctionDef)}
+    need({"validate", "negative_canaries"} <= census_exports,
+         "factor-work census module must export validate(profile) and negative_canaries(profile)")
+    return (template_raw.decode("utf-8"), audit, plan, input_paths, audit_digest,
+            plan_digest, runner_digest, factor_digest, adapted_factor_raw,
+            adapted_factor_digest, census_digest, scope_text)
+
+
+def generate(args):
+    (template, audit, plan, input_paths, audit_digest, plan_digest,
+     runner_digest, factor_digest, adapted_factor_raw,
+     adapted_factor_digest, census_digest, scope_text) = load_plan_and_audit(args)
+    need(args.runner.parent.resolve() == args.scratch.resolve(),
+         "runner must be a file directly in the validator scratch directory")
+    need(args.factor_metadata_validator.parent.resolve() == args.scratch.resolve(),
+         "source factor metadata module must be in the validator scratch directory")
+    need(args.census_metadata_validator.parent.resolve() == args.scratch.resolve(),
+         "factor-work census metadata module must be in the validator scratch directory")
+    need(args.adapted_factor_metadata_validator.parent.resolve() == args.scratch.resolve(),
+         "adapted factor metadata module must be in the validator scratch directory")
+    need(args.runner.name == "run_factor_work_census_pair.py",
+         "unexpected factor-work census runner name")
+    need(args.factor_metadata_validator.name == "factor-profile-metadata-validator.py",
+         "unexpected source factor metadata module name")
+    need(args.census_metadata_validator.name == "factor-work-census-metadata-validator.py",
+         "unexpected factor-work census metadata module name")
+    need(args.adapted_factor_metadata_validator.name ==
+         "factor-work-census-factor-metadata-validator.py",
+         "unexpected adapted factor metadata module name")
+    need(args.gate_file == "factor-work-census-r1-gates.json" and
+         args.sequence_file == "factor-work-census-sequence-result.json",
+         "factor-work census gate/sequence filenames differ from the frozen runner contract")
+    need(args.output.name == "validate_factor_work_census_pair.py",
+         "unexpected generated pair-validator filename")
+
+    need(re.fullmatch(r"[A-Za-z0-9._-]{1,96}", args.profile_label) is not None and
+         args.profile_label not in (".", "..") and
+         re.fullmatch(r"[A-Za-z0-9._-]{1,96}", args.off_label) is not None and
+         args.off_label not in (".", "..") and args.profile_label != args.off_label,
+         "unsafe or duplicate factor-work census run labels")
+
+    need(not args.adapted_factor_metadata_validator.exists(),
+         "refusing to overwrite adapted factor metadata module")
+
+    source = template
+    constants = {
+        "FROZEN_PLAN_SHA256": plan_digest,
+        "FROZEN_RUNNER_SHA256": runner_digest,
+        "FROZEN_PROFILE_LABEL": args.profile_label,
+        "FROZEN_OFF_LABEL": args.off_label,
+        "EXPECTED_PLAN_SEQUENCE": (
+            {"label": args.off_label, "seed": args.seed, "mode": "off"},
+            {"label": args.profile_label, "seed": args.seed, "mode": "profile"},
+        ),
+        "FROZEN_PROFILE_CANDIDATE_HASHES": {
+            path: input_paths[path] for path in PROFILE_SOURCE_PATHS
+        },
+    }
+    for name, value in constants.items():
+        source = replace_assignment(source, name, value)
+
+    dynamic_constants = (
+        "FROZEN_SEED = " + repr(args.seed) + "\n"
+        "FROZEN_REQUESTED_PACKAGE_COUNT = 40\n"
+        "FROZEN_SOURCE_AUDIT_SHA256 = " + repr(audit_digest) + "\n"
+        "FROZEN_SOURCE_INPUT_COUNT = " + repr(args.source_input_count) + "\n"
+        "FROZEN_FACTOR_METADATA_SHA256 = " + repr(adapted_factor_digest) + "\n"
+        "FROZEN_CENSUS_METADATA_SHA256 = " + repr(census_digest) + "\n"
+        "FACTOR_TIMING_SCOPE = " + repr(scope_text) + "\n"
+        "SOURCE_DIR = Path(" + repr(str(args.source_path.resolve())) + ")\n"
+        "SOURCE_AUDIT_PATH = Path(" + repr(str(args.source_audit.resolve())) + ")\n"
+        "RUNNER_FILENAME = " + repr(args.runner.name) + "\n"
+        "SEQUENCE_FILENAME = " + repr(args.sequence_file) + "\n"
+        "GATE_FILENAME = " + repr(args.gate_file) + "\n"
+        "FACTOR_METADATA_FILENAME = " + repr(args.adapted_factor_metadata_validator.name) + "\n"
+        "CENSUS_METADATA_FILENAME = " + repr(args.census_metadata_validator.name) + "\n"
+        "factor_module = None\n"
+        "census_module = None\n\n"
+    )
+    source = replace_once(source, "\n\ndef need(condition, message):",
+                          "\n\n" + dynamic_constants + "def need(condition, message):",
+                          "dynamic profile constants")
+
+    replacements = (
+        ('    global solve_module, factor_module\n',
+         '    global solve_module, factor_module, census_module\n', "module globals"),
+        ('    factor_spec.loader.exec_module(factor_module)\n    candidate_hashes = {}',
+         '    factor_spec.loader.exec_module(factor_module)\n'
+         '    census_module_path = scratch / CENSUS_METADATA_FILENAME\n'
+         '    census_module_digest = sha256(census_module_path.read_bytes())\n'
+         '    need(census_module_digest == FROZEN_CENSUS_METADATA_SHA256, "factor-work census metadata module changed")\n'
+         '    census_spec = importlib.util.spec_from_file_location("factor_work_census_metadata", census_module_path)\n'
+         '    need(census_spec is not None and census_spec.loader is not None, "could not load factor-work census metadata validator")\n'
+         '    census_module = importlib.util.module_from_spec(census_spec)\n'
+         '    census_spec.loader.exec_module(census_module)\n'
+         '    candidate_hashes = {}', "census module import"),
+        ('        "factorMetadataModuleSha256": factor_module_digest,',
+         '        "factorMetadataModuleSha256": factor_module_digest,\n'
+         '        "factorWorkCensusMetadataModulePath": census_module_path.name,\n'
+         '        "factorWorkCensusMetadataModuleSha256": census_module_digest,',
+         "census module dependency binding"),
+        ('                row["samplerSummary"][phase]["factor"] = factor_module.validate(\n'
+         '                    report[phase]["luRepetitionProfile"])',
+         '                row["samplerSummary"][phase]["factor"] = factor_module.validate(\n'
+         '                    report[phase]["luRepetitionProfile"])\n'
+         '                row["samplerSummary"][phase]["factorWorkCensus"] = census_module.validate(\n'
+         '                    report[phase]["luRepetitionProfile"])',
+         "factor-work census validation call"),
+        ('        metadata_canaries.extend(factor_module.negative_canaries(profile))',
+         '        metadata_canaries.extend(factor_module.negative_canaries(profile))\n'
+         '        metadata_canaries.extend(census_module.negative_canaries(profile))',
+         "factor-work census negative canaries"),
+    )
+    for old, new, label in replacements:
+        source = replace_once(source, old, new, label)
+
+    source = replace_once(
+        source,
+        '"One off/profile pair cannot prove population performance"',
+        '"One off/profile pair does not establish zero probe overhead or population performance"',
+        "factor-work census plan limitation")
+
+    source = source.replace("factor-profile-validation", "factor-work-census-validation")
+    need("factor-work-census-validation" in source,
+         "factor-work census summary filename adaptation was not applied")
+    source = source.replace(
+        "single-seed complete-factor instrumentation only; not production acceptance or a speed claim",
+        "single-seed LU factor work census instrumentation only; counts are not time, not production acceptance or a speed claim")
+    need("single-seed LU factor work census instrumentation only" in source,
+         "factor-work census summary purpose was not applied")
+
+    source = replace_once(source,
+                          '        "zeroRowPreflightTimerScope": PREFLIGHT_TIMING_SCOPE,\n',
+                          '        "zeroRowPreflightTimerScope": PREFLIGHT_TIMING_SCOPE,\n'
+                          '        "wholeFactorTimerScope": FACTOR_TIMING_SCOPE,\n',
+                          "expanded whole-factor scope summary")
+
+    off_absence_function = '''def validate_off_factor_work_census_absence(report):
+    for phase in ("cold", "warm"):
+        phase_report = report.get(phase)
+        need(isinstance(phase_report, dict), "mode-off " + phase + " report is missing")
+        profile = phase_report.get("luRepetitionProfile")
+        if profile is not None:
+            need(isinstance(profile, dict), "mode-off " + phase + " repetition profile is malformed")
+            need("factorWorkCensus" not in profile,
+                 "mode-off " + phase + " unexpectedly contains factorWorkCensus")
+    return {"status": "ABSENT_AS_REQUIRED", "phases": ["cold", "warm"]}
+
+
+'''
+    source = replace_once(source, "def validate_pair(args, helper, dependency_binding, plan, plan_digest):",
+                          off_absence_function + "def validate_pair(args, helper, dependency_binding, plan, plan_digest):",
+                          "mode-off census absence validator insertion")
+    source = replace_once(source,
+                          '    ]\n    for row, label, enabled in zip(rows, (profile_label, off_label), (True, False)):\n',
+                          '    ]\n'
+                          '    off_census_absence = validate_off_factor_work_census_absence(rows[1]["report"])\n'
+                          '    for row, label, enabled in zip(rows, (profile_label, off_label), (True, False)):\n',
+                          "mode-off census absence assertion")
+    source = replace_once(source, '        "packageCount40ValidatedInBothReports": True,\n',
+                          '        "packageCount40ValidatedInBothReports": True,\n'
+                          '        "modeOffFactorWorkCensusAbsence": off_census_absence,\n',
+                          "mode-off census absence summary")
+
+    need("factor_module.validate(" in source and
+         "factor_module.negative_canaries(profile)" in source and
+         "census_module.validate(" in source and
+         "census_module.negative_canaries(profile)" in source and
+         "FROZEN_CENSUS_METADATA_SHA256" in source and
+         "FROZEN_SOURCE_AUDIT_SHA256" in source and
+         "FROZEN_FACTOR_METADATA_SHA256" in source,
+         "generated validator is missing required factor/census/source identity checks")
+    ast.parse(source, filename=str(args.output))
+    need(not args.output.exists(), "refusing to overwrite generated validator")
+    need(not args.adapted_factor_metadata_validator.exists(),
+         "refusing to overwrite adapted factor metadata module")
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    raw = source.encode("utf-8")
+    args.adapted_factor_metadata_validator.write_bytes(adapted_factor_raw)
+    args.output.write_bytes(raw)
+    return {
+        "status": "GENERATED_NOT_EXECUTED",
+        "output": args.output.name,
+        "outputSha256": sha256(raw),
+        "templateSha256": sha256(args.template.read_bytes()),
+        "sourcePath": str(args.source_path.resolve()),
+        "sourceAuditSha256": audit_digest,
+        "sourceInputCount": len(audit["inputs"]),
+        "planSha256": plan_digest,
+        "runnerSha256": runner_digest,
+        "sourceFactorMetadataValidatorSha256": factor_digest,
+        "adaptedFactorMetadataValidatorSha256": adapted_factor_digest,
+        "factorWorkCensusMetadataValidatorSha256": census_digest,
+        "expandedFactorTimingScope": scope_text,
+        "profileLabel": args.profile_label,
+        "offLabel": args.off_label,
+        "seed": args.seed,
+        "requestedPackageCount": 40,
+    }
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--scratch", type=Path, required=True)
+    parser.add_argument("--template", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--source-path", type=Path, required=True)
+    parser.add_argument("--source-audit", type=Path, required=True)
+    parser.add_argument("--source-audit-sha256", required=True)
+    parser.add_argument("--source-input-count", type=int, required=True)
+    parser.add_argument("--plan", type=Path, required=True)
+    parser.add_argument("--plan-sha256", required=True)
+    parser.add_argument("--runner", type=Path, required=True)
+    parser.add_argument("--runner-sha256", required=True)
+    parser.add_argument("--factor-metadata-validator", type=Path, required=True)
+    parser.add_argument("--factor-metadata-sha256", required=True)
+    parser.add_argument("--adapted-factor-metadata-validator", type=Path, required=True)
+    parser.add_argument("--expanded-factor-scope", required=True)
+    parser.add_argument("--census-metadata-validator", type=Path, required=True)
+    parser.add_argument("--census-metadata-sha256", required=True)
+    parser.add_argument("--seed", required=True)
+    parser.add_argument("--profile-label", required=True)
+    parser.add_argument("--off-label", required=True)
+    parser.add_argument("--package-count", type=int, default=40)
+    parser.add_argument("--gate-file", default="factor-work-census-r1-gates.json")
+    parser.add_argument("--sequence-file", default="factor-work-census-sequence-result.json")
+    args = parser.parse_args()
+    for name in ("scratch", "template", "output", "source_path", "source_audit",
+                 "plan", "runner", "factor_metadata_validator",
+                 "adapted_factor_metadata_validator", "census_metadata_validator"):
+        value = getattr(args, name)
+        setattr(args, name, value.resolve())
+    need(args.output.parent == args.scratch and
+         args.adapted_factor_metadata_validator.parent == args.scratch,
+         "generated validator output must be directly under scratch")
+    need(args.scratch.is_dir(), "scratch directory is missing")
+    result = generate(args)
+    print(json.dumps(result, ensure_ascii=False, separators=(",", ":")))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

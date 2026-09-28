@@ -1,0 +1,46 @@
+{
+  "label": "factor-work-census-02-profile-10014",
+  "mode": "profile",
+  "exitCode": 0,
+  "hostMonotonicSeconds": 129.98648279999907,
+  "wallMinusMonotonicSeconds": 4.588611773215234e-06,
+  "runnerOutcome": "PASS",
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 0.8503347999940161,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "reportSha256": "1e67e989abfbaed59c6d490f43d8cf9cd39272cb1d4f73d7ca101912df9eb1d9",
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "99aab9d5f6cee3da58c6ee5147c9e539da9ffab00e7f13a3f1d54f311b2e26aa",
+    "afterSha256": "99aab9d5f6cee3da58c6ee5147c9e539da9ffab00e7f13a3f1d54f311b2e26aa",
+    "sourceSha256Before": "8254d6a1093f36d6b70e609ef6efcd62a2958829c256047d1be531d6539ea262",
+    "sourceSha256After": "8254d6a1093f36d6b70e609ef6efcd62a2958829c256047d1be531d6539ea262",
+    "webSha256Before": "2802f107e10d4417c9998b46e981c3a199ab09513ba50e0ec1241b8f68ea1646",
+    "webSha256After": "2802f107e10d4417c9998b46e981c3a199ab09513ba50e0ec1241b8f68ea1646",
+    "runnerBeforeSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+    "runnerAfterSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+    "fileCountBefore": 1525,
+    "fileCountAfter": 1525,
+    "seconds": 0.3523101000027964
+  },
+  "cold": {
+    "elapsedMs": 98217,
+    "proofElapsedMs": 69555,
+    "routingElapsedMs": 22472,
+    "totalWork": 490,
+    "hypothesisWork": 390,
+    "cleanupComplete": true
+  },
+  "warm": {
+    "elapsedMs": 28560,
+    "proofElapsedMs": 0,
+    "routingElapsedMs": 22485,
+    "totalWork": 101,
+    "hypothesisWork": 1,
+    "cleanupComplete": true
+  }
+}

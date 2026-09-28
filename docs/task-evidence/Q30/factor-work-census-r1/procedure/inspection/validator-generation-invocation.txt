@@ -1,0 +1,33 @@
+from pathlib import Path
+import hashlib,json,re,subprocess,sys
+s=Path(__file__).resolve().parent
+prep=s/'scratch/factor-work-census-r1-preparation'
+source=prep/'fixture'
+text=(source/'src/com/lushprojects/circuitjs1/client/CirSim.java').read_text(encoding='utf-8')
+matches=re.findall(r'result\.put\("luFactorTimingScope", new JSONString\(\s*"([^"]+)"\)\);',text)
+assert len(matches)==1
+command=[sys.executable,'-B',str(s/'scratchroot/prepare_factor_work_validator.py')]
+args={
+ 'scratch':s,'template':s/'validate_factor_profile_pair_root.py',
+ 'output':s/'validate_factor_work_census_pair.py',
+ 'source-path':source,'source-audit':prep/'source-audit.json',
+ 'source-audit-sha256':'e61464def6a1da12d3dd4c9b067aa779c9c701b49eef7c3b9b7e97323070b5d6',
+ 'source-input-count':1343,'plan':s/'factor-work-census-measurement-plan.json',
+ 'plan-sha256':'583af9363d2c0e947d3d46bc1630267fa15aa1656291e1ea5b7259f419aa2823',
+ 'runner':s/'run_factor_work_census_pair.py',
+ 'runner-sha256':'65e5d9c6304a03ef08941c57e53f74d22e9b526abca245d9d736a0f63e4efca3',
+ 'factor-metadata-validator':s/'factor-profile-metadata-validator.py',
+ 'factor-metadata-sha256':'abd0a4352f2505055f36ac16ba0987eae102c8cb8381378c909a842978a6d490',
+ 'adapted-factor-metadata-validator':s/'factor-work-census-factor-metadata-validator.py',
+ 'expanded-factor-scope':matches[0],
+ 'census-metadata-validator':s/'factor-work-census-metadata-validator.py',
+ 'census-metadata-sha256':'c781479a7b5ba8410846c4d8d3919b1884c1ba9ccb00466c7fae00dfdf78953e',
+ 'seed':'10014','profile-label':'factor-work-census-02-profile-10014',
+ 'off-label':'factor-work-census-01-off-10014'
+}
+for key,value in args.items():command.extend(['--'+key,str(value)])
+p=subprocess.run(command,text=True,capture_output=True)
+receipt=s/'factor-work-census-validator-generation-root.json'
+assert not receipt.exists()
+receipt.write_text(json.dumps({'command':command,'generatorSha256':hashlib.sha256(Path(command[2]).read_bytes()).hexdigest(),'exitCode':p.returncode,'stdout':p.stdout,'stderr':p.stderr},indent=2)+'\n',encoding='utf-8')
+print(p.stdout,end='');print(p.stderr,end='');sys.exit(p.returncode)

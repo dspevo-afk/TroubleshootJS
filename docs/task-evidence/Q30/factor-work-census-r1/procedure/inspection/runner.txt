@@ -1,0 +1,65 @@
+from pathlib import Path
+import hashlib,json,subprocess,sys,time
+s=Path(__file__).resolve().parent
+repo=Path('<REDACTED_PERSONAL_PATH>codex/worktrees/q30-multirail-qualification/TroubleshootJS')
+source=Path((s/'factor-work-census-source-path.txt').read_text(encoding='utf-8'))
+def sha(raw):return hashlib.sha256(raw).hexdigest()
+plan_raw=(s/'factor-work-census-measurement-plan.json').read_bytes()
+assert sha(plan_raw)=='583af9363d2c0e947d3d46bc1630267fa15aa1656291e1ea5b7259f419aa2823'
+plan=json.loads(plan_raw)
+expected=[{'label':'factor-work-census-01-off-10014','mode':'off','seed':'10014'},{'label':'factor-work-census-02-profile-10014','mode':'profile','seed':'10014'}]
+assert plan['sequence']==expected
+audit_raw=(source.parent/'source-audit.json').read_bytes()
+assert sha(audit_raw)=='e61464def6a1da12d3dd4c9b067aa779c9c701b49eef7c3b9b7e97323070b5d6'
+audit=json.loads(audit_raw)
+gate_raw=(s/'factor-work-census-r1-gates.json').read_bytes();gates=json.loads(gate_raw)
+assert gates['status']=='FOCUSED_GATES_PASS_NOT_ACCEPTANCE' and len(gates['steps'])==4
+assert all(r['exitCode']==0 for r in gates['steps'])
+assert gates['sourceAuditSha256']==sha(audit_raw)
+runner=repo/'tests/browser/compiled_attribute_acceptance.py'
+assert sha(runner.read_bytes())=='1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4'
+outcome=s/'factor-work-census-sequence-result.json';assert not outcome.exists()
+result={'status':'RUNNING','planSha256':sha(plan_raw),'gatesSha256':sha(gate_raw),'sourceAuditSha256':sha(audit_raw),'runnerSha256':sha(runner.read_bytes()),'hostDriverSha256':sha(Path(__file__).read_bytes()),'rows':[],'notRun':[r['label'] for r in expected]}
+def save():outcome.write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
+def unchanged():
+ for entry in audit['inputs']:
+  raw=(source/entry['path']).read_bytes()
+  assert sha(raw)==entry['sha256'] and len(raw)==entry['bytes'],entry['path']
+ assert sha(runner.read_bytes())==result['runnerSha256']
+def hostcheck(out,summary):
+ host=json.loads((out/'result.json').read_bytes())
+ assert summary['exitCode']==0 and host['outcome']=='PASS' and host['inputAudit']['status']=='PASS'
+ c=host['cleanup'];assert c['status']=='PASS' and c['serverStopped'] and not c['errors'] and not c['ownedSurvivors']
+ assert len(host['cases'])==1
+ row=host['cases'][0]
+ assert row['outcome']=='PASS' and row['terminalReached'] and row['stateMatch'] and row['reportObserved'] and row['reportJsonValid'] and row['reportMatch']
+ assert not row['timedOut'] and not row['navigationError']
+ for name in ('pageErrors','httpErrors','consoleErrors','attributeReadErrors','listenerCleanupErrors'):assert row[name]==[],name
+ raw=(out/row['reportFile']).read_bytes();assert sha(raw)==row['reportSha256'] and len(raw)==row['reportLength']
+ d=json.loads(raw);assert d['seed']=='10014' and d['requestedSeed']=='10014'
+ summary.update({'runnerOutcome':host['outcome'],'cleanup':c,'reportSha256':sha(raw),'inputAudit':host['inputAudit']})
+ for phase in ('cold','warm'):
+  summary[phase]={k:d[phase].get(k) for k in ('elapsedMs','proofElapsedMs','routingElapsedMs','totalWork','hypothesisWork','cleanupComplete')}
+ return {key:host['inputAudit'][key] for key in ('beforeSha256','sourceSha256Before','webSha256Before','runnerBeforeSha256','fileCountBefore')}
+save();identities=[]
+try:
+ for row in expected:
+  unchanged();label=row['label'];out=s/label;spec=s/(label+'-spec.json');summ=s/(label+'-summary.json')
+  assert not out.exists() and not spec.exists() and not summ.exists()
+  query='&tsjQ30LuRepetitionProfile=true' if row['mode']=='profile' else ''
+  case={'name':label,'path':'circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=10014'+query,'stateAttribute':'data-tsj-q30-coordinator-state','expectedState':'PASS:complete','reportAttribute':'data-tsj-q30-coordinator-report','timeoutSeconds':600}
+  spec.write_text(json.dumps({'cases':[case]},indent=2)+'\n',encoding='utf-8')
+  print('START '+label,flush=True);wall=time.time();mono=time.monotonic()
+  with (s/(label+'.log')).open('w',encoding='utf-8') as log:
+   p=subprocess.run([sys.executable,'-B',str(runner),str(source),str(out),str(spec)],stdout=log,stderr=subprocess.STDOUT)
+  elapsed=time.monotonic()-mono
+  summary={'label':label,'mode':row['mode'],'exitCode':p.returncode,'hostMonotonicSeconds':elapsed,'wallMinusMonotonicSeconds':time.time()-wall-elapsed}
+  summ.write_text(json.dumps(summary,indent=2)+'\n',encoding='utf-8')
+  identities.append(hostcheck(out,summary));unchanged()
+  summ.write_text(json.dumps(summary,indent=2)+'\n',encoding='utf-8')
+  result['rows'].append(summary);result['notRun'].remove(label);save()
+  print(json.dumps(summary),flush=True)
+ assert identities[0]==identities[1]
+ result['status']='HOST_CAPTURE_PASS_PENDING_STRICT_PROFILE_VALIDATION';save();print(result['status'],flush=True)
+except BaseException as error:
+ result['status']='STOPPED_FAILURE';result['failure']=str(error);save();raise

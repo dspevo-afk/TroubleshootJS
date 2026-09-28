@@ -1,0 +1,66 @@
+{
+  "status": "FOCUSED_GATES_PASS_NOT_ACCEPTANCE",
+  "scope": "isolated selected-factor work-census gates; not Q30 acceptance",
+  "sourceAuditSha256": "e61464def6a1da12d3dd4c9b067aa779c9c701b49eef7c3b9b7e97323070b5d6",
+  "steps": [
+    {
+      "name": "native9",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "<REDACTED_PERSONAL_PATH>ppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\native-factor-work-census.ps1",
+        "-SourceRoot",
+        "<REDACTED_PERSONAL_PATH>ppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\scratch\\factor-work-census-r1-preparation\\fixture",
+        "-Label",
+        "native-factor-work-census-r1"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 33.983035199998994
+    },
+    {
+      "name": "gwt5",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "<REDACTED_PERSONAL_PATH>ppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\build-run.ps1",
+        "-SourceRoot",
+        "<REDACTED_PERSONAL_PATH>ppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\scratch\\factor-work-census-r1-preparation\\fixture",
+        "-Label",
+        "factor-work-census-r1-gwt"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 78.44996800000081
+    },
+    {
+      "name": "compiled-a07-disabled-normal",
+      "command": [
+        "<REDACTED_PERSONAL_PATH>ppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+        "-B",
+        "<REDACTED_PERSONAL_PATH>ppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\run_current_solver_canaries.py",
+        "<REDACTED_PERSONAL_PATH>codex\\worktrees\\q30-multirail-qualification\\TroubleshootJS",
+        "<REDACTED_PERSONAL_PATH>ppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb",
+        "<REDACTED_PERSONAL_PATH>ppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\scratch\\factor-work-census-r1-preparation\\fixture",
+        "factor-work-census-r1-canaries"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 6.168245300010312
+    },
+    {
+      "name": "exact-a07-reader-three-corruptions",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "<REDACTED_PERSONAL_PATH>ppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\read_a07.ps1",
+        "-Repo",
+        "<REDACTED_PERSONAL_PATH>codex\\worktrees\\q30-multirail-qualification\\TroubleshootJS",
+        "-Report",
+        "<REDACTED_PERSONAL_PATH>ppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\factor-work-census-r1-canaries\\cases\\001-factor-work-census-r1-canaries-a07.report.json"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.6045194000034826
+    }
+  ]
+}

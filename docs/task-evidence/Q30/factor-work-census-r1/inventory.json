@@ -1,0 +1,941 @@
+{
+  "inventoryScope": "every file except inventory.json and inventory.sha256",
+  "items": [
+    {
+      "bytes": 4279,
+      "path": "README.md",
+      "redactions": 0,
+      "sha256": "b69af31c7c681864ae401820ddcdf1dd8f8668c11812ec803329cefe81e93358",
+      "sourceBytes": 4279,
+      "sourceLabel": "generated packet README",
+      "sourceSha256": "b69af31c7c681864ae401820ddcdf1dd8f8668c11812ec803329cefe81e93358",
+      "storedSha256": "b69af31c7c681864ae401820ddcdf1dd8f8668c11812ec803329cefe81e93358",
+      "transform": "generated-markdown"
+    },
+    {
+      "bytes": 873,
+      "path": "gates/compiled-canaries-spec.json",
+      "redactions": 0,
+      "sha256": "a06f1dd5151939111c8f399aca47806ec970154ff7a7fc725d6ef3735e0e50ee",
+      "sourceLabel": "factor-work-census-r1-canaries-spec.json",
+      "sourceSha256": "a06f1dd5151939111c8f399aca47806ec970154ff7a7fc725d6ef3735e0e50ee",
+      "storedSha256": "a06f1dd5151939111c8f399aca47806ec970154ff7a7fc725d6ef3735e0e50ee",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 238,
+      "path": "gates/compiled-canaries-summary.json",
+      "redactions": 0,
+      "sha256": "58fee3114da1d2d4198479a98a42c36b549469700f04d4675bf1a4043bc8acf7",
+      "sourceLabel": "factor-work-census-r1-canaries-summary.json",
+      "sourceSha256": "58fee3114da1d2d4198479a98a42c36b549469700f04d4675bf1a4043bc8acf7",
+      "storedSha256": "58fee3114da1d2d4198479a98a42c36b549469700f04d4675bf1a4043bc8acf7",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 122,
+      "path": "gates/compiled-canaries.log",
+      "redactions": 0,
+      "sha256": "cbd665c722263f1e88cfc512afa3a62dbbf353055644be557dafec4fa0953352",
+      "sourceLabel": "factor-work-census-r1-canaries.log",
+      "sourceSha256": "cbd665c722263f1e88cfc512afa3a62dbbf353055644be557dafec4fa0953352",
+      "storedSha256": "cbd665c722263f1e88cfc512afa3a62dbbf353055644be557dafec4fa0953352",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 2968,
+      "path": "gates/focused-gates.json",
+      "redactions": 12,
+      "sha256": "566b1a8800361497deaf4cb4fb15c00a41cbc26b002d1e8c2efeb3e84406e818",
+      "sourceLabel": "factor-work-census-r1-gates.json",
+      "sourceSha256": "44a40cf8454eefa05e4120d7a45dd9744773ac3b0c83c6af0c6c33cc0dbd185d",
+      "storedSha256": "566b1a8800361497deaf4cb4fb15c00a41cbc26b002d1e8c2efeb3e84406e818",
+      "transform": "personal-path-redaction"
+    },
+    {
+      "bytes": 272,
+      "path": "gates/gwt-receipt.json",
+      "redactions": 0,
+      "sha256": "df0d4dbbc150d9a0f77b4fc95ba00ce35a45c4a97bb4bb9d7515ef7ed3277e35",
+      "sourceLabel": "factor-work-census-r1-gwt.json",
+      "sourceSha256": "df0d4dbbc150d9a0f77b4fc95ba00ce35a45c4a97bb4bb9d7515ef7ed3277e35",
+      "storedSha256": "df0d4dbbc150d9a0f77b4fc95ba00ce35a45c4a97bb4bb9d7515ef7ed3277e35",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 1333,
+      "path": "gates/gwt.log",
+      "redactions": 1,
+      "sha256": "a61eac7d73abefd235107b4dce74ed4253ddf5cecdc2a31e84482b7e25267f0a",
+      "sourceLabel": "factor-work-census-r1-gwt.log",
+      "sourceSha256": "b86b3cad4b62c3267ec90c330f99d819e3c7d65fbae8e58e0604d796f668e5ad",
+      "storedSha256": "a61eac7d73abefd235107b4dce74ed4253ddf5cecdc2a31e84482b7e25267f0a",
+      "transform": "personal-path-redaction"
+    },
+    {
+      "bytes": 2841,
+      "path": "gates/measurement-plan.json",
+      "redactions": 0,
+      "sha256": "583af9363d2c0e947d3d46bc1630267fa15aa1656291e1ea5b7259f419aa2823",
+      "sourceLabel": "factor-work-census-measurement-plan.json",
+      "sourceSha256": "583af9363d2c0e947d3d46bc1630267fa15aa1656291e1ea5b7259f419aa2823",
+      "storedSha256": "583af9363d2c0e947d3d46bc1630267fa15aa1656291e1ea5b7259f419aa2823",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 751,
+      "path": "gates/native-receipt.txt",
+      "redactions": 0,
+      "sha256": "ced9dafce431f585c27b44180221e25c83614565c7c9c50f4d2de988eccb02fb",
+      "sourceLabel": "native-factor-work-census-r1-receipt.txt",
+      "sourceSha256": "ced9dafce431f585c27b44180221e25c83614565c7c9c50f4d2de988eccb02fb",
+      "storedSha256": "ced9dafce431f585c27b44180221e25c83614565c7c9c50f4d2de988eccb02fb",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 629,
+      "path": "gates/native-result.json",
+      "redactions": 0,
+      "sha256": "e8b5f2724fff9be79dab08ff44f2dae5c6562a287dfb640ade175d3104b8f9d9",
+      "sourceLabel": "native-factor-work-census-r1.json",
+      "sourceSha256": "e8b5f2724fff9be79dab08ff44f2dae5c6562a287dfb640ade175d3104b8f9d9",
+      "storedSha256": "e8b5f2724fff9be79dab08ff44f2dae5c6562a287dfb640ade175d3104b8f9d9",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 4707,
+      "path": "gates/native.log",
+      "redactions": 0,
+      "sha256": "bae26b6377127da3d9fcc160212dc6c88c21d5ac526981ce0c12a7d846a903f5",
+      "sourceLabel": "native-factor-work-census-r1.log",
+      "sourceSha256": "bae26b6377127da3d9fcc160212dc6c88c21d5ac526981ce0c12a7d846a903f5",
+      "storedSha256": "bae26b6377127da3d9fcc160212dc6c88c21d5ac526981ce0c12a7d846a903f5",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 3448,
+      "path": "gates/validator-generation.json",
+      "redactions": 13,
+      "sha256": "cacc91ea2ed78a2d2bc830d98a5667a9b683357418279a087abf5aa4265ad484",
+      "sourceLabel": "factor-work-census-validator-generation-root.json",
+      "sourceSha256": "b77d6254442c36926846685f6ca1ffc19fad895e6c765281c3388c594ac9ee68",
+      "storedSha256": "cacc91ea2ed78a2d2bc830d98a5667a9b683357418279a087abf5aa4265ad484",
+      "transform": "personal-path-redaction"
+    },
+    {
+      "bytes": 1483,
+      "path": "procedure/inspection/a07-reader.txt",
+      "redactions": 0,
+      "sha256": "eea365306493418263f901c145715dddec4ea2901e5ac1176305b93c36943368",
+      "sourceLabel": "read_a07.ps1",
+      "sourceSha256": "eea365306493418263f901c145715dddec4ea2901e5ac1176305b93c36943368",
+      "storedSha256": "eea365306493418263f901c145715dddec4ea2901e5ac1176305b93c36943368",
+      "transform": "inspection-copy;LF;one-terminal-newline"
+    },
+    {
+      "bytes": 1200,
+      "path": "procedure/inspection/compiled-canary-runner.txt",
+      "redactions": 0,
+      "sha256": "62f98058d12f94f0ac1cb0544454aef4cd2ec86ac210619fbcfafeac3974b807",
+      "sourceLabel": "run_current_solver_canaries.py",
+      "sourceSha256": "62f98058d12f94f0ac1cb0544454aef4cd2ec86ac210619fbcfafeac3974b807",
+      "storedSha256": "62f98058d12f94f0ac1cb0544454aef4cd2ec86ac210619fbcfafeac3974b807",
+      "transform": "inspection-copy;LF;one-terminal-newline"
+    },
+    {
+      "bytes": 11177,
+      "path": "procedure/inspection/factor-metadata-helper.txt",
+      "redactions": 0,
+      "sha256": "09654f6eae1c4e073355c5eb3cbe711ebdbc0ec5ddfa405912531e4294519cdd",
+      "sourceLabel": "factor-work-census-factor-metadata-validator.py",
+      "sourceSha256": "3b7d2d8b7b0b0ab8d11d8958ef3ab0e4bb03944666a1c0b9c5597773ee0897ba",
+      "storedSha256": "09654f6eae1c4e073355c5eb3cbe711ebdbc0ec5ddfa405912531e4294519cdd",
+      "transform": "inspection-copy;LF;one-terminal-newline"
+    },
+    {
+      "bytes": 1062,
+      "path": "procedure/inspection/gwt-gate-runner.txt",
+      "redactions": 1,
+      "sha256": "b1cfcbfd497b4e4c48854783b7e4118a452c40b032fcd0f86f5a087c279d79b6",
+      "sourceLabel": "build-run.ps1",
+      "sourceSha256": "5bde61d081264e189e8232d2668a8a6ca3c045aa8323b10476923b1f172889a4",
+      "storedSha256": "b1cfcbfd497b4e4c48854783b7e4118a452c40b032fcd0f86f5a087c279d79b6",
+      "transform": "inspection-copy;LF;one-terminal-newline;personal-path-redaction"
+    },
+    {
+      "bytes": 2312,
+      "path": "procedure/inspection/independent-source-review.txt",
+      "redactions": 0,
+      "sha256": "915f3c4934053e1490409663b4f1565e4e1cd111cf4fcf851b5994464f5d70dd",
+      "sourceLabel": "factor-work-census-independent-review.md",
+      "sourceSha256": "884607b1f349fc83057a2dda7cf9235da81b24a0d33c179db9bbd71dea96e3f7",
+      "storedSha256": "915f3c4934053e1490409663b4f1565e4e1cd111cf4fcf851b5994464f5d70dd",
+      "transform": "inspection-copy;LF;one-terminal-newline"
+    },
+    {
+      "bytes": 2154,
+      "path": "procedure/inspection/independent-validator-review.txt",
+      "redactions": 0,
+      "sha256": "70b6ae3322d256fce6ec920b8e2f69cc5e565b54a3614a7e599896e879cce4b9",
+      "sourceLabel": "factor-work-census-validator-review.md",
+      "sourceSha256": "f6862acd243d13c2c37e83c8f1b5c7dc7cb397706636d04087b4c31efff59a27",
+      "storedSha256": "70b6ae3322d256fce6ec920b8e2f69cc5e565b54a3614a7e599896e879cce4b9",
+      "transform": "inspection-copy;LF;one-terminal-newline"
+    },
+    {
+      "bytes": 2846,
+      "path": "procedure/inspection/legacy-canary-checker.txt",
+      "redactions": 0,
+      "sha256": "a776cfa51880a2a13d87e4cf5be7daa28ee1897213cbf522d13cdb13f27c1342",
+      "sourceLabel": "check_lu_sampler_metadata_canaries.py",
+      "sourceSha256": "a776cfa51880a2a13d87e4cf5be7daa28ee1897213cbf522d13cdb13f27c1342",
+      "storedSha256": "a776cfa51880a2a13d87e4cf5be7daa28ee1897213cbf522d13cdb13f27c1342",
+      "transform": "inspection-copy;LF;one-terminal-newline"
+    },
+    {
+      "bytes": 2425,
+      "path": "procedure/inspection/legacy-canary-receipt.txt",
+      "redactions": 0,
+      "sha256": "e33429c28a11ee338dacddc6418785c9a74d57749684a9db7da648745d4ed707",
+      "sourceLabel": "lu-sampler-metadata-canaries.json",
+      "sourceSha256": "a4a4850853716795848026863c8164a0149980a94155ae6a5413de38c2860d25",
+      "storedSha256": "e33429c28a11ee338dacddc6418785c9a74d57749684a9db7da648745d4ed707",
+      "transform": "inspection-copy;LF;one-terminal-newline"
+    },
+    {
+      "bytes": 28145,
+      "path": "procedure/inspection/legacy-profile-validator.txt",
+      "redactions": 2,
+      "sha256": "dfb100945cc65896f8d579bacd5e633c87c21c71ffd71051cbabbc3eebf18fac",
+      "sourceLabel": "validate_lu_repetition_pair.py",
+      "sourceSha256": "56d11822c0456ef4372bfa7cdfc0f3d79965e6aa895fcfd665e0d4a8b72da312",
+      "storedSha256": "dfb100945cc65896f8d579bacd5e633c87c21c71ffd71051cbabbc3eebf18fac",
+      "transform": "inspection-copy;LF;one-terminal-newline;personal-path-redaction"
+    },
+    {
+      "bytes": 3737,
+      "path": "procedure/inspection/metadata-contract.txt",
+      "redactions": 0,
+      "sha256": "e8cc93773f0f8ac4080258d397ef4372f0e576f0348e6c28c34937184988a786",
+      "sourceLabel": "factor-work-census-metadata-validator.md",
+      "sourceSha256": "e8cc93773f0f8ac4080258d397ef4372f0e576f0348e6c28c34937184988a786",
+      "storedSha256": "e8cc93773f0f8ac4080258d397ef4372f0e576f0348e6c28c34937184988a786",
+      "transform": "inspection-copy;LF;one-terminal-newline"
+    },
+    {
+      "bytes": 1428,
+      "path": "procedure/inspection/native-gate-runner.txt",
+      "redactions": 1,
+      "sha256": "941324d70080146680553755945ca822d5fea2ce830236ad220605571e3e217a",
+      "sourceLabel": "native-factor-work-census.ps1",
+      "sourceSha256": "1acd2f7057f11e1d815a5f7b4257849a7b10f3c53a37253ab0e12bf7f74a2ff6",
+      "storedSha256": "941324d70080146680553755945ca822d5fea2ce830236ad220605571e3e217a",
+      "transform": "inspection-copy;LF;one-terminal-newline;personal-path-redaction"
+    },
+    {
+      "bytes": 4980,
+      "path": "procedure/inspection/runner.txt",
+      "redactions": 1,
+      "sha256": "a0f36a059455d3195ef9a7e57564eb4781bc3783af160f9d5f9dbc63a696cec2",
+      "sourceLabel": "run_factor_work_census_pair.py",
+      "sourceSha256": "65e5d9c6304a03ef08941c57e53f74d22e9b526abca245d9d736a0f63e4efca3",
+      "storedSha256": "a0f36a059455d3195ef9a7e57564eb4781bc3783af160f9d5f9dbc63a696cec2",
+      "transform": "inspection-copy;LF;one-terminal-newline;personal-path-redaction"
+    },
+    {
+      "bytes": 2125,
+      "path": "procedure/inspection/validator-generation-invocation.txt",
+      "redactions": 0,
+      "sha256": "d5e4be04cd6dc322aa3976d48d5f39a51a016c67cfe089eafdf29ed17ed0730d",
+      "sourceLabel": "prepare_census_validator_root_invocation.py",
+      "sourceSha256": "d5e4be04cd6dc322aa3976d48d5f39a51a016c67cfe089eafdf29ed17ed0730d",
+      "storedSha256": "d5e4be04cd6dc322aa3976d48d5f39a51a016c67cfe089eafdf29ed17ed0730d",
+      "transform": "inspection-copy;LF;one-terminal-newline"
+    },
+    {
+      "bytes": 2800,
+      "path": "procedure/inspection/validator-generator-notes.txt",
+      "redactions": 0,
+      "sha256": "102bc2684b33064b80142db851d2acd401bb1d61c8a138d71e934cd64f1f0f96",
+      "sourceLabel": "prepare_factor_work_validator.md",
+      "sourceSha256": "102bc2684b33064b80142db851d2acd401bb1d61c8a138d71e934cd64f1f0f96",
+      "storedSha256": "102bc2684b33064b80142db851d2acd401bb1d61c8a138d71e934cd64f1f0f96",
+      "transform": "inspection-copy;LF;one-terminal-newline"
+    },
+    {
+      "bytes": 22099,
+      "path": "procedure/inspection/validator-generator.txt",
+      "redactions": 0,
+      "sha256": "ac72fb1418a673c08467dd232f0df1d6d1bb66722685428febeb16b0900d5d95",
+      "sourceLabel": "prepare_factor_work_validator.py",
+      "sourceSha256": "d6475f51de3611946d4bc74d29edd5a76f3d62f884f6957142891ab09024748f",
+      "storedSha256": "ac72fb1418a673c08467dd232f0df1d6d1bb66722685428febeb16b0900d5d95",
+      "transform": "inspection-copy;LF;one-terminal-newline"
+    },
+    {
+      "bytes": 43583,
+      "path": "procedure/inspection/validator.txt",
+      "redactions": 4,
+      "sha256": "83fc425c6368a94811193adfca33efd442303956ce594ebfdf381a50669f3e76",
+      "sourceLabel": "validate_factor_work_census_pair.py",
+      "sourceSha256": "4b5299e7819b0adba643c857b766f91df2c6b6c536674cb366e1582603902505",
+      "storedSha256": "83fc425c6368a94811193adfca33efd442303956ce594ebfdf381a50669f3e76",
+      "transform": "inspection-copy;LF;one-terminal-newline;personal-path-redaction"
+    },
+    {
+      "bytes": 17183,
+      "path": "procedure/inspection/work-census-metadata-helper.txt",
+      "redactions": 0,
+      "sha256": "c781479a7b5ba8410846c4d8d3919b1884c1ba9ccb00466c7fae00dfdf78953e",
+      "sourceLabel": "factor-work-census-metadata-validator.py",
+      "sourceSha256": "c781479a7b5ba8410846c4d8d3919b1884c1ba9ccb00466c7fae00dfdf78953e",
+      "storedSha256": "c781479a7b5ba8410846c4d8d3919b1884c1ba9ccb00466c7fae00dfdf78953e",
+      "transform": "inspection-copy;LF;one-terminal-newline"
+    },
+    {
+      "bytes": 4830,
+      "path": "provenance/dependency-map.json",
+      "redactions": 0,
+      "sha256": "158dbce6c1917705669e91c821a7133b5fce105debf0dfd7ba18cb2aec097421",
+      "sourceBytes": 4830,
+      "sourceLabel": "derived hash-pinned procedure and source map",
+      "sourceSha256": "158dbce6c1917705669e91c821a7133b5fce105debf0dfd7ba18cb2aec097421",
+      "storedSha256": "158dbce6c1917705669e91c821a7133b5fce105debf0dfd7ba18cb2aec097421",
+      "transform": "generated-json"
+    },
+    {
+      "bytes": 14275,
+      "path": "provenance/redaction-ledger.json",
+      "redactions": 0,
+      "sha256": "9125d4b257d1059ce2060c31070a4fe28b8cd32e6cb8b17ccd35fbfdace0fbd6",
+      "sourceBytes": 14275,
+      "sourceLabel": "derived original/stored hash and privacy transformation ledger",
+      "sourceSha256": "9125d4b257d1059ce2060c31070a4fe28b8cd32e6cb8b17ccd35fbfdace0fbd6",
+      "storedSha256": "9125d4b257d1059ce2060c31070a4fe28b8cd32e6cb8b17ccd35fbfdace0fbd6",
+      "transform": "generated-json"
+    },
+    {
+      "bytes": 1395,
+      "path": "runs/compiled-canaries/cases/001-factor-work-census-r1-canaries-a07.json",
+      "redactions": 0,
+      "sha256": "beb2325bcf0832afd9030a297b7b5733fd3a958c5d92c02c5da0a518c57c87cf",
+      "sourceLabel": "factor-work-census-r1-canaries/cases/001-factor-work-census-r1-canaries-a07.json",
+      "sourceSha256": "beb2325bcf0832afd9030a297b7b5733fd3a958c5d92c02c5da0a518c57c87cf",
+      "storedSha256": "beb2325bcf0832afd9030a297b7b5733fd3a958c5d92c02c5da0a518c57c87cf",
+      "transform": "byte-copy"
+    },
+    {
+      "byteExactPayload": true,
+      "bytes": 9393,
+      "gzipPayloadBytes": 80898,
+      "gzipPayloadSha256": "464a0f1d1d6886db02522c18f2a88d9d4aeb61e76c4d33756667f8e834cea1c3",
+      "path": "runs/compiled-canaries/cases/001-factor-work-census-r1-canaries-a07.report.json.gz",
+      "redactions": 0,
+      "sha256": "05dad8ff608e446ada5251b442ecbe5462b398f90067b2970e8a9328ae7c5433",
+      "sourceLabel": "factor-work-census-r1-canaries/cases/001-factor-work-census-r1-canaries-a07.report.json",
+      "sourceSha256": "464a0f1d1d6886db02522c18f2a88d9d4aeb61e76c4d33756667f8e834cea1c3",
+      "storedSha256": "05dad8ff608e446ada5251b442ecbe5462b398f90067b2970e8a9328ae7c5433",
+      "transform": "gzip;payload-byte-exact"
+    },
+    {
+      "bytes": 8,
+      "path": "runs/compiled-canaries/cases/001-factor-work-census-r1-canaries-a07.state.txt",
+      "redactions": 0,
+      "sha256": "d2b4740b4a36aece77f74f8fd73c9b787c86efaa450eea01b931149a19c22ff2",
+      "sourceLabel": "factor-work-census-r1-canaries/cases/001-factor-work-census-r1-canaries-a07.state.txt",
+      "sourceSha256": "d2b4740b4a36aece77f74f8fd73c9b787c86efaa450eea01b931149a19c22ff2",
+      "storedSha256": "d2b4740b4a36aece77f74f8fd73c9b787c86efaa450eea01b931149a19c22ff2",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 1579,
+      "path": "runs/compiled-canaries/cases/002-factor-work-census-r1-canaries-disabled.json",
+      "redactions": 0,
+      "sha256": "2808d71e19dbc6fc08d2a091855275c7f489070d0b549f4a51775b036ca6d83c",
+      "sourceLabel": "factor-work-census-r1-canaries/cases/002-factor-work-census-r1-canaries-disabled.json",
+      "sourceSha256": "2808d71e19dbc6fc08d2a091855275c7f489070d0b549f4a51775b036ca6d83c",
+      "storedSha256": "2808d71e19dbc6fc08d2a091855275c7f489070d0b549f4a51775b036ca6d83c",
+      "transform": "byte-copy"
+    },
+    {
+      "byteExactPayload": true,
+      "bytes": 224,
+      "gzipPayloadBytes": 344,
+      "gzipPayloadSha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+      "path": "runs/compiled-canaries/cases/002-factor-work-census-r1-canaries-disabled.report.json.gz",
+      "redactions": 0,
+      "sha256": "5b8e46ef5a04d8746c0d9243f4ba9900ec88968302808491a72c7a2259062f87",
+      "sourceLabel": "factor-work-census-r1-canaries/cases/002-factor-work-census-r1-canaries-disabled.report.json",
+      "sourceSha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+      "storedSha256": "5b8e46ef5a04d8746c0d9243f4ba9900ec88968302808491a72c7a2259062f87",
+      "transform": "gzip;payload-byte-exact"
+    },
+    {
+      "bytes": 31,
+      "path": "runs/compiled-canaries/cases/002-factor-work-census-r1-canaries-disabled.state.txt",
+      "redactions": 0,
+      "sha256": "95abc8986af9d28c5de9c0245e91d8ca7197e8e54d53bae8a8c03a1738b0ee9f",
+      "sourceLabel": "factor-work-census-r1-canaries/cases/002-factor-work-census-r1-canaries-disabled.state.txt",
+      "sourceSha256": "95abc8986af9d28c5de9c0245e91d8ca7197e8e54d53bae8a8c03a1738b0ee9f",
+      "storedSha256": "95abc8986af9d28c5de9c0245e91d8ca7197e8e54d53bae8a8c03a1738b0ee9f",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 1865,
+      "path": "runs/compiled-canaries/identity.json",
+      "redactions": 1,
+      "sha256": "827ab783dbc33e37c1fafcf6c47abe394b8efb0c1e8696719bbb0a32f7bd4856",
+      "sourceLabel": "factor-work-census-r1-canaries/identity.json",
+      "sourceSha256": "d15f97019d16e0ef302b85918ff5963a2638c4fb5f9ad19ff41c6f49cda0541d",
+      "storedSha256": "827ab783dbc33e37c1fafcf6c47abe394b8efb0c1e8696719bbb0a32f7bd4856",
+      "transform": "personal-path-redaction"
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/compiled-canaries/input-manifest-after.json",
+      "redactions": 0,
+      "sha256": "2a7a521aa1da9b6c40db13316be7a284c9e238437564b8abc2d19ccd5948a6ad",
+      "sourceLabel": "factor-work-census-r1-canaries/input-manifest-after.json",
+      "sourceSha256": "2a7a521aa1da9b6c40db13316be7a284c9e238437564b8abc2d19ccd5948a6ad",
+      "storedSha256": "2a7a521aa1da9b6c40db13316be7a284c9e238437564b8abc2d19ccd5948a6ad",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/compiled-canaries/input-manifest-before.json",
+      "redactions": 0,
+      "sha256": "11e27772d6040f8dee57318dbc0e242f8a96ed12e5f3428b86cf243a9212ff5d",
+      "sourceLabel": "factor-work-census-r1-canaries/input-manifest-before.json",
+      "sourceSha256": "11e27772d6040f8dee57318dbc0e242f8a96ed12e5f3428b86cf243a9212ff5d",
+      "storedSha256": "11e27772d6040f8dee57318dbc0e242f8a96ed12e5f3428b86cf243a9212ff5d",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 1480,
+      "path": "runs/compiled-canaries/owned-processes-before-close.json",
+      "redactions": 0,
+      "sha256": "ab1ccce1a2cd26d5eebbfbbf971b8efc61d5efd4519a55886e90dde209ed059b",
+      "sourceLabel": "factor-work-census-r1-canaries/owned-processes-before-close.json",
+      "sourceSha256": "ab1ccce1a2cd26d5eebbfbbf971b8efc61d5efd4519a55886e90dde209ed059b",
+      "storedSha256": "ab1ccce1a2cd26d5eebbfbbf971b8efc61d5efd4519a55886e90dde209ed059b",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 1295,
+      "path": "runs/compiled-canaries/owned-processes-before.json",
+      "redactions": 0,
+      "sha256": "d8621ea31b7fdbd88cbd1cd922b9876068ea848399c0d17a58a50792050d972b",
+      "sourceLabel": "factor-work-census-r1-canaries/owned-processes-before.json",
+      "sourceSha256": "d8621ea31b7fdbd88cbd1cd922b9876068ea848399c0d17a58a50792050d972b",
+      "storedSha256": "d8621ea31b7fdbd88cbd1cd922b9876068ea848399c0d17a58a50792050d972b",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 6071,
+      "path": "runs/compiled-canaries/progress.json",
+      "redactions": 2,
+      "sha256": "1eddc6e64f6a5a52423843248f88fc4700259c97bce67d79d7e63b0b8431c679",
+      "sourceLabel": "factor-work-census-r1-canaries/progress.json",
+      "sourceSha256": "41538a1cbfca5cf52d3579be9bde3f4dd24c05b021f1d63df453653234640e8a",
+      "storedSha256": "1eddc6e64f6a5a52423843248f88fc4700259c97bce67d79d7e63b0b8431c679",
+      "transform": "personal-path-redaction"
+    },
+    {
+      "bytes": 6795,
+      "path": "runs/compiled-canaries/result.json",
+      "redactions": 2,
+      "sha256": "b99c8f90b4ba05be45ea48d456f326d4ebc65aa2726f248332b7300e25090e71",
+      "sourceLabel": "factor-work-census-r1-canaries/result.json",
+      "sourceSha256": "6652893999ccbdfc545a848c8c876c1f03e29f26f08a03da7eb50dcb65b57e79",
+      "storedSha256": "b99c8f90b4ba05be45ea48d456f326d4ebc65aa2726f248332b7300e25090e71",
+      "transform": "personal-path-redaction"
+    },
+    {
+      "bytes": 365,
+      "path": "runs/compiled-canaries/run-start.json",
+      "redactions": 1,
+      "sha256": "737c7cce4961f0f0e3ca11f47a0ec84b9529e85e905ef54afc0c70eb67718a99",
+      "sourceLabel": "factor-work-census-r1-canaries/run-start.json",
+      "sourceSha256": "83ee1ce08ee84dd8c50524a7eabe3e8d317a8a6968364b13b04578f57e05485b",
+      "storedSha256": "737c7cce4961f0f0e3ca11f47a0ec84b9529e85e905ef54afc0c70eb67718a99",
+      "transform": "personal-path-redaction"
+    },
+    {
+      "bytes": 146,
+      "path": "runs/compiled-canaries/runner-after.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceLabel": "factor-work-census-r1-canaries/runner-after.json",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "storedSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 146,
+      "path": "runs/compiled-canaries/runner-before.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceLabel": "factor-work-census-r1-canaries/runner-before.json",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "storedSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 873,
+      "path": "runs/compiled-canaries/spec.json",
+      "redactions": 0,
+      "sha256": "a06f1dd5151939111c8f399aca47806ec970154ff7a7fc725d6ef3735e0e50ee",
+      "sourceLabel": "factor-work-census-r1-canaries/spec.json",
+      "sourceSha256": "a06f1dd5151939111c8f399aca47806ec970154ff7a7fc725d6ef3735e0e50ee",
+      "storedSha256": "a06f1dd5151939111c8f399aca47806ec970154ff7a7fc725d6ef3735e0e50ee",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 1481,
+      "path": "runs/off/cases/001-factor-work-census-01-off-10014.json",
+      "redactions": 0,
+      "sha256": "5c86d77acab8356cc9257540d12e81114fbd055b0a3913c9fd6f8b1b445f5b48",
+      "sourceLabel": "factor-work-census-01-off-10014/cases/001-factor-work-census-01-off-10014.json",
+      "sourceSha256": "5c86d77acab8356cc9257540d12e81114fbd055b0a3913c9fd6f8b1b445f5b48",
+      "storedSha256": "5c86d77acab8356cc9257540d12e81114fbd055b0a3913c9fd6f8b1b445f5b48",
+      "transform": "byte-copy"
+    },
+    {
+      "byteExactPayload": true,
+      "bytes": 251084,
+      "gzipPayloadBytes": 1748508,
+      "gzipPayloadSha256": "20772c5f8ec75740260b7347ad000c950e36100fd3aa31bee19c519cf9499e29",
+      "path": "runs/off/cases/001-factor-work-census-01-off-10014.report.json.gz",
+      "redactions": 0,
+      "sha256": "94a51c061b683578dc4e0ad6cf571b55593970d0e8b7d3f6b609857681a4941e",
+      "sourceLabel": "factor-work-census-01-off-10014/cases/001-factor-work-census-01-off-10014.report.json",
+      "sourceSha256": "20772c5f8ec75740260b7347ad000c950e36100fd3aa31bee19c519cf9499e29",
+      "storedSha256": "94a51c061b683578dc4e0ad6cf571b55593970d0e8b7d3f6b609857681a4941e",
+      "transform": "gzip;payload-byte-exact"
+    },
+    {
+      "bytes": 13,
+      "path": "runs/off/cases/001-factor-work-census-01-off-10014.state.txt",
+      "redactions": 0,
+      "sha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "sourceLabel": "factor-work-census-01-off-10014/cases/001-factor-work-census-01-off-10014.state.txt",
+      "sourceSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "storedSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 1866,
+      "path": "runs/off/identity.json",
+      "redactions": 1,
+      "sha256": "205aad4e4807a589c8196751069e96b8eddbf7a0106e643bae2f635c14f6b20d",
+      "sourceLabel": "factor-work-census-01-off-10014/identity.json",
+      "sourceSha256": "c65a86e737eef56c5e526cab21e78386c84d285e4c0ff1a19aa5f8b74b1d7499",
+      "storedSha256": "205aad4e4807a589c8196751069e96b8eddbf7a0106e643bae2f635c14f6b20d",
+      "transform": "personal-path-redaction"
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/off/input-manifest-after.json",
+      "redactions": 0,
+      "sha256": "ced8ff4ec12abd77b40a2d324f3ab12772a4272c18a1a910b149c85e2f0d624b",
+      "sourceLabel": "factor-work-census-01-off-10014/input-manifest-after.json",
+      "sourceSha256": "ced8ff4ec12abd77b40a2d324f3ab12772a4272c18a1a910b149c85e2f0d624b",
+      "storedSha256": "ced8ff4ec12abd77b40a2d324f3ab12772a4272c18a1a910b149c85e2f0d624b",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/off/input-manifest-before.json",
+      "redactions": 0,
+      "sha256": "c26f4a38395710e1e4b03176d82b8ba2c1f48cdb579897b1a5cc293937e3d7fb",
+      "sourceLabel": "factor-work-census-01-off-10014/input-manifest-before.json",
+      "sourceSha256": "c26f4a38395710e1e4b03176d82b8ba2c1f48cdb579897b1a5cc293937e3d7fb",
+      "storedSha256": "c26f4a38395710e1e4b03176d82b8ba2c1f48cdb579897b1a5cc293937e3d7fb",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 1664,
+      "path": "runs/off/owned-processes-before-close.json",
+      "redactions": 0,
+      "sha256": "d790d52fd67d8ba552965d0875d7ee949f2a9483e4f4f7da5d3f2850dcc08022",
+      "sourceLabel": "factor-work-census-01-off-10014/owned-processes-before-close.json",
+      "sourceSha256": "d790d52fd67d8ba552965d0875d7ee949f2a9483e4f4f7da5d3f2850dcc08022",
+      "storedSha256": "d790d52fd67d8ba552965d0875d7ee949f2a9483e4f4f7da5d3f2850dcc08022",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 1295,
+      "path": "runs/off/owned-processes-before.json",
+      "redactions": 0,
+      "sha256": "313ae0e028ef8185e78d17e623cf48836b9ee896a6318437ae0e17f3ae790a88",
+      "sourceLabel": "factor-work-census-01-off-10014/owned-processes-before.json",
+      "sourceSha256": "313ae0e028ef8185e78d17e623cf48836b9ee896a6318437ae0e17f3ae790a88",
+      "storedSha256": "313ae0e028ef8185e78d17e623cf48836b9ee896a6318437ae0e17f3ae790a88",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 4406,
+      "path": "runs/off/progress.json",
+      "redactions": 2,
+      "sha256": "4dc73db3a2aa6457254305e5e3321260cbe846648aa1e0681dec7fbc84429545",
+      "sourceLabel": "factor-work-census-01-off-10014/progress.json",
+      "sourceSha256": "464fc2bf0212e68eadc03416b01946d2fe980bbf4aafdc36c04d7fe3ae762d6b",
+      "storedSha256": "4dc73db3a2aa6457254305e5e3321260cbe846648aa1e0681dec7fbc84429545",
+      "transform": "personal-path-redaction"
+    },
+    {
+      "bytes": 5129,
+      "path": "runs/off/result.json",
+      "redactions": 2,
+      "sha256": "b65acb740891a78a087bda0fdce58bb2d68a35939d20749fdcfda80cffadb2a8",
+      "sourceLabel": "factor-work-census-01-off-10014/result.json",
+      "sourceSha256": "dec8fb9624b5a31f61ab3ca95fc293d33a529197ee7c24bcbec7a0f89d2288e3",
+      "storedSha256": "b65acb740891a78a087bda0fdce58bb2d68a35939d20749fdcfda80cffadb2a8",
+      "transform": "personal-path-redaction"
+    },
+    {
+      "bytes": 365,
+      "path": "runs/off/run-start.json",
+      "redactions": 1,
+      "sha256": "9157d2ab6c31173f2dad250a961ea2347da51d96050046e293726967b51a16cd",
+      "sourceLabel": "factor-work-census-01-off-10014/run-start.json",
+      "sourceSha256": "e7cde76b89cac146f04441275be719daf403ace1bf31c810198fbbb37e6a9c9d",
+      "storedSha256": "9157d2ab6c31173f2dad250a961ea2347da51d96050046e293726967b51a16cd",
+      "transform": "personal-path-redaction"
+    },
+    {
+      "bytes": 146,
+      "path": "runs/off/runner-after.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceLabel": "factor-work-census-01-off-10014/runner-after.json",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "storedSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 146,
+      "path": "runs/off/runner-before.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceLabel": "factor-work-census-01-off-10014/runner-before.json",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "storedSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 408,
+      "path": "runs/off/spec.json",
+      "redactions": 0,
+      "sha256": "0e7f7759253ef4a3f48002aa15f9e5ed7acac0991be2fa54dd2ffbd89a68507f",
+      "sourceLabel": "factor-work-census-01-off-10014/spec.json",
+      "sourceSha256": "0e7f7759253ef4a3f48002aa15f9e5ed7acac0991be2fa54dd2ffbd89a68507f",
+      "storedSha256": "0e7f7759253ef4a3f48002aa15f9e5ed7acac0991be2fa54dd2ffbd89a68507f",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 3312,
+      "path": "runs/off/strict-reader.txt",
+      "redactions": 0,
+      "sha256": "79b1717046aa62d81b6a59656644addb08c98df5f7ffbe66a3b9db05f9e44f9e",
+      "sourceLabel": "factor-work-census-01-off-10014-strict-reader-root-r1.txt",
+      "sourceSha256": "79b1717046aa62d81b6a59656644addb08c98df5f7ffbe66a3b9db05f9e44f9e",
+      "storedSha256": "79b1717046aa62d81b6a59656644addb08c98df5f7ffbe66a3b9db05f9e44f9e",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 1806071,
+      "path": "runs/off/strict-wrapper.json",
+      "redactions": 0,
+      "sha256": "d5214b5aa5f79ea7ca24f69a86f36984f81ce7ad7a1a28b69dcbc3c0ddd1a3e7",
+      "sourceLabel": "factor-work-census-01-off-10014-strict-wrapper-root-r1.json",
+      "sourceSha256": "d5214b5aa5f79ea7ca24f69a86f36984f81ce7ad7a1a28b69dcbc3c0ddd1a3e7",
+      "storedSha256": "d5214b5aa5f79ea7ca24f69a86f36984f81ce7ad7a1a28b69dcbc3c0ddd1a3e7",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 1703,
+      "path": "runs/off/summary.json",
+      "redactions": 0,
+      "sha256": "7d3d4f809f6767b25f74bef880687ee6128e97a2a38d024aa6e92a7f64739d56",
+      "sourceLabel": "factor-work-census-01-off-10014-summary.json",
+      "sourceSha256": "7d3d4f809f6767b25f74bef880687ee6128e97a2a38d024aa6e92a7f64739d56",
+      "storedSha256": "7d3d4f809f6767b25f74bef880687ee6128e97a2a38d024aa6e92a7f64739d56",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 53133,
+      "path": "runs/pair-validation.json",
+      "redactions": 0,
+      "sha256": "98e8d090537237e451c91a5d11e68f52e2e1431f90339da5baa54fea23e1584b",
+      "sourceLabel": "factor-work-census-02-profile-10014-vs-factor-work-census-01-off-10014-factor-work-census-validation-root-r1.json",
+      "sourceSha256": "98e8d090537237e451c91a5d11e68f52e2e1431f90339da5baa54fea23e1584b",
+      "storedSha256": "98e8d090537237e451c91a5d11e68f52e2e1431f90339da5baa54fea23e1584b",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 42378,
+      "path": "runs/pair-validation.log",
+      "redactions": 0,
+      "sha256": "b36225951912df39403b4708244bae523f1138ff9841e66d789b34dc3b411b67",
+      "sourceLabel": "factor-work-census-validation-root-r1.log",
+      "sourceSha256": "b36225951912df39403b4708244bae523f1138ff9841e66d789b34dc3b411b67",
+      "storedSha256": "b36225951912df39403b4708244bae523f1138ff9841e66d789b34dc3b411b67",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 1551,
+      "path": "runs/profile/cases/001-factor-work-census-02-profile-10014.json",
+      "redactions": 0,
+      "sha256": "4be25d0ef0ed277bcb7da85a12ea19b50aad5607004e2c19f0bd05ef991b4c2e",
+      "sourceLabel": "factor-work-census-02-profile-10014/cases/001-factor-work-census-02-profile-10014.json",
+      "sourceSha256": "4be25d0ef0ed277bcb7da85a12ea19b50aad5607004e2c19f0bd05ef991b4c2e",
+      "storedSha256": "4be25d0ef0ed277bcb7da85a12ea19b50aad5607004e2c19f0bd05ef991b4c2e",
+      "transform": "byte-copy"
+    },
+    {
+      "byteExactPayload": true,
+      "bytes": 261675,
+      "gzipPayloadBytes": 1771607,
+      "gzipPayloadSha256": "1e67e989abfbaed59c6d490f43d8cf9cd39272cb1d4f73d7ca101912df9eb1d9",
+      "path": "runs/profile/cases/001-factor-work-census-02-profile-10014.report.json.gz",
+      "redactions": 0,
+      "sha256": "48a480011381242d24e9ad369441e4ed0f90da2275f178dab0443e61a5174bab",
+      "sourceLabel": "factor-work-census-02-profile-10014/cases/001-factor-work-census-02-profile-10014.report.json",
+      "sourceSha256": "1e67e989abfbaed59c6d490f43d8cf9cd39272cb1d4f73d7ca101912df9eb1d9",
+      "storedSha256": "48a480011381242d24e9ad369441e4ed0f90da2275f178dab0443e61a5174bab",
+      "transform": "gzip;payload-byte-exact"
+    },
+    {
+      "bytes": 13,
+      "path": "runs/profile/cases/001-factor-work-census-02-profile-10014.state.txt",
+      "redactions": 0,
+      "sha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "sourceLabel": "factor-work-census-02-profile-10014/cases/001-factor-work-census-02-profile-10014.state.txt",
+      "sourceSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "storedSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 1869,
+      "path": "runs/profile/identity.json",
+      "redactions": 1,
+      "sha256": "181caf452abe8c441cdef9608c156d0fc43c484666e9129e72f66ee6b340ca2a",
+      "sourceLabel": "factor-work-census-02-profile-10014/identity.json",
+      "sourceSha256": "ce424ac436df269ce89e4e9a382689f3678d615e19da7103688565db3684e1ca",
+      "storedSha256": "181caf452abe8c441cdef9608c156d0fc43c484666e9129e72f66ee6b340ca2a",
+      "transform": "personal-path-redaction"
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/profile/input-manifest-after.json",
+      "redactions": 0,
+      "sha256": "14d1d9c08dfa4052475ed70f7b84c9bc71bca9034272e21093a7d5d31990353c",
+      "sourceLabel": "factor-work-census-02-profile-10014/input-manifest-after.json",
+      "sourceSha256": "14d1d9c08dfa4052475ed70f7b84c9bc71bca9034272e21093a7d5d31990353c",
+      "storedSha256": "14d1d9c08dfa4052475ed70f7b84c9bc71bca9034272e21093a7d5d31990353c",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/profile/input-manifest-before.json",
+      "redactions": 0,
+      "sha256": "4561bb497b3ccf69aa064717ab850da635fec83d73aa2913a2b7f9f9d5be95ff",
+      "sourceLabel": "factor-work-census-02-profile-10014/input-manifest-before.json",
+      "sourceSha256": "4561bb497b3ccf69aa064717ab850da635fec83d73aa2913a2b7f9f9d5be95ff",
+      "storedSha256": "4561bb497b3ccf69aa064717ab850da635fec83d73aa2913a2b7f9f9d5be95ff",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 1665,
+      "path": "runs/profile/owned-processes-before-close.json",
+      "redactions": 0,
+      "sha256": "2fb12abb550d70530c334bef38f0046f410c7436dd44fd36f0dfef9aa03d905b",
+      "sourceLabel": "factor-work-census-02-profile-10014/owned-processes-before-close.json",
+      "sourceSha256": "2fb12abb550d70530c334bef38f0046f410c7436dd44fd36f0dfef9aa03d905b",
+      "storedSha256": "2fb12abb550d70530c334bef38f0046f410c7436dd44fd36f0dfef9aa03d905b",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 1295,
+      "path": "runs/profile/owned-processes-before.json",
+      "redactions": 0,
+      "sha256": "9f8e48b29db31a7b0b231be7d2bd5687a7dbe45a35d54a14ad436760663e64ca",
+      "sourceLabel": "factor-work-census-02-profile-10014/owned-processes-before.json",
+      "sourceSha256": "9f8e48b29db31a7b0b231be7d2bd5687a7dbe45a35d54a14ad436760663e64ca",
+      "storedSha256": "9f8e48b29db31a7b0b231be7d2bd5687a7dbe45a35d54a14ad436760663e64ca",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 4479,
+      "path": "runs/profile/progress.json",
+      "redactions": 2,
+      "sha256": "829bce91f1a1555382bb4733534f58728fbf2a1812adb1c92c2553e3b538820f",
+      "sourceLabel": "factor-work-census-02-profile-10014/progress.json",
+      "sourceSha256": "797441d0716b4f5153cc4ccf9c1df0c6be6e3c906a7d1a045a181eb52cb4d1a9",
+      "storedSha256": "829bce91f1a1555382bb4733534f58728fbf2a1812adb1c92c2553e3b538820f",
+      "transform": "personal-path-redaction"
+    },
+    {
+      "bytes": 5203,
+      "path": "runs/profile/result.json",
+      "redactions": 2,
+      "sha256": "524636abfafd93cc534efd352af90fe4260ee885246313ccdd6af5c71f229e74",
+      "sourceLabel": "factor-work-census-02-profile-10014/result.json",
+      "sourceSha256": "cefb5027bf21f8b11b330c8d91cae6b914787b05a70c6b9639bb684f408015e5",
+      "storedSha256": "524636abfafd93cc534efd352af90fe4260ee885246313ccdd6af5c71f229e74",
+      "transform": "personal-path-redaction"
+    },
+    {
+      "bytes": 365,
+      "path": "runs/profile/run-start.json",
+      "redactions": 1,
+      "sha256": "13d8f6fbf94a2268cbe27e60c0391d1f37e3ace56962dd36d22497174629c306",
+      "sourceLabel": "factor-work-census-02-profile-10014/run-start.json",
+      "sourceSha256": "2625b36a8bf3baa9bb9ba1f8ab5e66fd594ab031fed1df5c6489543207c48548",
+      "storedSha256": "13d8f6fbf94a2268cbe27e60c0391d1f37e3ace56962dd36d22497174629c306",
+      "transform": "personal-path-redaction"
+    },
+    {
+      "bytes": 146,
+      "path": "runs/profile/runner-after.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceLabel": "factor-work-census-02-profile-10014/runner-after.json",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "storedSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 146,
+      "path": "runs/profile/runner-before.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceLabel": "factor-work-census-02-profile-10014/runner-before.json",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "storedSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 443,
+      "path": "runs/profile/spec.json",
+      "redactions": 0,
+      "sha256": "6d3ff9e431e1aa28183cde58aac2cc664b7deb2a8bc6ccd9e1e1c7a7abfb74f9",
+      "sourceLabel": "factor-work-census-02-profile-10014/spec.json",
+      "sourceSha256": "6d3ff9e431e1aa28183cde58aac2cc664b7deb2a8bc6ccd9e1e1c7a7abfb74f9",
+      "storedSha256": "6d3ff9e431e1aa28183cde58aac2cc664b7deb2a8bc6ccd9e1e1c7a7abfb74f9",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 3310,
+      "path": "runs/profile/strict-reader.txt",
+      "redactions": 0,
+      "sha256": "c132a630a6f9a1a50a454746537ecb9861aa27c1961bbf177c925b69c21c4ff5",
+      "sourceLabel": "factor-work-census-02-profile-10014-strict-reader-root-r1.txt",
+      "sourceSha256": "c132a630a6f9a1a50a454746537ecb9861aa27c1961bbf177c925b69c21c4ff5",
+      "storedSha256": "c132a630a6f9a1a50a454746537ecb9861aa27c1961bbf177c925b69c21c4ff5",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 1806070,
+      "path": "runs/profile/strict-wrapper.json",
+      "redactions": 0,
+      "sha256": "ab381bf4de2bb58586a1ab5e60a381580474d58fdd22da684c38801d63268dd4",
+      "sourceLabel": "factor-work-census-02-profile-10014-strict-wrapper-root-r1.json",
+      "sourceSha256": "ab381bf4de2bb58586a1ab5e60a381580474d58fdd22da684c38801d63268dd4",
+      "storedSha256": "ab381bf4de2bb58586a1ab5e60a381580474d58fdd22da684c38801d63268dd4",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 1713,
+      "path": "runs/profile/summary.json",
+      "redactions": 0,
+      "sha256": "381597488874cde90afaf830c7b70a924324f7b2145ef0199dbf328250df7373",
+      "sourceLabel": "factor-work-census-02-profile-10014-summary.json",
+      "sourceSha256": "381597488874cde90afaf830c7b70a924324f7b2145ef0199dbf328250df7373",
+      "storedSha256": "381597488874cde90afaf830c7b70a924324f7b2145ef0199dbf328250df7373",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 4335,
+      "path": "runs/sequence-result.json",
+      "redactions": 0,
+      "sha256": "49170fe7776d11198f445807a09f335ffb430ecb835a1e7c284dde149c2a4129",
+      "sourceLabel": "factor-work-census-sequence-result.json",
+      "sourceSha256": "49170fe7776d11198f445807a09f335ffb430ecb835a1e7c284dde149c2a4129",
+      "storedSha256": "49170fe7776d11198f445807a09f335ffb430ecb835a1e7c284dde149c2a4129",
+      "transform": "byte-copy"
+    },
+    {
+      "bytes": 1332,
+      "path": "source/committed-parent-references.json",
+      "redactions": 0,
+      "sha256": "efd61f6b3df828a53d3915ea38543e031b99e10d77c9ca7f9eb4cca46bf763c3",
+      "sourceLabel": "hash-pinned committed source dependency references",
+      "sourceSha256": "efd61f6b3df828a53d3915ea38543e031b99e10d77c9ca7f9eb4cca46bf763c3",
+      "storedSha256": "efd61f6b3df828a53d3915ea38543e031b99e10d77c9ca7f9eb4cca46bf763c3",
+      "transform": "generated-json"
+    },
+    {
+      "bytes": 1926,
+      "path": "source/input-delta.json",
+      "redactions": 0,
+      "sha256": "626c584b31ce4490019fb6b2e9bbe32007a0ab238cd50c1a859d2eb3675b2858",
+      "sourceLabel": "derived current-vs-committed-base input comparison",
+      "sourceSha256": "626c584b31ce4490019fb6b2e9bbe32007a0ab238cd50c1a859d2eb3675b2858",
+      "storedSha256": "626c584b31ce4490019fb6b2e9bbe32007a0ab238cd50c1a859d2eb3675b2858",
+      "transform": "generated-json"
+    },
+    {
+      "byteExactPayload": true,
+      "bytes": 14484,
+      "gzipPayloadBytes": 66840,
+      "gzipPayloadSha256": "379880e2a17cc7846751c613ab5807c6b05d6a45b94ce3165d928be4d0903c8e",
+      "path": "source/overlays/scripts/verify-current-contracts.ps1.gz",
+      "redactions": 0,
+      "sha256": "5420a3f73175e4a85db21b50b4f5bfa0d704015a0325c2727f0dd79b01e83de6",
+      "sourceLabel": "current candidate overlay scripts/verify-current-contracts.ps1",
+      "sourceSha256": "379880e2a17cc7846751c613ab5807c6b05d6a45b94ce3165d928be4d0903c8e",
+      "storedSha256": "5420a3f73175e4a85db21b50b4f5bfa0d704015a0325c2727f0dd79b01e83de6",
+      "transform": "gzip;payload-byte-exact"
+    },
+    {
+      "byteExactPayload": true,
+      "bytes": 80826,
+      "gzipPayloadBytes": 388766,
+      "gzipPayloadSha256": "18a67830ea731145d8f765f16b37bccb3ef13c39798f0e387f40b303b307b479",
+      "path": "source/overlays/src/com/lushprojects/circuitjs1/client/CirSim.java.gz",
+      "redactions": 0,
+      "sha256": "7aca9f3a57f98263c40550388253f9dcc822f2827a466deeb422ba49932d2cb9",
+      "sourceLabel": "current candidate overlay src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceSha256": "18a67830ea731145d8f765f16b37bccb3ef13c39798f0e387f40b303b307b479",
+      "storedSha256": "7aca9f3a57f98263c40550388253f9dcc822f2827a466deeb422ba49932d2cb9",
+      "transform": "gzip;payload-byte-exact"
+    },
+    {
+      "byteExactPayload": true,
+      "bytes": 3126,
+      "gzipPayloadBytes": 14367,
+      "gzipPayloadSha256": "c3defce392e264989b047aafb2afe4b9fd84ce84923e3a864da8d635704ea5f9",
+      "path": "source/overlays/tests/contracts/Q30LuFactorWorkCensusContractTest.java.gz",
+      "redactions": 0,
+      "sha256": "abbe9672cf34c2140d58e825ba6c77ac2137464af5b8894d740b7ee89e602792",
+      "sourceLabel": "current candidate overlay tests/contracts/Q30LuFactorWorkCensusContractTest.java",
+      "sourceSha256": "c3defce392e264989b047aafb2afe4b9fd84ce84923e3a864da8d635704ea5f9",
+      "storedSha256": "abbe9672cf34c2140d58e825ba6c77ac2137464af5b8894d740b7ee89e602792",
+      "transform": "gzip;payload-byte-exact"
+    },
+    {
+      "bytes": 269081,
+      "path": "source/source-audit.json",
+      "redactions": 0,
+      "sha256": "e61464def6a1da12d3dd4c9b067aa779c9c701b49eef7c3b9b7e97323070b5d6",
+      "sourceLabel": "prepared full 1,343-input source audit",
+      "sourceSha256": "e61464def6a1da12d3dd4c9b067aa779c9c701b49eef7c3b9b7e97323070b5d6",
+      "storedSha256": "e61464def6a1da12d3dd4c9b067aa779c9c701b49eef7c3b9b7e97323070b5d6",
+      "transform": "byte-copy"
+    }
+  ],
+  "packet": "Q30/factor-work-census-r1",
+  "schema": 1
+}

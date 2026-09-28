@@ -1,0 +1,9 @@
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "factor-work-census-r1-gwt",
+  "exitCode": 0,
+  "startedUtc": "2026-09-28T09:50:27.0917179Z",
+  "finishedUtc": "2026-09-28T09:51:45.2992560Z",
+  "elapsedSeconds": 78.20293,
+  "status": "PASS"
+}

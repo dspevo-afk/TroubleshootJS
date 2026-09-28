@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<REDACTED_PERSONAL_PATH>ppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\scratch\\factor-work-census-r1-preparation\\fixture",
+  "startedUtc": "2026-09-28T09:51:45.808940+00:00",
+  "outcome": "NOT_RUN",
+  "cases": [
+    {
+      "schema": 1,
+      "case": {
+        "index": 1,
+        "name": "factor-work-census-r1-canaries-a07",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyA07=true&tsjDebug=true&running=true",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "PASS:a07",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-a07-report"
+      },
+      "url": "http://127.0.0.1:57703/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyA07=true&tsjDebug=true&running=true",
+      "startedUtc": "2026-09-28T09:51:48.491951+00:00",
+      "finishedUtc": "2026-09-28T09:51:49.729063+00:00",
+      "operationSeconds": 1.2371079000004102,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:a07",
+      "lastObservedState": "PASS:a07",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 80898,
+      "reportSha256": "464a0f1d1d6886db02522c18f2a88d9d4aeb61e76c4d33756667f8e834cea1c3",
+      "reportFile": "cases/001-factor-work-census-r1-canaries-a07.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 2,
+        "name": "factor-work-census-r1-canaries-disabled",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30NormalAcceptance=true&tsjQ30Seed=13",
+        "stateAttribute": "data-tsj-q30-normal-acceptance-state",
+        "expectedState": "BLOCKED:normal-catalog-disabled",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL",
+          "BLOCKED"
+        ],
+        "timeoutSeconds": 30.0,
+        "reportAttribute": "data-tsj-q30-normal-acceptance-report"
+      },
+      "url": "http://127.0.0.1:57703/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30NormalAcceptance=true&tsjQ30Seed=13",
+      "startedUtc": "2026-09-28T09:51:49.730216+00:00",
+      "finishedUtc": "2026-09-28T09:51:50.235059+00:00",
+      "operationSeconds": 0.5048398000071757,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "BLOCKED:normal-catalog-disabled",
+      "lastObservedState": "BLOCKED:normal-catalog-disabled",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 344,
+      "reportSha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+      "reportFile": "cases/002-factor-work-census-r1-canaries-disabled.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    }
+  ],
+  "caseCount": 2,
+  "errors": [],
+  "inputAudit": {
+    "status": "BEFORE_CAPTURED",
+    "beforeSha256": "99aab9d5f6cee3da58c6ee5147c9e539da9ffab00e7f13a3f1d54f311b2e26aa",
+    "sourceSha256": "8254d6a1093f36d6b70e609ef6efcd62a2958829c256047d1be531d6539ea262",
+    "webSha256": "2802f107e10d4417c9998b46e981c3a199ab09513ba50e0ec1241b8f68ea1646",
+    "fileCount": 1525
+  },
+  "identity": {
+    "schema": 1,
+    "runner": {
+      "pid": 23492,
+      "created": "2026-09-28T09:51:45.6854700Z",
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+    },
+    "edgeProcessesBeforeCases": [
+      {
+        "pid": 20548,
+        "parent": 4024,
+        "created": "2026-09-28T09:51:47.9329350Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 8268,
+        "parent": 20548,
+        "created": "2026-09-28T09:51:47.9522990Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 5824,
+        "parent": 20548,
+        "created": "2026-09-28T09:51:48.0203940Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 25248,
+        "parent": 20548,
+        "created": "2026-09-28T09:51:48.0243340Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 25456,
+        "parent": 20548,
+        "created": "2026-09-28T09:51:48.0457370Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 22548,
+        "parent": 20548,
+        "created": "2026-09-28T09:51:48.1026520Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 19856,
+        "parent": 20548,
+        "created": "2026-09-28T09:51:48.1067290Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "profile": "<REDACTED_PERSONAL_PATH>ppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\factor-work-census-r1-canaries\\profile",
+    "port": 57703,
+    "baseUrl": "http://127.0.0.1:57703"
+  },
+  "operationStartedUtc": "2026-09-28T09:51:48.491938+00:00"
+}

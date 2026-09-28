@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "status": "PREDECLARED",
+  "scope": "Private selected-factor operation census on the accepted sticky-finite numerical base; instrumentation only, not a production optimization or Q30 acceptance.",
+  "seed": "10014",
+  "requestedPackageCount": 40,
+  "sequence": [
+    {"label": "factor-work-census-01-off-10014", "mode": "off", "seed": "10014"},
+    {"label": "factor-work-census-02-profile-10014", "mode": "profile", "seed": "10014"}
+  ],
+  "preconditions": [
+    "Freeze the complete isolated 1343-input source fixture and exact source-derived counted arithmetic before gates or timing.",
+    "Pass focused native arithmetic, cadence, partial-failure/cleanup, profile, temporal and budget checks, the maintained JDK8/GWT build, and compiled A07/disabled-normal checks with exact reader negatives.",
+    "No concurrent heavyweight gate; each arm uses a fresh browser process/context with an empty cold private proof cache. Warm evidence is separate.",
+    "The ordinary LU factor/solve arithmetic, pivot ties, finite guards, settling, proof hypotheses, route ordering, physical admission, service/retest semantics, signed-long replay, budgets and cleanup remain unchanged."
+  ],
+  "measurement": "Count operations only on calls 8,16,... of the existing sparse-selected whole-factor wrapper. At 1453 timer-selected calls this is 181 census calls, not every eighth of all 742391 factors. No new per-pivot timers or matrix traversal. Existing monotonic sampled factor timing includes census work and bookkeeping; counts are not phase seconds and cannot be multiplied into a claimed duration. Record successful and failed actual scopes and dimension-specific work, including scans where no lower rows require updates.",
+  "validation": "Require complete non-timing report parity, old preflight/solve/factor metadata checks with the exact expanded factor scope, strict new census conservation checks and negative mutations, and both unchanged plan-4 strict readers with their corruption cases. Bind source, compiled web and maintained host runner before/after. Require clean host error arrays and verified owned cleanup. The 40-package request echo is backed by the frozen plan/topology materialization assertions, not a separate runtime count enumeration.",
+  "earlyStop": "Stop on any native/build/host/input/metadata/parity/cleanup failure; preserve that failure and mark subsequent operations NOT RUN.",
+  "interpretation": "Use counts to identify avoidable scans in the largest remaining sampled solver subtask; a subsequent isolated A/B trial must establish any speedup. One off/profile pair does not establish zero probe overhead or population performance. Retain the 90000ms normal cumulative limit, 640 shared work units, 5000ms active-operation limit and isolated private 90-300s measurement. Q30 remains BLOCKED."
+}

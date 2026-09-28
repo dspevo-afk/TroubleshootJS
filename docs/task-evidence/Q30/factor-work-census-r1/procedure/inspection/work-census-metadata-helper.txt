@@ -1,0 +1,314 @@
+"""Strict metadata checks for the opt-in sampled LU factor work census.
+
+Compose validate(profile) with the existing repetition, factor-timing and solve
+validators. Counts are work observations, never elapsed time or savings.
+"""
+from copy import deepcopy
+import math
+
+PERIOD = 8
+MAX_SAFE_INTEGER = (1 << 53) - 1
+SELECTION_RULE = (
+    "timer-selected lu_factorNonlinearProfiled calls numbered 8,16,...; denominator is "
+    "luFactorTimingAttempts, including owner-mismatched adjacent comparisons")
+TIME_CAVEAT = (
+    "luFactorMillis includes census selection, counter operations, cleanup, and "
+    "aggregation on every eighth timer-selected factor; work counts are not "
+    "seconds and must not be multiplied into time")
+CENSUS_FIELDS = {
+    "selectionPeriodTimerSelectedCalls", "selectionRule",
+    "timerSelectedFactorCalls", "selectedFactorCalls",
+    "completedFactorCalls", "failedFactorCalls", "workIsCountNotTime",
+    "timeCaveat", "byMatrixSize",
+}
+COUNT_FIELDS = {
+    "matrixInputSamples", "factorAttempts", "factorCompletions", "factorFailures",
+    "preflightCompletions", "preflightZeroRowRejections",
+    "factorBodiesEntered", "workspaceResetCalls", "workspaceClearCalls",
+    "pivots", "pivotSearchCandidates", "pivotSwaps", "lowerRowProbes",
+    "lowerNonzeroInputs", "lowerNonzeroFactors", "upperColumnProbes",
+    "upperNonzeroColumns", "pivotsWithNoLowerRows",
+    "upperProbesWithNoLowerRows", "upperNonzerosWithNoLowerRows",
+    "rankOneUpdateAttempts", "rankOneUpdatesCompleted",
+    "referenceClearCalls", "lowerRowReferencesCleared",
+}
+
+
+class FactorWorkCensusValidationError(AssertionError):
+    """A census field, count, dimension, or conservation rule is invalid."""
+
+
+def _need(condition, message):
+    if not condition:
+        raise FactorWorkCensusValidationError(message)
+
+
+def _integer(value, label, minimum=0):
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise FactorWorkCensusValidationError(label + " must be an integer")
+    if isinstance(value, float) and (not math.isfinite(value) or not value.is_integer()):
+        raise FactorWorkCensusValidationError(label + " must be a finite whole number")
+    result = int(value)
+    _need(minimum <= result <= MAX_SAFE_INTEGER,
+          label + " is outside the safe nonnegative integer range")
+    return result
+
+
+def _keys(value, expected, label):
+    _need(isinstance(value, dict), label + " must be an object")
+    actual = set(value)
+    _need(actual == expected,
+          label + " field set differs from the exact work-census contract")
+
+
+def _size_key(key, label):
+    _need(isinstance(key, str) and key.isascii() and key.isdecimal(),
+          label + " must be a decimal matrix-size key")
+    try:
+        size = int(key)
+    except (ValueError, OverflowError):
+        raise FactorWorkCensusValidationError(label + " is not a valid matrix-size key")
+    _need(1 <= size <= MAX_SAFE_INTEGER,
+          label + " is outside the safe positive integer range")
+    _need(str(size) == key, label + " is not a canonical matrix-size key")
+    return size
+
+
+def validate(profile):
+    """Validate a complete repetition profile's optional factorWorkCensus.
+
+    The returned summary exposes integer counts only. It does not estimate or
+    claim elapsed time. Partial failed factors may contribute bounded work up
+    to their failure point; successful factors must contain their full exact
+    triangular work.
+    """
+    _need(isinstance(profile, dict), "profile must be an object")
+    census = profile.get("factorWorkCensus")
+    _keys(census, CENSUS_FIELDS, "factorWorkCensus")
+    _need(_integer(census["selectionPeriodTimerSelectedCalls"],
+                   "selectionPeriodTimerSelectedCalls", 1) == PERIOD,
+          "factor-work selection period changed")
+    _need(census.get("selectionRule") == SELECTION_RULE,
+          "factor-work selection rule changed")
+    _need(census.get("workIsCountNotTime") is True,
+          "factor-work census must be explicitly count-not-time")
+    _need(census.get("timeCaveat") == TIME_CAVEAT,
+          "factor-work time caveat changed")
+
+    timer_selected = _integer(census.get("timerSelectedFactorCalls"),
+                              "timerSelectedFactorCalls")
+    attempts_total = _integer(profile.get("luFactorTimingAttempts"),
+                              "luFactorTimingAttempts")
+    _need(timer_selected == attempts_total,
+          "timer-selected factor calls differ from the timer denominator")
+    selected = _integer(census.get("selectedFactorCalls"),
+                        "selectedFactorCalls")
+    _need(selected == timer_selected // PERIOD,
+          "selected work-census calls differ from every-eighth cadence")
+    completed = _integer(census.get("completedFactorCalls"),
+                         "completedFactorCalls")
+    failed = _integer(census.get("failedFactorCalls"), "failedFactorCalls")
+    _need(completed + failed == selected,
+          "selected work-census outcomes do not conserve attempts")
+
+    sizes = census.get("byMatrixSize")
+    _need(isinstance(sizes, dict), "byMatrixSize must be an object")
+    _need((selected == 0 and not sizes) or (selected > 0 and bool(sizes)),
+          "dimension groups do not match selected work-census calls")
+
+    # Tie census dimensions to the full current-sample size accounting when
+    # present; the cadence subset cannot exceed any full sampled-size group.
+    sampled_groups = profile.get("sampledSizeGroups")
+    _need(isinstance(sampled_groups, dict), "sampledSizeGroups must be an object")
+    sampled_by_size = {}
+    for raw_key, raw_count in sampled_groups.items():
+        size = _size_key(raw_key, "sampledSizeGroups key")
+        count = _integer(raw_count, "sampledSizeGroups[" + raw_key + "]", 1)
+        sampled_by_size[size] = count
+    sampled_inputs = _integer(profile.get("sampledMatrixInputs"),
+                               "sampledMatrixInputs")
+    _need(sum(sampled_by_size.values()) == sampled_inputs,
+          "sampled matrix size groups do not conserve input matrices")
+    if sampled_by_size:
+        minimum = _integer(profile.get("minimumMatrixSize"), "minimumMatrixSize", 1)
+        maximum = _integer(profile.get("maximumMatrixSize"), "maximumMatrixSize", 1)
+        _need(minimum == min(sampled_by_size) and maximum == max(sampled_by_size),
+              "sampled matrix size bounds disagree with size groups")
+    else:
+        _need(sampled_inputs == 0, "sampled matrices lack dimension groups")
+        _need(_integer(profile.get("minimumMatrixSize"), "minimumMatrixSize") == 0 and
+              _integer(profile.get("maximumMatrixSize"), "maximumMatrixSize") == 0,
+              "empty sampled dimensions must have zero size bounds")
+
+    totals = {name: 0 for name in COUNT_FIELDS}
+    dimensions = []
+    for raw_key, item in sizes.items():
+        n = _size_key(raw_key, "byMatrixSize key")
+        _keys(item, COUNT_FIELDS | {"matrixSize"}, "byMatrixSize[" + raw_key + "]")
+        _need(_integer(item["matrixSize"], "matrixSize", 1) == n,
+              "matrixSize does not match its object key")
+        _need(n in sampled_by_size,
+              "work-census dimension is absent from current sampled dimensions")
+        counts = {name: _integer(item[name], raw_key + "." + name)
+                  for name in COUNT_FIELDS}
+        _need(counts["factorAttempts"] > 0,
+              raw_key + " dimension has no selected factor attempts")
+        _need(counts["matrixInputSamples"] == counts["factorAttempts"],
+              raw_key + " selected matrix-input samples do not match factor attempts")
+        _need(counts["factorAttempts"] <= sampled_by_size[n],
+              raw_key + " census count exceeds its current sampled dimension count")
+        _need(counts["factorCompletions"] + counts["factorFailures"] ==
+              counts["factorAttempts"], raw_key + " factor outcomes do not conserve attempts")
+        _need(counts["preflightCompletions"] <= counts["factorAttempts"],
+              raw_key + " preflight completions exceed attempts")
+        _need(counts["preflightZeroRowRejections"] <= counts["preflightCompletions"],
+              raw_key + " zero-row rejections exceed completed preflights")
+        _need(counts["preflightZeroRowRejections"] <= counts["factorFailures"],
+              raw_key + " zero-row rejections exceed failed factors")
+        _need(counts["factorBodiesEntered"] <= counts["preflightCompletions"],
+              raw_key + " factor body entered without completed preflight")
+        _need(counts["factorCompletions"] <= counts["factorBodiesEntered"],
+              raw_key + " completed factor lacks an entered factor body")
+        _need(counts["factorBodiesEntered"] <=
+              counts["factorAttempts"] - counts["preflightZeroRowRejections"],
+              raw_key + " body-entry count conflicts with zero-row rejections")
+        _need(counts["workspaceResetCalls"] <= counts["factorAttempts"] and
+              counts["workspaceResetCalls"] >=
+              counts["preflightCompletions"],
+              raw_key + " workspace resets are outside selected-factor bounds")
+        _need(counts["workspaceClearCalls"] <= counts["factorAttempts"] and
+              counts["workspaceClearCalls"] >= counts["factorBodiesEntered"] +
+              counts["preflightZeroRowRejections"],
+              raw_key + " workspace clears are outside selected-factor bounds")
+
+        ntri = n * (n + 1) // 2
+        strict_tri = n * (n - 1) // 2
+        body = counts["factorBodiesEntered"]
+        success = counts["factorCompletions"]
+        _need(success * n <= counts["pivots"] <= body * n,
+              raw_key + " pivot counts exceed successful/partial work bounds")
+        _need(success * ntri <= counts["pivotSearchCandidates"] <= body * ntri,
+              raw_key + " pivot-search counts exceed triangular work bounds")
+        for field in ("lowerRowProbes", "upperColumnProbes"):
+            _need(success * strict_tri <= counts[field] <= body * strict_tri,
+                  raw_key + " " + field + " exceed triangular work bounds")
+        _need(counts["pivotSwaps"] <= counts["pivots"],
+              raw_key + " pivot swaps exceed pivots")
+        _need(counts["lowerNonzeroInputs"] <= counts["lowerRowProbes"],
+              raw_key + " lower nonzero inputs exceed lower probes")
+        _need(counts["lowerNonzeroFactors"] <= counts["lowerNonzeroInputs"],
+              raw_key + " lower nonzero factors exceed nonzero inputs")
+        _need(counts["upperNonzeroColumns"] <= counts["upperColumnProbes"],
+              raw_key + " upper nonzero columns exceed upper probes")
+        _need(counts["rankOneUpdateAttempts"] <=
+              counts["lowerNonzeroFactors"] * max(0, n - 1),
+              raw_key + " rank-one updates exceed lower-row/upper-column bounds")
+        _need(counts["rankOneUpdatesCompleted"] <= counts["rankOneUpdateAttempts"],
+              raw_key + " completed rank-one updates exceed attempts")
+        _need(counts["rankOneUpdateAttempts"] == counts["rankOneUpdatesCompleted"]
+              if success == counts["factorAttempts"] else
+              counts["rankOneUpdatesCompleted"] <= counts["rankOneUpdateAttempts"],
+              raw_key + " successful factors have incomplete rank-one updates")
+        _need(counts["pivotsWithNoLowerRows"] <= min(counts["pivots"], body * max(0, n - 1)),
+              raw_key + " empty-lower-pivot count exceeds pivot bounds")
+        _need(counts["upperProbesWithNoLowerRows"] <= counts["upperColumnProbes"] and
+              counts["upperProbesWithNoLowerRows"] <=
+              counts["pivotsWithNoLowerRows"] * max(0, n - 1),
+              raw_key + " empty-lower upper probes exceed their bounds")
+        _need(counts["upperNonzerosWithNoLowerRows"] <=
+              min(counts["upperNonzeroColumns"], counts["upperProbesWithNoLowerRows"]),
+              raw_key + " empty-lower upper nonzeros exceed their bounds")
+        _need(counts["referenceClearCalls"] >= counts["workspaceClearCalls"] +
+              (n - 1) * success and
+              counts["referenceClearCalls"] <= n * counts["factorAttempts"],
+              raw_key + " row-reference clear calls do not match factor outcomes")
+        _need(counts["lowerRowReferencesCleared"] <=
+              counts["referenceClearCalls"] * max(0, n - 1),
+              raw_key + " cleared row references exceed clear-call bounds")
+        if n == 1:
+            _need(counts["lowerRowProbes"] == 0 and counts["upperColumnProbes"] == 0 and
+                  counts["rankOneUpdateAttempts"] == 0 and
+                  counts["pivotsWithNoLowerRows"] == 0 and
+                  counts["upperProbesWithNoLowerRows"] == 0 and
+                  counts["upperNonzerosWithNoLowerRows"] == 0 and
+                  counts["lowerRowReferencesCleared"] == 0,
+                  "1x1 factor work contains triangular-operation counts")
+        for field, value in counts.items():
+            totals[field] += value
+            _need(totals[field] <= MAX_SAFE_INTEGER,
+                  "aggregated " + field + " exceeds the safe integer range")
+        dimensions.append(n)
+
+    _need(totals["matrixInputSamples"] == selected and
+          totals["factorAttempts"] == selected,
+          "matrix-size samples/attempts do not sum to selected factor calls")
+    _need(totals["factorCompletions"] == completed and totals["factorFailures"] == failed,
+          "matrix-size outcomes do not match top-level outcomes")
+    return {
+        "timerSelectedFactorCalls": timer_selected,
+        "selectedFactorCalls": selected,
+        "completedFactorCalls": completed,
+        "failedFactorCalls": failed,
+        "matrixSizes": sorted(dimensions),
+        "workIsCountNotTime": True,
+    }
+
+
+def negative_canaries(profile):
+    """Return rejected metadata mutations against an actual profile object."""
+    validate(profile)
+    cases = []
+
+    def rejects(name, mutate):
+        changed = deepcopy(profile)
+        mutate(changed)
+        try:
+            validate(changed)
+        except (FactorWorkCensusValidationError, AssertionError, KeyError, TypeError,
+                ValueError, OverflowError) as error:
+            cases.append({"case": name, "status": "REJECTED_AS_EXPECTED",
+                          "reason": str(error)})
+        else:
+            raise AssertionError("factor work-census corruption accepted: " + name)
+
+    def census_mutation(field, value):
+        return lambda p: p["factorWorkCensus"].__setitem__(field, value)
+
+    def size_mutation(field, value):
+        def mutate(p):
+            first = next(iter(p["factorWorkCensus"]["byMatrixSize"].values()))
+            first[field] = value
+        return mutate
+
+    rejects("timer denominator mismatch", census_mutation(
+        "timerSelectedFactorCalls", profile["luFactorTimingAttempts"] + 1))
+    rejects("selection cadence mismatch", census_mutation(
+        "selectionPeriodTimerSelectedCalls", PERIOD + 1))
+    rejects("selected calls violate floor cadence", census_mutation(
+        "selectedFactorCalls", profile["factorWorkCensus"]["selectedFactorCalls"] + 1))
+    rejects("selected outcome total mismatch", census_mutation(
+        "completedFactorCalls", profile["factorWorkCensus"]["completedFactorCalls"] + 1))
+    rejects("missing matrix-size group", lambda p: p["factorWorkCensus"]["byMatrixSize"].clear())
+    rejects("matrix-size key/value mismatch", lambda p: p["factorWorkCensus"]["byMatrixSize"].__setitem__(
+        "999", next(iter(p["factorWorkCensus"]["byMatrixSize"].values()))))
+    rejects("missing work counter", lambda p: next(iter(p["factorWorkCensus"]["byMatrixSize"].values())).pop(
+        "pivots"))
+    rejects("unexpected work counter", lambda p: next(iter(
+        p["factorWorkCensus"]["byMatrixSize"].values())).__setitem__("elapsedMillis", 0))
+    rejects("unexpected timestamp field", census_mutation("selectedAtTimestamp", 1))
+    rejects("boolean work count", size_mutation("pivots", True))
+    rejects("NaN work count", size_mutation("pivots", float("nan")))
+    rejects("infinite work count", size_mutation("pivots", float("inf")))
+    rejects("fractional work count", size_mutation("pivots", 1.5))
+    rejects("negative work count", size_mutation("pivots", -1))
+    rejects("unsafe integer count", size_mutation("pivotSearchCandidates", MAX_SAFE_INTEGER + 1))
+    rejects("impossible pivot work", size_mutation("pivots", MAX_SAFE_INTEGER))
+    rejects("successful factor triangular undercount", size_mutation("pivotSearchCandidates", 0))
+    rejects("impossible rank-one updates", size_mutation("rankOneUpdateAttempts", MAX_SAFE_INTEGER))
+    rejects("empty-lower counter mismatch", size_mutation("upperProbesWithNoLowerRows", MAX_SAFE_INTEGER))
+    rejects("workspace reference-clear mismatch", size_mutation("referenceClearCalls", 0))
+    rejects("work/time semantic mutation", census_mutation("workIsCountNotTime", False))
+    rejects("selection-rule identity", census_mutation("selectionRule", "every eighth LU pivot"))
+    rejects("dimension exceeds current sampled counts", lambda p: p["sampledSizeGroups"].__setitem__(
+        next(iter(p["sampledSizeGroups"])), 0))
+    return cases

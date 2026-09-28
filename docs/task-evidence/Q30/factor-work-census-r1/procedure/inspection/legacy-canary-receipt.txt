@@ -1,0 +1,69 @@
+{
+  "status": "PASS",
+  "rawReportSha256": "0d8ad63b7e31f6c7da32e7e4fcab6a25456cca608bdf35b938e04e6134afab3c",
+  "validatorSha256": "56d11822c0456ef4372bfa7cdfc0f3d79965e6aa895fcfd665e0d4a8b72da312",
+  "positiveSamplerRecords": 1,
+  "negativeMetadataCanaries": [
+    {
+      "case": "foreign phase",
+      "status": "REJECTED_AS_EXPECTED",
+      "reason": "cold profile phase label mismatch"
+    },
+    {
+      "case": "nonadjacent comparison",
+      "status": "REJECTED_AS_EXPECTED",
+      "reason": "cold comparison was not the immediately following sampled factor call"
+    },
+    {
+      "case": "duplicate start",
+      "status": "REJECTED_AS_EXPECTED",
+      "reason": "cold sample positions are duplicated or out of order"
+    },
+    {
+      "case": "completed-pair count",
+      "status": "REJECTED_AS_EXPECTED",
+      "reason": "cold sampler pair/input counts do not partition consistently"
+    },
+    {
+      "case": "match count",
+      "status": "REJECTED_AS_EXPECTED",
+      "reason": "cold sampler pair/input counts do not partition consistently"
+    },
+    {
+      "case": "compared-cell census",
+      "status": "REJECTED_AS_EXPECTED",
+      "reason": "cold no-abort compared entries differ from paired sampled matrix inputs"
+    },
+    {
+      "case": "clock error",
+      "status": "REJECTED_AS_EXPECTED",
+      "reason": "cold browser sampler did not use a clean monotonic performance.now clock"
+    },
+    {
+      "case": "wall clock mislabeled",
+      "status": "REJECTED_AS_EXPECTED",
+      "reason": "cold browser sampler did not use a clean monotonic performance.now clock"
+    },
+    {
+      "case": "signed-zero entry overflow",
+      "status": "REJECTED_AS_EXPECTED",
+      "reason": "cold signed-zero entries exceed all compared entries"
+    },
+    {
+      "case": "size census drift",
+      "status": "REJECTED_AS_EXPECTED",
+      "reason": "cold matrix-size group total differs from sampled inputs"
+    },
+    {
+      "case": "overhead outside measurement",
+      "status": "REJECTED_AS_EXPECTED",
+      "reason": "cold sample-only overhead exceeds the measurement job deadline"
+    },
+    {
+      "case": "profile in query-off report",
+      "status": "REJECTED_AS_EXPECTED",
+      "reason": "cold query-off report unexpectedly contains a profile"
+    }
+  ],
+  "scope": "sampler metadata only; separate strict current-plan4 readers check electrical/proof/physical/work/cache/budget evidence"
+}

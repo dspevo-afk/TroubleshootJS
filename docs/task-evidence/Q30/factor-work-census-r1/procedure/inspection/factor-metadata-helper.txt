@@ -1,0 +1,225 @@
+"""Strict metadata checks for the sampled whole-LU-factor timer draft.
+
+Compose validate(profile) with the existing repetition/preflight and solve
+validators; this module does not replace either validator.
+"""
+from copy import deepcopy
+import math
+
+
+LU_FACTOR_TIMING_SCOPE = 'actual lu_factorNonlinearOwned(profile) call for every selected SAMPLE_START/SAMPLE_COMPARE, including owner-mismatched compares; includes workspace reset, zero-row preflight, LU arithmetic, workspace clear, and work-census selection, counters, cleanup, and aggregation on every eighth timer-selected call; excludes sample copy/compare and lu_solve; overlaps zeroRowPreflightMillis'
+EXPECTED_FACTOR_FIELDS = {
+    "luFactorMillis",
+    "luFactorTimingScope",
+    "luFactorTimingAttempts",
+    "luFactorTimingCompletions",
+    "luFactorTimingSamples",
+    "luFactorTimingErrors",
+    "luFactorSuccesses",
+    "luFactorFailures",
+    "luFactorNativeClockUnavailable",
+    "luFactorClock",
+}
+BROWSER_CLOCK = "performance.now"
+NATIVE_CLOCK = "unavailable-native"
+
+
+class FactorMetadataValidationError(AssertionError):
+    """A factor-profile field or identity does not meet its frozen contract."""
+
+
+def _need(condition, message):
+    if not condition:
+        raise FactorMetadataValidationError(message)
+
+
+def _integer(value, label, minimum=0):
+    # bool subclasses int in Python, so reject it explicitly. GWT JSONNumber
+    # fields may parse as integral floats; permit only finite whole values.
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise FactorMetadataValidationError(label + " must be an integer")
+    if isinstance(value, float) and (not math.isfinite(value) or not value.is_integer()):
+        raise FactorMetadataValidationError(label + " must be a finite whole number")
+    result = int(value)
+    _need(result >= minimum, label + " is below its minimum")
+    return result
+
+
+def _finite_nonnegative(value, label):
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise FactorMetadataValidationError(label + " must be a finite number")
+    try:
+        result = float(value)
+    except (OverflowError, ValueError):
+        raise FactorMetadataValidationError(label + " must be a finite number")
+    _need(math.isfinite(result), label + " must be finite")
+    _need(result >= 0.0, label + " must be nonnegative")
+    return result
+
+
+def validate(profile):
+    """Validate only the new inclusive factor timing fields and return a summary.
+
+    Browser profiles must contain valid performance.now samples for every
+    selected start/compare factor. Native contract profiles are accepted only
+    when they explicitly report the clock unavailable and contain no elapsed
+    samples; their result has ``measured`` false and cannot support a browser
+    performance claim.
+    """
+    _need(isinstance(profile, dict), "factor profile must be an object")
+    phase = profile.get("phase")
+    _need(isinstance(phase, str) and phase in ("cold", "warm"),
+          "factor profile phase must be cold or warm")
+
+    factor_keys = {key for key in profile
+                   if isinstance(key, str) and key.startswith("luFactor")}
+    _need(factor_keys == EXPECTED_FACTOR_FIELDS,
+          "factor metadata field set differs from the exact draft contract")
+    _need(profile.get("luFactorTimingScope") == LU_FACTOR_TIMING_SCOPE,
+          phase + " whole-factor timing scope changed")
+
+    # The selected action calls the factor wrapper for each start and compare,
+    # even when compare identity fails; identity still controls solve sampling.
+    starts = _integer(profile.get("sampledStarts"), phase + " sampledStarts", 1)
+    compares = _integer(profile.get("compareAttempts"), phase + " compareAttempts")
+    sampled_inputs = _integer(profile.get("sampledMatrixInputs"),
+                              phase + " sampledMatrixInputs", 1)
+    factor_calls = _integer(profile.get("factorCalls"), phase + " factorCalls", 1)
+    selected_calls = starts + compares
+    _need(compares <= starts,
+          phase + " compare attempts exceed selected sample starts")
+    _need(sampled_inputs == selected_calls,
+          phase + " sampled matrix inputs differ from starts plus compares")
+    _need(selected_calls <= factor_calls,
+          phase + " selected factor calls exceed all scoped factor calls")
+
+    attempts = _integer(profile.get("luFactorTimingAttempts"),
+                        phase + " luFactorTimingAttempts", 1)
+    completions = _integer(profile.get("luFactorTimingCompletions"),
+                           phase + " luFactorTimingCompletions")
+    samples = _integer(profile.get("luFactorTimingSamples"),
+                       phase + " luFactorTimingSamples")
+    errors = _integer(profile.get("luFactorTimingErrors"),
+                      phase + " luFactorTimingErrors")
+    native_unavailable = _integer(profile.get("luFactorNativeClockUnavailable"),
+                                  phase + " luFactorNativeClockUnavailable")
+    successes = _integer(profile.get("luFactorSuccesses"),
+                         phase + " luFactorSuccesses")
+    failures = _integer(profile.get("luFactorFailures"),
+                        phase + " luFactorFailures")
+    _need(attempts == selected_calls,
+          phase + " factor timing attempts differ from sampled starts plus compares")
+    _need(completions == attempts,
+          phase + " factor timing attempts and completions do not balance")
+    _need(successes + failures == completions,
+          phase + " factor outcome counts do not balance completed calls")
+    _need(successes == attempts and failures == 0,
+          phase + " sampled factor calls include a false return or exception")
+
+    preflight_attempts = _integer(profile.get("zeroRowPreflightTimingAttempts"),
+                                  phase + " zeroRowPreflightTimingAttempts")
+    preflight_completions = _integer(profile.get("zeroRowPreflightTimingCompletions"),
+                                     phase + " zeroRowPreflightTimingCompletions")
+    preflight_samples = _integer(profile.get("zeroRowPreflightTimingSamples"),
+                                 phase + " zeroRowPreflightTimingSamples")
+    preflight_errors = _integer(profile.get("zeroRowPreflightTimingErrors"),
+                                phase + " zeroRowPreflightTimingErrors")
+    preflight_millis = _finite_nonnegative(profile.get("zeroRowPreflightMillis"),
+                                           phase + " zeroRowPreflightMillis")
+    preflight_clock = profile.get("zeroRowPreflightClock")
+    _need(preflight_attempts == attempts and preflight_completions == attempts,
+          phase + " nested zero-row preflight calls differ from selected factor calls")
+
+    factor_millis = _finite_nonnegative(profile.get("luFactorMillis"),
+                                         phase + " luFactorMillis")
+    _need(factor_millis >= preflight_millis,
+          phase + " inclusive factor time is less than its nested preflight time")
+    clock = profile.get("luFactorClock")
+    if clock == BROWSER_CLOCK:
+        _need(samples == attempts and errors == 0 and native_unavailable == 0,
+              phase + " browser factor clock samples/errors do not balance")
+        _need(preflight_clock == BROWSER_CLOCK and
+              preflight_samples == attempts and preflight_errors == 0,
+              phase + " nested preflight did not use a complete browser clock")
+        measured = True
+    elif clock == NATIVE_CLOCK:
+        _need(native_unavailable == attempts and samples == 0 and errors == 0 and
+              factor_millis == 0.0,
+              phase + " native factor clock status conflicts with elapsed counters")
+        _need(preflight_clock == NATIVE_CLOCK and preflight_samples == 0 and
+              preflight_errors == 0 and preflight_millis == 0.0,
+              phase + " native preflight clock status conflicts with elapsed counters")
+        measured = False
+    else:
+        raise FactorMetadataValidationError(
+            phase + " factor clock must be performance.now or unavailable-native")
+
+    return {
+        "phase": phase,
+        "selectedFactorCalls": selected_calls,
+        "factorSuccesses": successes,
+        "factorFailures": failures,
+        "luFactorMillis": factor_millis,
+        "nestedZeroRowPreflightMillis": preflight_millis,
+        "inclusiveOfPreflight": True,
+        "timingClock": clock,
+        "measured": measured,
+        "timingSamples": samples,
+        "timingErrors": errors,
+        "nativeClockUnavailable": native_unavailable,
+    }
+
+
+def negative_canaries(profile):
+    """Return actual-field corruptions rejected by validate().
+
+    Mutations target the GWT-timed contract. Native structural profiles are
+    validated by validate() separately and are not used as this mutation base.
+    """
+    validate(profile)
+    _need(profile.get("luFactorClock") == BROWSER_CLOCK,
+          "factor negative canaries require a browser-timed baseline")
+    cases = []
+
+    def rejects(name, mutate):
+        changed = deepcopy(profile)
+        mutate(changed)
+        try:
+            validate(changed)
+        except (FactorMetadataValidationError, AssertionError, KeyError, TypeError,
+                ValueError, OverflowError) as error:
+            cases.append({"case": name, "status": "REJECTED_AS_EXPECTED",
+                          "reason": str(error)})
+        else:
+            raise AssertionError("factor metadata corruption was accepted: " + name)
+
+    def bump(field, amount=1):
+        def mutation(value):
+            value[field] = value[field] + amount
+        return mutation
+
+    rejects("boolean factor counter", lambda p: p.__setitem__("luFactorTimingAttempts", True))
+    rejects("missing factor elapsed field", lambda p: p.pop("luFactorMillis"))
+    rejects("unexpected factor metadata field",
+            lambda p: p.__setitem__("luFactorTimingUnexpected", 0))
+    rejects("selected factor attempt identity", bump("luFactorTimingAttempts"))
+    rejects("factor timing completion conservation", bump("luFactorTimingCompletions"))
+    rejects("factor timing sample conservation", lambda p: p.__setitem__(
+        "luFactorTimingSamples", p["luFactorTimingSamples"] - 1))
+    rejects("factor timing clock errors", bump("luFactorTimingErrors"))
+    rejects("factor outcome conservation", lambda p: p.__setitem__(
+        "luFactorFailures", p["luFactorFailures"] + 1))
+    rejects("native clock count in browser profile",
+            bump("luFactorNativeClockUnavailable"))
+    rejects("nonfinite factor elapsed", lambda p: p.__setitem__(
+        "luFactorMillis", float("nan")))
+    rejects("negative factor elapsed", lambda p: p.__setitem__(
+        "luFactorMillis", -1.0))
+    rejects("factor elapsed excludes nested preflight", lambda p: p.__setitem__(
+        "luFactorMillis", p["zeroRowPreflightMillis"] / 2.0))
+    rejects("factor timing scope identity", lambda p: p.__setitem__(
+        "luFactorTimingScope", "generic factor time"))
+    rejects("factor clock identity", lambda p: p.__setitem__(
+        "luFactorClock", "Date.now"))
+    rejects("preflight conservation", bump("zeroRowPreflightTimingCompletions"))
+    return cases

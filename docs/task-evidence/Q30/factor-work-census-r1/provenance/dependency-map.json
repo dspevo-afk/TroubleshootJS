@@ -1,0 +1,111 @@
+{
+  "candidate": {
+    "exactDeltaPaths": [
+      "scripts/verify-current-contracts.ps1",
+      "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "tests/contracts/Q30LuFactorWorkCensusContractTest.java"
+    ],
+    "inputCount": 1343,
+    "sourceAuditSha256": "e61464def6a1da12d3dd4c9b067aa779c9c701b49eef7c3b9b7e97323070b5d6"
+  },
+  "committedBase": {
+    "README_sha256": "7743bef6c0ad05e54d2555cc1f29457cccf2c30094d645294dfd94346a8cb002",
+    "base_reference_sha256": "69953cd5dc015662b44920a25a069c47ec480cfd08f162f6016ed26bc34e035a",
+    "input_inventory_gzip_sha256": "8693d921e4fa04e81dfadad2b6a65806e1352aced4dcba3f55358d8951ed8347",
+    "inventory_checksum_file_sha256": "9731a131d3177251bdeaa489fec14631a18be268a5d95f580f29915d4c5782df",
+    "inventory_sha256": "14ebed8a7d27a8001015281f1257d3fe79f2bfe1c5518a0024f0192c204f0cc5",
+    "packet": "../factor-profile"
+  },
+  "inspectionCopies": [
+    {
+      "file": "procedure/inspection/runner.txt",
+      "originalSha256": "65e5d9c6304a03ef08941c57e53f74d22e9b526abca245d9d736a0f63e4efca3"
+    },
+    {
+      "file": "procedure/inspection/validator.txt",
+      "originalSha256": "4b5299e7819b0adba643c857b766f91df2c6b6c536674cb366e1582603902505"
+    },
+    {
+      "file": "procedure/inspection/factor-metadata-helper.txt",
+      "originalSha256": "3b7d2d8b7b0b0ab8d11d8958ef3ab0e4bb03944666a1c0b9c5597773ee0897ba"
+    },
+    {
+      "file": "procedure/inspection/work-census-metadata-helper.txt",
+      "originalSha256": "c781479a7b5ba8410846c4d8d3919b1884c1ba9ccb00466c7fae00dfdf78953e"
+    },
+    {
+      "file": "procedure/inspection/legacy-profile-validator.txt",
+      "originalSha256": "56d11822c0456ef4372bfa7cdfc0f3d79965e6aa895fcfd665e0d4a8b72da312"
+    },
+    {
+      "file": "procedure/inspection/legacy-canary-checker.txt",
+      "originalSha256": "a776cfa51880a2a13d87e4cf5be7daa28ee1897213cbf522d13cdb13f27c1342"
+    },
+    {
+      "file": "procedure/inspection/legacy-canary-receipt.txt",
+      "originalSha256": "a4a4850853716795848026863c8164a0149980a94155ae6a5413de38c2860d25"
+    },
+    {
+      "file": "procedure/inspection/native-gate-runner.txt",
+      "originalSha256": "1acd2f7057f11e1d815a5f7b4257849a7b10f3c53a37253ab0e12bf7f74a2ff6"
+    },
+    {
+      "file": "procedure/inspection/gwt-gate-runner.txt",
+      "originalSha256": "5bde61d081264e189e8232d2668a8a6ca3c045aa8323b10476923b1f172889a4"
+    },
+    {
+      "file": "procedure/inspection/compiled-canary-runner.txt",
+      "originalSha256": "62f98058d12f94f0ac1cb0544454aef4cd2ec86ac210619fbcfafeac3974b807"
+    },
+    {
+      "file": "procedure/inspection/a07-reader.txt",
+      "originalSha256": "eea365306493418263f901c145715dddec4ea2901e5ac1176305b93c36943368"
+    },
+    {
+      "file": "procedure/inspection/validator-generation-invocation.txt",
+      "originalSha256": "d5e4be04cd6dc322aa3976d48d5f39a51a016c67cfe089eafdf29ed17ed0730d"
+    },
+    {
+      "file": "procedure/inspection/validator-generator.txt",
+      "originalSha256": "d6475f51de3611946d4bc74d29edd5a76f3d62f884f6957142891ab09024748f"
+    },
+    {
+      "file": "procedure/inspection/validator-generator-notes.txt",
+      "originalSha256": "102bc2684b33064b80142db851d2acd401bb1d61c8a138d71e934cd64f1f0f96"
+    },
+    {
+      "file": "procedure/inspection/metadata-contract.txt",
+      "originalSha256": "e8cc93773f0f8ac4080258d397ef4372f0e576f0348e6c28c34937184988a786"
+    },
+    {
+      "file": "procedure/inspection/independent-source-review.txt",
+      "originalSha256": "884607b1f349fc83057a2dda7cf9235da81b24a0d33c179db9bbd71dea96e3f7"
+    },
+    {
+      "file": "procedure/inspection/independent-validator-review.txt",
+      "originalSha256": "f6862acd243d13c2c37e83c8f1b5c7dc7cb397706636d04087b4c31efff59a27"
+    }
+  ],
+  "limitations": [
+    "Inspection copies redact personal paths and are not exact runnable scripts.",
+    "The pair is one private seed/package diagnostic and cannot establish production acceptance or a performance claim."
+  ],
+  "packerRevision": {
+    "intermediateAttemptSha256": "d91963e84cab6867efb83ab26c13ed415b346dcd32f6178c48b7f4cd13157f54",
+    "previousRevisionSha256": "4f11480a298e76128adcaeb71bb422bf1e53bb16842d2db2c9fcf5b3c5c2f231",
+    "sha256": "611251d79478322b9cfd5cb24e969c36d892587bebca79e730bc43a96e96c168",
+    "taskRootRelativePath": "package_factor_work_census.py"
+  },
+  "purpose": "review/reproduction references for the private selected-factor count experiment",
+  "schema": 1,
+  "strictReaders": [
+    {
+      "path": "../owned-zero-row-scan/procedure/readers/check_d01.py",
+      "sha256": "f58847541571cdf829835d05c200bac6ea0079dab065d90ebdf7f44914241929"
+    },
+    {
+      "path": "../owned-zero-row-scan/procedure/readers/check_coordinator.py",
+      "sha256": "247ded434bcdbdba6f78e7edf8f9c8b3671aaf8465bfabb29c875d5b2512bddb"
+    }
+  ]
+}
