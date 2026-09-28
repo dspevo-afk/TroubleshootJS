@@ -1,0 +1,16 @@
+{
+  "status": "INCONCLUSIVE_FIRST_PAIR_ROUTING_GAIN_BELOW_TWO_PERCENT",
+  "rowsRun": 2,
+  "rowsNotRun": [
+    "route-transform-03-candidate-7",
+    "route-transform-04-control-7",
+    "route-transform-05-control-10387",
+    "route-transform-06-candidate-10387",
+    "route-transform-07-candidate-10014",
+    "route-transform-08-control-10014"
+  ],
+  "preexecutionPrototypeReadme": "provenance/preexecution-prototype-readme.md.gz",
+  "prototypeNote": "Its NOT RUN statements describe the pre-gate snapshot and are superseded by current gate receipts.",
+  "patchParseHistory": "The prototype README records an earlier static patch parse failure due to missing final newline; the corrected normalized review patch parsed before timing.",
+  "speedupClaim": false
+}

@@ -1,0 +1,64 @@
+{
+  "fusionControl": {
+    "packetPath": "docs/task-evidence/Q30/pivot-lower-fusion-r2/",
+    "packetCommit": "ffe9132",
+    "packetInventorySha256": "9645873f63b10cea3341ed64b52819d2bd5660bb6c1e179232c657a40cf1a7ea",
+    "controlSourceAuditPath": "provenance/scratch/pivot-lower-fusion-r2-preparation/source-audit.json",
+    "controlSourceAuditStoredSha256": "84b52b384972d28863cd235a7d0fe24a5721f397f229f420dc9c49388ab85f82",
+    "controlSourceAuditOriginalSha256": "0d27e176dc46afb4db91316570f4674e52b51ce2b462c64f6b6a37b98cbec197",
+    "controlInputs": 1340,
+    "arm": "armInputs.candidate"
+  },
+  "sharedHelpers": [
+    {
+      "name": "run_timing.py",
+      "executedSha256": "a7ef67c63397a28c1781b40746507fc0fa129f030742b8c6201350f099a9765f",
+      "referencePath": "docs/task-evidence/Q30/sticky-finite-solve-r2/tools/run_timing.py",
+      "referenceSha256": "9d5fb80840b3a53f8076f8311250e4eba808c74cb009bdb07225792c48b014ec",
+      "executedCopy": "procedures/run-timing-executed.py.gz"
+    },
+    {
+      "name": "validate_current_q30_timing_pair.py",
+      "executedSha256": "67430d7c56d872d115a7c38732bf60101cff52e8bf40f7af075213debc8e7e3b",
+      "referencePath": "docs/task-evidence/Q30/sticky-finite-solve-r2/tools/validate_current_q30_timing_pair.py",
+      "referenceSha256": "67430d7c56d872d115a7c38732bf60101cff52e8bf40f7af075213debc8e7e3b",
+      "boundary": "Exact byte match; not duplicated."
+    },
+    {
+      "name": "compiled_attribute_acceptance.py",
+      "executedSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+      "referencePath": "tests/browser/compiled_attribute_acceptance.py",
+      "referenceSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4"
+    },
+    {
+      "name": "run_current_solver_canaries.py",
+      "executedSha256": "62f98058d12f94f0ac1cb0544454aef4cd2ec86ac210619fbcfafeac3974b807",
+      "referencePath": "docs/task-evidence/Q30/sticky-finite-solve-r2/tools/run_current_solver_canaries.py",
+      "referenceSha256": "62f98058d12f94f0ac1cb0544454aef4cd2ec86ac210619fbcfafeac3974b807",
+      "boundary": "Exact byte match to the executed helper; committed reference reused."
+    },
+    {
+      "name": "read_a07.ps1",
+      "executedSha256": "eea365306493418263f901c145715dddec4ea2901e5ac1176305b93c36943368",
+      "referencePath": "docs/task-evidence/Q30/sticky-finite-solve-r2/tools/read_a07.ps1",
+      "referenceSha256": "eea365306493418263f901c145715dddec4ea2901e5ac1176305b93c36943368",
+      "boundary": "Exact byte match to the executed helper; committed reference reused."
+    }
+  ],
+  "pathRedaction": "Personal Windows home path prefix replaced with <PRIVATE_USER>; every archived payload is scanned after decompression.",
+  "excluded": [
+    "browser profile/cache",
+    "compiled WAR/JAR",
+    "uncontrolled build/scratch trees"
+  ],
+  "strictReaders": [
+    {
+      "path": "docs/task-evidence/Q30/owned-zero-row-scan/procedure/readers/check_coordinator.py",
+      "sha256": "247ded434bcdbdba6f78e7edf8f9c8b3671aaf8465bfabb29c875d5b2512bddb"
+    },
+    {
+      "path": "docs/task-evidence/Q30/owned-zero-row-scan/procedure/readers/check_d01.py",
+      "sha256": "f58847541571cdf829835d05c200bac6ea0079dab065d90ebdf7f44914241929"
+    }
+  ]
+}

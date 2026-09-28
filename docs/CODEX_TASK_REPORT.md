@@ -1,11 +1,13 @@
 # Current checkpoint: Q30 BLOCKED / NOT ACCEPTED
 
-Branch `codex/q30-multirail-qualification`; checkpoint base
-`8d110f893440e189ba91b5cf8722fa75a5c604a3` (D01 private evidence).
+Branch `codex/q30-multirail-qualification`; accepted source checkpoint
+`ffe91321d0cc674a6a3e3e5e9f382d9d198a16e4`,
+`Collect LU lower rows during pivot search`.
 The accepted intermediate candidate collects LU lower rows during pivot search;
 pure `CirSim.java` SHA-256 is
 `c75fa32de8f6175424675aa590604ceca10fb1b335c63640e638a92b3bf0ff32`.
-Its source/test/registration and evidence are prepared for a local commit.
+Its source/test/registration and evidence are committed locally after a passing
+staged whitespace check; no unrelated source was staged.
 No push or completion email. Normal-player Q30 publication remains disabled.
 U06/U07/Q60 and later remain unstarted; full final matrices are NOT RUN.
 
@@ -60,8 +62,8 @@ physical admission 0.075 s, settlement orchestration 1.271 s and proof cleanup
 retries and repeated work are explicit in [stage evidence](task-evidence/Q30/stage-profile/README.md).
 Inclusive proof purposes must not be added to their child timers. A later
 [factor probe](task-evidence/Q30/factor-profile/README.md) estimates factorization
-at 33.620 s and solve at 9.146 s; sparse sampling makes these estimates, not exact
-totals. Its nested preflight time is not added again. Full parity, 109 metadata
+at 33.620 s and solve at 9.146 s before fusion; sparse sampling makes these
+estimates, not current exact totals. Its nested preflight time is not added again. Full parity, 109 metadata
 negatives, strict readers and owned cleanup PASS. Profiling remains isolated.
 
 The [factor census](task-evidence/Q30/factor-work-census-r1/README.md) passes focused
@@ -70,14 +72,51 @@ native/GWT/compiled gates, full parity, 155 metadata negatives and strict reader
 lower pivots explain only 3.43% of upper probes. Counts are not time or speedup.
 All eleven warm samples succeed; the 530-ms off/on difference does not prove zero
 overhead. The malformed-short-row partial-count limit remains disclosed.
+A read-only feasibility review rejected new sparse per-pivot timing: expected
+sub-microsecond intervals are far below the observed 0.1-ms timer quantum, and
+more clock calls would not provide reliable low-overhead attribution. That probe
+is NOT RUN; operation counts alone do not justify another matrix-index trial.
+An independent dependency review confirms voltage publication feeds solver/model
+state. Wire-current refresh is observable by accepted-step callbacks and wire
+scopes; broad deferral is not safe. No publication/refresh change is implemented,
+and the mixed wire/callback timing bucket does not establish an isolated cost.
 
 Routing trial: an exact two-pass Manhattan field in the simpler router passes
 native6/GWT5/A07/disabled-normal, its 724-assertion BFS oracle and strict readers.
 Fresh control/candidate cold times are 97.240/97.296 s, routing 22.543/22.486 s.
 The 57-ms routing gain and 56-ms cold regression are inconclusive. The predeclared
 continuation rule stopped the trial; six rows are NOT RUN. The transform remains
-unintegrated. New source-only instrumentation covers both simple routing and
-P07's separate multilayer search before another optimization is chosen.
+unintegrated. Root verified the 84-artifact [inconclusive trial packet](task-evidence/Q30/route-distance-transform-r1/README.md),
+all four exact raw reports and the 1,340-to-1,341-input source reconstruction.
+Inventory: `83971f4f6adab97d85d2b642beb9cb3626dccd0ade9f5552d58447b045a0bcfa`.
+New private instrumentation covers both simple routing and P07's multilayer search.
+The private routing-profile fixture now passes native9 (39.004 s, including 145
+new collector assertions), GWT5 (80.934 s), compiled A07/disabled-normal and three
+strict negative canaries. Root restored an existing wall-timer boundary before
+gates. Reader review/preflight caught and repaired a contradictory clock-count
+check and a browser-profile-directory false rejection; original drafts/failure
+are retained. A CLI Path/string error stopped validation after two successful
+host captures; the corrected reader revalidated those exact reports before the
+third predeclared row. Both complete non-timing comparisons PASS, with 29 metadata
+corruptions per cold/warm profile and 43 strict corruptions per arm. Application
+source, build, limits and plan did not change during the reader repairs.
+
+Fresh control/profile/control cold times are 98.580/97.199/96.985 s; proof takes
+69.374/68.529/68.214 s and routing 22.983/22.539/22.560 s. All still exceed 90 s.
+The profile falls within the 1.595-s control cold range; routing is 21 ms below
+the lower control. This supports coarse ranking, not zero overhead or an exact
+production-cost claim. Code-shape and timer overhead are not separated.
+Monotonic P07 slices take 21.1392 s; after disjoint goal/lower-bound/setup/final
+validation children, 19.9238 s remains in A* plus publisher/state-machine work.
+The nested 6.3-ms router setup is already inside 8.1-ms search setup. P05 totals
+1.4037 s (A* 0.7289 s; distance field 0.2964 s). All three P05 attempts reject;
+P07 retains attempts 3/1/4: rejected, successful, rejected; attempt 1 is selected.
+No failed attempt or required admission check was skipped. Each profile has
+5,312 clock reads, 2,656 scopes, zero clock/scope/open/late errors and a frozen
+terminal snapshot. The complete evidence packet is being assembled.
+A separate read-only review found no generic contract justifying batching voltage
+publication; setters/cache updates/Composite recursion remain unchanged. Further
+work is to isolate solver publication cost and subdivide the large P07 residual.
 
 Scale remains NOT ACCEPTED. The preserved uncommitted plan-4/77-root proposal
 covers 20–40 structurally through purposeful one/two-channel functional variants;
@@ -102,13 +141,15 @@ Seven archived helper whitespace errors stopped the first commit; normalized
 inspection copies preserve original hashes and passed the final staged check.
 
 Resources/preserved work: completed host runs released their owned processes;
-manual tabs and preview port 34917 are closed. No heavy run is active. Task-temp
+manual tabs and preview port 34917 are closed. All three routing-profile hosts
+verified owned cleanup; no heavy run is active. Task-temp route-stage-profile-*
+receipts retain each process identity and cleanup. Task-temp
 fixtures/evidence remain; previously blocked cleanup is not retried. Desktop
 work, pre-existing cache files, unaccepted plan-4 sources/tests/readers and the
 normal-verifier hook/API remain unstaged. No broad cleanup or remote action.
 
-Next: commit the audited fusion source/evidence locally, profile remaining routing
-and factor costs, and resolve timing/scale/lifecycle gates. Run the full final
+Next: profile remaining routing and factor costs, and resolve timing/scale/lifecycle
+gates. Run the full final
 matrix only after normal cold timing has margin, required scale passes and focused
 regressions pass. Q30 remains BLOCKED.
 
