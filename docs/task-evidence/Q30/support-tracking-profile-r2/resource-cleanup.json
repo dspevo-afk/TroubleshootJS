@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "targets": [
+    {
+      "name": "TroubleshootJS-q30-tracking-retry-59699beb6d5448e9b42995c511adcee5",
+      "verifiedFileCount": 6624,
+      "verifiedBytes": 945382640.0,
+      "reparsePoints": 0,
+      "removed": true,
+      "cleanupSeconds": 1.0975501
+    },
+    {
+      "name": "TroubleshootJS-q30-profile-recovery-20260928",
+      "verifiedFileCount": 129,
+      "verifiedBytes": 29621088.0,
+      "reparsePoints": 0,
+      "removed": true,
+      "cleanupSeconds": 0.0309834
+    }
+  ],
+  "liveTaskProcesses": [],
+  "scope": "Only the two exact task-owned directories; no other Temp or repository cleanup",
+  "initialDeletedTemp": "Removed externally by user-confirmed cleanup task, not this script",
+  "finishedUtc": "2026-09-28T19:05:40.8984321Z"
+}

@@ -1,0 +1,122 @@
+[
+  {
+    "file": "GenerationRequest.java",
+    "signature": "Prepared resolve(PlanCache cache)",
+    "category": "\"plan.resolve\"",
+    "sampled": false
+  },
+  {
+    "file": "GenerationCoordinator.java",
+    "signature": "public String resolve(",
+    "category": "\"generation.resolve\"",
+    "sampled": false
+  },
+  {
+    "file": "GenerationCoordinator.java",
+    "signature": "public String healthy(",
+    "category": "\"generation.healthy\"",
+    "sampled": false
+  },
+  {
+    "file": "GenerationCoordinator.java",
+    "signature": "public String physical(",
+    "category": "\"generation.physical\"",
+    "sampled": false
+  },
+  {
+    "file": "GenerationCoordinator.java",
+    "signature": "public boolean proveNext()",
+    "category": "\"generation.proof\"",
+    "sampled": false
+  },
+  {
+    "file": "GeneratedDiagnosticProofService.java",
+    "signature": "boolean step()",
+    "category": "\"proof.unit.\" + nextUnit.name()",
+    "sampled": false
+  },
+  {
+    "file": "GeneratedDiagnosticProofService.java",
+    "signature": "private void runReplayAndInstall()",
+    "category": "\"proof.replayInstall\"",
+    "sampled": false
+  },
+  {
+    "file": "GeneratedDiagnosticObservationExecutor.java",
+    "signature": "private void executeStep(GeneratedDiagnosticProgram.Step step)",
+    "category": "\"observation.\" + step.kind.name()",
+    "sampled": false
+  },
+  {
+    "file": "GeneratedRuntimeDeveloperSettlement.java",
+    "signature": "static boolean stepTemporalPreparation(",
+    "category": "\"settle.temporalPreparation\"",
+    "sampled": false
+  },
+  {
+    "file": "GeneratedRuntimeDeveloperSettlement.java",
+    "signature": "static void settleHealthy(",
+    "category": "\"settle.healthy\"",
+    "sampled": false
+  },
+  {
+    "file": "GeneratedRuntimeDeveloperSettlement.java",
+    "signature": "static void settle(CirSim sim, GeneratedBoardInstance expectedOwner, String label)",
+    "category": "\"settle.runtime\"",
+    "sampled": false
+  },
+  {
+    "file": "CircuitSolverExecutor.java",
+    "signature": "void advanceFor(Object permit, double duration)",
+    "category": "\"solver.advanceDuration\"",
+    "sampled": false
+  },
+  {
+    "file": "CircuitSolverExecutor.java",
+    "signature": "private void check(Operation operation, double now)",
+    "category": "\"solver.guard\"",
+    "sampled": true
+  },
+  {
+    "file": "GeneratedExternalPowerBindings.java",
+    "signature": "boolean isCurrent()",
+    "category": "\"source.controlCurrentness\"",
+    "sampled": true
+  },
+  {
+    "file": "GeneratedExternalPowerBindings.java",
+    "signature": "String controlSignature()",
+    "category": "\"source.controlSignature\"",
+    "sampled": false
+  },
+  {
+    "file": "GeneratedExternalPowerBindings.java",
+    "signature": "void setConnected(boolean connected)",
+    "category": "\"source.setConnected\"",
+    "sampled": false
+  },
+  {
+    "file": "GeneratedExternalPowerBindings.java",
+    "signature": "void restore(GeneratedExternalPowerBindings target)",
+    "category": "\"source.restoreControls\"",
+    "sampled": false
+  },
+  {
+    "file": "GeneratedDiagnosticContextKey.java",
+    "signature": "static GeneratedDiagnosticContextKey capture(",
+    "category": "\"proof.contextCapture\"",
+    "sampled": false
+  },
+  {
+    "file": "Rb30Generator.java",
+    "signature": "Candidate construct(Rb30Plan plan, String requestedFaultId)",
+    "category": "\"construction.electrical\"",
+    "sampled": false
+  },
+  {
+    "file": "Task41SimulationSnapshot.java",
+    "signature": "void restore(CirSim sim)",
+    "category": "\"snapshot.restore\"",
+    "sampled": false
+  }
+]

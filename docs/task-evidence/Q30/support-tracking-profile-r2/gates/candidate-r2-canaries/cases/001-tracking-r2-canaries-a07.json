@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 1,
+    "name": "tracking-r2-canaries-a07",
+    "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyA07=true&tsjDebug=true&running=true",
+    "stateAttribute": "data-tsj-verification",
+    "expectedState": "PASS:a07",
+    "expectedPrefix": null,
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 600.0,
+    "reportAttribute": "data-tsj-a07-report"
+  },
+  "url": "http://127.0.0.1:60041/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyA07=true&tsjDebug=true&running=true",
+  "startedUtc": "2026-09-28T18:36:33.588461+00:00",
+  "finishedUtc": "2026-09-28T18:36:34.901394+00:00",
+  "operationSeconds": 1.312000000005355,
+  "outcome": "PASS",
+  "terminalReached": true,
+  "stateMatch": true,
+  "observedState": "PASS:a07",
+  "lastObservedState": "PASS:a07",
+  "timedOut": false,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": true,
+  "reportJsonValid": true,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 80899,
+  "reportSha256": "8910b173c13839fea267c0ee2eb9ca31133162a10495b09b0fe83ccd89cd6160",
+  "reportFile": "cases/001-tracking-r2-canaries-a07.report.json",
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [],
+  "listenerCleanupErrors": [],
+  "navigationError": null
+}

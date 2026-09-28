@@ -1,0 +1,170 @@
+{
+  "label": "07-prototype-off-r2",
+  "seed": "10014",
+  "arm": "candidate",
+  "profile": false,
+  "exitCode": 0,
+  "hostMonotonicSeconds": 136.625,
+  "wallMinusMonotonicSeconds": 0.00509190559387207,
+  "competingProcesses": [
+    {
+      "name": "ChatGPT",
+      "pid": 15748,
+      "cpuSecondsDelta": 16.546875,
+      "workingSetBytes": 1442865152
+    },
+    {
+      "name": "ChatGPT",
+      "pid": 15120,
+      "cpuSecondsDelta": 9.40625,
+      "workingSetBytes": 214011904
+    },
+    {
+      "name": "codex",
+      "pid": 15996,
+      "cpuSecondsDelta": 2.1875,
+      "workingSetBytes": 974389248
+    },
+    {
+      "name": "ChatGPT",
+      "pid": 12776,
+      "cpuSecondsDelta": 1.71875,
+      "workingSetBytes": 374964224
+    },
+    {
+      "name": "ChatGPT",
+      "pid": 17136,
+      "cpuSecondsDelta": 0.40625,
+      "workingSetBytes": 242757632
+    },
+    {
+      "name": "ChatGPT",
+      "pid": 16324,
+      "cpuSecondsDelta": 0.390625,
+      "workingSetBytes": 322093056
+    },
+    {
+      "name": "ChatGPT",
+      "pid": 15200,
+      "cpuSecondsDelta": 0.3125,
+      "workingSetBytes": 58511360
+    },
+    {
+      "name": "audiodg",
+      "pid": 22500,
+      "cpuSecondsDelta": 0.1875,
+      "workingSetBytes": 16662528
+    },
+    {
+      "name": "codex-computer-use-swift",
+      "pid": 11448,
+      "cpuSecondsDelta": 0.125,
+      "workingSetBytes": 46350336
+    },
+    {
+      "name": "explorer",
+      "pid": 9084,
+      "cpuSecondsDelta": 0.125,
+      "workingSetBytes": 427425792
+    },
+    {
+      "name": "CrossDeviceService",
+      "pid": 9688,
+      "cpuSecondsDelta": 0.078125,
+      "workingSetBytes": 111267840
+    },
+    {
+      "name": "ChatGPT",
+      "pid": 18776,
+      "cpuSecondsDelta": 0.0625,
+      "workingSetBytes": 57028608
+    },
+    {
+      "name": "codex-code-mode-host",
+      "pid": 10960,
+      "cpuSecondsDelta": 0.046875,
+      "workingSetBytes": 49016832
+    },
+    {
+      "name": "ChatGPT",
+      "pid": 15760,
+      "cpuSecondsDelta": 0.03125,
+      "workingSetBytes": 198664192
+    },
+    {
+      "name": "codex",
+      "pid": 13516,
+      "cpuSecondsDelta": 0.03125,
+      "workingSetBytes": 109752320
+    },
+    {
+      "name": "msedgewebview2",
+      "pid": 11912,
+      "cpuSecondsDelta": 0.03125,
+      "workingSetBytes": 119029760
+    },
+    {
+      "name": "pwsh",
+      "pid": 22036,
+      "cpuSecondsDelta": 0.03125,
+      "workingSetBytes": 81514496
+    },
+    {
+      "name": "conhost",
+      "pid": 16004,
+      "cpuSecondsDelta": 0.015625,
+      "workingSetBytes": 7356416
+    },
+    {
+      "name": "msedgewebview2",
+      "pid": 13484,
+      "cpuSecondsDelta": 0.015625,
+      "workingSetBytes": 80719872
+    },
+    {
+      "name": "node",
+      "pid": 4988,
+      "cpuSecondsDelta": 0.015625,
+      "workingSetBytes": 67039232
+    }
+  ],
+  "cpuFrequencyLimit": "WMI nominal/current endpoint reading only; turbo, throttling and temperature not observed; ended processes absent from CPU deltas",
+  "runnerOutcome": "PASS",
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 1.0469999999913853,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "287cdb5a5d286b7808aa7817d2cb2d505133d322b70ce575e8ea7acfd36870e1",
+    "afterSha256": "287cdb5a5d286b7808aa7817d2cb2d505133d322b70ce575e8ea7acfd36870e1",
+    "sourceSha256Before": "1678d7ebf11bfb321e8c7c032f3cfd3de1da5899ff6bedb997ff4cc65afa6ce3",
+    "sourceSha256After": "1678d7ebf11bfb321e8c7c032f3cfd3de1da5899ff6bedb997ff4cc65afa6ce3",
+    "webSha256Before": "dd777944888da3c73cada37b216f99bdefefe036bfe8c9aa79a0944fb29ac733",
+    "webSha256After": "dd777944888da3c73cada37b216f99bdefefe036bfe8c9aa79a0944fb29ac733",
+    "runnerBeforeSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+    "runnerAfterSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+    "fileCountBefore": 1527,
+    "fileCountAfter": 1527,
+    "seconds": 0.7339999999967404
+  },
+  "cold": {
+    "elapsedMs": 102737,
+    "proofElapsedMs": 73096,
+    "routingElapsedMs": 23113,
+    "totalWork": 490,
+    "hypothesisWork": 390,
+    "cleanupComplete": true
+  },
+  "warm": {
+    "elapsedMs": 29657,
+    "proofElapsedMs": 0,
+    "routingElapsedMs": 23319,
+    "totalWork": 101,
+    "hypothesisWork": 1,
+    "cleanupComplete": true
+  }
+}

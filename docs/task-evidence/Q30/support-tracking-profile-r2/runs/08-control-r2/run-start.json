@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<TASK_TEMP>\\control",
+  "startedUtc": "2026-09-28T18:52:22.506864+00:00",
+  "outcome": "NOT_RUN",
+  "cases": [],
+  "caseCount": 1,
+  "errors": []
+}

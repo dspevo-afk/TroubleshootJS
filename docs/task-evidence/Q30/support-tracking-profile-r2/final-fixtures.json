@@ -1,0 +1,14 @@
+{
+  "control": {
+    "status": "PASS",
+    "sourceInputs": 1340
+  },
+  "candidate": {
+    "status": "PASS",
+    "sourceInputs": 1344
+  },
+  "runner": {
+    "status": "PASS",
+    "sha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4"
+  }
+}

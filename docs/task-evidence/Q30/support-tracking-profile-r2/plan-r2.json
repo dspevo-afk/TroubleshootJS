@@ -1,0 +1,9 @@
+{
+ "revision":2,
+ "supersedes":"plan.json for final candidate measurements only; retains 01 control,02 OFF,03 ON as original rows",
+ "sequence":["01-control (unchanged source/build baseline, retained)","04-prototype-off-r2","05-profile-on-r2","06-profile-on-r2","07-prototype-off-r2","08-control-r2"],
+ "changes":"Two reviewed profiler cleanup failure paths repaired. Stamp timer moved to sparse independent call sampling because per-stamp timing in selected kernel steps biased the parent doStep estimate above full solver wall time. Original ON03 retained as profiler-overhead failure evidence, not accurate component seconds.",
+ "frozen":"No solver arithmetic/steps/proofs/candidate/route/cache/budget changes. No optimization prototype integration. No later milestone.",
+ "interpretation":"Two counterbalanced OFF/ON pairs; full counts and raw timing calibration, no speed acceptance. Baselinecontrols bracket host drift but an intervening profiler build happened; code-shape effects of dormant instrumentation not isolated.",
+ "environment":"User confirmed a concurrent cleanup task deleted initial Temp fixtures. Hash-pinned reconstruction and retry succeeded; current task has requested cleanup remain paused."
+}

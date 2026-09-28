@@ -1,0 +1,36 @@
+*** Begin Patch
+*** Update File: src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java
+@@
+             RunRecord record = RunRecord.capture(runName, job, coordinator,
+                 runStartedAt, maxManualAdvanceMillis, manualAdvanceCalls,
+                 proofHitsAtRunStart, proofMissesAtRunStart,
+                 planHitsAtRunStart, planMissesAtRunStart, MEASUREMENT_JOB_MILLIS);
+-            record.trackingProfile = Q30TrackingProfile.snapshot();
+-            Q30TrackingProfile.startRun(false);
++            Throwable runFailure = priorFailure;
++            try {
++                record.trackingProfile = Q30TrackingProfile.snapshot();
++            } catch (Throwable profileFailure) {
++                if (runFailure == null) runFailure = profileFailure;
++                else retain(runFailure, profileFailure);
++            } finally {
++                Q30TrackingProfile.startRun(false);
++            }
+             GeneratedBoardInstance published = null;
+             ProofValue proof = null;
+-            Throwable runFailure = priorFailure;
+@@
+         private void failBeforeOrDuringRun(Throwable problem, String at) {
+             if (finished || active != this) return;
+             timer.cancel();
+             if (job != null && coordinator.getJob() == job && coordinator.isRunning()) {
+@@
+                     completeRun(problem);
+                     return;
+                 }
+             }
++            // No completed run can freeze this collector. Cleanup may park for a
++            // retry, so retire profiling before entering that pending state.
++            Q30TrackingProfile.startRun(false);
+             failure = problem;
+*** End Patch

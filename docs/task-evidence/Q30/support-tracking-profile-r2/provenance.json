@@ -1,0 +1,1982 @@
+[
+  {
+    "source": "<RECOVERY>\\01-control-raw-report.json",
+    "stored": "runs/01-control/raw-report.json.gz",
+    "sourceBytes": 1748507,
+    "sourceSha256": "cae6f2be2338952c6d2dc3a2d83343d76d73cf7e0956699f446b890b10fedd87",
+    "payloadSha256": "cae6f2be2338952c6d2dc3a2d83343d76d73cf7e0956699f446b890b10fedd87",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\01-control-summary.json",
+    "stored": "runs/01-control/summary.json",
+    "sourceBytes": 4548,
+    "sourceSha256": "a3aafedd9c538a0fa5c96a929d5f63473722960b2467655c36206d10f4ef2fdd",
+    "payloadSha256": "a3aafedd9c538a0fa5c96a929d5f63473722960b2467655c36206d10f4ef2fdd",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\01-control-validation.json",
+    "stored": "runs/01-control/validation.json",
+    "sourceBytes": 7707,
+    "sourceSha256": "abc88d261356724bc96cec4f78d5155df6073e5848364d652cb88afd24af004c",
+    "payloadSha256": "abc88d261356724bc96cec4f78d5155df6073e5848364d652cb88afd24af004c",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\01-control-host-result.json",
+    "stored": "runs/01-control/host-result.json",
+    "sourceBytes": 5017,
+    "sourceSha256": "49f7d9edc35bc983592baf41c00aad808bba80dc0cbf5fbd3c4b368a1d44b667",
+    "payloadSha256": "dfdf51882d48394983c32b06a9ce748d34269a937ac9b0d51d85084f63a10bc7",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\01-control-host-before.json",
+    "stored": "runs/01-control/host-before.json.gz",
+    "sourceBytes": 33286,
+    "sourceSha256": "075a94878a1c2e7c3ba1939710b63d13e751467328db4dac2de5b463e6fc43b2",
+    "payloadSha256": "075a94878a1c2e7c3ba1939710b63d13e751467328db4dac2de5b463e6fc43b2",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\01-control-host-after.json",
+    "stored": "runs/01-control/host-after.json.gz",
+    "sourceBytes": 33455,
+    "sourceSha256": "6b8bdbbfcd14b69b011da8145b48f132924abc9c1688c529f7625e820fe35e7f",
+    "payloadSha256": "6b8bdbbfcd14b69b011da8145b48f132924abc9c1688c529f7625e820fe35e7f",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\01-control-spec.json",
+    "stored": "runs/01-control/spec.json",
+    "sourceBytes": 387,
+    "sourceSha256": "b6bf402bcc052483035cda189c215522a403e4daf5f911fc2049273c1922eb42",
+    "payloadSha256": "b6bf402bcc052483035cda189c215522a403e4daf5f911fc2049273c1922eb42",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\01-control.log",
+    "stored": "runs/01-control/runner.log",
+    "sourceBytes": 48,
+    "sourceSha256": "f5627e5335e10e7d187e0343812f14c4354ac6878b898c3c83e2846534f836f4",
+    "payloadSha256": "f5627e5335e10e7d187e0343812f14c4354ac6878b898c3c83e2846534f836f4",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\01-control\\identity.json",
+    "stored": "runs/01-control/identity.json",
+    "sourceBytes": 1834,
+    "sourceSha256": "8c1499f06e7f84c011e4d9000efe0ba8ef3dce9a1a505440699f45de94641a71",
+    "payloadSha256": "0cba21a29d8cbfc511bc709b81b77309a7d596ed7f615118429295a0a29bea14",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\01-control\\owned-processes-before.json",
+    "stored": "runs/01-control/owned-processes-before.json",
+    "sourceBytes": 1297,
+    "sourceSha256": "880502522647afabef986e3979122c159f16735dbb00d5888739fbea4f950820",
+    "payloadSha256": "880502522647afabef986e3979122c159f16735dbb00d5888739fbea4f950820",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\01-control\\owned-processes-before-close.json",
+    "stored": "runs/01-control/owned-processes-before-close.json",
+    "sourceBytes": 1665,
+    "sourceSha256": "46235c727161236a64f14a167fb320f5678b7db90c7251a3b39c0ff967a996b4",
+    "payloadSha256": "46235c727161236a64f14a167fb320f5678b7db90c7251a3b39c0ff967a996b4",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\01-control\\run-start.json",
+    "stored": "runs/01-control/run-start.json",
+    "sourceBytes": 326,
+    "sourceSha256": "6ccafd6913bd39ed2d171f01e8874a054172a1b662984db8050e98ba30db6443",
+    "payloadSha256": "9b20156bae417b59dd3c2b3ce76fb013304a4bb79a43b20292f6c7b517f8eb14",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\01-control\\runner-before.json",
+    "stored": "runs/01-control/runner-before.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\01-control\\runner-after.json",
+    "stored": "runs/01-control/runner-after.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\01-control\\input-manifest-before.json",
+    "stored": "runs/01-control/input-manifest-before.json.gz",
+    "sourceBytes": 291302,
+    "sourceSha256": "fc6ea8d7c9ad114ca179611306fee852bd51f73843352fefb59c9f624bf0945f",
+    "payloadSha256": "fc6ea8d7c9ad114ca179611306fee852bd51f73843352fefb59c9f624bf0945f",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\01-control\\input-manifest-after.json",
+    "stored": "runs/01-control/input-manifest-after.json.gz",
+    "sourceBytes": 291302,
+    "sourceSha256": "f002cfe8e909c5371435768dda5b97530694b3fbdfc32dc57ed2e96e9d54a95b",
+    "payloadSha256": "f002cfe8e909c5371435768dda5b97530694b3fbdfc32dc57ed2e96e9d54a95b",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\02-prototype-off-raw-report.json",
+    "stored": "runs/02-prototype-off/raw-report.json.gz",
+    "sourceBytes": 1749527,
+    "sourceSha256": "9e61459bf39f07e192c36371e6e15caefc229880a79670f0b7c371da5902d6a4",
+    "payloadSha256": "9e61459bf39f07e192c36371e6e15caefc229880a79670f0b7c371da5902d6a4",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\02-prototype-off-summary.json",
+    "stored": "runs/02-prototype-off/summary.json",
+    "sourceBytes": 4541,
+    "sourceSha256": "869feb62fad2f53abf4efa2b3ba80332b21e43994ceb2345be866a5bb8323323",
+    "payloadSha256": "869feb62fad2f53abf4efa2b3ba80332b21e43994ceb2345be866a5bb8323323",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\02-prototype-off-validation.json",
+    "stored": "runs/02-prototype-off/validation.json",
+    "sourceBytes": 7717,
+    "sourceSha256": "6197bb0d656f944e54273056c59bc4344af4f8913672b92706a95e478355e74d",
+    "payloadSha256": "6197bb0d656f944e54273056c59bc4344af4f8913672b92706a95e478355e74d",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\02-prototype-off-host-result.json",
+    "stored": "runs/02-prototype-off/host-result.json",
+    "sourceBytes": 5037,
+    "sourceSha256": "34de19ca38f7305f3938bb078537b5fff56c5630aab34fa982d7c23da984e30d",
+    "payloadSha256": "2622c9447199fc0be0d639f032274c14e38704383b44da837db389d0b7acec18",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\02-prototype-off-host-before.json",
+    "stored": "runs/02-prototype-off/host-before.json.gz",
+    "sourceBytes": 33453,
+    "sourceSha256": "f3710441626d06850e865d6e3ae13acdacebe6aaed06a5efaa2d6427b6ff010d",
+    "payloadSha256": "f3710441626d06850e865d6e3ae13acdacebe6aaed06a5efaa2d6427b6ff010d",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\02-prototype-off-host-after.json",
+    "stored": "runs/02-prototype-off/host-after.json.gz",
+    "sourceBytes": 34111,
+    "sourceSha256": "af0f0967f8cbca66c4fdd1bd346ed6b091d3672851b39243f263654e22f654e1",
+    "payloadSha256": "af0f0967f8cbca66c4fdd1bd346ed6b091d3672851b39243f263654e22f654e1",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\02-prototype-off-spec.json",
+    "stored": "runs/02-prototype-off/spec.json",
+    "sourceBytes": 393,
+    "sourceSha256": "620f0f93214957c2e6a70230ac023d677d2094d6960a4fd5266975de64ac4093",
+    "payloadSha256": "620f0f93214957c2e6a70230ac023d677d2094d6960a4fd5266975de64ac4093",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\02-prototype-off.log",
+    "stored": "runs/02-prototype-off/runner.log",
+    "sourceBytes": 54,
+    "sourceSha256": "ccf7d76c7a5a789ee68025efe2a8b6c9fc9e4346efecf18229aaf164d0db3055",
+    "payloadSha256": "ccf7d76c7a5a789ee68025efe2a8b6c9fc9e4346efecf18229aaf164d0db3055",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\02-prototype-off\\identity.json",
+    "stored": "runs/02-prototype-off/identity.json",
+    "sourceBytes": 1840,
+    "sourceSha256": "d4c9535e67e65f752b41de3161bfefb7d110e25aa67282082cbf033aa8a0077b",
+    "payloadSha256": "a84cb2ca798cc90f00323167618aca9335840336d343fe14d5dfbfe588c01591",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\02-prototype-off\\owned-processes-before.json",
+    "stored": "runs/02-prototype-off/owned-processes-before.json",
+    "sourceBytes": 1297,
+    "sourceSha256": "368cc276d7d48c5a2b96dfb9e7d53df34d55f3ea485579d15559ba293f0c3453",
+    "payloadSha256": "368cc276d7d48c5a2b96dfb9e7d53df34d55f3ea485579d15559ba293f0c3453",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\02-prototype-off\\owned-processes-before-close.json",
+    "stored": "runs/02-prototype-off/owned-processes-before-close.json",
+    "sourceBytes": 1666,
+    "sourceSha256": "81e74cda13c9cd133326faa159205284c1b77964cbcc3cb45e47e99857303540",
+    "payloadSha256": "81e74cda13c9cd133326faa159205284c1b77964cbcc3cb45e47e99857303540",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\02-prototype-off\\run-start.json",
+    "stored": "runs/02-prototype-off/run-start.json",
+    "sourceBytes": 328,
+    "sourceSha256": "81a20e234d95d0343a764a4b9b221017b2dd246ea444e477c1cc7701e9513527",
+    "payloadSha256": "1cd6061599151aca58eec6b0787c26e8ee07b0d9765eb81f8f2c77ae9f71051e",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\02-prototype-off\\runner-before.json",
+    "stored": "runs/02-prototype-off/runner-before.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\02-prototype-off\\runner-after.json",
+    "stored": "runs/02-prototype-off/runner-after.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\02-prototype-off\\input-manifest-before.json",
+    "stored": "runs/02-prototype-off/input-manifest-before.json.gz",
+    "sourceBytes": 291697,
+    "sourceSha256": "1e2cbf89bf38335bf01fa5e85c1d7dcd3e4ecaa7db6825f559f2fce93487a6e3",
+    "payloadSha256": "1e2cbf89bf38335bf01fa5e85c1d7dcd3e4ecaa7db6825f559f2fce93487a6e3",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\02-prototype-off\\input-manifest-after.json",
+    "stored": "runs/02-prototype-off/input-manifest-after.json.gz",
+    "sourceBytes": 291697,
+    "sourceSha256": "cb33d89e20ffcc3574d8006b51b3435f1d722cda3684527ceadb72bd9db4397d",
+    "payloadSha256": "cb33d89e20ffcc3574d8006b51b3435f1d722cda3684527ceadb72bd9db4397d",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\03-profile-on-raw-report.json",
+    "stored": "runs/03-profile-on/raw-report.json.gz",
+    "sourceBytes": 1783116,
+    "sourceSha256": "e36a3364fed27c54aeef8990e324808ab83afcdc933ffd13816a36b2da5712e9",
+    "payloadSha256": "e36a3364fed27c54aeef8990e324808ab83afcdc933ffd13816a36b2da5712e9",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\03-profile-on-summary.json",
+    "stored": "runs/03-profile-on/summary.json",
+    "sourceBytes": 4543,
+    "sourceSha256": "8eb5e1919875a68258c2877a512502e9ddbee4f2aefc1d08c58a4987592bb66b",
+    "payloadSha256": "8eb5e1919875a68258c2877a512502e9ddbee4f2aefc1d08c58a4987592bb66b",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\03-profile-on-validation.json",
+    "stored": "runs/03-profile-on/validation.json",
+    "sourceBytes": 7745,
+    "sourceSha256": "a5fce7cc109e6ffdce70a439bc64a1b00544789649346e0eb8743c524acae85c",
+    "payloadSha256": "a5fce7cc109e6ffdce70a439bc64a1b00544789649346e0eb8743c524acae85c",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\03-profile-on-host-result.json",
+    "stored": "runs/03-profile-on/host-result.json",
+    "sourceBytes": 5074,
+    "sourceSha256": "d665e3dd5059d0ed0cb34ab04aef8281a99b45d6ed1ad8f8817876db973277a1",
+    "payloadSha256": "751040b3af49e0ce4753302d2bac651f494ecf7578e6498ea68fefdb64633548",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\03-profile-on-host-before.json",
+    "stored": "runs/03-profile-on/host-before.json.gz",
+    "sourceBytes": 34284,
+    "sourceSha256": "6aec1c548d5a7c0e973e781940c54771165762b3a57bb47db37a633d6ea3aa73",
+    "payloadSha256": "6aec1c548d5a7c0e973e781940c54771165762b3a57bb47db37a633d6ea3aa73",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\03-profile-on-host-after.json",
+    "stored": "runs/03-profile-on/host-after.json.gz",
+    "sourceBytes": 34452,
+    "sourceSha256": "0ea988a98d99a093bf68eeef241f1b6b959bf011f5ea2f672b7e75430c73213a",
+    "payloadSha256": "0ea988a98d99a093bf68eeef241f1b6b959bf011f5ea2f672b7e75430c73213a",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\03-profile-on-spec.json",
+    "stored": "runs/03-profile-on/spec.json",
+    "sourceBytes": 417,
+    "sourceSha256": "76615f058ae4018ca1005e788d9806136c84a67a096c0c0396c43e357da8325c",
+    "payloadSha256": "76615f058ae4018ca1005e788d9806136c84a67a096c0c0396c43e357da8325c",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\03-profile-on-metadata-reader.json",
+    "stored": "runs/03-profile-on/metadata-reader.json",
+    "sourceBytes": 516,
+    "sourceSha256": "f09a770a5da7ff438045e5f15a5572b31a6a4a56b6495ad0b62524a10dc65f4d",
+    "payloadSha256": "f09a770a5da7ff438045e5f15a5572b31a6a4a56b6495ad0b62524a10dc65f4d",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\03-profile-on.log",
+    "stored": "runs/03-profile-on/runner.log",
+    "sourceBytes": 51,
+    "sourceSha256": "4be9f77a33682e2063ba04450070697a5f098581545790bb3e21b01600d8ce35",
+    "payloadSha256": "4be9f77a33682e2063ba04450070697a5f098581545790bb3e21b01600d8ce35",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\03-profile-on\\identity.json",
+    "stored": "runs/03-profile-on/identity.json",
+    "sourceBytes": 1829,
+    "sourceSha256": "b678ca33c53f0418617ce5877ccdeafe90c37d55f011ea454161f99531b5da65",
+    "payloadSha256": "8524d5857e527494030585cc71c8e0e61720cc9d9b38249c7a3552b0111dd59f",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\03-profile-on\\owned-processes-before.json",
+    "stored": "runs/03-profile-on/owned-processes-before.json",
+    "sourceBytes": 1289,
+    "sourceSha256": "10d8ff78ffae373c1c0eb2dd2d992f44534d6c50e9cdcf7f5860c6996333c747",
+    "payloadSha256": "10d8ff78ffae373c1c0eb2dd2d992f44534d6c50e9cdcf7f5860c6996333c747",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\03-profile-on\\owned-processes-before-close.json",
+    "stored": "runs/03-profile-on/owned-processes-before-close.json",
+    "sourceBytes": 1657,
+    "sourceSha256": "ee5049f574d2a40ab6e24bca20c96374054fdc23358fc49cc2b59f10d2a43ee1",
+    "payloadSha256": "ee5049f574d2a40ab6e24bca20c96374054fdc23358fc49cc2b59f10d2a43ee1",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\03-profile-on\\run-start.json",
+    "stored": "runs/03-profile-on/run-start.json",
+    "sourceBytes": 328,
+    "sourceSha256": "9d9447d740d4f07dcd58a5817f3f38ef3ffe26e8a65b0ea0ce11ff9a90f830fc",
+    "payloadSha256": "b335734fc1baa57cd5ef8bcd99f0fcbfc89264a10a1a7f06e3186a5c2ee12fa8",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\03-profile-on\\runner-before.json",
+    "stored": "runs/03-profile-on/runner-before.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\03-profile-on\\runner-after.json",
+    "stored": "runs/03-profile-on/runner-after.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\03-profile-on\\input-manifest-before.json",
+    "stored": "runs/03-profile-on/input-manifest-before.json.gz",
+    "sourceBytes": 291697,
+    "sourceSha256": "1f4154b7836a4f32829bd3191a43c0e77c7d0ff20cb4ea7acc3a80d887c7da12",
+    "payloadSha256": "1f4154b7836a4f32829bd3191a43c0e77c7d0ff20cb4ea7acc3a80d887c7da12",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\03-profile-on\\input-manifest-after.json",
+    "stored": "runs/03-profile-on/input-manifest-after.json.gz",
+    "sourceBytes": 291697,
+    "sourceSha256": "e27dc5406e9b74dc15c0501ccaf83709a970b8e7a2097146c1f2342936e02ed7",
+    "payloadSha256": "e27dc5406e9b74dc15c0501ccaf83709a970b8e7a2097146c1f2342936e02ed7",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\04-prototype-off-r2-raw-report.json",
+    "stored": "runs/04-prototype-off-r2/raw-report.json.gz",
+    "sourceBytes": 1749526,
+    "sourceSha256": "4a9d8effb563df9b1e036fd6bd6a5d2bde924f4b1a264da2cfac8b7fb0749c4e",
+    "payloadSha256": "4a9d8effb563df9b1e036fd6bd6a5d2bde924f4b1a264da2cfac8b7fb0749c4e",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\04-prototype-off-r2-summary.json",
+    "stored": "runs/04-prototype-off-r2/summary.json",
+    "sourceBytes": 4501,
+    "sourceSha256": "02c386302647e573d98658ca0bb56fea73496da696a80b2db7218af086d84385",
+    "payloadSha256": "02c386302647e573d98658ca0bb56fea73496da696a80b2db7218af086d84385",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\04-prototype-off-r2-validation.json",
+    "stored": "runs/04-prototype-off-r2/validation.json",
+    "sourceBytes": 7720,
+    "sourceSha256": "b14045e73326e575447214698f76c5d54870f7ee7d3ef4e7f622218a8d94767c",
+    "payloadSha256": "b14045e73326e575447214698f76c5d54870f7ee7d3ef4e7f622218a8d94767c",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\04-prototype-off-r2-host-result.json",
+    "stored": "runs/04-prototype-off-r2/host-result.json",
+    "sourceBytes": 5004,
+    "sourceSha256": "66637daee4ed23fe5fcef5022568ee6bce82cc7902562c323601238e43b8fd54",
+    "payloadSha256": "c720fb3ac5fc396c4284ac9d76c8fd10837137b95c1180ce513bcbf063cd76d0",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\04-prototype-off-r2-host-before.json",
+    "stored": "runs/04-prototype-off-r2/host-before.json.gz",
+    "sourceBytes": 34580,
+    "sourceSha256": "2dcb87bae1034f28b320fc6a88768b5905441843435944f989d4b977dc21b8fe",
+    "payloadSha256": "2dcb87bae1034f28b320fc6a88768b5905441843435944f989d4b977dc21b8fe",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\04-prototype-off-r2-host-after.json",
+    "stored": "runs/04-prototype-off-r2/host-after.json.gz",
+    "sourceBytes": 34603,
+    "sourceSha256": "c8e8fb6c80ce120f60cf841a9812e7b6ba847ea060d08d92e2dd6d2871f62491",
+    "payloadSha256": "c8e8fb6c80ce120f60cf841a9812e7b6ba847ea060d08d92e2dd6d2871f62491",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\04-prototype-off-r2-spec.json",
+    "stored": "runs/04-prototype-off-r2/spec.json",
+    "sourceBytes": 396,
+    "sourceSha256": "40ff64a995b39eefd3621bd51244df025d64226996913c976134df1cebe497ac",
+    "payloadSha256": "40ff64a995b39eefd3621bd51244df025d64226996913c976134df1cebe497ac",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\04-prototype-off-r2.log",
+    "stored": "runs/04-prototype-off-r2/runner.log",
+    "sourceBytes": 55,
+    "sourceSha256": "d34c944b1f54b885181dccef4e91d99aff9f891eb7ea2ccc980e08f07fe998c1",
+    "payloadSha256": "d34c944b1f54b885181dccef4e91d99aff9f891eb7ea2ccc980e08f07fe998c1",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\04-prototype-off-r2\\identity.json",
+    "stored": "runs/04-prototype-off-r2/identity.json",
+    "sourceBytes": 1841,
+    "sourceSha256": "745ead5d79030832f930950f591820f184f2a05b7452f7899d05d7823129eaf7",
+    "payloadSha256": "34e62b617ad58ef091a227e655fed6014fba6e1f8e213e3d788040dc94f74cf9",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\04-prototype-off-r2\\owned-processes-before.json",
+    "stored": "runs/04-prototype-off-r2/owned-processes-before.json",
+    "sourceBytes": 1295,
+    "sourceSha256": "38ce20a82dbda72f7e70d847ffe3e9340a03c7d9257c980804a2f95ae4458aac",
+    "payloadSha256": "38ce20a82dbda72f7e70d847ffe3e9340a03c7d9257c980804a2f95ae4458aac",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\04-prototype-off-r2\\owned-processes-before-close.json",
+    "stored": "runs/04-prototype-off-r2/owned-processes-before-close.json",
+    "sourceBytes": 1665,
+    "sourceSha256": "92958b22bbd4fec65477bdd1e89edaf0dd6926005a4a1ef329249aa8b91a8582",
+    "payloadSha256": "92958b22bbd4fec65477bdd1e89edaf0dd6926005a4a1ef329249aa8b91a8582",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\04-prototype-off-r2\\run-start.json",
+    "stored": "runs/04-prototype-off-r2/run-start.json",
+    "sourceBytes": 328,
+    "sourceSha256": "8a8263d289c5a356381bdecd38cec322cf758e26f01bb0f54e6d0740263b8f50",
+    "payloadSha256": "c00492a2b806fc86304d661db93b2867db9ae19dd72a0108a0260462b3bf7de3",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\04-prototype-off-r2\\runner-before.json",
+    "stored": "runs/04-prototype-off-r2/runner-before.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\04-prototype-off-r2\\runner-after.json",
+    "stored": "runs/04-prototype-off-r2/runner-after.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\04-prototype-off-r2\\input-manifest-before.json",
+    "stored": "runs/04-prototype-off-r2/input-manifest-before.json.gz",
+    "sourceBytes": 291697,
+    "sourceSha256": "3448a80a1c5ecfd6582327f51147cdd1ebca252c381eed3045b59266d568c653",
+    "payloadSha256": "3448a80a1c5ecfd6582327f51147cdd1ebca252c381eed3045b59266d568c653",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\04-prototype-off-r2\\input-manifest-after.json",
+    "stored": "runs/04-prototype-off-r2/input-manifest-after.json.gz",
+    "sourceBytes": 291697,
+    "sourceSha256": "d5f9d8365d4cc42885d0e4cdb7870ddb8d321245e2f64d838c738cd4439d5937",
+    "payloadSha256": "d5f9d8365d4cc42885d0e4cdb7870ddb8d321245e2f64d838c738cd4439d5937",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\05-profile-on-r2-raw-report.json",
+    "stored": "runs/05-profile-on-r2/raw-report.json.gz",
+    "sourceBytes": 1783686,
+    "sourceSha256": "fd0f5b30579cbbeaf46f690bd9f26f18b94bc48cb98d7a4d69c9955383dfd5c9",
+    "payloadSha256": "fd0f5b30579cbbeaf46f690bd9f26f18b94bc48cb98d7a4d69c9955383dfd5c9",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\05-profile-on-r2-summary.json",
+    "stored": "runs/05-profile-on-r2/summary.json",
+    "sourceBytes": 4500,
+    "sourceSha256": "235d0af5fc2ac9d8e9e1b84c92ca279bef8bb99f07062684b0bea32f92f6f662",
+    "payloadSha256": "235d0af5fc2ac9d8e9e1b84c92ca279bef8bb99f07062684b0bea32f92f6f662",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\05-profile-on-r2-validation.json",
+    "stored": "runs/05-profile-on-r2/validation.json",
+    "sourceBytes": 7746,
+    "sourceSha256": "3cf8b2d1423b1644b209e1fba92072409ab6885f3c99faef8db5570c1948fa04",
+    "payloadSha256": "3cf8b2d1423b1644b209e1fba92072409ab6885f3c99faef8db5570c1948fa04",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\05-profile-on-r2-host-result.json",
+    "stored": "runs/05-profile-on-r2/host-result.json",
+    "sourceBytes": 5075,
+    "sourceSha256": "e0fd19c472761c0a5f9ad87dbf9a9958f558e63ec29f2963db2140f4b17dc1c7",
+    "payloadSha256": "c63e6fe742039151183a4a72515af3e92a05e600b9b128c17a8527d5c2759f7f",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\05-profile-on-r2-host-before.json",
+    "stored": "runs/05-profile-on-r2/host-before.json.gz",
+    "sourceBytes": 34595,
+    "sourceSha256": "307eebc791804d9e3ff25e5286f7c5dd5407497a8a9cc66faad7fdcdd3f74290",
+    "payloadSha256": "307eebc791804d9e3ff25e5286f7c5dd5407497a8a9cc66faad7fdcdd3f74290",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\05-profile-on-r2-host-after.json",
+    "stored": "runs/05-profile-on-r2/host-after.json.gz",
+    "sourceBytes": 34764,
+    "sourceSha256": "c7dc8e1c681fdcabb87af02d75b9010e6a6a8a5e5851f1b8234c763febe4c160",
+    "payloadSha256": "c7dc8e1c681fdcabb87af02d75b9010e6a6a8a5e5851f1b8234c763febe4c160",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\05-profile-on-r2-spec.json",
+    "stored": "runs/05-profile-on-r2/spec.json",
+    "sourceBytes": 420,
+    "sourceSha256": "d502ddd83b791e07377a29ac54574e58ea86b144706cc2c8460f7ac02a8b63d4",
+    "payloadSha256": "d502ddd83b791e07377a29ac54574e58ea86b144706cc2c8460f7ac02a8b63d4",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\05-profile-on-r2-metadata-reader.json",
+    "stored": "runs/05-profile-on-r2/metadata-reader.json",
+    "sourceBytes": 526,
+    "sourceSha256": "e01e29c3a8ce529065a19ea8cfef72813689c6746a143099e695accb11d82147",
+    "payloadSha256": "e01e29c3a8ce529065a19ea8cfef72813689c6746a143099e695accb11d82147",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\05-profile-on-r2.log",
+    "stored": "runs/05-profile-on-r2/runner.log",
+    "sourceBytes": 54,
+    "sourceSha256": "2d110f1f237d1e786734059c6015ad9d54dd49bffda171c570c984196065087e",
+    "payloadSha256": "2d110f1f237d1e786734059c6015ad9d54dd49bffda171c570c984196065087e",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\05-profile-on-r2\\identity.json",
+    "stored": "runs/05-profile-on-r2/identity.json",
+    "sourceBytes": 1837,
+    "sourceSha256": "5d600ab316f14dbf7e6b23e9bf18231ac62887c8a14e9d3e0a442a09bee717ce",
+    "payloadSha256": "eaa39527045c3dd9753157902aad401877c360366baad30655904396772b4577",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\05-profile-on-r2\\owned-processes-before.json",
+    "stored": "runs/05-profile-on-r2/owned-processes-before.json",
+    "sourceBytes": 1295,
+    "sourceSha256": "742092c483a3cd1768931bdb2613a8cbd3ee5f35230bc824a034ec5bc48f4070",
+    "payloadSha256": "742092c483a3cd1768931bdb2613a8cbd3ee5f35230bc824a034ec5bc48f4070",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\05-profile-on-r2\\owned-processes-before-close.json",
+    "stored": "runs/05-profile-on-r2/owned-processes-before-close.json",
+    "sourceBytes": 1665,
+    "sourceSha256": "4ee95567aebc9f4adcfbbd3db759ca4e035821d0ca94a5bd2a3ca3d67f5b872a",
+    "payloadSha256": "4ee95567aebc9f4adcfbbd3db759ca4e035821d0ca94a5bd2a3ca3d67f5b872a",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\05-profile-on-r2\\run-start.json",
+    "stored": "runs/05-profile-on-r2/run-start.json",
+    "sourceBytes": 328,
+    "sourceSha256": "42869d44cea6716d906a37b585a3138c0fc4880510093bbf064e27656a7489c5",
+    "payloadSha256": "e0ccb5c2e4e06787114ed60ee9db58e21af3da6d4326267af962d89269b8177e",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\05-profile-on-r2\\runner-before.json",
+    "stored": "runs/05-profile-on-r2/runner-before.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\05-profile-on-r2\\runner-after.json",
+    "stored": "runs/05-profile-on-r2/runner-after.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\05-profile-on-r2\\input-manifest-before.json",
+    "stored": "runs/05-profile-on-r2/input-manifest-before.json.gz",
+    "sourceBytes": 291697,
+    "sourceSha256": "bb75ac58cf0d50bffb021d077bab84dd6c11b8c48ea6d21a120f4843fefec5aa",
+    "payloadSha256": "bb75ac58cf0d50bffb021d077bab84dd6c11b8c48ea6d21a120f4843fefec5aa",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\05-profile-on-r2\\input-manifest-after.json",
+    "stored": "runs/05-profile-on-r2/input-manifest-after.json.gz",
+    "sourceBytes": 291697,
+    "sourceSha256": "be07d1f52df90dc4a5633fec9c6f9e1373478e618abab5595d6783b6ea9e32bb",
+    "payloadSha256": "be07d1f52df90dc4a5633fec9c6f9e1373478e618abab5595d6783b6ea9e32bb",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\06-profile-on-r2-raw-report.json",
+    "stored": "runs/06-profile-on-r2/raw-report.json.gz",
+    "sourceBytes": 1783882,
+    "sourceSha256": "f0b676d7add6d3adb2fc26a5feb53e656e3a7448bedf63a485ae85908d70b939",
+    "payloadSha256": "f0b676d7add6d3adb2fc26a5feb53e656e3a7448bedf63a485ae85908d70b939",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\06-profile-on-r2-summary.json",
+    "stored": "runs/06-profile-on-r2/summary.json",
+    "sourceBytes": 4534,
+    "sourceSha256": "c8d7bf654a02e14ddace9ad0038e801fd114fbb29cf3d45f00a631017426c615",
+    "payloadSha256": "c8d7bf654a02e14ddace9ad0038e801fd114fbb29cf3d45f00a631017426c615",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\06-profile-on-r2-validation.json",
+    "stored": "runs/06-profile-on-r2/validation.json",
+    "sourceBytes": 7746,
+    "sourceSha256": "d6081256e66a272f7bd098fdf37a40c7e49d1f0b68a6cca6cfe3d3e3880596ab",
+    "payloadSha256": "d6081256e66a272f7bd098fdf37a40c7e49d1f0b68a6cca6cfe3d3e3880596ab",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\06-profile-on-r2-host-result.json",
+    "stored": "runs/06-profile-on-r2/host-result.json",
+    "sourceBytes": 5075,
+    "sourceSha256": "9c962ee8828446c447852dbda93119df9130dae49fc832aed6e2986bdbe27df5",
+    "payloadSha256": "aee6a42ee252c255baf0db6e3e0b98eace71570cc6f8b932dbe74487c55f6de3",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\06-profile-on-r2-host-before.json",
+    "stored": "runs/06-profile-on-r2/host-before.json.gz",
+    "sourceBytes": 34760,
+    "sourceSha256": "6ee6edbb58241e2d53d7f017a38e22928daaaba74413f0337587d6377493038f",
+    "payloadSha256": "6ee6edbb58241e2d53d7f017a38e22928daaaba74413f0337587d6377493038f",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\06-profile-on-r2-host-after.json",
+    "stored": "runs/06-profile-on-r2/host-after.json.gz",
+    "sourceBytes": 34763,
+    "sourceSha256": "8ba8228f5fc38aa7758d9077cd459409013dfda0e7679a7ad124eeefc3c02147",
+    "payloadSha256": "8ba8228f5fc38aa7758d9077cd459409013dfda0e7679a7ad124eeefc3c02147",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\06-profile-on-r2-spec.json",
+    "stored": "runs/06-profile-on-r2/spec.json",
+    "sourceBytes": 420,
+    "sourceSha256": "fe36c37ee1c01c746cf78fcdde49bb94ab232dd213dfeb214daaaae56a2a40aa",
+    "payloadSha256": "fe36c37ee1c01c746cf78fcdde49bb94ab232dd213dfeb214daaaae56a2a40aa",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\06-profile-on-r2-metadata-reader.json",
+    "stored": "runs/06-profile-on-r2/metadata-reader.json",
+    "sourceBytes": 526,
+    "sourceSha256": "862669cb8638712439e3eb46e685a688d2a882c8d974b054171c1cbf128f5d00",
+    "payloadSha256": "862669cb8638712439e3eb46e685a688d2a882c8d974b054171c1cbf128f5d00",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\06-profile-on-r2.log",
+    "stored": "runs/06-profile-on-r2/runner.log",
+    "sourceBytes": 54,
+    "sourceSha256": "b8c85ce9359606609335c288aacb45f9d7aa510fc7ee97e036e41e29280ea7db",
+    "payloadSha256": "b8c85ce9359606609335c288aacb45f9d7aa510fc7ee97e036e41e29280ea7db",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\06-profile-on-r2\\identity.json",
+    "stored": "runs/06-profile-on-r2/identity.json",
+    "sourceBytes": 1837,
+    "sourceSha256": "75e411dcb9e4f50513513ede33fb8ea52b73d5d197d776346fd76a5975cc8250",
+    "payloadSha256": "789835fb73860f199b09532cbe5f1497a18174f90a77dac4939fa99180aa03de",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\06-profile-on-r2\\owned-processes-before.json",
+    "stored": "runs/06-profile-on-r2/owned-processes-before.json",
+    "sourceBytes": 1294,
+    "sourceSha256": "28c4bd83d6850bd81a2af9bf90712ca42aedd265042d83609e4d82574d49d22d",
+    "payloadSha256": "28c4bd83d6850bd81a2af9bf90712ca42aedd265042d83609e4d82574d49d22d",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\06-profile-on-r2\\owned-processes-before-close.json",
+    "stored": "runs/06-profile-on-r2/owned-processes-before-close.json",
+    "sourceBytes": 1663,
+    "sourceSha256": "638fc36938df8598a561257cf0dbf9c149e33c95a63e679187a802dcf7466e15",
+    "payloadSha256": "638fc36938df8598a561257cf0dbf9c149e33c95a63e679187a802dcf7466e15",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\06-profile-on-r2\\run-start.json",
+    "stored": "runs/06-profile-on-r2/run-start.json",
+    "sourceBytes": 328,
+    "sourceSha256": "6ededd411b9dbca2c8a7e346b8b755d51913edc77401b49ed7b3edbf308c8a33",
+    "payloadSha256": "e457e21486b5205f4cbf1a75fa366ab6898fab4757d60e291d053d309855d377",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\06-profile-on-r2\\runner-before.json",
+    "stored": "runs/06-profile-on-r2/runner-before.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\06-profile-on-r2\\runner-after.json",
+    "stored": "runs/06-profile-on-r2/runner-after.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\06-profile-on-r2\\input-manifest-before.json",
+    "stored": "runs/06-profile-on-r2/input-manifest-before.json.gz",
+    "sourceBytes": 291697,
+    "sourceSha256": "f2dbe606327e1f90ce0aff956a0c09a7f20a47e62a8aaa1a1498308772d57373",
+    "payloadSha256": "f2dbe606327e1f90ce0aff956a0c09a7f20a47e62a8aaa1a1498308772d57373",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\06-profile-on-r2\\input-manifest-after.json",
+    "stored": "runs/06-profile-on-r2/input-manifest-after.json.gz",
+    "sourceBytes": 291697,
+    "sourceSha256": "c4b3d152a9535a461d20d2b1561353c8f09c088888da3d4f9ee5a3dd42c13f16",
+    "payloadSha256": "c4b3d152a9535a461d20d2b1561353c8f09c088888da3d4f9ee5a3dd42c13f16",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\07-prototype-off-r2-raw-report.json",
+    "stored": "runs/07-prototype-off-r2/raw-report.json.gz",
+    "sourceBytes": 1749526,
+    "sourceSha256": "9679f80421cfd9a7bef67561ef5ddd75d5517ced1459b11652abf8d916e0a83b",
+    "payloadSha256": "9679f80421cfd9a7bef67561ef5ddd75d5517ced1459b11652abf8d916e0a83b",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\07-prototype-off-r2-summary.json",
+    "stored": "runs/07-prototype-off-r2/summary.json",
+    "sourceBytes": 4523,
+    "sourceSha256": "5a3e481275ed2127c5350d1786b4986408b0df21cbcb87cfba8745c21b299cd5",
+    "payloadSha256": "5a3e481275ed2127c5350d1786b4986408b0df21cbcb87cfba8745c21b299cd5",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\07-prototype-off-r2-validation.json",
+    "stored": "runs/07-prototype-off-r2/validation.json",
+    "sourceBytes": 7720,
+    "sourceSha256": "906df57dff9ed13fe3e24f977e1eaa76b97c58fbc168c8f79961692a2fb56d25",
+    "payloadSha256": "906df57dff9ed13fe3e24f977e1eaa76b97c58fbc168c8f79961692a2fb56d25",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\07-prototype-off-r2-host-result.json",
+    "stored": "runs/07-prototype-off-r2/host-result.json",
+    "sourceBytes": 5046,
+    "sourceSha256": "5e6a4cadf2a260e6ec7a0016ff38450cc5aaf1c9e7b4adc2b52af099aebab0f9",
+    "payloadSha256": "503fe3a32192c4e10faf5885314b53029e6f0baf6ef5b22963e4ae06177695f0",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\07-prototype-off-r2-host-before.json",
+    "stored": "runs/07-prototype-off-r2/host-before.json.gz",
+    "sourceBytes": 34922,
+    "sourceSha256": "2806d906a5847c2ff1165a96f70e369203cb38e91f4a6d03b9be63100f9b2960",
+    "payloadSha256": "2806d906a5847c2ff1165a96f70e369203cb38e91f4a6d03b9be63100f9b2960",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\07-prototype-off-r2-host-after.json",
+    "stored": "runs/07-prototype-off-r2/host-after.json.gz",
+    "sourceBytes": 34604,
+    "sourceSha256": "12e275951faba7b41d153348557c32fe00cc961ce5482eaf729ee295cc9af6da",
+    "payloadSha256": "12e275951faba7b41d153348557c32fe00cc961ce5482eaf729ee295cc9af6da",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\07-prototype-off-r2-spec.json",
+    "stored": "runs/07-prototype-off-r2/spec.json",
+    "sourceBytes": 396,
+    "sourceSha256": "9d7284242480021c65d96e1f899541b883b95408548920b94ed4b73adc61648c",
+    "payloadSha256": "9d7284242480021c65d96e1f899541b883b95408548920b94ed4b73adc61648c",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\07-prototype-off-r2.log",
+    "stored": "runs/07-prototype-off-r2/runner.log",
+    "sourceBytes": 57,
+    "sourceSha256": "cad33ba9cebb8c44abf2b56c331de841ffa0b8dd6e495fa3dacc344f263f45b1",
+    "payloadSha256": "cad33ba9cebb8c44abf2b56c331de841ffa0b8dd6e495fa3dacc344f263f45b1",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\07-prototype-off-r2\\identity.json",
+    "stored": "runs/07-prototype-off-r2/identity.json",
+    "sourceBytes": 1843,
+    "sourceSha256": "9c65612802e70a993fe8623f3ef127c88725b0b3cfd38e11f4bf3337bb5b4587",
+    "payloadSha256": "a4828ac65bffac714d3396978db07271cd9c0ba9a777bd113e41bba3417823b4",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\07-prototype-off-r2\\owned-processes-before.json",
+    "stored": "runs/07-prototype-off-r2/owned-processes-before.json",
+    "sourceBytes": 1297,
+    "sourceSha256": "b5edf1fdede5b29883235b9e95c1551fe503fd23e6dc7a25c6a13465272d4523",
+    "payloadSha256": "b5edf1fdede5b29883235b9e95c1551fe503fd23e6dc7a25c6a13465272d4523",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\07-prototype-off-r2\\owned-processes-before-close.json",
+    "stored": "runs/07-prototype-off-r2/owned-processes-before-close.json",
+    "sourceBytes": 1667,
+    "sourceSha256": "e6856f7b8fa4a1799e63f9b8ce79ffc8cad9e3030953a022e0620311342be192",
+    "payloadSha256": "e6856f7b8fa4a1799e63f9b8ce79ffc8cad9e3030953a022e0620311342be192",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\07-prototype-off-r2\\run-start.json",
+    "stored": "runs/07-prototype-off-r2/run-start.json",
+    "sourceBytes": 328,
+    "sourceSha256": "e347d77ec5e6a852910802f3c93a125ddbf0b7dbf3dba4427a87dc8e359de6fe",
+    "payloadSha256": "7cd90f05faabe1c43eca6c1602d644886010f7b9d0571e059c8f0ae7e0f5f7b0",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\07-prototype-off-r2\\runner-before.json",
+    "stored": "runs/07-prototype-off-r2/runner-before.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\07-prototype-off-r2\\runner-after.json",
+    "stored": "runs/07-prototype-off-r2/runner-after.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\07-prototype-off-r2\\input-manifest-before.json",
+    "stored": "runs/07-prototype-off-r2/input-manifest-before.json.gz",
+    "sourceBytes": 291697,
+    "sourceSha256": "0b9a8d8f39cdf446d75627caded7fa278c6442e0fffab072a0bf8429316c3a99",
+    "payloadSha256": "0b9a8d8f39cdf446d75627caded7fa278c6442e0fffab072a0bf8429316c3a99",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\07-prototype-off-r2\\input-manifest-after.json",
+    "stored": "runs/07-prototype-off-r2/input-manifest-after.json.gz",
+    "sourceBytes": 291697,
+    "sourceSha256": "7038767ce91ddefbce746a1be9c77bf6d4e951a360472b3e2314b09e7325da9c",
+    "payloadSha256": "7038767ce91ddefbce746a1be9c77bf6d4e951a360472b3e2314b09e7325da9c",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\08-control-r2-raw-report.json",
+    "stored": "runs/08-control-r2/raw-report.json.gz",
+    "sourceBytes": 1748507,
+    "sourceSha256": "75c16a29af514a3cae3306f66714b10df56f60a94edb6f9629fe4674bfe95b80",
+    "payloadSha256": "75c16a29af514a3cae3306f66714b10df56f60a94edb6f9629fe4674bfe95b80",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\08-control-r2-summary.json",
+    "stored": "runs/08-control-r2/summary.json",
+    "sourceBytes": 4521,
+    "sourceSha256": "e62af9f25ebce370185d41f50dfd1fd3e5947606cb85bfe4632f1b79e99d39cb",
+    "payloadSha256": "e62af9f25ebce370185d41f50dfd1fd3e5947606cb85bfe4632f1b79e99d39cb",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\08-control-r2-validation.json",
+    "stored": "runs/08-control-r2/validation.json",
+    "sourceBytes": 7710,
+    "sourceSha256": "a4d1f2428f2bf3d0d5d04eba4d04ed8d3438488ebb45e39c2f6e7453c39f6a83",
+    "payloadSha256": "a4d1f2428f2bf3d0d5d04eba4d04ed8d3438488ebb45e39c2f6e7453c39f6a83",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\08-control-r2-host-result.json",
+    "stored": "runs/08-control-r2/host-result.json",
+    "sourceBytes": 5010,
+    "sourceSha256": "a41226c482efa445bfeb20f1cb1dab6d9c85a82fbafdbd7e80f23f58d1de2ff3",
+    "payloadSha256": "8320d39b7b114d6f6166f112b4759967f4ddfa3ba7380434dc2ca696712eab89",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\08-control-r2-host-before.json",
+    "stored": "runs/08-control-r2/host-before.json.gz",
+    "sourceBytes": 34254,
+    "sourceSha256": "c1ae9d32b98292e6a9c4570b9acfbada1d813bbeb8472e7be5e2ee7a404c1d07",
+    "payloadSha256": "c1ae9d32b98292e6a9c4570b9acfbada1d813bbeb8472e7be5e2ee7a404c1d07",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\08-control-r2-host-after.json",
+    "stored": "runs/08-control-r2/host-after.json.gz",
+    "sourceBytes": 34599,
+    "sourceSha256": "adb9c80a3c59f732765558e8949b87e23c73ffa8b35b2ba91a9dd28c115d1a9e",
+    "payloadSha256": "adb9c80a3c59f732765558e8949b87e23c73ffa8b35b2ba91a9dd28c115d1a9e",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\08-control-r2-spec.json",
+    "stored": "runs/08-control-r2/spec.json",
+    "sourceBytes": 390,
+    "sourceSha256": "ffd113869528cdf5947c30e9f7009678364cff2d54f98b335df7bd0bd2322ba0",
+    "payloadSha256": "ffd113869528cdf5947c30e9f7009678364cff2d54f98b335df7bd0bd2322ba0",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\08-control-r2.log",
+    "stored": "runs/08-control-r2/runner.log",
+    "sourceBytes": 51,
+    "sourceSha256": "c547ea0cb9741e634e5c098b5a56f10969018f82b62e1c229fb5dc553d273bbd",
+    "payloadSha256": "c547ea0cb9741e634e5c098b5a56f10969018f82b62e1c229fb5dc553d273bbd",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\08-control-r2\\identity.json",
+    "stored": "runs/08-control-r2/identity.json",
+    "sourceBytes": 1835,
+    "sourceSha256": "52c407ba04bd6162355f092248f6a4ceb5fbee4b8f11acaf42ac0f4010d1fb44",
+    "payloadSha256": "992045511e5502f4416717634ec719cf0720dc5f7cf3c2c5eebb7781f916c9cd",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\08-control-r2\\owned-processes-before.json",
+    "stored": "runs/08-control-r2/owned-processes-before.json",
+    "sourceBytes": 1295,
+    "sourceSha256": "68127a317f2228aed281e6cbde24dda5fac6564477e24164953abafd7cc63d69",
+    "payloadSha256": "68127a317f2228aed281e6cbde24dda5fac6564477e24164953abafd7cc63d69",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\08-control-r2\\owned-processes-before-close.json",
+    "stored": "runs/08-control-r2/owned-processes-before-close.json",
+    "sourceBytes": 1665,
+    "sourceSha256": "9ddf99efd6401ea68f60888af6ff33bdf0b78d0603205abf444ee933561a7867",
+    "payloadSha256": "9ddf99efd6401ea68f60888af6ff33bdf0b78d0603205abf444ee933561a7867",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\08-control-r2\\run-start.json",
+    "stored": "runs/08-control-r2/run-start.json",
+    "sourceBytes": 326,
+    "sourceSha256": "490475a442208efdef978a7b26eefb4d081f7f0a9cbd8212fc9b4e450b8e92a6",
+    "payloadSha256": "8cb6cbe7dd5b29f87071fbe1dcb6b4f1fb0da4a1efb336c261c7b897a62f42ba",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\08-control-r2\\runner-before.json",
+    "stored": "runs/08-control-r2/runner-before.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\08-control-r2\\runner-after.json",
+    "stored": "runs/08-control-r2/runner-after.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\08-control-r2\\input-manifest-before.json",
+    "stored": "runs/08-control-r2/input-manifest-before.json.gz",
+    "sourceBytes": 291302,
+    "sourceSha256": "9aac9b29d9da7d4003fa3298d472f76127f9726ffdf12f7223bd342656f80ca2",
+    "payloadSha256": "9aac9b29d9da7d4003fa3298d472f76127f9726ffdf12f7223bd342656f80ca2",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\08-control-r2\\input-manifest-after.json",
+    "stored": "runs/08-control-r2/input-manifest-after.json.gz",
+    "sourceBytes": 291302,
+    "sourceSha256": "89407af83da8ae99607575657c8d21967409f5d565ed405ae76fc4a3e36ab188",
+    "payloadSha256": "89407af83da8ae99607575657c8d21967409f5d565ed405ae76fc4a3e36ab188",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\control-canaries\\cases\\001-tracking-control-retry-canaries-a07.json",
+    "stored": "gates/control-canaries/cases/001-tracking-control-retry-canaries-a07.json",
+    "sourceBytes": 1397,
+    "sourceSha256": "fb111a128e6bd09a501bb50e8e46d2ffa4d280ff7b18cb5fdc2f0f5b81e39711",
+    "payloadSha256": "fb111a128e6bd09a501bb50e8e46d2ffa4d280ff7b18cb5fdc2f0f5b81e39711",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\control-canaries\\cases\\001-tracking-control-retry-canaries-a07.report.json",
+    "stored": "gates/control-canaries/cases/001-tracking-control-retry-canaries-a07.report.json.gz",
+    "sourceBytes": 80898,
+    "sourceSha256": "31bdfbf3d907133739f89508329dc2e92195fe10f7a5dec7ae5f52d5a004f270",
+    "payloadSha256": "31bdfbf3d907133739f89508329dc2e92195fe10f7a5dec7ae5f52d5a004f270",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\control-canaries\\cases\\002-tracking-control-retry-canaries-disabled.json",
+    "stored": "gates/control-canaries/cases/002-tracking-control-retry-canaries-disabled.json",
+    "sourceBytes": 1582,
+    "sourceSha256": "6fbe3ccdf1cd9b8fa942a597e90421251a9cf1de00fb18123254c1a8eeac0075",
+    "payloadSha256": "6fbe3ccdf1cd9b8fa942a597e90421251a9cf1de00fb18123254c1a8eeac0075",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\control-canaries\\cases\\002-tracking-control-retry-canaries-disabled.report.json",
+    "stored": "gates/control-canaries/cases/002-tracking-control-retry-canaries-disabled.report.json.gz",
+    "sourceBytes": 344,
+    "sourceSha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+    "payloadSha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\control-canaries\\identity.json",
+    "stored": "gates/control-canaries/identity.json",
+    "sourceBytes": 1831,
+    "sourceSha256": "82743de95dd10007bd106932fa740269558139c05373879c5b58372c91ab5662",
+    "payloadSha256": "36186f341018de50ba7902c6b9528198a494737deed86a99f475c5293305c0a0",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\control-canaries\\input-manifest-after.json",
+    "stored": "gates/control-canaries/input-manifest-after.json.gz",
+    "sourceBytes": 291302,
+    "sourceSha256": "f736e3b20fd2c131df974c56c51f28671cbca25627946b4f8a8aaad558e45c6a",
+    "payloadSha256": "f736e3b20fd2c131df974c56c51f28671cbca25627946b4f8a8aaad558e45c6a",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\control-canaries\\input-manifest-before.json",
+    "stored": "gates/control-canaries/input-manifest-before.json.gz",
+    "sourceBytes": 291302,
+    "sourceSha256": "3e75a8ec32c867de1d98dd83f62db786362dd2592b31acfcb929ab6ec97b6bb0",
+    "payloadSha256": "3e75a8ec32c867de1d98dd83f62db786362dd2592b31acfcb929ab6ec97b6bb0",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\control-canaries\\owned-processes-before-close.json",
+    "stored": "gates/control-canaries/owned-processes-before-close.json",
+    "sourceBytes": 1472,
+    "sourceSha256": "9b8e99e7a030a490a11c8b6f8a7ee860e59d80354cfe52335ec5c3b598587c5c",
+    "payloadSha256": "9b8e99e7a030a490a11c8b6f8a7ee860e59d80354cfe52335ec5c3b598587c5c",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\control-canaries\\owned-processes-before.json",
+    "stored": "gates/control-canaries/owned-processes-before.json",
+    "sourceBytes": 1288,
+    "sourceSha256": "50c6f1eb23f29eaff615d3a74c149372b8973a67982f046dd5c7a5fff05edadd",
+    "payloadSha256": "50c6f1eb23f29eaff615d3a74c149372b8973a67982f046dd5c7a5fff05edadd",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\control-canaries\\progress.json",
+    "stored": "gates/control-canaries/progress.json",
+    "sourceBytes": 6003,
+    "sourceSha256": "76222598991a0c36ce7df53a662078f0ecc1f3658d0d698383f6da76e5e905d8",
+    "payloadSha256": "915f4b09b8c9ab2509631a109fbab6e70869f011880f6eeaf4cccbf9a1c70349",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\control-canaries\\result.json",
+    "stored": "gates/control-canaries/result.json",
+    "sourceBytes": 6727,
+    "sourceSha256": "2476450f252e76a1f80929024a0f224de1bc7b1567764951f695305b88bfbbb8",
+    "payloadSha256": "b2d299e589356a1977e06d65549e23bace4907e2abddb3b31950e2537904d64e",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\control-canaries\\run-start.json",
+    "stored": "gates/control-canaries/run-start.json",
+    "sourceBytes": 326,
+    "sourceSha256": "0be1b680ab8c86a176c030e9bfcb64bf24ac7cac45c4669a69afee1f2262bbf5",
+    "payloadSha256": "c87567d2bd99ce9d6b9893e5e0b7489e162243a3d2b4050c1e9e03fa3bdd7387",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\control-canaries\\runner-after.json",
+    "stored": "gates/control-canaries/runner-after.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\control-canaries\\runner-before.json",
+    "stored": "gates/control-canaries/runner-before.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\control-canaries\\spec.json",
+    "stored": "gates/control-canaries/spec.json",
+    "sourceBytes": 873,
+    "sourceSha256": "977b86b27321c88e366038a6bcdab2549096767f972e0fd55aaac379759ecd08",
+    "payloadSha256": "977b86b27321c88e366038a6bcdab2549096767f972e0fd55aaac379759ecd08",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-canaries\\cases\\001-tracking-control-retry-canaries-a07.json",
+    "stored": "gates/candidate-canaries/cases/001-tracking-control-retry-canaries-a07.json",
+    "sourceBytes": 1397,
+    "sourceSha256": "685036ad7729aab6ef01b15266cc9d29878149b7001279b9675c58e3acd4eb32",
+    "payloadSha256": "685036ad7729aab6ef01b15266cc9d29878149b7001279b9675c58e3acd4eb32",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-canaries\\cases\\001-tracking-control-retry-canaries-a07.report.json",
+    "stored": "gates/candidate-canaries/cases/001-tracking-control-retry-canaries-a07.report.json.gz",
+    "sourceBytes": 80900,
+    "sourceSha256": "bec1aa81ca52bf9665b3f8e2d7175d31092187190fc8a690a9dcca1f621f9564",
+    "payloadSha256": "bec1aa81ca52bf9665b3f8e2d7175d31092187190fc8a690a9dcca1f621f9564",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-canaries\\cases\\002-tracking-control-retry-canaries-disabled.json",
+    "stored": "gates/candidate-canaries/cases/002-tracking-control-retry-canaries-disabled.json",
+    "sourceBytes": 1582,
+    "sourceSha256": "063f50749a614a07d55acea700a2a6d9d470ea7f009f6e9a871c86879b006f0f",
+    "payloadSha256": "063f50749a614a07d55acea700a2a6d9d470ea7f009f6e9a871c86879b006f0f",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-canaries\\cases\\002-tracking-control-retry-canaries-disabled.report.json",
+    "stored": "gates/candidate-canaries/cases/002-tracking-control-retry-canaries-disabled.report.json.gz",
+    "sourceBytes": 344,
+    "sourceSha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+    "payloadSha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-canaries\\identity.json",
+    "stored": "gates/candidate-canaries/identity.json",
+    "sourceBytes": 1842,
+    "sourceSha256": "da85cef5cccf5ad20c3dfc839da9cda27c9dfeaf3ed72302c506786227bf3356",
+    "payloadSha256": "9701545df86c3193f9e3f08e0cd6e59a65d490b65740ae543ab1582e67f824a2",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-canaries\\input-manifest-after.json",
+    "stored": "gates/candidate-canaries/input-manifest-after.json.gz",
+    "sourceBytes": 291697,
+    "sourceSha256": "caafcf5329a99395ca44616f5a8ef1344988fe93ec97056c17bb95512d11afb6",
+    "payloadSha256": "caafcf5329a99395ca44616f5a8ef1344988fe93ec97056c17bb95512d11afb6",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-canaries\\input-manifest-before.json",
+    "stored": "gates/candidate-canaries/input-manifest-before.json.gz",
+    "sourceBytes": 291697,
+    "sourceSha256": "edc7b2e3fc31cfbd6d720739c2a459512d58a310d5c0f3b4d46436fa975b6c8f",
+    "payloadSha256": "edc7b2e3fc31cfbd6d720739c2a459512d58a310d5c0f3b4d46436fa975b6c8f",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-canaries\\owned-processes-before-close.json",
+    "stored": "gates/candidate-canaries/owned-processes-before-close.json",
+    "sourceBytes": 1482,
+    "sourceSha256": "1c052800fb7a7bba26ac6b8855b7aabbdedf95b55fbaed3b5948dd4687f0aff9",
+    "payloadSha256": "1c052800fb7a7bba26ac6b8855b7aabbdedf95b55fbaed3b5948dd4687f0aff9",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-canaries\\owned-processes-before.json",
+    "stored": "gates/candidate-canaries/owned-processes-before.json",
+    "sourceBytes": 1297,
+    "sourceSha256": "fc6c2e852ab3080c6cc6279e58355153c982e87519b5557fd3853f4a69283c46",
+    "payloadSha256": "fc6c2e852ab3080c6cc6279e58355153c982e87519b5557fd3853f4a69283c46",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-canaries\\progress.json",
+    "stored": "gates/candidate-canaries/progress.json",
+    "sourceBytes": 6016,
+    "sourceSha256": "42fdcdcfd91dc5ad91d9d406fe3b1e067e0f7fcf57fd066652e5da8532e79bfb",
+    "payloadSha256": "18ea57284e3a9e2335eb6a3ec475bad94ba9548917b3d12da1d44f5716a4bbe7",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-canaries\\result.json",
+    "stored": "gates/candidate-canaries/result.json",
+    "sourceBytes": 6740,
+    "sourceSha256": "9ccfa2b1092aae2dca30b8d4492763534586dadb126b1c28185456ac2e0710d1",
+    "payloadSha256": "c8325609288332f9f130fb80614be9535daa3747e3ce5b90ab2279684785088c",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-canaries\\run-start.json",
+    "stored": "gates/candidate-canaries/run-start.json",
+    "sourceBytes": 328,
+    "sourceSha256": "797c6bf4aa432a3f566e3b2993a41f15a71e813e4f6eedc8af059b4b86144add",
+    "payloadSha256": "e703ac8ef70b6aab07bf952f7d35e290833e3805b1ac98ec7bddb43a8b0635ed",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-canaries\\runner-after.json",
+    "stored": "gates/candidate-canaries/runner-after.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-canaries\\runner-before.json",
+    "stored": "gates/candidate-canaries/runner-before.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-canaries\\spec.json",
+    "stored": "gates/candidate-canaries/spec.json",
+    "sourceBytes": 873,
+    "sourceSha256": "977b86b27321c88e366038a6bcdab2549096767f972e0fd55aaac379759ecd08",
+    "payloadSha256": "977b86b27321c88e366038a6bcdab2549096767f972e0fd55aaac379759ecd08",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-r2-canaries\\cases\\001-tracking-r2-canaries-a07.json",
+    "stored": "gates/candidate-r2-canaries/cases/001-tracking-r2-canaries-a07.json",
+    "sourceBytes": 1374,
+    "sourceSha256": "48e0f88cdb4a48bef19ea5c872d1df4c703b0aff8f844888cee130ee38ff0727",
+    "payloadSha256": "48e0f88cdb4a48bef19ea5c872d1df4c703b0aff8f844888cee130ee38ff0727",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-r2-canaries\\cases\\001-tracking-r2-canaries-a07.report.json",
+    "stored": "gates/candidate-r2-canaries/cases/001-tracking-r2-canaries-a07.report.json.gz",
+    "sourceBytes": 80899,
+    "sourceSha256": "8910b173c13839fea267c0ee2eb9ca31133162a10495b09b0fe83ccd89cd6160",
+    "payloadSha256": "8910b173c13839fea267c0ee2eb9ca31133162a10495b09b0fe83ccd89cd6160",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-r2-canaries\\cases\\002-tracking-r2-canaries-disabled.json",
+    "stored": "gates/candidate-r2-canaries/cases/002-tracking-r2-canaries-disabled.json",
+    "sourceBytes": 1544,
+    "sourceSha256": "27d62df26f53482e32704e85ae0dce30abc0c7820e9cda91c6b30bb4587f5d03",
+    "payloadSha256": "27d62df26f53482e32704e85ae0dce30abc0c7820e9cda91c6b30bb4587f5d03",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-r2-canaries\\cases\\002-tracking-r2-canaries-disabled.report.json",
+    "stored": "gates/candidate-r2-canaries/cases/002-tracking-r2-canaries-disabled.report.json.gz",
+    "sourceBytes": 344,
+    "sourceSha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+    "payloadSha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-r2-canaries\\identity.json",
+    "stored": "gates/candidate-r2-canaries/identity.json",
+    "sourceBytes": 1845,
+    "sourceSha256": "b3ff8d31dba03abef29b84e0dc0d5e3e1c621c09f93c76d6a042dcfc2149ce6f",
+    "payloadSha256": "53e5fbaace73f5912013fd7fb71ddb4f8d0e058966def427b692310f728d4a84",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-r2-canaries\\input-manifest-after.json",
+    "stored": "gates/candidate-r2-canaries/input-manifest-after.json.gz",
+    "sourceBytes": 291697,
+    "sourceSha256": "23caca76fc6932a9d2d9e10b1cd50495b5ef40c15e8b0cbd615faa9285d7a289",
+    "payloadSha256": "23caca76fc6932a9d2d9e10b1cd50495b5ef40c15e8b0cbd615faa9285d7a289",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-r2-canaries\\input-manifest-before.json",
+    "stored": "gates/candidate-r2-canaries/input-manifest-before.json.gz",
+    "sourceBytes": 291697,
+    "sourceSha256": "22e1df711b060221ffd26d82d5945701a7b6faade115990641f3c69747a14ef4",
+    "payloadSha256": "22e1df711b060221ffd26d82d5945701a7b6faade115990641f3c69747a14ef4",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-r2-canaries\\owned-processes-before-close.json",
+    "stored": "gates/candidate-r2-canaries/owned-processes-before-close.json",
+    "sourceBytes": 1482,
+    "sourceSha256": "c99d972fdd4658af094bc0e993633716cfea3d0b744c2b2ab0f8fb976a70f69a",
+    "payloadSha256": "c99d972fdd4658af094bc0e993633716cfea3d0b744c2b2ab0f8fb976a70f69a",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-r2-canaries\\owned-processes-before.json",
+    "stored": "gates/candidate-r2-canaries/owned-processes-before.json",
+    "sourceBytes": 1297,
+    "sourceSha256": "d5fedc3364da870af3c8b99aa3495d91aec63ed26eabadcb35fbf214ef85b683",
+    "payloadSha256": "d5fedc3364da870af3c8b99aa3495d91aec63ed26eabadcb35fbf214ef85b683",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-r2-canaries\\progress.json",
+    "stored": "gates/candidate-r2-canaries/progress.json",
+    "sourceBytes": 5958,
+    "sourceSha256": "06d0b615c383eace61a9360de62ee0b015c67321ae230465d38aa825c9967ffe",
+    "payloadSha256": "44d6d1a08ecf0fb4fe244c61fedb766406b7b5cde62ee9dd21522be91f973e3d",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-r2-canaries\\result.json",
+    "stored": "gates/candidate-r2-canaries/result.json",
+    "sourceBytes": 6681,
+    "sourceSha256": "e7cb5b54cff7028f5e50805128e411ec737b9b7d2810e1630a63b34a97870101",
+    "payloadSha256": "2ae201241749a341f0ddd55c9cc18808e4d90a3ccea4bc187a77b2f2eff705a3",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-r2-canaries\\run-start.json",
+    "stored": "gates/candidate-r2-canaries/run-start.json",
+    "sourceBytes": 328,
+    "sourceSha256": "dac2af895aee1b4d53186aae78f501177b4eb393aa6a73278925e1b7fdfc4ec2",
+    "payloadSha256": "fb6a9eff3f2003cc762a07448c12f05895ed4df013e883c8971dd77669d85f47",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-r2-canaries\\runner-after.json",
+    "stored": "gates/candidate-r2-canaries/runner-after.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-r2-canaries\\runner-before.json",
+    "stored": "gates/candidate-r2-canaries/runner-before.json",
+    "sourceBytes": 146,
+    "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "payloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<TASK_TEMP>\\candidate-r2-canaries\\spec.json",
+    "stored": "gates/candidate-r2-canaries/spec.json",
+    "sourceBytes": 853,
+    "sourceSha256": "c7c7a0c6ae1e541644b5dcc519ac3d7823285152bade39c825740baa3af93293",
+    "payloadSha256": "c7c7a0c6ae1e541644b5dcc519ac3d7823285152bade39c825740baa3af93293",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\analysis.json",
+    "stored": "analysis.json",
+    "sourceBytes": 5074,
+    "sourceSha256": "18746047d6b5f1e17a78cd1f5e4fc6cc51880629cf2fa616b54ab685dc3425d7",
+    "payloadSha256": "18746047d6b5f1e17a78cd1f5e4fc6cc51880629cf2fa616b54ab685dc3425d7",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\archive_sources.py",
+    "stored": "procedures/archive_sources.py.gz",
+    "sourceBytes": 1506,
+    "sourceSha256": "09ec09ea0cca45cd83da7e069b9a7d28a67cda49929a6fdedd4b66e42f1b3f2d",
+    "payloadSha256": "56a5f31df0dab42cf2f48128a9108bedf41d4c9603b1e12476822fe8887a082f",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\audit_instrumented.py",
+    "stored": "procedures/audit_instrumented.py.gz",
+    "sourceBytes": 905,
+    "sourceSha256": "b7c0f1fb0ba34682c10aa3bf240f3cef1d55500b0d37ff84b0f22a38178f7f94",
+    "payloadSha256": "b7c0f1fb0ba34682c10aa3bf240f3cef1d55500b0d37ff84b0f22a38178f7f94",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\canary-r2-spec.json",
+    "stored": "gates/canary-r2-spec.json",
+    "sourceBytes": 853,
+    "sourceSha256": "c7c7a0c6ae1e541644b5dcc519ac3d7823285152bade39c825740baa3af93293",
+    "payloadSha256": "c7c7a0c6ae1e541644b5dcc519ac3d7823285152bade39c825740baa3af93293",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\canary-spec.json",
+    "stored": "gates/canary-spec.json",
+    "sourceBytes": 873,
+    "sourceSha256": "977b86b27321c88e366038a6bcdab2549096767f972e0fd55aaac379759ecd08",
+    "payloadSha256": "977b86b27321c88e366038a6bcdab2549096767f972e0fd55aaac379759ecd08",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\candidate-build.log",
+    "stored": "gates/candidate-build.log",
+    "sourceBytes": 1295,
+    "sourceSha256": "69b08d7f3be7c78a37892e8a6e838571751efc3ee311d93aba5e448396074b98",
+    "payloadSha256": "f03e395120470eacfbee411f989a3641451c2665aa3d346bd208d9f113e750a0",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\candidate-canary-result.json",
+    "stored": "gates/candidate-canary-result.json",
+    "sourceBytes": 6740,
+    "sourceSha256": "9ccfa2b1092aae2dca30b8d4492763534586dadb126b1c28185456ac2e0710d1",
+    "payloadSha256": "c8325609288332f9f130fb80614be9535daa3747e3ce5b90ab2279684785088c",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\candidate-canary.log",
+    "stored": "gates/candidate-canary.log",
+    "sourceBytes": 124,
+    "sourceSha256": "b8c7b82d35962c1f470f8f87913251666ecbee26d4466fb1abdfa4ea18885a25",
+    "payloadSha256": "b8c7b82d35962c1f470f8f87913251666ecbee26d4466fb1abdfa4ea18885a25",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\candidate-native-receipt.txt",
+    "stored": "gates/candidate-native-receipt.txt",
+    "sourceBytes": 638,
+    "sourceSha256": "37becd03f753984d8c0339d3be532d2d14d4c502983af17a56edbd81d4b5b499",
+    "payloadSha256": "37becd03f753984d8c0339d3be532d2d14d4c502983af17a56edbd81d4b5b499",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\candidate-native-result.json",
+    "stored": "gates/candidate-native-result.json",
+    "sourceBytes": 56,
+    "sourceSha256": "1bdeff3000b0e914eec2fe28956549359c4f8548b2f9cc5df0cc823dc4346616",
+    "payloadSha256": "1bdeff3000b0e914eec2fe28956549359c4f8548b2f9cc5df0cc823dc4346616",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\candidate-native.log",
+    "stored": "gates/candidate-native.log",
+    "sourceBytes": 4594,
+    "sourceSha256": "b8fce3adf72ada0c9808716c58e3554520e5b4c77895efe2a8ff32160e6bc732",
+    "payloadSha256": "b8fce3adf72ada0c9808716c58e3554520e5b4c77895efe2a8ff32160e6bc732",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\candidate-r2-a07-reader.txt",
+    "stored": "gates/candidate-r2-a07-reader.txt",
+    "sourceBytes": 75,
+    "sourceSha256": "44d24b9e9a389a6f682363c51ef04ef37694276dbe30f6ac328ade766286b3f7",
+    "payloadSha256": "44d24b9e9a389a6f682363c51ef04ef37694276dbe30f6ac328ade766286b3f7",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\candidate-r2-build.log",
+    "stored": "gates/candidate-r2-build.log",
+    "sourceBytes": 1295,
+    "sourceSha256": "849ccf11bcb38a079f07e6ef66eae616cadb1183c0fab1ac199ec459721aa42b",
+    "payloadSha256": "65118cc84f14e7059f985abc0ecbb9be5374ba1b1ebda5fb0c1faf4ff25ab35d",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\candidate-r2-canary-result.json",
+    "stored": "gates/candidate-r2-canary-result.json",
+    "sourceBytes": 6681,
+    "sourceSha256": "e7cb5b54cff7028f5e50805128e411ec737b9b7d2810e1630a63b34a97870101",
+    "payloadSha256": "2ae201241749a341f0ddd55c9cc18808e4d90a3ccea4bc187a77b2f2eff705a3",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\candidate-r2-canary.log",
+    "stored": "gates/candidate-r2-canary.log",
+    "sourceBytes": 100,
+    "sourceSha256": "e6184bb2122818f2944645bc2c65105c3817465f65fa7b12e0d85325060ad67b",
+    "payloadSha256": "e6184bb2122818f2944645bc2c65105c3817465f65fa7b12e0d85325060ad67b",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\candidate-r2-native-receipt.txt",
+    "stored": "gates/candidate-r2-native-receipt.txt",
+    "sourceBytes": 230,
+    "sourceSha256": "6d7a3fa81a73802a579beb62156e3f04844721beeee1dc08be429e4331cbfbd9",
+    "payloadSha256": "6d7a3fa81a73802a579beb62156e3f04844721beeee1dc08be429e4331cbfbd9",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\candidate-r2-native-result.json",
+    "stored": "gates/candidate-r2-native-result.json",
+    "sourceBytes": 56,
+    "sourceSha256": "6002e47c247b8f5d6aaf60bc277995955b9857f6ce471159f36ae60b153154ce",
+    "payloadSha256": "6002e47c247b8f5d6aaf60bc277995955b9857f6ce471159f36ae60b153154ce",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\candidate-r2-native.log",
+    "stored": "gates/candidate-r2-native.log",
+    "sourceBytes": 918,
+    "sourceSha256": "e1b7614013de5bb821018500f836a6ef8a9830c4863aa6a1f7a53826668b5c06",
+    "payloadSha256": "e1b7614013de5bb821018500f836a6ef8a9830c4863aa6a1f7a53826668b5c06",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\control-canary-result.json",
+    "stored": "gates/control-canary-result.json",
+    "sourceBytes": 6727,
+    "sourceSha256": "2476450f252e76a1f80929024a0f224de1bc7b1567764951f695305b88bfbbb8",
+    "payloadSha256": "b2d299e589356a1977e06d65549e23bace4907e2abddb3b31950e2537904d64e",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\control-canary.log",
+    "stored": "gates/control-canary.log",
+    "sourceBytes": 124,
+    "sourceSha256": "498bbeb26fd254b82ec30aa70e7335caf7e51922849a851728ef72297ea97920",
+    "payloadSha256": "498bbeb26fd254b82ec30aa70e7335caf7e51922849a851728ef72297ea97920",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\final-fixtures.json",
+    "stored": "final-fixtures.json",
+    "sourceBytes": 275,
+    "sourceSha256": "05e341e14e47eeb6a8824e96e40059ef5fc8e267b8ff3330e8646a8132ee868b",
+    "payloadSha256": "05e341e14e47eeb6a8824e96e40059ef5fc8e267b8ff3330e8646a8132ee868b",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\finish_analysis.py",
+    "stored": "procedures/finish_analysis.py.gz",
+    "sourceBytes": 6039,
+    "sourceSha256": "44fe828091aabd0fa0249571553e2d9462c234d9ced5b28cfd10c73461d96abf",
+    "payloadSha256": "f0968ffb2a2dd52a5dc88e7d79b178b142e503dde792901ebd01ca227a5bac79",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\instrument_orchestration.py",
+    "stored": "procedures/instrument_orchestration.py.gz",
+    "sourceBytes": 3335,
+    "sourceSha256": "a80c29aa4f00611cd958b315dea5d80b68f2f54958dda33b10561ff3d32ca414",
+    "payloadSha256": "a80c29aa4f00611cd958b315dea5d80b68f2f54958dda33b10561ff3d32ca414",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\measure.py",
+    "stored": "procedures/measure.py.gz",
+    "sourceBytes": 3579,
+    "sourceSha256": "703ec2ff93f09c648d0ce6792a03e9d4482fcfd881d5ee0b61b43a798e2e212b",
+    "payloadSha256": "138f2efa390e4f44ad30f49e8dcdfd5308369cc9fe40f7dcb6afb78b6e6ad311",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\orchestration-instrumentation.json",
+    "stored": "orchestration-instrumentation.json",
+    "sourceBytes": 3715,
+    "sourceSha256": "791f5a15be0bef6bc957c7056b2e74878ff9354572abeb45874dc06c1b5e3b7e",
+    "payloadSha256": "791f5a15be0bef6bc957c7056b2e74878ff9354572abeb45874dc06c1b5e3b7e",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\ownership-native-receipt.txt",
+    "stored": "gates/ownership-native-receipt.txt",
+    "sourceBytes": 244,
+    "sourceSha256": "0dc7430782a39153d3679d18f0e0c6cbf3cda8a408c8f560d741e9fa7808fff5",
+    "payloadSha256": "0dc7430782a39153d3679d18f0e0c6cbf3cda8a408c8f560d741e9fa7808fff5",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\ownership-native-result.json",
+    "stored": "gates/ownership-native-result.json",
+    "sourceBytes": 56,
+    "sourceSha256": "440d1d84b193f399513e82a09a0599cdd7951276dafc992cf16e21bbc8e5c18d",
+    "payloadSha256": "440d1d84b193f399513e82a09a0599cdd7951276dafc992cf16e21bbc8e5c18d",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\ownership-native.log",
+    "stored": "gates/ownership-native.log",
+    "sourceBytes": 932,
+    "sourceSha256": "af6e9292896ed951866874cff1adc2077377c84da5d3ce30c16fb2d57ff4ad3b",
+    "payloadSha256": "af6e9292896ed951866874cff1adc2077377c84da5d3ce30c16fb2d57ff4ad3b",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\parity.json",
+    "stored": "parity.json",
+    "sourceBytes": 2582,
+    "sourceSha256": "7ee7e1c9fa247bb4fa57d8e4670dc47fff39e7e65166763e3c4778f8f8d411ce",
+    "payloadSha256": "7ee7e1c9fa247bb4fa57d8e4670dc47fff39e7e65166763e3c4778f8f8d411ce",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\plan-r2.json",
+    "stored": "plan-r2.json",
+    "sourceBytes": 1221,
+    "sourceSha256": "9bf5a65eb1e546e3be09c6e30470185ff023f52234b7ea2c661b241e6029933f",
+    "payloadSha256": "9bf5a65eb1e546e3be09c6e30470185ff023f52234b7ea2c661b241e6029933f",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\plan.json",
+    "stored": "plan.json",
+    "sourceBytes": 1455,
+    "sourceSha256": "fd906223e16f7aaf023bcd5f5d8f6fe80b5384fdc10e4b4640b8c726fae75449",
+    "payloadSha256": "fd906223e16f7aaf023bcd5f5d8f6fe80b5384fdc10e4b4640b8c726fae75449",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\prepare_retry.py",
+    "stored": "procedures/prepare_retry.py.gz",
+    "sourceBytes": 1740,
+    "sourceSha256": "17cd1ce091a07ddfb6bae52a446ca19fe528e3272d9222279464b43608f07913",
+    "payloadSha256": "3502b6438fce5e0efa5000b75acaff5d390c422a66115026a79a2901b5058463",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\preservation.json",
+    "stored": "preservation.json",
+    "sourceBytes": 447,
+    "sourceSha256": "0be41808ee3fa8dfc438e255862c9ca1dd9ca8a73b30d2d9d78b8e668bc2c2bf",
+    "payloadSha256": "0be41808ee3fa8dfc438e255862c9ca1dd9ca8a73b30d2d9d78b8e668bc2c2bf",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\profiler-lifecycle-fix.patch",
+    "stored": "procedures/profiler-lifecycle-fix.patch",
+    "sourceBytes": 1703,
+    "sourceSha256": "ad096dad63f8132563366153941b6afb1081d9a893d30b7e38f60517d5c8def1",
+    "payloadSha256": "ad096dad63f8132563366153941b6afb1081d9a893d30b7e38f60517d5c8def1",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\profiles.csv",
+    "stored": "profiles.csv",
+    "sourceBytes": 40923,
+    "sourceSha256": "6d0f63393bd876dd6ac9a6023780ba785bb99703d7674f39a366536b19ee8961",
+    "payloadSha256": "6d0f63393bd876dd6ac9a6023780ba785bb99703d7674f39a366536b19ee8961",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\recovery-worktree-state.json",
+    "stored": "audits/recovery-worktree-state.json.gz",
+    "sourceBytes": 47603,
+    "sourceSha256": "4a31598185870664cde388616066bd7a398c1d7b7dcc0f05296170b9ae8e000b",
+    "payloadSha256": "4a31598185870664cde388616066bd7a398c1d7b7dcc0f05296170b9ae8e000b",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\retry-control-build.log",
+    "stored": "gates/retry-control-build.log",
+    "sourceBytes": 1293,
+    "sourceSha256": "2b91228b51ba8e1d68168ba6d5d7fd86fc7e97fce54a7a0e6890ee536dd7a68d",
+    "payloadSha256": "994bfe42f3840170cffe54cd29fde10a0e12da78cb774bd835d3f2120a73240b",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\timings.csv",
+    "stored": "timings.csv",
+    "sourceBytes": 1313,
+    "sourceSha256": "10bce58f758733a57f8f409a90e5db2b114fe2af674b14b626074923044c5edd",
+    "payloadSha256": "10bce58f758733a57f8f409a90e5db2b114fe2af674b14b626074923044c5edd",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<RECOVERY>\\validate_measurement.py",
+    "stored": "procedures/validate_measurement.py.gz",
+    "sourceBytes": 2952,
+    "sourceSha256": "f2e68d2a9db226334ca0575e18038bf1a0282f1f84fcb2b594e6342646681ee1",
+    "payloadSha256": "59713ebafb32f3eb6289f2fc2a8e3e5f108f1f348d9ee244cef42709aee92ebf",
+    "transformation": "UTF-8/path tokens only",
+    "gzip": true
+  },
+  {
+    "source": "<RECOVERY>\\validate_profile.py",
+    "stored": "procedures/validate_profile.py.gz",
+    "sourceBytes": 10290,
+    "sourceSha256": "c4843f4a277f6c7f7f2d9e25c1393d2c56c7fb7038bbb2d5b5c5ee8f6714832a",
+    "payloadSha256": "c4843f4a277f6c7f7f2d9e25c1393d2c56c7fb7038bbb2d5b5c5ee8f6714832a",
+    "transformation": "exact",
+    "gzip": true
+  },
+  {
+    "source": "<Q30_REPO>\\docs\\task-evidence\\Q30\\scale-plan-4\\check_coordinator.py",
+    "stored": "procedures/readers/check_coordinator.py",
+    "sourceBytes": 89432,
+    "sourceSha256": "247ded434bcdbdba6f78e7edf8f9c8b3671aaf8465bfabb29c875d5b2512bddb",
+    "payloadSha256": "247ded434bcdbdba6f78e7edf8f9c8b3671aaf8465bfabb29c875d5b2512bddb",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<Q30_REPO>\\docs\\task-evidence\\Q30\\scale-plan-4\\check_d01.py",
+    "stored": "procedures/readers/check_d01.py",
+    "sourceBytes": 82383,
+    "sourceSha256": "f58847541571cdf829835d05c200bac6ea0079dab065d90ebdf7f44914241929",
+    "payloadSha256": "f58847541571cdf829835d05c200bac6ea0079dab065d90ebdf7f44914241929",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<Q30_REPO>\\docs\\task-evidence\\Q30\\live-lu-support-r1\\procedures\\validate_current_q30_timing_pair.py",
+    "stored": "procedures/readers/validate_current_q30_timing_pair.py",
+    "sourceBytes": 21229,
+    "sourceSha256": "67430d7c56d872d115a7c38732bf60101cff52e8bf40f7af075213debc8e7e3b",
+    "payloadSha256": "67430d7c56d872d115a7c38732bf60101cff52e8bf40f7af075213debc8e7e3b",
+    "transformation": "exact",
+    "gzip": false
+  },
+  {
+    "source": "<Q30_REPO>\\tests\\browser\\compiled_attribute_acceptance.py",
+    "stored": "procedures/compiled_attribute_acceptance.py.gz",
+    "sourceBytes": 30624,
+    "sourceSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+    "payloadSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+    "transformation": "exact",
+    "gzip": true
+  }
+]

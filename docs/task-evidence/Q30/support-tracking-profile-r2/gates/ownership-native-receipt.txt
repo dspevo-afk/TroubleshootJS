@@ -1,0 +1,7 @@
+PASS: staged family registration contracts 15 assertions
+
+PASS: q30 generation request contracts 321 assertions
+
+PASS: Q30 generation measurement budget contracts 25 assertions
+
+PASS: Q30 normal execution policy contracts 299 assertions

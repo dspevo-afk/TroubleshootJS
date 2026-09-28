@@ -1,0 +1,91 @@
+{
+  "base": "live-lu-support-r1/source/overlay-map.json",
+  "appliesAfterExactLiveSupportPrototype": true,
+  "inputs": 1344,
+  "finalOverlays": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+      "stored": "source/src__com__lushprojects__circuitjs1__client__CircuitSolverExecutor.java.gz",
+      "sha256": "3378cb553ab843233d89e29494169e2b66287c0510b6a902a85302f26b5b678b",
+      "bytes": 20734
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "stored": "source/src__com__lushprojects__circuitjs1__client__CirSim.java.gz",
+      "sha256": "90c7ec82d7583d9f54454b857655aa5c88d3b837f99bf72c9d1e6c2a79bcd721",
+      "bytes": 355037
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticContextKey.java",
+      "stored": "source/src__com__lushprojects__circuitjs1__client__GeneratedDiagnosticContextKey.java.gz",
+      "sha256": "e22bfeb2396986f0e30a926797685d03ded20a7c8e1dc434ca9878c881286f2d",
+      "bytes": 2874
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticObservationExecutor.java",
+      "stored": "source/src__com__lushprojects__circuitjs1__client__GeneratedDiagnosticObservationExecutor.java.gz",
+      "sha256": "32d1cd6c747f484dd51f9cf40679e1b9cea31c0cecc41c6616333438d3add170",
+      "bytes": 17514
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "stored": "source/src__com__lushprojects__circuitjs1__client__GeneratedDiagnosticProofService.java.gz",
+      "sha256": "a8d1cba9e81e7fdfb76be848d5ca4b54f1d0935a219ab603f471bdc2e2640a39",
+      "bytes": 86780
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GeneratedExternalPowerBindings.java",
+      "stored": "source/src__com__lushprojects__circuitjs1__client__GeneratedExternalPowerBindings.java.gz",
+      "sha256": "2ffad0fe0c49e7abcb43644465988871a3f37495ab7a0aff8e54443ef210e436",
+      "bytes": 10256
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GeneratedRuntimeDeveloperSettlement.java",
+      "stored": "source/src__com__lushprojects__circuitjs1__client__GeneratedRuntimeDeveloperSettlement.java.gz",
+      "sha256": "9aee9e3a23606ad6d1f6c4c382ae584cb498f498714fdcdbb76bce343009ab0b",
+      "bytes": 10595
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+      "stored": "source/src__com__lushprojects__circuitjs1__client__GenerationCoordinator.java.gz",
+      "sha256": "793cadb588c4532cc0fc07e67602ea0033c26f7db5fe042bd1a0b64488f948b3",
+      "bytes": 44717
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationRequest.java",
+      "stored": "source/src__com__lushprojects__circuitjs1__client__GenerationRequest.java.gz",
+      "sha256": "1fa78771bd1e4143df4fc62b619d536c0ceffbe92594d90dfbc589ffdf37942f",
+      "bytes": 21474
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/LuStructuralSupport.java",
+      "stored": "source/src__com__lushprojects__circuitjs1__client__LuStructuralSupport.java.gz",
+      "sha256": "8af55d3fc7fdd519eb503dc71d740144157f39ac0ffa4eb07e514771a8013a25",
+      "bytes": 17128
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java",
+      "stored": "source/src__com__lushprojects__circuitjs1__client__Q30CoordinatorQualificationVerifier.java.gz",
+      "sha256": "023cecb727d11e569d497e27f36129d72de3f0c4d04117a1dee60e8e801d49ba",
+      "bytes": 74287
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb30Generator.java",
+      "stored": "source/src__com__lushprojects__circuitjs1__client__Rb30Generator.java.gz",
+      "sha256": "97e668ff7662e6378e6821478ca8e507ac83adfbe5437b28bc28f8ded9622527",
+      "bytes": 43665
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+      "stored": "source/src__com__lushprojects__circuitjs1__client__Task41SimulationSnapshot.java.gz",
+      "sha256": "b58bcaf8e5b5c7cd81d8bcd70173adff12d34c03d42fd05fe87dbfac5b53a0a5",
+      "bytes": 55672
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30TrackingProfile.java",
+      "stored": "source/src__com__lushprojects__circuitjs1__client__Q30TrackingProfile.java.gz",
+      "sha256": "8dc94b20442998e60ffd3c8a4393ce70c45b450b50862ef113e08e221df724e1",
+      "bytes": 8486
+    }
+  ]
+}

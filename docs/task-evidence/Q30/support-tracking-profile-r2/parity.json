@@ -1,0 +1,61 @@
+{
+  "status": "PASS",
+  "reference": "01-control",
+  "rows": [
+    {
+      "label": "01-control",
+      "projectionSha256": "c3b78c185f2dbc5284f1280b57973b0593a53647ba5c7704a44636cd856ee3ee",
+      "rawReportSha256": "cae6f2be2338952c6d2dc3a2d83343d76d73cf7e0956699f446b890b10fedd87",
+      "strictCorruptionsRejected": 43
+    },
+    {
+      "label": "02-prototype-off",
+      "projectionSha256": "c3b78c185f2dbc5284f1280b57973b0593a53647ba5c7704a44636cd856ee3ee",
+      "rawReportSha256": "9e61459bf39f07e192c36371e6e15caefc229880a79670f0b7c371da5902d6a4",
+      "strictCorruptionsRejected": 43
+    },
+    {
+      "label": "03-profile-on",
+      "projectionSha256": "c3b78c185f2dbc5284f1280b57973b0593a53647ba5c7704a44636cd856ee3ee",
+      "rawReportSha256": "e36a3364fed27c54aeef8990e324808ab83afcdc933ffd13816a36b2da5712e9",
+      "strictCorruptionsRejected": 43
+    },
+    {
+      "label": "04-prototype-off-r2",
+      "projectionSha256": "c3b78c185f2dbc5284f1280b57973b0593a53647ba5c7704a44636cd856ee3ee",
+      "rawReportSha256": "4a9d8effb563df9b1e036fd6bd6a5d2bde924f4b1a264da2cfac8b7fb0749c4e",
+      "strictCorruptionsRejected": 43
+    },
+    {
+      "label": "05-profile-on-r2",
+      "projectionSha256": "c3b78c185f2dbc5284f1280b57973b0593a53647ba5c7704a44636cd856ee3ee",
+      "rawReportSha256": "fd0f5b30579cbbeaf46f690bd9f26f18b94bc48cb98d7a4d69c9955383dfd5c9",
+      "strictCorruptionsRejected": 43
+    },
+    {
+      "label": "06-profile-on-r2",
+      "projectionSha256": "c3b78c185f2dbc5284f1280b57973b0593a53647ba5c7704a44636cd856ee3ee",
+      "rawReportSha256": "f0b676d7add6d3adb2fc26a5feb53e656e3a7448bedf63a485ae85908d70b939",
+      "strictCorruptionsRejected": 43
+    },
+    {
+      "label": "07-prototype-off-r2",
+      "projectionSha256": "c3b78c185f2dbc5284f1280b57973b0593a53647ba5c7704a44636cd856ee3ee",
+      "rawReportSha256": "9679f80421cfd9a7bef67561ef5ddd75d5517ced1459b11652abf8d916e0a83b",
+      "strictCorruptionsRejected": 43
+    },
+    {
+      "label": "08-control-r2",
+      "projectionSha256": "c3b78c185f2dbc5284f1280b57973b0593a53647ba5c7704a44636cd856ee3ee",
+      "rawReportSha256": "75c16a29af514a3cae3306f66714b10df56f60a94edb6f9629fe4674bfe95b80",
+      "strictCorruptionsRejected": 43
+    }
+  ],
+  "excluded": [
+    "only declared timing paths from unchanged prior pair reader",
+    "trackingProfileRequested",
+    "cold.trackingProfile",
+    "warm.trackingProfile"
+  ],
+  "scope": "full cold/warm report equality after only the listed exclusions; raw reports retained"
+}

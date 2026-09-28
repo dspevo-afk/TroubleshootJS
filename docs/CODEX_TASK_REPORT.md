@@ -1,4 +1,78 @@
-# Current checkpoint: Q30 BLOCKED / NOT ACCEPTED
+# Current checkpoint: Q30 BLOCKED / NOT ACCEPTED — tracking measurements
+
+2026-09-28. Branch `codex/q30-multirail-qualification`, prepared from evidence
+HEAD `6e531049084b5224eb8cb923f95e46c127169d57`. Accepted production optimization
+source remains `ffe9132` (initial optimization `7a30a3f`). This continuation is
+an evidence-only local checkpoint: **no production integration, push or email**.
+Normal Q30 stays disabled; `NORMAL_MEDIUM_EXECUTION@2` remains 90,000 ms / 640
+work units / 5,000 ms active operation. U06/U07/Q60 and later remain unstarted.
+
+The requested family ownership and layout repair was already implemented at
+`745d537`. Fresh source review and focused native checks confirm family-owned
+staged policy/construction through `StagedFamilyCapability`, generic request/
+coordinator ownership, and no Q30 layout special case. No duplicate code change
+was needed. Roadmap status and implemented architecture remain unchanged.
+
+[Support-tracking evidence and limits](task-evidence/Q30/support-tracking-profile-r2/README.md)
+records actual private seed-10014 plan-4, 40-package execution. This differs from
+the older seed-7 106.350 s profile (79.421 s solver / 20.070 s routing); timings
+must not be combined. All eight reports preserve the complete non-timing proof,
+five hypotheses, 490 cold work / 390 hypothesis work units and restored owners.
+
+| Final comparison | Cold ms | Proof ms | Routing ms |
+| --- | ---: | ---: | ---: |
+| Opening control | 98846 | 69328 | 23266 |
+| Prototype, profiler OFF 1 | 102361 | 72742 | 23195 |
+| Prototype, profiler ON 1 | 113285 | 83198 | 22983 |
+| Prototype, profiler ON 2 | 114842 | 84414 | 23270 |
+| Prototype, profiler OFF 2 | 102737 | 73096 | 23113 |
+| Closing control | 99106 | 69393 | 23453 |
+
+Observed ON−OFF cold differences are +10,924/+12,105 ms; controls span 260 ms
+and OFF rows 376 ms. Host activity, caches, intervening builds and dormant
+instrumentation code shape prevent a precise causal overhead claim. Every cold
+row still exceeds 90 s. No LU or routing improvement is accepted.
+
+The monotonic profiler records 608,049 accepted steps, 1,350,440 nonlinear
+trials, 742,391 factors/solves, ten retries, 118,624,334 support stamps and
+9,661,990,182 copied matrix/RHS cells. Full solver-loop time is 81.784/83.063 s
+with profiling on. Factor estimates 34.205/35.010 s are sampled and inclusive.
+All category counts, cumulative measured time, means and sampled maxima are
+retained. Per-stamp samples 14.4/15.4 ms versus empty-scope 10.4/9.8 ms cannot
+support extrapolation: naive totals exceed the enclosing doStep estimates.
+**Support-tracking cost and a dominant removable cost remain INCONCLUSIVE.**
+
+Fresh PASS: control and final private r2 JDK8/GWT five-permutation builds;
+native ownership/policy four suites; final r2 native support/factor 1661/2148
+assertions; compiled A07 and disabled-normal canaries plus three reader negatives;
+all eight actual coordinator reports, 43 strict corruptions per row, complete
+non-timing parity, source/runtime audits and owned host cleanup. Profiler metadata
+reader rejects ten corruptions per report; it shares the profiler's author.
+Independent review covered ownership, temporary profiler lifecycle and result
+interpretation. Two profiler failure-path cleanup bugs were repaired privately
+and source-reviewed; injected exceptional-path tests are NOT RUN. Full normal/
+scale acceptance is NOT RUN while timing fails; player UI testing NOT APPLICABLE.
+
+The user confirmed a cleanup task deleted initial/older Temp fixtures. No repo
+source was lost. The first canary receipt is missing and UNVERIFIED; exact
+hash-pinned reconstruction and fresh gates succeeded. Preliminary biased timer
+results, an early missing-report reader invocation, packaging newline correction
+and inherited process/Python limitations remain documented in the packet.
+
+Preserved: all 96 pre-existing changed desktop files and 172 Q30 worktree files
+passed byte audits. The unrelated desktop checkout remains at `e0c3688` on
+`codex/task43p-final-recovery`. The Q30 worktree's 26 tracked plan-4 edits,
+untracked scale evidence/source and caches remain unstaged. Browser/server hosts
+finished with cleanup PASS; the two verified task-only directories were removed
+after archival (`resource-cleanup.json`). No global runtime settings changed.
+
+Next: keep Q30 blocked; isolate tracker-only versus full/restricted LU with
+aggregate counterbalanced phases before another optimization. That experiment
+is NOT RUN. No scale expansion or later milestone is authorized by this result.
+
+---
+
+# Historical checkpoint: Q30 live-support trial at 6e53104
 
 Branch `codex/q30-multirail-qualification`; prepared from documentation HEAD
 `f94d523` (`Record Q30 live matrix support census`). Accepted production source

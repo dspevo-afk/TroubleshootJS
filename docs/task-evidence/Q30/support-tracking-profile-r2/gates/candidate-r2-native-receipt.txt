@@ -1,0 +1,11 @@
+PASS: LU structural support contracts assertions=1661
+
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+PASS: LU structural factorization contracts assertions=2148

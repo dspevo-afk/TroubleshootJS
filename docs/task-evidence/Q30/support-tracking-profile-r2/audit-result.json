@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "inventoryFiles": 246,
+  "sourceOverlays": 14,
+  "postLifecyclePreSamplingChangedSources": 2,
+  "originalOnSourceBackups": 3,
+  "actualQ30Reports": 8,
+  "fullNonTimingParity": "PASS",
+  "rawReportHashAudit": "PASS",
+  "worktreePreservation": {
+    "desktop": {
+      "preexistingChangedFiles": 96,
+      "bytesAndStatus": "PASS"
+    },
+    "q30": {
+      "preexistingChangedFiles": 172,
+      "bytesAndStatus": "PASS"
+    }
+  },
+  "scope": "stored artifact integrity and existing strict positive reader; no new browser or performance run"
+}

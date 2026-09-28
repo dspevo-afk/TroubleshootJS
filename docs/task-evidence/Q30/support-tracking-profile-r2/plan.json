@@ -1,0 +1,12 @@
+{
+ "scope":"Private support-tracking attribution; no production optimization or admission",
+ "seed":"10014",
+ "sequence":["01-control","02-prototype-off","03-profile-on","04-profile-on","05-prototype-off","06-control"],
+ "runtime":"fresh Edge process/profile per run; unchanged Playwright1.57 Python3.12 task-local host",
+ "comparisons":"two reversed OFF/ON pairs measure profiling perturbation; outer controls bracket prototype code shape and host drift; all full non-timing proof must match",
+ "acceptance":"No speed improvement may be claimed from this small attribution sequence; retain all failures and ranges. If profiling perturbation exceeds control variation, report sampling as diagnostic with the measured overhead, not uninstrumented production cost.",
+ "budgets":"NORMAL_MEDIUM_EXECUTION@2 90000ms/640/5000 frozen; private measurement300000ms unchanged; browser600s; no full matrix",
+ "host":"CPU/process snapshots outside measured host operation; WMI clocks nominal only; no affinity/power/global settings change",
+ "sampling":"kernel sample one step attempt/64; exact invocation/work counts; sample sum/mean/max; inclusive nesting, no double counting",
+ "initialEnvironmentFailure":"First source/build/browser receipt directory disappeared with older Q30 Temp directories. No deletion issued by this task; cause unestablished. Both fixtures reconstructed from archived SHA256 manifests. Retry control build and browser canaries passed."
+}
