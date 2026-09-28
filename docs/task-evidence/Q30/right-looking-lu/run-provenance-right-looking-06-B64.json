@@ -1,0 +1,456 @@
+{
+  "run": "right-looking-06-B64",
+  "arm": "B",
+  "seed": "64",
+  "status": "PASS",
+  "runner": {
+    "schema": 1,
+    "runner": "compiled_attribute_acceptance.py",
+    "repository": "<task-temp>\\columnref-reference",
+    "startedUtc": "2026-09-28T01:59:35.101622+00:00",
+    "outcome": "PASS",
+    "cases": [
+      {
+        "schema": 1,
+        "case": {
+          "index": 1,
+          "name": "right-looking-06-B64",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=64",
+          "stateAttribute": "data-tsj-q30-coordinator-state",
+          "expectedState": "PASS:complete",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "PASS",
+            "FAIL"
+          ],
+          "timeoutSeconds": 600.0,
+          "reportAttribute": "data-tsj-q30-coordinator-report"
+        },
+        "url": "http://127.0.0.1:58008/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=64",
+        "startedUtc": "2026-09-28T01:59:36.217640+00:00",
+        "finishedUtc": "2026-09-28T02:01:17.996402+00:00",
+        "operationSeconds": 101.77875739999581,
+        "outcome": "PASS",
+        "terminalReached": true,
+        "stateMatch": true,
+        "observedState": "PASS:complete",
+        "lastObservedState": "PASS:complete",
+        "timedOut": false,
+        "expectedFailureCanary": false,
+        "expectedFailureStateWasNotAnUnexpectedError": false,
+        "reportObserved": true,
+        "reportJsonValid": true,
+        "reportJsonError": null,
+        "reportMatch": true,
+        "reportLength": 1545675,
+        "reportSha256": "f9a96306e81b838f27558caef2f31ea533af23409f7365b0d4d56a616519cf13",
+        "reportFile": "cases/001-right-looking-06-B64.report.json",
+        "pageErrors": [],
+        "httpErrors": [],
+        "consoleErrors": [],
+        "attributeReadErrors": [],
+        "listenerCleanupErrors": [],
+        "navigationError": null
+      }
+    ],
+    "caseCount": 1,
+    "errors": [],
+    "inputAudit": {
+      "status": "PASS",
+      "beforeSha256": "919389b79b48aa6e7023a4651b9645023be873168f49ed2387251db7e53758fe",
+      "afterSha256": "919389b79b48aa6e7023a4651b9645023be873168f49ed2387251db7e53758fe",
+      "sourceSha256Before": "7f07fee8219ff26686b531f33e57b156a04340268aad939081184b862decae30",
+      "sourceSha256After": "7f07fee8219ff26686b531f33e57b156a04340268aad939081184b862decae30",
+      "webSha256Before": "6c902db8657d282930b52c4ee8c1ee7df4ba099286f95379486ba8da93a13fd5",
+      "webSha256After": "6c902db8657d282930b52c4ee8c1ee7df4ba099286f95379486ba8da93a13fd5",
+      "runnerBeforeSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+      "runnerAfterSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+      "fileCountBefore": 1524,
+      "fileCountAfter": 1524,
+      "seconds": 0.37898340000538155
+    },
+    "identity": {
+      "schema": 1,
+      "runner": {
+        "pid": 24840,
+        "created": "2026-09-28T01:59:34.9788850Z",
+        "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+      },
+      "edgeProcessesBeforeCases": [
+        {
+          "pid": 24820,
+          "parent": 5192,
+          "created": "2026-09-28T01:59:35.6917680Z",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+        },
+        {
+          "pid": 24728,
+          "parent": 24820,
+          "created": "2026-09-28T01:59:35.7034670Z",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+        },
+        {
+          "pid": 23748,
+          "parent": 24820,
+          "created": "2026-09-28T01:59:35.7769910Z",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+        },
+        {
+          "pid": 23828,
+          "parent": 24820,
+          "created": "2026-09-28T01:59:35.7809040Z",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+        },
+        {
+          "pid": 23624,
+          "parent": 24820,
+          "created": "2026-09-28T01:59:35.8050710Z",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+        },
+        {
+          "pid": 23060,
+          "parent": 24820,
+          "created": "2026-09-28T01:59:35.8639400Z",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+        },
+        {
+          "pid": 10316,
+          "parent": 24820,
+          "created": "2026-09-28T01:59:35.8679480Z",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+        }
+      ],
+      "profile": "<task-temp>\\right-looking-06-B64\\profile",
+      "port": 58008,
+      "baseUrl": "http://127.0.0.1:58008"
+    },
+    "operationStartedUtc": "2026-09-28T01:59:36.217627+00:00",
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 0.8759217999904649,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    },
+    "finishedUtc": "2026-09-28T02:01:19.262143+00:00"
+  },
+  "inputManifest": {
+    "beforeSourceSha256": "7f07fee8219ff26686b531f33e57b156a04340268aad939081184b862decae30",
+    "afterSourceSha256": "7f07fee8219ff26686b531f33e57b156a04340268aad939081184b862decae30",
+    "beforeWebSha256": "6c902db8657d282930b52c4ee8c1ee7df4ba099286f95379486ba8da93a13fd5",
+    "afterWebSha256": "6c902db8657d282930b52c4ee8c1ee7df4ba099286f95379486ba8da93a13fd5",
+    "unchanged": true
+  },
+  "strictReader": {
+    "file": "strict-reader-right-looking-06-B64.txt",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  "processAndRunSnapshots": {
+    "run-start.json": {
+      "schema": 1,
+      "runner": "compiled_attribute_acceptance.py",
+      "repository": "<task-temp>\\columnref-reference",
+      "startedUtc": "2026-09-28T01:59:35.101622+00:00",
+      "outcome": "NOT_RUN",
+      "cases": [],
+      "caseCount": 1,
+      "errors": []
+    },
+    "identity.json": {
+      "schema": 1,
+      "runner": {
+        "pid": 24840,
+        "created": "2026-09-28T01:59:34.9788850Z",
+        "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+      },
+      "edgeProcessesBeforeCases": [
+        {
+          "pid": 24820,
+          "parent": 5192,
+          "created": "2026-09-28T01:59:35.6917680Z",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+        },
+        {
+          "pid": 24728,
+          "parent": 24820,
+          "created": "2026-09-28T01:59:35.7034670Z",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+        },
+        {
+          "pid": 23748,
+          "parent": 24820,
+          "created": "2026-09-28T01:59:35.7769910Z",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+        },
+        {
+          "pid": 23828,
+          "parent": 24820,
+          "created": "2026-09-28T01:59:35.7809040Z",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+        },
+        {
+          "pid": 23624,
+          "parent": 24820,
+          "created": "2026-09-28T01:59:35.8050710Z",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+        },
+        {
+          "pid": 23060,
+          "parent": 24820,
+          "created": "2026-09-28T01:59:35.8639400Z",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+        },
+        {
+          "pid": 10316,
+          "parent": 24820,
+          "created": "2026-09-28T01:59:35.8679480Z",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+        }
+      ],
+      "profile": "<task-temp>\\right-looking-06-B64\\profile",
+      "port": 58008,
+      "baseUrl": "http://127.0.0.1:58008"
+    },
+    "spec.json": {
+      "cases": [
+        {
+          "name": "right-looking-06-B64",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=64",
+          "stateAttribute": "data-tsj-q30-coordinator-state",
+          "expectedState": "PASS:complete",
+          "reportAttribute": "data-tsj-q30-coordinator-report",
+          "timeoutSeconds": 600
+        }
+      ]
+    },
+    "progress.json": {
+      "schema": 1,
+      "runner": "compiled_attribute_acceptance.py",
+      "repository": "<task-temp>\\columnref-reference",
+      "startedUtc": "2026-09-28T01:59:35.101622+00:00",
+      "outcome": "NOT_RUN",
+      "cases": [
+        {
+          "schema": 1,
+          "case": {
+            "index": 1,
+            "name": "right-looking-06-B64",
+            "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=64",
+            "stateAttribute": "data-tsj-q30-coordinator-state",
+            "expectedState": "PASS:complete",
+            "expectedPrefix": null,
+            "terminalPrefixes": [
+              "PASS",
+              "FAIL"
+            ],
+            "timeoutSeconds": 600.0,
+            "reportAttribute": "data-tsj-q30-coordinator-report"
+          },
+          "url": "http://127.0.0.1:58008/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=64",
+          "startedUtc": "2026-09-28T01:59:36.217640+00:00",
+          "finishedUtc": "2026-09-28T02:01:17.996402+00:00",
+          "operationSeconds": 101.77875739999581,
+          "outcome": "PASS",
+          "terminalReached": true,
+          "stateMatch": true,
+          "observedState": "PASS:complete",
+          "lastObservedState": "PASS:complete",
+          "timedOut": false,
+          "expectedFailureCanary": false,
+          "expectedFailureStateWasNotAnUnexpectedError": false,
+          "reportObserved": true,
+          "reportJsonValid": true,
+          "reportJsonError": null,
+          "reportMatch": true,
+          "reportLength": 1545675,
+          "reportSha256": "f9a96306e81b838f27558caef2f31ea533af23409f7365b0d4d56a616519cf13",
+          "reportFile": "cases/001-right-looking-06-B64.report.json",
+          "pageErrors": [],
+          "httpErrors": [],
+          "consoleErrors": [],
+          "attributeReadErrors": [],
+          "listenerCleanupErrors": [],
+          "navigationError": null
+        }
+      ],
+      "caseCount": 1,
+      "errors": [],
+      "inputAudit": {
+        "status": "BEFORE_CAPTURED",
+        "beforeSha256": "919389b79b48aa6e7023a4651b9645023be873168f49ed2387251db7e53758fe",
+        "sourceSha256": "7f07fee8219ff26686b531f33e57b156a04340268aad939081184b862decae30",
+        "webSha256": "6c902db8657d282930b52c4ee8c1ee7df4ba099286f95379486ba8da93a13fd5",
+        "fileCount": 1524
+      },
+      "identity": {
+        "schema": 1,
+        "runner": {
+          "pid": 24840,
+          "created": "2026-09-28T01:59:34.9788850Z",
+          "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+        },
+        "edgeProcessesBeforeCases": [
+          {
+            "pid": 24820,
+            "parent": 5192,
+            "created": "2026-09-28T01:59:35.6917680Z",
+            "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+          },
+          {
+            "pid": 24728,
+            "parent": 24820,
+            "created": "2026-09-28T01:59:35.7034670Z",
+            "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+          },
+          {
+            "pid": 23748,
+            "parent": 24820,
+            "created": "2026-09-28T01:59:35.7769910Z",
+            "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+          },
+          {
+            "pid": 23828,
+            "parent": 24820,
+            "created": "2026-09-28T01:59:35.7809040Z",
+            "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+          },
+          {
+            "pid": 23624,
+            "parent": 24820,
+            "created": "2026-09-28T01:59:35.8050710Z",
+            "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+          },
+          {
+            "pid": 23060,
+            "parent": 24820,
+            "created": "2026-09-28T01:59:35.8639400Z",
+            "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+          },
+          {
+            "pid": 10316,
+            "parent": 24820,
+            "created": "2026-09-28T01:59:35.8679480Z",
+            "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+          }
+        ],
+        "profile": "<task-temp>\\right-looking-06-B64\\profile",
+        "port": 58008,
+        "baseUrl": "http://127.0.0.1:58008"
+      },
+      "operationStartedUtc": "2026-09-28T01:59:36.217627+00:00"
+    },
+    "runner-before.json": {
+      "path": "compiled_attribute_acceptance.py",
+      "size": 30609,
+      "sha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5"
+    },
+    "runner-after.json": {
+      "path": "compiled_attribute_acceptance.py",
+      "size": 30609,
+      "sha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5"
+    },
+    "owned-processes-before.json": [
+      {
+        "pid": 24820,
+        "parent": 5192,
+        "created": "2026-09-28T01:59:35.6917680Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 24728,
+        "parent": 24820,
+        "created": "2026-09-28T01:59:35.7034670Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 23748,
+        "parent": 24820,
+        "created": "2026-09-28T01:59:35.7769910Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 23828,
+        "parent": 24820,
+        "created": "2026-09-28T01:59:35.7809040Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 23624,
+        "parent": 24820,
+        "created": "2026-09-28T01:59:35.8050710Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 23060,
+        "parent": 24820,
+        "created": "2026-09-28T01:59:35.8639400Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 10316,
+        "parent": 24820,
+        "created": "2026-09-28T01:59:35.8679480Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "owned-processes-before-close.json": [
+      {
+        "pid": 24820,
+        "parent": 5192,
+        "created": "2026-09-28T01:59:35.6917680Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 24728,
+        "parent": 24820,
+        "created": "2026-09-28T01:59:35.7034670Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 23748,
+        "parent": 24820,
+        "created": "2026-09-28T01:59:35.7769910Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 23828,
+        "parent": 24820,
+        "created": "2026-09-28T01:59:35.7809040Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 23624,
+        "parent": 24820,
+        "created": "2026-09-28T01:59:35.8050710Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 23060,
+        "parent": 24820,
+        "created": "2026-09-28T01:59:35.8639400Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 10316,
+        "parent": 24820,
+        "created": "2026-09-28T01:59:35.8679480Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 22064,
+        "parent": 24820,
+        "created": "2026-09-28T01:59:36.6380100Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 19484,
+        "parent": 24820,
+        "created": "2026-09-28T02:00:35.8907380Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "owned-processes-after.json": null
+  },
+  "caseReportCount": 1
+}

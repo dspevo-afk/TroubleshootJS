@@ -1,0 +1,1 @@
+{"cleanupRequired":false,"generationStarted":false,"liveOwnerMutation":false,"normalAcceptance":"BLOCKED","phase":"normal-catalog-disabled","seed":"13","snapshotCaptured":false,"status":"PASS_BLOCKED_CANARY"}

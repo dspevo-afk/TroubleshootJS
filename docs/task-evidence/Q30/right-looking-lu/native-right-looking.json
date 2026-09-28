@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 48.2229553,
+  "phase": "focused native regression including maintained cleanup",
+  "suites": [
+    "A07ExecutionContractTest",
+    "Q30TemporalWorkContractTest",
+    "Q30GenerationMeasurementBudgetContractTest",
+    "Q30NormalExecutionPolicyContractTest"
+  ]
+}

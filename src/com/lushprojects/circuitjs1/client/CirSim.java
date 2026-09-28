@@ -7956,11 +7956,13 @@ MouseOutHandler, MouseWheelHandler {
     	}
     }
     
-    // Scratch row references are valid only while a factorization is in progress.
-    // Reused capacity is cleared in lu_factor's finally block on every exit.
+    // Scratch row references are valid only while one pivot column is processed.
+    // Reused capacity is cleared after each column and in lu_factor's finally block.
     static final class LuFactorizationWorkspace {
-        private double[][][] lowerRows = new double[0][][];
-        private int[] lowerRowCounts = new int[0];
+        private double[][] lowerRows = new double[0][];
+        private int[] upperColumns = new int[0];
+        private int lowerRowCount;
+        private int upperColumnCount;
         private int capacity;
         private int activeSize;
 
@@ -7968,42 +7970,41 @@ MouseOutHandler, MouseWheelHandler {
             clear();
             if (size < 0) throw new IllegalArgumentException("negative LU size");
             if (size > capacity) {
-                if (size != 0 && size > Integer.MAX_VALUE / size)
-                    throw new IllegalArgumentException("LU workspace capacity overflow");
-                double[][][] rows = new double[size][][];
-                for (int i = 0; i < size; i++) rows[i] = new double[size][];
+                double[][] rows = new double[size][];
+                int[] columns = new int[size];
                 lowerRows = rows;
-                lowerRowCounts = new int[size];
+                upperColumns = columns;
                 capacity = size;
             }
             activeSize = size;
         }
 
-        private void append(int column, double[] row) {
-            int count = lowerRowCounts[column];
-            lowerRows[column][count] = row;
-            lowerRowCounts[column] = count + 1;
+        private void appendLowerRow(double[] row) {
+            lowerRows[lowerRowCount++] = row;
+        }
+
+        private void appendUpperColumn(int column) {
+            upperColumns[upperColumnCount++] = column;
+        }
+
+        private void clearPivot() {
+            for (int i = 0; i < lowerRowCount; i++) lowerRows[i] = null;
+            lowerRowCount = 0;
+            upperColumnCount = 0;
         }
 
         private void clear() {
-            for (int column = 0; column < activeSize; column++) {
-                int count = lowerRowCounts[column];
-                for (int i = 0; i < count; i++) lowerRows[column][i] = null;
-                lowerRowCounts[column] = 0;
-            }
+            clearPivot();
             activeSize = 0;
         }
 
         boolean allCountsZeroForChecks() {
-            for (int column = 0; column < capacity; column++)
-                if (lowerRowCounts[column] != 0) return false;
-            return true;
+            return lowerRowCount == 0 && upperColumnCount == 0 && activeSize == 0;
         }
 
         boolean allRowReferencesNullForChecks() {
-            for (int column = 0; column < capacity; column++)
-                for (int i = 0; i < capacity; i++)
-                    if (lowerRows[column][i] != null) return false;
+            for (int i = 0; i < capacity; i++)
+                if (lowerRows[i] != null) return false;
             return true;
         }
     }
@@ -8036,27 +8037,14 @@ MouseOutHandler, MouseWheelHandler {
                 if (row_all_zeros) return false;
             }
 
-            // Revisit only rows whose finalized lower-column value is nonzero.
-            // Iterating k outside each row preserves the historical arithmetic order.
-            for (j = 0; j != n; j++) {
-                for (k = 0; k != j; k++) {
-                    double coefficient = a[k][j];
-                    if (coefficient == 0) continue;
-                    double[][] rows = workspace.lowerRows[k];
-                    int count = workspace.lowerRowCounts[k];
-                    for (int entry = 0; entry < count; entry++) {
-                        double[] row = rows[entry];
-                        double value = row[j] - row[k] * coefficient;
-                        requireFiniteStamp(value);
-                        row[j] = value;
-                    }
-                }
-
+            // Apply each pivot to the trailing matrix. For any individual
+            // entry, pivots still update in ascending k order, matching Crout.
+            for (k = 0; k != n; k++) {
                 // calculate lower triangular elements for this column
                 double largest = 0;
                 int largestRow = -1;
-                for (i = j; i != n; i++) {
-                    double q = a[i][j];
+                for (i = k; i != n; i++) {
+                    double q = a[i][k];
                     double x = Math.abs(q);
                     if (x >= largest) {
                         largest = x;
@@ -8064,34 +8052,52 @@ MouseOutHandler, MouseWheelHandler {
                     }
                 }
 
-                // Pivoting moves complete numeric rows; prior-column indexes
-                // remain valid because both rows are below every earlier pivot.
-                if (j != largestRow) {
+                if (k != largestRow) {
                     double[] row = a[largestRow];
-                    a[largestRow] = a[j];
-                    a[j] = row;
+                    a[largestRow] = a[k];
+                    a[k] = row;
                 }
 
                 // keep track of row interchanges
-                ipvt[j] = largestRow;
+                ipvt[k] = largestRow;
 
                 // avoid zeros
-                if (a[j][j] == 0.0) {
+                if (a[k][k] == 0.0) {
                     System.out.println("avoided zero");
-                    a[j][j] = 1e-18;
+                    a[k][k] = 1e-18;
                 }
 
-                if (j != n-1) {
-                    double mult = 1.0/a[j][j];
+                if (k != n-1) {
+                    double mult = 1.0/a[k][k];
                     requireFiniteStamp(mult);
-                    for (i = j+1; i != n; i++) {
+                    for (i = k+1; i != n; i++) {
                         double[] row = a[i];
-                        if (row[j] == 0) continue;
-                        double value = row[j] * mult;
+                        if (row[k] == 0) continue;
+                        double value = row[k] * mult;
                         requireFiniteStamp(value);
-                        row[j] = value;
-                        if (value != 0) workspace.append(j, row);
+                        row[k] = value;
+                        if (value != 0) workspace.appendLowerRow(row);
                     }
+
+                    double[] pivotRow = a[k];
+                    for (j = k+1; j != n; j++)
+                        if (pivotRow[j] != 0) workspace.appendUpperColumn(j);
+
+                    double[][] rows = workspace.lowerRows;
+                    int rowCount = workspace.lowerRowCount;
+                    int upperCount = workspace.upperColumnCount;
+                    int[] columns = workspace.upperColumns;
+                    for (int entry = 0; entry < rowCount; entry++) {
+                        double[] row = rows[entry];
+                        double factor = row[k];
+                        for (int upper = 0; upper < upperCount; upper++) {
+                            j = columns[upper];
+                            double value = row[j] - factor * pivotRow[j];
+                            requireFiniteStamp(value);
+                            row[j] = value;
+                        }
+                    }
+                    workspace.clearPivot();
                 }
             }
             return true;

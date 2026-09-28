@@ -1,0 +1,81 @@
+{
+  "schema": "q30-right-looking-final-integrated-source-audit@1",
+  "scope": "Final integrated-source gates before local commit; no push/publication authorization.",
+  "gwt": {
+    "gate": "maintained JDK8/GWT five-permutation build",
+    "label": "root-right-looking-plan4-gwt",
+    "status": "PASS",
+    "exitCode": 0,
+    "elapsedSeconds": 88.9878218,
+    "permutations": 5
+  },
+  "browserCanaries": {
+    "outcome": "PASS",
+    "caseCount": 2,
+    "a07": {
+      "status": "PASS",
+      "elapsedSeconds": 1.2653402000141796,
+      "pureAssertions": 271502,
+      "runtimeAssertions": 73,
+      "wallMs": 474,
+      "cleanup": "PASS",
+      "strictReader": "PASS: exact maintained Test-A07Report; three negative corruption canaries"
+    },
+    "normalDisabled": {
+      "status": "BLOCKED",
+      "phase": "normal-catalog-disabled",
+      "elapsedSeconds": 0.4810882000019774,
+      "generationStarted": false,
+      "snapshotCaptured": false,
+      "liveOwnerMutation": false,
+      "strictReader": {
+        "cleanupRequired": false,
+        "generationStarted": false,
+        "liveOwnerMutation": false,
+        "normalAcceptance": "BLOCKED",
+        "phase": "normal-catalog-disabled",
+        "seed": "13",
+        "snapshotCaptured": false,
+        "status": "PASS_BLOCKED_CANARY"
+      }
+    }
+  },
+  "inputStability": {
+    "status": "PASS",
+    "aggregateBeforeSha256": "ebc4b20cbb50f7289756db02dd7a63571fc27336c71a44defcd15d8d0db5d326",
+    "aggregateAfterSha256": "ebc4b20cbb50f7289756db02dd7a63571fc27336c71a44defcd15d8d0db5d326",
+    "sourceSha256Before": "ab540278ecd8fbb3eeda0889016af63d77d73af48b04e5d80886e2ac1235b8be",
+    "sourceSha256After": "ab540278ecd8fbb3eeda0889016af63d77d73af48b04e5d80886e2ac1235b8be",
+    "webSha256Before": "eb7dfa74b99b87c28c8f0f76af5126adb470ff24b0f125e867bff39c9ebca2a6",
+    "webSha256After": "eb7dfa74b99b87c28c8f0f76af5126adb470ff24b0f125e867bff39c9ebca2a6",
+    "runnerSha256Before": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+    "runnerSha256After": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+    "fileCountBefore": 1525,
+    "fileCountAfter": 1525,
+    "sourceFiles": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+        "size": 343183,
+        "sha256": "418b9735b374e10af73a30ab75ddb593fb2fcd60f6da4d15c75523963e97f300",
+        "matchesBeforeAfterCanaryManifest": true
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java",
+        "size": 13738,
+        "sha256": "ac4a994de4c75f83434f81ebf6b8649738ff90fa3c802234546435cc23982de5",
+        "matchesBeforeAfterCanaryManifest": true
+      }
+    ]
+  },
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 0.9422604999999749,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "limitations": [
+    "Normal Q30 catalog remained disabled; the blocked canary is only a pre-mutation rejection check.",
+    "This does not establish Q30 normal-player timing, complete-corpus acceptance, or publication readiness."
+  ]
+}

@@ -1,9 +1,10 @@
 # Current checkpoint: Q30 BLOCKED / NOT ACCEPTED
 
 Branch `codex/q30-multirail-qualification`; checkpoint parent
-`dd5b22d3595cdb23e0ab2b9baec8890470f73305` (rejected geometry trial evidence).
+`a57ffc30b04d306daf0355e44d218de4175bb9ea` (`Optimize finite solver validation`).
 Accepted solver lineage is `0b29680c7daa62123732b91e3c1157e8ba0d6abd`
-plus the validated finite-predicate delta in this checkpoint.
+plus the validated finite-predicate delta and the right-looking LU delta secured
+in this checkpoint (parent HEAD above).
 No push or completion email. Normal Q30 remains disabled; U06/U07/Q60 and later
 milestones remain unstarted. Full final matrices are NOT RUN while hard gates fail.
 
@@ -41,6 +42,11 @@ control. Both preserve complete proof/context/work and cleanup; this material
 difference prevents using sampled times as production stage costs. Qualitative
 ranking still identifies LU, solved-voltage publication, finite guards and
 routing. [CPU evidence and limitations](task-evidence/Q30/cdp-cpu-profile/README.md).
+Read-only publication review found no substantial safe shortcut: ordered model
+callbacks and live wire-current refreshes remain necessary, with recipients
+already prepared by analysis. The small remaining node-vector cast cost does
+not justify another lifecycle cache. Sampled array allocation largely belongs
+to routing, whose remaining costs are under review. No publication change was made.
 The finite-range predicate is now an accepted intermediate optimization,
 integrated with target line endings preserved and secured in this local checkpoint. It passes
 four native suites (46.940 s; 271,483 A07 assertions), GWT5 (80.942 s), compiled
@@ -52,14 +58,18 @@ input audits and cleanup PASS. Seed 13 still takes 91.583 s, so Q30 remains
 BLOCKED. The IEEE finite predicate retains every call and rejects the same NaN
 and infinities; vectors retain the old predicate as an independent oracle.
 [Intermediate evidence](task-evidence/Q30/finite-predicate/README.md).
-A separate right-looking LU trial remains isolated and unaccepted. Its static
-review found no blocker; four native suites PASS (48.223 s, 271,351 A07
-assertions and cleanup), GWT5 PASS (86.585 s), and compiled A07/strict negative
-canaries PASS. The first fresh pair is 84.881 s versus 87.439 s control,
-with exact proof/physical/work parity and 37 negative canaries PASS. The fresh
-seed-13 pair is 92.306 s versus 93.893 s control, with the same strict parity
-and negative checks PASS. Remaining declared runs are pending. Neither change
-introduces mutable graph/proof reuse.
+The right-looking LU trial is accepted as an intermediate optimization and
+integrated with final-source gates PASS and secured by this local checkpoint.
+Static review found no blocker; four native suites PASS (48.223 s, 271,351 A07 assertions and cleanup),
+GWT5 PASS (86.585 s), and compiled A07/strict negative canaries PASS. All eight
+fresh counterbalanced runs pass full request/physical/proof/work/cache parity,
+37 negative canaries per pair and owned cleanup. Four paired cold savings are
+2.558/1.587/0.935/2.122 s (median 1.855 s); seed-7 ranges are 0.283 s control
+and 0.719 s candidate. Seed 13 still takes 92.306 s. Per-entry arithmetic order
+and full finite scanning remain; pivot-local O(n) scratch is cleared after
+each pivot and on every exit. Neither accepted change introduces mutable
+graph/proof reuse. Combined finite/LU gains are not assumed to be additive.
+[Right-looking LU evidence](task-evidence/Q30/right-looking-lu/README.md).
 
 The uncommitted plan-4 candidate extends the same family through one/two active
 channels, real reference arrangements and purposeful support blocks. Replay /4,
@@ -89,12 +99,39 @@ now validates exact authenticated metadata. A focused timing probe measures a
 1 ps tolerance. Five cumulative deadlines and a final 2 ps request cushion now
 preserve the original aggregate assertion; the seed-13 DREV sensitivity case
 PASSes (44.215 s including cleanup) with actual elapsed above 250 ms. A fresh
-combined gate remains pending. Runtime power-contract identity also now enters
-the dependency context and requires fresh strict evidence. No electrical v4 proof or normal timing acceptance
-is claimed. Root's actual final-source GWT5 rebuild now PASSes (81.555 s),
-including the integrated finite predicate and power-domain registration.
-Compiled A07/strict negative canaries and disabled-Q30/no-mutation canary PASS
-on that build; this still does not qualify the full plan-4 family.
+combined r5 native gate now PASSes (296.863 s including cleanup): all ten service
+and all ten sensitivity cases pass. The strict reader's obsolete final-marker
+grammar was repaired with exact authenticated support/topology/canonical-plan
+binding for final, pair and seed rows. Selected-census read and 24 corruption,
+census, metadata and scope canaries PASS; the failed read remains retained.
+Runtime power-contract identity also now enters
+the dependency context and requires fresh strict evidence. No complete electrical v4 corpus or normal timing acceptance
+is claimed. Root's final-source GWT5 build with finite predicate and power-domain
+registration PASSed (81.555 s), along with compiled A07/negative and disabled-Q30
+canaries. The newer combined right-looking/finite/plan-4 GWT5 build now PASSes
+(88.988 s); compiled A07/three negative canaries and disabled-Q30/no-mutation
+canary PASS (1.265/0.481 s application; 0.942 s owned cleanup). These do not
+qualify the full family. The first frozen 20-package edge (10387) reaches
+compiled D01 application PASS in 53.228 s. Its strict cold+warm reader now
+PASSes ten fault pairs after correcting nested field framing and plan-derived
+cleanup binding counts; 64 actual-receipt corruption and seven synthetic power
+context canaries PASS. The earlier failed reads remain retained. This is one
+focused 20-package proof fixture, not full scale or normal timing acceptance.
+
+Two further isolated measured-hotspot trials are in progress. Zero-coefficient
+triangular solve fails its first native gate (50.925 s, exit 2, cleanup PASS)
+because a pivoted oracle fixture does not retain its asserted sparse zeros;
+the assertion is retained and a block-structured pivot fixture now proves the
+intended pivot and zeros. The four-suite rerun PASSes (47.792 s, 271,804 solver
+assertions and cleanup). Its isolated GWT5 build PASSes in 88.778 s, but
+independent review finds a real numerical-failure propagation regression:
+zero times a nonfinite solved value can be suppressed during transformer
+inversion. A finite-referenced-value guard and independent inverse regression
+are being prepared in scratch; timing remains NOT RUN and no root integration
+is permitted from the failed version. Routing queue/neighbor-allocation source
+is frozen in scratch, with gates NOT RUN. A separate
+catalog-enabled normal-qualification fixture is being prepared in OS-temp;
+root production stays disabled, and no positive normal 90-second run has occurred.
 
 Frozen contracts: 90,000 ms cumulative, 640 units, 5,000 ms per operation;
 isolated private 90–300 s measurement; family-generic request/coordinator and
@@ -102,16 +139,19 @@ StagedFamilyCapability ownership; exact signed-long replay/candidate ordering;
 complete physical/electrical/diagnostic/service/retest proofs and cleanup.
 
 Resources: completed browser/server jobs report owned cleanup PASS and no
-survivors. One isolated right-looking LU comparison browser is active; no build
-or native gate is active. Root WAR matches its latest finite-predicate/plan-4
-source build. Isolated timing does not qualify the unaccepted plan-4 worktree. Frozen
+survivors. The focused 40-package D01 browser gate is active; completed
+native/build/browser gates have stopped. Root WAR matches right-looking LU,
+finite predicate and plan-4 source. Isolated timing does not qualify
+the unaccepted plan-4 worktree. Frozen
 accepted/control and trial fixtures remain in unique OS-temp scratch. Earlier
 administrative scratch deletion is policy-blocked separately from runtime
 cleanup (exact leaves in acceptance-continuation/resource-cleanup.json).
 Preserve unrelated Desktop checkout edits and pre-existing test `__pycache__`.
 Plan-4 source/tests/driver/replay/readers/evidence are uncommitted and unstaged;
-the validated finite predicate/evidence is the only production delta secured by
-this checkpoint's local commit. No push is authorized.
+the validated finite predicate/evidence is secured in the parent HEAD. Right-looking
+LU, its independent regression and evidence are the only optimization source
+delta staged for this checkpoint; the normal-verifier hook stays unstaged.
+No push is authorized.
 Next: resolve focused electrical gates, build final source, measure isolated
 solver trials, then prove scale and normal cold timing before any final matrix.
 

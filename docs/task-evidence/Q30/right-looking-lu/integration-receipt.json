@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "acceptedIntermediateOnly": true,
+  "q30Status": "BLOCKED",
+  "files": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "beforeSha256": "bf800a4784a34b7c7529c633bd3756e016508cc995205129d5a90689f5f6c43f",
+      "afterSha256": "418b9735b374e10af73a30ab75ddb593fb2fcd60f6da4d15c75523963e97f300",
+      "trialLfSha256": "6d74bd50db06a9c44db22bb23bf19ec9c0e7848ec35bba28189cd0ea47fcb5a2",
+      "preservedNormalVerifierHook": true,
+      "preservedLineEnding": "LF"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java",
+      "beforeSha256": "bff7965e658cb8fceeed8f3f4f632c1b66d72e195f428188d7915347b4a3774c",
+      "afterSha256": "ac4a994de4c75f83434f81ebf6b8649738ff90fa3c802234546435cc23982de5",
+      "trialLfSha256": "5e6446217f8d7db94034894fae4919ce8c43d4e43309f19acb7dd7c178ab6e31",
+      "preservedNormalVerifierHook": false,
+      "preservedLineEnding": "CRLF"
+    }
+  ],
+  "otherProductionFilesUntouched": true
+}

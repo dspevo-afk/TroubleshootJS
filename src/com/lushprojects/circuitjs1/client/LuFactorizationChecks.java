@@ -16,8 +16,8 @@ final class LuFactorizationChecks {
             assertions += compareWithOriginal(makeFixture(alternatingSizes[i], alternatingFixtures[i]),
                     workspace, "alternating workspace reuse " + i);
 
-        // This pivot at column one swaps rows whose earlier-column entries are
-        // already indexed. The later pivot checks that those row references stay valid.
+        // Several late pivots compare the right-looking trailing updates against
+        // the independent Crout oracle after row order has changed.
         double[][] latePivot = {
             { 10, 0, 1, 0 },
             { 1, 1, 1, 0 },
@@ -32,8 +32,18 @@ final class LuFactorizationChecks {
                 "late-pivot fixture did not exercise the intended row swaps");
         assertions += 2;
 
+        double[][] tiedPivot = {
+            { 1, 2, 3 }, { 5, 7, 11 }, { -5, 13, 17 }
+        };
+        assertions += compareWithOriginal(tiedPivot, workspace, "later-row pivot tie");
+        int[] tiedPivots = new int[3];
+        require(originalFactor(copy(tiedPivot), 3, tiedPivots), "pivot-tie fixture is singular");
+        require(tiedPivots[0] == 2, "pivot tie did not preserve the later-row >= rule");
+        assertions += 2;
+
         // Underflow after a nonzero input factor must be computed and then
-        // omitted from the next lower-column row list; signed zero remains numeric-equivalent.
+        // omitted from the right-looking lower-row update list; signed zero
+        // remains numeric-equivalent.
         assertions += compareWithOriginal(new double[][] {
             { 1.0e308, 1 }, { Double.MIN_VALUE, 2 }
         }, workspace, "underflow-created zero");

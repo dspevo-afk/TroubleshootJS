@@ -1,0 +1,196 @@
+{
+  "schema": "q30-right-looking-final-integrated-evidence@1",
+  "kind": "final integrated-source GWT and browser canaries; pre-commit only, not acceptance",
+  "artifacts": [
+    {
+      "source": "root-right-looking-plan4-gwt.json",
+      "path": "plan4-gwt.json",
+      "sourceBytes": 277,
+      "sourceSha256": "f5a57485af9f15244f7548d40e314baedef57daa6bffef69528f7010e1f5d987",
+      "storedBytes": 277,
+      "storedSha256": "f5a57485af9f15244f7548d40e314baedef57daa6bffef69528f7010e1f5d987",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "root-right-looking-plan4-gwt.log",
+      "path": "plan4-gwt.log",
+      "sourceBytes": 1259,
+      "sourceSha256": "e25e68a3bf06f06d034b87423a29b450bbf79fc585e882c5f2a1ba995e790a26",
+      "storedBytes": 1202,
+      "storedSha256": "9937220415287ecd00328518442cabace88c73d5c73f67cfcef33338c4ded4bc",
+      "compression": "sanitized UTF-8",
+      "transformations": [
+        "<REPOSITORY_ROOT>"
+      ]
+    },
+    {
+      "source": "result.json",
+      "path": "browser-canaries/result.sanitized.json",
+      "sourceBytes": 6647,
+      "sourceSha256": "b0ea5a4b93eeabe4651c33d18f258d54acec96664531833a6b6033bfb83c49e4",
+      "storedBytes": 6535,
+      "storedSha256": "44c02c8a381d1f52f468299406fdbd63b189ee478b8a2a6860ced3f973cfb534",
+      "compression": "sanitized JSON",
+      "transformations": [
+        "<REPOSITORY_ROOT>",
+        "<SCRATCH_ROOT>",
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "spec.json",
+      "path": "browser-canaries/spec.json",
+      "sourceBytes": 675,
+      "sourceSha256": "aa7ad558a875ee41b5a08bf1a33ec75d0d2ad7b2e0e3fe1d76372440428ccfab",
+      "storedBytes": 814,
+      "storedSha256": "4e163c0a7e463555e0cd571ee080b3cbf2e86393c95aaa34a5a5816a80ae1e30",
+      "compression": "sanitized JSON",
+      "transformations": []
+    },
+    {
+      "source": "runner-before.json",
+      "path": "browser-canaries/runner-before.json",
+      "sourceBytes": 160,
+      "sourceSha256": "11a48c6dedf760ba3f0ec324cb796ce1de04e3916dd1f06b1a1d253670d48e0a",
+      "storedBytes": 160,
+      "storedSha256": "11a48c6dedf760ba3f0ec324cb796ce1de04e3916dd1f06b1a1d253670d48e0a",
+      "compression": "sanitized JSON",
+      "transformations": []
+    },
+    {
+      "source": "runner-after.json",
+      "path": "browser-canaries/runner-after.json",
+      "sourceBytes": 160,
+      "sourceSha256": "11a48c6dedf760ba3f0ec324cb796ce1de04e3916dd1f06b1a1d253670d48e0a",
+      "storedBytes": 160,
+      "storedSha256": "11a48c6dedf760ba3f0ec324cb796ce1de04e3916dd1f06b1a1d253670d48e0a",
+      "compression": "sanitized JSON",
+      "transformations": []
+    },
+    {
+      "source": "root-right-looking-canaries/input-manifest-before.json",
+      "path": "browser-canaries/input-manifest-before.json.gz",
+      "sourceBytes": 291302,
+      "sourceSha256": "1effa561dcc8a0fcb0562be9ae3e3de6a04a33cb25ee532e0bf5d5b78a8191a0",
+      "storedBytes": 80033,
+      "storedSha256": "3349c6825d6b1920860ced7375be10ac9cd2b57a81ca2a19c0a310be67de4117",
+      "compression": "deterministic gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "root-right-looking-canaries/input-manifest-after.json",
+      "path": "browser-canaries/input-manifest-after.json.gz",
+      "sourceBytes": 291302,
+      "sourceSha256": "94cff7f88f55dedb21578c6b56f878a236d28587c80cd70f7c40d6aa78a5b83c",
+      "storedBytes": 80033,
+      "storedSha256": "5f6aad368b5bc43af44d94fbeb40e01e368a1da6f0cd458efc3a6b7012ee4b95",
+      "compression": "deterministic gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "001-root-right-looking-a07.json",
+      "path": "browser-canaries/cases/001-root-right-looking-a07.json",
+      "sourceBytes": 1371,
+      "sourceSha256": "0618c2cb21e282f7d6edf483c613df833e1ea8b335a4665cfa1b9d08b69ad189",
+      "storedBytes": 1382,
+      "storedSha256": "fedc7314d610fb89895b812b368ba6697d472dd9a632c519d0aeae0704c71ced",
+      "compression": "sanitized JSON",
+      "transformations": [
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "root-right-looking-canaries/cases/001-root-right-looking-a07.report.json",
+      "path": "browser-canaries/cases/001-root-right-looking-a07.report.json.gz",
+      "sourceBytes": 80899,
+      "sourceSha256": "068982fe6243fa3b0812293028f788e25be149eda21e55f073c5fe38de73a2be",
+      "storedBytes": 9401,
+      "storedSha256": "c22cc9be79dd5210e09570a4000c1c8fb1559271190392f29c3bcefb6763da80",
+      "compression": "deterministic gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "001-root-right-looking-a07.state.txt",
+      "path": "browser-canaries/cases/001-root-right-looking-a07.state.txt",
+      "sourceBytes": 8,
+      "sourceSha256": "d2b4740b4a36aece77f74f8fd73c9b787c86efaa450eea01b931149a19c22ff2",
+      "storedBytes": 8,
+      "storedSha256": "d2b4740b4a36aece77f74f8fd73c9b787c86efaa450eea01b931149a19c22ff2",
+      "compression": "sanitized UTF-8",
+      "transformations": []
+    },
+    {
+      "source": "002-root-q30-disabled.json",
+      "path": "browser-canaries/cases/002-root-q30-disabled.json",
+      "sourceBytes": 1535,
+      "sourceSha256": "c6cf3dd1f905cd3b6a2a0c07d49a88feacac2b988837347b8dfed2303815da37",
+      "storedBytes": 1546,
+      "storedSha256": "f7045f390668c13fb1f00bbba91df5fc44291aa7530b2c10a1dd77518485082b",
+      "compression": "sanitized JSON",
+      "transformations": [
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "root-right-looking-canaries/cases/002-root-q30-disabled.report.json",
+      "path": "browser-canaries/cases/002-root-q30-disabled.report.json.gz",
+      "sourceBytes": 344,
+      "sourceSha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+      "storedBytes": 224,
+      "storedSha256": "5b8e46ef5a04d8746c0d9243f4ba9900ec88968302808491a72c7a2259062f87",
+      "compression": "deterministic gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "002-root-q30-disabled.state.txt",
+      "path": "browser-canaries/cases/002-root-q30-disabled.state.txt",
+      "sourceBytes": 31,
+      "sourceSha256": "95abc8986af9d28c5de9c0245e91d8ca7197e8e54d53bae8a8c03a1738b0ee9f",
+      "storedBytes": 31,
+      "storedSha256": "95abc8986af9d28c5de9c0245e91d8ca7197e8e54d53bae8a8c03a1738b0ee9f",
+      "compression": "sanitized UTF-8",
+      "transformations": []
+    },
+    {
+      "source": "root-right-looking-a07-reader.txt",
+      "path": "browser-canaries/a07-strict-reader.txt",
+      "sourceBytes": 75,
+      "sourceSha256": "44d24b9e9a389a6f682363c51ef04ef37694276dbe30f6ac328ade766286b3f7",
+      "storedBytes": 75,
+      "storedSha256": "44d24b9e9a389a6f682363c51ef04ef37694276dbe30f6ac328ade766286b3f7",
+      "compression": "sanitized UTF-8",
+      "transformations": []
+    },
+    {
+      "source": "root-right-looking-disabled-reader.txt",
+      "path": "browser-canaries/normal-disabled-strict-reader.txt",
+      "sourceBytes": 210,
+      "sourceSha256": "39d803b9975af58a2154b7bc672b9d09e90ab682686f4e9c8252544d1aea1528",
+      "storedBytes": 210,
+      "storedSha256": "39d803b9975af58a2154b7bc672b9d09e90ab682686f4e9c8252544d1aea1528",
+      "compression": "sanitized UTF-8",
+      "transformations": []
+    },
+    {
+      "source": "root-right-looking-canaries.log",
+      "path": "browser-canaries/host.log",
+      "sourceBytes": 88,
+      "sourceSha256": "7f587e3d9e8bbf18ea37a61f478472a244fb2f328f22a9d7077d9507aab132ba",
+      "storedBytes": 88,
+      "storedSha256": "7f587e3d9e8bbf18ea37a61f478472a244fb2f328f22a9d7077d9507aab132ba",
+      "compression": "sanitized UTF-8",
+      "transformations": []
+    },
+    {
+      "source": "derived from canary result and before/after inventories; LU source file hashes rechecked against working tree",
+      "path": "source-input-cleanup-audit.json",
+      "sourceBytes": 3083,
+      "sourceSha256": "bc7fcf08e1e3982772c20ed0d034f8f053fb32ddcbfc92854d37c95911284866",
+      "storedBytes": 3083,
+      "storedSha256": "bc7fcf08e1e3982772c20ed0d034f8f053fb32ddcbfc92854d37c95911284866",
+      "compression": "none",
+      "transformations": []
+    }
+  ]
+}

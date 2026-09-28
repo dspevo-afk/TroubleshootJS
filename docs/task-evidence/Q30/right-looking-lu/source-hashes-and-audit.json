@@ -1,0 +1,111 @@
+{
+  "schema": "q30-right-looking-source-evidence@1",
+  "result": "PASS",
+  "baselineCommit": "0b29680c7daa62123732b91e3c1157e8ba0d6abd",
+  "expectedModifiedPaths": [
+    "src/com/lushprojects/circuitjs1/client/CirSim.java",
+    "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java"
+  ],
+  "actualCandidateVsArchiveModifiedPaths": [
+    "src/com/lushprojects/circuitjs1/client/CirSim.java",
+    "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java"
+  ],
+  "auditInterpretation": "The two expected right-looking Java files differ from the archive; every other archive path matches byte-for-byte. Candidate Git blob IDs are path-normalized and exactly match baseline tree blobs for all unmodified files.",
+  "sourceFiles": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "baselineRawSha256": "63da367edf792db1b2764d2e43da5bc286f5805f2822b5240165ad8326efe9db",
+      "candidateRawSha256": "b6150d61ec8f5fc658f9be2d748a14b48cee76663048eca2036bb5084b90f1f5",
+      "baselineNormalizedLfSha256": "00987891814047b9de4d690111a79f0bc997080a3cdd80bef30a62bfffee596f",
+      "candidateNormalizedLfSha256": "6d74bd50db06a9c44db22bb23bf19ec9c0e7848ec35bba28189cd0ea47fcb5a2",
+      "baselineGitBlob": "acf51aafca51ee1d3eb6481d21fddd0bb1096154",
+      "candidateGitBlob": "0aa42951e82427af304a942735be66a7c1f10e80",
+      "candidateMatchesSourceAudit": true,
+      "baselineMatchesArchiveAudit": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java",
+      "baselineRawSha256": "bff7965e658cb8fceeed8f3f4f632c1b66d72e195f428188d7915347b4a3774c",
+      "candidateRawSha256": "ac4a994de4c75f83434f81ebf6b8649738ff90fa3c802234546435cc23982de5",
+      "baselineNormalizedLfSha256": "3911aad7a95e5c10f5cfb32c3c9794748d6087fddbc617432ffd1b0f06b644ca",
+      "candidateNormalizedLfSha256": "5e6446217f8d7db94034894fae4919ce8c43d4e43309f19acb7dd7c178ab6e31",
+      "baselineGitBlob": "335a8138dc1334aaca2cddb42eba2b7d12a37476",
+      "candidateGitBlob": "279d8fcd17b466f597289a457be3a693adf0f25f",
+      "candidateMatchesSourceAudit": true,
+      "baselineMatchesArchiveAudit": true
+    }
+  ],
+  "normalizedPatch": {
+    "path": "source.patch.gz",
+      "compression": "gzip; sha256 and bytes below refer to exact decompressed patch",
+      "storedSha256": "f5251bfee1a30c2e630e937f4dbb225fee1f8e5eeaf798e3bc5b01b17231cca6",
+    "lineEndings": "LF",
+    "sha256": "6fff31eb7e7b840199b25af3cc98818398005b5c34fd378207f8447537437867",
+    "bytes": 9520
+  },
+  "sourceAuditJarEquivalence": [
+    {
+      "candidateSha256": "71c4f78e437b8fdcd9cc0dfd2abea8c089eb677005a6a5cff320206cc52b46cc",
+      "finiteCandidateReferenceSha256": "71c4f78e437b8fdcd9cc0dfd2abea8c089eb677005a6a5cff320206cc52b46cc",
+      "matchesRootAndReference": true,
+      "name": "asm-5.0.3.jar",
+      "rootSha256": "71c4f78e437b8fdcd9cc0dfd2abea8c089eb677005a6a5cff320206cc52b46cc"
+    },
+    {
+      "candidateSha256": "e8fa2a63462c96557dcd36c25525e1264b77366ff851cf0b94eb7592b290849d",
+      "finiteCandidateReferenceSha256": "e8fa2a63462c96557dcd36c25525e1264b77366ff851cf0b94eb7592b290849d",
+      "matchesRootAndReference": true,
+      "name": "asm-analysis-5.0.3.jar",
+      "rootSha256": "e8fa2a63462c96557dcd36c25525e1264b77366ff851cf0b94eb7592b290849d"
+    },
+    {
+      "candidateSha256": "18c1e092230233c9d29e46f21943d769bdb48130cc279e4b0e663f423948c2da",
+      "finiteCandidateReferenceSha256": "18c1e092230233c9d29e46f21943d769bdb48130cc279e4b0e663f423948c2da",
+      "matchesRootAndReference": true,
+      "name": "asm-commons-5.0.3.jar",
+      "rootSha256": "18c1e092230233c9d29e46f21943d769bdb48130cc279e4b0e663f423948c2da"
+    },
+    {
+      "candidateSha256": "347a7a9400f9964e87c91d3980e48eebdc8d024bc3b36f7f22189c662853a51c",
+      "finiteCandidateReferenceSha256": "347a7a9400f9964e87c91d3980e48eebdc8d024bc3b36f7f22189c662853a51c",
+      "matchesRootAndReference": true,
+      "name": "asm-tree-5.0.3.jar",
+      "rootSha256": "347a7a9400f9964e87c91d3980e48eebdc8d024bc3b36f7f22189c662853a51c"
+    },
+    {
+      "candidateSha256": "2768edbfa2681b5077f08151de586a6d66b916703cda3ab297e58b41ae8f2362",
+      "finiteCandidateReferenceSha256": "2768edbfa2681b5077f08151de586a6d66b916703cda3ab297e58b41ae8f2362",
+      "matchesRootAndReference": true,
+      "name": "asm-util-5.0.3.jar",
+      "rootSha256": "2768edbfa2681b5077f08151de586a6d66b916703cda3ab297e58b41ae8f2362"
+    },
+    {
+      "candidateSha256": "c7321e367fc24e5c7ad97b74d1cf2980c45fbd7cbe1fd412f8a8ba128f685135",
+      "finiteCandidateReferenceSha256": "c7321e367fc24e5c7ad97b74d1cf2980c45fbd7cbe1fd412f8a8ba128f685135",
+      "matchesRootAndReference": true,
+      "name": "gwt-dev-2.7.0.jar",
+      "rootSha256": "c7321e367fc24e5c7ad97b74d1cf2980c45fbd7cbe1fd412f8a8ba128f685135"
+    },
+    {
+      "candidateSha256": "d3721bcdd7c6855a524801212dd74548967d8fb65cbc212a20890732ff2c6948",
+      "finiteCandidateReferenceSha256": "d3721bcdd7c6855a524801212dd74548967d8fb65cbc212a20890732ff2c6948",
+      "matchesRootAndReference": true,
+      "name": "gwt-user-2.7.0.jar",
+      "rootSha256": "d3721bcdd7c6855a524801212dd74548967d8fb65cbc212a20890732ff2c6948"
+    },
+    {
+      "candidateSha256": "a394d52a9b7fe2bb14f0718d2b3c8308ffe8f37e911956012398d55c9f9f9b54",
+      "finiteCandidateReferenceSha256": "a394d52a9b7fe2bb14f0718d2b3c8308ffe8f37e911956012398d55c9f9f9b54",
+      "matchesRootAndReference": true,
+      "name": "validation-api-1.0.0.GA-sources.jar",
+      "rootSha256": "a394d52a9b7fe2bb14f0718d2b3c8308ffe8f37e911956012398d55c9f9f9b54"
+    },
+    {
+      "candidateSha256": "e459f313ebc6db2483f8ceaad39af07086361b474fa92e40f442e8de5d9895dc",
+      "finiteCandidateReferenceSha256": "e459f313ebc6db2483f8ceaad39af07086361b474fa92e40f442e8de5d9895dc",
+      "matchesRootAndReference": true,
+      "name": "validation-api-1.0.0.GA.jar",
+      "rootSha256": "e459f313ebc6db2483f8ceaad39af07086361b474fa92e40f442e8de5d9895dc"
+    }
+  ]
+}
