@@ -1,0 +1,68 @@
+{
+  "files": [
+    {
+      "observed": [
+        {
+          "bytes": 3099961,
+          "label": "cpu-10ms-r1-02-profile-10014",
+          "sha256": "09383cea503a4dd4219ae3877fee674ef455c58f47316da02547fe9734268bab"
+        },
+        {
+          "bytes": 3099961,
+          "label": "cpu-10ms-r1-positive-a07",
+          "sha256": "09383cea503a4dd4219ae3877fee674ef455c58f47316da02547fe9734268bab"
+        },
+        {
+          "bytes": 3099961,
+          "label": "cpu-10ms-r1-stop-negative-a07",
+          "sha256": "09383cea503a4dd4219ae3877fee674ef455c58f47316da02547fe9734268bab"
+        }
+      ],
+      "packetPath": "provenance/loaded-cache/D4C3E4FCCE6C8CC844CB7E4CC06EF094.cache.js.gz",
+      "relative": "cpu-profile/cacheBundles/D4C3E4FCCE6C8CC844CB7E4CC06EF094.cache.js"
+    },
+    {
+      "observed": [
+        {
+          "bytes": 3086419,
+          "label": "cpu-10ms-r1-02-profile-10014",
+          "sha256": "b10cd75edabbfd0954b3e96eecad14c15c56285454b5725db13318eb630daa5c"
+        },
+        {
+          "bytes": 3086419,
+          "label": "cpu-10ms-r1-positive-a07",
+          "sha256": "b10cd75edabbfd0954b3e96eecad14c15c56285454b5725db13318eb630daa5c"
+        },
+        {
+          "bytes": 3086419,
+          "label": "cpu-10ms-r1-stop-negative-a07",
+          "sha256": "b10cd75edabbfd0954b3e96eecad14c15c56285454b5725db13318eb630daa5c"
+        }
+      ],
+      "packetPath": "provenance/loaded-cache/D4C3E4FCCE6C8CC844CB7E4CC06EF094.decoded.js.gz",
+      "relative": "cpu-profile/cacheBundles/D4C3E4FCCE6C8CC844CB7E4CC06EF094.decoded.js"
+    },
+    {
+      "observed": [
+        {
+          "bytes": 523227,
+          "label": "cpu-10ms-r1-02-profile-10014",
+          "sha256": "da9a8ee22ad4f733a268b186e05888c2624bd9adaa2ba07cfc87fc7540069c2d"
+        },
+        {
+          "bytes": 523227,
+          "label": "cpu-10ms-r1-positive-a07",
+          "sha256": "da9a8ee22ad4f733a268b186e05888c2624bd9adaa2ba07cfc87fc7540069c2d"
+        },
+        {
+          "bytes": 523227,
+          "label": "cpu-10ms-r1-stop-negative-a07",
+          "sha256": "da9a8ee22ad4f733a268b186e05888c2624bd9adaa2ba07cfc87fc7540069c2d"
+        }
+      ],
+      "packetPath": "provenance/loaded-cache/D4C3E4FCCE6C8CC844CB7E4CC06EF094.symbolMap.gz",
+      "relative": "cpu-profile/symbolMaps/D4C3E4FCCE6C8CC844CB7E4CC06EF094.symbolMap.gz"
+    }
+  ],
+  "status": "PASS_BYTE_IDENTICAL_ACROSS_PROFILE_RUNS"
+}

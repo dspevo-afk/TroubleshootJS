@@ -124,11 +124,50 @@ from its historical original bytes; the final integrity/source audit PASSes.
 A separate read-only review found no generic contract justifying batching voltage
 publication; setters/cache updates/Composite recursion remain unchanged. Further
 work is to isolate solver publication cost and subdivide the large P07 residual.
-Source-only probe review caught CPU sampled-node/source-attribution and host
-error/canary defects, plus a solver-probe pause-accounting defect. Repairs and
-focused validation are pending; neither new probe has executed a browser or
-Q30 measurement. The external 10-ms CPU plan predeclares fresh control/profile/
-control rows on unchanged source/runtime inputs, after real host canaries.
+Probe review caught and repaired CPU sampled-node/source-attribution and host
+error/canary defects. The reviewed 10-ms driver passes three real host canaries:
+A07 positive, unsupported-method rejection before recording, and rejection while
+recording followed by a successful stop. Both completed A07 reports pass the
+strict reader and three corruptions each; all owned cleanup passes. Three
+offline mapping fixtures separately pass and do not substitute for host proof.
+Fresh CPU control/profile/control cold times are 97.811/100.493/97.699 s on the
+same audited 1,340 source and 1,525 runtime inputs. Both full non-timing comparisons
+and strict negatives PASS; all arms retain 490 work and 390 hypotheses. The
+profiled slowdown is 2.682–2.794 s, exceeding the 112-ms control range; exact causal
+overhead is not isolated. All rows still fail 90 s. Sampling covers navigation
+through host-observed RUNNING:warm, including a short possible warm tail. It
+supports coarse CPU ranking, not exact deadline contributions. Independent
+source-mapped interpretation puts direct LU factor samples at 26.940 s, solve at
+7.674 s and runCircuitOwned self samples at 11.446 s; these are CPU attribution,
+not wall stages to add together. Root audited all 186 packet artifacts, five
+exact reports and the unchanged 1,340/1,525 input boundaries in the
+[CPU packet](task-evidence/Q30/cpu-profile-10ms-r1/README.md).
+Inventory: `5beb50e9eede530b0bf054551d215f7f7d0ba451ffaa7b5ecea593c78687c583`.
+Two review source references omitted the intermediate Temp directory; metadata
+was corrected without changing payloads, and previous inventory hashes remain.
+The separate solver-publication probe repairs pause/resume accounting, invalid
+finalization and clock handling before execution. Its five focused native suites
+PASS (47.385 s; new collector 1,634 assertions). Actual JDK8/GWT5 PASSes (83.570 s),
+as do compiled A07/disabled-normal (5.928 s, cleanup 0.942 s) and three strict
+negatives. The first canary command failed before launch because its output path
+was relative; that exit-2 failure is retained, and the corrected absolute-path
+command passes without source changes. Fresh control/profile/control Q30 times
+are 99.614/97.853/97.835 s; both complete non-timing comparisons, 31 metadata
+corruptions per cold/warm snapshot, strict readers and owned cleanup PASS. The
+profile is inside the 1.779-s control range, not proof of zero overhead. Cold
+samples roughly expand to 10.913 s for solved-voltage publication, 6.914 s for
+owned-step wire refresh and 1.690 s for bookkeeping. Most sampled durations are
+zero at the 0.1-ms timer quantum, so those are coarse inferences, not exact totals.
+Ten rollback calls were unselected (unknown cost), the immediate-wire path was
+not exercised, and one UI-wire sample is insufficient for expansion. The source
+remains isolated in Temp and is not an accepted optimization; packaging is pending.
+A separate one-site LU finite-guard trial passes native6 (46.348 s), GWT5
+(80.098 s), compiled A07/disabled-normal (4.957 s, cleanup 0.904 s) and three
+reader negatives. All five exact compiled factors put the existing failure
+helper behind the unchanged inline finite predicate. An initial inspection reader
+expected numeric literals where GWT uses named constants; the repaired reader
+resolves their exact bounds. Source/build were unchanged. No timing benefit is
+measured yet; the trial remains isolated and unintegrated.
 
 Scale remains NOT ACCEPTED. The preserved uncommitted plan-4/77-root proposal
 covers 20–40 structurally through purposeful one/two-channel functional variants;
@@ -153,9 +192,10 @@ Seven archived helper whitespace errors stopped the first commit; normalized
 inspection copies preserve original hashes and passed the final staged check.
 
 Resources/preserved work: completed host runs released their owned processes;
-manual tabs and preview port 34917 are closed. All three routing-profile hosts
-verified owned cleanup; no heavy run is active. Task-temp route-stage-profile-*
-receipts retain each process identity and cleanup. Task-temp
+manual tabs and preview port 34917 are closed. All routing and CPU-profile hosts
+verified owned cleanup. No heavy run is active at this checkpoint;
+no simultaneous heavy matrix or timing run is allowed. Task-temp route-stage-profile-*
+and cpu-10ms-r1-* receipts retain each process identity and cleanup. Task-temp
 fixtures/evidence remain; previously blocked cleanup is not retried. Desktop
 work, pre-existing cache files, unaccepted plan-4 sources/tests/readers and the
 normal-verifier hook/API remain unstaged. No broad cleanup or remote action.

@@ -1,0 +1,54 @@
+{
+  "catalog": "DISABLED",
+  "causalExactOverheadIsolated": false,
+  "controlColdTotalsMs": [
+    97811,
+    97699
+  ],
+  "independentInterpretationSha256": "6289bf6f52c66b0ba2efd0a7ad59c60f9a30d8a194cf5dd827e06a7a81df8e96",
+  "interpretation": "INDEPENDENT_NOTE_INCLUDED_NO_PRODUCTION_CLAIM",
+  "inventoryExcludes": [
+    "inventory.json",
+    "inventory.sha256"
+  ],
+  "loadedCacheSourceClean": true,
+  "loadedCacheSourceFiles": 3,
+  "negativeStartHasNoApplicationReport": true,
+  "normalQ30Acceptance": "BLOCKED",
+  "observedProfileSlowdownMs": [
+    2682,
+    2794
+  ],
+  "packet": "Q30/cpu-profile-10ms-r1",
+  "parentSourceInputs": 1340,
+  "profileColdTotalMs": 100493,
+  "profileIncludesNavigationAndWarmTail": true,
+  "rawCompletedReportCount": 5,
+  "rootCorrectionRecord": {
+    "changedGeneratedFiles": [
+      "README.md",
+      "manifest.json",
+      "inventory.json",
+      "inventory.sha256"
+    ],
+    "kind": "README_WORDING_ONLY",
+    "priorInventorySha256": "1d4eb7636051e1aba958504060f526fbd0dea95bd673284bfb0f5dfe73cd29e4"
+  },
+  "rootDecisionSha256": "901c234a2cdfbaea44ea9200c66222258b27fa9a0ffd0c812722056335d31b8e",
+  "rootDecisionStatus": "PASS_COARSE_PRIVATE_CPU_RANKING_ONLY",
+  "runtimeSourceInputs": 1525,
+  "schema": 1,
+  "sequence": "OFF/ON/OFF seed 10014",
+  "sourceRefCorrectionRecord": {
+    "changedGeneratedFiles": [
+      "manifest.json",
+      "inventory.json",
+      "inventory.sha256"
+    ],
+    "kind": "SOURCE_REF_NAMESPACE_ONLY",
+    "metadataOnly": true,
+    "payloadsUnchanged": true,
+    "priorInventorySha256": "34b30878832fa78499843782f0c1d0313360ef81de7c367084c03dcb165f1d71"
+  },
+  "status": "COMPLETED_PRIVATE_CPU_DIAGNOSTIC_NO_PRODUCTION_CLAIM"
+}
