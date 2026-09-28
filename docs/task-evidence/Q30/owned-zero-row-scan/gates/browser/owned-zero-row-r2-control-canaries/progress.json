@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\trial-owned-zero-row-adeed4deab8f400eb8d754da0ffc1a57\\control",
+  "startedUtc": "2026-09-28T06:26:51.598156+00:00",
+  "outcome": "NOT_RUN",
+  "cases": [
+    {
+      "schema": 1,
+      "case": {
+        "index": 1,
+        "name": "owned-zero-row-r2-control-canaries-a07",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyA07=true&tsjDebug=true&running=true",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "PASS:a07",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-a07-report"
+      },
+      "url": "http://127.0.0.1:52044/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyA07=true&tsjDebug=true&running=true",
+      "startedUtc": "2026-09-28T06:26:54.153710+00:00",
+      "finishedUtc": "2026-09-28T06:26:55.355465+00:00",
+      "operationSeconds": 1.2017515000043204,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:a07",
+      "lastObservedState": "PASS:a07",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 80898,
+      "reportSha256": "0609c5dd9f9fbf6c72327f072d1b192891545373777c5ae2be67462c8c2e9b96",
+      "reportFile": "cases/001-owned-zero-row-r2-control-canaries-a07.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 2,
+        "name": "owned-zero-row-r2-control-canaries-disabled",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30NormalAcceptance=true&tsjQ30Seed=13",
+        "stateAttribute": "data-tsj-q30-normal-acceptance-state",
+        "expectedState": "BLOCKED:normal-catalog-disabled",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL",
+          "BLOCKED"
+        ],
+        "timeoutSeconds": 30.0,
+        "reportAttribute": "data-tsj-q30-normal-acceptance-report"
+      },
+      "url": "http://127.0.0.1:52044/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30NormalAcceptance=true&tsjQ30Seed=13",
+      "startedUtc": "2026-09-28T06:26:55.356446+00:00",
+      "finishedUtc": "2026-09-28T06:26:55.847654+00:00",
+      "operationSeconds": 0.4912051999999676,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "BLOCKED:normal-catalog-disabled",
+      "lastObservedState": "BLOCKED:normal-catalog-disabled",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 344,
+      "reportSha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+      "reportFile": "cases/002-owned-zero-row-r2-control-canaries-disabled.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    }
+  ],
+  "caseCount": 2,
+  "errors": [],
+  "inputAudit": {
+    "status": "BEFORE_CAPTURED",
+    "beforeSha256": "5837479e083d4362269950e8cef344400deedcc3ad4dc10898def631fa1f40d0",
+    "sourceSha256": "014c97009ddc0e56b853da788d622fbf025991ca80e0b2aa9b164862d6d4f649",
+    "webSha256": "ffdcf2f3df438609ee1010b03bd21550c57396b6b98220677830576067c056d5",
+    "fileCount": 1525
+  },
+  "identity": {
+    "schema": 1,
+    "runner": {
+      "pid": 20220,
+      "created": "2026-09-28T06:26:51.4744420Z",
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+    },
+    "edgeProcessesBeforeCases": [
+      {
+        "pid": 18180,
+        "parent": 17028,
+        "created": "2026-09-28T06:26:53.6155680Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 20492,
+        "parent": 18180,
+        "created": "2026-09-28T06:26:53.6356280Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 18948,
+        "parent": 18180,
+        "created": "2026-09-28T06:26:53.7035960Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 23768,
+        "parent": 18180,
+        "created": "2026-09-28T06:26:53.7079620Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 17960,
+        "parent": 18180,
+        "created": "2026-09-28T06:26:53.7289130Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 20824,
+        "parent": 18180,
+        "created": "2026-09-28T06:26:53.7931640Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 24452,
+        "parent": 18180,
+        "created": "2026-09-28T06:26:53.7971010Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "profile": "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\owned-zero-row-r2-control-canaries\\profile",
+    "port": 52044,
+    "baseUrl": "http://127.0.0.1:52044"
+  },
+  "operationStartedUtc": "2026-09-28T06:26:54.153697+00:00"
+}

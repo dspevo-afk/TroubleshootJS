@@ -1,0 +1,25 @@
+{
+  "cases": [
+    {
+      "name": "owned-zero-row-r2-candidate-canaries-a07",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyA07=true&tsjDebug=true&running=true",
+      "stateAttribute": "data-tsj-verification",
+      "expectedState": "PASS:a07",
+      "reportAttribute": "data-tsj-a07-report",
+      "timeoutSeconds": 600
+    },
+    {
+      "name": "owned-zero-row-r2-candidate-canaries-disabled",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30NormalAcceptance=true&tsjQ30Seed=13",
+      "stateAttribute": "data-tsj-q30-normal-acceptance-state",
+      "expectedState": "BLOCKED:normal-catalog-disabled",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL",
+        "BLOCKED"
+      ],
+      "reportAttribute": "data-tsj-q30-normal-acceptance-report",
+      "timeoutSeconds": 30
+    }
+  ]
+}

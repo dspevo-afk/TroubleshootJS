@@ -8052,8 +8052,12 @@ MouseOutHandler, MouseWheelHandler {
             for (i = 0; i != n; i++) {
                 boolean row_all_zeros = true;
                 double[] row = a[i];
-                for (j = 0; j != n; j++)
-                    if (row[j] != 0) row_all_zeros = false;
+                for (j = 0; j != n; j++) {
+                    if (row[j] != 0) {
+                        row_all_zeros = false;
+                        break;
+                    }
+                }
                 if (row_all_zeros) return false;
             }
             return lu_factorAfterInputScan(a, n, ipvt, workspace);

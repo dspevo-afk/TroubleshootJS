@@ -1,0 +1,70 @@
+START index-native
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 36.8881996,
+  "phase": "focused native owned-path oracle/general solver/temporal/measurement budget/normal policy including maintained cleanup",
+  "suites": [
+    "A07ExecutionContractTest",
+    "Q30OwnedLuZeroRowContractTest",
+    "Q30TemporalWorkContractTest",
+    "Q30GenerationMeasurementBudgetContractTest",
+    "Q30NormalExecutionPolicyContractTest"
+  ]
+}
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+PASS: A07 execution contracts assertions=271503
+
+PASS: Q30 owned LU zero-row contracts assertions=164
+
+PASS: focused current contracts; 5 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.
+PASS index-native
+START index-gwt
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "owned-zero-row-index-gwt",
+  "exitCode": 0,
+  "startedUtc": "2026-09-28T06:45:47.8610142Z",
+  "finishedUtc": "2026-09-28T06:47:06.3893425Z",
+  "elapsedSeconds": 78.5240072,
+  "status": "PASS"
+}
+[gwt-compile:stdout]       Compiling permutation 4...
+[gwt-compile:stdout]    Compile of permutations succeeded
+[gwt-compile:stdout]    Compilation succeeded -- 74.281s
+[gwt-compile:stdout] Linking into [REDACTED_USER_PATH]
+[gwt-compile:stdout]    Link succeeded
+[gwt-compile:stdout]    Linking succeeded -- 2.171s
+PASS index-gwt
+START index-compiled-a07
+{"status": "PASS", "exitCode": 0, "elapsedSeconds": 5.35332439999911, "cleanup": {"status": "PASS", "seconds": 0.8814672000007704, "serverStopped": true, "ownedSurvivors": [], "errors": []}, "scope": "actual compiled A07 on exact staged source; unaccepted normal-verifier API absent"}
+PASS index-compiled-a07
+START index-strict-a07
+PASS: exact maintained Test-A07Report; three negative corruption canaries
+PASS index-strict-a07
+START root-gwt
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "owned-zero-row-root-gwt",
+  "exitCode": 0,
+  "startedUtc": "2026-09-28T06:47:12.5602988Z",
+  "finishedUtc": "2026-09-28T06:48:29.3625467Z",
+  "elapsedSeconds": 76.7983183,
+  "status": "PASS"
+}
+[gwt-compile:stdout]       Compiling permutation 4...
+[gwt-compile:stdout]    Compile of permutations succeeded
+[gwt-compile:stdout]    Compilation succeeded -- 73.703s
+[gwt-compile:stdout] Linking into [REDACTED_USER_PATH]
+[gwt-compile:stdout]    Link succeeded
+[gwt-compile:stdout]    Linking succeeded -- 1.274s
+PASS root-gwt
+{"status": "FINAL_SOURCE_GATES_PASS_PENDING_ROOT_INPUT_EQUALITY", "scope": "exact staged source gates followed by working-source production build; no normal acceptance", "steps": [{"label": "index-native", "command": ["pwsh", "-NoProfile", "-File", "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\native-owned-zero-row.ps1", "-SourceRoot", "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\owned-zero-row-index-300df56483d74db6b6bfad3ce3c36d53", "-Label", "native-owned-zero-row-index"], "exitCode": 0, "elapsedSeconds": 37.09207109999261}, {"label": "index-gwt", "command": ["pwsh", "-NoProfile", "-File", "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\build-run.ps1", "-SourceRoot", "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\owned-zero-row-index-300df56483d74db6b6bfad3ce3c36d53", "-Label", "owned-zero-row-index-gwt"], "exitCode": 0, "elapsedSeconds": 78.72800010000356}, {"label": "index-compiled-a07", "command": ["[REDACTED_USER_PATH]\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe", "-B", "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\run_staged_solver_canary.py", "[REDACTED_USER_PATH]\\.codex\\worktrees\\q30-multirail-qualification\\TroubleshootJS", "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb", "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\owned-zero-row-index-300df56483d74db6b6bfad3ce3c36d53", "owned-zero-row-index-canary"], "exitCode": 0, "elapsedSeconds": 5.413962899998296}, {"label": "index-strict-a07", "command": ["pwsh", "-NoProfile", "-File", "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\read_a07.ps1", "-Repo", "[REDACTED_USER_PATH]\\.codex\\worktrees\\q30-multirail-qualification\\TroubleshootJS", "-Report", "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\owned-zero-row-index-canary\\cases\\001-owned-zero-row-index-canary-a07.report.json"], "exitCode": 0, "elapsedSeconds": 0.5602952000044752}, {"label": "root-gwt", "command": ["pwsh", "-NoProfile", "-File", "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\build-run.ps1", "-SourceRoot", "[REDACTED_USER_PATH]\\.codex\\worktrees\\q30-multirail-qualification\\TroubleshootJS", "-Label", "owned-zero-row-root-gwt"], "exitCode": 0, "elapsedSeconds": 76.99614809999184}], "elapsedSeconds": 198.7937130999926}

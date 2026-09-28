@@ -1,0 +1,110 @@
+{
+  "status": "FOCUSED_GATES_PASS_NOT_ACCEPTANCE",
+  "scope": "focused zero-row trial gates, not Q30 acceptance",
+  "steps": [
+    {
+      "name": "native-candidate",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\native-owned-zero-row.ps1",
+        "-SourceRoot",
+        "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\trial-owned-zero-row-adeed4deab8f400eb8d754da0ffc1a57\\candidate",
+        "-Label",
+        "native-owned-zero-row-candidate-r2"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 33.879232000006596
+    },
+    {
+      "name": "candidate-gwt",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\build-run.ps1",
+        "-SourceRoot",
+        "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\trial-owned-zero-row-adeed4deab8f400eb8d754da0ffc1a57\\candidate",
+        "-Label",
+        "owned-zero-row-r2-candidate-gwt"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 78.48153359998832
+    },
+    {
+      "name": "candidate-compiled-canaries",
+      "command": [
+        "[REDACTED_USER_PATH]\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+        "-B",
+        "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\run_current_solver_canaries.py",
+        "[REDACTED_USER_PATH]\\.codex\\worktrees\\q30-multirail-qualification\\TroubleshootJS",
+        "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb",
+        "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\trial-owned-zero-row-adeed4deab8f400eb8d754da0ffc1a57\\candidate",
+        "owned-zero-row-r2-candidate-canaries"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 6.3074760000017704
+    },
+    {
+      "name": "candidate-a07-strict",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\read_a07.ps1",
+        "-Repo",
+        "[REDACTED_USER_PATH]\\.codex\\worktrees\\q30-multirail-qualification\\TroubleshootJS",
+        "-Report",
+        "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\owned-zero-row-r2-candidate-canaries\\cases\\001-owned-zero-row-r2-candidate-canaries-a07.report.json"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.5870614000014029
+    },
+    {
+      "name": "control-gwt",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\build-run.ps1",
+        "-SourceRoot",
+        "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\trial-owned-zero-row-adeed4deab8f400eb8d754da0ffc1a57\\control",
+        "-Label",
+        "owned-zero-row-r2-control-gwt"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 78.79628609999781
+    },
+    {
+      "name": "control-compiled-canaries",
+      "command": [
+        "[REDACTED_USER_PATH]\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+        "-B",
+        "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\run_current_solver_canaries.py",
+        "[REDACTED_USER_PATH]\\.codex\\worktrees\\q30-multirail-qualification\\TroubleshootJS",
+        "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb",
+        "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\trial-owned-zero-row-adeed4deab8f400eb8d754da0ffc1a57\\control",
+        "owned-zero-row-r2-control-canaries"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.9905230999866035
+    },
+    {
+      "name": "control-a07-strict",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\read_a07.ps1",
+        "-Repo",
+        "[REDACTED_USER_PATH]\\.codex\\worktrees\\q30-multirail-qualification\\TroubleshootJS",
+        "-Report",
+        "[REDACTED_USER_PATH]\\AppData\\Local\\Temp\\TroubleshootJS-q30-next-2fcc758f00244e17b7d1d6834ade0bcb\\owned-zero-row-r2-control-canaries\\cases\\001-owned-zero-row-r2-control-canaries-a07.report.json"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.5482327999925474
+    }
+  ],
+  "elapsedSeconds": 204.61235450000095
+}

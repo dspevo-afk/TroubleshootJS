@@ -1,6 +1,7 @@
 # Current checkpoint: Q30 BLOCKED / NOT ACCEPTED
 
-Branch `codex/q30-multirail-qualification`. Latest accepted source is local
+Branch `codex/q30-multirail-qualification`. This checkpoint adds the accepted
+private zero-row early exit to the previous accepted local source
 `e285675d6f8f689cd7e73d09543f6cd37de8987f`
 (`Avoid redundant finite checks in nonlinear LU`). No push or completion email.
 Normal Q30 publication remains disabled. U06/U07/Q60 and later milestones are
@@ -62,16 +63,33 @@ against the committed working-source reconstruction, exact raw reports,
 inventory and personal-path removal. R1 sampler/reader defects and repairs are
 retained. [Current preflight](task-evidence/Q30/current-preflight/README.md).
 
-An unintegrated early-exit scan trial is now running in task-owned source-only
-fixtures. Its sole production delta stops each private row scan at the first
+The early-exit scan is accepted as an intermediate optimization in this local
+checkpoint. Its sole production delta
+stops each private row scan at the first
 nonzero; the outer zero-row test and shared factor/solve code remain. Independent
 source review finds no blocker. The first native gate correctly FAILed (33.827 s)
 because the new test omitted the required PASS output prefix despite completing
 164 assertions. R2 changes only that prefix. Native5 PASS 33.677 s; both actual
 GWT builds and compiled A07/disabled-normal/strict-negative gates pass with
-owned cleanup. The predeclared eight fresh timing rows span 20/37/40 packages,
-repeat seed 7 and stop on failures or >5% first-pair proof regression. Timing and
-the optimization acceptance decision are still PENDING; no trial source is staged.
+owned cleanup. All eight predeclared fresh timing rows and four complete-report
+comparisons PASS, preserving every non-timing electrical/physical/proof/work/
+cache field. Cold savings are 1.857/0.740/3.939/3.175 s, median 2.516 s; proof
+savings are 1.957/0.666/3.932/3.145 s, median 2.551 s. Repeated seed-7 within-arm
+cold ranges are 0.627 s control/0.691 s candidate, and proof ranges 0.635/0.553 s.
+This supports the repeated gain; the single 20-part delta is not a population
+claim. The 40-part candidate still takes 99.800 s (proof 70.808 s, routing
+22.637 s), above the normal limit. The exact-index source excludes the existing
+normal hook and plan-4 changes; its native5 PASSes in 36.888 s, production GWT5
+and compiled A07 plus three strict-reader corruptions PASS, with owned cleanup
+0.881 s. Root production refresh PASSes in 76.798 s. Its complete 392-file WAR
+and all 1,525 consumed inputs match the measured r2 candidate byte-for-byte,
+supporting reuse of those actual compiled canaries on the identical artifact.
+The production commit scope is only the row scan, new oracle test and one driver
+registration, plus its evidence and this checkpoint. The measured working source
+has 1,339 audited inputs; the exact source index has 1,338. No push is authorized.
+The validated source index tree is `3193f91b468243968fb58c2661245514cbd4e86f`;
+subsequent staging adds documentation only.
+[Accepted row-scan evidence](task-evidence/Q30/owned-zero-row-scan/README.md).
 
 Uncommitted plan-4 scale work remains NOT ACCEPTED. Purposeful one/two-channel
 topologies and support blocks replace count padding; current replay is /4 with
@@ -86,26 +104,33 @@ D01 seed 10387/20 passes app, strict reader and host cleanup. Seed 10014/40 pass
 app/strict proof but retains HOST POLLING FAIL from six attribute timeouts during
 synchronous construction. The isolated resumable verifier r3 has source-review
 blockers: retained snapshot objects, unreleased bridge and permissive boundary
-reader. An r4 scoped-lease/reader repair is in scratch, unintegrated and unrun.
-Actual successor and visible-power canaries remain NOT RUN. The maintained host
+reader. R4's synthetic strict-reader self-test PASSes, but source audit finds
+three blockers: after D01 stops, withdrawing debug/Q30 scope can leave its bridge
+until normal completion/timeout; lease close retains the last snapshot DOM
+attribute; and broad binding-exception handling can admit incomplete snapshots.
+R4 is retained without a GWT/browser gate; a bounded r5 lifecycle/binding repair
+is in scratch. Actual successor
+and visible-power canaries remain NOT RUN. The maintained host
 runner fix `b23acec` now rejects attribute-read errors; it does not erase old failure.
 The earlier normal-path seed-7 request failed at 90,066.6 ms and 378/390 proof
 units, with cleanup passing. No successful normal admission receipt exists yet.
 
-Resources: the current zero-row timing sequence owns its maintained runner's
-recorded browser/server processes; prior completed runs have verified cleanup
-and no survivors. The substantial task-temp source/evidence copies remain.
+Resources: the zero-row timing sequence completed with verified browser/server
+cleanup and no survivors on all eight rows. Final-source gates and owned cleanup
+are complete; no browser/server or heavy gate is running. Substantial task-temp
+source/evidence copies remain.
 Automatic approval review previously blocked recursive deletion of two older
 copies and one copied generated-WAR tree; no retry is planned. Their exact
 identities are retained in the detailed historical checkpoint below. Unrelated
 Desktop checkout work and pre-existing `tests/__pycache__` are preserved.
 Plan-4 source/tests/driver/readers, normal-verifier hook/API and scale evidence
-remain unstaged and uncommitted. This documentation checkpoint contains only
-the measurement evidence and report. No production source is staged or changed
-by the new sampler.
+remain unstaged and uncommitted. Documentation-only checkpoint `7c3bb8d` contains
+the sampler evidence and report; it integrated no sampler. This checkpoint also
+corrects that packet's table heading from hypotheses to hypothesis work units,
+updates its inventory and re-audits all 51 artifacts. Measurements are unchanged.
 
-Next: finish the zero-row comparison and accept or reject it from focused proof
-and measured attribution; then address the next measured cost. Repair and prove
+Next: measure actual solve cost/factored sparsity before trying the stale unrun
+sticky-finite solve draft. Repair and prove
 D01 lifecycle canaries, obtain normal cold timing with margin and scale coverage,
 and only then run the complete final acceptance matrix. Q30 stays BLOCKED.
 

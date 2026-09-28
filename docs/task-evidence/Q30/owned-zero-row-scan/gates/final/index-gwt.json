@@ -1,0 +1,9 @@
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "owned-zero-row-index-gwt",
+  "exitCode": 0,
+  "startedUtc": "2026-09-28T06:45:47.8610142Z",
+  "finishedUtc": "2026-09-28T06:47:06.3893425Z",
+  "elapsedSeconds": 78.5240072,
+  "status": "PASS"
+}

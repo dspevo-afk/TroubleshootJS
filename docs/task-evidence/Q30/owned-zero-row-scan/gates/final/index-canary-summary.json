@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 5.35332439999911,
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 0.8814672000007704,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "scope": "actual compiled A07 on exact staged source; unaccepted normal-verifier API absent"
+}

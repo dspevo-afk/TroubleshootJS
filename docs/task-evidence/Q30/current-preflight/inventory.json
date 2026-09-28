@@ -136,8 +136,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "e68f64447cd389aaed8343aec3beddd5205727ad09ed335cb95a7e73a494fdac",
-      "bytes": 5996
+      "sha256": "08bdbe37fa908fc8ff45c9987d9f89e4672e159df275476be50055279406427e",
+      "bytes": 6008
     },
     {
       "path": "records/a07-strict-negative-canaries-r2.txt",

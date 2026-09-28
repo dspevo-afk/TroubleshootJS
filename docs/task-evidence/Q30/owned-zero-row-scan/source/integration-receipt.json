@@ -1,0 +1,25 @@
+{
+  "status": "INTEGRATED_AND_SELECTIVELY_STAGED_PENDING_INDEX_GATES",
+  "scope": "only private row scan, independent native test and one maintained driver registration; existing normal hook and plan4 driver/source remain unstaged",
+  "files": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "stagedBlob": "300c0ee3fcfbdae685684e2b1d73f850aa49fdb4",
+      "stagedSha256": "c940f48ecedce80d3fed292aa72893e93bb44a10c3f1eac350de0b24f9187a53",
+      "workingSha256": "deb593ff2471904a72690cf0332a53bc968a4c93f6f2ac28e3140fa59dc1e242"
+    },
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "stagedBlob": "9e7321f0f4f33abe013ec7554999922acdaad67b",
+      "stagedSha256": "fca0e673c9236582de686f64f7bda32e8e83ed61ed7101785894334bf888c7d3",
+      "workingSha256": "2f65d3cf1d82f2681edf3f5a40e42c3d790efe71348bb97d565bb14eed9bf536"
+    },
+    {
+      "path": "tests/contracts/Q30OwnedLuZeroRowContractTest.java",
+      "stagedBlob": "d39ffcc63d615a58b8fc867f64339babbce3bc42",
+      "stagedSha256": "481e1eefc94d0285aabcae4da912a86ffd0249791627a9737c7c123ac5f51a40",
+      "workingSha256": "481e1eefc94d0285aabcae4da912a86ffd0249791627a9737c7c123ac5f51a40"
+    }
+  ],
+  "sequenceStatus": "FOCUSED_EXPERIMENT_PASS_NOT_ACCEPTANCE"
+}

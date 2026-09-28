@@ -1,0 +1,39 @@
+cold outcomes: PASS=1 EXPECTED_REJECTION=0 FAIL=0 NOT_RUN=0 MISSING=0
+cold successful measurement-only complete-row elapsed ms: n=1 p50=81290 p95=81290
+cold successful measurement-only complete-row wall ms: n=1 p50=81298 p95=81298
+cold successful measurement-only active routing ms: n=1 p50=14530 p95=14530
+cold successful measurement-only diagnostic proof ms: n=1 p50=61346 p95=61346
+cold successful measurement-only stage RESOLVE ms: n=1 p50=1 p95=1
+cold successful measurement-only stage HEALTHY ms: n=1 p50=19437 p95=19437
+cold successful measurement-only stage PHYSICAL ms: n=1 p50=60 p95=60
+cold successful measurement-only stage HYPOTHESES ms: n=1 p50=59510 p95=59510
+cold successful measurement-only stage SYMPTOM ms: n=1 p50=7 p95=7
+cold successful measurement-only stage PUBLISH ms: n=1 p50=59 p95=59
+cold successful measurement-only proof-work CANDIDATE_HEALTHY_SETTLE ms: n=1 p50=14576 p95=14576
+cold successful measurement-only proof-work CANDIDATE_SETTLE ms: n=1 p50=3329 p95=3329
+cold successful measurement-only proof-work CUSTOMER_RETEST ms: n=1 p50=12099 p95=12099
+cold successful measurement-only proof-work CUSTOMER_RETEST_COMPLETION ms: n=1 p50=35 p95=35
+cold successful measurement-only proof-work EVIDENCE_RESTORE_PRIMARY ms: n=1 p50=92 p95=92
+cold successful measurement-only proof-work OBSERVATION_STEP:DC_VOLTAGE ms: n=1 p50=1174 p95=1174
+cold successful measurement-only proof-work OBSERVATION_STEP:INPUT ms: n=1 p50=11049 p95=11049
+cold successful measurement-only proof-work OBSERVATION_STEP:POWER ms: n=1 p50=137 p95=137
+cold successful measurement-only proof-work OBSERVATION_STEP:SETTLE ms: n=1 p50=173 p95=173
+cold successful measurement-only proof-work OBSERVATION_STEP:WAIT ms: n=1 p50=0 p95=0
+cold successful measurement-only proof-work POWER_OFF_SETTLE ms: n=1 p50=3374 p95=3374
+cold successful measurement-only proof-work POWER_ON_SETTLE ms: n=1 p50=243 p95=243
+cold successful measurement-only proof-work REMOVE_SETTLE ms: n=1 p50=256 p95=256
+cold successful measurement-only proof-work REPAIR_STATUS_SETTLE ms: n=1 p50=12233 p95=12233
+cold successful measurement-only proof-work REPLACE_SETTLE ms: n=1 p50=265 p95=265
+cold successful measurement-only proof-work REPLAY_INSTALL ms: n=1 p50=445 p95=445
+warm outcomes: PASS=1 EXPECTED_REJECTION=0 FAIL=0 NOT_RUN=0 MISSING=0
+warm successful measurement-only complete-row elapsed ms: n=1 p50=19767 p95=19767
+warm successful measurement-only complete-row wall ms: n=1 p50=19773 p95=19773
+warm successful measurement-only active routing ms: n=1 p50=14466 p95=14466
+warm successful measurement-only diagnostic proof ms: n=1 p50=0 p95=0
+warm successful measurement-only stage RESOLVE ms: n=1 p50=0 p95=0
+warm successful measurement-only stage HEALTHY ms: n=1 p50=19281 p95=19281
+warm successful measurement-only stage PHYSICAL ms: n=1 p50=52 p95=52
+warm successful measurement-only stage HYPOTHESES ms: n=1 p50=21 p95=21
+warm successful measurement-only stage SYMPTOM ms: n=1 p50=6 p95=6
+warm successful measurement-only stage PUBLISH ms: n=1 p50=59 p95=59
+PASS: CURRENT PLAN@4/PROVIDER@4 DEVELOPER MEASUREMENT-ONLY Q30 coordinator cold/warm evidence seeds=1 electricalPairs=10 sameBuild=True actualDeadlineMs=300000 defaultProductionDeadlineMs=90000; corruptionCanaries=43; this is not a normal-deadline timing/admission pass

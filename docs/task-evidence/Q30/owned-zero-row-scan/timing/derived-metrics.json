@@ -1,0 +1,139 @@
+{
+  "rows": [
+    {
+      "label": "owned-zero-row-01-control-7",
+      "arm": "control",
+      "seed": "7",
+      "coldMs": 80663,
+      "proofMs": 60711,
+      "routingMs": 14565,
+      "workUnits": 462,
+      "hypothesisWorkUnits": 390,
+      "reportSha256": "a0eefc17452c1cdc302863e5ffb18408335bd76f8182c428554a7dde4e61f1d2",
+      "reportBytes": 1624178
+    },
+    {
+      "label": "owned-zero-row-02-candidate-7",
+      "arm": "candidate",
+      "seed": "7",
+      "coldMs": 78806,
+      "proofMs": 58754,
+      "routingMs": 14827,
+      "workUnits": 462,
+      "hypothesisWorkUnits": 390,
+      "reportSha256": "86d858d6d1ed2faadfbffdfc668795479a24950397022ddbd0d3ef755ae0fecc",
+      "reportBytes": 1624177
+    },
+    {
+      "label": "owned-zero-row-03-candidate-10387",
+      "arm": "candidate",
+      "seed": "10387",
+      "coldMs": 23984,
+      "proofMs": 16274,
+      "routingMs": 5782,
+      "workUnits": 276,
+      "hypothesisWorkUnits": 230,
+      "reportSha256": "9f96b5e0beb3c135ea2df3a1f76dabacaf93c8d2ddb3ff92c0a673bfdd8dea7b",
+      "reportBytes": 896246
+    },
+    {
+      "label": "owned-zero-row-04-control-10387",
+      "arm": "control",
+      "seed": "10387",
+      "coldMs": 24724,
+      "proofMs": 16940,
+      "routingMs": 5800,
+      "workUnits": 276,
+      "hypothesisWorkUnits": 230,
+      "reportSha256": "f931bd11d0afad0483917a5cd91fd7742e255b3bd60ef8efd53b4946d2060f16",
+      "reportBytes": 896246
+    },
+    {
+      "label": "owned-zero-row-05-control-10014",
+      "arm": "control",
+      "seed": "10014",
+      "coldMs": 103739,
+      "proofMs": 74740,
+      "routingMs": 22507,
+      "workUnits": 490,
+      "hypothesisWorkUnits": 390,
+      "reportSha256": "6c24dfd791bf22cedd6dac6afe7654755794b03d49c00c605d70dd927361cf6a",
+      "reportBytes": 1748511
+    },
+    {
+      "label": "owned-zero-row-06-candidate-10014",
+      "arm": "candidate",
+      "seed": "10014",
+      "coldMs": 99800,
+      "proofMs": 70808,
+      "routingMs": 22637,
+      "workUnits": 490,
+      "hypothesisWorkUnits": 390,
+      "reportSha256": "04447358355106caf67c013f04b8fd78e356c5e64b45a1044eb601cf4b235e63",
+      "reportBytes": 1748509
+    },
+    {
+      "label": "owned-zero-row-07-candidate-7",
+      "arm": "candidate",
+      "seed": "7",
+      "coldMs": 78115,
+      "proofMs": 58201,
+      "routingMs": 14623,
+      "workUnits": 462,
+      "hypothesisWorkUnits": 390,
+      "reportSha256": "103197354b627fb69ee6093b8fddfbf1c1a2df45dd1bf7c59ac0f80c318a567e",
+      "reportBytes": 1624177
+    },
+    {
+      "label": "owned-zero-row-08-control-7",
+      "arm": "control",
+      "seed": "7",
+      "coldMs": 81290,
+      "proofMs": 61346,
+      "routingMs": 14530,
+      "workUnits": 462,
+      "hypothesisWorkUnits": 390,
+      "reportSha256": "7f3eaa41ec9705d524b58bda8230fd54bb229bfd865fd503267cfeeb6d99d75b",
+      "reportBytes": 1624178
+    }
+  ],
+  "pairs": [
+    {
+      "tag": "owned-zero-row-pair-1",
+      "seed": "7",
+      "controlMinusCandidateColdMs": 1857,
+      "controlMinusCandidateProofMs": 1957,
+      "controlMinusCandidateRoutingMs": -262
+    },
+    {
+      "tag": "owned-zero-row-pair-2",
+      "seed": "10387",
+      "controlMinusCandidateColdMs": 740,
+      "controlMinusCandidateProofMs": 666,
+      "controlMinusCandidateRoutingMs": 18
+    },
+    {
+      "tag": "owned-zero-row-pair-3",
+      "seed": "10014",
+      "controlMinusCandidateColdMs": 3939,
+      "controlMinusCandidateProofMs": 3932,
+      "controlMinusCandidateRoutingMs": -130
+    },
+    {
+      "tag": "owned-zero-row-pair-4",
+      "seed": "7",
+      "controlMinusCandidateColdMs": 3175,
+      "controlMinusCandidateProofMs": 3145,
+      "controlMinusCandidateRoutingMs": -93
+    }
+  ],
+  "medianControlMinusCandidateColdMs": 2516.0,
+  "medianControlMinusCandidateProofMs": 2551.0,
+  "medianControlMinusCandidateRoutingMs": -111.5,
+  "seed7WithinArmRangesMs": {
+    "controlCold": 627,
+    "candidateCold": 691,
+    "controlProof": 635,
+    "candidateProof": 553
+  }
+}

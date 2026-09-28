@@ -16,7 +16,7 @@ The 1,338-input baseline is the reconstructed candidate arm of the committed [va
 - Profile/off paired strict validation: PASS. Both arms report exact request and proof parity outside declared timing/profile fields; profile/off input parity PASS; each strict reader ran 43 corruption cases; the pair validator ran 51 metadata negative canaries.
 - Both browser runs and compiled canaries report host cleanup PASS. The five browser error arrays are empty; the fresh pair's host monotonic durations are 134.6474503 s and 135.6555107 s. The two pair cleanup durations are 0.9033369 s and 1.1818034 s.
 
-| Arm | Cold app elapsed | Proof | Routing | Work / hypotheses | Host result |
+| Arm | Cold app elapsed | Proof | Routing | Work units / hypothesis units | Host result |
 | --- | ---: | ---: | ---: | ---: | --- |
 | Profile | 102,757 ms | 73,810 ms | 22,466 ms | 490 / 390 | PASS; no timeout; report matched |
 | Query-off | 103,323 ms | 74,275 ms | 22,521 ms | 490 / 390 | PASS; no timeout; report matched |

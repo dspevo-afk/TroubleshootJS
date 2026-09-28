@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "status": "PREDECLARED",
+  "scope": "Focused private intermediate optimization comparison on current unaccepted plan4; not a reduction of, or substitute for, the frozen normal acceptance/scale corpus.",
+  "candidate": "Short-circuit only each private owned nonlinear LU zero-row scan at its first nonzero; check every row and preserve general finite validation, all factor/solve arithmetic, ordering, work and proofs.",
+  "sequence": [
+    {
+      "label": "owned-zero-row-01-control-7",
+      "arm": "control",
+      "seed": "7"
+    },
+    {
+      "label": "owned-zero-row-02-candidate-7",
+      "arm": "candidate",
+      "seed": "7"
+    },
+    {
+      "label": "owned-zero-row-03-candidate-10387",
+      "arm": "candidate",
+      "seed": "10387"
+    },
+    {
+      "label": "owned-zero-row-04-control-10387",
+      "arm": "control",
+      "seed": "10387"
+    },
+    {
+      "label": "owned-zero-row-05-control-10014",
+      "arm": "control",
+      "seed": "10014"
+    },
+    {
+      "label": "owned-zero-row-06-candidate-10014",
+      "arm": "candidate",
+      "seed": "10014"
+    },
+    {
+      "label": "owned-zero-row-07-candidate-7",
+      "arm": "candidate",
+      "seed": "7"
+    },
+    {
+      "label": "owned-zero-row-08-control-7",
+      "arm": "control",
+      "seed": "7"
+    }
+  ],
+  "preconditions": [
+    "Frozen source pair differs only in CirSim.java; same private-path oracle/test driver on both arms",
+    "Focused actual private-path/native solver/temporal/budget gates pass",
+    "Actual final-source JDK8/GWT build and compiled A07/disabled-normal/strict-negative gates pass",
+    "No sampler queries or unaccepted numerical changes",
+    "One heavyweight operation at a time and fresh browser process/context per timing row"
+  ],
+  "earlyStop": "Stop on any host/correctness/cleanup failure; stop after the first complete pair if candidate proofElapsedMs exceeds control by more than 5%. Preserve failures and mark remaining rows NOT RUN.",
+  "comparison": "Run exact current-plan4 reader with self-negative cases on every arm and complete-report parity outside enumerated timing fields; verify input/process cleanup and host monotonic versus wall-clock drift. Preserve raw reports.",
+  "interpretation": "Use paired cold/proof deltas and repeated seed7 within-arm spread; no population claim from one small20-part difference. Accept only a valid attributable intermediate improvement. The frozen90,000ms/640work/5,000ms contracts stay fixed, and Q30 remainsBLOCKED until normal cold timing with margin, scale coverage and all acceptance requirements pass."
+}
