@@ -1,0 +1,109 @@
+{
+  "schema": "q30-routing-bookkeeping-source-audit@1",
+  "status": "PASS",
+  "baselineCommit": "a57ffc30b04d306daf0355e44d218de4175bb9ea",
+  "baselineArchive": "zero-solve-baseline-a57ffc3.zip",
+  "baselineArchiveSha256": "b016768bfd591465af44ec80ae7e35964744a1485c699ccaa7d43ee0e0af328b",
+  "candidateLocation": "isolated scratch fixture; not integrated into repository source",
+  "candidateCopiedInputFileCount": 1291,
+  "archiveInputFileCount": 1328,
+  "archiveInputsNotCopiedIntoBoundedFixtureCount": 37,
+  "candidateInputPathSetIsSubsetOfArchive": true,
+  "allCandidateCopiedInputsMatchA57CommitObjects": true,
+  "candidateComparedToArchive": {
+    "lfNormalizedIdentical": 3,
+    "modified": 3,
+    "rawIdentical": 1288
+  },
+  "modifiedSourceHashes": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "baselineArchiveSha256": "560b068a9e9ca2a8791f0a3085e1e58ef1b2e6e598065d2119323ebcabd7ee4a",
+      "baselineGitBlob": "0c25b914ca661e08c718855ab505f711fc2f2902",
+      "candidateSha256": "037fa2f679957e22cf3003b0bc2ad4086c59c3ebfa1d804cc2242d8e359edd1b"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "baselineArchiveSha256": "fe30ec39271943ef31c547ff92d0ef13b93a2387a45bd06929c6ab875186ad23",
+      "baselineGitBlob": "18feece28669017b3eec96607ac9be2fd088dde6",
+      "candidateSha256": "a7b29cda37555953d6281c84e35aa75531eea4cb78fb55e8253485ea6b17401d"
+    },
+    {
+      "path": "tests/contracts/P07TwoLayerContractTest.java",
+      "baselineArchiveSha256": "ee30a2939dabf6ea2da39cebdcb4a47d41c1078115b0764d212c8269ad988276",
+      "baselineGitBlob": "fd4839d7efc6d8fed94748f68cc5a6c3f09fb5c4",
+      "candidateSha256": "186218a1808a16b6dddb944260fdfbb80dc57333d8f2248b98e4b42eb5002463"
+    }
+  ],
+  "pinnedJars": [
+    {
+      "expectedSha256": "71C4F78E437B8FDCD9CC0DFD2ABEA8C089EB677005A6A5CFF320206CC52B46CC",
+      "match": true,
+      "path": ".tools/gwt-2.7.0/asm-5.0.3.jar",
+      "sha256": "71C4F78E437B8FDCD9CC0DFD2ABEA8C089EB677005A6A5CFF320206CC52B46CC"
+    },
+    {
+      "expectedSha256": "E8FA2A63462C96557DCD36C25525E1264B77366FF851CF0B94EB7592B290849D",
+      "match": true,
+      "path": ".tools/gwt-2.7.0/asm-analysis-5.0.3.jar",
+      "sha256": "E8FA2A63462C96557DCD36C25525E1264B77366FF851CF0B94EB7592B290849D"
+    },
+    {
+      "expectedSha256": "18C1E092230233C9D29E46F21943D769BDB48130CC279E4B0E663F423948C2DA",
+      "match": true,
+      "path": ".tools/gwt-2.7.0/asm-commons-5.0.3.jar",
+      "sha256": "18C1E092230233C9D29E46F21943D769BDB48130CC279E4B0E663F423948C2DA"
+    },
+    {
+      "expectedSha256": "347A7A9400F9964E87C91D3980E48EEBDC8D024BC3B36F7F22189C662853A51C",
+      "match": true,
+      "path": ".tools/gwt-2.7.0/asm-tree-5.0.3.jar",
+      "sha256": "347A7A9400F9964E87C91D3980E48EEBDC8D024BC3B36F7F22189C662853A51C"
+    },
+    {
+      "expectedSha256": "2768EDBFA2681B5077F08151DE586A6D66B916703CDA3AB297E58B41AE8F2362",
+      "match": true,
+      "path": ".tools/gwt-2.7.0/asm-util-5.0.3.jar",
+      "sha256": "2768EDBFA2681B5077F08151DE586A6D66B916703CDA3AB297E58B41AE8F2362"
+    },
+    {
+      "expectedSha256": "C7321E367FC24E5C7AD97B74D1CF2980C45FBD7CBE1FD412F8A8BA128F685135",
+      "match": true,
+      "path": ".tools/gwt-2.7.0/gwt-dev-2.7.0.jar",
+      "sha256": "C7321E367FC24E5C7AD97B74D1CF2980C45FBD7CBE1FD412F8A8BA128F685135"
+    },
+    {
+      "expectedSha256": "D3721BCDD7C6855A524801212DD74548967D8FB65CBC212A20890732FF2C6948",
+      "match": true,
+      "path": ".tools/gwt-2.7.0/gwt-user-2.7.0.jar",
+      "sha256": "D3721BCDD7C6855A524801212DD74548967D8FB65CBC212A20890732FF2C6948"
+    },
+    {
+      "expectedSha256": "A394D52A9B7FE2BB14F0718D2B3C8308FFE8F37E911956012398D55C9F9F9B54",
+      "match": true,
+      "path": ".tools/gwt-2.7.0/validation-api-1.0.0.GA-sources.jar",
+      "sha256": "A394D52A9B7FE2BB14F0718D2B3C8308FFE8F37E911956012398D55C9F9F9B54"
+    },
+    {
+      "expectedSha256": "E459F313EBC6DB2483F8CEAAD39AF07086361B474FA92E40F442E8DE5D9895DC",
+      "match": true,
+      "path": ".tools/gwt-2.7.0/validation-api-1.0.0.GA.jar",
+      "sha256": "E459F313EBC6DB2483F8CEAAD39AF07086361B474FA92E40F442E8DE5D9895DC"
+    }
+  ],
+  "generatedBuildFilesExcluded": [
+    "war/circuitjs1/**",
+    "war/WEB-INF/deploy/**",
+    ".git/**",
+    ".tools/gwt-2.7.0/compile-cache/**",
+    ".tools/gwt-2.7.0/compile-work/**"
+  ],
+  "sourcePatch": {
+    "addedTrailingWhitespace": 0,
+    "gzipMtimeSeconds": 0,
+    "gzipPath": "source.patch.gz",
+    "gzipSha256": "301c18a0e4285d7877c6d89124f238aaf7b1962b6c7e8637644830574c334df1",
+    "path": "source.patch",
+    "sha256": "284d7d0f503f1268a5ee76d7c2fdacd64ef626ad091973f634497793de6edb41"
+  }
+}

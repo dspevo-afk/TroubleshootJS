@@ -1,0 +1,367 @@
+{
+  "schema": "q30-routing-bookkeeping-artifact-hashes@1",
+  "status": "ACCEPTED_INTERMEDIATE_INTEGRATED_GATES_PASS",
+  "selfIncluded": false,
+  "artifacts": [
+    {
+      "path": "a07-application-report.json.gz",
+      "size": 9393,
+      "sha256": "c1f45996ead2070227eed7aac1e43a8c0603b103afce2ba64e517c71835049c2"
+    },
+    {
+      "path": "a07-command.log",
+      "size": 56,
+      "sha256": "9d6bf698f3ba55b5cfd60a497acdc442961745677e257bfd53cac6e475d3632b"
+    },
+    {
+      "path": "a07-provenance.json",
+      "size": 1197,
+      "sha256": "bfb2024bba2444115acb0c176bb4689c65de696e0586fa76b74c95b3e1a4e63c"
+    },
+    {
+      "path": "a07-spec.json",
+      "size": 335,
+      "sha256": "c041409a39a0466b395bcc4788a9e36e2f7da51e0b569678937ecc3ab51e6c54"
+    },
+    {
+      "path": "a07-strict-reader.txt",
+      "size": 74,
+      "sha256": "48c35983ad2f4a8b91f939714151254c2bc27fa1c8e6e1c1c488d983a4a4cfc8"
+    },
+    {
+      "path": "application-report-routing-bookkeeping-01-R7.json.gz",
+      "size": 216467,
+      "sha256": "1eaaa75d8976d2d9c1d81de209a662146d2e314ad4c4d99eb76e7907b6d41f73"
+    },
+    {
+      "path": "application-report-routing-bookkeeping-02-F7.json.gz",
+      "size": 216458,
+      "sha256": "615470f963034324eb979287c8a7341c8f7907a45407966a022d3ca226ed6a80"
+    },
+    {
+      "path": "application-report-routing-bookkeeping-03-F13.json.gz",
+      "size": 240633,
+      "sha256": "3d2f933a5fdcb1cc6d77d1056fed190d88abded30533ec20db41b8daa07ec6e7"
+    },
+    {
+      "path": "application-report-routing-bookkeeping-04-R13.json.gz",
+      "size": 240639,
+      "sha256": "cbf767d54c156af73257efe85ac599e5f6ab2b74e290bce9efaa462a3791e809"
+    },
+    {
+      "path": "application-report-routing-bookkeeping-05-R64.json.gz",
+      "size": 228390,
+      "sha256": "fdb7c279ef4f3907df42a66dec6d6c64c7d28c4c43a17e01f565c834cd0a21ab"
+    },
+    {
+      "path": "application-report-routing-bookkeeping-06-F64.json.gz",
+      "size": 228388,
+      "sha256": "c529cfa1ee433caf1f4924cd8345df5f87ecd0d1104ec51bd465b917722585fe"
+    },
+    {
+      "path": "application-report-routing-bookkeeping-07-F7.json.gz",
+      "size": 216464,
+      "sha256": "e10977999747459fb72058cc34296f8b5d960ef9a316a126e77ab1ea7f424e6b"
+    },
+    {
+      "path": "application-report-routing-bookkeeping-08-R7.json.gz",
+      "size": 216460,
+      "sha256": "c54c4d95ae71a910458afdff2b92a3ba23dd512123bbd6e8e8344b896c5ad90b"
+    },
+    {
+      "path": "candidate-integration-receipt.json",
+      "size": 935,
+      "sha256": "a93363bb054ca2c82fe42d8928cc9c81e64ae1f70c83ad1d32650f909b681d6d"
+    },
+    {
+      "path": "comparison.json",
+      "size": 10991,
+      "sha256": "0d07648810d2aec5e0a28b7e154115dd2a8c5e9b84ccadea6651742fcb186215"
+    },
+    {
+      "path": "final-integrated-source/a07-case.json",
+      "size": 1380,
+      "sha256": "7ea1532128841761be663d0eac95b608f89ab04b284ff7403db6cf64651b4ca6"
+    },
+    {
+      "path": "final-integrated-source/a07-report.json.gz",
+      "size": 9389,
+      "sha256": "565340db669d9b83454a379d8b1caa31691567ea44f2d4319befb22f45d6d275"
+    },
+    {
+      "path": "final-integrated-source/a07-strict-reader.txt",
+      "size": 74,
+      "sha256": "48c35983ad2f4a8b91f939714151254c2bc27fa1c8e6e1c1c488d983a4a4cfc8"
+    },
+    {
+      "path": "final-integrated-source/browser-canaries-provenance.json",
+      "size": 2983,
+      "sha256": "bf8b03ccffe8691517f2794d20ccd26f54b4a24437f56da1f7f98a3bf51c51a2"
+    },
+    {
+      "path": "final-integrated-source/browser-canaries-result.json",
+      "size": 6553,
+      "sha256": "8bb0fe7e5fb73db530cf8f1042e09c3f2e2c498dcb99f03f6d00df7a29df68ae"
+    },
+    {
+      "path": "final-integrated-source/browser-canaries-spec.json",
+      "size": 834,
+      "sha256": "8cacee010f6a6589fdc40e4c75ad4cd7cebaa625f74983972c51f78dff7d92a1"
+    },
+    {
+      "path": "final-integrated-source/browser-canaries.log",
+      "size": 105,
+      "sha256": "3358ef75d77deb126ec9ae2dcd5d345755f7053b87b281fc684b9244660fcf5f"
+    },
+    {
+      "path": "final-integrated-source/disabled-catalog-case.json",
+      "size": 1565,
+      "sha256": "41c7520839ec56b5bc9361172ee749cfc4bc8d8bc2da07db0ce5ac5fc6f8fd80"
+    },
+    {
+      "path": "final-integrated-source/disabled-catalog-report.json.gz",
+      "size": 224,
+      "sha256": "5b8e46ef5a04d8746c0d9243f4ba9900ec88968302808491a72c7a2259062f87"
+    },
+    {
+      "path": "final-integrated-source/gate-summary.json",
+      "size": 1754,
+      "sha256": "2eee641f8c1e5620a18d8f9808d14fb60c969f108d1b11ecc6f5d333c0794508"
+    },
+    {
+      "path": "final-integrated-source/gwt.json",
+      "size": 267,
+      "sha256": "ed1831882b8f9e27fd2bb304dcd9888387d0a55efc933548955c8e200851dcca"
+    },
+    {
+      "path": "final-integrated-source/gwt.log",
+      "size": 1188,
+      "sha256": "abab7f07bb4eca6ab5f34ec20964034e48e2a98b99a6c596feb1a86c73b55f14"
+    },
+    {
+      "path": "final-integrated-source/input-manifest-after.json.gz",
+      "size": 80055,
+      "sha256": "945a5dc0fd21008f2ace17ec9c6beb8bf8d6daf3a4494ae96929a2996a75590b"
+    },
+    {
+      "path": "final-integrated-source/input-manifest-before.json.gz",
+      "size": 80055,
+      "sha256": "ff1317b44ac9ce6ebc6f65b3f20eb64825d65bb1306d30f195e1beb2ea6fec35"
+    },
+    {
+      "path": "final-integrated-source/native-receipt.txt",
+      "size": 3044,
+      "sha256": "85af2b7e5cda038139bdc47b75cc5e205997d1eb24fa8da51f616901c854d5ee"
+    },
+    {
+      "path": "final-integrated-source/native.json",
+      "size": 281,
+      "sha256": "1aa0d1aef8f0a9579c925aa5cc72decc7890e9c1b3c30fffa4470838b1869843"
+    },
+    {
+      "path": "final-integrated-source/native.log",
+      "size": 3721,
+      "sha256": "2003b4129176a186b287402e41eab5c56098dbc34bc4294a12bf191f37a8c6a8"
+    },
+    {
+      "path": "gwt-gate.json",
+      "size": 263,
+      "sha256": "fb1e09f49919ef2c29f395f06137b8bb07c8eb9ba7ad3e6a9c0e157745dd6f84"
+    },
+    {
+      "path": "gwt-gate.log",
+      "size": 1218,
+      "sha256": "12f3fb88e66dbdd309f5ca6c1426fc38c6514f8141e9aee095b3b31b2e374dbc"
+    },
+    {
+      "path": "input-manifest-finite-control.json.gz",
+      "size": 79982,
+      "sha256": "845796159be338a49fd5559b1ae4c1cda502193e20da777b394fa35d044500b7"
+    },
+    {
+      "path": "input-manifest-routing-candidate.json.gz",
+      "size": 79977,
+      "sha256": "301af762d9e1185d55e1309e1dae9871c55aeae10f952fbe2ae97284d829df1a"
+    },
+    {
+      "path": "input-manifest-verification.json",
+      "size": 3618,
+      "sha256": "94011aaec51dd597ccb0ef63ed1d67b85b4da7639cb0cfbd9edc4096541c350b"
+    },
+    {
+      "path": "native-gates-receipt.txt",
+      "size": 3044,
+      "sha256": "a184fae9b574aeba11cbeafc8048c9b5533318ba36be1c4487ca3a1727845d44"
+    },
+    {
+      "path": "native-gates.json",
+      "size": 297,
+      "sha256": "36d431bd8c2cf260ec4bedb181fc9634413b3367bc5344d799bd9fba0a0a58b5"
+    },
+    {
+      "path": "native-gates.log",
+      "size": 3721,
+      "sha256": "6eac2565971bea200d8e7f52fce8c46f8442c3f40e542b0f4e2301f31848f81b"
+    },
+    {
+      "path": "pair-F13-R13.json",
+      "size": 1077,
+      "sha256": "c34a77efe4b482852783b7e2f96ef296a3c41383317b7f65505bb1dbd9fe64c9"
+    },
+    {
+      "path": "pair-F7-R7.json",
+      "size": 1073,
+      "sha256": "3500ddd26b63d9d600df61b7427c922bda03d0afcd17ccef9615dda6589e08f9"
+    },
+    {
+      "path": "pair-R64-F64.json",
+      "size": 1081,
+      "sha256": "7ffb20ed9a2cf2f8e485dc9a3b7a8734bfb25b20218458614b82ebf142bd806f"
+    },
+    {
+      "path": "pair-R7-F7.json",
+      "size": 1077,
+      "sha256": "e1dd197f1cca502a9cdefce3ae31612730c8f0a80c211e5d478ac3ac253eec09"
+    },
+    {
+      "path": "README.md",
+      "size": 4925,
+      "sha256": "7c3b2633d47f7707026c04fd5474bd539b41999271fd6464da73515af1ab5e8f"
+    },
+    {
+      "path": "root-comparison-plan.json",
+      "size": 778,
+      "sha256": "c54679f14dd63839e27d386fdc54f75ddd6f3b1e7ff755f2a33ae8152408999a"
+    },
+    {
+      "path": "run-log-routing-bookkeeping-01-R7.txt",
+      "size": 61,
+      "sha256": "88aa195c7b95755c8e80620a5803b80ba7740e4535271d958441c8c6d79f1aad"
+    },
+    {
+      "path": "run-log-routing-bookkeeping-02-F7.txt",
+      "size": 61,
+      "sha256": "e707eaf2b3eec7e2acf7452773e783138824867608bf8d02885243505e79d507"
+    },
+    {
+      "path": "run-log-routing-bookkeeping-03-F13.txt",
+      "size": 62,
+      "sha256": "2306021db0472330aebc4e0407b4ff1351f72b57e24bb30d0e010479eba3e9b4"
+    },
+    {
+      "path": "run-log-routing-bookkeeping-04-R13.txt",
+      "size": 62,
+      "sha256": "a35fd029e89181f499068be4370b6ee3a9e743bd90da010efc29bee8aa16185d"
+    },
+    {
+      "path": "run-log-routing-bookkeeping-05-R64.txt",
+      "size": 60,
+      "sha256": "2edef72d86216605de4333531b7ad21716f54d57644dee85e97ffca06d1dfcbd"
+    },
+    {
+      "path": "run-log-routing-bookkeeping-06-F64.txt",
+      "size": 62,
+      "sha256": "e7ca2fd986a17bcb171f1a85542e22e93ea85794245b128e1a61833c80c3b780"
+    },
+    {
+      "path": "run-log-routing-bookkeeping-07-F7.txt",
+      "size": 61,
+      "sha256": "ae0af1c06a84bf1e3ef8ca3929261d4f2d67d76dd3326e3b4eb6dc1d8d2dd733"
+    },
+    {
+      "path": "run-log-routing-bookkeeping-08-R7.txt",
+      "size": 60,
+      "sha256": "596207b3f57ce9595af761fc9f09b4bc29a3baca2f246b322aa953124aab2535"
+    },
+    {
+      "path": "run-provenance-routing-bookkeeping-01-R7.json",
+      "size": 6580,
+      "sha256": "5b1f613222f0ee227ed4bf7f0b1ecc9195a94b1b088b1e03fc3b16a21f716b48"
+    },
+    {
+      "path": "run-provenance-routing-bookkeeping-02-F7.json",
+      "size": 6579,
+      "sha256": "a7552aac99a877425e5e54ba772214384c03e2b0f4f8c9bc9ff034052659c504"
+    },
+    {
+      "path": "run-provenance-routing-bookkeeping-03-F13.json",
+      "size": 6587,
+      "sha256": "5c7e55a7ca54b954c2e0807f130b81f71935c661778645cdd99fc48e3eaf544f"
+    },
+    {
+      "path": "run-provenance-routing-bookkeeping-04-R13.json",
+      "size": 6587,
+      "sha256": "04eda88be15efc1c0db88654ee2149e18e7825093eac7ad94f68ef83f0ea2a31"
+    },
+    {
+      "path": "run-provenance-routing-bookkeeping-05-R64.json",
+      "size": 6590,
+      "sha256": "997a05e144fb73241a5d1606583098cabcd2f196e2ea96a76921d118eecea5cd"
+    },
+    {
+      "path": "run-provenance-routing-bookkeeping-06-F64.json",
+      "size": 6567,
+      "sha256": "31ccdd4f0f5d0b48c9fd566eba3c2d6a42f72c1047c0ec4bafb47feb4ed31452"
+    },
+    {
+      "path": "run-provenance-routing-bookkeeping-07-F7.json",
+      "size": 6584,
+      "sha256": "b3cea209d8b05dd33c626d2a50122f4c6b35ba3238cca8e93fbc8e9d48ae3220"
+    },
+    {
+      "path": "run-provenance-routing-bookkeeping-08-R7.json",
+      "size": 6582,
+      "sha256": "8849a6430d0c6093fe2e8f4518b81b1d702f1bb5d82c39a289626c6aa427aaef"
+    },
+    {
+      "path": "source-audit.json",
+      "size": 4717,
+      "sha256": "3e59a56f43326599748d5238b6852c95dac0b6045f34a1669e1c832648617249"
+    },
+    {
+      "path": "source.patch.gz",
+      "size": 3111,
+      "sha256": "301c18a0e4285d7877c6d89124f238aaf7b1962b6c7e8637644830574c334df1"
+    },
+    {
+      "path": "strict-reader-routing-bookkeeping-01-R7.txt",
+      "size": 3282,
+      "sha256": "90409c417a39f9cd3ad08c7728e0bc290dcf2f7b2cd131d0bdd82ae828a521e4"
+    },
+    {
+      "path": "strict-reader-routing-bookkeeping-02-F7.txt",
+      "size": 3259,
+      "sha256": "8972e0e339a1f45e16f8d6b819f0ae0be0b43f11b7f0e2537b40deecc155494e"
+    },
+    {
+      "path": "strict-reader-routing-bookkeeping-03-F13.txt",
+      "size": 3284,
+      "sha256": "836d7d21ba25132c2f58d10eda24c8c542580e306d0a84c1506c91e1eceb7998"
+    },
+    {
+      "path": "strict-reader-routing-bookkeeping-04-R13.txt",
+      "size": 3261,
+      "sha256": "884df54bb0d1f4410987b9960f190a41d13bda5f61e986c1ee4b03df10963d5a"
+    },
+    {
+      "path": "strict-reader-routing-bookkeeping-05-R64.txt",
+      "size": 3282,
+      "sha256": "fc490f5a7dcfc238536a880e8516de58d20b56ecaa896101199e0fd8c0431255"
+    },
+    {
+      "path": "strict-reader-routing-bookkeeping-06-F64.txt",
+      "size": 3261,
+      "sha256": "5c897768510638bd75d80a79767d0152f7fa8eaf1d47c35ccc1b8f2bebc8b9d1"
+    },
+    {
+      "path": "strict-reader-routing-bookkeeping-07-F7.txt",
+      "size": 3282,
+      "sha256": "b1434d43ba4f94bc2303702096861df604ecebf9bf7508de3e85c2f8c3d6007d"
+    },
+    {
+      "path": "strict-reader-routing-bookkeeping-08-R7.txt",
+      "size": 3259,
+      "sha256": "3a10428fca78bbd3b0dcd511e656606e7f474cebd3e4faee913b21f0bcc1e57a"
+    }
+  ]
+}

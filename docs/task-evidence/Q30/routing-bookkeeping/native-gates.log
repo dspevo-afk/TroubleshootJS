@@ -1,0 +1,34 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+P04_CORPUS {"family":"led","seed":"0","attempts":1,"rawSegments":204,"canonicalSegments":17,"expansions":17616,"length":2040,"uniqueLength":2040,"reusedLength":0,"bends":12,"congestionRejections":281,"elapsedMs":244.3404}
+P04_CORPUS {"family":"led","seed":"3","attempts":1,"rawSegments":200,"canonicalSegments":17,"expansions":17565,"length":2000,"uniqueLength":2000,"reusedLength":0,"bends":12,"congestionRejections":293,"elapsedMs":19.3959}
+P04_CORPUS {"family":"led","seed":"-17","attempts":1,"rawSegments":168,"canonicalSegments":18,"expansions":20172,"length":1680,"uniqueLength":1680,"reusedLength":0,"bends":12,"congestionRejections":352,"elapsedMs":17.1468}
+P04_CORPUS {"family":"diode","seed":"0","attempts":1,"rawSegments":309,"canonicalSegments":23,"expansions":126430,"length":3090,"uniqueLength":3090,"reusedLength":0,"bends":16,"congestionRejections":2685,"elapsedMs":101.0498}
+P04_CORPUS {"family":"diode","seed":"3","attempts":1,"rawSegments":355,"canonicalSegments":26,"expansions":182677,"length":3550,"uniqueLength":3550,"reusedLength":0,"bends":18,"congestionRejections":4507,"elapsedMs":114.3621}
+P04_CORPUS {"family":"diode","seed":"-17","attempts":1,"rawSegments":267,"canonicalSegments":24,"expansions":177638,"length":2670,"uniqueLength":2670,"reusedLength":0,"bends":16,"congestionRejections":4063,"elapsedMs":107.167}
+P04_CORPUS {"family":"parallel","seed":"0","attempts":1,"rawSegments":422,"canonicalSegments":33,"expansions":216317,"length":4220,"uniqueLength":4220,"reusedLength":0,"bends":21,"congestionRejections":4688,"elapsedMs":181.9588}
+P04_CORPUS {"family":"parallel","seed":"3","attempts":1,"rawSegments":300,"canonicalSegments":31,"expansions":23087,"length":3000,"uniqueLength":3000,"reusedLength":0,"bends":16,"congestionRejections":407,"elapsedMs":22.6167}
+REJECT parallel -17 0 Unable to route net GND from J1.2@160,210 to LED1.K@360,140
+P04_CORPUS {"family":"parallel","seed":"-17","attempts":2,"rawSegments":377,"canonicalSegments":31,"expansions":71739,"length":3770,"uniqueLength":3770,"reusedLength":0,"bends":21,"congestionRejections":1964,"elapsedMs":142.2652}
+PASS: P04 routing contracts assertions=6408 branches=6
+
+P07_SMALL linked=false policy=ONE_LAYER outcome=SUCCESS expansions=8315 vias=0 length=1040
+P07_SMALL linked=false policy=SPARSE_LINK outcome=SUCCESS expansions=8315 vias=0 length=1040
+P07_SMALL linked=false policy=RESTRICTED_TWO_LAYER outcome=SUCCESS expansions=3405 vias=2 length=700
+P07_SMALL linked=false policy=FULLER_TWO_LAYER outcome=SUCCESS expansions=670 vias=2 length=700
+P07_SMALL linked=true policy=ONE_LAYER outcome=LEFT:BRANCH_QUALITY_LIMIT expansions=13160 vias=0 length=0
+P07_SMALL linked=true policy=SPARSE_LINK outcome=SUCCESS expansions=57 vias=0 length=540
+P07_SMALL linked=true policy=RESTRICTED_TWO_LAYER outcome=SUCCESS expansions=57 vias=0 length=540
+P07_SMALL linked=true policy=FULLER_TWO_LAYER outcome=SUCCESS expansions=57 vias=0 length=540
+PASS: P07 two-layer contracts assertions=1077
+
+PASS: Pcb layer routing resumption contracts assertions=2203
+
+PASS: focused current contracts; 3 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

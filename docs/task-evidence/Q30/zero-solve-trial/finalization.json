@@ -25,9 +25,9 @@
   "gateEvidence": {
     "repairedNative": {"status": "PASS", "elapsedSeconds": 48.5587746, "exitCode": 0, "a07Assertions": 271837, "temporalAssertions": 83, "generationBudgetAssertions": 25, "normalPolicyAssertions": 325, "receipt": "gates/native-r3.json.gz"},
     "repairedGwt": {"status": "PASS", "elapsedSeconds": 85.5935064, "permutations": 5, "receipt": "gates/gwt-r3.json.gz"},
-    "compiledA07": {"status": "PASS", "elapsedSeconds": 1.283089, "negativeCanaries": 3, "receipt": "runs/A07/compiled-a07-report.json.gz"},
-    "correctedFixtureNative": {"status": "PASS", "elapsedSeconds": 47.7924081, "receipt": "gates/native-r2.json.gz", "note": "Before inverse-propagation review and repair"},
-    "correctedFixtureGwt": {"status": "PASS", "elapsedSeconds": 88.778205, "permutations": 5, "receipt": "gates/gwt-r2.json.gz", "note": "Before inverse-propagation review and repair"}
+    "compiledA07": {"status": "PASS", "elapsedSeconds": 1.283089, "negativeCanaries": 3, "receipt": "runs/A07/cases/001-zero-solve-r3-a07.report.json.gz"},
+    "correctedFixtureNative": {"status": "PASS", "elapsedSeconds": 47.7924081, "receipt": "gates/native-r2-corrected-fixture.json.gz", "note": "Before inverse-propagation review and repair"},
+    "correctedFixtureGwt": {"status": "PASS", "elapsedSeconds": 88.778205, "permutations": 5, "receipt": "gates/gwt-r2-corrected-fixture.json.gz", "note": "Before inverse-propagation review and repair"}
   },
   "plannedSequence": [["Z", "7"], ["F", "7"], ["F", "13"], ["Z", "13"], ["Z", "64"], ["F", "64"], ["F", "7"], ["Z", "7"]],
   "notRun": [

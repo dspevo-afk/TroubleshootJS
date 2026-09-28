@@ -1,0 +1,310 @@
+{
+  "schema": "q30-routing-bookkeeping-comparison@1",
+  "status": "ACCEPTED_INTERMEDIATE",
+  "integratedSourceGates": "PASS",
+  "qualification": "Q30_BLOCKED_NOT_ACCEPTED",
+  "candidateIntegrated": true,
+  "baselineCommit": "a57ffc30b04d306daf0355e44d218de4175bb9ea",
+  "control": "finite-predicate-candidate",
+  "candidate": "routing-bookkeeping-candidate",
+  "declaredBeforeTiming": true,
+  "declaredSequence": [
+    "R7",
+    "F7",
+    "F13",
+    "R13",
+    "R64",
+    "F64",
+    "F7",
+    "R7"
+  ],
+  "completedRuns": [
+    {
+      "label": "routing-bookkeeping-01-R7",
+      "arm": "routingCandidate",
+      "status": "PASS",
+      "seed": "7",
+      "coldMs": 86074,
+      "proofMs": 63089,
+      "routingMs": 17317,
+      "totalWork": 468,
+      "hypothesisWork": 390,
+      "cleanupSeconds": 1.2403032000001986,
+      "sourceSha256": "38bdc250ecadc039793cdd5b9acfed722cf844018668f36ace2c5ded49497f24",
+      "webSha256": "633693045d098d1e9d2ed8008ad2445cbbb2daffab6d4d54a01f6529856d8b00",
+      "inputInventoryStable": true,
+      "reportSha256": "40401074af5ab4da778c6b70d556caf992300560ed9f4cef838e40c6fbadd4c2"
+    },
+    {
+      "label": "routing-bookkeeping-02-F7",
+      "arm": "finiteControl",
+      "status": "PASS",
+      "seed": "7",
+      "coldMs": 91038,
+      "proofMs": 63471,
+      "routingMs": 22020,
+      "totalWork": 468,
+      "hypothesisWork": 390,
+      "cleanupSeconds": 1.2249631000013324,
+      "sourceSha256": "e5bee82740aa9ccc163a90b6615cb6058005e57dfe9229d6110dbdeb6f1f5527",
+      "webSha256": "2d8dcfa3e29ad208e124c43c416f9f6f2368492985e03834285a62e362ee8e85",
+      "inputInventoryStable": true,
+      "reportSha256": "3eaf1a4509a84c197dcafd2b9d99115d90eb4d950b322486905dc1c7a55721d6"
+    },
+    {
+      "label": "routing-bookkeeping-03-F13",
+      "arm": "finiteControl",
+      "status": "PASS",
+      "seed": "13",
+      "coldMs": 98361,
+      "proofMs": 69838,
+      "routingMs": 22433,
+      "totalWork": 464,
+      "hypothesisWork": 390,
+      "cleanupSeconds": 0.9419575999927474,
+      "sourceSha256": "e5bee82740aa9ccc163a90b6615cb6058005e57dfe9229d6110dbdeb6f1f5527",
+      "webSha256": "2d8dcfa3e29ad208e124c43c416f9f6f2368492985e03834285a62e362ee8e85",
+      "inputInventoryStable": true,
+      "reportSha256": "4e3cb4450a06ca9d307d4e8fc97b025c0801f25cc167dcbd298e36b376f318c1"
+    },
+    {
+      "label": "routing-bookkeeping-04-R13",
+      "arm": "routingCandidate",
+      "status": "PASS",
+      "seed": "13",
+      "coldMs": 92615,
+      "proofMs": 69115,
+      "routingMs": 17478,
+      "totalWork": 464,
+      "hypothesisWork": 390,
+      "cleanupSeconds": 1.0207547000027262,
+      "sourceSha256": "38bdc250ecadc039793cdd5b9acfed722cf844018668f36ace2c5ded49497f24",
+      "webSha256": "633693045d098d1e9d2ed8008ad2445cbbb2daffab6d4d54a01f6529856d8b00",
+      "inputInventoryStable": true,
+      "reportSha256": "22a9b3017730a624dc0318b3a9c00ef2909edd5b624e8f26f4fba4023c2c9464"
+    },
+    {
+      "label": "routing-bookkeeping-05-R64",
+      "arm": "routingCandidate",
+      "status": "PASS",
+      "seed": "64",
+      "coldMs": 80748,
+      "proofMs": 64209,
+      "routingMs": 10489,
+      "totalWork": 446,
+      "hypothesisWork": 390,
+      "cleanupSeconds": 1.2822780999995302,
+      "sourceSha256": "38bdc250ecadc039793cdd5b9acfed722cf844018668f36ace2c5ded49497f24",
+      "webSha256": "633693045d098d1e9d2ed8008ad2445cbbb2daffab6d4d54a01f6529856d8b00",
+      "inputInventoryStable": true,
+      "reportSha256": "82de339b442ba6ed18bca114217726b6e10b639ee37253d42c037053b891cd2f"
+    },
+    {
+      "label": "routing-bookkeeping-06-F64",
+      "arm": "finiteControl",
+      "status": "PASS",
+      "seed": "64",
+      "coldMs": 89046,
+      "proofMs": 69219,
+      "routingMs": 13628,
+      "totalWork": 446,
+      "hypothesisWork": 390,
+      "cleanupSeconds": 0.8976222000055714,
+      "sourceSha256": "e5bee82740aa9ccc163a90b6615cb6058005e57dfe9229d6110dbdeb6f1f5527",
+      "webSha256": "2d8dcfa3e29ad208e124c43c416f9f6f2368492985e03834285a62e362ee8e85",
+      "inputInventoryStable": true,
+      "reportSha256": "8505ddc945385c9404146c018d090e7f25772c6fc428e2961ee38a535994dfdc"
+    },
+    {
+      "label": "routing-bookkeeping-07-F7",
+      "arm": "finiteControl",
+      "status": "PASS",
+      "seed": "7",
+      "coldMs": 86589,
+      "proofMs": 60390,
+      "routingMs": 20985,
+      "totalWork": 468,
+      "hypothesisWork": 390,
+      "cleanupSeconds": 1.047465600000578,
+      "sourceSha256": "e5bee82740aa9ccc163a90b6615cb6058005e57dfe9229d6110dbdeb6f1f5527",
+      "webSha256": "2d8dcfa3e29ad208e124c43c416f9f6f2368492985e03834285a62e362ee8e85",
+      "inputInventoryStable": true,
+      "reportSha256": "eaa68ac0e3659cfe85fdf55e6bc9a1a545fd6da837aa9a6cacfa4a4e41bdda01"
+    },
+    {
+      "label": "routing-bookkeeping-08-R7",
+      "arm": "routingCandidate",
+      "status": "PASS",
+      "seed": "7",
+      "coldMs": 80852,
+      "proofMs": 60027,
+      "routingMs": 15700,
+      "totalWork": 468,
+      "hypothesisWork": 390,
+      "cleanupSeconds": 1.1787534000031883,
+      "sourceSha256": "38bdc250ecadc039793cdd5b9acfed722cf844018668f36ace2c5ded49497f24",
+      "webSha256": "633693045d098d1e9d2ed8008ad2445cbbb2daffab6d4d54a01f6529856d8b00",
+      "inputInventoryStable": true,
+      "reportSha256": "490b9a02e67425aab00dcd9cc58fcabfa6f68e1c41a05d423f79ec9ea9f6ea1f"
+    }
+  ],
+  "pairs": [
+    {
+      "pair": "R7/F7",
+      "candidate": "routing-bookkeeping-01-R7",
+      "control": "routing-bookkeeping-02-F7",
+      "status": "PASS",
+      "negativeCanaries": 37,
+      "candidateSavingsMs": {
+        "cold": 4964,
+        "proof": 382,
+        "routing": 4703
+      }
+    },
+    {
+      "pair": "F13/R13",
+      "candidate": "routing-bookkeeping-04-R13",
+      "control": "routing-bookkeeping-03-F13",
+      "status": "PASS",
+      "negativeCanaries": 37,
+      "candidateSavingsMs": {
+        "cold": 5746,
+        "proof": 723,
+        "routing": 4955
+      }
+    },
+    {
+      "pair": "R64/F64",
+      "candidate": "routing-bookkeeping-05-R64",
+      "control": "routing-bookkeeping-06-F64",
+      "status": "PASS",
+      "negativeCanaries": 37,
+      "candidateSavingsMs": {
+        "cold": 8298,
+        "proof": 5010,
+        "routing": 3139
+      }
+    },
+    {
+      "pair": "F7/R7",
+      "candidate": "routing-bookkeeping-08-R7",
+      "control": "routing-bookkeeping-07-F7",
+      "status": "PASS",
+      "negativeCanaries": 37,
+      "candidateSavingsMs": {
+        "cold": 5737,
+        "proof": 363,
+        "routing": 5285
+      }
+    }
+  ],
+  "medianRoutingSavingsMs": 4829.0,
+  "medianColdSavingsMs": 5741.5,
+  "coldSavingsAttribution": "Cold savings are measured paired differences; do not attribute the full cold-time change to routing because proof time and run-to-run variation contribute.",
+  "scopeDistinction": "The eight-run isolated comparison is against base a57ffc30b04d306daf0355e44d218de4175bb9ea, which contains the earlier finite-predicate change. The routing candidate adds exactly the three recorded paths. Right-looking LU and plan4 are separate trials and are not part of this isolated comparison. Root has integrated the three routing paths into the current combined source; final combined-source gates remain pending.",
+  "limitations": [
+    "Seed 13 routing-candidate cold time is 92,615 ms, above the 90,000 ms target.",
+    "Intermediate optimization acceptance is pending final integrated-source gates.",
+    "This does not qualify Q30 or enable normal publication."
+  ],
+  "gates": {
+    "native": {
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedSeconds": 33.4420668,
+      "suites": [
+        "P07TwoLayerContractTest",
+        "PcbLayerRoutingResumptionContractTest",
+        "P04RoutingContractTest"
+      ]
+    },
+    "gwt": {
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedSeconds": 90.6453101,
+      "target": "maintained JDK8/GWT five-permutation build"
+    },
+    "a07": {
+      "status": "PASS",
+      "strictReader": "PASS",
+      "negativeCanaries": 3
+    }
+  },
+  "integratedSource": {
+    "status": "INTEGRATED_PENDING_FINAL_GATES",
+    "sourceCommit": "02450fb07ea63dc6fa0966b0a3b79f04a12f7c9f",
+    "files": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "beforeSha256": "f3221c8c4b34eeb3720dd3852f99df08224239e05c01d148204272f9cf9936b6",
+        "candidateSha256": "5996f040f1243039b56e3e5cbff9fc904a902af0c5d9da9a507a84b2b0a4db7f"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "beforeSha256": "733774f6062ee95a40d08e1cb8bb698e161284f5af628e395a4beefa1d5a56e5",
+        "candidateSha256": "c728dd8a1e2c164e366019db76050c4ec32281b7112f0e71f38769710c77e1d9"
+      },
+      {
+        "path": "tests/contracts/P07TwoLayerContractTest.java",
+        "beforeSha256": "8ebd70dca050f0c823282d36b17c32ce0878b94e7f649ab9235004d5e7b2608f",
+        "candidateSha256": "481bc31450593a7dada73b39d2f3d04df0e6034550b81ae9b6843b0d4d773dce"
+      }
+    ]
+  },
+  "finalIntegratedGateDirectory": "final-integrated-source/",
+  "finalIntegratedGateSummary": {
+    "schema": "q30-routing-bookkeeping-integrated-gates@1",
+    "status": "PASS",
+    "native": {
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedSeconds": 35.391672,
+      "suites": [
+        "P07TwoLayerContractTest",
+        "PcbLayerRoutingResumptionContractTest",
+        "P04RoutingContractTest"
+      ]
+    },
+    "gwt": {
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedSeconds": 82.0174975,
+      "label": "root-routing-integrated-gwt"
+    },
+    "browserCanaries": {
+      "status": "PASS",
+      "a07": {
+        "state": "PASS:a07",
+        "operationSeconds": 1.285430499992799,
+        "strictReader": "PASS",
+        "negativeCanaries": 3
+      },
+      "disabledCatalog": {
+        "state": "BLOCKED:normal-catalog-disabled",
+        "operationSeconds": 0.4882847999979276,
+        "normalCatalogEnabled": false,
+        "generationStarted": false,
+        "snapshotCaptured": false,
+        "liveOwnerMutation": false
+      }
+    },
+    "inputAudit": {
+      "status": "PASS",
+      "fileCountBefore": 1525,
+      "fileCountAfter": 1525,
+      "sha256Before": "ed0c95550a0a120337d667d7e53bfd47be58ba19a0edbade49d4326caedb8f6c",
+      "sha256After": "ed0c95550a0a120337d667d7e53bfd47be58ba19a0edbade49d4326caedb8f6c",
+      "sourceSha256": "f25a20b6551e01a4fe9ba1404c31a1714fcc7518463855975e929e07e4b74454",
+      "webSha256": "484025391e491c45b5ba3194c6e2354980d0c5013b447fff8c35b2a0ed70c2d4"
+    },
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 0.9443175999913365,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    },
+    "allPageHttpConsoleAttributeListenerNavigationErrorsZero": true,
+    "sourceScope": "Combined current source includes finite-predicate, right-looking LU, plan4, and routing-bookkeeping work; router integration receipt records the three routing paths."
+  }
+}

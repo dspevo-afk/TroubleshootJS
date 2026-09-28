@@ -507,8 +507,10 @@ final class PcbNetRouter {
             if(tail==0) throw new Rejected("ORPHAN_TREE");
             while(head<tail) {
                 int key=queue[head++],x=key%gridWidth,y=key/gridWidth;
-                for(int next:new int[]{x>0?key-1:-1,x+1<gridWidth?key+1:-1,y>0?key-gridWidth:-1,y+1<gridHeight?key+gridWidth:-1})
-                    if(next>=0&&distance[next]==Integer.MAX_VALUE) { distance[next]=distance[key]+1;queue[tail++]=next; }
+                if(x>0) { int next=key-1; if(distance[next]==Integer.MAX_VALUE) { distance[next]=distance[key]+1;queue[tail++]=next; } }
+                if(x+1<gridWidth) { int next=key+1; if(distance[next]==Integer.MAX_VALUE) { distance[next]=distance[key]+1;queue[tail++]=next; } }
+                if(y>0) { int next=key-gridWidth; if(distance[next]==Integer.MAX_VALUE) { distance[next]=distance[key]+1;queue[tail++]=next; } }
+                if(y+1<gridHeight) { int next=key+gridWidth; if(distance[next]==Integer.MAX_VALUE) { distance[next]=distance[key]+1;queue[tail++]=next; } }
             }
             return distance;
         }

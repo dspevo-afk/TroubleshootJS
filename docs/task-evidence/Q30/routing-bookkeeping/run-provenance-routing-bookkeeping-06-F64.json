@@ -1,0 +1,239 @@
+{
+  "schema": "q30-routing-bookkeeping-run-provenance@1",
+  "label": "routing-bookkeeping-06-F64",
+  "arm": "finiteControl",
+  "variant": "F",
+  "seed": "64",
+  "runOutcome": "PASS",
+  "exitCode": 0,
+  "startedUtc": "2026-09-28T03:09:44.309533+00:00",
+  "finishedUtc": "2026-09-28T03:11:34.223921+00:00",
+  "operationSeconds": 109.91438269999344,
+  "runnerMonotonicSeconds": 112.51445149999927,
+  "cold": {
+    "elapsedMs": 89046,
+    "proofElapsedMs": 69219,
+    "routingElapsedMs": 13628,
+    "totalWork": 446,
+    "hypothesisWork": 390,
+    "cleanupComplete": true,
+    "profileKeys": []
+  },
+  "warm": {
+    "elapsedMs": 20106,
+    "proofElapsedMs": 0,
+    "routingElapsedMs": 13946,
+    "totalWork": 57,
+    "hypothesisWork": 1,
+    "cleanupComplete": true,
+    "profileKeys": []
+  },
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 0.8976222000055714,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "case": {
+    "outcome": "PASS",
+    "timedOut": false,
+    "terminalReached": true,
+    "stateMatch": true,
+    "pageErrorCount": 0,
+    "httpErrorCount": 0,
+    "consoleErrorCount": 0,
+    "attributeReadErrorCount": 0,
+    "listenerCleanupErrorCount": 0,
+    "navigationError": null
+  },
+  "inputInventory": {
+    "beforeAfterStable": true,
+    "beforeManifestSha256": "189523a5f3929698c0803ee66e11a8ff41a5f8d330579d51e4bfdc319dbda149",
+    "afterManifestSha256": "189523a5f3929698c0803ee66e11a8ff41a5f8d330579d51e4bfdc319dbda149",
+    "sourceSha256": "e5bee82740aa9ccc163a90b6615cb6058005e57dfe9229d6110dbdeb6f1f5527",
+    "webSha256": "2d8dcfa3e29ad208e124c43c416f9f6f2368492985e03834285a62e362ee8e85",
+    "fileCount": 1524
+  },
+  "processOwnership": {
+    "runnerPid": 22560,
+    "runnerCreated": "2026-09-28T03:09:43.0279260Z",
+    "runnerExecutable": "python3.13.exe",
+    "browserProcessesBeforeCases": [
+      {
+        "pid": 7004,
+        "parent": 20492,
+        "created": "2026-09-28T03:09:43.7488740Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 22756,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:43.7601230Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 12020,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:43.8318130Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 15328,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:43.8354280Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 13512,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:43.8615560Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 12768,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:43.9408590Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 16204,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:43.9464590Z",
+        "executable": "msedge.exe"
+      }
+    ],
+    "ownedProcessesBefore": [
+      {
+        "pid": 7004,
+        "parent": 20492,
+        "created": "2026-09-28T03:09:43.7488740Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 22756,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:43.7601230Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 12020,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:43.8318130Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 15328,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:43.8354280Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 13512,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:43.8615560Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 12768,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:43.9408590Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 16204,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:43.9464590Z",
+        "executable": "msedge.exe"
+      }
+    ],
+    "ownedProcessesBeforeClose": [
+      {
+        "pid": 7004,
+        "parent": 20492,
+        "created": "2026-09-28T03:09:43.7488740Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 22756,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:43.7601230Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 12020,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:43.8318130Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 15328,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:43.8354280Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 13512,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:43.8615560Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 12768,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:43.9408590Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 16204,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:43.9464590Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 7924,
+        "parent": 7004,
+        "created": "2026-09-28T03:09:44.7421700Z",
+        "executable": "msedge.exe"
+      },
+      {
+        "pid": 21272,
+        "parent": 7004,
+        "created": "2026-09-28T03:10:43.9739560Z",
+        "executable": "msedge.exe"
+      }
+    ],
+    "runnerBefore": {
+      "path": "compiled_attribute_acceptance.py",
+      "size": 30609,
+      "sha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5"
+    },
+    "runnerAfter": {
+      "path": "compiled_attribute_acceptance.py",
+      "size": 30609,
+      "sha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5"
+    },
+    "profile": "<isolated-run-profile>",
+    "port": 51461,
+    "baseUrlHost": "127.0.0.1"
+  },
+  "rawApplicationReport": {
+    "file": "application-report-routing-bookkeeping-06-F64.json.gz",
+    "rawBytes": 1545683,
+    "rawSha256": "8505ddc945385c9404146c018d090e7f25772c6fc428e2961ee38a535994dfdc",
+    "gzipBytes": 228388,
+    "gzipSha256": "c529cfa1ee433caf1f4924cd8345df5f87ecd0d1104ec51bd465b917722585fe"
+  },
+  "spec": {
+    "cases": [
+      {
+        "name": "routing-bookkeeping-06-F64",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=64",
+        "stateAttribute": "data-tsj-q30-coordinator-state",
+        "expectedState": "PASS:complete",
+        "reportAttribute": "data-tsj-q30-coordinator-report",
+        "timeoutSeconds": 600
+      }
+    ]
+  }
+}

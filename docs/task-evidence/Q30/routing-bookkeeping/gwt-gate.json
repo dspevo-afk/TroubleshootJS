@@ -1,0 +1,9 @@
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "routing-bookkeeping-gwt",
+  "exitCode": 0,
+  "startedUtc": "2026-09-28T02:55:36.5191055Z",
+  "finishedUtc": "2026-09-28T02:57:07.1686718Z",
+  "elapsedSeconds": 90.6453101,
+  "status": "PASS"
+}

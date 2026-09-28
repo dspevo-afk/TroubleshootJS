@@ -1,0 +1,84 @@
+{
+  "schema": "q30-routing-bookkeeping-input-inventory-verification@1",
+  "status": "PASS",
+  "arms": {
+    "routingCandidate": {
+      "verifiedRuns": [
+        "routing-bookkeeping-01-R7",
+        "routing-bookkeeping-04-R13",
+        "routing-bookkeeping-05-R64",
+        "routing-bookkeeping-08-R7"
+      ],
+      "allBeforeAfterInventoriesMatch": true,
+      "canonicalInventorySha256": "e03ecefe32d81a97afa702153fa2cfab1976249479aefece0eff6b0239a88bef",
+      "fileCount": 1524,
+      "sourceSha256": "38bdc250ecadc039793cdd5b9acfed722cf844018668f36ace2c5ded49497f24",
+      "webSha256": "633693045d098d1e9d2ed8008ad2445cbbb2daffab6d4d54a01f6529856d8b00",
+      "perRun": [
+        {
+          "label": "routing-bookkeeping-01-R7",
+          "beforeSha256": "14a650f45f78fc35bf7f1e806d4bfab229c33c78760a6b2c6adb77fb98b6624b",
+          "afterSha256": "14a650f45f78fc35bf7f1e806d4bfab229c33c78760a6b2c6adb77fb98b6624b",
+          "beforeAfterEqual": true
+        },
+        {
+          "label": "routing-bookkeeping-04-R13",
+          "beforeSha256": "14a650f45f78fc35bf7f1e806d4bfab229c33c78760a6b2c6adb77fb98b6624b",
+          "afterSha256": "14a650f45f78fc35bf7f1e806d4bfab229c33c78760a6b2c6adb77fb98b6624b",
+          "beforeAfterEqual": true
+        },
+        {
+          "label": "routing-bookkeeping-05-R64",
+          "beforeSha256": "14a650f45f78fc35bf7f1e806d4bfab229c33c78760a6b2c6adb77fb98b6624b",
+          "afterSha256": "14a650f45f78fc35bf7f1e806d4bfab229c33c78760a6b2c6adb77fb98b6624b",
+          "beforeAfterEqual": true
+        },
+        {
+          "label": "routing-bookkeeping-08-R7",
+          "beforeSha256": "14a650f45f78fc35bf7f1e806d4bfab229c33c78760a6b2c6adb77fb98b6624b",
+          "afterSha256": "14a650f45f78fc35bf7f1e806d4bfab229c33c78760a6b2c6adb77fb98b6624b",
+          "beforeAfterEqual": true
+        }
+      ]
+    },
+    "finiteControl": {
+      "verifiedRuns": [
+        "routing-bookkeeping-02-F7",
+        "routing-bookkeeping-03-F13",
+        "routing-bookkeeping-06-F64",
+        "routing-bookkeeping-07-F7"
+      ],
+      "allBeforeAfterInventoriesMatch": true,
+      "canonicalInventorySha256": "d8b2d7d6c30facf8045da9e7d644fb3f0be356f60f42b5b63429bead83a2f39a",
+      "fileCount": 1524,
+      "sourceSha256": "e5bee82740aa9ccc163a90b6615cb6058005e57dfe9229d6110dbdeb6f1f5527",
+      "webSha256": "2d8dcfa3e29ad208e124c43c416f9f6f2368492985e03834285a62e362ee8e85",
+      "perRun": [
+        {
+          "label": "routing-bookkeeping-02-F7",
+          "beforeSha256": "189523a5f3929698c0803ee66e11a8ff41a5f8d330579d51e4bfdc319dbda149",
+          "afterSha256": "189523a5f3929698c0803ee66e11a8ff41a5f8d330579d51e4bfdc319dbda149",
+          "beforeAfterEqual": true
+        },
+        {
+          "label": "routing-bookkeeping-03-F13",
+          "beforeSha256": "189523a5f3929698c0803ee66e11a8ff41a5f8d330579d51e4bfdc319dbda149",
+          "afterSha256": "189523a5f3929698c0803ee66e11a8ff41a5f8d330579d51e4bfdc319dbda149",
+          "beforeAfterEqual": true
+        },
+        {
+          "label": "routing-bookkeeping-06-F64",
+          "beforeSha256": "189523a5f3929698c0803ee66e11a8ff41a5f8d330579d51e4bfdc319dbda149",
+          "afterSha256": "189523a5f3929698c0803ee66e11a8ff41a5f8d330579d51e4bfdc319dbda149",
+          "beforeAfterEqual": true
+        },
+        {
+          "label": "routing-bookkeeping-07-F7",
+          "beforeSha256": "189523a5f3929698c0803ee66e11a8ff41a5f8d330579d51e4bfdc319dbda149",
+          "afterSha256": "189523a5f3929698c0803ee66e11a8ff41a5f8d330579d51e4bfdc319dbda149",
+          "beforeAfterEqual": true
+        }
+      ]
+    }
+  }
+}

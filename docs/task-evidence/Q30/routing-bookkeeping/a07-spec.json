@@ -1,0 +1,12 @@
+{
+  "cases": [
+    {
+      "stateAttribute": "data-tsj-verification",
+      "expectedState": "PASS:a07",
+      "timeoutSeconds": 600,
+      "name": "routing-bookkeeping-a07",
+      "reportAttribute": "data-tsj-a07-report",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyA07=true&tsjDebug=true&running=true"
+    }
+  ]
+}

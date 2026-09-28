@@ -1,194 +1,123 @@
 # Current checkpoint: Q30 BLOCKED / NOT ACCEPTED
 
-Branch `codex/q30-multirail-qualification`; checkpoint parent
-`d825d0f6df667f470d5a8bcad74f1d607b206cfc` (`Optimize LU trailing-matrix updates`).
-Accepted solver lineage is `0b29680c7daa62123732b91e3c1157e8ba0d6abd`
-plus the validated finite-predicate delta and the right-looking LU delta secured
-in this checkpoint.
-No push or completion email. Normal Q30 remains disabled; U06/U07/Q60 and later
-milestones remain unstarted. Full final matrices are NOT RUN while hard gates fail.
+Branch `codex/q30-multirail-qualification`; local HEAD
+`b23acecea4b53325f88f6374960355beb47389e5`
+(`Fail browser acceptance on attribute-read errors`). The next local checkpoint
+secures the validated routing delta. No push or completion email. Normal Q30
+publication stays disabled; U06/U07/Q60 and later milestones are unstarted.
+Full final acceptance matrices are NOT RUN while hard gates fail.
 
-The mandatory initial independent review and local checkpoint are complete:
-`7a30a3fdcfa1dc9092d546edcb01bfa9ed435a36`, finite-zero factor skip, native/GWT
-and eight counterbalanced fresh cold runs PASS. Four paired savings are
-11.155–14.706 s; all resulting cold times still exceed 90 s. Subsequent accepted
-column-row references/pivot optimization at `0b29680` preserves complete finite
-scanning, arithmetic order and unconditional reference cleanup. Native four-suite
-gate, GWT5, compiled A07, strict negative readers and six fresh paired runs PASS:
-seeds 7/13/64 improve from 106.647/114.733/103.935 s to 86.809/93.243/82.580 s.
-Exact requests, all hypotheses/proofs/work, physical admission and cache isolation
-match. These are accepted intermediate optimizations, not Q30 acceptance.
-[Initial review](task-evidence/Q30/intermediate-optimization/README.md);
-[accepted LU evidence](task-evidence/Q30/sparse-column-references/README.md).
+The mandatory FIRST independent review, focused regression and fresh cold
+comparison were completed and committed at `7a30a3fdcfa1dc9092d546edcb01bfa9ed435a36`.
+Eight counterbalanced runs preserved exact request, proof, physical, work and
+cache behavior; paired savings were 11.155–14.706 s and every cold result still
+exceeded 90 s. [Initial review/evidence](task-evidence/Q30/intermediate-optimization/README.md).
 
-Monotonic low-intrusion stage profiling explains 106.350 s: solver stepping
+Accepted intermediate optimizations, each with independent review, native/GWT,
+compiled solver checks, fresh counterbalanced timing and cleanup evidence:
+
+- `0b29680`: column row references/whole-row pivots, 19.838–21.490 s paired cold
+  savings; seed 13 still 93.243 s.
+  [Evidence](task-evidence/Q30/sparse-column-references/README.md).
+- `a57ffc3`: equivalent IEEE finite predicate, median 2.065 s paired savings;
+  seed 13 still 91.583 s. [Evidence](task-evidence/Q30/finite-predicate/README.md).
+- `d825d0f`: right-looking LU with preserved per-entry arithmetic order,
+  complete finite scans and cleared pivot-local scratch; median 1.855 s paired
+  savings; seed 13 still 92.306 s.
+  [Evidence](task-evidence/Q30/right-looking-lu/README.md).
+- Current validated routing delta: typed heap and direct ordered neighbor
+  visits, with exact comparator, expansions, physical checks and observer limits.
+  Eight fresh runs preserve all proof/physical/work/cache and input parity.
+  Routing savings 4.703/4.955/3.139/5.285 s, median 4.829 s. Median total cold
+  savings 5.742 s includes host variation: unchanged seed-64 proof varies 5.010 s,
+  and repeated seed-7 cold ranges are 4.449 s control/5.222 s candidate.
+  Seed 13 still takes 92.615 s. Final combined-source native3 PASS 35.392 s,
+  GWT5 PASS 82.017 s, compiled A07 PASS 1.285 s plus three negative canaries,
+  disabled-normal canary, stable 1,525 inputs and owned cleanup PASS.
+  [Evidence](task-evidence/Q30/routing-bookkeeping/README.md).
+
+These isolated gains are not assumed additive or normal-corpus acceptance.
+Application timing in the comparisons uses the unchanged report wall clocks;
+host totals and wall-clock drift use monotonic timing. The stage profiles use
+monotonic instrumentation. The 106.350 s profile accounts for solver stepping
 79.421 s, routing 20.070 s, placement 0.826 s, analyze/setup 1.224 s,
-construction 0.377 s and physical admission 0.075 s, with every hypothesis,
-diagnostic/service/repair/retest/completion purpose, rejected route candidate,
-repeated work and cleanup accounted separately. Accepted-LU follow-up is
-96.359 s: solver 66.219 s, routing/validators 22.542 s. Unchanged controls vary
-by over 10 s, so corpus headroom is still missing.
-[Stage profile](task-evidence/Q30/stage-profile/README.md);
-[refined profile](task-evidence/Q30/route-and-lu-profile/README.md);
-[accepted-kernel profile](task-evidence/Q30/accepted-kernel-profile/README.md).
-Packed index, row-list, bounded via ancestry and immutable routing geometry
-trials were rejected and removed; their patches, failures and evidence remain
-in their respective evidence directories. Routing source remains accepted 0b.
+construction 0.377 s, physical admission 0.075 s, settling 1.271 s,
+proof cleanup 0.082 s and remaining glue. Every diagnostic/service/repair/retest/
+completion purpose, candidate route rejection and repeated work is itemized.
+The accepted-kernel follow-up is 96.359 s, including solver 66.219 s and
+routing/validators 22.542 s.
+[Stages](task-evidence/Q30/stage-profile/README.md);
+[route/kernel refinement](task-evidence/Q30/route-and-lu-profile/README.md);
+[follow-up](task-evidence/Q30/accepted-kernel-profile/README.md).
+Actual CDP attribution identifies LU as the largest remaining contributor,
+but profiling added about 13 s versus its fresh control, so sampled costs are
+ranking evidence only. [CPU limits](task-evidence/Q30/cdp-cpu-profile/README.md).
 
-Actual CDP CPU canaries now validate exact GWT source/symbol attribution, with
-initial attribution failure and deliberate unsupported-command failure retained.
-The 1 ms profile takes 100.442 s cold versus a fresh uninstrumented 87.473 s
-control. Both preserve complete proof/context/work and cleanup; this material
-difference prevents using sampled times as production stage costs. Qualitative
-ranking still identifies LU, solved-voltage publication, finite guards and
-routing. [CPU evidence and limitations](task-evidence/Q30/cdp-cpu-profile/README.md).
-Read-only publication review found no substantial safe shortcut: ordered model
-callbacks and live wire-current refreshes remain necessary, with recipients
-already prepared by analysis. The small remaining node-vector cast cost does
-not justify another lifecycle cache. Sampled array allocation largely belongs
-to routing, whose remaining costs are under review. No publication change was made.
-The finite-range predicate is now an accepted intermediate optimization,
-integrated with target line endings preserved and secured in this local checkpoint. It passes
-four native suites (46.940 s; 271,483 A07 assertions), GWT5 (80.942 s), compiled
-A07 and strict negative canaries. Eight fresh counterbalanced runs save
-1.333–2.646 s per pair (median 2.065 s). The seed-7 repeat ranges are 0.319 s
-for control and 0.022 s for candidate; proof accounts for the gain while routing
-does not improve. Exact requests, complete proof/physical/work/cache parity,
-input audits and cleanup PASS. Seed 13 still takes 91.583 s, so Q30 remains
-BLOCKED. The IEEE finite predicate retains every call and rejects the same NaN
-and infinities; vectors retain the old predicate as an independent oracle.
-[Intermediate evidence](task-evidence/Q30/finite-predicate/README.md).
-The right-looking LU trial is accepted as an intermediate optimization and
-integrated with final-source gates PASS and secured by this local checkpoint.
-Static review found no blocker; four native suites PASS (48.223 s, 271,351 A07 assertions and cleanup),
-GWT5 PASS (86.585 s), and compiled A07/strict negative canaries PASS. All eight
-fresh counterbalanced runs pass full request/physical/proof/work/cache parity,
-37 negative canaries per pair and owned cleanup. Four paired cold savings are
-2.558/1.587/0.935/2.122 s (median 1.855 s); seed-7 ranges are 0.283 s control
-and 0.719 s candidate. Seed 13 still takes 92.306 s. Per-entry arithmetic order
-and full finite scanning remain; pivot-local O(n) scratch is cleared after
-each pivot and on every exit. Neither accepted change introduces mutable
-graph/proof reuse. Combined finite/LU gains are not assumed to be additive.
-[Right-looking LU evidence](task-evidence/Q30/right-looking-lu/README.md).
+Rejected packed-index, row-list, bounded-via and geometry trials are removed,
+with failures and evidence retained. Zero-coefficient triangular solve also
+remains rejected: review found hidden nonfinite propagation during transformer
+inversion; the repair passed native4/GWT5/A07 but its first pair was
+94.810 s versus 89.794 s control. Remaining six runs were NOT RUN under its
+early-stop rule; no zero-solve source was integrated. `02450fb` retains this
+trial; the current documentation corrects three receipt links.
+[Zero-solve evidence](task-evidence/Q30/zero-solve-trial/README.md).
 
-The uncommitted plan-4 candidate extends the same family through one/two active
-channels, real reference arrangements and purposeful support blocks. Replay /4,
-native metadata driver, strict readers and a disabled normal-deadline verifier
-are integrated. This is NOT scale qualification. A frozen proposal preserves
-all 51 original roots and appends 26 using structural coverage only; each
-representative/held-out cohort covers counts 20–40 and all 18 axes. All 77 exact
-Java plans match an independent oracle. The 64-root native cap is unchanged;
-eventual corpus batches remain 51+26. Six structural/replay suites PASS in
-55.691 s, pure plan export/cleanup PASS in 34.568 s. Initial compile, LED-pin,
-template-grammar and driver metadata failures are retained and repaired.
-Actual GWT5 PASS in 90.415 s; compiled disabled-normal canary PASS (0.677 s
-application, cleanup 0.905 s) before any generation, snapshot or mutation.
-[Current candidate evidence](task-evidence/Q30/scale-plan-4/README.md).
+The uncommitted plan-4 scale candidate provides purposeful one/two-channel
+topologies and support blocks, current replay /4, family-owned power-domain
+registration and exact current readers. It is NOT accepted scale coverage.
+The frozen 77-root proposal retains all original 51 and adds 26 by structural
+coverage only; representative and held-out cohorts each span counts 20–40
+and 18 topology axes. Java plans match an independent oracle for all 77.
+Structural native6 PASS 55.691 s; focused ten service + ten finer-step cases
+PASS 296.863 s after retained/repaired driver, metadata and wait-test failures.
+The production settling/threshold contracts are unchanged.
+[Candidate and failures](task-evidence/Q30/scale-plan-4/README.md).
 
-The next focused service run exposed a real missing registration: Q30 declared
-its power-domain contract but never installed the runtime capability. That
-registration is now fixed through the existing physical owner, with a test of
-the installed owner's differential reference and retained storage obligation.
-The prior ten service cases FAILed on the missing capability (99.168 s including
-cleanup); sensitivity was NOT RUN. The fresh two-seed/five-fault gate FAILed
-in 293.181 s including cleanup: all ten service cases PASS, seed-7 sensitivity
-Java cases PASS but the driver rejects their new metadata, and all five seed-13
-sensitivity cases fail the simulated 250 ms service-wait assertion. The driver
-now validates exact authenticated metadata. A focused timing probe measures a
-1.083 ps accumulated deficit across five calls, each within the executor's
-1 ps tolerance. Five cumulative deadlines and a final 2 ps request cushion now
-preserve the original aggregate assertion; the seed-13 DREV sensitivity case
-PASSes (44.215 s including cleanup) with actual elapsed above 250 ms. A fresh
-combined r5 native gate now PASSes (296.863 s including cleanup): all ten service
-and all ten sensitivity cases pass. The strict reader's obsolete final-marker
-grammar was repaired with exact authenticated support/topology/canonical-plan
-binding for final, pair and seed rows. Selected-census read and 24 corruption,
-census, metadata and scope canaries PASS; the failed read remains retained.
-Runtime power-contract identity also now enters
-the dependency context and requires fresh strict evidence. No complete electrical v4 corpus or normal timing acceptance
-is claimed. Root's final-source GWT5 build with finite predicate and power-domain
-registration PASSed (81.555 s), along with compiled A07/negative and disabled-Q30
-canaries. The newer combined right-looking/finite/plan-4 GWT5 build now PASSes
-(88.988 s); compiled A07/three negative canaries and disabled-Q30/no-mutation
-canary PASS (1.265/0.481 s application; 0.942 s owned cleanup). These do not
-qualify the full family. The first frozen 20-package edge (10387) reaches
-compiled D01 application PASS in 53.228 s. Its strict cold+warm reader now
-PASSes ten fault pairs after correcting nested field framing and plan-derived
-cleanup binding counts; 64 actual-receipt corruption and seven synthetic power
-context canaries PASS. The earlier failed reads remain retained. This is one
-focused 20-package proof fixture. The frozen 40-package representative (10014)
-also PASSes compiled D01 (208.587 s), strict cold+warm ten-pair read and 62
-corruption plus seven synthetic power canaries; owned cleanup PASS in 1.354 s.
-Audit finds six recovered 10-second attribute-read timeouts in the 40-package
-host case. Its electrical receipt/reader PASS is retained, but host polling is
-FAIL/limited despite the runner aggregate saying PASS; this is not clean browser
-or timing evidence. Neither fixture establishes full scale or normal acceptance.
+Actual D01 at seed 10387/20 packages passes app/strict proof and clean host
+polling. Seed 10014/40 packages passes app/strict proof but retains HOST POLLING
+FAIL: six 10-second attribute timeouts, likely during synchronous 31–33 s
+route construction. A resumable private-verifier draft is being prepared in
+OS-temp; it is not integrated. Held-out edges and broad scale qualification
+remain NOT RUN. [D01 receipts](task-evidence/Q30/scale-plan-4/d01-one-edge/README.md).
+An isolated one-flag catalog-enabled fixture hits the actual normal deadline
+on seed 7/37 packages: 90,066.6 ms monotonic, 378/390 proof units, 448 total work,
+max advance 1,264.3 ms. App cleanup/restoration PASS 1.3 ms; host cleanup PASS
+0.830 s. No successful normal receipt exists; remaining normal cases are NOT RUN.
+[Normal failure](task-evidence/Q30/scale-plan-4/normal-policy-focused/README.md).
 
-The isolated zero-coefficient trial is rejected. Zero-coefficient
-triangular solve fails its first native gate (50.925 s, exit 2, cleanup PASS)
-because a pivoted oracle fixture does not retain its asserted sparse zeros;
-the assertion is retained and a block-structured pivot fixture now proves the
-intended pivot and zeros. The four-suite rerun PASSes (47.792 s, 271,804 solver
-assertions and cleanup). Its isolated GWT5 build PASSes in 88.778 s, but
-independent review finds a real numerical-failure propagation regression:
-zero times a nonfinite solved value can be suppressed during transformer
-inversion. A finite-referenced-value guard and independent inverse regression
-now preserve historical nonfinite propagation. The repaired trial passes native4
-(48.559 s, 271,837 solver assertions), GWT5 (85.594 s), compiled A07/three
-negative canaries, but is REJECTED after its first fresh cold pair: 94.810 s
-versus 89.794 s control, with 4.396 s more proof time and full proof/physical/work
-parity plus 37 negative canaries PASS. Both cleanups PASS. The remaining six
-predeclared runs are NOT RUN under the early-stop rule; one pair is not a
-population slowdown estimate. Neither version was integrated into root.
-[Rejected trial and retained failures](task-evidence/Q30/zero-solve-trial/README.md).
-Routing queue/neighbor-allocation source is frozen in scratch and independently
-reviewed without blockers. Three native route/order/resumption/physical suites
-PASS (33.442 s, including cleanup). GWT5 (90.645 s) and compiled A07/three
-negative canaries PASS. Three fresh pairs preserve exact proof/physical/work
-parity, 37 negative canaries each and clean host polling. Routing savings are
-4.703/4.955/3.139 s. Seed-64 also shows a 5.010 s difference in unchanged proof
-work, so the entire cold gain is not attributed to routing. The reversed
-seed-7 pair remains active; this trial is not integrated or accepted yet. A separate
-catalog-enabled normal-qualification fixture is isolated in OS-temp with exactly
-one eligibility flag changed. Its GWT5 build PASSes (90.105 s). The first
-fresh normal-policy seed-7 run FAILs at the actual cumulative deadline:
-90,066.6 ms monotonic, 378/390 hypothesis units and 448 total work units.
-Recorded healthy/physical/hypothesis work takes 26,184/80/61,585 ms; route/proof
-summary fields are unset on timeout and must not be interpreted as zero cost.
-Maximum advance is 1,264.3 ms. Application cleanup and predecessor restoration
-PASS in 1.3 ms; host-owned cleanup PASS in 0.830 s with no survivors. This is
-an application TIMEOUT, not a host timeout. Remaining focused normal cases are
-NOT RUN while performance work resumes. Production stays disabled.
-A private, no-reuse sampler is being prepared to measure adjacent unchanged
-nonlinear LU inputs within one analyzed owner. No numerical cache is implemented.
-Its initial copied WAR contained build output; automatic approval review blocked
-removing that copied folder before execution. The copy is preserved. A fresh
-source-only build directory will be created after the two instrumented files
-freeze; no sampler build or runtime measurement has happened.
+The host runner now rejects recorded attribute errors even after terminal/report
+recovery. Actual Edge reproduced the old false PASS, then passed the fixed
+positive/negative expectations with owned cleanup. An audit of 25 prior timing
+receipts found no such host errors. This fix does not erase the 40-part D01
+failure. [Runner fix](task-evidence/Q30/attribute-read-failure/README.md).
 
-Frozen contracts: 90,000 ms cumulative, 640 units, 5,000 ms per operation;
-isolated private 90–300 s measurement; family-generic request/coordinator and
-StagedFamilyCapability ownership; exact signed-long replay/candidate ordering;
-complete physical/electrical/diagnostic/service/retest proofs and cleanup.
+A private, no-reuse LU sampler is still under review. Its first draft sampled
+1,021 calls apart instead of adjacent pairs and mislabeled GWT 2.7's wall clock
+as monotonic. Both defects are being repaired before measurement, with a narrow
+coordinator execution window to exclude successor work. No numerical cache
+exists. Historical rejected-index evidence had only 18/712 exact adjacent
+matches; it is not evidence for the current plan-4 source.
 
-Resources: completed browser/server jobs report owned cleanup PASS and no
-survivors. The isolated routing bookkeeping cold comparison is active; completed
-native/build/browser gates have stopped. Root WAR matches right-looking LU,
-finite predicate and plan-4 source. Isolated timing does not qualify
-the unaccepted plan-4 worktree. Frozen
-accepted/control and trial fixtures remain in unique OS-temp scratch. Earlier
-administrative scratch deletion is policy-blocked separately from runtime
-cleanup (exact earlier leaves in acceptance-continuation/resource-cleanup.json).
-The additional retained task copy is lu-repetition-profile-candidate/source/war;
-its deletion was rejected as blocked by policy before any command ran.
-Preserve unrelated Desktop checkout edits and pre-existing test `__pycache__`.
-Plan-4 source/tests/driver/replay/readers/evidence are uncommitted and unstaged;
-the validated finite predicate/evidence is secured in the parent HEAD. Right-looking
-LU, its independent regression and evidence are the only optimization source
-delta committed at HEAD; the normal-verifier hook stays unstaged.
-No push is authorized.
-Next: resolve focused electrical gates, build final source, measure isolated
-solver trials, then prove scale and normal cold timing before any final matrix.
+Frozen contracts remain 90,000 ms cumulative, 640 work units, 5,000 ms per
+operation; isolated private 90–300 s measurement; generic request/coordinator
+and StagedFamilyCapability ownership; exact signed-long replay/order; complete
+physical/electrical/diagnostic/service/retest proofs, cache isolation and cleanup.
+No deadline, hypothesis, settling requirement or acceptance threshold is relaxed.
+
+Resources: completed native/build/browser jobs have stopped; owned browser/server
+cleanup reports PASS with no survivors. No heavy gate is active. Root WAR matches
+the combined routing/finite/right-LU/plan-4 source. Frozen trials remain in unique
+OS-temp. Automatic approval review blocked administrative scratch deletion
+separately from runtime cleanup: earlier exact leaves are recorded in
+acceptance-continuation/resource-cleanup.json; the additional retained copy is
+lu-repetition-profile-candidate/source/war. No deletion retry is authorized or
+planned; a fresh source-only sampler fixture will be created. Unrelated Desktop
+checkout edits and pre-existing test __pycache__ remain preserved. Plan-4 source,
+tests, driver, verifier hook/readers/evidence remain unstaged and uncommitted.
+
+Next: secure routing locally; finish the corrected low-intrusion LU measurement
+and investigate structural solver costs; repair private D01 route responsiveness.
+Then prove normal cold timing with margin and scale before any final matrix.
 
 # Historical checkpoint: Q30 acceptance continuation — BLOCKED / NOT ACCEPTED
 

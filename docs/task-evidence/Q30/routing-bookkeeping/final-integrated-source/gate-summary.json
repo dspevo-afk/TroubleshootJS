@@ -1,0 +1,55 @@
+{
+  "schema": "q30-routing-bookkeeping-integrated-gates@1",
+  "status": "PASS",
+  "native": {
+    "status": "PASS",
+    "exitCode": 0,
+    "elapsedSeconds": 35.391672,
+    "suites": [
+      "P07TwoLayerContractTest",
+      "PcbLayerRoutingResumptionContractTest",
+      "P04RoutingContractTest"
+    ]
+  },
+  "gwt": {
+    "status": "PASS",
+    "exitCode": 0,
+    "elapsedSeconds": 82.0174975,
+    "label": "root-routing-integrated-gwt"
+  },
+  "browserCanaries": {
+    "status": "PASS",
+    "a07": {
+      "state": "PASS:a07",
+      "operationSeconds": 1.285430499992799,
+      "strictReader": "PASS",
+      "negativeCanaries": 3
+    },
+    "disabledCatalog": {
+      "state": "BLOCKED:normal-catalog-disabled",
+      "operationSeconds": 0.4882847999979276,
+      "normalCatalogEnabled": false,
+      "generationStarted": false,
+      "snapshotCaptured": false,
+      "liveOwnerMutation": false
+    }
+  },
+  "inputAudit": {
+    "status": "PASS",
+    "fileCountBefore": 1525,
+    "fileCountAfter": 1525,
+    "sha256Before": "ed0c95550a0a120337d667d7e53bfd47be58ba19a0edbade49d4326caedb8f6c",
+    "sha256After": "ed0c95550a0a120337d667d7e53bfd47be58ba19a0edbade49d4326caedb8f6c",
+    "sourceSha256": "f25a20b6551e01a4fe9ba1404c31a1714fcc7518463855975e929e07e4b74454",
+    "webSha256": "484025391e491c45b5ba3194c6e2354980d0c5013b447fff8c35b2a0ed70c2d4"
+  },
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 0.9443175999913365,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "allPageHttpConsoleAttributeListenerNavigationErrorsZero": true,
+  "sourceScope": "Combined current source includes finite-predicate, right-looking LU, plan4, and routing-bookkeeping work; router integration receipt records the three routing paths."
+}

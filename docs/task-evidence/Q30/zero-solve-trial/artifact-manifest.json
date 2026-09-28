@@ -827,10 +827,10 @@
       "source": "authored evidence",
       "artifact": "finalization.json",
       "sourceSha256": null,
-      "sanitizedContentSha256": "edf411318f31f0e184069f6ea176c38a364dbfd9b91e2facc9113634d55c4c66",
+      "sanitizedContentSha256": "12691b190f28e8b3aff5f6605f97d5c83855a844c13cec571362618eeb96aa86",
       "gzipSha256": null,
-      "sourceBytes": 3410,
-      "sanitizedBytes": 3410,
+      "sourceBytes": 3461,
+      "sanitizedBytes": 3461,
       "gzipBytes": null
     }
   ]

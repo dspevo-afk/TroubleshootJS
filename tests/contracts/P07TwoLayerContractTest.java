@@ -4,6 +4,7 @@ public final class P07TwoLayerContractTest {
     private static int checks;
     static void require(boolean ok,String why) { checks++; if(!ok) throw new AssertionError(why); }
     public static void main(String[] args) {
+        typedQueueMatchesPriorityQueue();
         for(boolean linked:new boolean[]{false,true}) {
             P06FactoryLinkFixtures.Fixture fixture=new P06FactoryLinkFixtures.Fixture(true,0,0,!linked);
             String original=fixture.layout.geometryFingerprint();
@@ -24,6 +25,42 @@ public final class P07TwoLayerContractTest {
         }
         negatives(); barriers(); surfacePadEnvelope();
         System.out.println("PASS: P07 two-layer contracts assertions="+checks);
+    }
+    @SuppressWarnings({"rawtypes","unchecked"})
+    private static void typedQueueMatchesPriorityQueue() {
+        try {
+            Class<?> nodeType=Class.forName(PcbLayerRoutingPrototype.class.getName()+"$Node");
+            java.lang.reflect.Constructor<?> nodeConstructor=nodeType.getDeclaredConstructor(
+                int.class,int.class,int.class,int.class,int.class,int.class,int.class,int.class,nodeType);
+            nodeConstructor.setAccessible(true);
+            Class<?> queueType=Class.forName(PcbLayerRoutingPrototype.class.getName()+"$NodeQueue");
+            java.lang.reflect.Constructor<?> queueConstructor=queueType.getDeclaredConstructor();
+            queueConstructor.setAccessible(true);
+            Object queue=queueConstructor.newInstance();
+            java.lang.reflect.Method add=queueType.getDeclaredMethod("add",nodeType);
+            java.lang.reflect.Method poll=queueType.getDeclaredMethod("poll");
+            add.setAccessible(true); poll.setAccessible(true);
+            java.util.PriorityQueue oracle=new java.util.PriorityQueue();
+            require(poll.invoke(queue)==oracle.poll(),"empty typed queue matches PriorityQueue");
+            for(int i=0;i<1024;i++) {
+                int total=i%17,heuristic=(i/3)%(total+1),cost=total-heuristic;
+                Object node=nodeConstructor.newInstance((i*11)%31,(i/13)%2,(i/7)%5,(i/37)%5,
+                    cost,heuristic,i,31,null);
+                add.invoke(queue,node); oracle.add(node);
+                if(i%5==2 || i%7==3) require(poll.invoke(queue)==oracle.poll(),
+                    "typed queue poll identity matches PriorityQueue during mixed operations");
+            }
+            Object tiedFirst=nodeConstructor.newInstance(4,1,2,3,20,6,2048,31,null);
+            Object tiedSecond=nodeConstructor.newInstance(4,1,2,3,20,6,2049,31,null);
+            require(((Comparable)tiedFirst).compareTo(tiedSecond)<0,"serial orders equal A* priority fields");
+            add.invoke(queue,tiedFirst); oracle.add(tiedFirst);
+            add.invoke(queue,tiedSecond); oracle.add(tiedSecond);
+            while(!oracle.isEmpty()) require(poll.invoke(queue)==oracle.poll(),
+                "typed queue preserves full PriorityQueue dequeue identity order");
+            require(poll.invoke(queue)==null,"typed queue returns null after drain");
+        } catch(Exception failure) {
+            throw new AssertionError("typed route queue must match PriorityQueue identity order",failure);
+        }
     }
     private static void reject(Runnable action,String why) {
         boolean rejected=false;

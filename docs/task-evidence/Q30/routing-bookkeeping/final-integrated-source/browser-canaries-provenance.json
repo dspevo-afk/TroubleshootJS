@@ -1,0 +1,97 @@
+{
+  "schema": "q30-routing-integrated-canary-provenance@1",
+  "status": "PASS",
+  "startedUtc": "2026-09-28T03:28:58.000349+00:00",
+  "finishedUtc": "2026-09-28T03:29:04.065257+00:00",
+  "caseCount": 2,
+  "runnerErrors": [],
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 0.9443175999913365,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "ed0c95550a0a120337d667d7e53bfd47be58ba19a0edbade49d4326caedb8f6c",
+    "afterSha256": "ed0c95550a0a120337d667d7e53bfd47be58ba19a0edbade49d4326caedb8f6c",
+    "sourceSha256Before": "f25a20b6551e01a4fe9ba1404c31a1714fcc7518463855975e929e07e4b74454",
+    "sourceSha256After": "f25a20b6551e01a4fe9ba1404c31a1714fcc7518463855975e929e07e4b74454",
+    "webSha256Before": "484025391e491c45b5ba3194c6e2354980d0c5013b447fff8c35b2a0ed70c2d4",
+    "webSha256After": "484025391e491c45b5ba3194c6e2354980d0c5013b447fff8c35b2a0ed70c2d4",
+    "runnerBeforeSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+    "runnerAfterSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+    "fileCountBefore": 1525,
+    "fileCountAfter": 1525,
+    "seconds": 0.34021340000617784
+  },
+  "runner": {
+    "pid": 14780,
+    "created": "2026-09-28T03:28:57.8504690Z",
+    "executable": "python3.13.exe"
+  },
+  "browserProcessesBeforeCases": [
+    {
+      "pid": 21836,
+      "parent": 24184,
+      "created": "2026-09-28T03:29:00.4102530Z",
+      "executable": "msedge.exe"
+    },
+    {
+      "pid": 18704,
+      "parent": 21836,
+      "created": "2026-09-28T03:29:00.4375820Z",
+      "executable": "msedge.exe"
+    },
+    {
+      "pid": 3488,
+      "parent": 21836,
+      "created": "2026-09-28T03:29:00.5076210Z",
+      "executable": "msedge.exe"
+    },
+    {
+      "pid": 22868,
+      "parent": 21836,
+      "created": "2026-09-28T03:29:00.5115490Z",
+      "executable": "msedge.exe"
+    },
+    {
+      "pid": 22780,
+      "parent": 21836,
+      "created": "2026-09-28T03:29:00.5419900Z",
+      "executable": "msedge.exe"
+    },
+    {
+      "pid": 4112,
+      "parent": 21836,
+      "created": "2026-09-28T03:29:00.6014900Z",
+      "executable": "msedge.exe"
+    },
+    {
+      "pid": 24980,
+      "parent": 21836,
+      "created": "2026-09-28T03:29:00.6051700Z",
+      "executable": "msedge.exe"
+    }
+  ],
+  "port": 63002,
+  "profile": "<isolated-canary-profile>",
+  "baseUrlHost": "127.0.0.1",
+  "cases": [
+    {
+      "state": "PASS:a07",
+      "operationSeconds": 1.285430499992799,
+      "reportSha256": "27ad5d21949ea8d6616bbb638747de0b6643357b298a02dba82a3b38d9f10ef5",
+      "outcome": "PASS",
+      "observedState": "PASS:a07"
+    },
+    {
+      "state": "BLOCKED:normal-catalog-disabled",
+      "operationSeconds": 0.4882847999979276,
+      "reportSha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+      "outcome": "PASS",
+      "observedState": "BLOCKED:normal-catalog-disabled"
+    }
+  ]
+}

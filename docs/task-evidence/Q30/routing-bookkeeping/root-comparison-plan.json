@@ -1,0 +1,21 @@
+{
+  "schema": "routing-bookkeeping-root-plan-v1",
+  "declaredBeforeTiming": true,
+  "baseline": "a57ffc30b04d306daf0355e44d218de4175bb9ea",
+  "control": "finite-predicate-candidate",
+  "candidate": "routing-bookkeeping-candidate",
+  "sequence": [
+    "R7",
+    "F7",
+    "F13",
+    "R13",
+    "R64",
+    "F64",
+    "F7",
+    "R7"
+  ],
+  "earlyStop": "Correctness failure or no useful initial paired gain; retain failures and NOT RUN rows",
+  "gates": "Native P07/P04/resumption, GWT5, compiled A07 strict plus three negative canaries PASS",
+  "preserved": "Exact request, all physical/proof/work/cache semantics; fresh owned process/profile per run; no normal acceptance claim",
+  "interpretation": "Repeatable benefit required; within-variant ranges and attribution checked"
+}

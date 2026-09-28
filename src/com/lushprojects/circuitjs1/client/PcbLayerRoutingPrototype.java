@@ -3,7 +3,6 @@ package com.lushprojects.circuitjs1.client;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.PriorityQueue;
 import java.util.Vector;
 
 /** Bounded two-face routing engine; adoption remains controlled by the physical-policy owner. */
@@ -174,6 +173,43 @@ final class PcbLayerRoutingPrototype {
             return serial<other.serial?-1:serial==other.serial?0:1;
         }
     }
+    /** Typed heap uses Node.compareTo directly; each route Node serial breaks remaining ties. */
+    private static final class NodeQueue {
+        private Node[] values=new Node[128];
+        private int size;
+        void add(Node value) {
+            if(value==null) throw new IllegalArgumentException("Missing search node");
+            if(size==values.length) {
+                Node[] larger=new Node[values.length*2];
+                System.arraycopy(values,0,larger,0,size);
+                values=larger;
+            }
+            int at=size++;
+            while(at>0) {
+                int parent=(at-1)>>>1;
+                Node above=values[parent];
+                if(value.compareTo(above)>=0) break;
+                values[at]=above; at=parent;
+            }
+            values[at]=value;
+        }
+        Node poll() {
+            if(size==0) return null;
+            Node result=values[0],value=values[--size];
+            values[size]=null;
+            if(size>0) {
+                int at=0,half=size>>>1;
+                while(at<half) {
+                    int child=(at<<1)+1,right=child+1;
+                    if(right<size && values[right].compareTo(values[child])<0) child=right;
+                    if(value.compareTo(values[child])<=0) break;
+                    values[at]=values[child]; at=child;
+                }
+                values[at]=value;
+            }
+            return result;
+        }
+    }
     private static final class Search {
         final TroubleshootBoard board;
         final PcbBoardLayout layout;
@@ -289,8 +325,10 @@ final class PcbLayerRoutingPrototype {
             while(head<tail) {
                 if((head&4095)==0) observer.check(pass);
                 int c=queue[head++],cx=c%width,cy=c/width;
-                int[] next={cx>0?c-1:-1,cx+1<width?c+1:-1,cy>0?c-width:-1,cy+1<height?c+width:-1};
-                for(int n:next) if(n>=0 && distance[n]<0) { distance[n]=distance[c]+GRID; queue[tail++]=n; }
+                if(cx>0) { int n=c-1; if(distance[n]<0) { distance[n]=distance[c]+GRID; queue[tail++]=n; } }
+                if(cx+1<width) { int n=c+1; if(distance[n]<0) { distance[n]=distance[c]+GRID; queue[tail++]=n; } }
+                if(cy>0) { int n=c-width; if(distance[n]<0) { distance[n]=distance[c]+GRID; queue[tail++]=n; } }
+                if(cy+1<height) { int n=c+width; if(distance[n]<0) { distance[n]=distance[c]+GRID; queue[tail++]=n; } }
             }
             return distance;
         }
@@ -300,7 +338,7 @@ final class PcbLayerRoutingPrototype {
             final boolean[] goal;
             final int[] distance;
             final HashMap<Integer,Node> best=new HashMap<Integer,Node>();
-            final PriorityQueue<Node> queue=new PriorityQueue<Node>();
+            final NodeQueue queue=new NodeQueue();
             int expanded;
             Node found;
             BranchSearch(String net,PcbPadPlacement start,PcbPadPlacement root) {
@@ -312,6 +350,14 @@ final class PcbLayerRoutingPrototype {
                         distance[cell(start)],serial++,cells,null));
                 observer.check(pass);
             }
+            void offerStep(Node current,int n,int direction) {
+                if(!faces[current.layer].permitsLayerStep(x(current.cell),y(current.cell),x(n),y(n),net,start,root) ||
+                        !rules.permits(net,PcbConductorBuilder.stroke(x(current.cell),y(current.cell),x(n),y(n)))) return;
+                int cost=current.cost+GRID+(current.layer==primary?0:policy.secondaryCost)+
+                    (current.direction!=4 && current.direction!=direction?35:0);
+                offer(queue,best,new Node(n,current.layer,direction,current.transitions,cost,
+                    distance[n],serial++,cells,current));
+            }
             void advanceOne() {
                 Node current=queue.poll();
                 if(current==null) throw new Exhausted(net+":NO_PATH");
@@ -322,17 +368,10 @@ final class PcbLayerRoutingPrototype {
                 expanded++; budget.expanded++;
                 if(goal[current.layer*cells+current.cell]) { found=current; return; }
                 int cx=current.cell%width,cy=current.cell/width;
-                int[] next={cy>0?current.cell-width:-1,cx+1<width?current.cell+1:-1,
-                    cy+1<height?current.cell+width:-1,cx>0?current.cell-1:-1};
-                for(int direction=0;direction<4;direction++) {
-                    int n=next[direction]; if(n<0) continue;
-                    if(!faces[current.layer].permitsLayerStep(x(current.cell),y(current.cell),x(n),y(n),net,start,root) ||
-                            !rules.permits(net,PcbConductorBuilder.stroke(x(current.cell),y(current.cell),x(n),y(n)))) continue;
-                    int cost=current.cost+GRID+(current.layer==primary?0:policy.secondaryCost)+
-                        (current.direction!=4 && current.direction!=direction?35:0);
-                    offer(queue,best,new Node(n,current.layer,direction,current.transitions,cost,
-                        distance[n],serial++,cells,current));
-                }
+                if(cy>0) offerStep(current,current.cell-width,0);
+                if(cx+1<width) offerStep(current,current.cell+1,1);
+                if(cy+1<height) offerStep(current,current.cell+width,2);
+                if(cx>0) offerStep(current,current.cell-1,3);
                 if(current.direction!=4 && current.transitions<policy.transitions &&
                         pathViaFits(current) && viaFits(net,x(current.cell),y(current.cell)))
                     offer(queue,best,new Node(current.cell,1-current.layer,4,current.transitions+1,
@@ -441,7 +480,7 @@ final class PcbLayerRoutingPrototype {
                 observer.check(pass);
             }
         }
-        void offer(PriorityQueue<Node> queue,HashMap<Integer,Node> best,Node node) {
+        void offer(NodeQueue queue,HashMap<Integer,Node> best,Node node) {
             Node previous=best.get(node.key);
             if(previous!=null && previous.cost<=node.cost) return;
             best.put(node.key,node); queue.add(node);

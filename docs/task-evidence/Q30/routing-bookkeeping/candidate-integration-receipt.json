@@ -1,0 +1,21 @@
+{
+  "status": "INTEGRATED_PENDING_FINAL_GATES",
+  "sourceCommit": "02450fb07ea63dc6fa0966b0a3b79f04a12f7c9f",
+  "files": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "beforeSha256": "f3221c8c4b34eeb3720dd3852f99df08224239e05c01d148204272f9cf9936b6",
+      "candidateSha256": "5996f040f1243039b56e3e5cbff9fc904a902af0c5d9da9a507a84b2b0a4db7f"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "beforeSha256": "733774f6062ee95a40d08e1cb8bb698e161284f5af628e395a4beefa1d5a56e5",
+      "candidateSha256": "c728dd8a1e2c164e366019db76050c4ec32281b7112f0e71f38769710c77e1d9"
+    },
+    {
+      "path": "tests/contracts/P07TwoLayerContractTest.java",
+      "beforeSha256": "8ebd70dca050f0c823282d36b17c32ce0878b94e7f649ab9235004d5e7b2608f",
+      "candidateSha256": "481bc31450593a7dada73b39d2f3d04df0e6034550b81ae9b6843b0d4d773dce"
+    }
+  ]
+}

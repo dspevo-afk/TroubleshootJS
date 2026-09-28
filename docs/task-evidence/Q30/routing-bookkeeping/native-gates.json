@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 33.4420668,
+  "phase": "focused native route/order/resumption/physical regression including maintained cleanup",
+  "suites": [
+    "P07TwoLayerContractTest",
+    "PcbLayerRoutingResumptionContractTest",
+    "P04RoutingContractTest"
+  ]
+}

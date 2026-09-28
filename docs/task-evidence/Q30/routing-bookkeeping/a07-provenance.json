@@ -1,0 +1,40 @@
+{
+  "schema": "q30-routing-bookkeeping-a07-provenance@1",
+  "label": "routing-bookkeeping-a07",
+  "status": "PASS",
+  "startedUtc": "2026-09-28T02:58:29.159144+00:00",
+  "finishedUtc": "2026-09-28T02:58:30.428990+00:00",
+  "operationSeconds": 1.2698396000050707,
+  "case": {
+    "outcome": "PASS",
+    "terminalReached": true,
+    "stateMatch": true,
+    "timedOut": false,
+    "pageErrors": [],
+    "httpErrors": [],
+    "consoleErrors": [],
+    "attributeReadErrors": [],
+    "listenerCleanupErrors": [],
+    "navigationError": null
+  },
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 1.2865033999987645,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "runner": {
+    "pid": 22472,
+    "created": "2026-09-28T02:58:26.2692110Z",
+    "executable": "python3.13.exe"
+  },
+  "rawApplicationReport": {
+    "file": "a07-application-report.json.gz",
+    "rawBytes": 80898,
+    "rawSha256": "5655b28618d1e90cee8ececf69ed520e11523e105e6c2287a407b6897b75b468",
+    "gzipBytes": 9393,
+    "gzipSha256": "c1f45996ead2070227eed7aac1e43a8c0603b103afce2ba64e517c71835049c2"
+  },
+  "strictReader": "PASS: exact maintained Test-A07Report; three negative corruption canaries"
+}
