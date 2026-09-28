@@ -460,7 +460,7 @@ def run_case(page, base_url, case, output):
     report_match = (case["reportAttribute"] is None or
                     (report is not None and report_json_valid is True))
     browser_error = bool(page_errors or http_errors or console_errors or
-                         listener_cleanup_errors)
+                         read_errors or listener_cleanup_errors)
     expected_failure_canary = (case["expectedState"] or case["expectedPrefix"]).startswith("FAIL")
     if timed_out:
         outcome = "TIMEOUT"

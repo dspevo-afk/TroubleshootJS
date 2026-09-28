@@ -1,0 +1,1 @@
+{"cases":[{"name":"attribute-read-positive","path":"circuitjs.html","stateAttribute":"data-tsj-host-canary-state","expectedState":"PASS","terminalPrefixes":["PASS","FAIL"],"timeoutSeconds":45,"reportAttribute":"data-tsj-host-canary-report"}]}

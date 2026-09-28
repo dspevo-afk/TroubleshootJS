@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en"
+      data-tsj-host-canary-state="WAIT"
+      data-tsj-host-canary-report='{"status":"PASS","fixture":"attribute-read-timeout"}'>
+<head>
+  <meta charset="utf-8">
+  <title>Compiled attribute reader timeout canary</title>
+  <script>
+    window.addEventListener("DOMContentLoaded", function () {
+      var savedRoot = document.documentElement;
+      window.setTimeout(function () {
+        savedRoot.remove();
+        window.setTimeout(function () {
+          document.appendChild(savedRoot);
+          savedRoot.setAttribute("data-tsj-host-canary-state", "PASS");
+        }, 15000);
+      }, 500);
+    });
+  </script>
+</head>
+<body>Static host-only fixture; no simulator or controller code.</body>
+</html>

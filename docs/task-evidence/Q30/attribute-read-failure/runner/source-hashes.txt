@@ -1,0 +1,5 @@
+runner=tests/browser/compiled_attribute_acceptance.py
+preFixSha256=4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5
+postFixSha256=1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4
+head=02450fb07ea63dc6fa0966b0a3b79f04a12f7c9f
+branch=codex/q30-multirail-qualification
