@@ -1,0 +1,26 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: Q30 generation measurement budget contracts 25 assertions
+
+PASS: Q30 normal execution policy contracts 325 assertions
+
+P07_SMALL linked=false policy=ONE_LAYER outcome=SUCCESS expansions=8315 vias=0 length=1040
+P07_SMALL linked=false policy=SPARSE_LINK outcome=SUCCESS expansions=8315 vias=0 length=1040
+P07_SMALL linked=false policy=RESTRICTED_TWO_LAYER outcome=SUCCESS expansions=3405 vias=2 length=700
+P07_SMALL linked=false policy=FULLER_TWO_LAYER outcome=SUCCESS expansions=670 vias=2 length=700
+P07_SMALL linked=true policy=ONE_LAYER outcome=LEFT:BRANCH_QUALITY_LIMIT expansions=13160 vias=0 length=0
+P07_SMALL linked=true policy=SPARSE_LINK outcome=SUCCESS expansions=57 vias=0 length=540
+P07_SMALL linked=true policy=RESTRICTED_TWO_LAYER outcome=SUCCESS expansions=57 vias=0 length=540
+P07_SMALL linked=true policy=FULLER_TWO_LAYER outcome=SUCCESS expansions=57 vias=0 length=540
+PASS: P07 two-layer contracts assertions=1665
+
+PASS: Pcb layer routing resumption contracts assertions=2203
+
+PASS: focused current contracts; 4 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

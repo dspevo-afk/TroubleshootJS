@@ -1,0 +1,9 @@
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "geometry-build",
+  "exitCode": 0,
+  "startedUtc": "2026-09-27T23:53:21.6520912Z",
+  "finishedUtc": "2026-09-27T23:54:51.5090095Z",
+  "elapsedSeconds": 89.8520914,
+  "status": "PASS"
+}

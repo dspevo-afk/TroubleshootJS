@@ -1,0 +1,24 @@
+{
+  "status": "REJECTED_RUNTIME_BENEFIT_NOT_ESTABLISHED",
+  "acceptedSource": "0b29680c7daa62123732b91e3c1157e8ba0d6abd",
+  "reason": "Reverse-order repeat saves only113ms routing and regresses192ms cold; unchangedcontrol varies10.133s. Correctness passed; insufficient repeatable benefit.",
+  "patchSha256": "c68bf10185049a2b021b7d358b46a8900881316bfa9914865dd8cd5c3fd39e02",
+  "patchChecks": {
+    "candidateReverse": {
+      "exitCode": 0,
+      "diagnostic": ""
+    },
+    "acceptedForward": {
+      "exitCode": 0,
+      "diagnostic": ""
+    }
+  },
+  "removedProductionAndTestDelta": [
+    "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+    "tests/contracts/P07TwoLayerContractTest.java"
+  ],
+  "sourceRestoration": "Accepted router bytes restored; native test matches committed content with worktree CRLF; both tracked diffs empty",
+  "rootWebOutput": "REJECTED_GEOMETRY_CANDIDATE_REBUILD_BEFORE_USE",
+  "normalPublication": "DISABLED",
+  "q30": "BLOCKED"
+}

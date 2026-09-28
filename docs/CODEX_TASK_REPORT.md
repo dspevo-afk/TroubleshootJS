@@ -77,20 +77,28 @@ unexplained variation is retained and reinforces the missing headroom gate.
 All exact steps/trials/factors/proofs/work/cleanup match. LU still dominates
 sampled kernel time; refined routing samples point to via geometry checks.
 [Current profile and limits](task-evidence/Q30/accepted-kernel-profile/README.md).
-Next: validate immutable geometry-bound reuse if its independent oracle passes;
-review remaining LU work. Purposeful scale, strict readers, replay epoch and a
-normal-deadline verifier are in isolated scratch; none is integrated/qualified.
+The immutable routing-geometry trial was also removed. Four native suites and
+cleanup PASS (44.000 s), GWT5 PASS (89.852 s), eight fresh compiled private runs
+and strict proof/physical/work/cache parity PASS. Median paired route savings
+are only 0.474 s; reverse-order seed-7 repeat saves 0.113 s routing and regresses
+0.192 s cold. Unchanged control varies by 10.133 s. Correctness passed, but a
+useful repeatable runtime benefit was not established. Exact patch and all
+results are retained. [Rejected geometry trial](task-evidence/Q30/immutable-routing-geometry/README.md).
+Remaining LU and publication audits found no justified additional change from
+the existing samples; an actual CPU profile is being prepared in scratch.
+Purposeful scale, strict readers, replay epoch and a normal-deadline verifier
+are in isolated scratch; none is integrated/qualified.
 U06/U07/Q60 and later milestones remain unstarted.
 
 Resources: all completed browser/server jobs have maintained ownership receipts,
 cleanup PASS and no survivors. No browser/build is active at this checkpoint.
-Root WAR is the rejected routing trial; rebuild before use. The accepted-reference,
+Root WAR is the rejected geometry candidate; rebuild before use. The accepted-reference,
 columnref-reference and isolated profiler fixtures are retained for continued
 work. Earlier administrative scratch deletion remains policy-blocked separately
 from runtime cleanup; exact leaves are in acceptance-continuation/resource-cleanup.json.
 Preserve the unrelated dirty Desktop checkout and pre-existing
-`tests/contracts/__pycache__/`. Production source matches accepted 0b29680.
-Only evidence/docs changes are pending; profiler and scale edits are isolated.
+`tests/contracts/__pycache__/`. Production source matches accepted 0b29680;
+profiler and scale edits remain isolated. This checkpoint changes evidence/report only.
 No resources from
 the unrelated Desktop checkout were modified.
 
