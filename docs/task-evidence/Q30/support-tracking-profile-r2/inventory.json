@@ -461,8 +461,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 18502,
-    "sha256": "77b096a33716091e9c975b0d203615a338c243e635d40d21e2fe1bb98cbafd39"
+    "bytes": 18683,
+    "sha256": "64f81cca474f19499917e26a49a84f2ba3062a3663bcce5500a3f0fc0027f868"
   },
   {
     "path": "resource-cleanup.json",

@@ -105,8 +105,9 @@ work. Rejected/retried work has exact counts but no independent duration.
 The collector times all calls to coarse owners, analysis, construction, replay,
 settling, source transitions, observations, signature capture and snapshot
 restore. Kernel timing samples the first and every 64th step attempt, including
-all nonlinear trials within the selected step. Stamp timing independently
-samples the first and every 4096th call. All counters run on the full workload;
+all nonlinear trials within the selected step. Stamp timing separately samples
+the first and every 4096th call; these deterministic samples are not statistically
+independent. All counters run on the full workload;
 double counters are guarded below 2^53 and are exact integers here. Category
 timings are inclusive/nested and must **not** be summed into an additive budget.
 
@@ -146,7 +147,7 @@ ON03 timed every stamp within selected kernel steps. Its expanded `doStep`
 estimate was 88.772 s, exceeding the fully timed 83.036 s solver loop. This is
 retained as evidence of observer/sampling bias, not usable phase attribution.
 
-R2 reduced stamp timing to 28,962 independent samples out of 118,624,334 calls.
+R2 reduced stamp timing to 28,962 periodic samples out of 118,624,334 calls.
 ON05 measured only 14.4 ms in those samples, versus 10.4 ms for the paired empty
 timer scope; ON06 measured 15.4 versus 9.8 ms. The naive expansions 58.98/63.08 s
 exceed the enclosing sampled `doStep` estimates 15.93/16.20 s. Both raw expansions
@@ -188,7 +189,9 @@ clears profiling before either parked path and in a `finally`; errors join the
 existing failure and common owner-cleanup path. The same reviewer accepted the
 repair by source inspection. Another read-only reviewer checked final timing
 interpretation, rejected stamp extrapolation and confirmed the blocked outcome.
-Root acceptance remains evidence-only. No independent performance rerun occurred.
+Final read-only packet review found no substantive blocker and requested the
+periodic-sampling wording clarification above. Root acceptance remains
+evidence-only. No independent performance rerun occurred.
 
 ## Reproduction and retained failures
 
