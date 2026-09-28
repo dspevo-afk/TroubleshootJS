@@ -1,0 +1,45 @@
+START native-d01-r7-final
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 34.8066559,
+  "phase": "focused private D01 source compile/diagnostic/plan/temporal/budget/normal-policy contracts including maintained cleanup; browser lifecycle not established",
+  "suites": [
+    "D01DiagnosticContractTest",
+    "Q30PlanContractTest",
+    "Q30TemporalWorkContractTest",
+    "Q30GenerationMeasurementBudgetContractTest",
+    "Q30NormalExecutionPolicyContractTest"
+  ]
+}
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+
+PASS: Q30 generation measurement budget contracts 25 assertions
+
+PASS: Q30 normal execution policy contracts 299 assertions
+
+PASS: D01 diagnostic contracts assertions=168
+
+PASS: focused current contracts; 5 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.
+START d01-r7-final-gwt
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "d01-r7-final-gwt",
+  "exitCode": 0,
+  "startedUtc": "2026-09-28T08:11:57.2865412Z",
+  "finishedUtc": "2026-09-28T08:13:15.6797218Z",
+  "elapsedSeconds": 78.3890028,
+  "status": "PASS"
+}
+[gwt-compile:stdout]       Compiling permutation 4...
+[gwt-compile:stdout]    Compile of permutations succeeded
+[gwt-compile:stdout]    Compilation succeeded -- 75.193s
+[gwt-compile:stdout] Linking into $TASKROOT\scratch\d01-r7-final-preparation\fixture\war\circuitjs1
+[gwt-compile:stdout]    Link succeeded
+[gwt-compile:stdout]    Linking succeeded -- 1.345s
+NATIVE_GWT_PASS_BROWSER_NOT_RUN

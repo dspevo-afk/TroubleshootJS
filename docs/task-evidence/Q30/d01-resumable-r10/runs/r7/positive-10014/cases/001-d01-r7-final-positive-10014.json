@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 1,
+    "name": "d01-r7-final-positive-10014",
+    "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10014",
+    "stateAttribute": "data-tsj-q30-d01-state",
+    "expectedState": "PASS",
+    "expectedPrefix": null,
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 600.0,
+    "reportAttribute": "data-tsj-q30-d01-report"
+  },
+  "url": "http://127.0.0.1:55250/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10014",
+  "startedUtc": "2026-09-28T08:16:53.963583+00:00",
+  "finishedUtc": "2026-09-28T08:19:41.442399+00:00",
+  "operationSeconds": 167.4788114999974,
+  "outcome": "PASS",
+  "terminalReached": true,
+  "stateMatch": true,
+  "observedState": "PASS",
+  "lastObservedState": "PASS",
+  "timedOut": false,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": true,
+  "reportJsonValid": true,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 878680,
+  "reportSha256": "0ed55c61675639a285ecf9d70673a319f5c9e89f12841a6b348681b6eca46f51",
+  "reportFile": "cases/001-d01-r7-final-positive-10014.report.json",
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [],
+  "listenerCleanupErrors": [],
+  "navigationError": null
+}

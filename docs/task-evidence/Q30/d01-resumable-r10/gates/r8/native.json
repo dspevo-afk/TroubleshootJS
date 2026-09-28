@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 33.987644,
+  "phase": "focused private D01 source compile/diagnostic/plan/temporal/budget/normal-policy contracts including maintained cleanup; browser lifecycle not established",
+  "suites": [
+    "D01DiagnosticContractTest",
+    "Q30PlanContractTest",
+    "Q30TemporalWorkContractTest",
+    "Q30GenerationMeasurementBudgetContractTest",
+    "Q30NormalExecutionPolicyContractTest"
+  ]
+}

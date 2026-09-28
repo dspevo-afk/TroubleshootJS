@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 0.047294100004364736,
+  "scope": "synthetic reader metadata negatives only; no browser lifecycle or native exception proof",
+  "readerSha256": "9a289103bfcf634f87a4ec1f02c62fa48bf7b90eb32dfce920940a6994b22dbe",
+  "output": "PASS: strict D01 snapshot and cleanup schemas with mutation guards\n"
+}

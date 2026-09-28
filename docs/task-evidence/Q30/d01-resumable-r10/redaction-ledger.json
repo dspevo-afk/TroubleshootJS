@@ -1,0 +1,488 @@
+{
+  "filesWithNormalizations": [
+    {
+      "normalization": {
+        "bareCrSequencesConverted": 0,
+        "crlfSequencesConverted": 0,
+        "finalLfCount": 1,
+        "preNormalizationContentSha256": "c4b478212543b75327c625118dc52471e2e7d964958c8a3a6349de5289a2103d",
+        "rule": "UTF-8 LF lines; strip trailing spaces/tabs; remove terminal blank lines; exactly one final LF",
+        "storedContentSha256": "24e66cb4312b182b08bb64ef825ebec9702039b1c7b2281af5c27e1d6f302781",
+        "terminalBlankLinesRemoved": 1,
+        "trailingHorizontalWhitespaceBytesRemoved": 0
+      },
+      "path": "tools/history/run_d01_r7_final_boundary_gates.py",
+      "preNormalizationContentSha256": "c4b478212543b75327c625118dc52471e2e7d964958c8a3a6349de5289a2103d",
+      "sourceSha256": "21aa37e7a3c25953fc21b13a61bc6a2df34a0fdccb11a924c084cda3ba55ded9",
+      "storedContentSha256": "24e66cb4312b182b08bb64ef825ebec9702039b1c7b2281af5c27e1d6f302781"
+    },
+    {
+      "normalization": {
+        "bareCrSequencesConverted": 0,
+        "crlfSequencesConverted": 0,
+        "finalLfCount": 1,
+        "preNormalizationContentSha256": "4986f834d4f2c8cf595f1579d65ee8881da2ff1d341ca415b87d8a9a3dbb002f",
+        "rule": "UTF-8 LF lines; strip trailing spaces/tabs; remove terminal blank lines; exactly one final LF",
+        "storedContentSha256": "f7cf7132b23d4795e4759a712763de88ad6008e3e23f4dcd4cc9183e71d107ae",
+        "terminalBlankLinesRemoved": 1,
+        "trailingHorizontalWhitespaceBytesRemoved": 0
+      },
+      "path": "tools/history/run_d01_r7_final_native_gwt_gates.py",
+      "preNormalizationContentSha256": "4986f834d4f2c8cf595f1579d65ee8881da2ff1d341ca415b87d8a9a3dbb002f",
+      "sourceSha256": "4986f834d4f2c8cf595f1579d65ee8881da2ff1d341ca415b87d8a9a3dbb002f",
+      "storedContentSha256": "f7cf7132b23d4795e4759a712763de88ad6008e3e23f4dcd4cc9183e71d107ae"
+    },
+    {
+      "normalization": {
+        "bareCrSequencesConverted": 0,
+        "crlfSequencesConverted": 0,
+        "finalLfCount": 1,
+        "preNormalizationContentSha256": "64f64fe6397127cdc65ef23b48f7df0ca52f4ee4910dfa71f73fab476461ebee",
+        "rule": "UTF-8 LF lines; strip trailing spaces/tabs; remove terminal blank lines; exactly one final LF",
+        "storedContentSha256": "bb83b48140c59d5b2bc5c06337750e24fe8072541076a763c5948232eac1ddf1",
+        "terminalBlankLinesRemoved": 1,
+        "trailingHorizontalWhitespaceBytesRemoved": 0
+      },
+      "path": "tools/history/run_d01_r7_final_positive_gates.py",
+      "preNormalizationContentSha256": "64f64fe6397127cdc65ef23b48f7df0ca52f4ee4910dfa71f73fab476461ebee",
+      "sourceSha256": "5345b0de7a8172aea75c654379ce3f4db85f64a25e9ca266cd7a52e78ea007c8",
+      "storedContentSha256": "bb83b48140c59d5b2bc5c06337750e24fe8072541076a763c5948232eac1ddf1"
+    },
+    {
+      "normalization": {
+        "bareCrSequencesConverted": 0,
+        "crlfSequencesConverted": 32,
+        "finalLfCount": 1,
+        "preNormalizationContentSha256": "5b2f42d09c9f7a2ea07191132ccef8ba245a6640d7ab5e5523a936ede181c727",
+        "rule": "UTF-8 LF lines; strip trailing spaces/tabs; remove terminal blank lines; exactly one final LF",
+        "storedContentSha256": "bd8663576095d7e968c618a13805f761a5ee4d0e5bf1f9395aa1e2fda19db58b",
+        "terminalBlankLinesRemoved": 1,
+        "trailingHorizontalWhitespaceBytesRemoved": 0
+      },
+      "path": "tools/history/run_d01_r8_native_gwt_gates.py",
+      "preNormalizationContentSha256": "5b2f42d09c9f7a2ea07191132ccef8ba245a6640d7ab5e5523a936ede181c727",
+      "sourceSha256": "5b2f42d09c9f7a2ea07191132ccef8ba245a6640d7ab5e5523a936ede181c727",
+      "storedContentSha256": "bd8663576095d7e968c618a13805f761a5ee4d0e5bf1f9395aa1e2fda19db58b"
+    },
+    {
+      "normalization": {
+        "bareCrSequencesConverted": 0,
+        "crlfSequencesConverted": 32,
+        "finalLfCount": 1,
+        "preNormalizationContentSha256": "e88b50ac67c4a04382338fa0b920efc0bc049ffc7781b713a8ada696e778b312",
+        "rule": "UTF-8 LF lines; strip trailing spaces/tabs; remove terminal blank lines; exactly one final LF",
+        "storedContentSha256": "bf46caf1737b65a81a37cdbc0db8bbd06797be84695c78be8eae15bf38f009f0",
+        "terminalBlankLinesRemoved": 1,
+        "trailingHorizontalWhitespaceBytesRemoved": 0
+      },
+      "path": "tools/history/run_d01_r9_native_gwt_gates.py",
+      "preNormalizationContentSha256": "e88b50ac67c4a04382338fa0b920efc0bc049ffc7781b713a8ada696e778b312",
+      "sourceSha256": "557f1d859bfb567fe041c5fc1f8eacf31d7cc1f5de66df77964a6ffb0dbc3cf7",
+      "storedContentSha256": "bf46caf1737b65a81a37cdbc0db8bbd06797be84695c78be8eae15bf38f009f0"
+    },
+    {
+      "normalization": {
+        "bareCrSequencesConverted": 0,
+        "crlfSequencesConverted": 4,
+        "finalLfCount": 1,
+        "preNormalizationContentSha256": "a63bc6f72f87c02eeaa4bb558eeeb43993bbe53fa7239a50865695c95a8a6031",
+        "rule": "UTF-8 LF lines; strip trailing spaces/tabs; remove terminal blank lines; exactly one final LF",
+        "storedContentSha256": "b0c4792ed3a4d5e118dda10ea0c605aad23dc31b22ef3f12d8e4fc0719f2f874",
+        "terminalBlankLinesRemoved": 2,
+        "trailingHorizontalWhitespaceBytesRemoved": 1
+      },
+      "path": "tools/r10/prepare_d01_r10_gate_runner.py",
+      "preNormalizationContentSha256": "a63bc6f72f87c02eeaa4bb558eeeb43993bbe53fa7239a50865695c95a8a6031",
+      "sourceSha256": "4cd88f2bc6c6be1a413733f5ecbc50752a967a12780e26b8e2dcdd80e082f7d8",
+      "storedContentSha256": "b0c4792ed3a4d5e118dda10ea0c605aad23dc31b22ef3f12d8e4fc0719f2f874"
+    },
+    {
+      "normalization": {
+        "bareCrSequencesConverted": 0,
+        "crlfSequencesConverted": 35,
+        "finalLfCount": 1,
+        "preNormalizationContentSha256": "a37b70fa02d092a3f67c6d78da446a31f1079bc51a1c2adf84f7b43d088e7ae0",
+        "rule": "UTF-8 LF lines; strip trailing spaces/tabs; remove terminal blank lines; exactly one final LF",
+        "storedContentSha256": "34bc216a38928a007db8b771adc3f5cf90ad7e1558ba24aa7f30187afa279bdc",
+        "terminalBlankLinesRemoved": 1,
+        "trailingHorizontalWhitespaceBytesRemoved": 0
+      },
+      "path": "tools/r10/run_d01_r10_native_gwt_gates.py",
+      "preNormalizationContentSha256": "a37b70fa02d092a3f67c6d78da446a31f1079bc51a1c2adf84f7b43d088e7ae0",
+      "sourceSha256": "bc0f09ef5c7e0094011b886883164cdb2ca6b7cbd3be55af1b030470489d42f3",
+      "storedContentSha256": "34bc216a38928a007db8b771adc3f5cf90ad7e1558ba24aa7f30187afa279bdc"
+    }
+  ],
+  "filesWithRedactions": [
+    {
+      "counts": {
+        "$TASKROOT": 2
+      },
+      "path": "sources/lineage-audits/r7.json.gz",
+      "sourceSha256": "729360f3cf12ceace58b4fc627afeb2951dc055a39e7a0aa9289faa8b408c505",
+      "storedContentSha256": "acacd87d97f1fd864e087c2601025a169d0d1733a5811337a81fed7d4fa0dacf"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 2
+      },
+      "path": "sources/lineage-audits/r8.json.gz",
+      "sourceSha256": "717cc9bcf649d87b6dd801d76a52b78143e35b74acd395387807eefff7544d38",
+      "storedContentSha256": "58c02e8c1bcdfbe9ea1ce1f1df6ad5cb4ac21b99e0737fb883127254c4ed3069"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 2
+      },
+      "path": "sources/lineage-audits/r9.json.gz",
+      "sourceSha256": "9df9e5c7ae41ec093469be2b5c576c6fab5940d65738715e0a2fdf52064d0adf",
+      "storedContentSha256": "759c645076558842c1ad2086f82cc4f51694a76f3277e42074e6fc22c6f6d12a"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 2
+      },
+      "path": "sources/lineage-audits/r10.json.gz",
+      "sourceSha256": "3e802932fd1df9177371b0e3e2ae211b9837fddda66039d36847be5ad298c4c3",
+      "storedContentSha256": "43c399c0d2293c18aedf5ad4e749699cb6c70a8cb4e723f536f6da9a79896782"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 4
+      },
+      "path": "gates/r7/native-gwt-gates.json",
+      "sourceSha256": "3d481c47c159cfe5f00637abeeb27c105d05568f0b0f89dd4a059ce73b6b72bc",
+      "storedContentSha256": "4179e7c8f16ffce1694a25b74af32243589db27b74aa79f29f57a245b5b754fb"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "gates/r7/native-gwt-gates.log",
+      "sourceSha256": "b316d5df3161e8acacdccdb7873e5f0a54917e599454767eb3ebb6a864641471",
+      "storedContentSha256": "b2f600acb0efbcb0d2bb21d887a6d617f627fc5b42b9ff6826a9cb947f60f090"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "gates/r7/gwt.log",
+      "sourceSha256": "5c716ff3d3cea29fe05d414f538a9261e78fdfd7b390794bf2591afd1362b515",
+      "storedContentSha256": "65a7a28f50e6af242772b5baccaaa315f7c711795ad65cf4fe8f297b0f28306a"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 4
+      },
+      "path": "gates/r8/native-gwt-gates.json",
+      "sourceSha256": "fa857d381767194fa87023c1d1018b47c0afecb44d05abd288c3747773aea35c",
+      "storedContentSha256": "8e22f6c19fa5aeabcd78ba62eb8051dd2d6a3a9a5122f07431508ae5f807a9dc"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "gates/r8/native-gwt-gates.log",
+      "sourceSha256": "cefa50c03cae37aa081bc4f4b82bad577d3a54e7191850124ff51ba49982907e",
+      "storedContentSha256": "ce83dd84758f81e8f247a1aedcdf6864a51d43fec2f5ed44e1b6790ac20a83fb"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "gates/r8/gwt.log",
+      "sourceSha256": "0f7edfa4f9f9c424f308c1c8e462a82a4cc88ab4041decae4d5e2a9ccc9179ff",
+      "storedContentSha256": "f369789d76e3da177bfeaa7a705e1368b8c603dda5bcd6f4aac7c44b7d2ea67c"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 4
+      },
+      "path": "gates/r9/native-gwt-gates.json",
+      "sourceSha256": "e08c5fadb3ad86669e6895fc98b1adbdff66e33404e5e6139154716ac3b38e0f",
+      "storedContentSha256": "4220e61c57befc35b3ae30f9d8e6ef502b7fe2b8ca1cf107133d00fb27d62e56"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "gates/r9/gwt.log",
+      "sourceSha256": "aed28ac0a017db7d643af11b1a763a7e641564aa28d0a9f1a8ed81f7a2e6c9cf",
+      "storedContentSha256": "144c9b6837bc5565d142b979465c9fab7b54e4ebafe27779f41b8a51005c65c4"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 4
+      },
+      "path": "gates/r10/native-gwt-gates.json",
+      "sourceSha256": "ea558e459bb1636d3a5e8fe2df24299005d16f42fce38e6ff2c7a5972e7e6131",
+      "storedContentSha256": "8bc6cf39ef171c651b2773eae2ff51b9dc398f9817f13c01dff84ceb1e5e8159"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "gates/r10/gwt.log",
+      "sourceSha256": "073dcc8de7e42dc9e8394fbf27f7132b3c3ae5e004e3fd8652319a93bd410d7f",
+      "storedContentSha256": "6b74e2bd8acd4e9479f7ac5489dee94af38e339110459318f54aab59a30d31ba"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "runs/r7/clock/identity.json",
+      "sourceSha256": "6f69253de580a972da7698ef16e18b0808ff9ec5868c733780d71a0813faadaa",
+      "storedContentSha256": "db52f3901720c626640aea6ad7c6e0fc52785d21ea5d9f624dc5055ea32cecce"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 2
+      },
+      "path": "runs/r7/clock/progress.json",
+      "sourceSha256": "f94a57bdb851601a4b1ba70dbbe9c15eb47623d464ec4a12667aaf609358b01f",
+      "storedContentSha256": "38f63d6e7dc2aa6f3af28ac5097de7a0e3c361add5bb8ec4890c5ac4183e8ad9"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 2
+      },
+      "path": "runs/r7/clock/result.json",
+      "sourceSha256": "dff8e45d61342707b34ca73f7621f2e5a0f42c4204e40cc8901e3a25e8d6b769",
+      "storedContentSha256": "732ec2837b3d0ecc5091a04f960d16a89b4459dae8688b6e6d3aac20aad7a4a4"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "runs/r7/clock/run-start.json",
+      "sourceSha256": "1c5390e6b41ba4b7a7e94e9e6e2a145df5067bb0f447aa15c549327920659063",
+      "storedContentSha256": "64733dc26e4dcc45929f42bde178389c6dd598781d90ce5c3ddbb7e1edea3dbb"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "runs/r7/positive-10014/identity.json",
+      "sourceSha256": "d5daf23a6be11dd8f8b35ce4dfdacfc65062c538100e5fe8eccb9b8938ddcd44",
+      "storedContentSha256": "75b8784fa64625e78f39952f3e741ec7969a003f8c1b29ba0225e6c5bf680e6b"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 2
+      },
+      "path": "runs/r7/positive-10014/progress.json",
+      "sourceSha256": "7341bda9cf17eef500c50bb90711b63746620f9eb4506a18fe105c2391b63a20",
+      "storedContentSha256": "8ae06f9d9e797b5374f978b57c9cd0bd8a37f589837bb5f8b4c0b67bec0025f2"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 2
+      },
+      "path": "runs/r7/positive-10014/result.json",
+      "sourceSha256": "e1407e7dc6349e044ef79bc85e514c94bf220c9803ba6a7150394874df15ad9c",
+      "storedContentSha256": "989a5e8db7b3e4da5dac3fd70f3e5141380cb79d45740136d6d4a827b26af3c2"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "runs/r7/positive-10014/run-start.json",
+      "sourceSha256": "f16470ae28893d7c9e14b16587ffd68dc2dca116a6fcc297e03c725b23c3a45f",
+      "storedContentSha256": "c20a946169006045a29fc9037eb572cb1f7a969ec73bdd629a9dab9df801a030"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "runs/r7/positive-10387/identity.json",
+      "sourceSha256": "6cc6f9e0f4637d8e6cf2a58435e9c03872b220fb981c5f5937a3ed6f944003f0",
+      "storedContentSha256": "1fa3dc03d864423484eb21d925240a9003d57a73aea67f4410119ab617bbb1bf"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 2
+      },
+      "path": "runs/r7/positive-10387/progress.json",
+      "sourceSha256": "d7986137824f85a70673d7a1b5bf92b380a5e3ba6e3c327a9fdcb6157ead94c2",
+      "storedContentSha256": "ad8de4ccb4ea289012446eab544d529a96123f4904dbcaeea7857d0325aca3f8"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 2
+      },
+      "path": "runs/r7/positive-10387/result.json",
+      "sourceSha256": "9a129b8a7956b12e2634e958bf43eecfc2c712183aa387689516c33794ebc3ca",
+      "storedContentSha256": "87449566669c0fd4753805bcf2f376f6b09a44edb86c43f771fe45a9e63f902b"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "runs/r7/positive-10387/run-start.json",
+      "sourceSha256": "a95ae371d7eebc3ac80f5268427891db2aa0ee605dd950a4d8bd9267cc510e6f",
+      "storedContentSha256": "d34cd01ec0c2bef98f29609d6d15de5977594b68d4ea5ddf28f3881805552b3c"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "runs/r7/scope/identity.json",
+      "sourceSha256": "5bb7aca879902c006a501227a5b33df46c01de987be5d866e6c79715de743918",
+      "storedContentSha256": "79e09cf2825d5524c7675aa7379b2afa2a9c60ea55fc97ff8a7d7fadabba52a1"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 2
+      },
+      "path": "runs/r7/scope/progress.json",
+      "sourceSha256": "84907116dbefa7d1cea67511fee8b48573806c8b7a691ef3bf4dbbcc89a275aa",
+      "storedContentSha256": "c0cb116e53f2dab8093a25a5903cbc68f19eb6d17c50a3534fb55141e5fc540a"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 2
+      },
+      "path": "runs/r7/scope/result.json",
+      "sourceSha256": "7b6cb607d495ee38b4de86525b9c75c337750888a19883be065aa1be8f44d689",
+      "storedContentSha256": "0c29ceb7511445cf15dcc3b6b3277d0dc1e745ff520e2388bfd7f8e604a4e63e"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "runs/r7/scope/run-start.json",
+      "sourceSha256": "d93ff0725f66eb87bb25bdacc89926cf024748b796f6483e4f410e0595c10297",
+      "storedContentSha256": "40d8f7417d7e364e8571c26b9161e94ea2fc9e9aefc4bfc28bb230fcf8def0b3"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "runs/r7/timing/identity.json",
+      "sourceSha256": "5c6125656c6272f5e69dc57496d7fe2fd7fd7a6b202a08d30ea854c51d305894",
+      "storedContentSha256": "94aef35bfc3e0360691b75404dd537c28c5651e9ab45eadea6ed0e07c61df54f"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 2
+      },
+      "path": "runs/r7/timing/progress.json",
+      "sourceSha256": "5035f7cb25797737e1299adefa138f69cf89617099b9e1595e81332c0bd15cce",
+      "storedContentSha256": "95bf78cb615922c1ff4f81cebfecef9f503c77c305e7496bed1f7d5a21ce5a4f"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 2
+      },
+      "path": "runs/r7/timing/result.json",
+      "sourceSha256": "089e3de14615bacc49a8a89142665254915f15ccf8f534022a2a441b28979262",
+      "storedContentSha256": "b0ce079216adff064f032123847293a85a147e8c1a22f2ca25f711a64ce6af99"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "runs/r7/timing/run-start.json",
+      "sourceSha256": "a558ebedbc247914b23f092c37afb2faf49dd2f9fcbff77599187ab21d624185",
+      "storedContentSha256": "6953026c06ad5a7014e71a9a022148e15f5e61c2489cbd3cd263cad33c2e0512"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "runs/r8/no-click-10387/identity.json",
+      "sourceSha256": "8be14934fb5d26894981edea6e267886a3450732cb3482fce165a3fc90bb2517",
+      "storedContentSha256": "d6bf0e0bad4fefc5d5305ff69c19086630834b953443d339261c94944e8f2dda"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 2
+      },
+      "path": "runs/r8/no-click-10387/progress.json",
+      "sourceSha256": "97eb265dc27be37e3e56b9c104dc7687846ab17163f017a3f18a953dde9256be",
+      "storedContentSha256": "7b8111cc3e9c306e247513dca7061fa6401ef09c2939d4a2b797a7f48346624a"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 2
+      },
+      "path": "runs/r8/no-click-10387/result.json",
+      "sourceSha256": "801648cad61539cd9cdce0b97bf37b5e6f9c5993eee6f3e750ad5189b178587a",
+      "storedContentSha256": "32e0c85787c9028db7e96329a55434549b821d83cd3e25332deb9f2f0eddbd09"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "runs/r8/no-click-10387/run-start.json",
+      "sourceSha256": "c3a2a21d5e7c11e24bb0bdabaea40703e9545e8a9f750dfcefa69d2b616ddd17",
+      "storedContentSha256": "4d6750179b1eb2e6c0f0053d3417ee235ca0b6ffcde02993c9970827d64a70a1"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 2
+      },
+      "path": "tools/r10/prepare_d01_r10_gate_runner.py",
+      "sourceSha256": "4cd88f2bc6c6be1a413733f5ecbc50752a967a12780e26b8e2dcdd80e082f7d8",
+      "storedContentSha256": "b0c4792ed3a4d5e118dda10ea0c605aad23dc31b22ef3f12d8e4fc0719f2f874"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "tools/r10/run_d01_r10_native_gwt_gates.py",
+      "sourceSha256": "bc0f09ef5c7e0094011b886883164cdb2ca6b7cbd3be55af1b030470489d42f3",
+      "storedContentSha256": "34bc216a38928a007db8b771adc3f5cf90ad7e1558ba24aa7f30187afa279bdc"
+    },
+    {
+      "counts": {
+        "$REPO": 1
+      },
+      "path": "tools/history/run_d01_r7_final_boundary_gates.py",
+      "sourceSha256": "21aa37e7a3c25953fc21b13a61bc6a2df34a0fdccb11a924c084cda3ba55ded9",
+      "storedContentSha256": "24e66cb4312b182b08bb64ef825ebec9702039b1c7b2281af5c27e1d6f302781"
+    },
+    {
+      "counts": {
+        "$REPO": 1
+      },
+      "path": "tools/history/run_d01_r7_final_positive_gates.py",
+      "sourceSha256": "5345b0de7a8172aea75c654379ce3f4db85f64a25e9ca266cd7a52e78ea007c8",
+      "storedContentSha256": "bb83b48140c59d5b2bc5c06337750e24fe8072541076a763c5948232eac1ddf1"
+    },
+    {
+      "counts": {
+        "$REPO": 1
+      },
+      "path": "tools/history/run_d01_r8_no_click_gate.py",
+      "sourceSha256": "8a2f7cc99ab9adaa7253f4e9000936efa8d6691b346af081a048ea74591bf94a",
+      "storedContentSha256": "3b58f3d24b4f2a74a5abe8a5de58f320e85f19644d70320decca168250a5a166"
+    },
+    {
+      "counts": {
+        "$TASKROOT": 1
+      },
+      "path": "tools/history/run_d01_r9_native_gwt_gates.py",
+      "sourceSha256": "557f1d859bfb567fe041c5fc1f8eacf31d7cc1f5de66df77964a6ffb0dbc3cf7",
+      "storedContentSha256": "bf46caf1737b65a81a37cdbc0db8bbd06797be84695c78be8eae15bf38f009f0"
+    },
+    {
+      "counts": {
+        "$DESKTOPROOT": 1
+      },
+      "path": "tools/native-d01-r5.ps1",
+      "sourceSha256": "d6c7ae2cd103e7536f01a933a2d965a52772d378b4fa7fa91ef98e71a4e78404",
+      "storedContentSha256": "d0ecd99dd1f79a4f44b97914768fbe5510e2a8f35fb7d8263c5d97e304ea517c"
+    },
+    {
+      "counts": {
+        "$DESKTOPROOT": 1
+      },
+      "path": "tools/build-run.ps1",
+      "sourceSha256": "5bde61d081264e189e8232d2668a8a6ca3c045aa8323b10476923b1f172889a4",
+      "storedContentSha256": "899267d3a5fb3ae7ebf677e25e05403b05e4e3e86e4fc36435bd15adb658b202"
+    }
+  ],
+  "policy": "Absolute user/task/repository roots are replaced only in metadata, logs, source-audit copies, and inspection runner copies. The seven designated archived inspection copies also normalize line endings and trailing/final whitespace, with original and pre-normalization hashes retained. Exact browser reports and exact source overlays are not modified.",
+  "schema": 1
+}

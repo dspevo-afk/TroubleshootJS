@@ -1,0 +1,302 @@
+- iframe
+- iframe
+- table:
+  - rowgroup:
+    - row:
+      - cell
+    - row "MULTIMETER DC V AC V SCOPE OHM CONT DIODE --- V":
+      - cell "MULTIMETER DC V AC V SCOPE OHM CONT DIODE --- V":
+        - table:
+          - rowgroup:
+            - row "MULTIMETER":
+              - cell "MULTIMETER":
+                - generic: MULTIMETER
+            - row "DC V AC V SCOPE OHM CONT DIODE":
+              - cell "DC V AC V SCOPE OHM CONT DIODE":
+                - table:
+                  - rowgroup:
+                    - row "DC V AC V":
+                      - cell "DC V":
+                        - button "DC V"
+                      - cell "AC V":
+                        - button "AC V"
+                    - row "SCOPE OHM":
+                      - cell "SCOPE":
+                        - button "SCOPE"
+                      - cell "OHM":
+                        - button "OHM"
+                    - row "CONT DIODE":
+                      - cell "CONT":
+                        - button "CONT"
+                      - cell "DIODE":
+                        - button "DIODE"
+            - row "--- V":
+              - cell "--- V":
+                - generic: "--- V"
+            - row:
+              - cell
+            - row:
+              - cell
+            - row:
+              - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row "Open controlled indicator":
+      - cell "Open controlled indicator":
+        - button "Open controlled indicator"
+    - 'row "Board Power: OFF"':
+      - 'cell "Board Power: OFF"':
+        - 'button "Board Power: OFF"'
+    - row "New control board":
+      - cell "New control board":
+        - button "New control board"
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row:
+      - cell
+    - row "Bench power":
+      - cell "Bench power":
+        - table "Bench power":
+          - rowgroup:
+            - row "BENCH POWER":
+              - cell "BENCH POWER":
+                - generic: BENCH POWER
+            - 'row "Supply 1 (+12V): disconnected"':
+              - 'cell "Supply 1 (+12V): disconnected"':
+                - generic: "Supply 1 (+12V): disconnected"
+            - row "Connect Supply 1 (+12V)":
+              - cell "Connect Supply 1 (+12V)":
+                - button "Connect Supply 1 (+12V)"
+            - 'row "Limit: 250 mA"':
+              - 'cell "Limit: 250 mA"':
+                - combobox "Supply 1 (+12V) current limit":
+                  - 'option "Limit: 1 mA"'
+                  - 'option "Limit: 10 mA"'
+                  - 'option "Limit: 25 mA"'
+                  - 'option "Limit: 100 mA"'
+                  - 'option "Limit: 250 mA" [selected]'
+                  - 'option "Limit: 500 mA"'
+            - row "Each output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.":
+              - cell "Each output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.":
+                - generic: Each output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.
+    - row "Board view":
+      - cell "Board view":
+        - table "Board view":
+          - rowgroup:
+            - row "BOARD VIEW":
+              - cell "BOARD VIEW":
+                - generic: BOARD VIEW
+            - row "Fit bench":
+              - cell "Fit bench":
+                - table:
+                  - rowgroup:
+                    - row "Fit bench":
+                      - cell "Fit bench":
+                        - button "Fit bench"
+            - row "Zoom + Zoom - View bottom copper":
+              - cell "Zoom + Zoom - View bottom copper":
+                - table:
+                  - rowgroup:
+                    - row "Zoom +":
+                      - cell "Zoom +":
+                        - button "Zoom +"
+                    - row "Zoom -":
+                      - cell "Zoom -":
+                        - button "Zoom -"
+                    - row "View bottom copper":
+                      - cell "View bottom copper":
+                        - button "View bottom copper"
+            - 'row "Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe. Hold Tab on the board: bottom view; release: top."':
+              - 'cell "Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe. Hold Tab on the board: bottom view; release: top."':
+                - generic: "Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe. Hold Tab on the board: bottom view; release: top."
+            - row "Top side / top copper":
+              - cell "Top side / top copper":
+                - generic: Top side / top copper
+            - row "Select component":
+              - cell "Select component":
+                - combobox "Select component":
+                  - option "Select component" [selected]
+                  - option "J1"
+                  - option "LED1"
+                  - option "R1"
+            - row "Probe terminal":
+              - cell "Probe terminal":
+                - combobox "Probe terminal":
+                  - option "Probe terminal" [selected]
+                  - option "J1 terminal 1"
+                  - option "J1 terminal 2"
+                  - option "LED1 terminal A"
+                  - option "LED1 terminal K"
+                  - option "R1 terminal 1"
+                  - option "R1 terminal 2"
+            - row "Place red probe Place black probe":
+              - cell "Place red probe Place black probe":
+                - table:
+                  - rowgroup:
+                    - row "Place red probe":
+                      - cell "Place red probe":
+                        - button "Place red probe"
+                    - row "Place black probe":
+                      - cell "Place black probe":
+                        - button "Place black probe"
+            - row:
+              - cell:
+                - status
+    - row "Service ticket":
+      - cell "Service ticket":
+        - table "Service ticket":
+          - rowgroup:
+            - row "Service Ticket":
+              - cell "Service Ticket":
+                - generic: Service Ticket
+            - row "Indicator does not light.":
+              - cell "Indicator does not light.":
+                - generic: Indicator does not light.
+            - 'row "Customer retest: Observe the indicator after repair."':
+              - 'cell "Customer retest: Observe the indicator after repair."':
+                - generic: "Customer retest: Observe the indicator after repair."
+            - row "Retest Customer":
+              - cell "Retest Customer":
+                - button "Retest Customer"
+    - row:
+      - cell
+    - row "Parts Tray":
+      - cell "Parts Tray":
+        - table "Parts Tray":
+          - rowgroup:
+            - row "Resistor Replacement Catalog":
+              - cell "Resistor Replacement Catalog":
+                - generic: Resistor Replacement Catalog
+            - row "10 Ohm +/-5%":
+              - cell "10 Ohm +/-5%":
+                - combobox [disabled]:
+                  - option "10 Ohm +/-5%" [selected]
+                  - option "12 Ohm +/-5%"
+                  - option "15 Ohm +/-5%"
+                  - option "18 Ohm +/-5%"
+                  - option "22 Ohm +/-5%"
+                  - option "27 Ohm +/-5%"
+                  - option "33 Ohm +/-5%"
+                  - option "39 Ohm +/-5%"
+                  - option "47 Ohm +/-5%"
+                  - option "56 Ohm +/-5%"
+                  - option "68 Ohm +/-5%"
+                  - option "82 Ohm +/-5%"
+                  - option "100 Ohm +/-5%"
+                  - option "120 Ohm +/-5%"
+                  - option "150 Ohm +/-5%"
+                  - option "180 Ohm +/-5%"
+                  - option "220 Ohm +/-5%"
+                  - option "270 Ohm +/-5%"
+                  - option "330 Ohm +/-5%"
+                  - option "390 Ohm +/-5%"
+                  - option "470 Ohm +/-5%"
+                  - option "560 Ohm +/-5%"
+                  - option "680 Ohm +/-5%"
+                  - option "820 Ohm +/-5%"
+                  - option "1000 Ohm +/-5%"
+                  - option "1200 Ohm +/-5%"
+                  - option "1500 Ohm +/-5%"
+                  - option "1800 Ohm +/-5%"
+                  - option "2200 Ohm +/-5%"
+                  - option "2700 Ohm +/-5%"
+                  - option "3300 Ohm +/-5%"
+                  - option "3900 Ohm +/-5%"
+                  - option "4700 Ohm +/-5%"
+                  - option "5600 Ohm +/-5%"
+                  - option "6800 Ohm +/-5%"
+                  - option "8200 Ohm +/-5%"
+                  - option "10000 Ohm +/-5%"
+                  - option "12000 Ohm +/-5%"
+                  - option "15000 Ohm +/-5%"
+                  - option "18000 Ohm +/-5%"
+                  - option "22000 Ohm +/-5%"
+                  - option "27000 Ohm +/-5%"
+                  - option "33000 Ohm +/-5%"
+                  - option "39000 Ohm +/-5%"
+                  - option "47000 Ohm +/-5%"
+                  - option "56000 Ohm +/-5%"
+                  - option "68000 Ohm +/-5%"
+                  - option "82000 Ohm +/-5%"
+                  - option "100000 Ohm +/-5%"
+                  - option "120000 Ohm +/-5%"
+                  - option "150000 Ohm +/-5%"
+                  - option "180000 Ohm +/-5%"
+                  - option "220000 Ohm +/-5%"
+                  - option "270000 Ohm +/-5%"
+                  - option "330000 Ohm +/-5%"
+                  - option "390000 Ohm +/-5%"
+                  - option "470000 Ohm +/-5%"
+                  - option "560000 Ohm +/-5%"
+                  - option "680000 Ohm +/-5%"
+                  - option "820000 Ohm +/-5%"
+                  - option "1000000 Ohm +/-5%"
+                  - option "1200000 Ohm +/-5%"
+                  - option "1500000 Ohm +/-5%"
+                  - option "1800000 Ohm +/-5%"
+                  - option "2200000 Ohm +/-5%"
+                  - option "2700000 Ohm +/-5%"
+                  - option "3300000 Ohm +/-5%"
+                  - option "3900000 Ohm +/-5%"
+                  - option "4700000 Ohm +/-5%"
+                  - option "5600000 Ohm +/-5%"
+                  - option "6800000 Ohm +/-5%"
+                  - option "8200000 Ohm +/-5%"
+                  - option "10000000 Ohm +/-5%"
+            - row "Install new resistor":
+              - cell "Install new resistor":
+                - button "Install new resistor" [disabled]
+            - row "Remove R1 before installing a replacement.":
+              - cell "Remove R1 before installing a replacement.":
+                - generic: Remove R1 before installing a replacement.
+            - row "LED Replacement Catalog":
+              - cell "LED Replacement Catalog":
+                - generic: LED Replacement Catalog
+            - row "Generic red LED":
+              - cell "Generic red LED":
+                - combobox [disabled]:
+                  - option "Generic red LED" [selected]
+                  - option "Generic red LED (reversed)"
+            - row "Install new LED":
+              - cell "Install new LED":
+                - button "Install new LED" [disabled]
+            - row "Remove LED1 before installing a replacement.":
+              - cell "Remove LED1 before installing a replacement.":
+                - generic: Remove LED1 before installing a replacement.
+            - row "Replacement Catalog":
+              - cell "Replacement Catalog":
+                - generic: Replacement Catalog
+            - row "2-pin terminal connector":
+              - cell "2-pin terminal connector":
+                - combobox [disabled]:
+                  - option "2-pin terminal connector" [selected]
+            - row "Install new connector":
+              - cell "Install new connector":
+                - button "Install new connector" [disabled]
+            - row "Remove J1 before installing a replacement.":
+              - cell "Remove J1 before installing a replacement.":
+                - generic: Remove J1 before installing a replacement.
+            - row "Parts Tray":
+              - cell "Parts Tray":
+                - generic: Parts Tray
+            - row "No loose parts.":
+              - cell "No loose parts.":
+                - generic: No loose parts.

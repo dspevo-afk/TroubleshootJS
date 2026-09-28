@@ -1,7 +1,7 @@
 # Current checkpoint: Q30 BLOCKED / NOT ACCEPTED
 
 Branch `codex/q30-multirail-qualification`; checkpoint base
-`2fa7dd7bec46690dce246b29eaa4d810efee2afb` (factor evidence checkpoint).
+`2b152c25c556eea8c7fb4582c5459c17c69821b3` (factor-census evidence checkpoint).
 Accepted numerical source is `ba107090e4899ca9d3a2413259c78d042d20dae1`,
 `Skip finite zero products in LU solve`. No push or completion email.
 Normal Q30 publication remains disabled. U06/U07/Q60 and later are unstarted.
@@ -115,10 +115,33 @@ plan/hash and this correction. The final source edge review found no blocker:
 current owners allocate distinct rows; general aliased-row inputs could differ
 only in the sign of an underflowed zero, which the existing numerical oracle
 treats as equal. This is a static review, not a new alias test. The change is
-integrated in the working source but remains unstaged. Its 1,339-input proposed
-final-source export excludes unaccepted plan-4 and normal-verifier changes;
-native6 passes in 37.033 s, and final-source GWT/A07/root-runtime checks are
-running. Acceptance and the source commit remain pending those checks.
+integrated in the working source and accepted as an intermediate optimization.
+Its 1,339-input final-source export excludes unaccepted plan-4 and normal-verifier
+changes: native6 (37.033 s), GWT5 (79.701 s), compiled A07 and three negative-reader
+checks PASS. Root GWT passes in 77.504 s; all 1,525 consumed inputs and all 392
+WAR files match the timed candidate byte-for-byte. Exactly three intended
+source/test/registration paths are staged; all 1,330 staged source blobs plus
+nine pinned JARs match the passing final-source fixture. Cached whitespace check
+PASSes. The local source commit awaits the evidence packet's final audit.
+
+An isolated routing distance-field prototype follows: replace the queue-based
+unobstructed Manhattan field with forward/reverse relaxation while retaining
+the exact A* heuristic values, order, work and geometry. The sole production
+delta is `PcbNetRouter`; its 1,341-input fixture includes the accepted solver
+candidate and adds an independent queue-BFS oracle. The predeclared trial uses
+20/37/40-package seeds and repeated counterbalanced 40-package pairs, with an
+early stop for insufficient routing gain or cold regression. This is a
+measurement continuation rule, not a product acceptance threshold. Independent
+source review found no blocker. Native6 passes in 34.597 s (724 exact-distance
+assertions), GWT5 in 78.279 s, and compiled A07/disabled-normal plus three strict
+negatives pass. The first fresh control takes 97.240 s (proof 68.511 s, routing
+22.543 s), with verified cleanup. Candidate cold/proof/routing times are
+97.296/68.660/22.486 s. Complete non-timing parity and both strict readers
+(43 corruptions each) PASS, with clean host errors and owned cleanup. The trial
+stopped as INCONCLUSIVE: routing improved only 57 ms (below its predeclared 2%
+continuation rule), while total cold time was 56 ms slower. Six remaining rows
+are NOT RUN. The transform is not integrated. Coarse request-owned routing-phase
+instrumentation is being prepared before choosing another routing optimization.
 
 Scale: the uncommitted plan-4 family and 77-root proposal remain NOT ACCEPTED.
 Purposeful one/two-channel topologies and functional support blocks cover
@@ -162,22 +185,31 @@ corruptions of that actual report PASS. D01 correctly remains FAIL/no-admission.
 This explicitly uses a 10-ms canary poll, not a claim about ordinary 1-second
 latency. Native hook-removal exception injection remains NOT RUN; no screenshots
 or headless-wrapper certification are claimed. No resumable D01 draft is
-integrated into root.
+integrated into root. Root audited 166 packet artifacts, 28 gzip payloads,
+11 byte-exact raw reports and the 1,340-input reconstruction. Independent packet
+review confirmed the narrow canary outcomes; two misleading summary labels were
+corrected and the final inventory rechecked. [D01 private evidence](task-evidence/Q30/d01-resumable-r10/README.md),
+inventory `f740152959a0949f25de617a33c6db6ccbae1f5ffb0363cb61552ced498dc17a`.
+The first staged check caught whitespace in seven archived helper copies and
+stopped the commit. Their inspection whitespace was normalized with original
+hashes retained; the complete packet audit passes again. No raw report or source
+overlay changed and no production gate was rerun for this packaging repair.
 
 Resources/preserved work: all completed maintained host runs released their owned
 browser/server resources. Manual tabs are closed; preview stop revalidated PID
 20332 and released port 34917 after the r10 canary (the first stop invocation
 used an unsupported parameter and was corrected). The isolated lower-collection
-r2 cold sequence has completed with owned cleanup PASS. Its final-source gate
-sequence is the only heavy run active.
+r2 cold sequence and final-source gates have completed with owned cleanup PASS.
+The isolated route-transform cold sequence has also stopped with owned cleanup
+PASS. No heavy run is active; new routing instrumentation is source-only work.
 Task-temp source and evidence copies remain.
 Previously blocked recursive cleanup is not retried;
 its exact resources/reasons remain in historical checkpoints. Desktop checkout
 work, pre-existing cache files, and all unaccepted plan-4 source/tests/readers,
 normal-verifier hook/API and scale evidence remain preserved and unstaged.
 
-Next: finish the lower-collection final-source gates and secure its bounded
-result, measure routing's major helpers, and finish D01 lifecycle qualification.
+Next: secure the lower-collection intermediate commit after its packet audit,
+profile the remaining routing phases, and finish D01 lifecycle qualification.
 Only after normal cold timing with margin, required scale and focused gates pass
 may the full final acceptance matrix run. Q30 remains BLOCKED.
 

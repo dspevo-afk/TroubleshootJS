@@ -1,0 +1,146 @@
+{
+  "status": "FOCUSED_D01_20_40_PASS_VISIBLE_AND_POSTSTOP_NOT_RUN",
+  "scope": "focused real D01 cold/warm20+40 cases after resumable construction repair, not normal or scale acceptance",
+  "sourceAuditSha256": "729360f3cf12ceace58b4fc627afeb2951dc055a39e7a0aa9289faa8b408c505",
+  "readers": {
+    "check_d01.py": "f58847541571cdf829835d05c200bac6ea0079dab065d90ebdf7f44914241929",
+    "check_d01_canaries.py": "bf2dd4d21850c0d6d865d9ca24a69246981955dc248195ecaf7721419710bd2e"
+  },
+  "rows": [
+    {
+      "label": "d01-r7-final-positive-10387",
+      "seed": "10387",
+      "status": "FOCUSED_D01_PASS_NOT_ACCEPTANCE",
+      "hostMonotonicSeconds": 47.74124590000429,
+      "reportSha256": "77c977d696e1cd8cdec43e66c5008503bfe59c37f73d211f4911fdc995320edc",
+      "appStatus": "PASS",
+      "appElapsedMs": 41014,
+      "metadata": {
+        "status": "PASS",
+        "cold": {
+          "advanceCount": 37,
+          "measuredActiveMillis": 6324.79999999702,
+          "maximumAdvanceMillis": 386.20000000298023
+        },
+        "warm": {
+          "advanceCount": 37,
+          "measuredActiveMillis": 6208.399999991059,
+          "maximumAdvanceMillis": 396.70000000298023
+        },
+        "constructionSessionReleased": true,
+        "predecessorOwnerStillCurrent": true,
+        "cleanupComplete": true
+      },
+      "readers": [
+        {
+          "reader": "check_d01.py",
+          "exitCode": 0,
+          "output": "d01-r7-final-positive-10387-check_d01.log"
+        },
+        {
+          "reader": "check_d01_canaries.py",
+          "exitCode": 0,
+          "output": "d01-r7-final-positive-10387-check_d01_canaries.log"
+        }
+      ],
+      "metadataCorruptionsRejected": [
+        "normalAdmission",
+        "cleanupComplete",
+        "hostBoundaryLeaseCloseStatus",
+        "hostBoundaryLeaseCloseError",
+        "hostBoundaryLeaseReleased",
+        "hostBoundaryWindowHookRemoved",
+        "hostBoundarySnapshotReceiptRemoved"
+      ],
+      "cleanup": {
+        "status": "PASS",
+        "seconds": 0.8358841999870492,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "inputAudit": {
+        "status": "PASS",
+        "beforeSha256": "d8824887f1eacf3fdaae8eff264c6308c84cb2bc4f099bc18a90630e935cccf9",
+        "afterSha256": "d8824887f1eacf3fdaae8eff264c6308c84cb2bc4f099bc18a90630e935cccf9",
+        "sourceSha256Before": "cbef685b6883339630be20b83e6d309e79fd7efc15e9ce2b411bee0fa4ed0efd",
+        "sourceSha256After": "cbef685b6883339630be20b83e6d309e79fd7efc15e9ce2b411bee0fa4ed0efd",
+        "webSha256Before": "f88782efee2fde7167ad759f5b40f07c72e302c0ecd96cb48f55b2b41ed19505",
+        "webSha256After": "f88782efee2fde7167ad759f5b40f07c72e302c0ecd96cb48f55b2b41ed19505",
+        "runnerBeforeSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+        "runnerAfterSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+        "fileCountBefore": 1526,
+        "fileCountAfter": 1526,
+        "seconds": 0.35526510000636335
+      }
+    },
+    {
+      "label": "d01-r7-final-positive-10014",
+      "seed": "10014",
+      "status": "FOCUSED_D01_PASS_NOT_ACCEPTANCE",
+      "hostMonotonicSeconds": 176.34621329999936,
+      "reportSha256": "0ed55c61675639a285ecf9d70673a319f5c9e89f12841a6b348681b6eca46f51",
+      "appStatus": "PASS",
+      "appElapsedMs": 166662,
+      "metadata": {
+        "status": "PASS",
+        "cold": {
+          "advanceCount": 87,
+          "measuredActiveMillis": 23570.39999999106,
+          "maximumAdvanceMillis": 512.3999999910593
+        },
+        "warm": {
+          "advanceCount": 87,
+          "measuredActiveMillis": 23292.5,
+          "maximumAdvanceMillis": 521.0999999940395
+        },
+        "constructionSessionReleased": true,
+        "predecessorOwnerStillCurrent": true,
+        "cleanupComplete": true
+      },
+      "readers": [
+        {
+          "reader": "check_d01.py",
+          "exitCode": 0,
+          "output": "d01-r7-final-positive-10014-check_d01.log"
+        },
+        {
+          "reader": "check_d01_canaries.py",
+          "exitCode": 0,
+          "output": "d01-r7-final-positive-10014-check_d01_canaries.log"
+        }
+      ],
+      "metadataCorruptionsRejected": [
+        "normalAdmission",
+        "cleanupComplete",
+        "hostBoundaryLeaseCloseStatus",
+        "hostBoundaryLeaseCloseError",
+        "hostBoundaryLeaseReleased",
+        "hostBoundaryWindowHookRemoved",
+        "hostBoundarySnapshotReceiptRemoved"
+      ],
+      "cleanup": {
+        "status": "PASS",
+        "seconds": 0.933913399989251,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "inputAudit": {
+        "status": "PASS",
+        "beforeSha256": "d8824887f1eacf3fdaae8eff264c6308c84cb2bc4f099bc18a90630e935cccf9",
+        "afterSha256": "d8824887f1eacf3fdaae8eff264c6308c84cb2bc4f099bc18a90630e935cccf9",
+        "sourceSha256Before": "cbef685b6883339630be20b83e6d309e79fd7efc15e9ce2b411bee0fa4ed0efd",
+        "sourceSha256After": "cbef685b6883339630be20b83e6d309e79fd7efc15e9ce2b411bee0fa4ed0efd",
+        "webSha256Before": "f88782efee2fde7167ad759f5b40f07c72e302c0ecd96cb48f55b2b41ed19505",
+        "webSha256After": "f88782efee2fde7167ad759f5b40f07c72e302c0ecd96cb48f55b2b41ed19505",
+        "runnerBeforeSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+        "runnerAfterSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+        "fileCountBefore": 1526,
+        "fileCountAfter": 1526,
+        "seconds": 0.5221191000018734
+      }
+    }
+  ],
+  "notRun": []
+}

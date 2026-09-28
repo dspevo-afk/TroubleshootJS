@@ -1,0 +1,131 @@
+{
+  "status": "PASS_ACTUAL_POSTSTOP_SCOPE_CANARY",
+  "scope": "Actual in-app Browser private compiled canary; not headless host certification or Q30 acceptance",
+  "sourceAuditSha256": "3e802932fd1df9177371b0e3e2ae211b9837fddda66039d36847be5ad298c4c3",
+  "sourceInputCount": 1340,
+  "sourceInputsUnchangedAfterRun": true,
+  "browserId": "2",
+  "tabId": "5",
+  "previewPort": 34917,
+  "previewPid": 20332,
+  "previewCreationTime": "2026-09-28T06:01:02.096545-04:00",
+  "previewExecutable": "WindowsPowerShell/powershell.exe",
+  "previewScript": "scratch/d01-r10-preparation/fixture/scripts/preview.ps1",
+  "input": "Navigate explicit private canary URL tsjQ30D01ConstructionScopeWithdrawalAfterStop=true, seed10387; no app-controller calls or player-input claim",
+  "reportFile": "d01-r10-browser-poststop-scope-report.json",
+  "reportSha256": "fba8a312915f813bdf5d69cce921ea3036a3ddb0b06710c6d5b0661a9a914b61",
+  "reportBytes": 98319,
+  "readerSha256": "b38dc3ee763446065024a9d46037e56cb4d5fb53d7b7c7b35ea951f0104761f8",
+  "readerExitCode": 0,
+  "readerOutput": "PASS: D01 post-stop injected scope-withdrawal cleanup receipt\nD01 remains FAIL with no admission; normal successor is proven RUNNING at lease close\n",
+  "actualNegativeCanaries": [
+    {
+      "field": "sameSuccessorPhysicalStateAcrossLeaseClose",
+      "status": "REJECTED_AS_EXPECTED"
+    },
+    {
+      "field": "completionObserverDisarmed",
+      "status": "REJECTED_AS_EXPECTED"
+    },
+    {
+      "field": "captureStateReleased",
+      "status": "REJECTED_AS_EXPECTED"
+    },
+    {
+      "field": "scopeFlagRestoredSafely",
+      "status": "REJECTED_AS_EXPECTED"
+    },
+    {
+      "field": "normalMaximumJobMillis",
+      "status": "REJECTED_AS_EXPECTED"
+    },
+    {
+      "field": "successorStillRunningImmediatelyAfterLeaseClose",
+      "status": "REJECTED_AS_EXPECTED"
+    },
+    {
+      "field": "successorPhysicalStateAfterLeaseClose.graphVectorToken",
+      "status": "REJECTED_AS_EXPECTED"
+    }
+  ],
+  "actual": {
+    "schema": 1,
+    "status": "PASS",
+    "query": "tsjQ30D01ConstructionScopeWithdrawalAfterStop=true",
+    "purpose": "negative D01 boundary canary; injects verifier-scope withdrawal after DONE while the ordinary player successor remains running",
+    "startApi": "PlayerLaunchRequest.generation -> GenerationCoordinator.start(asynchronous=true)",
+    "normalMaximumJobMillis": 90000,
+    "normalMaximumSteps": 640,
+    "normalMaximumStepMillis": 5000,
+    "snapshotLeaseTimeoutMillis": 95000,
+    "snapshotLeaseScopePollMillis": 10,
+    "scopeWithdrawalPollIsCanaryOnly": true,
+    "defaultOneSecondLatencyProven": false,
+    "snapshotScopeLossObserved": false,
+    "family": "LED_INDICATOR",
+    "seed": "3",
+    "profile": "EASY",
+    "requestReplay": "tsj-alpha/4/EASY/LED_INDICATOR/3",
+    "startIssued": true,
+    "physicalStateUnchangedAtStart": true,
+    "startObserved": true,
+    "stopObserved": true,
+    "completionObserved": false,
+    "completionJobStopped": false,
+    "completionValid": false,
+    "completionTimeoutMillis": 95000,
+    "snapshotLeaseReleasePending": false,
+    "phaseAtScopeWithdrawal": "DONE",
+    "successorCoordinatorTokenAtStop": "I5",
+    "successorJobTokenAtStop": "I37",
+    "scopeWithdrawalInjectionReady": true,
+    "scopeWithdrawalInjectedAfterDone": true,
+    "q30ScopeFalseAfterInjection": true,
+    "scopeWithdrawalPollObserved": true,
+    "successorRunningAtScopeWithdrawalPoll": true,
+    "successorCoordinatorTokenAtPoll": "I5",
+    "successorJobTokenAtPoll": "I37",
+    "successorRunningImmediatelyBeforeLeaseClose": true,
+    "successorJobOutcomeAtLeaseClose": "RUNNING",
+    "successorExactIdentityAtLeaseClose": true,
+    "physicalStateComparisonScope": "primitive current-simulator state immediately before and after lease close in this timer callback",
+    "normalSuccessorMayProgressSinceD01Stop": true,
+    "predecessorStateEqualityAtLeaseCloseClaimed": false,
+    "successorPhysicalStateCapturedImmediatelyBeforeClose": true,
+    "snapshotLeaseReleased": true,
+    "snapshotWindowHookRemoved": true,
+    "snapshotReceiptRemoved": true,
+    "snapshotLeaseCloseStatus": "PASS",
+    "snapshotLeaseCloseError": "",
+    "snapshotLeaseCloseReason": "debug-q30-scope-loss",
+    "captureStateReleased": true,
+    "leaseDetachedFromActiveSlot": true,
+    "completionObserverDisarmed": true,
+    "completionObserverReferenceReleased": true,
+    "successorPhysicalStateCapturedImmediatelyAfterClose": true,
+    "sameSuccessorPhysicalStateAcrossLeaseClose": true,
+    "successorStillRunningImmediatelyAfterLeaseClose": true,
+    "successorJobNotCancelledOrReplacedAtLeaseClose": true,
+    "scopeFlagRestoredSafely": true,
+    "scopeWithdrawalObserved": true,
+    "primitiveLeaseCloseReceiptComplete": true
+  },
+  "cleanup": {
+    "status": "PASS",
+    "tabClosed": true,
+    "stopCommand": "pwsh -NoProfile -File scripts/stop-preview.ps1",
+    "ownedProcessStopped": true,
+    "portPositivelyReleased": true,
+    "initialWrongParameterAttempt": {
+      "exitCode": 1,
+      "reason": "Unsupported -Port argument; no process was stopped by this attempt; corrected maintained invocation succeeded."
+    }
+  },
+  "limitations": [
+    "No native hook-removal exception injection.",
+    "No screenshots captured.",
+    "No default-one-second polling latency claim; this canary explicitly uses ten milliseconds.",
+    "Manual Browser evidence does not certify maintained headless host error arrays.",
+    "Witness omits simIsRunning/developerVerifierRunning and does not independently prove all internal token cross-links; reviewed close path does not write those omitted fields."
+  ]
+}

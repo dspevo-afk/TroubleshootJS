@@ -1,0 +1,26 @@
+{
+  "maintainedGwtBuild": {
+    "path": "scripts/build.ps1",
+    "sha256": "424f91d0be7d8452b85c050a2312b1e61e7541b124200074496dc64ca13af45c"
+  },
+  "note": "Repository-relative dependencies are linked by the existing committed packet and verified hashes; they are not copied.",
+  "status": "HASH_PINNED_EXTERNAL_DEPENDENCIES",
+  "stickyFiniteBase": {
+    "candidateCirSim": {
+      "gzipSha256": "86cc183d6baa4399e3db015d64e55b4cdb4493225050cfa4d5a265b1fe7bb1b7",
+      "path": "../sticky-finite-solve-r2/sources/candidate-CirSim.java.gz",
+      "sourceSha256": "2658e94560fd9e1f0e9157a54be773bd9568d9350fa6ce56c39acaa7cf87e0b1"
+    },
+    "candidateLuFactorizationChecks": {
+      "gzipSha256": "6a14b7daf3f182909f8852cadd65973838af3640d1f472f0f8588e944df95075",
+      "path": "../sticky-finite-solve-r2/sources/candidate-LuFactorizationChecks.java.gz",
+      "sourceSha256": "d558d7d10706cb1da22d20f795ece6448e714be5d16315ad51a125c70b429c6c"
+    },
+    "packetInventorySha256": "c3e98e85bc97fb230f8b0b2fbed9dc5333e927dff1f87ecfb66689125b7a02a3",
+    "packetPath": "../sticky-finite-solve-r2/",
+    "sourcePairAudit": {
+      "path": "../sticky-finite-solve-r2/sources/source-pair-audit.json",
+      "sha256": "80110e21c0d5f4baf31460d3e0a12e12d9fc5cdecc1e83d49319fbc226a3c82a"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "$TASKROOT\\scratch\\d01-r7-final-preparation\\fixture",
+  "startedUtc": "2026-09-28T08:14:28.735795+00:00",
+  "outcome": "NOT_RUN",
+  "cases": [],
+  "caseCount": 1,
+  "errors": []
+}

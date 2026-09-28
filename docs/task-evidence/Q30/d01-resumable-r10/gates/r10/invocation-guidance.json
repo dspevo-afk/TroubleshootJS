@@ -1,0 +1,22 @@
+{
+  "actualArgvReceipt": "gates/r10/native-gwt-gates.json",
+  "gwt": [
+    "pwsh",
+    "-NoProfile",
+    "-File",
+    "scripts/build.ps1",
+    "<run against reconstructed audited fixture per maintained build contract>"
+  ],
+  "native": [
+    "pwsh",
+    "-NoProfile",
+    "-File",
+    "<native-runner>",
+    "-SourceRoot",
+    "<reconstructed-1340-input-fixture>",
+    "-Label",
+    "d01-r10-native"
+  ],
+  "note": "No command was rerun by this packaging script. Redacted temporary runner copies under tools/ are for inspection only.",
+  "status": "INVOCATION_GUIDANCE_ONLY"
+}

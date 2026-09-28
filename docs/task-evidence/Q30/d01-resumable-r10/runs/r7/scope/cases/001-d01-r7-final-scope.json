@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 1,
+    "name": "d01-r7-final-scope",
+    "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10387&tsjQ30D01ConstructionScopeLoss=true",
+    "stateAttribute": "data-tsj-q30-d01-state",
+    "expectedState": "FAIL",
+    "expectedPrefix": null,
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 600.0,
+    "reportAttribute": "data-tsj-q30-d01-report"
+  },
+  "url": "http://127.0.0.1:53061/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10387&tsjQ30D01ConstructionScopeLoss=true",
+  "startedUtc": "2026-09-28T08:14:16.401667+00:00",
+  "finishedUtc": "2026-09-28T08:14:17.250689+00:00",
+  "operationSeconds": 0.8490178999927593,
+  "outcome": "PASS",
+  "terminalReached": true,
+  "stateMatch": true,
+  "observedState": "FAIL",
+  "lastObservedState": "FAIL",
+  "timedOut": false,
+  "expectedFailureCanary": true,
+  "expectedFailureStateWasNotAnUnexpectedError": true,
+  "reportObserved": true,
+  "reportJsonValid": true,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 1942,
+  "reportSha256": "a8dc6d09e53cd2d0d13db6dc37d6b4199a3d38053d43571607bb8b0b4bc8c3fa",
+  "reportFile": "cases/001-d01-r7-final-scope.report.json",
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [],
+  "listenerCleanupErrors": [],
+  "navigationError": null
+}

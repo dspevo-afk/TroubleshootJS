@@ -1,0 +1,32 @@
+{
+  "status": "EXPECTED_NO_CLICK_FAILURE_AND_CLEANUP_PASS",
+  "scope": "expected negative private visible-power canary when no player click occurs; not normal acceptance",
+  "sourceAuditSha256": "717cc9bcf649d87b6dd801d76a52b78143e35b74acd395387807eefff7544d38",
+  "hostMonotonicSeconds": 44.30031279999821,
+  "appStatus": "FAIL",
+  "reportSha256": "7cded0dd0c905edc8b21519c6617b3d3bf5c8f2bce52d36ee55243b67f84d20c",
+  "coldStatus": "PASS",
+  "warmStatus": "PASS",
+  "failurePhase": "visiblePowerBoundary",
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 0.8235830000048736,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "340ef853c9d8f1f8b308d79ef205c141652e5824b90b474e1c0fd1178cb6abc1",
+    "afterSha256": "340ef853c9d8f1f8b308d79ef205c141652e5824b90b474e1c0fd1178cb6abc1",
+    "sourceSha256Before": "1fc5e03ae7c88bae9b2cbd0b27d84086f319bc175e6ba3b3400987ecc2b99477",
+    "sourceSha256After": "1fc5e03ae7c88bae9b2cbd0b27d84086f319bc175e6ba3b3400987ecc2b99477",
+    "webSha256Before": "7dee017e89cbb15ccb989178f401c2f061f40f83ac325e18639cf2cacc19835d",
+    "webSha256After": "7dee017e89cbb15ccb989178f401c2f061f40f83ac325e18639cf2cacc19835d",
+    "runnerBeforeSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+    "runnerAfterSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+    "fileCountBefore": 1526,
+    "fileCountAfter": 1526,
+    "seconds": 0.35349339999083895
+  }
+}

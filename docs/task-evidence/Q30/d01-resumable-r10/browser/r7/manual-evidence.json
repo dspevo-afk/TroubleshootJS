@@ -1,0 +1,39 @@
+{
+  "status": "PARTIAL_PASS_WITH_VISIBLE_READER_FAILURE",
+  "scope": "Actual Codex in-app Browser, compiled r7 final fixture, manual boundary inputs. Not timing acceptance or maintained headless host certification.",
+  "sourceAuditSha256": "729360f3cf12ceace58b4fc627afeb2951dc055a39e7a0aa9289faa8b408c505",
+  "browserId": "2",
+  "tabId": "2",
+  "previewPort": 34917,
+  "previewPid": 23468,
+  "normalSuccessor": {
+    "seed": "10387",
+    "queryFlag": "tsjQ30D01ConstructionNormalSuccessor=true",
+    "input": "Navigate to explicit developer canary URL; ordinary successor is issued by the compiled private canary, not a player input claim.",
+    "report": "d01-r7-browser-normal-successor-report.json",
+    "reader": "scratch/d01-resumable-draft/r7/check_d01_normal_successor_canary.py",
+    "readerExitCode": 0,
+    "result": "PASS: D01 FAIL/no admission; ordinary LED_INDICATOR/EASY/3 completes; predecessor preserved at stop; successor is final owner; lease released."
+  },
+  "visiblePowerDelayedAttempt": {
+    "seed": "10387",
+    "queryFlag": "tsjQ30D01VisiblePowerBoundary=true",
+    "report": "d01-r7-browser-visible-power-late-report.json",
+    "result": "FAIL: D01 completed before the real click. Nested canary FAIL, but top-level D01 incorrectly PASS. Preserved for fail-closed reporting repair.",
+    "screenshotAttempts": 2,
+    "screenshotResult": "BLOCKED: both Page.captureScreenshot requests timed out. Opening the tab in Codex returned queued. No screenshots captured or claimed."
+  },
+  "visiblePowerConstructionAttempt": {
+    "seed": "10014",
+    "queryFlag": "tsjQ30D01VisiblePowerBoundary=true",
+    "input": "Real getByRole(button, Board Power: ON, exact=true).click() after navigation; read-only DOM inspection and report extraction.",
+    "report": "d01-r7-browser-visible-power-10014-report.json",
+    "afterDom": "d01-r7-browser-visible-power-after-dom.txt",
+    "readerArgument": "--visible-power-boundary",
+    "readerExitCode": 1,
+    "result": "FAIL: strict reader requires completed negative report phase DONE; actual report FAIL/construction, nested BOUNDARY_RECEIPT_READY, cleanup true. Real power transition remains OFF and boundary snapshot is preserved."
+  },
+  "captureNotes": "DOM strings above 200k require 50k read-only chunks; the delayed attempt's earlier single-call truncated export is retained separately and is not evidence. No window bridge, hidden controller, or app-state mutation was injected.",
+  "cleanup": "PASS: task-owned tab closed; maintained stop-preview revalidated PID ownership and positively released port 34917.",
+  "notRun": ["post-DONE scope withdrawal", "actual native hook-removal exception", "successful screenshot inspection"]
+}

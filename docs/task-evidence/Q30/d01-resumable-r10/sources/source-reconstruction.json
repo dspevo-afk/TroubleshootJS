@@ -1,0 +1,38 @@
+{
+  "allOtherSharedInputsMatchExactly": true,
+  "base": {
+    "candidateArmSourceSha256": {
+      "CirSim.java": "2658e94560fd9e1f0e9157a54be773bd9568d9350fa6ce56c39acaa7cf87e0b1",
+      "LuFactorizationChecks.java": "d558d7d10706cb1da22d20f795ece6448e714be5d16315ad51a125c70b429c6c"
+    },
+    "candidateInputCount": 1339,
+    "packetPath": "../sticky-finite-solve-r2/",
+    "sourcePairAuditPath": "../sticky-finite-solve-r2/sources/source-pair-audit.json",
+    "sourcePairAuditSha256": "80110e21c0d5f4baf31460d3e0a12e12d9fc5cdecc1e83d49319fbc226a3c82a"
+  },
+  "differences": [
+    {
+      "baseSha256": "38a10626cfae464297776fba63bce37d81150bba0ea3e27fa80a9c5f59828e05",
+      "finalSha256": "7180d16178a712b1a0fc35a9be70e2b693d1442a802b1c2e1be99b78233efe60",
+      "kind": "modified",
+      "path": "src/com/lushprojects/circuitjs1/client/Q30DiagnosticAdmissionVerifier.java"
+    },
+    {
+      "baseSha256": null,
+      "finalSha256": "f7cded8104787967e36602872775e2ab7a0d6d316b15adbf8b7811881d257178",
+      "kind": "added",
+      "path": "src/com/lushprojects/circuitjs1/client/Q30D01HostBoundarySnapshot.java"
+    }
+  ],
+  "final": {
+    "auditSha256": "3e802932fd1df9177371b0e3e2ae211b9837fddda66039d36847be5ad298c4c3",
+    "generatedWarCopied": false,
+    "inputCount": 1340,
+    "pinnedJarCount": 9,
+    "warFileCount": 29
+  },
+  "note": "Only r9/r10 overlays are copied; older r7/r8 lineage is represented by hash-pinned source audits. No source tree, JARs, or generated WAR is duplicated.",
+  "overlaySourceHashesVerified": true,
+  "status": "VERIFIED_BY_EXACT_INPUT_MANIFEST_COMPARISON",
+  "unchangedSharedInputs": 1338
+}

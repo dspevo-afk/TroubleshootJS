@@ -1,0 +1,36 @@
+{
+  "status": "NATIVE_GWT_PASS_BROWSER_NOT_RUN",
+  "sourceAuditSha256": "3e802932fd1df9177371b0e3e2ae211b9837fddda66039d36847be5ad298c4c3",
+  "steps": [
+    {
+      "name": "native-d01-r10",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "$TASKROOT\\native-d01-r5.ps1",
+        "-SourceRoot",
+        "$TASKROOT\\scratch\\d01-r10-preparation\\fixture",
+        "-Label",
+        "native-d01-r10"
+      ],
+      "exitCode": 0,
+      "hostElapsedSeconds": 34.13203210000938
+    },
+    {
+      "name": "d01-r10-gwt",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "$TASKROOT\\build-run.ps1",
+        "-SourceRoot",
+        "$TASKROOT\\scratch\\d01-r10-preparation\\fixture",
+        "-Label",
+        "d01-r10-gwt"
+      ],
+      "exitCode": 0,
+      "hostElapsedSeconds": 79.97382270000526
+    }
+  ]
+}
