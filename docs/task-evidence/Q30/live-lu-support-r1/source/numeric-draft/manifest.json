@@ -1,0 +1,15 @@
+{
+  "artifact": "tests/contracts/LuStructuralFactorizationContractTest.java",
+  "artifact_sha256": "D82B7B8A8A179BCBF2821242FE01C334A138FEDE01D7B5F7F22616FDE30861F7",
+  "kind": "source-only contract test",
+  "base_source_fixture": "scratch/pivot-lower-fusion-r2-preparation/candidate",
+  "validation": "NOT RUN by this worker",
+  "scope": [
+    "raw-bit parity with the full LU factor and solve path",
+    "independent dense Crout oracle and analytic residual checks",
+    "balanced interleaved support, pivot ties, and row-object permutation",
+    "singular local pivot fallback, sentinel, overflow failures, and cleanup",
+    "stamp updates/cancellation, certificate fallback, aliases, and workspace reuse",
+    "deterministic permuted-block corpus"
+  ]
+}

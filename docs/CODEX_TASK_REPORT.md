@@ -1,6 +1,131 @@
 # Current checkpoint: Q30 BLOCKED / NOT ACCEPTED
 
 Branch `codex/q30-multirail-qualification`; prepared from documentation HEAD
+`f94d523` (`Record Q30 live matrix support census`). Accepted production source
+remains `ffe9132`. No push or completion email. Normal-player Q30 remains disabled;
+U06/U07/Q60 and later are unstarted. Full final matrices are NOT RUN while hard
+gates fail. Frozen limits remain 90,000 ms cumulative / 640 shared work units /
+5,000 ms active operation; private 90–300-second measurements remain isolated.
+
+The requested FIRST independent review, focused regressions and fresh
+counterbalanced comparison were secured locally at `7a30a3f`. Original savings
+11.155–14.706 s preserved complete non-timing proof equality; every cold row
+still exceeded 90 s. [Accepted initial optimization](task-evidence/Q30/intermediate-optimization/README.md).
+Later accepted LU row-reference/fusion work has its own source, independent
+oracle, native/GWT/compiled and paired evidence. No additional production change
+is accepted from the stopped experiments below.
+
+The [monotonic stage profile](task-evidence/Q30/stage-profile/README.md) explains
+the approximately 106-second path; these disjoint categories sum to 106.350 s:
+
+| Stage | Seconds |
+| --- | ---: |
+| Plan resolution | 0.0002 |
+| Placement | 0.8262 |
+| Routing | 20.0695 |
+| Physical admission | 0.0746 |
+| Initial/repeated hypothesis construction | 0.3772 |
+| CircuitJS analyze/setup | 1.2238 |
+| Solver stepping | 79.4210 |
+| Settling orchestration outside solver calls | 1.2708 |
+| Diagnostic/hypothesis orchestration outside nested work | 0.6423 |
+| Proof cleanup | 0.0821 |
+| Other stage work | 0.0571 |
+| Unscoped/event-loop/clock-boundary residual | 2.3056 |
+
+Inclusive purposes are retained separately, not added again: healthy settling
+19.804 s, faulted settling 4.371 s, diagnostic input settling 14.242 s, service
+preparation 4.359 s, repair-status proof 16.337 s, retest 16.492 s and completion
+proof 0.030 s. Five fresh hypothesis owners, 502 analyses, all 390 proof units,
+repeated work and all route attempts/rejections remain. This request had no
+generation-candidate retry. Outer measurement-owner cleanup was 0.0027 s.
+
+Subsequent [CPU sampling](task-evidence/Q30/cpu-profile-10ms-r1/README.md) placed
+LU factor/solve/owned-loop sampled self time at 26.940/7.674/11.446 s; these are
+not disjoint wall stages. Profiling slowed its row by 2.682–2.794 s.
+[Publication sampling](task-evidence/Q30/solver-publication-profile-r1/README.md)
+has coarse-timer limits; callback deferral is unsupported by current contracts.
+[P07 via memo](task-evidence/Q30/p07-static-via-r1/README.md) reduced routing in
+two pairs but failed the total-cold variability rule; it remains unintegrated.
+
+The [LU support census](task-evidence/Q30/lu-support-census-r4/README.md), secured
+at `f94d523`, sampled 181/742,391 cold factors. Every sampled current matrix had
+multiple balanced components, but none preserved the original partition:
+49–58 added edges and 30–36 cross-original edges prohibit static partition reuse.
+Outside-component scan fractions around 35–36% overlap and are not time savings.
+Cold OFF/ON/OFF 99.209/99.041/98.243 s placed ON inside the 0.966-s control range.
+Full parity/negative readers, native7, GWT5, compiled canaries and cleanup PASS.
+Root source/report/inventory audit and staged byte audit PASS. No census code
+is integrated; prior failed gates and corrected packaging attributions remain.
+
+The [live-support LU trial](task-evidence/Q30/live-lu-support-r1/README.md) is now
+**INCONCLUSIVE / NOT INTEGRATED**. Its generic owner unions original support
+with every mapped runtime stamp, including zero/cancelling stamps. Per-factor
+domains preserve global pivots/ties/arithmetic; local-zero pivots resume full
+LU. Analysis replacement, stop and snapshot restore invalidate the certificate.
+
+| Fresh private 40-package row | Cold ms | Proof ms | Routing ms |
+| --- | ---: | ---: | ---: |
+| Control 1 | 122294 | 88331 | 26715 |
+| Candidate 1 | 116584 | 82467 | 26892 |
+| Candidate 2 | 114072 | 81064 | 25860 |
+| Control 2 | 111612 | 78867 | 25772 |
+
+Paired cold gains +5,710/-2,460 ms and proof gains +5,864/-2,197 ms fail the
+predeclared repeat rule; controls span 10,682 ms. Remaining 37/20-package rows
+are NOT RUN. Both full non-timing comparisons and 43 strict corruptions per arm
+PASS; every cold row retains 490 work / 390 hypothesis units. All four owned
+host cleanups PASS. Application fields remain wall-clock; whole-host operation
+is monotonic and cleanup separate. No warm-proof reuse, clock-jump evidence,
+speed claim or established OS/thermal/noise cause. Tracking cost remains unresolved.
+
+Prototype native9 PASS (56.037 s), GWT5 PASS (100.522 s), compiled A07/disabled
+normal PASS (7.584 s; cleanup 1.350 s), strict reader/three negatives PASS.
+Source audit `ce1b55ca0b463746b19976871a5be1401972c294bf0cc881070bdd36284b7ba4`
+binds 1,343 inputs; runtime 1,526. Inputs stayed unchanged throughout the trial.
+Independent source-only review found no mathematical/lifecycle blocker for the
+private trial. Direct executable owner-invalidation/snapshot tests and exact
+n=512 coverage remain gaps before adoption. The outer sequence has no independent
+subprocess timeout beyond the browser case's 600-second limit.
+
+Retained failures: missing pending test registration caused pre-compiler exit 2;
+first native run failed the new historical dense-oracle signed-zero assertion.
+An unchanged accepted-source witness (23 assertions) proved the inherited +0/-0
+difference. Only the new historical comparison was corrected; current full-LU
+factor/pivot/solve bits and independent nonzero factor bits remain exact. Existing
+oracles are unchanged. No requirement or acceptance threshold was weakened.
+
+Root packet audit PASS: 172 artifacts, six exact raw reports, six exact source
+overlays and the 1,340-to-1,343 input map. Inventory
+`ddd1295edbe82e229a4e1dba9fa00b48f4c30a683810842324d6781e1c922986`.
+Large/CRLF/whitespace-sensitive payloads use exact gzip; prior inventories remain.
+An initial cached check caught three extra EOF blank lines in evidence copies;
+exact gzip storage preserves them and resolves the packaging-only check failure.
+After the timing sequence, both Store Python entry points failed to launch with
+access denied. The bundled app Python passed the read-only packet audit. This
+does not alter completed measurement inputs; the new launch failure is unresolved.
+
+Scale remains NOT ACCEPTED. Preserved uncommitted plan-4 offers purposeful
+one/two-channel 20–40-package variants with 77 representative/held-out roots and
+18 axes. Structural/oracle and ten service plus ten finer-step cases PASS;
+full electrical/normal corpus NOT RUN. Earlier normal seed 7 failed at 90,066.6 ms
+and 378/390 hypothesis units with cleanup PASS. No normal Q30 admission passes.
+
+Resources: timing/build/native/compiled hosts finished; owned cleanup passed;
+no heavy task process or manual preview remains. Task-temp fixtures/evidence
+are retained; previously rejected recursive cleanup is not retried. Plan-4
+sources/tests/readers, architecture edits, disabled-normal hook/API and caches
+remain unstaged. No broad cleanup, remote action or global setting change.
+
+Next: measure the prototype's incremental tracking/scan costs before further
+implementation; preserve the accepted solver until an improvement survives
+fresh repeated controls. Normal cold corpus with margin, required scale and
+focused gates must pass before the single full final acceptance matrix.
+Q30 remains BLOCKED.
+
+# Historical checkpoint: census secured; live-support timing pending
+
+Branch `codex/q30-multirail-qualification`; prepared from documentation HEAD
 `7739c8f`. Accepted production source remains `ffe9132`
 (`Collect LU lower rows during pivot search`). No push or completion email.
 Normal-player Q30 publication remains disabled. U06/U07/Q60 and later are

@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "baselineOriginalAuditSha256": "0d27e176dc46afb4db91316570f4674e52b51ce2b462c64f6b6a37b98cbec197",
+  "sourceInputsBefore": 1340,
+  "sourceInputsAfter": 1343,
+  "sourceAuditSha256": "ce1b55ca0b463746b19976871a5be1401972c294bf0cc881070bdd36284b7ba4",
+  "exactFinalOverlays": [
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "storedAt": "source/final-overlays/scripts__verify-current-contracts.ps1.gz",
+      "sha256": "5e8adebed4f28bc9728f879427340b4993f66f8acf6b89d960dfdcb3d419c808",
+      "bytes": 66771
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "storedAt": "source/final-overlays/src__com__lushprojects__circuitjs1__client__CirSim.java.gz",
+      "sha256": "bae8c0de993402c7cae3f2e609347bc0de8fef2e64d4a0117ab3502a16ec0345",
+      "bytes": 351627
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/LuStructuralSupport.java",
+      "storedAt": "source/final-overlays/src__com__lushprojects__circuitjs1__client__LuStructuralSupport.java.gz",
+      "sha256": "b3bca13ce1e1801e8767dfbd3fa5a61c0ab61cb5b2161cbb836a1b469cca8d66",
+      "bytes": 15631
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+      "storedAt": "source/final-overlays/src__com__lushprojects__circuitjs1__client__Task41SimulationSnapshot.java.gz",
+      "sha256": "bf225b793e51368fc64cffd0500ab80e30af5c4e7624f6d91925e8ce4a7cb261",
+      "bytes": 56591
+    },
+    {
+      "path": "tests/contracts/LuStructuralFactorizationContractTest.java",
+      "storedAt": "source/final-overlays/tests__contracts__LuStructuralFactorizationContractTest.java.gz",
+      "sha256": "ba4ffdd856de1a79e0f97ebab53b05670fc22afd9b94ce41be4fdae4fa7b93f3",
+      "bytes": 35983
+    },
+    {
+      "path": "tests/contracts/LuStructuralSupportContractTest.java",
+      "storedAt": "source/final-overlays/tests__contracts__LuStructuralSupportContractTest.java.gz",
+      "sha256": "dd6dbb5f871bbc895c9d8b68ae35aa6fc1a6de4e77f4b152fc07823cd0a234cf",
+      "bytes": 19346
+    }
+  ],
+  "pinnedParentReconstructionReferences": [
+    {
+      "commit": "f94d523232677760c2af24cde886f4a92a09833d",
+      "path": "docs/task-evidence/Q30/lu-support-census-r4/source/overlay-map.json",
+      "bytes": 3523,
+      "sha256": "cfdf22d1270fc3fa15c1601875881f6d0dc36331570d3660d3b3f0f2b2fa6d73"
+    },
+    {
+      "commit": "f94d523232677760c2af24cde886f4a92a09833d",
+      "path": "docs/task-evidence/Q30/lu-support-census-r4/source/parent/pivot-lower-fusion-r2/stored-parent-source-audit.json.gz",
+      "bytes": 143911,
+      "sha256": "a786eae07f29759ee3028650f1f51642ea0c0f25ce3ae6002e8d478186545a79"
+    },
+    {
+      "commit": "f94d523232677760c2af24cde886f4a92a09833d",
+      "path": "docs/task-evidence/Q30/pivot-lower-fusion-r2/source/provenance.json",
+      "bytes": 3031,
+      "sha256": "4ca6403c87a85b5e4c816c886dbfe09bd5cf4f854890548328e55e0f97645c69"
+    }
+  ],
+  "instructions": "Reconstruct the measured fusion baseline using pinned parent source lineage, verify all 1340 control input entries in source-audit, then apply these six complete overlays and verify all 1343 candidate entries. No generated WAR or full checkout is included."
+}

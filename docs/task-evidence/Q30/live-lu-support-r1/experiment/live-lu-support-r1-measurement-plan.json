@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "status": "PREDECLARED",
+  "purpose": "PRIVATE_GENERIC_LIVE_SUPPORT_LU_TRIAL",
+  "productionAcceptance": false,
+  "sourceAuditSha256": "ce1b55ca0b463746b19976871a5be1401972c294bf0cc881070bdd36284b7ba4",
+  "source": {
+    "control": "scratch/pivot-lower-fusion-r2-preparation/candidate",
+    "candidate": "live-lu-support-r1-preparation/candidate"
+  },
+  "runtime": {
+    "control": {
+      "sha256": "53f869e8164f6b8edc3b75ba1e6a299a984de5c88829b60b04a9ca59e76787a9",
+      "fileCount": 1525
+    },
+    "candidate": {
+      "sha256": "22b85ba94cfd3d56626f4655a0b0ba371db3e2f689a42f034cd98400e50e27f6",
+      "fileCount": 1526
+    }
+  },
+  "sequence": [
+    {
+      "label": "live-lu-support-r1-01-control-10014",
+      "arm": "control",
+      "seed": "10014",
+      "packages": 40
+    },
+    {
+      "label": "live-lu-support-r1-02-candidate-10014",
+      "arm": "candidate",
+      "seed": "10014",
+      "packages": 40
+    },
+    {
+      "label": "live-lu-support-r1-03-candidate-10014",
+      "arm": "candidate",
+      "seed": "10014",
+      "packages": 40
+    },
+    {
+      "label": "live-lu-support-r1-04-control-10014",
+      "arm": "control",
+      "seed": "10014",
+      "packages": 40
+    },
+    {
+      "label": "live-lu-support-r1-05-candidate-7",
+      "arm": "candidate",
+      "seed": "7",
+      "packages": 37
+    },
+    {
+      "label": "live-lu-support-r1-06-control-7",
+      "arm": "control",
+      "seed": "7",
+      "packages": 37
+    },
+    {
+      "label": "live-lu-support-r1-07-control-10387",
+      "arm": "control",
+      "seed": "10387",
+      "packages": 20
+    },
+    {
+      "label": "live-lu-support-r1-08-candidate-10387",
+      "arm": "candidate",
+      "seed": "10387",
+      "packages": 20
+    }
+  ],
+  "continuationAfterFirstPair": "Continue only with full parity and at least1percent reductions in both cold total and proof time. Otherwise retain focused evidence as inconclusive/rejected and mark remaining6rows NOT_RUN. This is an experiment resource rule, not an acceptance threshold change.",
+  "continuationAfterRepeatedPair": "Both forty-package paired cold/proof gains must remain positive; minimum cold gain must exceed the larger within-arm cold range. Otherwise stop before smaller-scale checks. Passing this rule is bounded repeated-seed evidence only.",
+  "requirements": [
+    "New owned browser every row; original private cold cache protocol, complete reports/proofs and strict negatives.",
+    "No profile query or clocks. All consumed source/build inputs unchanged before and after each row.",
+    "Preserve numerical predicates/failure text/arithmetic order/pivots/settling/physical/replay/work/cache/cleanup.",
+    "No final matrix until normal cold margin and full scale gates pass. No production acceptance from these private rows."
+  ],
+  "interpretation": "Generic live stamped-coordinate support restricts only certified scan domains; original pivot order, ties, arithmetic, initial zero-row scan and finite checks remain. Tracking and scratch costs are included. Census domain counts overlap and do not predict time savings. Fresh matched controls and reverse-order repeat required for attribution; normal acceptance requires the full declared corpus and margin independently.",
+  "limits": {
+    "normalMaxJobMillis": 90000,
+    "maxJobSteps": 640,
+    "maxUnitMillis": 5000
+  }
+}

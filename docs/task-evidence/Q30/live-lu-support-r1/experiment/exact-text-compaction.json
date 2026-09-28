@@ -1,0 +1,234 @@
+{
+  "priorInventorySha256": "91ec98f6aae6b5c5d271198a2b6e1211fa3add25d1e23b41bbd24ef0ab4a1b62",
+  "reason": "Preserve exact CRLF and trailing-whitespace payloads against Git text normalization and whitespace checks; no data or source changes",
+  "files": [
+    {
+      "restorePath": "experiment/live-lu-support-r1-root-interpretation.json",
+      "storedPath": "experiment/live-lu-support-r1-root-interpretation.json.gz",
+      "payloadBytes": 7048,
+      "payloadSha256": "5d29142123524c4e4b1f09c4303c7a8d483ce671fd0c0885ca7f134cfeda2586"
+    },
+    {
+      "restorePath": "experiment/live-lu-support-r1-source-review.json",
+      "storedPath": "experiment/live-lu-support-r1-source-review.json.gz",
+      "payloadBytes": 2961,
+      "payloadSha256": "c6bf399e078d7151d23a6074526bbae0b6812dfa76c010ac652b6b1fbc339db3"
+    },
+    {
+      "restorePath": "experiment/live-lu-support-r2-oracle-correction.json",
+      "storedPath": "experiment/live-lu-support-r2-oracle-correction.json.gz",
+      "payloadBytes": 572,
+      "payloadSha256": "48591538e8c1256c246ab6809d65965040c5d618b302c4b38c21b70c3414c2c8"
+    },
+    {
+      "restorePath": "gates/live-lu-support-r1-a07-reader.log",
+      "storedPath": "gates/live-lu-support-r1-a07-reader.log.gz",
+      "payloadBytes": 75,
+      "payloadSha256": "44d24b9e9a389a6f682363c51ef04ef37694276dbe30f6ac328ade766286b3f7"
+    },
+    {
+      "restorePath": "gates/live-lu-support-r1-gwt5.json",
+      "storedPath": "gates/live-lu-support-r1-gwt5.json.gz",
+      "payloadBytes": 273,
+      "payloadSha256": "759d4593ac70dd22f1f226877f78d88497e16da91254afe3b58e1e1bcd601b27"
+    },
+    {
+      "restorePath": "gates/live-lu-support-r1-gwt5.log",
+      "storedPath": "gates/live-lu-support-r1-gwt5.log.gz",
+      "payloadBytes": 1240,
+      "payloadSha256": "974f7fa8e620c2e582e751a63d8d187f3cb3b4cf1cf98be141ee33e288db60dc"
+    },
+    {
+      "restorePath": "gates/live-lu-support-r1-native-tracker-preflight.json",
+      "storedPath": "gates/live-lu-support-r1-native-tracker-preflight.json.gz",
+      "payloadBytes": 325,
+      "payloadSha256": "470d4e6fad068e927fc318db04bd09a23a7d75b63fe29761812dda3dbd5389e5"
+    },
+    {
+      "restorePath": "gates/live-lu-support-r1-native-tracker-preflight.log",
+      "storedPath": "gates/live-lu-support-r1-native-tracker-preflight.log.gz",
+      "payloadBytes": 475,
+      "payloadSha256": "99c467d0ef1825a9027ace68855e88060f95ca3c12ed709eaf55badb716e17ae"
+    },
+    {
+      "restorePath": "gates/live-lu-support-r1-native9.json",
+      "storedPath": "gates/live-lu-support-r1-native9.json.gz",
+      "payloadBytes": 650,
+      "payloadSha256": "bf2bf1f25dbbb1a3f97ef9345c7c4d4b76daf283d0cd593f34aca456097dd0b6"
+    },
+    {
+      "restorePath": "gates/live-lu-support-r1-native9.log",
+      "storedPath": "gates/live-lu-support-r1-native9.log.gz",
+      "payloadBytes": 5627,
+      "payloadSha256": "54ea25cea02baf49164ffeba63d4c3ea21d6311c2172f7af8840106fa9dc066a"
+    },
+    {
+      "restorePath": "gates/live-lu-support-r2-native9-receipt.txt",
+      "storedPath": "gates/live-lu-support-r2-native9-receipt.txt.gz",
+      "payloadBytes": 880,
+      "payloadSha256": "3359c476bc4443c6924654e5a87441714d20e0e2307fb718c595c640a0dfc17b"
+    },
+    {
+      "restorePath": "gates/live-lu-support-r2-native9.json",
+      "storedPath": "gates/live-lu-support-r2-native9.json.gz",
+      "payloadBytes": 650,
+      "payloadSha256": "a0c7006554aadad80e41dfde6b08c3dddde110a20a5c8af382b77c73f4768cd2"
+    },
+    {
+      "restorePath": "gates/live-lu-support-r2-native9.log",
+      "storedPath": "gates/live-lu-support-r2-native9.log.gz",
+      "payloadBytes": 4836,
+      "payloadSha256": "537c801c775731240196bb63c0929ef165918de855aea6e1590a93444afd31b9"
+    },
+    {
+      "restorePath": "gates/live-lu-zero-sign-witness-r1-native-receipt.txt",
+      "storedPath": "gates/live-lu-zero-sign-witness-r1-native-receipt.txt.gz",
+      "payloadBytes": 195,
+      "payloadSha256": "98e2296fb669bf62ce379ee5f445b6711201ca931cd7497b3bdccf354925a82b"
+    },
+    {
+      "restorePath": "gates/live-lu-zero-sign-witness-r1-native.json",
+      "storedPath": "gates/live-lu-zero-sign-witness-r1-native.json.gz",
+      "payloadBytes": 172,
+      "payloadSha256": "b65eeaf503fb2344b693f1809395a0e37a68a0b89e0c4566ccefea6d7ff2dee0"
+    },
+    {
+      "restorePath": "gates/live-lu-zero-sign-witness-r1-native.log",
+      "storedPath": "gates/live-lu-zero-sign-witness-r1-native.log.gz",
+      "payloadBytes": 883,
+      "payloadSha256": "61b50555a1d8be4a099ef32966c9251bc39a4928f482ba3cf5199fffb262abfc"
+    },
+    {
+      "restorePath": "hosts/live-lu-support-r1-01-control-10014/live-lu-support-r1-01-control-10014-summary.json",
+      "storedPath": "hosts/live-lu-support-r1-01-control-10014/live-lu-support-r1-01-control-10014-summary.json.gz",
+      "payloadBytes": 1919,
+      "payloadSha256": "058242bccce9a63d1a56a9c5f5fc6ef5c9c882a9491fd80a673084d05a1cfe26"
+    },
+    {
+      "restorePath": "hosts/live-lu-support-r1-01-control-10014/live-lu-support-r1-01-control-10014.log",
+      "storedPath": "hosts/live-lu-support-r1-01-control-10014/live-lu-support-r1-01-control-10014.log.gz",
+      "payloadBytes": 73,
+      "payloadSha256": "cd74644254001b2efdc20846cfd464a810afa64d5629c931576e4c153568a80e"
+    },
+    {
+      "restorePath": "hosts/live-lu-support-r1-02-candidate-10014/live-lu-support-r1-02-candidate-10014-summary.json",
+      "storedPath": "hosts/live-lu-support-r1-02-candidate-10014/live-lu-support-r1-02-candidate-10014-summary.json.gz",
+      "payloadBytes": 1921,
+      "payloadSha256": "6b161a86b57f96cafe392e9cf6cb2793c8ed7c16fd1bd8c7208113a1e3ac0f8e"
+    },
+    {
+      "restorePath": "hosts/live-lu-support-r1-02-candidate-10014/live-lu-support-r1-02-candidate-10014.log",
+      "storedPath": "hosts/live-lu-support-r1-02-candidate-10014/live-lu-support-r1-02-candidate-10014.log.gz",
+      "payloadBytes": 75,
+      "payloadSha256": "1b148d1082f2ae21588a9247f3d1e2626abdb09b3bc3b318bff6f7edb5dc8e35"
+    },
+    {
+      "restorePath": "hosts/live-lu-support-r1-03-candidate-10014/live-lu-support-r1-03-candidate-10014-summary.json",
+      "storedPath": "hosts/live-lu-support-r1-03-candidate-10014/live-lu-support-r1-03-candidate-10014-summary.json.gz",
+      "payloadBytes": 1919,
+      "payloadSha256": "dcff3e8636b6698ed1afeca9854683e7ad305e38538cb666ef5f7a3917b581fa"
+    },
+    {
+      "restorePath": "hosts/live-lu-support-r1-03-candidate-10014/live-lu-support-r1-03-candidate-10014.log",
+      "storedPath": "hosts/live-lu-support-r1-03-candidate-10014/live-lu-support-r1-03-candidate-10014.log.gz",
+      "payloadBytes": 75,
+      "payloadSha256": "0bd878efc6c815d4699ccb72ff688bf84e36a141129cf189159f910594f27812"
+    },
+    {
+      "restorePath": "hosts/live-lu-support-r1-04-control-10014/live-lu-support-r1-04-control-10014-summary.json",
+      "storedPath": "hosts/live-lu-support-r1-04-control-10014/live-lu-support-r1-04-control-10014-summary.json.gz",
+      "payloadBytes": 1919,
+      "payloadSha256": "d93163771ad911b3798223a38407aa2dccff1406e018195c87d004ac8a2a55ba"
+    },
+    {
+      "restorePath": "hosts/live-lu-support-r1-04-control-10014/live-lu-support-r1-04-control-10014.log",
+      "storedPath": "hosts/live-lu-support-r1-04-control-10014/live-lu-support-r1-04-control-10014.log.gz",
+      "payloadBytes": 73,
+      "payloadSha256": "50a7496b8183ea6d807488bd00af5314a7b281d31453d0d2ab2c8d2440a3c013"
+    },
+    {
+      "restorePath": "hosts/live-lu-support-r1-canaries/live-lu-support-r1-canaries-spec.json",
+      "storedPath": "hosts/live-lu-support-r1-canaries/live-lu-support-r1-canaries-spec.json.gz",
+      "payloadBytes": 867,
+      "payloadSha256": "f8f840b1e3d488814b9fcc93bc1cf3241c3daa6bc129d00b6ccc819df42c8db4"
+    },
+    {
+      "restorePath": "hosts/live-lu-support-r1-canaries/live-lu-support-r1-canaries-summary.json",
+      "storedPath": "hosts/live-lu-support-r1-canaries/live-lu-support-r1-canaries-summary.json.gz",
+      "payloadBytes": 236,
+      "payloadSha256": "006478477e641c3dfd3f803fdb5ef7e3341e220678faa9ff9006d9ee9ae571e5"
+    },
+    {
+      "restorePath": "hosts/live-lu-support-r1-canaries/live-lu-support-r1-canaries.log",
+      "storedPath": "hosts/live-lu-support-r1-canaries/live-lu-support-r1-canaries.log.gz",
+      "payloadBytes": 116,
+      "payloadSha256": "c8a09a41471723ebe7bb7c3727f9571c1a3d4878c9058639ee2aed9805b5e6e3"
+    },
+    {
+      "restorePath": "hosts/live-lu-support-r1-canaries/spec.json",
+      "storedPath": "hosts/live-lu-support-r1-canaries/spec.json.gz",
+      "payloadBytes": 867,
+      "payloadSha256": "f8f840b1e3d488814b9fcc93bc1cf3241c3daa6bc129d00b6ccc819df42c8db4"
+    },
+    {
+      "restorePath": "procedures/prepare_live_lu_support_measurement_root.py",
+      "storedPath": "procedures/prepare_live_lu_support_measurement_root.py.gz",
+      "payloadBytes": 4759,
+      "payloadSha256": "608bcacf70ebeb54b40c9265fc9eb9c40d2f635e8a319d820976844b27814f6d"
+    },
+    {
+      "restorePath": "procedures/run_live_lu_support_r1_sequence_root.py",
+      "storedPath": "procedures/run_live_lu_support_r1_sequence_root.py.gz",
+      "payloadBytes": 5261,
+      "payloadSha256": "b755e3a35d78fd807111a68c9ccdef14c2cbb18e2cb2b8b87a5ea689940b5bd1"
+    },
+    {
+      "restorePath": "procedures/wire_live_lu_support_r1_root.py",
+      "storedPath": "procedures/wire_live_lu_support_r1_root.py.gz",
+      "payloadBytes": 9249,
+      "payloadSha256": "6a45cf5a302b865a894e61b7f7e1f2c51e99d5f55930f793e4c9d63ef22f2164"
+    },
+    {
+      "restorePath": "reviews/generic-wire-observation-contract.md",
+      "storedPath": "reviews/generic-wire-observation-contract.md.gz",
+      "payloadBytes": 5953,
+      "payloadSha256": "a3545d51e84fba188fdc5fa93d571fc28a937d0d9eb8d7782f7f64177e1aae52"
+    },
+    {
+      "restorePath": "reviews/live-lu-support-owner-contract.md",
+      "storedPath": "reviews/live-lu-support-owner-contract.md.gz",
+      "payloadBytes": 5087,
+      "payloadSha256": "8fd938d11ff3315d7b7656441a1c4575c559068bac662fe4dfa75d3fd39e1860"
+    },
+    {
+      "restorePath": "reviews/live-lu-support-r1-independent-pre-timing-audit.md",
+      "storedPath": "reviews/live-lu-support-r1-independent-pre-timing-audit.md.gz",
+      "payloadBytes": 5263,
+      "payloadSha256": "e10c7f999c5d23c717ff800499e0b87d109ff47de21a503fd09c69fb01f0c7be"
+    },
+    {
+      "restorePath": "reviews/live-lu-support-r1-root-wiring-review.md",
+      "storedPath": "reviews/live-lu-support-r1-root-wiring-review.md.gz",
+      "payloadBytes": 5809,
+      "payloadSha256": "e4e617b364f29bbef4e5e4d72cb4b6a19215562328e0416107017447fd34a583"
+    },
+    {
+      "restorePath": "reviews/lu-solve-support-feasibility.md",
+      "storedPath": "reviews/lu-solve-support-feasibility.md.gz",
+      "payloadBytes": 5103,
+      "payloadSha256": "b01bf69b2ec9db9f415023b9f39de3f5f1baa971d3277c4824c0bb579f2b2443"
+    },
+    {
+      "restorePath": "source/tracker-draft/README.md",
+      "storedPath": "source/tracker-draft/README.md.gz",
+      "payloadBytes": 2162,
+      "payloadSha256": "0f3ae18cac42d66c63cb02be135db7855a3e2866f730116351feea4225d6da77"
+    },
+    {
+      "restorePath": "source/tracker-draft/manifest.json",
+      "storedPath": "source/tracker-draft/manifest.json.gz",
+      "payloadBytes": 1366,
+      "payloadSha256": "920be48861e2546dfe6dc79b3ca1c527e7e9d86640c90d31ce685d22123e2001"
+    }
+  ]
+}

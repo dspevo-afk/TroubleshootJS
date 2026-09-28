@@ -1,0 +1,69 @@
+{
+  "status": "FROZEN_READY_FOR_FOCUSED_TRIAL",
+  "driverSha256": "f898b68446fbd27df1f725df80eceece369d28198fb58ce15ef06034e7213406",
+  "files": [
+    {
+      "path": "live-lu-support-r1-measurement-plan.json",
+      "sha256": "997caa330da842257b1e8fc8e074e4f915be8c6e19b66426ce16ef069bbdadbb"
+    },
+    {
+      "path": "live-lu-support-r1-preparation/source-audit.json",
+      "sha256": "ce1b55ca0b463746b19976871a5be1401972c294bf0cc881070bdd36284b7ba4"
+    },
+    {
+      "path": "run_timing.py",
+      "sha256": "a7ef67c63397a28c1781b40746507fc0fa129f030742b8c6201350f099a9765f"
+    },
+    {
+      "path": "validate_current_q30_timing_pair.py",
+      "sha256": "67430d7c56d872d115a7c38732bf60101cff52e8bf40f7af075213debc8e7e3b"
+    },
+    {
+      "path": "live-lu-support-r2-native9.json",
+      "sha256": "a0c7006554aadad80e41dfde6b08c3dddde110a20a5c8af382b77c73f4768cd2"
+    },
+    {
+      "path": "live-lu-support-r1-gwt5.json",
+      "sha256": "759d4593ac70dd22f1f226877f78d88497e16da91254afe3b58e1e1bcd601b27"
+    },
+    {
+      "path": "live-lu-support-r1-canaries/result.json",
+      "sha256": "d71caa79473eab73e630028d3d9a81598a720f85936d44949ee6a2e4c4e358a7"
+    },
+    {
+      "path": "live-lu-support-r1-canaries-summary.json",
+      "sha256": "006478477e641c3dfd3f803fdb5ef7e3341e220678faa9ff9006d9ee9ae571e5"
+    },
+    {
+      "path": "live-lu-support-r1-a07-reader.log",
+      "sha256": "44d24b9e9a389a6f682363c51ef04ef37694276dbe30f6ac328ade766286b3f7"
+    },
+    {
+      "path": "live-lu-support-r1-source-review.json",
+      "sha256": "c6bf399e078d7151d23a6074526bbae0b6812dfa76c010ac652b6b1fbc339db3"
+    },
+    {
+      "path": "scratch/live-lu-support-r1-root-wiring-review.md",
+      "sha256": "e4e617b364f29bbef4e5e4d72cb4b6a19215562328e0416107017447fd34a583"
+    },
+    {
+      "path": "scratch/root-live-lu-kernel-obligations.md",
+      "sha256": "e2b6601d5ad4046526f4aa0ad65592557273c8c100286214a4f19414cdd30773"
+    }
+  ],
+  "repoFiles": [
+    {
+      "path": "tests/browser/compiled_attribute_acceptance.py",
+      "sha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4"
+    },
+    {
+      "path": "docs/task-evidence/Q30/scale-plan-4/check_coordinator.py",
+      "sha256": "247ded434bcdbdba6f78e7edf8f9c8b3671aaf8465bfabb29c875d5b2512bddb"
+    },
+    {
+      "path": "docs/task-evidence/Q30/scale-plan-4/check_d01.py",
+      "sha256": "f58847541571cdf829835d05c200bac6ea0079dab065d90ebdf7f44914241929"
+    }
+  ],
+  "scope": "Private matched cold experiment only, no production acceptance."
+}

@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<TASK_SCRATCH>\\live-lu-support-r1-preparation\\candidate",
+  "startedUtc": "2026-09-28T17:11:11.333641+00:00",
+  "outcome": "NOT_RUN",
+  "cases": [],
+  "caseCount": 2,
+  "errors": []
+}
