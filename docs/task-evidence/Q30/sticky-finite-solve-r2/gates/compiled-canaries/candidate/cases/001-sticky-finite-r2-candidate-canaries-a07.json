@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 1,
+    "name": "sticky-finite-r2-candidate-canaries-a07",
+    "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyA07=true&tsjDebug=true&running=true",
+    "stateAttribute": "data-tsj-verification",
+    "expectedState": "PASS:a07",
+    "expectedPrefix": null,
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 600.0,
+    "reportAttribute": "data-tsj-a07-report"
+  },
+  "url": "http://127.0.0.1:62610/circuitjs.html?tsjChallenge=led&seed=3&tsjVerifyA07=true&tsjDebug=true&running=true",
+  "startedUtc": "2026-09-28T07:49:49.367293+00:00",
+  "finishedUtc": "2026-09-28T07:49:50.608912+00:00",
+  "operationSeconds": 1.241615400009323,
+  "outcome": "PASS",
+  "terminalReached": true,
+  "stateMatch": true,
+  "observedState": "PASS:a07",
+  "lastObservedState": "PASS:a07",
+  "timedOut": false,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": true,
+  "reportJsonValid": true,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 80897,
+  "reportSha256": "adf6ca0a700796739653a11732c98718cc587e9b17ef496bb7a7dca7e748ed80",
+  "reportFile": "cases/001-sticky-finite-r2-candidate-canaries-a07.report.json",
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [],
+  "listenerCleanupErrors": [],
+  "navigationError": null
+}

@@ -1,0 +1,81 @@
+{
+  "status": "FINAL_SOURCE_GATES_PASS_PENDING_ROOT_INPUT_EQUALITY",
+  "scope": "exact staged source gates followed by working-source production build; no normal acceptance",
+  "steps": [
+    {
+      "label": "index-native",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "<SCRATCH>\\native-owned-zero-row.ps1",
+        "-SourceRoot",
+        "<SCRATCH>\\sticky-finite-r2-index-44218c4298f54d67b3f56522f6e7b283",
+        "-Label",
+        "native-sticky-finite-r2-index"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 36.95327820000239
+    },
+    {
+      "label": "index-gwt",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "<SCRATCH>\\build-run.ps1",
+        "-SourceRoot",
+        "<SCRATCH>\\sticky-finite-r2-index-44218c4298f54d67b3f56522f6e7b283",
+        "-Label",
+        "sticky-finite-r2-index-gwt"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 79.0181520999904
+    },
+    {
+      "label": "index-compiled-a07",
+      "command": [
+        "<USER_HOME>\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+        "-B",
+        "<SCRATCH>\\run_staged_solver_canary.py",
+        "<REPO>",
+        "<SCRATCH>",
+        "<SCRATCH>\\sticky-finite-r2-index-44218c4298f54d67b3f56522f6e7b283",
+        "sticky-finite-r2-index-canary"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.444236700001056
+    },
+    {
+      "label": "index-strict-a07",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "<SCRATCH>\\read_a07.ps1",
+        "-Repo",
+        "<REPO>",
+        "-Report",
+        "<SCRATCH>\\sticky-finite-r2-index-canary\\cases\\001-sticky-finite-r2-index-canary-a07.report.json"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.5646858000109205
+    },
+    {
+      "label": "root-gwt",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "<SCRATCH>\\build-run.ps1",
+        "-SourceRoot",
+        "<REPO>",
+        "-Label",
+        "sticky-finite-r2-root-gwt"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 78.02537350000057
+    }
+  ],
+  "elapsedSeconds": 200.00893129999167
+}

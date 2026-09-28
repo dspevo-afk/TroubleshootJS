@@ -1,7 +1,9 @@
 # Current checkpoint: Q30 BLOCKED / NOT ACCEPTED
 
-Branch `codex/q30-multirail-qualification`. This checkpoint adds the accepted
-private zero-row early exit to the previous accepted local source
+Branch `codex/q30-multirail-qualification`. Local HEAD/source checkpoint
+`57929125daf6322006fe7da871b2edc7cca9590d`
+(`Short-circuit owned LU zero-row scans`) adds the accepted private early exit
+to the previous accepted local source
 `e285675d6f8f689cd7e73d09543f6cd37de8987f`
 (`Avoid redundant finite checks in nonlinear LU`). No push or completion email.
 Normal Q30 publication remains disabled. U06/U07/Q60 and later milestones are
@@ -90,6 +92,76 @@ has 1,339 audited inputs; the exact source index has 1,338. No push is authorize
 The validated source index tree is `3193f91b468243968fb58c2661245514cbd4e86f`;
 subsequent staging adds documentation only.
 [Accepted row-scan evidence](task-evidence/Q30/owned-zero-row-scan/README.md).
+Root's packet/index audit passes: all 286 inventoried artifacts, 13 raw browser
+reports, both complete 1,339-input reconstructions and three exact staged source
+blobs. The packet inventory is
+`5b043edacb964134dfd18a584696f93717c831f189c405860b7225f4ecee0107`.
+
+A new isolated 1,341-input fixture extends the prior sparse sampler to time
+actual triangular solves and count factored lower/upper coefficients and initial
+RHS finiteness. It invokes the actual solve once and changes no arithmetic.
+Before the first gate, root rebased the accepted row scan, added the test's
+required PASS marker and corrected its explicit L*U fixture RHS (12.5 to 23).
+Native7 PASSes in 46.750 s (24 new solve-sampler assertions); actual GWT5 PASSes
+in 78.412 s. Compiled A07/disabled-normal and exact reader/three corruptions
+PASS, with 0.934 s owned cleanup. The predeclared fresh off/on seed-10014 pair
+completed with cold 99.730/99.729 s and proof 71.015/70.837 s. Both host runs PASS,
+inputs remain unchanged and cleanup passes in 1.024/0.888 s with no survivors.
+Independent source review finds no correctness blocker, with a nonblocking
+identity-test coverage gap. Full report parity and source/host/cleanup bindings
+PASS; both current strict readers reject 43 corruptions, and the composed sampler
+validator rejects 79 metadata corruptions. The 1,453 sampled actual solves take
+22.300 ms; their strict lower/upper entries are 88.594%/89.687% exact zero and
+all 122,114 initial RHS values are finite. Extrapolating to 742,391 factor calls
+suggests about 11.394 s, with sparse selection and timer granularity limiting
+that estimate. Capture timing excludes the new RHS/triangle census and per-call
+guards. The near-equal one-pair elapsed time does not prove zero instrumentation
+cost. No sampler is integrated into root. The unrun first runner draft's wrong fixture/layout assumptions were
+replaced before execution by the established maintained-runner interface.
+Root's packet audit passes all 100 inventoried files, both exact raw timing
+reports, compiled canaries and the complete 1,341-input reconstruction.
+[Solve measurement](task-evidence/Q30/solve-profile/README.md).
+
+The isolated sticky-finite solve r2 trial now has a frozen eight-row plan
+(control/candidate seed 7; candidate/control 10387; control/candidate 10014;
+candidate/control 7). Every arm has 1,339 audited inputs and identical added
+independent LU oracle checks; only `lu_solve` differs. The candidate scans the
+initial RHS once, skips exact-zero terms while all stored values remain finite,
+and permanently falls back to the historical dense loops after any nonfinite
+value. Native5 PASSes in 32.934 s, including 271,699 A07 assertions. Candidate/
+control GWT5 PASS in 79.406/78.902 s; actual A07/disabled-normal and each exact
+reader/three corruptions PASS, with host cleanup 1.191/1.155 s. All eight fresh
+rows and four complete-report comparisons PASS, with unchanged work/proofs,
+empty host error arrays, stable inputs and owned cleanup. Paired cold savings
+are 2.022/0.266/1.441/1.459 s (median 1.450 s); proof savings are
+1.852/0.275/1.394/1.349 s (median 1.3715 s). Repeated seed-7 cold ranges are
+0.263 s control/0.826 s candidate, and proof ranges 0.175/0.678 s. Both repeated
+gains exceed those within-arm ranges; the single small 20-part result is not a
+population claim. The 40-part candidate still takes 98.306 s, proof 69.495 s,
+routing 22.601 s. This is an accepted intermediate optimization, not Q30
+acceptance. Root integrated only its two files and selectively staged the solver
+method and independent checks; the existing normal hook and all plan-4 changes
+remain outside the index. Exact index-source tree
+`27a5e7244e31e3debabded8670dacc95b1feddd8` has 1,338 inputs. Exact index native5
+PASSes in 36.753 s, GWT5 in 78.811 s, and compiled A07 plus three reader
+corruptions PASS with cleanup 0.873 s. Root GWT5 PASSes in 77.827 s. All 1,525
+consumed inputs and the entire 392-file WAR match the measured candidate
+byte-for-byte, supporting reuse of its compiled evidence. Independent source
+review finds no algebra, proof or budget blocker; signed-zero bit identity
+remains outside the existing numerical oracle. Root repaired missing canary
+artifacts and incorrect runner references before accepting the packet, then
+audited all 260 inventoried files, 13 exact raw browser reports, both 1,339-input
+source reconstructions, and both actual staged source blobs. The final inventory
+is `e1d1f560e133e38673b3e11ba5e733525ed843b4b32281152c8a4c191906af24`.
+[Accepted sticky-finite evidence](task-evidence/Q30/sticky-finite-solve-r2/README.md).
+
+The next isolated whole-factor probe changes no numerical operation. Its first
+native gate FAILed after 33.950 s because the new test attempted browser-only
+GWT JSON construction on the JVM. R1 is preserved. R2 changes only that test:
+native timing/cleanup checks remain, and exact serialized scope/counters are
+required by the real browser metadata reader. Native8, production GWT5,
+compiled A07/disabled-normal and exact A07/three corruptions all PASS. Fresh
+off/profile measurement remains NOT RUN at this commit; no profiler is integrated.
 
 Uncommitted plan-4 scale work remains NOT ACCEPTED. Purposeful one/two-channel
 topologies and support blocks replace count padding; current replay is /4 with
@@ -108,16 +180,47 @@ reader. R4's synthetic strict-reader self-test PASSes, but source audit finds
 three blockers: after D01 stops, withdrawing debug/Q30 scope can leave its bridge
 until normal completion/timeout; lease close retains the last snapshot DOM
 attribute; and broad binding-exception handling can admit incomplete snapshots.
-R4 is retained without a GWT/browser gate; a bounded r5 lifecycle/binding repair
-is in scratch. Actual successor
-and visible-power canaries remain NOT RUN. The maintained host
+R4 is retained without a GWT/browser gate. R5 fixes those three source gaps but
+its first native gate FAILs at 22.808 s on a JSONObject helper overload. R6 fixes
+that compile call; native5 PASSes in 46.757 s and actual GWT5 in 79.313 s. Review
+also finds that native hook/DOM removal exceptions can leave success flags true,
+and a repeated close can erase failed receipts. A bounded r7 repair is in scratch;
+r6 browser qualification is NOT RUN while this cleanup blocker remains. R7's
+focused source review finds no blocker, and its synthetic reader self-test
+PASSes in 0.047 s. The original r7 prepared fixture remains NOT RUN; a separate
+final fixture includes the accepted sticky-finite solver. Native5 PASSes in
+34.807 s and actual GWT5 in 78.389 s. The separate construction metadata reader needed an r2 repair
+to require r7's top-level close status/error and three cleanup confirmations;
+its 17 synthetic corruptions pass. Real scope-loss, terminal-timing and terminal-
+clock negative cases PASS their boundary checks and cleanup, including disposal
+of both completed private owners. Real cold/warm D01 cases at 20/40 packages
+PASS the unchanged electrical/physical readers and seven actual-report metadata
+corruptions each. Host elapsed times are 47.741/176.346 s, separately followed
+by cleanup 0.836/0.934 s; these private measurements are not normal acceptance.
+Construction advances peak at 396.7/521.1 ms, with no host attribute errors.
+The actual in-app Browser normal-successor canary also PASSes: D01 stays FAIL
+with no admission, and ordinary LED_INDICATOR/EASY/3 finishes with its own owner.
+The visible Board Power click preserves the OFF state and cleanup, but the
+strict boundary reader FAILs because the terminal report retains phase
+`construction` instead of `DONE`. A late first attempt completed before the
+click and correctly has a failed nested canary, though its top-level status
+incorrectly remains PASS. Both failures are preserved; a source repair is
+pending. Two screenshot captures timed out, so screenshot evidence is BLOCKED.
+Post-stop scope-withdrawal and native hook-removal exception canaries remain
+NOT RUN. No r7 verifier source is integrated into the worktree.
+The maintained host
 runner fix `b23acec` now rejects attribute-read errors; it does not erase old failure.
 The earlier normal-path seed-7 request failed at 90,066.6 ms and 378/390 proof
 units, with cleanup passing. No successful normal admission receipt exists yet.
 
 Resources: the zero-row timing sequence completed with verified browser/server
 cleanup and no survivors on all eight rows. Final-source gates and owned cleanup
-are complete; no browser/server or heavy gate is running. Substantial task-temp
+are complete. The isolated solve timing sequence has also completed with verified
+browser/server cleanup. All eight sticky-finite r2 timing runs and final-source
+gates have finished with owned cleanup. The final r7 native/GWT, boundary and
+positive host sequences have finished with owned cleanup. The manual Browser
+tab is closed; maintained preview stop verified PID 23468 and port 34917 release.
+One heavy operation runs at a time. Substantial task-temp
 source/evidence copies remain.
 Automatic approval review previously blocked recursive deletion of two older
 copies and one copied generated-WAR tree; no retry is planned. Their exact
@@ -129,8 +232,8 @@ the sampler evidence and report; it integrated no sampler. This checkpoint also
 corrects that packet's table heading from hypotheses to hypothesis work units,
 updates its inventory and re-audits all 51 artifacts. Measurements are unchanged.
 
-Next: measure actual solve cost/factored sparsity before trying the stale unrun
-sticky-finite solve draft. Repair and prove
+Next: finish and commit the accepted sticky-finite intermediate checkpoint,
+then measure the remaining factor cost against routing. Repair and prove
 D01 lifecycle canaries, obtain normal cold timing with margin and scale coverage,
 and only then run the complete final acceptance matrix. Q30 stays BLOCKED.
 

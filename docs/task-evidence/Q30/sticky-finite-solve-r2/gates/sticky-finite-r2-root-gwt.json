@@ -1,0 +1,9 @@
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "sticky-finite-r2-root-gwt",
+  "exitCode": 0,
+  "startedUtc": "2026-09-28T08:08:29.2268914Z",
+  "finishedUtc": "2026-09-28T08:09:47.0576779Z",
+  "elapsedSeconds": 77.8268483,
+  "status": "PASS"
+}

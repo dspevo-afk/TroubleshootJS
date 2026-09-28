@@ -1,0 +1,65 @@
+{
+  "bundle": "../owned-zero-row-scan",
+  "inventorySha256": "5b043edacb964134dfd18a584696f93717c831f189c405860b7225f4ecee0107",
+  "lineageSha256": "4e21fd3d0cd40f5e6992ba5a8d2445ce1792b3e196a13eded255c1475f659cb9",
+  "reconstruction": "Start with the owned-zero-row-scan source baseline; apply the five exact overlays listed in source-audit.json. The complete 1,341-row input hash inventory is included here.",
+  "baselineLineage": {
+    "scope": "intermediate only; not Q30 acceptance",
+    "priorBundle": "../validated-factor-input",
+    "priorInventorySha256": "7a20e7723eef5f40867c8dfc3aeb683bb3420190de516d9aacbed03e4f6bd36e",
+    "priorCandidateManifestSha256": "a29c53b2151693b18f0d2a4fe71114ed026d5e7df6ff5ac18c9caf2785d6ca3d",
+    "inheritedCandidateCirSimSha256": "f836bfc58bdfb87d67f25184ebcd51e60d9eb820d6cc5acb966bcde98a64296b",
+    "r2SourceAuditSha256": "73ed7bc8a111831b854ab91889ef325164b0e1438f2eef645d6da0cb75c9ea73",
+    "r2Payloads": [
+      {
+        "name": "r2-candidate",
+        "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+        "sha256": "deb593ff2471904a72690cf0332a53bc968a4c93f6f2ac28e3140fa59dc1e242",
+        "bytes": 344165,
+        "stored": "source/r2-candidate.bin.gz"
+      },
+      {
+        "name": "r2-common-driver",
+        "path": "scripts/verify-current-contracts.ps1",
+        "sha256": "2f65d3cf1d82f2681edf3f5a40e42c3d790efe71348bb97d565bb14eed9bf536",
+        "bytes": 66434,
+        "stored": "source/r2-common-driver.bin.gz"
+      },
+      {
+        "name": "r2-common-test",
+        "path": "tests/contracts/Q30OwnedLuZeroRowContractTest.java",
+        "sha256": "481e1eefc94d0285aabcae4da912a86ffd0249791627a9737c7c123ac5f51a40",
+        "bytes": 9540,
+        "stored": "source/r2-common-test.bin.gz"
+      }
+    ],
+    "finalIndexTree": "3193f91b468243968fb58c2661245514cbd4e86f",
+    "finalIndexInputCount": 1338,
+    "stagedPayloads": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+        "sha256": "c940f48ecedce80d3fed292aa72893e93bb44a10c3f1eac350de0b24f9187a53",
+        "bytes": 343912,
+        "stored": "source/final-index/CirSim.java.gz"
+      },
+      {
+        "path": "scripts/verify-current-contracts.ps1",
+        "sha256": "fca0e673c9236582de686f64f7bda32e8e83ed61ed7101785894334bf888c7d3",
+        "bytes": 51020,
+        "stored": "source/final-index/verify-current-contracts.ps1.gz"
+      },
+      {
+        "path": "tests/contracts/Q30OwnedLuZeroRowContractTest.java",
+        "sha256": "481e1eefc94d0285aabcae4da912a86ffd0249791627a9737c7c123ac5f51a40",
+        "bytes": 9540,
+        "stored": "source/final-index/Q30OwnedLuZeroRowContractTest.java.gz"
+      }
+    ],
+    "rootRuntimeEquality": {
+      "status": "PASS",
+      "inputs": 1525,
+      "warFiles": 392
+    },
+    "note": "Timed R2 files and staged-index files are separately identified; no equality is inferred from names alone."
+  }
+}

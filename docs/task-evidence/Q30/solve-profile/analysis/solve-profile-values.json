@@ -1,0 +1,42 @@
+{
+  "coldSolveSamples": 1453,
+  "sampledSolveMillis": 22.300000175833702,
+  "factorCalls": 742391,
+  "strictLower": {
+    "entries": 5073653,
+    "exactZeros": 4494964,
+    "nonzeros": 578689
+  },
+  "strictUpper": {
+    "entries": 5073653,
+    "exactZeros": 4550398,
+    "nonzeros": 523255
+  },
+  "combinedStrictTriangleExactZeroPercent": 89.14052655946317,
+  "probeOverheadMillis": 38.39999985694885,
+  "probeClock": "performance.now",
+  "probeClockErrors": 0,
+  "sampledStarts": 727,
+  "completedPairs": 726,
+  "matchedPairs": 30,
+  "differentPairs": 696,
+  "sampledMatrixInputs": 1453,
+  "sampledSizeGroups": {
+    "78": 2,
+    "80": 86,
+    "82": 225,
+    "84": 842,
+    "85": 184,
+    "90": 114
+  },
+  "zeroRowPreflightMillis": 2.4999999552965164,
+  "extrapolatedSolveSecondsIfEveryFactorCallCostTheSampleMean": 11.393888114616214,
+  "extrapolationStatus": "ROUGH EXTRAPOLATION ONLY; not measured time or an optimization claim",
+  "limits": [
+    "performance.now granularity and sparse deterministic selection",
+    "probeOverheadMillis is sample capture/compare inside brackets; excludes per-factor window/counter/modulo and compilation effects",
+    "reported probe overhead also excludes initial RHS and strict-triangle census/traversal",
+    "one seed and one off/profile pair",
+    "near-identical total/proof/routing timing does not prove zero overhead"
+  ]
+}

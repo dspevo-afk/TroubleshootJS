@@ -1,0 +1,19 @@
+{
+  "status": "INTEGRATED_SELECTIVELY_STAGED_PENDING_FINAL_SOURCE_GATES",
+  "scope": "only lu_solve and independent oracle checks; existing normal hook and plan4 changes excluded from index",
+  "files": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "stagedBlob": "5f98ccfb4ff21dd56b3a65755e3e06536e893943",
+      "stagedSha256": "82023675beb4093bdc95abe7456614773b1011c319cb72202c2db2a250a95bfd",
+      "workingSha256": "2658e94560fd9e1f0e9157a54be773bd9568d9350fa6ce56c39acaa7cf87e0b1"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java",
+      "stagedBlob": "bf11218a346e4e921bd0e0def84f215cac7662ba",
+      "stagedSha256": "8b0bd00ee98d0fb89829a1d6f82a0b6654aa588ff518f713e742f45153764477",
+      "workingSha256": "d558d7d10706cb1da22d20f795ece6448e714be5d16315ad51a125c70b429c6c"
+    }
+  ],
+  "sequenceStatus": "FOCUSED_EXPERIMENT_PASS_NOT_ACCEPTANCE"
+}

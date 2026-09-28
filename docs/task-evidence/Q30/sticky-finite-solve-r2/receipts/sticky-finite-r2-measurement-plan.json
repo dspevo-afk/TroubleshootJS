@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "status": "PREDECLARED",
+  "scope": "Focused private intermediate sticky-finite solve experiment on current unaccepted plan4; not a substitute for the frozen normal acceptance or scale corpus.",
+  "candidate": "One complete initial RHS finite census; omit exact-zero triangular coefficients only while every stored RHS value remains finite; permanently retain historical dense loops after a nonfinite initial or stored result. Preserve nonzero arithmetic order, factorization, settling, work, hypotheses, service, repair, retest, physical admission, all budgets, and cleanup.",
+  "motivation": "Validated solve-profile off/on seed10014 reports pass full parity, 79 metadata negatives and 43 strict corruptions per arm. 1453 sampled solves take22.3ms, ~89% of strict triangle entries are zero and sampled initial RHS are finite. Extrapolation is limited; this experiment measures actual speed and rejects regression.",
+  "sequence": [
+    {
+      "label": "sticky-finite-r2-01-control-7",
+      "arm": "control",
+      "seed": "7"
+    },
+    {
+      "label": "sticky-finite-r2-02-candidate-7",
+      "arm": "candidate",
+      "seed": "7"
+    },
+    {
+      "label": "sticky-finite-r2-03-candidate-10387",
+      "arm": "candidate",
+      "seed": "10387"
+    },
+    {
+      "label": "sticky-finite-r2-04-control-10387",
+      "arm": "control",
+      "seed": "10387"
+    },
+    {
+      "label": "sticky-finite-r2-05-control-10014",
+      "arm": "control",
+      "seed": "10014"
+    },
+    {
+      "label": "sticky-finite-r2-06-candidate-10014",
+      "arm": "candidate",
+      "seed": "10014"
+    },
+    {
+      "label": "sticky-finite-r2-07-candidate-7",
+      "arm": "candidate",
+      "seed": "7"
+    },
+    {
+      "label": "sticky-finite-r2-08-control-7",
+      "arm": "control",
+      "seed": "7"
+    }
+  ],
+  "preconditions": [
+    "Root source57929125daf6322006fe7da871b2edc7cca9590d with preserved existing plan4/normal-hook changes; source-only isolated arms, identical new independent oracle tests, only lu_solve differs.",
+    "Focused native solver/owned-zero-row/temporal/budget gates; actual JDK8/GWT and compiled A07/disabled-normal/negative-reader checks pass on final sources.",
+    "No profile query or graph/cache reuse; fresh browser process/context per row; cold empty private cache; warm output separate. One heavyweight operation at a time."
+  ],
+  "earlyStop": "Stop on any host/correctness/cleanup/parity failure. Stop after first complete pair if candidate cold proofElapsedMs exceeds control by more than 5%; preserve all failures and mark later rows NOT RUN.",
+  "comparison": "Exact current-plan4 reader plus self-negative checks every arm. Full reports identical outside enumerated timing fields; source/runner identity and actual owned cleanup checked. Host monotonic elapsed and wall-minus-monotonic drift separate from legacy app wall-clock phase fields.",
+  "interpretation": "Accept only valid attributable intermediate gain assessed against paired cold/proof deltas and repeated seed7 within-arm spread; no population claim from one20-part result. 90,000ms cumulative/640 shared work/5,000ms active limits unchanged. Q30 stays BLOCKED until normal cold corpus with margin, required scale, focused and full acceptance gates pass. No push."
+}

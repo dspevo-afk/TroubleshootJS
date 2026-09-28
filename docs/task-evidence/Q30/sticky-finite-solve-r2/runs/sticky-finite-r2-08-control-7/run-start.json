@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<SCRATCH>\\trial-sticky-finite-r2-404770fca4484f2ca18bc5759e12fb0c\\control",
+  "startedUtc": "2026-09-28T08:02:31.372011+00:00",
+  "outcome": "NOT_RUN",
+  "cases": [],
+  "caseCount": 1,
+  "errors": []
+}

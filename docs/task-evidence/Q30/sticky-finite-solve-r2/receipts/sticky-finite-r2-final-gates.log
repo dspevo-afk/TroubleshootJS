@@ -1,0 +1,70 @@
+START index-native
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 36.752787,
+  "phase": "focused native owned-path oracle/general solver/temporal/measurement budget/normal policy including maintained cleanup",
+  "suites": [
+    "A07ExecutionContractTest",
+    "Q30OwnedLuZeroRowContractTest",
+    "Q30TemporalWorkContractTest",
+    "Q30GenerationMeasurementBudgetContractTest",
+    "Q30NormalExecutionPolicyContractTest"
+  ]
+}
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+PASS: A07 execution contracts assertions=271699
+
+PASS: Q30 owned LU zero-row contracts assertions=164
+
+PASS: focused current contracts; 5 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.
+PASS index-native
+START index-gwt
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "sticky-finite-r2-index-gwt",
+  "exitCode": 0,
+  "startedUtc": "2026-09-28T08:07:04.2043408Z",
+  "finishedUtc": "2026-09-28T08:08:23.0202643Z",
+  "elapsedSeconds": 78.8114043,
+  "status": "PASS"
+}
+[gwt-compile:stdout]       Compiling permutation 4...
+[gwt-compile:stdout]    Compile of permutations succeeded
+[gwt-compile:stdout]    Compilation succeeded -- 74.360s
+[gwt-compile:stdout] Linking into <SCRATCH>\sticky-finite-r2-index-44218c4298f54d67b3f56522f6e7b283\war\circuitjs1
+[gwt-compile:stdout]    Link succeeded
+[gwt-compile:stdout]    Linking succeeded -- 2.362s
+PASS index-gwt
+START index-compiled-a07
+{"status": "PASS", "exitCode": 0, "elapsedSeconds": 5.3850762999936705, "cleanup": {"status": "PASS", "seconds": 0.87259990000166, "serverStopped": true, "ownedSurvivors": [], "errors": []}, "scope": "actual compiled A07 on exact staged source; unaccepted normal-verifier API absent"}
+PASS index-compiled-a07
+START index-strict-a07
+PASS: exact maintained Test-A07Report; three negative corruption canaries
+PASS index-strict-a07
+START root-gwt
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "sticky-finite-r2-root-gwt",
+  "exitCode": 0,
+  "startedUtc": "2026-09-28T08:08:29.2268914Z",
+  "finishedUtc": "2026-09-28T08:09:47.0576779Z",
+  "elapsedSeconds": 77.8268483,
+  "status": "PASS"
+}
+[gwt-compile:stdout]       Compiling permutation 4...
+[gwt-compile:stdout]    Compile of permutations succeeded
+[gwt-compile:stdout]    Compilation succeeded -- 74.685s
+[gwt-compile:stdout] Linking into <REPO>\war\circuitjs1
+[gwt-compile:stdout]    Link succeeded
+[gwt-compile:stdout]    Linking succeeded -- 1.298s
+PASS root-gwt
+{"status": "FINAL_SOURCE_GATES_PASS_PENDING_ROOT_INPUT_EQUALITY", "scope": "exact staged source gates followed by working-source production build; no normal acceptance", "steps": [{"label": "index-native", "command": ["pwsh", "-NoProfile", "-File", "<SCRATCH>\\native-owned-zero-row.ps1", "-SourceRoot", "<SCRATCH>\\sticky-finite-r2-index-44218c4298f54d67b3f56522f6e7b283", "-Label", "native-sticky-finite-r2-index"], "exitCode": 0, "elapsedSeconds": 36.95327820000239}, {"label": "index-gwt", "command": ["pwsh", "-NoProfile", "-File", "<SCRATCH>\\build-run.ps1", "-SourceRoot", "<SCRATCH>\\sticky-finite-r2-index-44218c4298f54d67b3f56522f6e7b283", "-Label", "sticky-finite-r2-index-gwt"], "exitCode": 0, "elapsedSeconds": 79.0181520999904}, {"label": "index-compiled-a07", "command": ["<USER_HOME>\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe", "-B", "<SCRATCH>\\run_staged_solver_canary.py", "<REPO>", "<SCRATCH>", "<SCRATCH>\\sticky-finite-r2-index-44218c4298f54d67b3f56522f6e7b283", "sticky-finite-r2-index-canary"], "exitCode": 0, "elapsedSeconds": 5.444236700001056}, {"label": "index-strict-a07", "command": ["pwsh", "-NoProfile", "-File", "<SCRATCH>\\read_a07.ps1", "-Repo", "<REPO>", "-Report", "<SCRATCH>\\sticky-finite-r2-index-canary\\cases\\001-sticky-finite-r2-index-canary-a07.report.json"], "exitCode": 0, "elapsedSeconds": 0.5646858000109205}, {"label": "root-gwt", "command": ["pwsh", "-NoProfile", "-File", "<SCRATCH>\\build-run.ps1", "-SourceRoot", "<REPO>", "-Label", "sticky-finite-r2-root-gwt"], "exitCode": 0, "elapsedSeconds": 78.02537350000057}], "elapsedSeconds": 200.00893129999167}

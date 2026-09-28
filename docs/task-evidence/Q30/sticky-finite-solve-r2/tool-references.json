@@ -1,0 +1,99 @@
+{
+  "executedScratchSources": [
+    {
+      "packetSha256": "56b2873e0909ffb60837d9701d30478710b55382c87919281d51de7870f17dd1",
+      "path": "tools/run_sticky_finite_r2_sequence.py",
+      "redactions": 1,
+      "sourceSha256": "981e5aed0e18240f4fef6accab0541ed3b6ed421b41a641e0929be1d18bc4507"
+    },
+    {
+      "packetSha256": "8bb84c0562500759b76a135dfdabd9f595404d58207921bc93e4424f680a3d19",
+      "path": "tools/prepare_sticky_finite_sequence_root.py",
+      "redactions": 0,
+      "sourceSha256": "8bb84c0562500759b76a135dfdabd9f595404d58207921bc93e4424f680a3d19"
+    },
+    {
+      "packetSha256": "4b61c43d06b7c5cc39a53d948a6ae61e177ff62c2d105416b37942b1619dd32e",
+      "path": "tools/run_sticky_finite_r2_gates.py",
+      "redactions": 1,
+      "sourceSha256": "473943f918ca6580cd7d19e48b7ea9357e71260d91c301bd35da7d8294a972c5"
+    },
+    {
+      "packetSha256": "d6ba1e7c36679fa9f55a9c85dee9ecfd50cc5223ad2abea8f5dbb2a9d874d955",
+      "path": "tools/run_sticky_finite_r2_final_gates.py",
+      "redactions": 1,
+      "sourceSha256": "175712f8e056d55ae17554c7eb5ea8da8c87060be70e20e706b518c94e3fa133"
+    },
+    {
+      "packetSha256": "509905a0a1af56f457038f7ee4f402093e9c34ade0f9f641425d307598235419",
+      "path": "tools/prepare_sticky_finite_gate_runner.py",
+      "redactions": 0,
+      "sourceSha256": "509905a0a1af56f457038f7ee4f402093e9c34ade0f9f641425d307598235419"
+    },
+    {
+      "packetSha256": "67430d7c56d872d115a7c38732bf60101cff52e8bf40f7af075213debc8e7e3b",
+      "path": "tools/validate_current_q30_timing_pair.py",
+      "redactions": 0,
+      "sourceSha256": "67430d7c56d872d115a7c38732bf60101cff52e8bf40f7af075213debc8e7e3b"
+    },
+    {
+      "packetSha256": "b9e2c9d65f9c38b59e2d7ed055921ea647547975d8c2ac48cb32d283cffea0f5",
+      "path": "tools/native-owned-zero-row.ps1",
+      "redactions": 1,
+      "sourceSha256": "b241f880e9c0e1e4c2a26e958622f0180a205dfaf0b17ad03cea1d1be600a43b"
+    },
+    {
+      "packetSha256": "77a27070eb6e0f6e307452963dcacdb882d8e6e0a1495ab6c0bad1f5a8e4a43c",
+      "path": "tools/build-run.ps1",
+      "redactions": 1,
+      "sourceSha256": "5bde61d081264e189e8232d2668a8a6ca3c045aa8323b10476923b1f172889a4"
+    },
+    {
+      "packetSha256": "3a05cfde4c158f82d120ab2b37ad6376fdcdd34d0e4d80a6ca5767f1493c7635",
+      "path": "tools/run_staged_solver_canary.py",
+      "redactions": 0,
+      "sourceSha256": "3a05cfde4c158f82d120ab2b37ad6376fdcdd34d0e4d80a6ca5767f1493c7635"
+    },
+    {
+      "packetSha256": "eea365306493418263f901c145715dddec4ea2901e5ac1176305b93c36943368",
+      "path": "tools/read_a07.ps1",
+      "redactions": 0,
+      "sourceSha256": "eea365306493418263f901c145715dddec4ea2901e5ac1176305b93c36943368"
+    },
+    {
+      "path": "tools/run_timing.py",
+      "sourceSha256": "a7ef67c63397a28c1781b40746507fc0fa129f030742b8c6201350f099a9765f",
+      "packetSha256": "a7ef67c63397a28c1781b40746507fc0fa129f030742b8c6201350f099a9765f",
+      "redactions": 0
+    },
+    {
+      "path": "tools/run_current_solver_canaries.py",
+      "sourceSha256": "62f98058d12f94f0ac1cb0544454aef4cd2ec86ac210619fbcfafeac3974b807",
+      "packetSha256": "62f98058d12f94f0ac1cb0544454aef4cd2ec86ac210619fbcfafeac3974b807",
+      "redactions": 0
+    }
+  ],
+  "maintainedCommittedReferences": [
+    {
+      "path": "tests/browser/compiled_attribute_acceptance.py",
+      "role": "browserRunner",
+      "sha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4"
+    },
+    {
+      "path": "docs/task-evidence/Q30/owned-zero-row-scan/procedure/readers/check_coordinator.py",
+      "role": "strictCoordinatorReader",
+      "sha256": "247ded434bcdbdba6f78e7edf8f9c8b3671aaf8465bfabb29c875d5b2512bddb"
+    },
+    {
+      "path": "docs/task-evidence/Q30/owned-zero-row-scan/procedure/readers/check_d01.py",
+      "role": "strictD01Parser",
+      "sha256": "f58847541571cdf829835d05c200bac6ea0079dab065d90ebdf7f44914241929"
+    }
+  ],
+  "pairValidatorPacketPath": "tools/validate_current_q30_timing_pair.py",
+  "pairValidatorSha256": "67430d7c56d872d115a7c38732bf60101cff52e8bf40f7af075213debc8e7e3b",
+  "rootHead": "57929125daf6322006fe7da871b2edc7cca9590d",
+  "runtimeAuditPath": "receipts/audit_sticky_finite_r2_root_runtime.py",
+  "sequenceReceipt": "receipts/sticky-finite-r2-sequence-result.json",
+  "rootCorrection": "Corrected the browser-runner hash and resolved strict readers to committed identical archived copies; added exact executed timing and compiled-canary helpers."
+}

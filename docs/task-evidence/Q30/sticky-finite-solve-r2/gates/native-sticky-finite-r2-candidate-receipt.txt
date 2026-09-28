@@ -1,0 +1,20 @@
+PASS: Q30 temporal work contracts 161 assertions oneChannelHealthyFaultedRetestUnits=3/3/3 twoChannelHealthyFaultedRetestUnits=5/5/5
+
+PASS: Q30 generation measurement budget contracts 25 assertions
+
+PASS: Q30 normal execution policy contracts 299 assertions
+
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+PASS: A07 execution contracts assertions=271699
+
+PASS: Q30 owned LU zero-row contracts assertions=164

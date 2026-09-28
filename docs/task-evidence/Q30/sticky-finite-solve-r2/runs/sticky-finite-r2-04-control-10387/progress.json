@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<SCRATCH>\\trial-sticky-finite-r2-404770fca4484f2ca18bc5759e12fb0c\\control",
+  "startedUtc": "2026-09-28T07:55:40.454842+00:00",
+  "outcome": "NOT_RUN",
+  "cases": [
+    {
+      "schema": 1,
+      "case": {
+        "index": 1,
+        "name": "sticky-finite-r2-04-control-10387",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=10387",
+        "stateAttribute": "data-tsj-q30-coordinator-state",
+        "expectedState": "PASS:complete",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-q30-coordinator-report"
+      },
+      "url": "http://127.0.0.1:59891/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=10387",
+      "startedUtc": "2026-09-28T07:55:41.556052+00:00",
+      "finishedUtc": "2026-09-28T07:56:13.849336+00:00",
+      "operationSeconds": 32.293278999990434,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:complete",
+      "lastObservedState": "PASS:complete",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 896246,
+      "reportSha256": "0bb1b0f1ae80fe3f47c4d3e11a33cc2445b524f4e817b5c8e321be91fb5e731f",
+      "reportFile": "cases/001-sticky-finite-r2-04-control-10387.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    }
+  ],
+  "caseCount": 1,
+  "errors": [],
+  "inputAudit": {
+    "status": "BEFORE_CAPTURED",
+    "beforeSha256": "ff7aa08d3bb16af0ceb5e74975473b31d80d68a42522bb49e0bf61dce0d975fd",
+    "sourceSha256": "6ce961d82b71b8439bc7ae14d069a103b321a867549232891eb80eb644048a21",
+    "webSha256": "4775068835b6beac1dadce1763b02f1e75e45fae38ae5feeb3631602d1603bb2",
+    "fileCount": 1525
+  },
+  "identity": {
+    "schema": 1,
+    "runner": {
+      "pid": 20492,
+      "created": "2026-09-28T07:55:40.3342710Z",
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+    },
+    "edgeProcessesBeforeCases": [
+      {
+        "pid": 6812,
+        "parent": 23452,
+        "created": "2026-09-28T07:55:41.0347930Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 20316,
+        "parent": 6812,
+        "created": "2026-09-28T07:55:41.0458330Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 16964,
+        "parent": 6812,
+        "created": "2026-09-28T07:55:41.1189920Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 23480,
+        "parent": 6812,
+        "created": "2026-09-28T07:55:41.1228440Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 6176,
+        "parent": 6812,
+        "created": "2026-09-28T07:55:41.1462540Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 24248,
+        "parent": 6812,
+        "created": "2026-09-28T07:55:41.2091700Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 2404,
+        "parent": 6812,
+        "created": "2026-09-28T07:55:41.2130380Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "profile": "<SCRATCH>\\sticky-finite-r2-04-control-10387\\profile",
+    "port": 59891,
+    "baseUrl": "http://127.0.0.1:59891"
+  },
+  "operationStartedUtc": "2026-09-28T07:55:41.556039+00:00"
+}

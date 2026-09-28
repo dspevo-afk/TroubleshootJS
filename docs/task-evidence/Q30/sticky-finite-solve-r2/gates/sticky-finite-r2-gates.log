@@ -1,0 +1,76 @@
+START native-candidate
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 32.9336089,
+  "phase": "focused native owned-path oracle/general solver/temporal/measurement budget/normal policy including maintained cleanup",
+  "suites": [
+    "A07ExecutionContractTest",
+    "Q30OwnedLuZeroRowContractTest",
+    "Q30TemporalWorkContractTest",
+    "Q30GenerationMeasurementBudgetContractTest",
+    "Q30NormalExecutionPolicyContractTest"
+  ]
+}
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+avoided zero
+PASS: A07 execution contracts assertions=271699
+
+PASS: Q30 owned LU zero-row contracts assertions=164
+
+PASS: focused current contracts; 5 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.
+PASS native-candidate
+START candidate-gwt
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "sticky-finite-r2-candidate-gwt",
+  "exitCode": 0,
+  "startedUtc": "2026-09-28T07:48:26.4265409Z",
+  "finishedUtc": "2026-09-28T07:49:45.8371152Z",
+  "elapsedSeconds": 79.4064916,
+  "status": "PASS"
+}
+[gwt-compile:stdout]       Compiling permutation 4...
+[gwt-compile:stdout]    Compile of permutations succeeded
+[gwt-compile:stdout]    Compilation succeeded -- 76.427s
+[gwt-compile:stdout] Linking into <SCRATCH>\trial-sticky-finite-r2-404770fca4484f2ca18bc5759e12fb0c\candidate\war\circuitjs1
+[gwt-compile:stdout]    Link succeeded
+[gwt-compile:stdout]    Linking succeeded -- 1.240s
+PASS candidate-gwt
+START candidate-compiled-canaries
+{"status": "PASS", "exitCode": 0, "elapsedSeconds": 6.177711900003487, "cleanup": {"status": "PASS", "seconds": 1.1911227000091458, "serverStopped": true, "ownedSurvivors": [], "errors": []}}
+PASS candidate-compiled-canaries
+START candidate-a07-strict
+PASS: exact maintained Test-A07Report; three negative corruption canaries
+PASS candidate-a07-strict
+START control-gwt
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "sticky-finite-r2-control-gwt",
+  "exitCode": 0,
+  "startedUtc": "2026-09-28T07:49:54.5446355Z",
+  "finishedUtc": "2026-09-28T07:51:13.4513338Z",
+  "elapsedSeconds": 78.9024436,
+  "status": "PASS"
+}
+[gwt-compile:stdout]       Compiling permutation 4...
+[gwt-compile:stdout]    Compile of permutations succeeded
+[gwt-compile:stdout]    Compilation succeeded -- 75.854s
+[gwt-compile:stdout] Linking into <SCRATCH>\trial-sticky-finite-r2-404770fca4484f2ca18bc5759e12fb0c\control\war\circuitjs1
+[gwt-compile:stdout]    Link succeeded
+[gwt-compile:stdout]    Linking succeeded -- 1.234s
+PASS control-gwt
+START control-compiled-canaries
+{"status": "PASS", "exitCode": 0, "elapsedSeconds": 5.95252160000382, "cleanup": {"status": "PASS", "seconds": 1.1545210000040242, "serverStopped": true, "ownedSurvivors": [], "errors": []}}
+PASS control-compiled-canaries
+START control-a07-strict
+PASS: exact maintained Test-A07Report; three negative corruption canaries
+PASS control-a07-strict
+{"status": "FOCUSED_GATES_PASS_NOT_ACCEPTANCE", "scope": "focused sticky-finite solve trial gates, not Q30 acceptance", "steps": [{"name": "native-candidate", "command": ["pwsh", "-NoProfile", "-File", "<SCRATCH>\\native-owned-zero-row.ps1", "-SourceRoot", "<SCRATCH>\\trial-sticky-finite-r2-404770fca4484f2ca18bc5759e12fb0c\\candidate", "-Label", "native-sticky-finite-r2-candidate"], "exitCode": 0, "elapsedSeconds": 33.13726970000425}, {"name": "candidate-gwt", "command": ["pwsh", "-NoProfile", "-File", "<SCRATCH>\\build-run.ps1", "-SourceRoot", "<SCRATCH>\\trial-sticky-finite-r2-404770fca4484f2ca18bc5759e12fb0c\\candidate", "-Label", "sticky-finite-r2-candidate-gwt"], "exitCode": 0, "elapsedSeconds": 79.61275259999093}, {"name": "candidate-compiled-canaries", "command": ["<USER_HOME>\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe", "-B", "<SCRATCH>\\run_current_solver_canaries.py", "<REPO>", "<SCRATCH>", "<SCRATCH>\\trial-sticky-finite-r2-404770fca4484f2ca18bc5759e12fb0c\\candidate", "sticky-finite-r2-candidate-canaries"], "exitCode": 0, "elapsedSeconds": 6.237087899993639}, {"name": "candidate-a07-strict", "command": ["pwsh", "-NoProfile", "-File", "<SCRATCH>\\read_a07.ps1", "-Repo", "<REPO>", "-Report", "<SCRATCH>\\sticky-finite-r2-candidate-canaries\\cases\\001-sticky-finite-r2-candidate-canaries-a07.report.json"], "exitCode": 0, "elapsedSeconds": 0.6189236999925924}, {"name": "control-gwt", "command": ["pwsh", "-NoProfile", "-File", "<SCRATCH>\\build-run.ps1", "-SourceRoot", "<SCRATCH>\\trial-sticky-finite-r2-404770fca4484f2ca18bc5759e12fb0c\\control", "-Label", "sticky-finite-r2-control-gwt"], "exitCode": 0, "elapsedSeconds": 79.10228439999628}, {"name": "control-compiled-canaries", "command": ["<USER_HOME>\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe", "-B", "<SCRATCH>\\run_current_solver_canaries.py", "<REPO>", "<SCRATCH>", "<SCRATCH>\\trial-sticky-finite-r2-404770fca4484f2ca18bc5759e12fb0c\\control", "sticky-finite-r2-control-canaries"], "exitCode": 0, "elapsedSeconds": 6.011727600009181}, {"name": "control-a07-strict", "command": ["pwsh", "-NoProfile", "-File", "<SCRATCH>\\read_a07.ps1", "-Repo", "<REPO>", "-Report", "<SCRATCH>\\sticky-finite-r2-control-canaries\\cases\\001-sticky-finite-r2-control-canaries-a07.report.json"], "exitCode": 0, "elapsedSeconds": 0.5398464000027161}], "sourceAuditSha256": "80110e21c0d5f4baf31460d3e0a12e12d9fc5cdecc1e83d49319fbc226a3c82a", "planSha256": "727f2e9f4a63a74b0846ac242c1a2cd34f40f9f3b8bf8aed2b7f6cbb6e3ab0a9", "elapsedSeconds": 209.12821429999894}

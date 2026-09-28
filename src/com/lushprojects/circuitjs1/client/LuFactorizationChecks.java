@@ -103,6 +103,7 @@ final class LuFactorizationChecks {
         assertions += compareWithOriginal(new double[][] { { 3, 1 }, { 1, 2 } },
                 workspace, "valid factorization after failures");
 
+        assertions += checkStickyFiniteSolveCases();
         assertions += checkInvertMatrix();
         return assertions;
     }
@@ -189,6 +190,138 @@ final class LuFactorizationChecks {
         require(workspace.allCountsZeroForChecks(), "LU workspace retained row counts after return");
         require(workspace.allRowReferencesNullForChecks(), "LU workspace retained row references after return");
         return 2;
+    }
+
+    private static int checkStickyFiniteSolveCases() {
+        int assertions = 0;
+
+        // Dense and sparse matrices both require real pivoted factors. Exercise
+        // multiple all-finite RHS shapes against the unchanged independent oracle.
+        double[][] dense = {
+            { 4, 1, 2 }, { 1, 5, 1 }, { 2, 1, 6 }
+        };
+        double[][] sparsePivoted = {
+            { 0, 0, 2, 0 }, { 1, 0, 0, 0 },
+            { 0, 3, 0, 1 }, { 0, 0, 1, 4 }
+        };
+        assertions += compareSolveFixtureWithOriginal(dense,
+                new double[] { 2, -3, 5 }, "dense finite solve");
+        double[][] sparsePivotFactors = copy(sparsePivoted);
+        int[] sparsePivotVector = new int[sparsePivoted.length];
+        require(originalFactor(sparsePivotFactors, sparsePivoted.length, sparsePivotVector),
+                "sparse pivot fixture is singular");
+        require(sparsePivotVector[0] == 1 && sparsePivotVector[1] == 2,
+                "sparse solve fixture did not exercise its intended row pivots");
+        assertions += 2;
+        assertions += compareSolveFixtureWithOriginal(sparsePivoted,
+                new double[] { 1, 2, -3, 4 }, "sparse pivoted finite solve");
+        assertions += compareSolveFixtureWithOriginal(sparsePivoted,
+                new double[] { 0, -0.0, Double.MIN_VALUE, -Double.MIN_VALUE },
+                "pivoted signed-zero and subnormal solve");
+        assertions += compareSolveFixtureWithOriginal(sparsePivoted,
+                new double[] { Double.NaN, 2, -3, 4 },
+                "pivoted sparse initial NaN RHS");
+
+        double[][] identity = { { 1, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 } };
+        assertions += compareSolveFixtureWithOriginal(identity,
+                new double[] { -0.0, 0.0, -0.0 }, "all-zero signed RHS");
+        for (double bad : new double[] {
+                Double.NaN, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY }) {
+            double[] rhs = { 1, bad, -2 };
+            assertions += compareSolveFixtureWithOriginal(identity, rhs,
+                    "initial nonfinite RHS " + bad);
+        }
+
+        // The lower multiplier is finite and pivot-valid, but this forward
+        // accumulation overflows. The next forward row and backsolve must keep
+        // the historical dense 0*Infinity => NaN propagation.
+        double[][] forwardOverflow = {
+            { 1, 0, 0 }, { 0.9, 1, 0 }, { 0, 0, 1 }
+        };
+        double[][] forwardOracleFactors = copy(forwardOverflow);
+        int[] forwardOraclePivots = new int[forwardOverflow.length];
+        require(originalFactor(forwardOracleFactors, forwardOverflow.length, forwardOraclePivots),
+                "forward-overflow oracle fixture is singular");
+        double[] forwardOracleRhs = { 1.0e308, -1.0e308, 1 };
+        originalSolve(forwardOracleFactors, forwardOverflow.length, forwardOraclePivots,
+                forwardOracleRhs);
+        // Forward substitution first produces [1e308, -Inf, NaN]. During
+        // back substitution, row 1 evaluates 0*NaN and promotes -Inf to NaN;
+        // row 0 then also becomes NaN. Check the final oracle state, not the
+        // intermediate forward value.
+        require(Double.isNaN(forwardOracleRhs[0]) &&
+                Double.isNaN(forwardOracleRhs[1]) &&
+                Double.isNaN(forwardOracleRhs[2]),
+                "forward-overflow oracle did not retain final dense NaN propagation");
+        assertions += 2;
+        assertions += compareSolveFixtureWithOriginal(forwardOverflow,
+                new double[] { 1.0e308, -1.0e308, 1 },
+                "finite RHS overflows during forward substitution");
+
+        // A successful factorization can retain a subnormal final pivot. The
+        // RHS stays finite through forward substitution, then the final divide
+        // overflows; an earlier zero upper coefficient must still propagate NaN.
+        double[][] tinyFinalPivot = {
+            { 1, 0 }, { 0, Double.MIN_VALUE }
+        };
+        double[][] tinyOracleFactors = copy(tinyFinalPivot);
+        int[] tinyOraclePivots = new int[tinyFinalPivot.length];
+        require(originalFactor(tinyOracleFactors, tinyFinalPivot.length, tinyOraclePivots) &&
+                tinyOracleFactors[0][1] == 0 && tinyOracleFactors[1][1] == Double.MIN_VALUE,
+                "tiny-pivot oracle fixture lost its zero upper coefficient or subnormal pivot");
+        double[] tinyOracleRhs = { 0, 1 };
+        originalSolve(tinyOracleFactors, tinyFinalPivot.length, tinyOraclePivots, tinyOracleRhs);
+        require(Double.isNaN(tinyOracleRhs[0]) &&
+                tinyOracleRhs[1] == Double.POSITIVE_INFINITY,
+                "tiny-pivot oracle did not retain 0*Inf propagation");
+        assertions += 2;
+        assertions += compareSolveFixtureWithOriginal(tinyFinalPivot,
+                new double[] { 0, 1 }, "tiny final pivot second-identity RHS overflow");
+
+        return assertions;
+    }
+
+    private static int compareSolveFixtureWithOriginal(double[][] before,
+            double[] initialRhs, String description) {
+        int size = before.length;
+        require(initialRhs.length == size, description + ": RHS dimension mismatch");
+        double[][] expectedFactors = copy(before), actualFactors = copy(before);
+        int[] expectedPivots = new int[size], actualPivots = new int[size];
+        require(originalFactor(expectedFactors, size, expectedPivots),
+                description + ": independent fixture factorization is singular");
+        require(CirSim.lu_factor(actualFactors, size, actualPivots),
+                description + ": CircuitJS fixture factorization is singular");
+        int assertions = 2;
+        for (int i = 0; i < size; i++) {
+            require(expectedPivots[i] == actualPivots[i],
+                    description + ": factor pivot differs from independent oracle");
+            assertions++;
+            for (int j = 0; j < size; j++) {
+                require(expectedFactors[i][j] == actualFactors[i][j],
+                        description + ": factor differs from independent oracle");
+                assertions++;
+            }
+        }
+        double[] expectedRhs = new double[size], actualRhs = new double[size];
+        for (int i = 0; i < size; i++)
+            expectedRhs[i] = actualRhs[i] = initialRhs[i];
+        originalSolve(expectedFactors, size, expectedPivots, expectedRhs);
+        CirSim.lu_solve(actualFactors, size, actualPivots, actualRhs);
+        for (int i = 0; i < size; i++) {
+            require(sameSolveValue(expectedRhs[i], actualRhs[i]),
+                    description + ": solve differs from independent oracle at " + i +
+                    " (expected " + expectedRhs[i] + ", got " + actualRhs[i] + ")");
+            assertions++;
+        }
+        return assertions;
+    }
+
+    private static boolean sameSolveValue(double expected, double actual) {
+        if (Double.isNaN(expected)) return Double.isNaN(actual);
+        if (Double.isInfinite(expected)) return expected == actual;
+        // Signed-zero bit identity is intentionally outside this oracle's contract.
+        if (expected == 0 && actual == 0) return true;
+        return expected == actual;
     }
 
     private static int checkInvertMatrix() {

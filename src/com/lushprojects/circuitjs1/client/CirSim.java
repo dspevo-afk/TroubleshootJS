@@ -8139,42 +8139,74 @@ MouseOutHandler, MouseWheelHandler {
     // previously performed by lu_factor.  On input, b[0..n-1] is the right
     // hand side of the equations, and on output, contains the solution.
     static void lu_solve(double a[][], int n, int ipvt[], double b[]) {
-	int i;
+        int i;
 
-	// find first nonzero b element
-	for (i = 0; i != n; i++) {
-	    int row = ipvt[i];
+        // A zero coefficient times a finite RHS value contributes only a zero.
+        // Track whether every RHS slot can still be proven finite so normal
+        // finite solves can omit zero products without hiding 0*Inf or 0*NaN.
+        boolean allReferencedValuesFinite = true;
+        for (i = 0; i < n; i++) {
+            if (!SolverExecutionBoundary.finite(b[i]))
+                allReferencedValuesFinite = false;
+        }
 
-	    double swap = b[row];
-	    b[row] = b[i];
-	    b[i] = swap;
-	    if (swap != 0)
-		break;
-	}
-	
-	int bi = i++;
-	for (; i < n; i++) {
-	    int row = ipvt[i];
-	    int j;
-	    double tot = b[row];
-	    
-	    b[row] = b[i];
-	    // forward substitution using the lower triangular matrix
+        // find first nonzero b element
+        for (i = 0; i != n; i++) {
+            int row = ipvt[i];
+
+            double swap = b[row];
+            b[row] = b[i];
+            b[i] = swap;
+            if (swap != 0)
+                break;
+        }
+
+        int bi = i++;
+        for (; i < n; i++) {
+            int row = ipvt[i];
+            int j;
+            double tot = b[row];
+
+            b[row] = b[i];
+            // Forward substitution. With a finite RHS census, omit only exact
+            // zero coefficients; otherwise retain the historical dense loop so
+            // zero * nonfinite values continue to propagate as NaN.
             double[] matrixRow = a[i];
-	    for (j = bi; j < i; j++)
-		tot -= matrixRow[j]*b[j];
-	    b[i] = tot;
-	}
-	for (i = n-1; i >= 0; i--) {
-	    double tot = b[i];
-	    
-	    // back-substitution using the upper triangular matrix
-	    int j;
+            if (allReferencedValuesFinite) {
+                for (j = bi; j < i; j++) {
+                    double coefficient = matrixRow[j];
+                    if (coefficient != 0)
+                        tot -= coefficient * b[j];
+                }
+            } else {
+                for (j = bi; j < i; j++)
+                    tot -= matrixRow[j] * b[j];
+            }
+            b[i] = tot;
+            if (!SolverExecutionBoundary.finite(tot))
+                allReferencedValuesFinite = false;
+        }
+        for (i = n-1; i >= 0; i--) {
+            double tot = b[i];
+
+            // Back-substitution uses the same ascending term order. A value
+            // made nonfinite by an earlier row permanently selects dense loops.
+            int j;
             double[] matrixRow = a[i];
-	    for (j = i+1; j != n; j++)
-		tot -= matrixRow[j]*b[j];
-	    b[i] = tot/matrixRow[i];
-	}
+            if (allReferencedValuesFinite) {
+                for (j = i+1; j != n; j++) {
+                    double coefficient = matrixRow[j];
+                    if (coefficient != 0)
+                        tot -= coefficient * b[j];
+                }
+            } else {
+                for (j = i+1; j != n; j++)
+                    tot -= matrixRow[j] * b[j];
+            }
+            b[i] = tot / matrixRow[i];
+            if (!SolverExecutionBoundary.finite(b[i]))
+                allReferencedValuesFinite = false;
+        }
     }
 
     

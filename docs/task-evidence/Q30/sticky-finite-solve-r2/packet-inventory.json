@@ -1,0 +1,2124 @@
+{
+  "files": [
+    {
+      "bytes": 3391,
+      "path": "README.md",
+      "redactions": 0,
+      "sha256": "1c3746f73e03dba906e889adff0838e8a9aca6244097974c7a46e55bdf784953",
+      "sourceSha256": "1c3746f73e03dba906e889adff0838e8a9aca6244097974c7a46e55bdf784953",
+      "transformed": false
+    },
+    {
+      "bytes": 7878,
+      "path": "comparisons/sticky-finite-r2-01-control-7-vs-sticky-finite-r2-02-candidate-7-timing-parity-sticky-finite-r2-pair-1.json",
+      "redactions": 0,
+      "sha256": "a0125b5fcbb32e368a745a29a3b621fcb61c030803bc5d10af589f7d70494557",
+      "sourceSha256": "a0125b5fcbb32e368a745a29a3b621fcb61c030803bc5d10af589f7d70494557",
+      "transformed": false
+    },
+    {
+      "bytes": 7912,
+      "path": "comparisons/sticky-finite-r2-03-candidate-10387-vs-sticky-finite-r2-04-control-10387-timing-parity-sticky-finite-r2-pair-2.json",
+      "redactions": 0,
+      "sha256": "394212198887aae0369c05fd73377ffa84983d0499101670ef6940c3e3d38fd1",
+      "sourceSha256": "394212198887aae0369c05fd73377ffa84983d0499101670ef6940c3e3d38fd1",
+      "transformed": false
+    },
+    {
+      "bytes": 7931,
+      "path": "comparisons/sticky-finite-r2-05-control-10014-vs-sticky-finite-r2-06-candidate-10014-timing-parity-sticky-finite-r2-pair-3.json",
+      "redactions": 0,
+      "sha256": "0614c599c092666a2cd3a249c6f11031a1adb2a701d67e27b5b15798b0d71a8f",
+      "sourceSha256": "0614c599c092666a2cd3a249c6f11031a1adb2a701d67e27b5b15798b0d71a8f",
+      "transformed": false
+    },
+    {
+      "bytes": 7881,
+      "path": "comparisons/sticky-finite-r2-07-candidate-7-vs-sticky-finite-r2-08-control-7-timing-parity-sticky-finite-r2-pair-4.json",
+      "redactions": 0,
+      "sha256": "186ef14319ac329d5df169673cb2e751cc7bb5386b1d0195168bd17647e728e5",
+      "sourceSha256": "186ef14319ac329d5df169673cb2e751cc7bb5386b1d0195168bd17647e728e5",
+      "transformed": false
+    },
+    {
+      "bytes": 6476,
+      "path": "comparisons/sticky-finite-r2-pair-1-validation.log",
+      "redactions": 0,
+      "sha256": "a045417fadcc5dce77eefe99d309a5e49580f261d013e1dc622e8c4fe3e14687",
+      "sourceSha256": "a045417fadcc5dce77eefe99d309a5e49580f261d013e1dc622e8c4fe3e14687",
+      "transformed": false
+    },
+    {
+      "bytes": 6510,
+      "path": "comparisons/sticky-finite-r2-pair-2-validation.log",
+      "redactions": 0,
+      "sha256": "62355c29a1090eab4fb237e57408d48717b56c3a8ac897229234e5f92c80fe3b",
+      "sourceSha256": "62355c29a1090eab4fb237e57408d48717b56c3a8ac897229234e5f92c80fe3b",
+      "transformed": false
+    },
+    {
+      "bytes": 6529,
+      "path": "comparisons/sticky-finite-r2-pair-3-validation.log",
+      "redactions": 0,
+      "sha256": "311eb4191a773365d86dfa64684a92edb5845acd578cee4b22a2a7a9ed2fff7e",
+      "sourceSha256": "311eb4191a773365d86dfa64684a92edb5845acd578cee4b22a2a7a9ed2fff7e",
+      "transformed": false
+    },
+    {
+      "bytes": 6479,
+      "path": "comparisons/sticky-finite-r2-pair-4-validation.log",
+      "redactions": 0,
+      "sha256": "1d44859ee9d8d8267ea049d77a59a5095daf8cda08fdb44aa7f762c1e6817855",
+      "sourceSha256": "1d44859ee9d8d8267ea049d77a59a5095daf8cda08fdb44aa7f762c1e6817855",
+      "transformed": false
+    },
+    {
+      "bytes": 1393,
+      "path": "gates/compiled-a07/cases/001-sticky-finite-r2-index-canary-a07.json",
+      "redactions": 0,
+      "sha256": "8db02d3054891366723e2b34db2a3540bd86f1b646e9a6863a8452fdfdfe7f6d",
+      "sourceSha256": "8db02d3054891366723e2b34db2a3540bd86f1b646e9a6863a8452fdfdfe7f6d",
+      "transformed": false
+    },
+    {
+      "bytes": 8,
+      "path": "gates/compiled-a07/cases/001-sticky-finite-r2-index-canary-a07.state.txt",
+      "redactions": 0,
+      "sha256": "d2b4740b4a36aece77f74f8fd73c9b787c86efaa450eea01b931149a19c22ff2",
+      "sourceSha256": "d2b4740b4a36aece77f74f8fd73c9b787c86efaa450eea01b931149a19c22ff2",
+      "transformed": false
+    },
+    {
+      "bytes": 1773,
+      "path": "gates/compiled-a07/identity.json",
+      "redactions": 1,
+      "sha256": "d923bea95350fceb42e0fb5ab6621a9c8b27022b822e2beb2be3ffe8ab264944",
+      "sourceSha256": "ef45389e1d2edc3b38c2c8817711b9fa9945166d00901931a737c741c33b49f8",
+      "transformed": true
+    },
+    {
+      "bytes": 291075,
+      "path": "gates/compiled-a07/input-manifest-after.json",
+      "redactions": 0,
+      "sha256": "8492ace3b41f5ae2a71d6c3946a52992d48ad044d013f319162f92f580669be4",
+      "sourceSha256": "8492ace3b41f5ae2a71d6c3946a52992d48ad044d013f319162f92f580669be4",
+      "transformed": false
+    },
+    {
+      "bytes": 291075,
+      "path": "gates/compiled-a07/input-manifest-before.json",
+      "redactions": 0,
+      "sha256": "f36658be8b5414d50b32875c16294f4a8778403fbd317d08b61c45afb534665a",
+      "sourceSha256": "f36658be8b5414d50b32875c16294f4a8778403fbd317d08b61c45afb534665a",
+      "transformed": false
+    },
+    {
+      "bytes": 1480,
+      "path": "gates/compiled-a07/owned-processes-before-close.json",
+      "redactions": 0,
+      "sha256": "ff260db535f102dc0a46e85159284c3682519ec8b60d1695ebe55c1c227d8209",
+      "sourceSha256": "ff260db535f102dc0a46e85159284c3682519ec8b60d1695ebe55c1c227d8209",
+      "transformed": false
+    },
+    {
+      "bytes": 1296,
+      "path": "gates/compiled-a07/owned-processes-before.json",
+      "redactions": 0,
+      "sha256": "8f76eb93e625f5bb5edaebee557ff41b0df399d106661b29a77dc91eabbbacf3",
+      "sourceSha256": "8f76eb93e625f5bb5edaebee557ff41b0df399d106661b29a77dc91eabbbacf3",
+      "transformed": false
+    },
+    {
+      "bytes": 4137,
+      "path": "gates/compiled-a07/progress.json",
+      "redactions": 2,
+      "sha256": "65a6c9523d833089a0b0456041e0cfc2c7e05f14f4ea842731e2374f661eba73",
+      "sourceSha256": "6522dc9d6d3b3073984630ee0fac1cf11bf237d3ca015082787e2baeea90f53c",
+      "transformed": true
+    },
+    {
+      "artifactType": "raw-browser-report",
+      "bytes": 9391,
+      "encoding": "gzip-lossless",
+      "path": "gates/compiled-a07/raw-browser-report.json.gz",
+      "sha256": "b0341585cc787486c7aa6254aac475a9f66b1f4e7976640c1466f4cfe2b9670a",
+      "sourceBytes": 80897,
+      "sourceSha256": "09a388c87932826fd6a256e60c8bcbefaa4e012694c9c03824879ee17688a34e",
+      "transformed": false
+    },
+    {
+      "bytes": 4860,
+      "path": "gates/compiled-a07/result.json",
+      "redactions": 2,
+      "sha256": "8f5c24971a377ad17cb0434da9ff98a5a7c2ebc92dac3a16695f07d9e6610ce9",
+      "sourceSha256": "c253483628dfb7acbd6ff27ae3608fae4c7a3884b450fbf7d6e25aec99c649d4",
+      "transformed": true
+    },
+    {
+      "bytes": 277,
+      "path": "gates/compiled-a07/run-start.json",
+      "redactions": 1,
+      "sha256": "ed6ec4445b0cab95bbba82aeba3873aaf7b426104c2f724916f22410409780bb",
+      "sourceSha256": "8f15554affad989f023df4d1fa252fd7634e39fe908d6d95d956d0cbfa18a238",
+      "transformed": true
+    },
+    {
+      "bytes": 146,
+      "path": "gates/compiled-a07/runner-after.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 146,
+      "path": "gates/compiled-a07/runner-before.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 357,
+      "path": "gates/compiled-a07/spec.json",
+      "redactions": 0,
+      "sha256": "e839a178bc38532e5368f35acc61e61b1a7ce9c51fa0587cb7e2130ced24da51",
+      "sourceSha256": "e839a178bc38532e5368f35acc61e61b1a7ce9c51fa0587cb7e2130ced24da51",
+      "transformed": false
+    },
+    {
+      "bytes": 1404,
+      "path": "gates/compiled-canaries/candidate/cases/001-sticky-finite-r2-candidate-canaries-a07.json",
+      "redactions": 0,
+      "sha256": "b02d82d2f1d8445dbe37e9bcc010e66ffa1d170f081443e0e5cb04da3f55615b",
+      "sourceSha256": "b02d82d2f1d8445dbe37e9bcc010e66ffa1d170f081443e0e5cb04da3f55615b",
+      "transformed": false
+    },
+    {
+      "bytes": 8,
+      "path": "gates/compiled-canaries/candidate/cases/001-sticky-finite-r2-candidate-canaries-a07.state.txt",
+      "redactions": 0,
+      "sha256": "d2b4740b4a36aece77f74f8fd73c9b787c86efaa450eea01b931149a19c22ff2",
+      "sourceSha256": "d2b4740b4a36aece77f74f8fd73c9b787c86efaa450eea01b931149a19c22ff2",
+      "transformed": false
+    },
+    {
+      "bytes": 1590,
+      "path": "gates/compiled-canaries/candidate/cases/002-sticky-finite-r2-candidate-canaries-disabled.json",
+      "redactions": 0,
+      "sha256": "53e575898634371c4d2f65b4b78025e88c0afcbba1dd91ad6ad62f20d3164b25",
+      "sourceSha256": "53e575898634371c4d2f65b4b78025e88c0afcbba1dd91ad6ad62f20d3164b25",
+      "transformed": false
+    },
+    {
+      "bytes": 31,
+      "path": "gates/compiled-canaries/candidate/cases/002-sticky-finite-r2-candidate-canaries-disabled.state.txt",
+      "redactions": 0,
+      "sha256": "95abc8986af9d28c5de9c0245e91d8ca7197e8e54d53bae8a8c03a1738b0ee9f",
+      "sourceSha256": "95abc8986af9d28c5de9c0245e91d8ca7197e8e54d53bae8a8c03a1738b0ee9f",
+      "transformed": false
+    },
+    {
+      "bytes": 1778,
+      "path": "gates/compiled-canaries/candidate/identity.json",
+      "redactions": 1,
+      "sha256": "4b6c785d7ecd598d6446a8aba481f3e9593f66200169c90055f054ac15bd677e",
+      "sourceSha256": "4fe845ff2368738284ba27a91f1c64af170fb69457a53d94655dc8242cd65dc6",
+      "transformed": true
+    },
+    {
+      "bytes": 291302,
+      "path": "gates/compiled-canaries/candidate/input-manifest-after.json",
+      "redactions": 0,
+      "sha256": "2d23bd25065e477a582577eadfb8cda329b39a52a86ca164ea1442bb2e186183",
+      "sourceSha256": "2d23bd25065e477a582577eadfb8cda329b39a52a86ca164ea1442bb2e186183",
+      "transformed": false
+    },
+    {
+      "bytes": 291302,
+      "path": "gates/compiled-canaries/candidate/input-manifest-before.json",
+      "redactions": 0,
+      "sha256": "72668bee45b68c2ea065294b93201c69c3332921f2eaf839ca0e33179fa565c6",
+      "sourceSha256": "72668bee45b68c2ea065294b93201c69c3332921f2eaf839ca0e33179fa565c6",
+      "transformed": false
+    },
+    {
+      "bytes": 1479,
+      "path": "gates/compiled-canaries/candidate/owned-processes-before-close.json",
+      "redactions": 0,
+      "sha256": "a99b063409b88b636ba07e661bcd243ff7d4a494721868b116212eccf046998e",
+      "sourceSha256": "a99b063409b88b636ba07e661bcd243ff7d4a494721868b116212eccf046998e",
+      "transformed": false
+    },
+    {
+      "bytes": 1295,
+      "path": "gates/compiled-canaries/candidate/owned-processes-before.json",
+      "redactions": 0,
+      "sha256": "94a3ca068c7d9f34d5ec7b0fc20b2de5e9646e9c221fcfd21ac157aab6f5abf3",
+      "sourceSha256": "94a3ca068c7d9f34d5ec7b0fc20b2de5e9646e9c221fcfd21ac157aab6f5abf3",
+      "transformed": false
+    },
+    {
+      "bytes": 5927,
+      "path": "gates/compiled-canaries/candidate/progress.json",
+      "redactions": 2,
+      "sha256": "94930fd9f18f960f6ea768d9791e1760656e159e4f91ff39a904b31307876f5c",
+      "sourceSha256": "7339b5350da6d3678cebb60f2bd515a1dfab132bf3abf9712c65bf38ef0a6126",
+      "transformed": true
+    },
+    {
+      "artifactType": "raw-browser-report",
+      "bytes": 9383,
+      "encoding": "gzip-lossless",
+      "path": "gates/compiled-canaries/candidate/reports/001-sticky-finite-r2-candidate-canaries-a07.report.json.gz",
+      "sha256": "96842f6f9be50ce337a209a55b802b23f456b137afaac35e7e1c711fe228d534",
+      "sourceBytes": 80897,
+      "sourceSha256": "adf6ca0a700796739653a11732c98718cc587e9b17ef496bb7a7dca7e748ed80",
+      "transformed": false
+    },
+    {
+      "artifactType": "raw-browser-report",
+      "bytes": 224,
+      "encoding": "gzip-lossless",
+      "path": "gates/compiled-canaries/candidate/reports/002-sticky-finite-r2-candidate-canaries-disabled.report.json.gz",
+      "sha256": "5b8e46ef5a04d8746c0d9243f4ba9900ec88968302808491a72c7a2259062f87",
+      "sourceBytes": 344,
+      "sourceSha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+      "transformed": false
+    },
+    {
+      "bytes": 6652,
+      "path": "gates/compiled-canaries/candidate/result.json",
+      "redactions": 2,
+      "sha256": "1ad40b250393fc7acfe6a1294d4fa560a87901a47fc9fac4b3e44ba35335d9b0",
+      "sourceSha256": "244cc7b19df0cc2c37f0cece6e003b6c2e1bc9644fa0d9d971ae591c15202dfb",
+      "transformed": true
+    },
+    {
+      "bytes": 288,
+      "path": "gates/compiled-canaries/candidate/run-start.json",
+      "redactions": 1,
+      "sha256": "bb38ba489399779ae82cc43cb0cfeb02c62344c243f57a6afb16f17561990b49",
+      "sourceSha256": "ef5746d66b66e32be3b6feff4b9511813e69a3bae323a39c9b6ee85bc90f2608",
+      "transformed": true
+    },
+    {
+      "bytes": 146,
+      "path": "gates/compiled-canaries/candidate/runner-after.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 146,
+      "path": "gates/compiled-canaries/candidate/runner-before.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 883,
+      "path": "gates/compiled-canaries/candidate/spec.json",
+      "redactions": 0,
+      "sha256": "fc6ceadbfd644005886e18164edbe5cf4d069b52ea3d06e9e0f64b2ec7eb1449",
+      "sourceSha256": "fc6ceadbfd644005886e18164edbe5cf4d069b52ea3d06e9e0f64b2ec7eb1449",
+      "transformed": false
+    },
+    {
+      "bytes": 1401,
+      "path": "gates/compiled-canaries/control/cases/001-sticky-finite-r2-control-canaries-a07.json",
+      "redactions": 0,
+      "sha256": "ef4d32a89fc4f40c518e29c80718dea636793c7fb856950ae93735d09c6ecab6",
+      "sourceSha256": "ef4d32a89fc4f40c518e29c80718dea636793c7fb856950ae93735d09c6ecab6",
+      "transformed": false
+    },
+    {
+      "bytes": 8,
+      "path": "gates/compiled-canaries/control/cases/001-sticky-finite-r2-control-canaries-a07.state.txt",
+      "redactions": 0,
+      "sha256": "d2b4740b4a36aece77f74f8fd73c9b787c86efaa450eea01b931149a19c22ff2",
+      "sourceSha256": "d2b4740b4a36aece77f74f8fd73c9b787c86efaa450eea01b931149a19c22ff2",
+      "transformed": false
+    },
+    {
+      "bytes": 1586,
+      "path": "gates/compiled-canaries/control/cases/002-sticky-finite-r2-control-canaries-disabled.json",
+      "redactions": 0,
+      "sha256": "e70b1a4e5ee79c7d3f6ff1c9104aada40f1f6efa8449eeab9a12f10f30cd87da",
+      "sourceSha256": "e70b1a4e5ee79c7d3f6ff1c9104aada40f1f6efa8449eeab9a12f10f30cd87da",
+      "transformed": false
+    },
+    {
+      "bytes": 31,
+      "path": "gates/compiled-canaries/control/cases/002-sticky-finite-r2-control-canaries-disabled.state.txt",
+      "redactions": 0,
+      "sha256": "95abc8986af9d28c5de9c0245e91d8ca7197e8e54d53bae8a8c03a1738b0ee9f",
+      "sourceSha256": "95abc8986af9d28c5de9c0245e91d8ca7197e8e54d53bae8a8c03a1738b0ee9f",
+      "transformed": false
+    },
+    {
+      "bytes": 1770,
+      "path": "gates/compiled-canaries/control/identity.json",
+      "redactions": 1,
+      "sha256": "a8993d166f12a59496f3d2532ffc1617a47a209204ec70cee029281607abea33",
+      "sourceSha256": "0010f4b596c65e5a1bd7fe8617feaa5218dbf3417c2048be22d4a7fe224d55c0",
+      "transformed": true
+    },
+    {
+      "bytes": 291302,
+      "path": "gates/compiled-canaries/control/input-manifest-after.json",
+      "redactions": 0,
+      "sha256": "2d1ce5f31d82a33e9e293758b1dd23d7f11caa29617552997c362c733485e749",
+      "sourceSha256": "2d1ce5f31d82a33e9e293758b1dd23d7f11caa29617552997c362c733485e749",
+      "transformed": false
+    },
+    {
+      "bytes": 291302,
+      "path": "gates/compiled-canaries/control/input-manifest-before.json",
+      "redactions": 0,
+      "sha256": "7673a0596acb3cbdc0d76712ee9ee0f89f980346763a0c16706c8a83db249079",
+      "sourceSha256": "7673a0596acb3cbdc0d76712ee9ee0f89f980346763a0c16706c8a83db249079",
+      "transformed": false
+    },
+    {
+      "bytes": 1472,
+      "path": "gates/compiled-canaries/control/owned-processes-before-close.json",
+      "redactions": 0,
+      "sha256": "8997a522be6c4b2fcb70178d1eda2697ca1df1095a61d1af9ab19c7715703666",
+      "sourceSha256": "8997a522be6c4b2fcb70178d1eda2697ca1df1095a61d1af9ab19c7715703666",
+      "transformed": false
+    },
+    {
+      "bytes": 1289,
+      "path": "gates/compiled-canaries/control/owned-processes-before.json",
+      "redactions": 0,
+      "sha256": "76785910890a48399f2ea5b89f1469e33a4bdb3374e7854ed0379aafaecf8514",
+      "sourceSha256": "76785910890a48399f2ea5b89f1469e33a4bdb3374e7854ed0379aafaecf8514",
+      "transformed": false
+    },
+    {
+      "bytes": 5910,
+      "path": "gates/compiled-canaries/control/progress.json",
+      "redactions": 2,
+      "sha256": "7de32c8503534233f4b118e9366e5499a63f4380b6aadd0dd030b6a6ac3ae578",
+      "sourceSha256": "c308e8e73dce3aa684a18255ae55cff79da0362c01ed30808233dca478ac1d3a",
+      "transformed": true
+    },
+    {
+      "artifactType": "raw-browser-report",
+      "bytes": 9383,
+      "encoding": "gzip-lossless",
+      "path": "gates/compiled-canaries/control/reports/001-sticky-finite-r2-control-canaries-a07.report.json.gz",
+      "sha256": "66e5c6e436ca915ff475e70b63f772d35f11e6af8409f800ddb3ebac0debf0ef",
+      "sourceBytes": 80897,
+      "sourceSha256": "1a898e55438399ff222680b37e400dee825d2f4e493329fd0138306edb55a1d4",
+      "transformed": false
+    },
+    {
+      "artifactType": "raw-browser-report",
+      "bytes": 224,
+      "encoding": "gzip-lossless",
+      "path": "gates/compiled-canaries/control/reports/002-sticky-finite-r2-control-canaries-disabled.report.json.gz",
+      "sha256": "5b8e46ef5a04d8746c0d9243f4ba9900ec88968302808491a72c7a2259062f87",
+      "sourceBytes": 344,
+      "sourceSha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+      "transformed": false
+    },
+    {
+      "bytes": 6634,
+      "path": "gates/compiled-canaries/control/result.json",
+      "redactions": 2,
+      "sha256": "d3f902f2d2c83b67352628ed925d01c3a125e9afc4f72053fe64727a1b4597d5",
+      "sourceSha256": "14203c53e514d5d08a281243cad9b3a5b473d73a3bed0dd530db9504bb3f6780",
+      "transformed": true
+    },
+    {
+      "bytes": 286,
+      "path": "gates/compiled-canaries/control/run-start.json",
+      "redactions": 1,
+      "sha256": "4c8839703f03c0ca2fc705a4787fef0f7f996ea284203a574f48c389985795d3",
+      "sourceSha256": "7d67bd954b3f0bfc0ec1712caa5d48e045179c0249e03e4a34cdb18e3f701db9",
+      "transformed": true
+    },
+    {
+      "bytes": 146,
+      "path": "gates/compiled-canaries/control/runner-after.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 146,
+      "path": "gates/compiled-canaries/control/runner-before.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 879,
+      "path": "gates/compiled-canaries/control/spec.json",
+      "redactions": 0,
+      "sha256": "c661f443bbe05f15c65bda01edec72024b9447a300e4a8fdbc191a5251216f35",
+      "sourceSha256": "c661f443bbe05f15c65bda01edec72024b9447a300e4a8fdbc191a5251216f35",
+      "transformed": false
+    },
+    {
+      "bytes": 524,
+      "path": "gates/native-sticky-finite-r2-candidate-receipt.txt",
+      "redactions": 0,
+      "sha256": "62ab1723e876eb710e22e845a2698e93a4ee74b24baae95dbc0317de208c54a2",
+      "sourceSha256": "62ab1723e876eb710e22e845a2698e93a4ee74b24baae95dbc0317de208c54a2",
+      "transformed": false
+    },
+    {
+      "bytes": 434,
+      "path": "gates/native-sticky-finite-r2-candidate.json",
+      "redactions": 0,
+      "sha256": "52129b0d8a2bb77e3d332294b786aafff78f7e7b46b3f8969d0218cf1d5b1e58",
+      "sourceSha256": "52129b0d8a2bb77e3d332294b786aafff78f7e7b46b3f8969d0218cf1d5b1e58",
+      "transformed": false
+    },
+    {
+      "bytes": 4480,
+      "path": "gates/native-sticky-finite-r2-candidate.log",
+      "redactions": 0,
+      "sha256": "313902a0290d4603b26e6307a3d627a5848d2a076ac4b7c01d000bed3334e800",
+      "sourceSha256": "313902a0290d4603b26e6307a3d627a5848d2a076ac4b7c01d000bed3334e800",
+      "transformed": false
+    },
+    {
+      "bytes": 468,
+      "path": "gates/native-sticky-finite-r2-index-receipt.txt",
+      "redactions": 0,
+      "sha256": "b26312b8bcde56c26964fd1d51f5c154505f110ca0a8671db4cf96601a946a8c",
+      "sourceSha256": "b26312b8bcde56c26964fd1d51f5c154505f110ca0a8671db4cf96601a946a8c",
+      "transformed": false
+    },
+    {
+      "bytes": 433,
+      "path": "gates/native-sticky-finite-r2-index.json",
+      "redactions": 0,
+      "sha256": "d00b2259e54c7c881288370c04a0add2473abdd39e054424b7548afdd3d526eb",
+      "sourceSha256": "d00b2259e54c7c881288370c04a0add2473abdd39e054424b7548afdd3d526eb",
+      "transformed": false
+    },
+    {
+      "bytes": 3203,
+      "path": "gates/native-sticky-finite-r2-index.log",
+      "redactions": 0,
+      "sha256": "7f2b21c53ac6d4ae59eb426b793594b3036a1107e579214cbadda84857a03d57",
+      "sourceSha256": "7f2b21c53ac6d4ae59eb426b793594b3036a1107e579214cbadda84857a03d57",
+      "transformed": false
+    },
+    {
+      "bytes": 883,
+      "path": "gates/sticky-finite-r2-candidate-canaries-spec.json",
+      "redactions": 0,
+      "sha256": "fc6ceadbfd644005886e18164edbe5cf4d069b52ea3d06e9e0f64b2ec7eb1449",
+      "sourceSha256": "fc6ceadbfd644005886e18164edbe5cf4d069b52ea3d06e9e0f64b2ec7eb1449",
+      "transformed": false
+    },
+    {
+      "bytes": 238,
+      "path": "gates/sticky-finite-r2-candidate-canaries-summary.json",
+      "redactions": 0,
+      "sha256": "456841dfe7e55e213010f8d8a8a615a0c25a4f057b804542e80afab5b07a2779",
+      "sourceSha256": "456841dfe7e55e213010f8d8a8a615a0c25a4f057b804542e80afab5b07a2779",
+      "transformed": false
+    },
+    {
+      "bytes": 279,
+      "path": "gates/sticky-finite-r2-candidate-gwt.json",
+      "redactions": 0,
+      "sha256": "728f345452d7b849fd75dfa3c2636c8837cbac296c0a6d7609ea9201332e7e53",
+      "sourceSha256": "728f345452d7b849fd75dfa3c2636c8837cbac296c0a6d7609ea9201332e7e53",
+      "transformed": false
+    },
+    {
+      "bytes": 1260,
+      "path": "gates/sticky-finite-r2-candidate-gwt.log",
+      "redactions": 1,
+      "sha256": "4890a1a98ff84e09a3654b776f444e5122ab7141ecc45196c38b8428f1e2d0b0",
+      "sourceSha256": "31f6e9a9a18709659adc36985c88e129a5fe838f2a2cd509adc08de74dd7fac8",
+      "transformed": true
+    },
+    {
+      "bytes": 879,
+      "path": "gates/sticky-finite-r2-control-canaries-spec.json",
+      "redactions": 0,
+      "sha256": "c661f443bbe05f15c65bda01edec72024b9447a300e4a8fdbc191a5251216f35",
+      "sourceSha256": "c661f443bbe05f15c65bda01edec72024b9447a300e4a8fdbc191a5251216f35",
+      "transformed": false
+    },
+    {
+      "bytes": 237,
+      "path": "gates/sticky-finite-r2-control-canaries-summary.json",
+      "redactions": 0,
+      "sha256": "24f35940bbc9e520a371ed09190a261fcc5f08595bf8aac0dcaf77b9b9d50399",
+      "sourceSha256": "24f35940bbc9e520a371ed09190a261fcc5f08595bf8aac0dcaf77b9b9d50399",
+      "transformed": false
+    },
+    {
+      "bytes": 277,
+      "path": "gates/sticky-finite-r2-control-gwt.json",
+      "redactions": 0,
+      "sha256": "2c4902c3a9a7b8a573e11322bee03cb9de0efd8dae97378643606aeb9eccf765",
+      "sourceSha256": "2c4902c3a9a7b8a573e11322bee03cb9de0efd8dae97378643606aeb9eccf765",
+      "transformed": false
+    },
+    {
+      "bytes": 1258,
+      "path": "gates/sticky-finite-r2-control-gwt.log",
+      "redactions": 1,
+      "sha256": "35e78ecaab9c6fa17860e21b280baa564a82e55cba215cbf10569fc49d67d85e",
+      "sourceSha256": "44b6968f8d47f91b101a27058836311c2bd40b52b02a4478cdcaac20772b9ebd",
+      "transformed": true
+    },
+    {
+      "bytes": 3511,
+      "path": "gates/sticky-finite-r2-gates.json",
+      "redactions": 22,
+      "sha256": "e1008e1905d4e1164a0555e96acfaccad5db4f1f290f44aedc777f116a7ee961",
+      "sourceSha256": "f45f64169cc655ffc670b88892ef0222c6903d9ec14254687503ba5be9e60054",
+      "transformed": true
+    },
+    {
+      "bytes": 5710,
+      "path": "gates/sticky-finite-r2-gates.log",
+      "redactions": 24,
+      "sha256": "0f091352d1d2373bf26d397544ca69ce721ba00fe62c14e20f677a79280b7464",
+      "sourceSha256": "161220ca681fa9fbf026127178bee17b407fb4dae14e9718385d360ed5097aa6",
+      "transformed": true
+    },
+    {
+      "bytes": 357,
+      "path": "gates/sticky-finite-r2-index-canary-spec.json",
+      "redactions": 0,
+      "sha256": "e839a178bc38532e5368f35acc61e61b1a7ce9c51fa0587cb7e2130ced24da51",
+      "sourceSha256": "e839a178bc38532e5368f35acc61e61b1a7ce9c51fa0587cb7e2130ced24da51",
+      "transformed": false
+    },
+    {
+      "bytes": 334,
+      "path": "gates/sticky-finite-r2-index-canary-summary.json",
+      "redactions": 0,
+      "sha256": "a857d2d1413dde55d1f532df8eeed52580e4d643354ac1449bf8871c2123a976",
+      "sourceSha256": "a857d2d1413dde55d1f532df8eeed52580e4d643354ac1449bf8871c2123a976",
+      "transformed": false
+    },
+    {
+      "bytes": 275,
+      "path": "gates/sticky-finite-r2-index-gwt.json",
+      "redactions": 0,
+      "sha256": "2e8d1601e05fa53463d9213b9a993fbded9c073d94de82bfb2c7959abf08f661",
+      "sourceSha256": "2e8d1601e05fa53463d9213b9a993fbded9c073d94de82bfb2c7959abf08f661",
+      "transformed": false
+    },
+    {
+      "bytes": 1250,
+      "path": "gates/sticky-finite-r2-index-gwt.log",
+      "redactions": 1,
+      "sha256": "1bd86ffcab7747120da1857737a7db5230534864ad72480ec69db9aa35cec53b",
+      "sourceSha256": "e32f0ae8ed7541c3f65cd42594c952fa23b3604b7f552ce21f1644b10c65124b",
+      "transformed": true
+    },
+    {
+      "bytes": 274,
+      "path": "gates/sticky-finite-r2-root-gwt.json",
+      "redactions": 0,
+      "sha256": "956a356f9dbf46a07c86357a11f9e6c06d557176fa18d3244f0588c75f8e5458",
+      "sourceSha256": "956a356f9dbf46a07c86357a11f9e6c06d557176fa18d3244f0588c75f8e5458",
+      "transformed": false
+    },
+    {
+      "bytes": 1191,
+      "path": "gates/sticky-finite-r2-root-gwt.log",
+      "redactions": 1,
+      "sha256": "71b5c2fdaa4d67fe061a901abdd9d6e5b69c0fae732261196df88ca69cc82c5f",
+      "sourceSha256": "f4b2d457d91213259876a7de4dcef2e87dff2a9f31bec031ad26ed090e051b57",
+      "transformed": true
+    },
+    {
+      "bytes": 1672,
+      "path": "receipts/audit_sticky_finite_r2_root_runtime.py",
+      "redactions": 1,
+      "sha256": "a1130972e2b9a49fa07500dd6e2d44b0ff06863bed92aa5a2b535bfa7f08400f",
+      "sourceSha256": "831ac545a8375f47bfbfbdfca2207b205c3f82765f3bbb24f71ac20c718a3e7a",
+      "transformed": true
+    },
+    {
+      "bytes": 2288,
+      "path": "receipts/sticky-finite-r2-final-gates.json",
+      "redactions": 14,
+      "sha256": "b74e540b71883c0e31d3ddc66297130d50f33150059bbf7cafb887db84c2a697",
+      "sourceSha256": "969c59fd95129c259a4c407e0211b3997efcb358f0eb82e7a9cf17fd8e2d45b9",
+      "transformed": true
+    },
+    {
+      "bytes": 4303,
+      "path": "receipts/sticky-finite-r2-final-gates.log",
+      "redactions": 16,
+      "sha256": "1094e6dadff4dad02cbb58a3cc449579fbb77f46f5141f12a53be31f42c5a5fd",
+      "sourceSha256": "539d920169d0cbc5b1058263c23f2e4342acae8ff0272e20936208a956c1bad7",
+      "transformed": true
+    },
+    {
+      "bytes": 956,
+      "path": "receipts/sticky-finite-r2-integration.json",
+      "redactions": 0,
+      "sha256": "ebea14f30be27c8a8157e9f43a26f44145b2508a236b6eb6e3527ff27c6e2dd4",
+      "sourceSha256": "ebea14f30be27c8a8157e9f43a26f44145b2508a236b6eb6e3527ff27c6e2dd4",
+      "transformed": false
+    },
+    {
+      "bytes": 3293,
+      "path": "receipts/sticky-finite-r2-measurement-plan.json",
+      "redactions": 0,
+      "sha256": "727f2e9f4a63a74b0846ac242c1a2cd34f40f9f3b8bf8aed2b7f6cbb6e3ab0a9",
+      "sourceSha256": "727f2e9f4a63a74b0846ac242c1a2cd34f40f9f3b8bf8aed2b7f6cbb6e3ab0a9",
+      "transformed": false
+    },
+    {
+      "bytes": 816,
+      "path": "receipts/sticky-finite-r2-root-runtime-equality.json",
+      "redactions": 0,
+      "sha256": "249af054bc4128f661999836b462691d511723a75d4ca1383a3888936fe8de6b",
+      "sourceSha256": "249af054bc4128f661999836b462691d511723a75d4ca1383a3888936fe8de6b",
+      "transformed": false
+    },
+    {
+      "bytes": 59140,
+      "path": "receipts/sticky-finite-r2-sequence-result.json",
+      "redactions": 0,
+      "sha256": "896913ae7a55303a66beff9d020a30fcdc2712feaacf5119a1567921ad46161b",
+      "sourceSha256": "896913ae7a55303a66beff9d020a30fcdc2712feaacf5119a1567921ad46161b",
+      "transformed": false
+    },
+    {
+      "bytes": 5547,
+      "path": "reviews/sticky-finite-solve-independent-review.md",
+      "redactions": 0,
+      "sha256": "8aba969527644ec81cce92f73aa383d4a93f84dbeb172c57b0258fa8fc26ecae",
+      "sourceSha256": "8aba969527644ec81cce92f73aa383d4a93f84dbeb172c57b0258fa8fc26ecae",
+      "transformed": false
+    },
+    {
+      "bytes": 1468,
+      "path": "runs/sticky-finite-r2-01-control-7/cases/001-sticky-finite-r2-01-control-7.json",
+      "redactions": 0,
+      "sha256": "183d83945f00a0a56f17581cbfa9982060addb7d095f49c96d91f76fad29f8a2",
+      "sourceSha256": "183d83945f00a0a56f17581cbfa9982060addb7d095f49c96d91f76fad29f8a2",
+      "transformed": false
+    },
+    {
+      "bytes": 13,
+      "path": "runs/sticky-finite-r2-01-control-7/cases/001-sticky-finite-r2-01-control-7.state.txt",
+      "redactions": 0,
+      "sha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "sourceSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "transformed": false
+    },
+    {
+      "bytes": 1773,
+      "path": "runs/sticky-finite-r2-01-control-7/identity.json",
+      "redactions": 1,
+      "sha256": "010c739256641eeb197b9c85339600dffff11a4c607b6012da791f1d6d1ad1b3",
+      "sourceSha256": "ba18b10028d9231b7703f117cb0b4abf5c2c84d4afae46234d387c8ef27580eb",
+      "transformed": true
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/sticky-finite-r2-01-control-7/input-manifest-after.json",
+      "redactions": 0,
+      "sha256": "54feb51dea90841f5eafaf2675cd05533018476848177b22b24614f455994727",
+      "sourceSha256": "54feb51dea90841f5eafaf2675cd05533018476848177b22b24614f455994727",
+      "transformed": false
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/sticky-finite-r2-01-control-7/input-manifest-before.json",
+      "redactions": 0,
+      "sha256": "41f6184159325263f7c56fafe0ef39c300ff715a4d1eab728b83b8fb8af8a9e4",
+      "sourceSha256": "41f6184159325263f7c56fafe0ef39c300ff715a4d1eab728b83b8fb8af8a9e4",
+      "transformed": false
+    },
+    {
+      "bytes": 1666,
+      "path": "runs/sticky-finite-r2-01-control-7/owned-processes-before-close.json",
+      "redactions": 0,
+      "sha256": "a68237bb0f10e3f5aadbcac3751481c4e0d53e5ef7a20df0ea6b1b4393ea5677",
+      "sourceSha256": "a68237bb0f10e3f5aadbcac3751481c4e0d53e5ef7a20df0ea6b1b4393ea5677",
+      "transformed": false
+    },
+    {
+      "bytes": 1296,
+      "path": "runs/sticky-finite-r2-01-control-7/owned-processes-before.json",
+      "redactions": 0,
+      "sha256": "8dab6ab714b2f06a7a8a655e7bde60f4b6dbb3cc7a691a6a7e048b0eff60031b",
+      "sourceSha256": "8dab6ab714b2f06a7a8a655e7bde60f4b6dbb3cc7a691a6a7e048b0eff60031b",
+      "transformed": false
+    },
+    {
+      "bytes": 4221,
+      "path": "runs/sticky-finite-r2-01-control-7/progress.json",
+      "redactions": 2,
+      "sha256": "15e345b8991a7daf9ea644f2e8df3b62a08c378da50ffb81a0527cf44c67bcdd",
+      "sourceSha256": "80bd295bb7afb5f163dffec2b3dac3fb783c109614185b9be1d8529e8eeba5db",
+      "transformed": true
+    },
+    {
+      "artifactType": "raw-browser-report",
+      "bytes": 238952,
+      "encoding": "gzip-lossless",
+      "path": "runs/sticky-finite-r2-01-control-7/raw-browser-report.json.gz",
+      "sha256": "7e34fb1837f325795c2f9fd8252a6ee4c94eaa5a74bd4e471c2f686b49603f19",
+      "sourceBytes": 1624177,
+      "sourceSha256": "0ecad94b2aea87e29926612174eb887062b627a0f4219cbd2ea5e65c21f775f3",
+      "transformed": false
+    },
+    {
+      "bytes": 4945,
+      "path": "runs/sticky-finite-r2-01-control-7/result.json",
+      "redactions": 2,
+      "sha256": "c44b8afe1c18a50094f4a7bf9f520e03090889d9ba255f5155419704522e5a0d",
+      "sourceSha256": "0e5f8e7e1337444a37baa9ffd93e5761692f7c6e69f3c8f743f84ba47a2e65fa",
+      "transformed": true
+    },
+    {
+      "bytes": 286,
+      "path": "runs/sticky-finite-r2-01-control-7/run-start.json",
+      "redactions": 1,
+      "sha256": "b65dd1a359b0af041dae45aa299240d2abb9e285450be1bdfe659b6a20e6fe49",
+      "sourceSha256": "c1778da3c26e53a231cec8a560b335ffda3fcd1fd8e814c7f0e313925171ce04",
+      "transformed": true
+    },
+    {
+      "bytes": 146,
+      "path": "runs/sticky-finite-r2-01-control-7/runner-after.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 146,
+      "path": "runs/sticky-finite-r2-01-control-7/runner-before.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 335,
+      "path": "runs/sticky-finite-r2-01-control-7/spec.json",
+      "redactions": 0,
+      "sha256": "7340bb4bccdb7fef09743ba4a399f5b8ff333a09c90ef0ea71e2eef551aff7e8",
+      "sourceSha256": "7340bb4bccdb7fef09743ba4a399f5b8ff333a09c90ef0ea71e2eef551aff7e8",
+      "transformed": false
+    },
+    {
+      "bytes": 335,
+      "path": "runs/sticky-finite-r2-01-control-7/sticky-finite-r2-01-control-7-spec.json",
+      "redactions": 0,
+      "sha256": "7340bb4bccdb7fef09743ba4a399f5b8ff333a09c90ef0ea71e2eef551aff7e8",
+      "sourceSha256": "7340bb4bccdb7fef09743ba4a399f5b8ff333a09c90ef0ea71e2eef551aff7e8",
+      "transformed": false
+    },
+    {
+      "bytes": 3308,
+      "path": "runs/sticky-finite-r2-01-control-7/sticky-finite-r2-01-control-7-strict-reader-sticky-finite-r2-pair-1.txt",
+      "redactions": 0,
+      "sha256": "5cee1e681d0e12d875a30c01d078127898637c033f068cd4764d006909cc3235",
+      "sourceSha256": "5cee1e681d0e12d875a30c01d078127898637c033f068cd4764d006909cc3235",
+      "transformed": false
+    },
+    {
+      "bytes": 1681742,
+      "path": "runs/sticky-finite-r2-01-control-7/sticky-finite-r2-01-control-7-strict-wrapper-sticky-finite-r2-pair-1.json",
+      "redactions": 0,
+      "sha256": "74fb09046d8103455e31877d184e712097fb1c36f1b88321bcd0df2a846d62bb",
+      "sourceSha256": "74fb09046d8103455e31877d184e712097fb1c36f1b88321bcd0df2a846d62bb",
+      "transformed": false
+    },
+    {
+      "bytes": 1906,
+      "path": "runs/sticky-finite-r2-01-control-7/sticky-finite-r2-01-control-7-summary.json",
+      "redactions": 0,
+      "sha256": "2267b10819ad0dbcceb82d35bcd35d10a7412f35ac9f19720b68fc6da4e6f8b8",
+      "sourceSha256": "2267b10819ad0dbcceb82d35bcd35d10a7412f35ac9f19720b68fc6da4e6f8b8",
+      "transformed": false
+    },
+    {
+      "bytes": 66,
+      "path": "runs/sticky-finite-r2-01-control-7/sticky-finite-r2-01-control-7.log",
+      "redactions": 0,
+      "sha256": "c444deb25a45f68c5aef370e8e1c4336a8a6270b796e766b3612067371303249",
+      "sourceSha256": "c444deb25a45f68c5aef370e8e1c4336a8a6270b796e766b3612067371303249",
+      "transformed": false
+    },
+    {
+      "bytes": 1472,
+      "path": "runs/sticky-finite-r2-02-candidate-7/cases/001-sticky-finite-r2-02-candidate-7.json",
+      "redactions": 0,
+      "sha256": "9768c86eea3f98c4845a204a4aa3e629304831157dfacca3b4e3dcc844b85e58",
+      "sourceSha256": "9768c86eea3f98c4845a204a4aa3e629304831157dfacca3b4e3dcc844b85e58",
+      "transformed": false
+    },
+    {
+      "bytes": 13,
+      "path": "runs/sticky-finite-r2-02-candidate-7/cases/001-sticky-finite-r2-02-candidate-7.state.txt",
+      "redactions": 0,
+      "sha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "sourceSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "transformed": false
+    },
+    {
+      "bytes": 1775,
+      "path": "runs/sticky-finite-r2-02-candidate-7/identity.json",
+      "redactions": 1,
+      "sha256": "963668c5d54548db69b18d7852f84e73fbcb2fcd82fc10b7cd2b8639b11ec47b",
+      "sourceSha256": "a9d7c3d048a6a49d59e6c1bd5e210d25aeb7cc2aa7b5df184ffbb8e25d17a783",
+      "transformed": true
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/sticky-finite-r2-02-candidate-7/input-manifest-after.json",
+      "redactions": 0,
+      "sha256": "371b17f2237f81746b9799c0105b6072751dad3b5950d0e5b4ad461a2f13d9cc",
+      "sourceSha256": "371b17f2237f81746b9799c0105b6072751dad3b5950d0e5b4ad461a2f13d9cc",
+      "transformed": false
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/sticky-finite-r2-02-candidate-7/input-manifest-before.json",
+      "redactions": 0,
+      "sha256": "34b4d02e46477f1102fd21be479d53cf5cb985fd1660cce515b84f5dc97d65d1",
+      "sourceSha256": "34b4d02e46477f1102fd21be479d53cf5cb985fd1660cce515b84f5dc97d65d1",
+      "transformed": false
+    },
+    {
+      "bytes": 1666,
+      "path": "runs/sticky-finite-r2-02-candidate-7/owned-processes-before-close.json",
+      "redactions": 0,
+      "sha256": "55bd0639b67ea914192debb5ecd709797146abd087555c6b4466c626d94e0a94",
+      "sourceSha256": "55bd0639b67ea914192debb5ecd709797146abd087555c6b4466c626d94e0a94",
+      "transformed": false
+    },
+    {
+      "bytes": 1296,
+      "path": "runs/sticky-finite-r2-02-candidate-7/owned-processes-before.json",
+      "redactions": 0,
+      "sha256": "100b8ef592c08362d2a60e8a96da4284ebd2f347ba3cbe3cf23c286347e741f7",
+      "sourceSha256": "100b8ef592c08362d2a60e8a96da4284ebd2f347ba3cbe3cf23c286347e741f7",
+      "transformed": false
+    },
+    {
+      "bytes": 4229,
+      "path": "runs/sticky-finite-r2-02-candidate-7/progress.json",
+      "redactions": 2,
+      "sha256": "fa41966d06e244fe4b0161e0bba059ae0662ff2b4d102fbd4df26c21ea715736",
+      "sourceSha256": "103f0a0b4863db9c44e935f6ed7375feb705a5b77628f0a91b61f7477178a5cb",
+      "transformed": true
+    },
+    {
+      "artifactType": "raw-browser-report",
+      "bytes": 238948,
+      "encoding": "gzip-lossless",
+      "path": "runs/sticky-finite-r2-02-candidate-7/raw-browser-report.json.gz",
+      "sha256": "c90013b20c13e12c78ad741c7abaac01c5ad896a102a960472b191b44e5b2bcc",
+      "sourceBytes": 1624178,
+      "sourceSha256": "dca9a4cad5ca004cc50f6178d983dd16d5c159cca5292e15cf1b853cec5f93e2",
+      "transformed": false
+    },
+    {
+      "bytes": 4954,
+      "path": "runs/sticky-finite-r2-02-candidate-7/result.json",
+      "redactions": 2,
+      "sha256": "3cc3c752cb140ad565fd49ee903369ad12f8dcd9ab2e660567fbd6747fb2cd1a",
+      "sourceSha256": "967fa05a9ade6279ed90b357c57be78238be5a467ae17f066635dc5b348bf30b",
+      "transformed": true
+    },
+    {
+      "bytes": 288,
+      "path": "runs/sticky-finite-r2-02-candidate-7/run-start.json",
+      "redactions": 1,
+      "sha256": "8411fd917bcdf8f6f688949285419f5faee3b7ce77e8ba9b73b4b20f53890a69",
+      "sourceSha256": "74bcc8c2aba9ffe75e5fcd2861a660e3527aa64bb8e0183a16cf32684f912ff3",
+      "transformed": true
+    },
+    {
+      "bytes": 146,
+      "path": "runs/sticky-finite-r2-02-candidate-7/runner-after.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 146,
+      "path": "runs/sticky-finite-r2-02-candidate-7/runner-before.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 337,
+      "path": "runs/sticky-finite-r2-02-candidate-7/spec.json",
+      "redactions": 0,
+      "sha256": "2472e12454533453d624ca5d6debad0e64bbb401f11d27ab9c0106eb5c4ea6ad",
+      "sourceSha256": "2472e12454533453d624ca5d6debad0e64bbb401f11d27ab9c0106eb5c4ea6ad",
+      "transformed": false
+    },
+    {
+      "bytes": 337,
+      "path": "runs/sticky-finite-r2-02-candidate-7/sticky-finite-r2-02-candidate-7-spec.json",
+      "redactions": 0,
+      "sha256": "2472e12454533453d624ca5d6debad0e64bbb401f11d27ab9c0106eb5c4ea6ad",
+      "sourceSha256": "2472e12454533453d624ca5d6debad0e64bbb401f11d27ab9c0106eb5c4ea6ad",
+      "transformed": false
+    },
+    {
+      "bytes": 3310,
+      "path": "runs/sticky-finite-r2-02-candidate-7/sticky-finite-r2-02-candidate-7-strict-reader-sticky-finite-r2-pair-1.txt",
+      "redactions": 0,
+      "sha256": "389943e46995167816b867473367ca7e43b716a2e48814bea7d6adc78febecaa",
+      "sourceSha256": "389943e46995167816b867473367ca7e43b716a2e48814bea7d6adc78febecaa",
+      "transformed": false
+    },
+    {
+      "bytes": 1681743,
+      "path": "runs/sticky-finite-r2-02-candidate-7/sticky-finite-r2-02-candidate-7-strict-wrapper-sticky-finite-r2-pair-1.json",
+      "redactions": 0,
+      "sha256": "7a60b554de6ce9b9b31b606b2fdf40ed0df5a9d41f1b3195e09649fd67defdbd",
+      "sourceSha256": "7a60b554de6ce9b9b31b606b2fdf40ed0df5a9d41f1b3195e09649fd67defdbd",
+      "transformed": false
+    },
+    {
+      "bytes": 1909,
+      "path": "runs/sticky-finite-r2-02-candidate-7/sticky-finite-r2-02-candidate-7-summary.json",
+      "redactions": 0,
+      "sha256": "b6a69e3548b31a901266db70860755418f13ab5576c63fe34c0d4a1515572fce",
+      "sourceSha256": "b6a69e3548b31a901266db70860755418f13ab5576c63fe34c0d4a1515572fce",
+      "transformed": false
+    },
+    {
+      "bytes": 68,
+      "path": "runs/sticky-finite-r2-02-candidate-7/sticky-finite-r2-02-candidate-7.log",
+      "redactions": 0,
+      "sha256": "948f042ab7788f0e102e6a3ae0d62b0b478228d37091ba502ed227ef4de3e036",
+      "sourceSha256": "948f042ab7788f0e102e6a3ae0d62b0b478228d37091ba502ed227ef4de3e036",
+      "transformed": false
+    },
+    {
+      "bytes": 1487,
+      "path": "runs/sticky-finite-r2-03-candidate-10387/cases/001-sticky-finite-r2-03-candidate-10387.json",
+      "redactions": 0,
+      "sha256": "92514f23b8d46d83d785eee07ca780fe38165270565cabe3936821f632db13f4",
+      "sourceSha256": "92514f23b8d46d83d785eee07ca780fe38165270565cabe3936821f632db13f4",
+      "transformed": false
+    },
+    {
+      "bytes": 13,
+      "path": "runs/sticky-finite-r2-03-candidate-10387/cases/001-sticky-finite-r2-03-candidate-10387.state.txt",
+      "redactions": 0,
+      "sha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "sourceSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "transformed": false
+    },
+    {
+      "bytes": 1777,
+      "path": "runs/sticky-finite-r2-03-candidate-10387/identity.json",
+      "redactions": 1,
+      "sha256": "fff22aa90aeae4e3945791f1775a142a8cf0beac5d7595ee0d5f48b677d3793c",
+      "sourceSha256": "913051f0828f10d629dc8cef1fa8c6df99b5e77df4f777b05720b295c763077c",
+      "transformed": true
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/sticky-finite-r2-03-candidate-10387/input-manifest-after.json",
+      "redactions": 0,
+      "sha256": "8e0f7e1490a8594a3219f32d76f98112317576e3ac442159a122c76c9a9a5a26",
+      "sourceSha256": "8e0f7e1490a8594a3219f32d76f98112317576e3ac442159a122c76c9a9a5a26",
+      "transformed": false
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/sticky-finite-r2-03-candidate-10387/input-manifest-before.json",
+      "redactions": 0,
+      "sha256": "ecfb8308c5badfbb523618f9bbfbd3376c2dedfac67349298d15896f94cefa5b",
+      "sourceSha256": "ecfb8308c5badfbb523618f9bbfbd3376c2dedfac67349298d15896f94cefa5b",
+      "transformed": false
+    },
+    {
+      "bytes": 1479,
+      "path": "runs/sticky-finite-r2-03-candidate-10387/owned-processes-before-close.json",
+      "redactions": 0,
+      "sha256": "ccd827a1fc5676ec735326428f4658e3df335a62603702a94a1208a4fac53e41",
+      "sourceSha256": "ccd827a1fc5676ec735326428f4658e3df335a62603702a94a1208a4fac53e41",
+      "transformed": false
+    },
+    {
+      "bytes": 1294,
+      "path": "runs/sticky-finite-r2-03-candidate-10387/owned-processes-before.json",
+      "redactions": 0,
+      "sha256": "d5f0fba35f4f1aad3d21aaae00fee49e864f6fb66342f3258bd464abf9dcb989",
+      "sourceSha256": "d5f0fba35f4f1aad3d21aaae00fee49e864f6fb66342f3258bd464abf9dcb989",
+      "transformed": false
+    },
+    {
+      "bytes": 4246,
+      "path": "runs/sticky-finite-r2-03-candidate-10387/progress.json",
+      "redactions": 2,
+      "sha256": "c2d880451129cd77ed5b4247a82071c7c79e2cc8bbcb04ff172b2b5370ccf22e",
+      "sourceSha256": "d0c96577ed0f86fcbaaf6318c891b56b3c19de354a0e5d70855eec8be403d6d8",
+      "transformed": true
+    },
+    {
+      "artifactType": "raw-browser-report",
+      "bytes": 148555,
+      "encoding": "gzip-lossless",
+      "path": "runs/sticky-finite-r2-03-candidate-10387/raw-browser-report.json.gz",
+      "sha256": "1fdc8b4e72288975753783d00a2bbfed79deecc6c91518d2c38cf7bc55fc0ea6",
+      "sourceBytes": 896246,
+      "sourceSha256": "f2560781193023a3af932f535af101b0a11ff471b1336a22fa1c7b61a2835305",
+      "transformed": false
+    },
+    {
+      "bytes": 4971,
+      "path": "runs/sticky-finite-r2-03-candidate-10387/result.json",
+      "redactions": 2,
+      "sha256": "4e80711213e562b51bd4713532a416a84e0a4367d569db16ec8fce599d3bc6be",
+      "sourceSha256": "80818792c611077a72008610437e199501f0616cfba2be56837132f53c339a6e",
+      "transformed": true
+    },
+    {
+      "bytes": 288,
+      "path": "runs/sticky-finite-r2-03-candidate-10387/run-start.json",
+      "redactions": 1,
+      "sha256": "fe23f04776952486d812ef037ae82799494741c140530cd0cd36fa2b7d83103a",
+      "sourceSha256": "7f3dd7f355cd992a2214ddf669909c52a01bb36a3eb2032293b0136cf52893f5",
+      "transformed": true
+    },
+    {
+      "bytes": 146,
+      "path": "runs/sticky-finite-r2-03-candidate-10387/runner-after.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 146,
+      "path": "runs/sticky-finite-r2-03-candidate-10387/runner-before.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 345,
+      "path": "runs/sticky-finite-r2-03-candidate-10387/spec.json",
+      "redactions": 0,
+      "sha256": "cdc5d28a07b6dc98279118bb3d00da2e0937796e1836a68da04486e5bc3f05cb",
+      "sourceSha256": "cdc5d28a07b6dc98279118bb3d00da2e0937796e1836a68da04486e5bc3f05cb",
+      "transformed": false
+    },
+    {
+      "bytes": 345,
+      "path": "runs/sticky-finite-r2-03-candidate-10387/sticky-finite-r2-03-candidate-10387-spec.json",
+      "redactions": 0,
+      "sha256": "cdc5d28a07b6dc98279118bb3d00da2e0937796e1836a68da04486e5bc3f05cb",
+      "sourceSha256": "cdc5d28a07b6dc98279118bb3d00da2e0937796e1836a68da04486e5bc3f05cb",
+      "transformed": false
+    },
+    {
+      "bytes": 3282,
+      "path": "runs/sticky-finite-r2-03-candidate-10387/sticky-finite-r2-03-candidate-10387-strict-reader-sticky-finite-r2-pair-2.txt",
+      "redactions": 0,
+      "sha256": "a7b5cd9fbbbfff14131af0222550dd07eaaf50c79744ac37ba1ce751d984b660",
+      "sourceSha256": "a7b5cd9fbbbfff14131af0222550dd07eaaf50c79744ac37ba1ce751d984b660",
+      "transformed": false
+    },
+    {
+      "bytes": 926901,
+      "path": "runs/sticky-finite-r2-03-candidate-10387/sticky-finite-r2-03-candidate-10387-strict-wrapper-sticky-finite-r2-pair-2.json",
+      "redactions": 0,
+      "sha256": "62a77edf162f77d02f9ef1a2880a1b856dbdcb446f52b51398e4cfe1b40f6428",
+      "sourceSha256": "62a77edf162f77d02f9ef1a2880a1b856dbdcb446f52b51398e4cfe1b40f6428",
+      "transformed": false
+    },
+    {
+      "bytes": 1914,
+      "path": "runs/sticky-finite-r2-03-candidate-10387/sticky-finite-r2-03-candidate-10387-summary.json",
+      "redactions": 0,
+      "sha256": "a34344ff02837b249ee50356dc9e1941b42fd28a565bd75176376d211d1a451f",
+      "sourceSha256": "a34344ff02837b249ee50356dc9e1941b42fd28a565bd75176376d211d1a451f",
+      "transformed": false
+    },
+    {
+      "bytes": 72,
+      "path": "runs/sticky-finite-r2-03-candidate-10387/sticky-finite-r2-03-candidate-10387.log",
+      "redactions": 0,
+      "sha256": "95beff26f96512fb23ef2d0dd065287b19f857bf8e3baa7bd913513e1d7348ab",
+      "sourceSha256": "95beff26f96512fb23ef2d0dd065287b19f857bf8e3baa7bd913513e1d7348ab",
+      "transformed": false
+    },
+    {
+      "bytes": 1484,
+      "path": "runs/sticky-finite-r2-04-control-10387/cases/001-sticky-finite-r2-04-control-10387.json",
+      "redactions": 0,
+      "sha256": "4f3834aee744fac3af2092809bfec23a859303feb306502c9fc34c97f6d5a2c9",
+      "sourceSha256": "4f3834aee744fac3af2092809bfec23a859303feb306502c9fc34c97f6d5a2c9",
+      "transformed": false
+    },
+    {
+      "bytes": 13,
+      "path": "runs/sticky-finite-r2-04-control-10387/cases/001-sticky-finite-r2-04-control-10387.state.txt",
+      "redactions": 0,
+      "sha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "sourceSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "transformed": false
+    },
+    {
+      "bytes": 1770,
+      "path": "runs/sticky-finite-r2-04-control-10387/identity.json",
+      "redactions": 1,
+      "sha256": "b1705190e3c1a2bb53a0b266a76c4687d1124bcd108bacc8797d0d67baf0f714",
+      "sourceSha256": "3d32bf19d43df95a05e839256ad717048425c820284fd696c6eb22cdd94bd3dc",
+      "transformed": true
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/sticky-finite-r2-04-control-10387/input-manifest-after.json",
+      "redactions": 0,
+      "sha256": "a0544be49b3ac5955856ccd6e8c3fbabef012a0eeb3c562b5b7f2f3ec38c17e2",
+      "sourceSha256": "a0544be49b3ac5955856ccd6e8c3fbabef012a0eeb3c562b5b7f2f3ec38c17e2",
+      "transformed": false
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/sticky-finite-r2-04-control-10387/input-manifest-before.json",
+      "redactions": 0,
+      "sha256": "fd1af2db6ed91140d029ecc6b82dbf8c83083b28f9ad32cbd4626cabba18797c",
+      "sourceSha256": "fd1af2db6ed91140d029ecc6b82dbf8c83083b28f9ad32cbd4626cabba18797c",
+      "transformed": false
+    },
+    {
+      "bytes": 1473,
+      "path": "runs/sticky-finite-r2-04-control-10387/owned-processes-before-close.json",
+      "redactions": 0,
+      "sha256": "4b636318c461e19e9c5e0427e8d87d880f47aa75c598c3c936cd753edff9217a",
+      "sourceSha256": "4b636318c461e19e9c5e0427e8d87d880f47aa75c598c3c936cd753edff9217a",
+      "transformed": false
+    },
+    {
+      "bytes": 1289,
+      "path": "runs/sticky-finite-r2-04-control-10387/owned-processes-before.json",
+      "redactions": 0,
+      "sha256": "9bbdb92fb0bcb420c1642cde740c066caa190a20ec2aaae03a181f4bb73c7494",
+      "sourceSha256": "9bbdb92fb0bcb420c1642cde740c066caa190a20ec2aaae03a181f4bb73c7494",
+      "transformed": false
+    },
+    {
+      "bytes": 4234,
+      "path": "runs/sticky-finite-r2-04-control-10387/progress.json",
+      "redactions": 2,
+      "sha256": "dc5b0c2a1559f6622d82f458b4b12f137d4e7d8c69f6878a3830bfb7df02b3bb",
+      "sourceSha256": "782efa98bbf073aa965eb7b6dd5119ec1ff24a8a5a1c9fed7f12df005821770c",
+      "transformed": true
+    },
+    {
+      "artifactType": "raw-browser-report",
+      "bytes": 148560,
+      "encoding": "gzip-lossless",
+      "path": "runs/sticky-finite-r2-04-control-10387/raw-browser-report.json.gz",
+      "sha256": "9a8831bd884e71f9c236beb9e76e4c177d5e3bdddf62e70d12244bc338f36e2a",
+      "sourceBytes": 896246,
+      "sourceSha256": "0bb1b0f1ae80fe3f47c4d3e11a33cc2445b524f4e817b5c8e321be91fb5e731f",
+      "transformed": false
+    },
+    {
+      "bytes": 4958,
+      "path": "runs/sticky-finite-r2-04-control-10387/result.json",
+      "redactions": 2,
+      "sha256": "cc53557e40361ab662ec6d6935b7ac31f5dac096e04547225f2ec83e31ee255f",
+      "sourceSha256": "e54834426ada383d1b5f60967721cda5cd6a275146170f3cdc3b0acf6ad0f111",
+      "transformed": true
+    },
+    {
+      "bytes": 286,
+      "path": "runs/sticky-finite-r2-04-control-10387/run-start.json",
+      "redactions": 1,
+      "sha256": "ef89c8687adcf90dfc8a5bb8954b219722d1a8c7dc38c66e078655c9341d80ff",
+      "sourceSha256": "8ea5bc14561eabdeb379e88e9b83f1b3c59e34706d1ee40c3d1054e90864e329",
+      "transformed": true
+    },
+    {
+      "bytes": 146,
+      "path": "runs/sticky-finite-r2-04-control-10387/runner-after.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 146,
+      "path": "runs/sticky-finite-r2-04-control-10387/runner-before.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 343,
+      "path": "runs/sticky-finite-r2-04-control-10387/spec.json",
+      "redactions": 0,
+      "sha256": "d63bdb965f052989d271f5418c4b71634b58d296db62e47bf33180c23a32d6fd",
+      "sourceSha256": "d63bdb965f052989d271f5418c4b71634b58d296db62e47bf33180c23a32d6fd",
+      "transformed": false
+    },
+    {
+      "bytes": 343,
+      "path": "runs/sticky-finite-r2-04-control-10387/sticky-finite-r2-04-control-10387-spec.json",
+      "redactions": 0,
+      "sha256": "d63bdb965f052989d271f5418c4b71634b58d296db62e47bf33180c23a32d6fd",
+      "sourceSha256": "d63bdb965f052989d271f5418c4b71634b58d296db62e47bf33180c23a32d6fd",
+      "transformed": false
+    },
+    {
+      "bytes": 3282,
+      "path": "runs/sticky-finite-r2-04-control-10387/sticky-finite-r2-04-control-10387-strict-reader-sticky-finite-r2-pair-2.txt",
+      "redactions": 0,
+      "sha256": "baedeedc90c85dbe673b028f0ec4016ff376f48216ebd4d61eebfd145292263a",
+      "sourceSha256": "baedeedc90c85dbe673b028f0ec4016ff376f48216ebd4d61eebfd145292263a",
+      "transformed": false
+    },
+    {
+      "bytes": 926901,
+      "path": "runs/sticky-finite-r2-04-control-10387/sticky-finite-r2-04-control-10387-strict-wrapper-sticky-finite-r2-pair-2.json",
+      "redactions": 0,
+      "sha256": "e065964694754e4f5d4f7a4f8098594e4cb4b65f987bab059577e4317e6a3a96",
+      "sourceSha256": "e065964694754e4f5d4f7a4f8098594e4cb4b65f987bab059577e4317e6a3a96",
+      "transformed": false
+    },
+    {
+      "bytes": 1910,
+      "path": "runs/sticky-finite-r2-04-control-10387/sticky-finite-r2-04-control-10387-summary.json",
+      "redactions": 0,
+      "sha256": "d4ac96841d126617329fccafe5596042888471bddd5cd9dc940b5b7131463270",
+      "sourceSha256": "d4ac96841d126617329fccafe5596042888471bddd5cd9dc940b5b7131463270",
+      "transformed": false
+    },
+    {
+      "bytes": 70,
+      "path": "runs/sticky-finite-r2-04-control-10387/sticky-finite-r2-04-control-10387.log",
+      "redactions": 0,
+      "sha256": "f4d15dcb8e680701087be1da8498a9c5714c0888c1de56d2f8cad36a79f9c999",
+      "sourceSha256": "f4d15dcb8e680701087be1da8498a9c5714c0888c1de56d2f8cad36a79f9c999",
+      "transformed": false
+    },
+    {
+      "bytes": 1485,
+      "path": "runs/sticky-finite-r2-05-control-10014/cases/001-sticky-finite-r2-05-control-10014.json",
+      "redactions": 0,
+      "sha256": "517299c7fc591070cab0a1de54557c01c35bb7285c95426cdf7367d3ccaac216",
+      "sourceSha256": "517299c7fc591070cab0a1de54557c01c35bb7285c95426cdf7367d3ccaac216",
+      "transformed": false
+    },
+    {
+      "bytes": 13,
+      "path": "runs/sticky-finite-r2-05-control-10014/cases/001-sticky-finite-r2-05-control-10014.state.txt",
+      "redactions": 0,
+      "sha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "sourceSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "transformed": false
+    },
+    {
+      "bytes": 1771,
+      "path": "runs/sticky-finite-r2-05-control-10014/identity.json",
+      "redactions": 1,
+      "sha256": "8a0bbe1a53132e24107a7133abd5409a4ce85b5a2ec004cdc3bc8b0e22b8ff16",
+      "sourceSha256": "0d252edb22faad339af4d1c5b3b0bb13febddd397a7c6127c24f0e057e38b554",
+      "transformed": true
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/sticky-finite-r2-05-control-10014/input-manifest-after.json",
+      "redactions": 0,
+      "sha256": "2fe0a80f3acb7b29ad34577d852a3a9a4a96cab82ff11770159b7422f8421d17",
+      "sourceSha256": "2fe0a80f3acb7b29ad34577d852a3a9a4a96cab82ff11770159b7422f8421d17",
+      "transformed": false
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/sticky-finite-r2-05-control-10014/input-manifest-before.json",
+      "redactions": 0,
+      "sha256": "c3f25d253481062225e64f2a3d39c405fd6e479ede1a7154a59147430f727240",
+      "sourceSha256": "c3f25d253481062225e64f2a3d39c405fd6e479ede1a7154a59147430f727240",
+      "transformed": false
+    },
+    {
+      "bytes": 1659,
+      "path": "runs/sticky-finite-r2-05-control-10014/owned-processes-before-close.json",
+      "redactions": 0,
+      "sha256": "ea4e9a4c63223a9859e52ac279f9f66545da34f7be05af5c7498f6be5ab35d38",
+      "sourceSha256": "ea4e9a4c63223a9859e52ac279f9f66545da34f7be05af5c7498f6be5ab35d38",
+      "transformed": false
+    },
+    {
+      "bytes": 1291,
+      "path": "runs/sticky-finite-r2-05-control-10014/owned-processes-before.json",
+      "redactions": 0,
+      "sha256": "8501317bb24e4b52112899a0bc27ef80ce6a961f8106951666fd9245efc3115b",
+      "sourceSha256": "8501317bb24e4b52112899a0bc27ef80ce6a961f8106951666fd9245efc3115b",
+      "transformed": false
+    },
+    {
+      "bytes": 4236,
+      "path": "runs/sticky-finite-r2-05-control-10014/progress.json",
+      "redactions": 2,
+      "sha256": "e261303a4e1f116a32aa8b660a03abdcf0e6b33b615a62dc60d16a0024fdb544",
+      "sourceSha256": "976f24163b5fe4168b1b7acdf410ac504df915b3003aa6fab0b1f821b4e149dc",
+      "transformed": true
+    },
+    {
+      "artifactType": "raw-browser-report",
+      "bytes": 251087,
+      "encoding": "gzip-lossless",
+      "path": "runs/sticky-finite-r2-05-control-10014/raw-browser-report.json.gz",
+      "sha256": "482f45f1ef5e6ec2e243ebd0c322354fbd6c62f8af4e795324b793a32b71a3f7",
+      "sourceBytes": 1748508,
+      "sourceSha256": "5de3f75457ec95427ddedc94aa45442279325551ed6777e40d0a6fc2edb12943",
+      "transformed": false
+    },
+    {
+      "bytes": 4959,
+      "path": "runs/sticky-finite-r2-05-control-10014/result.json",
+      "redactions": 2,
+      "sha256": "f3bd1db3749620919b69d8484f37cdd3e8a734d55491b8e1e131e4587c93b907",
+      "sourceSha256": "98e7e684c18b2cec14269dfec2d8d9b586f71038f60a81930032952ed3a9282d",
+      "transformed": true
+    },
+    {
+      "bytes": 286,
+      "path": "runs/sticky-finite-r2-05-control-10014/run-start.json",
+      "redactions": 1,
+      "sha256": "03d79e307040734c4f540cc5ff4a44623474097574fdee2ca0b8d1f6d69565e7",
+      "sourceSha256": "74231397797bb908c96dae9b005f0307e5c28b7fbad37a5986c1e93fcd115b64",
+      "transformed": true
+    },
+    {
+      "bytes": 146,
+      "path": "runs/sticky-finite-r2-05-control-10014/runner-after.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 146,
+      "path": "runs/sticky-finite-r2-05-control-10014/runner-before.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 343,
+      "path": "runs/sticky-finite-r2-05-control-10014/spec.json",
+      "redactions": 0,
+      "sha256": "a83100fb007130f9a1f10bb462c7aa68e9633b9ef4cfe6439546826a21dc2f0c",
+      "sourceSha256": "a83100fb007130f9a1f10bb462c7aa68e9633b9ef4cfe6439546826a21dc2f0c",
+      "transformed": false
+    },
+    {
+      "bytes": 343,
+      "path": "runs/sticky-finite-r2-05-control-10014/sticky-finite-r2-05-control-10014-spec.json",
+      "redactions": 0,
+      "sha256": "a83100fb007130f9a1f10bb462c7aa68e9633b9ef4cfe6439546826a21dc2f0c",
+      "sourceSha256": "a83100fb007130f9a1f10bb462c7aa68e9633b9ef4cfe6439546826a21dc2f0c",
+      "transformed": false
+    },
+    {
+      "bytes": 3312,
+      "path": "runs/sticky-finite-r2-05-control-10014/sticky-finite-r2-05-control-10014-strict-reader-sticky-finite-r2-pair-3.txt",
+      "redactions": 0,
+      "sha256": "29f089ddd30867510a6897f16e514420a52f691b0fa2ad072c543afafaeab5aa",
+      "sourceSha256": "29f089ddd30867510a6897f16e514420a52f691b0fa2ad072c543afafaeab5aa",
+      "transformed": false
+    },
+    {
+      "bytes": 1806071,
+      "path": "runs/sticky-finite-r2-05-control-10014/sticky-finite-r2-05-control-10014-strict-wrapper-sticky-finite-r2-pair-3.json",
+      "redactions": 0,
+      "sha256": "c596603a5f8ba46bea733c7773098b18f6a0d2301285e0d02f5b2a10b6aa79ad",
+      "sourceSha256": "c596603a5f8ba46bea733c7773098b18f6a0d2301285e0d02f5b2a10b6aa79ad",
+      "transformed": false
+    },
+    {
+      "bytes": 1915,
+      "path": "runs/sticky-finite-r2-05-control-10014/sticky-finite-r2-05-control-10014-summary.json",
+      "redactions": 0,
+      "sha256": "34ae2bab9824745fb4275d69e09a436576fe992b1672fa9d1621b83bc18367a8",
+      "sourceSha256": "34ae2bab9824745fb4275d69e09a436576fe992b1672fa9d1621b83bc18367a8",
+      "transformed": false
+    },
+    {
+      "bytes": 71,
+      "path": "runs/sticky-finite-r2-05-control-10014/sticky-finite-r2-05-control-10014.log",
+      "redactions": 0,
+      "sha256": "a42a91b4722b7f15527c0a3b5870207d918193dbc3e23d448af06c8bb996bc7c",
+      "sourceSha256": "a42a91b4722b7f15527c0a3b5870207d918193dbc3e23d448af06c8bb996bc7c",
+      "transformed": false
+    },
+    {
+      "bytes": 1489,
+      "path": "runs/sticky-finite-r2-06-candidate-10014/cases/001-sticky-finite-r2-06-candidate-10014.json",
+      "redactions": 0,
+      "sha256": "e1680fa3af2dc3ce2aa392db0e5a276d6d2e4e5a0071a89a62103e3af803e323",
+      "sourceSha256": "e1680fa3af2dc3ce2aa392db0e5a276d6d2e4e5a0071a89a62103e3af803e323",
+      "transformed": false
+    },
+    {
+      "bytes": 13,
+      "path": "runs/sticky-finite-r2-06-candidate-10014/cases/001-sticky-finite-r2-06-candidate-10014.state.txt",
+      "redactions": 0,
+      "sha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "sourceSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "transformed": false
+    },
+    {
+      "bytes": 1773,
+      "path": "runs/sticky-finite-r2-06-candidate-10014/identity.json",
+      "redactions": 1,
+      "sha256": "953da78af360a70e3c706e99cd4c8a2c84e9c73940c1816dd0c3bfa100c2c2a8",
+      "sourceSha256": "d3301cca5672048632a12076482e8e1dcda8c37c263ec3e3d43de2ecc5919b84",
+      "transformed": true
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/sticky-finite-r2-06-candidate-10014/input-manifest-after.json",
+      "redactions": 0,
+      "sha256": "85afffdc4b8bd5b7b13605674fc6ad775a02d21617fac3286cd954780f138483",
+      "sourceSha256": "85afffdc4b8bd5b7b13605674fc6ad775a02d21617fac3286cd954780f138483",
+      "transformed": false
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/sticky-finite-r2-06-candidate-10014/input-manifest-before.json",
+      "redactions": 0,
+      "sha256": "7f087fc825b8e883770ca0d10964b1b7e14189a0959d36485442e95157f29f89",
+      "sourceSha256": "7f087fc825b8e883770ca0d10964b1b7e14189a0959d36485442e95157f29f89",
+      "transformed": false
+    },
+    {
+      "bytes": 1658,
+      "path": "runs/sticky-finite-r2-06-candidate-10014/owned-processes-before-close.json",
+      "redactions": 0,
+      "sha256": "f18a33e98c9b9b0da58d90176d9d63851a273b813b7f4255946d9a0586244bc8",
+      "sourceSha256": "f18a33e98c9b9b0da58d90176d9d63851a273b813b7f4255946d9a0586244bc8",
+      "transformed": false
+    },
+    {
+      "bytes": 1290,
+      "path": "runs/sticky-finite-r2-06-candidate-10014/owned-processes-before.json",
+      "redactions": 0,
+      "sha256": "7fd4da86d64bfa5673022b2125b5a7753fb6387939163edd2ca76342d4f089b4",
+      "sourceSha256": "7fd4da86d64bfa5673022b2125b5a7753fb6387939163edd2ca76342d4f089b4",
+      "transformed": false
+    },
+    {
+      "bytes": 4244,
+      "path": "runs/sticky-finite-r2-06-candidate-10014/progress.json",
+      "redactions": 2,
+      "sha256": "6f10e80470f6d612dde0f386b86634c33128a9f48953f7db9431750ec29678ad",
+      "sourceSha256": "3bdd14fa58d3075f80e5101c07a34b4320535578ab27fd297523d30da72d4329",
+      "transformed": true
+    },
+    {
+      "artifactType": "raw-browser-report",
+      "bytes": 251082,
+      "encoding": "gzip-lossless",
+      "path": "runs/sticky-finite-r2-06-candidate-10014/raw-browser-report.json.gz",
+      "sha256": "9b8ce51f62d4339da2164983d84b2f87bd3131eddcb4485ffd7330eed325f9ec",
+      "sourceBytes": 1748509,
+      "sourceSha256": "be41629ba587ed3e73fde98cbc9dc351a1fa80da38d97455bb34a433316d1a6b",
+      "transformed": false
+    },
+    {
+      "bytes": 4969,
+      "path": "runs/sticky-finite-r2-06-candidate-10014/result.json",
+      "redactions": 2,
+      "sha256": "2f8d830391b2a240c82d286a015088357827d9d091ad742776771101c61c3362",
+      "sourceSha256": "4d27fd936493d8ab16b4dc0a869ce0a5c58021c01cf185bd15f7f3fb265dd777",
+      "transformed": true
+    },
+    {
+      "bytes": 288,
+      "path": "runs/sticky-finite-r2-06-candidate-10014/run-start.json",
+      "redactions": 1,
+      "sha256": "03253780740ea381ff217922c0193a6e3d9ac5650d1ba6e5897c65174830d78e",
+      "sourceSha256": "a5e12ec643732aae7c732815c6d13ded5b1e1c6adb54757cafb75e60d1ad2d63",
+      "transformed": true
+    },
+    {
+      "bytes": 146,
+      "path": "runs/sticky-finite-r2-06-candidate-10014/runner-after.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 146,
+      "path": "runs/sticky-finite-r2-06-candidate-10014/runner-before.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 345,
+      "path": "runs/sticky-finite-r2-06-candidate-10014/spec.json",
+      "redactions": 0,
+      "sha256": "088eac2101af710cc9bb511299c1e7f600fff6848095666ccbb40d55522a281a",
+      "sourceSha256": "088eac2101af710cc9bb511299c1e7f600fff6848095666ccbb40d55522a281a",
+      "transformed": false
+    },
+    {
+      "bytes": 345,
+      "path": "runs/sticky-finite-r2-06-candidate-10014/sticky-finite-r2-06-candidate-10014-spec.json",
+      "redactions": 0,
+      "sha256": "088eac2101af710cc9bb511299c1e7f600fff6848095666ccbb40d55522a281a",
+      "sourceSha256": "088eac2101af710cc9bb511299c1e7f600fff6848095666ccbb40d55522a281a",
+      "transformed": false
+    },
+    {
+      "bytes": 3312,
+      "path": "runs/sticky-finite-r2-06-candidate-10014/sticky-finite-r2-06-candidate-10014-strict-reader-sticky-finite-r2-pair-3.txt",
+      "redactions": 0,
+      "sha256": "b65e4010cbf9c23dc826079db2f09e26574f373a2f711408db5249c40bb24739",
+      "sourceSha256": "b65e4010cbf9c23dc826079db2f09e26574f373a2f711408db5249c40bb24739",
+      "transformed": false
+    },
+    {
+      "bytes": 1806072,
+      "path": "runs/sticky-finite-r2-06-candidate-10014/sticky-finite-r2-06-candidate-10014-strict-wrapper-sticky-finite-r2-pair-3.json",
+      "redactions": 0,
+      "sha256": "694239697574f35f0558c9d155df01f3d8555d42d384c63cc1b7532f62f3452d",
+      "sourceSha256": "694239697574f35f0558c9d155df01f3d8555d42d384c63cc1b7532f62f3452d",
+      "transformed": false
+    },
+    {
+      "bytes": 1917,
+      "path": "runs/sticky-finite-r2-06-candidate-10014/sticky-finite-r2-06-candidate-10014-summary.json",
+      "redactions": 0,
+      "sha256": "7724f897e472e9e353ee0b2facee954cb37e5a46cb766fa94c79f2b0498db814",
+      "sourceSha256": "7724f897e472e9e353ee0b2facee954cb37e5a46cb766fa94c79f2b0498db814",
+      "transformed": false
+    },
+    {
+      "bytes": 73,
+      "path": "runs/sticky-finite-r2-06-candidate-10014/sticky-finite-r2-06-candidate-10014.log",
+      "redactions": 0,
+      "sha256": "33bb97d701ca64d2a81069da4e38c890c1c405a649016c2f680f46951d0aaee8",
+      "sourceSha256": "33bb97d701ca64d2a81069da4e38c890c1c405a649016c2f680f46951d0aaee8",
+      "transformed": false
+    },
+    {
+      "bytes": 1472,
+      "path": "runs/sticky-finite-r2-07-candidate-7/cases/001-sticky-finite-r2-07-candidate-7.json",
+      "redactions": 0,
+      "sha256": "866b0363b6ea7e75b3b3adf3eb8e996f25d5e999f26328e7c01cadb6d4d2b391",
+      "sourceSha256": "866b0363b6ea7e75b3b3adf3eb8e996f25d5e999f26328e7c01cadb6d4d2b391",
+      "transformed": false
+    },
+    {
+      "bytes": 13,
+      "path": "runs/sticky-finite-r2-07-candidate-7/cases/001-sticky-finite-r2-07-candidate-7.state.txt",
+      "redactions": 0,
+      "sha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "sourceSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "transformed": false
+    },
+    {
+      "bytes": 1774,
+      "path": "runs/sticky-finite-r2-07-candidate-7/identity.json",
+      "redactions": 1,
+      "sha256": "1239fdd0a0ba371900a746ef6729c88af323dd48256da0e2132b1d14865ba01e",
+      "sourceSha256": "ca821e39069904c25a95f33b40a9105b8d19687a55d5707843deba099ce6a78e",
+      "transformed": true
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/sticky-finite-r2-07-candidate-7/input-manifest-after.json",
+      "redactions": 0,
+      "sha256": "92fffa23a544c330f6605e0dab87230bf786f74247710b8250aa94356140380a",
+      "sourceSha256": "92fffa23a544c330f6605e0dab87230bf786f74247710b8250aa94356140380a",
+      "transformed": false
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/sticky-finite-r2-07-candidate-7/input-manifest-before.json",
+      "redactions": 0,
+      "sha256": "d0b85a8f9797b2f860b3de5325f378475da48f3e090663e5c45d37d614814caf",
+      "sourceSha256": "d0b85a8f9797b2f860b3de5325f378475da48f3e090663e5c45d37d614814caf",
+      "transformed": false
+    },
+    {
+      "bytes": 1665,
+      "path": "runs/sticky-finite-r2-07-candidate-7/owned-processes-before-close.json",
+      "redactions": 0,
+      "sha256": "1cf343dc46ff80543a37791a3aecaf4d671d185356792c5019b75cca49cc757e",
+      "sourceSha256": "1cf343dc46ff80543a37791a3aecaf4d671d185356792c5019b75cca49cc757e",
+      "transformed": false
+    },
+    {
+      "bytes": 1295,
+      "path": "runs/sticky-finite-r2-07-candidate-7/owned-processes-before.json",
+      "redactions": 0,
+      "sha256": "fd81bc6b07fdeb056ed7bb41cc6f16c4fc0565aa10bddb4915f805c812889114",
+      "sourceSha256": "fd81bc6b07fdeb056ed7bb41cc6f16c4fc0565aa10bddb4915f805c812889114",
+      "transformed": false
+    },
+    {
+      "bytes": 4228,
+      "path": "runs/sticky-finite-r2-07-candidate-7/progress.json",
+      "redactions": 2,
+      "sha256": "251dfd5110fcbbdb561c1008aebe6f05a26266b8de6d4888fac0c4839868c078",
+      "sourceSha256": "7b32ba307861a11f8913b71f2a68bdfbc1b4dc33bc403a217ab9eef1fa0269df",
+      "transformed": true
+    },
+    {
+      "artifactType": "raw-browser-report",
+      "bytes": 238950,
+      "encoding": "gzip-lossless",
+      "path": "runs/sticky-finite-r2-07-candidate-7/raw-browser-report.json.gz",
+      "sha256": "21cfd53368b99fc3f6c90434043c206f5b973043094b9ff4e8fb80116f7c4833",
+      "sourceBytes": 1624177,
+      "sourceSha256": "7cc15bc81115fea4cfb188e23cf607ea6b98cdcefa76ff38fd28fc96a950ea68",
+      "transformed": false
+    },
+    {
+      "bytes": 4953,
+      "path": "runs/sticky-finite-r2-07-candidate-7/result.json",
+      "redactions": 2,
+      "sha256": "4d9b4093930628298eeeaf7a20fe36ba58c11684a48c8e289fd479877e666bf8",
+      "sourceSha256": "b1f7b23d5d73e234ae132e4b7fd822b50a7cc7008d4c035374642b43b0d5f626",
+      "transformed": true
+    },
+    {
+      "bytes": 288,
+      "path": "runs/sticky-finite-r2-07-candidate-7/run-start.json",
+      "redactions": 1,
+      "sha256": "f78dfc3f9842851307eef2fc99c9d74947a5ea8929acbfe3341da0e5a1f17990",
+      "sourceSha256": "c11c2a28ce7c6f36a7fa19916fc3f318a1670a877f26dd600c7aa0816289b25d",
+      "transformed": true
+    },
+    {
+      "bytes": 146,
+      "path": "runs/sticky-finite-r2-07-candidate-7/runner-after.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 146,
+      "path": "runs/sticky-finite-r2-07-candidate-7/runner-before.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 337,
+      "path": "runs/sticky-finite-r2-07-candidate-7/spec.json",
+      "redactions": 0,
+      "sha256": "7d68a97dd7ae4cc7cd2f164dfe33018ed233170502f1fd91c83b0184c0db1ac7",
+      "sourceSha256": "7d68a97dd7ae4cc7cd2f164dfe33018ed233170502f1fd91c83b0184c0db1ac7",
+      "transformed": false
+    },
+    {
+      "bytes": 337,
+      "path": "runs/sticky-finite-r2-07-candidate-7/sticky-finite-r2-07-candidate-7-spec.json",
+      "redactions": 0,
+      "sha256": "7d68a97dd7ae4cc7cd2f164dfe33018ed233170502f1fd91c83b0184c0db1ac7",
+      "sourceSha256": "7d68a97dd7ae4cc7cd2f164dfe33018ed233170502f1fd91c83b0184c0db1ac7",
+      "transformed": false
+    },
+    {
+      "bytes": 3308,
+      "path": "runs/sticky-finite-r2-07-candidate-7/sticky-finite-r2-07-candidate-7-strict-reader-sticky-finite-r2-pair-4.txt",
+      "redactions": 0,
+      "sha256": "cffc359e0788755f1ddac6ded7b4c0611ba2ad8d6aa57113bcf51d2cec6c0231",
+      "sourceSha256": "cffc359e0788755f1ddac6ded7b4c0611ba2ad8d6aa57113bcf51d2cec6c0231",
+      "transformed": false
+    },
+    {
+      "bytes": 1681742,
+      "path": "runs/sticky-finite-r2-07-candidate-7/sticky-finite-r2-07-candidate-7-strict-wrapper-sticky-finite-r2-pair-4.json",
+      "redactions": 0,
+      "sha256": "0a8ec429c48e1583944421aa42c6d8287b8d80689bdd3cc78994d52db456509b",
+      "sourceSha256": "0a8ec429c48e1583944421aa42c6d8287b8d80689bdd3cc78994d52db456509b",
+      "transformed": false
+    },
+    {
+      "bytes": 1909,
+      "path": "runs/sticky-finite-r2-07-candidate-7/sticky-finite-r2-07-candidate-7-summary.json",
+      "redactions": 0,
+      "sha256": "935f39f95e6a490f3d09f677fe8bf19f84f86d5d42f36c531db1d71f30cb265c",
+      "sourceSha256": "935f39f95e6a490f3d09f677fe8bf19f84f86d5d42f36c531db1d71f30cb265c",
+      "transformed": false
+    },
+    {
+      "bytes": 68,
+      "path": "runs/sticky-finite-r2-07-candidate-7/sticky-finite-r2-07-candidate-7.log",
+      "redactions": 0,
+      "sha256": "90ab2783de670a960d7b95beacefc00232b066215e42d38be4ed5cbf3cb585b5",
+      "sourceSha256": "90ab2783de670a960d7b95beacefc00232b066215e42d38be4ed5cbf3cb585b5",
+      "transformed": false
+    },
+    {
+      "bytes": 1468,
+      "path": "runs/sticky-finite-r2-08-control-7/cases/001-sticky-finite-r2-08-control-7.json",
+      "redactions": 0,
+      "sha256": "85f16f3e8833763c291c83bf04ddee4b2aa88d617b127b7f6375c62d65941648",
+      "sourceSha256": "85f16f3e8833763c291c83bf04ddee4b2aa88d617b127b7f6375c62d65941648",
+      "transformed": false
+    },
+    {
+      "bytes": 13,
+      "path": "runs/sticky-finite-r2-08-control-7/cases/001-sticky-finite-r2-08-control-7.state.txt",
+      "redactions": 0,
+      "sha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "sourceSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "transformed": false
+    },
+    {
+      "bytes": 1772,
+      "path": "runs/sticky-finite-r2-08-control-7/identity.json",
+      "redactions": 1,
+      "sha256": "d0b61b19e32d97782e9d2e687e84cd0b85339dee2142937deea76529034b8cae",
+      "sourceSha256": "62a4cf1407472d22562457ca52b5b47cc1d04565336b890e4e4d0f1bdbbe0084",
+      "transformed": true
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/sticky-finite-r2-08-control-7/input-manifest-after.json",
+      "redactions": 0,
+      "sha256": "72cf244808ad776c2658e44ea09a05aee2d661ce133182658f5edf7d8fc32afc",
+      "sourceSha256": "72cf244808ad776c2658e44ea09a05aee2d661ce133182658f5edf7d8fc32afc",
+      "transformed": false
+    },
+    {
+      "bytes": 291302,
+      "path": "runs/sticky-finite-r2-08-control-7/input-manifest-before.json",
+      "redactions": 0,
+      "sha256": "513534ea3a89e04bbccf19753ec0eeb83f69a36310d38cfcfd83d00d3353f049",
+      "sourceSha256": "513534ea3a89e04bbccf19753ec0eeb83f69a36310d38cfcfd83d00d3353f049",
+      "transformed": false
+    },
+    {
+      "bytes": 1664,
+      "path": "runs/sticky-finite-r2-08-control-7/owned-processes-before-close.json",
+      "redactions": 0,
+      "sha256": "793e8fb967e13e190b369a79f9ffabc0524cc67dbed00891709d2abfdedd33ed",
+      "sourceSha256": "793e8fb967e13e190b369a79f9ffabc0524cc67dbed00891709d2abfdedd33ed",
+      "transformed": false
+    },
+    {
+      "bytes": 1295,
+      "path": "runs/sticky-finite-r2-08-control-7/owned-processes-before.json",
+      "redactions": 0,
+      "sha256": "067abd8a7c6d7426400a4ace123aa8e1d2184b9048fcd79c2b50a1e449cd3cec",
+      "sourceSha256": "067abd8a7c6d7426400a4ace123aa8e1d2184b9048fcd79c2b50a1e449cd3cec",
+      "transformed": false
+    },
+    {
+      "bytes": 4220,
+      "path": "runs/sticky-finite-r2-08-control-7/progress.json",
+      "redactions": 2,
+      "sha256": "4fa2be38e1a836409cfc2f4c3a9d9c358fef477f20ce6c603af124e778a3064d",
+      "sourceSha256": "ff2dbdf126a0a55bb4979d13c5e54296c6f3a2fd2ec941b4d90aa6ab79f8f1b5",
+      "transformed": true
+    },
+    {
+      "artifactType": "raw-browser-report",
+      "bytes": 238946,
+      "encoding": "gzip-lossless",
+      "path": "runs/sticky-finite-r2-08-control-7/raw-browser-report.json.gz",
+      "sha256": "d59d13fc27e903ee406d583fe9301a074b384adafa667ac370879defa1417a50",
+      "sourceBytes": 1624178,
+      "sourceSha256": "7c05c5acf2a803591698c04331e591ce2ed6f5d0dd8e187eabc1929d62e6865d",
+      "transformed": false
+    },
+    {
+      "bytes": 4944,
+      "path": "runs/sticky-finite-r2-08-control-7/result.json",
+      "redactions": 2,
+      "sha256": "4f3d1ffa1b9601717eea290870318cc978bd9cf9a232d576382f77e7414fdc93",
+      "sourceSha256": "64c95d3eba13f84981db55641a25b43059384f6494a36d51f0bab8858f5bc31d",
+      "transformed": true
+    },
+    {
+      "bytes": 286,
+      "path": "runs/sticky-finite-r2-08-control-7/run-start.json",
+      "redactions": 1,
+      "sha256": "52292a8570706211e5607c571271fb3d317075d7804ac7315018d0872256a241",
+      "sourceSha256": "f69a2a31d8836c0d82b069354aabcdb8b7531ea37d787ad5e03c3732d374f3b1",
+      "transformed": true
+    },
+    {
+      "bytes": 146,
+      "path": "runs/sticky-finite-r2-08-control-7/runner-after.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 146,
+      "path": "runs/sticky-finite-r2-08-control-7/runner-before.json",
+      "redactions": 0,
+      "sha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "sourceSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "transformed": false
+    },
+    {
+      "bytes": 335,
+      "path": "runs/sticky-finite-r2-08-control-7/spec.json",
+      "redactions": 0,
+      "sha256": "b0c18895ea41e12a6f683e04755b8b4bdb2a0c1428e3359f90c4897024e3297f",
+      "sourceSha256": "b0c18895ea41e12a6f683e04755b8b4bdb2a0c1428e3359f90c4897024e3297f",
+      "transformed": false
+    },
+    {
+      "bytes": 335,
+      "path": "runs/sticky-finite-r2-08-control-7/sticky-finite-r2-08-control-7-spec.json",
+      "redactions": 0,
+      "sha256": "b0c18895ea41e12a6f683e04755b8b4bdb2a0c1428e3359f90c4897024e3297f",
+      "sourceSha256": "b0c18895ea41e12a6f683e04755b8b4bdb2a0c1428e3359f90c4897024e3297f",
+      "transformed": false
+    },
+    {
+      "bytes": 3308,
+      "path": "runs/sticky-finite-r2-08-control-7/sticky-finite-r2-08-control-7-strict-reader-sticky-finite-r2-pair-4.txt",
+      "redactions": 0,
+      "sha256": "d26566c31dcd4aec994dec73d0f1d6f5ada170a160093a74f4d2ba1a29ae2f02",
+      "sourceSha256": "d26566c31dcd4aec994dec73d0f1d6f5ada170a160093a74f4d2ba1a29ae2f02",
+      "transformed": false
+    },
+    {
+      "bytes": 1681743,
+      "path": "runs/sticky-finite-r2-08-control-7/sticky-finite-r2-08-control-7-strict-wrapper-sticky-finite-r2-pair-4.json",
+      "redactions": 0,
+      "sha256": "e8869a23993d47ba3ee6d081e931616d9d5da0dd2c9b3a3c764ea5c771774012",
+      "sourceSha256": "e8869a23993d47ba3ee6d081e931616d9d5da0dd2c9b3a3c764ea5c771774012",
+      "transformed": false
+    },
+    {
+      "bytes": 1906,
+      "path": "runs/sticky-finite-r2-08-control-7/sticky-finite-r2-08-control-7-summary.json",
+      "redactions": 0,
+      "sha256": "fd05b614328d62cc2ea9f4dd3c6851f22ce4a31b2bf0cf6bd46f0ec6b0f6e4d8",
+      "sourceSha256": "fd05b614328d62cc2ea9f4dd3c6851f22ce4a31b2bf0cf6bd46f0ec6b0f6e4d8",
+      "transformed": false
+    },
+    {
+      "bytes": 66,
+      "path": "runs/sticky-finite-r2-08-control-7/sticky-finite-r2-08-control-7.log",
+      "redactions": 0,
+      "sha256": "c06cebd4efac2c6029236ca4c4355a0f7a28cd73189505b16ddefceb7d18d731",
+      "sourceSha256": "c06cebd4efac2c6029236ca4c4355a0f7a28cd73189505b16ddefceb7d18d731",
+      "transformed": false
+    },
+    {
+      "artifactType": "exact-source-overlay",
+      "bytes": 73961,
+      "encoding": "gzip-lossless",
+      "path": "sources/candidate-CirSim.java.gz",
+      "sha256": "86cc183d6baa4399e3db015d64e55b4cdb4493225050cfa4d5a265b1fe7bb1b7",
+      "sourceBytes": 345877,
+      "sourceSha256": "2658e94560fd9e1f0e9157a54be773bd9568d9350fa6ce56c39acaa7cf87e0b1",
+      "transformed": false
+    },
+    {
+      "artifactType": "exact-source-overlay",
+      "bytes": 4904,
+      "encoding": "gzip-lossless",
+      "path": "sources/candidate-LuFactorizationChecks.java.gz",
+      "sha256": "6a14b7daf3f182909f8852cadd65973838af3640d1f472f0f8588e944df95075",
+      "sourceBytes": 21109,
+      "sourceSha256": "d558d7d10706cb1da22d20f795ece6448e714be5d16315ad51a125c70b429c6c",
+      "transformed": false
+    },
+    {
+      "artifactType": "exact-source-overlay",
+      "bytes": 73565,
+      "encoding": "gzip-lossless",
+      "path": "sources/control-CirSim.java.gz",
+      "sha256": "6a934159a91bd0cd9cf9e412abad67cc7cf798c4235c72720cd0cf966887a304",
+      "sourceBytes": 344165,
+      "sourceSha256": "deb593ff2471904a72690cf0332a53bc968a4c93f6f2ac28e3140fa59dc1e242",
+      "transformed": false
+    },
+    {
+      "artifactType": "exact-source-overlay",
+      "bytes": 4904,
+      "encoding": "gzip-lossless",
+      "path": "sources/control-LuFactorizationChecks.java.gz",
+      "sha256": "6a14b7daf3f182909f8852cadd65973838af3640d1f472f0f8588e944df95075",
+      "sourceBytes": 21109,
+      "sourceSha256": "d558d7d10706cb1da22d20f795ece6448e714be5d16315ad51a125c70b429c6c",
+      "transformed": false
+    },
+    {
+      "bytes": 309205,
+      "path": "sources/index-source-audit.json",
+      "redactions": 0,
+      "sha256": "0ebf792822942471456bfcfc9fe14cae942b4d342d2252cde202783ee49c3fbe",
+      "sourceSha256": "0ebf792822942471456bfcfc9fe14cae942b4d342d2252cde202783ee49c3fbe",
+      "transformed": false
+    },
+    {
+      "bytes": 829984,
+      "path": "sources/source-pair-audit.json",
+      "redactions": 0,
+      "sha256": "80110e21c0d5f4baf31460d3e0a12e12d9fc5cdecc1e83d49319fbc226a3c82a",
+      "sourceSha256": "80110e21c0d5f4baf31460d3e0a12e12d9fc5cdecc1e83d49319fbc226a3c82a",
+      "transformed": false
+    },
+    {
+      "artifactType": "exact-source-overlay",
+      "bytes": 73941,
+      "encoding": "gzip-lossless",
+      "path": "sources/staged-index-CirSim.java.gz",
+      "sha256": "f47854d0b342270366b93bf082ade9fb4431ad80e3d30572bf0e10aa048104fa",
+      "sourceBytes": 345624,
+      "sourceSha256": "82023675beb4093bdc95abe7456614773b1011c319cb72202c2db2a250a95bfd",
+      "transformed": false
+    },
+    {
+      "artifactType": "exact-source-overlay",
+      "bytes": 4884,
+      "encoding": "gzip-lossless",
+      "path": "sources/staged-index-LuFactorizationChecks.java.gz",
+      "sha256": "f66e64459fb75173f749c4df116de21beb0139ca923cadf1ffa73a50f39dc326",
+      "sourceBytes": 20681,
+      "sourceSha256": "8b0bd00ee98d0fb89829a1d6f82a0b6654aa588ff518f713e742f45153764477",
+      "transformed": false
+    },
+    {
+      "path": "tool-references.json",
+      "bytes": 4469,
+      "sha256": "6e8dc355e8db024207ac3eff51e2f4c05a09e8c4cb5664de8ba3801ae603f658",
+      "sourceSha256": "6e8dc355e8db024207ac3eff51e2f4c05a09e8c4cb5664de8ba3801ae603f658",
+      "redactions": 0,
+      "transformed": false
+    },
+    {
+      "bytes": 1051,
+      "path": "tools/build-run.ps1",
+      "redactions": 1,
+      "sha256": "77a27070eb6e0f6e307452963dcacdb882d8e6e0a1495ab6c0bad1f5a8e4a43c",
+      "sourceSha256": "5bde61d081264e189e8232d2668a8a6ca3c045aa8323b10476923b1f172889a4",
+      "transformed": true
+    },
+    {
+      "bytes": 1246,
+      "path": "tools/native-owned-zero-row.ps1",
+      "redactions": 1,
+      "sha256": "b9e2c9d65f9c38b59e2d7ed055921ea647547975d8c2ac48cb32d283cffea0f5",
+      "sourceSha256": "b241f880e9c0e1e4c2a26e958622f0180a205dfaf0b17ad03cea1d1be600a43b",
+      "transformed": true
+    },
+    {
+      "bytes": 1647,
+      "path": "tools/prepare_sticky_finite_gate_runner.py",
+      "redactions": 0,
+      "sha256": "509905a0a1af56f457038f7ee4f402093e9c34ade0f9f641425d307598235419",
+      "sourceSha256": "509905a0a1af56f457038f7ee4f402093e9c34ade0f9f641425d307598235419",
+      "transformed": false
+    },
+    {
+      "bytes": 3605,
+      "path": "tools/prepare_sticky_finite_sequence_root.py",
+      "redactions": 0,
+      "sha256": "8bb84c0562500759b76a135dfdabd9f595404d58207921bc93e4424f680a3d19",
+      "sourceSha256": "8bb84c0562500759b76a135dfdabd9f595404d58207921bc93e4424f680a3d19",
+      "transformed": false
+    },
+    {
+      "bytes": 1483,
+      "path": "tools/read_a07.ps1",
+      "redactions": 0,
+      "sha256": "eea365306493418263f901c145715dddec4ea2901e5ac1176305b93c36943368",
+      "sourceSha256": "eea365306493418263f901c145715dddec4ea2901e5ac1176305b93c36943368",
+      "transformed": false
+    },
+    {
+      "path": "tools/run_current_solver_canaries.py",
+      "bytes": 1200,
+      "sha256": "62f98058d12f94f0ac1cb0544454aef4cd2ec86ac210619fbcfafeac3974b807",
+      "sourceSha256": "62f98058d12f94f0ac1cb0544454aef4cd2ec86ac210619fbcfafeac3974b807",
+      "redactions": 0,
+      "transformed": false
+    },
+    {
+      "bytes": 1167,
+      "path": "tools/run_staged_solver_canary.py",
+      "redactions": 0,
+      "sha256": "3a05cfde4c158f82d120ab2b37ad6376fdcdd34d0e4d80a6ca5767f1493c7635",
+      "sourceSha256": "3a05cfde4c158f82d120ab2b37ad6376fdcdd34d0e4d80a6ca5767f1493c7635",
+      "transformed": false
+    },
+    {
+      "bytes": 2563,
+      "path": "tools/run_sticky_finite_r2_final_gates.py",
+      "redactions": 1,
+      "sha256": "d6ba1e7c36679fa9f55a9c85dee9ecfd50cc5223ad2abea8f5dbb2a9d874d955",
+      "sourceSha256": "175712f8e056d55ae17554c7eb5ea8da8c87060be70e20e706b518c94e3fa133",
+      "transformed": true
+    },
+    {
+      "bytes": 3837,
+      "path": "tools/run_sticky_finite_r2_gates.py",
+      "redactions": 1,
+      "sha256": "4b61c43d06b7c5cc39a53d948a6ae61e177ff62c2d105416b37942b1619dd32e",
+      "sourceSha256": "473943f918ca6580cd7d19e48b7ea9357e71260d91c301bd35da7d8294a972c5",
+      "transformed": true
+    },
+    {
+      "bytes": 18059,
+      "path": "tools/run_sticky_finite_r2_sequence.py",
+      "redactions": 1,
+      "sha256": "56b2873e0909ffb60837d9701d30478710b55382c87919281d51de7870f17dd1",
+      "sourceSha256": "981e5aed0e18240f4fef6accab0541ed3b6ed421b41a641e0929be1d18bc4507",
+      "transformed": true
+    },
+    {
+      "path": "tools/run_timing.py",
+      "bytes": 2015,
+      "sha256": "a7ef67c63397a28c1781b40746507fc0fa129f030742b8c6201350f099a9765f",
+      "sourceSha256": "a7ef67c63397a28c1781b40746507fc0fa129f030742b8c6201350f099a9765f",
+      "redactions": 0,
+      "transformed": false
+    },
+    {
+      "bytes": 21229,
+      "path": "tools/validate_current_q30_timing_pair.py",
+      "redactions": 0,
+      "sha256": "67430d7c56d872d115a7c38732bf60101cff52e8bf40f7af075213debc8e7e3b",
+      "sourceSha256": "67430d7c56d872d115a7c38732bf60101cff52e8bf40f7af075213debc8e7e3b",
+      "transformed": false
+    }
+  ],
+  "note": "Inventory excludes packet-inventory.json and packet-inventory.sha256. sourceSha256 identifies original bytes before any metadata/log redaction. Raw browser report gzip entries are lossless.",
+  "schema": 1
+}
