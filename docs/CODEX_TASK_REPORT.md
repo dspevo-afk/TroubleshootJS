@@ -1,5 +1,124 @@
 # Current checkpoint: Q30 BLOCKED / NOT ACCEPTED
 
+Branch `codex/q30-multirail-qualification`; checkpoint base
+`3c61c792c9502b6c202e44782bdd9948dcd0bdb7` (archive-format correction).
+Accepted numerical source is `ba107090e4899ca9d3a2413259c78d042d20dae1`,
+`Skip finite zero products in LU solve`. No push or completion email.
+Normal Q30 publication remains disabled. U06/U07/Q60 and later are unstarted.
+Full final acceptance matrices remain NOT RUN while hard gates fail.
+
+The 90,000-ms cumulative, 640-work and 5,000-ms active-operation limits are
+unchanged. Private 90–300-second measurement isolation, all settling and
+hypotheses/proofs, complete physical admission, exact signed-long replay,
+candidate ordering, family ownership, repair/retest semantics, cache isolation
+and cleanup contracts remain required.
+
+The requested FIRST independent review, focused regression and fresh cold
+comparison of the original uncommitted optimization were completed and secured
+locally at `7a30a3f`. Its eight counterbalanced runs retained exact non-timing
+electrical/proof/physical/work/cache results and saved 11.155–14.706 s; every cold
+result still exceeded 90 s. [Initial checkpoint](task-evidence/Q30/intermediate-optimization/README.md).
+Later accepted local deltas are column references, finite predicates,
+right-looking LU, routing queue/neighbors, validated nonlinear input, early
+zero-row scanning and finite-RHS zero-product omission. Their isolated gains are
+not assumed additive. Rejected trials and failed gates remain in their evidence.
+
+Latest accepted intermediate optimization: scan the initial RHS once, omit exact
+zero-coefficient products while stored RHS values remain finite, and permanently
+return to the historical dense loops on any nonfinite stored value. Independent
+source review found no algebra/proof/budget blocker; the original independent
+oracle is unchanged. Signed-zero bit identity remains outside that oracle.
+Focused native5, both timing-arm JDK8/GWT builds, compiled A07/disabled-normal and
+strict-negative checks PASS. Eight fresh rows/four full-report comparisons PASS;
+median paired cold/proof savings are 1.450/1.3715 s. Repeated seed-7 gains exceed
+within-arm ranges; the single 20-part pair is not a population claim. The
+40-package candidate still takes 98.306 s (proof 69.495 s, routing 22.601 s).
+Exact staged-source native/GWT/A07 gates PASS, and all 1,525 runtime inputs plus
+392 WAR files match the measured candidate. Root audited 260 packet artifacts,
+13 exact raw reports, both 1,339-input reconstructions and both staged sources.
+[Accepted evidence](task-evidence/Q30/sticky-finite-solve-r2/README.md).
+The source commit was issued despite three archived-script EOF whitespace
+warnings. Follow-up `3c61c79` fixes those inspection copies, retains their original
+hashes and passes `git diff --cached --check`; production and measurements are
+unchanged. Final inventory: `c3e98e85bc97fb230f8b0b2fbed9dc5333e927dff1f87ecfb66689125b7a02a3`.
+
+Performance attribution: the original monotonic 106.350-s profile identifies
+solver stepping 79.421 s, routing 20.070 s, placement 0.826 s, analyze/setup
+1.224 s, construction 0.377 s, physical admission 0.075 s, settling 1.271 s and
+proof cleanup 0.082 s. Plan resolution, proof purposes, retries and repeated work
+are itemized in [stage evidence](task-evidence/Q30/stage-profile/README.md).
+CPU sampling has substantial overhead and is ranking evidence only.
+[Actual solve sampling](task-evidence/Q30/solve-profile/README.md) is committed;
+no profiler is integrated into production source.
+
+The new isolated whole-factor probe has now passed full source/host/report
+parity, 109 metadata corruptions, and both unchanged strict readers with 43
+corruptions each. Its 1,342-input source includes the accepted solver. R1 native
+FAIL (33.950 s) attempted browser-only JSON construction on the JVM; R2 changes
+only the test, with serialization checks enforced by the real browser reader.
+R2 native8/GWT5/compiled A07/disabled-normal/exact-reader gates PASS. Fresh off/on
+seed-10014 cold times are 98.362/98.339 s; proof 69.299/69.627 s and routing
+22.867/22.482 s. Owned cleanup PASSes separately in 0.896/0.973 s.
+The 1,453 selected actual factors take 65.800 ms and solves 17.900 ms across
+742,391 factor calls. Rough extrapolations are 33.620 s factor/9.146 s solve;
+sparse selection and clock granularity prevent treating these as exact totals.
+The factor bracket includes its nested 2.600-ms preflight measurement; do not
+add it again. Capture timing omits some instrumentation costs, and the 23-ms
+off/on difference does not prove zero overhead. Factor remains the largest
+estimated subtask, followed by routing. Independent source/validator reviews
+found no actionable blockers. Root verified all 107 inventory members, the
+1,342-input reconstruction, four byte-exact raw reports and procedure dependency
+hashes. [Factor evidence](task-evidence/Q30/factor-profile/README.md), inventory
+`14ebed8a7d27a8001015281f1257d3fe79f2bfe1c5518a0024f0192c204f0cc5`.
+The summary's package count comes from the request echo and audited plan/topology
+assertions; it is not a separate report enumeration. The old V8 profile has no
+per-loop positions and uses an earlier kernel. A source-only sparse work census
+is being prepared; no further optimization has been selected or integrated.
+
+Scale: the uncommitted plan-4 family and 77-root proposal remain NOT ACCEPTED.
+Purposeful one/two-channel topologies and functional support blocks cover
+20–40 structurally; all 77 plans match the independent oracle and representative/
+held-out cohorts span the band and 18 axes. Structural native6 and ten service
+plus ten finer-step cases PASS. These do not establish normal scale/timing
+acceptance. [Scale candidate](task-evidence/Q30/scale-plan-4/README.md).
+The earlier actual normal seed-7 request failed at 90,066.6 ms and 378/390 proof
+units with cleanup PASS; no successful normal Q30 admission receipt exists.
+
+D01: the synchronous 40-part verifier's host timeouts remain recorded. Isolated
+resumable r7 passes native/GWT, real scope-loss/terminal-timing/terminal-clock
+negative cases, and cold/warm 20/40 electrical/physical readers with host cleanup.
+Manual input exposed terminal-phase and late-canary reporting defects. Isolated
+r8 fixes only those terminal reports; native5/GWT5 PASS. Its real Board Power
+click after 37 construction advances passes the unchanged strict reader, keeps
+power OFF, reports DONE and releases the session. Its ordinary LED_INDICATOR/
+EASY/3 successor also completes with the expected owner and cleanup. The actual
+no-click 20-part case completes cold/warm proof, then correctly reports FAIL/no
+admission at `visiblePowerBoundary`; host/cleanup PASS (44.300 s, cleanup 0.824 s).
+A separate delayed click during service proof fails owner/control checks and is
+retained; it is not successful construction-boundary evidence. Two r7 screenshot
+requests timed out, so no screenshots are claimed. Actual post-DONE scope-loss
+and native hook-removal exception qualification remain outstanding. Isolated r9
+adds an explicit post-DONE scope-withdrawal canary with a labeled 10-ms poll;
+ordinary successor polling remains 1,000 ms. Independent source review found no
+blocker; focused native/GWT gates are running on its frozen 1,340-input fixture.
+No resumable D01 draft is integrated into root.
+
+Resources/preserved work: all completed maintained host runs released their owned
+browser/server resources. Manual tabs are closed; preview stop revalidated PID
+7564 and released port 34917. Only the isolated r9 gate sequence is running. Task-temp source
+and evidence copies remain. Previously blocked recursive cleanup is not retried;
+its exact resources/reasons remain in historical checkpoints. Desktop checkout
+work, pre-existing cache files, and all unaccepted plan-4 source/tests/readers,
+normal-verifier hook/API and scale evidence remain preserved and unstaged.
+
+Next: attribute the remaining factor phases before selecting another optimization,
+measure routing's major helpers, and finish D01 lifecycle qualification.
+Only after normal cold timing with margin, required scale and focused gates pass
+may the full final acceptance matrix run. Q30 remains BLOCKED.
+
+
+# Historical checkpoint: accepted sticky-finite source and in-progress factor/D01 checks
+
 Branch `codex/q30-multirail-qualification`. Local HEAD/source checkpoint
 `ba107090e4899ca9d3a2413259c78d042d20dae1`
 (`Skip finite zero products in LU solve`) adds the accepted finite-RHS solve

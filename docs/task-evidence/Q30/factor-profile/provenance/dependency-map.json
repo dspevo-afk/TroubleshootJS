@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "fullPairValidator": {
+    "path": "procedure/validate_factor_profile_pair_root.py.gz",
+    "originalSha256": "386da5bf31947bc3c8a4e92a3c1713e7a0bc1f529ea5f89f1acd7dcad4adcb03",
+    "dependencies": [
+      {
+        "name": "validate_lu_repetition_pair.py",
+        "path": "procedure/dependencies/validate_lu_repetition_pair.py.gz",
+        "executedSha256": "56d11822c0456ef4372bfa7cdfc0f3d79965e6aa895fcfd665e0d4a8b72da312",
+        "archivedCopyIsPathScrubbed": true
+      },
+      {
+        "name": "check_lu_sampler_metadata_canaries.py",
+        "path": "procedure/dependencies/check_lu_sampler_metadata_canaries.py.gz",
+        "sha256": "a776cfa51880a2a13d87e4cf5be7daa28ee1897213cbf522d13cdb13f27c1342"
+      },
+      {
+        "name": "solve-profile-metadata-validator.py",
+        "path": "procedure/dependencies/solve-profile-metadata-validator.py.gz",
+        "sha256": "58a0c3003c7279f61d100d87cf853ea453d4a04261c76431a15ab5215d20e337"
+      }
+    ]
+  },
+  "pairHostRunner": {
+    "path": "procedure/run_factor_profile_pair.py.gz",
+    "sha256": "45367eec97265bcf88698de7ff63089dc51c0a2892338787220c0919268bca37"
+  },
+  "browserRunner": {
+    "path": "procedure/dependencies/compiled_attribute_acceptance.py.gz",
+    "repoPath": "tests/browser/compiled_attribute_acceptance.py",
+    "sha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4"
+  },
+  "runTimingPy": {
+    "path": "procedure/run_timing.py.gz",
+    "sha256": "a7ef67c63397a28c1781b40746507fc0fa129f030742b8c6201350f099a9765f",
+    "executedByPair": false
+  },
+  "compiledCanaries": {
+    "runnerPath": "procedure/dependencies/run_current_solver_canaries.py.gz",
+    "runnerOriginalSha256": "62f98058d12f94f0ac1cb0544454aef4cd2ec86ac210619fbcfafeac3974b807",
+    "baseSpecPath": "procedure/dependencies/root-routing-integrated-canaries-spec.json.gz",
+    "baseSpecSha256": "1dc1082c01ea815940be6a192227a9886777a4f6c1dd5c974e5e8570da81de8b",
+    "generatedFactorSpecPath": "gates/factor-profile-r2-canaries-spec.json.gz",
+    "generatedFactorSpecSha256": "31ef7a8520f4bbcfb711f7334dc44fa0ff24835d3b149b92d8aba918e998e167"
+  },
+  "redactionLedger": "provenance/archive-transforms.json"
+}

@@ -1,0 +1,17 @@
+{
+  "packet": "../solve-profile",
+  "inventorySha256": "3e69eab774e516b8b3d3673c787e6d91d330df87808ba742f090b5f13ed6d139",
+  "baseInputCount": 1341,
+  "candidateInputCount": 1342,
+  "unchangedInputs": 1338,
+  "overlayPaths": [
+    "scripts/verify-current-contracts.ps1",
+    "src/com/lushprojects/circuitjs1/client/CirSim.java",
+    "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java",
+    "tests/contracts/Q30LuFactorProfileContractTest.java"
+  ],
+  "staleOverlaySummaryTestHash": true,
+  "auditOverlaySummaryTestSha256": "3bf74b9406eb1bc70e4499004949446513ff56b3abd457cc0ee0b23f3811068d",
+  "authoritativeR2TestSha256": "b82c79ce6a7312ef0197511c4161e56077cdb6f7401db2f071196d4aaa53a190",
+  "reconstruction": "Use the committed solve-profile source inventory/baseline, then apply the four byte-exact overlays in source/overlays. All remaining source inputs match by SHA-256."
+}
