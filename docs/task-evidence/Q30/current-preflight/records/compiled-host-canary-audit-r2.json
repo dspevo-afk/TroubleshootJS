@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "scope": "root compiled sampler query-off A07 and disabled-normal host audit",
+  "caseCount": 2,
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "f273542ef447240715593a926ec25783c60f4d234e5989a61ac106bb561932e0",
+    "afterSha256": "f273542ef447240715593a926ec25783c60f4d234e5989a61ac106bb561932e0",
+    "sourceSha256Before": "ca9b07c7072378a28c68f2294de33f8bbcdfa6fba4553cd81d57b96fc064e780",
+    "sourceSha256After": "ca9b07c7072378a28c68f2294de33f8bbcdfa6fba4553cd81d57b96fc064e780",
+    "webSha256Before": "ee7d15d40ad52c13175b74c6a125a0a3ea76c6930f0ff083f6f34445a7468de8",
+    "webSha256After": "ee7d15d40ad52c13175b74c6a125a0a3ea76c6930f0ff083f6f34445a7468de8",
+    "runnerBeforeSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+    "runnerAfterSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+    "fileCountBefore": 1525,
+    "fileCountAfter": 1525,
+    "seconds": 0.352573800002574
+  },
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 0.9375113999994937,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "allFiveErrorArraysEmpty": true
+}

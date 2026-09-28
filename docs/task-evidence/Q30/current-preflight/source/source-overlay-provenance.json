@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "status": "SOURCE_OVERLAY_ARCHIVED; final input audit PASS is the consumed-input qualification",
+  "baselineCommit": "e7a73e7fb0ce824cd51675e383225c50be2124d2",
+  "baselineSourceInputs": 1338,
+  "addedContractTest": true,
+  "finalFixtureSourceInputs": 1339,
+  "sourceAuditSha256": "9a5d9e1cf5251fcd77f13ff781a08197cfd6531647905299cec3a6f039ad4751",
+  "candidateFiles": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "bytes": 372207,
+      "sha256": "15a576e8a254def5e1a90dcd860992ec36cacb9d1c1dbfd61026e52988cf340d"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java",
+      "bytes": 75953,
+      "sha256": "b378808e40c9173e337fea996c74375c361c251f1c9032d90504b777f0f147d8"
+    },
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "bytes": 66443,
+      "sha256": "9d1c1002f78a98b328f339d1c05f9601f6cb3042b0c0f5c17b4dc241c2bdac0c"
+    },
+    {
+      "path": "tests/contracts/Q30LuRepetitionProfileContractTest.java",
+      "bytes": 20083,
+      "sha256": "3bf162017b8967304e87a07928c3fdd5d7966dd3a7945e988560a9ed4b9d5e3c"
+    }
+  ],
+  "archive": "source/r2-source-overlay.tar.gz",
+  "limitation": "The baselineCommit identifies only the Git foundation. The consumed 1338-input working baseline includes unaccepted plan4 and the validated-factor-input candidate overlay, reconstructed through the referenced committed bundle. It is not the bare commit tree.",
+  "baselineReconstruction": {
+    "bundle": "../validated-factor-input",
+    "arm": "candidate",
+    "bundleInventorySha256": "7a20e7723eef5f40867c8dfc3aeb683bb3420190de516d9aacbed03e4f6bd36e",
+    "manifest": "../validated-factor-input/source/trial-candidate-input-manifest.json",
+    "manifestSha256": "a29c53b2151693b18f0d2a4fe71114ed026d5e7df6ff5ac18c9caf2785d6ca3d",
+    "recipe": "../validated-factor-input/source/control-overlay-manifest.json",
+    "recipeSha256": "8a2c196c530cbe90036c60a38f9daa3a02abb7e325cfe4d85c6397424f24ebb6",
+    "instructions": "Reconstruct the validated-factor-input candidate arm using its Git base, control overlays, exact newline transforms, pinned JARs and candidate overlay; then apply this four-file tar archive."
+  }
+}

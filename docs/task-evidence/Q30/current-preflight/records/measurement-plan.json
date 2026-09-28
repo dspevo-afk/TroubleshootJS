@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "status": "PREDECLARED",
+  "candidate": "current plan4 + validated finite-input nonlinear LU and accepted routing; isolated query-gated measurement only",
+  "sequence": [
+    {
+      "label": "current-preflight-01-profile-10014",
+      "seed": "10014",
+      "mode": "profile"
+    },
+    {
+      "label": "current-preflight-02-off-10014",
+      "seed": "10014",
+      "mode": "query-off control"
+    }
+  ],
+  "scope": "Private diagnostic coordinator cold/warm measurement of currently failing 40-package case; no normal acceptance, no product optimization or factor/proof reuse.",
+  "sample": "Every 1021st nonlinear LU call inside a verified synchronous coordinator advance starts a full value snapshot; the immediately following scoped factor call compares all entries. Pause/analysis/owner/size/failure/end abort pending pairs. Row-hit statistics are gathered only during the existing snapshot traversal.",
+  "timing": "Browser performance.now brackets selected private input preflight and sample copy/compare. Clock granularity and sparse-sample selection limit extrapolation; report aggregate and count, avoid false precision. No per-entry or per-pivot timing. Host time.monotonic plus wall-minus-monotonic drift; original report wall-clock fields retain their meaning.",
+  "requirements": [
+    "native actual sampler, solver, temporal and budget gates",
+    "maintained JDK8/GWT5 final-source build",
+    "compiled A07 strict reader/negative cases and disabled-normal gate",
+    "fresh Edge context/process for each mode",
+    "all host-error arrays empty, input audit and owned cleanup PASS",
+    "actual numerical call remains lu_factorNonlinearOwned for both modes",
+    "raw reports retained and current plan4 strict readers plus negative fixtures",
+    "full request/owner/physical/proof/work/cache parity excluding explicit timing/profile fields",
+    "metadata invariants and corruptions for new sampled row/clock counts"
+  ],
+  "limits": "One seed assesses remaining preflight cost and instrumentation; no population speed estimate, normal acceptance or acceptance margin. No speed improvement is implemented by this sampler. Any extrapolation is explicitly a sampled estimate, not directly timed cumulative work."
+}

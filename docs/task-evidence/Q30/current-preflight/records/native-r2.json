@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 47.4215832,
+  "phase": "focused native actual sampler/solver/temporal/budget regression including maintained cleanup",
+  "suites": [
+    "A07ExecutionContractTest",
+    "Q30LuRepetitionProfileContractTest",
+    "Q30TemporalWorkContractTest",
+    "Q30GenerationMeasurementBudgetContractTest",
+    "Q30NormalExecutionPolicyContractTest"
+  ]
+}

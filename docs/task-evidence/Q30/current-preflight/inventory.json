@@ -1,0 +1,411 @@
+{
+  "schema": 1,
+  "purpose": "Controlled evidence bundle for a private current-preflight LU sample; no production acceptance claim.",
+  "files": [
+    {
+      "path": "cases/a07-canary-case-input.json",
+      "sha256": "e302556b5dc54b0279d17e7197f224051d74b1efd33b5a3554e057e0992559b7",
+      "bytes": 1393,
+      "source": "scratch/current-preflight-canaries-r2/cases/001-current-preflight-canaries-r2-a07.json"
+    },
+    {
+      "path": "cases/a07-canary-raw-report.json.gz",
+      "sha256": "9aa113fbdea9c1a6f657036ab9c2d32c72b4987b751eec070730c907fc1b6e7e",
+      "bytes": 9395,
+      "source": "scratch/current-preflight-canaries-r2/cases/001-current-preflight-canaries-r2-a07.report.json",
+      "uncompressedSha256": "e8ad534d0b2fd58ee618144d4af461d0a81e9710fbb3bb355764ba2aa75fc509",
+      "uncompressedBytes": 80898,
+      "note": "gzip payload decompresses byte-for-byte to the source file"
+    },
+    {
+      "path": "cases/compiled-canaries-run-spec.json",
+      "sha256": "59a94b85b5617fb183aae9321ff9a6790286bba4217d122610b824769a45f364",
+      "bytes": 871,
+      "source": "scratch/current-preflight-canaries-r2/spec.json"
+    },
+    {
+      "path": "cases/disabled-normal-canary-case-input.json",
+      "sha256": "ab27194a7286f17ae1daa82f037df29e7cc11ecc339642fead8f70cafca47c80",
+      "bytes": 1577,
+      "source": "scratch/current-preflight-canaries-r2/cases/002-current-preflight-canaries-r2-disabled.json"
+    },
+    {
+      "path": "cases/disabled-normal-canary-raw-report.json.gz",
+      "sha256": "5b8e46ef5a04d8746c0d9243f4ba9900ec88968302808491a72c7a2259062f87",
+      "bytes": 224,
+      "source": "scratch/current-preflight-canaries-r2/cases/002-current-preflight-canaries-r2-disabled.report.json",
+      "uncompressedSha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+      "uncompressedBytes": 344,
+      "note": "gzip payload decompresses byte-for-byte to the source file"
+    },
+    {
+      "path": "cases/profile-case-input.json",
+      "sha256": "02eafe41dbe14d61b9e413ece7fa982479db59e09676ca13f6cad5e8ce854c13",
+      "bytes": 1549,
+      "source": "scratch/current-preflight-01-profile-10014/cases/001-current-preflight-01-profile-10014.json"
+    },
+    {
+      "path": "cases/profile-raw-report.json.gz",
+      "sha256": "55949fa5d029fd716dde9d87a712223f6fcd4b10d579a09890bbffdafb18737e",
+      "bytes": 259122,
+      "source": "scratch/current-preflight-01-profile-10014/cases/001-current-preflight-01-profile-10014.report.json",
+      "uncompressedSha256": "6ebb1e6aacdf22ba2325a80e9867a857fc366f935dcaeded5330b6fbe3c20e77",
+      "uncompressedBytes": 1762410,
+      "note": "gzip payload decompresses byte-for-byte to the source file"
+    },
+    {
+      "path": "cases/profile-run-spec.json",
+      "sha256": "508e2141aef4a856efa9a09c61965db97e65ce9fe3088447dd58629f03e93e1d",
+      "bytes": 442,
+      "source": "scratch/current-preflight-01-profile-10014/spec.json"
+    },
+    {
+      "path": "cases/query-off-case-input.json",
+      "sha256": "74b6ac36512cc35d9f29532aef1e5505e2f6cbd348bb6a19ac7dc7b5884d66c8",
+      "bytes": 1478,
+      "source": "scratch/current-preflight-02-off-10014/cases/001-current-preflight-02-off-10014.json"
+    },
+    {
+      "path": "cases/query-off-raw-report.json.gz",
+      "sha256": "33b9065f0903d0bce59d215f10703c5848baca47945dd9bfbefdff4e9e9768a8",
+      "bytes": 251083,
+      "source": "scratch/current-preflight-02-off-10014/cases/001-current-preflight-02-off-10014.report.json",
+      "uncompressedSha256": "34c855b3ff19d40fe7d57bc07085d08d703f6b80a59959d5458aee7b909b8f25",
+      "uncompressedBytes": 1748511,
+      "note": "gzip payload decompresses byte-for-byte to the source file"
+    },
+    {
+      "path": "cases/query-off-run-spec.json",
+      "sha256": "a975ea7b7508d0c559bbd3c5af5bd48fd35d7cde8d283b75188d74172dd20dc3",
+      "bytes": 407,
+      "source": "scratch/current-preflight-02-off-10014/spec.json"
+    },
+    {
+      "path": "manifests/compiled-canaries-input-manifest-after.json.gz",
+      "sha256": "ca1732635a67aa532b291d0afad188fffaace35925110864545a39773c49ae7a",
+      "bytes": 80050,
+      "source": "scratch/current-preflight-canaries-r2/input-manifest-after.json",
+      "uncompressedSha256": "66f1b8739657780624e0f0fc6eb00c53cb51b6a77147e56649ce79c655f06f12",
+      "uncompressedBytes": 291302,
+      "note": "gzip payload decompresses byte-for-byte to the source file"
+    },
+    {
+      "path": "manifests/compiled-canaries-input-manifest-before.json.gz",
+      "sha256": "467751d7b9f4af21bd9d42d9c63e07361c81c62ce911cc58544cfbc955ab606f",
+      "bytes": 80050,
+      "source": "scratch/current-preflight-canaries-r2/input-manifest-before.json",
+      "uncompressedSha256": "8fa6ed274414f4dfd2a22265aa094a3a3801ba96d75e09c3e1c0b3c0fe96582f",
+      "uncompressedBytes": 291302,
+      "note": "gzip payload decompresses byte-for-byte to the source file"
+    },
+    {
+      "path": "manifests/profile-input-manifest-after.json.gz",
+      "sha256": "3544849a6bce8e1d7a299263ed63b96868d5a8b0182fb13c563c5e05cce963be",
+      "bytes": 80050,
+      "source": "scratch/current-preflight-01-profile-10014/input-manifest-after.json",
+      "uncompressedSha256": "64af0fd5072facdcbc37a19bd632eb65c0eb84f1dbdb7bb7626632d205483dba",
+      "uncompressedBytes": 291302,
+      "note": "gzip payload decompresses byte-for-byte to the source file"
+    },
+    {
+      "path": "manifests/profile-input-manifest-before.json.gz",
+      "sha256": "596887f79004059e3ac5589e5e19fd9acc7889801ca9fb7125eca86666437e7f",
+      "bytes": 80050,
+      "source": "scratch/current-preflight-01-profile-10014/input-manifest-before.json",
+      "uncompressedSha256": "476a53ce87647001b1ef4a9d1e877ee162362b5312d3e891793a765d341f2680",
+      "uncompressedBytes": 291302,
+      "note": "gzip payload decompresses byte-for-byte to the source file"
+    },
+    {
+      "path": "manifests/query-off-input-manifest-after.json.gz",
+      "sha256": "eac4f3fe4d7adc8490d5ada279b71c7790cf3679ed4e19f96872f452b80893bd",
+      "bytes": 80050,
+      "source": "scratch/current-preflight-02-off-10014/input-manifest-after.json",
+      "uncompressedSha256": "15f578385effcf87e01e7bba0a6c7213048e1669b1054092b39c1445f1f703c5",
+      "uncompressedBytes": 291302,
+      "note": "gzip payload decompresses byte-for-byte to the source file"
+    },
+    {
+      "path": "manifests/query-off-input-manifest-before.json.gz",
+      "sha256": "d56a6497be0cdbf0b8740ec3c3ad1447c65eee643c30ac7802918f8edf5d3860",
+      "bytes": 80049,
+      "source": "scratch/current-preflight-02-off-10014/input-manifest-before.json",
+      "uncompressedSha256": "dc41bc045e09f0eda5e141f6eb816aac874e459c3eb33f1896f21f81721ea119",
+      "uncompressedBytes": 291302,
+      "note": "gzip payload decompresses byte-for-byte to the source file"
+    },
+    {
+      "path": "README.md",
+      "sha256": "e68f64447cd389aaed8343aec3beddd5205727ad09ed335cb95a7e73a494fdac",
+      "bytes": 5996
+    },
+    {
+      "path": "records/a07-strict-negative-canaries-r2.txt",
+      "sha256": "44d24b9e9a389a6f682363c51ef04ef37694276dbe30f6ac328ade766286b3f7",
+      "bytes": 75,
+      "source": "scratch/current-preflight-a07-strict-r2.txt"
+    },
+    {
+      "path": "records/compiled-canaries-host-result.path-redacted.json",
+      "sha256": "d47b7dbcd72078e00a9ad3b0996aef04711ad8d6a556f457528bfb8cf30ff31f",
+      "bytes": 6595,
+      "source": "scratch/current-preflight-canaries-r2/result.json",
+      "note": "JSON metadata only; local filesystem roots redacted. Original source hash recorded below.",
+      "originalSha256": "5364a5c5d70f255ace55ffd786ffc48c228ca99decac9c917932589d0d3c5198",
+      "originalBytes": 6787,
+      "redactions": 2
+    },
+    {
+      "path": "records/compiled-canaries-r2-summary.json",
+      "sha256": "9e286b3a5890714bdfdfa8d5d9bb3e68fcd54a61efc2549ac191989ed4b6b49e",
+      "bytes": 238,
+      "source": "scratch/current-preflight-canaries-r2-summary.json"
+    },
+    {
+      "path": "records/compiled-canaries-r2.log",
+      "sha256": "1cfbac2d3a0068ae1a55fa0658f4843eec6df9d93a36749dfc83eb0d5ceecd41",
+      "bytes": 120,
+      "source": "scratch/current-preflight-canaries-r2.log"
+    },
+    {
+      "path": "records/compiled-host-canary-audit-r2.json",
+      "sha256": "a2c0981124c375fe06555e1c3840a79d7170ede32663d62c9f4cfefec73572b9",
+      "bytes": 1196,
+      "source": "scratch/current-preflight-host-canary-audit-r2.json"
+    },
+    {
+      "path": "records/final-input-audit.json",
+      "sha256": "d217dcff51869fc57ec5403efff030fad35223aff542c644b8e4b323bfc47d5b",
+      "bytes": 1642,
+      "source": "scratch/current-preflight-final-input-audit.json"
+    },
+    {
+      "path": "records/gwt-five-permutation-r2.json",
+      "sha256": "9f6d92a9f6ebf975f188f54214e766c23d413b74a268fa0095e7f24249b054e3",
+      "bytes": 273,
+      "source": "scratch/current-preflight-gwt-r2.json"
+    },
+    {
+      "path": "records/independent-source-review.md",
+      "sha256": "8c08d5a5f0f137c4537c4845a8901fb00c1bc3ecacb9b9544ca7213945aa54b3",
+      "bytes": 5136,
+      "source": "scratch/scratch/current-preflight-independent-review.md",
+      "originalSha256": "dcc2e61f5dd2db8e7f47032934f362ef6cf1ceac20bcb742fc8ba1857de1593f",
+      "priorArchivedSha256": "dcc2e61f5dd2db8e7f47032934f362ef6cf1ceac20bcb742fc8ba1857de1593f",
+      "archiveTransforms": [
+        "Removed surplus trailing blank lines to satisfy git diff --check; executable statements unchanged."
+      ]
+    },
+    {
+      "path": "records/measurement-plan.json",
+      "sha256": "e822950a95469bd5b547fdc27494756ec85f264cd7817c3c804cb3d1f548fe5c",
+      "bytes": 2251,
+      "source": "scratch/current-preflight-measurement-plan.json"
+    },
+    {
+      "path": "records/native-r2.json",
+      "sha256": "6fd6369971d6c4e2e95fd8d12350c65d57cf00c77c76935027dec6ab3ca1dbdf",
+      "bytes": 413,
+      "source": "scratch/native-current-preflight-r2.json"
+    },
+    {
+      "path": "records/native-r2.log",
+      "sha256": "a00954c83f5560856953d2d11235d16d6741c0a9c488a27cbc15ec3e126ce39a",
+      "bytes": 4486,
+      "source": "scratch/native-current-preflight-r2.log"
+    },
+    {
+      "path": "records/profile-host-result.path-redacted.json",
+      "sha256": "d8aa443396e1ae74a728b6ba80243731c7eaba9d92b0d4b0d0800c18f7195c8d",
+      "bytes": 5006,
+      "source": "scratch/current-preflight-01-profile-10014/result.json",
+      "note": "JSON metadata only; local filesystem roots redacted. Original source hash recorded below.",
+      "originalSha256": "d8393a3eca125fe1098053ef23fe6a79be0b6dab358b553dd7a637ff97e6b2ab",
+      "originalBytes": 5198,
+      "redactions": 2
+    },
+    {
+      "path": "records/profile-off-pair-validation-r2.json",
+      "sha256": "de34369e7e4d2f023c8c8f829fc27f9f61f74ea26ea984f68864ca93a32b9a52",
+      "bytes": 27708,
+      "source": "scratch/current-preflight-01-profile-10014-vs-current-preflight-02-off-10014-current-preflight-validation-root-r2.json"
+    },
+    {
+      "path": "records/profile-off-pair-validation-r2.log",
+      "sha256": "014e8bdfdc52db268fb7226bc652b3cadb6cca206cc29577070b9743854d955f",
+      "bytes": 22317,
+      "source": "scratch/current-preflight-pair-validation-root-r2.log"
+    },
+    {
+      "path": "records/profile-strict-reader-r2.txt",
+      "sha256": "81f85b672c5ae261be0c3fe845896d6d2a56c40749e49e3903240fd799f43b3b",
+      "bytes": 3314,
+      "source": "scratch/current-preflight-01-profile-10014-strict-reader-root-r2.txt"
+    },
+    {
+      "path": "records/profile-summary.json",
+      "sha256": "c914f2b1b4e85ca26624f1bcd4f1bd7f2f374553b6b93a3ad5a7628f6d62ac61",
+      "bytes": 4744,
+      "source": "scratch/current-preflight-01-profile-10014-summary.json"
+    },
+    {
+      "path": "records/query-off-host-result.path-redacted.json",
+      "sha256": "ff494c51746dc143bc2555c62869f5c2f7b33bbcb97e966353140eddd86f54f6",
+      "bytes": 4933,
+      "source": "scratch/current-preflight-02-off-10014/result.json",
+      "note": "JSON metadata only; local filesystem roots redacted. Original source hash recorded below.",
+      "originalSha256": "1d63de0935ce075043f8abf5a8edb2b601ee9aa955118ba7c5c475455501de5f",
+      "originalBytes": 5125,
+      "redactions": 2
+    },
+    {
+      "path": "records/query-off-strict-reader-r2.txt",
+      "sha256": "7182f5ec4d7aaaa4fa2095b3b0d359ed601ddb24a1005dc9150378589b9e7acd",
+      "bytes": 3314,
+      "source": "scratch/current-preflight-02-off-10014-strict-reader-root-r2.txt"
+    },
+    {
+      "path": "records/query-off-summary.json",
+      "sha256": "b2d2e7699de30979ef1e970050c62564b0d8c5b350605c632aa42ddfef550ace",
+      "bytes": 738,
+      "source": "scratch/current-preflight-02-off-10014-summary.json"
+    },
+    {
+      "source": "current-preflight-profile-draft/r1-frozen/src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "uncompressedSha256": "92711c658450ca6ad4b308224559b0107df0039d03476839476c2e72e2915d4a",
+      "uncompressedBytes": 372009,
+      "note": "Exact retained unrun r1 sampler source; no runtime PASS.",
+      "path": "source/r1-unrun/src/com/lushprojects/circuitjs1/client/CirSim.java.gz",
+      "sha256": "dd1d354aa73d64d4901480c1df969536fdd4421c0eb6be592ef8b2499347a878",
+      "bytes": 77542
+    },
+    {
+      "source": "current-preflight-profile-draft/r1-frozen/src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java",
+      "uncompressedSha256": "b378808e40c9173e337fea996c74375c361c251f1c9032d90504b777f0f147d8",
+      "uncompressedBytes": 75953,
+      "note": "Exact retained unrun r1 sampler source; no runtime PASS.",
+      "path": "source/r1-unrun/src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java.gz",
+      "sha256": "b3eca9d3192fc803082b237a3b8133392442a61cf3e934bd6331bb74bc279f7c",
+      "bytes": 12819
+    },
+    {
+      "source": "current-preflight-profile-draft/r1-frozen/tests/contracts/Q30LuRepetitionProfileContractTest.java",
+      "uncompressedSha256": "021751d58658dc9c6d47f3d6a78c55e5c14e27946a85810c3245e06e4ed51e97",
+      "uncompressedBytes": 19847,
+      "note": "Exact retained unrun r1 sampler source; no runtime PASS.",
+      "path": "source/r1-unrun/tests/contracts/Q30LuRepetitionProfileContractTest.java.gz",
+      "sha256": "24fc37690f00424b0815316c7476cf28fb7781b447097c599fc0f7a2463f6699",
+      "bytes": 4111
+    },
+    {
+      "path": "source/r2-source-overlay.tar.gz",
+      "sha256": "1fa0b4bde32fd1c169538ca5bf4f4f66ba8b49fa32074c164b6e5cb0b9bca9f1",
+      "bytes": 108582,
+      "source": "four exact candidate overlay files",
+      "uncompressedSha256": "aeebcda81658e0de6e6b85e6c5ef712d0aed59815be18e28672c54dbbd4d50c7",
+      "uncompressedBytes": 542720,
+      "note": "tar.gz of the exact four-file overlay only; archive members individually hashed in source-overlay-provenance.json",
+      "members": [
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+          "bytes": 372207,
+          "sha256": "15a576e8a254def5e1a90dcd860992ec36cacb9d1c1dbfd61026e52988cf340d"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java",
+          "bytes": 75953,
+          "sha256": "b378808e40c9173e337fea996c74375c361c251f1c9032d90504b777f0f147d8"
+        },
+        {
+          "path": "scripts/verify-current-contracts.ps1",
+          "bytes": 66443,
+          "sha256": "9d1c1002f78a98b328f339d1c05f9601f6cb3042b0c0f5c17b4dc241c2bdac0c"
+        },
+        {
+          "path": "tests/contracts/Q30LuRepetitionProfileContractTest.java",
+          "bytes": 20083,
+          "sha256": "3bf162017b8967304e87a07928c3fdd5d7966dd3a7945e988560a9ed4b9d5e3c"
+        }
+      ]
+    },
+    {
+      "path": "source/source-audit.json.gz",
+      "sha256": "13284b59306812f36ecf7c025dd617a89f79167e758145ddc6ace5013946283b",
+      "bytes": 72315,
+      "source": "scratch/current-preflight-profile-b934bc7c77344c31b9d6a81b6e0fbcfe/source-audit.json",
+      "uncompressedSha256": "9a5d9e1cf5251fcd77f13ff781a08197cfd6531647905299cec3a6f039ad4751",
+      "uncompressedBytes": 268725,
+      "note": "gzip payload decompresses byte-for-byte to the source file"
+    },
+    {
+      "path": "source/source-overlay-provenance.json",
+      "sha256": "aa052e23fad3e66b6b49a7e0f826f054da8bf020e369d093636d6b3ebeb9ce08",
+      "bytes": 2287
+    },
+    {
+      "path": "validator/audit_current_preflight_inputs.path-redacted.py",
+      "sha256": "8562ce03f598b6102db9564d22d088cb00fddd6f5ae5f0d712fac56f10a7e714",
+      "bytes": 2529,
+      "source": "scratch/audit_current_preflight_inputs.py",
+      "note": "Single fixture-default path redacted; exact source hash is retained in provenance. This archival copy is not invoked.",
+      "originalSha256": "7fef6db83f3626a08e5c6f469b08d8df926eee3146bd3a36df4f8fcebcc2529d",
+      "originalBytes": 2652,
+      "redaction": "Only the absolute fixture default replaced with a placeholder.",
+      "priorArchivedSha256": "91c8508f7b83458cec48397bc75868db052533e9251eff1fd3762ef29991b4d5",
+      "archiveTransforms": [
+        "Removed surplus trailing blank lines to satisfy git diff --check; executable statements unchanged."
+      ]
+    },
+    {
+      "path": "validator/check_lu_sampler_metadata_canaries.py",
+      "sha256": "a776cfa51880a2a13d87e4cf5be7daa28ee1897213cbf522d13cdb13f27c1342",
+      "bytes": 2846,
+      "source": "scratch/check_lu_sampler_metadata_canaries.py"
+    },
+    {
+      "path": "validator/lu-sampler-metadata-canaries.json",
+      "sha256": "a4a4850853716795848026863c8164a0149980a94155ae6a5413de38c2860d25",
+      "bytes": 2494,
+      "source": "scratch/lu-sampler-metadata-canaries.json"
+    },
+    {
+      "path": "validator/PROVENANCE.md",
+      "sha256": "48e4da7b91e9475df9d8e9af8e57bffe5d85a1a1fe1083ff8c1fc21b916d1324",
+      "bytes": 1581
+    },
+    {
+      "path": "validator/run_current_preflight.py",
+      "sha256": "3411e3dff825e05b3b740c15507c440cd827239d2a034afca2db2efdc8387b27",
+      "bytes": 2252,
+      "source": "scratch/run_current_preflight.py",
+      "originalSha256": "81eab6fc77670c01d25119313b4795f86d131c5164796937cf400b7f4d05c160",
+      "note": "Archival copy with the personal repository default replaced; original execution hash retained.",
+      "priorArchivedSha256": "3da6f01da0606053b73a7fadd3a865d55ba10e64871497b63962139142098dd1",
+      "archiveTransforms": [
+        "Removed surplus trailing blank lines to satisfy git diff --check; executable statements unchanged."
+      ]
+    },
+    {
+      "path": "validator/validate_current_preflight_pair.py",
+      "sha256": "6abcf80d263e0411d15bf2425aa7ec1b352a09937b43b54c39e6fb85157050d1",
+      "bytes": 34690,
+      "source": "scratch/current-preflight-validator-draft/validate_current_preflight_pair.py"
+    },
+    {
+      "path": "validator/validate_current_preflight_pair.r1.py",
+      "sha256": "a7619bb36d61d71c09471116064eaaacaf2987e41ac9bfeebe46a8a8370c34b3",
+      "bytes": 34331,
+      "source": "scratch/current-preflight-validator-draft/validate_current_preflight_pair.r1.py"
+    },
+    {
+      "path": "validator/validate_lu_repetition_pair.path-redacted.py",
+      "sha256": "562885b05b882f3ae63a67cd0052fedbe028acd5d0a3454ba75a13f75f19b2e9",
+      "bytes": 28020,
+      "source": "scratch/validate_lu_repetition_pair.py",
+      "note": "Path-default literals redacted; exact source hash is retained in provenance. Not accepted by exact-hash validator without restoring the private original.",
+      "originalSha256": "56d11822c0456ef4372bfa7cdfc0f3d79965e6aa895fcfd665e0d4a8b72da312",
+      "originalBytes": 28129,
+      "redaction": "Only SCRATCH_DEFAULT and REPO_DEFAULT literal absolute path values replaced."
+    }
+  ]
+}

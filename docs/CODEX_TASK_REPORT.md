@@ -1,13 +1,125 @@
 # Current checkpoint: Q30 BLOCKED / NOT ACCEPTED
 
+Branch `codex/q30-multirail-qualification`. Latest accepted source is local
+`e285675d6f8f689cd7e73d09543f6cd37de8987f`
+(`Avoid redundant finite checks in nonlinear LU`). No push or completion email.
+Normal Q30 publication remains disabled. U06/U07/Q60 and later milestones are
+unstarted; full final acceptance matrices remain NOT RUN while hard gates fail.
+The 90,000-ms cumulative, 640-work and 5,000-ms active-operation limits remain
+unchanged, as do private measurement isolation, settling, all hypotheses/proofs,
+physical admission, replay, family ownership and cleanup contracts.
+
+The mandatory FIRST independent review, focused regression and fresh comparison
+of the original uncommitted optimization were completed at local `7a30a3f`.
+Its eight counterbalanced runs preserved exact electrical/proof/physical/work/
+cache results and saved 11.155–14.706 s, while every cold result still exceeded
+90 s. [Initial review](task-evidence/Q30/intermediate-optimization/README.md).
+Subsequent accepted local optimizations are column references `0b29680`, finite
+predicate `a57ffc3`, right-looking LU `d825d0f`, routing queue/neighbors `86aa58b`,
+and validated nonlinear input `e285675`. Their isolated gains are not assumed
+additive or normal-corpus acceptance. Rejected trials and failed gates remain
+in their evidence; the zero-coefficient solve trial at `02450fb` is not integrated.
+
+The original monotonic 106.350-s breakdown identifies solver stepping 79.421 s,
+routing 20.070 s, placement 0.826 s, analyze/setup 1.224 s, construction 0.377 s,
+physical admission 0.075 s, settling 1.271 s and proof cleanup 0.082 s, with
+remaining glue itemized. Diagnostic/service/repair/retest/completion purposes,
+candidate rejections and repeated work are separated in the
+[stage evidence](task-evidence/Q30/stage-profile/README.md). The accepted-kernel
+follow-up is 96.359 s with solver 66.219 s and routing/validators 22.542 s.
+[Follow-up](task-evidence/Q30/accepted-kernel-profile/README.md).
+CPU sampling added substantial overhead and is ranking evidence only.
+
+The accepted finite-input optimization skips only duplicate per-cell predicates
+in the private restored/checked-stamp nonlinear matrix path. General validation,
+zero-row checks, numerical ordering and guards remain. Final focused native4,
+both production GWT builds, compiled A07/disabled-normal checks and exact readers
+pass. Eight fresh plan-4 runs have full report parity, empty host error arrays,
+stable inputs and owned cleanup. Paired cold savings are 2.421/0.259/2.642/2.253 s;
+proof savings are 2.284/0.330/2.332/2.142 s. Repeated seed-7 spreads are much smaller
+than the repeated gain; the single small 20-part delta is not a population claim.
+The exact committed plan-2 source also passes its independent native/GWT/A07
+gates. Seed 10014/40 parts still takes 103.346 s cold, proof 74.354 s and routing
+22.468 s. [Accepted evidence](task-evidence/Q30/validated-factor-input/README.md).
+
+This local documentation checkpoint records current-preflight measurement
+evidence and integrates no sampler. R2 native5 PASS 47.422 s, production GWT5
+PASS 81.103 s, compiled A07/disabled-normal and exact reader/three corruptions
+PASS. Fresh seed-10014/40 profile/off cold times are 102.757/103.323 s; proof
+73.810/74.275 s and routing 22.466/22.521 s. All 1,339 source inputs are unchanged;
+complete reports match outside timing/profile fields. Both strict readers pass
+43 corruptions; the sampler reader rejects 51 metadata corruptions. Host error
+arrays are empty and owned cleanup passes in 0.903/1.182 s.
+
+The sampler observes 742,391 factors and 1,453 input traversals. Left-to-right
+first-hit scans would read 2,490,017 of 10,269,420 cells (24.247%); diagonal-first
+would read more. Every sampled row is nonzero. The 10.6-ms sampled scan time
+suggests roughly 5.416 s only by extrapolation: sparse selection and uncalibrated
+timer granularity limit that estimate. The 36.9-ms capture/compare bracket omits
+per-call/codegen overhead; one pair with the profile faster cannot quantify
+instrumentation cost. Root independently audited the compact source overlay
+against the committed working-source reconstruction, exact raw reports,
+inventory and personal-path removal. R1 sampler/reader defects and repairs are
+retained. [Current preflight](task-evidence/Q30/current-preflight/README.md).
+
+An unintegrated early-exit scan trial is now running in task-owned source-only
+fixtures. Its sole production delta stops each private row scan at the first
+nonzero; the outer zero-row test and shared factor/solve code remain. Independent
+source review finds no blocker. The first native gate correctly FAILed (33.827 s)
+because the new test omitted the required PASS output prefix despite completing
+164 assertions. R2 changes only that prefix. Native5 PASS 33.677 s; both actual
+GWT builds and compiled A07/disabled-normal/strict-negative gates pass with
+owned cleanup. The predeclared eight fresh timing rows span 20/37/40 packages,
+repeat seed 7 and stop on failures or >5% first-pair proof regression. Timing and
+the optimization acceptance decision are still PENDING; no trial source is staged.
+
+Uncommitted plan-4 scale work remains NOT ACCEPTED. Purposeful one/two-channel
+topologies and support blocks replace count padding; current replay is /4 with
+family-owned power domains. The frozen 77-root proposal preserves all original
+51 and adds 26 by structural coverage only; each representative/held-out cohort
+spans 20–40 and 18 topology axes. All 77 canonical plans match the independent
+oracle. Structural native6 and focused ten service plus ten finer-step rows pass.
+These are focused proofs, not scale or normal timing acceptance.
+[Scale candidate](task-evidence/Q30/scale-plan-4/README.md).
+
+D01 seed 10387/20 passes app, strict reader and host cleanup. Seed 10014/40 passes
+app/strict proof but retains HOST POLLING FAIL from six attribute timeouts during
+synchronous construction. The isolated resumable verifier r3 has source-review
+blockers: retained snapshot objects, unreleased bridge and permissive boundary
+reader. An r4 scoped-lease/reader repair is in scratch, unintegrated and unrun.
+Actual successor and visible-power canaries remain NOT RUN. The maintained host
+runner fix `b23acec` now rejects attribute-read errors; it does not erase old failure.
+The earlier normal-path seed-7 request failed at 90,066.6 ms and 378/390 proof
+units, with cleanup passing. No successful normal admission receipt exists yet.
+
+Resources: the current zero-row timing sequence owns its maintained runner's
+recorded browser/server processes; prior completed runs have verified cleanup
+and no survivors. The substantial task-temp source/evidence copies remain.
+Automatic approval review previously blocked recursive deletion of two older
+copies and one copied generated-WAR tree; no retry is planned. Their exact
+identities are retained in the detailed historical checkpoint below. Unrelated
+Desktop checkout work and pre-existing `tests/__pycache__` are preserved.
+Plan-4 source/tests/driver/readers, normal-verifier hook/API and scale evidence
+remain unstaged and uncommitted. This documentation checkpoint contains only
+the measurement evidence and report. No production source is staged or changed
+by the new sampler.
+
+Next: finish the zero-row comparison and accept or reject it from focused proof
+and measured attribution; then address the next measured cost. Repair and prove
+D01 lifecycle canaries, obtain normal cold timing with margin and scale coverage,
+and only then run the complete final acceptance matrix. Q30 stays BLOCKED.
+
+# Historical checkpoint: Q30 optimization and current-preflight review — local e285675
+
 Branch `codex/q30-multirail-qualification`; prior accepted source checkpoint
 `86aa58bc6d7f8909d1519a57da6ab1d094a23c48`
 (`Optimize Q30 routing queue and neighbor traversal`). The validated routing
 delta and runner fix are committed locally. No push or completion email. Normal Q30
 publication stays disabled; U06/U07/Q60 and later milestones are unstarted.
 Full final acceptance matrices are NOT RUN while hard gates fail.
-The validated factor-input optimization below is accepted as an intermediate
-change in the local commit containing this checkpoint, based on
+The validated factor-input optimization below is accepted at
+`e285675d6f8f689cd7e73d09543f6cd37de8987f`
+(`Avoid redundant finite checks in nonlinear LU`), based on
 `e7a73e7fb0ce824cd51675e383225c50be2124d2`. Q30 itself remains BLOCKED.
 The preceding LU measurement evidence is committed locally at
 `e7a73e7fb0ce824cd51675e383225c50be2124d2`; it integrates no sampler or plan-4 source.
@@ -166,8 +278,8 @@ not a population claim. Seed 10014/40 parts still takes 103.346 s cold, includin
 Strict readers run 43/44 corruption cases as appropriate; every electrical,
 physical, hypothesis, service/retest, work, cache and cleanup field stays exact.
 
-Only the optimization, strengthened A07 canaries, its evidence and this report
-are included in this local commit; the normal hook and plan-4 work remain
+Commit `e285675` includes only the optimization, strengthened A07 canaries,
+its evidence and the checkpoint report; the normal hook and plan-4 work remain
 uncommitted. All 1,338 working inputs match the measured
 candidate. An independent exact-index fixture (1,337 inputs; committed plan-2
 baseline) also passes native4 48.284 s, GWT5 80.962 s and compiled A07 plus strict
@@ -176,10 +288,45 @@ source and independently checked the evidence inventory, compressed payloads,
 privacy, exact reconstruction of both 1,338-input arms, and all eight raw reports.
 [Validated factor-input evidence](task-evidence/Q30/validated-factor-input/README.md).
 
-Next: measure the remaining private LU preflight cost and row-hit distribution
-with the validated sparse sampler, then select the next measured kernel change.
-The repaired private D01 resumable draft has source review but still needs its
-real successor/power-boundary canaries and runtime gates. Keep all zero-row,
+The current private-preflight sampler is isolated measurement code, not integrated
+into root production source. Source review found no correctness blocker after
+adding an explicit timing-completion counter to the native early-return/exception
+canaries. R1 is retained; r2 native5 PASS 47.422 s, GWT5 PASS 81.103 s, actual A07
+and disabled-normal canaries PASS, exact A07 reader/three corruptions PASS.
+All 1,339 source-fixture inputs match their prebuild audit; compiled canaries and
+both timing runs consume identical source/web/runner manifests.
+
+Fresh seed-10014/40-part profile/off cold times are 102.757 / 103.323 s, proof
+73.810 / 74.275 s, routing 22.466 / 22.521 s. Complete reports match outside
+explicit timing and profile fields. Both current readers pass 43 corruptions;
+51 sampler-metadata corruptions are rejected. Host errors are empty and owned
+cleanup PASSes in 0.903 / 1.182 s. Root repaired nonexistent helper API calls and
+a missing carried runner hash in the new reader before successful validation;
+the original reader draft and unchanged raw browser reports are retained.
+
+Cold sampling observes 742,391 factors, 727 starts, 726 completed adjacent pairs
+(30 exact matches) and one correctly aborted pair. The 1,453 sampled inputs
+contain 10,269,420 cells. A left-to-right first-hit scan would read 2,490,017
+(24.247%); diagonal-first would read 2,606,252 and is worse. Every sampled row
+has a nonzero; only 148 of 122,114 sampled diagonal entries are nonzero.
+Sampled scan time totals 10.6 ms, suggesting roughly 5.416 s if extrapolated.
+This is not directly measured cumulative work: sparse selection and uncalibrated
+browser timer granularity limit the estimate. Copy/compare brackets total
+36.9 ms and exclude per-call/codegen overhead. One pair with the profile
+0.566 s faster cannot quantify total instrumentation cost or prove acceptance.
+The controlled evidence packet is being prepared; no sampler source is staged.
+
+Next: test a left-to-right early exit within each private zero-row scan, retaining
+the check for every row, all general finite scans and the unchanged factor body.
+The new candidate and native private-path oracle are isolated in task scratch;
+its implementation, gates and fresh counterbalanced timing are not yet complete.
+The repaired private D01 resumable r2 draft has source review. Independent r3
+review confirms the ordinary normal coordinator path but finds blockers: a
+static snapshot identity registry retains retired objects, its bridge lacks
+revocation, and the boundary reader accepts incomplete snapshots. R3 is retained
+unrun; a scoped-lease/strict-reader r4 repair is isolated in task scratch. No D01
+draft is integrated, and runtime successor/visible-power canaries remain NOT RUN.
+Keep all zero-row,
 arithmetic, general-API, solve and publication checks.
 Then prove normal cold timing with margin and scale before any final matrix.
 

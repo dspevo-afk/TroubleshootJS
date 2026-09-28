@@ -1,0 +1,31 @@
+{
+  "label": "current-preflight-02-off-10014",
+  "mode": "off",
+  "exitCode": 0,
+  "hostMonotonicSeconds": 135.6555107000022,
+  "wallMinusMonotonicSeconds": 4.0170998545363545e-06,
+  "runnerOutcome": "PASS",
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 1.1818034000025364,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "cold": {
+    "elapsedMs": 103323,
+    "proofElapsedMs": 74275,
+    "routingElapsedMs": 22521,
+    "totalWork": 490,
+    "hypothesisWork": 390,
+    "cleanupComplete": true
+  },
+  "warm": {
+    "elapsedMs": 28795,
+    "proofElapsedMs": 0,
+    "routingElapsedMs": 22422,
+    "totalWork": 101,
+    "hypothesisWork": 1,
+    "cleanupComplete": true
+  }
+}

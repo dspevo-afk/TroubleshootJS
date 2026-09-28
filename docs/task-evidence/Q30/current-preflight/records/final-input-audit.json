@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "scope": "all1339 source-only fixture inputs still match prebuild source audit; compiled canaries and both measured browser runs have identical complete consumed source/web/runner manifests",
+  "fixture": "current-preflight-profile-b934bc7c77344c31b9d6a81b6e0fbcfe",
+  "sourceAuditSha256": "9a5d9e1cf5251fcd77f13ff781a08197cfd6531647905299cec3a6f039ad4751",
+  "expectedSourceInputs": 1339,
+  "manifestSha256": "f273542ef447240715593a926ec25783c60f4d234e5989a61ac106bb561932e0",
+  "sourceSha256": "ca9b07c7072378a28c68f2294de33f8bbcdfa6fba4553cd81d57b96fc064e780",
+  "webSha256": "ee7d15d40ad52c13175b74c6a125a0a3ea76c6930f0ff083f6f34445a7468de8",
+  "runLabels": [
+    "current-preflight-canaries-r2",
+    "current-preflight-01-profile-10014",
+    "current-preflight-02-off-10014"
+  ],
+  "coldSample": {
+    "fullCellReads": 10269420,
+    "leftToRightCellReads": 2490017,
+    "leftToRightReadFraction": 0.2424690975731833,
+    "diagonalFirstCellReads": 2606252,
+    "zeroRowPreflightMeasuredMillis": 10.599999964237213,
+    "selectedCalls": 1453,
+    "totalFactors": 742391,
+    "extrapolatedPreflightMillis": 5415.928818616675,
+    "extrapolationLimit": "sparse deterministic sample; browser clock granularity uncalibrated; not directly measured cumulative work or a promised speedup"
+  },
+  "build": {
+    "gate": "maintained JDK8/GWT five-permutation build",
+    "label": "current-preflight-gwt-r2",
+    "exitCode": 0,
+    "startedUtc": "2026-09-28T05:44:13.9422781Z",
+    "finishedUtc": "2026-09-28T05:45:35.0493065Z",
+    "elapsedSeconds": 81.1025758,
+    "status": "PASS"
+  }
+}
