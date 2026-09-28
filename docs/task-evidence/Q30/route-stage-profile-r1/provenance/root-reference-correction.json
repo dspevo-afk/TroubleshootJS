@@ -1,0 +1,27 @@
+{
+  "status": "REPAIRED_METADATA_REFERENCES_ONLY",
+  "priorInventorySha256": "61e21ee2277b0985763c7fea1b4467404f836669c560b90ca3535fd4dee41304",
+  "firstRootAudit": "FAIL: three review sourceRef values omitted the intermediate scratch directory; exact review payloads and hashes were correct.",
+  "changes": [
+    {
+      "path": "provenance/review/root-review-decision.md.gz",
+      "oldSourceRef": "scratch/route-stage-profile-root-review-decision.md",
+      "newSourceRef": "scratch/scratch/route-stage-profile-root-review-decision.md",
+      "sourceSha256": "026ced9bb9be2b723944d12c3fa4f187fc725506e51812fd282f493970c994d5"
+    },
+    {
+      "path": "provenance/review/source-review.md.gz",
+      "oldSourceRef": "scratch/route-stage-profile-source-review.md",
+      "newSourceRef": "scratch/scratch/route-stage-profile-source-review.md",
+      "sourceSha256": "38d6e2d249383202dce0d8fde32474fe2f9c0d9589dfc0a1f488005980b85067"
+    },
+    {
+      "path": "provenance/review/source-review.original.md.gz",
+      "oldSourceRef": "scratch/route-stage-profile-source-review.original.md",
+      "newSourceRef": "scratch/scratch/route-stage-profile-source-review.original.md",
+      "sourceSha256": "c74367d34bf3d4fe8b08711f9af7517b01cd9b8d064e38c9b6939cd42d26cd4f"
+    }
+  ],
+  "unchanged": "All source, raw-report, gate, comparison, interpretation and review artifact payload bytes. No build or host run.",
+  "next": "Rerun root integrity/source reconstruction audit on the corrected final inventory."
+}

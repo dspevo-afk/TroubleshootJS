@@ -1,0 +1,26 @@
+{
+  "baseSourceInputs": 1340,
+  "candidateSourceInputs": 1343,
+  "changedSourceOverlayCount": 11,
+  "interpretationHelperSha256": "53cc245e49e772acb7b01a62d6c192c0f588d9e9a6f8092390fa56e41e08446d",
+  "interpretationSha256": "f30cfce7c8134d286f7396b4677f346fd8159ecc217ce601da6f2b2f7e441817",
+  "inventoryExcludes": [
+    "inventory.json",
+    "inventory.sha256"
+  ],
+  "normalQ30Acceptance": "BLOCKED_CATALOG_DISABLED",
+  "packet": "Q30/route-stage-profile-r1",
+  "rawCanaryReportCount": 2,
+  "rawMeasurementReportCount": 3,
+  "rawReportHashes": {
+    "route-stage-profile-01-control-10014": "c407fcf452d61c910ea7990702483e04710ab1ff1dd5bfc5df295c90521d4775",
+    "route-stage-profile-02-profile-10014": "0c242a935ce3629fd1384e371494b562d459d4c6ee7a35339dc89da95471b8c1",
+    "route-stage-profile-03-control-10014": "c1525bb681ade95ae08704f6634f92e11e861a62937ef8bf0606a66e2f145ec1"
+  },
+  "rootCommit": "ffe91321d0cc674a6a3e3e5e9f382d9d198a16e4",
+  "schema": 1,
+  "sourceAuditSha256": "01a0c70a2117720f6e16ae000924cc201c8e0b0b0d15d19db2e4347f4425324a",
+  "status": "PASS_COARSE_PRIVATE_ATTRIBUTION_ONLY",
+  "strictReaderCount": 4,
+  "strictWrapperCount": 4
+}

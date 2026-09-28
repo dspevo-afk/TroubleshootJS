@@ -113,10 +113,22 @@ The nested 6.3-ms router setup is already inside 8.1-ms search setup. P05 totals
 P07 retains attempts 3/1/4: rejected, successful, rejected; attempt 1 is selected.
 No failed attempt or required admission check was skipped. Each profile has
 5,312 clock reads, 2,656 scopes, zero clock/scope/open/late errors and a frozen
-terminal snapshot. The complete evidence packet is being assembled.
+terminal snapshot. Root audited all 141 artifacts in the
+[routing-profile packet](task-evidence/Q30/route-stage-profile-r1/README.md),
+including five exact raw reports and the 1,340-to-1,343-input reconstruction.
+Three review source references omitted an intermediate directory; only that
+metadata was corrected, preserving payloads and the original inventory hash.
+Inventory: `1cd1e99db1e3bd1670c6468d86d05830320b6a875a788d40a6c07a9229efa3ed`.
+Root corrected its audit reader to distinguish the parent map's stored bytes
+from its historical original bytes; the final integrity/source audit PASSes.
 A separate read-only review found no generic contract justifying batching voltage
 publication; setters/cache updates/Composite recursion remain unchanged. Further
 work is to isolate solver publication cost and subdivide the large P07 residual.
+Source-only probe review caught CPU sampled-node/source-attribution and host
+error/canary defects, plus a solver-probe pause-accounting defect. Repairs and
+focused validation are pending; neither new probe has executed a browser or
+Q30 measurement. The external 10-ms CPU plan predeclares fresh control/profile/
+control rows on unchanged source/runtime inputs, after real host canaries.
 
 Scale remains NOT ACCEPTED. The preserved uncommitted plan-4/77-root proposal
 covers 20–40 structurally through purposeful one/two-channel functional variants;
