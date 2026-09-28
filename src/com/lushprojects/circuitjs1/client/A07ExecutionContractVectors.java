@@ -72,9 +72,40 @@ final class A07ExecutionContractVectors {
         expect(Outcome.STALE_OWNER, new Runnable() { public void run() { b.beginTrial(stale, 1401); }});
         b.beginTrial(successor, 1401); b.accepted(successor, .5, 1402); b.finish(successor, Outcome.COMPLETE);
         require(b.canPublish(successor, b.observation()) && !b.canPublish(first, sample), "successor is sole result owner");
+        finiteClassificationVectors();
         wallClocks();
         events();
         return assertions;
+    }
+    private static void finiteClassificationVectors() {
+        double positiveOverflow = Double.MAX_VALUE * 2.0;
+        double negativeOverflow = -Double.MAX_VALUE * 2.0;
+        double[] cases = {
+            -Double.MAX_VALUE, Double.MAX_VALUE,
+            -Double.MIN_VALUE, Double.MIN_VALUE, -0.0, 0.0,
+            Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, Double.NaN,
+            Double.longBitsToDouble(0x7ff0000000000001L),
+            positiveOverflow, negativeOverflow
+        };
+        for (int index = 0; index < cases.length; index++) {
+            requireFiniteMatchesOracle(cases[index], "finite classification boundary " + index);
+        }
+        for (int exponent = -1074; exponent <= 1024; exponent += 37) {
+            double power = Math.pow(2.0, exponent);
+            requireFiniteMatchesOracle(power, "finite positive power exponent " + exponent);
+            requireFiniteMatchesOracle(-power, "finite negative power exponent " + exponent);
+        }
+        // Keep exact power-of-two transitions around the largest finite values explicit.
+        for (int exponent : new int[] {-1074, -1073, -1022, -1000, -512, -1,
+                0, 1, 512, 1000, 1022, 1023, 1024}) {
+            double power = Math.pow(2.0, exponent);
+            requireFiniteMatchesOracle(power, "finite edge power exponent " + exponent);
+            requireFiniteMatchesOracle(-power, "finite negative edge power exponent " + exponent);
+        }
+    }
+    private static void requireFiniteMatchesOracle(double value, String message) {
+        boolean expected = !Double.isNaN(value) && !Double.isInfinite(value);
+        require(SolverExecutionBoundary.finite(value) == expected, message);
     }
     private static void wallClocks() {
         final SolverExecutionBoundary clock = new SolverExecutionBoundary();

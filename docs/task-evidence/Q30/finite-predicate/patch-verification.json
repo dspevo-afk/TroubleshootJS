@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "baselineCommit": "0b29680c7daa62123732b91e3c1157e8ba0d6abd",
+  "candidate": "finite-predicate-candidate",
+  "declaredDeltaFiles": [
+    "src/com/lushprojects/circuitjs1/client/SolverExecutionBoundary.java",
+    "src/com/lushprojects/circuitjs1/client/A07ExecutionContractVectors.java"
+  ],
+  "exactPatch": {
+    "path": "finite-predicate.patch",
+    "sha256": "47d9ec0e4bc309dc36f0d4f4a26faad18a2d17e9cbcfa4da3aed8c614b428b23",
+    "bytes": 43234,
+    "reconstruction": "byte exact"
+  },
+  "reviewPatch": {
+    "path": "finite-predicate-semantic.patch",
+    "sha256": "61bf3612d0f128091217446ec1973a8df9052a1f2fdc1effef8b57fb160f25fe",
+    "bytes": 3237,
+    "reconstruction": "LF-normalized content exact; line-ending bytes intentionally normalized for review"
+  },
+  "changedFileCount": 2,
+  "changedFiles": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/SolverExecutionBoundary.java",
+      "baselineSha256": "e34e0a71170408cabc99b8154a3d88ac5192dcd0adde80cbca8bc138ac4d85b6",
+      "candidateSha256": "52cc197644fc8f159bebf171a7242a6a704244f718d8148e692faf38c5d2c8d5",
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lfOnly": 163,
+        "crOnly": 0,
+        "bytes": 9162
+      },
+      "candidateLineEndings": {
+        "crlf": 163,
+        "lfOnly": 0,
+        "crOnly": 0,
+        "bytes": 9331
+      },
+      "baselineLfNormalizedSha256": "e34e0a71170408cabc99b8154a3d88ac5192dcd0adde80cbca8bc138ac4d85b6",
+      "candidateLfNormalizedSha256": "23084a3b2e9624c0b02ce40146b98b8a6882ad2d5c5c1e862c98dba116654f90",
+      "exactReconstruction": true,
+      "lfNormalizedReconstruction": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/A07ExecutionContractVectors.java",
+      "baselineSha256": "a6f39e7a3449f13f0fe8add06404dfd6462e065f1c2b01f42d16868017658985",
+      "candidateSha256": "92bb1182b7f2057ed73a2afcd55bc441a5cffcd6871d02ea3e26d97d3c66c93f",
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lfOnly": 162,
+        "crOnly": 0,
+        "bytes": 10887
+      },
+      "candidateLineEndings": {
+        "crlf": 193,
+        "lfOnly": 0,
+        "crOnly": 0,
+        "bytes": 12829
+      },
+      "baselineLfNormalizedSha256": "a6f39e7a3449f13f0fe8add06404dfd6462e065f1c2b01f42d16868017658985",
+      "candidateLfNormalizedSha256": "56ce83daecd89b30dde4db1244aa95c90a81f75c35b93c703fff613154a6eee6",
+      "exactReconstruction": true,
+      "lfNormalizedReconstruction": true
+    }
+  ],
+  "lineEndingExplanation": "The exact patch contains full-file newline changes where archive/source line endings differ. The LF-normalized review patch isolates semantic line changes; no behavior is inferred from line-ending churn. Preserve target repository line endings when integrating.",
+  "personalPathTransformations": []
+}

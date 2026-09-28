@@ -1,0 +1,189 @@
+{
+  "schema": 1,
+  "description": "Sanitized host-run receipts and byte-identical application reports archived separately. Host-local repository/scratch paths, ephemeral ports, profile paths, and process identifiers are omitted from receipts; hashes identify original unsanitized inputs. Application report payloads contain no host-local paths and are preserved byte-for-byte.",
+  "runs": [
+    {
+      "label": "profiled",
+      "wrapperResultSha256": "f305f7920b27ee8c7e637175ae0c35e48e17494e650d63cf2a303bf742838afe",
+      "wrapperRunner": "cpu_profile_candidate.py",
+      "applicationReport": "application-profiled-b7-report.json.gz",
+      "applicationReportSha256": "0c6fe0e596dc39c837796e84b57467653eb5040525543ca2bf5b1fab3712e475",
+      "applicationReportArchiveSha256": "a94dba2066c0040f432a5e3edeb91b6efce871fef051584ed2cd4c8ee2bf4a87",
+      "applicationReportBytes": 1491221,
+      "wrapper": {
+        "outcome": "PASS",
+        "caseCount": 1,
+        "errors": [],
+        "startedUtc": "2026-09-28T00:45:44.545131+00:00",
+        "operationStartedUtc": "2026-09-28T00:45:45.691389+00:00",
+        "finishedUtc": "2026-09-28T00:47:54.449195+00:00"
+      },
+      "case": {
+        "case": {
+          "index": 1,
+          "name": "geometry-02-B7",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=7",
+          "stateAttribute": "data-tsj-q30-coordinator-state",
+          "expectedState": "PASS:complete",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "PASS",
+            "FAIL"
+          ],
+          "timeoutSeconds": 600.0,
+          "reportAttribute": "data-tsj-q30-coordinator-report"
+        },
+        "startedUtc": "2026-09-28T00:45:45.691397+00:00",
+        "finishedUtc": "2026-09-28T00:47:53.264509+00:00",
+        "operationSeconds": 127.57310730000609,
+        "outcome": "PASS",
+        "applicationOutcome": "PASS",
+        "cpuProfileOutcome": "PASS",
+        "terminalReached": true,
+        "stateMatch": true,
+        "observedState": "PASS:complete",
+        "lastObservedState": "PASS:complete",
+        "timedOut": false,
+        "expectedFailureCanary": false,
+        "reportObserved": true,
+        "reportJsonValid": true,
+        "reportMatch": true,
+        "reportLength": 1491221,
+        "reportSha256": "0c6fe0e596dc39c837796e84b57467653eb5040525543ca2bf5b1fab3712e475",
+        "pageErrors": [],
+        "httpErrors": [],
+        "consoleErrors": [],
+        "attributeReadErrors": [],
+        "listenerCleanupErrors": [],
+        "navigationError": null
+      },
+      "inputAudit": {
+        "status": "PASS",
+        "beforeSha256": "919389b79b48aa6e7023a4651b9645023be873168f49ed2387251db7e53758fe",
+        "afterSha256": "919389b79b48aa6e7023a4651b9645023be873168f49ed2387251db7e53758fe",
+        "sourceSha256Before": "7f07fee8219ff26686b531f33e57b156a04340268aad939081184b862decae30",
+        "sourceSha256After": "7f07fee8219ff26686b531f33e57b156a04340268aad939081184b862decae30",
+        "webSha256Before": "6c902db8657d282930b52c4ee8c1ee7df4ba099286f95379486ba8da93a13fd5",
+        "webSha256After": "6c902db8657d282930b52c4ee8c1ee7df4ba099286f95379486ba8da93a13fd5",
+        "runnerBeforeSha256": "b1586acaf9c76a0b29712b53b70bbb3cb086d0ff14056162d368018eede11fb6",
+        "runnerAfterSha256": "b1586acaf9c76a0b29712b53b70bbb3cb086d0ff14056162d368018eede11fb6",
+        "fileCountBefore": 1524,
+        "fileCountAfter": 1524,
+        "seconds": 0.34286030000657775
+      },
+      "cleanup": {
+        "status": "PASS",
+        "seconds": 0.830479700001888,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "cpuProfileConfig": {
+        "samplingIntervalMicroseconds": 1000,
+        "caseCount": 1,
+        "scope": "page target only; CPU sampling and passive Debugger source-provenance capture are diagnostic and may perturb timing",
+        "stopTargetState": "RUNNING:warm",
+        "requireWarmBoundary": true,
+        "negativeCanary": false
+      },
+      "cpuProfileReceipt": {
+        "status": "PASS",
+        "samplingIntervalMicroseconds": 1000,
+        "scope": "starts before navigation; target-state stop is host-observed and may include a short warm-boundary tail",
+        "startIncludesNavigation": true,
+        "stopTargetState": "RUNNING:warm",
+        "requireWarmBoundary": true,
+        "startRequestedUtc": "2026-09-28T00:45:45.693705+00:00",
+        "startRoundTripSeconds": 0.0017995999951381236,
+        "stopObservedState": "RUNNING:warm",
+        "stateReadRoundTripSeconds": 0.14567470000474714,
+        "pollIntervalSeconds": 0.2,
+        "profileMayIncludeWarmWorkUntilStopAck": true,
+        "lastColdStateObservedUtc": "2026-09-28T00:47:26.718136+00:00",
+        "transitionDetectionWindowSeconds": 0.3461083000001963,
+        "stopReason": "target-state-observed",
+        "stopObservedUtc": "2026-09-28T00:47:27.064251+00:00",
+        "warmBoundaryObserved": true,
+        "stopObservedHostMonotonicSeconds": 83987.9620936,
+        "stopDispatchDelaySeconds": 6.600006599910557e-06,
+        "stopRoundTripSeconds": 0.42028919998847414,
+        "qualityFailures": []
+      }
+    },
+    {
+      "label": "control",
+      "wrapperResultSha256": "59e1f869fee1110de89541bf215e771bea72ee3ffce5e56dda96a3de00560c4e",
+      "wrapperRunner": "compiled_attribute_acceptance.py",
+      "applicationReport": "application-control-b7-report.json.gz",
+      "applicationReportSha256": "cb74dbde051cb15cfcf2b291e6a066af6a2e7bcc0c65e8e98a07c981ceb44149",
+      "applicationReportArchiveSha256": "b6048d6fd15840cbf7a5c5f059beefc35e4dfafc682124beea55993991f8de77",
+      "applicationReportBytes": 1491218,
+      "wrapper": {
+        "outcome": "PASS",
+        "caseCount": 1,
+        "errors": [],
+        "startedUtc": "2026-09-28T00:49:28.626037+00:00",
+        "operationStartedUtc": "2026-09-28T00:49:29.786921+00:00",
+        "finishedUtc": "2026-09-28T00:51:24.969120+00:00"
+      },
+      "case": {
+        "case": {
+          "index": 1,
+          "name": "cpu-followup-B7",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=7",
+          "stateAttribute": "data-tsj-q30-coordinator-state",
+          "expectedState": "PASS:complete",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "PASS",
+            "FAIL"
+          ],
+          "timeoutSeconds": 600.0,
+          "reportAttribute": "data-tsj-q30-coordinator-report"
+        },
+        "startedUtc": "2026-09-28T00:49:29.786935+00:00",
+        "finishedUtc": "2026-09-28T00:51:23.648052+00:00",
+        "operationSeconds": 113.86111149999488,
+        "outcome": "PASS",
+        "terminalReached": true,
+        "stateMatch": true,
+        "observedState": "PASS:complete",
+        "lastObservedState": "PASS:complete",
+        "timedOut": false,
+        "expectedFailureCanary": false,
+        "reportObserved": true,
+        "reportJsonValid": true,
+        "reportMatch": true,
+        "reportLength": 1491218,
+        "reportSha256": "cb74dbde051cb15cfcf2b291e6a066af6a2e7bcc0c65e8e98a07c981ceb44149",
+        "pageErrors": [],
+        "httpErrors": [],
+        "consoleErrors": [],
+        "attributeReadErrors": [],
+        "listenerCleanupErrors": [],
+        "navigationError": null
+      },
+      "inputAudit": {
+        "status": "PASS",
+        "beforeSha256": "919389b79b48aa6e7023a4651b9645023be873168f49ed2387251db7e53758fe",
+        "afterSha256": "919389b79b48aa6e7023a4651b9645023be873168f49ed2387251db7e53758fe",
+        "sourceSha256Before": "7f07fee8219ff26686b531f33e57b156a04340268aad939081184b862decae30",
+        "sourceSha256After": "7f07fee8219ff26686b531f33e57b156a04340268aad939081184b862decae30",
+        "webSha256Before": "6c902db8657d282930b52c4ee8c1ee7df4ba099286f95379486ba8da93a13fd5",
+        "webSha256After": "6c902db8657d282930b52c4ee8c1ee7df4ba099286f95379486ba8da93a13fd5",
+        "runnerBeforeSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+        "runnerAfterSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+        "fileCountBefore": 1524,
+        "fileCountAfter": 1524,
+        "seconds": 0.3414401000045473
+      },
+      "cleanup": {
+        "status": "PASS",
+        "seconds": 0.9779973999975482,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,1960 @@
+{
+  "schema": 1,
+  "kind": "focused comparison sequence evidence collection; not an acceptance verdict",
+  "finalizationState": "COMPLETE",
+  "finalizationReason": "All four pairs save runtime in proof with exact request/physical/proof/work/cache parity. Reverse-order seed-7 repeat confirms a gain larger than observed same-variant range. Seed13 still exceeds90s; no normal acceptance follows.",
+  "finalizedUtc": null,
+  "baselineCommit": "0b29680c7daa62123732b91e3c1157e8ba0d6abd",
+  "candidatePatch": {
+    "schema": 1,
+    "baselineCommit": "0b29680c7daa62123732b91e3c1157e8ba0d6abd",
+    "candidate": "finite-predicate-candidate",
+    "declaredDeltaFiles": [
+      "src/com/lushprojects/circuitjs1/client/SolverExecutionBoundary.java",
+      "src/com/lushprojects/circuitjs1/client/A07ExecutionContractVectors.java"
+    ],
+    "exactPatch": {
+      "path": "finite-predicate.patch",
+      "sha256": "47d9ec0e4bc309dc36f0d4f4a26faad18a2d17e9cbcfa4da3aed8c614b428b23",
+      "bytes": 43234,
+      "reconstruction": "byte exact"
+    },
+    "reviewPatch": {
+      "path": "finite-predicate-semantic.patch",
+      "sha256": "61bf3612d0f128091217446ec1973a8df9052a1f2fdc1effef8b57fb160f25fe",
+      "bytes": 3237,
+      "reconstruction": "LF-normalized content exact; line-ending bytes intentionally normalized for review"
+    },
+    "changedFileCount": 2,
+    "changedFiles": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/SolverExecutionBoundary.java",
+        "baselineSha256": "e34e0a71170408cabc99b8154a3d88ac5192dcd0adde80cbca8bc138ac4d85b6",
+        "candidateSha256": "52cc197644fc8f159bebf171a7242a6a704244f718d8148e692faf38c5d2c8d5",
+        "baselineLineEndings": {
+          "crlf": 0,
+          "lfOnly": 163,
+          "crOnly": 0,
+          "bytes": 9162
+        },
+        "candidateLineEndings": {
+          "crlf": 163,
+          "lfOnly": 0,
+          "crOnly": 0,
+          "bytes": 9331
+        },
+        "baselineLfNormalizedSha256": "e34e0a71170408cabc99b8154a3d88ac5192dcd0adde80cbca8bc138ac4d85b6",
+        "candidateLfNormalizedSha256": "23084a3b2e9624c0b02ce40146b98b8a6882ad2d5c5c1e862c98dba116654f90",
+        "exactReconstruction": true,
+        "lfNormalizedReconstruction": true
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/A07ExecutionContractVectors.java",
+        "baselineSha256": "a6f39e7a3449f13f0fe8add06404dfd6462e065f1c2b01f42d16868017658985",
+        "candidateSha256": "92bb1182b7f2057ed73a2afcd55bc441a5cffcd6871d02ea3e26d97d3c66c93f",
+        "baselineLineEndings": {
+          "crlf": 0,
+          "lfOnly": 162,
+          "crOnly": 0,
+          "bytes": 10887
+        },
+        "candidateLineEndings": {
+          "crlf": 193,
+          "lfOnly": 0,
+          "crOnly": 0,
+          "bytes": 12829
+        },
+        "baselineLfNormalizedSha256": "a6f39e7a3449f13f0fe8add06404dfd6462e065f1c2b01f42d16868017658985",
+        "candidateLfNormalizedSha256": "56ce83daecd89b30dde4db1244aa95c90a81f75c35b93c703fff613154a6eee6",
+        "exactReconstruction": true,
+        "lfNormalizedReconstruction": true
+      }
+    ],
+    "lineEndingExplanation": "The exact patch contains full-file newline changes where archive/source line endings differ. The LF-normalized review patch isolates semantic line changes; no behavior is inferred from line-ending churn. Preserve target repository line endings when integrating.",
+    "personalPathTransformations": []
+  },
+  "sourceIntegration": {
+    "status": "PASS",
+    "onlyPaths": [
+      "src/com/lushprojects/circuitjs1/client/SolverExecutionBoundary.java",
+      "src/com/lushprojects/circuitjs1/client/A07ExecutionContractVectors.java"
+    ],
+    "rows": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/SolverExecutionBoundary.java",
+        "beforeSha256": "a75284e2ff4b3d836cafc1121409c789e854ac339081944dd5aad6066c592a2e",
+        "trialRawSha256": "52cc197644fc8f159bebf171a7242a6a704244f718d8148e692faf38c5d2c8d5",
+        "integratedRawSha256": "52cc197644fc8f159bebf171a7242a6a704244f718d8148e692faf38c5d2c8d5",
+        "normalizedTrialAndIntegratedSha256": "23084a3b2e9624c0b02ce40146b98b8a6882ad2d5c5c1e862c98dba116654f90",
+        "preservedTargetLineEndings": true
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/A07ExecutionContractVectors.java",
+        "beforeSha256": "e47dddc8b8101e03ad1b3f9f1ddae570080a2dd3c0394d94c124e797aa50e026",
+        "trialRawSha256": "92bb1182b7f2057ed73a2afcd55bc441a5cffcd6871d02ea3e26d97d3c66c93f",
+        "integratedRawSha256": "92bb1182b7f2057ed73a2afcd55bc441a5cffcd6871d02ea3e26d97d3c66c93f",
+        "normalizedTrialAndIntegratedSha256": "56ce83daecd89b30dde4db1244aa95c90a81f75c35b93c703fff613154a6eee6",
+        "preservedTargetLineEndings": true
+      }
+    ],
+    "scope": "Accepted intermediate solver trial only; root plan-4 candidate remains separate and unaccepted."
+  },
+  "rootCanaries": {
+    "outcome": "PASS",
+    "caseCount": 2,
+    "inputAuditStable": true,
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 0.9500801999965915,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    },
+    "applicationReports": [
+      {
+        "report": "001-root-finite-a07.report.json",
+        "sha256": "06cb613d987f9da0fba248a05758546d1079b2079a454556247292c88720b1ef",
+        "status": "PASS",
+        "phase": null,
+        "caseName": "root-finite-a07",
+        "caseOutcome": "PASS",
+        "observedState": "PASS:a07"
+      },
+      {
+        "report": "002-root-q30-disabled.report.json",
+        "sha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+        "status": "BLOCKED",
+        "phase": "normal-catalog-disabled",
+        "caseName": "root-q30-disabled",
+        "caseOutcome": "PASS",
+        "observedState": "BLOCKED:normal-catalog-disabled",
+        "noLiveMutation": true
+      }
+    ],
+    "normalAdmissionProbe": "BLOCKED before generation/snapshot/live-owner mutation; this rejection is not a normal-player acceptance pass.",
+    "normalReaderTextReceipt": "gates/root-canaries/root-finite-disabled-reader.txt",
+    "interpretation": "This build includes the unaccepted plan4/power-registration source. Its canary reports are not normal-player acceptance."
+  },
+  "decision": "ACCEPTED_INTERMEDIATE",
+  "q30Status": "BLOCKED / NOT ACCEPTED",
+  "normalPublicationEnabled": false,
+  "pairedColdSavingsMs": [
+    1674,
+    2646,
+    2456,
+    1333
+  ],
+  "medianPairedColdSavingsMs": 2065.0,
+  "seed7ControlRepeatRangeMs": 319,
+  "seed7CandidateRepeatRangeMs": 22,
+  "plannedSequence": [
+    "finite-01-F7",
+    "finite-02-B7",
+    "finite-03-B13",
+    "finite-04-F13",
+    "finite-05-F64",
+    "finite-06-B64",
+    "finite-07-B7",
+    "finite-08-F7"
+  ],
+  "runRows": [
+    {
+      "runId": "finite-01-F7",
+      "status": "PASS",
+      "outcome": "PASS",
+      "resultSha256": "88d1b98be3cab993aae19751155a132e21998dcb5ff08f36a8bad05c7dd7f82e",
+      "operationStartedUtc": "2026-09-28T01:18:51.606427+00:00",
+      "operationSeconds": 111.48182879999513,
+      "finishedUtc": "2026-09-28T01:20:44.414617+00:00",
+      "inputAuditStable": true,
+      "cleanupComplete": true,
+      "hostCleanup": {
+        "status": "PASS",
+        "seconds": 0.9684702999948058,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "applicationReportSha256": "43f008fea8ea9fb5dec3f64cc6398f3d7e2fbbb963356fd8a16e128b40e670fc",
+      "applicationReportMatchesReceipt": true,
+      "applicationOutcome": "PASS",
+      "coldElapsedMs": 85492,
+      "coldProofElapsedMs": 59631,
+      "coldRoutingElapsedMs": 20589,
+      "coldWork": 468,
+      "coldProofWork": 390,
+      "coldProofSamples": 185,
+      "warmElapsedMs": 25263,
+      "warmProofCacheHitDelta": 1,
+      "warmReuseReceipt": true,
+      "applicationCleanupComplete": true,
+      "diagnosticProofParityWithStrictWrapper": true
+    },
+    {
+      "runId": "finite-02-B7",
+      "status": "PASS",
+      "outcome": "PASS",
+      "resultSha256": "b24087b2bb9bfb3f8c704223bfdbf54b245ef6adf228685c9eb59f05e422ef80",
+      "operationStartedUtc": "2026-09-28T01:21:04.783813+00:00",
+      "operationSeconds": 113.16198200000508,
+      "finishedUtc": "2026-09-28T01:22:59.560432+00:00",
+      "inputAuditStable": true,
+      "cleanupComplete": true,
+      "hostCleanup": {
+        "status": "PASS",
+        "seconds": 1.2473582000093302,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "applicationReportSha256": "551e01d09a0b74bad87dd248b590f1b2a485c840ff7560cc90d1a2010314de81",
+      "applicationReportMatchesReceipt": true,
+      "applicationOutcome": "PASS",
+      "coldElapsedMs": 87166,
+      "coldProofElapsedMs": 61344,
+      "coldRoutingElapsedMs": 20587,
+      "coldWork": 468,
+      "coldProofWork": 390,
+      "coldProofSamples": 185,
+      "warmElapsedMs": 25265,
+      "warmProofCacheHitDelta": 1,
+      "warmReuseReceipt": true,
+      "applicationCleanupComplete": true,
+      "diagnosticProofParityWithStrictWrapper": true
+    },
+    {
+      "runId": "finite-03-B13",
+      "status": "PASS",
+      "outcome": "PASS",
+      "resultSha256": "96b3dc6a659bacb0625a80c68c6fa0813eb77e4583e4e1ce5ea78ff1132d5017",
+      "operationStartedUtc": "2026-09-28T01:23:42.598385+00:00",
+      "operationSeconds": 122.45481210001162,
+      "finishedUtc": "2026-09-28T01:25:46.550587+00:00",
+      "inputAuditStable": true,
+      "cleanupComplete": true,
+      "hostCleanup": {
+        "status": "PASS",
+        "seconds": 1.1271839999972144,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "applicationReportSha256": "b9573be8f4b285a5c0a386ea70d9934a5a9ca58f3087ba5020c790dacaa93b4f",
+      "applicationReportMatchesReceipt": true,
+      "applicationOutcome": "PASS",
+      "coldElapsedMs": 94229,
+      "coldProofElapsedMs": 67699,
+      "coldRoutingElapsedMs": 20817,
+      "coldWork": 464,
+      "coldProofWork": 390,
+      "coldProofSamples": 185,
+      "warmElapsedMs": 27466,
+      "warmProofCacheHitDelta": 1,
+      "warmReuseReceipt": true,
+      "applicationCleanupComplete": true,
+      "diagnosticProofParityWithStrictWrapper": true
+    },
+    {
+      "runId": "finite-04-F13",
+      "status": "PASS",
+      "outcome": "PASS",
+      "resultSha256": "9b516afa682ebc3227097bee77bacc9e527d8525db3bdd4a8ca7dea610eed63c",
+      "operationStartedUtc": "2026-09-28T01:26:22.811546+00:00",
+      "operationSeconds": 118.38345200000913,
+      "finishedUtc": "2026-09-28T01:28:22.735761+00:00",
+      "inputAuditStable": true,
+      "cleanupComplete": true,
+      "hostCleanup": {
+        "status": "PASS",
+        "seconds": 1.1861558999953559,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "applicationReportSha256": "e9c83e37e61c53536c5c7836eae8aad11149ed7ed85c366425e95f7432af3ac0",
+      "applicationReportMatchesReceipt": true,
+      "applicationOutcome": "PASS",
+      "coldElapsedMs": 91583,
+      "coldProofElapsedMs": 64986,
+      "coldRoutingElapsedMs": 20972,
+      "coldWork": 464,
+      "coldProofWork": 390,
+      "coldProofSamples": 185,
+      "warmElapsedMs": 26059,
+      "warmProofCacheHitDelta": 1,
+      "warmReuseReceipt": true,
+      "applicationCleanupComplete": true,
+      "diagnosticProofParityWithStrictWrapper": true
+    },
+    {
+      "runId": "finite-05-F64",
+      "status": "PASS",
+      "outcome": "PASS",
+      "resultSha256": "0f7e4291dd6ca30aa39aac53959d2436b16cf211ebec5867408b94f0948599a9",
+      "operationStartedUtc": "2026-09-28T01:28:45.882580+00:00",
+      "operationSeconds": 99.37676469999133,
+      "finishedUtc": "2026-09-28T01:30:26.516225+00:00",
+      "inputAuditStable": true,
+      "cleanupComplete": true,
+      "hostCleanup": {
+        "status": "PASS",
+        "seconds": 0.904252100008307,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "applicationReportSha256": "f0caf1073c3f166a4a3238a5eebf1a3b2e9afdd62d505e0ec1ca0e0df1bcfefe",
+      "applicationReportMatchesReceipt": true,
+      "applicationOutcome": "PASS",
+      "coldElapsedMs": 80587,
+      "coldProofElapsedMs": 62046,
+      "coldRoutingElapsedMs": 13006,
+      "coldWork": 446,
+      "coldProofWork": 390,
+      "coldProofSamples": 185,
+      "warmElapsedMs": 18064,
+      "warmProofCacheHitDelta": 1,
+      "warmReuseReceipt": true,
+      "applicationCleanupComplete": true,
+      "diagnosticProofParityWithStrictWrapper": true
+    },
+    {
+      "runId": "finite-06-B64",
+      "status": "PASS",
+      "outcome": "PASS",
+      "resultSha256": "1fe7206c7a7696f67414c874c4ca8e5e78afc48e4e6bb1b4e595128ff52546e0",
+      "operationStartedUtc": "2026-09-28T01:30:57.969934+00:00",
+      "operationSeconds": 102.00849159999052,
+      "finishedUtc": "2026-09-28T01:32:41.100544+00:00",
+      "inputAuditStable": true,
+      "cleanupComplete": true,
+      "hostCleanup": {
+        "status": "PASS",
+        "seconds": 0.761883700004546,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "applicationReportSha256": "6f3ce84f84d0201adb12bedc5ba3977e936155a9a03ee5fffcf8022a82009525",
+      "applicationReportMatchesReceipt": true,
+      "applicationOutcome": "PASS",
+      "coldElapsedMs": 83043,
+      "coldProofElapsedMs": 64700,
+      "coldRoutingElapsedMs": 12622,
+      "coldWork": 446,
+      "coldProofWork": 390,
+      "coldProofSamples": 185,
+      "warmElapsedMs": 18239,
+      "warmProofCacheHitDelta": 1,
+      "warmReuseReceipt": true,
+      "applicationCleanupComplete": true,
+      "diagnosticProofParityWithStrictWrapper": true
+    },
+    {
+      "runId": "finite-07-B7",
+      "status": "PASS",
+      "outcome": "PASS",
+      "resultSha256": "d65e2517cf3dd968e5fac0fef48a23597f15a84604e0ae57adb039186d6f1f61",
+      "operationStartedUtc": "2026-09-28T01:32:58.577204+00:00",
+      "operationSeconds": 112.75243309998768,
+      "finishedUtc": "2026-09-28T01:34:52.914502+00:00",
+      "inputAuditStable": true,
+      "cleanupComplete": true,
+      "hostCleanup": {
+        "status": "PASS",
+        "seconds": 1.2328491999942344,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "applicationReportSha256": "0eea753c893c0de4fddf7e69af0c8ad3bc8f2f5698e7a3789e0ce5b3745a275b",
+      "applicationReportMatchesReceipt": true,
+      "applicationOutcome": "PASS",
+      "coldElapsedMs": 86847,
+      "coldProofElapsedMs": 61416,
+      "coldRoutingElapsedMs": 20165,
+      "coldWork": 468,
+      "coldProofWork": 390,
+      "coldProofSamples": 185,
+      "warmElapsedMs": 25186,
+      "warmProofCacheHitDelta": 1,
+      "warmReuseReceipt": true,
+      "applicationCleanupComplete": true,
+      "diagnosticProofParityWithStrictWrapper": true
+    },
+    {
+      "runId": "finite-08-F7",
+      "status": "PASS",
+      "outcome": "PASS",
+      "resultSha256": "e906918cae819cd857be65a150c6bd29fce5d13f9b5be00445a952466c003135",
+      "operationStartedUtc": "2026-09-28T01:34:58.042774+00:00",
+      "operationSeconds": 111.42353479999292,
+      "finishedUtc": "2026-09-28T01:36:50.754708+00:00",
+      "inputAuditStable": true,
+      "cleanupComplete": true,
+      "hostCleanup": {
+        "status": "PASS",
+        "seconds": 0.93746229998942,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "applicationReportSha256": "fd07d32219600d4f108a1d6550c4b0034764b67f1bdff066ef3c5d71fe21f366",
+      "applicationReportMatchesReceipt": true,
+      "applicationOutcome": "PASS",
+      "coldElapsedMs": 85514,
+      "coldProofElapsedMs": 59990,
+      "coldRoutingElapsedMs": 20358,
+      "coldWork": 468,
+      "coldProofWork": 390,
+      "coldProofSamples": 185,
+      "warmElapsedMs": 25185,
+      "warmProofCacheHitDelta": 1,
+      "warmReuseReceipt": true,
+      "applicationCleanupComplete": true,
+      "diagnosticProofParityWithStrictWrapper": true
+    }
+  ],
+  "pairArtifacts": [
+    {
+      "runs": [
+        "finite-01-F7",
+        "finite-02-B7"
+      ],
+      "status": "PASS",
+      "artifact": "comparison/finite-01-F7-vs-finite-02-B7-parity.json",
+      "negativeCanaries": 37,
+      "exactRequest": true,
+      "completeParity": true
+    },
+    {
+      "runs": [
+        "finite-03-B13",
+        "finite-04-F13"
+      ],
+      "status": "PASS",
+      "artifact": "comparison/finite-03-B13-vs-finite-04-F13-parity.json",
+      "negativeCanaries": 37,
+      "exactRequest": true,
+      "completeParity": true
+    },
+    {
+      "runs": [
+        "finite-05-F64",
+        "finite-06-B64"
+      ],
+      "status": "PASS",
+      "artifact": "comparison/finite-05-F64-vs-finite-06-B64-parity.json",
+      "negativeCanaries": 37,
+      "exactRequest": true,
+      "completeParity": true
+    },
+    {
+      "runs": [
+        "finite-07-B7",
+        "finite-08-F7"
+      ],
+      "status": "PASS",
+      "artifact": "comparison/finite-07-B7-vs-finite-08-F7-parity.json",
+      "negativeCanaries": 37,
+      "exactRequest": true,
+      "completeParity": true
+    }
+  ],
+  "a07NegativeCanaryCountClaimedByReaderReceipt": 3,
+  "timingInterpretation": "No aggregate performance acceptance is made by this collector. Compare paired observations against the predeclared plan and measured within-variant variation.",
+  "artifacts": [
+    {
+      "source": "finite-integration.json",
+      "path": "source/finite-integration.json",
+      "sourceBytes": 1414,
+      "sourceSha256": "dd2d6ab6fdeb3546400a0483b661db3701aa55cc0f7f1d7df595b5f76d21cc9b",
+      "storedBytes": 1388,
+      "storedSha256": "805d780c1d6af4a01d1824a2226ce1bce36f7b84ecc0700b088812bb733fd6ab",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-comparison-plan.json",
+      "path": "predeclared-comparison-plan.json",
+      "sourceBytes": 1182,
+      "sourceSha256": "5fdf1404da5052525592f3056e5616c519800b1ffa27248b61c21d81857ba02f",
+      "storedBytes": 1182,
+      "storedSha256": "5fdf1404da5052525592f3056e5616c519800b1ffa27248b61c21d81857ba02f",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-comparison-finalization.json",
+      "path": "finalization-marker.json",
+      "sourceBytes": 830,
+      "sourceSha256": "e4f5437c09c7c6284bfb6ca686d4d63f7de175dbad27d4bbe3e61ea00e847983",
+      "storedBytes": 802,
+      "storedSha256": "fb24bbd84e3c9ef6ae75c3a465b6e17862f94ee288f392f11585d5db69e1e85f",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "native-finite-predicate.json",
+      "path": "gates/native/native-finite-predicate.json",
+      "sourceBytes": 332,
+      "sourceSha256": "55d7d314dc97e5d44f5860979f121de738c58bd782ad521e00011e9fbab51ad6",
+      "storedBytes": 320,
+      "storedSha256": "81d539954e3e1c19f46504364f9936ea5f1f5ea41eda9320055d0fe87fddda53",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "native-finite-predicate.log",
+      "path": "gates/native/native-finite-predicate.log",
+      "sourceBytes": 3147,
+      "sourceSha256": "63a2fd2ba5b4524bb1104ee4f89c029af56bb665e74ffdfb52208eab4ada70fd",
+      "storedBytes": 3147,
+      "storedSha256": "63a2fd2ba5b4524bb1104ee4f89c029af56bb665e74ffdfb52208eab4ada70fd",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "native-finite-predicate-receipt.txt",
+      "path": "gates/native/native-finite-predicate-receipt.txt",
+      "sourceBytes": 412,
+      "sourceSha256": "fb67de538f8f99f82dc4cf0abe80114cb629b4da22b584031c44f525e8cd2373",
+      "storedBytes": 412,
+      "storedSha256": "fb67de538f8f99f82dc4cf0abe80114cb629b4da22b584031c44f525e8cd2373",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-predicate-gwt.json",
+      "path": "gates/gwt/finite-predicate-gwt.json",
+      "sourceBytes": 269,
+      "sourceSha256": "bc11939c527d416d06bd3dbbb7c596852e07cc75848e245f56f36b62bf226154",
+      "storedBytes": 260,
+      "storedSha256": "c93adc53ef832a3a3c8f3fc2223290576b3a872dff0d283b297fe943eab769df",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-predicate-gwt.log",
+      "path": "gates/gwt/finite-predicate-gwt.log",
+      "sourceBytes": 1302,
+      "sourceSha256": "c45d891fefecbc71c8ad27f6c1c729a1d334c72b77d2a442b9d0bc57df6a5584",
+      "storedBytes": 1201,
+      "storedSha256": "8df982c54bc6e380be17668068c1cfaa6254801264f26a8e86ae8d57c4c3d6b5",
+      "compression": "none",
+      "transformations": [
+        "<CANDIDATE_ROOT>"
+      ]
+    },
+    {
+      "source": "finite-predicate-a07/result.json",
+      "path": "gates/a07/result.json",
+      "sourceBytes": 4979,
+      "sourceSha256": "defff00123bf4bd200f12bbcc78f682f1e53efc3d5374b0297f4553929da642e",
+      "storedBytes": 4811,
+      "storedSha256": "6b6c30b9e986e5378de1b424906a685e598fa6a9331e6064879d6b38690783b0",
+      "compression": "none",
+      "transformations": [
+        "<CANDIDATE_ROOT>",
+        "<SCRATCH_ROOT>",
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "finite-predicate-a07/spec.json",
+      "path": "gates/a07/spec.json",
+      "sourceBytes": 280,
+      "sourceSha256": "df770f2a809351d2461e2bfd3f5b6917278d4768d578c07b62439ae4b424a1cd",
+      "storedBytes": 335,
+      "storedSha256": "7334b71ee9dae9849b05e57ea3a4dffd023da788d880deaa1852f6ed9501dfa7",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-predicate-a07/runner-before.json",
+      "path": "gates/a07/runner-before.json",
+      "sourceBytes": 146,
+      "sourceSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "storedBytes": 146,
+      "storedSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-predicate-a07/runner-after.json",
+      "path": "gates/a07/runner-after.json",
+      "sourceBytes": 146,
+      "sourceSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "storedBytes": 146,
+      "storedSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-predicate-a07/input-manifest-before.json",
+      "path": "gates/a07/input-manifest-before.json.gz",
+      "sourceBytes": 291097,
+      "sourceSha256": "1797c88a59a5b10e1560ec36a62ba86fa6131681bd54fab78beb39d01f275eae",
+      "storedBytes": 79983,
+      "storedSha256": "4e668c4fc32d7a394d80f3e2442bdd7d9c91d94110fa2f93dde5029db2f3e39f",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-predicate-a07/input-manifest-after.json",
+      "path": "gates/a07/input-manifest-after.json.gz",
+      "sourceBytes": 291097,
+      "sourceSha256": "0430d2c17a8d8d05a9a14c58954d672d72ae17a660ce2e335ae157c79b3012e5",
+      "storedBytes": 79982,
+      "storedSha256": "23b1a02ddc3ba049c6dbbc359d855732a64bf17bf081f291c8b74c3974101ed3",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-predicate-a07/cases/001-column-reference-lu-a07.json",
+      "path": "gates/a07/cases/001-column-reference-lu-a07.json",
+      "sourceBytes": 1373,
+      "sourceSha256": "50ce9279babb2fa657bb57c2d998a39f0ad669b812c3c3b4b332097bb1ee47d9",
+      "storedBytes": 1384,
+      "storedSha256": "29bcb99b7e6d4b51a856f5334fcefc050fefb9a35202faeea2bd45f346a9238c",
+      "compression": "none",
+      "transformations": [
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "finite-predicate-a07/cases/001-column-reference-lu-a07.report.json",
+      "path": "gates/a07/cases/001-column-reference-lu-a07.report.json.gz",
+      "sourceBytes": 80898,
+      "sourceSha256": "e5cc330ea0dbcc17cdb4f9adb4b388e61b048152565859cb042e805a3bf33e6a",
+      "storedBytes": 9391,
+      "storedSha256": "b7b4931e1e2bf76256c0406da7fc08a05256213a95771347f57d7251047ad627",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-predicate-a07/cases/001-column-reference-lu-a07.state.txt",
+      "path": "gates/a07/cases/001-column-reference-lu-a07.state.txt",
+      "sourceBytes": 8,
+      "sourceSha256": "d2b4740b4a36aece77f74f8fd73c9b787c86efaa450eea01b931149a19c22ff2",
+      "storedBytes": 8,
+      "storedSha256": "d2b4740b4a36aece77f74f8fd73c9b787c86efaa450eea01b931149a19c22ff2",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "A07 reader receipt 1",
+      "path": "gates/a07/reader-receipts/reader-01.txt",
+      "sourceBytes": 75,
+      "sourceSha256": "44d24b9e9a389a6f682363c51ef04ef37694276dbe30f6ac328ade766286b3f7",
+      "storedBytes": 75,
+      "storedSha256": "44d24b9e9a389a6f682363c51ef04ef37694276dbe30f6ac328ade766286b3f7",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "root-finite-canaries/result.json",
+      "path": "gates/root-canaries/result.json",
+      "sourceBytes": 6626,
+      "sourceSha256": "0ceaa3c2c8305c5c52be33269615ec098f3094c1c77f38830a9ad0407160cdfe",
+      "storedBytes": 6514,
+      "storedSha256": "5138dd77363f1d40a7c3a331863eb8699ff317b4713ae22c864b6f70a6ce4c1c",
+      "compression": "none",
+      "transformations": [
+        "<REPOSITORY_ROOT>",
+        "<SCRATCH_ROOT>",
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "root-finite-canaries/input-manifest-before.json",
+      "path": "gates/root-canaries/input-manifest-before.json.gz",
+      "sourceBytes": 291302,
+      "sourceSha256": "14779b5484353a19ba019537116f4cca5dd6b1dec261786c047391aa2b1f5aa5",
+      "storedBytes": 80040,
+      "storedSha256": "20ba06ea7595e2a91a339c0a6ed181f69ff87201da7d22461b247683442db7db",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "root-finite-canaries/input-manifest-after.json",
+      "path": "gates/root-canaries/input-manifest-after.json.gz",
+      "sourceBytes": 291302,
+      "sourceSha256": "ae4a3d31c27b98c937570b55f18b8a05f353476b35462ffe89ad172b089d3f25",
+      "storedBytes": 80040,
+      "storedSha256": "62ab8e6101df10f315cd0897ba3a305763a33ab8a3a21664f06d45663606a719",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "root-finite-canaries/runner-before.json",
+      "path": "gates/root-canaries/runner-before.json",
+      "sourceBytes": 160,
+      "sourceSha256": "11a48c6dedf760ba3f0ec324cb796ce1de04e3916dd1f06b1a1d253670d48e0a",
+      "storedBytes": 160,
+      "storedSha256": "11a48c6dedf760ba3f0ec324cb796ce1de04e3916dd1f06b1a1d253670d48e0a",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "root-finite-canaries/runner-after.json",
+      "path": "gates/root-canaries/runner-after.json",
+      "sourceBytes": 160,
+      "sourceSha256": "11a48c6dedf760ba3f0ec324cb796ce1de04e3916dd1f06b1a1d253670d48e0a",
+      "storedBytes": 160,
+      "storedSha256": "11a48c6dedf760ba3f0ec324cb796ce1de04e3916dd1f06b1a1d253670d48e0a",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "root-finite-canaries/spec.json",
+      "path": "gates/root-canaries/spec.json",
+      "sourceBytes": 668,
+      "sourceSha256": "0ded96238aeaee7fdb47dd84d6829b7bd719193a49ecb8745fb5153785a0dc69",
+      "storedBytes": 807,
+      "storedSha256": "be944caf497865783470f98f66cbe0bf42450c8c56e09dea1d46d1146f1653d9",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "root-finite-canaries/cases/001-root-finite-a07.json",
+      "path": "gates/root-canaries/cases/001-root-finite-a07.json",
+      "sourceBytes": 1357,
+      "sourceSha256": "db42bafffbcd30ca4ed2aef350ab76a37306479e0ebd5b14913c07bda5f73aea",
+      "storedBytes": 1368,
+      "storedSha256": "ea8088bdff19660964959b8679812b0cc66f292937e68adf66a9eeebafdbecdb",
+      "compression": "none",
+      "transformations": [
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "root-finite-canaries/cases/001-root-finite-a07.report.json",
+      "path": "gates/root-canaries/cases/001-root-finite-a07.report.json.gz",
+      "sourceBytes": 80898,
+      "sourceSha256": "06cb613d987f9da0fba248a05758546d1079b2079a454556247292c88720b1ef",
+      "storedBytes": 9389,
+      "storedSha256": "1c104e25f50cba9e2fc879515fd164417469b012bf4d2d2c660b4c4c8f78981c",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "root-finite-canaries/cases/002-root-q30-disabled.json",
+      "path": "gates/root-canaries/cases/002-root-q30-disabled.json",
+      "sourceBytes": 1535,
+      "sourceSha256": "a8c2b009c4e40a46365074e6d5ea556db90f1c1bf0c2ba79476cf87a94c6f0b7",
+      "storedBytes": 1546,
+      "storedSha256": "bd25c0c15f6bbc5d2e2c18d6415e630857c20c507b1d906b4b6ed318ef65c70a",
+      "compression": "none",
+      "transformations": [
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "root-finite-canaries/cases/002-root-q30-disabled.report.json",
+      "path": "gates/root-canaries/cases/002-root-q30-disabled.report.json.gz",
+      "sourceBytes": 344,
+      "sourceSha256": "1b2c42b654efd33c1d60bdc3b1c9993d7a9ed5329982561e0341c35e45ddde66",
+      "storedBytes": 224,
+      "storedSha256": "5b8e46ef5a04d8746c0d9243f4ba9900ec88968302808491a72c7a2259062f87",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "root-finite-canaries/cases/001-root-finite-a07.state.txt",
+      "path": "gates/root-canaries/cases/001-root-finite-a07.state.txt",
+      "sourceBytes": 8,
+      "sourceSha256": "d2b4740b4a36aece77f74f8fd73c9b787c86efaa450eea01b931149a19c22ff2",
+      "storedBytes": 8,
+      "storedSha256": "d2b4740b4a36aece77f74f8fd73c9b787c86efaa450eea01b931149a19c22ff2",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "root-finite-canaries/cases/002-root-q30-disabled.state.txt",
+      "path": "gates/root-canaries/cases/002-root-q30-disabled.state.txt",
+      "sourceBytes": 31,
+      "sourceSha256": "95abc8986af9d28c5de9c0245e91d8ca7197e8e54d53bae8a8c03a1738b0ee9f",
+      "storedBytes": 31,
+      "storedSha256": "95abc8986af9d28c5de9c0245e91d8ca7197e8e54d53bae8a8c03a1738b0ee9f",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "root-finite-canaries-spec.json",
+      "path": "gates/root-canaries/declared-spec.json",
+      "sourceBytes": 668,
+      "sourceSha256": "0ded96238aeaee7fdb47dd84d6829b7bd719193a49ecb8745fb5153785a0dc69",
+      "storedBytes": 807,
+      "storedSha256": "be944caf497865783470f98f66cbe0bf42450c8c56e09dea1d46d1146f1653d9",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "root-finite-plan4-gwt.json",
+      "path": "gates/gwt/root-finite-plan4-gwt.json",
+      "sourceBytes": 270,
+      "sourceSha256": "f304c137e0c052904c09e9869037e7eb22312a39912b417ec5ba29458b2734a4",
+      "storedBytes": 261,
+      "storedSha256": "3c9a04ae6d083789cd7b15e675aa55db576118c3bd685758ae0d7ff82d9ef527",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "root-finite-plan4-gwt.log",
+      "path": "gates/gwt/root-finite-plan4-gwt.log",
+      "sourceBytes": 1259,
+      "sourceSha256": "088177c3461f2238c349a5fd7bf31d78124b2b58fd38bd374054d85aeb1031d8",
+      "storedBytes": 1202,
+      "storedSha256": "cc7eaf79893b1e2d525608fe65b818cd1a9586721c49bef722f35284b1e3a5e5",
+      "compression": "none",
+      "transformations": [
+        "<REPOSITORY_ROOT>"
+      ]
+    },
+    {
+      "source": "root-finite-a07-reader.txt",
+      "path": "gates/root-canaries/root-finite-a07-reader.txt",
+      "sourceBytes": 75,
+      "sourceSha256": "44d24b9e9a389a6f682363c51ef04ef37694276dbe30f6ac328ade766286b3f7",
+      "storedBytes": 75,
+      "storedSha256": "44d24b9e9a389a6f682363c51ef04ef37694276dbe30f6ac328ade766286b3f7",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "root-finite-disabled-reader.txt",
+      "path": "gates/root-canaries/root-finite-disabled-reader.txt",
+      "sourceBytes": 210,
+      "sourceSha256": "39d803b9975af58a2154b7bc672b9d09e90ab682686f4e9c8252544d1aea1528",
+      "storedBytes": 210,
+      "storedSha256": "39d803b9975af58a2154b7bc672b9d09e90ab682686f4e9c8252544d1aea1528",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-01-F7/result.json",
+      "path": "runs/finite-01-F7/result.json",
+      "sourceBytes": 5032,
+      "sourceSha256": "88d1b98be3cab993aae19751155a132e21998dcb5ff08f36a8bad05c7dd7f82e",
+      "storedBytes": 4864,
+      "storedSha256": "4877494c1f33dddc2d7aef5cd64264e36f797f7c0a7b6aea3d2cda6b8740367b",
+      "compression": "none",
+      "transformations": [
+        "<CANDIDATE_ROOT>",
+        "<SCRATCH_ROOT>",
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "finite-01-F7/spec.json",
+      "path": "runs/finite-01-F7/spec.json",
+      "sourceBytes": 318,
+      "sourceSha256": "6d2fc2da46904fc912c58f62495f7724447eb27bfc7f480af31ad1205565de1a",
+      "storedBytes": 373,
+      "storedSha256": "344c4f8711c52a4d051d89288dbde3fcd095bb168db9063e4ad0b5248bbddc34",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-01-F7/runner-before.json",
+      "path": "runs/finite-01-F7/runner-before.json",
+      "sourceBytes": 146,
+      "sourceSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "storedBytes": 146,
+      "storedSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-01-F7/runner-after.json",
+      "path": "runs/finite-01-F7/runner-after.json",
+      "sourceBytes": 146,
+      "sourceSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "storedBytes": 146,
+      "storedSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-01-F7/input-manifest-before.json",
+      "path": "runs/finite-01-F7/input-manifest-before.json.gz",
+      "sourceBytes": 291097,
+      "sourceSha256": "b2115d5ed0807efcdccef7af8fbe3c08d21d3c3c2a82d034277f3220a4ef31ba",
+      "storedBytes": 79983,
+      "storedSha256": "032ea84c29aeff9cf099ebd63f2a67bab933257c920e26211f884c223f233aee",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-01-F7/input-manifest-after.json",
+      "path": "runs/finite-01-F7/input-manifest-after.json.gz",
+      "sourceBytes": 291097,
+      "sourceSha256": "ffcab00615cfba66c16f1daa673ebbad725df17cb471c1e2b71bac2f7aa1268f",
+      "storedBytes": 79983,
+      "storedSha256": "d9e51da6a9587982938e66457d56a1016b13e13c1e0c72b3e93cce82f3e157e5",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-01-F7/strict-wrapper.json",
+      "path": "runs/finite-01-F7/strict-wrapper.json.gz",
+      "sourceBytes": 1493562,
+      "sourceSha256": "a330b7da6f7b4da55cb93f783847a40ffe17a772350da0c13b290000da9af17b",
+      "storedBytes": 216634,
+      "storedSha256": "264458d1166f3b37f460eb4d615e0e7b24ad925fea17f9640b46666a2bca8197",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-01-F7/cases/001-finite-01-F7.json",
+      "path": "runs/finite-01-F7/cases/001-finite-01-F7.json",
+      "sourceBytes": 1435,
+      "sourceSha256": "ace3de717003ac6b124cacff6e82526f227deff1afd89e4d23b59fb45982d10b",
+      "storedBytes": 1446,
+      "storedSha256": "fecfee92142c8645470e0d85f60b98d6d44d28607b06458759e0a02fe4645435",
+      "compression": "none",
+      "transformations": [
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "finite-01-F7/cases/001-finite-01-F7.report.json",
+      "path": "runs/finite-01-F7/cases/001-finite-01-F7.report.json.gz",
+      "sourceBytes": 1491218,
+      "sourceSha256": "43f008fea8ea9fb5dec3f64cc6398f3d7e2fbbb963356fd8a16e128b40e670fc",
+      "storedBytes": 216460,
+      "storedSha256": "76c4980a84648c2f57f99557d7a5bdd773c7e816bcb33ee68233cec950295c0b",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-01-F7/cases/001-finite-01-F7.state.txt",
+      "path": "runs/finite-01-F7/cases/001-finite-01-F7.state.txt",
+      "sourceBytes": 13,
+      "sourceSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "storedBytes": 13,
+      "storedSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-01-F7-reader.txt",
+      "path": "comparison/finite-01-F7-reader.txt",
+      "sourceBytes": 3323,
+      "sourceSha256": "3e9d116e32777eacbf6491305b247193dbd1bd2bd8a3300c1fd9aa87784ac09f",
+      "storedBytes": 3323,
+      "storedSha256": "3e9d116e32777eacbf6491305b247193dbd1bd2bd8a3300c1fd9aa87784ac09f",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-01-F7-summary.json",
+      "path": "comparison/finite-01-F7-summary.json",
+      "sourceBytes": 1889,
+      "sourceSha256": "05a1149eb6a206be9569660a6fb85c6133271fe337cf8ca1964b73b7dafa4f0f",
+      "storedBytes": 1814,
+      "storedSha256": "49262bc42c9fd874dbebc8d88862c406a6367e999111b4a1c5347c2eb5c3cbf4",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-01-F7.log",
+      "path": "comparison/finite-01-F7.log",
+      "sourceBytes": 50,
+      "sourceSha256": "80b65158165e078556b7e2986cd2d1b117f16f6744dba11c13f391c4d4c24d77",
+      "storedBytes": 50,
+      "storedSha256": "80b65158165e078556b7e2986cd2d1b117f16f6744dba11c13f391c4d4c24d77",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-02-B7/result.json",
+      "path": "runs/finite-02-B7/result.json",
+      "sourceBytes": 5024,
+      "sourceSha256": "b24087b2bb9bfb3f8c704223bfdbf54b245ef6adf228685c9eb59f05e422ef80",
+      "storedBytes": 4882,
+      "storedSha256": "915ebe8e331cf8f83cc905082a247b456bd92614e893254a858a200cdf7e1b59",
+      "compression": "none",
+      "transformations": [
+        "<SCRATCH_ROOT>",
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "finite-02-B7/spec.json",
+      "path": "runs/finite-02-B7/spec.json",
+      "sourceBytes": 318,
+      "sourceSha256": "5fbf8fc9e4e7a835c5cd3807b8a05ee31cd25487706ad8d1499376e018e3020b",
+      "storedBytes": 373,
+      "storedSha256": "fb2bc375930d2d56f252b202f34e3030d3d9a057c788cd91651c2e8f244abf36",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-02-B7/runner-before.json",
+      "path": "runs/finite-02-B7/runner-before.json",
+      "sourceBytes": 146,
+      "sourceSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "storedBytes": 146,
+      "storedSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-02-B7/runner-after.json",
+      "path": "runs/finite-02-B7/runner-after.json",
+      "sourceBytes": 146,
+      "sourceSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "storedBytes": 146,
+      "storedSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-02-B7/input-manifest-before.json",
+      "path": "runs/finite-02-B7/input-manifest-before.json.gz",
+      "sourceBytes": 291096,
+      "sourceSha256": "fb8f91f39e6d1d6c733f21ebc7c64c36682f02b07120aa3d645a4bd3c42399ff",
+      "storedBytes": 79978,
+      "storedSha256": "364c0cec2230153a611ab7707ae119032220c7cf7d376f2c1288004527f0a037",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-02-B7/input-manifest-after.json",
+      "path": "runs/finite-02-B7/input-manifest-after.json.gz",
+      "sourceBytes": 291096,
+      "sourceSha256": "5bb72d6a42f5f8873898863246905f9e6725906b9accc6412b5f45ff90cb6760",
+      "storedBytes": 79978,
+      "storedSha256": "045214a60b785ac1221fad0c9878caec929b195fee401568e1e52c680fc622c8",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-02-B7/strict-wrapper.json",
+      "path": "runs/finite-02-B7/strict-wrapper.json.gz",
+      "sourceBytes": 1493561,
+      "sourceSha256": "9f0f2a8cfaf359531deb6271453c29562926806949b3e5dc6002f5d5428c46f1",
+      "storedBytes": 216636,
+      "storedSha256": "cf2863ccf849ac228da4045a06bd132906f9f6a0f255c98cef93dba4f2d9d965",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-02-B7/cases/001-finite-02-B7.json",
+      "path": "runs/finite-02-B7/cases/001-finite-02-B7.json",
+      "sourceBytes": 1435,
+      "sourceSha256": "f23d4c37ad4086d03d97c58a2306684129dfd660c63369cd55af1ecd208c2e3e",
+      "storedBytes": 1446,
+      "storedSha256": "34b68492448900e843219bb584367282e393a5872d2a395b1ae0bfa478da8bbf",
+      "compression": "none",
+      "transformations": [
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "finite-02-B7/cases/001-finite-02-B7.report.json",
+      "path": "runs/finite-02-B7/cases/001-finite-02-B7.report.json.gz",
+      "sourceBytes": 1491217,
+      "sourceSha256": "551e01d09a0b74bad87dd248b590f1b2a485c840ff7560cc90d1a2010314de81",
+      "storedBytes": 216466,
+      "storedSha256": "6d7405432feb44f121f243bfd9d1f4c5a5044dc23a50714f5345d3ad67238480",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-02-B7/cases/001-finite-02-B7.state.txt",
+      "path": "runs/finite-02-B7/cases/001-finite-02-B7.state.txt",
+      "sourceBytes": 13,
+      "sourceSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "storedBytes": 13,
+      "storedSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-02-B7-reader.txt",
+      "path": "comparison/finite-02-B7-reader.txt",
+      "sourceBytes": 3298,
+      "sourceSha256": "c8575d95fe0f49fb0f3eb452c25d7829ff11d38e4b13cf1a35ac373b08f770ee",
+      "storedBytes": 3298,
+      "storedSha256": "c8575d95fe0f49fb0f3eb452c25d7829ff11d38e4b13cf1a35ac373b08f770ee",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-02-B7-summary.json",
+      "path": "comparison/finite-02-B7-summary.json",
+      "sourceBytes": 1891,
+      "sourceSha256": "1cddf2aef6e9178dcd547b89b435c602dad962887ae0fddb13d95d1267bbb2d2",
+      "storedBytes": 1816,
+      "storedSha256": "127e387b973685ccd7b803a14d964d57e79a53c66e94d6970342b97595300855",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-02-B7.log",
+      "path": "comparison/finite-02-B7.log",
+      "sourceBytes": 50,
+      "sourceSha256": "3d5bca51658d8dd29c9d74ace25d35fff19b68394320ddbadf4f5de09ca8d263",
+      "storedBytes": 50,
+      "storedSha256": "3d5bca51658d8dd29c9d74ace25d35fff19b68394320ddbadf4f5de09ca8d263",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-03-B13/result.json",
+      "path": "runs/finite-03-B13/result.json",
+      "sourceBytes": 5030,
+      "sourceSha256": "96b3dc6a659bacb0625a80c68c6fa0813eb77e4583e4e1ce5ea78ff1132d5017",
+      "storedBytes": 4888,
+      "storedSha256": "6b26b9dc39f53b2d9b214ad6c1161792e859240b143960d91b75d7368c7f39b3",
+      "compression": "none",
+      "transformations": [
+        "<SCRATCH_ROOT>",
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "finite-03-B13/spec.json",
+      "path": "runs/finite-03-B13/spec.json",
+      "sourceBytes": 320,
+      "sourceSha256": "107aac33efdc05145766ac2238a86fc94fe99bedd50aaffb65418c03605dfd44",
+      "storedBytes": 375,
+      "storedSha256": "19c3eb4b254bafa6b40fd439864d430d0b7dde12d3a7792f398e6c0ccaeb0e49",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-03-B13/runner-before.json",
+      "path": "runs/finite-03-B13/runner-before.json",
+      "sourceBytes": 146,
+      "sourceSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "storedBytes": 146,
+      "storedSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-03-B13/runner-after.json",
+      "path": "runs/finite-03-B13/runner-after.json",
+      "sourceBytes": 146,
+      "sourceSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "storedBytes": 146,
+      "storedSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-03-B13/input-manifest-before.json",
+      "path": "runs/finite-03-B13/input-manifest-before.json.gz",
+      "sourceBytes": 291096,
+      "sourceSha256": "c0cb60ff9268e258de00f232af14b57f65fe313ea0823cc4b3c94cf2358f0d92",
+      "storedBytes": 79979,
+      "storedSha256": "d8c86a925b2435be0d9b6da4de15d15ee7c794894a6cc11b77ac19604d40ad8d",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-03-B13/input-manifest-after.json",
+      "path": "runs/finite-03-B13/input-manifest-after.json.gz",
+      "sourceBytes": 291096,
+      "sourceSha256": "b2cfeb3f67084daa3c7f25b4536a63d414b07338033d5adc98ab14a95ec6088d",
+      "storedBytes": 79978,
+      "storedSha256": "e0fa6e386affbfe61857cabe9d21a3801749acdd01022c1d0714a521f3770747",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-03-B13/strict-wrapper.json",
+      "path": "runs/finite-03-B13/strict-wrapper.json.gz",
+      "sourceBytes": 1645865,
+      "sourceSha256": "c293fef1d33223cd081a92626e5631d67eaf3506db56330a257d683a79dba9ca",
+      "storedBytes": 240847,
+      "storedSha256": "75831c7e9f5499bbb73880edea27d6e7b100758bd8af55f3b639dc946c6467c2",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-03-B13/cases/001-finite-03-B13.json",
+      "path": "runs/finite-03-B13/cases/001-finite-03-B13.json",
+      "sourceBytes": 1439,
+      "sourceSha256": "390ee71c9ae424fae0eef0af63066fe695a1f9a5f81cfd3ead0606c9d9dbf9a1",
+      "storedBytes": 1450,
+      "storedSha256": "d4d50c20ccede2d3d97c97df4441a2b7e9b7f48c5268e94cbff70cd8fa507855",
+      "compression": "none",
+      "transformations": [
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "finite-03-B13/cases/001-finite-03-B13.report.json",
+      "path": "runs/finite-03-B13/cases/001-finite-03-B13.report.json.gz",
+      "sourceBytes": 1643544,
+      "sourceSha256": "b9573be8f4b285a5c0a386ea70d9934a5a9ca58f3087ba5020c790dacaa93b4f",
+      "storedBytes": 240634,
+      "storedSha256": "bf5612a33cb52fa90a0214d9a99227637a9268dd0d3ecc80b8f8dbf2477ba7d1",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-03-B13/cases/001-finite-03-B13.state.txt",
+      "path": "runs/finite-03-B13/cases/001-finite-03-B13.state.txt",
+      "sourceBytes": 13,
+      "sourceSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "storedBytes": 13,
+      "storedSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-03-B13-reader.txt",
+      "path": "comparison/finite-03-B13-reader.txt",
+      "sourceBytes": 3321,
+      "sourceSha256": "e8a406ff2abada8af6068d7a99f249a27b7530e2574698305fafdf2fe5647ff0",
+      "storedBytes": 3321,
+      "storedSha256": "e8a406ff2abada8af6068d7a99f249a27b7530e2574698305fafdf2fe5647ff0",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-03-B13-summary.json",
+      "path": "comparison/finite-03-B13-summary.json",
+      "sourceBytes": 1892,
+      "sourceSha256": "81e31fafabf50573057836c4d0864b91cbcb58b738b6ff721e9cb88a627b6e59",
+      "storedBytes": 1817,
+      "storedSha256": "a01829857b87a93baad7d06e5171f539a48a26698a763759106e8f374e0bba49",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-03-B13.log",
+      "path": "comparison/finite-03-B13.log",
+      "sourceBytes": 51,
+      "sourceSha256": "3778fa5fc9bc901f56c2416000a076803ef2b9f5c251e3a0e2c09b8a5797c996",
+      "storedBytes": 51,
+      "storedSha256": "3778fa5fc9bc901f56c2416000a076803ef2b9f5c251e3a0e2c09b8a5797c996",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-04-F13/result.json",
+      "path": "runs/finite-04-F13/result.json",
+      "sourceBytes": 5028,
+      "sourceSha256": "9b516afa682ebc3227097bee77bacc9e527d8525db3bdd4a8ca7dea610eed63c",
+      "storedBytes": 4860,
+      "storedSha256": "f36e44a5714875f76be9bfbf73919924d728147a1764ee91ce09cb884c4ba523",
+      "compression": "none",
+      "transformations": [
+        "<CANDIDATE_ROOT>",
+        "<SCRATCH_ROOT>",
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "finite-04-F13/spec.json",
+      "path": "runs/finite-04-F13/spec.json",
+      "sourceBytes": 320,
+      "sourceSha256": "ef32747238e2098ab755c595319b1e3e48f4aa85c25052adfecfbe3740f559c0",
+      "storedBytes": 375,
+      "storedSha256": "3af722c10d08f93f2e2553bd6b08664d89b4a6a0e9c59f92b45464cac2bf4f1b",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-04-F13/runner-before.json",
+      "path": "runs/finite-04-F13/runner-before.json",
+      "sourceBytes": 146,
+      "sourceSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "storedBytes": 146,
+      "storedSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-04-F13/runner-after.json",
+      "path": "runs/finite-04-F13/runner-after.json",
+      "sourceBytes": 146,
+      "sourceSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "storedBytes": 146,
+      "storedSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-04-F13/input-manifest-before.json",
+      "path": "runs/finite-04-F13/input-manifest-before.json.gz",
+      "sourceBytes": 291097,
+      "sourceSha256": "562d2b4a714783b1e942aa190131990513528dc5279fec6f85305f8c1fbf6a3b",
+      "storedBytes": 79983,
+      "storedSha256": "4df8db53a59b32922c9c655fbab56f1fb3ce47e50f79e0bec45086bee39b21f1",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-04-F13/input-manifest-after.json",
+      "path": "runs/finite-04-F13/input-manifest-after.json.gz",
+      "sourceBytes": 291097,
+      "sourceSha256": "d930a0677d8a08e684ca536e5e84319aeb34b31d1a337d6095173bfb4dcbbbb5",
+      "storedBytes": 79983,
+      "storedSha256": "3399dde3ea199e8e24c89e45d0c15aeec5a7304a6af8e287ed9f840a2ec9a9f8",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-04-F13/strict-wrapper.json",
+      "path": "runs/finite-04-F13/strict-wrapper.json.gz",
+      "sourceBytes": 1645864,
+      "sourceSha256": "7b5d64fab94a7a4314f0984898d440d9f65f4657a83b57309b51252afee85a6f",
+      "storedBytes": 240844,
+      "storedSha256": "c1458280fc3f231f90dd4c94796ec411f534c95abb3da1c15d1bca5e3743cebb",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-04-F13/cases/001-finite-04-F13.json",
+      "path": "runs/finite-04-F13/cases/001-finite-04-F13.json",
+      "sourceBytes": 1439,
+      "sourceSha256": "8ea8375bc200fd92001d92994eea959d7120ee6452326afedaee78d0905befb2",
+      "storedBytes": 1450,
+      "storedSha256": "14972da66125730dab45ac599f44900909ac13c927c43f995c86d02110e2b748",
+      "compression": "none",
+      "transformations": [
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "finite-04-F13/cases/001-finite-04-F13.report.json",
+      "path": "runs/finite-04-F13/cases/001-finite-04-F13.report.json.gz",
+      "sourceBytes": 1643543,
+      "sourceSha256": "e9c83e37e61c53536c5c7836eae8aad11149ed7ed85c366425e95f7432af3ac0",
+      "storedBytes": 240635,
+      "storedSha256": "5feb9105c955e0f114a96ef16402f57c7c1452292d75b1f2c431af4e2c3c8891",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-04-F13/cases/001-finite-04-F13.state.txt",
+      "path": "runs/finite-04-F13/cases/001-finite-04-F13.state.txt",
+      "sourceBytes": 13,
+      "sourceSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "storedBytes": 13,
+      "storedSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-04-F13-reader.txt",
+      "path": "comparison/finite-04-F13-reader.txt",
+      "sourceBytes": 3298,
+      "sourceSha256": "3bfc714894e241023144be8619b2a07431dc1c78ace75b94812f326f4cafdc7a",
+      "storedBytes": 3298,
+      "storedSha256": "3bfc714894e241023144be8619b2a07431dc1c78ace75b94812f326f4cafdc7a",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-04-F13-summary.json",
+      "path": "comparison/finite-04-F13-summary.json",
+      "sourceBytes": 1892,
+      "sourceSha256": "8c9b117db7fcbd62040ddf497af9936de496445dc299cfab05ec5e1d2796108e",
+      "storedBytes": 1817,
+      "storedSha256": "1dacaa205a4db17c29d828be1c3f319490c695b35f4cd6bc549526892ffad1e2",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-04-F13.log",
+      "path": "comparison/finite-04-F13.log",
+      "sourceBytes": 51,
+      "sourceSha256": "0a87d4f1a7006f562c33139f5fd7690fbb8ff3c8542a71e38d59aa64949bd1b8",
+      "storedBytes": 51,
+      "storedSha256": "0a87d4f1a7006f562c33139f5fd7690fbb8ff3c8542a71e38d59aa64949bd1b8",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-05-F64/result.json",
+      "path": "runs/finite-05-F64/result.json",
+      "sourceBytes": 5034,
+      "sourceSha256": "0f7e4291dd6ca30aa39aac53959d2436b16cf211ebec5867408b94f0948599a9",
+      "storedBytes": 4866,
+      "storedSha256": "3b3c699521857a52dcffad66b947957ef17082a5c486b7788cfb911e36204e68",
+      "compression": "none",
+      "transformations": [
+        "<CANDIDATE_ROOT>",
+        "<SCRATCH_ROOT>",
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "finite-05-F64/spec.json",
+      "path": "runs/finite-05-F64/spec.json",
+      "sourceBytes": 320,
+      "sourceSha256": "0ba4f2587d85008517999bde4650dc59d226aacb2d9f17d8302218a477e7996e",
+      "storedBytes": 375,
+      "storedSha256": "404979e1213ebf2c125f72e1233918e26041e7912fe12ca41ab74011e756d965",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-05-F64/runner-before.json",
+      "path": "runs/finite-05-F64/runner-before.json",
+      "sourceBytes": 146,
+      "sourceSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "storedBytes": 146,
+      "storedSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-05-F64/runner-after.json",
+      "path": "runs/finite-05-F64/runner-after.json",
+      "sourceBytes": 146,
+      "sourceSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "storedBytes": 146,
+      "storedSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-05-F64/input-manifest-before.json",
+      "path": "runs/finite-05-F64/input-manifest-before.json.gz",
+      "sourceBytes": 291097,
+      "sourceSha256": "37b96fc0ba31e0f1a0fc6078f2b9e6e8fcf3bfc32e59292abc54093eb843fba0",
+      "storedBytes": 79983,
+      "storedSha256": "4fc7b46f5ed6e36ea79fd698ea7ad635bfb8fee5f46c740eb1e7e4f02c793f31",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-05-F64/input-manifest-after.json",
+      "path": "runs/finite-05-F64/input-manifest-after.json.gz",
+      "sourceBytes": 291097,
+      "sourceSha256": "e7509026405f008b4d2cbf8fd896f220add5d4fe72f80456f2b49bea354ba859",
+      "storedBytes": 79983,
+      "storedSha256": "04eb6484e2a9e157b8d84e0cadb3710c3f85f58b54524c23334247a12f426448",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-05-F64/strict-wrapper.json",
+      "path": "runs/finite-05-F64/strict-wrapper.json.gz",
+      "sourceBytes": 1547999,
+      "sourceSha256": "62f20b3e54c973fde01198f15e9b4ffbe2c558b5e8b28886f49b07487f818629",
+      "storedBytes": 228575,
+      "storedSha256": "3e16fb7bd80f72b443f3e883ed5a4b3709afbdb7c5895cf08576ee223827557b",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-05-F64/cases/001-finite-05-F64.json",
+      "path": "runs/finite-05-F64/cases/001-finite-05-F64.json",
+      "sourceBytes": 1438,
+      "sourceSha256": "4d9b0c2610f1e8ec0b390d2e9dee5feb1e6c0717bfa45452e45be9d1e37611f6",
+      "storedBytes": 1449,
+      "storedSha256": "5c9d532dc93fed5848907861c1fabdc7603cd209f35e9f1402ca32491cba1d91",
+      "compression": "none",
+      "transformations": [
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "finite-05-F64/cases/001-finite-05-F64.report.json",
+      "path": "runs/finite-05-F64/cases/001-finite-05-F64.report.json.gz",
+      "sourceBytes": 1545674,
+      "sourceSha256": "f0caf1073c3f166a4a3238a5eebf1a3b2e9afdd62d505e0ec1ca0e0df1bcfefe",
+      "storedBytes": 228387,
+      "storedSha256": "aec16bd19e7b4b0e55c01d144127905bea87234e73415b5dc02753c935b71c35",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-05-F64/cases/001-finite-05-F64.state.txt",
+      "path": "runs/finite-05-F64/cases/001-finite-05-F64.state.txt",
+      "sourceBytes": 13,
+      "sourceSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "storedBytes": 13,
+      "storedSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-05-F64-reader.txt",
+      "path": "comparison/finite-05-F64-reader.txt",
+      "sourceBytes": 3321,
+      "sourceSha256": "396591e92d22cae8d147ef8b5123e92b3f256bbf2f2c8ba02b3bfdd8fc88be0a",
+      "storedBytes": 3321,
+      "storedSha256": "396591e92d22cae8d147ef8b5123e92b3f256bbf2f2c8ba02b3bfdd8fc88be0a",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-05-F64-summary.json",
+      "path": "comparison/finite-05-F64-summary.json",
+      "sourceBytes": 1891,
+      "sourceSha256": "921bf5fe54cbb6015d97837f8c3b623f0c5d3d8936e9b8573d931afd11d8f4b2",
+      "storedBytes": 1816,
+      "storedSha256": "2a58cdea5999ef0349de7c74339f3642182ed26756e2224e7e5f9ccd00e6cc1f",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-05-F64.log",
+      "path": "comparison/finite-05-F64.log",
+      "sourceBytes": 50,
+      "sourceSha256": "19cdb3fe8da4aacf8f09316a03d323827f48a81da2413821e6fa96cb4515f034",
+      "storedBytes": 50,
+      "storedSha256": "19cdb3fe8da4aacf8f09316a03d323827f48a81da2413821e6fa96cb4515f034",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-06-B64/result.json",
+      "path": "runs/finite-06-B64/result.json",
+      "sourceBytes": 5028,
+      "sourceSha256": "1fe7206c7a7696f67414c874c4ca8e5e78afc48e4e6bb1b4e595128ff52546e0",
+      "storedBytes": 4886,
+      "storedSha256": "ccaa99633e938e3271e40ba04eda9ba3e5e92328601e2f8c8d3c9caff41db863",
+      "compression": "none",
+      "transformations": [
+        "<SCRATCH_ROOT>",
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "finite-06-B64/spec.json",
+      "path": "runs/finite-06-B64/spec.json",
+      "sourceBytes": 320,
+      "sourceSha256": "0e40472aa242c7c82e0489109a704192f04767c83da570763e6faeb28ad6a4ba",
+      "storedBytes": 375,
+      "storedSha256": "95edf5b3dabea7aa35d61d9da440259cf1550b0eea967455862e077c6eaca0d1",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-06-B64/runner-before.json",
+      "path": "runs/finite-06-B64/runner-before.json",
+      "sourceBytes": 146,
+      "sourceSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "storedBytes": 146,
+      "storedSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-06-B64/runner-after.json",
+      "path": "runs/finite-06-B64/runner-after.json",
+      "sourceBytes": 146,
+      "sourceSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "storedBytes": 146,
+      "storedSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-06-B64/input-manifest-before.json",
+      "path": "runs/finite-06-B64/input-manifest-before.json.gz",
+      "sourceBytes": 291096,
+      "sourceSha256": "9f5f919e43ae81eaf516a657c5d2cbf20e3ee80dd7541f05f8e913f2269c0318",
+      "storedBytes": 79979,
+      "storedSha256": "038149c58beddcf74855e648372cb5a6d77e9b9687970528f41c7f6f62f4a15e",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-06-B64/input-manifest-after.json",
+      "path": "runs/finite-06-B64/input-manifest-after.json.gz",
+      "sourceBytes": 291096,
+      "sourceSha256": "8fa9120aa293ca0df99fe078e2476d554b68b9edb32b41901ea7b562aa5fa419",
+      "storedBytes": 79978,
+      "storedSha256": "599457edd95957e5cc7904b423cc18197190ac2ed7a75068f62646bbf947a313",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-06-B64/strict-wrapper.json",
+      "path": "runs/finite-06-B64/strict-wrapper.json.gz",
+      "sourceBytes": 1548002,
+      "sourceSha256": "abdf0d91434d8b8103e8bc27ebcabef448c0cd9d091f28f41f903a313c47971d",
+      "storedBytes": 228571,
+      "storedSha256": "73fb31c0349062821246b8acf47ef1681f22ce772e5498fc82a7e7abae03dc0c",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-06-B64/cases/001-finite-06-B64.json",
+      "path": "runs/finite-06-B64/cases/001-finite-06-B64.json",
+      "sourceBytes": 1439,
+      "sourceSha256": "ebff594b320e92c9309b642018b51b598c3b6f43f02b2538cc54512edf339571",
+      "storedBytes": 1450,
+      "storedSha256": "44082928fe45cbf4c4406158c6bb3147994a1f55136c05cf8aec8a5b049af2b9",
+      "compression": "none",
+      "transformations": [
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "finite-06-B64/cases/001-finite-06-B64.report.json",
+      "path": "runs/finite-06-B64/cases/001-finite-06-B64.report.json.gz",
+      "sourceBytes": 1545677,
+      "sourceSha256": "6f3ce84f84d0201adb12bedc5ba3977e936155a9a03ee5fffcf8022a82009525",
+      "storedBytes": 228385,
+      "storedSha256": "8d9c9149e6c4d428ce4f9cf1ecfea245244a9d70439e6f1ecce413a615153dc9",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-06-B64/cases/001-finite-06-B64.state.txt",
+      "path": "runs/finite-06-B64/cases/001-finite-06-B64.state.txt",
+      "sourceBytes": 13,
+      "sourceSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "storedBytes": 13,
+      "storedSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-06-B64-reader.txt",
+      "path": "comparison/finite-06-B64-reader.txt",
+      "sourceBytes": 3298,
+      "sourceSha256": "2dffd43e19f332f70299e8321e97c5280016bee4aae5cccc4854aebc8964fb2a",
+      "storedBytes": 3298,
+      "storedSha256": "2dffd43e19f332f70299e8321e97c5280016bee4aae5cccc4854aebc8964fb2a",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-06-B64-summary.json",
+      "path": "comparison/finite-06-B64-summary.json",
+      "sourceBytes": 1891,
+      "sourceSha256": "6de71680059f0ace6e0838b7c712406c559d22177063aea576f62d1ad4f04aec",
+      "storedBytes": 1816,
+      "storedSha256": "eec578efea615780eefc0eb7cbc5afcbfe819a8e0733fc4d4e9cb7bd6807bee6",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-06-B64.log",
+      "path": "comparison/finite-06-B64.log",
+      "sourceBytes": 51,
+      "sourceSha256": "a9477e28e89e850647e93583686d02a6a77399bbdb27a2410156f2ea7506ddc1",
+      "storedBytes": 51,
+      "storedSha256": "a9477e28e89e850647e93583686d02a6a77399bbdb27a2410156f2ea7506ddc1",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-07-B7/result.json",
+      "path": "runs/finite-07-B7/result.json",
+      "sourceBytes": 5023,
+      "sourceSha256": "d65e2517cf3dd968e5fac0fef48a23597f15a84604e0ae57adb039186d6f1f61",
+      "storedBytes": 4881,
+      "storedSha256": "40a276ce9a01b50d9510d1a15f63ad9c842c97cde97a7f2ef4e4edebae871030",
+      "compression": "none",
+      "transformations": [
+        "<SCRATCH_ROOT>",
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "finite-07-B7/spec.json",
+      "path": "runs/finite-07-B7/spec.json",
+      "sourceBytes": 318,
+      "sourceSha256": "76ae42dc89bd44d32431044f26640678635ef27c970ec83a9782e8de100e0d71",
+      "storedBytes": 373,
+      "storedSha256": "f3406615b3538bef55a8bcfc1ee1731110cadb4fd2153a51d7c7fc0cdae633fd",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-07-B7/runner-before.json",
+      "path": "runs/finite-07-B7/runner-before.json",
+      "sourceBytes": 146,
+      "sourceSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "storedBytes": 146,
+      "storedSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-07-B7/runner-after.json",
+      "path": "runs/finite-07-B7/runner-after.json",
+      "sourceBytes": 146,
+      "sourceSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "storedBytes": 146,
+      "storedSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-07-B7/input-manifest-before.json",
+      "path": "runs/finite-07-B7/input-manifest-before.json.gz",
+      "sourceBytes": 291096,
+      "sourceSha256": "350395992578427941b7f1a4c5dfea9c182b05d14f012b4bfa7d9b2ff2dab34f",
+      "storedBytes": 79978,
+      "storedSha256": "72baa4b8f057710fc54a8e7dae06077d096ed95e2aef973001275492875b08c7",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-07-B7/input-manifest-after.json",
+      "path": "runs/finite-07-B7/input-manifest-after.json.gz",
+      "sourceBytes": 291096,
+      "sourceSha256": "e1a420b9d96f20460d06dd562bf82761b2be31208f7e9a32e1a654d5496b34f0",
+      "storedBytes": 79978,
+      "storedSha256": "4c177d7d03be68ed526ef174a0c6667348caa31f527deaae2a39b0f5b7f8d3a7",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-07-B7/strict-wrapper.json",
+      "path": "runs/finite-07-B7/strict-wrapper.json.gz",
+      "sourceBytes": 1493563,
+      "sourceSha256": "ab69eac2ea64f8ea2dee8df0b7af2ed75fd053e2e9d02b906c50dade79815c10",
+      "storedBytes": 216632,
+      "storedSha256": "fa51798257fa08db38df9be1f00b78d2c7ba831e4e0a0427148c2d80c1150aaf",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-07-B7/cases/001-finite-07-B7.json",
+      "path": "runs/finite-07-B7/cases/001-finite-07-B7.json",
+      "sourceBytes": 1435,
+      "sourceSha256": "109396ab03bd8d9c0873aa5be1d17ac479d604cee4bb6c55056edfabcebed83a",
+      "storedBytes": 1446,
+      "storedSha256": "db1648aaa33ce1645d56bff90274d8fbf5d7421fcc4ce1a048cbd0ac2a2db7f0",
+      "compression": "none",
+      "transformations": [
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "finite-07-B7/cases/001-finite-07-B7.report.json",
+      "path": "runs/finite-07-B7/cases/001-finite-07-B7.report.json.gz",
+      "sourceBytes": 1491219,
+      "sourceSha256": "0eea753c893c0de4fddf7e69af0c8ad3bc8f2f5698e7a3789e0ce5b3745a275b",
+      "storedBytes": 216460,
+      "storedSha256": "34f74b86ca7de352415f05a5dbde101aedfd792738fef5bb16ea40d6e6ff39cb",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-07-B7/cases/001-finite-07-B7.state.txt",
+      "path": "runs/finite-07-B7/cases/001-finite-07-B7.state.txt",
+      "sourceBytes": 13,
+      "sourceSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "storedBytes": 13,
+      "storedSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-07-B7-reader.txt",
+      "path": "comparison/finite-07-B7-reader.txt",
+      "sourceBytes": 3323,
+      "sourceSha256": "f8ffad6d5da6d89d9d216d2a10bb33694047d3a64d838303147e35ef348c2431",
+      "storedBytes": 3323,
+      "storedSha256": "f8ffad6d5da6d89d9d216d2a10bb33694047d3a64d838303147e35ef348c2431",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-07-B7-summary.json",
+      "path": "comparison/finite-07-B7-summary.json",
+      "sourceBytes": 1891,
+      "sourceSha256": "8d8803d210a1e33f5b89c4e0e603de6075fc33819515844b8a7e23572d62ee5a",
+      "storedBytes": 1816,
+      "storedSha256": "18e77e1167db0c2b86ba5305649636845be28f4db46ce8f69222629b4e5c15bd",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-07-B7.log",
+      "path": "comparison/finite-07-B7.log",
+      "sourceBytes": 50,
+      "sourceSha256": "161ff55ed123d9eba4823ee3e3106a5df286fa2cf6c29630b015f9f05ac01f0a",
+      "storedBytes": 50,
+      "storedSha256": "161ff55ed123d9eba4823ee3e3106a5df286fa2cf6c29630b015f9f05ac01f0a",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-08-F7/result.json",
+      "path": "runs/finite-08-F7/result.json",
+      "sourceBytes": 5032,
+      "sourceSha256": "e906918cae819cd857be65a150c6bd29fce5d13f9b5be00445a952466c003135",
+      "storedBytes": 4864,
+      "storedSha256": "7e94aea3b807906a82dd9805f501219c093cffd2a7e7a89783b7cc895f163762",
+      "compression": "none",
+      "transformations": [
+        "<CANDIDATE_ROOT>",
+        "<SCRATCH_ROOT>",
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "finite-08-F7/spec.json",
+      "path": "runs/finite-08-F7/spec.json",
+      "sourceBytes": 318,
+      "sourceSha256": "d793cac5012b4139df099bdf6163833baf522c651205c99733cc4a4843fb1e7d",
+      "storedBytes": 373,
+      "storedSha256": "0e56b524b9e160a9ee6b5563d56ac18453724899628e3e89340d20a495457f71",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-08-F7/runner-before.json",
+      "path": "runs/finite-08-F7/runner-before.json",
+      "sourceBytes": 146,
+      "sourceSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "storedBytes": 146,
+      "storedSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-08-F7/runner-after.json",
+      "path": "runs/finite-08-F7/runner-after.json",
+      "sourceBytes": 146,
+      "sourceSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "storedBytes": 146,
+      "storedSha256": "4e475445057b8e5467d22ea4a43486c404a2d2bef0f43bc4cc25e48ac0954729",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-08-F7/input-manifest-before.json",
+      "path": "runs/finite-08-F7/input-manifest-before.json.gz",
+      "sourceBytes": 291097,
+      "sourceSha256": "46509864b01f8ca066bab46f5ee5814e2c99faa7a535ecc66074ac37af6c1440",
+      "storedBytes": 79983,
+      "storedSha256": "005a5fa2fbbd88da4490769120a9d2328b8f1e68ad61e64813f2bb3ec466b888",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-08-F7/input-manifest-after.json",
+      "path": "runs/finite-08-F7/input-manifest-after.json.gz",
+      "sourceBytes": 291097,
+      "sourceSha256": "078ee95ec357d132703f228fe5ecf1a683a76f612588f16bd3342f0fd0ada60a",
+      "storedBytes": 79983,
+      "storedSha256": "20eb4eec9bcd3ff09ab1bcda13515aabc66959b1e958ba6d412543d50bbf792d",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-08-F7/strict-wrapper.json",
+      "path": "runs/finite-08-F7/strict-wrapper.json.gz",
+      "sourceBytes": 1493561,
+      "sourceSha256": "1b65ea8a341b3f250a36b499d560be27fb237043ed04acd686b7204221424934",
+      "storedBytes": 216627,
+      "storedSha256": "592a978ae9c95e4670c74db65661e8ec0afd9ce1a1b83e668a24ed1849a1947e",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-08-F7/cases/001-finite-08-F7.json",
+      "path": "runs/finite-08-F7/cases/001-finite-08-F7.json",
+      "sourceBytes": 1435,
+      "sourceSha256": "75ddf64564e10e9fbd9ff153383b6365e62fc5d148d1d52a6203471f41540482",
+      "storedBytes": 1446,
+      "storedSha256": "496ad4a65d95a3ca1edb61b19d815f896c7285be4c252048126ea584a4347cef",
+      "compression": "none",
+      "transformations": [
+        "<ephemeral-port>"
+      ]
+    },
+    {
+      "source": "finite-08-F7/cases/001-finite-08-F7.report.json",
+      "path": "runs/finite-08-F7/cases/001-finite-08-F7.report.json.gz",
+      "sourceBytes": 1491217,
+      "sourceSha256": "fd07d32219600d4f108a1d6550c4b0034764b67f1bdff066ef3c5d71fe21f366",
+      "storedBytes": 216454,
+      "storedSha256": "9c11723d5dc62dcc564e2234fb752507c3f7284012bebdbdd848318409d4bdcb",
+      "compression": "gzip; payload byte-identical",
+      "transformations": []
+    },
+    {
+      "source": "finite-08-F7/cases/001-finite-08-F7.state.txt",
+      "path": "runs/finite-08-F7/cases/001-finite-08-F7.state.txt",
+      "sourceBytes": 13,
+      "sourceSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "storedBytes": 13,
+      "storedSha256": "d2d506285f5a0346542af546791e20deb77c51783da402ec38500b70c50f7184",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-08-F7-reader.txt",
+      "path": "comparison/finite-08-F7-reader.txt",
+      "sourceBytes": 3298,
+      "sourceSha256": "6a3c034ac634f9177c1e5397bc5874e0f4fe4e6be60fc7f24bf63f60dbb1d2f1",
+      "storedBytes": 3298,
+      "storedSha256": "6a3c034ac634f9177c1e5397bc5874e0f4fe4e6be60fc7f24bf63f60dbb1d2f1",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-08-F7-summary.json",
+      "path": "comparison/finite-08-F7-summary.json",
+      "sourceBytes": 1887,
+      "sourceSha256": "c19661f35139eb0e0b9101a04f4a62ab569981adcad3ed81da213b93e3fb74c7",
+      "storedBytes": 1812,
+      "storedSha256": "676f6ff6437cc058a0d82a3bc8215bdb75580654766328ef90d22bd3da73a19a",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "comparison/finite-08-F7.log",
+      "path": "comparison/finite-08-F7.log",
+      "sourceBytes": 50,
+      "sourceSha256": "d76f264779101a4f9779fe4f08dcc33db7cf928811cf43c9342903a7f34beb3d",
+      "storedBytes": 50,
+      "storedSha256": "d76f264779101a4f9779fe4f08dcc33db7cf928811cf43c9342903a7f34beb3d",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-01-F7-vs-finite-02-B7-parity.json",
+      "path": "comparison/finite-01-F7-vs-finite-02-B7-parity.json",
+      "sourceBytes": 1078,
+      "sourceSha256": "87b599dbe9ffc7dbb3b097a3a9da844d4a6a01dd39a93d30803a102284c44402",
+      "storedBytes": 1048,
+      "storedSha256": "025bb1fe5c81bf5d0001de732e44cfe446adf169aa701f07bb0c018aa060ef60",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-03-B13-vs-finite-04-F13-parity.json",
+      "path": "comparison/finite-03-B13-vs-finite-04-F13-parity.json",
+      "sourceBytes": 1082,
+      "sourceSha256": "a1415c97c1ef853bb058a1c4db38b2f21973819728882bc6d5ca9978a75e28ce",
+      "storedBytes": 1052,
+      "storedSha256": "2266e69c238a1f3b0be6b4f0b8bf274cd289f4183a48a5ab3a1b304617ce4e21",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-05-F64-vs-finite-06-B64-parity.json",
+      "path": "comparison/finite-05-F64-vs-finite-06-B64-parity.json",
+      "sourceBytes": 1081,
+      "sourceSha256": "38970d5bb3168a0ecf53fe4f59c25db6dae214cb165c43cb6ab62676db28d95e",
+      "storedBytes": 1051,
+      "storedSha256": "4aa027f043d6e35d48860c6759964ca296a9499b09b10b72744be672a0866ab0",
+      "compression": "none",
+      "transformations": []
+    },
+    {
+      "source": "finite-07-B7-vs-finite-08-F7-parity.json",
+      "path": "comparison/finite-07-B7-vs-finite-08-F7-parity.json",
+      "sourceBytes": 1077,
+      "sourceSha256": "34aa92905265c54185c69898152bfef5848acf50ec4aede7791c3955ae762ce7",
+      "storedBytes": 1047,
+      "storedSha256": "6d3e5143b8c6b14b6d4da307e347d681f60bd8494c8a276beff797d634f45752",
+      "compression": "none",
+      "transformations": []
+    }
+  ]
+}

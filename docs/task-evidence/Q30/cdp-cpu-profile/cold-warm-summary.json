@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "candidate": "Q30 B7",
+  "scope": "developer-only isolated qualification",
+  "normalAcceptance": "NOT_RUN",
+  "profiled": {
+    "run": "cpu-q30-B7",
+    "applicationOutcome": "PASS",
+    "cpuProfileOutcome": "PASS",
+    "cold": {
+      "elapsedMs": 100442,
+      "wallMs": 100450,
+      "routingMs": 22796,
+      "diagnosticProofMs": 71720
+    },
+    "warm": {
+      "elapsedMs": 26288,
+      "wallMs": 26294,
+      "routingMs": 20496,
+      "diagnosticProofMs": 0
+    }
+  },
+  "immediateFreshUnprofiledControl": {
+    "run": "cpu-followup-B7",
+    "applicationOutcome": "PASS",
+    "cold": {
+      "elapsedMs": 87473,
+      "wallMs": 87479,
+      "routingMs": 20234,
+      "diagnosticProofMs": 61987
+    },
+    "warm": {
+      "elapsedMs": 25656,
+      "wallMs": 25664,
+      "routingMs": 20501,
+      "diagnosticProofMs": 0
+    }
+  },
+  "sameWork": {
+    "hypotheses": 5,
+    "diagnosticProofUnits": 390,
+    "generationJobs": 468,
+    "warmProofCacheReuses": 1,
+    "warmWorkUnits": 79,
+    "proofParityExcludingTiming": true
+  },
+  "coldProfileMinusControlMs": 12969,
+  "profileRankingOnly": true,
+  "timingLimit": "A single pair cannot separate sampler/debugger overhead from host variation; do not use profiled elapsed or hotspot totals as normal-deadline evidence.",
+  "sampledHotspots": [
+    { "method": "CirSim.lu_factor", "inclusiveMs": 34258, "selfMs": 23061 },
+    { "method": "CirSim.stampMatrix", "inclusiveMs": 8406 },
+    { "method": "CirSim.lu_solve", "selfMs": 7798 },
+    { "method": "Q30 publication", "inclusiveMs": 7973 },
+    { "method": "Q30 routing", "inclusiveMs": 18751 }
+  ],
+  "inclusiveTotalsOverlap": true
+}

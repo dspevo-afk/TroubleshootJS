@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "seed": "7",
+  "strictReaders": 2,
+  "negativeCanaries": 37,
+  "exactRequest": true,
+  "completeOwnerPhysicalAndProofParityExcludingTiming": true,
+  "runs": [
+    {
+      "label": "finite-07-B7",
+      "sourceSha256": "7f07fee8219ff26686b531f33e57b156a04340268aad939081184b862decae30",
+      "webSha256": "6c902db8657d282930b52c4ee8c1ee7df4ba099286f95379486ba8da93a13fd5",
+      "coldMs": 86847,
+      "proofMs": 61416,
+      "routingMs": 20165,
+      "cleanupSeconds": 1.2328491999942344
+    },
+    {
+      "label": "finite-08-F7",
+      "sourceSha256": "e5bee82740aa9ccc163a90b6615cb6058005e57dfe9229d6110dbdeb6f1f5527",
+      "webSha256": "2d8dcfa3e29ad208e124c43c416f9f6f2368492985e03834285a62e362ee8e85",
+      "coldMs": 85514,
+      "proofMs": 59990,
+      "routingMs": 20358,
+      "cleanupSeconds": 0.93746229998942
+    }
+  ],
+  "firstMinusSecondColdMs": 1333,
+  "firstMinusSecondProofMs": 1426,
+  "firstMinusSecondRoutingMs": -193,
+  "limit": "Private measurement only; not a normal production acceptance pass."
+}

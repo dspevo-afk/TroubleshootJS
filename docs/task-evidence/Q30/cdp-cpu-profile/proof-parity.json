@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "strictReaders": 2,
+  "negativeCanaries": 37,
+  "exactRequest": true,
+  "completeOwnerPhysicalAndProofParityExcludingTiming": true,
+  "coldProfileMs": 100442,
+  "coldControlMs": 87473,
+  "differenceMs": 12969,
+  "limit": "Sampling/debugger overhead and host variation are not isolated by one pair; profile is ranking evidence only."
+}

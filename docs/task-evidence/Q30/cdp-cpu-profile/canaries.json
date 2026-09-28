@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "control": "A07 positive + unsupported-method negative canary",
+  "attempts": [
+    {
+      "run": "cpu-a07-positive",
+      "runnerOutcome": "FAIL_PROFILE",
+      "applicationOutcome": "PASS:a07",
+      "reason": "No sampled GWT function matched a unique symbol-map row.",
+      "inputAudit": "PASS",
+      "cleanup": "PASS"
+    },
+    {
+      "run": "cpu-a07-negative",
+      "runnerOutcome": "FAIL",
+      "negativeCanary": true,
+      "reason": "Unsupported CDP method was correctly rejected before profile capture.",
+      "inputAudit": "PASS",
+      "cleanup": "PASS"
+    },
+    {
+      "run": "cpu-a07-positive-r2",
+      "runnerOutcome": "PASS",
+      "applicationOutcome": "PASS:a07",
+      "cpuProfileOutcome": "PASS",
+      "exactPayloadSymbolMapLink": true,
+      "inputAudit": "PASS",
+      "cleanup": "PASS"
+    },
+    {
+      "run": "cpu-a07-negative-r2",
+      "runnerOutcome": "EXPECTED_FAIL",
+      "negativeCanary": true,
+      "reason": "The unsupported CDP method remains rejected.",
+      "inputAudit": "PASS",
+      "cleanup": "PASS"
+    }
+  ]
+}

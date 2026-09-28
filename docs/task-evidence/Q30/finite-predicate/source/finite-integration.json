@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "onlyPaths": [
+    "src/com/lushprojects/circuitjs1/client/SolverExecutionBoundary.java",
+    "src/com/lushprojects/circuitjs1/client/A07ExecutionContractVectors.java"
+  ],
+  "rows": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/SolverExecutionBoundary.java",
+      "beforeSha256": "a75284e2ff4b3d836cafc1121409c789e854ac339081944dd5aad6066c592a2e",
+      "trialRawSha256": "52cc197644fc8f159bebf171a7242a6a704244f718d8148e692faf38c5d2c8d5",
+      "integratedRawSha256": "52cc197644fc8f159bebf171a7242a6a704244f718d8148e692faf38c5d2c8d5",
+      "normalizedTrialAndIntegratedSha256": "23084a3b2e9624c0b02ce40146b98b8a6882ad2d5c5c1e862c98dba116654f90",
+      "preservedTargetLineEndings": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/A07ExecutionContractVectors.java",
+      "beforeSha256": "e47dddc8b8101e03ad1b3f9f1ddae570080a2dd3c0394d94c124e797aa50e026",
+      "trialRawSha256": "92bb1182b7f2057ed73a2afcd55bc441a5cffcd6871d02ea3e26d97d3c66c93f",
+      "integratedRawSha256": "92bb1182b7f2057ed73a2afcd55bc441a5cffcd6871d02ea3e26d97d3c66c93f",
+      "normalizedTrialAndIntegratedSha256": "56ce83daecd89b30dde4db1244aa95c90a81f75c35b93c703fff613154a6eee6",
+      "preservedTargetLineEndings": true
+    }
+  ],
+  "scope": "Accepted intermediate solver trial only; root plan-4 candidate remains separate and unaccepted."
+}

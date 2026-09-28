@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "kind": "unified diff from maintained harness to frozen profiler runner",
+  "maintainedBase": {
+    "path": "tests/browser/compiled_attribute_acceptance.py",
+    "sha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+    "unchangedDuringCapture": true
+  },
+  "frozenDerivedRunner": {
+    "name": "cpu_profile_root.py",
+    "sha256": "b1586acaf9c76a0b29712b53b70bbb3cb086d0ff14056162d368018eede11fb6"
+  },
+  "orderedChanges": [
+    {
+      "point": "target setup",
+      "change": "Create a CDP session for the selected page target; enable Profiler and Debugger. Subscribe to Debugger.scriptParsed before navigation."
+    },
+    {
+      "point": "sampling setup",
+      "change": "Set V8 Profiler samplingInterval to 1000 microseconds and start sampling immediately before the existing navigation."
+    },
+    {
+      "point": "source provenance",
+      "change": "For sampled script IDs, retain scriptParsed URL/hash and passive Debugger.getScriptSource bytes. Link a GWT script only when its bytes exactly match the decoded payload of a loaded cache bundle or its cache URL uniquely identifies that bundle."
+    },
+    {
+      "point": "capture stop",
+      "change": "Keep the maintained DOM-attribute acceptance loop; stop profiling after the host observes RUNNING:warm. Record stop dispatch/round-trip and possible warm-boundary tail."
+    },
+    {
+      "point": "profile validation",
+      "change": "Validate sample/time-delta array alignment, loaded bundle identity, unique symbol-map rows, and at least one source-proven mapped GWT sample. Fail the profile capture if a required provenance check fails."
+    },
+    {
+      "point": "artifacts",
+      "change": "Write the raw V8 profile JSON, compact attribution/provenance JSON, and exact used GWT symbol map compressed with deterministic gzip metadata."
+    },
+    {
+      "point": "negative canary",
+      "change": "In a separate expected-failure run, send an unsupported Profiler method and require the protocol error; record cleanup and unchanged-input audits."
+    }
+  ],
+  "applicationControl": "none; acceptance remains through existing DOM attributes",
+  "timingUse": "diagnostic ranking only; 1 ms sampling and debugger provenance can perturb timing",
+  "exactPatch": {
+    "path": "runner.patch",
+    "sha256": "fb450effcb845714469dba3bd5db598cc07005084cf75b9b01b1efa5ef3c6292",
+    "bytes": 35696,
+    "reconstructionVerification": "runner-patch-verification.json",
+    "byteExactReconstruction": true
+  },
+  "rawRuntimeSourcePolicy": "Captured in-page GWT JavaScript source is not included; profiler runner source is represented by the patch above."
+}

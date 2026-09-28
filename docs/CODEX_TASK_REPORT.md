@@ -1,106 +1,119 @@
-# Current checkpoint: Q30 intermediate optimization accepted; Q30 BLOCKED
+# Current checkpoint: Q30 BLOCKED / NOT ACCEPTED
 
-Branch `codex/q30-multirail-qualification`; accepted production HEAD
-`0b29680c7daa62123732b91e3c1157e8ba0d6abd`
-(`Optimize sparse LU row traversal and pivoting`). Initial accepted optimization:
-`7a30a3fdcfa1dc9092d546edcb01bfa9ed435a36`
-(`Optimize Q30 solver qualification path`). Initial base was
-`745d537de5b18bd7ec2ae769fc00d3696e5af6bd`. No push or completion email.
+Branch `codex/q30-multirail-qualification`; checkpoint parent
+`dd5b22d3595cdb23e0ab2b9baec8890470f73305` (rejected geometry trial evidence).
+Accepted solver lineage is `0b29680c7daa62123732b91e3c1157e8ba0d6abd`
+plus the validated finite-predicate delta in this checkpoint.
+No push or completion email. Normal Q30 remains disabled; U06/U07/Q60 and later
+milestones remain unstarted. Full final matrices are NOT RUN while hard gates fail.
 
-The initial uncommitted finite-zero-factor optimization was independently
-reviewed and secured. Four fresh native suites PASS, 93,541 A07 assertions;
-actual control GWT build PASS, optimized build reused after all 1,524 consumed
-inputs matched. Eight fresh counterbalanced cold runs preserve exact requests,
-full electrical proof, work counts and cache/cleanup boundaries. Four pairs
-save 11.155–14.706 s (median 12.868 s); seed-13 repeat ranges are 2.437 s for
-control and 0.296 s optimized. Numeric equality is proved, not signed-zero bit
-identity. Every optimized run still exceeds 90 s (103.287–114.309 s).
-[Intermediate review and evidence](task-evidence/Q30/intermediate-optimization/README.md).
+The mandatory initial independent review and local checkpoint are complete:
+`7a30a3fdcfa1dc9092d546edcb01bfa9ed435a36`, finite-zero factor skip, native/GWT
+and eight counterbalanced fresh cold runs PASS. Four paired savings are
+11.155–14.706 s; all resulting cold times still exceed 90 s. Subsequent accepted
+column-row references/pivot optimization at `0b29680` preserves complete finite
+scanning, arithmetic order and unconditional reference cleanup. Native four-suite
+gate, GWT5, compiled A07, strict negative readers and six fresh paired runs PASS:
+seeds 7/13/64 improve from 106.647/114.733/103.935 s to 86.809/93.243/82.580 s.
+Exact requests, all hypotheses/proofs/work, physical admission and cache isolation
+match. These are accepted intermediate optimizations, not Q30 acceptance.
+[Initial review](task-evidence/Q30/intermediate-optimization/README.md);
+[accepted LU evidence](task-evidence/Q30/sparse-column-references/README.md).
 
-Monotonic accepted-source profile explains 106.350 s: solver stepping 79.421 s,
-routing 20.070 s, placement 0.826 s, analysis/setup 1.224 s, construction
-0.377 s and physical admission 0.075 s, plus orchestration/cleanup/residual.
-It separates all hypothesis, diagnostic, service, repair, retest and completion
-work and retained routing failures. Five hypotheses, 185 observations and
-390 proof units are unchanged. [Stage breakdown](task-evidence/Q30/stage-profile/README.md).
+Monotonic low-intrusion stage profiling explains 106.350 s: solver stepping
+79.421 s, routing 20.070 s, placement 0.826 s, analyze/setup 1.224 s,
+construction 0.377 s and physical admission 0.075 s, with every hypothesis,
+diagnostic/service/repair/retest/completion purpose, rejected route candidate,
+repeated work and cleanup accounted separately. Accepted-LU follow-up is
+96.359 s: solver 66.219 s, routing/validators 22.542 s. Unchanged controls vary
+by over 10 s, so corpus headroom is still missing.
+[Stage profile](task-evidence/Q30/stage-profile/README.md);
+[refined profile](task-evidence/Q30/route-and-lu-profile/README.md);
+[accepted-kernel profile](task-evidence/Q30/accepted-kernel-profile/README.md).
+Packed index, row-list, bounded via ancestry and immutable routing geometry
+trials were rejected and removed; their patches, failures and evidence remain
+in their respective evidence directories. Routing source remains accepted 0b.
 
-Two subsequent solver experiments passed focused correctness but regressed
-timing and were removed. Packed index: 116.310 s versus fresh control 106.447 s.
-Row lists: 112.399 s versus fresh control 107.655 s. Both retain exact patches,
-native/GWT/compiled A07 gates, strict readers, proof parity and cleanup receipts.
-Their remaining comparison rows were stopped, not reported as PASS.
-[Packed index](task-evidence/Q30/sparse-index/README.md),
-[row lists](task-evidence/Q30/sparse-row-list/README.md).
+Actual CDP CPU canaries now validate exact GWT source/symbol attribution, with
+initial attribution failure and deliberate unsupported-command failure retained.
+The 1 ms profile takes 100.442 s cold versus a fresh uninstrumented 87.473 s
+control. Both preserve complete proof/context/work and cleanup; this material
+difference prevents using sampled times as production stage costs. Qualitative
+ranking still identifies LU, solved-voltage publication, finite guards and
+routing. [CPU evidence and limitations](task-evidence/Q30/cdp-cpu-profile/README.md).
+The finite-range predicate is now an accepted intermediate optimization,
+integrated with target line endings preserved and secured in this local checkpoint. It passes
+four native suites (46.940 s; 271,483 A07 assertions), GWT5 (80.942 s), compiled
+A07 and strict negative canaries. Eight fresh counterbalanced runs save
+1.333–2.646 s per pair (median 2.065 s). The seed-7 repeat ranges are 0.319 s
+for control and 0.022 s for candidate; proof accounts for the gain while routing
+does not improve. Exact requests, complete proof/physical/work/cache parity,
+input audits and cleanup PASS. Seed 13 still takes 91.583 s, so Q30 remains
+BLOCKED. The IEEE finite predicate retains every call and rejects the same NaN
+and infinities; vectors retain the old predicate as an independent oracle.
+[Intermediate evidence](task-evidence/Q30/finite-predicate/README.md).
+A separate right-looking LU trial remains isolated and unaccepted. Its static
+review found no blocker; four native suites PASS (48.223 s, 271,351 A07
+assertions and cleanup), GWT5 PASS (86.585 s), and compiled A07/strict negative
+canaries PASS. The first fresh pair is 84.881 s versus 87.439 s control,
+with exact proof/physical/work parity and 37 negative canaries PASS. The fresh
+seed-13 pair is 92.306 s versus 93.893 s control, with the same strict parity
+and negative checks PASS. Remaining declared runs are pending. Neither change
+introduces mutable graph/proof reuse.
 
-The refined accepted-source profiler PASSes build (81.334 s), compiled seed 7,
-strict reader/37 corruption canaries, exact request/physical/electrical context,
-work and cleanup. Cold monotonic time is 106.731 s. Sampled LU ranks Crout
-updates, numeric row copying and scaling highest; short phase samples have
-quantization/JIT limits and cannot be extrapolated as total runtime. P07 A*
-takes 15.595 s, lower-bound BFS 1.002 s, goals 0.395 s. Setup/final admission
-are small. [Refined profile](task-evidence/Q30/route-and-lu-profile/README.md).
+The uncommitted plan-4 candidate extends the same family through one/two active
+channels, real reference arrangements and purposeful support blocks. Replay /4,
+native metadata driver, strict readers and a disabled normal-deadline verifier
+are integrated. This is NOT scale qualification. A frozen proposal preserves
+all 51 original roots and appends 26 using structural coverage only; each
+representative/held-out cohort covers counts 20–40 and all 18 axes. All 77 exact
+Java plans match an independent oracle. The 64-root native cap is unchanged;
+eventual corpus batches remain 51+26. Six structural/replay suites PASS in
+55.691 s, pure plan export/cleanup PASS in 34.568 s. Initial compile, LED-pin,
+template-grammar and driver metadata failures are retained and repaired.
+Actual GWT5 PASS in 90.415 s; compiled disabled-normal canary PASS (0.677 s
+application, cleanup 0.905 s) before any generation, snapshot or mutation.
+[Current candidate evidence](task-evidence/Q30/scale-plan-4/README.md).
 
-Second accepted intermediate: per-column references to nonzero lower rows,
-preserving coefficient hoisting and arithmetic order, row-reference pivots,
-finite-zero scaling skip and unconditional reference cleanup. Four native
-suites PASS (47.584 s, 271,331 A07 assertions); final-source actual GWT5 PASS
-(80.496 s); compiled A07/strict reader/three negative canaries PASS. Six fresh
-counterbalanced private runs preserve exact request, complete proof/context,
-all work, private-cache isolation and cleanup. Seeds 7/13/64 improve from
-106.647/114.733/103.935 s to 86.809/93.243/82.580 s. Median paired savings:
-21.355 s. Routing differs only 10–115 ms; most savings are in solver proof.
-Independent review found no correctness blocker. Full finite-input scanning
-remains; no mutable numerical/proof cache is introduced. Source/web inputs
-match all candidate runs and a frozen reference copy. This source/evidence
-delta is accepted for a local checkpoint; it does not accept Q30.
-[Gates, attribution and limits](task-evidence/Q30/sparse-column-references/README.md).
+The next focused service run exposed a real missing registration: Q30 declared
+its power-domain contract but never installed the runtime capability. That
+registration is now fixed through the existing physical owner, with a test of
+the installed owner's differential reference and retained storage obligation.
+The prior ten service cases FAILed on the missing capability (99.168 s including
+cleanup); sensitivity was NOT RUN. The fresh two-seed/five-fault gate FAILed
+in 293.181 s including cleanup: all ten service cases PASS, seed-7 sensitivity
+Java cases PASS but the driver rejects their new metadata, and all five seed-13
+sensitivity cases fail the simulated 250 ms service-wait assertion. The driver
+now validates exact authenticated metadata. A focused timing probe measures a
+1.083 ps accumulated deficit across five calls, each within the executor's
+1 ps tolerance. Five cumulative deadlines and a final 2 ps request cushion now
+preserve the original aggregate assertion; the seed-13 DREV sensitivity case
+PASSes (44.215 s including cleanup) with actual elapsed above 250 ms. A fresh
+combined gate remains pending. Runtime power-contract identity also now enters
+the dependency context and requires fresh strict evidence. No electrical v4 proof or normal timing acceptance
+is claimed. Root's actual final-source GWT5 rebuild now PASSes (81.555 s),
+including the integrated finite predicate and power-domain registration.
+Compiled A07/strict negative canaries and disabled-Q30/no-mutation canary PASS
+on that build; this still does not qualify the full plan-4 family.
 
-Q30 stays disabled and BLOCKED. Frozen limits are 90,000 ms cumulative,
-640 shared units and 5,000 ms per operation. Private measurement/cache isolation,
-generic StagedFamilyCapability/request/coordinator ownership, exact signed-long
-replay, canonical ordering, all settling/proofs and physical admission remain.
-Scale is still 33/35/37; 20–32, 34, 36 and 38–40 are unimplemented. A discrete
-20/21-part single-channel and two-channel support expansion are design options,
-not qualification. [Scale audit](task-evidence/Q30/scale-design.md).
+Frozen contracts: 90,000 ms cumulative, 640 units, 5,000 ms per operation;
+isolated private 90–300 s measurement; family-generic request/coordinator and
+StagedFamilyCapability ownership; exact signed-long replay/candidate ordering;
+complete physical/electrical/diagnostic/service/retest proofs and cleanup.
 
-Full final acceptance matrices are NOT RUN while timing/scale fail. Seed 13
-still exceeds 90 s; the smaller margins do not establish corpus acceptance.
-The bounded prior-via ancestry experiment passed native/build/proof parity but
-was rejected: 86.816 s versus fresh control 86.458 s, only 0.204 s route savings.
-Its source/test delta was removed; remaining four timing rows are NOT RUN.
-[Retained trial](task-evidence/Q30/bounded-via-ancestry/README.md).
-
-Updated accepted-source profile/build/strict proof PASS: 96.359 s monotonic,
-66.219 s solver stepping, 22.542 s routing including validators. A fresh
-uninstrumented control also slowed to 97.498 s versus earlier 86.458 s. This
-unexplained variation is retained and reinforces the missing headroom gate.
-All exact steps/trials/factors/proofs/work/cleanup match. LU still dominates
-sampled kernel time; refined routing samples point to via geometry checks.
-[Current profile and limits](task-evidence/Q30/accepted-kernel-profile/README.md).
-The immutable routing-geometry trial was also removed. Four native suites and
-cleanup PASS (44.000 s), GWT5 PASS (89.852 s), eight fresh compiled private runs
-and strict proof/physical/work/cache parity PASS. Median paired route savings
-are only 0.474 s; reverse-order seed-7 repeat saves 0.113 s routing and regresses
-0.192 s cold. Unchanged control varies by 10.133 s. Correctness passed, but a
-useful repeatable runtime benefit was not established. Exact patch and all
-results are retained. [Rejected geometry trial](task-evidence/Q30/immutable-routing-geometry/README.md).
-Remaining LU and publication audits found no justified additional change from
-the existing samples; an actual CPU profile is being prepared in scratch.
-Purposeful scale, strict readers, replay epoch and a normal-deadline verifier
-are in isolated scratch; none is integrated/qualified.
-U06/U07/Q60 and later milestones remain unstarted.
-
-Resources: all completed browser/server jobs have maintained ownership receipts,
-cleanup PASS and no survivors. No browser/build is active at this checkpoint.
-Root WAR is the rejected geometry candidate; rebuild before use. The accepted-reference,
-columnref-reference and isolated profiler fixtures are retained for continued
-work. Earlier administrative scratch deletion remains policy-blocked separately
-from runtime cleanup; exact leaves are in acceptance-continuation/resource-cleanup.json.
-Preserve the unrelated dirty Desktop checkout and pre-existing
-`tests/contracts/__pycache__/`. Production source matches accepted 0b29680;
-profiler and scale edits remain isolated. This checkpoint changes evidence/report only.
-No resources from
-the unrelated Desktop checkout were modified.
+Resources: completed browser/server jobs report owned cleanup PASS and no
+survivors. One isolated right-looking LU comparison browser is active; no build
+or native gate is active. Root WAR matches its latest finite-predicate/plan-4
+source build. Isolated timing does not qualify the unaccepted plan-4 worktree. Frozen
+accepted/control and trial fixtures remain in unique OS-temp scratch. Earlier
+administrative scratch deletion is policy-blocked separately from runtime
+cleanup (exact leaves in acceptance-continuation/resource-cleanup.json).
+Preserve unrelated Desktop checkout edits and pre-existing test `__pycache__`.
+Plan-4 source/tests/driver/replay/readers/evidence are uncommitted and unstaged;
+the validated finite predicate/evidence is the only production delta secured by
+this checkpoint's local commit. No push is authorized.
+Next: resolve focused electrical gates, build final source, measure isolated
+solver trials, then prove scale and normal cold timing before any final matrix.
 
 # Historical checkpoint: Q30 acceptance continuation — BLOCKED / NOT ACCEPTED
 

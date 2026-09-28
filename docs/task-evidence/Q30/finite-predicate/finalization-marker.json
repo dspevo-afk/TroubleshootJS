@@ -1,0 +1,28 @@
+{
+  "state": "COMPLETE",
+  "decision": "ACCEPTED_INTERMEDIATE",
+  "terminalRunIds": [
+    "finite-01-F7",
+    "finite-02-B7",
+    "finite-03-B13",
+    "finite-04-F13",
+    "finite-05-F64",
+    "finite-06-B64",
+    "finite-07-B7",
+    "finite-08-F7"
+  ],
+  "notRunIds": [],
+  "stopReason": null,
+  "q30Status": "BLOCKED / NOT ACCEPTED",
+  "normalPublicationEnabled": false,
+  "pairedColdSavingsMs": [
+    1674,
+    2646,
+    2456,
+    1333
+  ],
+  "medianPairedColdSavingsMs": 2065.0,
+  "seed7ControlRepeatRangeMs": 319,
+  "seed7CandidateRepeatRangeMs": 22,
+  "reason": "All four pairs save runtime in proof with exact request/physical/proof/work/cache parity. Reverse-order seed-7 repeat confirms a gain larger than observed same-variant range. Seed13 still exceeds90s; no normal acceptance follows."
+}

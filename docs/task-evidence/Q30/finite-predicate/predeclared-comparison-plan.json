@@ -1,0 +1,11 @@
+{
+  "schema": "q30-finite-predicate-trial-plan-v1",
+  "status": "DECLARED_BEFORE_COLD_COMPARISON",
+  "baseline": "0b29680c7daa62123732b91e3c1157e8ba0d6abd",
+  "sourceDelta": ["SolverExecutionBoundary.finite inclusive finite-range predicate", "A07 independent classification vectors"],
+  "sequence": [["F", "7"], ["B", "7"], ["B", "13"], ["F", "13"], ["F", "64"], ["B", "64"], ["B", "7"], ["F", "7"]],
+  "gatesBeforeTiming": ["focused native four suites", "actual maintained GWT five-permutation build", "compiled A07 with strict reader and negative canaries"],
+  "controls": ["fresh owned browser/profile/server per run", "exact input manifest stable", "no simultaneous heavy gate", "identical exact requests/all hypotheses/full proof/physical admission/work/cache isolation", "unconditional owned cleanup"],
+  "earlyStop": "Stop remaining pairs if correctness fails or initial paired candidate cold/proof timing provides no useful gain; retain failure and NOT RUN rows.",
+  "acceptance": "Require useful repeatable paired improvement beyond observed within-variant variation; no threshold/deadline/proof change. All timings remain private measurements, never normal acceptance."
+}

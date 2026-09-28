@@ -152,7 +152,7 @@ final class SolverExecutionBoundary {
             observation.operation == operation.id && operation.candidate == observation &&
             isCurrent(observation, operation.owner, operation.graph, observation.simulationTime);
     }
-    static boolean finite(double value) { return !Double.isNaN(value) && !Double.isInfinite(value); }
+    static boolean finite(double value) { return value >= -Double.MAX_VALUE && value <= Double.MAX_VALUE; }
     private static boolean wallMillis(double value) {
         return finite(value) && value >= 0 && value <= MAX_WALL_MILLIS && value == Math.floor(value);
     }

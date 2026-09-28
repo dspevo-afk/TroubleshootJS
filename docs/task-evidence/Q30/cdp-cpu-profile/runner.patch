@@ -1,0 +1,742 @@
+--- a/tests/browser/compiled_attribute_acceptance.py
++++ b/tools/cpu_profile_candidate.py
+@@ -22,6 +22,8 @@
+ from threading import Thread
+ from urllib.parse import urlsplit
+ 
++import csv
++import gzip
+ import hashlib
+ import json
+ import math
+@@ -54,6 +56,11 @@
+ CASE_NAME_RE = re.compile(r"[^A-Za-z0-9._-]+")
+ INPUT_ROOTS = ("src", "war")
+ CHUNK_SIZE = 1024 * 1024
++CPU_PROFILE_SAMPLING_INTERVAL_US = 1000
++CPU_PROFILE_CACHE_RE = re.compile(r"/([0-9A-Fa-f]{32})\.cache\.js$")
++CPU_PROFILE_ALLOWED_PATHS = ("/circuitjs.html", "/circuitjs1/", "/tsj-", "/font/")
++GWT_SYMBOL_FIELDS = ("jsName", "jsniIdent", "className", "memberName",
++                     "sourceUri", "sourceLine", "fragmentNumber")
+ 
+ 
+ class QuietHandler(SimpleHTTPRequestHandler):
+@@ -327,6 +334,399 @@
+     return path
+ 
+ 
++
++
++def _cpu_cache_name(path):
++    match = CPU_PROFILE_CACHE_RE.search(path or "")
++    return match.group(1).upper() if match else None
++
++
++def _safe_cpu_profile_path(raw_url):
++    """Return only an allowlisted local app path; accept sanitized paths on replay."""
++    parsed = urlsplit(raw_url or "")
++    path = parsed.path
++    local_http = (parsed.scheme in ("http", "https") and
++                  parsed.hostname in ("127.0.0.1", "localhost"))
++    already_sanitized = not parsed.scheme and not parsed.netloc
++    if ((local_http or already_sanitized) and
++            path.startswith(CPU_PROFILE_ALLOWED_PATHS)):
++        return path
++    return ""
++
++
++def _walk_debugger_stack(stack):
++    while isinstance(stack, dict):
++        for frame in stack.get("callFrames", []):
++            if isinstance(frame, dict):
++                yield frame
++        parent = stack.get("parent")
++        if not isinstance(parent, dict):
++            break
++        stack = parent
++
++
++def _read_gwt_download_payload(repo, strong_name):
++    """Decode GWT's JSON-string array wrapper without executing its contents."""
++    bundle_path = repo / "war/circuitjs1" / (strong_name + ".cache.js")
++    bundle_bytes = bundle_path.read_bytes()
++    bundle_text = bundle_bytes.decode("utf-8-sig")
++    prefix = "circuitjs1.onScriptDownloaded("
++    if not bundle_text.startswith(prefix):
++        raise ValueError("cache bundle does not start with the expected GWT wrapper")
++    position = len(prefix)
++    while position < len(bundle_text) and bundle_text[position].isspace():
++        position += 1
++    if position >= len(bundle_text) or bundle_text[position] != "[":
++        raise ValueError("GWT wrapper payload is not a JSON array")
++    fragments, end = json.JSONDecoder().raw_decode(bundle_text, position)
++    if not isinstance(fragments, list) or not fragments or not all(
++            isinstance(fragment, str) for fragment in fragments):
++        raise ValueError("GWT wrapper array must contain non-empty string fragments")
++    if bundle_text[end:].strip() != ");":
++        raise ValueError("GWT wrapper has an unexpected suffix")
++    payload_text = "".join(fragments)
++    payload_bytes = payload_text.encode("utf-8")
++    embedded_names = re.findall(
++        r"\$strongName\s*=\s*['\"]([0-9A-Fa-f]{32})['\"]", payload_text)
++    if embedded_names != [strong_name]:
++        raise ValueError("decoded GWT payload strong name does not match its cache filename")
++    return {
++        "strongName": strong_name,
++        "cacheFileSha256": hashlib.sha256(bundle_bytes).hexdigest(),
++        "cacheFileBytes": len(bundle_bytes),
++        "payloadSha256": hashlib.sha256(payload_bytes).hexdigest(),
++        "payloadUtf8Bytes": len(payload_bytes),
++        "fragmentCount": len(fragments),
++        "embeddedStrongNameCount": len(embedded_names),
++        "wrapperValidated": True,
++    }, bundle_bytes, payload_bytes
++
++
++def capture_profile_script_provenance(repo, profile, cdp_session, script_events):
++    """Link sampled scriptIds only to exact GWT URLs or their decoded payload bytes."""
++    nodes_by_id = {node.get("id"): node for node in profile.get("nodes", [])}
++    sampled_script_ids = set()
++    for node_id in profile.get("samples", []):
++        node = nodes_by_id.get(node_id)
++        frame = node.get("callFrame", {}) if node else {}
++        script_id = str(frame.get("scriptId", ""))
++        if script_id not in ("", "0") and not _cpu_cache_name(
++                _safe_cpu_profile_path(frame.get("url", ""))):
++            sampled_script_ids.add(script_id)
++
++    strong_names = set()
++    for node in profile.get("nodes", []):
++        path = _safe_cpu_profile_path(node.get("callFrame", {}).get("url", ""))
++        strong = _cpu_cache_name(path)
++        if strong:
++            strong_names.add(strong)
++    for event in script_events.values():
++        strong = _cpu_cache_name(_safe_cpu_profile_path(event.get("url", "")))
++        if strong:
++            strong_names.add(strong)
++
++    bundles = {}
++    bundle_evidence = []
++    for strong in sorted(strong_names):
++        try:
++            metadata, file_bytes, payload_bytes = _read_gwt_download_payload(repo, strong)
++            bundles[strong] = (file_bytes, payload_bytes)
++            bundle_evidence.append(metadata)
++        except BaseException as error:
++            bundle_evidence.append({
++                "strongName": strong,
++                "wrapperValidated": False,
++                "error": type(error).__name__ + ": " + str(error),
++            })
++
++    script_map = {}
++    evidence_rows = []
++    for script_id in sorted(sampled_script_ids):
++        event = script_events.get(script_id, {})
++        event_url = _safe_cpu_profile_path(event.get("url", ""))
++        linked_names = set()
++        event_url_name = _cpu_cache_name(event_url)
++        if event_url_name:
++            linked_names.add(event_url_name)
++        stack_paths = []
++        for stack_frame in _walk_debugger_stack(event.get("stackTrace")):
++            path = _safe_cpu_profile_path(stack_frame.get("url", ""))
++            if path:
++                stack_paths.append(path)
++
++        source_text = None
++        source_error = None
++        try:
++            response = cdp_session.send("Debugger.getScriptSource", {
++                "scriptId": script_id})
++            value = response.get("scriptSource") if isinstance(response, dict) else None
++            if isinstance(value, str):
++                source_text = value
++            else:
++                source_error = "Debugger.getScriptSource returned no source text"
++        except BaseException as error:
++            source_error = type(error).__name__ + ": " + str(error)
++
++        source_sha256 = None
++        source_bytes = None
++        payload_matches = []
++        if source_text is not None:
++            source_bytes_value = source_text.encode("utf-8")
++            source_sha256 = hashlib.sha256(source_bytes_value).hexdigest()
++            source_bytes = len(source_bytes_value)
++            for strong, (file_bytes, payload_bytes) in sorted(bundles.items()):
++                match_kind = None
++                if source_bytes_value == file_bytes:
++                    match_kind = "exact-cache-file-bytes"
++                elif source_bytes_value == payload_bytes:
++                    match_kind = "exact-decoded-payload-bytes"
++                elif source_bytes >= 256 and source_bytes_value in payload_bytes:
++                    match_kind = "exact-decoded-payload-substring-256plus"
++                if match_kind:
++                    payload_matches.append({
++                        "strongName": strong,
++                        "match": match_kind,
++                        "scriptSourceSha256": source_sha256,
++                    })
++                    linked_names.add(strong)
++
++        unique_names = sorted(linked_names)
++        linked_strong = unique_names[0] if len(unique_names) == 1 else None
++        if linked_strong:
++            script_map[script_id] = linked_strong
++        evidence_rows.append({
++            "scriptId": script_id,
++            "debuggerScriptParsedObserved": bool(event),
++            "scriptParsedUrl": event_url,
++            "scriptParsedHash": event.get("hash") if isinstance(event.get("hash"), str) else None,
++            "scriptParsedStackPaths": sorted(set(stack_paths)),
++            "scriptSourceSha256": source_sha256,
++            "scriptSourceUtf8Bytes": source_bytes,
++            "scriptSourceError": source_error,
++            "decodedPayloadMatches": payload_matches,
++            "linkedStrongNames": unique_names,
++            "linkedStrongName": linked_strong,
++            "linkBasis": (
++                "exact-scriptParsed-cache-url" if event_url_name and linked_strong else
++                "exact-script-source-vs-decoded-payload" if len(payload_matches) == 1 and linked_strong else
++                "conflicting-exact-links" if len(unique_names) > 1 else "unlinked"),
++        })
++    return script_map, evidence_rows, bundle_evidence
++
++
++def save_cpu_profile_artifacts(repo, output, case, profile, capture,
++                               script_id_to_strong_name=None):
++    """Keep a sanitized V8 profile and source-proven GWT symbol attribution."""
++    script_id_to_strong_name = script_id_to_strong_name or {}
++    profile_dir = output / "cpu-profile"
++    profile_dir.mkdir(parents=True, exist_ok=True)
++    sanitized = profile
++    strong_names = set()
++    wanted_names = {}
++
++    for node in sanitized.get("nodes", []):
++        frame = node.get("callFrame", {})
++        path = _safe_cpu_profile_path(frame.get("url", ""))
++        frame["url"] = path
++        strong = _cpu_cache_name(path)
++        if strong:
++            strong_names.add(strong)
++
++    # Keep profile function names available to build the symbol lookup table,
++    # but do not attribute an empty-URL frame by name alone. Its scriptId must
++    # first be linked to a loaded bundle by exact Debugger/source evidence.
++    strong_names.update(script_id_to_strong_name.values())
++    for node in sanitized.get("nodes", []):
++        frame = node.get("callFrame", {})
++        name = frame.get("functionName", "")
++        script_id = str(frame.get("scriptId", ""))
++        if not name:
++            continue
++        direct = _cpu_cache_name(frame.get("url", ""))
++        targets = ([direct] if direct else sorted(strong_names))
++        for strong in targets:
++            wanted_names.setdefault(strong, set()).add(name)
++
++    profile_bytes = json.dumps(sanitized, ensure_ascii=False,
++                               separators=(",", ":")).encode("utf-8")
++    profile_path = profile_dir / "v8-cpu-profile.json"
++    profile_path.write_bytes(profile_bytes)
++
++    symbol_tables = {}
++    symbol_artifacts = []
++    symbol_root = profile_dir / "symbolMaps"
++    symbol_root.mkdir(parents=True, exist_ok=True)
++    for strong in sorted(strong_names):
++        symbol_path = (repo / "war/WEB-INF/deploy/circuitjs1/symbolMaps" /
++                       (strong + ".symbolMap"))
++        if not symbol_path.is_file():
++            symbol_artifacts.append({
++                "strongName": strong, "status": "MISSING",
++                "repoPath": symbol_path.relative_to(repo).as_posix()})
++            continue
++        symbol_bytes = symbol_path.read_bytes()
++        symbol_sha = hashlib.sha256(symbol_bytes).hexdigest()
++        archived = symbol_root / (strong + ".symbolMap.gz")
++        archived.write_bytes(gzip.compress(symbol_bytes, mtime=0))
++        wanted = wanted_names.get(strong, set())
++        table = {}
++        known_lu_factor_rows = []
++        with symbol_path.open("r", encoding="utf-8", newline="") as stream:
++            # GWT's CSV field names are themselves a comment. Filtering comments
++            # and using DictReader's default would consume the first data row as
++            # its header and silently lose all symbol attribution.
++            records = csv.DictReader(
++                (line for line in stream if not line.startswith("#")),
++                fieldnames=GWT_SYMBOL_FIELDS)
++            for row in records:
++                if (row.get("className") ==
++                        "com.lushprojects.circuitjs1.client.CirSim" and
++                        row.get("memberName") == "lu_factor"):
++                    known_lu_factor_rows.append(row)
++                js_name = row.get("jsName", "")
++                if js_name in wanted:
++                    table.setdefault(js_name, []).append({
++                        "jsName": js_name,
++                        "jsniIdent": row.get("jsniIdent", ""),
++                        "className": row.get("className", ""),
++                        "memberName": row.get("memberName", ""),
++                        "sourceUri": row.get("sourceUri", ""),
++                        "sourceLine": row.get("sourceLine", ""),
++                        "fragmentNumber": row.get("fragmentNumber", ""),
++                    })
++        map_valid = len(known_lu_factor_rows) == 1
++        symbol_tables[strong] = table
++        symbol_artifacts.append({
++            "strongName": strong,
++            "status": "PASS" if map_valid else "INVALID",
++            "knownCirSimLuFactorRows": len(known_lu_factor_rows),
++            "knownCirSimLuFactorJsName": (
++                known_lu_factor_rows[0].get("jsName") if map_valid else None),
++            "repoPath": symbol_path.relative_to(repo).as_posix(),
++            "sha256": symbol_sha,
++            "compressedArtifact": archived.relative_to(output).as_posix(),
++            "compressedBytes": archived.stat().st_size,
++            "mappedProfileFunctionCount": sum(1 for rows in table.values() if len(rows) == 1),
++            "ambiguousSymbolCount": sum(1 for rows in table.values() if len(rows) > 1),
++            "profileFunctionCount": len(wanted),
++        })
++
++    nodes_by_id = {node.get("id"): node for node in sanitized.get("nodes", [])}
++    samples = sanitized.get("samples", [])
++    deltas = sanitized.get("timeDeltas", [])
++    sample_groups = {}
++    gwt_sample_count = 0
++    mapped_gwt_sample_count = 0
++    pair_count = min(len(samples), len(deltas))
++    for index in range(pair_count):
++        node = nodes_by_id.get(samples[index])
++        frame = node.get("callFrame", {}) if node else {}
++        function_name = frame.get("functionName", "")
++        direct_strong = _cpu_cache_name(frame.get("url", ""))
++        script_id = str(frame.get("scriptId", ""))
++        proven_strong = (direct_strong or
++                         script_id_to_strong_name.get(script_id))
++        if direct_strong:
++            strong = direct_strong
++            mapping_basis = "profile-url"
++        elif proven_strong:
++            strong = proven_strong
++            mapping_basis = "exact-debugger-source-proven-scriptId"
++        else:
++            strong = None
++            mapping_basis = None
++        mappings = (symbol_tables.get(strong, {}).get(function_name, [])
++                    if strong and function_name else [])
++        mapping = mappings[0] if len(mappings) == 1 else None
++        if mapping is not None:
++            mapped_gwt_sample_count += 1
++        if mapping:
++            label = mapping["className"] + "::" + mapping["memberName"]
++            source_uri = mapping["sourceUri"]
++            source_line = mapping["sourceLine"]
++        else:
++            label = function_name or "<anonymous-or-unmapped>"
++            source_uri = ""
++            source_line = ""
++        key = (strong or "", label, source_uri, source_line, function_name,
++               mapping_basis or "unmapped")
++        group = sample_groups.get(key)
++        if group is None:
++            group = {
++                "strongName": strong,
++                "functionName": function_name,
++                "label": label,
++                "sourceUri": source_uri,
++                "sourceLine": source_line,
++                "mapped": mapping is not None,
++                "mappingBasis": mapping_basis,
++                "sampleCount": 0,
++                "sampledMicroseconds": 0,
++            }
++            sample_groups[key] = group
++        group["sampleCount"] += 1
++        delta = deltas[index]
++        if isinstance(delta, (int, float)) and delta >= 0:
++            group["sampledMicroseconds"] += delta
++
++    mapped_groups = [row for row in sample_groups.values() if row["mapped"]]
++    unmapped_groups = [row for row in sample_groups.values() if not row["mapped"]]
++    sort_groups = lambda rows: sorted(
++        rows, key=lambda row: (-row["sampledMicroseconds"], row["label"]))
++    summary = {
++        "schema": 1,
++        "caseName": case["name"],
++        "samplingIntervalMicroseconds": CPU_PROFILE_SAMPLING_INTERVAL_US,
++        "profileStartTimeMicroseconds": sanitized.get("startTime"),
++        "profileEndTimeMicroseconds": sanitized.get("endTime"),
++        "profileRangeMicroseconds": (
++            sanitized.get("endTime", 0) - sanitized.get("startTime", 0)
++            if isinstance(sanitized.get("endTime"), (int, float)) and
++               isinstance(sanitized.get("startTime"), (int, float)) else None),
++        "profileFile": profile_path.relative_to(output).as_posix(),
++        "profileSha256": hashlib.sha256(profile_bytes).hexdigest(),
++        "profileNodeCount": len(sanitized.get("nodes", [])),
++        "sampleCount": len(samples),
++        "timeDeltaCount": len(deltas),
++        "pairedSampleCount": pair_count,
++        "sampleArraysAligned": len(samples) == len(deltas),
++        "gwtBundleCount": len(strong_names),
++        "gwtBundleStrongNames": sorted(strong_names),
++        "mappedGwtSampleCount": mapped_gwt_sample_count,
++        "provenScriptIdCount": len(script_id_to_strong_name),
++        "scriptIdStrongNames": dict(sorted(script_id_to_strong_name.items())),
++        "allGwtSymbolMapsValidated": bool(strong_names) and all(
++            row.get("status") == "PASS" for row in symbol_artifacts),
++        "frameAttributionRule": (
++            "A sampled frame is attributed only from its own hashed cache URL or "
++            "from an exact scriptId link established by Debugger.scriptParsed cache "
++            "URL or script-source bytes matching the decoded GWT payload. Function-"
++            "name matches and eval-stack ancestry do not establish source identity."),
++        "scriptProvenance": capture.get("scriptProvenance", {}),
++        "pairedSampledMicroseconds": sum(
++            delta for delta in deltas[:pair_count]
++            if isinstance(delta, (int, float)) and delta >= 0),
++        "symbolMaps": symbol_artifacts,
++        "captureBoundary": {
++            key: capture.get(key) for key in (
++                "scope", "startIncludesNavigation", "stopReason", "stopTargetState",
++                "stopObservedState", "stopObservedUtc", "stopObservedHostMonotonicSeconds",
++                "transitionDetectionWindowSeconds", "stateReadRoundTripSeconds",
++                "pollIntervalSeconds", "profileMayIncludeWarmWorkUntilStopAck",
++                "warmBoundaryObserved", "requireWarmBoundary",
++                "stopRoundTripSeconds")
++        },
++        "topMappedMethods": sort_groups(mapped_groups)[:200],
++        "topUnmappedFrames": sort_groups(unmapped_groups)[:100],
++        "interpretationLimit": (
++            "V8 sampled CPU time for this page target only. Do not extrapolate "
++            "samples into solver wall time or treat this diagnostic run as a "
++            "deadline result. Sampling overhead is unmeasured."),
++    }
++    save_json(output, "cpu-profile/attribution.json", summary)
++    return summary
++
++
+ def expected_matches(case, state):
+     if state is None:
+         return False
+@@ -339,7 +739,9 @@
+     return "cases/" + case["slug"]
+ 
+ 
+-def run_case(page, base_url, case, output):
++def run_case(page, base_url, case, output, cpu_profile_session=None, cpu_profile_repo=None,
++             cpu_profile_stop_state="RUNNING:warm", cpu_profile_negative_canary=False,
++             cpu_profile_require_warm_boundary=False, cpu_profile_script_events=None):
+     started = time.monotonic()
+     started_utc = utc_now()
+     deadline = started + case["timeoutSeconds"]
+@@ -352,6 +754,10 @@
+     last_observed_state = None
+     terminal_reached = False
+     timed_out = False
++    cpu_profile_capture = {"status": "NOT_REQUESTED"}
++    cpu_profiler_enabled = False
++    cpu_profile_started = False
++    last_cold_state_observation = None
+ 
+     def on_page_error(error):
+         page_errors.append(str(error))
+@@ -394,7 +800,125 @@
+                                 "message": str(error)})
+             return None
+ 
++    def stop_cpu_profile(stop_reason, observed_state=None, observed_monotonic=None):
++        nonlocal cpu_profiler_enabled, cpu_profile_started
++        if not cpu_profile_started:
++            return
++        stop_started = time.monotonic()
++        cpu_profile_capture["stopReason"] = stop_reason
++        cpu_profile_capture["stopObservedState"] = observed_state
++        cpu_profile_capture["stopObservedUtc"] = utc_now()
++        cpu_profile_capture["warmBoundaryObserved"] = (
++            stop_reason == "target-state-observed" and
++            observed_state == cpu_profile_stop_state)
++        if observed_monotonic is not None:
++            cpu_profile_capture["stopObservedHostMonotonicSeconds"] = observed_monotonic
++            cpu_profile_capture["stopDispatchDelaySeconds"] = max(
++                0.0, stop_started - observed_monotonic)
++        cpu_profile_started = False
++        try:
++            stopped = cpu_profile_session.send("Profiler.stop")
++            cpu_profile_capture["stopRoundTripSeconds"] = time.monotonic() - stop_started
++            profile = stopped.get("profile") if isinstance(stopped, dict) else None
++            if not isinstance(profile, dict):
++                raise RuntimeError("Profiler.stop returned no CPU profile")
++            (script_id_to_strong_name, script_provenance,
++             loaded_bundle_evidence) = capture_profile_script_provenance(
++                cpu_profile_repo, profile, cpu_profile_session,
++                cpu_profile_script_events or {})
++            script_provenance_record = {
++                "sampledScripts": script_provenance,
++                "loadedBundles": loaded_bundle_evidence,
++            }
++            cpu_profile_capture["scriptProvenance"] = script_provenance_record
++            save_json(output, "cpu-profile/script-provenance.json",
++                      script_provenance_record)
++            summary = save_cpu_profile_artifacts(
++                cpu_profile_repo, output, case, profile, cpu_profile_capture,
++                script_id_to_strong_name)
++            quality_failures = []
++            if not summary["sampleArraysAligned"]:
++                quality_failures.append("sample and time-delta arrays are misaligned")
++            if summary["pairedSampleCount"] <= 0:
++                quality_failures.append("profile has no aligned samples")
++            if (summary["gwtBundleCount"] > 0 and
++                    not summary["allGwtSymbolMapsValidated"]):
++                quality_failures.append("one or more loaded GWT symbol maps failed CirSim.lu_factor validation")
++            if (summary["gwtBundleCount"] > 0 and
++                    summary["mappedGwtSampleCount"] <= 0):
++                quality_failures.append("loaded GWT code had no sample with exact script provenance and a unique symbol-map row")
++            if (cpu_profile_require_warm_boundary and
++                    not cpu_profile_capture.get("warmBoundaryObserved")):
++                quality_failures.append("required RUNNING:warm boundary was not observed")
++            cpu_profile_capture.update({
++                "status": "CAPTURED",
++                "qualityFailures": quality_failures,
++                "artifacts": {
++                    "profile": summary["profileFile"],
++                    "attribution": "cpu-profile/attribution.json",
++                    "symbolMaps": summary["symbolMaps"],
++                },
++            })
++        except BaseException as error:
++            cpu_profile_capture.update({
++                "status": "STOP_OR_EXPORT_FAILED",
++                "stopRoundTripSeconds": time.monotonic() - stop_started,
++                "error": {"type": type(error).__name__, "message": str(error)},
++            })
++        finally:
++            if cpu_profiler_enabled:
++                try:
++                    cpu_profile_session.send("Profiler.disable")
++                except BaseException as error:
++                    cpu_profile_capture["disableError"] = str(error)
++                cpu_profiler_enabled = False
++        if cpu_profile_capture.get("status") == "CAPTURED":
++            profile_failed = bool(cpu_profile_capture.get("qualityFailures") or
++                                  cpu_profile_capture.get("disableError"))
++            cpu_profile_capture["status"] = "FAIL_PROFILE" if profile_failed else "PASS"
++
+     try:
++        if cpu_profile_session is not None:
++            cpu_profile_capture = {
++                "status": "STARTING",
++                "samplingIntervalMicroseconds": CPU_PROFILE_SAMPLING_INTERVAL_US,
++                "scope": "starts before navigation; target-state stop is host-observed and may include a short warm-boundary tail",
++                "startIncludesNavigation": True,
++                "stopTargetState": cpu_profile_stop_state,
++                "requireWarmBoundary": cpu_profile_require_warm_boundary,
++            }
++            try:
++                cpu_profile_session.send("Profiler.enable")
++                cpu_profiler_enabled = True
++                cpu_profile_session.send("Profiler.setSamplingInterval", {
++                    "interval": CPU_PROFILE_SAMPLING_INTERVAL_US})
++                cpu_profile_capture["startRequestedUtc"] = utc_now()
++                cpu_profile_started_at = time.monotonic()
++                if cpu_profile_negative_canary:
++                    cpu_profile_session.send("Profiler.__codexUnsupportedCanary")
++                else:
++                    cpu_profile_session.send("Profiler.start")
++                cpu_profile_started = True
++                cpu_profile_capture["startRoundTripSeconds"] = (
++                    time.monotonic() - cpu_profile_started_at)
++                cpu_profile_capture["status"] = "RECORDING"
++                if cpu_profile_negative_canary:
++                    raise RuntimeError(
++                        "Unsupported profiler method unexpectedly succeeded")
++            except BaseException as error:
++                cpu_profile_capture["status"] = "START_FAILED"
++                cpu_profile_capture["error"] = {
++                    "type": type(error).__name__, "message": str(error)}
++                if cpu_profiler_enabled:
++                    try:
++                        cpu_profile_session.send("Profiler.disable")
++                    except BaseException as disable_error:
++                        cpu_profile_capture["disableError"] = str(disable_error)
++                    cpu_profiler_enabled = False
++                save_json(output, "cpu-profile/start-failure.json",
++                          cpu_profile_capture)
++                raise RuntimeError("V8 CPU profile failed to start: " + str(error))
++
+         try:
+             response = page.goto(url, wait_until="domcontentloaded",
+                                  timeout=max(1, int(case["timeoutSeconds"] * 1000)))
+@@ -411,9 +935,31 @@
+ 
+         if navigation_error is None:
+             while time.monotonic() < deadline:
++                state_read_started_at = time.monotonic()
+                 state = read_attribute(case["stateAttribute"])
++                state_observed_at = time.monotonic()
+                 if state is not None:
+                     last_observed_state = state
++                    if state == "RUNNING:cold":
++                        last_cold_state_observation = {
++                            "utc": utc_now(), "monotonic": state_observed_at}
++                    if cpu_profile_started and state == cpu_profile_stop_state:
++                        cpu_profile_capture.update({
++                            "stopTargetState": cpu_profile_stop_state,
++                            "stopObservedState": state,
++                            "stateReadRoundTripSeconds": (
++                                state_observed_at - state_read_started_at),
++                            "pollIntervalSeconds": POLL_SECONDS,
++                            "profileMayIncludeWarmWorkUntilStopAck": True,
++                            "lastColdStateObservedUtc": (
++                                last_cold_state_observation["utc"]
++                                if last_cold_state_observation else None),
++                            "transitionDetectionWindowSeconds": (
++                                state_observed_at - last_cold_state_observation["monotonic"]
++                                if last_cold_state_observation else None),
++                        })
++                        stop_cpu_profile("target-state-observed", state,
++                                         state_observed_at)
+                     if any(state.startswith(prefix) for prefix in case["terminalPrefixes"]):
+                         terminal_reached = True
+                         break
+@@ -427,6 +973,9 @@
+             if state is not None:
+                 last_observed_state = state
+     finally:
++        if cpu_profile_started:
++            stop_cpu_profile("case-exit-before-target-state",
++                             last_observed_state, time.monotonic())
+         # The event lists are owned by this case.  Detach handlers before the
+         # receipt is returned so later navigations cannot mutate old results.
+         for event, handler in (("pageerror", on_page_error),
+@@ -470,6 +1019,12 @@
+         outcome = "PASS"
+     else:
+         outcome = "FAIL"
++    application_outcome = outcome
++    cpu_profile_outcome = ("NOT_REQUESTED" if cpu_profile_session is None else
++                           ("PASS" if cpu_profile_capture.get("status") == "PASS"
++                            else "FAIL"))
++    if cpu_profile_session is not None and cpu_profile_outcome == "FAIL" and outcome == "PASS":
++        outcome = "FAIL_PROFILE"
+     finished = time.monotonic()
+     receipt = {
+         "schema": SCRIPT_SCHEMA,
+@@ -481,6 +1036,8 @@
+         "finishedUtc": utc_now(),
+         "operationSeconds": finished - started,
+         "outcome": outcome,
++        "applicationOutcome": application_outcome,
++        "cpuProfileOutcome": cpu_profile_outcome,
+         "terminalReached": terminal_reached,
+         "stateMatch": state_match,
+         "observedState": last_observed_state,
+@@ -503,6 +1060,7 @@
+         "attributeReadErrors": read_errors,
+         "listenerCleanupErrors": listener_cleanup_errors,
+         "navigationError": navigation_error,
++        "cpuProfile": cpu_profile_capture,
+     }
+     save_json(output, case_slug(case) + ".json", receipt)
+     return receipt
+@@ -530,8 +1088,18 @@
+ 
+ 
+ def main(argv):
+-    if len(argv) != 4:
+-        print("usage: compiled_attribute_acceptance.py REPO OUTPUT SPEC_JSON", file=sys.stderr)
++    flags = argv[4:]
++    supported_flags = {"--profiler-negative-canary", "--require-warm-boundary"}
++    if (len(argv) < 4 or len(argv) > 6 or len(flags) != len(set(flags)) or
++            not set(flags).issubset(supported_flags)):
++        print("usage: cpu_profile_candidate.py REPO OUTPUT SPEC_JSON "
++              "[--profiler-negative-canary] [--require-warm-boundary]",
++              file=sys.stderr)
++        return 2
++    negative_canary = "--profiler-negative-canary" in flags
++    require_warm_boundary = "--require-warm-boundary" in flags
++    if negative_canary and require_warm_boundary:
++        print("ERROR negative canary cannot require an app boundary", file=sys.stderr)
+         return 2
+     try:
+         repo = Path(argv[1]).expanduser().resolve()
+@@ -542,6 +1110,8 @@
+         if not spec_path.is_file():
+             raise ValueError("spec JSON path is not a file")
+         spec, raw_spec, cases = load_spec(spec_path)
++        if len(cases) != 1:
++            raise ValueError("CPU profile candidate requires exactly one case")
+     except (OSError, ValueError) as error:
+         print("ERROR", str(error), file=sys.stderr)
+         return 2
+@@ -552,7 +1122,7 @@
+         print("ERROR unable to create unique output directory: " + str(error), file=sys.stderr)
+         return 2
+     (output / "spec.json").write_bytes(raw_spec)
+-    result = {"schema": SCRIPT_SCHEMA, "runner": "compiled_attribute_acceptance.py",
++    result = {"schema": SCRIPT_SCHEMA, "runner": "cpu_profile_candidate.py",
+               "repository": str(repo), "startedUtc": utc_now(), "outcome": "NOT_RUN",
+               "cases": [], "caseCount": len(cases), "errors": []}
+     save_json(output, "run-start.json", result)
+@@ -561,6 +1131,9 @@
+     server_thread = None
+     playwright = None
+     context = None
++    cdp_session = None
++    debugger_enabled = False
++    debugger_script_events = {}
+     owned = []
+     input_before = None
+     runner_before = None
+@@ -612,10 +1185,30 @@
+         if not owned:
+             raise RuntimeError("no Edge descendant was observed before browser gates")
+         page = context.pages[0] if context.pages else context.new_page()
++        cdp_session = context.new_cdp_session(page)
++        def on_script_parsed(event):
++            if isinstance(event, dict) and event.get("scriptId") is not None:
++                debugger_script_events[str(event["scriptId"])] = event
++        cdp_session.on("Debugger.scriptParsed", on_script_parsed)
++        cdp_session.send("Debugger.enable")
++        debugger_enabled = True
++        result["cpuProfileConfig"] = {
++            "samplingIntervalMicroseconds": CPU_PROFILE_SAMPLING_INTERVAL_US,
++            "caseCount": 1,
++            "scope": "page target only; CPU sampling and passive Debugger source-provenance capture are diagnostic and may perturb timing",
++            "stopTargetState": "RUNNING:warm",
++            "requireWarmBoundary": require_warm_boundary,
++            "negativeCanary": negative_canary,
++        }
+         result["identity"] = identity
+         result["operationStartedUtc"] = utc_now()
+         for case in cases:
+-            receipt = run_case(page, base_url, case, output)
++            receipt = run_case(page, base_url, case, output,
++                               cpu_profile_session=cdp_session,
++                               cpu_profile_repo=repo,
++                               cpu_profile_negative_canary=negative_canary,
++                               cpu_profile_require_warm_boundary=require_warm_boundary,
++                               cpu_profile_script_events=debugger_script_events)
+             result["cases"].append(receipt)
+             save_json(output, "progress.json", result)
+             print(receipt["outcome"], case["name"],
+@@ -664,6 +1257,17 @@
+         cleanup_started = time.monotonic()
+         cleanup_errors = []
+         try:
++            if cdp_session is not None:
++                if debugger_enabled:
++                    try:
++                        cdp_session.send("Debugger.disable")
++                    except BaseException as error:
++                        cleanup_errors.append({"phase": "debugger-disable",
++                                               "message": str(error)})
++                try:
++                    cdp_session.detach()
++                except BaseException as error:
++                    cleanup_errors.append({"phase": "cdp-detach", "message": str(error)})
+             if context is not None:
+                 try:
+                     rows = process_rows()

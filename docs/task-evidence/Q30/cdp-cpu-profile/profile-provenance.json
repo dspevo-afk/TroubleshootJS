@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "sourceAudit": {
+    "status": "PASS",
+    "inputSetSha256BeforeAndAfter": "919389b79b48aa6e7023a4651b9645023be873168f49ed2387251db7e53758fe",
+    "sourceTreeSha256BeforeAndAfter": "7f07fee8219ff26686b531f33e57b156a04340268aad939081184b862decae30",
+    "compiledWebSha256BeforeAndAfter": "6c902db8657d282930b52c4ee8c1ee7df4ba099286f95379486ba8da93a13fd5",
+    "frozenProfilerRunnerSha256BeforeAndAfter": "b1586acaf9c76a0b29712b53b70bbb3cb086d0ff14056162d368018eede11fb6",
+    "maintainedHarness": "tests/browser/compiled_attribute_acceptance.py",
+    "maintainedHarnessSha256BeforeAndAfter": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5"
+  },
+  "capture": {
+    "samplingIntervalMicroseconds": 1000,
+    "target": "page only",
+    "startsBeforeNavigation": true,
+    "q30StopTargetState": "RUNNING:warm",
+    "q30WarmBoundaryObserved": true,
+    "mayIncludeShortWarmTail": true,
+    "sourceCapture": "passive Debugger scriptParsed/source capture; exact decoded-payload comparison",
+    "profilingPerturbsTiming": true
+  },
+  "loadedGwtBundle": {
+    "strongName": "95F8651A7DE48234E5EE60A722D38AE9",
+    "cacheFileSha256": "204d3b451c6d4e9436d0c0050ac238080f4e948992a5f613cbed471815398dbb",
+    "cacheFileBytes": 3063731,
+    "decodedPayloadSha256": "9156345ecc3dd0ef9d31818a61280b6a67a31cda2ea68f46e4a88076020982d4",
+    "decodedPayloadUtf8Bytes": 3050263,
+    "q30SampledScriptId": "26",
+    "scriptIdLink": "exact-script-source-vs-decoded-payload",
+    "a07PositiveR2UsesSameStrongName": true
+  },
+  "symbolMap": {
+    "repoRelativePath": "war/WEB-INF/deploy/circuitjs1/symbolMaps/95F8651A7DE48234E5EE60A722D38AE9.symbolMap",
+    "validation": "PASS",
+    "knownLuFactorJavaScriptName": "XUb",
+    "uncompressedSha256": "a4791453febf4f6232aa757b6473b878184b69b6ca1014958ac1d1c0d5d14e94",
+    "includedExactCompressedArtifact": "profiles/95F8651A7DE48234E5EE60A722D38AE9.symbolMap.gz",
+    "compressedSha256": "c83bb96b45035efbcf0888cd1b2eb9489b184fb8bc888af40b498aadf159f499",
+    "compressedBytes": 518828
+  },
+  "profiles": [
+    {
+      "run": "cpu-a07-positive-r2",
+      "samplingIntervalMicroseconds": 1000,
+      "profileSha256": "7ca7cd36d2d886d2ba51a385b1708ad794f1524c6049746e8ffe22b1e9034037",
+      "profileBytes": 328728,
+      "sampleCount": 1087,
+      "mappedGwtSamples": 703,
+      "includedGzip": "profiles/a07-positive-r2.v8-cpu-profile.json.gz",
+      "includedGzipSha256": "6e7c624644ebfa64e4bca0f649071ce021584aa79832246762010a4e5558152c"
+    },
+    {
+      "run": "cpu-q30-B7",
+      "samplingIntervalMicroseconds": 1000,
+      "profileSha256": "dc4aa9ce012eb77d2ddfa6dd8542b1204942b8028182a39e389b3ccc46313eb7",
+      "profileBytes": 2670712,
+      "profileRangeMicroseconds": 101538131,
+      "profileNodeCount": 12607,
+      "sampleCount": 66468,
+      "mappedGwtSamples": 63554,
+      "provenScriptIdCount": 1,
+      "includedGzip": "profiles/q30-B7.v8-cpu-profile.json.gz",
+      "includedGzipSha256": "32fc112bbcbf5b204beff556fed06728af742aa09e6a6f17dbafed41107909c4"
+    }
+  ],
+  "interpretationLimit": "Use for qualitative ranking only; inclusive profile stacks overlap and sampling/debugger overhead is not isolated."
+}
