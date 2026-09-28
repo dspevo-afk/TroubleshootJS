@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "status": "PREDECLARED",
+  "scope": "Focused intermediate optimization experiment on unaccepted plan-4 working source; not the frozen normal acceptance corpus.",
+  "change": "Only the internal owned nonlinear factor entry omits repeated input finite predicates after a validated restore and checked dynamic stamps. Full zero-row scans, all factor arithmetic guards, general LU input checks, solver stepping and publication checks remain.",
+  "fixture": "Fresh source-only control/candidate fixtures with identical added negative test vectors. No generated WAR or graph/proof result copied. Two final-source maintained builds, one heavy gate at a time.",
+  "sequence": [
+    {"label": "validated-input-01-candidate-7", "arm": "candidate", "seed": "7", "packages": 37},
+    {"label": "validated-input-02-control-7", "arm": "control", "seed": "7", "packages": 37},
+    {"label": "validated-input-03-control-10387", "arm": "control", "seed": "10387", "packages": 20},
+    {"label": "validated-input-04-candidate-10387", "arm": "candidate", "seed": "10387", "packages": 20},
+    {"label": "validated-input-05-candidate-10014", "arm": "candidate", "seed": "10014", "packages": 40},
+    {"label": "validated-input-06-control-10014", "arm": "control", "seed": "10014", "packages": 40},
+    {"label": "validated-input-07-control-7", "arm": "control", "seed": "7", "packages": 37},
+    {"label": "validated-input-08-candidate-7", "arm": "candidate", "seed": "7", "packages": 37}
+  ],
+  "requirements": [
+    "Independent source review of the producer proof and final narrow delta",
+    "Focused native A07, temporal, measurement-budget and normal-policy contracts with negative producer canaries",
+    "Actual maintained JDK8/GWT5 builds and compiled A07 with the exact reader plus corruption checks",
+    "Fresh browser process/context and empty private proof cache for each cold row",
+    "Host outcome, five error arrays, input audit and exact owned cleanup all PASS",
+    "Current plan-4 strict reader on each full receipt, all hypotheses and proof/work/physical/electrical/cache requirements preserved",
+    "Exact complete-report parity outside declared timing fields for each matched pair"
+  ],
+  "earlyStop": "Stop on correctness, host, cleanup or input-audit failure. If the first valid candidate/control pair has candidate proof time more than 5% slower, preserve that result and leave the remaining six runs NOT RUN; this conservative experiment stop is not a production threshold or population regression claim.",
+  "attribution": "The legacy application phase clocks retain their wall-time meaning. The host wrapper records monotonic duration and wall-minus-monotonic drift. Use paired proof time, unchanged routing as a control, and the repeated seed-7 range; do not attribute every whole-request difference to LU or claim additive gains.",
+  "fixedProductionContracts": {"cumulativeMillis": 90000, "sharedWorkUnits": 640, "activeOperationMillis": 5000, "privateMeasurementIsolation": "90-300 seconds, no normal-cache transfer"},
+  "limits": "Small focused corpus spanning 20/37/40 parts; the predeclared normal and scale corpora remain intact and unrun. Normal publication stays disabled. Full final acceptance waits for all hard gates, including normal cold margin and scale coverage. No push."
+}

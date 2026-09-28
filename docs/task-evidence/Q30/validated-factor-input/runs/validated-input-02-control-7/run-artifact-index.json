@@ -1,0 +1,31 @@
+{
+  "label": "validated-input-02-control-7",
+  "files": [
+    "runs/validated-input-02-control-7/identity.json",
+    "runs/validated-input-02-control-7/progress.json",
+    "runs/validated-input-02-control-7/result.json",
+    "runs/validated-input-02-control-7/run-start.json",
+    "runs/validated-input-02-control-7/spec.json",
+    "runs/validated-input-02-control-7/owned-processes-before.json",
+    "runs/validated-input-02-control-7/owned-processes-before-close.json",
+    "runs/validated-input-02-control-7/runner-before.json",
+    "runs/validated-input-02-control-7/runner-after.json"
+  ],
+  "inputManifestRefs": {
+    "before": {
+      "path": "input-manifests/323dcdf01894c9817e2412d37fc9268204a9814ac08a272c891227538bcd98b5.json.gz",
+      "sha256": "323dcdf01894c9817e2412d37fc9268204a9814ac08a272c891227538bcd98b5",
+      "bytes": 291302
+    },
+    "after": {
+      "path": "input-manifests/15e9e38705ac0d2ab38f3cf45c42072ee121c988a34e7e600cbed260ac854b29.json.gz",
+      "sha256": "15e9e38705ac0d2ab38f3cf45c42072ee121c988a34e7e600cbed260ac854b29",
+      "bytes": 291302
+    }
+  },
+  "completeApplicationReport": {
+    "artifact": "runs/validated-input-02-control-7/complete-application-report.json.gz",
+    "sha256": "1e4cca26cd32954afb249ef16ebdceae06f2d709d1c3c1f1464ee4fe0251b857",
+    "bytes": 1624178
+  }
+}

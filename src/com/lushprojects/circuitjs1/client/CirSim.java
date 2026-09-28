@@ -3384,7 +3384,7 @@ MouseOutHandler, MouseWheelHandler {
 			break;
 		    if (a01MeasurementRunning)
 			a01FactorizationCount++;
-		    if (!lu_factor(circuitMatrix, circuitMatrixSize,
+		    if (!lu_factorNonlinearOwned(circuitMatrix, circuitMatrixSize,
 			  circuitPermute, luFactorizationWorkspace)) {
 			stop("Singular matrix!", null);
 			return;
@@ -8022,10 +8022,7 @@ MouseOutHandler, MouseWheelHandler {
         if (workspace == null) throw new IllegalArgumentException("null LU workspace");
         try {
             workspace.reset(n);
-            int i,j,k;
-
-            // check for a possible singular matrix by scanning for rows that
-            // are all zeroes
+            int i, j;
             for (i = 0; i != n; i++) {
                 boolean row_all_zeros = true;
                 double[] row = a[i];
@@ -8033,79 +8030,107 @@ MouseOutHandler, MouseWheelHandler {
                     requireFiniteStamp(row[j]);
                     if (row[j] != 0) row_all_zeros = false;
                 }
-                // if all zeros, it's a singular matrix
                 if (row_all_zeros) return false;
             }
-
-            // Apply each pivot to the trailing matrix. For any individual
-            // entry, pivots still update in ascending k order, matching Crout.
-            for (k = 0; k != n; k++) {
-                // calculate lower triangular elements for this column
-                double largest = 0;
-                int largestRow = -1;
-                for (i = k; i != n; i++) {
-                    double q = a[i][k];
-                    double x = Math.abs(q);
-                    if (x >= largest) {
-                        largest = x;
-                        largestRow = i;
-                    }
-                }
-
-                if (k != largestRow) {
-                    double[] row = a[largestRow];
-                    a[largestRow] = a[k];
-                    a[k] = row;
-                }
-
-                // keep track of row interchanges
-                ipvt[k] = largestRow;
-
-                // avoid zeros
-                if (a[k][k] == 0.0) {
-                    System.out.println("avoided zero");
-                    a[k][k] = 1e-18;
-                }
-
-                if (k != n-1) {
-                    double mult = 1.0/a[k][k];
-                    requireFiniteStamp(mult);
-                    for (i = k+1; i != n; i++) {
-                        double[] row = a[i];
-                        if (row[k] == 0) continue;
-                        double value = row[k] * mult;
-                        requireFiniteStamp(value);
-                        row[k] = value;
-                        if (value != 0) workspace.appendLowerRow(row);
-                    }
-
-                    double[] pivotRow = a[k];
-                    for (j = k+1; j != n; j++)
-                        if (pivotRow[j] != 0) workspace.appendUpperColumn(j);
-
-                    double[][] rows = workspace.lowerRows;
-                    int rowCount = workspace.lowerRowCount;
-                    int upperCount = workspace.upperColumnCount;
-                    int[] columns = workspace.upperColumns;
-                    for (int entry = 0; entry < rowCount; entry++) {
-                        double[] row = rows[entry];
-                        double factor = row[k];
-                        for (int upper = 0; upper < upperCount; upper++) {
-                            j = columns[upper];
-                            double value = row[j] - factor * pivotRow[j];
-                            requireFiniteStamp(value);
-                            row[j] = value;
-                        }
-                    }
-                    workspace.clearPivot();
-                }
-            }
-            return true;
+            return lu_factorAfterInputScan(a, n, ipvt, workspace);
         } finally {
             workspace.clear();
         }
     }
 
+    /**
+     * Private to the owned nonlinear path: its matrix was restored from the
+     * scanned origMatrix and all doStep matrix writes passed stampMatrix.
+     * Keep the general overload above fully validating for independent inputs.
+     */
+    private static boolean lu_factorNonlinearOwned(double a[][], int n, int ipvt[],
+            LuFactorizationWorkspace workspace) {
+        if (workspace == null) throw new IllegalArgumentException("null LU workspace");
+        try {
+            workspace.reset(n);
+            int i, j;
+            for (i = 0; i != n; i++) {
+                boolean row_all_zeros = true;
+                double[] row = a[i];
+                for (j = 0; j != n; j++)
+                    if (row[j] != 0) row_all_zeros = false;
+                if (row_all_zeros) return false;
+            }
+            return lu_factorAfterInputScan(a, n, ipvt, workspace);
+        } finally {
+            workspace.clear();
+        }
+    }
+
+    /** Called only after one of the two complete input/zero-row scans above. */
+    private static boolean lu_factorAfterInputScan(double a[][], int n, int ipvt[],
+            LuFactorizationWorkspace workspace) {
+        int i, j, k;
+        // Apply each pivot to the trailing matrix. For any individual entry,
+        // pivots still update in ascending k order, matching Crout.
+        for (k = 0; k != n; k++) {
+            // calculate lower triangular elements for this column
+            double largest = 0;
+            int largestRow = -1;
+            for (i = k; i != n; i++) {
+                double q = a[i][k];
+                double x = Math.abs(q);
+                if (x >= largest) {
+                    largest = x;
+                    largestRow = i;
+                }
+            }
+
+            if (k != largestRow) {
+                double[] row = a[largestRow];
+                a[largestRow] = a[k];
+                a[k] = row;
+            }
+
+            // keep track of row interchanges
+            ipvt[k] = largestRow;
+
+            // avoid zeros
+            if (a[k][k] == 0.0) {
+                System.out.println("avoided zero");
+                a[k][k] = 1e-18;
+            }
+
+            if (k != n-1) {
+                double mult = 1.0/a[k][k];
+                requireFiniteStamp(mult);
+                for (i = k+1; i != n; i++) {
+                    double[] row = a[i];
+                    if (row[k] == 0) continue;
+                    double value = row[k] * mult;
+                    requireFiniteStamp(value);
+                    row[k] = value;
+                    if (value != 0) workspace.appendLowerRow(row);
+                }
+
+                double[] pivotRow = a[k];
+                for (j = k+1; j != n; j++)
+                    if (pivotRow[j] != 0) workspace.appendUpperColumn(j);
+
+                double[][] rows = workspace.lowerRows;
+                int rowCount = workspace.lowerRowCount;
+                int upperCount = workspace.upperColumnCount;
+                int[] columns = workspace.upperColumns;
+                for (int entry = 0; entry < rowCount; entry++) {
+                    double[] row = rows[entry];
+                    double factor = row[k];
+                    for (int upper = 0; upper < upperCount; upper++) {
+                        j = columns[upper];
+                        double value = row[j] - factor * pivotRow[j];
+                        requireFiniteStamp(value);
+                        row[j] = value;
+                    }
+                }
+                workspace.clearPivot();
+            }
+        }
+        return true;
+    }
     // Solves the set of n linear equations using a LU factorization
     // previously performed by lu_factor.  On input, b[0..n-1] is the right
     // hand side of the equations, and on output, contains the solution.

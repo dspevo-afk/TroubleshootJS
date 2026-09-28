@@ -1,0 +1,44 @@
+[
+  {
+    "pid": 11556,
+    "parent": 23192,
+    "created": "2026-09-28T05:03:09.7043970Z",
+    "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+  },
+  {
+    "pid": 24492,
+    "parent": 11556,
+    "created": "2026-09-28T05:03:09.7153970Z",
+    "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+  },
+  {
+    "pid": 24812,
+    "parent": 11556,
+    "created": "2026-09-28T05:03:09.7836480Z",
+    "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+  },
+  {
+    "pid": 18864,
+    "parent": 11556,
+    "created": "2026-09-28T05:03:09.7875890Z",
+    "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+  },
+  {
+    "pid": 20012,
+    "parent": 11556,
+    "created": "2026-09-28T05:03:09.8087530Z",
+    "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+  },
+  {
+    "pid": 22212,
+    "parent": 11556,
+    "created": "2026-09-28T05:03:09.8671710Z",
+    "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+  },
+  {
+    "pid": 22564,
+    "parent": 11556,
+    "created": "2026-09-28T05:03:09.8711310Z",
+    "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+  }
+]

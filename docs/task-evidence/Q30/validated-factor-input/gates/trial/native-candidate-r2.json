@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 45.83867,
+  "phase": "focused native general solver/temporal/measurement budget/normal policy regression including maintained cleanup; owned nonlinear producer canaries are compiled-browser gates",
+  "suites": [
+    "A07ExecutionContractTest",
+    "Q30TemporalWorkContractTest",
+    "Q30GenerationMeasurementBudgetContractTest",
+    "Q30NormalExecutionPolicyContractTest"
+  ]
+}

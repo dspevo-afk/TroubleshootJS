@@ -1,0 +1,31 @@
+{
+  "label": "validated-input-06-control-10014",
+  "files": [
+    "runs/validated-input-06-control-10014/identity.json",
+    "runs/validated-input-06-control-10014/progress.json",
+    "runs/validated-input-06-control-10014/result.json",
+    "runs/validated-input-06-control-10014/run-start.json",
+    "runs/validated-input-06-control-10014/spec.json",
+    "runs/validated-input-06-control-10014/owned-processes-before.json",
+    "runs/validated-input-06-control-10014/owned-processes-before-close.json",
+    "runs/validated-input-06-control-10014/runner-before.json",
+    "runs/validated-input-06-control-10014/runner-after.json"
+  ],
+  "inputManifestRefs": {
+    "before": {
+      "path": "input-manifests/6d046b5dd1ce56e004fe0f871bb11cafba87be4a843d9f8319a703af675e691f.json.gz",
+      "sha256": "6d046b5dd1ce56e004fe0f871bb11cafba87be4a843d9f8319a703af675e691f",
+      "bytes": 291302
+    },
+    "after": {
+      "path": "input-manifests/029dc783b458c63ff1425a80d15ec47c6880cc9b21475fd0fe9d8f94e9f7802a.json.gz",
+      "sha256": "029dc783b458c63ff1425a80d15ec47c6880cc9b21475fd0fe9d8f94e9f7802a",
+      "bytes": 291302
+    }
+  },
+  "completeApplicationReport": {
+    "artifact": "runs/validated-input-06-control-10014/complete-application-report.json.gz",
+    "sha256": "a93955b9566c65ed07d35ba22eb88040b4d451980aba700a0ef96897f10b9ebb",
+    "bytes": 1748511
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "status": "INTEGRATED_AND_STAGED_OPTIMIZATION_ONLY_PENDING_FINAL_GATES",
+  "sourceCheckpoint": "e7a73e7fb0ce824cd51675e383225c50be2124d2",
+  "files": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "beforeSha256": "418b9735b374e10af73a30ab75ddb593fb2fcd60f6da4d15c75523963e97f300",
+      "afterSha256": "f836bfc58bdfb87d67f25184ebcd51e60d9eb820d6cc5acb966bcde98a64296b"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/A07SolverDeveloperVerifier.java",
+      "beforeSha256": "92fa2350bc9fb7de90c6acc98e7519ec8ce3d5a672c1f8c706305276f9857426",
+      "afterSha256": "323f0486be26f82986f04595c1de7f34dc30d1732dae0ff3a99080d7bb3fb720"
+    }
+  ],
+  "rootFinalInputCountMatchingCandidate": 1338,
+  "unacceptedNormalHookStaged": false
+}

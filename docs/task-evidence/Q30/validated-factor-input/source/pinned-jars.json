@@ -1,0 +1,59 @@
+{
+  "note": "JAR bytes are not copied; these path/size/SHA-256 values come from the exact consumed source-input audits.",
+  "trialArmJars": [
+    {
+      "path": ".tools/gwt-2.7.0/asm-5.0.3.jar",
+      "bytes": 53231,
+      "controlSha256": "71c4f78e437b8fdcd9cc0dfd2abea8c089eb677005a6a5cff320206cc52b46cc",
+      "candidateSha256": "71c4f78e437b8fdcd9cc0dfd2abea8c089eb677005a6a5cff320206cc52b46cc"
+    },
+    {
+      "path": ".tools/gwt-2.7.0/asm-analysis-5.0.3.jar",
+      "bytes": 20443,
+      "controlSha256": "e8fa2a63462c96557dcd36c25525e1264b77366ff851cf0b94eb7592b290849d",
+      "candidateSha256": "e8fa2a63462c96557dcd36c25525e1264b77366ff851cf0b94eb7592b290849d"
+    },
+    {
+      "path": ".tools/gwt-2.7.0/asm-commons-5.0.3.jar",
+      "bytes": 41717,
+      "controlSha256": "18c1e092230233c9d29e46f21943d769bdb48130cc279e4b0e663f423948c2da",
+      "candidateSha256": "18c1e092230233c9d29e46f21943d769bdb48130cc279e4b0e663f423948c2da"
+    },
+    {
+      "path": ".tools/gwt-2.7.0/asm-tree-5.0.3.jar",
+      "bytes": 29036,
+      "controlSha256": "347a7a9400f9964e87c91d3980e48eebdc8d024bc3b36f7f22189c662853a51c",
+      "candidateSha256": "347a7a9400f9964e87c91d3980e48eebdc8d024bc3b36f7f22189c662853a51c"
+    },
+    {
+      "path": ".tools/gwt-2.7.0/asm-util-5.0.3.jar",
+      "bytes": 43296,
+      "controlSha256": "2768edbfa2681b5077f08151de586a6d66b916703cda3ab297e58b41ae8f2362",
+      "candidateSha256": "2768edbfa2681b5077f08151de586a6d66b916703cda3ab297e58b41ae8f2362"
+    },
+    {
+      "path": ".tools/gwt-2.7.0/gwt-dev-2.7.0.jar",
+      "bytes": 38276750,
+      "controlSha256": "c7321e367fc24e5c7ad97b74d1cf2980c45fbd7cbe1fd412f8a8ba128f685135",
+      "candidateSha256": "c7321e367fc24e5c7ad97b74d1cf2980c45fbd7cbe1fd412f8a8ba128f685135"
+    },
+    {
+      "path": ".tools/gwt-2.7.0/gwt-user-2.7.0.jar",
+      "bytes": 32024115,
+      "controlSha256": "d3721bcdd7c6855a524801212dd74548967d8fb65cbc212a20890732ff2c6948",
+      "candidateSha256": "d3721bcdd7c6855a524801212dd74548967d8fb65cbc212a20890732ff2c6948"
+    },
+    {
+      "path": ".tools/gwt-2.7.0/validation-api-1.0.0.GA-sources.jar",
+      "bytes": 65220,
+      "controlSha256": "a394d52a9b7fe2bb14f0718d2b3c8308ffe8f37e911956012398d55c9f9f9b54",
+      "candidateSha256": "a394d52a9b7fe2bb14f0718d2b3c8308ffe8f37e911956012398d55c9f9f9b54"
+    },
+    {
+      "path": ".tools/gwt-2.7.0/validation-api-1.0.0.GA.jar",
+      "bytes": 47433,
+      "controlSha256": "e459f313ebc6db2483f8ceaad39af07086361b474fa92e40f442e8de5d9895dc",
+      "candidateSha256": "e459f313ebc6db2483f8ceaad39af07086361b474fa92e40f442e8de5d9895dc"
+    }
+  ]
+}

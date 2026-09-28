@@ -32,8 +32,14 @@ final class A07SolverDeveloperVerifier {
         observations();
         reentryAndIsolation();
         failure("nonfinite", Outcome.NUMERICAL_FAILURE);
-        failure("matrix-nonfinite", Outcome.NUMERICAL_FAILURE);
-        failure("matrix-overflow", Outcome.NUMERICAL_FAILURE);
+        failure("matrix-nonfinite", Outcome.NUMERICAL_FAILURE, false);
+        failure("matrix-positive-infinity", Outcome.NUMERICAL_FAILURE, false);
+        failure("matrix-negative-infinity", Outcome.NUMERICAL_FAILURE, false);
+        failure("matrix-baseline-nonfinite", Outcome.NUMERICAL_FAILURE, false);
+        record("real-matrix-nonfinite");
+        failure("matrix-overflow", Outcome.NUMERICAL_FAILURE, false);
+        failure("matrix-factor-overflow", Outcome.NUMERICAL_FAILURE, false);
+        record("real-matrix-overflow");
         failure("singular", Outcome.NUMERICAL_FAILURE);
         failure("nonconvergent", Outcome.NONCONVERGENCE);
         scheduledState();
@@ -92,18 +98,77 @@ final class A07SolverDeveloperVerifier {
         record("exclusive-private-graph-and-reentrant-model");
     }
     private void failure(String mode, Outcome expected) {
+        failure(mode, expected, true);
+    }
+    private void failure(String mode, Outcome expected, boolean recordCase) {
         Task41SimulationSnapshot before = Task41SimulationSnapshot.capture(sim);
         PrivateSolverContext proof = PrivateSolverContext.open(sim);
-        boolean failed = false;
+        boolean matrixCanary = mode.startsWith("matrix-");
+        boolean failed = false, matrixChecksHold = false;
+        int publishedSamples = -1;
+        long observedFactorizations = -1, observedSolves = -1, observedAcceptedSteps = -1;
+        long expectedFactorizations = "matrix-factor-overflow".equals(mode) ? 1 : 0;
         String observedFailure = "NO_FAILURE";
+        SolverTimeObservationService.Subscription sampleMonitor = null;
+        boolean priorMeasuring = sim.a01MeasurementRunning;
+        long priorAnalysis = sim.a01AnalysisCount, priorStamp = sim.a01StampCount;
+        long priorFactor = sim.a01FactorizationCount, priorSolve = sim.a01SolveCount;
+        long priorIteration = sim.a01IterationCount, priorSubiteration = sim.a01SubIterationCount;
+        long priorAccepted = sim.a01AcceptedStepCount;
         try {
             sim.adjustTimeStep = false;
             Fixture fixture = new Fixture(mode); proof.install(fixture.elements);
-            proof.analyze(); proof.advanceSteps(1);
-        } catch (Failure failure) { failed = failure.outcome == expected; observedFailure = failure.outcome + ":" + failure.getMessage();
-        } finally { proof.close(); }
-        require(failed, "real CircuitJS " + mode + " requires " + expected + "; observed " + observedFailure);
-        before.assertRestored(sim); record("real-" + mode);
+            if (matrixCanary) {
+                sim.a01MeasurementRunning = true;
+                sim.a01AnalysisCount = sim.a01StampCount = sim.a01FactorizationCount = 0;
+                sim.a01SolveCount = sim.a01IterationCount = sim.a01SubIterationCount = 0;
+                sim.a01AcceptedStepCount = 0;
+                sampleMonitor = sim.solverTimeObservations.subscribe(
+                    new CircuitPostMeasurementEndpoint(fixture.resistor, 0),
+                    new CircuitPostMeasurementEndpoint(fixture.resistor, 1), 16, true);
+            }
+            proof.analyze();
+            if (matrixCanary) {
+                // Exclude the analysis/stamp phase from trial-level factor/solve counts.
+                sim.a01FactorizationCount = sim.a01SolveCount = sim.a01AcceptedStepCount = 0;
+            }
+            proof.advanceSteps(1);
+        } catch (Failure failure) {
+            failed = failure.outcome == expected; observedFailure = failure.outcome + ":" + failure.getMessage();
+            if (matrixCanary) {
+                observedFactorizations = sim.a01FactorizationCount;
+                observedSolves = sim.a01SolveCount;
+                observedAcceptedSteps = sim.a01AcceptedStepCount;
+                matrixChecksHold = observedFactorizations == expectedFactorizations &&
+                    observedSolves == 0 && observedAcceptedSteps == 0;
+                publishedSamples = sampleMonitor == null ? -1 : sampleMonitor.getSampleCount();
+            }
+        } finally {
+            try {
+                if (sampleMonitor != null) sim.solverTimeObservations.unsubscribe(sampleMonitor);
+            } finally {
+                try { proof.close(); }
+                finally {
+                    sim.a01MeasurementRunning = priorMeasuring;
+                    sim.a01AnalysisCount = priorAnalysis; sim.a01StampCount = priorStamp;
+                    sim.a01FactorizationCount = priorFactor; sim.a01SolveCount = priorSolve;
+                    sim.a01IterationCount = priorIteration; sim.a01SubIterationCount = priorSubiteration;
+                    sim.a01AcceptedStepCount = priorAccepted;
+                }
+            }
+        }
+        String matrixDiagnostic = matrixCanary ? " (factorizations=" + observedFactorizations +
+            "/" + expectedFactorizations + ", solves=" + observedSolves + ", acceptedSteps=" +
+            observedAcceptedSteps + ", publishedSamples=" + publishedSamples + ", failure=" +
+            observedFailure + ")" : "";
+        require(failed, "real CircuitJS " + mode + " requires " + expected + "; observed " +
+            observedFailure + matrixDiagnostic);
+        if (matrixCanary)
+            require(matrixChecksHold && publishedSamples == 0,
+                "matrix finite guard rejects " + mode + " before solve, accepted step, and sample publication" +
+                    matrixDiagnostic);
+        before.assertRestored(sim);
+        if (recordCase) record("real-" + mode);
     }
     private void scheduledState() {
         String small = scheduledTrace(1), large = scheduledTrace(5);
@@ -432,13 +497,34 @@ final class A07SolverDeveloperVerifier {
         void stamp() {
             super.stamp();
             if (mode.startsWith("matrix-")) { sim.stampNonLinear(nodes[0]); sim.stampNonLinear(nodes[1]); }
+            if ("matrix-factor-overflow".equals(mode)) {
+                // Retain the DC source branch equation so the test stamp reaches LU, not a constant RHS.
+                int sourceBranch = sim.nodeList.size() + sim.voltageSources[0].voltSource;
+                sim.stampNonLinear(sourceBranch);
+            }
+            if ("matrix-baseline-nonfinite".equals(mode)) {
+                int branchRow = sim.circuitMatrixSize - 1;
+                sim.circuitMatrix[branchRow][branchRow] = Double.NaN;
+            }
         }
         void doStep() {
             super.doStep();
-            if ("matrix-nonfinite".equals(mode)) sim.stampMatrix(nodes[0], nodes[0], Double.NaN);
+            int matrixNode = nodes[0] > 0 ? nodes[0] : nodes[1];
+            if ("matrix-nonfinite".equals(mode)) sim.stampMatrix(matrixNode, matrixNode, Double.NaN);
+            if ("matrix-positive-infinity".equals(mode))
+                sim.stampMatrix(matrixNode, matrixNode, Double.POSITIVE_INFINITY);
+            if ("matrix-negative-infinity".equals(mode))
+                sim.stampMatrix(matrixNode, matrixNode, Double.NEGATIVE_INFINITY);
             if ("matrix-overflow".equals(mode)) {
-                sim.stampMatrix(nodes[0], nodes[0], Double.MAX_VALUE);
-                sim.stampMatrix(nodes[0], nodes[0], Double.MAX_VALUE);
+                sim.stampMatrix(matrixNode, matrixNode, Double.MAX_VALUE);
+                sim.stampMatrix(matrixNode, matrixNode, Double.MAX_VALUE);
+            }
+            if ("matrix-factor-overflow".equals(mode)) {
+                int voltageNode = sim.nodeList.size() + sim.voltageSources[0].voltSource;
+                sim.stampMatrix(matrixNode, matrixNode, Double.MAX_VALUE);
+                sim.stampMatrix(matrixNode, voltageNode, Double.MAX_VALUE);
+                sim.stampMatrix(voltageNode, matrixNode, Double.MAX_VALUE);
+                sim.stampMatrix(voltageNode, voltageNode, -Double.MAX_VALUE);
             }
             if ("nonconvergent".equals(mode)) sim.converged = false;
             if ("reentry".equals(mode) && !reentryRejected) {

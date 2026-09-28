@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "rows": [
+    {
+      "arm": "candidate",
+      "hostOutcome": "PASS",
+      "cases": 2,
+      "inputAudit": {
+        "status": "PASS",
+        "beforeSha256": "5837479e083d4362269950e8cef344400deedcc3ad4dc10898def631fa1f40d0",
+        "afterSha256": "5837479e083d4362269950e8cef344400deedcc3ad4dc10898def631fa1f40d0",
+        "sourceSha256Before": "014c97009ddc0e56b853da788d622fbf025991ca80e0b2aa9b164862d6d4f649",
+        "sourceSha256After": "014c97009ddc0e56b853da788d622fbf025991ca80e0b2aa9b164862d6d4f649",
+        "webSha256Before": "ffdcf2f3df438609ee1010b03bd21550c57396b6b98220677830576067c056d5",
+        "webSha256After": "ffdcf2f3df438609ee1010b03bd21550c57396b6b98220677830576067c056d5",
+        "runnerBeforeSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+        "runnerAfterSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+        "fileCountBefore": 1525,
+        "fileCountAfter": 1525,
+        "seconds": 0.3412972000078298
+      },
+      "cleanup": {
+        "status": "PASS",
+        "seconds": 1.1705589000048349,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      }
+    },
+    {
+      "arm": "control",
+      "hostOutcome": "PASS",
+      "cases": 2,
+      "inputAudit": {
+        "status": "PASS",
+        "beforeSha256": "28d22ab331f9e47cdfdc04bf4012109e534358c116fde05a13077b4391c9f8c9",
+        "afterSha256": "28d22ab331f9e47cdfdc04bf4012109e534358c116fde05a13077b4391c9f8c9",
+        "sourceSha256Before": "03d596534b96e56a9615415cd6b4abda0c91ad30d7efdd6a79032b884ca19a08",
+        "sourceSha256After": "03d596534b96e56a9615415cd6b4abda0c91ad30d7efdd6a79032b884ca19a08",
+        "webSha256Before": "5e9ddbc5e914b9d8d45597bffc4ccaec0b0c4fd18f04833d5458d5f7714078b4",
+        "webSha256After": "5e9ddbc5e914b9d8d45597bffc4ccaec0b0c4fd18f04833d5458d5f7714078b4",
+        "runnerBeforeSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+        "runnerAfterSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+        "fileCountBefore": 1525,
+        "fileCountAfter": 1525,
+        "seconds": 0.3493639000080293
+      },
+      "cleanup": {
+        "status": "PASS",
+        "seconds": 1.1645178999897325,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      }
+    }
+  ]
+}

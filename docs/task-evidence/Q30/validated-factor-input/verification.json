@@ -1,0 +1,29 @@
+{
+  "status": "PASS_EVIDENCE_BUNDLE",
+  "sourceReconstruction": "PASS",
+  "trialInputs": 1338,
+  "trialControlOverlays": 27,
+  "trialNewlineTransforms": 1279,
+  "candidateArmDifferences": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "overlay": "source/candidate-overlays/src/com/lushprojects/circuitjs1/client/CirSim.java.gz",
+      "controlSha256": "418b9735b374e10af73a30ab75ddb593fb2fcd60f6da4d15c75523963e97f300",
+      "candidateSha256": "f836bfc58bdfb87d67f25184ebcd51e60d9eb820d6cc5acb966bcde98a64296b",
+      "candidateBytes": 344066
+    }
+  ],
+  "finalIndexInputs": 1337,
+  "finalIndexGitBlobs": 1328,
+  "finalIndexPinnedJars": 9,
+  "rawCompleteReports": 8,
+  "privacy": "PASS stored bytes and recursively decompressed gzip payloads",
+  "sanitizedMetadataCount": 199,
+  "rootPreviewRefresh": "PASS; source/runtime equality audit included",
+  "note": "Intermediate optimization evidence only; no scale-corpus or normal-admission qualification claim.",
+  "packagingCorrections": [
+    "Corrected repeated-arm timing ranges, 20-part hypothesis work, rejected forced restore and GWT permutation wording.",
+    "Removed accidentally bundled obsolete plan-2 reader; preserved the actual current-plan4 validator and timing runner.",
+    "Initial staged whitespace check failed on four copied text files with extra EOF blank lines; normalized those copies, retained original/stored hashes, and reran the staged check. Raw reports and source overlays are unchanged."
+  ]
+}

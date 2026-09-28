@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<PERSONAL_PATH>",
+  "startedUtc": "2026-09-28T05:03:09.122303+00:00",
+  "outcome": "NOT_RUN",
+  "cases": [
+    {
+      "schema": 1,
+      "case": {
+        "index": 1,
+        "name": "validated-input-05-candidate-10014",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=10014",
+        "stateAttribute": "data-tsj-q30-coordinator-state",
+        "expectedState": "PASS:complete",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-q30-coordinator-report"
+      },
+      "url": "http://127.0.0.1:52428/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=10014",
+      "startedUtc": "2026-09-28T05:03:10.217765+00:00",
+      "finishedUtc": "2026-09-28T05:05:22.923208+00:00",
+      "operationSeconds": 132.70543739999994,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS:complete",
+      "lastObservedState": "PASS:complete",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 1748510,
+      "reportSha256": "2f22516079f51716663d2c26fcfaa84d609011d6739ccfca6d71be5ec15b39c9",
+      "reportFile": "cases/001-validated-input-05-candidate-10014.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    }
+  ],
+  "caseCount": 1,
+  "errors": [],
+  "inputAudit": {
+    "status": "BEFORE_CAPTURED",
+    "beforeSha256": "5837479e083d4362269950e8cef344400deedcc3ad4dc10898def631fa1f40d0",
+    "sourceSha256": "014c97009ddc0e56b853da788d622fbf025991ca80e0b2aa9b164862d6d4f649",
+    "webSha256": "ffdcf2f3df438609ee1010b03bd21550c57396b6b98220677830576067c056d5",
+    "fileCount": 1525
+  },
+  "identity": {
+    "schema": 1,
+    "runner": {
+      "pid": 4100,
+      "created": "2026-09-28T05:03:09.0042570Z",
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+    },
+    "edgeProcessesBeforeCases": [
+      {
+        "pid": 11556,
+        "parent": 23192,
+        "created": "2026-09-28T05:03:09.7043970Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 24492,
+        "parent": 11556,
+        "created": "2026-09-28T05:03:09.7153970Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 24812,
+        "parent": 11556,
+        "created": "2026-09-28T05:03:09.7836480Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 18864,
+        "parent": 11556,
+        "created": "2026-09-28T05:03:09.7875890Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 20012,
+        "parent": 11556,
+        "created": "2026-09-28T05:03:09.8087530Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 22212,
+        "parent": 11556,
+        "created": "2026-09-28T05:03:09.8671710Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 22564,
+        "parent": 11556,
+        "created": "2026-09-28T05:03:09.8711310Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "profile": "<PERSONAL_PATH>",
+    "port": 52428,
+    "baseUrl": "http://127.0.0.1:52428"
+  },
+  "operationStartedUtc": "2026-09-28T05:03:10.217749+00:00"
+}

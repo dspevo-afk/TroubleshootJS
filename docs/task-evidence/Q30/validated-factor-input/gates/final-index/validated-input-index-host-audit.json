@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "scope": "root read-only audit of exact-index compiled A07 host receipt",
+  "caseCount": 1,
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "5e595bd8b80a8e73c3bcb32ace609702f4de4831fb14f5675dcd802a8a20b1c1",
+    "afterSha256": "5e595bd8b80a8e73c3bcb32ace609702f4de4831fb14f5675dcd802a8a20b1c1",
+    "sourceSha256Before": "8db4b6178807728818e9ca2c86b84cd941a5ea2224a913216cdaeae6f4f16769",
+    "sourceSha256After": "8db4b6178807728818e9ca2c86b84cd941a5ea2224a913216cdaeae6f4f16769",
+    "webSha256Before": "e2932e51a4d87a222482c6410db1351f5b07869111eab733d42cf0acc8c5bd3a",
+    "webSha256After": "e2932e51a4d87a222482c6410db1351f5b07869111eab733d42cf0acc8c5bd3a",
+    "runnerBeforeSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+    "runnerAfterSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+    "fileCountBefore": 1524,
+    "fileCountAfter": 1524,
+    "seconds": 0.331572099996265
+  },
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 0.8771776999928989,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "allFiveErrorArraysEmpty": true,
+  "source": "validated-input-index-canary/result.json"
+}

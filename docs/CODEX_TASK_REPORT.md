@@ -1,11 +1,16 @@
 # Current checkpoint: Q30 BLOCKED / NOT ACCEPTED
 
-Branch `codex/q30-multirail-qualification`; accepted source checkpoint
+Branch `codex/q30-multirail-qualification`; prior accepted source checkpoint
 `86aa58bc6d7f8909d1519a57da6ab1d094a23c48`
 (`Optimize Q30 routing queue and neighbor traversal`). The validated routing
 delta and runner fix are committed locally. No push or completion email. Normal Q30
 publication stays disabled; U06/U07/Q60 and later milestones are unstarted.
 Full final acceptance matrices are NOT RUN while hard gates fail.
+The validated factor-input optimization below is accepted as an intermediate
+change in the local commit containing this checkpoint, based on
+`e7a73e7fb0ce824cd51675e383225c50be2124d2`. Q30 itself remains BLOCKED.
+The preceding LU measurement evidence is committed locally at
+`e7a73e7fb0ce824cd51675e383225c50be2124d2`; it integrates no sampler or plan-4 source.
 
 The mandatory FIRST independent review, focused regression and fresh cold
 comparison were completed and committed at `7a30a3fdcfa1dc9092d546edcb01bfa9ed435a36`.
@@ -124,8 +129,12 @@ physical/electrical/diagnostic/service/retest proofs, cache isolation and cleanu
 No deadline, hypothesis, settling requirement or acceptance threshold is relaxed.
 
 Resources: completed native/build/browser jobs have stopped; owned browser/server
-cleanup reports PASS with no survivors. No heavy gate is active. Root WAR matches
-the combined routing/finite/right-LU/plan-4 source. Frozen trials remain in unique
+cleanup reports PASS with no survivors. No heavy gate is active. Root source now
+contains the validated factor-input delta; its final JDK8/GWT5 rebuild PASSes
+in 78.540 s. All 1,525 consumed inputs and the complete 392-file WAR match the
+measured r3 candidate byte-for-byte, permitting reuse of its compiled canaries.
+Exact current-source and staged-source builds live in the owned fixtures.
+Frozen trials remain in unique
 OS-temp. Automatic approval review blocked administrative scratch deletion
 separately from runtime cleanup: earlier exact leaves are recorded in
 acceptance-continuation/resource-cleanup.json; the additional retained copy is
@@ -134,17 +143,44 @@ planned; the fresh source-only sampler fixture is created. Unrelated Desktop
 checkout edits and pre-existing test __pycache__ remain preserved. Plan-4 source,
 tests, driver, verifier hook/readers/evidence remain unstaged and uncommitted.
 
-Next: review and measure a private factor entry that removes only repeated finite
-input predicates after the validated restore/checked-stamp path; two independent
-source audits found no current producer-coverage gap. A predeclared fresh A/B
-experiment spans 20/37/40 parts and repeats seed 7. Initial native4 PASS 45.839 s;
-candidate/control GWT5 PASS 78.646/79.319 s. Both actual compiled checks FAIL the
-same new factor-overflow canary; input audits, disabled-normal checks and owned
-cleanup PASS. Timing remains NOT RUN. Repair the common fixture's phase before
-continuing; the required factor/solve/publication assertions stay fixed. Keep all
-zero-row, arithmetic, general-API, solve and publication checks. Review the repaired private D01
-resumable draft's terminal-result cleanup and verifier-flag ownership before
-runtime gates.
+Validated intermediate factor-input optimization: a private factor entry removes
+only repeated finite input predicates after the validated restore/checked-stamp
+path; two independent source audits found no current producer-coverage gap.
+The general input scans, every zero-row check, numerical ordering and arithmetic
+guards remain. A predeclared fresh A/B experiment spans 20/37/40 parts and repeats
+seed 7. Initial native4 PASS 45.839 s;
+candidate/control GWT5 PASS 78.646/79.319 s. Both initial compiled checks FAILed
+the new factor-overflow canary because a constant-column stamp overflowed RHS
+before LU. The r3 fixture marks the DC branch dynamic before simplification;
+required factor=1, solve=0, accepted=0 and samples=0 assertions are unchanged.
+Final r3 native4 PASS 44.459 s, candidate/control GWT5 PASS 78.499/78.009 s,
+both actual A07/disabled-normal checks and exact readers/three corruptions PASS.
+All host error arrays are empty; input audits and owned cleanup PASS. All eight
+predeclared private cold/warm runs and four complete-report comparisons PASS.
+Paired cold savings are 2.421/0.259/2.642/2.253 s (median 2.337); proof savings
+2.284/0.330/2.332/2.142 s (median 2.213). Routing varies by at most 88 ms per pair.
+Repeated seed-7 control/candidate cold ranges are 64/232 ms and proof ranges
+161/303 ms, supporting the repeated >2-s gain; the small 20-part delta alone is
+not a population claim. Seed 10014/40 parts still takes 103.346 s cold, including
+74.354 s proof and 22.468 s routing, and cannot meet the normal 90-s deadline.
+Strict readers run 43/44 corruption cases as appropriate; every electrical,
+physical, hypothesis, service/retest, work, cache and cleanup field stays exact.
+
+Only the optimization, strengthened A07 canaries, its evidence and this report
+are included in this local commit; the normal hook and plan-4 work remain
+uncommitted. All 1,338 working inputs match the measured
+candidate. An independent exact-index fixture (1,337 inputs; committed plan-2
+baseline) also passes native4 48.284 s, GWT5 80.962 s and compiled A07 plus strict
+reader/three corruptions, with host cleanup 0.877 s. Root reviewed the integrated
+source and independently checked the evidence inventory, compressed payloads,
+privacy, exact reconstruction of both 1,338-input arms, and all eight raw reports.
+[Validated factor-input evidence](task-evidence/Q30/validated-factor-input/README.md).
+
+Next: measure the remaining private LU preflight cost and row-hit distribution
+with the validated sparse sampler, then select the next measured kernel change.
+The repaired private D01 resumable draft has source review but still needs its
+real successor/power-boundary canaries and runtime gates. Keep all zero-row,
+arithmetic, general-API, solve and publication checks.
 Then prove normal cold timing with margin and scale before any final matrix.
 
 # Historical checkpoint: Q30 acceptance continuation — BLOCKED / NOT ACCEPTED

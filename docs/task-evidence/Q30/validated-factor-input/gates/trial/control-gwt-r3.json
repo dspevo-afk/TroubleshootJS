@@ -1,0 +1,9 @@
+{
+  "gate": "maintained JDK8/GWT five-permutation build",
+  "label": "validated-input-control-gwt-r3",
+  "exitCode": 0,
+  "startedUtc": "2026-09-28T04:55:31.0451728Z",
+  "finishedUtc": "2026-09-28T04:56:49.0586310Z",
+  "elapsedSeconds": 78.0091909,
+  "status": "PASS"
+}
