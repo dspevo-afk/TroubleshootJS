@@ -1,0 +1,69 @@
+{
+  "status": "PASS",
+  "archiveSha256": "eec166aa12450cc3b82e54dccaf44f413834cfcb4b60c8f2fd9b24a045b7de4c",
+  "entriesVerified": 267,
+  "strictReaderReplays": [
+    {
+      "arguments": [
+        "02-two-lane-profile-seed7",
+        "--compare",
+        "01-control-seed7"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"canariesRejected\": 37, \"evidence\": \"02-two-lane-profile-seed7-validation-005.json\", \"hypothesisPairCount\": 10, \"observations\": 185, \"parity\": \"PASS\", \"proofHypotheses\": 5, \"reportSha256\": \"4a87475f3fef7d48d4a8c0abb8547b4009dd3c7af26f9e9f75010d652fa4c3fa\", \"samplesPerHypothesis\": 37, \"sourceMapSha256\": \"3949addcd00aa687d0d97383b31e4f734bc17b3fef91c1495192d3ba2d7b934e\", \"sourceSha256\": \"61706c3939ded259bb7b9a5239b995807a855333faf63a8a89a6cb7d478f03c8\", \"status\": \"PASS\", \"webSha256\": \"eeca463313fcd78b4ec0e3bae2e5fe92ccb423636fcf4ae47a8e15c675f9b25f\"}"
+    },
+    {
+      "arguments": [
+        "03-control-seed7",
+        "--compare",
+        "01-control-seed7"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"canariesRejected\": 37, \"evidence\": \"03-control-seed7-validation-004.json\", \"hypothesisPairCount\": 10, \"observations\": 185, \"parity\": \"PASS\", \"proofHypotheses\": 5, \"reportSha256\": \"a6ca9b9ae8051f83fd7c62fef2b67ea5524a52aec03e5e9e37c3d832a1941b7e\", \"samplesPerHypothesis\": 37, \"sourceMapSha256\": \"fd80b82d3d97b23dfa1d20bde6701ce6a918f32d174effa48531c069261af33d\", \"sourceSha256\": \"eda4874d9e86a830a03a7c4b3eb68756796c65fc271c48021af4ee6104c52f1e\", \"status\": \"PASS\", \"webSha256\": \"25024984cd875fb496730abaf5e9747a85384572ab24b8b24ffeb99d06c37cf4\"}"
+    },
+    {
+      "arguments": [
+        "04-control-seed7",
+        "--compare",
+        "01-control-seed7"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"canariesRejected\": 37, \"evidence\": \"04-control-seed7-validation-004.json\", \"hypothesisPairCount\": 10, \"observations\": 185, \"parity\": \"PASS\", \"proofHypotheses\": 5, \"reportSha256\": \"e113734d2c069b3051b19af007d3b9cf48b63e0461cf5b7def293613649464f8\", \"samplesPerHypothesis\": 37, \"sourceMapSha256\": \"fd80b82d3d97b23dfa1d20bde6701ce6a918f32d174effa48531c069261af33d\", \"sourceSha256\": \"eda4874d9e86a830a03a7c4b3eb68756796c65fc271c48021af4ee6104c52f1e\", \"status\": \"PASS\", \"webSha256\": \"25024984cd875fb496730abaf5e9747a85384572ab24b8b24ffeb99d06c37cf4\"}"
+    },
+    {
+      "arguments": [
+        "05-candidate-seed7",
+        "--compare",
+        "04-control-seed7"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"canariesRejected\": 37, \"evidence\": \"05-candidate-seed7-validation-002.json\", \"hypothesisPairCount\": 10, \"observations\": 185, \"parity\": \"PASS\", \"proofHypotheses\": 5, \"reportSha256\": \"3cb759d60ea147a04b18abc7f3174b393f35471c7832b3a8c7073f1a8d18f833\", \"samplesPerHypothesis\": 37, \"sourceMapSha256\": \"0bdbd06e8b19ca053fb6794e70fa8f85d0c835f5be9484fda750f86114caf231\", \"sourceSha256\": \"95047003d6d443221e491c3ebbc58807b961c1a6feb35e9dc2c7d1d33a882502\", \"status\": \"PASS\", \"webSha256\": \"0b5d5b75bbd5f284f50bb08ba7d5ec88bc00c07d61248ac7cf454141a28edd86\"}"
+    },
+    {
+      "arguments": [
+        "06-candidate-seed7",
+        "--compare",
+        "04-control-seed7"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"canariesRejected\": 37, \"evidence\": \"06-candidate-seed7-validation-002.json\", \"hypothesisPairCount\": 10, \"observations\": 185, \"parity\": \"PASS\", \"proofHypotheses\": 5, \"reportSha256\": \"d3d317e140f3e4a0dc9722ae28f3c608e2e1d81e4131758ea2e7351daa53aac1\", \"samplesPerHypothesis\": 37, \"sourceMapSha256\": \"0bdbd06e8b19ca053fb6794e70fa8f85d0c835f5be9484fda750f86114caf231\", \"sourceSha256\": \"95047003d6d443221e491c3ebbc58807b961c1a6feb35e9dc2c7d1d33a882502\", \"status\": \"PASS\", \"webSha256\": \"0b5d5b75bbd5f284f50bb08ba7d5ec88bc00c07d61248ac7cf454141a28edd86\"}"
+    },
+    {
+      "arguments": [
+        "07-control-seed7",
+        "--compare",
+        "06-candidate-seed7"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"canariesRejected\": 37, \"evidence\": \"07-control-seed7-validation-002.json\", \"hypothesisPairCount\": 10, \"observations\": 185, \"parity\": \"PASS\", \"proofHypotheses\": 5, \"reportSha256\": \"388c2895f47ea3bf5e5c871d6188266af5aba47ee93113d3743c070b4e73b628\", \"samplesPerHypothesis\": 37, \"sourceMapSha256\": \"fd80b82d3d97b23dfa1d20bde6701ce6a918f32d174effa48531c069261af33d\", \"sourceSha256\": \"eda4874d9e86a830a03a7c4b3eb68756796c65fc271c48021af4ee6104c52f1e\", \"status\": \"PASS\", \"webSha256\": \"25024984cd875fb496730abaf5e9747a85384572ab24b8b24ffeb99d06c37cf4\"}"
+    },
+    {
+      "arguments": [
+        "--scope-loss"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"captureFailureMask\": 3, \"captureFailureProof\": \"NOT CLAIMED\", \"evidence\": \"profile-canaries-validation-002.json\", \"profilersCleared\": true, \"scopeLossCanariesRejected\": 13, \"status\": \"PASS\"}"
+    }
+  ],
+  "sourceGateReruns": "NOT RUN: immutable evidence reader only"
+}

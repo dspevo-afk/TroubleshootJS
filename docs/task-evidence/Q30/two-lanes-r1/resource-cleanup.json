@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "phase": "task-only scratch closeout",
+  "archiveSha256": "eec166aa12450cc3b82e54dccaf44f413834cfcb4b60c8f2fd9b24a045b7de4c",
+  "verifiedTargets": {
+    "TroubleshootJS-q30-two-lanes-17dcbfc65b12433da2f8d0aa951755f1": 9745,
+    "build-process-372fcd12961845309d1c3874a72bd3cc": 2
+  },
+  "recordedProcessReferencesChecked": 98,
+  "reusedPidReferencesLeftAlone": 0,
+  "taskSpecificProcessesRemaining": 0,
+  "processesTerminated": 0,
+  "resolvedContainmentAndReparseChecks": "PASS",
+  "ownershipCheckSeconds": 0.8384218,
+  "cleanupSeconds": 1.5347213,
+  "retainedTaskResources": [],
+  "unrelatedWork": "Preserved; no unrelated directories or processes changed"
+}

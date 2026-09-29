@@ -1,4 +1,47 @@
-# Current checkpoint: Q30 BLOCKED — support-cost evidence complete
+# Current checkpoint: Q30 BLOCKED — two-lane profile complete; map trial inconclusive
+
+2026-09-28 local. Branch `codex/q30-multirail-qualification`, source/base HEAD
+`3a877723f366f0dfa51666ab4121ea82f0e82838`. Clean exports isolated the committed
+plan-3 33/35/37 path; all seven measurements here are seed7 / 33 parts. No
+production optimization or prior support-tracking/LU prototype was integrated.
+
+Q30 remains normal-disabled and NOT ACCEPTED. Normal 90,000 ms / 640 work /
+5,000 ms active limits, family-owned staging, replay, proof and cleanup are
+unchanged. Private 300-second coordinator measurements do not prove normal
+admission. No push, email, scale integration or later milestone.
+
+Fresh profile: solver duration advances 55.145 s; 617,983 accepted steps,
+zero retries, 732,592 nonlinear factors (21.856 s nested); P07 A* 14.351 s,
+1,448,229 expansions and 10,565,705 map gets/puts. No safe removable settling
+or factor work was established. Unique rejected P07 passes cost 8.811 s;
+the overlapping raw discarded-work aggregate is explicitly excluded.
+
+The isolated branch-local integer-map candidate preserved all proof but missed
+the predeclared performance threshold. B/C/C/B cold times: 79.989 / 77.308 /
+78.350 / 78.817 s. Paired gains 2.681 / 0.467 s versus required 3.516 s;
+all-control spread 3.011 s. Inconclusive: no integration or further map campaign.
+
+PASS: final profile native seven suites; candidate routing/resumption suites;
+actual JDK8/GWT five-permutation builds; compiled A07 and negative readers;
+scope-loss and injected capture-failure cleanup; seven raw proof/input/host
+checks and exact non-timing parity. Per-run opaque owner hashes are excluded
+only after freshness/collision checks. Focused source reviews and extracted
+archive reader replay PASS. Earlier failures, normalization amendment and
+profiler limits are preserved. Full acceptance and conditional seeds13/64 NOT RUN.
+
+All 172 pre-existing Q30 changed/untracked files and 96 desktop files rehashed
+unchanged; the 26 tracked scale edits and all existing untracked work stay
+unstaged. Verified task-only scratch cleanup PASS; no retained task processes
+or resources. Next: investigate
+a different causally defensible reduction; do not extend the support-tracking
+or primitive-map campaign from these results. Accepted-size corpus margin and
+scale remain unproved. U06, U07, Q60 and later milestones remain unstarted.
+
+[Measurements, exact limits, commands, reviews and archived proof](task-evidence/Q30/two-lanes-r1/README.md).
+
+---
+
+# Historical checkpoint: Q30 BLOCKED — support-cost evidence complete
 
 2026-09-28 local. Evidence-only continuation from source/checkpoint HEAD
 `838886360b63df5640841448c8f24caa61b37b60` on
