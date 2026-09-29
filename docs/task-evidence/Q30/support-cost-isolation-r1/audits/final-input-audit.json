@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "scope": "Every frozen build input rehashed after the 14-row sequence; generated build output is separately audited by maintained runtime manifests",
+  "arms": {
+    "control": {
+      "files": 1340,
+      "mismatches": [],
+      "status": "PASS"
+    },
+    "diagnostic": {
+      "files": 1345,
+      "mismatches": [],
+      "status": "PASS"
+    }
+  }
+}

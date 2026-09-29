@@ -1,0 +1,13 @@
+START 11-restricted 2026-09-28T23:59:09.155612+00:00
+{"status": "PASS", "label": "11-restricted", "strictCorruptions": 43, "completeNonTimingParity": "PASS"}
+{"label": "11-restricted", "cold": {"elapsedMs": 114172, "proofElapsedMs": 79389, "routingElapsedMs": 27620, "totalWork": 490, "hypothesisWork": 390, "cleanupComplete": true}, "warm": {"elapsedMs": 31879, "proofElapsedMs": 0, "routingElapsedMs": 24718, "totalWork": 101, "hypothesisWork": 1, "cleanupComplete": true}, "cleanup": {"status": "PASS", "seconds": 1.047000000020489, "serverStopped": true, "ownedSurvivors": [], "errors": []}, "status": "PASS"}
+START 12-restricted 2026-09-29T00:01:46.978697+00:00
+{"status": "PASS", "label": "12-restricted", "strictCorruptions": 43, "completeNonTimingParity": "PASS"}
+{"label": "12-restricted", "cold": {"elapsedMs": 111480, "proofElapsedMs": 79718, "routingElapsedMs": 24686, "totalWork": 490, "hypothesisWork": 390, "cleanupComplete": true}, "warm": {"elapsedMs": 33882, "proofElapsedMs": 0, "routingElapsedMs": 26847, "totalWork": 101, "hypothesisWork": 1, "cleanupComplete": true}, "cleanup": {"status": "PASS", "seconds": 1.2190000000118744, "serverStopped": true, "ownedSurvivors": [], "errors": []}, "status": "PASS"}
+START 13-off 2026-09-29T00:04:23.877311+00:00
+{"status": "PASS", "label": "13-off", "strictCorruptions": 43, "completeNonTimingParity": "PASS"}
+{"label": "13-off", "cold": {"elapsedMs": 110717, "proofElapsedMs": 78624, "routingElapsedMs": 25116, "totalWork": 490, "hypothesisWork": 390, "cleanupComplete": true}, "warm": {"elapsedMs": 31214, "proofElapsedMs": 0, "routingElapsedMs": 24551, "totalWork": 101, "hypothesisWork": 1, "cleanupComplete": true}, "cleanup": {"status": "PASS", "seconds": 1.1719999999913853, "serverStopped": true, "ownedSurvivors": [], "errors": []}, "status": "PASS"}
+START 14-control 2026-09-29T00:06:57.129243+00:00
+{"status": "PASS", "label": "14-control", "strictCorruptions": 43, "completeNonTimingParity": "PASS"}
+{"label": "14-control", "cold": {"elapsedMs": 106454, "proofElapsedMs": 75693, "routingElapsedMs": 24122, "totalWork": 490, "hypothesisWork": 390, "cleanupComplete": true}, "warm": {"elapsedMs": 30816, "proofElapsedMs": 0, "routingElapsedMs": 24309, "totalWork": 101, "hypothesisWork": 1, "cleanupComplete": true}, "cleanup": {"status": "PASS", "seconds": 0.9070000000065193, "serverStopped": true, "ownedSurvivors": [], "errors": []}, "status": "PASS"}
+SEQUENCE COMPLETE 11-14

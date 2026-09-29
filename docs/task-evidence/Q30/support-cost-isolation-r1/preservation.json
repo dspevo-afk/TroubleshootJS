@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "stage": "Before evidence commit",
+  "scope": "Every preexisting changed file remains byte-identical; status unchanged except current report and new evidence packet",
+  "checkouts": {
+    "desktop": {
+      "head": "e0c368855a3891acd4673e94ce9afa732390e2bf",
+      "initialFilesHashed": 96,
+      "status": "PASS"
+    },
+    "q30": {
+      "head": "838886360b63df5640841448c8f24caa61b37b60",
+      "initialFilesHashed": 172,
+      "status": "PASS"
+    }
+  }
+}

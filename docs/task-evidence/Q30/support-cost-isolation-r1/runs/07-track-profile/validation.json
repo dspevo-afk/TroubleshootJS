@@ -1,0 +1,290 @@
+{
+  "status": "PASS",
+  "label": "07-track-profile",
+  "strictReader": {
+    "outcomes": {
+      "cold": {
+        "PASS": 1
+      },
+      "warm": {
+        "PASS": 1
+      }
+    },
+    "latency": {
+      "cold": {
+        "elapsedMs": {
+          "p50": 125866,
+          "p95": 125866,
+          "count": 1
+        },
+        "wallElapsedMs": {
+          "p50": 125875,
+          "p95": 125875,
+          "count": 1
+        },
+        "routingElapsedMs": {
+          "p50": 25281,
+          "p95": 25281,
+          "count": 1
+        },
+        "proofElapsedMs": {
+          "p50": 90765,
+          "p95": 90765,
+          "count": 1
+        },
+        "stages": {
+          "RESOLVE": {
+            "p50": 0,
+            "p95": 0,
+            "count": 1
+          },
+          "HEALTHY": {
+            "p50": 34420,
+            "p95": 34420,
+            "count": 1
+          },
+          "PHYSICAL": {
+            "p50": 84,
+            "p95": 84,
+            "count": 1
+          },
+          "HYPOTHESES": {
+            "p50": 88908,
+            "p95": 88908,
+            "count": 1
+          },
+          "SYMPTOM": {
+            "p50": 9,
+            "p95": 9,
+            "count": 1
+          },
+          "PUBLISH": {
+            "p50": 71,
+            "p95": 71,
+            "count": 1
+          }
+        },
+        "workLabels": {
+          "CANDIDATE_HEALTHY_SETTLE": {
+            "p50": 22427,
+            "p95": 22427,
+            "count": 1
+          },
+          "CANDIDATE_SETTLE": {
+            "p50": 5249,
+            "p95": 5249,
+            "count": 1
+          },
+          "CUSTOMER_RETEST": {
+            "p50": 18139,
+            "p95": 18139,
+            "count": 1
+          },
+          "CUSTOMER_RETEST_COMPLETION": {
+            "p50": 41,
+            "p95": 41,
+            "count": 1
+          },
+          "EVIDENCE_RESTORE_PRIMARY": {
+            "p50": 123,
+            "p95": 123,
+            "count": 1
+          },
+          "OBSERVATION_STEP:DC_VOLTAGE": {
+            "p50": 1553,
+            "p95": 1553,
+            "count": 1
+          },
+          "OBSERVATION_STEP:INPUT": {
+            "p50": 16038,
+            "p95": 16038,
+            "count": 1
+          },
+          "OBSERVATION_STEP:POWER": {
+            "p50": 172,
+            "p95": 172,
+            "count": 1
+          },
+          "OBSERVATION_STEP:SETTLE": {
+            "p50": 234,
+            "p95": 234,
+            "count": 1
+          },
+          "OBSERVATION_STEP:WAIT": {
+            "p50": 0,
+            "p95": 0,
+            "count": 1
+          },
+          "POWER_OFF_SETTLE": {
+            "p50": 4536,
+            "p95": 4536,
+            "count": 1
+          },
+          "POWER_ON_SETTLE": {
+            "p50": 522,
+            "p95": 522,
+            "count": 1
+          },
+          "REMOVE_SETTLE": {
+            "p50": 332,
+            "p95": 332,
+            "count": 1
+          },
+          "REPAIR_STATUS_SETTLE": {
+            "p50": 18481,
+            "p95": 18481,
+            "count": 1
+          },
+          "REPLACE_SETTLE": {
+            "p50": 349,
+            "p95": 349,
+            "count": 1
+          },
+          "REPLAY_INSTALL": {
+            "p50": 670,
+            "p95": 670,
+            "count": 1
+          }
+        }
+      },
+      "warm": {
+        "elapsedMs": {
+          "p50": 34240,
+          "p95": 34240,
+          "count": 1
+        },
+        "wallElapsedMs": {
+          "p50": 34248,
+          "p95": 34248,
+          "count": 1
+        },
+        "routingElapsedMs": {
+          "p50": 24667,
+          "p95": 24667,
+          "count": 1
+        },
+        "proofElapsedMs": {
+          "p50": 0,
+          "p95": 0,
+          "count": 1
+        },
+        "stages": {
+          "RESOLVE": {
+            "p50": 1,
+            "p95": 1,
+            "count": 1
+          },
+          "HEALTHY": {
+            "p50": 33554,
+            "p95": 33554,
+            "count": 1
+          },
+          "PHYSICAL": {
+            "p50": 66,
+            "p95": 66,
+            "count": 1
+          },
+          "HYPOTHESES": {
+            "p50": 24,
+            "p95": 24,
+            "count": 1
+          },
+          "SYMPTOM": {
+            "p50": 8,
+            "p95": 8,
+            "count": 1
+          },
+          "PUBLISH": {
+            "p50": 81,
+            "p95": 81,
+            "count": 1
+          }
+        },
+        "workLabels": {}
+      }
+    },
+    "pairCount": 10,
+    "canaries": 43,
+    "build": [
+      "284dd996cf92c356772cfd98e0bfa74946f5d3eeebec434bf48bcd906a42da4b",
+      "1d64f47bfb74bc5965b4aee99ad3957da7b8b67612211c45e961ac23b488fcb1"
+    ],
+    "failures": [],
+    "defaultMaxJobMillis": 90000,
+    "measurementMaxJobMillis": 300000
+  },
+  "removedTimings": [
+    "/totalElapsedMs",
+    "/phaseElapsedMs",
+    "/cold/elapsedMs",
+    "/cold/wallElapsedMs",
+    "/cold/maxAdvanceMs",
+    "/cold/maxManualUnitMs",
+    "/cold/routingElapsedMs",
+    "/cold/proofElapsedMs",
+    "/cold/cleanupElapsedMs",
+    "/cold/stages/0/elapsedMs",
+    "/cold/stages/1/elapsedMs",
+    "/cold/stages/2/elapsedMs",
+    "/cold/stages/3/elapsedMs",
+    "/cold/stages/4/elapsedMs",
+    "/cold/stages/5/elapsedMs",
+    "/cold/diagnosticWorkTimings/0/elapsedMs",
+    "/cold/diagnosticWorkTimings/0/maxUnitMs",
+    "/cold/diagnosticWorkTimings/1/elapsedMs",
+    "/cold/diagnosticWorkTimings/1/maxUnitMs",
+    "/cold/diagnosticWorkTimings/2/elapsedMs",
+    "/cold/diagnosticWorkTimings/2/maxUnitMs",
+    "/cold/diagnosticWorkTimings/3/elapsedMs",
+    "/cold/diagnosticWorkTimings/3/maxUnitMs",
+    "/cold/diagnosticWorkTimings/4/elapsedMs",
+    "/cold/diagnosticWorkTimings/4/maxUnitMs",
+    "/cold/diagnosticWorkTimings/5/elapsedMs",
+    "/cold/diagnosticWorkTimings/5/maxUnitMs",
+    "/cold/diagnosticWorkTimings/6/elapsedMs",
+    "/cold/diagnosticWorkTimings/6/maxUnitMs",
+    "/cold/diagnosticWorkTimings/7/elapsedMs",
+    "/cold/diagnosticWorkTimings/7/maxUnitMs",
+    "/cold/diagnosticWorkTimings/8/elapsedMs",
+    "/cold/diagnosticWorkTimings/8/maxUnitMs",
+    "/cold/diagnosticWorkTimings/9/elapsedMs",
+    "/cold/diagnosticWorkTimings/9/maxUnitMs",
+    "/cold/diagnosticWorkTimings/10/elapsedMs",
+    "/cold/diagnosticWorkTimings/10/maxUnitMs",
+    "/cold/diagnosticWorkTimings/11/elapsedMs",
+    "/cold/diagnosticWorkTimings/11/maxUnitMs",
+    "/cold/diagnosticWorkTimings/12/elapsedMs",
+    "/cold/diagnosticWorkTimings/12/maxUnitMs",
+    "/cold/diagnosticWorkTimings/13/elapsedMs",
+    "/cold/diagnosticWorkTimings/13/maxUnitMs",
+    "/cold/diagnosticWorkTimings/14/elapsedMs",
+    "/cold/diagnosticWorkTimings/14/maxUnitMs",
+    "/cold/diagnosticWorkTimings/15/elapsedMs",
+    "/cold/diagnosticWorkTimings/15/maxUnitMs",
+    "/cold/owner/diagnosticProof/elapsedMillis",
+    "/warm/elapsedMs",
+    "/warm/wallElapsedMs",
+    "/warm/maxAdvanceMs",
+    "/warm/maxManualUnitMs",
+    "/warm/routingElapsedMs",
+    "/warm/proofElapsedMs",
+    "/warm/cleanupElapsedMs",
+    "/warm/stages/0/elapsedMs",
+    "/warm/stages/1/elapsedMs",
+    "/warm/stages/2/elapsedMs",
+    "/warm/stages/3/elapsedMs",
+    "/warm/stages/4/elapsedMs",
+    "/warm/stages/5/elapsedMs",
+    "/warm/owner/diagnosticProof/elapsedMillis"
+  ],
+  "removedMetadata": [
+    "supportCostRequested",
+    "supportCostMode",
+    "cold.supportCost",
+    "warm.supportCost"
+  ],
+  "projectionSha256": "35931ba11ba14df558eeb0353263fd99f8d048308a8f4cd6e8b7775e281ef848",
+  "rawReportSha256": "100f73c6865ecf27e5daefea60e82640533e3adf21ec5dbb1cce6cf3569c7bd4",
+  "metadataValidation": "separate independent reader",
+  "unchangedControlParity": "PASS"
+}

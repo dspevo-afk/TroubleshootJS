@@ -1,0 +1,26 @@
+{
+  "checkpoint": "838886360b63df5640841448c8f24caa61b37b60",
+  "scope": "Private measurement first; no production ownership/layout/scale changes, no optimization integrated from this protocol",
+  "fixture": "Exact prior source-pinned seed10014 plan4 40-package, unchanged electrical proof and budgets",
+  "sequence": [
+    ["01-control", "control", "off", "off"],
+    ["02-off", "diagnostic", "off", "off"],
+    ["03-off-profile", "diagnostic", "off", "on"],
+    ["04-off-profile", "diagnostic", "off", "on"],
+    ["05-off", "diagnostic", "off", "off"],
+    ["06-track", "diagnostic", "track", "off"],
+    ["07-track-profile", "diagnostic", "track", "on"],
+    ["08-track-profile", "diagnostic", "track", "on"],
+    ["09-track", "diagnostic", "track", "off"],
+    ["10-off", "diagnostic", "off", "off"],
+    ["11-restricted", "diagnostic", "restricted", "off"],
+    ["12-restricted", "diagnostic", "restricted", "off"],
+    ["13-off", "diagnostic", "off", "off"],
+    ["14-control", "control", "off", "off"]
+  ],
+  "analysis": "Same-binary off/track/restricted ablation; off-vs-track exposes incremental maintenance with original full scan, track-vs-restricted exposes scan path. No counters/timers when profile off. Coarse monotonic profile and exact counters used for attribution; fine histogram explicitly quantized and not extrapolated. Raw unchanged source/build controls anchor code-shape drift. Baseline-profile overhead and tracker-profile overhead each use two counterbalanced pairs.",
+  "interpretationRule": "Report all observations. Material repeated effect requires both paired directions same sign and magnitude above max(1000ms,3x observed comparable OFF range). No causal single-cost precision from wall differences; source/code shape and host noise limits retained. No acceptance from one win or from effects within spread.",
+  "stopRule": "On application/cleanup/proof failure, investigate before continuing. If tracking is minor or absent from accepted baseline, do not optimize it merely to rescue prototype; identify next measured solver contributor. Full acceptance stays unrun while 90s fails.",
+  "host": "Fresh owned Edge headless profile per row; warm run intentional in each case; no JVM/build in timing sequence; WMI/process observations before/after; no OS cache reset, no thermal telemetry; maintained runner unchanged including 600s case timeout and lack of independent outer process timeout. Bundled Python3.12.14 + task-local Playwright1.57.0.",
+  "artifacts": "Unique OS-temp fixtures, small recovery copies of scripts/receipts; verify source/runtime inputs, strict proof43negatives, complete non-timing equality, profiler metadata separately; archive sanitized evidence and remove only verified task resources. No push."
+}

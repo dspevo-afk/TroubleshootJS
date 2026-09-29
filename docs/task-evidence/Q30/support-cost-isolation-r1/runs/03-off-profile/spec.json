@@ -1,0 +1,12 @@
+{
+  "cases": [
+    {
+      "name": "03-off-profile",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Coordinator=true&tsjQ30Seed=10014&tsjQ30SupportMode=off&tsjQ30CostProfile=true",
+      "stateAttribute": "data-tsj-q30-coordinator-state",
+      "expectedState": "PASS:complete",
+      "reportAttribute": "data-tsj-q30-coordinator-report",
+      "timeoutSeconds": 600
+    }
+  ]
+}

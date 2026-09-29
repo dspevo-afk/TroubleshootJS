@@ -1,0 +1,7 @@
+START 02-off 2026-09-28T23:33:43.174953+00:00
+{"status": "PASS", "label": "02-off", "strictCorruptions": 43, "completeNonTimingParity": "PASS"}
+{"label": "02-off", "cold": {"elapsedMs": 104878, "proofElapsedMs": 75233, "routingElapsedMs": 23390, "totalWork": 490, "hypothesisWork": 390, "cleanupComplete": true}, "warm": {"elapsedMs": 30073, "proofElapsedMs": 0, "routingElapsedMs": 23516, "totalWork": 101, "hypothesisWork": 1, "cleanupComplete": true}, "cleanup": {"status": "PASS", "seconds": 1.047000000020489, "serverStopped": true, "ownedSurvivors": [], "errors": []}, "status": "PASS"}
+START 03-off-profile 2026-09-28T23:36:09.434210+00:00
+{"status": "PASS", "label": "03-off-profile", "strictCorruptions": 43, "completeNonTimingParity": "PASS"}
+{"label": "03-off-profile", "cold": {"elapsedMs": 117718, "proofElapsedMs": 84692, "routingElapsedMs": 24683, "totalWork": 490, "hypothesisWork": 390, "cleanupComplete": true}, "warm": {"elapsedMs": 33422, "proofElapsedMs": 0, "routingElapsedMs": 24920, "totalWork": 101, "hypothesisWork": 1, "cleanupComplete": true}, "cleanup": {"status": "PASS", "seconds": 0.8280000000086147, "serverStopped": true, "ownedSurvivors": [], "errors": []}, "status": "PASS"}
+SEQUENCE COMPLETE 2-3

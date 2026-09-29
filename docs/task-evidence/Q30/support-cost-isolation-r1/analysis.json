@@ -1,0 +1,1484 @@
+{
+  "completedRows": 14,
+  "plannedRows": 14,
+  "contrasts": {
+    "baselineProfiler": {
+      "complete": true,
+      "controlLabels": [
+        "02-off",
+        "05-off"
+      ],
+      "observedColdRangeMs": 3593,
+      "predeclaredThresholdMs": 10779,
+      "bothDirectionsMaterial": false,
+      "pairs": [
+        {
+          "candidate": "03-off-profile",
+          "reference": "02-off",
+          "cold": {
+            "elapsedMs": 12840,
+            "proofElapsedMs": 9459,
+            "routingElapsedMs": 1293
+          },
+          "warmElapsedMs": 3349
+        },
+        {
+          "candidate": "04-off-profile",
+          "reference": "05-off",
+          "cold": {
+            "elapsedMs": 1183,
+            "proofElapsedMs": -1645,
+            "routingElapsedMs": 1335
+          },
+          "warmElapsedMs": 952
+        }
+      ]
+    },
+    "structuralMaintenance": {
+      "complete": true,
+      "controlLabels": [
+        "02-off",
+        "05-off",
+        "10-off",
+        "13-off"
+      ],
+      "observedColdRangeMs": 5839,
+      "predeclaredThresholdMs": 17517,
+      "bothDirectionsMaterial": false,
+      "pairs": [
+        {
+          "candidate": "06-track",
+          "reference": "05-off",
+          "cold": {
+            "elapsedMs": -5129,
+            "proofElapsedMs": -5313,
+            "routingElapsedMs": 61
+          },
+          "warmElapsedMs": 2187
+        },
+        {
+          "candidate": "09-track",
+          "reference": "10-off",
+          "cold": {
+            "elapsedMs": 2962,
+            "proofElapsedMs": 3140,
+            "routingElapsedMs": -771
+          },
+          "warmElapsedMs": -457
+        }
+      ]
+    },
+    "trackerProfiler": {
+      "complete": true,
+      "controlLabels": [
+        "06-track",
+        "09-track"
+      ],
+      "observedColdRangeMs": 9111,
+      "predeclaredThresholdMs": 27333,
+      "bothDirectionsMaterial": false,
+      "pairs": [
+        {
+          "candidate": "07-track-profile",
+          "reference": "06-track",
+          "cold": {
+            "elapsedMs": 22524,
+            "proofElapsedMs": 17380,
+            "routingElapsedMs": 1797
+          },
+          "warmElapsedMs": 1749
+        },
+        {
+          "candidate": "08-track-profile",
+          "reference": "09-track",
+          "cold": {
+            "elapsedMs": 10379,
+            "proofElapsedMs": 9678,
+            "routingElapsedMs": -303
+          },
+          "warmElapsedMs": 2524
+        }
+      ]
+    },
+    "restrictedVersusFullWithoutTracker": {
+      "complete": true,
+      "controlLabels": [
+        "02-off",
+        "05-off",
+        "10-off",
+        "13-off"
+      ],
+      "observedColdRangeMs": 5839,
+      "predeclaredThresholdMs": 17517,
+      "bothDirectionsMaterial": false,
+      "pairs": [
+        {
+          "candidate": "11-restricted",
+          "reference": "10-off",
+          "cold": {
+            "elapsedMs": 4681,
+            "proofElapsedMs": 2333,
+            "routingElapsedMs": 1929
+          },
+          "warmElapsedMs": 3
+        },
+        {
+          "candidate": "12-restricted",
+          "reference": "13-off",
+          "cold": {
+            "elapsedMs": 763,
+            "proofElapsedMs": 1094,
+            "routingElapsedMs": -430
+          },
+          "warmElapsedMs": 2668
+        }
+      ]
+    },
+    "rawControlCodeShape": {
+      "complete": true,
+      "controlLabels": [
+        "01-control",
+        "14-control"
+      ],
+      "observedColdRangeMs": 2278,
+      "predeclaredThresholdMs": 6834,
+      "bothDirectionsMaterial": false,
+      "pairs": [
+        {
+          "candidate": "02-off",
+          "reference": "01-control",
+          "cold": {
+            "elapsedMs": 702,
+            "proofElapsedMs": 1818,
+            "routingElapsedMs": -699
+          },
+          "warmElapsedMs": -819
+        },
+        {
+          "candidate": "13-off",
+          "reference": "14-control",
+          "cold": {
+            "elapsedMs": 4263,
+            "proofElapsedMs": 2931,
+            "routingElapsedMs": 994
+          },
+          "warmElapsedMs": 398
+        }
+      ]
+    }
+  },
+  "profiles": {
+    "03-off-profile": {
+      "cold": {
+        "counts": {
+          "clockAnomalies": 0,
+          "counterErrors": 0,
+          "analyzeCalls": 501,
+          "factorCalls": 742391,
+          "solveCalls": 742391,
+          "trialAttempts": 1350440,
+          "acceptedSteps": 608049,
+          "retrySteps": 10,
+          "runCalls": 5440,
+          "circuitStamps": 521,
+          "matrixStampCalls": 118769298,
+          "supportCreates": 0,
+          "supportCreateScannedSlots": 0,
+          "supportInitialScannedSlots": 0,
+          "supportAllocatedSlots": 0,
+          "supportInitialCoordinates": 0,
+          "supportStampCalls": 0,
+          "supportExistingCoordinates": 0,
+          "supportNewCoordinates": 0,
+          "supportNewUnions": 0,
+          "supportInitialUnions": 0,
+          "supportDynamicUnions": 0,
+          "supportSamePartitionCoordinates": 0,
+          "supportRelabeledVertices": 0,
+          "supportInvalidations": 0,
+          "supportInvalidationCalls": 0,
+          "supportInvalidationsAnalyze": 0,
+          "supportInvalidationsStamp": 0,
+          "supportInvalidationsRun": 0,
+          "supportInvalidationsCreate": 0,
+          "supportInvalidationsStop": 0,
+          "supportInvalidationsOther": 0,
+          "domainAttempts": 0,
+          "domainSuccesses": 0,
+          "domainUnchangedPartition": 0,
+          "domainChangedPartition": 0,
+          "domainAllocatedSlots": 0,
+          "domainCopiedSlots": 0,
+          "luInputScannedSlots": 1272116933,
+          "luPivotScannedSlots": 2654613198,
+          "luUpdatedSlots": 1981844174,
+          "lowerReferenceInsertions": 345366723,
+          "lowerReferenceClearedSlots": 345366723,
+          "lowerReferenceAllocatedSlots": 345,
+          "upperColumnAllocatedSlots": 345,
+          "matrixCopiedSlots": 9548471508,
+          "rightSideCopiedSlots": 113518674,
+          "factorsAtUnchangedPartition": 0,
+          "factorsAtChangedPartition": 0,
+          "factorsWithoutStructuralSupport": 742391,
+          "outOfRangeTypeStamps": 1216852
+        },
+        "countsSha256": "8fe932a4e7fef65d5487ef0e819e13245ff6eef0ccbedbee81b13b5d75a73617",
+        "timersMs": {
+          "analyzeMillis": 1883.6000002324581,
+          "factorMillis": 38840.40000665188,
+          "solveMillis": 8877.599998056889,
+          "runMillis": 83644.2000001669,
+          "createMillis": 0,
+          "domainMillis": 0,
+          "stampCircuitMillis": 220.99999964237213,
+          "maxAnalyzeMillis": 9.400000005960464,
+          "maxFactorMillis": 5.699999988079071,
+          "maxSolveMillis": 5.199999988079071,
+          "maxRunMillis": 94.2999999821186,
+          "maxCreateMillis": 0,
+          "maxDomainMillis": 0,
+          "maxStampCircuitMillis": 2.2000000178813934
+        },
+        "stampSampling": {
+          "stampSampleStride": 65536,
+          "stampSampleCount": 1812,
+          "stampSampleMaxMicros": 100.00002384185791,
+          "stampSampleCumulativeMicros": 600.0000536441803,
+          "stampSampleCalibrationTotalMicros": 599.9999940395355,
+          "stampSampleCalibrationMeanMicros": 0.33112582452512995,
+          "stampSampleBinsLt1Lt4Lt16Lt64Lt256AndAbove": [
+            1806,
+            0,
+            0,
+            0,
+            6,
+            0
+          ]
+        },
+        "stampsByDumpType": [
+          {
+            "dumpType": 99,
+            "stamps": 6252,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 100,
+            "stamps": 16635496,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 102,
+            "stamps": 8102640,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 103,
+            "stamps": 1042,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 114,
+            "stamps": 36368,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 115,
+            "stamps": 50452,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 116,
+            "stamps": 8102640,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 162,
+            "stamps": 16211532,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 450,
+            "stamps": 13512736,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 451,
+            "stamps": 5401760,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 452,
+            "stamps": 22461888,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 453,
+            "stamps": 10803520,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 454,
+            "stamps": 16209448,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 457,
+            "stamps": 16672,
+            "newCoordinates": 0
+          }
+        ]
+      },
+      "warm": {
+        "counts": {
+          "clockAnomalies": 0,
+          "counterErrors": 0,
+          "analyzeCalls": 8,
+          "factorCalls": 46334,
+          "solveCalls": 46334,
+          "trialAttempts": 82397,
+          "acceptedSteps": 36063,
+          "retrySteps": 0,
+          "runCalls": 288,
+          "circuitStamps": 8,
+          "matrixStampCalls": 7160494,
+          "supportCreates": 0,
+          "supportCreateScannedSlots": 0,
+          "supportInitialScannedSlots": 0,
+          "supportAllocatedSlots": 0,
+          "supportInitialCoordinates": 0,
+          "supportStampCalls": 0,
+          "supportExistingCoordinates": 0,
+          "supportNewCoordinates": 0,
+          "supportNewUnions": 0,
+          "supportInitialUnions": 0,
+          "supportDynamicUnions": 0,
+          "supportSamePartitionCoordinates": 0,
+          "supportRelabeledVertices": 0,
+          "supportInvalidations": 0,
+          "supportInvalidationCalls": 0,
+          "supportInvalidationsAnalyze": 0,
+          "supportInvalidationsStamp": 0,
+          "supportInvalidationsRun": 0,
+          "supportInvalidationsCreate": 0,
+          "supportInvalidationsStop": 0,
+          "supportInvalidationsOther": 0,
+          "domainAttempts": 0,
+          "domainSuccesses": 0,
+          "domainUnchangedPartition": 0,
+          "domainChangedPartition": 0,
+          "domainAllocatedSlots": 0,
+          "domainCopiedSlots": 0,
+          "luInputScannedSlots": 78216795,
+          "luPivotScannedSlots": 163610951,
+          "luUpdatedSlots": 111930149,
+          "lowerReferenceInsertions": 20656373,
+          "lowerReferenceClearedSlots": 20656373,
+          "lowerReferenceAllocatedSlots": 0,
+          "upperColumnAllocatedSlots": 0,
+          "matrixCopiedSlots": 575806004,
+          "rightSideCopiedSlots": 6887690,
+          "factorsAtUnchangedPartition": 0,
+          "factorsAtChangedPartition": 0,
+          "factorsWithoutStructuralSupport": 46334,
+          "outOfRangeTypeStamps": 72136
+        },
+        "countsSha256": "d897847baa8fc169ad068a201ce1820a7f60a1625006b27fc1a6cce61dfea83a",
+        "timersMs": {
+          "analyzeMillis": 32.30000001192093,
+          "factorMillis": 3437.2000013291836,
+          "solveMillis": 523.5999994874,
+          "runMillis": 6183,
+          "createMillis": 0,
+          "domainMillis": 0,
+          "stampCircuitMillis": 3.599999964237213,
+          "maxAnalyzeMillis": 5.700000017881393,
+          "maxFactorMillis": 0.800000011920929,
+          "maxSolveMillis": 0.30000001192092896,
+          "maxRunMillis": 54.900000005960464,
+          "maxCreateMillis": 0,
+          "maxDomainMillis": 0,
+          "maxStampCircuitMillis": 0.5999999940395355
+        },
+        "stampSampling": {
+          "stampSampleStride": 65536,
+          "stampSampleCount": 109,
+          "stampSampleMaxMicros": 0,
+          "stampSampleCumulativeMicros": 0,
+          "stampSampleCalibrationTotalMicros": 0,
+          "stampSampleCalibrationMeanMicros": 0,
+          "stampSampleBinsLt1Lt4Lt16Lt64Lt256AndAbove": [
+            109,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "stampsByDumpType": [
+          {
+            "dumpType": 99,
+            "stamps": 96,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 100,
+            "stamps": 988860,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 102,
+            "stamps": 494382,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 103,
+            "stamps": 16,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 114,
+            "stamps": 544,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 115,
+            "stamps": 792,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 116,
+            "stamps": 494382,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 162,
+            "stamps": 988860,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 450,
+            "stamps": 824098,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 451,
+            "stamps": 329588,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 452,
+            "stamps": 1318480,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 453,
+            "stamps": 659176,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 454,
+            "stamps": 988828,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 457,
+            "stamps": 256,
+            "newCoordinates": 0
+          }
+        ]
+      }
+    },
+    "04-off-profile": {
+      "cold": {
+        "counts": {
+          "clockAnomalies": 0,
+          "counterErrors": 0,
+          "analyzeCalls": 501,
+          "factorCalls": 742391,
+          "solveCalls": 742391,
+          "trialAttempts": 1350440,
+          "acceptedSteps": 608049,
+          "retrySteps": 10,
+          "runCalls": 5440,
+          "circuitStamps": 521,
+          "matrixStampCalls": 118769298,
+          "supportCreates": 0,
+          "supportCreateScannedSlots": 0,
+          "supportInitialScannedSlots": 0,
+          "supportAllocatedSlots": 0,
+          "supportInitialCoordinates": 0,
+          "supportStampCalls": 0,
+          "supportExistingCoordinates": 0,
+          "supportNewCoordinates": 0,
+          "supportNewUnions": 0,
+          "supportInitialUnions": 0,
+          "supportDynamicUnions": 0,
+          "supportSamePartitionCoordinates": 0,
+          "supportRelabeledVertices": 0,
+          "supportInvalidations": 0,
+          "supportInvalidationCalls": 0,
+          "supportInvalidationsAnalyze": 0,
+          "supportInvalidationsStamp": 0,
+          "supportInvalidationsRun": 0,
+          "supportInvalidationsCreate": 0,
+          "supportInvalidationsStop": 0,
+          "supportInvalidationsOther": 0,
+          "domainAttempts": 0,
+          "domainSuccesses": 0,
+          "domainUnchangedPartition": 0,
+          "domainChangedPartition": 0,
+          "domainAllocatedSlots": 0,
+          "domainCopiedSlots": 0,
+          "luInputScannedSlots": 1272116933,
+          "luPivotScannedSlots": 2654613198,
+          "luUpdatedSlots": 1981844174,
+          "lowerReferenceInsertions": 345366723,
+          "lowerReferenceClearedSlots": 345366723,
+          "lowerReferenceAllocatedSlots": 345,
+          "upperColumnAllocatedSlots": 345,
+          "matrixCopiedSlots": 9548471508,
+          "rightSideCopiedSlots": 113518674,
+          "factorsAtUnchangedPartition": 0,
+          "factorsAtChangedPartition": 0,
+          "factorsWithoutStructuralSupport": 742391,
+          "outOfRangeTypeStamps": 1216852
+        },
+        "countsSha256": "8fe932a4e7fef65d5487ef0e819e13245ff6eef0ccbedbee81b13b5d75a73617",
+        "timersMs": {
+          "analyzeMillis": 1591.7000002563,
+          "factorMillis": 35825.999992877245,
+          "solveMillis": 7951.500003755093,
+          "runMillis": 76396.89999979734,
+          "createMillis": 0,
+          "domainMillis": 0,
+          "stampCircuitMillis": 191.8000001013279,
+          "maxAnalyzeMillis": 6.300000011920929,
+          "maxFactorMillis": 4.4000000059604645,
+          "maxSolveMillis": 5.200000017881393,
+          "maxRunMillis": 63.20000001788139,
+          "maxCreateMillis": 0,
+          "maxDomainMillis": 0,
+          "maxStampCircuitMillis": 1.5999999940395355
+        },
+        "stampSampling": {
+          "stampSampleStride": 65536,
+          "stampSampleCount": 1812,
+          "stampSampleMaxMicros": 99.99999403953552,
+          "stampSampleCumulativeMicros": 299.99998211860657,
+          "stampSampleCalibrationTotalMicros": 299.99998211860657,
+          "stampSampleCalibrationMeanMicros": 0.1655629040389661,
+          "stampSampleBinsLt1Lt4Lt16Lt64Lt256AndAbove": [
+            1809,
+            0,
+            0,
+            0,
+            3,
+            0
+          ]
+        },
+        "stampsByDumpType": [
+          {
+            "dumpType": 99,
+            "stamps": 6252,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 100,
+            "stamps": 16635496,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 102,
+            "stamps": 8102640,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 103,
+            "stamps": 1042,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 114,
+            "stamps": 36368,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 115,
+            "stamps": 50452,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 116,
+            "stamps": 8102640,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 162,
+            "stamps": 16211532,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 450,
+            "stamps": 13512736,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 451,
+            "stamps": 5401760,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 452,
+            "stamps": 22461888,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 453,
+            "stamps": 10803520,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 454,
+            "stamps": 16209448,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 457,
+            "stamps": 16672,
+            "newCoordinates": 0
+          }
+        ]
+      },
+      "warm": {
+        "counts": {
+          "clockAnomalies": 0,
+          "counterErrors": 0,
+          "analyzeCalls": 8,
+          "factorCalls": 46334,
+          "solveCalls": 46334,
+          "trialAttempts": 82397,
+          "acceptedSteps": 36063,
+          "retrySteps": 0,
+          "runCalls": 288,
+          "circuitStamps": 8,
+          "matrixStampCalls": 7160494,
+          "supportCreates": 0,
+          "supportCreateScannedSlots": 0,
+          "supportInitialScannedSlots": 0,
+          "supportAllocatedSlots": 0,
+          "supportInitialCoordinates": 0,
+          "supportStampCalls": 0,
+          "supportExistingCoordinates": 0,
+          "supportNewCoordinates": 0,
+          "supportNewUnions": 0,
+          "supportInitialUnions": 0,
+          "supportDynamicUnions": 0,
+          "supportSamePartitionCoordinates": 0,
+          "supportRelabeledVertices": 0,
+          "supportInvalidations": 0,
+          "supportInvalidationCalls": 0,
+          "supportInvalidationsAnalyze": 0,
+          "supportInvalidationsStamp": 0,
+          "supportInvalidationsRun": 0,
+          "supportInvalidationsCreate": 0,
+          "supportInvalidationsStop": 0,
+          "supportInvalidationsOther": 0,
+          "domainAttempts": 0,
+          "domainSuccesses": 0,
+          "domainUnchangedPartition": 0,
+          "domainChangedPartition": 0,
+          "domainAllocatedSlots": 0,
+          "domainCopiedSlots": 0,
+          "luInputScannedSlots": 78216795,
+          "luPivotScannedSlots": 163610951,
+          "luUpdatedSlots": 111930149,
+          "lowerReferenceInsertions": 20656373,
+          "lowerReferenceClearedSlots": 20656373,
+          "lowerReferenceAllocatedSlots": 0,
+          "upperColumnAllocatedSlots": 0,
+          "matrixCopiedSlots": 575806004,
+          "rightSideCopiedSlots": 6887690,
+          "factorsAtUnchangedPartition": 0,
+          "factorsAtChangedPartition": 0,
+          "factorsWithoutStructuralSupport": 46334,
+          "outOfRangeTypeStamps": 72136
+        },
+        "countsSha256": "d897847baa8fc169ad068a201ce1820a7f60a1625006b27fc1a6cce61dfea83a",
+        "timersMs": {
+          "analyzeMillis": 25.200000047683716,
+          "factorMillis": 3185.0999980568886,
+          "solveMillis": 480.1000007390976,
+          "runMillis": 5709.5999999940395,
+          "createMillis": 0,
+          "domainMillis": 0,
+          "stampCircuitMillis": 3.199999988079071,
+          "maxAnalyzeMillis": 3.300000011920929,
+          "maxFactorMillis": 0.699999988079071,
+          "maxSolveMillis": 0.8999999761581421,
+          "maxRunMillis": 49.79999998211861,
+          "maxCreateMillis": 0,
+          "maxDomainMillis": 0,
+          "maxStampCircuitMillis": 0.5
+        },
+        "stampSampling": {
+          "stampSampleStride": 65536,
+          "stampSampleCount": 109,
+          "stampSampleMaxMicros": 0,
+          "stampSampleCumulativeMicros": 0,
+          "stampSampleCalibrationTotalMicros": 99.99999403953552,
+          "stampSampleCalibrationMeanMicros": 0.9174311379773901,
+          "stampSampleBinsLt1Lt4Lt16Lt64Lt256AndAbove": [
+            109,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "stampsByDumpType": [
+          {
+            "dumpType": 99,
+            "stamps": 96,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 100,
+            "stamps": 988860,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 102,
+            "stamps": 494382,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 103,
+            "stamps": 16,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 114,
+            "stamps": 544,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 115,
+            "stamps": 792,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 116,
+            "stamps": 494382,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 162,
+            "stamps": 988860,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 450,
+            "stamps": 824098,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 451,
+            "stamps": 329588,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 452,
+            "stamps": 1318480,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 453,
+            "stamps": 659176,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 454,
+            "stamps": 988828,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 457,
+            "stamps": 256,
+            "newCoordinates": 0
+          }
+        ]
+      }
+    },
+    "07-track-profile": {
+      "cold": {
+        "counts": {
+          "clockAnomalies": 0,
+          "counterErrors": 0,
+          "analyzeCalls": 501,
+          "factorCalls": 742391,
+          "solveCalls": 742391,
+          "trialAttempts": 1350440,
+          "acceptedSteps": 608049,
+          "retrySteps": 10,
+          "runCalls": 5440,
+          "circuitStamps": 521,
+          "matrixStampCalls": 118769298,
+          "supportCreates": 521,
+          "supportCreateScannedSlots": 3595570,
+          "supportInitialScannedSlots": 3595570,
+          "supportAllocatedSlots": 4287954,
+          "supportInitialCoordinates": 97375,
+          "supportStampCalls": 118624334,
+          "supportExistingCoordinates": 118595724,
+          "supportNewCoordinates": 28610,
+          "supportNewUnions": 85417,
+          "supportInitialUnions": 78939,
+          "supportDynamicUnions": 6478,
+          "supportSamePartitionCoordinates": 22132,
+          "supportRelabeledVertices": 114240,
+          "supportInvalidations": 521,
+          "supportInvalidationCalls": 521,
+          "supportInvalidationsAnalyze": 496,
+          "supportInvalidationsStamp": 20,
+          "supportInvalidationsRun": 0,
+          "supportInvalidationsCreate": 0,
+          "supportInvalidationsStop": 0,
+          "supportInvalidationsOther": 5,
+          "domainAttempts": 742391,
+          "domainSuccesses": 742391,
+          "domainUnchangedPartition": 741870,
+          "domainChangedPartition": 521,
+          "domainAllocatedSlots": 39174,
+          "domainCopiedSlots": 124783236,
+          "luInputScannedSlots": 1272116933,
+          "luPivotScannedSlots": 2654613198,
+          "luUpdatedSlots": 1981844174,
+          "lowerReferenceInsertions": 345366723,
+          "lowerReferenceClearedSlots": 345366723,
+          "lowerReferenceAllocatedSlots": 345,
+          "upperColumnAllocatedSlots": 345,
+          "matrixCopiedSlots": 9548471508,
+          "rightSideCopiedSlots": 113518674,
+          "factorsAtUnchangedPartition": 741870,
+          "factorsAtChangedPartition": 521,
+          "factorsWithoutStructuralSupport": 0,
+          "outOfRangeTypeStamps": 1216852
+        },
+        "countsSha256": "2aac0cf04fdc9c45879eb3092c88c1efa88aa027c7719ef0cb0c90f015a68f62",
+        "timersMs": {
+          "analyzeMillis": 1936.9999997019768,
+          "factorMillis": 42570.60000228882,
+          "solveMillis": 9038.500000208616,
+          "runMillis": 91215.49999973178,
+          "createMillis": 60.69999971985817,
+          "domainMillis": 1506.099998831749,
+          "stampCircuitMillis": 281.20000034570694,
+          "maxAnalyzeMillis": 9.699999988079071,
+          "maxFactorMillis": 6.5,
+          "maxSolveMillis": 0.800000011920929,
+          "maxRunMillis": 106.10000002384186,
+          "maxCreateMillis": 0.9000000059604645,
+          "maxDomainMillis": 0.29999998211860657,
+          "maxStampCircuitMillis": 2.9000000059604645
+        },
+        "stampSampling": {
+          "stampSampleStride": 65536,
+          "stampSampleCount": 1812,
+          "stampSampleMaxMicros": 99.99999403953552,
+          "stampSampleCumulativeMicros": 399.9999761581421,
+          "stampSampleCalibrationTotalMicros": 500,
+          "stampSampleCalibrationMeanMicros": 0.27593818984547464,
+          "stampSampleBinsLt1Lt4Lt16Lt64Lt256AndAbove": [
+            1808,
+            0,
+            0,
+            0,
+            4,
+            0
+          ]
+        },
+        "stampsByDumpType": [
+          {
+            "dumpType": 99,
+            "stamps": 6252,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 100,
+            "stamps": 16635496,
+            "newCoordinates": 3146
+          },
+          {
+            "dumpType": 102,
+            "stamps": 8102640,
+            "newCoordinates": 1544
+          },
+          {
+            "dumpType": 103,
+            "stamps": 1042,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 114,
+            "stamps": 36368,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 115,
+            "stamps": 50452,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 116,
+            "stamps": 8102640,
+            "newCoordinates": 2064
+          },
+          {
+            "dumpType": 162,
+            "stamps": 16211532,
+            "newCoordinates": 4689
+          },
+          {
+            "dumpType": 450,
+            "stamps": 13512736,
+            "newCoordinates": 5210
+          },
+          {
+            "dumpType": 451,
+            "stamps": 5401760,
+            "newCoordinates": 2077
+          },
+          {
+            "dumpType": 452,
+            "stamps": 22461888,
+            "newCoordinates": 5792
+          },
+          {
+            "dumpType": 453,
+            "stamps": 10803520,
+            "newCoordinates": 2004
+          },
+          {
+            "dumpType": 454,
+            "stamps": 16209448,
+            "newCoordinates": 2084
+          },
+          {
+            "dumpType": 457,
+            "stamps": 16672,
+            "newCoordinates": 0
+          }
+        ]
+      },
+      "warm": {
+        "counts": {
+          "clockAnomalies": 0,
+          "counterErrors": 0,
+          "analyzeCalls": 8,
+          "factorCalls": 46334,
+          "solveCalls": 46334,
+          "trialAttempts": 82397,
+          "acceptedSteps": 36063,
+          "retrySteps": 0,
+          "runCalls": 288,
+          "circuitStamps": 8,
+          "matrixStampCalls": 7160494,
+          "supportCreates": 8,
+          "supportCreateScannedSlots": 55784,
+          "supportInitialScannedSlots": 55784,
+          "supportAllocatedSlots": 66472,
+          "supportInitialCoordinates": 1508,
+          "supportStampCalls": 7158268,
+          "supportExistingCoordinates": 7157828,
+          "supportNewCoordinates": 440,
+          "supportNewUnions": 1320,
+          "supportInitialUnions": 1224,
+          "supportDynamicUnions": 96,
+          "supportSamePartitionCoordinates": 344,
+          "supportRelabeledVertices": 1768,
+          "supportInvalidations": 7,
+          "supportInvalidationCalls": 7,
+          "supportInvalidationsAnalyze": 7,
+          "supportInvalidationsStamp": 0,
+          "supportInvalidationsRun": 0,
+          "supportInvalidationsCreate": 0,
+          "supportInvalidationsStop": 0,
+          "supportInvalidationsOther": 0,
+          "domainAttempts": 46334,
+          "domainSuccesses": 46334,
+          "domainUnchangedPartition": 46326,
+          "domainChangedPartition": 8,
+          "domainAllocatedSlots": 2988,
+          "domainCopiedSlots": 7740964,
+          "luInputScannedSlots": 78216795,
+          "luPivotScannedSlots": 163610951,
+          "luUpdatedSlots": 111930149,
+          "lowerReferenceInsertions": 20656373,
+          "lowerReferenceClearedSlots": 20656373,
+          "lowerReferenceAllocatedSlots": 0,
+          "upperColumnAllocatedSlots": 0,
+          "matrixCopiedSlots": 575806004,
+          "rightSideCopiedSlots": 6887690,
+          "factorsAtUnchangedPartition": 46326,
+          "factorsAtChangedPartition": 8,
+          "factorsWithoutStructuralSupport": 0,
+          "outOfRangeTypeStamps": 72136
+        },
+        "countsSha256": "29a76388498bfc57be7a2c55f2c1d541ac18ee24bd800f45334f86c836129a84",
+        "timersMs": {
+          "analyzeMillis": 35,
+          "factorMillis": 4091.800000488758,
+          "solveMillis": 585.2999999523163,
+          "runMillis": 7272.400000035763,
+          "createMillis": 2.7999999821186066,
+          "domainMillis": 137.2999999821186,
+          "stampCircuitMillis": 6.800000011920929,
+          "maxAnalyzeMillis": 6.799999982118607,
+          "maxFactorMillis": 1,
+          "maxSolveMillis": 0.8999999761581421,
+          "maxRunMillis": 83.2000000178814,
+          "maxCreateMillis": 0.800000011920929,
+          "maxDomainMillis": 0.30000001192092896,
+          "maxStampCircuitMillis": 1.5999999940395355
+        },
+        "stampSampling": {
+          "stampSampleStride": 65536,
+          "stampSampleCount": 109,
+          "stampSampleMaxMicros": 0,
+          "stampSampleCumulativeMicros": 0,
+          "stampSampleCalibrationTotalMicros": 99.99999403953552,
+          "stampSampleCalibrationMeanMicros": 0.9174311379773901,
+          "stampSampleBinsLt1Lt4Lt16Lt64Lt256AndAbove": [
+            109,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "stampsByDumpType": [
+          {
+            "dumpType": 99,
+            "stamps": 96,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 100,
+            "stamps": 988860,
+            "newCoordinates": 48
+          },
+          {
+            "dumpType": 102,
+            "stamps": 494382,
+            "newCoordinates": 24
+          },
+          {
+            "dumpType": 103,
+            "stamps": 16,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 114,
+            "stamps": 544,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 115,
+            "stamps": 792,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 116,
+            "stamps": 494382,
+            "newCoordinates": 32
+          },
+          {
+            "dumpType": 162,
+            "stamps": 988860,
+            "newCoordinates": 72
+          },
+          {
+            "dumpType": 450,
+            "stamps": 824098,
+            "newCoordinates": 80
+          },
+          {
+            "dumpType": 451,
+            "stamps": 329588,
+            "newCoordinates": 32
+          },
+          {
+            "dumpType": 452,
+            "stamps": 1318480,
+            "newCoordinates": 88
+          },
+          {
+            "dumpType": 453,
+            "stamps": 659176,
+            "newCoordinates": 32
+          },
+          {
+            "dumpType": 454,
+            "stamps": 988828,
+            "newCoordinates": 32
+          },
+          {
+            "dumpType": 457,
+            "stamps": 256,
+            "newCoordinates": 0
+          }
+        ]
+      }
+    },
+    "08-track-profile": {
+      "cold": {
+        "counts": {
+          "clockAnomalies": 0,
+          "counterErrors": 0,
+          "analyzeCalls": 501,
+          "factorCalls": 742391,
+          "solveCalls": 742391,
+          "trialAttempts": 1350440,
+          "acceptedSteps": 608049,
+          "retrySteps": 10,
+          "runCalls": 5440,
+          "circuitStamps": 521,
+          "matrixStampCalls": 118769298,
+          "supportCreates": 521,
+          "supportCreateScannedSlots": 3595570,
+          "supportInitialScannedSlots": 3595570,
+          "supportAllocatedSlots": 4287954,
+          "supportInitialCoordinates": 97375,
+          "supportStampCalls": 118624334,
+          "supportExistingCoordinates": 118595724,
+          "supportNewCoordinates": 28610,
+          "supportNewUnions": 85417,
+          "supportInitialUnions": 78939,
+          "supportDynamicUnions": 6478,
+          "supportSamePartitionCoordinates": 22132,
+          "supportRelabeledVertices": 114240,
+          "supportInvalidations": 521,
+          "supportInvalidationCalls": 521,
+          "supportInvalidationsAnalyze": 496,
+          "supportInvalidationsStamp": 20,
+          "supportInvalidationsRun": 0,
+          "supportInvalidationsCreate": 0,
+          "supportInvalidationsStop": 0,
+          "supportInvalidationsOther": 5,
+          "domainAttempts": 742391,
+          "domainSuccesses": 742391,
+          "domainUnchangedPartition": 741870,
+          "domainChangedPartition": 521,
+          "domainAllocatedSlots": 39174,
+          "domainCopiedSlots": 124783236,
+          "luInputScannedSlots": 1272116933,
+          "luPivotScannedSlots": 2654613198,
+          "luUpdatedSlots": 1981844174,
+          "lowerReferenceInsertions": 345366723,
+          "lowerReferenceClearedSlots": 345366723,
+          "lowerReferenceAllocatedSlots": 345,
+          "upperColumnAllocatedSlots": 345,
+          "matrixCopiedSlots": 9548471508,
+          "rightSideCopiedSlots": 113518674,
+          "factorsAtUnchangedPartition": 741870,
+          "factorsAtChangedPartition": 521,
+          "factorsWithoutStructuralSupport": 0,
+          "outOfRangeTypeStamps": 1216852
+        },
+        "countsSha256": "2aac0cf04fdc9c45879eb3092c88c1efa88aa027c7719ef0cb0c90f015a68f62",
+        "timersMs": {
+          "analyzeMillis": 1893.1999999284744,
+          "factorMillis": 40733.79999315739,
+          "solveMillis": 8708.700000971556,
+          "runMillis": 88937.79999989271,
+          "createMillis": 59.40000033378601,
+          "domainMillis": 1539.3000011444092,
+          "stampCircuitMillis": 276.49999994039536,
+          "maxAnalyzeMillis": 9.199999988079071,
+          "maxFactorMillis": 5.399999976158142,
+          "maxSolveMillis": 0.7000000178813934,
+          "maxRunMillis": 111.30000001192093,
+          "maxCreateMillis": 1,
+          "maxDomainMillis": 0.3999999761581421,
+          "maxStampCircuitMillis": 2.800000011920929
+        },
+        "stampSampling": {
+          "stampSampleStride": 65536,
+          "stampSampleCount": 1812,
+          "stampSampleMaxMicros": 100.00002384185791,
+          "stampSampleCumulativeMicros": 400.0000059604645,
+          "stampSampleCalibrationTotalMicros": 599.9999642372131,
+          "stampSampleCalibrationMeanMicros": 0.3311258080779322,
+          "stampSampleBinsLt1Lt4Lt16Lt64Lt256AndAbove": [
+            1808,
+            0,
+            0,
+            0,
+            4,
+            0
+          ]
+        },
+        "stampsByDumpType": [
+          {
+            "dumpType": 99,
+            "stamps": 6252,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 100,
+            "stamps": 16635496,
+            "newCoordinates": 3146
+          },
+          {
+            "dumpType": 102,
+            "stamps": 8102640,
+            "newCoordinates": 1544
+          },
+          {
+            "dumpType": 103,
+            "stamps": 1042,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 114,
+            "stamps": 36368,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 115,
+            "stamps": 50452,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 116,
+            "stamps": 8102640,
+            "newCoordinates": 2064
+          },
+          {
+            "dumpType": 162,
+            "stamps": 16211532,
+            "newCoordinates": 4689
+          },
+          {
+            "dumpType": 450,
+            "stamps": 13512736,
+            "newCoordinates": 5210
+          },
+          {
+            "dumpType": 451,
+            "stamps": 5401760,
+            "newCoordinates": 2077
+          },
+          {
+            "dumpType": 452,
+            "stamps": 22461888,
+            "newCoordinates": 5792
+          },
+          {
+            "dumpType": 453,
+            "stamps": 10803520,
+            "newCoordinates": 2004
+          },
+          {
+            "dumpType": 454,
+            "stamps": 16209448,
+            "newCoordinates": 2084
+          },
+          {
+            "dumpType": 457,
+            "stamps": 16672,
+            "newCoordinates": 0
+          }
+        ]
+      },
+      "warm": {
+        "counts": {
+          "clockAnomalies": 0,
+          "counterErrors": 0,
+          "analyzeCalls": 8,
+          "factorCalls": 46334,
+          "solveCalls": 46334,
+          "trialAttempts": 82397,
+          "acceptedSteps": 36063,
+          "retrySteps": 0,
+          "runCalls": 288,
+          "circuitStamps": 8,
+          "matrixStampCalls": 7160494,
+          "supportCreates": 8,
+          "supportCreateScannedSlots": 55784,
+          "supportInitialScannedSlots": 55784,
+          "supportAllocatedSlots": 66472,
+          "supportInitialCoordinates": 1508,
+          "supportStampCalls": 7158268,
+          "supportExistingCoordinates": 7157828,
+          "supportNewCoordinates": 440,
+          "supportNewUnions": 1320,
+          "supportInitialUnions": 1224,
+          "supportDynamicUnions": 96,
+          "supportSamePartitionCoordinates": 344,
+          "supportRelabeledVertices": 1768,
+          "supportInvalidations": 7,
+          "supportInvalidationCalls": 7,
+          "supportInvalidationsAnalyze": 7,
+          "supportInvalidationsStamp": 0,
+          "supportInvalidationsRun": 0,
+          "supportInvalidationsCreate": 0,
+          "supportInvalidationsStop": 0,
+          "supportInvalidationsOther": 0,
+          "domainAttempts": 46334,
+          "domainSuccesses": 46334,
+          "domainUnchangedPartition": 46326,
+          "domainChangedPartition": 8,
+          "domainAllocatedSlots": 2988,
+          "domainCopiedSlots": 7740964,
+          "luInputScannedSlots": 78216795,
+          "luPivotScannedSlots": 163610951,
+          "luUpdatedSlots": 111930149,
+          "lowerReferenceInsertions": 20656373,
+          "lowerReferenceClearedSlots": 20656373,
+          "lowerReferenceAllocatedSlots": 0,
+          "upperColumnAllocatedSlots": 0,
+          "matrixCopiedSlots": 575806004,
+          "rightSideCopiedSlots": 6887690,
+          "factorsAtUnchangedPartition": 46326,
+          "factorsAtChangedPartition": 8,
+          "factorsWithoutStructuralSupport": 0,
+          "outOfRangeTypeStamps": 72136
+        },
+        "countsSha256": "29a76388498bfc57be7a2c55f2c1d541ac18ee24bd800f45334f86c836129a84",
+        "timersMs": {
+          "analyzeMillis": 34.1000000834465,
+          "factorMillis": 3680.7999998033047,
+          "solveMillis": 528.4999988973141,
+          "runMillis": 6606.600000023842,
+          "createMillis": 3.3000000417232513,
+          "domainMillis": 125.19999986886978,
+          "stampCircuitMillis": 7.200000017881393,
+          "maxAnalyzeMillis": 6.9000000059604645,
+          "maxFactorMillis": 1,
+          "maxSolveMillis": 0.699999988079071,
+          "maxRunMillis": 68.2000000178814,
+          "maxCreateMillis": 1,
+          "maxDomainMillis": 0.10000002384185791,
+          "maxStampCircuitMillis": 1.5999999940395355
+        },
+        "stampSampling": {
+          "stampSampleStride": 65536,
+          "stampSampleCount": 109,
+          "stampSampleMaxMicros": 0,
+          "stampSampleCumulativeMicros": 0,
+          "stampSampleCalibrationTotalMicros": 99.99999403953552,
+          "stampSampleCalibrationMeanMicros": 0.9174311379773901,
+          "stampSampleBinsLt1Lt4Lt16Lt64Lt256AndAbove": [
+            109,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "stampsByDumpType": [
+          {
+            "dumpType": 99,
+            "stamps": 96,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 100,
+            "stamps": 988860,
+            "newCoordinates": 48
+          },
+          {
+            "dumpType": 102,
+            "stamps": 494382,
+            "newCoordinates": 24
+          },
+          {
+            "dumpType": 103,
+            "stamps": 16,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 114,
+            "stamps": 544,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 115,
+            "stamps": 792,
+            "newCoordinates": 0
+          },
+          {
+            "dumpType": 116,
+            "stamps": 494382,
+            "newCoordinates": 32
+          },
+          {
+            "dumpType": 162,
+            "stamps": 988860,
+            "newCoordinates": 72
+          },
+          {
+            "dumpType": 450,
+            "stamps": 824098,
+            "newCoordinates": 80
+          },
+          {
+            "dumpType": 451,
+            "stamps": 329588,
+            "newCoordinates": 32
+          },
+          {
+            "dumpType": 452,
+            "stamps": 1318480,
+            "newCoordinates": 88
+          },
+          {
+            "dumpType": 453,
+            "stamps": 659176,
+            "newCoordinates": 32
+          },
+          {
+            "dumpType": 454,
+            "stamps": 988828,
+            "newCoordinates": 32
+          },
+          {
+            "dumpType": 457,
+            "stamps": 256,
+            "newCoordinates": 0
+          }
+        ]
+      }
+    }
+  },
+  "profileWorkConsistency": [
+    {
+      "left": "03-off-profile",
+      "right": "04-off-profile",
+      "allWorkCountsAndTypes": "IDENTICAL"
+    },
+    {
+      "left": "07-track-profile",
+      "right": "08-track-profile",
+      "allWorkCountsAndTypes": "IDENTICAL"
+    },
+    {
+      "left": "03-off-profile",
+      "right": "07-track-profile",
+      "nonstructuralWorkCounts": "IDENTICAL",
+      "scope": "All scalar nonstructural counts, including numeric LU scans, copies, inserts and clears"
+    }
+  ],
+  "limits": [
+    "Observed paired differences, not exact causal decomposition or confidence intervals.",
+    "Fine timers and stamp samples are quantized; no extrapolation or calibration subtraction.",
+    "Timer categories are nested and instrumentation materially changes code execution.",
+    "This single private seed does not qualify the frozen normal-player corpus."
+  ]
+}

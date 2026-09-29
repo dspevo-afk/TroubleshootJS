@@ -1,0 +1,178 @@
+{
+  "label": "04-off-profile",
+  "arm": "diagnostic",
+  "mode": "off",
+  "profile": true,
+  "seed": "10014",
+  "exitCode": 0,
+  "outerMonotonicSeconds": 145.14000000001397,
+  "wallMinusMonotonicSeconds": 0.010236845002509654,
+  "competingProcesses": [
+    {
+      "name": "ChatGPT",
+      "pid": 15748,
+      "cpuSecondsDelta": 27.859375,
+      "workingSetBytes": 1604747264
+    },
+    {
+      "name": "ChatGPT",
+      "pid": 15120,
+      "cpuSecondsDelta": 8.953125,
+      "workingSetBytes": 288014336
+    },
+    {
+      "name": "codex",
+      "pid": 15996,
+      "cpuSecondsDelta": 4.40625,
+      "workingSetBytes": 1099681792
+    },
+    {
+      "name": "ChatGPT",
+      "pid": 12776,
+      "cpuSecondsDelta": 4.359375,
+      "workingSetBytes": 373194752
+    },
+    {
+      "name": "brave",
+      "pid": 20992,
+      "cpuSecondsDelta": 0.859375,
+      "workingSetBytes": 662188032
+    },
+    {
+      "name": "ChatGPT",
+      "pid": 16324,
+      "cpuSecondsDelta": 0.59375,
+      "workingSetBytes": 353017856
+    },
+    {
+      "name": "brave",
+      "pid": 14940,
+      "cpuSecondsDelta": 0.53125,
+      "workingSetBytes": 508002304
+    },
+    {
+      "name": "ChatGPT",
+      "pid": 15760,
+      "cpuSecondsDelta": 0.53125,
+      "workingSetBytes": 130420736
+    },
+    {
+      "name": "brave",
+      "pid": 22704,
+      "cpuSecondsDelta": 0.515625,
+      "workingSetBytes": 262746112
+    },
+    {
+      "name": "ChatGPT",
+      "pid": 17136,
+      "cpuSecondsDelta": 0.28125,
+      "workingSetBytes": 246398976
+    },
+    {
+      "name": "ChatGPT",
+      "pid": 15200,
+      "cpuSecondsDelta": 0.265625,
+      "workingSetBytes": 59088896
+    },
+    {
+      "name": "CrossDeviceService",
+      "pid": 9688,
+      "cpuSecondsDelta": 0.21875,
+      "workingSetBytes": 118349824
+    },
+    {
+      "name": "brave",
+      "pid": 22772,
+      "cpuSecondsDelta": 0.1875,
+      "workingSetBytes": 114860032
+    },
+    {
+      "name": "brave",
+      "pid": 2928,
+      "cpuSecondsDelta": 0.15625,
+      "workingSetBytes": 173559808
+    },
+    {
+      "name": "codex-code-mode-host",
+      "pid": 10960,
+      "cpuSecondsDelta": 0.15625,
+      "workingSetBytes": 46276608
+    },
+    {
+      "name": "explorer",
+      "pid": 9084,
+      "cpuSecondsDelta": 0.125,
+      "workingSetBytes": 427712512
+    },
+    {
+      "name": "brave",
+      "pid": 11484,
+      "cpuSecondsDelta": 0.109375,
+      "workingSetBytes": 59781120
+    },
+    {
+      "name": "ChatGPT",
+      "pid": 18776,
+      "cpuSecondsDelta": 0.09375,
+      "workingSetBytes": 57061376
+    },
+    {
+      "name": "audiodg",
+      "pid": 23696,
+      "cpuSecondsDelta": 0.078125,
+      "workingSetBytes": 16646144
+    },
+    {
+      "name": "conhost",
+      "pid": 16004,
+      "cpuSecondsDelta": 0.078125,
+      "workingSetBytes": 7360512
+    }
+  ],
+  "hostLimits": "Nominal WMI endpoint clocks; no turbo/thermal/throttling observation; process deltas exclude exited processes.",
+  "runnerOutcome": "PASS",
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 0.9070000000065193,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "ffc8cf5f0be7aa204bdd8010de73905dec3fd65072794d1e581d489d30042f9d",
+    "afterSha256": "ffc8cf5f0be7aa204bdd8010de73905dec3fd65072794d1e581d489d30042f9d",
+    "sourceSha256Before": "284dd996cf92c356772cfd98e0bfa74946f5d3eeebec434bf48bcd906a42da4b",
+    "sourceSha256After": "284dd996cf92c356772cfd98e0bfa74946f5d3eeebec434bf48bcd906a42da4b",
+    "webSha256Before": "1d64f47bfb74bc5965b4aee99ad3957da7b8b67612211c45e961ac23b488fcb1",
+    "webSha256After": "1d64f47bfb74bc5965b4aee99ad3957da7b8b67612211c45e961ac23b488fcb1",
+    "runnerBeforeSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+    "runnerAfterSha256": "1bb267655c97e35f2869925ae91d92a56c708256305e4bfb10106a172d2748a4",
+    "fileCountBefore": 1527,
+    "fileCountAfter": 1527,
+    "seconds": 0.7339999999967404
+  },
+  "cases": [
+    {
+      "outcome": "PASS",
+      "operationSeconds": 141.67199999999139,
+      "observedState": "PASS:complete"
+    }
+  ],
+  "cold": {
+    "elapsedMs": 109654,
+    "proofElapsedMs": 77053,
+    "routingElapsedMs": 24758,
+    "totalWork": 490,
+    "hypothesisWork": 390,
+    "cleanupComplete": true
+  },
+  "warm": {
+    "elapsedMs": 31256,
+    "proofElapsedMs": 0,
+    "routingElapsedMs": 23410,
+    "totalWork": 101,
+    "hypothesisWork": 1,
+    "cleanupComplete": true
+  }
+}

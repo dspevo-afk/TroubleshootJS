@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "inventoryFiles": 336,
+  "provenanceRecords": 313,
+  "sourceOverlayFiles": 18,
+  "rawReportAudit": {
+    "reports": 14,
+    "strictCoordinatorReader": "PASS",
+    "fullNonTimingParity": "PASS",
+    "runtimeArms": [
+      "control",
+      "diagnostic"
+    ]
+  },
+  "personalPathScanFiles": 338,
+  "worktreePreservation": {
+    "desktop": {
+      "head": "e0c368855a3891acd4673e94ce9afa732390e2bf",
+      "initialFilesHashed": 96,
+      "status": "PASS"
+    },
+    "q30": {
+      "head": "838886360b63df5640841448c8f24caa61b37b60",
+      "initialFilesHashed": 172,
+      "status": "PASS"
+    }
+  },
+  "scope": "Stored measurement evidence, frozen source/runtime identities, and proof parity; no timing extrapolation."
+}

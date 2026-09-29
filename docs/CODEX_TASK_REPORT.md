@@ -1,4 +1,53 @@
-# Current checkpoint: Q30 BLOCKED / NOT ACCEPTED — tracking measurements
+# Current checkpoint: Q30 BLOCKED — support-cost evidence complete
+
+2026-09-28 local. Evidence-only continuation from source/checkpoint HEAD
+`838886360b63df5640841448c8f24caa61b37b60` on
+`codex/q30-multirail-qualification`. No production optimization is integrated;
+family ownership/layout repairs were not reopened. Normal Q30 stays disabled.
+The 90,000 ms / 640 work / 5,000 ms active limits remain frozen. No push, email,
+scale expansion, U06, U07, Q60 or later milestone.
+
+[Support-cost evidence and limits](task-evidence/Q30/support-cost-isolation-r1/README.md)
+retains all 14 actual private seed-10014 plan-4, 40-package cold/warm runs.
+Unchanged controls: 104.176/106.454 s. Comparable diagnostic tracker-off rows:
+104.878–110.717 s. Paired tracker-on minus tracker-off cold differences are
+-5.129/+2.962 s; restricted-mode differences are +4.681/+0.763 s. No comparison
+passes the predeclared repeated material-effect rule. Every cold row exceeds
+90 s; exact support time remains
+INCONCLUSIVE. Profile-on slowdowns and quantized samples cannot give a precise
+causal correction or intrinsic per-call distribution/maximum.
+
+Repeated profiles count 118,624,334 support stamps, 118,595,724 existing
+coordinates, 28,610 new coordinates, 6,478 dynamic unions and 741,870 unchanged
+partition preparations out of 742,391. Analyze/factor/solve/step counts and
+numeric LU work match tracker-off exactly. Unchanged partitions do not license
+reusing pivot-mutated row references or skipping numerical factorization.
+Accepted numeric LU scratch remains distinct from the absent production
+structural tracker; its isolated time is not established.
+
+Fresh PASS: control/final-private JDK8/GWT5, compiled A07/normal-disabled,
+14 complete proof projections with 43 strict corruptions each, independent
+metadata reader with 13 negatives, source/runtime audits and host cleanup.
+The new native test initially failed its reflection invocation (campaign exit 2);
+the test-only fix passes 73 assertions, with five unchanged passing prefix suites
+retained after input audit. Independent source/interpretation review passes with
+wording corrected. Full normal/scale acceptance NOT RUN; injected exceptional
+profiler lifecycle tests NOT RUN; visible player-flow testing NOT APPLICABLE.
+
+All 96 desktop and 172 Q30 pre-existing changed files remain byte-identical;
+the Q30 worktree retains its 26 tracked scale edits and pre-existing untracked
+source/evidence/caches. Only this report and the new packet belong to this task.
+Browser/server cleanup passed. After archival and containment/reparse/process
+checks, the two exact task directories (7,868/224 files) were removed in
+1.409/0.056 s. No task process or scratch resource remains.
+
+Next bounded work: numerical solver cost, with factorization still the largest
+measured kernel and no proven removable share. A row-preserving matrix-copy
+comparison is documented but UNRUN. Do not resume scale or later milestones.
+
+---
+
+# Historical checkpoint: Q30 tracking measurements at 8388863
 
 2026-09-28. Branch `codex/q30-multirail-qualification`, prepared from evidence
 HEAD `6e531049084b5224eb8cb923f95e46c127169d57`. Accepted production optimization

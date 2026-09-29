@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "scope": "Only the two exact task-owned directories; no process termination or other cleanup",
+  "preflightSeconds": 0.5704259,
+  "ownershipContainmentReparseChecks": "PASS",
+  "liveProcessReferences": 0,
+  "resources": [
+    {
+      "name": "TroubleshootJS-q30-support-cost-e045149241a0415dbbc12f8b4333e90c",
+      "region": "OS_TEMP",
+      "files": 7868,
+      "status": "PASS",
+      "deleteSeconds": 1.4092366
+    },
+    {
+      "name": "TroubleshootJS-q30-cost-recovery-e045149241a0415dbbc12f8b4333e90c",
+      "region": "LOCAL_APP_DATA",
+      "files": 224,
+      "status": "PASS",
+      "deleteSeconds": 0.0557318
+    }
+  ]
+}

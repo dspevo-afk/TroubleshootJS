@@ -1,0 +1,4 @@
+START 07-track-profile 2026-09-28T23:47:23.266488+00:00
+{"status": "PASS", "label": "07-track-profile", "strictCorruptions": 43, "completeNonTimingParity": "PASS"}
+{"label": "07-track-profile", "cold": {"elapsedMs": 125866, "proofElapsedMs": 90765, "routingElapsedMs": 25281, "totalWork": 490, "hypothesisWork": 390, "cleanupComplete": true}, "warm": {"elapsedMs": 34240, "proofElapsedMs": 0, "routingElapsedMs": 24667, "totalWork": 101, "hypothesisWork": 1, "cleanupComplete": true}, "cleanup": {"status": "PASS", "seconds": 1.1099999999860302, "serverStopped": true, "ownedSurvivors": [], "errors": []}, "status": "PASS"}
+SEQUENCE COMPLETE 7-7

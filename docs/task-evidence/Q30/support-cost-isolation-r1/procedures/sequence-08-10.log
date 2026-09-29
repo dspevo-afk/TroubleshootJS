@@ -1,0 +1,10 @@
+START 08-track-profile 2026-09-28T23:50:30.868413+00:00
+{"status": "PASS", "label": "08-track-profile", "strictCorruptions": 43, "completeNonTimingParity": "PASS"}
+{"label": "08-track-profile", "cold": {"elapsedMs": 122832, "proofElapsedMs": 89874, "routingElapsedMs": 24617, "totalWork": 490, "hypothesisWork": 390, "cleanupComplete": true}, "warm": {"elapsedMs": 33943, "proofElapsedMs": 0, "routingElapsedMs": 24874, "totalWork": 101, "hypothesisWork": 1, "cleanupComplete": true}, "cleanup": {"status": "PASS", "seconds": 0.889999999984866, "serverStopped": true, "ownedSurvivors": [], "errors": []}, "status": "PASS"}
+START 09-track 2026-09-28T23:53:18.787925+00:00
+{"status": "PASS", "label": "09-track", "strictCorruptions": 43, "completeNonTimingParity": "PASS"}
+{"label": "09-track", "cold": {"elapsedMs": 112453, "proofElapsedMs": 80196, "routingElapsedMs": 24920, "totalWork": 490, "hypothesisWork": 390, "cleanupComplete": true}, "warm": {"elapsedMs": 31419, "proofElapsedMs": 0, "routingElapsedMs": 24702, "totalWork": 101, "hypothesisWork": 1, "cleanupComplete": true}, "cleanup": {"status": "PASS", "seconds": 1.187999999994645, "serverStopped": true, "ownedSurvivors": [], "errors": []}, "status": "PASS"}
+START 10-off 2026-09-28T23:55:54.149599+00:00
+{"status": "PASS", "label": "10-off", "strictCorruptions": 43, "completeNonTimingParity": "PASS"}
+{"label": "10-off", "cold": {"elapsedMs": 109491, "proofElapsedMs": 77056, "routingElapsedMs": 25691, "totalWork": 490, "hypothesisWork": 390, "cleanupComplete": true}, "warm": {"elapsedMs": 31876, "proofElapsedMs": 0, "routingElapsedMs": 25146, "totalWork": 101, "hypothesisWork": 1, "cleanupComplete": true}, "cleanup": {"status": "PASS", "seconds": 1.1719999999913853, "serverStopped": true, "ownedSurvivors": [], "errors": []}, "status": "PASS"}
+SEQUENCE COMPLETE 8-10

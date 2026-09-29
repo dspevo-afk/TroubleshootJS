@@ -1,0 +1,24 @@
+{
+  "before": {
+    "utc": "2026-09-29T00:01:48.2844129Z",
+    "processors": [
+      {
+        "Name": "AMD Ryzen 7 7700 8-Core Processor              ",
+        "CurrentClockSpeed": 3801,
+        "MaxClockSpeed": 3801,
+        "LoadPercentage": 7
+      }
+    ]
+  },
+  "after": {
+    "utc": "2026-09-29T00:04:19.5867043Z",
+    "processors": [
+      {
+        "Name": "AMD Ryzen 7 7700 8-Core Processor              ",
+        "CurrentClockSpeed": 3801,
+        "MaxClockSpeed": 3801,
+        "LoadPercentage": 5
+      }
+    ]
+  }
+}

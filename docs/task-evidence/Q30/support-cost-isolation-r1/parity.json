@@ -1,0 +1,133 @@
+{
+  "rows": [
+    {
+      "label": "01-control",
+      "rawReportSha256": "efaa4e577c4f68fa45271dd2edc27dc832748d3e170a2492a37800cba1dbabfa",
+      "projectionSha256": "35931ba11ba14df558eeb0353263fd99f8d048308a8f4cd6e8b7775e281ef848",
+      "removedMetadata": []
+    },
+    {
+      "label": "02-off",
+      "rawReportSha256": "520eeb4f19e8f44dc74dc4a78a5e5875c0b7787ba91c75e673f7d713e7ebdc49",
+      "projectionSha256": "35931ba11ba14df558eeb0353263fd99f8d048308a8f4cd6e8b7775e281ef848",
+      "removedMetadata": [
+        "supportCostRequested",
+        "supportCostMode"
+      ]
+    },
+    {
+      "label": "03-off-profile",
+      "rawReportSha256": "d829ff689a0cce10b9da3a944e5958670fe8b35b235cdf748008f28d6745b57b",
+      "projectionSha256": "35931ba11ba14df558eeb0353263fd99f8d048308a8f4cd6e8b7775e281ef848",
+      "removedMetadata": [
+        "supportCostRequested",
+        "supportCostMode",
+        "cold.supportCost",
+        "warm.supportCost"
+      ]
+    },
+    {
+      "label": "04-off-profile",
+      "rawReportSha256": "d12e4194cb1b8b5cdb5126aecb3a7a211f60b93a3e28256306af837fdb551c8a",
+      "projectionSha256": "35931ba11ba14df558eeb0353263fd99f8d048308a8f4cd6e8b7775e281ef848",
+      "removedMetadata": [
+        "supportCostRequested",
+        "supportCostMode",
+        "cold.supportCost",
+        "warm.supportCost"
+      ]
+    },
+    {
+      "label": "05-off",
+      "rawReportSha256": "14d0c1c2db1560d77ad8c6e06a4834b34a5926d7614e0223dd51b042cd8c75c7",
+      "projectionSha256": "35931ba11ba14df558eeb0353263fd99f8d048308a8f4cd6e8b7775e281ef848",
+      "removedMetadata": [
+        "supportCostRequested",
+        "supportCostMode"
+      ]
+    },
+    {
+      "label": "06-track",
+      "rawReportSha256": "19b94ab4e6c8399348401e63626ce89a2d9862076eeeebe2164f7306d4a8f8a8",
+      "projectionSha256": "35931ba11ba14df558eeb0353263fd99f8d048308a8f4cd6e8b7775e281ef848",
+      "removedMetadata": [
+        "supportCostRequested",
+        "supportCostMode"
+      ]
+    },
+    {
+      "label": "07-track-profile",
+      "rawReportSha256": "100f73c6865ecf27e5daefea60e82640533e3adf21ec5dbb1cce6cf3569c7bd4",
+      "projectionSha256": "35931ba11ba14df558eeb0353263fd99f8d048308a8f4cd6e8b7775e281ef848",
+      "removedMetadata": [
+        "supportCostRequested",
+        "supportCostMode",
+        "cold.supportCost",
+        "warm.supportCost"
+      ]
+    },
+    {
+      "label": "08-track-profile",
+      "rawReportSha256": "fb408fcc9763d93e99bda2a4953bf33f4d8d9f138905d1d1663b8deebeeea571",
+      "projectionSha256": "35931ba11ba14df558eeb0353263fd99f8d048308a8f4cd6e8b7775e281ef848",
+      "removedMetadata": [
+        "supportCostRequested",
+        "supportCostMode",
+        "cold.supportCost",
+        "warm.supportCost"
+      ]
+    },
+    {
+      "label": "09-track",
+      "rawReportSha256": "8ff332dbea40c313e1eff10851190f2e3a17c94995f83fced3fa03716f60b53b",
+      "projectionSha256": "35931ba11ba14df558eeb0353263fd99f8d048308a8f4cd6e8b7775e281ef848",
+      "removedMetadata": [
+        "supportCostRequested",
+        "supportCostMode"
+      ]
+    },
+    {
+      "label": "10-off",
+      "rawReportSha256": "5acc80eb08059dbe6046fa675e42610d354fa01fb6b701bea2328b770ff39bbe",
+      "projectionSha256": "35931ba11ba14df558eeb0353263fd99f8d048308a8f4cd6e8b7775e281ef848",
+      "removedMetadata": [
+        "supportCostRequested",
+        "supportCostMode"
+      ]
+    },
+    {
+      "label": "11-restricted",
+      "rawReportSha256": "c4d5f517c83380aed2486a9c63b94c146c168d723ab8d59a527c8bbc5dc35343",
+      "projectionSha256": "35931ba11ba14df558eeb0353263fd99f8d048308a8f4cd6e8b7775e281ef848",
+      "removedMetadata": [
+        "supportCostRequested",
+        "supportCostMode"
+      ]
+    },
+    {
+      "label": "12-restricted",
+      "rawReportSha256": "fa68cade0ed54c6453761fc7e817622187a73a35cd3c8dbf7308c448a715a689",
+      "projectionSha256": "35931ba11ba14df558eeb0353263fd99f8d048308a8f4cd6e8b7775e281ef848",
+      "removedMetadata": [
+        "supportCostRequested",
+        "supportCostMode"
+      ]
+    },
+    {
+      "label": "13-off",
+      "rawReportSha256": "d34536c97902e9cbccef0660d55d5479a21a6684b3c9a4aec1e673818a50e8f2",
+      "projectionSha256": "35931ba11ba14df558eeb0353263fd99f8d048308a8f4cd6e8b7775e281ef848",
+      "removedMetadata": [
+        "supportCostRequested",
+        "supportCostMode"
+      ]
+    },
+    {
+      "label": "14-control",
+      "rawReportSha256": "9f86d5adc3838c13ae1823e8bc8a411d14c4a9507fcbb10dbfad772e16c156e5",
+      "projectionSha256": "35931ba11ba14df558eeb0353263fd99f8d048308a8f4cd6e8b7775e281ef848",
+      "removedMetadata": []
+    }
+  ],
+  "scope": "Complete proof after named metadata and declared timing fields only"
+}

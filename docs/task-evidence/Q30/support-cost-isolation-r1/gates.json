@@ -1,0 +1,44 @@
+{
+  "scope": "Focused gates on unchanged control and private final diagnostic fixture; no normal/scale acceptance claim",
+  "java": "Temurin JDK8u502-b07",
+  "buildInvocation": "scripts/build.ps1 -JavaHome <JDK8>",
+  "nativeInvocation": "scripts/verify-current-contracts.ps1 -JavaHome <JDK8> -Suite <selected suites> -ReceiptOutputPath <task receipt>",
+  "controlBuild": {"status":"PASS", "gwtPermutations":5, "compileSeconds":87.085, "linkSeconds":2.118, "hostSeconds":91.6574246},
+  "finalDiagnosticBuild": {"status":"PASS", "revision":"r3", "gwtPermutations":5, "compileSeconds":87.980, "linkSeconds":1.401, "hostSeconds":91.4648173},
+  "r2NativeCampaign": {
+    "status":"FAIL", "exitCode":2, "hostSecondsIncludingCleanup":47.195136,
+    "cleanup":"PASS; native task scratch/classes removed; no separate cleanup duration",
+    "suites":[
+      {"name":"Q30TemporalWorkContractTest", "status":"PASS", "assertions":161},
+      {"name":"Q30GenerationMeasurementBudgetContractTest", "status":"PASS", "assertions":25},
+      {"name":"A07ExecutionContractTest", "status":"PASS", "assertions":271699},
+      {"name":"LuStructuralSupportContractTest", "status":"PASS", "assertions":1661},
+      {"name":"LuStructuralFactorizationContractTest", "status":"PASS", "assertions":2148},
+      {"name":"Q30SupportCostDiagnosticContractTest", "status":"FAIL", "reason":"Test called the independent originalFactor oracle with the wrong number of reflection arguments"}
+    ]
+  },
+  "r3NativeFocused": {
+    "status":"PASS", "exitCode":0, "hostSecondsIncludingCleanup":34.286177,
+    "suite":"Q30SupportCostDiagnosticContractTest", "assertions":73,
+    "correction":"Pass the matrix size to the independent originalFactor oracle; no electrical or diagnostic runtime source changed",
+    "reuseBoundary":"r2 to r3 changes only this new test file. The five prior passing suites consumed unchanged inputs; their passing results are retained, not presented as a passing r2 campaign.",
+    "cleanup":"PASS; native task scratch/classes removed; no separate cleanup duration"
+  },
+  "compiledCanaries": {
+    "control":{"status":"PASS", "a07Seconds":1.281, "normalDisabledSeconds":0.485},
+    "diagnostic":{"status":"PASS", "a07Seconds":1.313, "normalDisabledSeconds":0.484},
+    "a07Reader":"Maintained Test-A07Report passed plus three corruptions rejected on each build",
+    "cleanup":"PASS; separate durations in archived host result receipts"
+  },
+  "actualMeasurements":"Per-row raw reports, host outcomes, source/runtime audits and separately timed cleanup are authoritative; final aggregation follows the frozen plan",
+  "strictProofReader":"43 corruptions rejected per actual row; full declared-non-timing projections must all equal the unchanged opening control",
+  "metadataReader":"Independent author; all diagnostic reports checked; 13 synthetic negative mutations rejected per invocation",
+  "fullNormalAndScaleMatrix":"NOT RUN while the known timing gate fails",
+  "playerFlowScreenshots":"NOT APPLICABLE; no visible product change",
+  "injectedProfilerFailureCancellationSuccessorTests":"NOT RUN; source lifecycle review and successful actual cleanup only",
+  "minorDevelopmentFindings":[
+    "Before r2 gates, static review corrected a long/double counter assignment and a missing factor reflection signature/argument list; ungated r1 source retained",
+    "Reader initially required supportPartitionEpoch, which remains internal and is not emitted; final reader checks emitted counters and union conservation without changing reports",
+    "Parity receipt initially omitted OFF metadata field names even though the projection removed them; receipt bookkeeping corrected and existing artifacts revalidated"
+  ]
+}
