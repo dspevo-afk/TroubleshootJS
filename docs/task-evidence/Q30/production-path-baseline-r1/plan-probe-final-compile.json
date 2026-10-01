@@ -1,0 +1,27 @@
+{
+  "FilePath": "<jdk8>\\bin\\javac.exe",
+  "Arguments": [
+    "-source",
+    "7",
+    "-target",
+    "7",
+    "-encoding",
+    "UTF-8",
+    "-classpath",
+    "<clean-export>\\.tools\\gwt-2.7.0\\gwt-user-2.7.0.jar;<clean-export>\\.tools\\gwt-2.7.0\\gwt-dev-2.7.0.jar",
+    "-sourcepath",
+    "<task-root>\\plan-audit\\empty-sourcepath",
+    "-d",
+    "<task-root>\\plan-audit\\classes-final",
+    "@<task-root>\\plan-audit\\sources.txt"
+  ],
+  "ProcessId": 19776,
+  "ProcessStartTicks": 639264586038732829,
+  "ExitCode": 0,
+  "Stdout": "",
+  "Stderr": "warning: [options] bootstrap class path not set in conjunction with -source 1.7\r\nNote: Some input files use unchecked or unsafe operations.\r\nNote: Recompile with -Xlint:unchecked for details.\r\n1 warning\r\n",
+  "StdoutLog": "<os-temp>\\TroubleshootJS\\verify-process-ef31b5d42258405692e677439e7801ca\\stdout.log",
+  "StderrLog": "<os-temp>\\TroubleshootJS\\verify-process-ef31b5d42258405692e677439e7801ca\\stderr.log",
+  "ProcessRoot": "<os-temp>\\TroubleshootJS\\verify-process-ef31b5d42258405692e677439e7801ca",
+  "TerminationProven": true
+}

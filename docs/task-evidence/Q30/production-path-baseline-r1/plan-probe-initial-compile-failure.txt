@@ -1,0 +1,503 @@
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+<clean-export>\src\com\lushprojects\circuitjs1\client\CircuitElm.java:29: error: cannot find symbol
+public abstract class CircuitElm implements Editable {
+                                            ^
+  symbol: class Editable
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:51: error: cannot find symbol
+    private final Vector<PcbRotation> allowedRotations;
+                         ^
+  symbol:   class PcbRotation
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:52: error: cannot find symbol
+    private final Vector<PcbBoardSide> allowedMountingSides;
+                         ^
+  symbol:   class PcbBoardSide
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:83: error: cannot find symbol
+            GeometryVariantSelection geometryVariantSelection, Vector<PcbRotation> allowedRotations,
+                                                                      ^
+  symbol:   class PcbRotation
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:84: error: cannot find symbol
+            Vector<PcbBoardSide> allowedMountingSides) {
+                   ^
+  symbol:   class PcbBoardSide
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:95: error: cannot find symbol
+            Vector<PcbRotation> allowedRotations, Vector<PcbBoardSide> allowedMountingSides) {
+                   ^
+  symbol:   class PcbRotation
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:95: error: cannot find symbol
+            Vector<PcbRotation> allowedRotations, Vector<PcbBoardSide> allowedMountingSides) {
+                                                         ^
+  symbol:   class PcbBoardSide
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:211: error: cannot find symbol
+    Vector<PcbRotation> getAllowedRotations() { return new Vector<PcbRotation>(allowedRotations); }
+           ^
+  symbol:   class PcbRotation
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:212: error: cannot find symbol
+    Vector<PcbBoardSide> getAllowedMountingSides() {
+           ^
+  symbol:   class PcbBoardSide
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:215: error: cannot find symbol
+    boolean supportsPose(PcbPackagePose pose) {
+                         ^
+  symbol:   class PcbPackagePose
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:309: error: cannot find symbol
+    private static Vector<PcbRotation> singletonRotations() {
+                          ^
+  symbol:   class PcbRotation
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:315: error: cannot find symbol
+    private static Vector<PcbBoardSide> singletonMountingSides() {
+                          ^
+  symbol:   class PcbBoardSide
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:321: error: cannot find symbol
+    private static Vector<PcbRotation> copyUniqueRotations(Vector<PcbRotation> source) {
+                                                                  ^
+  symbol:   class PcbRotation
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:321: error: cannot find symbol
+    private static Vector<PcbRotation> copyUniqueRotations(Vector<PcbRotation> source) {
+                          ^
+  symbol:   class PcbRotation
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:331: error: cannot find symbol
+    private static Vector<PcbBoardSide> copyUniqueMountingSides(Vector<PcbBoardSide> source) {
+                                                                       ^
+  symbol:   class PcbBoardSide
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:331: error: cannot find symbol
+    private static Vector<PcbBoardSide> copyUniqueMountingSides(Vector<PcbBoardSide> source) {
+                          ^
+  symbol:   class PcbBoardSide
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackageGeometry.java:138: error: cannot find symbol
+    Placement placedAt(PcbPackagePose pose) { return new Placement(this, pose); }
+                       ^
+  symbol:   class PcbPackagePose
+  location: class PhysicalPackageGeometry
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbCopperLayer.java:7: error: cannot find symbol
+    static PcbCopperLayer forFace(PcbBoardSide face) {
+                                  ^
+  symbol:   class PcbBoardSide
+  location: class PcbCopperLayer
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbCopperLayer.java:12: error: cannot find symbol
+    PcbBoardSide getFace() {
+    ^
+  symbol:   class PcbBoardSide
+  location: class PcbCopperLayer
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackageGeometry.java:166: error: cannot find symbol
+        private final PcbPackagePose pose;
+                      ^
+  symbol:   class PcbPackagePose
+  location: class Placement
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackageGeometry.java:168: error: cannot find symbol
+        private Placement(PhysicalPackageGeometry source, PcbPackagePose pose) {
+                                                          ^
+  symbol:   class PcbPackagePose
+  location: class Placement
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackageGeometry.java:289: error: cannot find symbol
+        PcbPackagePose getPose() { return pose; }
+        ^
+  symbol:   class PcbPackagePose
+  location: class Placement
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbWorkbenchRenderer.java:15: error: cannot find symbol
+    private PcbBoardSide viewingFace = PcbBoardSide.TOP;
+            ^
+  symbol:   class PcbBoardSide
+  location: class PcbWorkbenchRenderer
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbWorkbenchRenderer.java:25: error: cannot find symbol
+    PcbBoardSide getViewingFace() { return viewingFace; }
+    ^
+  symbol:   class PcbBoardSide
+  location: class PcbWorkbenchRenderer
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbWorkbenchRenderer.java:26: error: cannot find symbol
+    void setViewingFace(PcbBoardSide face) {
+                        ^
+  symbol:   class PcbBoardSide
+  location: class PcbWorkbenchRenderer
+<clean-export>\src\com\lushprojects\circuitjs1\client\GeneratedDiagnosticSolvabilityEvidence.java:36: error: cannot find symbol
+    private final GeneratedDiagnosticRepairSemantics repairSemantics;
+                  ^
+  symbol:   class GeneratedDiagnosticRepairSemantics
+  location: class GeneratedDiagnosticSolvabilityEvidence
+<clean-export>\src\com\lushprojects\circuitjs1\client\GenerationRequest.java:260: error: cannot find symbol
+                PhysicalConstructionMetadata initialMetadata) {
+                ^
+  symbol:   class PhysicalConstructionMetadata
+  location: class Prepared
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbViewport.java:9: error: cannot find symbol
+    private PcbBoardSide face = PcbBoardSide.TOP;
+            ^
+  symbol:   class PcbBoardSide
+  location: class PcbViewport
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbViewport.java:90: error: cannot find symbol
+    PcbBoardSide getFace() { return face; }
+    ^
+  symbol:   class PcbBoardSide
+  location: class PcbViewport
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbViewport.java:91: error: cannot find symbol
+    void setFace(PcbBoardSide value) {
+                 ^
+  symbol:   class PcbBoardSide
+  location: class PcbViewport
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbCopperViewCache.java:33: error: cannot find symbol
+    private PcbBoardSide face;
+            ^
+  symbol:   class PcbBoardSide
+  location: class PcbCopperViewCache
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbCopperViewCache.java:39: error: cannot find symbol
+            PcbBoardSide side,int policyVersion) {
+            ^
+  symbol:   class PcbBoardSide
+  location: class PcbCopperViewCache
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbCopperViewCache.java:54: error: cannot find symbol
+    Entry get(PcbConductorGraph.Snapshot copper,PcbViewport.Transform view,PcbBoardSide side,int version,String id) {
+                                                                           ^
+  symbol:   class PcbBoardSide
+  location: class PcbCopperViewCache
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbPadPlacement.java:11: error: cannot find symbol
+    private final PcbBoardSide mountingSide;
+                  ^
+  symbol:   class PcbBoardSide
+  location: class PcbPadPlacement
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbPadPlacement.java:24: error: cannot find symbol
+            PcbTerminalAttachment attachment, PcbBoardSide mountingSide) {
+                                              ^
+  symbol:   class PcbBoardSide
+  location: class PcbPadPlacement
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbPadPlacement.java:31: error: cannot find symbol
+            PcbTerminalAttachment attachment, PcbBoardSide mountingSide,
+                                              ^
+  symbol:   class PcbBoardSide
+  location: class PcbPadPlacement
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbPadPlacement.java:69: error: cannot find symbol
+    PcbBoardSide getMountingSide() { return mountingSide; }
+    ^
+  symbol:   class PcbBoardSide
+  location: class PcbPadPlacement
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbComponentPlacement.java:12: error: cannot find symbol
+    private final PcbPackagePose pose;
+                  ^
+  symbol:   class PcbPackagePose
+  location: class PcbComponentPlacement
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbComponentPlacement.java:29: error: cannot find symbol
+    private PcbComponentPlacement(String componentId, PcbPackagePose pose, int width, int height,
+                                                      ^
+  symbol:   class PcbPackagePose
+  location: class PcbComponentPlacement
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbComponentPlacement.java:115: error: cannot find symbol
+    static PcbComponentPlacement fromPhysicalGeometry(String componentId, PcbPackagePose pose,
+                                                                          ^
+  symbol:   class PcbPackagePose
+  location: class PcbComponentPlacement
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbComponentPlacement.java:133: error: cannot find symbol
+    PcbPackagePose getPose() { return pose; }
+    ^
+  symbol:   class PcbPackagePose
+  location: class PcbComponentPlacement
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbComponentPlacement.java:134: error: cannot find symbol
+    PcbRotation getRotation() { return pose.getRotation(); }
+    ^
+  symbol:   class PcbRotation
+  location: class PcbComponentPlacement
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbComponentPlacement.java:135: error: cannot find symbol
+    PcbBoardSide getMountingSide() { return pose.getMountingSide(); }
+    ^
+  symbol:   class PcbBoardSide
+  location: class PcbComponentPlacement
+<clean-export>\src\com\lushprojects\circuitjs1\client\WorkbenchPhysicalSceneSource.java:20: error: cannot find symbol
+    WorkbenchPhysicalScene capture(PcbBoardSide face, int trayPage) {
+                                   ^
+  symbol:   class PcbBoardSide
+  location: class WorkbenchPhysicalSceneSource
+<clean-export>\src\com\lushprojects\circuitjs1\client\WorkbenchPhysicalScene.java:74: error: cannot find symbol
+    final PcbBoardSide face;
+          ^
+  symbol:   class PcbBoardSide
+  location: class WorkbenchPhysicalScene
+<clean-export>\src\com\lushprojects\circuitjs1\client\WorkbenchPhysicalScene.java:81: error: cannot find symbol
+            PcbBoardSide face, PcbConductorGraph.Snapshot copper, List<Pad> pads,
+            ^
+  symbol:   class PcbBoardSide
+  location: class WorkbenchPhysicalScene
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbConductorGraph.java:78: error: cannot find symbol
+        boolean canProbe(PcbBoardSide face) { return PcbCopperAccess.canProbe(layer, exposure, face); }
+                         ^
+  symbol:   class PcbBoardSide
+  location: class Surface
+<clean-export>\src\com\lushprojects\circuitjs1\client\BoundedGeneratedBoardAssembler.java:172: error: cannot find symbol
+            PhysicalConstructionMetadata initialMetadata) {
+            ^
+  symbol:   class PhysicalConstructionMetadata
+  location: class BoundedGeneratedBoardAssembler
+<clean-export>\src\com\lushprojects\circuitjs1\client\BoundedGeneratedBoardAssembler.java:242: error: cannot find symbol
+            PhysicalConstructionMetadata initialMetadata) {
+            ^
+  symbol:   class PhysicalConstructionMetadata
+  location: class BoundedGeneratedBoardAssembler
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbViewport.java:17: error: cannot find symbol
+        private final PcbBoardSide face;
+                      ^
+  symbol:   class PcbBoardSide
+  location: class State
+<clean-export>\src\com\lushprojects\circuitjs1\client\WorkbenchLiftedLeadAppearance.java:36: error: cannot find symbol
+            PcbPackagePose pose, int terminal, Iterable<Rectangle> padKeepouts,
+            ^
+  symbol:   class PcbPackagePose
+  location: class WorkbenchLiftedLeadAppearance
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbCopperAccess.java:21: error: cannot find symbol
+    static boolean canProbe(PcbPadPlacement pad, PcbBoardSide face) {
+                                                 ^
+  symbol:   class PcbBoardSide
+  location: class PcbCopperAccess
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbCopperAccess.java:26: error: cannot find symbol
+    static boolean canProbe(PcbCopperLayer layer, Exposure exposure, PcbBoardSide face) {
+                                                                     ^
+  symbol:   class PcbBoardSide
+  location: class PcbCopperAccess
+<clean-export>\src\com\lushprojects\circuitjs1\client\WorkbenchPhysicalScene.java:19: error: cannot find symbol
+        final PcbBoardSide mountingSide;
+              ^
+  symbol:   class PcbBoardSide
+  location: class Pad
+<clean-export>\src\com\lushprojects\circuitjs1\client\WorkbenchPhysicalScene.java:26: error: cannot find symbol
+        boolean accessible(PcbBoardSide face) {
+                           ^
+  symbol:   class PcbBoardSide
+  location: class Pad
+<clean-export>\src\com\lushprojects\circuitjs1\client\WorkbenchPhysicalScene.java:53: error: cannot find symbol
+        final PcbBoardSide side;
+              ^
+  symbol:   class PcbBoardSide
+  location: class Part
+<clean-export>\src\com\lushprojects\circuitjs1\client\WorkbenchPhysicalScene.java:54: error: cannot find symbol
+        final PcbRotation rotation;
+              ^
+  symbol:   class PcbRotation
+  location: class Part
+<clean-export>\src\com\lushprojects\circuitjs1\client\WorkbenchPhysicalScene.java:62: error: cannot find symbol
+                PcbBoardSide side, PcbRotation rotation, int poseX, int poseY, Rectangle body,
+                ^
+  symbol:   class PcbBoardSide
+  location: class Part
+<clean-export>\src\com\lushprojects\circuitjs1\client\WorkbenchPhysicalScene.java:62: error: cannot find symbol
+                PcbBoardSide side, PcbRotation rotation, int poseX, int poseY, Rectangle body,
+                                   ^
+  symbol:   class PcbRotation
+  location: class Part
+<clean-export>\src\com\lushprojects\circuitjs1\client\WorkbenchPhysicalScene.java:44: error: cannot find symbol
+        final PcbBoardSide side;
+              ^
+  symbol:   class PcbBoardSide
+  location: class Slot
+<clean-export>\src\com\lushprojects\circuitjs1\client\BoundedGeneratedBoardAssembler.java:127: error: cannot find symbol
+        private final PhysicalConstructionMetadata initialPhysicalMetadata;
+                      ^
+  symbol:   class PhysicalConstructionMetadata
+  location: class LayoutSession
+<clean-export>\src\com\lushprojects\circuitjs1\client\BoundedGeneratedBoardAssembler.java:153: error: cannot find symbol
+        PhysicalConstructionMetadata initialMetadata() {
+        ^
+  symbol:   class PhysicalConstructionMetadata
+  location: class LayoutSession
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbFootprint.java:59: error: cannot find symbol
+    static PcbFootprint fromPhysicalPackage(BoardComponent component, PcbPackagePose pose,
+                                                                      ^
+  symbol:   class PcbPackagePose
+  location: class PcbFootprint
+<clean-export>\src\com\lushprojects\circuitjs1\client\BoundedGeneratedBoardAssembler.java:463: error: cannot find symbol
+        private PhysicalConstructionMetadata physicalMetadata;
+                ^
+  symbol:   class PhysicalConstructionMetadata
+  location: class Context
+<clean-export>\src\com\lushprojects\circuitjs1\client\BoundedGeneratedBoardAssembler.java:470: error: cannot find symbol
+        private PhysicalMaterializationReceipt physicalReceipt;
+                ^
+  symbol:   class PhysicalMaterializationReceipt
+  location: class Context
+<clean-export>\src\com\lushprojects\circuitjs1\client\BoundedGeneratedBoardAssembler.java:481: error: cannot find symbol
+        private final PhysicalConstructionMetadata initialPhysicalMetadata;
+                      ^
+  symbol:   class PhysicalConstructionMetadata
+  location: class Context
+<clean-export>\src\com\lushprojects\circuitjs1\client\BoundedGeneratedBoardAssembler.java:487: error: cannot find symbol
+                PhysicalConstructionMetadata initialMetadata) {
+                ^
+  symbol:   class PhysicalConstructionMetadata
+  location: class Context
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackages.java:123: error: cannot find symbol
+    private static Vector<PcbRotation> allCardinalRotations() {
+                          ^
+  symbol:   class PcbRotation
+  location: class PhysicalPackages
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackages.java:130: error: cannot find symbol
+    private static Vector<PcbBoardSide> bothBoardSides() {
+                          ^
+  symbol:   class PcbBoardSide
+  location: class PhysicalPackages
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:211: error: cannot find symbol
+    Vector<PcbRotation> getAllowedRotations() { return new Vector<PcbRotation>(allowedRotations); }
+                                                                  ^
+  symbol:   class PcbRotation
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:213: error: cannot find symbol
+        return new Vector<PcbBoardSide>(allowedMountingSides);
+                          ^
+  symbol:   class PcbBoardSide
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:310: error: cannot find symbol
+        Vector<PcbRotation> result = new Vector<PcbRotation>();
+               ^
+  symbol:   class PcbRotation
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:310: error: cannot find symbol
+        Vector<PcbRotation> result = new Vector<PcbRotation>();
+                                                ^
+  symbol:   class PcbRotation
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:311: error: cannot find symbol
+        result.add(PcbRotation.DEG_0);
+                   ^
+  symbol:   variable PcbRotation
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:316: error: cannot find symbol
+        Vector<PcbBoardSide> result = new Vector<PcbBoardSide>();
+               ^
+  symbol:   class PcbBoardSide
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:316: error: cannot find symbol
+        Vector<PcbBoardSide> result = new Vector<PcbBoardSide>();
+                                                 ^
+  symbol:   class PcbBoardSide
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:317: error: cannot find symbol
+        result.add(PcbBoardSide.TOP);
+                   ^
+  symbol:   variable PcbBoardSide
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:322: error: cannot find symbol
+        Vector<PcbRotation> result = new Vector<PcbRotation>();
+               ^
+  symbol:   class PcbRotation
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:322: error: cannot find symbol
+        Vector<PcbRotation> result = new Vector<PcbRotation>();
+                                                ^
+  symbol:   class PcbRotation
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:323: error: cannot find symbol
+        for (PcbRotation value : source) {
+             ^
+  symbol:   class PcbRotation
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:332: error: cannot find symbol
+        Vector<PcbBoardSide> result = new Vector<PcbBoardSide>();
+               ^
+  symbol:   class PcbBoardSide
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:332: error: cannot find symbol
+        Vector<PcbBoardSide> result = new Vector<PcbBoardSide>();
+                                                 ^
+  symbol:   class PcbBoardSide
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackage.java:333: error: cannot find symbol
+        for (PcbBoardSide value : source) {
+             ^
+  symbol:   class PcbBoardSide
+  location: class PhysicalPackage
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackageGeometry.java:65: error: cannot find symbol
+        PcbCoordinateSystem.requireLocalDimensions(width, height);
+        ^
+  symbol:   variable PcbCoordinateSystem
+  location: class PhysicalPackageGeometry
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackageGeometry.java:137: error: cannot find symbol
+    Placement placedAt(int x, int y) { return new Placement(this, PcbPackagePose.top(x, y)); }
+                                                                  ^
+  symbol:   variable PcbPackagePose
+  location: class PhysicalPackageGeometry
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackageGeometry.java:180: error: cannot find symbol
+                PcbCoordinateSystem.requireBoardCoordinate((long)pad.x +
+                ^
+  symbol:   variable PcbCoordinateSystem
+  location: class Placement
+<clean-export>\src\com\lushprojects\circuitjs1\client\PhysicalPackageGeometry.java:182: error: cannot find symbol
+                PcbCoordinateSystem.requireBoardCoordinate((long)pad.y +
+                ^
+  symbol:   variable PcbCoordinateSystem
+  location: class Placement
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbCopperLayer.java:9: error: cannot find symbol
+        return face == PcbBoardSide.TOP ? TOP : BOTTOM;
+                       ^
+  symbol:   variable PcbBoardSide
+  location: class PcbCopperLayer
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbCopperLayer.java:13: error: cannot find symbol
+        return this == TOP ? PcbBoardSide.TOP : PcbBoardSide.BOTTOM;
+                             ^
+  symbol:   variable PcbBoardSide
+  location: class PcbCopperLayer
+<clean-export>\src\com\lushprojects\circuitjs1\client\PcbCopperLayer.java:13: error: cannot find symbol
+        return this == TOP ? PcbBoardSide.TOP : PcbBoardSide.BOTTOM;
+                                                ^
+  symbol:   variable PcbBoardSide
+  location: class PcbCopperLayer
+<clean-export>\src\com\lushprojects\circuitjs1\client\CirSim.java:3738: error: incompatible types: CircuitElm cannot be converted to Editable
+                doEdit(menuElm);
+                       ^
+<clean-export>\src\com\lushprojects\circuitjs1\client\P07TwoLayerDeveloperVerifier.java:132: error: cannot find symbol
+    private static void target(StringBuilder json,String kind,PcbBoardSide face,Point p,double volts) {
+                                                              ^
+  symbol:   class PcbBoardSide
+  location: class P07TwoLayerDeveloperVerifier
+<clean-export>\src\com\lushprojects\circuitjs1\client\Rb30DecisionService.java:12: error: cannot find symbol
+    private final E04DecisionControlSlot slot;
+                  ^
+  symbol:   class E04DecisionControlSlot
+  location: class Rb30DecisionService
+<clean-export>\src\com\lushprojects\circuitjs1\client\Rb30DecisionService.java:13: error: cannot find symbol
+    private final PhysicalPartInventory<E04DecisionControlPart> inventory;
+                                        ^
+  symbol:   class E04DecisionControlPart
+  location: class Rb30DecisionService
+<clean-export>\src\com\lushprojects\circuitjs1\client\Rb30DecisionService.java:14: error: cannot find symbol
+    private final E04DecisionControlPart original;
+                  ^
+  symbol:   class E04DecisionControlPart
+  location: class Rb30DecisionService
+<clean-export>\src\com\lushprojects\circuitjs1\client\Rb30DecisionService.java:22: error: cannot find symbol
+    Rb30DecisionService(E04DecisionControlSlot slot,
+                        ^
+  symbol:   class E04DecisionControlSlot
+  location: class Rb30DecisionService
+<clean-export>\src\com\lushprojects\circuitjs1\client\Rb30DecisionService.java:23: error: cannot find symbol
+            PhysicalPartInventory<E04DecisionControlPart> inventory,
+                                  ^
+  symbol:   class E04DecisionControlPart
+  location: class Rb30DecisionService
+<clean-export>\src\com\lushprojects\circuitjs1\client\Rb30DecisionService.java:24: error: cannot find symbol
+            E04DecisionControlPart original,
+            ^
+  symbol:   class E04DecisionControlPart
+  location: class Rb30DecisionService
+<clean-export>\src\com\lushprojects\circuitjs1\client\Rb30DecisionService.java:54: error: cannot find symbol
+    E04DecisionControlSlot getSlot() { return slot; }
+    ^
+  symbol:   class E04DecisionControlSlot
+  location: class Rb30DecisionService
+<clean-export>\src\com\lushprojects\circuitjs1\client\Rb30DecisionService.java:55: error: cannot find symbol
+    PhysicalPartInventory<E04DecisionControlPart> getInventory() { return inventory; }
+                          ^
+  symbol:   class E04DecisionControlPart
+  location: class Rb30DecisionService
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+100 errors
+1 warning

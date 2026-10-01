@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "taskDirectory": "tsj-q30-production-screen-7c5d56fe9d754f08a560ab5e53e54426",
+  "initialAttempt": {
+    "status": "FAIL",
+    "phase": "maintained physical-path preflight",
+    "reason": "Historical archive path exceeded helper Win32 path handling; deletion did not start."
+  },
+  "finalImplementation": "Native PowerShell extended-length literal path; exact root/OS-temp containment and every ancestor/descendant reparse/containment check before recursive removal",
+  "javaChildTerminationReceipts": 2,
+  "ownedRootProcessMatchesBeforeDeletion": 0,
+  "browserOrServerLaunched": false,
+  "processTerminationAction": "NONE: children already exited",
+  "filesRemoved": 12641,
+  "cleanupElapsedMillis": 1758,
+  "directoryAbsent": true,
+  "preservedQ30Files": 172,
+  "preservedDesktopFiles": 96,
+  "retainedTaskResources": 0
+}

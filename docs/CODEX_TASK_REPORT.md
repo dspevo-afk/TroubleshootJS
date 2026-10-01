@@ -1,4 +1,50 @@
-# Current checkpoint: Q30 BLOCKED — two-lane profile complete; map trial inconclusive
+# Current checkpoint: Q30 BLOCKED — production screen needs a normal-path harness
+
+2026-10-01. Branch `codex/q30-multirail-qualification`, frozen source HEAD
+`41f02f1b9f6c32cb8cf4ffbf9e8bd2bb3ea2476b`. This is an evidence-only
+readiness-screen checkpoint. **Q30 remains BLOCKED / NOT ACCEPTED and
+disabled for normal players. Zero fresh cold production-admission jobs ran;
+no implemented variant is assigned a production PASS or FAIL.**
+
+A clean committed-source export and relevant input hashes are frozen in the
+[production-path baseline packet](task-evidence/Q30/production-path-baseline-r1/README.md).
+Actual Java resolution freezes seed7/33, seed64/35 and seed13/37, in that
+order, for three prospective cold normal search jobs. Native plan/request/
+measurement-budget/normal-policy suites PASS (2,256/446/25/325 assertions);
+the full matrix is NOT RUN. The packet records the precise harness gap.
+The existing private verifier uses a
+300-second request with no MEDIUM difficulty, a separate cache and manual
+debug scheduling. Normal starts/publication correctly reject the disabled
+family. The smallest required harness change is a generic request/job-bound
+test eligibility authority plus normal async/foreground execution, ordinary
+cold-cache proof and complete candidate/rejection telemetry. No admission
+override, production change or optimization was integrated.
+
+The 90,000 ms cumulative / 640 shared work / 5,000 ms active limits remain
+unchanged. The private plan-3 seed-7/33-package controls (79.020, 76.978,
+79.989, 78.817 s) do not establish normal admission. The earlier plan-4,
+seed-10014, 40-package campaign is a different workload, not a comparison
+baseline. The map candidate remains unintegrated; no support/LU/map campaign
+was extended. Full acceptance, browser admission and scale integration are
+NOT RUN. GWT/browser and visible player-flow checks are not claimed.
+
+The pre-existing 172 Q30 and 96 desktop changed/untracked files are preserved;
+the 26 tracked Q30 scale edits remain unstaged. Only this checkpoint and its
+new evidence packet belong to this task. No push, email or later milestone.
+Source/evidence review passes after two wording corrections. All pre-existing
+files rehash unchanged. Task-only resource cleanup PASS after a long-path
+preflight failure was diagnosed; no task process or resource remains.
+Validation, the retained setup failures and resource closeout are in the packet.
+
+Next: implement/review the scoped harness capability and execute the frozen
+small screen. Only then choose a measured failing workload or return to the
+roadmap's approximately 30-part board plus held-out 20–40-part corpus. Do not
+require every integer count or invent a 75/80-second gate. Existing scale
+work stays separate. U06, U07, Q60 and later milestones remain unstarted.
+
+---
+
+# Historical checkpoint: Q30 BLOCKED — two-lane profile complete; map trial inconclusive
 
 2026-09-28 local. Branch `codex/q30-multirail-qualification`, source/base HEAD
 `3a877723f366f0dfa51666ab4121ea82f0e82838`. Clean exports isolated the committed

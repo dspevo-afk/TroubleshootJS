@@ -1,0 +1,91 @@
+{
+  "schema": 1,
+  "status": "BLOCKED_HARNESS_CAPABILITY",
+  "sourceCommit": "41f02f1b9f6c32cb8cf4ffbf9e8bd2bb3ea2476b",
+  "sourceTree": "812f13f85c665dbda8932e007433b13617bc3031",
+  "sourceArchiveSha256": "e9ec4cb842b4befffed3db19a62b8bd7c5bc1e6953ceadc2393593adc6b79c33",
+  "sourceArchiveFiles": 8556,
+  "cleanExportVerifiedAgainstArchive": true,
+  "planVersion": 3,
+  "productionPolicy": {
+    "identity": "NORMAL_MEDIUM_EXECUTION@2",
+    "maxJobMillis": 90000,
+    "maxWorkUnits": 640,
+    "maxActiveOperationMillis": 5000
+  },
+  "freshColdAdmissionJobsExecuted": 0,
+  "compiledBrowserBuild": null,
+  "browser": {
+    "installed": "Microsoft Edge",
+    "version": "154.0.4258.37",
+    "executed": false
+  },
+  "normalQ30CatalogEnabled": false,
+  "qualificationAdmissionOverrideUsed": false,
+  "inputSha256": {
+    "src/com/lushprojects/circuitjs1/client/Rb30Plan.java": "f0a93aeb1567ba4ff362be3c187fb5dac72b9cb6878289d349d4e47ecf513ff8",
+    "src/com/lushprojects/circuitjs1/client/Rb30PlayerFamilyCapability.java": "889b1db853d3bb6a50d4a34545e0f1eae5ad1ae67b0d396fd78c3061c9d23f26",
+    "src/com/lushprojects/circuitjs1/client/Rb30Generator.java": "f5147f7c8461116a0e1294eafb6162b4adf151b68f2f51f87c9a5f7183dc9afd",
+    "src/com/lushprojects/circuitjs1/client/Rb30DiagnosticProvider.java": "c225d34bb2941d08259c649076ac4d6cc5705f5f80f3030203508215f1684fa4",
+    "src/com/lushprojects/circuitjs1/client/Rb30Behavior.java": "79f123719fc75c7d4cb57eab0790c22d774b11edafd2ad3f1e28fbdc5c7c11c0",
+    "src/com/lushprojects/circuitjs1/client/Rb30PowerDomains.java": "092a026ee6bb180c9e8b2cc07226c5cd3a050e10fda6c265e7266439e8e206b9",
+    "src/com/lushprojects/circuitjs1/client/StagedFamilyCapability.java": "753942e2b58fc8bb620338e00bb28082f014823ef963ab4e19e8799145d8fcaa",
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java": "035dd2326659736e449b0455b93bafa05a0c141c429406c64bfa1b55bec002cc",
+    "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java": "906ad41ff57f726653eea97a90f0d285a83e12e48aa9d2e6340c9f7bdfd767ea",
+    "src/com/lushprojects/circuitjs1/client/GenerationExecutionPolicy.java": "aa6d5ba795a3209254e5e48c86c8ecd91ec782d0670342eb6dd7ed63daba908e",
+    "src/com/lushprojects/circuitjs1/client/GenerationJob.java": "340d584f744dd3338c9ad1a567116dca9cd79b73d41326e716c7dd95cc741bef",
+    "src/com/lushprojects/circuitjs1/client/GenerationReceipt.java": "04dd7faddb0b18f2282076fb44f2e46a47b64a3d7cf557f42581b62c378f41d9",
+    "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java": "0791318c83a09d522674c1023ca15c94e77134a3e4b892ff5c61effea21ed86a",
+    "src/com/lushprojects/circuitjs1/client/PlayerFamilyCatalog.java": "05c867440da8f3bf92f7dc0fb226f0488e9593f210cc7c59e1c65dc94fc3ca82",
+    "src/com/lushprojects/circuitjs1/client/PlayerLaunchRequest.java": "6754bdd1dd389cc3eacde004654f4949fc0af28a15a84262f642989e8fbbd598",
+    "src/com/lushprojects/circuitjs1/client/QuickPlayAdmission.java": "f3e7610d075d567abcae60c6b9965e04076351dd622a1fea3784663117a704ca",
+    "src/com/lushprojects/circuitjs1/client/ForegroundGenerationClock.java": "226e6f84f6bed400c06030ecd71cc55712483ee8e0d65cce1d1ffe6c32284f8e",
+    "src/com/lushprojects/circuitjs1/client/DifficultyAssessment.java": "96b8e89cd7542d4d9695afb5211237d59745b0aef04939b794bacc8e19798da1",
+    "src/com/lushprojects/circuitjs1/client/DifficultyProfile.java": "a1e222a1f7f45426716dc167db012c7c7129ef72be0f6d18cb98fedd5c1eafbe",
+    "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofCache.java": "75567e992ee35f51061ab0772d6d56f970c554a5f07e76625eb3f2fbdbe12205",
+    "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java": "f0558f5f9e09050fa5b620c2f11d93cec6ad616bdabc6fcc564b95e73fc29aae",
+    "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticSolvabilityAdmission.java": "28e0b64751f7cd778defcb8ffcf43a14ca9c5477ba9fffea3dca1dace8ba8f75",
+    "src/com/lushprojects/circuitjs1/client/MediumBoardNormalAdmission.java": "e805ba6fb5a36d41204971d56161081e7f28ef611a1b8a48506d64842f519826",
+    "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java": "2748b5b00da4a23d02b39ea4f6cab9274cee0952bc8c1c49209e98c24fc5f5ef",
+    "src/com/lushprojects/circuitjs1/client/Q30CoordinatorQualificationVerifier.java": "43f5aa1cfa85401aa048b2394261e266bab2697bef4f66fbf01cabb0fc86040c",
+    "src/com/lushprojects/circuitjs1/client/Q30DiagnosticAdmissionVerifier.java": "5c8ee675c3b87fb39dd629a10cd96fc4cd582c904aa1a01648594dde60f03d1b",
+    "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java": "0a91d0670bd329a49cb7b8467f5079f513e9d70fd4e153d7202ae92458cf0325",
+    "src/com/lushprojects/circuitjs1/client/CirSim.java": "8459f84770f0699e46ab5710a19de05caa8acc22a0ae026c409a058caaadefda",
+    "src/com/lushprojects/circuitjs1/client/NamedRandomStreams.java": "bbb1276d0166f47b13bc77cfac6bfd4f1e02ae27731af8e48ebc7fe5baaf660e",
+    "scripts/build.ps1": "424f91d0be7d8452b85c050a2312b1e61e7541b124200074496dc64ca13af45c",
+    "scripts/verify-current-contracts.ps1": "a69c7a71d5956843c2fdc0886ebe77a4ade548c19d641edd5a9d6f637502ede6",
+    "scripts/VerifierIsolation.psm1": "aafe38893e5fc185a5b543b8c76a383ce7494fe76783fbf4e0330fded4dd298f",
+    "tests/browser/compiled_attribute_acceptance.py": "1045cef7309ff84ae28faf696600b4fc0c636c52bb7bb4d118394024679651fb",
+    "docs/ROADMAP.md": "23dc6a672b301428c3414834d6276ff83543073eada35ffce6ebd9698b18f212",
+    "AGENTS.md": "a3dec836f3ceb136cede52b5674f281b2459696c69aa74041fee7213f93fd95d",
+    "tests/contracts/Q30NormalExecutionPolicyContractTest.java": "b02c07495db27f961cf4abb4c1910e1170ae225fc1919fd84d67b08a4ac125b5",
+    "tests/contracts/Q30GenerationRequestContractTest.java": "c27c122792b2ae9f7877397717415a0c29f642a88ba48d7614c0aa7c6ffaea5f",
+    "tests/contracts/Q30GenerationMeasurementBudgetContractTest.java": "38b41e98024484e049b544226561eed51ab18e42dc26ed5b7f389ed70386dc8d",
+    "tests/contracts/Q30PlanContractTest.java": "4d3fffb813e88516143ead406048a728691eb4c8977b96e51421ab1f572ce60a"
+  },
+  "limitations": [
+    "No normal-production admission job executed; no per-variant PASS or FAIL is established.",
+    "A native structural package inventory is not a routed physical admission.",
+    "No browser/GWT build, cold ordinary-cache runtime, timing, lifecycle or UI result is claimed."
+  ],
+  "gwtBuildStatus": "NOT_RUN",
+  "jdk": {
+    "version": "javac 1.8.0_502",
+    "usage": "native-only"
+  },
+  "gwtDependencySha256": {
+    "gwt-dev-2.7.0.jar": "c7321e367fc24e5c7ad97b74d1cf2980c45fbd7cbe1fd412f8a8ba128f685135",
+    "gwt-user-2.7.0.jar": "d3721bcdd7c6855a524801212dd74548967d8fb65cbc212a20890732ff2c6948"
+  },
+  "nativeValidation": {
+    "status": "PASS",
+    "suites": {
+      "Q30PlanContractTest": 2256,
+      "Q30GenerationRequestContractTest": 446,
+      "Q30GenerationMeasurementBudgetContractTest": 25,
+      "Q30NormalExecutionPolicyContractTest": 325
+    },
+    "fullMatrix": "NOT_RUN",
+    "cleanup": "PASS"
+  }
+}

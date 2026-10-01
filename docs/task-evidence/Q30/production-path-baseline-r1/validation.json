@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "cleanExportTrackedInputsAfterNative": "UNCHANGED",
+  "exportFilesRechecked": 8556,
+  "nativeProcessExitCode": 0,
+  "nativeScratchCleanup": "PASS",
+  "purePlanProbe": "PASS",
+  "coldAdmissionJobsRun": 0,
+  "failuresRetained": [
+    {
+      "phase": "initial probe javac",
+      "result": "FAIL",
+      "exitCode": 1,
+      "reason": "Implicit sourcepath discovery could not find package-private types in differently named Java files. Fixed with explicit client source list and maintained fail-closed Task35 stub; production source unchanged."
+    },
+    {
+      "phase": "root probe wrapper directory setup",
+      "result": "FAIL",
+      "exitCode": 1,
+      "reason": "Empty sourcepath directory already existed. No Java process launched. Changed task-owned directory creation to idempotent New-Item -Force."
+    }
+  ],
+  "sourceReview": {
+    "status": "PASS_AFTER_TWO_WORDING_CORRECTIONS",
+    "scope": "Frozen harness semantics, generic test authority proposal, normal-disablement and original scale requirement; not runtime or pending seed/native evidence.",
+    "corrections": [
+      "Distinguish already-enforced 640/5000 from missing normal90s path.",
+      "Require foreground-clock semantics despite debug mode."
+    ]
+  },
+  "rootReview": "Verified actual Java plan inventory and normal request manifests, native4 exit0, sanitized evidence and unchanged exported inputs. No runtime acceptance claimed.",
+  "copiedEvidence": {
+    "plan-probe-results.txt": {
+      "originalSha256": "528d086092174539b618b0c1013ae30437b792605ef11c9280969168623f8b12",
+      "sanitizedSha256": "137db5fa5c99cd26f72dd731c1bc08d637b27bb7551ccdc4686be78cf0570444"
+    },
+    "plan-probe-initial-compile-failure.txt": {
+      "originalSha256": "34573dd5077e35958d31e086f7b08406bf60302ca3dea58a7aa4450e4e80454e",
+      "sanitizedSha256": "157eb742fb71a925449f7bc845562e247b89a9a1e6b52cce55e1d90012ffe361"
+    },
+    "plan-probe-final-compile.json": {
+      "originalSha256": "c011ab6e297d699894aa1e8e9644b51dbbebd92fe5562e3594064baa754d22b1",
+      "sanitizedSha256": "4455e445299fba131ab287f784631550f6847de8970573b4d44a287e4a71a50c"
+    },
+    "plan-probe-final-run.json": {
+      "originalSha256": "34b81714d83345bce269a470c534e0a490082c7ee06ed0f1252aa342b609e853",
+      "sanitizedSha256": "eafee77d53868987dd8be499d84f580184f59976a82578c0da25cc01a6256fef"
+    },
+    "native-focused.txt": {
+      "originalSha256": "f75e6e2ba390942e88f77a0ec8d9f47668b359b2a0b97e6fe4502407cfe801da",
+      "sanitizedSha256": "7618bcb453cbe21277be42a1c3135944a4eb7f95c86b545e5fa776596458d7ab"
+    },
+    "Rb30PlanAuditProbe.java": {
+      "originalSha256": "0f49ebe15a5fabccbb5dcf7c16120ee110b0b496871e795ca6e962eae31441aa",
+      "sanitizedSha256": "0f49ebe15a5fabccbb5dcf7c16120ee110b0b496871e795ca6e962eae31441aa"
+    },
+    "run-native-and-probe.ps1": {
+      "originalSha256": "a2772c132fb1163445ab09925c939366822e7c6ae3b4df056b279c4ca2eb69a7",
+      "sanitizedSha256": "351641d666a6da3b6b6c982d2845a0ff1e756ec572769e0b0859e2c23a7e02c4"
+    }
+  },
+  "evidencePackagingCorrections": [
+    "Root inspection caught JSON-escaped personal paths; final packet sanitizes parsed JSON recursively and rescans.",
+    "Root inspection repaired a Windows default-encoding read in the README; final artifact is UTF-8.",
+    "Expanded tabs in the sanitized initial javac failure log to pass diff whitespace checks; raw original hash retained."
+  ]
+}
