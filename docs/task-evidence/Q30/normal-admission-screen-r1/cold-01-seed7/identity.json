@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "runner": {
+    "pid": 14724,
+    "created": "2026-10-01T16:40:35.8622210Z",
+    "executable": "[BUNDLED_RUNTIME]\\dependencies\\python\\python.exe"
+  },
+  "edgeProcessesBeforeCases": [
+    {
+      "pid": 14636,
+      "parent": 25540,
+      "created": "2026-10-01T16:40:36.9194060Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 24596,
+      "parent": 14636,
+      "created": "2026-10-01T16:40:36.9732140Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 16488,
+      "parent": 14636,
+      "created": "2026-10-01T16:40:37.0198450Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 26012,
+      "parent": 14636,
+      "created": "2026-10-01T16:40:37.0256050Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 24852,
+      "parent": 14636,
+      "created": "2026-10-01T16:40:37.0486660Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 21368,
+      "parent": 14636,
+      "created": "2026-10-01T16:40:37.1126650Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 19700,
+      "parent": 14636,
+      "created": "2026-10-01T16:40:37.1190850Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    }
+  ],
+  "profile": "[TASK_TEMP]\\cold-01-seed7\\profile",
+  "port": 49672,
+  "baseUrl": "http://127.0.0.1:49672",
+  "browser": {
+    "name": "Microsoft Edge",
+    "version": "154.0.4258.37",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0"
+  },
+  "browserStartupMilliseconds": 265.00000001396984
+}

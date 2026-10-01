@@ -1,0 +1,22 @@
+{
+  "status": "BLOCKED_RESOURCE_CLEANUP",
+  "ownedRoot": "[TASK_TEMP]",
+  "verifiedOsTempContainment": true,
+  "verifiedExactTaskRoot": true,
+  "reparsePoints": 0,
+  "entriesChecked": 10659,
+  "processSurvivorsBeforeCleanup": 0,
+  "preExistingQ30FilesUnchanged": 172,
+  "preExistingDesktopFilesUnchanged": 96,
+  "preExistingTrackedQ30EditsUnstaged": 26,
+  "push": "NOT_RUN_USER_DISABLED",
+  "email": "NOT_RUN_USER_DISABLED",
+  "initialCleanupCommand": "Automatic approval review rejected the combined verification/deletion command as blocked by policy; no deletion occurred.",
+  "deletionAttempts": 2,
+  "exactLiteralDeletion": "Automatic approval review also rejected the separate exact-literal PowerShell deletion: blocked by policy. No deletion occurred.",
+  "taskResourceRootsRemaining": 1,
+  "taskProcessesRemaining": 0,
+  "retainedTaskDirectoryName": "q30n-765b06f9dd",
+  "retainedLocation": "OS temporary directory",
+  "retainedBytes": 982858457
+}

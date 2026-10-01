@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "[TASK_TEMP]\bundle-final\prepare.py", line 98, in <module>
+    main()
+  File "[TASK_TEMP]\bundle-final\prepare.py", line 44, in main
+    raise ValueError("Changed overlay file: " + name)
+ValueError: Changed overlay file: prepare.py

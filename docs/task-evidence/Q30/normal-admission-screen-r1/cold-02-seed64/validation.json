@@ -1,0 +1,23 @@
+{
+  "app": {
+    "applicationOutcome": "PASS",
+    "classification": "PASS",
+    "errors": [],
+    "metrics": {
+      "elapsedMs": 66464,
+      "headroomMs": 23536,
+      "maxActiveOperationMs": 1095,
+      "maxCoordinatorAdvanceMs": 1095,
+      "workUnits": 446
+    },
+    "rootSeed": "64",
+    "sha256": "62696972663125b1ac489e67ae829f2c5492654148d1e24939710463e8020a5c",
+    "status": "APP_PASS"
+  },
+  "host": {
+    "errors": [],
+    "status": "HOST_PASS"
+  },
+  "status": "APP_PASS",
+  "synthetic": false
+}

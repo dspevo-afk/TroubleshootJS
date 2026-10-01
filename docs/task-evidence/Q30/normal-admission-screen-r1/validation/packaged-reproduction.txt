@@ -1,0 +1,1 @@
+PASS: frozen baseline plus isolated harness prepared at [TASK_TEMP]\reproduction-package\app

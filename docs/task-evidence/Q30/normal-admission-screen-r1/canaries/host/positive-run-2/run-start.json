@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "runner": "normal_screen_host.py",
+  "repository": "[TASK_TEMP]\\host\\fixtures\\positive",
+  "startedUtc": "2026-10-01T16:19:40.702586+00:00",
+  "outcome": "NOT_RUN",
+  "cases": [],
+  "caseCount": 1,
+  "errors": [],
+  "browserStartupMilliseconds": null
+}

@@ -1,0 +1,134 @@
+{
+  "schema": 1,
+  "runner": "normal_screen_host.py",
+  "repository": "[TASK_TEMP]\\app",
+  "startedUtc": "2026-10-01T16:44:27.193190+00:00",
+  "outcome": "NOT_RUN",
+  "cases": [
+    {
+      "schema": 1,
+      "case": {
+        "index": 1,
+        "name": "cold-13",
+        "path": "circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=13",
+        "stateAttribute": "data-tsj-q30-normal-state",
+        "expectedState": null,
+        "expectedPrefix": "SCREEN_DONE",
+        "terminalPrefixes": [
+          "SCREEN_DONE"
+        ],
+        "timeoutSeconds": 150.0,
+        "reportAttribute": "data-tsj-q30-normal-report"
+      },
+      "url": "http://127.0.0.1:57576/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=13",
+      "startedUtc": "2026-10-01T16:44:28.707465+00:00",
+      "finishedUtc": "2026-10-01T16:45:44.831339+00:00",
+      "operationSeconds": 76.125,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "SCREEN_DONE",
+      "lastObservedState": "SCREEN_DONE",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 831780,
+      "reportSha256": "908c0da153116a94e0141a5bb9d40da3faa748aeab2cc764a1b738cc184ff1c9",
+      "reportFile": "cases/001-cold-13.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null,
+      "compiledResources": [
+        {
+          "url": "http://127.0.0.1:57576/circuitjs1/7247CC9D86D564651F0BC146A31D6453.cache.js",
+          "permutation": "7247CC9D86D564651F0BC146A31D6453",
+          "kind": "cache.js",
+          "status": 200,
+          "length": 3085531,
+          "sha256": "f5a85bc1577b79781abde4baed37fe8c35dcfb257c8a293b325fb2c3a8e89203"
+        }
+      ],
+      "compiledResourceErrors": [],
+      "terminalScreenshot": "cases/001-cold-13.png"
+    }
+  ],
+  "caseCount": 1,
+  "errors": [],
+  "browserStartupMilliseconds": 265.00000001396984,
+  "inputAudit": {
+    "status": "BEFORE_CAPTURED",
+    "beforeSha256": "ad514dcbeb32f9cad5f664912478a88cc24b438914cc55210b6fe1050dce63ac",
+    "sourceSha256": "273d3fa5b38654f24361a6adbafebec0457bcf69c507532ec48440efa81c4b2e",
+    "webSha256": "bc43df81a066a3646efd07c592caef917e6c3eeaab610bd5234df524c16f6bc2",
+    "fileCount": 1526
+  },
+  "identity": {
+    "schema": 1,
+    "runner": {
+      "pid": 22012,
+      "created": "2026-10-01T16:44:27.0632060Z",
+      "executable": "[BUNDLED_RUNTIME]\\dependencies\\python\\python.exe"
+    },
+    "edgeProcessesBeforeCases": [
+      {
+        "pid": 23040,
+        "parent": 21680,
+        "created": "2026-10-01T16:44:28.1214910Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 18616,
+        "parent": 23040,
+        "created": "2026-10-01T16:44:28.1755940Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 3620,
+        "parent": 23040,
+        "created": "2026-10-01T16:44:28.2242090Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 8672,
+        "parent": 23040,
+        "created": "2026-10-01T16:44:28.2305430Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 3308,
+        "parent": 23040,
+        "created": "2026-10-01T16:44:28.2527780Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 20660,
+        "parent": 23040,
+        "created": "2026-10-01T16:44:28.3158530Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 11484,
+        "parent": 23040,
+        "created": "2026-10-01T16:44:28.3215130Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "profile": "[TASK_TEMP]\\cold-03-seed13\\profile",
+    "port": 57576,
+    "baseUrl": "http://127.0.0.1:57576",
+    "browser": {
+      "name": "Microsoft Edge",
+      "version": "154.0.4258.37",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0"
+    },
+    "browserStartupMilliseconds": 265.00000001396984
+  },
+  "operationStartedUtc": "2026-10-01T16:44:28.707465+00:00"
+}

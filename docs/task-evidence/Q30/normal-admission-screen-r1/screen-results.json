@@ -1,0 +1,185 @@
+{
+  "schema": 1,
+  "status": "LIMITED_SCREEN_PASS",
+  "q30Accepted": false,
+  "q30NormalEnabled": false,
+  "coldJobsExecuted": 3,
+  "predeclaredOrder": [
+    "7",
+    "64",
+    "13"
+  ],
+  "rows": [
+    {
+      "seed": "7",
+      "actualPackages": 33,
+      "generationElapsedMs": 70569,
+      "startToCallbackWallMs": 70570,
+      "workUnits": 468,
+      "maxActiveOperationMs": 838,
+      "maxCoordinatorAdvanceMs": 839,
+      "headroomMs": 19431,
+      "routingElapsedMsNested": 15612,
+      "proofElapsedMsNested": 50384,
+      "cleanupElapsedMs": 2,
+      "ordinaryCacheHits": 0,
+      "ordinaryCacheMisses": 1,
+      "yields": 300,
+      "browserStartupMs": 265.00000001396984,
+      "caseSeconds": 71.10999999998603,
+      "hostCleanupSeconds": 1.297000000020489,
+      "browserVersion": "154.0.4258.37",
+      "classification": "PASS",
+      "cleanupComplete": true,
+      "sourceCommit": "41f02f1b9f6c32cb8cf4ffbf9e8bd2bb3ea2476b",
+      "applicationHarnessSha256": "1d286f0a0a6d816cb7c6a951328801d51d0b460bd1496a0ed0121211f9c3b074",
+      "planVersion": 3,
+      "requestMode": "normal MEDIUM candidate search; up to four shared-budget candidates",
+      "executionPolicy": "NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground",
+      "candidateAttempts": [
+        {
+          "ordinal": 0,
+          "manifest": "candidate=00;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=7;replay=tsj-alpha/3/MEDIUM/RB30_CONTROL/7;quickPlay=false;layout=13;planEpoch=3;plan=rb30-plan@3;seed=7;topology=RB30_SEPARATE_DIRECT_A_BJT_B_BJT;support=RB30_COMPACT_NO_STATUS@2;layout=-1194938301906846876;routing=8563653456340676275;physicalPolicy=MEDIUM_BOARD@1;fault=RELAY_B_COIL_OPEN;packages=33;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2",
+          "stage": "PUBLISH",
+          "outcome": "PASS",
+          "workUnits": 468,
+          "proofUnits": 390,
+          "failureType": null,
+          "failureMessage": null
+        }
+      ],
+      "physical": "PASS",
+      "difficulty": "MEDIUM",
+      "diagnosticRepairCompletion": "PASS",
+      "published": true,
+      "privateCacheUntouched": true,
+      "hiddenEvents": 0,
+      "hostCleanup": "PASS",
+      "loadedResources": [
+        {
+          "url": "http://127.0.0.1:49672/circuitjs1/7247CC9D86D564651F0BC146A31D6453.cache.js",
+          "permutation": "7247CC9D86D564651F0BC146A31D6453",
+          "kind": "cache.js",
+          "status": 200,
+          "length": 3085531,
+          "sha256": "f5a85bc1577b79781abde4baed37fe8c35dcfb257c8a293b325fb2c3a8e89203"
+        }
+      ],
+      "hostEndToEndMs": 74836
+    },
+    {
+      "seed": "64",
+      "actualPackages": 35,
+      "generationElapsedMs": 66464,
+      "startToCallbackWallMs": 66465,
+      "workUnits": 446,
+      "maxActiveOperationMs": 1095,
+      "maxCoordinatorAdvanceMs": 1095,
+      "headroomMs": 23536,
+      "routingElapsedMsNested": 9879,
+      "proofElapsedMsNested": 51659,
+      "cleanupElapsedMs": 2,
+      "ordinaryCacheHits": 0,
+      "ordinaryCacheMisses": 1,
+      "yields": 276,
+      "browserStartupMs": 297.0000000204891,
+      "caseSeconds": 66.98399999999674,
+      "hostCleanupSeconds": 1.1410000000032596,
+      "browserVersion": "154.0.4258.37",
+      "classification": "PASS",
+      "cleanupComplete": true,
+      "sourceCommit": "41f02f1b9f6c32cb8cf4ffbf9e8bd2bb3ea2476b",
+      "applicationHarnessSha256": "1d286f0a0a6d816cb7c6a951328801d51d0b460bd1496a0ed0121211f9c3b074",
+      "planVersion": 3,
+      "requestMode": "normal MEDIUM candidate search; up to four shared-budget candidates",
+      "executionPolicy": "NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground",
+      "candidateAttempts": [
+        {
+          "ordinal": 0,
+          "manifest": "candidate=00;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=64;replay=tsj-alpha/3/MEDIUM/RB30_CONTROL/64;quickPlay=false;layout=13;planEpoch=3;plan=rb30-plan@3;seed=64;topology=RB30_SHARED_HYSTERETIC_A_NMOS_B_NMOS;support=RB30_STANDARD_STATUS@2;layout=-7619673160888504460;routing=-2032842263090610941;physicalPolicy=MEDIUM_BOARD@1;fault=DREV_OPEN;packages=35;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2",
+          "stage": "PUBLISH",
+          "outcome": "PASS",
+          "workUnits": 446,
+          "proofUnits": 390,
+          "failureType": null,
+          "failureMessage": null
+        }
+      ],
+      "physical": "PASS",
+      "difficulty": "MEDIUM",
+      "diagnosticRepairCompletion": "PASS",
+      "published": true,
+      "privateCacheUntouched": true,
+      "hiddenEvents": 0,
+      "hostCleanup": "PASS",
+      "loadedResources": [
+        {
+          "url": "http://127.0.0.1:53768/circuitjs1/7247CC9D86D564651F0BC146A31D6453.cache.js",
+          "permutation": "7247CC9D86D564651F0BC146A31D6453",
+          "kind": "cache.js",
+          "status": 200,
+          "length": 3085531,
+          "sha256": "f5a85bc1577b79781abde4baed37fe8c35dcfb257c8a293b325fb2c3a8e89203"
+        }
+      ],
+      "hostEndToEndMs": 70448
+    },
+    {
+      "seed": "13",
+      "actualPackages": 37,
+      "generationElapsedMs": 75606,
+      "startToCallbackWallMs": 75607,
+      "workUnits": 464,
+      "maxActiveOperationMs": 1193,
+      "maxCoordinatorAdvanceMs": 1194,
+      "headroomMs": 14394,
+      "routingElapsedMsNested": 16294,
+      "proofElapsedMsNested": 54323,
+      "cleanupElapsedMs": 1,
+      "ordinaryCacheHits": 0,
+      "ordinaryCacheMisses": 1,
+      "yields": 295,
+      "browserStartupMs": 265.00000001396984,
+      "caseSeconds": 76.125,
+      "hostCleanupSeconds": 0.8279999999795109,
+      "browserVersion": "154.0.4258.37",
+      "classification": "PASS",
+      "cleanupComplete": true,
+      "sourceCommit": "41f02f1b9f6c32cb8cf4ffbf9e8bd2bb3ea2476b",
+      "applicationHarnessSha256": "1d286f0a0a6d816cb7c6a951328801d51d0b460bd1496a0ed0121211f9c3b074",
+      "planVersion": 3,
+      "requestMode": "normal MEDIUM candidate search; up to four shared-budget candidates",
+      "executionPolicy": "NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground",
+      "candidateAttempts": [
+        {
+          "ordinal": 0,
+          "manifest": "candidate=00;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=13;replay=tsj-alpha/3/MEDIUM/RB30_CONTROL/13;quickPlay=false;layout=13;planEpoch=3;plan=rb30-plan@3;seed=13;topology=RB30_SEPARATE_DIRECT_A_NMOS_B_BJT;support=RB30_FILTERED_SENSOR_INPUTS@2;layout=-8526998057890890386;routing=7912193663056532433;physicalPolicy=MEDIUM_BOARD@1;fault=DRIVE_A_OPEN;packages=37;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2",
+          "stage": "PUBLISH",
+          "outcome": "PASS",
+          "workUnits": 464,
+          "proofUnits": 390,
+          "failureType": null,
+          "failureMessage": null
+        }
+      ],
+      "physical": "PASS",
+      "difficulty": "MEDIUM",
+      "diagnosticRepairCompletion": "PASS",
+      "published": true,
+      "privateCacheUntouched": true,
+      "hiddenEvents": 0,
+      "hostCleanup": "PASS",
+      "loadedResources": [
+        {
+          "url": "http://127.0.0.1:57576/circuitjs1/7247CC9D86D564651F0BC146A31D6453.cache.js",
+          "permutation": "7247CC9D86D564651F0BC146A31D6453",
+          "kind": "cache.js",
+          "status": 200,
+          "length": 3085531,
+          "sha256": "f5a85bc1577b79781abde4baed37fe8c35dcfb257c8a293b325fb2c3a8e89203"
+        }
+      ],
+      "hostEndToEndMs": 79262
+    }
+  ]
+}

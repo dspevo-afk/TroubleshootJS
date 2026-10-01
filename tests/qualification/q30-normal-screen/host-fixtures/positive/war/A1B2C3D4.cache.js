@@ -1,0 +1,1 @@
+window.fixtureCacheAsset = true;

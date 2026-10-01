@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "exactStagedByteFiles": 200,
+  "stagedPathsRestricted": true,
+  "sourceReconstruction": "PASS",
+  "readerUnitTests": 6,
+  "realReceipts": [
+    "APP_PASS",
+    "APP_PASS",
+    "APP_PASS"
+  ],
+  "applicationHarnessSha256": "1d286f0a0a6d816cb7c6a951328801d51d0b460bd1496a0ed0121211f9c3b074"
+}

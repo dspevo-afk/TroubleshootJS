@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 1,
+    "name": "scope-loss-7",
+    "path": "circuitjs.html?lang=en&tsjNormalMode=scope-loss&tsjNormalSeed=7",
+    "stateAttribute": "data-tsj-q30-normal-state",
+    "expectedState": null,
+    "expectedPrefix": "SCREEN_DONE",
+    "terminalPrefixes": [
+      "SCREEN_DONE"
+    ],
+    "timeoutSeconds": 150.0,
+    "reportAttribute": "data-tsj-q30-normal-report"
+  },
+  "url": "http://127.0.0.1:54709/circuitjs.html?lang=en&tsjNormalMode=scope-loss&tsjNormalSeed=7",
+  "startedUtc": "2026-10-01T16:37:26.420259+00:00",
+  "finishedUtc": "2026-10-01T16:37:47.232253+00:00",
+  "operationSeconds": 20.81199999997625,
+  "outcome": "PASS",
+  "terminalReached": true,
+  "stateMatch": true,
+  "observedState": "SCREEN_DONE",
+  "lastObservedState": "SCREEN_DONE",
+  "timedOut": false,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": true,
+  "reportJsonValid": true,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 11783,
+  "reportSha256": "08358e7920955850048ba4b75c166f37a62a61e684a5f07f7bc53c6829bac104",
+  "reportFile": "cases/001-scope-loss-7.report.json",
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [],
+  "listenerCleanupErrors": [],
+  "navigationError": null,
+  "compiledResources": [
+    {
+      "url": "http://127.0.0.1:54709/circuitjs1/7247CC9D86D564651F0BC146A31D6453.cache.js",
+      "permutation": "7247CC9D86D564651F0BC146A31D6453",
+      "kind": "cache.js",
+      "status": 200,
+      "length": 3085531,
+      "sha256": "f5a85bc1577b79781abde4baed37fe8c35dcfb257c8a293b325fb2c3a8e89203"
+    }
+  ],
+  "compiledResourceErrors": [],
+  "terminalScreenshot": "cases/001-scope-loss-7.png"
+}

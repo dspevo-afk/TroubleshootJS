@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "runner": "normal_screen_host.py",
+  "repository": "[TASK_TEMP]\\app",
+  "startedUtc": "2026-10-01T16:36:15.410838+00:00",
+  "outcome": "NOT_RUN",
+  "cases": [],
+  "caseCount": 1,
+  "errors": [],
+  "browserStartupMilliseconds": null
+}

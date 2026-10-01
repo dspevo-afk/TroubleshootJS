@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "runner": {
+    "pid": 13220,
+    "created": "2026-10-01T16:30:49.3077580Z",
+    "executable": "[BUNDLED_RUNTIME]\\dependencies\\python\\python.exe"
+  },
+  "edgeProcessesBeforeCases": [
+    {
+      "pid": 24596,
+      "parent": 8520,
+      "created": "2026-10-01T16:30:52.5779540Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 21524,
+      "parent": 24596,
+      "created": "2026-10-01T16:30:52.6472030Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 20144,
+      "parent": 24596,
+      "created": "2026-10-01T16:30:52.6974330Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 12884,
+      "parent": 24596,
+      "created": "2026-10-01T16:30:52.7093000Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 21020,
+      "parent": 24596,
+      "created": "2026-10-01T16:30:52.7359650Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 6228,
+      "parent": 24596,
+      "created": "2026-10-01T16:30:52.8006940Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 26268,
+      "parent": 24596,
+      "created": "2026-10-01T16:30:52.8061760Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    }
+  ],
+  "profile": "[TASK_TEMP]\\run-unauthorized\\profile",
+  "port": 59189,
+  "baseUrl": "http://127.0.0.1:59189",
+  "browser": {
+    "name": "Microsoft Edge",
+    "version": "154.0.4258.37",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0"
+  },
+  "browserStartupMilliseconds": 311.9999999762513
+}

@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "runner": {
+    "pid": 20704,
+    "created": "2026-10-01T16:20:01.5230130Z",
+    "executable": "[BUNDLED_RUNTIME]\\dependencies\\python\\python.exe"
+  },
+  "edgeProcessesBeforeCases": [
+    {
+      "pid": 19276,
+      "parent": 17196,
+      "created": "2026-10-01T16:20:01.8745960Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 6720,
+      "parent": 19276,
+      "created": "2026-10-01T16:20:01.9236510Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 7716,
+      "parent": 19276,
+      "created": "2026-10-01T16:20:01.9757250Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 26164,
+      "parent": 19276,
+      "created": "2026-10-01T16:20:01.9818810Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 22944,
+      "parent": 19276,
+      "created": "2026-10-01T16:20:02.0031900Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 2216,
+      "parent": 19276,
+      "created": "2026-10-01T16:20:02.0674160Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 15880,
+      "parent": 19276,
+      "created": "2026-10-01T16:20:02.0733480Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    }
+  ],
+  "profile": "[TASK_TEMP]\\host\\canaries\\negative-run-2\\profile",
+  "port": 63556,
+  "baseUrl": "http://127.0.0.1:63556",
+  "browser": {
+    "name": "Microsoft Edge",
+    "version": "154.0.4258.37",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0"
+  },
+  "browserStartupMilliseconds": 281.00000001722947
+}

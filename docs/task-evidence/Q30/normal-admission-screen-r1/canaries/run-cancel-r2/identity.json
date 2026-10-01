@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "runner": {
+    "pid": 16104,
+    "created": "2026-10-01T16:36:15.2822560Z",
+    "executable": "[BUNDLED_RUNTIME]\\dependencies\\python\\python.exe"
+  },
+  "edgeProcessesBeforeCases": [
+    {
+      "pid": 20020,
+      "parent": 9732,
+      "created": "2026-10-01T16:36:18.2135920Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 9284,
+      "parent": 20020,
+      "created": "2026-10-01T16:36:18.2682680Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 21284,
+      "parent": 20020,
+      "created": "2026-10-01T16:36:18.3222100Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 24988,
+      "parent": 20020,
+      "created": "2026-10-01T16:36:18.3277310Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 25220,
+      "parent": 20020,
+      "created": "2026-10-01T16:36:18.3526690Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 9420,
+      "parent": 20020,
+      "created": "2026-10-01T16:36:18.4192770Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    },
+    {
+      "pid": 25492,
+      "parent": 20020,
+      "created": "2026-10-01T16:36:18.4252270Z",
+      "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    }
+  ],
+  "profile": "[TASK_TEMP]\\run-cancel-r2\\profile",
+  "port": 50392,
+  "baseUrl": "http://127.0.0.1:50392",
+  "browser": {
+    "name": "Microsoft Edge",
+    "version": "154.0.4258.37",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0"
+  },
+  "browserStartupMilliseconds": 297.0000000204891
+}

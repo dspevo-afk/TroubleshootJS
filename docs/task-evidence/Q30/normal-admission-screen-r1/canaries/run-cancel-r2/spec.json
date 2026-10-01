@@ -1,0 +1,15 @@
+{
+  "cases": [
+    {
+      "name": "cancel-7",
+      "path": "circuitjs.html?lang=en&tsjNormalMode=cancel&tsjNormalSeed=7",
+      "stateAttribute": "data-tsj-q30-normal-state",
+      "reportAttribute": "data-tsj-q30-normal-report",
+      "expectedPrefix": "SCREEN_DONE",
+      "terminalPrefixes": [
+        "SCREEN_DONE"
+      ],
+      "timeoutSeconds": 150
+    }
+  ]
+}

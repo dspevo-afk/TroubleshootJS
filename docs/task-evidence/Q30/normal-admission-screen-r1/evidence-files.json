@@ -1,0 +1,1382 @@
+{
+  "schema": 1,
+  "note": "Personal absolute paths replaced with stable tokens in textual host evidence. App receipts have no such paths; their original bytes and hashes remain intact. Input manifests are deterministic gzip. Profiles, dependencies and binaries are excluded.",
+  "files": [
+    {
+      "source": "records/compile-inputs.json",
+      "stored": "validation/compile-inputs.json",
+      "originalSha256": "a2006d0dbdf54e184c0c2fb123e5be3653e676459259ea3e00b54aa2c8e99cb7",
+      "storedSha256": "a2006d0dbdf54e184c0c2fb123e5be3653e676459259ea3e00b54aa2c8e99cb7",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "records/compile-inputs-final.json",
+      "stored": "validation/compile-inputs-final.json",
+      "originalSha256": "ac185e80f1fec896131120e6e725eaac3d82f7648be8a2462f8049ae42928f20",
+      "storedSha256": "ac185e80f1fec896131120e6e725eaac3d82f7648be8a2462f8049ae42928f20",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "records/native-focused-initial.txt",
+      "stored": "validation/native-focused-initial.txt",
+      "originalSha256": "144c835f07fac0410c7dfc998ebfed15c8017cc69b16e80f82880b52784b6ac5",
+      "storedSha256": "144c835f07fac0410c7dfc998ebfed15c8017cc69b16e80f82880b52784b6ac5",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "records/native-focused-final.txt",
+      "stored": "validation/native-focused-final.txt",
+      "originalSha256": "edef8ffbe36508606b3ed302b405262ac8b25d1df8268c0e370d5456131e768f",
+      "storedSha256": "edef8ffbe36508606b3ed302b405262ac8b25d1df8268c0e370d5456131e768f",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "records/native-boundary-expanded.txt",
+      "stored": "validation/native-boundary-expanded.txt",
+      "originalSha256": "51ae01b7e97e3b596b66b868cbe4359a91712487e6a9bb6e9bb7f210da784c86",
+      "storedSha256": "51ae01b7e97e3b596b66b868cbe4359a91712487e6a9bb6e9bb7f210da784c86",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "records/native-scope-fix.txt",
+      "stored": "validation/native-scope-fix.txt",
+      "originalSha256": "9ca1e8ffdb445afffca9b83641862a88484410410c3abf8aca96532183bdd1c1",
+      "storedSha256": "9ca1e8ffdb445afffca9b83641862a88484410410c3abf8aca96532183bdd1c1",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "records/gwt-build.txt",
+      "stored": "validation/gwt-build.txt",
+      "originalSha256": "ca4081322662d6e3a4b3b2bb1635b2338bf0e9a2b0d4c7162b1385379b1426df",
+      "storedSha256": "31d5a05fb83ee3726b7316c51348d320deeed6caad3eddec23e716a1b5853f8e",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "records/gwt-build-scope-fix.txt",
+      "stored": "validation/gwt-build-scope-fix.txt",
+      "originalSha256": "6601891d916a53a5f5dd0658d195912f65aed275d638b1aa40cc4bc9768671d3",
+      "storedSha256": "2a80057685fe5d84ebee799652e8175f5537b6512dec384232277652f8938d30",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "records/reader-tests.txt",
+      "stored": "validation/reader-tests.txt",
+      "originalSha256": "934a41cd1bf55975b1202372ca266c0c81ece658b9c025a7df1ba90329f93e65",
+      "storedSha256": "934a41cd1bf55975b1202372ca266c0c81ece658b9c025a7df1ba90329f93e65",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "records/reproduction-check.txt",
+      "stored": "validation/reproduction-check.txt",
+      "originalSha256": "9236a0db5708bdc062f329de3dfd2a5f89d1522cd3dab6e43dcfb9baad52c702",
+      "storedSha256": "c4bca0d0edb948eab9a1bbfe517e5e85335e2ca9ea9595536cae1bb8aacf68bd",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "records/reproduction-check-r2.txt",
+      "stored": "validation/reproduction-check-r2.txt",
+      "originalSha256": "96eb24d2c42c9f9a76f2d687035fc4e32288d988e0fdddf55d171550f2147c55",
+      "storedSha256": "395f44887cbc4f0e7c6c9c7f4a7e229fe285dddd8fb3dbfc605c2787f67c78a3",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "records/reproduction-check-r3.txt",
+      "stored": "validation/reproduction-check-r3.txt",
+      "originalSha256": "a23777f79387eee45adf7f0391fe47a55d9b84a764c21baaa4d408eefd2b8a90",
+      "storedSha256": "12d6cbf145eafe52dd6249eb8ab3b74bdcb73354673bddc58a8d9d5dffa55442",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-01-seed7/cases/001-cold-7.json",
+      "stored": "cold-01-seed7/cases/001-cold-7.json",
+      "originalSha256": "58ea40a6cd03688d3e0d5ebef8f4c83266c3cb14afcf2e930665b13152bb98f5",
+      "storedSha256": "58ea40a6cd03688d3e0d5ebef8f4c83266c3cb14afcf2e930665b13152bb98f5",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-01-seed7/cases/001-cold-7.png",
+      "stored": "cold-01-seed7/cases/001-cold-7.png",
+      "originalSha256": "473fb45f0299d173fea3711244cb1072bbb0bd49ca0cbbd91c45a085180785d2",
+      "storedSha256": "473fb45f0299d173fea3711244cb1072bbb0bd49ca0cbbd91c45a085180785d2",
+      "sanitized": false,
+      "gzip": false
+    },
+    {
+      "source": "cold-01-seed7/cases/001-cold-7.report.json",
+      "stored": "cold-01-seed7/cases/001-cold-7.report.json",
+      "originalSha256": "b8770a4a06bbb80911ba8814574ee7a09423749da239793461bfb692fd074983",
+      "storedSha256": "b8770a4a06bbb80911ba8814574ee7a09423749da239793461bfb692fd074983",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-01-seed7/cases/001-cold-7.state.txt",
+      "stored": "cold-01-seed7/cases/001-cold-7.state.txt",
+      "originalSha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "storedSha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-01-seed7/identity.json",
+      "stored": "cold-01-seed7/identity.json",
+      "originalSha256": "58adf7ccbd424aa7496fb4a90f65f0888015c8b29f5235769e72f5320a0acc7f",
+      "storedSha256": "c96327d74ec8be252a736a1fd59ba541cb62f59a76c9be9ced6507aa954e1fd8",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-01-seed7/input-manifest-after.json",
+      "stored": "cold-01-seed7/input-manifest-after.json.gz",
+      "originalSha256": "a480096c2f9f4f020e753f1f7461ad44b15e9a8dc65b04ddec9f811e006efd99",
+      "storedSha256": "9549b00cb93eecfdcc45eb578c5a80ac7d4d0940e5be6695a166102fb55ae9e3",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "cold-01-seed7/input-manifest-before.json",
+      "stored": "cold-01-seed7/input-manifest-before.json.gz",
+      "originalSha256": "4c0363ccef068fcbb9df9e8e4c6477acb4b6e5b435b6f7f1aadd3de285ca37a2",
+      "storedSha256": "6857f3787aac5a61105094837de7bfc46d294228e2d3b71e354fb625b3555bf7",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "cold-01-seed7/owned-processes-before-close.json",
+      "stored": "cold-01-seed7/owned-processes-before-close.json",
+      "originalSha256": "b6e4ae8bc79917cb8ac37fc9e8f0c5af7a4d0465b5983ded2538c1f25a562724",
+      "storedSha256": "b6e4ae8bc79917cb8ac37fc9e8f0c5af7a4d0465b5983ded2538c1f25a562724",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-01-seed7/owned-processes-before.json",
+      "stored": "cold-01-seed7/owned-processes-before.json",
+      "originalSha256": "3415459a150eb120c546128e3ba49cd1ba9f87bac3b62d6f4b883d0bab211fe1",
+      "storedSha256": "3415459a150eb120c546128e3ba49cd1ba9f87bac3b62d6f4b883d0bab211fe1",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-01-seed7/progress.json",
+      "stored": "cold-01-seed7/progress.json",
+      "originalSha256": "844735dd0473fa7a4a418bffa3486a4951893ad632e04a0ccccae436558676f6",
+      "storedSha256": "9191606cf6590378825d05f0eb333ea6880685002bdae440bfcb4d3bbac0b378",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-01-seed7/result.json",
+      "stored": "cold-01-seed7/result.json",
+      "originalSha256": "bd217e8dd7b7eac3028abc9bd506164fd2c8becbee21f2c3fd79cd5a3885d1fd",
+      "storedSha256": "2553300200fc3134b8e7294a91cb3d488d0b4987b348f4d7390422fbba8141bc",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-01-seed7/run-start.json",
+      "stored": "cold-01-seed7/run-start.json",
+      "originalSha256": "9bca14ae8b54c1c31be9f5be173990fc18d98cdc06c2132a42d37557e5a54167",
+      "storedSha256": "b435371d00fa204bce5bf0a5f1cea4f67745c6663f783ff18b5f5db78542a935",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-01-seed7/runner-after.json",
+      "stored": "cold-01-seed7/runner-after.json",
+      "originalSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "storedSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-01-seed7/runner-before.json",
+      "stored": "cold-01-seed7/runner-before.json",
+      "originalSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "storedSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-01-seed7/spec.json",
+      "stored": "cold-01-seed7/spec.json",
+      "originalSha256": "f468b9e171018e45a865f97cfe015ae7039eeeac049bff1c7ed154cd9066a54c",
+      "storedSha256": "f468b9e171018e45a865f97cfe015ae7039eeeac049bff1c7ed154cd9066a54c",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "records/cold-01-validation-final.json",
+      "stored": "cold-01-seed7/validation.json",
+      "originalSha256": "29b5741ab8d16d5f4b3fe21943908e7061cb835428fbf3b4c3d25777a24fa82d",
+      "storedSha256": "29b5741ab8d16d5f4b3fe21943908e7061cb835428fbf3b4c3d25777a24fa82d",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-02-seed64/cases/001-cold-64.json",
+      "stored": "cold-02-seed64/cases/001-cold-64.json",
+      "originalSha256": "532902a355584bb38afbedc38901966e215cd87a4f51adec02c438780dafd201",
+      "storedSha256": "532902a355584bb38afbedc38901966e215cd87a4f51adec02c438780dafd201",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-02-seed64/cases/001-cold-64.png",
+      "stored": "cold-02-seed64/cases/001-cold-64.png",
+      "originalSha256": "473fb45f0299d173fea3711244cb1072bbb0bd49ca0cbbd91c45a085180785d2",
+      "storedSha256": "473fb45f0299d173fea3711244cb1072bbb0bd49ca0cbbd91c45a085180785d2",
+      "sanitized": false,
+      "gzip": false
+    },
+    {
+      "source": "cold-02-seed64/cases/001-cold-64.report.json",
+      "stored": "cold-02-seed64/cases/001-cold-64.report.json",
+      "originalSha256": "62696972663125b1ac489e67ae829f2c5492654148d1e24939710463e8020a5c",
+      "storedSha256": "62696972663125b1ac489e67ae829f2c5492654148d1e24939710463e8020a5c",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-02-seed64/cases/001-cold-64.state.txt",
+      "stored": "cold-02-seed64/cases/001-cold-64.state.txt",
+      "originalSha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "storedSha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-02-seed64/identity.json",
+      "stored": "cold-02-seed64/identity.json",
+      "originalSha256": "a36a4c0a5fcfdc54fffd5917124bf5b70d1cb99ff5f36af0be142196d0fcf9dc",
+      "storedSha256": "504887e187bd260ffea3dea4af4a62d9fd2ee86ebb2b0e490daf17a40cdea4ae",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-02-seed64/input-manifest-after.json",
+      "stored": "cold-02-seed64/input-manifest-after.json.gz",
+      "originalSha256": "fca419ad5ffbde6e38514d35d6effe2c7e4cf8e311523e5532609e80a3a23759",
+      "storedSha256": "dd38c4f64cd351f58a1c172022be1f6a92a38155fca252998d5645f36a2a7dd3",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "cold-02-seed64/input-manifest-before.json",
+      "stored": "cold-02-seed64/input-manifest-before.json.gz",
+      "originalSha256": "8ef116d14539ddf3498ef45c7437d27e4f6be55d72b82cde92be43c120bf0fa6",
+      "storedSha256": "cd7e0992481bec574431c6025a019f37e13f368553cb16710143dc5db606226e",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "cold-02-seed64/owned-processes-before-close.json",
+      "stored": "cold-02-seed64/owned-processes-before-close.json",
+      "originalSha256": "641fa51c2e9f96ccd15332224d55330e9d10ff5db06e097f38406dff9d0abb09",
+      "storedSha256": "641fa51c2e9f96ccd15332224d55330e9d10ff5db06e097f38406dff9d0abb09",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-02-seed64/owned-processes-before.json",
+      "stored": "cold-02-seed64/owned-processes-before.json",
+      "originalSha256": "859d33b1c77222514048787d5c314e369019f7d3fa398ca3cb5bd77198a3fbc2",
+      "storedSha256": "859d33b1c77222514048787d5c314e369019f7d3fa398ca3cb5bd77198a3fbc2",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-02-seed64/progress.json",
+      "stored": "cold-02-seed64/progress.json",
+      "originalSha256": "a5b72f78252c9f3a8ff16e5c62a3b57d3ba7f38a8d84f6c631a98d2a7c01385a",
+      "storedSha256": "1b2fc565e5f4bac7c4e7a4e395341148ab29d33c0d419b869b40a28d6711262c",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-02-seed64/result.json",
+      "stored": "cold-02-seed64/result.json",
+      "originalSha256": "0c799a098d61f18ff0eb21d196a7ddc6efd96cfeffb974e2ffe49dd54ae815e2",
+      "storedSha256": "045d9f6ec7f97b73ddcbd0b1c27b78fea06f88ae99ddc3f3cc547b2eab28522c",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-02-seed64/run-start.json",
+      "stored": "cold-02-seed64/run-start.json",
+      "originalSha256": "fcaa5940d2fdd6fb90d2f3b584a98c788043ad9ab8784689455e5f24e9d41beb",
+      "storedSha256": "21e61c270598517ae291cc2332448effc7d5d2d33d274e06c4ed1e3602ccdc01",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-02-seed64/runner-after.json",
+      "stored": "cold-02-seed64/runner-after.json",
+      "originalSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "storedSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-02-seed64/runner-before.json",
+      "stored": "cold-02-seed64/runner-before.json",
+      "originalSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "storedSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-02-seed64/spec.json",
+      "stored": "cold-02-seed64/spec.json",
+      "originalSha256": "472aa76ad488484a8317ec929362d1a2d98fd3461231f16841f2ab83fb8dce62",
+      "storedSha256": "472aa76ad488484a8317ec929362d1a2d98fd3461231f16841f2ab83fb8dce62",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "records/cold-02-validation-final.json",
+      "stored": "cold-02-seed64/validation.json",
+      "originalSha256": "438ade7551aae3894cbe230df1600577008011c25090bb11142815e4bc063009",
+      "storedSha256": "438ade7551aae3894cbe230df1600577008011c25090bb11142815e4bc063009",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-03-seed13/cases/001-cold-13.json",
+      "stored": "cold-03-seed13/cases/001-cold-13.json",
+      "originalSha256": "cb5e05a75d1f0849a1b67baeaaf5d3f3b87407c1f5d1fd52908e95906462e3cc",
+      "storedSha256": "cb5e05a75d1f0849a1b67baeaaf5d3f3b87407c1f5d1fd52908e95906462e3cc",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-03-seed13/cases/001-cold-13.png",
+      "stored": "cold-03-seed13/cases/001-cold-13.png",
+      "originalSha256": "473fb45f0299d173fea3711244cb1072bbb0bd49ca0cbbd91c45a085180785d2",
+      "storedSha256": "473fb45f0299d173fea3711244cb1072bbb0bd49ca0cbbd91c45a085180785d2",
+      "sanitized": false,
+      "gzip": false
+    },
+    {
+      "source": "cold-03-seed13/cases/001-cold-13.report.json",
+      "stored": "cold-03-seed13/cases/001-cold-13.report.json",
+      "originalSha256": "908c0da153116a94e0141a5bb9d40da3faa748aeab2cc764a1b738cc184ff1c9",
+      "storedSha256": "908c0da153116a94e0141a5bb9d40da3faa748aeab2cc764a1b738cc184ff1c9",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-03-seed13/cases/001-cold-13.state.txt",
+      "stored": "cold-03-seed13/cases/001-cold-13.state.txt",
+      "originalSha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "storedSha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-03-seed13/identity.json",
+      "stored": "cold-03-seed13/identity.json",
+      "originalSha256": "68d9d1c08fc69ce595a4ce1f3e61a84cac554b7c514fe81a336857e2977dfd0f",
+      "storedSha256": "dc1c3e4f18b202c72c0be7da7f663debe28a1791942280c31679dab2cb2cc581",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-03-seed13/input-manifest-after.json",
+      "stored": "cold-03-seed13/input-manifest-after.json.gz",
+      "originalSha256": "098c4f0a9e7510009707248b871ad7ef8a9a0bb192ee8f0115c4f9dc89989939",
+      "storedSha256": "5fc33bbed68159a0c2ddeb8b4574f9b8aa34c29ac8016e79a80e526f9ea6b282",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "cold-03-seed13/input-manifest-before.json",
+      "stored": "cold-03-seed13/input-manifest-before.json.gz",
+      "originalSha256": "1a447487e4f5fc3e3bf1962bafd9d4539f0e0d7aa6fc3bf661a993558895f5e4",
+      "storedSha256": "196fe97519f7d8bb8466bc4dac93fc22b99ad70211718bd4aa0571922d46e929",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "cold-03-seed13/owned-processes-before-close.json",
+      "stored": "cold-03-seed13/owned-processes-before-close.json",
+      "originalSha256": "1de8b01a7f7e62168649b9d2f0b250202a958c81f07431e5436ca1e73d609595",
+      "storedSha256": "1de8b01a7f7e62168649b9d2f0b250202a958c81f07431e5436ca1e73d609595",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-03-seed13/owned-processes-before.json",
+      "stored": "cold-03-seed13/owned-processes-before.json",
+      "originalSha256": "78ea0576a9b62f7db0faedb99324c2def726533b96fa9c2202e2beacebfc9bac",
+      "storedSha256": "78ea0576a9b62f7db0faedb99324c2def726533b96fa9c2202e2beacebfc9bac",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-03-seed13/progress.json",
+      "stored": "cold-03-seed13/progress.json",
+      "originalSha256": "31d36aacc1d98a1edf758d10353e93562204f922ac9fdf3f265891f2ef54494c",
+      "storedSha256": "abd313a418518b6173465952b19823b446d6c7f48f8ed8281d2e59c1ad80ed45",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-03-seed13/result.json",
+      "stored": "cold-03-seed13/result.json",
+      "originalSha256": "f5d513594a2c08373a730248be7fbdac00e235397ea16fa0c07e915bd93a89bd",
+      "storedSha256": "15feadd961608e5b10f9646cdbcb9835f45dfded5fce3cc7500137652173ba63",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-03-seed13/run-start.json",
+      "stored": "cold-03-seed13/run-start.json",
+      "originalSha256": "74ee19b6b03e9c75fa7206028cc59a1fcc92390412cca68f83a2dde9175c3148",
+      "storedSha256": "1da96e6cd829417a25de7fcdff5cc60340a2afb061e3e022c099671ffbb62e7e",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-03-seed13/runner-after.json",
+      "stored": "cold-03-seed13/runner-after.json",
+      "originalSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "storedSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-03-seed13/runner-before.json",
+      "stored": "cold-03-seed13/runner-before.json",
+      "originalSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "storedSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "cold-03-seed13/spec.json",
+      "stored": "cold-03-seed13/spec.json",
+      "originalSha256": "8f2e0c861532b9848618b3193361227708178ed4340632cfeb1227a271474b99",
+      "storedSha256": "8f2e0c861532b9848618b3193361227708178ed4340632cfeb1227a271474b99",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "records/cold-03-validation-final.json",
+      "stored": "cold-03-seed13/validation.json",
+      "originalSha256": "bfd978338f37ac606ad656a87f718e7065524f6e09062c3c50f5c6dbef71f6a4",
+      "storedSha256": "bfd978338f37ac606ad656a87f718e7065524f6e09062c3c50f5c6dbef71f6a4",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized/cases/001-unauthorized-7.json",
+      "stored": "canaries/run-unauthorized/cases/001-unauthorized-7.json",
+      "originalSha256": "270ac8a98e5da1ebce346cea9a55bfbde990abf320889b57d49e7b187d6bdda8",
+      "storedSha256": "270ac8a98e5da1ebce346cea9a55bfbde990abf320889b57d49e7b187d6bdda8",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized/cases/001-unauthorized-7.png",
+      "stored": "canaries/run-unauthorized/cases/001-unauthorized-7.png",
+      "originalSha256": "154387389da712043c3504d2ea5e1b82f6f21f8200c32567d5c9048c99e6e123",
+      "storedSha256": "154387389da712043c3504d2ea5e1b82f6f21f8200c32567d5c9048c99e6e123",
+      "sanitized": false,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized/cases/001-unauthorized-7.report.json",
+      "stored": "canaries/run-unauthorized/cases/001-unauthorized-7.report.json",
+      "originalSha256": "4d6146c9cfb654fe048dac3c641ee6443f22719571724948badb5ed9b6255d23",
+      "storedSha256": "4d6146c9cfb654fe048dac3c641ee6443f22719571724948badb5ed9b6255d23",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized/cases/001-unauthorized-7.state.txt",
+      "stored": "canaries/run-unauthorized/cases/001-unauthorized-7.state.txt",
+      "originalSha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "storedSha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized/identity.json",
+      "stored": "canaries/run-unauthorized/identity.json",
+      "originalSha256": "4c5efaefdb576cf758d3d2403aa5b3aea3fc441d6c863852744bd360ee59fef4",
+      "storedSha256": "021888dc56fb0daad49e1e552ab9e43fac353e901ed9ac09b38ae7b434476851",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized/input-manifest-after.json",
+      "stored": "canaries/run-unauthorized/input-manifest-after.json.gz",
+      "originalSha256": "31185201c9e0ea751100f6f586ed9f6f0de1ed9bdc0406a071fe8890c87f0916",
+      "storedSha256": "4ee9a831e5047a5d2f198105aae712beb3e775313c2aaa0e5e612024c3880d59",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "run-unauthorized/input-manifest-before.json",
+      "stored": "canaries/run-unauthorized/input-manifest-before.json.gz",
+      "originalSha256": "a0c746c9bed3e67e8f2e1a3741729477e4c1b4d9e0760083f11cb7d382d107ff",
+      "storedSha256": "faa44b5525828a6b4bba24bd9cb6a0b04cd57629de4bacaf6b328a98b24d90a2",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "run-unauthorized/owned-processes-before-close.json",
+      "stored": "canaries/run-unauthorized/owned-processes-before-close.json",
+      "originalSha256": "f2a4d479fb30e61425c5c86d451f5ee6a0922658c4f1848704fe5a8e067310ac",
+      "storedSha256": "f2a4d479fb30e61425c5c86d451f5ee6a0922658c4f1848704fe5a8e067310ac",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized/owned-processes-before.json",
+      "stored": "canaries/run-unauthorized/owned-processes-before.json",
+      "originalSha256": "ebb6fb5e7a34093cc06a0ff7dfd8ac80c08fdfb97b117fec6b7fe125d51f8e88",
+      "storedSha256": "ebb6fb5e7a34093cc06a0ff7dfd8ac80c08fdfb97b117fec6b7fe125d51f8e88",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized/progress.json",
+      "stored": "canaries/run-unauthorized/progress.json",
+      "originalSha256": "42d644c796879e8f4edc2b72a0637e483f964e1a958074f4e2256a0e397b3666",
+      "storedSha256": "eaf2ad9901966b3744723d5a2105369ea37a9d913becd0e1f7d3f67326a11a51",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized/result.json",
+      "stored": "canaries/run-unauthorized/result.json",
+      "originalSha256": "a1c87e28d5150236fc4edeca244a4937e7eef29414da463e990dd70b2bfc567d",
+      "storedSha256": "c04ddf83d23a3140e0c9371224540c0e7e766f1577c81524f897cc7f71b331c5",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized/run-start.json",
+      "stored": "canaries/run-unauthorized/run-start.json",
+      "originalSha256": "293704afead6f7ce2492ecbf027112e45ab7bb8cd8eb7758958018408d6b7897",
+      "storedSha256": "fefe2d7f28a85e649696df64caf702b0cec5e251cfd43f4e23f06401c8154659",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized/runner-after.json",
+      "stored": "canaries/run-unauthorized/runner-after.json",
+      "originalSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "storedSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized/runner-before.json",
+      "stored": "canaries/run-unauthorized/runner-before.json",
+      "originalSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "storedSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized/spec.json",
+      "stored": "canaries/run-unauthorized/spec.json",
+      "originalSha256": "58fb94632f6407602de9c385c80da7e76109d8d04b530a8284e17b9ac1b9eef1",
+      "storedSha256": "58fb94632f6407602de9c385c80da7e76109d8d04b530a8284e17b9ac1b9eef1",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel/cases/001-cancel-7.json",
+      "stored": "canaries/run-cancel/cases/001-cancel-7.json",
+      "originalSha256": "b553ef1b0c4a96cb51200db0b2eafa24a45fbb2c1f4f3ccfc8ac7686bfccfeaf",
+      "storedSha256": "b553ef1b0c4a96cb51200db0b2eafa24a45fbb2c1f4f3ccfc8ac7686bfccfeaf",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel/cases/001-cancel-7.png",
+      "stored": "canaries/run-cancel/cases/001-cancel-7.png",
+      "originalSha256": "4f6b20f937d413035c59e67edda7d10711a4d917563eb4b4351e6ba2c0a45adc",
+      "storedSha256": "4f6b20f937d413035c59e67edda7d10711a4d917563eb4b4351e6ba2c0a45adc",
+      "sanitized": false,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel/cases/001-cancel-7.report.json",
+      "stored": "canaries/run-cancel/cases/001-cancel-7.report.json",
+      "originalSha256": "0a9f18227a11410f9112f2fe4969748833a9fb5abcf7f86e0b3ec5eb19674c76",
+      "storedSha256": "0a9f18227a11410f9112f2fe4969748833a9fb5abcf7f86e0b3ec5eb19674c76",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel/cases/001-cancel-7.state.txt",
+      "stored": "canaries/run-cancel/cases/001-cancel-7.state.txt",
+      "originalSha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "storedSha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel/identity.json",
+      "stored": "canaries/run-cancel/identity.json",
+      "originalSha256": "2a8a7cc6cc19303407167d12de8b47bcd5028f18c224aa961874a914226e744c",
+      "storedSha256": "87b1ec89520359e39515b601240dbfc10f8057af4ea4cf15750d1aa6fe350f48",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel/input-manifest-after.json",
+      "stored": "canaries/run-cancel/input-manifest-after.json.gz",
+      "originalSha256": "52a9f255eb393128853c66d02d5e5d89c2487f71fbdcb6a63de8987a5b42c402",
+      "storedSha256": "a74503e2072432bb63802b4a35fbe215385ca6534baf7714fc7d156ecebd69de",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "run-cancel/input-manifest-before.json",
+      "stored": "canaries/run-cancel/input-manifest-before.json.gz",
+      "originalSha256": "85d176b89b7cacb5247dacc193f04a92eab9ce76d8a9b018d6b9316af4666945",
+      "storedSha256": "c2a386adc5fef3685b69bf7cad32e17552db900d4c618c7058c217c5f2b56a15",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "run-cancel/owned-processes-before-close.json",
+      "stored": "canaries/run-cancel/owned-processes-before-close.json",
+      "originalSha256": "333a9d0b521eef1f14317a33f0cce9d7c6f6d035584b16c069cb636be7b99cb2",
+      "storedSha256": "333a9d0b521eef1f14317a33f0cce9d7c6f6d035584b16c069cb636be7b99cb2",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel/owned-processes-before.json",
+      "stored": "canaries/run-cancel/owned-processes-before.json",
+      "originalSha256": "287123bdf778e8ab2599ee038e2e82a58a5a2867514fcee6954e704e9814a886",
+      "storedSha256": "287123bdf778e8ab2599ee038e2e82a58a5a2867514fcee6954e704e9814a886",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel/progress.json",
+      "stored": "canaries/run-cancel/progress.json",
+      "originalSha256": "1ce29d7431b5ba341256cc7363221504ed1ead42383027d97b790d778631d6ab",
+      "storedSha256": "4d323bb5b07f4c71dcddb57e20daf25ee33f10fd775715587b6a30f855aaa335",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel/result.json",
+      "stored": "canaries/run-cancel/result.json",
+      "originalSha256": "66e36602c60f026b031050f5941ebe6f8303c5790305e696be87878c4ebfed40",
+      "storedSha256": "99877a710f1fbd5573a7f4b821407545701fc296bf98ff56ba838c740480d7a6",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel/run-start.json",
+      "stored": "canaries/run-cancel/run-start.json",
+      "originalSha256": "60ff6cae4b91e82b571d6bed55d723464846b227a112bd3c3170944be7964b0d",
+      "storedSha256": "e1cd4a6a0e65b090e43d108df8a411715c025ded4c4c79802474c218c5370e01",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel/runner-after.json",
+      "stored": "canaries/run-cancel/runner-after.json",
+      "originalSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "storedSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel/runner-before.json",
+      "stored": "canaries/run-cancel/runner-before.json",
+      "originalSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "storedSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel/spec.json",
+      "stored": "canaries/run-cancel/spec.json",
+      "originalSha256": "54d4b4e11e13fca9025afa22d8c055f76803f6d3dba45f76d0c9b9fbc79ab1a6",
+      "storedSha256": "54d4b4e11e13fca9025afa22d8c055f76803f6d3dba45f76d0c9b9fbc79ab1a6",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized-r2/cases/001-unauthorized-7.json",
+      "stored": "canaries/run-unauthorized-r2/cases/001-unauthorized-7.json",
+      "originalSha256": "0a81f68fe98d83115b27190fc8f9d599a7f4105f16554cc3006038309a4c8bf6",
+      "storedSha256": "0a81f68fe98d83115b27190fc8f9d599a7f4105f16554cc3006038309a4c8bf6",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized-r2/cases/001-unauthorized-7.png",
+      "stored": "canaries/run-unauthorized-r2/cases/001-unauthorized-7.png",
+      "originalSha256": "154387389da712043c3504d2ea5e1b82f6f21f8200c32567d5c9048c99e6e123",
+      "storedSha256": "154387389da712043c3504d2ea5e1b82f6f21f8200c32567d5c9048c99e6e123",
+      "sanitized": false,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized-r2/cases/001-unauthorized-7.report.json",
+      "stored": "canaries/run-unauthorized-r2/cases/001-unauthorized-7.report.json",
+      "originalSha256": "4d6146c9cfb654fe048dac3c641ee6443f22719571724948badb5ed9b6255d23",
+      "storedSha256": "4d6146c9cfb654fe048dac3c641ee6443f22719571724948badb5ed9b6255d23",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized-r2/cases/001-unauthorized-7.state.txt",
+      "stored": "canaries/run-unauthorized-r2/cases/001-unauthorized-7.state.txt",
+      "originalSha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "storedSha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized-r2/identity.json",
+      "stored": "canaries/run-unauthorized-r2/identity.json",
+      "originalSha256": "d82cc881aa23e2b0d0fda1500fb3e19f4f894ef37fb1207b6151d5160c7e99b0",
+      "storedSha256": "6d6f481ae868990bcde922e6d393ebed4d7300fcac5adb6d1d4b3594e564cda0",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized-r2/input-manifest-after.json",
+      "stored": "canaries/run-unauthorized-r2/input-manifest-after.json.gz",
+      "originalSha256": "295f71575a5c0eea601928ec5550fab49cf385a5d70fe224a8be87bec793caf6",
+      "storedSha256": "eb01c020ae605ef2ae5d4169d83a4bbba2e83e9b361481975350568335a71c88",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "run-unauthorized-r2/input-manifest-before.json",
+      "stored": "canaries/run-unauthorized-r2/input-manifest-before.json.gz",
+      "originalSha256": "4ffeca5e90fe5a2072f3e9b65b035e719f6314d9ff6088bf920791b7976c1372",
+      "storedSha256": "fdf33e88257997a013e041eb1ccf963670ab647922225b2964dec4b51424e94a",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "run-unauthorized-r2/owned-processes-before-close.json",
+      "stored": "canaries/run-unauthorized-r2/owned-processes-before-close.json",
+      "originalSha256": "1b7b3a83763f86c72e484254756b33c746a4d5ceea3711e6769ad2afec167190",
+      "storedSha256": "1b7b3a83763f86c72e484254756b33c746a4d5ceea3711e6769ad2afec167190",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized-r2/owned-processes-before.json",
+      "stored": "canaries/run-unauthorized-r2/owned-processes-before.json",
+      "originalSha256": "63ae6337054cf4ccde1319e135b8b9c30d41a61ef06756bc2a7e161f16a682cb",
+      "storedSha256": "63ae6337054cf4ccde1319e135b8b9c30d41a61ef06756bc2a7e161f16a682cb",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized-r2/progress.json",
+      "stored": "canaries/run-unauthorized-r2/progress.json",
+      "originalSha256": "ee97ffa446cbd35f41b21765d07b8abe87df47a9d3d2227f78f3d32f032dc90a",
+      "storedSha256": "7eb356038e32796673515c3a2df12e7cabd0eb1081f500de3deb4237ad71f2ed",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized-r2/result.json",
+      "stored": "canaries/run-unauthorized-r2/result.json",
+      "originalSha256": "68f42aa4cf4ac51b8de4e29b017c5b0543f3d979f77b89589ed917d4e06c1db2",
+      "storedSha256": "e87774fa7f9ee03581c5fd01fa4db1ecae691bf4f506c299ba76acea08f03a0a",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized-r2/run-start.json",
+      "stored": "canaries/run-unauthorized-r2/run-start.json",
+      "originalSha256": "7e2f50192aa9c205065d7882b4eb2e660dabb3256e46168587b4562c11f1dc77",
+      "storedSha256": "750affe46a7c45ed7755e8c9d5383780c149147a5712ce7151e738fc82e1b5bb",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized-r2/runner-after.json",
+      "stored": "canaries/run-unauthorized-r2/runner-after.json",
+      "originalSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "storedSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized-r2/runner-before.json",
+      "stored": "canaries/run-unauthorized-r2/runner-before.json",
+      "originalSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "storedSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-unauthorized-r2/spec.json",
+      "stored": "canaries/run-unauthorized-r2/spec.json",
+      "originalSha256": "58fb94632f6407602de9c385c80da7e76109d8d04b530a8284e17b9ac1b9eef1",
+      "storedSha256": "58fb94632f6407602de9c385c80da7e76109d8d04b530a8284e17b9ac1b9eef1",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel-r2/cases/001-cancel-7.json",
+      "stored": "canaries/run-cancel-r2/cases/001-cancel-7.json",
+      "originalSha256": "1ebde4525d155b0046515fb0353014bc16d82e09aa41bfc731ed2328dee601d8",
+      "storedSha256": "1ebde4525d155b0046515fb0353014bc16d82e09aa41bfc731ed2328dee601d8",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel-r2/cases/001-cancel-7.png",
+      "stored": "canaries/run-cancel-r2/cases/001-cancel-7.png",
+      "originalSha256": "cbca6aa6cbb25354267c2ffc4be6782253998d42c69381d6ed9515baa8348942",
+      "storedSha256": "cbca6aa6cbb25354267c2ffc4be6782253998d42c69381d6ed9515baa8348942",
+      "sanitized": false,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel-r2/cases/001-cancel-7.report.json",
+      "stored": "canaries/run-cancel-r2/cases/001-cancel-7.report.json",
+      "originalSha256": "7df16601048bbd870d84372daf8387aa82b373c503339b22c4244a9f73fb9e22",
+      "storedSha256": "7df16601048bbd870d84372daf8387aa82b373c503339b22c4244a9f73fb9e22",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel-r2/cases/001-cancel-7.state.txt",
+      "stored": "canaries/run-cancel-r2/cases/001-cancel-7.state.txt",
+      "originalSha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "storedSha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel-r2/identity.json",
+      "stored": "canaries/run-cancel-r2/identity.json",
+      "originalSha256": "ca49773e7b85d4439a351b6f4c8810d20f3d2c016c536f9f2e83d2fc3e9c083b",
+      "storedSha256": "f5f260ecfde28b5855a433af0a111f644ecc1d84181435d8f2f93b6eb7df549d",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel-r2/input-manifest-after.json",
+      "stored": "canaries/run-cancel-r2/input-manifest-after.json.gz",
+      "originalSha256": "05691a696efd0bcdfc2e79d1a7ee853552d2a70b943cbad12f2586970eea32b1",
+      "storedSha256": "111a6f0e00b6dff9f655175593a986c682e5f449a5413d9172a9dab2d9a71c77",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "run-cancel-r2/input-manifest-before.json",
+      "stored": "canaries/run-cancel-r2/input-manifest-before.json.gz",
+      "originalSha256": "8dcfed16add6f37ba958935905f918815f712348942febdd71c921d2029b681a",
+      "storedSha256": "c4b4ab309f3619ca403da4f8db2b7d53ee9de5561afbda28fd9f42a395850768",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "run-cancel-r2/owned-processes-before-close.json",
+      "stored": "canaries/run-cancel-r2/owned-processes-before-close.json",
+      "originalSha256": "5dae872490bd902d179a23d929312d717b1f6fa8b47b7713bf11f9a3391fb7fc",
+      "storedSha256": "5dae872490bd902d179a23d929312d717b1f6fa8b47b7713bf11f9a3391fb7fc",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel-r2/owned-processes-before.json",
+      "stored": "canaries/run-cancel-r2/owned-processes-before.json",
+      "originalSha256": "303350850077f764cb0af20f512f4d8d68e23a1435c87543aaf572c083f1a0f6",
+      "storedSha256": "303350850077f764cb0af20f512f4d8d68e23a1435c87543aaf572c083f1a0f6",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel-r2/progress.json",
+      "stored": "canaries/run-cancel-r2/progress.json",
+      "originalSha256": "b5cb0c397b57208a0dc46482b2aabc907d2c0e95a9f908c49e70b479f0d34b97",
+      "storedSha256": "aa52bca2333d096c165ca0b70ef79770d578ca51c3ad9e3974a22d15c7801c97",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel-r2/result.json",
+      "stored": "canaries/run-cancel-r2/result.json",
+      "originalSha256": "12fe6377d16aa08632926faf8c7c1f478251bc0bbb2d97531c80315ff3d72433",
+      "storedSha256": "3144e1b2305b159469ab53479d660b9360146ccf8bda6721ef027b327626b6a4",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel-r2/run-start.json",
+      "stored": "canaries/run-cancel-r2/run-start.json",
+      "originalSha256": "90e718de59f287b9f001e318eab51c8b5501f9afb0e925ceaa87cbf86f53d147",
+      "storedSha256": "1fa6e6ae4373c0d0f098b960862c18c8354e1f0c2980be3f80c6af01d4596b8e",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel-r2/runner-after.json",
+      "stored": "canaries/run-cancel-r2/runner-after.json",
+      "originalSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "storedSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel-r2/runner-before.json",
+      "stored": "canaries/run-cancel-r2/runner-before.json",
+      "originalSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "storedSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-cancel-r2/spec.json",
+      "stored": "canaries/run-cancel-r2/spec.json",
+      "originalSha256": "54d4b4e11e13fca9025afa22d8c055f76803f6d3dba45f76d0c9b9fbc79ab1a6",
+      "storedSha256": "54d4b4e11e13fca9025afa22d8c055f76803f6d3dba45f76d0c9b9fbc79ab1a6",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-scope-loss/cases/001-scope-loss-7.json",
+      "stored": "canaries/run-scope-loss/cases/001-scope-loss-7.json",
+      "originalSha256": "524e053b790dab050c91957724e711929909730c1baa30d0ac17ae64e657692d",
+      "storedSha256": "524e053b790dab050c91957724e711929909730c1baa30d0ac17ae64e657692d",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-scope-loss/cases/001-scope-loss-7.png",
+      "stored": "canaries/run-scope-loss/cases/001-scope-loss-7.png",
+      "originalSha256": "f4a824731023eefbf694f31b4a1c13c23747da899dd531bf42fa1710e7da30e2",
+      "storedSha256": "f4a824731023eefbf694f31b4a1c13c23747da899dd531bf42fa1710e7da30e2",
+      "sanitized": false,
+      "gzip": false
+    },
+    {
+      "source": "run-scope-loss/cases/001-scope-loss-7.report.json",
+      "stored": "canaries/run-scope-loss/cases/001-scope-loss-7.report.json",
+      "originalSha256": "08358e7920955850048ba4b75c166f37a62a61e684a5f07f7bc53c6829bac104",
+      "storedSha256": "08358e7920955850048ba4b75c166f37a62a61e684a5f07f7bc53c6829bac104",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-scope-loss/cases/001-scope-loss-7.state.txt",
+      "stored": "canaries/run-scope-loss/cases/001-scope-loss-7.state.txt",
+      "originalSha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "storedSha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-scope-loss/identity.json",
+      "stored": "canaries/run-scope-loss/identity.json",
+      "originalSha256": "ac95c1a6d2a3237124d93a32a2cf61d5ee3bec6e0fff51ba77a2b2ee9f42b10f",
+      "storedSha256": "8092fe6fb3a9a5371cf521d1b3d214c1c34780d37dba1af769cd0e8c3b818f5c",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-scope-loss/input-manifest-after.json",
+      "stored": "canaries/run-scope-loss/input-manifest-after.json.gz",
+      "originalSha256": "7a1b3e147869f0895d703a82c063bb98b6084bca8075f1a0d4ba85c203dad640",
+      "storedSha256": "f32916c27f803895e25c9cdbd87913aaf1999c7e1b4dfe51dc88c064476a96b1",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "run-scope-loss/input-manifest-before.json",
+      "stored": "canaries/run-scope-loss/input-manifest-before.json.gz",
+      "originalSha256": "5462d6b69fee26f0fda52e6302d6b0d16ede651ab17fbfa1aaef2de21080cd39",
+      "storedSha256": "998248565b42ea81f9d0a94a1af2306844714d6fd8d497f61f5502c2827ec287",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "run-scope-loss/owned-processes-before-close.json",
+      "stored": "canaries/run-scope-loss/owned-processes-before-close.json",
+      "originalSha256": "75d412e27c50d434e47fa314618d246d00c43d06c901e1e9666c3ebd42b68b73",
+      "storedSha256": "75d412e27c50d434e47fa314618d246d00c43d06c901e1e9666c3ebd42b68b73",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-scope-loss/owned-processes-before.json",
+      "stored": "canaries/run-scope-loss/owned-processes-before.json",
+      "originalSha256": "b8c8cabc221b1510b06302871fc3cda1c95e7f3330c9fbfc29be4710d4c21a2b",
+      "storedSha256": "b8c8cabc221b1510b06302871fc3cda1c95e7f3330c9fbfc29be4710d4c21a2b",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-scope-loss/progress.json",
+      "stored": "canaries/run-scope-loss/progress.json",
+      "originalSha256": "a78b68a3ca4450d8402131d0217d11228fad12a8b0e5920f0498fca9a9766094",
+      "storedSha256": "fac282da9055f503c05cc5df0764920aea4fd988a3f30d78cd08a50f30c421ac",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-scope-loss/result.json",
+      "stored": "canaries/run-scope-loss/result.json",
+      "originalSha256": "4a54b326ca97dc6f5080b2776126a5f36204971f15865da782d9780b001bfe44",
+      "storedSha256": "d7332b476ff48c5c73620a59574e13c3332aa0a73225e06f822495605c19c0e0",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-scope-loss/run-start.json",
+      "stored": "canaries/run-scope-loss/run-start.json",
+      "originalSha256": "dbd6a8b0c5e6571ba7921a2495d9b223db7563aca9b54776b55a20088fe75444",
+      "storedSha256": "2040fd5cb461826e37499d60549639a7da4d3a7b09adcf9c8b1add08f6e7745c",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-scope-loss/runner-after.json",
+      "stored": "canaries/run-scope-loss/runner-after.json",
+      "originalSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "storedSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-scope-loss/runner-before.json",
+      "stored": "canaries/run-scope-loss/runner-before.json",
+      "originalSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "storedSha256": "73e1b23062557ba21ac4bec362664bd825866658fb4b773e3b7374b89ed0023a",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "run-scope-loss/spec.json",
+      "stored": "canaries/run-scope-loss/spec.json",
+      "originalSha256": "7115134bd448b8d4707a195125dccfc391aa887cb2227e2416e31cb2782fbd9a",
+      "storedSha256": "7115134bd448b8d4707a195125dccfc391aa887cb2227e2416e31cb2782fbd9a",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/positive-run-2/cases/001-positive.json",
+      "stored": "canaries/host/positive-run-2/cases/001-positive.json",
+      "originalSha256": "ac855bf53e9ceef7cf1cb28b5769d9eae9431f5beffeac6ee2570e3a7b340808",
+      "storedSha256": "ac855bf53e9ceef7cf1cb28b5769d9eae9431f5beffeac6ee2570e3a7b340808",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/positive-run-2/cases/001-positive.report.json",
+      "stored": "canaries/host/positive-run-2/cases/001-positive.report.json",
+      "originalSha256": "8676df919427b8a72f429ed5a2c6dbe29cea60dffac43abf8d288b2618d791da",
+      "storedSha256": "8676df919427b8a72f429ed5a2c6dbe29cea60dffac43abf8d288b2618d791da",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/positive-run-2/cases/001-positive.state.txt",
+      "stored": "canaries/host/positive-run-2/cases/001-positive.state.txt",
+      "originalSha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "storedSha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/positive-run-2/identity.json",
+      "stored": "canaries/host/positive-run-2/identity.json",
+      "originalSha256": "e8ea59cf05ef8c5978baefeb550efcb9fecc5808e4a548932462e342712f4fee",
+      "storedSha256": "b57923e02aef942a5dee17b5abe56f0e99e3e288b997a29c73839218bd03f9ce",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/positive-run-2/input-manifest-after.json",
+      "stored": "canaries/host/positive-run-2/input-manifest-after.json.gz",
+      "originalSha256": "0059774e3d9457787f376885c55733ff58f573565909591c1d52d381799d0290",
+      "storedSha256": "65e904183748abef19403b8562dfe725b18a08ec8ab2d9a1cca9582553cc25d8",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "host/canaries/positive-run-2/input-manifest-before.json",
+      "stored": "canaries/host/positive-run-2/input-manifest-before.json.gz",
+      "originalSha256": "e1dbd6095f664ed2e2389c505b0a79a480cd12d4de41aa8e2ed68798155a6581",
+      "storedSha256": "653f45303d3bc2bd09901214cc2f198fef1dd40cb3d5b7b8416d24722b726cfe",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "host/canaries/positive-run-2/owned-processes-before-close.json",
+      "stored": "canaries/host/positive-run-2/owned-processes-before-close.json",
+      "originalSha256": "a29438fef0a45c71a2c410c9e50b44dec25899b49748bb1b5c84eb9f9caf59fd",
+      "storedSha256": "a29438fef0a45c71a2c410c9e50b44dec25899b49748bb1b5c84eb9f9caf59fd",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/positive-run-2/owned-processes-before.json",
+      "stored": "canaries/host/positive-run-2/owned-processes-before.json",
+      "originalSha256": "a29438fef0a45c71a2c410c9e50b44dec25899b49748bb1b5c84eb9f9caf59fd",
+      "storedSha256": "a29438fef0a45c71a2c410c9e50b44dec25899b49748bb1b5c84eb9f9caf59fd",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/positive-run-2/progress.json",
+      "stored": "canaries/host/positive-run-2/progress.json",
+      "originalSha256": "d087adaae51bbc3266be75aa0902e9a7085c9b0fc8bf3316997199928a94fa5e",
+      "storedSha256": "53d048fa32ae3e513ec41199c0b17151f9de1ae39342fa08cf7df75592dd4d9f",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/positive-run-2/result.json",
+      "stored": "canaries/host/positive-run-2/result.json",
+      "originalSha256": "fd243bbb1c3516bc32985d61c0bc5c5e6382e52bb9f43d4405280c4363eb22f3",
+      "storedSha256": "b77218a2da590f02f25893d8a47df88d9b00d8af67d58095e14559d3600cab34",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/positive-run-2/run-start.json",
+      "stored": "canaries/host/positive-run-2/run-start.json",
+      "originalSha256": "dc0fd3209eb1fd62ec211baa6e87aa6071fcfae2a2f2a86e3f75829ae538351c",
+      "storedSha256": "248af6d673f10b2751eb37e8872a8da0c33f7f30dc5c386ada26154cb74912ef",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/positive-run-2/runner-after.json",
+      "stored": "canaries/host/positive-run-2/runner-after.json",
+      "originalSha256": "884ac05cfb30b772ea3ae939a31af26f6d429dea5979797419daf8bb309ae9ad",
+      "storedSha256": "884ac05cfb30b772ea3ae939a31af26f6d429dea5979797419daf8bb309ae9ad",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/positive-run-2/runner-before.json",
+      "stored": "canaries/host/positive-run-2/runner-before.json",
+      "originalSha256": "884ac05cfb30b772ea3ae939a31af26f6d429dea5979797419daf8bb309ae9ad",
+      "storedSha256": "884ac05cfb30b772ea3ae939a31af26f6d429dea5979797419daf8bb309ae9ad",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/positive-run-2/spec.json",
+      "stored": "canaries/host/positive-run-2/spec.json",
+      "originalSha256": "4b5e774f2cc53013b25da755c47ebac9a640a830017d8c0a410c49a3e44c4518",
+      "storedSha256": "4b5e774f2cc53013b25da755c47ebac9a640a830017d8c0a410c49a3e44c4518",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/negative-run-2/cases/001-negative.json",
+      "stored": "canaries/host/negative-run-2/cases/001-negative.json",
+      "originalSha256": "56fc9015004793bdcd25c07e355478cd7eeb3f6aebe2acfbc4321188acad11c3",
+      "storedSha256": "56fc9015004793bdcd25c07e355478cd7eeb3f6aebe2acfbc4321188acad11c3",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/negative-run-2/cases/001-negative.state.txt",
+      "stored": "canaries/host/negative-run-2/cases/001-negative.state.txt",
+      "originalSha256": "04854f6b1178024b0738ff94555d0de90913a2ec81458d25566dddaeba9794cb",
+      "storedSha256": "04854f6b1178024b0738ff94555d0de90913a2ec81458d25566dddaeba9794cb",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/negative-run-2/identity.json",
+      "stored": "canaries/host/negative-run-2/identity.json",
+      "originalSha256": "680606bbe9bc7f772b56d9b10e47bf2d1110279ecd3e03c3093eb36b3cc1177d",
+      "storedSha256": "9574617b156b501cc7b84e3d7f93ea16db1b71ebc6c5f992e15c3a8786caa8a7",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/negative-run-2/input-manifest-after.json",
+      "stored": "canaries/host/negative-run-2/input-manifest-after.json.gz",
+      "originalSha256": "7e07c9079f4c1a0e2aef7debcf87a84ff66c37a135d2388bb4d126540a27c715",
+      "storedSha256": "ba130c7838c41b88c1e104072a394ee5dc02b653bc64463578a79a054889cc59",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "host/canaries/negative-run-2/input-manifest-before.json",
+      "stored": "canaries/host/negative-run-2/input-manifest-before.json.gz",
+      "originalSha256": "532fe434e328b40b6ae870246b335f54ca3d797ff5f2943f40eddb359627b377",
+      "storedSha256": "f9c0f7ce8f3057bd28bd7ae98f5956574723d986ea6562b4e1f797519dc02ca4",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "host/canaries/negative-run-2/owned-processes-before-close.json",
+      "stored": "canaries/host/negative-run-2/owned-processes-before-close.json",
+      "originalSha256": "d4f2573e0e0e9e395ad7d1c38ee0b3cf22023ddfebc47276b0a6e7a96adcd412",
+      "storedSha256": "d4f2573e0e0e9e395ad7d1c38ee0b3cf22023ddfebc47276b0a6e7a96adcd412",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/negative-run-2/owned-processes-before.json",
+      "stored": "canaries/host/negative-run-2/owned-processes-before.json",
+      "originalSha256": "d26c5ef5d3919e2ab8443df8b025d0ff885e21d0c3899eb1c159bcc367c0a142",
+      "storedSha256": "d26c5ef5d3919e2ab8443df8b025d0ff885e21d0c3899eb1c159bcc367c0a142",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/negative-run-2/progress.json",
+      "stored": "canaries/host/negative-run-2/progress.json",
+      "originalSha256": "b9f03853aad4e2525b7cd871626f8429478395d274d8f4b3b10005748295638b",
+      "storedSha256": "e1c73c0bdcae1ace89145e5c3e9e5e5467d60c090046f35b483395eb0b96fdd9",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/negative-run-2/result.json",
+      "stored": "canaries/host/negative-run-2/result.json",
+      "originalSha256": "95510265e6fb763e3ba96e5fd72f5ce53aaf65cda42d6faf8af74025d3b2a0bc",
+      "storedSha256": "9723f671b275033776e9bfb686477ae8d7f8f1ea6e6c28bd0dd834f1fac799e3",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/negative-run-2/run-start.json",
+      "stored": "canaries/host/negative-run-2/run-start.json",
+      "originalSha256": "fc231c66d558697bcccef5b6624f4019fffd3181cccdeca023fa59be0d17e326",
+      "storedSha256": "9278026b26cf68cdeab06d687cbaca0800d2991d5f338689f56323fc8fcc2c85",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/negative-run-2/runner-after.json",
+      "stored": "canaries/host/negative-run-2/runner-after.json",
+      "originalSha256": "884ac05cfb30b772ea3ae939a31af26f6d429dea5979797419daf8bb309ae9ad",
+      "storedSha256": "884ac05cfb30b772ea3ae939a31af26f6d429dea5979797419daf8bb309ae9ad",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/negative-run-2/runner-before.json",
+      "stored": "canaries/host/negative-run-2/runner-before.json",
+      "originalSha256": "884ac05cfb30b772ea3ae939a31af26f6d429dea5979797419daf8bb309ae9ad",
+      "storedSha256": "884ac05cfb30b772ea3ae939a31af26f6d429dea5979797419daf8bb309ae9ad",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/negative-run-2/spec.json",
+      "stored": "canaries/host/negative-run-2/spec.json",
+      "originalSha256": "dd2ca89b38f163785dcd06574e72a8171c7aa5cdafdd8d311e52a39e904da586",
+      "storedSha256": "dd2ca89b38f163785dcd06574e72a8171c7aa5cdafdd8d311e52a39e904da586",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/positive-run/input-manifest-after.json",
+      "stored": "canaries/host/positive-run/input-manifest-after.json.gz",
+      "originalSha256": "a58952326f67a65287585beaac07ca025d375bed63cc6623c473fb618a00c947",
+      "storedSha256": "51ce71e21d6710e1b4cbb1bdeffa6f7ec0b9ee60696b357a0747444e39418810",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "host/canaries/positive-run/input-manifest-before.json",
+      "stored": "canaries/host/positive-run/input-manifest-before.json.gz",
+      "originalSha256": "82f3d3812d1bcfb475d84c3168d7e0067811f3ecdf80b9f45d8fba51e55d3213",
+      "storedSha256": "e55304453a3bde43b299e774f2c2c1279341bd076dcf1e22ede7b30ee5f7a90a",
+      "sanitized": true,
+      "gzip": true
+    },
+    {
+      "source": "host/canaries/positive-run/result.json",
+      "stored": "canaries/host/positive-run/result.json",
+      "originalSha256": "55b1396b28e559a5caea6d181fc892cb0a0f1e619f9a072a9a1251effc31675d",
+      "storedSha256": "2f44298e34db74ca77f30dbdb3dd46996669149ffc41f5bcecf49412f926ba7e",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/positive-run/run-start.json",
+      "stored": "canaries/host/positive-run/run-start.json",
+      "originalSha256": "13d693269011ed41447075f00ad3b8463c19d3647e35c2fa7d661be50244d7fb",
+      "storedSha256": "2d8852d238d340f7f8bebde4b9ee355de5a813ede03681b60b0f7f6222607de5",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/positive-run/runner-after.json",
+      "stored": "canaries/host/positive-run/runner-after.json",
+      "originalSha256": "b917e39178f8546eae8dd5c425375f09067229eeb2ec9c2fbe21975783b97fda",
+      "storedSha256": "b917e39178f8546eae8dd5c425375f09067229eeb2ec9c2fbe21975783b97fda",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/positive-run/runner-before.json",
+      "stored": "canaries/host/positive-run/runner-before.json",
+      "originalSha256": "b917e39178f8546eae8dd5c425375f09067229eeb2ec9c2fbe21975783b97fda",
+      "storedSha256": "b917e39178f8546eae8dd5c425375f09067229eeb2ec9c2fbe21975783b97fda",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/positive-run/spec.json",
+      "stored": "canaries/host/positive-run/spec.json",
+      "originalSha256": "4b5e774f2cc53013b25da755c47ebac9a640a830017d8c0a410c49a3e44c4518",
+      "storedSha256": "4b5e774f2cc53013b25da755c47ebac9a640a830017d8c0a410c49a3e44c4518",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/pip-install.log",
+      "stored": "canaries/host/pip-install.log",
+      "originalSha256": "67bc6656b2b5d43ac9163262058223d0c111937dd089e484b20b6fa9ec5d9b2e",
+      "storedSha256": "67bc6656b2b5d43ac9163262058223d0c111937dd089e484b20b6fa9ec5d9b2e",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/positive.json",
+      "stored": "canaries/host/positive.json",
+      "originalSha256": "4b5e774f2cc53013b25da755c47ebac9a640a830017d8c0a410c49a3e44c4518",
+      "storedSha256": "4b5e774f2cc53013b25da755c47ebac9a640a830017d8c0a410c49a3e44c4518",
+      "sanitized": true,
+      "gzip": false
+    },
+    {
+      "source": "host/canaries/negative.json",
+      "stored": "canaries/host/negative.json",
+      "originalSha256": "dd2ca89b38f163785dcd06574e72a8171c7aa5cdafdd8d311e52a39e904da586",
+      "storedSha256": "dd2ca89b38f163785dcd06574e72a8171c7aa5cdafdd8d311e52a39e904da586",
+      "sanitized": true,
+      "gzip": false
+    }
+  ]
+}

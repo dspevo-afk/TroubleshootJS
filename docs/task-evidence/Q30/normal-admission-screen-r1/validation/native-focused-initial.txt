@@ -1,0 +1,16 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+
+Exception in thread "main" java.lang.IllegalArgumentException: Isolated qualification requires an exact simulator, coordinator, and request
+	at com.lushprojects.circuitjs1.client.IsolatedGenerationQualification.attach(IsolatedGenerationQualification.java:23)
+	at com.lushprojects.circuitjs1.client.IsolatedGenerationQualificationContractTest.validNormalSearchScope(IsolatedGenerationQualificationContractTest.java:35)
+	at com.lushprojects.circuitjs1.client.IsolatedGenerationQualificationContractTest.main(IsolatedGenerationQualificationContractTest.java:11)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: IsolatedGenerationQualificationContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

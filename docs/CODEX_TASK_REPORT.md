@@ -1,4 +1,54 @@
-# Current checkpoint: Q30 BLOCKED — production screen needs a normal-path harness
+# Current checkpoint: Q30 BLOCKED — limited normal-admission screen PASS
+
+2026-10-01. Branch `codex/q30-multirail-qualification`, task base HEAD
+`5dbde3bbf928a4af4ac79d63a923a97eb4a47f81`. **The authorized isolated harness
+and frozen three-job screen are complete. Q30 remains BLOCKED / NOT ACCEPTED
+and disabled for normal players.** This is a local harness/evidence checkpoint;
+no push or email, scale integration, optimization or later milestone.
+
+Tested application: clean export of `41f02f1b9f6c32cb8cf4ffbf9e8bd2bb3ea2476b`
+plus harness SHA256 `1d286f0a0a6d816cb7c6a951328801d51d0b460bd1496a0ed0121211f9c3b074`.
+The [evidence packet](task-evidence/Q30/normal-admission-screen-r1/README.md)
+and [reproducible overlay](../tests/qualification/q30-normal-screen/README.md)
+record the exact delta and compiled inputs. Shipping source/catalog are untouched.
+
+| Frozen order | Plan / seed / actual packages | Cold job ms | Work | Max active ms | Admission / cleanup |
+|---|---|---:|---:|---:|---|
+| 1 | 3 / 7 / 33 | 70,569 | 468 | 838 | PASS / PASS |
+| 2 | 3 / 64 / 35 | 66,464 | 446 | 1,095 | PASS / PASS |
+| 3 | 3 / 13 / 37 | 75,606 | 464 | 1,193 | PASS / PASS |
+
+Each ran once as the frozen normal MEDIUM candidate-search request, with one
+90,000 ms / 640 shared work / 5,000 ms active allowance, standard asynchronous
+foreground scheduling, a fresh ordinary cache, zero private-cache use and zero
+hidden events. Every root passed candidate 0, actual physical admission, MEDIUM
+assessment, all five diagnostic/repair/retest proofs and publication. No retry
+or rejection occurred. Headroom was 19,431 / 23,536 / 14,394 ms. Host startup,
+terminal capture and teardown are separately reported; nested timers are not added.
+
+PASS: focused native seven suites, then the affected three after the scope fix
+(27 new guard assertions / normal-policy 325 / A10 190); actual final JDK8/GWT
+five-permutation build; compiled unauthorized/cancel/scope-loss canaries;
+six strict-reader tests and all three real receipts; exact source reconstruction;
+source/evidence review. Initial fixture, scope/snapshot and replay-newline failures
+are retained with their fixes. Three partial lifecycle jobs preceded the three
+screen jobs; none was substituted for a screen row. Full matrix, broader scale,
+population reliability and visible player-input acceptance are NOT RUN.
+
+The 172 pre-existing Q30 and 96 desktop changed/untracked files remain hash-identical;
+26 tracked scale edits and all prior untracked work stay unstaged. Resource and
+preservation closeout is in the packet's `closeout.json`. Only the report, isolated
+harness package and scoped evidence are included in this checkpoint.
+OS-temp export `q30n-765b06f9dd` remains: automatic approval review blocked both
+verified cleanup commands. No task-owned browser, JVM, Python or Node process remains.
+
+Next unstarted work: broader Q30 scale/full acceptance under new authorization.
+This limited pass does not qualify arbitrary seeds or enable Q30. U06, U07, Q60
+and later milestones remain unstarted.
+
+---
+
+# Historical checkpoint: Q30 BLOCKED — production screen needs a normal-path harness
 
 2026-10-01. Branch `codex/q30-multirail-qualification`, frozen source HEAD
 `41f02f1b9f6c32cb8cf4ffbf9e8bd2bb3ea2476b`. This is an evidence-only

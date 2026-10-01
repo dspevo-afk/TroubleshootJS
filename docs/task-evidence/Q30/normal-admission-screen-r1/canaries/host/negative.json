@@ -1,0 +1,15 @@
+{
+  "cases": [
+    {
+      "timeoutSeconds": 1.5,
+      "reportAttribute": "data-tsj-q30-normal-report",
+      "terminalPrefixes": [
+        "SCREEN_DONE"
+      ],
+      "expectedPrefix": "SCREEN_DONE",
+      "name": "negative",
+      "path": "circuitjs.html",
+      "stateAttribute": "data-tsj-q30-normal-state"
+    }
+  ]
+}

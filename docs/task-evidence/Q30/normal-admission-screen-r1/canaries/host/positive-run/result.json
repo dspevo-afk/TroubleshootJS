@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "runner": "normal_screen_host.py",
+  "repository": "[TASK_TEMP]\\host\\fixtures\\positive",
+  "startedUtc": "2026-10-01T16:17:10.284889+00:00",
+  "outcome": "FAIL",
+  "cases": [],
+  "caseCount": 1,
+  "errors": [
+    {
+      "phase": "operation",
+      "message": "Playwright is not installed on this host",
+      "traceback": "Traceback (most recent call last):\n  File \"[TASK_TEMP]\\host\\normal_screen_host.py\", line 618, in main\n    raise RuntimeError(\"Playwright is not installed on this host\")\nRuntimeError: Playwright is not installed on this host\n"
+    }
+  ],
+  "browserStartupMilliseconds": null,
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "90b35f99efbd5effd2687a0eb5bbbf25a35199731d5fe78511afd5393dd75010",
+    "afterSha256": "90b35f99efbd5effd2687a0eb5bbbf25a35199731d5fe78511afd5393dd75010",
+    "sourceSha256Before": "f336f73e2ef7ff62a61916e8c9743e6ed827fcc61585df80815fa1d28d76fd6d",
+    "sourceSha256After": "f336f73e2ef7ff62a61916e8c9743e6ed827fcc61585df80815fa1d28d76fd6d",
+    "webSha256Before": "72c1f1eb24d9f52b762be0109e6ac06c16bcaab4e2a78e3355cf5b48ff2da85d",
+    "webSha256After": "72c1f1eb24d9f52b762be0109e6ac06c16bcaab4e2a78e3355cf5b48ff2da85d",
+    "runnerBeforeSha256": "07ba4dbd1e477580b5109cef2ca74991aacaf5451e4c9ff925ea4d0e4c35c5fb",
+    "runnerAfterSha256": "07ba4dbd1e477580b5109cef2ca74991aacaf5451e4c9ff925ea4d0e4c35c5fb",
+    "fileCountBefore": 4,
+    "fileCountAfter": 4,
+    "seconds": 0.0
+  },
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 0.875,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "finishedUtc": "2026-10-01T16:17:11.178468+00:00"
+}

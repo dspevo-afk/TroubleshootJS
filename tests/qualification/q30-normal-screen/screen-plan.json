@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "declaredAtUtc": "2026-10-01T13:39:18.624069+00:00",
+  "sourceCommit": "41f02f1b9f6c32cb8cf4ffbf9e8bd2bb3ea2476b",
+  "planVersion": 3,
+  "maxFreshColdJobs": 3,
+  "freshColdJobsExecuted": 0,
+  "requestFactory": "PlayerLaunchRequest.random(RB30_CONTROL, exactDecimalSeed, MEDIUM).generation()",
+  "requestPrivate": false,
+  "requestCandidateSearch": true,
+  "requestQuickPlayFlag": false,
+  "executionPolicy": "NORMAL_MEDIUM_EXECUTION@2",
+  "limits": {
+    "maxJobMillis": 90000,
+    "maxWorkUnits": 640,
+    "maxActiveOperationMillis": 5000,
+    "maxCandidatesPerSharedJob": 4
+  },
+  "coldProtocol": "Fresh isolated browser profile and simulator per job; ordinary proof cache empty with reuse enabled; private proof cache empty and unused; no prewarming. Standard async foreground path.",
+  "selectionRule": "Resolve 7,13,64 using committed Java. Keep mandatory7; select distinct35 and37 recipes. No fallback seeds needed or sampled.",
+  "failureRule": "Retain every failure/rejection and each internally ordered candidate under one cumulative job budget; do not replace failed roots or report a later candidate as success for an earlier seed.",
+  "cases": [
+    {
+      "id": "cold-01",
+      "seed": "7",
+      "planCanonical": "rb30-plan@3;seed=7;topology=RB30_SEPARATE_DIRECT_A_BJT_B_BJT;support=RB30_COMPACT_NO_STATUS@2;layout=-1194938301906846876;routing=8563653456340676275;physicalPolicy=MEDIUM_BOARD@1;fault=RELAY_B_COIL_OPEN;packages=33;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated",
+      "declaredPackageCount": 33,
+      "recipeComponentCount": 33,
+      "plannedCandidates": [
+        {
+          "ordinal": 0,
+          "seed": "7",
+          "declaredPackageCount": 33,
+          "manifest": "candidate=00;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=7;replay=tsj-alpha/3/MEDIUM/RB30_CONTROL/7;quickPlay=false;layout=13;planEpoch=3;plan=rb30-plan@3;seed=7;topology=RB30_SEPARATE_DIRECT_A_BJT_B_BJT;support=RB30_COMPACT_NO_STATUS@2;layout=-1194938301906846876;routing=8563653456340676275;physicalPolicy=MEDIUM_BOARD@1;fault=RELAY_B_COIL_OPEN;packages=33;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2"
+        },
+        {
+          "ordinal": 1,
+          "seed": "-7046029254386353124",
+          "declaredPackageCount": 37,
+          "manifest": "candidate=01;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=-7046029254386353124;replay=tsj-alpha/3/MEDIUM/RB30_CONTROL/-7046029254386353124;quickPlay=false;layout=13;planEpoch=3;plan=rb30-plan@3;seed=-7046029254386353124;topology=RB30_SEPARATE_DIRECT_A_BJT_B_NMOS;support=RB30_FILTERED_SENSOR_INPUTS@2;layout=3904218395079753839;routing=-2905497027645394106;physicalPolicy=MEDIUM_BOARD@1;fault=RELAY_B_COIL_OPEN;packages=37;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2"
+        },
+        {
+          "ordinal": 2,
+          "seed": "4354685564936845361",
+          "declaredPackageCount": 35,
+          "manifest": "candidate=02;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=4354685564936845361;replay=tsj-alpha/3/MEDIUM/RB30_CONTROL/4354685564936845361;quickPlay=false;layout=13;planEpoch=3;plan=rb30-plan@3;seed=4354685564936845361;topology=RB30_SHARED_HYSTERETIC_A_NMOS_B_NMOS;support=RB30_STANDARD_STATUS@2;layout=3578473738247914635;routing=6475821182286079402;physicalPolicy=MEDIUM_BOARD@1;fault=DRIVE_A_OPEN;packages=35;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2"
+        },
+        {
+          "ordinal": 3,
+          "seed": "-2691343689449507770",
+          "declaredPackageCount": 33,
+          "manifest": "candidate=03;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=-2691343689449507770;replay=tsj-alpha/3/MEDIUM/RB30_CONTROL/-2691343689449507770;quickPlay=false;layout=13;planEpoch=3;plan=rb30-plan@3;seed=-2691343689449507770;topology=RB30_SEPARATE_DIRECT_A_NMOS_B_BJT;support=RB30_COMPACT_NO_STATUS@2;layout=9098882220264657143;routing=-6936931817378892338;physicalPolicy=MEDIUM_BOARD@1;fault=DRIVE_A_OPEN;packages=33;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2"
+        }
+      ],
+      "state": "NOT_RUN_HARNESS_BLOCKED",
+      "actualPhysicalPackageCount": null,
+      "cumulativeJobElapsedMs": null,
+      "deterministicWorkUnits": null,
+      "maxActiveOperationMs": null,
+      "candidateAttempts": [],
+      "routingElapsedMs": null,
+      "proofElapsedMs": null,
+      "marginTo90000Ms": null,
+      "difficultyOutcome": "NOT_RUN",
+      "physicalAdmissionOutcome": "NOT_RUN",
+      "diagnosticRepairCompletionOutcome": "NOT_RUN",
+      "cleanupOutcome": "NOT_RUN",
+      "browserStartupMs": null,
+      "hostCleanupMs": null
+    },
+    {
+      "id": "cold-02",
+      "seed": "64",
+      "planCanonical": "rb30-plan@3;seed=64;topology=RB30_SHARED_HYSTERETIC_A_NMOS_B_NMOS;support=RB30_STANDARD_STATUS@2;layout=-7619673160888504460;routing=-2032842263090610941;physicalPolicy=MEDIUM_BOARD@1;fault=DREV_OPEN;packages=35;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated",
+      "declaredPackageCount": 35,
+      "recipeComponentCount": 35,
+      "plannedCandidates": [
+        {
+          "ordinal": 0,
+          "seed": "64",
+          "declaredPackageCount": 35,
+          "manifest": "candidate=00;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=64;replay=tsj-alpha/3/MEDIUM/RB30_CONTROL/64;quickPlay=false;layout=13;planEpoch=3;plan=rb30-plan@3;seed=64;topology=RB30_SHARED_HYSTERETIC_A_NMOS_B_NMOS;support=RB30_STANDARD_STATUS@2;layout=-7619673160888504460;routing=-2032842263090610941;physicalPolicy=MEDIUM_BOARD@1;fault=DREV_OPEN;packages=35;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2"
+        },
+        {
+          "ordinal": 1,
+          "seed": "-7046029254386353067",
+          "declaredPackageCount": 37,
+          "manifest": "candidate=01;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=-7046029254386353067;replay=tsj-alpha/3/MEDIUM/RB30_CONTROL/-7046029254386353067;quickPlay=false;layout=13;planEpoch=3;plan=rb30-plan@3;seed=-7046029254386353067;topology=RB30_SEPARATE_DIRECT_A_NMOS_B_BJT;support=RB30_FILTERED_SENSOR_INPUTS@2;layout=5515615812171378125;routing=-3203964579074482704;physicalPolicy=MEDIUM_BOARD@1;fault=REN_OPEN;packages=37;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2"
+        },
+        {
+          "ordinal": 2,
+          "seed": "4354685564936845418",
+          "declaredPackageCount": 33,
+          "manifest": "candidate=02;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=4354685564936845418;replay=tsj-alpha/3/MEDIUM/RB30_CONTROL/4354685564936845418;quickPlay=false;layout=13;planEpoch=3;plan=rb30-plan@3;seed=4354685564936845418;topology=RB30_SEPARATE_DIRECT_A_BJT_B_BJT;support=RB30_COMPACT_NO_STATUS@2;layout=-8588424145375347746;routing=4863530075444328577;physicalPolicy=MEDIUM_BOARD@1;fault=REN_OPEN;packages=33;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2"
+        },
+        {
+          "ordinal": 3,
+          "seed": "-2691343689449507713",
+          "declaredPackageCount": 33,
+          "manifest": "candidate=03;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=-2691343689449507713;replay=tsj-alpha/3/MEDIUM/RB30_CONTROL/-2691343689449507713;quickPlay=false;layout=13;planEpoch=3;plan=rb30-plan@3;seed=-2691343689449507713;topology=RB30_SHARED_HYSTERETIC_A_NMOS_B_NMOS;support=RB30_COMPACT_NO_STATUS@2;layout=-5228166604815692616;routing=4767746721576266303;physicalPolicy=MEDIUM_BOARD@1;fault=REN_OPEN;packages=33;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2"
+        }
+      ],
+      "state": "NOT_RUN_HARNESS_BLOCKED",
+      "actualPhysicalPackageCount": null,
+      "cumulativeJobElapsedMs": null,
+      "deterministicWorkUnits": null,
+      "maxActiveOperationMs": null,
+      "candidateAttempts": [],
+      "routingElapsedMs": null,
+      "proofElapsedMs": null,
+      "marginTo90000Ms": null,
+      "difficultyOutcome": "NOT_RUN",
+      "physicalAdmissionOutcome": "NOT_RUN",
+      "diagnosticRepairCompletionOutcome": "NOT_RUN",
+      "cleanupOutcome": "NOT_RUN",
+      "browserStartupMs": null,
+      "hostCleanupMs": null
+    },
+    {
+      "id": "cold-03",
+      "seed": "13",
+      "planCanonical": "rb30-plan@3;seed=13;topology=RB30_SEPARATE_DIRECT_A_NMOS_B_BJT;support=RB30_FILTERED_SENSOR_INPUTS@2;layout=-8526998057890890386;routing=7912193663056532433;physicalPolicy=MEDIUM_BOARD@1;fault=DRIVE_A_OPEN;packages=37;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated",
+      "declaredPackageCount": 37,
+      "recipeComponentCount": 37,
+      "plannedCandidates": [
+        {
+          "ordinal": 0,
+          "seed": "13",
+          "declaredPackageCount": 37,
+          "manifest": "candidate=00;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=13;replay=tsj-alpha/3/MEDIUM/RB30_CONTROL/13;quickPlay=false;layout=13;planEpoch=3;plan=rb30-plan@3;seed=13;topology=RB30_SEPARATE_DIRECT_A_NMOS_B_BJT;support=RB30_FILTERED_SENSOR_INPUTS@2;layout=-8526998057890890386;routing=7912193663056532433;physicalPolicy=MEDIUM_BOARD@1;fault=DRIVE_A_OPEN;packages=37;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2"
+        },
+        {
+          "ordinal": 1,
+          "seed": "-7046029254386353118",
+          "declaredPackageCount": 37,
+          "manifest": "candidate=01;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=-7046029254386353118;replay=tsj-alpha/3/MEDIUM/RB30_CONTROL/-7046029254386353118;quickPlay=false;layout=13;planEpoch=3;plan=rb30-plan@3;seed=-7046029254386353118;topology=RB30_SHARED_HYSTERETIC_A_BJT_B_BJT;support=RB30_FILTERED_SENSOR_INPUTS@2;layout=1703323813035367880;routing=-8137258835134386033;physicalPolicy=MEDIUM_BOARD@1;fault=SENSOR_A_OPEN;packages=37;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2"
+        },
+        {
+          "ordinal": 2,
+          "seed": "4354685564936845367",
+          "declaredPackageCount": 33,
+          "manifest": "candidate=02;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=4354685564936845367;replay=tsj-alpha/3/MEDIUM/RB30_CONTROL/4354685564936845367;quickPlay=false;layout=13;planEpoch=3;plan=rb30-plan@3;seed=4354685564936845367;topology=RB30_SEPARATE_DIRECT_A_BJT_B_BJT;support=RB30_COMPACT_NO_STATUS@2;layout=5643636233162400765;routing=6661193643000072928;physicalPolicy=MEDIUM_BOARD@1;fault=DREV_OPEN;packages=33;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2"
+        },
+        {
+          "ordinal": 3,
+          "seed": "-2691343689449507764",
+          "declaredPackageCount": 33,
+          "manifest": "candidate=03;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=-2691343689449507764;replay=tsj-alpha/3/MEDIUM/RB30_CONTROL/-2691343689449507764;quickPlay=false;layout=13;planEpoch=3;plan=rb30-plan@3;seed=-2691343689449507764;topology=RB30_SHARED_HYSTERETIC_A_BJT_B_BJT;support=RB30_COMPACT_NO_STATUS@2;layout=2975835055235271510;routing=6466420655017727129;physicalPolicy=MEDIUM_BOARD@1;fault=RELAY_B_COIL_OPEN;packages=33;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;sensors=two-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2"
+        }
+      ],
+      "state": "NOT_RUN_HARNESS_BLOCKED",
+      "actualPhysicalPackageCount": null,
+      "cumulativeJobElapsedMs": null,
+      "deterministicWorkUnits": null,
+      "maxActiveOperationMs": null,
+      "candidateAttempts": [],
+      "routingElapsedMs": null,
+      "proofElapsedMs": null,
+      "marginTo90000Ms": null,
+      "difficultyOutcome": "NOT_RUN",
+      "physicalAdmissionOutcome": "NOT_RUN",
+      "diagnosticRepairCompletionOutcome": "NOT_RUN",
+      "cleanupOutcome": "NOT_RUN",
+      "browserStartupMs": null,
+      "hostCleanupMs": null
+    }
+  ]
+}

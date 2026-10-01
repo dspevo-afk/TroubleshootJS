@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 1,
+    "name": "positive",
+    "path": "circuitjs.html",
+    "stateAttribute": "data-tsj-q30-normal-state",
+    "expectedState": null,
+    "expectedPrefix": "SCREEN_DONE",
+    "terminalPrefixes": [
+      "SCREEN_DONE"
+    ],
+    "timeoutSeconds": 4.0,
+    "reportAttribute": "data-tsj-q30-normal-report"
+  },
+  "url": "http://127.0.0.1:50665/circuitjs.html",
+  "startedUtc": "2026-10-01T16:19:42.454647+00:00",
+  "finishedUtc": "2026-10-01T16:19:42.939091+00:00",
+  "operationSeconds": 0.4850000000442378,
+  "outcome": "PASS",
+  "terminalReached": true,
+  "stateMatch": true,
+  "observedState": "SCREEN_DONE",
+  "lastObservedState": "SCREEN_DONE",
+  "timedOut": false,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": true,
+  "reportJsonValid": true,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 39,
+  "reportSha256": "8676df919427b8a72f429ed5a2c6dbe29cea60dffac43abf8d288b2618d791da",
+  "reportFile": "cases/001-positive.report.json",
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [],
+  "listenerCleanupErrors": [],
+  "navigationError": null,
+  "compiledResources": [
+    {
+      "url": "http://127.0.0.1:50665/A1B2C3D4.cache.js",
+      "permutation": "A1B2C3D4",
+      "kind": "cache.js",
+      "status": 200,
+      "length": 34,
+      "sha256": "466157419d7c428bc110d3e589ba6c74fbd6ca7dd6f7e83783cf5ebbea2f27fc"
+    },
+    {
+      "url": "http://127.0.0.1:50665/A1B2C3D4.cache.html",
+      "permutation": "A1B2C3D4",
+      "kind": "cache.html",
+      "status": 200,
+      "length": 71,
+      "sha256": "e59b42049920220f7ec47cb3ef92399f2a3aa0e46f56c4dcad452371dce64ed7"
+    }
+  ],
+  "compiledResourceErrors": []
+}

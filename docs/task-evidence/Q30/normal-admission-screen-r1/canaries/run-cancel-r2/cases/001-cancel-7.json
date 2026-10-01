@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 1,
+    "name": "cancel-7",
+    "path": "circuitjs.html?lang=en&tsjNormalMode=cancel&tsjNormalSeed=7",
+    "stateAttribute": "data-tsj-q30-normal-state",
+    "expectedState": null,
+    "expectedPrefix": "SCREEN_DONE",
+    "terminalPrefixes": [
+      "SCREEN_DONE"
+    ],
+    "timeoutSeconds": 150.0,
+    "reportAttribute": "data-tsj-q30-normal-report"
+  },
+  "url": "http://127.0.0.1:50392/circuitjs.html?lang=en&tsjNormalMode=cancel&tsjNormalSeed=7",
+  "startedUtc": "2026-10-01T16:36:18.822976+00:00",
+  "finishedUtc": "2026-10-01T16:36:39.410749+00:00",
+  "operationSeconds": 20.59399999998277,
+  "outcome": "PASS",
+  "terminalReached": true,
+  "stateMatch": true,
+  "observedState": "SCREEN_DONE",
+  "lastObservedState": "SCREEN_DONE",
+  "timedOut": false,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": true,
+  "reportJsonValid": true,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 11785,
+  "reportSha256": "7df16601048bbd870d84372daf8387aa82b373c503339b22c4244a9f73fb9e22",
+  "reportFile": "cases/001-cancel-7.report.json",
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [],
+  "listenerCleanupErrors": [],
+  "navigationError": null,
+  "compiledResources": [
+    {
+      "url": "http://127.0.0.1:50392/circuitjs1/7247CC9D86D564651F0BC146A31D6453.cache.js",
+      "permutation": "7247CC9D86D564651F0BC146A31D6453",
+      "kind": "cache.js",
+      "status": 200,
+      "length": 3085531,
+      "sha256": "f5a85bc1577b79781abde4baed37fe8c35dcfb257c8a293b325fb2c3a8e89203"
+    }
+  ],
+  "compiledResourceErrors": [],
+  "terminalScreenshot": "cases/001-cancel-7.png"
+}

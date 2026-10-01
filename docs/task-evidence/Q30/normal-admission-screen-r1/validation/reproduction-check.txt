@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "[TASK_TEMP]\bundle-final\prepare.py", line 88, in <module>
+    main()
+  File "[TASK_TEMP]\bundle-final\prepare.py", line 76, in main
+    raise ValueError("Prepared source differs from measured harness: " + name)
+ValueError: Prepared source differs from measured harness: src/com/lushprojects/circuitjs1/circuitjs1.gwt.xml

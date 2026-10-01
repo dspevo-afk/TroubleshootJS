@@ -1,0 +1,4 @@
+# Reproducible inputs retain their exact bytes across checkouts.
+* -text whitespace=cr-at-eol
+# Unified patch context preserves blank-line prefixes and original whitespace.
+*.patch whitespace=cr-at-eol,-blank-at-eol

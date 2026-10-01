@@ -1,0 +1,11 @@
+test_clean_timeout_is_completed_nonpass_without_proof (test_q30_screen_reader.ReaderContract.test_clean_timeout_is_completed_nonpass_without_proof) ... ok
+test_frozen_plan_hash_is_enforced (test_q30_screen_reader.ReaderContract.test_frozen_plan_hash_is_enforced) ... ok
+test_host_pass_never_changes_application_status (test_q30_screen_reader.ReaderContract.test_host_pass_never_changes_application_status) ... ok
+test_pass_rejects_mutated_contracts (test_q30_screen_reader.ReaderContract.test_pass_rejects_mutated_contracts) ... ok
+test_synthetic_pass_fixture_is_only_a_schema_test (test_q30_screen_reader.ReaderContract.test_synthetic_pass_fixture_is_only_a_schema_test) ... ok
+test_wrong_difficulty_is_completed_rejection (test_q30_screen_reader.ReaderContract.test_wrong_difficulty_is_completed_rejection) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+OK

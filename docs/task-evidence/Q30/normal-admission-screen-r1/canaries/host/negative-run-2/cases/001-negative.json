@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 1,
+    "name": "negative",
+    "path": "circuitjs.html",
+    "stateAttribute": "data-tsj-q30-normal-state",
+    "expectedState": null,
+    "expectedPrefix": "SCREEN_DONE",
+    "terminalPrefixes": [
+      "SCREEN_DONE"
+    ],
+    "timeoutSeconds": 1.5,
+    "reportAttribute": "data-tsj-q30-normal-report"
+  },
+  "url": "http://127.0.0.1:63556/circuitjs.html",
+  "startedUtc": "2026-10-01T16:20:02.451761+00:00",
+  "finishedUtc": "2026-10-01T16:20:03.964567+00:00",
+  "operationSeconds": 1.5,
+  "outcome": "TIMEOUT",
+  "terminalReached": false,
+  "stateMatch": false,
+  "observedState": "SCREEN_REJECTED",
+  "lastObservedState": "SCREEN_REJECTED",
+  "timedOut": true,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": false,
+  "reportJsonValid": null,
+  "reportJsonError": null,
+  "reportMatch": false,
+  "reportLength": 0,
+  "reportSha256": null,
+  "reportFile": null,
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [
+    {
+      "attribute": "data-tsj-q30-normal-report",
+      "type": "DeadlineExpired",
+      "message": "case deadline elapsed"
+    }
+  ],
+  "listenerCleanupErrors": [],
+  "navigationError": null,
+  "compiledResources": [
+    {
+      "url": "http://127.0.0.1:63556/A1B2C3D4.cache.js",
+      "permutation": "A1B2C3D4",
+      "kind": "cache.js",
+      "status": 200,
+      "length": 34,
+      "sha256": "466157419d7c428bc110d3e589ba6c74fbd6ca7dd6f7e83783cf5ebbea2f27fc"
+    },
+    {
+      "url": "http://127.0.0.1:63556/A1B2C3D4.cache.html",
+      "permutation": "A1B2C3D4",
+      "kind": "cache.html",
+      "status": 200,
+      "length": 71,
+      "sha256": "e59b42049920220f7ec47cb3ef92399f2a3aa0e46f56c4dcad452371dce64ed7"
+    }
+  ],
+  "compiledResourceErrors": []
+}
