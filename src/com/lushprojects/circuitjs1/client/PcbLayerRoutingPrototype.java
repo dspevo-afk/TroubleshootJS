@@ -337,6 +337,8 @@ final class PcbLayerRoutingPrototype {
             final PcbPadPlacement start,root;
             final boolean[] goal;
             final int[] distance;
+            final PcbBoardHole[] holes;
+            final Rectangle[] holeBounds;
             final HashMap<Integer,Node> best=new HashMap<Integer,Node>();
             final NodeQueue queue=new NodeQueue();
             int expanded;
@@ -344,6 +346,12 @@ final class PcbLayerRoutingPrototype {
             BranchSearch(String net,PcbPadPlacement start,PcbPadPlacement root) {
                 this.net=net; this.start=start; this.root=root;
                 observer.check(pass);
+                // Publisher finishes before the next branch is constructed.
+                // Its holes are immutable throughout this branch, including
+                // yields. Refresh from the owner for every new branch.
+                holes=layout.getHoles().toArray(new PcbBoardHole[0]);
+                holeBounds=new Rectangle[holes.length];
+                for(int i=0;i<holes.length;i++) holeBounds[i]=holes[i].getBounds();
                 goal=goals(net,root); distance=lowerBound(goal);
                 for(int layer=0;layer<2;layer++) if(layer==primary || policy==Policy.FULLER_TWO_LAYER)
                     offer(queue,best,new Node(cell(start),layer,4,0,layer==primary?0:policy.secondaryCost,
@@ -373,7 +381,7 @@ final class PcbLayerRoutingPrototype {
                 if(cy+1<height) offerStep(current,current.cell+width,2);
                 if(cx>0) offerStep(current,current.cell-1,3);
                 if(current.direction!=4 && current.transitions<policy.transitions &&
-                        pathViaFits(current) && viaFits(net,x(current.cell),y(current.cell)))
+                        pathViaFits(current) && viaFits(net,x(current.cell),y(current.cell),holes,holeBounds))
                     offer(queue,best,new Node(current.cell,1-current.layer,4,current.transitions+1,
                         current.cost+policy.viaCost,distance[current.cell],serial++,cells,current));
             }
@@ -485,11 +493,11 @@ final class PcbLayerRoutingPrototype {
             if(previous!=null && previous.cost<=node.cost) return;
             best.put(node.key,node); queue.add(node);
         }
-        boolean viaFits(String net,int x,int y) {
+        boolean viaFits(String net,int x,int y,PcbBoardHole[] holes,Rectangle[] holeBounds) {
             if(policy.transitions==0) return false;
-            for(PcbBoardHole hole:layout.getHoles())
+            for(PcbBoardHole hole:holes)
                 if(hole.x==x && hole.y==y) return net.equals(hole.netId);
-            if(layout.getHoles().size()>=policy.vias) return false;
+            if(holes.length>=policy.vias) return false;
             Rectangle land=new Rectangle(x-PcbTwoLayerRules.VIA_LAND,y-PcbTwoLayerRules.VIA_LAND,
                 PcbTwoLayerRules.VIA_LAND*2,PcbTwoLayerRules.VIA_LAND*2);
             if(!PcbTwoLayerRules.inside(layout.getBoardOutline(),land) || !rules.permits(net,land) ||
@@ -499,12 +507,12 @@ final class PcbLayerRoutingPrototype {
             Rectangle clearance=PcbTwoLayerRules.expand(land,PcbTraceRules.MIN_VISIBLE_CLEARANCE);
             for(PcbPadPlacement pad:pads)
                 if(PcbConductorBuilder.touch(clearance,pad.getPadBounds())) return false;
-            for(PcbBoardHole hole:layout.getHoles())
-                if(PcbConductorBuilder.touch(clearance,hole.getBounds())) return false;
+            for(Rectangle bounds:holeBounds)
+                if(PcbConductorBuilder.touch(clearance,bounds)) return false;
             return true;
         }
         boolean pathViaFits(Node current) {
-            if(layout.getHoles().size()+current.transitions+1>policy.vias) return false;
+            if(layout.getHoleCount()+current.transitions+1>policy.vias) return false;
             int pathIndex=0;
             for(Node node=current;node.previous!=null;node=node.previous) {
                 if((pathIndex++&255)==0) observer.check(pass);

@@ -1,0 +1,162 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<REPOSITORY_ROOT>",
+  "startedUtc": "2026-09-28T02:37:42.870157+00:00",
+  "outcome": "PASS",
+  "cases": [
+    {
+      "schema": 1,
+      "case": {
+        "index": 1,
+        "name": "plan4-d01-representative-40-10014",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10014",
+        "stateAttribute": "data-tsj-q30-d01-state",
+        "expectedState": "PASS",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-q30-d01-report"
+      },
+      "url": "http://127.0.0.1:<PORT>/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10014",
+      "startedUtc": "2026-09-28T02:37:44.075130+00:00",
+      "finishedUtc": "2026-09-28T02:41:12.661955+00:00",
+      "operationSeconds": 208.58681909998995,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS",
+      "lastObservedState": "PASS",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 877890,
+      "reportSha256": "f2d8433fcd634cfe3cd4e8f17252b1b0bdcac4bb1bd4b81292aefedeac2742c6",
+      "reportFile": "cases/001-plan4-d01-representative-40-10014.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [
+        {
+          "attribute": "data-tsj-q30-d01-state",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-q30-d01-state",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-q30-d01-state",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-q30-d01-state",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-q30-d01-state",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        },
+        {
+          "attribute": "data-tsj-q30-d01-state",
+          "type": "TimeoutError",
+          "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+        }
+      ],
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    }
+  ],
+  "caseCount": 1,
+  "errors": [],
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "ebc4b20cbb50f7289756db02dd7a63571fc27336c71a44defcd15d8d0db5d326",
+    "afterSha256": "ebc4b20cbb50f7289756db02dd7a63571fc27336c71a44defcd15d8d0db5d326",
+    "sourceSha256Before": "ab540278ecd8fbb3eeda0889016af63d77d73af48b04e5d80886e2ac1235b8be",
+    "sourceSha256After": "ab540278ecd8fbb3eeda0889016af63d77d73af48b04e5d80886e2ac1235b8be",
+    "webSha256Before": "eb7dfa74b99b87c28c8f0f76af5126adb470ff24b0f125e867bff39c9ebca2a6",
+    "webSha256After": "eb7dfa74b99b87c28c8f0f76af5126adb470ff24b0f125e867bff39c9ebca2a6",
+    "runnerBeforeSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+    "runnerAfterSha256": "4d0e724e563ff709397dffbddc200d7f52a1eb7ddff8cc68301fffcbe0deddf5",
+    "fileCountBefore": 1525,
+    "fileCountAfter": 1525,
+    "seconds": 0.40607929999532644
+  },
+  "identity": {
+    "schema": 1,
+    "runner": {
+      "pid": 20816,
+      "created": "2026-09-28T02:37:42.7096590Z",
+      "executable": "<BROWSER_EXECUTABLE>/python3.13.exe"
+    },
+    "edgeProcessesBeforeCases": [
+      {
+        "pid": 22180,
+        "parent": 6340,
+        "created": "2026-09-28T02:37:43.4702880Z",
+        "ExecutablePath": "<BROWSER_EXECUTABLE>/msedge.exe"
+      },
+      {
+        "pid": 8460,
+        "parent": 22180,
+        "created": "2026-09-28T02:37:43.4903220Z",
+        "ExecutablePath": "<BROWSER_EXECUTABLE>/msedge.exe"
+      },
+      {
+        "pid": 17056,
+        "parent": 22180,
+        "created": "2026-09-28T02:37:43.5608260Z",
+        "ExecutablePath": "<BROWSER_EXECUTABLE>/msedge.exe"
+      },
+      {
+        "pid": 25460,
+        "parent": 22180,
+        "created": "2026-09-28T02:37:43.5645850Z",
+        "ExecutablePath": "<BROWSER_EXECUTABLE>/msedge.exe"
+      },
+      {
+        "pid": 14356,
+        "parent": 22180,
+        "created": "2026-09-28T02:37:43.5893860Z",
+        "ExecutablePath": "<BROWSER_EXECUTABLE>/msedge.exe"
+      },
+      {
+        "pid": 24440,
+        "parent": 22180,
+        "created": "2026-09-28T02:37:43.6628470Z",
+        "ExecutablePath": "<BROWSER_EXECUTABLE>/msedge.exe"
+      },
+      {
+        "pid": 19480,
+        "parent": 22180,
+        "created": "2026-09-28T02:37:43.6666000Z",
+        "ExecutablePath": "<BROWSER_EXECUTABLE>/msedge.exe"
+      }
+    ],
+    "profile": "<TASK_OWNED_BROWSER_PROFILE_NOT_ARCHIVED>",
+    "port": 59931,
+    "baseUrl": "http://127.0.0.1:<PORT>"
+  },
+  "operationStartedUtc": "2026-09-28T02:37:44.075116+00:00",
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 1.3542931999982102,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "finishedUtc": "2026-09-28T02:41:14.424029+00:00"
+}

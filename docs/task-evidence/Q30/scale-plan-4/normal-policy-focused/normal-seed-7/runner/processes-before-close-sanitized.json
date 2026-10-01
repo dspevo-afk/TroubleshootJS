@@ -1,0 +1,65 @@
+[
+  {
+    "pid": 25508,
+    "parent": 20564,
+    "created": "2026-09-28T02:43:59.576223Z",
+    "ExecutablePath": "msedge.exe",
+    "sourceProcessListSha256": "79903e925348ba5f40e307d25bd719156fafb9149f2197bd5ecdccb56205020e"
+  },
+  {
+    "pid": 22120,
+    "parent": 25508,
+    "created": "2026-09-28T02:43:59.604222Z",
+    "ExecutablePath": "msedge.exe",
+    "sourceProcessListSha256": "79903e925348ba5f40e307d25bd719156fafb9149f2197bd5ecdccb56205020e"
+  },
+  {
+    "pid": 18368,
+    "parent": 25508,
+    "created": "2026-09-28T02:43:59.672544Z",
+    "ExecutablePath": "msedge.exe",
+    "sourceProcessListSha256": "79903e925348ba5f40e307d25bd719156fafb9149f2197bd5ecdccb56205020e"
+  },
+  {
+    "pid": 20212,
+    "parent": 25508,
+    "created": "2026-09-28T02:43:59.67643Z",
+    "ExecutablePath": "msedge.exe",
+    "sourceProcessListSha256": "79903e925348ba5f40e307d25bd719156fafb9149f2197bd5ecdccb56205020e"
+  },
+  {
+    "pid": 25412,
+    "parent": 25508,
+    "created": "2026-09-28T02:43:59.700816Z",
+    "ExecutablePath": "msedge.exe",
+    "sourceProcessListSha256": "79903e925348ba5f40e307d25bd719156fafb9149f2197bd5ecdccb56205020e"
+  },
+  {
+    "pid": 17572,
+    "parent": 25508,
+    "created": "2026-09-28T02:43:59.767604Z",
+    "ExecutablePath": "msedge.exe",
+    "sourceProcessListSha256": "79903e925348ba5f40e307d25bd719156fafb9149f2197bd5ecdccb56205020e"
+  },
+  {
+    "pid": 24140,
+    "parent": 25508,
+    "created": "2026-09-28T02:43:59.771272Z",
+    "ExecutablePath": "msedge.exe",
+    "sourceProcessListSha256": "79903e925348ba5f40e307d25bd719156fafb9149f2197bd5ecdccb56205020e"
+  },
+  {
+    "pid": 1600,
+    "parent": 25508,
+    "created": "2026-09-28T02:44:00.619132Z",
+    "ExecutablePath": "msedge.exe",
+    "sourceProcessListSha256": "79903e925348ba5f40e307d25bd719156fafb9149f2197bd5ecdccb56205020e"
+  },
+  {
+    "pid": 23736,
+    "parent": 25508,
+    "created": "2026-09-28T02:44:59.794567Z",
+    "ExecutablePath": "msedge.exe",
+    "sourceProcessListSha256": "79903e925348ba5f40e307d25bd719156fafb9149f2197bd5ecdccb56205020e"
+  }
+]

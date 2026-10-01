@@ -1,0 +1,61 @@
+{
+  "scope": "Selected two-seed service/sensitivity only; initial reader failure retained, corrected strict read PASS; full matrix NOT RUN",
+  "files": [
+    {
+      "sourceName": "native-scale-service-focused-r5.json",
+      "sourceSha256": "fd83afe2484c1914bb7878067a43fd1051ba3d0b582177f0cc20ac0c419f08ce",
+      "storedName": "native-scale-service-focused-r5.json",
+      "storedSha256": "61d62ba0582f55e521de6e347098e71e1ca4861e6008f8c229418415f41d66c4",
+      "pathSanitized": true
+    },
+    {
+      "sourceName": "native-scale-service-focused-r5.log",
+      "sourceSha256": "8fb297d638afb952e61666b74c88751c182e1e52f77ef7c9aa92ba016596113b",
+      "storedName": "native-scale-service-focused-r5.log.gz",
+      "storedSha256": "8e2cfb7bafe455330e980b856a4e67f76e3440fe5fcf0179c93153957634a408",
+      "pathSanitized": true
+    },
+    {
+      "sourceName": "native-scale-service-focused-r5-receipt.txt",
+      "sourceSha256": "b6bb5b134b079307ee0a86ed77fe381f738a7e134fa7e357bcce159bd6d9f2a0",
+      "storedName": "native-scale-service-focused-r5-receipt.txt.gz",
+      "storedSha256": "7dad444483c3bb33a277ccdc43bf3054c81b108cc53e106ab267e4160619b3d7",
+      "pathSanitized": true
+    },
+    {
+      "sourceName": "native-scale-service-focused-r5-reader-beforefix.json",
+      "sourceSha256": "3784e8a06c5e98fd579bd2d2c288721bc74767df191132f7c6e62e2217afc7c8",
+      "storedName": "native-scale-service-focused-r5-reader-beforefix.json.gz",
+      "storedSha256": "f4998f5895f9eb4612872dc7422d45e467f8a44f4ba5bc92fc925ebc09b968c5",
+      "pathSanitized": true
+    },
+    {
+      "sourceName": "native-scale-service-focused-r5-reader-beforefix-command.log",
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedName": "native-scale-service-focused-r5-reader-beforefix-command.log.gz",
+      "storedSha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "pathSanitized": true
+    },
+    {
+      "sourceName": "native-scale-service-focused-r5-reader.json",
+      "sourceSha256": "062071e85fcd4369eca51e7c6545be59aa743de2f3da10273b655c6b3f87ef0f",
+      "storedName": "native-scale-service-focused-r5-reader.json.gz",
+      "storedSha256": "4fc6eb2b2181a6b02d60f7d5e05952b5be3d673b991f2a30035bacf9a99d406b",
+      "pathSanitized": true
+    },
+    {
+      "sourceName": "scale-plan4-d01-20-reader-beforefix.txt",
+      "sourceSha256": "56387c1b83b875170e9d2efdf32f2aca78720eac0474d1092823663aa7d32d6d",
+      "storedName": "scale-plan4-d01-20-reader-beforefix.txt.gz",
+      "storedSha256": "feb83f23a18662c522ea6c6afe72b0874678199b0ab598d6c1ea1ddf6c5fc26e",
+      "pathSanitized": true
+    },
+    {
+      "sourceName": "scale-plan4-d01-20-canaries-beforefix.txt",
+      "sourceSha256": "88a024e19f24ef22508cfd95855e09690469133681ab41f1a8b118726fec1d0f",
+      "storedName": "scale-plan4-d01-20-canaries-beforefix.txt.gz",
+      "storedSha256": "20662c4b6b9928e97bb243edbbbc6e36128d8b72974e9df2fc20fcf55df5ff7d",
+      "pathSanitized": true
+    }
+  ]
+}

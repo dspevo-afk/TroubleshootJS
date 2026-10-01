@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 34.5681594,
+  "seedCount": 77,
+  "phase": "pure immutable Java plan export including maintained cleanup"
+}

@@ -1,0 +1,155 @@
+{
+  "schema": 1,
+  "sourceRun": "scale-plan4-d01-20",
+  "seed": 10387,
+  "packageCount": 20,
+  "runner": "compiled_attribute_acceptance.py",
+  "case": "plan4-d01-representative-20-10387",
+  "sourceResultSha256": "4cb0bf71f9fc7fc525efe9b9a4f11641a960d78424de8d62c9efc4c326dc8ac1",
+  "sourceCaseSummarySha256": "f0d0eec80b70e5d2899a51c12a67e3071f6d1d582d51109c065da94f44589813",
+  "sourceReportSha256": "ca1811390765cb2e72906b5b1c235501b87b606f0eb4d1b2722c5f63e8a19b39",
+  "reportedReportSha256": "ca1811390765cb2e72906b5b1c235501b87b606f0eb4d1b2722c5f63e8a19b39",
+  "archiveFiles": {
+    "identity.json": {
+      "sourceSha256": "1cef704d4f2a8fbd130e9c845508ad79100a02f9a23cbd2f2c244c9bfe11f146",
+      "archiveSha256": "8a2d440e57392ac9d424f62edeb0996e263bb8d2d82957d6991f9a4b3be6a4f0",
+      "sourceBytes": 1841,
+      "archiveBytes": 1440
+    },
+    "owned-processes-before.json": {
+      "sourceSha256": "014fc0c85ff82305393119bad22bd1df53d292d7502e4c6b06cbf3b015261138",
+      "archiveSha256": "d74d5b3937deae566838858744d18ca54bbaef92c1654d4db069e614a5c2bed5",
+      "sourceBytes": 1289,
+      "archiveBytes": 1051
+    },
+    "owned-processes-before-close.json": {
+      "sourceSha256": "e0a644870eda91c38cb15afe85188951d979e44d80c0f6e0c446f2bbdf1dea17",
+      "archiveSha256": "e71666c0b4846b0cb0fd2899178dcaa5baada2445327fd0d288f982db99df40e",
+      "sourceBytes": 1472,
+      "archiveBytes": 1200
+    },
+    "run-start.json": {
+      "sourceSha256": "b60477e45158e9d9b8edefecd2d1d55461f686cfdfbb2eec872af79e6e06e013",
+      "archiveSha256": "eb1d3e410c20c821038b1d3feaf3fe692391614d1b55d06278826afbe4467423",
+      "sourceBytes": 291,
+      "archiveBytes": 228
+    },
+    "progress.json": {
+      "sourceSha256": "1e37ff98093856b906fd518575141a1868ee3a484dce1398bd63fd71427fb365",
+      "archiveSha256": "6c4261ea02a44e731a3ad3b877b33e5d5b2549cdfc2c5dcc7a0ed2caf6ac9305",
+      "sourceBytes": 4250,
+      "archiveBytes": 3787
+    },
+    "result.json": {
+      "sourceSha256": "4cb0bf71f9fc7fc525efe9b9a4f11641a960d78424de8d62c9efc4c326dc8ac1",
+      "archiveSha256": "7c53141ab3488c395791078a2e0b7839a6e797d3a4cef40cd52a87cbf28105ee",
+      "sourceBytes": 4974,
+      "archiveBytes": 4511
+    },
+    "runner-before.json": {
+      "sourceSha256": "11a48c6dedf760ba3f0ec324cb796ce1de04e3916dd1f06b1a1d253670d48e0a",
+      "archiveSha256": "11a48c6dedf760ba3f0ec324cb796ce1de04e3916dd1f06b1a1d253670d48e0a",
+      "sourceBytes": 160,
+      "archiveBytes": 160
+    },
+    "runner-after.json": {
+      "sourceSha256": "11a48c6dedf760ba3f0ec324cb796ce1de04e3916dd1f06b1a1d253670d48e0a",
+      "archiveSha256": "11a48c6dedf760ba3f0ec324cb796ce1de04e3916dd1f06b1a1d253670d48e0a",
+      "sourceBytes": 160,
+      "archiveBytes": 160
+    },
+    "input-manifest-before.json.gz": {
+      "sourceSha256": "077ef17ff016f16e1fe4c4e544b81b1df58697696023910e66580e0f5ec61fc8",
+      "sourceBytes": 291302,
+      "sanitizedJsonSha256": "077ef17ff016f16e1fe4c4e544b81b1df58697696023910e66580e0f5ec61fc8",
+      "archiveSha256": "9ae1623de3730a0c2f889207d181ab3282256e628f2467cc791bb6259852f01f",
+      "archiveBytes": 80033
+    },
+    "input-manifest-after.json.gz": {
+      "sourceSha256": "c137394818121cfdaacd03cceecd327853bec9e2936e4d76ec6120cc15de903b",
+      "sourceBytes": 291302,
+      "sanitizedJsonSha256": "c137394818121cfdaacd03cceecd327853bec9e2936e4d76ec6120cc15de903b",
+      "archiveSha256": "6b323ccbbcc147b469a3f27f176d75854ccabfd23936bbcaa5f771549cd8f867",
+      "archiveBytes": 80033
+    },
+    "runner-spec.json": {
+      "sourceSha256": "08c139f228d2e1b2f5b6bd4e3333d8742f21d38f9fa17333adac1c7fea775690",
+      "archiveSha256": "079b69b0cab0a6af6be96bd0bf0e474b230346a89f687dd3a4d259351dad9e9d",
+      "sourceBytes": 449,
+      "archiveBytes": 433
+    },
+    "task-spec.json": {
+      "sourceSha256": "08c139f228d2e1b2f5b6bd4e3333d8742f21d38f9fa17333adac1c7fea775690",
+      "archiveSha256": "079b69b0cab0a6af6be96bd0bf0e474b230346a89f687dd3a4d259351dad9e9d",
+      "sourceBytes": 449,
+      "archiveBytes": 433
+    },
+    "case-summary.json": {
+      "sourceSha256": "f0d0eec80b70e5d2899a51c12a67e3071f6d1d582d51109c065da94f44589813",
+      "archiveSha256": "cc0a2e590a846b5f890513eb30842d24c6507bdf052d5406736c1e35bab1ca13",
+      "sourceBytes": 1424,
+      "archiveBytes": 1425
+    },
+    "browser-run.stdout.txt": {
+      "sha256": "ea03ef0c0f4a1ab918fbadf483dec0563aed72d579bcf95a81d072bad51bffb2",
+      "bytes": 70
+    },
+    "terminal-state.txt": {
+      "sha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "bytes": 4
+    },
+    "raw-report.json.gz": {
+      "sourceSha256": "ca1811390765cb2e72906b5b1c235501b87b606f0eb4d1b2722c5f63e8a19b39",
+      "sourceBytes": 453219,
+      "reportedSha256": "ca1811390765cb2e72906b5b1c235501b87b606f0eb4d1b2722c5f63e8a19b39",
+      "sanitizedJsonSha256": "a85f168f2405428869c183003a16f19c072263a73a0062065892715049a3cdcb",
+      "archiveSha256": "27e02dcf40310b43ddd60b0050caf83612682d07a41fe1b07a28560a62073653",
+      "archiveBytes": 75880
+    },
+    "assembled-wrapper.json": {
+      "sourceSha256": "4cf1ed66de8a5013ff18d877328b850329afa3f01bf831f697b4f5a4f3f60272",
+      "archiveSha256": "a9a11a8f4f999414badda1c07ba0c6ac8cb6cc6797a352ffe1c6934b871a1acb",
+      "sourceBytes": 472018,
+      "archiveBytes": 470899
+    }
+  },
+  "readers": [
+    {
+      "reader": "docs/task-evidence/Q30/scale-plan-4/check_d01.py",
+      "readerSha256": "f58847541571cdf829835d05c200bac6ea0079dab065d90ebdf7f44914241929",
+      "command": "python -B <reader> <ARCHIVE>/assembled-wrapper.json --seeds 10387 --require-warm",
+      "inputWrapperSha256": "a9a11a8f4f999414badda1c07ba0c6ac8cb6cc6797a352ffe1c6934b871a1acb",
+      "exitCode": 0,
+      "stdoutFile": "reader-cold-warm.stdout.txt",
+      "stdout": "PASS: current plan@4/provider@4 genuine cold+warm Q30 D01 seeds=1 pairs=10; player gates separate",
+      "stdoutSha256": "65b57ab3e1817fe6bc91e820da8f26e630685be7bb59e6e411f4d09f77d4bac0"
+    },
+    {
+      "reader": "docs/task-evidence/Q30/scale-plan-4/check_d01_canaries.py",
+      "readerSha256": "bf2dd4d21850c0d6d865d9ca24a69246981955dc248195ecaf7721419710bd2e",
+      "command": "python -B <reader> <ARCHIVE>/assembled-wrapper.json --seeds 10387",
+      "inputWrapperSha256": "a9a11a8f4f999414badda1c07ba0c6ac8cb6cc6797a352ffe1c6934b871a1acb",
+      "exitCode": 0,
+      "stdoutFile": "reader-canaries.stdout.txt",
+      "stdout": "PASS: PLAN@4/PROVIDER@4: baseline pairs=10; corrupted-receipt rejection canaries=64; schema-bound catalog claim flip=PASS; power-contract synthetic canaries=7 PASS",
+      "stdoutSha256": "0fd3339131267f2151ad79becbe4662fe29eccc3b16bb2721de79df8cb28b140"
+    }
+  ],
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 0.9340879000083078,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "outcome": "PASS",
+  "operationSeconds": 53.22753960000409,
+  "runnerDiagnostics": {
+    "attributeReadErrors": 0,
+    "pageErrors": 0,
+    "httpErrors": 0,
+    "consoleErrors": 0,
+    "listenerCleanupErrors": 0,
+    "navigationError": null
+  }
+}

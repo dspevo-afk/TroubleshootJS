@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 296.8631805,
+  "seeds": [
+    "7",
+    "13"
+  ],
+  "hypothesesPerSeed": 5,
+  "phase": "focused real solver service and finer-step sensitivity including maintained cleanup"
+}

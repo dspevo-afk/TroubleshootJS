@@ -1,0 +1,17 @@
+{
+  "cases": [
+    {
+      "name": "normal-q30-seed-7",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30NormalAcceptance=true&tsjQ30Seed=7",
+      "stateAttribute": "data-tsj-q30-normal-acceptance-state",
+      "expectedPrefix": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL",
+        "BLOCKED"
+      ],
+      "timeoutSeconds": 120,
+      "reportAttribute": "data-tsj-q30-normal-acceptance-report"
+    }
+  ]
+}

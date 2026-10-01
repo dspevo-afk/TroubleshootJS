@@ -2,7 +2,7 @@ package com.lushprojects.circuitjs1.client;
 
 import java.util.Vector;
 
-/** Structural guard for the one-graph Q30 construction pilot. */
+/** Structural guard for the one-graph procedural Q30 family. */
 final class Rb30TopologyValidator {
     private Rb30TopologyValidator() { }
 
@@ -44,18 +44,41 @@ final class Rb30TopologyValidator {
                 !(candidate.backing.get("F1") instanceof ProtectionFuseElm) ||
                 !(candidate.backing.get("DREV") instanceof DiodeElm))
             throw invalid("noncausal 12 V to E02 5 V rail");
-        if (candidate.backing.get("U2A") != candidate.decisionA ||
-                candidate.backing.get("U2B") != candidate.decisionB ||
-                candidate.decisionA == candidate.decisionB)
-            throw invalid("missing two independent E04 decisions");
-        for (String channel : new String[] { "A", "B" }) {
+        if (candidate.plan.channelCount != candidate.decisions.size())
+            throw invalid("decision population does not match active channels");
+        if (candidate.plan.hasEntryCapacitor) {
+            CircuitElm entryCap = candidate.backing.get("C12");
+            if (!(entryCap instanceof CapacitorElm) ||
+                    ((CapacitorElm) entryCap).capacitance != 1e-6)
+                throw invalid("missing requested fused-entry capacitor");
+            requireNet(board, "C12.1", "FUSED12");
+            requireNet(board, "C12.2", "CTRL_RETURN");
+        } else if (candidate.backing.get("C12") != null ||
+                board.getComponent("C12") != null) {
+            throw invalid("omitted entry capacitor remains in live graph");
+        }
+        if (candidate.plan.hasFiveVoltBleeder) {
+            CircuitElm bleeder = candidate.backing.get("RBLEED5");
+            if (!(bleeder instanceof ResistorElm) ||
+                    ((ResistorElm) bleeder).getResistance() != 100000.0)
+                throw invalid("missing requested 5 V stored-energy bleed path");
+            requireNet(board, "RBLEED5.1", "RAIL5");
+            requireNet(board, "RBLEED5.2", "CTRL_RETURN");
+        }
+        requireIndicator(candidate, "RLED", "LED1",
+            candidate.plan.hasFiveVoltIndicator, "RAIL5", "CTRL_RETURN", 3300.0);
+        requireIndicator(candidate, "RLED12", "LED12",
+            candidate.plan.hasTwelveVoltIndicator, "RAIL12", "CTRL_RETURN", 10000.0);
+        for (String channel : candidate.plan.channels()) {
+            if (candidate.backing.get("U2" + channel) != candidate.decision(channel))
+                throw invalid("missing independent E04 decision " + channel);
             CircuitElm rawPullDown = candidate.backing.get("RPIN_" + channel);
             if (!(rawPullDown instanceof ResistorElm) ||
                     ((ResistorElm) rawPullDown).getResistance() != 1000.0)
                 throw invalid("missing 1 kOhm raw sensor pull-down " + channel);
             requireNet(board, "RPIN_" + channel + ".1", channel + "_RAW");
             requireNet(board, "RPIN_" + channel + ".2", "CTRL_RETURN");
-            if (candidate.plan.hasSensorInputFilters()) {
+            if (candidate.plan.hasSensorInputFilter(channel)) {
                 CircuitElm filter = candidate.backing.get("CFLT_" + channel);
                 if (!(filter instanceof CapacitorElm) ||
                         ((CapacitorElm) filter).capacitance != 100e-9)
@@ -80,19 +103,31 @@ final class Rb30TopologyValidator {
                     !(candidate.backing.get("JO" + channel) instanceof
                         BoundedExternalLoadElm))
                 throw invalid("missing loaded E03 output " + channel);
+            requireIndicator(candidate, "RLEDOUT_" + channel,
+                "LEDOUT_" + channel, candidate.plan.hasOutputIndicator(channel),
+                "OUT_" + channel, "LOAD_RETURN", 10000.0);
         }
-        String reference = candidate.plan.sharedHystereticReference ?
+        String reference = candidate.plan.sharedReference() ?
             "REF_SHARED" : null;
-        for (String channel : new String[] { "A", "B" })
+        for (String channel : candidate.plan.channels())
             requireNet(board, "U2" + channel + ".REFERENCE",
                 reference == null ? channel + "_REF" : reference);
-        if (reference != null) {
-            if (board.getComponent("RFB_A") == null ||
-                    board.getComponent("RFB_B") == null ||
-                    board.getComponent("RREF_H") == null ||
+        if (candidate.plan.sharedHystereticReference()) {
+            if (board.getComponent("RREF_H") == null ||
                     board.getComponent("RREF_L") == null)
                 throw invalid("incomplete shared hysteretic arrangement");
-        } else for (String channel : new String[] { "A", "B" })
+            for (String channel : candidate.plan.channels())
+                if (board.getComponent("RFB_" + channel) == null)
+                    throw invalid("missing channel hysteresis feedback " + channel);
+        } else if (candidate.plan.referenceArrangement ==
+                Rb30Plan.ReferenceArrangement.SHARED_DIRECT) {
+            if (board.getComponent("RREF_H") == null ||
+                    board.getComponent("RREF_L") == null)
+                throw invalid("incomplete shared direct arrangement");
+            for (String channel : candidate.plan.channels())
+                if (board.getComponent("RFB_" + channel) != null)
+                    throw invalid("shared direct threshold gained feedback");
+        } else for (String channel : candidate.plan.channels())
             if (board.getComponent("RREF_H" + channel) == null ||
                     board.getComponent("RREF_L" + channel) == null)
                 throw invalid("incomplete separate direct arrangement");
@@ -102,17 +137,46 @@ final class Rb30TopologyValidator {
             if (element instanceof AbstractRailRegulatorElm) regulatorCount++;
             if (element instanceof ServiceRelayElm) relayCount++;
         }
-        if (decisionCount != 2 || regulatorCount != 1 || relayCount != 2)
+        if (decisionCount != candidate.plan.channelCount || regulatorCount != 1 ||
+                relayCount != candidate.plan.channelCount)
             throw invalid("duplicate or missing live functional role");
         requireElementCensus(candidate);
         requireFaultOwners(candidate);
     }
 
+    private static void requireIndicator(Rb30Generator.Candidate candidate,
+            String resistorId, String ledId, boolean expected,
+            String firstNet, String returnNet, double ohms) {
+        TroubleshootBoard board = candidate.board();
+        CircuitElm resistor = candidate.backing.get(resistorId);
+        CircuitElm led = candidate.backing.get(ledId);
+        if (!expected) {
+            if (resistor != null || led != null ||
+                    board.getComponent(resistorId) != null ||
+                    board.getComponent(ledId) != null)
+                throw invalid("unrequested indicator remains in topology " + resistorId);
+            return;
+        }
+        if (!(resistor instanceof ResistorElm) ||
+                ((ResistorElm) resistor).getResistance() != ohms ||
+                !(led instanceof LEDElm))
+            throw invalid("missing causal indicator pair " + resistorId);
+        String feed = "LED_FEED";
+        if ("RLED12".equals(resistorId)) feed = "LED12_FEED";
+        else if (resistorId.startsWith("RLEDOUT_"))
+            feed = "LED_OUT_" + resistorId.substring("RLEDOUT_".length()) + "_FEED";
+        requireNet(board, resistorId + ".1", firstNet);
+        requireNet(board, resistorId + ".2", feed);
+        requireNet(board, ledId + ".A", feed);
+        requireNet(board, ledId + ".K", returnNet);
+    }
+
     /** Verify all five answer-blind options have distinct executable physical owners. */
     private static void requireFaultOwners(Rb30Generator.Candidate candidate) {
+        String relayChannel = candidate.plan.channelCount == 1 ? "A" : "B";
         String[] ids = { "DREV_OPEN", "REN_OPEN", "SENSOR_A_OPEN",
-            "DRIVE_A_OPEN", "RELAY_B_COIL_OPEN" };
-        String[] owners = { "DREV", "REN", "RSA", "RDA", "KB" };
+            "DRIVE_A_OPEN", "RELAY_" + relayChannel + "_COIL_OPEN" };
+        String[] owners = { "DREV", "REN", "RSA", "RDA", "K" + relayChannel };
         if (candidate.faultCandidates == null || candidate.faultCandidates.size() != ids.length)
             throw invalid("Q30 must retain exactly five fault candidates");
         boolean selectedFound = false;

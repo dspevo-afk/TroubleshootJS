@@ -1,0 +1,99 @@
+{
+  "schema": "q30-sensitivity-parser-canaries@1",
+  "result": "PASS",
+  "scope": "Lightweight AST-extracted verifier parser check; no Java process, build, or native gate launched.",
+  "source": {
+    "label": "scripts/verify-current-contracts.ps1",
+    "sha256": "37CB834EAF3E04C4628261D972570AAAAA27497CA4D0C2C338457B71F82B5C16",
+    "astParseErrorCount": 0,
+    "extractedFunction": "Test-Q30SensitivityCaseOutput"
+  },
+  "inputLog": {
+    "label": "native-scale-service-focused-r4.log",
+    "sha256": "ED46ECEA57E7B676D08F577298DEE720D124CD81635949F78EBE249DA0D303E3",
+    "seed": "7",
+    "fault": "RELAY_B_COIL_OPEN",
+    "planRow": "Q30_CASE_PLAN {\"schema\":1,\"seed\":\"7\",\"canonical\":\"rb30-plan@4;seed=7;topology=RB30_CH2_SHARED_HYSTERETIC_A_BJT_B_BJT;support=C12:true,S5:false,S12:false,filters:3,outputIndicators:1,bleeder5:false;layout=-1194938301906846876;routing=8563653456340676275;physicalPolicy=MEDIUM_BOARD@1;fault=RELAY_B_COIL_OPEN;packages=37;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated\",\"planEpoch\":4,\"topology\":\"RB30_CH2_SHARED_HYSTERETIC_A_BJT_B_BJT_C12_Y_S5_N_S12_N_F3_O1_B5_N\",\"channelCount\":2,\"activeChannels\":[\"A\",\"B\"],\"packageCount\":37,\"referenceArrangement\":\"SHARED_HYSTERETIC\",\"support\":{\"C12\":true,\"S5\":false,\"S12\":false,\"filters\":3,\"outputIndicators\":1,\"bleeder5\":false},\"faults\":[{\"id\":\"DREV_OPEN\",\"owner\":\"DREV\"},{\"id\":\"REN_OPEN\",\"owner\":\"REN\"},{\"id\":\"SENSOR_A_OPEN\",\"owner\":\"RSA\"},{\"id\":\"DRIVE_A_OPEN\",\"owner\":\"RDA\"},{\"id\":\"RELAY_B_COIL_OPEN\",\"owner\":\"KB\"}],\"diagnosticProviderDeveloper\":\"rb30-control-diagnostic@2\",\"diagnosticProviderNormal\":\"rb30-control-diagnostic@4\",\"diagnosticTemplate\":\"RB30_CHANNEL_INPUT_SWEEP_V1\",\"diagnosticSamplesPerHypothesis\":37,\"temporalContract\":\"RB30_CHANNEL_FUNCTION@3\",\"sampleSeconds\":0.03,\"profileWorkUnits\":5,\"customerRetestWorkUnits\":5,\"maxJobMillis\":90000,\"maxJobSteps\":640,\"activeOperationMillis\":5000}",
+    "pairRow": "Q30_STEP_PAIR seed=7 support=C12:true,S5:false,S12:false,filters:3,outputIndicators:1,bleeder5:false topology=RB30_CH2_SHARED_HYSTERETIC_A_BJT_B_BJT_C12_Y_S5_N_S12_N_F3_O1_B5_N canonicalPlan=rb30-plan@4;seed=7;topology=RB30_CH2_SHARED_HYSTERETIC_A_BJT_B_BJT;support=C12:true,S5:false,S12:false,filters:3,outputIndicators:1,bleeder5:false;layout=-1194938301906846876;routing=8563653456340676275;physicalPolicy=MEDIUM_BOARD@1;fault=RELAY_B_COIL_OPEN;packages=37;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated fault=RELAY_B_COIL_OPEN referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US maxDeltaVolts=4.43680648e-11 toleranceVolts=0.120015755 phase=customer-retest sample=SENSORS_HIGH/REN.2-J1.2 referenceElapsedMillis=12357 productionCandidateElapsedMillis=6474 referenceSimSeconds=1.16019250 productionCandidateSimSeconds=1.16036000 referenceCleanupMillis=0 productionCandidateCleanupMillis=0 cleanup=true",
+    "passRow": "PASS: Q30 production solver step sensitivity assertions=1784 seed=7 support=C12:true,S5:false,S12:false,filters:3,outputIndicators:1,bleeder5:false topology=RB30_CH2_SHARED_HYSTERETIC_A_BJT_B_BJT_C12_Y_S5_N_S12_N_F3_O1_B5_N canonicalPlan=rb30-plan@4;seed=7;topology=RB30_CH2_SHARED_HYSTERETIC_A_BJT_B_BJT;support=C12:true,S5:false,S12:false,filters:3,outputIndicators:1,bleeder5:false;layout=-1194938301906846876;routing=8563653456340676275;physicalPolicy=MEDIUM_BOARD@1;fault=RELAY_B_COIL_OPEN;packages=37;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated faults=1 referenceMaximumStepSeconds=2.50000000e-06 productionCandidateMaximumStepSeconds=5.00000000e-06 candidateKind=PRODUCTION_5_US elapsedMillis=23426"
+  },
+  "expectedMetadata": {
+    "support": "C12:true,S5:false,S12:false,filters:3,outputIndicators:1,bleeder5:false",
+    "topology": "RB30_CH2_SHARED_HYSTERETIC_A_BJT_B_BJT_C12_Y_S5_N_S12_N_F3_O1_B5_N",
+    "canonical": "rb30-plan@4;seed=7;topology=RB30_CH2_SHARED_HYSTERETIC_A_BJT_B_BJT;support=C12:true,S5:false,S12:false,filters:3,outputIndicators:1,bleeder5:false;layout=-1194938301906846876;routing=8563653456340676275;physicalPolicy=MEDIUM_BOARD@1;fault=RELAY_B_COIL_OPEN;packages=37;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated"
+  },
+  "canaries": [
+    {
+      "name": "real-seed7-pair-and-pass",
+      "expectedAccepted": true,
+      "actualAccepted": true,
+      "canaryPassed": true
+    },
+    {
+      "name": "pair-support-corruption",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "canaryPassed": true
+    },
+    {
+      "name": "pair-topology-corruption",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "canaryPassed": true
+    },
+    {
+      "name": "pair-canonical-corruption",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "canaryPassed": true
+    },
+    {
+      "name": "pair-fault-corruption",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "canaryPassed": true
+    },
+    {
+      "name": "duplicate-pair-row",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "canaryPassed": true
+    },
+    {
+      "name": "final-support-corruption",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "canaryPassed": true
+    },
+    {
+      "name": "final-topology-corruption",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "canaryPassed": true
+    },
+    {
+      "name": "final-canonical-corruption",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "canaryPassed": true
+    },
+    {
+      "name": "unproven-termination",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "canaryPassed": true
+    },
+    {
+      "name": "nonzero-child-exit",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "canaryPassed": true
+    }
+  ],
+  "summary": {
+    "positiveAccepted": true,
+    "negativeRejected": true,
+    "negativeCount": 10,
+    "allPassed": true
+  }
+}

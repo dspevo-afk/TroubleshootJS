@@ -1,0 +1,1 @@
+PASS: PLAN@4/PROVIDER@4: baseline pairs=10; corrupted-receipt rejection canaries=62; schema-bound catalog claim flip=PASS; power-contract synthetic canaries=7 PASS

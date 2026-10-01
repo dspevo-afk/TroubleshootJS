@@ -6,12 +6,13 @@ param(
     [string[]]$Suite = @(),
     [long[]]$Q30ServiceSeeds = @(7,13,4,14,43,3,10,64),
     [long[]]$Q30SensitivitySeeds = @(7,13,4,14,43,3,10,64),
-    [ValidateSet('DREV_OPEN','REN_OPEN','SENSOR_A_OPEN','DRIVE_A_OPEN','RELAY_B_COIL_OPEN')]
-    [string[]]$Q30SensitivityFaults = @('DREV_OPEN','REN_OPEN','SENSOR_A_OPEN','DRIVE_A_OPEN','RELAY_B_COIL_OPEN'),
+    [ValidateSet('DREV_OPEN','REN_OPEN','SENSOR_A_OPEN','DRIVE_A_OPEN','RELAY_A_COIL_OPEN','RELAY_B_COIL_OPEN')]
+    [string[]]$Q30SensitivityFaults = @(),
     [long[]]$Q30CorpusSeeds = @(0,1,15,14,44,8,10,12,48,35,6,18,43,93,20,64,
         56,13,4,11,2,3,19,9,7,42,24,21,75,22,105,27,53,50,16,25,60,100,59,84,
         70,41,45,23,5,38,40,26,[long]::MinValue,[long]::MaxValue,9007199254740993L),
-    [long[]]$QuickPlayGateSeeds = @()
+    [long[]]$QuickPlayGateSeeds = @(),
+    [long[]]$Q30PlanSeeds = @()
 )
 
 # Maintained current seed, identity, geometry, recipe and construction contracts.
@@ -20,6 +21,193 @@ param(
 # solver/player gates remain separate.
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
+
+function Write-Q30CasePlanMetadataFailure {
+    param(
+        [Parameter(Mandatory = $true)][string]$Seed,
+        [Parameter(Mandatory = $true)][string]$Violation,
+        [string[]]$Lines = @()
+    )
+    $safeViolation = [regex]::Replace($Violation,
+        '(?i)(?:[A-Z]:\\|\\\\)[^\r\n,;)]*', '<path>')
+    Write-Host ('Q30_CASE_PLAN_PREFLIGHT_FAILURE seed=' + $Seed +
+        ' violation=' + $safeViolation)
+    foreach ($line in @($Lines)) {
+        if ($line -cmatch '^Q30_CASE_PLAN(?:\s|$)') {
+            Write-Host $line
+        }
+    }
+}
+function Get-Q30CasePlanMetadata {
+    param(
+        [Parameter(Mandatory = $true)][string]$JavaExe,
+        [Parameter(Mandatory = $true)][string]$ClassPath,
+        [Parameter(Mandatory = $true)][string]$Seed
+    )
+    $arguments = @('-ea', '-cp', $ClassPath,
+        'com.lushprojects.circuitjs1.client.Q30ServiceFlowContractTest',
+        '--describe-plan', $Seed)
+    $lines = @()
+    try {
+    $described = Invoke-VerifierBoundedProcess $JavaExe $arguments 60000
+    $lines = @($described.Stdout -split '\r?\n' | Where-Object { $_.Length -gt 0 })
+    if (-not $described.TerminationProven -or $described.ExitCode -ne 0 -or
+            $lines.Count -ne 1 -or $lines[0] -cnotmatch '^Q30_CASE_PLAN \{.+\}$') {
+        throw ('Q30 plan description failed exact seed ' + $Seed +
+            ', exit=' + $described.ExitCode + ', termination=' +
+            $described.TerminationProven)
+    }
+    $rawLine = $lines[0]
+    try {
+        $plan = $rawLine.Substring('Q30_CASE_PLAN '.Length) | ConvertFrom-Json -ErrorAction Stop
+    } catch {
+        throw ('Q30 plan description JSON is invalid for seed ' + $Seed + ': ' +
+            $_.Exception.Message)
+    }
+    if ($plan.schema -ne 1 -or $plan.seed -isnot [string] -or
+            $plan.seed -cne $Seed -or $plan.planEpoch -ne 4 -or
+            $plan.canonical -isnot [string] -or
+            $plan.canonical -cnotmatch ('^rb30-plan@4;seed=' +
+                [regex]::Escape($Seed) + ';topology=[A-Z0-9_]+;support=')) {
+        throw ('Q30 plan description has foreign schema, epoch, seed, or identity for ' + $Seed)
+    }
+    if ($plan.channelCount -notin @(1, 2)) {
+        throw ('Q30 plan description has unsupported channel count for seed ' + $Seed)
+    }
+    [string[]]$expectedChannels = if ($plan.channelCount -eq 1) { @('A') } else { @('A', 'B') }
+    $actualChannels = @($plan.activeChannels)
+    if ($actualChannels.Count -ne $expectedChannels.Count) {
+        throw ('Q30 active-channel count mismatch for seed ' + $Seed)
+    }
+    for ($index = 0; $index -lt $expectedChannels.Count; $index++) {
+        if ($actualChannels[$index] -cne $expectedChannels[$index]) {
+            throw ('Q30 active-channel order mismatch for seed ' + $Seed)
+        }
+    }
+    if ($plan.support.C12 -isnot [bool] -or $plan.support.S5 -isnot [bool] -or
+            $plan.support.S12 -isnot [bool] -or $plan.support.bleeder5 -isnot [bool] -or
+            $plan.support.filters -notin @(0, 1, 2, 3) -or
+            $plan.support.outputIndicators -notin @(0, 1, 2, 3)) {
+        throw ('Q30 support identity is malformed for seed ' + $Seed)
+    }
+    $supportIdentity = 'C12:' + $plan.support.C12.ToString().ToLowerInvariant() +
+        ',S5:' + $plan.support.S5.ToString().ToLowerInvariant() +
+        ',S12:' + $plan.support.S12.ToString().ToLowerInvariant() +
+        ',filters:' + $plan.support.filters +
+        ',outputIndicators:' + $plan.support.outputIndicators +
+        ',bleeder5:' + $plan.support.bleeder5.ToString().ToLowerInvariant()
+    if ($plan.canonical -cnotmatch (';support=' + [regex]::Escape($supportIdentity) + ';')) {
+        throw ('Q30 plan support JSON disagrees with canonical identity for seed ' + $Seed)
+    }
+    $axisMatch = [regex]::Match($plan.canonical,
+        ';topology=(RB30_CH[12]_(SEPARATE_DIRECT|SHARED_DIRECT|SHARED_HYSTERETIC)_A_(BJT|NMOS)(?:_B_(BJT|NMOS))?);')
+    if (-not $axisMatch.Success -or
+            [int]$axisMatch.Groups[1].Value.Substring(7, 1) -ne $plan.channelCount -or
+            ($plan.channelCount -eq 1 -and $axisMatch.Groups[4].Success) -or
+            ($plan.channelCount -eq 2 -and -not $axisMatch.Groups[4].Success) -or
+            $plan.referenceArrangement -cne $axisMatch.Groups[2].Value) {
+        throw ('Q30 topology/reference identity is malformed for seed ' + $Seed)
+    }
+    $expectedTopology = $axisMatch.Groups[1].Value +
+        '_C12_' + $(if ($plan.support.C12) { 'Y' } else { 'N' }) +
+        '_S5_' + $(if ($plan.support.S5) { 'Y' } else { 'N' }) +
+        '_S12_' + $(if ($plan.support.S12) { 'Y' } else { 'N' }) +
+        '_F' + $plan.support.filters + '_O' + $plan.support.outputIndicators +
+        '_B5_' + $(if ($plan.support.bleeder5) { 'Y' } else { 'N' })
+    if ($plan.topology -cne $expectedTopology -or
+            $plan.canonical -cnotmatch (';packages=' + $plan.packageCount + ';') -or
+            $plan.packageCount -lt 20 -or $plan.packageCount -gt 40) {
+        throw ('Q30 topology/package identity is inconsistent for seed ' + $Seed)
+    }
+    $relay = if ($plan.channelCount -eq 1) { 'KA' } else { 'KB' }
+    $relayFault = if ($plan.channelCount -eq 1) {
+        'RELAY_A_COIL_OPEN'
+    } else {
+        'RELAY_B_COIL_OPEN'
+    }
+    $expectedFaults = @(
+        @{ Id = 'DREV_OPEN'; Owner = 'DREV' },
+        @{ Id = 'REN_OPEN'; Owner = 'REN' },
+        @{ Id = 'SENSOR_A_OPEN'; Owner = 'RSA' },
+        @{ Id = 'DRIVE_A_OPEN'; Owner = 'RDA' },
+        @{ Id = $relayFault; Owner = $relay }
+    )
+    $faults = @($plan.faults)
+    if ($faults.Count -ne $expectedFaults.Count) {
+        throw ('Q30 plan fault count mismatch for seed ' + $Seed)
+    }
+    for ($index = 0; $index -lt $expectedFaults.Count; $index++) {
+        if ($faults[$index].id -cne $expectedFaults[$index].Id -or
+                $faults[$index].owner -cne $expectedFaults[$index].Owner) {
+            throw ('Q30 plan fault/owner/order mismatch for seed ' + $Seed +
+                ' at ordinal ' + $index)
+        }
+    }
+    $stateCount = 1 -shl $plan.channelCount
+    $expectedSamples = (7 + $plan.channelCount) * $stateCount + 1
+    $expectedWorkUnits = $stateCount + 1
+    if ($plan.diagnosticProviderDeveloper -cne 'rb30-control-diagnostic@2' -or
+            $plan.diagnosticProviderNormal -cne 'rb30-control-diagnostic@4' -or
+            $plan.diagnosticTemplate -cne 'RB30_CHANNEL_INPUT_SWEEP_V1' -or
+            $plan.temporalContract -cne 'RB30_CHANNEL_FUNCTION@3' -or
+            $plan.diagnosticSamplesPerHypothesis -ne $expectedSamples -or
+            $plan.sampleSeconds -ne 0.03 -or
+            $plan.profileWorkUnits -ne $expectedWorkUnits -or
+            $plan.customerRetestWorkUnits -ne $expectedWorkUnits -or
+            $plan.maxJobMillis -ne 90000 -or $plan.maxJobSteps -ne 640 -or
+            $plan.activeOperationMillis -ne 5000) {
+        throw ('Q30 plan provider, evidence, or unchanged job-budget contract mismatch for seed ' + $Seed)
+    }
+    $executionFaults = New-Object Collections.Generic.List[string]
+    $executionFaults.Add($relayFault)
+    foreach ($fault in $expectedFaults[0..3]) { $executionFaults.Add($fault.Id) }
+    return [pscustomobject]@{
+        Seed = $Seed
+        RawLine = $rawLine
+        Canonical = $plan.canonical
+        SupportIdentity = $supportIdentity
+        Topology = $expectedTopology
+        ChannelCount = [int]$plan.channelCount
+        ActiveChannels = $expectedChannels
+        PackageCount = [int]$plan.packageCount
+        RelayFault = $relayFault
+        FaultIds = @($executionFaults.ToArray())
+    }
+    } catch {
+        Write-Q30CasePlanMetadataFailure -Seed $Seed -Violation ([string]$_.Exception.Message) -Lines $lines
+        throw
+    }
+}
+
+function Test-Q30SensitivityCaseOutput {
+    param(
+        [Parameter(Mandatory = $true)][string]$Stdout,
+        [Parameter(Mandatory = $true)][string]$Seed,
+        [Parameter(Mandatory = $true)][string]$FaultId,
+        [Parameter(Mandatory = $true)][string]$SupportIdentity,
+        [Parameter(Mandatory = $true)][string]$Topology,
+        [Parameter(Mandatory = $true)][string]$Canonical,
+        [Parameter(Mandatory = $true)][bool]$TerminationProven,
+        [Parameter(Mandatory = $true)][int]$ExitCode
+    )
+    $pairRows = @($Stdout -split '\r?\n' | Where-Object {
+        $_.StartsWith('Q30_STEP_PAIR ')
+    })
+    $caseIdentityPattern = ' support=' + [regex]::Escape($SupportIdentity) +
+        ' topology=' + [regex]::Escape($Topology) +
+        ' canonicalPlan=' + [regex]::Escape($Canonical)
+    $pairPattern = '^Q30_STEP_PAIR seed=' + [regex]::Escape($Seed) +
+        $caseIdentityPattern + ' fault=' + [regex]::Escape($FaultId) + ' '
+    $finalPattern = '(?m)^PASS: Q30 production solver step sensitivity assertions=\d+ seed=' +
+        [regex]::Escape($Seed) + $caseIdentityPattern + ' faults=1 ' +
+        'referenceMaximumStepSeconds=2\.50000000e-06 ' +
+        'productionCandidateMaximumStepSeconds=5\.00000000e-06 ' +
+        'candidateKind=PRODUCTION_5_US elapsedMillis=\d+\r?$'
+    return $TerminationProven -and $ExitCode -eq 0 -and
+        $pairRows.Count -eq 1 -and [regex]::IsMatch($pairRows[0], $pairPattern) -and
+        [regex]::IsMatch($Stdout, $finalPattern)
+}
+
 $taskRoot = ''
 $resultCode = 2
 try {
@@ -32,6 +220,17 @@ try {
         if ($QuickPlayGateSeeds.Count -lt 1 -or $QuickPlayGateSeeds.Count -gt 128 -or
                 $distinctFixtureSeeds.Count -ne $QuickPlayGateSeeds.Count) {
             throw '-QuickPlayGateSeeds requires 1-128 distinct signed-long values.'
+        }
+    }
+    if ($PSBoundParameters.ContainsKey('Q30PlanSeeds')) {
+        $planFixtureSuites = @($Suite)
+        if ($planFixtureSuites.Count -ne 1 -or $planFixtureSuites[0] -cne 'Q30PlanContractTest') {
+            throw '-Q30PlanSeeds is allowed only with exactly -Suite Q30PlanContractTest.'
+        }
+        $distinctPlanSeeds = @($Q30PlanSeeds | Select-Object -Unique)
+        if ($Q30PlanSeeds.Count -lt 1 -or $Q30PlanSeeds.Count -gt 128 -or
+                $distinctPlanSeeds.Count -ne $Q30PlanSeeds.Count) {
+            throw '-Q30PlanSeeds requires 1-128 distinct signed-long values.'
         }
     }
     Import-Module (Join-Path $PSScriptRoot 'VerifierIsolation.psm1') -Force
@@ -235,6 +434,74 @@ final class PhysicalSpecificationDeveloperVerifier {
     }
     $receipts = New-Object Collections.Generic.List[string]
     $outputs = @{}
+    $q30PlanBySeed = @{}
+    $q30SensitivityFaultsBySeed = @{}
+    $needsQ30CorpusPlans = $Suite.Count -eq 0 -or
+        $Suite -contains 'Q30NormalCorpusContractTest'
+    $needsQ30ServicePlans = $Suite.Count -eq 0 -or
+        $Suite -contains 'Q30ServiceFlowContractTest'
+    $needsQ30SensitivityPlans = $Suite.Count -eq 0 -or
+        $Suite -contains 'Q30SolverStepSensitivityContractTest'
+    $q30RequestedSeedValues = New-Object Collections.Generic.List[long]
+    if ($needsQ30CorpusPlans) {
+        if ($Q30CorpusSeeds.Count -lt 1 -or $Q30CorpusSeeds.Count -gt 64 -or
+                @($Q30CorpusSeeds | Select-Object -Unique).Count -ne $Q30CorpusSeeds.Count) {
+            throw 'Q30 corpus requires 1-64 distinct exact signed-long seeds.'
+        }
+        foreach ($seedValue in $Q30CorpusSeeds) { $q30RequestedSeedValues.Add($seedValue) }
+    }
+    if ($needsQ30ServicePlans) {
+        if ($Q30ServiceSeeds.Count -lt 1 -or $Q30ServiceSeeds.Count -gt 32 -or
+                @($Q30ServiceSeeds | Select-Object -Unique).Count -ne $Q30ServiceSeeds.Count) {
+            throw 'Q30 service seeds require 1-32 distinct exact signed-long values.'
+        }
+        foreach ($seedValue in $Q30ServiceSeeds) { $q30RequestedSeedValues.Add($seedValue) }
+    }
+    if ($needsQ30SensitivityPlans) {
+        if ($Q30SensitivitySeeds.Count -lt 1 -or $Q30SensitivitySeeds.Count -gt 32 -or
+                @($Q30SensitivitySeeds | Select-Object -Unique).Count -ne $Q30SensitivitySeeds.Count) {
+            throw 'Q30 sensitivity seeds require 1-32 distinct exact signed-long values.'
+        }
+        if ($PSBoundParameters.ContainsKey('Q30SensitivityFaults') -and
+                ($Q30SensitivityFaults.Count -lt 1 -or
+                    @($Q30SensitivityFaults | Select-Object -Unique).Count -ne $Q30SensitivityFaults.Count)) {
+            throw 'Explicit Q30 sensitivity faults must be nonempty and distinct.'
+        }
+        foreach ($seedValue in $Q30SensitivitySeeds) { $q30RequestedSeedValues.Add($seedValue) }
+    }
+    $q30RequestedSeedTexts = New-Object Collections.Generic.List[string]
+    $q30RequestedSeedSeen = @{}
+    foreach ($seedValue in $q30RequestedSeedValues) {
+        $seedText = $seedValue.ToString([Globalization.CultureInfo]::InvariantCulture)
+        if (-not $q30RequestedSeedSeen.ContainsKey($seedText)) {
+            $q30RequestedSeedSeen[$seedText] = $true
+            $q30RequestedSeedTexts.Add($seedText)
+        }
+    }
+    foreach ($seedText in $q30RequestedSeedTexts) {
+        $planMetadata = Get-Q30CasePlanMetadata $java $classPath $seedText
+        $q30PlanBySeed[$seedText] = $planMetadata
+        Write-Host $planMetadata.RawLine
+        $receipts.Add($planMetadata.RawLine)
+    }
+    if ($needsQ30SensitivityPlans) {
+        foreach ($seedValue in $Q30SensitivitySeeds) {
+            $seedText = $seedValue.ToString([Globalization.CultureInfo]::InvariantCulture)
+            $planMetadata = $q30PlanBySeed[$seedText]
+            $selectedFaults = if ($PSBoundParameters.ContainsKey('Q30SensitivityFaults')) {
+                @($Q30SensitivityFaults)
+            } else {
+                @($planMetadata.FaultIds)
+            }
+            foreach ($faultId in $selectedFaults) {
+                if ($planMetadata.FaultIds -cnotcontains $faultId) {
+                    throw ('Explicit Q30 sensitivity fault ' + $faultId +
+                        ' is not declared by seed ' + $seedText + '; no cases were started.')
+                }
+            }
+            $q30SensitivityFaultsBySeed[$seedText] = @($selectedFaults)
+        }
+    }
     foreach ($definition in $testDefinitions) {
         $testClass = $definition.Name
         if ($Suite.Count -gt 0 -and $Suite -notcontains $testClass) { continue }
@@ -420,6 +687,52 @@ final class PhysicalSpecificationDeveloperVerifier {
         }
         $testArguments = @('-ea', '-cp', $classPath,
             ('com.lushprojects.circuitjs1.client.' + $testClass))
+        if ($testClass -eq 'Q30PlanContractTest' -and
+                $PSBoundParameters.ContainsKey('Q30PlanSeeds')) {
+            $planSeedTexts = @($Q30PlanSeeds | ForEach-Object {
+                $_.ToString([Globalization.CultureInfo]::InvariantCulture)
+            })
+            $planSeedCsv = [String]::Join(',', $planSeedTexts)
+            $exportArguments = @($testArguments) + @('--describe-plans', $planSeedCsv)
+            $exported = Invoke-VerifierBoundedProcess $java $exportArguments 60000
+            Write-Host $exported.Stdout
+            if ($exported.Stderr) { Write-Host $exported.Stderr }
+            $exportLines = @($exported.Stdout -split '\r?\n' |
+                Where-Object { $_.Length -gt 0 })
+            $exportMarker = 'PASS: Q30 plan contracts exported=' + $planSeedTexts.Count
+            if (-not $exported.TerminationProven -or $exported.ExitCode -ne 0 -or
+                    $exportLines.Count -ne ($planSeedTexts.Count + 1) -or
+                    $exportLines[-1] -cne $exportMarker) {
+                throw ('Q30 pure-plan export did not return the exact requested census; exit=' +
+                    $exported.ExitCode + ', termination=' + $exported.TerminationProven)
+            }
+            $planExportSeen = @{}
+            for ($planIndex = 0; $planIndex -lt $planSeedTexts.Count; $planIndex++) {
+                $rawPlanRow = $exportLines[$planIndex]
+                $planRowFields = $rawPlanRow -split '\|', 3
+                $expectedPlanSeed = $planSeedTexts[$planIndex]
+                if ($planRowFields.Count -ne 3 -or
+                        $planRowFields[0] -cne 'Q30_PLAN_CANONICAL' -or
+                        $planRowFields[1] -cne ('seed=' + $expectedPlanSeed) -or
+                        $planRowFields[2] -cnotmatch ('^plan=rb30-plan@4;seed=' +
+                            [regex]::Escape($expectedPlanSeed) + ';topology=[A-Z0-9_]+;support=')) {
+                    throw ('Q30 pure-plan export row/order/canonical mismatch at ordinal ' +
+                        $planIndex + ' for seed ' + $expectedPlanSeed)
+                }
+                if ($planExportSeen.ContainsKey($expectedPlanSeed)) {
+                    throw ('Duplicate Q30 pure-plan export seed: ' + $expectedPlanSeed)
+                }
+                $planExportSeen[$expectedPlanSeed] = $true
+                $receipts.Add($rawPlanRow)
+            }
+            if ($planExportSeen.Count -ne $planSeedTexts.Count) {
+                throw ('Q30 pure-plan export expected ' + $planSeedTexts.Count +
+                    ' distinct seeds, found ' + $planExportSeen.Count)
+            }
+            $receipts.Add($exportMarker)
+            $outputs[$testClass] = $exported.Stdout
+            continue
+        }
         if ($testClass -eq 'QuickPlayGateCorpus' -and
                 $PSBoundParameters.ContainsKey('QuickPlayGateSeeds')) {
             $testArguments += '--fixture-census'
@@ -485,34 +798,27 @@ final class PhysicalSpecificationDeveloperVerifier {
         }
         if ($testClass -eq 'Q30SolverStepSensitivityContractTest') {
             if ($Q30SensitivitySeeds.Count -lt 1 -or $Q30SensitivitySeeds.Count -gt 32 -or
-                    @($Q30SensitivitySeeds | Select-Object -Unique).Count -ne $Q30SensitivitySeeds.Count -or
-                    $Q30SensitivityFaults.Count -lt 1 -or
-                    @($Q30SensitivityFaults | Select-Object -Unique).Count -ne $Q30SensitivityFaults.Count) {
-                throw 'Q30 sensitivity requires distinct seeds and fault cases.'
+                    @($Q30SensitivitySeeds | Select-Object -Unique).Count -ne $Q30SensitivitySeeds.Count) {
+                throw 'Q30 sensitivity requires 1-32 distinct exact signed-long seeds.'
             }
             $sensitivityFailures = New-Object Collections.Generic.List[string]
             $sensitivityOutputs = New-Object Collections.Generic.List[string]
             $sensitivityPassed = 0
+            $sensitivityAttempted = 0
             foreach ($exactSeed in $Q30SensitivitySeeds) {
                 $seedText = $exactSeed.ToString([Globalization.CultureInfo]::InvariantCulture)
-                foreach ($faultId in $Q30SensitivityFaults) {
+                foreach ($faultId in $q30SensitivityFaultsBySeed[$seedText]) {
+                    $sensitivityAttempted++
                     $tested = Invoke-VerifierBoundedProcess $java (@($testArguments) +
                         @('--seed', $seedText, '--fault', $faultId)) 60000
                     Write-Host $tested.Stdout
                     if ($tested.Stderr) { Write-Host $tested.Stderr }
-                    $pairRows = @($tested.Stdout -split '\r?\n' | Where-Object {
-                        $_.StartsWith('Q30_STEP_PAIR ')
-                    })
-                    $pairPattern = '^Q30_STEP_PAIR seed=' + [regex]::Escape($seedText) +
-                        ' support=[A-Z0-9_]+ fault=' + [regex]::Escape($faultId) + ' '
-                    $finalPattern = '(?m)^PASS: Q30 production solver step sensitivity assertions=\d+ seed=' +
-                        [regex]::Escape($seedText) + ' support=[A-Z0-9_]+ faults=1 ' +
-                        'referenceMaximumStepSeconds=2\.50000000e-06 ' +
-                        'productionCandidateMaximumStepSeconds=5\.00000000e-06 ' +
-                        'candidateKind=PRODUCTION_5_US elapsedMillis=\d+\r?$'
-                    $qualified = $tested.TerminationProven -and $tested.ExitCode -eq 0 -and
-                        $pairRows.Count -eq 1 -and [regex]::IsMatch($pairRows[0], $pairPattern) -and
-                        [regex]::IsMatch($tested.Stdout, $finalPattern)
+                    $planMetadata = $q30PlanBySeed[$seedText]
+                    $qualified = Test-Q30SensitivityCaseOutput -Stdout $tested.Stdout `
+                        -Seed $seedText -FaultId $faultId `
+                        -SupportIdentity $planMetadata.SupportIdentity `
+                        -Topology $planMetadata.Topology -Canonical $planMetadata.Canonical `
+                        -TerminationProven $tested.TerminationProven -ExitCode $tested.ExitCode
                     if ($qualified) { $sensitivityPassed++ }
                     else { $sensitivityFailures.Add($seedText + '/' + $faultId) }
                     $caseReceipt = 'Q30_SENSITIVITY_CASE seed=' + $seedText + ' fault=' +
@@ -524,7 +830,7 @@ final class PhysicalSpecificationDeveloperVerifier {
                 }
             }
             $sensitivitySummary = 'Q30_SENSITIVITY_CENSUS attempted=' +
-                ($Q30SensitivitySeeds.Count * $Q30SensitivityFaults.Count) +
+                $sensitivityAttempted +
                 ' passed=' + $sensitivityPassed + ' failed=' + $sensitivityFailures.Count +
                 ' childBudgetMs=60000'
             Write-Host $sensitivitySummary
@@ -543,8 +849,8 @@ final class PhysicalSpecificationDeveloperVerifier {
         }
         if ($testClass -eq 'Q30ServiceFlowContractTest') {
             # Keep every seed/fault service path inside its own original child
-            # budget. Start with the relay case for each seed so its physical
-            # energy guard is diagnosed before the remaining four hypotheses.
+            # budget. Start with the metadata-declared relay so its physical
+            # energy guard precedes the four common hypotheses.
             if ($Q30ServiceSeeds.Count -lt 1 -or $Q30ServiceSeeds.Count -gt 32 -or
                     @($Q30ServiceSeeds | Select-Object -Unique).Count -ne $Q30ServiceSeeds.Count) {
                 throw 'Q30 service seeds require 1-32 distinct exact signed-long values.'
@@ -552,12 +858,13 @@ final class PhysicalSpecificationDeveloperVerifier {
             $q30Seeds = @($Q30ServiceSeeds | ForEach-Object {
                 $_.ToString([Globalization.CultureInfo]::InvariantCulture)
             })
-            $q30Faults = @('RELAY_B_COIL_OPEN', 'DREV_OPEN', 'REN_OPEN',
-                'SENSOR_A_OPEN', 'DRIVE_A_OPEN')
             $q30CaseReceipts = New-Object Collections.Generic.List[string]
             $q30CaseFailures = New-Object Collections.Generic.List[string]
             $q30Seen = @{}
+            $q30ExpectedCount = 0
             foreach ($q30Seed in $q30Seeds) {
+                $q30Faults = @($q30PlanBySeed[$q30Seed].FaultIds)
+                $q30ExpectedCount += $q30Faults.Count
                 foreach ($q30Fault in $q30Faults) {
                     $caseArguments = @($testArguments) + @('--seed', $q30Seed,
                         '--fault', $q30Fault)
@@ -610,14 +917,13 @@ final class PhysicalSpecificationDeveloperVerifier {
                 }
             }
             foreach ($q30Seed in $q30Seeds) {
-                foreach ($q30Fault in $q30Faults) {
+                foreach ($q30Fault in $q30PlanBySeed[$q30Seed].FaultIds) {
                     $caseKey = $q30Seed + '|' + $q30Fault
                     if (-not $q30Seen.ContainsKey($caseKey)) {
                         throw ('Missing Q30 service case from complete census: ' + $caseKey)
                     }
                 }
             }
-            $q30ExpectedCount = $q30Seeds.Count * $q30Faults.Count
             if ($q30Seen.Count -ne $q30ExpectedCount) {
                 throw ('Q30 service census expected ' + $q30ExpectedCount +
                     ' attempted cases, found ' + $q30Seen.Count)
@@ -635,7 +941,7 @@ final class PhysicalSpecificationDeveloperVerifier {
                 $q30PassedCount + ' failed=' + $q30CaseFailures.Count +
                 ' failedCases=' + $q30FailedText + ' seeds=' +
                 [String]::Join(',', $q30Seeds) + ' faults=5 ' +
-                'order=RELAY_B_COIL_OPEN,DREV_OPEN,REN_OPEN,SENSOR_A_OPEN,DRIVE_A_OPEN ' +
+                'order=RELAY_<channel>_COIL_OPEN,DREV_OPEN,REN_OPEN,SENSOR_A_OPEN,DRIVE_A_OPEN ' +
                 'childBudgetMs=60000'
             Write-Host $q30Census
             $q30CaseReceipts.Add($q30Census)

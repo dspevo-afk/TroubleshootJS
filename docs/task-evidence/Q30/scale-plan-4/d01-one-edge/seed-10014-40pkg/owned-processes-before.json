@@ -1,0 +1,44 @@
+[
+  {
+    "pid": 22180,
+    "parent": 6340,
+    "created": "2026-09-28T02:37:43.4702880Z",
+    "ExecutablePath": "<BROWSER_EXECUTABLE>/msedge.exe"
+  },
+  {
+    "pid": 8460,
+    "parent": 22180,
+    "created": "2026-09-28T02:37:43.4903220Z",
+    "ExecutablePath": "<BROWSER_EXECUTABLE>/msedge.exe"
+  },
+  {
+    "pid": 17056,
+    "parent": 22180,
+    "created": "2026-09-28T02:37:43.5608260Z",
+    "ExecutablePath": "<BROWSER_EXECUTABLE>/msedge.exe"
+  },
+  {
+    "pid": 25460,
+    "parent": 22180,
+    "created": "2026-09-28T02:37:43.5645850Z",
+    "ExecutablePath": "<BROWSER_EXECUTABLE>/msedge.exe"
+  },
+  {
+    "pid": 14356,
+    "parent": 22180,
+    "created": "2026-09-28T02:37:43.5893860Z",
+    "ExecutablePath": "<BROWSER_EXECUTABLE>/msedge.exe"
+  },
+  {
+    "pid": 24440,
+    "parent": 22180,
+    "created": "2026-09-28T02:37:43.6628470Z",
+    "ExecutablePath": "<BROWSER_EXECUTABLE>/msedge.exe"
+  },
+  {
+    "pid": 19480,
+    "parent": 22180,
+    "created": "2026-09-28T02:37:43.6666000Z",
+    "ExecutablePath": "<BROWSER_EXECUTABLE>/msedge.exe"
+  }
+]

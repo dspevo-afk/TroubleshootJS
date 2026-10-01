@@ -1,0 +1,51 @@
+[
+  {
+    "pid": 25508,
+    "parent": 20564,
+    "created": "2026-09-28T02:43:59.576223Z",
+    "ExecutablePath": "msedge.exe",
+    "sourceProcessListSha256": "aa2bc9d3f4945c484a7d6fdc862c1eff60a3fdb809dbfb0287c716f640cd7ae8"
+  },
+  {
+    "pid": 22120,
+    "parent": 25508,
+    "created": "2026-09-28T02:43:59.604222Z",
+    "ExecutablePath": "msedge.exe",
+    "sourceProcessListSha256": "aa2bc9d3f4945c484a7d6fdc862c1eff60a3fdb809dbfb0287c716f640cd7ae8"
+  },
+  {
+    "pid": 18368,
+    "parent": 25508,
+    "created": "2026-09-28T02:43:59.672544Z",
+    "ExecutablePath": "msedge.exe",
+    "sourceProcessListSha256": "aa2bc9d3f4945c484a7d6fdc862c1eff60a3fdb809dbfb0287c716f640cd7ae8"
+  },
+  {
+    "pid": 20212,
+    "parent": 25508,
+    "created": "2026-09-28T02:43:59.67643Z",
+    "ExecutablePath": "msedge.exe",
+    "sourceProcessListSha256": "aa2bc9d3f4945c484a7d6fdc862c1eff60a3fdb809dbfb0287c716f640cd7ae8"
+  },
+  {
+    "pid": 25412,
+    "parent": 25508,
+    "created": "2026-09-28T02:43:59.700816Z",
+    "ExecutablePath": "msedge.exe",
+    "sourceProcessListSha256": "aa2bc9d3f4945c484a7d6fdc862c1eff60a3fdb809dbfb0287c716f640cd7ae8"
+  },
+  {
+    "pid": 17572,
+    "parent": 25508,
+    "created": "2026-09-28T02:43:59.767604Z",
+    "ExecutablePath": "msedge.exe",
+    "sourceProcessListSha256": "aa2bc9d3f4945c484a7d6fdc862c1eff60a3fdb809dbfb0287c716f640cd7ae8"
+  },
+  {
+    "pid": 24140,
+    "parent": 25508,
+    "created": "2026-09-28T02:43:59.771272Z",
+    "ExecutablePath": "msedge.exe",
+    "sourceProcessListSha256": "aa2bc9d3f4945c484a7d6fdc862c1eff60a3fdb809dbfb0287c716f640cd7ae8"
+  }
+]

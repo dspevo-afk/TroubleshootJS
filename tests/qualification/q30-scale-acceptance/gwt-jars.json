@@ -1,0 +1,14 @@
+{
+  "gwtJars": {
+    "asm-5.0.3.jar": "71c4f78e437b8fdcd9cc0dfd2abea8c089eb677005a6a5cff320206cc52b46cc",
+    "asm-analysis-5.0.3.jar": "e8fa2a63462c96557dcd36c25525e1264b77366ff851cf0b94eb7592b290849d",
+    "asm-commons-5.0.3.jar": "18c1e092230233c9d29e46f21943d769bdb48130cc279e4b0e663f423948c2da",
+    "asm-tree-5.0.3.jar": "347a7a9400f9964e87c91d3980e48eebdc8d024bc3b36f7f22189c662853a51c",
+    "asm-util-5.0.3.jar": "2768edbfa2681b5077f08151de586a6d66b916703cda3ab297e58b41ae8f2362",
+    "gwt-dev-2.7.0.jar": "c7321e367fc24e5c7ad97b74d1cf2980c45fbd7cbe1fd412f8a8ba128f685135",
+    "gwt-user-2.7.0.jar": "d3721bcdd7c6855a524801212dd74548967d8fb65cbc212a20890732ff2c6948",
+    "validation-api-1.0.0.GA-sources.jar": "a394d52a9b7fe2bb14f0718d2b3c8308ffe8f37e911956012398d55c9f9f9b54",
+    "validation-api-1.0.0.GA.jar": "e459f313ebc6db2483f8ceaad39af07086361b474fa92e40f442e8de5d9895dc"
+  },
+  "schema": 1
+}

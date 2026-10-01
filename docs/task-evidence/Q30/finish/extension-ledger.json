@@ -1,0 +1,236 @@
+{
+  "schema": 1,
+  "status": "IN_PROGRESS",
+  "baseHead": "8ecaa02b729944d98f82dde56d12d2f4425197ba",
+  "changedCodeTestScriptFiles": 50,
+  "scope": "Actual tracked delta and new source/test/runner files for the authorized Q30 scale integration. Includes the initially preserved scale work. File count is descriptive, not an acceptance limit.",
+  "ordinaryVariantKnowledge": "Provider-local plan-4 channel count, reference arrangement, BJT/NMOS drivers and electrically purposeful support parts. Existing E02/E03/E04 electrical models, family-owned staged construction, physical services and generic admission are reused.",
+  "genericNewIndividualDeviceBranches": 0,
+  "genericImpact": "Bounded generic matrix/LU and voltage-distribution work, plus branch-scoped routing hole/bounds snapshots and exact closed-edge geometry arithmetic; no device-specific branch added to generic generation, solver, routing or workbench owners.",
+  "frozenQualificationInputs": {
+    "normalRoots": 77,
+    "prospectiveCandidateManifests": 308,
+    "serviceSeeds": 21,
+    "serviceFaultRows": 105,
+    "sensitivitySeeds": 21,
+    "sensitivityFaultRows": 105,
+    "d01CohortRoots": 21
+  },
+  "proofScale": {
+    "oneChannel": {
+      "inputStates": 2,
+      "hypotheses": 5,
+      "solverSamplesPerHypothesis": 17,
+      "hypothesisWorkUnits": 230
+    },
+    "twoChannels": {
+      "inputStates": 4,
+      "hypotheses": 5,
+      "solverSamplesPerHypothesis": 37,
+      "hypothesisWorkUnits": 390
+    }
+  },
+  "measuredResults": "See the final cold, native and compiled receipts for actual outcomes and timings; these declared input counts are not pass counts. The D01 cohort retains one known direct physical-policy rejection and does not count it as a warm pass.",
+  "files": [
+    {
+      "path": "docs/task-evidence/Q30/scale-plan-4/check_coordinator.py",
+      "category": "maintainedRunnerOrReader"
+    },
+    {
+      "path": "docs/task-evidence/Q30/scale-plan-4/check_corpus.py",
+      "category": "maintainedRunnerOrReader"
+    },
+    {
+      "path": "docs/task-evidence/Q30/scale-plan-4/check_d01.py",
+      "category": "maintainedRunnerOrReader"
+    },
+    {
+      "path": "docs/task-evidence/Q30/scale-plan-4/check_d01_canaries.py",
+      "category": "maintainedRunnerOrReader"
+    },
+    {
+      "path": "docs/task-evidence/Q30/scale-plan-4/check_native_service.py",
+      "category": "maintainedRunnerOrReader"
+    },
+    {
+      "path": "docs/task-evidence/Q30/scale-plan-4/check_normal_acceptance.py",
+      "category": "maintainedRunnerOrReader"
+    },
+    {
+      "path": "docs/task-evidence/Q30/scale-plan-4/check_normal_acceptance_canaries.py",
+      "category": "maintainedRunnerOrReader"
+    },
+    {
+      "path": "docs/task-evidence/Q30/scale-plan-4/normal-policy-focused/fixture/normal-catalog-one-flag.patch",
+      "category": "maintainedRunnerOrReader"
+    },
+    {
+      "path": "docs/task-evidence/Q30/scale-plan-4/scale-sensitivity-parser-canaries.ps1",
+      "category": "maintainedRunnerOrReader"
+    },
+    {
+      "path": "docs/task-evidence/Q30/scale-plan-4/scale_plan_reference.py",
+      "category": "maintainedRunnerOrReader"
+    },
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "category": "maintainedRunnerOrReader"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "category": "genericSolverOrRoutingPerformance"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CircuitNode.java",
+      "category": "genericSolverOrRoutingPerformance"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java",
+      "category": "compiledQualificationOrIndependentOracle"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java",
+      "category": "genericSolverOrRoutingPerformance"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbConductorBuilder.java",
+      "category": "genericSolverOrRoutingPerformance"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "category": "genericSolverOrRoutingPerformance"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PlayerLaunchRequest.java",
+      "category": "registryAndInterpretation"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30DiagnosticAdmissionVerifier.java",
+      "category": "compiledQualificationOrIndependentOracle"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q30ServiceDeveloperVerifier.java",
+      "category": "compiledQualificationOrIndependentOracle"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb30Behavior.java",
+      "category": "providerLocal"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb30DiagnosticProvider.java",
+      "category": "providerLocal"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb30Generator.java",
+      "category": "providerLocal"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb30Plan.java",
+      "category": "providerLocal"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb30PowerDomains.java",
+      "category": "providerLocal"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb30TopologyValidator.java",
+      "category": "providerLocal"
+    },
+    {
+      "path": "tests/browser/quickplay_procedural_acceptance.py",
+      "category": "maintainedRunnerOrReader"
+    },
+    {
+      "path": "tests/contracts/MediumBoardFloorplanningContractTest.java",
+      "category": "nativeOrOracleContract"
+    },
+    {
+      "path": "tests/contracts/MediumBoardPhysicalPolicyContractTest.java",
+      "category": "nativeOrOracleContract"
+    },
+    {
+      "path": "tests/contracts/P07TwoLayerContractTest.java",
+      "category": "nativeOrOracleContract"
+    },
+    {
+      "path": "tests/contracts/Q30CatalogIdentityContractTest.java",
+      "category": "nativeOrOracleContract"
+    },
+    {
+      "path": "tests/contracts/Q30CatalogTransferContractTest.java",
+      "category": "nativeOrOracleContract"
+    },
+    {
+      "path": "tests/contracts/Q30NormalCorpusContractTest.java",
+      "category": "nativeOrOracleContract"
+    },
+    {
+      "path": "tests/contracts/Q30PlanContractTest.java",
+      "category": "nativeOrOracleContract"
+    },
+    {
+      "path": "tests/contracts/Q30RelayServiceContractTest.java",
+      "category": "nativeOrOracleContract"
+    },
+    {
+      "path": "tests/contracts/Q30ServiceFlowContractTest.java",
+      "category": "nativeOrOracleContract"
+    },
+    {
+      "path": "tests/contracts/Q30SolverStepSensitivityContractTest.java",
+      "category": "nativeOrOracleContract"
+    },
+    {
+      "path": "tests/contracts/Q30TemporalWorkContractTest.java",
+      "category": "nativeOrOracleContract"
+    },
+    {
+      "path": "tests/contracts/QuickPlayGateContractTest.java",
+      "category": "nativeOrOracleContract"
+    },
+    {
+      "path": "tests/contracts/Rb30PhysicalMetadataContractTest.java",
+      "category": "nativeOrOracleContract"
+    },
+    {
+      "path": "tests/contracts/quickplay_gate_evidence.py",
+      "category": "nativeOrOracleContract"
+    },
+    {
+      "path": "tests/qualification/q30-scale-acceptance/baseline.patch",
+      "category": "isolatedQualificationHarness"
+    },
+    {
+      "path": "tests/qualification/q30-scale-acceptance/freeze_plan.py",
+      "category": "isolatedQualificationHarness"
+    },
+    {
+      "path": "tests/qualification/q30-scale-acceptance/normal_screen_host.py",
+      "category": "isolatedQualificationHarness"
+    },
+    {
+      "path": "tests/qualification/q30-scale-acceptance/overlay/src/com/lushprojects/circuitjs1/client/IsolatedGenerationQualification.java",
+      "category": "isolatedQualificationHarness"
+    },
+    {
+      "path": "tests/qualification/q30-scale-acceptance/overlay/src/com/lushprojects/circuitjs1/client/Q30NormalScreenHarness.java",
+      "category": "isolatedQualificationHarness"
+    },
+    {
+      "path": "tests/qualification/q30-scale-acceptance/overlay/tests/contracts/IsolatedGenerationQualificationContractTest.java",
+      "category": "isolatedQualificationHarness"
+    },
+    {
+      "path": "tests/qualification/q30-scale-acceptance/prepare.py",
+      "category": "isolatedQualificationHarness"
+    },
+    {
+      "path": "tests/qualification/q30-scale-acceptance/q30_scale_reader.py",
+      "category": "isolatedQualificationHarness"
+    },
+    {
+      "path": "tests/qualification/q30-scale-acceptance/test_q30_scale_reader.py",
+      "category": "isolatedQualificationHarness"
+    }
+  ]
+}

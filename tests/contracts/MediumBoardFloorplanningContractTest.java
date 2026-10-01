@@ -60,13 +60,14 @@ public final class MediumBoardFloorplanningContractTest {
             "historical P1 electrical net locality stays below the fixed MST bound: " +
                 historicalLocality.totalMst);
 
-        checkCurrentRecipes();
+        checkConfiguredScalePlans();
+        checkExplicitRegressionRecipes();
 
         System.out.println("PASS: medium board floorplanning contracts assertions=" +
             assertions + " historicalFixture=" + HISTORICAL_P1_FIXTURE_ID +
             " historicalNetMst=" + historicalLocality.totalMst +
             " historicalNetEdges=" + historicalLocality.edgeCount +
-            " currentRecipes=33/35/37");
+            " configuredScalePackages=20/29/40/40 regressionRecipes=33/35/37");
     }
 
     /** Ordinary placement demands may anchor both sides of one semantic region. */
@@ -196,9 +197,47 @@ public final class MediumBoardFloorplanningContractTest {
             " driverPackage=TO92_NPN");
     }
 
-    private static void checkCurrentRecipes() {
-        // These are the frozen representative rows used by Q30PlanContractTest:
-        // one current recipe of each physical size, independent of route results.
+    private static void checkConfiguredScalePlans() {
+        ScaleRecipe[] recipes = {
+            new ScaleRecipe("one-channel-minimum", 20,
+                Rb30Plan.configured(20260401L, 1,
+                    Rb30Plan.ReferenceArrangement.SEPARATE_DIRECT,
+                    false, false, false, 0, 0, false)),
+            new ScaleRecipe("one-channel-support", 29,
+                Rb30Plan.configured(20260402L, 1,
+                    Rb30Plan.ReferenceArrangement.SEPARATE_DIRECT,
+                    true, true, true, 1, 1, true)),
+            new ScaleRecipe("two-channel-shared-direct-max", 40,
+                Rb30Plan.configured(20260403L, 2,
+                    Rb30Plan.ReferenceArrangement.SHARED_DIRECT,
+                    true, true, false, 3, 3, true)),
+            new ScaleRecipe("two-channel-shared-hysteretic-max", 40,
+                Rb30Plan.configured(20260404L, 2,
+                    Rb30Plan.ReferenceArrangement.SHARED_HYSTERETIC,
+                    true, false, true, 1, 3, false))
+        };
+        for (ScaleRecipe recipe : recipes) {
+            Rb30Plan plan = recipe.plan;
+            check(plan.supportVariant == null,
+                recipe.name + " is a configured scale plan, not a legacy recipe");
+            check(plan.physicalPackageCount() == recipe.expectedPackages,
+                recipe.name + " retains its explicit package scale");
+            TroubleshootBoard board = plan.board();
+            PcbPlacementPlanner.Plan placed = place(board, plan.layoutSeed, 0);
+            PcbPlacementPlanner.Plan replay = place(board, plan.layoutSeed, 0);
+            check(placed.materialize().geometryFingerprint().equals(
+                replay.materialize().geometryFingerprint()),
+                recipe.name + " candidate 0 replays exact geometry");
+            check(placed.outline.equals(replay.outline),
+                recipe.name + " candidate 0 replays exact outline");
+            checkGeometryAndAccess(board, placed, recipe.expectedPackages,
+                expectedQ30PadCount(plan), recipe.name);
+        }
+    }
+
+    private static void checkExplicitRegressionRecipes() {
+        // Named v4 regression recipes retain the 33/35/37 historical shapes;
+        // they are separate from Rb30Plan.resolve's normal scale distribution.
         long[] seeds = { 0L, 48L, 56L };
         Rb30Plan.SupportVariant[] expected = {
             Rb30Plan.SupportVariant.COMPACT_33,
@@ -206,44 +245,67 @@ public final class MediumBoardFloorplanningContractTest {
             Rb30Plan.SupportVariant.FILTERED_37
         };
         for (int index = 0; index < seeds.length; index++) {
-            Rb30Plan plan = Rb30Plan.resolve(seeds[index]);
+            Rb30Plan plan = Rb30Plan.withSupport(seeds[index], expected[index]);
             check(plan.supportVariant == expected[index],
-                "current Q30 recipe representative retains its support variant: " +
+                "explicit Q30 regression recipe retains its support variant: " +
                     seeds[index]);
             TroubleshootBoard board = plan.board();
             printPlacementLocalityCensus(board, plan.layoutSeed,
-                "current-" + expected[index].name() + "-seed=" + seeds[index]);
+                "regression-" + expected[index].name() + "-seed=" + seeds[index]);
             for (int candidate = 0; candidate < PcbPlacementPlanner.OUTLINE_CANDIDATES;
                     candidate++) {
                 PcbPlacementPlanner.Plan placed = place(board, plan.layoutSeed, candidate);
                 PcbPlacementPlanner.Plan replay = place(board, plan.layoutSeed, candidate);
                 check(placed.materialize().geometryFingerprint().equals(
                     replay.materialize().geometryFingerprint()),
-                    "current Q30 recipe candidate replays exact geometry: " +
+                    "explicit Q30 regression candidate replays exact geometry: " +
                         expected[index] + "/" + candidate);
                 check(placed.outline.equals(replay.outline),
-                    "current Q30 recipe candidate replays exact outline: " +
+                    "explicit Q30 regression candidate replays exact outline: " +
                         expected[index] + "/" + candidate);
                 checkGeometryAndAccess(board, placed,
                     plan.physicalPackageCount(),
-                    82 + (plan.hasStatusIndicator() ? 4 : 0) +
-                        (plan.hasSensorInputFilters() ? 4 : 0),
-                    "current-" + expected[index].name() +
+                    expectedQ30PadCount(plan),
+                    "regression-" + expected[index].name() +
                         "-seed=" + seeds[index] + "/" + candidate);
             }
             checkJloadOutputRelationship(board, plan.layoutSeed,
-                "current-" + expected[index].name() + "-seed=" + seeds[index]);
+                "regression-" + expected[index].name() + "-seed=" + seeds[index]);
 
             if (seeds[index] == 0L) {
-                Rb30Plan otherPlan = Rb30Plan.resolve(1L);
+                Rb30Plan otherPlan = Rb30Plan.withSupport(1L,
+                    Rb30Plan.SupportVariant.COMPACT_33);
                 check(otherPlan.supportVariant == Rb30Plan.SupportVariant.COMPACT_33,
-                    "seed 1 retains the compact current Q30 recipe");
+                    "seed 1 retains the compact explicit Q30 regression recipe");
                 PcbPlacementPlanner.Plan first = place(board, plan.layoutSeed, 0);
                 PcbPlacementPlanner.Plan other = place(board, otherPlan.layoutSeed, 0);
                 check(!placementSignature(first).equals(placementSignature(other)),
-                    "different current placement seeds produce real variation");
+                    "different regression placement seeds produce real variation");
             }
         }
+    }
+
+    private static final class ScaleRecipe {
+        final String name;
+        final int expectedPackages;
+        final Rb30Plan plan;
+        ScaleRecipe(String name, int expectedPackages, Rb30Plan plan) {
+            this.name = name;
+            this.expectedPackages = expectedPackages;
+            this.plan = plan;
+        }
+    }
+
+    private static int expectedQ30PadCount(Rb30Plan plan) {
+        int filterCount = Integer.bitCount(plan.sensorInputFilterMask);
+        int outputIndicatorCount = Integer.bitCount(plan.outputIndicatorMask);
+        return 18 + 27 * plan.channelCount +
+            2 * plan.referencePackageCount() +
+            (plan.hasEntryCapacitor ? 2 : 0) +
+            (plan.hasFiveVoltIndicator ? 4 : 0) +
+            (plan.hasTwelveVoltIndicator ? 4 : 0) +
+            2 * filterCount + 4 * outputIndicatorCount +
+            (plan.hasFiveVoltBleeder ? 2 : 0);
     }
 
     /**

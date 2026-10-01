@@ -3354,10 +3354,8 @@ MouseOutHandler, MouseWheelHandler {
 		for (i = 0; i != circuitMatrixSize; i++)
 		    circuitRightSide[i] = origRightSide[i];
 		if (circuitNonLinear) {
-                    for (i = 0; i != circuitMatrixSize; i++) {
-                        double[] row = circuitMatrix[i], original = origMatrix[i];
-                        for (j = 0; j != circuitMatrixSize; j++) row[j] = original[j];
-                    }
+                    for (i = 0; i != circuitMatrixSize; i++)
+                        circuitMatrix[i] = copyReducedMatrixRow(origMatrix[i], circuitMatrixSize);
 		}
 		for (i = 0; i != iterationElementCount; i++)
 		    iterationElements[i].doStep();
@@ -7956,6 +7954,23 @@ MouseOutHandler, MouseWheelHandler {
     	}
     }
     
+    /** Copy the active prefix; analysis keeps the original rows at the full size. */
+    static double[] copyReducedMatrixRow(double[] original, int size) {
+        if (original == null || size < 0 || size > original.length)
+            throw new IllegalArgumentException("Invalid CircuitJS matrix row prefix");
+        if (GWT.isScript()) return copyReducedMatrixRowInScript(original, size);
+        double[] result = new double[size];
+        System.arraycopy(original, 0, result, 0, size);
+        return result;
+    }
+
+    // The pinned GWT runtime's slice helper restores the source array's class,
+    // cast map and element-category metadata, including primitive double[].
+    // Java's primitive-array copyOf instead reaches GWT's splice-based copy.
+    private static native double[] copyReducedMatrixRowInScript(double[] original, int size) /*-{
+        return @com.google.gwt.lang.Array::cloneSubrange([Ljava/lang/Object;II)(original, 0, size);
+    }-*/;
+
     // Scratch row references are valid only while one pivot column is processed.
     // Reused capacity is cleared after each column and in lu_factor's finally block.
     static final class LuFactorizationWorkspace {
@@ -8074,17 +8089,25 @@ MouseOutHandler, MouseWheelHandler {
         // pivots still update in ascending k order, matching Crout.
         for (k = 0; k != n; k++) {
             // calculate lower triangular elements for this column
-            double largest = 0;
-            int largestRow = -1;
+            double largest = Math.abs(a[k][k]);
+            int largestRow = k;
             int selectedLowerSlot = -1;
-            for (i = k; i != n; i++) {
-                double q = a[i][k];
-                double x = Math.abs(q);
-                int candidateLowerSlot = -1;
-                if (i > k && q != 0) {
-                    candidateLowerSlot = workspace.lowerRowCount;
-                    workspace.appendLowerRow(a[i]);
+            for (i = k+1; i != n; i++) {
+                double[] candidateRow = a[i];
+                double q = candidateRow[k];
+                // Sparse columns mostly contain exact zeros. They contribute
+                // no lower update; retain the later-row tie only while every
+                // pivot candidate seen so far is zero (including signed zero).
+                if (q == 0) {
+                    if (largest == 0) {
+                        largestRow = i;
+                        selectedLowerSlot = -1;
+                    }
+                    continue;
                 }
+                double x = Math.abs(q);
+                int candidateLowerSlot = workspace.lowerRowCount;
+                workspace.appendLowerRow(candidateRow);
                 if (x >= largest) {
                     largest = x;
                     largestRow = i;
@@ -8138,6 +8161,14 @@ MouseOutHandler, MouseWheelHandler {
                     rows[entry] = null;
                 workspace.lowerRowCount = scaledCount;
 
+                // With no nonzero lower factor there is no trailing update.
+                // Retain the reciprocal/scaling guards above, including their
+                // overflow behavior, but avoid scanning an unused upper row.
+                if (scaledCount == 0) {
+                    workspace.clearPivot();
+                    continue;
+                }
+
                 double[] pivotRow = a[k];
                 for (j = k+1; j != n; j++)
                     if (pivotRow[j] != 0) workspace.appendUpperColumn(j);
@@ -8145,6 +8176,10 @@ MouseOutHandler, MouseWheelHandler {
                 int rowCount = workspace.lowerRowCount;
                 int upperCount = workspace.upperColumnCount;
                 int[] columns = workspace.upperColumns;
+                if (upperCount == 0) {
+                    workspace.clearPivot();
+                    continue;
+                }
                 for (int entry = 0; entry < rowCount; entry++) {
                     double[] row = rows[entry];
                     double factor = row[k];

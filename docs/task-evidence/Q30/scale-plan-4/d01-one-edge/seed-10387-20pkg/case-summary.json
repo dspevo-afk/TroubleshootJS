@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "case": {
+    "index": 1,
+    "name": "plan4-d01-representative-20-10387",
+    "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10387",
+    "stateAttribute": "data-tsj-q30-d01-state",
+    "expectedState": "PASS",
+    "expectedPrefix": null,
+    "terminalPrefixes": [
+      "PASS",
+      "FAIL"
+    ],
+    "timeoutSeconds": 600.0,
+    "reportAttribute": "data-tsj-q30-d01-report"
+  },
+  "url": "http://127.0.0.1:<PORT>/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10387",
+  "startedUtc": "2026-09-28T02:17:45.768985+00:00",
+  "finishedUtc": "2026-09-28T02:18:38.996528+00:00",
+  "operationSeconds": 53.22753960000409,
+  "outcome": "PASS",
+  "terminalReached": true,
+  "stateMatch": true,
+  "observedState": "PASS",
+  "lastObservedState": "PASS",
+  "timedOut": false,
+  "expectedFailureCanary": false,
+  "expectedFailureStateWasNotAnUnexpectedError": false,
+  "reportObserved": true,
+  "reportJsonValid": true,
+  "reportJsonError": null,
+  "reportMatch": true,
+  "reportLength": 453219,
+  "reportSha256": "ca1811390765cb2e72906b5b1c235501b87b606f0eb4d1b2722c5f63e8a19b39",
+  "reportFile": "cases/001-plan4-d01-representative-20-10387.report.json",
+  "pageErrors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "attributeReadErrors": [],
+  "listenerCleanupErrors": [],
+  "navigationError": null
+}

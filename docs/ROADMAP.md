@@ -7,7 +7,17 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Q30 acceptance continuation — BLOCKED / NOT ACCEPTED**<br>
+**Current task:** **Q30 paused at user request — cold77 PASS; final release gates pending / NOT ACCEPTED**<br>
+**Q30 current checkpoint (2026-10-01):** Plan-4 purposeful 20–40-part variation and
+bounded solver/routing repairs pass all 77 frozen cold roots under the unchanged
+90-second / 640-work / five-second active limits (p50 56.766 s, p95 78.103 s,
+maximum 82.325 s). Focused native checks, the actual isolated GWT build and
+compiled canaries pass. Q30 remains disabled: final full native, enabled shipping
+build, compiled/menu/player-flow gates and acceptance review remain unfinished.
+The user requested a saved stopping point; no push or email. U06/U07/Q60 remain
+unstarted. [Handoff and remaining work](CODEX_TASK_REPORT.md),
+[checkpoint evidence](task-evidence/Q30/finish/README.md).
+
 **Historical post-P09 Quick Play qualification:** The nine families then current used fresh signed-long candidates and real placement/routing. Nineteen affected native suites, 144 structural cases, 18 actual launches, exact replay/cancellation/privacy/shop and compiled mutation/relay/generation gates passed. EASY/MEDIUM content eligibility remains; HARD/PSYCHOTIC are not unlocked. [Evidence at that checkpoint](task-evidence/ProceduralFamilies/README.md).
 **Quick Play uniqueness qualification (2026-09-19):** Every family/profile selectable at that checkpoint had bounded procedural New Board candidates, recent-root and physical duplicate guards, and single-candidate exact replay. The then-menu-discovered nine-pair, 180-board matrix had 20 distinct placements and merged copper patterns per pair with no structural rejects. Final native55, GWT5, 27/27 visible New Board launches, two exact replays and face-view evidence passed. That content spanned 3–16 parts; HARD/PSYCHOTIC and larger families remain unqualified. This historical matrix did not include the later SENSOR_CONTROL family; that checkpoint's catalog had ten family/profile pairs. [Historical audit, timings and limits](task-evidence/QuickPlayUnique/README.md).
 **Historical ten-pair catalog verification (2026-09-23):** The rebuilt production browser matrix passed three launches for each family/profile pair then current, including SENSOR_CONTROL/EASY, plus exact replay, power isolation, privacy and owned cleanup. A visible ordinary menu launch of an exact Sensor Control seed reached the Customer ticket, and a separate visible repair flow reached a passing customer retest. This remains fresh evidence for the ten-pair catalog at that checkpoint, not a rewrite of the 2026-09-19 nine-pair/180-board qualification. [Current matrix receipt](task-evidence/D01/quickplay-procedural-matrix.json) and [Sensor Control evidence](task-evidence/E04/README.md).

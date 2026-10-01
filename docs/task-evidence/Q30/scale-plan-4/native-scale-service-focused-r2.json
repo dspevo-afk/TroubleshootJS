@@ -1,0 +1,11 @@
+{
+  "status": "FAIL",
+  "exitCode": 2,
+  "elapsedSeconds": 35.8244225,
+  "seeds": [
+    "7",
+    "13"
+  ],
+  "hypothesesPerSeed": 5,
+  "phase": "focused real solver service and finer-step sensitivity including maintained cleanup"
+}

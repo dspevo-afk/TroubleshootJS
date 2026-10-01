@@ -3,7 +3,7 @@ package com.lushprojects.circuitjs1.client;
 /** Independent pre-optimization Crout oracle, exercised in JVM and GWT. */
 final class LuFactorizationChecks {
     static int run() {
-        int assertions = 0;
+        int assertions = matrixRowCopyChecks();
         CirSim.LuFactorizationWorkspace workspace = new CirSim.LuFactorizationWorkspace();
         for (int size : new int[] { 0, 1, 2, 3, 8, 24, 31, 32, 33, 63, 64, 65, 81 }) {
             for (int fixture = 0; fixture < 12; fixture++)
@@ -41,6 +41,12 @@ final class LuFactorizationChecks {
         require(tiedPivots[0] == 2, "pivot tie did not preserve the later-row >= rule");
         assertions += 2;
 
+        // Nonzero rows with a zero leading column exercise the original
+        // later-row zero tie and tiny-pivot behavior, including signed zero.
+        assertions += compareWithOriginal(new double[][] {
+            { 0, 1, 2 }, { -0.0, 3, 4 }, { 0, 5, 7 }
+        }, workspace, "zero leading pivot column");
+
         // Underflow after a nonzero input factor must be computed and then
         // omitted from the right-looking lower-row update list; signed zero
         // remains numeric-equivalent.
@@ -59,6 +65,24 @@ final class LuFactorizationChecks {
         assertions += compareWithOriginal(new double[][] {
             { -2, 1 }, { -0.0, 1 }
         }, workspace, "negative multiplier and negative zero");
+        assertions += compareWithOriginal(new double[][] {
+            { 2, 3, 4 }, { 0, 5, 6 }, { 0, 0, 7 }
+        }, workspace, "upper triangular with no trailing updates");
+        assertions += compareWithOriginal(new double[][] {
+            { 8, 0, -0.0 }, { 2, 9, 0 }, { -3, 4, 10 }
+        }, workspace, "lower triangular with empty upper rows");
+
+        boolean emptyLowerOverflowRejected = false;
+        try {
+            CirSim.lu_factor(new double[][] { { Double.MIN_VALUE, 1 }, { 0, 1 } },
+                2, new int[2], workspace);
+        } catch (SolverExecutionBoundary.Failure expected) {
+            emptyLowerOverflowRejected =
+                expected.outcome == SolverExecutionBoundary.Outcome.NUMERICAL_FAILURE;
+        }
+        require(emptyLowerOverflowRejected,
+            "empty lower column bypassed reciprocal-overflow rejection");
+        assertions += 1 + workspaceClearAssertions(workspace);
 
         // Reuse after a singular early return, a nonfinite input rejection, and
         // an overflow that occurs after a row reference has been recorded.
@@ -105,6 +129,42 @@ final class LuFactorizationChecks {
 
         assertions += checkStickyFiniteSolveCases();
         assertions += checkInvertMatrix();
+        return assertions;
+    }
+
+    private static int matrixRowCopyChecks() {
+        int assertions = 0;
+        double[] original = { 3.25, -0.0, Double.MIN_VALUE, Double.MAX_VALUE,
+            Double.NaN, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY };
+        for (int size = 0; size <= original.length; size++) {
+            double[] copy = CirSim.copyReducedMatrixRow(original, size);
+            require(copy != original && copy.length == size && copy.getClass() == original.getClass(),
+                "matrix row copy must preserve primitive array metadata and exact prefix length");
+            assertions++;
+            for (int i = 0; i < size; i++) {
+                require(copy[i] == original[i] || (Double.isNaN(copy[i]) && Double.isNaN(original[i])),
+                    "matrix row copy changed a source value");
+                if (original[i] == 0) require(1 / copy[i] == 1 / original[i], "matrix row copy changed signed zero");
+                assertions += original[i] == 0 ? 2 : 1;
+            }
+            if (size > 0) {
+                copy[0] = -19;
+                require(original[0] == 3.25, "working matrix row aliases the baseline");
+                assertions++;
+            }
+        }
+        for (int invalidSize : new int[] { -1, original.length + 1 }) {
+            boolean rejected = false;
+            try { CirSim.copyReducedMatrixRow(original, invalidSize); }
+            catch (IllegalArgumentException expected) { rejected = true; }
+            require(rejected, "matrix row copy silently padded or truncated an invalid prefix");
+            assertions++;
+        }
+        boolean nullRejected = false;
+        try { CirSim.copyReducedMatrixRow(null, 0); }
+        catch (IllegalArgumentException expected) { nullRejected = true; }
+        require(nullRejected, "matrix row copy accepted a null baseline");
+        assertions++;
         return assertions;
     }
 

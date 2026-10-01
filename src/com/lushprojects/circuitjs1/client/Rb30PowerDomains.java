@@ -19,28 +19,32 @@ final class Rb30PowerDomains {
         for (String id : board.getNetIds()) {
             if ("CTRL_RETURN".equals(id) || "LOAD_RETURN".equals(id))
                 continue;
-            boolean load = "LOAD12".equals(id) || "OUT_A".equals(id) ||
-                "OUT_B".equals(id) || "NC_A".equals(id) ||
-                "NC_B".equals(id);
+            boolean load = "LOAD12".equals(id) || id.startsWith("OUT_") ||
+                id.startsWith("NC_") || id.startsWith("LED_OUT_");
             boolean storage = "FUSED12".equals(id) || "RAIL12".equals(id) ||
-                "RAIL5".equals(id) || (plan.hasSensorInputFilters() &&
-                    ("A_SENSE".equals(id) || "B_SENSE".equals(id)));
+                "RAIL5".equals(id);
+            for (String channel : plan.channels())
+                if (plan.hasSensorInputFilter(channel) &&
+                        (channel + "_SENSE").equals(id))
+                    storage = true;
             rails.add(new PowerDomainContract.Rail(id,
                 load ? "LOAD_RETURN" : "CTRL_RETURN",
                 storage ? PowerDomainContract.StorageRequirement.OBSERVATION_REQUIRED :
                     PowerDomainContract.StorageRequirement.NONE));
         }
+        Vector<PowerDomainContract.Source> sources =
+            new Vector<PowerDomainContract.Source>();
+        sources.add(source("MAIN12", "RAW12", 12, .25, .05, .25));
+        for (String channel : plan.channels())
+            sources.add(source("SENSOR_" + channel, channel + "_RAW",
+                5, .25, .05, .25));
+        sources.add(source("LOAD12", "LOAD12", 12, .25, .05, .25));
         PowerDomainContract contract = new PowerDomainContract(
             "RB30_MULTI_RAIL", Arrays.asList(
                 new PowerDomainContract.Reference("CTRL_RETURN", "CONTROL",
                     null, false),
                 new PowerDomainContract.Reference("LOAD_RETURN", "LOAD",
-                    null, false)), rails,
-            Arrays.asList(
-                source("MAIN12", "RAW12", 12, .25, .05, .25),
-                source("SENSOR_A", "A_RAW", 5, .25, .05, .25),
-                source("SENSOR_B", "B_RAW", 5, .25, .05, .25),
-                source("LOAD12", "LOAD12", 12, .25, .05, .25)),
+                    null, false)), rails, sources,
             Collections.<PowerDomainContract.BackfeedPath>emptyList());
         contract.requireSourceCoverage(board.getPowerInputIds());
         return contract;

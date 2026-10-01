@@ -10,22 +10,11 @@ import java.util.Vector;
 /** One predeclared Q30 corpus row through actual normal physical admission. */
 public final class Q30NormalCorpusContractTest {
     private static final int EXPECTED_HYPOTHESES = 5;
-    private static final int EXPECTED_OBSERVATIONS = 37;
-    // Five complete 47-step programs, three five-unit profiles, one real
-    // five-unit customer operation and five service-readiness units, plus
-    // the existing fixed proof transitions.
-    // Reserve the full explicit-completion proof and primary preparation inside
-    // the unchanged 640-unit job budget before allowing routing slices.
-    private static final int EXPECTED_PROOF_UNITS = 5 * (11 + 47 + 3 * 4 + 4 + 4);
-    private static final int EXPECTED_OTHER_UNITS = 4 + 2 * 5;
-    private static final int MAX_ROUTE_ADVANCES =
-        GenerationCoordinator.MAX_JOB_STEPS - EXPECTED_PROOF_UNITS - EXPECTED_OTHER_UNITS;
-    private static final String[][] EXPECTED_FAULTS = {
+    private static final String[][] FIXED_EXPECTED_FAULTS = {
         { "DREV_OPEN", "DIODE_OPEN", "DREV" },
         { "REN_OPEN", "RESISTOR_OPEN", "REN" },
         { "SENSOR_A_OPEN", "RESISTOR_OPEN", "RSA" },
-        { "DRIVE_A_OPEN", "RESISTOR_OPEN", "RDA" },
-        { "RELAY_B_COIL_OPEN", "RELAY_COIL_OPEN", "KB" }
+        { "DRIVE_A_OPEN", "RESISTOR_OPEN", "RDA" }
     };
 
     private static int assertions;
@@ -54,7 +43,11 @@ public final class Q30NormalCorpusContractTest {
         try {
             Rb30Plan plan = Rb30Plan.resolve(seed);
             row.topologyAxis = plan.topologyAxis();
-            row.support = plan.supportVariant.name();
+            row.support = "C12:" + plan.hasEntryCapacitor + ",S5:" +
+                plan.hasFiveVoltIndicator + ",S12:" +
+                plan.hasTwelveVoltIndicator + ",F:" +
+                plan.sensorInputFilterMask + ",O:" +
+                plan.outputIndicatorMask + ",B5:" + plan.hasFiveVoltBleeder;
             row.partCount = plan.physicalPackageCount();
 
             long started = System.nanoTime();
@@ -117,6 +110,18 @@ public final class Q30NormalCorpusContractTest {
                     check(MediumBoardPhysicalPolicy.P05_ONE_FACE.equals(
                             row.warmRoute.result.getStatistics().selectedRoutePolicy),
                         "exact route replay changed the selected P05 policy");
+                    boolean rejectedByNormalConstruction = false;
+                    Rb30Generator normalGenerator = new Rb30Generator();
+                    try {
+                        normalGenerator.constructFromAcceptedRoute(plan, row.coldRoute.result);
+                    } catch (GenerationJob.Rejected expected) {
+                        rejectedByNormalConstruction = true;
+                    }
+                    check(rejectedByNormalConstruction,
+                        "one-face normal construction did not emit a retryable rejection");
+                    // A fresh construction on this generator also proves the
+                    // rejection happened before its one-use live allocation.
+                    unassembledCandidates.add(normalGenerator.construct(plan));
                     row.outcome = "REJECTED";
                     row.normalAdmissionOutcome = "REJECTED_POLICY";
                     row.normalAdmissionReason = "P05_ONLY_NORMAL_ADMISSION_REQUIRES_P07";
@@ -168,8 +173,8 @@ public final class Q30NormalCorpusContractTest {
                         provider.getDiagnosticPlan());
                     String expectedProgram = provider.getObservationProgram().canonical();
                     check(countMeasurements(provider.getObservationProgram()) ==
-                            EXPECTED_OBSERVATIONS,
-                        "normal observation program is not the exact 37-measurement contract");
+                            expectedObservationCount(plan),
+                        "normal observation program is not the active-channel measurement contract");
                     row.hypothesisCount = population.size();
                     row.observationCount = countMeasurements(provider.getObservationProgram());
 
@@ -259,12 +264,12 @@ public final class Q30NormalCorpusContractTest {
                 result.result = session.mediumResult();
                 break;
             }
-            if (advances > MAX_ROUTE_ADVANCES)
+            if (advances > maxRouteAdvances(candidate.plan))
                 throw new AssertionError("medium routing left insufficient work for the full production proof");
         }
         result.totalNanos = System.nanoTime() - started;
         result.totalAdvances = advances;
-        check(advances <= MAX_ROUTE_ADVANCES,
+        check(advances <= maxRouteAdvances(candidate.plan),
             "completed route left insufficient work for the full production proof");
         check(result.result != null,
             "medium route session completed without its full result object");
@@ -282,6 +287,29 @@ public final class Q30NormalCorpusContractTest {
         check(result.result.accepted() || "REJECTED".equals(stats.outcome),
             "medium route has an unknown result state");
         return result;
+    }
+
+    /** Independent channel-count oracle for the accepted diagnostic program. */
+    private static int expectedObservationCount(Rb30Plan plan) {
+        int channels = plan.channelCount;
+        return (7 + channels) * (1 << channels) + 1;
+    }
+
+    /** Reserve the full active proof before allowing physical-route slices. */
+    private static int expectedProofUnits(Rb30Plan plan) {
+        int channels = plan.channelCount;
+        int conditions = 1 << channels;
+        int workUnits = conditions + 1;
+        int programSteps = (9 + channels) * conditions + 3;
+        return EXPECTED_HYPOTHESES * (11 + programSteps +
+            3 * (workUnits - 1) + (workUnits - 1) + 4);
+    }
+
+    private static int maxRouteAdvances(Rb30Plan plan) {
+        int workUnits = (1 << plan.channelCount) + 1;
+        int otherUnits = 4 + 2 * workUnits;
+        return GenerationCoordinator.MAX_JOB_STEPS -
+            expectedProofUnits(plan) - otherUnits;
     }
 
     private static void accountAdvance(RouteRun run, long elapsedNanos,
@@ -308,7 +336,8 @@ public final class Q30NormalCorpusContractTest {
         owner.requireNormalPhysicalAdmission();
         admission.requireNormal(owner);
         GeneratedDiagnosticSolvabilityAdmission.validateStructural(owner);
-        check(GeneratedDiagnosticProofService.requiredWorkUnits(owner, true) == EXPECTED_PROOF_UNITS,
+        check(GeneratedDiagnosticProofService.requiredWorkUnits(owner, true) ==
+                expectedProofUnits(plan),
             "normal proof work differs from the independently reserved complete population");
 
         TroubleshootBoard board = owner.getBoard();
@@ -319,11 +348,19 @@ public final class Q30NormalCorpusContractTest {
                 owner.getPhysicalBoardRuntime().getSlots().size() ==
                     plan.physicalPackageCount(),
             "normal physical package, specification and runtime slot census differ");
-        check((board.getComponent("RLED") != null) == plan.hasStatusIndicator() &&
-                (board.getComponent("LED1") != null) == plan.hasStatusIndicator() &&
-                (board.getComponent("CFLT_A") != null) == plan.hasSensorInputFilters() &&
-                (board.getComponent("CFLT_B") != null) == plan.hasSensorInputFilters(),
-            "normal assembly did not realize the plan's functional support variant");
+        check((board.getComponent("RLED") != null) == plan.hasFiveVoltIndicator &&
+                (board.getComponent("LED1") != null) == plan.hasFiveVoltIndicator &&
+                (board.getComponent("RLED12") != null) == plan.hasTwelveVoltIndicator &&
+                (board.getComponent("LED12") != null) == plan.hasTwelveVoltIndicator &&
+                (board.getComponent("C12") != null) == plan.hasEntryCapacitor &&
+                (board.getComponent("RBLEED5") != null) == plan.hasFiveVoltBleeder,
+            "normal assembly did not realize the planned rail-support functions");
+        for (String channel : plan.channels())
+            check((board.getComponent("CFLT_" + channel) != null) ==
+                    plan.hasSensorInputFilter(channel) &&
+                (board.getComponent("LEDOUT_" + channel) != null) ==
+                    plan.hasOutputIndicator(channel),
+                "normal assembly did not realize channel support " + channel);
         for (String componentId : board.getComponentIds()) {
             BoardComponent component = board.getComponent(componentId);
             check(component != null && owner.getPhysicalSpecifications()
@@ -348,7 +385,7 @@ public final class Q30NormalCorpusContractTest {
                     padId);
         }
         check(owner.getExternalPowerBindings().hasControlsForAllInputs() &&
-                board.getPowerInputIds().size() == 4,
+                board.getPowerInputIds().size() == 2 + plan.channelCount,
             "normal composition lost a controllable external source");
         check(!owner.getFaultBinding().isApplied(),
             "normal generation applied a hidden fault before diagnostic service");
@@ -385,8 +422,8 @@ public final class Q30NormalCorpusContractTest {
                 owner.getSimulationBindings().getEndpoint(
                     diagnosticPlan.getReferenceTargetId()) != null,
             "diagnostic reference is not a composed board pad");
-        check(countMeasurements(program) == EXPECTED_OBSERVATIONS,
-            "normal diagnostic program changed its 37-observation population");
+        check(countMeasurements(program) == expectedObservationCount(plan),
+            "normal diagnostic program differs from the active-channel measurement population");
         for (GeneratedDiagnosticProgram.Step step : program.getSteps()) {
             if (step.kind == GeneratedDiagnosticProgram.Kind.DC_VOLTAGE ||
                     step.kind == GeneratedDiagnosticProgram.Kind.RESISTANCE ||
@@ -421,7 +458,7 @@ public final class Q30NormalCorpusContractTest {
             owners.add(candidate.getFault().getTargetComponentId());
         }
         Set<String> expectedOwners = new HashSet<String>();
-        for (String[] expected : EXPECTED_FAULTS) {
+        for (String[] expected : FIXED_EXPECTED_FAULTS) {
             GeneratedFaultCandidate actual = byId.get(expected[0]);
             check(actual != null && actual.getFault().getType() ==
                     GeneratedFaultType.valueOf(expected[1]) &&
@@ -429,6 +466,14 @@ public final class Q30NormalCorpusContractTest {
                 "normal hypothesis population changed the independent owner/type table");
             expectedOwners.add(expected[2]);
         }
+        String relay = plan.channelCount == 1 ? "KA" : "KB";
+        String relayFaultId = "RELAY_" + relay.substring(1) + "_COIL_OPEN";
+        GeneratedFaultCandidate relayFault = byId.get(relayFaultId);
+        check(relayFault != null &&
+                relayFault.getFault().getType() == GeneratedFaultType.RELAY_COIL_OPEN &&
+                relay.equals(relayFault.getFault().getTargetComponentId()),
+            "normal hypothesis population changed its active relay owner");
+        expectedOwners.add(relay);
         check(owners.equals(expectedOwners),
             "normal population lost an independent physical fault owner");
         check(byId.get(plan.selectedFault).getBinding() != null,
@@ -464,7 +509,7 @@ public final class Q30NormalCorpusContractTest {
         String actualProgram = replay.getDiagnosticProvider()
             .getObservationProgram().canonical();
         check(expectedPlan.equals(actualPlan) && expectedProgram.equals(actualProgram),
-            "normal provider replay changed its plan or 37-observation program");
+            "normal provider replay changed its plan or active-channel observation program");
         verifyPopulation(replay.getFaultCandidates(), plan);
     }
 

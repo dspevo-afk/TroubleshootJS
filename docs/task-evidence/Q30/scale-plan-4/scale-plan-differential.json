@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "scope": "independent Python structural oracle versus exact Java signed-long canonical plans; no electrical/route/timing qualification",
+  "rows": 77,
+  "outputs": {
+    "native-scale-plan-export.log": {
+      "status": "PASS",
+      "canonicalRows": 77,
+      "sha256": "28ef0108ed9b123731c6da8ff981c418155a6e94a1df5d51d09e43d42ecc2a36"
+    },
+    "native-scale-plan-export-receipt.txt": {
+      "status": "PASS",
+      "canonicalRows": 77,
+      "sha256": "50643fbc3eeb61a83f98ac8484e0f4c4752259323520011e99362012e79aab80"
+    }
+  },
+  "manifestSha256": "f3676c43d5c65b8d4677884784d3d158b86d79afc323d29d7f06472a981ba57e",
+  "currentPlanSha256": "c1323c148b32fb721e3e18ab1d493c1d8384d3d1d891cff24b2701b537e0cc67"
+}

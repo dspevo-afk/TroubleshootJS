@@ -14,29 +14,50 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
     static final double SAMPLE_SECONDS = .030;
     static final double SOLVER_MAX_STEP_SECONDS = 5e-6;
     static final double SOLVER_MIN_STEP_SECONDS = 50e-12;
-    private static final int PROFILE_WORK_UNITS = 5;
-    private static final int RETEST_WORK_UNITS = 5;
     private final TroubleshootBoard board;
     private final GeneratedExternalPowerBindings power;
+    private final String[] channels;
+    private final int allInputMask;
+    private final int profileWorkUnits;
+    private final int retestWorkUnits;
     private final GeneratedBoardOperationCatalog operations = new GeneratedBoardOperationCatalog();
     private final GeneratedCustomerRetestProfile retest;
-    private int input = 3;
+    private int input;
     private GeneratedObservedBehavior observed;
 
     Rb30Behavior(Rb30Generator.Candidate candidate) {
         board = candidate.board();
         power = candidate.assembly.power;
-        addInput(SENSORS_LOW, "Set both sensors LOW", 0);
-        addInput(SENSORS_A_ONLY, "Set sensor A HIGH, B LOW", 1);
-        addInput(SENSORS_B_ONLY, "Set sensor A LOW, B HIGH", 2);
-        addInput(SENSORS_HIGH, "Set both sensors HIGH", 3);
+        channels = candidate.plan.channels();
+        allInputMask = (1 << channels.length) - 1;
+        profileWorkUnits = (1 << channels.length) + 1;
+        retestWorkUnits = profileWorkUnits;
+        input = allInputMask;
+        if (channels.length == 1) {
+            addInput(SENSORS_LOW, "Set sensor A LOW", 0);
+            addInput(SENSORS_HIGH, "Set sensor A HIGH", 1);
+        } else {
+            addInput(SENSORS_LOW, "Set both sensors LOW", 0);
+            addInput(SENSORS_A_ONLY, "Set sensor A HIGH, B LOW", 1);
+            addInput(SENSORS_B_ONLY, "Set sensor A LOW, B HIGH", 2);
+            addInput(SENSORS_HIGH, "Set both sensors HIGH", 3);
+        }
         retest = new GeneratedCustomerRetestProfile("RB30_CUSTOMER_RETEST",
-            "Check that each external load follows its own sensor, including both loads together.",
-            "Connect the 12 V main and isolated load supplies and both sensor inputs.",
-            "Both LOW, A only, B only, both HIGH; restore the previous inputs.",
-            "Observe each output across its own two-terminal load connector.",
+            channels.length == 1 ?
+                "Check that the external load follows sensor A at LOW and HIGH." :
+                "Check that each external load follows its own sensor, including both loads together.",
+            channels.length == 1 ?
+                "Connect the 12 V main and isolated load supplies and sensor A." :
+                "Connect the 12 V main and isolated load supplies and both sensor inputs.",
+            channels.length == 1 ? "LOW, HIGH; restore the previous input." :
+                "Both LOW, A only, B only, both HIGH; restore the previous inputs.",
+            channels.length == 1 ?
+                "Observe output A across its two-terminal load connector." :
+                "Observe each output across its own two-terminal load connector.",
             "Allow 30 ms of CircuitJS time after each input change.",
-            "Low-voltage DC, two 180 ohm external loads; all serviced leads reconnected.",
+            channels.length == 1 ?
+                "Low-voltage DC, one 180 ohm external load; all serviced leads reconnected." :
+                "Low-voltage DC, two 180 ohm external loads; all serviced leads reconnected.",
             new GeneratedCustomerRetestProfile.Executor() {
                 public GeneratedCustomerRetestResult execute(CirSim sim, GeneratedBoardInstance owner) {
                     return GeneratedWork.complete(beginCustomerRetest(sim, owner));
@@ -48,7 +69,7 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
                         GeneratedBoardInstance owner) {
                     return beginCustomerRetest(sim, owner);
                 }
-                int getWorkUnits(GeneratedBoardInstance owner) { return RETEST_WORK_UNITS; }
+                int getWorkUnits(GeneratedBoardInstance owner) { return retestWorkUnits; }
             }));
     }
 
@@ -65,8 +86,8 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         if (owner == null || owner.getBoard() != board || owner.getExternalPowerBindings() != power ||
                 owner.getFamilyState() != this || owner.getTemporalBehavior() != this)
             throw new IllegalArgumentException("Foreign Q30 behavior owner");
-        for (String id : new String[] { "SENSOR_A", "SENSOR_B" })
-            for (CircuitElm element : power.getBinding(id).getBackingElements())
+        for (String channel : channels)
+            for (CircuitElm element : power.getBinding("SENSOR_" + channel).getBackingElements())
                 if (!owner.getSimulationElements().contains(element))
                     throw new IllegalArgumentException("Foreign Q30 sensor source");
     }
@@ -79,11 +100,14 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
 
     void setInputs(CirSim sim, GeneratedBoardInstance owner, int value) {
         requireCurrent(sim, owner);
-        if (value < 0 || value > 3) throw new IllegalArgumentException("Unsupported Q30 inputs");
-        LimitedDcSupplyElm a = power.getBinding("SENSOR_A").getLimitedSupply();
-        LimitedDcSupplyElm b = power.getBinding("SENSOR_B").getLimitedSupply();
-        a.configure((value & 1) != 0 ? 5 : 0, a.getLimitAmps());
-        b.configure((value & 2) != 0 ? 5 : 0, b.getLimitAmps());
+        if (value < 0 || value > allInputMask)
+            throw new IllegalArgumentException("Unsupported Q30 inputs");
+        for (int index = 0; index < channels.length; index++) {
+            LimitedDcSupplyElm source = power.getBinding(
+                "SENSOR_" + channels[index]).getLimitedSupply();
+            source.configure((value & (1 << index)) != 0 ? 5 : 0,
+                source.getLimitAmps());
+        }
         input = value;
         // Restamp the real finite sources; this never connects a source or repowers the board.
         sim.advanceGeneratedTemporalProfile(SAMPLE_SECONDS);
@@ -112,10 +136,15 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
     boolean healthy(GeneratedBoardInstance owner, int condition) {
         requireOwnedBy(owner);
         double rail = voltage(owner, "U1.OUTPUT", "U1.RETURN");
-        double a = voltage(owner, "JOA.1", "JOA.2");
-        double b = voltage(owner, "JOB.1", "JOB.2");
-        return rail >= 4.75 && rail <= 5.25 && outputMatches(a, (condition & 1) != 0) &&
-            outputMatches(b, (condition & 2) != 0);
+        if (rail < 4.75 || rail > 5.25) return false;
+        for (int index = 0; index < channels.length; index++) {
+            String channel = channels[index];
+            double output = voltage(owner, "JO" + channel + ".1",
+                "JO" + channel + ".2");
+            if (!outputMatches(output, (condition & (1 << index)) != 0))
+                return false;
+        }
+        return true;
     }
 
     private static boolean outputMatches(double volts, boolean on) {
@@ -131,29 +160,49 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
     // UI-frame increment small on this larger graph; explicit profiles retain
     // their full 30 ms settling interval and unchanged solver budgets.
     public double getLiveSolverAdvanceSeconds() { return .0001; }
-    public int getProfileWorkUnits() { return PROFILE_WORK_UNITS; }
+    public int getProfileWorkUnits() { return profileWorkUnits; }
 
     public GeneratedTemporalDependency getDependency(GeneratedBoardInstance owner) {
         requireOwnedBy(owner);
         TreeMap<String, String> values = new TreeMap<String, String>();
-        values.put("recipe", "LOW-A_ONLY-B_ONLY-HIGH-restore-inputs");
-        values.put("fault-preparation", "healthy-four-conditions-then-LOW-apply-fault-then-HIGH");
+        values.put("recipe", channels.length == 1 ?
+            "LOW-HIGH-restore-inputs" : "LOW-A_ONLY-B_ONLY-HIGH-restore-inputs");
+        values.put("fault-preparation", channels.length == 1 ?
+            "healthy-two-conditions-then-LOW-apply-fault-then-HIGH" :
+            "healthy-four-conditions-then-LOW-apply-fault-then-HIGH");
         values.put("sample-seconds", Double.toString(SAMPLE_SECONDS));
         values.put("qualification-solver", "CircuitJS-adaptive");
         values.put("qualification-maximum-step-seconds", Double.toString(SOLVER_MAX_STEP_SECONDS));
         values.put("qualification-minimum-step-seconds", Double.toString(SOLVER_MIN_STEP_SECONDS));
-        values.put("profile-work-units", Integer.toString(PROFILE_WORK_UNITS));
-        values.put("customer-retest-work-units", Integer.toString(RETEST_WORK_UNITS));
+        values.put("profile-work-units", Integer.toString(profileWorkUnits));
+        values.put("customer-retest-work-units", Integer.toString(retestWorkUnits));
+        values.put("active-channels", joinChannels());
+        values.put("condition-count", Integer.toString(1 << channels.length));
         values.put("rail-range-volts", "4.75..5.25");
         values.put("on-range-volts", "10.8..12.6");
         values.put("off-maximum-volts", "0.05");
-        values.put("outputs", "JOA.1-JOA.2;JOB.1-JOB.2");
+        StringBuilder outputs = new StringBuilder();
+        for (String channel : channels) {
+            if (outputs.length() > 0) outputs.append(';');
+            outputs.append("JO").append(channel).append(".1-JO")
+                .append(channel).append(".2");
+        }
+        values.put("outputs", outputs.toString());
         values.put("topology", owner.getTopologyVariantId());
         values.put("physical-policy", MediumBoardPhysicalPolicy.identity());
         values.put("seed", Long.toString(owner.getSeed()));
-        return new GeneratedTemporalDependency("RB30_TWO_CHANNEL_FUNCTION", 2,
+        return new GeneratedTemporalDependency("RB30_CHANNEL_FUNCTION", 3,
             GeneratedTemporalDependency.FRESH_GENERATED_OWNER_COLD_V1,
             "JOA.1", "JOA.2", values);
+    }
+
+    private String joinChannels() {
+        StringBuilder result = new StringBuilder();
+        for (String channel : channels) {
+            if (result.length() > 0) result.append(',');
+            result.append(channel);
+        }
+        return result.toString();
     }
 
     public GeneratedWork<GeneratedRepairStatus> beginProfile(final CirSim sim,
@@ -201,7 +250,7 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
                 profile.cancel();
                 cancelled = true;
             }
-            int getWorkUnits() { return RETEST_WORK_UNITS; }
+            int getWorkUnits() { return retestWorkUnits; }
         };
     }
 
@@ -218,7 +267,7 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
                 return GeneratedCustomerRetestSupport.failure();
             }
             void cancel() { if (!complete) cancelled = true; }
-            int getWorkUnits() { return RETEST_WORK_UNITS; }
+            int getWorkUnits() { return retestWorkUnits; }
         };
     }
 
@@ -252,13 +301,13 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         private final double[] powerInputLimits;
         private final BoardPowerState powerState;
         private final boolean physicalState;
-        private final LimitedDcSupplyElm sensorA, sensorB;
-        private final double sensorALimit, sensorBLimit;
+        private final LimitedDcSupplyElm[] sensorSources;
+        private final double[] sensorLimits;
         private final double expectedMaximumStep, expectedMinimumStep;
         private final boolean expectedAdaptiveStep;
         private final int priorInput;
         private int expectedInput;
-        private double expectedA, expectedB;
+        private final double[] expectedSensorVoltages;
         private int phase;
         private boolean passed = true;
         private boolean blocked;
@@ -270,7 +319,7 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         ProfileWork(CirSim sim, GeneratedBoardInstance instance, Profile profile) {
             if (profile == null) throw new IllegalArgumentException("Missing Q30 profile");
             Rb30Behavior.this.requireCurrent(sim, instance);
-            if (profile == Profile.HEALTHY && input != 3)
+            if (profile == Profile.HEALTHY && input != allInputMask)
                 throw new IllegalStateException("Healthy Q30 proof requires the fresh HIGH input state");
             ownerSim = sim;
             owner = instance;
@@ -315,20 +364,26 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
                 powerInputLimits[i] = powerInputSupplies[i] == null ? Double.NaN :
                     powerInputSupplies[i].getLimitAmps();
             }
-            sensorA = powerBindings.getBinding("SENSOR_A").getLimitedSupply();
-            sensorB = powerBindings.getBinding("SENSOR_B").getLimitedSupply();
-            if (sensorA == null || sensorB == null || !instance.getSimulationElements().contains(sensorA) ||
-                    !instance.getSimulationElements().contains(sensorB))
-                throw new IllegalStateException("Q30 profile lost its sensor source owner");
-            sensorALimit = sensorA.getLimitAmps();
-            sensorBLimit = sensorB.getLimitAmps();
+            sensorSources = new LimitedDcSupplyElm[channels.length];
+            sensorLimits = new double[channels.length];
+            expectedSensorVoltages = new double[channels.length];
+            for (int index = 0; index < channels.length; index++) {
+                LimitedDcSupplyElm source = powerBindings.getBinding(
+                    "SENSOR_" + channels[index]).getLimitedSupply();
+                if (source == null || !instance.getSimulationElements().contains(source))
+                    throw new IllegalStateException("Q30 profile lost its sensor source owner");
+                sensorSources[index] = source;
+                sensorLimits[index] = source.getLimitAmps();
+            }
             priorInput = input;
             expectedInput = input;
-            expectedA = sensorA.maxVoltage;
-            expectedB = sensorB.maxVoltage;
-            if (expectedA != ((input & 1) != 0 ? 5 : 0) ||
-                    expectedB != ((input & 2) != 0 ? 5 : 0))
-                throw new IllegalStateException("Q30 input state disagrees with its live sources");
+            for (int index = 0; index < channels.length; index++) {
+                expectedSensorVoltages[index] = sensorSources[index].maxVoltage;
+                if (expectedSensorVoltages[index] !=
+                        ((input & (1 << index)) != 0 ? 5 : 0))
+                    throw new IllegalStateException(
+                        "Q30 input state disagrees with its live sources");
+            }
             if (profile == Profile.HEALTHY) {
                 // Apply the same declared CircuitJS recipe before the first healthy sample.
                 sim.timeStep = sim.maxTimeStep = SOLVER_MAX_STEP_SECONDS;
@@ -345,19 +400,19 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
 
         boolean step() {
             if (cancelled) throw new IllegalStateException("Q30 profile cancelled");
-            if (complete || phase >= PROFILE_WORK_UNITS) return false;
+            if (complete || phase >= profileWorkUnits) return false;
             requireCurrent("unit " + phase + " before");
             if (!blocked) {
                 if (profile == Profile.HEALTHY) {
-                    if (phase < 4) observeCondition(phase);
+                    if (phase < allInputMask + 1) observeCondition(phase);
                     else if (passed) applyInput(0);
                 } else if (profile == Profile.FAULTED) {
                     if (phase == 0) {
-                        applyInput(3);
-                        localObserved = healthy(owner, 3) ? null :
+                        applyInput(allInputMask);
+                        localObserved = healthy(owner, allInputMask) ? null :
                             GeneratedObservedBehavior.RELAY_LOAD_NOT_SWITCHING;
                     }
-                } else if (phase < 4) {
+                } else if (phase < allInputMask + 1) {
                     observeCondition(phase);
                 } else if (input != priorInput) {
                     applyInput(priorInput);
@@ -365,7 +420,7 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
             }
             phase++;
             requireCurrent("unit " + (phase - 1) + " after");
-            return phase < PROFILE_WORK_UNITS;
+            return phase < profileWorkUnits;
         }
 
         private void observeCondition(int condition) {
@@ -385,8 +440,8 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
             appendVoltage(" regulatorReturn_U1_RETURN_to_J1_2_V", owner,
                 "U1.RETURN", "J1.2");
             appendVoltage(" main12V_J1_1_to_J1_2_V", owner, "J1.1", "J1.2");
-            appendChannelFailureSnapshot("A");
-            appendChannelFailureSnapshot("B");
+            for (String channel : channels)
+                appendChannelFailureSnapshot(channel);
         }
 
         private void appendChannelFailureSnapshot(String channel) {
@@ -446,9 +501,9 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
 
         private String inputName(int value) {
             if (value == 0) return "LOW";
+            if (value == allInputMask) return "HIGH";
             if (value == 1) return "A_ONLY";
             if (value == 2) return "B_ONLY";
-            if (value == 3) return "HIGH";
             return "UNKNOWN";
         }
 
@@ -540,25 +595,29 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         }
 
         private void applyInput(int value) {
-            if (value < 0 || value > 3) throw new IllegalArgumentException("Unsupported Q30 input state");
+            if (value < 0 || value > allInputMask)
+                throw new IllegalArgumentException("Unsupported Q30 input state");
             requireCurrent("input " + value + " before");
             expectedInput = value;
-            expectedA = (value & 1) != 0 ? 5 : 0;
-            expectedB = (value & 2) != 0 ? 5 : 0;
-            sensorA.configure(expectedA, sensorALimit);
-            sensorB.configure(expectedB, sensorBLimit);
+            for (int index = 0; index < channels.length; index++) {
+                expectedSensorVoltages[index] =
+                    (value & (1 << index)) != 0 ? 5 : 0;
+                sensorSources[index].configure(expectedSensorVoltages[index],
+                    sensorLimits[index]);
+            }
             input = value;
             ownerSim.advanceGeneratedTemporalProfile(SAMPLE_SECONDS);
             requireCurrent("input " + value + " after");
         }
 
         GeneratedRepairStatus finish() {
-            if (cancelled || phase < PROFILE_WORK_UNITS)
+            if (cancelled || phase < profileWorkUnits)
                 throw new IllegalStateException("Q30 profile is incomplete");
             requireCurrent("finish");
             if (profile == Profile.HEALTHY) {
                 if (!passed)
-                    throw new IllegalStateException("Healthy Q30 failed four input conditions:" + failures);
+                    throw new IllegalStateException("Healthy Q30 failed " +
+                        (1 << channels.length) + " input conditions:" + failures);
                 result = GeneratedRepairStatus.CORRECTLY_RESTORED;
             } else if (profile == Profile.FAULTED) {
                 observed = localObserved;
@@ -589,15 +648,14 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
                 throw new IllegalStateException("Q30 prior-input cleanup failed", cleanupFailure);
         }
 
-        int getWorkUnits() { return PROFILE_WORK_UNITS; }
+        int getWorkUnits() { return profileWorkUnits; }
 
         private void requireCurrent(String stage) {
             if (!isCurrentOwnerIdentity() || powerController.getState() != powerState ||
                     modifications.isFullyRestored() != physicalState ||
                     !controlObservation.isCurrent() || !savedControls.matches() ||
-                    input != expectedInput || sensorA.maxVoltage != expectedA ||
-                    sensorB.maxVoltage != expectedB || sensorA.getLimitAmps() != sensorALimit ||
-                    sensorB.getLimitAmps() != sensorBLimit || !solverRecipeIsCurrent())
+                    input != expectedInput || !sensorCommandsAreCurrent() ||
+                    !solverRecipeIsCurrent())
                 throw new IllegalStateException("Q30 profile lost owner or controls at " + stage);
         }
 
@@ -651,23 +709,25 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         }
 
         private boolean sensorCommandsAreCurrent() {
-            return input == expectedInput && sensorA.maxVoltage == expectedA &&
-                sensorB.maxVoltage == expectedB && sensorA.getLimitAmps() == sensorALimit &&
-                sensorB.getLimitAmps() == sensorBLimit &&
-                powerBindings.getBinding("SENSOR_A").getLimitedSupply() == sensorA &&
-                powerBindings.getBinding("SENSOR_B").getLimitedSupply() == sensorB;
+            if (input != expectedInput) return false;
+            for (int index = 0; index < channels.length; index++)
+                if (sensorSources[index].maxVoltage != expectedSensorVoltages[index] ||
+                        sensorSources[index].getLimitAmps() != sensorLimits[index] ||
+                        powerBindings.getBinding("SENSOR_" + channels[index])
+                            .getLimitedSupply() != sensorSources[index])
+                    return false;
+            return true;
         }
 
         /** No solver or external-power command is touched while the board is off. */
         private void restoreInputCommandWhileUnpowered() {
-            double a = (priorInput & 1) != 0 ? 5 : 0;
-            double b = (priorInput & 2) != 0 ? 5 : 0;
-            sensorA.maxVoltage = a;
-            sensorB.maxVoltage = b;
+            for (int index = 0; index < channels.length; index++) {
+                double volts = (priorInput & (1 << index)) != 0 ? 5 : 0;
+                sensorSources[index].maxVoltage = volts;
+                expectedSensorVoltages[index] = volts;
+            }
             input = priorInput;
             expectedInput = priorInput;
-            expectedA = a;
-            expectedB = b;
         }
 
         private boolean isCurrentOwnerIdentity() {
@@ -700,7 +760,8 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
     public void verifyFaulted(GeneratedBoardInstance owner, BoardModificationController modifications,
             BoardPowerState state) {
         requireOwnedBy(owner);
-        if (state != BoardPowerState.POWERED || observed == null || healthy(owner, 3))
+        if (state != BoardPowerState.POWERED || observed == null ||
+                healthy(owner, allInputMask))
             throw new IllegalStateException("Q30 fault has no measured symptom");
     }
     public void verifyFaultedProfile(CirSim sim, GeneratedBoardInstance owner,

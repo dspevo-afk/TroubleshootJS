@@ -1,9 +1,9 @@
 package com.lushprojects.circuitjs1.client;
 
-/** Public-probe diagnostics and exact seeded replay for the Q30 pilot. */
+/** Public-probe diagnostics and exact seeded replay for the Q30 family. */
 final class Rb30DiagnosticProvider implements GeneratedDiagnosticProvider,
         GeneratedDiagnosticServicePreparation.Provider {
-    private static final String TEMPLATE = "RB30_TWO_CHANNEL_INPUT_SWEEP";
+    private static final String TEMPLATE = "RB30_CHANNEL_INPUT_SWEEP_V1";
     private static final GeneratedDiagnosticServicePreparation.Policy NORMAL_SERVICE_PREPARATION =
         new GeneratedDiagnosticServicePreparation.Policy(5, .050);
     private final Rb30Plan plan;
@@ -24,7 +24,7 @@ final class Rb30DiagnosticProvider implements GeneratedDiagnosticProvider,
     }
 
     public String getProviderId() {
-        return admission == null ? "rb30-control-diagnostic@1" : "rb30-control-diagnostic@3";
+        return admission == null ? "rb30-control-diagnostic@2" : "rb30-control-diagnostic@4";
     }
 
     public GeneratedDiagnosticServicePreparation.Policy getServicePreparationPolicy() {
@@ -32,29 +32,82 @@ final class Rb30DiagnosticProvider implements GeneratedDiagnosticProvider,
     }
 
     public GeneratedDiagnosticPlan getDiagnosticPlan() {
+        String[] channels = plan.channels();
+        String[] conditions = conditions();
+        String[] samples = samples();
+        String[] terminals = observationTerminals(channels);
+        String[] initialSteps = new String[conditions.length];
+        String[] retest = new String[conditions.length + 1];
+        String[] conditionIds = new String[conditions.length];
+        String[] hypotheses = hypothesisRoles(channels);
+        for (int index = 0; index < conditions.length; index++) {
+            initialSteps[index] = conditions[index];
+            retest[index] = conditions[index];
+            conditionIds[index] = samples[index];
+        }
+        retest[conditions.length] = GeneratedBoardOperationIds.CUSTOMER_RETEST;
         return new GeneratedDiagnosticPlan(TEMPLATE, "J1.2",
-            new String[] { "J1.1", "DREV.K", "REN.2", "U1.OUTPUT", "RSA.2",
-                "RDA.1", "RDA.2", "KB.A2", "JOA.1", "JOA.2", "JOB.1",
-                "JOB.2" },
+            terminals,
             new String[] { "DC_VOLTAGE" },
-            normalDeclaration(new String[] { Rb30Behavior.SENSORS_LOW,
-                Rb30Behavior.SENSORS_A_ONLY, Rb30Behavior.SENSORS_B_ONLY,
-                Rb30Behavior.SENSORS_HIGH }, "BOARD_POWER_OFF_SERVICE"),
+            normalDeclaration(initialSteps, "BOARD_POWER_OFF_SERVICE"),
             new String[] { WorkbenchOperation.REMOVE, WorkbenchOperation.LIFT_LEAD },
             new String[] { WorkbenchOperation.CATALOG_INSTALL },
             new String[] { WorkbenchOperation.LIFT_LEAD,
                 WorkbenchOperation.RECONNECT_LEAD, WorkbenchOperation.REMOVE,
                 WorkbenchOperation.CATALOG_INSTALL },
-            new String[] { Rb30Behavior.SENSORS_LOW,
-                Rb30Behavior.SENSORS_A_ONLY, Rb30Behavior.SENSORS_B_ONLY,
-                Rb30Behavior.SENSORS_HIGH,
-                GeneratedBoardOperationIds.CUSTOMER_RETEST },
-            new String[] { "LOW_INPUT_SETTLED", "A_ONLY_INPUT_SETTLED",
-                "B_ONLY_INPUT_SETTLED", "HIGH_INPUT_SETTLED" },
-            new String[] { "MAIN_12V", "REGULATED_5V", "SENSOR_A",
-                "SENSOR_B", "ENABLE_PATH", "SENSOR_A_PATH", "DRIVE_A_PATH",
-                "RELAY_B_COIL", "OUTPUT_A_LOAD", "OUTPUT_B_LOAD" },
+            retest, conditionIds, hypotheses,
             8, false, true, "PHYSICAL_COMPONENT_REPLACEMENT");
+    }
+
+    private String[] conditions() {
+        return plan.channelCount == 1 ?
+            new String[] { Rb30Behavior.SENSORS_LOW, Rb30Behavior.SENSORS_HIGH } :
+            new String[] { Rb30Behavior.SENSORS_LOW, Rb30Behavior.SENSORS_A_ONLY,
+                Rb30Behavior.SENSORS_B_ONLY, Rb30Behavior.SENSORS_HIGH };
+    }
+
+    private String[] samples() {
+        return plan.channelCount == 1 ?
+            new String[] { "LOW_INPUT_SETTLED", "HIGH_INPUT_SETTLED" } :
+            new String[] { "LOW_INPUT_SETTLED", "A_ONLY_INPUT_SETTLED",
+                "B_ONLY_INPUT_SETTLED", "HIGH_INPUT_SETTLED" };
+    }
+
+    private String[] observationTerminals(String[] channels) {
+        VectorBuilder terminals = new VectorBuilder();
+        terminals.add("J1.1");
+        terminals.add("DREV.K");
+        terminals.add("REN.2");
+        terminals.add("U1.OUTPUT");
+        terminals.add("RSA.2");
+        terminals.add("RDA.1");
+        terminals.add("RDA.2");
+        String relay = channels.length == 1 ? "KA" : "KB";
+        terminals.add(relay + ".A2");
+        for (String channel : channels) {
+            terminals.add("JO" + channel + ".1");
+            terminals.add("JO" + channel + ".2");
+        }
+        return terminals.toArray();
+    }
+
+    private String[] hypothesisRoles(String[] channels) {
+        if (channels.length == 1)
+            return new String[] { "MAIN_12V", "REGULATED_5V", "SENSOR_A",
+                "ENABLE_PATH", "SENSOR_A_PATH", "DRIVE_A_PATH",
+                "RELAY_A_COIL", "OUTPUT_A_LOAD" };
+        return new String[] { "MAIN_12V", "REGULATED_5V", "SENSOR_A",
+            "SENSOR_B", "ENABLE_PATH", "SENSOR_A_PATH", "DRIVE_A_PATH",
+            "RELAY_B_COIL", "OUTPUT_A_LOAD", "OUTPUT_B_LOAD" };
+    }
+
+    private static final class VectorBuilder {
+        private final java.util.Vector<String> values =
+            new java.util.Vector<String>();
+        void add(String value) { values.add(value); }
+        String[] toArray() {
+            return values.toArray(new String[values.size()]);
+        }
     }
 
     private String[] normalDeclaration(String[] existing, String serviceId) {
@@ -69,11 +122,8 @@ final class Rb30DiagnosticProvider implements GeneratedDiagnosticProvider,
         GeneratedDiagnosticPlan diagnosticPlan = getDiagnosticPlan();
         GeneratedDiagnosticProgram.Builder program =
             GeneratedDiagnosticProgram.builder(diagnosticPlan);
-        String[] conditions = { Rb30Behavior.SENSORS_LOW,
-            Rb30Behavior.SENSORS_A_ONLY, Rb30Behavior.SENSORS_B_ONLY,
-            Rb30Behavior.SENSORS_HIGH };
-        String[] samples = { "LOW_INPUT_SETTLED", "A_ONLY_INPUT_SETTLED",
-            "B_ONLY_INPUT_SETTLED", "HIGH_INPUT_SETTLED" };
+        String[] conditions = conditions();
+        String[] samples = samples();
         for (int index = 0; index < conditions.length; index++) {
             program.input(conditions[index]).waitSample(samples[index], 0);
             measure(program, conditions[index] + "_DREV_K", "DREV.K", "J1.2");
@@ -82,12 +132,16 @@ final class Rb30DiagnosticProvider implements GeneratedDiagnosticProvider,
             measure(program, conditions[index] + "_RSA_2", "RSA.2", "J1.2");
             measure(program, conditions[index] + "_RDA_1", "RDA.1", "J1.2");
             measure(program, conditions[index] + "_RDA_2", "RDA.2", "J1.2");
-            measure(program, conditions[index] + "_KB_A2", "KB.A2", "J1.2");
-            measure(program, conditions[index] + "_OUTPUT_A", "JOA.1", "JOA.2");
-            measure(program, conditions[index] + "_OUTPUT_B", "JOB.1", "JOB.2");
+            String relay = plan.channelCount == 1 ? "KA" : "KB";
+            measure(program, conditions[index] + "_K" +
+                (plan.channelCount == 1 ? "A" : "B") + "_A2",
+                relay + ".A2", "J1.2");
+            for (String channel : plan.channels())
+                measure(program, conditions[index] + "_OUTPUT_" + channel,
+                    "JO" + channel + ".1", "JO" + channel + ".2");
         }
-        // A final independent supply measurement makes the receipt 37 samples:
-        // nine observations in each functional condition plus the main input.
+        // Two channels retain 9*4+1=37 observations. One channel uses
+        // 8*2+1=17 with no absent-channel readings.
         measure(program, "MAIN_12V", "J1.1", "J1.2");
         if (admission != null) {
             // The proof session executes provider-owned, bounded readiness
@@ -132,10 +186,11 @@ final class Rb30DiagnosticProvider implements GeneratedDiagnosticProvider,
         if ("REN".equals(componentId) || "RSA".equals(componentId))
             return "R_CATALOG_10000";
         if ("RDA".equals(componentId)) return "R_CATALOG_1000";
-        if ("KB".equals(componentId))
+        String relayId = plan.channelCount == 1 ? "KA" : "KB";
+        if (relayId.equals(componentId))
             for (PhysicalBoardRuntimeCapability capability :
                     instance.getPhysicalBoardRuntime().getCapabilities())
-                if (capability instanceof Rb30RelayService && "KB".equals(
+                if (capability instanceof Rb30RelayService && relayId.equals(
                         ((Rb30RelayService) capability).getComponentId()))
                     return ((Rb30RelayService) capability).getFiveVoltCatalogId();
         throw new IllegalArgumentException("No correct Q30 replacement for " +

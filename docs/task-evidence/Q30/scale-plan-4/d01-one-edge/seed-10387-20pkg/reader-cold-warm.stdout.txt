@@ -1,0 +1,1 @@
+PASS: current plan@4/provider@4 genuine cold+warm Q30 D01 seeds=1 pairs=10; player gates separate

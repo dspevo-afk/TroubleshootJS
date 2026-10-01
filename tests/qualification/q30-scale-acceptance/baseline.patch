@@ -1,0 +1,402 @@
+diff --git a/src/com/lushprojects/circuitjs1/circuitjs1.gwt.xml b/src/com/lushprojects/circuitjs1/circuitjs1.gwt.xml
+index 07907c6..65dc70e 100644
+--- a/src/com/lushprojects/circuitjs1/circuitjs1.gwt.xml
++++ b/src/com/lushprojects/circuitjs1/circuitjs1.gwt.xml
+@@ -4,5 +4,5 @@
+     <inherits name="com.google.gwt.http.HTTP" />
+     <inherits name="com.google.gwt.json.JSON" />
+     <inherits name='com.google.gwt.user.theme.clean.Clean'/>
+-    <entry-point class="com.lushprojects.circuitjs1.client.circuitjs1" />
++    <entry-point class="com.lushprojects.circuitjs1.client.Q30NormalScreenHarness" />
+  </module>
+diff --git a/src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java b/src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java
+index 47ac866..d414773 100644
+--- a/src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java
++++ b/src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java
+@@ -34,6 +34,8 @@ final class GenerationCoordinator {
+     private final GeneratedDiagnosticProofCache diagnosticMeasurementProofs =
+         new GeneratedDiagnosticProofCache();
+     private final QuickPlayBoardHistory recentBoards = new QuickPlayBoardHistory();
++    /* Temporary normal-player qualification scope. It never changes the catalog. */
++    private IsolatedGenerationQualification isolatedQualification;
+     private GenerationJob job;
+     private Services services;
+     private Timer continuation, watchdog;
+@@ -102,6 +104,7 @@ final class GenerationCoordinator {
+     long getMaxAdvanceMillis() { return maxAdvanceMillis; }
+     long getLastRoutingElapsedMillisForDeveloperVerification() { return lastRoutingElapsedMillis; }
+     long getLastProofElapsedMillisForDeveloperVerification() { return lastProofElapsedMillis; }
++    boolean usesForegroundClockForIsolatedQualification() { return foregroundBudget; }
+     Map<String, long[]> getLastDiagnosticMeasurementWorkTimingsForDeveloperVerification() {
+         return copyWorkTimings(lastDiagnosticMeasurementWorkTimings);
+     }
+@@ -174,7 +177,47 @@ final class GenerationCoordinator {
+     }
+ 
+     void start(GenerationRequest request, Completion completion, boolean asynchronous) {
+-        start(request, completion, asynchronous, true, normalMaximumJobMillis(request), false, null);
++        IsolatedGenerationQualification qualification = isolatedQualification;
++        long maximumJobMillis = qualification == null ? normalMaximumJobMillis(request) :
++            normalMaximumJobMillis(request, qualification);
++        start(request, completion, asynchronous, true, maximumJobMillis, false, null);
++    }
++
++    private long normalMaximumJobMillis(GenerationRequest request,
++            IsolatedGenerationQualification qualification) {
++        if (request == null) throw new IllegalArgumentException("Missing generation request");
++        GenerationExecutionPolicy policy = request.getExecutionPolicy();
++        if (policy == null) throw new IllegalArgumentException("Missing generation execution contract");
++        policy.requireRequest(request);
++        if (qualification == null) PlayerFamilyCatalog.requireNormalPlayerEnabled(request.getFamilyId());
++        else qualification.requireStart(this, sim, request);
++        return policy.maximumJobMillis;
++    }
++
++    void attachIsolatedQualification(IsolatedGenerationQualification qualification) {
++        if (qualification == null || isolatedQualification != null ||
++                !isFreshForIsolatedQualification())
++            throw new IllegalStateException("Isolated qualification requires a fresh idle coordinator");
++        isolatedQualification = qualification;
++    }
++
++    void detachIsolatedQualification(IsolatedGenerationQualification qualification) {
++        if (isolatedQualification == qualification) isolatedQualification = null;
++    }
++
++    boolean isFreshForIsolatedQualification() {
++        return sim.generationCoordinator == this && !sim.troubleshootDebug &&
++            !sim.developerVerifierRunning && !isRunning() && !advancing && job == null &&
++            services == null && !sim.activeMeasurementOverlay && sim.isGeneratedRuntimeSettled() &&
++            plans.size() == 0 && plans.getHits() == 0 && plans.getMisses() == 0 &&
++            diagnosticProofs.size() == 0 && diagnosticProofs.getHits() == 0 &&
++            diagnosticProofs.getMisses() == 0 && diagnosticMeasurementProofs.size() == 0 &&
++            diagnosticMeasurementProofs.getHits() == 0 && diagnosticMeasurementProofs.getMisses() == 0 &&
++            recentBoards.size() == 0;
++    }
++
++    boolean isAttachedIsolatedQualification(IsolatedGenerationQualification qualification) {
++        return isolatedQualification == qualification;
+     }
+ 
+     private static long normalMaximumJobMillis(GenerationRequest request) {
+@@ -207,8 +250,20 @@ final class GenerationCoordinator {
+                 (measurementOnly || !sim.troubleshootDebug || !sim.developerVerifierRunning))
+             throw new IllegalStateException(
+                 "Controlled P09 negative escaped its developer-verification scope");
+-        if (!measurementOnly && maximumJobMillis != normalMaximumJobMillis(request))
++        IsolatedGenerationQualification qualification = isolatedQualification;
++        if (qualification != null && measurementOnly)
++            throw new IllegalStateException("Isolated qualification cannot enter private measurement mode");
++        if (qualification != null && (!asynchronous || !allowDiagnosticProofReuse ||
++                completion == null || controlledP09Negative != null || sim.troubleshootDebug ||
++                sim.developerVerifierRunning))
++            throw new IllegalStateException(
++                "Isolated qualification requires the ordinary asynchronous player start path");
++        long expectedMaximumJobMillis = measurementOnly ? maximumJobMillis : qualification == null ?
++            normalMaximumJobMillis(request) : normalMaximumJobMillis(request, qualification);
++        if (!measurementOnly && maximumJobMillis != expectedMaximumJobMillis)
+             throw new IllegalStateException("Normal generation deadline differs from its execution contract");
++        if (qualification != null && !measurementOnly)
++            qualification.requireStart(this, sim, request);
+         cancel();
+         if (services != null && services.hasSavedOwners())
+             throw new IllegalStateException("Previous generation has incomplete cleanup");
+@@ -221,8 +276,9 @@ final class GenerationCoordinator {
+             diagnosticMeasurementProofs : diagnosticProofs;
+         if (measurementOnly) diagnosticMeasurementWorkTimings.clear();
+         services = new Services(request, completion, allowDiagnosticProofReuse,
+-            proofCache, measurementOnly, controlledP09Negative);
++            proofCache, measurementOnly, controlledP09Negative, qualification);
+         job = new GenerationJob(services, maximumJobMillis, MAX_JOB_STEPS, MAX_STEP_MILLIS);
++        if (qualification != null) qualification.bindJob(this, sim, request, job);
+         yields = 0; cancelledAt = 0; cancellationLatency = 0; maxAdvanceMillis = 0;
+         lastRoutingElapsedMillis = 0; lastProofElapsedMillis = 0;
+         lastCleanupAudit = null;
+@@ -401,6 +457,7 @@ final class GenerationCoordinator {
+         private final boolean allowDiagnosticProofReuse;
+         private final GeneratedDiagnosticProofCache proofCache;
+         private final boolean measurementOnly;
++        private final IsolatedGenerationQualification qualification;
+         private GeneratedBoardInstance original;
+         private GeneratedChallengeController originalController;
+         private Object originalGraph;
+@@ -423,7 +480,8 @@ final class GenerationCoordinator {
+ 
+         Services(GenerationRequest request, Completion completion, boolean allowDiagnosticProofReuse,
+                 GeneratedDiagnosticProofCache proofCache, boolean measurementOnly,
+-                ControlledP09NegativeForDeveloperVerification controlledP09Negative) {
++                ControlledP09NegativeForDeveloperVerification controlledP09Negative,
++                IsolatedGenerationQualification qualification) {
+             if (proofCache == null)
+                 throw new IllegalArgumentException("Missing diagnostic proof cache owner");
+             this.selection = request; this.request = request.candidate(0); this.completion = completion;
+@@ -431,6 +489,7 @@ final class GenerationCoordinator {
+             this.proofCache = proofCache;
+             this.measurementOnly = measurementOnly;
+             this.controlledP09Negative = controlledP09Negative;
++            this.qualification = qualification;
+             original = sim.getGeneratedBoardInstance();
+             originalController = sim.getGeneratedChallengeController();
+             originalGraph = sim.elmList;
+@@ -449,6 +508,9 @@ final class GenerationCoordinator {
+                     constructionSession != null)
+                 throw new IllegalStateException("Previous candidate still owns resources");
+             request = selection.candidate(index);
++            if (qualification != null)
++                qualification.beginCandidate(GenerationCoordinator.this, sim, request, job,
++                    job.getCandidateIndex(), Long.toString(request.getDescriptor().getRootSeed()));
+             expectedProofUnits = 0; cleanupComplete = false; proofContextKey = null;
+             dependencyContext = null; rawTemporalDependencyCanonical = null; proofCacheHit = false;
+             proofCachePublicationPending = false;
+@@ -480,6 +542,9 @@ final class GenerationCoordinator {
+                     GenerationRequest.Construction construction = constructionSession.result();
+                     candidate = construction.instance;
+                     realizationManifest = construction.realizationManifest;
++                    if (qualification != null)
++                        qualification.recordPackages(GenerationCoordinator.this, sim, request, job,
++                            job.getCandidateIndex(), candidate.getBoard().getComponentIds().size());
+                     constructionSession=null;
+                 }
+                 catch (PcbRoutingRejectedException rejection) { throw new GenerationJob.Rejected(rejection.getMessage()); }
+@@ -539,6 +604,9 @@ final class GenerationCoordinator {
+                 throw new IllegalStateException(
+                     "Generated board failed physical admission validation", failure);
+             }
++            if (qualification != null)
++                qualification.recordPhysical(GenerationCoordinator.this, sim, request, job,
++                    job.getCandidateIndex());
+             try {
+                 return dependencies();
+             } catch (Throwable failure) {
+@@ -634,7 +702,8 @@ final class GenerationCoordinator {
+                     "Private diagnostic measurement scope changed before publication");
+             requireCurrentProofContext("generation publication");
+             if (!measurementOnly) {
+-                PlayerFamilyCatalog.requireNormalPlayerEnabled(request.getFamilyId());
++                if (qualification == null) PlayerFamilyCatalog.requireNormalPlayerEnabled(request.getFamilyId());
++                else qualification.requirePublication(GenerationCoordinator.this, sim, request, job);
+                 request.getExecutionPolicy().requireOwner(candidate);
+             }
+             if (request.getDifficulty() != null) {
+@@ -652,6 +721,9 @@ final class GenerationCoordinator {
+                 sim.quickPlaySession = QuickPlaySession.forCandidate(selection, candidate);
+             }
+             installation.publish();
++            if (qualification != null)
++                qualification.recordPublished(GenerationCoordinator.this, sim, request, job,
++                    job.getCandidateIndex());
+             if (physicalFingerprint != null) recentBoards.published(physicalFingerprint);
+             /* A proof artifact becomes reusable only after the same candidate
+              * passed final dependency validation and its fresh publication.
+@@ -701,6 +773,10 @@ final class GenerationCoordinator {
+             if (failure instanceof RuntimeException) throw (RuntimeException)failure;
+             if (failure != null) throw new IllegalStateException("Generation cleanup failed", failure);
+             cleanupComplete = true;
++            if (qualification != null && job.getCandidateIndex() >= 0 &&
++                    job.getOutcome() != GenerationJob.Outcome.PASS)
++                qualification.recordAborted(GenerationCoordinator.this, sim, request, job,
++                    job.getCandidateIndex());
+             // Restore succeeded before making the next exact candidate eligible.
+             // The protected original stays owned until the entire launch terminates.
+             installation = null; proof = null; candidate = null; constructionSession = null;
+@@ -712,6 +788,8 @@ final class GenerationCoordinator {
+         }
+         public boolean isCurrent() {
+             if (services != this) return false;
++            if (qualification != null && !qualification.isCurrentForJob(
++                    GenerationCoordinator.this, sim, selection, job)) return false;
+             if (installation == null)
+                 return sim.getGeneratedBoardInstance() == original &&
+                     sim.getGeneratedChallengeController() == originalController && sim.elmList == originalGraph;
+@@ -750,6 +828,9 @@ final class GenerationCoordinator {
+         private void assessDifficulty() {
+             if (request.getDifficulty() == null) return;
+             difficulty = DifficultyAssessment.assess(candidate, proofReceipt);
++            if (qualification != null)
++                qualification.recordDiagnostic(GenerationCoordinator.this, sim, request, job,
++                    job.getCandidateIndex(), difficulty.canonical());
+             if (difficulty.profile != request.getDifficulty())
+                 throw new GenerationJob.Rejected("The proved board does not match the requested difficulty");
+         }
+diff --git a/src/com/lushprojects/circuitjs1/client/GenerationJob.java b/src/com/lushprojects/circuitjs1/client/GenerationJob.java
+index abe3fe0..8500e63 100644
+--- a/src/com/lushprojects/circuitjs1/client/GenerationJob.java
++++ b/src/com/lushprojects/circuitjs1/client/GenerationJob.java
+@@ -139,6 +139,7 @@ final class GenerationJob {
+ 
+     private long lastObservedMillis;
+     private long completedElapsedMillis;
++    private long maxActiveOperationMillis;
+     private int nextCandidatePosition;
+     private int candidateIndex = -1;
+     private int stepCount;
+@@ -152,6 +153,7 @@ final class GenerationJob {
+     private Stage stage = Stage.RESOLVE;
+     private Outcome outcome = Outcome.RUNNING;
+     private Throwable failure;
++    private String attemptFailureType, attemptFailureMessage;
+     private GenerationReceipt receipt;
+     private String physicalDependencies;
+     private final String[] stageReceipts = new String[STAGE_COUNT];
+@@ -164,11 +166,14 @@ final class GenerationJob {
+     static final class Attempt {
+         final int ordinal, workUnits, proofUnits;
+         final String manifest;
++        final String failureType, failureMessage;
+         final Stage stage;
+         final Outcome outcome;
+-        Attempt(int ordinal, String manifest, Stage stage, Outcome outcome, int workUnits, int proofUnits) {
++        Attempt(int ordinal, String manifest, Stage stage, Outcome outcome, int workUnits, int proofUnits,
++                String failureType, String failureMessage) {
+             this.ordinal=ordinal; this.manifest=manifest; this.stage=stage; this.outcome=outcome;
+             this.workUnits=workUnits; this.proofUnits=proofUnits;
++            this.failureType=failureType; this.failureMessage=failureMessage;
+         }
+     }
+     java.util.List<Attempt> getAttempts() {
+@@ -181,7 +186,11 @@ final class GenerationJob {
+     private void recordAttempt(Outcome result) {
+         if (candidateIndex < 0 || (!attempts.isEmpty() && attempts.get(attempts.size()-1).ordinal==candidateIndex)) return;
+         attempts.add(new Attempt(candidateIndex, currentManifest(), stage, result,
+-            stepCount-candidateStartedSteps, candidateStageWorkCounts[Stage.HYPOTHESES.ordinal()]));
++            stepCount-candidateStartedSteps, candidateStageWorkCounts[Stage.HYPOTHESES.ordinal()],
++            attemptFailureType != null ? attemptFailureType :
++                failure == null ? null : failure.getClass().getSimpleName(),
++            attemptFailureType != null ? attemptFailureMessage :
++                failure == null ? null : failure.getMessage()));
+     }
+ 
+     GenerationJob(Services services, long maxJobMillis, int maxSteps, long maxStepMillis) {
+@@ -236,6 +245,7 @@ final class GenerationJob {
+         long stageStarted = lastObservedMillis;
+         boolean stageAttempted = false;
+         boolean telemetryRecorded = false;
++        boolean unitClockStarted = false;
+         unitActive = false;
+         try {
+             // A browser yield may have elapsed since the previous unit.  The
+@@ -244,6 +254,7 @@ final class GenerationJob {
+             checkpoint();
+             stageStarted = lastObservedMillis;
+             unitStartedMillis = lastObservedMillis;
++            unitClockStarted = true;
+             unitActive = true;
+             if (stepCount >= maxSteps)
+                 throw new Failure(Outcome.WORK_EXHAUSTED,
+@@ -259,27 +270,32 @@ final class GenerationJob {
+                 completedElapsedMillis = elapsedAt(lastObservedMillis);
+             return more;
+         } catch (Rejected rejected) {
++            captureAttemptFailure(rejected);
+             unitActive = false;
+             if (stageAttempted && !telemetryRecorded)
+                 recordStageTelemetry(attempted, stageStarted, lastObservedMillis);
+             return handleRejection(rejected);
+         } catch (CheckpointFailure checkpointFailure) {
++            captureAttemptFailure(checkpointFailure);
+             unitActive = false;
+             if (stageAttempted && !telemetryRecorded)
+                 recordStageTelemetry(attempted, stageStarted, lastObservedMillis);
+             return failTerminal(checkpointFailure, checkpointFailure.getOutcome());
+         } catch (Failure boundedFailure) {
++            captureAttemptFailure(boundedFailure);
+             unitActive = false;
+             if (stageAttempted && !telemetryRecorded)
+                 recordStageTelemetry(attempted, stageStarted, lastObservedMillis);
+             return failTerminal(boundedFailure, boundedFailure.getOutcome());
+         } catch (Throwable unexpected) {
++            captureAttemptFailure(unexpected);
+             unitActive = false;
+             long failureFinished = sampleFailureMillis();
+             if (stageAttempted && !telemetryRecorded)
+                 recordStageTelemetry(attempted, stageStarted, failureFinished);
+             return failTerminal(unexpected, Outcome.PROGRAMMING_FAILURE);
+         } finally {
++            if (unitClockStarted) observeMaxActiveOperation();
+             unitActive = false;
+         }
+     }
+@@ -288,6 +304,7 @@ final class GenerationJob {
+         if (outcome != Outcome.RUNNING)
+             return;
+         Cancelled cancelled = new Cancelled("Generation cancelled");
++        captureAttemptFailure(cancelled);
+         markTerminal(cancelled.getOutcome(), cancelled);
+         unitActive = false;
+         finishAbort();
+@@ -309,6 +326,7 @@ final class GenerationJob {
+         }
+         unitActive = false;
+         if (outcome == Outcome.RUNNING) {
++            captureAttemptFailure(infrastructureFailure);
+             markTerminal(Outcome.INFRASTRUCTURE_FAILURE, infrastructureFailure);
+             // Scope entry can fail before a candidate is active.  It still
+             // owns a live generation service that must receive one abort.
+@@ -392,6 +410,10 @@ final class GenerationJob {
+         return stepCount;
+     }
+ 
++    long getMaxActiveOperationMillis() {
++        return maxActiveOperationMillis;
++    }
++
+     int getCandidateIndex() {
+         return candidateIndex;
+     }
+@@ -602,10 +624,13 @@ final class GenerationJob {
+     private boolean failTerminal(Throwable primary, Outcome desired) {
+         if (outcome == Outcome.PASS)
+             return false;
+-        if (outcome == Outcome.RUNNING)
++        if (outcome == Outcome.RUNNING) {
++            captureAttemptFailure(primary);
+             markTerminal(desired, primary);
+-        else if (failure == null)
++        } else if (failure == null) {
++            captureAttemptFailure(primary);
+             failure = primary;
++        }
+         finishAbort();
+         completedElapsedMillis = elapsedAt(lastObservedMillis);
+         return false;
+@@ -650,6 +675,8 @@ final class GenerationJob {
+         abortAttempted = false;
+         needsAbort = false;
+         failure = null;
++        attemptFailureType = null;
++        attemptFailureMessage = null;
+     }
+ 
+     private void clearCandidateLineage() {
+@@ -672,6 +699,19 @@ final class GenerationJob {
+             stageElapsedMillis[index] += delta;
+     }
+ 
++    private void observeMaxActiveOperation() {
++        long elapsed = lastObservedMillis < unitStartedMillis ? Long.MAX_VALUE :
++            lastObservedMillis - unitStartedMillis;
++        if (elapsed < 0) elapsed = Long.MAX_VALUE;
++        maxActiveOperationMillis = Math.max(maxActiveOperationMillis, elapsed);
++    }
++
++    private void captureAttemptFailure(Throwable primary) {
++        if (primary == null || attemptFailureType != null) return;
++        attemptFailureType = primary.getClass().getSimpleName();
++        attemptFailureMessage = primary.getMessage();
++    }
++
+     private long sampleFailureMillis() {
+         try {
+             long sampled = services.nowMillis();
+diff --git a/scripts/verify-current-contracts.ps1 b/scripts/verify-current-contracts.ps1
+index 43f556f..e8884d8 100644
+--- a/scripts/verify-current-contracts.ps1
++++ b/scripts/verify-current-contracts.ps1
+@@ -124,6 +124,7 @@ final class PhysicalSpecificationDeveloperVerifier {
+     $sourcePaths += $stub
+     if ($needsQ30NativeLoggerBridge) { $sourcePaths += $nativeLoggerShim }
+     $testDefinitions = @(
++        @{ Name = 'IsolatedGenerationQualificationContractTest'; Marker = 'isolated generation qualification ' },
+         @{ Name = 'StagedFamilyRegistrationContractTest'; Marker = 'staged family registration contracts ' },
+         @{ Name = 'GeneratedExternalPowerBindingsControlObservationContractTest'; Marker = 'generated power control observation contracts assertions=' },
+         @{ Name = 'ProceduralFamilyContractTest'; Marker = 'procedural family contracts ' },

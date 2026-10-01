@@ -19,7 +19,6 @@ final class Q30DiagnosticAdmissionVerifier {
     private static final String REQUEST_CANONICAL =
         "tsj-q30-normal-d01-qualification-request@1;family=RB30;profile=MEDIUM";
     private static final int EXPECTED_HYPOTHESIS_COUNT = 5;
-    private static final int EXPECTED_SAMPLE_COUNT = 37;
     private static final String SOURCE_CONTEXT_INPUT = "MAIN12";
     private static Runner active;
 
@@ -101,6 +100,8 @@ final class Q30DiagnosticAdmissionVerifier {
         private String phaseName = "construction";
         private String failurePhase;
         private Throwable failure;
+        private StagedFamilyCapability.ConstructionSession constructionSession;
+        private String expectedConstructionPlanCanonical;
         private GenerationRequest.Construction construction;
         private GeneratedBoardInstance owner;
         private GeneratedChallengeController controller;
@@ -298,6 +299,7 @@ final class Q30DiagnosticAdmissionVerifier {
                     cleanupMillis += sincePhaseStart();
                     parkCleanupPending("cleanupException", problem);
                 } else {
+                    constructionSession = null;
                     phase = Phase.CLEANUP;
                     phaseName = "cleanup";
                     phaseStarted = System.currentTimeMillis();
@@ -334,9 +336,18 @@ final class Q30DiagnosticAdmissionVerifier {
 
         private void construct() {
             phaseName = "construction";
-            construction = new Rb30Generator().constructNormalForQualification(seed);
+            if (constructionSession == null) beginFamilyConstruction();
+            if (!constructionSession.advance()) {
+                publishProgress("construction", 0, 0);
+                return;
+            }
+            construction = constructionSession.result();
+            constructionSession = null;
             constructionMillis += sincePhaseStart();
             owner = construction.instance;
+            require(expectedConstructionPlanCanonical.equals(
+                    construction.realizationManifest),
+                "Q30 staged construction changed its resolved plan identity");
             require(owner != null && !owner.isDeveloperOnlyFaultRoute(),
                 "Q30 normal generator returned a developer-only owner");
             require(owner.getSeed() == seed && Rb30Plan.FAMILY_ID.equals(owner.getCircuitFamilyId()),
@@ -438,7 +449,8 @@ final class Q30DiagnosticAdmissionVerifier {
             if (!(owner.getTemporalBehavior() instanceof Rb30Behavior))
                 throw new IllegalStateException("Q30 canary requires the real Rb30 behavior");
             serviceCanaryInput = ((Rb30Behavior)owner.getTemporalBehavior()).getInputs();
-            require(serviceCanaryInput == 3,
+            int highMask = owner.getBoard().getComponent("JOB") == null ? 1 : 3;
+            require(serviceCanaryInput == highMask,
                 "Q30 staged selected-fault owner did not retain its declared HIGH input");
             serviceCanarySimWasRunning = sim.simIsRunning();
             serviceCanaryInitialSimulationTime = sim.t;
@@ -508,8 +520,11 @@ final class Q30DiagnosticAdmissionVerifier {
                     "q30-service-canary-power-healthy-owner");
                 serviceHealthyWork = serviceCanaryOwner.getTemporalBehavior().beginProfile(
                     sim, serviceCanaryOwner, GeneratedTemporalBehavior.Profile.HEALTHY);
-                require(serviceHealthyWork != null && serviceHealthyWork.getWorkUnits() == 5,
-                    "Q30 healthy relay canary did not create the bounded five-unit profile");
+                int expectedProfileUnits = ((Rb30Behavior)
+                    serviceCanaryOwner.getTemporalBehavior()).getProfileWorkUnits();
+                require(serviceHealthyWork != null &&
+                        serviceHealthyWork.getWorkUnits() == expectedProfileUnits,
+                    "Q30 healthy relay canary profile units differ from active-channel recipe");
                 serviceCanaryStage = ServiceCanaryStage.HEALTHY_PROFILE;
                 publishProgress("servicePreparationCanaries", 0, 7);
                 return;
@@ -527,7 +542,8 @@ final class Q30DiagnosticAdmissionVerifier {
                 return;
             case DRIVE_HIGH:
                 ((Rb30Behavior)serviceCanaryOwner.getTemporalBehavior()).setInputs(
-                    sim, serviceCanaryOwner, 3);
+                    sim, serviceCanaryOwner,
+                    serviceCanaryOwner.getBoard().getComponent("JOB") == null ? 1 : 3);
                 serviceCanaryStage = ServiceCanaryStage.CHECK_ENERGIZED_RELAY;
                 return;
             case CHECK_ENERGIZED_RELAY:
@@ -664,7 +680,12 @@ final class Q30DiagnosticAdmissionVerifier {
             require(serviceCanaryFaultBinding != null && !serviceCanaryFaultBinding.isApplied() &&
                     serviceCanaryOwner.getTemporalBehavior() instanceof Rb30Behavior,
                 "Q30 energized-relay fixture is not a real healthy owner");
-            for (String componentId : new String[] { "KA", "KB" }) {
+            Vector<String> relayIds = new Vector<String>();
+            if (serviceCanaryOwner.getBoard().getComponent("KA") != null)
+                relayIds.add("KA");
+            if (serviceCanaryOwner.getBoard().getComponent("KB") != null)
+                relayIds.add("KB");
+            for (String componentId : relayIds) {
                 PhysicalPart<?> candidate = serviceCanaryOwner.getPhysicalBoardRuntime()
                     .getInstalledPart(componentId);
                 if (!(candidate instanceof PhysicalRelayPart)) continue;
@@ -1470,6 +1491,7 @@ final class Q30DiagnosticAdmissionVerifier {
         }
 
         private void validateReceiptAndEvidence() {
+            int expectedSamplesPerHypothesis = expectedSampleCount();
             require(receipt != null && receipt.getContextKey() != null,
                 "Cold D01 proof returned no context-bound receipt");
             receipt.requireContextKey(contextKey);
@@ -1497,9 +1519,9 @@ final class Q30DiagnosticAdmissionVerifier {
                     "D01 hypothesis lacks repair, customer retest or restored-state evidence: " +
                         item.getHypothesisKey());
                 Vector<GeneratedDiagnosticSample> samples = item.getSolverSamples();
-                require(samples.size() == EXPECTED_SAMPLE_COUNT,
+                require(samples.size() == expectedSamplesPerHypothesis,
                     "D01 hypothesis has " + samples.size() + " actual samples; expected " +
-                        EXPECTED_SAMPLE_COUNT);
+                        expectedSamplesPerHypothesis);
                 JSONObject row = new JSONObject();
                 put(row, "hypothesisKey", item.getHypothesisKey());
                 put(row, "routeId", item.getRouteId());
@@ -1534,13 +1556,14 @@ final class Q30DiagnosticAdmissionVerifier {
             Collections.sort(expected);
             Collections.sort(actual);
             require(expected.equals(actual), "Cold D01 proof changed the exact hypothesis population");
-            require(observations == EXPECTED_HYPOTHESIS_COUNT * EXPECTED_SAMPLE_COUNT,
-                "Cold D01 proof did not retain all 185 actual observations");
+            require(observations == EXPECTED_HYPOTHESIS_COUNT *
+                    expectedSamplesPerHypothesis,
+                "Cold D01 proof did not retain the full per-hypothesis observation population");
 
             GeneratedDiagnosticProgram program = owner.getDiagnosticProvider().getObservationProgram();
             Vector<String> expectedSampleIds = observationSampleIds(program);
-            require(expectedSampleIds.size() == EXPECTED_SAMPLE_COUNT,
-                "Q30 normal observation program no longer declares exactly 37 samples");
+            require(expectedSampleIds.size() == expectedSamplesPerHypothesis,
+                "Q30 normal observation program differs from the active-channel contract");
             for (GeneratedDiagnosticSolvabilityEvidence item : evidence) {
                 Vector<GeneratedDiagnosticSample> samples = item.getSolverSamples();
                 for (int index = 0; index < expectedSampleIds.size(); index++)
@@ -1592,16 +1615,25 @@ final class Q30DiagnosticAdmissionVerifier {
 
         private void constructWarm() {
             phaseName = "warmConstruction";
-            phaseStarted = System.currentTimeMillis();
             JSONObject warm = (JSONObject)report.get("warm").isObject();
-            put(warm, "status", "RUNNING");
-            construction = new Rb30Generator().constructNormalForQualification(seed);
+            if (constructionSession == null) {
+                phaseStarted = System.currentTimeMillis();
+                put(warm, "status", "RUNNING");
+                beginFamilyConstruction();
+            }
+            if (!constructionSession.advance()) {
+                publishProgress("warmConstruction", 0, 0);
+                return;
+            }
+            construction = constructionSession.result();
+            constructionSession = null;
             owner = construction.instance;
             require(owner != null && !owner.isDeveloperOnlyFaultRoute() &&
                     owner.getSeed() == seed && Rb30Plan.FAMILY_ID.equals(owner.getCircuitFamilyId()),
                 "Q30 warm capture did not construct a fresh normal owner for the cold seed");
             owner.requireNormalPhysicalAdmission();
-            require(realizationManifest.equals(construction.realizationManifest),
+            require(expectedConstructionPlanCanonical.equals(construction.realizationManifest) &&
+                    realizationManifest.equals(construction.realizationManifest),
                 "Fresh same-seed normal owner changed its consumed realization manifest");
             warmConstructionMillis += sincePhaseStart();
             staged = new FreshGeneratedRuntimeInstallation.Staged(sim, owner);
@@ -1611,6 +1643,27 @@ final class Q30DiagnosticAdmissionVerifier {
             staged.prepare(false);
             if (!staged.isPreparationComplete()) staged.pause();
             publishProgress("warmPreparation", 0, 0);
+        }
+
+        private void beginFamilyConstruction() {
+            StagedFamilyCapability family =
+                PlayerFamilyCatalog.stagedCapability(Rb30Plan.FAMILY_ID);
+            require(family != null && Rb30Plan.FAMILY_ID.equals(family.familyId()) &&
+                    family.supportsPrivateQualification(),
+                "Q30 D01 has no registered private staged-family capability");
+            StagedFamilyCapability.Plan plan = family.resolve(seed);
+            String planCanonical = family.canonicalIdentity(plan);
+            require(planCanonical != null && planCanonical.length() != 0,
+                "Q30 staged family returned no resolved plan identity");
+            if (expectedConstructionPlanCanonical == null) {
+                expectedConstructionPlanCanonical = planCanonical;
+            } else {
+                require(expectedConstructionPlanCanonical.equals(planCanonical),
+                    "Fresh same-seed Q30 staged family changed its resolved plan identity");
+            }
+            constructionSession = family.beginConstruction(plan);
+            require(constructionSession != null,
+                "Q30 staged family returned no construction session");
         }
 
         private void prepareWarm() {
@@ -1643,6 +1696,11 @@ final class Q30DiagnosticAdmissionVerifier {
             phaseName = "warmCacheReuse";
             phaseStarted = System.currentTimeMillis();
             publishProgress("warmCacheReuse", 0, EXPECTED_HYPOTHESIS_COUNT);
+        }
+
+        private int expectedSampleCount() {
+            int channels = owner.getBoard().getComponent("JOB") == null ? 1 : 2;
+            return (7 + channels) * (1 << channels) + 1;
         }
 
         private void verifySourceContextChange() {
@@ -1741,7 +1799,7 @@ final class Q30DiagnosticAdmissionVerifier {
             put(warm, "sameTrustedContext", true);
             put(warm, "sameProviderProgramPartition", true);
             put(warm, "sameImmutableEvidence", true);
-            put(warm, "samplePopulationPerHypothesis", EXPECTED_SAMPLE_COUNT);
+            put(warm, "samplePopulationPerHypothesis", expectedSampleCount());
             put(warm, "hypothesisCount", EXPECTED_HYPOTHESIS_COUNT);
             put(warm, "receiptBoundToFreshOwner", true);
             put(warm, "warmReuseReceipt", warmReceipt.isWarmReuseForDeveloperVerification());
@@ -1758,6 +1816,9 @@ final class Q30DiagnosticAdmissionVerifier {
 
         private void cleanupAndFinish() {
             phaseName = "cleanup";
+            // Dropping unfinished family work abandons private route planning; the
+            // Q30 session creates an electrical owner only when it returns complete.
+            constructionSession = null;
             Throwable cleanupFailure = null;
             if (serviceCanaryScopeActive && serviceCanaryController != null) {
                 try {
@@ -1948,6 +2009,7 @@ final class Q30DiagnosticAdmissionVerifier {
         }
 
         private void clearCurrentStageReferences() {
+            constructionSession = null;
             proof = null;
             cleanupFailureSession = null;
             receipt = null;

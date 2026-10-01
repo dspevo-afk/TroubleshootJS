@@ -198,7 +198,7 @@ final class Q30ServiceDeveloperVerifier {
                 break;
             case SETTLE_AFTER_OBSERVATION_DISCHARGE:
                 settle("Q30 post-observation discharge");
-                if ("KB".equals(component)) {
+                if (isRelayTarget()) {
                     // E03's five-terminal relay owner supports whole-part service.
                     // Absence of lead service is an explicit capability expectation.
                     require(!sim.pcbWorkbenchController.isAvailable(
@@ -289,12 +289,12 @@ final class Q30ServiceDeveloperVerifier {
                 break;
             case SETTLE_AFTER_SECOND_ORIGINAL_REMOVE:
                 settle("Q30 original removal after retest");
-                stage = "KB".equals(component) ? Stage.WRONG_RELAY_INSTALL :
+                stage = isRelayTarget() ? Stage.WRONG_RELAY_INSTALL :
                     Stage.CORRECT_RELAY_INSTALL;
                 break;
             case WRONG_RELAY_INSTALL:
                 dispatch(WorkbenchOperation.forCatalog(component,
-                    Rb30RelayService.CATALOG_PREFIX + "KB_12V"));
+                    Rb30RelayService.CATALOG_PREFIX + component + "_12V"));
                 stage = Stage.SETTLE_AFTER_WRONG_INSTALL;
                 break;
             case SETTLE_AFTER_WRONG_INSTALL:
@@ -384,8 +384,15 @@ final class Q30ServiceDeveloperVerifier {
                     candidate.getFault().getId() + ":" +
                     candidate.getFault().getTargetComponentId()),
                     "rejected or duplicate hypothesis");
-            require(population.toString().equals(
-                "[DREV_OPEN:DREV, DRIVE_A_OPEN:RDA, RELAY_B_COIL_OPEN:KB, REN_OPEN:REN, SENSOR_A_OPEN:RSA]"),
+            String relay = owner.getBoard().getComponent("KB") == null ? "KA" : "KB";
+            TreeSet<String> expectedPopulation = new TreeSet<String>();
+            expectedPopulation.add("DREV_OPEN:DREV");
+            expectedPopulation.add("DRIVE_A_OPEN:RDA");
+            expectedPopulation.add("RELAY_" + relay.substring(1) +
+                "_COIL_OPEN:" + relay);
+            expectedPopulation.add("REN_OPEN:REN");
+            expectedPopulation.add("SENSOR_A_OPEN:RSA");
+            require(population.equals(expectedPopulation),
                 "five-candidate population changed: " + population);
             GeneratedFaultServiceabilityAdmission.validate(owner,
                 owner.getFaultBinding());
@@ -429,8 +436,11 @@ final class Q30ServiceDeveloperVerifier {
             samples = observationCursor.finish();
             observationCursor = null;
             require(!samples.isEmpty(), "empty diagnostic measurements");
-            require(samples.size() == 37,
-                "expected all 37 production diagnostic observations, got " + samples.size());
+            int channelCount = owner.getBoard().getComponent("JOB") == null ? 1 : 2;
+            int expectedSamples = (7 + channelCount) * (1 << channelCount) + 1;
+            require(samples.size() == expectedSamples,
+                "expected all " + expectedSamples +
+                    " production diagnostic observations, got " + samples.size());
             stage = Stage.CLEAR_INSTRUMENTS;
         }
 
@@ -506,7 +516,7 @@ final class Q30ServiceDeveloperVerifier {
             sim.advanceGeneratedTemporalProfile(.005);
             dischargeSteps++;
             validateCurrent("after-discharge-chunk", true);
-            boolean relayTarget = "KB".equals(component);
+            boolean relayTarget = isRelayTarget();
             boolean discharged = !relayTarget ||
                 Rb30RelayService.isDischarged(owner, component);
             if (dischargeSteps < 20 || relayTarget && !discharged &&
@@ -538,6 +548,10 @@ final class Q30ServiceDeveloperVerifier {
                 "unavailable " + operation.getId());
             require(sim.pcbWorkbenchController.dispatch(operation),
                 "failed " + operation.getId());
+        }
+
+        private boolean isRelayTarget() {
+            return "KA".equals(component) || "KB".equals(component);
         }
 
         private void settle(String description) {
@@ -618,7 +632,7 @@ final class Q30ServiceDeveloperVerifier {
                 .append("\",\"hypotheses\":")
                 .append(owner.getFaultCandidates().size())
                 .append(",\"leadService\":\"")
-                .append("KB".equals(component) ? "NOT_SUPPORTED" : "PASS")
+                .append(isRelayTarget() ? "NOT_SUPPORTED" : "PASS")
                 .append("\"")
                 .append(",\"unrepairedRetest\":false,\"originalRetest\":false,\"repairedRetest\":true,\"elapsedMillis\":")
                 .append(elapsedMillis).append(",\"samples\":[");

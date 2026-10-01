@@ -1,4 +1,159 @@
-# Current checkpoint: Q30 BLOCKED — limited normal-admission screen PASS
+# Current checkpoint: Q30 paused — 77-root cold corpus PASS; release gates pending
+
+2026-10-01. Paused at the user's request for a handoff and saved local checkpoint.
+Active project: the `q30-multirail-qualification/TroubleshootJS` worktree, branch
+`codex/q30-multirail-qualification`; task base
+`8ecaa02b729944d98f82dde56d12d2f4425197ba`. This checkpoint is **not Q30 completion**.
+Q30 remains disabled in the normal catalog. No push or email is authorized or
+performed. U06, U07 and Q60 remain unstarted; Q30 is the next work to resume.
+
+Implemented: plan-4 purposeful 20–40-package variation, one/two-channel electrical,
+diagnostic, service and retest ownership, current `tsj-alpha/4` replay identity,
+expanded independent native fixtures, and an isolated qualification harness.
+Fixed typed rejection of P05-only routes before electrical allocation, preserving
+deterministic retries. Measured solver/matrix-copy and branch-local via/bounds
+optimizations retain CircuitJS truth, routing policy and full proof work. The
+90,000 ms / 640 work / 5,000 ms active-operation limits are unchanged.
+
+**PASS:** all 77 frozen roots in the single fresh r9 cold run, in declared order,
+with application, strict-reader, host-input and cleanup passes. Run completed
+2026-10-01 22:17:16 UTC; host sequence exited 0. Cold elapsed: nearest-rank p50
+56,766 ms, p95 78,103 ms, maximum 82,325 ms (root 42); maximum 536 shared work and
+1,451 ms active operation. Representative 20/30/40 seeds 10387/10226/10014 took
+20,356 / 29,269 / 76,395 ms. These are isolated ordinary-admission results, not
+final enabled-menu or visible player-flow evidence. The
+[checkpoint evidence](task-evidence/Q30/finish/README.md) preserves failed attempts
+alongside the passing run. Normal-player warm population timing is NOT MEASURED.
+
+**PASS:** focused plan/structure/service/sensitivity/identity/policy checks;
+r8 A07 execution, E02 regulator, E04 sensor, Q30 temporal and A03 identity suites;
+r9 P07 (11,677 assertions), routing resumption (2,203) and physical-policy suites;
+actual r9 JDK8 five-permutation GWT build; six compiled authorization, cancellation,
+scope-loss, solver positive/negative and manifest canaries; reader unit tests.
+Independent reviews covered family ownership, solver/copy changes and routing
+snapshot lifecycle; they do not replace the pending final integrated release review.
+
+**NOT RUN / remaining:** final native 78-suite matrix plus 51+26 structural roots
+and 21-by-five service/sensitivity populations; final enabled production build;
+31 compiled gates (including the 21-row D01 cohort); 33 ordinary menu launches and
+three exact replays; visible 20/30/40 diagnosis, repair and retest with screenshots;
+final source/evidence review, acceptance documentation and release commit.
+The staged catalog-enable patch remains unapplied. Preserve its globally registered
+but disabled negative fixture when applying it after the readiness audit.
+
+**Known limits:** earlier revisions retain real timeouts. r4's original wrapper
+misreported its compile failure; the correcting FAIL audit is retained. The first
+focused r9 root-35 reader was invalid because its export-host binding was omitted;
+the corrected binding reuses unchanged application bytes, and the later full77
+run independently passes. The source-attempt archive helper's CRLF repair still
+needs a runtime smoke test and complete reconstruction; its earlier archive is
+invalid. D01 root 35 must remain the specific P05 construction rejection; it is
+not a warm pass. No evidence supports arbitrary-seed or other-hardware guarantees.
+
+Checkpoint diff review: all staged source/docs pass whitespace checks except eight
+single-space blank-context markers in the frozen `baseline.patch` fixture. The
+full check retains those format warnings (exit 2); its unchanged digest is kept,
+not rewritten to silence the check. See `finish/checkpoint-diff-check.json`.
+
+**Resources/preservation:** no owned test, build, browser, preview or profiler
+process is running; all workers have finished before handoff. Retain the task's
+`%LOCALAPPDATA%/Temp/q30-finish-0fa2512465` directory: immutable r1–r9 sources,
+pinned JDK, raw receipts/profiles, catalog patch and resume helpers remain there.
+The older `q30n-765b06f9dd` export is outside cleanup scope. Desktop work and
+unrelated pre-existing Python caches are preserved; do not clean them broadly.
+
+**Resume:** read this checkpoint and the finish packet, audit current source against
+r9 source identity `843411cdfe0a8bb3e8d4100f800ad1e07eab29688f6fb74ddc8de8d2cc9e4690`
+and bound-plan SHA `42348d7db094ca98fbdc15e5d19239532ba557b00752a92278fe9caf34182ae0`,
+then finish the archive and release gates above. Helpers in the retained task temp
+include `run_final_native.ps1`, `run_build.ps1`, `compiled-gate-plan/`,
+`catalog-release-patch/`, `source-attempt-archive/` and `evidence-package/`.
+Do not restart the passing cold corpus without an input change or required fresh gate.
+
+---
+
+# Historical checkpoint: Q30 completion in progress — frozen cold corpus
+
+2026-10-01. Branch `codex/q30-multirail-qualification`, task base HEAD
+`8ecaa02b729944d98f82dde56d12d2f4425197ba`. The user authorized integrating the
+preserved plan-4 scale work, fixing failures, full qualification and eventual
+catalog enablement, followed by local commits only. **Q30 is NOT ACCEPTED and
+remains disabled. Nothing has been pushed or emailed.** U06, U07 and Q60 remain
+unstarted. The original roadmap acceptance and 90,000 ms / 640 work / 5,000 ms
+active limits are unchanged.
+
+The [working packet](task-evidence/Q30/finish/README.md) freezes all 77 plan-4
+roots before evaluation, beginning with seeds 10387/20, 10226/30 and 10014/40.
+Actual compiled Java exported all root plans and 308 prospective candidate
+manifests before the first cold job. Focused structural, service, sensitivity,
+request, normal-policy, diagnostic and catalog-transfer checks PASS; the initial
+unknown-suite invocation is retained as a setup failure. The actual isolated
+JDK8/GWT build and compiled authorization/cancellation/scope-loss canaries PASS.
+Full native and browser matrices remain NOT RUN.
+
+The first ordinary cold jobs passed for 10387/20 (22,283 ms, 276 work) and
+10226/30 (32,657 ms, 274 work). Seed 10014/40 hit TIMEOUT at 90,368 ms / 482
+work during diagnostic hypotheses, with 384 of 390 proof units reached.
+All three application and host cleanup checks passed. A transport terminal
+capture is not an admission pass. The expanded-case profile identified sparse
+LU pivot scanning and repeated per-call routing hole copies. Bounded repairs
+preserve pivot ties, numerical order, physical policy and all proof work.
+Focused native routing, solver/oracle and temporal checks, the actual JDK8/GWT
+build and compiled A07/lifecycle canaries pass. The D01 verifier now advances
+cold/warm construction through the existing family session; fresh seed 10014
+passes full D01 proof/cache/cleanup with zero host attribute-read errors.
+
+The r2 corpus stopped after 12 passing jobs. Its 20/30/40 pilots passed at
+21,023 / 31,351 / 89,685 ms. Root 35 then exposed a P05-only route reported as
+a programming failure. The family now rejects that route before assembly,
+allowing the existing deterministic retry path to run. Native fixtures and
+compiled receipts confirm the corrected rejection and retry; P07 admission is
+unchanged. The 39-package retry candidate remains a measured timing blocker:
+r3 reached 335/390 proof units at 90,579 ms; r5, with the bounded empty-lower LU
+skip, reached 373/390 at 90,479 ms. Cleanup passes, but neither is admission.
+The bulk-copy experiment was removed after its compiled result regressed.
+The r7 candidate also removes repeated routing hole-list copies through the
+layout's protected live ID order and count. Focused P07, resumability, physical
+policy and admission checks, GWT build and six compiled canaries pass. Its
+seed-35 retry still times out at 90,048 ms after 382/390 proof units. The
+remaining 64 frozen roots completed one characterization pass: 63 normal
+passes and one TIMEOUT at root 42, whose first candidate physically rejected
+and whose second reached 387/390 proof units. All 64 host and cleanup checks
+pass. Passing times span 21,412–88,765 ms; this is not a final 77-root corpus.
+The r8 candidate passes five focused native suites, the actual five-permutation
+GWT build and six compiled canaries. Its bounded matrix-copy and solver-loop
+changes still leave root 35 at TIMEOUT: 90,047 ms / 519 shared work, with
+387/390 proof units reached. Application and host cleanup pass. The fresh
+sampled profile preserves another TIMEOUT and identifies 9.384 seconds inside
+via-fit checks, including repeated collection iteration and emulated long edge
+sums. The r9 repair snapshots existing vias and their bounds per route branch,
+after the preceding Publisher has finished, and uses exact double sums for the
+closed copper-overlap predicate. It changes neither route order nor policy.
+Three focused native routing suites, independent source review, the actual
+GWT build and six compiled canaries pass. Focused root 35 completes in 81,882 ms
+with 524 shared work; root 42 completes in 79,747 ms with 536 work. Both complete
+all 390 hypothesis units and pass cleanup. The unchanged r9 build is now running
+the full 77-root cold corpus. No catalog readiness is claimed before that and
+the remaining full gates finish.
+All failed builds, timeouts and host-capture failures are retained. Broader
+qualification awaits the measured repair check; no cold
+population acceptance or final enabled-candidate result is claimed.
+The intended dirty scale implementation is now in scope. Unrelated desktop
+changes are untouched. The obsolete unaccepted manual normal-acceptance debug
+entry was retired; the isolated qualification overlay stays outside shipping
+source. Current worker ownership is disjoint and the root owns final acceptance.
+Task-owned OS-temp workspace `q30-finish-0fa2512465` contains the pinned JDK,
+frozen exports, host dependencies and raw receipts. Each cold host records its
+browser identity and cleanup; profiler processes have been retired. The prior
+inactive `q30n-765b06f9dd` export
+is outside this task's cleanup scope.
+
+Next: complete the frozen corpus and full gates, enable and visibly validate the
+final ordinary-player candidate, independently review, document and commit.
+
+---
+
+# Historical checkpoint: Q30 BLOCKED — limited normal-admission screen PASS
 
 2026-10-01. Branch `codex/q30-multirail-qualification`, task base HEAD
 `5dbde3bbf928a4af4ac79d63a923a97eb4a47f81`. **The authorized isolated harness

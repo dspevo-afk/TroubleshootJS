@@ -43,12 +43,15 @@ class CircuitNode {
     }
 
     void applyVoltage(double value) {
-        for (int i = 0; i < voltageElements.length; i++) {
-            CircuitElm element = voltageElements[i];
+        CircuitElm[] elements = voltageElements;
+        int[] posts = voltagePosts;
+        boolean[] wires = idealWires;
+        for (int i = 0; i < elements.length; i++) {
+            CircuitElm element = elements[i];
             // Exact ideal wires inherit an empty calculateCurrent callback.
             // All other models keep their original voltage setter and order.
-            if (idealWires[i]) element.volts[voltagePosts[i]] = value;
-            else element.setNodeVoltage(voltagePosts[i], value);
+            if (wires[i]) element.volts[posts[i]] = value;
+            else element.setNodeVoltage(posts[i], value);
         }
     }
 }

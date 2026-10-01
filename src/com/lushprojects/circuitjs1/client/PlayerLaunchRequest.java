@@ -2,7 +2,7 @@ package com.lushprojects.circuitjs1.client;
 
 /** Public replay identity. Parsing never normalizes an unknown seed, family or epoch. */
 final class PlayerLaunchRequest {
-    static final String EPOCH = "tsj-alpha/3";
+    static final String EPOCH = "tsj-alpha/4";
     final String familyId;
     final long seed;
     final DifficultyProfile profile;

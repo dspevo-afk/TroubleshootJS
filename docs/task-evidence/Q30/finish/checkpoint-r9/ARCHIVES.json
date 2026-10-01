@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "status": "CHECKPOINT_ONLY_RELEASE_GATES_PENDING",
+  "manifestSha256": "a21d5ef2f1b2d49fb0d5fd693ee5fca98dde32c86e7c837b98cfc6c6bb90a4ae",
+  "artifactCount": 3481,
+  "privacyAudit": "PASS: 3481 manifest artifacts and metadata; compressed text expanded before scanning",
+  "archives": [
+    {
+      "path": "cold-r9-final77.tar.gz",
+      "files": 1387,
+      "bytes": 20788610,
+      "sha256": "a5d89d73efe106f98a69f171e757cd7414e07913d14eb240a048f44ad1754811",
+      "sourceByteComparison": "PASS"
+    },
+    {
+      "path": "retained-attempts.tar.gz",
+      "files": 2097,
+      "bytes": 29028332,
+      "sha256": "f4ebd920b4e80b9459018010c505a4754a9774692479f94196f370a638e2f1a7",
+      "sourceByteComparison": "PASS",
+      "metadataFiles": 3
+    }
+  ]
+}

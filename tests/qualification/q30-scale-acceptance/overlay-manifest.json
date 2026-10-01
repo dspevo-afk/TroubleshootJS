@@ -1,0 +1,14 @@
+{
+  "packageFiles": {
+    "acceptance-plan.json": "1078cb80a13e8fcde2dac6dd1188ee8fa3add3faf6b64a385ed27ed4cc19b749",
+    "baseline.patch": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+    "gwt-jars.json": "7b5232a0c4ab78587dcb0d187293f4901d11adeac22663481f56fee389935c9a",
+    "normal_screen_host.py": "6173c294f38c1cec5274e4b31cc9ee5709dadc307379827db7b117ae9e92ea09",
+    "overlay/src/com/lushprojects/circuitjs1/client/IsolatedGenerationQualification.java": "b9d494cbc4d0ee827283e9e29a3d83eee3eca7f32e59919aaa1ce9fbc2cb6d6e",
+    "overlay/src/com/lushprojects/circuitjs1/client/Q30NormalScreenHarness.java": "24841c7537d70b2136d45d8c7a9911f235f1b8ffe594b6a9511da767d203be66",
+    "overlay/tests/contracts/IsolatedGenerationQualificationContractTest.java": "afd47e797d8a59f1e855034b3e47183ffca085b96df2ba6a0a8cbb54fecc18a9",
+    "prepare.py": "362fc302f3d7b428c3945d1fa2e821879d8162f4f2c7a4a4a5e0921d7afae438"
+  },
+  "schema": 1,
+  "wrapperIdentity": "ce12328b1f78be131f9c67d4f20a8f3a24610436c2a5a9cc415463e76fc8da16"
+}

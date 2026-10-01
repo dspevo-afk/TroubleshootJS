@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "status": "PASS_READ_ONLY_AUDIT",
+  "scope": "Raw JSON hash provenance and exact decoded-manifest/edge-canonical equality; not electrical or normal-admission qualification.",
+  "rawInputs": {
+    "repositoryManifest": {
+      "path": "docs/task-evidence/Q30/scale-plan-4/manifest-proposal.json",
+      "sha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8"
+    },
+    "planExportOracleInput": {
+      "path": "$SCRATCH/scale-plan-reference/manifest-proposal.json",
+      "sha256": "f3676c43d5c65b8d4677884784d3d158b86d79afc323d29d7f06472a981ba57e"
+    },
+    "edgeSelectionPlan": {
+      "path": "scale-edge-focused-plan.json",
+      "sha256": "8f541e153862fcd97775dae20136ae60086705581744292d737afcd89a824569",
+      "manifestSha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8"
+    },
+    "planExportDifferential": {
+      "path": "docs/task-evidence/Q30/scale-plan-4/scale-plan-differential.json",
+      "manifestSha256": "f3676c43d5c65b8d4677884784d3d158b86d79afc323d29d7f06472a981ba57e"
+    },
+    "planExportInputCopy": {
+      "path": "plan-export-input-manifest.json",
+      "sha256": "f3676c43d5c65b8d4677884784d3d158b86d79afc323d29d7f06472a981ba57e"
+    }
+  },
+  "comparison": {
+    "rawManifestBytesEqual": false,
+    "decodedManifestObjectsEqual": true,
+    "orderedSeedCount": 77,
+    "orderedSeedListsEqual": true,
+    "all77ExpectedPlan4CanonicalRowsEqual": true,
+    "edgeRowsMatchRepositoryManifest": true,
+    "edgeRowsMatchExportOracleManifest": true,
+    "interpretation": "The two manifest hashes differ because their raw JSON serializations differ; the decoded JSON objects and all ordered plan canonicals are equal. The edge-plan hash binds the repository proposal bytes; the differential hash binds the exact export-oracle input bytes.",
+    "planExportManifestHashMatchesCopy": true,
+    "copiedExportInputIsByteIdenticalToSource": true
+  },
+  "edgeRows": [
+    {
+      "seed": "10387",
+      "cohort": "Representative",
+      "packageCount": 20,
+      "canonicalSha256": "7be55bf1aecf4f664fa388cefb82f3c98bfa38dc29dc1e52d4d264c4ff36a71e",
+      "canonicalMatchesRepositoryAndExportManifests": true
+    },
+    {
+      "seed": "10014",
+      "cohort": "Representative",
+      "packageCount": 40,
+      "canonicalSha256": "ac514db0e0eeded7891aeee8228d87eb5f9d499cf43ab5cf78b642fd5ff20b77",
+      "canonicalMatchesRepositoryAndExportManifests": true
+    },
+    {
+      "seed": "20364",
+      "cohort": "Held-out",
+      "packageCount": 20,
+      "canonicalSha256": "1b68abd90a92734d5f54d2df72065cb6d668efc516532347d3b4a9d75095c9b5",
+      "canonicalMatchesRepositoryAndExportManifests": true
+    },
+    {
+      "seed": "22",
+      "cohort": "Held-out",
+      "packageCount": 40,
+      "canonicalSha256": "480c289ef4d91e979431055c7706f052777a913bb56814c3cd010037844a9de3",
+      "canonicalMatchesRepositoryAndExportManifests": true
+    }
+  ],
+  "readerBinding": {
+    "strictReader": "check_native_service.validate_plan_export_evidence (also shared by check_corpus)",
+    "manifestArgument": "plan-export-input-manifest.json",
+    "differentialField": "scale-plan-differential.json:manifestSha256",
+    "requiredSha256": "f3676c43d5c65b8d4677884784d3d158b86d79afc323d29d7f06472a981ba57e",
+    "reason": "The strict reader intentionally compares supplied raw manifest bytes; semantically equal but differently serialized manifest-proposal.json has a different hash and must not be supplied for this export receipt."
+  },
+  "copyEvidence": {
+    "source": "$SCRATCH/scale-plan-reference/manifest-proposal.json",
+    "sourceSha256": "f3676c43d5c65b8d4677884784d3d158b86d79afc323d29d7f06472a981ba57e",
+    "destination": "docs/task-evidence/Q30/scale-plan-4/plan-export-input-manifest.json",
+    "destinationSha256": "f3676c43d5c65b8d4677884784d3d158b86d79afc323d29d7f06472a981ba57e",
+    "byteIdentical": true
+  }
+}

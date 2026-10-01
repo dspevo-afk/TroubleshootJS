@@ -1,0 +1,16 @@
+{
+  "cases": [
+    {
+      "name": "plan4-d01-representative-20-10387",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10387",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "timeoutSeconds": 600,
+      "reportAttribute": "data-tsj-q30-d01-report"
+    }
+  ]
+}

@@ -68,8 +68,8 @@ owner restoration permits retry. Timeout, exhaustion, cancellation, stale owners
 programming error and cleanup failure never publish. Difficulty is computed from
 complete current diagnostic/repair evidence. Qualified EASY and composed-MEDIUM
 content is enabled; HARD/PSYCHOTIC and unimplemented family/profile content are
-not made playable by layout policy. Q30's catalog registration is implemented,
-but the bounded 33/35/37-part candidate is not accepted normal-player content.
+not made playable by layout policy. Q30's catalog registration and plan-4
+20–40-part variation are implemented but await normal-player acceptance.
 Historical passes under the rejected 300-second policy do not qualify the
 authorized 90-second production limit.
 
@@ -78,7 +78,7 @@ coordinate result belongs to the exact immutable request. Hypotheses may copy th
 geometry, but create fresh electrical/runtime and proof owners. Geometry is revalidated;
 foreign-request reuse fails before allocation. This geometry cache contains no
 electrical readings or repair proof; D01 proof-value reuse has its own identity
-and fresh-owner validation. Exact replay is tsj-alpha/3; old epochs reject. Dependency interpretation
+and fresh-owner validation. Exact replay is tsj-alpha/4; old epochs reject. Dependency interpretation
 v16 captures admission4/layout13 and the current dump-model v6. Eight entropy
 bytes travel as canonical signed decimal text,
 never through a lossy JavaScript Number.
@@ -194,6 +194,14 @@ The prototype reuses the router's exact per-face obstacle/escape/clearance
 predicates. Bounded A* carries face, direction and transition count, orders ties
 and nets deterministically, charges vias and secondary-face travel, and publishes
 only fully validated private candidates.
+Each branch snapshots the ID-ordered holes and immutable hole bounds after the
+preceding path publisher finishes. The private layout owns the hole map; a branch
+cannot publish holes while it searches, and the next branch reads a fresh census.
+This removes repeated collection walks and bounds allocation from via-fit checks
+without retaining a second geometry owner. Closed copper-overlap checks promote
+each coordinate to double before adding its integer width: these two-int sums
+are exact throughout the full int range, including sums beyond that range, and
+retain the same inclusive edge comparisons as the widened-long oracle.
 
 Limits: two faces, three orders, 250,000 grid cells, 100,000 expansions per branch
 and one million total. Restricted routing allows two transitions per branch and
@@ -344,6 +352,12 @@ use their own scratch. Full finite-input scanning, arithmetic guards, pivot
 selection, tiny-pivot handling and substitution remain unchanged. Zero factors,
 coefficients and finite zero scaling products need no numeric update. This
 reduces work between disconnected tray islands without removing their models.
+Pivot scanning also skips exact zero entries while retaining the later-row tie
+when the entire candidate column is zero, including signed zero.
+An empty lower or upper list performs no trailing update. Nonlinear trial restore
+copies only the reduced prefix of each independently owned original matrix row;
+the pinned GWT array-slice helper retains primitive-array metadata. The original
+matrix remains at its full analysis size and never aliases a mutable trial row.
 `LuFactorizationChecks` retains the original algorithm as an independent JVM/GWT
 oracle for numerically exact factors, pivots and solutions, including late
 pivots, underflow, inversion and failure recovery. Signed-zero bit identity is
@@ -2040,31 +2054,37 @@ and routing seeds, while the normal physical token and full diagnostic proof sti
 gate publication.
 
 The Q30 provider now carries the actual five-candidate fault population.
-`Rb30Behavior` owns sensor operations and the four-condition
+`Rb30Behavior` owns active-channel sensor operations and the two- or four-condition
 customer function recipe; readings come from live CircuitJS endpoints.
-`Rb30DiagnosticProvider` declares 37 DC observations and exact hypothesis
+`Rb30DiagnosticProvider` declares 17 or 37 DC observations and exact hypothesis
 replay using the sealed medium layout. `Rb30Generator` keeps generated resistor
 fault switches separate from component-bound secondary damage paths, so a
 removed original retains its fault while replacement uses the existing
 physical service owners. Scoped relay and decision adapters retain their
 individual slot ownership. Output connectors declare their external load
 harnesses so service construction preserves the actual 180 ohm CircuitJS loads.
+`Rb30Generator` installs `PowerDomainRuntimeCapability` on that same physical
+runtime using the resolved `Rb30PowerDomains` contract, board and power bindings.
+The capability validates current-owner reference and active-measurement readiness;
+FUSED12 remains observation-required whether the optional entry capacitor is
+present or absent. Control and load returns remain separate reference domains.
 Q30's optional relay service predicate checks all five live board pads against
 their local control/load returns and the installed target coil current. It
 retains the strict 50 mV / 1 uA boundaries while allowing isolated upstream
 capacitors to retain charge. The default E03 whole-board discharge predicate
 and instrument energy checks are unchanged. Live repair-status queries only
 observe the current graph; explicit retests and temporal profiles drive the
-complete four-condition recipe. `Q30ServiceDeveloperVerifier` exercises those
+complete active-channel recipe. `Q30ServiceDeveloperVerifier` exercises those
 production observations and workbench operations; it issues no D01 admission
 receipt. `PlayerFamilyCatalog` now catalogs eleven entries: the nine synchronous
 leaf IDs from `QuickPlayFamilyRegistry`, the composed controlled-indicator ID, and
 `RB30_CONTROL`. Its versioned `PLAYER_FAMILY_EXECUTION@1` declaration binds each
 family to its profile, execution policy and physical-admission identity. The
 catalog entry is registration state, not a normal publication receipt; the
-Q30 normal-player entry is disabled. Its 33/35/37-part implementation and
-private qualification remain available; the broader scale and production
-performance claims are not accepted.
+Q30 normal-player entry is disabled. The unaccepted plan-4 candidate supports
+procedural 20–40-package declarations and retains explicit 33/35/37 regression
+fixtures. Structural coverage is distinct from electrical/physical admission
+and normal cold-corpus timing; scale and production performance remain unaccepted.
 
 Normal-medium qualification has a separate `GeneratedPhysicalAdmission` seam.
 `MediumBoardNormalAdmission` binds an accepted bounded P07 route to immutable
@@ -2080,6 +2100,11 @@ schema-2 reports record `registered=true`/`normalCatalogRegistered=true`,
 `normalAdmission=false` and `playerPublished=false`. The current provider uses
 the bounded service-readiness policy described below; the physical owner still
 checks real residual voltage and coil current.
+The D01 verifier advances both cold and warm construction through the registered
+family's `ConstructionSession`, one advance per timer callback. It binds the
+result to the resolved plan identity and abandons unfinished route work on
+failure or cleanup. This keeps long routing work observable without changing
+the construction algorithm or the diagnostic proof and cache contracts.
 
 `StagedFamilyCapability` is the typed family-owned construction boundary.
 `PlayerFamilyCatalog` registers the capability separately from normal-player
@@ -2112,15 +2137,21 @@ start and execution, and owner release clears the callback. The report labels
 this controlled negative separately from the natural population and records
 original geometry, private ownership, retry identity and cleanup.
 
-`Rb30Plan` version 3 independently derives a support arrangement: 33 packages
-without the optional status indicator, the 35-package reference, or 37 packages
-with real 100-nF sensor filters. Each raw sensor input has a real 1-kohm
-pull-down: the declared external source cannot sink feedback current, so this
-path makes LOW physically defined while preserving series sensor isolation.
-Driver, reference, fault and geometry concerns
-remain independent. Filter storage enters the power-domain declarations. The
-reference fixture uses the corrected 35 packages; it is not the whole medium
-support claim.
+`Rb30Plan` version 4 independently selects one or two complete sensor/output
+channels, separate direct, shared direct or shared hysteretic references, and
+functional support: entry capacitance, 5 V/12 V indication, 100-nF sensor filters,
+isolated output indication and a 5 V bleeder. Optional output indicators return
+to the load domain; control return is separate. Every raw sensor input retains
+its 1-kohm pull-down because the external source cannot sink feedback current.
+Named streams isolate channel/reference/support choices from existing driver,
+fault, layout and routing derivations. Over-ceiling support combinations resolve
+through a bounded canonical enumeration of valid flag vectors at minimum Hamming
+distance, with a named tie stream. There are no count-specific seed recipes.
+Absent-channel support bits reject. The resulting package range is 20–40;
+support storage remains declared and FUSED12 stays observation-required even
+without C12. Old 33/35/37 shapes are explicit independent regression fixtures.
+Replay epoch `tsj-alpha/4` identifies the changed interpretation; earlier epochs
+reject before launching or changing a live board.
 
 `RelayDriverProvider` supplies the selected transistor's typed specification
 under its actual component ID. Q30 registers QA/QB before physical ownership
@@ -2136,13 +2167,16 @@ cleanup. The device recipe uses the original 5-us maximum and 50-ps minimum.
 The 25-us trial failed the regulator input envelope and was rejected. This configuration
 enters the temporal dependency. It does not change shared models or work budgets.
 An input restore advances time only when the recipe actually changed that input.
-The temporal recipe v2 declares five profile and five customer-retest work units.
+The temporal recipe v3 declares three profile/retest work units for one channel
+and five for two channels, covering every input condition plus restoration.
 Each cursor unit advances at most one 30-ms observation, with the same synchronous
 callers draining that cursor. It captures the graph, mutation receipt, power,
 external controls, sensor commands and solver settings; stale work cannot restore
 inputs or repower a successor. Private qualification uses normal play's explicit
 customer-retest completion rule. Its complete five-hypothesis D01 declaration is
-390 units; the direct non-explicit proof includes its completion profile (410).
+230 units for one channel or 390 for two; direct non-explicit proof also charges
+the completion profile. All five fault hypotheses remain required. The single
+channel relay hypothesis targets KA; the two-channel hypothesis targets KB.
 A private coordinator measurement entry requires an immutable qualification
 request, debug scope and an active verifier before canceling or changing work.
 It can select a 90–300-second job limit for private measurement while every
@@ -2154,7 +2188,17 @@ predecessor and clears the measurement cache. Reports identify this measurement
 mode and record actual job, route and proof-operation timing separately. These
 reports do not qualify a production deadline or register normal content.
 
-Normal Q30 provider v3 replaces five unconditional discharge waits per hypothesis
+The isolated `tests/qualification/q30-scale-acceptance` package snapshots the
+current source and applies the existing test-only authorization overlay outside
+the checkout. It exports actual Java plan identities and all prospective
+candidates before evaluating the frozen plan-4 corpus. Cold jobs use ordinary
+asynchronous scheduling, a fresh ordinary proof cache and the unchanged normal
+limits. Receipt readers distinguish terminal capture, admission and cleanup.
+The obsolete manually advanced normal-acceptance debug entry is retired; the
+isolated overlay is not part of shipping source or catalog eligibility.
+
+Normal Q30 provider v4 retains the preceding provider's replacement of five
+unconditional discharge waits per hypothesis
 with a generic provider-declared service policy. After power-off settlement,
 five charged units check availability of REMOVE for the exact installed part.
 Only an unavailable operation advances CircuitJS, by at most 50 ms per unit;
@@ -2163,7 +2207,7 @@ physical guard at dispatch. The policy and its limits enter the dependency
 identity; providers without a policy retain their existing proof path. The
 cursor captures current owner, graph, physical part, source controls, solver
 recipe and mutation receipt, and retains failed cleanup for an exact retry.
-After the healthy four-condition proof, the profile drives both sensors LOW
+After the healthy full-input proof, the profile drives all active sensors LOW
 before fault application, then HIGH for fault verification. This establishes a
 real electrical initial state for the regenerative variant: opening RSA after
 it has latched HIGH can otherwise hide the fault at a HIGH-only observation.
@@ -2182,6 +2226,10 @@ session. Medium construction returns between slices through the existing
 generation work boundary, charging every advance without resetting the job clock.
 Candidate order, branch/search budgets, via caps and canonical routing statistics
 remain unchanged; frozen-corpus equality and compiled timing qualify the refactor.
+Via-fit checks use the branch-owned, ID-ordered hole and bounds snapshot described
+above. The next branch refreshes it after the preceding path publisher completes;
+there is no persistent second hole index. Other callers retain the snapshot getter,
+and path-via budget checks use the owner's allocation-free hole count.
 
 `PcbAccessPlanner` requires every escape to reach one shared free channel;
 final compaction preserves access margins and revalidates those constraints.

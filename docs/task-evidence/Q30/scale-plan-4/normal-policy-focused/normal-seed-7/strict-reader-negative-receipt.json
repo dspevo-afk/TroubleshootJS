@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "status": "EXPECTED_REJECTION",
+  "command": "python -B check_normal_acceptance.py <failed-seed-7-report> --seed 7",
+  "exitCode": 2,
+  "stdout": null,
+  "stderr": "FAIL: BLOCKED/FAIL/non-PASS acceptance receipt is rejected\r\n",
+  "reportSha256": "3ddd0923a6b764d92cb9063d819eaf6dc32bb89a6b855539bd80d68404227807",
+  "readerSha256": "82e76c5ce6113c8ac8f7e2d268a14184b17c022d760ba1d1a39a2cbc5227a312"
+}

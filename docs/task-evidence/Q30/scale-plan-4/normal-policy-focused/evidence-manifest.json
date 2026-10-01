@@ -1,0 +1,120 @@
+{
+  "schema": 1,
+  "status": "FAILED_NORMAL_DEADLINE_CLEANUP_PASS",
+  "evidenceOnly": "One private fixture build and one seed-7 normal acceptance failure; no additional cases.",
+  "repositoryAtArchive": {
+    "branch": "codex/q30-multirail-qualification",
+    "head": "d825d0f6df667f470d5a8bcad74f1d607b206cfc"
+  },
+  "sourceFixture": {
+    "snapshotHead": "a57ffc30b04d306daf0355e44d218de4175bb9ea",
+    "copiedInputTreeSha256": "c6796ef5838eadb90a0f19e15f62efcedb800df314156435e6537a86f2db4b9b",
+    "fixtureInputTreeSha256": "cad6b4b5aa5b09a6584c4babbfb9a8c536acf4a9c7dc2b4cca82201eba992a21",
+    "copiedFileCount": 1338,
+    "sourceDeltaCount": 1,
+    "sourceDelta": "PlayerFamilyCatalog.currentRegistration: Q30 staged registration false -> true, private fixture only",
+    "productionCatalogRemainsDisabled": true,
+    "authoritativeSeed7Canonical": "Q30_PLAN_CANONICAL|seed=7|plan=rb30-plan@4;seed=7;topology=RB30_CH2_SHARED_HYSTERETIC_A_BJT_B_BJT;support=C12:true,S5:false,S12:false,filters:3,outputIndicators:1,bleeder5:false;layout=-1194938301906846876;routing=8563653456340676275;physicalPolicy=MEDIUM_BOARD@1;fault=RELAY_B_COIL_OPEN;packages=37;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated",
+    "planExportLogSha256": "28ef0108ed9b123731c6da8ff981c418155a6e94a1df5d51d09e43d42ecc2a36"
+  },
+  "gwtBuild": {
+    "status": "PASS",
+    "exitCode": 0,
+    "elapsedSeconds": 90.1049808,
+    "gate": "maintained JDK8/GWT five-permutation build",
+    "permutations": 5,
+    "receiptSha256": "8f0c31ba1ab885a3da56a99a04b9873b276d495753b8382db4d123fcf2e21018",
+    "rawLogSha256": "7dc6bf27fa063c7e62e8e91f1db8226855c73c22ef0883e0c59ccc05fe09c46c",
+    "sanitizedLogSha256": "75557ff2b4b3edb4146c8b2ccafe793501f9bc8d0e192cbbf2783b7a16357903"
+  },
+  "browserSeed7": {
+    "seed": "7",
+    "packageCount": 37,
+    "cohort": "Representative",
+    "expectedState": "PASS",
+    "observedState": "FAIL:normal",
+    "runnerCaseOutcome": "FAIL",
+    "runnerOperationSeconds": 90.74972730000445,
+    "browserTimedOut": false,
+    "applicationStatus": "FAIL",
+    "failurePhase": "normal",
+    "failure": "java.lang.IllegalStateException: Monotonic normal request elapsed beyond the 90000 ms cumulative budget",
+    "maxJobMillis": 90000,
+    "maxJobSteps": 640,
+    "maxUnitMillis": 5000,
+    "requestElapsedMonotonicMs": 90066.59999999404,
+    "jobOutcome": "TIMEOUT",
+    "jobElapsedMs": 90037,
+    "totalWork": 448,
+    "hypothesisWork": 378,
+    "stageWork": [
+      {
+        "name": "RESOLVE",
+        "work": 1,
+        "elapsedMs": 0
+      },
+      {
+        "name": "HEALTHY",
+        "work": 68,
+        "elapsedMs": 26184
+      },
+      {
+        "name": "PHYSICAL",
+        "work": 1,
+        "elapsedMs": 80
+      },
+      {
+        "name": "HYPOTHESES",
+        "work": 378,
+        "elapsedMs": 61585
+      },
+      {
+        "name": "SYMPTOM",
+        "work": 0,
+        "elapsedMs": 0
+      },
+      {
+        "name": "PUBLISH",
+        "work": 0,
+        "elapsedMs": 0
+      }
+    ],
+    "applicationCleanupComplete": true,
+    "ownerRestored": true,
+    "restored": true,
+    "cleanupPending": false,
+    "normalAcceptancePassed": false,
+    "rawReportSha256": "3ddd0923a6b764d92cb9063d819eaf6dc32bb89a6b855539bd80d68404227807",
+    "rawReportArchiveSha256": "bd453ed77d444043ab52983030ab9f3c8e011e4f06aae2c230e84c84906fbb9d"
+  },
+  "inputAudit": {
+    "status": "PASS",
+    "fileCountBefore": 1525,
+    "fileCountAfter": 1525,
+    "sourceSha256Before": "6f502a53f26834973496a909c314bedbdd0e7ce945fbd917bb62764ccff1d51d",
+    "sourceSha256After": "6f502a53f26834973496a909c314bedbdd0e7ce945fbd917bb62764ccff1d51d",
+    "webSha256Before": "147be027e6a8cc5386ab27d07a9d85560ac4c8ad3013129e9bc9443389b2c584",
+    "webSha256After": "147be027e6a8cc5386ab27d07a9d85560ac4c8ad3013129e9bc9443389b2c584",
+    "beforeManifestSha256": "f13d8a689878ebbdcd58a5565f024e5dd2ff78ebbc7dcb415965cb041e61d82e",
+    "afterManifestSha256": "54b32f2c8d4b0d106398f49857a26f8f45170be4027643a7fcca25e60d25480c"
+  },
+  "hostCleanup": {
+    "status": "PASS",
+    "seconds": 0.8297434999985853,
+    "serverStopped": true,
+    "ownedSurvivorCount": 0,
+    "errors": 0
+  },
+  "strictReaderNegative": {
+    "status": "EXPECTED_REJECTION",
+    "exitCode": 2,
+    "message": "FAIL: BLOCKED/FAIL/non-PASS acceptance receipt is rejected",
+    "reportSha256": "3ddd0923a6b764d92cb9063d819eaf6dc32bb89a6b855539bd80d68404227807",
+    "readerSha256": "82e76c5ce6113c8ac8f7e2d268a14184b17c022d760ba1d1a39a2cbc5227a312"
+  },
+  "rawLocalSourceHashes": {
+    "runnerResultSha256": "9b4b90622e557757110f4367bef612f4858977fc4d4de03700a843c4eb05bca9",
+    "runnerIdentitySha256": "761e389f720e0d8e455c9b7d0fe3a67a5f483a27989122e1f4c8a47cf253a834",
+    "caseReceiptSha256": "4da5c00d271879f4939c94f0c721925641d54ef89b07a9508ab2970fc901e5bc"
+  }
+}

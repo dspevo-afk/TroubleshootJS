@@ -99,6 +99,7 @@ class PcbBoardLayout {
         holes.put(hole.id,hole);
     }
     Vector<PcbBoardHole> getHoles() { return new Vector<PcbBoardHole>(holes.values()); }
+    int getHoleCount() { return holes.size(); }
     PcbConductorGraph captureConductorGraph(TroubleshootBoard board) {
         return PcbConductorBuilder.capture(board,this);
     }

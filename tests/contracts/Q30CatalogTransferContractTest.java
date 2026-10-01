@@ -52,6 +52,8 @@ public final class Q30CatalogTransferContractTest {
         final NativeCatalogCirSim sim = new NativeCatalogCirSim();
         final NativeCapabilityContext capabilityContext =
             new NativeCapabilityContext();
+        final Rb30Plan plan = Rb30Plan.withSupport(SEED,
+            Rb30Plan.SupportVariant.FILTERED_37);
         final CirSim previousSimulator = CircuitElm.sim;
         GeneratedBoardInstance owner;
         PhysicalBoardRuntime runtime;
@@ -91,7 +93,7 @@ public final class Q30CatalogTransferContractTest {
         void run() {
             CircuitElm.sim = sim;
             Q30ServiceFlowContractTest.configureSimulator(sim);
-            owner = new Rb30Generator().generateNormalForQualification(SEED);
+            owner = new Rb30Generator().generateNormalForQualification(plan);
             check(owner.getSeed() == SEED && !owner.isDeveloperOnlyFaultRoute(),
                 "seed-13 fixture is the accepted normal Q30 owner");
             check(owner.getPhysicalBoardRuntime().getPhysicalParts().size() == 37,
@@ -547,7 +549,7 @@ public final class Q30CatalogTransferContractTest {
             E04SensorControlModel.DecisionElement current =
                 ((E04DecisionControlPart) targetOriginal).getElement();
             E04SensorControlModel.Variant differentVariant =
-                Rb30Plan.resolve(SEED).sharedHystereticReference ?
+                plan.sharedHystereticReference() ?
                     E04SensorControlModel.Variant.DIRECT_THRESHOLD :
                     E04SensorControlModel.Variant.HYSTERETIC_REGENERATIVE;
             E04SensorControlModel.RailContract rail =

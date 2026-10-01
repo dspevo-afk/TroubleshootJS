@@ -1,0 +1,32 @@
+{
+  "status": "DECLARED_BEFORE_PHYSICAL_OR_ELECTRICAL_RUNS",
+  "scope": "focused low/high edge canaries, not full scale qualification",
+  "selection": "first exact count in frozen manifest order per representative/held-out cohort",
+  "manifestSha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8",
+  "rows": [
+    {
+      "seed": "10387",
+      "cohort": "Representative",
+      "packageCount": 20,
+      "canonical": "rb30-plan@4;seed=10387;topology=RB30_CH1_SHARED_DIRECT_A_BJT;support=C12:false,S5:false,S12:false,filters:0,outputIndicators:0,bleeder5:false;layout=-3255522771404521770;routing=-6535911948543126759;physicalPolicy=MEDIUM_BOARD@1;fault=RELAY_A_COIL_OPEN;packages=20;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=1;sensors=1-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN);loadReference=isolated"
+    },
+    {
+      "seed": "10014",
+      "cohort": "Representative",
+      "packageCount": 40,
+      "canonical": "rb30-plan@4;seed=10014;topology=RB30_CH2_SEPARATE_DIRECT_A_BJT_B_NMOS;support=C12:false,S5:true,S12:false,filters:1,outputIndicators:3,bleeder5:true;layout=-3262450690658810933;routing=-5851812364560090390;physicalPolicy=MEDIUM_BOARD@1;fault=REN_OPEN;packages=40;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated"
+    },
+    {
+      "seed": "20364",
+      "cohort": "Held-out",
+      "packageCount": 20,
+      "canonical": "rb30-plan@4;seed=20364;topology=RB30_CH1_SHARED_DIRECT_A_BJT;support=C12:false,S5:false,S12:false,filters:0,outputIndicators:0,bleeder5:false;layout=-4299743742600706268;routing=-724539781568242061;physicalPolicy=MEDIUM_BOARD@1;fault=DREV_OPEN;packages=20;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=1;sensors=1-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN);loadReference=isolated"
+    },
+    {
+      "seed": "22",
+      "cohort": "Held-out",
+      "packageCount": 40,
+      "canonical": "rb30-plan@4;seed=22;topology=RB30_CH2_SHARED_HYSTERETIC_A_NMOS_B_BJT;support=C12:true,S5:false,S12:true,filters:3,outputIndicators:2,bleeder5:true;layout=-5405813596696424534;routing=-1869640971445039899;physicalPolicy=MEDIUM_BOARD@1;fault=SENSOR_A_OPEN;packages=40;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated"
+    }
+  ]
+}

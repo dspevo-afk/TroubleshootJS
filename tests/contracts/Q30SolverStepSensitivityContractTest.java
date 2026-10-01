@@ -19,34 +19,15 @@ public final class Q30SolverStepSensitivityContractTest {
     private static final double SAMPLE_SECONDS = .030;
     private static final double SERVICE_WAIT_SECONDS = .050;
     private static final int SERVICE_WAIT_COUNT = 5;
+    private static final double SERVICE_WAIT_FINAL_REQUEST_CUSHION_SECONDS = 2e-12;
     private static final int MAX_RELAY_DISCHARGE_STEPS = 100;
     private static final double RELATIVE_TOLERANCE = .01;
     private static final double ABSOLUTE_TOLERANCE = .01;
-    private static final String[] INPUT_OPERATIONS = {
-        Rb30Behavior.SENSORS_LOW, Rb30Behavior.SENSORS_A_ONLY,
-        Rb30Behavior.SENSORS_B_ONLY, Rb30Behavior.SENSORS_HIGH
-    };
-    private static final boolean[][] EXPECTED_OUTPUTS = {
-        { false, false }, { true, false }, { false, true }, { true, true }
-    };
-    private static final String[][] FAULTS = {
+    private static final String[][] COMMON_FAULTS = {
         { "DREV_OPEN", "DIODE_OPEN", "DREV", "3" },
         { "REN_OPEN", "RESISTOR_OPEN", "REN", "3" },
         { "SENSOR_A_OPEN", "RESISTOR_OPEN", "RSA", "1" },
-        { "DRIVE_A_OPEN", "RESISTOR_OPEN", "RDA", "1" },
-        { "RELAY_B_COIL_OPEN", "RELAY_COIL_OPEN", "KB", "2" }
-    };
-    private static final String[][] SAMPLE_PAIRS = {
-        { "DREV.K", "J1.2" }, { "REN.2", "J1.2" },
-        { "U1.OUTPUT", "J1.2" }, { "RSA.2", "J1.2" },
-        { "RDA.1", "J1.2" }, { "RDA.2", "J1.2" },
-        { "KB.A2", "J1.2" }, { "JOA.1", "JOA.2" },
-        { "JOB.1", "JOB.2" }, { "J1.1", "J1.2" }
-    };
-    private static final String[] SAMPLE_NAMES = {
-        "DREV.K-J1.2", "REN.2-J1.2", "U1.OUTPUT-J1.2", "RSA.2-J1.2",
-        "RDA.1-J1.2", "RDA.2-J1.2", "KB.A2-J1.2", "JOA.1-JOA.2",
-        "JOB.1-JOB.2", "MAIN_12V"
+        { "DRIVE_A_OPEN", "RESISTOR_OPEN", "RDA", "1" }
     };
 
     private static int assertions;
@@ -61,36 +42,107 @@ public final class Q30SolverStepSensitivityContractTest {
             if ((args.length != 2 && args.length != 4) || !"--seed".equals(args[0]) ||
                     (args.length == 4 && !"--fault".equals(args[2])))
                 throw new IllegalArgumentException("Usage: --seed <canonical-signed-long> [--fault " +
-                    "DREV_OPEN|REN_OPEN|SENSOR_A_OPEN|DRIVE_A_OPEN|RELAY_B_COIL_OPEN]");
+                    "DREV_OPEN|REN_OPEN|SENSOR_A_OPEN|DRIVE_A_OPEN|RELAY_A_COIL_OPEN|RELAY_B_COIL_OPEN]");
             seed = Long.parseLong(args[1]);
             if (!Long.toString(seed).equals(args[1]))
                 throw new IllegalArgumentException("Noncanonical Q30 sensitivity seed: " + args[1]);
             if (args.length == 4) {
                 selectedFault = args[3];
-                faultIndex(selectedFault);
+                faultIndex(selectedFault, faultsFor(Rb30Plan.resolve(seed)));
             }
         }
+        Rb30Plan plan = Rb30Plan.resolve(seed);
+        String[][] faults = faultsFor(plan);
         int cases = 0;
         verifySeed(seed, selectedFault);
-        cases = selectedFault == null ? FAULTS.length : 1;
+        cases = selectedFault == null ? faults.length : 1;
         System.out.println("PASS: Q30 production solver step sensitivity assertions=" + assertions +
-            " seed=" + seed + " support=" + Rb30Plan.resolve(seed).supportVariant.name() +
+            " seed=" + seed + " support=" + plan.supportIdentity() +
+            " topology=" + plan.topology() + " canonicalPlan=" + plan.canonical() +
             " faults=" + cases + " referenceMaximumStepSeconds=" + format(REFERENCE_STEP) +
             " productionCandidateMaximumStepSeconds=" +
             format(CANDIDATE_STEP) + " candidateKind=PRODUCTION_5_US" +
             " elapsedMillis=" + elapsedMillis(started));
     }
 
-    private static int faultIndex(String faultId) {
-        for (int index = 0; index < FAULTS.length; index++)
-            if (FAULTS[index][0].equals(faultId)) return index;
+    private static int faultIndex(String faultId, String[][] faults) {
+        for (int index = 0; index < faults.length; index++)
+            if (faults[index][0].equals(faultId)) return index;
         throw new IllegalArgumentException("Unsupported Q30 sensitivity fault: " + faultId);
+    }
+
+    private static String[][] faultsFor(Rb30Plan plan) {
+        int allChannels = (1 << plan.channelCount) - 1;
+        String relay = plan.channelCount == 1 ? "KA" : "KB";
+        String relayFault = plan.channelCount == 1 ?
+            "RELAY_A_COIL_OPEN" : "RELAY_B_COIL_OPEN";
+        String[][] result = new String[5][4];
+        for (int index = 0; index < COMMON_FAULTS.length; index++)
+            result[index] = COMMON_FAULTS[index].clone();
+        result[0][3] = Integer.toString(allChannels);
+        result[1][3] = Integer.toString(allChannels);
+        result[4] = new String[] { relayFault, "RELAY_COIL_OPEN", relay,
+            Integer.toString(1 << (plan.channelCount - 1)) };
+        return result;
+    }
+
+    private static String[] inputOperations(Rb30Plan plan) {
+        return plan.channelCount == 1 ? new String[] {
+            Rb30Behavior.SENSORS_LOW, Rb30Behavior.SENSORS_HIGH } : new String[] {
+            Rb30Behavior.SENSORS_LOW, Rb30Behavior.SENSORS_A_ONLY,
+            Rb30Behavior.SENSORS_B_ONLY, Rb30Behavior.SENSORS_HIGH };
+    }
+
+    private static int[] inputMasks(Rb30Plan plan) {
+        int[] masks = new int[1 << plan.channelCount];
+        for (int index = 0; index < masks.length; index++) masks[index] = index;
+        return masks;
+    }
+
+    private static String[][] samplePairs(Rb30Plan plan) {
+        int channelCount = plan.channelCount;
+        String[][] pairs = new String[7 + channelCount + 1][2];
+        String relay = channelCount == 1 ? "KA" : "KB";
+        String[] fixed = {
+            "DREV.K", "REN.2", "U1.OUTPUT", "RSA.2", "RDA.1", "RDA.2",
+            relay + ".A2"
+        };
+        for (int index = 0; index < fixed.length; index++) {
+            pairs[index][0] = fixed[index];
+            pairs[index][1] = "J1.2";
+        }
+        int output = 7;
+        for (String channel : plan.channels()) {
+            pairs[output][0] = "JO" + channel + ".1";
+            pairs[output++][1] = "JO" + channel + ".2";
+        }
+        pairs[output][0] = "J1.1";
+        pairs[output][1] = "J1.2";
+        return pairs;
+    }
+
+    private static String[] sampleNames(Rb30Plan plan) {
+        String[][] pairs = samplePairs(plan);
+        String[] names = new String[pairs.length];
+        for (int index = 0; index < pairs.length; index++)
+            names[index] = pairs[index][0] + "-" + pairs[index][1];
+        names[names.length - 1] = "MAIN_12V";
+        return names;
+    }
+
+    private static boolean outputOn(int inputMask, int channelIndex) {
+        return (inputMask & (1 << channelIndex)) != 0;
+    }
+
+    private static int observationCount(Rb30Plan plan) {
+        return (7 + plan.channelCount) * (1 << plan.channelCount) + 1;
     }
 
     private static void verifySeed(long seed, String selectedFault) {
         long seedStarted = System.nanoTime();
         CirSim priorGlobalSim = CircuitElm.sim;
         Rb30Plan plan = Rb30Plan.resolve(seed);
+        String[][] faults = faultsFor(plan);
         Vector<OwnerResource> resources = new Vector<OwnerResource>();
         boolean cleanupVerified = false;
         long seedCleanupMillis = 0;
@@ -98,11 +150,11 @@ public final class Q30SolverStepSensitivityContractTest {
             // Route exactly once through the accepted medium policy. The
             // routed DREV owner is also the first fresh solver owner; all
             // other owners receive copies of that sealed accepted layout.
-            SensitivityCirSim routedSim = newSensitivitySim(seed, FAULTS[0][0],
+            SensitivityCirSim routedSim = newSensitivitySim(seed, faults[0][0],
                 REFERENCE_STEP);
             CircuitElm.sim = routedSim;
-            GeneratedFault firstFault = new GeneratedFault(FAULTS[0][0],
-                GeneratedFaultType.valueOf(FAULTS[0][1]), FAULTS[0][2],
+            GeneratedFault firstFault = new GeneratedFault(faults[0][0],
+                GeneratedFaultType.valueOf(faults[0][1]), faults[0][2],
                 Rb30Plan.FAMILY_ID, seed);
             OwnerResource routedDrev = track(resources, new Rb30Generator()
                 .generateForHypothesis(seed, firstFault.getHypothesisKey()), routedSim);
@@ -115,10 +167,10 @@ public final class Q30SolverStepSensitivityContractTest {
 
             Set<CircuitElm> priorElements = new HashSet<CircuitElm>();
             priorElements.addAll(collectOwnerElements(routedDrev.owner, null));
-            int from = selectedFault == null ? 0 : faultIndex(selectedFault);
-            int to = selectedFault == null ? FAULTS.length : from + 1;
+            int from = selectedFault == null ? 0 : faultIndex(selectedFault, faults);
+            int to = selectedFault == null ? faults.length : from + 1;
             for (int fault = from; fault < to; fault++) {
-                String faultId = FAULTS[fault][0];
+                String faultId = faults[fault][0];
                 OwnerResource referenceOwner = fault == 0 ? routedDrev :
                     track(resources, assembleFresh(plan, acceptedLayout, faultId,
                         seed, REFERENCE_STEP));
@@ -139,15 +191,16 @@ public final class Q30SolverStepSensitivityContractTest {
                                 "fresh solver owners have disjoint CircuitJS elements " + faultId);
                 }
 
-                RunResult reference = runOwner(seed, fault, referenceOwner,
+                RunResult reference = runOwner(plan, faults, fault, referenceOwner,
                     REFERENCE_STEP);
-                RunResult candidate = runOwner(seed, fault, candidateOwner,
+                RunResult candidate = runOwner(plan, faults, fault, candidateOwner,
                     CANDIDATE_STEP);
                 require(referenceOwner.cleanupVerified && candidateOwner.cleanupVerified,
                     "both paired owners are disconnected and deleted before comparison");
-                Delta maximum = compare(reference, candidate, faultId);
+                Delta maximum = compare(plan, reference, candidate, faultId);
                 System.out.println("Q30_STEP_PAIR seed=" + seed + " support=" +
-                    plan.supportVariant.name() + " fault=" + faultId +
+                    plan.supportIdentity() + " topology=" + plan.topology() +
+                    " canonicalPlan=" + plan.canonical() + " fault=" + faultId +
                     " referenceMaximumStepSeconds=" + format(REFERENCE_STEP) +
                     " productionCandidateMaximumStepSeconds=" +
                     format(CANDIDATE_STEP) +
@@ -164,7 +217,9 @@ public final class Q30SolverStepSensitivityContractTest {
                     " cleanup=true");
             }
             System.out.println("Q30_STEP_SEED seed=" + seed + " support=" +
-                plan.supportVariant.name() + " referenceMaximumStepSeconds=" +
+                plan.supportIdentity() + " topology=" + plan.topology() +
+                " canonicalPlan=" + plan.canonical() +
+                " referenceMaximumStepSeconds=" +
                 format(REFERENCE_STEP) + " productionCandidateMaximumStepSeconds=" +
                 format(CANDIDATE_STEP) +
                 " candidateKind=PRODUCTION_5_US routeTopology=" + plan.topology() +
@@ -237,8 +292,15 @@ public final class Q30SolverStepSensitivityContractTest {
         return sim;
     }
 
-    private static RunResult runOwner(long seed, int faultIndex,
-            OwnerResource resource, double maxStep) {
+    private static RunResult runOwner(Rb30Plan plan, String[][] faults,
+            int faultIndex, OwnerResource resource, double maxStep) {
+        long seed = plan.seed;
+        String faultId = faults[faultIndex][0];
+        int expectedFaultMask = Integer.parseInt(faults[faultIndex][3]);
+        String[] inputOperations = inputOperations(plan);
+        int[] inputMasks = inputMasks(plan);
+        int samplesPerCondition = 7 + plan.channelCount;
+        int conditionCount = 1 << plan.channelCount;
         final GeneratedBoardInstance owner = resource.owner;
         long started = System.nanoTime();
         final SensitivityCirSim sim = resource.ownerSim;
@@ -271,23 +333,25 @@ public final class Q30SolverStepSensitivityContractTest {
             "owner is configured for declared maximum " + format(maxStep) +
             " s with unchanged minimum and adaptive solver");
         Rb30Behavior behavior = (Rb30Behavior) owner.getFamilyState();
-        Capture capture = new Capture(owner, behavior);
+        Capture capture = new Capture(owner, behavior, plan);
         sim.capture = capture;
         owner.getFaultBinding().setApplied(false);
         recordStepProfileBoundary(sim, "initial-electrical-settle", true);
         settleElectrical(sim, "initial-electrical-settle");
         recordStepProfileBoundary(sim, "initial-electrical-settle", false);
+        verifySupportPresence(owner, plan);
+        sampleFused12(owner, "powered-before-service");
 
         capture.begin("healthy");
         recordStepProfileBoundary(sim, "healthy-preparation", true);
         if (maxStep == PRODUCTION_STEP) {
             behavior.prepareHealthyProfile(sim, owner);
         } else {
-            for (int condition = 0; condition < 4; condition++) {
-                behavior.setInputs(sim, owner, condition);
-                require(behavior.healthy(owner, condition),
+            for (int condition = 0; condition < conditionCount; condition++) {
+                behavior.setInputs(sim, owner, inputMasks[condition]);
+                require(behavior.healthy(owner, inputMasks[condition]),
                     format(maxStep * 1e6) + " us finer-reference healthy condition " +
-                    condition + " passes for " + FAULTS[faultIndex][0]);
+                    condition + " passes for " + faultId);
             }
             behavior.setInputs(sim, owner, 0);
         }
@@ -295,33 +359,36 @@ public final class Q30SolverStepSensitivityContractTest {
         double[] healthy = capture.finish("healthy");
         require(behavior.getInputs() == 0 && behavior.healthy(owner, 0),
             "healthy preparation reaches real LOW before fault application");
-        verifyTruth(healthy, 0, "healthy", FAULTS[faultIndex][0]);
+        verifyTruth(healthy, 0, "healthy", faultId, plan);
 
         owner.getFaultBinding().setApplied(true);
         recordStepProfileBoundary(sim, "fault-profile-preparation", true);
         behavior.prepareFaultedProfile(sim, owner);
         recordStepProfileBoundary(sim, "fault-profile-preparation", false);
-        require(behavior.getInputs() == 3 &&
+        require(behavior.getInputs() == conditionCount - 1 &&
                 behavior.getObservedBehavior() == GeneratedObservedBehavior.RELAY_LOAD_NOT_SWITCHING,
             "fault application produces a measured HIGH-condition symptom");
-        recordStepProfileBoundary(sim, "faulted-four-input-profile", true);
+        recordStepProfileBoundary(sim, "faulted-channel-input-profile", true);
         capture.begin("faulted");
         int symptomMask = 0;
-        for (int condition = 0; condition < 4; condition++) {
+        for (int condition = 0; condition < conditionCount; condition++) {
             GeneratedCustomerRetestResult inputResult = owner.invokeOperation(
-                INPUT_OPERATIONS[condition], sim);
-            require(inputResult == null, "real input operation " + INPUT_OPERATIONS[condition]);
-            double a = Rb30Behavior.voltage(owner, "JOA.1", "JOA.2");
-            double b = Rb30Behavior.voltage(owner, "JOB.1", "JOB.2");
-            if (!matches(a, EXPECTED_OUTPUTS[condition][0])) symptomMask |= 1;
-            if (!matches(b, EXPECTED_OUTPUTS[condition][1])) symptomMask |= 2;
+                inputOperations[condition], sim);
+            require(inputResult == null, "real input operation " + inputOperations[condition]);
+            int channelIndex = 0;
+            for (String channel : plan.channels()) {
+                double output = Rb30Behavior.voltage(owner,
+                    "JO" + channel + ".1", "JO" + channel + ".2");
+                if (!matches(output, outputOn(inputMasks[condition], channelIndex)))
+                    symptomMask |= 1 << channelIndex;
+                channelIndex++;
+            }
         }
         double[] faulted = capture.finish("faulted");
-        recordStepProfileBoundary(sim, "faulted-four-input-profile", false);
-        require(symptomMask == Integer.parseInt(FAULTS[faultIndex][3]),
-            "faulted four-condition truth mask matches independent Q30 oracle");
-        verifyTruth(faulted, Integer.parseInt(FAULTS[faultIndex][3]),
-            "faulted", FAULTS[faultIndex][0]);
+        recordStepProfileBoundary(sim, "faulted-channel-input-profile", false);
+        require(symptomMask == expectedFaultMask,
+            "faulted channel-input truth mask matches independent Q30 oracle");
+        verifyTruth(faulted, expectedFaultMask, "faulted", faultId, plan);
 
         sim.nativeProfilesReady = true;
         recordStepProfileBoundary(sim, "unrepaired-customer-retest", true);
@@ -331,11 +398,11 @@ public final class Q30SolverStepSensitivityContractTest {
         double[] wrongOriginal = capture.finish("wrong-original-retest");
         recordStepProfileBoundary(sim, "unrepaired-customer-retest", false);
         require(unrepaired != null && !unrepaired.isPassed(),
-            "unrepaired actual four-input customer retest fails");
-        verifyTruth(wrongOriginal, Integer.parseInt(FAULTS[faultIndex][3]),
-            "wrong-original-retest", FAULTS[faultIndex][0]);
+            "unrepaired actual active-channel customer retest fails");
+        verifyTruth(wrongOriginal, expectedFaultMask,
+            "wrong-original-retest", faultId, plan);
 
-        String component = FAULTS[faultIndex][2];
+        String component = faults[faultIndex][2];
         PhysicalPart<?> original = runtime.getInstalledPart(component);
         PhysicalSlotMutationProvider service = runtime.getMutationProvider(component);
         String catalogId = owner.getDiagnosticProvider().getCorrectCatalogId(owner, component);
@@ -363,8 +430,8 @@ public final class Q30SolverStepSensitivityContractTest {
         recordStepProfileBoundary(sim, "reinstalled-original-customer-retest", false);
         require(originalRetest != null && !originalRetest.isPassed(),
             "reinstalling the original remains a wrong repair");
-        verifyTruth(originalAfterReinstall, Integer.parseInt(FAULTS[faultIndex][3]),
-            "wrong-original-retest", FAULTS[faultIndex][0]);
+        verifyTruth(originalAfterReinstall, expectedFaultMask,
+            "wrong-original-retest", faultId, plan);
 
         powerOffAndWait250ms(sim, owner, runtime, modifications);
         require(service.removeInstalledPart(), "faulted original can be removed for replacement");
@@ -391,7 +458,7 @@ public final class Q30SolverStepSensitivityContractTest {
         recordStepProfileBoundary(sim, "repaired-customer-retest", false);
         require(repaired != null && repaired.isPassed(),
             "correct physical catalog repair passes actual customer retest");
-        verifyTruth(repairedReadings, 0, "customer-retest", FAULTS[faultIndex][0]);
+        verifyTruth(repairedReadings, 0, "customer-retest", faultId, plan);
         require(expectedLayout.equals(owner.getPcbLayout().geometryFingerprint()) &&
                 expectedPhysical.equals(PhysicalBoardFingerprint.of(owner)),
             "repaired owner retains a sealed routed layout");
@@ -414,31 +481,72 @@ public final class Q30SolverStepSensitivityContractTest {
         if (sim.boardPowerController.getState() != BoardPowerState.UNPOWERED) {
             sim.boardPowerController.setState(BoardPowerState.UNPOWERED);
             runtime.onBoardPowerStateChanged(BoardPowerState.UNPOWERED);
+            sampleFused12(owner, "immediately-after-source-disconnect");
         }
         settleElectrical(sim, "service-power-off-disconnect");
         require(sim.boardPowerController.isElectricallyUnpowered(),
             "all external power is disconnected before service");
         double waitStart = sim.t;
-        for (int step = 0; step < SERVICE_WAIT_COUNT; step++)
-            sim.advanceGeneratedTemporalProfile(SERVICE_WAIT_SECONDS);
+        StringBuilder waitProgress = new StringBuilder();
+        double requestedSeconds = 0;
+        for (int step = 0; step < SERVICE_WAIT_COUNT; step++) {
+            double stepStart = sim.t;
+            double deadline = waitStart + (step + 1) * SERVICE_WAIT_SECONDS;
+            if (step == SERVICE_WAIT_COUNT - 1) {
+                // Request 2 ps past the cumulative endpoint: twice the executor's
+                // existing 1 ps completion tolerance, covering cumulative target
+                // rounding without changing the acceptance epsilon or physics interval.
+                deadline += SERVICE_WAIT_FINAL_REQUEST_CUSHION_SECONDS;
+            }
+            double request = deadline - sim.t;
+            requestedSeconds += request;
+            sim.advanceGeneratedTemporalProfile(request);
+            if (step != 0) waitProgress.append(';');
+            waitProgress.append("step=").append(step + 1)
+                .append(" start=").append(preciseDouble(stepStart))
+                .append(" target=").append(preciseDouble(deadline))
+                .append(" requested=").append(preciseDouble(request))
+                .append(" end=").append(preciseDouble(sim.t))
+                .append(" advanced=").append(preciseDouble(sim.t - stepStart));
+        }
         double elapsed = sim.t - waitStart;
-        require(elapsed >= .250 - 1e-12 &&
-                elapsed <= .250 + SERVICE_WAIT_COUNT * sim.maxTimeStep + 1e-9,
-            "CircuitJS advances at least the declared 250 ms power-off service guard");
-        if ("KB".equals(owner.getFaultLocus().getComponentId())) {
-            if (!Rb30RelayService.isDischarged(owner, "KB")) {
+        double waitUpperBound = .250 + SERVICE_WAIT_COUNT * sim.maxTimeStep + 1e-9;
+        boolean waitElapsedInBounds = elapsed >= .250 - 1e-12 &&
+            elapsed <= .250 + SERVICE_WAIT_COUNT * sim.maxTimeStep + 1e-9;
+        String waitTiming = "start=" + preciseDouble(waitStart) +
+            " end=" + preciseDouble(sim.t) + " elapsed=" + preciseDouble(elapsed) +
+            " elapsedMinus250ms=" + preciseDouble(elapsed - .250) +
+            " requestedSeconds=" + preciseDouble(requestedSeconds) +
+            " nominalSeconds=" + preciseDouble(SERVICE_WAIT_COUNT * SERVICE_WAIT_SECONDS) +
+            " finalRequestCushion=" +
+                preciseDouble(SERVICE_WAIT_FINAL_REQUEST_CUSHION_SECONDS) +
+            " lowerBound=" + preciseDouble(.250 - 1e-12) +
+            " upperBound=" + preciseDouble(waitUpperBound) +
+            " declaredMaximumStep=" + preciseDouble(sim.maxTimeStep) +
+            " currentStep=" + preciseDouble(sim.timeStep) + " calls=[" + waitProgress + "]";
+        System.out.println("Q30_SERVICE_WINDOW seed=" + sensitivitySim.sensitivitySeed +
+            " fault=" + sensitivitySim.sensitivityFault + " role=" +
+            (sameStep(sensitivitySim.sensitivityMaximumStep, PRODUCTION_STEP) ?
+                "PRODUCTION_5_US" : "FINER_2_5_US_REFERENCE") + " " + waitTiming);
+        require(waitElapsedInBounds,
+            "CircuitJS advances at least the declared 250 ms power-off service guard: " +
+                waitTiming);
+        sampleFused12(owner, "after-250ms-service-window");
+        String relay = owner.getFaultLocus().getComponentId();
+        if ("KA".equals(relay) || "KB".equals(relay)) {
+            if (!Rb30RelayService.isDischarged(owner, relay)) {
                 boolean rejected = false;
-                try { runtime.getMutationProvider("KB").removeInstalledPart(); }
+                try { runtime.getMutationProvider(relay).removeInstalledPart(); }
                 catch (BoardModificationRejectedException expected) { rejected = true; }
-                require(rejected && runtime.getInstalledPart("KB") != null,
+                require(rejected && runtime.getInstalledPart(relay) != null,
                     "residual target energy blocks the relay mutation after 250 ms");
                 int extra = 0;
-                while (!Rb30RelayService.isDischarged(owner, "KB") &&
+                while (!Rb30RelayService.isDischarged(owner, relay) &&
                         extra < MAX_RELAY_DISCHARGE_STEPS) {
                     sim.advanceGeneratedTemporalProfile(SERVICE_WAIT_SECONDS);
                     extra++;
                 }
-                require(Rb30RelayService.isDischarged(owner, "KB"),
+                require(Rb30RelayService.isDischarged(owner, relay),
                     "real relay pins and coil reach the scoped service threshold");
             }
         }
@@ -491,6 +599,42 @@ public final class Q30SolverStepSensitivityContractTest {
         }
         settleElectrical(sim, "service-power-on-reconnect");
         verifySettledOwner(sim, owner, modifications);
+    }
+
+    private static void verifySupportPresence(GeneratedBoardInstance owner,
+            Rb30Plan plan) {
+        PhysicalBoardRuntime runtime = owner.getPhysicalBoardRuntime();
+        require((runtime.getInstalledPart("C12") != null) == plan.hasEntryCapacitor,
+            "C12 physical presence matches the procedural support plan");
+        PhysicalBoardRuntimeCapability capability = runtime.getCapability(
+            PowerDomainRuntimeCapability.CAPABILITY_ID);
+        require(capability instanceof PowerDomainContractProvider,
+            "real Q30 power-domain observation contract is installed");
+        if (capability instanceof PowerDomainContractProvider) {
+            PowerDomainContract contract = ((PowerDomainContractProvider) capability).getContract();
+            PowerDomainContract.Rail fused12 = contract.getRails().get("FUSED12");
+            require(fused12 != null && fused12.getStorageRequirement() ==
+                    PowerDomainContract.StorageRequirement.OBSERVATION_REQUIRED,
+                "FUSED12 stays observation-required when optional C12 is absent");
+        }
+        for (String channel : plan.channels()) {
+            require((runtime.getInstalledPart("LEDOUT_" + channel) != null) ==
+                    plan.hasOutputIndicator(channel),
+                "output indicator population follows plan flags for " + channel);
+            if (plan.hasOutputIndicator(channel))
+                require(Math.abs(Rb30Behavior.voltage(owner,
+                        "LEDOUT_" + channel + ".K", "JLOAD.2")) <= .05,
+                    "output LED cathode follows the real down-channel LOAD_RETURN for " + channel);
+        }
+    }
+
+    private static void sampleFused12(GeneratedBoardInstance owner, String phase) {
+        double value = Rb30Behavior.voltage(owner, "DREV.A", "J1.2");
+        require(finite(value), "actual bound FUSED12 endpoint is finite at " + phase);
+        System.out.println("Q30_STEP_FUSED12 seed=" + owner.getSeed() +
+            " phase=" + phase + " c12=" +
+            (owner.getPhysicalBoardRuntime().getInstalledPart("C12") != null) +
+            " volts=" + format(value) + " storage=OBSERVATION_REQUIRED");
     }
 
     private static void settleMutation(CirSim sim, GeneratedBoardInstance owner,
@@ -680,7 +824,9 @@ public final class Q30SolverStepSensitivityContractTest {
                 "stable board-probe endpoint survives service: " + pad);
     }
 
-    private static Delta compare(RunResult reference, RunResult candidate, String fault) {
+    private static Delta compare(Rb30Plan plan, RunResult reference,
+            RunResult candidate, String fault) {
+        int count = observationCount(plan);
         String[] phases = { "healthy", "faulted", "wrong-original-retest", "customer-retest" };
         double[][] left = { reference.healthy, reference.faulted,
             reference.wrongOriginal, reference.repaired };
@@ -688,9 +834,10 @@ public final class Q30SolverStepSensitivityContractTest {
             candidate.wrongOriginal, candidate.repaired };
         Delta maximum = new Delta();
         for (int phase = 0; phase < phases.length; phase++) {
-            require(left[phase].length == 37 && right[phase].length == 37,
-                phases[phase] + " contains exactly 37 real D01 readings");
-            for (int index = 0; index < 37; index++) {
+            require(left[phase].length == count && right[phase].length == count,
+                phases[phase] + " contains exactly " + count +
+                    " plan-shaped real D01 readings");
+            for (int index = 0; index < count; index++) {
                 double a = left[phase][index], b = right[phase][index];
                 require(finite(a) && finite(b), "finite paired " + phases[phase] +
                     " sample " + index + " for " + fault);
@@ -699,13 +846,13 @@ public final class Q30SolverStepSensitivityContractTest {
                 double delta = Math.abs(a - b);
                 require(delta <= tolerance,
                     "2.5 us reference and 5 us production candidate agree within 0.01 V + 1% at " +
-                    phases[phase] + "/" + sampleName(index) + " delta=" + delta +
+                    phases[phase] + "/" + sampleName(index, plan) + " delta=" + delta +
                     " tolerance=" + tolerance + " fault=" + fault);
                 if (delta > maximum.delta) {
                     maximum.delta = delta;
                     maximum.tolerance = tolerance;
                     maximum.phase = phases[phase];
-                    maximum.sample = sampleName(index);
+                    maximum.sample = sampleName(index, plan);
                 }
             }
         }
@@ -713,11 +860,16 @@ public final class Q30SolverStepSensitivityContractTest {
     }
 
     private static void verifyTruth(double[] readings, int expectedMask,
-            String phase, String fault) {
-        require(readings.length == 37, phase + " retains all 37 diagnostic readings");
+            String phase, String fault, Rb30Plan plan) {
+        int channelCount = plan.channelCount;
+        int stride = 7 + channelCount;
+        int conditionCount = 1 << channelCount;
+        int[] masks = inputMasks(plan);
+        require(readings.length == observationCount(plan), phase +
+            " retains all " + observationCount(plan) + " plan-shaped diagnostic readings");
         int actualMask = 0;
-        for (int condition = 0; condition < 4; condition++) {
-            int offset = condition * 9;
+        for (int condition = 0; condition < conditionCount; condition++) {
+            int offset = condition * stride;
             double rail = readings[offset + 2];
             require(finite(rail), phase + " has a finite measured 5 V rail at input " +
                 condition + " fault=" + fault);
@@ -725,21 +877,37 @@ public final class Q30SolverStepSensitivityContractTest {
                 require(rail >= 4.75 && rail <= 5.25,
                     phase + " measured 5 V rail is in bounds at input " + condition +
                     " fault=" + fault);
-            double a = readings[offset + 7], b = readings[offset + 8];
-            if (!matches(a, EXPECTED_OUTPUTS[condition][0])) actualMask |= 1;
-            if (!matches(b, EXPECTED_OUTPUTS[condition][1])) actualMask |= 2;
+            for (int channel = 0; channel < channelCount; channel++)
+                if (!matches(readings[offset + 7 + channel],
+                        outputOn(masks[condition], channel)))
+                    actualMask |= 1 << channel;
         }
         require(actualMask == expectedMask, phase + " has independently expected output mask " +
             expectedMask + " (actual " + actualMask + ") for " + fault);
-        require(matches(readings[36], true), phase + " retains a real main 12 V reading");
+        if (channelCount == 2 && plan.referenceArrangement ==
+                Rb30Plan.ReferenceArrangement.SHARED_DIRECT &&
+                ("healthy".equals(phase) || "customer-retest".equals(phase))) {
+            int aOnly = stride;
+            int bOnly = stride * 2;
+            require(matches(readings[aOnly + 7], true) &&
+                    matches(readings[aOnly + 8], false) &&
+                    matches(readings[bOnly + 7], false) &&
+                    matches(readings[bOnly + 8], true),
+                phase + " proves shared-direct A-only and B-only outputs remain uncoupled");
+        }
+        require(matches(readings[conditionCount * stride], true),
+            phase + " retains a real main 12 V reading");
         for (int index = 0; index < readings.length; index++)
             require(finite(readings[index]), phase + " has finite real sample " +
-                sampleName(index) + " fault=" + fault);
+                sampleName(index, plan) + " fault=" + fault);
     }
 
-    private static String sampleName(int index) {
-        return index == 36 ? SAMPLE_NAMES[9] :
-            INPUT_OPERATIONS[index / 9] + "/" + SAMPLE_NAMES[index % 9];
+    private static String sampleName(int index, Rb30Plan plan) {
+        String[] names = sampleNames(plan);
+        int stride = 7 + plan.channelCount;
+        int conditionCount = 1 << plan.channelCount;
+        if (index == conditionCount * stride) return names[names.length - 1];
+        return inputOperations(plan)[index / stride] + "/" + names[index % stride];
     }
 
     private static boolean matches(double volts, boolean on) {
@@ -764,16 +932,29 @@ public final class Q30SolverStepSensitivityContractTest {
         return String.format(java.util.Locale.ROOT, "%.9g", value);
     }
 
+    private static String preciseDouble(double value) {
+        return Double.toString(value);
+    }
+
     private static final class Capture {
         private final GeneratedBoardInstance owner;
         private final Rb30Behavior behavior;
+        private final Rb30Plan plan;
+        private final String[][] pairs;
+        private final int samplesPerCondition;
+        private final int conditionCount;
         private String phase;
         private int capturedConditions;
-        private final double[] readings = new double[37];
+        private final double[] readings;
 
-        Capture(GeneratedBoardInstance owner, Rb30Behavior behavior) {
+        Capture(GeneratedBoardInstance owner, Rb30Behavior behavior, Rb30Plan plan) {
             this.owner = owner;
             this.behavior = behavior;
+            this.plan = plan;
+            pairs = samplePairs(plan);
+            samplesPerCondition = 7 + plan.channelCount;
+            conditionCount = 1 << plan.channelCount;
+            readings = new double[observationCount(plan)];
         }
 
         void begin(String name) {
@@ -784,24 +965,25 @@ public final class Q30SolverStepSensitivityContractTest {
 
         void afterAdvance(SensitivityCirSim sim, double seconds) {
             if (phase == null || Math.abs(seconds - SAMPLE_SECONDS) > 1e-12 ||
-                    capturedConditions >= 4) return;
+                    capturedConditions >= conditionCount) return;
             int expectedInput = capturedConditions;
             require(behavior.getInputs() == expectedInput,
                 phase + " captures the actual requested condition " + expectedInput);
-            int offset = capturedConditions * 9;
-            for (int sample = 0; sample < 9; sample++)
+            int offset = capturedConditions * samplesPerCondition;
+            for (int sample = 0; sample < samplesPerCondition; sample++)
                 readings[offset + sample] = Rb30Behavior.voltage(owner,
-                    SAMPLE_PAIRS[sample][0], SAMPLE_PAIRS[sample][1]);
+                    pairs[sample][0], pairs[sample][1]);
             capturedConditions++;
         }
 
         double[] finish(String expectedPhase) {
             if (phase == null || !phase.equals(expectedPhase))
                 throw new IllegalStateException("Unexpected Q30 sample phase");
-            require(capturedConditions == 4,
-                phase + " captures four distinct real 30 ms input settlements");
-            readings[36] = Rb30Behavior.voltage(owner,
-                SAMPLE_PAIRS[9][0], SAMPLE_PAIRS[9][1]);
+            require(capturedConditions == conditionCount,
+                phase + " captures " + conditionCount +
+                    " distinct real 30 ms input settlements");
+            readings[conditionCount * samplesPerCondition] = Rb30Behavior.voltage(owner,
+                pairs[pairs.length - 1][0], pairs[pairs.length - 1][1]);
             phase = null;
             return readings.clone();
         }
@@ -894,6 +1076,7 @@ public final class Q30SolverStepSensitivityContractTest {
             double sensorACommand = Double.NaN;
             double sensorBCommand = Double.NaN;
             int inputCommands = -1;
+            boolean hasChannelB = false;
             StringBuilder diagnosticFailures = new StringBuilder();
             try {
                 GeneratedBoardInstance owner = getGeneratedBoardInstance();
@@ -912,15 +1095,18 @@ public final class Q30SolverStepSensitivityContractTest {
                         "J1.2", diagnosticFailures);
                     outputAToOutputAReturn = diagnosticVoltage(owner, "JOA.1",
                         "JOA.2", diagnosticFailures);
-                    outputBToOutputBReturn = diagnosticVoltage(owner, "JOB.1",
-                        "JOB.2", diagnosticFailures);
+                    hasChannelB = Rb30Plan.resolve(owner.getSeed()).channelCount == 2;
+                    if (hasChannelB)
+                        outputBToOutputBReturn = diagnosticVoltage(owner, "JOB.1",
+                            "JOB.2", diagnosticFailures);
                     try {
                         if (owner.getFamilyState() instanceof Rb30Behavior)
                             inputCommands = ((Rb30Behavior) owner.getFamilyState()).getInputs();
                         sensorACommand = diagnosticSensorCommand(owner, "SENSOR_A",
                             diagnosticFailures);
-                        sensorBCommand = diagnosticSensorCommand(owner, "SENSOR_B",
-                            diagnosticFailures);
+                        if (hasChannelB)
+                            sensorBCommand = diagnosticSensorCommand(owner, "SENSOR_B",
+                                diagnosticFailures);
                         PhysicalPart<?> regulatorPart = owner.getPhysicalBoardRuntime()
                             .getInstalledPart("U1");
                         if (regulatorPart != null &&
@@ -964,7 +1150,9 @@ public final class Q30SolverStepSensitivityContractTest {
                 " adaptive=" + adjustTimeStep +
                 " commandedInputs=" + inputCommands +
                 " SENSOR_A_maxVoltage_V=" + format(sensorACommand) +
-                " SENSOR_B_maxVoltage_V=" + format(sensorBCommand) +
+                " SENSOR_B_maxVoltage_V=" +
+                    (hasChannelB ?
+                        format(sensorBCommand) : "not-applicable") +
                 " U1_INPUT_to_U1_RETURN_V=" + format(inputToReturn) +
                 " U1_INPUT_to_J1_2_V=" + format(inputToMainReturn) +
                 " U1_OUTPUT_to_U1_RETURN_V=" + format(outputToReturn) +
@@ -972,7 +1160,9 @@ public final class Q30SolverStepSensitivityContractTest {
                 " U1_RETURN_to_J1_2_V=" + format(regulatorReturnToMainReturn) +
                 " J1_1_to_J1_2_V=" + format(mainSupplyToMainReturn) +
                 " JOA_1_to_JOA_2_V=" + format(outputAToOutputAReturn) +
-                " JOB_1_to_JOB_2_V=" + format(outputBToOutputBReturn) +
+                " JOB_1_to_JOB_2_V=" +
+                    (hasChannelB ?
+                        format(outputBToOutputBReturn) : "not-applicable") +
                 " regulatorModelInput_V=" + format(modelInput) +
                 " E02_maximumInput_V=" + format(contractMaximumInput) +
                 " stopMessage=" + (stopMessage == null ? "none" : stopMessage) +

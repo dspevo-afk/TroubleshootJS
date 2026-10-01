@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "seed": "10387",
+  "packageCount": 20,
+  "readers": [
+    {
+      "reader": "docs/task-evidence/Q30/scale-plan-4/check_d01.py",
+      "readerSha256": "f58847541571cdf829835d05c200bac6ea0079dab065d90ebdf7f44914241929",
+      "command": "python -B <reader> <ARCHIVE>/assembled-wrapper.json --seeds 10387 --require-warm",
+      "inputWrapperSha256": "a9a11a8f4f999414badda1c07ba0c6ac8cb6cc6797a352ffe1c6934b871a1acb",
+      "exitCode": 0,
+      "stdoutFile": "reader-cold-warm.stdout.txt",
+      "stdout": "PASS: current plan@4/provider@4 genuine cold+warm Q30 D01 seeds=1 pairs=10; player gates separate",
+      "stdoutSha256": "65b57ab3e1817fe6bc91e820da8f26e630685be7bb59e6e411f4d09f77d4bac0"
+    },
+    {
+      "reader": "docs/task-evidence/Q30/scale-plan-4/check_d01_canaries.py",
+      "readerSha256": "bf2dd4d21850c0d6d865d9ca24a69246981955dc248195ecaf7721419710bd2e",
+      "command": "python -B <reader> <ARCHIVE>/assembled-wrapper.json --seeds 10387",
+      "inputWrapperSha256": "a9a11a8f4f999414badda1c07ba0c6ac8cb6cc6797a352ffe1c6934b871a1acb",
+      "exitCode": 0,
+      "stdoutFile": "reader-canaries.stdout.txt",
+      "stdout": "PASS: PLAN@4/PROVIDER@4: baseline pairs=10; corrupted-receipt rejection canaries=64; schema-bound catalog claim flip=PASS; power-contract synthetic canaries=7 PASS",
+      "stdoutSha256": "0fd3339131267f2151ad79becbe4662fe29eccc3b16bb2721de79df8cb28b140"
+    }
+  ]
+}

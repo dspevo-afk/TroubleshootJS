@@ -371,7 +371,10 @@ final class PcbConductorBuilder {
         PcbCoordinateSystem.requireBoardRectangle(r); return r;
     }
     static boolean touch(Rectangle a, Rectangle b) {
-        return (long)a.x+a.width >= b.x && (long)b.x+b.width >= a.x &&
-            (long)a.y+a.height >= b.y && (long)b.y+b.height >= a.y;
+        // Each edge is a sum of two ints, hence exactly representable as a
+        // double even beyond the int range. Avoid GWT's emulated long objects
+        // in this hot predicate without changing closed-edge comparisons.
+        return (double)a.x+a.width >= b.x && (double)b.x+b.width >= a.x &&
+            (double)a.y+a.height >= b.y && (double)b.y+b.height >= a.y;
     }
 }

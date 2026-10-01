@@ -17,13 +17,21 @@ final class Rb30Generator {
             this.id = id; this.type = type; this.owner = owner;
         }
     }
-    private static final FaultDescriptor[] FAULT_DESCRIPTORS = {
-        new FaultDescriptor("DREV_OPEN", GeneratedFaultType.DIODE_OPEN, "DREV"),
-        new FaultDescriptor("REN_OPEN", GeneratedFaultType.RESISTOR_OPEN, "REN"),
-        new FaultDescriptor("SENSOR_A_OPEN", GeneratedFaultType.RESISTOR_OPEN, "RSA"),
-        new FaultDescriptor("DRIVE_A_OPEN", GeneratedFaultType.RESISTOR_OPEN, "RDA"),
-        new FaultDescriptor("RELAY_B_COIL_OPEN", GeneratedFaultType.RELAY_COIL_OPEN, "KB")
-    };
+    private static Vector<FaultDescriptor> faultDescriptors(Rb30Plan plan) {
+        String channel = plan.channelCount == 1 ? "A" : "B";
+        Vector<FaultDescriptor> descriptors = new Vector<FaultDescriptor>();
+        descriptors.add(new FaultDescriptor("DREV_OPEN",
+            GeneratedFaultType.DIODE_OPEN, "DREV"));
+        descriptors.add(new FaultDescriptor("REN_OPEN",
+            GeneratedFaultType.RESISTOR_OPEN, "REN"));
+        descriptors.add(new FaultDescriptor("SENSOR_A_OPEN",
+            GeneratedFaultType.RESISTOR_OPEN, "RSA"));
+        descriptors.add(new FaultDescriptor("DRIVE_A_OPEN",
+            GeneratedFaultType.RESISTOR_OPEN, "RDA"));
+        descriptors.add(new FaultDescriptor("RELAY_" + channel +
+            "_COIL_OPEN", GeneratedFaultType.RELAY_COIL_OPEN, "K" + channel));
+        return descriptors;
+    }
 
     static final class Candidate {
         final Rb30Plan plan;
@@ -39,32 +47,38 @@ final class Rb30Generator {
         final Vector<CircuitElm> internalSupport;
         final Vector<WireElm> netInterconnect;
         final Map<String, CircuitElm> backing;
+        final Map<String, E04SensorControlModel.DecisionElement> decisions;
+        final Map<String, ServiceRelayElm> relays;
+        final Map<String, Rb30RelayService> relayServices;
+        final Map<String, Rb30DecisionService> decisionServices;
 
         Candidate(Rb30Plan plan, RelayOutputGenerator.Assembly assembly,
                 PhysicalBoardRuntime runtime, LinearRegulatorElm regulator,
-                E04SensorControlModel.DecisionElement decisionA,
-                E04SensorControlModel.DecisionElement decisionB,
-                ServiceRelayElm relayA, ServiceRelayElm relayB,
-                Rb30RelayService relayServiceA,
-                Rb30RelayService relayServiceB,
-                Rb30DecisionService serviceA, Rb30DecisionService serviceB,
                 Vector<GeneratedFaultCandidate> faultCandidates,
                 GeneratedFaultBinding selectedFault,
                 Vector<CircuitElm> internalSupport,
                 Vector<WireElm> netInterconnect,
-                Map<String, CircuitElm> backing) {
+                Map<String, CircuitElm> backing,
+                Map<String, E04SensorControlModel.DecisionElement> decisions,
+                Map<String, ServiceRelayElm> relays,
+                Map<String, Rb30RelayService> relayServices,
+                Map<String, Rb30DecisionService> decisionServices) {
             this.plan = plan;
             this.assembly = assembly;
             this.runtime = runtime;
             this.regulator = regulator;
-            this.decisionA = decisionA;
-            this.decisionB = decisionB;
-            this.relayA = relayA;
-            this.relayB = relayB;
-            this.relayServiceA = relayServiceA;
-            this.relayServiceB = relayServiceB;
-            this.serviceA = serviceA;
-            this.serviceB = serviceB;
+            this.decisions = decisions;
+            this.relays = relays;
+            this.relayServices = relayServices;
+            this.decisionServices = decisionServices;
+            this.decisionA = decisions.get("A");
+            this.decisionB = decisions.get("B");
+            this.relayA = relays.get("A");
+            this.relayB = relays.get("B");
+            this.relayServiceA = relayServices.get("A");
+            this.relayServiceB = relayServices.get("B");
+            this.serviceA = decisionServices.get("A");
+            this.serviceB = decisionServices.get("B");
             this.faultCandidates = faultCandidates;
             this.selectedFault = selectedFault;
             this.internalSupport = internalSupport;
@@ -74,6 +88,16 @@ final class Rb30Generator {
 
         TroubleshootBoard board() { return assembly.board; }
         Vector<CircuitElm> elements() { return assembly.elements; }
+        E04SensorControlModel.DecisionElement decision(String channel) {
+            return decisions.get(channel);
+        }
+        ServiceRelayElm relay(String channel) { return relays.get(channel); }
+        Rb30RelayService relayService(String channel) {
+            return relayServices.get(channel);
+        }
+        Rb30DecisionService decisionService(String channel) {
+            return decisionServices.get(channel);
+        }
     }
 
     private RelayOutputGenerator.Assembly a;
@@ -98,7 +122,7 @@ final class Rb30Generator {
         if (plan == null) throw new IllegalArgumentException("Missing Q30 plan");
         selectedFaultId = requestedFaultId == null || requestedFaultId.length() == 0 ?
             plan.selectedFault : requestedFaultId;
-        if (!isFaultId(selectedFaultId))
+        if (!isFaultId(selectedFaultId, plan))
             throw new IllegalArgumentException("Unknown Q30 fault hypothesis: " + selectedFaultId);
         if (constructionStarted)
             throw new IllegalStateException("Each Q30 generator owns one candidate construction");
@@ -108,8 +132,9 @@ final class Rb30Generator {
             a.net(net, a.board.getNet(net).getRoutingRole());
 
         source("J1", "MAIN12", 12, "RAW12", "CTRL_RETURN");
-        source("JSA", "SENSOR_A", 5, "A_RAW", "CTRL_RETURN");
-        source("JSB", "SENSOR_B", 5, "B_RAW", "CTRL_RETURN");
+        for (String channel : plan.channels())
+            source("JS" + channel, "SENSOR_" + channel, 5,
+                channel + "_RAW", "CTRL_RETURN");
         source("JLOAD", "LOAD12", 12, "LOAD12", "LOAD_RETURN");
         Point returned = a.nets.get("CTRL_RETURN");
         GroundElm ground = new GroundElm(returned.x, returned.y);
@@ -122,7 +147,8 @@ final class Rb30Generator {
         two("F1", fuse, "RAW12", "FUSED12");
         diode("DREV", "FUSED12", "RAIL12");
         reverseOpen = installReverseOpenPath(selectedFaultId.equals("DREV_OPEN"));
-        capacitor("C12", 1e-6, "FUSED12", "CTRL_RETURN");
+        if (plan.hasEntryCapacitor)
+            capacitor("C12", 1e-6, "FUSED12", "CTRL_RETURN");
         capacitor("CIN", 2.2e-5, "RAIL12", "CTRL_RETURN");
 
         RailRegulationContract rail = RailRegulationContract.linear5V();
@@ -133,33 +159,40 @@ final class Rb30Generator {
         RegulatorPhysicalMapping.mapComponentTerminals(a.board, "U1", regulator);
         resistor("REN", 10000, "RAIL12", "EN5");
         capacitor("C5", 1e-6, "RAIL5", "CTRL_RETURN");
+        if (plan.hasFiveVoltBleeder)
+            resistor("RBLEED5", 100000, "RAIL5", "CTRL_RETURN");
 
         E04SensorControlModel.RailContract decisionRail =
             E04SensorControlModel.adaptE02Rail(rail);
-        E04SensorControlModel.Variant variant = plan.sharedHystereticReference ?
+        E04SensorControlModel.Variant variant = plan.sharedHystereticReference() ?
             E04SensorControlModel.Variant.HYSTERETIC_REGENERATIVE :
             E04SensorControlModel.Variant.DIRECT_THRESHOLD;
         E04SensorControlModel.Configuration config =
             E04SensorControlModel.Configuration.defaults(decisionRail);
-        E04SensorControlModel.DecisionElement decisionA =
-            decision("A", variant, decisionRail, config);
-        E04SensorControlModel.DecisionElement decisionB =
-            decision("B", variant, decisionRail, config);
-        resistor("RSA", 10000, "A_RAW", "A_SENSE");
-        resistor("RSB", 10000, "B_RAW", "B_SENSE");
-        resistor("RPIN_A", 1000, "A_RAW", "CTRL_RETURN");
-        resistor("RPIN_B", 1000, "B_RAW", "CTRL_RETURN");
-        if (plan.hasSensorInputFilters()) {
-            capacitor("CFLT_A", 100e-9, "A_SENSE", "CTRL_RETURN");
-            capacitor("CFLT_B", 100e-9, "B_SENSE", "CTRL_RETURN");
+        TreeMap<String, E04SensorControlModel.DecisionElement> decisions =
+            new TreeMap<String, E04SensorControlModel.DecisionElement>();
+        for (String channel : plan.channels()) {
+            decisions.put(channel, decision(channel, variant, decisionRail, config));
+            resistor("RS" + channel, 10000,
+                channel + "_RAW", channel + "_SENSE");
+            resistor("RPIN_" + channel, 1000,
+                channel + "_RAW", "CTRL_RETURN");
+            if (plan.hasSensorInputFilter(channel))
+                capacitor("CFLT_" + channel, 100e-9,
+                    channel + "_SENSE", "CTRL_RETURN");
         }
-        if (plan.sharedHystereticReference) {
+        if (plan.sharedHystereticReference()) {
             resistor("RREF_H", 10000, "RAIL5", "REF_SHARED");
             resistor("RREF_L", 10000, "REF_SHARED", "CTRL_RETURN");
-            resistor("RFB_A", 22000, "A_CMD", "A_SENSE");
-            resistor("RFB_B", 22000, "B_CMD", "B_SENSE");
+            for (String channel : plan.channels())
+                resistor("RFB_" + channel, 22000,
+                    channel + "_CMD", channel + "_SENSE");
+        } else if (plan.referenceArrangement ==
+                Rb30Plan.ReferenceArrangement.SHARED_DIRECT) {
+            resistor("RREF_H", 10000, "RAIL5", "REF_SHARED");
+            resistor("RREF_L", 10000, "REF_SHARED", "CTRL_RETURN");
         } else {
-            for (String channel : new String[] { "A", "B" }) {
+            for (String channel : plan.channels()) {
                 resistor("RREF_H" + channel, 10000,
                     "RAIL5", channel + "_REF");
                 resistor("RREF_L" + channel, 10000,
@@ -167,44 +200,59 @@ final class Rb30Generator {
             }
         }
 
-        ServiceRelayElm relayA = output("A", plan.driverA());
-        ServiceRelayElm relayB = output("B", plan.driverB());
-        if (plan.hasStatusIndicator()) {
+        TreeMap<String, ServiceRelayElm> relays =
+            new TreeMap<String, ServiceRelayElm>();
+        for (String channel : plan.channels())
+            relays.put(channel, output(channel,
+                "A".equals(channel) ? plan.driverA() : plan.driverB()));
+        if (plan.hasFiveVoltIndicator) {
             resistor("RLED", 3300, "RAIL5", "LED_FEED");
-            LEDElm led = new LEDElm(nextX(), 400);
-            led.drag(led.x + 80, 400);
-            led.modelName = "default-led";
-            led.setup();
-            two("LED1", led, "LED_FEED", "CTRL_RETURN");
+            led("LED1", "LED_FEED", "CTRL_RETURN");
+        }
+        if (plan.hasTwelveVoltIndicator) {
+            resistor("RLED12", 10000, "RAIL12", "LED12_FEED");
+            led("LED12", "LED12_FEED", "CTRL_RETURN");
+        }
+        for (String channel : plan.channels()) if (plan.hasOutputIndicator(channel)) {
+            resistor("RLEDOUT_" + channel, 10000,
+                "OUT_" + channel, "LED_OUT_" + channel + "_FEED");
+            led("LEDOUT_" + channel,
+                "LED_OUT_" + channel + "_FEED", "LOAD_RETURN");
         }
 
-        externalLoad("A");
-        externalLoad("B");
+        for (String channel : plan.channels()) externalLoad(channel);
         a.requireCompleteManifest();
-        Vector<GeneratedFaultCandidate> candidates = faults(plan, relayB);
+        String relayChannel = plan.channelCount == 1 ? "A" : "B";
+        Vector<GeneratedFaultCandidate> candidates = faults(plan,
+            relays.get(relayChannel));
         GeneratedFaultBinding selected = selected(candidates,
             selectedFaultId);
         GeneratedFaultEngine.clearAll(candidates);
         if (backing.size() != a.board.getComponentIds().size())
             throw new IllegalStateException("Q30 physical backing census incomplete");
-        PhysicalBoardRuntime runtime = installPhysicalOwners(decisionA,
-            decisionB, decisionRail, variant, config, selected);
-        Rb30DecisionService serviceA = decisionService(runtime, "U2A");
-        Rb30DecisionService serviceB = decisionService(runtime, "U2B");
-        Rb30RelayService relayServiceA = relayService(runtime, "KA");
-        Rb30RelayService relayServiceB = relayService(runtime, "KB");
+        PhysicalBoardRuntime runtime = installPhysicalOwners(plan, decisions,
+            decisionRail, variant, config, selected);
+        TreeMap<String, Rb30DecisionService> decisionServices =
+            new TreeMap<String, Rb30DecisionService>();
+        TreeMap<String, Rb30RelayService> relayServices =
+            new TreeMap<String, Rb30RelayService>();
+        for (String channel : plan.channels()) {
+            decisionServices.put(channel,
+                decisionService(runtime, "U2" + channel));
+            relayServices.put(channel,
+                relayService(runtime, "K" + channel));
+        }
         Candidate candidate = new Candidate(plan, a, runtime, regulator,
-            decisionA, decisionB,
-            relayA, relayB, relayServiceA, relayServiceB,
-            serviceA, serviceB, candidates, selected,
+            candidates, selected,
             new Vector<CircuitElm>(internalSupport), netInterconnect(),
-            new TreeMap<String, CircuitElm>(backing));
+            new TreeMap<String, CircuitElm>(backing), decisions, relays,
+            relayServices, decisionServices);
         Rb30TopologyValidator.require(candidate);
         return candidate;
     }
 
-    private boolean isFaultId(String id) {
-        for (FaultDescriptor descriptor : FAULT_DESCRIPTORS)
+    private boolean isFaultId(String id, Rb30Plan plan) {
+        for (FaultDescriptor descriptor : faultDescriptors(plan))
             if (descriptor.id.equals(id)) return true;
         return false;
     }
@@ -306,6 +354,14 @@ final class Rb30Generator {
         two(id, capacitor, first, second);
     }
 
+    private void led(String id, String anode, String cathode) {
+        LEDElm led = new LEDElm(nextX(), 400);
+        led.drag(led.x + 80, 400);
+        led.modelName = "default-led";
+        led.setup();
+        two(id, led, anode, cathode);
+    }
+
     private void diode(String id, String anode, String cathode) {
         DiodeElm diode = new DiodeElm(nextX(), 400);
         diode.drag(diode.x + 80, 400);
@@ -334,7 +390,7 @@ final class Rb30Generator {
     }
 
     private Vector<GeneratedFaultCandidate> faults(Rb30Plan plan,
-            ServiceRelayElm relayB) {
+            ServiceRelayElm relay) {
         Vector<GeneratedFaultCandidate> candidates =
             new Vector<GeneratedFaultCandidate>();
         candidates.add(GeneratedFaultEngine.diodeOpen("DREV_OPEN",
@@ -348,11 +404,12 @@ final class Rb30Generator {
             candidates.add(new GeneratedFaultCandidate(new GeneratedFaultBinding(
                 fault, new SwitchOpenFaultEffect(resistorFaultOpens.get(id))), true));
         }
-        GeneratedFault relayFault = new GeneratedFault("RELAY_B_COIL_OPEN",
-            GeneratedFaultType.RELAY_COIL_OPEN, "KB", Rb30Plan.FAMILY_ID,
-            plan.seed);
+        String relayChannel = plan.channelCount == 1 ? "A" : "B";
+        GeneratedFault relayFault = new GeneratedFault("RELAY_" +
+            relayChannel + "_COIL_OPEN", GeneratedFaultType.RELAY_COIL_OPEN,
+            "K" + relayChannel, Rb30Plan.FAMILY_ID, plan.seed);
         candidates.add(new GeneratedFaultCandidate(new GeneratedFaultBinding(
-            relayFault, new RelayFaultEffect(relayB, true)), true));
+            relayFault, new RelayFaultEffect(relay, true)), true));
         return candidates;
     }
 
@@ -400,13 +457,15 @@ final class Rb30Generator {
     }
 
     private PhysicalBoardRuntime installPhysicalOwners(
-            E04SensorControlModel.DecisionElement decisionA,
-            E04SensorControlModel.DecisionElement decisionB,
+            Rb30Plan plan,
+            Map<String, E04SensorControlModel.DecisionElement> decisions,
             E04SensorControlModel.RailContract rail,
             E04SensorControlModel.Variant variant,
             E04SensorControlModel.Configuration config,
             GeneratedFaultBinding selected) {
         PhysicalBoardRuntime runtime = new PhysicalBoardRuntime(a.board);
+        runtime.registerCapability(new PowerDomainRuntimeCapability(
+            Rb30PowerDomains.create(plan), a.board, a.power));
         for (String id : a.board.getComponentIds()) {
             BoardComponent component = a.board.getComponent(id);
             PhysicalPackage physical = component.getPhysicalPackage();
@@ -431,7 +490,7 @@ final class Rb30Generator {
             PhysicalSpecification spec;
             PhysicalNameplate label;
             E04SensorControlModel.DecisionElement decision =
-                id.equals("U2A") ? decisionA : id.equals("U2B") ? decisionB : null;
+                id.startsWith("U2") ? decisions.get(id.substring(2)) : null;
             if (decision != null) {
                 spec = new BasicPhysicalSpecification(decision.declarationIdentity());
                 label = new PhysicalNameplate(id, component.getType() + " " + id);
@@ -455,9 +514,13 @@ final class Rb30Generator {
                     "Markings", "1N4148");
                 a.specifications.addPhysicalDefinition(id, spec, label, physical);
             } else if (isLedComponent(component, physical)) {
-                spec = new LedNameplate(id, "Q30 status LED", "default-led",
+                String purpose = id.startsWith("LEDOUT_") ?
+                    "Q30 " + id.substring("LEDOUT_".length()) + " load-output indicator" :
+                    id.equals("LED12") ? "Q30 12 V rail status LED" :
+                        "Q30 5 V rail status LED";
+                spec = new LedNameplate(id, purpose, "default-led",
                     1, 0, 0);
-                label = new PhysicalNameplate(id, "Status LED",
+                label = new PhysicalNameplate(id, purpose,
                     "Markings", "default-led");
                 a.specifications.addPhysicalDefinition(id, spec, label, physical);
             } else if (isCeramicCapacitorComponent(component, physical)) {
@@ -666,8 +729,18 @@ final class Rb30Generator {
         return constructNormalForQualification(seed).instance;
     }
 
+    /** Explicit seeded plan overload for named structural regression fixtures. */
+    GeneratedBoardInstance generateNormalForQualification(Rb30Plan plan) {
+        return constructNormalForQualification(plan).instance;
+    }
+
     GenerationRequest.Construction constructNormalForQualification(long seed) {
-        Rb30Plan plan = Rb30Plan.resolve(seed);
+        return constructNormalForQualification(Rb30Plan.resolve(seed));
+    }
+
+    GenerationRequest.Construction constructNormalForQualification(Rb30Plan plan) {
+        if (plan == null)
+            throw new IllegalArgumentException("Missing Q30 qualification plan");
         SeededPcbLayoutGenerator.Session routing = new SeededPcbLayoutGenerator().begin(
             plan.board(), plan.layoutSeed, plan.routingSeed, null);
         while (!routing.advance()) { }
@@ -680,6 +753,13 @@ final class Rb30Generator {
         if (plan == null || routed == null || !routed.accepted() ||
                 routed.getLayout() == null)
             throw new IllegalArgumentException("Q30 owner construction requires an accepted medium route");
+        // The structural policy may legitimately prefer its one-face route.
+        // That result is outside the qualified normal-medium contract, so
+        // reject this candidate before allocating any live electrical owner.
+        if (MediumBoardPhysicalPolicy.P05_ONE_FACE.equals(
+                routed.getStatistics().selectedRoutePolicy))
+            throw new GenerationJob.Rejected(
+                "Normal medium admission requires a selected P07 two-layer route");
         Candidate candidate = construct(plan);
         try {
             GeneratedPhysicalAdmission admission = MediumBoardNormalAdmission.fromAcceptedRoute(
@@ -700,11 +780,18 @@ final class Rb30Generator {
         }
     }
 
-    /** Replays one exact member of the canonical five-fault population. */
+    /** Replays one exact member of the plan's complete five-fault population. */
     GeneratedBoardInstance generateForHypothesis(long seed, String hypothesisKey) {
+        return generateForHypothesis(Rb30Plan.resolve(seed), hypothesisKey);
+    }
+
+    /** Explicit-plan replay is reserved for structural regression fixtures. */
+    GeneratedBoardInstance generateForHypothesis(Rb30Plan plan,
+            String hypothesisKey) {
+        if (plan == null)
+            throw new IllegalArgumentException("Missing Q30 hypothesis plan");
         if (hypothesisKey == null || hypothesisKey.length() == 0)
             throw new IllegalArgumentException("Missing Q30 hypothesis key");
-        Rb30Plan plan = Rb30Plan.resolve(seed);
         String faultId = faultIdForHypothesis(plan, hypothesisKey);
         Candidate candidate = new Rb30Generator().construct(plan, faultId);
         return assemble(candidate, route(candidate));
@@ -713,7 +800,7 @@ final class Rb30Generator {
     static String faultIdForHypothesis(Rb30Plan plan, String hypothesisKey) {
         if (plan == null || hypothesisKey == null || hypothesisKey.length() == 0)
             throw new IllegalArgumentException("Missing Q30 hypothesis identity");
-        for (FaultDescriptor descriptor : FAULT_DESCRIPTORS) {
+        for (FaultDescriptor descriptor : faultDescriptors(plan)) {
             GeneratedFault expected = new GeneratedFault(descriptor.id,
                 descriptor.type, descriptor.owner, Rb30Plan.FAMILY_ID, plan.seed);
             if (hypothesisKey.equals(expected.getHypothesisKey()))
@@ -757,14 +844,17 @@ final class Rb30Generator {
         GeneratedChallengeDefinition challenge = new GeneratedChallengeDefinition(
             "RB30_OUTPUT_NOT_TRACKING", Rb30Plan.FAMILY_ID,
             candidate.plan.topology(), candidate.plan.seed, behavior.scenarios(),
-            "Repair verified. Both sensor-controlled loads follow their inputs.",
+            candidate.plan.channelCount == 1 ?
+                "Repair verified. The sensor-controlled load follows its input." :
+                "Repair verified. Both sensor-controlled loads follow their inputs.",
             fault, candidate.selectedFault, behavior);
         Rb30DiagnosticProvider diagnostics = new Rb30DiagnosticProvider(
             candidate.plan, layout, admission);
         GeneratedBoardInstance instance = new GeneratedBoardInstance(
             candidate.board(), candidate.elements(), candidate.plan.seed,
             Rb30Plan.FAMILY_ID, candidate.plan.topology(),
-            "Generated two-channel sensor control board, seed " +
+            "Generated " + candidate.plan.channelCount +
+                "-channel sensor control board, seed " +
                 Long.toString(candidate.plan.seed),
             candidate.assembly.components, candidate.assembly.power,
             candidate.assembly.connections, behavior, layout,

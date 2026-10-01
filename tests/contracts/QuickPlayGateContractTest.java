@@ -8,6 +8,7 @@ public final class QuickPlayGateContractTest {
     private static int checks;
     private static void check(boolean value,String message) { checks++; if(!value) throw new AssertionError(message); }
     public static void main(String[] args) {
+        replayEpoch();
         for(long seed:new long[]{0,1,-1,Long.MIN_VALUE,Long.MAX_VALUE,9007199254740993L,-4518705223253195925L}) selection(seed);
         for(int i=0;i<1024;i++) selection(QuickPlayGateCorpus.seed(false,i));
         for(long seed:new long[]{0,1,-1,Long.MIN_VALUE,Long.MAX_VALUE,9007199254740993L})
@@ -33,6 +34,23 @@ public final class QuickPlayGateContractTest {
         scheduler(); session(); recentPhysicalBoards(); newBoardIdentity(); copperNormalization();
         System.out.println("PASS: Quick Play gate contracts assertions="+checks);
     }
+    private static void replayEpoch() {
+        boolean stale = false;
+        try { PlayerLaunchRequest.parse("tsj-alpha/3/MEDIUM/RB30_CONTROL/13"); }
+        catch (IllegalArgumentException expected) {
+            stale = "Unsupported replay identity or epoch".equals(expected.getMessage());
+        }
+        check(stale, "A v3 Q30 replay silently adopted the v4 interpretation");
+        for (long seed : new long[] {Long.MIN_VALUE, Long.MIN_VALUE + 1, -9007199254740993L,
+                -1, 0, 1, 9007199254740993L, Long.MAX_VALUE - 1, Long.MAX_VALUE}) {
+            String replay = "tsj-alpha/4/MEDIUM/RB30_CONTROL/" + Long.toString(seed);
+            PlayerLaunchRequest decoded = PlayerLaunchRequest.parse(replay);
+            check(decoded.seed == seed && decoded.profile == DifficultyProfile.MEDIUM &&
+                    Rb30Plan.FAMILY_ID.equals(decoded.familyId) && replay.equals(decoded.replay()),
+                "Current v4 replay rounded or reinterpreted signed-long seed " + seed);
+        }
+    }
+
     private static void selection(long seed) {
         PlayerLaunchRequest launch=PlayerLaunchRequest.random(Rb15Plan.FAMILY_ID,Long.toString(seed),"EASY");
         GenerationRequest request=launch.generation(); HashSet<Long> seen=new HashSet<Long>();

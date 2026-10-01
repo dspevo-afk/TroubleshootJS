@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "scope": "synthetic power-context corruption canaries only; actual v4 proof integration pending",
+  "cases": [
+    {
+      "name": "synthetic-v4-power-contract-accepted",
+      "status": "PASS"
+    },
+    {
+      "name": "stale-NONE-power-contract",
+      "status": "PASS"
+    },
+    {
+      "name": "wrong-load-rail-return-reference",
+      "status": "PASS"
+    },
+    {
+      "name": "FUSED12-storage-required-without-C12",
+      "status": "PASS"
+    },
+    {
+      "name": "missing-required-rail",
+      "status": "PASS"
+    },
+    {
+      "name": "missing-active-sensor-source",
+      "status": "PASS"
+    },
+    {
+      "name": "missing-active-channel-B-source",
+      "status": "PASS"
+    }
+  ],
+  "readerSha256": "b5cfcf275fc8dd75bd8b4a6822aac0e58d631b08f3b0fdb07acc8c3133262e01"
+}

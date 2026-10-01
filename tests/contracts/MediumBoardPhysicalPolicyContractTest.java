@@ -105,7 +105,7 @@ public final class MediumBoardPhysicalPolicyContractTest {
             "marginal fuller route is not selected");
         // Freeze the original 33-package route fixture so the escape/compaction
         // regression remains independent of later Q30 package additions.
-        Rb30Plan edgeTrimPlan = Rb30Plan.resolve(83L);
+        Rb30Plan edgeTrimPlan = Rb30Plan.reference(83L);
         TroubleshootBoard edgeTrimBoard = originalSeed83Board(edgeTrimPlan);
         MediumBoardPhysicalPolicy.Result edgeTrim = new SeededPcbLayoutGenerator()
             .generateWithPolicyResult(edgeTrimBoard, edgeTrimPlan.layoutSeed,
@@ -135,7 +135,8 @@ public final class MediumBoardPhysicalPolicyContractTest {
 
     /**
      * Frozen route-regression declaration from accepted source
-     * 16a922b2b757dfcd1cbc3a0230ab2b97ac2fbb50: Rb30Plan.resolve(83)'s
+     * 16a922b2b757dfcd1cbc3a0230ab2b97ac2fbb50: the seed-83 two-channel Q30
+     * regression fixture's
      * original 33 packages, before RPIN_A/RPIN_B were introduced. The current
      * plan supplies the unchanged seed-83 topology and placement/routing draws;
      * this fixture intentionally does not expose a production historical-plan API.

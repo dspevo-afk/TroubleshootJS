@@ -4,6 +4,8 @@ public final class P07TwoLayerContractTest {
     private static int checks;
     static void require(boolean ok,String why) { checks++; if(!ok) throw new AssertionError(why); }
     public static void main(String[] args) {
+        holeSnapshotsPreserveOwnerAndOrder();
+        closedCopperEdgesMatchLongOracle();
         typedQueueMatchesPriorityQueue();
         for(boolean linked:new boolean[]{false,true}) {
             P06FactoryLinkFixtures.Fixture fixture=new P06FactoryLinkFixtures.Fixture(true,0,0,!linked);
@@ -25,6 +27,52 @@ public final class P07TwoLayerContractTest {
         }
         negatives(); barriers(); surfacePadEnvelope();
         System.out.println("PASS: P07 two-layer contracts assertions="+checks);
+    }
+    private static void holeSnapshotsPreserveOwnerAndOrder() {
+        PcbBoardLayout layout=new PcbBoardLayout(1100,650,new Rectangle(100,100,600,400),
+            new Rectangle(820,120,200,400));
+        require(layout.getHoleCount()==0 && layout.getHoles().isEmpty(),"empty hole owner");
+        PcbBoardHole later=PcbTwoLayerRules.via("z-via","N",300,300);
+        PcbBoardHole first=PcbTwoLayerRules.via("a-via","N",200,300);
+        layout.addHole(later);
+        java.util.Vector<PcbBoardHole> snapshot=layout.getHoles();
+        layout.addHole(first);
+        PcbBoardHole[] refreshed=layout.getHoles().toArray(new PcbBoardHole[0]);
+        require(layout.getHoleCount()==2 && refreshed.length==2 &&
+            refreshed[0]==first && refreshed[1]==later,"fresh snapshot sees additions in canonical hole-ID order");
+        require(snapshot.size()==1 && snapshot.firstElement()==later,"existing hole snapshot remains independent");
+        snapshot.clear(); refreshed[0]=null;
+        require(layout.getHoleCount()==2 && layout.getHoles().firstElement()==first,
+            "mutating snapshots cannot mutate their owner");
+        PcbBoardLayout copy=layout.copyForRouting();
+        copy.addHole(PcbTwoLayerRules.via("copy-via","N",400,300));
+        require(copy.getHoleCount()==3 && layout.getHoleCount()==2,"routing-copy hole owners stay independent");
+    }
+    private static void closedCopperEdgesMatchLongOracle() {
+        int[] boundary={Integer.MIN_VALUE,Integer.MIN_VALUE+1,-1,0,1,
+            Integer.MAX_VALUE-1,Integer.MAX_VALUE};
+        for(int ax:boundary) for(int aw:boundary) for(int bx:boundary) for(int bw:boundary) {
+            Rectangle a=new Rectangle(ax,bx,aw,bw);
+            Rectangle b=new Rectangle(bx,ax,bw,aw);
+            require(PcbConductorBuilder.touch(a,b)==longTouch(a,b),
+                "closed copper overlap matches long oracle at full int boundaries");
+        }
+        java.util.Random random=new java.util.Random(0x503037L);
+        for(int i=0;i<8192;i++) {
+            Rectangle a=new Rectangle(random.nextInt(),random.nextInt(),random.nextInt(),random.nextInt());
+            Rectangle b=new Rectangle(random.nextInt(),random.nextInt(),random.nextInt(),random.nextInt());
+            require(PcbConductorBuilder.touch(a,b)==longTouch(a,b),
+                "closed copper overlap matches independent long oracle");
+        }
+        Rectangle land=new Rectangle(100,100,12,12);
+        require(PcbConductorBuilder.touch(land,new Rectangle(112,112,12,12)),
+            "closed corners remain conductive contact");
+        require(!PcbConductorBuilder.touch(land,new Rectangle(113,112,12,12)),
+            "one-unit gap stays separate");
+    }
+    private static boolean longTouch(Rectangle a,Rectangle b) {
+        return (long)a.x+a.width>=b.x && (long)b.x+b.width>=a.x &&
+            (long)a.y+a.height>=b.y && (long)b.y+b.height>=a.y;
     }
     @SuppressWarnings({"rawtypes","unchecked"})
     private static void typedQueueMatchesPriorityQueue() {

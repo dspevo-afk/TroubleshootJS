@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "runner": {
+    "pid": 19572,
+    "created": "2026-09-28T02:43:57.308681Z",
+    "executable": "python3.13.exe"
+  },
+  "edgeProcessesBeforeCases": [
+    {
+      "pid": 25508,
+      "parent": 20564,
+      "created": "2026-09-28T02:43:59.576223Z",
+      "ExecutablePath": "msedge.exe"
+    },
+    {
+      "pid": 22120,
+      "parent": 25508,
+      "created": "2026-09-28T02:43:59.604222Z",
+      "ExecutablePath": "msedge.exe"
+    },
+    {
+      "pid": 18368,
+      "parent": 25508,
+      "created": "2026-09-28T02:43:59.672544Z",
+      "ExecutablePath": "msedge.exe"
+    },
+    {
+      "pid": 20212,
+      "parent": 25508,
+      "created": "2026-09-28T02:43:59.67643Z",
+      "ExecutablePath": "msedge.exe"
+    },
+    {
+      "pid": 25412,
+      "parent": 25508,
+      "created": "2026-09-28T02:43:59.700816Z",
+      "ExecutablePath": "msedge.exe"
+    },
+    {
+      "pid": 17572,
+      "parent": 25508,
+      "created": "2026-09-28T02:43:59.767604Z",
+      "ExecutablePath": "msedge.exe"
+    },
+    {
+      "pid": 24140,
+      "parent": 25508,
+      "created": "2026-09-28T02:43:59.771272Z",
+      "ExecutablePath": "msedge.exe"
+    }
+  ],
+  "profile": "<UNIQUE_OS_TEMP_BROWSER_PROFILE>",
+  "port": "<ephemeral>",
+  "baseUrl": "http://127.0.0.1:<ephemeral>",
+  "sourceIdentitySha256": "761e389f720e0d8e455c9b7d0fe3a67a5f483a27989122e1f4c8a47cf253a834"
+}

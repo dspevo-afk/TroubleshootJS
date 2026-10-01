@@ -1,0 +1,14 @@
+{
+  "status": "FAIL",
+  "exitCode": 2,
+  "elapsedSeconds": 34.4936945,
+  "phase": "focused native structural/replay contracts including maintained cleanup",
+  "suites": [
+    "Q30PlanContractTest",
+    "Q30RelayServiceContractTest",
+    "Q30CatalogIdentityContractTest",
+    "Rb30PhysicalMetadataContractTest",
+    "MediumBoardFloorplanningContractTest",
+    "QuickPlayGateContractTest"
+  ]
+}

@@ -16,8 +16,10 @@ public final class Q30RelayServiceContractTest {
         CircuitElm.sim = sim;
         for (long seed : new long[] { 0L, 1L, Long.MIN_VALUE,
                 Long.MAX_VALUE, 9007199254740993L }) {
+            // This contract specifically verifies both independently scoped
+            // relay services, so pin its fixture to the explicit two-channel shape.
             Rb30Generator.Candidate candidate = new Rb30Generator().construct(
-                Rb30Plan.resolve(seed));
+                Rb30Plan.reference(seed));
             Rb30TopologyValidator.require(candidate);
             Rb30RelayService ka = candidate.relayServiceA;
             Rb30RelayService kb = candidate.relayServiceB;

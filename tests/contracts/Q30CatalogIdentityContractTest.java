@@ -20,8 +20,9 @@ public final class Q30CatalogIdentityContractTest {
         sim.gridSize = 16; sim.gridMask = ~15; sim.gridRound = 7; CircuitElm.sim = sim;
         Fixture candidate = null;
         try {
-            Rb30Plan plan = Rb30Plan.resolve(13L);
-            candidate = new Fixture(new Rb30Generator().generateNormalForQualification(13L));
+            Rb30Plan plan = Rb30Plan.reference(13L);
+            candidate = new Fixture(new Rb30Generator()
+                .generateNormalForQualification(plan));
             verifyRelayAliases(candidate);
             verifyDistinctKeysNeverMerge(candidate);
             verifyDecisionDeclarationIdentity(candidate, plan);

@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "fullDiffCheck": {
+    "exitCode": 2,
+    "status": "FORMAT_WARNINGS_RETAINED",
+    "output": "tests/qualification/q30-scale-acceptance/baseline.patch:35: trailing whitespace.\n+ \ntests/qualification/q30-scale-acceptance/baseline.patch:80: trailing whitespace.\n+ \ntests/qualification/q30-scale-acceptance/baseline.patch:124: trailing whitespace.\n+ \ntests/qualification/q30-scale-acceptance/baseline.patch:226: trailing whitespace.\n+ \ntests/qualification/q30-scale-acceptance/baseline.patch:268: trailing whitespace.\n+ \ntests/qualification/q30-scale-acceptance/baseline.patch:338: trailing whitespace.\n+ \ntests/qualification/q30-scale-acceptance/baseline.patch:369: trailing whitespace.\n+ \ntests/qualification/q30-scale-acceptance/baseline.patch:374: trailing whitespace.\n+ \n"
+  },
+  "allOtherStagedFilesCheck": {
+    "exitCode": 0,
+    "status": "PASS"
+  },
+  "frozenPatchSha256": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+  "explanation": "The eight warnings are single-space context markers for blank lines inside an unchanged, frozen unified-diff fixture. They are required context syntax, not trailing whitespace in produced Java. Preserve its recorded digest; do not rewrite qualification inputs to silence the check. One extra EOF blank line in the evidence README was fixed."
+}
