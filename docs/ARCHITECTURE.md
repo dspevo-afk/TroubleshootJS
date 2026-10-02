@@ -79,7 +79,7 @@ geometry, but create fresh electrical/runtime and proof owners. Geometry is reva
 foreign-request reuse fails before allocation. This geometry cache contains no
 electrical readings or repair proof; D01 proof-value reuse has its own identity
 and fresh-owner validation. Exact replay is tsj-alpha/4; old epochs reject. Dependency interpretation
-v16 captures admission4/layout13 and the current dump-model v6. Eight entropy
+v16 captures admission4/layout14 and the current dump-model v6. Eight entropy
 bytes travel as canonical signed decimal text,
 never through a lossy JavaScript Number.
 
@@ -2044,7 +2044,7 @@ inward-facing connector anchors, then refines positions against the existing
 For a provider-selected `MEDIUM_BOARD@1` candidate, the generator ranks six
 placements by electrical span, region and connector locality, corridor
 obstruction and normalized area before routing at most three with the existing
-one-face router and then the unchanged P07 fuller two-layer router. A successful
+one-face router and then the P07 fuller two-layer router. A successful
 one-face route remains preferred unless the two-layer quality improves
 materially. This candidate is structural; by itself it does not relax P09
 normal admission or constitute final normal admission. The current catalog
@@ -2224,8 +2224,17 @@ The generic P07 router retains its queue, net/branch position and path publicati
 across bounded 32,768-operation slices. The synchronous entry drains the same
 session. Medium construction returns between slices through the existing
 generation work boundary, charging every advance without resetting the job clock.
-Candidate order, branch/search budgets, via caps and canonical routing statistics
-remain unchanged; frozen-corpus equality and compiled timing qualify the refactor.
+Placement candidate order, branch/search budgets, via caps and the canonical
+statistics format remain unchanged; historical frozen-corpus equality and compiled
+timing qualified that slice refactor.
+The layout-14 correction schedules each net's P07 branches with P05's existing
+nearest-to-reached-pad selector, retaining the lexical root and sorted-ID ties.
+A branch joins the reached set only after its complete copper publisher finishes.
+Net order, placement candidate order and all budgets stay fixed. This changes
+route geometry and is identified by the layout epoch in request/cache/manifest
+identity; public replay text keeps its existing schema. The exact seed-10 frozen
+service plan and an independent spatial/tie fixture cover the correction;
+focused success does not qualify the full cold cohort or normal publication.
 Via-fit checks use the branch-owned, ID-ordered hole and bounds snapshot described
 above. The next branch refreshes it after the preceding path publisher completes;
 there is no persistent second hole index. Other callers retain the snapshot getter,

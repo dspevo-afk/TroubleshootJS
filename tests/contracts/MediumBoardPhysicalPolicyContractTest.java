@@ -9,6 +9,7 @@ public final class MediumBoardPhysicalPolicyContractTest {
     private MediumBoardPhysicalPolicyContractTest() { }
 
     public static void main(String[] args) {
+        frozenSeed10Routing();
         Rb30Plan firstPlan = Rb30Plan.resolve(0L);
         Rb30Plan secondPlan = Rb30Plan.resolve(0L);
         check(firstPlan.canonical().equals(secondPlan.canonical()),
@@ -126,6 +127,39 @@ public final class MediumBoardPhysicalPolicyContractTest {
             "seed 83 compacting does not reintroduce a disconnected escape channel");
         System.out.println("PASS: medium physical policy contracts assertions=" + assertions +
             " receipt=" + first.toCanonical());
+    }
+
+    /** Exact predeclared service-cohort plan; retries cannot satisfy this witness. */
+    private static void frozenSeed10Routing() {
+        Rb30Plan plan = Rb30Plan.resolve(10L);
+        check(plan.channelCount == 2 && plan.physicalPackageCount() == 36 &&
+            plan.referenceArrangement == Rb30Plan.ReferenceArrangement.SEPARATE_DIRECT &&
+            plan.driverABjt && !plan.driverBBjt &&
+            plan.layoutSeed == -5437028946546985473L &&
+            plan.routingSeed == 6161596101315970262L,
+            "seed 10 retains the frozen 36-package two-channel plan and random concerns");
+        TroubleshootBoard board = plan.board();
+        check(board.getComponentIds().size() == 36,
+            "seed 10 routes the original complete board without retry substitution");
+        MediumBoardPhysicalPolicy.Result first = new SeededPcbLayoutGenerator()
+            .generateWithPolicyResult(board, plan.layoutSeed, plan.routingSeed, NOOP);
+        System.out.println("Q30_SEED10_ROUTING " + first.toCanonical());
+        check(first.accepted() && MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER.equals(
+            first.getStatistics().selectedRoutePolicy),
+            "seed 10 frozen service plan has a normal-eligible P07 physical realization");
+        check(first.getStatistics().placementCandidates == 6 &&
+            first.getStatistics().routeAttempts <= 6,
+            "seed 10 retains the existing bounded placement and route candidate breadth");
+        first.getLayout().validateGeometry(board);
+        new PcbTwoLayerRules(board, first.getLayout()).validate(first.getLayout());
+        check(first.getLayout().getComponents().size() == 36 &&
+            first.getLayout().getPads().size() == board.getPadIds().size(),
+            "seed 10 preserves every original package and electrical endpoint");
+        MediumBoardPhysicalPolicy.Result replay = new SeededPcbLayoutGenerator()
+            .generateWithPolicyResult(plan.board(), plan.layoutSeed, plan.routingSeed, NOOP);
+        check(first.toCanonical().equals(replay.toCanonical()) &&
+            first.getLayout().geometryFingerprint().equals(replay.getLayout().geometryFingerprint()),
+            "seed 10 replays exact geometry and bounded work without changing plan identity");
     }
 
     private static final SeededPcbLayoutGenerator.AttemptObserver NOOP =

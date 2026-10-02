@@ -1,0 +1,434 @@
+{
+  "schema": 1,
+  "baseHead": "bf5063f4f3eadc989eadd7d1bf7191c2c8fb8a06",
+  "acceptanceStatus": "NOT_ACCEPTED",
+  "Q30NormalPlayerEnabled": false,
+  "scope": "Exact frozen original seed-10 routing repair, focused requalification and disabled shipping build",
+  "plan": {
+    "seed": "10",
+    "parts": 36,
+    "channels": 2,
+    "referenceArrangement": "SEPARATE_DIRECT",
+    "driverA": "BJT",
+    "driverB": "NMOS",
+    "layoutSeed": "-5437028946546985473",
+    "routingSeed": "6161596101315970262"
+  },
+  "limitsUnchanged": {
+    "normalCumulativeMs": 90000,
+    "normalSharedWork": 640,
+    "normalActiveMs": 5000,
+    "branchExpansions": 100000,
+    "nativeChildBudgetMs": 60000
+  },
+  "finalSourceIdentity": "bc08deef78a040a27e6fd7803d401e59fe4b3ed971217c5507bb637129b7c2c4",
+  "finalSourceFiles": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "size": 27944,
+      "sha256": "3b7022742280f5ed53a4e222e6dd9116e0f2dc53e20f8e304ed3141bd324526e"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "size": 53108,
+      "sha256": "abf5345ab58ac2f4962bd03398e17609ebcc9349ff42a22d9101c9392deebb76"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "size": 50430,
+      "sha256": "c9bd12f17f8f16df8709d8c03449c7de16c1320da7650a82d6d03687bd35eb0e"
+    },
+    {
+      "path": "tests/contracts/MediumBoardPhysicalPolicyContractTest.java",
+      "size": 21537,
+      "sha256": "e573821ab6e456871b66030533a49b6a4e63f95a36f07a645788a22db4a7e659"
+    },
+    {
+      "path": "tests/contracts/P07TwoLayerContractTest.java",
+      "size": 21266,
+      "sha256": "6048070ecf8631caeb87f9d7b44543003f7a6e2bd3cb9f1beaa522e5dc268fe4"
+    }
+  ],
+  "runs": [
+    {
+      "startedUtc": "2026-10-02T00:55:28.0534624Z",
+      "suites": [
+        "MediumBoardPhysicalPolicyContractTest"
+      ],
+      "batch": "baseline",
+      "elapsedSeconds": 22.7641419,
+      "sourceFiles": [
+        {
+          "sha256": "2f68e92495873b0ed4027fecb7a5c7867f840fe8cce9bc93fbd13b824acef40e",
+          "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java"
+        },
+        {
+          "sha256": "e7910f09d401dd2453f1fcda2f972a022663824892cb69653a5d5a3a0d012fa5",
+          "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java"
+        },
+        {
+          "sha256": "e573821ab6e456871b66030533a49b6a4e63f95a36f07a645788a22db4a7e659",
+          "path": "tests/contracts/MediumBoardPhysicalPolicyContractTest.java"
+        },
+        {
+          "sha256": "c74b264e0fb068ece6733f252c6b3aaee1c8aa5ec1427e263442e35ad319183a",
+          "path": "tests/contracts/P07TwoLayerContractTest.java"
+        }
+      ],
+      "tag": "baseline-seed10",
+      "schema": 1,
+      "finishedUtc": "2026-10-02T00:55:50.8540085Z",
+      "exitCode": 2,
+      "wrapperStatus": "FAIL",
+      "reviewedStatus": "EXPECTED_PRE_FIX_FAIL",
+      "cleanup": "PASS: maintained runner reports task-owned scratch removed",
+      "timingBoundary": "Compilation, suite execution and cleanup; separate cleanup time not recorded"
+    },
+    {
+      "startedUtc": "2026-10-02T01:03:11.9622049Z",
+      "suites": [
+        "MediumBoardPhysicalPolicyContractTest"
+      ],
+      "batch": "baseline",
+      "elapsedSeconds": 38.6073889,
+      "sourceFiles": [
+        {
+          "sha256": "3b7022742280f5ed53a4e222e6dd9116e0f2dc53e20f8e304ed3141bd324526e",
+          "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java"
+        },
+        {
+          "sha256": "e7910f09d401dd2453f1fcda2f972a022663824892cb69653a5d5a3a0d012fa5",
+          "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java"
+        },
+        {
+          "sha256": "e573821ab6e456871b66030533a49b6a4e63f95a36f07a645788a22db4a7e659",
+          "path": "tests/contracts/MediumBoardPhysicalPolicyContractTest.java"
+        },
+        {
+          "sha256": "c74b264e0fb068ece6733f252c6b3aaee1c8aa5ec1427e263442e35ad319183a",
+          "path": "tests/contracts/P07TwoLayerContractTest.java"
+        }
+      ],
+      "tag": "nearest-branch-seed10",
+      "schema": 1,
+      "finishedUtc": "2026-10-02T01:03:50.6019465Z",
+      "exitCode": 0,
+      "wrapperStatus": "COMMAND_PASS_PENDING_RECEIPT_REVIEW",
+      "reviewedStatus": "INTERMEDIATE_PASS",
+      "cleanup": "PASS: maintained runner reports task-owned scratch removed",
+      "timingBoundary": "Compilation, suite execution and cleanup; separate cleanup time not recorded"
+    },
+    {
+      "startedUtc": "2026-10-02T01:08:39.8637575Z",
+      "suites": [
+        "MediumBoardPhysicalPolicyContractTest",
+        "P05RoutingContractTest",
+        "P06FactoryLinkContractTest",
+        "P07TwoLayerContractTest",
+        "PcbLayerRoutingResumptionContractTest"
+      ],
+      "batch": "physical",
+      "elapsedSeconds": 41.214908799999996,
+      "sourceFiles": [
+        {
+          "sha256": "3b7022742280f5ed53a4e222e6dd9116e0f2dc53e20f8e304ed3141bd324526e",
+          "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java"
+        },
+        {
+          "sha256": "c9bd12f17f8f16df8709d8c03449c7de16c1320da7650a82d6d03687bd35eb0e",
+          "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java"
+        },
+        {
+          "sha256": "e573821ab6e456871b66030533a49b6a4e63f95a36f07a645788a22db4a7e659",
+          "path": "tests/contracts/MediumBoardPhysicalPolicyContractTest.java"
+        },
+        {
+          "sha256": "6048070ecf8631caeb87f9d7b44543003f7a6e2bd3cb9f1beaa522e5dc268fe4",
+          "path": "tests/contracts/P07TwoLayerContractTest.java"
+        }
+      ],
+      "tag": "final-focused-physical",
+      "schema": 1,
+      "finishedUtc": "2026-10-02T01:09:21.1129010Z",
+      "exitCode": 0,
+      "wrapperStatus": "COMMAND_PASS_PENDING_RECEIPT_REVIEW",
+      "reviewedStatus": "PASS",
+      "cleanup": "PASS: maintained runner reports task-owned scratch removed",
+      "timingBoundary": "Compilation, suite execution and cleanup; separate cleanup time not recorded"
+    },
+    {
+      "startedUtc": "2026-10-02T01:10:02.9425295Z",
+      "suites": [
+        "Q30ServiceFlowContractTest"
+      ],
+      "batch": "service",
+      "elapsedSeconds": 100.28047579999999,
+      "sourceFiles": [
+        {
+          "sha256": "3b7022742280f5ed53a4e222e6dd9116e0f2dc53e20f8e304ed3141bd324526e",
+          "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java"
+        },
+        {
+          "sha256": "abf5345ab58ac2f4962bd03398e17609ebcc9349ff42a22d9101c9392deebb76",
+          "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java"
+        },
+        {
+          "sha256": "c9bd12f17f8f16df8709d8c03449c7de16c1320da7650a82d6d03687bd35eb0e",
+          "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java"
+        },
+        {
+          "sha256": "e573821ab6e456871b66030533a49b6a4e63f95a36f07a645788a22db4a7e659",
+          "path": "tests/contracts/MediumBoardPhysicalPolicyContractTest.java"
+        },
+        {
+          "sha256": "6048070ecf8631caeb87f9d7b44543003f7a6e2bd3cb9f1beaa522e5dc268fe4",
+          "path": "tests/contracts/P07TwoLayerContractTest.java"
+        }
+      ],
+      "tag": "final-seed10-service",
+      "schema": 1,
+      "finishedUtc": "2026-10-02T01:11:43.2595059Z",
+      "exitCode": 0,
+      "wrapperStatus": "COMMAND_PASS_PENDING_RECEIPT_REVIEW",
+      "reviewedStatus": "PASS",
+      "cleanup": "PASS: maintained runner reports task-owned scratch removed",
+      "timingBoundary": "Compilation, suite execution and cleanup; separate cleanup time not recorded"
+    },
+    {
+      "startedUtc": "2026-10-02T01:12:49.8106812Z",
+      "suites": [
+        "Q30SolverStepSensitivityContractTest"
+      ],
+      "batch": "sensitivity",
+      "elapsedSeconds": 131.3418171,
+      "sourceFiles": [
+        {
+          "sha256": "3b7022742280f5ed53a4e222e6dd9116e0f2dc53e20f8e304ed3141bd324526e",
+          "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java"
+        },
+        {
+          "sha256": "abf5345ab58ac2f4962bd03398e17609ebcc9349ff42a22d9101c9392deebb76",
+          "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java"
+        },
+        {
+          "sha256": "c9bd12f17f8f16df8709d8c03449c7de16c1320da7650a82d6d03687bd35eb0e",
+          "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java"
+        },
+        {
+          "sha256": "e573821ab6e456871b66030533a49b6a4e63f95a36f07a645788a22db4a7e659",
+          "path": "tests/contracts/MediumBoardPhysicalPolicyContractTest.java"
+        },
+        {
+          "sha256": "6048070ecf8631caeb87f9d7b44543003f7a6e2bd3cb9f1beaa522e5dc268fe4",
+          "path": "tests/contracts/P07TwoLayerContractTest.java"
+        }
+      ],
+      "tag": "final-seed10-sensitivity",
+      "schema": 1,
+      "finishedUtc": "2026-10-02T01:15:01.1841194Z",
+      "exitCode": 0,
+      "wrapperStatus": "COMMAND_PASS_PENDING_RECEIPT_REVIEW",
+      "reviewedStatus": "PASS",
+      "cleanup": "PASS: maintained runner reports task-owned scratch removed",
+      "timingBoundary": "Compilation, suite execution and cleanup; separate cleanup time not recorded"
+    }
+  ],
+  "build": {
+    "startedUtc": "2026-10-02T01:19:03.7720905Z",
+    "compilationConfirmed": true,
+    "elapsedSeconds": 83.3200572,
+    "sourceSnapshot": "shipping-epoch14/source-snapshot.json",
+    "scope": "Final-source epoch14 disabled shipping export; no qualification overlay",
+    "status": "PASS",
+    "schema": 1,
+    "finishedUtc": "2026-10-02T01:20:27.0962836Z",
+    "exitCode": 0
+  },
+  "resources": {
+    "schema": 1,
+    "terminatedProcesses": 0,
+    "remainingProcesses": [],
+    "scope": "Exact new task temp token and task build/native wrappers; excludes this query PID",
+    "status": "PASS",
+    "remainingCount": 0,
+    "checkedUtc": "2026-10-02T01:24:32.3604370Z"
+  },
+  "diagnosticProbe": {
+    "status": "EXPECTED_NATIVE_FAIL; OUTER_WRAPPER_FAIL",
+    "boundary": "Pre-fix blobs plus rejection-only printf; no changed routing or limits",
+    "nativeCleanup": "PASS",
+    "outerWrapperFailure": "Invalid exit command after completed native failure; not a host PASS"
+  },
+  "rootReview": "Integrated implementation and evidence reviewed by root; parent acceptance review pending",
+  "leafAudit": "Read-only identity/lifecycle review found no blocker; no tests run by leaf",
+  "notRun": [
+    "fresh 77-root cold qualification / 90-second timing",
+    "final full native82",
+    "full service105 and sensitivity105",
+    "structural51+26",
+    "enabled production build",
+    "compiled31/D01-21",
+    "ordinary menu33/replay3",
+    "visible 20/30/40 diagnosis/repair/retest",
+    "new candidate source archive verification",
+    "parent acceptance review"
+  ],
+  "evidence": [
+    {
+      "retainedRelativePath": "baseline-seed10.log",
+      "rawSha256": "22fc12c0ff854e1410629e0a34f898f76d3b81234ccd089bb6a78c41847fbce1",
+      "portableFile": "baseline-seed10.log.gz",
+      "portablePayloadSha256": "1af3d28eff4b8c8993e2eecdf74883eda1162de8f3ba22ca1f81f815e8d9bbb5",
+      "compressedSha256": "eca0d88a4d870ccff3a2f6476a6e9c510f8417920575aa3e7c67ef9b454da2a1",
+      "rawBytes": 5780
+    },
+    {
+      "retainedRelativePath": "baseline-seed10-result.json",
+      "rawSha256": "12611f7266869b293e5e093bff69e4fe1937e4a664cd2714f13a72f623a54c31",
+      "portableFile": "baseline-seed10-result.json.gz",
+      "portablePayloadSha256": "086acb99c9477783600cd29d2e4ccb77b5d017b5b0d4b5892911f6dab204142b",
+      "compressedSha256": "16b8806b8f6ae03aebee73d72f0ccacc4f92d1c701a89f95187f0ea81fd879cb",
+      "rawBytes": 1466
+    },
+    {
+      "retainedRelativePath": "baseline-branch-probe.log",
+      "rawSha256": "5518b82f71c9175b99667ace10d20baf80105a24d396439582fb01060c6745e6",
+      "portableFile": "baseline-branch-probe.log.gz",
+      "portablePayloadSha256": "439b3cc7c8903c8cf7fe5fab9ad11e62f10fb4e4b2c048d1ef15dd3840e52067",
+      "compressedSha256": "14fa0b610b8f593b3bd6200626d45d80d061458bf54d73a3973f58561e9e3779",
+      "rawBytes": 7772
+    },
+    {
+      "retainedRelativePath": "baseline-branch-probe-binding.json",
+      "rawSha256": "440f3b2c7ed40243bd1e19ed553f11ae59042286c41aba840a1c27abb995d3a2",
+      "portableFile": "baseline-branch-probe-binding.json.gz",
+      "portablePayloadSha256": "38f9baaedfc46b0167744353fa5b54901cb28902ae991bd46b7c003bb524c45c",
+      "compressedSha256": "32096b2492696d8652b43d71cd8a62c499d36331d92e0db1c546bfb4f7eeac51",
+      "rawBytes": 949
+    },
+    {
+      "retainedRelativePath": "nearest-branch-seed10.log",
+      "rawSha256": "6148e3bc38a40d273aecc827e31d891c5328a7fbe093e0d447d4999f3319d213",
+      "portableFile": "nearest-branch-seed10.log.gz",
+      "portablePayloadSha256": "50c9cdeff0a739805212d86568a784c35d4d5844abe2cda45e593ed610bd2692",
+      "compressedSha256": "eb6cdb7e16bae42dbe1521fd52b07654fcefdb4d9c5366ed24dfc3b6b31b09d9",
+      "rawBytes": 7196
+    },
+    {
+      "retainedRelativePath": "nearest-branch-seed10-result.json",
+      "rawSha256": "6aae6b0a1ad5b4d21a856d71af8f3b48e628abd2876ef4864b82f763684b4f11",
+      "portableFile": "nearest-branch-seed10-result.json.gz",
+      "portablePayloadSha256": "2cc247af13131263910d381fcb5ef6fce56b23f07795c4175d601ff223a727a7",
+      "compressedSha256": "c506eb49c0ca5a09ad774539f6fcab2678d2c7682bb9c1cd3ebc925b4f94d17c",
+      "rawBytes": 1503
+    },
+    {
+      "retainedRelativePath": "final-focused-physical.log",
+      "rawSha256": "e29e57f476fdc5637af133eff171e8a70767d34a9809bd12ff1265b963f4f55d",
+      "portableFile": "final-focused-physical.log.gz",
+      "portablePayloadSha256": "6069f8f7e846992908e726498b952f0d5bddb424d8960f2a12003c099e1bfb7c",
+      "compressedSha256": "894c76f7723332439e2c94804ad2b74fbb083bdaf1bbfc383b0c4874f31bfd69",
+      "rawBytes": 13290
+    },
+    {
+      "retainedRelativePath": "final-focused-physical.txt",
+      "rawSha256": "7c5769ccd8a922bf412689d5ec41233c7fff46836580e6ebb85131bbb0266220",
+      "portableFile": "final-focused-physical.txt.gz",
+      "portablePayloadSha256": "b4ed86d4599a7283a4cc30dbe2f70cd5ac0cd709a3323e78ff787cd7d1935118",
+      "compressedSha256": "b7fed4a321920c7044e6b2019f01a5f9001b00209ac4e13a0fda02a0eda7274a",
+      "rawBytes": 5878
+    },
+    {
+      "retainedRelativePath": "final-focused-physical-result.json",
+      "rawSha256": "40b1d64d2fd4d23c1c3828f080c4d408732e91f6fac4f33ab060b69e700f3631",
+      "portableFile": "final-focused-physical-result.json.gz",
+      "portablePayloadSha256": "ff3cd7a9d3f3ada623483075358991c68d7e0fef40b8d819e282e49316902b43",
+      "compressedSha256": "6cb0f3fb1a20369e4023620a7fd1d9174bd9fd7898c8ceafc0bc4d8c581086c8",
+      "rawBytes": 1716
+    },
+    {
+      "retainedRelativePath": "final-seed10-service.log",
+      "rawSha256": "c54da4c299cbb287d962424cb9a94e08f621a2d1a92956e30d03cec3af9d3637",
+      "portableFile": "final-seed10-service.log.gz",
+      "portablePayloadSha256": "177a0591226e1aa5a58d5aa85786a6f4464aec1f172b74648bdd2551d29df7ab",
+      "compressedSha256": "8a19cb407434fa73494c3306b477fae11ca5cf16b45f05eaeaa4b40f00598a31",
+      "rawBytes": 48872
+    },
+    {
+      "retainedRelativePath": "final-seed10-service.txt",
+      "rawSha256": "f39a4ccdce6e560143e0e6028ee98984539081457621a62fc838811933f04da5",
+      "portableFile": "final-seed10-service.txt.gz",
+      "portablePayloadSha256": "f186a02ce0a40f261adfa28b831dc01c01636db8020c27496dedab108808d902",
+      "compressedSha256": "c614a4fdac316111e892207d5b35c6cab45bdeed832476bc1d524d8e6420f9b0",
+      "rawBytes": 24116
+    },
+    {
+      "retainedRelativePath": "final-seed10-service-result.json",
+      "rawSha256": "3c6e3d897200e6aa783d973b43e71626da5c571453eaff199ae67f7edfdc4d8a",
+      "portableFile": "final-seed10-service-result.json.gz",
+      "portablePayloadSha256": "e5018f78670de16f3fa29b0d4e3dd996723eb2072b44eefc9b917f4bbb8bf0fa",
+      "compressedSha256": "1e2db69d954e50cd45558d2333712eff3a8a606e098773485d749d0562745cae",
+      "rawBytes": 1758
+    },
+    {
+      "retainedRelativePath": "final-seed10-sensitivity.log",
+      "rawSha256": "16a40ac44e90ace731e15469edd118e5c63d0c4b0db84367a99e96d185721821",
+      "portableFile": "final-seed10-sensitivity.log.gz",
+      "portablePayloadSha256": "690bcb11fa1cf4ca3992f7d91461c448f5fef55f744c73bbbc862c6f7c8f2ebf",
+      "compressedSha256": "5ffb7646aeffd22ad95594ae1055c81019cf6f4d4d3b523fab086a3c920b61b1",
+      "rawBytes": 294438
+    },
+    {
+      "retainedRelativePath": "final-seed10-sensitivity.txt",
+      "rawSha256": "efcf20cf7b1ac68da47a70450934123fa50c9890ea517db6ce5e7fe5ecea56b1",
+      "portableFile": "final-seed10-sensitivity.txt.gz",
+      "portablePayloadSha256": "f7f543ab85a9dec627243b3817b80b7867246ceddf46764847e563c0a26388e0",
+      "compressedSha256": "00dd5b61a9f9d8b11270e78f892b561b21d9a6bd6bba6863f9a073c2ef803ef6",
+      "rawBytes": 145067
+    },
+    {
+      "retainedRelativePath": "final-seed10-sensitivity-result.json",
+      "rawSha256": "72702c1fff23a5cfb9c16436c445a22a72e30d726a65837c657d7f768ac0324d",
+      "portableFile": "final-seed10-sensitivity-result.json.gz",
+      "portablePayloadSha256": "0b9bd6464c2b38344f6c5db2cf9e596a32f16efafdb281b0e20d8f886463ec9f",
+      "compressedSha256": "ae47d92fffb82faee7847ceaa7a1999ae8eb2506df6ca9251e8cc1e5c5bca861",
+      "rawBytes": 1769
+    },
+    {
+      "retainedRelativePath": "shipping-epoch14-build.log",
+      "rawSha256": "544978c7b7f3901adba7aa7459a128b868fc30fc23ff015004084c645b138c9f",
+      "portableFile": "shipping-epoch14-build.log.gz",
+      "portablePayloadSha256": "aef9a6bb445d8f3199a09d7472930a47ffc185a8ff1fb642b988cf5e8b58642a",
+      "compressedSha256": "b9403ec1f3eee8b6b14a367a7ca3a08aa38c758ec44f8570f309f437b2aacb0d",
+      "rawBytes": 2578
+    },
+    {
+      "retainedRelativePath": "shipping-epoch14-build-result.json",
+      "rawSha256": "29ea60590fa7eae4e1ae979e5f4fb7bfed2aadd8a16666e09b44741faae1a68e",
+      "portableFile": "shipping-epoch14-build-result.json.gz",
+      "portablePayloadSha256": "0b0f202cd592d7c68a228987fcd7b4a7b10668656b6e8112ba90f769ec15ff2d",
+      "compressedSha256": "ba032bda1b5f45ce14c45646779625c6a767bef05034fc53b057e4ea7c15e7e1",
+      "rawBytes": 401
+    },
+    {
+      "retainedRelativePath": "final-resources.json",
+      "rawSha256": "3839e83c7cd3ca3d6dfa83fcd8d6c782fde54fa2177eafa52788f1b257d9b1a9",
+      "portableFile": "final-resources.json.gz",
+      "portablePayloadSha256": "13a2154b61d6a52215affc83385ed5428f7c0b3ef6f4beed231431b08c8cf97c",
+      "compressedSha256": "5852446c11c2a73ddcfbadd9922dd5f0c106eee99f4d3c0f6ae4711776f5a0d8",
+      "rawBytes": 270
+    },
+    {
+      "retainedRelativePath": "shipping-epoch14/source-snapshot.json",
+      "rawSha256": "6c27aaeb1d3f6dd6c01b4838a5df327592b021620e0864e7b4665357f0ee103d",
+      "portableFile": "source-snapshot.json.gz",
+      "portablePayloadSha256": "d3eab9111acc39d244c8ea467d156e06dd0dd2e07721868831488e6a060aedf1",
+      "compressedSha256": "38e39a2ee9ef76f5d0366cf2d7d457ab2fb07ec2155b8b410ac5dda6347782c8",
+      "rawBytes": 270912
+    }
+  ],
+  "packaging": {
+    "status": "PASS",
+    "priorAttempts": "Two FAIL attempts before documentation writes: ASCII title guard mismatched the existing Unicode dash; same evidence bytes retained and verified on resume"
+  }
+}

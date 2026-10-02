@@ -247,7 +247,8 @@ final class PcbNetRouter {
         }
         return best;
     }
-    private static String chooseNext(PcbBoardLayout layout,Vector<String> remaining,Vector<String> reached) {
+    /** Canonical nearest-to-reached branch selection shared by both route owners. */
+    static String chooseNext(PcbBoardLayout layout,Vector<String> remaining,Vector<String> reached) {
         String best=remaining.get(0); long distance=Long.MAX_VALUE;
         for(String id:remaining) for(String other:reached) {
             PcbPadPlacement a=layout.getPad(id),b=layout.getPad(other);

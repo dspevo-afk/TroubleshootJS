@@ -226,7 +226,7 @@ final class PcbLayerRoutingPrototype {
         private int netIndex;
         private String currentNet;
         private Vector<String> currentPadIds;
-        private int nextPadIndex;
+        private Vector<String> reachedPadIds;
         private PcbPadPlacement currentRoot;
         private BranchSearch branch;
         private Publisher publisher;
@@ -260,6 +260,7 @@ final class PcbLayerRoutingPrototype {
             if(publisher!=null) {
                 if(publisher.advanceOne()) {
                     segments+=publisher.segments;
+                    reachedPadIds.add(publisher.start.getPadId());
                     publisher=null;
                 }
                 return;
@@ -282,8 +283,10 @@ final class PcbLayerRoutingPrototype {
                 if(pass==2) Collections.reverse(nets);
                 return;
             }
-            if(currentPadIds!=null && nextPadIndex<currentPadIds.size()) {
-                PcbPadPlacement start=layout.getPad(currentPadIds.get(nextPadIndex++));
+            if(currentPadIds!=null && !currentPadIds.isEmpty()) {
+                String next=PcbNetRouter.chooseNext(layout,currentPadIds,reachedPadIds);
+                currentPadIds.remove(next);
+                PcbPadPlacement start=layout.getPad(next);
                 branches++;
                 branch=new BranchSearch(currentNet,start,currentRoot);
                 return;
@@ -293,10 +296,11 @@ final class PcbLayerRoutingPrototype {
                 currentPadIds=board.getNet(currentNet).getPadIds();
                 Collections.sort(currentPadIds);
                 if(currentPadIds.size()<2) {
-                    currentPadIds=null; currentRoot=null; nextPadIndex=0;
+                    currentPadIds=null; currentRoot=null; reachedPadIds=null;
                 } else {
-                    currentRoot=layout.getPad(currentPadIds.get(0));
-                    nextPadIndex=1;
+                    currentRoot=layout.getPad(currentPadIds.remove(0));
+                    reachedPadIds=new Vector<String>();
+                    reachedPadIds.add(currentRoot.getPadId());
                 }
                 return;
             }

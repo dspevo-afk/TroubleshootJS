@@ -1,4 +1,60 @@
-# Current checkpoint: Q30 blocked — frozen service seed 10 fails routing
+# Current checkpoint: Q30 seed-10 routing fixed - focused gates PASS; acceptance pending
+
+2026-10-02. Local continuation from `bf5063f4f3eadc989eadd7d1bf7191c2c8fb8a06` on
+`codex/q30-multirail-qualification`; this entry belongs to the local patch commit.
+**Q30 NOT ACCEPTED and remains disabled.** U06/U07/Q60 are unstarted. No merge,
+push, publication, email or evidence deletion. The original frozen seed cohort
+and 90,000 ms / 640 work / 5,000 ms active limits remain unchanged.
+
+**Cause/fix:** P07's lexical endpoint order started long congested branches before
+building nearby copper, exhausting the unchanged 100,000-expansion branch cap.
+The exact original seed-10 36-package/two-channel plan now routes by sharing P05's
+existing nearest-to-reached selector. Lexical root/ties, candidate breadth, net
+order and all limits stay fixed; reached membership changes only after complete
+path publication. No retry topology substitution. Layout interpretation is 14;
+public save/replay formats stay unchanged. Independent spatial-order/tie and exact
+plan/replay regressions are added. [Patch evidence](task-evidence/Q30/seed10-routing-epoch14/README.md).
+
+**Fresh PASS:** final physical/P05/P06/P07/resumption five-suite batch (41.215 s);
+all five frozen seed-10 service cases with physical repair/customer retest
+(100.280 s total); all five seed-10 5 us / 2.5 us sensitivity cases (131.342 s);
+actual final-source disabled JDK8/GWT shipping build, five permutations
+(83.320 s). Native cleanup PASS; separate cleanup elapsed time
+was not recorded. Build uses an exact 1,354-input tracked-source export without
+overlay. Root reviewed integrated patch/evidence; read-only leaf identity/lifecycle
+audit found no blocker, ran no tests. Parent acceptance review is pending.
+
+**Preserved FAIL / limits:** the pre-fix minimal exact-plan test fails as intended
+(maintained exit 2, 22.764 s). The diagnostic-only baseline reproduces unchanged
+branch-cap rejection and native cleanup; its outer wrapper had an invalid exit
+command after completion and is not a host PASS. An intermediate nearest-order
+PASS precedes final epoch/test additions and is not final-source acceptance.
+Total route work increases when successful nets finish. **Fresh normal 90-second
+timing is NOT RUN; historical layout-13 cold77 does not qualify this new source.**
+
+**Remaining gates:** parent patch review; original-cohort compiled/cold77 fresh,
+full native82, service105/sensitivity105, structural51+26, enabled production
+build, compiled31/D01-21 (retain seed-35 rejection oracle), ordinary menu33/replay3,
+visible 20/30/40 diagnosis/repair/retest, new source archive verification and final
+parent acceptance. Full matrix was not started this focused turn. Browser/Computer
+Use node_repl JS and graphical controls remain unavailable: supported visible
+input/screenshots are BLOCKED / NOT RUN. Enable patch remains unapplied.
+
+**Preservation/resources:** sibling desktop/worktree edits and four pre-existing
+untracked Python-cache directories are unchanged. Keep prior retained evidence
+and new OS-temp label `q30-seed10-routing-9e2440a2cafc413d8fe274e278845ae2`, including
+raw logs, diagnostic export and disabled shipping build. No task-owned persistent
+preview/browser/server was started; after bounded test/build completion the final
+resource check confirms no remaining task-owned build/test process. No cleanup
+or wide machine change was performed.
+
+**Next action:** parent reviews this local focused patch, then resumes the pending
+fresh full qualification under unchanged budgets. Do not enable Q30 or start later
+milestones from focused success alone.
+
+---
+
+# Historical checkpoint: Q30 blocked — frozen service seed 10 fails routing
 
 2026-10-02. Local resume from `bbbfcd684c4c226c66e5cc2ea673b3cf35c3ac68` on
 `codex/q30-multirail-qualification`; candidate adds only the exact seven-line

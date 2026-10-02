@@ -7,6 +7,7 @@ public final class P07TwoLayerContractTest {
         holeSnapshotsPreserveOwnerAndOrder();
         closedCopperEdgesMatchLongOracle();
         typedQueueMatchesPriorityQueue();
+        nearestBranchesFollowSpatialTree();
         for(boolean linked:new boolean[]{false,true}) {
             P06FactoryLinkFixtures.Fixture fixture=new P06FactoryLinkFixtures.Fixture(true,0,0,!linked);
             String original=fixture.layout.geometryFingerprint();
@@ -27,6 +28,49 @@ public final class P07TwoLayerContractTest {
         }
         negatives(); barriers(); surfacePadEnvelope();
         System.out.println("PASS: P07 two-layer contracts assertions="+checks);
+    }
+    /** Electrical membership is fixed; spatial proximity and canonical ties choose branches. */
+    private static void nearestBranchesFollowSpatialTree() {
+        TroubleshootBoard board=new TroubleshootBoard("P07_NEAREST_BRANCH");
+        board.addNet(new BoardNet("N"));
+        PcbBoardLayout placement=new PcbBoardLayout(1100,650,new Rectangle(100,100,600,400),
+            new Rectangle(820,120,200,400));
+        addPoint(board,placement,"A","N",170,200);
+        addPoint(board,placement,"B","N",630,200);
+        addPoint(board,placement,"C","N",250,200);
+        addPoint(board,placement,"D","N",170,280);
+        board.validate();
+        String original=placement.geometryFingerprint();
+        java.util.Vector<String> remaining=board.getNet("N").getPadIds();
+        java.util.Collections.sort(remaining);
+        remaining.remove("A.1");
+        java.util.Vector<String> reached=new java.util.Vector<String>(); reached.add("A.1");
+        require("C.1".equals(PcbNetRouter.chooseNext(placement,remaining,reached)),
+            "80-unit nearest branches beat the 460-unit lexical B; canonical C wins C/D tie");
+        reached.add("C.1"); remaining.remove("C.1");
+        require("D.1".equals(PcbNetRouter.chooseNext(placement,remaining,reached)),
+            "next branch minimizes distance to the entire reached tree");
+        reached.add("D.1"); remaining.remove("D.1");
+        require("B.1".equals(PcbNetRouter.chooseNext(placement,remaining,reached)),
+            "the remaining endpoint is eventually routed");
+        PcbLayerRoutingPrototype.Result result=PcbLayerRoutingPrototype.route(board,placement,
+            PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,P06FactoryLinkFixtures.OBSERVER);
+        require(result.accepted(),"nearest-branch fixture routes with existing bounds");
+        String[] expected={"C.1","D.1","B.1"};
+        for(int branch=1;branch<=expected.length;branch++) {
+            PcbTraceGeometry first=null;
+            for(PcbTraceGeometry trace:result.layout.getTraces())
+                if(("p07/N/"+branch+"/0").equals(trace.getSourceId())) first=trace;
+            require(first!=null && expected[branch-1].equals(first.getStartPadId()),
+                "P07 actually publishes the expected spatial branch order "+branch);
+        }
+        result.layout.validateRoutingGeometry(board);
+        new PcbTwoLayerRules(board,result.layout).validate(result.layout);
+        require(result.expansions<=PcbLayerRoutingPrototype.MAX_EXPANSIONS &&
+            original.equals(placement.geometryFingerprint()),
+            "nearest branches preserve the original placement and search bound");
+        require(board.getNet("N").getPadIds().size()==4,
+            "branch scheduling does not remove authoritative net endpoints");
     }
     private static void holeSnapshotsPreserveOwnerAndOrder() {
         PcbBoardLayout layout=new PcbBoardLayout(1100,650,new Rectangle(100,100,600,400),
