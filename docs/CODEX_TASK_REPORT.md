@@ -1,4 +1,42 @@
-# Current checkpoint: Q30 fresh pilot PASS; original cold corpus RUNNING
+# Current checkpoint: Q30 cold77 verified PASS; full native 82 RUNNING
+
+2026-10-02T03:16:27.074160+00:00. Local candidate base `1089110`; reviewed checkpoint `fc042840`. **Q30 NOT
+ACCEPTED; disabled.** No merge/push/email/evidence deletion; U06/U07/Q60 unstarted.
+Original 77-root order, 21 service/sensitivity roots, four candidates and 90,000/
+640/5,000 limits stay unchanged. [Cold77 evidence](task-evidence/Q30/epoch14-cold77/README.md).
+
+Fresh cold77 **PASS**: all 77 APP_PASS/HOST_PASS/cleanup PASS; strict root re-review
+matched all captured results; all 1,354 frozen raw inputs verified unchanged.
+Published boards cover every integer size 20-40. Worst 82,787 ms (root 10000),
+headroom 7,213 ms; work 507; active/coordinator 1,377 ms. Cleanup total 84.692 s,
+maximum 1.371 s; servers stopped, no owned survivors/errors. Outer pilot/rest
+totals 129.857/3,811.925 s include host lifecycle and are not launch budgets.
+Source identity: e186ffb8ed12b6a1d947e932124095998c98fcd7cb1f68253d892456e39fc332.
+
+Earlier final-source isolated GWT5/four compiled cases and three pilots PASS remain bound in
+first-stage packet. Original reader FAIL_INVALID/exit 2 remains preserved. Current
+16 reader tests PASS and read-only leaf continuation review found no blocker.
+Copied service metadata hardening is a nonblocking follow-up; this audit compared
+all 21 and native consumes the exact raw-hash-pinned acceptance file. Audit receipt
+write first blocked by restricted permissions, authorized retry PASS; no app change.
+
+Full native 82 **RUNNING**, session 10932, PowerShell PID 22456 created
+2026-10-02T03:11:29.8075140Z. Explicit 21 service/sensitivity seeds, 105 cases each,
+structural 51; all original child bounds remain. Native PASS NOT CLAIMED. One
+expensive matrix at a time. Poll existing log/session; do not relaunch. After PASS
+review run `native-append` (26 roots), disabled shipping build/compiled 31/D01-21/negative
+catalog/replay, archives, private one-boolean enabled build/menu 33/replay 3 and
+parent acceptance. Preserve distinct D01 seed 35 rejection oracle.
+
+Visible 20/30/40 player repair/retest BLOCKED/NOT RUN: graphical/node_repl tools
+unavailable. Review steps are prepared in first-stage VISIBLE_REVIEW.md; final
+private preview is not ready yet. Shipping stays disabled; stale broad catalog
+patch unapplied. Retain temp label q30-epoch14-qualification-81a29fe18e234b0899b079ff4090b60f, all raw evidence/profiles/exports
+and helper versions. Four pre-existing untracked caches and sibling edits preserved.
+
+---
+
+# Historical checkpoint: Q30 fresh pilot PASS; original cold corpus RUNNING
 
 2026-10-02T02:11:11.932810+00:00. Candidate base `108911013e114e7707a5fe0c643df43043cc6759` plus
 strict reader/fixture documentation changes recorded in this local checkpoint.
