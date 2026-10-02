@@ -1,4 +1,44 @@
-# Current checkpoint: Q30 fresh native82 and structural77 PASS; cold qualification pending
+# Current checkpoint: Q30 pilot3 PASS; original cold77 RUNNING
+
+2026-10-02T06:49:48.061906+00:00. Branch `codex/q30-multirail-qualification`; frozen source base
+`7bdc23e8170e4a9e737b33daf4bb533f87468b22`, identity `a3bd150019d00870a08896efd893c99aff120ce11a49f34cca0af07f33d59c31`.
+**Q30 NOT ACCEPTED; disabled.** No push/merge/publication/email/evidence deletion.
+U06/U07/Q60 unstarted. [Cold pilot/live handoff](task-evidence/Q30/epoch15-cold-pilot/README.md).
+All1,354 raw inputs unchanged; architecture current layout epoch15.
+
+Retained fresh PASS: native82 (4,328.150s), service105/sensitivity105, structural
+77 (70 accepted/7 explicit rejection/zero failures), independent oracles/cleanup;
+new isolated GWT5 (126.553s), compiled4/freeze (17.890s; cleanup1.116s), all77 roots/
+308 manifests declared before cold. Initial zero-case ABI failure preserved and
+resolved by existing CP313 host; no install/protection/source change.
+[Prior phase packet](task-evidence/Q30/epoch15-native-qualification/README.md).
+
+Pilot3 strict re-evaluation PASS:20/30/40 parts21.432/30.386/72.749s, original
+candidate0 each, APP/HOST/input/cleanup PASS. Pilot aggregate136.313s, cleanup
+3.746s. At capture10/77 cold roots passed, max72749ms, minimum
+headroom17251ms. Remaining74 RUNNING, current root12.
+No corpus PASS claim. Original90,000/640/5,000 limits and frozen order/canonicals/
+candidate caps retained; stop on every nonpass, no root substitution.
+
+Live runner: session47937, wrapper PID6456, creation2026-10-02T06:42:49.0889270Z,
+powershell.exe `run_epoch15_cold.ps1 -Batch cold-rest`. Do not duplicate or kill.
+Raw authoritative sequence/log/identity/profile records under OS-temp label
+`q30-epoch15-qualification-306d44cccd8d447abe0b257530b9354a`. Workspace `epoch15-task-pointer.json` binds exact paths.
+One expensive job at a time; preserve LocalDots priority. Four original untracked
+caches and sibling worktree edits remain. Defender stays enabled, no exceptions.
+
+Next: monitor existing runner; after completion strict-audit77 with maintained
+reader and workspace `audit_epoch15_cold77.py`, including all20-40 published sizes.
+Only after PASS run compiled31/semantic D01 review (seed35 typed rejection),
+disabled control/private menu-replay, formal archive and parent acceptance review.
+Compiled audit's full inventory comparison fixed before first gate; five cache
+permutations independently required. Use explicit existing CP313 host and retained
+dependency PYTHONPATH. Supported interactive Browser/computer/node_repl absent:
+visible20/30/40 diagnosis/repair/retest remains BLOCKED/NOT RUN. Q30 trackedfalse.
+
+---
+
+# Historical checkpoint: Q30 fresh native82 and structural77 PASS; cold qualification pending
 
 2026-10-02T06:18:41.150186+00:00. Branch `codex/q30-multirail-qualification`; reviewed source base
 `7bdc23e8170e4a9e737b33daf4bb533f87468b22`. **Q30 NOT ACCEPTED; disabled.** No merge/push/publication/
