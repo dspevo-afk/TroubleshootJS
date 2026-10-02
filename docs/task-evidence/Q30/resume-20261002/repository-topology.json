@@ -1,0 +1,586 @@
+{
+  "schema": 1,
+  "status": "READ_ONLY_AUDIT",
+  "checkpoint": "bbbfcd684c4c226c66e5cc2ea673b3cf35c3ac68",
+  "origin": "https://github.com/dspevo-afk/TroubleshootJS.git",
+  "upstreamRemote": "https://github.com/sharpie7/circuitjs1.git",
+  "verifiedOriginDefaultBranch": "master",
+  "liveRemoteHeads": [
+    {
+      "branch": "codex-inbox",
+      "sha": "3a5351f8ade672a6c898253b60e00b5729d6e759"
+    },
+    {
+      "branch": "codex/component-visual-audit",
+      "sha": "f5407b476955672ae7181971b440d2e38a5e6801"
+    },
+    {
+      "branch": "codex/pcb-routing-scalability-audit",
+      "sha": "0681cc61d2fb92d06f8c1f0a571a4160eeded824"
+    },
+    {
+      "branch": "codex/post43-agents-governance-inbox",
+      "sha": "5deec96bae467a0e9a15881480a1c8291ef689f8"
+    },
+    {
+      "branch": "codex/post43-mainline-consolidation",
+      "sha": "a5b253873c2b25a54d7c393b118e3f2e1831a4d8"
+    },
+    {
+      "branch": "codex/post43-roadmap-redesign",
+      "sha": "acd2c265a91908cb2656d7306936c13c2ddd96ea"
+    },
+    {
+      "branch": "codex/procedural-generation-audit",
+      "sha": "1eebf1a9bd7dc2ab3aac5f4278d4ae8eba03f989"
+    },
+    {
+      "branch": "codex/prompt-dropbox",
+      "sha": "236c7e6f37a9af9c5011ed73b1fcf5fcbb730f4e"
+    },
+    {
+      "branch": "codex/q30-multirail-qualification",
+      "sha": "745d537de5b18bd7ec2ae769fc00d3696e5af6bd"
+    },
+    {
+      "branch": "codex/state-lifecycle-integrity-audit",
+      "sha": "792a6da80e9eca3750c74803ba72bc3b0fbdc2f4"
+    },
+    {
+      "branch": "codex/task43-recovery-assessment",
+      "sha": "4d39242817effa7f01711ea74f845a0189d7affc"
+    },
+    {
+      "branch": "codex/task43-recovery-checkpoint",
+      "sha": "239b52f0c1fd36eac5ccb65ad7dbe559474c1800"
+    },
+    {
+      "branch": "codex/task43-recovery-integration",
+      "sha": "8245c79990647f6c40f53bc1dd9330ec2ccd22b4"
+    },
+    {
+      "branch": "codex/task43p-final-recovery",
+      "sha": "e0a9d978409bc84d376d0dfe69a3afedb1b94e15"
+    },
+    {
+      "branch": "codex/troubleshooting-realism-audit",
+      "sha": "1875234c46b058b9400e86ad5716d7f536f12cf7"
+    },
+    {
+      "branch": "codex/ui-workbench-shell",
+      "sha": "7bbb9de591155da0db0c173cb26c5e621a622c6a"
+    },
+    {
+      "branch": "codex/verification-integrity-audit",
+      "sha": "14d97a6652e5158fc80006b0da8d71b5a514c54c"
+    },
+    {
+      "branch": "master",
+      "sha": "9dc06141190da3a44ebe12015a4f5656f0f40ef5"
+    }
+  ],
+  "remoteMethod": "Agent repository_topology: successful authorized git ls-remote --symref on 2026-10-01/02; no fetch",
+  "localMethod": "git worktree list, status --short with no optional locks, for-each-ref, rev-list",
+  "worktrees": [
+    {
+      "HEAD": "e0c368855a3891acd4673e94ce9afa732390e2bf",
+      "branch": "refs/heads/codex/task43p-final-recovery",
+      "pathLabel": "Desktop/TroubleshootJS",
+      "exists": true,
+      "statusRows": [
+        "M src/com/lushprojects/circuitjs1/client/A07SolverDeveloperVerifier.java",
+        " M src/com/lushprojects/circuitjs1/client/AlphaDeveloperVerifier.java",
+        " M src/com/lushprojects/circuitjs1/client/CirSim.java",
+        " M src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+        " M src/com/lushprojects/circuitjs1/client/FreshGeneratedRuntimeInstallation.java",
+        " M src/com/lushprojects/circuitjs1/client/GeneratedLiveTemporalSimulation.java",
+        " M src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+        "?? docs/task-evidence/RelaySeed4/",
+        "?? docs/task-evidence/visual-productization/a07-build11.json",
+        "?? docs/task-evidence/visual-productization/a07-report.json",
+        "?? docs/task-evidence/visual-productization/a08-build14-failure.json",
+        "?? docs/task-evidence/visual-productization/a08-report.json",
+        "?? docs/task-evidence/visual-productization/alpha-build10-failure.json",
+        "?? docs/task-evidence/visual-productization/alpha-build14-browser-state.jpg",
+        "?? docs/task-evidence/visual-productization/alpha-build14-progress.json",
+        "?? docs/task-evidence/visual-productization/alpha-build6-admission-failure.json",
+        "?? docs/task-evidence/visual-productization/alpha-case0-pilot-4.json",
+        "?? docs/task-evidence/visual-productization/alpha-case0-pilot-failure.json",
+        "?? docs/task-evidence/visual-productization/alpha-final.txt",
+        "?? docs/task-evidence/visual-productization/alpha-forced.json",
+        "?? docs/task-evidence/visual-productization/alpha-full-build13-fail.json",
+        "?? docs/task-evidence/visual-productization/alpha-rc0-build11.json",
+        "?? docs/task-evidence/visual-productization/alpha-rc0-build12.json",
+        "?? docs/task-evidence/visual-productization/alpha-rc0-build13.json",
+        "?? docs/task-evidence/visual-productization/alpha-rc0-build7.json",
+        "?? docs/task-evidence/visual-productization/alpha-rc0-build8.json",
+        "?? docs/task-evidence/visual-productization/alpha-rc0-build9.json",
+        "?? docs/task-evidence/visual-productization/alpha-report.json",
+        "?? docs/task-evidence/visual-productization/before-rb15-bottom.png",
+        "?? docs/task-evidence/visual-productization/before-rb15-top.png",
+        "?? docs/task-evidence/visual-productization/candidate-build14.json",
+        "?? docs/task-evidence/visual-productization/candidate.json",
+        "?? docs/task-evidence/visual-productization/e03-build15-failure.json",
+        "?? docs/task-evidence/visual-productization/final-bench-overview.jpg",
+        "?? docs/task-evidence/visual-productization/final-healthy-lifted-measurement.jpg",
+        "?? docs/task-evidence/visual-productization/final-healthy-removed-powered.jpg",
+        "?? docs/task-evidence/visual-productization/final-healthy-resistor-menu.jpg",
+        "?? docs/task-evidence/visual-productization/final-inputs.json",
+        "?? docs/task-evidence/visual-productization/final-ui-menus.txt",
+        "?? docs/task-evidence/visual-productization/gwt-final.txt",
+        "?? docs/task-evidence/visual-productization/gwt-top-bench-pilot-2.txt",
+        "?? docs/task-evidence/visual-productization/gwt-top-bench-pilot.txt",
+        "?? docs/task-evidence/visual-productization/gwt-visual-pilot.txt",
+        "?? docs/task-evidence/visual-productization/healthy-lifted-measurement.png",
+        "?? docs/task-evidence/visual-productization/healthy-removed-powered.png",
+        "?? docs/task-evidence/visual-productization/healthy-resistor-menu.png",
+        "?? docs/task-evidence/visual-productization/healthy-restored-powered.png",
+        "?? docs/task-evidence/visual-productization/inputs-build14.json",
+        "?? docs/task-evidence/visual-productization/native-final.txt",
+        "?? docs/task-evidence/visual-productization/native-focused-final.txt",
+        "?? docs/task-evidence/visual-productization/native-pilot-2.json",
+        "?? docs/task-evidence/visual-productization/native-pilot-2.json.manifest-controlled-alt.txt",
+        "?? docs/task-evidence/visual-productization/native-pilot-2.json.manifest-controlled.txt",
+        "?? docs/task-evidence/visual-productization/native-pilot-2.json.manifest-resistive.txt",
+        "?? docs/task-evidence/visual-productization/native-pilot-2.json.roles.txt",
+        "?? docs/task-evidence/visual-productization/native-pilot-2.json.seeds.txt",
+        "?? docs/task-evidence/visual-productization/native-pilot-2.json.values.txt",
+        "?? docs/task-evidence/visual-productization/native-pilot-2.json.vectors.txt",
+        "?? docs/task-evidence/visual-productization/native-pilot-2.txt",
+        "?? docs/task-evidence/visual-productization/native-pilot.txt",
+        "?? docs/task-evidence/visual-productization/pending-after-build15.json",
+        "?? docs/task-evidence/visual-productization/pilot-led-top.png",
+        "?? docs/task-evidence/visual-productization/pilot-top-bench.png",
+        "?? docs/task-evidence/visual-productization/rc-retest-build12-error.json",
+        "?? docs/task-evidence/visual-productization/rc-retest-build13-error.json",
+        "?? docs/task-evidence/visual-productization/render0-build6.json",
+        "?? docs/task-evidence/visual-productization/render0-final.json",
+        "?? docs/task-evidence/visual-productization/render0-forced.json",
+        "?? docs/task-evidence/visual-productization/render0-pilot.json",
+        "?? docs/task-evidence/visual-productization/render0-report.json",
+        "?? docs/task-evidence/visual-productization/service-build8.json",
+        "?? docs/task-evidence/visual-productization/service-final.json",
+        "?? docs/task-evidence/visual-productization/service-forced-pilot.json",
+        "?? docs/task-evidence/visual-productization/service-forced.json",
+        "?? docs/task-evidence/visual-productization/service-pilot.json",
+        "?? docs/task-evidence/visual-productization/service-report.json",
+        "?? docs/task-evidence/visual-productization/stored-energy-build9.txt",
+        "?? docs/task-evidence/visual-productization/ui-adapter-final.txt",
+        "?? docs/task-evidence/visual-productization/wood-pilot.png",
+        "?? tests/contracts/__pycache__/"
+      ]
+    },
+    {
+      "HEAD": "0018f3d7456a12b02fe72299205531fe2e572267",
+      "detached": true,
+      "pathLabel": "C:/tmp/TSJ-procedural-resume-stbm0fh3/publication",
+      "exists": true,
+      "statusRows": []
+    },
+    {
+      "HEAD": "55cac1d24528a26505f540ee52f85631e0add4d2",
+      "detached": true,
+      "pathLabel": "CodexWorktrees/4c08/TroubleshootJS",
+      "exists": true,
+      "statusRows": [
+        "M docs/CODEX_TASK_REPORT.md",
+        " M docs/ROADMAP.md",
+        " M src/com/lushprojects/circuitjs1/client/CirSim.java",
+        "?? docs/task-evidence/A01/",
+        "?? scripts/a01.py",
+        "?? scripts/collect-a01.mjs",
+        "?? src/com/lushprojects/circuitjs1/client/A01MeasurementVerifier.java",
+        "?? tests/benchmarks/"
+      ]
+    },
+    {
+      "HEAD": "a5b253873c2b25a54d7c393b118e3f2e1831a4d8",
+      "detached": true,
+      "pathLabel": "CodexWorktrees/5691/TroubleshootJS",
+      "exists": true,
+      "statusRows": [
+        "M scripts/VerifierIsolation.psm1",
+        " M scripts/verify-browser.ps1",
+        " M scripts/verify-gate-b.ps1",
+        " M scripts/verify-task43p-source-experiments.ps1"
+      ]
+    },
+    {
+      "HEAD": "9853f1e5fd311830d14d671d0ba380c51018a658",
+      "detached": true,
+      "pathLabel": "CodexWorktrees/97e7/TroubleshootJS",
+      "exists": true,
+      "statusRows": [
+        "M AGENTS.md",
+        "?? docs/research/POST_TASK_43_INTEGRITY_RECONCILIATION.md"
+      ]
+    },
+    {
+      "HEAD": "3b4fd13db927a673a1d106bdb1ac7d19af9dea12",
+      "detached": true,
+      "pathLabel": "CodexWorktrees/996c/TroubleshootJS",
+      "exists": true,
+      "statusRows": [
+        "M docs/ARCHITECTURE.md",
+        " M docs/CODEX_TASK_REPORT.md",
+        " M docs/task-evidence/A01/README.md",
+        " M scripts/VerifierIsolation.psm1",
+        " M scripts/a01.py",
+        " M scripts/collect-a01.mjs",
+        " M scripts/preview.ps1",
+        " M src/com/lushprojects/circuitjs1/client/A01MeasurementVerifier.java",
+        "?? docs/task-evidence/A01/corrected-check-summary.json",
+        "?? docs/task-evidence/A01/corrected-cleanup-summary.json",
+        "?? docs/task-evidence/A01/corrected-debug-off-summary.json",
+        "?? docs/task-evidence/A01/corrected-holdout-summary.json",
+        "?? docs/task-evidence/A01/corrected-identity-summary.json",
+        "?? docs/task-evidence/A01/corrected-negative-summary.json",
+        "?? docs/task-evidence/A01/corrected-pilot-summary.json",
+        "?? tests/contracts/a01_collection_integrity.mjs",
+        "?? tests/contracts/a01_qualification_integrity.py"
+      ]
+    },
+    {
+      "HEAD": "a5b253873c2b25a54d7c393b118e3f2e1831a4d8",
+      "detached": true,
+      "pathLabel": "CodexWorktrees/a502/TroubleshootJS",
+      "exists": true,
+      "statusRows": [
+        "M scripts/VerifierIsolation.psm1",
+        " M scripts/verify-browser.ps1",
+        " M scripts/verify-gate-b.ps1",
+        " M scripts/verify-task43p-source-experiments.ps1"
+      ]
+    },
+    {
+      "HEAD": "9853f1e5fd311830d14d671d0ba380c51018a658",
+      "detached": true,
+      "pathLabel": "CodexWorktrees/daa4/TroubleshootJS",
+      "exists": true,
+      "statusRows": [
+        "M AGENTS.md",
+        "?? docs/research/POST_TASK_43_INTEGRITY_RECONCILIATION.md"
+      ]
+    },
+    {
+      "HEAD": "a5b253873c2b25a54d7c393b118e3f2e1831a4d8",
+      "detached": true,
+      "pathLabel": "CodexWorktrees/e6df/TroubleshootJS",
+      "exists": true,
+      "statusRows": [
+        "M scripts/VerifierIsolation.psm1",
+        " M scripts/verify-browser.ps1",
+        " M scripts/verify-gate-b.ps1",
+        " M scripts/verify-task43p-source-experiments.ps1"
+      ]
+    },
+    {
+      "HEAD": "55cac1d24528a26505f540ee52f85631e0add4d2",
+      "detached": true,
+      "pathLabel": "CodexWorktrees/f56d/TroubleshootJS",
+      "exists": true,
+      "statusRows": [
+        "M docs/CODEX_TASK_REPORT.md",
+        " M docs/ROADMAP.md",
+        " M src/com/lushprojects/circuitjs1/client/CirSim.java",
+        "?? docs/task-evidence/A01/",
+        "?? scripts/a01.py",
+        "?? scripts/collect-a01.mjs",
+        "?? src/com/lushprojects/circuitjs1/client/A01MeasurementVerifier.java",
+        "?? tests/benchmarks/"
+      ]
+    },
+    {
+      "HEAD": "e0c368855a3891acd4673e94ce9afa732390e2bf",
+      "detached": true,
+      "pathLabel": "CodexWorktrees/q30-decision-service/TroubleshootJS",
+      "exists": true,
+      "statusRows": [
+        "?? src/com/lushprojects/circuitjs1/client/Rb30DecisionService.java"
+      ]
+    },
+    {
+      "HEAD": "bbbfcd684c4c226c66e5cc2ea673b3cf35c3ac68",
+      "branch": "refs/heads/codex/q30-multirail-qualification",
+      "pathLabel": "CodexWorktrees/q30-multirail-qualification/TroubleshootJS",
+      "exists": true,
+      "statusRows": [
+        "M tests/contracts/QuickPlayPhysicalMatrixContractTest.java",
+        "?? docs/task-evidence/Q30/scale-plan-4/__pycache__/",
+        "?? tests/contracts/__pycache__/",
+        "?? tests/qualification/q30-normal-screen/__pycache__/",
+        "?? tests/qualification/q30-scale-acceptance/__pycache__/"
+      ]
+    },
+    {
+      "HEAD": "8a807c4c4eaac4979b6d05d6edd22b95710d9ce6",
+      "detached": true,
+      "prunable": "gitdir file points to non-existent location",
+      "pathLabel": "OSTemp/TroubleshootJS-medium-procedural-verify",
+      "exists": false
+    },
+    {
+      "HEAD": "9082930f197c173b1e22ca7ada8033e4143fbdd8",
+      "detached": true,
+      "prunable": "gitdir file points to non-existent location",
+      "pathLabel": "OSTemp/TroubleshootJS-P06-20260915-g3kl9e46/candidate",
+      "exists": false
+    },
+    {
+      "HEAD": "5a9e544c41a343f3943211cf83fba85b05cfcd29",
+      "detached": true,
+      "prunable": "gitdir file points to non-existent location",
+      "pathLabel": "OSTemp/TroubleshootJS-P09-l6dxv50r/candidate",
+      "exists": false
+    },
+    {
+      "HEAD": "5a9e544c41a343f3943211cf83fba85b05cfcd29",
+      "detached": true,
+      "prunable": "gitdir file points to non-existent location",
+      "pathLabel": "OSTemp/TroubleshootJS-P09-l6dxv50r/integrated",
+      "exists": false
+    },
+    {
+      "HEAD": "e0c368855a3891acd4673e94ce9afa732390e2bf",
+      "detached": true,
+      "prunable": "gitdir file points to non-existent location",
+      "pathLabel": "OSTemp/TroubleshootJS-q30-electrical-pilot-d5ac6f2da4294878afa045bb419bd7db",
+      "exists": false
+    },
+    {
+      "HEAD": "e0c368855a3891acd4673e94ce9afa732390e2bf",
+      "detached": true,
+      "prunable": "gitdir file points to non-existent location",
+      "pathLabel": "OSTemp/troubleshootjs-q30-envelope-e0c3688",
+      "exists": false
+    },
+    {
+      "HEAD": "e0c368855a3891acd4673e94ce9afa732390e2bf",
+      "detached": true,
+      "prunable": "gitdir file points to non-existent location",
+      "pathLabel": "OSTemp/TroubleshootJS-q30-floorplan-v3-20260923-184930805",
+      "exists": false
+    },
+    {
+      "HEAD": "e0c368855a3891acd4673e94ce9afa732390e2bf",
+      "detached": true,
+      "prunable": "gitdir file points to non-existent location",
+      "pathLabel": "OSTemp/TroubleshootJS-q30-physical-pilot-f3b2bc734b4247ca8f779bd2a14df1fd",
+      "exists": false
+    },
+    {
+      "HEAD": "e0c368855a3891acd4673e94ce9afa732390e2bf",
+      "detached": true,
+      "prunable": "gitdir file points to non-existent location",
+      "pathLabel": "OSTemp/troubleshootjs-q30-rb30-5b917bb8f62e4f3892af7a0e1d6ecd73",
+      "exists": false
+    },
+    {
+      "HEAD": "e0c368855a3891acd4673e94ce9afa732390e2bf",
+      "detached": true,
+      "prunable": "gitdir file points to non-existent location",
+      "pathLabel": "OSTemp/TroubleshootJS-q30-sensor-v4-f915542b03d540adbc4f054743f1cd52",
+      "exists": false
+    },
+    {
+      "HEAD": "83d3eb39eb3669b756a78588d95bdf155cecb172",
+      "detached": true,
+      "prunable": "gitdir file points to non-existent location",
+      "pathLabel": "OSTemp/TroubleshootJS-QuickPlay-a7cif7ke/candidate",
+      "exists": false
+    },
+    {
+      "HEAD": "4d39242817effa7f01711ea74f845a0189d7affc",
+      "branch": "refs/heads/codex/task43-recovery-assessment",
+      "prunable": "gitdir file points to non-existent location",
+      "pathLabel": "OSTemp/TroubleshootJS-task43-recovery-assessment",
+      "exists": false
+    },
+    {
+      "HEAD": "e0c368855a3891acd4673e94ce9afa732390e2bf",
+      "detached": true,
+      "prunable": "gitdir file points to non-existent location",
+      "pathLabel": "OSTemp/tsj-q30-generator-20260923",
+      "exists": false
+    },
+    {
+      "HEAD": "99a0001982ad92d245fda1e38a9c7ea1045da3a3",
+      "detached": true,
+      "prunable": "gitdir file points to non-existent location",
+      "pathLabel": "OSTemp/tsjs-review-99a0001-b8d53fdd",
+      "exists": false
+    },
+    {
+      "HEAD": "0681cc61d2fb92d06f8c1f0a571a4160eeded824",
+      "branch": "refs/heads/codex/pcb-routing-scalability-audit",
+      "prunable": "gitdir file points to non-existent location",
+      "pathLabel": "Desktop/pcb-routing-scalability-audit",
+      "exists": false
+    },
+    {
+      "HEAD": "792a6da80e9eca3750c74803ba72bc3b0fbdc2f4",
+      "branch": "refs/heads/codex/state-lifecycle-integrity-audit",
+      "prunable": "gitdir file points to non-existent location",
+      "pathLabel": "Desktop/state-lifecycle-integrity-audit",
+      "exists": false
+    },
+    {
+      "HEAD": "1eebf1a9bd7dc2ab3aac5f4278d4ae8eba03f989",
+      "branch": "refs/heads/codex/procedural-generation-audit",
+      "pathLabel": "Desktop/TroubleshootJS/.worktrees/procedural-generation-audit",
+      "exists": true,
+      "statusRows": []
+    },
+    {
+      "HEAD": "1875234c46b058b9400e86ad5716d7f536f12cf7",
+      "branch": "refs/heads/codex/troubleshooting-realism-audit",
+      "pathLabel": "Desktop/TroubleshootJS/.worktrees/troubleshooting-realism-audit",
+      "exists": true,
+      "statusRows": []
+    },
+    {
+      "HEAD": "7bbb9de591155da0db0c173cb26c5e621a622c6a",
+      "branch": "refs/heads/codex/ui-workbench-shell",
+      "pathLabel": "Desktop/TroubleshootJS/.worktrees/ui-workbench-shell",
+      "exists": true,
+      "statusRows": []
+    },
+    {
+      "HEAD": "14d97a6652e5158fc80006b0da8d71b5a514c54c",
+      "branch": "refs/heads/codex/verification-integrity-audit",
+      "prunable": "gitdir file points to non-existent location",
+      "pathLabel": "Desktop/verification-integrity-audit",
+      "exists": false
+    }
+  ],
+  "localBranches": [
+    {
+      "branch": "codex/component-visual-audit",
+      "sha": "f5407b476955672ae7181971b440d2e38a5e6801",
+      "upstream": "origin/codex/component-visual-audit",
+      "aheadMaster": 0,
+      "behindMaster": 58
+    },
+    {
+      "branch": "codex/integration-audits-ui",
+      "sha": "92df2401d865f81e9c68fb1e1b503a6b92fa8051",
+      "upstream": "",
+      "aheadMaster": 0,
+      "behindMaster": 42
+    },
+    {
+      "branch": "codex/pcb-routing-scalability-audit",
+      "sha": "0681cc61d2fb92d06f8c1f0a571a4160eeded824",
+      "upstream": "origin/codex/pcb-routing-scalability-audit",
+      "aheadMaster": 0,
+      "behindMaster": 58
+    },
+    {
+      "branch": "codex/post43-mainline-consolidation",
+      "sha": "a5b253873c2b25a54d7c393b118e3f2e1831a4d8",
+      "upstream": "origin/codex/post43-mainline-consolidation",
+      "aheadMaster": 5,
+      "behindMaster": 0
+    },
+    {
+      "branch": "codex/post43-roadmap-redesign",
+      "sha": "acd2c265a91908cb2656d7306936c13c2ddd96ea",
+      "upstream": "origin/codex/post43-roadmap-redesign",
+      "aheadMaster": 0,
+      "behindMaster": 1
+    },
+    {
+      "branch": "codex/procedural-generation-audit",
+      "sha": "1eebf1a9bd7dc2ab3aac5f4278d4ae8eba03f989",
+      "upstream": "origin/codex/procedural-generation-audit",
+      "aheadMaster": 0,
+      "behindMaster": 58
+    },
+    {
+      "branch": "codex/q30-multirail-qualification",
+      "sha": "bbbfcd684c4c226c66e5cc2ea673b3cf35c3ac68",
+      "upstream": "origin/codex/q30-multirail-qualification",
+      "aheadMaster": 104,
+      "behindMaster": 0
+    },
+    {
+      "branch": "codex/state-lifecycle-integrity-audit",
+      "sha": "792a6da80e9eca3750c74803ba72bc3b0fbdc2f4",
+      "upstream": "origin/codex/state-lifecycle-integrity-audit",
+      "aheadMaster": 1,
+      "behindMaster": 31
+    },
+    {
+      "branch": "codex/task43-recovery-assessment",
+      "sha": "4d39242817effa7f01711ea74f845a0189d7affc",
+      "upstream": "origin/codex/task43-recovery-assessment",
+      "aheadMaster": 1,
+      "behindMaster": 30
+    },
+    {
+      "branch": "codex/task43-recovery-checkpoint",
+      "sha": "239b52f0c1fd36eac5ccb65ad7dbe559474c1800",
+      "upstream": "origin/codex/task43-recovery-checkpoint",
+      "aheadMaster": 0,
+      "behindMaster": 29
+    },
+    {
+      "branch": "codex/task43-recovery-integration",
+      "sha": "8245c79990647f6c40f53bc1dd9330ec2ccd22b4",
+      "upstream": "origin/codex/task43-recovery-integration",
+      "aheadMaster": 0,
+      "behindMaster": 3
+    },
+    {
+      "branch": "codex/task43p-final-recovery",
+      "sha": "e0c368855a3891acd4673e94ce9afa732390e2bf",
+      "upstream": "origin/codex/task43p-final-recovery",
+      "aheadMaster": 62,
+      "behindMaster": 0
+    },
+    {
+      "branch": "codex/troubleshooting-realism-audit",
+      "sha": "1875234c46b058b9400e86ad5716d7f536f12cf7",
+      "upstream": "origin/codex/troubleshooting-realism-audit",
+      "aheadMaster": 0,
+      "behindMaster": 58
+    },
+    {
+      "branch": "codex/ui-workbench-shell",
+      "sha": "7bbb9de591155da0db0c173cb26c5e621a622c6a",
+      "upstream": "origin/codex/ui-workbench-shell",
+      "aheadMaster": 0,
+      "behindMaster": 57
+    },
+    {
+      "branch": "codex/verification-integrity-audit",
+      "sha": "14d97a6652e5158fc80006b0da8d71b5a514c54c",
+      "upstream": "origin/codex/verification-integrity-audit",
+      "aheadMaster": 1,
+      "behindMaster": 31
+    },
+    {
+      "branch": "master",
+      "sha": "9dc06141190da3a44ebe12015a4f5656f0f40ef5",
+      "upstream": "origin/master",
+      "aheadMaster": 0,
+      "behindMaster": 0
+    }
+  ],
+  "ownershipLimit": "Dirty state does not prove active ownership. Every dirty sibling is preserved; no process working-directory inspection was performed.",
+  "actions": {
+    "merge": false,
+    "rebase": false,
+    "reset": false,
+    "prune": false,
+    "delete": false,
+    "push": false,
+    "fetch": false,
+    "historyRewrite": false
+  },
+  "commonGitDirectoryBinding": {
+    "desktopAndQ30Same": true,
+    "label": "Desktop/TroubleshootJS/.git",
+    "method": "git rev-parse --path-format=absolute --git-common-dir in both checkouts; equal exact result"
+  }
+}

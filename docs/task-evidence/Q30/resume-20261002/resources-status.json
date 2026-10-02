@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "observedUtc": "2026-10-02T00:45:37.269144+00:00",
+  "status": "PASS",
+  "method": "Read-only Win32_Process census; java/javaw/python/python3.13/msedge/powershell/pwsh command lines bound to the two exact Q30 task temp roots; current query process excluded",
+  "matches": 0,
+  "nativeCleanup": "PASS in both logs",
+  "scratch": "Retained; labels in archive-repair-results.json",
+  "serverBrowserBuild": "No new server/browser/build launched in this resume",
+  "actions": {
+    "terminatedProcesses": 0,
+    "deletedEvidence": false,
+    "globalSettingsChanged": false
+  }
+}

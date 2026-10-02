@@ -1,0 +1,553 @@
+{
+  "schema": 1,
+  "kind": "Q30_SOURCE_ATTEMPT_ARCHIVE",
+  "generatedUtc": "2026-10-02T00:20:09.8982912Z",
+  "taskRootLabel": "q30-finish-0fa2512465",
+  "repoLabel": "repository",
+  "baseHead": "8ecaa02b729944d98f82dde56d12d2f4425197ba",
+  "observedRepositoryHead": "bbbfcd684c4c226c66e5cc2ea673b3cf35c3ac68",
+  "status": "SOURCE_ARCHIVE_ONLY",
+  "archiveRunStatus": "PASS",
+  "acceptanceStatus": "NOT_ASSESSED",
+  "baselinePatch": {
+    "repositoryRelativePath": "tests/qualification/q30-scale-acceptance/baseline.patch",
+    "sha256": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+    "pinnedSha256": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+    "repositoryHashVerified": true,
+    "expectedPaths": [
+      "scripts/verify-current-contracts.ps1",
+      "src/com/lushprojects/circuitjs1/circuitjs1.gwt.xml",
+      "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+      "src/com/lushprojects/circuitjs1/client/GenerationJob.java"
+    ]
+  },
+  "compactMode": true,
+  "exclusions": [
+    "jars and .tools content",
+    "generated build outputs except the exact profile-linked compiled payload recorded under profile/",
+    "browser profile directories and account-local state",
+    "absolute/private paths",
+    "full source-tree.tar.gz copies unless -IncludeSourceTrees is supplied"
+  ],
+  "candidates": [
+    {
+      "candidate": "q30-scale-acceptance-prepared",
+      "status": "ARCHIVED_SOURCE_ONLY",
+      "sourceIdentity": "71400939d6806c3760562452b10e2bc7f56604b3655ea94c17441592beed662a",
+      "sourceSnapshotSha256": "1d1e5c0f624e9ba517e7335eae535db8c99756245439433e5d2b9dbf24ac1278",
+      "receiptSha256": "e6e6e91954c37e8806cc62376e2d15179366c4cf079b9523fb3a8eb16255252a",
+      "sourceFileCount": 1341,
+      "sourceBytes": 14642085,
+      "declaredSnapshotAppByteMatch": "FAIL",
+      "declaredSnapshotMismatchCount": 4,
+      "snapshotMismatchClassification": "EXPECTED_BASELINE_PATCH",
+      "baselinePatchVerification": "PASS",
+      "sourceSnapshotReceiptHashMatch": true,
+      "effectiveSourceArchive": {
+        "status": "OMITTED_COMPACT",
+        "reconstructionInputs": [
+          "q30-scale-acceptance-prepared/source-delta.patch.gz",
+          "q30-scale-acceptance-prepared/source-delta.json",
+          "q30-scale-acceptance-prepared/prepare-receipt.json",
+          "q30-scale-acceptance-prepared/source-snapshot.json",
+          "q30-scale-acceptance-prepared/overlay.tar.gz",
+          "base HEAD identified by archive-manifest.json.baseHead"
+        ]
+      },
+      "sourceDelta": {
+        "manifestPath": "q30-scale-acceptance-prepared/source-delta.json",
+        "patchPath": "q30-scale-acceptance-prepared/source-delta.patch.gz",
+        "changedFileCount": 1294,
+        "patchRoundTrip": "PASS",
+        "reconstruction": "PASS"
+      },
+      "overlayArchive": {
+        "path": "q30-scale-acceptance-prepared/overlay.tar.gz",
+        "bytes": 17135,
+        "sha256": "a5ed9ae82453e8221bb093ad815410bcd6bc7d8a03a354da27ecc70ff20b89a6",
+        "extractedBytesMatchSource": "PASS"
+      },
+      "overlayDeclaredBytesMatch": "PASS",
+      "archiveValid": true,
+      "overlayIdentitySha256": "f2f394bdc15a9ff885c33f4ff448ea7e64b2353ff101b237d08daf78b3b16c4d",
+      "manifestSha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8",
+      "acceptancePlanSha256": "1078cb80a13e8fcde2dac6dd1188ee8fa3add3faf6b64a385ed27ed4cc19b749",
+      "baselinePatchSha256": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+      "wrapperIdentity": "b5f8100798c5a6c8365721a260474d510c1cf78c9e93d7c8d18dc4496a85c4be",
+      "hostRunnerSha256": "aa0baa8516844e0b735a927642ae5231116ce1e8d7c6dcdbd33cd68f26cc759a"
+    },
+    {
+      "candidate": "q30-scale-acceptance-r2",
+      "status": "ARCHIVED_SOURCE_ONLY",
+      "sourceIdentity": "5ae11306cab3dab1ef86130b8cf876b890dba60740b7a613a9958cfb39a9bea2",
+      "sourceSnapshotSha256": "7d979bd5d7a10e4abbfca9cd1353139a3048a3ca87af8f1b682dc19fc8ae06ef",
+      "receiptSha256": "8bed3471b7eeeb767d972fdb934e8a3a148dcef63c88aa4df14c12c4a20212a8",
+      "sourceFileCount": 1341,
+      "sourceBytes": 14645552,
+      "declaredSnapshotAppByteMatch": "FAIL",
+      "declaredSnapshotMismatchCount": 4,
+      "snapshotMismatchClassification": "EXPECTED_BASELINE_PATCH",
+      "baselinePatchVerification": "PASS",
+      "sourceSnapshotReceiptHashMatch": true,
+      "effectiveSourceArchive": {
+        "status": "OMITTED_COMPACT",
+        "reconstructionInputs": [
+          "q30-scale-acceptance-r2/source-delta.patch.gz",
+          "q30-scale-acceptance-r2/source-delta.json",
+          "q30-scale-acceptance-r2/prepare-receipt.json",
+          "q30-scale-acceptance-r2/source-snapshot.json",
+          "q30-scale-acceptance-r2/overlay.tar.gz",
+          "base HEAD identified by archive-manifest.json.baseHead"
+        ]
+      },
+      "sourceDelta": {
+        "manifestPath": "q30-scale-acceptance-r2/source-delta.json",
+        "patchPath": "q30-scale-acceptance-r2/source-delta.patch.gz",
+        "changedFileCount": 1295,
+        "patchRoundTrip": "PASS",
+        "reconstruction": "PASS"
+      },
+      "overlayArchive": {
+        "path": "q30-scale-acceptance-r2/overlay.tar.gz",
+        "bytes": 17141,
+        "sha256": "68d3258ca0fc9df802f96066cfe3a52c618ca6cef864359a8fbb8300b0d8a3cb",
+        "extractedBytesMatchSource": "PASS"
+      },
+      "overlayDeclaredBytesMatch": "PASS",
+      "archiveValid": true,
+      "overlayIdentitySha256": "132d6206f30fe10c1548206196098580c7f613a9393761dff7de25d86a04f55e",
+      "manifestSha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8",
+      "acceptancePlanSha256": "1078cb80a13e8fcde2dac6dd1188ee8fa3add3faf6b64a385ed27ed4cc19b749",
+      "baselinePatchSha256": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+      "wrapperIdentity": "b5f8100798c5a6c8365721a260474d510c1cf78c9e93d7c8d18dc4496a85c4be",
+      "hostRunnerSha256": "aa0baa8516844e0b735a927642ae5231116ce1e8d7c6dcdbd33cd68f26cc759a"
+    },
+    {
+      "candidate": "q30-scale-acceptance-r2b",
+      "status": "ARCHIVED_SOURCE_ONLY",
+      "sourceIdentity": "5ae11306cab3dab1ef86130b8cf876b890dba60740b7a613a9958cfb39a9bea2",
+      "sourceSnapshotSha256": "7d979bd5d7a10e4abbfca9cd1353139a3048a3ca87af8f1b682dc19fc8ae06ef",
+      "receiptSha256": "8d3d29941c050733af0755278915479d116ab2839ad75b17b28b52e8086d0932",
+      "sourceFileCount": 1341,
+      "sourceBytes": 14645552,
+      "declaredSnapshotAppByteMatch": "FAIL",
+      "declaredSnapshotMismatchCount": 4,
+      "snapshotMismatchClassification": "EXPECTED_BASELINE_PATCH",
+      "baselinePatchVerification": "PASS",
+      "sourceSnapshotReceiptHashMatch": true,
+      "effectiveSourceArchive": {
+        "status": "OMITTED_COMPACT",
+        "reconstructionInputs": [
+          "q30-scale-acceptance-r2b/source-delta.patch.gz",
+          "q30-scale-acceptance-r2b/source-delta.json",
+          "q30-scale-acceptance-r2b/prepare-receipt.json",
+          "q30-scale-acceptance-r2b/source-snapshot.json",
+          "q30-scale-acceptance-r2b/overlay.tar.gz",
+          "base HEAD identified by archive-manifest.json.baseHead"
+        ]
+      },
+      "sourceDelta": {
+        "manifestPath": "q30-scale-acceptance-r2b/source-delta.json",
+        "patchPath": "q30-scale-acceptance-r2b/source-delta.patch.gz",
+        "changedFileCount": 1295,
+        "patchRoundTrip": "PASS",
+        "reconstruction": "PASS"
+      },
+      "overlayArchive": {
+        "path": "q30-scale-acceptance-r2b/overlay.tar.gz",
+        "bytes": 17140,
+        "sha256": "5c2920863f13c34f6eb31a0b39e473bcace35024961453ad06f9ee0e53b21c0c",
+        "extractedBytesMatchSource": "PASS"
+      },
+      "overlayDeclaredBytesMatch": "PASS",
+      "archiveValid": true,
+      "overlayIdentitySha256": "132d6206f30fe10c1548206196098580c7f613a9393761dff7de25d86a04f55e",
+      "manifestSha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8",
+      "acceptancePlanSha256": "1078cb80a13e8fcde2dac6dd1188ee8fa3add3faf6b64a385ed27ed4cc19b749",
+      "baselinePatchSha256": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+      "wrapperIdentity": "ea668d63f82e2712f60cc3d46636b2feadbae42a460693c5b35723230696503b",
+      "hostRunnerSha256": "6173c294f38c1cec5274e4b31cc9ee5709dadc307379827db7b117ae9e92ea09"
+    },
+    {
+      "candidate": "q30-scale-acceptance-r3",
+      "status": "ARCHIVED_SOURCE_ONLY",
+      "sourceIdentity": "e4123221f553a6e985fe39280d8b937f4dbeb57409f03a708a49b8a105c82aec",
+      "sourceSnapshotSha256": "19a6a5556acb6788bb28dd246bec4bf1728801c3ce8ba5812eee1cc2c5b1e28a",
+      "receiptSha256": "916655cf58a59d9804733b1877f1588e4a2cfb174c5f7036bfbb157ee88d902d",
+      "sourceFileCount": 1341,
+      "sourceBytes": 14646824,
+      "declaredSnapshotAppByteMatch": "FAIL",
+      "declaredSnapshotMismatchCount": 4,
+      "snapshotMismatchClassification": "EXPECTED_BASELINE_PATCH",
+      "baselinePatchVerification": "PASS",
+      "sourceSnapshotReceiptHashMatch": true,
+      "effectiveSourceArchive": {
+        "status": "OMITTED_COMPACT",
+        "reconstructionInputs": [
+          "q30-scale-acceptance-r3/source-delta.patch.gz",
+          "q30-scale-acceptance-r3/source-delta.json",
+          "q30-scale-acceptance-r3/prepare-receipt.json",
+          "q30-scale-acceptance-r3/source-snapshot.json",
+          "q30-scale-acceptance-r3/overlay.tar.gz",
+          "base HEAD identified by archive-manifest.json.baseHead"
+        ]
+      },
+      "sourceDelta": {
+        "manifestPath": "q30-scale-acceptance-r3/source-delta.json",
+        "patchPath": "q30-scale-acceptance-r3/source-delta.patch.gz",
+        "changedFileCount": 1295,
+        "patchRoundTrip": "PASS",
+        "reconstruction": "PASS"
+      },
+      "overlayArchive": {
+        "path": "q30-scale-acceptance-r3/overlay.tar.gz",
+        "bytes": 17139,
+        "sha256": "89a23462edb05dab276b1df839d7ee3d1b1d188c2404521b73b1c639bd1e24a0",
+        "extractedBytesMatchSource": "PASS"
+      },
+      "overlayDeclaredBytesMatch": "PASS",
+      "archiveValid": true,
+      "overlayIdentitySha256": "1adca2e4cc54296ed65e775c53ae3684fcae2b5440c186dc3d00727ef244f7e7",
+      "manifestSha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8",
+      "acceptancePlanSha256": "1078cb80a13e8fcde2dac6dd1188ee8fa3add3faf6b64a385ed27ed4cc19b749",
+      "baselinePatchSha256": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+      "wrapperIdentity": "ea668d63f82e2712f60cc3d46636b2feadbae42a460693c5b35723230696503b",
+      "hostRunnerSha256": "6173c294f38c1cec5274e4b31cc9ee5709dadc307379827db7b117ae9e92ea09"
+    },
+    {
+      "candidate": "q30-scale-acceptance-r4",
+      "status": "ARCHIVED_SOURCE_ONLY",
+      "sourceIdentity": "ca2c642cf847ecd1b1d448987cd637c6b5990d32a6dc2f8914cff734bf6dd3b8",
+      "sourceSnapshotSha256": "9a426ed971303ab409973cfc045ec8844ab19813dc6b4e642251a0c02bbad048",
+      "receiptSha256": "2e30821575567453f7eeea466334adf434d0eb559526f4c37ca33e6b27bd2a01",
+      "sourceFileCount": 1341,
+      "sourceBytes": 14648092,
+      "declaredSnapshotAppByteMatch": "FAIL",
+      "declaredSnapshotMismatchCount": 4,
+      "snapshotMismatchClassification": "EXPECTED_BASELINE_PATCH",
+      "baselinePatchVerification": "PASS",
+      "sourceSnapshotReceiptHashMatch": true,
+      "effectiveSourceArchive": {
+        "status": "OMITTED_COMPACT",
+        "reconstructionInputs": [
+          "q30-scale-acceptance-r4/source-delta.patch.gz",
+          "q30-scale-acceptance-r4/source-delta.json",
+          "q30-scale-acceptance-r4/prepare-receipt.json",
+          "q30-scale-acceptance-r4/source-snapshot.json",
+          "q30-scale-acceptance-r4/overlay.tar.gz",
+          "base HEAD identified by archive-manifest.json.baseHead"
+        ]
+      },
+      "sourceDelta": {
+        "manifestPath": "q30-scale-acceptance-r4/source-delta.json",
+        "patchPath": "q30-scale-acceptance-r4/source-delta.patch.gz",
+        "changedFileCount": 1295,
+        "patchRoundTrip": "PASS",
+        "reconstruction": "PASS"
+      },
+      "overlayArchive": {
+        "path": "q30-scale-acceptance-r4/overlay.tar.gz",
+        "bytes": 17328,
+        "sha256": "509ef77a5200adce3577935893d297ede7a2296dae0e8761692a90b742b9f009",
+        "extractedBytesMatchSource": "PASS"
+      },
+      "overlayDeclaredBytesMatch": "PASS",
+      "archiveValid": true,
+      "overlayIdentitySha256": "e8bc7e10ccb52bb9a55d5b3af83b86fd98406b37e2f9f4f0f99e4875a460be9c",
+      "manifestSha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8",
+      "acceptancePlanSha256": "1078cb80a13e8fcde2dac6dd1188ee8fa3add3faf6b64a385ed27ed4cc19b749",
+      "baselinePatchSha256": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+      "wrapperIdentity": "ce12328b1f78be131f9c67d4f20a8f3a24610436c2a5a9cc415463e76fc8da16",
+      "hostRunnerSha256": "6173c294f38c1cec5274e4b31cc9ee5709dadc307379827db7b117ae9e92ea09"
+    },
+    {
+      "candidate": "q30-scale-acceptance-r4b",
+      "status": "ARCHIVED_SOURCE_ONLY",
+      "sourceIdentity": "8bc216833eb9d33b8826d70731e072e363dd811ce4ca371261ead67a65536933",
+      "sourceSnapshotSha256": "31aa03608fca4a82d278b59c9f4b69f35e863075b5b42b6bafd74b522a53deef",
+      "receiptSha256": "ddd041269d831ddd8951b7562b6db35ebbdae909e03b51e0ba51935da5f4a58a",
+      "sourceFileCount": 1341,
+      "sourceBytes": 14648144,
+      "declaredSnapshotAppByteMatch": "FAIL",
+      "declaredSnapshotMismatchCount": 4,
+      "snapshotMismatchClassification": "EXPECTED_BASELINE_PATCH",
+      "baselinePatchVerification": "PASS",
+      "sourceSnapshotReceiptHashMatch": true,
+      "effectiveSourceArchive": {
+        "status": "OMITTED_COMPACT",
+        "reconstructionInputs": [
+          "q30-scale-acceptance-r4b/source-delta.patch.gz",
+          "q30-scale-acceptance-r4b/source-delta.json",
+          "q30-scale-acceptance-r4b/prepare-receipt.json",
+          "q30-scale-acceptance-r4b/source-snapshot.json",
+          "q30-scale-acceptance-r4b/overlay.tar.gz",
+          "base HEAD identified by archive-manifest.json.baseHead"
+        ]
+      },
+      "sourceDelta": {
+        "manifestPath": "q30-scale-acceptance-r4b/source-delta.json",
+        "patchPath": "q30-scale-acceptance-r4b/source-delta.patch.gz",
+        "changedFileCount": 1295,
+        "patchRoundTrip": "PASS",
+        "reconstruction": "PASS"
+      },
+      "overlayArchive": {
+        "path": "q30-scale-acceptance-r4b/overlay.tar.gz",
+        "bytes": 17323,
+        "sha256": "57e1ed265e1e18ee81fef1d81cb0b46cb215d8894ee0f5845f348e683459704f",
+        "extractedBytesMatchSource": "PASS"
+      },
+      "overlayDeclaredBytesMatch": "PASS",
+      "archiveValid": true,
+      "overlayIdentitySha256": "e9c7dcae5d3ebcd339cc923c72be9438ffda6def7d0a3500b48d6c21f234888d",
+      "manifestSha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8",
+      "acceptancePlanSha256": "1078cb80a13e8fcde2dac6dd1188ee8fa3add3faf6b64a385ed27ed4cc19b749",
+      "baselinePatchSha256": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+      "wrapperIdentity": "ce12328b1f78be131f9c67d4f20a8f3a24610436c2a5a9cc415463e76fc8da16",
+      "hostRunnerSha256": "6173c294f38c1cec5274e4b31cc9ee5709dadc307379827db7b117ae9e92ea09"
+    },
+    {
+      "candidate": "q30-scale-acceptance-r5",
+      "status": "ARCHIVED_SOURCE_ONLY",
+      "sourceIdentity": "2d2680e16cec2024af48eb01c2896a97378f7ac9892ecccd66790e5bb5f92559",
+      "sourceSnapshotSha256": "35c9ac2c699fdad14499ce19ca738bc3ba9f3c2e973426a403b246f801efddac",
+      "receiptSha256": "ec53362c45229a8b6864205423d68fbf154345b6c621335f47f34acc43127e08",
+      "sourceFileCount": 1341,
+      "sourceBytes": 14647956,
+      "declaredSnapshotAppByteMatch": "FAIL",
+      "declaredSnapshotMismatchCount": 4,
+      "snapshotMismatchClassification": "EXPECTED_BASELINE_PATCH",
+      "baselinePatchVerification": "PASS",
+      "sourceSnapshotReceiptHashMatch": true,
+      "effectiveSourceArchive": {
+        "status": "OMITTED_COMPACT",
+        "reconstructionInputs": [
+          "q30-scale-acceptance-r5/source-delta.patch.gz",
+          "q30-scale-acceptance-r5/source-delta.json",
+          "q30-scale-acceptance-r5/prepare-receipt.json",
+          "q30-scale-acceptance-r5/source-snapshot.json",
+          "q30-scale-acceptance-r5/overlay.tar.gz",
+          "base HEAD identified by archive-manifest.json.baseHead"
+        ]
+      },
+      "sourceDelta": {
+        "manifestPath": "q30-scale-acceptance-r5/source-delta.json",
+        "patchPath": "q30-scale-acceptance-r5/source-delta.patch.gz",
+        "changedFileCount": 1295,
+        "patchRoundTrip": "PASS",
+        "reconstruction": "PASS"
+      },
+      "overlayArchive": {
+        "path": "q30-scale-acceptance-r5/overlay.tar.gz",
+        "bytes": 17327,
+        "sha256": "4b57bce6ca214a0873464300ccf51688567e54a1d3befafdb18b1ba88022f3b5",
+        "extractedBytesMatchSource": "PASS"
+      },
+      "overlayDeclaredBytesMatch": "PASS",
+      "archiveValid": true,
+      "overlayIdentitySha256": "562601ebfe5b00b81b63d7595cb479e4516c327bcfff412b996be9cdbae1d530",
+      "manifestSha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8",
+      "acceptancePlanSha256": "1078cb80a13e8fcde2dac6dd1188ee8fa3add3faf6b64a385ed27ed4cc19b749",
+      "baselinePatchSha256": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+      "wrapperIdentity": "ce12328b1f78be131f9c67d4f20a8f3a24610436c2a5a9cc415463e76fc8da16",
+      "hostRunnerSha256": "6173c294f38c1cec5274e4b31cc9ee5709dadc307379827db7b117ae9e92ea09"
+    },
+    {
+      "candidate": "q30-scale-acceptance-r6",
+      "status": "ARCHIVED_SOURCE_ONLY",
+      "sourceIdentity": "d5f75b9346ac89f04ac2706081ad232aa8aca967c4f9a8bc8d27c286e2b38495",
+      "sourceSnapshotSha256": "8e1fe1b690653bed278c914c9fce81481aca72d55f7ee2df530edd008a059804",
+      "receiptSha256": "4eec7e9b8fb4e88ccaa849f7bf96c534c3a34fd63ac1a5f0ab03008d735f1241",
+      "sourceFileCount": 1341,
+      "sourceBytes": 14648507,
+      "declaredSnapshotAppByteMatch": "FAIL",
+      "declaredSnapshotMismatchCount": 4,
+      "snapshotMismatchClassification": "EXPECTED_BASELINE_PATCH",
+      "baselinePatchVerification": "PASS",
+      "sourceSnapshotReceiptHashMatch": true,
+      "effectiveSourceArchive": {
+        "status": "OMITTED_COMPACT",
+        "reconstructionInputs": [
+          "q30-scale-acceptance-r6/source-delta.patch.gz",
+          "q30-scale-acceptance-r6/source-delta.json",
+          "q30-scale-acceptance-r6/prepare-receipt.json",
+          "q30-scale-acceptance-r6/source-snapshot.json",
+          "q30-scale-acceptance-r6/overlay.tar.gz",
+          "base HEAD identified by archive-manifest.json.baseHead"
+        ]
+      },
+      "sourceDelta": {
+        "manifestPath": "q30-scale-acceptance-r6/source-delta.json",
+        "patchPath": "q30-scale-acceptance-r6/source-delta.patch.gz",
+        "changedFileCount": 1295,
+        "patchRoundTrip": "PASS",
+        "reconstruction": "PASS"
+      },
+      "overlayArchive": {
+        "path": "q30-scale-acceptance-r6/overlay.tar.gz",
+        "bytes": 17325,
+        "sha256": "7ad2a3a7b8eef21235e0317b98073c1ae9000d05a841f149add53ec0150841a3",
+        "extractedBytesMatchSource": "PASS"
+      },
+      "overlayDeclaredBytesMatch": "PASS",
+      "archiveValid": true,
+      "overlayIdentitySha256": "8fd7e57952fa43082b5ff660227e11d5974e1715ebbb5265ae37ed2fb741e6f6",
+      "manifestSha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8",
+      "acceptancePlanSha256": "1078cb80a13e8fcde2dac6dd1188ee8fa3add3faf6b64a385ed27ed4cc19b749",
+      "baselinePatchSha256": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+      "wrapperIdentity": "ce12328b1f78be131f9c67d4f20a8f3a24610436c2a5a9cc415463e76fc8da16",
+      "hostRunnerSha256": "6173c294f38c1cec5274e4b31cc9ee5709dadc307379827db7b117ae9e92ea09"
+    },
+    {
+      "candidate": "q30-scale-acceptance-r7",
+      "status": "ARCHIVED_SOURCE_ONLY",
+      "sourceIdentity": "34a1e28675cb5a7119a8f568bd8546151eacba80ff695d047a59d9fd7ac2ac0c",
+      "sourceSnapshotSha256": "dd789750ad129ee437b2e1f9e4a146c0a82dd78e265e1cee01a790fcd96873ef",
+      "receiptSha256": "cf3660af9060c2caa403d626692f8080306897c063c4748b1ef8f9f63c393455",
+      "sourceFileCount": 1341,
+      "sourceBytes": 14650284,
+      "declaredSnapshotAppByteMatch": "FAIL",
+      "declaredSnapshotMismatchCount": 4,
+      "snapshotMismatchClassification": "EXPECTED_BASELINE_PATCH",
+      "baselinePatchVerification": "PASS",
+      "sourceSnapshotReceiptHashMatch": true,
+      "effectiveSourceArchive": {
+        "status": "OMITTED_COMPACT",
+        "reconstructionInputs": [
+          "q30-scale-acceptance-r7/source-delta.patch.gz",
+          "q30-scale-acceptance-r7/source-delta.json",
+          "q30-scale-acceptance-r7/prepare-receipt.json",
+          "q30-scale-acceptance-r7/source-snapshot.json",
+          "q30-scale-acceptance-r7/overlay.tar.gz",
+          "base HEAD identified by archive-manifest.json.baseHead"
+        ]
+      },
+      "sourceDelta": {
+        "manifestPath": "q30-scale-acceptance-r7/source-delta.json",
+        "patchPath": "q30-scale-acceptance-r7/source-delta.patch.gz",
+        "changedFileCount": 1295,
+        "patchRoundTrip": "PASS",
+        "reconstruction": "PASS"
+      },
+      "overlayArchive": {
+        "path": "q30-scale-acceptance-r7/overlay.tar.gz",
+        "bytes": 17327,
+        "sha256": "0e1ad5832e1201282c38d8bc8c889d9a97d5772a27c6cb0e1a1cda115b06b560",
+        "extractedBytesMatchSource": "PASS"
+      },
+      "overlayDeclaredBytesMatch": "PASS",
+      "archiveValid": true,
+      "overlayIdentitySha256": "c7d3cbf451607597b36fc67fd11ff32acb37a0ca5f21ed7f192c46e8ca43fb05",
+      "manifestSha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8",
+      "acceptancePlanSha256": "1078cb80a13e8fcde2dac6dd1188ee8fa3add3faf6b64a385ed27ed4cc19b749",
+      "baselinePatchSha256": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+      "wrapperIdentity": "ce12328b1f78be131f9c67d4f20a8f3a24610436c2a5a9cc415463e76fc8da16",
+      "hostRunnerSha256": "6173c294f38c1cec5274e4b31cc9ee5709dadc307379827db7b117ae9e92ea09"
+    },
+    {
+      "candidate": "q30-scale-acceptance-r8",
+      "status": "ARCHIVED_SOURCE_ONLY",
+      "sourceIdentity": "7b12e7c9b554bc9f7ae2bbb10185c6d70096bb9512fce7cdedc41d8d01641e80",
+      "sourceSnapshotSha256": "d69b1b3a1dbe314688a9cc403fb24db9e546be6932d403a96a08e762c79bb467",
+      "receiptSha256": "ed07ceee727c1912a23ea33b61b0fecb12f1f838c8bb3532dc178fb118878392",
+      "sourceFileCount": 1341,
+      "sourceBytes": 14652935,
+      "declaredSnapshotAppByteMatch": "FAIL",
+      "declaredSnapshotMismatchCount": 4,
+      "snapshotMismatchClassification": "EXPECTED_BASELINE_PATCH",
+      "baselinePatchVerification": "PASS",
+      "sourceSnapshotReceiptHashMatch": true,
+      "effectiveSourceArchive": {
+        "status": "OMITTED_COMPACT",
+        "reconstructionInputs": [
+          "q30-scale-acceptance-r8/source-delta.patch.gz",
+          "q30-scale-acceptance-r8/source-delta.json",
+          "q30-scale-acceptance-r8/prepare-receipt.json",
+          "q30-scale-acceptance-r8/source-snapshot.json",
+          "q30-scale-acceptance-r8/overlay.tar.gz",
+          "base HEAD identified by archive-manifest.json.baseHead"
+        ]
+      },
+      "sourceDelta": {
+        "manifestPath": "q30-scale-acceptance-r8/source-delta.json",
+        "patchPath": "q30-scale-acceptance-r8/source-delta.patch.gz",
+        "changedFileCount": 1295,
+        "patchRoundTrip": "PASS",
+        "reconstruction": "PASS"
+      },
+      "overlayArchive": {
+        "path": "q30-scale-acceptance-r8/overlay.tar.gz",
+        "bytes": 17327,
+        "sha256": "ac3f3bdbe5487283bb31ad64d5044c061d55ea71ce7cea96f97537bdf17054f3",
+        "extractedBytesMatchSource": "PASS"
+      },
+      "overlayDeclaredBytesMatch": "PASS",
+      "archiveValid": true,
+      "overlayIdentitySha256": "b506ad4726a1883671e52d9ce41e3627e14cdf84763507d69fa909fb2b3ea6a4",
+      "manifestSha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8",
+      "acceptancePlanSha256": "1078cb80a13e8fcde2dac6dd1188ee8fa3add3faf6b64a385ed27ed4cc19b749",
+      "baselinePatchSha256": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+      "wrapperIdentity": "ce12328b1f78be131f9c67d4f20a8f3a24610436c2a5a9cc415463e76fc8da16",
+      "hostRunnerSha256": "6173c294f38c1cec5274e4b31cc9ee5709dadc307379827db7b117ae9e92ea09"
+    },
+    {
+      "candidate": "q30-scale-acceptance-r9",
+      "status": "ARCHIVED_SOURCE_ONLY",
+      "sourceIdentity": "843411cdfe0a8bb3e8d4100f800ad1e07eab29688f6fb74ddc8de8d2cc9e4690",
+      "sourceSnapshotSha256": "5f898ecdee00d09bac92e7405c836d8218a67e1908eaf2a6a7b738d39034a15d",
+      "receiptSha256": "9040758138667ec2638e2026e77be97abd246a274c4b99a1b5b4df4494bb0e5d",
+      "sourceFileCount": 1341,
+      "sourceBytes": 14654771,
+      "declaredSnapshotAppByteMatch": "FAIL",
+      "declaredSnapshotMismatchCount": 4,
+      "snapshotMismatchClassification": "EXPECTED_BASELINE_PATCH",
+      "baselinePatchVerification": "PASS",
+      "sourceSnapshotReceiptHashMatch": true,
+      "effectiveSourceArchive": {
+        "status": "OMITTED_COMPACT",
+        "reconstructionInputs": [
+          "q30-scale-acceptance-r9/source-delta.patch.gz",
+          "q30-scale-acceptance-r9/source-delta.json",
+          "q30-scale-acceptance-r9/prepare-receipt.json",
+          "q30-scale-acceptance-r9/source-snapshot.json",
+          "q30-scale-acceptance-r9/overlay.tar.gz",
+          "base HEAD identified by archive-manifest.json.baseHead"
+        ]
+      },
+      "sourceDelta": {
+        "manifestPath": "q30-scale-acceptance-r9/source-delta.json",
+        "patchPath": "q30-scale-acceptance-r9/source-delta.patch.gz",
+        "changedFileCount": 1295,
+        "patchRoundTrip": "PASS",
+        "reconstruction": "PASS"
+      },
+      "overlayArchive": {
+        "path": "q30-scale-acceptance-r9/overlay.tar.gz",
+        "bytes": 17325,
+        "sha256": "85e050e8f6859bd25cb39634849a7d838109d1ac9f02120c9ef2621d65aab9e2",
+        "extractedBytesMatchSource": "PASS"
+      },
+      "overlayDeclaredBytesMatch": "PASS",
+      "archiveValid": true,
+      "overlayIdentitySha256": "89d54d17b0aa7435b35c0140d0de6581e6b7c18bfe5d12ada8d43ed74df5e604",
+      "manifestSha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8",
+      "acceptancePlanSha256": "1078cb80a13e8fcde2dac6dd1188ee8fa3add3faf6b64a385ed27ed4cc19b749",
+      "baselinePatchSha256": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+      "wrapperIdentity": "ce12328b1f78be131f9c67d4f20a8f3a24610436c2a5a9cc415463e76fc8da16",
+      "hostRunnerSha256": "6173c294f38c1cec5274e4b31cc9ee5709dadc307379827db7b117ae9e92ea09"
+    }
+  ],
+  "invalidCandidates": [],
+  "profile": {
+    "status": "ARCHIVED_PROFILE_SUPPORT",
+    "summaryPath": "profile-summary.json",
+    "archivePath": "profile-selected.tar.gz",
+    "archiveBytes": 2497944,
+    "archiveSha256": "286df007d5a088dfa48bae04062177baf8619e83aa1a91ac41ee8d51b342df55",
+    "sourceCandidate": "q30-scale-acceptance-prepared",
+    "exactCompiledPayload": true,
+    "cpuprofileFilesFound": [],
+    "selectedFileCount": 15
+  },
+  "reconstructionBoundary": "For each candidate, start from baseHead, apply source-delta.patch.gz at the repository root, and validate every source-delta.json changedFiles size and SHA-256. Then unpack overlay.tar.gz at the repository root and validate receipt.overlayFiles. The four declared snapshot/app mismatches are classified as EXPECTED_BASELINE_PATCH only when raw reverse restoration matches, or exact archived originals match all snapshot hashes and forward application of the pinned patch reproduces all effective app bytes. source-tree.tar.gz is optional audit evidence; no acceptance result is inferred."
+}

@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "status": "BLOCKED",
+  "frozenPlanSource": "docs/task-evidence/Q30/finish/warm-cohort-plan.json",
+  "nativeFailures": {
+    "suite": "Q30ServiceFlowContractTest",
+    "status": "FAIL",
+    "attempted": 105,
+    "passed": 100,
+    "failed": 5,
+    "failedSeed": "10",
+    "failedFaults": [
+      "RELAY_B_COIL_OPEN",
+      "DREV_OPEN",
+      "REN_OPEN",
+      "SENSOR_A_OPEN",
+      "DRIVE_A_OPEN"
+    ],
+    "failure": "Q30 physical layout rejected seed 10",
+    "phase": "Exact-plan physical route before service hypotheses",
+    "childBudgetMillis": 60000
+  },
+  "coldReportSha256": "2d9b7846d5f0ae2201316702ba2f41597ce186e289dc526101efff13d7a6d2dd",
+  "coldEvidence": "finish/checkpoint-r9/cold-r9-final77.tar.gz",
+  "rootPlanCanonical": "rb30-plan@4;seed=10;topology=RB30_CH2_SEPARATE_DIRECT_A_BJT_B_NMOS;support=C12:false,S5:false,S12:false,filters:3,outputIndicators:1,bleeder5:false;layout=-5437028946546985473;routing=6161596101315970262;physicalPolicy=MEDIUM_BOARD@1;fault=DREV_OPEN;packages=36;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated",
+  "rootPackages": 36,
+  "rootChannels": 2,
+  "coldAdmissionStatus": "PASS",
+  "coldElapsedMillis": 47555,
+  "coldWorkUnits": 434,
+  "candidates": [
+    {
+      "ordinal": 0,
+      "seed": "10",
+      "actualPackages": -1,
+      "physical": false,
+      "diagnostic": false,
+      "difficulty": null,
+      "published": false,
+      "aborted": true
+    },
+    {
+      "ordinal": 1,
+      "seed": "-7046029254386353121",
+      "actualPackages": -1,
+      "physical": false,
+      "diagnostic": false,
+      "difficulty": null,
+      "published": false,
+      "aborted": true
+    },
+    {
+      "ordinal": 2,
+      "seed": "4354685564936845364",
+      "actualPackages": 24,
+      "physical": true,
+      "diagnostic": true,
+      "difficulty": "difficulty/2;profile=MEDIUM;parts=24;hypotheses=5;repairs=5;owners=5;readings=2;singleRemaining=2;executedEvidenceDepth=7-7;legalWitnessActions=27-27;modes=1;inputs=4;railTargets=8;temporal=2;parallel=false",
+      "published": true,
+      "aborted": false
+    }
+  ],
+  "attempts": [
+    {
+      "ordinal": 0,
+      "manifest": "candidate=00;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=10;replay=tsj-alpha/4/MEDIUM/RB30_CONTROL/10;quickPlay=false;layout=13;planEpoch=4;plan=rb30-plan@4;seed=10;topology=RB30_CH2_SEPARATE_DIRECT_A_BJT_B_NMOS;support=C12:false,S5:false,S12:false,filters:3,outputIndicators:1,bleeder5:false;layout=-5437028946546985473;routing=6161596101315970262;physicalPolicy=MEDIUM_BOARD@1;fault=DREV_OPEN;packages=36;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2",
+      "stage": "HEALTHY",
+      "outcome": "EXPECTED_REJECTION",
+      "workUnits": 77,
+      "proofUnits": 0,
+      "failureType": "Rejected",
+      "failureMessage": "Unable to generate a routed PCB after 14 deterministic attempts for seed -5437028946546985473: PCB routing candidate rejected at attempt 12: P07_FULLER_TWO_LAYER:A_REF:BRANCH_SEARCH_LIMIT"
+    },
+    {
+      "ordinal": 1,
+      "manifest": "candidate=01;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=-7046029254386353121;replay=tsj-alpha/4/MEDIUM/RB30_CONTROL/-7046029254386353121;quickPlay=false;layout=13;planEpoch=4;plan=rb30-plan@4;seed=-7046029254386353121;topology=RB30_CH1_SHARED_DIRECT_A_NMOS;support=C12:true,S5:true,S12:true,filters:0,outputIndicators:0,bleeder5:false;layout=-5537361466424365148;routing=3483145913645536243;physicalPolicy=MEDIUM_BOARD@1;fault=REN_OPEN;packages=25;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=1;sensors=1-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2",
+      "stage": "HEALTHY",
+      "outcome": "EXPECTED_REJECTION",
+      "workUnits": 78,
+      "proofUnits": 0,
+      "failureType": "Rejected",
+      "failureMessage": "Unable to generate a routed PCB after 14 deterministic attempts for seed -5537361466424365148: PCB routing candidate rejected at attempt 12: P07_FULLER_TWO_LAYER:RAIL5:NO_PATH"
+    },
+    {
+      "ordinal": 2,
+      "manifest": "candidate=02;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=4354685564936845364;replay=tsj-alpha/4/MEDIUM/RB30_CONTROL/4354685564936845364;quickPlay=false;layout=13;planEpoch=4;plan=rb30-plan@4;seed=4354685564936845364;topology=RB30_CH1_SHARED_HYSTERETIC_A_BJT;support=C12:false,S5:false,S12:true,filters:0,outputIndicators:0,bleeder5:true;layout=238198070640141880;routing=-4933879170902447425;physicalPolicy=MEDIUM_BOARD@1;fault=DRIVE_A_OPEN;packages=24;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=1;sensors=1-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2",
+      "stage": "PUBLISH",
+      "outcome": "PASS",
+      "workUnits": 279,
+      "proofUnits": 230,
+      "failureType": null,
+      "failureMessage": null
+    }
+  ],
+  "publishedManifest": "candidate=02;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=4354685564936845364;replay=tsj-alpha/4/MEDIUM/RB30_CONTROL/4354685564936845364;quickPlay=false;layout=13;planEpoch=4;plan=rb30-plan@4;seed=4354685564936845364;topology=RB30_CH1_SHARED_HYSTERETIC_A_BJT;support=C12:false,S5:false,S12:true,filters:0,outputIndicators:0,bleeder5:true;layout=238198070640141880;routing=-4933879170902447425;physicalPolicy=MEDIUM_BOARD@1;fault=DRIVE_A_OPEN;packages=24;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=1;sensors=1-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2",
+  "boundary": "Cold admission succeeds by retrying a different 24-part one-channel design. It does not prove service/sensitivity for the frozen original 36-part two-channel separate/direct plan. No seed was substituted and no required assertions/budgets were relaxed."
+}

@@ -78,6 +78,13 @@ public final class QuickPlayPhysicalMatrixContractTest {
                 } catch (SupportedEnvelope.Rejected rejectedEnvelope) {
                     rejected++;
                     System.out.println("PHYSICAL_REJECT|" + family + '|' + profile + '|' + seed + "|ENVELOPE|" + rejectedEnvelope.getMessage());
+                } catch (GenerationJob.Rejected rejectedNormalPolicy) {
+                    check(Rb30Plan.FAMILY_ID.equals(family) &&
+                        "Normal medium admission requires a selected P07 two-layer route".equals(
+                            rejectedNormalPolicy.getMessage()),
+                        "Unexpected normal-policy rejection: " + family);
+                    rejected++;
+                    System.out.println("PHYSICAL_REJECT|" + family + '|' + profile + '|' + seed + "|NORMAL_POLICY|" + rejectedNormalPolicy.getMessage());
                 }
             }
             check(accepted == TARGET, "Fewer than 20 valid physical boards: " + family);

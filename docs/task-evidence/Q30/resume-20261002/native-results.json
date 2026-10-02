@@ -1,0 +1,656 @@
+{
+  "schema": 1,
+  "candidateHead": "bbbfcd684c4c226c66e5cc2ea673b3cf35c3ac68",
+  "suiteCount": 82,
+  "overallStatus": "FAIL",
+  "maxJobMillis": 90000,
+  "maxWorkUnits": 640,
+  "maxActiveOperationMillis": 5000,
+  "maintainedCommand": "scripts/verify-current-contracts.ps1 -JavaHome <retained-task-root>/jdk/jdk8u502-b07 -ReceiptOutputPath <fresh-receipt> -Q30ServiceSeeds <frozen21> -Q30SensitivitySeeds <frozen21> -Q30CorpusSeeds <first51>",
+  "invokedWrappers": [
+    "run_final_native.ps1 -Batch full",
+    "run_final_native_resume_r2.ps1 -Batch full"
+  ],
+  "firstAttempt": {
+    "startedUtc": "2026-10-01T23:53:27.9456403Z",
+    "seconds": 354.1041161,
+    "batch": "full",
+    "serviceSeeds": [
+      "0",
+      "1",
+      "15",
+      "14",
+      "8",
+      "10",
+      "12",
+      "48",
+      "35",
+      "18",
+      "43",
+      "4",
+      "11",
+      "3",
+      "10000",
+      "10009",
+      "10016",
+      "10017",
+      "10387",
+      "10226",
+      "10014"
+    ],
+    "corpusSeeds": [
+      "0",
+      "1",
+      "15",
+      "14",
+      "44",
+      "8",
+      "10",
+      "12",
+      "48",
+      "35",
+      "6",
+      "18",
+      "43",
+      "93",
+      "20",
+      "64",
+      "56",
+      "13",
+      "4",
+      "11",
+      "2",
+      "3",
+      "19",
+      "9",
+      "7",
+      "42",
+      "24",
+      "21",
+      "75",
+      "22",
+      "105",
+      "27",
+      "53",
+      "50",
+      "16",
+      "25",
+      "60",
+      "100",
+      "59",
+      "84",
+      "70",
+      "41",
+      "45",
+      "23",
+      "5",
+      "38",
+      "40",
+      "26",
+      "-9223372036854775808",
+      "9223372036854775807",
+      "9007199254740993"
+    ],
+    "status": "FAIL",
+    "schema": 1,
+    "finishedUtc": "2026-10-01T23:59:22.0522060Z",
+    "exitCode": 2
+  },
+  "firstFailure": "QuickPlayPhysicalMatrixContractTest did not recognize the exact typed P05-only normal-policy rejection added before this resume",
+  "secondAttempt": {
+    "startedUtc": "2026-10-02T00:02:41.8017307Z",
+    "seconds": 1688.5256439999998,
+    "batch": "full",
+    "serviceSeeds": [
+      "0",
+      "1",
+      "15",
+      "14",
+      "8",
+      "10",
+      "12",
+      "48",
+      "35",
+      "18",
+      "43",
+      "4",
+      "11",
+      "3",
+      "10000",
+      "10009",
+      "10016",
+      "10017",
+      "10387",
+      "10226",
+      "10014"
+    ],
+    "corpusSeeds": [
+      "0",
+      "1",
+      "15",
+      "14",
+      "44",
+      "8",
+      "10",
+      "12",
+      "48",
+      "35",
+      "6",
+      "18",
+      "43",
+      "93",
+      "20",
+      "64",
+      "56",
+      "13",
+      "4",
+      "11",
+      "2",
+      "3",
+      "19",
+      "9",
+      "7",
+      "42",
+      "24",
+      "21",
+      "75",
+      "22",
+      "105",
+      "27",
+      "53",
+      "50",
+      "16",
+      "25",
+      "60",
+      "100",
+      "59",
+      "84",
+      "70",
+      "41",
+      "45",
+      "23",
+      "5",
+      "38",
+      "40",
+      "26",
+      "-9223372036854775808",
+      "9223372036854775807",
+      "9007199254740993"
+    ],
+    "status": "FAIL",
+    "schema": 1,
+    "finishedUtc": "2026-10-02T00:30:50.3305613Z",
+    "exitCode": 2
+  },
+  "freshPassedSuites": [
+    {
+      "suite": "StagedFamilyRegistrationContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: staged family registration contracts 15 assertions"
+      ]
+    },
+    {
+      "suite": "GeneratedExternalPowerBindingsControlObservationContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: generated power control observation contracts assertions=16"
+      ]
+    },
+    {
+      "suite": "ProceduralFamilyContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: procedural family contracts assertions=54",
+        "PASS: procedural family contracts assertions=47",
+        "PASS: procedural family contracts assertions=50",
+        "PASS: procedural family contracts assertions=47",
+        "PASS: procedural family contracts assertions=56",
+        "PASS: procedural family contracts assertions=47",
+        "PASS: procedural family contracts assertions=52",
+        "PASS: procedural family contracts assertions=47",
+        "PASS: procedural family contracts assertions=54",
+        "PASS: procedural family contracts assertions=47",
+        "PASS: procedural family contracts assertions=54",
+        "PASS: procedural family contracts assertions=47",
+        "PASS: procedural family contracts assertions=54",
+        "PASS: procedural family contracts assertions=47",
+        "PASS: procedural family contracts assertions=54",
+        "PASS: procedural family contracts assertions=47",
+        "PASS: procedural family contracts assertions=54",
+        "PASS: procedural family contracts assertions=47",
+        "PASS: procedural family contracts assertions=63",
+        "PASS: procedural family contracts assertions=47",
+        "PASS: procedural family contracts assertions=72",
+        "PASS: procedural family contracts assertions=71"
+      ]
+    },
+    {
+      "suite": "QuickPlayPhysicalMatrixContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: Quick Play physical matrix contracts pairs=10 assertions=1285",
+        "PASS: Quick Play physical matrix contracts pairs=1 assertions=141"
+      ]
+    },
+    {
+      "suite": "QuickPlayContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: Quick Play current seed envelopes and construction"
+      ]
+    },
+    {
+      "suite": "PcbCompactionContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: PCB compaction contracts assertions=612 reducedFamilies=11"
+      ]
+    },
+    {
+      "suite": "DensePcbPackingContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: dense PCB packing seeds=11 assertions=1024 reduced=11 areaSum=21350458"
+      ]
+    },
+    {
+      "suite": "VisualWorkbenchContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: visual workbench contracts assertions=150"
+      ]
+    },
+    {
+      "suite": "Task43PhysicalEndpointContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: Task43 current physical endpoint contracts assertions=320 legacyFamilies=6 controlledSignedSeeds=4"
+      ]
+    },
+    {
+      "suite": "ArchitectureFootprintContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: architecture footprint contracts assertions=46 routedPackages=4 deterministicRepeats=4 familyRegressions=6"
+      ]
+    },
+    {
+      "suite": "PhysicalServiceabilityContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: physical serviceability contracts assertions=1250"
+      ]
+    },
+    {
+      "suite": "U04SessionContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: U04 session contracts assertions=3914"
+      ]
+    },
+    {
+      "suite": "U05DifficultyContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: U05 difficulty contracts assertions=30"
+      ]
+    },
+    {
+      "suite": "E03RelayContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: E03 relay contracts 161 assertions"
+      ]
+    },
+    {
+      "suite": "E02RegulatorContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: E02 regulator contracts 1441 assertions"
+      ]
+    },
+    {
+      "suite": "E04SensorControlContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: E04 sensor-control contracts 316 assertions"
+      ]
+    },
+    {
+      "suite": "SensorControlFamilyContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: SensorControl family contracts 268 assertions"
+      ]
+    },
+    {
+      "suite": "Q15ControlBoardContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: Q15 control board contracts assertions=6864 designs=4"
+      ]
+    },
+    {
+      "suite": "Q30PlanContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: Q30 plan contracts 4381 assertions, topologies=11, oneChannelSeeds=7, twoChannelSeeds=10, "
+      ]
+    },
+    {
+      "suite": "Q30RelayServiceContractTest",
+      "status": "PASS",
+      "markers": [
+        "PASS: Q30 relay service contracts 110 assertions"
+      ]
+    }
+  ],
+  "physicalCensus": {
+    "families": 11,
+    "accepted": 220,
+    "exactReplays": 220,
+    "status": "PASS"
+  },
+  "serviceCensus": {
+    "suite": "Q30ServiceFlowContractTest",
+    "status": "FAIL",
+    "attempted": 105,
+    "passed": 100,
+    "failed": 5,
+    "failedSeed": "10",
+    "failedFaults": [
+      "RELAY_B_COIL_OPEN",
+      "DREV_OPEN",
+      "REN_OPEN",
+      "SENSOR_A_OPEN",
+      "DRIVE_A_OPEN"
+    ],
+    "failure": "Q30 physical layout rejected seed 10",
+    "phase": "Exact-plan physical route before service hypotheses",
+    "childBudgetMillis": 60000
+  },
+  "remainingSuites": [
+    {
+      "suite": "Q30TemporalWorkContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "DiagnosticServicePreparationContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "Q30SolverStepSensitivityContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "Q30NormalCorpusContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "Q30GenerationRequestContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "Q30GenerationMeasurementBudgetContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "Q30NormalExecutionPolicyContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "Q30CatalogIdentityContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "Q30CatalogTransferContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "Rb30PhysicalMetadataContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "MediumBoardPhysicalPolicyContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "MediumBoardNormalAdmissionContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "MediumBoardFloorplanningContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "ChallengeDescriptorContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "FunctionalBlockContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "ElectricalPortContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "BoundedAssemblyContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "ControlledIndicatorAssemblyContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "SwitchedLowSideCompatibilityContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "Task49ValueSynthesisContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "A05RoleContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "E01SourceContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "A06PowerContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "A07ExecutionContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "Q30OwnedLuZeroRowContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "Q30LuPivotCollectionContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "A09DiagnosticContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "D01DiagnosticContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "A10GenerationContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "A10RoutingContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "A10DependencyContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "A11ProviderConformanceTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "A03IdentityContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "A02CandidateContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "A02GeometryContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "P01PhysicalPoseContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "P02ConductorContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "U01ViewportContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "U02MeasurementContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "U03ObservationContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "WorkbenchLiftedLeadAppearanceContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "P03PlacementContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "RouterQueueContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "P04RoutingContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "P05RoutingContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "P06FactoryLinkContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "P07TwoLayerContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "PcbLayerRoutingResumptionContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "P08ScalabilityContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "P09EnvelopeCorpus",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "QuickPlayGateCorpus",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "QuickPlayGateHoldoutCorpus",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "QuickPlayGateContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "P09EnvelopeContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "P07LayerCorpus",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "P05RoutingCorpus",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "P05GenerationCorpus",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "A02ReplayContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "ElectricalUnitPackageMapContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "A04ConstructionContractTest",
+      "status": "NOT_RUN"
+    },
+    {
+      "suite": "A04PhysicalDeclarationContractTest",
+      "status": "NOT_RUN"
+    }
+  ],
+  "appended26StructuralRoots": "NOT_RUN",
+  "sensitivity105Cases": "NOT_RUN",
+  "cleanup": {
+    "status": "PASS",
+    "evidence": "Both native logs end with CLEANUP: current JVM contract classes and task-owned scratch removed.",
+    "elapsedSeconds": null,
+    "timingScope": "Wrapper seconds include the overall runner; separate cleanup duration was not recorded"
+  },
+  "artifacts": [
+    {
+      "rawName": "final-native-full.log",
+      "rawBytes": 215818,
+      "rawSha256": "2ce389c8f6715f3284a2bbca94574ef83e0cd56babbb5c09f65ba10158c7df6f",
+      "artifact": "final-native-full.log.gz",
+      "artifactBytes": 13924,
+      "artifactSha256": "b3f7c30196f11ea26a4130819fc225bfded59954aca783eb2bbc589e484fe802",
+      "transform": "Decode original encoding to UTF-8; redact personal/task absolute paths; optional gzip; original retained unchanged"
+    },
+    {
+      "rawName": "resume-native-r2-full.log",
+      "rawBytes": 995820,
+      "rawSha256": "fd96bba58871d8a1b69f6e939eef8c95cc098b1de7a4c8195f2c30a42d40afeb",
+      "artifact": "resume-native-r2-full.log.gz",
+      "artifactBytes": 30150,
+      "artifactSha256": "4f5d3d143a6c86a68843c86f2aab8eb6aed6f8290f82b229b2255a5bc0ce9de0",
+      "transform": "Decode original encoding to UTF-8; redact personal/task absolute paths; optional gzip; original retained unchanged"
+    },
+    {
+      "rawName": "resume-native-r2-full.txt",
+      "rawBytes": 505315,
+      "rawSha256": "b57c38052be94530d75fdf4dd62b98b1ae1e49b7e9bd6c90aa15f9d948626436",
+      "artifact": "resume-native-r2-full.txt.gz",
+      "artifactBytes": 27311,
+      "artifactSha256": "a04c8049ceaf4c9a307a6c224c0d6e9fe65da43bd2d4bb681260392d9aa3c150",
+      "transform": "Decode original encoding to UTF-8; redact personal/task absolute paths; optional gzip; original retained unchanged"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "head": "bbbfcd684c4c226c66e5cc2ea673b3cf35c3ac68",
+  "r9SourceIdentity": "843411cdfe0a8bb3e8d4100f800ad1e07eab29688f6fb74ddc8de8d2cc9e4690",
+  "checkedInputCount": 1341,
+  "mismatches": [],
+  "missing": [],
+  "addedTrackedPaths": [
+    "tests/qualification/q30-scale-acceptance/README.md",
+    "tests/qualification/q30-scale-acceptance/acceptance-plan.json",
+    "tests/qualification/q30-scale-acceptance/baseline.patch",
+    "tests/qualification/q30-scale-acceptance/freeze_plan.py",
+    "tests/qualification/q30-scale-acceptance/gwt-jars.json",
+    "tests/qualification/q30-scale-acceptance/normal_screen_host.py",
+    "tests/qualification/q30-scale-acceptance/overlay-manifest.json",
+    "tests/qualification/q30-scale-acceptance/overlay/src/com/lushprojects/circuitjs1/client/IsolatedGenerationQualification.java",
+    "tests/qualification/q30-scale-acceptance/overlay/src/com/lushprojects/circuitjs1/client/Q30NormalScreenHarness.java",
+    "tests/qualification/q30-scale-acceptance/overlay/tests/contracts/IsolatedGenerationQualificationContractTest.java",
+    "tests/qualification/q30-scale-acceptance/prepare.py",
+    "tests/qualification/q30-scale-acceptance/q30_scale_reader.py",
+    "tests/qualification/q30-scale-acceptance/test_q30_scale_reader.py"
+  ],
+  "removedTrackedPaths": [],
+  "q30NormalPlayerEnabled": false,
+  "shippingExport": "app",
+  "overlayApplied": false,
+  "boundary": "All r9 production inputs are byte-identical. Initial full 1341-file audit PASS preceded the root-owned +7-line native fixture fix, now copied into this export. The 13 checkpointed qualification package paths are tests only. No isolated overlay or catalog patch applied.",
+  "nativeFixtureChange": {
+    "path": "tests/contracts/QuickPlayPhysicalMatrixContractTest.java",
+    "scope": "Exact typed P05 normal-policy rejection handling; +7 lines; no production/source budget change",
+    "afterSha256": "dc02a67acdb735d463511613c39258e02b34ba5558f35c5b1acdb93d5edaa3cf",
+    "beforeSha256": "5c273f0a086cc701a5792c257fa657de5510de6dc05b79fe20fcc35a251f0fe7"
+  }
+}

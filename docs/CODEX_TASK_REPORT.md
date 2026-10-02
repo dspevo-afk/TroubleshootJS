@@ -1,4 +1,64 @@
-# Current checkpoint: Q30 paused — 77-root cold corpus PASS; release gates pending
+# Current checkpoint: Q30 blocked — frozen service seed 10 fails routing
+
+2026-10-02. Local resume from `bbbfcd684c4c226c66e5cc2ea673b3cf35c3ac68` on
+`codex/q30-multirail-qualification`; candidate adds only the exact seven-line
+native physical-census rejection handler plus checkpoint/evidence documentation.
+This entry is part of the verified local checkpoint commit. **Q30 is NOT ACCEPTED
+and remains disabled.** No production, catalog, save or replay changes; no merge,
+push, publication, email or evidence deletion. U06/U07/Q60 remain unstarted.
+The 90,000 ms / 640 work / 5,000 ms active limits are unchanged.
+
+**FAIL:** final native attempt before the fixture fix stopped at an expected typed
+P05-only route rejection (exit 2, 354.104 s). The second full attempt ran
+2026-10-02 00:02:41.802–00:30:50.331 UTC (1,688.526 s, exit 2): twenty preceding
+suites PASS, including eleven-family 220-board/220-exact-replay physical census;
+Q30 service census attempted 105, passed 100, failed all five seed-10 cases.
+The exact original 36-part/two-channel separate/direct plan fails physical routing
+before service. Its cold-root admission PASS retries to a different 24-part,
+one-channel candidate and does not establish this frozen plan's service coverage.
+No required case, seed, assertion or limit was waived. Native cleanup PASS;
+separate cleanup elapsed time was not recorded. Current runner has **82**, not
+the historical checkpoint's 78 suites; 61 subsequent suites, sensitivity105 and
+structural51+26 remain NOT RUN fresh. See the [resume packet](task-evidence/Q30/resume-20261002/README.md).
+
+**PASS with boundary:** independent checkpoint audit verified all 1,341 r9 inputs,
+source/archive hashes and all 77 cold receipts/readers/specs/logs. Production bytes
+remain unchanged; cold77 is reused, not rerun (max 82,325 ms / max 536 work /
+max 1,451 ms active). Twelve strict-reader unit tests PASS. Source archive helper
+smoke and eleven-candidate reconstruction now PASS with exact raw-original hashes,
+pinned-baseline forward reproduction, effective deltas/overlays and exact linked
+profile payload. Earlier failures remain retained. This is source archival proof,
+not qualification acceptance. Full archive remains in resume OS temp; compact
+manifest, verified helper, transport hash and failure/native evidence are recorded
+in the packet. Retained isolated r9 GWT/canaries remain historical proof only.
+
+**Remaining gates / blockers:** fix the frozen seed-10 route through its existing
+owners under unchanged limits, then affected requalification and full native82;
+final enabled JDK8/GWT build, compiled31/D01-21, ordinary menu33/replay3, visible
+20/30/40 diagnosis/repair/retest, and parent integrated acceptance. Browser and
+Computer Use skills were read, but required node_repl JS and graphical control
+tools are unavailable: visible input/screenshots are BLOCKED / NOT RUN. Catalog
+enable patch stays unapplied. Architecture ownership is unchanged.
+
+**Git/preservation/resources:** read-only topology audit verified shared desktop/Q30
+common Git directory, 32 listed worktrees, sixteen local branches and eighteen
+live origin heads without fetch or ref changes. Audited desktop `e0c3688` is 42
+commits before base checkpoint `bbbfcd6`; it has seven unrelated tracked edits and
+untracked data. Q30 was 37 ahead of live origin before this local checkpoint.
+No sibling changes or stale worktree records were altered. All launched wrappers
+have finished; no task-owned build/test/browser/server process remains. Preserve
+four existing untracked Python-cache directories, `%LOCALAPPDATA%/Temp/`
+`q30-finish-0fa2512465`, `q30-resume-20261001-c798b16a`, and the two retained archive
+scratch labels listed in the packet. No evidence deletion is authorized.
+
+**Next action:** parent reviews this honest FAIL checkpoint and the exact frozen
+cohort blocker; resume with focused real routing/service checks, then the pending
+gates. Any production input change invalidates affected reused evidence. Do not
+silently substitute the passing retry topology or begin U06/U07/Q60.
+
+---
+
+# Historical checkpoint: Q30 paused — 77-root cold corpus PASS; release gates pending
 
 2026-10-01. Paused at the user's request for a handoff and saved local checkpoint.
 Active project: the `q30-multirail-qualification/TroubleshootJS` worktree, branch

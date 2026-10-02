@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "command": "python -B -m unittest discover -s tests/qualification/q30-scale-acceptance -p test_q30_scale_reader.py",
+  "python": "Bundled Codex Python 3.12.14",
+  "tests": 12,
+  "elapsedSeconds": 0.005,
+  "scope": "Previously completed in this resume before checkpoint; no fresh full electrical/generation proof implied"
+}

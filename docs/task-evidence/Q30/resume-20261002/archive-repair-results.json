@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "attempts": [
+    {
+      "attempt": "Original smoke r9",
+      "status": "FAIL",
+      "reason": "Helper assumed repository HEAD equals prepared base; checkpoint HEAD is a verified descendant"
+    },
+    {
+      "attempt": "Resume smoke r9 v2",
+      "status": "FAIL",
+      "reason": "Reverse baseline check with autocrlf=false cannot reproduce mixed raw CRLF/LF originals"
+    },
+    {
+      "attempt": "Resume helper v3 parse",
+      "status": "FAIL",
+      "reason": "Compare-Object newline syntax; corrected in retained v4"
+    },
+    {
+      "attempt": "Resume smoke r9 v4",
+      "status": "PASS",
+      "manifestSha256": "fc817b98c9eddaff5e908865204c87d8c39aa4102a65b45fdf551a0cc585a969"
+    },
+    {
+      "attempt": "Resume full11 v4",
+      "status": "SOURCE_ARCHIVE_ONLY_PASS",
+      "manifestSha256": "fdd2e7134347302e84e68614be01f0094efc7a0ec0e78b203a33c8ced2e38f91",
+      "baselineBindings": 11,
+      "deltaReconstruction": 11,
+      "overlayExtraction": 11,
+      "profilePayload": "Exact prepared linked payload preserved; 15 files",
+      "acceptanceStatus": "NOT_ASSESSED"
+    }
+  ],
+  "originalHelperSha256": "a1c0c6a85d68b7bd8f3776323c2f4d6ea8ec234c7792d548d1757d1f2f4daeb7",
+  "verifiedHelperSha256": "d14c811e487c0817003d5171fc0c1c53820c5d213e05a9c2c5724fb808b9fb8d",
+  "repair": "Keep exact prepared base object after verifying ancestor relationship; raw original snapshot hashes plus pinned baseline forward application must reproduce exact effective bytes. Preserve reverse failure evidence. No normalization or whitespace-ignore allowance added. Global Git settings unchanged.",
+  "resources": [
+    "q30-source-archive-c2124e4a2fad4d4ba626486778e4c699",
+    "q30-source-archive-ae02ad77e56b4e40ad0864687a03b14f"
+  ],
+  "scratchPolicy": "Verified task-owned archive scratch retained in OS temp; no evidence deleted",
+  "elapsedSeconds": null
+}

@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "status": "SOURCE_ARCHIVE_ONLY_PASS",
+  "acceptanceStatus": "NOT_ASSESSED",
+  "files": 81,
+  "expandedPrivacyChecks": 186,
+  "privacyAudit": "PASS",
+  "archiveFile": "source-attempts-final11.tar.gz",
+  "archiveBytes": 52793342,
+  "archiveSha256": "7a9558f8ffbf2737561e661c3aaceaea46619708f9dccb319393260a5abfd8a9",
+  "manifestSha256": "fdd2e7134347302e84e68614be01f0094efc7a0ec0e78b203a33c8ced2e38f91",
+  "sourceByteComparison": "PASS",
+  "candidateCount": 11,
+  "binding": "Original frozen base object; raw original snapshot hashes; pinned baseline patch forward byte reproduction; effective source delta reconstruction; overlay extraction"
+}
