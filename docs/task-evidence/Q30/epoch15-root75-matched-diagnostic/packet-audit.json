@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "status": "PACKAGED_DIAGNOSTIC_ONLY",
+  "archiveSha256": "1b57cee086867feca82191bf8817771d7db851bc8fd71ddac41b066abd0bf2f1",
+  "memberCount": 95,
+  "sourceInputsRechecked": 1354,
+  "operationSeconds": 318.6752851,
+  "q30Acceptance": "NOT_ESTABLISHED",
+  "oldStrictReaderHostFailuresRetained": 2
+}

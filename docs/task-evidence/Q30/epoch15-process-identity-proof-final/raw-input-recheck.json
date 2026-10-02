@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "rawInputsRechecked": 143,
+  "sourceInputsRechecked": 1354,
+  "sourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+  "transportLifecycleMarkers": {
+    "closedPageObserverFailure": "PASS_NEGATIVE_PROOF",
+    "sessionLossNegative": "PASS",
+    "cancellationNegative": "PASS"
+  },
+  "auditUtc": "2026-10-02T12:26:02.451183+00:00",
+  "acceptance": "NOT CLAIMED",
+  "limitation": "This later recheck does not claim the initial packager captured collection-time hashes."
+}

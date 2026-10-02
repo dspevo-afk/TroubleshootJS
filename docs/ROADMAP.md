@@ -7,16 +7,21 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Q30 NOT ACCEPTED - cold77 PASS; compiled31 terminal FAIL27/31**<br>
-**Q30 checkpoint (2026-10-02):** Native82/service105/sensitivity105/structural77,
-JDK8/GWT5, compiled4/freeze and cold77 strict PASS; exact77 roots/308 candidates,
-all20-40 sizes, max80.978s under unchanged90s. Full compiled31 finished27 PASS/
-4 FAIL (Alpha/A10 observation timeouts, E02 canary propagation, E04 stale repair
-fixture); no errors waived. Source archive PASS; all1,354 inputs unchanged.
-Cause fixes/fresh gates, menu/replay/player/final review remain. Q30 disabled;
-U06/U07/Q60 unstarted. No push/merge/email/evidence deletion.
-[Current handoff](CODEX_TASK_REPORT.md),
-[compiled terminal evidence](task-evidence/Q30/epoch15-compiled31-terminal/README.md).
+**Current task:** **Q30 NOT ACCEPTED - final cold qualification FAIL at root75**<br>
+**Q30 checkpoint (2026-10-02):** Fresh native82/structural77, both GWT5,
+focused3, compiled31 and compiled4/export/freeze PASS. Required cold77 FAIL at
+index32/root75:90.221s/90s,31 prior PASS/45 NOT RUN; full auditor FAIL/incomplete.
+Four matched root75 diagnostics74.517/74.591/73.614/73.452s show no consistent
+current-build slowdown in that sample; cause UNKNOWN, failed qualification retained.
+Disabled menu30 launches/2 replays and source-only archive PASS; archive acceptance
+NOT ASSESSED. Dave approved future receipt/serial-runner workflow improvements,
+outside frozen application inputs;36/36 focused tests PASS, including nine actual
+Windows process checks. Early runner accounting failure retained; bounded cleanup
+drain fixed and verified. The full cold failure and missing visible QA remain blockers.
+Original77/308 and90s/640/5s unchanged; Q30 disabled; U06/U07/Q60 unstarted.
+Private enabled build/menu blocked by cold FAIL; supported visible repair QA unavailable;
+parent acceptance review pending. No push/merge/email/evidence deletion.
+[Current handoff](CODEX_TASK_REPORT.md), [failure evidence](task-evidence/Q30/epoch15-cold77-timeout-seed75/README.md), [diagnostic](task-evidence/Q30/epoch15-root75-matched-diagnostic/README.md).
 
 **Historical post-P09 Quick Play qualification:** The nine families then current used fresh signed-long candidates and real placement/routing. Nineteen affected native suites, 144 structural cases, 18 actual launches, exact replay/cancellation/privacy/shop and compiled mutation/relay/generation gates passed. EASY/MEDIUM content eligibility remains; HARD/PSYCHOTIC are not unlocked. [Evidence at that checkpoint](task-evidence/ProceduralFamilies/README.md).
 **Quick Play uniqueness qualification (2026-09-19):** Every family/profile selectable at that checkpoint had bounded procedural New Board candidates, recent-root and physical duplicate guards, and single-candidate exact replay. The then-menu-discovered nine-pair, 180-board matrix had 20 distinct placements and merged copper patterns per pair with no structural rejects. Final native55, GWT5, 27/27 visible New Board launches, two exact replays and face-view evidence passed. That content spanned 3–16 parts; HARD/PSYCHOTIC and larger families remain unqualified. This historical matrix did not include the later SENSOR_CONTROL family; that checkpoint's catalog had ten family/profile pairs. [Historical audit, timings and limits](task-evidence/QuickPlayUnique/README.md).
@@ -2469,7 +2474,7 @@ router improved from 6/72 to 54/72, and the selected policy routed 12/12
 sampled seeds including six held-out. Those accepted checkpoints remain
 historical evidence and retain their recorded failures and limits.
 
-The preserved implementation defines bounded 33/35/37-part RB30 variants across eight
+The earlier implementation defined bounded 33/35/37-part RB30 variants across eight
 topology axes: separate/direct and shared/hysteretic reference arrangements,
 each with the A/B BJT/NMOS driver combinations. Historical native05 passed 78 Java suites
 with independent oracles, 40/40 service rows and 40/40 finer-step comparison
@@ -2494,9 +2499,11 @@ The subsequent [acceptance continuation](task-evidence/Q30/acceptance-continuati
 profiles the solver and eliminates finite zero products without changing proof,
 order or policy. Matched cold totals improve to 113.630, 106.251 and 103.046
 seconds, with 86.107, 79.834 and 83.305 seconds of proof. All totals still fail
-90 seconds. Exact current package counts remain 33/35/37; counts 20–32, 34,
-36 and 38–40 are unimplemented. These are private measurements, not normal
-acceptance or evidence of broad 20–40 support.
+90 seconds. At that measurement checkpoint, the measured package counts were
+33/35/37. Current plan-4 seeded generation implements purposeful 20-40-part
+variation under a 40-package ceiling. Fresh full-cohort qualification remains
+pending; the measurements above remain private historical evidence, not
+normal-player acceptance.
 
 The accepted column row-reference intermediate optimization has fresh native,
 GWT and compiled solver checks plus six counterbalanced private cold runs.
@@ -2504,9 +2511,11 @@ Times for seeds 7/13/64 are 86.809/93.243/82.580 seconds, with exact proof/work
 parity against their controls. One still exceeds 90 seconds; no full-corpus
 normal acceptance or broad scale claim follows from this small comparison.
 
-Q30 remains blocked for measured performance and unproved broader size
-coverage under its unchanged original scope. U06, U07, Q60 and later
-milestones remain UNSTARTED.
+Q30 remains BLOCKED / NOT ACCEPTED under its unchanged original scope.
+Plan-4 20-40-part generation is implemented, but fresh full-cohort and remaining
+acceptance gates are pending. Normal-player publication remains disabled
+pending those gates, visible player-flow proof and parent review. U06, U07,
+Q60 and later milestones remain UNSTARTED.
 See [Q30 evidence](task-evidence/Q30/README.md).
 
 #### Q30-P1 — Medium-board floorplanning and two-layer physical policy
@@ -2561,9 +2570,9 @@ record the measured candidate and limits.
 
 **Exact deliverable:** Approximately 30-part heterogeneous multi-rail control
 board plus a held-out 20-40-part corpus, repeated output channels and
-structurally different implementations of shared roles. The preserved
-implementation currently uses 33/35/37-part variants across eight topology
-axes; those measurements do not replace the original acceptance target.
+structurally different implementations of shared roles. Current plan-4 seeded generation provides purposeful 20-40-part variation.
+Historical 33/35/37 measurements across eight topology axes remain supporting
+evidence; they do not replace the original acceptance target or full-cohort gates.
 
 **Acceptance:** Generation, routing, domain behavior, partial power, normal diagnostics and repair meet the frozen budget; no generic layer gains device-specific branches; selected layer strategy is inspectable and comprehensible.
 

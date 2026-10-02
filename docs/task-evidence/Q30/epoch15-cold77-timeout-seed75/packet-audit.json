@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "createdUtc": "2026-10-02T15:16:09.128624+00:00",
+  "artifactCount": 524,
+  "archiveMemberCount": 526,
+  "portableBytesChecked": 27232666,
+  "sourceInputsRechecked": 1354,
+  "archiveSha256": "0bf9b802e973c4b691b1e50a4025a338229f17ebc9880d58b588e7533b42a4a3",
+  "qualificationStatus": "FAIL",
+  "priorAuditAttempt": {
+    "status": "FAIL",
+    "exitCode": 1,
+    "reason": "checker assumed evidence/ prefix; actual maintained packet paths are rooted directly",
+    "resolution": "inspect actual archive format and check exact declared paths"
+  },
+  "priorPackagingAttempt": {
+    "status": "FAIL_CLOSED",
+    "exitCode": 1,
+    "helperSha256": "2d9d90d39cb815fd3b416d0f2701a2a8191a231961004a085b3f092bd679ccdf",
+    "reason": "prior prerequisite not PASS: compiled31",
+    "cause": "packager expected auditStatus; actual compiled31 audit uses status",
+    "outputCreated": false,
+    "resolution": "read actual PASS status field; gate not rerun"
+  },
+  "limitsChanged": false,
+  "gateRerun": false
+}

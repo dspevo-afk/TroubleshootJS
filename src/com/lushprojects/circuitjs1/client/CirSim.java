@@ -5657,9 +5657,14 @@ MouseOutHandler, MouseWheelHandler {
 		 publishBrowserVerificationResult("PASS:e02");
 	     } catch (Throwable failure) {
 		 publishBrowserVerificationResult("FAIL:e02:" + failure.getMessage());
-		 if (failure instanceof Error) throw (Error)failure;
-		 if (failure instanceof RuntimeException) throw (RuntimeException)failure;
-		 throw new IllegalStateException("E02 verification failed", failure);
+		 // The explicit negative canary is terminal evidence, like A07's
+		 // forced failure. Unexpected solver or verifier errors still escape.
+		 if (!(troubleshootE02ForcedFailure && failure instanceof AssertionError &&
+		         "e02-explicit-failure-canary".equals(failure.getMessage()))) {
+		     if (failure instanceof Error) throw (Error)failure;
+		     if (failure instanceof RuntimeException) throw (RuntimeException)failure;
+		     throw new IllegalStateException("E02 verification failed", failure);
+		 }
 	     } finally { developerVerifierRunning = false; }
 	 }
 	    if (!developerVerifierRunning && troubleshootA06Verification &&

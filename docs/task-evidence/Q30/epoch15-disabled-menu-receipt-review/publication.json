@@ -1,0 +1,11 @@
+{
+  "status": "PACKAGED",
+  "destination": "docs/task-evidence/Q30/epoch15-disabled-menu-receipt-review/epoch15-disabled-menu-receipt-review.tar.gz",
+  "bytes": 471071,
+  "sha256": "3ab93aec9393116d3b278ed9d40bc1d340066dc06f651267f540c64a385b67fc",
+  "memberCount": 31,
+  "q30Acceptance": "NOT_ESTABLISHED",
+  "sourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+  "sourceInputsRechecked": 1354,
+  "helperSha256": "5729ba14de232cbbab838e50743559d797651ce2cd1bd737206d9a64461bde6f"
+}

@@ -1,0 +1,11 @@
+{
+  "archiveSha256": "7ff9c08ea98d61e35ba14a5f78f0280c9ba214518d3d370da14a5e188d549a53",
+  "exactRecordedProcessInstancesAbsentOrSignaled": 11,
+  "helperSha256": "c6b6de0855cec650d12a690497980f01c33d918c087196668e31961337165566",
+  "members": 91,
+  "operationSeconds": 0.3440000000409782,
+  "qualificationAccepted": false,
+  "schema": 1,
+  "sourceInputsRechecked": 1354,
+  "status": "PASS"
+}

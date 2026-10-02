@@ -404,6 +404,10 @@ final class QuickPlayDeveloperVerifier {
             verifyNmosCorrectRepairCanFinish(sim, challenge);
             return;
         }
+        if (QuickPlayFamilyRegistry.SENSOR_CONTROL.equals(instance.getCircuitFamilyId())) {
+            verifySensorControlCorrectRepairCanFinish(sim, challenge, instance);
+            return;
+        }
         require("LED_INDICATOR".equals(instance.getCircuitFamilyId()) && instance.getSeed() == 3,
             "Quick Play verification selection is not the deterministic LED proof");
         ResistorSlotController slots = sim.getResistorSlotController();
@@ -598,6 +602,44 @@ final class QuickPlayDeveloperVerifier {
         require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED,
             "Quick Play NPN seed 1 correct replacement did not report generic repair status");
         finishRepaired(sim, instance, challenge);
+    }
+
+    private static void verifySensorControlCorrectRepairCanFinish(CirSim sim,
+            GeneratedChallengeController challenge, GeneratedBoardInstance instance) {
+        GeneratedFault fault = challenge.getDefinition().getFault();
+        String target = fault.getTargetComponentId();
+        require(fault.getType() == GeneratedFaultType.RESISTOR_OPEN &&
+                ("RBIAS".equals(target) || "RREF".equals(target) || "RFB".equals(target)) &&
+                instance.getFamilyState() instanceof SensorControlFamilyState,
+            "Quick Play sensor proof has no serviceable open-resistor fault");
+        require(!challenge.performCustomerRetest().isPassed(),
+            "Quick Play unrepaired sensor fault passed its LOW/HIGH customer retest");
+        require(instance.getDiagnosticProvider() != null,
+            "Quick Play sensor proof has no current diagnostic provider");
+        String correct = instance.getDiagnosticProvider().getCorrectCatalogId(instance, target);
+        replace(sim, instance, sim.getResistorSlotController(target), correct);
+        power(sim, instance, BoardPowerState.POWERED);
+        SensorControlFamilyState state = (SensorControlFamilyState) instance.getFamilyState();
+        instance.invokeOperation(GeneratedBoardOperationIds.SENSOR_CONDITION_LOW, sim);
+        settle(sim, instance);
+        require(SensorControlGeneratedBoardValidator.isHealthyLow(instance),
+            "Quick Play sensor replacement did not restore actual LOW behavior");
+        instance.invokeOperation(GeneratedBoardOperationIds.SENSOR_CONDITION_MID, sim);
+        settle(sim, instance);
+        require(state.getCommandedCondition() == E04SensorControlModel.SensorCondition.SENSOR_MID &&
+                state.getModel().getSensorCondition() == E04SensorControlModel.SensorCondition.SENSOR_MID,
+            "Quick Play sensor MID command did not reach the current owner");
+        instance.invokeOperation(GeneratedBoardOperationIds.SENSOR_CONDITION_HIGH, sim);
+        settle(sim, instance);
+        require(SensorControlGeneratedBoardValidator.isHealthyHigh(instance),
+            "Quick Play sensor replacement did not restore actual HIGH behavior");
+        require(challenge.getRepairStatus() == GeneratedRepairStatus.CORRECTLY_RESTORED,
+            "Correctly restored sensor challenge did not report generic repair status");
+        finishRepaired(sim, instance, challenge);
+        require(state.getCommandedCondition() == E04SensorControlModel.SensorCondition.SENSOR_HIGH &&
+                sim.getBoardPowerController().getState() == BoardPowerState.POWERED &&
+                sim.getBoardModificationController().isFullyRestored(),
+            "Quick Play sensor retest did not restore its input, power and physical state");
     }
 
     private static void verifyNpnCorrectRepairCanFinish(CirSim sim,

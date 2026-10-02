@@ -1,4 +1,348 @@
-# Current checkpoint: Q30 cold77 PASS; compiled31 terminal FAIL27/31
+# Current checkpoint: Q30 cold qualification FAIL; local acceptance blocked
+
+2026-10-02T16:23:35.607769+00:00. Branch `codex/q30-multirail-qualification`;
+base HEAD `d37c3b3b8581abdeaa9b88b7bfb2349cff958d31`, five source changes plus docs/evidence.
+Frozen source `a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51`;
+all1,354 consumed inputs unchanged. Q30 NOT ACCEPTED and disabled. Original77 roots,
+308 candidates,90s/640/5s unchanged. U06/U07/Q60 unstarted. No push/email/publication/deletion.
+
+Fresh final-source gates: native82 PASS4035.361s and append26 PASS196.324s;
+combined structural77=70 admitted/7 typed route rejects/0 failed, with exact105
+service/105 sensitivity rows and all four independent oracles. Native cleanup
+review PASS; cleanup elapsed NOT RECORDED separately. Shipping/isolated JDK8/GWT5
+PASS84.999s/85.285s; compiled31 PASS31/31, strict audit PASS, operation2691.423s,
+cleanupPASS1.287s. Focused E02+/negative/E04 PASS3/3. Actual transport21 and both
+live process ownership canaries PASS; earlier failures remain preserved.
+Compiled4/export/freeze PASS; original77/308 canonicals/order match. Short-controller
+extra live capture missed after exit; host identity/cleanup proof retained.
+
+Required final cold77 **FAIL**: original index32/root75 TIMEOUT90.221s,
+221ms beyond90s;409/640 work, active/coordinator1.593s/5s.31 prior roots PASS,
+45 NOT RUN; full77 auditor ran FAIL/incomplete. Failed-root hostPASS/cleanupPASS
+1.032s; rest operation1656.499s/exit1. No failure replaced or budget relaxed.
+[Failure packet](task-evidence/Q30/epoch15-cold77-timeout-seed75/README.md):526
+members independently checked; all1,354 source hashes rechecked.
+
+Matched diagnostic CURRENT/OLD/OLD/CURRENT:74.517/74.591/73.614/73.452s,
+483 work each; actual hosts/cleanup PASS, operation318.675s.34 recorded process
+instances gone. The two old strict readers retain HOST_FAIL for their original
+host pins; the common-host allowance applies only to this diagnostic. Source/app/
+overlay/five-cache hashes unchanged. CPU not sampled; cause remains UNKNOWN.
+[Diagnostic packet](task-evidence/Q30/epoch15-root75-matched-diagnostic/README.md):95
+members checked. These four observations do not establish cohort acceptance.
+
+Disabled production menu receipt audit PASS:30 launches/2 replays, exact ten-family
+matrix, privacy and stale/blocked replay checks, no runtime errors. Operation235.552s,
+cleanupPASS0.429s; repository/shipping1,354 inputs and357 compiled files match.
+[Menu packet](task-evidence/Q30/epoch15-disabled-menu-receipt-review/README.md):31
+members independently checked. Source-only archive PASS77.337s, baseline/delta/
+roundtrip/overlay bytes match; acceptance NOT ASSESSED and cleanup elapsed not
+recorded separately. [Archive packet](task-evidence/Q30/epoch15-final-source-archive/README.md):14
+members independently checked. Combined menu/archive process review PASS10,
+all exact recorded instances absent; extra menu outer/driver capture missed.
+
+Dave authorized future receipt/serial-runner workflow improvements. Additive
+[tooling/evidence](task-evidence/Q30/qualification-workflow/README.md) stays outside
+frozen1,354 inputs: PASS36/36 (22 receipts/five normalizer/nine actual Windows
+process checks), operation2.000s. Early0.047s accounting-race FAIL preserved;
+corrected two-child canary PASS0.157s with32ms cleanup drains. Persistent descendants
+still fail. Canonical source/paths/reader checks and exclusive writes pass;
+normalized ledger remains31 PASS/1 FAIL/45 NOT_RUN. Independent static review PASS
+limited to receipts/normalizer; independent resource review PASS11 exact instances.
+All fixture evidence retained;91-member portable packet and coordination handoff saved.
+Packaging/checker errors are retained with corrections; no gate rerun from packaging.
+
+No owned runner remains active. Raw qualification root label
+`q30-process-pinned-final-qualification-fcffecff8fa444889bce93725495c628`;
+diagnostic label `q30-root75-matched-4974587d7d744d1d9ee9a876cf607a2d` and archive
+scratch `q30-source-archive-217be45978364c74ac25349cf44ba8b7` retained.
+Restart pointers/helpers: task workspace `epoch15-final/`. Four original Python
+caches and sibling work untouched. Supported Browser/computer/node_repl tools
+absent: visible20/30/40 diagnosis/repair/retest BLOCKED/NOT RUN. Private enabled
+build/menu BLOCKED by cold77 FAIL. Parent independent acceptance review pending.
+Local checkpoint candidate includes only intended source/docs/evidence; no acceptance claim.
+Next: parent review and further root75 diagnosis, then fresh full cold77 plus
+supported visible/enabled gates before Q30 acceptance. U06/U07/Q60 stay unstarted.
+
+---
+
+# Historical checkpoint: Q30 final cold qualification FAIL at root75; disabled
+
+2026-10-02T14:55:38.667047+00:00. Branch `codex/q30-multirail-qualification`;
+HEAD `d37c3b3b8581abdeaa9b88b7bfb2349cff958d31` plus five reviewed source changes and docs.
+Frozen source `a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51`;1,354 raw inputs unchanged.
+**Q30 NOT ACCEPTED; disabled.** No push/merge/publication/email/evidence deletion.
+Original77 roots/308 candidates/90s/640/5s unchanged; U06/U07/Q60 unstarted.
+
+Fresh actual disabled shipping JDK8/GWT5 PASS84.999s, five permutations.
+Focused production E02+/negative/E04 PASS3/3,20.328s; cleanup PASS1.289s.
+Final compiled31 **PASS31/31**, strict audit PASS0 errors; original spec/oracle
+unchanged. Operation/stage 2691.423s; host cleanup PASS
+1.287s separately, server stopped/no survivors/errors.
+Alpha41, A07, A10, E02+/negative, current E04 repair/retest, Q30 service13 and
+all21 D01 cases retain their independent expectations. Seed35 remains the declared
+typed physical negative. Scoped passive terminal reads/events/errors and input
+bindings pass; no timeouts or errors waived. This is automated compiled proof.
+Independent terminal CIM review PASS: all11 recorded outer/controller/host/driver/
+initial Edge instances absent; no termination performed. Final tool82391 exited0.
+[Final compiled31 packet](task-evidence/Q30/epoch15-process-final-compiled31/README.md)
+archive/member/privacy audit PASS118 members,117 raw receipt hashes rechecked;
+initial independent checker prefix-assumption FAIL retained in packet-audit.json.
+
+Both consumed process inventories now fail closed on empty/malformed results,
+require the runner and valid UTC identities, use explicit WindowsPS/CIM termination
+and retain bounded nonzero diagnostic detail. Package pin matches actual scale-host
+bytes; other seven hashes unchanged. Real transport21 PASS59.105s/four cleanupPASS;
+compiled/scale live ownership canaries PASS5.893s/5.924s, exact sibling exclusion,
+target close while peer lives and all owned worker/Edge identities absent.
+[Process proof](task-evidence/Q30/epoch15-process-identity-proof-final/README.md):143
+portable payload/hash/privacy checks PASS; supplemental143 raw/1,354 source recheck
+and all three lifecycle-negative markers PASS. The partial54-payload packaging
+attempt remains INCOMPLETE; no gate claim. Initial collection-time hash guard was
+absent; later recheck does not claim that historical guard; helper strengthened.
+
+Prior compiled31 FAIL_CLEANUP31/31 appPASS,2,534.582s/cleanupFAIL5.845s and strict
+auditFAIL6 are preserved. Its blank-stderr nonzero cause remains unknown; current
+passing proof does not retroactively repair it. Alias-helper pre-browser failure
+and stale-package-pin preparation rejection are retained with exact sources.
+[Cleanup failure](task-evidence/Q30/epoch15-final-compiled-cleanup-failure/README.md)
+and [prior fix proof](task-evidence/Q30/epoch15-final-fix-proof/README.md) retained.
+
+Fresh native-full82 PASS; tool94459 exited0. Strict receipt audit PASS0 issues:
+all82 suite markers, four independent oracles, report protocol, listener23,
+seven nonempty parity sidecars, exact105 service/105 finer-step rows and first51
+structural corpus roots (47 admitted/4 typed rejects) in original order.
+Operation4035.361s; cleanup elapsed NOT RECORDED separately. Independent cleanup
+PASS: recorded wrapper instance gone, unique captured scratch absent and zero
+matching JVMs; no termination performed. All1,354 raw inputs unchanged.
+
+Append26 terminal0, strict audit PASS0 and independent captured-scratch/JVM
+cleanup PASS; 23 admitted/3 typed rejects, operation196.324s. Combined native
+structural77:70 admitted/7 typed route rejects/0 failed; no308-job or cold-timing claim.
+[Final native packet](task-evidence/Q30/epoch15-native-full-append-evidence/README.md)
+archive/member/privacy audit PASS33 members; all1,354 raw inputs rechecked.
+ArchiveSHA`ef26cb46f381c417097e68866ab4ffbdb81ebef8416157917ef1ddf9e5ca5766`.
+Root corrected equivalent UTC fractional formatting and escaped-path sanitation
+in the packet helper before execution; leaf static review preceded those fixes.
+
+Fresh isolated JDK8/GWT5 PASS85.285s/five permutations, tool51363 exited0.
+Compiled4/export/freeze PASS19.297s, host cleanup PASS1.278s separately;
+original77 roots/308 canonical candidates/order/limits match the original plan.
+Tool18523 exited0. Separate short-controller live capture arrived after exit:
+NOT_CAPTURED (attempt exit1), host-owned identity/cleanup proof retained; no
+termination. This does not claim a captured controller creation time.
+Cold pilot3 terminal0 and summary audit PASS: worst69.182s/90s;
+operation128.311s, per-case cleanup total3.018s separately. Full77 audit pending.
+
+Final cold-rest stopped at original index32/root75: application TIMEOUT90.221s,
+221ms over unchanged90s; work409/640 and max active/coordinator1.593s/5s.
+31 earlier roots APP_PASS;45 NOT RUN. Host/cleanup PASS1.032s for failed root;
+this does not qualify the application. Rest operation1656.499s/exit1/incomplete.
+Required full cold77 audit FAIL: Sequence incomplete; raw1,354 source inputs
+still match. No retry/substitution/limit waiver. Tool38643 exited1.
+Independent resource review PASS260 exact wrapper/host/initial Edge instances
+absent, reused PIDs preserved; drivers not separately sampled; no termination.
+Root75 stopped during HYPOTHESES on unchanged candidate0/39parts/2channels.
+Healthy29.189s/89work, Physical0.138s/1work, Hypotheses59.495s/318work.
+Earlier source root75 passed76.344s/483work with Healthy17.922s/89work and
+Hypotheses56.682s/390work. Same Edge154.0.4258.48/PWB1.63.0/CP313.14 and
+candidate canonicals, but source/web/host bytes differ; cause UNKNOWN. This is
+not a controlled same-binary comparison or a hardware-cause diagnosis.
+
+Raw task label `q30-process-pinned-final-qualification-fcffecff8fa444889bce93725495c628`; restartable
+`epoch15-final/epoch15-task-pointer.json` binds source/plan/failures. No expensive
+gate remains active. Next: bounded root75 diagnosis and unaffected disabled-menu/
+exact source archive; private-enabled menu is BLOCKED by cold77 FAIL. Cold failure
+packet pending. Current roadmap distinguishes implemented plan-4 purposeful20-40
+generation from qualification; Q30 NOT ACCEPTED/disabled and all limits retained.
+Private-menu workspace validator corrected before launch to two ordered saved
+replays plus separate Q30 replay, all three strict PASS/isolation checks retained;
+summary explicitly records total3/array2/Q301. AST PASS; execution NOT RUN.
+Supplemental static review of the two Java deltas found no concrete blocker;
+scoped callers/validators/tests read only, no gates rerun. Parent acceptance is
+separate. Workspace canary/cold evidence-overwrite guards tightened; cold audit
+now requires complete bound integer3/74 wrapper receipts, and canary/private-menu
+dependencies are explicitly pinned/recorded. Originals retained. Final Python3
+and PowerShell9 AST checks PASS; actual import/module-path preflight PASS with
+CP313.14/PWB1.63.0/greenlet3.5.6. These guards await their full cold/menu runs.
+One expensive gate at a time; LocalDots priority. Earlier native/cold/archive proof
+remains history. Parent independent acceptance review pending. Supported Browser/
+computer/node_repl absent: visible20/30/40 diagnosis/repair/retest BLOCKED/NOT RUN.
+Four original Python caches and sibling work preserved; no wide PC change.
+
+---
+
+# Historical checkpoint: Q30 process boundary fixed; final fresh gates underway
+
+2026-10-02T12:00:41.257773+00:00. Branch `codex/q30-multirail-qualification`;
+HEAD `d37c3b3b8581abdeaa9b88b7bfb2349cff958d31` plus five reviewed source changes and docs.
+Final source `a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51`; independent1,354-input audit PASS.
+**Q30 NOT ACCEPTED; disabled.** No push/merge/publication/email/evidence deletion.
+Original77 roots/308 candidates/90s/640/5s unchanged; U06/U07/Q60 unstarted.
+
+E02 consumes only its forced exact assertion; E04 proves the current sensor repair
+through existing catalog/mutation/solver/retest owners. The passive compiled host
+holds one exact local script until scoped HTML attachment and verifies terminal
+backend identities/state/read/error boundaries. Both consumed Windows process
+queries require nonempty valid UTC inventories containing the runner, use explicit
+WindowsPS with terminating CIM errors and retain bounded exit/stdout/stderr detail.
+The scale wrapper pin changed only to the canary-verified host bytes; other seven
+package hashes and every candidate/oracle/limit remain unchanged.
+
+Real transport21 PASS59.105s, four cleanup PASS receipts. Compiled/scale process
+ownership canaries PASS5.893s/5.924s: actual CP313 images, two sibling Edge trees,
+mutual exclusion, target close while peer lives, fresh empty owned sets, then both
+worker/Edge identities absent. Seven synthetic parser negatives supplement this
+real host proof.
+[Portable process/transport packet](task-evidence/Q30/epoch15-process-identity-proof-final/README.md)
+contains143 payloads; independent compressed/payload hash and privacy audit PASS.
+Supplemental recheck PASS143 raw inputs/1,354 source inputs and all three lifecycle
+negative markers. Initial packager lacked collection-time hashes; later raw recheck
+does not claim that historical guard. Helper strengthened for subsequent use.
+Earlier54-payload partial attempt is retained with INCOMPLETE marker; intentional
+malformed fixture was mistakenly parsed as a receipt, with no gate result claimed.
+Prior alias-helper FAIL0.715s occurred before browser launch;
+preserved with exact source. Initial maintained preparation rejected the stale
+host pin before copies; its raw rejection root is preserved. No gate error waived.
+
+Prior full compiled31 remains FAIL_CLEANUP31/31 appPASS,2,534.582s; cleanupFAIL
+5.845s, strict audit FAIL6. Original nonzero blank-stderr cause unknown; current
+guard fix and passing short canaries do not retroactively repair that receipt.
+[Cleanup failure packet](task-evidence/Q30/epoch15-final-compiled-cleanup-failure/README.md)
+has113 payload/hash/privacy checks PASS; no profiles/screenshots. Task-only new
+packet directory/files inherited owner-only Temp permissions on rename; only those
+four entries were reset to existing repo inheritance, bytes unchanged. ACL backup
+is private workspace evidence. No unrelated/system/sandbox permissions changed.
+
+Fresh actual shipping JDK8/GWT5 PASS84.999s, five permutations;
+focused production E02+/negative/E04 PASS3/3,20.328s,
+cleanup PASS1.289s/no survivors/errors;1,354 inputs unchanged.
+Final full compiled31 RUNNING, session82391; controller PID7368, creation
+`2026-10-02T12:03:01.1851440Z`; hostPID24196, creation
+`2026-10-02T12:03:02.3203530Z`. Explicit pinned CP313 physical image verified.
+Wrapper streams30s progress; exact original31case/spec/oracle unchanged. No aggregate
+PASS claim. Root monitors this existing runner through terminal cleanup and audit.
+Observed `2026-10-02T12:26:18.461995+00:00`:18/31 app cases PASS,0 errors;
+terminal cleanup/audit pending. Do not duplicate or kill it.
+Raw task label `q30-process-pinned-final-qualification-fcffecff8fa444889bce93725495c628`; restartable `epoch15-final/epoch15-task-pointer.json`
+binds frozen source/plan, retained originals and previous failures. Root owns each
+launched runner through terminal/audit. One expensive job; LocalDots priority.
+
+Next: terminal compiled31/audit, fresh native82/structural77, isolatedGWT5,
+compiled4/export/freeze/cold77, disabled/private menu/replay and exact sourcearchive.
+Earlier native/cold/archive proof remains history; final-source gates pending.
+Parent independent acceptance review pending. Supported Browser/computer/node_repl
+unavailable: visible20/30/40 diagnosis/repair/retest BLOCKED/NOT RUN. No visual PASS.
+Four original Python caches and sibling work preserved; no wide PC change.
+
+---
+
+# Historical checkpoint: Q30 compiled31 FAIL_CLEANUP; process boundary under review
+
+2026-10-02T11:28:48.838015+00:00. Branch `codex/q30-multirail-qualification`;
+HEAD `d37c3b3b8581abdeaa9b88b7bfb2349cff958d31` plus three integrated source fixes and documentation.
+Frozen source `25f0c65ae6c29a70fd7a9cca7e622f3e7872fa05b1e7b45ba16538bce19fd62a`; all1,354 inputs unchanged.
+**Q30 NOT ACCEPTED; disabled.** No push/merge/publication/email/evidence deletion.
+Original77 roots/308 candidates/90s/640/5s unchanged; U06/U07/Q60 unstarted.
+
+Final-source compiled31 terminal **FAIL_CLEANUP**,31/31 app cases PASS,
+operation/stage 2534.582s, exit1; strict audit FAIL with six
+aggregate/stage/cleanup findings. All declared positive/negative oracles retained,
+including seed35's typed physical rejection. No observer/read/browser case error.
+Cleanup FAIL5.845s: serverStopped=true, pre-close process
+query and20 survivor queries returned nonzero with blank stderr. Existing error
+omits returncode/stdout; exact underlying cause is unknown. No cleanup PASS claim.
+
+Controller17716 creation2026-10-02T10:37:56.2339160Z, host17948 and seven initially
+owned Edge IDs independently absent at post-run CIM check; PID17716 was reused by
+conhost with a newer creation time and left untouched. That observation cannot
+retroactively repair the failed cleanup receipt. No owned test runner remains.
+Exact selected CP313 read-only query now succeeds with both WindowsPS and bundled
+PS7, so a fresh invocation alone does not explain the earlier failure.
+
+Review found an empty zero-exit query can look like no survivors. A workspace-only
+draft requires complete row validation, the runner identity and fail-fast CIM;
+it records bounded returncode/stdout/stderr diagnostics. Root will validate actual
+Windows/Edge ownership, sibling exclusion and shutdown before integrating/rerunning.
+No cases, budgets, errors or cleanup assertions are waived.
+
+Shipping actual JDK8/GWT5 PASS82.656s; focused E02+/negative/E04 PASS3/3,
+18.343s, cleanup PASS1.238s; selected transport21 PASS59.717s with four cleanup
+PASS receipts. [Fix proof](task-evidence/Q30/epoch15-final-fix-proof/README.md)
+retains221 verified sanitized payloads and both earlier failed attempts.
+These are bound to the frozen source above; future source changes need an audited
+consumed-input boundary or fresh applicable gates. Earlier native/cold77/archive
+proof remains history and does not certify this candidate.
+
+Raw label `q30-final-qualification-be815db03e7d4421b061ebc228a984fd`; restartable source/plan/helpers/ownership at workspace
+`epoch15-final/epoch15-task-pointer.json`. One expensive job at a time, LocalDots
+priority and four original caches/sibling work preserved; no wide PC change.
+Next: process canaries, final freeze/applicable build/compiled/native/cold gates,
+disabled/private menus/replay and source archive. Parent acceptance review pending.
+Supported Browser/computer/node_repl absent: visible20/30/40 diagnosis/repair/retest
+BLOCKED/NOT RUN. Q30 stays disabled; no acceptance claim.
+
+---
+
+# Historical checkpoint: Q30 final fixes frozen; full compiled31 RUNNING
+
+2026-10-02T10:40:51.154751+00:00. Branch `codex/q30-multirail-qualification`;
+HEAD `d37c3b3b8581abdeaa9b88b7bfb2349cff958d31` plus three source fixes and checkpoint docs.
+Final identity `25f0c65ae6c29a70fd7a9cca7e622f3e7872fa05b1e7b45ba16538bce19fd62a`;1,354 inputs pinned.
+**Q30 NOT ACCEPTED; disabled.** No push/merge/publication/email/evidence deletion.
+U06/U07/Q60 unstarted; original77 roots/308 candidates/90s/640/5s unchanged.
+
+E02 exact forced assertion publishes expected FAIL without uncaught propagation;
+unexpected errors still throw. E04 services the current sensor family through
+existing real mutation/catalog/solver/retest owners. Host observes passive CDP DOM
+events; holds exactly one local compiled script until HTML attachment before app
+execution; requires bounded final reads and stable backend document/HTML identity.
+Frontend versions reject stale queries; benign frontend handle renewals are not
+document replacement. Scope/state/session/read/browser/cleanup errors stay fatal.
+
+Final transport21 scenarios PASS59.717s: startup and synchronous12s scripts,
+wrong-node filtering, preterminal replacement, explicit negative, eleven fatal
+negatives (including same-URL HTML replacement and duplicate script), actual CDP
+loss and cancellation; all four cleanup receipts PASS/no survivors/errors.
+Final-source actual shipping JDK8/GWT5 PASS82.656s;
+focused E02positive/negative/E04 PASS3/3,18.343s;
+E04 sensor repair/retest13.271s, cleanup PASS1.238s, all input hashes unchanged.
+
+[Final fix proof](task-evidence/Q30/epoch15-final-fix-proof/README.md):221 sanitized
+payload/compressed hashes and privacy checks PASS; failed attempts preserved.
+Scoped independent read-only review of exact final host/E02/E04/build/focused/
+transport evidence found no concrete false-PASS/cleanup/player behavior issue;
+no gate was launched by review. This does not certify full Q30 acceptance.
+
+Full compiled31 RUNNING: 21/31 captured, 21 PASS, 0 non-PASS
+at `2026-10-02T11:03:26.782369+00:00`; Alpha/A10 and both E02/E04 gates captured PASS.
+Controller PID17716, creation `2026-10-02T10:37:56.2339160Z`; pinned CP313
+`run_epoch15_shipping_hosts.py compiled31`. Tool session19423 lookup unavailable;
+exact controller creation/executable/command revalidated by CIM; receipts advance.
+Monitor existing owned process, not a new runner. No aggregate PASS claim.
+Raw task label `q30-final-qualification-be815db03e7d4421b061ebc228a984fd`; workspace
+`epoch15-final/epoch15-task-pointer.json` binds source/plan/ownership/progress.
+Do not duplicate/kill. Root owns terminal results. One expensive job at a time;
+LocalDots priority preserved, no global/protection/server changes.
+
+Prior native82/cold77 PASS (max80.978s/90s), compiled31 terminal27PASS/4FAIL and
+archive PASS remain unchanged history; they do not qualify the final fixes.
+First fresh freeze/root and startup acquisition FAIL2/3 (cleanup PASS) retained;
+expanded startup canary FAIL due benign frontend renewal retained with exact bytes.
+No cases/errors/budgets waived or evidence deleted.
+[Final fix proof](task-evidence/Q30/epoch15-final-fix-proof/README.md):221 gzip payload/compressed
+hashes and personal-path checks independently PASS; scoped review found no concrete
+false-PASS/cleanup/player issue and excludes full acceptance. Four original caches/sibling
+edits preserved. [Prior terminal packet](task-evidence/Q30/epoch15-compiled31-terminal/README.md).
+
+Next: terminal compiled31/strict audit, then fresh native82/structural77,
+isolated GWT5/compiled4/export/freeze/cold77, disabled/private menus/replay/archive.
+Parent independent acceptance review pending. Supported Browser/computer/node_repl
+unavailable: visible20/30/40 diagnosis/repair/retest BLOCKED/NOT RUN. No visual PASS.
+
+---
+
+# Historical checkpoint: Q30 cold77 PASS; compiled31 terminal FAIL27/31
 
 2026-10-02T08:47:48.254507+00:00. Branch `codex/q30-multirail-qualification`; unchanged source base
 `7bdc23e8170e4a9e737b33daf4bb533f87468b22`, identity `a3bd150019d00870a08896efd893c99aff120ce11a49f34cca0af07f33d59c31`.

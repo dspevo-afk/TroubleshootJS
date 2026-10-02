@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "membersVerified": 118,
+  "portableBytes": 16862759,
+  "archiveSha256": "aed802688029259b6adf21dbe86dae46deb90409959056fd71b5dabab4a43cfe",
+  "manifestSha256": "a02dd115ec26204ba017fec58c4b7d64d05e1d9947a2fc1ab55de968a2d390ad",
+  "rawReceiptHashesRechecked": 117,
+  "q30Acceptance": "NOT CLAIMED",
+  "auditUtc": "2026-10-02T12:55:54.365516+00:00",
+  "priorAttempt": {
+    "status": "FAIL",
+    "exitCode": 1,
+    "reason": "Independent auditor expected logical names without the packager's documented evidence/ prefix.",
+    "elapsedSeconds": 0.166384092
+  }
+}

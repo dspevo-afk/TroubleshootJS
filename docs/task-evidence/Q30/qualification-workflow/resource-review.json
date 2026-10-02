@@ -1,0 +1,65 @@
+{
+  "exactRecordedProcessInstances": 11,
+  "instances": [
+    {
+      "creationFileTimeTicks": 134354313976709998,
+      "pid": 28908,
+      "status": "ABSENT"
+    },
+    {
+      "creationFileTimeTicks": 134354306862981207,
+      "pid": 29000,
+      "status": "ABSENT"
+    },
+    {
+      "creationFileTimeTicks": 134354312980124942,
+      "pid": 5828,
+      "status": "ABSENT"
+    },
+    {
+      "creationFileTimeTicks": 134354312980922415,
+      "pid": 28364,
+      "status": "ABSENT"
+    },
+    {
+      "creationFileTimeTicks": 134354313977707129,
+      "pid": 28580,
+      "status": "ABSENT"
+    },
+    {
+      "creationFileTimeTicks": 134354313979955884,
+      "pid": 23344,
+      "status": "ABSENT"
+    },
+    {
+      "creationFileTimeTicks": 134354313980823905,
+      "pid": 10944,
+      "status": "ABSENT"
+    },
+    {
+      "creationFileTimeTicks": 134354313986301377,
+      "pid": 4032,
+      "status": "ABSENT"
+    },
+    {
+      "creationFileTimeTicks": 134354313987437303,
+      "pid": 1088,
+      "status": "ABSENT"
+    },
+    {
+      "creationFileTimeTicks": 134354313993287321,
+      "pid": 21292,
+      "status": "ABSENT"
+    },
+    {
+      "creationFileTimeTicks": 134354313995309345,
+      "pid": 28576,
+      "status": "ABSENT"
+    }
+  ],
+  "limit": "Descendant cleanup is proven by assigned-before-resume owned JobObject active count zero; no system-wide availability inference.",
+  "reviewedUtc": "2026-10-02T16:20:21.706069+00:00",
+  "schema": 1,
+  "status": "PASS",
+  "terminationPerformed": false
+}

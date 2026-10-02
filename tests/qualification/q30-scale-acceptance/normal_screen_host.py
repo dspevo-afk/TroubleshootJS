@@ -294,18 +294,45 @@ def capture_script_identity(repo):
 
 
 def process_rows():
-    query = ("Get-CimInstance Win32_Process | Select-Object "
+    query = ("$ErrorActionPreference='Stop'; Get-CimInstance Win32_Process -ErrorAction Stop | Select-Object "
              "@{n='pid';e={$_.ProcessId}},@{n='parent';e={$_.ParentProcessId}},"
              "@{n='created';e={$_.CreationDate.ToUniversalTime().ToString('o')}},"
              "ExecutablePath | ConvertTo-Json -Compress")
-    result = subprocess.run(["powershell.exe", "-NoProfile", "-Command", query],
+    powershell = Path(os.environ["SystemRoot"]) / "System32/WindowsPowerShell/v1.0/powershell.exe"
+    result = subprocess.run([str(powershell), "-NoProfile", "-Command", query],
                             capture_output=True, text=True, timeout=20)
     if result.returncode:
-        raise RuntimeError("process identity query failed: " + result.stderr.strip())
+        detail = {"returnCode": result.returncode,
+                  "returnCodeHex": hex(result.returncode & 0xffffffff),
+                  "stdoutLength": len(result.stdout), "stderrLength": len(result.stderr),
+                  "stdout": result.stdout[:1000], "stderr": result.stderr[:1000]}
+        raise RuntimeError("process identity query failed: " + json.dumps(detail))
     if not result.stdout.strip():
-        return []
+        raise RuntimeError("process identity query returned an empty inventory")
     rows = json.loads(result.stdout)
-    return [rows] if isinstance(rows, dict) else rows
+    rows = [rows] if isinstance(rows, dict) else rows
+    if not isinstance(rows, list) or not rows:
+        raise RuntimeError("process identity query returned an invalid inventory")
+    seen = set()
+    for row in rows:
+        if (not isinstance(row, dict) or set(row) != {"pid", "parent", "created", "ExecutablePath"}
+                or type(row["pid"]) is not int or row["pid"] < 0
+                or type(row["parent"]) is not int or row["parent"] < 0
+                or row["pid"] in seen or not isinstance(row["created"], str)
+                or not row["created"]
+                or (row["ExecutablePath"] is not None and not isinstance(row["ExecutablePath"], str))):
+            raise RuntimeError("process identity query returned a malformed or duplicate row")
+        try:
+            created = datetime.fromisoformat(row["created"].replace("Z", "+00:00"))
+        except ValueError as error:
+            raise RuntimeError("process identity query returned an invalid creation time") from error
+        if created.utcoffset() != timezone.utc.utcoffset(created):
+            raise RuntimeError("process identity query creation time is not UTC")
+        seen.add(row["pid"])
+    own = [row for row in rows if row["pid"] == os.getpid()]
+    if len(own) != 1 or not own[0]["ExecutablePath"]:
+        raise RuntimeError("process identity query omitted the runner identity")
+    return rows
 
 
 def owned_edge_rows(rows):

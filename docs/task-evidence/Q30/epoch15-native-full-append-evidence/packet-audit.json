@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "observedUtc": "2026-10-02T14:13:17.936784+00:00",
+  "archiveSha256": "ef26cb46f381c417097e68866ab4ffbdb81ebef8416157917ef1ddf9e5ca5766",
+  "archiveMembers": 33,
+  "sourceInputsRechecked": 1354,
+  "limitsUnchanged": true,
+  "structural77Only": true,
+  "privacyAndMemberHashes": "PASS",
+  "q30Acceptance": "NOT_ESTABLISHED",
+  "noGatesRerun": true
+}

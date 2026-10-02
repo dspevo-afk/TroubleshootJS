@@ -12,6 +12,19 @@ instruments, valid repair behavior and answer privacy remain required. The
 [current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
 older evidence packets describe their own historical candidates.
 
+## Future qualification workflow tools
+
+`docs/task-evidence/Q30/qualification-workflow/` owns additive receipt validation,
+retained cold-evidence normalization and serial Windows command execution.
+Receipts bind source/HEAD/plan and keep application, host observation, operation
+and cleanup clocks separate. The read-only adapter verifies canonical source
+identity, source bytes, safe paths and maintained-reader bindings. The runner
+assigns suspended children to an owned kill-on-close job before resume, bounds
+logs/deadlines, preserves application metrics on host failure and stops on the
+first nonpass with remaining roots explicitly NOT_RUN. Job accounting drain is
+bounded inside cleanup. These helpers neither replace the electrical auditors
+nor alter frozen Q30 inputs, acceptance limits or normal-player eligibility.
+
 ## Windows Quick Play preview lifecycle
 
 `Start TroubleshootJS.cmd` calls `start-preview.ps1` for the production Quick
@@ -4363,6 +4376,21 @@ bootstrap/permutation artifacts, runs the renderer/provider boundary check,
 and runs the parser, GWT XML, isolation, and 0/1/2 contract checks in
 `scripts/verify-gate-b.ps1`. The exact job check name is
 `Gate B Windows JDK8 deterministic verification`.
+
+The compiled developer-attribute host owns a passive CDP DOM observer scoped to
+the declared HTML node and exact document URL. It holds one selected local GWT
+script request until HTML attachment, before application execution or job budgets
+begin. Events avoid polling synchronous developer fixtures; acceptance still
+requires bounded final state/report reads and stable backend document/HTML node
+identities. Frontend versions reject stale queries; renewed handles do not imply
+a different document. State/scope, observer, browser, read and cleanup errors stay
+fatal. Owned route/DOM tasks and listeners close before session/context teardown.
+This transport injects no app code and establishes no player visual/responsiveness proof.
+Both consumed compiled/cold-screen hosts require a validated nonempty Windows
+process inventory containing the runner for ownership and survivor checks.
+Explicit WindowsPS/CIM errors terminate the query; bounded exit/stdout/stderr
+diagnostics are retained. Unknown or incomplete inventories fail cleanup.
+
 
 The default `verify-gate-b.ps1` invocation used by this job is deterministic
 and nonvisual: it includes the deterministic isolation/ownership and contract
