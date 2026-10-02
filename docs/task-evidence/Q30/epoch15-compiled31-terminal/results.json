@@ -1,0 +1,1150 @@
+{
+  "schema": 1,
+  "checkpointUtc": "2026-10-02T08:47:48.254507+00:00",
+  "baseHead": "7bdc23e8170e4a9e737b33daf4bb533f87468b22",
+  "sourceIdentity": "a3bd150019d00870a08896efd893c99aff120ce11a49f34cca0af07f33d59c31",
+  "Q30Status": "NOT_ACCEPTED; disabled",
+  "compiled31": {
+    "status": "FAIL",
+    "cases": 31,
+    "passed": 27,
+    "failed": 4,
+    "operationSeconds": 2681.3439999999828,
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 0.9704524000408128,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    },
+    "failedCases": [
+      {
+        "schema": 1,
+        "case": {
+          "index": 1,
+          "name": "alpha-full41",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "PASS:alpha",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "PASS",
+            "FAIL"
+          ],
+          "timeoutSeconds": 900.0,
+          "reportAttribute": "data-tsj-alpha-report"
+        },
+        "url": "http://127.0.0.1:53086/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true",
+        "startedUtc": "2026-10-02T07:50:00.519630+00:00",
+        "finishedUtc": "2026-10-02T07:58:27.355110+00:00",
+        "operationSeconds": 506.83547009999165,
+        "outcome": "FAIL",
+        "terminalReached": true,
+        "stateMatch": true,
+        "observedState": "PASS:alpha",
+        "lastObservedState": "PASS:alpha",
+        "timedOut": false,
+        "expectedFailureCanary": false,
+        "expectedFailureStateWasNotAnUnexpectedError": false,
+        "reportObserved": true,
+        "reportJsonValid": true,
+        "reportJsonError": null,
+        "reportMatch": true,
+        "reportLength": 135740,
+        "reportSha256": "2867269596e882af080b3af1d4c481a9622035468f818f90b26b6b95bfb1fca9",
+        "reportFile": "cases/001-alpha-full41.report.json",
+        "pageErrors": [],
+        "httpErrors": [],
+        "consoleErrors": [],
+        "attributeReadErrors": [
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          }
+        ],
+        "listenerCleanupErrors": [],
+        "navigationError": null
+      },
+      {
+        "schema": 1,
+        "case": {
+          "index": 5,
+          "name": "a10-positive",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyA10=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "PASS:a10",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "PASS",
+            "FAIL"
+          ],
+          "timeoutSeconds": 600.0,
+          "reportAttribute": "data-tsj-a10-report"
+        },
+        "url": "http://127.0.0.1:53086/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyA10=true",
+        "startedUtc": "2026-10-02T07:58:29.618122+00:00",
+        "finishedUtc": "2026-10-02T08:01:03.036978+00:00",
+        "operationSeconds": 153.4188527999795,
+        "outcome": "FAIL",
+        "terminalReached": true,
+        "stateMatch": true,
+        "observedState": "PASS:a10",
+        "lastObservedState": "PASS:a10",
+        "timedOut": false,
+        "expectedFailureCanary": false,
+        "expectedFailureStateWasNotAnUnexpectedError": false,
+        "reportObserved": true,
+        "reportJsonValid": true,
+        "reportJsonError": null,
+        "reportMatch": true,
+        "reportLength": 33340,
+        "reportSha256": "69a3ace9d01f43b57b644dc0d7c47a138f5adbc5bb83ec1d99a309e0e915c950",
+        "reportFile": "cases/005-a10-positive.report.json",
+        "pageErrors": [],
+        "httpErrors": [],
+        "consoleErrors": [],
+        "attributeReadErrors": [
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          },
+          {
+            "attribute": "data-tsj-verification",
+            "type": "TimeoutError",
+            "message": "Locator.get_attribute: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"html\")\n"
+          }
+        ],
+        "listenerCleanupErrors": [],
+        "navigationError": null
+      },
+      {
+        "schema": 1,
+        "case": {
+          "index": 8,
+          "name": "e02-explicit-negative",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyE02=true&tsjE02Fail=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": null,
+          "expectedPrefix": "FAIL:e02",
+          "terminalPrefixes": [
+            "PASS",
+            "FAIL"
+          ],
+          "timeoutSeconds": 120.0,
+          "reportAttribute": null
+        },
+        "url": "http://127.0.0.1:53086/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyE02=true&tsjE02Fail=true",
+        "startedUtc": "2026-10-02T08:01:04.257610+00:00",
+        "finishedUtc": "2026-10-02T08:01:04.746545+00:00",
+        "operationSeconds": 0.48893170000519603,
+        "outcome": "FAIL",
+        "terminalReached": true,
+        "stateMatch": true,
+        "observedState": "FAIL:e02:e02-explicit-failure-canary",
+        "lastObservedState": "FAIL:e02:e02-explicit-failure-canary",
+        "timedOut": false,
+        "expectedFailureCanary": true,
+        "expectedFailureStateWasNotAnUnexpectedError": true,
+        "reportObserved": false,
+        "reportJsonValid": null,
+        "reportJsonError": null,
+        "reportMatch": true,
+        "reportLength": 0,
+        "reportSha256": null,
+        "reportFile": null,
+        "pageErrors": [
+          "ajb"
+        ],
+        "httpErrors": [],
+        "consoleErrors": [],
+        "attributeReadErrors": [],
+        "listenerCleanupErrors": [],
+        "navigationError": null
+      },
+      {
+        "schema": 1,
+        "case": {
+          "index": 9,
+          "name": "e04-sensor-control-quickplay",
+          "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=7&tsjQuickPlayTestSeed=3",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "PASS:quick-play",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "PASS",
+            "FAIL"
+          ],
+          "timeoutSeconds": 120.0,
+          "reportAttribute": null
+        },
+        "url": "http://127.0.0.1:53086/circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=7&tsjQuickPlayTestSeed=3",
+        "startedUtc": "2026-10-02T08:01:04.747837+00:00",
+        "finishedUtc": "2026-10-02T08:01:17.989653+00:00",
+        "operationSeconds": 13.241813600005116,
+        "outcome": "FAIL",
+        "terminalReached": true,
+        "stateMatch": false,
+        "observedState": "FAIL:Quick Play verification selection is not the deterministic LED proof",
+        "lastObservedState": "FAIL:Quick Play verification selection is not the deterministic LED proof",
+        "timedOut": false,
+        "expectedFailureCanary": false,
+        "expectedFailureStateWasNotAnUnexpectedError": false,
+        "reportObserved": false,
+        "reportJsonValid": null,
+        "reportJsonError": null,
+        "reportMatch": true,
+        "reportLength": 0,
+        "reportSha256": null,
+        "reportFile": null,
+        "pageErrors": [],
+        "httpErrors": [],
+        "consoleErrors": [],
+        "attributeReadErrors": [],
+        "listenerCleanupErrors": [],
+        "navigationError": null
+      }
+    ],
+    "strictAuditErrors": [
+      "compiled31 overall outcome: expected 'PASS', observed 'FAIL'",
+      "case 001.outcome: expected 'PASS', observed 'FAIL'",
+      "case 001.attributeReadErrors: expected [], observed [{'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}]",
+      "case 005.outcome: expected 'PASS', observed 'FAIL'",
+      "case 005.attributeReadErrors: expected [], observed [{'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}, {'attribute': 'data-tsj-verification', 'type': 'TimeoutError', 'message': 'Locator.get_attribute: Timeout 10000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n'}]",
+      "case 008.outcome: expected 'PASS', observed 'FAIL'",
+      "case 008.pageErrors: expected [], observed ['ajb']",
+      "case 009.outcome: expected 'PASS', observed 'FAIL'",
+      "case 009.stateMatch: expected True, observed False",
+      "case 009.observedState: expected 'PASS:quick-play', observed 'FAIL:Quick Play verification selection is not the deterministic LED proof'",
+      "source binding.status: expected 'COMMAND_PASS_PENDING_RECEIPT_REVIEW', observed 'FAIL'",
+      "source binding.exitCode: expected 0, observed 1"
+    ]
+  },
+  "archive": {
+    "status": "PASS",
+    "startedUtc": "2026-10-02T08:42:50.4782758Z",
+    "owner": {
+      "pid": 22384,
+      "createdUtc": "2026-10-02T08:42:50.1447020Z",
+      "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "commandLine": "\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -File <workspace>\\run_epoch15_archive.ps1"
+    },
+    "archiveRoot": "<task-temp>\\source-attempt-archive-epoch15",
+    "exitCode": 0,
+    "finishedUtc": "2026-10-02T08:44:02.8662424Z",
+    "elapsedSeconds": 72.3540194
+  },
+  "evidence": [
+    {
+      "retainedRelativePath": "compiled31-stage-result.json",
+      "rawSha256": "f350511710d2a8bc68acd1ea2a5bf60a544483ad032d72b4d66008323a5d536f",
+      "portableFile": "compiled31-stage-result.json.gz",
+      "portablePayloadSha256": "11d17034b5bd7688687c9ec1d113c8506dc9032c47f43fa6c589c02cd60b9c3a",
+      "compressedSha256": "88cd7ddef359a9bfcd0370bde14da2d28776289289eddd7cb1a0216924afdf64"
+    },
+    {
+      "retainedRelativePath": "compiled31-audit.json",
+      "rawSha256": "ff695c44b8fc49646e2518a58448b101775ad30e563671c3c70a3c0d1e06f1cf",
+      "portableFile": "compiled31-audit.json.gz",
+      "portablePayloadSha256": "8026927b292425b336e0389e475f75b51526086766e110d02374cd760b0edf8f",
+      "compressedSha256": "bc10fb37e104f6215ae977a4166ed25788d901621dae6742d5f8d9ce2026a818"
+    },
+    {
+      "retainedRelativePath": "compiled31-spec.json",
+      "rawSha256": "898145a040b8920350461961dbad85b94f2d7ef286e95a0ebd347781d291bc97",
+      "portableFile": "compiled31-spec.json.gz",
+      "portablePayloadSha256": "1e1f5ce124888066dda55a9f7cd037539f0df027e056d0f0d0af52aaa1482e83",
+      "compressedSha256": "44820c02da258f1c8c5c3b46a1da848c50dba746c0bd323dd8719f8309066143"
+    },
+    {
+      "retainedRelativePath": "compiled31-declared-physical-rejection.json",
+      "rawSha256": "76c4adb18948b1b7770a4228948a4b1f94c627d77a9cc352dd124e1e7bf09838",
+      "portableFile": "compiled31-declared-physical-rejection.json.gz",
+      "portablePayloadSha256": "6215dd586b3c4156472dea426b48b1490fc5854226f1246135cc46d0cf00650d",
+      "compressedSha256": "54dca52b72830b66a088c822e5a1e58441ab7e5da854160aa9324d8e8cc39e96"
+    },
+    {
+      "retainedRelativePath": "compiled31.log",
+      "rawSha256": "35c8a8124efbff60c3505a328461d1d34d172abd53d6e036f6258065e2216824",
+      "portableFile": "compiled31.log.gz",
+      "portablePayloadSha256": "18792dfcf57549c9e939efcdb556ca715095f960e456106b1d2556d3e156f204",
+      "compressedSha256": "f81a6e9e57f43afe6bd1f5d9dd4e7fbed2e3b1ba5f448233dbedbbb396487ffc"
+    },
+    {
+      "retainedRelativePath": "archive-stage-result.json",
+      "rawSha256": "d9160878cacee21bffc708d7218a97e1ab2e7b27bcb0fe0caff4c68476206586",
+      "portableFile": "archive-stage-result.json.gz",
+      "portablePayloadSha256": "381522471810e3378a7dbf56575a34f3b9f4758389359a15fd758de54b3e6758",
+      "compressedSha256": "c357e6cad3a1672b49e269e189a12d62d2db5e6434eb5308ede08a6dc90c13dc"
+    },
+    {
+      "retainedRelativePath": "archive-stage.log",
+      "rawSha256": "6547e2c116283384f129efdc9d58730f5ef313b6aa78dcf6f8b090fb4e39821b",
+      "portableFile": "archive-stage.log.gz",
+      "portablePayloadSha256": "6b41ebc878ffac3dd3a3d30762528b02c783bf4fb7e69e1ab7a43f24d6a89812",
+      "compressedSha256": "93b4b72eebe4fdc01297242ba6bf6d58cae92b75706b07929b725377ba076d0b"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/001-alpha-full41.json",
+      "rawSha256": "0577d7c71181fbc0af291b503f22288227693ee42fce7d5867e73e21f2576bf8",
+      "portableFile": "compiled31__cases__001-alpha-full41.json.gz",
+      "portablePayloadSha256": "0577d7c71181fbc0af291b503f22288227693ee42fce7d5867e73e21f2576bf8",
+      "compressedSha256": "6b9cf49c321003d0447a38d8d71eb324822b306870186d936bcb5659a73c4212"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/001-alpha-full41.report.json",
+      "rawSha256": "2867269596e882af080b3af1d4c481a9622035468f818f90b26b6b95bfb1fca9",
+      "portableFile": "compiled31__cases__001-alpha-full41.report.json.gz",
+      "portablePayloadSha256": "35218a7c67fea84a1f446f2bf05a96f39e12df91411195f3ba1f8754acef4bdb",
+      "compressedSha256": "c824f201bbd63888032c0bc16124213c0639f453936932b04c7f5fb310de55ad"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/001-alpha-full41.state.txt",
+      "rawSha256": "d085071226f5ee814cef396d086a9a0a28d325495f2668d084c973b361de9e0e",
+      "portableFile": "compiled31__cases__001-alpha-full41.state.txt.gz",
+      "portablePayloadSha256": "d085071226f5ee814cef396d086a9a0a28d325495f2668d084c973b361de9e0e",
+      "compressedSha256": "d86e0680e569b40938ae51e061799ba77ef3ceb14d898b9c810bcb061dabe3c8"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/002-alpha-explicit-negative.json",
+      "rawSha256": "476c78292d404f5cad43c80333d07612b736f925da8189f576d40bea258b3369",
+      "portableFile": "compiled31__cases__002-alpha-explicit-negative.json.gz",
+      "portablePayloadSha256": "476c78292d404f5cad43c80333d07612b736f925da8189f576d40bea258b3369",
+      "compressedSha256": "c726e7fb57e015db384781f3883b7cc0408ac3985c62c6ea2ff9085a90893e70"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/002-alpha-explicit-negative.report.json",
+      "rawSha256": "db70be866e3c36839c8868f126160f365d8ef885ab09d8aff62f230b6aaf9244",
+      "portableFile": "compiled31__cases__002-alpha-explicit-negative.report.json.gz",
+      "portablePayloadSha256": "e14cc4a2c5f22bef771225aa781afe43a6634aafe61dc861d7a76f1e9bf34d1d",
+      "compressedSha256": "9e582ebfa2a8b5b7d90a98cc5781f75a3390b4a48b0f9afcca57b77edaf00a60"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/002-alpha-explicit-negative.state.txt",
+      "rawSha256": "0cf1d5d0fb83cc03c22bc8d829a70ef0353f4fbeb59e5e61b9696815ce2318ce",
+      "portableFile": "compiled31__cases__002-alpha-explicit-negative.state.txt.gz",
+      "portablePayloadSha256": "0cf1d5d0fb83cc03c22bc8d829a70ef0353f4fbeb59e5e61b9696815ce2318ce",
+      "compressedSha256": "a23a9fd73c4614161011e83f93ae00bc9911c25b053cd3d3cfe7314bcceb8ca9"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/003-a07-real-solver-nonfinite-pivot.json",
+      "rawSha256": "8ea4deedfb8e760f0bf34329bfef1cccf75c90721635448f7afa2f41e2af6248",
+      "portableFile": "compiled31__cases__003-a07-real-solver-nonfinite-pivot.json.gz",
+      "portablePayloadSha256": "8ea4deedfb8e760f0bf34329bfef1cccf75c90721635448f7afa2f41e2af6248",
+      "compressedSha256": "c0fe91be7455c795deabcfeeb45992d237a03137fab92ae02ff4031a4354e78d"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/003-a07-real-solver-nonfinite-pivot.report.json",
+      "rawSha256": "9aa97181120ec7f3d47f29c4b722b27c518009ed1457081e918d806d7c7b01a9",
+      "portableFile": "compiled31__cases__003-a07-real-solver-nonfinite-pivot.report.json.gz",
+      "portablePayloadSha256": "86947e1c4dd0aa7b55e350029b47a38f2f641117cce88550033de55a25fbfff4",
+      "compressedSha256": "b664a7746b1c155363de902b88c3df6be144875171f2e4d976b40ef6f23d67d8"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/003-a07-real-solver-nonfinite-pivot.state.txt",
+      "rawSha256": "d2b4740b4a36aece77f74f8fd73c9b787c86efaa450eea01b931149a19c22ff2",
+      "portableFile": "compiled31__cases__003-a07-real-solver-nonfinite-pivot.state.txt.gz",
+      "portablePayloadSha256": "d2b4740b4a36aece77f74f8fd73c9b787c86efaa450eea01b931149a19c22ff2",
+      "compressedSha256": "fb0ce3370f125bf56b4f07b66cff7147cf445bdcde724d8f75ced005216f3aef"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/004-a07-explicit-negative.json",
+      "rawSha256": "55598e1d2cc2e7d47a13b350ffa30a8ac7370ef50f58facaf892c12108ae71b4",
+      "portableFile": "compiled31__cases__004-a07-explicit-negative.json.gz",
+      "portablePayloadSha256": "55598e1d2cc2e7d47a13b350ffa30a8ac7370ef50f58facaf892c12108ae71b4",
+      "compressedSha256": "030de5725e77728042824a724751b2656de6187e775905a89c011793fa4be575"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/004-a07-explicit-negative.state.txt",
+      "rawSha256": "22417c93ad0944980f4f12c7e0b520d2eb43c4d065d1bcfa1d4d2b4c8b27d12e",
+      "portableFile": "compiled31__cases__004-a07-explicit-negative.state.txt.gz",
+      "portablePayloadSha256": "22417c93ad0944980f4f12c7e0b520d2eb43c4d065d1bcfa1d4d2b4c8b27d12e",
+      "compressedSha256": "fe038943647bc91669e5006ab4a7b604c6babf7a844bca7459765cf13b365c12"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/005-a10-positive.json",
+      "rawSha256": "ebfbb6fd8af5292ad6fe4543b1e5e786502ab1538580d1bc13be0787ecd90773",
+      "portableFile": "compiled31__cases__005-a10-positive.json.gz",
+      "portablePayloadSha256": "ebfbb6fd8af5292ad6fe4543b1e5e786502ab1538580d1bc13be0787ecd90773",
+      "compressedSha256": "e4bf6bd6f6d42df77e9b1d1dc761f121cc0e924cd66cb29d30df3a3ee97667e6"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/005-a10-positive.report.json",
+      "rawSha256": "69a3ace9d01f43b57b644dc0d7c47a138f5adbc5bb83ec1d99a309e0e915c950",
+      "portableFile": "compiled31__cases__005-a10-positive.report.json.gz",
+      "portablePayloadSha256": "cb6d23d835c4f34d68c3c50dbc80dfab0eaa386fa5085a1734ec12c2f2d6486d",
+      "compressedSha256": "d26a5980cdb2dffc69e7884fec82d2b57e32390324eb676d400caa9a186d2b4b"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/005-a10-positive.state.txt",
+      "rawSha256": "89459766f5ecb8e73e391a2337859799834979bcb3a18d793cfe119d7c394421",
+      "portableFile": "compiled31__cases__005-a10-positive.state.txt.gz",
+      "portablePayloadSha256": "89459766f5ecb8e73e391a2337859799834979bcb3a18d793cfe119d7c394421",
+      "compressedSha256": "1b5eb16cbe3dc30efbc2f48a0b30f1c412aefd027583ce86d418c10fc04b48c5"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/006-a10-explicit-negative.json",
+      "rawSha256": "a95aca9028a09c1326f50d81a99b76b93a7e7dd44df26257f9ba15d0b69cac94",
+      "portableFile": "compiled31__cases__006-a10-explicit-negative.json.gz",
+      "portablePayloadSha256": "a95aca9028a09c1326f50d81a99b76b93a7e7dd44df26257f9ba15d0b69cac94",
+      "compressedSha256": "6ff6a75a32981e952496db5ae37400a63a471f080694e2be73def8511a355a49"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/006-a10-explicit-negative.state.txt",
+      "rawSha256": "95dbd98d024bb17917bc89e5b5f8c60ddb4dbce9ca0d4efe88e054d59b9364a4",
+      "portableFile": "compiled31__cases__006-a10-explicit-negative.state.txt.gz",
+      "portablePayloadSha256": "95dbd98d024bb17917bc89e5b5f8c60ddb4dbce9ca0d4efe88e054d59b9364a4",
+      "compressedSha256": "0002ea26dbdf238470d7570ee0ef41294363fa9ff095776f2b4e29cabbecd547"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/007-e02-positive.json",
+      "rawSha256": "ad1c520d0ef464aed1990e8f7dd2bd7a6c5ce5c6898828f0342c618620498a88",
+      "portableFile": "compiled31__cases__007-e02-positive.json.gz",
+      "portablePayloadSha256": "ad1c520d0ef464aed1990e8f7dd2bd7a6c5ce5c6898828f0342c618620498a88",
+      "compressedSha256": "9c48a9639e01ce38cc6c214f2a0c043585b0c1f15c0bc4b75f7cb03ab56ed783"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/007-e02-positive.report.json",
+      "rawSha256": "4b6eab05dfa0f18e5e9899019e7cc43c17a883d953e22f92910bb4e47abb4523",
+      "portableFile": "compiled31__cases__007-e02-positive.report.json.gz",
+      "portablePayloadSha256": "b16daf8e1100bed9bcecf37e08ace7bb61a57979a85c1cd1a7e1851c2d1aebef",
+      "compressedSha256": "e40f1edb90c9526ca16568f105d67fe718bc37acf3f024de996ab9a6115ff3ce"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/007-e02-positive.state.txt",
+      "rawSha256": "f4aa81bd1ae98379a6508c43721384bbaa585306e62f13b1b85a5d056c1b8a31",
+      "portableFile": "compiled31__cases__007-e02-positive.state.txt.gz",
+      "portablePayloadSha256": "f4aa81bd1ae98379a6508c43721384bbaa585306e62f13b1b85a5d056c1b8a31",
+      "compressedSha256": "43f79a03375ea33cf25f1cba84f963c85432be030f260f557eeb9f2f306477af"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/008-e02-explicit-negative.json",
+      "rawSha256": "919ca6168d216cf60796db79f479e58588ff8a9cac5ce0092adaa194ff7a1b4e",
+      "portableFile": "compiled31__cases__008-e02-explicit-negative.json.gz",
+      "portablePayloadSha256": "919ca6168d216cf60796db79f479e58588ff8a9cac5ce0092adaa194ff7a1b4e",
+      "compressedSha256": "60609d9c895f97ce1a78bf3350a310b1ad193813e2579fa080b5dbcf5eabbe99"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/008-e02-explicit-negative.state.txt",
+      "rawSha256": "a09d44a13df4a49d3f0fa643a3a150664046c8ea069c0754597334bde92bce98",
+      "portableFile": "compiled31__cases__008-e02-explicit-negative.state.txt.gz",
+      "portablePayloadSha256": "a09d44a13df4a49d3f0fa643a3a150664046c8ea069c0754597334bde92bce98",
+      "compressedSha256": "759705ac99c789e32b324fbf6dd63f677b8c81eeb399a3279f9b88226663cf1b"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/009-e04-sensor-control-quickplay.json",
+      "rawSha256": "0f6af31c81d59d48b7e710f88661f771faf46afa0dc0435bc4725cb4a2946079",
+      "portableFile": "compiled31__cases__009-e04-sensor-control-quickplay.json.gz",
+      "portablePayloadSha256": "0f6af31c81d59d48b7e710f88661f771faf46afa0dc0435bc4725cb4a2946079",
+      "compressedSha256": "f61ca95cf2446badfc986dfd264363659c95299f0ef639cf0df9d5ef2b463bee"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/009-e04-sensor-control-quickplay.state.txt",
+      "rawSha256": "c247c819e996daab8d4b0508f69b4ba9ae1502fd336779f4069e7db67a21352c",
+      "portableFile": "compiled31__cases__009-e04-sensor-control-quickplay.state.txt.gz",
+      "portablePayloadSha256": "c247c819e996daab8d4b0508f69b4ba9ae1502fd336779f4069e7db67a21352c",
+      "compressedSha256": "7963f1bbcb2f0819dd6c6305c00d4773df3163ecd7c462b6e9db7b98ab4ff3c6"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/010-q30-service-seed13.json",
+      "rawSha256": "bd8ba92b27ccf327d7649d29d048f15eec4677c5852d814af5657e0629b73507",
+      "portableFile": "compiled31__cases__010-q30-service-seed13.json.gz",
+      "portablePayloadSha256": "bd8ba92b27ccf327d7649d29d048f15eec4677c5852d814af5657e0629b73507",
+      "compressedSha256": "b469662fa5a1fe8d46cf5718e846bcba32e85ed245bbd79a9ebd2160292cffee"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/010-q30-service-seed13.report.json",
+      "rawSha256": "19fc2e9bc13c177f6700b3ca5c7e39d48cb8d0e7347f4ebe5c670cbd22146632",
+      "portableFile": "compiled31__cases__010-q30-service-seed13.report.json.gz",
+      "portablePayloadSha256": "67fd739ed8666933d1bd9b1baeea4bb689f5d166c04b8a7ddc94b439992d06af",
+      "compressedSha256": "6de3798bec6d5516a98ce7ea69e8c7e10239a38e8a19e8485f17d3d3142f920a"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/010-q30-service-seed13.state.txt",
+      "rawSha256": "19fc2e9bc13c177f6700b3ca5c7e39d48cb8d0e7347f4ebe5c670cbd22146632",
+      "portableFile": "compiled31__cases__010-q30-service-seed13.state.txt.gz",
+      "portablePayloadSha256": "67fd739ed8666933d1bd9b1baeea4bb689f5d166c04b8a7ddc94b439992d06af",
+      "compressedSha256": "6de3798bec6d5516a98ce7ea69e8c7e10239a38e8a19e8485f17d3d3142f920a"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/011-d01-descriptive21-seed-10387.json",
+      "rawSha256": "4b05505f98c669d675ebf904b53b6845f794766937fcb1ced75585648aa0ac0b",
+      "portableFile": "compiled31__cases__011-d01-descriptive21-seed-10387.json.gz",
+      "portablePayloadSha256": "4b05505f98c669d675ebf904b53b6845f794766937fcb1ced75585648aa0ac0b",
+      "compressedSha256": "c4dcdf0250bb0ee078e79dde1bf899d06af35762dafb6c7b5b9efb09bbb29b36"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/011-d01-descriptive21-seed-10387.report.json",
+      "rawSha256": "5a3a1cab37949e47d4eae7f080ca32af574c3e44ec030e9f28ca315b9741431a",
+      "portableFile": "compiled31__cases__011-d01-descriptive21-seed-10387.report.json.gz",
+      "portablePayloadSha256": "f886588036ba5873efcb6e352443e293f7b44d3c65f08f6426d96a38c34cad71",
+      "compressedSha256": "f0cd432159ba0523e918d28c0b3a8103cb2feb2ffbd3d2149a4bc8120d04c0ff"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/011-d01-descriptive21-seed-10387.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__011-d01-descriptive21-seed-10387.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/012-d01-descriptive21-seed-10226.json",
+      "rawSha256": "2e327b970d5733503e59a9feeb6411e918820e7f906380640c0f43ac60801634",
+      "portableFile": "compiled31__cases__012-d01-descriptive21-seed-10226.json.gz",
+      "portablePayloadSha256": "2e327b970d5733503e59a9feeb6411e918820e7f906380640c0f43ac60801634",
+      "compressedSha256": "2b7d012679d2be80d8857b47a74da824f9aa1adda7285307b396e9dd5819cfc7"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/012-d01-descriptive21-seed-10226.report.json",
+      "rawSha256": "af97e101e69e4c3f691060298de1b7750146e9d0f4060465a334ab4ec5561a00",
+      "portableFile": "compiled31__cases__012-d01-descriptive21-seed-10226.report.json.gz",
+      "portablePayloadSha256": "4b560ce2bb0165287c7dcb66f7678fee7dce3e5eef91095b9724165b6b0848ed",
+      "compressedSha256": "9872f13ce0d7e73ba22ed7dbff4aa906b189b5f070d441f713227a1a997ca3cc"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/012-d01-descriptive21-seed-10226.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__012-d01-descriptive21-seed-10226.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/013-d01-descriptive21-seed-10014.json",
+      "rawSha256": "464d0990ce2ab23019d987682ba36c2de6c513191e00b1296519470d9e2b7959",
+      "portableFile": "compiled31__cases__013-d01-descriptive21-seed-10014.json.gz",
+      "portablePayloadSha256": "464d0990ce2ab23019d987682ba36c2de6c513191e00b1296519470d9e2b7959",
+      "compressedSha256": "021de740418d810526de844e06a14ab37e8669f4828f8fb86816b58b21519ae9"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/013-d01-descriptive21-seed-10014.report.json",
+      "rawSha256": "e9c462401bb55da3546e6f82efd9e9d722294d1e766f0689b326b7e77836e84f",
+      "portableFile": "compiled31__cases__013-d01-descriptive21-seed-10014.report.json.gz",
+      "portablePayloadSha256": "45db8d091ef101e69b673962170d1b3680db0e83cea2c1dd76acc931197661b1",
+      "compressedSha256": "4b0cf95c29894a8a271518b0fcd9ce45b887e982cd008aa54b039a654dec8073"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/013-d01-descriptive21-seed-10014.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__013-d01-descriptive21-seed-10014.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/014-d01-descriptive21-seed-0.json",
+      "rawSha256": "d31efd798ed73191d3f69ee31239d7844ce04d0298db2dd39ef791d11c7e5ece",
+      "portableFile": "compiled31__cases__014-d01-descriptive21-seed-0.json.gz",
+      "portablePayloadSha256": "d31efd798ed73191d3f69ee31239d7844ce04d0298db2dd39ef791d11c7e5ece",
+      "compressedSha256": "d73850230e73df9359ae3cdfd5f5c6feac8bd73e47e63d7018b405f4158343d7"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/014-d01-descriptive21-seed-0.report.json",
+      "rawSha256": "9dd68b469b6cd9e71410825e774985907c1bac67e0283d729dab618105a93bf7",
+      "portableFile": "compiled31__cases__014-d01-descriptive21-seed-0.report.json.gz",
+      "portablePayloadSha256": "34f108e591d74ddc57e1f6c18eb472c551cf2f944a3719044bce96764c1e924f",
+      "compressedSha256": "9752a855f396e574a61c4ee96e5cdc62ec343c4bfb9d4231b92bc59c54be3ce3"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/014-d01-descriptive21-seed-0.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__014-d01-descriptive21-seed-0.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/015-d01-descriptive21-seed-1.json",
+      "rawSha256": "97c400c2683fc24aadfc7b51f426c63a75651415c015c140be8f9b01abce451c",
+      "portableFile": "compiled31__cases__015-d01-descriptive21-seed-1.json.gz",
+      "portablePayloadSha256": "97c400c2683fc24aadfc7b51f426c63a75651415c015c140be8f9b01abce451c",
+      "compressedSha256": "af4862fb3d2e5f36e48a93e4b4dd4efeb5d2c2823c83884693c1b087e5767c34"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/015-d01-descriptive21-seed-1.report.json",
+      "rawSha256": "2d1cca7c2cc397614e6983c7aaff3ab049f725d0760c276a9cdc8e88c7c61089",
+      "portableFile": "compiled31__cases__015-d01-descriptive21-seed-1.report.json.gz",
+      "portablePayloadSha256": "649bf0c31026b0b99c92bd58d3aa6e73c70c9b39e341476a4851227e1b01c3c4",
+      "compressedSha256": "426259bdc6ed889ae0881c472cec746f1b8f3cae0e48ba2edee0d7c7d99a972b"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/015-d01-descriptive21-seed-1.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__015-d01-descriptive21-seed-1.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/016-d01-descriptive21-seed-15.json",
+      "rawSha256": "8a7531339004d02575e7f3539c07428719892acc8252ec15eca6cb3b384c97f3",
+      "portableFile": "compiled31__cases__016-d01-descriptive21-seed-15.json.gz",
+      "portablePayloadSha256": "8a7531339004d02575e7f3539c07428719892acc8252ec15eca6cb3b384c97f3",
+      "compressedSha256": "3bc1a2ab4df19b57f93767950ea8ee09dedfe090fd733907d8a7e934ab5cae02"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/016-d01-descriptive21-seed-15.report.json",
+      "rawSha256": "6c2c7ef77a2ce9f5cf82ff6893a53e787e8f1d0c1c7b13af99f1bcdb91eadbeb",
+      "portableFile": "compiled31__cases__016-d01-descriptive21-seed-15.report.json.gz",
+      "portablePayloadSha256": "a58226184ba2b7000fa34fa0cf33519e738b3ddf008211e10b102d43f8c60bfd",
+      "compressedSha256": "2b216ed12c8d684a853c836d2a5b2b1011aae9af3c0d90aec0eb0be7216f5c0a"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/016-d01-descriptive21-seed-15.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__016-d01-descriptive21-seed-15.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/017-d01-descriptive21-seed-14.json",
+      "rawSha256": "0699cb438e137005ab66cb365feb26dae914894471fdb2c089f3fd07e1ee836d",
+      "portableFile": "compiled31__cases__017-d01-descriptive21-seed-14.json.gz",
+      "portablePayloadSha256": "0699cb438e137005ab66cb365feb26dae914894471fdb2c089f3fd07e1ee836d",
+      "compressedSha256": "68d19cf3a1552a8627f60a09adb02c817f3acc5c66ab09c63d0219f780bf8fad"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/017-d01-descriptive21-seed-14.report.json",
+      "rawSha256": "7f8b93ad0cd9e272114e70f547b191c4466c0de68c5466dbc18d55fe36cef6e8",
+      "portableFile": "compiled31__cases__017-d01-descriptive21-seed-14.report.json.gz",
+      "portablePayloadSha256": "893346743362d3d8d3237ba3906360bd696cddaf5a8d80a849ffa847f0c1e6ff",
+      "compressedSha256": "4f1ccbe2543bada5be3d799b75424ecd390a16eb683ebf951c4abdb85b1490aa"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/017-d01-descriptive21-seed-14.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__017-d01-descriptive21-seed-14.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/018-d01-descriptive21-seed-8.json",
+      "rawSha256": "530b85d7ccbcd042ce4f402cdd243925b7fad7f306e01c855ee21cf47d9e5c74",
+      "portableFile": "compiled31__cases__018-d01-descriptive21-seed-8.json.gz",
+      "portablePayloadSha256": "530b85d7ccbcd042ce4f402cdd243925b7fad7f306e01c855ee21cf47d9e5c74",
+      "compressedSha256": "96543bfa8891cd49181c921bb0966bb11c7a70dc337a3e0bae8b74a1fd618c5f"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/018-d01-descriptive21-seed-8.report.json",
+      "rawSha256": "f422ed9b41a0f4cf43f9aa4f72bf93dbd2c710dabc9a38b3d143e29644a00ba9",
+      "portableFile": "compiled31__cases__018-d01-descriptive21-seed-8.report.json.gz",
+      "portablePayloadSha256": "85438bf2934d6c6f80d0c62f311494e6c864eb7ab26aa07047493ffdfaa196f1",
+      "compressedSha256": "4dac56bcb8c8d2bbfcffc32699c842bec418efadcad20a1667ce9dd0c9139f3c"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/018-d01-descriptive21-seed-8.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__018-d01-descriptive21-seed-8.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/019-d01-descriptive21-seed-10.json",
+      "rawSha256": "5f36da4898d3e939ce086fab47347812c81cdf24b0762c9421ba5ab1368526d3",
+      "portableFile": "compiled31__cases__019-d01-descriptive21-seed-10.json.gz",
+      "portablePayloadSha256": "5f36da4898d3e939ce086fab47347812c81cdf24b0762c9421ba5ab1368526d3",
+      "compressedSha256": "bd725a6c5b2805c1633ae738340930de5c286cf736036732529e4b0906bd2250"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/019-d01-descriptive21-seed-10.report.json",
+      "rawSha256": "5b8c7e4ba6693ccb1837839d9b75c199d4fb865693969e0112ea51e976f554f6",
+      "portableFile": "compiled31__cases__019-d01-descriptive21-seed-10.report.json.gz",
+      "portablePayloadSha256": "2f075eeeab25c360b6f16e5ef47467681e7d686bffbc0bfe4038ef6e1d806099",
+      "compressedSha256": "31cc6f57b667c85c71a706127033eb252ec314f6e9f33e82b4350be778d39c0f"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/019-d01-descriptive21-seed-10.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__019-d01-descriptive21-seed-10.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/020-d01-descriptive21-seed-12.json",
+      "rawSha256": "2f385e80cb8438b03c3ee31e3e63b0c4ce4a77da60257397ea6eb35195dd96f4",
+      "portableFile": "compiled31__cases__020-d01-descriptive21-seed-12.json.gz",
+      "portablePayloadSha256": "2f385e80cb8438b03c3ee31e3e63b0c4ce4a77da60257397ea6eb35195dd96f4",
+      "compressedSha256": "53841bc5028426b9b409fc004fb811d0b2762952f82473cfac09cd2bf1ed1a8f"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/020-d01-descriptive21-seed-12.report.json",
+      "rawSha256": "3a92fca14c32d92dcecbe58f21e8fdc80e2f48cddb45151add3f40537ed1bdd6",
+      "portableFile": "compiled31__cases__020-d01-descriptive21-seed-12.report.json.gz",
+      "portablePayloadSha256": "d4e75a96a3221582ebab2e7946834d7cb85a219ace22107523efd55928708dcb",
+      "compressedSha256": "0cc461e8221a663b2206fa0bb3155381c9b22f024f0046db2f5f915e04817a52"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/020-d01-descriptive21-seed-12.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__020-d01-descriptive21-seed-12.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/021-d01-descriptive21-seed-48.json",
+      "rawSha256": "7b55d92d2858def69851f888f9706df539c0d0e97881d700b78a855d9886ef33",
+      "portableFile": "compiled31__cases__021-d01-descriptive21-seed-48.json.gz",
+      "portablePayloadSha256": "7b55d92d2858def69851f888f9706df539c0d0e97881d700b78a855d9886ef33",
+      "compressedSha256": "3692c4a9acc5cf379c08f6662b05f75d337aa0c1d348da4c146589bfa8daa2e8"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/021-d01-descriptive21-seed-48.report.json",
+      "rawSha256": "81530bbcff7d690ebd8f8614f3756c6626f71461116df110603eceea1ff88bb2",
+      "portableFile": "compiled31__cases__021-d01-descriptive21-seed-48.report.json.gz",
+      "portablePayloadSha256": "20c21fc4a6653e0baad2f365c4ca8a61ca096ca82291a1f2a40e0598befbe8f0",
+      "compressedSha256": "50b6d80c6acb07a3019916c4266215ab939b09500cdd2d733bc3b10e409d573f"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/021-d01-descriptive21-seed-48.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__021-d01-descriptive21-seed-48.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/022-d01-descriptive21-seed-35.json",
+      "rawSha256": "fc16e9000b1718672d086b456d1aef64c26eb2a794f86d0d8e4bf211874b5df6",
+      "portableFile": "compiled31__cases__022-d01-descriptive21-seed-35.json.gz",
+      "portablePayloadSha256": "fc16e9000b1718672d086b456d1aef64c26eb2a794f86d0d8e4bf211874b5df6",
+      "compressedSha256": "8edba330d757dc07bfea2a1557900ea26e4e799f491e2a8be9a82ce94b19ce8d"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/022-d01-descriptive21-seed-35.report.json",
+      "rawSha256": "bced9cfa9529fa0994ff4f3e3ec628928549cda41c9d7e718d9c82c66cf33f59",
+      "portableFile": "compiled31__cases__022-d01-descriptive21-seed-35.report.json.gz",
+      "portablePayloadSha256": "e2846bcac3cb4bdc854eb0bd6277df385890cce64f52ae707aacb9f1591828b3",
+      "compressedSha256": "c0c8145b49b815024cf2746caaceadb4790376970c60799ae0a1d6c8b52b8685"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/022-d01-descriptive21-seed-35.state.txt",
+      "rawSha256": "425305e25df9df108e011164f7ca97522276cf1bc67b8aec3a7139cd60fb9a81",
+      "portableFile": "compiled31__cases__022-d01-descriptive21-seed-35.state.txt.gz",
+      "portablePayloadSha256": "425305e25df9df108e011164f7ca97522276cf1bc67b8aec3a7139cd60fb9a81",
+      "compressedSha256": "ace930a205b458b6911364210957fe04c5af2fe199a2ba2d29ec20c6c3cb0eb5"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/023-d01-descriptive21-seed-18.json",
+      "rawSha256": "754492514a7a63f263887c227184780cd1f89980121c84106abf0ed248502ff4",
+      "portableFile": "compiled31__cases__023-d01-descriptive21-seed-18.json.gz",
+      "portablePayloadSha256": "754492514a7a63f263887c227184780cd1f89980121c84106abf0ed248502ff4",
+      "compressedSha256": "cc3732530250e142b704ba7b435fc7ba6b5ea0207f4ce7ce5668372ec602811b"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/023-d01-descriptive21-seed-18.report.json",
+      "rawSha256": "74c723ea0299b877626942d6e50499ce9f4093ba744ef838482825a147ba0e09",
+      "portableFile": "compiled31__cases__023-d01-descriptive21-seed-18.report.json.gz",
+      "portablePayloadSha256": "29785a3a0ca8ac8f9036b261815b9f17ceee6778e2746f64b19a0389779fb107",
+      "compressedSha256": "84f2faaf6e9dc74caa2ded5299b70fd34cedc28ccb9752531715e7728e75cd86"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/023-d01-descriptive21-seed-18.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__023-d01-descriptive21-seed-18.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/024-d01-descriptive21-seed-43.json",
+      "rawSha256": "afffa0942bef551da52c2208b11311a88a8798649ff7c97aec3189f99d34f41e",
+      "portableFile": "compiled31__cases__024-d01-descriptive21-seed-43.json.gz",
+      "portablePayloadSha256": "afffa0942bef551da52c2208b11311a88a8798649ff7c97aec3189f99d34f41e",
+      "compressedSha256": "fda410471bb5d8c6f90d6736b108b922423cd96713189f489b385a811ef73dcd"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/024-d01-descriptive21-seed-43.report.json",
+      "rawSha256": "864d53efc5ea4d851e064b788b34aadb40916134097c1342b5c4ab8fd463e372",
+      "portableFile": "compiled31__cases__024-d01-descriptive21-seed-43.report.json.gz",
+      "portablePayloadSha256": "a518c4e8f53bc7e065e2ba2770a5483675ec8030d8f8bb9e173efa5ecbd3d1d8",
+      "compressedSha256": "cb5439a5d4fdeadbba4c3b8f0025ad28b9a9e797ecd3709a240456a192ac0822"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/024-d01-descriptive21-seed-43.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__024-d01-descriptive21-seed-43.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/025-d01-descriptive21-seed-4.json",
+      "rawSha256": "bb46b73e978f783ccbd5025db519903da6ba4ab5d40269564b74d6bacd5a94d1",
+      "portableFile": "compiled31__cases__025-d01-descriptive21-seed-4.json.gz",
+      "portablePayloadSha256": "bb46b73e978f783ccbd5025db519903da6ba4ab5d40269564b74d6bacd5a94d1",
+      "compressedSha256": "5d7ec1345464dd922d2a420dd66125cc5ca49caec405429417cc2ae29eacd375"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/025-d01-descriptive21-seed-4.report.json",
+      "rawSha256": "d5efbc2a6427354c4b6f692e5b1bec3931c95d46632b2f8bb251739a2fa36900",
+      "portableFile": "compiled31__cases__025-d01-descriptive21-seed-4.report.json.gz",
+      "portablePayloadSha256": "6dce6b1be88188ab8358ad61a236cb52ac64acc0adf543933f133da880ce155e",
+      "compressedSha256": "166bc0ab9de93da6b88ab7e61b9908f0833233faee11bf7411e1e6f712266aa5"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/025-d01-descriptive21-seed-4.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__025-d01-descriptive21-seed-4.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/026-d01-descriptive21-seed-11.json",
+      "rawSha256": "2f22636bbeea9bd92ee20b19571e70164c25b4724d161c7970309cb012f43509",
+      "portableFile": "compiled31__cases__026-d01-descriptive21-seed-11.json.gz",
+      "portablePayloadSha256": "2f22636bbeea9bd92ee20b19571e70164c25b4724d161c7970309cb012f43509",
+      "compressedSha256": "99400e327049bfc906752a770a8d061e71febbcffb8b2af1cf316e6167f51124"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/026-d01-descriptive21-seed-11.report.json",
+      "rawSha256": "a3ea0d051d471342059f5723fe05bdfe180d1c337ec3122d2e0d881b6fb90931",
+      "portableFile": "compiled31__cases__026-d01-descriptive21-seed-11.report.json.gz",
+      "portablePayloadSha256": "d1fa8f711a5b3e5982e9e7f97c7a38c7ccb2652efc747e6da23db3387d37ef67",
+      "compressedSha256": "195fb6773e7f7853fbfa28b6f27237eea3cc3f27d5a2d1b981bdf0cbc957ab8b"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/026-d01-descriptive21-seed-11.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__026-d01-descriptive21-seed-11.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/027-d01-descriptive21-seed-3.json",
+      "rawSha256": "6ebddb4a89a0435b4fbb6372244b601d8691825008299618c067b2003eb08e47",
+      "portableFile": "compiled31__cases__027-d01-descriptive21-seed-3.json.gz",
+      "portablePayloadSha256": "6ebddb4a89a0435b4fbb6372244b601d8691825008299618c067b2003eb08e47",
+      "compressedSha256": "07fe1d39d5eed33772dadf31a665dae9cec04158558df81e36f203330d03f867"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/027-d01-descriptive21-seed-3.report.json",
+      "rawSha256": "c6bb891280dd6c0ed319b277538a8b9d99516662358f82291bbdbc42246f560c",
+      "portableFile": "compiled31__cases__027-d01-descriptive21-seed-3.report.json.gz",
+      "portablePayloadSha256": "77084f5f404f8deaf009759bd976176b892f03ebd176db1ec5d8926d59fad1bd",
+      "compressedSha256": "ff38903962ca9a1d287ed54655ecf9dfb5431cf03beef0f28c366c6ac70718eb"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/027-d01-descriptive21-seed-3.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__027-d01-descriptive21-seed-3.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/028-d01-descriptive21-seed-10000.json",
+      "rawSha256": "2545f89fcc7ca8eae4f15e7c8730445c26a2365f0dc8d14a968cf3f3e9d4c56c",
+      "portableFile": "compiled31__cases__028-d01-descriptive21-seed-10000.json.gz",
+      "portablePayloadSha256": "2545f89fcc7ca8eae4f15e7c8730445c26a2365f0dc8d14a968cf3f3e9d4c56c",
+      "compressedSha256": "34be160e76b5c4ea4e7a667e51288a506eadfc44e63db9445957bd5b3c7a8af9"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/028-d01-descriptive21-seed-10000.report.json",
+      "rawSha256": "e27c9149b33eeaedda9479564b9cda4fde12c616c99028b04e03c80d8a6f0613",
+      "portableFile": "compiled31__cases__028-d01-descriptive21-seed-10000.report.json.gz",
+      "portablePayloadSha256": "a296988dfa0db62b1cf9867ccd1ef0f11313e45c6ab8c24064a3f8c5c31aab56",
+      "compressedSha256": "c7ef49648aced056c9869668e54806762a15edceea39ce15eb19d08519f5a1e7"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/028-d01-descriptive21-seed-10000.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__028-d01-descriptive21-seed-10000.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/029-d01-descriptive21-seed-10009.json",
+      "rawSha256": "05994aae8fb1e2cab21da3b03dcd705cde1f95b845433b7536a4e5dd83a8ea11",
+      "portableFile": "compiled31__cases__029-d01-descriptive21-seed-10009.json.gz",
+      "portablePayloadSha256": "05994aae8fb1e2cab21da3b03dcd705cde1f95b845433b7536a4e5dd83a8ea11",
+      "compressedSha256": "4580f7c3c458de180365ba3cd759efa32566b69075eb92845266d368979eddae"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/029-d01-descriptive21-seed-10009.report.json",
+      "rawSha256": "77fce6c18d6205ac8278ef7cbb756afbf5ef56cdfed9dfc4f6291d7db02a7635",
+      "portableFile": "compiled31__cases__029-d01-descriptive21-seed-10009.report.json.gz",
+      "portablePayloadSha256": "aeec7f3b66a2d4653bdd5a1c794a49d4b17cc287582e16b8c467b98c0a763ef3",
+      "compressedSha256": "81563031bf59641b08c78327422b55a1eaa3ea12bc9e13407691f2d56d725530"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/029-d01-descriptive21-seed-10009.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__029-d01-descriptive21-seed-10009.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/030-d01-descriptive21-seed-10016.json",
+      "rawSha256": "18faa6ba8260a1b444c82e9e05c5d609cdfdc34a3d4ff7bc1fddd40b42ce6655",
+      "portableFile": "compiled31__cases__030-d01-descriptive21-seed-10016.json.gz",
+      "portablePayloadSha256": "18faa6ba8260a1b444c82e9e05c5d609cdfdc34a3d4ff7bc1fddd40b42ce6655",
+      "compressedSha256": "6bfd6ad425b171a53038a901d5a45a9b375f98ad1a60f922b74d914d1cd57910"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/030-d01-descriptive21-seed-10016.report.json",
+      "rawSha256": "fc028f08308eed10410ec9eaffe9c955094ce6efa7a77a5aaffe826085b75dff",
+      "portableFile": "compiled31__cases__030-d01-descriptive21-seed-10016.report.json.gz",
+      "portablePayloadSha256": "baf81ffda95b549d3db365ccbde5bfe30d590e1a02a577b34b635ff81b22be13",
+      "compressedSha256": "f714250ac52fbe13b72ce571b855d7ae8d04a68206cc27a2a0edcd75a7549d37"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/030-d01-descriptive21-seed-10016.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__030-d01-descriptive21-seed-10016.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/031-d01-descriptive21-seed-10017.json",
+      "rawSha256": "b5503b768e43e74f14ca1c1632013cbd5648c45d14d32e629942b9012a266acb",
+      "portableFile": "compiled31__cases__031-d01-descriptive21-seed-10017.json.gz",
+      "portablePayloadSha256": "b5503b768e43e74f14ca1c1632013cbd5648c45d14d32e629942b9012a266acb",
+      "compressedSha256": "baed9230dfdc5b4f221c3c18d21d5ab9c05b2d36b7ad10398817f22a1092f613"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/031-d01-descriptive21-seed-10017.report.json",
+      "rawSha256": "2014b285634e8fc921289aa72567ed99d77238321c37d676e5cd6029169f2bc5",
+      "portableFile": "compiled31__cases__031-d01-descriptive21-seed-10017.report.json.gz",
+      "portablePayloadSha256": "12b8f886b9c62da431fd8cb2f34f34f6c99dae98fd6a5221ecb0417753ee3be6",
+      "compressedSha256": "0516f02fec729b5210e1849497907d3d0e8472411014e4a09c0cc8c606970c83"
+    },
+    {
+      "retainedRelativePath": "compiled31/cases/031-d01-descriptive21-seed-10017.state.txt",
+      "rawSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "portableFile": "compiled31__cases__031-d01-descriptive21-seed-10017.state.txt.gz",
+      "portablePayloadSha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+      "compressedSha256": "d295b535ae07dad6b436779f9fb7a7a071fc9a7b6e57e2ba8e8ca0f48f13984e"
+    },
+    {
+      "retainedRelativePath": "compiled31/identity.json",
+      "rawSha256": "3fc1f049f3be37fc0ac03cb103bc121b30ba3c54fa78ff55e531f2733c9d4aef",
+      "portableFile": "compiled31__identity.json.gz",
+      "portablePayloadSha256": "b7729e695b0857ae212d1e1386e16e0cc6519017781f660e55b57885cb17ea35",
+      "compressedSha256": "4fe8e2b81977055584570fe745eed0576f66ff13b438cf29e00d7df246718e3d"
+    },
+    {
+      "retainedRelativePath": "compiled31/input-manifest-after.json",
+      "rawSha256": "f1ad4df1c4fc31b676c0b2c4abe2c3374a8efcc5dad17f22058c4e1b9803379f",
+      "portableFile": "compiled31__input-manifest-after.json.gz",
+      "portablePayloadSha256": "f1ad4df1c4fc31b676c0b2c4abe2c3374a8efcc5dad17f22058c4e1b9803379f",
+      "compressedSha256": "e63d55cbe73666aa38ec4697788c18293f0b59f554689ccd7ba0b6f5ad28abbb"
+    },
+    {
+      "retainedRelativePath": "compiled31/input-manifest-before.json",
+      "rawSha256": "19bc205c6b8ac99b09a85293c622b6673d20961d563d2aa5bb2c61e2b0b47fb2",
+      "portableFile": "compiled31__input-manifest-before.json.gz",
+      "portablePayloadSha256": "19bc205c6b8ac99b09a85293c622b6673d20961d563d2aa5bb2c61e2b0b47fb2",
+      "compressedSha256": "aaffcdd058a2f54e90b985fb1387387b018063314dc54024bf39bd41f643be71"
+    },
+    {
+      "retainedRelativePath": "compiled31/owned-processes-before-close.json",
+      "rawSha256": "a767a6be62b33f9c7020a5ab517a8f02ea4816c968ffa77c38982c82518f671b",
+      "portableFile": "compiled31__owned-processes-before-close.json.gz",
+      "portablePayloadSha256": "a767a6be62b33f9c7020a5ab517a8f02ea4816c968ffa77c38982c82518f671b",
+      "compressedSha256": "b36ed77af9201037c4212637d3eff8e42b4e9985324c60ebe5f8ef979a1f75fa"
+    },
+    {
+      "retainedRelativePath": "compiled31/owned-processes-before.json",
+      "rawSha256": "ac09c6c57b6d6f27e079e27150e46340e29fc2e35822de8e54092e82506d7fb9",
+      "portableFile": "compiled31__owned-processes-before.json.gz",
+      "portablePayloadSha256": "ac09c6c57b6d6f27e079e27150e46340e29fc2e35822de8e54092e82506d7fb9",
+      "compressedSha256": "fb10d4edf96edb33a9b7200d097fabe6b11932f441d6c7c61e7f1c15f3b81cd2"
+    },
+    {
+      "retainedRelativePath": "compiled31/progress.json",
+      "rawSha256": "d01e266386f6407652cb3901ca13fffefbb72a5a916387ba289f9e2e50773a33",
+      "portableFile": "compiled31__progress.json.gz",
+      "portablePayloadSha256": "4b1f5b1c5fa98557fe25e8dffbd3d323aa4dfe735c29bf3ab2ed47cda96b4364",
+      "compressedSha256": "ed9b1645c02b12bc820b3a5059b6371fa6bd8efd88ef81147bb2e05f5d047dec"
+    },
+    {
+      "retainedRelativePath": "compiled31/result.json",
+      "rawSha256": "a4f7714daaac5491b9ca4957c0a691c8e2f4e123632323ef2a1d576ccf8be935",
+      "portableFile": "compiled31__result.json.gz",
+      "portablePayloadSha256": "f509ca83891e14bf636a132db4e95993b97118dc54825a031eae198aacce461b",
+      "compressedSha256": "c0ddd30ec8868f473fdea4f88a7b8b7137eacda1b2b1f5ea6679e31027e24ee9"
+    },
+    {
+      "retainedRelativePath": "compiled31/run-start.json",
+      "rawSha256": "f5afd6153f0a396d2862c8323a0918a0a0d5a68dde2138834df891cc33fb0f8f",
+      "portableFile": "compiled31__run-start.json.gz",
+      "portablePayloadSha256": "96dd116e3afe421fbafaa762ff475e7439d967c8d724221c0ab043d9a7fc646e",
+      "compressedSha256": "563a3a540cd56748e9f67734c5d559c21d2db89ac6f46d8b32a21c8afe098936"
+    },
+    {
+      "retainedRelativePath": "compiled31/runner-after.json",
+      "rawSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "portableFile": "compiled31__runner-after.json.gz",
+      "portablePayloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "compressedSha256": "905d5135256e0a028b950dd01b73b15115dc32261010c0e8f26d58df1e57ccb9"
+    },
+    {
+      "retainedRelativePath": "compiled31/runner-before.json",
+      "rawSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "portableFile": "compiled31__runner-before.json.gz",
+      "portablePayloadSha256": "95f26ded8b1354e589798ebce82416dc5e0035aceb2850884e606f5f7b844823",
+      "compressedSha256": "905d5135256e0a028b950dd01b73b15115dc32261010c0e8f26d58df1e57ccb9"
+    },
+    {
+      "retainedRelativePath": "compiled31/spec.json",
+      "rawSha256": "898145a040b8920350461961dbad85b94f2d7ef286e95a0ebd347781d291bc97",
+      "portableFile": "compiled31__spec.json.gz",
+      "portablePayloadSha256": "1e1f5ce124888066dda55a9f7cd037539f0df027e056d0f0d0af52aaa1482e83",
+      "compressedSha256": "44820c02da258f1c8c5c3b46a1da848c50dba746c0bd323dd8719f8309066143"
+    },
+    {
+      "retainedRelativePath": "source-attempt-archive-epoch15/archive-manifest.json",
+      "rawSha256": "453c89cc560c59bfdf73addb8e4f2dbd9cc6af534dfc29f1c8b3bef625aa594f",
+      "portableFile": "source-attempt-archive-epoch15__archive-manifest.json.gz",
+      "portablePayloadSha256": "82ef2dbc69fd9ba20cf21bd361e2530700b6f372e996ef1ad5373d4e556beb2f",
+      "compressedSha256": "4cc1e76ab0d2c5ae67c65a5dff7750203949263409ec49b0fb5b7892d475229f"
+    },
+    {
+      "retainedRelativePath": "source-attempt-archive-epoch15/archive-manifest.sha256",
+      "rawSha256": "22526692b6de4ce93afc03c8b8892958f8ea0492b783cad25b4b81e45c06ae0b",
+      "portableFile": "source-attempt-archive-epoch15__archive-manifest.sha256.gz",
+      "portablePayloadSha256": "518534f956b6254f5ccd53e2f5b69b88be06635b7b38ec5498196358ff5e8b15",
+      "compressedSha256": "2f1333c72a9d43563381ead7f6ec09d4d8ca8ed20b67a4317ef40d359c59632b"
+    },
+    {
+      "retainedRelativePath": "source-attempt-archive-epoch15/isolated/prepare-receipt.json",
+      "rawSha256": "25c0ed91e2a99c834ff878ded607b28755b18511b9f97a494e563d35e186ec58",
+      "portableFile": "source-attempt-archive-epoch15__isolated__prepare-receipt.json.gz",
+      "portablePayloadSha256": "94c687041d166230e7ac1100e93ea0029fa520120cdbde2deaf6b95d741ee5ef",
+      "compressedSha256": "27589957bce93a97bfe6a08b12eb56c0f580314d3d1d3af9434235757ef7eee3"
+    },
+    {
+      "retainedRelativePath": "source-attempt-archive-epoch15/isolated/source-delta.json",
+      "rawSha256": "c8af1b43ef4ae326a5e2efcf474a59ae9cd70b182327808ecc879749b86fa5e4",
+      "portableFile": "source-attempt-archive-epoch15__isolated__source-delta.json.gz",
+      "portablePayloadSha256": "a26899ffc4f39ce76525d39e0b22dca5bf4f5daaa996a8ad8b41a58a99d318eb",
+      "compressedSha256": "a01b0bd1764799bbf6ad7a5a1aa042a51e360ff1b448cb3ad7563cd0e4acd2b4"
+    },
+    {
+      "retainedRelativePath": "source-attempt-archive-epoch15/isolated/source-file-audit.json",
+      "rawSha256": "fb64ba23ec1e1c6dc34169514f8afa80422774d149df02d3108728ac1bae82b9",
+      "portableFile": "source-attempt-archive-epoch15__isolated__source-file-audit.json.gz",
+      "portablePayloadSha256": "aa50c01ddcd3b837cd823630afe31b874d6922542e984d12951903e7235dd924",
+      "compressedSha256": "bcca3d1c71583dae2f1fc448f2d97ad31538659bff74c76664ec75cae4b72739"
+    },
+    {
+      "retainedRelativePath": "source-attempt-archive-epoch15/isolated/source-snapshot.json",
+      "rawSha256": "11f02099d9911ab7150719ea68fc46e9422f2a9fe9017f8ffb57c4e4c487719e",
+      "portableFile": "source-attempt-archive-epoch15__isolated__source-snapshot.json.gz",
+      "portablePayloadSha256": "a2e09c6ccbea759250c565d3cd310d2c288f7502e92eaae7a87d6d0f9be510bb",
+      "compressedSha256": "fe533673823e1132e81a9acb860407c49f0e5442f0841f47303f5e2354442d5a"
+    },
+    {
+      "retainedRelativePath": "helpers/audit_epoch15_compiled31.py",
+      "rawSha256": "4518c49b6c460206fe53a2ca4e82687e4b195adc827c42a888aabae3e7e32a41",
+      "portableFile": "helpers__audit_epoch15_compiled31.py.gz",
+      "portablePayloadSha256": "4518c49b6c460206fe53a2ca4e82687e4b195adc827c42a888aabae3e7e32a41",
+      "compressedSha256": "59f655188faac9862456dab547e4cae131105759d063144e5bc7ebe9e2ab314c"
+    },
+    {
+      "retainedRelativePath": "helpers/run_epoch15_archive.ps1",
+      "rawSha256": "b9458fb9e3d2f337273eac7f1d26edbb52ccb95bd7ca1f16f2b9f05848d0bdf4",
+      "portableFile": "helpers__run_epoch15_archive.ps1.gz",
+      "portablePayloadSha256": "266a7a9583386d20fd143ae1c274449bc45a9a6206f285b7a5f8a7ee2113b856",
+      "compressedSha256": "a40984bc7e105f56b1520500a1fd247ccaf1a7eb208ed6efbafba60b208709d1"
+    }
+  ]
+}

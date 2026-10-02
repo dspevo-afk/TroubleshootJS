@@ -7,15 +7,16 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Q30 NOT ACCEPTED - cold77 audited PASS; compiled31 RUNNING**<br>
-**Q30 checkpoint (2026-10-02):** Fresh native82/service105/sensitivity105/structural77,
-isolated GWT5 and compiled4/freeze PASS. Cold77 strict audit PASS: exact77 roots/
-308 candidates and every20-40 part size; maximum80.978s, headroom9.022s under the
-unchanged90s budget; work506/640 and active1.343/5s. All1,354 inputs unchanged,
-all cleanup PASS. Compiled31 RUNNING; menu/replay/archive/player/final review
-pending. Q30 disabled; U06/U07/Q60 unstarted. No push/merge/email/evidence deletion.
+**Current task:** **Q30 NOT ACCEPTED - cold77 PASS; compiled31 terminal FAIL27/31**<br>
+**Q30 checkpoint (2026-10-02):** Native82/service105/sensitivity105/structural77,
+JDK8/GWT5, compiled4/freeze and cold77 strict PASS; exact77 roots/308 candidates,
+all20-40 sizes, max80.978s under unchanged90s. Full compiled31 finished27 PASS/
+4 FAIL (Alpha/A10 observation timeouts, E02 canary propagation, E04 stale repair
+fixture); no errors waived. Source archive PASS; all1,354 inputs unchanged.
+Cause fixes/fresh gates, menu/replay/player/final review remain. Q30 disabled;
+U06/U07/Q60 unstarted. No push/merge/email/evidence deletion.
 [Current handoff](CODEX_TASK_REPORT.md),
-[full cold evidence](task-evidence/Q30/epoch15-cold-qualification/README.md).
+[compiled terminal evidence](task-evidence/Q30/epoch15-compiled31-terminal/README.md).
 
 **Historical post-P09 Quick Play qualification:** The nine families then current used fresh signed-long candidates and real placement/routing. Nineteen affected native suites, 144 structural cases, 18 actual launches, exact replay/cancellation/privacy/shop and compiled mutation/relay/generation gates passed. EASY/MEDIUM content eligibility remains; HARD/PSYCHOTIC are not unlocked. [Evidence at that checkpoint](task-evidence/ProceduralFamilies/README.md).
 **Quick Play uniqueness qualification (2026-09-19):** Every family/profile selectable at that checkpoint had bounded procedural New Board candidates, recent-root and physical duplicate guards, and single-candidate exact replay. The then-menu-discovered nine-pair, 180-board matrix had 20 distinct placements and merged copper patterns per pair with no structural rejects. Final native55, GWT5, 27/27 visible New Board launches, two exact replays and face-view evidence passed. That content spanned 3–16 parts; HARD/PSYCHOTIC and larger families remain unqualified. This historical matrix did not include the later SENSOR_CONTROL family; that checkpoint's catalog had ten family/profile pairs. [Historical audit, timings and limits](task-evidence/QuickPlayUnique/README.md).

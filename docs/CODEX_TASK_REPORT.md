@@ -1,4 +1,40 @@
-# Current checkpoint: Q30 cold77 audited PASS; compiled31 RUNNING
+# Current checkpoint: Q30 cold77 PASS; compiled31 terminal FAIL27/31
+
+2026-10-02T08:47:48.254507+00:00. Branch `codex/q30-multirail-qualification`; unchanged source base
+`7bdc23e8170e4a9e737b33daf4bb533f87468b22`, identity `a3bd150019d00870a08896efd893c99aff120ce11a49f34cca0af07f33d59c31`.
+**Q30 NOT ACCEPTED; disabled.** No push/merge/publication/email/evidence deletion.
+U06/U07/Q60 unstarted. [Compiled terminal evidence](task-evidence/Q30/epoch15-compiled31-terminal/README.md).
+
+Fresh cold77 strict PASS: exact77 roots/308 predeclared candidates/all20-40 sizes;
+max80.978s, headroom9.022s under unchanged90s; work506/640, active1.343/5s.
+Native82/service105/sensitivity105/structural77, JDK8/GWT5 and compiled4/freeze
+PASS; all1,354 raw inputs unchanged. Prior zero-case ABI failure preserved and
+corrected using existing CP313 dependencies without installing/changing protection.
+
+Compiled31 finished exit1,27 PASS/4 FAIL,2,681.344s; strict audit FAIL(12 findings).
+All21 D01 and Q30service13 PASS, including seed35's declared physical rejection.
+Alpha/A10 APP PASS but10/14 attribute reads timed out at10s; no blanket waiver.
+E02 expected canary rethrows; E04 current sensor selection hits stale LED repair
+guard. Independent read-only review agrees. Cause fixes and fresh gates pending.
+Cleanup PASS0.970s; server stopped/no survivors/errors. Session57647 completed;
+controller24860/host25740 exited. No test process remains owned by that run.
+
+Formal source archive PASS72.354s for exact isolated candidate: baseline/delta/
+overlay receipt and roundtrip checks, no acceptance inference. Scratch retained
+`q30-source-archive-73ae7bb92fab4e27b19af57c3152c4d5`; no evidence deletion.
+Raw artifacts/helpers retained in task label `q30-epoch15-qualification-306d44cccd8d447abe0b257530b9354a`, workspace
+epoch15-task-pointer.json binds paths. Four original caches/sibling edits preserved;
+LocalDots priority, one expensive job at a time, Defender enabled.
+
+Next: review narrow verifier/host cause fixes, run real boundary canaries and fresh
+applicable native/JDK8/GWT/compiled31 gates; then disabled/private menu/replay.
+Tracked Q30false; private enabled build is qualification only. Parent acceptance
+review pending. Browser/computer/node_repl absent: visible20/30/40 diagnosis,
+repair/retest BLOCKED/NOT RUN. No Q30 acceptance claim.
+
+---
+
+# Historical checkpoint: Q30 cold77 audited PASS; compiled31 RUNNING
 
 2026-10-02T07:56:34.939032+00:00. Branch `codex/q30-multirail-qualification`; source base
 `7bdc23e8170e4a9e737b33daf4bb533f87468b22`, identity `a3bd150019d00870a08896efd893c99aff120ce11a49f34cca0af07f33d59c31`.
