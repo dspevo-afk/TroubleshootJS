@@ -284,7 +284,13 @@ final class PcbLayerRoutingPrototype {
                 return;
             }
             if(currentPadIds!=null && !currentPadIds.isEmpty()) {
-                String next=PcbNetRouter.chooseNext(layout,currentPadIds,reachedPadIds);
+                // Keep a different branch tree on the existing reverse-priority pass.
+                // Wide return nets retain nearest-to-reached scheduling; lexical
+                // return branches can exhaust the unchanged per-branch search cap.
+                boolean lexical=pass==2 &&
+                    board.getNet(currentNet).getRoutingRole()!=BoardNet.RoutingRole.RETURN;
+                String next=lexical?currentPadIds.firstElement():
+                    PcbNetRouter.chooseNext(layout,currentPadIds,reachedPadIds);
                 currentPadIds.remove(next);
                 PcbPadPlacement start=layout.getPad(next);
                 branches++;

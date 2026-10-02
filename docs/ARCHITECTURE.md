@@ -79,7 +79,7 @@ geometry, but create fresh electrical/runtime and proof owners. Geometry is reva
 foreign-request reuse fails before allocation. This geometry cache contains no
 electrical readings or repair proof; D01 proof-value reuse has its own identity
 and fresh-owner validation. Exact replay is tsj-alpha/4; old epochs reject. Dependency interpretation
-v16 captures admission4/layout14 and the current dump-model v6. Eight entropy
+v16 captures admission4/layout15 and the current dump-model v6. Eight entropy
 bytes travel as canonical signed decimal text,
 never through a lossy JavaScript Number.
 
@@ -2227,14 +2227,20 @@ generation work boundary, charging every advance without resetting the job clock
 Placement candidate order, branch/search budgets, via caps and the canonical
 statistics format remain unchanged; historical frozen-corpus equality and compiled
 timing qualified that slice refactor.
-The layout-14 correction schedules each net's P07 branches with P05's existing
-nearest-to-reached-pad selector, retaining the lexical root and sorted-ID ties.
-A branch joins the reached set only after its complete copper publisher finishes.
-Net order, placement candidate order and all budgets stay fixed. This changes
-route geometry and is identified by the layout epoch in request/cache/manifest
-identity; public replay text keeps its existing schema. The exact seed-10 frozen
-service plan and an independent spatial/tie fixture cover the correction;
-focused success does not qualify the full cold cohort or normal publication.
+The layout-15 correction preserves P05's nearest-to-reached-pad scheduling on
+P07's priority and degree passes. The existing reverse-priority pass uses lexical
+branches for non-return nets, retaining a distinct branch tree when nearest-only
+routes block later escapes or violate route quality. Typed return nets keep
+nearest scheduling on all three passes: long lexical return branches can exhaust
+the unchanged per-branch search cap. Every net retains its lexical root and
+sorted-ID ties. A branch joins the reached set only after its complete copper
+publisher finishes. Net order, placement candidate order, validators and all
+budgets stay fixed; rejected escape-channel candidates remain rejected.
+The route geometry change is identified by the layout epoch in request/cache/
+manifest identity; public replay text keeps its existing schema. Frozen original
+plans 8, 4, 10000 and 10 and the independent nearest spatial/tie fixture cover
+the correction. Focused success does not qualify the full cold cohort or normal
+publication; layout-14 cold evidence does not qualify this changed source.
 Via-fit checks use the branch-owned, ID-ordered hole and bounds snapshot described
 above. The next branch refreshes it after the preceding path publisher completes;
 there is no persistent second hole index. Other callers retain the snapshot getter,

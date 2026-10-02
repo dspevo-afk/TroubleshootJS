@@ -6,10 +6,36 @@ import java.util.Vector;
 public final class MediumBoardPhysicalPolicyContractTest {
     private static int assertions;
 
+    private static final String SEED_8_PLAN =
+        "rb30-plan@4;seed=8;topology=RB30_CH2_SHARED_DIRECT_A_NMOS_B_BJT;" +
+        "support=C12:false,S5:false,S12:false,filters:0,outputIndicators:1,bleeder5:false;" +
+        "layout=1789953187444160285;routing=-8500271482997274880;" +
+        "physicalPolicy=MEDIUM_BOARD@1;fault=SENSOR_A_OPEN;packages=32;main=12V;" +
+        "regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;" +
+        "sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN)," +
+        "RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated";
+    private static final String SEED_4_PLAN =
+        "rb30-plan@4;seed=4;topology=RB30_CH2_SHARED_DIRECT_A_BJT_B_NMOS;" +
+        "support=C12:true,S5:false,S12:false,filters:1,outputIndicators:2,bleeder5:false;" +
+        "layout=-7967780441668740599;routing=4321422998255155060;" +
+        "physicalPolicy=MEDIUM_BOARD@1;fault=DREV_OPEN;packages=34;main=12V;" +
+        "regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;" +
+        "sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN)," +
+        "RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated";
+    private static final String SEED_10000_PLAN =
+        "rb30-plan@4;seed=10000;topology=RB30_CH2_SHARED_HYSTERETIC_A_NMOS_B_NMOS;" +
+        "support=C12:false,S5:false,S12:false,filters:1,outputIndicators:1,bleeder5:true;" +
+        "layout=-5582834733033270822;routing=-7232503086477951915;" +
+        "physicalPolicy=MEDIUM_BOARD@1;fault=RELAY_B_COIL_OPEN;packages=36;main=12V;" +
+        "regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;" +
+        "sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN)," +
+        "RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated";
+
     private MediumBoardPhysicalPolicyContractTest() { }
 
     public static void main(String[] args) {
         frozenSeed10Routing();
+        frozenRepresentativeRootRouting();
         Rb30Plan firstPlan = Rb30Plan.resolve(0L);
         Rb30Plan secondPlan = Rb30Plan.resolve(0L);
         check(firstPlan.canonical().equals(secondPlan.canonical()),
@@ -160,6 +186,89 @@ public final class MediumBoardPhysicalPolicyContractTest {
         check(first.toCanonical().equals(replay.toCanonical()) &&
             first.getLayout().geometryFingerprint().equals(replay.getLayout().geometryFingerprint()),
             "seed 10 replays exact geometry and bounded work without changing plan identity");
+    }
+
+    /** Exact representative Q30 roots from the epoch-4 qualification plan. */
+    private static void frozenRepresentativeRootRouting() {
+        frozenRepresentativeRootRouting(8L, 32, 1789953187444160285L,
+            -8500271482997274880L, SEED_8_PLAN);
+        frozenRepresentativeRootRouting(4L, 34, -7967780441668740599L,
+            4321422998255155060L, SEED_4_PLAN);
+        frozenRepresentativeRootRouting(10000L, 36, -5582834733033270822L,
+            -7232503086477951915L, SEED_10000_PLAN);
+    }
+
+    /** One route only: the four-root corpus contract owns cold/warm replay. */
+    private static void frozenRepresentativeRootRouting(long seed,
+            int expectedPackages, long expectedLayoutSeed, long expectedRoutingSeed,
+            String expectedCanonical) {
+        Rb30Plan plan = Rb30Plan.resolve(seed);
+        check(plan.seed == seed && plan.channelCount == 2 &&
+            plan.physicalPackageCount() == expectedPackages &&
+            plan.layoutSeed == expectedLayoutSeed &&
+            plan.routingSeed == expectedRoutingSeed &&
+            expectedCanonical.equals(plan.canonical()),
+            "seed " + seed + " retains its exact epoch-4 acceptance-plan identity");
+
+        TroubleshootBoard board = plan.board();
+        Vector<String> expectedComponentIds = board.getComponentIds();
+        Vector<String> expectedPadIds = board.getPadIds();
+        check(expectedComponentIds.size() == expectedPackages,
+            "seed " + seed + " materializes its declared physical package count");
+
+        MediumBoardPhysicalPolicy.Result result = new SeededPcbLayoutGenerator()
+            .generateWithPolicyResult(board, plan.layoutSeed, plan.routingSeed, NOOP);
+        System.out.println("Q30_FROZEN_ROOT_ROUTING seed=" + seed + " " +
+            result.toCanonical());
+        check(result.accepted() && MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER.equals(
+            result.getStatistics().selectedRoutePolicy),
+            "seed " + seed + " has an accepted normal-eligible P07 realization");
+
+        MediumBoardPhysicalPolicy.Statistics stats = result.getStatistics();
+        check(stats.placementCandidates == 6 &&
+            stats.placementCandidates == MediumBoardPhysicalPolicy.PLACEMENT_CANDIDATES &&
+            stats.routeAttempts <= 6 &&
+            stats.oneFaceAttempts <= MediumBoardPhysicalPolicy.ROUTING_CANDIDATES &&
+            stats.twoLayerAttempts <= MediumBoardPhysicalPolicy.ROUTING_CANDIDATES &&
+            stats.routeAttempts == stats.oneFaceAttempts + stats.twoLayerAttempts,
+            "seed " + seed + " stays within the existing six-placement/six-route bounds");
+        check(stats.rankedPlacementAttempts.size() == stats.placementScores.size() &&
+            stats.placementScores.size() ==
+                stats.placementCandidates - stats.placementRejections,
+            "seed " + seed + " retains aligned ranked original placement IDs and scores");
+        boolean originalRankIds = true;
+        boolean[] seenAttempts = new boolean[stats.placementCandidates];
+        for (Integer rankedAttempt : stats.rankedPlacementAttempts) {
+            if (rankedAttempt == null || rankedAttempt < 0 ||
+                    rankedAttempt >= stats.placementCandidates || seenAttempts[rankedAttempt]) {
+                originalRankIds = false;
+                continue;
+            }
+            seenAttempts[rankedAttempt] = true;
+        }
+        check(originalRankIds,
+            "seed " + seed + " ranking preserves unique original placement attempt IDs");
+
+        PcbBoardLayout layout = result.getLayout();
+        layout.validateGeometry(board);
+        new PcbTwoLayerRules(board, layout).validate(layout);
+        boolean packageMappingPreserved = layout.getComponents().size() ==
+            expectedComponentIds.size();
+        for (String componentId : expectedComponentIds) {
+            BoardComponent source = board.getComponent(componentId);
+            PcbComponentPlacement placed = layout.getComponent(componentId);
+            if (source == null || placed == null ||
+                    source.getPhysicalPackage() != placed.getPhysicalPackage())
+                packageMappingPreserved = false;
+        }
+        boolean padMappingPreserved = layout.getPads().size() == expectedPadIds.size();
+        for (String padId : expectedPadIds) {
+            PcbPadPlacement placed = layout.getPad(padId);
+            if (placed == null || !padId.equals(placed.getPadId()))
+                padMappingPreserved = false;
+        }
+        check(packageMappingPreserved && padMappingPreserved,
+            "seed " + seed + " preserves every original package and pad identity");
     }
 
     private static final SeededPcbLayoutGenerator.AttemptObserver NOOP =

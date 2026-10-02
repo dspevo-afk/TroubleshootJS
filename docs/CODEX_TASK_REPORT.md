@@ -1,4 +1,55 @@
-# Current checkpoint: Q30 cold77 PASS; full native blocked on three original plans
+# Current checkpoint: Q30 layout15 original-plan patch; focused gates PASS
+
+2026-10-02T04:24:52.043413+00:00. Branch `codex/q30-multirail-qualification`; source base `d9ec018bb725a29b47c68e72a3e1a5632a5c5a88`.
+Candidate source identity `fa2c58b0aaa742f01d8bb77dd1d215927103fe5f861c24284a951f96101c59af`.
+**Q30 BLOCKED / NOT ACCEPTED; disabled.** Local patch checkpoint for independent
+parent review before any expensive full matrix or fresh cold77. No merge/push/
+email/evidence deletion; U06/U07/Q60 unstarted.
+[Focused evidence and original-plan reproduction](task-evidence/Q30/epoch15-original-plan-routing/README.md).
+
+**Cause and fix:** branch-order-only counterfactuals on the exact original plans
+preserve all identities and placements. Nearest-only rejects 8/4/10000, accepts 10;
+lexical-only accepts those three, rejects 10 at its return branch search cap.
+The mixed existing reverse-priority pass accepts all four. Production P07 keeps
+nearest on passes 0/1 and on typed RETURN nets; pass 2 uses lexical non-return
+branches. No seed/topology special case. Net/placement order, candidate breadth,
+expansion/via/quality/escape limits and 90,000/640/5,000 app limits are unchanged.
+Layout epoch 15 identifies the geometry change; public save/replay schemas stay.
+Three exact frozen original-plan regressions added; seed-10 regression retained.
+
+**PASS:** focused physical 5 suites, 47.594 s; original corpus 4 accepted, zero
+rejected, admission and exact geometry/work replay, 50.947 s; service 20/20,
+269.203 s; production solver-step sensitivity 20/20, 419.893 s; actual final-source
+disabled JDK8/GWT 5-permutation build, 84.992 s. These are phase/host totals,
+not cold 90-second launch proof. All 1,354 consumed raw inputs and shipping export
+rehash identically after gates; only router, epoch declaration and medium test
+differ from the prior layout-14 export. Root integrated diff/whitespace review
+complete; leaf scope was static strategy audit and test-file review, not acceptance.
+
+**Resources/evidence:** all recorded wrappers/JVMs absent, captured native scratch
+removed; maintained native cleanup and independent resource check PASS. Separate
+cleanup elapsed NOT RECORDED. No task-owned preview/browser/runner remains.
+Retain OS-temp label `q30-original-route-9e830ef8cad64a8681a600e116414df6`, all three
+instrumented exports, final disabled shipping export/build, logs/receipts/source
+bindings and helpers. Failed current/lexical diagnostics emitted no standalone
+.txt receipt; complete logs/results/source fixtures retained. Evidence assembly
+initially stopped on that gap; verified partial bytes were preserved on resume.
+Portable packet has 42 sanitized gzip artifacts plus README/results with raw,
+payload and gzip hashes. Four pre-existing caches and sibling edits preserved.
+
+**Next:** parent independently reviews the exact local patch commit, then prepares
+fresh changed-source full native 82/service 105/sensitivity 105/structural 51+26/
+independent oracles and cold77. Compiled 31/D01, disabled controls, formal archives,
+private one-boolean enabled build/menu 33/replay 3 and final acceptance remain
+NOT RUN/pending. Prior layout-14 cold77 does not qualify layout15. Visible ordinary
+20/30/40 repair/retest BLOCKED/NOT RUN: callable Browser/computer-use/node_repl
+input tools unavailable (tool metadata rechecked); no enabled preview was attempted.
+Resume pointers/helpers in task workspace; existing output tags reject rerun.
+No budget waiver, retry-plan substitution or later milestone.
+
+---
+
+# Historical checkpoint: Q30 cold77 PASS; full native blocked on three original plans
 
 2026-10-02T03:40:25.887722+00:00. Source base `1089110`, native launch `fc042840`, cold checkpoint `4902962`.
 **Q30 BLOCKED / NOT ACCEPTED; disabled.** No merge/push/email/evidence deletion.

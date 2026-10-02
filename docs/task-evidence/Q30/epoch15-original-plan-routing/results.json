@@ -1,0 +1,976 @@
+{
+  "schema": 1,
+  "checkpointUtc": "2026-10-02T04:23:21.069770+00:00",
+  "status": "FOCUSED PATCH PASS; parent review required before full qualification",
+  "Q30": "BLOCKED / NOT ACCEPTED; disabled",
+  "baseHead": "d9ec018bb725a29b47c68e72a3e1a5632a5c5a88",
+  "sourceIdentity": "fa2c58b0aaa742f01d8bb77dd1d215927103fe5f861c24284a951f96101c59af",
+  "layoutEpoch": 15,
+  "sourceFilesAuditedUnchangedAfterGates": 1354,
+  "changedConsumedPaths": [
+    "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+    "tests/contracts/MediumBoardPhysicalPolicyContractTest.java"
+  ],
+  "originalRootOrder": [
+    "8",
+    "4",
+    "10000",
+    "10"
+  ],
+  "canonicalPlans": [
+    {
+      "schema": 1,
+      "seed": "8",
+      "canonical": "rb30-plan@4;seed=8;topology=RB30_CH2_SHARED_DIRECT_A_NMOS_B_BJT;support=C12:false,S5:false,S12:false,filters:0,outputIndicators:1,bleeder5:false;layout=1789953187444160285;routing=-8500271482997274880;physicalPolicy=MEDIUM_BOARD@1;fault=SENSOR_A_OPEN;packages=32;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated",
+      "planEpoch": 4,
+      "topology": "RB30_CH2_SHARED_DIRECT_A_NMOS_B_BJT_C12_N_S5_N_S12_N_F0_O1_B5_N",
+      "channelCount": 2,
+      "activeChannels": [
+        "A",
+        "B"
+      ],
+      "packageCount": 32,
+      "referenceArrangement": "SHARED_DIRECT",
+      "support": {
+        "C12": false,
+        "S5": false,
+        "S12": false,
+        "filters": 0,
+        "outputIndicators": 1,
+        "bleeder5": false
+      },
+      "faults": [
+        {
+          "id": "DREV_OPEN",
+          "owner": "DREV"
+        },
+        {
+          "id": "REN_OPEN",
+          "owner": "REN"
+        },
+        {
+          "id": "SENSOR_A_OPEN",
+          "owner": "RSA"
+        },
+        {
+          "id": "DRIVE_A_OPEN",
+          "owner": "RDA"
+        },
+        {
+          "id": "RELAY_B_COIL_OPEN",
+          "owner": "KB"
+        }
+      ],
+      "diagnosticProviderDeveloper": "rb30-control-diagnostic@2",
+      "diagnosticProviderNormal": "rb30-control-diagnostic@4",
+      "diagnosticTemplate": "RB30_CHANNEL_INPUT_SWEEP_V1",
+      "diagnosticSamplesPerHypothesis": 37,
+      "temporalContract": "RB30_CHANNEL_FUNCTION@3",
+      "sampleSeconds": 0.03,
+      "profileWorkUnits": 5,
+      "customerRetestWorkUnits": 5,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "activeOperationMillis": 5000
+    },
+    {
+      "schema": 1,
+      "seed": "4",
+      "canonical": "rb30-plan@4;seed=4;topology=RB30_CH2_SHARED_DIRECT_A_BJT_B_NMOS;support=C12:true,S5:false,S12:false,filters:1,outputIndicators:2,bleeder5:false;layout=-7967780441668740599;routing=4321422998255155060;physicalPolicy=MEDIUM_BOARD@1;fault=DREV_OPEN;packages=34;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated",
+      "planEpoch": 4,
+      "topology": "RB30_CH2_SHARED_DIRECT_A_BJT_B_NMOS_C12_Y_S5_N_S12_N_F1_O2_B5_N",
+      "channelCount": 2,
+      "activeChannels": [
+        "A",
+        "B"
+      ],
+      "packageCount": 34,
+      "referenceArrangement": "SHARED_DIRECT",
+      "support": {
+        "C12": true,
+        "S5": false,
+        "S12": false,
+        "filters": 1,
+        "outputIndicators": 2,
+        "bleeder5": false
+      },
+      "faults": [
+        {
+          "id": "DREV_OPEN",
+          "owner": "DREV"
+        },
+        {
+          "id": "REN_OPEN",
+          "owner": "REN"
+        },
+        {
+          "id": "SENSOR_A_OPEN",
+          "owner": "RSA"
+        },
+        {
+          "id": "DRIVE_A_OPEN",
+          "owner": "RDA"
+        },
+        {
+          "id": "RELAY_B_COIL_OPEN",
+          "owner": "KB"
+        }
+      ],
+      "diagnosticProviderDeveloper": "rb30-control-diagnostic@2",
+      "diagnosticProviderNormal": "rb30-control-diagnostic@4",
+      "diagnosticTemplate": "RB30_CHANNEL_INPUT_SWEEP_V1",
+      "diagnosticSamplesPerHypothesis": 37,
+      "temporalContract": "RB30_CHANNEL_FUNCTION@3",
+      "sampleSeconds": 0.03,
+      "profileWorkUnits": 5,
+      "customerRetestWorkUnits": 5,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "activeOperationMillis": 5000
+    },
+    {
+      "schema": 1,
+      "seed": "10000",
+      "canonical": "rb30-plan@4;seed=10000;topology=RB30_CH2_SHARED_HYSTERETIC_A_NMOS_B_NMOS;support=C12:false,S5:false,S12:false,filters:1,outputIndicators:1,bleeder5:true;layout=-5582834733033270822;routing=-7232503086477951915;physicalPolicy=MEDIUM_BOARD@1;fault=RELAY_B_COIL_OPEN;packages=36;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated",
+      "planEpoch": 4,
+      "topology": "RB30_CH2_SHARED_HYSTERETIC_A_NMOS_B_NMOS_C12_N_S5_N_S12_N_F1_O1_B5_Y",
+      "channelCount": 2,
+      "activeChannels": [
+        "A",
+        "B"
+      ],
+      "packageCount": 36,
+      "referenceArrangement": "SHARED_HYSTERETIC",
+      "support": {
+        "C12": false,
+        "S5": false,
+        "S12": false,
+        "filters": 1,
+        "outputIndicators": 1,
+        "bleeder5": true
+      },
+      "faults": [
+        {
+          "id": "DREV_OPEN",
+          "owner": "DREV"
+        },
+        {
+          "id": "REN_OPEN",
+          "owner": "REN"
+        },
+        {
+          "id": "SENSOR_A_OPEN",
+          "owner": "RSA"
+        },
+        {
+          "id": "DRIVE_A_OPEN",
+          "owner": "RDA"
+        },
+        {
+          "id": "RELAY_B_COIL_OPEN",
+          "owner": "KB"
+        }
+      ],
+      "diagnosticProviderDeveloper": "rb30-control-diagnostic@2",
+      "diagnosticProviderNormal": "rb30-control-diagnostic@4",
+      "diagnosticTemplate": "RB30_CHANNEL_INPUT_SWEEP_V1",
+      "diagnosticSamplesPerHypothesis": 37,
+      "temporalContract": "RB30_CHANNEL_FUNCTION@3",
+      "sampleSeconds": 0.03,
+      "profileWorkUnits": 5,
+      "customerRetestWorkUnits": 5,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "activeOperationMillis": 5000
+    },
+    {
+      "schema": 1,
+      "seed": "10",
+      "canonical": "rb30-plan@4;seed=10;topology=RB30_CH2_SEPARATE_DIRECT_A_BJT_B_NMOS;support=C12:false,S5:false,S12:false,filters:3,outputIndicators:1,bleeder5:false;layout=-5437028946546985473;routing=6161596101315970262;physicalPolicy=MEDIUM_BOARD@1;fault=DREV_OPEN;packages=36;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated",
+      "planEpoch": 4,
+      "topology": "RB30_CH2_SEPARATE_DIRECT_A_BJT_B_NMOS_C12_N_S5_N_S12_N_F3_O1_B5_N",
+      "channelCount": 2,
+      "activeChannels": [
+        "A",
+        "B"
+      ],
+      "packageCount": 36,
+      "referenceArrangement": "SEPARATE_DIRECT",
+      "support": {
+        "C12": false,
+        "S5": false,
+        "S12": false,
+        "filters": 3,
+        "outputIndicators": 1,
+        "bleeder5": false
+      },
+      "faults": [
+        {
+          "id": "DREV_OPEN",
+          "owner": "DREV"
+        },
+        {
+          "id": "REN_OPEN",
+          "owner": "REN"
+        },
+        {
+          "id": "SENSOR_A_OPEN",
+          "owner": "RSA"
+        },
+        {
+          "id": "DRIVE_A_OPEN",
+          "owner": "RDA"
+        },
+        {
+          "id": "RELAY_B_COIL_OPEN",
+          "owner": "KB"
+        }
+      ],
+      "diagnosticProviderDeveloper": "rb30-control-diagnostic@2",
+      "diagnosticProviderNormal": "rb30-control-diagnostic@4",
+      "diagnosticTemplate": "RB30_CHANNEL_INPUT_SWEEP_V1",
+      "diagnosticSamplesPerHypothesis": 37,
+      "temporalContract": "RB30_CHANNEL_FUNCTION@3",
+      "sampleSeconds": 0.03,
+      "profileWorkUnits": 5,
+      "customerRetestWorkUnits": 5,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "activeOperationMillis": 5000
+    }
+  ],
+  "diagnosticComparison": {
+    "current": {
+      "startedUtc": "2026-10-02T03:52:24.3447022Z",
+      "kind": "DIAGNOSTIC_ONLY",
+      "variant": "current",
+      "elapsedSeconds": 34.5885537,
+      "baseHead": "d9ec018bb725a29b47c68e72a3e1a5632a5c5a88",
+      "gateStatus": "FAIL_PRESERVED",
+      "cleanupElapsedSeconds": "NOT RECORDED separately",
+      "schema": 1,
+      "finishedUtc": "2026-10-02T03:52:58.9467485Z",
+      "exitCode": 2
+    },
+    "lexical": {
+      "startedUtc": "2026-10-02T03:57:06.4122935Z",
+      "kind": "DIAGNOSTIC_ONLY",
+      "variant": "lexical",
+      "elapsedSeconds": 36.2463792,
+      "baseHead": "d9ec018bb725a29b47c68e72a3e1a5632a5c5a88",
+      "gateStatus": "FAIL_PRESERVED",
+      "cleanupElapsedSeconds": "NOT RECORDED separately",
+      "schema": 1,
+      "finishedUtc": "2026-10-02T03:57:42.6701941Z",
+      "exitCode": 2
+    },
+    "hybrid": {
+      "startedUtc": "2026-10-02T03:59:13.0108923Z",
+      "kind": "DIAGNOSTIC_ONLY",
+      "variant": "hybrid",
+      "elapsedSeconds": 33.6059395,
+      "baseHead": "d9ec018bb725a29b47c68e72a3e1a5632a5c5a88",
+      "gateStatus": "ORIGINAL_FOUR_ROUTE_PASS_PENDING_REVIEW",
+      "cleanupElapsedSeconds": "NOT RECORDED separately",
+      "schema": 1,
+      "finishedUtc": "2026-10-02T03:59:46.6145378Z",
+      "exitCode": 0
+    }
+  },
+  "focusedGates": {
+    "physical": {
+      "startedUtc": "2026-10-02T04:05:14.1804780Z",
+      "confirmed": true,
+      "elapsedSeconds": 47.5943152,
+      "baseHead": "d9ec018bb725a29b47c68e72a3e1a5632a5c5a88",
+      "cleanupElapsedSeconds": "NOT RECORDED separately",
+      "status": "PASS",
+      "schema": 1,
+      "finishedUtc": "2026-10-02T04:06:01.7847460Z",
+      "stage": "physical",
+      "exitCode": 0
+    },
+    "corpus": {
+      "startedUtc": "2026-10-02T04:06:21.1741468Z",
+      "confirmed": true,
+      "elapsedSeconds": 50.9469524,
+      "baseHead": "d9ec018bb725a29b47c68e72a3e1a5632a5c5a88",
+      "cleanupElapsedSeconds": "NOT RECORDED separately",
+      "status": "PASS",
+      "schema": 1,
+      "finishedUtc": "2026-10-02T04:07:12.1220527Z",
+      "stage": "corpus",
+      "exitCode": 0
+    },
+    "service": {
+      "startedUtc": "2026-10-02T04:07:42.3229133Z",
+      "confirmed": true,
+      "elapsedSeconds": 269.2032598,
+      "baseHead": "d9ec018bb725a29b47c68e72a3e1a5632a5c5a88",
+      "cleanupElapsedSeconds": "NOT RECORDED separately",
+      "status": "PASS",
+      "schema": 1,
+      "finishedUtc": "2026-10-02T04:12:11.5415904Z",
+      "stage": "service",
+      "exitCode": 0
+    },
+    "sensitivity": {
+      "startedUtc": "2026-10-02T04:12:32.2771023Z",
+      "confirmed": true,
+      "elapsedSeconds": 419.89279769999996,
+      "baseHead": "d9ec018bb725a29b47c68e72a3e1a5632a5c5a88",
+      "cleanupElapsedSeconds": "NOT RECORDED separately",
+      "status": "PASS",
+      "schema": 1,
+      "finishedUtc": "2026-10-02T04:19:32.1777978Z",
+      "stage": "sensitivity",
+      "exitCode": 0
+    },
+    "build": {
+      "startedUtc": "2026-10-02T04:19:59.0363104Z",
+      "confirmed": true,
+      "elapsedSeconds": 84.9924202,
+      "baseHead": "d9ec018bb725a29b47c68e72a3e1a5632a5c5a88",
+      "cleanupElapsedSeconds": "NOT RECORDED separately",
+      "status": "PASS",
+      "schema": 1,
+      "finishedUtc": "2026-10-02T04:21:24.0327443Z",
+      "stage": "build",
+      "exitCode": 0
+    }
+  },
+  "corpusRows": [
+    {
+      "schema": 1,
+      "planEpoch": 4,
+      "seed": "8",
+      "outcome": "ACCEPTED",
+      "routeOutcome": "SUCCESS",
+      "normalAdmissionOutcome": "ACCEPTED",
+      "normalAdmissionReason": null,
+      "topologyAxis": "RB30_CH2_SHARED_DIRECT_A_NMOS_B_BJT",
+      "support": "C12:false,S5:false,S12:false,F:0,O:1,B5:false",
+      "partCount": 32,
+      "contractValidated": true,
+      "cleanup": true,
+      "hypothesisCount": 5,
+      "observationCount": 37,
+      "physicalFingerprintHash": "8bda7807",
+      "layoutFingerprintHash": "91616cc0",
+      "coldConstructionNanos": 484700900,
+      "coldAdmissionAssemblyNanos": 289997000,
+      "coldGenerationNanos": 774697900,
+      "coldRouteNanos": 2949654700,
+      "coldPlacementAdvanceNanos": 255096100,
+      "coldRoutingAdvanceNanos": 2694474700,
+      "coldPlacementAdvances": 6,
+      "coldRoutingAdvances": 36,
+      "warmConstructionNanos": 2975100,
+      "warmAdmissionAssemblyNanos": 24119400,
+      "warmGenerationNanos": 27094500,
+      "warmRouteNanos": 2126807400,
+      "warmPlacementAdvanceNanos": 108418200,
+      "warmRoutingAdvanceNanos": 2018324400,
+      "cleanupNanos": 494300,
+      "normalStructuralReplayNanos": 234840700,
+      "totalNanos": 6215924400,
+      "routeTimingMethod": "first six session advances=placement; remaining advances=routing",
+      "proofPhase": "NOT_RUN_BY_NORMAL_CORPUS_CONTRACT",
+      "coldRouteCanonical": "MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=24168;routes=6;routingWork=19/3517501;p05=3/0;p07=3/1;selectedAttempt=4;ranked=[0, 4, 2, 1, 3, 5];placementScores=[0{total=1095852;electrical=122250;region=10945;connector=6040;corridor=2291;outline=7740600;courtyard=580052;demand=2020771}, 4{total=1100575;electrical=122530;region=8625;connector=6860;corridor=2847;outline=7911800;courtyard=580052;demand=2020771}, 2{total=1158144;electrical=129480;region=10000;connector=6900;corridor=2550;outline=7700400;courtyard=581252;demand=2023971}, 1{total=1196405;electrical=132520;region=9300;connector=7150;corridor=3809;outline=7828000;courtyard=582452;demand=2027171}, 3{total=1206088;electrical=134590;region=11143;connector=6800;corridor=2807;outline=7690800;courtyard=586052;demand=2036771}, 5{total=1258801;electrical=141050;region=9215;connector=8220;corridor=2839;outline=7549200;courtyard=581252;demand=2023971}];selectedScore=1100575;selectedQualityMilli=167497418;routeOutcomes=[P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@4=REJECTED:Unable to route net A_DRIVE from RDA.2@710,560 to QA.G@870,910, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@0=REJECTED:DISCONNECTED_ESCAPE_CHANNEL, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@2=REJECTED:DISCONNECTED_ESCAPE_CHANNEL];failure=null",
+      "warmRouteCanonical": "MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=24168;routes=6;routingWork=19/3517501;p05=3/0;p07=3/1;selectedAttempt=4;ranked=[0, 4, 2, 1, 3, 5];placementScores=[0{total=1095852;electrical=122250;region=10945;connector=6040;corridor=2291;outline=7740600;courtyard=580052;demand=2020771}, 4{total=1100575;electrical=122530;region=8625;connector=6860;corridor=2847;outline=7911800;courtyard=580052;demand=2020771}, 2{total=1158144;electrical=129480;region=10000;connector=6900;corridor=2550;outline=7700400;courtyard=581252;demand=2023971}, 1{total=1196405;electrical=132520;region=9300;connector=7150;corridor=3809;outline=7828000;courtyard=582452;demand=2027171}, 3{total=1206088;electrical=134590;region=11143;connector=6800;corridor=2807;outline=7690800;courtyard=586052;demand=2036771}, 5{total=1258801;electrical=141050;region=9215;connector=8220;corridor=2839;outline=7549200;courtyard=581252;demand=2023971}];selectedScore=1100575;selectedQualityMilli=167497418;routeOutcomes=[P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@4=REJECTED:Unable to route net A_DRIVE from RDA.2@710,560 to QA.G@870,910, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@0=REJECTED:DISCONNECTED_ESCAPE_CHANNEL, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@2=REJECTED:DISCONNECTED_ESCAPE_CHANNEL];failure=null",
+      "coldRouteOutcomes": [
+        "P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P05_ONE_FACE@4=REJECTED:Unable to route net A_DRIVE from RDA.2@710,560 to QA.G@870,910",
+        "P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P07_FULLER_TWO_LAYER@0=REJECTED:DISCONNECTED_ESCAPE_CHANNEL",
+        "P07_FULLER_TWO_LAYER@4=SUCCESS",
+        "P07_FULLER_TWO_LAYER@2=REJECTED:DISCONNECTED_ESCAPE_CHANNEL"
+      ],
+      "warmRouteOutcomes": [
+        "P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P05_ONE_FACE@4=REJECTED:Unable to route net A_DRIVE from RDA.2@710,560 to QA.G@870,910",
+        "P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P07_FULLER_TWO_LAYER@0=REJECTED:DISCONNECTED_ESCAPE_CHANNEL",
+        "P07_FULLER_TWO_LAYER@4=SUCCESS",
+        "P07_FULLER_TWO_LAYER@2=REJECTED:DISCONNECTED_ESCAPE_CHANNEL"
+      ],
+      "routeRejection": null,
+      "validationFailure": null
+    },
+    {
+      "schema": 1,
+      "planEpoch": 4,
+      "seed": "4",
+      "outcome": "ACCEPTED",
+      "routeOutcome": "SUCCESS",
+      "normalAdmissionOutcome": "ACCEPTED",
+      "normalAdmissionReason": null,
+      "topologyAxis": "RB30_CH2_SHARED_DIRECT_A_BJT_B_NMOS",
+      "support": "C12:true,S5:false,S12:false,F:1,O:2,B5:false",
+      "partCount": 34,
+      "contractValidated": true,
+      "cleanup": true,
+      "hypothesisCount": 5,
+      "observationCount": 37,
+      "physicalFingerprintHash": "f898b9b6",
+      "layoutFingerprintHash": "235c1ac0",
+      "coldConstructionNanos": 51443400,
+      "coldAdmissionAssemblyNanos": 46233300,
+      "coldGenerationNanos": 97676700,
+      "coldRouteNanos": 3742443700,
+      "coldPlacementAdvanceNanos": 236176900,
+      "coldRoutingAdvanceNanos": 3506152700,
+      "coldPlacementAdvances": 6,
+      "coldRoutingAdvances": 52,
+      "warmConstructionNanos": 3159900,
+      "warmAdmissionAssemblyNanos": 22393700,
+      "warmGenerationNanos": 25553600,
+      "warmRouteNanos": 3069158300,
+      "warmPlacementAdvanceNanos": 110901900,
+      "warmRoutingAdvanceNanos": 2958129100,
+      "cleanupNanos": 515200,
+      "normalStructuralReplayNanos": 207296800,
+      "totalNanos": 7176058200,
+      "routeTimingMethod": "first six session advances=placement; remaining advances=routing",
+      "proofPhase": "NOT_RUN_BY_NORMAL_CORPUS_CONTRACT",
+      "coldRouteCanonical": "MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=25680;routes=6;routingWork=17/4222706;p05=3/0;p07=3/2;selectedAttempt=5;ranked=[5, 2, 1, 0, 4, 3];placementScores=[5{total=1091857;electrical=122030;region=10695;connector=4970;corridor=2686;outline=8108800;courtyard=593252;demand=2084811}, 2{total=1118760;electrical=128230;region=8375;connector=6090;corridor=1012;outline=8046500;courtyard=596852;demand=2094411}, 1{total=1149465;electrical=131030;region=9273;connector=6370;corridor=1268;outline=7998200;courtyard=599252;demand=2100811}, 0{total=1232991;electrical=137360;region=10017;connector=7370;corridor=3277;outline=7804500;courtyard=598052;demand=2097611}, 4{total=1240298;electrical=140290;region=9760;connector=6750;corridor=2323;outline=7867200;courtyard=598052;demand=2097611}, 3{total=1261524;electrical=142310;region=10573;connector=6380;corridor=2649;outline=7980000;courtyard=600452;demand=2104011}];selectedScore=1091857;selectedQualityMilli=180682092;routeOutcomes=[P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@5=SUCCESS, P07_FULLER_TWO_LAYER@2=SUCCESS, P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:CTRL_RETURN:NO_PATH];failure=null",
+      "warmRouteCanonical": "MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=25680;routes=6;routingWork=17/4222706;p05=3/0;p07=3/2;selectedAttempt=5;ranked=[5, 2, 1, 0, 4, 3];placementScores=[5{total=1091857;electrical=122030;region=10695;connector=4970;corridor=2686;outline=8108800;courtyard=593252;demand=2084811}, 2{total=1118760;electrical=128230;region=8375;connector=6090;corridor=1012;outline=8046500;courtyard=596852;demand=2094411}, 1{total=1149465;electrical=131030;region=9273;connector=6370;corridor=1268;outline=7998200;courtyard=599252;demand=2100811}, 0{total=1232991;electrical=137360;region=10017;connector=7370;corridor=3277;outline=7804500;courtyard=598052;demand=2097611}, 4{total=1240298;electrical=140290;region=9760;connector=6750;corridor=2323;outline=7867200;courtyard=598052;demand=2097611}, 3{total=1261524;electrical=142310;region=10573;connector=6380;corridor=2649;outline=7980000;courtyard=600452;demand=2104011}];selectedScore=1091857;selectedQualityMilli=180682092;routeOutcomes=[P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@5=SUCCESS, P07_FULLER_TWO_LAYER@2=SUCCESS, P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:CTRL_RETURN:NO_PATH];failure=null",
+      "coldRouteOutcomes": [
+        "P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P07_FULLER_TWO_LAYER@5=SUCCESS",
+        "P07_FULLER_TWO_LAYER@2=SUCCESS",
+        "P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:CTRL_RETURN:NO_PATH"
+      ],
+      "warmRouteOutcomes": [
+        "P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P07_FULLER_TWO_LAYER@5=SUCCESS",
+        "P07_FULLER_TWO_LAYER@2=SUCCESS",
+        "P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:CTRL_RETURN:NO_PATH"
+      ],
+      "routeRejection": null,
+      "validationFailure": null
+    },
+    {
+      "schema": 1,
+      "planEpoch": 4,
+      "seed": "10000",
+      "outcome": "ACCEPTED",
+      "routeOutcome": "SUCCESS",
+      "normalAdmissionOutcome": "ACCEPTED",
+      "normalAdmissionReason": null,
+      "topologyAxis": "RB30_CH2_SHARED_HYSTERETIC_A_NMOS_B_NMOS",
+      "support": "C12:false,S5:false,S12:false,F:1,O:1,B5:true",
+      "partCount": 36,
+      "contractValidated": true,
+      "cleanup": true,
+      "hypothesisCount": 5,
+      "observationCount": 37,
+      "physicalFingerprintHash": "cc60c834",
+      "layoutFingerprintHash": "58a4d61f",
+      "coldConstructionNanos": 59209200,
+      "coldAdmissionAssemblyNanos": 48168300,
+      "coldGenerationNanos": 107377500,
+      "coldRouteNanos": 4079533600,
+      "coldPlacementAdvanceNanos": 264435300,
+      "coldRoutingAdvanceNanos": 3814984900,
+      "coldPlacementAdvances": 6,
+      "coldRoutingAdvances": 55,
+      "warmConstructionNanos": 3106600,
+      "warmAdmissionAssemblyNanos": 30119200,
+      "warmGenerationNanos": 33225800,
+      "warmRouteNanos": 3472597500,
+      "warmPlacementAdvanceNanos": 114430200,
+      "warmRoutingAdvanceNanos": 3358049100,
+      "cleanupNanos": 465700,
+      "normalStructuralReplayNanos": 261840600,
+      "totalNanos": 7997142400,
+      "routeTimingMethod": "first six session advances=placement; remaining advances=routing",
+      "proofPhase": "NOT_RUN_BY_NORMAL_CORPUS_CONTRACT",
+      "coldRouteCanonical": "MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=27193;routes=6;routingWork=18/4295538;p05=3/0;p07=3/1;selectedAttempt=2;ranked=[5, 4, 2, 1, 0, 3];placementScores=[5{total=1056576;electrical=116310;region=10830;connector=6400;corridor=2738;outline=8614900;courtyard=638132;demand=2268791}, 4{total=1142932;electrical=123570;region=11350;connector=6720;corridor=4769;outline=8527200;courtyard=635732;demand=2262391}, 2{total=1196136;electrical=134510;region=10640;connector=6480;corridor=2257;outline=8653600;courtyard=630932;demand=2249591}, 1{total=1244332;electrical=139150;region=10198;connector=7740;corridor=2723;outline=8353800;courtyard=628532;demand=2243191}, 0{total=1290799;electrical=140620;region=10050;connector=8480;corridor=5288;outline=8424000;courtyard=630932;demand=2249591}, 3{total=1571540;electrical=174350;region=11242;connector=7660;corridor=6216;outline=8327700;courtyard=634532;demand=2259191}];selectedScore=1196136;selectedQualityMilli=187146199;routeOutcomes=[P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@5=REJECTED:P07_FULLER_TWO_LAYER:CTRL_RETURN:NO_PATH, P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:A_CMD:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@2=SUCCESS];failure=null",
+      "warmRouteCanonical": "MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=27193;routes=6;routingWork=18/4295538;p05=3/0;p07=3/1;selectedAttempt=2;ranked=[5, 4, 2, 1, 0, 3];placementScores=[5{total=1056576;electrical=116310;region=10830;connector=6400;corridor=2738;outline=8614900;courtyard=638132;demand=2268791}, 4{total=1142932;electrical=123570;region=11350;connector=6720;corridor=4769;outline=8527200;courtyard=635732;demand=2262391}, 2{total=1196136;electrical=134510;region=10640;connector=6480;corridor=2257;outline=8653600;courtyard=630932;demand=2249591}, 1{total=1244332;electrical=139150;region=10198;connector=7740;corridor=2723;outline=8353800;courtyard=628532;demand=2243191}, 0{total=1290799;electrical=140620;region=10050;connector=8480;corridor=5288;outline=8424000;courtyard=630932;demand=2249591}, 3{total=1571540;electrical=174350;region=11242;connector=7660;corridor=6216;outline=8327700;courtyard=634532;demand=2259191}];selectedScore=1196136;selectedQualityMilli=187146199;routeOutcomes=[P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@5=REJECTED:P07_FULLER_TWO_LAYER:CTRL_RETURN:NO_PATH, P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:A_CMD:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@2=SUCCESS];failure=null",
+      "coldRouteOutcomes": [
+        "P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P07_FULLER_TWO_LAYER@5=REJECTED:P07_FULLER_TWO_LAYER:CTRL_RETURN:NO_PATH",
+        "P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:A_CMD:BRANCH_SEARCH_LIMIT",
+        "P07_FULLER_TWO_LAYER@2=SUCCESS"
+      ],
+      "warmRouteOutcomes": [
+        "P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P07_FULLER_TWO_LAYER@5=REJECTED:P07_FULLER_TWO_LAYER:CTRL_RETURN:NO_PATH",
+        "P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:A_CMD:BRANCH_SEARCH_LIMIT",
+        "P07_FULLER_TWO_LAYER@2=SUCCESS"
+      ],
+      "routeRejection": null,
+      "validationFailure": null
+    },
+    {
+      "schema": 1,
+      "planEpoch": 4,
+      "seed": "10",
+      "outcome": "ACCEPTED",
+      "routeOutcome": "SUCCESS",
+      "normalAdmissionOutcome": "ACCEPTED",
+      "normalAdmissionReason": null,
+      "topologyAxis": "RB30_CH2_SEPARATE_DIRECT_A_BJT_B_NMOS",
+      "support": "C12:false,S5:false,S12:false,F:3,O:1,B5:false",
+      "partCount": 36,
+      "contractValidated": true,
+      "cleanup": true,
+      "hypothesisCount": 5,
+      "observationCount": 37,
+      "physicalFingerprintHash": "8fa54de7",
+      "layoutFingerprintHash": "c6bbab6",
+      "coldConstructionNanos": 51413300,
+      "coldAdmissionAssemblyNanos": 44912600,
+      "coldGenerationNanos": 96325900,
+      "coldRouteNanos": 5333807000,
+      "coldPlacementAdvanceNanos": 216697700,
+      "coldRoutingAdvanceNanos": 5116936400,
+      "coldPlacementAdvances": 6,
+      "coldRoutingAdvances": 85,
+      "warmConstructionNanos": 3529900,
+      "warmAdmissionAssemblyNanos": 23744300,
+      "warmGenerationNanos": 27274200,
+      "warmRouteNanos": 4674979300,
+      "warmPlacementAdvanceNanos": 108440800,
+      "warmRoutingAdvanceNanos": 4566357000,
+      "cleanupNanos": 458400,
+      "normalStructuralReplayNanos": 207884200,
+      "totalNanos": 10374997800,
+      "routeTimingMethod": "first six session advances=placement; remaining advances=routing",
+      "proofPhase": "NOT_RUN_BY_NORMAL_CORPUS_CONTRACT",
+      "coldRouteCanonical": "MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=27192;routes=6;routingWork=20/5099004;p05=3/0;p07=3/2;selectedAttempt=0;ranked=[0, 2, 3, 5, 4, 1];placementScores=[0{total=1170274;electrical=131410;region=11485;connector=5780;corridor=2251;outline=8533000;courtyard=620372;demand=2209611}, 2{total=1259357;electrical=142380;region=9110;connector=8450;corridor=1822;outline=8444800;courtyard=631172;demand=2238411}, 3{total=1278654;electrical=141320;region=11090;connector=7460;corridor=3967;outline=8510400;courtyard=628772;demand=2232011}, 5{total=1283889;electrical=139100;region=10745;connector=7850;corridor=5825;outline=8271700;courtyard=622772;demand=2216011}, 4{total=1288485;electrical=144890;region=10005;connector=8170;corridor=2428;outline=8342000;courtyard=625172;demand=2222411}, 1{total=1333927;electrical=149110;region=9600;connector=8820;corridor=3221;outline=8228000;courtyard=625172;demand=2222411}];selectedScore=1170274;selectedQualityMilli=188837524;routeOutcomes=[P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@3=REJECTED:Unable to route net RAIL12 from CIN.+@730,1580 to DREV.K@640,960, P07_FULLER_TWO_LAYER@0=SUCCESS, P07_FULLER_TWO_LAYER@2=SUCCESS, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:A_REF:BRANCH_SEARCH_LIMIT];failure=null",
+      "warmRouteCanonical": "MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=27192;routes=6;routingWork=20/5099004;p05=3/0;p07=3/2;selectedAttempt=0;ranked=[0, 2, 3, 5, 4, 1];placementScores=[0{total=1170274;electrical=131410;region=11485;connector=5780;corridor=2251;outline=8533000;courtyard=620372;demand=2209611}, 2{total=1259357;electrical=142380;region=9110;connector=8450;corridor=1822;outline=8444800;courtyard=631172;demand=2238411}, 3{total=1278654;electrical=141320;region=11090;connector=7460;corridor=3967;outline=8510400;courtyard=628772;demand=2232011}, 5{total=1283889;electrical=139100;region=10745;connector=7850;corridor=5825;outline=8271700;courtyard=622772;demand=2216011}, 4{total=1288485;electrical=144890;region=10005;connector=8170;corridor=2428;outline=8342000;courtyard=625172;demand=2222411}, 1{total=1333927;electrical=149110;region=9600;connector=8820;corridor=3221;outline=8228000;courtyard=625172;demand=2222411}];selectedScore=1170274;selectedQualityMilli=188837524;routeOutcomes=[P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@3=REJECTED:Unable to route net RAIL12 from CIN.+@730,1580 to DREV.K@640,960, P07_FULLER_TWO_LAYER@0=SUCCESS, P07_FULLER_TWO_LAYER@2=SUCCESS, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:A_REF:BRANCH_SEARCH_LIMIT];failure=null",
+      "coldRouteOutcomes": [
+        "P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P05_ONE_FACE@3=REJECTED:Unable to route net RAIL12 from CIN.+@730,1580 to DREV.K@640,960",
+        "P07_FULLER_TWO_LAYER@0=SUCCESS",
+        "P07_FULLER_TWO_LAYER@2=SUCCESS",
+        "P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:A_REF:BRANCH_SEARCH_LIMIT"
+      ],
+      "warmRouteOutcomes": [
+        "P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P05_ONE_FACE@3=REJECTED:Unable to route net RAIL12 from CIN.+@730,1580 to DREV.K@640,960",
+        "P07_FULLER_TWO_LAYER@0=SUCCESS",
+        "P07_FULLER_TWO_LAYER@2=SUCCESS",
+        "P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:A_REF:BRANCH_SEARCH_LIMIT"
+      ],
+      "routeRejection": null,
+      "validationFailure": null
+    }
+  ],
+  "resourceCheck": {
+    "wrapperRecords": [
+      {
+        "variant": "current",
+        "schema": 1,
+        "command": "\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -ExecutionPolicy Bypass -File <workspace>\\run_q30_original_route_diagnostic.ps1 -Variant current",
+        "createdUtc": "2026-10-02T03:52:23.9712360Z",
+        "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "pid": 21104
+      },
+      {
+        "variant": "lexical",
+        "schema": 1,
+        "command": "\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -ExecutionPolicy Bypass -File <workspace>\\run_q30_original_route_diagnostic.ps1 -Variant lexical",
+        "createdUtc": "2026-10-02T03:57:06.0924300Z",
+        "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "pid": 23784
+      },
+      {
+        "variant": "hybrid",
+        "schema": 1,
+        "command": "\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -ExecutionPolicy Bypass -File <workspace>\\run_q30_original_route_diagnostic.ps1 -Variant hybrid",
+        "createdUtc": "2026-10-02T03:59:12.6633410Z",
+        "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "pid": 27996
+      },
+      {
+        "stage": "physical",
+        "schema": 1,
+        "command": "\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -ExecutionPolicy Bypass -File <workspace>\\run_q30_original_route_final.ps1 -Stage physical",
+        "createdUtc": "2026-10-02T04:05:13.8126080Z",
+        "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "pid": 21088
+      },
+      {
+        "stage": "corpus",
+        "schema": 1,
+        "command": "\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -ExecutionPolicy Bypass -File <workspace>\\run_q30_original_route_final.ps1 -Stage corpus",
+        "createdUtc": "2026-10-02T04:06:20.8569120Z",
+        "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "pid": 21448
+      },
+      {
+        "stage": "service",
+        "schema": 1,
+        "command": "\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -ExecutionPolicy Bypass -File <workspace>\\run_q30_original_route_final.ps1 -Stage service",
+        "createdUtc": "2026-10-02T04:07:42.0077000Z",
+        "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "pid": 16984
+      },
+      {
+        "stage": "sensitivity",
+        "schema": 1,
+        "command": "\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -ExecutionPolicy Bypass -File <workspace>\\run_q30_original_route_final.ps1 -Stage sensitivity",
+        "createdUtc": "2026-10-02T04:12:31.9575720Z",
+        "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "pid": 16992
+      },
+      {
+        "stage": "build",
+        "schema": 1,
+        "command": "\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -ExecutionPolicy Bypass -File <workspace>\\run_q30_original_route_final.ps1 -Stage build",
+        "createdUtc": "2026-10-02T04:19:58.6770360Z",
+        "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "pid": 23072
+      }
+    ],
+    "capturedJava": [
+      {
+        "parentPid": 16992,
+        "pid": 23188,
+        "executable": "%USERPROFILE%\\AppData\\Local\\Temp\\q30-finish-0fa2512465\\jdk\\jdk8u502-b07\\bin\\java.exe",
+        "createdUtc": "2026-10-02T04:14:09.0803180Z",
+        "command": "\"%USERPROFILE%\\AppData\\Local\\Temp\\q30-finish-0fa2512465\\jdk\\jdk8u502-b07\\bin\\java.exe\" \"-ea\" \"-cp\" \"%USERPROFILE%\\AppData\\Local\\Temp\\TroubleshootJS-current-contracts-e4eb0e0f69ea440c9035008fe839a31f\\classes;<repo>\\.tools\\gwt-2.7.0\\gwt-user-2.7.0.jar;<repo>\\.tools\\gwt-2.7.0\\gwt-dev-2.7.0.jar\" \"com.lushprojects.circuitjs1.client.Q30SolverStepSensitivityContractTest\" \"--seed\" \"4\" \"--fault\" \"RELAY_B_COIL_OPEN\""
+      },
+      {
+        "pid": 23012,
+        "command": "\"%USERPROFILE%\\AppData\\Local\\Temp\\q30-finish-0fa2512465\\jdk\\jdk8u502-b07\\bin\\java.exe\" \"-Xmx1g\" \"-Dgwt.persistentunitcachedir=<task-temp>\\shipping-epoch15\\app\\.tools\\gwt-2.7.0\\compile-cache\" \"-cp\" \"<task-temp>\\shipping-epoch15\\app\\src;<task-temp>\\shipping-epoch15\\app\\.tools\\gwt-2.7.0\\gwt-dev-2.7.0.jar;<task-temp>\\shipping-epoch15\\app\\.tools\\gwt-2.7.0\\gwt-user-2.7.0.jar;<task-temp>\\shipping-epoch15\\app\\.tools\\gwt-2.7.0\\validation-api-1.0.0.GA.jar;<task-temp>\\shipping-epoch15\\app\\.tools\\gwt-2.7.0\\validation-api-1.0.0.GA-sources.jar;<task-temp>\\shipping-epoch15\\app\\.tools\\gwt-2.7.0\\asm-5.0.3.jar;<task-temp>\\shipping-epoch15\\app\\.tools\\gwt-2.7.0\\asm-analysis-5.0.3.jar;<task-temp>\\shipping-epoch15\\app\\.tools\\gwt-2.7.0\\asm-commons-5.0.3.jar;<task-temp>\\shipping-epoch15\\app\\.tools\\gwt-2.7.0\\asm-tree-5.0.3.jar;<task-temp>\\shipping-epoch15\\app\\.tools\\gwt-2.7.0\\asm-util-5.0.3.jar\" \"com.google.gwt.dev.Compiler\" \"-war\" \"<task-temp>\\shipping-epoch15\\app\\war\" \"-workDir\" \"<task-temp>\\shipping-epoch15\\app\\.tools\\gwt-2.7.0\\compile-work\" \"-style\" \"OBF\" \"-logLevel\" \"INFO\" \"com.lushprojects.circuitjs1.circuitjs1\"",
+        "executable": "%USERPROFILE%\\AppData\\Local\\Temp\\q30-finish-0fa2512465\\jdk\\jdk8u502-b07\\bin\\java.exe",
+        "createdUtc": "2026-10-02T04:20:00.2008680Z",
+        "parentPid": 23072
+      }
+    ],
+    "method": "Verify recorded PID+creation+executable; scan JVM commands for unique task root; verify captured native scratch absent. All native stages also log bounded-process cleanup; other individual scratch paths not separately captured.",
+    "taskJava": [],
+    "taskWrappers": [],
+    "ownedScratch": [],
+    "cleanupElapsedSeconds": "NOT RECORDED separately",
+    "status": "PASS",
+    "schema": 1,
+    "checkedUtc": "2026-10-02T04:22:00.0545426Z",
+    "knownNativeScratch": [
+      "%USERPROFILE%\\AppData\\Local\\Temp\\TroubleshootJS-current-contracts-e4eb0e0f69ea440c9035008fe839a31f"
+    ]
+  },
+  "evidence": [
+    {
+      "retainedRelativePath": "current.log",
+      "rawSha256": "3a825aa3b402a27cb83762713d6259111e3fd0dec79a5ead54f28f27fa51c20f",
+      "portableFile": "current.log.gz",
+      "portablePayloadSha256": "7821e693f1b8b6f11bcac85990b915ad79b9e02cdb45394384ba516a3ea4c71b",
+      "compressedSha256": "2e4aff3b19d6a5ab9f45201262061fb9a4238b7f6da24d05a02084730d33f21f"
+    },
+    {
+      "retainedRelativePath": "current-result.json",
+      "rawSha256": "e52c50c63252d223e7a317fcdc45611d07d6376998ac31b6e695f0ab2a8cb372",
+      "portableFile": "current-result.json.gz",
+      "portablePayloadSha256": "a6c66e503c7a595280d974da92aed3f564d12cab293472690044abe8f394aa9f",
+      "compressedSha256": "b2b1b3aa48cf612f2ae7ff6a1c42f4f79450788db227e552cf51d3d252812845"
+    },
+    {
+      "retainedRelativePath": "current-binding.json",
+      "rawSha256": "3e6b868045e9b2b82697f2d846461e7a97a424d6ce812f3694c5f7cdd8273ae3",
+      "portableFile": "current-binding.json.gz",
+      "portablePayloadSha256": "93e6bd5d102bccab68ec7fc604dda71b47d9d5c9206f096d914e19408a30d8e1",
+      "compressedSha256": "7a9ebf09fc1072888c54977b293ec28c6633be6681d7629747ffe874d7c050c1"
+    },
+    {
+      "retainedRelativePath": "current-ownership.json",
+      "rawSha256": "ecbb65da3f86cc23690a5432a73e541b591ed7011621e596d87ab003d90c3b59",
+      "portableFile": "current-ownership.json.gz",
+      "portablePayloadSha256": "99b0a96a7a5c856ef88d78099ba8f979104a1b1b23b18c18fb9b43386e01beb7",
+      "compressedSha256": "d39049599db2577bd3aa7e28b40d8fd55a954730fd7900847694e0edf1397dfc"
+    },
+    {
+      "retainedRelativePath": "current/src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "rawSha256": "781bc674ce2842566ea0ed293d3328cb29fbd333e525aeab8a53416e38fe0ac0",
+      "portableFile": "current__src__com__lushprojects__circuitjs1__client__PcbLayerRoutingPrototype.java.gz",
+      "portablePayloadSha256": "781bc674ce2842566ea0ed293d3328cb29fbd333e525aeab8a53416e38fe0ac0",
+      "compressedSha256": "ed37226283cb15b680222e8901d0e2f9ad85f642783b4b49f5c98a9f03504809"
+    },
+    {
+      "retainedRelativePath": "current/tests/contracts/MediumBoardPhysicalPolicyContractTest.java",
+      "rawSha256": "ea50979dfcd4661a0b0fd1a9db3543bf2cf6d14820e5fa40c70bf29a96a0d438",
+      "portableFile": "current__tests__contracts__MediumBoardPhysicalPolicyContractTest.java.gz",
+      "portablePayloadSha256": "ea50979dfcd4661a0b0fd1a9db3543bf2cf6d14820e5fa40c70bf29a96a0d438",
+      "compressedSha256": "1a723d5cbdf8a71f0a810232bdc28104d36549c3c1a65eab0439c365bbbcedcf"
+    },
+    {
+      "retainedRelativePath": "lexical.log",
+      "rawSha256": "514eb52745490ef91ca9a375d79c7b2381fac731bce65a3c5ffc6411db7db731",
+      "portableFile": "lexical.log.gz",
+      "portablePayloadSha256": "c3e5ef369fc190842367dcb2fbb70134f2c830c3fa5d2cda885d900dbd0131d3",
+      "compressedSha256": "2584f628906e60f756d1ff518b3ff3ebb9704586bd269831f0a87c9df86b323a"
+    },
+    {
+      "retainedRelativePath": "lexical-result.json",
+      "rawSha256": "0abb6193c756b4725fb0bc917cc7f6cce2e6518f0d65b790e2813bf68a9dbaae",
+      "portableFile": "lexical-result.json.gz",
+      "portablePayloadSha256": "cde3652ea99cbbd59c06d90cc1b8f1c08b0046f1c3d51fc886f88e9ec5cd64c0",
+      "compressedSha256": "de7b9037c184b79f131c4236540ab06bb18c3e0f31fb07db2af460923d2fd332"
+    },
+    {
+      "retainedRelativePath": "lexical-binding.json",
+      "rawSha256": "4a7307423733757481cd1d0dcad169a10113d0b5afd43252e61d6752d316f08b",
+      "portableFile": "lexical-binding.json.gz",
+      "portablePayloadSha256": "331ed89d04c5b18bb93abbefc0bb08badfc9ae3e67adf40649fbe3abd6dc590b",
+      "compressedSha256": "16b2d1c9b0ceafe7ec726b5639304b6e41262fcb4e7124d8de1b482d107f7dbe"
+    },
+    {
+      "retainedRelativePath": "lexical-ownership.json",
+      "rawSha256": "cdfd87f9bba72f70a7fcb137ee568cd19f44bc3dac053c4939edb5e53dc46519",
+      "portableFile": "lexical-ownership.json.gz",
+      "portablePayloadSha256": "adf1ebe61a4240c0d0a9db426d7a3de79af39d3d7ea84ce8fcf7796faa6982e4",
+      "compressedSha256": "78c08d6a5a94b4a641f56be0e425e59b75c778c5ae698ab9e2d657ec3c41be62"
+    },
+    {
+      "retainedRelativePath": "lexical/src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "rawSha256": "0bff1834a97663c42f885511f21d91671209497b5c4efb42b4d5ae453d558995",
+      "portableFile": "lexical__src__com__lushprojects__circuitjs1__client__PcbLayerRoutingPrototype.java.gz",
+      "portablePayloadSha256": "0bff1834a97663c42f885511f21d91671209497b5c4efb42b4d5ae453d558995",
+      "compressedSha256": "4c7d728d495d35cb1d145a12d39ea77acfc41f09e65de9ef0827ee6c8781add4"
+    },
+    {
+      "retainedRelativePath": "lexical/tests/contracts/MediumBoardPhysicalPolicyContractTest.java",
+      "rawSha256": "ea50979dfcd4661a0b0fd1a9db3543bf2cf6d14820e5fa40c70bf29a96a0d438",
+      "portableFile": "lexical__tests__contracts__MediumBoardPhysicalPolicyContractTest.java.gz",
+      "portablePayloadSha256": "ea50979dfcd4661a0b0fd1a9db3543bf2cf6d14820e5fa40c70bf29a96a0d438",
+      "compressedSha256": "1a723d5cbdf8a71f0a810232bdc28104d36549c3c1a65eab0439c365bbbcedcf"
+    },
+    {
+      "retainedRelativePath": "hybrid.log",
+      "rawSha256": "bf4f298b739544ef214b9c8e77600ffaf55f896beef5b9b5d7b6112aa0bd9a8d",
+      "portableFile": "hybrid.log.gz",
+      "portablePayloadSha256": "0a0a9c6eb8f89ff15f74191a82f02310e6e400df17640222cce594cd292cdb9b",
+      "compressedSha256": "6661c4ef818b8f3ee2fdd718aad63b7fee15650d875eb0b5a2ce0c45b462d40b"
+    },
+    {
+      "retainedRelativePath": "hybrid-result.json",
+      "rawSha256": "1ac8c368e662d4615a1477a08a09d33c05e06e6112e93dda5cdb72b61fe6a273",
+      "portableFile": "hybrid-result.json.gz",
+      "portablePayloadSha256": "f8af83d4475c6874601351aaf2184bc958f9b8591b2791837711af81e661e862",
+      "compressedSha256": "2447ad73d6d814f53b6c711c123060c02e33c9ab555ccc8ca14086e43fb8b1a7"
+    },
+    {
+      "retainedRelativePath": "hybrid-binding.json",
+      "rawSha256": "e3c064bcbaa5ae5db71d2198635529a77beda5d4a03bc241a1ae5a23bcec4d3f",
+      "portableFile": "hybrid-binding.json.gz",
+      "portablePayloadSha256": "079dfe5f511d54f099981b05726b52f4e12511e2fb23125627f0801d049dcd6f",
+      "compressedSha256": "082daf0da00bfebdda031fbb86d41ca5363f676faf503a927924c3a8213361c9"
+    },
+    {
+      "retainedRelativePath": "hybrid-ownership.json",
+      "rawSha256": "c7648ea2a92de520dd9eab0b6c2886b1027d9da2ed5f5a24545493756d134861",
+      "portableFile": "hybrid-ownership.json.gz",
+      "portablePayloadSha256": "d96b414b406d7f0707f75b0bfbca22f8b4b83583df784f7f01552dfab458f7b2",
+      "compressedSha256": "7621554c868b981439d80b824330fba8dd98d2024f9818e591ac9905009ec548"
+    },
+    {
+      "retainedRelativePath": "hybrid/src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "rawSha256": "8d90de2ad2bfed3140a41b5b74a5bd1b599120326142243bd41b0fe9880bcae6",
+      "portableFile": "hybrid__src__com__lushprojects__circuitjs1__client__PcbLayerRoutingPrototype.java.gz",
+      "portablePayloadSha256": "8d90de2ad2bfed3140a41b5b74a5bd1b599120326142243bd41b0fe9880bcae6",
+      "compressedSha256": "542a0427be655f43c9db98949fd6b8376bf6364c90309a80ef61e500185a9c5a"
+    },
+    {
+      "retainedRelativePath": "hybrid/tests/contracts/MediumBoardPhysicalPolicyContractTest.java",
+      "rawSha256": "ea50979dfcd4661a0b0fd1a9db3543bf2cf6d14820e5fa40c70bf29a96a0d438",
+      "portableFile": "hybrid__tests__contracts__MediumBoardPhysicalPolicyContractTest.java.gz",
+      "portablePayloadSha256": "ea50979dfcd4661a0b0fd1a9db3543bf2cf6d14820e5fa40c70bf29a96a0d438",
+      "compressedSha256": "1a723d5cbdf8a71f0a810232bdc28104d36549c3c1a65eab0439c365bbbcedcf"
+    },
+    {
+      "retainedRelativePath": "hybrid.txt",
+      "rawSha256": "e983aa0e750cd5caf81c91bb781aee48425c6885ab15c7b38851862660ee473b",
+      "portableFile": "hybrid.txt.gz",
+      "portablePayloadSha256": "7280e289dc690208d016e18e5c63de79bbd8847596870c11af1caac82479ee30",
+      "compressedSha256": "7be6f32086038bb16f9bcee5a720c2a2c1d7e124ed33e5bdf0e9b4bc40c6f070"
+    },
+    {
+      "retainedRelativePath": "final-physical.log",
+      "rawSha256": "c9980dac123cac58c4edeb3ff0fc43d49b11b64d970cf608ace4a8c0ef737cac",
+      "portableFile": "final-physical.log.gz",
+      "portablePayloadSha256": "eb11e117fc7142940cc0374d0218e355b6c807b88e0edd315e7fcf0273822d75",
+      "compressedSha256": "cbf14a2ce7993df6389f4d5c706d5f169d3499c68ae1a9efaa05a8c4a4a5972f"
+    },
+    {
+      "retainedRelativePath": "final-physical-result.json",
+      "rawSha256": "5c6a981311e3f7789307b8e2a7fa84bafb0bb8c19de05d1ba1d0ba04e759f574",
+      "portableFile": "final-physical-result.json.gz",
+      "portablePayloadSha256": "59bb2b3079a233be8fa55824d604b9534834d4b3a9f5a9a9f61f44c468d07ae3",
+      "compressedSha256": "a4ee3a209284dc206a0e541ccbc4acef16e93e000e7e855f283bb5ea2fd82318"
+    },
+    {
+      "retainedRelativePath": "final-physical-ownership.json",
+      "rawSha256": "b1718ed1e3f09079a6b1b7ae5dc37c6fd1041bd55b6e5e74feaebe3bd8fc893a",
+      "portableFile": "final-physical-ownership.json.gz",
+      "portablePayloadSha256": "41c9a9df7f0b7c1b4c4b90835fe441171e8ea5f809b48637c33339e99ce47c72",
+      "compressedSha256": "e04b7349880a8a22a3f6f541b12f7ae0d9db4b93b403a8e7cbe3f586b1a28186"
+    },
+    {
+      "retainedRelativePath": "final-physical.txt",
+      "rawSha256": "ce22c6e3ee2e5258a6b6a1c954ed7d63bd1cb5c4dd35e82a7de2533e5601ded9",
+      "portableFile": "final-physical.txt.gz",
+      "portablePayloadSha256": "a3db4ee77d564cad3563a273dc02a2ef495f87c131274bc951cf0894a00155c7",
+      "compressedSha256": "ad3e46a088efbd2dd0438c7388c41c9a6f727c01d61488b414e8c51f624acf82"
+    },
+    {
+      "retainedRelativePath": "final-corpus.log",
+      "rawSha256": "3e131f138d38a6a146b2bd0f381aee31b1487ba611a797392acbd7d70eb9cc68",
+      "portableFile": "final-corpus.log.gz",
+      "portablePayloadSha256": "e799f9b7fc4e29e1b62c53dec0feaf59d281a52b28b59ebb56f7009e056ab2ae",
+      "compressedSha256": "afe00fe71872e0aa9da57c95e2d3d79208f5187caf592255a733285c3c6183b3"
+    },
+    {
+      "retainedRelativePath": "final-corpus-result.json",
+      "rawSha256": "b105980f45a84112976505aeb851c1a1828886d2786c837cd4075fdac00b2437",
+      "portableFile": "final-corpus-result.json.gz",
+      "portablePayloadSha256": "b7cce1c63b28e21a6ec52935226f084d3a437811a1780e13666001cc125eeba6",
+      "compressedSha256": "391779d3bf89821e073c144a9ded962cec246d92e8bccfd19d2e7823d9723b49"
+    },
+    {
+      "retainedRelativePath": "final-corpus-ownership.json",
+      "rawSha256": "af7023c0a897592d1b044a75e8d267270f8c04e5f74f9e353178024c00be0af6",
+      "portableFile": "final-corpus-ownership.json.gz",
+      "portablePayloadSha256": "e74e33950f11e1f62bc5af7e45a7ffd822e44aafc0e5d5fa084d95200731c62e",
+      "compressedSha256": "8c12663151eba2d064beef1a5e431515abba66db59b680c1c6bb9be5b58dd845"
+    },
+    {
+      "retainedRelativePath": "final-corpus.txt",
+      "rawSha256": "9f5449d6a90668fe496a7032b060931b75cb91f5a7cc429c48b3bf8752986033",
+      "portableFile": "final-corpus.txt.gz",
+      "portablePayloadSha256": "50995e4ee84e7d7c87670e5ad34df2277a5cd54c697225060cc4b975dd42eb10",
+      "compressedSha256": "73f6ca7d20aaa5c98a3af9fc868c3e760c0cb5c99a1360ad1cc94172209f213b"
+    },
+    {
+      "retainedRelativePath": "final-service.log",
+      "rawSha256": "bed892bbf4af30282b892ffbca97b4ac0e8e4a07ebb0f3c65a049ebc05dfea44",
+      "portableFile": "final-service.log.gz",
+      "portablePayloadSha256": "b8f35195971364a6f05a0c979f4924004c3cc8a290f54c92790fd81b479c6c01",
+      "compressedSha256": "88846ec79fde25a52951a4a8c7a18ef01b75ff045ec1d74bec2c6facbecf6ba8"
+    },
+    {
+      "retainedRelativePath": "final-service-result.json",
+      "rawSha256": "bbac9d10e7c81cb9e5363e0915eb35cc52fff5f325196c38860ffca259b26b13",
+      "portableFile": "final-service-result.json.gz",
+      "portablePayloadSha256": "0a8f3dc98c613542d5e41297f063711df5cd1160e9fdda9ed27b2fcef9f4329c",
+      "compressedSha256": "2463f3eaadefecb64b36130b02ef379e4e730b0b9f123e88ae498acfb041e8f7"
+    },
+    {
+      "retainedRelativePath": "final-service-ownership.json",
+      "rawSha256": "a5b741863227f94878466747d1911aa34b2d351b86342c6d1904e9850aa215ab",
+      "portableFile": "final-service-ownership.json.gz",
+      "portablePayloadSha256": "c1ab0db10406cf89e3c43ebe52988ceb5c0d65e6135248eb1c5cac927d6493b3",
+      "compressedSha256": "a0d907ae7b2e89a2d142e2ff9db4c4beafe0c67594d81c8b34f326fed37d4c6c"
+    },
+    {
+      "retainedRelativePath": "final-service.txt",
+      "rawSha256": "6a5b471888080a591f2a921a47c82fec1606e5b2e98e259a745979b825d50908",
+      "portableFile": "final-service.txt.gz",
+      "portablePayloadSha256": "509e5113b1d036da858360a9367945d0639f0c2f201063ab58336d55c0f6af73",
+      "compressedSha256": "cc1dfa3d780b6ccdcf1fb64909ec58f22239e3e03e6f067d7bf9ed9c553fea9c"
+    },
+    {
+      "retainedRelativePath": "final-sensitivity.log",
+      "rawSha256": "a1ec3aef2cd9f18cf68fddb02107d3718be0abbb4aa600691ef0c88bfe47438e",
+      "portableFile": "final-sensitivity.log.gz",
+      "portablePayloadSha256": "1ac14d612ceb65cb19330dbbc2874c15ccafe9c7e5c55fd3f5841bcc5273c198",
+      "compressedSha256": "cd6af189ffaded128248f8b9d995a82675b5d152e08ea6e1128d89e68077b89f"
+    },
+    {
+      "retainedRelativePath": "final-sensitivity-result.json",
+      "rawSha256": "3ce5fe70af6ce58563028a020e6018082e8633f56cebd23b9aa25b11c85aaf39",
+      "portableFile": "final-sensitivity-result.json.gz",
+      "portablePayloadSha256": "988f777139d359c94688c6fdc865b8ad8e903365717010d62a207198219fe124",
+      "compressedSha256": "7b9a2ede65912dd683f020ec2d4fe1bee18c4419f8340b129eff58f966084567"
+    },
+    {
+      "retainedRelativePath": "final-sensitivity-ownership.json",
+      "rawSha256": "7b85ad91235f8068bf62daf34443cff19e62b811469b4644c6ecd5f5d97ecd72",
+      "portableFile": "final-sensitivity-ownership.json.gz",
+      "portablePayloadSha256": "52c65c9774eb0815e16af75923f000c12a87d6da909cf8ece80a1d940ad2c517",
+      "compressedSha256": "1d2e91281c58fb4c5e0248b6ec0ee62a736bf32435315a900e6bb99a931a8bcc"
+    },
+    {
+      "retainedRelativePath": "final-sensitivity.txt",
+      "rawSha256": "c48a85991db7333a3300edcdaf1336d6455dbe33bce47c6e635c6a5cfab0ef26",
+      "portableFile": "final-sensitivity.txt.gz",
+      "portablePayloadSha256": "007281546dc78624849e63e4c16b9a185263fc390b84ddd058738bed6505a6a6",
+      "compressedSha256": "7a9f896b05ee82c18f45cbe2d31042a36cab83bd78ff3e061b8ef83172af006c"
+    },
+    {
+      "retainedRelativePath": "final-build.log",
+      "rawSha256": "e0526cc5f8e3a0a66fed2acbc3bebbc0ac8f1b9799bc7ce53375b69c49456132",
+      "portableFile": "final-build.log.gz",
+      "portablePayloadSha256": "cf234e906c5e3155dd8e10fc38d9df821b259ad3b26b417e6b3fdd31aedb5a46",
+      "compressedSha256": "5e51c3d100fc1aeaf8ed06c47463a69b880148cda2c21420551204e7132f80f7"
+    },
+    {
+      "retainedRelativePath": "final-build-result.json",
+      "rawSha256": "38da33edd97aa474d289d67257e0282bf339f528f6ea03d290c36492c6fa80b0",
+      "portableFile": "final-build-result.json.gz",
+      "portablePayloadSha256": "ba47bc1100d7b75d736f99693947966accd1f6d513575556538009d6f7a15e70",
+      "compressedSha256": "eccd87901c1844a8df3446ead8f64b41b04d6f31fd4a947e5cbdf5c59f0016a6"
+    },
+    {
+      "retainedRelativePath": "final-build-ownership.json",
+      "rawSha256": "0fd88813916856962358caa18a9f18689a8c85f21523730814a8ad005bdae790",
+      "portableFile": "final-build-ownership.json.gz",
+      "portablePayloadSha256": "81c25217ea7bb105702d26c731e0556f0287eb13b8baec1e83cfcc9920b554c1",
+      "compressedSha256": "ad9089429e478b63c7c5d1ec21d2f692a43d36040659b2dcdb10c792baf9c9f3"
+    },
+    {
+      "retainedRelativePath": "shipping-epoch15/source-snapshot.json",
+      "rawSha256": "9009f27f6cc51c1bf6e7d8c2f4ca5caf84e6a4071ed763447ae08817f4666c0c",
+      "portableFile": "shipping-epoch15__source-snapshot.json.gz",
+      "portablePayloadSha256": "4f6bb29324f100e3a6194c09abbed5db2d044fcf8a5beb15f6763991101c97f4",
+      "compressedSha256": "20254a4ec6409e24ea7813048008e60f25eea1228bbe6ac86dfb177caa37a46d"
+    },
+    {
+      "retainedRelativePath": "final-resource-check.json",
+      "rawSha256": "f56b53f8c5dedd953cd57b5eb768fce7e7328e1e11c69787939a0f7635fec453",
+      "portableFile": "final-resource-check.json.gz",
+      "portablePayloadSha256": "d64a18a13bea5991a2d04f8973d267194a7134c184fd85793c2ca9d54b9431b4",
+      "compressedSha256": "10339746772c822848f646a82ff9e9625c7ca0eb9687513b30701d8bd7d27531"
+    },
+    {
+      "retainedRelativePath": "sensitivity-native-live-ownership.json",
+      "rawSha256": "75dd82f9bb941ddc00d6b96374de6b2aac621cae5ccb31e968b7ef7d88340bb7",
+      "portableFile": "sensitivity-native-live-ownership.json.gz",
+      "portablePayloadSha256": "75031ad05eca9bbbad78b578e1850175e268b353955e267ba8f39838b906573a",
+      "compressedSha256": "046caa0cc32672ff3e6434f380697c2dd717814ae10379afcf7e5ef54d127c94"
+    },
+    {
+      "retainedRelativePath": "build-java-live-ownership.json",
+      "rawSha256": "e65177a66b5a11b74e94a76c9a4a91f4f192076293ae3e4090559798f4f94924",
+      "portableFile": "build-java-live-ownership.json.gz",
+      "portablePayloadSha256": "8b2bdaca74673b04039c896ca9bdfcc7cc5ae5e5c7befbb317b3440b5d197135",
+      "compressedSha256": "8d54ab487a58d68e16196033286d45ce40d539b0d7aa259ec956d436cb6cf042"
+    }
+  ],
+  "retainedTempLabel": "q30-original-route-9e830ef8cad64a8681a600e116414df6",
+  "limits": {
+    "appMillis": 90000,
+    "appWork": 640,
+    "activeMillis": 5000,
+    "P07Expansions": 1000000,
+    "P07BranchExpansions": 100000,
+    "P07Orderings": 3,
+    "nativeChildMillis": 60000
+  },
+  "remaining": "Independent parent patch review, then fresh full native82/service105/sensitivity105/structural51+26/independent oracles, cold77, compiled/disabled controls/archives/private enabled/menu/replay/visible/final acceptance. No later milestones or publication.",
+  "diagnosticReceiptLimit": "Failed focused diagnostics current/lexical exit2 did not write standalone .txt receipts; full logs, result, fixture and source bindings retained. Initial packet assembly stopped on the missing current.txt after preserving current.log.gz; resumed by verifying exact existing bytes, no deletion or gate rerun."
+}
