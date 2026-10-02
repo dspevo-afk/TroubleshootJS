@@ -2,6 +2,7 @@ import hashlib
 import json
 import copy
 import unittest
+import tempfile
 from pathlib import Path
 
 import q30_scale_reader as reader
@@ -12,8 +13,9 @@ def hash_text(text):
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def frozen_plan():
-    acceptance, raw = reader.load(reader.PACKAGE / "acceptance-plan.json")
+def frozen_plan(acceptance_path=None):
+    acceptance_path = acceptance_path or reader.PACKAGE / "acceptance-plan.json"
+    acceptance, raw = reader.load(acceptance_path)
     files = [{"path": "src/example.java", "size": 1, "sha256": hash_text("x")}]
     source_identity = hash_text(json.dumps(
         {"schema": 1, "baseHead": acceptance["baseHead"], "files": files},
@@ -59,6 +61,20 @@ def frozen_plan():
     return plan
 
 
+def continued_acceptance():
+    acceptance, _ = reader.load(reader.PACKAGE / "acceptance-plan.json")
+    acceptance["baseHead"] = "a" * 40
+    return acceptance
+
+
+def write_acceptance(directory, acceptance, filename="acceptance-plan.json"):
+    raw = (json.dumps(acceptance, sort_keys=True, indent=2, ensure_ascii=False) +
+           "\n").encode("utf-8")
+    path = Path(directory) / filename
+    path.write_bytes(raw)
+    return path, raw
+
+
 def sample(sample_id="s0"):
     return {"id": sample_id, "outcome": "NUMERIC", "value": 0.0, "tolerance": 0.1}
 
@@ -78,6 +94,72 @@ class ScaleReaderContractTests(unittest.TestCase):
         plan["planEpoch"] = 3
         with self.assertRaisesRegex(reader.Invalid, "epoch"):
             reader.validate_plan(plan, b"fixture")
+
+    def test_valid_continuation_rebinds_only_base_head_and_hashes_selected_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path, raw = write_acceptance(directory, continued_acceptance())
+            plan = frozen_plan(path)
+            self.assertEqual(plan["acceptancePlanSha256"],
+                             hashlib.sha256(raw).hexdigest())
+            self.assertEqual(plan["baseHead"], "a" * 40)
+            reader.validate_plan(plan, b"fixture", acceptance_path=path)
+
+    def test_default_acceptance_path_still_rejects_continued_plan(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path, _ = write_acceptance(directory, continued_acceptance())
+            plan = frozen_plan(path)
+            with self.assertRaisesRegex(reader.Invalid, "does not bind"):
+                reader.validate_plan(plan, b"fixture")
+
+    def test_continuation_rejects_changes_to_any_frozen_contract(self):
+        mutations = [
+            ("seed", lambda a: a["cases"][0].update(seed="999999")),
+            ("canonical", lambda a: a["cases"][0].update(
+                canonical=a["cases"][0]["canonical"] + ";changed=true")),
+            ("cold order", lambda a: a["coldOrder"].__setitem__(
+                slice(0, 2), list(reversed(a["coldOrder"][:2])))),
+            ("budget", lambda a: a["limits"].update(jobMillis=90001)),
+            ("budget numeric type", lambda a: a["limits"].update(jobMillis=90000.0)),
+            ("service roots", lambda a: a["serviceAndSensitivitySeeds"].__setitem__(
+                0, "999999")),
+            ("schema numeric type", lambda a: a.update(schema=True)),
+            ("unknown field", lambda a: a.update(unexpectedContract=True)),
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            for label, mutate in mutations:
+                with self.subTest(contract=label):
+                    acceptance = continued_acceptance()
+                    mutate(acceptance)
+                    path, _ = write_acceptance(
+                        directory, acceptance, label.replace(" ", "-") + ".json")
+                    plan = frozen_plan(path)
+                    with self.assertRaisesRegex(
+                            reader.Invalid, "changes the frozen cohort or contracts"):
+                        reader.validate_plan(
+                            plan, b"fixture", acceptance_path=path)
+
+    def test_continuation_rejects_malformed_or_mismatched_head_and_raw_hash(self):
+        with tempfile.TemporaryDirectory() as directory:
+            malformed = continued_acceptance()
+            malformed["baseHead"] = "A" * 40
+            malformed_path, _ = write_acceptance(
+                directory, malformed, "malformed-head.json")
+            malformed_plan = frozen_plan(malformed_path)
+            with self.assertRaisesRegex(reader.Invalid, "base HEAD is malformed"):
+                reader.validate_plan(
+                    malformed_plan, b"fixture", acceptance_path=malformed_path)
+
+            path, _ = write_acceptance(
+                directory, continued_acceptance(), "continued.json")
+            plan = frozen_plan(path)
+            plan["acceptancePlanSha256"] = "0" * 64
+            with self.assertRaisesRegex(reader.Invalid, "does not bind"):
+                reader.validate_plan(plan, b"fixture", acceptance_path=path)
+
+            plan = frozen_plan(path)
+            plan["baseHead"] = "b" * 40
+            with self.assertRaisesRegex(reader.Invalid, "source HEAD mismatch"):
+                reader.validate_plan(plan, b"fixture", acceptance_path=path)
 
     def test_rejects_missing_hypothesis(self):
         proof = {"warmReuse": False, "explicitCompletion": True,

@@ -49,6 +49,16 @@ python -m unittest discover -s tests/qualification/q30-scale-acceptance `
   -p test_q30_scale_reader.py -v
 ```
 
+For a reviewed source continuation at a different HEAD, keep the bundled frozen
+plan and prior evidence unchanged. Make an external copy changing only `baseHead`;
+pass it as `prepare.py --plan`, `freeze_plan.py --acceptance-plan`, and
+`q30_scale_reader.py --acceptance-plan`. The reader requires every other field,
+including JSON types, to match the bundled plan exactly, then checks the selected
+file's raw hash and HEAD against the frozen compiled plan. Roots, case order,
+candidate caps, canonical plans, service/sensitivity seeds and limits cannot change.
+A changed reader is still hashed in each result; capture fresh source inputs before
+starting the resumed corpus rather than rewriting existing preparation receipts.
+
 Each reader result records `readerSha256` for the exact reader source bytes,
 `scalePlanSha256`, and `freezePlanSha256` for the co-located plan freezer. Keep
 that result with each app/host pair and verify its reader hash against the

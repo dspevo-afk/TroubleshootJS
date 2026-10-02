@@ -1,4 +1,46 @@
-# Current checkpoint: Q30 seed-10 routing fixed - focused gates PASS; acceptance pending
+# Current checkpoint: Q30 fresh pilot PASS; original cold corpus RUNNING
+
+2026-10-02T02:11:11.932810+00:00. Candidate base `108911013e114e7707a5fe0c643df43043cc6759` plus
+strict reader/fixture documentation changes recorded in this local checkpoint.
+**Q30 NOT ACCEPTED; disabled.** No merge/push/email/evidence deletion.
+U06/U07/Q60 unstarted; all original cohort/order/candidate caps and 90,000/640/5,000
+limits remain unchanged. [First-stage evidence](task-evidence/Q30/epoch14-first-stage/README.md).
+
+Parent independent routing review no blocker; P07/resumption 11,686/2,203 assertions
+and 1,354 snapshot hashes independently verified. Architecture stale epoch corrected.
+Reader continuation fix is qualification-only: explicit plan changes ONLY baseHead,
+strictly preserves every other JSON field/type and retains all evidence checks.
+16 focused tests PASS; original FAIL_INVALID/exit 2 pilot preserved, not relabeled.
+
+Fresh exact 1,354-source isolated GWT5 PASS 82.337 s; pinned four compiled cases PASS
+17.258 s, host cleanup 0.888 s; 77 roots/308 manifests frozen before cold launch.
+Final source identity: e186ffb8ed12b6a1d947e932124095998c98fcd7cb1f68253d892456e39fc332.
+Fresh pilot 3 PASS: 20 parts 19,958 ms / 272 work / 488 ms active;
+30 parts 30,032 ms / 268 work / 892 ms active; 40 parts 69,689 ms / 439 work /
+1,265 ms active. All application/host/cleanup gates PASS. Pilot total 129.857 s
+includes host startups/teardown and is not one normal launch's budget.
+
+At checkpoint 12/77 cold roots passed, max 69,689 ms. Remaining serial
+corpus RUNNING, current root 35 (RUNNING); do not
+claim full corpus PASS. Owned wrapper PID 16536, created 02:03:41.147972 UTC,
+PowerShell; tool session 65345. Exact browser/profile/port identities and cleanup
+are in each host record. No native/build matrix runs concurrently. Keep entire
+OS-temp label q30-epoch14-qualification-81a29fe18e234b0899b079ff4090b60f including
+all raw failed/supplemental/final evidence, profiles, source exports and helper
+versions. Four pre-existing untracked caches and sibling worktrees are preserved.
+
+Next: poll existing cold runner without restarting, review all 77 strict results,
+then `native-full` (82 suites) (explicit 21 service/sensitivity seeds; 105 cases each; structural 51)
+and `native-append` (26 roots) sequentially. Future helper allows descendant checkpoint HEAD
+only with exact 1,354 frozen-source hash proof. Compiled31/D01-21, ordinary
+menu33/replay3, enabled build, archive and final parent acceptance remain pending.
+Visible20/30/40 player repair/retest BLOCKED/NOT RUN due unavailable graphical/
+node_repl tools; user review steps will be prepared before treating that as final
+gap. Preserve distinct D01 seed35 rejection oracle. No later milestone starts.
+
+---
+
+# Historical checkpoint: Q30 seed-10 routing fixed - focused gates PASS; acceptance pending
 
 2026-10-02. Local continuation from `bf5063f4f3eadc989eadd7d1bf7191c2c8fb8a06` on
 `codex/q30-multirail-qualification`; this entry belongs to the local patch commit.

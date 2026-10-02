@@ -634,7 +634,7 @@ Candidate statistics report expansions, raw segments and moves rejected by
 other-net occupancy/clearance. Existing legality is unchanged; the bounded P05 scheduler below owns recovery limits.
 
 At the P03 qualification boundary the layout epoch was 11 and dependency
-interpretation was v7. The current layout epoch is 13 and the global dependency
+interpretation was v7. The current layout epoch is 14 and the global dependency
 interpretation is v16. Dependency
 capture includes placement demands, canonical domain barriers, typed net roles
 and the route score version, including the declared routing layer. Historical layout artifacts reject through the

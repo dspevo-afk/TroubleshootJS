@@ -7,20 +7,18 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Q30 NOT ACCEPTED - seed-10 routing repaired; fresh full qualification pending**<br>
-**Q30 current checkpoint (2026-10-02):** The exact frozen 36-package/two-channel
-seed-10 plan now routes without retry substitution. P07 shares the existing
-nearest-to-reached branch selector under unchanged caps; layout interpretation
-advances to 14. Fresh five-suite physical/routing/resumption, five service cases,
-five sensitivity cases and the disabled final-source JDK8/GWT build PASS.
-The original cohort and 90-second / 640-work / five-second active limits are
-unchanged. Historical layout-13 cold77 does not qualify the changed source;
-fresh cold/full native/compiled/menu/player-flow/archive gates and parent review
-remain pending. Q30 stays disabled; supported visible controls remain unavailable.
-Local checkpoint only; no merge/push/email. U06/U07/Q60 remain unstarted.
-[Handoff and remaining work](CODEX_TASK_REPORT.md),
-[routing patch evidence](task-evidence/Q30/seed10-routing-epoch14/README.md),
-[prior failure evidence](task-evidence/Q30/resume-20261002/README.md).
+**Current task:** **Q30 NOT ACCEPTED - fresh pilot PASS; original cold77 running**<br>
+**Q30 current checkpoint (2026-10-02):** Independent review accepted the narrow
+seed10 routing patch. Fresh strict-reader continuation fixtures 16 PASS, exact
+source isolated GWT5/four compiled PASS and original20/30/40 pilot launches PASS
+at 19.958/30.032/69.689 seconds under unchanged 90-second limits. At checkpoint
+12/77 cold roots passed; remaining serial corpus RUNNING, not completed.
+Preserved first reader FAIL_INVALID was fixed without changing any frozen cohort,
+order, candidate cap or budget. Full native 82/service105/sensitivity105/structural
+51+26 and compiled/menu/player/archive/final review gates remain. Q30 disabled;
+visible controls unavailable; no merge/push/email. U06/U07/Q60 unstarted.
+[Handoff](CODEX_TASK_REPORT.md),
+[first-stage evidence](task-evidence/Q30/epoch14-first-stage/README.md).
 
 **Historical post-P09 Quick Play qualification:** The nine families then current used fresh signed-long candidates and real placement/routing. Nineteen affected native suites, 144 structural cases, 18 actual launches, exact replay/cancellation/privacy/shop and compiled mutation/relay/generation gates passed. EASY/MEDIUM content eligibility remains; HARD/PSYCHOTIC are not unlocked. [Evidence at that checkpoint](task-evidence/ProceduralFamilies/README.md).
 **Quick Play uniqueness qualification (2026-09-19):** Every family/profile selectable at that checkpoint had bounded procedural New Board candidates, recent-root and physical duplicate guards, and single-candidate exact replay. The then-menu-discovered nine-pair, 180-board matrix had 20 distinct placements and merged copper patterns per pair with no structural rejects. Final native55, GWT5, 27/27 visible New Board launches, two exact replays and face-view evidence passed. That content spanned 3–16 parts; HARD/PSYCHOTIC and larger families remain unqualified. This historical matrix did not include the later SENSOR_CONTROL family; that checkpoint's catalog had ten family/profile pairs. [Historical audit, timings and limits](task-evidence/QuickPlayUnique/README.md).

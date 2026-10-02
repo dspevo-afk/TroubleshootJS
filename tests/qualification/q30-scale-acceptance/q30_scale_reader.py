@@ -76,8 +76,25 @@ def canonical_long(value, label):
     return parsed
 
 
-def validate_plan(plan, raw):
-    acceptance, acceptance_raw = load(PACKAGE / "acceptance-plan.json")
+def frozen_acceptance(acceptance_path=None):
+    """A continuation can rebind HEAD, while every frozen contract stays exact."""
+    bundled, bundled_raw = load(PACKAGE / "acceptance-plan.json")
+    if acceptance_path is None:
+        return bundled, bundled_raw
+    continued, continued_raw = load(acceptance_path)
+    continued_contract = {key: value for key, value in continued.items() if key != "baseHead"}
+    bundled_contract = {key: value for key, value in bundled.items() if key != "baseHead"}
+    need(json.dumps(continued_contract, sort_keys=True, separators=(",", ":")) ==
+         json.dumps(bundled_contract, sort_keys=True, separators=(",", ":")),
+         "continued acceptance plan changes the frozen cohort or contracts")
+    need(isinstance(continued.get("baseHead"), str) and
+         re.fullmatch(r"[0-9a-f]{40}", continued["baseHead"]),
+         "continued acceptance plan base HEAD is malformed")
+    return continued, continued_raw
+
+
+def validate_plan(plan, raw, acceptance_path=None):
+    acceptance, acceptance_raw = frozen_acceptance(acceptance_path)
     need(plan.get("schema") == 1 and plan.get("status") == "PLANNED" and
          plan.get("planEpoch") == 4, "plan schema/status/epoch mismatch")
     need(plan.get("acceptancePlanSha256") == digest(acceptance_raw),
@@ -406,8 +423,8 @@ def host_ok(host, report, report_raw, plan):
     return checked
 
 
-def evaluate(report, report_raw, plan_obj, plan_raw, host=None):
-    plans = validate_plan(plan_obj, plan_raw)
+def evaluate(report, report_raw, plan_obj, plan_raw, host=None, acceptance_path=None):
+    plans = validate_plan(plan_obj, plan_raw, acceptance_path)
     app = app_ok(report, report_raw, plans, plan_obj)
     host_result = host_ok(host, report, report_raw, plan_obj) if host is not None else None
     status = app["status"]
@@ -430,6 +447,7 @@ def main(argv=None):
     parser.add_argument("--report", required=True)
     parser.add_argument("--plan", required=True)
     parser.add_argument("--host-record")
+    parser.add_argument("--acceptance-plan", help="Explicit frozen continuation; only baseHead may differ")
     parser.add_argument("--output")
     args = parser.parse_args(argv)
     code_digests = qualification_code_digests()
@@ -439,7 +457,7 @@ def main(argv=None):
         plan_digest = digest(plan_raw)
         report, report_raw = load(args.report)
         host = load(args.host_record)[0] if args.host_record else None
-        result = evaluate(report, report_raw, plan, plan_raw, host)
+        result = evaluate(report, report_raw, plan, plan_raw, host, args.acceptance_plan)
         code = 0 if result["status"] == "APP_PASS" else 1
     except (OSError, Invalid, KeyError, TypeError, IndexError) as error:
         result = {"status": "FAIL_INVALID", "app": {"status": "FAIL_INVALID",
