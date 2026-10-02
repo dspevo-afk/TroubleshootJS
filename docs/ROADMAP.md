@@ -8,20 +8,23 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
 **Current task:** **Q30 NOT ACCEPTED - final cold qualification FAIL at root75**<br>
-**Q30 checkpoint (2026-10-02):** Fresh native82/structural77, both GWT5,
-focused3, compiled31 and compiled4/export/freeze PASS. Required cold77 FAIL at
-index32/root75:90.221s/90s,31 prior PASS/45 NOT RUN; full auditor FAIL/incomplete.
-Four matched root75 diagnostics74.517/74.591/73.614/73.452s show no consistent
-current-build slowdown in that sample; cause UNKNOWN, failed qualification retained.
-Disabled menu30 launches/2 replays and source-only archive PASS; archive acceptance
-NOT ASSESSED. Dave approved future receipt/serial-runner workflow improvements,
-outside frozen application inputs;36/36 focused tests PASS, including nine actual
-Windows process checks. Early runner accounting failure retained; bounded cleanup
-drain fixed and verified. The full cold failure and missing visible QA remain blockers.
-Original77/308 and90s/640/5s unchanged; Q30 disabled; U06/U07/Q60 unstarted.
-Private enabled build/menu blocked by cold FAIL; supported visible repair QA unavailable;
-parent acceptance review pending. No push/merge/email/evidence deletion.
-[Current handoff](CODEX_TASK_REPORT.md), [failure evidence](task-evidence/Q30/epoch15-cold77-timeout-seed75/README.md), [diagnostic](task-evidence/Q30/epoch15-root75-matched-diagnostic/README.md).
+**Q30 checkpoint (2026-10-02):** Full cold77 still FAIL at root75:
+90.221s/90s,31 prior PASS/45 NOT_RUN. Prior fresh native/structural/GWT/compiled,
+disabled menu and source-only archive checks retain their unchanged-input scope.
+Retained phase review places the slowdown inside active application wall
+intervals; compute/preemption/GC cause UNKNOWN. The16:55 parent window expired
+without a Q30 launch. PDH per-core preflight/raw probe FAIL; separate four-second
+native passive canary is diagnostic-only with API/identity limits.
+Independent review's shared cleanup-deadline correction is integrated and
+PASS39/39 selected Windows harness checks; held-pipe negatives fail cleanup and
+stop suffix launches. Compiled attachment guard remains a workspace draft;
+real Edge canaries NOT_RUN, retained final31 attachments audited PASS.
+All1,354 frozen app/host inputs and original77/308/90s/640/5s unchanged.
+Q30 disabled; enabled build/menu and supported visible repair QA remain blocked;
+U06/U07/Q60 unstarted. Parent acceptance review and a new diagnostic window
+remain pending. No push/merge/email/evidence deletion.
+[Current handoff](CODEX_TASK_REPORT.md), [failure](task-evidence/Q30/epoch15-cold77-timeout-seed75/README.md),
+[phase/harness evidence](task-evidence/Q30/epoch15-root75-phase-and-harness-review/README.md).
 
 **Historical post-P09 Quick Play qualification:** The nine families then current used fresh signed-long candidates and real placement/routing. Nineteen affected native suites, 144 structural cases, 18 actual launches, exact replay/cancellation/privacy/shop and compiled mutation/relay/generation gates passed. EASY/MEDIUM content eligibility remains; HARD/PSYCHOTIC are not unlocked. [Evidence at that checkpoint](task-evidence/ProceduralFamilies/README.md).
 **Quick Play uniqueness qualification (2026-09-19):** Every family/profile selectable at that checkpoint had bounded procedural New Board candidates, recent-root and physical duplicate guards, and single-candidate exact replay. The then-menu-discovered nine-pair, 180-board matrix had 20 distinct placements and merged copper patterns per pair with no structural rejects. Final native55, GWT5, 27/27 visible New Board launches, two exact replays and face-view evidence passed. That content spanned 3–16 parts; HARD/PSYCHOTIC and larger families remain unqualified. This historical matrix did not include the later SENSOR_CONTROL family; that checkpoint's catalog had ten family/profile pairs. [Historical audit, timings and limits](task-evidence/QuickPlayUnique/README.md).

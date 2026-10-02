@@ -1,0 +1,14 @@
+docs/ARCHITECTURE.md
+docs/CODEX_TASK_REPORT.md
+docs/ROADMAP.md
+docs/task-evidence/Q30/epoch15-root75-phase-and-harness-review/README.md
+docs/task-evidence/Q30/epoch15-root75-phase-and-harness-review/changed-files.txt
+docs/task-evidence/Q30/epoch15-root75-phase-and-harness-review/documentation-write-failure.json
+docs/task-evidence/Q30/epoch15-root75-phase-and-harness-review/integration-audit.json
+docs/task-evidence/Q30/epoch15-root75-phase-and-harness-review/manifest.json
+docs/task-evidence/Q30/epoch15-root75-phase-and-harness-review/root75-phase-and-harness-review.tar.gz
+docs/task-evidence/Q30/epoch15-root75-phase-and-harness-review/serial-test-resource-review.json
+docs/task-evidence/Q30/qualification-workflow/README.md
+docs/task-evidence/Q30/qualification-workflow/run_workflow_tests.py
+docs/task-evidence/Q30/qualification-workflow/serial_runner.py
+docs/task-evidence/Q30/qualification-workflow/test_serial_runner_held_pipe.py

@@ -21,9 +21,14 @@ and cleanup clocks separate. The read-only adapter verifies canonical source
 identity, source bytes, safe paths and maintained-reader bindings. The runner
 assigns suspended children to an owned kill-on-close job before resume, bounds
 logs/deadlines, preserves application metrics on host failure and stops on the
-first nonpass with remaining roots explicitly NOT_RUN. Job accounting drain is
-bounded inside cleanup. These helpers neither replace the electrical auditors
-nor alter frozen Q30 inputs, acceptance limits or normal-player eligibility.
+first nonpass with remaining roots explicitly NOT_RUN. One shared15s cleanup
+deadline covers process/job shutdown, accounting drain and output-reader waits.
+Each reader owns its log flush/close; the caller never waits on a live reader's
+file lock. Readers still alive or failed at the deadline make cleanup fail.
+These helpers neither replace the electrical auditors nor alter frozen Q30
+inputs, acceptance limits or normal-player eligibility. Passive CPU experiments
+and unintegrated host drafts are retained as explicitly scoped diagnostic
+evidence; they do not change the qualification result.
 
 ## Windows Quick Play preview lifecycle
 

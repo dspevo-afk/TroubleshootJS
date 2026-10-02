@@ -52,7 +52,7 @@ class Result(unittest.TextTestResult):
 
     def stopTest(self, test):
         self.current.update(finishedUtc=utc(), elapsedSeconds=time.monotonic()-self.t0,
-                            retainedTaskRoot=str(test.base) if hasattr(test, "base") else None)
+                            retainedTaskRoot=str(test.base) if hasattr(test, "base") else str(test.evidence) if hasattr(test, "evidence") else None)
         self.rows.append(self.current)
         super().stopTest(test)
 
@@ -60,7 +60,7 @@ class Result(unittest.TextTestResult):
 def main():
     work = Path(__file__).resolve().parent
     files = ["receipts.py", "serial_runner.py", "test_receipts.py", "test_serial_runner.py", "test_normalizer.py",
-             "normalize_cold_evidence.py", Path(__file__).name]
+             "normalize_cold_evidence.py", "test_serial_runner_held_pipe.py", Path(__file__).name]
     hashes = {name: hashlib.sha256((work/name).read_bytes()).hexdigest() for name in files}
     root = Path(tempfile.mkdtemp(prefix="q30-workflow-tests-"))
     k = serial_runner._api()
@@ -71,7 +71,7 @@ def main():
     write_exclusive(root/"launch.json", {"schema": 1, "owner": owner, "startedUtc": start,
         "sourceHashes": hashes, "scope": "synthetic harness canaries, not electrical qualification",
         "qualification": False, "maximumBatchSeconds": 120, "concurrency": 1, "requests": 0})
-    names = sys.argv[1:] or ["test_receipts", "test_normalizer", "test_serial_runner"]
+    names = sys.argv[1:] or ["test_receipts", "test_normalizer", "test_serial_runner", "test_serial_runner_held_pipe"]
     suite = unittest.defaultTestLoader.loadTestsFromNames(names)
     planned = suite.countTestCases()
     result = unittest.TextTestRunner(verbosity=2, failfast=True, resultclass=Result).run(suite)

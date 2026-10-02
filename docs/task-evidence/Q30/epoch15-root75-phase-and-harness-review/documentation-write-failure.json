@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "status": "FAIL",
+  "operation": "documentation checkpoint helper",
+  "phase": "read existing CODEX_TASK_REPORT.md",
+  "toolExitCode": 1,
+  "toolExecutionSeconds": 0.157889171,
+  "error": "UnicodeDecodeError: cp1252 cannot decode byte0x9d at position180889",
+  "writesBeforeFailure": ["new evidence README.md"],
+  "taskReportRoadmapArchitectureChangedBeforeFailure": false,
+  "correction": "Use explicit UTF-8 for existing Markdown reads",
+  "qualification": false
+}

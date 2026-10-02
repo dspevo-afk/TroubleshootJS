@@ -35,8 +35,9 @@ run serially, hidden, suspended until assigned to an owned kill-on-close Windows
 job. The runner records PID, creation time, executable and command hash; it
 captures at most1MiB per log and stops after the first failed or missing proof.
 Later roots are explicit NOT_RUN. A step is bounded to180s host observation;
-cleanup has10s plus at most5s after closing the job. A500ms job-accounting drain
-after root exit is charged to cleanup; persistent descendants still fail.
+one15s cleanup deadline includes process/job shutdown,500ms accounting drain
+and all output-reader waits. Readers own log flush/close; a reader still alive
+or failed at the deadline makes cleanup FAIL. Persistent descendants still fail.
 No global process termination or runtime setting changes occur.
 
 Workers must produce receipts from actual maintained application/host auditors
@@ -47,7 +48,7 @@ succeeds. Valid application measurements survive an outer host failure.
 
 Validation on the actual selected bundled CPython3.12.14 Windows implementation:
 
-- PASS36/36:22 receipt tests, five normalizer rejection fixtures and nine process
+- Historical baseline PASS36/36:22 receipt tests, five normalizer rejection fixtures and nine process
   tests. Test body1.992s, operation2.000s, no skips/errors/failures. Real canaries
   cover serial non-overlap,90,221ms mislabeled PASS, host timeout with descendant,
   persistent descendant after root exit, missing receipt, log overflow, existing
@@ -60,6 +61,18 @@ Validation on the actual selected bundled CPython3.12.14 Windows implementation:
   PID was performed. This does not declare the shared desktop available.
 - Independent static review PASS limited to receipt/normalizer source and path
   guards. Agent implementation was reviewed by root and actually executed here.
+
+Current shared-deadline correction: PASS39/39 (22 receipts/five normalizer/
+12 actual Windows process tests), operation5.421s; outer5.562s/cleanup0.031s.
+Real duplicated-writer pipe and stalled-sink negatives preserve application
+measurements, return within the shortened1.5s test deadline and report remaining
+root NOT_RUN. Fixtures then release their exact owned handles and prove readers
+exit. No production budget was changed. The original36-test packet below is
+historical source; the current runner hash is
+`19931855b98aeb358f16dcbd94b6c69d81a221191bed2f07697a3ccdcffff5e6`.
+[New source/test/resource evidence](../epoch15-root75-phase-and-harness-review/README.md)
+preserves that distinction and the earlier failures. The current batch includes
+the three new tests. All1,354 application/host inputs remain unchanged.
 
 All fixtures and the early failure remain retained. The portable91-member
 [canary packet](canary-evidence.tar.gz) has SHA256

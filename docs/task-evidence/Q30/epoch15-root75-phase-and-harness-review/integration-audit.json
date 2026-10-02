@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "reviewedUtc": "2026-10-02T17:35:54.832041+00:00",
+  "portableMembers": 147,
+  "sourceInputsUnchanged": 1354,
+  "testedToolsHashMatch": true,
+  "processInstances": 16,
+  "resources": [
+    {
+      "pid": 10628,
+      "creationFileTimeTicks": 134354349664534929,
+      "status": "ABSENT"
+    },
+    {
+      "pid": 18964,
+      "creationFileTimeTicks": 134354352824477123,
+      "status": "ABSENT"
+    },
+    {
+      "pid": 27140,
+      "creationFileTimeTicks": 134354354333531035,
+      "status": "ABSENT"
+    },
+    {
+      "pid": 18768,
+      "creationFileTimeTicks": 134354331100680911,
+      "status": "ABSENT"
+    },
+    {
+      "pid": 23716,
+      "creationFileTimeTicks": 134354334162056753,
+      "status": "ABSENT"
+    },
+    {
+      "pid": 13296,
+      "creationFileTimeTicks": 134354349666522210,
+      "status": "ABSENT"
+    },
+    {
+      "pid": 8184,
+      "creationFileTimeTicks": 134354349668817422,
+      "status": "ABSENT"
+    },
+    {
+      "pid": 29472,
+      "creationFileTimeTicks": 134354349669731746,
+      "status": "ABSENT"
+    },
+    {
+      "pid": 29328,
+      "creationFileTimeTicks": 134354349675217440,
+      "status": "ABSENT"
+    },
+    {
+      "pid": 21652,
+      "creationFileTimeTicks": 134354349676609579,
+      "status": "ABSENT"
+    },
+    {
+      "pid": 22112,
+      "creationFileTimeTicks": 134354349682461825,
+      "status": "ABSENT"
+    },
+    {
+      "pid": 30240,
+      "creationFileTimeTicks": 134354349684514434,
+      "status": "ABSENT"
+    },
+    {
+      "pid": 23236,
+      "creationFileTimeTicks": 134354349686771598,
+      "status": "ABSENT"
+    },
+    {
+      "pid": 6744,
+      "creationFileTimeTicks": 134354349702551737,
+      "status": "ABSENT"
+    },
+    {
+      "pid": 6996,
+      "creationFileTimeTicks": 134354349703374706,
+      "status": "ABSENT"
+    },
+    {
+      "pid": 9708,
+      "creationFileTimeTicks": 134354349704340188,
+      "status": "ABSENT"
+    }
+  ],
+  "terminationPerformed": false,
+  "normalQ30Enabled": false,
+  "qualification": false,
+  "limits": "Exact recorded instances only; no global availability or driver-instance inventory claim"
+}

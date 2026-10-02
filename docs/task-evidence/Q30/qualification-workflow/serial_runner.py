@@ -201,6 +201,7 @@ class _Drain:
     def __init__(self, fd, stream):
         self.fd, self.stream, self.count = fd, stream, 0
         self.overflow, self.errors = threading.Event(), []
+        self.streamClosed = False
         self.thread = threading.Thread(target=self._read, daemon=True)
 
     def _read(self):
@@ -214,13 +215,22 @@ class _Drain:
                     data = chunk[:room]; self.stream.write(data); self.count += len(data)
                 if len(chunk) > room:
                     self.overflow.set()
-        except (OSError, ValueError) as exc:
-            self.errors.append(repr(exc))
+        except BaseException as exc:
+            self.errors.append("reader: " + repr(exc))
         finally:
             try:
                 os.close(self.fd)
-            except OSError as exc:
-                self.errors.append(repr(exc))
+            except BaseException as exc:
+                self.errors.append("pipe-close: " + repr(exc))
+            try:
+                self.stream.flush()
+            except BaseException as exc:
+                self.errors.append("log-flush: " + repr(exc))
+            try:
+                self.stream.close()
+                self.streamClosed = True
+            except BaseException as exc:
+                self.errors.append("log-close: " + repr(exc))
 
 
 def _make_job(k):
@@ -233,16 +243,17 @@ def _make_job(k):
     return job
 
 
-def _stop(k, job, proc, assigned, pid, cleanup_started=None):
+def _stop(k, job, proc, assigned, pid, cleanup_started=None, drains=()):
     started = cleanup_started if cleanup_started is not None else time.monotonic()
-    end = started + CLEANUP_MS / 1000
+    cleanup_deadline = started + (CLEANUP_MS + POST_CLOSE_MS) / 1000
+    job_deadline = started + CLEANUP_MS / 1000
     drain_started = time.monotonic()
     drain_ms, drain_succeeded, accounting_error = 0, None, None
     if proc:
         if assigned and job:
             if k.WaitForSingleObject(proc, 0) == WAIT_OBJECT_0:
                 drain_succeeded = False
-                drain_end = min(end, time.monotonic() + JOB_ACCOUNTING_DRAIN_MS / 1000)
+                drain_end = min(job_deadline, time.monotonic() + JOB_ACCOUNTING_DRAIN_MS / 1000)
                 while time.monotonic() < drain_end:
                     try:
                         active_before_termination = _active(k, job)
@@ -261,7 +272,7 @@ def _stop(k, job, proc, assigned, pid, cleanup_started=None):
         else:
             k.TerminateProcess(proc, 0xE202)
     active, signaled = None, False
-    while time.monotonic() < end:
+    while time.monotonic() < job_deadline:
         signaled = bool(proc and k.WaitForSingleObject(proc, 0) == WAIT_OBJECT_0)
         try:
             active = _active(k, job) if job else 0
@@ -275,11 +286,28 @@ def _stop(k, job, proc, assigned, pid, cleanup_started=None):
         if job:
             k.CloseHandle(job); job = None; closed = True
         if proc:
-            k.WaitForSingleObject(proc, POST_CLOSE_MS)
+            remaining_ms = max(0, int((cleanup_deadline - time.monotonic()) * 1000))
+            if remaining_ms:
+                k.WaitForSingleObject(proc, remaining_ms)
             signaled = k.WaitForSingleObject(proc, 0) == WAIT_OBJECT_0
         active = None
+    drainer_started = time.monotonic()
+    for drain in drains:
+        if drain.thread.ident is None or not drain.thread.is_alive():
+            continue
+        remaining = cleanup_deadline - time.monotonic()
+        if remaining <= 0:
+            break
+        drain.thread.join(timeout=remaining)
+    drainer_ms = int((time.monotonic() - drainer_started) * 1000)
+    live_drainers = sum(1 for drain in drains if drain.thread.is_alive())
+    drain_errors = [error for drain in drains for error in drain.errors]
+    drains_complete = (live_drainers == 0 and all(drain.streamClosed for drain in drains) and not drain_errors)
     return job, {"pid": pid, "processSignaled": bool(signaled), "jobActiveProcesses": active,
-                 "jobClosedForCleanup": closed, "cleanupVerified": bool(signaled and active == 0),
+                 "jobClosedForCleanup": closed, "drainsComplete": drains_complete,
+                 "liveDrainers": live_drainers, "drainerWaitMs": drainer_ms,
+                 "drainerErrors": drain_errors,
+                 "cleanupVerified": bool(signaled and active == 0 and drains_complete),
                  "cleanupElapsedMs": int((time.monotonic() - started) * 1000),
                  "jobAccountingDrainMs": drain_ms, "jobAccountingDrainSucceeded": drain_succeeded,
                  "jobAccountingError": accounting_error}
@@ -327,18 +355,24 @@ def _spawn(k, step, argv, cwd):
                 "drains": drains, "files": files, "resumeNs": time.monotonic_ns(), "assigned": True}
     except Exception as exc:
         if proc:
-            job, cleanup = _stop(k, job, proc, assigned, int(pid))
+            job, cleanup = _stop(k, job, proc, assigned, int(pid), drains=drains)
         else:
             cleanup = {"pid": None, "processSignaled": True, "jobActiveProcesses": 0,
                        "jobClosedForCleanup": False, "cleanupVerified": True, "cleanupElapsedMs": 0}
         for d in drains:
-            if d.thread.ident is not None: d.thread.join(timeout=2)
+            if d.thread.ident is None:
+                try:
+                    d.stream.close(); d.streamClosed = True
+                except OSError as close_error:
+                    d.errors.append(repr(close_error))
         for fd in fds:
             try: os.close(fd)
             except OSError: pass
+        drained_streams = {id(d.stream) for d in drains}
         for stream in files:
-            try: stream.close()
-            except OSError: pass
+            if id(stream) not in drained_streams:
+                try: stream.close()
+                except OSError: pass
         if job: k.CloseHandle(job)
         if thread: k.CloseHandle(thread)
         if proc: k.CloseHandle(proc)
@@ -364,13 +398,16 @@ def _wait(k, child, timeout_ms):
     process_end = time.monotonic_ns()
     signaled = k.WaitForSingleObject(child["proc"], 0) == WAIT_OBJECT_0
     cleanup_started = time.monotonic()
-    job, clean = _stop(k, child["job"], child["proc"], True, child["pid"], cleanup_started)
+    job, clean = _stop(k, child["job"], child["proc"], True, child["pid"], cleanup_started,
+                       drains=child["drains"])
     child["job"] = job
     if reason is None and signaled and not clean["jobAccountingDrainSucceeded"]:
         detail = clean["jobAccountingError"]
         reason = (f"job accounting query failed after root exit: {detail}" if detail else
                   "root exited with live/unverified job descendants")
-    if not clean["cleanupVerified"]: reason = reason or "owned job cleanup was not verified"
+    if not clean["drainsComplete"]:
+        reason = reason or "stdout/stderr readers did not finish within shared cleanup deadline"
+    if not clean["cleanupVerified"]: reason = reason or "owned job or log-reader cleanup was not verified"
     code = wintypes.DWORD()
     exit_code = int(code.value) if k.GetExitCodeProcess(child["proc"], ctypes.byref(code)) else None
     return {"reason": reason, "exitCode": exit_code, "cleanup": clean,
@@ -443,17 +480,17 @@ def _run_case(k, spec, step, index, root):
     try:
         child = _spawn(k, step, argv, case)
         waited = _wait(k, child, timeout)
-        for d in child["drains"]: d.thread.join(timeout=5)
-        for f in child["files"]: f.flush()
         out, err = child["drains"]
-        logs = {"stdout": {"bytes": out.count, "limitExceeded": out.overflow.is_set(), "errors": out.errors},
-                "stderr": {"bytes": err.count, "limitExceeded": err.overflow.is_set(), "errors": err.errors}}
+        logs = {"stdout": {"bytes": out.count, "limitExceeded": out.overflow.is_set(), "errors": out.errors,
+                           "readerAlive": out.thread.is_alive(), "streamClosed": out.streamClosed},
+                "stderr": {"bytes": err.count, "limitExceeded": err.overflow.is_set(), "errors": err.errors,
+                           "readerAlive": err.thread.is_alive(), "streamClosed": err.streamClosed}}
         identity = {"pid": child["pid"], "creationFileTimeTicks": child["creationTicks"],
             "executable": child["image"], "commandSha256": child["commandSha256"], "exitCode": waited["exitCode"]}
         host_reason = waited["reason"]
         reason = host_reason
         if any(v["limitExceeded"] for v in logs.values()): reason = reason or "stdout/stderr exceeded 1 MiB"
-        if any(v["errors"] for v in logs.values()) or any(d.thread.is_alive() for d in child["drains"]):
+        if any(v["errors"] or v["readerAlive"] or not v["streamClosed"] for v in logs.values()):
             reason = reason or "stdout/stderr reader did not finish cleanly"
         if reason and host_reason is None:
             host_reason = reason
@@ -499,7 +536,8 @@ def _run_case(k, spec, step, index, root):
         reason = f"runner error: {type(exc).__name__}: {exc}"
         clean = {"cleanupVerified": False, "cleanupElapsedMs": 0, "pid": child["pid"] if child else None}
         if child and child["job"]:
-            child["job"], clean = _stop(k, child["job"], child["proc"], True, child["pid"])
+            child["job"], clean = _stop(k, child["job"], child["proc"], True, child["pid"],
+                                        drains=child["drains"])
         normalized = _fallback(spec, seed, timeout, reason, (time.monotonic_ns()-t0)//1_000_000, clean)
         if not (case / "normalized-receipt.json").exists(): write_exclusive(case / "normalized-receipt.json", normalized)
         record.update({"runnerStatus": "FAIL", "reason": reason, "cleanup": clean,
@@ -508,9 +546,6 @@ def _run_case(k, spec, step, index, root):
         if child:
             if child["job"]: k.CloseHandle(child["job"])
             k.CloseHandle(child["thread"]); k.CloseHandle(child["proc"])
-            for f in child["files"]:
-                try: f.close()
-                except OSError: pass
     record["finishedUtc"] = _utc()
     record["elapsedWallMs"] = (time.monotonic_ns()-t0)//1_000_000
     write_exclusive(case / "step-result.json", record)

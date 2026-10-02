@@ -1,0 +1,149 @@
+{
+  "heldPipeCases": [
+    {
+      "applicationStatusPreserved": "PASS",
+      "cleanupElapsedMs": 1500,
+      "drainsCompleteAtDeadline": false,
+      "jobActiveProcesses": 0,
+      "liveDrainersAtDeadline": 1,
+      "postReleaseAssertions": "stream closed and drainer thread stopped",
+      "processSignaled": true,
+      "retainedRootName": "q30-held-drainer-review-jymxj0lz",
+      "rootSeed": "75",
+      "rows": [
+        "FAIL",
+        "NOT_RUN"
+      ],
+      "runnerOutcome": "FAIL",
+      "sequenceSummarySha256": "C040F7A93883461F95371FC37730FCA24FF3C81F91CFC5F8B5A93BD8CC49E0A7",
+      "stdoutReaderAliveAtDeadline": true,
+      "stdoutStreamClosedAtDeadline": false,
+      "stepResultSha256": "FCEE41AF22B81C63853F00DD171B7D0B459A17289290F5701D6D9B65569B8BD0",
+      "test": "test_live_output_drainer_fails_within_shared_cleanup_and_marks_next_not_run",
+      "unittestStatus": "PASS",
+      "workerExitCode": 0
+    },
+    {
+      "applicationStatusPreserved": "PASS",
+      "cleanupElapsedMs": 1500,
+      "drainsCompleteAtDeadline": false,
+      "hostObservationStatus": "TIMEOUT",
+      "jobActiveProcesses": 0,
+      "liveDrainersAtDeadline": 1,
+      "postReleaseAssertions": "test-owned duplicate writer closed; drainer stream closed; no drainer thread remained alive",
+      "processSignaled": true,
+      "retainedRootName": "q30-held-drainer-review-ohf94nvp",
+      "rootSeed": "75",
+      "rows": [
+        "FAIL",
+        "NOT_RUN"
+      ],
+      "runnerOutcome": "FAIL",
+      "sequenceSummarySha256": "FFE2EDE396257FBB0A19FA70C9EC72762F9F49EE4FFB31FDAB1E43D24E7AE189",
+      "stdoutReaderAliveAtDeadline": true,
+      "stdoutStreamClosedAtDeadline": false,
+      "stepResultSha256": "7979223067D608BAC6DB93E9BD07075787FF7A303A599DF307C77DCC18FBEF1C",
+      "test": "test_parent_owned_duplicate_writer_holds_real_pipe_until_shared_deadline",
+      "unittestStatus": "PASS",
+      "workerExitCode": 0
+    }
+  ],
+  "launcher": {
+    "cleanupElapsedMs": 31,
+    "cleanupVerified": true,
+    "drainsComplete": true,
+    "exitCode": 0,
+    "jobActiveProcesses": 0,
+    "liveDrainers": 0,
+    "operationElapsedMs": 5562,
+    "processSignaled": true
+  },
+  "limits": [
+    "Recorded fixture process results report process signaled and job active count zero.",
+    "Current PID checks found no running exact fixture instance; PID 29328 has since been reused by a later WmiPrvSE process.",
+    "No test, application, or fixture processes were launched or terminated during this review.",
+    "No global process enumeration was performed."
+  ],
+  "qualification": false,
+  "recordedProcessInstances": [
+    {
+      "creationFileTimeTicks": "134354349664534929",
+      "currentState": "not-running",
+      "pid": 10628
+    },
+    {
+      "creationFileTimeTicks": "134354349666522210",
+      "currentState": "not-running",
+      "pid": 13296
+    },
+    {
+      "creationFileTimeTicks": "134354349668817422",
+      "currentState": "not-running",
+      "pid": 8184
+    },
+    {
+      "creationFileTimeTicks": "134354349669731746",
+      "currentState": "not-running",
+      "pid": 29472
+    },
+    {
+      "creationFileTimeTicks": "134354349675217440",
+      "currentState": "pid-reused-by-different-process",
+      "observedCreationUtc": "2026-10-02T17:20:06.291133Z",
+      "observedName": "WmiPrvSE.exe",
+      "pid": 29328
+    },
+    {
+      "creationFileTimeTicks": "134354349676609579",
+      "currentState": "not-running",
+      "pid": 21652
+    },
+    {
+      "creationFileTimeTicks": "134354349682461825",
+      "currentState": "not-running",
+      "pid": 22112
+    },
+    {
+      "creationFileTimeTicks": "134354349684514434",
+      "currentState": "not-running",
+      "pid": 30240
+    },
+    {
+      "creationFileTimeTicks": "134354349686771598",
+      "currentState": "not-running",
+      "pid": 23236
+    },
+    {
+      "creationFileTimeTicks": "134354349702551737",
+      "currentState": "not-running",
+      "pid": 6744
+    },
+    {
+      "creationFileTimeTicks": "134354349703374706",
+      "currentState": "not-running",
+      "pid": 6996
+    },
+    {
+      "creationFileTimeTicks": "134354349704340188",
+      "currentState": "not-running",
+      "pid": 9708
+    }
+  ],
+  "schema": 1,
+  "scope": "read-only review of selected-Windows serial-runner tests and exact recorded process instances",
+  "testBatch": {
+    "errors": 0,
+    "failures": 0,
+    "heldPipeTestSha256": "7F3F93834CC63D6AB24BDC2468DC903192BCA8ECB79F42B0CB0E35B7D603CBFC",
+    "launcherResultSha256": "66274602868158BDB6F9722A30731B12FABBB9E91DF8A62BD059EEC77E9B2414",
+    "launcherRootName": "q30-serial-review-sx9w68od",
+    "operationSeconds": 5.421,
+    "plannedTests": 39,
+    "serialRunnerSha256": "19931855B98AEB358F16DCBD94B6C69D81A221191BED2F07697A3CCDCFFFF5E6",
+    "sourceInputsUnchanged": true,
+    "status": "PASS",
+    "taskRootName": "q30-workflow-tests-438v4cs6",
+    "testResultsSha256": "4643382323C735745B9203D8B81E6F6598D79C720077ABB77A6C21ABBDEFAFEC",
+    "testsRun": 39
+  }
+}

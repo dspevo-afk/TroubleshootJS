@@ -1,4 +1,63 @@
-# Current checkpoint: Q30 cold qualification FAIL; local acceptance blocked
+# Current checkpoint: Q30 blocked; tested cleanup correction, root75 cause unresolved
+
+2026-10-02T17:33:40.308206+00:00. Branch `codex/q30-multirail-qualification`; parent local HEAD
+`0c7860ba43b0749553622db025fa54b7ad0da7e5`, plus tested tools/docs/evidence below.
+Application base `d37c3b3b8581abdeaa9b88b7bfb2349cff958d31`, frozen source
+`a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51`;
+all1,354 consumed inputs unchanged. Q30 NOT ACCEPTED and disabled.77 roots/
+308 candidates/90s/640/5s unchanged. U06/U07/Q60 unstarted. No push/email/deletion.
+
+Authoritative full cold77 remains FAIL:root75 TIMEOUT90.221s,31 prior PASS,
+45 NOT_RUN; full auditor FAIL/incomplete. Prior fresh native82/append26,
+structural77, both GWT5, compiled31/focused/transport, disabled menu and
+source-only archive results remain scoped to their unchanged consumed inputs;
+the historical checkpoint immediately below has their exact clocks/limits.
+Enabled build/menu still BLOCKED by cold FAIL. Actual visible20/30/40 diagnosis/
+repair/retest BLOCKED: supported Browser/computer/node_repl tools unavailable.
+
+New [phase/harness evidence](task-evidence/Q30/epoch15-root75-phase-and-harness-review/README.md):
+failure HEALTHY29.189s/89 units and HYPOTHESES59.495s/318; active stages88.823s
+of90.221s. Prior matched healthy16.846-17.206s/89 and hypotheses54.608-56.065s/
+390 are different completed prefixes. Slowdown lies inside active application
+wall intervals; compute/preemption/GC cause UNKNOWN. Same first39-package/two-
+channel root75 candidate, no hidden events/cache population/fallback. No CPU
+data exists for the failed run; later desktop anecdote is not that evidence.
+
+The16:55 parent window expired with **zero Q30 launches**. Passive PDH preflight
+FAIL0x800007d6; partial samples were not persisted, metadata explicitly records
+that loss. Changed raw probe FAIL1.141s reproduces invalid per-core formatting;
+no settings repair. Actual expired-window refusal PASS0.153s; active helper
+draft static FAIL/unexecuted. Separate native class8 passive canary PASS_DIAGNOSTIC_ONLY
+five samples/4.000s, actual invalid-class/backward rejection; outer4.078s,
+cleanup0.016s/job0/readers complete. Native API/processor-identity/inference
+limits remain explicit; this is no qualification PASS or Q30 CPU/cause proof.
+
+Independent review found two harness gaps. Integrated serial cleanup fix:
+shared15s deadline includes job/process/accounting and log-reader waits; readers
+own flush/close. PASS39/39 (22 receipts/five normalizer/12 actual Windows process
+checks), operation5.421s, outer5.562s/cleanup0.031s/job0/readers complete.
+Real held-pipe and blocked-sink negatives preserve app metrics, fail cleanup at
+the deadline and suffix NOT_RUN; fixture releases then prove reader exit.
+Independent read-only resource review:12 exact instances absent/original gone,
+one PID reused; no kill. One preparation count38 was corrected by actual39.
+
+Compiled script attachment guard stays a frozen **workspace draft**; actual
+Edge attached/absent/detached checks NOT_RUN pending parent window. Read-only
+final packet audit PASS31/31 exact attachments and118 members; earlier
+FAIL_CLEANUP preserved. Original repository host remains `fb6c7857…` and no
+application/host/build bytes changed. New147-member sanitized evidence archive
+pins raw/tool bytes; failures and drafts retained. Parent targeted/acceptance
+review remains pending; no current task-owned runner active.
+
+Retained roots/pointers in task workspace `epoch15-final/`; four original cache
+directories/seven untracked cache files and sibling Desktop work preserved.
+Next: parent-coordinated7-minute serial diagnostic/Edge window; finish helper/
+guard verification, concrete timing diagnosis, then fresh full cold77 and
+enabled/visible gates before acceptance. No later milestone starts.
+
+---
+
+# Historical checkpoint: Q30 local checkpoint0c7860ba; cold qualification FAIL
 
 2026-10-02T16:23:35.607769+00:00. Branch `codex/q30-multirail-qualification`;
 base HEAD `d37c3b3b8581abdeaa9b88b7bfb2349cff958d31`, five source changes plus docs/evidence.
