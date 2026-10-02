@@ -1,0 +1,147 @@
+{
+  "schema": 1,
+  "checkpointUtc": "2026-10-02T03:40:25.887722+00:00",
+  "Q30Status": "BLOCKED / NOT ACCEPTED; disabled",
+  "sourceBaseHead": "108911013e114e7707a5fe0c643df43043cc6759",
+  "nativeLaunchCheckpointHead": "fc042840d8192fdbd19b20e29669cd7e0a7e49d8",
+  "coldCheckpointHead": "4902962c8c47fff01828f67222efebd5deb7984a",
+  "sourceIdentity": "e186ffb8ed12b6a1d947e932124095998c98fcd7cb1f68253d892456e39fc332",
+  "consumedInputsUnchangedAfterRun": 1354,
+  "cold": {
+    "status": "PASS",
+    "passed": 77,
+    "failed": 0,
+    "maxElapsedMs": 82787,
+    "minHeadroomMs": 7213,
+    "maxWork": 507,
+    "maxActiveMs": 1377
+  },
+  "native": {
+    "status": "FAIL",
+    "maintainedReceiptExitCode": 2,
+    "toolSessionExitCode": 1,
+    "phaseElapsedSeconds": 1341.4000953999998,
+    "startedUtc": "2026-10-02T03:11:31.3375431Z",
+    "finishedUtc": "2026-10-02T03:33:52.7392316Z",
+    "precedingSuitesPassed": 20,
+    "failedSuiteIndex": 21,
+    "plannedFullSuiteCount": 82,
+    "serviceAttempted": 105,
+    "servicePassed": 90,
+    "serviceFailed": 15,
+    "faults": 5,
+    "failedRoots": [
+      {
+        "rootSeed": "8",
+        "canonical": "rb30-plan@4;seed=8;topology=RB30_CH2_SHARED_DIRECT_A_NMOS_B_BJT;support=C12:false,S5:false,S12:false,filters:0,outputIndicators:1,bleeder5:false;layout=1789953187444160285;routing=-8500271482997274880;physicalPolicy=MEDIUM_BOARD@1;fault=SENSOR_A_OPEN;packages=32;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated",
+        "plannedPackages": 32,
+        "plannedChannels": 2,
+        "coldPublishedCandidate": 2,
+        "coldPublishedPackages": 28,
+        "coldPublishedChannels": 1,
+        "nativePassed": 0,
+        "nativeFailed": 5
+      },
+      {
+        "rootSeed": "4",
+        "canonical": "rb30-plan@4;seed=4;topology=RB30_CH2_SHARED_DIRECT_A_BJT_B_NMOS;support=C12:true,S5:false,S12:false,filters:1,outputIndicators:2,bleeder5:false;layout=-7967780441668740599;routing=4321422998255155060;physicalPolicy=MEDIUM_BOARD@1;fault=DREV_OPEN;packages=34;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated",
+        "plannedPackages": 34,
+        "plannedChannels": 2,
+        "coldPublishedCandidate": 1,
+        "coldPublishedPackages": 27,
+        "coldPublishedChannels": 1,
+        "nativePassed": 0,
+        "nativeFailed": 5
+      },
+      {
+        "rootSeed": "10000",
+        "canonical": "rb30-plan@4;seed=10000;topology=RB30_CH2_SHARED_HYSTERETIC_A_NMOS_B_NMOS;support=C12:false,S5:false,S12:false,filters:1,outputIndicators:1,bleeder5:true;layout=-5582834733033270822;routing=-7232503086477951915;physicalPolicy=MEDIUM_BOARD@1;fault=RELAY_B_COIL_OPEN;packages=36;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated",
+        "plannedPackages": 36,
+        "plannedChannels": 2,
+        "coldPublishedCandidate": 1,
+        "coldPublishedPackages": 39,
+        "coldPublishedChannels": 2,
+        "nativePassed": 0,
+        "nativeFailed": 5
+      }
+    ],
+    "seed10Service": "5/5 PASS",
+    "failurePhase": "Physical generation before service",
+    "cleanup": "PASS; logged and independently checked no wrapper/helper/Java survivors and removed native scratch",
+    "cleanupElapsedSeconds": "NOT RECORDED separately",
+    "remaining61Suites": "NOT RUN",
+    "sensitivity105": "NOT RUN",
+    "structural51plus26": "NOT RUN",
+    "independentOracles": "NOT RUN"
+  },
+  "evidence": [
+    {
+      "retainedRelativePath": "native-full.log",
+      "rawSha256": "fd5ed51c3249c4c1c183f15f1e0d96dd3879837cb3ff55ca8080b70610713c26",
+      "portableFile": "native-full.log.gz",
+      "portablePayloadSha256": "c0b5af70d53ff5b2474c11a08dad57c77f5f249cfa39d3a983265a06f96787d5",
+      "compressedSha256": "cfbf0b8c3023bb000b8993c2148131d0e579643f33c1955b086f84f4e9ef4ce9"
+    },
+    {
+      "retainedRelativePath": "native-full.txt",
+      "rawSha256": "1e299aac455ae493311d7ed09278d24134e1a5819428842361ee19cfaf75c6c8",
+      "portableFile": "native-full.txt.gz",
+      "portablePayloadSha256": "7a60d486180a90c79a90d093ca4f9a2ced0de3979439fc0729cb8aa32e28a0a1",
+      "compressedSha256": "1351ef1349632bb1939548cab1e9f2bc478c30f2260d6dcba922e4243c8c443e"
+    },
+    {
+      "retainedRelativePath": "native-full-result.json",
+      "rawSha256": "f3911f1dd80789f4c60fe2d37c55cce60106c903bddc17f1eca429c8014400ad",
+      "portableFile": "native-full-result.json.gz",
+      "portablePayloadSha256": "26cd671b0d1771b2da4ccffd0e35b037f687c318ba37691ae7ae1ce4cfc678c5",
+      "compressedSha256": "abf13d0ad816c11f5b7bf6c9a9028340a149526e6ee5d3594724ff8efcd516f8"
+    },
+    {
+      "retainedRelativePath": "native-full-ownership.json",
+      "rawSha256": "17cc01bcc690789bbbcd53e70e2e539166315e059ca7c4507142f7fe3c387f25",
+      "portableFile": "native-full-ownership.json.gz",
+      "portablePayloadSha256": "4c45f97fc0ac3de3fac1709b61c86fadedeec9f755e24a77810631dd76312d49",
+      "compressedSha256": "90099f4635ddfc056d06d2c76e83207833a659df4719385491aab66ece4bd278"
+    },
+    {
+      "retainedRelativePath": "native-current-child-snapshot.json",
+      "rawSha256": "3ca2f9facec3f657ea741f4da66d86475a6ad34d91bf519f6ea02d46fbe61946",
+      "portableFile": "native-current-child-snapshot.json.gz",
+      "portablePayloadSha256": "2f0098587405c918fbfbe952613a8c7ce70e2b11487c835e36beb098a217b6f3",
+      "compressedSha256": "d9fb2ec2a6d03033a57dcfda3ba7f75f376bbd5d1039e453169358fd45d0808f"
+    },
+    {
+      "retainedRelativePath": "native-final-resource-check.json",
+      "rawSha256": "83e6959eda332b7096d139bd2e85a18443e37b44e12cc9dbb794b94673b484f2",
+      "portableFile": "native-final-resource-check.json.gz",
+      "portablePayloadSha256": "6c830de48d24235c501c39e5f4919fde8fd92f27b51557ff2811e41346ba8006",
+      "compressedSha256": "f47211f2880629a5e11cd48d4ac533b1e03af20cd14add572b4fd0f35202a49b"
+    },
+    {
+      "retainedRelativePath": "progress-capture-helper-aborted.json",
+      "rawSha256": "c50a3e3ed41e1667ff53765a3cf472431540f39bce33c2048575cd6ed31d4ae0",
+      "portableFile": "progress-capture-helper-aborted.json.gz",
+      "portablePayloadSha256": "ea8d2e12a7a10915796de1037f4ec5f0938bbd7076070096550241578b3211b8",
+      "compressedSha256": "3934fe5489db6327556d8442f8724ececead4ee52ec5b77d4b0afbb3b51eae61"
+    },
+    {
+      "retainedRelativePath": "native-service-blocker.log",
+      "rawSha256": "d13b46323136b0f370a20d2a37f59ffe5c4f737d52187696354f3927f550d3dc",
+      "portableFile": "native-service-blocker.log.gz",
+      "portablePayloadSha256": "136cbbc1455b03a04f1324f757eabe665e64b7487a98f90b2d3d375a3f810fec",
+      "compressedSha256": "4e77de185847fc132bb888358685b8e43f7292167a4fd2f26dc6052669699deb"
+    }
+  ],
+  "resources": {
+    "stoppedHelperPid28256Present": false,
+    "nativeScratchPresent": false,
+    "schema": 1,
+    "taskNativeChildren": [],
+    "noTerminationPerformedByThisCheck": true,
+    "wrapperPid22456Present": false,
+    "observedUtc": "2026-10-02T03:36:32.4450511Z"
+  },
+  "retainedTempLabel": "q30-epoch14-qualification-81a29fe18e234b0899b079ff4090b60f",
+  "captureLimit": "One read-only capture helper had a parser error then a delayed large-JSON read. Verified helper28256 was stopped, partial log retained; native22456 untouched.",
+  "nextAction": "Diagnose exact frozen original physical plans for roots8,4,10000; fix bounded routing cause, then rerun changed-source required gates. Do not substitute cold retry plans or relax bounds."
+}

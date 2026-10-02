@@ -1,4 +1,45 @@
-# Current checkpoint: Q30 cold77 verified PASS; full native 82 RUNNING
+# Current checkpoint: Q30 cold77 PASS; full native blocked on three original plans
+
+2026-10-02T03:40:25.887722+00:00. Source base `1089110`, native launch `fc042840`, cold checkpoint `4902962`.
+**Q30 BLOCKED / NOT ACCEPTED; disabled.** No merge/push/email/evidence deletion.
+U06/U07/Q60 unstarted. All frozen cohorts/order/caps and 90,000/640/5,000 limits
+remain unchanged. [Final native blocker](task-evidence/Q30/epoch14-native-service-blocker/README.md).
+
+**FAIL:** full-native attempt ended 2026-10-02T03:33:52.7392316Z, 1341.400 s,
+receipt exit 2 (tool session returned nonzero 1). Twenty preceding suites PASS,
+including physical census 220 boards/220 exact replays. Service 105 completed:
+90 PASS, 15 FAIL; roots 8/4/10000 fail all five faults with physical layout rejection
+before service at Rb30Generator.route:819. Seed 10 original-plan service 5/5 PASS.
+Detailed routing rejection cause is not yet diagnosed. Cold retries do not prove
+these exact original plans. Remaining 61 suites, sensitivity 105, structural 51 + 26
+and independent oracles NOT RUN; no later gate was started.
+
+**PASS:** [cold77](task-evidence/Q30/epoch14-cold77/README.md), all 77 APP/HOST/cleanup,
+all sizes 20-40 published; worst 82.787 s, 7.213 s headroom, 507 work, 1.377 s active.
+Strict rereview and all 1,354 raw source hashes unchanged after native failure.
+Source identity: e186ffb8ed12b6a1d947e932124095998c98fcd7cb1f68253d892456e39fc332. Earlier isolated GWT5/four compiled
+canaries and 16 reader tests remain bound; full acceptance is not claimed.
+
+**Resources:** native session 10932 finished; wrapper 22456 and delayed capture
+helper 28256 absent, no task Java survivor, native scratch removed. Cleanup PASS;
+separate cleanup elapsed NOT RECORDED. No task-owned runner/browser/preview remains.
+Only verified delayed read-only helper was stopped; partial log and all evidence
+retained. Keep temp label q30-epoch14-qualification-81a29fe18e234b0899b079ff4090b60f and earlier labels, including exports,
+profiles, full failure log/receipt, source archives and resume helpers.
+Four pre-existing untracked caches and sibling worktree changes preserved.
+
+**Next:** parent coordinates reproduction and bounded routing repair for exact
+original roots 8/4/10000, then fresh required changed-source gates. Do not relaunch
+existing native output, waive roots or use successful cold retry plans as repair.
+Compiled 31/D01-21/disabled controls, final shipping build, source archives, private
+one-boolean enabled build/menu 33/replay 3 and final acceptance remain pending.
+Visible 20/30/40 repair/retest BLOCKED/NOT RUN: graphical/node_repl tools unavailable;
+review steps prepared, but final private preview not ready. Preserve D01 seed 35
+rejection oracle. Q30 stays disabled; later milestones remain unstarted.
+
+---
+
+# Historical checkpoint: Q30 cold77 verified PASS; full native 82 RUNNING
 
 2026-10-02T03:16:27.074160+00:00. Local candidate base `1089110`; reviewed checkpoint `fc042840`. **Q30 NOT
 ACCEPTED; disabled.** No merge/push/email/evidence deletion; U06/U07/Q60 unstarted.
