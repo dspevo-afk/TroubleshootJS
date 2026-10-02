@@ -1,4 +1,53 @@
-# Current checkpoint: Q30 layout15 original-plan patch; focused gates PASS
+# Current checkpoint: Q30 fresh native82 and structural77 PASS; cold qualification pending
+
+2026-10-02T06:18:41.150186+00:00. Branch `codex/q30-multirail-qualification`; reviewed source base
+`7bdc23e8170e4a9e737b33daf4bb533f87468b22`. **Q30 NOT ACCEPTED; disabled.** No merge/push/publication/
+email/evidence deletion. U06/U07/Q60 unstarted. Architecture current epoch corrected
+to15. [Fresh native evidence](task-evidence/Q30/epoch15-native-qualification/README.md).
+
+Native82 PASS, 4328.150s: exact original21
+service/sensitivity roots105/105 each, structural51, maintained full suites/four
+independent oracles/report protocol/listener identity/seven parity sidecars.
+Structural appended26 PASS, 248.575s.
+All77 frozen original structural identities in order, 70 accepted and
+7 explicit rejections, zero contract failures. Both strict receipt audits
+PASS; all1,354 consumed raw inputs unchanged. Source identity
+`a3bd150019d00870a08896efd893c99aff120ce11a49f34cca0af07f33d59c31`. Frozen continuation changes only baseHead to7bd;
+cohorts/order/canonicals/candidate counts/caps and90,000/640/5,000 limits untouched.
+
+Native wrappers/JVMs and captured unique scratch paths independently absent;
+maintained cleanup markers PASS, no termination. Native cleanup elapsed separately
+NOT RECORDED. Defender remains enabled. Parent reported clean scan and approved
+resumption; no false-positive classification/exclusion/restore/replay/alternate
+flagged LocalDots operation. Existing native session17778 resumed, not duplicated.
+
+Raw task evidence/helpers retained under OS-temp label `q30-epoch15-qualification-306d44cccd8d447abe0b257530b9354a`;
+workspace pointer `epoch15-task-pointer.json`. Preserve all earlier raw evidence,
+four untracked caches and sibling edits. Shipping GWT reuse audits1,354 raw bytes
+unchanged from passing five-permutation build; only baseHead metadata differs.
+Fresh isolated JDK8/GWT5 build PASS, 126.553s, with actual compile/link confirmation.
+Fresh compiled4/freeze PASS17.890s, host cleanup PASS1.116s: all77 roots/308
+candidate manifests frozen before cold. First compiled host failed before any
+case because bundled Python3.12 could not load retained CP313 greenlet. Failure
+and successful cleanup are preserved. Existing Python3.13.14/Playwright1.63.0
+API import passed; corrected fresh tag `compiled-canaries-py313` passed unchanged
+cases. No install/protection/source change. Use updated `run_epoch15_cold.ps1`
+and `run_epoch15_cold_sequence.py`, which bind that existing host runtime.
+Cold77 is NOT RUN: cold0/77 maximum/headroom NOT MEASURED. No runner active at
+this parent coordination handoff; prior sessions17778/74259/3998/40167/10981 ended.
+
+Next: run `run_epoch15_cold.ps1 -Batch cold-pilot` (first3 frozen roots), then
+review its results before `-Batch cold-rest` (remaining74) serially. Use actual
+Windows PowerShell host with permission for task temp and CIM. Do not rerun
+completed native/build/canaries. Compiled31/D01-21, disabled and
+private menu/replay, source archive and parent acceptance follow. Maintain seed35
+typed policy-rejection oracle. Tracked shipping Q30 remains false. Interactive
+Browser/computer/node_repl tools absent: visible20/30/40 diagnosis/repair/retest
+BLOCKED/NOT RUN. Headless menu results cannot close that gap.
+
+---
+
+# Historical checkpoint: Q30 layout15 original-plan patch; focused gates PASS
 
 2026-10-02T04:24:52.043413+00:00. Branch `codex/q30-multirail-qualification`; source base `d9ec018bb725a29b47c68e72a3e1a5632a5c5a88`.
 Candidate source identity `fa2c58b0aaa742f01d8bb77dd1d215927103fe5f861c24284a951f96101c59af`.

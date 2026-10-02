@@ -1,0 +1,179 @@
+{
+  "schema": 1,
+  "sourceIdentity": "a3bd150019d00870a08896efd893c99aff120ce11a49f34cca0af07f33d59c31",
+  "candidateBaseHead": "7bdc23e8170e4a9e737b33daf4bb533f87468b22",
+  "status": "QUALIFICATION_HOST_PHASE_PASS_Q30_NOT_ACCEPTED",
+  "gwtPermutations": 5,
+  "gwtElapsedSeconds": 126.5529019,
+  "compiledCanaryCases": 4,
+  "compiledElapsedSeconds": 17.89000000001397,
+  "hostCleanupSeconds": 1.1157181999878958,
+  "frozenRoots": 77,
+  "candidateManifests": 308,
+  "freshColdCases": 0,
+  "preservedFailure": "Initial CP312/CP313 import mismatch: host FAIL, zero cases, input/cleanup PASS",
+  "remaining": "Cold77; compiled31; disabled/private menu/replay; source archive; visible20/30/40 repair/retest; parent acceptance",
+  "evidence": [
+    {
+      "retainedRelativePath": "isolated-build.log",
+      "rawSha256": "523d1d125598420bc4d9b94d2df7a5234828283332a5e799f9b65829c42d1bd8",
+      "portableFile": "host__isolated-build.log.gz",
+      "portablePayloadSha256": "2ef8fb68ee01aa58c3479565e87973191aa251b8ba7c69ebfddb8a9e5439c8a6",
+      "compressedSha256": "53f9c4ca0af8d856a8d46423eaadc065a6f72e2c442855e56b3f76741b951760"
+    },
+    {
+      "retainedRelativePath": "isolated-build-result.json",
+      "rawSha256": "52c312c46a139a88b1b35e5e7d2ee2d787c88b7580c833140cd6bac45041607b",
+      "portableFile": "host__isolated-build-result.json.gz",
+      "portablePayloadSha256": "1fec03afe6fbfe3fa109cd9b552539e1c5e881478942edea47ab0d99b126b3ca",
+      "compressedSha256": "f919a6f66fe3456a05b59e669cceb23f869cea4bb2322d46c4f38f38e3d8538b"
+    },
+    {
+      "retainedRelativePath": "isolated-build-ownership.json",
+      "rawSha256": "34370aec91f1d3e5cef11f58700dc9cae531cc720f349dbd69a67eec7c4e0e99",
+      "portableFile": "host__isolated-build-ownership.json.gz",
+      "portablePayloadSha256": "cbb4ca06bf38a8f2a68d28d4e3fdcfe7e859c6897314c74e583b5f104e526f68",
+      "compressedSha256": "f43f1e1f73cfd433ab38e2eed624371bde7ca30b3121b878cf525c7b51eb7f75"
+    },
+    {
+      "retainedRelativePath": "compiled-canaries-host.log",
+      "rawSha256": "fc4b771a6f270adb0fbc366eb21070f7350767395be4e12df8d7a23b61eb15be",
+      "portableFile": "host__compiled-canaries-host.log.gz",
+      "portablePayloadSha256": "3310c492b38caa27bde1214af908a13b62b3588fac8dea64b8d972134585df4d",
+      "compressedSha256": "3e542a79b2ff72909af5330e40c17228ee9655395793df35bef780f04ec07f3f"
+    },
+    {
+      "retainedRelativePath": "compiled-canaries-stage-result.json",
+      "rawSha256": "6b6f032cee2e2a6efff99fbef6bcb799b071608a5b1c93dd1af6acbb368c000b",
+      "portableFile": "host__compiled-canaries-stage-result.json.gz",
+      "portablePayloadSha256": "e8a0d75cb4788883eded55674d011e26aadd417d50315280ccb65f773e18b93c",
+      "compressedSha256": "772371f2fee0dacdd74c2f7ca15f45ff66965806770c60fda932ecdf19a88b70"
+    },
+    {
+      "retainedRelativePath": "compiled-canaries/result.json",
+      "rawSha256": "0d0c5a30e9602f55ebd2e193d63b8960a6443b7eb36f5296e0fadca5ef52b1aa",
+      "portableFile": "host__compiled-canaries__result.json.gz",
+      "portablePayloadSha256": "0217ffa955d32ee9368cefea21af1ce41082c7b3e61ecc447724672480799019",
+      "compressedSha256": "aab595115671ad3df990441d122a28e6278e18644f74617261d38bfb8c90061b"
+    },
+    {
+      "retainedRelativePath": "compiled-canaries-failure-review.json",
+      "rawSha256": "fbd74d655258fe8bcac9e513ab1be40954c6e5b27673720605ed472910c10b3e",
+      "portableFile": "host__compiled-canaries-failure-review.json.gz",
+      "portablePayloadSha256": "724c2987f1c2c2aeb35b989383005f30d79666cf9cc5d3dee39e9aed222ec1e5",
+      "compressedSha256": "dcc0942b41211174b61b5385a1a672821b3ebbbd54fe8f1a882cb50ac7e83705"
+    },
+    {
+      "retainedRelativePath": "compiled-canaries-py313-stage-result.json",
+      "rawSha256": "61e27bc97e64787784b0948e6a96bf41e8b52d3ade5c13ed9edd7202363fb3e6",
+      "portableFile": "host__compiled-canaries-py313-stage-result.json.gz",
+      "portablePayloadSha256": "38846b1f022a685c83ffba4242eff170434ba7a8fe17b798556bc00ae61753ff",
+      "compressedSha256": "4a56bb2c2a3e6651607dd08d2190c541ca94bd991815209158469d3285124915"
+    },
+    {
+      "retainedRelativePath": "compiled-canaries-py313-host.log",
+      "rawSha256": "1830d2c4386f0c6a832f7469d81a29d0ebc7e94fbb9f140fb2d115e9a62c797d",
+      "portableFile": "host__compiled-canaries-py313-host.log.gz",
+      "portablePayloadSha256": "56e3df6e60eaceb938fdc985bd70921b9aef151fae3fd50e76eee448f054817e",
+      "compressedSha256": "2655acc54086cf1c7b7d11d12c3d3c2e2aa5338d01c5213356c3d6a0735c7330"
+    },
+    {
+      "retainedRelativePath": "compiled-canaries-py313-manifest-freeze.log",
+      "rawSha256": "ffaca5eb1f5bafde95ee818c0a0fa07335e954a33f3236bc5f644f7565ccca2d",
+      "portableFile": "host__compiled-canaries-py313-manifest-freeze.log.gz",
+      "portablePayloadSha256": "32fb666d2c906d82678cc309839dce277204441a8db311b08101b754ac14184f",
+      "compressedSha256": "3fdc64abcf1c62cfdb67c4b9794a4760c3e2720a00a49cd45538785825c45179"
+    },
+    {
+      "retainedRelativePath": "compiled-canaries-py313/result.json",
+      "rawSha256": "1f324adb7fcd752ca525032f7bb9235bd267643a5172b1b415261ea2833c0377",
+      "portableFile": "host__compiled-canaries-py313__result.json.gz",
+      "portablePayloadSha256": "0a85bf1a84e5c1294d73e87474ed3797503bd1161bb2f3b0b49171a2bcdfd796",
+      "compressedSha256": "841bcda494cbcf0778cfc6be22031b47d77b4100e379425c7bc683148d3818ce"
+    },
+    {
+      "retainedRelativePath": "compiled-canaries-py313/identity.json",
+      "rawSha256": "9155da07008ea760ddc29aac1940c11dc5ddccf5febdb891fa2fff45932fbfe5",
+      "portableFile": "host__compiled-canaries-py313__identity.json.gz",
+      "portablePayloadSha256": "ff8adaa23efb128357a70a8752222bbc9e7bc8b3801683204c07ead511b1a81d",
+      "compressedSha256": "5256c6e0b47d326cfc58d18cc6f7afec333bc799cf05ab1651e05f2199502970"
+    },
+    {
+      "retainedRelativePath": "scale-plan.json",
+      "rawSha256": "6278bb89dc2d8391c2c23f4a5cff23c0fc7ad895465913d3da67b6e1a41f5694",
+      "portableFile": "host__scale-plan.json.gz",
+      "portablePayloadSha256": "6278bb89dc2d8391c2c23f4a5cff23c0fc7ad895465913d3da67b6e1a41f5694",
+      "compressedSha256": "2f16e0362891c5f3c1d00893bff13997ff1bc0ad328fddc36b856c0418b85c39"
+    },
+    {
+      "retainedRelativePath": "compiled-canaries-py313/cases/001-manifest-export.report.json",
+      "rawSha256": "a5f7f7e7222bf2bf039e31f6bcab3a2c064ffaff2fef7bb5fad84563af8e42ac",
+      "portableFile": "host__compiled-canaries-py313__cases__001-manifest-export.report.json.gz",
+      "portablePayloadSha256": "1e53c26bcedbe3fcd574551dd21d1c7a6b07144721fc3ccc36db2126c0814e3f",
+      "compressedSha256": "fd97db0a0d0c3c99809e2a18d5c6a331312a3ac535deae841521a23718a88e91"
+    },
+    {
+      "retainedRelativePath": "compiled-canaries-py313/cases/002-unauthorized.report.json",
+      "rawSha256": "2b969f9d104c60c29a5478ed179490351b3d08d41a662436310c66c776c89771",
+      "portableFile": "host__compiled-canaries-py313__cases__002-unauthorized.report.json.gz",
+      "portablePayloadSha256": "7281fd1cf23c811c9dadf2953504cda6f042089ff1a045dd1f2cee97e8d28de0",
+      "compressedSha256": "611985da7cd147cb8abf5069f2742071c5e1be03c4f86d0eb80ddedb0b954980"
+    },
+    {
+      "retainedRelativePath": "compiled-canaries-py313/cases/003-cancel.report.json",
+      "rawSha256": "cee9dc91fdc02e27194b65240fce17f60f07c062b5eb1d6d7ff517127fa99cac",
+      "portableFile": "host__compiled-canaries-py313__cases__003-cancel.report.json.gz",
+      "portablePayloadSha256": "f4a84b8b342611959b07a81c57c816b88ec86c14539cf7ad706714474314085f",
+      "compressedSha256": "73adb205d000c7bcc60fd142e6edf0e1697d75531228993590013862e39eb9c0"
+    },
+    {
+      "retainedRelativePath": "compiled-canaries-py313/cases/004-scope-loss.report.json",
+      "rawSha256": "77a92e2b804cabfb62539fbb878d8c77f940cf0ccc288de847801c16ad4fddf2",
+      "portableFile": "host__compiled-canaries-py313__cases__004-scope-loss.report.json.gz",
+      "portablePayloadSha256": "90d24491c75eb4c81945cf27a037a87fc8910adc6f4bfe4034dd61fd2080a714",
+      "compressedSha256": "aa3e366ef39fb778ab46c0c789867a55e451bcff7270843acd8f88117ccffaf0"
+    },
+    {
+      "retainedRelativePath": "updated-helpers/run_epoch15_canaries.py",
+      "rawSha256": "0a5135a206948708e982cc6927848d8fe3237388308de272388c9e63ad2151d3",
+      "portableFile": "host__updated-helpers__run_epoch15_canaries.py.gz",
+      "portablePayloadSha256": "42b654771fc22237a7e15aae8a0cd862e6fa01566d88a0d531a796dabedc221b",
+      "compressedSha256": "9d8115b43633cade4fb8304ea72d4b71afea9603f3f7314b6118c022ff826e1b"
+    },
+    {
+      "retainedRelativePath": "updated-helpers/run_epoch15_cold.ps1",
+      "rawSha256": "acbced6a08ebfb2d86b069d912af559126e932c00511ecdeb3376c75dde0fa5e",
+      "portableFile": "host__updated-helpers__run_epoch15_cold.ps1.gz",
+      "portablePayloadSha256": "783ccbca6109536068fbb1244e9062e9294f00a54ceb49cb1f1c38351a45ab20",
+      "compressedSha256": "ec889edda6143048e3404714f090f001e4c95dfeeea807a36f12430a413d6659"
+    },
+    {
+      "retainedRelativePath": "updated-helpers/run_epoch15_cold_sequence.py",
+      "rawSha256": "3cb9ea7bd2e5434549ccfdcef7b4771ccd044163131d79411128c2b2a5243af0",
+      "portableFile": "host__updated-helpers__run_epoch15_cold_sequence.py.gz",
+      "portablePayloadSha256": "1ce948a1fcc0fd61c6b244742a5355e92dc5b2d273ceb276c5bace3a40985a82",
+      "compressedSha256": "5a2e1a04326a601575188180940e57188047564363f5388185b429ce79d7a643"
+    },
+    {
+      "retainedRelativePath": "updated-helpers/audit_epoch15_cold77.py",
+      "rawSha256": "4f6b141cf84a7b79eeefef32076083d7f2cc7adb6abfab6cd6bca97ea1225fb4",
+      "portableFile": "host__updated-helpers__audit_epoch15_cold77.py.gz",
+      "portablePayloadSha256": "d9031e699d4e5bc744561617d6309fa1497265a4b4b24458abc2b9cea51bc329",
+      "compressedSha256": "a9ab05e9cc06d7edd57cf2c44eaa5858fbf37d582c0722085842e6ec22d4600d"
+    },
+    {
+      "retainedRelativePath": "updated-helpers/run_epoch15_shipping_hosts.py",
+      "rawSha256": "1f5ab04cedba70f0f7c888b695a86d4f5e9be06b9d77d93773902a5cb9e97e7b",
+      "portableFile": "host__updated-helpers__run_epoch15_shipping_hosts.py.gz",
+      "portablePayloadSha256": "a012a01234c3b489eb2d03990cbe65add5b3bf39232dcb7ef3db0198aec70f8a",
+      "compressedSha256": "41b788ff88662090fa023517336150d8d537dee80a47e4e891ef1bc19295517c"
+    },
+    {
+      "retainedRelativePath": "updated-helpers/audit_epoch15_compiled31.py",
+      "rawSha256": "51a17dbabdc7711824618396bdef7572d0229b0f5d454f73fbd31aad8069b4cc",
+      "portableFile": "host__updated-helpers__audit_epoch15_compiled31.py.gz",
+      "portablePayloadSha256": "51a17dbabdc7711824618396bdef7572d0229b0f5d454f73fbd31aad8069b4cc",
+      "compressedSha256": "48881db6d5b1b8b8622bbe7ccbf6daff5f054f2efdf029e26793ae7b884eaa5d"
+    }
+  ]
+}

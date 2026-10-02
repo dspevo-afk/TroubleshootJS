@@ -1,0 +1,302 @@
+{
+  "schema": 1,
+  "checkpointUtc": "2026-10-02T06:18:41.150186+00:00",
+  "Q30Status": "NOT_ACCEPTED; disabled",
+  "candidateBaseHead": "7bdc23e8170e4a9e737b33daf4bb533f87468b22",
+  "sourceIdentity": "a3bd150019d00870a08896efd893c99aff120ce11a49f34cca0af07f33d59c31",
+  "rawInputsVerified": 1354,
+  "nativeFullSuites": 82,
+  "servicePass": 105,
+  "sensitivityPass": 105,
+  "structuralRows": 77,
+  "structuralAccepted": 70,
+  "structuralRejected": 7,
+  "nativeFullElapsedSeconds": 4328.1497543,
+  "structuralAppendElapsedSeconds": 248.5748352,
+  "cleanup": "Maintained cleanup markers plus independent exact-instance/JVM/scratch absence PASS",
+  "cleanupElapsedSeconds": "NOT RECORDED separately by native wrapper",
+  "freshColdCases": 0,
+  "coldMaximumMillis": "NOT MEASURED",
+  "limitsUnchanged": {
+    "jobMillis": 90000,
+    "sharedWork": 640,
+    "activeOperationMillis": 5000,
+    "nativeChildMillis": 60000
+  },
+  "remaining": "Fresh qualification GWT/canaries/manifests/cold77, compiled31/D01, disabled and private menu/replay, archives, visible20/30/40 repair/retest, parent acceptance review",
+  "evidence": [
+    {
+      "retainedRelativePath": "continuation-binding.json",
+      "rawSha256": "184de88765515b7cbd9b4c9be8e2d26b74ca8c4676c37bf44594e1b4765eb870",
+      "portableFile": "continuation-binding.json.gz",
+      "portablePayloadSha256": "0ba030763a74b3474950347b2458343f3412256b93a4ae1962a4793d425d556c",
+      "compressedSha256": "8607bb0f104b8c635ed31e22d148ef038bb74fef20f9ed7ee71a8a00d5157113"
+    },
+    {
+      "retainedRelativePath": "acceptance-plan.json",
+      "rawSha256": "2a3c221159f9966f217f42fa8ba31ec830cae70f30fbbc27d8d67c2d9a9d2938",
+      "portableFile": "acceptance-plan.json.gz",
+      "portablePayloadSha256": "56c2417e60bf0a42252f838e0e2fbe2360a377353edb56084be32528b7a1af4f",
+      "compressedSha256": "f34fb23aee95a68291256458eb6a4c75b8f56de080719e3f7ef4f748ce7a9713"
+    },
+    {
+      "retainedRelativePath": "source-snapshot.json",
+      "rawSha256": "6bf62c29e12317d358e69e0e0d6a4eca4b96d5720b9070e8424021fce0d1bc75",
+      "portableFile": "source-snapshot.json.gz",
+      "portablePayloadSha256": "0b02b41af4a6709cd104513b34650ab5e480ffaa6e8c4eb494608c2d950a4dee",
+      "compressedSha256": "a2aaf47d495758ced201be13418ad818817fa7dccf0d1d68df906381a3490108"
+    },
+    {
+      "retainedRelativePath": "shipping-build-reuse.json",
+      "rawSha256": "8d8f980407bfd882336c6fae2ba4daa8b0a9faaac5b51a58dbac3a80912cf9a6",
+      "portableFile": "shipping-build-reuse.json.gz",
+      "portablePayloadSha256": "c45953c79c713a390ee341dc9ba710da0c0730be24685fdcb04e6bc4494f2dff",
+      "compressedSha256": "813d74fd00ce65e1fd6e4182f9d6136b981ca254db3a382defa719d6ef29bf58"
+    },
+    {
+      "retainedRelativePath": "defender-resume-check.json",
+      "rawSha256": "4c65a42cd30245efa88d2c3e8e232c97776e62e0f332cd060943a9bd44d8e13a",
+      "portableFile": "defender-resume-check.json.gz",
+      "portablePayloadSha256": "c6b22bb9be83ff25ba780285124477416b1a1edab6d796600607102843368f0d",
+      "compressedSha256": "6b01c6e1a59b73f008346dfe5c4641995a6ca4647e1cf48b342a0fce6b093df5"
+    },
+    {
+      "retainedRelativePath": "isolated/prepare-receipt.json",
+      "rawSha256": "25c0ed91e2a99c834ff878ded607b28755b18511b9f97a494e563d35e186ec58",
+      "portableFile": "isolated__prepare-receipt.json.gz",
+      "portablePayloadSha256": "94c687041d166230e7ac1100e93ea0029fa520120cdbde2deaf6b95d741ee5ef",
+      "compressedSha256": "27589957bce93a97bfe6a08b12eb56c0f580314d3d1d3af9434235757ef7eee3"
+    },
+    {
+      "retainedRelativePath": "isolated/source-snapshot.json",
+      "rawSha256": "11f02099d9911ab7150719ea68fc46e9422f2a9fe9017f8ffb57c4e4c487719e",
+      "portableFile": "isolated__source-snapshot.json.gz",
+      "portablePayloadSha256": "a2e09c6ccbea759250c565d3cd310d2c288f7502e92eaae7a87d6d0f9be510bb",
+      "compressedSha256": "fe533673823e1132e81a9acb860407c49f0e5442f0841f47303f5e2354442d5a"
+    },
+    {
+      "retainedRelativePath": "native-full.log",
+      "rawSha256": "707cfc3c43e8bf15129f105feffd788af51381e0a5f56d9b509f8f67ea06308e",
+      "portableFile": "native-full.log.gz",
+      "portablePayloadSha256": "53d1050beaf9fc4a06a38d059ea07f93a521f8d1497173644b44e1ca76699209",
+      "compressedSha256": "1585c727dd902e99ddc1d367323d265f28e28967f7c978987ec80ef846e28304"
+    },
+    {
+      "retainedRelativePath": "native-full.txt",
+      "rawSha256": "86148f40a913da63b8f0afeee7d90cbaa13c8deb32a00f7a0d9686994deba513",
+      "portableFile": "native-full.txt.gz",
+      "portablePayloadSha256": "d94ab3fa939530e8fb8e40c94802b2ecb6fe49a1ce47d50cb537b93bd96f532c",
+      "compressedSha256": "7d6a65cf6564327e98a1160cee2bb0825ea5ac7df4f8d7fff3e6291f4774f3bb"
+    },
+    {
+      "retainedRelativePath": "native-full-result.json",
+      "rawSha256": "24c86885c389768b11ce303ecce569f14c612d159acb53fd3cedc0f68161d5f1",
+      "portableFile": "native-full-result.json.gz",
+      "portablePayloadSha256": "5cdb421f6161ebe3456754e2169b62261ab23f0fa7a60b6c9d47607956988093",
+      "compressedSha256": "8ae09ed61bb1a77057a2d4553eea6956c3191aec31660ad9ed5c586b7d6bf8c0"
+    },
+    {
+      "retainedRelativePath": "native-full-audit.json",
+      "rawSha256": "fd208b229960503f672a50c0d18194144d19b7491bd43fd1f3b3674a7fa48f33",
+      "portableFile": "native-full-audit.json.gz",
+      "portablePayloadSha256": "4a694851c65d99d2bc8bb67acbfdb5726f59d0ecb479c30fb0a013adf013de44",
+      "compressedSha256": "3ba21cb2ec199f197a4cf3c381c4d3d80363b893e793b73b1e27b9e918d76cf4"
+    },
+    {
+      "retainedRelativePath": "native-full-ownership.json",
+      "rawSha256": "44e5bad035d7425103e8497a850eae4e728e953bda06d065f1cfc0d9c0c53f71",
+      "portableFile": "native-full-ownership.json.gz",
+      "portablePayloadSha256": "25cf8aa179c978773b26be7243cd84ad312effbb9a28db764dd3692d0dacc7e8",
+      "compressedSha256": "a19c2273627b686355c45c381e7e8cb77043be6d73a8fc1fd0f96150af2b855f"
+    },
+    {
+      "retainedRelativePath": "native-full-live-children.json",
+      "rawSha256": "e69ef39b124a4b0608e9e735168f79ef8a214ef8c08723557234254ab4b65e30",
+      "portableFile": "native-full-live-children.json.gz",
+      "portablePayloadSha256": "caa5921fc384964d7aba2f69c81643883254f06b95629300017368d0b8e5f579",
+      "compressedSha256": "f101a9602a5851bc6ee64600018f8bc780fc4114e95d8a98dfdbffee15416e0e"
+    },
+    {
+      "retainedRelativePath": "native-full-cleanup-review.json",
+      "rawSha256": "f9ef097c4ea320a33e3c3f986c0d667e0679562d356e76a8987f66fe85ba3d9e",
+      "portableFile": "native-full-cleanup-review.json.gz",
+      "portablePayloadSha256": "2890e71caf2d85f02f436a60764ef25d952ce3ceaa09f4c4b1bcff3a0a28fa35",
+      "compressedSha256": "c7ede7e3f86d23fd90a12e75c4c960fe1b92b76c6308731d16406843f9ac424b"
+    },
+    {
+      "retainedRelativePath": "native-append.log",
+      "rawSha256": "bb1ec62380640c872da10dbe6fb1058d1d33d9ad71d9f512d99d1ca80a0ebb79",
+      "portableFile": "native-append.log.gz",
+      "portablePayloadSha256": "3c7dbda7038d3a782aa86750327f7324fa57c8680d15d9424492cc63bf4fd942",
+      "compressedSha256": "0bdc82e4675dada481b0a9863e111b4df4162482bbf833552a0beca8beec82da"
+    },
+    {
+      "retainedRelativePath": "native-append.txt",
+      "rawSha256": "6b523c4f5da12bfcbce4d87d22f81176409fa1b649c5bb3cf8cc003a54c9c42b",
+      "portableFile": "native-append.txt.gz",
+      "portablePayloadSha256": "21d36541f5338ad3ed3c82216f30c09dff98005efdc1f8506a6304010ac7df87",
+      "compressedSha256": "b006e428d204fc336779ef44206eda6a13a46285915d55de5a922f83f6cc60d3"
+    },
+    {
+      "retainedRelativePath": "native-append-result.json",
+      "rawSha256": "4b27475359f1e83c262e98ea4b16d19fb45ff1d79ada7004416e0836a2778178",
+      "portableFile": "native-append-result.json.gz",
+      "portablePayloadSha256": "ac35adaaeb2487496d74f91741708c4e4e071561595a0f037738ccfc224de0db",
+      "compressedSha256": "8fe12b737dcc5b893ba3799fe64bd0a9285e8d24aaa5f8d9478306572e4dc928"
+    },
+    {
+      "retainedRelativePath": "native-append-audit.json",
+      "rawSha256": "49360968dd1b3f4ee2aef7f825097b34e7baf7873dd2ccf9ff835bff7690e948",
+      "portableFile": "native-append-audit.json.gz",
+      "portablePayloadSha256": "f8edf7179409ab07e4a7c71e7d458e8acabced9dc713ca00cc3125361e0ed78c",
+      "compressedSha256": "063733712f5d1028f2547089ac541c48e1da64996c988a210886e0df37bdef76"
+    },
+    {
+      "retainedRelativePath": "native-append-ownership.json",
+      "rawSha256": "31b7b4c5606f6f82a090e44d8419fc5aa3f63cdf2ff9663bb161c15098877485",
+      "portableFile": "native-append-ownership.json.gz",
+      "portablePayloadSha256": "c7ad991f2cd4c98912a1f2248a0d1978d2d84b25377ac3b6e7046e602f5af770",
+      "compressedSha256": "2379d777942dbe4de3181194c0fd0ed1628eaf03bd7b4bfa58b47d52f3acdd59"
+    },
+    {
+      "retainedRelativePath": "native-append-live-children.json",
+      "rawSha256": "9f1a1c744727ab3b1037d9e07d386b51ef689aeadb01b7a440f8f14d162c1846",
+      "portableFile": "native-append-live-children.json.gz",
+      "portablePayloadSha256": "95f349a1058313c354b8ca280b82f79cb1ef06bde60cfa91db13fa6e00955183",
+      "compressedSha256": "511819cfed1c85b19982022b38cee05a2224a3161a41a19ab9d85f79fb47ca51"
+    },
+    {
+      "retainedRelativePath": "native-append-cleanup-review.json",
+      "rawSha256": "5289a2b6dbf3369e45a6fa6faab71064dd21475309beb7cfd6cd8821e90a40a5",
+      "portableFile": "native-append-cleanup-review.json.gz",
+      "portablePayloadSha256": "f568de95e3d39205dfee495af90db2b7f78d5deed14342cda5bd99336aebd987",
+      "compressedSha256": "7fc150328c340fac39a581e8cc4180cce0bba273195944ab8e28110c381800a1"
+    },
+    {
+      "retainedRelativePath": "native-full.txt.vectors.txt",
+      "rawSha256": "933a9149fc364fa1944e7fd203bf9f651e25f8dd0c48f3bec781355062b9ffea",
+      "portableFile": "native-full.txt.vectors.txt.gz",
+      "portablePayloadSha256": "933a9149fc364fa1944e7fd203bf9f651e25f8dd0c48f3bec781355062b9ffea",
+      "compressedSha256": "3a64f36dc53e523328e6a61cfbb5827c94ab5fe090e9c50b583c3b4ca358f22a"
+    },
+    {
+      "retainedRelativePath": "native-full.txt.manifest-resistive.txt",
+      "rawSha256": "8281aa99f86526a54667b2d5de2389c7247b439006839ed61c80404c6bfc757b",
+      "portableFile": "native-full.txt.manifest-resistive.txt.gz",
+      "portablePayloadSha256": "8281aa99f86526a54667b2d5de2389c7247b439006839ed61c80404c6bfc757b",
+      "compressedSha256": "c01f106a9d7eada6588a5ef5a5835a0d4aec4d0ba2f13db538f85a7d4df88605"
+    },
+    {
+      "retainedRelativePath": "native-full.txt.manifest-controlled.txt",
+      "rawSha256": "e064bdd8a81c815c55ec108c842a0fedf978f6d069b558e1b069592873395b28",
+      "portableFile": "native-full.txt.manifest-controlled.txt.gz",
+      "portablePayloadSha256": "e064bdd8a81c815c55ec108c842a0fedf978f6d069b558e1b069592873395b28",
+      "compressedSha256": "7079673908143128316d9e3b4e2e428c14bb9348a54ef8cf3dd6012496253b3e"
+    },
+    {
+      "retainedRelativePath": "native-full.txt.manifest-controlled-alt.txt",
+      "rawSha256": "c07b2db2b6c40bca52d881ad35594eea9c45d1bd9fe54263a896b0ac6a56fc6e",
+      "portableFile": "native-full.txt.manifest-controlled-alt.txt.gz",
+      "portablePayloadSha256": "c07b2db2b6c40bca52d881ad35594eea9c45d1bd9fe54263a896b0ac6a56fc6e",
+      "compressedSha256": "8a9ef0ae681fb49cb9987d7bc04559561deb2483edb12055a9e19002da13704a"
+    },
+    {
+      "retainedRelativePath": "native-full.txt.seeds.txt",
+      "rawSha256": "7bbf6739c314c6d9e9229d626ab0d7f7354a75e1e52a40660c67b23a9bcaa705",
+      "portableFile": "native-full.txt.seeds.txt.gz",
+      "portablePayloadSha256": "7bbf6739c314c6d9e9229d626ab0d7f7354a75e1e52a40660c67b23a9bcaa705",
+      "compressedSha256": "fd279e98606b733fa3b01abd5342b52291e743b9854789b516d3a167beb928b3"
+    },
+    {
+      "retainedRelativePath": "native-full.txt.roles.txt",
+      "rawSha256": "89f99bcd09c8871cef1b307c20f59932d1f29eb9ed3ea84f42483655535f5125",
+      "portableFile": "native-full.txt.roles.txt.gz",
+      "portablePayloadSha256": "fdb910ba41b7b2f92541763bc1dbbe1710dcb113f3df4264661742ca5cb2cfb6",
+      "compressedSha256": "261f6e9422908fbad1034aa0924042eee9769a837cec4ce6844e608ccf4c8287"
+    },
+    {
+      "retainedRelativePath": "native-full.txt.values.txt",
+      "rawSha256": "521f61ec6d7700f3affd52577d92ecb00446831027e278138c81c1d1b6e12555",
+      "portableFile": "native-full.txt.values.txt.gz",
+      "portablePayloadSha256": "83d70b5c6e7fc25eabc5add784aadd7442832090eb5a6c4f55853c70f866d27a",
+      "compressedSha256": "8baccbe4ceb35512647aed0809128cfc49becdb8839b3c98328e6ba4199c83f9"
+    },
+    {
+      "retainedRelativePath": "launch-helpers/run_epoch15_native.ps1",
+      "rawSha256": "e4e7c80e3eca24852edb56d5f729cd3c30cee1d89c5c4d26ce79bc6c612f6473",
+      "portableFile": "launch-helpers__run_epoch15_native.ps1.gz",
+      "portablePayloadSha256": "5f1be48af08b049401c8b18a98f5f0893ecf00371d02105670a654c72d8729e8",
+      "compressedSha256": "f8df72b97fa8a0bd316242d82da439173dd94637ed691198f1763b6663a524bc"
+    },
+    {
+      "retainedRelativePath": "launch-helpers/audit_epoch15_native.py",
+      "rawSha256": "2ffe8a0c55d887d1c380cecd5803aa24cde47ebd70baae461e751f4ecc9aa048",
+      "portableFile": "launch-helpers__audit_epoch15_native.py.gz",
+      "portablePayloadSha256": "40355bdee78370aa45d10059d9f57f0906eb32be02f16a50fd2f98176cda2d50",
+      "compressedSha256": "6aad1a9b9cce719d16dd2fad4e389ec6320e74de6b701c1e400f330f178037c8"
+    },
+    {
+      "retainedRelativePath": "launch-helpers/check_epoch15_native_cleanup.ps1",
+      "rawSha256": "a77a2148217c715b146b0290e669dbf20ed54358b62ae506dbb507a8e4f2710d",
+      "portableFile": "launch-helpers__check_epoch15_native_cleanup.ps1.gz",
+      "portablePayloadSha256": "7c47b361d26bc6f83fe600cf8d50a9de6d82357bff80f8f0db950e08b736cd7e",
+      "compressedSha256": "d6ec2d52267308808e78388e1da36efce31b4093b0e7a2fe34d52251659c5079"
+    },
+    {
+      "retainedRelativePath": "launch-helpers/run_epoch15_build.ps1",
+      "rawSha256": "245bd56ca63e261aeaab379913808c8dcdd50d4124eed57009a7482696deb775",
+      "portableFile": "launch-helpers__run_epoch15_build.ps1.gz",
+      "portablePayloadSha256": "e0c53b59e8052866d0a630ecfbc3bf28b4d92357284c9305ebec1ea84fb654a9",
+      "compressedSha256": "3160d1f322bbf8ef0dbb5bcc3d28eb051d2caae48afc01c793a2b308111310f2"
+    },
+    {
+      "retainedRelativePath": "launch-helpers/run_epoch15_canaries.py",
+      "rawSha256": "b3ebe58edb2b38cb84792772676cd1285718d09ad6d548a80871bdbb5445f90a",
+      "portableFile": "launch-helpers__run_epoch15_canaries.py.gz",
+      "portablePayloadSha256": "96c8fde28a97522b19a8dd1515a7283b922ef6f5a2757f7a6e35bf0b7cf17902",
+      "compressedSha256": "df7aaeab07d539824c28989daa88131b35a314e90501830520194c65efbb82c3"
+    },
+    {
+      "retainedRelativePath": "launch-helpers/run_epoch15_cold.ps1",
+      "rawSha256": "203b0269e1c37cdc6787e167865995c7128af294cafde8611900dca0687898c3",
+      "portableFile": "launch-helpers__run_epoch15_cold.ps1.gz",
+      "portablePayloadSha256": "0a5ebc33d0d1f98fb74abee159bc0b1b95afa63950e2ac6b02cd7832586938ce",
+      "compressedSha256": "da7663ff24a3dbd554207e33d2123e8a69b7d8e47bb458cdb14c22035e4a7408"
+    },
+    {
+      "retainedRelativePath": "launch-helpers/run_epoch14_cold_sequence.py",
+      "rawSha256": "1935be4a34e8e4ed48f1dbfc3c6d6161c41153409f886a95ae148040ff7378fb",
+      "portableFile": "launch-helpers__run_epoch14_cold_sequence.py.gz",
+      "portablePayloadSha256": "1935be4a34e8e4ed48f1dbfc3c6d6161c41153409f886a95ae148040ff7378fb",
+      "compressedSha256": "be39b57c2d2b572fdbb9c12af5b93d932260e78cfb024a96c8c86f704a858052"
+    },
+    {
+      "retainedRelativePath": "launch-helpers/audit_epoch15_cold77.py",
+      "rawSha256": "4f6b141cf84a7b79eeefef32076083d7f2cc7adb6abfab6cd6bca97ea1225fb4",
+      "portableFile": "launch-helpers__audit_epoch15_cold77.py.gz",
+      "portablePayloadSha256": "d9031e699d4e5bc744561617d6309fa1497265a4b4b24458abc2b9cea51bc329",
+      "compressedSha256": "a9ab05e9cc06d7edd57cf2c44eaa5858fbf37d582c0722085842e6ec22d4600d"
+    },
+    {
+      "retainedRelativePath": "launch-helpers/run_epoch15_shipping_hosts.py",
+      "rawSha256": "20c186f3d4ba40ad1993ce4924c94f4b4f17370bf532e6fd3f018e8945ab34ad",
+      "portableFile": "launch-helpers__run_epoch15_shipping_hosts.py.gz",
+      "portablePayloadSha256": "14569b739be9754b2f8a9851372ba79e3f86b3ed81ce9484b8a7c5b74cd0328d",
+      "compressedSha256": "df542beb583fc4ae3a706b508952bcc8e67c0a41addcf2c7c9d85b25270b273a"
+    },
+    {
+      "retainedRelativePath": "launch-helpers/audit_epoch15_compiled31.py",
+      "rawSha256": "51a17dbabdc7711824618396bdef7572d0229b0f5d454f73fbd31aad8069b4cc",
+      "portableFile": "launch-helpers__audit_epoch15_compiled31.py.gz",
+      "portablePayloadSha256": "51a17dbabdc7711824618396bdef7572d0229b0f5d454f73fbd31aad8069b4cc",
+      "compressedSha256": "48881db6d5b1b8b8622bbe7ccbf6daff5f054f2efdf029e26793ae7b884eaa5d"
+    },
+    {
+      "retainedRelativePath": "launch-helpers/epoch15-task-pointer.json",
+      "rawSha256": "184de88765515b7cbd9b4c9be8e2d26b74ca8c4676c37bf44594e1b4765eb870",
+      "portableFile": "launch-helpers__epoch15-task-pointer.json.gz",
+      "portablePayloadSha256": "0ba030763a74b3474950347b2458343f3412256b93a4ae1962a4793d425d556c",
+      "compressedSha256": "8607bb0f104b8c635ed31e22d148ef038bb74fef20f9ed7ee71a8a00d5157113"
+    }
+  ]
+}
