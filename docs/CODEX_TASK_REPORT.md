@@ -1,4 +1,38 @@
-# Current checkpoint: Q30 pilot3 PASS; original cold77 RUNNING
+# Current checkpoint: Q30 cold77 audited PASS; compiled31 RUNNING
+
+2026-10-02T07:56:34.939032+00:00. Branch `codex/q30-multirail-qualification`; source base
+`7bdc23e8170e4a9e737b33daf4bb533f87468b22`, identity `a3bd150019d00870a08896efd893c99aff120ce11a49f34cca0af07f33d59c31`.
+**Q30 NOT ACCEPTED; disabled.** No push, merge, publication, email or evidence deletion.
+U06/U07/Q60 unstarted. [Full cold evidence](task-evidence/Q30/epoch15-cold-qualification/README.md).
+
+Fresh cold77 strict audit PASS: exact roots/order/308 candidates; every20-40 part
+size published. Max80.978s (root35), minimum headroom9.022s under unchanged90s;
+work506/640, active/coordinator1.343/5s. P50 57.593s,
+p95 76.344s (nearest rank). No failures/substitutions.
+All1,354 raw inputs unchanged. Pilot phase136.313s; remaining74 phase3933.352s;
+cleanup89.157s total/1.455s max, all server/survivor/error receipts PASS.
+Cold session47937 completed exit0; wrapper6456 created06:42:49.0889270Z exited.
+
+Retained PASS: native82/service105/sensitivity105/structural77, isolated GWT5,
+compiled4/freeze and independent cleanup/oracles. Initial zero-case ABI failure
+preserved; existing matching CP313 host corrected it without source/install or
+protection changes. [Prior packet](task-evidence/Q30/epoch15-native-qualification/README.md).
+
+Compiled31 RUNNING, session57647; controller PID24860, creation
+2026-10-02T07:49:51.9289540Z, task-local run_epoch15_shipping_hosts.py compiled31.
+Do not duplicate/kill. Raw progress/identity/logs under task label `q30-epoch15-qualification-306d44cccd8d447abe0b257530b9354a`;
+workspace epoch15-task-pointer.json binds exact paths. One expensive gate at a
+time; LocalDots priority, Defender enabled, four existing caches/sibling edits preserved.
+
+Next: finish compiled31, run semantic audit including seed35's typed rejection;
+then disabled-menu30/replay2, private enabled GWT/menu33/replay3, formal archive.
+Private copy changes only catalog boolean; tracked source remains false. Parent
+acceptance review pending. Browser/computer/node_repl unavailable: visible20/30/40
+diagnosis, repair and functional retest BLOCKED/NOT RUN. No Q30 acceptance claim.
+
+---
+
+# Historical checkpoint: Q30 pilot3 PASS; original cold77 RUNNING
 
 2026-10-02T06:49:48.061906+00:00. Branch `codex/q30-multirail-qualification`; frozen source base
 `7bdc23e8170e4a9e737b33daf4bb533f87468b22`, identity `a3bd150019d00870a08896efd893c99aff120ce11a49f34cca0af07f33d59c31`.
