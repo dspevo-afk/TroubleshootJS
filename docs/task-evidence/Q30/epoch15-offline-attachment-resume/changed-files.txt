@@ -1,0 +1,8 @@
+docs/CODEX_TASK_REPORT.md
+docs/ROADMAP.md
+docs/task-evidence/Q30/epoch15-offline-attachment-resume/README.md
+docs/task-evidence/Q30/epoch15-offline-attachment-resume/changed-files.txt
+docs/task-evidence/Q30/epoch15-offline-attachment-resume/manifest.json
+docs/task-evidence/Q30/epoch15-offline-attachment-resume/offline-attachment-resume-r2.tar.gz
+docs/task-evidence/Q30/epoch15-offline-attachment-resume/packet-audit.json
+docs/task-evidence/Q30/epoch15-offline-attachment-resume/audit-corrections.json

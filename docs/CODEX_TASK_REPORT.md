@@ -1,4 +1,40 @@
-# Current checkpoint: Q30 blocked; tested cleanup correction, root75 cause unresolved
+# Current checkpoint: Q30 blocked; offline attachment guard/canaries prepared
+
+2026-10-03. Branch `codex/q30-multirail-qualification`; parent local HEAD
+`7015495007e3cffbf262afbd58410a4929a4945a`, plus docs/evidence below.
+Q30 NOT ACCEPTED and disabled. Cold77 remains31 PASS/1 TIMEOUT90.221s/45 NOT_RUN;
+original77/308/90s/640/5s unchanged. U06/U07/Q60 unstarted. No push/email/deletion.
+Local Dots retains priority; this continuation launched no Edge/Q30, broad tests,
+timing benchmarks, build, server or model changes.
+
+[Offline evidence](task-evidence/Q30/epoch15-offline-attachment-resume/README.md):
+original24 synthetic checks retained four failures/two errors; corrected24 PASS.
+Final38 PASS0.108s, outer0.268s/cleanup0ms at recorded resolution/job0/readers
+complete. These are offline identity/receipt checks, not actual Edge/solver/timing.
+Two hashed historical Edge receipts support replacing the detached oracle's
+both-identities-change condition with either-identity-change.
+
+Read-only review found an iframe/main-frame provenance gap and unused generation
+binding. Corrected guard and five-case canary oracle remain **workspace drafts**;
+the repository host/app/build is untouched. Actual Edge attached/absent/detached/
+iframe/duplicate and cleanup gates NOT_RUN. Preparation PASS: selected pinned
+runtime imports/ASTs/fixtures,1,354 frozen source inputs,118 final31 packet members;
+historical final31 attachments/cleanup PASS and earlier FAIL_CLEANUP preserved.
+Root75 offline owner review establishes no concrete timing cause.
+Initial export privacy and auditor source-pin transcription FAILs retained;
+corrected64-member packet/hash/privacy/AST/1,354-input audit PASS0.127s.
+
+Six exact offline child PIDs absent; all owned jobs/readers cleaned. Raw roots/
+exact command plan live in workspace `epoch15-final/attachment-offline-resume/`.
+Four original cache directories/seven files and sibling Desktop work preserved.
+Next: parent-coordinate four minutes for one120s Edge canary job plus15s cleanup
+and105s reserve. No granted window or auto-run. Later separate seven-minute
+root75 diagnostic/combined-sampler gate, full cold77, enabled build/menu/replay,
+supported visible repair/retest and parent acceptance review remain required.
+
+---
+
+# Historical checkpoint: Q30 blocked; tested cleanup correction, root75 cause unresolved
 
 2026-10-02T17:33:40.308206+00:00. Branch `codex/q30-multirail-qualification`; parent local HEAD
 `0c7860ba43b0749553622db025fa54b7ad0da7e5`, plus tested tools/docs/evidence below.

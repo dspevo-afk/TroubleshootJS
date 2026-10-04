@@ -8,6 +8,14 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
 **Current task:** **Q30 NOT ACCEPTED - final cold qualification FAIL at root75**<br>
+**Q30 offline continuation (2026-10-03):** No Edge/Q30 runs or timing benchmarks;
+Local Dots retains priority. Final38 offline identity/receipt checks PASS;
+new guard checks main-frame provenance and generations, and five canaries are
+prepared. Guard/oracle remain workspace drafts; actual Edge NOT_RUN.
+All1,354 frozen app/host inputs remain unchanged; old cold FAIL is preserved.
+Next requested window: four minutes, one120s canary job/15s cleanup/105s reserve.
+Root75 cause remains UNKNOWN; separate quiet diagnostics and all acceptance gates
+remain pending. [Evidence](task-evidence/Q30/epoch15-offline-attachment-resume/README.md).
 **Q30 checkpoint (2026-10-02):** Full cold77 still FAIL at root75:
 90.221s/90s,31 prior PASS/45 NOT_RUN. Prior fresh native/structural/GWT/compiled,
 disabled menu and source-only archive checks retain their unchanged-input scope.

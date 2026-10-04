@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "status": "PASS_PACKET_AND_UNCHANGED_INPUTS_ONLY",
+  "scope": "Read-only/no-extraction/member/path/privacy/hash/AST/frozen-source audit; no Edge or Q30",
+  "members": 64,
+  "sourceAsts": 10,
+  "frozenInputsVerified": 1354,
+  "selectedGuardSha256": "5ff81d18a7a9beab10ef161166ede4a4cfa58bab1074c4a53a41270486eb4460",
+  "selectedHelperSha256": "a65458a353cd78db435200e48619016f834ec96c7a9a9f9c0c49840da5ee980f",
+  "originalDraftsAndRepositoryHostUnchanged": true,
+  "finalOfflineChecks": 38,
+  "operationSeconds": 0.12670550006441772,
+  "archiveSha256": "ac0912b7bd3b38696b0d2dd441e30234a06deebb7dffd383d761f0d8607fdd42",
+  "finishedUtc": "2026-10-03T23:59:40.120379+00:00",
+  "q30Accepted": false,
+  "actualEdge": "NOT_RUN",
+  "normalQ30Enabled": false
+}

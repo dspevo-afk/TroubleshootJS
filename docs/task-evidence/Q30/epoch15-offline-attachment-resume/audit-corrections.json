@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "status": "FAILURES_RETAINED_THEN_SEPARATE_AUDIT_PASS",
+  "exportFailure": {
+    "archiveSha256": "038c447339ab9c5fdd31ce22687895798d352bac60a964cda994edd107eecec7",
+    "scope": "One escaped personal prefix remained in packager-source member",
+    "preserved": "Workspace failed-export archive/manifest/pointer; no deletion"
+  },
+  "sourcePinTranscriptionFailure": {
+    "phase": "Original-draft source pin comparison",
+    "auditProcessExitCode": 1,
+    "elapsed": "NOT_RECORDED",
+    "wrongLiteral": "8ebc3d4d68e437169d4166c079c90bc0faacbdc51aaafa6d70df0ff3d3c82f6f4",
+    "correctLiteral": "8ebc3d4d68e437169d4166c079c90bc0faacbdc51aafa6d70df0ff3d3c82f6f4",
+    "independentBasis": "Preserved initial24 actual sourceBefore receipt and unchanged original draft hash",
+    "originalAuditSourceSha256": "aac192b5f6e5c36ef05d1680de377ade2ebcbaa7496fdf9a1a310f6b3dbbfced",
+    "correctedAuditSourceSha256": "54cb9d6f067493b053abfd72cea1d8b62ece5f8b738176f973b6f78265ef6733",
+    "assertionsRelaxed": false
+  },
+  "correctedPacketAudit": "PASS_PACKET_AND_UNCHANGED_INPUTS_ONLY",
+  "archiveSha256": "ac0912b7bd3b38696b0d2dd441e30234a06deebb7dffd383d761f0d8607fdd42",
+  "rawEvidencePreserved": true
+}
