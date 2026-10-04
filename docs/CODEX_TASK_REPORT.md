@@ -1,4 +1,42 @@
-# Current checkpoint: Q30 blocked; actual attachment canary FAIL, resources released
+# Current checkpoint: Q30 blocked; reviewed offline attachment candidate ready
+
+2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
+`f88917aac6344b160ed7a2435933613385b98a07`, plus this local docs/evidence checkpoint.
+Q30 remains disabled/NOT ACCEPTED. No Edge/Q30, timing, build or broad matrix
+launch for this correction. Local Dots retains PC priority; no window is granted.
+
+[Evidence and restart](task-evidence/Q30/epoch15-offline-attachment-r4/README.md):
+final69 focused synthetic checks PASS0.159417s, outer0.366s/exit0; cleanup0ms
+at recorded resolution/job0/readers complete. Preparation PASS: pinned runtime,
+1354 frozen inputs,118 historical compiled31 members, prior FAIL_CLEANUP and exact
+failed Edge raw/source hashes unchanged. Nine exact offline child PIDs absent
+at00:51:11UTC; raw evidence and previous revisions retained.
+Final artifact audit PASS:62 member hashes/privacy/ASTs and1354 unchanged inputs,
+operation0.199816s/outer0.258s, job0/readers complete; audit child28564 absent.
+
+Final r4 source review PASS with no remaining source blocker in its limited scope.
+The unintegrated draft separates DOM refresh from frame/loader/backend identity,
+fences held requests against entry scope/navigation, and uses one terminal route
+action plus one existing ten-second observer close deadline. Replacement runs
+after load/timer; its oracle requires stable frame/loader and a changed backend.
+Two reproduced synthetic failures were fixed and preserved; no pre-fix PASS reused.
+Actual Edge frame-wrapper identity, request/event ordering and revised canary
+remain NOT_RUN. Conservative unknown-entry DOM invalidation aborts ambiguity.
+Production app/host/build inputs stay unchanged; the previous actual Edge FAIL
+is retained, including its missing replacement proof.
+
+Next: new parent-coordinated240s window, one five-fixture Edge job120s plus15s
+cleanup/105s reserve; frozen workspace plan `epoch15-final/attachment-offline-resume-r4/quiet-window-plan.json`
+has `autoRun:false`, `windowGranted:false`. No expired wrapper reuse.
+Later separate root75 diagnosis, final cold77, enabled production/menu/replay,
+supported visible repair/retest, archive verification and parent review remain.
+Cold77 remains31 PASS/1 TIMEOUT90.221s/45 NOT_RUN;77/308/90s/640/5s unchanged.
+No push/publish/email/evidence deletion. Original four cache directories/seven
+files and sibling Desktop work preserved. U06/U07/Q60 unstarted.
+
+---
+
+# Historical checkpoint: Q30 blocked; actual attachment canary FAIL, resources released
 
 2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
 `383d32291f3bc8ec5943eeccce016566c7c031d3`, plus this docs-only failed-gate receipt.

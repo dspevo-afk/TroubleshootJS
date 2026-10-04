@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "scope": "OFFLINE_ARTIFACT_AND_FROZEN_INPUTS_ONLY",
+  "qualification": false,
+  "startedUtc": "2026-10-04T00:55:58.568705+00:00",
+  "archiveSha256": "5f295858ee72bcea026d8ec4aedaefaecef2fef29ea51f16f5e894f06f3e1897",
+  "membersVerified": 62,
+  "memberHashesPrivacyAndAst": "PASS",
+  "sourcePins": {
+    "compiled_attribute_acceptance.py": "146101ab19500b06e8d0cb56bde32d90f8439c87b245099c8e1c569b07df85cd",
+    "run_attachment_scope_canaries.py": "b02a307e046ca9de5a9f79aa3f346dce405b10692220153c0a11e8713fa0738f",
+    "offline_attachment_checks.py": "4e9871a05b627a2e75b6a2ab08fc03b5b317bfcb0b846e3e956595081bda4916"
+  },
+  "frozenInputsVerified": 1354,
+  "frozenSourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+  "priorFailuresPreserved": true,
+  "nextCanaryScope": "FIVE_FIXTURES_ONE120S_JOB_15S_CLEANUP_NEW240S_PARENT_WINDOW",
+  "actualEdge": "NOT_RUN",
+  "productionInputsUnchanged": true,
+  "operationSeconds": 0.1998156999470666,
+  "finishedUtc": "2026-10-04T00:55:58.768519+00:00"
+}

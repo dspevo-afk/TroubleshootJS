@@ -8,6 +8,16 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
 **Current task:** **Q30 NOT ACCEPTED - final cold qualification FAIL at root75**<br>
+**Q30 offline r4 correction (2026-10-04):** Final69 focused synthetic checks
+PASS; source review PASS within its limited scope. Draft now separates DOM
+refresh from semantic identity, fences requests at entry, drains a single route
+action under the existing close budget, and schedules replacement after load.
+Two synthetic failures and the actual Edge FAIL remain preserved. All1354 frozen
+app/host inputs unchanged; guard remains unintegrated and actual revised Edge
+NOT_RUN. Next scope is one five-fixture120s job/15s cleanup in a new parent-
+coordinated240s window; none granted/auto-run. Q30 stays disabled; root75/full
+qualification and visible acceptance gates remain pending.
+[Ready candidate](task-evidence/Q30/epoch15-offline-attachment-r4/README.md).
 **Q30 actual attachment canary (2026-10-04):** One authorized five-fixture
 Edge job FAIL: positive had stable backend IDs but observer generation changed;
 detached fixture did not prove HTML replacement. No rerun. Host cleanup PASS,

@@ -1,0 +1,152 @@
+{
+  "schema": 1,
+  "status": "READY_OFFLINE_ACTUAL_EDGE_NOT_RUN",
+  "qualification": false,
+  "baseHead": "f88917aac6344b160ed7a2435933613385b98a07",
+  "frozenSourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+  "frozenInputsVerified": 1354,
+  "sourcePins": {
+    "compiled_attribute_acceptance.py": "146101ab19500b06e8d0cb56bde32d90f8439c87b245099c8e1c569b07df85cd",
+    "run_attachment_scope_canaries.py": "b02a307e046ca9de5a9f79aa3f346dce405b10692220153c0a11e8713fa0738f",
+    "offline_attachment_checks.py": "4e9871a05b627a2e75b6a2ab08fc03b5b317bfcb0b846e3e956595081bda4916"
+  },
+  "syntheticChecks": {
+    "status": "PASS",
+    "tests": 69,
+    "operationSeconds": 0.15941650001332164,
+    "scope": "OFFLINE_SYNTHETIC_ONLY_NO_EDGE_OR_Q30"
+  },
+  "preparation": {
+    "status": "PASS",
+    "operationSeconds": 0.31438120000530034
+  },
+  "outerChecks": [
+    {
+      "pid": 18924,
+      "status": "PASS",
+      "operationMillis": 366,
+      "cleanup": {
+        "pid": 18924,
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "jobClosedForCleanup": false,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "drainerWaitMs": 0,
+        "drainerErrors": [],
+        "cleanupVerified": true,
+        "cleanupElapsedMs": 0,
+        "jobAccountingDrainMs": 0,
+        "jobAccountingDrainSucceeded": true,
+        "jobAccountingError": null
+      }
+    },
+    {
+      "pid": 28080,
+      "status": "PASS",
+      "operationMillis": 382,
+      "cleanup": {
+        "pid": 28080,
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "jobClosedForCleanup": false,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "drainerWaitMs": 0,
+        "drainerErrors": [],
+        "cleanupVerified": true,
+        "cleanupElapsedMs": 0,
+        "jobAccountingDrainMs": 0,
+        "jobAccountingDrainSucceeded": true,
+        "jobAccountingError": null
+      }
+    }
+  ],
+  "review": {
+    "schema": 1,
+    "status": "PASS_SOURCE_REVIEW_ONLY",
+    "reviewer": "attachment_offline_review",
+    "revision": "r4",
+    "scope": [
+      "DOM acquisition epoch versus semantic frame/loader/URL/backend scope",
+      "stale acquisition and main-frame invalidation",
+      "held entry known/unknown scope fence",
+      "single terminal route action and bounded cooperative close",
+      "post-load replacement fixture and strict frame/loader/backend oracle",
+      "69 focused synthetic case source review"
+    ],
+    "remainingBlockers": [],
+    "reportedTests": "Root ran69 PASS; reviewer did not run tests",
+    "limits": [
+      "Actual updated Edge five-case canary NOT_RUN",
+      "Playwright frame-wrapper identity not newly proved",
+      "Live request-to-loader event ordering not proved",
+      "Unknown entry scope fails conservatively on any intervening DOM epoch change",
+      "No solver/timing/player-visible qualification"
+    ],
+    "findingsResolved": [
+      "DOM refresh falsely rejected same backend identity",
+      "Parser-active document.open lacked replacement proof",
+      "Held request rebinding across navigation",
+      "Detached oracle accepting navigation alone",
+      "Reproduced double-abort during close",
+      "Missing diagnostic for cancelled exception-path abort",
+      "Held request rebinding across same-loader replacement"
+    ]
+  },
+  "previousActualEdge": "FAIL_RETAINED_NOT_RELABELLED",
+  "actualRevisedEdge": "NOT_RUN_NEW_PARENT_WINDOW_REQUIRED",
+  "q30Enabled": false,
+  "authoritativeCold77": {
+    "status": "FAIL",
+    "pass": 31,
+    "timeout": 1,
+    "notRun": 45,
+    "timeoutSeconds": 90.221
+  },
+  "limits": {
+    "roots": 77,
+    "candidates": 308,
+    "jobMillis": 90000,
+    "sharedWork": 640,
+    "activeOperationMillis": 5000
+  },
+  "nextWindow": {
+    "seconds": 240,
+    "jobs": 1,
+    "operationMillis": 120000,
+    "cleanupMillis": 15000,
+    "reserveSeconds": 105,
+    "cases": 5,
+    "windowGranted": false,
+    "autoRun": false
+  },
+  "remaining": [
+    "Actual five-fixture Edge gate and cleanup before guard integration",
+    "Parent-coordinated root75 diagnosis and final full cold77 acceptance",
+    "Enabled production build and menu/replay checks only after prerequisites",
+    "Supported visible repair/retest, source archive verification and parent acceptance review"
+  ],
+  "resources": "No persistent task processes; raw failure/test/preparation evidence retained",
+  "untouched": "Production host/app, unrelated sibling Desktop work, original seven cache files; U06/U07/Q60 unstarted",
+  "publication": "LOCAL_CHECKPOINT_ONLY_NO_PUSH_EMAIL_PUBLISH",
+  "finishedUtc": "2026-10-04T00:52:20.859162+00:00",
+  "ownedResourceProof": {
+    "schema": 1,
+    "status": "PASS_EXACT_OWNED_PIDS_ABSENT",
+    "checkedUtc": "2026-10-04T00:51:11.7997491Z",
+    "pids": [
+      1972,
+      28324,
+      23232,
+      26936,
+      16480,
+      19968,
+      22900,
+      18924,
+      28080
+    ],
+    "observed": [],
+    "noTermination": true
+  }
+}
