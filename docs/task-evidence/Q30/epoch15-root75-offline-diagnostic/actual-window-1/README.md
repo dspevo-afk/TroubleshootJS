@@ -41,3 +41,10 @@ evidence offline where possible, then a separately authorized live window. The
 consumed grant and launch marker must never be reused. Root75 cause and all
 remaining full regression/cold77/enabled build/menu/replay/visible repair/retest/
 source-archive/parent acceptance gates remain pending.
+
+Parent later reported a3.4s Core fixture at approximately08:38UTC before its hold
+arrived. [Coordination receipt](coordination-update.json): host finished after
+cleanup08:35:05.923UTC and desktop was verified released08:36:34.969UTC, so the
+reported fixture did not overlap this attempt on supplied timestamps. Exact Core
+start/end were not provided or independently audited. The entire reserved240s
+window is not claimed quiet. No extra Q30 run; Core may resume.

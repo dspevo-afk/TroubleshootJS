@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "status": "PARENT_REPORTED_LATE_FIXTURE_NO_MEASURED_RUN_OVERLAP",
+  "qualification": false,
+  "source": "Parent coordination message from thread01a1017d-669f-76ed-b3cf-1341fcc89016",
+  "reportedCoreFixture": {"timeUtc": "2026-10-04T08:38:00Z approximately", "durationSeconds": 3.4, "exactStartEndProvided": false, "beforeHoldReceived": true},
+  "actualDiagnosticHost": {"startedUtc": "2026-10-04T08:35:01.851241Z", "caseStartedUtc": "2026-10-04T08:35:03.978749Z", "caseFinishedUtc": "2026-10-04T08:35:04.331177Z", "hostFinishedAfterCleanupUtc": "2026-10-04T08:35:05.923000Z"},
+  "desktopVerifiedReleasedUtc": "2026-10-04T08:36:34.9690510Z",
+  "interpretation": "Reported Core fixture occurred after diagnostic and verified desktop release; no overlap on supplied timestamps. Entire reserved08:34:59.959-08:38:59.959 window is not claimed quiet.",
+  "limits": "Core timestamps are parent-reported and approximate, not independently audited; Q30 app generation/timing never started due capture setup failure.",
+  "extraRuns": 0,
+  "desktopReleased": true,
+  "coreMayResume": true
+}
