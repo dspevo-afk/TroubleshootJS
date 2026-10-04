@@ -1,4 +1,32 @@
-# Current checkpoint: Q30 blocked; offline attachment guard/canaries prepared
+# Current checkpoint: Q30 blocked; actual attachment canary FAIL, resources released
+
+2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
+`383d32291f3bc8ec5943eeccce016566c7c031d3`, plus this docs-only failed-gate receipt.
+Exactly one parent-authorized five-fixture Edge job ran,120s operation limit/
+15s cleanup. Canary **FAIL**, outer operation4.046s/exit1; host cleanup
+PASS1.295s, serverStopped/job0/readers complete. Recorded child29104 and seven
+Edge PIDs were checked absent at00:10:35UTC. PC resources released. No rerun.
+
+[Latest receipt](task-evidence/Q30/epoch15-offline-attachment-resume/edge-window-result.json):
+attached positive observed correct state/URL/main-frame attachment and stable
+backend IDs3/5, but generation1->2 made terminal scope fail. Detached fixture
+also kept its original IDs9/11; replacement proof is missing. Missing/iframe/
+duplicate rows retain intended errors and exact controlled-abort diagnostics;
+aggregate validation stopped at failed positive, never PASS. Original failures,
+raw profiles/receipts and selected source pins retained. Guard not integrated.
+
+Repo app/host/build inputs unchanged; selected guard/helper/compiled packet/
+prior failure hashes unchanged after actual job. Q30 still disabled/NOT ACCEPTED;
+cold77 remains31 PASS/1 TIMEOUT90.221s/45 NOT_RUN,90s/640/5s unchanged.
+No Q30, build, cold/timing run, push/email/evidence deletion. Four original cache
+directories/seven files preserved. U06/U07/Q60 unstarted.
+Next: read-only diagnosis then offline correction of observer-generation scope
+and parser-active replacement fixture; freeze and request a new fixture window.
+Root75 timing still requires its separate parent-coordinated quiet window.
+
+---
+
+# Historical checkpoint: Q30 blocked; offline attachment guard/canaries prepared
 
 2026-10-03. Branch `codex/q30-multirail-qualification`; parent local HEAD
 `7015495007e3cffbf262afbd58410a4929a4945a`, plus docs/evidence below.

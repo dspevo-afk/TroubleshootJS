@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "status": "FAIL_CANARY_RESOURCES_RELEASED",
+  "commitUnchanged": "383d32291f3bc8ec5943eeccce016566c7c031d3",
+  "windowReference": "parent-01a1017d-20261004T000732Z-four-minute-attachment-only",
+  "windowEndUtc": "2026-10-04T00:11:32Z",
+  "jobsAuthorized": 1,
+  "jobsLaunched": 1,
+  "secondJob": "NOT_RUN_NOT_AUTHORIZED",
+  "outerRoot": "<user>/AppData\\Local\\Temp\\q30-attachment-edge-window-dk30axka",
+  "canaryRoot": "<user>/AppData\\Local\\Temp\\q30-attachment-scope-canary-psbjt3qf",
+  "selectedGuardSha256": "5ff81d18a7a9beab10ef161166ede4a4cfa58bab1074c4a53a41270486eb4460",
+  "selectedCanarySha256": "a65458a353cd78db435200e48619016f834ec96c7a9a9f9c0c49840da5ee980f",
+  "outerOperationMillis": 4046,
+  "outerExitCode": 1,
+  "outerCleanup": {
+    "status": "PASS",
+    "jobActiveProcesses": 0,
+    "drainsComplete": true,
+    "elapsedMillis": 0,
+    "clockLimit": "0ms at recorded resolution does not prove zero cost"
+  },
+  "hostCleanup": {
+    "status": "PASS",
+    "seconds": 1.2954206999856979,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "resourceCheck": {
+    "checkedUtc": "2026-10-04T00:10:35.9936598Z",
+    "ownerChild29104": "ABSENT",
+    "recordedEdgePids": [
+      2700,
+      24384,
+      27580,
+      30592,
+      17584,
+      16328,
+      29000
+    ],
+    "currentlyPresent": [],
+    "profile": "host-output/profile",
+    "port": 50154,
+    "termination": "NONE_NEEDED"
+  },
+  "hostRows": "Five completed rows, all host outcomes FAIL; four fixtures intended negative, attached positive unexpectedly failed",
+  "attachedPositive": {
+    "status": "FAIL_UNEXPECTED",
+    "observedState": "PASS:attached",
+    "urlMatches": true,
+    "mainFrameRequest": true,
+    "backendDocument": [
+      3,
+      3
+    ],
+    "backendHtml": [
+      5,
+      5
+    ],
+    "generation": [
+      1,
+      2
+    ],
+    "error": "terminal-document-scope exactattachment requirement"
+  },
+  "detachedFixture": {
+    "status": "FAIL_UNPROVEN_REPLACEMENT",
+    "observedState": "PASS:detached",
+    "backendDocument": [
+      9,
+      9
+    ],
+    "backendHtml": [
+      11,
+      11
+    ],
+    "generation": [
+      1,
+      2
+    ],
+    "limitation": "Synchronous document.open/write during parser did not change the original HTML identity; this does not prove detached rejection"
+  },
+  "otherNegatives": "Missing-script, iframe-only and duplicate rows show their intended observer errors; iframe/duplicate retain exact controlled-abort console diagnostics. Aggregate canary validation stopped at the failed positive; do not relabel suite PASS.",
+  "next": "Read-only diagnosis of observer generation versus actual backend scope and parser-active replacement fixture; fix and re-freeze offline, then request a new canary window. No rerun in this window.",
+  "q30Accepted": false,
+  "normalQ30Enabled": false,
+  "q30ApplicationsLaunched": 0,
+  "productionBuildOrCold77": "NOT_RUN",
+  "root75Performance": "NOT_RUN_REQUIRES_SEPARATE_WINDOW",
+  "guardIntegrated": false,
+  "pushEmailEvidenceDeletion": "NONE",
+  "trackedTree": "At resource check: unchanged from383d3229; same four cache dirs preserved",
+  "repositoryCheckpointUpdate": "Recorded in this repository docs checkpoint; original workspace observation retained"
+}

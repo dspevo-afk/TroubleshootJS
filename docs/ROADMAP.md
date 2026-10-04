@@ -8,6 +8,12 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
 **Current task:** **Q30 NOT ACCEPTED - final cold qualification FAIL at root75**<br>
+**Q30 actual attachment canary (2026-10-04):** One authorized five-fixture
+Edge job FAIL: positive had stable backend IDs but observer generation changed;
+detached fixture did not prove HTML replacement. No rerun. Host cleanup PASS,
+owned job/readers drained and recorded child/seven Edge PIDs absent; PC window
+released. Guard stays unintegrated; all Q30 application/qualification limits
+and authoritative cold FAIL remain unchanged. [Latest receipt](task-evidence/Q30/epoch15-offline-attachment-resume/edge-window-result.json).
 **Q30 offline continuation (2026-10-03):** No Edge/Q30 runs or timing benchmarks;
 Local Dots retains priority. Final38 offline identity/receipt checks PASS;
 new guard checks main-frame provenance and generations, and five canaries are
