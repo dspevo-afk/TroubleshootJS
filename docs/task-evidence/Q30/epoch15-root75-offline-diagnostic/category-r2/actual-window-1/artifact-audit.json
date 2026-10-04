@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "status": "PASS_ARTIFACT_ONLY",
+  "qualification": false,
+  "checks": [
+    "13 bound sanitized receipt hashes and JSON",
+    "packet personal-path/address privacy scan",
+    "unchanged six r2 candidate pins",
+    "original cold77 archive still matches declared SHA"
+  ],
+  "newLiveRuns": 0,
+  "newFixturesRun": 0,
+  "productionBuild": "NOT_APPLICABLE",
+  "elapsedSeconds": 0.03065559989772737,
+  "limits": "Static evidence integrity only; no new Performance/Edge/CPU/Q30 runtime proof"
+}

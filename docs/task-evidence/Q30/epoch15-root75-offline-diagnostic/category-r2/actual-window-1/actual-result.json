@@ -1,0 +1,390 @@
+{
+  "schema": 1,
+  "status": "FAIL_CAPTURE_SETUP_APP_NOT_RUN",
+  "qualification": false,
+  "parentHead": "40235228052f3079e9bed65fed68dd9900cd0223",
+  "candidateManifestSha256": "74fb6460385c5e33fc9a7e241c21d62c990d1e442dc02c7ac15e1ac412d16cd3",
+  "window": {
+    "schema": 1,
+    "parentReference": "01a1017d-669f-76ed-b3cf-1341fcc89016: Core safe boundary confirmed; one reviewed r2 normal-entrypoint diagnostic after preflight",
+    "windowGranted": true,
+    "quietDesktopConfirmed": true,
+    "candidateManifestSha256": "74fb6460385c5e33fc9a7e241c21d62c990d1e442dc02c7ac15e1ac412d16cd3",
+    "windowStartUtc": "2026-10-04T09:15:43.2814931Z",
+    "windowEndUtc": "2026-10-04T09:19:43.2814931Z",
+    "maximumCases": 1,
+    "qualification": false,
+    "limits": {
+      "sharedWork": 640,
+      "jobMillis": 90000,
+      "activeOperationMillis": 5000
+    }
+  },
+  "desktopReleasedUtc": "2026-10-04T09:17:00.6354489Z",
+  "noRerun": true,
+  "diagnosticCasesAttempted": 1,
+  "applicationGenerationRuns": 0,
+  "applicationAudit": "NOT_RUN",
+  "phase": "Empty trace category enumeration before app script release",
+  "categoryPreflight": {
+    "status": "MISSING_REQUIREMENTS",
+    "requiredCategories": [
+      "devtools.timeline",
+      "v8",
+      "v8.execute",
+      "toplevel",
+      "disabled-by-default-v8.gc"
+    ],
+    "returnedCategories": [],
+    "returnedEvidenceComplete": true,
+    "missingRequirements": [
+      "devtools.timeline",
+      "v8",
+      "v8.execute",
+      "toplevel",
+      "disabled-by-default-v8.gc"
+    ],
+    "matches": [],
+    "errors": [],
+    "returnedType": "list",
+    "returnedCount": 0,
+    "returnedUtf8Bytes": 0,
+    "returnedCategoriesJsonSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "selectedEdge": {
+    "protocolVersion": "1.3",
+    "product": "Edg/154.0.4258.53",
+    "revision": "@5af6e80f702cffe10645c6d6433668f011b739be",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "jsVersion": "15.4.11.7"
+  },
+  "selectedTarget": {
+    "targetId": "360D6F60515339F958BE7BCCDE6B3493",
+    "type": "page",
+    "title": "127.0.0.1:60046/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "url": "http://127.0.0.1:60046/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "attached": true,
+    "canAccessOpener": false,
+    "browserContextId": "3281D9C35D132DA52DC3252BACDF3636",
+    "pid": 20696
+  },
+  "sessionKindFromPinnedSource": "page CDP session",
+  "wrongTargetObserved": false,
+  "emptyEnumerationRootCause": "UNKNOWN",
+  "traceStartSupport": "NOT_RUN",
+  "PerformanceSupport": "NOT_RUN",
+  "root75PerformanceCause": "UNKNOWN",
+  "metricsCaptured": false,
+  "traceCaptured": false,
+  "commandClocks": [
+    {
+      "method": "Browser.getVersion",
+      "beforeNs": 632897467653500,
+      "afterNs": 632897469572000
+    },
+    {
+      "method": "Target.getTargetInfo",
+      "beforeNs": 632897469575000,
+      "afterNs": 632897470125900
+    },
+    {
+      "method": "Tracing.getCategories",
+      "beforeNs": 632897470130500,
+      "afterNs": 632897492819800
+    }
+  ],
+  "timings": {
+    "outerOperationMs": 5829,
+    "innerOperationMs": 3348,
+    "hostCaseOperationSeconds": 0.31533419992774725,
+    "hostCleanupSeconds": 1.2481069999048486,
+    "finalizationMs": 1152.3436,
+    "outerCleanupMs": 0,
+    "innerCleanupMs": 0
+  },
+  "cleanup": {
+    "host": {
+      "status": "PASS",
+      "seconds": 1.2481069999048486,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    },
+    "outer": {
+      "pid": 29584,
+      "processSignaled": true,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "drainsComplete": true,
+      "liveDrainers": 0,
+      "drainerWaitMs": 0,
+      "drainerErrors": [],
+      "cleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null
+    },
+    "inner": {
+      "pid": 27340,
+      "processSignaled": true,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "drainsComplete": true,
+      "liveDrainers": 0,
+      "drainerWaitMs": 0,
+      "drainerErrors": [],
+      "cleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null
+    },
+    "independentRelease": {
+      "schema": 1,
+      "status": "PASS_RELEASED",
+      "checkedUtc": "2026-10-04T09:17:00.6354489Z",
+      "processes": [
+        {
+          "pid": 4516,
+          "status": "ABSENT",
+          "createdUtc": null
+        },
+        {
+          "pid": 6988,
+          "status": "ABSENT",
+          "createdUtc": null
+        },
+        {
+          "pid": 18792,
+          "status": "ABSENT",
+          "createdUtc": null
+        },
+        {
+          "pid": 20544,
+          "status": "ABSENT",
+          "createdUtc": null
+        },
+        {
+          "pid": 20696,
+          "status": "ABSENT",
+          "createdUtc": null
+        },
+        {
+          "pid": 22280,
+          "status": "ABSENT",
+          "createdUtc": null
+        },
+        {
+          "pid": 26936,
+          "status": "ABSENT",
+          "createdUtc": null
+        },
+        {
+          "pid": 27340,
+          "status": "ABSENT",
+          "createdUtc": null
+        },
+        {
+          "pid": 29584,
+          "status": "ABSENT",
+          "createdUtc": null
+        },
+        {
+          "pid": 29820,
+          "status": "ABSENT",
+          "createdUtc": null
+        },
+        {
+          "pid": 29952,
+          "status": "ABSENT",
+          "createdUtc": null
+        }
+      ],
+      "taskPort": 60046,
+      "taskPortListeners": 0,
+      "terminatedProcesses": 0,
+      "normalEntrypointExit": 1,
+      "controllerStatus": "CONTROLLER_COMPLETE_WORKER_FAILURE",
+      "diagnosticStatus": "DIAGNOSTIC_FAIL",
+      "captureStatus": "FAIL_CAPTURE",
+      "categoryStatus": "MISSING_REQUIREMENTS",
+      "returnedCategoryCount": 0,
+      "returnedEvidenceComplete": true,
+      "missingRequirements": [
+        "devtools.timeline",
+        "v8",
+        "v8.execute",
+        "toplevel",
+        "disabled-by-default-v8.gc"
+      ],
+      "outerOperationMs": 5829,
+      "innerOperationMs": 3348,
+      "hostCaseOperationSeconds": 0.31533419992774725,
+      "hostCleanupSeconds": 1.2481069999048486,
+      "hostFinishedUtc": "2026-10-04T05:15:48.059962-04:00",
+      "applicationAudit": "NOT_RUN",
+      "inputBindingUnchanged": true,
+      "extraRuns": 0,
+      "documentationOrCommitPerformed": false
+    }
+  },
+  "inputsUnchanged": true,
+  "sixCandidateSourcePinsUnchanged": true,
+  "originalCold77ArchiveSha256": "0bf9b802e973c4b691b1e50a4025a338229f17ebc9880d58b588e7533b42a4a3",
+  "originalCold77": "31 PASS /1 root75 TIMEOUT90221ms /45 NOT_RUN",
+  "normalQ30Enabled": false,
+  "appLimits": {
+    "jobMillis": 90000,
+    "sharedWork": 640,
+    "activeOperationMillis": 5000
+  },
+  "postFailureReaderError": "Missing app report is downstream FileNotFoundError; no APP_FAIL/timing result",
+  "sourceChanges": 0,
+  "rawBindings": [
+    {
+      "file": "controller-result.json",
+      "rawSha256": "33710b49fafee57bf27d1fe50bad1957ba99d8b80a80a5a8df2706f70a747395",
+      "sanitizedSha256": "803ee9973ffd8b8fa4b326503488820731167fa2d9fa2d452ba92b06c133b559",
+      "rawLocation": "<OS_TEMP>\\q30-root75-diagnostic-controller-lwt3sl8d\\controller-result.json",
+      "bytes": 1709
+    },
+    {
+      "file": "diagnostic-result.json",
+      "rawSha256": "9d050930efdbb6e51a18d0083eb15fc16ed728d9ff211e4946051f6b11b73adf",
+      "sanitizedSha256": "b9c01d0e817266acd2a33ed97ff5ae43ab8c5ff3913b2bd3655a617e4c490d7b",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-ilvopz30\\diagnostic-result.json",
+      "bytes": 3514
+    },
+    {
+      "file": "renderer-category-preflight.json",
+      "rawSha256": "688f4d1c543530872c4cf278f173b86a2440123004732a55c3fcfb59880c0a0f",
+      "sanitizedSha256": "7e0c02f946b329223fb6a52bb705e1743f5e45e3765293ef237dd42e6065c4a1",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-ilvopz30\\host-output\\renderer-category-preflight.json",
+      "bytes": 1464
+    },
+    {
+      "file": "renderer-capture.json",
+      "rawSha256": "21422866c4d90e3c78934986523d5bc81ecdafdd84d4b161cf3344fcafcc2ed1",
+      "sanitizedSha256": "7e355715a4f23439b12d0e37e4031125a8b66d08d4b367cd30f836a457410ba8",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-ilvopz30\\host-output\\renderer-capture.json",
+      "bytes": 3946
+    },
+    {
+      "file": "host-result.json",
+      "rawSha256": "df805d68ce1c88bb108e8e67f923d0207f26567910c05e139e620b295bdba68f",
+      "sanitizedSha256": "9f169877a974f8be26bd6bf3d94fa37bbbfaff0445e63120d4e0d386397d243c",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-ilvopz30\\host-output\\result.json",
+      "bytes": 6388
+    },
+    {
+      "file": "host-identity.json",
+      "rawSha256": "810a8e95a27fa220c07159905c0a2cfe4eb8a0b0158f79243790e397c1875c52",
+      "sanitizedSha256": "2ea85c0f0bd4a02b9ccbc0aeaf89529321c1250836ce5434cc6f1dcb443867a4",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-ilvopz30\\host-output\\identity.json",
+      "bytes": 1791
+    },
+    {
+      "file": "input-audit-before.json",
+      "rawSha256": "c1a640cc9e49497dd3b8e14d905ae70e462c653bebe077b99d9cd8124e9b070f",
+      "sanitizedSha256": "b7083187f0b0b97e12c30f7c0728f2b5f306cd00d0cb6ddb3e6f5c1c05a613f8",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-ilvopz30\\input-audit-before.json",
+      "bytes": 3479
+    },
+    {
+      "file": "input-audit-after.json",
+      "rawSha256": "349a553626364b68183df2cbc55bc5fa78ff8fee9d06e3725658f3abe78324c1",
+      "sanitizedSha256": "2dd11d41aade27c47c26ff0ab33339bff5c644a02060a40e07774c9d7dfa2cd6",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-ilvopz30\\input-audit-after.json",
+      "bytes": 2938
+    },
+    {
+      "file": "release.json",
+      "rawSha256": "cb50290471d2846e4ccc5eb336a8471738595f87e58061944a866625ccc74342",
+      "sanitizedSha256": "19040097e1304cb46a80308f9ee095189a711fa0ab2b505d787770957af70abb",
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-category-offline-r2\\r2-live-release.json",
+      "bytes": 1856
+    },
+    {
+      "file": "grant.json",
+      "rawSha256": "88ad3ed7a57db96f99009a541268bab5b68e8baea8c75d4b6b49a7828a50b27e",
+      "sanitizedSha256": "6fbda6eeb7e26601d4ebadd109a789c62bcbf4da37db234ed0e8960a049d1fed",
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-category-offline-r2\\quiet-window-grant-20261004-r2-once.json",
+      "bytes": 575
+    },
+    {
+      "file": "consumed-grant.json",
+      "rawSha256": "912397c18a279b4cf6e466ff2f9dd82d4fabf747d56a3ed9df40b3f806749c85",
+      "sanitizedSha256": "ace5a99b0616ef7cc972251f9e9c17b70b0d8d9a33876109b1fd50c83cd650b4",
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-category-offline-r2\\launch-used-88ad3ed7a57db96f99009a541268bab5b68e8baea8c75d4b6b49a7828a50b27e.json",
+      "bytes": 410
+    },
+    {
+      "file": "preflight-result.json",
+      "rawSha256": "2bbe21fd83bc6a375aec34ca66cf71a36c7c329fa6b7ec6bf3c34ea39fd44cbe",
+      "sanitizedSha256": "104cf29f8710abb38052597a448f86641d1511b16cc073d09a7c5a33ef346903",
+      "rawLocation": "<OS_TEMP>\\q30-root75-r2-live-preflight-gfk0xqi5\\stdout.log",
+      "bytes": 3481
+    },
+    {
+      "file": "preflight-owned-result.json",
+      "rawSha256": "f6e3009e6395bcc2cd2b7512c11d30143278d1150dc825a6a90e738a419b6da4",
+      "sanitizedSha256": "f6e3009e6395bcc2cd2b7512c11d30143278d1150dc825a6a90e738a419b6da4",
+      "rawLocation": "<OS_TEMP>\\q30-root75-r2-live-preflight-gfk0xqi5\\launcher-result.json",
+      "bytes": 1525
+    }
+  ],
+  "additionalRetainedRaw": [
+    {
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-ilvopz30\\stdout.log",
+      "rawSha256": "e1df316ce1beefe98390520829fab77c8933e6d54a223a010a3e78f6cef80c12",
+      "bytes": 43,
+      "copied": false,
+      "reason": "Retained raw; compact sanitized receipts contain relevant bindings"
+    },
+    {
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-ilvopz30\\stderr.log",
+      "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "copied": false,
+      "reason": "Retained raw; compact sanitized receipts contain relevant bindings"
+    },
+    {
+      "rawLocation": "<OS_TEMP>\\q30-root75-diagnostic-controller-lwt3sl8d\\stdout.log",
+      "rawSha256": "4b4c395d3359f0f545c80476a64c2d9f0f0e1af3406bd763ee898942949e0539",
+      "bytes": 455,
+      "copied": false,
+      "reason": "Retained raw; compact sanitized receipts contain relevant bindings"
+    },
+    {
+      "rawLocation": "<OS_TEMP>\\q30-root75-diagnostic-controller-lwt3sl8d\\stderr.log",
+      "rawSha256": "b6b803e12bd2dc5043099ac037b5b8b30ea0e3b41ec0db092816789e41d914ee",
+      "bytes": 980,
+      "copied": false,
+      "reason": "Retained raw; compact sanitized receipts contain relevant bindings"
+    },
+    {
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-category-offline-r2\\r2-live-preflight-processes.json",
+      "rawSha256": "97687190dfb3c78e93fea052b3f1d4c0aeec4121c4402c7774e5244c78a12e77",
+      "bytes": 3449,
+      "copied": false,
+      "reason": "Retained raw; compact sanitized receipts contain relevant bindings"
+    },
+    {
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-ilvopz30\\host-output\\input-manifest-before.json",
+      "rawSha256": "72e08e5a110f418d8d3901f287ae94c73644a6c36c0ecdb7fcc370fc4f38c7dc",
+      "bytes": 291507,
+      "copied": false,
+      "reason": "Retained raw; compact sanitized receipts contain relevant bindings"
+    },
+    {
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-ilvopz30\\host-output\\input-manifest-after.json",
+      "rawSha256": "182ba707999b5781ae09dca391fffbf112cf2f50d078b445b539d793452fef82",
+      "bytes": 291507,
+      "copied": false,
+      "reason": "Retained raw; compact sanitized receipts contain relevant bindings"
+    }
+  ],
+  "nextDiagnostic": "Proposal only: one metrics-only root75 run independent of trace enumeration",
+  "newLiveRunsThisPreservation": 0
+}

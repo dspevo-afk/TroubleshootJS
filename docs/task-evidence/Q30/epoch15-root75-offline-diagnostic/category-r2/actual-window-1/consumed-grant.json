@@ -1,0 +1,7 @@
+{
+  "status": "ONE_DIAGNOSTIC_LAUNCH_RESERVED",
+  "qualification": false,
+  "parentReference": "01a1017d-669f-76ed-b3cf-1341fcc89016: Core safe boundary confirmed; one reviewed r2 normal-entrypoint diagnostic after preflight",
+  "grantSha256": "88ad3ed7a57db96f99009a541268bab5b68e8baea8c75d4b6b49a7828a50b27e",
+  "candidateManifestSha256": "74fb6460385c5e33fc9a7e241c21d62c990d1e442dc02c7ac15e1ac412d16cd3"
+}

@@ -1,4 +1,43 @@
-# Current checkpoint: Q30 blocked; category preflight r2 prepared offline
+# Current checkpoint: Q30 blocked; r2 empty-category failure preserved
+
+2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
+`40235228052f3079e9bed65fed68dd9900cd0223`, plus this local docs/evidence checkpoint.
+[R2 actual](task-evidence/Q30/epoch15-root75-offline-diagnostic/category-r2/actual-window-1/README.md):
+one parent-authorized normal-entrypoint attempt FAIL_CAPTURE_SETUP_APP_NOT_RUN.
+Edge154.0.4258.53 returned complete valid categories[]; all five named requirements
+missing. Exact page/frame/loader/owned rendererPID20696 match held root75 script.
+No grouping ambiguity. Compiled script aborted before release/Performance/Tracing
+start; no app generation/report/CPU/trace/root75 timing. Empty enumeration cause
+UNKNOWN; Tracing.start support NOT_RUN. Secondary missing-report error retained.
+
+Outer5.829s/exit1; inner3.348s/exit1; host case0.315334s. Host cleanup PASS1.248107s;
+outer/inner verified0ms at recorded resolution/job0/readers complete. Finalization
+1.152344s within20s. Desktop released09:17:00.6354489UTC and parent notified before
+housekeeping: all11 recorded PIDs absent, port60046 no listener, no termination.
+Core resumed Local Dots; unrelated idle Edge preserved. No new live run now.
+Before/after1354 repository/1526 app inputs and six pins unchanged. Original
+cold77 archive hash verified unchanged;13 sanitized raw/hash-bound receipts and
+packet JSON/privacy/hash audit PASS_ARTIFACT_ONLY; raw/consumed grants untouched.
+Limited independent receipt/primary-source review complete, no live/tests/edits.
+
+[Next proposal](task-evidence/Q30/epoch15-root75-offline-diagnostic/category-r2/actual-window-1/next-diagnostic.md):
+one metrics-only root75 run using existing Performance threadTicks baseline/final.
+Optional CPU unavailable must not abort a correctly attached app; separate app/
+CPU/cleanup results, no invented zeros or GC/preemption claims. Proposal only,
+unimplemented/NOT_RUN; offline focused checks/new pins then new parent window.
+No extra browser preflight, tracing/session retry, native probe, build or matrix.
+Production/hosts/build inputs unchanged; JDK8/GWT rebuild NOT APPLICABLE.
+
+Q30 disabled/NOT ACCEPTED; authoritative cold77 remains31 PASS/1 root75
+TIMEOUT90.221s/45 NOT_RUN;77/308/90s/640/5s unchanged. Root75 cause UNKNOWN.
+Original seven untracked cache files/sibling Desktop work preserved; no task-owned
+persistent resource. No push/publish/email/evidence deletion. Root75 correction,
+full regression/cold77/enabled production/menu/replay/supported visible repair/
+retest/full source archive/parent acceptance pending. U06/U07/Q60 unstarted.
+
+---
+
+# Historical checkpoint: Q30 blocked; category preflight r2 prepared offline
 
 2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
 `379bee18a3a15503315a8edb5f64cb1e12b86acd`, plus this local docs/evidence checkpoint.

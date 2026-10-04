@@ -1,0 +1,177 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<OS_TEMP>\\q30-process-pinned-final-qualification-fcffecff8fa444889bce93725495c628\\isolated\\app",
+  "startedUtc": "2026-10-04T09:15:44.878027+00:00",
+  "outcome": "FAIL",
+  "cases": [
+    {
+      "schema": 1,
+      "case": {
+        "index": 1,
+        "name": "cold-75",
+        "path": "circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+        "stateAttribute": "data-tsj-q30-normal-state",
+        "expectedState": null,
+        "expectedPrefix": "SCREEN_DONE",
+        "terminalPrefixes": [
+          "SCREEN_DONE"
+        ],
+        "timeoutSeconds": 150.0,
+        "reportAttribute": "data-tsj-q30-normal-report"
+      },
+      "url": "http://127.0.0.1:60046/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+      "observedPageUrl": "http://127.0.0.1:60046/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+      "startedUtc": "2026-10-04T09:15:46.086477+00:00",
+      "finishedUtc": "2026-10-04T09:15:46.401818+00:00",
+      "operationSeconds": 0.31533419992774725,
+      "outcome": "FAIL",
+      "terminalReached": false,
+      "stateMatch": false,
+      "observedState": null,
+      "lastObservedState": null,
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": false,
+      "reportJsonValid": null,
+      "reportJsonError": null,
+      "reportMatch": false,
+      "reportLength": 0,
+      "reportSha256": null,
+      "reportFile": null,
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_FAILED",
+          "location": {
+            "url": "http://127.0.0.1:60046/circuitjs1/2D3548662A035150B17CA50F76C0D2ED.cache.js",
+            "line": 0,
+            "column": 0,
+            "lineNumber": 0,
+            "columnNumber": 0
+          }
+        }
+      ],
+      "attributeReadErrors": [],
+      "observerErrors": [
+        {
+          "phase": "compiled-script-attachment",
+          "type": "ValueError",
+          "message": "trace category preflight MISSING_REQUIREMENTS: devtools.timeline, v8, v8.execute, toplevel, disabled-by-default-v8.gc"
+        },
+        {
+          "phase": "renderer-diagnostic-capture",
+          "type": "RuntimeError",
+          "message": "capture incomplete"
+        }
+      ],
+      "observation": {
+        "transport": "PASSIVE_CDP_DOM",
+        "stateEvents": 0,
+        "compiledScriptsHeld": 1,
+        "scriptAttachment": {
+          "frameId": "360D6F60515339F958BE7BCCDE6B3493",
+          "loaderId": "340054BBAD3ED1849E6E24E6F3AFC296",
+          "pageUrl": "http://127.0.0.1:60046/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+          "documentBackend": 2,
+          "htmlBackend": 4,
+          "generation": 1,
+          "exactPageUrl": true,
+          "resourceType": "script",
+          "mainFrameRequest": true
+        },
+        "currentDocuments": 2,
+        "finalStateReadRequired": false,
+        "terminalScopeVerified": false,
+        "scopeIdentity": null
+      },
+      "listenerCleanupErrors": [],
+      "navigationError": null,
+      "diagnosticOnly": true,
+      "qualification": false
+    }
+  ],
+  "caseCount": 1,
+  "errors": [],
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "ff25c399dee104f98327d09910e16e6213ce49440197f59c53ff1e73f071fbf0",
+    "afterSha256": "ff25c399dee104f98327d09910e16e6213ce49440197f59c53ff1e73f071fbf0",
+    "sourceSha256Before": "fe50dde963bb44b9d4a6694c3679ab44ee8e19e3487b308c8ab7ad5f506ced1c",
+    "sourceSha256After": "fe50dde963bb44b9d4a6694c3679ab44ee8e19e3487b308c8ab7ad5f506ced1c",
+    "webSha256Before": "e0f263d63964b74a220b8e7f3078466a2442d3985c104c9e2957092b0f625666",
+    "webSha256After": "e0f263d63964b74a220b8e7f3078466a2442d3985c104c9e2957092b0f625666",
+    "runnerBeforeSha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+    "runnerAfterSha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+    "fileCountBefore": 1526,
+    "fileCountAfter": 1526,
+    "seconds": 0.4082764000631869
+  },
+  "identity": {
+    "schema": 1,
+    "runner": {
+      "pid": 27340,
+      "created": "2026-10-04T09:15:44.7271010Z",
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+    },
+    "edgeProcessesBeforeCases": [
+      {
+        "pid": 4516,
+        "parent": 26936,
+        "created": "2026-10-04T09:15:45.4533840Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 22280,
+        "parent": 4516,
+        "created": "2026-10-04T09:15:45.5015460Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 29952,
+        "parent": 4516,
+        "created": "2026-10-04T09:15:45.5477270Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 20544,
+        "parent": 4516,
+        "created": "2026-10-04T09:15:45.5540170Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 18792,
+        "parent": 4516,
+        "created": "2026-10-04T09:15:45.5741500Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 29820,
+        "parent": 4516,
+        "created": "2026-10-04T09:15:45.6405950Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 20696,
+        "parent": 4516,
+        "created": "2026-10-04T09:15:45.6465710Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "profile": "<OS_TEMP>\\q30-root75-renderer-diagnostic-ilvopz30\\host-output\\profile",
+    "port": 60046,
+    "baseUrl": "http://127.0.0.1:60046"
+  },
+  "operationStartedUtc": "2026-10-04T09:15:46.086464+00:00",
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 1.2481069999048486,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "finishedUtc": "2026-10-04T09:15:48.059962+00:00"
+}

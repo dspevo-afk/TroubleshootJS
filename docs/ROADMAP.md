@@ -8,7 +8,20 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
 **Current task:** **Q30 NOT ACCEPTED - final cold qualification FAIL at root75**<br>
-**Q30 category preflight r2 (2026-10-04):** Offline-only correction saves bounded
+**Q30 actual r2 failure (2026-10-04):** One authorized normal-entrypoint attempt
+returned complete trace categories[] on the exact held root75 page/renderer.
+Capture setup FAIL before app release/Performance/Tracing start; no app or CPU
+result. Empty enumeration cause UNKNOWN; grouping did not cause this rejection.
+Outer5.829s/exit1; host cleanup PASS1.248107s; all11 owned PIDs absent/port60046
+closed, desktop released09:17:00.635UTC before housekeeping. Frozen inputs/pins/
+cold77 archive unchanged. No new live run during offline preservation. Next is
+a proposal for one Performance threadTicks CPU/wall case independent of tracing,
+with optional metrics unavailable preserving app outcome. Unimplemented/NOT_RUN;
+offline checks/new pins and fresh parent window required; Core retains priority.
+Q30 disabled/NOT ACCEPTED, all limits/cold77 FAIL/remaining gates unchanged.
+[Failure and practical proposal](task-evidence/Q30/epoch15-root75-offline-diagnostic/category-r2/actual-window-1/README.md).
+
+**Q30 category preflight r2 preparation (before live attempt,2026-10-04):** Offline-only correction saves bounded
 actual category replies before rejection and matches literal comma-group atoms.
 All five required categories/filters/qualification budgets unchanged. Final74
 synthetic checks/input audit PASS;13-member hash/privacy/AST packet audit PASS;

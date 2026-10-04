@@ -1,0 +1,120 @@
+{
+  "schema": 1,
+  "status": "FAIL_CAPTURE",
+  "qualification": false,
+  "diagnosticOnly": true,
+  "binding": {
+    "rootSeed": "75",
+    "pageUrl": "http://127.0.0.1:60046/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "attachedDocument": {
+      "frameId": "360D6F60515339F958BE7BCCDE6B3493",
+      "loaderId": "340054BBAD3ED1849E6E24E6F3AFC296",
+      "pageUrl": "http://127.0.0.1:60046/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+      "documentBackend": 2,
+      "htmlBackend": 4,
+      "generation": 1,
+      "exactPageUrl": true,
+      "resourceType": "script",
+      "mainFrameRequest": true
+    },
+    "r4OriginalHostSha256": "146101ab19500b06e8d0cb56bde32d90f8439c87b245099c8e1c569b07df85cd",
+    "derivedHeadfulHostSha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+    "terminalScopeVerified": false,
+    "terminalScope": null
+  },
+  "browserProtocol": {
+    "protocolVersion": "1.3",
+    "product": "Edg/154.0.4258.53",
+    "revision": "@5af6e80f702cffe10645c6d6433668f011b739be",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "jsVersion": "15.4.11.7"
+  },
+  "timeDomain": "threadTicks",
+  "categoryPreflight": {
+    "status": "MISSING_REQUIREMENTS",
+    "requiredCategories": [
+      "devtools.timeline",
+      "v8",
+      "v8.execute",
+      "toplevel",
+      "disabled-by-default-v8.gc"
+    ],
+    "returnedCategories": [],
+    "returnedEvidenceComplete": true,
+    "missingRequirements": [
+      "devtools.timeline",
+      "v8",
+      "v8.execute",
+      "toplevel",
+      "disabled-by-default-v8.gc"
+    ],
+    "matches": [],
+    "errors": [],
+    "returnedType": "list",
+    "returnedCount": 0,
+    "returnedUtf8Bytes": 0,
+    "returnedCategoriesJsonSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "targetBefore": {
+    "targetId": "360D6F60515339F958BE7BCCDE6B3493",
+    "type": "page",
+    "title": "127.0.0.1:60046/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "url": "http://127.0.0.1:60046/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "attached": true,
+    "canAccessOpener": false,
+    "browserContextId": "3281D9C35D132DA52DC3252BACDF3636",
+    "pid": 20696
+  },
+  "targetAfter": null,
+  "metricsBefore": null,
+  "metricsAfter": null,
+  "metricDelta": null,
+  "clockMarkers": [],
+  "commandClocks": [
+    {
+      "method": "Browser.getVersion",
+      "beforeNs": 632897467653500,
+      "afterNs": 632897469572000
+    },
+    {
+      "method": "Target.getTargetInfo",
+      "beforeNs": 632897469575000,
+      "afterNs": 632897470125900
+    },
+    {
+      "method": "Tracing.getCategories",
+      "beforeNs": 632897470130500,
+      "afterNs": 632897492819800
+    }
+  ],
+  "traceCompletion": null,
+  "bufferUsage": [],
+  "traceBytes": 0,
+  "traceSha256": null,
+  "traceEOF": false,
+  "traceContentAudit": "NOT_RUN",
+  "errors": [
+    {
+      "phase": "setup-or-scope",
+      "type": "ValueError",
+      "message": "trace category preflight MISSING_REQUIREMENTS: devtools.timeline, v8, v8.execute, toplevel, disabled-by-default-v8.gc"
+    }
+  ],
+  "finishElapsedMs": 0.0331,
+  "bounds": {
+    "traceBufferKiB": 16384,
+    "traceFileBytes": 25165824,
+    "categoryEntries": 4096,
+    "categoryEntryBytes": 1024,
+    "categoryTotalBytes": 262144,
+    "setupSeconds": 5.0,
+    "finishSeconds": 5.0
+  },
+  "limits": [
+    "Instrumentation overhead is unknown until selected Edge path is tested.",
+    "ThreadTime is renderer main-thread running time including GC/host work, not solver-only CPU.",
+    "Wall minus thread time does not identify scheduler-ready time or establish preemption.",
+    "Trace GC/task coverage, renderer thread identity and marker mapping require post-run audit.",
+    "No per-proof-item or HEALTHY-slice labels exist in this unchanged normal-mode artifact."
+  ]
+}

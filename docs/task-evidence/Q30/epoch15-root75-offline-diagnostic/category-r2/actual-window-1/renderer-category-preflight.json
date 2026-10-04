@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "qualification": false,
+  "browserProtocol": {
+    "protocolVersion": "1.3",
+    "product": "Edg/154.0.4258.53",
+    "revision": "@5af6e80f702cffe10645c6d6433668f011b739be",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "jsVersion": "15.4.11.7"
+  },
+  "target": {
+    "targetId": "360D6F60515339F958BE7BCCDE6B3493",
+    "type": "page",
+    "title": "127.0.0.1:60046/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "url": "http://127.0.0.1:60046/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "attached": true,
+    "canAccessOpener": false,
+    "browserContextId": "3281D9C35D132DA52DC3252BACDF3636",
+    "pid": 20696
+  },
+  "categoryPreflight": {
+    "status": "MISSING_REQUIREMENTS",
+    "requiredCategories": [
+      "devtools.timeline",
+      "v8",
+      "v8.execute",
+      "toplevel",
+      "disabled-by-default-v8.gc"
+    ],
+    "returnedCategories": [],
+    "returnedEvidenceComplete": true,
+    "missingRequirements": [
+      "devtools.timeline",
+      "v8",
+      "v8.execute",
+      "toplevel",
+      "disabled-by-default-v8.gc"
+    ],
+    "matches": [],
+    "errors": [],
+    "returnedType": "list",
+    "returnedCount": 0,
+    "returnedUtf8Bytes": 0,
+    "returnedCategoriesJsonSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "traceContentAudit": "NOT_RUN"
+}

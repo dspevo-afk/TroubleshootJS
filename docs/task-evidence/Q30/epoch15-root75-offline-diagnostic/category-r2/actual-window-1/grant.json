@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "parentReference": "01a1017d-669f-76ed-b3cf-1341fcc89016: Core safe boundary confirmed; one reviewed r2 normal-entrypoint diagnostic after preflight",
+  "windowGranted": true,
+  "quietDesktopConfirmed": true,
+  "candidateManifestSha256": "74fb6460385c5e33fc9a7e241c21d62c990d1e442dc02c7ac15e1ac412d16cd3",
+  "windowStartUtc": "2026-10-04T09:15:43.2814931Z",
+  "windowEndUtc": "2026-10-04T09:19:43.2814931Z",
+  "maximumCases": 1,
+  "qualification": false,
+  "limits": {
+    "sharedWork": 640,
+    "jobMillis": 90000,
+    "activeOperationMillis": 5000
+  }
+}

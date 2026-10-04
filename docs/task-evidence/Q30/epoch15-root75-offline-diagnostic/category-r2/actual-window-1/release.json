@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "status": "PASS_RELEASED",
+  "checkedUtc": "2026-10-04T09:17:00.6354489Z",
+  "processes": [
+    {
+      "pid": 4516,
+      "status": "ABSENT",
+      "createdUtc": null
+    },
+    {
+      "pid": 6988,
+      "status": "ABSENT",
+      "createdUtc": null
+    },
+    {
+      "pid": 18792,
+      "status": "ABSENT",
+      "createdUtc": null
+    },
+    {
+      "pid": 20544,
+      "status": "ABSENT",
+      "createdUtc": null
+    },
+    {
+      "pid": 20696,
+      "status": "ABSENT",
+      "createdUtc": null
+    },
+    {
+      "pid": 22280,
+      "status": "ABSENT",
+      "createdUtc": null
+    },
+    {
+      "pid": 26936,
+      "status": "ABSENT",
+      "createdUtc": null
+    },
+    {
+      "pid": 27340,
+      "status": "ABSENT",
+      "createdUtc": null
+    },
+    {
+      "pid": 29584,
+      "status": "ABSENT",
+      "createdUtc": null
+    },
+    {
+      "pid": 29820,
+      "status": "ABSENT",
+      "createdUtc": null
+    },
+    {
+      "pid": 29952,
+      "status": "ABSENT",
+      "createdUtc": null
+    }
+  ],
+  "taskPort": 60046,
+  "taskPortListeners": 0,
+  "terminatedProcesses": 0,
+  "normalEntrypointExit": 1,
+  "controllerStatus": "CONTROLLER_COMPLETE_WORKER_FAILURE",
+  "diagnosticStatus": "DIAGNOSTIC_FAIL",
+  "captureStatus": "FAIL_CAPTURE",
+  "categoryStatus": "MISSING_REQUIREMENTS",
+  "returnedCategoryCount": 0,
+  "returnedEvidenceComplete": true,
+  "missingRequirements": [
+    "devtools.timeline",
+    "v8",
+    "v8.execute",
+    "toplevel",
+    "disabled-by-default-v8.gc"
+  ],
+  "outerOperationMs": 5829,
+  "innerOperationMs": 3348,
+  "hostCaseOperationSeconds": 0.31533419992774725,
+  "hostCleanupSeconds": 1.2481069999048486,
+  "hostFinishedUtc": "2026-10-04T05:15:48.059962-04:00",
+  "applicationAudit": "NOT_RUN",
+  "inputBindingUnchanged": true,
+  "extraRuns": 0,
+  "documentationOrCommitPerformed": false
+}
