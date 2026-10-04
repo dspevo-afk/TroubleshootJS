@@ -7,7 +7,25 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Q30 NOT ACCEPTED - nonvisual gates passed; visible QA/parent acceptance pending**<br>
+**Current task:** **Q30 NOT ACCEPTED - headed 20/30/40 repair/retest recorded; parent acceptance pending**
+**Q30 headed visible followup (2026-10-04):** Parent-authorized actual headed
+Edge SDK input on the audited private production preview. Frozen 20/30/40 roots
+10387/10226/10014: three unrepaired retests failed, normal Shop/remove/compatible
+install produced three FUNCTION VERIFIED screens. Repaired 20/30 HIGH 11.983 V,
+LOW 2.16 μV,rail 5 V;40 rail 4.992 V/all eight outputs match four sensor combinations.
+Five headed screenshots inspected. 388 actions: 382 PASS/six failed attempts
+retained; first quickplay-route menu wait FAIL preserved. Isolated OHM 20/40 and
+DIODE 30 both directions UNKNOWN/inconclusive; exact cause UNKNOWN, no active-
+meter PASS. Q30 D01 is DC-only; parent must adjudicate this limit. Original
+corrected host exit 1/own live console survivor retained; separate post-exit
+release PASS: 16 instances absent/port 60064 closed/no termination. Source 1,354/
+compiled 357/deploy 6/jars 9 unchanged before/after; public 1,354 rechecked/disabled.
+Observed waits 21.698/38.358/89.400s; fixed 90 s/640 units/5 s unchanged, no new cold
+benchmark or build/full matrix. Local evidence only. Parent acceptance pending;
+public Q30 still disabled, U06/U07/Q60 unstarted. Earlier GUI-tool blocker
+superseded by authorized headed SDK input; history preserved.
+[Visible evidence and limits](task-evidence/Q30/qualification-workflow/headed-visible-20261004/README.md).
+<br>
 **Q30 remaining nonvisual gates (2026-10-04):** Fresh full native PASS82 suites,
 four independent oracle markers/report/listener checks,105 service/105 sensitivity
 rows; append PASS26 structural roots. Combined77 structural rows70 accepted/
@@ -23,8 +41,10 @@ port64488 closed. Full isolated/private source archives and byte checks PASS;
 source-only acceptance NOT_ASSESSED. Outer cleanup duration not separately
 recorded; browser cleanup0.737s. Four headless screenshots inspected, no visible
 Q30 repair proof. Read-only leaf provenance review found no issue; parent owns
-acceptance. Q30 still disabled:visible20/30/40 diagnosis/repair/retest BLOCKED
-by unavailable interactive tools; parent review pending. U06/U07/Q60 unstarted.
+acceptance. At that checkpoint visible20/30/40 diagnosis/repair/retest was
+recorded BLOCKED by unavailable interactive tools; the headed followup above
+supersedes that tooling conclusion. Parent review pending; Q30 disabled and
+U06/U07/Q60 unstarted.
 Local checkpoint only; no push/publish/email/evidence deletion.
 [Remaining gates, preserved failures and restart limits](task-evidence/Q30/qualification-workflow/remaining-gates-20261004/README.md).
 
@@ -2726,9 +2746,12 @@ Plan-4 20-40-part generation and fresh original-host cold77 pass the frozen
 cohort. Fresh full native regression, private enabled production build phase/
 source audit, separate headless menu/replay, and full source archives now pass
 their recorded boundaries; original orchestration failures remain explicit.
-Normal-player publication stays disabled pending actual visible20/30/40
-diagnosis/repair/customer-retest and parent acceptance. Headless screenshots
-do not satisfy that gate. U06, U07, Q60 and later milestones remain UNSTARTED.
+Normal-player publication stays disabled. Actual headed20/30/40 guided DC,
+replacement and customer-retest flows are now recorded with three verified
+screens; isolated active-meter UNKNOWN statuses and original host exit1 remain
+explicit limits for parent acceptance. Headless screenshots do not supply that
+visible evidence. Parent acceptance PENDING; U06/U07/Q60 remain UNSTARTED.
+See [headed followup](task-evidence/Q30/qualification-workflow/headed-visible-20261004/README.md).
 See [remaining-gate checkpoint](task-evidence/Q30/qualification-workflow/remaining-gates-20261004/README.md).
 See [Q30 evidence](task-evidence/Q30/README.md).
 

@@ -1,0 +1,189 @@
+{
+  "schema": 1,
+  "artifacts": [
+    {
+      "role": "ui-result.json",
+      "rawBytes": 255323,
+      "rawSha256": "94da8f42e998ba4f0c44ac837966994eef205814e3e9cc0bd270613c42d35167",
+      "portableBytes": 255323,
+      "portableSha256": "94da8f42e998ba4f0c44ac837966994eef205814e3e9cc0bd270613c42d35167",
+      "transformation": "Known local paths tokenized and UTF8 BOM removed; all other content retained"
+    },
+    {
+      "role": "host-result.json",
+      "rawBytes": 1432,
+      "rawSha256": "0179ff54d1c5adde93f931224d1884b37e3105f52449f7561b8fbea45da95545",
+      "portableBytes": 1128,
+      "portableSha256": "c46023d49d177c125e650c47ddc380b193087b991f0859a46b72ce728eaf945a",
+      "transformation": "Known local paths tokenized and UTF8 BOM removed; all other content retained"
+    },
+    {
+      "role": "host-command-result.json",
+      "rawBytes": 152,
+      "rawSha256": "edb29e3a230de57f7a2a1dc547aa5701dc2b11a0f348ab2695bc4809d5bcc372",
+      "portableBytes": 152,
+      "portableSha256": "edb29e3a230de57f7a2a1dc547aa5701dc2b11a0f348ab2695bc4809d5bcc372",
+      "transformation": "Known local paths tokenized and UTF8 BOM removed; all other content retained"
+    },
+    {
+      "role": "launch-identity.json",
+      "rawBytes": 638,
+      "rawSha256": "de38f8ca6a4078522ae15288fd51e4a84e4e2059d8200a66b95fbf826b945ee4",
+      "portableBytes": 570,
+      "portableSha256": "434aea5293e520b7aab40be6bdffb273a87ee7203fdde6b3942be755f48536d2",
+      "transformation": "Known local paths tokenized and UTF8 BOM removed; all other content retained"
+    },
+    {
+      "role": "ready.json",
+      "rawBytes": 10568,
+      "rawSha256": "13c28f685e9c7cd5b2776a315d639218c01fd7bded762fe140cafdf426f3e949",
+      "portableBytes": 9802,
+      "portableSha256": "c7aa4630e117470b2957b62e4ee908de3d2cdf49b8ff7bc3d2cbfd0d75a6cba6",
+      "transformation": "Known local paths tokenized and UTF8 BOM removed; all other content retained"
+    },
+    {
+      "role": "preview-serving-identity.json",
+      "rawBytes": 1111,
+      "rawSha256": "0d6b16c13fab79e18d7332667dc7a8c1dc3d07798df0cdd04f9f2a0f4f5bd228",
+      "portableBytes": 791,
+      "portableSha256": "4fbc9fbcf2fbc11fe72c3cf762ac838c670cc4d497af1a64b51c0966441775ee",
+      "transformation": "Known local paths tokenized and UTF8 BOM removed; all other content retained"
+    },
+    {
+      "role": "preview-process-identity.json",
+      "rawBytes": 494,
+      "rawSha256": "c0030583583e2d7a409526253f523136e0bb4a034db96fdc86e38d9c18d87c5a",
+      "portableBytes": 420,
+      "portableSha256": "ef0058c579803b88acdb93eb68999a5128d74f6d7105e39fd9fa68449df65ed9",
+      "transformation": "Known local paths tokenized and UTF8 BOM removed; all other content retained"
+    },
+    {
+      "role": "owned-processes.json",
+      "rawBytes": 17289,
+      "rawSha256": "b05129b32044d2962053a6ad8c382e914324f2bc0fa332ae891e27a7eeff5961",
+      "portableBytes": 15957,
+      "portableSha256": "24ee89ec3b0edc1cfe3c80477682e971e2e903ebd19ae7d7947d5484fd5db0eb",
+      "transformation": "Known local paths tokenized and UTF8 BOM removed; all other content retained"
+    },
+    {
+      "role": "headed-window-proof.json",
+      "rawBytes": 189,
+      "rawSha256": "44a72493b50cc1f2ca5d5afac0591842476bd380644c7b1a2e1b9633d0ba7791",
+      "portableBytes": 189,
+      "portableSha256": "44a72493b50cc1f2ca5d5afac0591842476bd380644c7b1a2e1b9633d0ba7791",
+      "transformation": "Known local paths tokenized and UTF8 BOM removed; all other content retained"
+    },
+    {
+      "role": "release-audit.json",
+      "rawBytes": 800,
+      "rawSha256": "a6f7851acf3851ed6f889152af53acbbb7ab8800945e0d3c83f5a5aea7a35214",
+      "portableBytes": 800,
+      "portableSha256": "a6f7851acf3851ed6f889152af53acbbb7ab8800945e0d3c83f5a5aea7a35214",
+      "transformation": "Known local paths tokenized and UTF8 BOM removed; all other content retained"
+    },
+    {
+      "role": "ui-driver.py",
+      "rawBytes": 11073,
+      "rawSha256": "6cd53ec3619ec1d8877af692d34e92171bea28f59adab66019c86b25549edf74",
+      "portableBytes": 11070,
+      "portableSha256": "57f0871fd0b7bb912b3b3a1fbbb2dd9400e0b493337d32a67ca6831626f25ace",
+      "transformation": "Known local paths tokenized and UTF8 BOM removed; all other content retained"
+    },
+    {
+      "role": "ui-launcher.ps1",
+      "rawBytes": 2043,
+      "rawSha256": "266b84dc38d1b269712fe2e4a43b9ee5fd1f06114d8b2338706a595354f2ae65",
+      "portableBytes": 1795,
+      "portableSha256": "2d115aeaa4deec14a5da849db70f6b9c4111ee2ed62650f0bda88ceb0f13c845",
+      "transformation": "Known local paths tokenized and UTF8 BOM removed; all other content retained"
+    },
+    {
+      "role": "ui-command-client.py",
+      "rawBytes": 1445,
+      "rawSha256": "6c0724da96becff0a9d0717eaab22dd40508a8091072e68a87b90c084f0bfc6a",
+      "portableBytes": 1445,
+      "portableSha256": "6c0724da96becff0a9d0717eaab22dd40508a8091072e68a87b90c084f0bfc6a",
+      "transformation": "Known local paths tokenized and UTF8 BOM removed; all other content retained"
+    },
+    {
+      "role": "failed-start/ui-result.json",
+      "rawBytes": 3031,
+      "rawSha256": "61481332caf0556e2e7974a631f5b92deb264bd0a486edf2c7658555f2e372ba",
+      "portableBytes": 2607,
+      "portableSha256": "c7837043c18ee7ccb1f2ce197fb8fc402236bce4525c69591da14189c6188087",
+      "transformation": "Known local paths tokenized and UTF8 BOM removed; all other content retained"
+    },
+    {
+      "role": "failed-start/host-result.json",
+      "rawBytes": 3556,
+      "rawSha256": "27896f35e00e68db4f45f5e636dc57e9fb6bfcea3ac003eb6a6b9c14413f57d0",
+      "portableBytes": 2835,
+      "portableSha256": "fb7a374bccb0fa662d82c0959ea53828eae812789f2bddfed34f79b64eb5938e",
+      "transformation": "Known local paths tokenized and UTF8 BOM removed; all other content retained"
+    },
+    {
+      "role": "failed-start/release-audit.json",
+      "rawBytes": 235,
+      "rawSha256": "be64d45a003a2be293c8abfe45af87ebe28ef194e5c7c3f974b817aa4e32a42a",
+      "portableBytes": 235,
+      "portableSha256": "be64d45a003a2be293c8abfe45af87ebe28ef194e5c7c3f974b817aa4e32a42a",
+      "transformation": "Known local paths tokenized and UTF8 BOM removed; all other content retained"
+    },
+    {
+      "role": "failed-start/ui-driver.py",
+      "rawBytes": 10415,
+      "rawSha256": "68020b707de1bc774cb80fe4148a4bf8370b8af9deb7aabbe7f529224f3bfb2d",
+      "portableBytes": 10412,
+      "portableSha256": "b73663eb9f7ed05db58152c0c40be6c09ea99dd155268b7054299abe174d99f7",
+      "transformation": "Known local paths tokenized and UTF8 BOM removed; all other content retained"
+    },
+    {
+      "role": "screenshots/005-20part-unrepaired-high.png",
+      "rawBytes": 362058,
+      "rawSha256": "7dd2dfb508692c2a70b9a1054123fe8015d8395f2115137c5673dcd012207db7",
+      "portableBytes": 362058,
+      "portableSha256": "7dd2dfb508692c2a70b9a1054123fe8015d8395f2115137c5673dcd012207db7",
+      "transformation": "Byte-identical actual headed screenshot; no image editing"
+    },
+    {
+      "role": "screenshots/012-20part-function-verified.png",
+      "rawBytes": 246623,
+      "rawSha256": "c992cf3d512335889d81cafbfcb4830a6fdd5fb913396f5f786e1f0a1e0c2d35",
+      "portableBytes": 246623,
+      "portableSha256": "c992cf3d512335889d81cafbfcb4830a6fdd5fb913396f5f786e1f0a1e0c2d35",
+      "transformation": "Byte-identical actual headed screenshot; no image editing"
+    },
+    {
+      "role": "screenshots/017-30part-function-verified.png",
+      "rawBytes": 244365,
+      "rawSha256": "1d52f86b8f5f3a8745d834c5e6795d99c5239d3f39176533b063beea5c32529c",
+      "portableBytes": 244365,
+      "portableSha256": "1d52f86b8f5f3a8745d834c5e6795d99c5239d3f39176533b063beea5c32529c",
+      "transformation": "Byte-identical actual headed screenshot; no image editing"
+    },
+    {
+      "role": "screenshots/019-40part-bottom-unrepaired.png",
+      "rawBytes": 297258,
+      "rawSha256": "058ba53399fb2c3e9a778408114b01fd491744c5f39dbe46385bef8d417c4c48",
+      "portableBytes": 297258,
+      "portableSha256": "058ba53399fb2c3e9a778408114b01fd491744c5f39dbe46385bef8d417c4c48",
+      "transformation": "Byte-identical actual headed screenshot; no image editing"
+    },
+    {
+      "role": "screenshots/023-40part-function-verified.png",
+      "rawBytes": 261766,
+      "rawSha256": "9d6bead2069ee9c8eea7a300fc5c63c7d20bfc27b5619cec28d66f3c40964e0f",
+      "portableBytes": 261766,
+      "portableSha256": "9d6bead2069ee9c8eea7a300fc5c63c7d20bfc27b5619cec28d66f3c40964e0f",
+      "transformation": "Byte-identical actual headed screenshot; no image editing"
+    },
+    {
+      "role": "failed-export.json",
+      "rawBytes": 408,
+      "rawSha256": "f76b8a28ea51014137e2114f57abd6deb3043881958bb29b0a7365dbf87f8936",
+      "portableBytes": 408,
+      "portableSha256": "f76b8a28ea51014137e2114f57abd6deb3043881958bb29b0a7365dbf87f8936",
+      "transformation": "Byte-identical authored export failure; no local paths present"
+    }
+  ]
+}

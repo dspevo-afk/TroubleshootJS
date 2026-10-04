@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "status": "PASS_UNCHANGED_PUBLIC_PRIVATE_COMPILED_BOUNDARIES",
+  "candidateHead": "579dc1fc9eb13bfe91bf8830d408205490db4655",
+  "sourceBaseHead": "d37c3b3b8581abdeaa9b88b7bfb2349cff958d31",
+  "sourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+  "publicInputsFreshlyRechecked": 1354,
+  "privateBefore": {
+    "status": "PASS",
+    "rawInputs": 1354,
+    "compiledFiles": 357,
+    "permutations": 5,
+    "deploymentFiles": 6,
+    "pinnedJars": 9
+  },
+  "privateAfter": {
+    "status": "PASS",
+    "rawInputs": 1354,
+    "compiledFiles": 357,
+    "permutations": 5,
+    "deploymentFiles": 6,
+    "pinnedJars": 9
+  },
+  "publicQ30Disabled": true,
+  "buildAndFullMatrixRerun": false,
+  "driverRawSha256": "6cd53ec3619ec1d8877af692d34e92171bea28f59adab66019c86b25549edf74",
+  "driverBoundary": "Workspace driver was invoked; launch/post hashes and preserved copy match. No claimed immutable-copy execution.",
+  "reuse": "Previously audited production private build reused only after raw1354/compiled357/deploy6/jars9 equality; native/full build evidence remains in prior packet"
+}

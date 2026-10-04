@@ -1,0 +1,18 @@
+{
+  "protocol": "troubleshootjs-preview-identity-v1",
+  "repositoryRoot": "<PRIVATE_APP>",
+  "previewScript": "<PRIVATE_APP>\\scripts\\preview.ps1",
+  "webRoot": "<PRIVATE_APP>\\war",
+  "sourceRoot": "<PRIVATE_APP>\\src",
+  "scriptRoot": "<PRIVATE_APP>\\scripts",
+  "sourceDigest": "a55be0ac0957544f0abfa7fed15bb2a57d8b127c0c95a2a145f0e0f3d9611fab",
+  "scriptDigest": "4964485f374706bccda20cf30028465fab3f38d502a428b7fa4d58399815b5ba",
+  "webDigest": "6222a3610f03d9a00611689b6675943258f34be93e13ee3efe30ec2481aace83",
+  "executionDigest": "1422c6964884df16f28cc0e7834c8def49e72cfa5be4d5e3605363bc4bcf01a2",
+  "executionFileCount": 1544,
+  "previewPort": 60064,
+  "processId": 4784,
+  "processStartTicks": 639267429675421567,
+  "verifierRunId": "",
+  "verifierNonce": ""
+}

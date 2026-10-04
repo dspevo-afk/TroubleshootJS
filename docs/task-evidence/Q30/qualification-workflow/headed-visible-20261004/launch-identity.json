@@ -1,0 +1,9 @@
+{
+  "pid": 29424,
+  "headed": true,
+  "commandLine": "\"<USER_HOME>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe\" -NoProfile -File <WORKSPACE>\\headed_launch.ps1",
+  "userScope": "Visible 20/30/40 repair/retest through ordinary UI only; no build/full matrix",
+  "created": "2026-10-04T20:36:06.2187150Z",
+  "executable": "<USER_HOME>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "driverSha256": "6cd53ec3619ec1d8877af692d34e92171bea28f59adab66019c86b25549edf74"
+}

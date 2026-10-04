@@ -1,4 +1,61 @@
-# Current checkpoint: Q30 nonvisual gates passed; visible QA/parent acceptance blocked
+# Current checkpoint: Q30 headed 20/30/40 repair/retest recorded; parent acceptance pending
+
+2026-10-04. Branch `codex/q30-multirail-qualification`; HEAD before this local
+evidence commit `579dc1fc9eb13bfe91bf8830d408205490db4655`.
+[Headed visible evidence](task-evidence/Q30/qualification-workflow/headed-visible-20261004/README.md).
+Q30 remains DISABLED / NOT ACCEPTED. U06/U07/Q60 unstarted. No production,
+save/replay, build/full matrix, push/publish/email or evidence deletion in this
+followup. Parent authorized headed SDK locator/mouse/keyboard/screenshot input;
+the earlier interactive-tool blocker was too broad and is superseded.
+
+Actual production preview in one headed Edge context/one ready page, with real
+window handle. Ordinary UI only: no evaluation, hidden owner/snapshot calls,
+injected state or synthetic dispatch. Frozen roots 10387/10226/10014 expose
+20/30/40 packages. All three unrepaired customer retests failed; normal Shop,
+remove and compatible tray installation led to three visible FUNCTION VERIFIED
+results. Repaired 20/30 HIGH 11.983 V/LOW 2.16 μV/rail 5 V; repaired 40 rail 4.992 V,
+all eight readings match the four LOW/HIGH combinations (HIGH 11.980–11.983 V,
+LOW 2.159–2.160 μV). Powered 30 rail 0 V/entry path 11.229 V and 40 rail 0 V/enable
+path 10.512 V support guided localization. Real left/red/right/black pad clicks,
+normal terminal selectors and top/bottom inspection recorded. Five selected
+headed screenshots inspected and preserved. Guided flow does not independently
+prove blind diagnostic solvability; frozen D01 evidence remains separate.
+
+OHM 20/40 and DIODE 30 both directions show UNKNOWN after all supplies isolated;
+these are inconclusive readiness statuses, not OL or resistance/diode PASS.
+Exact live contributor UNKNOWN. Static source review: Q30's sole active owner
+assesses all rails; D01 declares DC observations, not active-meter proof. Parent
+must adjudicate this limit. Relay lead lift is unsupported. Normal removal
+passed later after discharge/control refresh; no disabled-control bypass.
+
+388 commands/responses byte/content bound: 382 PASS/six failed attempts retained.
+First headed quickplay-route/menu wait FAIL and closed-SDK cleanup error remain.
+Corrected source before/after PASS: 1,354 raw/357 compiled/five permutations/
+six deploy/nine jars; public 1,354 rechecked/registration false. Observed ticket
+waits 21.698/38.358/89.400s; not a new cold benchmark. 90,000 ms/640 shared/
+5,000 ms active/coordinator unchanged. Prior native/full build/menu/replay/source
+archives unchanged at consumed-input boundary; no unchanged gate rerun.
+
+Corrected host exit 1 remains FAIL: final body check saw its own conhost before
+controller exit. Independent post-exit release 21:02:02.3301555Z PASS: all 16
+recorded instances absent/port 60064 closed/no termination. Original raw result
+not relabeled PASS. Wrapper 20:36:06.625–21:01:11.429Z; final preview/process
+cleanup 0.640 s excludes earlier browser close/input audit. Browser cleanup time
+NOT RECORDED separately. Launch/post/preserved driver bytes 6cd53ec3… agree;
+workspace path was invoked, not immutable-copy execution. Export's first wrong
+Unicode unit parser failed before writes and is retained; ranges/readings intact.
+
+Root reviewed ledger/conditions/images and final diff. Read-only Luna MAX leaf
+confirmed UI API/source boundaries with stated limits; no UI/gates/edits or
+acceptance by reviewer. Parent acceptance PENDING. Raw attempts/profiles/private
+build/archives and restart helpers retained. No task app/browser/listener
+persists; eight pre-existing untracked paths and Desktop sibling preserved.
+Next: parent acceptance and any required active-meter followup, before public
+enablement or U06/U07/Q60. Local checkpoint only.
+
+---
+
+# Historical checkpoint: Q30 nonvisual gates passed; visible QA/parent acceptance blocked
 
 2026-10-04. Branch `codex/q30-multirail-qualification`; local checkpoint parent
 HEAD `208d8fa9d1dc7e17d5c32e99b3ddab4cbf6de024`, plus this evidence commit.

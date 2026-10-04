@@ -1,0 +1,19 @@
+{
+  "FilePath": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+  "Arguments": [
+    "-B",
+    "-u",
+    "<WORKSPACE>\\headed_q30_ui.py",
+    "<FAILED_HEADED_ROOT>",
+    "<PRIVATE_ROOT>"
+  ],
+  "ProcessId": 1788,
+  "ProcessStartTicks": 639267425789467227,
+  "ExitCode": 1,
+  "Stdout": "Traceback (most recent call last):\r\n  File \"<WORKSPACE>\\headed_q30_ui.py\", line 85, in <module>\r\n    page.get_by_role('button',name='New board',exact=True).wait_for(state='visible',timeout=30000)\r\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"<DEPS>\\playwright\\sync_api\\_generated.py\", line 20696, in wait_for\r\n    self._sync(\r\n    ~~~~~~~~~~^\r\n        self._impl_obj.wait_for(timeout=to_milliseconds(timeout), state=state)\r\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n    )\r\n    ^\r\n  File \"<DEPS>\\playwright\\_impl\\_sync_base.py\", line 115, in _sync\r\n    return task.result()\r\n           ~~~~~~~~~~~^^\r\n  File \"<DEPS>\\playwright\\_impl\\_locator.py\", line 752, in wait_for\r\n    await self._frame.wait_for_selector(\r\n        self._selector, strict=True, timeout=timeout, state=state\r\n    )\r\n  File \"<DEPS>\\playwright\\_impl\\_frame.py\", line 395, in wait_for_selector\r\n    await self._channel.send(\r\n        \"waitForSelector\", self._timeout, locals_to_params(locals())\r\n    )\r\n  File \"<DEPS>\\playwright\\_impl\\_connection.py\", line 76, in send\r\n    return await self._connection.wrap_api_call(\r\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n    ...<3 lines>...\r\n    )\r\n    ^\r\n  File \"<DEPS>\\playwright\\_impl\\_connection.py\", line 632, in wrap_api_call\r\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\r\nplaywright._impl._errors.TimeoutError: Locator.wait_for: Timeout 30000ms exceeded.\r\nCall log:\r\n  - waiting for get_by_role(\"button\", name=\"New board\", exact=True) to be visible\r\n\r\n\r\n{\"outcome\": \"FAIL_HOST_OR_SESSION\", \"cleanup\": {\"seconds\": 0.6435388999525458, \"recordedSurvivors\": [{\"pid\": 6700, \"parent\": 1788, \"created\": \"2026-10-04T20:29:38.9718990Z\", \"ExecutablePath\": \"C:\\\\WINDOWS\\\\system32\\\\conhost.exe\", \"CommandLine\": \"\\\\??\\\\C:\\\\WINDOWS\\\\system32\\\\conhost.exe 0x4\"}], \"previewExitCode\": 1}, \"actionCount\": 0}\r\n",
+  "Stderr": "",
+  "StdoutLog": "<OS_TEMP>\\TroubleshootJS\\verify-process-a3c107e722974d75bc082b805de3533c\\stdout.log",
+  "StderrLog": "<OS_TEMP>\\TroubleshootJS\\verify-process-a3c107e722974d75bc082b805de3533c\\stderr.log",
+  "ProcessRoot": "<OS_TEMP>\\TroubleshootJS\\verify-process-a3c107e722974d75bc082b805de3533c",
+  "TerminationProven": true
+}

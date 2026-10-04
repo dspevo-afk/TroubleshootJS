@@ -1,0 +1,7 @@
+{
+  "pid": 4784,
+  "parent": 8368,
+  "created": "2026-10-04T20:36:07.5421560Z",
+  "ExecutablePath": "<USER_HOME>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "CommandLine": "<USER_HOME>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe -NoProfile -File <PRIVATE_APP>\\scripts\\preview.ps1 -Port 60064 -ForceTcpListener"
+}

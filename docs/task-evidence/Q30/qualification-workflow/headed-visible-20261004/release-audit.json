@@ -1,0 +1,14 @@
+{
+  "preservedDriverSha256": "6cd53ec3619ec1d8877af692d34e92171bea28f59adab66019c86b25549edf74",
+  "status": "PASS",
+  "executedWorkspaceDriverSha256": "6cd53ec3619ec1d8877af692d34e92171bea28f59adab66019c86b25549edf74",
+  "terminationPerformed": false,
+  "recordedInstances": 16,
+  "checkedUtc": "2026-10-04T21:02:02.3301555Z",
+  "exactRecordedSurvivors": [],
+  "originalHostEndOfBodySurvivor": "Controller-owned conhost PID10552 remained while controller body was live; original exit1 retained.",
+  "port60064Listening": false,
+  "launchDriverSha256": "6cd53ec3619ec1d8877af692d34e92171bea28f59adab66019c86b25549edf74",
+  "driverHashBoundary": "Workspace driver was invoked; launch/post hashes and preserved copy match. No claimed immutable-copy execution.",
+  "originalHostExit": 1
+}

@@ -1,0 +1,222 @@
+{
+  "schema": 1,
+  "status": "PASS_VISIBLE_POWERED_DC_REPAIR_CUSTOMER_RETEST_WITH_LIMITS",
+  "candidateHead": "579dc1fc9eb13bfe91bf8830d408205490db4655",
+  "browser": "Actual headed Edge isolated profile; one persistent context and one page recorded at ready; exact real window handle recorded",
+  "uiApiBoundary": "Ordinary locators/select/fill, keyboard/mouse, visible text and screenshot APIs; no evaluation, injected state, synthetic dispatch or hidden game functions",
+  "actions": 388,
+  "successfulActions": 382,
+  "failedActions": [
+    {
+      "sequence": 2,
+      "command": {
+        "op": "select",
+        "field": "Difficulty",
+        "label": "MEDIUM"
+      },
+      "error": "TimeoutError('Locator.select_option: Timeout 15000ms exceeded.\\nCall log:\\n  - waiting for get_by_label(\"Difficulty\", exact=True)\\n')"
+    },
+    {
+      "sequence": 28,
+      "command": {
+        "op": "click",
+        "name": "DC voltage"
+      },
+      "error": "TimeoutError('Locator.click: Timeout 15000ms exceeded.\\nCall log:\\n  - waiting for get_by_role(\"button\", name=\"DC voltage\", exact=True)\\n')"
+    },
+    {
+      "sequence": 52,
+      "command": {
+        "op": "click",
+        "name": "Lift lead A1"
+      },
+      "error": "TimeoutError('Locator.click: Timeout 15000ms exceeded.\\nCall log:\\n  - waiting for get_by_role(\"button\", name=\"Lift lead A1\", exact=True)\\n    - locator resolved to <button disabled type=\"button\" class=\"tsj-action-button\">Lift lead A1</button>\\n  - attempting click action\\n    2 × waiting for element to be visible, enabled and stable\\n      - element is not enabled\\n    - retrying click action\\n    - waiting 20ms\\n    2 × waiting for element to be visible, enabled and stable\\n      - element is not enabled\\n    - retrying click action\\n      - waiting 100ms\\n    27 × waiting for element to be visible, enabled and stable\\n       - element is not enabled\\n     - retrying click action\\n       - waiting 500ms\\n    - waiting for element to be visible, enabled and stable\\n')"
+    },
+    {
+      "sequence": 72,
+      "command": {
+        "op": "click",
+        "name": "Parts tray"
+      },
+      "error": "TimeoutError('Locator.click: Timeout 15000ms exceeded.\\nCall log:\\n  - waiting for get_by_role(\"button\", name=\"Parts tray\", exact=True)\\n')"
+    },
+    {
+      "sequence": 175,
+      "command": {
+        "op": "click",
+        "name": "Add to Parts Tray: Diodes, Generic silicon diode"
+      },
+      "error": "TimeoutError('Locator.click: Timeout 15000ms exceeded.\\nCall log:\\n  - waiting for get_by_role(\"button\", name=\"Add to Parts Tray: Diodes, Generic silicon diode\", exact=True)\\n')"
+    },
+    {
+      "sequence": 176,
+      "command": {
+        "op": "click",
+        "name": "Part 31 - Generic silicon diode"
+      },
+      "error": "TimeoutError('Locator.click: Timeout 15000ms exceeded.\\nCall log:\\n  - waiting for get_by_role(\"button\", name=\"Part 31 - Generic silicon diode\", exact=True)\\n')"
+    }
+  ],
+  "failedActionInterpretation": "Wrong accessible labels/stock geometry suffix, premature unacquired part selection, and unsupported relay lead lift. Failures preserved; only subsequent evidenced actions count. UI host success is not inferred from exit.",
+  "cases": [
+    {
+      "seed": 10387,
+      "packages": 20,
+      "preparationVisibleWaitSeconds": 21.69763110007625,
+      "unrepairedRetest": "FAIL_EXPECTED",
+      "outputHighBefore": "2.16 μV",
+      "outputHighAfter": "11.983 V",
+      "outputLowAfter": "2.16 μV",
+      "railAfter": "5 V",
+      "replacementResponse": 78,
+      "verifiedResponse": 105,
+      "isolatedResistance": "UNKNOWN_INCONCLUSIVE"
+    },
+    {
+      "seed": 10226,
+      "packages": 30,
+      "preparationVisibleWaitSeconds": 38.357667300035246,
+      "unrepairedRetest": "FAIL_EXPECTED",
+      "outputHighBefore": "2.16 μV",
+      "railBefore": "0 V",
+      "diodePathDropBefore": "11.229 V",
+      "outputHighAfter": "11.983 V",
+      "outputLowAfter": "2.16 μV",
+      "railAfter": "5 V",
+      "replacementResponse": 186,
+      "verifiedResponse": 217,
+      "isolatedDiodeBothDirections": "UNKNOWN_INCONCLUSIVE"
+    },
+    {
+      "seed": 10014,
+      "packages": 40,
+      "preparationVisibleWaitSeconds": 89.39977310004178,
+      "unrepairedRetest": "FAIL_EXPECTED",
+      "outputAHighBefore": "2.16 μV",
+      "outputBHighBefore": "2.16 μV",
+      "railBefore": "0 V",
+      "enablePathDropBefore": "10.512 V",
+      "railAfter": "4.992 V",
+      "replacementResponse": 298,
+      "verifiedResponse": 386,
+      "isolatedResistance": "UNKNOWN_INCONCLUSIVE",
+      "repairedInputMeasurements": [
+        {
+          "sensorState": "LOW/LOW",
+          "output": "JOA",
+          "responseSequence": 325,
+          "display": "2.16 μV",
+          "volts": 2.16e-06,
+          "expectedRangeVolts": [
+            0,
+            0.05
+          ],
+          "status": "PASS"
+        },
+        {
+          "sensorState": "LOW/LOW",
+          "output": "JOB",
+          "responseSequence": 331,
+          "display": "2.16 μV",
+          "volts": 2.16e-06,
+          "expectedRangeVolts": [
+            0,
+            0.05
+          ],
+          "status": "PASS"
+        },
+        {
+          "sensorState": "HIGH/LOW",
+          "output": "JOA",
+          "responseSequence": 342,
+          "display": "11.983 V",
+          "volts": 11.983,
+          "expectedRangeVolts": [
+            10.8,
+            12.6
+          ],
+          "status": "PASS"
+        },
+        {
+          "sensorState": "HIGH/LOW",
+          "output": "JOB",
+          "responseSequence": 348,
+          "display": "2.159 μV",
+          "volts": 2.1589999999999996e-06,
+          "expectedRangeVolts": [
+            0,
+            0.05
+          ],
+          "status": "PASS"
+        },
+        {
+          "sensorState": "LOW/HIGH",
+          "output": "JOA",
+          "responseSequence": 359,
+          "display": "2.159 μV",
+          "volts": 2.1589999999999996e-06,
+          "expectedRangeVolts": [
+            0,
+            0.05
+          ],
+          "status": "PASS"
+        },
+        {
+          "sensorState": "LOW/HIGH",
+          "output": "JOB",
+          "responseSequence": 365,
+          "display": "11.983 V",
+          "volts": 11.983,
+          "expectedRangeVolts": [
+            10.8,
+            12.6
+          ],
+          "status": "PASS"
+        },
+        {
+          "sensorState": "HIGH/HIGH",
+          "output": "JOA",
+          "responseSequence": 376,
+          "display": "11.98 V",
+          "volts": 11.98,
+          "expectedRangeVolts": [
+            10.8,
+            12.6
+          ],
+          "status": "PASS"
+        },
+        {
+          "sensorState": "HIGH/HIGH",
+          "output": "JOB",
+          "responseSequence": 382,
+          "display": "11.98 V",
+          "volts": 11.98,
+          "expectedRangeVolts": [
+            10.8,
+            12.6
+          ],
+          "status": "PASS"
+        }
+      ]
+    }
+  ],
+  "firstHeadedAttempt": "FAIL_MENU_WAIT_QUICKPLAY_ROUTE_PRESERVED",
+  "hostExitCode": 1,
+  "hostCleanup": "FAIL_ORIGINAL_END_OF_BODY_CONTROLLER_CONSOLE_SURVIVOR_PRESERVED",
+  "hostCleanupSeconds": 0.6396879999665543,
+  "hostCleanupTimingBoundary": "Final preview/process check only; context.close and post-input audit already occurred; browser close duration NOT_RECORDED separately",
+  "independentRelease": "PASS_POST_EXIT_16_INSTANCES_ABSENT_PORT_CLOSED_NO_TERMINATION",
+  "unpoweredActiveMeter": "NOT_CERTIFIED_UNKNOWN_READINESS_EXACT_LIVE_CAUSE_UNKNOWN",
+  "applicationPreparationLimitMilliseconds": 90000,
+  "timingLimit": "Visible wait timing is observer timing, not a new timing benchmark; unchanged cold77 retained separately",
+  "blindDiagnosticSolvability": "NOT_ESTABLISHED_BY_GUIDED_UI_FLOW_SEPARATE_FROZEN_D01_EVIDENCE",
+  "parentAcceptance": "PENDING",
+  "q30Accepted": false,
+  "normalPlayQ30Enabled": false,
+  "publication": "LOCAL_ONLY_NO_PUSH_PUBLISH_EMAIL",
+  "unstarted": [
+    "U06",
+    "U07",
+    "Q60"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "status": "PASS_ACTUAL_HEADED_VISUAL_INSPECTION_WITH_LIMITS",
+  "inspector": "Root via view_image",
+  "screenshots": [
+    "screenshots/005-20part-unrepaired-high.png",
+    "screenshots/012-20part-function-verified.png",
+    "screenshots/017-30part-function-verified.png",
+    "screenshots/019-40part-bottom-unrepaired.png",
+    "screenshots/023-40part-function-verified.png"
+  ],
+  "observations": [
+    "20-part unrepaired HIGH shows left/red and right/black markers at JOA and 2.16 microvolt reading.",
+    "20/30/40 result screenshots visibly show FUNCTION VERIFIED/customer retest passed.",
+    "40-part bottom copper is inspectable, with real probe markers and failed customer retest banner before repair.",
+    "Toolbar, meter and tray render; no hidden fault answer, netlist or debug field appears in selected images."
+  ],
+  "limits": [
+    "Screenshots establish rendered UI state, not electrical truth independently.",
+    "Guided frozen representative flows; independent D01/cohort evidence remains separate.",
+    "Other raw screenshots retained locally without deletion."
+  ]
+}

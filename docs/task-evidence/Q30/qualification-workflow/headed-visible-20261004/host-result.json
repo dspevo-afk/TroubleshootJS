@@ -1,0 +1,19 @@
+{
+  "FilePath": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+  "Arguments": [
+    "-B",
+    "-u",
+    "<WORKSPACE>\\headed_q30_ui.py",
+    "<HEADED_ROOT>",
+    "<PRIVATE_ROOT>"
+  ],
+  "ProcessId": 8368,
+  "ProcessStartTicks": 639267429666894556,
+  "ExitCode": 1,
+  "Stdout": "{\"outcome\": \"UI_SESSION_CLOSED_PENDING_FLOW_REVIEW\", \"cleanup\": {\"seconds\": 0.6396879999665543, \"recordedSurvivors\": [{\"pid\": 10552, \"parent\": 8368, \"created\": \"2026-10-04T20:36:06.7190740Z\", \"ExecutablePath\": \"C:\\\\WINDOWS\\\\system32\\\\conhost.exe\", \"CommandLine\": \"\\\\??\\\\C:\\\\WINDOWS\\\\system32\\\\conhost.exe 0x4\"}], \"previewExitCode\": 1}, \"actionCount\": 388}\r\n",
+  "Stderr": "",
+  "StdoutLog": "<OS_TEMP>\\TroubleshootJS\\verify-process-fec8df2e32d44e859f0bb90078ca7f39\\stdout.log",
+  "StderrLog": "<OS_TEMP>\\TroubleshootJS\\verify-process-fec8df2e32d44e859f0bb90078ca7f39\\stderr.log",
+  "ProcessRoot": "<OS_TEMP>\\TroubleshootJS\\verify-process-fec8df2e32d44e859f0bb90078ca7f39",
+  "TerminationProven": true
+}

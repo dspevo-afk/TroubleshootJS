@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "status": "PASS_EXPORTED_BYTES_AND_VISIBLE_OBSERVATIONS_WITH_RETAINED_LIMITS",
+  "observedUtc": "2026-10-04T21:18:47.519244+00:00",
+  "manifestSha256": "b0a81a80294b598008665599a10dcf367b11bf3efd39041e448c961cd7f2023f",
+  "manifestedFiles": 29,
+  "derivedRawPortableBindings": 23,
+  "screenshots": 5,
+  "actions": 388,
+  "successfulActions": 382,
+  "preservedFailedActions": 6,
+  "rawCommandResponseMatches": 388,
+  "publicRawInputsUnchanged": 1354,
+  "preservedUntrackedFilesByteEqualToPreviousLocalCheckpoint": 8,
+  "hostExitCodePreserved": 1,
+  "independentPostExitRelease": "PASS_SEPARATE_GATE",
+  "activeMeters": "UNKNOWN_NOT_CERTIFIED",
+  "parentAcceptance": "PENDING",
+  "q30Accepted": false,
+  "normalPlayQ30Enabled": false,
+  "buildOrFullMatrixRerun": false,
+  "executedBrowserSessionsByThisAuditor": 0,
+  "limits": [
+    "Scope is exported bytes and previously recorded visible observations, not application acceptance.",
+    "PNG appearance was inspected separately by root; PNG signature/hash checks do not inspect appearance.",
+    "Driver launch/post/copy hashes agree; invoked workspace path is not immutable-copy execution.",
+    "Current untracked hashes match the preceding local checkpoint, not an unavailable earlier historical hash."
+  ]
+}

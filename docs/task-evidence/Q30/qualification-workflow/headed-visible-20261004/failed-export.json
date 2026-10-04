@@ -1,0 +1,7 @@
+{
+  "operation": "Meter display parse before output mkdir",
+  "error": "RuntimeError: No numeric DC reading",
+  "status": "FAIL_EXPORT_VALIDATION_NO_PACKET_WRITES",
+  "failedSourceSha256": "75bcb8b573fb17972255569327f5c6c06b247973d1b6ea86aaaa68422ed03250",
+  "cause": "Authored volts parser accepted U+00B5 micro sign while actual UI uses U+03BC Greek mu. Numeric ranges and raw results unchanged."
+}
