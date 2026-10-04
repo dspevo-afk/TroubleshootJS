@@ -1,0 +1,17 @@
+{
+  "exitCode": 2,
+  "cleanupElapsedSeconds": "NOT_RECORDED separately",
+  "startedUtc": "2026-10-04T21:46:39.0961437Z",
+  "finishedUtc": "2026-10-04T21:47:18.7088431Z",
+  "fullMatrix": false,
+  "status": "FAIL",
+  "cold77": false,
+  "elapsedSeconds": 39.6060124,
+  "suites": [
+    "Q30PowerReadinessContractTest",
+    "Q30PlanContractTest",
+    "A06PowerContractTest",
+    "U02MeasurementContractTest",
+    "GeneratedExternalPowerBindingsControlObservationContractTest"
+  ]
+}

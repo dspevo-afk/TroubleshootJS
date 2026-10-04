@@ -1,0 +1,12 @@
+{
+  "processTimeoutSeconds": 900,
+  "startedUtc": "2026-10-04T21:51:21.8742900Z",
+  "status": "PASS_ACTUAL_FINAL_SOURCE_JDK8_GWT_BUILD",
+  "style": "OBF",
+  "publicQ30Enabled": false,
+  "target": "Compile",
+  "finishedUtc": "2026-10-04T21:53:01.7545021Z",
+  "cleanupElapsedSeconds": "NOT_RECORDED separately",
+  "elapsedSeconds": 99.8746161,
+  "exitCode": 0
+}

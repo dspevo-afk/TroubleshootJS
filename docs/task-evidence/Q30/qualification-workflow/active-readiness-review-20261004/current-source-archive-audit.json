@@ -1,0 +1,9 @@
+{
+  "status": "PASS_EXACT_1355_SOURCE_FILES_ROUND_TRIP",
+  "archive": "<focused-root>/current-source-1355.tar.gz",
+  "sha256": "c977b4aa5e13b701820344631eaf494606e091d21806a5357e4b35f22bb1bc26",
+  "fileCount": 1355,
+  "elapsedSeconds": 0.954428100027144,
+  "noExtraction": true,
+  "scope": "Explicit preceding 1354 raw-source paths plus the new fixture; no repository/global traversal or compiled output. Byte archive audit only, not acceptance or original overlay reconstruction rerun."
+}

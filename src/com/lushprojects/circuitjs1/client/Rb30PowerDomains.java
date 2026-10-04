@@ -21,12 +21,26 @@ final class Rb30PowerDomains {
                 continue;
             boolean load = "LOAD12".equals(id) || id.startsWith("OUT_") ||
                 id.startsWith("NC_") || id.startsWith("LED_OUT_");
-            boolean storage = "FUSED12".equals(id) || "RAIL12".equals(id) ||
-                "RAIL5".equals(id);
-            for (String channel : plan.channels())
-                if (plan.hasSensorInputFilter(channel) &&
-                        (channel + "_SENSE").equals(id))
+            // Observe every known exposure to CIN/C5/optional C12 and relay
+            // energy, including nodes reached through real components. This
+            // is a discharge obligation, not a capacitor on each named net.
+            // The isolated load domain and unrelated sensor inputs stay NONE.
+            boolean storage = "RAW12".equals(id) || "FUSED12".equals(id) ||
+                "RAIL12".equals(id) || "RAIL5".equals(id) || "EN5".equals(id) ||
+                "REF_SHARED".equals(id) || "LED_FEED".equals(id) ||
+                "LED12_FEED".equals(id);
+            for (String channel : plan.channels()) {
+                if ((channel + "_REF").equals(id) ||
+                        (channel + "_CMD").equals(id) ||
+                        (channel + "_DRIVE").equals(id) ||
+                        (channel + "_COIL_LOW").equals(id))
                     storage = true;
+                if ((plan.hasSensorInputFilter(channel) ||
+                        plan.sharedHystereticReference()) &&
+                        ((channel + "_SENSE").equals(id) ||
+                         (channel + "_RAW").equals(id)))
+                    storage = true;
+            }
             rails.add(new PowerDomainContract.Rail(id,
                 load ? "LOAD_RETURN" : "CTRL_RETURN",
                 storage ? PowerDomainContract.StorageRequirement.OBSERVATION_REQUIRED :

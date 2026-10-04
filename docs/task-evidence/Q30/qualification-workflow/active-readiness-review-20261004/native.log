@@ -1,0 +1,112 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: generated power control observation contracts assertions=16
+
+PASS: Q30 plan contracts 4381 assertions, topologies=11, oneChannelSeeds=7, twoChannelSeeds=10, structuralPackageBand=20..40
+
+Q30_POWER_READINESS seed=10387 packages=20 status=PASS residual=DISCHARGE thresholdVolts=0.25 activeOhm=PASS activeDiode=PASS
+Q30_POWER_READINESS seed=10226 packages=30 status=PASS residual=DISCHARGE thresholdVolts=0.25 activeOhm=PASS activeDiode=PASS
+Q30_POWER_READINESS seed=10014 packages=40 status=PASS residual=DISCHARGE thresholdVolts=0.25 activeOhm=PASS activeDiode=PASS
+PASS: Q30 power readiness contracts 120 assertions seeds=3 realOhm=3 realDiode=3
+
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 9 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+converged after 9 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 9 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 12 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+
+A06_VECTORS_BEGIN
+A06-POWER-VECTORS-1;partial:PARTIAL=PASS;backfed:BACKFED=PASS;backfed-not-ready:POWER_OFF=PASS;disabled-is-connected:CONNECTED=PASS;disabled-backfed:BACKFED=PASS;isolated-not-discharged:ALL_SOURCES_ISOLATED=PASS;residual:DISCHARGE=PASS;stored-rail:RESIDUAL=PASS;threshold:READY=PASS;negative-residual:DISCHARGE=PASS;stale:WAITING=PASS;nonfinite:UNKNOWN=PASS;nonfinite:UNKNOWN=PASS;nonfinite:UNKNOWN=PASS;missing-rail:UNKNOWN=PASS;missing-source:UNKNOWN=PASS;storage-unknown:UNKNOWN=PASS;unexplained-energy:UNKNOWN=PASS;forbidden-path-not-hidden=PASS;equal-voltage-contention=PASS;LOW-is-a-drive:DRIVEN=PASS;LOW-is-not-isolation:POWER_OFF=PASS;source-order:power-domain/1;10:two-source;9:reference;3:GND;20:isolated-low-voltage;-1:;5:false;4:rail;1:A;3:GND;4:NONE;4:rail;1:B;3:GND;20:OBSERVATION_REQUIRED;6:source;2:SA;1:A;24:KNOWN:0:4014000000000000;22:KNOWN:3fa999999999999a;7:KNOWN:0;14:NOT_APPLICABLE;13:STIFF_VOLTAGE;6:source;2:SB;1:B;24:KNOWN:0:4014000000000000;22:KNOWN:3fa999999999999a;7:KNOWN:0;14:NOT_APPLICABLE;13:STIFF_VOLTAGE;8:backfeed;2:AB;1:A;1:B;22:KNOWN:3f747ae147ae147b;4:true;=PASS;differential-no-earth:ADMITTED=PASS;numeric-ground-not-earth:UNPROVEN=PASS;isolation:REJECTED=PASS;labels-not-joins:UNPROVEN=PASS;scope-return-short:REJECTED=PASS;earth-needs-connection:CONNECTION_REQUIRED=PASS;no-fake-earth-readout=PASS;provider-live:OPERABLE=PASS;provider-off:UNPOWERED=PASS;brownout:BROWNOUT=PASS;overvoltage:OUT_OF_ENVELOPE=PASS;reset:RESET_HELD=PASS;clock:CLOCK_MISSING=PASS;reset-unknown:UNKNOWN=PASS;partial-provider:UNKNOWN=PASS;provider-NaN:UNKNOWN=PASS;drive-shortfall=PASS;drive-unknown=PASS;drive-boundary=PASS;supply-envelope=PASS;unknown-reference-is-not-ready:UNKNOWN=PASS;unknown-reference-rail:UNKNOWN=PASS;unknown-reference-diagnostic=PASS;bounds-do-not-rewrite-contact-state:PARTIAL=PASS;outside-source-envelope:UNKNOWN=PASS;outside-envelope-diagnostic=PASS;unknown-source-envelope:UNKNOWN=PASS;unknown-envelope-diagnostic=PASS;unknown-brownout-is-not-absent:UNKNOWN=PASS;explicit-no-brownout-consumer:OPERABLE=PASS;policy-order:READY=PASS;policy-order:POWER_OFF=PASS;policy-order:WAITING=PASS;policy-order:DISCHARGE=PASS;policy-order:UNKNOWN=PASS;policy-order:POWER_OFF=PASS;policy-order:POWER_OFF=PASS;policy-order:POWER_OFF=PASS;policy-order:POWER_OFF=PASS;policy-order:POWER_OFF=PASS;policy-order:WAITING=PASS;policy-order:POWER_OFF=PASS;policy-order:WAITING=PASS;policy-order:DISCHARGE=PASS;policy-order:UNKNOWN=PASS;policy-order:DISCHARGE=PASS;policy-order:POWER_OFF=PASS;policy-order:DISCHARGE=PASS;policy-order:DISCHARGE=PASS;policy-order:UNKNOWN=PASS;policy-order:UNKNOWN=PASS;policy-order:POWER_OFF=PASS;policy-order:UNKNOWN=PASS;policy-order:UNKNOWN=PASS;policy-order:UNKNOWN=PASS;null-policy:UNKNOWN=PASS;RC-NaN:UNKNOWN=PASS;RC-infinity:UNKNOWN=PASS;RC-threshold:READY=PASS;
+A06_VECTORS_END
+PASS: A06 power contracts assertions=152
+
+PASS: U02 measurement contracts assertions=585
+
+PASS: focused current contracts; 5 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

@@ -1,0 +1,209 @@
+{
+  "schema": 1,
+  "status": "PASS_Q30_FIX_REVIEW_PACKET_BYTE_AUDIT",
+  "files": [
+    {
+      "path": "affected-context/controller-identity.json",
+      "size": 544,
+      "sha256": "406cdaedef8161f6dcb5a06f9e5dbd57e75e7391276a6abffa1b2cb6765fcc2a"
+    },
+    {
+      "path": "affected-context/native.log",
+      "size": 4337,
+      "sha256": "7ff2f3984a76ac3bb8ab1bd820f18e2a731a9aa819e6fdb60efc2257e347802b"
+    },
+    {
+      "path": "affected-context/native.txt",
+      "size": 381,
+      "sha256": "50133f4e9486b9b4c355b9909274055529428e612a1bf9293cf0ce37c1f14d1f"
+    },
+    {
+      "path": "affected-context/result.json",
+      "size": 475,
+      "sha256": "dd99f9b3fcb6a2cb64b77e668c450f6d5daf3103afb9886f96ce82c5828ae6fd"
+    },
+    {
+      "path": "before-fix/case-10014.json",
+      "size": 32255,
+      "sha256": "b9f74393b8fa1c19496c12330581ffdbe889d63cbed38e64137b9423fa1e0fbf"
+    },
+    {
+      "path": "before-fix/case-10226.json",
+      "size": 23073,
+      "sha256": "9e9b36872ecc0beb3733c01d4247937b78d99f69ada2af9c929c08ed3370627a"
+    },
+    {
+      "path": "before-fix/case-10387.json",
+      "size": 18728,
+      "sha256": "2ea45c5260cb646632480a7d355a7883dc750dfec4514f1084ca823d0bca26df"
+    },
+    {
+      "path": "before-fix/compile-result.json",
+      "size": 1258,
+      "sha256": "bf41b44e9d702615a1f81c7205007e8a1c505f03c1e2dfa806012217369b2e44"
+    },
+    {
+      "path": "before-fix/controller-identity.json",
+      "size": 510,
+      "sha256": "a62994057067f9cfe380a323b24c4325106419328d0dd9a40f34292e5652cb3d"
+    },
+    {
+      "path": "before-fix/Q30ActivePowerDiagnostic.java",
+      "size": 5260,
+      "sha256": "208deeb3795ca577e00d6f80929365d4dac172cebf6e2c6fa1ec29dd35206a6b"
+    },
+    {
+      "path": "before-fix/result.json",
+      "size": 655,
+      "sha256": "c9cebea0cec7352b7f3959f70c312a676427ddb772df6dd6b1f5e4e418983a7d"
+    },
+    {
+      "path": "before-fix/source-binding.json",
+      "size": 156311,
+      "sha256": "a28d3908e287aa1fcbd2ce0be654a7ceb9a321610766f4b0a54172acd3410f07"
+    },
+    {
+      "path": "before-fix/source-snapshot.json",
+      "size": 270380,
+      "sha256": "bfeaf1d89bd63657b0f0cbfa21f727203b243e60863a7334a20eee96b707c6f4"
+    },
+    {
+      "path": "build-controller-identity.json",
+      "size": 500,
+      "sha256": "6dea68dfd68ffe3dd3e1a43b3dfe04941ea889900dc246f304589e39053c7dd3"
+    },
+    {
+      "path": "build-result.json",
+      "size": 372,
+      "sha256": "e95869aaab55fb733ff4ec193f8b0564e2c8dafdaa305edc7af921b4f90930a2"
+    },
+    {
+      "path": "build.log",
+      "size": 1182,
+      "sha256": "07d4300d042fdf8ab95d36f65bc165827010affc47f156fe24ce2d219165cbd9"
+    },
+    {
+      "path": "current-source-archive-audit.json",
+      "size": 499,
+      "sha256": "be4306ae1c17d74138d6841e907d53408964a7f7224a45167c6a3c347d57bd07"
+    },
+    {
+      "path": "current-source-inventory.json",
+      "size": 271235,
+      "sha256": "6bb3fd2c34bc567770e15f9e9c1390a8142da6c769b4f2b5880c74b109d9e0b8"
+    },
+    {
+      "path": "enablement-artifact-validation.json",
+      "size": 633,
+      "sha256": "9eb9173a2c7599353ed05bd7a5754e750ec05a7cfedd858c25befd8c1a9e2762"
+    },
+    {
+      "path": "export-bindings.json",
+      "size": 11819,
+      "sha256": "0a877124cf9d65a1bef2f4ffd25df6537d92294b442f5689f74c53aab495dd35"
+    },
+    {
+      "path": "failed-native-fixture/native-controller-identity.json",
+      "size": 513,
+      "sha256": "d63ed80e96bec294e9a8c084eb3957d48b92fbe809d60c5fbbf211dc80b3677d"
+    },
+    {
+      "path": "failed-native-fixture/native-result.json",
+      "size": 494,
+      "sha256": "02ebf75514e785be271b58a0da349b9f155e2973582e1efdd9b68e5cbb84a665"
+    },
+    {
+      "path": "failed-native-fixture/native.log",
+      "size": 2746,
+      "sha256": "529727d30d4c5aff90349267aa05293c7beb464b7d7940afa9b85d3369e8f788"
+    },
+    {
+      "path": "helpers/audit_power_resources.ps1",
+      "size": 2456,
+      "sha256": "2cfb7c9b4828b54071a275fc3885bddb6ab1dcfd9f50876abe1dd6e077d25aab"
+    },
+    {
+      "path": "helpers/prepare_active_native.py",
+      "size": 2824,
+      "sha256": "6cfcce43390eab72ff33d1b557bbd5108f30b5ef5e4c38351ae668bade8cfa67"
+    },
+    {
+      "path": "helpers/run_active_native.ps1",
+      "size": 2880,
+      "sha256": "6ee7e1d3cc7b29b469d4e5a6b3f09ee7d160212522efe5a1d609789d81a89432"
+    },
+    {
+      "path": "helpers/run_power_fix_build.ps1",
+      "size": 2032,
+      "sha256": "9a87e9cd9f9da59b066db424a4bfdb8d5cd47b8b4732cf0063a4a0a87206684c"
+    },
+    {
+      "path": "helpers/run_power_fix_context.ps1",
+      "size": 2248,
+      "sha256": "58b46208d975a7a47549630884421987248efa63e7d484f29394e2332bd9459c"
+    },
+    {
+      "path": "helpers/run_power_fix_focused.ps1",
+      "size": 2281,
+      "sha256": "79f792c311943f96c1f8fb3810c78124185309b606afa904da434243dea80707"
+    },
+    {
+      "path": "historical-cold-distribution.json",
+      "size": 586,
+      "sha256": "c736a0347eaf7b48eb6bf88233c6f8cb4e8ef8f27e449f9807014e02ce0424fc"
+    },
+    {
+      "path": "impact-audit.md",
+      "size": 2241,
+      "sha256": "a031f9ef2a9565a7c033a55178973791828e006216e308e7a30abcbf43a1c945"
+    },
+    {
+      "path": "independent-review.json",
+      "size": 2206,
+      "sha256": "e02101e623703f2c422c8608889ead2ef1f5f156a9e50c73cf7098eb28e18197"
+    },
+    {
+      "path": "minimal-enablement.diff",
+      "size": 478,
+      "sha256": "da864c661eafa30b70480b531e55ace786e8b248b50d33e71098cac9a945f361"
+    },
+    {
+      "path": "native-controller-identity.json",
+      "size": 505,
+      "sha256": "b59a17aad5c25be399e0833d0f260f6669e6451491be8b2af9d0fb7b7d20cc8c"
+    },
+    {
+      "path": "native-result.json",
+      "size": 524,
+      "sha256": "5a0011dd26c73f925d99541f84c893d5f1eedd3d0d9664584e627344b4b042dc"
+    },
+    {
+      "path": "native.log",
+      "size": 7066,
+      "sha256": "0a5e3253dcb213924867b996869c4974557cf3954a506a1d988bc62184ddf752"
+    },
+    {
+      "path": "native.txt",
+      "size": 3615,
+      "sha256": "404b20a33d32497c2e4db284adb526b4d5ccd37e5bfe189f22a9cb588b52ceeb"
+    },
+    {
+      "path": "preserved-work-audit.json",
+      "size": 1829,
+      "sha256": "ca50643827e228df82154cb7d047dff4f7e793d2040164c103185cf2b3dbd075"
+    },
+    {
+      "path": "README.md",
+      "size": 7480,
+      "sha256": "b81cf1e1a98482db2e7f60f2f5fb06705147ea1a323860345f70ae561bde477d"
+    },
+    {
+      "path": "release-audit.json",
+      "size": 3262,
+      "sha256": "33134baa066ed691c65f8a05bbc785a775911f9e3ed1357b44782738258f6a4e"
+    }
+  ],
+  "limits": "Portable bounded receipts/source inventories/helpers/reviews. Does not qualify changed-candidate cold77, compiled UI or original acceptance.",
+  "q30Enabled": false,
+  "accepted": false
+}

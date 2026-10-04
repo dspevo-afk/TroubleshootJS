@@ -1,0 +1,9 @@
+--- a/src/com/lushprojects/circuitjs1/client/PlayerFamilyCatalog.java
++++ b/src/com/lushprojects/circuitjs1/client/PlayerFamilyCatalog.java
+@@ -18,5 +18,5 @@
+     private static RegistrationBoundary currentRegistration() {
+         RegistrationBoundary result = new RegistrationBoundary();
+-        result.registerStagedFamily(new Rb30PlayerFamilyCapability(), false);
++        result.registerStagedFamily(new Rb30PlayerFamilyCapability(), true);
+         return result;
+     }

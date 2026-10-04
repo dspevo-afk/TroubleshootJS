@@ -286,6 +286,7 @@ final class PhysicalSpecificationDeveloperVerifier {
 '@, (New-Object Text.UTF8Encoding($false)))
     $needsQ30NativeLoggerBridge = $Suite.Count -eq 0 -or
         $Suite -contains 'Q30ServiceFlowContractTest' -or
+        $Suite -contains 'Q30PowerReadinessContractTest' -or
         $Suite -contains 'Q30TemporalWorkContractTest' -or
         $Suite -contains 'DiagnosticServicePreparationContractTest' -or
         $Suite -contains 'Q30CatalogTransferContractTest' -or
@@ -345,6 +346,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'Q30PlanContractTest'; Marker = 'Q30 plan contracts ' },
         @{ Name = 'Q30RelayServiceContractTest'; Marker = 'Q30 relay service contracts ' },
         @{ Name = 'Q30ServiceFlowContractTest'; Marker = 'Q30 service flow contracts ' },
+        @{ Name = 'Q30PowerReadinessContractTest'; Marker = 'Q30 power readiness contracts ' },
         @{ Name = 'Q30TemporalWorkContractTest'; Marker = 'Q30 temporal work contracts ' },
         @{ Name = 'DiagnosticServicePreparationContractTest'; Marker = 'diagnostic service preparation contracts ' },
         @{ Name = 'Q30SolverStepSensitivityContractTest'; Marker = 'Q30 production solver step sensitivity ' },

@@ -1,0 +1,8 @@
+{
+  "initialHandwrittenArtifactCheck": "FAIL_WRONG_CALL_PREFIX_THEN_LINE_ENDING_CONTEXT",
+  "correction": "Generated exact unified delta from unchanged raw catalog source; preserves its CRLF context; source registration remains false",
+  "finalGitApplyCheck": "PASS_GIT_APPLY_CHECK_EXACT_CONTEXT_NOT_APPLIED",
+  "publicEnablementApplied": false,
+  "initialCachedWhitespaceCheck": "FAIL_CONTEXT_BLANK_LINE_PREFIX_SPACES_IN_REVIEW_PATCH",
+  "artifactOnlyCorrection": "Reduced exact generated context from3 to2 lines to omit empty context lines; actual product/source unchanged; previous controls preserved in task workspace"
+}

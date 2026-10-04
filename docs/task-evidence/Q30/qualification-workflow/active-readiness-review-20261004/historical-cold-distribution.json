@@ -1,0 +1,15 @@
+{
+  "scope": "Historical preceding-source cold normal admission, not current changed power context",
+  "source": "../cold77-actual-window-1/sequence-summary.json",
+  "sourceSha256": "46d08efc559813282b69451c37ba22bf1c2889a6e3853a9b0eaef41ab6324f86",
+  "count": 77,
+  "quantileMethod": "nearest rank ceil(p*n), one-based",
+  "p50Millis": 60844,
+  "p95Millis": 78689,
+  "minimumMillis": 20788,
+  "maximumMillis": 85562,
+  "maximumWorkUnits": 506,
+  "currentCold77": "NOT_RUN",
+  "normalWarmPopulationPercentiles": "NOT_MEASURED",
+  "currentCandidateQualification": false
+}

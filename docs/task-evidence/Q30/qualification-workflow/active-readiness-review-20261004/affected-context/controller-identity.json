@@ -1,0 +1,8 @@
+{
+  "scope": "Affected dependency/cache, diagnostic preparation and Q30 temporal lifecycle contracts; no full matrix or cold77",
+  "commandLine": "\"<user-home>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe\" -NoProfile -File <task-workspace>\\run_power_fix_context.ps1",
+  "pid": 21948,
+  "createdUtc": "2026-10-04T21:58:01.1515270Z",
+  "executable": "<user-home>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "taskRoot": "<context-root>"
+}

@@ -1,0 +1,16 @@
+{
+  "finishedUtc": "2026-10-04T21:58:50.2165411Z",
+  "suites": [
+    "A10DependencyContractTest",
+    "D01DiagnosticContractTest",
+    "DiagnosticServicePreparationContractTest",
+    "Q30TemporalWorkContractTest"
+  ],
+  "startedUtc": "2026-10-04T21:58:01.4594337Z",
+  "cleanupElapsedSeconds": "NOT_RECORDED separately",
+  "cold77": false,
+  "exitCode": 0,
+  "elapsedSeconds": 48.7499578,
+  "fullMatrix": false,
+  "status": "PASS_FOCUSED_AFFECTED_CONTRACTS"
+}

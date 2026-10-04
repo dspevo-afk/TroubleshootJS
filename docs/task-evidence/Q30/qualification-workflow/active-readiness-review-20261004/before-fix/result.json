@@ -1,0 +1,29 @@
+{
+  "cases": [
+    {
+      "terminationProven": true,
+      "complete": true,
+      "seed": "10387",
+      "exitCode": 0
+    },
+    {
+      "terminationProven": true,
+      "complete": true,
+      "seed": "10226",
+      "exitCode": 0
+    },
+    {
+      "terminationProven": true,
+      "complete": true,
+      "seed": "10014",
+      "exitCode": 0
+    }
+  ],
+  "cold77Run": false,
+  "elapsedSeconds": 72.0499959,
+  "productionSourceChanged": false,
+  "status": "DIAGNOSTIC_COMPLETED_NOT_PRODUCT_ACCEPTANCE",
+  "buildRun": false,
+  "startedUtc": "2026-10-04T21:34:13.8816974Z",
+  "finishedUtc": "2026-10-04T21:35:25.9404421Z"
+}

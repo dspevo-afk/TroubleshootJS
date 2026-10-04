@@ -1,0 +1,17 @@
+{
+  "finishedUtc": "2026-10-04T21:49:59.7393110Z",
+  "cold77": false,
+  "fullMatrix": false,
+  "startedUtc": "2026-10-04T21:48:56.7597005Z",
+  "exitCode": 0,
+  "cleanupElapsedSeconds": "NOT_RECORDED separately",
+  "suites": [
+    "Q30PowerReadinessContractTest",
+    "Q30PlanContractTest",
+    "A06PowerContractTest",
+    "U02MeasurementContractTest",
+    "GeneratedExternalPowerBindingsControlObservationContractTest"
+  ],
+  "status": "COMMAND_PASS_PENDING_RECEIPT_REVIEW",
+  "elapsedSeconds": 62.971387
+}

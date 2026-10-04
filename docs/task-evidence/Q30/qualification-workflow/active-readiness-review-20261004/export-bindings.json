@@ -1,0 +1,247 @@
+{
+  "status": "EXPORTED_BOUNDED_TASK_RECEIPTS",
+  "files": [
+    {
+      "packetPath": "before-fix/result.json",
+      "rawSha256": "c9cebea0cec7352b7f3959f70c312a676427ddb772df6dd6b1f5e4e418983a7d",
+      "exportSha256": "c9cebea0cec7352b7f3959f70c312a676427ddb772df6dd6b1f5e4e418983a7d",
+      "rawSize": 655,
+      "exportSize": 655,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "before-fix/compile-result.json",
+      "rawSha256": "742536862d66f7debea46e4d36bce1f2096d1dc611284158aebf662d46613bdc",
+      "exportSha256": "bf41b44e9d702615a1f81c7205007e8a1c505f03c1e2dfa806012217369b2e44",
+      "rawSize": 1714,
+      "exportSize": 1258,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "before-fix/source-binding.json",
+      "rawSha256": "725fa58642ed8a645d42f5673942eea769448a72c0d571d52f46989de49ca053",
+      "exportSha256": "a28d3908e287aa1fcbd2ce0be654a7ceb9a321610766f4b0a54172acd3410f07",
+      "rawSize": 214987,
+      "exportSize": 156311,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "before-fix/source-snapshot.json",
+      "rawSha256": "bfeaf1d89bd63657b0f0cbfa21f727203b243e60863a7334a20eee96b707c6f4",
+      "exportSha256": "bfeaf1d89bd63657b0f0cbfa21f727203b243e60863a7334a20eee96b707c6f4",
+      "rawSize": 270380,
+      "exportSize": 270380,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "before-fix/Q30ActivePowerDiagnostic.java",
+      "rawSha256": "208deeb3795ca577e00d6f80929365d4dac172cebf6e2c6fa1ec29dd35206a6b",
+      "exportSha256": "208deeb3795ca577e00d6f80929365d4dac172cebf6e2c6fa1ec29dd35206a6b",
+      "rawSize": 5260,
+      "exportSize": 5260,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "before-fix/controller-identity.json",
+      "rawSha256": "9df3d3846e72c6e2b5506fb626df88b7e7fb9ff8085d40f26b2511b2144e4dc8",
+      "exportSha256": "a62994057067f9cfe380a323b24c4325106419328d0dd9a40f34292e5652cb3d",
+      "rawSize": 645,
+      "exportSize": 510,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "before-fix/case-10387.json",
+      "rawSha256": "3874be739d082850f3b6185b4b73436d188c57f8bbba97e660f8c0c1c93993e9",
+      "exportSha256": "2ea45c5260cb646632480a7d355a7883dc750dfec4514f1084ca823d0bca26df",
+      "rawSize": 18968,
+      "exportSize": 18728,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "before-fix/case-10226.json",
+      "rawSha256": "1800820bb33dcd544c1dc0bd201f1d0824c31097392cef85f6e42510a0ddafb7",
+      "exportSha256": "9e9b36872ecc0beb3733c01d4247937b78d99f69ada2af9c929c08ed3370627a",
+      "rawSize": 23313,
+      "exportSize": 23073,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "before-fix/case-10014.json",
+      "rawSha256": "00016641662ebd3970b0e6fb331bc4c64066069b437de596575545d9943108ec",
+      "exportSha256": "b9f74393b8fa1c19496c12330581ffdbe889d63cbed38e64137b9423fa1e0fbf",
+      "rawSize": 32495,
+      "exportSize": 32255,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "native.log",
+      "rawSha256": "0a5e3253dcb213924867b996869c4974557cf3954a506a1d988bc62184ddf752",
+      "exportSha256": "0a5e3253dcb213924867b996869c4974557cf3954a506a1d988bc62184ddf752",
+      "rawSize": 7066,
+      "exportSize": 7066,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "native.txt",
+      "rawSha256": "404b20a33d32497c2e4db284adb526b4d5ccd37e5bfe189f22a9cb588b52ceeb",
+      "exportSha256": "404b20a33d32497c2e4db284adb526b4d5ccd37e5bfe189f22a9cb588b52ceeb",
+      "rawSize": 3615,
+      "exportSize": 3615,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "native-result.json",
+      "rawSha256": "5a0011dd26c73f925d99541f84c893d5f1eedd3d0d9664584e627344b4b042dc",
+      "exportSha256": "5a0011dd26c73f925d99541f84c893d5f1eedd3d0d9664584e627344b4b042dc",
+      "rawSize": 524,
+      "exportSize": 524,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "native-controller-identity.json",
+      "rawSha256": "ecfb0db1218b5229acef137fcda16b706f8c9d54524c8ed0a2565c8841520ebd",
+      "exportSha256": "b59a17aad5c25be399e0833d0f260f6669e6451491be8b2af9d0fb7b7d20cc8c",
+      "rawSize": 640,
+      "exportSize": 505,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "build.log",
+      "rawSha256": "93d42b9b7a3fe5e2d8bd5281d89ffbb0a5cd74f595243a8f2c5733836031e1fd",
+      "exportSha256": "07d4300d042fdf8ab95d36f65bc165827010affc47f156fe24ce2d219165cbd9",
+      "rawSize": 1250,
+      "exportSize": 1182,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "build-result.json",
+      "rawSha256": "e95869aaab55fb733ff4ec193f8b0564e2c8dafdaa305edc7af921b4f90930a2",
+      "exportSha256": "e95869aaab55fb733ff4ec193f8b0564e2c8dafdaa305edc7af921b4f90930a2",
+      "rawSize": 372,
+      "exportSize": 372,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "build-controller-identity.json",
+      "rawSha256": "5ac63bf63b9cd69c8f2b020de52c614bddc552791e790100be4c59f310ef719a",
+      "exportSha256": "6dea68dfd68ffe3dd3e1a43b3dfe04941ea889900dc246f304589e39053c7dd3",
+      "rawSize": 635,
+      "exportSize": 500,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "release-audit.json",
+      "rawSha256": "8e171dfbdc5ada2c609807c3dacf880ce9f8400fb95afa3054b16ac741e0a691",
+      "exportSha256": "33134baa066ed691c65f8a05bbc785a775911f9e3ed1357b44782738258f6a4e",
+      "rawSize": 3979,
+      "exportSize": 3262,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "failed-native-fixture/native.log",
+      "rawSha256": "529727d30d4c5aff90349267aa05293c7beb464b7d7940afa9b85d3369e8f788",
+      "exportSha256": "529727d30d4c5aff90349267aa05293c7beb464b7d7940afa9b85d3369e8f788",
+      "rawSize": 2746,
+      "exportSize": 2746,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "failed-native-fixture/native-result.json",
+      "rawSha256": "02ebf75514e785be271b58a0da349b9f155e2973582e1efdd9b68e5cbb84a665",
+      "exportSha256": "02ebf75514e785be271b58a0da349b9f155e2973582e1efdd9b68e5cbb84a665",
+      "rawSize": 494,
+      "exportSize": 494,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "failed-native-fixture/native-controller-identity.json",
+      "rawSha256": "d1e1439940cc5754fa4f863ffd246213c84515578185385e0300052fd7194801",
+      "exportSha256": "d63ed80e96bec294e9a8c084eb3957d48b92fbe809d60c5fbbf211dc80b3677d",
+      "rawSize": 641,
+      "exportSize": 513,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "affected-context/native.log",
+      "rawSha256": "7ff2f3984a76ac3bb8ab1bd820f18e2a731a9aa819e6fdb60efc2257e347802b",
+      "exportSha256": "7ff2f3984a76ac3bb8ab1bd820f18e2a731a9aa819e6fdb60efc2257e347802b",
+      "rawSize": 4337,
+      "exportSize": 4337,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "affected-context/native.txt",
+      "rawSha256": "50133f4e9486b9b4c355b9909274055529428e612a1bf9293cf0ce37c1f14d1f",
+      "exportSha256": "50133f4e9486b9b4c355b9909274055529428e612a1bf9293cf0ce37c1f14d1f",
+      "rawSize": 381,
+      "exportSize": 381,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "affected-context/result.json",
+      "rawSha256": "dd99f9b3fcb6a2cb64b77e668c450f6d5daf3103afb9886f96ce82c5828ae6fd",
+      "exportSha256": "dd99f9b3fcb6a2cb64b77e668c450f6d5daf3103afb9886f96ce82c5828ae6fd",
+      "rawSize": 475,
+      "exportSize": 475,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "affected-context/controller-identity.json",
+      "rawSha256": "ea7e6bd7fa60a125c563e5f8784f645ae77f92af37ef7f0ea61ca5103c1386c8",
+      "exportSha256": "406cdaedef8161f6dcb5a06f9e5dbd57e75e7391276a6abffa1b2cb6765fcc2a",
+      "rawSize": 683,
+      "exportSize": 544,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "helpers/run_active_native.ps1",
+      "rawSha256": "1afb8b5ce1ced085e1cb1b7c005307bde6453dda0cc739b6932c582b6dd451a0",
+      "exportSha256": "6ee7e1d3cc7b29b469d4e5a6b3f09ee7d160212522efe5a1d609789d81a89432",
+      "rawSize": 2951,
+      "exportSize": 2880,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "helpers/prepare_active_native.py",
+      "rawSha256": "83656bc66ad958163639bffe692c75af5dc90d2471dd1506b148b1623fd40842",
+      "exportSha256": "6cfcce43390eab72ff33d1b557bbd5108f30b5ef5e4c38351ae668bade8cfa67",
+      "rawSize": 2895,
+      "exportSize": 2824,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "helpers/run_power_fix_focused.ps1",
+      "rawSha256": "444a7136eb13429ba996cb4ecd23973627e85c27c13d9425aed0c08ddf4c0fda",
+      "exportSha256": "79f792c311943f96c1f8fb3810c78124185309b606afa904da434243dea80707",
+      "rawSize": 2355,
+      "exportSize": 2281,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "helpers/run_power_fix_build.ps1",
+      "rawSha256": "b390385ede608caa4a250f6054cd9fb749a6a32979b55a461326358b2036e863",
+      "exportSha256": "9a87e9cd9f9da59b066db424a4bfdb8d5cd47b8b4732cf0063a4a0a87206684c",
+      "rawSize": 2103,
+      "exportSize": 2032,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "helpers/run_power_fix_context.ps1",
+      "rawSha256": "0b76325f02d059b1ba052260ae9eaf6717d9ed91c9f30236f0d8396d0af4d4e3",
+      "exportSha256": "58b46208d975a7a47549630884421987248efa63e7d484f29394e2332bd9459c",
+      "rawSize": 2322,
+      "exportSize": 2248,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    },
+    {
+      "packetPath": "helpers/audit_power_resources.ps1",
+      "rawSha256": "e84cd1b578b4a8dfd05b271c1136fc092fc0fbb5db0dd2b9974b4ab695ec70e9",
+      "exportSha256": "2cfb7c9b4828b54071a275fc3885bddb6ab1dcfd9f50876abe1dd6e077d25aab",
+      "rawSize": 2647,
+      "exportSize": 2456,
+      "transformation": "UTF-8 BOM removal and exact task/home path tokenization only"
+    }
+  ],
+  "rawEvidencePreserved": true,
+  "privacy": "Exact task/home paths tokenized; raw and exported hashes recorded separately. Existing failure/exit values preserved."
+}

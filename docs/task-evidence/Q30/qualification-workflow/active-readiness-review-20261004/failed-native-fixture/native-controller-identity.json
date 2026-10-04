@@ -1,0 +1,8 @@
+{
+  "scope": "Focused five suites, shared Q30 active readiness; no full matrix or cold77",
+  "executable": "<user-home>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "createdUtc": "2026-10-04T21:46:38.7100180Z",
+  "taskRoot": "<failed-fixture-root>",
+  "commandLine": "\"<user-home>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe\" -NoProfile -File <task-workspace>\\run_power_fix_focused.ps1",
+  "pid": 28228
+}

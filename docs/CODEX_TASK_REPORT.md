@@ -1,4 +1,53 @@
-# Current checkpoint: Q30 headed 20/30/40 repair/retest recorded; parent acceptance pending
+# Current checkpoint: Q30 residual-exposure fix verified locally; acceptance blocked
+
+2026-10-04. Branch `codex/q30-multirail-qualification`; HEAD before this local
+fix checkpoint `88e9ff27411a470a6dde2120732c7e3af609257e`.
+[Fix/review evidence](task-evidence/Q30/qualification-workflow/active-readiness-review-20261004/README.md).
+Q30 DISABLED / NOT ACCEPTED; U06/U07/Q60 unstarted. No push/publish/email,
+evidence deletion, global changes or budget/save/replay/epoch changes.
+
+Actual pre-fix CircuitJS diagnostic identified missing family-local storage
+exposure declarations, rather than stale/nonfinite/unowned samples. Known
+RAW12/EN5/reference/coil/filter paths now require discharge observations;
+unexplained load energy still UNKNOWN. No physics, threshold or readiness bypass.
+All three 20/30/40 roots now exercise truthful DISCHARGE blocking and real
+OHM/DIODE transactions on initially uncharged isolated graphs. Native scheduling
+adapts only eight actual guarded steps; no compiled UI claim follows.
+
+Focused native five suites PASS/exit0/62.971s (new120 assertions, plan4381,
+A06152,U02585,controls16). Four affected dependency/diagnostic/preparation/
+temporal suites PASS/exit0/48.750s (15/168/18/161 assertions). Actual final-source
+JDK8/GWT OBF build PASS/exit0/99.875s/five permutations/link. First native
+fixture FAIL/39.606s/command exit2 remains preserved: absent GWT speed widget;
+later native scheduling correction fixed only the fixture. Current full83 native
+matrix/independent oracles NOT RUN; prior full82 remains historical.
+
+Exact 1355-source archive byte roundtrip PASS. Post-run inventory: prior1354,
+1352 byte-identical/two changed plus one new fixture. This is not an immutable
+launch pin or original overlay reconstruction rerun. Storage canonical enters
+the exact preparation/cache context, so old cold77 cannot qualify this changed
+candidate. New maintained pin and full77 cold gate require a new parent-coordinated
+resource window; consumed grant not reused. Limits remain90000ms/640shared/
+5000ms active. Original current-candidate warm distribution evidence outstanding.
+
+Fresh compiled instrument status/retry and current private-enabled build/menu/
+replay NOT RUN. Old headed three repair/retest results retain their boundaries;
+no automatic whole-flow rerun after this metadata change. Same charged graph's
+eventual READY recovery NOT RUN; retained real charge must remain blocked.
+Prior host exit1 is a cleanup-harness FAIL, separate post-exit release PASS.
+
+Nine new recorded exact process instances absent after exit; no termination.
+Native scratch cleanup markers PASS; cleanup elapsed NOT RECORDED separately.
+No new browser/listener/server. Raw diagnostic classes, failure, source archive
+and restart helpers retained in task temp. Eight pre-existing untracked files
+and Desktop sibling preserved. Root/independent source review recorded with
+limits; parent final acceptance pending. Minimum eventual enablement is the
+single catalog false-to-true toggle, not applied. Next: parent-coordinated current
+qualification and compiled status/recovery evidence before enablement.
+
+---
+
+# Historical checkpoint: Q30 headed 20/30/40 repair/retest recorded; parent acceptance pending
 
 2026-10-04. Branch `codex/q30-multirail-qualification`; HEAD before this local
 evidence commit `579dc1fc9eb13bfe91bf8830d408205490db4655`.

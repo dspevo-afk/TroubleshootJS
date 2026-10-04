@@ -2095,9 +2095,17 @@ individual slot ownership. Output connectors declare their external load
 harnesses so service construction preserves the actual 180 ohm CircuitJS loads.
 `Rb30Generator` installs `PowerDomainRuntimeCapability` on that same physical
 runtime using the resolved `Rb30PowerDomains` contract, board and power bindings.
-The capability validates current-owner reference and active-measurement readiness;
-FUSED12 remains observation-required whether the optional entry capacitor is
-present or absent. Control and load returns remain separate reference domains.
+The capability validates current-owner reference and active-measurement readiness.
+Known paths exposed to CIN/C5, optional C12 and relay energy require voltage
+observations through discharge: RAW12, FUSED12, the supply/enable/reference/
+indicator and channel drive/coil paths, plus filtered or hysteretic sensor paths.
+OBSERVATION_REQUIRED declares an energy exposure, not a capacitor on every net.
+FUSED12 retains that obligation whether optional C12 is present or absent.
+Unrelated sensor nets and isolated load-domain nets remain NONE; unexplained
+voltage there remains UNKNOWN. Current finite residual samples on declared paths
+yield DISCHARGE without altering the real graph or the 0.25 V active-meter guard.
+The contract canonical value is part of exact diagnostic preparation/cache
+identity. Control and load returns remain separate reference domains.
 Q30's optional relay service predicate checks all five live board pads against
 their local control/load returns and the installed target coil current. It
 retains the strict 50 mV / 1 uA boundaries while allowing isolated upstream

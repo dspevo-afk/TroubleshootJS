@@ -1,0 +1,95 @@
+{
+  "cleanupElapsedSeconds": "NOT_RECORDED separately",
+  "status": "PASS_RECORDED_EXACT_INSTANCES_ABSENT",
+  "processes": [
+    {
+      "pid": 24572,
+      "exactInstancePresent": false,
+      "recordedCreatedUtc": "2026-10-04T21:34:13.3024990Z",
+      "kind": "controller",
+      "identityFile": "<diagnostic-root>\\controller-identity.json",
+      "pidPresent": false,
+      "terminationAttempted": false
+    },
+    {
+      "pid": 3892,
+      "exactInstancePresent": false,
+      "recordedCreatedUtc": "2026-10-04T21:48:56.4301150Z",
+      "kind": "controller",
+      "identityFile": "<focused-root>\\native-controller-identity.json",
+      "pidPresent": false,
+      "terminationAttempted": false
+    },
+    {
+      "pid": 19212,
+      "exactInstancePresent": false,
+      "recordedCreatedUtc": "2026-10-04T21:51:21.5536950Z",
+      "kind": "controller",
+      "identityFile": "<focused-root>\\build-controller-identity.json",
+      "pidPresent": false,
+      "terminationAttempted": false
+    },
+    {
+      "pid": 28228,
+      "exactInstancePresent": false,
+      "recordedCreatedUtc": "2026-10-04T21:46:38.7100180Z",
+      "kind": "controller",
+      "identityFile": "<failed-fixture-root>\\native-controller-identity.json",
+      "pidPresent": false,
+      "terminationAttempted": false
+    },
+    {
+      "pid": 21948,
+      "exactInstancePresent": false,
+      "recordedCreatedUtc": "2026-10-04T21:58:01.1515270Z",
+      "kind": "controller",
+      "identityFile": "<context-root>\\controller-identity.json",
+      "pidPresent": false,
+      "terminationAttempted": false
+    },
+    {
+      "exactInstancePresent": false,
+      "terminationAttempted": false,
+      "kind": "bounded-native-child",
+      "pid": 20664,
+      "boundedTerminationProven": true,
+      "identityFile": "<diagnostic-root>\\compile-result.json",
+      "pidPresent": false,
+      "recordedStartTicks": 639267464539564647
+    },
+    {
+      "exactInstancePresent": false,
+      "terminationAttempted": false,
+      "kind": "bounded-native-child",
+      "pid": 12296,
+      "boundedTerminationProven": true,
+      "identityFile": "<diagnostic-root>\\case-10387.json",
+      "pidPresent": false,
+      "recordedStartTicks": 639267464592032459
+    },
+    {
+      "exactInstancePresent": false,
+      "terminationAttempted": false,
+      "kind": "bounded-native-child",
+      "pid": 26792,
+      "boundedTerminationProven": true,
+      "identityFile": "<diagnostic-root>\\case-10226.json",
+      "pidPresent": false,
+      "recordedStartTicks": 639267464751620870
+    },
+    {
+      "exactInstancePresent": false,
+      "terminationAttempted": false,
+      "kind": "bounded-native-child",
+      "pid": 28336,
+      "boundedTerminationProven": true,
+      "identityFile": "<diagnostic-root>\\case-10014.json",
+      "pidPresent": false,
+      "recordedStartTicks": 639267464962608732
+    }
+  ],
+  "scope": "Five recorded controllers and four bounded diagnostic children only; no global process discovery; native/build harness scratch cleanup recorded separately",
+  "retainedScratch": "<diagnostic-root>",
+  "observedUtc": "2026-10-04T21:59:52.2269504Z",
+  "terminationAttempted": false
+}

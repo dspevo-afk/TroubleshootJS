@@ -1,0 +1,8 @@
+{
+  "executable": "<user-home>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "createdUtc": "2026-10-04T21:34:13.3024990Z",
+  "pid": 24572,
+  "taskRoot": "<diagnostic-root>",
+  "commandLine": "\"<user-home>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe\" -NoProfile -File <task-workspace>\\run_active_native.ps1",
+  "scope": "Serial compile and three observation-only real-solver cases, no product changes"
+}

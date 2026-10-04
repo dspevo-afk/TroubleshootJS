@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "manifestedFiles": 40,
+  "controlFiles": 2,
+  "manifestSha256": "b3982e733337ab96924d3a437b2e76976942f988ce9624666e619040f3e3b987",
+  "privacy": "No personal absolute paths in packet; exact source/member/content/export hashes validated",
+  "currentSourceCount": 1355,
+  "sourceArchiveByteRoundTrip": "PASS",
+  "publicQ30Enabled": false,
+  "accepted": false,
+  "preExistingUntrackedByteAudit": "PASS_EIGHT",
+  "freshCurrentCold77": "NOT_RUN",
+  "freshCurrentFull83": "NOT_RUN",
+  "freshCompiledStatusRecovery": "NOT_RUN",
+  "artifactRefinement": "Exact enablement patch context changed from3 to2 only; prior controls preserved outside repository"
+}

@@ -2750,7 +2750,16 @@ Normal-player publication stays disabled. Actual headed20/30/40 guided DC,
 replacement and customer-retest flows are now recorded with three verified
 screens; isolated active-meter UNKNOWN statuses and original host exit1 remain
 explicit limits for parent acceptance. Headless screenshots do not supply that
-visible evidence. Parent acceptance PENDING; U06/U07/Q60 remain UNSTARTED.
+visible evidence. The subsequent family-local residual-exposure fix passes nine
+focused native suites and the actual final-source JDK8/GWT build; known charged
+paths now report DISCHARGE while preserving active-meter blocking. This changes
+the exact power/preparation context: previous cold77/private build/menu/replay
+results remain historical, not current-candidate acceptance. Fresh source/context
+pin and cold77, original warm-distribution evidence, and current compiled status/
+private-enabled checks remain outstanding. Same charged graph's eventual READY
+recovery is not proved. Q30 remains disabled; no whole repair-flow or full83
+native rerun is claimed. See [fix/review checkpoint](task-evidence/Q30/qualification-workflow/active-readiness-review-20261004/README.md).
+Parent acceptance PENDING; U06/U07/Q60 remain UNSTARTED.
 See [headed followup](task-evidence/Q30/qualification-workflow/headed-visible-20261004/README.md).
 See [remaining-gate checkpoint](task-evidence/Q30/qualification-workflow/remaining-gates-20261004/README.md).
 See [Q30 evidence](task-evidence/Q30/README.md).

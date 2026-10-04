@@ -1,0 +1,8 @@
+{
+  "createdUtc": "2026-10-04T21:48:56.4301150Z",
+  "scope": "Focused five suites, shared Q30 active readiness; no full matrix or cold77",
+  "taskRoot": "<focused-root>",
+  "pid": 3892,
+  "executable": "<user-home>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "commandLine": "\"<user-home>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe\" -NoProfile -File <task-workspace>\\run_power_fix_focused.ps1"
+}

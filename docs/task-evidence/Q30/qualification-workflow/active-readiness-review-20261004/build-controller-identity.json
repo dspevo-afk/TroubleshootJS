@@ -1,0 +1,8 @@
+{
+  "taskRoot": "<focused-root>",
+  "executable": "<user-home>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "commandLine": "\"<user-home>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe\" -NoProfile -File <task-workspace>\\run_power_fix_build.ps1",
+  "scope": "Actual maintained final-source JDK8/GWT OBF build; public Q30 disabled",
+  "pid": 19212,
+  "createdUtc": "2026-10-04T21:51:21.5536950Z"
+}

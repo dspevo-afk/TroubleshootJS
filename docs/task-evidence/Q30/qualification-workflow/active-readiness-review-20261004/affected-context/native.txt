@@ -1,0 +1,7 @@
+PASS: Q30 temporal work contracts 161 assertions oneChannelHealthyFaultedRetestUnits=3/3/3 twoChannelHealthyFaultedRetestUnits=5/5/5
+
+PASS: diagnostic service preparation contracts 18 assertions policy=action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner
+
+PASS: D01 diagnostic contracts assertions=168
+
+PASS: A10 dependency contracts assertions=15
