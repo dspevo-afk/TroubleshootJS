@@ -1,0 +1,5 @@
+{
+  "status": "PASS_STATIC_EVIDENCE_MAPPING_WITH_LIMITS",
+  "scope": "Read-only owner/frozen-plan audit checklist; active run not inspected by leaf reviewers. Root audited actual files with unchanged strict reader.",
+  "parentAcceptance": "PENDING"
+}

@@ -1,0 +1,30 @@
+{
+  "docs/task-evidence/Q30/qualification-workflow/cold77_batch.py": {
+    "sha256": "eac3b78ab8944766a26167c36ea808298369faf797d46a99561073a0fe6d94e6",
+    "bytes": 17087
+  },
+  "docs/task-evidence/Q30/qualification-workflow/cold77_case_worker.py": {
+    "sha256": "08b4438ac43821f7ed29f6cfd84089afdbfed7500c64f4d911cff208698777df",
+    "bytes": 12163
+  },
+  "docs/task-evidence/Q30/qualification-workflow/serial_runner.py": {
+    "sha256": "19931855b98aeb358f16dcbd94b6c69d81a221191bed2f07697a3ccdcffff5e6",
+    "bytes": 28314
+  },
+  "docs/task-evidence/Q30/qualification-workflow/receipts.py": {
+    "sha256": "5d0865564e39a33a679a7fe5adda0e3ba2c539ce5740034e0a495135619ab0a8",
+    "bytes": 8473
+  },
+  "tests/qualification/q30-scale-acceptance/normal_screen_host.py": {
+    "sha256": "8da1af0f184cea190f17fb02629e4475013337558e32903e95992552723a4440",
+    "bytes": 36014
+  },
+  "tests/qualification/q30-scale-acceptance/q30_scale_reader.py": {
+    "sha256": "5015d92d10b9769e954ca6e009ce07196be6c447899882460b7edebd45ff9553",
+    "bytes": 24925
+  },
+  "tests/qualification/q30-normal-screen/q30_screen_reader.py": {
+    "sha256": "4bb00b568a7d3462144dcea3725e89111f9e7b37e752945948309ec29c88cf5f",
+    "bytes": 15046
+  }
+}

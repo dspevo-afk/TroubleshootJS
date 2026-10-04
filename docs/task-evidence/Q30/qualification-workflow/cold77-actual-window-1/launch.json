@@ -1,0 +1,19 @@
+{
+  "candidateManifestSha256": "6fb772ea21ce6f2570de3cbca4e128a6b6d25d33159c30be3856cc8a670ec49b",
+  "cleanupLimitMs": 15000,
+  "errors": [],
+  "independentReleaseReserveMs": 30000,
+  "operationLimitMs": 15068588,
+  "process": {
+    "commandSha256": "990cd5a5757dfdd7de127ac173a18e0ae52985a1d489abd8030633aa045f66ca",
+    "creationFileTimeTicks": 134356043031214268,
+    "executable": "<SYSTEM_PROGRAM_FILES>/WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+    "pid": 6988,
+    "resumeMonotonicNs": 658255971843600
+  },
+  "qualified": false,
+  "schema": 1,
+  "status": "RUNNING",
+  "taskRoot": "<COLD77_RAW>",
+  "windowEndUtc": "2026-10-04T20:30:21.7151436Z"
+}

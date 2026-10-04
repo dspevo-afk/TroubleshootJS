@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "pid": 13588,
+  "creationFileTimeTicks": 134356043017680203,
+  "executable": "<SYSTEM_PROGRAM_FILES>/WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+  "exitCode": 0,
+  "exitedUtc": "2026-10-04T17:31:50.5773583Z",
+  "observedUtc": "2026-10-04T17:31:50.5819995+00:00",
+  "normalElapsedMs": 4408810.0,
+  "windowEndUtc": "2026-10-04T20:30:21.7151436Z",
+  "beforeWindowEnd": true
+}

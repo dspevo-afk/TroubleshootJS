@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "status": "PASS_RAW_TO_SANITIZED_RELEASE_BINDINGS",
+  "inputs": {
+    "independent-release.json": {
+      "correctionField": "rawReleaseSha256",
+      "rawSha256": "cf9bfa5c9b952b0fb4e2bee76ddf9db1aaf6e6458d1b1931394b071ff8d20662",
+      "rawBytes": 256102,
+      "copiedSha256": "bccc4986f910ddf4bcca4afa9b48768f00e73d3f9b00003140f7557ee4d15da5",
+      "copiedBytes": 250656
+    },
+    "normal-exit.json": {
+      "correctionField": "normalExitSha256",
+      "rawSha256": "ce376ad99cc661417ef72c7de4726b41570a275be9fbc6da419e29ecf905c54b",
+      "rawBytes": 453,
+      "copiedSha256": "7c0963cadbd3daf97dfed82252297e1f97867e7e45b5317cfa9c2a05085f4a47",
+      "copiedBytes": 447
+    },
+    "normal-owner.json": {
+      "correctionField": "ownerSha256",
+      "rawSha256": "f852a0864fb5eb8cfcea793eb019e82ef0ee947c76b437711d7a9bb2f73bf3df",
+      "rawBytes": 3445,
+      "copiedSha256": "9eb46e8394cb75782cfcc0fc296ff883336f3531327ee37ed02fffd15d8f0698",
+      "copiedBytes": 2269
+    }
+  },
+  "explanation": "Correction fields bind preserved raw receipts. Derivation links those raw hashes to sanitized public copies, whose hashes match this packet manifest. No raw timestamp/resource facts changed.",
+  "utcHelper": {
+    "packetPath": "utc-duration-helper.ps1",
+    "sha256": "4b707fe3f89fee98c07224aab69f54df7e1229360ec47344f31622c9a0ada99a",
+    "bytes": 382,
+    "correctionField": "utcHelperSha256"
+  },
+  "originalFailure": {
+    "repositoryRelativePath": "docs/task-evidence/Q30/epoch15-cold77-timeout-seed75/epoch15-cold77-timeout-seed75.tar.gz",
+    "sha256": "0bf9b802e973c4b691b1e50a4025a338229f17ebc9880d58b588e7533b42a4a3",
+    "bytes": 3878132,
+    "freshlyVerifiedUnchanged": true,
+    "scope": "Existing repository evidence retained in place, not duplicated in this packet."
+  }
+}

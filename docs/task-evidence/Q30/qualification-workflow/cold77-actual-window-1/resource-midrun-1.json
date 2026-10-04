@@ -1,0 +1,9 @@
+{
+  "observedUtc": "2026-10-04T16:44:52.5997010+00:00",
+  "freeMemoryGiB": 14.07,
+  "totalMemoryGiB": 31.74,
+  "cpuPercent": 10,
+  "cFreeGiB": 560.44,
+  "scope": "Read-only resource sample during authorized serial cold77; no resource changes",
+  "initialRestrictedCimAttempt": "ACCESS_DENIED; no sample or resource mutation"
+}

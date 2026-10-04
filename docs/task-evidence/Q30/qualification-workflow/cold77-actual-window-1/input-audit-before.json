@@ -1,0 +1,21 @@
+{
+  "acceptancePlanSha256": "69707f4282dd41a394c2eb6723057b32379d0743553940a2b2a11bd5221f8d48",
+  "baseHead": "d37c3b3b8581abdeaa9b88b7bfb2349cff958d31",
+  "hostRunnerSha256": "8da1af0f184cea190f17fb02629e4475013337558e32903e95992552723a4440",
+  "matchedHelperSha256": "68a5257bac66c667a7adbe50a7eb25049e5f795aa9f93be8bc62e982edb6ffce",
+  "planSha256": "b57e6a39a9ad385734347d0e066ab82ed28dbf46bbb6baa680b700cc054f8f21",
+  "pointerSha256": "e896d456a95ca40d601e7bdd48abdcf90abdc81c96c28c72ed9f7a8e4ec8baa5",
+  "preparedAppStateSha256": "a32366e16141023a728de31a1144f9862d889922f9537112f556786f8b464598",
+  "preparedInputIdentity": {
+    "combinedSha256": "ff25c399dee104f98327d09910e16e6213ce49440197f59c53ff1e73f071fbf0",
+    "fileCount": 1526,
+    "sourceFileCount": 1134,
+    "sourceSha256": "fe50dde963bb44b9d4a6694c3679ab44ee8e19e3487b308c8ab7ad5f506ced1c",
+    "webFileCount": 392,
+    "webSha256": "e0f263d63964b74a220b8e7f3078466a2442d3985c104c9e2957092b0f625666"
+  },
+  "readerSha256": "5015d92d10b9769e954ca6e009ce07196be6c447899882460b7edebd45ff9553",
+  "repositoryInputs": 1354,
+  "repositoryMapSha256": "224a0d93d62ded3a5ea0f125f31711d05259b2b5bd76ffafd30717be1516485b",
+  "sourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51"
+}

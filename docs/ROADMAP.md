@@ -7,7 +7,28 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Q30 NOT ACCEPTED - final cold qualification FAIL at root75**<br>
+**Current task:** **Q30 NOT ACCEPTED - fresh cold77 PASS; other acceptance gates pending**<br>
+**Q30 fresh original-host cold77 (2026-10-04):**77 PASS/0 FAIL/0 NOT_RUN,
+exact frozen order/308 metadata rows, published sizes20-40. Worst root35
+85,562ms/root75 79,019ms under unchanged90,000ms/640shared/5,000ms active
+and coordinator limits; maxima506units/1,427ms. Normal entrypoint4,408,810ms/
+exit0, native batch4,407,389ms; all77 step jobs/outer job0/readers closed,
+controller publication in time. Independent release17:34:32.0072646Z,
+698 recorded instances absent/77 ports closed/no termination, before window
+end20:30:21.7151436Z. Raw negative derived release duration preserved with
+hash-bound UTC correction:161.4299063s after exit. First release audit reserved-
+variable failure retained. Original failed31/1TIMEOUT90,221ms/45NOT_RUN
+archive preserved unchanged; original slowdown cause UNKNOWN. Reapplied exact
+strict reader to77 reports/actual hosts and audited1,354 repo/1,526 app inputs;
+28-file packet/hash/privacy/regular archive audit PASS, scoped to cold77.
+No new qualification harness/retry/instrumentation/production enablement.
+Q30 remains disabled/NOT ACCEPTED:required final full regression, private
+enabled build/menu/replay, actual visible20/30/40 repair/retest, full Q30 source
+archive and parent acceptance pending. No player-input tools/visual PASS;
+no full matrix/build in this run. Cooperative I/O/RAM/profile-cap limits remain.
+U06/U07/Q60 unstarted; no push/publish/email/evidence deletion.
+[Fresh cohort and evidence](task-evidence/Q30/qualification-workflow/cold77-actual-window-1/README.md).
+
 **Q30 actual R5 / cold77 continuation prepared (2026-10-04):** One authorized
 diagnostic root75 app PASS77,899ms/483units; host78.582s/cleanup1.097s,
 normal entrypoint85.068s/exit0. Exact report/sanitized receipts preserved;
@@ -2670,9 +2691,9 @@ order or policy. Matched cold totals improve to 113.630, 106.251 and 103.046
 seconds, with 86.107, 79.834 and 83.305 seconds of proof. All totals still fail
 90 seconds. At that measurement checkpoint, the measured package counts were
 33/35/37. Current plan-4 seeded generation implements purposeful 20-40-part
-variation under a 40-package ceiling. Fresh full-cohort qualification remains
-pending; the measurements above remain private historical evidence, not
-normal-player acceptance.
+variation under a 40-package ceiling. Fresh original-host cold77 now passes77/77 under the unchanged
+90-second limit; the measurements above remain private historical evidence.
+Remaining Q30 acceptance gates are still pending; normal publication stays disabled.
 
 The accepted column row-reference intermediate optimization has fresh native,
 GWT and compiled solver checks plus six counterbalanced private cold runs.
@@ -2681,8 +2702,8 @@ parity against their controls. One still exceeds 90 seconds; no full-corpus
 normal acceptance or broad scale claim follows from this small comparison.
 
 Q30 remains BLOCKED / NOT ACCEPTED under its unchanged original scope.
-Plan-4 20-40-part generation is implemented, but fresh full-cohort and remaining
-acceptance gates are pending. Normal-player publication remains disabled
+Plan-4 20-40-part generation and fresh original-host cold77 now pass the
+frozen cohort; remaining acceptance gates are pending. Normal-player publication remains disabled
 pending those gates, visible player-flow proof and parent review. U06, U07,
 Q60 and later milestones remain UNSTARTED.
 See [Q30 evidence](task-evidence/Q30/README.md).

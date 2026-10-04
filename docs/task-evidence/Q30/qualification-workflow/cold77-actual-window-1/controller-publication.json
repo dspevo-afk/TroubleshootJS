@@ -1,0 +1,6 @@
+{
+  "qualified": true,
+  "scope": "Requires successful exit and independent desktop release; blocked I/O is not bounded by this cooperative check.",
+  "status": "PASS_COLD77_CONTROLLER",
+  "withinFinalizationDeadline": true
+}

@@ -1,4 +1,52 @@
-# Current checkpoint: Q30 blocked; R5 success preserved, cold77 ready offline
+# Current checkpoint: Q30 cold77 PASS; separate acceptance gates pending
+
+2026-10-04. Branch `codex/q30-multirail-qualification`; candidate local HEAD
+`661b1c0e91d41bc353511327ee26ad47aa141d07`, plus this evidence checkpoint.
+[Fresh original-host cold77](task-evidence/Q30/qualification-workflow/cold77-actual-window-1/README.md):
+77 PASS / 0 FAIL / 0 NOT_RUN, exact frozen order/308 candidate metadata rows,
+published sizes20-40 inclusive. Original host/strict reader/source binding;
+no metrics instrumentation/retry/new qualification harness. Unchanged limits:
+90,000ms /640 shared /5,000ms active/coordinator. Worst root35:85,562ms,
+headroom4,438ms; root75:79,019ms. Maximum506 work units/1,427ms active and
+coordinator. Native batch operation4,407,389ms; normal4,408,810ms/exit0.
+All77 step jobs and outer job0/readers closed; controller publication in time.
+
+Window16:18:21.7151436Z-20:30:21.7151436Z; exact main PID13588 born
+16:18:21.7680203Z, exited17:31:50.5773583Z. Independent desktop release
+17:34:32.0072646Z:698 recorded instances absent/77 recorded ports closed,
+no termination,947.8517ms audit operation,161.4299063s after exit/before end.
+First release audit FAIL on reserved PowerShell Host variable before checking;
+raw second audit's negative derived duration retained and hash-bound UTC
+correction PASS using exact literal strings/existing DateTimeOffset helper.
+Resource snapshot14.07GiB free RAM/560.44GiB free C:/10%CPU, not peak/cap proof.
+Restricted CIM/checkpoint-write failures retained in workspace notes/corrected.
+Controller disk-I/O deadlines cooperative; RAM/profile disk uncapped.
+
+Preflight PASS2,522ms; final strict reader reapplied to all77 reports/actual
+hosts, persisted results matched,1,354 repository/1,526 app inputs unchanged.
+Maintained receipt/batch/controller reconstruction PASS. Twenty-eight-file
+packet hash/privacy/regular archive audit PASS:77 exact reports,616 sanitized
+receipts/seven exact owner sources. Packing5,441ms/job0/readers closed.
+Packet manifest `82e5c6aee32f1ac323caca8e5ad1ce52dfd2a63770eafe0d8890e43cd0b52ac4`.
+Original31 PASS/root75 TIMEOUT90,221ms/45 NOT_RUN archive unchanged; R5 stays
+diagnostic-only. Original slowdown CPU/GC/scheduling cause UNKNOWN.
+
+Q30 DISABLED/NOT ACCEPTED. Required fresh full regression, private enabled
+production build/menu/replay, actual visible20/30/40 diagnosis/repair/retest,
+full Q30 source archive and parent acceptance remain pending. Browser/computer
+player-input tools unavailable; CDP cold receipts are not visible repair proof.
+No production changes/full matrix/build here; JDK8/GWT rebuild NOT APPLICABLE
+to evidence/docs. Static leaf review covers timing/evidence mapping only;
+parent owns independent acceptance. U06/U07/Q60 unstarted. No persistent task
+app/browser/listener; raw evidence/profiles/helpers/consumed grant retained.
+Seven pre-existing untracked cache files and new consumed cold77 marker left
+untracked; sibling Desktop work preserved. Local checkpoint only, no push/
+publish/email/evidence deletion. Next: parent review of fresh cold77 evidence
+and coordinate the remaining Q30 gates; never relaunch this consumed grant.
+
+---
+
+# Historical checkpoint: Q30 blocked; R5 success preserved, cold77 ready offline
 
 2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
 `cb96bf3eca82305b0bf0d98b3ab771f8973f2ec6`, plus this local checkpoint.

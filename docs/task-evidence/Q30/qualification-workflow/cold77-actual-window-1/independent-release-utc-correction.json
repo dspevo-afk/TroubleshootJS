@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "status": "PASS_INDEPENDENT_RELEASE_UTC_CORRECTED",
+  "rawReleaseSha256": "cf9bfa5c9b952b0fb4e2bee76ddf9db1aaf6e6458d1b1931394b071ff8d20662",
+  "normalExitSha256": "ce376ad99cc661417ef72c7de4726b41570a275be9fbc6da419e29ecf905c54b",
+  "ownerSha256": "f852a0864fb5eb8cfcea793eb019e82ef0ee947c76b437711d7a9bb2f73bf3df",
+  "utcHelperSha256": "4b707fe3f89fee98c07224aab69f54df7e1229360ec47344f31622c9a0ada99a",
+  "normalExitedUtc": "2026-10-04T17:31:50.5773583Z",
+  "releasedUtc": "2026-10-04T17:34:32.0072646+00:00",
+  "windowEndUtc": "2026-10-04T20:30:21.7151436Z",
+  "rawAfterNormalExitSeconds": -14237.9927354,
+  "correctAfterNormalExitSeconds": 161.4299063,
+  "correctWindowRemainingSeconds": 10549.707879,
+  "beforeWindowEnd": true,
+  "cause": "Default ConvertFrom-Json converted UTC literals to DateTime; reparsing its culture string treated it as local time. Exact JSON UTC strings plus existing DateTimeOffset helper correct the derived value.",
+  "rawReceiptPreserved": true,
+  "resourceEvidenceUnchanged": true,
+  "terminationUsed": false
+}
