@@ -1,0 +1,135 @@
+{
+  "schema": 1,
+  "status": "PASS_ARTIFACT_ONLY",
+  "qualification": false,
+  "archive": "root75-metrics-r3.tar.gz",
+  "archiveSha256": "8548d5b47c09fb11d34046ed6b47ad72c151af4b63f03b9c83c71b040493a9f5",
+  "memberCount": 22,
+  "members": [
+    {
+      "name": "candidate/README.md",
+      "size": 6877,
+      "sha256": "a6ad703b6347d6d0c28cc06a1d5c4a8a2addf0460fb1df31d376cd5edf0a7566"
+    },
+    {
+      "name": "candidate/candidate-manifest.json",
+      "size": 1743,
+      "sha256": "6a76b910b89a523e578bb0a3856763378c57d3cf4c61f1c5794c92eefea48d9f"
+    },
+    {
+      "name": "candidate/grant-example-NOT-GRANTED.json",
+      "size": 457,
+      "sha256": "9e9d84c894b918e382c91293bff4d9808fc057e642fd96dbe4db7f7d06624091"
+    },
+    {
+      "name": "candidate/headful_attribute_host.py",
+      "size": 51883,
+      "sha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be"
+    },
+    {
+      "name": "candidate/instrumented_host.py",
+      "size": 7846,
+      "sha256": "22df7ae2ae039b4d47337c5ef1d72d010b8549ed8b73609a03f0ee4522f7a2ab"
+    },
+    {
+      "name": "candidate/offline_checks.py",
+      "size": 46520,
+      "sha256": "5106da073f5dfc01aaa0de5afcd6afbfc2c91acc72bf7f9470aa4c915b73a99f"
+    },
+    {
+      "name": "candidate/renderer_capture.py",
+      "size": 10439,
+      "sha256": "a3554aa8e850640863c1b829b46882664d54245e6f7f8b59945d1aefe0a63851"
+    },
+    {
+      "name": "candidate/review-result.json",
+      "size": 2554,
+      "sha256": "1bc4659137d299175d8511ffef579f830920a5aeb94c43f35b391814b971126e"
+    },
+    {
+      "name": "candidate/run_one_diagnostic.py",
+      "size": 29160,
+      "sha256": "054d0da795802524525fd717ce5de55429c291be610334b4115ad430bd1cbc1f"
+    },
+    {
+      "name": "candidate/verify_offline_candidate.py",
+      "size": 2348,
+      "sha256": "eea25a18be2bd7cf9c48e194715a5277a5a80801af4db923083cf54f3c2ea5c6"
+    },
+    {
+      "name": "evidence/offline-result.json",
+      "size": 4956,
+      "sha256": "c507893ce009418dbcfdde2b7eeab52f472ecd1cf3beb7e3acd64aaafd0b898c"
+    },
+    {
+      "name": "evidence/owned-result.json",
+      "size": 1453,
+      "sha256": "b9afd9314a443ea3177b2d98459411b603f8868c6c75bea53301882e9633e6c5"
+    },
+    {
+      "name": "evidence/pre-finite-guard-note.json",
+      "size": 869,
+      "sha256": "598497619112f906f963aa97f0e5e92131b9738f5bfdfa4bb6f3f1304c072c4d"
+    },
+    {
+      "name": "evidence/pre-finite-guard-offline-result.json",
+      "size": 4675,
+      "sha256": "b3f2c30254db3abd80e62af455a0e13ba64f4dd43e37b290a97eb9ad8b3b513b"
+    },
+    {
+      "name": "evidence/pre-finite-guard-owned-result.json",
+      "size": 1452,
+      "sha256": "6ec304ac8291aa537129412a9de29b9869f38f832a351a106f54154e97fafdbf"
+    },
+    {
+      "name": "evidence/pre-finite-guard-test-inputs.tar.gz",
+      "size": 34989,
+      "sha256": "a823a69f5dd8561718870032514d6cfaa202de6079931bb17386526e043a45e2"
+    },
+    {
+      "name": "evidence/prior-attempt.json",
+      "size": 1503,
+      "sha256": "4a70b018f3dd7f485116e57ca2e5552149149db8b2da332b9d2d468cf34e7421"
+    },
+    {
+      "name": "evidence/prior-offline-result.json",
+      "size": 1004,
+      "sha256": "67d3cacdd96ba295b93b204832057db9de2ae46a6df4244829433f1a3c06bf91"
+    },
+    {
+      "name": "evidence/prior-owned-result.json",
+      "size": 1454,
+      "sha256": "1d138da1a1f4e7e3406284b04d59fed1de1148333188c924e93decce0019e58c"
+    },
+    {
+      "name": "evidence/prior-stderr.log",
+      "size": 10430,
+      "sha256": "1cfd490a219da29933a33545be2b7083ca20a372e14f7b2cd204ce3a5b0d2216"
+    },
+    {
+      "name": "evidence/prior-test-inputs.tar.gz",
+      "size": 34715,
+      "sha256": "fe1fb7f1ce08a8eae68a30922e56bf382e76e2a20e647f98337661a58a421836"
+    },
+    {
+      "name": "evidence/source-diff.patch",
+      "size": 112858,
+      "sha256": "13ad0c7187942f03b2e594fdd8dc1de2ed5258fc68d2cc0f0f2922f13e8645d9"
+    }
+  ],
+  "candidateManifestSha256": "6a76b910b89a523e578bb0a3856763378c57d3cf4c61f1c5794c92eefea48d9f",
+  "sixSourcePinsBoundToFinalTests": 28,
+  "sourceFilesChanged": [
+    "renderer_capture.py",
+    "instrumented_host.py",
+    "run_one_diagnostic.py",
+    "offline_checks.py"
+  ],
+  "priorR2SourcesUnchanged": true,
+  "priorFailurePreserved": true,
+  "cold77ArchiveUnchanged": true,
+  "syntaxCheckedPythonFiles": 6,
+  "privacyScan": "PASS",
+  "browserLaunched": false,
+  "limits": "Offline metrics draft packet; not actual selected Edge capability/overhead/Q30 acceptance/full qualification source archive"
+}

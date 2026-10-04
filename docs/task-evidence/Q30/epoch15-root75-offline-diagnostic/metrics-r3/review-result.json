@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "status": "PASS_LIMITED_STATIC_METRICS_SCOPE",
+  "qualification": false,
+  "candidateManifestSha256": "6a76b910b89a523e578bb0a3856763378c57d3cf4c61f1c5794c92eefea48d9f",
+  "sourcePins": {
+    "renderer_capture.py": "a3554aa8e850640863c1b829b46882664d54245e6f7f8b59945d1aefe0a63851",
+    "instrumented_host.py": "22df7ae2ae039b4d47337c5ef1d72d010b8549ed8b73609a03f0ee4522f7a2ab",
+    "run_one_diagnostic.py": "054d0da795802524525fd717ce5de55429c291be610334b4115ad430bd1cbc1f",
+    "offline_checks.py": "5106da073f5dfc01aaa0de5afcd6afbfc2c91acc72bf7f9470aa4c915b73a99f",
+    "headful_attribute_host.py": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+    "verify_offline_candidate.py": "eea25a18be2bd7cf9c48e194715a5277a5a80801af4db923083cf54f3c2ea5c6"
+  },
+  "independentScope": {
+    "reviewer": "root75_sampler_audit",
+    "sourceFilesReviewed": ["renderer_capture.py", "instrumented_host.py", "run_one_diagnostic.py"],
+    "result": "No material blocker found on final three pinned runtime drafts",
+    "boundaries": [
+      "Final attachment callback follows successful Target and counter reads; scope loss is fatal",
+      "Optional metric failures remain CPU_UNAVAILABLE with strict Performance.disable cleanup",
+      "Final counter/scope work shares the original five-second finish deadline and 1.5-second cleanup reserve",
+      "Distinct report-unavailable status requires the exact one-case root75/150-second timeout, clean teardown and verified boundary",
+      "Refreshed finite-delta guard rejects subtraction overflow into CPU_UNAVAILABLE before strict JSON; disable still runs and cleanup failures remain fatal"
+    ],
+    "caveat": "An empty attributeReadErrors list is accepted with the maintained TIMEOUT/timedOut receipt. It does not require a per-read deadline error.",
+    "rootDisposition": "Intentional: the maintained observer may expire between reads. This status never certifies terminal completion or app PASS.",
+    "testsRunByReviewer": false,
+    "nativeOrLiveActions": false
+  },
+  "rootScope": "Reviewed integrated runtime/fixture diff and final owned 28-method fixture/input receipts; unchanged attachment owner/verifier pinned",
+  "blockers": [],
+  "limitations": [
+    "Synthetic CDP and launch fixtures do not prove the selected Edge transport, Performance capability or counter quality",
+    "No live browser, app root75 timing, GC/CPU/preemption cause, visible QA or qualification acceptance",
+    "Production and build inputs unchanged; no production ownership change"
+  ]
+}

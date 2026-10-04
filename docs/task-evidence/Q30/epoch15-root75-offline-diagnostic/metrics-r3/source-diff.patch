@@ -1,0 +1,2036 @@
+--- r2/renderer_capture.py
++++ r3/renderer_capture.py
+@@ -1,24 +1,13 @@
+-"""Bounded diagnostic CDP capture. No app/controller calls or qualification claim."""
++"""Bounded optional renderer CPU metrics; app/qualification outcome is independent."""
+ import asyncio
+-import base64
+-from datetime import datetime, timezone
+-import hashlib
+ import json
+ import math
+ from pathlib import Path
+ import time
+ 
+-CATEGORIES = ("devtools.timeline", "v8", "v8.execute", "toplevel",
+-              "disabled-by-default-v8.gc")
+-TRACE_BUFFER_KIB = 16384
+-MAX_TRACE_BYTES = 24 * 1024 * 1024
+-READ_BYTES = 64 * 1024
+ CAPTURE_SETUP_SECONDS = 5.0
+ CAPTURE_FINISH_SECONDS = 5.0
+ CAPTURE_CLEANUP_SECONDS = 1.5
+-MAX_CATEGORY_ENTRIES = 4096
+-MAX_CATEGORY_ENTRY_BYTES = 1024
+-MAX_CATEGORY_BYTES = 256 * 1024
+ 
+ 
+ def need(condition, message):
+@@ -26,64 +15,20 @@
+         raise ValueError(message)
+ 
+ 
+-def category_preflight(response):
+-    """Match literal category atoms, including explicitly advertised groups."""
+-    row = {"status": "INVALID_RESPONSE", "requiredCategories": list(CATEGORIES),
+-           "returnedCategories": None, "returnedEvidenceComplete": False,
+-           "missingRequirements": None, "matches": [], "errors": []}
+-    categories = response.get("categories") if type(response) is dict else None
+-    row["returnedType"] = type(categories).__name__
+-    if type(response) is not dict or "categories" not in response or type(categories) is not list:
+-        row["errors"].append("Tracing.getCategories must return categories as an array of strings")
+-        return row
+-    row["returnedCount"] = len(categories)
+-    if len(categories) > MAX_CATEGORY_ENTRIES:
+-        row["errors"].append("category entry count exceeds explicit bound")
+-        return row
+-    size = 0
+-    for index, value in enumerate(categories):
+-        if type(value) is not str:
+-            row["errors"].append("category entry %d is not a string" % index)
+-            return row
+-        try:
+-            encoded = value.encode("utf-8")
+-        except UnicodeEncodeError:
+-            row["errors"].append("category entry %d is not valid UTF-8" % index)
+-            return row
+-        size += len(encoded)
+-        if len(encoded) > MAX_CATEGORY_ENTRY_BYTES or size > MAX_CATEGORY_BYTES:
+-            row["errors"].append("category byte bound exceeded at entry %d" % index)
+-            return row
+-    # Preserve original order/duplicates/spelling before any membership decision.
+-    row["returnedCategories"] = list(categories)
+-    row["returnedEvidenceComplete"] = True
+-    row["returnedUtf8Bytes"] = size
+-    row["returnedCategoriesJsonSha256"] = hashlib.sha256(
+-        json.dumps(categories, ensure_ascii=True, separators=(",", ":")).encode()).hexdigest()
+-    atoms = [value.split(",") for value in categories]
+-    if any(not token for group in atoms for token in group):
+-        row["errors"].append("empty category/group atom; requirement membership unknown")
+-        return row
+-    missing = []
+-    for required in CATEGORIES:
+-        witness = next((index for index, group in enumerate(atoms) if required in group), None)
+-        if witness is None:
+-            missing.append(required)
+-        else:
+-            row["matches"].append({"requiredCategory": required, "returnedEntryIndex": witness,
+-                                   "matchKind": "EXACT" if categories[witness] == required else "GROUP_ATOM"})
+-    row["missingRequirements"] = missing
+-    row["status"] = "MISSING_REQUIREMENTS" if missing else "REQUIREMENTS_ENUMERATED"
+-    return row
++class CaptureIdentityError(ValueError):
++    pass
+ 
+ 
+ def metric_values(response):
++    need(type(response) is dict, "metrics response is not an object")
+     rows = response.get("metrics")
+     need(type(rows) is list and len(rows) <= 128, "metrics missing or unbounded")
+     values = {}
+     for row in rows:
++        need(type(row) is dict, "metric row is not an object")
+         name, value = row.get("name"), row.get("value")
+-        need(type(name) is str and name and name not in values, "metric name missing or repeated")
++        need(type(name) is str and 0 < len(name) <= 256 and name not in values,
++             "metric name missing, repeated or unbounded")
+         need(type(value) in (int, float) and math.isfinite(value), "metric not finite")
+         values[name] = value
+     need(all(key in values for key in ("Timestamp", "ThreadTime", "TaskDuration")),
+@@ -100,9 +45,8 @@
+         if key in before and key in after:
+             need(after[key] >= before[key], key + " moved backward")
+             delta[key + "Seconds"] = after[key] - before[key]
++            need(math.isfinite(delta[key + "Seconds"]), key + " delta not finite")
+     need(delta["TimestampSeconds"] > 0, "metric wall clock did not advance")
+-    # This is renderer main-thread running time, not solver-only CPU. Do not
+-    # interpret wall minus CPU as scheduler-ready time or a preemption proof.
+     return delta
+ 
+ 
+@@ -110,214 +54,147 @@
+     def __init__(self, session, root, *, binding):
+         self.session, self.root = session, Path(root)
+         self.binding = dict(binding)
+-        self.errors, self.calls, self.buffer_rows = [], [], []
++        self.errors, self.fatal_errors, self.cleanup_errors, self.calls = [], [], [], []
+         self.before = self.after = self.deltas = self.version = None
+         self.target_before = self.target_after = None
+-        self.categories = {"status": "NOT_RUN", "requiredCategories": list(CATEGORIES),
+-                           "returnedCategories": None, "returnedEvidenceComplete": False,
+-                           "missingRequirements": None}
+-        self.trace_attempted = self.performance_attempted = False
+-        self.started = self.finished = False
+-        self.trace_complete = asyncio.Event()
+-        self.completion = None
+-        self.stream = None
+-        self.bytes = 0
+-        self.digest = hashlib.sha256()
+-        self.listeners = []
+-        self.clocks = []
++        self.performance_attempted = self.performance_disabled = False
++        self.started = self.finished = self.setup_attempted = False
+         self.deadline = 0
+-        self.buffer_overflow = False
++        self.setup_elapsed_ms = None
+ 
+     def error(self, phase, error):
++        self.fatal_errors.append({"phase": phase, "type": type(error).__name__, "message": str(error)})
++
++    def unavailable(self, phase, error):
+         self.errors.append({"phase": phase, "type": type(error).__name__, "message": str(error)})
++        self.deltas = None
+ 
+     async def send(self, method, params=None):
+         remaining = self.deadline - time.monotonic()
+-        need(remaining > 0, "shared capture deadline expired before " + method)
++        need(remaining > 0, "optional metric slot expired before " + method)
+         before = time.monotonic_ns()
+         try:
+             return await asyncio.wait_for(self.session.send(method, params or {}), remaining)
+         finally:
+-            # Stream reads can be numerous; preserve their total byte count,
+-            # while keeping command timing receipts bounded.
+-            if method != "IO.read" or len(self.calls) < 32:
+-                self.calls.append({"method": method, "beforeNs": before,
+-                                   "afterNs": time.monotonic_ns()})
+-
+-    def complete(self, row):
+-        if self.completion is not None:
+-            self.error("Tracing.tracingComplete", ValueError("duplicate completion"))
+-        else:
+-            self.completion = dict(row)
+-            self.stream = row.get("stream")
+-        self.trace_complete.set()
+-
+-    def buffer_usage(self, row):
+-        if len(self.buffer_rows) < 256:
+-            self.buffer_rows.append(dict(row))
+-        else:
+-            self.buffer_overflow = True
+-        value = row.get("percentFull", row.get("value"))
+-        if type(value) not in (int, float) or not math.isfinite(value) or not 0 <= value < 1:
+-            self.buffer_overflow = True
+-
+-    async def marker(self, label):
+-        row = {"id": "q30-root75-" + label, "beforeNs": time.monotonic_ns(),
+-               "utc": datetime.now(timezone.utc).isoformat(timespec="microseconds")}
+-        await self.send("Tracing.recordClockSyncMarker", {"syncId": row["id"]})
+-        row["afterNs"] = time.monotonic_ns()
+-        self.clocks.append(row)
++            self.calls.append({"method": method, "beforeNs": before, "afterNs": time.monotonic_ns()})
++
++    def target(self, row, *, previous=None):
++        attachment = self.binding.get("attachedDocument", {})
++        valid = (type(row) is dict and row.get("type") == "page" and
++                 type(row.get("targetId")) is str and bool(row["targetId"]) and
++                 row.get("url") == self.binding["pageUrl"] and
++                 (not attachment.get("frameId") or row["targetId"] == attachment["frameId"]))
++        if previous is not None:
++            valid = valid and all(row.get(key) == previous.get(key)
++                for key in ("targetId", "type", "url", "browserContextId"))
++        if not valid:
++            raise CaptureIdentityError("capture crossed its exact page/frame target identity")
++        return row
++
++    async def disable(self):
++        if not self.performance_attempted or self.performance_disabled:
++            return
++        try:
++            await self.send("Performance.disable")
++            self.performance_disabled = True
++        except asyncio.CancelledError:
++            raise
++        except Exception as error:
++            self.cleanup_errors.append({"phase": "Performance.disable", "type": type(error).__name__,
++                                        "message": str(error)})
+ 
+     async def start(self, deadline):
+-        need(not self.started and not self.trace_attempted, "capture start repeated")
+-        self.deadline = min(deadline, time.monotonic() + CAPTURE_SETUP_SECONDS)
+-        for event, handler in (("Tracing.tracingComplete", self.complete),
+-                               ("Tracing.bufferUsage", self.buffer_usage)):
+-            self.session.on(event, handler)
+-            self.listeners.append((event, handler))
+-        self.version = await self.send("Browser.getVersion")
+-        self.target_before = (await self.send("Target.getTargetInfo")).get("targetInfo")
+-        need(type(self.target_before) is dict and self.target_before.get("type") == "page" and
+-             type(self.target_before.get("targetId")) is str and self.target_before["targetId"] and
+-             self.target_before.get("url") == self.binding["pageUrl"], "target lacks exact page binding")
+-        self.categories["status"] = "COMMAND_NOT_COMPLETED"
+-        self.categories = category_preflight(await self.send("Tracing.getCategories"))
+-        # Persist before rejecting or starting any instrument domain. Even a
+-        # later capture/cleanup failure must not erase the category response.
+-        with (self.root / "renderer-category-preflight.json").open("x", encoding="utf-8") as output:
+-            json.dump({"schema": 1, "qualification": False, "browserProtocol": self.version,
+-                       "target": self.target_before, "categoryPreflight": self.categories,
+-                       "traceContentAudit": "NOT_RUN"}, output, indent=2, allow_nan=False)
+-            output.write("\n")
+-        need(self.categories["status"] == "REQUIREMENTS_ENUMERATED",
+-             "trace category preflight " + self.categories["status"] + ": " +
+-             (", ".join(self.categories["missingRequirements"] or []) or
+-              "; ".join(self.categories.get("errors", []))))
+-        self.performance_attempted = True
+-        await self.send("Performance.enable", {"timeDomain": "threadTicks"})
+-        self.before = metric_values(await self.send("Performance.getMetrics"))
+-        self.trace_attempted = True
+-        await self.send("Tracing.start", {"transferMode": "ReturnAsStream",
+-            "streamFormat": "json", "streamCompression": "none",
+-            "bufferUsageReportingInterval": 1000,
+-            "traceConfig": {"recordMode": "recordUntilFull",
+-                "traceBufferSizeInKb": TRACE_BUFFER_KIB,
+-                "enableSampling": False, "enableSystrace": False,
+-                "includedCategories": list(CATEGORIES)}})
+-        await self.marker("before-script-release")
++        if self.setup_attempted or time.monotonic() >= deadline:
++            raise CaptureIdentityError("repeated capture or enclosing route deadline expired")
++        self.setup_attempted = True
++        began = time.monotonic_ns()
++        finish_setup = min(deadline, time.monotonic() + CAPTURE_SETUP_SECONDS)
++        self.deadline = finish_setup - CAPTURE_CLEANUP_SECONDS
++        phase = "setup-browser-version"
++        try:
++            self.version = await self.send("Browser.getVersion")
++            phase = "setup-target"
++            self.target_before = self.target((await self.send("Target.getTargetInfo")).get("targetInfo"))
++            phase = "Performance.enable"
++            self.performance_attempted = True
++            await self.send("Performance.enable", {"timeDomain": "threadTicks"})
++            phase = "baseline-metrics"
++            self.before = metric_values(await self.send("Performance.getMetrics"))
++        except (CaptureIdentityError, asyncio.CancelledError):
++            raise
++        except Exception as error:
++            self.unavailable(phase, error)
++            # Optional setup failures get bounded cleanup before app release.
++            # The enclosing route/parent job deadlines remain authoritative.
++            self.deadline = finish_setup
++            await self.disable()
++        finally:
++            self.setup_elapsed_ms = (time.monotonic_ns() - began) / 1e6
++        if time.monotonic() >= deadline:
++            raise CaptureIdentityError("enclosing route deadline expired after optional metrics")
+         self.started = True
+ 
+-    async def finish(self):
++    async def finish(self, deadline=None, verify_scope=None):
+         if self.finished:
+             return
+         self.finished = True
+-        finish_deadline = time.monotonic() + CAPTURE_FINISH_SECONDS
++        began = time.monotonic_ns()
++        finish_deadline = min(deadline, time.monotonic() + CAPTURE_FINISH_SECONDS) if deadline is not None else time.monotonic() + CAPTURE_FINISH_SECONDS
+         self.deadline = finish_deadline - CAPTURE_CLEANUP_SECONDS
+-        finish_start = time.monotonic_ns()
+-        eof = False
+-        end_attempted = False
+-        try:
+-            if self.started:
+-                self.target_after = (await self.send("Target.getTargetInfo")).get("targetInfo")
+-                need(type(self.target_after) is dict and all(self.target_after.get(key) ==
+-                     self.target_before.get(key) for key in ("targetId", "type", "url", "browserContextId")),
+-                     "capture crossed its target identity")
+-                need(self.binding.get("terminalScopeVerified") is True,
+-                     "terminal lacks stable attachment scope")
++        try:
++            terminal = self.binding.get("terminalScopeVerified") is True
++            timeout_boundary = (self.binding.get("boundaryScopeVerified") is True and
++                                self.binding.get("boundaryKind") == "OBSERVER_TIMEOUT")
++            if not terminal and not timeout_boundary:
++                raise CaptureIdentityError("final boundary lacks stable attachment scope")
++            if self.started and self.before is not None and not self.errors:
++                self.target_after = self.target((await self.send("Target.getTargetInfo")).get("targetInfo"),
++                                                previous=self.target_before)
+                 self.after = metric_values(await self.send("Performance.getMetrics"))
+                 self.deltas = metric_delta(self.before, self.after)
+-                await self.marker("after-terminal-or-error")
+-        except (Exception, asyncio.CancelledError) as error:
+-            self.error("final-metrics", error)
+-        try:
+-            if self.trace_attempted:
+-                need(self.deadline > time.monotonic(), "read budget exhausted before Tracing.end")
+-                end_attempted = True
+-                await self.send("Tracing.end")
+-                remaining = self.deadline - time.monotonic()
+-                need(remaining > 0, "capture deadline before trace completion")
+-                await asyncio.wait_for(self.trace_complete.wait(), remaining)
+-                row = self.completion
+-                need(row.get("dataLossOccurred") is False, "trace data loss or missing loss flag")
+-                need(type(self.stream) is str and self.stream, "trace completion missing stream")
+-                need(row.get("traceFormat", "json") == "json" and
+-                     row.get("streamCompression", "none") == "none", "trace format changed")
+-                need(not self.buffer_overflow, "trace buffer full or buffer observations invalid")
+-                with (self.root / "renderer-trace.json").open("xb") as output:
+-                    for _ in range(MAX_TRACE_BYTES // READ_BYTES + 1):
+-                        chunk = await self.send("IO.read", {"handle": self.stream, "size": READ_BYTES})
+-                        text = chunk.get("data")
+-                        need(type(text) is str, "trace chunk data missing")
+-                        encoded = chunk.get("base64Encoded", False)
+-                        need(type(encoded) is bool and type(chunk.get("eof")) is bool,
+-                             "trace chunk flags invalid")
+-                        need(len(text) <= (((READ_BYTES + 2) // 3) * 4 if encoded else READ_BYTES),
+-                             "trace chunk encoded length exceeds bound")
+-                        data = base64.b64decode(text, validate=True) if encoded else text.encode("utf-8")
+-                        need(len(data) <= READ_BYTES and self.bytes + len(data) <= MAX_TRACE_BYTES,
+-                             "trace stream exceeds explicit byte bound")
+-                        need(data or chunk["eof"], "trace stream made no progress")
+-                        output.write(data)
+-                        self.digest.update(data)
+-                        self.bytes += len(data)
+-                        if chunk["eof"]:
+-                            eof = True
+-                            break
+-                    need(eof, "trace stream did not reach EOF within bound")
+-                    need(self.bytes > 0, "trace stream empty")
+-        except (Exception, asyncio.CancelledError) as error:
+-            self.error("trace-finish", error)
++                if verify_scope is not None:
++                    try:
++                        self.binding["finalMetricScope"] = await verify_scope(self.deadline)
++                        self.binding["finalMetricScopeVerified"] = True
++                    except asyncio.CancelledError:
++                        raise
++                    except Exception as error:
++                        raise CaptureIdentityError("final metric attachment scope: " + str(error)) from error
++        except CaptureIdentityError as error:
++            self.error("final-scope", error)
++            self.deltas = None
++        except asyncio.CancelledError as error:
++            self.error("final-cancellation", error)
++            self.deltas = None
++        except Exception as error:
++            self.unavailable("final-metrics", error)
+         finally:
+-            # Reserve distinct bounded opportunities for end, stream close and
+-            # domain disable even if a read or final metric consumes its budget.
+-            self.deadline = finish_deadline - 2 * CAPTURE_CLEANUP_SECONDS / 3
+-            if self.trace_attempted and not end_attempted:
+-                try:
+-                    await self.send("Tracing.end")
+-                    remaining = self.deadline - time.monotonic()
+-                    need(remaining > 0, "cleanup end completion budget exhausted")
+-                    await asyncio.wait_for(self.trace_complete.wait(), remaining)
+-                except (Exception, asyncio.CancelledError) as error:
+-                    self.error("cleanup-Tracing.end", error)
+-            self.deadline = finish_deadline - CAPTURE_CLEANUP_SECONDS / 3
+-            if self.stream:
+-                try:
+-                    await self.send("IO.close", {"handle": self.stream})
+-                except (Exception, asyncio.CancelledError) as error:
+-                    self.error("IO.close", error)
+             self.deadline = finish_deadline
+-            if self.performance_attempted:
+-                try:
+-                    await self.send("Performance.disable")
+-                except (Exception, asyncio.CancelledError) as error:
+-                    self.error("Performance.disable", error)
+-            for event, handler in self.listeners:
+-                try:
+-                    self.session.remove_listener(event, handler)
+-                except Exception as error:
+-                    self.error("capture-listener-cleanup", error)
+-            self.listeners.clear()
+-        result = {"schema": 1, "status": "PASS_CAPTURE_ONLY" if self.started and eof and
+-                  self.deltas is not None and not self.errors else "FAIL_CAPTURE",
+-            "qualification": False, "diagnosticOnly": True, "binding": self.binding,
+-            "browserProtocol": self.version, "timeDomain": "threadTicks",
+-            "categoryPreflight": self.categories,
+-            "targetBefore": self.target_before, "targetAfter": self.target_after,
+-            "metricsBefore": self.before, "metricsAfter": self.after, "metricDelta": self.deltas,
+-            "clockMarkers": self.clocks, "commandClocks": self.calls, "traceCompletion": self.completion,
+-            "bufferUsage": self.buffer_rows, "traceBytes": self.bytes,
+-            "traceSha256": self.digest.hexdigest() if self.bytes else None, "traceEOF": eof,
+-            "traceContentAudit": "NOT_RUN",
+-            "errors": self.errors, "finishElapsedMs": (time.monotonic_ns() - finish_start) / 1e6,
+-            "bounds": {"traceBufferKiB": TRACE_BUFFER_KIB, "traceFileBytes": MAX_TRACE_BYTES,
+-                       "categoryEntries": MAX_CATEGORY_ENTRIES, "categoryEntryBytes": MAX_CATEGORY_ENTRY_BYTES,
+-                       "categoryTotalBytes": MAX_CATEGORY_BYTES,
+-                       "setupSeconds": CAPTURE_SETUP_SECONDS, "finishSeconds": CAPTURE_FINISH_SECONDS},
+-            "limits": ["Instrumentation overhead is unknown until selected Edge path is tested.",
+-                "ThreadTime is renderer main-thread running time including GC/host work, not solver-only CPU.",
+-                "Wall minus thread time does not identify scheduler-ready time or establish preemption.",
+-                "Trace GC/task coverage, renderer thread identity and marker mapping require post-run audit.",
+-                "No per-proof-item or HEALTHY-slice labels exist in this unchanged normal-mode artifact."]}
++            try:
++                await self.disable()
++            except asyncio.CancelledError as error:
++                self.cleanup_errors.append({"phase": "Performance.disable-cancellation",
++                                            "type": type(error).__name__, "message": str(error)})
++        cleanup = {"status": "FAIL" if self.cleanup_errors else "PASS",
++                   "performanceEnableAttempted": self.performance_attempted,
++                   "performanceDisabled": self.performance_disabled if self.performance_attempted else None,
++                   "errors": self.cleanup_errors}
++        status = "CPU_MEASURED" if self.started and self.deltas is not None and not self.errors else "CPU_UNAVAILABLE"
++        if self.fatal_errors or cleanup["status"] != "PASS":
++            status = "FAIL_CAPTURE"
++        result = {"schema": 2, "status": status, "qualification": False, "diagnosticOnly": True,
++            "binding": self.binding, "browserProtocol": self.version, "timeDomain": "threadTicks",
++            "tracing": "NOT_ATTEMPTED_METRICS_ONLY", "targetBefore": self.target_before,
++            "targetAfter": self.target_after, "metricsBefore": self.before, "metricsAfter": self.after,
++            "metricDelta": self.deltas, "commandClocks": self.calls,
++            "errors": self.errors, "fatalErrors": self.fatal_errors, "cleanup": cleanup,
++            "setupElapsedMs": self.setup_elapsed_ms, "finishElapsedMs": (time.monotonic_ns() - began) / 1e6,
++            "bounds": {"setupSeconds": CAPTURE_SETUP_SECONDS, "finishSeconds": CAPTURE_FINISH_SECONDS,
++                       "cleanupReserveSeconds": CAPTURE_CLEANUP_SECONDS, "metricRows": 128, "metricNameChars": 256},
++            "limits": ["Optional metric unavailability does not abort a safely owned app run.",
++                "ThreadTime is aggregate renderer main-thread running time including GC/DOM/host work, not solver-only CPU.",
++                "Wall minus thread time does not establish preemption; no GC or per-stage CPU attribution.",
++                "App phase wall times come only from the unchanged terminal report; instrumentation overhead is unknown."]}
+         with (self.root / "renderer-capture.json").open("x", encoding="utf-8") as output:
+             json.dump(result, output, indent=2, allow_nan=False)
+             output.write("\n")
+--- r2/instrumented_host.py
++++ r3/instrumented_host.py
+@@ -7,8 +7,9 @@
+ import json
+ from pathlib import Path
+ import sys
++import time
+ 
+-from renderer_capture import RendererCapture
++from renderer_capture import RendererCapture, CAPTURE_FINISH_SECONDS, CAPTURE_CLEANUP_SECONDS
+ 
+ R4_SHA = "146101ab19500b06e8d0cb56bde32d90f8439c87b245099c8e1c569b07df85cd"
+ HOST_SHA = "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be"
+@@ -66,10 +67,37 @@
+         async def close(self):
+             try:
+                 if getattr(self, "capture", None) is not None:
++                    finish_deadline = time.monotonic() + CAPTURE_FINISH_SECONDS
+                     self.capture.binding["terminalScopeVerified"] = self.terminal_verified
+                     self.capture.binding["terminalScope"] = getattr(self, "scope_identity", None)
+-                    result = await self.capture.finish()
+-                    if result is None or result["status"] != "PASS_CAPTURE_ONLY":
++                    async def final_scope(deadline):
++                        original_deadline = self.deadline
++                        try:
++                            self.deadline = deadline
++                            _, _, scope = await self.read_document_scope()
++                            attachment = self.script_attachment
++                            if (self.closed or self.session_lost or
++                                self.navigation_epoch != attachment["generation"] or
++                                any(attachment.get(key) != value for key, value in scope.items())):
++                                raise ValueError("final boundary crossed its compiled-script attachment")
++                            return {**scope, "generation": self.navigation_epoch}
++                        finally:
++                            self.deadline = original_deadline
++                    if not self.terminal_verified and self.capture.started and time.monotonic() >= self.deadline:
++                        self.capture.binding["boundaryKind"] = "OBSERVER_TIMEOUT"
++                        self.capture.binding["boundaryScopeVerified"] = False
++                        try:
++                            # Closing read only: the observation is already over.
++                            # Reuse the exact r4 scope parser within the SAME final
++                            # capture budget; never extend app/route observation.
++                            scope = await final_scope(finish_deadline - CAPTURE_CLEANUP_SECONDS)
++                            self.capture.binding["boundaryScope"] = scope
++                            self.capture.binding["boundaryScopeVerified"] = True
++                        except (Exception, asyncio.CancelledError) as error:
++                            self.capture.error("timeout-boundary-scope", error)
++                    result = await self.capture.finish(finish_deadline, final_scope)
++                    if result is None or result["status"] not in ("CPU_MEASURED", "CPU_UNAVAILABLE") or \
++                       result["cleanup"]["status"] != "PASS":
+                         self.failure("renderer-diagnostic-capture", RuntimeError("capture incomplete"))
+             finally:
+                 await super().close()
+--- r2/run_one_diagnostic.py
++++ r3/run_one_diagnostic.py
+@@ -117,12 +117,62 @@
+        not waited["cleanup"]["drainsComplete"]:
+         return "FAIL_CONTROLLER"
+     valid = type(summary) is dict and summary.get("inputBindingUnchanged") is True and \
+-        summary.get("errors") == [] and summary.get("rendererCapture") == "PASS_CAPTURE_ONLY"
+-    if valid and waited["exitCode"] == 0 and summary.get("status") == "DIAGNOSTIC_CAPTURE_COMPLETE":
++        summary.get("errors") == [] and summary.get("rendererCapture") in ("CPU_MEASURED", "CPU_UNAVAILABLE") and \
++        summary.get("captureCleanup") == "PASS"
++    if valid and waited["exitCode"] == 0 and summary.get("status") == "DIAGNOSTIC_COMPLETE":
+         return "CONTROLLER_COMPLETE_DIAGNOSTIC_ONLY"
+-    if valid and waited["exitCode"] == 1 and summary.get("status") == "DIAGNOSTIC_CAPTURE_COMPLETE_APP_NONPASS":
++    if valid and waited["exitCode"] == 1 and summary.get("status") == "DIAGNOSTIC_COMPLETE_APP_NONPASS":
+         return "CONTROLLER_COMPLETE_APP_NONPASS_DIAGNOSTIC_ONLY"
++    if valid and waited["exitCode"] == 1 and summary.get("status") == "DIAGNOSTIC_OBSERVER_TIMEOUT_REPORT_UNAVAILABLE":
++        return "CONTROLLER_COMPLETE_OBSERVER_TIMEOUT_REPORT_UNAVAILABLE"
+     return "CONTROLLER_COMPLETE_WORKER_FAILURE"
++
++
++def clean_observer_timeout(host, capture):
++    cases = host.get("cases")
++    if type(cases) is not list or len(cases) != 1 or type(cases[0]) is not dict:
++        return False
++    case = cases[0]
++    errors = case.get("attributeReadErrors")
++    spec = case.get("case", {})
++    return (host.get("outcome") == "FAIL" and case.get("outcome") == "TIMEOUT" and
++        case.get("timedOut") is True and case.get("terminalReached") is False and
++        case.get("navigationError") is None and spec.get("path") == PATH and spec.get("timeoutSeconds") == 150 and
++        all(case.get(key) == [] for key in ("pageErrors", "httpErrors", "consoleErrors", "observerErrors", "listenerCleanupErrors")) and
++        type(errors) is list and all(type(row) is dict and row.get("type") == "DeadlineExpired" and
++            row.get("attribute") in ("data-tsj-q30-normal-state", "data-tsj-q30-normal-report") for row in errors) and
++        capture.get("binding", {}).get("boundaryKind") == "OBSERVER_TIMEOUT" and
++        capture.get("binding", {}).get("boundaryScopeVerified") is True)
++
++
++def completed_status(host, capture, waited, drains, app_audit):
++    clean = waited["cleanup"]
++    timed_out = clean_observer_timeout(host, capture)
++    host_complete = (waited["exitCode"] == 0 and host["outcome"] == "PASS") or (waited["exitCode"] == 1 and timed_out)
++    valid = (waited["reason"] is None and host_complete and clean["cleanupVerified"] and
++        clean["drainsComplete"] and all(not d["overflow"] and not d["errors"] and
++        not d["readerAlive"] and d["streamClosed"] for d in drains) and
++        host["errors"] == [] and host["inputAudit"]["status"] == "PASS" and
++        host["cleanup"]["status"] == "PASS" and host["cleanup"]["serverStopped"] is True and
++        host["cleanup"]["ownedSurvivors"] == [] and host["cleanup"]["errors"] == [] and
++        capture["status"] in ("CPU_MEASURED", "CPU_UNAVAILABLE") and capture["cleanup"]["status"] == "PASS")
++    if not valid:
++        return "DIAGNOSTIC_FAIL"
++    if app_audit["status"] == "REPORT_UNAVAILABLE":
++        return "DIAGNOSTIC_OBSERVER_TIMEOUT_REPORT_UNAVAILABLE" if timed_out else "DIAGNOSTIC_FAIL"
++    if app_audit["status"] == "FAIL_REPORT_AUDIT":
++        return "DIAGNOSTIC_FAIL"
++    if timed_out:
++        return "DIAGNOSTIC_COMPLETE_APP_NONPASS"
++    return "DIAGNOSTIC_COMPLETE" if app_audit["status"] == "APP_PASS" else "DIAGNOSTIC_COMPLETE_APP_NONPASS"
++
++
++def wall_phases(report):
++    # These unchanged application wall/work rows are not CPU samples or a new oracle.
++    return {"source": "UNCHANGED_APP_REPORT", "rootSeed": report.get("rootSeed"),
++            "applicationOutcome": report.get("applicationOutcome"), "terminalStage": report.get("terminalStage"),
++            "generationElapsedMs": report.get("generationElapsedMs"), "workUnits": report.get("workUnits"),
++            "stages": report.get("stages"), "attempts": report.get("attempts")}
+ 
+ 
+ def validate_grant(grant, manifest_sha, now):
+@@ -323,7 +373,8 @@
+         "maximumInnerHostCapMs": OUTER_MS, "controllerMonotonicDeadlineNs": args.controller_deadline_ns,
+         "taskRoot": str(root), "parentReference": grant["parentReference"],
+         "windowEndUtc": grant["windowEndUtc"], "candidateManifestSha256": before["candidateManifestSha256"],
+-        "errors": [], "applicationAudit": "NOT_RUN", "rendererCapture": "NOT_RUN"}
++        "errors": [], "applicationAudit": "NOT_RUN", "rendererCapture": "NOT_RUN",
++        "captureCleanup": "NOT_RUN", "phaseWallTimes": None}
+     k, child, waited = runner._api(), None, None
+     environment = {key: os.environ.get(key) for key in ("PYTHONPATH", "PYTHONDONTWRITEBYTECODE", "PYTHONIOENCODING")}
+     try:
+@@ -342,35 +393,42 @@
+             "readerAlive": d.thread.is_alive(), "streamClosed": d.streamClosed} for d in child["drains"]]
+         final_started_ns = time.monotonic_ns()
+         final_deadline = final_started_ns + FINAL_RESERVE_MS * 1000000
++        # The unchanged reader audits app data independently of CPU/host receipts.
++        # Missing reports are explicit; still retain available CPU/cleanup data.
++        report_path = output / "cases/001-cold-75.report.json"
++        try:
++            reader_path = args.repo / "tests/qualification/q30-scale-acceptance/q30_scale_reader.py"
++            reader = imported(reader_path, "root75_diagnostic_app_reader", before["dependencies"]["reader"])
++            regular_bounded(report_path, deadline=final_deadline)
++            regular_bounded(variant["paths"]["plan"], deadline=final_deadline)
++            regular_bounded(variant["paths"]["acceptance"], deadline=final_deadline)
++            report, raw = reader_json(reader, report_path, final_deadline)
++            plan, plan_raw = reader_json(reader, variant["paths"]["plan"], final_deadline)
++            app_audit = reader.evaluate(report, raw, plan, plan_raw, acceptance_path=variant["paths"]["acceptance"])
++            check_deadline(final_deadline)
++            result["appReportSha256"] = hashlib.sha256(raw).hexdigest()
++            result["phaseWallTimes"] = wall_phases(report)
++        except FileNotFoundError as error:
++            missing_report = error.filename is not None and Path(error.filename) == report_path
++            app_audit = {"status": "REPORT_UNAVAILABLE" if missing_report else "FAIL_REPORT_AUDIT", "applicationOutcome": None,
++                         "errors": [type(error).__name__ + ": " + str(error)]}
++            if not missing_report:
++                result["errors"].append("app input read: " + repr(error))
++        except Exception as error:
++            app_audit = {"status": "FAIL_REPORT_AUDIT", "applicationOutcome": None,
++                         "errors": [type(error).__name__ + ": " + str(error)]}
++            result["errors"].append("app report audit: " + repr(error))
++        result["applicationAudit"] = app_audit
++        # Preserve app audit/wall rows before optional capture receipt inspection.
+         host = strict_json(output / "result.json", final_deadline)
++        result["hostObservation"] = {key: host.get(key) for key in ("outcome", "cleanup", "errors", "inputAudit")}
+         capture = strict_json(output / "renderer-capture.json", final_deadline)
+-        result["hostObservation"] = {key: host.get(key) for key in ("outcome", "cleanup", "errors", "inputAudit")}
+         result["rendererCapture"] = capture["status"]
+-        # The modified diagnostic host is deliberately excluded from acceptance
+-        # host auditing. The unchanged maintained reader audits the app alone.
+-        reader_path = args.repo / "tests/qualification/q30-scale-acceptance/q30_scale_reader.py"
+-        reader = imported(reader_path, "root75_diagnostic_app_reader", before["dependencies"]["reader"])
+-        report_path = output / "cases/001-cold-75.report.json"
+-        regular_bounded(report_path, deadline=final_deadline)
+-        regular_bounded(variant["paths"]["plan"], deadline=final_deadline)
+-        regular_bounded(variant["paths"]["acceptance"], deadline=final_deadline)
+-        report, raw = reader_json(reader, report_path, final_deadline)
+-        plan, plan_raw = reader_json(reader, variant["paths"]["plan"], final_deadline)
+-        app_audit = reader.evaluate(report, raw, plan, plan_raw, acceptance_path=variant["paths"]["acceptance"])
+-        check_deadline(final_deadline)
+-        result["applicationAudit"] = app_audit
+-        result["appReportSha256"] = hashlib.sha256(raw).hexdigest()
+-        clean = waited["cleanup"]
+-        valid = (waited["reason"] is None and waited["exitCode"] == 0 and clean["cleanupVerified"] and
+-            clean["drainsComplete"] and all(not d["overflow"] and not d["errors"] and
+-            not d["readerAlive"] and d["streamClosed"] for d in result["drains"]) and
+-            host["outcome"] == "PASS" and host["errors"] == [] and host["inputAudit"]["status"] == "PASS" and
+-            host["cleanup"]["status"] == "PASS" and host["cleanup"]["serverStopped"] is True and
+-            host["cleanup"]["ownedSurvivors"] == [] and host["cleanup"]["errors"] == [] and
+-            capture["status"] == "PASS_CAPTURE_ONLY")
+-        if valid:
+-            result["status"] = "DIAGNOSTIC_CAPTURE_COMPLETE" if app_audit["status"] == "APP_PASS" else \
+-                "DIAGNOSTIC_CAPTURE_COMPLETE_APP_NONPASS"
++        result["captureCleanup"] = capture["cleanup"]["status"]
++        result["status"] = completed_status(host, capture, waited, result["drains"], app_audit)
++        if app_audit["status"] == "REPORT_UNAVAILABLE" and result["status"] != "DIAGNOSTIC_OBSERVER_TIMEOUT_REPORT_UNAVAILABLE":
++            result["errors"].append("app report unavailable outside a clean observer timeout")
++
+     except BaseException as error:
+         result["errors"].append(type(error).__name__ + ": " + str(error))
+         if child is not None and waited is None:
+@@ -415,8 +473,8 @@
+             result["status"] = "DIAGNOSTIC_FAIL"
+         write(root / "diagnostic-result.json", result)
+     print(json.dumps({key: result.get(key) for key in
+-                     ("status", "taskRoot", "rendererCapture", "inputBindingUnchanged", "errors")}, indent=2))
+-    return 0 if result["status"] == "DIAGNOSTIC_CAPTURE_COMPLETE" else 1
++                     ("status", "taskRoot", "rendererCapture", "captureCleanup", "applicationAudit", "phaseWallTimes", "inputBindingUnchanged", "errors")}, indent=2))
++    return 0 if result["status"] == "DIAGNOSTIC_COMPLETE" else 1
+ 
+ 
+ def main(argv=None):
+--- r2/offline_checks.py
++++ r3/offline_checks.py
+@@ -1,593 +1,871 @@
+-"""New synthetic capture/grant fixtures only. No browser/native CPU/sample launch."""
++"""Synthetic offline contracts for the root75 metrics-only diagnostic.
++
++Fixtures exercise the Python owners without launching a browser, native process,
++application case, or CPU sampler. All generated reports are synthetic.
++"""
+ import asyncio
+-import base64
+ from datetime import datetime, timedelta, timezone
+ import json
+ from pathlib import Path
++import sys
+ import tempfile
+ import time
++import types
+ import unittest
++from contextlib import redirect_stdout
++from io import StringIO
+ from unittest.mock import patch
+ 
+-import renderer_capture as capture
++import instrumented_host
++import renderer_capture
+ import run_one_diagnostic as launcher
+-import instrumented_host as wrapper
+-
+-ROOT = Path(tempfile.mkdtemp(prefix="q30-root75-offline-fixtures-"))
++
++
++HERE = Path(__file__).resolve().parent
++HOST_PATH = HERE / "headful_attribute_host.py"
++FIXTURE_ROOT = Path(tempfile.mkdtemp(prefix="q30-root75-metrics-offline-"))
++ROOT = FIXTURE_ROOT  # Kept for the unchanged bounded verifier's receipt destination.
+ URL = "http://127.0.0.1:12345/" + launcher.PATH
+-
+-
+-def metrics(timestamp=100.0, thread=2.0):
+-    return {"metrics": [{"name": "Timestamp", "value": timestamp},
+-        {"name": "ThreadTime", "value": thread}, {"name": "TaskDuration", "value": thread / 2},
+-        {"name": "ScriptDuration", "value": thread / 3}]}
+-
+-
+-class Session:
+-    def __init__(self, fault=None):
++STATE = "SCREEN_DONE:synthetic-fixture"
++ATTRIBUTE = "data-tsj-q30-normal-state"
++
++
++def metric_response(timestamp=100.0, thread=2.0, script_duration=None):
++    if script_duration is None:
++        script_duration = thread / 3
++    return {"metrics": [
++        {"name": "Timestamp", "value": timestamp},
++        {"name": "ThreadTime", "value": thread},
++        {"name": "TaskDuration", "value": thread / 2},
++        {"name": "ScriptDuration", "value": script_duration},
++    ]}
++
++
++def write_json(path, value):
++    path.parent.mkdir(parents=True, exist_ok=True)
++    path.write_text(json.dumps(value, indent=2, allow_nan=False) + "\n", encoding="utf-8")
++
++
++def owned_dir(test_case, label):
++    path = FIXTURE_ROOT / (test_case._testMethodName + "-" + label)
++    path.mkdir(parents=True, exist_ok=False)
++    return path
++
++
++def assert_metrics_only(test_case, session):
++    methods = [method for method, _ in session.calls]
++    test_case.assertFalse(any(name.startswith(("Tracing.", "IO.")) for name in methods), methods)
++    test_case.assertEqual(session.listeners, {})
++
++
++class MetricsSession:
++    """Synthetic subset of the CDP session API consumed by this candidate."""
++
++    def __init__(self, fault=None, observer=None):
+         self.fault = fault
++        self.observer = observer
++        self.calls = []
+         self.listeners = {}
+-        self.calls = []
+-        self.metric_reads = self.target_reads = self.chunk_reads = 0
+-        self.trace = b'{"traceEvents":[{"name":"fixture","ts":1}]}'
+-
+-    def on(self, event, handler):
+-        self.listeners[event] = handler
+-
+-    def remove_listener(self, event, handler):
+-        if self.fault == "listener-close":
+-            raise RuntimeError("listener failed")
+-        assert self.listeners.pop(event) == handler
++        self.metric_reads = 0
++        self.target_reads = 0
++        self.frame_tree_reads = 0
++        self.frame_id = "frame" if observer is not None else "fixed"
++        self.loader_id = "loader"
++        self.target_id = "wrong-frame" if fault == "target-frame" else self.frame_id
++        self.target_url = "elsewhere" if fault == "target-url" else URL
++        self.browser_context_id = "context"
++        self.page = getattr(observer, "page", None)
+ 
+     async def send(self, method, params):
+         self.calls.append((method, params))
+-        if method == "Page.getFrameTree":
+-            return {"frameTree": {"frame": {"id": "frame", "loaderId": "loader", "url": URL}}}
+-        if method == "DOM.getDocument":
+-            return {"root": {"nodeId": 2, "backendNodeId": 2, "documentURL": URL,
+-                "children": [{"nodeName": "HTML", "nodeId": 4,
+-                    "backendNodeId": 5 if self.fault == "scope-change" else 4,
+-                    "attributes": ["data-tsj-q30-normal-state", "SCREEN_DONE:fixture"]}]}}
+         if method == "Browser.getVersion":
+             return {"protocolVersion": "fixture", "product": "fixture", "jsVersion": "fixture"}
+         if method == "Target.getTargetInfo":
+             self.target_reads += 1
+-            return {"targetInfo": {"targetId": "other" if self.fault == "target-change" and
+-                self.target_reads > 1 else "fixed", "type": "page",
+-                "url": "other" if self.fault == "target-url" else URL}}
+-        if method == "Tracing.getCategories":
+-            return {"categories": [] if self.fault == "categories" else list(capture.CATEGORIES)}
++            target_id, context_id = self.target_id, self.browser_context_id
++            if self.fault == "target-after-change" and self.target_reads > 1:
++                target_id = "successor-frame"
++            if self.fault == "context-after-change" and self.target_reads > 1:
++                context_id = "successor-context"
++            return {"targetInfo": {"targetId": target_id, "type": "page",
++                                   "url": self.target_url, "browserContextId": context_id}}
+         if method == "Performance.enable":
+-            assert params == {"timeDomain": "threadTicks"}
+-            if self.fault == "enable":
+-                raise RuntimeError("thread time unsupported")
++            if params != {"timeDomain": "threadTicks"}:
++                raise AssertionError("capture must request the threadTicks time domain")
++            if self.fault == "enable-error":
++                raise RuntimeError("synthetic threadTicks enable failure")
++            return {}
+         if method == "Performance.getMetrics":
+             self.metric_reads += 1
+-            if self.metric_reads == 1:
+-                return metrics()
+-            if self.fault == "metric-timeout":
+-                await asyncio.sleep(.2)
+-            if self.fault == "regression":
+-                return metrics(101.0, 1.0)
+-            if self.fault == "missing-metric":
++            if self.fault == "route-frame-change" and self.metric_reads == 1:
++                self.frame_id = "successor-frame"
++            elif self.fault == "route-loader-change" and self.metric_reads == 1:
++                self.loader_id = "successor-loader"
++            elif self.fault == "route-generation-change" and self.metric_reads == 1:
++                self.observer.navigation_epoch += 1
++            elif self.fault == "route-url-change" and self.metric_reads == 1:
++                self.page.url = URL + "#successor"
++            elif self.fault == "final-scope-loader-change" and self.metric_reads == 2:
++                self.loader_id = "successor-loader"
++            if self.fault == "baseline-timeout" and self.metric_reads == 1:
++                await asyncio.sleep(.40)
++            if self.fault == "final-timeout" and self.metric_reads == 2:
++                await asyncio.sleep(.40)
++            if self.fault == "baseline-malformed" and self.metric_reads == 1:
+                 return {"metrics": []}
+-            return metrics(101.0, 2.25)
+-        if method == "Tracing.start":
+-            assert params["traceConfig"]["traceBufferSizeInKb"] == 16384
+-            assert params["traceConfig"]["recordMode"] == "recordUntilFull"
+-            assert params["traceConfig"]["enableSampling"] is False
+-            assert params["traceConfig"]["enableSystrace"] is False
+-            if self.fault == "start":
+-                raise RuntimeError("trace start uncertain")
+-            if self.fault == "buffer":
+-                self.listeners["Tracing.bufferUsage"]({"percentFull": 1.0})
+-        if method == "Tracing.end":
+-            if self.fault == "end":
+-                raise RuntimeError("trace end failed")
+-            if self.fault == "completion-timeout":
+-                return {}
+-            row = {"dataLossOccurred": self.fault == "loss", "stream": "fixture-stream",
+-                   "traceFormat": "json", "streamCompression": "none"}
+-            if self.fault == "no-stream":
+-                row.pop("stream")
+-            if self.fault == "missing-loss":
+-                row.pop("dataLossOccurred")
+-            if self.fault == "format":
+-                row["traceFormat"] = "proto"
+-            if self.fault == "compression":
+-                row["streamCompression"] = "gzip"
+-            self.listeners["Tracing.tracingComplete"](row)
+-            if self.fault == "duplicate-completion":
+-                self.listeners["Tracing.tracingComplete"](row)
+-        if method == "IO.read":
+-            self.chunk_reads += 1
+-            if self.fault == "stream-timeout":
+-                await asyncio.sleep(.2)
+-            if self.fault == "read":
+-                raise RuntimeError("stream read failed")
+-            if self.fault == "base64":
+-                return {"data": "!!!", "eof": True, "base64Encoded": True}
+-            if self.fault == "oversize":
+-                return {"data": "x" * (capture.READ_BYTES + 1), "eof": True}
+-            if self.fault == "no-progress":
+-                return {"data": "", "eof": False}
+-            if self.fault == "empty":
+-                return {"data": "", "eof": True}
+-            if self.fault == "flags":
+-                return {"data": "x", "eof": 1}
+-            if self.fault == "no-eof":
+-                return {"data": "x" * capture.READ_BYTES, "eof": False}
+-            if self.chunk_reads == 1:
+-                return {"data": self.trace[:20].decode(), "eof": False}
+-            return {"data": base64.b64encode(self.trace[20:]).decode(), "base64Encoded": True, "eof": True}
+-        if method == "IO.close" and self.fault == "close":
+-            raise RuntimeError("stream close failed")
+-        if method == "Performance.disable" and self.fault == "disable":
+-            raise RuntimeError("disable failed")
+-        return {}
++            if self.fault == "final-malformed" and self.metric_reads == 2:
++                return {"metrics": [{"name": "Timestamp", "value": 101.0}]}
++            if self.fault == "final-regression" and self.metric_reads == 2:
++                return metric_response(101.0, 1.0)
++            if self.fault == "extreme-duration-delta":
++                return (metric_response(100.0, 2.0, -1e308) if self.metric_reads == 1 else
++                        metric_response(101.0, 2.25, 1e308))
++            return metric_response(100.0, 2.0) if self.metric_reads == 1 else metric_response(101.0, 2.25)
++        if method == "Page.getFrameTree":
++            self.frame_tree_reads += 1
++            if self.fault == "boundary-loader-change" and self.frame_tree_reads == 3:
++                self.loader_id = "successor-loader"
++            return {"frameTree": {"frame": {"id": self.frame_id, "loaderId": self.loader_id,
++                                             "url": URL}}}
++        if method == "DOM.getDocument":
++            return {"root": {"nodeId": 2, "backendNodeId": 2, "documentURL": URL,
++                "children": [{"nodeName": "HTML", "nodeId": 4, "backendNodeId": 4,
++                    "attributes": [ATTRIBUTE, STATE]}]}}
++        if method == "Performance.disable":
++            if self.fault == "disable-error":
++                raise RuntimeError("synthetic disable cleanup failure")
++            return {}
++        raise AssertionError("unexpected synthetic CDP method: " + method)
+ 
+     async def detach(self):
+         self.calls.append(("detach", {}))
+ 
+ 
+-class CaptureChecks(unittest.IsolatedAsyncioTestCase):
+-    async def execute(self, fault=None, *, terminal=True):
+-        root = ROOT / self._testMethodName
++class MetricValidationChecks(unittest.TestCase):
++    def test_metric_values_accepts_finite_required_rows_and_rejects_bad_shape(self):
++        parsed = renderer_capture.metric_values(metric_response())
++        self.assertEqual(parsed["Timestamp"], 100.0)
++        invalid = [
++            None, {"metrics": []},
++            {"metrics": [{"name": "Timestamp", "value": 1}]},
++            {"metrics": [{"name": "Timestamp", "value": 1},
++                         {"name": "Timestamp", "value": 2}]},
++            metric_response(thread=True), metric_response(thread=float("nan")),
++            metric_response(thread=-1.0),
++            {"metrics": [{"name": "x" * 257, "value": 1},
++                         {"name": "Timestamp", "value": 1},
++                         {"name": "ThreadTime", "value": 1},
++                         {"name": "TaskDuration", "value": 1}]},
++            {"metrics": [{"name": "Timestamp", "value": 1},
++                         {"name": "ThreadTime", "value": 1},
++                         {"name": "TaskDuration", "value": 1}] * 43},
++        ]
++        for response in invalid:
++            with self.subTest(response=response):
++                with self.assertRaises(ValueError):
++                    renderer_capture.metric_values(response)
++
++    def test_metric_delta_requires_advancing_clock_and_nonregressing_values(self):
++        before = renderer_capture.metric_values(metric_response())
++        with self.assertRaisesRegex(ValueError, "did not advance"):
++            renderer_capture.metric_delta(before, before)
++        with self.assertRaisesRegex(ValueError, "ThreadTime moved backward"):
++            renderer_capture.metric_delta(before, renderer_capture.metric_values(metric_response(101.0, 1.0)))
++        extreme_before = renderer_capture.metric_values(metric_response(script_duration=-1e308))
++        extreme_after = renderer_capture.metric_values(metric_response(101.0, 2.25, 1e308))
++        with self.assertRaisesRegex(ValueError, "ScriptDuration delta not finite"):
++            renderer_capture.metric_delta(extreme_before, extreme_after)
++        delta = renderer_capture.metric_delta(before, renderer_capture.metric_values(metric_response(101.0, 2.25)))
++        self.assertEqual(delta["TimestampSeconds"], 1.0)
++        self.assertEqual(delta["ThreadTimeSeconds"], .25)
++
++    def test_production_and_parent_budget_constants_remain_frozen(self):
++        self.assertEqual((renderer_capture.CAPTURE_SETUP_SECONDS, renderer_capture.CAPTURE_FINISH_SECONDS,
++                          renderer_capture.CAPTURE_CLEANUP_SECONDS), (5.0, 5.0, 1.5))
++        self.assertEqual(launcher.LIMITS, {"jobMillis": 90000, "sharedWork": 640,
++                                           "activeOperationMillis": 5000})
++        self.assertEqual((launcher.OUTER_MS, launcher.CLEANUP_MS, launcher.FINAL_RESERVE_MS,
++                          launcher.CONTROLLER_MS, launcher.WINDOW_SECONDS),
++                         (180000, 15000, 20000, 220000, 240))
++
++
++class RendererCaptureChecks(unittest.IsolatedAsyncioTestCase):
++    async def run_capture(self, fault=None, *, binding=None):
++        root = owned_dir(self, fault or "positive")
++        session = MetricsSession(fault)
++        item = renderer_capture.RendererCapture(session, root,
++            binding=binding or {"pageUrl": URL, "terminalScopeVerified": True})
++        with patch.object(renderer_capture, "CAPTURE_SETUP_SECONDS", .25), \
++             patch.object(renderer_capture, "CAPTURE_FINISH_SECONDS", .25), \
++             patch.object(renderer_capture, "CAPTURE_CLEANUP_SECONDS", .10):
++            await item.start(time.monotonic() + 2.0)
++            item.binding["terminalScopeVerified"] = True
++            result = await item.finish()
++        return result, session, root, item
++
++    async def test_cpu_measured_positive_is_metrics_only(self):
++        result, session, root, _ = await self.run_capture()
++        self.assertEqual(result["status"], "CPU_MEASURED")
++        self.assertFalse(result["qualification"])
++        self.assertTrue(result["diagnosticOnly"])
++        self.assertEqual(result["metricDelta"]["ThreadTimeSeconds"], .25)
++        self.assertEqual(result["tracing"], "NOT_ATTEMPTED_METRICS_ONLY")
++        self.assertEqual(json.loads((root / "renderer-capture.json").read_text())["status"], "CPU_MEASURED")
++        assert_metrics_only(self, session)
++
++    async def test_setup_and_final_metric_failures_are_optional_cpu_unavailable(self):
++        faults = ("enable-error", "baseline-malformed", "baseline-timeout",
++                  "final-malformed", "final-timeout", "final-regression",
++                  "extreme-duration-delta")
++        for fault in faults:
++            with self.subTest(fault=fault):
++                result, session, _, item = await self.run_capture(fault)
++                self.assertEqual(result["status"], "CPU_UNAVAILABLE")
++                self.assertIsNone(result["metricDelta"])
++                self.assertEqual(result["cleanup"]["status"], "PASS")
++                self.assertTrue(result["errors"])
++                self.assertEqual([row["method"] for row in result["commandClocks"]].count(
++                    "Performance.disable"), 1)
++                self.assertTrue(item.started)
++                assert_metrics_only(self, session)
++
++    async def test_final_target_or_context_identity_change_is_fatal(self):
++        for fault in ("target-after-change", "context-after-change"):
++            with self.subTest(fault=fault):
++                root = owned_dir(self, fault)
++                session = MetricsSession(fault)
++                item = renderer_capture.RendererCapture(session, root, binding={"pageUrl": URL})
++                with patch.object(renderer_capture, "CAPTURE_SETUP_SECONDS", .25), \
++                     patch.object(renderer_capture, "CAPTURE_FINISH_SECONDS", .25), \
++                     patch.object(renderer_capture, "CAPTURE_CLEANUP_SECONDS", .10):
++                    await item.start(time.monotonic() + 2.0)
++                    item.binding["terminalScopeVerified"] = True
++                    result = await item.finish()
++                self.assertEqual(result["status"], "FAIL_CAPTURE")
++                self.assertIsNone(result["metricDelta"])
++                self.assertTrue(result["fatalErrors"])
++                assert_metrics_only(self, session)
++
++    async def test_initial_target_identity_change_is_rejected_before_enable(self):
++        root = owned_dir(self, "target-before-enable")
++        session = MetricsSession("target-frame")
++        item = renderer_capture.RendererCapture(session, root, binding={
++            "pageUrl": URL, "attachedDocument": {"frameId": "frame"}})
++        with patch.object(renderer_capture, "CAPTURE_SETUP_SECONDS", .25), \
++             patch.object(renderer_capture, "CAPTURE_CLEANUP_SECONDS", .10):
++            with self.assertRaises(renderer_capture.CaptureIdentityError):
++                await item.start(time.monotonic() + 2.0)
++        self.assertIsNone(item.deltas)
++        self.assertNotIn("Performance.enable", [method for method, _ in session.calls])
++        assert_metrics_only(self, session)
++
++    async def test_disable_cleanup_failure_is_strict_capture_failure(self):
++        result, session, _, _ = await self.run_capture("disable-error")
++        self.assertEqual(result["status"], "FAIL_CAPTURE")
++        self.assertEqual(result["cleanup"]["status"], "FAIL")
++        self.assertFalse(result["cleanup"]["performanceDisabled"])
++        self.assertEqual(result["metricDelta"]["ThreadTimeSeconds"], .25)
++        self.assertEqual(result["cleanup"]["errors"][0]["phase"], "Performance.disable")
++        self.assertIn("synthetic disable cleanup failure", result["cleanup"]["errors"][0]["message"])
++        assert_metrics_only(self, session)
++
++
++class PinnedRouteScopeChecks(unittest.IsolatedAsyncioTestCase):
++    def setUp(self):
++        self.root = owned_dir(self, "route-fixtures")
++
++    async def make_observer(self, name, fault=None):
++        root = self.root / name
+         root.mkdir()
+-        session = Session(fault)
+-        item = capture.RendererCapture(session, root, binding={"pageUrl": URL,
+-            "terminalScopeVerified": terminal})
+-        try:
+-            await item.start(time.monotonic() + 1)
+-        except Exception as error:
+-            item.error("setup", error)
+-        # Three 50ms cleanup opportunities avoid using 10ms subdeadlines on the
+-        # selected Windows event loop. The .2s fake stall still MUST exceed the
+-        # .15s operation budget; cleanup commands and the elapsed cap stay required.
+-        with patch.object(capture, "CAPTURE_FINISH_SECONDS", .3), \
+-             patch.object(capture, "CAPTURE_CLEANUP_SECONDS", .15), \
+-             patch.object(capture, "MAX_TRACE_BYTES", 2 * capture.READ_BYTES):
+-            result = await item.finish()
+-        self.assertFalse(result["qualification"])
+-        self.assertEqual(result["traceContentAudit"], "NOT_RUN")
+-        self.assertEqual(item.listeners, [])
+-        self.assertLess(result["finishElapsedMs"], 500)
+-        if fault:
+-            self.assertEqual(result["status"], "FAIL_CAPTURE")
+-            self.assertTrue(result["errors"])
+-        return result, session, root, item
+-
+-    async def test_positive(self):
+-        result, session, root, item = await self.execute()
+-        self.assertEqual(result["status"], "PASS_CAPTURE_ONLY")
+-        self.assertEqual(result["metricDelta"]["TimestampSeconds"], 1.0)
+-        self.assertEqual(result["metricDelta"]["ThreadTimeSeconds"], .25)
+-        self.assertEqual((root / "renderer-trace.json").read_bytes(), session.trace)
+-        self.assertEqual(result["traceBytes"], len(session.trace))
+-        methods = [row[0] for row in session.calls]
+-        self.assertLess(methods.index("IO.close"), methods.index("Performance.disable"))
+-        self.assertIsNone(await item.finish())
+-        self.assertEqual(methods.count("Tracing.end"), 1)
+-
+-    async def test_unsealed_terminal(self):
+-        result, _, _, _ = await self.execute(terminal=False)
+-        self.assertEqual(result["status"], "FAIL_CAPTURE")
+-        self.assertIn("stable attachment", result["errors"][0]["message"])
+-
+-
+-def add_capture_negative(fault):
+-    async def check(self):
+-        result, session, _, _ = await self.execute(fault)
+-        if fault not in ("target-url", "categories", "enable"):
+-            self.assertIn("Tracing.end", [row[0] for row in session.calls])
+-        if fault == "completion-timeout":
+-            self.assertLess(result["finishElapsedMs"], 500)
+-        if fault in ("metric-timeout", "stream-timeout"):
+-            methods = [row[0] for row in session.calls]
+-            self.assertIn("IO.close", methods)
+-            self.assertIn("Performance.disable", methods)
+-    setattr(CaptureChecks, "test_" + fault.replace("-", "_"), check)
+-
+-
+-for FAULT in ("target-change", "target-url", "categories", "enable", "start", "buffer", "regression",
+-              "missing-metric", "end", "loss", "missing-loss", "no-stream", "format", "compression",
+-              "duplicate-completion", "read", "base64", "oversize", "no-progress", "empty", "flags",
+-              "no-eof", "close", "disable", "listener-close", "completion-timeout"):
+-    add_capture_negative(FAULT)
+-for FAULT in ("metric-timeout", "stream-timeout"):
+-    add_capture_negative(FAULT)
+-
+-
+-class CategoryChecks(unittest.TestCase):
+-    # Independent required contract and primary-source group fixtures, rather
+-    # than deriving expected membership from the implementation under test.
+-    required = ["devtools.timeline", "v8", "v8.execute", "toplevel", "disabled-by-default-v8.gc"]
+-    grouped = ["devtools.timeline,v8", "v8.execute,toplevel", "disabled-by-default-v8.gc"]
+-
+-    def test_exact_preserves_order_duplicates(self):
+-        values = ["unrelated", "v8", "devtools.timeline", "v8.execute", "toplevel",
+-                  "disabled-by-default-v8.gc", "v8"]
+-        row = capture.category_preflight({"categories": values})
+-        self.assertEqual(row["status"], "REQUIREMENTS_ENUMERATED")
+-        self.assertEqual(row["requiredCategories"], self.required)
+-        self.assertEqual(row["returnedCategories"], values)
+-        self.assertTrue(row["returnedEvidenceComplete"])
+-        self.assertEqual(row["missingRequirements"], [])
+-        self.assertTrue(all(item["matchKind"] == "EXACT" for item in row["matches"]))
+-
+-    def test_explicit_comma_groups(self):
+-        row = capture.category_preflight({"categories": self.grouped})
+-        self.assertEqual(row["status"], "REQUIREMENTS_ENUMERATED")
+-        self.assertEqual(row["returnedCategories"], self.grouped)
+-        self.assertEqual([item["returnedEntryIndex"] for item in row["matches"]], [0, 0, 1, 1, 2])
+-        self.assertEqual(row["matches"][0]["matchKind"], "GROUP_ATOM")
+-
+-    def test_each_requirement_stays_required(self):
+-        for required in self.required:
+-            with self.subTest(required=required):
+-                values = [value for value in self.required if value != required]
+-                row = capture.category_preflight({"categories": values})
+-                self.assertEqual(row["status"], "MISSING_REQUIREMENTS")
+-                self.assertEqual(row["missingRequirements"], [required])
+-                self.assertEqual(row["returnedCategories"], values)
+-
+-    def test_no_alias_case_substring_or_wildcard_support(self):
+-        values = ["DEVTOOLS.TIMELINE", "v8*", "v8.execute.more", "toplevel.flow",
+-                  "disabled-by-default-v8.gc_extra"]
+-        row = capture.category_preflight({"categories": values})
+-        self.assertEqual(row["status"], "MISSING_REQUIREMENTS")
+-        self.assertEqual(row["missingRequirements"], self.required)
+-
+-    def test_no_whitespace_normalization(self):
+-        row = capture.category_preflight({"categories": ["devtools.timeline, v8",
+-            "v8.execute,toplevel", "disabled-by-default-v8.gc"]})
+-        self.assertEqual(row["missingRequirements"], ["v8"])
+-
+-    def test_empty_list_explains_all_missing(self):
+-        row = capture.category_preflight({"categories": []})
+-        self.assertEqual(row["missingRequirements"], self.required)
+-        self.assertEqual(row["returnedCategories"], [])
+-        self.assertTrue(row["returnedEvidenceComplete"])
+-
+-    def test_malformed_response_is_unknown_membership(self):
+-        for response in (None, [], {}, {"categories": None}, {"categories": "v8"},
+-                         {"categories": [1]}, {"categories": [True]}):
+-            with self.subTest(response=response):
+-                row = capture.category_preflight(response)
+-                self.assertEqual(row["status"], "INVALID_RESPONSE")
+-                self.assertIsNone(row["missingRequirements"])
+-                self.assertFalse(row["returnedEvidenceComplete"])
+-                self.assertTrue(row["errors"])
+-
+-    def test_empty_group_retains_response_but_refuses_membership(self):
+-        values = self.required + ["a,,b"]
+-        row = capture.category_preflight({"categories": values})
+-        self.assertEqual(row["status"], "INVALID_RESPONSE")
+-        self.assertEqual(row["returnedCategories"], values)
+-        self.assertIsNone(row["missingRequirements"])
+-
+-    def test_category_bounds(self):
+-        cases = [["x"] * 4097, ["x" * 1025], ["x" * 1024] * 257,
+-                 ["\u00e9" * 513]]
+-        for values in cases:
+-            with self.subTest(count=len(values)):
+-                row = capture.category_preflight({"categories": values})
+-                self.assertEqual(row["status"], "INVALID_RESPONSE")
+-                self.assertFalse(row["returnedEvidenceComplete"])
+-                self.assertIsNone(row["missingRequirements"])
+-
+-    def test_invalid_utf8_is_explained(self):
+-        row = capture.category_preflight({"categories": ["\ud800"]})
+-        self.assertEqual(row["status"], "INVALID_RESPONSE")
+-        self.assertIn("not valid UTF-8", row["errors"][0])
+-
+-
+-class CategoryLifecycleChecks(unittest.IsolatedAsyncioTestCase):
+-    async def test_missing_saved_before_fail_closed(self):
+-        class MissingGC(Session):
+-            async def send(self, method, params):
+-                if method == "Tracing.getCategories":
+-                    self.calls.append((method, params))
+-                    return {"categories": ["devtools.timeline", "v8", "v8.execute", "toplevel"]}
+-                return await super().send(method, params)
+-        root = ROOT / self._testMethodName
+-        root.mkdir()
+-        session = MissingGC()
+-        item = capture.RendererCapture(session, root, binding={"pageUrl": URL})
+-        with self.assertRaisesRegex(ValueError, "MISSING_REQUIREMENTS: disabled-by-default-v8.gc"):
+-            await item.start(time.monotonic() + 1)
+-        receipt = json.loads((root / "renderer-category-preflight.json").read_text())
+-        self.assertEqual(receipt["categoryPreflight"]["returnedCategories"],
+-                         ["devtools.timeline", "v8", "v8.execute", "toplevel"])
+-        self.assertEqual(receipt["categoryPreflight"]["missingRequirements"], ["disabled-by-default-v8.gc"])
+-        self.assertNotIn("Performance.enable", [row[0] for row in session.calls])
+-        self.assertNotIn("Tracing.start", [row[0] for row in session.calls])
+-        result = await item.finish()
+-        self.assertEqual(result["status"], "FAIL_CAPTURE")
+-        self.assertEqual(result["categoryPreflight"], receipt["categoryPreflight"])
+-        self.assertEqual(session.listeners, {})
+-
+-    async def test_group_acceptance_keeps_filters_and_content_unknown(self):
+-        class Groups(Session):
+-            async def send(self, method, params):
+-                if method == "Tracing.getCategories":
+-                    self.calls.append((method, params))
+-                    return {"categories": ["devtools.timeline,v8", "v8.execute,toplevel",
+-                                           "disabled-by-default-v8.gc"]}
+-                return await super().send(method, params)
+-        root = ROOT / self._testMethodName
+-        root.mkdir()
+-        session = Groups()
+-        item = capture.RendererCapture(session, root, binding={"pageUrl": URL, "terminalScopeVerified": True})
+-        await item.start(time.monotonic() + 1)
+-        start = next(params for method, params in session.calls if method == "Tracing.start")
+-        self.assertEqual(start["traceConfig"]["includedCategories"], CategoryChecks.required)
+-        result = await item.finish()
+-        self.assertEqual(result["status"], "PASS_CAPTURE_ONLY")
+-        self.assertEqual(result["traceContentAudit"], "NOT_RUN")
+-        self.assertEqual(result["categoryPreflight"]["status"], "REQUIREMENTS_ENUMERATED")
+-        self.assertEqual(session.listeners, {})
+-
+-    async def test_existing_category_receipt_not_overwritten(self):
+-        root = ROOT / self._testMethodName
+-        root.mkdir()
+-        receipt = root / "renderer-category-preflight.json"
+-        receipt.write_text("preserved fixture")
+-        session = Session()
+-        item = capture.RendererCapture(session, root, binding={"pageUrl": URL})
+-        with self.assertRaises(FileExistsError):
+-            await item.start(time.monotonic() + 1)
+-        self.assertEqual(receipt.read_text(), "preserved fixture")
+-        self.assertNotIn("Performance.enable", [row[0] for row in session.calls])
+-        await item.finish()
+-        self.assertEqual(session.listeners, {})
+-
+-
+-class MetricChecks(unittest.TestCase):
+-    def test_missing(self):
+-        with self.assertRaises(ValueError):
+-            capture.metric_values({"metrics": []})
+-
+-    def test_duplicate(self):
+-        row = metrics()
+-        row["metrics"].append(row["metrics"][0])
+-        with self.assertRaises(ValueError):
+-            capture.metric_values(row)
+-
+-    def test_bool(self):
+-        row = metrics(thread=True)
+-        with self.assertRaises(ValueError):
+-            capture.metric_values(row)
+-
+-    def test_nan(self):
+-        with self.assertRaises(ValueError):
+-            capture.metric_values(metrics(thread=float("nan")))
+-
+-    def test_no_clock_progress(self):
+-        value = capture.metric_values(metrics())
+-        with self.assertRaises(ValueError):
+-            capture.metric_delta(value, value)
+-
+-    def test_no_zero_substitution(self):
+-        row = metrics()
+-        row["metrics"] = [item for item in row["metrics"] if item["name"] != "ThreadTime"]
+-        with self.assertRaises(ValueError):
+-            capture.metric_values(row)
+-
+-
+-class RouteChecks(unittest.IsolatedAsyncioTestCase):
+-    async def make(self, fault=None):
+-        root = ROOT / self._testMethodName
+-        root.mkdir()
+-        host = wrapper.imported(Path(__file__).parent / "headful_attribute_host.py",
+-                                "root75_fixture_actual_r4_owner", wrapper.HOST_SHA)
+-        wrapper.install(host, root)
++        host = instrumented_host.imported(HOST_PATH, "root75_offline_host_" + name,
++                                          instrumented_host.HOST_SHA)
++        captures = instrumented_host.install(host, root)
++
+         class Page:
+-            url = URL
+-            main_frame = object()
++            def __init__(self):
++                self.url = URL
++                self.main_frame = object()
+             async def unroute(self, pattern, handler):
+-                pass
++                return None
++
+         page = Page()
+-        item = host.HtmlAttributeObserver(page, URL, "data-tsj-q30-normal-state",
+-                                          time.monotonic() + 2, [])
+-        item.session = Session(fault)
++        item = host.HtmlAttributeObserver(page, URL, ATTRIBUTE, time.monotonic() + 3.0, [])
++        item.session = MetricsSession(fault, item)
+         item.navigation_epoch = 1
+         item.document_scope = {"frameId": "frame", "loaderId": "loader", "pageUrl": URL,
+                                "documentBackend": 2, "htmlBackend": 4}
+         item.document_id = item.document_backend = 2
+         item.html_id = item.html_backend = 4
++        item.state = STATE
+         item.html_ready.set()
+-        class Request:
+-            frame = page.main_frame
+-            resource_type = "script"
++
+         class Route:
+-            request = Request()
+             def __init__(self):
++                self.request = type("Request", (), {"frame": page.main_frame,
++                    "resource_type": "script"})()
+                 self.actions = []
+             async def continue_(self):
+                 self.actions.append("continue")
+             async def abort(self):
+                 self.actions.append("abort")
+-                if fault == "abort-failure":
+-                    raise RuntimeError("original abort failure")
+-        return item, Route(), root
+-
+-    async def test_original_owner_positive(self):
+-        item, route, root = await self.make()
++
++        return host, item, Route(), captures, root
++
++    async def test_pinned_route_scope_terminal_check_and_cleanup(self):
++        _, item, route, captures, root = await self.make_observer("positive")
+         await item.hold_compiled_script(route)
+         self.assertEqual(route.actions, ["continue"])
+-        self.assertTrue(item.capture.started)
+-        await item.verify_terminal_scope(dict(item.document_scope), 1, "SCREEN_DONE:fixture", 0)
++        self.assertEqual(item.script_attachment["generation"], 1)
++        await item.verify_terminal_scope(dict(item.document_scope), 1, STATE, 0)
+         self.assertTrue(item.terminal_verified)
+         await item.close()
+         self.assertEqual(item.errors, [])
+-        self.assertEqual(json.loads((root / "renderer-capture.json").read_text())["status"],
+-                         "PASS_CAPTURE_ONLY")
+-        methods = [row[0] for row in item.session.calls]
++        self.assertFalse(item.route_tasks)
++        receipt = json.loads((root / "renderer-capture.json").read_text())
++        self.assertEqual(receipt["status"], "CPU_MEASURED")
++        self.assertEqual(captures[0].binding["terminalScope"]["generationAfter"], 1)
++        methods = [method for method, _ in item.session.calls]
+         self.assertLess(methods.index("Performance.disable"), methods.index("detach"))
+-        self.assertFalse(item.route_tasks)
+-
+-    async def test_setup_failure_releases_original_route(self):
+-        item, route, _ = await self.make("categories")
++        assert_metrics_only(self, item.session)
++
++    async def test_optional_metric_errors_continue_original_route_once(self):
++        faults = ("enable-error", "baseline-malformed", "baseline-timeout",
++                  "final-malformed", "final-timeout", "final-regression",
++                  "extreme-duration-delta")
++        with patch.object(renderer_capture, "CAPTURE_SETUP_SECONDS", .25), \
++             patch.object(renderer_capture, "CAPTURE_FINISH_SECONDS", .25), \
++             patch.object(renderer_capture, "CAPTURE_CLEANUP_SECONDS", .10):
++            for index, fault in enumerate(faults):
++                with self.subTest(fault=fault):
++                    _, item, route, _, root = await self.make_observer("optional-" + str(index), fault)
++                    await item.hold_compiled_script(route)
++                    self.assertEqual(route.actions, ["continue"])
++                    await item.verify_terminal_scope(dict(item.document_scope), 1, STATE, 0)
++                    await item.close()
++                    self.assertEqual(route.actions, ["continue"])
++                    self.assertFalse(item.route_tasks)
++                    self.assertEqual(item.errors, [])
++                    receipt = json.loads((root / "renderer-capture.json").read_text())
++                    self.assertEqual(receipt["status"], "CPU_UNAVAILABLE")
++                    self.assertEqual(receipt["cleanup"]["status"], "PASS")
++                    assert_metrics_only(self, item.session)
++
++    async def test_target_frame_loader_generation_and_url_mismatches_abort_once(self):
++        faults = ("target-frame", "target-url", "route-frame-change", "route-loader-change",
++                  "route-generation-change", "route-url-change")
++        for index, fault in enumerate(faults):
++            with self.subTest(fault=fault):
++                _, item, route, _, root = await self.make_observer("identity-" + str(index), fault)
++                await item.hold_compiled_script(route)
++                self.assertEqual(route.actions, ["abort"])
++                self.assertFalse(item.route_tasks)
++                await item.close()
++                receipt = json.loads((root / "renderer-capture.json").read_text())
++                self.assertEqual(receipt["status"], "FAIL_CAPTURE")
++                self.assertIsNone(receipt["metricDelta"])
++                assert_metrics_only(self, item.session)
++
++    async def test_original_owner_aborts_once_on_attachment_drift_deadline_or_cancel(self):
++        for index, drift in enumerate(("frame", "loader", "generation", "url")):
++            with self.subTest(drift=drift):
++                _, item, route, captures, _ = await self.make_observer("owner-drift-" + str(index))
++                item.html_ready.clear()
++                task = asyncio.create_task(item.hold_compiled_script(route))
++                await asyncio.sleep(0)
++                if drift == "frame":
++                    item.document_scope = {**item.document_scope, "frameId": "successor-frame"}
++                elif drift == "loader":
++                    item.document_scope = {**item.document_scope, "loaderId": "successor-loader"}
++                elif drift == "generation":
++                    item.navigation_epoch += 1
++                else:
++                    item.page.url = URL + "#successor"
++                item.html_ready.set()
++                await task
++                self.assertEqual(route.actions, ["abort"])
++                self.assertFalse(item.route_tasks)
++                self.assertEqual(captures, [])
++                await item.close()
++
++        _, item, route, captures, _ = await self.make_observer("expired-route")
++        item.deadline = time.monotonic() - 1.0
++        item.html_ready.clear()
+         await item.hold_compiled_script(route)
+         self.assertEqual(route.actions, ["abort"])
+-        self.assertEqual(item.errors[0]["phase"], "compiled-script-attachment")
++        self.assertFalse(item.route_tasks)
++        self.assertEqual(captures, [])
+         await item.close()
++
++        _, item, route, captures, _ = await self.make_observer("cancel-route")
++        item.html_ready.clear()
++        task = asyncio.create_task(item.hold_compiled_script(route))
++        await asyncio.sleep(0)
++        task.cancel()
++        with self.assertRaises(asyncio.CancelledError):
++            await task
++        self.assertEqual(route.actions, ["abort"])
+         self.assertFalse(item.route_tasks)
+-
+-    async def test_setup_scope_change_releases_original_route(self):
+-        item, route, _ = await self.make("scope-change")
++        self.assertEqual(captures, [])
++        await item.close()
++
++    async def test_expired_observer_uses_verified_boundary_scope_without_terminal_claim(self):
++        _, item, route, captures, root = await self.make_observer("timeout-boundary")
+         await item.hold_compiled_script(route)
+-        self.assertEqual(route.actions, ["abort"])
+-        self.assertIn("crossed held-script", item.errors[0]["message"])
++        self.assertEqual(route.actions, ["continue"])
++        item.deadline = time.monotonic() - 1.0
++        with patch.object(renderer_capture, "CAPTURE_SETUP_SECONDS", .25), \
++             patch.object(renderer_capture, "CAPTURE_FINISH_SECONDS", .25), \
++             patch.object(renderer_capture, "CAPTURE_CLEANUP_SECONDS", .10):
++            await item.close()
++        receipt = json.loads((root / "renderer-capture.json").read_text())
++        self.assertFalse(receipt["binding"]["terminalScopeVerified"])
++        self.assertEqual(receipt["binding"]["boundaryKind"], "OBSERVER_TIMEOUT")
++        self.assertTrue(receipt["binding"]["boundaryScopeVerified"])
++        self.assertEqual(receipt["binding"]["boundaryScope"]["generation"], 1)
++        self.assertEqual(receipt["status"], "CPU_MEASURED")
++        self.assertEqual(receipt["cleanup"]["status"], "PASS")
++        self.assertEqual(route.actions, ["continue"])
++        self.assertEqual(item.errors, [])
++        self.assertEqual(captures[0].binding["boundaryScope"]["loaderId"], "loader")
++        assert_metrics_only(self, item.session)
++
++    async def test_timeout_boundary_scope_drift_is_fatal_and_unverified(self):
++        _, item, route, _, root = await self.make_observer("timeout-boundary-drift", "boundary-loader-change")
++        await item.hold_compiled_script(route)
++        item.deadline = time.monotonic() - 1.0
++        with patch.object(renderer_capture, "CAPTURE_SETUP_SECONDS", .25), \
++             patch.object(renderer_capture, "CAPTURE_FINISH_SECONDS", .25), \
++             patch.object(renderer_capture, "CAPTURE_CLEANUP_SECONDS", .10):
++            await item.close()
++        receipt = json.loads((root / "renderer-capture.json").read_text())
++        self.assertFalse(receipt["binding"]["terminalScopeVerified"])
++        self.assertFalse(receipt["binding"]["boundaryScopeVerified"])
++        self.assertEqual(receipt["status"], "FAIL_CAPTURE")
++        self.assertTrue(receipt["fatalErrors"])
++        self.assertEqual(route.actions, ["continue"])
++        self.assertTrue(any(row["phase"] == "renderer-diagnostic-capture" for row in item.errors))
++        assert_metrics_only(self, item.session)
++
++    async def test_final_counter_sample_rechecks_exact_loader_scope(self):
++        _, item, route, _, root = await self.make_observer("final-metric-scope", "final-scope-loader-change")
++        await item.hold_compiled_script(route)
++        await item.verify_terminal_scope(dict(item.document_scope), 1, STATE, 0)
+         await item.close()
+-
+-    async def test_setup_cancellation_releases_original_route(self):
+-        item, route, _ = await self.make()
+-        entered = asyncio.Event()
+-        async def pending(*args):
+-            entered.set()
+-            await asyncio.Event().wait()
+-        with patch.object(capture.RendererCapture, "start", pending):
+-            task = asyncio.create_task(item.hold_compiled_script(route))
+-            await entered.wait()
+-            task.cancel()
+-            with self.assertRaises(asyncio.CancelledError):
+-                await task
+-        self.assertEqual(route.actions, ["abort"])
+-        await item.close()
+-        self.assertFalse(item.route_tasks)
+-
+-    async def test_failed_original_abort_recorded_once(self):
+-        item, route, _ = await self.make("abort-failure")
+-        with patch.object(capture.RendererCapture, "start", side_effect=RuntimeError("setup failure")):
+-            await item.hold_compiled_script(route)
+-        self.assertEqual(route.actions, ["abort"])
+-        self.assertIn("diagnostic-setup-route-abort", [row["phase"] for row in item.errors])
+-        await item.close()
+-
+-
+-class GrantChecks(unittest.TestCase):
++        receipt = json.loads((root / "renderer-capture.json").read_text())
++        self.assertEqual(route.actions, ["continue"])
++        self.assertEqual(receipt["status"], "FAIL_CAPTURE")
++        self.assertIsNone(receipt["metricDelta"])
++        self.assertTrue(receipt["fatalErrors"])
++        self.assertFalse(receipt["binding"].get("finalMetricScopeVerified", False))
++        self.assertEqual(receipt["cleanup"]["status"], "PASS")
++        assert_metrics_only(self, item.session)
++
++
++def host_receipt(outcome="PASS"):
++    return {"outcome": outcome, "errors": [], "inputAudit": {"status": "PASS"},
++        "cleanup": {"status": "PASS", "serverStopped": True, "ownedSurvivors": [], "errors": []}}
++
++
++def capture_receipt(status="CPU_UNAVAILABLE", cleanup="PASS", **binding):
++    return {"status": status, "cleanup": {"status": cleanup},
++            "rendererCapability": "unknown", "binding": binding}
++
++
++def waited(exit_code=0):
++    return {"reason": None, "exitCode": exit_code,
++            "cleanup": {"cleanupVerified": True, "drainsComplete": True}}
++
++
++def good_drains():
++    return [{"overflow": False, "errors": [], "readerAlive": False, "streamClosed": True}]
++
++
++def clean_timeout_host():
++    case = {"outcome": "TIMEOUT", "timedOut": True, "terminalReached": False,
++        "navigationError": None, "case": {"path": launcher.PATH, "timeoutSeconds": 150},
++        "pageErrors": [], "httpErrors": [], "consoleErrors": [], "observerErrors": [],
++        "listenerCleanupErrors": [],
++        "attributeReadErrors": [
++            {"type": "DeadlineExpired", "attribute": "data-tsj-q30-normal-state"},
++            {"type": "DeadlineExpired", "attribute": "data-tsj-q30-normal-report"}]}
++    host = host_receipt("FAIL")
++    host["cases"] = [case]
++    return host
++
++
++class StatusChecks(unittest.TestCase):
++    def test_completed_status_accepts_cpu_unavailable_for_app_pass_and_nonpass(self):
++        capture = capture_receipt()
++        status = launcher.completed_status(host_receipt(), capture, waited(), good_drains(),
++                                           {"status": "APP_PASS"})
++        self.assertEqual(status, "DIAGNOSTIC_COMPLETE")
++        status = launcher.completed_status(host_receipt(), capture, waited(), good_drains(),
++                                           {"status": "APP_NONPASS"})
++        self.assertEqual(status, "DIAGNOSTIC_COMPLETE_APP_NONPASS")
++
++    def test_completed_status_requires_capture_host_input_and_process_cleanup(self):
++        host, capture = host_receipt(), capture_receipt()
++        self.assertEqual(launcher.completed_status(host, capture, waited(), good_drains(),
++                         {"status": "APP_PASS"}), "DIAGNOSTIC_COMPLETE")
++        broken_capture = capture_receipt(cleanup="FAIL")
++        self.assertEqual(launcher.completed_status(host, broken_capture, waited(), good_drains(),
++                         {"status": "APP_PASS"}), "DIAGNOSTIC_FAIL")
++        broken_host = host_receipt()
++        broken_host["cleanup"]["errors"] = ["synthetic cleanup failure"]
++        self.assertEqual(launcher.completed_status(broken_host, capture, waited(), good_drains(),
++                         {"status": "APP_PASS"}), "DIAGNOSTIC_FAIL")
++        reported_host_error = host_receipt()
++        reported_host_error["errors"] = ["synthetic observation failure"]
++        self.assertEqual(launcher.completed_status(reported_host_error, capture, waited(), good_drains(),
++                         {"status": "APP_PASS"}), "DIAGNOSTIC_FAIL")
++        broken_inputs = host_receipt()
++        broken_inputs["inputAudit"]["status"] = "FAIL"
++        self.assertEqual(launcher.completed_status(broken_inputs, capture, waited(), good_drains(),
++                         {"status": "APP_PASS"}), "DIAGNOSTIC_FAIL")
++        self.assertEqual(launcher.completed_status(host, capture, waited(1), good_drains(),
++                         {"status": "APP_PASS"}), "DIAGNOSTIC_FAIL")
++        self.assertEqual(launcher.completed_status(host, capture, waited(),
++                         [{"overflow": True, "errors": [], "readerAlive": False, "streamClosed": True}],
++                         {"status": "APP_PASS"}), "DIAGNOSTIC_FAIL")
++
++    def test_clean_timeout_without_report_is_classified_and_bad_boundary_is_rejected(self):
++        capture = capture_receipt(boundaryKind="OBSERVER_TIMEOUT", boundaryScopeVerified=True)
++        status = launcher.completed_status(clean_timeout_host(), capture, waited(1), good_drains(),
++                                           {"status": "REPORT_UNAVAILABLE"})
++        self.assertEqual(status, "DIAGNOSTIC_OBSERVER_TIMEOUT_REPORT_UNAVAILABLE")
++        failed_scope = capture_receipt(boundaryKind="OBSERVER_TIMEOUT", boundaryScopeVerified=False)
++        status = launcher.completed_status(clean_timeout_host(), failed_scope, waited(1), good_drains(),
++                                           {"status": "REPORT_UNAVAILABLE"})
++        self.assertEqual(status, "DIAGNOSTIC_FAIL")
++        host = clean_timeout_host()
++        host["cases"][0]["observerErrors"] = ["synthetic observer failure"]
++        status = launcher.completed_status(host, capture, waited(1), good_drains(),
++                                           {"status": "APP_NONPASS"})
++        self.assertEqual(status, "DIAGNOSTIC_FAIL")
++
++    def test_controller_status_accepts_cpu_unavailable_app_nonpass_and_clean_timeout(self):
++        summary = {"status": "DIAGNOSTIC_COMPLETE_APP_NONPASS",
++                   "inputBindingUnchanged": True, "errors": [],
++                   "rendererCapture": "CPU_UNAVAILABLE", "captureCleanup": "PASS"}
++        self.assertEqual(launcher.controller_status(waited(1), summary),
++                         "CONTROLLER_COMPLETE_APP_NONPASS_DIAGNOSTIC_ONLY")
++        timeout = {**summary, "status": "DIAGNOSTIC_OBSERVER_TIMEOUT_REPORT_UNAVAILABLE"}
++        self.assertEqual(launcher.controller_status(waited(1), timeout),
++                         "CONTROLLER_COMPLETE_OBSERVER_TIMEOUT_REPORT_UNAVAILABLE")
++
++    def test_controller_status_fails_on_timeout_missing_receipt_inputs_or_cleanup(self):
++        good = {"status": "DIAGNOSTIC_COMPLETE", "inputBindingUnchanged": True,
++                "errors": [], "rendererCapture": "CPU_UNAVAILABLE", "captureCleanup": "PASS"}
++        self.assertEqual(launcher.controller_status(waited(), good),
++                         "CONTROLLER_COMPLETE_DIAGNOSTIC_ONLY")
++        self.assertEqual(launcher.controller_status(waited(), None),
++                         "CONTROLLER_COMPLETE_WORKER_FAILURE")
++        self.assertEqual(launcher.controller_status(waited(), {**good, "inputBindingUnchanged": False}),
++                         "CONTROLLER_COMPLETE_WORKER_FAILURE")
++        self.assertEqual(launcher.controller_status(waited(), {**good, "errors": ["synthetic"]}),
++                         "CONTROLLER_COMPLETE_WORKER_FAILURE")
++        self.assertEqual(launcher.controller_status(waited(), {**good, "captureCleanup": "FAIL"}),
++                         "CONTROLLER_COMPLETE_WORKER_FAILURE")
++        failed = {"reason": "outer deadline", "exitCode": 1,
++                  "cleanup": {"cleanupVerified": True, "drainsComplete": True}}
++        self.assertEqual(launcher.controller_status(failed, good), "FAIL_CONTROLLER")
++
++
++class GrantAndFinalizationChecks(unittest.TestCase):
+     def setUp(self):
+         self.now = datetime(2026, 10, 4, 6, 0, 0, tzinfo=timezone.utc)
+         self.digest = "f" * 64
+-        self.grant = {"schema": 1, "parentReference": "synthetic-fixture", "windowGranted": True,
+-            "quietDesktopConfirmed": True, "candidateManifestSha256": self.digest,
+-            "windowStartUtc": "2026-10-04T06:00:00Z", "windowEndUtc": "2026-10-04T06:04:00Z",
+-            "maximumCases": 1, "qualification": False, "limits": dict(launcher.LIMITS)}
+-
+-    def test_positive_validation_only(self):
++        self.grant = {"schema": 1, "parentReference": "synthetic-fixture",
++            "windowGranted": True, "quietDesktopConfirmed": True,
++            "candidateManifestSha256": self.digest, "windowStartUtc": "2026-10-04T06:00:00Z",
++            "windowEndUtc": "2026-10-04T06:04:00Z", "maximumCases": 1,
++            "qualification": False, "limits": dict(launcher.LIMITS)}
++
++    def test_grant_positive_and_fail_closed_contracts(self):
+         self.assertEqual(launcher.validate_grant(self.grant, self.digest, self.now),
+                          self.now + timedelta(seconds=240))
+-
+-    def test_missing_launch_grant_refused_before_audit(self):
+-        with patch.object(launcher, "audit", side_effect=AssertionError("must not audit/import")):
++        bad_grants = []
++        for key, value in (("windowGranted", False), ("quietDesktopConfirmed", False),
++                           ("qualification", True), ("maximumCases", 2)):
++            bad_grants.append({**self.grant, key: value})
++        bad_grants.append({**self.grant, "limits": {**launcher.LIMITS, "jobMillis": 90001}})
++        for grant in bad_grants:
++            with self.subTest(grant=grant):
++                with self.assertRaises(ValueError):
++                    launcher.validate_grant(grant, self.digest, self.now)
++        with self.assertRaises(ValueError):
++            launcher.validate_grant(self.grant, "a" * 64, self.now)
++        with self.assertRaises(ValueError):
++            launcher.validate_grant(self.grant, self.digest, self.now + timedelta(seconds=240))
++        with self.assertRaises(ValueError):
++            launcher.validate_grant(self.grant, self.digest, self.now + timedelta(seconds=26))
++
++    def test_launch_without_grant_refuses_before_audit(self):
++        with patch.object(launcher, "audit", side_effect=AssertionError("must refuse first")):
+             with self.assertRaisesRegex(ValueError, "parent grant"):
+                 launcher.main(["--repo", "unused", "--pointer", "unused", "--matched-helper", "unused",
+                     "--runner", "unused", "--r4-original", "unused", "--launch"])
+ 
+-    def test_expired(self):
+-        with self.assertRaises(ValueError):
+-            launcher.validate_grant(self.grant, self.digest, self.now + timedelta(seconds=240))
+-
+-    def test_insufficient_cleanup_reserve(self):
+-        with self.assertRaises(ValueError):
+-            launcher.validate_grant(self.grant, self.digest, self.now + timedelta(seconds=26))
+-
+-    def test_candidate_mismatch(self):
+-        with self.assertRaises(ValueError):
+-            launcher.validate_grant(self.grant, "a" * 64, self.now)
+-
+-    def test_multiple_cases(self):
+-        self.grant["maximumCases"] = 2
+-        with self.assertRaises(ValueError):
+-            launcher.validate_grant(self.grant, self.digest, self.now)
+-
+-    def test_no_window_grant(self):
+-        self.grant["windowGranted"] = False
+-        with self.assertRaises(ValueError):
+-            launcher.validate_grant(self.grant, self.digest, self.now)
+-
+-    def test_not_quiet(self):
+-        self.grant["quietDesktopConfirmed"] = False
+-        with self.assertRaises(ValueError):
+-            launcher.validate_grant(self.grant, self.digest, self.now)
+-
+-    def test_budget_change(self):
+-        self.grant["limits"]["jobMillis"] = 90001
+-        with self.assertRaises(ValueError):
+-            launcher.validate_grant(self.grant, self.digest, self.now)
+-
+-    def test_qualification(self):
+-        self.grant["qualification"] = True
+-        with self.assertRaises(ValueError):
+-            launcher.validate_grant(self.grant, self.digest, self.now)
+-
+-
+-class FinalizationChecks(unittest.TestCase):
+-    def test_expired_budget_before_file_read(self):
++    def test_strict_json_deadline_duplicate_nonfinite_and_size_checks(self):
++        root = owned_dir(self, "strict-json")
+         with self.assertRaisesRegex(ValueError, "reserve exhausted"):
+-            launcher.strict_json(ROOT / "absent.json", time.monotonic_ns() - 1)
+-
+-    def test_oversized_file_before_parse(self):
+-        path = ROOT / "oversized-sparse-fixture.json"
+-        with path.open("xb") as output:
++            launcher.strict_json(root / "absent.json", time.monotonic_ns() - 1)
++        duplicate = root / "duplicate.json"
++        duplicate.write_bytes(b'{"x":1,"x":2}')
++        with self.assertRaisesRegex(ValueError, "duplicate JSON"):
++            launcher.strict_json(duplicate)
++        nonfinite = root / "nonfinite.json"
++        nonfinite.write_bytes(b'{"x":NaN}')
++        with self.assertRaisesRegex(ValueError, "nonfinite"):
++            launcher.strict_json(nonfinite)
++        oversized = root / "oversized.json"
++        with oversized.open("xb") as output:
+             output.truncate(launcher.MAX_JSON_BYTES + 1)
+         with self.assertRaisesRegex(ValueError, "bounded regular"):
+-            launcher.strict_json(path)
+-
+-    def test_duplicate_json_rejection(self):
+-        path = ROOT / "duplicate-fixture.json"
+-        path.write_bytes(b'{"x":1,"x":2}')
+-        with self.assertRaisesRegex(ValueError, "duplicate JSON"):
+-            launcher.strict_json(path)
+-
+-    def test_nonfinite_json_rejection(self):
+-        path = ROOT / "nonfinite-fixture.json"
+-        path.write_bytes(b'{"x":NaN}')
+-        with self.assertRaisesRegex(ValueError, "nonfinite"):
+-            launcher.strict_json(path)
+-
+-    def test_hard_outer_scope(self):
+-        self.assertEqual(launcher.CONTROLLER_MS, 220000)
+-        self.assertLessEqual(launcher.CONTROLLER_MS + launcher.CLEANUP_MS,
+-                             launcher.WINDOW_SECONDS * 1000)
+-
+-    def test_host_budget_clamps_slow_preflight(self):
++            launcher.strict_json(oversized)
++
++    def test_host_budget_keeps_deadline_and_cleanup_reserves(self):
+         self.assertEqual(launcher.host_budget(220000000000, 10000000000), 174000)
+         self.assertEqual(launcher.host_budget(220000000000, 0), 180000)
+-
+-    def test_host_budget_refuses_late_start(self):
+         with self.assertRaisesRegex(ValueError, "insufficient controller"):
+             launcher.host_budget(220000000000, 120000000000)
+ 
+-    def test_complete_app_nonpass_not_controller_failure(self):
+-        waited = {"reason": None, "exitCode": 1,
+-                  "cleanup": {"cleanupVerified": True, "drainsComplete": True}}
+-        summary = {"status": "DIAGNOSTIC_CAPTURE_COMPLETE_APP_NONPASS", "inputBindingUnchanged": True,
+-                   "errors": [], "rendererCapture": "PASS_CAPTURE_ONLY"}
+-        self.assertEqual(launcher.controller_status(waited, summary),
+-                         "CONTROLLER_COMPLETE_APP_NONPASS_DIAGNOSTIC_ONLY")
+-        summary["inputBindingUnchanged"] = False
+-        self.assertEqual(launcher.controller_status(waited, summary), "CONTROLLER_COMPLETE_WORKER_FAILURE")
+-
+-    def test_controller_timeout_is_failure(self):
+-        waited = {"reason": "outer deadline", "exitCode": 1,
+-                  "cleanup": {"cleanupVerified": True, "drainsComplete": True}}
+-        self.assertEqual(launcher.controller_status(waited, None), "FAIL_CONTROLLER")
+-
+-    def test_controller_missing_summary_is_worker_failure(self):
+-        waited = {"reason": None, "exitCode": 1,
+-                  "cleanup": {"cleanupVerified": True, "drainsComplete": True}}
+-        self.assertEqual(launcher.controller_status(waited, None), "CONTROLLER_COMPLETE_WORKER_FAILURE")
++
++class FakeDrain:
++    def __init__(self):
++        self.count = 128
++        self.overflow = types.SimpleNamespace(is_set=lambda: False)
++        self.errors = []
++        self.thread = types.SimpleNamespace(is_alive=lambda: False)
++        self.streamClosed = True
++
++
++class FakeReader:
++    def __init__(self, app_status):
++        self.app_status = app_status
++
++    @staticmethod
++    def pairs(rows):
++        result = {}
++        for key, value in rows:
++            if key in result:
++                raise ValueError("duplicate synthetic JSON key")
++            result[key] = value
++        return result
++
++    @staticmethod
++    def bad_constant(value):
++        raise ValueError("nonfinite synthetic JSON constant: " + value)
++
++    def evaluate(self, report, raw, plan, plan_raw, *, acceptance_path):
++        return {"status": self.app_status, "syntheticFixture": True}
++
++
++class FakeKernel:
++    @staticmethod
++    def CloseHandle(_handle):
++        return True
++
++
++class FakeRunner:
++    def __init__(self, scenario, report, created_roots):
++        self.scenario = scenario
++        self.report = report
++        self.created_roots = created_roots
++        self.wait_calls = []
++
++    @staticmethod
++    def _api():
++        return FakeKernel()
++
++    def _spawn(self, _kernel, _config, argv, root):
++        output = Path(argv[argv.index("--output") + 1])
++        output.mkdir()
++        child = {"pid": 475, "creationTicks": 1, "image": "synthetic-fixture-only",
++                 "commandSha256": "a" * 64, "resumeNs": time.monotonic_ns(),
++                 "drains": [FakeDrain()], "job": None, "thread": None, "proc": None,
++                 "argv": argv, "root": root, "output": output}
++        self.created_roots.append(root)
++        return child
++
++    def _wait(self, _kernel, child, timeout_ms):
++        self.wait_calls.append(timeout_ms)
++        output = child["output"]
++        if self.scenario not in ("missing-report", "observer-timeout-report-unavailable"):
++            report_path = output / "cases/001-cold-75.report.json"
++            if self.scenario == "malformed-report":
++                report_path.parent.mkdir(parents=True, exist_ok=True)
++                report_path.write_text("{malformed fixture JSON", encoding="utf-8")
++            else:
++                write_json(report_path, self.report)
++        if self.scenario == "observer-timeout-report-unavailable":
++            host = clean_timeout_host()
++        elif self.scenario != "missing-host":
++            host = host_receipt()
++        if self.scenario != "missing-host":
++            write_json(output / "result.json", host)
++        if self.scenario not in ("missing-host", "missing-capture"):
++            binding = ({"boundaryKind": "OBSERVER_TIMEOUT", "boundaryScopeVerified": True}
++                       if self.scenario == "observer-timeout-report-unavailable" else {})
++            write_json(output / "renderer-capture.json",
++                       {"status": "CPU_UNAVAILABLE", "cleanup": {"status": "PASS"},
++                        "binding": binding})
++        exit_code = 1 if self.scenario == "observer-timeout-report-unavailable" else 0
++        return {"reason": None, "exitCode": exit_code,
++                "cleanup": {"cleanupVerified": True, "drainsComplete": True}}
++
++
++class LauncherLaunchChecks(unittest.TestCase):
++    def run_fake_launch(self, scenario):
++        root = owned_dir(self, scenario)
++        synthetic_here = root / "candidate"
++        synthetic_here.mkdir()
++        repo = root / "repo"
++        repo.mkdir()
++        runner_dir = root / "runner"
++        runner_dir.mkdir()
++        runner_path = runner_dir / "maintained_runner.py"
++        runner_path.write_text("# synthetic import boundary\n", encoding="utf-8")
++        receipts_path = runner_dir / "receipts.py"
++        receipts_path.write_text("# synthetic receipt import binding\n", encoding="utf-8")
++        receipts_module = types.ModuleType("receipts")
++        receipts_module.__file__ = str(receipts_path)
++        host_python = root / "python.exe"
++        host_python.write_bytes(b"synthetic fixture path; never executed")
++        deps = root / "deps"
++        (deps / "playwright").mkdir(parents=True)
++        (deps / "greenlet").mkdir()
++        app = root / "prepared-app"
++        app.mkdir()
++        plan, acceptance, grant_path = root / "plan.json", root / "acceptance.json", root / "grant.json"
++        if scenario != "missing-plan":
++            write_json(plan, {"synthetic": True})
++        write_json(acceptance, {"synthetic": True})
++        write_json(grant_path, {
++            "schema": 1, "parentReference": "synthetic-offline-fixture",
++            "windowGranted": True, "quietDesktopConfirmed": True,
++            "candidateManifestSha256": "f" * 64,
++            "windowStartUtc": "2026-10-04T06:00:00Z",
++            "windowEndUtc": "2026-10-04T06:04:00Z",
++            "maximumCases": 1, "qualification": False,
++            "limits": dict(launcher.LIMITS)})
++        report = {"rootSeed": "75", "applicationOutcome": "PASS", "terminalStage": "SCREEN_DONE",
++                  "generationElapsedMs": 1234.5, "workUnits": 640,
++                  "stages": [{"name": "generation", "elapsedMs": 1200.0}],
++                  "attempts": [{"number": 1, "outcome": "PASS"}]}
++        before = {"candidateManifestSha256": "f" * 64,
++                  "dependencies": {"reader": "synthetic-reader-pin"},
++                  "operationElapsedMs": 1.0, "phaseClocks": []}
++        after_template = {**before, "operationElapsedMs": 2.0,
++                          "phaseClocks": [{"phase": "synthetic-final-audit"}]}
++        created_roots = []
++        runner = FakeRunner(scenario, report, created_roots)
++        reader = FakeReader("APP_PASS")
++
++        def fake_imported(path, _name, _expected):
++            return reader if Path(path).name == "q30_scale_reader.py" else runner
++
++        def fake_audit(_args, _deadline=None):
++            return dict(after_template), {"synthetic": True}
++
++        def fake_mkdtemp(prefix):
++            path = synthetic_here / (prefix.strip("-") + "-owned")
++            path.mkdir()
++            return str(path)
++
++        args = types.SimpleNamespace(repo=repo, pointer=root / "pointer.json",
++            matched_helper=root / "matched.py", runner=runner_path, r4_original=root / "r4.py",
++            grant_json=grant_path, host_python=host_python, deps=deps,
++            controller_deadline_ns=time.monotonic_ns() + 240_000_000_000)
++        variant = {"app": app, "paths": {"plan": plan, "acceptance": acceptance}}
++        old_sys_path = list(sys.path)
++        try:
++            with patch.object(launcher, "HERE", synthetic_here), \
++                 patch.object(launcher, "imported", side_effect=fake_imported), \
++                 patch.object(launcher, "audit", side_effect=fake_audit), \
++                 patch.object(launcher, "validate_grant", return_value=None), \
++                 patch.object(launcher.sys, "platform", "win32"), \
++                 patch.dict(sys.modules, {"receipts": receipts_module}), \
++                 patch.object(launcher.tempfile, "mkdtemp", side_effect=fake_mkdtemp), \
++                 redirect_stdout(StringIO()):
++                status_code = launcher.launch(args, before, variant)
++        finally:
++            sys.path[:] = old_sys_path
++        self.assertEqual(len(created_roots), 1)
++        result_path = Path(created_roots[0]) / "diagnostic-result.json"
++        return status_code, json.loads(result_path.read_text(encoding="utf-8")), runner
++
++    def test_fake_launch_preserves_app_report_with_optional_cpu_unavailable(self):
++        code, result, runner = self.run_fake_launch("complete")
++        self.assertEqual(code, 0)
++        self.assertEqual(result["status"], "DIAGNOSTIC_COMPLETE")
++        self.assertEqual(result["rendererCapture"], "CPU_UNAVAILABLE")
++        self.assertEqual(result["captureCleanup"], "PASS")
++        self.assertTrue(result["inputBindingUnchanged"])
++        self.assertEqual(result["applicationAudit"]["status"], "APP_PASS")
++        self.assertEqual(result["phaseWallTimes"]["source"], "UNCHANGED_APP_REPORT")
++        self.assertEqual(result["phaseWallTimes"]["rootSeed"], "75")
++        self.assertEqual(result["phaseWallTimes"]["generationElapsedMs"], 1234.5)
++        self.assertTrue(result["appReportSha256"])
++        self.assertEqual(len(runner.wait_calls), 1)
++        self.assertEqual(runner.wait_calls[0], launcher.OUTER_MS)
++
++    def test_missing_host_or_capture_receipt_keeps_app_report_and_phase_rows(self):
++        for scenario in ("missing-host", "missing-capture"):
++            with self.subTest(scenario=scenario):
++                code, result, _ = self.run_fake_launch(scenario)
++                self.assertEqual(code, 1)
++                self.assertEqual(result["status"], "DIAGNOSTIC_FAIL")
++                self.assertTrue(result["errors"])
++                self.assertTrue(result["inputBindingUnchanged"])
++                self.assertEqual(result["applicationAudit"]["status"], "APP_PASS")
++                self.assertEqual(result["phaseWallTimes"]["source"], "UNCHANGED_APP_REPORT")
++                self.assertEqual(result["phaseWallTimes"]["rootSeed"], "75")
++                self.assertTrue(result["appReportSha256"])
++                self.assertEqual(result["rendererCapture"], "NOT_RUN")
++                self.assertEqual(result["captureCleanup"], "NOT_RUN")
++                if scenario == "missing-capture":
++                    self.assertEqual(result["hostObservation"]["outcome"], "PASS")
++                else:
++                    self.assertIsNone(result.get("hostObservation"))
++
++    def test_missing_app_report_survives_clean_timeout_classification(self):
++        code, result, _ = self.run_fake_launch("observer-timeout-report-unavailable")
++        self.assertEqual(code, 1)
++        self.assertEqual(result["status"], "DIAGNOSTIC_OBSERVER_TIMEOUT_REPORT_UNAVAILABLE")
++        self.assertEqual(result["applicationAudit"]["status"], "REPORT_UNAVAILABLE")
++        self.assertIsNone(result["phaseWallTimes"])
++        self.assertEqual(result["rendererCapture"], "CPU_UNAVAILABLE")
++        self.assertEqual(result["captureCleanup"], "PASS")
++        self.assertEqual(result["hostObservation"]["outcome"], "FAIL")
++        self.assertEqual(result["errors"], [])
++        self.assertTrue(result["inputBindingUnchanged"])
++        controller = launcher.controller_status(result["operation"], result)
++        self.assertEqual(controller, "CONTROLLER_COMPLETE_OBSERVER_TIMEOUT_REPORT_UNAVAILABLE")
++
++    def test_missing_plan_and_malformed_app_report_are_report_audit_failures(self):
++        for scenario in ("missing-plan", "malformed-report"):
++            with self.subTest(scenario=scenario):
++                code, result, _ = self.run_fake_launch(scenario)
++                self.assertEqual(code, 1)
++                self.assertEqual(result["status"], "DIAGNOSTIC_FAIL")
++                self.assertEqual(result["applicationAudit"]["status"], "FAIL_REPORT_AUDIT")
++                self.assertNotEqual(result["applicationAudit"]["status"], "REPORT_UNAVAILABLE")
++                self.assertEqual(result["rendererCapture"], "CPU_UNAVAILABLE")
++                self.assertEqual(result["captureCleanup"], "PASS")
++                self.assertTrue(result["errors"])
++                self.assertIsNone(result["phaseWallTimes"])
++                self.assertTrue(result["inputBindingUnchanged"])
++
+ 
+ if __name__ == "__main__":
+-    suite = unittest.defaultTestLoader.loadTestsFromModule(__import__(__name__))
++    suite = unittest.defaultTestLoader.loadTestsFromModule(sys.modules[__name__])
+     result = unittest.TextTestRunner(verbosity=2).run(suite)
+     receipt = {"schema": 1, "status": "PASS_SYNTHETIC_ONLY" if result.wasSuccessful() else "FAIL",
+         "qualification": False, "browserLaunched": False, "q30CasesLaunched": 0,
+         "nativeCpuSamples": 0, "tests": result.testsRun, "failures": len(result.failures),
+-        "errors": len(result.errors), "skipped": len(result.skipped), "fixtureRoot": str(ROOT)}
+-    (ROOT / "offline-result.json").write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
++        "errors": len(result.errors), "skipped": len(result.skipped), "fixtureRoot": str(FIXTURE_ROOT)}
++    (FIXTURE_ROOT / "offline-result.json").write_text(json.dumps(receipt, indent=2) + "\n",
++                                                        encoding="utf-8")
+     print(json.dumps(receipt, indent=2))
+     raise SystemExit(0 if result.wasSuccessful() else 1)

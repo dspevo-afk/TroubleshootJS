@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "qualification": false,
+  "runnerSha256": "19931855b98aeb358f16dcbd94b6c69d81a221191bed2f07697a3ccdcffff5e6",
+  "outerTimeoutMs": 30000,
+  "startedUtc": "2026-10-04T10:17:43.454716+00:00",
+  "errors": [],
+  "process": {
+    "pid": 13292,
+    "creationFileTimeTicks": 134355826634585069,
+    "executable": "<PHYSICAL_PYTHON_PACKAGE>\\python3.13.exe",
+    "commandSha256": "256648b32099176706e05704fa78c5b0986544fa8738c3d5195b35761e8ab766",
+    "resumeMonotonicNs": 636614766427100
+  },
+  "operation": {
+    "reason": null,
+    "exitCode": 0,
+    "cleanup": {
+      "pid": 13292,
+      "processSignaled": true,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "drainsComplete": true,
+      "liveDrainers": 0,
+      "drainerWaitMs": 0,
+      "drainerErrors": [],
+      "cleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null
+    },
+    "operationElapsedMs": 2431
+  },
+  "logs": [
+    {
+      "bytes": 4888,
+      "readerAlive": false,
+      "errors": [],
+      "limitExceeded": false,
+      "streamClosed": true
+    },
+    {
+      "bytes": 5396,
+      "readerAlive": false,
+      "errors": [],
+      "limitExceeded": false,
+      "streamClosed": true
+    }
+  ],
+  "sourceUnchanged": true,
+  "elapsedWallSeconds": 2.440058800042607,
+  "finishedUtc": "2026-10-04T10:17:45.894774+00:00"
+}

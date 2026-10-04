@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "status": "PRESERVED_FAIL_OFFLINE_FIXTURES",
+  "qualification": false,
+  "rawRootRole": "task-owned OS-temp/q30-root75-metrics-r3-offline-6txvz9m0",
+  "candidateManifestSha256": "f8acf68312ad6301b7db7ecebf1f1c52a309de4d6d586b2f7688ab71523660a4",
+  "tests": 27,
+  "failures": 1,
+  "testErrors": 4,
+  "cause": "Synthetic grant omitted launch receipt fields; fixture wrongly expected valid counters discarded after disable failed",
+  "correction": "Fixtures supplied realistic synthetic grant fields and independently assert measured counters plus strict cleanup failure; runtime sources unchanged during this fixture correction",
+  "rawHashes": {
+    "stdout.log": "7cd6c435654bed5825cd0de10a3fbdae1e2a4f7f2a54054d03f8d9ffebc42019",
+    "stderr.log": "d6eedffc7dea54501650d6c92e4e776d9690bbc218c866d026c9dc9638069167",
+    "launcher-result.json": "f1ddb4dbe76d10e051652a8bbc39264fdc9793690ff1c7d6f3b73415d721f4fc"
+  },
+  "preTestSnapshotSha256": "fe1fb7f1ce08a8eae68a30922e56bf382e76e2a20e647f98337661a58a421836",
+  "cleanup": {
+    "pid": 29940,
+    "processSignaled": true,
+    "jobActiveProcesses": 0,
+    "jobClosedForCleanup": false,
+    "drainsComplete": true,
+    "liveDrainers": 0,
+    "drainerWaitMs": 0,
+    "drainerErrors": [],
+    "cleanupVerified": true,
+    "cleanupElapsedMs": 0,
+    "jobAccountingDrainMs": 0,
+    "jobAccountingDrainSucceeded": true,
+    "jobAccountingError": null
+  },
+  "processAbsentUtc": "2026-10-04T10:18:00.9399000Z",
+  "deletedEvidence": false
+}

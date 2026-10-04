@@ -8,16 +8,31 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
 **Current task:** **Q30 NOT ACCEPTED - final cold qualification FAIL at root75**<br>
+**Q30 metrics diagnostic r3 (2026-10-04):** Prepared offline for one root75
+case with baseline/final Performance threadTicks and unchanged app phase wall
+rows. No tracing or category dependency. Optional metrics unavailable preserves
+the safely owned app run; identity/route/host/job/cleanup failures remain strict.
+Final attachment recheck and separate observer-timeout/report-unavailable path;
+nonfinite derived counters rejected before JSON. Final 28 focused fixture methods
+with subcases/input audit PASS; 22-member hash/privacy/AST packet PASS; limited
+independent final source review found no blocker. Earlier fixture FAIL/pre-fix
+PASS and r1/r2 actual failures preserved. No new live Edge/app/CPU probe/build/
+matrix ran; selected-host support/overhead/root75 timing remain NOT_RUN. Ready
+normal entrypoint requires a fresh manifest-bound parent grant and one 240 s quiet
+window; none granted/auto-run. Core retains priority. Q30 disabled/NOT ACCEPTED;
+31 PASS/1 root75 TIMEOUT 90.221 s/45 NOT_RUN and all fixed limits/remaining gates
+unchanged. [Candidate, scope and runtime gaps](task-evidence/Q30/epoch15-root75-offline-diagnostic/metrics-r3/README.md).
+
 **Q30 actual r2 failure (2026-10-04):** One authorized normal-entrypoint attempt
 returned complete trace categories[] on the exact held root75 page/renderer.
 Capture setup FAIL before app release/Performance/Tracing start; no app or CPU
 result. Empty enumeration cause UNKNOWN; grouping did not cause this rejection.
 Outer5.829s/exit1; host cleanup PASS1.248107s; all11 owned PIDs absent/port60046
 closed, desktop released09:17:00.635UTC before housekeeping. Frozen inputs/pins/
-cold77 archive unchanged. No new live run during offline preservation. Next is
-a proposal for one Performance threadTicks CPU/wall case independent of tracing,
-with optional metrics unavailable preserving app outcome. Unimplemented/NOT_RUN;
-offline checks/new pins and fresh parent window required; Core retains priority.
+cold77 archive unchanged. No new live run during offline preservation. At that
+failure checkpoint, a Performance threadTicks CPU/wall case independent of
+tracing was proposed. Its subsequent offline preparation is recorded above;
+actual runtime remains NOT_RUN and a fresh parent window is required.
 Q30 disabled/NOT ACCEPTED, all limits/cold77 FAIL/remaining gates unchanged.
 [Failure and practical proposal](task-evidence/Q30/epoch15-root75-offline-diagnostic/category-r2/actual-window-1/README.md).
 

@@ -1,4 +1,55 @@
-# Current checkpoint: Q30 blocked; r2 empty-category failure preserved
+# Current checkpoint: Q30 blocked; metrics diagnostic r3 ready offline
+
+2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
+`aee897d2047a7202cd5ecd2cbb5867734a6de60a`, plus this local docs/evidence checkpoint.
+[Prepared candidate](task-evidence/Q30/epoch15-root75-offline-diagnostic/metrics-r3/README.md):
+one root75 diagnostic using baseline/final Performance threadTicks counters and
+unchanged app report phase wall rows. Six pinned workspace drafts; four changed
+from r2 (capture, adapter, runner, focused fixtures). No Tracing/category/IO or new
+listener work. Optional metric failure records CPU_UNAVAILABLE and permits a
+correctly attached app run; identity, route, host, job and cleanup remain strict.
+Final counter scope recheck rejects successor documents. A separate verified
+observer-timeout boundary can retain available counters without claiming terminal
+completion; missing actual report is explicitly REPORT_UNAVAILABLE. Invalid
+report or missing plan stays FAIL_REPORT_AUDIT. Finite delta guard prevents JSON
+overflow from turning optional unavailable counters into a serialization failure.
+
+Final 28 focused unittest methods with subcases PASS, zero failures/errors/skips.
+Fixture plus input audit 2292.3675 ms; outer operation 2431 ms/exit 0. Cleanup PASS
+0 ms at recorded resolution, job 0/readers complete. Input audit 1131.1636 ms:
+1,354 repository/1,526 prepared-app inputs and six final source pins unchanged.
+First fixture FAIL (27 methods, 1 failure/4 errors) and pre-guard 28-method PASS
+remain preserved with raw logs/exact pre-test snapshots; final evidence is fresh.
+22-member packet hashes/privacy/six ASTs/final-source binding PASS_ARTIFACT_ONLY;
+original cold77 archive unchanged. Limited independent final runtime source
+review: no blocker, no tests/live actions. Packet is not the full Q30 archive gate.
+
+Manifest `6a76b910b89a523e578bb0a3856763378c57d3cf4c61f1c5794c92eefea48d9f`.
+Audit-only default; supported `run_one_diagnostic.py` once with a fresh manifest-
+bound grant in a parent-coordinated 240 s quiet window. No window/auto-run now;
+no browser preflight retry, tracing fallback or direct worker bypass. Controller
+220 s + 15 s cleanup; inner host at most 180 s with existing reserves, observer
+150 s; setup/final capture 5 s each/1.5 s cleanup reserve. Core retains priority.
+Selected Edge capability/counter quality/overhead/root75 timing remain NOT_RUN.
+ThreadTime aggregates renderer main-thread work; no solver/per-stage CPU, GC or
+preemption cause established. No live browser, app case, CPU probe, build or
+qualification matrix ran. Production/hosts/build inputs unchanged; JDK8/GWT
+rebuild NOT APPLICABLE to this workspace draft/docs/evidence checkpoint.
+
+Q30 disabled/NOT ACCEPTED; cold77 remains 31 PASS/1 root75 TIMEOUT 90.221 s/
+45 NOT_RUN. Fixed 77 roots/308 candidates/90,000 ms/640 shared units/5,000 ms
+active operation unchanged; root75 cause UNKNOWN. Original r1/r2 failures,
+consumed grants, raw evidence, seven untracked cache files and sibling Desktop
+work preserved. Recorded child PIDs 13292/30348/29940 absent at 10:18:00.9399000 UTC;
+no task-owned persistent resource. No push/publish/email/evidence deletion.
+Next: parent grants the one diagnostic window; inspect actual app wall and CPU
+data. Root75 correction, full regression/cold77, enabled build/menu/replay/
+supported visible repair/retest, full source archive and parent acceptance remain
+pending. U06/U07/Q60 unstarted.
+
+---
+
+# Historical checkpoint: Q30 blocked; r2 empty-category failure preserved
 
 2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
 `40235228052f3079e9bed65fed68dd9900cd0223`, plus this local docs/evidence checkpoint.
