@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "status": "PASS_NORMAL_ENTRYPOINT_STATIC_SCOPE",
+  "qualification": false,
+  "reviewHead": "697cf0d784f69fa7f1f59dec90666144ef45125f",
+  "candidateManifestSha256": "14879cb0249319e6cd70c85bf61a9d382649398fd792fad21c86b99edd3dda96",
+  "reviewer": "root75_sampler_audit",
+  "rootIntegratedReview": true,
+  "scope": [
+    "Final six source hashes match manifest",
+    "Proxy failures abort original held route once",
+    "CDP cleanup reserve and predecode stream bounds",
+    "Controller remaining deadline clamps host budget",
+    "Bounded report readers and post-input audit",
+    "App nonpass distinguished from controller failure"
+  ],
+  "notRun": [
+    "Selected Edge CDP capture",
+    "Trace content/GC/thread/marker mapping",
+    "Actual nested integration",
+    "Root75 or cold77 qualification",
+    "Visible player input and repair/retest"
+  ],
+  "remainingBoundary": {
+    "classification": "NONBLOCKING_OFFLINE_PREPARATION_LIMIT",
+    "issue": "Direct internal --owned-worker invocation with valid grant and arbitrary deadline can bypass outer job",
+    "supportedRoute": "Documented normal entrypoint owns outer worker job",
+    "authenticatedHandoff": false,
+    "rootDecision": "Preserve restriction; no direct worker invocation or all-entrypoint timeout claim"
+  },
+  "productionSourceChanges": 0,
+  "browserLaunched": false,
+  "q30CasesLaunched": 0
+}

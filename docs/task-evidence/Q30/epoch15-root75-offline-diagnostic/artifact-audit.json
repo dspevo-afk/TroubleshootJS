@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "status": "PASS_ARTIFACT_ONLY",
+  "qualification": false,
+  "archiveSha256": "0fa71de0ddcdf48bd29f5d78d9f5435c7a4856e73af5778ed393d827913c4319",
+  "members": 44,
+  "decompressedBytes": 307523,
+  "syntaxCheckedPythonFiles": 12,
+  "privatePathAddressScan": "PASS",
+  "final61SourceBinding": "PASS",
+  "browserLaunched": false,
+  "q30CasesLaunched": 0,
+  "limits": "Diagnostic packet only; not a live capture, Q30 acceptance or final Q30 source archive gate.",
+  "auditElapsedMs": 36.6101,
+  "outerOperationMs": 91,
+  "outerWallSeconds": 0.10088689997792244,
+  "exitCode": 0,
+  "cleanup": {
+    "pid": 20532,
+    "processSignaled": true,
+    "jobActiveProcesses": 0,
+    "jobClosedForCleanup": false,
+    "drainsComplete": true,
+    "liveDrainers": 0,
+    "drainerWaitMs": 0,
+    "drainerErrors": [],
+    "cleanupVerified": true,
+    "cleanupElapsedMs": 0,
+    "jobAccountingDrainMs": 0,
+    "jobAccountingDrainSucceeded": true,
+    "jobAccountingError": null
+  },
+  "pidAbsent": {
+    "pid": 20532,
+    "checkedUtc": "2026-10-04T08:06:48.0907882Z",
+    "method": "Get-CimInstance Win32_Process exact PID filter",
+    "terminated": false
+  }
+}

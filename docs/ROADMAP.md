@@ -8,6 +8,19 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
 **Current task:** **Q30 NOT ACCEPTED - final cold qualification FAIL at root75**<br>
+**Q30 root75 offline preparation (2026-10-04):** Final61 focused synthetic
+checks and unchanged1354 repository/1526 prepared-app inputs PASS;44-member
+packet hash/privacy/AST audit PASS. Six workspace-only drafts prepare one bounded
+headful diagnostic; no Edge/app/CPU/build job was launched. Static review covers
+the documented normal entrypoint; direct internal worker calls bypass its outer
+job and are unsupported. Root75 compute/preemption/GC cause remains UNKNOWN.
+Previous offline audit TIMEOUT and fixture deadline FAIL/source are preserved;
+fixture-only timing revision did not alter production or Q30 budgets. Selected
+Edge APIs, trace content and nested capture NOT_RUN. A new parent-granted240s
+quiet window is required; no auto-run or repeated passing canary. Q30 stays
+disabled/NOT ACCEPTED;77/308/90s/640/5s and remaining acceptance gates unchanged.
+[Diagnostic evidence/restart](task-evidence/Q30/epoch15-root75-offline-diagnostic/README.md).
+
 **Q30 reviewed actual r4 canary (2026-10-04):** One unchanged five-fixture
 Edge job PASS after setup/preflight,3.293s operation; host cleanup PASS1.290s,
 job0/readers complete and exact child/seven Edge PIDs absent. Positive attachment

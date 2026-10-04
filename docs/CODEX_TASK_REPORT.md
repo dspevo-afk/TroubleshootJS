@@ -1,4 +1,42 @@
-# Current checkpoint: Q30 blocked; reviewed five-fixture Edge canary PASS
+# Current checkpoint: Q30 blocked; bounded root75 offline diagnostic prepared
+
+2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
+`697cf0d784f69fa7f1f59dec90666144ef45125f`, plus this local docs/evidence checkpoint.
+No quiet desktop window granted; Server Center/Local Dots retain priority.
+Q30 remains disabled/NOT ACCEPTED. Authoritative cold77:31 PASS /1 root75
+TIMEOUT90.221s /45 NOT_RUN; fixed77/308/90s/640/5s unchanged. U06/U07/Q60 unstarted.
+
+[Evidence/restart](task-evidence/Q30/epoch15-root75-offline-diagnostic/README.md):
+six workspace-only source drafts prepare one headful root75 capture on unchanged
+compiled inputs. HYPOTHESES dominates wall time; HEALTHY has about12s same-unit
+excess; compute/preemption/GC/other-pause cause UNKNOWN. No production code change.
+Final61 focused offline fixtures PASS,1.836391s including input audit; outer1.963s,
+exit0/cleanup verified0ms at recorded resolution/job0/readers complete. All six
+source hashes,1354 repository inputs and1526 prepared-app files unchanged.
+Packet audit PASS_ARTIFACT_ONLY:44 members/hash/privacy/AST/final61 binding,
+outer91ms/exit0/cleanup0ms/job0/readers complete. This is not the Q30 archive gate.
+Static review PASS in normal-entrypoint scope. Direct internal worker calls can
+bypass the outer job; supported entrypoint only, no authenticated handoff claim.
+
+Preserved FAIL: first offline input audit TIMEOUT10.006s (cleanup25ms PASS),
+unknown stalled phase; subsequent phase-logged audit PASS. Preserved56-fixture
+FAIL missed a10ms cleanup slot; only synthetic fixture slots changed to50ms.
+Production capture5s/1.5s and app budgets unchanged. Final61 supersedes prior
+51/56 PASS. Raw receipts, exact failed source and immutable packet all retained.
+Seven recorded offline child PIDs absent; latest20532 checked08:06:48UTC.
+No task-owned persistent resources; no termination, build, native CPU sample,
+Edge/root75/cold77 launch, push, publish, email or evidence deletion this turn.
+Original four cache directories/seven files and sibling Desktop work preserved.
+Docs/evidence-only checkpoint: JDK8/GWT rebuild NOT APPLICABLE; existing r4 actual
+five-fixture PASS reused only after consumed hashes audited. No canary rerun.
+Next: parent-granted240s quiet window, exactly one diagnostic via normal entrypoint;
+selected Edge APIs/trace content/nested integration NOT_RUN. Root75 correction,
+full cold77/regression, enabled production/menu/replay, supported visible repair/
+retest, full source archive and parent acceptance remain pending.
+
+---
+
+# Historical checkpoint: Q30 blocked; reviewed five-fixture Edge canary PASS
 
 2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
 `2854f9d96f838a57422ce33480a55e3b83fad52f`, plus this local evidence checkpoint.

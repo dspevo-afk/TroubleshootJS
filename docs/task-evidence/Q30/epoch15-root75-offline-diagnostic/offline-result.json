@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "status": "PASS_OFFLINE_ONLY",
+  "qualification": false,
+  "browserLaunched": false,
+  "q30CasesLaunched": 0,
+  "nativeCpuSamples": 0,
+  "tests": 61,
+  "failures": 0,
+  "errors": [],
+  "testErrors": 0,
+  "skipped": 0,
+  "sourcePins": {
+    "renderer_capture.py": "22ac044ed8b678b544335ce8412e708d88cefd1e5a79daf666190fafac86ecfc",
+    "instrumented_host.py": "db815fc4ae8f87df3f7c27879df7ef04ae93b6b6a8c1448eef15321b770fd9f9",
+    "run_one_diagnostic.py": "ad6e57bb27a1808694d45fbfd73ede18e17e7978b7d3e1cf61a22465970a49f2",
+    "offline_checks.py": "5b2311403c22d70ed5a79eca06a2c1da912cbdd92c43645440b9cbb85be7a134",
+    "headful_attribute_host.py": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+    "verify_offline_candidate.py": "eea25a18be2bd7cf9c48e194715a5277a5a80801af4db923083cf54f3c2ea5c6"
+  },
+  "sourceUnchanged": true,
+  "candidateManifestSha256": "14879cb0249319e6cd70c85bf61a9d382649398fd792fad21c86b99edd3dda96",
+  "inputAudit": {
+    "schema": 1,
+    "status": "PASS_OFFLINE_INPUT_AUDIT",
+    "qualification": false,
+    "browserLaunched": false,
+    "q30CasesLaunched": 0,
+    "candidateManifestSha256": "14879cb0249319e6cd70c85bf61a9d382649398fd792fad21c86b99edd3dda96",
+    "sourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+    "baseHead": "d37c3b3b8581abdeaa9b88b7bfb2349cff958d31",
+    "repositoryInputs": {
+      "fileCount": 1354,
+      "mapSha256": "224a0d93d62ded3a5ea0f125f31711d05259b2b5bd76ffafd30717be1516485b"
+    },
+    "preparedApp": {
+      "stateSha256": "a32366e16141023a728de31a1144f9862d889922f9537112f556786f8b464598",
+      "inputIdentity": {
+        "sha256": "ff25c399dee104f98327d09910e16e6213ce49440197f59c53ff1e73f071fbf0",
+        "sourceSha256": "fe50dde963bb44b9d4a6694c3679ab44ee8e19e3487b308c8ab7ad5f506ced1c",
+        "webSha256": "e0f263d63964b74a220b8e7f3078466a2442d3985c104c9e2957092b0f625666",
+        "fileCount": 1526,
+        "sourceFileCount": 1134,
+        "webFileCount": 392
+      }
+    },
+    "passedCanaryReceiptSha256": "2faa3de7aaade5ce583f547d703f3318af2ebb1af7338843ad3734e9b0a709e2",
+    "sourcePins": {
+      "renderer_capture.py": {
+        "sha256": "22ac044ed8b678b544335ce8412e708d88cefd1e5a79daf666190fafac86ecfc",
+        "size": 13668
+      },
+      "instrumented_host.py": {
+        "sha256": "db815fc4ae8f87df3f7c27879df7ef04ae93b6b6a8c1448eef15321b770fd9f9",
+        "size": 5763
+      },
+      "run_one_diagnostic.py": {
+        "sha256": "ad6e57bb27a1808694d45fbfd73ede18e17e7978b7d3e1cf61a22465970a49f2",
+        "size": 25435
+      },
+      "offline_checks.py": {
+        "sha256": "5b2311403c22d70ed5a79eca06a2c1da912cbdd92c43645440b9cbb85be7a134",
+        "size": 20891
+      },
+      "headful_attribute_host.py": {
+        "sha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+        "size": 51883
+      },
+      "verify_offline_candidate.py": {
+        "sha256": "eea25a18be2bd7cf9c48e194715a5277a5a80801af4db923083cf54f3c2ea5c6",
+        "size": 2348
+      }
+    },
+    "dependencies": {
+      "maintainedRunner": "19931855b98aeb358f16dcbd94b6c69d81a221191bed2f07697a3ccdcffff5e6",
+      "inputLoader": "68a5257bac66c667a7adbe50a7eb25049e5f795aa9f93be8bc62e982edb6ffce",
+      "runnerReceipts": "5d0865564e39a33a679a7fe5adda0e3ba2c539ce5740034e0a495135619ab0a8",
+      "reader": "5015d92d10b9769e954ca6e009ce07196be6c447899882460b7edebd45ff9553",
+      "readerBase": "4bb00b568a7d3462144dcea3725e89111f9e7b37e752945948309ec29c88cf5f",
+      "readerFreeze": "42348d7db094ca98fbdc15e5d19239532ba557b00752a92278fe9caf34182ae0",
+      "pointer": "e896d456a95ca40d601e7bdd48abdcf90abdc81c96c28c72ed9f7a8e4ec8baa5",
+      "snapshot": "5369115c5c29ce3a2c2d5b815204359551a2b8d1302d918fd7c6fb7a0ef91240",
+      "receipt": "3835c832ef416733fa1a793349acaad5d8fa99f61ee91368c3ba1a475c467341",
+      "plan": "b57e6a39a9ad385734347d0e066ab82ed28dbf46bbb6baa680b700cc054f8f21",
+      "acceptance": "69707f4282dd41a394c2eb6723057b32379d0743553940a2b2a11bd5221f8d48"
+    },
+    "phaseClocks": [
+      {
+        "phase": "candidate-pins",
+        "elapsedMs": 0.002
+      },
+      {
+        "phase": "frozen-input-loader",
+        "elapsedMs": 2.1042
+      },
+      {
+        "phase": "repository-1354-inventory",
+        "elapsedMs": 14.9484
+      },
+      {
+        "phase": "prepared-app-inventory",
+        "elapsedMs": 382.8874
+      },
+      {
+        "phase": "prepared-app-complete-manifest",
+        "elapsedMs": 769.8583
+      },
+      {
+        "phase": "external-owner-pins",
+        "elapsedMs": 1109.0595
+      }
+    ],
+    "operationElapsedMs": 1112.4423
+  },
+  "elapsedMs": 1836.3909,
+  "selectedEdgeCapture": "NOT_RUN_NO_PARENT_WINDOW",
+  "root75ApplicationRuns": 0,
+  "productionSourceChanges": 0
+}
