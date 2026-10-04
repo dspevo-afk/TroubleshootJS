@@ -8,6 +8,14 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
 **Current task:** **Q30 NOT ACCEPTED - final cold qualification FAIL at root75**<br>
+**Q30 reviewed actual r4 canary (2026-10-04):** One unchanged five-fixture
+Edge job PASS after setup/preflight,3.293s operation; host cleanup PASS1.290s,
+job0/readers complete and exact child/seven Edge PIDs absent. Positive attachment
+passed; same-frame/loader detached fixture proved HTML10->12 replacement; other
+three negatives failed for intended guard reasons. Receipt review PASS for these
+five paths. Guard remains unintegrated;1354 inputs unchanged, Q30 disabled and
+all cold/visible/acceptance limits/gates unchanged. No broader run authorized.
+[Actual receipt](task-evidence/Q30/epoch15-offline-attachment-r4/actual-edge-result.json).
 **Q30 offline r4 correction (2026-10-04):** Final69 focused synthetic checks
 PASS; source review PASS within its limited scope. Draft now separates DOM
 refresh from semantic identity, fences requests at entry, drains a single route

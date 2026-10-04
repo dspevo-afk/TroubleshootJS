@@ -1,0 +1,536 @@
+{
+  "schema": 1,
+  "status": "PASS_FIVE_FIXTURE_CANARY_ONLY",
+  "qualification": false,
+  "timingAcceptance": false,
+  "candidateHead": "2854f9d96f838a57422ce33480a55e3b83fad52f",
+  "sourcePins": {
+    "compiled_attribute_acceptance.py": "146101ab19500b06e8d0cb56bde32d90f8439c87b245099c8e1c569b07df85cd",
+    "run_attachment_scope_canaries.py": "b02a307e046ca9de5a9f79aa3f346dce405b10692220153c0a11e8713fa0738f",
+    "offline_attachment_checks.py": "4e9871a05b627a2e75b6a2ab08fc03b5b317bfcb0b846e3e956595081bda4916"
+  },
+  "frozenSourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+  "frozenInputsBeforeAfterVerified": 1354,
+  "startedUtc": "2026-10-04T01:12:57.833048+00:00",
+  "finishedUtc": "2026-10-04T01:13:01.136329+00:00",
+  "outerOperationMillis": 3293,
+  "outerCleanup": {
+    "pid": 22992,
+    "processSignaled": true,
+    "jobActiveProcesses": 0,
+    "jobClosedForCleanup": false,
+    "drainsComplete": true,
+    "liveDrainers": 0,
+    "drainerWaitMs": 0,
+    "drainerErrors": [],
+    "cleanupVerified": true,
+    "cleanupElapsedMs": 0,
+    "jobAccountingDrainMs": 0,
+    "jobAccountingDrainSucceeded": true,
+    "jobAccountingError": null
+  },
+  "outerExitCode": 0,
+  "hostOutcome": "FAIL_EXPECTED_FOUR_NEGATIVES",
+  "hostCleanup": {
+    "status": "PASS",
+    "seconds": 1.290252299979329,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "canaryProofs": {
+    "hostReturnCode": 1,
+    "hostOutcome": "FAIL",
+    "caseCount": 5,
+    "caseOperationSeconds": [
+      0.09242810006253421,
+      0.24856340000405908,
+      0.25386619998607785,
+      0.24640199996065348,
+      0.04252470005303621
+    ],
+    "cleanupSeconds": 1.290252299979329,
+    "runnerStartedUtc": "2026-10-04T01:12:58.059183+00:00",
+    "runnerOperationStartedUtc": "2026-10-04T01:12:58.898686+00:00",
+    "runnerFinishedUtc": "2026-10-04T01:13:01.081350+00:00",
+    "positiveAttachedScript": "PASS",
+    "missingScriptGuard": "PASS_NEGATIVE_PROOF",
+    "sameUrlDetachedScriptGuard": "PASS_NEGATIVE_PROOF",
+    "iframeOnlyScriptGuard": "PASS_NEGATIVE_PROOF",
+    "duplicateScriptGuard": "PASS_NEGATIVE_PROOF",
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 1.290252299979329,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    },
+    "edgeIdentityCountBeforeCases": 7,
+    "inputAudit": {
+      "status": "PASS",
+      "beforeSha256": "e203b69543c969e1cf45f3f563d69c6de58420d4ec6c340f62da1e328f451ba3",
+      "afterSha256": "e203b69543c969e1cf45f3f563d69c6de58420d4ec6c340f62da1e328f451ba3",
+      "sourceSha256Before": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "sourceSha256After": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "webSha256Before": "e203b69543c969e1cf45f3f563d69c6de58420d4ec6c340f62da1e328f451ba3",
+      "webSha256After": "e203b69543c969e1cf45f3f563d69c6de58420d4ec6c340f62da1e328f451ba3",
+      "runnerBeforeSha256": "146101ab19500b06e8d0cb56bde32d90f8439c87b245099c8e1c569b07df85cd",
+      "runnerAfterSha256": "146101ab19500b06e8d0cb56bde32d90f8439c87b245099c8e1c569b07df85cd",
+      "fileCountBefore": 3,
+      "fileCountAfter": 3,
+      "seconds": 0.0019134999020025134
+    }
+  },
+  "inputHashesUnchanged": {
+    "selectedHost": true,
+    "finalCompiled31Packet": true,
+    "finalCompiled31Manifest": true,
+    "priorFailedCompiled31Result": true
+  },
+  "ownedResourceRelease": {
+    "schema": 1,
+    "status": "PASS_EXACT_OWNED_PIDS_ABSENT",
+    "checkedUtc": "2026-10-04T01:14:50.4549482Z",
+    "pids": [
+      22992,
+      24080,
+      5564,
+      7260,
+      14796,
+      11980,
+      24356,
+      30216
+    ],
+    "observed": [],
+    "outerRoot": "${OS_TEMP}\\q30-attachment-r4-relative-edge-q80el221",
+    "canaryRoot": "${OS_TEMP}\\q30-attachment-scope-canary-tj_iu5wl",
+    "noRerun": true,
+    "noTermination": true
+  },
+  "cases": [
+    {
+      "case": {
+        "index": 1,
+        "name": "attached-positive",
+        "path": "circuitjs.html?attachmentCanary=attached",
+        "stateAttribute": "data-tsj-attachment-canary",
+        "expectedState": "PASS:attached",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 20.0,
+        "reportAttribute": null
+      },
+      "url": "http://127.0.0.1:57558/circuitjs.html?attachmentCanary=attached",
+      "observedPageUrl": "http://127.0.0.1:57558/circuitjs.html?attachmentCanary=attached",
+      "observedState": "PASS:attached",
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "timedOut": false,
+      "operationSeconds": 0.09242810006253421,
+      "observerErrors": [],
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null,
+      "observation": {
+        "transport": "PASSIVE_CDP_DOM",
+        "stateEvents": 1,
+        "compiledScriptsHeld": 1,
+        "scriptAttachment": {
+          "frameId": "85F5DA34C7CF3E3247259E048EC39F55",
+          "loaderId": "2004FD456087530EF6A8DD4C93955863",
+          "pageUrl": "http://127.0.0.1:57558/circuitjs.html?attachmentCanary=attached",
+          "documentBackend": 2,
+          "htmlBackend": 4,
+          "generation": 1,
+          "exactPageUrl": true,
+          "resourceType": "script",
+          "mainFrameRequest": true
+        },
+        "currentDocuments": 2,
+        "finalStateReadRequired": true,
+        "terminalScopeVerified": true,
+        "scopeIdentity": {
+          "generationBefore": 1,
+          "generationAfter": 1,
+          "domEpochBefore": 3,
+          "domEpochAfter": 3,
+          "frameBefore": "85F5DA34C7CF3E3247259E048EC39F55",
+          "frameAfter": "85F5DA34C7CF3E3247259E048EC39F55",
+          "loaderBefore": "2004FD456087530EF6A8DD4C93955863",
+          "loaderAfter": "2004FD456087530EF6A8DD4C93955863",
+          "frameSnapshotStable": true,
+          "stateChangesBefore": 1,
+          "stateChangesAfter": 1,
+          "documentNodeBefore": null,
+          "documentNodeAfter": 7,
+          "htmlNodeBefore": null,
+          "htmlNodeAfter": 9,
+          "documentBackendBefore": 2,
+          "documentBackendAfter": 2,
+          "htmlBackendBefore": 4,
+          "htmlBackendAfter": 4,
+          "pageUrlMatches": true,
+          "documentUrlMatches": true,
+          "stateMatches": true,
+          "attributeMatches": true,
+          "compiledScriptRequests": 1,
+          "scriptAttachment": {
+            "frameId": "85F5DA34C7CF3E3247259E048EC39F55",
+            "loaderId": "2004FD456087530EF6A8DD4C93955863",
+            "pageUrl": "http://127.0.0.1:57558/circuitjs.html?attachmentCanary=attached",
+            "documentBackend": 2,
+            "htmlBackend": 4,
+            "generation": 1,
+            "exactPageUrl": true,
+            "resourceType": "script",
+            "mainFrameRequest": true
+          },
+          "scriptAttachmentMatchesTerminalScope": true
+        }
+      }
+    },
+    {
+      "case": {
+        "index": 2,
+        "name": "missing-script-negative",
+        "path": "circuitjs.html?attachmentCanary=missing",
+        "stateAttribute": "data-tsj-attachment-canary",
+        "expectedState": "FAIL:missing",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 20.0,
+        "reportAttribute": null
+      },
+      "url": "http://127.0.0.1:57558/circuitjs.html?attachmentCanary=missing",
+      "observedPageUrl": "http://127.0.0.1:57558/circuitjs.html?attachmentCanary=missing",
+      "observedState": "FAIL:missing",
+      "outcome": "FAIL",
+      "terminalReached": true,
+      "stateMatch": false,
+      "timedOut": false,
+      "operationSeconds": 0.24856340000405908,
+      "observerErrors": [
+        {
+          "phase": "terminal-document-scope",
+          "type": "ValueError",
+          "message": "Terminal state/report lacks its exact compiled-script HTML attachment"
+        }
+      ],
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null,
+      "observation": {
+        "transport": "PASSIVE_CDP_DOM",
+        "stateEvents": 0,
+        "compiledScriptsHeld": 0,
+        "scriptAttachment": null,
+        "currentDocuments": 1,
+        "finalStateReadRequired": true,
+        "terminalScopeVerified": false,
+        "scopeIdentity": {
+          "generationBefore": 1,
+          "generationAfter": 1,
+          "domEpochBefore": 3,
+          "domEpochAfter": 3,
+          "frameBefore": "85F5DA34C7CF3E3247259E048EC39F55",
+          "frameAfter": "85F5DA34C7CF3E3247259E048EC39F55",
+          "loaderBefore": "ED8E0196BA927612525F70E9F7AD6860",
+          "loaderAfter": "ED8E0196BA927612525F70E9F7AD6860",
+          "frameSnapshotStable": true,
+          "stateChangesBefore": 0,
+          "stateChangesAfter": 0,
+          "documentNodeBefore": 1,
+          "documentNodeAfter": 4,
+          "htmlNodeBefore": 3,
+          "htmlNodeAfter": 6,
+          "documentBackendBefore": 5,
+          "documentBackendAfter": 5,
+          "htmlBackendBefore": 7,
+          "htmlBackendAfter": 7,
+          "pageUrlMatches": true,
+          "documentUrlMatches": true,
+          "stateMatches": true,
+          "attributeMatches": true,
+          "compiledScriptRequests": 0,
+          "scriptAttachment": null,
+          "scriptAttachmentMatchesTerminalScope": false
+        }
+      }
+    },
+    {
+      "case": {
+        "index": 3,
+        "name": "detached-script-negative",
+        "path": "circuitjs.html?attachmentCanary=detached",
+        "stateAttribute": "data-tsj-attachment-canary",
+        "expectedState": "PASS:detached",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 20.0,
+        "reportAttribute": null
+      },
+      "url": "http://127.0.0.1:57558/circuitjs.html?attachmentCanary=detached",
+      "observedPageUrl": "http://127.0.0.1:57558/circuitjs.html?attachmentCanary=detached",
+      "observedState": "PASS:detached",
+      "outcome": "FAIL",
+      "terminalReached": true,
+      "stateMatch": false,
+      "timedOut": false,
+      "operationSeconds": 0.25386619998607785,
+      "observerErrors": [
+        {
+          "phase": "terminal-document-scope",
+          "type": "ValueError",
+          "message": "Terminal state/report lacks its exact compiled-script HTML attachment"
+        }
+      ],
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null,
+      "observation": {
+        "transport": "PASSIVE_CDP_DOM",
+        "stateEvents": 0,
+        "compiledScriptsHeld": 1,
+        "scriptAttachment": {
+          "frameId": "85F5DA34C7CF3E3247259E048EC39F55",
+          "loaderId": "3BB8C162D0E16A84934C4E3DC8FA5C69",
+          "pageUrl": "http://127.0.0.1:57558/circuitjs.html?attachmentCanary=detached",
+          "documentBackend": 8,
+          "htmlBackend": 10,
+          "generation": 1,
+          "exactPageUrl": true,
+          "resourceType": "script",
+          "mainFrameRequest": true
+        },
+        "currentDocuments": 2,
+        "finalStateReadRequired": true,
+        "terminalScopeVerified": false,
+        "scopeIdentity": {
+          "generationBefore": 1,
+          "generationAfter": 1,
+          "domEpochBefore": 4,
+          "domEpochAfter": 4,
+          "frameBefore": "85F5DA34C7CF3E3247259E048EC39F55",
+          "frameAfter": "85F5DA34C7CF3E3247259E048EC39F55",
+          "loaderBefore": "3BB8C162D0E16A84934C4E3DC8FA5C69",
+          "loaderAfter": "3BB8C162D0E16A84934C4E3DC8FA5C69",
+          "frameSnapshotStable": true,
+          "stateChangesBefore": 0,
+          "stateChangesAfter": 0,
+          "documentNodeBefore": 4,
+          "documentNodeAfter": 7,
+          "htmlNodeBefore": 6,
+          "htmlNodeAfter": 9,
+          "documentBackendBefore": 8,
+          "documentBackendAfter": 8,
+          "htmlBackendBefore": 12,
+          "htmlBackendAfter": 12,
+          "pageUrlMatches": true,
+          "documentUrlMatches": true,
+          "stateMatches": true,
+          "attributeMatches": true,
+          "compiledScriptRequests": 1,
+          "scriptAttachment": {
+            "frameId": "85F5DA34C7CF3E3247259E048EC39F55",
+            "loaderId": "3BB8C162D0E16A84934C4E3DC8FA5C69",
+            "pageUrl": "http://127.0.0.1:57558/circuitjs.html?attachmentCanary=detached",
+            "documentBackend": 8,
+            "htmlBackend": 10,
+            "generation": 1,
+            "exactPageUrl": true,
+            "resourceType": "script",
+            "mainFrameRequest": true
+          },
+          "scriptAttachmentMatchesTerminalScope": false
+        }
+      }
+    },
+    {
+      "case": {
+        "index": 4,
+        "name": "iframe-script-negative",
+        "path": "circuitjs.html?attachmentCanary=iframe",
+        "stateAttribute": "data-tsj-attachment-canary",
+        "expectedState": "PASS:iframe",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 20.0,
+        "reportAttribute": null
+      },
+      "url": "http://127.0.0.1:57558/circuitjs.html?attachmentCanary=iframe",
+      "observedPageUrl": "http://127.0.0.1:57558/circuitjs.html?attachmentCanary=iframe",
+      "observedState": "PASS:iframe",
+      "outcome": "FAIL",
+      "terminalReached": false,
+      "stateMatch": false,
+      "timedOut": false,
+      "operationSeconds": 0.24640199996065348,
+      "observerErrors": [
+        {
+          "phase": "compiled-script-attachment",
+          "type": "ValueError",
+          "message": "Selected compiled module request is not owned by the main frame"
+        }
+      ],
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_FAILED",
+          "location": {
+            "url": "http://127.0.0.1:57558/circuitjs1/00000000000000000000000000000000.cache.js?mode=iframe",
+            "line": 0,
+            "column": 0,
+            "lineNumber": 0,
+            "columnNumber": 0
+          }
+        }
+      ],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null,
+      "observation": {
+        "transport": "PASSIVE_CDP_DOM",
+        "stateEvents": 1,
+        "compiledScriptsHeld": 1,
+        "scriptAttachment": null,
+        "currentDocuments": 1,
+        "finalStateReadRequired": false,
+        "terminalScopeVerified": false,
+        "scopeIdentity": null
+      }
+    },
+    {
+      "case": {
+        "index": 5,
+        "name": "duplicate-script-negative",
+        "path": "circuitjs.html?attachmentCanary=duplicate",
+        "stateAttribute": "data-tsj-attachment-canary",
+        "expectedState": "PASS:duplicate",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 20.0,
+        "reportAttribute": null
+      },
+      "url": "http://127.0.0.1:57558/circuitjs.html?attachmentCanary=duplicate",
+      "observedPageUrl": "http://127.0.0.1:57558/circuitjs.html?attachmentCanary=duplicate",
+      "observedState": "PASS:duplicate",
+      "outcome": "FAIL",
+      "terminalReached": false,
+      "stateMatch": false,
+      "timedOut": false,
+      "operationSeconds": 0.04252470005303621,
+      "observerErrors": [
+        {
+          "phase": "compiled-script-attachment",
+          "type": "ValueError",
+          "message": "More than one selected compiled module script request"
+        }
+      ],
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_FAILED",
+          "location": {
+            "url": "http://127.0.0.1:57558/circuitjs1/00000000000000000000000000000000.cache.js?mode=duplicate&request=2",
+            "line": 0,
+            "column": 0,
+            "lineNumber": 0,
+            "columnNumber": 0
+          }
+        }
+      ],
+      "attributeReadErrors": [],
+      "listenerCleanupErrors": [],
+      "navigationError": null,
+      "observation": {
+        "transport": "PASSIVE_CDP_DOM",
+        "stateEvents": 1,
+        "compiledScriptsHeld": 2,
+        "scriptAttachment": {
+          "frameId": "85F5DA34C7CF3E3247259E048EC39F55",
+          "loaderId": "8FE52617EDCA0536AD2967EAE5AF3010",
+          "pageUrl": "http://127.0.0.1:57558/circuitjs.html?attachmentCanary=duplicate",
+          "documentBackend": 18,
+          "htmlBackend": 20,
+          "generation": 1,
+          "exactPageUrl": true,
+          "resourceType": "script",
+          "mainFrameRequest": true
+        },
+        "currentDocuments": 1,
+        "finalStateReadRequired": false,
+        "terminalScopeVerified": false,
+        "scopeIdentity": null
+      }
+    }
+  ],
+  "rawReceiptHashes": {
+    "canary-result.json": "3b7d46bd18b58f2cda9db3c5e241ac20f52f0307c016f12790daaf3734e56281",
+    "edge-r4-relative-one-shot-launch.json": "1f4eee29502f414b91417d1a6fe5a6f051927f2385ee99ac89a7785fee3a92f4",
+    "edge-r4-relative-preflight.json": "f7138feccd17e920c3bfd52e11ef90714dbe073f4818fdcd5c1416c64d52d42a",
+    "edge-r4-relative-release.json": "6a33de8c724125c537d524fae3f3eded99897483bafb7b67fe941e3baecde775",
+    "launch.json": "4ff988ad3493ca5cb584890e063cc4edbd2feffbbe52e6764a32789e2a949428",
+    "launcher-result.json": "8f57c4cae473b8b2dc08d7e4fcf8dbf07c6dd906cd68bc4376bf8174f193936b",
+    "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout.log": "301395e02f92081aefcd9710a7c10a6ce7932d0d50d9d2bfea2edcda84c12b95",
+    "host-output\\result.json": "dfee56e94a45e9fd9e6b36a770ab4a67741a96a0762fed796c9f942a4c133033",
+    "host-output\\cases\\001-attached-positive.json": "5eeeca921303c0f1067ea3da4e3c16bde77b3b37b11de64b4b8a43985ce970cf",
+    "host-output\\cases\\002-missing-script-negative.json": "12f2fc4d3a436ee01120f0c3b0946a6a10da6087bc1aac4912b7a1aa0bcb7688",
+    "host-output\\cases\\003-detached-script-negative.json": "c3560dc3e19b14b8c572be2789de865c531f98db652b737aa6f43d626319517f",
+    "host-output\\cases\\004-iframe-script-negative.json": "2d39a0120b1b1bfa859ebef82cb648c5a6c3fb415cc0331420c087f73e3e243a",
+    "host-output\\cases\\005-duplicate-script-negative.json": "4a5d808af65fa341c9c1c71752082ac43d8f7db981d27db35f1076fe8ba5565e"
+  },
+  "rawMirror": "${TASK_WORKSPACE}\\epoch15-final\\attachment-offline-resume-r4\\edge-r4-actual-20261004",
+  "rawRoot": "${OS_TEMP}\\q30-attachment-scope-canary-tj_iu5wl",
+  "outerRawRoot": "${OS_TEMP}\\q30-attachment-r4-relative-edge-q80el221",
+  "jobCount": 1,
+  "noRerun": true,
+  "actualReceiptReview": {
+    "status": "PASS_RECEIPT_REVIEW_ONLY",
+    "reviewer": "attachment_offline_review",
+    "noReviewerLaunches": true,
+    "limits": [
+      "Only five toy fixtures; no solver/player/timing qualification",
+      "Main-frame and iframe identity proved for these paths",
+      "In-flight same-URL navigation during held route remains synthetic-only"
+    ]
+  },
+  "q30Enabled": false,
+  "productionHostIntegrated": false,
+  "priorActualFailure": "RETAINED_UNCHANGED",
+  "priorWallClockAttempt": "NOT_RUN_RETAINED",
+  "cold77": "FAIL_31PASS_1TIMEOUT90.221S_45NOT_RUN",
+  "limits": "UNCHANGED_77ROOTS_308CANDIDATES_90S_640UNITS_5S",
+  "next": "Parent-coordinate qualification continuation; no further browser/build/timing job authorized by this window",
+  "publication": "LOCAL_ONLY_NO_PUSH_EMAIL",
+  "recordedUtc": "2026-10-04T01:19:52.047898+00:00"
+}

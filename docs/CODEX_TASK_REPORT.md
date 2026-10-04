@@ -1,4 +1,35 @@
-# Current checkpoint: Q30 blocked; reviewed offline attachment candidate ready
+# Current checkpoint: Q30 blocked; reviewed five-fixture Edge canary PASS
+
+2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
+`2854f9d96f838a57422ce33480a55e3b83fad52f`, plus this local evidence checkpoint.
+Exactly one parent-authorized unchanged r4 fixture job ran; allocation began at
+actual test launch after setup/preflight. CANARY PASS, outer operation 3.293s,
+exit0/job0/readers complete; host cleanup PASS 1.290252s, server stopped/no survivors.
+Child22992 and all seven recorded Edge PIDs absent at01:14:50UTC; resources released.
+No rerun. Previous wall-clock attempt NOT_RUN and previous actual FAIL preserved.
+
+[Actual receipt](task-evidence/Q30/epoch15-offline-attachment-r4/actual-edge-result.json):
+attached positive passed exact frame/loader/URL with Document2/HTML4 stable.
+Detached negative retained Document8/frame/loader/URL but HTML10->12, proving
+same-document replacement. Missing/iframe/duplicate each produced the intended
+sole guard error and targeted abort diagnostics only. Underlying host FAIL is
+expected from four negatives; composed canary and cleanup PASS. Independent
+receipt review PASS for these five paths. Held in-flight navigation race remains
+synthetic-only; no visible player/solver/timing qualification is claimed.
+
+All three frozen draft hashes and 1354 consumed app/host inputs unchanged before/
+after; guard remains unintegrated. Q30 disabled/NOT ACCEPTED. Cold77 remains
+31 PASS/1 TIMEOUT90.221s/45 NOT_RUN;77/308/90s/640/5s unchanged.
+No root75, cold77, build or additional browser job; no push/publish/email/deletion.
+Original four cache directories/seven files and sibling Desktop work preserved.
+Raw receipts/profiles and workspace mirror retained. U06/U07/Q60 unstarted.
+Next: parent-coordinate remaining Q30 qualification/integration scope; root75,
+full cold77, enabled production/menu/replay, supported visible repair/retest,
+source archive verification and parent acceptance remain pending.
+
+---
+
+# Historical checkpoint: Q30 blocked; reviewed offline attachment candidate ready
 
 2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
 `f88917aac6344b160ed7a2435933613385b98a07`, plus this local docs/evidence checkpoint.
