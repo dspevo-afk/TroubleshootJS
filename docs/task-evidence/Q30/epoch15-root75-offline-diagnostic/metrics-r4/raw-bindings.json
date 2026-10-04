@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "status": "RETAINED_RAW",
+  "qualification": false,
+  "rawRoot": "<OS_TEMP>\\q30-root75-metrics-r4-offline-a0ry3g2f",
+  "processAbsentUtc": "2026-10-04T13:11:10.2643182Z",
+  "processPid": 21944,
+  "preTestSnapshotSha256": "eaa4ed53aa5b2301e61254068f320e2d05931ef2204fd1f3238a1fcddea99001",
+  "rawHashes": {
+    "stdout.log": "cc97e6d6bd525e1f18054d71b054d9f480c51e6af45ab56726b13f47d49edc14",
+    "stderr.log": "a8e4e4c6683b2cea2a7c832815cf93e706047ebbbc55dbe9f6722d128623e4f6",
+    "launcher-result.json": "f967fa0a5a3465ab8a40b0ea7d05bad5cc6c2ec2d67b853b2187c248447bf563",
+    "launch.json": "6770fa038b0e73f29137024632df0266584ac08443224fedf1b8aa2315700afe"
+  },
+  "priorR3CandidateUnchanged": true,
+  "priorActualFailurePreserved": true,
+  "newLiveRuns": 0
+}

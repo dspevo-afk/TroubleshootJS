@@ -1,0 +1,129 @@
+{
+  "schema": 1,
+  "status": "PASS_ARTIFACT_ONLY",
+  "qualification": false,
+  "archive": "root75-metrics-r4.tar.gz",
+  "archiveSha256": "bcf9fef782fcecf19251cabf17a543e7ddde87de3af051c47c0d6d57474406bb",
+  "memberCount": 21,
+  "members": [
+    {
+      "name": "candidate/README.md",
+      "bytes": 4867,
+      "sha256": "0b8d849d70cbddbfd00383462a43c5dd2a6077066342717298039234ffe5327c"
+    },
+    {
+      "name": "candidate/candidate-manifest.json",
+      "bytes": 1732,
+      "sha256": "c12a6e3675aa6b3f94bb2a08e83f2469c03da6e2edc06b13efe5c212f9f93388"
+    },
+    {
+      "name": "candidate/grant-example-NOT-GRANTED.json",
+      "bytes": 457,
+      "sha256": "15fb99268ce9d296af530426026fcfeb239c785830eb244a3f7b5f4576bb95a0"
+    },
+    {
+      "name": "candidate/headful_attribute_host.py",
+      "bytes": 51883,
+      "sha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be"
+    },
+    {
+      "name": "candidate/instrumented_host.py",
+      "bytes": 8650,
+      "sha256": "76c16529dfa49b3537ae947afe0040f230b64250a9c6cc82da95ba8fad127b18"
+    },
+    {
+      "name": "candidate/offline_checks.py",
+      "bytes": 61425,
+      "sha256": "b192790f130c70c69c71dcf0d28d6cbfafca656498568d42d56bf89806a77459"
+    },
+    {
+      "name": "candidate/renderer_capture.py",
+      "bytes": 10439,
+      "sha256": "a3554aa8e850640863c1b829b46882664d54245e6f7f8b59945d1aefe0a63851"
+    },
+    {
+      "name": "candidate/review-result.json",
+      "bytes": 2669,
+      "sha256": "fcb25d11543b3413e914ac68ccf68d2969e67c4f860d1266c15a3326a483ebaf"
+    },
+    {
+      "name": "candidate/run_one_diagnostic.py",
+      "bytes": 29160,
+      "sha256": "054d0da795802524525fd717ce5de55429c291be610334b4115ad430bd1cbc1f"
+    },
+    {
+      "name": "candidate/verify_offline_candidate.py",
+      "bytes": 2348,
+      "sha256": "eea25a18be2bd7cf9c48e194715a5277a5a80801af4db923083cf54f3c2ea5c6"
+    },
+    {
+      "name": "evidence/offline-result.json",
+      "bytes": 4741,
+      "sha256": "0971a6c7bdedfe4c01f460873d61fce9f80ba58ccbd8dae17076de4f78bef98d"
+    },
+    {
+      "name": "evidence/owned-result.json",
+      "bytes": 1527,
+      "sha256": "f967fa0a5a3465ab8a40b0ea7d05bad5cc6c2ec2d67b853b2187c248447bf563"
+    },
+    {
+      "name": "evidence/pre-test-inputs.tar.gz",
+      "bytes": 37741,
+      "sha256": "eaa4ed53aa5b2301e61254068f320e2d05931ef2204fd1f3238a1fcddea99001"
+    },
+    {
+      "name": "evidence/prior-attempt.json",
+      "bytes": 812,
+      "sha256": "97bd2c43fb41596bf41d84004177210a3d3a4146fadaca6c226e096ba3c84d48"
+    },
+    {
+      "name": "evidence/prior-host-result.json",
+      "bytes": 1729,
+      "sha256": "3acd88172957c056d05a6ad63cfc5b05c0bef6610dba40b6ab2b91d2af925d4c"
+    },
+    {
+      "name": "evidence/prior-offline-result.json",
+      "bytes": 1071,
+      "sha256": "f640e22ea66caef298f3d7e5080a0300930dbc67109ee3c6d128e3f6532246c7"
+    },
+    {
+      "name": "evidence/prior-owned-result.json",
+      "bytes": 1526,
+      "sha256": "150b951a8aac871de67fc48ea3ab3af6ce8bd2f9ad434ab6d9fc0eb6fcdbc12e"
+    },
+    {
+      "name": "evidence/prior-stderr.log",
+      "bytes": 7989,
+      "sha256": "b6de1449bfc8998c3de1df979aede95d45bcd126191cbbc11d6dea50f479b397"
+    },
+    {
+      "name": "evidence/prior-test-inputs.tar.gz",
+      "bytes": 37723,
+      "sha256": "596a40416d5b0c3f6a3432b3ce7d1f106fa72173bbd2180c95066ae5ee6b5268"
+    },
+    {
+      "name": "evidence/raw-bindings.json",
+      "bytes": 782,
+      "sha256": "4a13e199e8b5a8de74f935682bbb4bd8df53233ad922ff65bca54aca4ddedd64"
+    },
+    {
+      "name": "evidence/source-diff.patch",
+      "bytes": 19903,
+      "sha256": "9742b4cc3616c53500b21263e101100522500b1c430f95c572ee8989c7f3b1ef"
+    }
+  ],
+  "candidateManifestSha256": "c12a6e3675aa6b3f94bb2a08e83f2469c03da6e2edc06b13efe5c212f9f93388",
+  "sourceFilesChanged": [
+    "instrumented_host.py",
+    "offline_checks.py"
+  ],
+  "finalSourceTests": 32,
+  "priorR3SourcesUnchanged": true,
+  "priorActualFailurePreserved": true,
+  "originalCold77ArchiveUnchanged": true,
+  "priorFixtureFailurePreserved": true,
+  "pythonAsts": 6,
+  "privacyScan": "PASS",
+  "newLiveRuns": 0,
+  "scope": "New candidate exact-source/hash/privacy/AST packet only; selected-host rebind NOT_RUN; not full Q30 archive gate"
+}

@@ -1,4 +1,48 @@
-# Current checkpoint: Q30 blocked; r3 actual saved, observer defect isolated offline
+# Current checkpoint: Q30 blocked; observer ID correction R4 ready offline
+
+2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
+`9a44732ff159fc662b0eb189b0b7105e60f0397c`, plus this local checkpoint.
+[Implemented candidate/restart](task-evidence/Q30/epoch15-root75-offline-diagnostic/metrics-r4/README.md):
+new six-source workspace R4; only adapter and fixtures changed. One verified setup
+DOM response rebinds document/HTML frontend IDs and cached state before original
+route release. DOM-version/navigation/held-attachment/frame/loader/URL/backend/
+session/HTML checks fence that response. Existing route-abort and cleanup owners,
+counter optionality, report/phase formats, diagnostic and app limits unchanged.
+Immutable R3/actual failure/raw evidence/consumed grant preserved.
+
+Fresh 32 unittest methods with subcases PASS, zero failures/errors/skips.
+Fixture plus input audit 2519.6037 ms; input audit
+1209.4482 ms; owned operation
+2649 ms/exit 0. Cleanup PASS 0 ms
+at recorded resolution/job 0/readers closed; child 21944 absent
+2026-10-04T13:11:10.2643182Z. Dynamic frontend-ID/stale-event/same-response-state
+and strict epoch/scope/session guards covered. Pinned owner run_case synthetic
+publication preserves exact nonpass report bytes/hash/terminal scope; missing
+report cannot become app pass. All original fixture contracts retained.
+1,354 repo/1,526 prepared-app inputs/six final pins unchanged during tests.
+First 32-method FAIL/two fixture startup errors and exact sources/raw host error
+preserved; fixture-only optional CDP payload correction, no assertions relaxed.
+Limited independent final static review: no blocker, no tests/live actions.
+Exact source snapshot/archive/hash/privacy/six AST packet audit recorded; it is
+not the full Q30 source archive gate or selected-host proof.
+
+Manifest `c12a6e3675aa6b3f94bb2a08e83f2469c03da6e2edc06b13efe5c212f9f93388`. Audit-only normal entrypoint ready; fresh manifest-
+bound grant and parent-coordinated 240 s quiet window required for one case.
+No window/auto-run now. No Edge/app/native CPU/build/matrix ran. Selected-host
+rebind/report capture NOT RUN; root75 slowdown/app publication remain UNKNOWN.
+Production/build/owners unchanged; JDK8/GWT rebuild NOT APPLICABLE. No persistent
+task resource; raw fixtures/evidence retained. Seven original untracked caches
+and sibling Desktop work preserved. Local commit only; no push/publish/email.
+
+Q30 disabled/NOT ACCEPTED; original 31 PASS / 1 root75 TIMEOUT 90.221 s / 45 NOT RUN.
+77/308/90,000 ms/640/5,000 ms unchanged; 150 s diagnostic is no 90 s qualification.
+Next: parent grants coordinated selected-host R4 window. Root75 fix, full
+regression/cold77, enabled build/menu/replay/visible repair/retest, full source
+archive and parent acceptance remain pending. U06/U07/Q60 unstarted.
+
+---
+
+# Historical checkpoint: Q30 blocked; r3 actual saved, observer defect isolated offline
 
 2026-10-04. Branch `codex/q30-multirail-qualification`; live/parent local HEAD
 `a6770f35baced892ba949a6c67a20a20c453ff65`, plus this docs/evidence-only checkpoint.

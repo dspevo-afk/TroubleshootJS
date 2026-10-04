@@ -1,0 +1,394 @@
+--- r3/instrumented_host.py
++++ r4/instrumented_host.py
+@@ -45,12 +45,24 @@
+                     # Runs only after r4 has established the exact held main-frame
+                     # script attachment. No app job has started at this point.
+                     try:
++                        version = observer.version
++                        generation = observer.navigation_epoch
++                        attachment = observer.script_attachment
++                        if not isinstance(attachment, dict):
++                            raise ValueError("held-script attachment is missing")
++                        attachment = dict(attachment)
+                         await observer.capture.start(observer.deadline)
+-                        _, _, scope = await observer.read_document_scope()
+-                        attachment = observer.script_attachment
+-                        if (observer.closed or observer.navigation_epoch != attachment["generation"] or
++                        document, html, scope = await observer.read_document_scope()
++                        if (observer.closed or observer.session_lost or version != observer.version or
++                            generation != observer.navigation_epoch or generation != attachment.get("generation") or
++                            observer.script_attachment != attachment or
++                            html is None or
+                             any(attachment.get(key) != value for key, value in scope.items())):
+                             raise ValueError("diagnostic setup crossed held-script attachment")
++                        observer.document_id = document["nodeId"]
++                        observer.document_backend = document["backendNodeId"]
++                        observer.document_scope = scope
++                        observer.attach_html(html)
+                     except (Exception, asyncio.CancelledError) as setup_error:
+                         observer.capture.error("setup-or-scope", setup_error)
+                         # The r4 owner has marked its proxy continue action as
+--- r3/offline_checks.py
++++ r4/offline_checks.py
+@@ -5,6 +5,7 @@
+ """
+ import asyncio
+ from datetime import datetime, timedelta, timezone
++import hashlib
+ import json
+ from pathlib import Path
+ import sys
+@@ -28,6 +29,7 @@
+ URL = "http://127.0.0.1:12345/" + launcher.PATH
+ STATE = "SCREEN_DONE:synthetic-fixture"
+ ATTRIBUTE = "data-tsj-q30-normal-state"
++REPORT_ATTRIBUTE = "data-tsj-q30-normal-report"
+ 
+ 
+ def metric_response(timestamp=100.0, thread=2.0, script_duration=None):
+@@ -141,6 +143,179 @@
+         self.calls.append(("detach", {}))
+ 
+ 
++class RecycledFrontendSession(MetricsSession):
++    """Synthetic CDP session whose frontend IDs change while backend scope stays fixed."""
++
++    def __init__(self, page=None, *, observer=None, fault=None, report=None):
++        super().__init__(fault, observer)
++        self.page = page or getattr(observer, "page", None)
++        self.frame_id = self.target_id = "frame"
++        self.target_url = URL
++        self.listeners = {}
++        self.document_reads = 0
++        self.last_document_id = self.last_html_id = None
++        self.report = report
++
++    def on(self, event, handler):
++        self.listeners.setdefault(event, []).append(handler)
++
++    def remove_listener(self, event, handler):
++        handlers = self.listeners.get(event, [])
++        if handler in handlers:
++            handlers.remove(handler)
++        if not handlers:
++            self.listeners.pop(event, None)
++
++    def emit(self, event, value):
++        for handler in tuple(self.listeners.get(event, ())):
++            handler(value)
++
++    async def send(self, method, params=None):
++        params = params or {}
++        if method in ("Page.enable", "DOM.enable"):
++            self.calls.append((method, params))
++            return {}
++        if method == "Page.getFrameTree":
++            result = await super().send(method, params)
++            frame = result["frameTree"]["frame"]
++            if self.fault == "frame":
++                frame["id"] = "successor-frame"
++            elif self.fault == "loader":
++                frame["loaderId"] = "successor-loader"
++            return result
++        if method == "DOM.getDocument":
++            self.calls.append((method, params))
++            self.document_reads += 1
++            document_id = 2 + 10 * self.document_reads
++            html_id = document_id + 2
++            self.last_document_id, self.last_html_id = document_id, html_id
++            document_backend, html_backend = ((20, 40) if self.fault == "backend" else (2, 4))
++            if self.page is not None and self.page.navigated and self.document_reads == 3:
++                state = "PREPARED:synthetic"
++            elif self.page is not None:
++                state = self.page.attributes.get(ATTRIBUTE, "ATTACHED:synthetic")
++            else:
++                state = "PREPARED:synthetic"
++            attributes = [ATTRIBUTE, state]
++            report = self.page.attributes.get(REPORT_ATTRIBUTE) if self.page is not None else None
++            if report is not None:
++                attributes.extend((REPORT_ATTRIBUTE, report))
++            children = [] if self.fault == "missing-html" else [{
++                "nodeName": "HTML", "nodeId": html_id, "backendNodeId": html_backend,
++                "attributes": attributes}]
++            return {"root": {"nodeName": "#document", "nodeId": document_id,
++                "backendNodeId": document_backend, "documentURL": self.target_url,
++                "children": children}}
++        result = await super().send(method, params)
++        if method == "Performance.getMetrics" and self.metric_reads == 1 and self.observer is not None:
++            if self.fault == "version":
++                self.emit("DOM.documentUpdated", {})
++            elif self.fault == "session":
++                self.emit("close", {})
++            elif self.fault == "navigation":
++                self.observer.navigation_epoch += 1
++            elif self.fault == "attachment":
++                self.observer.script_attachment["generation"] += 1
++        return result
++
++
++class SyntheticRoute:
++    def __init__(self, page, *, publish_events=False):
++        self.page = page
++        self.publish_events = publish_events
++        self.actions = []
++        self.request = types.SimpleNamespace(frame=page.main_frame, resource_type="script")
++        observer = getattr(page, "observer", None)
++        self.old_html_id = getattr(observer, "html_id", None)
++        self.refreshed_html_id = None
++        self.count_after_stale = self.count_after_fresh = None
++        self.cached_state_after_binding = None
++        self.report_present_at_route_entry = None
++        self.report_after_terminal = None
++
++    async def continue_(self):
++        self.actions.append("continue")
++        if not self.publish_events:
++            return
++        observer, session = self.page.observer, self.page.session
++        self.report_present_at_route_entry = REPORT_ATTRIBUTE in self.page.attributes
++        if self.old_html_id is None:
++            self.old_html_id = session.last_html_id - 10
++        self.refreshed_html_id = session.last_html_id
++        self.cached_state_after_binding = observer.state
++        session.emit("DOM.attributeModified", {"nodeId": self.old_html_id,
++            "name": ATTRIBUTE, "value": "RUNNING:stale"})
++        self.count_after_stale = observer.event_count
++        self.page.attributes[ATTRIBUTE] = "RUNNING:synthetic"
++        session.emit("DOM.attributeModified", {"nodeId": self.refreshed_html_id,
++            "name": ATTRIBUTE, "value": "RUNNING:synthetic"})
++        if self.page.report is not None:
++            self.page.attributes[REPORT_ATTRIBUTE] = self.page.report
++        self.page.attributes[ATTRIBUTE] = STATE
++        self.report_after_terminal = self.page.attributes.get(REPORT_ATTRIBUTE)
++        session.emit("DOM.attributeModified", {"nodeId": self.refreshed_html_id,
++            "name": ATTRIBUTE, "value": STATE})
++        self.count_after_fresh = observer.event_count
++        session.emit("DOM.attributeModified", {"nodeId": self.old_html_id,
++            "name": ATTRIBUTE, "value": "SCREEN_DONE:stale"})
++
++    async def abort(self):
++        self.actions.append("abort")
++
++
++class SyntheticPage:
++    """Small fake Playwright surface; it does not start a browser or server."""
++
++    def __init__(self, report=None):
++        self.url = "about:blank"
++        self.main_frame = object()
++        self.navigated = False
++        self.attributes = {ATTRIBUTE: "ATTACHED:synthetic"}
++        self.report = report
++        self.listeners = {}
++        self.observer = None
++        self.route_handler = None
++        self.route_instance = None
++        self.session = RecycledFrontendSession(self, report=report)
++
++        class Context:
++            async def new_cdp_session(_context, _page):
++                return self.session
++        self.context = Context()
++
++    async def route(self, _pattern, handler):
++        self.route_handler = handler
++        self.observer = handler.__self__
++
++    async def unroute(self, _pattern, _handler):
++        return None
++
++    def on(self, event, handler):
++        self.listeners.setdefault(event, []).append(handler)
++
++    def remove_listener(self, event, handler):
++        handlers = self.listeners.get(event, [])
++        if handler in handlers:
++            handlers.remove(handler)
++        if not handlers:
++            self.listeners.pop(event, None)
++
++    async def goto(self, url, **_kwargs):
++        self.url, self.session.target_url, self.navigated = url, url, True
++        self.session.emit("Page.frameNavigated", {"frame": {"id": "frame", "url": url}})
++        await self.observer.html_ready.wait()
++        self.route_instance = SyntheticRoute(self, publish_events=True)
++        await self.route_handler(self.route_instance)
++        return types.SimpleNamespace(status=200, url=url, status_text="OK")
++
++    def locator(self, _selector):
++        page = self
++        class Locator:
++            async def get_attribute(_locator, attribute, timeout=None):
++                return page.attributes.get(attribute)
++        return Locator()
++
++
+ class MetricValidationChecks(unittest.TestCase):
+     def test_metric_values_accepts_finite_required_rows_and_rejects_bad_shape(self):
+         parsed = renderer_capture.metric_values(metric_response())
+@@ -459,6 +634,115 @@
+         self.assertFalse(receipt["binding"].get("finalMetricScopeVerified", False))
+         self.assertEqual(receipt["cleanup"]["status"], "PASS")
+         assert_metrics_only(self, item.session)
++
++
++class RendererAdapterRebindChecks(unittest.IsolatedAsyncioTestCase):
++    def setUp(self):
++        self.root = owned_dir(self, "frontend-id-rebind")
++
++    def direct_route_fixture(self, name, fault):
++        output = self.root / name
++        output.mkdir()
++        host = instrumented_host.imported(HOST_PATH, "root75_rebind_host_" + name,
++                                          instrumented_host.HOST_SHA)
++        captures = instrumented_host.install(host, output)
++        page = SyntheticPage()
++        page.url = URL
++        page.navigated = True
++        item = host.HtmlAttributeObserver(page, URL, ATTRIBUTE, time.monotonic() + 3.0, [])
++        session = RecycledFrontendSession(page, observer=item, fault=fault)
++        page.session, page.observer = session, item
++        item.session = session
++        item.navigation_epoch = 1
++        item.document_scope = {"frameId": "frame", "loaderId": "loader", "pageUrl": URL,
++                               "documentBackend": 2, "htmlBackend": 4}
++        item.document_id = item.document_backend = 2
++        item.html_id = item.html_backend = 4
++        item.state = "ATTACHED:synthetic"
++        item.html_ready.set()
++        for event, handler in (("Page.frameNavigated", item.frame_navigated),
++                               ("DOM.documentUpdated", item.document_updated),
++                               ("close", item.session_closed)):
++            session.on(event, handler)
++            item.listeners.append((event, handler))
++        return host, page, item, SyntheticRoute(page), captures, output
++
++    async def run_owner_case(self, name, report):
++        output = self.root / name
++        output.mkdir()
++        host = instrumented_host.imported(HOST_PATH, "root75_owner_host_" + name,
++                                          instrumented_host.HOST_SHA)
++        captures = instrumented_host.install(host, output)
++        page = SyntheticPage(report)
++        case = {"index": 1, "name": "cold-75", "slug": "001-cold-75",
++            "path": launcher.PATH, "stateAttribute": ATTRIBUTE, "expectedState": None,
++            "expectedPrefix": "SCREEN_DONE", "terminalPrefixes": ["SCREEN_DONE"],
++            "timeoutSeconds": 150.0, "reportAttribute": REPORT_ATTRIBUTE}
++        receipt = await host.run_case(page, "http://127.0.0.1:12345", case, output)
++        return receipt, page, captures, output
++
++    async def test_actual_owner_rebinds_recycled_ids_and_preserves_nonpass_report(self):
++        report_raw = '{ "rootSeed":"75", "applicationOutcome":"FAIL", "terminalStage":"SCREEN_DONE" }'
++        receipt, page, captures, output = await self.run_owner_case("owner-nonpass-report", report_raw)
++        route = page.route_instance
++        self.assertEqual(route.actions, ["continue"])
++        self.assertFalse(route.report_present_at_route_entry)
++        self.assertEqual(route.report_after_terminal, report_raw)
++        self.assertNotEqual(route.old_html_id, route.refreshed_html_id)
++        self.assertEqual(route.cached_state_after_binding, "PREPARED:synthetic")
++        self.assertEqual(route.count_after_stale, 0)
++        self.assertEqual(route.count_after_fresh, 2)
++        self.assertEqual(page.observer.html_id, route.refreshed_html_id)
++        self.assertEqual(receipt["outcome"], "PASS")
++        self.assertEqual(receipt["observedState"], STATE)
++        self.assertTrue(receipt["reportJsonValid"])
++        self.assertTrue(receipt["observation"]["terminalScopeVerified"])
++        scope = receipt["observation"]["scopeIdentity"]
++        self.assertTrue(scope["scriptAttachmentMatchesTerminalScope"])
++        self.assertEqual(scope["documentBackendBefore"], 2)
++        self.assertEqual(scope["documentBackendAfter"], 2)
++        self.assertEqual(scope["htmlBackendBefore"], 4)
++        self.assertEqual(scope["htmlBackendAfter"], 4)
++        report_path = output / "cases/001-cold-75.report.json"
++        self.assertEqual(report_path.read_bytes(), report_raw.encode("utf-8"))
++        self.assertEqual(receipt["reportSha256"], hashlib.sha256(report_raw.encode("utf-8")).hexdigest())
++        self.assertEqual(json.loads(report_path.read_text(encoding="utf-8"))["applicationOutcome"], "FAIL")
++        self.assertEqual(captures[0].binding["terminalScope"], scope)
++        assert_metrics_only(self, page.session)
++
++    async def test_actual_owner_reports_missing_report_without_conflating_terminal_state(self):
++        receipt, page, _, _ = await self.run_owner_case("owner-missing-report", None)
++        self.assertEqual(page.route_instance.actions, ["continue"])
++        self.assertTrue(receipt["terminalReached"])
++        self.assertFalse(receipt["timedOut"])
++        self.assertEqual(receipt["observedState"], STATE)
++        self.assertEqual(receipt["outcome"], "FAIL")
++        self.assertFalse(receipt["reportObserved"])
++        self.assertIsNone(receipt["reportJsonValid"])
++        self.assertFalse(receipt["reportMatch"])
++        self.assertIsNone(receipt["reportSha256"])
++        self.assertTrue(receipt["observation"]["terminalScopeVerified"])
++        self.assertEqual(receipt["observerErrors"], [])
++        assert_metrics_only(self, page.session)
++
++    async def test_adapter_identity_and_epoch_guards_abort_once_before_release(self):
++        faults = ("version", "session", "navigation", "attachment", "backend",
++                  "frame", "loader", "missing-html")
++        with patch.object(renderer_capture, "CAPTURE_SETUP_SECONDS", .25), \
++             patch.object(renderer_capture, "CAPTURE_FINISH_SECONDS", .25), \
++             patch.object(renderer_capture, "CAPTURE_CLEANUP_SECONDS", .10):
++            for fault in faults:
++                with self.subTest(fault=fault):
++                    _, _, item, route, _, _ = self.direct_route_fixture("guard-" + fault, fault)
++                    await item.hold_compiled_script(route)
++                    self.assertEqual(route.actions, ["abort"])
++                    self.assertFalse(item.route_tasks)
++                    self.assertTrue(item.capture.fatal_errors)
++                    await item.close()
++                    result = json.loads((item.capture.root / "renderer-capture.json").read_text())
++                    self.assertEqual(result["status"], "FAIL_CAPTURE")
++                    self.assertEqual(result["cleanup"]["status"], "PASS")
++                    assert_metrics_only(self, item.session)
+ 
+ 
+ def host_receipt(outcome="PASS"):
+@@ -658,7 +942,8 @@
+         raise ValueError("nonfinite synthetic JSON constant: " + value)
+ 
+     def evaluate(self, report, raw, plan, plan_raw, *, acceptance_path):
+-        return {"status": self.app_status, "syntheticFixture": True}
++        return {"status": self.app_status, "applicationOutcome": report.get("applicationOutcome"),
++                "syntheticFixture": True}
+ 
+ 
+ class FakeKernel:
+@@ -749,7 +1034,8 @@
+             "windowEndUtc": "2026-10-04T06:04:00Z",
+             "maximumCases": 1, "qualification": False,
+             "limits": dict(launcher.LIMITS)})
+-        report = {"rootSeed": "75", "applicationOutcome": "PASS", "terminalStage": "SCREEN_DONE",
++        app_outcome = "FAIL" if scenario == "app-nonpass" else "PASS"
++        report = {"rootSeed": "75", "applicationOutcome": app_outcome, "terminalStage": "SCREEN_DONE",
+                   "generationElapsedMs": 1234.5, "workUnits": 640,
+                   "stages": [{"name": "generation", "elapsedMs": 1200.0}],
+                   "attempts": [{"number": 1, "outcome": "PASS"}]}
+@@ -760,7 +1046,7 @@
+                           "phaseClocks": [{"phase": "synthetic-final-audit"}]}
+         created_roots = []
+         runner = FakeRunner(scenario, report, created_roots)
+-        reader = FakeReader("APP_PASS")
++        reader = FakeReader("APP_NONPASS" if scenario == "app-nonpass" else "APP_PASS")
+ 
+         def fake_imported(path, _name, _expected):
+             return reader if Path(path).name == "q30_scale_reader.py" else runner
+@@ -810,6 +1096,20 @@
+         self.assertEqual(len(runner.wait_calls), 1)
+         self.assertEqual(runner.wait_calls[0], launcher.OUTER_MS)
+ 
++    def test_fake_launch_keeps_app_nonpass_separate_from_host_pass_and_optional_cpu(self):
++        code, result, _ = self.run_fake_launch("app-nonpass")
++        self.assertEqual(code, 1)
++        self.assertEqual(result["status"], "DIAGNOSTIC_COMPLETE_APP_NONPASS")
++        self.assertEqual(result["applicationAudit"]["status"], "APP_NONPASS")
++        self.assertEqual(result["applicationAudit"]["applicationOutcome"], "FAIL")
++        self.assertEqual(result["hostObservation"]["outcome"], "PASS")
++        self.assertEqual(result["rendererCapture"], "CPU_UNAVAILABLE")
++        self.assertEqual(result["captureCleanup"], "PASS")
++        self.assertEqual(result["phaseWallTimes"]["applicationOutcome"], "FAIL")
++        self.assertTrue(result["appReportSha256"])
++        self.assertTrue(result["inputBindingUnchanged"])
++        self.assertEqual(result["errors"], [])
++
+     def test_missing_host_or_capture_receipt_keeps_app_report_and_phase_rows(self):
+         for scenario in ("missing-host", "missing-capture"):
+             with self.subTest(scenario=scenario):

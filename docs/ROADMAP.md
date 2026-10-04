@@ -8,6 +8,19 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
 **Current task:** **Q30 NOT ACCEPTED - final cold qualification FAIL at root75**<br>
+**Q30 implemented observer correction R4 (2026-10-04):** New candidate binds
+frontend nodes/cached state from the same verified setup DOM response before
+route release, fenced by DOM version, navigation, attachment, scope and session.
+Only adapter/fixtures changed; four sources and frozen inputs unchanged. Fresh
+32 focused unittest methods with subcases PASS; dynamic IDs/stale events,
+guard rejection and exact nonpass/missing-report capture covered. Final static
+review found no blocker; source/hash/privacy/AST packet audit PASS within its
+artifact scope. R3 actual failure/consumed grant preserved. Ready normal entrypoint
+requires fresh manifest-bound parent grant/240 s window; none granted/auto-run.
+No new live/browser/CPU/build/matrix. Selected-host report capture/root75 outcome
+NOT RUN/UNKNOWN; Q30 disabled/NOT ACCEPTED and original 31 PASS / 1 root75 TIMEOUT
+90.221 s / 45 NOT RUN, all fixed limits/gates unchanged. [Ready candidate and gaps](task-evidence/Q30/epoch15-root75-offline-diagnostic/metrics-r4/README.md).
+
 **Q30 actual r3/offline diagnosis (2026-10-04):** One authorized normal-
 entrypoint root75 returned observer TIMEOUT/report unavailable, exit1. Aggregate
 threadTicks measured77.369066 s thread/76.260622 s script over149.910079 s; app
