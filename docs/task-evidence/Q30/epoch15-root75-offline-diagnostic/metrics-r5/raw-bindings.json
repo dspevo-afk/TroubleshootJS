@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "bindings": [
+    {
+      "name": "offline-result.json",
+      "rawLocation": "<OS_TEMP>\\q30-root75-metrics-r5-final-offline-9xwwgkcm\\stdout.log",
+      "rawSha256": "f2639d8f99a9a42e410230f1d556078eab1e9b849876cf808616ed08ee957a5b",
+      "sanitizedSha256": "2d6b31aa87fa4d3b1892c7c2e97ddbd24424319684bdc0f731b61ee687c0ce0a",
+      "bytes": 4743
+    },
+    {
+      "name": "owned-result.json",
+      "rawLocation": "<OS_TEMP>\\q30-root75-metrics-r5-final-offline-9xwwgkcm\\launcher-result.json",
+      "rawSha256": "cf1a1bb171c2cbbadcced45fd858d2367e59be66e44ff234af3849c34823abd3",
+      "sanitizedSha256": "cf1a1bb171c2cbbadcced45fd858d2367e59be66e44ff234af3849c34823abd3",
+      "bytes": 1527
+    },
+    {
+      "name": "prior-offline-result.json",
+      "rawLocation": "<OS_TEMP>\\q30-root75-metrics-r5-offline-iqw7ifej\\stdout.log",
+      "rawSha256": "5e34520c00d164c0cc391034e5e2f0f08b4f15f65dfcb5ab5b9d6cfd8b33fc27",
+      "sanitizedSha256": "a7ff7c64b74cd996a86597b26e4f25a24b511b4a0705748841a56869ec484ba4",
+      "bytes": 1071
+    },
+    {
+      "name": "prior-owned-result.json",
+      "rawLocation": "<OS_TEMP>\\q30-root75-metrics-r5-offline-iqw7ifej\\launcher-result.json",
+      "rawSha256": "b5a1decd29ca1542ddcb65623736e932614efff3d3f7d2111c2cb26a04091858",
+      "sanitizedSha256": "b5a1decd29ca1542ddcb65623736e932614efff3d3f7d2111c2cb26a04091858",
+      "bytes": 1527
+    },
+    {
+      "name": "timezone-result.json",
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\q30-utc-duration-result.json",
+      "rawSha256": "c29dd6656da1641c5a05c1873a7308768e7a31c2a6029976257cc2268c451577",
+      "sanitizedSha256": "af987ca2f1cda5e57155ad35e5e37110f527a529200bc247aebb41cc9bedafdb",
+      "bytes": 885
+    }
+  ],
+  "originalActualLauncherSha256": "f9432a184da65ec3ac91a3574da97c6302bbbdccbc9906175ade4f6da9bd5f79",
+  "timezoneCorrectedLauncherSha256": "ef9a94be74095f740f934606242625b9375f36f8b43b16cf35d05feea3cb53be",
+  "rawReleaseUnchangedSha256": "29232d8e3ee30dfd1ee013d992c546b30ae1acde98054e43ea261627ab12c0d7",
+  "immutableR4OracleSha256": "76c16529dfa49b3537ae947afe0040f230b64250a9c6cc82da95ba8fad127b18",
+  "firstFixtureFailurePreserved": true
+}

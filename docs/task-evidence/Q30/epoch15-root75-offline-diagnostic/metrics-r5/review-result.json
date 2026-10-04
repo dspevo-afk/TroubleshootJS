@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "status": "PASS_LIMITED_STATIC_OWNER_REUSE_SCOPE",
+  "qualification": false,
+  "candidateManifestSha256": "40d92a573000021bb22190aeda4fe40455ed39ada1349d8d638e36e326bfb02b",
+  "sourcePins": {
+    "renderer_capture.py": {
+      "sha256": "a3554aa8e850640863c1b829b46882664d54245e6f7f8b59945d1aefe0a63851",
+      "size": 10439
+    },
+    "instrumented_host.py": {
+      "sha256": "eff7d7ef3f2b46ec8000423e27dfeb3694dc51a4de31180dc529e4dec4633c8f",
+      "size": 10695
+    },
+    "run_one_diagnostic.py": {
+      "sha256": "054d0da795802524525fd717ce5de55429c291be610334b4115ad430bd1cbc1f",
+      "size": 29160
+    },
+    "offline_checks.py": {
+      "sha256": "4d255e49108361b80cb3eca0f36b508f9143cb10c19f1bc672d2d3a62046c22f",
+      "size": 65892
+    },
+    "headful_attribute_host.py": {
+      "sha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+      "size": 51883
+    },
+    "verify_offline_candidate.py": {
+      "sha256": "eea25a18be2bd7cf9c48e194715a5277a5a80801af4db923083cf54f3c2ea5c6",
+      "size": 2348
+    }
+  },
+  "reviewer": "Independent leaf observer-path reviewer; root reconciled actual final source identities",
+  "blockers": [],
+  "checksRunByReviewer": [],
+  "browserLaunchedByReviewer": false,
+  "scope": [
+    "Reuse pinned acquisition owner and maintained bounded launcher unchanged",
+    "No setup DOM.getDocument/rebind; one nondestructive current main-frame/loader probe",
+    "Existing html_ready acquisition completes before synchronous exact semantic/live/session/ID/pending/error proof",
+    "Original route abort and performance/job cleanup owners unchanged",
+    "Exact immutable R4 refresh witness, dynamic frontend IDs/stale events, report bytes/hash, app FAIL vs host PASS, missing report"
+  ],
+  "nonblockingLimits": [
+    "Seven identity negative subcases assert abort/fatal/cleanup, but not per-fault named diagnostic labels.",
+    "Actual R4 failed predicate remains UNKNOWN because the generic receipt omits operands.",
+    "Selected-host revised behavior/overhead/root75 outcome NOT_RUN; no Q30 acceptance or app/CPU result."
+  ],
+  "rootChecks": {
+    "tests": 35,
+    "failures": 0,
+    "testErrors": 0,
+    "skipped": 0,
+    "status": "PASS_OFFLINE_ONLY",
+    "ownedOperationMs": 2608
+  }
+}

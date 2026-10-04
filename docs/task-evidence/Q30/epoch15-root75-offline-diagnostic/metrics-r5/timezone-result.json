@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "status": "PASS_TIMEZONE_DURATION_ONLY",
+  "qualification": false,
+  "tests": 5,
+  "checkedUtc": "2026-10-04T13:43:47.2023083Z",
+  "testsUsedActualSelectedPowerShell": true,
+  "browserLaunched": false,
+  "rawReleaseReceiptChanged": false,
+  "selectedLocalTimezone": "Eastern Standard Time",
+  "cases": [
+    {
+      "case": "actual-r4",
+      "actualSeconds": 0.5279744,
+      "expectedSeconds": 0.5279744
+    },
+    {
+      "case": "same-positive-offset",
+      "actualSeconds": 0.5279744,
+      "expectedSeconds": 0.5279744
+    },
+    {
+      "case": "same-negative-offset",
+      "actualSeconds": 0.5279744,
+      "expectedSeconds": 0.5279744
+    },
+    {
+      "case": "midnight",
+      "actualSeconds": 0.75,
+      "expectedSeconds": 0.75
+    },
+    {
+      "case": "negative",
+      "actualSeconds": -0.5279744,
+      "expectedSeconds": -0.5279744
+    }
+  ]
+}

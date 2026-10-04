@@ -8,6 +8,30 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
 **Current task:** **Q30 NOT ACCEPTED - final cold qualification FAIL at root75**<br>
+**Q30 actual R4 / minimal owner reuse R5 (2026-10-04):** R4 failed
+at the added setup guard before app release: FAIL_CAPTURE, no app report/state/
+CPU delta or root75 result. Exact rejected predicate UNKNOWN because its generic
+receipt omitted operands. Main 6.236 s; host cleanup PASS 1.262 s, jobs zero,
+readers closed. Eleven PIDs absent/port 52550 closed; desktop release verified
+13:29:31.453Z before window end. Raw wrong duration retained and flagged;
+separate UTC correction passed five selected-PowerShell cases. Implemented R5
+reuses the pinned observer/acquisition/launcher, removes setup DOM.getDocument,
+manual rebind and acquisition-epoch equality, and retains one frame probe that
+preserves DOM bindings. Existing ready acquisition and exact synchronous
+attachment proof precede original continuation; failed checks/operands recorded.
+Exact immutable-R4 synthetic refresh witness fails while R5 passes; actual
+failed operand remains UNKNOWN. Final 35 offline methods/input audit PASS;
+first three fixture failures retained/corrected without adapter changes.
+31 old test bodies retained; one wrong acquisition-epoch oracle explicitly
+corrected. Final static review PASS/no blocker; packet hash/privacy/AST audit
+scoped to artifacts. Only adapter/fixtures changed; four sources, production,
+save/replay formats and limits unchanged. No new live/browser/app/CPU/build/
+matrix. Selected-host R5 NOT RUN, no grant/auto-run; parent review before retry.
+Q30 disabled/NOT ACCEPTED; original 31 PASS / 1 root75 TIMEOUT 90.221 s / 45 NOT RUN,
+all fixed limits and remaining gates unchanged. U06/U07/Q60 unstarted.
+[Actual R4](task-evidence/Q30/epoch15-root75-offline-diagnostic/metrics-r4/actual-window-1/README.md)
+and [implemented R5](task-evidence/Q30/epoch15-root75-offline-diagnostic/metrics-r5/README.md).
+
 **Q30 implemented observer correction R4 (2026-10-04):** New candidate binds
 frontend nodes/cached state from the same verified setup DOM response before
 route release, fenced by DOM version, navigation, attachment, scope and session.

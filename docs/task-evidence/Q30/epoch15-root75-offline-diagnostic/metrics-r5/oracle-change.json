@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "originalMethodsUnchanged": 31,
+  "addedMethods": 3,
+  "changedMethod": "RendererAdapterRebindChecks.test_adapter_identity_and_epoch_guards_abort_once_before_release",
+  "reason": "DOM acquisition epoch refresh is allowed only after completed owner acquisition with exact semantic identities; it is not a navigation or document identity change.",
+  "retainedNegativeCases": [
+    "session",
+    "navigation",
+    "attachment",
+    "backend",
+    "frame",
+    "loader",
+    "missing-html"
+  ],
+  "newNegativeCases": [
+    "pending owner acquisition",
+    "owner acquisition error"
+  ],
+  "exactR4SourceCounterexample": "Synthetic same-backend/loader/navigation refresh aborts in exact immutable R4; actual failed predicate remains UNKNOWN."
+}

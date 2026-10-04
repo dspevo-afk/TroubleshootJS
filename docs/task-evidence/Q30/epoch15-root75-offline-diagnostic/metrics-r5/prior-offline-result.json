@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "status": "FAIL",
+  "qualification": false,
+  "browserLaunched": false,
+  "q30CasesLaunched": 0,
+  "nativeCpuSamples": 0,
+  "tests": 35,
+  "failures": 3,
+  "errors": [],
+  "testErrors": 0,
+  "skipped": 0,
+  "sourcePins": {
+    "renderer_capture.py": "a3554aa8e850640863c1b829b46882664d54245e6f7f8b59945d1aefe0a63851",
+    "instrumented_host.py": "eff7d7ef3f2b46ec8000423e27dfeb3694dc51a4de31180dc529e4dec4633c8f",
+    "run_one_diagnostic.py": "054d0da795802524525fd717ce5de55429c291be610334b4115ad430bd1cbc1f",
+    "offline_checks.py": "efe3881a93d024e74c33414892a3f9398edc013a41cf1e3941c97ec7000ff93a",
+    "headful_attribute_host.py": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+    "verify_offline_candidate.py": "eea25a18be2bd7cf9c48e194715a5277a5a80801af4db923083cf54f3c2ea5c6"
+  },
+  "sourceUnchanged": true,
+  "candidateManifestSha256": "a453b5ef4cd70b3a6619a75a48a45ada78b9a2fa721fe07862e644ac5a21ce7f",
+  "inputAudit": null,
+  "fixtureRoot": "<OS_TEMP>\\q30-root75-metrics-offline-15k_wad9",
+  "elapsedMs": 1343.8747
+}

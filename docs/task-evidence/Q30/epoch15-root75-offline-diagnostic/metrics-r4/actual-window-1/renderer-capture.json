@@ -1,0 +1,146 @@
+{
+  "schema": 2,
+  "status": "FAIL_CAPTURE",
+  "qualification": false,
+  "diagnosticOnly": true,
+  "binding": {
+    "rootSeed": "75",
+    "pageUrl": "http://127.0.0.1:52550/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "attachedDocument": {
+      "frameId": "91E05836F728EEDB7B7284E8F8B47E8F",
+      "loaderId": "AAB7FA15BA7B5D0A12FA2447E36ABC20",
+      "pageUrl": "http://127.0.0.1:52550/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+      "documentBackend": 2,
+      "htmlBackend": 4,
+      "generation": 1,
+      "exactPageUrl": true,
+      "resourceType": "script",
+      "mainFrameRequest": true
+    },
+    "r4OriginalHostSha256": "146101ab19500b06e8d0cb56bde32d90f8439c87b245099c8e1c569b07df85cd",
+    "derivedHeadfulHostSha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+    "terminalScopeVerified": false,
+    "terminalScope": null
+  },
+  "browserProtocol": {
+    "protocolVersion": "1.3",
+    "product": "Edg/154.0.4258.53",
+    "revision": "@5af6e80f702cffe10645c6d6433668f011b739be",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "jsVersion": "15.4.11.7"
+  },
+  "timeDomain": "threadTicks",
+  "tracing": "NOT_ATTEMPTED_METRICS_ONLY",
+  "targetBefore": {
+    "targetId": "91E05836F728EEDB7B7284E8F8B47E8F",
+    "type": "page",
+    "title": "127.0.0.1:52550/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "url": "http://127.0.0.1:52550/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "attached": true,
+    "canAccessOpener": false,
+    "browserContextId": "37273F09F1B4008DF1CE919D93A3090B",
+    "pid": 30288
+  },
+  "targetAfter": null,
+  "metricsBefore": {
+    "Timestamp": 648120.410212,
+    "AudioHandlers": 0,
+    "AudioWorkletProcessors": 0,
+    "Documents": 6,
+    "Frames": 5,
+    "JSEventListeners": 12,
+    "LayoutObjects": 14,
+    "MediaKeySessions": 0,
+    "MediaKeys": 0,
+    "Nodes": 79,
+    "Resources": 14,
+    "ContextLifecycleStateObservers": 7,
+    "V8PerContextDatas": 6,
+    "WorkerGlobalScopes": 0,
+    "UACSSResources": 0,
+    "RTCPeerConnections": 0,
+    "ResourceFetchers": 6,
+    "AdSubframes": 0,
+    "DetachedScriptStates": 2,
+    "ArrayBufferContents": 0,
+    "LayoutCount": 1,
+    "RecalcStyleCount": 1,
+    "LayoutDuration": 0.000912,
+    "RecalcStyleDuration": 0.000247,
+    "DevToolsCommandDuration": 3.8e-05,
+    "ScriptDuration": 0,
+    "V8CompileDuration": 0,
+    "TaskDuration": 0.001228,
+    "TaskOtherDuration": 3.1e-05,
+    "ThreadTime": 0.001247,
+    "ProcessTime": 0.081726,
+    "JSHeapUsedSize": 1631024,
+    "JSHeapTotalSize": 3145728,
+    "FirstMeaningfulPaint": 0,
+    "DomContentLoaded": 648120.403348,
+    "NavigationStart": 648120.336874
+  },
+  "metricsAfter": null,
+  "metricDelta": null,
+  "commandClocks": [
+    {
+      "method": "Browser.getVersion",
+      "beforeNs": 648120403303000,
+      "afterNs": 648120405657900
+    },
+    {
+      "method": "Target.getTargetInfo",
+      "beforeNs": 648120405662000,
+      "afterNs": 648120406214200
+    },
+    {
+      "method": "Performance.enable",
+      "beforeNs": 648120406220000,
+      "afterNs": 648120409266300
+    },
+    {
+      "method": "Performance.getMetrics",
+      "beforeNs": 648120409267600,
+      "afterNs": 648120410751600
+    },
+    {
+      "method": "Performance.disable",
+      "beforeNs": 648120632188100,
+      "afterNs": 648120632864100
+    }
+  ],
+  "errors": [],
+  "fatalErrors": [
+    {
+      "phase": "setup-or-scope",
+      "type": "ValueError",
+      "message": "diagnostic setup crossed held-script attachment"
+    },
+    {
+      "phase": "final-scope",
+      "type": "CaptureIdentityError",
+      "message": "final boundary lacks stable attachment scope"
+    }
+  ],
+  "cleanup": {
+    "status": "PASS",
+    "performanceEnableAttempted": true,
+    "performanceDisabled": true,
+    "errors": []
+  },
+  "setupElapsedMs": 7.4756,
+  "finishElapsedMs": 0.6913,
+  "bounds": {
+    "setupSeconds": 5.0,
+    "finishSeconds": 5.0,
+    "cleanupReserveSeconds": 1.5,
+    "metricRows": 128,
+    "metricNameChars": 256
+  },
+  "limits": [
+    "Optional metric unavailability does not abort a safely owned app run.",
+    "ThreadTime is aggregate renderer main-thread running time including GC/DOM/host work, not solver-only CPU.",
+    "Wall minus thread time does not establish preemption; no GC or per-stage CPU attribution.",
+    "App phase wall times come only from the unchanged terminal report; instrumentation overhead is unknown."
+  ]
+}

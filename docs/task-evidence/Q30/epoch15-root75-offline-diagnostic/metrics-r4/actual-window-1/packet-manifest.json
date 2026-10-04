@@ -1,0 +1,348 @@
+{
+  "schema": 1,
+  "status": "PRESERVED_ACTUAL_R4_FAILURE",
+  "qualification": false,
+  "parentHeadAtPreservation": "8409d7248899b4bd16825696f21852fc63eec109",
+  "candidateManifestSha256": "c12a6e3675aa6b3f94bb2a08e83f2469c03da6e2edc06b13efe5c212f9f93388",
+  "rawReceiptCount": 14,
+  "hashOnlyBindingCount": 19,
+  "artifacts": {
+    "candidate-manifest.json": {
+      "sha256": "c12a6e3675aa6b3f94bb2a08e83f2469c03da6e2edc06b13efe5c212f9f93388",
+      "bytes": 1732
+    },
+    "controller-result.json": {
+      "sha256": "758bdff4124bf7ff2f0f7532ff01096f799268cdaaa39a77ece00139d7bccba8",
+      "bytes": 1964
+    },
+    "diagnostic-result.json": {
+      "sha256": "b756d67d6d38cd99154de9faf3f4f74779c8d6cb6ddc13dfbd759484ef1498d7",
+      "bytes": 3665
+    },
+    "host-result.json": {
+      "sha256": "7082496c693a97d11a842b6b49f364a20eeb824597c88a63639c18360f0e0a37",
+      "bytes": 6325
+    },
+    "host-identity.json": {
+      "sha256": "8e66a31906938303bf56464080ae661558e3fb9c7a66034a1cbbacb0c5003bf4",
+      "bytes": 1798
+    },
+    "renderer-capture.json": {
+      "sha256": "e7c71523b8af4275d70d601bdeed6cec4bece78f758ce1f2754d6127e37f386e",
+      "bytes": 4559
+    },
+    "input-audit-before.json": {
+      "sha256": "4bffe97d035eda5085812cdcce5fdf60394578ebf1b7ec14a8c5f03459e08a5e",
+      "bytes": 3481
+    },
+    "input-audit-after.json": {
+      "sha256": "08ee1a4570d91f41b8aaf77723a1bae2b5419facc89ae294c53a0928ff0459ac",
+      "bytes": 2938
+    },
+    "normal-owner.json": {
+      "sha256": "988d6684530af89f1c9167a0185d283f48ed4c545967589e55ce3d786ea6cdd5",
+      "bytes": 2772
+    },
+    "normal-exit.json": {
+      "sha256": "5d946cfe8ba2cfd7c1e357acb118570227937b11c729172e0441ecbcc096dfff",
+      "bytes": 279
+    },
+    "grant.json": {
+      "sha256": "ec6c62e9b4cdedfacb70ecd3a546d2b841717fb07465816c284edf86149176a9",
+      "bytes": 521
+    },
+    "consumed-grant.json": {
+      "sha256": "a34f7c1bde04c830d752d6c71f257223918653129c777dd6cbbfe1a9e6b1b93e",
+      "bytes": 356
+    },
+    "release.json": {
+      "sha256": "72c89db3ea7f018e0fcbce02ff509ee49daa0704cf9d78425ffccef1fcf33de6",
+      "bytes": 2283
+    },
+    "preflight-result.json": {
+      "sha256": "d2325c6ce6e1e4ffef02e3821b9fd3d04dbcf2098f4aea9a87cead5eb8163bfd",
+      "bytes": 441
+    },
+    "actual-result.json": {
+      "sha256": "c52feca0f9b790ff80cdba0d238da5d60bcf495efc515f447d762827fff0376c",
+      "bytes": 22241
+    }
+  },
+  "rawReceiptBindings": [
+    {
+      "file": "candidate-manifest.json",
+      "rawSha256": "c12a6e3675aa6b3f94bb2a08e83f2469c03da6e2edc06b13efe5c212f9f93388",
+      "sanitizedSha256": "c12a6e3675aa6b3f94bb2a08e83f2469c03da6e2edc06b13efe5c212f9f93388",
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r4\\candidate-manifest.json",
+      "rawBytes": 1732,
+      "preservedCopy": "candidate-manifest.json"
+    },
+    {
+      "file": "controller-result.json",
+      "rawSha256": "092df95c4560ec239cab43b86a8df14857fa513bc768acf69fb9a5196bee1230",
+      "sanitizedSha256": "758bdff4124bf7ff2f0f7532ff01096f799268cdaaa39a77ece00139d7bccba8",
+      "rawLocation": "<OS_TEMP>\\q30-root75-diagnostic-controller-9_rhx8ap\\controller-result.json",
+      "rawBytes": 2118,
+      "preservedCopy": "controller-result.json"
+    },
+    {
+      "file": "diagnostic-result.json",
+      "rawSha256": "3c7a28e138361d8ec7fdd3cce55a951591ec0e34d8ac6b612707cd4d6f5e83d0",
+      "sanitizedSha256": "b756d67d6d38cd99154de9faf3f4f74779c8d6cb6ddc13dfbd759484ef1498d7",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hqodbu59\\diagnostic-result.json",
+      "rawBytes": 3841,
+      "preservedCopy": "diagnostic-result.json"
+    },
+    {
+      "file": "host-result.json",
+      "rawSha256": "0cbb438e083a90b93fbee22c5617ec9c20ac4be7594b7145d4cf2849e9b82847",
+      "sanitizedSha256": "7082496c693a97d11a842b6b49f364a20eeb824597c88a63639c18360f0e0a37",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hqodbu59\\host-output\\result.json",
+      "rawBytes": 6383,
+      "preservedCopy": "host-result.json"
+    },
+    {
+      "file": "host-identity.json",
+      "rawSha256": "6feeaa676b84b225f78658f8f18f1438df78cf636c918943837054f3f0b1c811",
+      "sanitizedSha256": "8e66a31906938303bf56464080ae661558e3fb9c7a66034a1cbbacb0c5003bf4",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hqodbu59\\host-output\\identity.json",
+      "rawBytes": 1827,
+      "preservedCopy": "host-identity.json"
+    },
+    {
+      "file": "renderer-capture.json",
+      "rawSha256": "d50420b2acf3166d8b4765097dc363106817e4b177080d29aabe4bac2d49b51a",
+      "sanitizedSha256": "e7c71523b8af4275d70d601bdeed6cec4bece78f758ce1f2754d6127e37f386e",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hqodbu59\\host-output\\renderer-capture.json",
+      "rawBytes": 4705,
+      "preservedCopy": "renderer-capture.json"
+    },
+    {
+      "file": "input-audit-before.json",
+      "rawSha256": "d82257691ce77a1dacaebd65803bdb8c6943d68430147b024d849a2eecb78bd9",
+      "sanitizedSha256": "4bffe97d035eda5085812cdcce5fdf60394578ebf1b7ec14a8c5f03459e08a5e",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hqodbu59\\input-audit-before.json",
+      "rawBytes": 3573,
+      "preservedCopy": "input-audit-before.json"
+    },
+    {
+      "file": "input-audit-after.json",
+      "rawSha256": "eb57cde157b0a1d0fd523554c68becd3e054af4115caf8d893847603f8473319",
+      "sanitizedSha256": "08ee1a4570d91f41b8aaf77723a1bae2b5419facc89ae294c53a0928ff0459ac",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hqodbu59\\input-audit-after.json",
+      "rawBytes": 3003,
+      "preservedCopy": "input-audit-after.json"
+    },
+    {
+      "file": "normal-owner.json",
+      "rawSha256": "8cff97d5de0c18fe65e1e784e99cda6bb8ff4ed21275fc802dd7111264e41a89",
+      "sanitizedSha256": "988d6684530af89f1c9167a0185d283f48ed4c545967589e55ce3d786ea6cdd5",
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r4\\r4-live-normal-owner.json",
+      "rawBytes": 3626,
+      "preservedCopy": "normal-owner.json"
+    },
+    {
+      "file": "normal-exit.json",
+      "rawSha256": "e23d5a8accea2554794833f764096d0d7dc2f5ccf5140376b2d36979176e16b8",
+      "sanitizedSha256": "5d946cfe8ba2cfd7c1e357acb118570227937b11c729172e0441ecbcc096dfff",
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r4\\r4-live-normal-exit.json",
+      "rawBytes": 290,
+      "preservedCopy": "normal-exit.json"
+    },
+    {
+      "file": "grant.json",
+      "rawSha256": "c5ba82c4e24c56a37a5dfb9e7cfdfb9330965a5f30c056bf3774e9a63a4270e1",
+      "sanitizedSha256": "ec6c62e9b4cdedfacb70ecd3a546d2b841717fb07465816c284edf86149176a9",
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r4\\quiet-window-grant-20261004-r4-once.json",
+      "rawBytes": 537,
+      "preservedCopy": "grant.json"
+    },
+    {
+      "file": "consumed-grant.json",
+      "rawSha256": "5f8605496d271804885e4c7a9423b659cdf1d7e20b7b98e6e57de982cb83642b",
+      "sanitizedSha256": "a34f7c1bde04c830d752d6c71f257223918653129c777dd6cbbfe1a9e6b1b93e",
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r4\\launch-used-c5ba82c4e24c56a37a5dfb9e7cfdfb9330965a5f30c056bf3774e9a63a4270e1.json",
+      "rawBytes": 363,
+      "preservedCopy": "consumed-grant.json"
+    },
+    {
+      "file": "release.json",
+      "rawSha256": "29232d8e3ee30dfd1ee013d992c546b30ae1acde98054e43ea261627ab12c0d7",
+      "sanitizedSha256": "72c89db3ea7f018e0fcbce02ff509ee49daa0704cf9d78425ffccef1fcf33de6",
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r4\\r4-live-release.json",
+      "rawBytes": 2465,
+      "preservedCopy": "release.json"
+    },
+    {
+      "file": "preflight-result.json",
+      "rawSha256": "9696af1135a44a788b16fe075e2e97d6713df5c0069d0d78e399928f50d4325f",
+      "sanitizedSha256": "d2325c6ce6e1e4ffef02e3821b9fd3d04dbcf2098f4aea9a87cead5eb8163bfd",
+      "rawLocation": "<OS_TEMP>\\q30-root75-r4-live-preflight-c_a9it82\\launcher-result.json",
+      "rawBytes": 1527,
+      "preservedCopy": "preflight-result.json"
+    }
+  ],
+  "additionalRawRetained": [
+    {
+      "file": "controller-stdout.log",
+      "rawSha256": "6bb140e1cfb688b0c7f5d26761700dd8bd1f3da5ab544ddaf2ad300b627673da",
+      "rawBytes": 701,
+      "rawLocation": "<OS_TEMP>\\q30-root75-diagnostic-controller-9_rhx8ap\\stdout.log",
+      "copied": false,
+      "reason": "Raw log retained in place; hash only"
+    },
+    {
+      "file": "controller-stderr.log",
+      "rawSha256": "9f1a9a66b23b07f1ec82cc6b5e0f1173705a6233093c200adbe98de4b3cbd83e",
+      "rawBytes": 981,
+      "rawLocation": "<OS_TEMP>\\q30-root75-diagnostic-controller-9_rhx8ap\\stderr.log",
+      "copied": false,
+      "reason": "Raw log retained in place; hash only"
+    },
+    {
+      "file": "diagnostic-stdout.log",
+      "rawSha256": "6e86e62d35a76f0e5b587d09e0fdcbbfa5d99786fd168afa84a106f0682e1b51",
+      "rawBytes": 43,
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hqodbu59\\stdout.log",
+      "copied": false,
+      "reason": "Raw log retained in place; hash only"
+    },
+    {
+      "file": "diagnostic-stderr.log",
+      "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawBytes": 0,
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hqodbu59\\stderr.log",
+      "copied": false,
+      "reason": "Raw log retained in place; hash only"
+    },
+    {
+      "file": "normal-stdout.log",
+      "rawSha256": "092df95c4560ec239cab43b86a8df14857fa513bc768acf69fb9a5196bee1230",
+      "rawBytes": 2118,
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r4\\r4-live-normal.stdout.log",
+      "copied": false,
+      "reason": "Raw log retained in place; hash only"
+    },
+    {
+      "file": "normal-stderr.log",
+      "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawBytes": 0,
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r4\\r4-live-normal.stderr.log",
+      "copied": false,
+      "reason": "Raw log retained in place; hash only"
+    },
+    {
+      "file": "preflight-stdout.log",
+      "rawSha256": "b54f13bfca62a743f9a633dd2566c2a95fe407249e46a51259840c67cda50cca",
+      "rawBytes": 3572,
+      "rawLocation": "<OS_TEMP>\\q30-root75-r4-live-preflight-c_a9it82\\stdout.log",
+      "copied": false,
+      "reason": "Raw log retained in place; hash only"
+    },
+    {
+      "file": "preflight-stderr.log",
+      "rawSha256": "b3179c62aa8dfd5e5c537b98c57690de115d97915184961ae549d0f523829c08",
+      "rawBytes": 490,
+      "rawLocation": "<OS_TEMP>\\q30-root75-r4-live-preflight-c_a9it82\\stderr.log",
+      "copied": false,
+      "reason": "Raw log retained in place; hash only"
+    },
+    {
+      "file": "preflight-launch.json",
+      "rawSha256": "6c8118b0c777482779f925f2122cdfefeb8a4e169a08addc33bda61416c76db8",
+      "rawBytes": 602,
+      "rawLocation": "<OS_TEMP>\\q30-root75-r4-live-preflight-c_a9it82\\launch.json",
+      "copied": false,
+      "reason": "Raw launch receipt retained in place; hash only"
+    },
+    {
+      "file": "preflight-baseline-processes.json",
+      "rawSha256": "5f58e4508a03a51fa06735ed0846812b0e2bbcaa9be67ea7d0bcbc6cf0106a49",
+      "rawBytes": 24387,
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r4\\r4-live-preflight-processes.json",
+      "copied": false,
+      "reason": "Baseline process inventory not copied; hash only"
+    },
+    {
+      "file": "normal-launcher-original.ps1",
+      "rawSha256": "f9432a184da65ec3ac91a3574da97c6302bbbdccbc9906175ade4f6da9bd5f79",
+      "rawBytes": 10963,
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r4\\r4-live-launcher-original.ps1",
+      "copied": false,
+      "reason": "Original actual launcher source retained in place; hash only"
+    },
+    {
+      "file": "renderer-launch.json",
+      "rawSha256": "e49a9ebd0284ec8c2dad9e9f69197971f07bfd2c7e4a54681eb8f58dff9cf7f5",
+      "rawBytes": 1221,
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hqodbu59\\launch.json",
+      "copied": false,
+      "reason": "Raw launch receipt retained in place; hash only"
+    },
+    {
+      "file": "host-input-manifest-before.json",
+      "rawSha256": "fc4b07d09aa469fccace8bc28286eab6e34fdb87512a0822b1a7b53dd0179b6f",
+      "rawBytes": 291507,
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hqodbu59\\host-output\\input-manifest-before.json",
+      "copied": false,
+      "reason": "Large input manifest retained in place; hash only"
+    },
+    {
+      "file": "host-input-manifest-after.json",
+      "rawSha256": "4497b2e5ef39c54216b951e725da7fc975efa818e7596d98898473650a341b1a",
+      "rawBytes": 291507,
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hqodbu59\\host-output\\input-manifest-after.json",
+      "copied": false,
+      "reason": "Large input manifest retained in place; hash only"
+    },
+    {
+      "file": "host-owned-processes-before.json",
+      "rawSha256": "4993df8a6a647e7259be77ac3f903bbdd1429fcf2d580eec432c73148bb85ea1",
+      "rawBytes": 1298,
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hqodbu59\\host-output\\owned-processes-before.json",
+      "copied": false,
+      "reason": "Process inventory retained in place; hash only"
+    },
+    {
+      "file": "host-owned-processes-before-close.json",
+      "rawSha256": "5f5b45ccf872405be2c6ec6d4a6f0670433b4d84fcd507d3f6681e916541d1ac",
+      "rawBytes": 1483,
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hqodbu59\\host-output\\owned-processes-before-close.json",
+      "copied": false,
+      "reason": "Process inventory retained in place; hash only"
+    },
+    {
+      "file": "host-progress.json",
+      "rawSha256": "4e2d2a732a339d493e892af29d224a1cdbe5073768c79438a0a9bdc9da37e1e9",
+      "rawBytes": 5658,
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hqodbu59\\host-output\\progress.json",
+      "copied": false,
+      "reason": "Progress receipt retained in place; hash only"
+    },
+    {
+      "file": "host-runner-before.json",
+      "rawSha256": "6e9cc169981e593ad19aa951f932e77e4a4ba87e56d830301999d6fb43e7675a",
+      "rawBytes": 139,
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hqodbu59\\host-output\\runner-before.json",
+      "copied": false,
+      "reason": "Raw receipt retained in place; hash only"
+    },
+    {
+      "file": "host-runner-after.json",
+      "rawSha256": "6e9cc169981e593ad19aa951f932e77e4a4ba87e56d830301999d6fb43e7675a",
+      "rawBytes": 139,
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hqodbu59\\host-output\\runner-after.json",
+      "copied": false,
+      "reason": "Raw receipt retained in place; hash only"
+    }
+  ],
+  "validation": {
+    "sixCandidateSourcePins": "PASS",
+    "inputAuditBeforeAfterIdentity": "PASS",
+    "grantAndConsumedMarkerBinding": "PASS",
+    "failureAndCleanupConsistency": "PASS",
+    "utcReleaseDelta": "PASS; derived independently, raw field preserved and flagged",
+    "personalPathScrub": "PASS",
+    "sourceReadsOnly": true
+  }
+}

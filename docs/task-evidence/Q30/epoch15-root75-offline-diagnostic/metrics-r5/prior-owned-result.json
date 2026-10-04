@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "status": "FAIL",
+  "qualification": false,
+  "runnerSha256": "19931855b98aeb358f16dcbd94b6c69d81a221191bed2f07697a3ccdcffff5e6",
+  "outerTimeoutMs": 30000,
+  "startedUtc": "2026-10-04T13:40:43.438918+00:00",
+  "errors": [],
+  "process": {
+    "pid": 9388,
+    "creationFileTimeTicks": 134355948434430163,
+    "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+    "commandSha256": "29bb5c4b6a5133ef3d2f627710eb4e32dc2bddbdc4195005e14b56b4daffc732",
+    "resumeMonotonicNs": 648796293457500
+  },
+  "operation": {
+    "reason": null,
+    "exitCode": 1,
+    "cleanup": {
+      "pid": 9388,
+      "processSignaled": true,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "drainsComplete": true,
+      "liveDrainers": 0,
+      "drainerWaitMs": 0,
+      "drainerErrors": [],
+      "cleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null
+    },
+    "operationElapsedMs": 1475
+  },
+  "logs": [
+    {
+      "bytes": 1126,
+      "readerAlive": false,
+      "errors": [],
+      "limitExceeded": false,
+      "streamClosed": true
+    },
+    {
+      "bytes": 10168,
+      "readerAlive": false,
+      "errors": [],
+      "limitExceeded": false,
+      "streamClosed": true
+    }
+  ],
+  "sourceUnchanged": true,
+  "elapsedWallSeconds": 1.4847284000134096,
+  "finishedUtc": "2026-10-04T13:40:44.923645+00:00"
+}

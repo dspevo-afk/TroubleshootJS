@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "status": "PASS_RELEASED",
+  "qualification": false,
+  "checkedUtc": "2026-10-04T13:29:31.4534931Z",
+  "verificationStartedUtc": "2026-10-04T13:29:30.9294923Z",
+  "verificationSeconds": 0.5254438,
+  "secondsAfterEntrypointExit": 14400.5279744,
+  "beforeWindowEnd": true,
+  "controllerRoot": "<OS_TEMP>\\q30-root75-diagnostic-controller-9_rhx8ap",
+  "diagnosticRoot": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hqodbu59",
+  "controllerStatus": "CONTROLLER_COMPLETE_WORKER_FAILURE",
+  "diagnosticStatus": "DIAGNOSTIC_FAIL",
+  "applicationAudit": {
+    "status": "REPORT_UNAVAILABLE",
+    "applicationOutcome": null,
+    "errors": [
+      "FileNotFoundError: [WinError 2] The system cannot find the file specified: '<OS_TEMP>\\\\q30-root75-renderer-diagnostic-hqodbu59\\\\host-output\\\\cases\\\\001-cold-75.report.json'"
+    ]
+  },
+  "phaseWallTimes": null,
+  "rendererCapture": "FAIL_CAPTURE",
+  "metricDelta": null,
+  "hostCleanup": {
+    "status": "PASS",
+    "seconds": 1.2621435000328347,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "captureCleanup": {
+    "status": "PASS",
+    "performanceEnableAttempted": true,
+    "performanceDisabled": true,
+    "errors": []
+  },
+  "outerCleanup": {
+    "pid": 12672,
+    "processSignaled": true,
+    "jobActiveProcesses": 0,
+    "jobClosedForCleanup": false,
+    "drainsComplete": true,
+    "liveDrainers": 0,
+    "drainerWaitMs": 0,
+    "drainerErrors": [],
+    "cleanupVerified": true,
+    "cleanupElapsedMs": 0,
+    "jobAccountingDrainMs": 0,
+    "jobAccountingDrainSucceeded": true,
+    "jobAccountingError": null
+  },
+  "innerCleanup": {
+    "pid": 16824,
+    "processSignaled": true,
+    "jobActiveProcesses": 0,
+    "jobClosedForCleanup": false,
+    "drainsComplete": true,
+    "liveDrainers": 0,
+    "drainerWaitMs": 0,
+    "drainerErrors": [],
+    "cleanupVerified": true,
+    "cleanupElapsedMs": 0,
+    "jobAccountingDrainMs": 0,
+    "jobAccountingDrainSucceeded": true,
+    "jobAccountingError": null
+  },
+  "recordedPidsChecked": [
+    11084,
+    12672,
+    14428,
+    16824,
+    18940,
+    21904,
+    24936,
+    25264,
+    27456,
+    28056,
+    30288
+  ],
+  "presentProcesses": [],
+  "taskPort": 52550,
+  "taskPortListeners": 0,
+  "terminatedProcesses": 0,
+  "errors": []
+}

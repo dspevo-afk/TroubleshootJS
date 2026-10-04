@@ -1,0 +1,185 @@
+--- r4/instrumented_host.py
++++ r5/instrumented_host.py
+@@ -45,24 +45,43 @@
+                     # Runs only after r4 has established the exact held main-frame
+                     # script attachment. No app job has started at this point.
+                     try:
+-                        version = observer.version
+-                        generation = observer.navigation_epoch
+                         attachment = observer.script_attachment
+                         if not isinstance(attachment, dict):
+                             raise ValueError("held-script attachment is missing")
+                         attachment = dict(attachment)
+                         await observer.capture.start(observer.deadline)
+-                        document, html, scope = await observer.read_document_scope()
+-                        if (observer.closed or observer.session_lost or version != observer.version or
+-                            generation != observer.navigation_epoch or generation != attachment.get("generation") or
+-                            observer.script_attachment != attachment or
+-                            html is None or
+-                            any(attachment.get(key) != value for key, value in scope.items())):
+-                            raise ValueError("diagnostic setup crossed held-script attachment")
+-                        observer.document_id = document["nodeId"]
+-                        observer.document_backend = document["backendNodeId"]
+-                        observer.document_scope = scope
+-                        observer.attach_html(html)
++                        # A frame read does not discard the owner's frontend DOM
++                        # bindings. Let its existing version-fenced acquisition
++                        # finish; a frontend refresh is not a new loader/document.
++                        frame = (await asyncio.wait_for(observer.session.send("Page.getFrameTree", {}),
++                            observer.timeout()))["frameTree"]["frame"]
++                        await asyncio.wait_for(observer.html_ready.wait(), observer.timeout())
++                        scope = observer.document_scope
++                        scope_keys = ("frameId", "loaderId", "pageUrl", "documentBackend", "htmlBackend")
++                        checks = {
++                            "live-session": not observer.closed and not observer.session_lost,
++                            "held-attachment": observer.script_attachment == attachment,
++                            "navigation": observer.navigation_epoch == attachment.get("generation"),
++                            "main-frame": not frame.get("parentId") and frame.get("id") == attachment.get("frameId"),
++                            "loader": frame.get("loaderId") == attachment.get("loaderId"),
++                            "page-url": frame.get("url", "") + frame.get("urlFragment", "") == observer.page.url == observer.url == attachment.get("pageUrl"),
++                            "owner-ready": observer.html_ready.is_set() and not any(not task.done() for task in observer.tasks),
++                            "owner-errors": not observer.errors,
++                            "owner-scope": isinstance(scope, dict) and scope == {key: attachment.get(key) for key in scope_keys},
++                            "frontend-nodes": type(observer.document_id) is int and type(observer.html_id) is int,
++                            "backend-nodes": type(observer.document_backend) is int and type(observer.html_backend) is int and
++                                observer.document_backend == attachment.get("documentBackend") and observer.html_backend == attachment.get("htmlBackend"),
++                        }
++                        observer.capture.binding["setupGuard"] = {"checks": checks,
++                            "domAcquisitionEpoch": observer.version, "navigationEpoch": observer.navigation_epoch,
++                            "documentNode": observer.document_id, "htmlNode": observer.html_id,
++                            "ownerScope": dict(scope) if isinstance(scope, dict) else None,
++                            "frame": {key: frame.get(key) for key in ("id", "loaderId", "url", "urlFragment", "parentId")}}
++                        rejected = [name for name, accepted in checks.items() if not accepted]
++                        if rejected:
++                            raise ValueError("diagnostic held-script guard rejected: " + ", ".join(rejected))
++                        # No await/query/rebind between this synchronous proof
++                        # and invoking the original route's continuation below.
+                     except (Exception, asyncio.CancelledError) as setup_error:
+                         observer.capture.error("setup-or-scope", setup_error)
+                         # The r4 owner has marked its proxy continue action as
+--- r4/offline_checks.py
++++ r5/offline_checks.py
+@@ -208,7 +208,7 @@
+                 "children": children}}
+         result = await super().send(method, params)
+         if method == "Performance.getMetrics" and self.metric_reads == 1 and self.observer is not None:
+-            if self.fault == "version":
++            if self.fault in ("version", "refresh"):
+                 self.emit("DOM.documentUpdated", {})
+             elif self.fault == "session":
+                 self.emit("close", {})
+@@ -216,6 +216,13 @@
+                 self.observer.navigation_epoch += 1
+             elif self.fault == "attachment":
+                 self.observer.script_attachment["generation"] += 1
++            elif self.fault == "backend":
++                self.observer.document_backend = 20
++                self.observer.html_backend = 40
++                self.observer.document_scope = {**self.observer.document_scope,
++                    "documentBackend": 20, "htmlBackend": 40}
++            elif self.fault == "missing-html":
++                self.observer.html_id = None
+         return result
+ 
+ 
+@@ -276,7 +283,7 @@
+         self.observer = None
+         self.route_handler = None
+         self.route_instance = None
+-        self.session = RecycledFrontendSession(self, report=report)
++        self.session = RecycledFrontendSession(self, fault="refresh", report=report)
+ 
+         class Context:
+             async def new_cdp_session(_context, _page):
+@@ -286,6 +293,7 @@
+     async def route(self, _pattern, handler):
+         self.route_handler = handler
+         self.observer = handler.__self__
++        self.session.observer = self.observer
+ 
+     async def unroute(self, _pattern, _handler):
+         return None
+@@ -726,7 +734,7 @@
+         assert_metrics_only(self, page.session)
+ 
+     async def test_adapter_identity_and_epoch_guards_abort_once_before_release(self):
+-        faults = ("version", "session", "navigation", "attachment", "backend",
++        faults = ("session", "navigation", "attachment", "backend",
+                   "frame", "loader", "missing-html")
+         with patch.object(renderer_capture, "CAPTURE_SETUP_SECONDS", .25), \
+              patch.object(renderer_capture, "CAPTURE_FINISH_SECONDS", .25), \
+@@ -743,6 +751,74 @@
+                     self.assertEqual(result["status"], "FAIL_CAPTURE")
+                     self.assertEqual(result["cleanup"]["status"], "PASS")
+                     assert_metrics_only(self, item.session)
++
++    async def test_frontend_refresh_reuses_owner_binding_without_extra_document_query(self):
++        _, _, item, route, _, _ = self.direct_route_fixture("owner-refresh", "version")
++        before = item.version
++        await item.hold_compiled_script(route)
++        self.assertEqual(route.actions, ["continue"])
++        self.assertGreater(item.version, before)
++        self.assertEqual(item.document_count, 1)
++        self.assertEqual(item.document_id, item.session.last_document_id)
++        self.assertEqual(item.html_id, item.session.last_html_id)
++        self.assertEqual(item.state, "ATTACHED:synthetic")
++        self.assertEqual(item.session.document_reads, 1)
++        self.assertTrue(all(item.capture.binding["setupGuard"]["checks"].values()))
++        self.assertEqual(item.errors, [])
++        await item.close()
++        result = json.loads((item.capture.root / "renderer-capture.json").read_text())
++        self.assertEqual(result["cleanup"]["status"], "PASS")
++
++    async def test_old_guard_rejects_same_owner_refresh_that_minimal_adapter_accepts(self):
++        # Execute the exact immutable R4 adapter as an independent regression
++        # oracle; this synthetic witness does not identify the actual R4 operand.
++        old_path = HERE.parent / "root75-metrics-offline-r4/instrumented_host.py"
++        old = instrumented_host.imported(old_path, "immutable_r4_refresh_oracle",
++            "76c16529dfa49b3537ae947afe0040f230b64250a9c6cc82da95ba8fad127b18")
++        output = self.root / "old-refresh-witness"
++        output.mkdir()
++        host = instrumented_host.imported(HOST_PATH, "old_refresh_owner", instrumented_host.HOST_SHA)
++        old.install(host, output)
++        page = SyntheticPage()
++        page.url, page.navigated = URL, True
++        item = host.HtmlAttributeObserver(page, URL, ATTRIBUTE, time.monotonic() + 2.0, [])
++        session = RecycledFrontendSession(page, observer=item, fault="version")
++        page.session, page.observer, item.session = session, item, session
++        item.navigation_epoch = 1
++        item.document_scope = {"frameId": "frame", "loaderId": "loader", "pageUrl": URL,
++                               "documentBackend": 2, "htmlBackend": 4}
++        item.document_id = item.document_backend = 2
++        item.html_id = item.html_backend = 4
++        item.html_ready.set()
++        session.on("DOM.documentUpdated", item.document_updated)
++        item.listeners.append(("DOM.documentUpdated", item.document_updated))
++        route = SyntheticRoute(page)
++        await item.hold_compiled_script(route)
++        if item.tasks:
++            await asyncio.gather(*tuple(item.tasks))
++        self.assertEqual(route.actions, ["abort"])
++        self.assertEqual(item.navigation_epoch, 1)
++        self.assertEqual(item.document_scope, {key: item.script_attachment[key] for key in
++            ("frameId", "loaderId", "pageUrl", "documentBackend", "htmlBackend")})
++        self.assertTrue(any(error["message"] == "diagnostic setup crossed held-script attachment"
++                            for error in item.capture.fatal_errors))
++        self.assertGreater(session.document_reads, item.document_count)
++        await item.close()
++
++    async def test_pending_or_failed_owner_acquisition_cannot_release_script(self):
++        for fault in ("pending", "failed"):
++            with self.subTest(fault=fault):
++                _, _, item, route, _, _ = self.direct_route_fixture("acquisition-" + fault, None)
++                if fault == "pending":
++                    task = asyncio.create_task(asyncio.sleep(.10))
++                    item.tasks.add(task)
++                else:
++                    item.failure("DOM.getDocument", RuntimeError("synthetic owner acquisition error"))
++                await item.hold_compiled_script(route)
++                self.assertEqual(route.actions, ["abort"])
++                checks = item.capture.binding["setupGuard"]["checks"]
++                self.assertFalse(checks["owner-ready" if fault == "pending" else "owner-errors"])
++                await item.close()
+ 
+ 
+ def host_receipt(outcome="PASS"):

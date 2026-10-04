@@ -1,0 +1,202 @@
+{
+  "schema": 1,
+  "status": "PASS_OFFLINE_ARTIFACT_ONLY",
+  "qualification": false,
+  "candidateManifestSha256": "40d92a573000021bb22190aeda4fe40455ed39ada1349d8d638e36e326bfb02b",
+  "archive": {
+    "file": "root75-metrics-r5.tar.gz",
+    "sha256": "3d9f84ca3bb67753ae15a525da9136157919d9adac7b9a5d4aa078e7aa5a41e8",
+    "bytes": 135507,
+    "regularMembers": 23
+  },
+  "members": [
+    {
+      "name": "candidate/README.md",
+      "sha256": "64b97e217a8246219a0816fbc61dbd96f2f493d7485f3c20668bfca25ffc23ba",
+      "bytes": 6027
+    },
+    {
+      "name": "candidate/candidate-manifest.json",
+      "sha256": "40d92a573000021bb22190aeda4fe40455ed39ada1349d8d638e36e326bfb02b",
+      "bytes": 1739
+    },
+    {
+      "name": "candidate/headful_attribute_host.py",
+      "sha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+      "bytes": 51883
+    },
+    {
+      "name": "candidate/instrumented_host.py",
+      "sha256": "eff7d7ef3f2b46ec8000423e27dfeb3694dc51a4de31180dc529e4dec4633c8f",
+      "bytes": 10695
+    },
+    {
+      "name": "candidate/offline_checks.py",
+      "sha256": "4d255e49108361b80cb3eca0f36b508f9143cb10c19f1bc672d2d3a62046c22f",
+      "bytes": 65892
+    },
+    {
+      "name": "candidate/renderer_capture.py",
+      "sha256": "a3554aa8e850640863c1b829b46882664d54245e6f7f8b59945d1aefe0a63851",
+      "bytes": 10439
+    },
+    {
+      "name": "candidate/review-result.json",
+      "sha256": "6e2458393d513489672d8522da1e874425ffa37ea4c28f4a38cfa67a3f9a9ebe",
+      "bytes": 2335
+    },
+    {
+      "name": "candidate/run_one_diagnostic.py",
+      "sha256": "054d0da795802524525fd717ce5de55429c291be610334b4115ad430bd1cbc1f",
+      "bytes": 29160
+    },
+    {
+      "name": "candidate/verify_offline_candidate.py",
+      "sha256": "eea25a18be2bd7cf9c48e194715a5277a5a80801af4db923083cf54f3c2ea5c6",
+      "bytes": 2348
+    },
+    {
+      "name": "evidence/final-test-inputs.tar.gz",
+      "sha256": "087ae351137b4ec426a39fb5a6ac15938bf357c04f0211fa47e9a40deac09ea2",
+      "bytes": 39165
+    },
+    {
+      "name": "evidence/first-failed-test-inputs.tar.gz",
+      "sha256": "e1795f681864d45378d9e087ec74bd8a7f98fd0495993241ed0f30f5bc08dafb",
+      "bytes": 39121
+    },
+    {
+      "name": "evidence/offline-result.json",
+      "sha256": "2d6b31aa87fa4d3b1892c7c2e97ddbd24424319684bdc0f731b61ee687c0ce0a",
+      "bytes": 4743
+    },
+    {
+      "name": "evidence/oracle-change.json",
+      "sha256": "b450019bf9f8bcefe5c5a1e65504344863a7619c2ea2529c492da894b32d76ba",
+      "bytes": 761
+    },
+    {
+      "name": "evidence/owned-result.json",
+      "sha256": "cf1a1bb171c2cbbadcced45fd858d2367e59be66e44ff234af3849c34823abd3",
+      "bytes": 1527
+    },
+    {
+      "name": "evidence/prior-fixture-stderr.txt",
+      "sha256": "1e10d7ade4f27f68c08ed8ed5abbaca6143b0684987a5084333ea52c2dd3c0ae",
+      "bytes": 9985
+    },
+    {
+      "name": "evidence/prior-offline-result.json",
+      "sha256": "a7ff7c64b74cd996a86597b26e4f25a24b511b4a0705748841a56869ec484ba4",
+      "bytes": 1071
+    },
+    {
+      "name": "evidence/prior-owned-result.json",
+      "sha256": "b5a1decd29ca1542ddcb65623736e932614efff3d3f7d2111c2cb26a04091858",
+      "bytes": 1527
+    },
+    {
+      "name": "evidence/raw-bindings.json",
+      "sha256": "b54f12762602ca8fddb3bcef5c251cd287e9246ed65e6e1ba8f737e720cd0230",
+      "bytes": 2201
+    },
+    {
+      "name": "evidence/source-diff.patch",
+      "sha256": "18e7a31f858a8bc64e1ef81e251095da4c22fb12010a347c470e8d5675ab9959",
+      "bytes": 11493
+    },
+    {
+      "name": "evidence/timezone-result.json",
+      "sha256": "af987ca2f1cda5e57155ad35e5e37110f527a529200bc247aebb41cc9bedafdb",
+      "bytes": 885
+    },
+    {
+      "name": "oracle/instrumented_host-r4.py",
+      "sha256": "76c16529dfa49b3537ae947afe0040f230b64250a9c6cc82da95ba8fad127b18",
+      "bytes": 8650
+    },
+    {
+      "name": "timezone/check_q30_utc_duration.ps1",
+      "sha256": "6589a9a00e4b48e3bf1534df166b0baf0e2501afee781fd4ed12210409544e94",
+      "bytes": 1754
+    },
+    {
+      "name": "timezone/q30_utc_duration.ps1",
+      "sha256": "4b707fe3f89fee98c07224aab69f54df7e1229360ec47344f31622c9a0ada99a",
+      "bytes": 382
+    }
+  ],
+  "files": [
+    {
+      "name": "README.md",
+      "sha256": "64b97e217a8246219a0816fbc61dbd96f2f493d7485f3c20668bfca25ffc23ba",
+      "bytes": 6027
+    },
+    {
+      "name": "candidate-manifest.json",
+      "sha256": "40d92a573000021bb22190aeda4fe40455ed39ada1349d8d638e36e326bfb02b",
+      "bytes": 1739
+    },
+    {
+      "name": "offline-result.json",
+      "sha256": "2d6b31aa87fa4d3b1892c7c2e97ddbd24424319684bdc0f731b61ee687c0ce0a",
+      "bytes": 4743
+    },
+    {
+      "name": "oracle-change.json",
+      "sha256": "b450019bf9f8bcefe5c5a1e65504344863a7619c2ea2529c492da894b32d76ba",
+      "bytes": 761
+    },
+    {
+      "name": "owned-result.json",
+      "sha256": "cf1a1bb171c2cbbadcced45fd858d2367e59be66e44ff234af3849c34823abd3",
+      "bytes": 1527
+    },
+    {
+      "name": "prior-offline-result.json",
+      "sha256": "a7ff7c64b74cd996a86597b26e4f25a24b511b4a0705748841a56869ec484ba4",
+      "bytes": 1071
+    },
+    {
+      "name": "prior-owned-result.json",
+      "sha256": "b5a1decd29ca1542ddcb65623736e932614efff3d3f7d2111c2cb26a04091858",
+      "bytes": 1527
+    },
+    {
+      "name": "raw-bindings.json",
+      "sha256": "b54f12762602ca8fddb3bcef5c251cd287e9246ed65e6e1ba8f737e720cd0230",
+      "bytes": 2201
+    },
+    {
+      "name": "review-result.json",
+      "sha256": "6e2458393d513489672d8522da1e874425ffa37ea4c28f4a38cfa67a3f9a9ebe",
+      "bytes": 2335
+    },
+    {
+      "name": "root75-metrics-r5.tar.gz",
+      "sha256": "3d9f84ca3bb67753ae15a525da9136157919d9adac7b9a5d4aa078e7aa5a41e8",
+      "bytes": 135507
+    },
+    {
+      "name": "source-diff.patch",
+      "sha256": "18e7a31f858a8bc64e1ef81e251095da4c22fb12010a347c470e8d5675ab9959",
+      "bytes": 11493
+    },
+    {
+      "name": "timezone-result.json",
+      "sha256": "af987ca2f1cda5e57155ad35e5e37110f527a529200bc247aebb41cc9bedafdb",
+      "bytes": 885
+    }
+  ],
+  "checks": [
+    "exact source snapshots",
+    "six source pins/ASTs",
+    "same adapter across failed/final offline runs",
+    "fixture oracle change explicit",
+    "member equality/regular-only",
+    "privacy",
+    "owned cleanup",
+    "frozen input maps"
+  ],
+  "limits": "Offline artifact audit only; no selected-host or Q30 acceptance/full source archive proof."
+}

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "parentReference": "01a1017d-669f-76ed-b3cf-1341fcc89016 one metrics-r4 root75 after preflight",
+  "windowGranted": true,
+  "quietDesktopConfirmed": true,
+  "candidateManifestSha256": "c12a6e3675aa6b3f94bb2a08e83f2469c03da6e2edc06b13efe5c212f9f93388",
+  "windowStartUtc": "2026-10-04T13:29:24.6885246Z",
+  "windowEndUtc": "2026-10-04T13:33:24.6885246Z",
+  "maximumCases": 1,
+  "qualification": false,
+  "limits": {
+    "jobMillis": 90000,
+    "sharedWork": 640,
+    "activeOperationMillis": 5000
+  }
+}

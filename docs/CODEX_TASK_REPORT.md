@@ -1,4 +1,63 @@
-# Current checkpoint: Q30 blocked; observer ID correction R4 ready offline
+# Current checkpoint: Q30 blocked; R4 failure saved, owner reuse R5 verified offline
+
+2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
+`8409d7248899b4bd16825696f21852fc63eec109`, plus this local checkpoint.
+[Actual R4](task-evidence/Q30/epoch15-root75-offline-diagnostic/metrics-r4/actual-window-1/README.md):
+one normal-entrypoint attempt failed at the added setup guard before releasing
+the original script. FAIL_CAPTURE, exit 1; main 6.236310 s, case 0.313188 s.
+No state, app report or CPU delta. The exact rejected predicate is UNKNOWN:
+the compound error omitted its operands. This is not an application result.
+Host cleanup PASS in 1.262144 s; Performance.disable PASS; both jobs reached zero
+active processes and closed their readers. Release verified at
+13:29:31.4534931Z, before window end 13:33:24.6885246Z: 11 PIDs absent,
+port 52550 closed, no termination. The raw invalid duration 14,400.5279744 s is
+retained and flagged; UTC stamps give 0.5279744 s. Separate DateTimeOffset fix
+passed five selected-PowerShell cases. Original launcher retained; corrected
+launcher syntax-checked, NOT executed.
+
+[Implemented R5](task-evidence/Q30/epoch15-root75-offline-diagnostic/metrics-r5/README.md)
+reuses the exact proven observer/acquisition and maintained bounded launcher.
+Removed setup DOM.getDocument, manual rebind and version equality. One frame
+probe that preserves DOM bindings precedes existing html_ready acquisition,
+then synchronous proof of the exact attachment, navigation, URL, scope,
+frontend/backend IDs, live session, completed acquisition and absence of owner
+errors. Original continuation follows immediately. Failed checks and operands
+are recorded. An exact immutable-R4 synthetic witness rejects a same-document
+owner refresh that R5 accepts; it does not identify the actual R4 predicate.
+Only adapter and fixtures changed; four sources, production, save/replay
+formats, qualification limits and ownership remain unchanged.
+
+Final 35 focused methods PASS, zero failures/errors/skips. Fixture plus input
+audit 2471.7173 ms; input audit 1101.2634 ms; owned operation 2608 ms, exit 0.
+Cleanup PASS at recorded 0 ms resolution, job zero/readers closed. All 1,354
+repository/1,526 app inputs and six final pins unchanged. First three fixture
+failures retained with exact sources: synthetic observer linkage and acquisition
+wait fixed, adapter unchanged. 31 old test bodies retained; one wrong
+acquisition-epoch rejection oracle explicitly corrected. Seven true identity
+negatives retained, plus pending/error cases. Exact R4 oracle separately bound.
+Independent final static review PASS, no blocker and no executions. Individual
+negative diagnostic labels are not asserted (nonblocking limit). Packet hash,
+privacy, AST and snapshot audit PASS within artifact scope; full Q30 source
+archive gate remains pending.
+
+Manifest `40d92a573000021bb22190aeda4fe40455ed39ada1349d8d638e36e326bfb02b`.
+No R5 live run, grant, window or auto-run; parent review required before any
+future live attempt. No Edge/app/CPU/build/matrix ran during this correction.
+No persistent task resource; children 17736/9388 absent at 13:44:21.1451386Z.
+Seven original untracked caches, sibling Desktop work, prior raw failures,
+evidence and consumed R4 grant preserved. Local checkpoint only; no push,
+publish or email. JDK8/GWT rebuild NOT APPLICABLE: no Java/production changes.
+
+Q30 DISABLED/NOT ACCEPTED; original 31 PASS / 1 root75 TIMEOUT 90.221 s / 45 NOT RUN.
+77 roots/308 candidates/90,000 ms/640 shared/5,000 ms active unchanged. Selected-
+host R5, root75 cause/correction, full regression/cold77, enabled build/menu/
+replay/visible repair/retest, full source archive and parent acceptance remain
+pending. U06/U07/Q60 unstarted. Next: parent review of the concrete correction;
+no additional live attempt authorized.
+
+---
+
+# Historical checkpoint: Q30 blocked; observer ID correction R4 ready offline
 
 2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
 `9a44732ff159fc662b0eb189b0b7105e60f0397c`, plus this local checkpoint.
