@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "status": "CONTROLLER_COMPLETE_OBSERVER_TIMEOUT_REPORT_UNAVAILABLE",
+  "qualification": false,
+  "outerTimeoutMs": 220000,
+  "cleanupLimitMs": 15000,
+  "candidateManifestSha256": "6a76b910b89a523e578bb0a3856763378c57d3cf4c61f1c5794c92eefea48d9f",
+  "windowEndUtc": "2026-10-04T12:16:08.8752128Z",
+  "workerMonotonicDeadlineNs": 643702296081400,
+  "taskRoot": "<OS_TEMP>\\q30-root75-diagnostic-controller-23bz3fkg",
+  "errors": [],
+  "process": {
+    "pid": 12276,
+    "creationFileTimeTicks": 134355895294555676,
+    "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+    "commandSha256": "771e52dc2b1a11fcc841b7515638484531b1d7185347027247e0a11985e064bd",
+    "resumeMonotonicNs": 643482314629500
+  },
+  "operation": {
+    "reason": null,
+    "exitCode": 1,
+    "cleanup": {
+      "pid": 12276,
+      "processSignaled": true,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "drainsComplete": true,
+      "liveDrainers": 0,
+      "drainerWaitMs": 0,
+      "drainerErrors": [],
+      "cleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null
+    },
+    "operationElapsedMs": 167686
+  },
+  "workerSummary": {
+    "status": "DIAGNOSTIC_OBSERVER_TIMEOUT_REPORT_UNAVAILABLE",
+    "taskRoot": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hfyrcxwd",
+    "rendererCapture": "CPU_MEASURED",
+    "captureCleanup": "PASS",
+    "applicationAudit": {
+      "status": "REPORT_UNAVAILABLE",
+      "applicationOutcome": null,
+      "errors": [
+        "FileNotFoundError: [WinError 2] The system cannot find the file specified: '<OS_TEMP>\\\\q30-root75-renderer-diagnostic-hfyrcxwd\\\\host-output\\\\cases\\\\001-cold-75.report.json'"
+      ]
+    },
+    "phaseWallTimes": null,
+    "inputBindingUnchanged": true,
+    "errors": []
+  }
+}

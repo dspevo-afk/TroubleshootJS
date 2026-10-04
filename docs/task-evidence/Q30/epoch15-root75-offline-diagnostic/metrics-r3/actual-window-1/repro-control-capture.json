@@ -1,0 +1,164 @@
+{
+  "schema": 2,
+  "status": "CPU_MEASURED",
+  "qualification": false,
+  "diagnosticOnly": true,
+  "binding": {
+    "rootSeed": "75",
+    "pageUrl": "http://127.0.0.1:12345/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "attachedDocument": {
+      "frameId": "frame",
+      "loaderId": "loader",
+      "pageUrl": "http://127.0.0.1:12345/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+      "documentBackend": 2,
+      "htmlBackend": 4,
+      "generation": 0,
+      "exactPageUrl": true,
+      "resourceType": "script",
+      "mainFrameRequest": true
+    },
+    "r4OriginalHostSha256": "146101ab19500b06e8d0cb56bde32d90f8439c87b245099c8e1c569b07df85cd",
+    "derivedHeadfulHostSha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+    "terminalScopeVerified": true,
+    "terminalScope": {
+      "generationBefore": 0,
+      "generationAfter": 0,
+      "domEpochBefore": 0,
+      "domEpochAfter": 0,
+      "frameBefore": "frame",
+      "frameAfter": "frame",
+      "loaderBefore": "loader",
+      "loaderAfter": "loader",
+      "frameSnapshotStable": true,
+      "stateChangesBefore": 2,
+      "stateChangesAfter": 2,
+      "documentNodeBefore": 12,
+      "documentNodeAfter": 22,
+      "htmlNodeBefore": 14,
+      "htmlNodeAfter": 24,
+      "documentBackendBefore": 2,
+      "documentBackendAfter": 2,
+      "htmlBackendBefore": 4,
+      "htmlBackendAfter": 4,
+      "pageUrlMatches": true,
+      "documentUrlMatches": true,
+      "stateMatches": true,
+      "attributeMatches": true,
+      "compiledScriptRequests": 1,
+      "scriptAttachment": {
+        "frameId": "frame",
+        "loaderId": "loader",
+        "pageUrl": "http://127.0.0.1:12345/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+        "documentBackend": 2,
+        "htmlBackend": 4,
+        "generation": 0,
+        "exactPageUrl": true,
+        "resourceType": "script",
+        "mainFrameRequest": true
+      },
+      "scriptAttachmentMatchesTerminalScope": true
+    },
+    "finalMetricScope": {
+      "frameId": "frame",
+      "loaderId": "loader",
+      "pageUrl": "http://127.0.0.1:12345/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+      "documentBackend": 2,
+      "htmlBackend": 4,
+      "generation": 0
+    },
+    "finalMetricScopeVerified": true
+  },
+  "browserProtocol": {
+    "protocolVersion": "fixture",
+    "product": "Chromium/154 synthetic"
+  },
+  "timeDomain": "threadTicks",
+  "tracing": "NOT_ATTEMPTED_METRICS_ONLY",
+  "targetBefore": {
+    "targetId": "frame",
+    "type": "page",
+    "url": "http://127.0.0.1:12345/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "browserContextId": "context"
+  },
+  "targetAfter": {
+    "targetId": "frame",
+    "type": "page",
+    "url": "http://127.0.0.1:12345/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "browserContextId": "context"
+  },
+  "metricsBefore": {
+    "Timestamp": 101,
+    "ThreadTime": 2.1,
+    "TaskDuration": 1.1
+  },
+  "metricsAfter": {
+    "Timestamp": 102,
+    "ThreadTime": 2.2,
+    "TaskDuration": 1.2
+  },
+  "metricDelta": {
+    "TimestampSeconds": 1,
+    "ThreadTimeSeconds": 0.10000000000000009,
+    "TaskDurationSeconds": 0.09999999999999987
+  },
+  "commandClocks": [
+    {
+      "method": "Browser.getVersion",
+      "beforeNs": 645010701400300,
+      "afterNs": 645010701466700
+    },
+    {
+      "method": "Target.getTargetInfo",
+      "beforeNs": 645010701470000,
+      "afterNs": 645010701532400
+    },
+    {
+      "method": "Performance.enable",
+      "beforeNs": 645010701537100,
+      "afterNs": 645010701594200
+    },
+    {
+      "method": "Performance.getMetrics",
+      "beforeNs": 645010701596600,
+      "afterNs": 645010701652300
+    },
+    {
+      "method": "Target.getTargetInfo",
+      "beforeNs": 645010702126900,
+      "afterNs": 645010702192200
+    },
+    {
+      "method": "Performance.getMetrics",
+      "beforeNs": 645010702198100,
+      "afterNs": 645010702259100
+    },
+    {
+      "method": "Performance.disable",
+      "beforeNs": 645010702475000,
+      "afterNs": 645010702535400
+    }
+  ],
+  "errors": [],
+  "fatalErrors": [],
+  "cleanup": {
+    "status": "PASS",
+    "performanceEnableAttempted": true,
+    "performanceDisabled": true,
+    "errors": []
+  },
+  "setupElapsedMs": 0.2642,
+  "finishElapsedMs": 0.4149,
+  "bounds": {
+    "setupSeconds": 5.0,
+    "finishSeconds": 5.0,
+    "cleanupReserveSeconds": 1.5,
+    "metricRows": 128,
+    "metricNameChars": 256
+  },
+  "limits": [
+    "Optional metric unavailability does not abort a safely owned app run.",
+    "ThreadTime is aggregate renderer main-thread running time including GC/DOM/host work, not solver-only CPU.",
+    "Wall minus thread time does not establish preemption; no GC or per-stage CPU attribution.",
+    "App phase wall times come only from the unchanged terminal report; instrumentation overhead is unknown."
+  ]
+}

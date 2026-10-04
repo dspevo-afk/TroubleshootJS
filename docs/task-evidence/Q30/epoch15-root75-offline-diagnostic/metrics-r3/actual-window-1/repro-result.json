@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "status": "SYNTHETIC_REPRO_ONLY",
+  "assertionStatus": "PASS",
+  "qualification": false,
+  "liveExecution": false,
+  "browserLaunched": false,
+  "nativeProcessLaunched": false,
+  "applicationOutcome": null,
+  "sourcePins": {
+    "renderer_capture.py": "a3554aa8e850640863c1b829b46882664d54245e6f7f8b59945d1aefe0a63851",
+    "instrumented_host.py": "22df7ae2ae039b4d47337c5ef1d72d010b8549ed8b73609a03f0ee4522f7a2ab",
+    "headful_attribute_host.py": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be"
+  },
+  "tests": 2,
+  "failures": 0,
+  "errors": 0,
+  "fixtureRoot": "<OS_TEMP>\\q30-r3-frontend-id-repro-1zjs45q5"
+}

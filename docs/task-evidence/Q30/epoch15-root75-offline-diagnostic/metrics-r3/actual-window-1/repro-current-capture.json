@@ -1,0 +1,138 @@
+{
+  "schema": 2,
+  "status": "FAIL_CAPTURE",
+  "qualification": false,
+  "diagnosticOnly": true,
+  "binding": {
+    "rootSeed": "75",
+    "pageUrl": "http://127.0.0.1:12345/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "attachedDocument": {
+      "frameId": "frame",
+      "loaderId": "loader",
+      "pageUrl": "http://127.0.0.1:12345/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+      "documentBackend": 2,
+      "htmlBackend": 4,
+      "generation": 0,
+      "exactPageUrl": true,
+      "resourceType": "script",
+      "mainFrameRequest": true
+    },
+    "r4OriginalHostSha256": "146101ab19500b06e8d0cb56bde32d90f8439c87b245099c8e1c569b07df85cd",
+    "derivedHeadfulHostSha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+    "terminalScopeVerified": false,
+    "terminalScope": {
+      "generationBefore": 0,
+      "generationAfter": 0,
+      "domEpochBefore": 0,
+      "domEpochAfter": 0,
+      "frameBefore": "frame",
+      "frameAfter": "frame",
+      "loaderBefore": "loader",
+      "loaderAfter": "loader",
+      "frameSnapshotStable": true,
+      "stateChangesBefore": 0,
+      "stateChangesAfter": 0,
+      "documentNodeBefore": 2,
+      "documentNodeAfter": 22,
+      "htmlNodeBefore": 4,
+      "htmlNodeAfter": 24,
+      "documentBackendBefore": 2,
+      "documentBackendAfter": 2,
+      "htmlBackendBefore": 4,
+      "htmlBackendAfter": 4,
+      "pageUrlMatches": true,
+      "documentUrlMatches": true,
+      "stateMatches": false,
+      "attributeMatches": true,
+      "compiledScriptRequests": 1,
+      "scriptAttachment": {
+        "frameId": "frame",
+        "loaderId": "loader",
+        "pageUrl": "http://127.0.0.1:12345/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+        "documentBackend": 2,
+        "htmlBackend": 4,
+        "generation": 0,
+        "exactPageUrl": true,
+        "resourceType": "script",
+        "mainFrameRequest": true
+      },
+      "scriptAttachmentMatchesTerminalScope": true
+    }
+  },
+  "browserProtocol": {
+    "protocolVersion": "fixture",
+    "product": "Chromium/154 synthetic"
+  },
+  "timeDomain": "threadTicks",
+  "tracing": "NOT_ATTEMPTED_METRICS_ONLY",
+  "targetBefore": {
+    "targetId": "frame",
+    "type": "page",
+    "url": "http://127.0.0.1:12345/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "browserContextId": "context"
+  },
+  "targetAfter": null,
+  "metricsBefore": {
+    "Timestamp": 101,
+    "ThreadTime": 2.1,
+    "TaskDuration": 1.1
+  },
+  "metricsAfter": null,
+  "metricDelta": null,
+  "commandClocks": [
+    {
+      "method": "Browser.getVersion",
+      "beforeNs": 645010729413100,
+      "afterNs": 645010729640000
+    },
+    {
+      "method": "Target.getTargetInfo",
+      "beforeNs": 645010729643200,
+      "afterNs": 645010729712500
+    },
+    {
+      "method": "Performance.enable",
+      "beforeNs": 645010729717200,
+      "afterNs": 645010729780400
+    },
+    {
+      "method": "Performance.getMetrics",
+      "beforeNs": 645010729782900,
+      "afterNs": 645010729845600
+    },
+    {
+      "method": "Performance.disable",
+      "beforeNs": 645010730347100,
+      "afterNs": 645010730422500
+    }
+  ],
+  "errors": [],
+  "fatalErrors": [
+    {
+      "phase": "final-scope",
+      "type": "CaptureIdentityError",
+      "message": "final boundary lacks stable attachment scope"
+    }
+  ],
+  "cleanup": {
+    "status": "PASS",
+    "performanceEnableAttempted": true,
+    "performanceDisabled": true,
+    "errors": []
+  },
+  "setupElapsedMs": 0.4429,
+  "finishElapsedMs": 0.0876,
+  "bounds": {
+    "setupSeconds": 5.0,
+    "finishSeconds": 5.0,
+    "cleanupReserveSeconds": 1.5,
+    "metricRows": 128,
+    "metricNameChars": 256
+  },
+  "limits": [
+    "Optional metric unavailability does not abort a safely owned app run.",
+    "ThreadTime is aggregate renderer main-thread running time including GC/DOM/host work, not solver-only CPU.",
+    "Wall minus thread time does not establish preemption; no GC or per-stage CPU attribution.",
+    "App phase wall times come only from the unchanged terminal report; instrumentation overhead is unknown."
+  ]
+}

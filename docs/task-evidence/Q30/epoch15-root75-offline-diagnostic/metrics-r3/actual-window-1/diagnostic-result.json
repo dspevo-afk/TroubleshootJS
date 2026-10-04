@@ -1,0 +1,106 @@
+{
+  "schema": 1,
+  "status": "DIAGNOSTIC_OBSERVER_TIMEOUT_REPORT_UNAVAILABLE",
+  "qualification": false,
+  "diagnosticOnly": true,
+  "rootSeed": "75",
+  "maximumCases": 1,
+  "limits": {
+    "jobMillis": 90000,
+    "sharedWork": 640,
+    "activeOperationMillis": 5000
+  },
+  "maximumInnerHostCapMs": 180000,
+  "controllerMonotonicDeadlineNs": 643702296081400,
+  "taskRoot": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hfyrcxwd",
+  "parentReference": "01a1017d-669f-76ed-b3cf-1341fcc89016 one metrics-r3 root75 after preflight",
+  "windowEndUtc": "2026-10-04T12:16:08.8752128Z",
+  "candidateManifestSha256": "6a76b910b89a523e578bb0a3856763378c57d3cf4c61f1c5794c92eefea48d9f",
+  "errors": [],
+  "applicationAudit": {
+    "status": "REPORT_UNAVAILABLE",
+    "applicationOutcome": null,
+    "errors": [
+      "FileNotFoundError: [WinError 2] The system cannot find the file specified: '<OS_TEMP>\\\\q30-root75-renderer-diagnostic-hfyrcxwd\\\\host-output\\\\cases\\\\001-cold-75.report.json'"
+    ]
+  },
+  "rendererCapture": "CPU_MEASURED",
+  "captureCleanup": "PASS",
+  "phaseWallTimes": null,
+  "innerHostCapMs": 171690,
+  "ownedProcess": {
+    "pid": 15652,
+    "creationFileTimeTicks": 134355895417635069,
+    "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+    "commandSha256": "4b2e8c598c0f527d40222f7658d594a340b56786c5628342f806df318ed02591",
+    "resumeMonotonicNs": 643494623555600
+  },
+  "operation": {
+    "reason": null,
+    "exitCode": 1,
+    "cleanup": {
+      "pid": 15652,
+      "processSignaled": true,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "drainsComplete": true,
+      "liveDrainers": 0,
+      "drainerWaitMs": 0,
+      "drainerErrors": [],
+      "cleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null
+    },
+    "operationElapsedMs": 154226
+  },
+  "drains": [
+    {
+      "bytes": 47,
+      "overflow": false,
+      "errors": [],
+      "readerAlive": false,
+      "streamClosed": true
+    },
+    {
+      "bytes": 0,
+      "overflow": false,
+      "errors": [],
+      "readerAlive": false,
+      "streamClosed": true
+    }
+  ],
+  "hostObservation": {
+    "outcome": "FAIL",
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 1.1371613999363035,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    },
+    "errors": [],
+    "inputAudit": {
+      "status": "PASS",
+      "beforeSha256": "ff25c399dee104f98327d09910e16e6213ce49440197f59c53ff1e73f071fbf0",
+      "afterSha256": "ff25c399dee104f98327d09910e16e6213ce49440197f59c53ff1e73f071fbf0",
+      "sourceSha256Before": "fe50dde963bb44b9d4a6694c3679ab44ee8e19e3487b308c8ab7ad5f506ced1c",
+      "sourceSha256After": "fe50dde963bb44b9d4a6694c3679ab44ee8e19e3487b308c8ab7ad5f506ced1c",
+      "webSha256Before": "e0f263d63964b74a220b8e7f3078466a2442d3985c104c9e2957092b0f625666",
+      "webSha256After": "e0f263d63964b74a220b8e7f3078466a2442d3985c104c9e2957092b0f625666",
+      "runnerBeforeSha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+      "runnerAfterSha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+      "fileCountBefore": 1526,
+      "fileCountAfter": 1526,
+      "seconds": 0.4363154999446124
+    }
+  },
+  "inputBindingUnchanged": true,
+  "finalization": {
+    "budgetMs": 20000,
+    "elapsedMs": 1134.1172,
+    "deadlineExceeded": false,
+    "method": "cooperative phase/file checks plus hard220s owned outer controller for blocked I/O"
+  }
+}

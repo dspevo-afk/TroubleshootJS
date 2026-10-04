@@ -1,4 +1,52 @@
-# Current checkpoint: Q30 blocked; metrics diagnostic r3 ready offline
+# Current checkpoint: Q30 blocked; r3 actual saved, observer defect isolated offline
+
+2026-10-04. Branch `codex/q30-multirail-qualification`; live/parent local HEAD
+`a6770f35baced892ba949a6c67a20a20c453ff65`, plus this docs/evidence-only checkpoint.
+[Actual and restart](task-evidence/Q30/epoch15-root75-offline-diagnostic/metrics-r3/actual-window-1/README.md):
+one authorized normal-entrypoint root75 returned OBSERVER_TIMEOUT_REPORT_UNAVAILABLE,
+exit1. StateEvents0/cached state null; no app report/phase wall rows. App outcome/
+publication and root75 slowdown cause UNKNOWN. CPU_MEASURED: interval149.910079 s,
+ThreadTime77.369066 s/ScriptDuration76.260622 s; aggregate, no phase/GC/preemption
+attribution. Stable timeout/final metric semantic scope; terminal scope unverified.
+
+[Offline diagnosis](task-evidence/Q30/epoch15-root75-offline-diagnostic/metrics-r3/actual-window-1/analysis.md):
+adapter's extra DOM.getDocument discards fresh frontend nodes; event filter keeps
+old HTML nodeId although backend identity passes. Chromium154 source supports
+the binding reset. Two modeled tests import exact pinned R3 sources: current
+adapter drops states; same-response rebind control accepts both. PASS2/2, zero
+failures/errors/skips; unittest0.087 s/owned333 ms/exit0, cleanup PASS0 ms recorded,
+job0/readers closed, child28952 absent12:37:54.0122799 UTC. Synthetic evidence;
+actual frontend IDs/app publication not captured. Earlier28-method fixed-ID PASS
+masked this integration. Read-only observer/producer reviews reconciled; pre-status
+boot stall remains possible. Smallest correction proposed: same-response frontend
+binding after scope/DOM-version checks before original route release. NOT
+IMPLEMENTED / selected-host NOT_RUN. No new live case/probe/build/matrix now.
+
+Actual main168.8965585 s/exit1/finished12:14:57.7725208 UTC before12:16:08.875 window
+end; no watchdog/termination. Outer167,686 ms/inner154,226 ms/host150.0502934 s.
+Host cleanup PASS1.1371614 s/server stopped/no survivors; capture cleanup PASS.
+Outer/inner cleanup PASS0 ms recorded/job0/readers complete. Independent release
+check late12:18:33.1488595 UTC found all12 recorded PIDs absent/port58193 closed;
+five baseline Edge untouched. Parent received result/release before housekeeping.
+No task-owned persistent resource; raw/consumed grants/profiles/evidence retained.
+
+Fresh preflight PASS1,395 ms/exit0/cleanupPASS. All six R3 pins/1,354 repo/1,526
+prepared-app inputs and original cold77 archive unchanged. Fourteen sanitized
+actual receipts plus offline repro/analysis saved; packet hash/privacy/AST audit
+recorded in its manifest. Production/build/owners unchanged; JDK8/GWT rebuild
+NOT APPLICABLE. Preserve sibling Desktop work and seven original untracked caches.
+Local commit only; no push/publish/email/evidence deletion.
+
+Q30 disabled/NOT ACCEPTED; original31 PASS/1 root75 TIMEOUT90.221 s/45 NOT_RUN.
+77/308/90,000 ms/640/5,000 ms unchanged.150 s observer diagnostic is no substitute
+for90 s qualification. Next: parent approves scope of narrow observer correction
+in a new candidate; no live grant now. Root75 fix/full regression/cold77, enabled
+build/menu/replay/visible repair/retest/full source archive/parent acceptance
+remain pending. U06/U07/Q60 unstarted.
+
+---
+
+# Historical checkpoint: Q30 blocked; metrics diagnostic r3 ready offline
 
 2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
 `aee897d2047a7202cd5ecd2cbb5867734a6de60a`, plus this local docs/evidence checkpoint.

@@ -1,0 +1,399 @@
+{
+  "schema": 1,
+  "status": "OBSERVER_TIMEOUT_REPORT_UNAVAILABLE_WITH_AGGREGATE_CPU",
+  "qualification": false,
+  "parentHead": "a6770f35baced892ba949a6c67a20a20c453ff65",
+  "candidateManifestSha256": "6a76b910b89a523e578bb0a3856763378c57d3cf4c61f1c5794c92eefea48d9f",
+  "candidateArchiveSha256": "8548d5b47c09fb11d34046ed6b47ad72c151af4b63f03b9c83c71b040493a9f5",
+  "window": {
+    "schema": 1,
+    "parentReference": "01a1017d-669f-76ed-b3cf-1341fcc89016 one metrics-r3 root75 after preflight",
+    "windowGranted": true,
+    "quietDesktopConfirmed": true,
+    "candidateManifestSha256": "6a76b910b89a523e578bb0a3856763378c57d3cf4c61f1c5794c92eefea48d9f",
+    "windowStartUtc": "2026-10-04T12:12:08.8752128Z",
+    "windowEndUtc": "2026-10-04T12:16:08.8752128Z",
+    "maximumCases": 1,
+    "qualification": false,
+    "limits": {
+      "jobMillis": 90000,
+      "sharedWork": 640,
+      "activeOperationMillis": 5000
+    }
+  },
+  "normalEntrypointFinishedUtc": "2026-10-04T12:14:57.7725208Z",
+  "independentReleaseVerifiedUtc": "2026-10-04T12:18:33.1488595Z",
+  "independentReleaseCheckWasLate": true,
+  "diagnosticCasesAttempted": 1,
+  "additionalLiveRuns": 0,
+  "applicationAudit": "REPORT_UNAVAILABLE",
+  "applicationOutcome": null,
+  "phaseWallTimes": null,
+  "observedState": null,
+  "stateEventsAccepted": 0,
+  "appPublication": "UNKNOWN",
+  "cpuStatus": "CPU_MEASURED",
+  "cpuDelta": {
+    "TimestampSeconds": 149.91007899993565,
+    "ThreadTimeSeconds": 77.369066,
+    "TaskDurationSeconds": 77.103954,
+    "ScriptDurationSeconds": 76.260622,
+    "V8CompileDurationSeconds": 0.006436,
+    "DevToolsCommandDurationSeconds": 0.003398
+  },
+  "selectedEdge": {
+    "protocolVersion": "1.3",
+    "product": "Edg/154.0.4258.53",
+    "revision": "@5af6e80f702cffe10645c6d6433668f011b739be",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "jsVersion": "15.4.11.7"
+  },
+  "binding": {
+    "rootSeed": "75",
+    "pageUrl": "http://127.0.0.1:58193/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "attachedDocument": {
+      "frameId": "4F83A8180130683321FD75C7F43D1E1A",
+      "loaderId": "01BA998D167AB3893B281DCB22AE0601",
+      "pageUrl": "http://127.0.0.1:58193/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+      "documentBackend": 2,
+      "htmlBackend": 4,
+      "generation": 1,
+      "exactPageUrl": true,
+      "resourceType": "script",
+      "mainFrameRequest": true
+    },
+    "r4OriginalHostSha256": "146101ab19500b06e8d0cb56bde32d90f8439c87b245099c8e1c569b07df85cd",
+    "derivedHeadfulHostSha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+    "terminalScopeVerified": false,
+    "terminalScope": null,
+    "boundaryKind": "OBSERVER_TIMEOUT",
+    "boundaryScopeVerified": true,
+    "boundaryScope": {
+      "frameId": "4F83A8180130683321FD75C7F43D1E1A",
+      "loaderId": "01BA998D167AB3893B281DCB22AE0601",
+      "pageUrl": "http://127.0.0.1:58193/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+      "documentBackend": 2,
+      "htmlBackend": 4,
+      "generation": 1
+    },
+    "finalMetricScope": {
+      "frameId": "4F83A8180130683321FD75C7F43D1E1A",
+      "loaderId": "01BA998D167AB3893B281DCB22AE0601",
+      "pageUrl": "http://127.0.0.1:58193/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+      "documentBackend": 2,
+      "htmlBackend": 4,
+      "generation": 1
+    },
+    "finalMetricScopeVerified": true
+  },
+  "cpuSetupMs": 7.8256,
+  "cpuFinishMs": 16.8449,
+  "timings": {
+    "normalEntrypointWallSeconds": 168.8965585,
+    "outerOperationMs": 167686,
+    "innerOperationMs": 154226,
+    "hostCaseOperationSeconds": 150.05029339995235,
+    "hostCleanupSeconds": 1.1371613999363035,
+    "finalizationMs": 1134.1172,
+    "outerCleanupMs": 0,
+    "innerCleanupMs": 0
+  },
+  "cleanup": {
+    "host": {
+      "status": "PASS",
+      "seconds": 1.1371613999363035,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    },
+    "capture": {
+      "status": "PASS",
+      "performanceEnableAttempted": true,
+      "performanceDisabled": true,
+      "errors": []
+    },
+    "outer": {
+      "pid": 12276,
+      "processSignaled": true,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "drainsComplete": true,
+      "liveDrainers": 0,
+      "drainerWaitMs": 0,
+      "drainerErrors": [],
+      "cleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null
+    },
+    "inner": {
+      "pid": 15652,
+      "processSignaled": true,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "drainsComplete": true,
+      "liveDrainers": 0,
+      "drainerWaitMs": 0,
+      "drainerErrors": [],
+      "cleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null
+    },
+    "independentRelease": {
+      "schema": 1,
+      "status": "PASS_RELEASED",
+      "checkedUtc": "2026-10-04T12:18:33.1488595Z",
+      "qualification": false,
+      "normalEntrypointExit": 1,
+      "controllerStatus": "CONTROLLER_COMPLETE_OBSERVER_TIMEOUT_REPORT_UNAVAILABLE",
+      "diagnosticStatus": "DIAGNOSTIC_OBSERVER_TIMEOUT_REPORT_UNAVAILABLE",
+      "applicationAudit": "REPORT_UNAVAILABLE",
+      "phaseWallTimes": null,
+      "cpuStatus": "CPU_MEASURED",
+      "cpuDelta": {
+        "TimestampSeconds": 149.91007899993565,
+        "ThreadTimeSeconds": 77.369066,
+        "TaskDurationSeconds": 77.103954,
+        "ScriptDurationSeconds": 76.260622,
+        "V8CompileDurationSeconds": 0.006436,
+        "DevToolsCommandDurationSeconds": 0.003398
+      },
+      "cpuSetupMs": 7.8256,
+      "cpuFinishMs": 16.8449,
+      "captureCleanup": "PASS",
+      "hostCaseSeconds": 150.05029339995235,
+      "hostCleanupSeconds": 1.1371613999363035,
+      "outerOperationMs": 167686,
+      "innerOperationMs": 154226,
+      "inputBindingUnchanged": true,
+      "recordedPidsChecked": [
+        2732,
+        2920,
+        12064,
+        12276,
+        14620,
+        15652,
+        15840,
+        16236,
+        23824,
+        28488,
+        30296,
+        30380
+      ],
+      "presentProcesses": [],
+      "taskPort": 58193,
+      "taskPortListeners": 0,
+      "terminatedProcesses": 0,
+      "unrelatedBaselineEdgePidsPreserved": [
+        18904,
+        17868,
+        14732,
+        29608,
+        3604
+      ],
+      "controllerRoot": "<OS_TEMP>\\q30-root75-diagnostic-controller-23bz3fkg",
+      "diagnosticRoot": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hfyrcxwd",
+      "profile": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hfyrcxwd\\host-output\\profile",
+      "parentSourceThread": "01a1017d-669f-76ed-b3cf-1341fcc89016",
+      "limitations": "No app terminal report or phase wall rows; renderer aggregate metrics do not establish per-stage CPU, GC or preemption cause"
+    }
+  },
+  "inputsUnchanged": true,
+  "sixCandidateSourcePinsUnchanged": true,
+  "originalCold77ArchiveSha256": "0bf9b802e973c4b691b1e50a4025a338229f17ebc9880d58b588e7533b42a4a3",
+  "originalCold77": "31 PASS /1 root75 TIMEOUT90221ms /45 NOT_RUN",
+  "normalQ30Enabled": false,
+  "appLimits": {
+    "jobMillis": 90000,
+    "sharedWork": 640,
+    "activeOperationMillis": 5000
+  },
+  "scope": "Retained one-shot diagnostic, not the 90-second app qualification or a visible player-flow pass",
+  "missingReportMeaning": "Observer deadline prevented the attribute query; saved report absent does not prove no app publication",
+  "root75PerformanceCause": "UNKNOWN",
+  "instrumentationOverhead": "UNKNOWN",
+  "sourceChanges": 0,
+  "rawBindings": [
+    {
+      "file": "controller-result.json",
+      "rawSha256": "ee1af46d5d21de16e9d43261de299c8b6ca572f4e0a5cd075fe118213324300f",
+      "sanitizedSha256": "7ac380cf403b566ebedd933d2538d2d5be35460ea64e5507e42510f94b117887",
+      "rawLocation": "<OS_TEMP>\\q30-root75-diagnostic-controller-23bz3fkg\\controller-result.json",
+      "bytes": 1949
+    },
+    {
+      "file": "diagnostic-result.json",
+      "rawSha256": "968a8391c17240206d7045bca312fa35818954d2fb2b8d0812399a0e5f5c24ed",
+      "sanitizedSha256": "830e0d1627165093bda69f102b7fef70045e49b2a9d31f4628dfa2f9a98af008",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hfyrcxwd\\diagnostic-result.json",
+      "bytes": 3632
+    },
+    {
+      "file": "renderer-capture.json",
+      "rawSha256": "2e8d4d823f128bdf912cd3e6a0cab69cdd63ae1ef2a2acb00f99826cab4ce16e",
+      "sanitizedSha256": "7bbb0b67e43a0cdf3c46706a0b2c2f200169e056126176799efba6c7e34ab4d1",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hfyrcxwd\\host-output\\renderer-capture.json",
+      "bytes": 6964
+    },
+    {
+      "file": "host-result.json",
+      "rawSha256": "ed0426d8e9104a3ae5bee853f912a7418a7f00d1428da9b5e1180fda05c48adb",
+      "sanitizedSha256": "653d44b559489d0b6101a4f7563e90a289bae94223c465ad8b442d379c3f9d32",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hfyrcxwd\\host-output\\result.json",
+      "bytes": 5804
+    },
+    {
+      "file": "host-identity.json",
+      "rawSha256": "99202297a266b4396c0ae7d5b5f48f517b2f477ba483526e3f6dc4c8c291eedc",
+      "sanitizedSha256": "8cc9000617c1835e8533cfba831441d33e0495230bb33de892dfe005e0c7ea04",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hfyrcxwd\\host-output\\identity.json",
+      "bytes": 1797
+    },
+    {
+      "file": "input-audit-before.json",
+      "rawSha256": "d6b3e8d19f1200a057b409128a949a2d88adef4cb50d1f8a75606ab396253caa",
+      "sanitizedSha256": "389507f43b8fb1a96340169f0d65c4b754cf704de4e769b73c97be04903c6eac",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hfyrcxwd\\input-audit-before.json",
+      "bytes": 3487
+    },
+    {
+      "file": "input-audit-after.json",
+      "rawSha256": "0993ba03c2ba81ebc30da29b99003dc3b941e04ab82d93e5cff0da6366449b53",
+      "sanitizedSha256": "52cca0f6a2d0cd3f8857edfc8be3269ed2501ba135177ea8523d69c3fcb42196",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hfyrcxwd\\input-audit-after.json",
+      "bytes": 2938
+    },
+    {
+      "file": "release.json",
+      "rawSha256": "e038e3ac85a5ea8d13362fb6fdd1e1387e082461407e41fb502c62b6403fe02b",
+      "sanitizedSha256": "14224b6f55e36c354fdf39314c9b34230f94466df3730c1933243bda60aad432",
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r3\\r3-live-release.json",
+      "bytes": 1738
+    },
+    {
+      "file": "grant.json",
+      "rawSha256": "9f95837f0f4bd71fd8993bf475b4cfb5b7b92cf041eb99ebdc82db012eced506",
+      "sanitizedSha256": "ca1d646f9319e0f555edd5edacc7d6abd1953628672d1f548b4a0da3cbffbed7",
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r3\\quiet-window-grant-20261004-r3-once.json",
+      "bytes": 521
+    },
+    {
+      "file": "consumed-grant.json",
+      "rawSha256": "5f85b00b0959120b7925cf3a1dbc0ebf89fc52a8010db6f2553ddf37c7e3d3a8",
+      "sanitizedSha256": "05b2cd8b53f8b5233bdfd9acbdc52b63444a455dc86615185db113576cc6151b",
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r3\\launch-used-9f95837f0f4bd71fd8993bf475b4cfb5b7b92cf041eb99ebdc82db012eced506.json",
+      "bytes": 356
+    },
+    {
+      "file": "preflight-result.json",
+      "rawSha256": "1a29ad8c1b9841c736629ac846e1c334553e966b862af771f3765a610fd26651",
+      "sanitizedSha256": "86394d8ca3058b0fb582e574eab5a1cd3f31dca414e48d4a2868215446067637",
+      "rawLocation": "<OS_TEMP>\\q30-root75-r3-live-preflight-z19s5wrr\\stdout.log",
+      "bytes": 3479
+    },
+    {
+      "file": "preflight-owned-result.json",
+      "rawSha256": "20e1a13efae2749196e690953aca2cf00bbd490e90a54c03038f5e5068e23e41",
+      "sanitizedSha256": "20e1a13efae2749196e690953aca2cf00bbd490e90a54c03038f5e5068e23e41",
+      "rawLocation": "<OS_TEMP>\\q30-root75-r3-live-preflight-z19s5wrr\\launcher-result.json",
+      "bytes": 1527
+    },
+    {
+      "file": "normal-owner.json",
+      "rawSha256": "8a88f88899b1f1b007a4ee73817633f029f764b5ca6a4bcc71d683ca2fb62fc4",
+      "sanitizedSha256": "bbf31d3cddf16d0bc218a720ddeb1f194546638d0698ca26619dda2d9840081c",
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r3\\r3-live-normal-owner.json",
+      "bytes": 2771
+    },
+    {
+      "file": "normal-exit.json",
+      "rawSha256": "3bc906a96e318f28c8e59dc2e5c1736b18d6eac22c6842bc299e17c0e3d3bbbd",
+      "sanitizedSha256": "d1db82166e56e7d8a66d484a35d0d23746fb04c02e0a5faac87ce3c723f4d035",
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r3\\r3-live-normal-exit.json",
+      "bytes": 280
+    }
+  ],
+  "additionalRetainedRaw": [
+    {
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hfyrcxwd\\stdout.log",
+      "rawSha256": "e510dd9cb857ee452455b5c4479ecf732103405d1d157bdee932d7afd010c877",
+      "bytes": 47,
+      "copied": false,
+      "reason": "Raw retained; controlled sanitized receipts contain relevant bindings"
+    },
+    {
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hfyrcxwd\\stderr.log",
+      "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "copied": false,
+      "reason": "Raw retained; controlled sanitized receipts contain relevant bindings"
+    },
+    {
+      "rawLocation": "<OS_TEMP>\\q30-root75-diagnostic-controller-23bz3fkg\\stdout.log",
+      "rawSha256": "5a1759d4db6b524fbb7a2c78853ae25f5ae140b2063fdebda264642d6d3f3ba2",
+      "bytes": 665,
+      "copied": false,
+      "reason": "Raw retained; controlled sanitized receipts contain relevant bindings"
+    },
+    {
+      "rawLocation": "<OS_TEMP>\\q30-root75-diagnostic-controller-23bz3fkg\\stderr.log",
+      "rawSha256": "8672b25f66bcb7e5b85b9843c39a50fc615e478ada802e17b566274fdafd0429",
+      "bytes": 987,
+      "copied": false,
+      "reason": "Raw retained; controlled sanitized receipts contain relevant bindings"
+    },
+    {
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r3\\r3-live-normal.stdout.log",
+      "rawSha256": "ee1af46d5d21de16e9d43261de299c8b6ca572f4e0a5cd075fe118213324300f",
+      "bytes": 2101,
+      "copied": false,
+      "reason": "Raw retained; controlled sanitized receipts contain relevant bindings"
+    },
+    {
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r3\\r3-live-normal.stderr.log",
+      "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "copied": false,
+      "reason": "Raw retained; controlled sanitized receipts contain relevant bindings"
+    },
+    {
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r3\\r3-live-preflight-processes.json",
+      "rawSha256": "85fceab4e0f4593315b918f6e84a7e08633685265524f8c1f6e4ddbed00cbf7d",
+      "bytes": 20669,
+      "copied": false,
+      "reason": "Raw retained; controlled sanitized receipts contain relevant bindings"
+    },
+    {
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hfyrcxwd\\host-output\\input-manifest-before.json",
+      "rawSha256": "1c98b362aa0b9d019ea8d6c7e2525892a6def7da08d75054438bb6704dbd2fd3",
+      "bytes": 291507,
+      "copied": false,
+      "reason": "Raw retained; controlled sanitized receipts contain relevant bindings"
+    },
+    {
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hfyrcxwd\\host-output\\input-manifest-after.json",
+      "rawSha256": "a55db637c7a0adabef8f17a0504e2cfe22c0aea972485e20a96a32814102a144",
+      "bytes": 291507,
+      "copied": false,
+      "reason": "Raw retained; controlled sanitized receipts contain relevant bindings"
+    },
+    {
+      "rawLocation": "<OS_TEMP>\\q30-root75-diagnostic-controller-23bz3fkg\\launch.json",
+      "rawSha256": "74273accd4b0d314a0b1a4cf6c800a4ad150eab4602e03138a227a9b1d925e98",
+      "bytes": 805,
+      "copied": false,
+      "reason": "Raw retained; controlled sanitized receipts contain relevant bindings"
+    },
+    {
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-hfyrcxwd\\launch.json",
+      "rawSha256": "9336231e17f3b6926f5bbba6267d023045630c08f7133d3397ccf1c62941f7a6",
+      "bytes": 1221,
+      "copied": false,
+      "reason": "Raw retained; controlled sanitized receipts contain relevant bindings"
+    }
+  ],
+  "nextAction": "Offline analysis and smallest observer correction proposal; no new live run authorized"
+}

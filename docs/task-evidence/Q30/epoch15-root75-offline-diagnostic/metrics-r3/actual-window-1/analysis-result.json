@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "status": "OFFLINE_HARNESS_DEFECT_REPRODUCED",
+  "qualification": false,
+  "candidateSourcesChanged": false,
+  "newLiveRuns": 0,
+  "applicationOutcome": null,
+  "root75PerformanceCause": "UNKNOWN",
+  "proposedCorrection": "Same verified setup response frontend rebind with DOM-version fence before route release",
+  "correctionStatus": "NOT_IMPLEMENTED",
+  "selectedHostCorrectionValidation": "NOT_RUN",
+  "reproSourceSha256": "a5b589b875b44530d18bc3bc014ad5e22a06113c316aaeb2fd1aa49a68d33964",
+  "reproTests": 2,
+  "reproAssertionStatus": "PASS",
+  "sourceReview": {
+    "observer": "Read-only concrete defect confirmed",
+    "producer": "Read-only entrypoint/frame convention aligned; pre-status startup blind spot remains",
+    "integration": "Root prioritizes masked-event cause; no assertion of actual publication"
+  },
+  "reproRaw": {
+    "result": "<OS_TEMP>\\q30-root75-r3-frontend-repro-nkk62p41",
+    "fixtures": "<OS_TEMP>\\q30-r3-frontend-id-repro-1zjs45q5"
+  },
+  "rawReproBindings": [
+    {
+      "role": "stdout",
+      "rawSha256": "e7310c7eb69eace379e85db059d37d3edae820fff08600e777c716aa860686ab",
+      "bytes": 700
+    },
+    {
+      "role": "stderr",
+      "rawSha256": "2f33a6270f7f1ada913fe7006c648024d916f2fd77876343c8b12ca6df6180dd",
+      "bytes": 423
+    },
+    {
+      "role": "launch",
+      "rawSha256": "79e73514a4b4dd6d0248f7cef20bf441ca9239142f290171b5cd00775bec3c6f",
+      "bytes": 602
+    },
+    {
+      "role": "currentCapture",
+      "rawSha256": "61c7fec2ea4e2997fa668dd1e187b6d43b256d036377236ec00cf26d41d4b132",
+      "bytes": 4264
+    },
+    {
+      "role": "controlCapture",
+      "rawSha256": "611d697caa5b99d6bdce7e47df89536f95da3a706fbc4afeebcea5a7873455ab",
+      "bytes": 5055
+    }
+  ]
+}

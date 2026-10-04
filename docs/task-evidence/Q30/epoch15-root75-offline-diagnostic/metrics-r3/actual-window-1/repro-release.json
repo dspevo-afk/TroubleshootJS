@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "status": "PASS_CHILD_ABSENT",
+  "qualification": false,
+  "checkedUtc": "2026-10-04T12:37:54.0122799Z",
+  "pid": 28952,
+  "absent": true,
+  "terminationPerformed": false,
+  "method": "Exact PID Get-CimInstance Win32_Process after job cleanup; no broad inventory"
+}

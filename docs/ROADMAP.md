@@ -8,7 +8,23 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
 **Current task:** **Q30 NOT ACCEPTED - final cold qualification FAIL at root75**<br>
-**Q30 metrics diagnostic r3 (2026-10-04):** Prepared offline for one root75
+**Q30 actual r3/offline diagnosis (2026-10-04):** One authorized normal-
+entrypoint root75 returned observer TIMEOUT/report unavailable, exit1. Aggregate
+threadTicks measured77.369066 s thread/76.260622 s script over149.910079 s; app
+outcome/publication/phase times/slowdown cause UNKNOWN. Offline review found
+adapter's extra DOM.getDocument discards new frontend IDs; state filter keeps
+old HTML ID. Two synthetic exact-source tests PASS: current path drops states,
+same-response rebind control captures them. Chromium154 source supports reset;
+actual frontend IDs not captured. Narrow scope/DOM-version-guarded rebind proposed,
+NOT IMPLEMENTED/selected-host NOT_RUN; no new live run. Main168.897 s/outer167.686 s/
+host150.050 s; host cleanup PASS1.137 s/jobs0/readers closed. Independent release
+check late12:18:33.149 UTC found12 PIDs absent/port58193 closed, baseline Edge
+untouched. Inputs/six pins/cold77 archive unchanged; actual receipts and consumed
+grant preserved. Q30 disabled/NOT ACCEPTED; original31 PASS/1 root75 TIMEOUT90.221 s/
+45 NOT_RUN and fixed90,000 ms/all limits/gates unchanged. Parent owns next scope/
+window; U06/U07/Q60 unstarted. [Actual, diagnosis and restart](task-evidence/Q30/epoch15-root75-offline-diagnostic/metrics-r3/actual-window-1/README.md).
+
+**Q30 metrics diagnostic r3 preparation (before live attempt,2026-10-04):** Prepared offline for one root75
 case with baseline/final Performance threadTicks and unchanged app phase wall
 rows. No tracing or category dependency. Optional metrics unavailable preserves
 the safely owned app run; identity/route/host/job/cleanup failures remain strict.
@@ -32,7 +48,7 @@ closed, desktop released09:17:00.635UTC before housekeeping. Frozen inputs/pins/
 cold77 archive unchanged. No new live run during offline preservation. At that
 failure checkpoint, a Performance threadTicks CPU/wall case independent of
 tracing was proposed. Its subsequent offline preparation is recorded above;
-actual runtime remains NOT_RUN and a fresh parent window is required.
+the subsequent r3 actual and observer defect are recorded above.
 Q30 disabled/NOT ACCEPTED, all limits/cold77 FAIL/remaining gates unchanged.
 [Failure and practical proposal](task-evidence/Q30/epoch15-root75-offline-diagnostic/category-r2/actual-window-1/README.md).
 

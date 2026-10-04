@@ -1,0 +1,142 @@
+{
+  "schema": 1,
+  "status": "PASS_ARTIFACT_ONLY",
+  "qualification": false,
+  "checkedUtc": "2026-10-04T12:44:17.904127+00:00",
+  "elapsedSeconds": 0.12530590000096709,
+  "candidateManifestSha256": "6a76b910b89a523e578bb0a3856763378c57d3cf4c61f1c5794c92eefea48d9f",
+  "candidateArchiveSha256": "8548d5b47c09fb11d34046ed6b47ad72c151af4b63f03b9c83c71b040493a9f5",
+  "candidateArchiveMembers": 22,
+  "candidateSourcePinsUnchanged": 6,
+  "pythonAstCount": 7,
+  "sanitizedActualReceipts": 14,
+  "packetFilesExcludingManifest": 24,
+  "packetBytesExcludingManifest": 85432,
+  "privacyStatus": "PASS_CONTROLLED_ARTIFACT_PATH_SCAN",
+  "files": [
+    {
+      "file": "actual-result.json",
+      "sha256": "78b9d45240ddf09fdbaa8ff5469c938e1ae97ea147d5f3c264c178f1c026fc9e",
+      "bytes": 16561
+    },
+    {
+      "file": "analysis-result.json",
+      "sha256": "92909665fd563ce35267bb0621ee691ceaeb57ecc8d9220c53f9ca39740ee775",
+      "bytes": 1756
+    },
+    {
+      "file": "analysis.md",
+      "sha256": "8b629caf32b0da747907df99a29d8353a572866bd774ba746111bf2a737d0dc1",
+      "bytes": 6220
+    },
+    {
+      "file": "consumed-grant.json",
+      "sha256": "05b2cd8b53f8b5233bdfd9acbdc52b63444a455dc86615185db113576cc6151b",
+      "bytes": 356
+    },
+    {
+      "file": "controller-result.json",
+      "sha256": "7ac380cf403b566ebedd933d2538d2d5be35460ea64e5507e42510f94b117887",
+      "bytes": 1949
+    },
+    {
+      "file": "diagnostic-result.json",
+      "sha256": "830e0d1627165093bda69f102b7fef70045e49b2a9d31f4628dfa2f9a98af008",
+      "bytes": 3632
+    },
+    {
+      "file": "frontend_id_repro.py",
+      "sha256": "a5b589b875b44530d18bc3bc014ad5e22a06113c316aaeb2fd1aa49a68d33964",
+      "bytes": 8251
+    },
+    {
+      "file": "grant.json",
+      "sha256": "ca1d646f9319e0f555edd5edacc7d6abd1953628672d1f548b4a0da3cbffbed7",
+      "bytes": 521
+    },
+    {
+      "file": "host-identity.json",
+      "sha256": "8cc9000617c1835e8533cfba831441d33e0495230bb33de892dfe005e0c7ea04",
+      "bytes": 1797
+    },
+    {
+      "file": "host-result.json",
+      "sha256": "653d44b559489d0b6101a4f7563e90a289bae94223c465ad8b442d379c3f9d32",
+      "bytes": 5804
+    },
+    {
+      "file": "input-audit-after.json",
+      "sha256": "52cca0f6a2d0cd3f8857edfc8be3269ed2501ba135177ea8523d69c3fcb42196",
+      "bytes": 2938
+    },
+    {
+      "file": "input-audit-before.json",
+      "sha256": "389507f43b8fb1a96340169f0d65c4b754cf704de4e769b73c97be04903c6eac",
+      "bytes": 3487
+    },
+    {
+      "file": "normal-exit.json",
+      "sha256": "d1db82166e56e7d8a66d484a35d0d23746fb04c02e0a5faac87ce3c723f4d035",
+      "bytes": 280
+    },
+    {
+      "file": "normal-owner.json",
+      "sha256": "bbf31d3cddf16d0bc218a720ddeb1f194546638d0698ca26619dda2d9840081c",
+      "bytes": 2771
+    },
+    {
+      "file": "preflight-owned-result.json",
+      "sha256": "20e1a13efae2749196e690953aca2cf00bbd490e90a54c03038f5e5068e23e41",
+      "bytes": 1527
+    },
+    {
+      "file": "preflight-result.json",
+      "sha256": "86394d8ca3058b0fb582e574eab5a1cd3f31dca414e48d4a2868215446067637",
+      "bytes": 3479
+    },
+    {
+      "file": "README.md",
+      "sha256": "ff297a3ce298a1133fddae6008fb0a80896462845352704f3d4416cd6780a270",
+      "bytes": 3922
+    },
+    {
+      "file": "release.json",
+      "sha256": "14224b6f55e36c354fdf39314c9b34230f94466df3730c1933243bda60aad432",
+      "bytes": 1738
+    },
+    {
+      "file": "renderer-capture.json",
+      "sha256": "7bbb0b67e43a0cdf3c46706a0b2c2f200169e056126176799efba6c7e34ab4d1",
+      "bytes": 6964
+    },
+    {
+      "file": "repro-control-capture.json",
+      "sha256": "cfae4761143990d2d8f91e742e1a4cdec9ae54699233bdc248867a0c923f8c6b",
+      "bytes": 4891
+    },
+    {
+      "file": "repro-current-capture.json",
+      "sha256": "8ede8888b8ec9d8a01f92372d6bf67def697d7ac0c1627d8c834d5b21af6f063",
+      "bytes": 4126
+    },
+    {
+      "file": "repro-owned-result.json",
+      "sha256": "9ca3d8b7280d577bf7e59a705acfd2ebcfa0fb5c976313fb2591b2d6fb05629c",
+      "bytes": 1525
+    },
+    {
+      "file": "repro-release.json",
+      "sha256": "b33946c388ef99ae54845066b45fb64e63831935d009e63b331a9e9584bbe645",
+      "bytes": 285
+    },
+    {
+      "file": "repro-result.json",
+      "sha256": "8f5fe925a1aaa8744bda06c53757c62bd33fee39474581c92d0d5ae68ed92c69",
+      "bytes": 652
+    }
+  ],
+  "liveRuns": 0,
+  "runtimeFixStatus": "NOT_IMPLEMENTED",
+  "selectedHostFixVerification": "NOT_RUN",
+  "scope": "Hash/size/JSON/privacy/AST and exact frozen r3 source binding only; not full Q30 source-archive acceptance"
+}

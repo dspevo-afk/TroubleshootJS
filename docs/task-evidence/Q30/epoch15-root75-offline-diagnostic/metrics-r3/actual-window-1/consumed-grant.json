@@ -1,0 +1,7 @@
+{
+  "status": "ONE_DIAGNOSTIC_LAUNCH_RESERVED",
+  "qualification": false,
+  "parentReference": "01a1017d-669f-76ed-b3cf-1341fcc89016 one metrics-r3 root75 after preflight",
+  "grantSha256": "9f95837f0f4bd71fd8993bf475b4cfb5b7b92cf041eb99ebdc82db012eced506",
+  "candidateManifestSha256": "6a76b910b89a523e578bb0a3856763378c57d3cf4c61f1c5794c92eefea48d9f"
+}

@@ -1,0 +1,217 @@
+{
+  "schema": 2,
+  "status": "CPU_MEASURED",
+  "qualification": false,
+  "diagnosticOnly": true,
+  "binding": {
+    "rootSeed": "75",
+    "pageUrl": "http://127.0.0.1:58193/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "attachedDocument": {
+      "frameId": "4F83A8180130683321FD75C7F43D1E1A",
+      "loaderId": "01BA998D167AB3893B281DCB22AE0601",
+      "pageUrl": "http://127.0.0.1:58193/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+      "documentBackend": 2,
+      "htmlBackend": 4,
+      "generation": 1,
+      "exactPageUrl": true,
+      "resourceType": "script",
+      "mainFrameRequest": true
+    },
+    "r4OriginalHostSha256": "146101ab19500b06e8d0cb56bde32d90f8439c87b245099c8e1c569b07df85cd",
+    "derivedHeadfulHostSha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+    "terminalScopeVerified": false,
+    "terminalScope": null,
+    "boundaryKind": "OBSERVER_TIMEOUT",
+    "boundaryScopeVerified": true,
+    "boundaryScope": {
+      "frameId": "4F83A8180130683321FD75C7F43D1E1A",
+      "loaderId": "01BA998D167AB3893B281DCB22AE0601",
+      "pageUrl": "http://127.0.0.1:58193/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+      "documentBackend": 2,
+      "htmlBackend": 4,
+      "generation": 1
+    },
+    "finalMetricScope": {
+      "frameId": "4F83A8180130683321FD75C7F43D1E1A",
+      "loaderId": "01BA998D167AB3893B281DCB22AE0601",
+      "pageUrl": "http://127.0.0.1:58193/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+      "documentBackend": 2,
+      "htmlBackend": 4,
+      "generation": 1
+    },
+    "finalMetricScopeVerified": true
+  },
+  "browserProtocol": {
+    "protocolVersion": "1.3",
+    "product": "Edg/154.0.4258.53",
+    "revision": "@5af6e80f702cffe10645c6d6433668f011b739be",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "jsVersion": "15.4.11.7"
+  },
+  "timeDomain": "threadTicks",
+  "tracing": "NOT_ATTEMPTED_METRICS_ONLY",
+  "targetBefore": {
+    "targetId": "4F83A8180130683321FD75C7F43D1E1A",
+    "type": "page",
+    "title": "127.0.0.1:58193/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "url": "http://127.0.0.1:58193/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "attached": true,
+    "canAccessOpener": false,
+    "browserContextId": "3C656174C9806A6097F4D2C541AF186A",
+    "pid": 15840
+  },
+  "targetAfter": {
+    "targetId": "4F83A8180130683321FD75C7F43D1E1A",
+    "type": "page",
+    "title": "127.0.0.1:58193/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "url": "http://127.0.0.1:58193/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "attached": true,
+    "canAccessOpener": false,
+    "browserContextId": "3C656174C9806A6097F4D2C541AF186A",
+    "pid": 15840
+  },
+  "metricsBefore": {
+    "Timestamp": 643497.321552,
+    "AudioHandlers": 0,
+    "AudioWorkletProcessors": 0,
+    "Documents": 6,
+    "Frames": 5,
+    "JSEventListeners": 12,
+    "LayoutObjects": 14,
+    "MediaKeySessions": 0,
+    "MediaKeys": 0,
+    "Nodes": 79,
+    "Resources": 14,
+    "ContextLifecycleStateObservers": 7,
+    "V8PerContextDatas": 6,
+    "WorkerGlobalScopes": 0,
+    "UACSSResources": 0,
+    "RTCPeerConnections": 0,
+    "ResourceFetchers": 6,
+    "AdSubframes": 0,
+    "DetachedScriptStates": 2,
+    "ArrayBufferContents": 0,
+    "LayoutCount": 1,
+    "RecalcStyleCount": 1,
+    "LayoutDuration": 0.001097,
+    "RecalcStyleDuration": 0.000253,
+    "DevToolsCommandDuration": 4.4e-05,
+    "ScriptDuration": 0,
+    "V8CompileDuration": 0,
+    "TaskDuration": 0.001434,
+    "TaskOtherDuration": 4e-05,
+    "ThreadTime": 0.001454,
+    "ProcessTime": 0.080508,
+    "JSHeapUsedSize": 1631024,
+    "JSHeapTotalSize": 2883584,
+    "FirstMeaningfulPaint": 0,
+    "DomContentLoaded": 643497.313483,
+    "NavigationStart": 643497.248447
+  },
+  "metricsAfter": {
+    "Timestamp": 643647.231631,
+    "AudioHandlers": 0,
+    "AudioWorkletProcessors": 0,
+    "Documents": 4,
+    "Frames": 4,
+    "JSEventListeners": 280,
+    "LayoutObjects": 298,
+    "MediaKeySessions": 0,
+    "MediaKeys": 0,
+    "Nodes": 3824,
+    "Resources": 16,
+    "ContextLifecycleStateObservers": 18,
+    "V8PerContextDatas": 8,
+    "WorkerGlobalScopes": 0,
+    "UACSSResources": 0,
+    "RTCPeerConnections": 0,
+    "ResourceFetchers": 4,
+    "AdSubframes": 0,
+    "DetachedScriptStates": 0,
+    "ArrayBufferContents": 0,
+    "LayoutCount": 455,
+    "RecalcStyleCount": 460,
+    "LayoutDuration": 0.066281,
+    "RecalcStyleDuration": 0.018982,
+    "DevToolsCommandDuration": 0.003442,
+    "ScriptDuration": 76.260622,
+    "V8CompileDuration": 0.006436,
+    "TaskDuration": 77.105388,
+    "TaskOtherDuration": 0.749625,
+    "ThreadTime": 77.37052,
+    "ProcessTime": 83.190652,
+    "JSHeapUsedSize": 31788632,
+    "JSHeapTotalSize": 35950592,
+    "FirstMeaningfulPaint": 643497.677043,
+    "DomContentLoaded": 643497.313483,
+    "NavigationStart": 643497.248447
+  },
+  "metricDelta": {
+    "TimestampSeconds": 149.91007899993565,
+    "ThreadTimeSeconds": 77.369066,
+    "TaskDurationSeconds": 77.103954,
+    "ScriptDurationSeconds": 76.260622,
+    "V8CompileDurationSeconds": 0.006436,
+    "DevToolsCommandDurationSeconds": 0.003398
+  },
+  "commandClocks": [
+    {
+      "method": "Browser.getVersion",
+      "beforeNs": 643497314287600,
+      "afterNs": 643497316174700
+    },
+    {
+      "method": "Target.getTargetInfo",
+      "beforeNs": 643497316177900,
+      "afterNs": 643497316701400
+    },
+    {
+      "method": "Performance.enable",
+      "beforeNs": 643497316706700,
+      "afterNs": 643497320429400
+    },
+    {
+      "method": "Performance.getMetrics",
+      "beforeNs": 643497320431500,
+      "afterNs": 643497322086600
+    },
+    {
+      "method": "Target.getTargetInfo",
+      "beforeNs": 643647230482500,
+      "afterNs": 643647231200800
+    },
+    {
+      "method": "Performance.getMetrics",
+      "beforeNs": 643647231213900,
+      "afterNs": 643647232034300
+    },
+    {
+      "method": "Performance.disable",
+      "beforeNs": 643647246414300,
+      "afterNs": 643647247313700
+    }
+  ],
+  "errors": [],
+  "fatalErrors": [],
+  "cleanup": {
+    "status": "PASS",
+    "performanceEnableAttempted": true,
+    "performanceDisabled": true,
+    "errors": []
+  },
+  "setupElapsedMs": 7.8256,
+  "finishElapsedMs": 16.8449,
+  "bounds": {
+    "setupSeconds": 5.0,
+    "finishSeconds": 5.0,
+    "cleanupReserveSeconds": 1.5,
+    "metricRows": 128,
+    "metricNameChars": 256
+  },
+  "limits": [
+    "Optional metric unavailability does not abort a safely owned app run.",
+    "ThreadTime is aggregate renderer main-thread running time including GC/DOM/host work, not solver-only CPU.",
+    "Wall minus thread time does not establish preemption; no GC or per-stage CPU attribution.",
+    "App phase wall times come only from the unchanged terminal report; instrumentation overhead is unknown."
+  ]
+}

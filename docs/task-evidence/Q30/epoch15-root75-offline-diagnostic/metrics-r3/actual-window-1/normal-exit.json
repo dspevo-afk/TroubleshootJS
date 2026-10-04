@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "status": "NORMAL_ENTRYPOINT_EXITED",
+  "pid": 2732,
+  "exitCode": 1,
+  "elapsedWallSeconds": 168.8965585,
+  "finishedUtc": "2026-10-04T12:14:57.7725208Z",
+  "qualification": false,
+  "watchdogExpired": false,
+  "windowEndUtc": "2026-10-04T12:16:08.8752128Z"
+}
