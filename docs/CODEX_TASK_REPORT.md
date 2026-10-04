@@ -1,4 +1,37 @@
-# Current checkpoint: Q30 blocked; bounded root75 offline diagnostic prepared
+# Current checkpoint: Q30 diagnostic setup FAIL; desktop released
+
+2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
+`4dc70a19c6f4ee1f120f0f947e92188ab9e18c00`, plus this local failure checkpoint.
+Parent authorized one240s window after preflight; one normal entrypoint call.
+[Actual result](task-evidence/Q30/epoch15-root75-offline-diagnostic/actual-window-1/README.md):
+FAIL_CAPTURE_SETUP_APP_NOT_RUN. Selected Edge154.0.4258.53 returned Browser/Target/
+Tracing.getCategories, then required-category validation failed. Held compiled
+script aborted before release, Performance.enable or Tracing.start; no app
+generation, state/report, metrics/trace or root75 timing. Category list was not
+retained; exact missing category UNKNOWN. Secondary missing-report reader error.
+No rerun, direct worker bypass, cold77 or other live test.
+
+Outer6.977s/exit1; inner4.516s/exit1; host case0.352419s. Host cleanup PASS1.170s;
+outer/inner verified0ms at recorded resolution/job0/readers complete. Finalization
+1.126853s within20s. Desktop released08:36:34.969051UTC: exact worker/host/driver/
+seven Edge/two preflight PIDs absent, port49934 no listener; unrelated idle Edge
+startup services preserved. No task-owned persistent process or termination.
+Preflight PASS1.296s operation; no competing browser renderer/test owner. Before/
+after1354 repository and1526 app inputs and six draft source pins unchanged.
+Original cold77 archive still matches its declared SHA; failures/raw evidence/
+consumed grant/launch marker preserved. Production/build/hosts unchanged.
+
+Q30 disabled/NOT ACCEPTED. Cold77 remains31 PASS/1 TIMEOUT90.221s/45 NOT_RUN;
+77/308/90s/640/5s unchanged. Root75 compute/GC/preemption cause UNKNOWN. U06/U07/
+Q60 unstarted. No build/push/publish/email/evidence deletion; original seven
+untracked caches and sibling Desktop work preserved. Docs-only rebuild N/A.
+Next: parent-coordinate category-contract diagnosis and a separate live window;
+do not reuse consumed grant. Full regression/cold77, enabled production/menu/
+replay, supported visible repair/retest, full archive and parent acceptance pending.
+
+---
+
+# Historical checkpoint: Q30 blocked; bounded root75 offline diagnostic prepared
 
 2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
 `697cf0d784f69fa7f1f59dec90666144ef45125f`, plus this local docs/evidence checkpoint.

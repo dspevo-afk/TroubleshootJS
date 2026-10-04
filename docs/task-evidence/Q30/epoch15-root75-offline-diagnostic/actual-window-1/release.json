@@ -1,0 +1,70 @@
+{
+  "checkedUtc": "2026-10-04T08:36:34.9690510Z",
+  "status": "PASS_RELEASED",
+  "processes": [
+    {
+      "pid": 1976,
+      "status": "ABSENT",
+      "creationUtc": null
+    },
+    {
+      "pid": 5792,
+      "status": "ABSENT",
+      "creationUtc": null
+    },
+    {
+      "pid": 18828,
+      "status": "ABSENT",
+      "creationUtc": null
+    },
+    {
+      "pid": 27752,
+      "status": "ABSENT",
+      "creationUtc": null
+    },
+    {
+      "pid": 28384,
+      "status": "ABSENT",
+      "creationUtc": null
+    },
+    {
+      "pid": 30380,
+      "status": "ABSENT",
+      "creationUtc": null
+    },
+    {
+      "pid": 14820,
+      "status": "ABSENT",
+      "creationUtc": null
+    },
+    {
+      "pid": 9132,
+      "status": "ABSENT",
+      "creationUtc": null
+    },
+    {
+      "pid": 26116,
+      "status": "ABSENT",
+      "creationUtc": null
+    },
+    {
+      "pid": 22384,
+      "status": "ABSENT",
+      "creationUtc": null
+    },
+    {
+      "pid": 20084,
+      "status": "ABSENT",
+      "creationUtc": null
+    },
+    {
+      "pid": 26236,
+      "status": "ABSENT",
+      "creationUtc": null
+    }
+  ],
+  "taskPort": 49934,
+  "taskPortListeners": 0,
+  "terminatedProcesses": 0,
+  "unrelatedBackgroundEdgePreserved": true
+}

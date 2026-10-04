@@ -1,0 +1,269 @@
+{
+  "schema": 1,
+  "status": "FAIL_CAPTURE_SETUP_APP_NOT_RUN",
+  "qualification": false,
+  "window": {
+    "schema": 1,
+    "parentReference": "01a1017d-669f-76ed-b3cf-1341fcc89016: one240s root75 normal-entrypoint diagnostic authorized after preflight",
+    "windowGranted": true,
+    "quietDesktopConfirmed": true,
+    "candidateManifestSha256": "14879cb0249319e6cd70c85bf61a9d382649398fd792fad21c86b99edd3dda96",
+    "windowStartUtc": "2026-10-04T08:34:59.9590768Z",
+    "windowEndUtc": "2026-10-04T08:38:59.9590768Z",
+    "maximumCases": 1,
+    "qualification": false,
+    "limits": {
+      "activeOperationMillis": 5000,
+      "jobMillis": 90000,
+      "sharedWork": 640
+    }
+  },
+  "desktopReleasedUtc": "2026-10-04T08:36:34.969051Z",
+  "noRerun": true,
+  "parentHead": "4dc70a19c6f4ee1f120f0f947e92188ab9e18c00",
+  "candidateManifestSha256": "14879cb0249319e6cd70c85bf61a9d382649398fd792fad21c86b99edd3dda96",
+  "diagnosticCasesAttempted": 1,
+  "applicationGenerationRuns": 0,
+  "phase": "Required trace-category validation before script release, Performance.enable and Tracing.start",
+  "error": "required GC/task trace categories unsupported",
+  "selectedEdge": {
+    "protocolVersion": "1.3",
+    "product": "Edg/154.0.4258.53",
+    "revision": "@5af6e80f702cffe10645c6d6433668f011b739be",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "jsVersion": "15.4.11.7"
+  },
+  "returnedCategoryListRetained": false,
+  "exactMissingCategory": "UNKNOWN",
+  "root75PerformanceCause": "UNKNOWN",
+  "commandClocks": [
+    {
+      "method": "Browser.getVersion",
+      "beforeNs": 630455389300400,
+      "afterNs": 630455391062700
+    },
+    {
+      "method": "Target.getTargetInfo",
+      "beforeNs": 630455391065900,
+      "afterNs": 630455391571300
+    },
+    {
+      "method": "Tracing.getCategories",
+      "beforeNs": 630455391574400,
+      "afterNs": 630455413510800
+    }
+  ],
+  "timings": {
+    "outerOperationMs": 6977,
+    "innerOperationMs": 4516,
+    "hostCaseOperationSeconds": 0.35241900000255555,
+    "hostCleanupSeconds": 1.1699825000250712,
+    "finalizationMs": 1126.8531,
+    "outerCleanupMs": 0,
+    "innerCleanupMs": 0
+  },
+  "cleanup": {
+    "host": {
+      "status": "PASS",
+      "seconds": 1.1699825000250712,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    },
+    "outer": {
+      "pid": 1976,
+      "processSignaled": true,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "drainsComplete": true,
+      "liveDrainers": 0,
+      "drainerWaitMs": 0,
+      "drainerErrors": [],
+      "cleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null
+    },
+    "inner": {
+      "pid": 5792,
+      "processSignaled": true,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "drainsComplete": true,
+      "liveDrainers": 0,
+      "drainerWaitMs": 0,
+      "drainerErrors": [],
+      "cleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null
+    },
+    "independentRelease": {
+      "checkedUtc": "2026-10-04T08:36:34.969051Z",
+      "status": "PASS_RELEASED",
+      "processes": [
+        {
+          "pid": 1976,
+          "status": "ABSENT",
+          "creationUtc": null
+        },
+        {
+          "pid": 5792,
+          "status": "ABSENT",
+          "creationUtc": null
+        },
+        {
+          "pid": 18828,
+          "status": "ABSENT",
+          "creationUtc": null
+        },
+        {
+          "pid": 27752,
+          "status": "ABSENT",
+          "creationUtc": null
+        },
+        {
+          "pid": 28384,
+          "status": "ABSENT",
+          "creationUtc": null
+        },
+        {
+          "pid": 30380,
+          "status": "ABSENT",
+          "creationUtc": null
+        },
+        {
+          "pid": 14820,
+          "status": "ABSENT",
+          "creationUtc": null
+        },
+        {
+          "pid": 9132,
+          "status": "ABSENT",
+          "creationUtc": null
+        },
+        {
+          "pid": 26116,
+          "status": "ABSENT",
+          "creationUtc": null
+        },
+        {
+          "pid": 22384,
+          "status": "ABSENT",
+          "creationUtc": null
+        },
+        {
+          "pid": 20084,
+          "status": "ABSENT",
+          "creationUtc": null
+        },
+        {
+          "pid": 26236,
+          "status": "ABSENT",
+          "creationUtc": null
+        }
+      ],
+      "taskPort": 49934,
+      "taskPortListeners": 0,
+      "terminatedProcesses": 0,
+      "unrelatedBackgroundEdgePreserved": true
+    }
+  },
+  "inputsUnchanged": true,
+  "sixCandidateSourcePinsUnchanged": true,
+  "originalCold77ArchiveSha256": "0bf9b802e973c4b691b1e50a4025a338229f17ebc9880d58b588e7533b42a4a3",
+  "originalCold77": "31 PASS /1 root75 TIMEOUT90221ms /45 NOT_RUN",
+  "normalQ30Enabled": false,
+  "appLimits": {
+    "jobMillis": 90000,
+    "sharedWork": 640,
+    "activeOperationMillis": 5000
+  },
+  "metricsCaptured": false,
+  "traceCaptured": false,
+  "postFailureReaderError": "Expected app report absent; secondary FileNotFoundError; no APP_FAIL or timing classification",
+  "sourceChanges": 0,
+  "rawBindings": [
+    {
+      "file": "controller-result.json",
+      "rawSha256": "dc306e86a8a810624ad1bac73f4b6fe638b9102281a0521249965fffc569f4fb",
+      "sanitizedSha256": "bddfc1bd36c58f3e0b243d83f01acd2d6225307f2300a0f60ea8856fc2830cfd",
+      "rawLocation": "<OS_TEMP>\\q30-root75-diagnostic-controller-guf9u98p\\controller-result.json",
+      "bytes": 1707
+    },
+    {
+      "file": "diagnostic-result.json",
+      "rawSha256": "a762f1c281f4735b970f749fb14f2caa5073252020b8db47aae56a27ab49b905",
+      "sanitizedSha256": "0b11d965f8813658e4399b61ef3e4f6ebacd1f48ad51c09d460adcd42bfa7ab2",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-85bj3ams\\diagnostic-result.json",
+      "bytes": 3493
+    },
+    {
+      "file": "renderer-capture.json",
+      "rawSha256": "0dd049af76356eadd6eeb8278ca3a0acd113c29565fc8e03157da2663e302b43",
+      "sanitizedSha256": "d94fa1aaec6fc479d68c8973bd6b7122d683cc132d36fac881b621050f62a710",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-85bj3ams\\host-output\\renderer-capture.json",
+      "bytes": 3130
+    },
+    {
+      "file": "host-result.json",
+      "rawSha256": "390eccdbf876cf242d90c1adb55ee1998121b72f98f5788877aa04aa7c24fa64",
+      "sanitizedSha256": "539574eaf1b7eb5678cb6bea84d33cabcebba5c1f9c042dc06b0b6dc760ef904",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-85bj3ams\\host-output\\result.json",
+      "bytes": 6322
+    },
+    {
+      "file": "input-audit-before.json",
+      "rawSha256": "12e565dfe3b88c7b1551d055ed47c303a43b28a89e27f63ef1e21922f78b2c1d",
+      "sanitizedSha256": "bde6a32dae4031ca702227c56dda703928599696a3bef19d3699f7cdd72d76b7",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-85bj3ams\\input-audit-before.json",
+      "bytes": 3480
+    },
+    {
+      "file": "input-audit-after.json",
+      "rawSha256": "9b377173a30a8c32d74ef66b957199e1fa4dad62dce6335c8d24d4dddc5708ec",
+      "sanitizedSha256": "05b3e246887ebf6d51cc2d079908da88c606dc9b630c88684e85c7bc35502c5c",
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-85bj3ams\\input-audit-after.json",
+      "bytes": 2938
+    },
+    {
+      "file": "release.json",
+      "rawSha256": "8a36ecff11a20db8fb0ab3bbaa6f27e463925f05a6650571334202931f01a090",
+      "sanitizedSha256": "bc35550df12c01f3fb2b43aa0150b784f41f7483d417fedb4fb18d0479688cf0",
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-offline-resume\\live-window-release.json",
+      "bytes": 1237
+    },
+    {
+      "file": "grant.json",
+      "rawSha256": "40996b858814209c56ec595ab554363a95aca9029c53e1f8eedaf80f61d76d23",
+      "sanitizedSha256": "fe4bb3a4dcaf03694a799b115cc5ee01b2b20d294d7f64764641105d5be4a605",
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-offline-resume\\quiet-window-grant-20261004-root75-1.json",
+      "bytes": 555
+    },
+    {
+      "file": "preflight-result.json",
+      "rawSha256": "1dbe2e0606b943de3856303081237ba54ee5225e6ed774501409be97a6f6c4fe",
+      "sanitizedSha256": "0007860d2ec50be39fd8791623e0ab24445c189cf485db2d201f5a41f530d05e",
+      "rawLocation": "<OS_TEMP>\\q30-root75-live-preflight-5mu_xhof\\stdout.log",
+      "bytes": 3479
+    },
+    {
+      "file": "preflight-owned-result.json",
+      "rawSha256": "dfb6c7ae3b4d375cd5cae68babd90e56c76823d1f846e8f4a07b378c4d3d3e5f",
+      "sanitizedSha256": "dfb6c7ae3b4d375cd5cae68babd90e56c76823d1f846e8f4a07b378c4d3d3e5f",
+      "rawLocation": "<OS_TEMP>\\q30-root75-live-preflight-5mu_xhof\\launcher-result.json",
+      "bytes": 1527
+    }
+  ],
+  "limits": [
+    "No exact missing-category evidence",
+    "No compute/GC/preemption evidence",
+    "No visible player-input QA",
+    "No cold77 rerun, build or other live case",
+    "No push, publish, email or evidence deletion"
+  ],
+  "targetReportedRendererPid": 22384,
+  "targetPidMatchesRecordedOwnedEdge": true
+}

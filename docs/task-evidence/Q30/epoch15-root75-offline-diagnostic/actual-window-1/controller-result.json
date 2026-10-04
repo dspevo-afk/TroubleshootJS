@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "status": "CONTROLLER_COMPLETE_WORKER_FAILURE",
+  "qualification": false,
+  "outerTimeoutMs": 220000,
+  "cleanupLimitMs": 15000,
+  "candidateManifestSha256": "14879cb0249319e6cd70c85bf61a9d382649398fd792fad21c86b99edd3dda96",
+  "windowEndUtc": "2026-10-04T08:38:59.9590768Z",
+  "workerMonotonicDeadlineNs": 630671394509400,
+  "taskRoot": "<OS_TEMP>\\q30-root75-diagnostic-controller-guf9u98p",
+  "errors": [],
+  "process": {
+    "pid": 1976,
+    "creationFileTimeTicks": 134355765001031455,
+    "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+    "commandSha256": "eabf97dca720dab7183a3644ab606d6730e6088a408c0d71e455e1a2d884a084",
+    "resumeMonotonicNs": 630451411430900
+  },
+  "operation": {
+    "reason": null,
+    "exitCode": 1,
+    "cleanup": {
+      "pid": 1976,
+      "processSignaled": true,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "drainsComplete": true,
+      "liveDrainers": 0,
+      "drainerWaitMs": 0,
+      "drainerErrors": [],
+      "cleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null
+    },
+    "operationElapsedMs": 6977
+  },
+  "workerSummary": {
+    "status": "DIAGNOSTIC_FAIL",
+    "taskRoot": "<OS_TEMP>\\q30-root75-renderer-diagnostic-85bj3ams",
+    "rendererCapture": "FAIL_CAPTURE",
+    "inputBindingUnchanged": true,
+    "errors": [
+      "FileNotFoundError: [WinError 2] The system cannot find the file specified: '<OS_TEMP>\\\\q30-root75-renderer-diagnostic-85bj3ams\\\\host-output\\\\cases\\\\001-cold-75.report.json'"
+    ]
+  }
+}

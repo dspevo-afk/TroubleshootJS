@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "status": "FAIL_CAPTURE",
+  "qualification": false,
+  "diagnosticOnly": true,
+  "binding": {
+    "rootSeed": "75",
+    "pageUrl": "http://127.0.0.1:49934/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "attachedDocument": {
+      "frameId": "249D8FCE00BC667A3C5C2E2CE496BE86",
+      "loaderId": "F9E381787CDF19A8800EAC587FD9ADD1",
+      "pageUrl": "http://127.0.0.1:49934/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+      "documentBackend": 2,
+      "htmlBackend": 4,
+      "generation": 1,
+      "exactPageUrl": true,
+      "resourceType": "script",
+      "mainFrameRequest": true
+    },
+    "r4OriginalHostSha256": "146101ab19500b06e8d0cb56bde32d90f8439c87b245099c8e1c569b07df85cd",
+    "derivedHeadfulHostSha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+    "terminalScopeVerified": false,
+    "terminalScope": null
+  },
+  "browserProtocol": {
+    "protocolVersion": "1.3",
+    "product": "Edg/154.0.4258.53",
+    "revision": "@5af6e80f702cffe10645c6d6433668f011b739be",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "jsVersion": "15.4.11.7"
+  },
+  "timeDomain": "threadTicks",
+  "targetBefore": {
+    "targetId": "249D8FCE00BC667A3C5C2E2CE496BE86",
+    "type": "page",
+    "title": "127.0.0.1:49934/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "url": "http://127.0.0.1:49934/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+    "attached": true,
+    "canAccessOpener": false,
+    "browserContextId": "D42160C8A1833AAA885953B766D5FF6E",
+    "pid": 22384
+  },
+  "targetAfter": null,
+  "metricsBefore": null,
+  "metricsAfter": null,
+  "metricDelta": null,
+  "clockMarkers": [],
+  "commandClocks": [
+    {
+      "method": "Browser.getVersion",
+      "beforeNs": 630455389300400,
+      "afterNs": 630455391062700
+    },
+    {
+      "method": "Target.getTargetInfo",
+      "beforeNs": 630455391065900,
+      "afterNs": 630455391571300
+    },
+    {
+      "method": "Tracing.getCategories",
+      "beforeNs": 630455391574400,
+      "afterNs": 630455413510800
+    }
+  ],
+  "traceCompletion": null,
+  "bufferUsage": [],
+  "traceBytes": 0,
+  "traceSha256": null,
+  "traceEOF": false,
+  "traceContentAudit": "NOT_RUN",
+  "errors": [
+    {
+      "phase": "setup-or-scope",
+      "type": "ValueError",
+      "message": "required GC/task trace categories unsupported"
+    }
+  ],
+  "finishElapsedMs": 0.0308,
+  "bounds": {
+    "traceBufferKiB": 16384,
+    "traceFileBytes": 25165824,
+    "setupSeconds": 5.0,
+    "finishSeconds": 5.0
+  },
+  "limits": [
+    "Instrumentation overhead is unknown until selected Edge path is tested.",
+    "ThreadTime is renderer main-thread running time including GC/host work, not solver-only CPU.",
+    "Wall minus thread time does not identify scheduler-ready time or establish preemption.",
+    "Trace GC/task coverage, renderer thread identity and marker mapping require post-run audit.",
+    "No per-proof-item or HEALTHY-slice labels exist in this unchanged normal-mode artifact."
+  ]
+}

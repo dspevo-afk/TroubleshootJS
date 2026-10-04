@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "status": "PASS_FAILURE_RECEIPT_STATIC_REVIEW",
+  "qualification": false,
+  "reviewer": "root75_sampler_audit",
+  "scope": "Bounded retained receipts and pinned source only; no new process or live test",
+  "supported": [
+    "Required trace-category validation raised before Performance.enable or Tracing.start",
+    "Capture command log contains only Browser.getVersion, Target.getTargetInfo and Tracing.getCategories",
+    "Pinned setup-failure path aborts original held compiled-script route; actual host records net::ERR_FAILED",
+    "Compiled app did not reach root75 path; zero state events, no terminal/report, applicationAudit NOT_RUN",
+    "Missing report FileNotFoundError is downstream, not a solver or app-nonpass result",
+    "Worker/controller exit1 and failure classifications match receipts",
+    "Owned cleanup and release receipts support no task survivors and no port49934 listener"
+  ],
+  "limits": [
+    "Returned category list absent; exact missing category unknown",
+    "No app timing, CPU, GC, trace or preemption evidence",
+    "Review does not establish Q30 acceptance or visible player QA"
+  ],
+  "rootIntegrated": true,
+  "liveActions": 0
+}

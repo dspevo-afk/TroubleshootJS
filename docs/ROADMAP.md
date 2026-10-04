@@ -8,6 +8,16 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
 **Current task:** **Q30 NOT ACCEPTED - final cold qualification FAIL at root75**<br>
+**Q30 actual root75 diagnostic (2026-10-04):** One authorized normal-entrypoint
+attempt FAIL at required trace-category setup on Edge154.0.4258.53, before app
+script release/metrics/tracing. No app root75 timing; exact missing category UNKNOWN
+because the returned list was not retained. Outer6.977s/exit1; host cleanup PASS
+1.170s, job0/readers complete; exact PIDs absent/port49934 closed and desktop
+released08:36:34UTC. No rerun or other live test. All frozen inputs/source pins
+and original cold77 archive unchanged. Q30 disabled/NOT ACCEPTED; root75 cause,
+all original limits and remaining acceptance gates unchanged. New parent scope/
+window required. [Actual failure/release](task-evidence/Q30/epoch15-root75-offline-diagnostic/actual-window-1/README.md).
+
 **Q30 root75 offline preparation (2026-10-04):** Final61 focused synthetic
 checks and unchanged1354 repository/1526 prepared-app inputs PASS;44-member
 packet hash/privacy/AST audit PASS. Six workspace-only drafts prepare one bounded

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "parentReference": "01a1017d-669f-76ed-b3cf-1341fcc89016: one240s root75 normal-entrypoint diagnostic authorized after preflight",
+  "windowGranted": true,
+  "quietDesktopConfirmed": true,
+  "candidateManifestSha256": "14879cb0249319e6cd70c85bf61a9d382649398fd792fad21c86b99edd3dda96",
+  "windowStartUtc": "2026-10-04T08:34:59.9590768Z",
+  "windowEndUtc": "2026-10-04T08:38:59.9590768Z",
+  "maximumCases": 1,
+  "qualification": false,
+  "limits": {
+    "activeOperationMillis": 5000,
+    "jobMillis": 90000,
+    "sharedWork": 640
+  }
+}
