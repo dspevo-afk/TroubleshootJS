@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "status": "PASS_ARTIFACT_ONLY",
+  "qualification": false,
+  "archive": "root75-category-r2.tar.gz",
+  "archiveSha256": "1665d8b1671e868ee2798230b77537eab359138921c5880178d6162b880040ed",
+  "memberCount": 13,
+  "members": [
+    {
+      "name": "candidate/README.md",
+      "size": 5015,
+      "sha256": "85417062935459b9df69afcf02759f02425bb49e5b6e368cd6c2ab0f3995db50"
+    },
+    {
+      "name": "candidate/candidate-manifest.json",
+      "size": 1757,
+      "sha256": "74fb6460385c5e33fc9a7e241c21d62c990d1e442dc02c7ac15e1ac412d16cd3"
+    },
+    {
+      "name": "candidate/grant-example-NOT-GRANTED.json",
+      "size": 460,
+      "sha256": "6dea3954e91debdcf382188173517f41c0bb06ee5d2e9a63fde0a3ee6f10a2f4"
+    },
+    {
+      "name": "candidate/headful_attribute_host.py",
+      "size": 51883,
+      "sha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be"
+    },
+    {
+      "name": "candidate/instrumented_host.py",
+      "size": 5763,
+      "sha256": "db815fc4ae8f87df3f7c27879df7ef04ae93b6b6a8c1448eef15321b770fd9f9"
+    },
+    {
+      "name": "candidate/offline_checks.py",
+      "size": 28890,
+      "sha256": "7b8246e7094f7d06871f8fa7cbd239f69035d0171aa41ad277b5125224692236"
+    },
+    {
+      "name": "candidate/renderer_capture.py",
+      "size": 17622,
+      "sha256": "36b2032561e56d8d7d2b539de2657392756d9052d814075b89dab34888966d1e"
+    },
+    {
+      "name": "candidate/review-result.json",
+      "size": 1154,
+      "sha256": "f6f0ea8f722af551d7ecbd894518274af9e917a5679e8dafcf164319dc6c4841"
+    },
+    {
+      "name": "candidate/run_one_diagnostic.py",
+      "size": 25435,
+      "sha256": "ad6e57bb27a1808694d45fbfd73ede18e17e7978b7d3e1cf61a22465970a49f2"
+    },
+    {
+      "name": "candidate/verify_offline_candidate.py",
+      "size": 2348,
+      "sha256": "eea25a18be2bd7cf9c48e194715a5277a5a80801af4db923083cf54f3c2ea5c6"
+    },
+    {
+      "name": "evidence/offline-result.json",
+      "size": 4899,
+      "sha256": "9f0e51e735c7840e1cec7c1f9baa3d3a7eae6cc02fa9382f345209d8ba5e2217"
+    },
+    {
+      "name": "evidence/owned-result.json",
+      "size": 1147,
+      "sha256": "bee17147ad3d8bfdfcfbe076960f09d77bc93ae8778f3dfb57a811bd2940386c"
+    },
+    {
+      "name": "evidence/source-diff.patch",
+      "size": 15180,
+      "sha256": "d90437bbcb0f80162c73005b37daddc825c9d3b1e5e22d383383c7943b15e9ab"
+    }
+  ],
+  "candidateManifestSha256": "74fb6460385c5e33fc9a7e241c21d62c990d1e442dc02c7ac15e1ac412d16cd3",
+  "sixSourcePinsBoundToFinal74": true,
+  "sourceFilesChanged": [
+    "renderer_capture.py",
+    "offline_checks.py"
+  ],
+  "priorR1SourcesUnchanged": true,
+  "syntaxCheckedPythonFiles": 6,
+  "privacyScan": "PASS",
+  "browserLaunched": false,
+  "limits": "Offline category packet only; not actual Edge support, trace coverage, Q30 acceptance or its full source archive gate"
+}

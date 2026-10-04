@@ -1,0 +1,272 @@
+--- r1/renderer_capture.py
++++ r2/renderer_capture.py
+@@ -16,11 +16,65 @@
+ CAPTURE_SETUP_SECONDS = 5.0
+ CAPTURE_FINISH_SECONDS = 5.0
+ CAPTURE_CLEANUP_SECONDS = 1.5
++MAX_CATEGORY_ENTRIES = 4096
++MAX_CATEGORY_ENTRY_BYTES = 1024
++MAX_CATEGORY_BYTES = 256 * 1024
+ 
+ 
+ def need(condition, message):
+     if not condition:
+         raise ValueError(message)
++
++
++def category_preflight(response):
++    """Match literal category atoms, including explicitly advertised groups."""
++    row = {"status": "INVALID_RESPONSE", "requiredCategories": list(CATEGORIES),
++           "returnedCategories": None, "returnedEvidenceComplete": False,
++           "missingRequirements": None, "matches": [], "errors": []}
++    categories = response.get("categories") if type(response) is dict else None
++    row["returnedType"] = type(categories).__name__
++    if type(response) is not dict or "categories" not in response or type(categories) is not list:
++        row["errors"].append("Tracing.getCategories must return categories as an array of strings")
++        return row
++    row["returnedCount"] = len(categories)
++    if len(categories) > MAX_CATEGORY_ENTRIES:
++        row["errors"].append("category entry count exceeds explicit bound")
++        return row
++    size = 0
++    for index, value in enumerate(categories):
++        if type(value) is not str:
++            row["errors"].append("category entry %d is not a string" % index)
++            return row
++        try:
++            encoded = value.encode("utf-8")
++        except UnicodeEncodeError:
++            row["errors"].append("category entry %d is not valid UTF-8" % index)
++            return row
++        size += len(encoded)
++        if len(encoded) > MAX_CATEGORY_ENTRY_BYTES or size > MAX_CATEGORY_BYTES:
++            row["errors"].append("category byte bound exceeded at entry %d" % index)
++            return row
++    # Preserve original order/duplicates/spelling before any membership decision.
++    row["returnedCategories"] = list(categories)
++    row["returnedEvidenceComplete"] = True
++    row["returnedUtf8Bytes"] = size
++    row["returnedCategoriesJsonSha256"] = hashlib.sha256(
++        json.dumps(categories, ensure_ascii=True, separators=(",", ":")).encode()).hexdigest()
++    atoms = [value.split(",") for value in categories]
++    if any(not token for group in atoms for token in group):
++        row["errors"].append("empty category/group atom; requirement membership unknown")
++        return row
++    missing = []
++    for required in CATEGORIES:
++        witness = next((index for index, group in enumerate(atoms) if required in group), None)
++        if witness is None:
++            missing.append(required)
++        else:
++            row["matches"].append({"requiredCategory": required, "returnedEntryIndex": witness,
++                                   "matchKind": "EXACT" if categories[witness] == required else "GROUP_ATOM"})
++    row["missingRequirements"] = missing
++    row["status"] = "MISSING_REQUIREMENTS" if missing else "REQUIREMENTS_ENUMERATED"
++    return row
+ 
+ 
+ def metric_values(response):
+@@ -59,6 +113,9 @@
+         self.errors, self.calls, self.buffer_rows = [], [], []
+         self.before = self.after = self.deltas = self.version = None
+         self.target_before = self.target_after = None
++        self.categories = {"status": "NOT_RUN", "requiredCategories": list(CATEGORIES),
++                           "returnedCategories": None, "returnedEvidenceComplete": False,
++                           "missingRequirements": None}
+         self.trace_attempted = self.performance_attempted = False
+         self.started = self.finished = False
+         self.trace_complete = asyncio.Event()
+@@ -123,9 +180,19 @@
+         need(type(self.target_before) is dict and self.target_before.get("type") == "page" and
+              type(self.target_before.get("targetId")) is str and self.target_before["targetId"] and
+              self.target_before.get("url") == self.binding["pageUrl"], "target lacks exact page binding")
+-        categories = (await self.send("Tracing.getCategories")).get("categories")
+-        need(type(categories) is list and all(item in categories for item in CATEGORIES),
+-             "required GC/task trace categories unsupported")
++        self.categories["status"] = "COMMAND_NOT_COMPLETED"
++        self.categories = category_preflight(await self.send("Tracing.getCategories"))
++        # Persist before rejecting or starting any instrument domain. Even a
++        # later capture/cleanup failure must not erase the category response.
++        with (self.root / "renderer-category-preflight.json").open("x", encoding="utf-8") as output:
++            json.dump({"schema": 1, "qualification": False, "browserProtocol": self.version,
++                       "target": self.target_before, "categoryPreflight": self.categories,
++                       "traceContentAudit": "NOT_RUN"}, output, indent=2, allow_nan=False)
++            output.write("\n")
++        need(self.categories["status"] == "REQUIREMENTS_ENUMERATED",
++             "trace category preflight " + self.categories["status"] + ": " +
++             (", ".join(self.categories["missingRequirements"] or []) or
++              "; ".join(self.categories.get("errors", []))))
+         self.performance_attempted = True
+         await self.send("Performance.enable", {"timeDomain": "threadTicks"})
+         self.before = metric_values(await self.send("Performance.getMetrics"))
+@@ -234,6 +301,7 @@
+                   self.deltas is not None and not self.errors else "FAIL_CAPTURE",
+             "qualification": False, "diagnosticOnly": True, "binding": self.binding,
+             "browserProtocol": self.version, "timeDomain": "threadTicks",
++            "categoryPreflight": self.categories,
+             "targetBefore": self.target_before, "targetAfter": self.target_after,
+             "metricsBefore": self.before, "metricsAfter": self.after, "metricDelta": self.deltas,
+             "clockMarkers": self.clocks, "commandClocks": self.calls, "traceCompletion": self.completion,
+@@ -242,6 +310,8 @@
+             "traceContentAudit": "NOT_RUN",
+             "errors": self.errors, "finishElapsedMs": (time.monotonic_ns() - finish_start) / 1e6,
+             "bounds": {"traceBufferKiB": TRACE_BUFFER_KIB, "traceFileBytes": MAX_TRACE_BYTES,
++                       "categoryEntries": MAX_CATEGORY_ENTRIES, "categoryEntryBytes": MAX_CATEGORY_ENTRY_BYTES,
++                       "categoryTotalBytes": MAX_CATEGORY_BYTES,
+                        "setupSeconds": CAPTURE_SETUP_SECONDS, "finishSeconds": CAPTURE_FINISH_SECONDS},
+             "limits": ["Instrumentation overhead is unknown until selected Edge path is tested.",
+                 "ThreadTime is renderer main-thread running time including GC/host work, not solver-only CPU.",
+--- r1/offline_checks.py
++++ r2/offline_checks.py
+@@ -198,6 +198,151 @@
+     add_capture_negative(FAULT)
+ 
+ 
++class CategoryChecks(unittest.TestCase):
++    # Independent required contract and primary-source group fixtures, rather
++    # than deriving expected membership from the implementation under test.
++    required = ["devtools.timeline", "v8", "v8.execute", "toplevel", "disabled-by-default-v8.gc"]
++    grouped = ["devtools.timeline,v8", "v8.execute,toplevel", "disabled-by-default-v8.gc"]
++
++    def test_exact_preserves_order_duplicates(self):
++        values = ["unrelated", "v8", "devtools.timeline", "v8.execute", "toplevel",
++                  "disabled-by-default-v8.gc", "v8"]
++        row = capture.category_preflight({"categories": values})
++        self.assertEqual(row["status"], "REQUIREMENTS_ENUMERATED")
++        self.assertEqual(row["requiredCategories"], self.required)
++        self.assertEqual(row["returnedCategories"], values)
++        self.assertTrue(row["returnedEvidenceComplete"])
++        self.assertEqual(row["missingRequirements"], [])
++        self.assertTrue(all(item["matchKind"] == "EXACT" for item in row["matches"]))
++
++    def test_explicit_comma_groups(self):
++        row = capture.category_preflight({"categories": self.grouped})
++        self.assertEqual(row["status"], "REQUIREMENTS_ENUMERATED")
++        self.assertEqual(row["returnedCategories"], self.grouped)
++        self.assertEqual([item["returnedEntryIndex"] for item in row["matches"]], [0, 0, 1, 1, 2])
++        self.assertEqual(row["matches"][0]["matchKind"], "GROUP_ATOM")
++
++    def test_each_requirement_stays_required(self):
++        for required in self.required:
++            with self.subTest(required=required):
++                values = [value for value in self.required if value != required]
++                row = capture.category_preflight({"categories": values})
++                self.assertEqual(row["status"], "MISSING_REQUIREMENTS")
++                self.assertEqual(row["missingRequirements"], [required])
++                self.assertEqual(row["returnedCategories"], values)
++
++    def test_no_alias_case_substring_or_wildcard_support(self):
++        values = ["DEVTOOLS.TIMELINE", "v8*", "v8.execute.more", "toplevel.flow",
++                  "disabled-by-default-v8.gc_extra"]
++        row = capture.category_preflight({"categories": values})
++        self.assertEqual(row["status"], "MISSING_REQUIREMENTS")
++        self.assertEqual(row["missingRequirements"], self.required)
++
++    def test_no_whitespace_normalization(self):
++        row = capture.category_preflight({"categories": ["devtools.timeline, v8",
++            "v8.execute,toplevel", "disabled-by-default-v8.gc"]})
++        self.assertEqual(row["missingRequirements"], ["v8"])
++
++    def test_empty_list_explains_all_missing(self):
++        row = capture.category_preflight({"categories": []})
++        self.assertEqual(row["missingRequirements"], self.required)
++        self.assertEqual(row["returnedCategories"], [])
++        self.assertTrue(row["returnedEvidenceComplete"])
++
++    def test_malformed_response_is_unknown_membership(self):
++        for response in (None, [], {}, {"categories": None}, {"categories": "v8"},
++                         {"categories": [1]}, {"categories": [True]}):
++            with self.subTest(response=response):
++                row = capture.category_preflight(response)
++                self.assertEqual(row["status"], "INVALID_RESPONSE")
++                self.assertIsNone(row["missingRequirements"])
++                self.assertFalse(row["returnedEvidenceComplete"])
++                self.assertTrue(row["errors"])
++
++    def test_empty_group_retains_response_but_refuses_membership(self):
++        values = self.required + ["a,,b"]
++        row = capture.category_preflight({"categories": values})
++        self.assertEqual(row["status"], "INVALID_RESPONSE")
++        self.assertEqual(row["returnedCategories"], values)
++        self.assertIsNone(row["missingRequirements"])
++
++    def test_category_bounds(self):
++        cases = [["x"] * 4097, ["x" * 1025], ["x" * 1024] * 257,
++                 ["\u00e9" * 513]]
++        for values in cases:
++            with self.subTest(count=len(values)):
++                row = capture.category_preflight({"categories": values})
++                self.assertEqual(row["status"], "INVALID_RESPONSE")
++                self.assertFalse(row["returnedEvidenceComplete"])
++                self.assertIsNone(row["missingRequirements"])
++
++    def test_invalid_utf8_is_explained(self):
++        row = capture.category_preflight({"categories": ["\ud800"]})
++        self.assertEqual(row["status"], "INVALID_RESPONSE")
++        self.assertIn("not valid UTF-8", row["errors"][0])
++
++
++class CategoryLifecycleChecks(unittest.IsolatedAsyncioTestCase):
++    async def test_missing_saved_before_fail_closed(self):
++        class MissingGC(Session):
++            async def send(self, method, params):
++                if method == "Tracing.getCategories":
++                    self.calls.append((method, params))
++                    return {"categories": ["devtools.timeline", "v8", "v8.execute", "toplevel"]}
++                return await super().send(method, params)
++        root = ROOT / self._testMethodName
++        root.mkdir()
++        session = MissingGC()
++        item = capture.RendererCapture(session, root, binding={"pageUrl": URL})
++        with self.assertRaisesRegex(ValueError, "MISSING_REQUIREMENTS: disabled-by-default-v8.gc"):
++            await item.start(time.monotonic() + 1)
++        receipt = json.loads((root / "renderer-category-preflight.json").read_text())
++        self.assertEqual(receipt["categoryPreflight"]["returnedCategories"],
++                         ["devtools.timeline", "v8", "v8.execute", "toplevel"])
++        self.assertEqual(receipt["categoryPreflight"]["missingRequirements"], ["disabled-by-default-v8.gc"])
++        self.assertNotIn("Performance.enable", [row[0] for row in session.calls])
++        self.assertNotIn("Tracing.start", [row[0] for row in session.calls])
++        result = await item.finish()
++        self.assertEqual(result["status"], "FAIL_CAPTURE")
++        self.assertEqual(result["categoryPreflight"], receipt["categoryPreflight"])
++        self.assertEqual(session.listeners, {})
++
++    async def test_group_acceptance_keeps_filters_and_content_unknown(self):
++        class Groups(Session):
++            async def send(self, method, params):
++                if method == "Tracing.getCategories":
++                    self.calls.append((method, params))
++                    return {"categories": ["devtools.timeline,v8", "v8.execute,toplevel",
++                                           "disabled-by-default-v8.gc"]}
++                return await super().send(method, params)
++        root = ROOT / self._testMethodName
++        root.mkdir()
++        session = Groups()
++        item = capture.RendererCapture(session, root, binding={"pageUrl": URL, "terminalScopeVerified": True})
++        await item.start(time.monotonic() + 1)
++        start = next(params for method, params in session.calls if method == "Tracing.start")
++        self.assertEqual(start["traceConfig"]["includedCategories"], CategoryChecks.required)
++        result = await item.finish()
++        self.assertEqual(result["status"], "PASS_CAPTURE_ONLY")
++        self.assertEqual(result["traceContentAudit"], "NOT_RUN")
++        self.assertEqual(result["categoryPreflight"]["status"], "REQUIREMENTS_ENUMERATED")
++        self.assertEqual(session.listeners, {})
++
++    async def test_existing_category_receipt_not_overwritten(self):
++        root = ROOT / self._testMethodName
++        root.mkdir()
++        receipt = root / "renderer-category-preflight.json"
++        receipt.write_text("preserved fixture")
++        session = Session()
++        item = capture.RendererCapture(session, root, binding={"pageUrl": URL})
++        with self.assertRaises(FileExistsError):
++            await item.start(time.monotonic() + 1)
++        self.assertEqual(receipt.read_text(), "preserved fixture")
++        self.assertNotIn("Performance.enable", [row[0] for row in session.calls])
++        await item.finish()
++        self.assertEqual(session.listeners, {})
++
++
+ class MetricChecks(unittest.TestCase):
+     def test_missing(self):
+         with self.assertRaises(ValueError):

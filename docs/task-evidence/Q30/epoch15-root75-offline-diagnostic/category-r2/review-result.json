@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "status": "PASS_LIMITED_STATIC_CATEGORY_SCOPE",
+  "qualification": false,
+  "reviewer": "root75_sampler_audit",
+  "candidateManifestSha256": "74fb6460385c5e33fc9a7e241c21d62c990d1e442dc02c7ac15e1ac412d16cd3",
+  "scope": "Final category helper/receipt ordering and focused fixtures only; no reviewer-run tests or live actions",
+  "rootIntegrated": true,
+  "blockers": [],
+  "supported": [
+    "Bounded valid response preserved in original order with duplicates",
+    "Exact literal comma-group atoms; no aliases or invented support",
+    "Malformed/over-bound responses refuse membership as unknown",
+    "Exclusive early receipt precedes rejection and instrument domains",
+    "Canonical five requirements/trace filters and content NOT_RUN unchanged",
+    "Focused fixtures cover grouped/exact/missing/lookalike/bounds and lifecycle"
+  ],
+  "optionalUnrunFixtures": ["Tracing.getCategories exception/timeout", "Acceptance exactly at each bound"],
+  "limits": ["Actual Edge list/grouping/missing requirements unknown", "No r2 live capture or Q30 acceptance evidence", "Direct internal worker remains unsupported"],
+  "liveActions": 0
+}

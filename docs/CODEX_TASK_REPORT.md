@@ -1,4 +1,39 @@
-# Current checkpoint: Q30 diagnostic setup FAIL; desktop released
+# Current checkpoint: Q30 blocked; category preflight r2 prepared offline
+
+2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
+`379bee18a3a15503315a8edb5f64cb1e12b86acd`, plus this local docs/evidence checkpoint.
+[Corrected candidate](task-evidence/Q30/epoch15-root75-offline-diagnostic/category-r2/README.md):
+separate six-file draft changes only capture category handling and focused checks.
+Bounded actual valid list/order/duplicates/spelling and named missing requirements
+are saved exclusively before rejection/instrument start/script release. Literal
+comma-group tokens accepted; no alias/trim/case/wildcard support invented. All five
+requirements/filters and app90s/640/5s/capture/controller cleanup limits unchanged.
+Chromium154 group/filter contract supports this correction; installed Edge's
+actual list/grouping/missing requirement is UNKNOWN. Exact Edge revision unavailable.
+
+Final74 offline checks PASS (61 existing+13 new),0 failures/errors/skips; fixture+
+input audit1.890913s, outer2.026s/exit0/verified cleanup0ms at recorded resolution/
+job0/readers complete. Audit1.118778s:1354 repo/1526 app files/six pins unchanged.
+13-member packet hashes/privacy/six ASTs/final74 binding PASS_ARTIFACT_ONLY.
+Limited static review PASS/no blocker; optional command-error/exact-bound tests
+not run. Child24344 absent08:56:10UTC; no task-owned persistent resource.
+R1 sources/actual FAIL/consumed grant and original cold77 evidence preserved.
+No new live Edge, app case, CPU sampler, benchmark or build; Core resumes Local
+Dots. New grant example false/expired; no parent window/auto-run. Direct internal
+worker bypass remains unsupported; normal entrypoint only.
+
+Q30 disabled/NOT ACCEPTED; cold77 remains31 PASS/1 root75 TIMEOUT90.221s/45 NOT_RUN;
+77/308/90s/640/5s unchanged. No r2 runtime category/trace/CPU/GC/player QA proof.
+Production/hosts/build inputs unchanged; JDK8/GWT rebuild NOT APPLICABLE. Original
+seven cache files/sibling Desktop work preserved. No push/publish/email/deletion.
+Next: parent-coordinate a new window for r2; inspect actual categories and capture
+support/content before attributing root75 cost. Root75 correction, final full
+regression/cold77/enabled build/menu/replay/visible repair/retest/full source
+archive and parent acceptance pending. U06/U07/Q60 unstarted.
+
+---
+
+# Historical checkpoint: Q30 diagnostic setup FAIL; desktop released
 
 2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
 `4dc70a19c6f4ee1f120f0f947e92188ab9e18c00`, plus this local failure checkpoint.

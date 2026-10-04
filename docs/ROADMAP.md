@@ -8,6 +8,16 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
 **Current task:** **Q30 NOT ACCEPTED - final cold qualification FAIL at root75**<br>
+**Q30 category preflight r2 (2026-10-04):** Offline-only correction saves bounded
+actual category replies before rejection and matches literal comma-group atoms.
+All five required categories/filters/qualification budgets unchanged. Final74
+synthetic checks/input audit PASS;13-member hash/privacy/AST packet audit PASS;
+limited source review PASS. Installed Edge's actual list/missing category and r2
+runtime/trace coverage remain UNKNOWN/NOT_RUN; previous actual FAIL preserved.
+No live Edge/app/benchmark/build or window granted; Core resumes Local Dots.
+Q30 disabled/NOT ACCEPTED; cold77 FAIL and all remaining gates unchanged.
+[Candidate and runtime gaps](task-evidence/Q30/epoch15-root75-offline-diagnostic/category-r2/README.md).
+
 **Q30 actual root75 diagnostic (2026-10-04):** One authorized normal-entrypoint
 attempt FAIL at required trace-category setup on Edge154.0.4258.53, before app
 script release/metrics/tracing. No app root75 timing; exact missing category UNKNOWN

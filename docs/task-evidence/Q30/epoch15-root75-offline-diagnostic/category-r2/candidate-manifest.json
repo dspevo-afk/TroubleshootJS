@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "status": "PREPARED_OFFLINE_NOT_RUN",
+  "qualification": false,
+  "autoRun": false,
+  "windowGranted": false,
+  "reviewHead": "379bee18a3a15503315a8edb5f64cb1e12b86acd",
+  "maximumCases": 1,
+  "rootSeed": "75",
+  "frozenSourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+  "limits": {
+    "jobMillis": 90000,
+    "sharedWork": 640,
+    "activeOperationMillis": 5000
+  },
+  "outerTimeoutMs": 180000,
+  "cleanupBudgetMs": 15000,
+  "finalReserveMs": 20000,
+  "requestedWindowSeconds": 240,
+  "hostObservationSeconds": 150,
+  "sourcePins": {
+    "renderer_capture.py": {
+      "sha256": "36b2032561e56d8d7d2b539de2657392756d9052d814075b89dab34888966d1e",
+      "size": 17622
+    },
+    "instrumented_host.py": {
+      "sha256": "db815fc4ae8f87df3f7c27879df7ef04ae93b6b6a8c1448eef15321b770fd9f9",
+      "size": 5763
+    },
+    "run_one_diagnostic.py": {
+      "sha256": "ad6e57bb27a1808694d45fbfd73ede18e17e7978b7d3e1cf61a22465970a49f2",
+      "size": 25435
+    },
+    "offline_checks.py": {
+      "sha256": "7b8246e7094f7d06871f8fa7cbd239f69035d0171aa41ad277b5125224692236",
+      "size": 28890
+    },
+    "headful_attribute_host.py": {
+      "sha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+      "size": 51883
+    },
+    "verify_offline_candidate.py": {
+      "sha256": "eea25a18be2bd7cf9c48e194715a5277a5a80801af4db923083cf54f3c2ea5c6",
+      "size": 2348
+    }
+  },
+  "controllerTimeoutMs": 220000,
+  "priorCandidateManifestSha256": "14879cb0249319e6cd70c85bf61a9d382649398fd792fad21c86b99edd3dda96",
+  "correctionScope": "Bounded category retention and literal comma-group membership; five requirements/budgets unchanged"
+}
