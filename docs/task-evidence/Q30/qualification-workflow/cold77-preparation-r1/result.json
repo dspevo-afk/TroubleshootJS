@@ -1,0 +1,79 @@
+{
+  "status": "PASS_OFFLINE_PREPARATION_ONLY",
+  "qualification": false,
+  "sourcePins": {
+    "cold77_batch.py": {
+      "sha256": "eac3b78ab8944766a26167c36ea808298369faf797d46a99561073a0fe6d94e6",
+      "size": 17087
+    },
+    "cold77_case_worker.py": {
+      "sha256": "08b4438ac43821f7ed29f6cfd84089afdbfed7500c64f4d911cff208698777df",
+      "size": 12163
+    },
+    "offline_process_canary.py": {
+      "sha256": "034f7d667931b698e801bdc433ede982299ea265d3883badde4c4e90e7cfe918",
+      "size": 5095
+    },
+    "test_cold77_batch.py": {
+      "sha256": "e1ded7d69886f29df459e24432b26ef18e51da2a671eb12daec7326ce9d22271",
+      "size": 17346
+    }
+  },
+  "candidateManifestSha256": "6fb772ea21ce6f2570de3cbca4e128a6b6d25d33159c30be3856cc8a670ec49b",
+  "originalCold77": {
+    "status": "FAIL",
+    "pass": 31,
+    "timeout": 1,
+    "notRun": 45,
+    "archiveSha256": "0bf9b802e973c4b691b1e50a4025a338229f17ebc9880d58b588e7533b42a4a3"
+  },
+  "ownedPidsForIndependentAbsenceCheck": [
+    8224,
+    10496,
+    16440,
+    19256,
+    20888,
+    23948,
+    24752,
+    25768,
+    27996,
+    29816
+  ],
+  "resourcePolicy": {
+    "windowMs": 15120000,
+    "rootCount": 77,
+    "candidateCount": 308,
+    "applicationLimits": {
+      "jobMillis": 90000,
+      "sharedWork": 640,
+      "activeOperationMillis": 5000
+    },
+    "hostCaseMs": 150000,
+    "stepOperationMs": 180000,
+    "stepCleanupMs": 15000,
+    "stepsMaximumMs": 15015000,
+    "batchJobMaximumMs": 15070000,
+    "batchCleanupMs": 15000,
+    "controllerRecordMs": 5000,
+    "independentReleaseMs": 30000,
+    "serial": true,
+    "profilePolicy": "One fresh headful Edge context/profile/page and loopback server per root, serial; variable internal Edge process count.",
+    "memoryDisk": "No hard RAM or profile-disk cap. Retain all outputs; logs capped at1MiB each and receipt4MiB. Parent coordinates quiet Windows resource availability.",
+    "executionStatus": "FULL_COLD77_NOT_RUN_NO_LIVE_GRANT"
+  },
+  "reviewScope": {
+    "root": "PASS_FINAL_INTEGRATED_SOURCE_REVIEW",
+    "independent": "PASS_WITH_LIMITS_FINAL_TIMING_REVIEW_NO_EXECUTION",
+    "scope": "Read-only additive worker/controller, original host/reader/runner receipts and arithmetic. No qualification or visible-game evidence.",
+    "resolved": "Atomic launch publication; missing-receipt strict app-only recovery; five-second record reserve; minimum grant arithmetic; post-publication deadline receipt.",
+    "limits": "Native job operation/cleanup bounded. Controller final disk I/O checks are cooperative, so blocked I/O is not a hard whole-controller deadline proof. Independent desktop release required for a future run."
+  },
+  "remainingGates": [
+    "Fresh full77 original-host cold qualification, all308 frozen candidate metadata and all20-40 published sizes",
+    "Required full regression matrix",
+    "Private enabled production build, menu and replay checks before normal-play enablement",
+    "Actual visible20/30/40 examination, diagnosis, unrepaired/repair/functional-retest flow with player input",
+    "Full source archive verification",
+    "Parent independent acceptance review"
+  ]
+}

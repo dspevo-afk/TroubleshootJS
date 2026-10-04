@@ -1,0 +1,91 @@
+{
+  "status": "MEASURED_COMPARISON_ONLY",
+  "qualification": false,
+  "binding": {
+    "rootSeed": "75",
+    "sourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+    "sourceCommit": "d37c3b3b8581abdeaa9b88b7bfb2349cff958d31",
+    "requestCanonical": "tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=75;replay=tsj-alpha/4/MEDIUM/RB30_CONTROL/75;quickPlay=false;layout=15;planEpoch=4;plan=rb30-plan@4;seed=75;topology=RB30_CH2_SEPARATE_DIRECT_A_BJT_B_BJT;support=C12:false,S5:true,S12:false,filters:1,outputIndicators:3,bleeder5:false;layout=6626451485285559634;routing=4130765676055363405;physicalPolicy=MEDIUM_BOARD@1;fault=DRIVE_A_OPEN;packages=39;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=true;difficulty=MEDIUM@1;assessment=2",
+    "planCanonical": "rb30-plan@4;seed=75;topology=RB30_CH2_SEPARATE_DIRECT_A_BJT_B_BJT;support=C12:false,S5:true,S12:false,filters:1,outputIndicators:3,bleeder5:false;layout=6626451485285559634;routing=4130765676055363405;physicalPolicy=MEDIUM_BOARD@1;fault=DRIVE_A_OPEN;packages=39;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated",
+    "manifestSha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8"
+  },
+  "old": {
+    "reportSha256": "e58d0337d3f823ad4b00a99651a3aeffdeccb14387b05e6f3e3e27f39b14a9a1",
+    "applicationOutcome": "TIMEOUT",
+    "generationElapsedMs": 90221,
+    "stages": [
+      {
+        "elapsedMs": 1,
+        "stage": "RESOLVE",
+        "workUnits": 1
+      },
+      {
+        "elapsedMs": 29189,
+        "stage": "HEALTHY",
+        "workUnits": 89
+      },
+      {
+        "elapsedMs": 138,
+        "stage": "PHYSICAL",
+        "workUnits": 1
+      },
+      {
+        "elapsedMs": 59495,
+        "stage": "HYPOTHESES",
+        "workUnits": 318
+      },
+      {
+        "elapsedMs": 0,
+        "stage": "SYMPTOM",
+        "workUnits": 0
+      },
+      {
+        "elapsedMs": 0,
+        "stage": "PUBLISH",
+        "workUnits": 0
+      }
+    ],
+    "stageWallSumMs": 88823,
+    "cpuAttribution": "UNAVAILABLE"
+  },
+  "r5": {
+    "reportSha256": "0740fe159791a2c310b72ab5ea173a674e25405808ecf2ad32a97352040cf2e6",
+    "applicationOutcome": "PASS",
+    "generationElapsedMs": 77899,
+    "stages": [
+      {
+        "elapsedMs": 0,
+        "stage": "RESOLVE",
+        "workUnits": 1
+      },
+      {
+        "elapsedMs": 17944,
+        "stage": "HEALTHY",
+        "workUnits": 89
+      },
+      {
+        "elapsedMs": 85,
+        "stage": "PHYSICAL",
+        "workUnits": 1
+      },
+      {
+        "elapsedMs": 58231,
+        "stage": "HYPOTHESES",
+        "workUnits": 390
+      },
+      {
+        "elapsedMs": 1,
+        "stage": "SYMPTOM",
+        "workUnits": 1
+      },
+      {
+        "elapsedMs": 76,
+        "stage": "PUBLISH",
+        "workUnits": 1
+      }
+    ],
+    "stageWallSumMs": 76337
+  },
+  "differenceMs": 12322,
+  "limits": "Same candidate, different completed proof prefixes. No causal CPU/GC/scheduling or overhead inference; original cold77 failure remains authoritative."
+}

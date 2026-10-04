@@ -1,4 +1,67 @@
-# Current checkpoint: Q30 blocked; R4 failure saved, owner reuse R5 verified offline
+# Current checkpoint: Q30 blocked; R5 success preserved, cold77 ready offline
+
+2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
+`cb96bf3eca82305b0bf0d98b3ab771f8973f2ec6`, plus this local checkpoint.
+[Actual R5](task-evidence/Q30/epoch15-root75-offline-diagnostic/metrics-r5/actual-window-1/README.md)
+is PASS_DIAGNOSTIC_ONLY: exact app report PASS/PUBLISH,77,899ms/483units,
+max active1,272ms/headroom12,101ms. Host case78.582106s; normal entrypoint
+85.067682s/exit0. Cleanup PASS1.096645s; both jobs0/readers closed,
+Performance.disable PASS. Independent desktop release14:10:24.612432Z,
+0.5247987s after exit/before window end:11 PIDs absent/port64408 closed,
+no termination. Eighteen manifested files/16 sanitized receipt bindings,
+six R5 pins and1,354 repo/1,526 app audit inputs verified. Exact report
+SHA `0740fe159791a2c310b72ab5ea173a674e25405808ecf2ad32a97352040cf2e6`.
+
+[Phase comparison and cold77 preparation](task-evidence/Q30/qualification-workflow/cold77-preparation-r1/README.md):
+same frozen root75 candidate. HEALTHY29,189ms/89units in original timeout
+versus17,944ms/89 in R5; HYPOTHESES59,495ms/318 incomplete versus58,231ms/390
+complete. Total12,322ms faster; CPU/GC/scheduling cause and instrumentation
+overhead UNKNOWN. R5 aggregate76.667793s ThreadTime/78.474508s wall provides
+no per-stage attribution. No additional instrumentation or production change.
+
+Additive cold77_batch/case_worker uses the exact prepared original host and
+strict reader, maintained serial native job owner,77 frozen roots/308 candidates,
+150s host case/180s step/15s cleanup. First nonpass leaves remainder NOT_RUN.
+Application metrics are separate from host/operation/cleanup clocks; strict
+raw-report recovery after interruption remains failed app-only evidence.
+Atomic launch handoff, source pins/final input audit and publication deadline
+checks implemented. R5 diagnostic host is not qualification provenance.
+
+Fresh seven offline tests PASS (0.178s body/281ms operation), three actual
+selected-Windows launcher canaries PASS (934ms operation; synthetic receipts,
+no app/browser), actual repository audit-only entrypoint PASS (2425ms operation).
+All final jobs0/readers closed/cleanup PASS at recorded0ms resolution. Initial
+preparation FAIL/Windows Store alias issue retained and corrected; earlier
+six-test PASS is historical. Independent final static review PASS_WITH_LIMITS,
+no executions. Seventeen-file hash/privacy/four-source archive packet audit
+PASS, scoped to these artifacts; full Q30 source archive remains pending.
+Ten exact recorded instances absent15:02:31.546563Z, no termination/listeners;
+packing child21652 also job0/readers closed. No persistent task resource.
+
+Candidate manifest `6fb772ea21ce6f2570de3cbca4e128a6b6d25d33159c30be3856cc8a670ec49b`.
+Future quiet-window allocation:4h12m after offline preflight.77*(180+15)s
+=4:10:15;55s batch orchestration gives native batch cap4:11:10, then15s outer
+cleanup,5s controller records and30s independent release. Fresh source/plan/
+manifest/limits/77-root grant required; none created or auto-run. Final disk
+I/O checks are cooperative, not a hard whole-controller wall-bound proof.
+RAM/profile disk have no hard cap; retain outputs,1MiB logs/4MiB receipts.
+Parent coordinates Windows availability; no wide PC/config/runtime changes.
+
+Q30 DISABLED/NOT ACCEPTED; original31 PASS/1 root75 TIMEOUT90.221s/45 NOT_RUN
+remains authoritative.90,000ms/640 shared/5,000ms active unchanged. No new
+live game case/full matrix/build/visible input in this follow-up. JDK8/GWT
+rebuild NOT APPLICABLE to additive Python/docs; required full regression,
+fresh full77, private enabled build/menu/replay, real visible20/30/40 repair/
+retest, full source archive and parent acceptance remain pending. Browser/
+computer player-input tools unavailable this turn; no visual PASS claimed.
+U06/U07/Q60 unstarted. Seven original untracked cache files, sibling Desktop
+work, raw evidence/helpers and consumed R5 grant preserved. Local commit only;
+no push/publish/email/evidence deletion. Next: parent acceptance of this
+preparation and coordinated full qualification resource window.
+
+---
+
+# Historical checkpoint: Q30 blocked; R4 failure saved, owner reuse R5 verified offline
 
 2026-10-04. Branch `codex/q30-multirail-qualification`; parent local HEAD
 `8409d7248899b4bd16825696f21852fc63eec109`, plus this local checkpoint.

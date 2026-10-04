@@ -1,0 +1,284 @@
+{
+  "schema": 1,
+  "status": "PASS_DIAGNOSTIC_ONLY",
+  "qualification": false,
+  "diagnosticOnly": true,
+  "parentHeadAtPreservation": "cb96bf3eca82305b0bf0d98b3ab771f8973f2ec6",
+  "candidateManifestSha256": "40d92a573000021bb22190aeda4fe40455ed39ada1349d8d638e36e326bfb02b",
+  "candidateArchiveSha256": "3d9f84ca3bb67753ae15a525da9136157919d9adac7b9a5d4aa078e7aa5a41e8",
+  "candidateSourcePins": {
+    "renderer_capture.py": {
+      "sha256": "a3554aa8e850640863c1b829b46882664d54245e6f7f8b59945d1aefe0a63851",
+      "size": 10439
+    },
+    "instrumented_host.py": {
+      "sha256": "eff7d7ef3f2b46ec8000423e27dfeb3694dc51a4de31180dc529e4dec4633c8f",
+      "size": 10695
+    },
+    "run_one_diagnostic.py": {
+      "sha256": "054d0da795802524525fd717ce5de55429c291be610334b4115ad430bd1cbc1f",
+      "size": 29160
+    },
+    "offline_checks.py": {
+      "sha256": "4d255e49108361b80cb3eca0f36b508f9143cb10c19f1bc672d2d3a62046c22f",
+      "size": 65892
+    },
+    "headful_attribute_host.py": {
+      "sha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+      "size": 51883
+    },
+    "verify_offline_candidate.py": {
+      "sha256": "eea25a18be2bd7cf9c48e194715a5277a5a80801af4db923083cf54f3c2ea5c6",
+      "size": 2348
+    }
+  },
+  "applicationSourceCommit": "d37c3b3b8581abdeaa9b88b7bfb2349cff958d31",
+  "applicationRequestManifestSha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8",
+  "quietWindow": {
+    "startUtc": "2026-10-04T14:08:59.0190173Z",
+    "endUtc": "2026-10-04T14:12:59.0190173Z",
+    "durationSeconds": 240,
+    "maximumCases": 1,
+    "consumedMarkerStatus": "ONE_DIAGNOSTIC_LAUNCH_RESERVED"
+  },
+  "normalEntrypoint": {
+    "status": "NORMAL_ENTRYPOINT_EXITED",
+    "exitCode": 0,
+    "elapsedWallSeconds": 85.0676816,
+    "finishedUtc": "2026-10-04T14:10:24.0876333Z",
+    "watchdogExpired": false,
+    "candidateManifestSha256": "40d92a573000021bb22190aeda4fe40455ed39ada1349d8d638e36e326bfb02b"
+  },
+  "diagnostic": {
+    "controllerStatus": "CONTROLLER_COMPLETE_DIAGNOSTIC_ONLY",
+    "status": "DIAGNOSTIC_COMPLETE",
+    "exitCode": 0,
+    "operationElapsedMs": 81818,
+    "finalizationElapsedMs": 1126.1805,
+    "applicationOutcome": "PASS",
+    "phaseWallTimes": {
+      "source": "UNCHANGED_APP_REPORT",
+      "rootSeed": "75",
+      "applicationOutcome": "PASS",
+      "terminalStage": "PUBLISH",
+      "generationElapsedMs": 77899,
+      "workUnits": 483,
+      "maxActiveOperationMs": 1272,
+      "headroomMs": 12101,
+      "stages": [
+        {
+          "stage": "RESOLVE",
+          "elapsedMs": 0,
+          "workUnits": 1
+        },
+        {
+          "stage": "HEALTHY",
+          "elapsedMs": 17944,
+          "workUnits": 89
+        },
+        {
+          "stage": "PHYSICAL",
+          "elapsedMs": 85,
+          "workUnits": 1
+        },
+        {
+          "stage": "HYPOTHESES",
+          "elapsedMs": 58231,
+          "workUnits": 390
+        },
+        {
+          "stage": "SYMPTOM",
+          "elapsedMs": 1,
+          "workUnits": 1
+        },
+        {
+          "stage": "PUBLISH",
+          "elapsedMs": 76,
+          "workUnits": 1
+        }
+      ]
+    },
+    "case": {
+      "name": "cold-75",
+      "outcome": "PASS",
+      "operationSeconds": 78.58210629993118,
+      "terminalState": "SCREEN_DONE",
+      "terminalReached": true,
+      "reportObserved": true,
+      "stateEvents": 2,
+      "compiledScriptsHeld": 1,
+      "currentDocuments": 2,
+      "terminalScopeVerified": true
+    },
+    "applicationReport": {
+      "file": "cold-75.report.json",
+      "bytes": 883694,
+      "sha256": "0740fe159791a2c310b72ab5ea173a674e25405808ecf2ad32a97352040cf2e6",
+      "copyMode": "EXACT_BYTES"
+    },
+    "capture": {
+      "status": "CPU_MEASURED",
+      "metricDelta": {
+        "TimestampSeconds": 78.47450799995568,
+        "ThreadTimeSeconds": 76.667793,
+        "TaskDurationSeconds": 76.645382,
+        "ScriptDurationSeconds": 76.330307,
+        "V8CompileDurationSeconds": 0.005095,
+        "DevToolsCommandDurationSeconds": 0.020096
+      },
+      "cleanupStatus": "PASS",
+      "performanceDisabled": true
+    },
+    "setupGuard": {
+      "checks": {
+        "live-session": true,
+        "held-attachment": true,
+        "navigation": true,
+        "main-frame": true,
+        "loader": true,
+        "page-url": true,
+        "owner-ready": true,
+        "owner-errors": true,
+        "owner-scope": true,
+        "frontend-nodes": true,
+        "backend-nodes": true
+      },
+      "domAcquisitionEpoch": 3,
+      "navigationEpoch": 1,
+      "setupFrontendNodes": {
+        "document": 4,
+        "html": 6
+      },
+      "setupBackendNodes": {
+        "document": 2,
+        "html": 4
+      },
+      "terminalFrontendNodes": {
+        "document": 7,
+        "html": 9
+      },
+      "terminalBackendNodes": {
+        "document": 2,
+        "html": 4
+      }
+    },
+    "timings": {
+      "hostCaseSeconds": 78.58210629993118,
+      "hostCleanupSeconds": 1.0966445999220014,
+      "hostCleanupStatus": "PASS",
+      "outerOperationElapsedMs": 84311,
+      "innerOperationElapsedMs": 81818,
+      "finalizationElapsedMs": 1126.1805,
+      "preflightElapsedWallSeconds": 1.32868779997807,
+      "setupCleanupVerified": true
+    }
+  },
+  "release": {
+    "status": "PASS_RELEASED",
+    "checkedUtc": "2026-10-04T14:10:24.6124320Z",
+    "secondsAfterEntrypointExitRaw": 0.5247987,
+    "secondsAfterEntrypointExitDerived": "0.5247987",
+    "beforeWindowEnd": true,
+    "recordedPidsChecked": 11,
+    "presentProcesses": 0,
+    "port": 64408,
+    "portListeners": 0,
+    "terminatedProcesses": 0,
+    "hostCleanup": {
+      "status": "PASS",
+      "seconds": 1.0966445999220014,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    },
+    "captureCleanup": {
+      "status": "PASS",
+      "performanceEnableAttempted": true,
+      "performanceDisabled": true,
+      "errors": []
+    },
+    "outerCleanup": {
+      "pid": 20020,
+      "processSignaled": true,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "drainsComplete": true,
+      "liveDrainers": 0,
+      "drainerWaitMs": 0,
+      "drainerErrors": [],
+      "cleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null
+    },
+    "innerCleanup": {
+      "pid": 14684,
+      "processSignaled": true,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "drainsComplete": true,
+      "liveDrainers": 0,
+      "drainerWaitMs": 0,
+      "drainerErrors": [],
+      "cleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null
+    }
+  },
+  "inputAudits": {
+    "status": "PASS_BEFORE_AND_AFTER",
+    "repositoryFileCount": 1354,
+    "preparedAppFileCount": 1526,
+    "sixCandidateSourcePinsUnchanged": true,
+    "inputBindingsEqual": true
+  },
+  "preflight": {
+    "status": "PASS",
+    "elapsedWallSeconds": 1.32868779997807,
+    "sourceUnchanged": true,
+    "operationExitCode": 0,
+    "errors": []
+  },
+  "sourceBindings": {
+    "launcher": {
+      "file": "launch_r5_window.ps1",
+      "sha256": "f27f9b8cd1b7745f522c770969338a7ee95768c684ec3b0d9336232ef5c7abc9"
+    },
+    "utcTimingHelper": {
+      "file": "q30_utc_duration.ps1",
+      "sha256": "4b707fe3f89fee98c07224aab69f54df7e1229360ec47344f31622c9a0ada99a"
+    },
+    "candidateArchiveUnchanged": true
+  },
+  "originalCold77": {
+    "archiveSha256": "0bf9b802e973c4b691b1e50a4025a338229f17ebc9880d58b588e7533b42a4a3",
+    "result": "31 PASS / 1 root75 TIMEOUT 90.221 s / 45 NOT RUN",
+    "preservedFailureSuperseded": false
+  },
+  "qualificationLimits": {
+    "normalQ30Enabled": false,
+    "root75PerformanceCause": "UNKNOWN",
+    "instrumentationOverhead": "UNKNOWN",
+    "aggregateThreadTimeIsSolverOnly": false,
+    "fullQ30Acceptance": false,
+    "U06": "UNSTARTED",
+    "U07": "UNSTARTED",
+    "Q60": "UNSTARTED",
+    "limits": {
+      "jobMillis": 90000,
+      "sharedWork": 640,
+      "activeOperationMillis": 5000
+    }
+  },
+  "interpretationLimits": [
+    "Renderer ThreadTime is aggregate main-thread running time, including GC, DOM and host work; it is not solver-only CPU.",
+    "Wall minus ThreadTime does not establish preemption, and the run has no per-stage CPU or GC attribution.",
+    "App phase wall rows come from the unchanged terminal report; instrumentation overhead is unknown.",
+    "This one diagnostic does not replace the prior cold77 TIMEOUT or complete Q30 acceptance gates."
+  ],
+  "additionalLiveRuns": 0,
+  "sourceReceiptsModified": false
+}

@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "status": "PASS_OFFLINE_PREPARATION_ONLY",
+  "qualification": false,
+  "files": {
+    "phase-comparison.json": {
+      "sha256": "8ce9d1615cc6fa1cb51c82039677cf30106e2a966b0c014c6990d9e10e059bed",
+      "bytes": 4241
+    },
+    "initial-preparation-fail.json": {
+      "sha256": "d61ff7d85b33cb44282ca628790bdd2ef53e34afdffac10f994e66b498a6116b",
+      "bytes": 1811
+    },
+    "corrected-preparation.json": {
+      "sha256": "07ca0d0136a25bc0c9a12970580cf1cd220c04bb8b67d65ff2acbe19633ef838",
+      "bytes": 1811
+    },
+    "earlier-tests-before-recovery.json": {
+      "sha256": "e6a32a8f8a3ee3129eecde210e48baee446bd2de9b11af501d91daae8aef4fd8",
+      "bytes": 1811
+    },
+    "final-freeze.json": {
+      "sha256": "6807aa2a0d4bde7bda599d499ad2a95e6323c2edf4e00833f6e831793fb7ad7d",
+      "bytes": 1810
+    },
+    "final-tests.json": {
+      "sha256": "06c878aa51a37b0228edfefd91e2455568a2ea1373c6639227821871e84b6fb4",
+      "bytes": 1811
+    },
+    "final-process-canaries.json": {
+      "sha256": "9e1dd85093abf20100783a3dabd8ddef2b430b03859aa5db6cfb6014c1c6c10a",
+      "bytes": 1809
+    },
+    "actual-process-canaries.json": {
+      "sha256": "79180a2107a880f8859cdd1356a4cea1e6cfe338ee147bb73aa86f642adad919",
+      "bytes": 5056
+    },
+    "final-entrypoint-inputs.json": {
+      "sha256": "8c8eed5a141e7c7156f4efe1053530d789a70040943b81a058085a6a4f94513f",
+      "bytes": 1811
+    },
+    "final-source-pins.json": {
+      "sha256": "709cec80a13553060801d4492974ae8c69bec0581fe254a2b567396355cdebc2",
+      "bytes": 535
+    },
+    "final-input-audit.json": {
+      "sha256": "8903d595de9f8d0dc60a97e5c8c892fa30136c0fa055dc38b51ef2e2c67ee9af",
+      "bytes": 1618
+    },
+    "final-resource-check.json": {
+      "sha256": "ad54469e17c1de247ead187065c3371367d6b249f0c551e2dcb972d9136f8562",
+      "bytes": 1295
+    },
+    "final-tested-sources.tar.gz": {
+      "sha256": "719ad18c0bdfe2db2358da54b2409bb09fafa36fbff3fd06b522488835b8f742",
+      "bytes": 14151
+    },
+    "README.md": {
+      "sha256": "1dc8f8f079ed2edb4d4fbe301ef63031c834c3fab934715f08f9517079c58505",
+      "bytes": 4705
+    },
+    "review.json": {
+      "sha256": "b9398399eace2e7ac564744c7892c444d70cd9d1f574de75d28d70ff0ee73a30",
+      "bytes": 665
+    },
+    "result.json": {
+      "sha256": "518783d22c2d7e9dda985e94162375ae27ee1e12d015fd62236262f9a9fd787c",
+      "bytes": 3133
+    }
+  }
+}

@@ -1,0 +1,284 @@
+{
+  "schema": 1,
+  "status": "PASS_DIAGNOSTIC_ONLY",
+  "qualification": false,
+  "candidateManifestSha256": "40d92a573000021bb22190aeda4fe40455ed39ada1349d8d638e36e326bfb02b",
+  "candidateArchiveSha256": "3d9f84ca3bb67753ae15a525da9136157919d9adac7b9a5d4aa078e7aa5a41e8",
+  "originalCold77ArchiveSha256": "0bf9b802e973c4b691b1e50a4025a338229f17ebc9880d58b588e7533b42a4a3",
+  "files": {
+    "README.md": {
+      "sha256": "6d47f640b8baaf9951884f7dc39523db6333406df9805db925298987d8b3c34b",
+      "bytes": 2803
+    },
+    "actual-result.json": {
+      "sha256": "e20f72e126e0db19a952919815b5d4fbbe6ca516c64e4d778c2ec019ae6333c6",
+      "bytes": 8677
+    },
+    "candidate-manifest.json": {
+      "sha256": "40d92a573000021bb22190aeda4fe40455ed39ada1349d8d638e36e326bfb02b",
+      "bytes": 1739
+    },
+    "case-001-cold-75.json": {
+      "sha256": "d499e02d4d15f877a18f4f00c5434c4352121a0c37b47f52b273042c1a82af58",
+      "bytes": 3395
+    },
+    "cold-75.report.json": {
+      "sha256": "0740fe159791a2c310b72ab5ea173a674e25405808ecf2ad32a97352040cf2e6",
+      "bytes": 883694
+    },
+    "consumed-grant.json": {
+      "sha256": "20cdf757deb1777d5416be1cb6d82d70aaf13e2c42fa9b8d6502cd7c281c4d08",
+      "bytes": 380
+    },
+    "controller-result.json": {
+      "sha256": "1f8a47f46141330b0ee7b4789d49d526cbc8cba88e04a3b830663b35d00c2186",
+      "bytes": 4836
+    },
+    "diagnostic-result.json": {
+      "sha256": "eeb11d942bc0fb0e48ba4368dd18d52d42263ead920c17b22479df91962a4920",
+      "bytes": 6524
+    },
+    "grant.json": {
+      "sha256": "00aca61f426f0eb82fbd836f81afab326255b0e7a59472f1c713721c2cea7685",
+      "bytes": 545
+    },
+    "host-identity.json": {
+      "sha256": "1379ecbaa3d58e8f4123b1e0119b5537a8da3f14fb4965b2a7023b6688129f35",
+      "bytes": 1787
+    },
+    "host-result.json": {
+      "sha256": "7c04e55519b26f6f982964906b8f50c807b5913d99e0fc5611b248a917489d79",
+      "bytes": 7200
+    },
+    "input-audit-after.json": {
+      "sha256": "f3fb2bdac6654ef01c7b201a1d9358d5aa7ab957e307ea40e254f492c6d25137",
+      "bytes": 2939
+    },
+    "input-audit-before.json": {
+      "sha256": "f91f68ff58981edc6cc6c8cddbc94145bde5bbfa8f1a3f4479695aba7edfc246",
+      "bytes": 3482
+    },
+    "normal-exit.json": {
+      "sha256": "b2e0131ce805b58af014cf1f797f4ce8dd663c1ec1e328aaa302cff3ca5088e5",
+      "bytes": 280
+    },
+    "normal-owner.json": {
+      "sha256": "1c322ecb167f5231a2bcdd168bd98e45f97e77f5a78243dfa8a78f6f0c22a057",
+      "bytes": 2772
+    },
+    "preflight-result.json": {
+      "sha256": "c59e0575aa3b2565c9ee5e5182787d070f30231ac75154a457ed341299b430d8",
+      "bytes": 1525
+    },
+    "release.json": {
+      "sha256": "644a9a31cbdab1ae8752cc22e32156d15f3bf9f9f7a4575073f753ae5bca6cb6",
+      "bytes": 8791
+    },
+    "renderer-capture.json": {
+      "sha256": "08d1359c9686f3670b84f80d47a3d710c5f09147bd7c8b81fb74179a16df95c0",
+      "bytes": 8960
+    }
+  },
+  "rawBindings": [
+    {
+      "file": "candidate-manifest.json",
+      "rawSha256": "40d92a573000021bb22190aeda4fe40455ed39ada1349d8d638e36e326bfb02b",
+      "rawBytes": 1739,
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r5\\candidate-manifest.json",
+      "preservedCopy": "candidate-manifest.json",
+      "preservedCopySha256": "40d92a573000021bb22190aeda4fe40455ed39ada1349d8d638e36e326bfb02b",
+      "copyMode": "SANITIZED_JSON"
+    },
+    {
+      "file": "controller-result.json",
+      "rawSha256": "ac000d1116600a65a0adac65eb6a0c9c5d5c71d5d9a92c94989a116ea48832e9",
+      "rawBytes": 5013,
+      "rawLocation": "<OS_TEMP>\\q30-root75-diagnostic-controller-s9umjz_y\\controller-result.json",
+      "preservedCopy": "controller-result.json",
+      "preservedCopySha256": "1f8a47f46141330b0ee7b4789d49d526cbc8cba88e04a3b830663b35d00c2186",
+      "copyMode": "SANITIZED_JSON"
+    },
+    {
+      "file": "diagnostic-result.json",
+      "rawSha256": "658878292127c0c644412e0d89cf84d46ddd51acac63118755cfa889f2e9059d",
+      "rawBytes": 6724,
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-75y5l3wt\\diagnostic-result.json",
+      "preservedCopy": "diagnostic-result.json",
+      "preservedCopySha256": "eeb11d942bc0fb0e48ba4368dd18d52d42263ead920c17b22479df91962a4920",
+      "copyMode": "SANITIZED_JSON"
+    },
+    {
+      "file": "host-result.json",
+      "rawSha256": "c873dd6aca2cb3447d941aa2a27366e69f15594a41c566ac7f1d6cbd1b068909",
+      "rawBytes": 7258,
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-75y5l3wt\\host-output\\result.json",
+      "preservedCopy": "host-result.json",
+      "preservedCopySha256": "7c04e55519b26f6f982964906b8f50c807b5913d99e0fc5611b248a917489d79",
+      "copyMode": "SANITIZED_JSON"
+    },
+    {
+      "file": "host-identity.json",
+      "rawSha256": "e59d2ab0f337ebc0836eda698f10761974ce39a157ff1d1f4daea7425f9bda5f",
+      "rawBytes": 1816,
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-75y5l3wt\\host-output\\identity.json",
+      "preservedCopy": "host-identity.json",
+      "preservedCopySha256": "1379ecbaa3d58e8f4123b1e0119b5537a8da3f14fb4965b2a7023b6688129f35",
+      "copyMode": "SANITIZED_JSON"
+    },
+    {
+      "file": "renderer-capture.json",
+      "rawSha256": "fb8114e3bed81c6f0531d05e5bf53e9797594059e98a0a29f6cceda037c74d97",
+      "rawBytes": 9237,
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-75y5l3wt\\host-output\\renderer-capture.json",
+      "preservedCopy": "renderer-capture.json",
+      "preservedCopySha256": "08d1359c9686f3670b84f80d47a3d710c5f09147bd7c8b81fb74179a16df95c0",
+      "copyMode": "SANITIZED_JSON"
+    },
+    {
+      "file": "case-001-cold-75.json",
+      "rawSha256": "d499e02d4d15f877a18f4f00c5434c4352121a0c37b47f52b273042c1a82af58",
+      "rawBytes": 3395,
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-75y5l3wt\\host-output\\cases\\001-cold-75.json",
+      "preservedCopy": "case-001-cold-75.json",
+      "preservedCopySha256": "d499e02d4d15f877a18f4f00c5434c4352121a0c37b47f52b273042c1a82af58",
+      "copyMode": "SANITIZED_JSON"
+    },
+    {
+      "file": "input-audit-before.json",
+      "rawSha256": "de2ec713accd8c3cd79af429ea9fc37926e32c40efadbc732c898cf9bfdd7aab",
+      "rawBytes": 3574,
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-75y5l3wt\\input-audit-before.json",
+      "preservedCopy": "input-audit-before.json",
+      "preservedCopySha256": "f91f68ff58981edc6cc6c8cddbc94145bde5bbfa8f1a3f4479695aba7edfc246",
+      "copyMode": "SANITIZED_JSON"
+    },
+    {
+      "file": "input-audit-after.json",
+      "rawSha256": "99b4bc7037869af0c86ead3d2d9322b94fff0d822ac5964d84f158da721be1ad",
+      "rawBytes": 3004,
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-75y5l3wt\\input-audit-after.json",
+      "preservedCopy": "input-audit-after.json",
+      "preservedCopySha256": "f3fb2bdac6654ef01c7b201a1d9358d5aa7ab957e307ea40e254f492c6d25137",
+      "copyMode": "SANITIZED_JSON"
+    },
+    {
+      "file": "normal-owner.json",
+      "rawSha256": "596b9078163da97a21560a711c81691019701c31a1dd115ae7921440cdc3fed4",
+      "rawBytes": 3626,
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r5\\r5-live-normal-owner.json",
+      "preservedCopy": "normal-owner.json",
+      "preservedCopySha256": "1c322ecb167f5231a2bcdd168bd98e45f97e77f5a78243dfa8a78f6f0c22a057",
+      "copyMode": "SANITIZED_JSON"
+    },
+    {
+      "file": "normal-exit.json",
+      "rawSha256": "ea0fb276e780d259188005e44af6c4d181702d0447d87e515236c11fd6394f8a",
+      "rawBytes": 291,
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r5\\r5-live-normal-exit.json",
+      "preservedCopy": "normal-exit.json",
+      "preservedCopySha256": "b2e0131ce805b58af014cf1f797f4ce8dd663c1ec1e328aaa302cff3ca5088e5",
+      "copyMode": "SANITIZED_JSON"
+    },
+    {
+      "file": "grant.json",
+      "rawSha256": "22b6918765b93729f2c7839407301b81dd4d92d01c20cc50b6f7ecc14d76759d",
+      "rawBytes": 561,
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r5\\quiet-window-grant-20261004-r5-once.json",
+      "preservedCopy": "grant.json",
+      "preservedCopySha256": "00aca61f426f0eb82fbd836f81afab326255b0e7a59472f1c713721c2cea7685",
+      "copyMode": "SANITIZED_JSON"
+    },
+    {
+      "file": "consumed-grant.json",
+      "rawSha256": "694a3426b066c77ebbf8e75d43638e3f17f71dff99668231dfa1c722b768e284",
+      "rawBytes": 387,
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r5\\launch-used-22b6918765b93729f2c7839407301b81dd4d92d01c20cc50b6f7ecc14d76759d.json",
+      "preservedCopy": "consumed-grant.json",
+      "preservedCopySha256": "20cdf757deb1777d5416be1cb6d82d70aaf13e2c42fa9b8d6502cd7c281c4d08",
+      "copyMode": "SANITIZED_JSON"
+    },
+    {
+      "file": "release.json",
+      "rawSha256": "32e9eea385b2de6dcc0cb884ed32c23a7f18b600ebb4554e65d5f2f0ea9f013b",
+      "rawBytes": 9107,
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\root75-metrics-offline-r5\\r5-live-release.json",
+      "preservedCopy": "release.json",
+      "preservedCopySha256": "644a9a31cbdab1ae8752cc22e32156d15f3bf9f9f7a4575073f753ae5bca6cb6",
+      "copyMode": "SANITIZED_JSON"
+    },
+    {
+      "file": "preflight-result.json",
+      "rawSha256": "c59e0575aa3b2565c9ee5e5182787d070f30231ac75154a457ed341299b430d8",
+      "rawBytes": 1525,
+      "rawLocation": "<OS_TEMP>\\q30-root75-r5-live-preflight-v40ouw80\\launcher-result.json",
+      "preservedCopy": "preflight-result.json",
+      "preservedCopySha256": "c59e0575aa3b2565c9ee5e5182787d070f30231ac75154a457ed341299b430d8",
+      "copyMode": "SANITIZED_JSON"
+    },
+    {
+      "file": "cold-75.report.json",
+      "rawSha256": "0740fe159791a2c310b72ab5ea173a674e25405808ecf2ad32a97352040cf2e6",
+      "rawBytes": 883694,
+      "rawLocation": "<OS_TEMP>\\q30-root75-renderer-diagnostic-75y5l3wt\\host-output\\cases\\001-cold-75.report.json",
+      "preservedCopy": "cold-75.report.json",
+      "preservedCopySha256": "0740fe159791a2c310b72ab5ea173a674e25405808ecf2ad32a97352040cf2e6",
+      "copyMode": "EXACT_BYTES"
+    }
+  ],
+  "additionalSourceBindings": [
+    {
+      "file": "root75-metrics-r5.tar.gz",
+      "rawSha256": "3d9f84ca3bb67753ae15a525da9136157919d9adac7b9a5d4aa078e7aa5a41e8",
+      "rawBytes": 135507,
+      "rawLocation": "<Q30_WORKTREE>\\docs\\task-evidence\\Q30\\epoch15-root75-offline-diagnostic\\metrics-r5\\root75-metrics-r5.tar.gz",
+      "copied": false,
+      "reason": "Candidate source archive remains at its original location."
+    },
+    {
+      "file": "launch_r5_window.ps1",
+      "rawSha256": "f27f9b8cd1b7745f522c770969338a7ee95768c684ec3b0d9336232ef5c7abc9",
+      "rawBytes": 11455,
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\launch_r5_window.ps1",
+      "copied": false,
+      "reason": "Used launcher remains at its original location."
+    },
+    {
+      "file": "q30_utc_duration.ps1",
+      "rawSha256": "4b707fe3f89fee98c07224aab69f54df7e1229360ec47344f31622c9a0ada99a",
+      "rawBytes": 382,
+      "rawLocation": "<TASK_WORKSPACE>\\epoch15-final\\q30_utc_duration.ps1",
+      "copied": false,
+      "reason": "Used UTC timing helper remains at its original location."
+    },
+    {
+      "file": "epoch15-cold77-timeout-seed75.tar.gz",
+      "rawSha256": "0bf9b802e973c4b691b1e50a4025a338229f17ebc9880d58b588e7533b42a4a3",
+      "rawBytes": 3878132,
+      "rawLocation": "<Q30_WORKTREE>\\docs\\task-evidence\\Q30\\epoch15-cold77-timeout-seed75\\epoch15-cold77-timeout-seed75.tar.gz",
+      "copied": false,
+      "reason": "Prior cold77 failure archive remains unchanged."
+    }
+  ],
+  "excludedRawInputs": [
+    {
+      "kind": "live/controller/renderer/preflight stdout and stderr logs",
+      "copied": false,
+      "hashed": false,
+      "reason": "Raw log contents and hashes are excluded from this packet."
+    },
+    {
+      "kind": "preflight process baseline and browser-profile/process inventories",
+      "copied": false,
+      "hashed": false,
+      "reason": "Private baseline/profile data is excluded from this packet."
+    }
+  ],
+  "preservationValidation": {
+    "receiptAssertions": "PASS",
+    "exactReportBytesAndHash": "PASS",
+    "sourcePinsAndArchives": "PASS",
+    "beforeAfterInputAudits": "PASS",
+    "privacyScan": "PASS",
+    "sourceReceiptsUnchanged": "PASS"
+  }
+}

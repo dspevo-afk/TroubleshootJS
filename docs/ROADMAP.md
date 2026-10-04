@@ -8,6 +8,26 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
 **Current task:** **Q30 NOT ACCEPTED - final cold qualification FAIL at root75**<br>
+**Q30 actual R5 / cold77 continuation prepared (2026-10-04):** One authorized
+diagnostic root75 app PASS77,899ms/483units; host78.582s/cleanup1.097s,
+normal entrypoint85.068s/exit0. Exact report/sanitized receipts preserved;
+desktop release verified14:10:24.612Z (11 PIDs absent/port64408 closed),
+jobs0/readers closed. Same-candidate phase comparison: HEALTHY29.189s→17.944s,
+HYPOTHESES59.495s/318 incomplete→58.231s/390 complete; cause/overhead UNKNOWN.
+Single diagnostic pass does not supersede original cold77 FAIL. Additive
+grant-bound cold77 worker/controller uses unchanged prepared original host,
+strict reader and serial native owner, preserving frozen77/308/90s6405s.
+Seven final offline regressions and three actual Windows synthetic launcher
+canaries PASS; actual repository audit-only entrypoint/input guard PASS.
+Independent final static review PASS_WITH_LIMITS; artifact hash/privacy/archive
+audit scoped to new evidence. Future full cohort needs4h12m coordinated window
+after preflight; native batch cap4:11:10 plus15s cleanup/5s records/30s release.
+Final disk-I/O checks cooperative; RAM/profile disk uncapped. No live grant or
+full run here; no production changes/build. Q30 still disabled/NOT ACCEPTED;
+original31 PASS/1 TIMEOUT90.221s/45 NOT_RUN and remaining acceptance gates
+unchanged. U06/U07/Q60 unstarted. [R5 success](task-evidence/Q30/epoch15-root75-offline-diagnostic/metrics-r5/actual-window-1/README.md),
+[restart/evidence](task-evidence/Q30/qualification-workflow/cold77-preparation-r1/README.md).
+
 **Q30 actual R4 / minimal owner reuse R5 (2026-10-04):** R4 failed
 at the added setup guard before app release: FAIL_CAPTURE, no app report/state/
 CPU delta or root75 result. Exact rejected predicate UNKNOWN because its generic

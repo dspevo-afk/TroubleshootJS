@@ -1,0 +1,7 @@
+{
+  "status": "ONE_DIAGNOSTIC_LAUNCH_RESERVED",
+  "qualification": false,
+  "parentReference": "01a1017d-669f-76ed-b3cf-1341fcc89016 one metrics-r5 root75 after fresh preflight; Core quiet grant",
+  "grantSha256": "22b6918765b93729f2c7839407301b81dd4d92d01c20cc50b6f7ecc14d76759d",
+  "candidateManifestSha256": "40d92a573000021bb22190aeda4fe40455ed39ada1349d8d638e36e326bfb02b"
+}

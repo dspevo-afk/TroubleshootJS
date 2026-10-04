@@ -1,0 +1,58 @@
+{
+  "status": "PASS_OWNED_INSTANCES_ABSENT",
+  "verifiedUtc": "2026-10-04T15:02:31.5465627+00:00",
+  "terminationCount": 0,
+  "listenersCreated": 0,
+  "rows": [
+    {
+      "pid": 25768,
+      "creationFileTimeTicks": 134355982690810649,
+      "status": "PID_ABSENT"
+    },
+    {
+      "pid": 23948,
+      "creationFileTimeTicks": 134355983299716654,
+      "status": "PID_ABSENT"
+    },
+    {
+      "pid": 27996,
+      "creationFileTimeTicks": 134355987876560663,
+      "status": "PID_ABSENT"
+    },
+    {
+      "pid": 10496,
+      "creationFileTimeTicks": 134355995133718176,
+      "status": "PID_ABSENT"
+    },
+    {
+      "pid": 16440,
+      "creationFileTimeTicks": 134355995198353419,
+      "status": "PID_ABSENT"
+    },
+    {
+      "pid": 29816,
+      "creationFileTimeTicks": 134355995255541185,
+      "status": "PID_ABSENT"
+    },
+    {
+      "pid": 19256,
+      "creationFileTimeTicks": 134355996026629882,
+      "status": "PID_ABSENT"
+    },
+    {
+      "pid": 8224,
+      "creationFileTimeTicks": 134355995256810522,
+      "status": "PID_ABSENT"
+    },
+    {
+      "pid": 24752,
+      "creationFileTimeTicks": 134355995260935451,
+      "status": "PID_ABSENT"
+    },
+    {
+      "pid": 20888,
+      "creationFileTimeTicks": 134355995262182394,
+      "status": "PID_ABSENT"
+    }
+  ]
+}

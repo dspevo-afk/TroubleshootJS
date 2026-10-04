@@ -1,5 +1,25 @@
 # Future qualification receipt and serial execution workflow
 
+The next cohort entrypoint is `cold77_batch.py`; default execution audits only.
+`cold77_case_worker.py` calls the unchanged original prepared host and strict
+reader under the existing serial owner. The candidate manifest binds the exact
+helper bytes and frozen input identity. [Final offline preparation, runtime
+allocation and limits](cold77-preparation-r1/README.md) records seven regressions,
+actual synthetic process canaries and remaining selected-host/full acceptance
+gates. A future launch requires a fresh parent grant; no live grant exists.
+
+Audit command: `python -B cold77_batch.py --repo <repo> --pointer <retained-pointer>
+--matched-helper <pinned-loader> --host-python <physical-python> --deps <task-deps>`.
+The workspace `cold77-qualified-batch/test-roles.json` and checkpoint handoff
+retain exact paths. Add `--launch --grant-json <fresh-grant>` only after parent
+authorization and quiet-window allocation. Grant fields: schema1,
+kind `Q30_COLD77_SERIAL_QUALIFICATION`, parentReference, candidateManifestSha256,
+sourceIdentity, planSha256, unchanged limits, integer rootCount77, UTC-Z
+notBeforeUtc/windowEndUtc exactly4h12m apart. A consumed canonical grant cannot
+run twice. Acceptance of a controller result also requires its separate in-time
+controller-publication receipt, successful exit and independent desktop release.
+Do not use the R5 diagnostic or synthetic canary receipts as qualification.
+
 Q30 is **NOT ACCEPTED and disabled**. These additive tools do not enable it or
 replace the maintained qualification auditors. Original77 roots/308 candidates,
 90,000ms cumulative application time,640 work units and5,000ms active/coordinator

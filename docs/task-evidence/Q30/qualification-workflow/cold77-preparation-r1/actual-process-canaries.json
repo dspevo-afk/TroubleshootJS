@@ -1,0 +1,143 @@
+{
+  "status": "PASS_OFFLINE_PROCESS_CANARIES_ONLY",
+  "qualification": false,
+  "casesLaunched": 0,
+  "browserLaunched": false,
+  "rows": [
+    {
+      "fixtureScope": "SYNTHETIC_RECEIPTS_NO_APP",
+      "rawBinding": {
+        "sha256": "2ed72a062a5e29188a1f179174405905b08aa923fc1dae77204f54d37918dffa",
+        "bytes": 356275
+      },
+      "controllerStatus": "PASS_COLD77_CONTROLLER",
+      "acceptedSyntheticFixture": true,
+      "operation": {
+        "cleanup": {
+          "cleanupElapsedMs": 0,
+          "cleanupVerified": true,
+          "drainerErrors": [],
+          "drainerWaitMs": 0,
+          "drainsComplete": true,
+          "jobAccountingDrainMs": 0,
+          "jobAccountingDrainSucceeded": true,
+          "jobAccountingError": null,
+          "jobActiveProcesses": 0,
+          "jobClosedForCleanup": false,
+          "liveDrainers": 0,
+          "pid": 8224,
+          "processSignaled": true
+        },
+        "exitCode": 0,
+        "operationElapsedMs": 280,
+        "reason": null
+      },
+      "process": {
+        "commandSha256": "ab96fc5f7cc21bb82857ac6638ce27e242425b2f5114f2f176a24480eae50d5e",
+        "creationFileTimeTicks": 134355995256810522,
+        "executable": "<SYSTEM_PROGRAM_FILES>/WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+        "pid": 8224,
+        "resumeMonotonicNs": 653478531880000
+      },
+      "errors": [],
+      "retainedRows": 77,
+      "operationLimitMs": 10000,
+      "publication": {
+        "qualified": true,
+        "scope": "Requires successful exit and independent desktop release; blocked I/O is not bounded by this cooperative check.",
+        "status": "PASS_COLD77_CONTROLLER",
+        "withinFinalizationDeadline": true
+      }
+    },
+    {
+      "fixtureScope": "SYNTHETIC_RECEIPTS_NO_APP",
+      "rawBinding": {
+        "sha256": "d98707fb51acf2db7eef4e04b8f9326d325a76255924de0da43c9a403b57787d",
+        "bytes": 5054
+      },
+      "controllerStatus": "FAIL_BATCH_CONTROLLER",
+      "acceptedSyntheticFixture": false,
+      "operation": {
+        "cleanup": {
+          "cleanupElapsedMs": 0,
+          "cleanupVerified": true,
+          "drainerErrors": [],
+          "drainerWaitMs": 0,
+          "drainsComplete": true,
+          "jobAccountingDrainMs": 0,
+          "jobAccountingDrainSucceeded": true,
+          "jobAccountingError": null,
+          "jobActiveProcesses": 0,
+          "jobClosedForCleanup": false,
+          "liveDrainers": 0,
+          "pid": 24752,
+          "processSignaled": true
+        },
+        "exitCode": 0,
+        "operationElapsedMs": 63,
+        "reason": null
+      },
+      "process": {
+        "commandSha256": "8ddd1798e826eb66aa0cfc5b4ef77d77d375c7f84cb6ed6d69641d72edb394df",
+        "creationFileTimeTicks": 134355995260935451,
+        "executable": "<SYSTEM_PROGRAM_FILES>/WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+        "pid": 24752,
+        "resumeMonotonicNs": 653478943577000
+      },
+      "errors": [],
+      "retainedRows": 77,
+      "operationLimitMs": 10000,
+      "publication": {
+        "qualified": false,
+        "scope": "Requires successful exit and independent desktop release; blocked I/O is not bounded by this cooperative check.",
+        "status": "FAIL_BATCH_CONTROLLER",
+        "withinFinalizationDeadline": true
+      }
+    },
+    {
+      "fixtureScope": "SYNTHETIC_RECEIPTS_NO_APP",
+      "rawBinding": {
+        "sha256": "fe2f2530e8d507e5d2e739035ece0d842189395cf4afc394a127a69ec016ceb3",
+        "bytes": 5049
+      },
+      "controllerStatus": "FAIL_BATCH_CONTROLLER",
+      "acceptedSyntheticFixture": false,
+      "operation": {
+        "cleanup": {
+          "cleanupElapsedMs": 25,
+          "cleanupVerified": true,
+          "drainerErrors": [],
+          "drainerWaitMs": 0,
+          "drainsComplete": true,
+          "jobAccountingDrainMs": 0,
+          "jobAccountingDrainSucceeded": null,
+          "jobAccountingError": null,
+          "jobActiveProcesses": 0,
+          "jobClosedForCleanup": false,
+          "liveDrainers": 0,
+          "pid": 20888,
+          "processSignaled": true
+        },
+        "exitCode": 57857,
+        "operationElapsedMs": 222,
+        "reason": "outer process deadline expired"
+      },
+      "process": {
+        "commandSha256": "5175cf9f5b245f5ea9c598ece91e25ba779306cae8204de1fff087b367a70e9e",
+        "creationFileTimeTicks": 134355995262182394,
+        "executable": "<SYSTEM_PROGRAM_FILES>/WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+        "pid": 20888,
+        "resumeMonotonicNs": 653479068457600
+      },
+      "errors": [],
+      "retainedRows": 77,
+      "operationLimitMs": 200,
+      "publication": {
+        "qualified": false,
+        "scope": "Requires successful exit and independent desktop release; blocked I/O is not bounded by this cooperative check.",
+        "status": "FAIL_BATCH_CONTROLLER",
+        "withinFinalizationDeadline": true
+      }
+    }
+  ]
+}

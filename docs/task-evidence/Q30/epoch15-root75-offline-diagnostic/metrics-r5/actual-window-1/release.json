@@ -1,0 +1,258 @@
+{
+  "schema": 1,
+  "status": "PASS_RELEASED",
+  "qualification": false,
+  "checkedUtc": "2026-10-04T14:10:24.6124320Z",
+  "verificationStartedUtc": "2026-10-04T14:10:24.0918008Z",
+  "verificationSeconds": 0.5222449,
+  "secondsAfterEntrypointExit": 0.5247987,
+  "beforeWindowEnd": true,
+  "controllerRoot": "<OS_TEMP>\\q30-root75-diagnostic-controller-s9umjz_y",
+  "diagnosticRoot": "<OS_TEMP>\\q30-root75-renderer-diagnostic-75y5l3wt",
+  "controllerStatus": "CONTROLLER_COMPLETE_DIAGNOSTIC_ONLY",
+  "diagnosticStatus": "DIAGNOSTIC_COMPLETE",
+  "applicationAudit": {
+    "status": "APP_PASS",
+    "app": {
+      "status": "APP_PASS",
+      "classification": "PASS",
+      "applicationOutcome": "PASS",
+      "rootSeed": "75",
+      "sha256": "0740fe159791a2c310b72ab5ea173a674e25405808ecf2ad32a97352040cf2e6",
+      "metrics": {
+        "elapsedMs": 77899,
+        "workUnits": 483,
+        "maxActiveOperationMs": 1272,
+        "maxCoordinatorAdvanceMs": 1272,
+        "headroomMs": 12101
+      },
+      "errors": []
+    },
+    "host": null,
+    "synthetic": false
+  },
+  "phaseWallTimes": {
+    "source": "UNCHANGED_APP_REPORT",
+    "rootSeed": "75",
+    "applicationOutcome": "PASS",
+    "terminalStage": "PUBLISH",
+    "generationElapsedMs": 77899,
+    "workUnits": 483,
+    "stages": [
+      {
+        "stage": "RESOLVE",
+        "elapsedMs": 0,
+        "workUnits": 1
+      },
+      {
+        "stage": "HEALTHY",
+        "elapsedMs": 17944,
+        "workUnits": 89
+      },
+      {
+        "stage": "PHYSICAL",
+        "elapsedMs": 85,
+        "workUnits": 1
+      },
+      {
+        "stage": "HYPOTHESES",
+        "elapsedMs": 58231,
+        "workUnits": 390
+      },
+      {
+        "stage": "SYMPTOM",
+        "elapsedMs": 1,
+        "workUnits": 1
+      },
+      {
+        "stage": "PUBLISH",
+        "elapsedMs": 76,
+        "workUnits": 1
+      }
+    ],
+    "attempts": [
+      {
+        "ordinal": 0,
+        "manifest": "candidate=00;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=75;replay=tsj-alpha/4/MEDIUM/RB30_CONTROL/75;quickPlay=false;layout=15;planEpoch=4;plan=rb30-plan@4;seed=75;topology=RB30_CH2_SEPARATE_DIRECT_A_BJT_B_BJT;support=C12:false,S5:true,S12:false,filters:1,outputIndicators:3,bleeder5:false;layout=6626451485285559634;routing=4130765676055363405;physicalPolicy=MEDIUM_BOARD@1;fault=DRIVE_A_OPEN;packages=39;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2",
+        "stage": "PUBLISH",
+        "outcome": "PASS",
+        "workUnits": 483,
+        "proofUnits": 390,
+        "failureType": null,
+        "failureMessage": null
+      }
+    ]
+  },
+  "rendererCapture": "CPU_MEASURED",
+  "metricDelta": {
+    "TimestampSeconds": 78.47450799995568,
+    "ThreadTimeSeconds": 76.667793,
+    "TaskDurationSeconds": 76.645382,
+    "ScriptDurationSeconds": 76.330307,
+    "V8CompileDurationSeconds": 0.005095,
+    "DevToolsCommandDurationSeconds": 0.020096
+  },
+  "captureFatalErrors": [],
+  "setupGuard": {
+    "checks": {
+      "live-session": true,
+      "held-attachment": true,
+      "navigation": true,
+      "main-frame": true,
+      "loader": true,
+      "page-url": true,
+      "owner-ready": true,
+      "owner-errors": true,
+      "owner-scope": true,
+      "frontend-nodes": true,
+      "backend-nodes": true
+    },
+    "domAcquisitionEpoch": 3,
+    "navigationEpoch": 1,
+    "documentNode": 4,
+    "htmlNode": 6,
+    "ownerScope": {
+      "frameId": "9D31CAAED7B9BA24C91340B38EE1D209",
+      "loaderId": "1168EBBCC6903DD51365A4F7EF5DD71A",
+      "pageUrl": "http://127.0.0.1:64408/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+      "documentBackend": 2,
+      "htmlBackend": 4
+    },
+    "frame": {
+      "id": "9D31CAAED7B9BA24C91340B38EE1D209",
+      "loaderId": "1168EBBCC6903DD51365A4F7EF5DD71A",
+      "url": "http://127.0.0.1:64408/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+      "urlFragment": null,
+      "parentId": null
+    }
+  },
+  "hostCase": {
+    "outcome": "PASS",
+    "terminalReached": true,
+    "timedOut": false,
+    "observedState": "SCREEN_DONE",
+    "lastObservedState": "SCREEN_DONE",
+    "operationSeconds": 78.58210629993118,
+    "reportObserved": true,
+    "reportSha256": "0740fe159791a2c310b72ab5ea173a674e25405808ecf2ad32a97352040cf2e6",
+    "observerErrors": [],
+    "observation": {
+      "transport": "PASSIVE_CDP_DOM",
+      "stateEvents": 2,
+      "compiledScriptsHeld": 1,
+      "scriptAttachment": {
+        "frameId": "9D31CAAED7B9BA24C91340B38EE1D209",
+        "loaderId": "1168EBBCC6903DD51365A4F7EF5DD71A",
+        "pageUrl": "http://127.0.0.1:64408/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+        "documentBackend": 2,
+        "htmlBackend": 4,
+        "generation": 1,
+        "exactPageUrl": true,
+        "resourceType": "script",
+        "mainFrameRequest": true
+      },
+      "currentDocuments": 2,
+      "finalStateReadRequired": true,
+      "terminalScopeVerified": true,
+      "scopeIdentity": {
+        "generationBefore": 1,
+        "generationAfter": 1,
+        "domEpochBefore": 3,
+        "domEpochAfter": 3,
+        "frameBefore": "9D31CAAED7B9BA24C91340B38EE1D209",
+        "frameAfter": "9D31CAAED7B9BA24C91340B38EE1D209",
+        "loaderBefore": "1168EBBCC6903DD51365A4F7EF5DD71A",
+        "loaderAfter": "1168EBBCC6903DD51365A4F7EF5DD71A",
+        "frameSnapshotStable": true,
+        "stateChangesBefore": 2,
+        "stateChangesAfter": 2,
+        "documentNodeBefore": 4,
+        "documentNodeAfter": 7,
+        "htmlNodeBefore": 6,
+        "htmlNodeAfter": 9,
+        "documentBackendBefore": 2,
+        "documentBackendAfter": 2,
+        "htmlBackendBefore": 4,
+        "htmlBackendAfter": 4,
+        "pageUrlMatches": true,
+        "documentUrlMatches": true,
+        "stateMatches": true,
+        "attributeMatches": true,
+        "compiledScriptRequests": 1,
+        "scriptAttachment": {
+          "frameId": "9D31CAAED7B9BA24C91340B38EE1D209",
+          "loaderId": "1168EBBCC6903DD51365A4F7EF5DD71A",
+          "pageUrl": "http://127.0.0.1:64408/circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=75",
+          "documentBackend": 2,
+          "htmlBackend": 4,
+          "generation": 1,
+          "exactPageUrl": true,
+          "resourceType": "script",
+          "mainFrameRequest": true
+        },
+        "scriptAttachmentMatchesTerminalScope": true
+      }
+    }
+  },
+  "hostCleanup": {
+    "status": "PASS",
+    "seconds": 1.0966445999220014,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "captureCleanup": {
+    "status": "PASS",
+    "performanceEnableAttempted": true,
+    "performanceDisabled": true,
+    "errors": []
+  },
+  "outerCleanup": {
+    "pid": 20020,
+    "processSignaled": true,
+    "jobActiveProcesses": 0,
+    "jobClosedForCleanup": false,
+    "drainsComplete": true,
+    "liveDrainers": 0,
+    "drainerWaitMs": 0,
+    "drainerErrors": [],
+    "cleanupVerified": true,
+    "cleanupElapsedMs": 0,
+    "jobAccountingDrainMs": 0,
+    "jobAccountingDrainSucceeded": true,
+    "jobAccountingError": null
+  },
+  "innerCleanup": {
+    "pid": 14684,
+    "processSignaled": true,
+    "jobActiveProcesses": 0,
+    "jobClosedForCleanup": false,
+    "drainsComplete": true,
+    "liveDrainers": 0,
+    "drainerWaitMs": 0,
+    "drainerErrors": [],
+    "cleanupVerified": true,
+    "cleanupElapsedMs": 0,
+    "jobAccountingDrainMs": 0,
+    "jobAccountingDrainSucceeded": true,
+    "jobAccountingError": null
+  },
+  "recordedPidsChecked": [
+    3124,
+    3664,
+    4500,
+    7144,
+    9132,
+    10208,
+    14684,
+    20020,
+    21784,
+    27720,
+    30652
+  ],
+  "presentProcesses": [],
+  "taskPort": 64408,
+  "taskPortListeners": 0,
+  "terminatedProcesses": 0,
+  "errors": []
+}

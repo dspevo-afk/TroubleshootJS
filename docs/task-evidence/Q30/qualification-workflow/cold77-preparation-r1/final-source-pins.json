@@ -1,0 +1,18 @@
+{
+  "cold77_batch.py": {
+    "sha256": "eac3b78ab8944766a26167c36ea808298369faf797d46a99561073a0fe6d94e6",
+    "size": 17087
+  },
+  "cold77_case_worker.py": {
+    "sha256": "08b4438ac43821f7ed29f6cfd84089afdbfed7500c64f4d911cff208698777df",
+    "size": 12163
+  },
+  "offline_process_canary.py": {
+    "sha256": "034f7d667931b698e801bdc433ede982299ea265d3883badde4c4e90e7cfe918",
+    "size": 5095
+  },
+  "test_cold77_batch.py": {
+    "sha256": "e1ded7d69886f29df459e24432b26ef18e51da2a671eb12daec7326ce9d22271",
+    "size": 17346
+  }
+}

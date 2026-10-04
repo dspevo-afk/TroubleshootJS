@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "status": "DIAGNOSTIC_COMPLETE",
+  "qualification": false,
+  "diagnosticOnly": true,
+  "rootSeed": "75",
+  "maximumCases": 1,
+  "limits": {
+    "jobMillis": 90000,
+    "sharedWork": 640,
+    "activeOperationMillis": 5000
+  },
+  "maximumInnerHostCapMs": 180000,
+  "controllerMonotonicDeadlineNs": 650712018400000,
+  "taskRoot": "<OS_TEMP>\\q30-root75-renderer-diagnostic-75y5l3wt",
+  "parentReference": "01a1017d-669f-76ed-b3cf-1341fcc89016 one metrics-r5 root75 after fresh preflight; Core quiet grant",
+  "windowEndUtc": "2026-10-04T14:12:59.0190173Z",
+  "candidateManifestSha256": "40d92a573000021bb22190aeda4fe40455ed39ada1349d8d638e36e326bfb02b",
+  "errors": [],
+  "applicationAudit": {
+    "status": "APP_PASS",
+    "app": {
+      "status": "APP_PASS",
+      "classification": "PASS",
+      "applicationOutcome": "PASS",
+      "rootSeed": "75",
+      "sha256": "0740fe159791a2c310b72ab5ea173a674e25405808ecf2ad32a97352040cf2e6",
+      "metrics": {
+        "elapsedMs": 77899,
+        "workUnits": 483,
+        "maxActiveOperationMs": 1272,
+        "maxCoordinatorAdvanceMs": 1272,
+        "headroomMs": 12101
+      },
+      "errors": []
+    },
+    "host": null,
+    "synthetic": false
+  },
+  "rendererCapture": "CPU_MEASURED",
+  "captureCleanup": "PASS",
+  "phaseWallTimes": {
+    "source": "UNCHANGED_APP_REPORT",
+    "rootSeed": "75",
+    "applicationOutcome": "PASS",
+    "terminalStage": "PUBLISH",
+    "generationElapsedMs": 77899,
+    "workUnits": 483,
+    "stages": [
+      {
+        "stage": "RESOLVE",
+        "elapsedMs": 0,
+        "workUnits": 1
+      },
+      {
+        "stage": "HEALTHY",
+        "elapsedMs": 17944,
+        "workUnits": 89
+      },
+      {
+        "stage": "PHYSICAL",
+        "elapsedMs": 85,
+        "workUnits": 1
+      },
+      {
+        "stage": "HYPOTHESES",
+        "elapsedMs": 58231,
+        "workUnits": 390
+      },
+      {
+        "stage": "SYMPTOM",
+        "elapsedMs": 1,
+        "workUnits": 1
+      },
+      {
+        "stage": "PUBLISH",
+        "elapsedMs": 76,
+        "workUnits": 1
+      }
+    ],
+    "attempts": [
+      {
+        "ordinal": 0,
+        "manifest": "candidate=00;tsj-generation-request/5;normal-medium@1;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB30_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=75;replay=tsj-alpha/4/MEDIUM/RB30_CONTROL/75;quickPlay=false;layout=15;planEpoch=4;plan=rb30-plan@4;seed=75;topology=RB30_CH2_SEPARATE_DIRECT_A_BJT_B_BJT;support=C12:false,S5:true,S12:false,filters:1,outputIndicators:3,bleeder5:false;layout=6626451485285559634;routing=4130765676055363405;physicalPolicy=MEDIUM_BOARD@1;fault=DRIVE_A_OPEN;packages=39;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated;route=MEDIUM_BOARD@1;physicalAdmission=MEDIUM_BOARD_NORMAL@1;executionPolicy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB30_CONTROL;candidateProfile=MEDIUM@1;policy=NORMAL_MEDIUM_EXECUTION@2;physical=MEDIUM_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=MEDIUM_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=2",
+        "stage": "PUBLISH",
+        "outcome": "PASS",
+        "workUnits": 483,
+        "proofUnits": 390,
+        "failureType": null,
+        "failureMessage": null
+      }
+    ]
+  },
+  "innerHostCapMs": 180000,
+  "ownedProcess": {
+    "pid": 14684,
+    "creationFileTimeTicks": 134355965405256367,
+    "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+    "commandSha256": "a1fbc82e76b6e7d2b520916cc86927401a57094b3fa92225f15b56014b211520",
+    "resumeMonotonicNs": 650493378193400
+  },
+  "operation": {
+    "reason": null,
+    "exitCode": 0,
+    "cleanup": {
+      "pid": 14684,
+      "processSignaled": true,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "drainsComplete": true,
+      "liveDrainers": 0,
+      "drainerWaitMs": 0,
+      "drainerErrors": [],
+      "cleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null
+    },
+    "operationElapsedMs": 81818
+  },
+  "drains": [
+    {
+      "bytes": 44,
+      "overflow": false,
+      "errors": [],
+      "readerAlive": false,
+      "streamClosed": true
+    },
+    {
+      "bytes": 0,
+      "overflow": false,
+      "errors": [],
+      "readerAlive": false,
+      "streamClosed": true
+    }
+  ],
+  "appReportSha256": "0740fe159791a2c310b72ab5ea173a674e25405808ecf2ad32a97352040cf2e6",
+  "hostObservation": {
+    "outcome": "PASS",
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 1.0966445999220014,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    },
+    "errors": [],
+    "inputAudit": {
+      "status": "PASS",
+      "beforeSha256": "ff25c399dee104f98327d09910e16e6213ce49440197f59c53ff1e73f071fbf0",
+      "afterSha256": "ff25c399dee104f98327d09910e16e6213ce49440197f59c53ff1e73f071fbf0",
+      "sourceSha256Before": "fe50dde963bb44b9d4a6694c3679ab44ee8e19e3487b308c8ab7ad5f506ced1c",
+      "sourceSha256After": "fe50dde963bb44b9d4a6694c3679ab44ee8e19e3487b308c8ab7ad5f506ced1c",
+      "webSha256Before": "e0f263d63964b74a220b8e7f3078466a2442d3985c104c9e2957092b0f625666",
+      "webSha256After": "e0f263d63964b74a220b8e7f3078466a2442d3985c104c9e2957092b0f625666",
+      "runnerBeforeSha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+      "runnerAfterSha256": "669c9d1bcd5b221b970809ae17545c86ef79b67edf904ec25df12c26badec5be",
+      "fileCountBefore": 1526,
+      "fileCountAfter": 1526,
+      "seconds": 0.7425635000690818
+    }
+  },
+  "inputBindingUnchanged": true,
+  "finalization": {
+    "budgetMs": 20000,
+    "elapsedMs": 1126.1805,
+    "deadlineExceeded": false,
+    "method": "cooperative phase/file checks plus hard220s owned outer controller for blocked I/O"
+  }
+}

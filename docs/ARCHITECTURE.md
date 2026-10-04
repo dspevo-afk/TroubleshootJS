@@ -30,6 +30,18 @@ inputs, acceptance limits or normal-player eligibility. Passive CPU experiments
 and unintegrated host drafts are retained as explicitly scoped diagnostic
 evidence; they do not change the qualification result.
 
+`cold77_batch.py` and `cold77_case_worker.py` connect these maintained owners to
+the unchanged prepared original normal-screen host and strict scale reader.
+The audit-only entrypoint verifies frozen repository/app inventories plus its
+own pins. A fresh parent grant binds source/plan/manifest,77 roots and one finite
+quiet window. Native jobs own the serial cohort and per-root process trees.
+Atomic launch records fence the internal worker; first nonpass leaves later
+roots NOT_RUN. Completed raw reports can supply app-only diagnostics after an
+interruption, while missing host/source/cleanup proof remains failure. Final
+input audits, ordered all77 receipts,20–40 size coverage and in-time publication
+are required before a cold77 pass. Controller disk-I/O deadlines are cooperative;
+independent desktop release and complete Q30 acceptance remain separate gates.
+
 ## Windows Quick Play preview lifecycle
 
 `Start TroubleshootJS.cmd` calls `start-preview.ps1` for the production Quick
