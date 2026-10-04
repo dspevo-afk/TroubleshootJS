@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "status": "PASS_HEADLESS_LAYOUT_INSPECTION_WITH_LIMITS",
+  "inspectedBy": "Root via view_image",
+  "screenshots": [
+    "screenshots/led_indicator-top.png",
+    "screenshots/led_indicator-bottom.png",
+    "screenshots/composed_controlled_indicator-top.png",
+    "screenshots/composed_controlled_indicator-bottom.png"
+  ],
+  "observed": [
+    "Toolbar, meter, and parts tray render in each image.",
+    "LED component view and copper underside are visible and readable.",
+    "Composed board top and copper underside fit the captured workbench viewport.",
+    "No hidden fault label, netlist, or debug flag is visible in these four screenshots."
+  ],
+  "limits": [
+    "Automated headless menu input and screenshots only.",
+    "No Q30 20/30/40 visible diagnosis, unrepaired/repair, or customer retest proof.",
+    "Electrical correctness is supplied by separate native/compiled contracts, not inferred from pixels."
+  ]
+}

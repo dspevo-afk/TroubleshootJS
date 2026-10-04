@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "status": "PASS_EXPORTED_ARTIFACT_HASH_PRIVACY_SOURCE_BOUNDARY",
+  "observedUtc": "2026-10-04T20:09:05.149695+00:00",
+  "packetManifestSha256": "a17b2d7e5ebfe5b310a8776c46cdcdde0918a11f9b38b72eccae8ebab2221b97",
+  "manifestedFiles": 41,
+  "archives": [
+    {
+      "archive": "native-receipts.tar.gz",
+      "files": 11,
+      "memberHashes": "PASS"
+    },
+    {
+      "archive": "gate-receipts.tar.gz",
+      "files": 30,
+      "memberHashes": "PASS"
+    },
+    {
+      "archive": "isolated/source-tree.tar.gz",
+      "files": 1354,
+      "memberHashes": "PASS"
+    },
+    {
+      "archive": "isolated/overlay.tar.gz",
+      "files": 3,
+      "memberHashes": "PASS"
+    },
+    {
+      "archive": "isolated/declared-baseline-originals.tar.gz",
+      "files": 4,
+      "memberHashes": "PASS"
+    },
+    {
+      "archive": "private/source-tree.tar.gz",
+      "files": 1354,
+      "memberHashes": "PASS"
+    },
+    {
+      "archive": "isolated/source-delta.patch.gz",
+      "binding": "PASS_EXACT_GZIP_ROUND_TRIP"
+    }
+  ],
+  "sourceInputsRechecked": 1354,
+  "publicQ30Disabled": true,
+  "preservedUntrackedPaths": 8,
+  "preservedUntrackedHistoricalByteHashes": "NOT_AVAILABLE_NO_BYTE_UNCHANGED_CLAIM",
+  "trackedChanges": [
+    "docs/CODEX_TASK_REPORT.md",
+    "docs/ROADMAP.md",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/README.md",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/commands.md",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/compiled31-reuse-audit.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/derivation.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/disabled-menu-reuse-input-audit.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/gate-receipts-index.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/gate-receipts.tar.gz",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/native-append-audit.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/native-append-release-audit.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/native-full-audit.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/native-full-release-audit.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/native-receipts-index.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/native-receipts.tar.gz",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/packet-audit.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/packet-manifest.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/private-build-reuse-audit.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/private-caller-adaptation.patch",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/private-caller-scope-audit.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/private-gate-result.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/private-menu-release-audit.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/result.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/screenshot-inspection.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/screenshots/composed_controlled_indicator-bottom.png",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/screenshots/composed_controlled_indicator-top.png",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/screenshots/led_indicator-bottom.png",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/screenshots/led_indicator-top.png",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/source-archives/archive-release-audit.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/source-archives/isolated-independent-audit.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/source-archives/isolated/archive-manifest.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/source-archives/isolated/archive-manifest.sha256",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/source-archives/isolated/declared-baseline-originals.tar.gz",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/source-archives/isolated/overlay.tar.gz",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/source-archives/isolated/prepare-receipt.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/source-archives/isolated/source-delta.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/source-archives/isolated/source-delta.patch.gz",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/source-archives/isolated/source-file-audit.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/source-archives/isolated/source-snapshot.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/source-archives/isolated/source-tree.tar.gz",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/source-archives/private/archive-manifest.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/source-archives/private/source-tree.tar.gz",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/source-bindings.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/static-review.json",
+    "docs/task-evidence/Q30/qualification-workflow/remaining-gates-20261004/visual-qa-gap.json"
+  ],
+  "scope": "Exported bytes, regular archive inventory, privacy scan and final source boundary; actual runtime semantic audits remain separately recorded; no visible/parent acceptance"
+}

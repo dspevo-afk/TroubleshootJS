@@ -1,0 +1,194 @@
+{
+  "schema": 1,
+  "candidate": "isolated",
+  "status": "ARCHIVED_SOURCE_ONLY",
+  "sourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+  "baseHead": "d37c3b3b8581abdeaa9b88b7bfb2349cff958d31",
+  "observedRepositoryHead": "208d8fa9d1dc7e17d5c32e99b3ddab4cbf6de024",
+  "sourceFileCount": 1354,
+  "sourceBytes": 14932611,
+  "sourceSnapshotSha256": "5369115c5c29ce3a2c2d5b815204359551a2b8d1302d918fd7c6fb7a0ef91240",
+  "receiptSha256": "3835c832ef416733fa1a793349acaad5d8fa99f61ee91368c3ba1a475c467341",
+  "receiptSourceSnapshotSha256": "5369115c5c29ce3a2c2d5b815204359551a2b8d1302d918fd7c6fb7a0ef91240",
+  "sourceSnapshotReceiptHashMatch": true,
+  "declaredSnapshotAppByteMatch": {
+    "status": "FAIL",
+    "mismatchCount": 4,
+    "mismatches": [
+      {
+        "path": "scripts/verify-current-contracts.ps1",
+        "declaredSize": 66537,
+        "declaredSha256": "357abf8cb72ab67038d67a2ebfc07118b1d166ae789b4e0f3b37e53cdd0fc589",
+        "actualExists": true,
+        "actualSize": 67734,
+        "actualSha256": "21a0b9c29d72ff2fc1ae51a186833ae185e029fa3c1576119bd0e1f5637daa46"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/circuitjs1.gwt.xml",
+        "declaredSize": 372,
+        "declaredSha256": "ffebbaa4fbfec412035814816f62f86beab5a6c833de7f6314f5b6962b0ab476",
+        "actualExists": true,
+        "actualSize": 384,
+        "actualSha256": "dd1e732802c66ed02b9a0c265a96d61b36ce606e7d0352625cdf90b458966852"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+        "declaredSize": 44620,
+        "declaredSha256": "9296105f4843cb4b6439e3f349873b0aee94bbce146a88d014329c5b14162a4d",
+        "actualExists": true,
+        "actualSize": 50129,
+        "actualSha256": "ddebb207b828015914b7de3d9382058bbd0a5eaf3d721af8947f66ee9f23a648"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/GenerationJob.java",
+        "declaredSize": 28934,
+        "declaredSha256": "340d584f744dd3338c9ad1a567116dca9cd79b73d41326e716c7dd95cc741bef",
+        "actualExists": true,
+        "actualSize": 30809,
+        "actualSha256": "ec016cde2987533dd1117c2fa47d7c8fca58e45ff3c3e4c0aca39091ca5aed53"
+      }
+    ],
+    "classification": "EXPECTED_BASELINE_PATCH",
+    "baselinePatchVerification": {
+      "status": "PASS",
+      "classification": "EXPECTED_BASELINE_PATCH",
+      "method": "EXACT_FORWARD_RAW_BYTE_BINDING",
+      "patchPathSetMatch": true,
+      "declaredMismatchSetMatch": true,
+      "reverseCheckExitCode": 1,
+      "reverseApplyExitCode": null,
+      "forwardCheckExitCode": 0,
+      "forwardApplyExitCode": 0,
+      "declaredOriginalHashes": [
+        {
+          "path": "scripts/verify-current-contracts.ps1",
+          "size": 66537,
+          "sha256": "357abf8cb72ab67038d67a2ebfc07118b1d166ae789b4e0f3b37e53cdd0fc589"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/circuitjs1.gwt.xml",
+          "size": 372,
+          "sha256": "ffebbaa4fbfec412035814816f62f86beab5a6c833de7f6314f5b6962b0ab476"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+          "size": 44620,
+          "sha256": "9296105f4843cb4b6439e3f349873b0aee94bbce146a88d014329c5b14162a4d"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/GenerationJob.java",
+          "size": 28934,
+          "sha256": "340d584f744dd3338c9ad1a567116dca9cd79b73d41326e716c7dd95cc741bef"
+        }
+      ],
+      "reproducedEffectiveHashes": [
+        {
+          "path": "scripts/verify-current-contracts.ps1",
+          "size": 67734,
+          "sha256": "21a0b9c29d72ff2fc1ae51a186833ae185e029fa3c1576119bd0e1f5637daa46",
+          "match": true
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/circuitjs1.gwt.xml",
+          "size": 384,
+          "sha256": "dd1e732802c66ed02b9a0c265a96d61b36ce606e7d0352625cdf90b458966852",
+          "match": true
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+          "size": 50129,
+          "sha256": "ddebb207b828015914b7de3d9382058bbd0a5eaf3d721af8947f66ee9f23a648",
+          "match": true
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/GenerationJob.java",
+          "size": 30809,
+          "sha256": "ec016cde2987533dd1117c2fa47d7c8fca58e45ff3c3e4c0aca39091ca5aed53",
+          "match": true
+        }
+      ],
+      "originalsArchive": {
+        "path": "isolated/declared-baseline-originals.tar.gz",
+        "sha256": "966cc61a2bbf4ec059b7cc2f1cf769dbc028bb258f328a8d1f0e0e27dce1a33f",
+        "bytes": 29254,
+        "roundTrip": "PASS"
+      },
+      "affectedPaths": [
+        "scripts/verify-current-contracts.ps1",
+        "src/com/lushprojects/circuitjs1/circuitjs1.gwt.xml",
+        "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+        "src/com/lushprojects/circuitjs1/client/GenerationJob.java"
+      ],
+      "reason": "Exact raw originals match every snapshot hash; the pinned patch reproduces every effective app byte; originals tar extraction matches all raw hashes. Reverse failure is retained."
+    },
+    "boundary": "source-snapshot.json is a manifest; source-delta.patch.gz reconstructs effective snapshot paths from base HEAD; overlay.tar.gz carries receipt.overlayFiles"
+  },
+  "overlay": {
+    "identitySha256": "54e6af83ec6ba2c213c4675c344f595761fccd4961e71ff7d79a74d708586138",
+    "fileCount": 3,
+    "declaredAndActual": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/IsolatedGenerationQualification.java",
+        "declaredSize": 12167,
+        "declaredSha256": "b9d494cbc4d0ee827283e9e29a3d83eee3eca7f32e59919aaa1ce9fbc2cb6d6e",
+        "actualSize": 12167,
+        "actualSha256": "b9d494cbc4d0ee827283e9e29a3d83eee3eca7f32e59919aaa1ce9fbc2cb6d6e",
+        "match": true
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Q30NormalScreenHarness.java",
+        "declaredSize": 66185,
+        "declaredSha256": "cba90e3cd99cb70315b17cc5c3db34519d424b544ba91b09618b59f2f447c583",
+        "actualSize": 66185,
+        "actualSha256": "cba90e3cd99cb70315b17cc5c3db34519d424b544ba91b09618b59f2f447c583",
+        "match": true
+      },
+      {
+        "path": "tests/contracts/IsolatedGenerationQualificationContractTest.java",
+        "declaredSize": 12490,
+        "declaredSha256": "afd47e797d8a59f1e855034b3e47183ffca085b96df2ba6a0a8cbb54fecc18a9",
+        "actualSize": 12490,
+        "actualSha256": "afd47e797d8a59f1e855034b3e47183ffca085b96df2ba6a0a8cbb54fecc18a9",
+        "match": true
+      }
+    ],
+    "declaredBytesMatch": "PASS",
+    "archive": {
+      "archivePath": "overlay.tar.gz",
+      "bytes": 17331,
+      "sha256": "855f58a4c1f63a48e88cc8f5c4416560a48a957b9124dfe1720075cdcc61a21b",
+      "extractedBytesMatchSource": "PASS"
+    }
+  },
+  "sourceArchive": {
+    "status": "INCLUDED",
+    "archivePath": "source-tree.tar.gz",
+    "bytes": 2998188,
+    "sha256": "f6e324f4d790cbddb086ff297d253b9b8bc9c1219123759a7c3d416a5f1f1b1c",
+    "extractedFileCount": 1354,
+    "extractedBytesMatchSource": "PASS"
+  },
+  "sourceDelta": {
+    "manifestPath": "source-delta.json",
+    "patchPath": "source-delta.patch.gz",
+    "changedFileCount": 1279,
+    "patchRoundTrip": "PASS",
+    "reconstruction": {
+      "status": "PASS",
+      "method": "git apply on changed HEAD paths",
+      "checkedFileCount": 1279,
+      "checkExitCode": 0,
+      "applyExitCode": 0,
+      "hashMismatches": []
+    }
+  },
+  "inputIdentity": {
+    "manifestSha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8",
+    "acceptancePlanSha256": "69707f4282dd41a394c2eb6723057b32379d0743553940a2b2a11bd5221f8d48",
+    "baselinePatchSha256": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+    "baselinePatchPath": "tests/qualification/q30-scale-acceptance/baseline.patch",
+    "baselinePatchRepositoryHashVerified": true,
+    "wrapperIdentity": "ce12328b1f78be131f9c67d4f20a8f3a24610436c2a5a9cc415463e76fc8da16",
+    "hostRunnerSha256": "8da1af0f184cea190f17fb02629e4475013337558e32903e95992552723a4440"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "status": "PASS_SCOPED_AST_DIFF",
+  "beforeSha256": "a87da5d445478af18a35c75d7023b0f09a14fc6ac1447baad41b7e9ea04f90ca",
+  "afterSha256": "3847637a0c8281705f6cb061ebec4a916d6e3ff26e56717d4afad71d65fe079f",
+  "changedTopLevelNodes": [
+    "GWT_JARS",
+    "validate_cold_gate",
+    "inventory_raw_source_roots",
+    "main"
+  ],
+  "patchSha256": "433e2d3e0c8dd15fd7f7a58d4a9b6b3b4cf92fc9fa40ce70e92eef0ad40412ba",
+  "scope": [
+    "Cold77 receipt consumer only; failed historical cold receipt retained",
+    "Three handwritten pins corrected to source-bound nine-jar manifest; jar bytes unchanged",
+    "Build uses available maintained PowerShell 7 host; no global environment change",
+    "Six generated deployment outputs classified by actual five permutation names; extra output negative canary retained"
+  ],
+  "productionFilesChanged": 0,
+  "applicationLimitsChanged": false,
+  "originalFullCallerStatus": "FAIL_PRESERVED",
+  "correctedFullCallerRerun": false
+}

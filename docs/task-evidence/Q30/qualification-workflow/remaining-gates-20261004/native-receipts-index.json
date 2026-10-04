@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "archive": "native-receipts.tar.gz",
+  "members": [
+    {
+      "path": "native-full.log",
+      "rawBytes": 4328076,
+      "rawSha256": "8659bc2ebe9c5890f2959154f48383aee7d50e1c88aaa31d0184e46bb06510c2",
+      "portableBytes": 4328076,
+      "portableSha256": "8659bc2ebe9c5890f2959154f48383aee7d50e1c88aaa31d0184e46bb06510c2"
+    },
+    {
+      "path": "native-full.txt",
+      "rawBytes": 4341755,
+      "rawSha256": "ef80d01c6cdb33372b50a66b0d0257286d69ff0e085d18b7e488a5cc2590fdb7",
+      "portableBytes": 4341755,
+      "portableSha256": "ef80d01c6cdb33372b50a66b0d0257286d69ff0e085d18b7e488a5cc2590fdb7"
+    },
+    {
+      "path": "native-append.log",
+      "rawBytes": 160154,
+      "rawSha256": "24bba2173fa6f334aa83be24181f20bcf772a195daa4233f5cc2f18ce8439f88",
+      "portableBytes": 160154,
+      "portableSha256": "24bba2173fa6f334aa83be24181f20bcf772a195daa4233f5cc2f18ce8439f88"
+    },
+    {
+      "path": "native-append.txt",
+      "rawBytes": 161312,
+      "rawSha256": "72ea381a2dcb4d74866ac7189e947bafa3f289e21c8574e60751d3ab76458e98",
+      "portableBytes": 161312,
+      "portableSha256": "72ea381a2dcb4d74866ac7189e947bafa3f289e21c8574e60751d3ab76458e98"
+    },
+    {
+      "path": "native-full.txt.manifest-controlled-alt.txt",
+      "rawBytes": 200418,
+      "rawSha256": "c07b2db2b6c40bca52d881ad35594eea9c45d1bd9fe54263a896b0ac6a56fc6e",
+      "portableBytes": 200418,
+      "portableSha256": "c07b2db2b6c40bca52d881ad35594eea9c45d1bd9fe54263a896b0ac6a56fc6e"
+    },
+    {
+      "path": "native-full.txt.manifest-controlled.txt",
+      "rawBytes": 199403,
+      "rawSha256": "e064bdd8a81c815c55ec108c842a0fedf978f6d069b558e1b069592873395b28",
+      "portableBytes": 199403,
+      "portableSha256": "e064bdd8a81c815c55ec108c842a0fedf978f6d069b558e1b069592873395b28"
+    },
+    {
+      "path": "native-full.txt.manifest-resistive.txt",
+      "rawBytes": 27965,
+      "rawSha256": "8281aa99f86526a54667b2d5de2389c7247b439006839ed61c80404c6bfc757b",
+      "portableBytes": 27965,
+      "portableSha256": "8281aa99f86526a54667b2d5de2389c7247b439006839ed61c80404c6bfc757b"
+    },
+    {
+      "path": "native-full.txt.roles.txt",
+      "rawBytes": 701,
+      "rawSha256": "89f99bcd09c8871cef1b307c20f59932d1f29eb9ed3ea84f42483655535f5125",
+      "portableBytes": 701,
+      "portableSha256": "89f99bcd09c8871cef1b307c20f59932d1f29eb9ed3ea84f42483655535f5125"
+    },
+    {
+      "path": "native-full.txt.seeds.txt",
+      "rawBytes": 4738,
+      "rawSha256": "7bbf6739c314c6d9e9229d626ab0d7f7354a75e1e52a40660c67b23a9bcaa705",
+      "portableBytes": 4738,
+      "portableSha256": "7bbf6739c314c6d9e9229d626ab0d7f7354a75e1e52a40660c67b23a9bcaa705"
+    },
+    {
+      "path": "native-full.txt.values.txt",
+      "rawBytes": 6835,
+      "rawSha256": "521f61ec6d7700f3affd52577d92ecb00446831027e278138c81c1d1b6e12555",
+      "portableBytes": 6835,
+      "portableSha256": "521f61ec6d7700f3affd52577d92ecb00446831027e278138c81c1d1b6e12555"
+    },
+    {
+      "path": "native-full.txt.vectors.txt",
+      "rawBytes": 18813,
+      "rawSha256": "933a9149fc364fa1944e7fd203bf9f651e25f8dd0c48f3bec781355062b9ffea",
+      "portableBytes": 18813,
+      "portableSha256": "933a9149fc364fa1944e7fd203bf9f651e25f8dd0c48f3bec781355062b9ffea"
+    }
+  ],
+  "transformation": "Same explicit local-path tokenization as packet derivation; raw sources remain local"
+}

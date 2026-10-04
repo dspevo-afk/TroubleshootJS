@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "sourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+  "sourceBaseHead": "d37c3b3b8581abdeaa9b88b7bfb2349cff958d31",
+  "sourceSnapshotRawSha256": "bfeaf1d89bd63657b0f0cbfa21f727203b243e60863a7334a20eee96b707c6f4",
+  "continuedAcceptancePlanSha256": "69707f4282dd41a394c2eb6723057b32379d0743553940a2b2a11bd5221f8d48",
+  "nativeLauncherSha256": "6c56c37b0c52c395dc72088cf608bd86a0fcfa534ae9ee269e1ad9b651c4de86",
+  "nativeSemanticAuditorSha256": "0c3e1b66b21b20cf9ddf404c7d1741a1512cd441dc145ad3a40c4415598bb69e",
+  "privateRunnerSha256": "75e79a0ba5bcb1e3365aee413f0fd94f25d560e08e1c9cd8816896633c3e5b1a",
+  "archiveOwnerSha256": "d14c811e487c0817003d5171fc0c1c53820c5d213e05a9c2c5724fb808b9fb8d",
+  "privateCatalogDelta": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PlayerFamilyCatalog.java",
+      "beforeSize": 12020,
+      "beforeSha256": "f3ef310259bc471f3141744ea87ebc2bd85513775dc6320625341a6ec2913417",
+      "afterSize": 12019,
+      "afterSha256": "3d182d6652a2144e8b40ff15c03dd1ccc9d2b274380b660ef8a06e6308140ccf",
+      "falseOccurrenceBefore": 1,
+      "trueOccurrenceAfter": 1
+    }
+  ],
+  "productionChange": false,
+  "saveReplayFormatsChanged": false,
+  "limits": {
+    "applicationMilliseconds": 90000,
+    "sharedUnits": 640,
+    "activeAndCoordinatorMilliseconds": 5000,
+    "nativeServiceSensitivityPerCaseMilliseconds": 60000
+  }
+}

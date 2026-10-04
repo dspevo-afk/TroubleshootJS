@@ -7,7 +7,27 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Q30 NOT ACCEPTED - fresh cold77 PASS; other acceptance gates pending**<br>
+**Current task:** **Q30 NOT ACCEPTED - nonvisual gates passed; visible QA/parent acceptance pending**<br>
+**Q30 remaining nonvisual gates (2026-10-04):** Fresh full native PASS82 suites,
+four independent oracle markers/report/listener checks,105 service/105 sensitivity
+rows; append PASS26 structural roots. Combined77 structural rows70 accepted/
+seven declared route rejects/zero failed. Full3,908.443s/append190.311s, exit0;
+strict auditors/source1354 unchanged. Private production JDK8/GWT build phase
+PASS84.831s/five OBF permutations. Original post-build classification FAIL
+preserved; corrected existing raw-source owner separately classifies the six
+expected deployment files and rejects extras; compiled-output handling remains. Separate reuse audit and subsequent pinned
+headless runner PASS33 launches/three replays/stale replay rejection; slowest
+89.391s under unchanged90s. Full corrected orchestration NOT RERUN. Final1354
+raw/357 compiled/nine jars/public inputs unchanged; nine menu identities absent/
+port64488 closed. Full isolated/private source archives and byte checks PASS;
+source-only acceptance NOT_ASSESSED. Outer cleanup duration not separately
+recorded; browser cleanup0.737s. Four headless screenshots inspected, no visible
+Q30 repair proof. Read-only leaf provenance review found no issue; parent owns
+acceptance. Q30 still disabled:visible20/30/40 diagnosis/repair/retest BLOCKED
+by unavailable interactive tools; parent review pending. U06/U07/Q60 unstarted.
+Local checkpoint only; no push/publish/email/evidence deletion.
+[Remaining gates, preserved failures and restart limits](task-evidence/Q30/qualification-workflow/remaining-gates-20261004/README.md).
+
 **Q30 fresh original-host cold77 (2026-10-04):**77 PASS/0 FAIL/0 NOT_RUN,
 exact frozen order/308 metadata rows, published sizes20-40. Worst root35
 85,562ms/root75 79,019ms under unchanged90,000ms/640shared/5,000ms active
@@ -22,9 +42,9 @@ archive preserved unchanged; original slowdown cause UNKNOWN. Reapplied exact
 strict reader to77 reports/actual hosts and audited1,354 repo/1,526 app inputs;
 28-file packet/hash/privacy/regular archive audit PASS, scoped to cold77.
 No new qualification harness/retry/instrumentation/production enablement.
-Q30 remains disabled/NOT ACCEPTED:required final full regression, private
-enabled build/menu/replay, actual visible20/30/40 repair/retest, full Q30 source
-archive and parent acceptance pending. No player-input tools/visual PASS;
+At that cold77-only checkpoint, Q30 remained disabled/NOT ACCEPTED:final
+full regression, private enabled build/menu/replay, actual visible20/30/40
+repair/retest, full Q30 source archive and parent acceptance were pending. No player-input tools/visual PASS;
 no full matrix/build in this run. Cooperative I/O/RAM/profile-cap limits remain.
 U06/U07/Q60 unstarted; no push/publish/email/evidence deletion.
 [Fresh cohort and evidence](task-evidence/Q30/qualification-workflow/cold77-actual-window-1/README.md).
@@ -2702,10 +2722,14 @@ parity against their controls. One still exceeds 90 seconds; no full-corpus
 normal acceptance or broad scale claim follows from this small comparison.
 
 Q30 remains BLOCKED / NOT ACCEPTED under its unchanged original scope.
-Plan-4 20-40-part generation and fresh original-host cold77 now pass the
-frozen cohort; remaining acceptance gates are pending. Normal-player publication remains disabled
-pending those gates, visible player-flow proof and parent review. U06, U07,
-Q60 and later milestones remain UNSTARTED.
+Plan-4 20-40-part generation and fresh original-host cold77 pass the frozen
+cohort. Fresh full native regression, private enabled production build phase/
+source audit, separate headless menu/replay, and full source archives now pass
+their recorded boundaries; original orchestration failures remain explicit.
+Normal-player publication stays disabled pending actual visible20/30/40
+diagnosis/repair/customer-retest and parent acceptance. Headless screenshots
+do not satisfy that gate. U06, U07, Q60 and later milestones remain UNSTARTED.
+See [remaining-gate checkpoint](task-evidence/Q30/qualification-workflow/remaining-gates-20261004/README.md).
 See [Q30 evidence](task-evidence/Q30/README.md).
 
 #### Q30-P1 — Medium-board floorplanning and two-layer physical policy

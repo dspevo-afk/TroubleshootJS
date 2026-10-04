@@ -1,0 +1,11 @@
+{
+  "scope": "Exact append launcher; per-case termination/scratch cleanup validated by unchanged native auditor",
+  "sameInstancePresent": false,
+  "recordedPid": 29308,
+  "status": "PASS_RECORDED_APPEND_LAUNCHER_ABSENT",
+  "schema": 1,
+  "observedUtc": "2026-10-04T19:20:20.2135509+00:00",
+  "terminatedByAudit": false,
+  "cleanupElapsedSeconds": "NOT RECORDED separately",
+  "createdUtc": "2026-10-04T19:15:25.0326620Z"
+}

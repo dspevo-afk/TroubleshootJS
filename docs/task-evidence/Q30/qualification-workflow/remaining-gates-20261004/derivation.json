@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "artifacts": [
+    {
+      "role": "native-full-audit.json",
+      "rawBytes": 9361,
+      "rawSha256": "382e706dd5daf1e77e084a1f6df9258d530f5e1e1d28824cc4eab75fe5d7add7",
+      "portableBytes": 8407,
+      "portableSha256": "c0b84e45dbdfc6c6d9a5c1cdbb27d602a29c5fd0448472e014827ccbba72ade5",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    },
+    {
+      "role": "native-append-audit.json",
+      "rawBytes": 6718,
+      "rawSha256": "69d4b3db42883b67d7f550c3eda2a276fb51dd68bab202123dca1356170e1d47",
+      "portableBytes": 6324,
+      "portableSha256": "c106530c598ee14d774a8ea88c450dd1456297771512b2d0b71430f4ea3c67f3",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    },
+    {
+      "role": "native-full-release-audit.json",
+      "rawBytes": 907,
+      "rawSha256": "79bf12b609bb6be71d7fd9c887f39a5cb40e6565abd85d965eba930421acb0b1",
+      "portableBytes": 907,
+      "portableSha256": "79bf12b609bb6be71d7fd9c887f39a5cb40e6565abd85d965eba930421acb0b1",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    },
+    {
+      "role": "native-append-release-audit.json",
+      "rawBytes": 435,
+      "rawSha256": "9b97b6ea4e1c3687a11a27137f72d2283bb1d3d07f310bc406aeebca353f8f4d",
+      "portableBytes": 435,
+      "portableSha256": "9b97b6ea4e1c3687a11a27137f72d2283bb1d3d07f310bc406aeebca353f8f4d",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    },
+    {
+      "role": "compiled31-reuse-audit.json",
+      "rawBytes": 29679,
+      "rawSha256": "4d84702f51982eb6a77dc2f7cfa0529ce14783e51dde8b20d3ba8d1160d74af3",
+      "portableBytes": 25303,
+      "portableSha256": "b103cd8753fbbf872c77bc5f30b887419f5deafff42bd91760fd3275c45ac7d1",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    },
+    {
+      "role": "disabled-menu-reuse-input-audit.json",
+      "rawBytes": 709,
+      "rawSha256": "3ae6398ec035afdb9991566a6366fa4bb89cedd256dd76568b1b4e0e79e60f98",
+      "portableBytes": 709,
+      "portableSha256": "3ae6398ec035afdb9991566a6366fa4bb89cedd256dd76568b1b4e0e79e60f98",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    },
+    {
+      "role": "private-gate-result.json",
+      "rawBytes": 5838,
+      "rawSha256": "b5dfd7e06e1b163efaa311d0733a9bc56bd7f1fdc8617cadd28ec0d177d41516",
+      "portableBytes": 5271,
+      "portableSha256": "c927b0617ce28def85f19d5b80d15d2badec518e1c7de68cdf97df238f575a44",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    },
+    {
+      "role": "private-build-reuse-audit.json",
+      "rawBytes": 2490,
+      "rawSha256": "fa579f46d061f7ba1e267ba99fa651a8f55fb5a10b94efa9bb0a9202f4094e30",
+      "portableBytes": 2461,
+      "portableSha256": "2ab7484404cf487de4c48f16590b22ae6cc8d77d9f3b4114c32c23e293f90fc0",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    },
+    {
+      "role": "private-menu-release-audit.json",
+      "rawBytes": 2693,
+      "rawSha256": "6831fe58d705b204c3415e5e7bc632bbb78ae0c679eb1bec9e16e5a65722f66b",
+      "portableBytes": 2688,
+      "portableSha256": "e1aca4d7f031316726c6e80102cd311b19d7188efb3b9fae023dea3bec762f0e",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    },
+    {
+      "role": "source-archives/isolated-independent-audit.json",
+      "rawBytes": 1412,
+      "rawSha256": "f256388d6219e709b78fddc64149b87240097a3c531985453b526d28ebd926c7",
+      "portableBytes": 1412,
+      "portableSha256": "f256388d6219e709b78fddc64149b87240097a3c531985453b526d28ebd926c7",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    },
+    {
+      "role": "source-archives/archive-release-audit.json",
+      "rawBytes": 567,
+      "rawSha256": "a2a17a093a16f22bf81d1d00197ca8e6407c802426ed9e8dca10e14dedc1719e",
+      "portableBytes": 562,
+      "portableSha256": "7b659e1f5c0610c13ea1056d1bc5993e8113386574a190156e091ba0fc51c0df",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    },
+    {
+      "role": "visual-qa-gap.json",
+      "rawBytes": 1090,
+      "rawSha256": "004649a2ad9406a00486472fa42730602b3dd4939303041e5d1ca41eba52a685",
+      "portableBytes": 1090,
+      "portableSha256": "004649a2ad9406a00486472fa42730602b3dd4939303041e5d1ca41eba52a685",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    },
+    {
+      "role": "source-archives/isolated/archive-manifest.json",
+      "rawBytes": 4238,
+      "rawSha256": "e800c446823326161392b5dc63c253494acfd2cd916066348b1828af4a93fecc",
+      "portableBytes": 4238,
+      "portableSha256": "e800c446823326161392b5dc63c253494acfd2cd916066348b1828af4a93fecc",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    },
+    {
+      "role": "source-archives/isolated/archive-manifest.sha256",
+      "rawBytes": 89,
+      "rawSha256": "11f998eb68333d42f7ba22040cdfb4ef24b4a857738e34a46017ff2edbf0865e",
+      "portableBytes": 89,
+      "portableSha256": "11f998eb68333d42f7ba22040cdfb4ef24b4a857738e34a46017ff2edbf0865e",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    },
+    {
+      "role": "source-archives/isolated/prepare-receipt.json",
+      "rawBytes": 272755,
+      "rawSha256": "3835c832ef416733fa1a793349acaad5d8fa99f61ee91368c3ba1a475c467341",
+      "portableBytes": 272755,
+      "portableSha256": "3835c832ef416733fa1a793349acaad5d8fa99f61ee91368c3ba1a475c467341",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    },
+    {
+      "role": "source-archives/isolated/source-delta.json",
+      "rawBytes": 458866,
+      "rawSha256": "b28bb064f5e400b8a300cc0e7418327a8f40d33d5bfc4192c4f51a4ce49eaf52",
+      "portableBytes": 458866,
+      "portableSha256": "b28bb064f5e400b8a300cc0e7418327a8f40d33d5bfc4192c4f51a4ce49eaf52",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    },
+    {
+      "role": "source-archives/isolated/source-file-audit.json",
+      "rawBytes": 8398,
+      "rawSha256": "cdacbeb0088e07a0405d601b35c51b162a0752d33bf45b11097044f75476b80f",
+      "portableBytes": 8398,
+      "portableSha256": "cdacbeb0088e07a0405d601b35c51b162a0752d33bf45b11097044f75476b80f",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    },
+    {
+      "role": "source-archives/isolated/source-snapshot.json",
+      "rawBytes": 270197,
+      "rawSha256": "5369115c5c29ce3a2c2d5b815204359551a2b8d1302d918fd7c6fb7a0ef91240",
+      "portableBytes": 270197,
+      "portableSha256": "5369115c5c29ce3a2c2d5b815204359551a2b8d1302d918fd7c6fb7a0ef91240",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    },
+    {
+      "role": "source-archives/private/archive-manifest.json",
+      "rawBytes": 273140,
+      "rawSha256": "0444fbaa47ef111fae037b6cf3173c95dab213966f381a7e965b568fa8a4c0ef",
+      "portableBytes": 273140,
+      "portableSha256": "0444fbaa47ef111fae037b6cf3173c95dab213966f381a7e965b568fa8a4c0ef",
+      "transformation": "Known local paths replaced by role tokens; UTF-8 BOM removed; all other content retained"
+    }
+  ],
+  "roles": [
+    "<ORIGINAL_TASK_ROOT>",
+    "<PRIVATE_ROOT>",
+    "<NATIVE_ROOT>",
+    "<SOURCE_ARCHIVE_ROOT>",
+    "<REPO>",
+    "<JDK8>",
+    "<PRIVATE_APP>",
+    "<WORKSPACE>",
+    "<DEPS>",
+    "<OS_TEMP>",
+    "<USER_HOME>"
+  ],
+  "boundary": "Actual gates/auditors consumed raw local receipts before this export. Portable artifacts preserve clocks/results and hashes with local paths tokenized; raw receipt hashes remain provenance, not portable artifact hashes."
+}

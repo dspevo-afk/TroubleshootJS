@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "status": "BLOCKED_VISIBLE_PLAYER_QA",
+  "observedUtc": "2026-10-04 18:49:25 UTC",
+  "inspection": "Callable tool metadata inspected in this execution environment",
+  "supportedAvailable": "Desktop Commander exposes terminal/process/file actions; maintained Playwright runner supports automated headless menu input",
+  "missing": "No callable Browser/computer action for real visible pointer/keyboard input and screen capture",
+  "requiredCases": [
+    {
+      "rootSeed": "10387",
+      "packages": 20,
+      "status": "NOT_RUN_VISIBLE_DIAGNOSIS_REPAIR_RETEST"
+    },
+    {
+      "rootSeed": "10226",
+      "packages": 30,
+      "status": "NOT_RUN_VISIBLE_DIAGNOSIS_REPAIR_RETEST"
+    },
+    {
+      "rootSeed": "10014",
+      "packages": 40,
+      "status": "NOT_RUN_VISIBLE_DIAGNOSIS_REPAIR_RETEST"
+    }
+  ],
+  "limits": "CDP/controller calls and headless screenshots do not certify these visible flows",
+  "foreground": "No new foreground desktop reservation requested or consumed; coordinate with parent before future headful QA",
+  "normalPlayQ30Enabled": false
+}

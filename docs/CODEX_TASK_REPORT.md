@@ -1,4 +1,74 @@
-# Current checkpoint: Q30 cold77 PASS; separate acceptance gates pending
+# Current checkpoint: Q30 nonvisual gates passed; visible QA/parent acceptance blocked
+
+2026-10-04. Branch `codex/q30-multirail-qualification`; local checkpoint parent
+HEAD `208d8fa9d1dc7e17d5c32e99b3ddab4cbf6de024`, plus this evidence commit.
+[Remaining-gate evidence](task-evidence/Q30/qualification-workflow/remaining-gates-20261004/README.md).
+Source base `d37c3b3b8581abdeaa9b88b7bfb2349cff958d31`, source identity
+`a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51`;
+1,354 raw inputs unchanged. Public Q30 DISABLED / NOT ACCEPTED. U06/U07/Q60
+unstarted. No production/save/replay change, push/publish/email/evidence deletion.
+
+Fresh maintained native full PASS/exit0,3,908.443s:82 Java suites, four
+independent oracle markers, report/listener checks,105 service/105 finer-step
+sensitivity rows across frozen21 roots/five faults, seven oracle sidecars.
+First51 structural rows47 accepted/four declared route rejects/zero failed.
+Fresh append PASS/exit0,190.311s:26 rows23 accepted/three declared route
+rejects/zero failed; one focused suite, full oracles NOT RUN in append.
+Combined77 structural rows70 accepted/seven declared route rejects/zero failed.
+Unchanged semantic auditors PASS/no issues; source1354 post-check PASS.
+Native outer cleanup duration NOT RECORDED separately; scratch cleanup markers
+PASS, exact recorded instances/classpath absent. Point-in-time resource samples
+are not peak/cap proof. No simultaneous expensive test/build matrix.
+
+Private JDK8/GWT OBF build phase PASS/exit0,84.831s/five permutations using
+actual `scripts/build.ps1`. Private1354-source copy has one catalog false-to-
+true toggle; public checkout remains false. Original orchestration FAIL retained:
+bad handwritten jar pins, WindowsPowerShell5 Get-FileHash loading failure, then
+successful-build raw inventory misclassified six generated deployment files.
+Existing caller fixed only cold77 prerequisite consumption, three manifest pins,
+available PowerShell7 build host, and six-output classification. Actual nine jar
+bytes unchanged; actual build-process exit/timeout canary PASS. WindowsPS5 module
+cause unresolved; failed process-only environment canary retained. No global fix.
+
+Full corrected orchestration NOT RERUN. Separate corrected source/build reuse
+audit PASS:1354 exact raw,357 compiled/five permutations, six deployment hashes,
+nine jars/build inputs/public source unchanged; extra-output negative EXPECTED-
+REJECTED. Then pinned headless runner PASS33 launches/three replays, stale replay
+EXPECTED_REJECTED/no generation/state change/private metadata absent33. Slowest
+89.391s against unchanged90,000ms. Outer operation419.640s; browser cleanup0.737s;
+outer cleanup duration NOT RECORDED separately. Post-menu source/compiled/
+deployment/dependency/runner/public-source audit PASS. Nine exact menu identities
+absent/port64488 closed; no release-audit termination. Reused compiled31 semantic
+audit PASS; disabled-menu357 compiled inputs/build receipt unchanged, no new run.
+Committed fresh cold77 packet/manifest validated; cohort not rerun/consumed grant
+not reused.90,000ms/640shared/5,000ms active/coordinator/native60s caps unchanged.
+
+Maintained full isolated source archive PASS80.305s:1354 effective inputs plus
+three scale overlays; pinned four-file baseline differences classified/rebuilt,
+delta/round-trip checks PASS. Source delta1279 byte-level paths archives the
+existing candidate. Private raw archive1354 files/single catalog delta PASS.
+Independent actual archive byte/privacy audit PASS; source-only acceptance NOT
+ASSESSED. Raw/sanitized receipt hashes bound separately; regular-file packet
+audit records the export boundary. Four actual headless LED/composed top/bottom
+screenshots inspected; layout/privacy only, not visible Q30 repair evidence.
+Luna MAX read-only leaf found no provenance issue in helper/receipt scope;
+no executions/acceptance by reviewer. Parent independent acceptance PENDING.
+
+Visible20/30/40 diagnosis/unrepaired/repair/customer-retest BLOCKED: no callable
+interactive Browser/computer pointer/keyboard/capture tools. Roots10387/10226/
+10014 NOT RUN for this gate. Parent must coordinate supported visible QA on the
+retained audited private production build, then review acceptance before any
+normal-play enablement. Do not start later milestones or relaunch cold77 grant.
+No persistent task app/browser/listener; exact recorded release checks passed.
+Raw failure/gate evidence, profiles, private app, source archives and archive
+scratch retained; local restart paths in task workspace handoff. Pre-existing
+seven cache files and consumed cold77 untracked marker preserved; sibling
+Desktop checkout preserved. Local checkpoint only. Next: visible QA and parent
+acceptance, not another unchanged native/full build run.
+
+---
+
+# Historical checkpoint: Q30 cold77 PASS; separate acceptance gates pending
 
 2026-10-04. Branch `codex/q30-multirail-qualification`; candidate local HEAD
 `661b1c0e91d41bc353511327ee26ad47aa141d07`, plus this evidence checkpoint.

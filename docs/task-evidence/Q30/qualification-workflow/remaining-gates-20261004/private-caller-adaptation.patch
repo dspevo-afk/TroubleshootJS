@@ -1,0 +1,106 @@
+--- a/run_epoch15_private_menu.py
++++ b/run_epoch15_private_menu.py
+@@ -54,12 +54,12 @@
+ GWT_JARS = {
+     "gwt-dev-2.7.0.jar": "c7321e367fc24e5c7ad97b74d1cf2980c45fbd7cbe1fd412f8a8ba128f685135",
+     "gwt-user-2.7.0.jar": "d3721bcdd7c6855a524801212dd74548967d8fb65cbc212a20890732ff2c6948",
+-    "validation-api-1.0.0.GA.jar": "e459f313eeb6db2483f8ceaad39af07086361b474fa92e40f442e8de5d9895dc",
++    "validation-api-1.0.0.GA.jar": "e459f313ebc6db2483f8ceaad39af07086361b474fa92e40f442e8de5d9895dc",
+     "validation-api-1.0.0.GA-sources.jar": "a394d52a9b7fe2bb14f0718d2b3c8308ffe8f37e911956012398d55c9f9f9b54",
+-    "asm-5.0.3.jar": "71c4f78e437b8fdcd9cc0dfd2abdea8c089eb677005a6cff320206cc52b46cc",
++    "asm-5.0.3.jar": "71c4f78e437b8fdcd9cc0dfd2abea8c089eb677005a6a5cff320206cc52b46cc",
+     "asm-analysis-5.0.3.jar": "e8fa2a63462c96557dcd36c25525e1264b77366ff851cf0b94eb7592b290849d",
+     "asm-commons-5.0.3.jar": "18c1e092230233c9d29e46f21943d769bdb48130cc279e4b0e663f423948c2da",
+-    "asm-tree-5.0.3.jar": "347a7a9400f9964e87c91d3980e48ee8bdc024bc3b36f7f22189c662853a51c",
++    "asm-tree-5.0.3.jar": "347a7a9400f9964e87c91d3980e48eebdc8d024bc3b36f7f22189c662853a51c",
+     "asm-util-5.0.3.jar": "2768edbfa2681b5077f08151de586a6d66b916703cda3ab297e58b41ae8f2362",
+ }
+ MENU_FAMILIES = (
+@@ -461,17 +461,41 @@
+ 
+ 
+ def validate_cold_gate(task):
+-    value, evidence = read_json(task / "cold77-audit.json", "cold77 audit")
+-    require(value.get("status") == "PASS", "cold77 audit is not PASS")
+-    require(value.get("sourceInputsVerified") == EXPECTED_RAW_INPUTS,
+-            "cold77 audit did not verify all raw inputs")
+-    require(value.get("sourceIdentity") == EXPECTED_SOURCE_IDENTITY,
+-            "cold77 audit source identity differs")
+-    require(value.get("candidateBaseHead") == EXPECTED_BASE_HEAD,
+-            "cold77 audit candidate base differs")
+-    require(value.get("count") == 77 and len(value.get("rows", [])) == 77,
+-            "cold77 audit does not contain all 77 roots")
+-    return {"status": "PASS", "evidence": evidence, "count": 77}
++    # Consume the actual new packet directly; preserve the old failed audit.
++    packet = REPO / "docs/task-evidence/Q30/qualification-workflow/cold77-actual-window-1"
++    manifest, manifest_file = read_json(packet / "packet-manifest.json",
++                                         "fresh cold77 packet manifest")
++    require(manifest_file["sha256"] ==
++            "82e5c6aee32f1ac323caca8e5ad1ce52dfd2a63770eafe0d8890e43cd0b52ac4",
++            "fresh cold77 packet manifest changed")
++    require(manifest.get("status") == "PASS_COLD77_PACKET_AUDIT" and
++            manifest.get("qualifiedCold77") is True and
++            manifest.get("q30Accepted") is False,
++            "fresh cold77 packet audit is not a qualification pass")
++    for relative, row in manifest["files"].items():
++        require(Path(relative).name == relative, "unsafe cold77 packet member")
++        member = packet / relative
++        require(member.is_file() and not member.is_symlink() and
++                member.stat().st_size == row["bytes"] and
++                sha256_file(member) == row["sha256"],
++                "fresh cold77 packet member changed: " + relative)
++    value, evidence = read_json(packet / "result.json", "fresh cold77 result")
++    require(value.get("status") == "PASS_COLD77" and
++            value.get("qualifiedCold77") is True and
++            value.get("pass") == 77 and value.get("fail") == 0 and
++            value.get("notRun") == 0 and value.get("candidateMetadataRows") == 308,
++            "fresh cold77 result is incomplete or failed")
++    require(value.get("q30Accepted") is False and
++            value.get("normalPlayEnabled") is False,
++            "fresh cold77 result incorrectly implies acceptance or enablement")
++    binding = value.get("inputBinding", {})
++    require(binding.get("repositoryInputs") == EXPECTED_RAW_INPUTS and
++            binding.get("sourceIdentity") == EXPECTED_SOURCE_IDENTITY and
++            binding.get("baseHead") == EXPECTED_BASE_HEAD,
++            "fresh cold77 result input binding differs")
++    return {"status": "PASS", "evidence": evidence,
++            "packetManifest": manifest_file, "count": 77,
++            "boundary": "Existing strict-reader cold77 packet; Q30 acceptance remains separate"}
+ 
+ 
+ def validate_compiled31_gate(task):
+@@ -751,6 +775,21 @@
+                         "raw source tree contains symlink: " + str(child))
+                 relative = child.relative_to(root).as_posix()
+                 if relative == "war/circuitjs1":
++                    continue
++                if relative == "war/WEB-INF/deploy":
++                    deployment = inventory_tree(root, relative)
++                    permutations = validate_five_gwt_permutations(
++                        inventory_tree(root, "war/circuitjs1"), "GWT deployment")
++                    expected = {
++                        "war/WEB-INF/deploy/circuitjs1/rpcPolicyManifest/manifest.txt"
++                    } | {
++                        "war/WEB-INF/deploy/circuitjs1/symbolMaps/" +
++                        PurePosixPath(row["path"]).name.replace(".cache.js", ".symbolMap")
++                        for row in permutations
++                    }
++                    require({row["path"] for row in deployment} == expected and
++                            all(row["size"] > 0 for row in deployment),
++                            "GWT deployment output inventory differs from five permutations")
+                     continue
+                 retained_subdirs.append(subdir)
+             subdirs[:] = retained_subdirs
+@@ -1098,8 +1137,11 @@
+ 
+         phase_started = time.monotonic()
+         set_phase("private-jdk8-gwt-build")
++        build_powershell = shutil.which("pwsh.exe")
++        require(build_powershell is not None,
++                "maintained PowerShell 7 build host is unavailable")
+         build_command = [
+-            str(powershell), "-NoProfile", "-ExecutionPolicy", "Bypass",
++            str(Path(build_powershell).resolve()), "-NoProfile", "-ExecutionPolicy", "Bypass",
+             "-File", str(temp_root / BUILD_SCRIPT),
+             "-JavaHome", str(JAVA_HOME),
+             "-Target", "Compile",

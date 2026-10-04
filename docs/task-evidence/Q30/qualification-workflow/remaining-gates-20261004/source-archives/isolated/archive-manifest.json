@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "kind": "Q30_SOURCE_ATTEMPT_ARCHIVE",
+  "generatedUtc": "2026-10-04T19:49:22.2928601Z",
+  "taskRootLabel": "q30-process-pinned-final-qualification-fcffecff8fa444889bce93725495c628",
+  "repoLabel": "repository",
+  "baseHead": "d37c3b3b8581abdeaa9b88b7bfb2349cff958d31",
+  "observedRepositoryHead": "208d8fa9d1dc7e17d5c32e99b3ddab4cbf6de024",
+  "status": "SOURCE_ARCHIVE_ONLY",
+  "archiveRunStatus": "PASS",
+  "acceptanceStatus": "NOT_ASSESSED",
+  "baselinePatch": {
+    "repositoryRelativePath": "tests/qualification/q30-scale-acceptance/baseline.patch",
+    "sha256": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+    "pinnedSha256": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+    "repositoryHashVerified": true,
+    "expectedPaths": [
+      "scripts/verify-current-contracts.ps1",
+      "src/com/lushprojects/circuitjs1/circuitjs1.gwt.xml",
+      "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+      "src/com/lushprojects/circuitjs1/client/GenerationJob.java"
+    ]
+  },
+  "compactMode": false,
+  "exclusions": [
+    "jars and .tools content",
+    "generated build outputs except the exact profile-linked compiled payload recorded under profile/",
+    "browser profile directories and account-local state",
+    "absolute/private paths",
+    "full source-tree.tar.gz copies unless -IncludeSourceTrees is supplied"
+  ],
+  "candidates": [
+    {
+      "candidate": "isolated",
+      "status": "ARCHIVED_SOURCE_ONLY",
+      "sourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+      "sourceSnapshotSha256": "5369115c5c29ce3a2c2d5b815204359551a2b8d1302d918fd7c6fb7a0ef91240",
+      "receiptSha256": "3835c832ef416733fa1a793349acaad5d8fa99f61ee91368c3ba1a475c467341",
+      "sourceFileCount": 1354,
+      "sourceBytes": 14932611,
+      "declaredSnapshotAppByteMatch": "FAIL",
+      "declaredSnapshotMismatchCount": 4,
+      "snapshotMismatchClassification": "EXPECTED_BASELINE_PATCH",
+      "baselinePatchVerification": "PASS",
+      "sourceSnapshotReceiptHashMatch": true,
+      "effectiveSourceArchive": {
+        "status": "INCLUDED",
+        "path": "isolated/source-tree.tar.gz",
+        "bytes": 2998188,
+        "sha256": "f6e324f4d790cbddb086ff297d253b9b8bc9c1219123759a7c3d416a5f1f1b1c",
+        "extractedBytesMatchSource": "PASS"
+      },
+      "sourceDelta": {
+        "manifestPath": "isolated/source-delta.json",
+        "patchPath": "isolated/source-delta.patch.gz",
+        "changedFileCount": 1279,
+        "patchRoundTrip": "PASS",
+        "reconstruction": "PASS"
+      },
+      "overlayArchive": {
+        "path": "isolated/overlay.tar.gz",
+        "bytes": 17331,
+        "sha256": "855f58a4c1f63a48e88cc8f5c4416560a48a957b9124dfe1720075cdcc61a21b",
+        "extractedBytesMatchSource": "PASS"
+      },
+      "overlayDeclaredBytesMatch": "PASS",
+      "archiveValid": true,
+      "overlayIdentitySha256": "54e6af83ec6ba2c213c4675c344f595761fccd4961e71ff7d79a74d708586138",
+      "manifestSha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8",
+      "acceptancePlanSha256": "69707f4282dd41a394c2eb6723057b32379d0743553940a2b2a11bd5221f8d48",
+      "baselinePatchSha256": "f3d40b868c21c3579cb22fd567f6d112b8db24cd5199f9edec6542201c9e8080",
+      "wrapperIdentity": "ce12328b1f78be131f9c67d4f20a8f3a24610436c2a5a9cc415463e76fc8da16",
+      "hostRunnerSha256": "8da1af0f184cea190f17fb02629e4475013337558e32903e95992552723a4440"
+    }
+  ],
+  "invalidCandidates": [],
+  "profile": null,
+  "reconstructionBoundary": "For each candidate, start from baseHead, apply source-delta.patch.gz at the repository root, and validate every source-delta.json changedFiles size and SHA-256. Then unpack overlay.tar.gz at the repository root and validate receipt.overlayFiles. The four declared snapshot/app mismatches are classified as EXPECTED_BASELINE_PATCH only when raw reverse restoration matches, or exact archived originals match all snapshot hashes and forward application of the pinned patch reproduces all effective app bytes. source-tree.tar.gz is optional audit evidence; no acceptance result is inferred."
+}

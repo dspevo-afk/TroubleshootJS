@@ -1,0 +1,27 @@
+{
+  "status": "PASS_RECORDED_NATIVE_FULL_RELEASE",
+  "recordedInstances": [
+    {
+      "pid": 11740,
+      "status": "RECORDED_INSTANCE_ABSENT",
+      "createdUtc": "2026-10-04T18:09:27.4190340Z"
+    },
+    {
+      "pid": 17764,
+      "status": "RECORDED_INSTANCE_ABSENT",
+      "createdUtc": "2026-10-04T18:09:27.4285070Z"
+    },
+    {
+      "pid": 25136,
+      "status": "RECORDED_INSTANCE_ABSENT",
+      "createdUtc": "2026-10-04T18:24:52.3262400Z"
+    }
+  ],
+  "terminatedByAudit": false,
+  "observedUtc": "2026-10-04T19:16:18.3634152+00:00",
+  "matchingClasspathProcesses": 0,
+  "scope": "Exact launcher and two mid-run recorded children plus task-specific classpath and scratch; maintained receipts separately prove per-case termination",
+  "documentedScratchAbsent": true,
+  "schema": 1,
+  "cleanupElapsedSeconds": "NOT RECORDED separately by maintained native wrapper"
+}

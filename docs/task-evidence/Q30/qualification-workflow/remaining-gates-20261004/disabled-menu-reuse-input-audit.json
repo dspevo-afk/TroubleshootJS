@@ -1,0 +1,13 @@
+{
+  "status": "PASS_REUSE_INPUT_BOUNDARY",
+  "scope": "Disabled-menu retained passing stage; actual shipping compiled files and build receipt unchanged; raw source verified separately by private preflight",
+  "compiledFiles": 357,
+  "stageBeforeAfterIdentical": true,
+  "newBrowserRun": false,
+  "schema": 1,
+  "checkedUtc": "2026-10-04T18:16:33.3590581+00:00",
+  "allCompiledInputsUnchanged": true,
+  "disabledMenuStageSha256": "ac5638a7678c4b12def4fbe3ee46e315007e4e0101aade15307383e2ac8abb0d",
+  "disabledMenuResultSha256": "09b0bf3788cc0d3656fbe920d8cc14878781a7ac06ef9d357d442bb485e6899b",
+  "shippingBuildReceiptSha256": "c654b539238eacb22f964e39da16ad44539b4f107131d1ae2f72fd4e13c3290f"
+}

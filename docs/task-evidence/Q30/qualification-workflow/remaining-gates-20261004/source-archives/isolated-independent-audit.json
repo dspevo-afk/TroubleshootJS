@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "status": "PASS_SOURCE_ARCHIVE_BYTES_ONLY",
+  "observedUtc": "2026-10-04T19:51:46.642311+00:00",
+  "sourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+  "manifestSha256": "e800c446823326161392b5dc63c253494acfd2cd916066348b1828af4a93fecc",
+  "baselineExpectedMismatches": 4,
+  "sourceArchive": {
+    "path": "source-tree.tar.gz",
+    "regularFileCount": 1354,
+    "sourceBytes": 14932611,
+    "bytes": 2998188,
+    "sha256": "f6e324f4d790cbddb086ff297d253b9b8bc9c1219123759a7c3d416a5f1f1b1c",
+    "exactMembersAndBytes": "PASS",
+    "personalPathScan": "PASS"
+  },
+  "overlayArchive": {
+    "path": "overlay.tar.gz",
+    "regularFileCount": 3,
+    "sourceBytes": 90842,
+    "bytes": 17331,
+    "sha256": "855f58a4c1f63a48e88cc8f5c4416560a48a957b9124dfe1720075cdcc61a21b",
+    "exactMembersAndBytes": "PASS",
+    "personalPathScan": "PASS"
+  },
+  "declaredOriginalsArchive": {
+    "path": "declared-baseline-originals.tar.gz",
+    "regularFileCount": 4,
+    "sourceBytes": 140463,
+    "bytes": 29254,
+    "sha256": "966cc61a2bbf4ec059b7cc2f1cf769dbc028bb258f328a8d1f0e0e27dce1a33f",
+    "exactMembersAndBytes": "PASS",
+    "personalPathScan": "PASS"
+  },
+  "deltaGzipByteBinding": "PASS",
+  "deltaReconstruction": "Maintained archive command PASS; not rerun by this read-only audit",
+  "acceptanceStatus": "NOT_ASSESSED"
+}

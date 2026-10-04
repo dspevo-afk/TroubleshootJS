@@ -1,0 +1,12 @@
+{
+  "createdUtc": "2026-10-04T19:48:01.6672480Z",
+  "scope": "Recorded archive controller identity only; source scratch intentionally retained",
+  "scratchRetained": "q30-source-archive-84a9ec20e85c43418f5d95feb02bab4b",
+  "pid": 30040,
+  "schema": 1,
+  "recordedInstancePresent": false,
+  "observedUtc": "2026-10-04T19:53:21.8891966+00:00",
+  "executable": "<USER_HOME>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "terminationPerformed": false,
+  "status": "PASS_EXACT_ARCHIVE_CONTROLLER_ABSENT"
+}

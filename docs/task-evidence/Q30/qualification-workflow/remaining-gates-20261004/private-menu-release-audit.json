@@ -1,0 +1,75 @@
+{
+  "status": "PASS_EXACT_RECORDED_INSTANCES_ABSENT_PORT_CLOSED",
+  "recordedInstanceCount": 9,
+  "schema": 1,
+  "scope": "Exact bounded controller, Python host, and recorded Edge identities; no broad historical process census",
+  "processes": [
+    {
+      "recordedInstancePresent": false,
+      "pidReused": false,
+      "executable": "<USER_HOME>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "pid": 15508,
+      "createdUtc": "2026-10-04T19:37:54.9531560Z"
+    },
+    {
+      "recordedInstancePresent": false,
+      "pidReused": false,
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+      "pid": 14620,
+      "createdUtc": "2026-10-04T19:37:55.5067770Z"
+    },
+    {
+      "recordedInstancePresent": false,
+      "pidReused": false,
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 4152,
+      "createdUtc": "2026-10-04T19:37:56.2150390Z"
+    },
+    {
+      "recordedInstancePresent": false,
+      "pidReused": false,
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 20228,
+      "createdUtc": "2026-10-04T19:37:56.2357050Z"
+    },
+    {
+      "recordedInstancePresent": false,
+      "pidReused": false,
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 30396,
+      "createdUtc": "2026-10-04T19:37:56.3436780Z"
+    },
+    {
+      "recordedInstancePresent": false,
+      "pidReused": false,
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 27852,
+      "createdUtc": "2026-10-04T19:37:56.3495340Z"
+    },
+    {
+      "recordedInstancePresent": false,
+      "pidReused": false,
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 13184,
+      "createdUtc": "2026-10-04T19:37:56.3844450Z"
+    },
+    {
+      "recordedInstancePresent": false,
+      "pidReused": false,
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 13852,
+      "createdUtc": "2026-10-04T19:37:56.4607820Z"
+    },
+    {
+      "recordedInstancePresent": false,
+      "pidReused": false,
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 18184,
+      "createdUtc": "2026-10-04T19:37:56.4664580Z"
+    }
+  ],
+  "terminationPerformed": false,
+  "portOpen": false,
+  "observedUtc": "2026-10-04T19:47:30.8149235+00:00",
+  "port": 64488
+}

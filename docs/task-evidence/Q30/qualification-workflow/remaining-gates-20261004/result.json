@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "status": "Q30_NONVISUAL_GATES_CHECKPOINT_NOT_ACCEPTED",
+  "generatedUtc": "2026-10-04T19:56:11.657498+00:00",
+  "checkpointBaseHead": "208d8fa9d1dc7e17d5c32e99b3ddab4cbf6de024",
+  "sourceBaseHead": "d37c3b3b8581abdeaa9b88b7bfb2349cff958d31",
+  "sourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+  "sourceInputCount": 1354,
+  "nativeFull": {
+    "status": "PASS",
+    "suiteCount": 82,
+    "independentOracleMarkerCount": 4,
+    "serviceRows": 105,
+    "sensitivityRows": 105,
+    "structuralRows": 51,
+    "acceptedRows": 47,
+    "declaredRouteRejectedRows": 4,
+    "exitCode": 0,
+    "elapsedSeconds": 3908.4431953,
+    "cleanupElapsedSeconds": "NOT RECORDED separately"
+  },
+  "nativeAppend": {
+    "status": "PASS",
+    "suiteCount": 1,
+    "structuralRows": 26,
+    "acceptedRows": 23,
+    "declaredRouteRejectedRows": 3,
+    "exitCode": 0,
+    "elapsedSeconds": 190.3112778,
+    "fullOracles": "NOT_RUN_HERE_FULL_BATCH_COVERS",
+    "cleanupElapsedSeconds": "NOT RECORDED separately"
+  },
+  "structuralCombined": {
+    "rows": 77,
+    "accepted": 70,
+    "declaredRouteRejected": 7,
+    "failed": 0
+  },
+  "privateEnabledBuild": {
+    "status": "PASS_BUILD_PHASE_AND_SEPARATE_SOURCE_BOUNDARY",
+    "elapsedSeconds": 84.831,
+    "permutations": 5,
+    "compiledFiles": 357,
+    "originalOrchestration": "FAIL_POST_BUILD_CLASSIFICATION_PRESERVED",
+    "fullBuildRepeated": false
+  },
+  "headlessMenuReplay": {
+    "status": "PASS",
+    "launches": 33,
+    "replays": 3,
+    "staleEpoch": "EXPECTED_REJECTED",
+    "privateMetadataAbsentCases": 33,
+    "applicationLimitMilliseconds": 90000,
+    "slowestLaunchSeconds": 89.39050889993086,
+    "outerOperationSeconds": 419.6403465,
+    "hostCleanupSeconds": 0.7365006000036374,
+    "outerCleanupSeconds": "NOT RECORDED separately"
+  },
+  "reusedInputs": {
+    "compiled31": "PASS_FRESH_SEMANTIC_AUDIT_AND_INPUT_BOUNDARY",
+    "disabledMenu": "PASS_INPUT_BOUNDARY_357_COMPILED_FILES_NO_NEW_BROWSER_RUN",
+    "cold77": "Existing committed original-host packet checked; no rerun"
+  },
+  "sourceArchives": {
+    "isolatedFullRaw": "PASS_1354_EFFECTIVE_FILES_AND_THREE_SCALE_OVERLAYS",
+    "privateFullRaw": "PASS_1354_FILES_SINGLE_CATALOG_ENABLE_DELTA",
+    "acceptanceStatus": "NOT_ASSESSED"
+  },
+  "visualPlayerQa": "BLOCKED",
+  "parentAcceptance": "PENDING",
+  "q30Accepted": false,
+  "normalPlayQ30Enabled": false,
+  "nextUnstartedMilestones": [
+    "U06",
+    "U07",
+    "Q60"
+  ],
+  "publication": "LOCAL_CHECKPOINT_ONLY_NO_PUSH_PUBLISH_EMAIL",
+  "evidenceDeleted": false
+}

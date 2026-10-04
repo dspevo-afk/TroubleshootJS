@@ -1,0 +1,133 @@
+{
+  "schema": 1,
+  "status": "PASS_PRIVATE_BUILD_MENU_REPLAY_SOURCE_BOUNDARY",
+  "observedUtc": "2026-10-04T19:47:01.359560+00:00",
+  "sourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+  "sourceBaseHead": "d37c3b3b8581abdeaa9b88b7bfb2349cff958d31",
+  "originalOrchestrationStatus": "FAIL_POST_BUILD_CLASSIFICATION_PRESERVED",
+  "buildPhase": {
+    "phase": "private-jdk8-gwt-build",
+    "status": "PASS",
+    "elapsedSeconds": 84.831,
+    "exitCode": 0
+  },
+  "compiledFiles": 357,
+  "permutations": 5,
+  "menu": {
+    "result": {
+      "label": "private enabled-menu browser result",
+      "path": "<PRIVATE_ROOT>\\private-menu-output\\result.json",
+      "size": 20069,
+      "sha256": "468af3ed37f8127b0685eaab7d57506b9ab353ebc35a630b6041975596994757"
+    },
+    "status": "PASS",
+    "caseCount": 33,
+    "replayCount": 3,
+    "replayArrayCount": 2,
+    "q30ReplayCount": 1,
+    "cleanup": {
+      "seconds": 0.7365006000036374,
+      "serverStopped": true,
+      "ownedSurvivors": []
+    },
+    "identity": {
+      "label": "private enabled-menu host identity",
+      "path": "<PRIVATE_ROOT>\\private-menu-output\\identity.json",
+      "size": 363,
+      "sha256": "947af5b41726b8179b6d6a56d6418aeea7f074aa5b5154c365092147b1ddacf5"
+    },
+    "ownedProcesses": {
+      "label": "private enabled-menu Edge ownership",
+      "path": "<PRIVATE_ROOT>\\private-menu-output\\owned-processes.json",
+      "size": 1333,
+      "sha256": "1841d4a8622d9ec563de0cf762e525fd78fcf5a64344616071175963e3bef418"
+    },
+    "screenshots": [
+      {
+        "label": "led_indicator-top.png",
+        "path": "<PRIVATE_ROOT>\\private-menu-output\\led_indicator-top.png",
+        "size": 205051,
+        "sha256": "b21c450d89731996d58a27b41d6cba401d3f917becbdc1a5d162539685523fcf"
+      },
+      {
+        "label": "led_indicator-bottom.png",
+        "path": "<PRIVATE_ROOT>\\private-menu-output\\led_indicator-bottom.png",
+        "size": 192866,
+        "sha256": "c5a95d94ba89b3b0a7c18315a32852e263baa38ae44fd16069d45b2296c1c312"
+      },
+      {
+        "label": "composed_controlled_indicator-top.png",
+        "path": "<PRIVATE_ROOT>\\private-menu-output\\composed_controlled_indicator-top.png",
+        "size": 161726,
+        "sha256": "749323f21e00394be0e3dc36ef070eaf179428971e0939f4d14efef2fb284e42"
+      },
+      {
+        "label": "composed_controlled_indicator-bottom.png",
+        "path": "<PRIVATE_ROOT>\\private-menu-output\\composed_controlled_indicator-bottom.png",
+        "size": 141228,
+        "sha256": "0e048267f69c3d85e7781cb68f8893ae58ce5368fca5f55ca3afdc0e0be771e2"
+      }
+    ]
+  },
+  "command": {
+    "startedUtc": "2026-10-04T19:37:55.4375416+00:00",
+    "finishedUtc": "2026-10-04T19:44:55.0820300+00:00",
+    "schema": 1,
+    "terminationProven": true,
+    "elapsedSeconds": 419.6403465,
+    "cleanupElapsedSeconds": "NOT RECORDED separately by maintained bounded process",
+    "exitCode": 0,
+    "owner": "Invoke-VerifierBoundedProcess",
+    "sourceBuildReceipt": "private-menu-result.json preserved FAIL post-build classification; passing build phase consumed by separate reuse audit"
+  },
+  "rawSource": {
+    "count": 1354,
+    "sha256": "c3fc76bb5f36bd5fabcac565e4a305f468b2a7b5095b95c0af492a5dc61312a0"
+  },
+  "deploymentOutputs": [
+    {
+      "path": "war/WEB-INF/deploy/circuitjs1/rpcPolicyManifest/manifest.txt",
+      "size": 73,
+      "sha256": "eb3b324e82be005d2ce52c55629f383b697e45369c16707be44fe45023e51b9a"
+    },
+    {
+      "path": "war/WEB-INF/deploy/circuitjs1/symbolMaps/73459E0291C7E4902A7873A7C8C82FBC.symbolMap",
+      "size": 6232564,
+      "sha256": "51702ee877a823fa1bd3355e2c616d20e4fdf6de467bee2b6d5d659941398839"
+    },
+    {
+      "path": "war/WEB-INF/deploy/circuitjs1/symbolMaps/899AE112E3B3FC494D959D83DE5F5EDE.symbolMap",
+      "size": 6676543,
+      "sha256": "2d768a9d0579d21eb5bdafed961a84082163cd574088213fb539d8e820bbf402"
+    },
+    {
+      "path": "war/WEB-INF/deploy/circuitjs1/symbolMaps/DE44C1EEBF0885EC955093DF796C61EC.symbolMap",
+      "size": 6676854,
+      "sha256": "be65c31582666e201fcaeb4e4dd4be6b42c146fe0de986cc14e9f9c61c9a5787"
+    },
+    {
+      "path": "war/WEB-INF/deploy/circuitjs1/symbolMaps/FBB07376B560C7F262A563D952CF142E.symbolMap",
+      "size": 6673219,
+      "sha256": "18832065c87f4cd93625cc4e6c6d5811645cd2ae2848874581a69cfe0459c00d"
+    },
+    {
+      "path": "war/WEB-INF/deploy/circuitjs1/symbolMaps/FC0C29B9BD34A498A6ECFBB875D82143.symbolMap",
+      "size": 6678060,
+      "sha256": "b3dd3fe30f0aa17ad26cd1094c19659ae79eedefdcaf9fc44339ee11f89de5c7"
+    }
+  ],
+  "publicSourceInputs": {
+    "count": 1354,
+    "sourceIdentity": null
+  },
+  "pinnedGwtJarsUnchanged": 9,
+  "runnerInputsUnchanged": true,
+  "normalQ30Enabled": false,
+  "q30Accepted": false,
+  "visiblePlayerQa": "BLOCKED_NO_INTERACTIVE_BROWSER_COMPUTER_TOOLS",
+  "limitations": [
+    "Headless automated menu/replay only; no visible Q30 diagnosis, repair, or retest.",
+    "Parent independent acceptance remains required.",
+    "Outer operation elapsed time and application clocks are separate; outer cleanup time not separately recorded."
+  ]
+}

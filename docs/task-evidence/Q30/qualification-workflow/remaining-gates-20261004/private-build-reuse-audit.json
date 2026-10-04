@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "status": "PASS_PRIVATE_BUILD_REUSE_BOUNDARY",
+  "observedUtc": "2026-10-04T19:35:25.913408+00:00",
+  "sourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+  "baseHead": "d37c3b3b8581abdeaa9b88b7bfb2349cff958d31",
+  "rawSource": {
+    "count": 1354,
+    "sha256": "c3fc76bb5f36bd5fabcac565e4a305f468b2a7b5095b95c0af492a5dc61312a0"
+  },
+  "compiledFiles": 357,
+  "compiledInventoryUnchanged": true,
+  "permutations": 5,
+  "buildPhase": {
+    "phase": "private-jdk8-gwt-build",
+    "status": "PASS",
+    "elapsedSeconds": 84.831,
+    "exitCode": 0
+  },
+  "deploymentOutputs": [
+    {
+      "path": "war/WEB-INF/deploy/circuitjs1/rpcPolicyManifest/manifest.txt",
+      "size": 73,
+      "sha256": "eb3b324e82be005d2ce52c55629f383b697e45369c16707be44fe45023e51b9a"
+    },
+    {
+      "path": "war/WEB-INF/deploy/circuitjs1/symbolMaps/73459E0291C7E4902A7873A7C8C82FBC.symbolMap",
+      "size": 6232564,
+      "sha256": "51702ee877a823fa1bd3355e2c616d20e4fdf6de467bee2b6d5d659941398839"
+    },
+    {
+      "path": "war/WEB-INF/deploy/circuitjs1/symbolMaps/899AE112E3B3FC494D959D83DE5F5EDE.symbolMap",
+      "size": 6676543,
+      "sha256": "2d768a9d0579d21eb5bdafed961a84082163cd574088213fb539d8e820bbf402"
+    },
+    {
+      "path": "war/WEB-INF/deploy/circuitjs1/symbolMaps/DE44C1EEBF0885EC955093DF796C61EC.symbolMap",
+      "size": 6676854,
+      "sha256": "be65c31582666e201fcaeb4e4dd4be6b42c146fe0de986cc14e9f9c61c9a5787"
+    },
+    {
+      "path": "war/WEB-INF/deploy/circuitjs1/symbolMaps/FBB07376B560C7F262A563D952CF142E.symbolMap",
+      "size": 6673219,
+      "sha256": "18832065c87f4cd93625cc4e6c6d5811645cd2ae2848874581a69cfe0459c00d"
+    },
+    {
+      "path": "war/WEB-INF/deploy/circuitjs1/symbolMaps/FC0C29B9BD34A498A6ECFBB875D82143.symbolMap",
+      "size": 6678060,
+      "sha256": "b3dd3fe30f0aa17ad26cd1094c19659ae79eedefdcaf9fc44339ee11f89de5c7"
+    }
+  ],
+  "dependencyInputsUnchanged": true,
+  "publicSourceInputsUnchanged": 1354,
+  "callerSha256": "3847637a0c8281705f6cb061ebec4a916d6e3ff26e56717d4afad71d65fe079f",
+  "negativeCanary": {
+    "status": "PASS_EXPECTED_REJECTED",
+    "message": "GWT deployment output inventory differs from five permutations",
+    "fixtureRoot": "<OS_TEMP>\\q30-deployment-negative-celowahs"
+  },
+  "originalCallerResult": "FAIL_POST_BUILD_CLASSIFICATION_PRESERVED",
+  "fullBuildRepeated": false
+}
