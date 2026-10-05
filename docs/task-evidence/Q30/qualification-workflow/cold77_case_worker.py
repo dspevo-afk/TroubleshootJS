@@ -14,9 +14,11 @@ import subprocess
 import sys
 import time
 
-from receipts import LIMITS, validate_case, write_exclusive
+from receipts import (
+    LIMITS, WORKFLOW_MANIFEST_FILENAME, load_workflow_manifest, validate_case,
+    write_exclusive,
+)
 
-MATCHED_SHA = '68a5257bac66c667a7adbe50a7eb25049e5f795aa9f93be8bc62e982edb6ffce'
 HOST_SECONDS = 150
 HERE = Path(__file__).resolve().parent
 
@@ -47,8 +49,11 @@ def imported(path, name, expected):
     spec.loader.exec_module(module)
     return module
 
-def audit_inputs(args):
-    matched = imported(args.matched_helper, 'q30_cold_matched_owner', MATCHED_SHA)
+def audit_inputs(args, workflow_manifest=None):
+    workflow = workflow_manifest or load_workflow_manifest(
+        HERE, HERE / WORKFLOW_MANIFEST_FILENAME)
+    matched_sha = workflow['externalMatchedHelperSha256']
+    matched = imported(args.matched_helper, 'q30_cold_matched_owner', matched_sha)
     need(args.repo.resolve(strict=True) == matched.REPO.resolve(strict=True), 'repo role differs')
     variant = matched.load_variant('current', args.pointer)
     inputs = matched.inventory(args.repo, variant['snapshot']['files'], True)
@@ -78,7 +83,7 @@ def audit_inputs(args):
         'preparedAppStateSha256': matched.digest(json.dumps(app, sort_keys=True, separators=(',', ':')).encode()),
         'preparedInputIdentity': expected_app,
         'readerSha256': pin, 'hostRunnerSha256': variant['plan']['hostRunnerSha256'], 'pointerSha256': sha(args.pointer),
-        'matchedHelperSha256': MATCHED_SHA}
+        'matchedHelperSha256': matched_sha}
     return binding, variant, reader, matched
 
 def case_spec(seed):
@@ -86,17 +91,6 @@ def case_spec(seed):
         'path': 'circuitjs.html?lang=en&tsjNormalMode=cold&tsjNormalSeed=' + seed,
         'stateAttribute': 'data-tsj-q30-normal-state', 'reportAttribute': 'data-tsj-q30-normal-report',
         'expectedPrefix': 'SCREEN_DONE', 'terminalPrefixes': ['SCREEN_DONE'], 'timeoutSeconds': HOST_SECONDS}]}
-
-def workflow_pins():
-    manifest_path = HERE / 'cold77-candidate-manifest.json'
-    manifest = read(manifest_path)[0]
-    need(set(manifest['sources']) == {'cold77_batch.py', 'cold77_case_worker.py'}, 'workflow source set')
-    for name, pin in manifest['sources'].items():
-        need(sha(HERE / name) == pin['sha256'] and (HERE / name).stat().st_size == pin['size'], 'workflow source changed: ' + name)
-    for name, expected in (('serial_runner.py', '19931855b98aeb358f16dcbd94b6c69d81a221191bed2f07697a3ccdcffff5e6'),
-                           ('receipts.py', '5d0865564e39a33a679a7fe5adda0e3ba2c539ce5740034e0a495135619ab0a8')):
-        need(sha(HERE / name) == expected, 'workflow owner changed: ' + name)
-    return sha(manifest_path)
 
 def receipt_from_records(seed, binding, report, host, checked, host_exit, elapsed_ms, inputs_unchanged, errors):
     app = checked.get('app') or {}
@@ -134,8 +128,10 @@ def execute(args):
     destination = args.receipt
     need(destination.is_absolute() and destination.parent.is_dir() and not destination.exists(), 'receipt collision/path')
     root = destination.parent
-    workflow_before = workflow_pins()
-    before, variant, reader, matched = audit_inputs(args)
+    manifest_path = HERE / WORKFLOW_MANIFEST_FILENAME
+    workflow_before = sha(manifest_path)
+    workflow = load_workflow_manifest(HERE, manifest_path)
+    before, variant, reader, matched = audit_inputs(args, workflow)
     seed = args.root_seed
     need(seed in variant['plan']['coldOrder'], 'root not in frozen cohort')
     write_exclusive(root / 'input-audit-before.json', before)
@@ -166,8 +162,10 @@ def execute(args):
         errors.append(type(error).__name__ + ': ' + str(error))
     unchanged = False
     try:
-        after, _, _, _ = audit_inputs(args)
-        need(workflow_pins() == workflow_before, 'workflow binding changed')
+        after_workflow = load_workflow_manifest(HERE, manifest_path)
+        need(sha(manifest_path) == workflow_before and after_workflow == workflow,
+             'workflow binding changed')
+        after, _, _, _ = audit_inputs(args, after_workflow)
         write_exclusive(root / 'input-audit-after.json', after)
         unchanged = before == after
     except Exception as error:

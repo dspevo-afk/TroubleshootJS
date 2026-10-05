@@ -12,35 +12,43 @@ instruments, valid repair behavior and answer privacy remain required. The
 [current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
 older evidence packets describe their own historical candidates.
 
-## Future qualification workflow tools
+## Maintained Q30 qualification ownership and current gates
 
-`docs/task-evidence/Q30/qualification-workflow/` owns additive receipt validation,
-retained cold-evidence normalization and serial Windows command execution.
-Receipts bind source/HEAD/plan and keep application, host observation, operation
-and cleanup clocks separate. The read-only adapter verifies canonical source
-identity, source bytes, safe paths and maintained-reader bindings. The runner
-assigns suspended children to an owned kill-on-close job before resume, bounds
-logs/deadlines, preserves application metrics on host failure and stops on the
-first nonpass with remaining roots explicitly NOT_RUN. One shared15s cleanup
-deadline covers process/job shutdown, accounting drain and output-reader waits.
-Each reader owns its log flush/close; the caller never waits on a live reader's
-file lock. Readers still alive or failed at the deadline make cleanup fail.
-These helpers neither replace the electrical auditors nor alter frozen Q30
-inputs, acceptance limits or normal-player eligibility. Passive CPU experiments
-and unintegrated host drafts are retained as explicitly scoped diagnostic
-evidence; they do not change the qualification result.
+The Q30 workflow keeps three identities separate: the source snapshot for the
+1,355 C621 application inputs, the `cold77-candidate-manifest.json` pins for
+maintained helper and external matched-helper bytes, and the task-local phase
+manifest's `workflowSources` map. `receipts.load_workflow_manifest` validates
+the cold manifest. `qualify.py` validates the phase manifest, checks the selected
+phase's required source owners before and after execution, and accepts only a
+worker result bound to that phase, manifest and source binding. Helper hashes
+are captured from their actual frozen bytes rather than duplicated as constants
+inside each helper. The current source identity is
+`87bb04f707ccaf57f92c5d38fdbf4db199d63359c573725fd34bac61484226d7`; normal Q30
+registration remains false.
 
-`cold77_batch.py` and `cold77_case_worker.py` connect these maintained owners to
-the unchanged prepared original normal-screen host and strict scale reader.
-The audit-only entrypoint verifies frozen repository/app inventories plus its
-own pins. A fresh parent grant binds source/plan/manifest,77 roots and one finite
-quiet window. Native jobs own the serial cohort and per-root process trees.
-Atomic launch records fence the internal worker; first nonpass leaves later
-roots NOT_RUN. Completed raw reports can supply app-only diagnostics after an
-interruption, while missing host/source/cleanup proof remains failure. Final
-input audits, ordered all77 receipts,20–40 size coverage and in-time publication
-are required before a cold77 pass. Controller disk-I/O deadlines are cooperative;
-independent desktop release and complete Q30 acceptance remain separate gates.
+`serial_runner.run_command` owns Windows host phases in native process jobs;
+`serial_runner.run_serial` owns the ordered cold77 cohort. The shared
+`windows_process_identity.py` owns native process birth identity and handle-based
+cleanup. `cold77_batch.py` validates the cold manifest and the exact grant before
+launch; `cold77_case_worker.py` owns one guarded cohort member. The existing
+application auditors remain the electrical and scale oracles. Per-case receipt
+schema 1, electrical reader, seed order, and 90,000 ms / 640 / 5,000 ms limits
+remain unchanged.
+
+`private_qualification.py` prepares and builds only a private OS-temp copy and
+owns the private menu/archive phases. `audit_release.py` owns release checks;
+`visible_repair.py` owns headed repair evidence. The actual JDK 8/GWT 5 private
+build and source-only archive passed. Headed production preview20/30/40
+repair/retest passed through ordinary input with served-input/CLI/cleanup proof.
+The private menu gate failed on its second random Q30 launch; required replay,
+stale and complete privacy checks were not reached. Release remains BLOCKED
+because its audit finished after the approved window. Focused workflow88/88
+passed under23 exact source hashes. D37 receipts keep their historical binding;
+each C621 phase retains its actual manifest epoch. All1,355 compiler inputs,
+nine jars and357+6 compiled/deployment outputs were audited before reuse.
+No phase result alone enables normal Q30 publication. Complete private menu/
+replay/privacy, timely release adjudication and parent acceptance remain required.
+See [current evidence](task-evidence/Q30/qualification-workflow/simplification-20261005/README.md).
 
 ## Windows Quick Play preview lifecycle
 

@@ -1,4 +1,80 @@
-# Current checkpoint: Q30 fresh matrix and cold77 pass; independent release blocked
+# Current checkpoint: Q30 workflow delivered; acceptance blocked
+
+2026-10-05. Branch `codex/q30-multirail-qualification`; local checkpoint base
+`07a183b83e36ba0118a70294454c605dd6f4a42b`. Production candidate remains
+`c621b55d2b071e064d5afd383451d2715e35940d`, 1,355 unchanged inputs, identity
+`87bb04f707ccaf57f92c5d38fdbf4db199d63359c573725fd34bac61484226d7`.
+Documentation/qualification owners and tests only. Q30 DISABLED / NOT ACCEPTED;
+parent owns acceptance. U06/U07/Q60 unstarted; no push/publication/email,
+duplicate cold cohort, limit relaxation, global PC change or restart.
+
+Delivered shared native PID/birth identity, bounded Job Object host phases,
+strict current schema/source manifests and one named phase entrypoint with
+matching parent/worker provenance. Proved different native birth means the
+recorded instance is gone even when the new image is unknown; missing or
+ambiguous birth blocks. Case schema1/public save/replay/90s/640/5s unchanged.
+Post-drain overflow/errors now fail the host. Focused selected-host suite
+PASS88/88 in8.357s, zero failures/errors/skips; all23 tested source hashes
+unchanged. Five actual Windows host canaries pass. Read-only integrated review
+found no new source blocker; legacy run_serial CloseHandle return checking and
+CIM/CIM interval-equality semantics remain narrow nonblocking follow-ups.
+Final Astra/Ultra read-only review finds no new local-checkpoint blocker;
+23source/34staged/8untracked hashes verified. Its raw OS-temp reads were
+denied; root separately verified61 new packet raw pins and source reuse.
+
+Retained native83/append26/GWT5/compiled31/canaries/disabled-menu/cold77 PASS
+under consumed C621 source; final reuse audit verifies all production inputs,
+nine jars, exact private catalog delta and357+6 compiled/deployment files.
+Cold77 PASS77/77, worst85.003s under90s. Current native cold CLI default audit
+PASS with zero browsers/cases. Corrected release proves809 old instances gone
+and77 ports closed, but remains BLOCKED after the approved16:32:46.188302Z
+window. Old R5 and all earlier failures remain; no late timing PASS.
+
+Actual private JDK8/GWT5 build PASS87.495s. Private source-only archive PASS,
+exact1,355 members, SHA256 a0ec761b1d9686010cbf10a5370e6a4c2a23f568eeb5d3c13a608ffe6a8eaa19.
+Private headless menu FAIL:31 launches pass; second random Q30 launch reaches
+ERROR at91.616s/selected90,000ms, candidates0/1/max447 units. Failed seed
+UNKNOWN: replay field belongs to predecessor accepted board. One launch and
+all three replay/stale/full-privacy checks NOT RUN. Diagnostic message/notice
+logging added afterward is source-tested only, no new full menu PASS.
+Menu socket nonzero does not prove closure; final PS7 audit does. Tighten
+that predicate before accepting a future menu PASS. Final EOF-only cleanup
+passed fresh88 and retained-source audit; all original gate epochs retained.
+
+Headed native Edge UI10 PASS for20/30/40 seeds10387/10226/10014: unrepaired
+customer failure, real removal/Shop/tray/install, actual LOW/HIGH and FUNCTION
+VERIFIED; all40-part sensor combinations checked. LOW about2.16microvolts,
+HIGH11.980-11.983V. Driver265.501s/cleanup0.542s; durable outer CLI exit0,
+owned job zero/handles closed. All1,526 served inputs match before/after.
+Five exact screenshots inspected. Ordinary visible input, no controller or
+page.evaluate. Guided repair evidence; literal pre-injection healthy state/
+fresh post-completion removal/retest NOT RUN, automatic control refresh NOT
+PROVED. Completed retest is recorded by product. UI1-8 failures and UI9 tool
+transport/missing outer-exit proof preserved. General warm-player reliability
+not established; task-local browser timer/render flags recorded.
+
+Final scoped audit PASS155 recorded instances gone/11 task ports closed,
+including the final owned PS7 listener query; no termination or desktop-idle
+claim. Earlier socket10035 observations retained as inconclusive. Known byte
+audit PASS60 named raw artifacts/all8 original untracked files. One worker
+removed6 generated scratch directories without names/content inventories;
+their prior contents cannot be verified. Known fixture/log files remain.
+This limits preservation claims. Desktop sibling untouched. Executor probe
+passed17:35:17UTC after app update, no403/restart.
+
+Evidence: [final workflow packet](task-evidence/Q30/qualification-workflow/simplification-20261005/README.md),
+gate-summary/source hashes/raw pins/five screenshots. Restart roots retained:
+`qualification-simplification-20261005-r1`, `q30-simplification-final-d7iuck_h`,
+`q30-simplification-73agdh0f`, `q30-workflow-tests-60d350__`,
+`q30-cold-default-final-5osv6u0n` plus prior C621/cold roots. Local handoff lists
+exact files, commit, source epochs, paths and restart commands; one heavy gate
+at a time. Next: parent-coordinate Q30 failed launch identity/cause, complete
+menu/replay/privacy after a justified fix, adjudicate release timing and conduct
+independent acceptance. Normal Q30 remains disabled; U06/U07/Q60 unstarted.
+
+---
+
+# Historical checkpoint: Q30 fresh matrix and cold77 pass; independent release blocked
 
 2026-10-05. Branch `codex/q30-multirail-qualification`; actual gates consumed
 HEAD `c621b55d2b071e064d5afd383451d2715e35940d`, 1,355 inputs, source identity

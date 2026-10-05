@@ -12,6 +12,7 @@ import unittest
 
 import serial_runner
 from receipts import write_exclusive
+from windows_process_identity import identity_from_handle
 
 
 def utc():
@@ -60,13 +61,16 @@ class Result(unittest.TextTestResult):
 def main():
     work = Path(__file__).resolve().parent
     files = ["receipts.py", "serial_runner.py", "test_receipts.py", "test_serial_runner.py", "test_normalizer.py",
-             "normalize_cold_evidence.py", "test_serial_runner_held_pipe.py", Path(__file__).name]
+             "normalize_cold_evidence.py", "test_serial_runner_held_pipe.py", Path(__file__).name,
+             "windows_process_identity.py", "test_windows_process_identity.py", "test_host_phase.py",
+             "cold77_batch.py", "cold77_case_worker.py", "cold77-candidate-manifest.json", "test_cold77_batch.py",
+             "qualify.py", "test_qualify.py", "audit_release.py", "test_audit_release.py",
+             "visible_repair.py", "test_visible_repair.py", "private_qualification.py", "private_menu.py"]
     hashes = {name: hashlib.sha256((work/name).read_bytes()).hexdigest() for name in files}
     root = Path(tempfile.mkdtemp(prefix="q30-workflow-tests-"))
     k = serial_runner._api()
     k.GetCurrentProcess.restype = ctypes.c_void_p
-    image, created = serial_runner._identity(k, k.GetCurrentProcess(), Path(sys.executable).resolve(strict=True))
-    owner = {"pid": os.getpid(), "executable": image, "creationFileTimeTicks": created}
+    owner = identity_from_handle(k.GetCurrentProcess())
     start, t0 = utc(), time.monotonic()
     write_exclusive(root/"launch.json", {"schema": 1, "owner": owner, "startedUtc": start,
         "sourceHashes": hashes, "scope": "synthetic harness canaries, not electrical qualification",

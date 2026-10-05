@@ -15,11 +15,12 @@ import tempfile
 import time
 
 from cold77_case_worker import audit_inputs, imported, need, read, receipt_from_records, sha
-from receipts import LIMITS, summarize_cases, write_exclusive
+from receipts import (
+    LIMITS, WORKFLOW_MANIFEST_FILENAME, load_workflow_manifest,
+    summarize_cases, write_exclusive,
+)
 
 HERE = Path(__file__).resolve().parent
-RUNNER_SHA = '19931855b98aeb358f16dcbd94b6c69d81a221191bed2f07697a3ccdcffff5e6'
-RECEIPTS_SHA = '5d0865564e39a33a679a7fe5adda0e3ba2c539ce5740034e0a495135619ab0a8'
 STEP_MS, CLEANUP_MS, FINAL_MS, RELEASE_MS = 180000, 15000, 60000, 30000
 CONTROLLER_RECORD_MS = 5000
 OPERATION_MS = 77 * (STEP_MS + CLEANUP_MS) + FINAL_MS
@@ -51,21 +52,15 @@ def validate_grant(grant, manifest_sha, binding, now):
 
 
 def verify_candidate(args):
-    manifest_path = HERE / 'cold77-candidate-manifest.json'
-    manifest = read(manifest_path)[0]
-    need(manifest.get('schema') == 1 and manifest.get('limits') == LIMITS and
-         manifest.get('windowMs') == WINDOW_MS, 'candidate contract')
-    need(set(manifest['sources']) == {'cold77_batch.py', 'cold77_case_worker.py'}, 'candidate source set')
-    for name, pin in manifest['sources'].items():
-        path = HERE / name
-        need(path.is_file() and sha(path) == pin['sha256'] and path.stat().st_size == pin['size'], 'candidate changed: ' + name)
-    need(sha(HERE / 'serial_runner.py') == RUNNER_SHA and sha(HERE / 'receipts.py') == RECEIPTS_SHA,
-         'maintained process/receipt owner changed')
+    manifest_path = HERE / WORKFLOW_MANIFEST_FILENAME
+    manifest = load_workflow_manifest(HERE, manifest_path)
+    need(manifest['limits'] == LIMITS and manifest['windowMs'] == WINDOW_MS,
+         'candidate frozen limits/window differ')
     need(Path(sys.modules['receipts'].__file__).resolve(strict=True) == (HERE / 'receipts.py').resolve(strict=True),
          'receipts import escaped owner')
-    binding, variant, _, _ = audit_inputs(args)
+    binding, variant, _, _ = audit_inputs(args, manifest)
     need(binding == manifest['inputBinding'], 'candidate frozen inputs differ')
-    return sha(manifest_path), binding, variant
+    return sha(manifest_path), binding, variant, manifest
 
 
 def build_spec(args, binding, plan):
@@ -94,8 +89,7 @@ def full_result(summary, plan):
             'qualificationScope': 'Cold77 only; Q30 acceptance and normal-play enablement remain pending.'}
 
 
-def owned_batch(args):
-    manifest_sha, binding, variant = verify_candidate(args)
+def owned_batch(args, manifest_sha, binding, variant, manifest):
     root = args.batch_root
     grant = read(root / 'quiet-window-grant.json')[0]
     validate_grant(grant, manifest_sha, binding, datetime.now(timezone.utc))
@@ -110,14 +104,16 @@ def owned_batch(args):
     need((HERE / ('cold77-launch-used-' + sha(root / 'quiet-window-grant.json') + '.json')).is_file(),
          'owned batch grant not consumed')
     spec = read(root / 'batch-spec.json')[0]
-    expected = build_spec(args, audit_inputs(args)[0], variant['plan'])
+    expected = build_spec(args, audit_inputs(args, manifest)[0], variant['plan'])
     need(spec == expected, 'owned batch spec changed')
-    runner = imported(HERE / 'serial_runner.py', 'q30_cold77_serial_owner', RUNNER_SHA)
+    runner_sha = manifest['sources']['serial_runner.py']['sha256']
+    runner = imported(HERE / 'serial_runner.py', 'q30_cold77_serial_owner', runner_sha)
     summary = runner.run_serial(spec, root / 'sequence')
     result = full_result(summary, variant['plan'])
     try:
-        after_sha, after, _ = verify_candidate(args)
-        need(after_sha == manifest_sha and after == binding, 'final batch input binding changed')
+        after_sha, after, _, after_manifest = verify_candidate(args)
+        need(after_sha == manifest_sha and after == binding and after_manifest == manifest,
+             'final batch input binding changed')
         write_exclusive(root / 'input-audit-after.json', after)
     except Exception as error:
         result.update(qualified=False, status='FAIL_COLD77', inputAuditError=type(error).__name__ + ': ' + str(error))
@@ -166,7 +162,7 @@ def recover_rows(root, spec, variant=None, reader=None, binding=None, deadline=N
     return summarize_cases([row['rootSeed'] for row in spec['steps']], receipts)
 
 
-def controlled_launch(args, manifest_sha, binding, variant):
+def controlled_launch(args, manifest_sha, binding, variant, manifest):
     grant, _ = read(args.grant_json)
     validate_grant(grant, manifest_sha, binding, datetime.now(timezone.utc))
     # Hash canonical JSON, so the retained grant and the supplied grant bind
@@ -183,7 +179,8 @@ def controlled_launch(args, manifest_sha, binding, variant):
     argv = [str(args.host_python.resolve(strict=True)), '-B', str(HERE / 'cold77_batch.py'), '--owned-batch', '--batch-root', str(root)]
     for name in ('repo', 'pointer', 'matched_helper', 'host_python', 'deps'):
         argv.extend(['--' + name.replace('_', '-'), str(getattr(args, name).resolve(strict=True))])
-    runner = imported(HERE / 'serial_runner.py', 'q30_cold77_outer_owner', RUNNER_SHA)
+    runner_sha = manifest['sources']['serial_runner.py']['sha256']
+    runner = imported(HERE / 'serial_runner.py', 'q30_cold77_outer_owner', runner_sha)
     k, child, waited = runner._api(), None, None
     result = {'schema': 1, 'status': 'FAIL_BATCH_CONTROLLER', 'qualified': False,
               'candidateManifestSha256': manifest_sha, 'windowEndUtc': grant['windowEndUtc'],
@@ -259,11 +256,11 @@ def main(argv=None):
     args = parser.parse_args(argv)
     need(not args.launch or args.grant_json is not None, 'launch requires fresh parent grant')
     need(not args.owned_batch or args.batch_root is not None and not args.launch, 'internal batch arguments')
-    manifest_sha, binding, variant = verify_candidate(args)
+    manifest_sha, binding, variant, manifest = verify_candidate(args)
     if args.owned_batch:
-        return owned_batch(args)
+        return owned_batch(args, manifest_sha, binding, variant, manifest)
     if args.launch:
-        return controlled_launch(args, manifest_sha, binding, variant)
+        return controlled_launch(args, manifest_sha, binding, variant, manifest)
     print(json.dumps({'status': 'PASS_OFFLINE_INPUT_AUDIT', 'browserLaunched': False, 'casesLaunched': 0,
         'candidateManifestSha256': manifest_sha, 'inputBinding': binding, 'windowMs': WINDOW_MS,
         'spec': build_spec(args, binding, variant['plan'])}, indent=2))

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import contextlib
 import copy
+import hashlib
 import importlib
 import io
 import json
@@ -80,7 +81,7 @@ class Cold77BatchTests(unittest.TestCase):
         cls.binding = cls.fixtures["binding"]
         cls.matched = cls.worker.imported(
             cls.role_paths["matched_helper"], "q30_cold77_recovery_matched",
-            cls.worker.MATCHED_SHA,
+            cls.binding["matchedHelperSha256"],
         )
         cls.variant = cls.matched.load_variant("current", cls.role_paths["pointer"])
         if cls.variant["plan"] != cls.plan:
@@ -137,22 +138,71 @@ class Cold77BatchTests(unittest.TestCase):
         self.assertEqual(json.loads(raw.decode("utf-8")), self.fixtures[fixture_name]["report"])
         return raw
 
-    def _recover_missing_report_receipt(self, fixture_name):
+    def _historical_timeout_context(self, destination):
+        """Load the timeout's own retained D37 plan and exact bound inputs."""
+        archive = self.repo / "docs/task-evidence/Q30/epoch15-cold77-timeout-seed75/epoch15-cold77-timeout-seed75.tar.gz"
+        packet_path = self.repo / "docs/task-evidence/Q30/epoch15-cold77-timeout-seed75/packet-manifest.json"
+        packet = json.loads(packet_path.read_text(encoding="utf-8"))
+        with tarfile.open(archive, "r:gz") as packet_archive:
+            plan_raw = packet_archive.extractfile("task/frozen-scale-plan.json").read()
+            acceptance_portable = packet_archive.extractfile("task/continued-acceptance-plan.json").read()
+            snapshot_portable = packet_archive.extractfile("task/source-snapshot.json").read()
+
+        # The evidence packet stores normalized LF copies while retaining the
+        # original byte hashes. Reconstruct and verify those original bytes.
+        self.assertNotIn(b"\r", acceptance_portable)
+        self.assertNotIn(b"\r", snapshot_portable)
+        acceptance_raw = acceptance_portable.replace(b"\n", b"\r\n")
+        snapshot_raw = snapshot_portable.replace(b"\n", b"\r\n")
+        artifacts = {row["path"]: row for row in packet["artifacts"]}
+        plan = json.loads(plan_raw.decode("utf-8-sig"))
+        snapshot = json.loads(snapshot_raw.decode("utf-8-sig"))
+        self.assertEqual(hashlib.sha256(plan_raw).hexdigest(),
+                         artifacts["task/frozen-scale-plan.json"]["rawSha256"])
+        self.assertEqual(hashlib.sha256(acceptance_raw).hexdigest(),
+                         packet["plan"]["continuedPlanSha256"])
+        self.assertEqual(hashlib.sha256(acceptance_raw).hexdigest(),
+                         artifacts["task/continued-acceptance-plan.json"]["rawSha256"])
+        self.assertEqual(hashlib.sha256(snapshot_raw).hexdigest(),
+                         packet["source"]["snapshotSha256"])
+        self.assertEqual(snapshot["files"], plan["sourceFiles"])
+        self.assertEqual(len(snapshot["files"]), packet["source"]["inputs"])
+        self.assertEqual(snapshot["sourceIdentity"], plan["sourceIdentity"])
+        self.assertEqual(snapshot["baseHead"], plan["baseHead"])
+        self.assertEqual(plan["sourceIdentity"], packet["source"]["sourceIdentity"])
+        self.assertEqual(plan["baseHead"], packet["source"]["baseHead"])
+        self.assertEqual(hashlib.sha256(acceptance_raw).hexdigest(),
+                         plan["acceptancePlanSha256"])
+
+        acceptance_path = destination / "continued-acceptance-plan.json"
+        acceptance_path.write_bytes(acceptance_raw)
+        variant = {"plan": plan, "planRaw": plan_raw.decode("utf-8-sig"),
+                   "paths": {"acceptance": acceptance_path}}
+        binding = {"sourceIdentity": plan["sourceIdentity"],
+                   "baseHead": plan["baseHead"],
+                   "planSha256": hashlib.sha256(plan_raw).hexdigest()}
+        return variant, binding
+
+    def _recover_missing_report_receipt(self, fixture_name, *, variant=None,
+                                        reader=None, binding=None):
         raw = self._retained_report_bytes(fixture_name)
-        cold_order = self.plan["coldOrder"]
+        variant = self.variant if variant is None else variant
+        reader = self.reader if reader is None else reader
+        binding = self.binding if binding is None else binding
+        cold_order = variant["plan"]["coldOrder"]
         seeds = cold_order[cold_order.index("75"):]
         spec = {"steps": [{"rootSeed": seed} for seed in seeds]}
-        temp_root = Path(tempfile.mkdtemp(prefix="cold77-recover-offline-"))
-        batch_root = temp_root / "batch"
-        case = batch_root / "sequence/cases/001-seed-75"
-        report_path = case / "host-output/cases/001-cold-75.report.json"
-        report_path.parent.mkdir(parents=True)
-        report_path.write_bytes(raw)
-        recovered = self.batch.recover_rows(
-            batch_root, spec, variant=self.variant, reader=self.reader, binding=self.binding,
-        )
-        self.assertEqual(report_path.read_bytes(), raw)
-        return recovered
+        with tempfile.TemporaryDirectory(prefix="cold77-recover-offline-") as temp_root:
+            batch_root = Path(temp_root) / "batch"
+            case = batch_root / "sequence/cases/001-seed-75"
+            report_path = case / "host-output/cases/001-cold-75.report.json"
+            report_path.parent.mkdir(parents=True)
+            report_path.write_bytes(raw)
+            recovered = self.batch.recover_rows(
+                batch_root, spec, variant=variant, reader=reader, binding=binding,
+            )
+            self.assertEqual(report_path.read_bytes(), raw)
+            return recovered
 
     def test_build_spec_preserves_frozen_order_and_default_is_audit_only(self):
         seeds = self.plan["coldOrder"]
@@ -183,7 +233,7 @@ class Cold77BatchTests(unittest.TestCase):
             argv.extend((option, str(self.role_paths[role])))
         manifest_sha = "a" * 64
         with mock.patch.object(self.batch, "verify_candidate",
-                                return_value=(manifest_sha, self.binding, {"plan": self.plan})), \
+                                return_value=(manifest_sha, self.binding, {"plan": self.plan}, {})), \
              mock.patch.object(self.batch, "controlled_launch", side_effect=AssertionError("default launched")), \
              mock.patch.object(self.batch, "owned_batch", side_effect=AssertionError("default ran owned batch")), \
              contextlib.redirect_stdout(io.StringIO()) as stdout:
@@ -194,6 +244,28 @@ class Cold77BatchTests(unittest.TestCase):
         self.assertIs(default_result["browserLaunched"], False)
         self.assertEqual(default_result["casesLaunched"], 0)
         self.assertEqual(default_result["spec"], spec)
+
+    def test_verify_candidate_uses_one_validated_manifest_binding(self):
+        manifest = {
+            "schema": 2, "limits": copy.deepcopy(self.batch.LIMITS),
+            "windowMs": self.batch.WINDOW_MS,
+            "inputBinding": copy.deepcopy(self.binding),
+            "externalMatchedHelperSha256": self.binding["matchedHelperSha256"],
+            "sources": {},
+        }
+        variant = {"plan": self.plan}
+        with mock.patch.object(self.batch, "load_workflow_manifest",
+                               return_value=manifest), \
+             mock.patch.object(self.batch, "audit_inputs",
+                               return_value=(self.binding, variant, object(), object())), \
+             mock.patch.object(self.batch, "sha", return_value="a" * 64) as digest:
+            candidate_sha, binding, observed_variant, observed_manifest = \
+                self.batch.verify_candidate(self._build_args())
+        self.assertEqual(candidate_sha, "a" * 64)
+        self.assertEqual(binding, self.binding)
+        self.assertIs(observed_variant, variant)
+        self.assertIs(observed_manifest, manifest)
+        digest.assert_called_once()
 
     def test_window_math_is_exactly_15120000_milliseconds(self):
         self.assertEqual(self.batch.STEP_MS, 180000)
@@ -316,23 +388,46 @@ class Cold77BatchTests(unittest.TestCase):
         self.assertFalse(disagreeing_summary["qualified"])
 
     def test_interrupted_report_recovery_keeps_app_metrics_but_fails_and_preserves_bytes(self):
-        timeout = self._recover_missing_report_receipt("timeout")
-        timeout_case = timeout["rows"][0]["receipt"]
-        self.assertEqual(timeout["outcome"], "FAIL")
-        self.assertEqual(timeout_case["application"]["status"], "TIMEOUT")
-        self.assertEqual(timeout_case["application"]["elapsedMs"], 90221)
-        self.assertEqual(timeout_case["host"]["status"], "FAIL")
-        self.assertFalse(timeout_case["sourceInputsUnchanged"])
-        self.assertTrue(all(row["status"] == "NOT_RUN" for row in timeout["rows"][1:]))
+        with tempfile.TemporaryDirectory(prefix="cold77-historical-timeout-") as destination:
+            historical_variant, historical_binding = self._historical_timeout_context(Path(destination))
+            timeout = self._recover_missing_report_receipt(
+                "timeout", variant=historical_variant, binding=historical_binding)
+            timeout_case = timeout["rows"][0]["receipt"]
+            self.assertEqual(timeout["outcome"], "FAIL")
+            self.assertEqual(timeout_case["application"]["status"], "TIMEOUT")
+            self.assertEqual(timeout_case["application"]["elapsedMs"], 90221)
+            self.assertEqual(timeout_case["host"]["status"], "FAIL")
+            self.assertEqual(timeout_case["sourceInputsUnchanged"], False)
+            self.assertEqual(timeout_case["sourceIdentity"], historical_binding["sourceIdentity"])
+            self.assertTrue(all(row["status"] == "NOT_RUN" for row in timeout["rows"][1:]))
 
-        r5 = self._recover_missing_report_receipt("r5")
-        r5_case = r5["rows"][0]["receipt"]
-        self.assertEqual(r5["outcome"], "FAIL")
-        self.assertEqual(r5_case["application"]["status"], "PASS")
-        self.assertEqual(r5_case["application"]["elapsedMs"], 77899)
-        self.assertEqual(r5_case["host"]["status"], "FAIL")
-        self.assertFalse(r5_case["sourceInputsUnchanged"])
-        self.assertTrue(all(row["status"] == "NOT_RUN" for row in r5["rows"][1:]))
+        # The archived D37 timeout must fail when re-evaluated under the current
+        # C621 binding. Preserve the report's app clock without qualifying it.
+        current_epoch_timeout = self._recover_missing_report_receipt("timeout")
+        current_timeout_case = current_epoch_timeout["rows"][0]["receipt"]
+        self.assertEqual(current_epoch_timeout["outcome"], "FAIL")
+        self.assertEqual(current_timeout_case["application"]["status"], "FAIL")
+        self.assertEqual(current_timeout_case["application"]["elapsedMs"], 90221)
+        self.assertEqual(current_timeout_case["host"]["status"], "FAIL")
+        self.assertFalse(current_timeout_case["sourceInputsUnchanged"])
+        self.assertEqual(current_timeout_case["provenance"]["binding"], self.binding)
+        self.assertEqual(current_timeout_case["sourceIdentity"], self.binding["sourceIdentity"])
+        self.assertNotEqual(self.fixtures["timeout"]["report"]["sourceIdentity"],
+                            self.binding["sourceIdentity"])
+        self.assertTrue(all(row["status"] == "NOT_RUN"
+                            for row in current_epoch_timeout["rows"][1:]))
+
+        with tempfile.TemporaryDirectory(prefix="cold77-historical-r5-") as destination:
+            historical_variant, historical_binding = self._historical_timeout_context(Path(destination))
+            r5 = self._recover_missing_report_receipt(
+                "r5", variant=historical_variant, binding=historical_binding)
+            r5_case = r5["rows"][0]["receipt"]
+            self.assertEqual(r5["outcome"], "FAIL")
+            self.assertEqual(r5_case["application"]["status"], "PASS")
+            self.assertEqual(r5_case["application"]["elapsedMs"], 77899)
+            self.assertEqual(r5_case["host"]["status"], "FAIL")
+            self.assertFalse(r5_case["sourceInputsUnchanged"])
+            self.assertTrue(all(row["status"] == "NOT_RUN" for row in r5["rows"][1:]))
 
 
 if __name__ == "__main__":

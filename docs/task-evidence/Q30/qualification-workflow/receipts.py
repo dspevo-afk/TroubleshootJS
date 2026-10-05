@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import copy
+import hashlib
 import os
 from pathlib import Path
 import re
@@ -13,6 +14,24 @@ LIMITS = {"jobMillis": 90000, "sharedWork": 640, "activeOperationMillis": 5000}
 HASH64 = re.compile(r"[0-9a-f]{64}\Z")
 HASH40 = re.compile(r"[0-9a-f]{40}\Z")
 SEED = re.compile(r"-?(0|[1-9][0-9]*)\Z")
+WORKFLOW_MANIFEST_FILENAME = "cold77-candidate-manifest.json"
+WORKFLOW_SOURCE_NAMES = (
+    "cold77_batch.py",
+    "cold77_case_worker.py",
+    "serial_runner.py",
+    "receipts.py",
+    "windows_process_identity.py",
+)
+_WORKFLOW_MANIFEST_FIELDS = {
+    "schema", "inputBinding", "externalMatchedHelperSha256",
+    "limits", "sources", "windowMs",
+}
+_INPUT_BINDING_FIELDS = {
+    "sourceIdentity", "baseHead", "planSha256", "acceptancePlanSha256",
+    "repositoryInputs", "repositoryMapSha256", "preparedAppStateSha256",
+    "preparedInputIdentity", "readerSha256", "hostRunnerSha256",
+    "pointerSha256", "matchedHelperSha256",
+}
 
 
 class ReceiptError(ValueError):
@@ -60,6 +79,118 @@ def _timed_fields(obj: dict, name: str) -> None:
     if obj["elapsedMs"] is None:
         _need(isinstance(note, str) and bool(note.strip()),
               name + ".elapsedLimitations must explain an unrecorded time")
+
+
+def _manifest_json(raw: bytes, label: str) -> dict:
+    def pairs(rows):
+        value = {}
+        for key, item in rows:
+            _need(key not in value, f"{label} has a duplicate JSON key")
+            value[key] = item
+        return value
+
+    def reject_constant(value):
+        raise ReceiptError(f"{label} contains non-finite JSON value {value}")
+
+    try:
+        value = json.loads(raw.decode("utf-8-sig"), object_pairs_hook=pairs,
+                           parse_constant=reject_constant)
+    except (UnicodeError, json.JSONDecodeError) as exc:
+        raise ReceiptError(f"{label} is not valid UTF-8 JSON: {exc}") from exc
+    _need(type(value) is dict, f"{label} must be an object")
+    return value
+
+
+def load_workflow_manifest(root, manifest_path) -> dict:
+    """Validate the one current workflow manifest and every pinned local source.
+
+    Case receipts remain schema 1. This schema-2 manifest owns the cold runner,
+    worker, shared serial runner, receipt validator and exact process identity
+    helper pins, plus the external matched-helper pin and frozen input binding.
+    """
+    try:
+        root_path = Path(root).resolve(strict=True)
+        _need(root_path.is_dir(), "workflow root must be a directory")
+        supplied = Path(manifest_path)
+        if not supplied.is_absolute():
+            supplied = root_path / supplied
+        _need(not supplied.is_symlink(), "workflow manifest cannot be a symlink")
+        path = supplied.resolve(strict=True)
+        try:
+            path.relative_to(root_path)
+        except ValueError as exc:
+            raise ReceiptError("workflow manifest escaped its root") from exc
+        _need(path.name == WORKFLOW_MANIFEST_FILENAME,
+              "workflow manifest has an unexpected filename")
+        _need(path.is_file(), "workflow manifest must be a regular file")
+        raw = path.read_bytes()
+    except OSError as exc:
+        raise ReceiptError(f"workflow manifest is unavailable: {exc}") from exc
+
+    _need(0 < len(raw) <= 4 * 1024 * 1024,
+          "workflow manifest size is outside the supported range")
+    manifest = _manifest_json(raw, "workflow manifest")
+    _object(manifest, "workflow manifest", _WORKFLOW_MANIFEST_FIELDS)
+    _need(type(manifest["schema"]) is int and manifest["schema"] == 2,
+          "workflow manifest schema must be integer version 2")
+
+    helper_sha = manifest["externalMatchedHelperSha256"]
+    _need(isinstance(helper_sha, str) and HASH64.fullmatch(helper_sha) is not None,
+          "external matched-helper pin must be lowercase SHA-256")
+
+    binding = _object(manifest["inputBinding"], "inputBinding",
+                      _INPUT_BINDING_FIELDS)
+    for key in ("sourceIdentity", "planSha256", "acceptancePlanSha256",
+                "repositoryMapSha256", "preparedAppStateSha256", "readerSha256",
+                "hostRunnerSha256", "pointerSha256", "matchedHelperSha256"):
+        _need(isinstance(binding[key], str) and HASH64.fullmatch(binding[key]) is not None,
+              f"inputBinding.{key} must be lowercase SHA-256")
+    _need(isinstance(binding["baseHead"], str) and HASH40.fullmatch(binding["baseHead"]) is not None,
+          "inputBinding.baseHead must be a commit SHA")
+    _need(type(binding["repositoryInputs"]) is int and binding["repositoryInputs"] > 0,
+          "inputBinding.repositoryInputs must be a positive integer")
+    prepared = _object(
+        binding["preparedInputIdentity"], "inputBinding.preparedInputIdentity",
+        {"combinedSha256", "fileCount", "sourceFileCount", "sourceSha256",
+         "webFileCount", "webSha256"},
+    )
+    for key in ("combinedSha256", "sourceSha256", "webSha256"):
+        _need(isinstance(prepared[key], str) and HASH64.fullmatch(prepared[key]) is not None,
+              f"inputBinding.preparedInputIdentity.{key} must be lowercase SHA-256")
+    for key in ("fileCount", "sourceFileCount", "webFileCount"):
+        _need(type(prepared[key]) is int and prepared[key] >= 0,
+              f"inputBinding.preparedInputIdentity.{key} must be a nonnegative integer")
+    _need(binding["matchedHelperSha256"] == helper_sha,
+          "external matched-helper pin differs from inputBinding")
+
+    limits = _object(manifest["limits"], "workflow limits", set(LIMITS))
+    _need(all(type(limits[key]) is int for key in LIMITS) and limits == LIMITS,
+          "workflow manifest changed the frozen 90000/640/5000 limits")
+    _need(type(manifest["windowMs"]) is int and manifest["windowMs"] > 0,
+          "workflow manifest windowMs must be a positive integer")
+
+    sources = _object(manifest["sources"], "workflow sources",
+                      set(WORKFLOW_SOURCE_NAMES))
+    for name in WORKFLOW_SOURCE_NAMES:
+        pin = _object(sources[name], f"workflow source {name}", {"sha256", "size"})
+        _need(isinstance(pin["sha256"], str) and HASH64.fullmatch(pin["sha256"]) is not None,
+              f"workflow source {name} sha256 is malformed")
+        _need(type(pin["size"]) is int and pin["size"] > 0,
+              f"workflow source {name} size must be positive")
+        source = root_path / name
+        _need(not source.is_symlink() and source.is_file(),
+              f"workflow source {name} must be a regular file")
+        try:
+            resolved = source.resolve(strict=True)
+            resolved.relative_to(root_path)
+            source_bytes = resolved.read_bytes()
+        except (OSError, ValueError) as exc:
+            raise ReceiptError(f"workflow source {name} escaped or is unavailable") from exc
+        _need(len(source_bytes) == pin["size"] and
+              hashlib.sha256(source_bytes).hexdigest() == pin["sha256"],
+              f"workflow source pin changed: {name}")
+
+    return copy.deepcopy(manifest)
 
 
 def validate_case(receipt: dict) -> str:

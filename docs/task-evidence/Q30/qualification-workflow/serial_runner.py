@@ -17,6 +17,7 @@ import time
 from datetime import datetime, timezone
 
 from receipts import LIMITS, ReceiptError, summarize_cases, validate_case, write_exclusive
+from windows_process_identity import identity_from_handle
 
 try:
     import _winapi
@@ -186,15 +187,12 @@ def _active(k, job):
 
 
 def _identity(k, handle, expected):
-    name, length = ctypes.create_unicode_buffer(32768), wintypes.DWORD(32768)
-    if not k.QueryFullProcessImageNameW(handle, 0, name, ctypes.byref(length)):
-        raise _error("QueryFullProcessImageNameW")
-    actual = Path(name.value[:length.value]).resolve(strict=True)
-    _need(os.path.normcase(str(actual)) == os.path.normcase(str(expected)), "created image differs from executable")
-    times = [_FILETIME() for _ in range(4)]
-    if not k.GetProcessTimes(handle, *(ctypes.byref(x) for x in times)):
-        raise _error("GetProcessTimes")
-    return str(actual), (int(times[0].high) << 32) | int(times[0].low)
+    # Read the exact retained child handle; the shared owner defines precision.
+    observed = identity_from_handle(handle)
+    actual = Path(observed["executable"]).resolve(strict=True)
+    _need(os.path.normcase(str(actual)) == os.path.normcase(str(expected)),
+          "created image differs from executable")
+    return str(actual), observed["creationFileTimeTicks"]
 
 
 class _Drain:
@@ -574,3 +572,65 @@ def run_serial(spec, new_os_temp_root):
         "serial": True, "stoppedAtFirstFailure": len(results) < len(steps) or summary["outcome"] != "PASS"})
     write_exclusive(root / "sequence-summary.json", summary)
     return summary
+
+
+def run_command(argv, new_os_temp_root, timeout_ms):
+    """One bounded owned host phase; application case caps remain in run_serial."""
+    k = _api()
+    _need(type(argv) is list and 1 <= len(argv) <= 128 and
+          all(isinstance(a, str) and a and not any(ord(c) < 32 for c in a) for a in argv),
+          "host phase argv invalid")
+    exe = _executable(k, argv[0])
+    _need(type(timeout_ms) is int and 0 < timeout_ms <= 1200000, "host phase timeout outside supported range")
+    _need(len(subprocess.list2cmdline(argv)) < 32767, "host command exceeds Windows limit")
+    root = Path(new_os_temp_root)
+    _need(root.is_absolute(), "host phase root must be absolute")
+    temp = Path(tempfile.gettempdir()).resolve(strict=True)
+    _check_chain(k, root.parent, temp)
+    _need(root.parent.resolve(strict=True).is_relative_to(temp), "host phase root must be under OS temp")
+    _need(_attrs(k, root) is None, "host phase output already exists")
+    root.mkdir(exist_ok=False)
+    started, child = _utc(), None
+    result = {"schema": 1, "status": "FAIL", "scope": "owned host phase; no application measurements",
+              "startedUtc": started, "deadlineMs": timeout_ms, "command": argv}
+    try:
+        child = _spawn(k, {"executable": exe}, argv, root)
+        write_exclusive(root / "launch.json", {"schema": 1, "startedUtc": started,
+            "process": {"pid": child["pid"], "executable": child["image"],
+                        "creationFileTimeTicks": child["creationTicks"], "birthPrecision": "NATIVE_100NS"},
+            "deadlineMs": timeout_ms, "commandSha256": child["commandSha256"]})
+        waited = _wait(k, child, timeout_ms)
+        reason = waited["reason"]
+        # Drain completion may discover overflow after the process wait returned.
+        # A successful child exit never blesses output beyond the retained cap.
+        if any(d.overflow.is_set() for d in child["drains"]):
+            reason = reason or "stdout/stderr exceeded 1 MiB"
+        if any(d.errors or d.thread.is_alive() or not d.streamClosed for d in child["drains"]):
+            reason = reason or "stdout/stderr reader did not finish cleanly"
+        result.update(status="PASS" if reason is None and waited["exitCode"] == 0 else "FAIL",
+            process={"pid": child["pid"], "executable": child["image"],
+                     "creationFileTimeTicks": child["creationTicks"], "birthPrecision": "NATIVE_100NS"},
+            operation={"elapsedMs": waited["operationElapsedMs"], "exitCode": waited["exitCode"],
+                       "reason": reason}, cleanup=waited["cleanup"],
+            logs={name: {"bytes": d.count, "overflow": d.overflow.is_set(), "errors": d.errors,
+                         "readerAlive": d.thread.is_alive(), "streamClosed": d.streamClosed}
+                  for name, d in zip(("stdout", "stderr"), child["drains"])})
+    except SpawnError as exc:
+        result.update(reason=str(exc), cleanup=exc.cleanup)
+    except Exception as exc:
+        result["reason"] = f"{type(exc).__name__}: {exc}"
+        if child:
+            child["job"], result["cleanup"] = _stop(k, child["job"], child["proc"], True,
+                                                  child["pid"], drains=child["drains"])
+    finally:
+        if child:
+            failures = []
+            for key in ("job", "thread", "proc"):
+                if child[key] and not k.CloseHandle(child[key]):
+                    failures.append(key)
+            result["handlesClosed"] = not failures
+            if failures:
+                result.update(status="FAIL", handleCloseFailures=failures)
+    result["finishedUtc"] = _utc()
+    write_exclusive(root / "host-result.json", result)
+    return result

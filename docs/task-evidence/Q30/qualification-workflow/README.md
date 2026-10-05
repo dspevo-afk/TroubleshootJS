@@ -1,34 +1,81 @@
-# Future qualification receipt and serial execution workflow
+# Q30 qualification workflow
 
-The next cohort entrypoint is `cold77_batch.py`; default execution audits only.
-`cold77_case_worker.py` calls the unchanged original prepared host and strict
-reader under the existing serial owner. The candidate manifest binds the exact
-helper bytes and frozen input identity. [Final offline preparation, runtime
-allocation and limits](cold77-preparation-r1/README.md) records seven regressions,
-actual synthetic process canaries and remaining selected-host/full acceptance
-gates. A future launch requires a fresh parent grant; no live grant exists.
+## Current source and eligibility
 
-Audit command: `python -B cold77_batch.py --repo <repo> --pointer <retained-pointer>
---matched-helper <pinned-loader> --host-python <physical-python> --deps <task-deps>`.
-The workspace `cold77-qualified-batch/test-roles.json` and checkpoint handoff
-retain exact paths. Add `--launch --grant-json <fresh-grant>` only after parent
-authorization and quiet-window allocation. Grant fields: schema1,
-kind `Q30_COLD77_SERIAL_QUALIFICATION`, parentReference, candidateManifestSha256,
-sourceIdentity, planSha256, unchanged limits, integer rootCount77, UTC-Z
-notBeforeUtc/windowEndUtc exactly4h12m apart. A consumed canonical grant cannot
-run twice. Acceptance of a controller result also requires its separate in-time
-controller-publication receipt, successful exit and independent desktop release.
-Do not use the R5 diagnostic or synthetic canary receipts as qualification.
+The current C621 source snapshot binds base `c621b55d2b071e064d5afd383451d2715e35940d`,
+source identity `87bb04f707ccaf57f92c5d38fdbf4db199d63359c573725fd34bac61484226d7`,
+snapshot SHA-256 `6fd6544fc12df1f1817452f56ee6fd43ceb177d0d08ea26c75f1b0c476b20fc3`,
+and 1,355 raw application inputs; that inventory is unchanged. Normal Q30
+registration remains false. Q30 is **NOT ACCEPTED and disabled**.
 
-Q30 is **NOT ACCEPTED and disabled**. These additive tools do not enable it or
-replace the maintained qualification auditors. Original77 roots/308 candidates,
-90,000ms cumulative application time,640 work units and5,000ms active/coordinator
-limits remain unchanged. U06/U07/Q60 remain unstarted.
+The maintained [`cold77-candidate-manifest.json`](cold77-candidate-manifest.json)
+is schema 2, SHA-256
+`4079468809f5569abe0c3632ff389751d7d6835d4deebeb1ae6234cc78bff25a`. It binds
+the current input identity and the external matched helper to the exact bytes of
+`cold77_batch.py`, `cold77_case_worker.py`, `serial_runner.py`, `receipts.py`, and
+`windows_process_identity.py`. `receipts.load_workflow_manifest(root,
+manifest_path)` validates that binding. Per-case receipts remain schema 1 with
+the existing electrical reader, frozen seed order, and 90,000 ms / 640 / 5,000 ms
+limits. No threshold or cohort size changed.
 
-Dave explicitly authorized these future harness improvements after the cold
-qualification failure. They live outside its frozen1,354-input inventory. Final
-source identity is `a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51`
-at base `d37c3b3b8581abdeaa9b88b7bfb2349cff958d31`.
+The actual private JDK8/GWT5 build PASS87.495s and1,355-member source archive
+PASS_SOURCE_ARCHIVE_ONLY. Headed native Edge UI10 PASS for real20/30/40 guided
+repair/customer retest, with full1,526 served-input hashes, durable outerCLI0,
+cleanup and five inspected screenshots. Final selected-host workflow PASS88/88
+under23 exact source hashes. Final reuse audit confirms unchanged public/private
+compiler inputs, nine jars and357+6 compiled/deployment files.
+
+Q30 acceptance is blocked. The private menu gate passed31 launches then failed
+on the second random RB30 launch (ERROR91.616s, selected90,000ms budget).
+Failed seed UNKNOWN; its retained replay is the predecessor accepted request.
+Remaining launch and all required replay/stale/full-privacy checks NOT RUN.
+Subsequent diagnostic logging is source-tested only. Release proves809 old
+instances absent/77 ports closed but remains BLOCKED after the approved
+16:32:46.188302Z quiet end. No cold rerun or changed application limit.
+See [final checkpoint packet](simplification-20261005/README.md) for exact
+epochs, limits, remaining gates and preservation uncertainty: six removed
+scratch directories have no prior content inventory, though60 named raw pins
+and all8 original untracked files are byte-verified.
+
+## Maintained entrypoints and ownership
+
+`qualify.py` is the phase entrypoint. Each invocation runs one named phase from
+`audit-retained`, `release`, `private-prepare`, `private-build`, `private-menu`,
+`private-archive`, or `visible`. Its schema-1 local run manifest binds the C621
+`sourceSnapshot`, `sourceBinding`, tools, retained evidence, and an exact
+`workflowSources` SHA-256 map. The map is frozen from the actual helper bytes;
+the selected phase requires its own owners plus shared runner/receipt/process
+owners. The dispatcher checks these pins before and after execution and accepts
+a worker result only when its phase, manifest hash, and source binding match.
+This helper map is separate from the 1,355-file source snapshot and from the
+cold candidate manifest; helper files do not carry duplicate hard-coded hashes.
+
+The dispatcher obtains `tools.python` from that local manifest. It must be the
+selected physical Python 3.13 executable, not the Windows Store alias or an
+ambient `sys.executable`. `serial_runner.run_command` owns host phases in native
+Windows jobs; `run_serial` owns the ordered cold77 cohort. The shared process
+identity owner records native process birth identity and handle-based cleanup.
+`private_qualification.py` prepares, builds, checks the menu, and archives only
+an OS-temp private copy; it does not enable Q30 in the checkout. `audit_release.py`
+owns release checks, while `visible_repair.py` owns the headed repair flow.
+
+Run a single phase from the repository root, using the exact physical executable
+and frozen manifest paths already recorded in the task:
+
+```powershell
+& '<manifest tools.python: physical Python 3.13>' -B docs/task-evidence/Q30/qualification-workflow/qualify.py `
+  --manifest '<frozen local run manifest>' --phase private-build `
+  --output '<new direct child of the manifest OS-temp root>'
+```
+
+The output directory must be new and a direct child of the manifest’s task
+OS-temp root. A result applies only to its named phase; every other phase remains
+`NOT_RUN`. The separate `cold77_batch.py` entrypoint audits by default. A cold
+launch still requires a fresh exact parent grant and the unchanged quiet-window
+reserve. Historical task-local copies of cold runners and release wrappers are
+retained as evidence, not current commands.
+
+## Receipt contract and historical evidence
 
 `receipts.py` requires separate application, host observation, operation and
 cleanup fields. Application time comes from the solver-backed report; a host
@@ -37,6 +84,16 @@ Missing measurements carry null with an explicit limitation where applicable.
 Exact seed order, source/HEAD/plan binding and original caps are required;
 omitted roots appear as NOT_RUN and make the sequence incomplete. Writes create
 new files exclusively. A summary owns a deep copy of its receipts.
+
+### Historical D37 cold77 cohort — not the current C621 result
+
+The following cold evidence belongs to base `d37c3b3b8581abdeaa9b88b7bfb2349cff958d31`,
+source identity `a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51`,
+and 1,354 inputs. It remains preserved as historical evidence and must not be
+re-evaluated under the C621 binding. The old raw R5 diagnostic remains BLOCKED.
+At that D37 checkpoint, the user authorized future runner and harness changes
+outside the frozen 1,354-input application inventory. That scope did not certify
+the current C621 helpers or replace fresh phase evidence.
 
 `normalize_cold_evidence.py` reads retained original fixtures, checks canonical
 source identity, all source bytes, safe contained paths and maintained reader
@@ -66,7 +123,11 @@ not independently implement the electrical oracle or grant execution authority.
 Missing cleanup proof remains failure even when emergency owned-job termination
 succeeds. Valid application measurements survive an outer host failure.
 
-Validation on the actual selected bundled CPython3.12.14 Windows implementation:
+### Historical D37 process and harness evidence
+
+The following results apply to the D37 process-helper version and its selected
+bundled CPython 3.12.14 Windows implementation; they are not current C621 phase
+results:
 
 - Historical baseline PASS36/36:22 receipt tests, five normalizer rejection fixtures and nine process
   tests. Test body1.992s, operation2.000s, no skips/errors/failures. Real canaries
@@ -82,17 +143,17 @@ Validation on the actual selected bundled CPython3.12.14 Windows implementation:
 - Independent static review PASS limited to receipt/normalizer source and path
   guards. Agent implementation was reviewed by root and actually executed here.
 
-Current shared-deadline correction: PASS39/39 (22 receipts/five normalizer/
+The historical shared-deadline correction passed39/39 (22 receipts/five normalizer/
 12 actual Windows process tests), operation5.421s; outer5.562s/cleanup0.031s.
 Real duplicated-writer pipe and stalled-sink negatives preserve application
 measurements, return within the shortened1.5s test deadline and report remaining
 root NOT_RUN. Fixtures then release their exact owned handles and prove readers
 exit. No production budget was changed. The original36-test packet below is
-historical source; the current runner hash is
+from an earlier source version; the runner hash at that historical checkpoint is
 `19931855b98aeb358f16dcbd94b6c69d81a221191bed2f07697a3ccdcffff5e6`.
 [New source/test/resource evidence](../epoch15-root75-phase-and-harness-review/README.md)
-preserves that distinction and the earlier failures. The current batch includes
-the three new tests. All1,354 application/host inputs remain unchanged.
+preserves that distinction and the earlier failures. That historical batch
+included the three additional tests and bound 1,354 D37 application/host inputs.
 
 All fixtures and the early failure remain retained. The portable91-member
 [canary packet](canary-evidence.tar.gz) has SHA256
@@ -103,7 +164,10 @@ record1,354 unchanged application inputs and process results. Personal local
 path prefixes are replaced by labeled placeholders only in the portable copy.
 Retained raw task roots remain authoritative.
 
-Run the same small harness batch from the repository with:
+### Historical D37 synthetic-harness invocation and handoff
+
+The command below belongs to the retained D37 synthetic harness packet. It is
+not the current `qualify.py` phase entrypoint:
 
 ```text
 python -B docs/task-evidence/Q30/qualification-workflow/run_workflow_tests.py
@@ -113,10 +177,12 @@ The batch retains a fresh OS-temp launch/result record and every canary fixture.
 It reports the planned120s batch budget; per-child execution/cleanup bounds are
 enforced by the runner. A supported Windows Python is required. This is synthetic
 harness validation, never electrical qualification or visible player-input QA.
-No unchanged application rebuild was repeated after this docs/tool addition:
-all1,354 previously consumed inputs were rehashed and match final gate evidence.
+At that packet checkpoint, no unchanged application rebuild was repeated after
+the docs/tool addition; all1,354 previously consumed inputs were rehashed and
+matched that packet's final gate evidence.
 
-Required Q30 blockers remain the fresh full cold77 failure, private enabled gates
-and supported visible20/30/40 diagnosis/repair/retest. Root75's four matched
-diagnostics do not explain its failed cold run or establish cohort acceptance.
-Parent acceptance review remains pending. No push, publication or email.
+At the D37 packet handoff, recorded Q30 blockers were the fresh full cold77
+failure, private enabled gates and supported visible20/30/40 diagnosis/repair/retest.
+Root75's four matched diagnostics did not explain its failed cold run or establish
+cohort acceptance. This is historical handoff status, not the current C621 gate
+summary.

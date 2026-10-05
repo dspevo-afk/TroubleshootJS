@@ -1,0 +1,335 @@
+{
+  "schema": 1,
+  "freezeUtc": "2026-10-05T18:19:16.787544+00:00",
+  "checkpointBase": "07a183b83e36ba0118a70294454c605dd6f4a42b",
+  "consumedProductionHead": "c621b55d2b071e064d5afd383451d2715e35940d",
+  "sourceIdentity": "87bb04f707ccaf57f92c5d38fdbf4db199d63359c573725fd34bac61484226d7",
+  "sourceSnapshotSha256": "6fd6544fc12df1f1817452f56ee6fd43ceb177d0d08ea26c75f1b0c476b20fc3",
+  "currentRunManifestSha256": "c3fd2c2b5f78b985da8102f539c45327049f26e07d882405f0c084b3ed4defc4",
+  "coldCandidateManifestSha256": "4079468809f5569abe0c3632ff389751d7d6835d4deebeb1ae6234cc78bff25a",
+  "overallAcceptance": "NOT_ACCEPTED",
+  "normalQ30Enabled": false,
+  "nextUnstartedRoadmapMilestone": "Q30 acceptance; U06/U07/Q60 unstarted",
+  "gates": [
+    {
+      "gate": "workflow88",
+      "status": "PASS",
+      "testsRun": 88,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "operationSeconds": 8.356685400009155,
+      "sourceFiles": 23,
+      "consumedSourcesUnchanged": true,
+      "scope": "Focused Windows job/process/receipt/provenance/inventory checks; not electrical qualification."
+    },
+    {
+      "gate": "retained-production-matrix",
+      "status": "PASS_REUSED_AFTER_EXACT_INPUT_AUDIT",
+      "scope": "Native83+append26, shipping and isolated GWT5, compiled31, four compiled canaries, disabled-menu30/replay/privacy and cold77 remain the consumed C621 evidence; no heavy rerun after workflow-only edits.",
+      "priorPacket": "../final-regression-20261005/README.md",
+      "coldCases": 77,
+      "worstColdApplicationMs": 85003,
+      "limits": {
+        "elapsedMs": 90000,
+        "workUnits": 640,
+        "activeOperationMs": 5000
+      }
+    },
+    {
+      "gate": "audit-retained",
+      "status": "PASS",
+      "manifestSha256": "c3fd2c2b5f78b985da8102f539c45327049f26e07d882405f0c084b3ed4defc4",
+      "workerStatus": "PASS",
+      "outerCliExitCode": 0,
+      "operationMilliseconds": 1324,
+      "cleanupMilliseconds": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "result": "U2/audit-retained-r4/phase.json",
+      "outerCli": "U2/cli-audit-retained-r4.json"
+    },
+    {
+      "gate": "cold-cli-default",
+      "status": "PASS_OFFLINE_INPUT_AUDIT",
+      "browserLaunched": false,
+      "casesLaunched": 0,
+      "candidateManifestSha256": "4079468809f5569abe0c3632ff389751d7d6835d4deebeb1ae6234cc78bff25a",
+      "operationMilliseconds": 1365,
+      "cleanupMilliseconds": 0,
+      "scope": "Audit only; no fresh grant or cohort."
+    },
+    {
+      "gate": "cold-release",
+      "status": "BLOCKED",
+      "operationMilliseconds": 1397,
+      "counts": {
+        "absent": 809,
+        "casesCleanupVerified": 77,
+        "liveExactMatches": 0,
+        "portsClosed": 77,
+        "recordedInstances": 809,
+        "recordedPorts": 77,
+        "unresolved": 0
+      },
+      "blockers": [
+        "audit finished after the approved quiet-window end"
+      ],
+      "quietEndUtc": "2026-10-05T16:32:46.188302Z",
+      "scope": "All809 old instances absent and77 ports closed; late observation is not an in-window release PASS."
+    },
+    {
+      "gate": "private-build",
+      "status": "PASS",
+      "operationSeconds": 87.495,
+      "compiledFiles": 357,
+      "deploymentFiles": 6,
+      "compiledInventorySha256": "1e2970745ac3f1248fc13bc40b2b040556352e5157817dfdac919f4db800f23e",
+      "manifestSha256": "19c87fdeda9374957a078813251284af5be4deca53182e0edb3ff4074ee6d5d0",
+      "scope": "Actual JDK8/GWT5 through scripts/build.ps1, private single-catalog-delta app; current production inputs/output verified unchanged."
+    },
+    {
+      "gate": "private-menu",
+      "status": "FAIL",
+      "plannedLaunches": 33,
+      "observedLaunches": 32,
+      "passedLaunches": 31,
+      "failedLaunches": 1,
+      "notRunLaunches": 1,
+      "failedFamily": "RB30_CONTROL",
+      "failedOrdinal": 1,
+      "screen": "ERROR",
+      "hostObservationSeconds": 91.61596500000451,
+      "selectedApplicationBudgetMs": 90000,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "maxObservedUnits": 447,
+      "failedLaunchSeed": "UNKNOWN_NOT_CAPTURED",
+      "failureReplayRole": "PREDECESSOR_ACCEPTED_REQUEST; not failed seed",
+      "threeReplayChecks": "NOT_RUN",
+      "staleReplayCheck": "NOT_RUN",
+      "completePrivacyGate": "NOT_RUN",
+      "laterDiagnosticLoggingLiveGate": "NOT_RUN",
+      "scope": "Real private-enabled headless gate failed; no retry to obtain PASS; logging addition source-tested only.",
+      "manifestSha256": "5cba352892f1da9d596877954f72221e3f7de703a586133c43beac735aeb0177",
+      "workerStatus": "FAIL",
+      "outerCliExitCode": 1,
+      "operationMilliseconds": 331691,
+      "cleanupMilliseconds": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "result": "U2/private-menu-r1/phase.json",
+      "outerCli": "U2/cli-private-menu-r1.json"
+    },
+    {
+      "gate": "private-source-archive",
+      "status": "PASS_SOURCE_ARCHIVE_ONLY",
+      "operationSeconds": 2.689,
+      "members": 1355,
+      "sha256": "a0ec761b1d9686010cbf10a5370e6a4c2a23f568eeb5d3c13a608ffe6a8eaa19",
+      "jarsIncluded": false,
+      "scope": "private-enabled 1,355-input source archive; not Q30 acceptance",
+      "manifestSha256": "d52770b52d79993790a46cda41b7005d551f9ba60748eb5bf8b41caa6efc239b",
+      "workerStatus": "PASS",
+      "outerCliExitCode": 0,
+      "operationMilliseconds": 2898,
+      "cleanupMilliseconds": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "result": "U2/private-archive-r1/phase.json",
+      "outerCli": "U2/cli-private-archive-r1.json"
+    },
+    {
+      "gate": "headed-visible20-30-40",
+      "status": "PASS",
+      "operationSeconds": 265.501,
+      "driverCleanupSeconds": 0.542,
+      "headed": true,
+      "headless": false,
+      "pageEvaluateUsed": false,
+      "gameFunctionsCalled": false,
+      "syntheticDispatchUsed": false,
+      "inputBefore": {
+        "status": "PASS",
+        "fileCount": 1526,
+        "totalBytes": 59144231,
+        "sha256": "ce3fb2eb4aa54e327b6ff5ae2a83f7d4fb2b6f483d4c18bfb1d5a06004f102d5",
+        "evidence": "input-before.json"
+      },
+      "inputAfter": {
+        "status": "PASS",
+        "fileCount": 1526,
+        "totalBytes": 59144231,
+        "sha256": "ce3fb2eb4aa54e327b6ff5ae2a83f7d4fb2b6f483d4c18bfb1d5a06004f102d5",
+        "evidence": "input-after.json"
+      },
+      "cases": [
+        {
+          "seed": "10387",
+          "packages": 20,
+          "status": "PASS",
+          "ticketPreparationObservationSeconds": 22.827,
+          "unrepairedRetest": "FAIL_EXPECTED",
+          "repairedRetest": "FUNCTION VERIFIED",
+          "replacementTrayLabel": "Part 21 - 5 V coil / SPDT / 24 V DC, 0.5 A contacts",
+          "readings": {
+            "Set sensor A LOW/JOA": {
+              "display": "2.16 μV",
+              "volts": 2.16e-06
+            },
+            "Set sensor A HIGH/JOA": {
+              "display": "11.983 V",
+              "volts": 11.983
+            }
+          },
+          "postCompletionRoundtrip": "NOT_RUN_NO_FRESH_HEALTHY_TO_FAULT_SEQUENCE"
+        },
+        {
+          "seed": "10226",
+          "packages": 30,
+          "status": "PASS",
+          "ticketPreparationObservationSeconds": 35.82,
+          "unrepairedRetest": "FAIL_EXPECTED",
+          "repairedRetest": "FUNCTION VERIFIED",
+          "replacementTrayLabel": "Part 31 - Generic silicon diode",
+          "readings": {
+            "Set sensor A LOW/JOA": {
+              "display": "2.16 μV",
+              "volts": 2.16e-06
+            },
+            "Set sensor A HIGH/JOA": {
+              "display": "11.983 V",
+              "volts": 11.983
+            }
+          },
+          "postCompletionRoundtrip": "NOT_RUN_NO_FRESH_HEALTHY_TO_FAULT_SEQUENCE"
+        },
+        {
+          "seed": "10014",
+          "packages": 40,
+          "status": "PASS",
+          "ticketPreparationObservationSeconds": 87.52,
+          "unrepairedRetest": "FAIL_EXPECTED",
+          "repairedRetest": "FUNCTION VERIFIED",
+          "replacementTrayLabel": "Part 41 - 10000 Ohm +/-5%",
+          "readings": {
+            "Set both sensors LOW/JOA": {
+              "display": "2.16 μV",
+              "volts": 2.16e-06
+            },
+            "Set both sensors LOW/JOB": {
+              "display": "2.16 μV",
+              "volts": 2.16e-06
+            },
+            "Set sensor A HIGH, B LOW/JOA": {
+              "display": "11.983 V",
+              "volts": 11.983
+            },
+            "Set sensor A HIGH, B LOW/JOB": {
+              "display": "2.159 μV",
+              "volts": 2.1589999999999996e-06
+            },
+            "Set sensor A LOW, B HIGH/JOA": {
+              "display": "2.159 μV",
+              "volts": 2.1589999999999996e-06
+            },
+            "Set sensor A LOW, B HIGH/JOB": {
+              "display": "11.983 V",
+              "volts": 11.983
+            },
+            "Set both sensors HIGH/JOA": {
+              "display": "11.98 V",
+              "volts": 11.98
+            },
+            "Set both sensors HIGH/JOB": {
+              "display": "11.98 V",
+              "volts": 11.98
+            }
+          },
+          "postCompletionRoundtrip": "NOT_RUN_NO_FRESH_HEALTHY_TO_FAULT_SEQUENCE"
+        }
+      ],
+      "screenshotsInspected": 5,
+      "scope": "Actual production preview/native headed Edge, visible ordinary input; guided repair and LOW/HIGH/customer retest. Not blind diagnosis, CDP wrapper certification, automatic physical-control refresh or literal pre-injection healthy state.",
+      "manifestSha256": "d52770b52d79993790a46cda41b7005d551f9ba60748eb5bf8b41caa6efc239b",
+      "workerStatus": "PASS",
+      "outerCliExitCode": 0,
+      "operationMilliseconds": 265763,
+      "cleanupMilliseconds": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "result": "U2/visible-r10/phase.json",
+      "outerCli": "U2/cli-visible-r10.json"
+    },
+    {
+      "gate": "final-source-reuse",
+      "status": "PASS",
+      "publicRawInputs": 1355,
+      "privateRawInputs": 1355,
+      "gwtJars": 9,
+      "compiledFiles": 357,
+      "deploymentFiles": 6,
+      "testedSources": 23,
+      "scope": "All 1,355 raw inputs, copied/pinned nine jars and 357+6 compiled/deployed files checked. The actual JDK8/GWT build remains its original 19c manifest epoch; later host/provenance guard edits were outside compiler inputs, not a rerun."
+    },
+    {
+      "gate": "final-known-preservation",
+      "status": "PASS_KNOWN_NAMED_BYTES_ONLY",
+      "namedRawPins": 60,
+      "originalUntracked": 8,
+      "limitation": "A worker removed six generated scratch directories without retaining their names/content inventories. Their prior contents cannot be verified. This audit does not prove all evidence was preserved."
+    },
+    {
+      "gate": "final-scoped-resource-release",
+      "status": "PASS_SCOPED_EXACT_ABSENCE",
+      "recordedInstances": 155,
+      "counts": {
+        "ABSENT": 155
+      },
+      "closedTaskPorts": 11,
+      "operationSeconds": 1.887,
+      "terminationUsed": false,
+      "scope": "Named current U1/U2/offline audit and final88 test receipt roots only; not a whole-desktop idle claim. Historical cold809 proof remains the retained late-window audit. No termination used."
+    },
+    {
+      "gate": "parent-acceptance",
+      "status": "NOT_RUN",
+      "scope": "Parent owns independent acceptance; normal Q30 remains disabled."
+    }
+  ],
+  "review": {
+    "scope": "Read-only integrated source review of process/jobs/provenance/visible driver; no independent rerun. Root final diff and evidence review.",
+    "result": "NO_NEW_SOURCE_BLOCKER_FOUND",
+    "nonblockingFollowups": [
+      "Legacy run_serial finally does not check CloseHandle return values.",
+      "Equal CIM_MICROSECOND births represent overlapping10-tick intervals; current native process ownership is exact and fallback MATCH blocks release, but the comparator precision statement should be tightened before a consumer treats CIM/CIM MATCH as exact ownership.",
+      "private_menu.port_is_closed currently accepts any nonzero socket status, including inconclusive10035. Current gate is FAIL; final independent PS7 query proves actual closed ports. Tighten this predicate before accepting a future menu PASS."
+    ],
+    "astraFinalCheckpoint": {
+      "model": "gpt-6-astra",
+      "reasoningEffort": "ultra",
+      "result": "NO_NEW_MATERIAL_BLOCKER_TO_LOCAL_BLOCKED_CHECKPOINT",
+      "scope": "Staged native process/jobs, manifests, qualification phases, visible driver and packet; verified23sourcehashes/34stagedpaths/8untracked hashes/whitespace/no unstaged tracked changes.",
+      "limitation": "Direct OS-temp raw receipt reads access-denied; reviewer did not independently revalidate raw receipts. Root independently verified61 named new packet raw pins and production reuse. No edits, gates or publication actions.",
+      "serviceTier": "Not configurable with this tool; Fast preference retained for next supported boundary."
+    }
+  },
+  "preservationIncident": "A worker removed six generated scratch directories without retaining their names/content inventories. Their prior contents cannot be verified. This audit does not prove all evidence was preserved.",
+  "earlierFailuresRetained": [
+    "UI r1-r8 physical-control/driver/Shop failures",
+    "UI r9 tool transport disconnect: child0/cleanup proved, outer CLI exit unobserved",
+    "resource socket r1/r2 inconclusive10035; maintained PS7 listener query supplies final scoped proof",
+    "old R5 unknown-image BLOCKED",
+    "original root10014 timeout and pre-fix compiled failures"
+  ],
+  "formattingFinalization": {
+    "privateMenuBeforeSha256": "0175c326c040fb1ae56de42447be49cb8ef8623e1f196f9e2d2020dbab9efb71",
+    "privateMenuAfterSha256": "c688a7ab20aae3022dae28c9d86d3739e059fe744a0375b88e0650e44b02416c",
+    "delta": "Final extra blank line removed only; fresh88 and retained-audit follow. Actual menu/visible/build/archive receipts keep consumed manifest epochs; their functional/compiler inputs are unchanged.",
+    "priorManifest": "S/qualification-manifest-at-ui10-and-final88.json",
+    "priorManifestSha256": "d52770b52d79993790a46cda41b7005d551f9ba60748eb5bf8b41caa6efc239b",
+    "stagedWhitespaceCheckInitial": "FAIL_EXIT2_EXTRA_BLANK_EOF; fixed, final check follows"
+  }
+}

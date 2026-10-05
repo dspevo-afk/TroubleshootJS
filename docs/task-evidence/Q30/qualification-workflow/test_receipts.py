@@ -1,4 +1,5 @@
 """Focused tests for the qualification receipt ledger; no process or physics fixtures."""
+import hashlib
 import json
 import tempfile
 import unittest
@@ -22,6 +23,87 @@ def passing(seed="75"):
         "operation": {"elapsedMs": 82000, "elapsedLimitations": None},
         "sourceInputsUnchanged": True,
     }
+
+
+def _manifest_fixture(root):
+    sources = {}
+    for name in receipts.WORKFLOW_SOURCE_NAMES:
+        content = ("fixture:" + name).encode("utf-8")
+        (root / name).write_bytes(content)
+        sources[name] = {"sha256": hashlib.sha256(content).hexdigest(),
+                         "size": len(content)}
+    helper_sha = "d" * 64
+    manifest = {
+        "schema": 2,
+        "inputBinding": {
+            "sourceIdentity": "a" * 64, "baseHead": "b" * 40,
+            "planSha256": "c" * 64, "acceptancePlanSha256": "e" * 64,
+            "repositoryInputs": 1355, "repositoryMapSha256": "f" * 64,
+            "preparedAppStateSha256": "1" * 64,
+            "preparedInputIdentity": {
+                "combinedSha256": "2" * 64, "fileCount": 1526,
+                "sourceFileCount": 1134, "sourceSha256": "3" * 64,
+                "webFileCount": 392, "webSha256": "4" * 64,
+            },
+            "readerSha256": "5" * 64, "hostRunnerSha256": "6" * 64,
+            "pointerSha256": "7" * 64, "matchedHelperSha256": helper_sha,
+        },
+        "externalMatchedHelperSha256": helper_sha,
+        "limits": dict(receipts.LIMITS),
+        "sources": sources,
+        "windowMs": 15120000,
+    }
+    path = root / receipts.WORKFLOW_MANIFEST_FILENAME
+    path.write_text(json.dumps(manifest, sort_keys=True), encoding="utf-8")
+    return path, manifest
+
+
+class WorkflowManifestTests(unittest.TestCase):
+    def test_current_manifest_schema_binds_exact_local_and_external_sources(self):
+        with tempfile.TemporaryDirectory(prefix="q30-workflow-manifest-") as temp:
+            root = Path(temp)
+            path, expected = _manifest_fixture(root)
+            actual = receipts.load_workflow_manifest(root, path)
+            self.assertEqual(actual, expected)
+
+    def test_legacy_schema_and_unknown_source_are_rejected(self):
+        with tempfile.TemporaryDirectory(prefix="q30-workflow-manifest-") as temp:
+            root = Path(temp)
+            path, manifest = _manifest_fixture(root)
+            manifest["schema"] = 1
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            with self.assertRaises(receipts.ReceiptError):
+                receipts.load_workflow_manifest(root, path)
+
+            manifest["schema"] = 2
+            manifest["sources"]["old-copy.py"] = {"sha256": "8" * 64, "size": 1}
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            with self.assertRaises(receipts.ReceiptError):
+                receipts.load_workflow_manifest(root, path)
+
+    def test_changed_source_pin_and_external_helper_mismatch_are_rejected(self):
+        with tempfile.TemporaryDirectory(prefix="q30-workflow-manifest-") as temp:
+            root = Path(temp)
+            path, _ = _manifest_fixture(root)
+            (root / "serial_runner.py").write_bytes(b"changed")
+            with self.assertRaisesRegex(receipts.ReceiptError, "pin changed"):
+                receipts.load_workflow_manifest(root, path)
+
+        with tempfile.TemporaryDirectory(prefix="q30-workflow-manifest-") as temp:
+            root = Path(temp)
+            path, manifest = _manifest_fixture(root)
+            manifest["externalMatchedHelperSha256"] = "8" * 64
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            with self.assertRaisesRegex(receipts.ReceiptError, "differs"):
+                receipts.load_workflow_manifest(root, path)
+
+    def test_duplicate_manifest_key_is_rejected(self):
+        with tempfile.TemporaryDirectory(prefix="q30-workflow-manifest-") as temp:
+            root = Path(temp)
+            path, _ = _manifest_fixture(root)
+            path.write_text('{"schema":2,"schema":2}', encoding="utf-8")
+            with self.assertRaisesRegex(receipts.ReceiptError, "duplicate"):
+                receipts.load_workflow_manifest(root, path)
 
 
 class ReceiptTests(unittest.TestCase):
