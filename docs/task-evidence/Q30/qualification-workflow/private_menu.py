@@ -4,6 +4,10 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from datetime import datetime, timezone
 import importlib.util
+import argparse
+import re
+
+import audit_release
 import socket
 from playwright.sync_api import sync_playwright
 from threading import Thread
@@ -32,8 +36,37 @@ OBSERVATION_MARGIN_SECONDS = 25
 PROMOTED_FROM_SHA256 = '75e79a0ba5bcb1e3365aee413f0fd94f25d560e08e1c9cd8816896633c3e5b1a'
 IDENTITY = None
 
-root, output = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve()
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('app', type=Path)
+parser.add_argument('output', type=Path)
+parser.add_argument('--diagnose-q30', action='store_true',
+                    help='Run only bounded Q30 launch observations; never a full-menu PASS')
+parser.add_argument('--diagnose-launches', type=int, choices=range(1, 5), default=2)
+parser.add_argument('--diagnose-exact-seed', action='append', default=[],
+                    help='Use the ordinary exact-seed UI for these diagnosis-only inputs')
+parser.add_argument('--headed', action='store_true')
+args = parser.parse_args()
+if args.diagnose_exact_seed and not args.diagnose_q30:
+    parser.error('Exact-seed diagnosis requires --diagnose-q30')
+if len(args.diagnose_exact_seed) > 4:
+    parser.error('At most four diagnosis seeds may be supplied')
+root, output = args.app.resolve(), args.output.resolve()
 output.mkdir(parents=True, exist_ok=False)
+
+
+class DiagnosticComplete(Exception):
+    """End a bounded diagnostic subset without claiming full qualification."""
+
+
+def failed_launch_seed(message, family, profile):
+    prefix = 'Family: ' + family + '; difficulty: ' + profile + '; launch seed: '
+    if not isinstance(message, str) or prefix not in message:
+        return None
+    value = message.split(prefix, 1)[1]
+    if not re.fullmatch(r'-?(0|[1-9][0-9]*)', value) or len(value) > 20:
+        return None
+    parsed = int(value)
+    return value if -(1 << 63) <= parsed < (1 << 63) and str(parsed) == value else None
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -138,10 +171,20 @@ def owned_survivors(owned):
     return survivors
 
 
-def port_is_closed(port):
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as probe:
-        probe.settimeout(1)
-        return probe.connect_ex(('127.0.0.1', port)) != 0
+def port_is_closed(port, powershell, evidence_root):
+    # A socket timeout (including Windows10035) does not prove absence.
+    # Reuse the bounded owned Windows listener query and retain its receipt.
+    data, host = audit_release._run_cim_and_ports(
+        {'tools': {'powershell': powershell}, 'tempRoot': str(evidence_root)}, [])
+    listeners = data.get('listeners')
+    if not isinstance(listeners, list) or any(
+            not isinstance(row, dict) or type(row.get('localPort')) is not int
+            or type(row.get('ownerPid')) is not int for row in listeners):
+        raise RuntimeError('Native TCP listener query returned an invalid table')
+    closed = not any(row['localPort'] == port for row in listeners)
+    with (Path(evidence_root) / 'listener-query.json').open('x', encoding='utf-8') as stream:
+        json.dump({'port': port, 'closed': closed, 'query': host}, stream, indent=2)
+    return closed
 
 
 def save(name, data):
@@ -153,7 +196,9 @@ thread = Thread(target=server.serve_forever, daemon=True)
 thread.start()
 base = 'http://127.0.0.1:' + str(server.server_port)
 owned = []
-result = {'outcome': 'NOT_RUN', 'cases': [], 'errors': []}
+result = {'outcome': 'NOT_RUN', 'cases': [], 'errors': [],
+          'scope': 'Q30_DIAGNOSIS_ONLY' if args.diagnose_q30 else 'FULL_MENU_QUALIFICATION',
+          'headed': args.headed, 'launchObserver': 'forwarding-only public action arguments; no seed mutation'}
 try:
     owner_row = next(row for row in processes() if row['pid'] == os.getpid())
     owner = cim_record(owner_row)
@@ -163,7 +208,7 @@ try:
                            'profile': str(output / 'profile')})
     with sync_playwright() as pw:
         context = pw.chromium.launch_persistent_context(
-            str(output / 'profile'), channel='msedge', headless=True,
+            str(output / 'profile'), channel='msedge', headless=not args.headed,
             viewport={'width': 1440, 'height': 1000},
             args=['--disable-background-timer-throttling', '--disable-renderer-backgrounding'])
         try:
@@ -174,6 +219,21 @@ try:
             page.goto(base + '/circuitjs.html', wait_until='domcontentloaded')
             page.wait_for_function("() => window.tsjProduct && document.body.getAttribute('data-player-screen') === 'MENU'", timeout=30000)
             snapshot = lambda: page.evaluate('window.tsjProduct.snapshot(false)')
+            # Observe the ordinary UI's exact string arguments before forwarding
+            # them unchanged. No controller action is initiated by this observer.
+            page.evaluate("""() => {
+                const action = window.tsjProduct.action;
+                window.__q30MenuLaunchTrace = [];
+                window.tsjProduct.action = function(token, view, name, first, second, third) {
+                    if (name === 'random' || name === 'launch' || name === 'replay') {
+                        if (window.__q30MenuLaunchTrace.length >= 64)
+                            throw new Error('Q30 bounded launch trace exhausted');
+                        window.__q30MenuLaunchTrace.push({token, view, name, first, second, third,
+                            observedAtMillis: Date.now()});
+                    }
+                    return action.apply(this, arguments);
+                };
+            }""")
             families = snapshot()['families']
             catalog = [(row['id'], row['profile']) for row in families]
             assert catalog == list(EXPECTED_CATALOG), catalog
@@ -194,7 +254,12 @@ try:
                 while time.monotonic() - start < bound:
                     state = snapshot()
                     if state.get('progress'):
-                        samples.append(state['progress'])
+                        sample = {'hostElapsedSeconds': time.monotonic() - start, **state['progress']}
+                        samples.append(sample)
+                        row['lastProgress'] = sample
+                        with (output / 'progress-samples.jsonl').open('a', encoding='utf-8') as stream:
+                            stream.write(json.dumps({'family': row['family'],
+                                'ordinal': row.get('ordinal'), 'sample': sample}) + '\n')
                     if state['screen'] in ('TICKET', 'ERROR'):
                         row.update({
                             'screen': state['screen'],
@@ -206,6 +271,9 @@ try:
                             'outcome': 'ERROR' if state['screen'] == 'ERROR' else 'TICKET',
                             'terminalMessage': state.get('message'),
                             'terminalNotice': state.get('notice'),
+                            'failedLaunchSeed': failed_launch_seed(
+                                state.get('message'), row['family'], row['profile']),
+                            'progressSamples': samples,
                             'replayRole': ('PREDECESSOR_REQUEST_ON_ERROR' if state['screen'] == 'ERROR' else 'ACCEPTED_REQUEST'),
                         })
                         return state, time.monotonic() - start, samples
@@ -224,16 +292,28 @@ try:
                 page.locator('label.tsj-product-field').filter(has_text='Board family').locator('select').select_option(family['id'])
 
             saved = {}
-            for family in families:
+            selected_families = [f for f in families if f['id'] == 'RB30_CONTROL'] if args.diagnose_q30 else families
+            for family in selected_families:
                 replays = set()
-                for ordinal in range(3):
+                launch_count = (len(args.diagnose_exact_seed) or args.diagnose_launches) if args.diagnose_q30 else 3
+                for ordinal in range(launch_count):
                     row = {'family': family['id'], 'profile': family['profile'],
                            'ordinal': ordinal, 'outcome': 'STARTED'}
                     result['cases'].append(row)
                     save('progress.json', result)
                     try:
                         select(family)
-                        click('New board')
+                        row['predecessorReplay'] = snapshot().get('replay')
+                        if args.diagnose_exact_seed:
+                            page.get_by_text('Enter an exact seed', exact=True).click()
+                            page.get_by_label('Exact seed (signed decimal integer)', exact=True).fill(
+                                args.diagnose_exact_seed[ordinal])
+                            click('Prepare exact seed')
+                        else:
+                            click('New board')
+                        row['launchAction'] = page.evaluate('window.__q30MenuLaunchTrace.slice(-1)[0]')
+                        save('launch-actions.json', page.evaluate('window.__q30MenuLaunchTrace'))
+                        save('progress.json', result)
                         state, seconds, samples = prepare(family, row)
                         assert state['screen'] == 'TICKET', row
                         assert state['replay'].startswith('tsj-alpha/4/' + family['profile'] + '/' + family['id'] + '/'), row
@@ -267,9 +347,16 @@ try:
                             row['outcome'] = 'FAIL'
                         row['failure'] = repr(failure)
                         row['failureVisibleText'] = page.locator('body').inner_text(timeout=3000)
+                        save('failure-snapshot.json', snapshot())
+                        page.screenshot(path=str(output / 'failed-launch.png'))
                         save('progress.json', result)
                         raise
 
+            if args.diagnose_q30:
+                assert result['cases'] and all(row['outcome'] == 'PASS' for row in result['cases'])
+                assert not result['errors'], result['errors']
+                result['outcome'] = 'DIAGNOSTIC_PASS'
+                raise DiagnosticComplete()
             assert len(result['cases']) == 33 and all(row['outcome'] == 'PASS' for row in result['cases'])
             result['replays'] = []
             family_by_id = {row['id']: row for row in families}
@@ -375,6 +462,8 @@ try:
                 context.close()
             if capture_error:
                 raise capture_error
+except DiagnosticComplete:
+    pass
 except BaseException:
     result['outcome'] = 'FAIL'
     result['failure'] = traceback.format_exc()
@@ -389,13 +478,14 @@ finally:
             break
         time.sleep(.25)
     try:
-        port_closed = port_is_closed(server.server_port)
-    except OSError:
+        port_closed = port_is_closed(server.server_port, os.environ.get('TSJ_POWERSHELL'), output)
+    except Exception as error:
         port_closed = False
+        result['listenerQueryError'] = repr(error)
     result['cleanup'] = {'seconds': time.monotonic() - cleanup_started,
                          'serverStopped': not thread.is_alive(),
                          'portClosed': port_closed,
                          'ownedSurvivors': survivors}
     save('result.json', result)
     print('FINISHED', result['outcome'], 'cases', len(result['cases']), flush=True)
-    sys.exit(0 if result['outcome'] == 'PASS' and not survivors and not thread.is_alive() else 1)
+    sys.exit(0 if result['outcome'] in ('PASS', 'DIAGNOSTIC_PASS') and port_closed and not survivors and not thread.is_alive() else 1)

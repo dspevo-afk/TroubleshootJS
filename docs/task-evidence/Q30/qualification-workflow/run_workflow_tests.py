@@ -65,7 +65,7 @@ def main():
              "windows_process_identity.py", "test_windows_process_identity.py", "test_host_phase.py",
              "cold77_batch.py", "cold77_case_worker.py", "cold77-candidate-manifest.json", "test_cold77_batch.py",
              "qualify.py", "test_qualify.py", "audit_release.py", "test_audit_release.py",
-             "visible_repair.py", "test_visible_repair.py", "private_qualification.py", "private_menu.py"]
+             "visible_repair.py", "test_visible_repair.py", "private_qualification.py", "private_menu.py", "test_private_menu.py"]
     hashes = {name: hashlib.sha256((work/name).read_bytes()).hexdigest() for name in files}
     root = Path(tempfile.mkdtemp(prefix="q30-workflow-tests-"))
     k = serial_runner._api()

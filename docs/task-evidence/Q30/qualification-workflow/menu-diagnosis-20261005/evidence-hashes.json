@@ -1,0 +1,292 @@
+{
+  "schema": 1,
+  "rawDisposition": "RETAINED_LOCALLY_REFERENCE_ONLY",
+  "aliases": {
+    "S": "task workspace qualification-menu-diagnosis-20261005-r1",
+    "D": "OS-temp q30-menu-diagnosis-ifuqn3fr",
+    "TEST": "q30-workflow-tests-60pvq2_j"
+  },
+  "rawSources": [
+    {
+      "path": "S/diagnosis-manifest.json",
+      "bytes": 6029,
+      "sha256": "fe13ac507accac6b5dcabd84535f5eb44457120bd4742702355723755903bb8f"
+    },
+    {
+      "path": "S/full-menu-manifest.json",
+      "bytes": 6017,
+      "sha256": "6f70954e979061b2571a6c96e0d1503ea7952ea76a21d4a43ac690e40a08d3b8"
+    },
+    {
+      "path": "S/retained-failure-identity-search.json",
+      "bytes": 9853,
+      "sha256": "21acbb67329cee23b99c3c5f27a1fe8ca74f651524fa2ad6a984cb1686553e5f"
+    },
+    {
+      "path": "S/final-source-test-audit.json",
+      "bytes": 285100,
+      "sha256": "030288e6798afa72e392422f5df7c1b9ecab59ad3d57f57805731920896413ae"
+    },
+    {
+      "path": "S/final-preservation-audit.json",
+      "bytes": 31063,
+      "sha256": "84615d7d9dc84f004b0e81607ca57e3954a1bc9a7b963321ee407fbfabdd3011"
+    },
+    {
+      "path": "S/final-resource-audit.json",
+      "bytes": 19200,
+      "sha256": "93d88c1e710f06f645a8a2ee9e3f87ffb6d1e92964f7d5f0d34ff09755de7ce5"
+    },
+    {
+      "path": "S/run_diagnosis.py",
+      "bytes": 3675,
+      "sha256": "9baaccc3c33e281f9439f99002e4782a5d6dbfec760426f8060c1fc4a2336aed"
+    },
+    {
+      "path": "S/focused_checks.py",
+      "bytes": 4023,
+      "sha256": "f7f880a3a14996735cc0332a34fb80e2088e044790c89f0822e0807a997d8df5"
+    },
+    {
+      "path": "S/finish_checks.py",
+      "bytes": 4024,
+      "sha256": "385fa15767f4828ad0560c7104debda6ea798b251adcfd5f7e1aa2b32dda96df"
+    },
+    {
+      "path": "S/audit_final.py",
+      "bytes": 7607,
+      "sha256": "1df85894e569d2983ad20c46a2671d8c49f35d187e95fc0c6f1731b904e9a12f"
+    },
+    {
+      "path": "S/private_menu.before-diagnosis.py",
+      "bytes": 20657,
+      "sha256": "c688a7ab20aae3022dae28c9d86d3739e059fe744a0375b88e0650e44b02416c"
+    },
+    {
+      "path": "S/qualify.before-menu-listener-owner.py",
+      "bytes": 28183,
+      "sha256": "129a7ef27ebeed42043ce8130dfd797e53391b19b324db112445249a97ded19d"
+    },
+    {
+      "path": "S/run_workflow_tests.before.py",
+      "bytes": 4577,
+      "sha256": "80ebba36c162d6035cd24a18315053e93e2f73bf55ebe1c393c732dc805def33"
+    },
+    {
+      "path": "D/diagnosis-r1.json",
+      "bytes": 4222,
+      "sha256": "3b9cca8f967e7a6af6ea8a4af876a1ff00cd278d7c1a1cca1f8f67a04ada672a"
+    },
+    {
+      "path": "D/menu-diagnosis-r1/result.json",
+      "bytes": 153811,
+      "sha256": "b4b2a13f3fa8c139a6089f25545d0a55ced66072a5da540dbddc8aad5b8047b0"
+    },
+    {
+      "path": "D/menu-diagnosis-r1/progress.json",
+      "bytes": 153666,
+      "sha256": "c616bdf1928046ef3fd8bf60f83b42c2a481cf59e81b0053ea87950f803ada37"
+    },
+    {
+      "path": "D/menu-diagnosis-r1/launch-actions.json",
+      "bytes": 400,
+      "sha256": "4fa13d583b44eff3122959c6cfb7a29af3d47f536ca955728579ba76ca20740d"
+    },
+    {
+      "path": "D/menu-diagnosis-r1/progress-samples.jsonl",
+      "bytes": 115405,
+      "sha256": "ff2d2cdbcd55229474b2c8765fa5d21972dc8a859c96f18adfd8a93c2208d48d"
+    },
+    {
+      "path": "D/menu-diagnosis-r1/identity.json",
+      "bytes": 401,
+      "sha256": "930a6ef0b96b108cef22d69c0b9e87bff8f761cea6615ef1562365208660ca8f"
+    },
+    {
+      "path": "D/menu-diagnosis-r1/owned-processes.json",
+      "bytes": 1854,
+      "sha256": "21c676eb0df645a3978b8358c8c5751bf6f4a55b2112569e7e96c7c1afcf7f37"
+    },
+    {
+      "path": "D/menu-diagnosis-r1/listener-query.json",
+      "bytes": 2152,
+      "sha256": "87f06410fb7370f9d00a2a2457ee36ac74d5dc5438ee3d9fefa7541218db7f8c"
+    },
+    {
+      "path": "D/owned-menu-diagnosis-r1/launch.json",
+      "bytes": 389,
+      "sha256": "e234ed16dca989edc4470a64bd04b983c94eeaf193ec6a2b36132ded39597e38"
+    },
+    {
+      "path": "D/owned-menu-diagnosis-r1/host-result.json",
+      "bytes": 1483,
+      "sha256": "7525f80b1ce483ff694b5e89f54952fb3d453a851b26f7ec0bab0a7679c13934"
+    },
+    {
+      "path": "D/owned-menu-diagnosis-r1/stdout.log",
+      "bytes": 207,
+      "sha256": "516084a6dd077625d14e9f71da28020267a64e225c6e09033394117f570e14e7"
+    },
+    {
+      "path": "D/owned-menu-diagnosis-r1/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "D/diagnosis-r2.json",
+      "bytes": 4617,
+      "sha256": "7f2b372451dc7d9aa13bcdd0323f1fefbc21e3676a89a0c4f38bfa3d5c39a948"
+    },
+    {
+      "path": "D/menu-diagnosis-r2/result.json",
+      "bytes": 449492,
+      "sha256": "1a5fecd3aa2deb5e5c71de83709031fb923c6f3192673a0dcc924d2a191d4654"
+    },
+    {
+      "path": "D/menu-diagnosis-r2/progress.json",
+      "bytes": 449358,
+      "sha256": "3b03f99b9a2cbf65e1911765085965fd67e1004c24b9e8475f6f7dda0b34c539"
+    },
+    {
+      "path": "D/menu-diagnosis-r2/launch-actions.json",
+      "bytes": 6745,
+      "sha256": "7cdc0a6600ac698b01d091057b91521997c11cacf070d4dde02d34fd3319177d"
+    },
+    {
+      "path": "D/menu-diagnosis-r2/progress-samples.jsonl",
+      "bytes": 305554,
+      "sha256": "b75446de0b457c85f3ba4c44add5bb3570a438ef2a7136d5998cfb8e3cb33404"
+    },
+    {
+      "path": "D/menu-diagnosis-r2/identity.json",
+      "bytes": 401,
+      "sha256": "853d9fa98a680c97b89571617139d84423463821b07954b57465110acf69c1dc"
+    },
+    {
+      "path": "D/menu-diagnosis-r2/owned-processes.json",
+      "bytes": 1853,
+      "sha256": "83f56a78ce8f44961d581df523a030d9aede3f1e55648c9ccaf738af996844e5"
+    },
+    {
+      "path": "D/menu-diagnosis-r2/listener-query.json",
+      "bytes": 2152,
+      "sha256": "7d43f454fadf8427ead8274ed23d841f17d2bf0292c9ded7a58f5eb08611d6de"
+    },
+    {
+      "path": "D/owned-menu-diagnosis-r2/launch.json",
+      "bytes": 390,
+      "sha256": "4f293276df8c66f6c992582e54eab78646504c31e3dce94181bb8798887d3d6a"
+    },
+    {
+      "path": "D/owned-menu-diagnosis-r2/host-result.json",
+      "bytes": 1468,
+      "sha256": "5acd3668aa95bb78d65105c723476fa1363e8122b045380859e6d00b52638c7c"
+    },
+    {
+      "path": "D/owned-menu-diagnosis-r2/stdout.log",
+      "bytes": 3072,
+      "sha256": "d3640acd92b07e03edacee2e047e75cbd1dca3b37ed6e51cba54db19255415ea"
+    },
+    {
+      "path": "D/owned-menu-diagnosis-r2/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "D/diagnosis-r3.json",
+      "bytes": 4282,
+      "sha256": "eb5317a80ecf17dba5dd422287f24041cce64801da70202bc3be70ef71379ea3"
+    },
+    {
+      "path": "D/menu-diagnosis-r3/result.json",
+      "bytes": 32871,
+      "sha256": "3ccb55ae7fb3e8d6d0fc46a65a6bcb1617b969b38acde08aa3b68069243f792d"
+    },
+    {
+      "path": "D/menu-diagnosis-r3/progress.json",
+      "bytes": 32726,
+      "sha256": "c6a5ad34c1b79f9ab9fcac004fa88dc678e8b4c964a868cf9fce6a11f6b1c268"
+    },
+    {
+      "path": "D/menu-diagnosis-r3/launch-actions.json",
+      "bytes": 202,
+      "sha256": "e2b651b9c516658081d6c7cb036302960a23b1c08b2d2f277b1355a8edf60e74"
+    },
+    {
+      "path": "D/menu-diagnosis-r3/progress-samples.jsonl",
+      "bytes": 23530,
+      "sha256": "f693fc27ebe9848ceec1b51af9a9fe8eb0a2de5d993f79b101823cf163330c04"
+    },
+    {
+      "path": "D/menu-diagnosis-r3/identity.json",
+      "bytes": 400,
+      "sha256": "d5e656c61e5681366e077c711154e9ee8dc97bfc69576ebe7b4f884266cec82e"
+    },
+    {
+      "path": "D/menu-diagnosis-r3/owned-processes.json",
+      "bytes": 1855,
+      "sha256": "0f69e91ca938526b1701296811e87f54d1bf7fa02de426287780dcdb9bfa8e2e"
+    },
+    {
+      "path": "D/menu-diagnosis-r3/listener-query.json",
+      "bytes": 2152,
+      "sha256": "f69ec88d55fc6a389e7c98becc1328bcbac0db0e34052e486f6edba7276f1da4"
+    },
+    {
+      "path": "D/owned-menu-diagnosis-r3/launch.json",
+      "bytes": 388,
+      "sha256": "ea59ba63a5c1e984433e1ebae13360ab31325de53972ce297f5aad263cd74bcc"
+    },
+    {
+      "path": "D/owned-menu-diagnosis-r3/host-result.json",
+      "bytes": 1527,
+      "sha256": "cc71fd897ae1f7106beb5f53afae33af9857fe37b7ea6474598e1aba8d7884c8"
+    },
+    {
+      "path": "D/owned-menu-diagnosis-r3/stdout.log",
+      "bytes": 121,
+      "sha256": "c79be59b17fb9e8400015966d0bdfd64e056b1df037c836ebd6d3eaddff1472a"
+    },
+    {
+      "path": "D/owned-menu-diagnosis-r3/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "D/focused-checks.json",
+      "bytes": 488,
+      "sha256": "154e854dfe011ce3a35049868797d896ff0d79e33ed2ba0579390cf2d9456ea0"
+    },
+    {
+      "path": "D/focused-final-host.json",
+      "bytes": 1670,
+      "sha256": "7226c3a41c92894edff91016c0c4bca87d3e1c48bc12082bc6de9e01fa5a6644"
+    },
+    {
+      "path": "D/later-resource-scope.json",
+      "bytes": 670,
+      "sha256": "e2bcba5eff0e6cb2f24bb06bcb70477a04b41651c5de1099d4bf868d42008ebd"
+    },
+    {
+      "path": "D/later-cold-resource-observation/release-audit.json",
+      "bytes": 769315,
+      "sha256": "090339a3236a0b8841eb3a54417f56a31ee3132af95b6a7fb27a688779b129f7"
+    },
+    {
+      "path": "D/diagnosis-resource-audit.json",
+      "bytes": 19290,
+      "sha256": "5d303cf752186f80cb273252313c5735d47c61aa8d2978afac290dc91d6c0b90"
+    },
+    {
+      "path": "TEST/launch.json",
+      "bytes": 2608,
+      "sha256": "3a37e309e9f09c960bbbda49873f30b4abb0901702e75955ebd04267a661886f"
+    },
+    {
+      "path": "TEST/test-results.json",
+      "bytes": 3980,
+      "sha256": "57cc2bd3aa2d166d2b912cd6f303c6e8aac230a12f176f8ffef5331cfd0c81de"
+    }
+  ],
+  "priorPreservation": "60 earlier pins +61 checkpoint pins +8 original untracked files rechecked"
+}

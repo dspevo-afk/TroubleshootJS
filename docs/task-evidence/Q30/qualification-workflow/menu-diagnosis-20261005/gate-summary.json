@@ -1,0 +1,1174 @@
+{
+  "schema": 1,
+  "acceptance": "NOT_ACCEPTED_PUBLIC_Q30_DISABLED",
+  "checkpointBase": "781f94750fe3d91757bef702b4a353b037ed86ef",
+  "productionBase": "c621b55d2b071e064d5afd383451d2715e35940d",
+  "sourceIdentity": "87bb04f707ccaf57f92c5d38fdbf4db199d63359c573725fd34bac61484226d7",
+  "limits": {
+    "jobMs": 90000,
+    "sharedUnits": 640,
+    "operationMs": 5000
+  },
+  "productionChanged": false,
+  "runs": [
+    {
+      "label": "r1",
+      "scope": "Q30_DIAGNOSIS_ONLY",
+      "status": "DIAGNOSTIC_PASS",
+      "operationMs": 177793,
+      "hostCleanupMs": 0,
+      "hostExitCode": 0,
+      "inputsUnchanged": true,
+      "browserAndServerCleanup": {
+        "seconds": 1.1317346999421716,
+        "serverStopped": true,
+        "portClosed": true,
+        "ownedSurvivors": []
+      },
+      "cases": [
+        {
+          "family": "RB30_CONTROL",
+          "profile": "MEDIUM",
+          "ordinal": 0,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/MEDIUM/RB30_CONTROL/-309104029943755731",
+          "predecessorReplay": null,
+          "seconds": 84.78262399998493,
+          "elapsedSeconds": 84.78253470000345,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 458,
+          "launchAction": {
+            "token": 1,
+            "view": 1,
+            "name": "random",
+            "first": "RB30_CONTROL",
+            "second": "-309104029943755731",
+            "third": "MEDIUM",
+            "observedAtMillis": 1791225697736
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "RB30_CONTROL",
+          "profile": "MEDIUM",
+          "ordinal": 1,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/MEDIUM/RB30_CONTROL/-7285308878927238583",
+          "predecessorReplay": "tsj-alpha/4/MEDIUM/RB30_CONTROL/-309104029943755731",
+          "seconds": 86.14164739998523,
+          "elapsedSeconds": 86.14151590003166,
+          "observedCandidates": [
+            1
+          ],
+          "maxObservedUnits": 486,
+          "launchAction": {
+            "token": 5,
+            "view": 7,
+            "name": "random",
+            "first": "RB30_CONTROL",
+            "second": "-7285308878927238583",
+            "third": "MEDIUM",
+            "observedAtMillis": 1791225784300
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        }
+      ],
+      "replays": [],
+      "normalQ30Replay": null,
+      "staleReplayEpoch": null,
+      "errors": []
+    },
+    {
+      "label": "r2",
+      "scope": "FULL_MENU_QUALIFICATION",
+      "status": "PASS",
+      "operationMs": 425236,
+      "hostCleanupMs": 0,
+      "hostExitCode": 0,
+      "inputsUnchanged": true,
+      "browserAndServerCleanup": {
+        "seconds": 1.2611895999871194,
+        "serverStopped": true,
+        "portClosed": true,
+        "ownedSurvivors": []
+      },
+      "cases": [
+        {
+          "family": "LED_INDICATOR",
+          "profile": "EASY",
+          "ordinal": 0,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/LED_INDICATOR/8134359923283076791",
+          "predecessorReplay": null,
+          "seconds": 0.39019110007211566,
+          "elapsedSeconds": 0.39017810008954257,
+          "observedCandidates": [
+            1
+          ],
+          "maxObservedUnits": 21,
+          "launchAction": {
+            "token": 1,
+            "view": 1,
+            "name": "random",
+            "first": "LED_INDICATOR",
+            "second": "8134359923283076791",
+            "third": "EASY",
+            "observedAtMillis": 1791225931149
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "LED_INDICATOR",
+          "profile": "EASY",
+          "ordinal": 1,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/LED_INDICATOR/308557855794761139",
+          "predecessorReplay": "tsj-alpha/4/EASY/LED_INDICATOR/8134359923283076791",
+          "seconds": 0.3284933000104502,
+          "elapsedSeconds": 0.32848200004082173,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 52,
+          "launchAction": {
+            "token": 5,
+            "view": 7,
+            "name": "random",
+            "first": "LED_INDICATOR",
+            "second": "308557855794761139",
+            "third": "EASY",
+            "observedAtMillis": 1791225932165
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "LED_INDICATOR",
+          "profile": "EASY",
+          "ordinal": 2,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/LED_INDICATOR/1224259858358157903",
+          "predecessorReplay": "tsj-alpha/4/EASY/LED_INDICATOR/308557855794761139",
+          "seconds": 0.1670386999612674,
+          "elapsedSeconds": 0.16702940000686795,
+          "observedCandidates": [
+            0
+          ],
+          "maxObservedUnits": 0,
+          "launchAction": {
+            "token": 9,
+            "view": 13,
+            "name": "random",
+            "first": "LED_INDICATOR",
+            "second": "1224259858358157903",
+            "third": "EASY",
+            "observedAtMillis": 1791225932866
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "DIODE_PROTECTED_INDICATOR",
+          "profile": "EASY",
+          "ordinal": 0,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/DIODE_PROTECTED_INDICATOR/783271785762403061",
+          "predecessorReplay": "tsj-alpha/4/EASY/LED_INDICATOR/1224259858358157903",
+          "seconds": 0.16294410009868443,
+          "elapsedSeconds": 0.16293420002330095,
+          "observedCandidates": [
+            0
+          ],
+          "maxObservedUnits": 0,
+          "launchAction": {
+            "token": 13,
+            "view": 19,
+            "name": "random",
+            "first": "DIODE_PROTECTED_INDICATOR",
+            "second": "783271785762403061",
+            "third": "EASY",
+            "observedAtMillis": 1791225933400
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "DIODE_PROTECTED_INDICATOR",
+          "profile": "EASY",
+          "ordinal": 1,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/DIODE_PROTECTED_INDICATOR/-6252760933711943092",
+          "predecessorReplay": "tsj-alpha/4/EASY/DIODE_PROTECTED_INDICATOR/783271785762403061",
+          "seconds": 0.15802060009445995,
+          "elapsedSeconds": 0.1580124000320211,
+          "observedCandidates": [
+            0
+          ],
+          "maxObservedUnits": 0,
+          "launchAction": {
+            "token": 17,
+            "view": 25,
+            "name": "random",
+            "first": "DIODE_PROTECTED_INDICATOR",
+            "second": "-6252760933711943092",
+            "third": "EASY",
+            "observedAtMillis": 1791225933934
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "DIODE_PROTECTED_INDICATOR",
+          "profile": "EASY",
+          "ordinal": 2,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/DIODE_PROTECTED_INDICATOR/9044092551282749734",
+          "predecessorReplay": "tsj-alpha/4/EASY/DIODE_PROTECTED_INDICATOR/-6252760933711943092",
+          "seconds": 0.16254779999144375,
+          "elapsedSeconds": 0.16253779991529882,
+          "observedCandidates": [
+            0
+          ],
+          "maxObservedUnits": 0,
+          "launchAction": {
+            "token": 21,
+            "view": 31,
+            "name": "random",
+            "first": "DIODE_PROTECTED_INDICATOR",
+            "second": "9044092551282749734",
+            "third": "EASY",
+            "observedAtMillis": 1791225934469
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "PARALLEL_DUAL_INDICATOR",
+          "profile": "EASY",
+          "ordinal": 0,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/PARALLEL_DUAL_INDICATOR/-3430860813228697248",
+          "predecessorReplay": "tsj-alpha/4/EASY/DIODE_PROTECTED_INDICATOR/9044092551282749734",
+          "seconds": 0.6770309000276029,
+          "elapsedSeconds": 0.6770197000587359,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 70,
+          "launchAction": {
+            "token": 25,
+            "view": 37,
+            "name": "random",
+            "first": "PARALLEL_DUAL_INDICATOR",
+            "second": "-3430860813228697248",
+            "third": "EASY",
+            "observedAtMillis": 1791225935004
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "PARALLEL_DUAL_INDICATOR",
+          "profile": "EASY",
+          "ordinal": 1,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/PARALLEL_DUAL_INDICATOR/-796336153187642257",
+          "predecessorReplay": "tsj-alpha/4/EASY/PARALLEL_DUAL_INDICATOR/-3430860813228697248",
+          "seconds": 0.48758099996484816,
+          "elapsedSeconds": 0.48757080000359565,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 81,
+          "launchAction": {
+            "token": 29,
+            "view": 43,
+            "name": "random",
+            "first": "PARALLEL_DUAL_INDICATOR",
+            "second": "-796336153187642257",
+            "third": "EASY",
+            "observedAtMillis": 1791225936057
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "PARALLEL_DUAL_INDICATOR",
+          "profile": "EASY",
+          "ordinal": 2,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/PARALLEL_DUAL_INDICATOR/4325109061916965329",
+          "predecessorReplay": "tsj-alpha/4/EASY/PARALLEL_DUAL_INDICATOR/-796336153187642257",
+          "seconds": 0.4725357999559492,
+          "elapsedSeconds": 0.4725265000015497,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 76,
+          "launchAction": {
+            "token": 33,
+            "view": 49,
+            "name": "random",
+            "first": "PARALLEL_DUAL_INDICATOR",
+            "second": "4325109061916965329",
+            "third": "EASY",
+            "observedAtMillis": 1791225936908
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "RC_DELAY",
+          "profile": "EASY",
+          "ordinal": 0,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/RC_DELAY/2531404245451627465",
+          "predecessorReplay": "tsj-alpha/4/EASY/PARALLEL_DUAL_INDICATOR/4325109061916965329",
+          "seconds": 31.714312500087544,
+          "elapsedSeconds": 31.71428499999456,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 78,
+          "launchAction": {
+            "token": 37,
+            "view": 55,
+            "name": "random",
+            "first": "RC_DELAY",
+            "second": "2531404245451627465",
+            "third": "EASY",
+            "observedAtMillis": 1791225937742
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "RC_DELAY",
+          "profile": "EASY",
+          "ordinal": 1,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/RC_DELAY/-8032022954817947199",
+          "predecessorReplay": "tsj-alpha/4/EASY/RC_DELAY/2531404245451627465",
+          "seconds": 31.45847070007585,
+          "elapsedSeconds": 31.458445199998096,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 78,
+          "launchAction": {
+            "token": 41,
+            "view": 61,
+            "name": "random",
+            "first": "RC_DELAY",
+            "second": "-8032022954817947199",
+            "third": "EASY",
+            "observedAtMillis": 1791225969956
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "RC_DELAY",
+          "profile": "EASY",
+          "ordinal": 2,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/RC_DELAY/-8970239022445302787",
+          "predecessorReplay": "tsj-alpha/4/EASY/RC_DELAY/-8032022954817947199",
+          "seconds": 31.378585300059058,
+          "elapsedSeconds": 31.378551100031473,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 78,
+          "launchAction": {
+            "token": 45,
+            "view": 67,
+            "name": "random",
+            "first": "RC_DELAY",
+            "second": "-8970239022445302787",
+            "third": "EASY",
+            "observedAtMillis": 1791226001967
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "NPN_LOW_SIDE_SWITCH",
+          "profile": "EASY",
+          "ordinal": 0,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/NPN_LOW_SIDE_SWITCH/200494298907801453",
+          "predecessorReplay": "tsj-alpha/4/EASY/RC_DELAY/-8970239022445302787",
+          "seconds": 0.6486954999854788,
+          "elapsedSeconds": 0.6486863000318408,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 69,
+          "launchAction": {
+            "token": 49,
+            "view": 73,
+            "name": "random",
+            "first": "NPN_LOW_SIDE_SWITCH",
+            "second": "200494298907801453",
+            "third": "EASY",
+            "observedAtMillis": 1791226033770
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "NPN_LOW_SIDE_SWITCH",
+          "profile": "EASY",
+          "ordinal": 1,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/NPN_LOW_SIDE_SWITCH/-1096631863857577146",
+          "predecessorReplay": "tsj-alpha/4/EASY/NPN_LOW_SIDE_SWITCH/200494298907801453",
+          "seconds": 0.7944242999656126,
+          "elapsedSeconds": 0.7944150000112131,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 54,
+          "launchAction": {
+            "token": 53,
+            "view": 79,
+            "name": "random",
+            "first": "NPN_LOW_SIDE_SWITCH",
+            "second": "-1096631863857577146",
+            "third": "EASY",
+            "observedAtMillis": 1791226034789
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "NPN_LOW_SIDE_SWITCH",
+          "profile": "EASY",
+          "ordinal": 2,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/NPN_LOW_SIDE_SWITCH/-1870191265533970931",
+          "predecessorReplay": "tsj-alpha/4/EASY/NPN_LOW_SIDE_SWITCH/-1096631863857577146",
+          "seconds": 0.4874945000046864,
+          "elapsedSeconds": 0.4874845000449568,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 51,
+          "launchAction": {
+            "token": 57,
+            "view": 85,
+            "name": "random",
+            "first": "NPN_LOW_SIDE_SWITCH",
+            "second": "-1870191265533970931",
+            "third": "EASY",
+            "observedAtMillis": 1791226035958
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "NMOS_LOW_SIDE_SWITCH",
+          "profile": "EASY",
+          "ordinal": 0,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/NMOS_LOW_SIDE_SWITCH/-6759088122976097132",
+          "predecessorReplay": "tsj-alpha/4/EASY/NPN_LOW_SIDE_SWITCH/-1870191265533970931",
+          "seconds": 0.4821906000142917,
+          "elapsedSeconds": 0.4821824999526143,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 55,
+          "launchAction": {
+            "token": 61,
+            "view": 91,
+            "name": "random",
+            "first": "NMOS_LOW_SIDE_SWITCH",
+            "second": "-6759088122976097132",
+            "third": "EASY",
+            "observedAtMillis": 1791226036810
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "NMOS_LOW_SIDE_SWITCH",
+          "profile": "EASY",
+          "ordinal": 1,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/NMOS_LOW_SIDE_SWITCH/-3423604476704533797",
+          "predecessorReplay": "tsj-alpha/4/EASY/NMOS_LOW_SIDE_SWITCH/-6759088122976097132",
+          "seconds": 0.48546160000842065,
+          "elapsedSeconds": 0.48545220005325973,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 54,
+          "launchAction": {
+            "token": 65,
+            "view": 97,
+            "name": "random",
+            "first": "NMOS_LOW_SIDE_SWITCH",
+            "second": "-3423604476704533797",
+            "third": "EASY",
+            "observedAtMillis": 1791226037664
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "NMOS_LOW_SIDE_SWITCH",
+          "profile": "EASY",
+          "ordinal": 2,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/NMOS_LOW_SIDE_SWITCH/8944090148365541264",
+          "predecessorReplay": "tsj-alpha/4/EASY/NMOS_LOW_SIDE_SWITCH/-3423604476704533797",
+          "seconds": 0.6863514999859035,
+          "elapsedSeconds": 0.6863424000330269,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 55,
+          "launchAction": {
+            "token": 69,
+            "view": 103,
+            "name": "random",
+            "first": "NMOS_LOW_SIDE_SWITCH",
+            "second": "8944090148365541264",
+            "third": "EASY",
+            "observedAtMillis": 1791226038514
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "RELAY_OUTPUT",
+          "profile": "EASY",
+          "ordinal": 0,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/RELAY_OUTPUT/-7905701547024330020",
+          "predecessorReplay": "tsj-alpha/4/EASY/NMOS_LOW_SIDE_SWITCH/8944090148365541264",
+          "seconds": 8.6530162000563,
+          "elapsedSeconds": 8.652994000003673,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 77,
+          "launchAction": {
+            "token": 73,
+            "view": 109,
+            "name": "random",
+            "first": "RELAY_OUTPUT",
+            "second": "-7905701547024330020",
+            "third": "EASY",
+            "observedAtMillis": 1791226039566
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "RELAY_OUTPUT",
+          "profile": "EASY",
+          "ordinal": 1,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/RELAY_OUTPUT/6507470411226352201",
+          "predecessorReplay": "tsj-alpha/4/EASY/RELAY_OUTPUT/-7905701547024330020",
+          "seconds": 7.588715900084935,
+          "elapsedSeconds": 7.588694800040685,
+          "observedCandidates": [
+            1
+          ],
+          "maxObservedUnits": 77,
+          "launchAction": {
+            "token": 77,
+            "view": 115,
+            "name": "random",
+            "first": "RELAY_OUTPUT",
+            "second": "6507470411226352201",
+            "third": "EASY",
+            "observedAtMillis": 1791226050669
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "RELAY_OUTPUT",
+          "profile": "EASY",
+          "ordinal": 2,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/RELAY_OUTPUT/4892098230051497920",
+          "predecessorReplay": "tsj-alpha/4/EASY/RELAY_OUTPUT/6507470411226352201",
+          "seconds": 6.843373300042003,
+          "elapsedSeconds": 6.843350799987093,
+          "observedCandidates": [
+            1
+          ],
+          "maxObservedUnits": 77,
+          "launchAction": {
+            "token": 81,
+            "view": 121,
+            "name": "random",
+            "first": "RELAY_OUTPUT",
+            "second": "4892098230051497920",
+            "third": "EASY",
+            "observedAtMillis": 1791226061691
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "SENSOR_CONTROL",
+          "profile": "EASY",
+          "ordinal": 0,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/SENSOR_CONTROL/2598764088436452276",
+          "predecessorReplay": "tsj-alpha/4/EASY/RELAY_OUTPUT/4892098230051497920",
+          "seconds": 1.5866258000023663,
+          "elapsedSeconds": 1.5866151000373065,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 152,
+          "launchAction": {
+            "token": 85,
+            "view": 127,
+            "name": "random",
+            "first": "SENSOR_CONTROL",
+            "second": "2598764088436452276",
+            "third": "EASY",
+            "observedAtMillis": 1791226071721
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "SENSOR_CONTROL",
+          "profile": "EASY",
+          "ordinal": 1,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/SENSOR_CONTROL/-5174054869683767758",
+          "predecessorReplay": "tsj-alpha/4/EASY/SENSOR_CONTROL/2598764088436452276",
+          "seconds": 1.8813945000292733,
+          "elapsedSeconds": 1.8813826000550762,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 153,
+          "launchAction": {
+            "token": 89,
+            "view": 133,
+            "name": "random",
+            "first": "SENSOR_CONTROL",
+            "second": "-5174054869683767758",
+            "third": "EASY",
+            "observedAtMillis": 1791226073676
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "SENSOR_CONTROL",
+          "profile": "EASY",
+          "ordinal": 2,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/SENSOR_CONTROL/2452934080993440576",
+          "predecessorReplay": "tsj-alpha/4/EASY/SENSOR_CONTROL/-5174054869683767758",
+          "seconds": 1.6431869000662118,
+          "elapsedSeconds": 1.6431723999558017,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 104,
+          "launchAction": {
+            "token": 93,
+            "view": 139,
+            "name": "random",
+            "first": "SENSOR_CONTROL",
+            "second": "2452934080993440576",
+            "third": "EASY",
+            "observedAtMillis": 1791226075931
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "RB15_CONTROL",
+          "profile": "EASY",
+          "ordinal": 0,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/RB15_CONTROL/6588397576091335128",
+          "predecessorReplay": "tsj-alpha/4/EASY/SENSOR_CONTROL/2452934080993440576",
+          "seconds": 13.262028399971314,
+          "elapsedSeconds": 13.261992099927738,
+          "observedCandidates": [
+            1
+          ],
+          "maxObservedUnits": 86,
+          "launchAction": {
+            "token": 97,
+            "view": 145,
+            "name": "random",
+            "first": "RB15_CONTROL",
+            "second": "6588397576091335128",
+            "third": "EASY",
+            "observedAtMillis": 1791226077967
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "RB15_CONTROL",
+          "profile": "EASY",
+          "ordinal": 1,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/RB15_CONTROL/1405888542556218187",
+          "predecessorReplay": "tsj-alpha/4/EASY/RB15_CONTROL/6588397576091335128",
+          "seconds": 13.373858600039966,
+          "elapsedSeconds": 13.373830600059591,
+          "observedCandidates": [
+            1
+          ],
+          "maxObservedUnits": 89,
+          "launchAction": {
+            "token": 101,
+            "view": 151,
+            "name": "random",
+            "first": "RB15_CONTROL",
+            "second": "1405888542556218187",
+            "third": "EASY",
+            "observedAtMillis": 1791226095348
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "RB15_CONTROL",
+          "profile": "EASY",
+          "ordinal": 2,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/RB15_CONTROL/-5167108061744995845",
+          "predecessorReplay": "tsj-alpha/4/EASY/RB15_CONTROL/1405888542556218187",
+          "seconds": 10.624784199986607,
+          "elapsedSeconds": 10.624757000012323,
+          "observedCandidates": [
+            1
+          ],
+          "maxObservedUnits": 80,
+          "launchAction": {
+            "token": 105,
+            "view": 157,
+            "name": "random",
+            "first": "RB15_CONTROL",
+            "second": "-5167108061744995845",
+            "third": "EASY",
+            "observedAtMillis": 1791226114044
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "COMPOSED_CONTROLLED_INDICATOR",
+          "profile": "MEDIUM",
+          "ordinal": 0,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/-4945697334310681062",
+          "predecessorReplay": "tsj-alpha/4/EASY/RB15_CONTROL/-5167108061744995845",
+          "seconds": 3.3193542000371963,
+          "elapsedSeconds": 3.3193341000005603,
+          "observedCandidates": [
+            1
+          ],
+          "maxObservedUnits": 613,
+          "launchAction": {
+            "token": 109,
+            "view": 163,
+            "name": "random",
+            "first": "COMPOSED_CONTROLLED_INDICATOR",
+            "second": "-4945697334310681062",
+            "third": "MEDIUM",
+            "observedAtMillis": 1791226129905
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "COMPOSED_CONTROLLED_INDICATOR",
+          "profile": "MEDIUM",
+          "ordinal": 1,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/3381353809674222860",
+          "predecessorReplay": "tsj-alpha/4/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/-4945697334310681062",
+          "seconds": 4.028811399941333,
+          "elapsedSeconds": 4.028793899924494,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 609,
+          "launchAction": {
+            "token": 113,
+            "view": 169,
+            "name": "random",
+            "first": "COMPOSED_CONTROLLED_INDICATOR",
+            "second": "3381353809674222860",
+            "third": "MEDIUM",
+            "observedAtMillis": 1791226134156
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "COMPOSED_CONTROLLED_INDICATOR",
+          "profile": "MEDIUM",
+          "ordinal": 2,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/2321772501107475201",
+          "predecessorReplay": "tsj-alpha/4/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/3381353809674222860",
+          "seconds": 3.881836500018835,
+          "elapsedSeconds": 3.881819100002758,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 612,
+          "launchAction": {
+            "token": 117,
+            "view": 175,
+            "name": "random",
+            "first": "COMPOSED_CONTROLLED_INDICATOR",
+            "second": "2321772501107475201",
+            "third": "MEDIUM",
+            "observedAtMillis": 1791226138569
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "RB30_CONTROL",
+          "profile": "MEDIUM",
+          "ordinal": 0,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/MEDIUM/RB30_CONTROL/-8185178356070116267",
+          "predecessorReplay": "tsj-alpha/4/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/2321772501107475201",
+          "seconds": 83.33916219999082,
+          "elapsedSeconds": 83.3390791999409,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 475,
+          "launchAction": {
+            "token": 121,
+            "view": 181,
+            "name": "random",
+            "first": "RB30_CONTROL",
+            "second": "-8185178356070116267",
+            "third": "MEDIUM",
+            "observedAtMillis": 1791226142843
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "RB30_CONTROL",
+          "profile": "MEDIUM",
+          "ordinal": 1,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/MEDIUM/RB30_CONTROL/-4179472768270835489",
+          "predecessorReplay": "tsj-alpha/4/MEDIUM/RB30_CONTROL/-8185178356070116267",
+          "seconds": 79.18583840003703,
+          "elapsedSeconds": 79.18576070002746,
+          "observedCandidates": [
+            1
+          ],
+          "maxObservedUnits": 477,
+          "launchAction": {
+            "token": 125,
+            "view": 187,
+            "name": "random",
+            "first": "RB30_CONTROL",
+            "second": "-4179472768270835489",
+            "third": "MEDIUM",
+            "observedAtMillis": 1791226227117
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        },
+        {
+          "family": "RB30_CONTROL",
+          "profile": "MEDIUM",
+          "ordinal": 2,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/MEDIUM/RB30_CONTROL/-4821226027617091532",
+          "predecessorReplay": "tsj-alpha/4/MEDIUM/RB30_CONTROL/-4179472768270835489",
+          "seconds": 26.470854700077325,
+          "elapsedSeconds": 26.4708149000071,
+          "observedCandidates": [
+            1
+          ],
+          "maxObservedUnits": 258,
+          "launchAction": {
+            "token": 129,
+            "view": 193,
+            "name": "random",
+            "first": "RB30_CONTROL",
+            "second": "-4821226027617091532",
+            "third": "MEDIUM",
+            "observedAtMillis": 1791226307425
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        }
+      ],
+      "replays": [
+        {
+          "family": "RELAY_OUTPUT",
+          "profile": "EASY",
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/EASY/RELAY_OUTPUT/4892098230051497920",
+          "seconds": 6.909944699960761,
+          "elapsedSeconds": 6.909921300015412,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 77,
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "isolated": true
+        },
+        {
+          "family": "COMPOSED_CONTROLLED_INDICATOR",
+          "profile": "MEDIUM",
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/2321772501107475201",
+          "seconds": 3.8870602999813855,
+          "elapsedSeconds": 3.887042499962263,
+          "observedCandidates": [
+            1
+          ],
+          "maxObservedUnits": 611,
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "isolated": true
+        }
+      ],
+      "normalQ30Replay": {
+        "family": "RB30_CONTROL",
+        "profile": "MEDIUM",
+        "outcome": "PASS",
+        "replay": "tsj-alpha/4/MEDIUM/RB30_CONTROL/-4821226027617091532",
+        "seconds": 5.133623799891211,
+        "elapsedSeconds": 5.133605899987742,
+        "observedCandidates": [
+          0,
+          1
+        ],
+        "maxObservedUnits": 28,
+        "selectedJobBudgetMillis": 90000,
+        "replayRole": "ACCEPTED_REQUEST",
+        "isolated": true
+      },
+      "staleReplayEpoch": {
+        "replay": "tsj-alpha/3/MEDIUM/RB30_CONTROL/13",
+        "outcome": "EXPECTED_REJECTED",
+        "message": "Unsupported replay identity or epoch",
+        "screen": "MENU",
+        "predecessorReplay": "tsj-alpha/4/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/2321772501107475201",
+        "predecessorIsolated": true,
+        "noGenerationStarted": true,
+        "prelaunchStateUnchanged": true
+      },
+      "errors": []
+    },
+    {
+      "label": "r3",
+      "scope": "Q30_DIAGNOSIS_ONLY",
+      "status": "DIAGNOSTIC_PASS",
+      "operationMs": 28935,
+      "hostCleanupMs": 0,
+      "hostExitCode": 0,
+      "inputsUnchanged": true,
+      "browserAndServerCleanup": {
+        "seconds": 1.0293126000324264,
+        "serverStopped": true,
+        "portClosed": true,
+        "ownedSurvivors": []
+      },
+      "cases": [
+        {
+          "family": "RB30_CONTROL",
+          "profile": "MEDIUM",
+          "ordinal": 0,
+          "outcome": "PASS",
+          "replay": "tsj-alpha/4/MEDIUM/RB30_CONTROL/-4821226027617091532",
+          "predecessorReplay": null,
+          "seconds": 24.87438060005661,
+          "elapsedSeconds": 24.874337700079195,
+          "observedCandidates": [
+            0,
+            1
+          ],
+          "maxObservedUnits": 258,
+          "launchAction": {
+            "token": 1,
+            "view": 1,
+            "name": "launch",
+            "first": "RB30_CONTROL",
+            "second": "-4821226027617091532",
+            "third": "MEDIUM",
+            "observedAtMillis": 1791226438908
+          },
+          "selectedJobBudgetMillis": 90000,
+          "replayRole": "ACCEPTED_REQUEST",
+          "privateMetadataAbsent": true
+        }
+      ],
+      "replays": [],
+      "normalQ30Replay": null,
+      "staleReplayEpoch": null,
+      "errors": []
+    }
+  ],
+  "focusedTests": {
+    "status": "PASS",
+    "tests": 4,
+    "skips": 0,
+    "seconds": 1.8652083999477327,
+    "testedSources": 24
+  },
+  "laterResourceObservation": {
+    "scope": "Later resource absence observation only; not in-window release or Q30 acceptance",
+    "status": "PASS_LATER_OBSERVATION_ONLY",
+    "originalStrictAuditStatus": "BLOCKED",
+    "observedWithinWindow": false,
+    "quietWindowEndUtc": "2026-10-05T16:32:46.188302Z",
+    "observedUtc": "2026-10-05T18:53:00.586754Z",
+    "counts": {
+      "recordedInstances": 809,
+      "absent": 809,
+      "liveExactMatches": 0,
+      "unresolved": 0,
+      "recordedPorts": 77,
+      "portsClosed": 77,
+      "casesCleanupVerified": 77
+    }
+  },
+  "continuationResources": {
+    "status": "PASS_SCOPED_ABSENCE",
+    "observedUtc": "2026-10-05T18:56:07.683462+00:00",
+    "recordedInstances": 40,
+    "counts": {
+      "ABSENT": 40
+    },
+    "ports": [
+      {
+        "port": 53902,
+        "closed": true
+      },
+      {
+        "port": 56867,
+        "closed": true
+      },
+      {
+        "port": 62092,
+        "closed": true
+      },
+      {
+        "port": 61779,
+        "closed": true
+      },
+      {
+        "port": 64369,
+        "closed": true
+      }
+    ],
+    "terminationUsed": false
+  },
+  "originalFailure": {
+    "status": "PRESERVED_UNREPRODUCED",
+    "seconds": 91.615965,
+    "failedSeed": "UNKNOWN",
+    "observedCandidatesMeaning": "0 initial/no candidate; 1 first candidate, not two attempts",
+    "priorReplayRole": "PREDECESSOR_ACCEPTED_BOARD",
+    "productionCause": "NOT_PROVED"
+  },
+  "preservation": {
+    "oldRawPins": 60,
+    "checkpointRawPins": 61,
+    "originalUntracked": 8,
+    "status": "PASS_KNOWN_NAMED_BYTES_ONLY",
+    "gap": "Six previously removed generated scratch directories lack prior names/content inventories. No deletion in this continuation."
+  },
+  "remaining": [
+    "Parent independent acceptance review",
+    "Original timing failure cause remains unproved",
+    "Original in-window release observation remains missing; later observation cannot replace it",
+    "General warm timing distribution and prior visible-flow limitations remain"
+  ],
+  "unstarted": [
+    "U06",
+    "U07",
+    "Q60"
+  ],
+  "publication": "NOT_REQUESTED_NO_PUSH_NO_EMAIL"
+}

@@ -25,17 +25,22 @@ cleanup and five inspected screenshots. Final selected-host workflow PASS88/88
 under23 exact source hashes. Final reuse audit confirms unchanged public/private
 compiler inputs, nine jars and357+6 compiled/deployment files.
 
-Q30 acceptance is blocked. The private menu gate passed31 launches then failed
-on the second random RB30 launch (ERROR91.616s, selected90,000ms budget).
-Failed seed UNKNOWN; its retained replay is the predecessor accepted request.
-Remaining launch and all required replay/stale/full-privacy checks NOT RUN.
-Subsequent diagnostic logging is source-tested only. Release proves809 old
-instances absent/77 ports closed but remains BLOCKED after the approved
-16:32:46.188302Z quiet end. No cold rerun or changed application limit.
-See [final checkpoint packet](simplification-20261005/README.md) for exact
-epochs, limits, remaining gates and preservation uncertainty: six removed
-scratch directories have no prior content inventory, though60 named raw pins
-and all8 original untracked files are byte-verified.
+The latest private menu retry passes33/33 launches, three replays, stale-v3
+rejection before mutation, privacy and native process/listener cleanup. New
+bounded Q30 diagnostics record exact action arguments, progress and error
+messages. Focused4/4 checks pass, including real native listener open/closed
+canaries. `DIAGNOSTIC_PASS` cannot qualify a full menu. The prior91.616s failure
+remains preserved/unreproduced; its failed seed and cause are unknown.
+
+Q30 remains NOT ACCEPTED and disabled. The explicitly later resource check
+proves809 recorded cold instances absent/77 ports closed; the original strict
+in-window release remains BLOCKED. General warm reliability and prior visible
+limits remain for parent review. Production source/build inputs are unchanged;
+accepted suites were not rerun. Known60+61 raw pins/all8 untracked files passed
+preservation audit; six previously removed scratch-directory inventories remain
+missing. See the [current packet](menu-diagnosis-20261005/README.md) for exact
+epochs, commands, evidence and limits; the [prior packet](simplification-20261005/README.md)
+retains the original failures and checkpoint.
 
 ## Maintained entrypoints and ownership
 

@@ -1,4 +1,57 @@
-# Current checkpoint: Q30 workflow delivered; acceptance blocked
+# Current checkpoint: Q30 private menu passes; acceptance remains pending
+
+2026-10-05. Branch `codex/q30-multirail-qualification`; checkpoint base
+`781f94750fe3d91757bef702b4a353b037ed86ef`. Production remains
+`c621b55d2b071e064d5afd383451d2715e35940d`,1,355 unchanged raw inputs,
+identity `87bb04f707ccaf57f92c5d38fdbf4db199d63359c573725fd34bac61484226d7`.
+Q30 DISABLED / NOT ACCEPTED. Parent owns acceptance. U06/U07/Q60 unstarted;
+no push/publication/email/deletion/global PC change/restart/new cold cohort.
+
+Delivered exact public launch tracing, persisted progress/error evidence,
+bounded Q30-only diagnosis and ordinary exact-seed UI replay in the maintained
+menu helper. Fixed cleanup to require native owned PS7 listener absence and
+pin its consumed owner. No production/public save/replay/physics/budget change.
+Initial focused4/4 and final maintained4/4 PASS; final1.865s,zero skips/errors,
+all24 tested source hashes unchanged. Root reviewed integrated helper changes;
+no separate reviewer/delegation used in this continuation.
+
+Fresh subset PASS2/2 at84.783/86.142s. One retry of the previously failed full
+menu gate PASS33/33 across11 families, three replays, stale-v3 rejection before
+mutation, privacy/zero page errors and owned cleanup. Q30 launches83.339,
+79.186,26.471s; full outer425.236s, browser/server cleanup1.261s, outer CLI0.
+Fresh ordinary exact-seed command PASS24.874s. Each run verifies raw,
+jar, private catalog delta and357+6 compiled/deployment hashes before/after.
+No native/GWT/compiled/cold77 suite rerun. Prior actual build/source archive/
+headed UI10 retain their audited epochs and stated visual limits. These new
+headless menu checks are not fresh visible repair evidence.
+
+Original menu failure91.616s/max447 units remains preserved and unreproduced.
+Named retained-artifact search recovered no failed seed. The old replay belongs
+to its predecessor; public `[0,1]` means no candidate then first candidate.
+Old terminal phase/outcome were not saved. Five new random Q30 launches passed;
+no production cause/fix, population p95 or broad warm reliability is claimed.
+90s/640 units/5s remain unchanged; the observation margin is not a product cap.
+
+Later resource observation at18:53:00.586754Z proves809 cold instances absent/
+77 ports closed. It is explicitly later-only; the original strict release
+remains BLOCKED after16:32:46.188302Z. Final current continuation audit PASS40
+instances absent/five ports closed, no termination/no whole-desktop idle claim.
+Known60+61 raw pins/all8 original untracked bytes/four scratch files unchanged.
+Six previously removed scratch directories have no prior names/content
+inventories; that preservation gap remains. No evidence deleted this turn.
+
+Evidence: [menu diagnosis packet](task-evidence/Q30/qualification-workflow/menu-diagnosis-20261005/README.md).
+Retained roots: task workspace `qualification-menu-diagnosis-20261005-r1`,
+OS-temp `q30-menu-diagnosis-ifuqn3fr`, final focused tests
+`q30-workflow-tests-60pvq2_j`, unchanged private app `q30-simplification-final-d7iuck_h`.
+Raw receipts, source epochs, exact commands and local commit live in the
+restartable handoff. Next: parent independent acceptance review of remaining
+timing/release/visual limits; no further unchanged suite rerun is justified.
+No task-owned persistent process remains among recorded instances.
+
+---
+
+# Historical checkpoint: Q30 workflow delivered; acceptance blocked
 
 2026-10-05. Branch `codex/q30-multirail-qualification`; local checkpoint base
 `07a183b83e36ba0118a70294454c605dd6f4a42b`. Production candidate remains

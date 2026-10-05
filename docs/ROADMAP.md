@@ -7,23 +7,22 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Q30 workflow delivered; private menu FAIL/release BLOCKED; NOT ACCEPTED**
-**Current continuation (2026-10-05):** C621 /1,355 production inputs unchanged.
-Shared native PID/birth owner, bounded job runner, strict source manifests and
-named phases delivered; selected-host workflow PASS88/88/23 source hashes.
-Retained full native/compiled/GWT/cold77 PASS reused after exact input audit;
-worst cold85.003s, unchanged90s/640/5s. Release809 gone/77 ports closed but
-BLOCKED after the approved window. Actual private JDK8/GWT5 build PASS87.495s;
-private1,355-member source archive PASS. Headed native UI10 real20/30/40 repair/
-retest PASS with outer CLI0/full served-input hashes/cleanup/five screenshots.
-Private menu FAIL after31 passed launches; second random Q30 launch ERROR91.616s,
-failed seed not captured; remaining menu/replay/stale/full-privacy NOT RUN.
-Normal Q30 disabled; parent acceptance pending; U06/U07/Q60 unstarted.
-Known60 raw pins/all8 untracked bytes checked. Six worker-removed scratch
-directories lack prior content inventories; preservation uncertainty disclosed.
-No push/email/global PC change/restart/new cold cohort.
-See [current checkpoint](CODEX_TASK_REPORT.md) and
-[workflow packet](task-evidence/Q30/qualification-workflow/simplification-20261005/README.md).
+**Current task:** **Q30 private menu PASS; acceptance pending; normal play disabled**
+**Current continuation (2026-10-05):** C621/1,355 production inputs unchanged.
+Minimal harness correction retains exact seed/progress/error identity and requires
+native listener absence. Focused4/4 PASS; one failed-menu gate retry PASS33/33,
+three replays/stale rejection/privacy/cleanup. Q30 launch times83.339/79.186/26.471s,
+unchanged90s/640/5s. Two additional random diagnostics and one exact-seed input
+pass. Original91.616s failure preserved, failed seed/cause remain unknown;
+no production performance fix or general warm reliability claim.
+Prior native/compiled/GWT/cold77/private archive/headed UI10 reused after exact
+input audit, with original epochs/limits. Later resource observation proves
+809 gone/77 closed; original in-window release remains BLOCKED. Current40
+instances gone/five ports closed. Known60+61 raw pins/all8 original untracked
+bytes preserved; six prior deleted scratch-directory inventories remain missing.
+Parent acceptance review pending. U06/U07/Q60 unstarted; no push/email/deletion/
+new cold cohort/global PC change/restart. See [checkpoint](CODEX_TASK_REPORT.md)
+and [current packet](task-evidence/Q30/qualification-workflow/menu-diagnosis-20261005/README.md).
 
 **Historical verifier timing continuation (2026-10-05):** Fresh pre-fix native 83/append 26,
 standard/isolated GWT5, four canaries and source archive passed, then full
@@ -2812,19 +2811,18 @@ Times for seeds 7/13/64 are 86.809/93.243/82.580 seconds, with exact proof/work
 parity against their controls. One still exceeds 90 seconds; no full-corpus
 normal acceptance or broad scale claim follows from this small comparison.
 
-**Current candidate (2026-10-05):** c621b55d production inputs unchanged;
-native83/append26/isolated+shipping GWT5/compiled31/disabled-menu/cold77 PASS
-under their consumed source. Cold77/controller77/77/worst85.003s under90s/640/5s.
-Corrected release809 old instances absent/77 closed ports but BLOCKED after the
-approved quiet end; old R5 unknown-image result preserved. Private one-delta
-JDK8/GWT5 build and1,355-member source archive PASS. Real headed20/30/40 repair/
-LOW-HIGH/customer retest PASS with durable outerCLI0/unchanged1,526 served inputs/
-cleanup/five inspected screenshots. Private menu FAIL:31 launches pass then
-second random Q30 launch ERROR91.616s; failed seed UNKNOWN, all required replay/
-stale/full-privacy checks NOT RUN. Workflow88/88 and final source/resource audits
-PASS; preservation has six deleted scratch-directory inventories missing.
-Parent acceptance pending, normal Q30 disabled, U06/U07/Q60 unstarted.
-[Current workflow checkpoint](task-evidence/Q30/qualification-workflow/simplification-20261005/README.md).
+**Current candidate (2026-10-05):** C621 production inputs unchanged.
+Retained native83/append26/GWT5/compiled31/cold77/private build/archive/headed
+UI10 keep their audited source epochs and limits. Fresh private menu PASS33/33,
+three replays/stale rejection/privacy/cleanup; Q30 times83.339/79.186/26.471s
+under unchanged90s/640/5s. Exact identity logging and native listener proof
+pass focused4/4. Original91.616s failure remains preserved/unreproduced with
+unknown failed seed/cause; broad warm reliability is not established. Later
+resource observation proves809 cold instances absent/77 ports closed, but
+the original in-window release remains BLOCKED. Six earlier removed scratch
+directories lack prior content inventories. Parent acceptance pending; normal
+Q30 disabled; U06/U07/Q60 unstarted.
+[Current menu diagnosis packet](task-evidence/Q30/qualification-workflow/menu-diagnosis-20261005/README.md).
 
 **Historical active-readiness checkpoint:**
 Q30 remains BLOCKED / NOT ACCEPTED under its unchanged original scope.

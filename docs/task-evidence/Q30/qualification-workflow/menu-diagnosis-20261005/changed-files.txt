@@ -1,0 +1,12 @@
+docs/CODEX_TASK_REPORT.md
+docs/ROADMAP.md
+docs/task-evidence/Q30/qualification-workflow/README.md
+docs/task-evidence/Q30/qualification-workflow/private_menu.py
+docs/task-evidence/Q30/qualification-workflow/qualify.py
+docs/task-evidence/Q30/qualification-workflow/run_workflow_tests.py
+docs/task-evidence/Q30/qualification-workflow/test_private_menu.py
+docs/task-evidence/Q30/qualification-workflow/menu-diagnosis-20261005/README.md
+docs/task-evidence/Q30/qualification-workflow/menu-diagnosis-20261005/gate-summary.json
+docs/task-evidence/Q30/qualification-workflow/menu-diagnosis-20261005/tested-sources.json
+docs/task-evidence/Q30/qualification-workflow/menu-diagnosis-20261005/evidence-hashes.json
+docs/task-evidence/Q30/qualification-workflow/menu-diagnosis-20261005/changed-files.txt

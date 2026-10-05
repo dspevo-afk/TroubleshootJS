@@ -417,7 +417,7 @@ def _workflow_names(phase: str):
     if phase.startswith("private-"):
         names.append("private_qualification.py")
         if phase == "private-menu":
-            names.append("private_menu.py")
+            names.extend(("private_menu.py", "audit_release.py"))
     if phase == "visible":
         names.append("visible_repair.py")
     return tuple(dict.fromkeys(names))
