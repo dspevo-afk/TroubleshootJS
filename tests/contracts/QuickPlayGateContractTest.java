@@ -128,10 +128,11 @@ public final class QuickPlayGateContractTest {
         Vector<String> catalog = PlayerFamilyCatalog.families();
         Vector<String> expected = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
         expected.add(ControlledIndicatorBlockContributions.FAMILY_ID);
-        check(catalog.size() == 10 && catalog.equals(expected),
-            "Current menu retains the qualified families while Q30 is blocked");
+        expected.add(Rb30Plan.FAMILY_ID);
+        check(catalog.size() == 11 && catalog.equals(expected),
+            "Current menu includes accepted Q30 after the existing qualified families");
         check(PlayerFamilyCatalog.registeredFamilies().contains(Rb30Plan.FAMILY_ID),
-            "Blocked Q30 retains its registered construction capability");
+            "Enabled Q30 retains its registered construction capability");
         int leafCount = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds().size();
         for (int i = 0; i < catalog.size(); i++) {
             String family = catalog.get(i);
@@ -155,14 +156,15 @@ public final class QuickPlayGateContractTest {
                 check(rejected && !QuickPlayFamilyRegistry.isNormalPlayerEligible(family),
                     "Staged catalog family crossed the synchronous generator boundary");
             }
-            check(staged.getExecutionPolicy() == GenerationExecutionPolicy.SMALL_BOARD,
-                "Small or composed family received a different execution contract");
+            check(staged.getExecutionPolicy() == (Rb30Plan.FAMILY_ID.equals(family) ?
+                    GenerationExecutionPolicy.NORMAL_MEDIUM : GenerationExecutionPolicy.SMALL_BOARD),
+                "Catalog family received a different execution contract");
         }
         GenerationRequest registered = GenerationRequest.stagedQuickPlay(
             new QuickPlaySelection(Rb30Plan.FAMILY_ID, Long.MIN_VALUE));
         check(registered.getExecutionPolicy() == GenerationExecutionPolicy.NORMAL_MEDIUM &&
             MediumBoardNormalAdmission.IDENTITY.equals(registered.getRequiredPhysicalAdmissionIdentity()),
-            "Registered Q30 retains medium request semantics without player eligibility");
+            "Enabled Q30 retains its qualified medium request semantics");
     }
 
     private static void session() {

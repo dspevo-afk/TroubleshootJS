@@ -1,0 +1,69 @@
+{
+  "status": "PASS_LOCAL_Q30_ENABLED",
+  "baseHead": "09b79b3172dffa68b4d6df76001db35cf2e0ada8",
+  "acceptedQualificationCommit": "09b79b3172dffa68b4d6df76001db35cf2e0ada8",
+  "normalQ30Enabled": true,
+  "remotePublication": false,
+  "catalogFamilies": 11,
+  "nativeFinal": {
+    "suites": [
+      "StagedFamilyRegistrationContractTest",
+      "QuickPlayContractTest",
+      "QuickPlayGateContractTest",
+      "U04SessionContractTest"
+    ],
+    "status": "PASS",
+    "operationMs": 32855
+  },
+  "productionBuild": {
+    "status": "PASS",
+    "command": "scripts/build.ps1 -JavaHome <pinned JDK8> -Target Compile -Style OBF",
+    "permutations": 5,
+    "operationMs": 78467,
+    "startedUtc": "2026-10-05T21:49:30.575002Z",
+    "finishedUtc": "2026-10-05T21:50:49.228396Z"
+  },
+  "takeoffOwnerReportedRuntimeEndUtc": "2026-10-05T21:47:56Z",
+  "normalQuickPlay": {
+    "status": "PASS",
+    "case": {
+      "family": "RB30_CONTROL",
+      "profile": "MEDIUM",
+      "action": "New board",
+      "replay": "tsj-alpha/4/MEDIUM/RB30_CONTROL/6846712061374042181",
+      "acceptedSeed": "6846712061374042181",
+      "ticketObservationSeconds": 68.34791330003645,
+      "metric": "Host click-to-visible-ticket observation, not exact GenerationJob timing",
+      "outcome": "PASS",
+      "privateMetadataAbsent": true
+    },
+    "launcherBootstrapReplay": "tsj-alpha/4/EASY/PARALLEL_DUAL_INDICATOR/2555740469588870651",
+    "operationSeconds": 83.09686299995519,
+    "cleanupSeconds": 1.460226400056854,
+    "gameFunctionsCalled": false,
+    "pageEvaluateUsed": false,
+    "visibleWindowProven": true,
+    "servedInputInventory": {
+      "beforeSha256": "6c6c6c0be26e8312babf08ce84ab35638594bee13f003c11a8d3ff6da513f66e",
+      "afterSha256": "6c6c6c0be26e8312babf08ce84ab35638594bee13f003c11a8d3ff6da513f66e",
+      "fileCount": 1526
+    }
+  },
+  "preservedFirstSmoke": {
+    "status": "FAIL_OBSERVER_EXPECTATION",
+    "productResult": "Launcher opened a customer ticket as designed.",
+    "cause": "Check incorrectly expected menu immediately at tsjQuickPlay=true.",
+    "correction": "Use the ticket Main menu button before selecting MEDIUM/Q30.",
+    "Q30ExplicitLaunches": 0,
+    "cleanup": "PASS"
+  },
+  "limits": {
+    "jobMs": 90000,
+    "workUnits": 640,
+    "activeOperationMs": 5000
+  },
+  "rawPins": 56,
+  "originalUntrackedPreserved": 8,
+  "evidenceDeleted": false,
+  "review": "Root integrated diff; read-only lookup identified affected current catalog assertions. Parent independent acceptance already recorded; no new acceptance review/corpus."
+}

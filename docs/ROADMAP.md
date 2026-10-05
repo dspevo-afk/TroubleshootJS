@@ -7,7 +7,17 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Q30 private menu PASS; acceptance pending; normal play disabled**
+**Current task:** **Q30 ACCEPTED and enabled locally; U06/U07/Q60 unstarted**
+Parent accepted qualification at09b79b31 within the documented host/frozen-corpus
+scope. Normal warm77/77 pairs/154 attempts closes the remaining gate. Local
+catalog enablement, four affected native suites, actual JDK8/GWT5 production
+build and one visible normal Q30 New board check PASS. No corpus rerun or
+remote push/publication/distribution/email. Historical late-release BLOCKED,
+unknown91.616s failure and six missing inventories remain disclosed; no general
+random reliability or modest-host claim. [Current checkpoint](CODEX_TASK_REPORT.md)
+and [local enablement](task-evidence/Q30/qualification-workflow/local-enablement-20261005/README.md).
+
+**Historical menu checkpoint:** **Q30 private menu PASS; acceptance pending; normal play disabled**
 **Current continuation (2026-10-05):** C621/1,355 production inputs unchanged.
 Minimal harness correction retains exact seed/progress/error identity and requires
 native listener absence. Focused4/4 PASS; one failed-menu gate retry PASS33/33,
@@ -605,7 +615,7 @@ For this first fixture the sensor/interlock is an externally player-operated low
 
 A low-voltage board with a 12 V source, 5 V regulated/control rail, two sensor channels, two output drivers, indication and real connectors. The allocation is 4 entry/protection parts, 4 regulator/filter parts, 8 sensor-conditioning parts, 10 dual-driver/output parts, 2 status parts and 2 additional connectors: **30 physical packages**.
 
-Required structural variants include alternative BJT/MOSFET driver populations and at least two accepted sensor/reference arrangements. The 5 V rail must be produced by the modeled regulator, not an unrelated external ideal rail. The preserved Q30 implementation has 33/35/37-part procedural variants, including partial-power and loading cases; Q30 is BLOCKED / NOT ACCEPTED and normal publication is disabled. This does not claim arbitrary support across 20–40 parts, and it is not satisfied by merely instantiating RB15 twice with no interaction.
+Required structural variants include alternative BJT/MOSFET driver populations and at least two accepted sensor/reference arrangements. The 5 V rail must be produced by the modeled regulator, not an unrelated external ideal rail. The accepted plan-4 Q30 implementation provides purposeful 20-40-part procedural variants, retaining 33/35/37-part regression fixtures and partial-power/loading cases. Qualification is bounded by the documented host and frozen corpus; it does not claim unrestricted random reliability and is not satisfied by merely instantiating RB15 twice with no interaction.
 
 ## 4.5 RB56: the 50-60-part appliance/control north star
 
@@ -1004,11 +1014,11 @@ Every enabled instrument declares electrical connection/stimulus, burden/loading
 
 ## 7.1 Status and authority
 
-T49, N00, A01-A11, R00, P01-P09, U01, E01-E04, Q15, U02, U03, U04, U05, D01 and REL-A were recorded accepted/completed at the E02/E04/D01 publication: 35 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. The historical non-catalog post-P09 follow-up covered procedural layouts for the nine then-current normal families and resistor shop/formation; SENSOR_CONTROL subsequently made ten family/profile pairs and required its own fresh catalog evidence. U02/U03 provide the bounded solver-time meter/scope boundary. Q30 remains implemented but BLOCKED / NOT ACCEPTED; U06 and U07 remain unstarted pending its acceptance. Only currently implemented EASY/MEDIUM content is qualified; unavailable difficulties remain deferred. P08 current isolated CLI runs satisfy unchanged ownership/cleanup gates; earlier unqualified launch attempts remain separately recorded.
+T49, N00, A01-A11, R00, P01-P09, U01, E01-E04, Q15, U02, U03, U04, U05, D01 and REL-A were recorded accepted/completed at the E02/E04/D01 publication: 35 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. The historical non-catalog post-P09 follow-up covered procedural layouts for the nine then-current normal families and resistor shop/formation; SENSOR_CONTROL subsequently made ten family/profile pairs and required its own fresh catalog evidence. U02/U03 provide the bounded solver-time meter/scope boundary. Q30 is now accepted within its documented host/corpus scope; U06 and U07 remain unstarted. Only currently implemented EASY/MEDIUM content is qualified; unavailable difficulties remain deferred. P08 current isolated CLI runs satisfy unchanged ownership/cleanup gates; earlier unqualified launch attempts remain separately recorded.
 
 A task-specific prompt authorizes a bounded scope. Follow current AGENTS.md for orchestration, ownership, review, publication and safety; R00 replaced its contradictory blanket compatibility wording under the owner's explicit instruction. A current correct requirement outranks an obsolete test. Do not start writers before relevant shared-interface investigations are reconciled.
 
-The hard prerequisites on the cards are authoritative. The phase map is a readable sequence, not a second conflicting dependency system. Conditional capabilities are resolved per Section 8. All future foundation expansion descends from R00; this prevents another active writer from extending the old contract while it is being retired. Q30 is BLOCKED / NOT ACCEPTED; the repair does not authorize later milestones.
+The hard prerequisites on the cards are authoritative. The phase map is a readable sequence, not a second conflicting dependency system. Conditional capabilities are resolved per Section 8. All future foundation expansion descends from R00; this prevents another active writer from extending the old contract while it is being retired. Q30 is accepted within its documented scope; later milestones require parent coordination.
 
 ## 7.2 Preferred Execution Order
 
@@ -1022,8 +1032,8 @@ preferred next eligible milestone. Future implementation needs its own authoriza
 **Already complete:** T49, N00, A01-A11, R00, P01-P09, U01, E01-E04, Q15, U02, U03, U04, U05, D01 and REL-A. A10 and A11 ran earlier
 than the old preferred order while satisfying their hard prerequisites: A10
 required A05/A07/A09/P02; A11 required A04/A08/A09. Their earlier placement does
-not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 → Q15 → U04 → U05 → REL-A → U02/U03 → E02 → E04 → D01 is complete. Q30 remains BLOCKED / NOT ACCEPTED.
-**Current milestone: Q30 — BLOCKED / NOT ACCEPTED.** The generic-generation and 90-second acceptance repair preserves the working family. Historical normal-player passes under a 300-second policy do not satisfy the frozen budget. U06, U07, Q60 and later milestones remain unstarted. Pending visual/FPS/tray work remains preserved.
+not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 → Q15 → U04 → U05 → REL-A → U02/U03 → E02 → E04 → D01 is complete. Q30 is now accepted within its documented host/corpus scope.
+**Completed milestone: Q30 — ACCEPTED within documented host/corpus scope.** The generic-generation and 90-second acceptance repair preserves the working family. Historical normal-player passes under a 300-second policy do not satisfy the frozen budget. U06, U07, Q60 and later milestones remain unstarted. Pending visual/FPS/tray work remains preserved.
 
 | Wave | Preferred sequence |
 |---|---|
@@ -2760,7 +2770,14 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### Q30 · Normal 20-40-part multi-rail procedural qualification
 
-**Status:** BLOCKED / NOT ACCEPTED. Independent review rejected `97e0727` for
+**Status:** PASS. Parent accepted09b79b31 within the documented host/frozen-corpus
+scope; normal Q30 is enabled locally after a fresh production build and narrow
+normal QuickPlay check. Limits remain90s/640/5s. Historical release lateness, the
+unknown91.616s failure and six missing inventories remain explicit. No unlimited
+random-population or modest-host claim. U06/U07/Q60 remain unstarted.
+[Local enablement evidence](task-evidence/Q30/qualification-workflow/local-enablement-20261005/README.md).
+
+**Historical acceptance repair:** Independent review rejected `97e0727` for
 device-specific generic generation logic and the unauthorized increase from
 90 to 300 seconds. The repair restores the 90,000 ms production limit;
 640 shared work units and 5,000 ms per active operation remain unchanged.
@@ -2836,7 +2853,7 @@ supports cleanup only. No duplicate cold run solely for the historical deadline,
 no new p95 target, limit relaxation or normal enablement. U06/U07/Q60 unstarted.
 [Warm preparation and restart boundary](task-evidence/Q30/qualification-workflow/warm-preparation-20261005/README.md).
 
-**Normal warm continuation (2026-10-05):** Frozen 77 ordinary exact-seed pairs
+**Historical normal warm checkpoint (2026-10-05, before parent acceptance):** Frozen 77 ordinary exact-seed pairs
 PASS 154/154 completed attempts, zero failures/over 90s intervals. Warm p50/p95/worst
 12.552/18.313/20.066s using existing A01;
 normal 90s/640/5s unchanged. Initial observer token failure preserved, corrected

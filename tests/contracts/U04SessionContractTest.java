@@ -52,9 +52,9 @@ public final class U04SessionContractTest {
         session.adopt(b, launch);
         check(!session.retested(test, a, true, "late") && session.owner() == b &&
             session.screen() == PlayerSession.Screen.WORKBENCH, "pending completion cannot finish an adopted successor");
-        check(PlayerFamilyCatalog.families().size() == 10 &&
-            !PlayerFamilyCatalog.families().contains(Rb30Plan.FAMILY_ID),
-            "blocked Q30 is absent from the normal-player menu");
+        check(PlayerFamilyCatalog.families().size() == 11 &&
+            PlayerFamilyCatalog.families().contains(Rb30Plan.FAMILY_ID),
+            "accepted Q30 is present in the normal-player menu");
         check(PlayerFamilyCatalog.registeredFamilies().size() == 11,
             "all implemented families retain their structural and catalog contracts");
         verifyGenericShop();

@@ -1,0 +1,22 @@
+{
+  "src/com/lushprojects/circuitjs1/client/PlayerFamilyCatalog.java": {
+    "beforeSha256": "f3ef310259bc471f3141744ea87ebc2bd85513775dc6320625341a6ec2913417",
+    "afterSha256": "3d182d6652a2144e8b40ff15c03dd1ccc9d2b274380b660ef8a06e6308140ccf"
+  },
+  "tests/contracts/StagedFamilyRegistrationContractTest.java": {
+    "beforeSha256": "ec7a0db8d78859160c37402fada51ab8bc3d574864b2e70c3ea26839d91190c0",
+    "afterSha256": "39d473d381c8f360ef274ef6f34c2d39afc2ae04c936641eee9084f3a3db825e"
+  },
+  "tests/contracts/QuickPlayGateContractTest.java": {
+    "beforeSha256": "7722a2dc1746838262911edc064f52efafcfbb98cf091e8d63d652b04cb4862e",
+    "afterSha256": "8f59c6329df0f19a2fbdfb068be8e0fae6941c9c7e54b39271e4bf8f4f1fc420"
+  },
+  "src/com/lushprojects/circuitjs1/client/QuickPlayDeveloperVerifier.java": {
+    "beforeSha256": "afaa5614475005d99002404c0cb8002fdb3c7c5b7fc0ba3ed35c2e3dcde5939f",
+    "afterSha256": "2d0229ed92266da78b99d4153b95b7d0a1e3a4f5de1eff8c444fb78c4b51a8d7"
+  },
+  "tests/contracts/U04SessionContractTest.java": {
+    "beforeSha256": "99da6c282f9f977044df11e7a77b1168c5f5601121184f6c7bd740ebc7a447fa",
+    "afterSha256": "1341090dacf150cbfd7a174931e1cd5ea35e12d52e30526776a75897edc43ecf"
+  }
+}

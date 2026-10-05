@@ -145,13 +145,13 @@ final class QuickPlayDeveloperVerifier {
         Vector<String> catalog = PlayerFamilyCatalog.families();
         Vector<String> expected = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
         expected.add(ControlledIndicatorBlockContributions.FAMILY_ID);
-        require(catalog.size() == 10 && catalog.equals(expected),
-            "Quick Play enabled catalog order or normal family census changed");
         expected.add(Rb30Plan.FAMILY_ID);
+        require(catalog.size() == 11 && catalog.equals(expected),
+            "Quick Play enabled catalog order or normal family census changed");
         Vector<String> registered = PlayerFamilyCatalog.registeredFamilies();
         require(registered.size() == 11 && registered.equals(expected) &&
-            !PlayerFamilyCatalog.isNormalPlayerEnabled(Rb30Plan.FAMILY_ID),
-            "Blocked Q30 must retain its registered construction and identity contracts");
+            PlayerFamilyCatalog.isNormalPlayerEnabled(Rb30Plan.FAMILY_ID),
+            "Accepted Q30 retains its registered construction and identity contracts");
 
         long[] roots = { Long.MIN_VALUE, 9007199254740993L, Long.MAX_VALUE };
         for (int familyIndex = 0; familyIndex < registered.size(); familyIndex++) {

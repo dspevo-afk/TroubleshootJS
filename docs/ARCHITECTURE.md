@@ -22,9 +22,12 @@ the cold manifest. `qualify.py` validates the phase manifest, checks the selecte
 phase's required source owners before and after execution, and accepts only a
 worker result bound to that phase, manifest and source binding. Helper hashes
 are captured from their actual frozen bytes rather than duplicated as constants
-inside each helper. The current source identity is
-`87bb04f707ccaf57f92c5d38fdbf4db199d63359c573725fd34bac61484226d7`; normal Q30
-registration remains false.
+inside each helper. The accepted qualification source identity is
+`87bb04f707ccaf57f92c5d38fdbf4db199d63359c573725fd34bac61484226d7`. Parent accepted
+Q30 at09b79b31 within its documented host/corpus scope. The local enablement
+changes the catalog flag and developer verifier census, followed by four native
+contracts, an actual production build and one headed normal QuickPlay launch.
+Normal Q30 registration is now true. [Local enablement evidence](task-evidence/Q30/qualification-workflow/local-enablement-20261005/README.md).
 
 `serial_runner.run_command` owns Windows host phases in native process jobs;
 `serial_runner.run_serial` owns the ordered cold77 cohort. The shared
@@ -63,7 +66,7 @@ and the actual frozen 77 normal priming/repeat pairs pass; warm p50/p95/worst ar
 12.552/18.313/20.066s with no failures.
 The first incorrect-token observer attempt remains separately preserved.
 See [normal warm evidence](task-evidence/Q30/qualification-workflow/normal-warm-20261005/README.md). No phase
-result alone enables Q30; parent independent acceptance remains required. See [current warm preparation](task-evidence/Q30/qualification-workflow/warm-preparation-20261005/README.md)
+result alone enabled Q30; parent independent acceptance has now been recorded. See [current warm preparation](task-evidence/Q30/qualification-workflow/warm-preparation-20261005/README.md)
 and [accepted menu evidence](task-evidence/Q30/qualification-workflow/menu-diagnosis-20261005/README.md).
 
 ## Windows Quick Play preview lifecycle
@@ -88,10 +91,9 @@ precede state deletion. Ambiguous identity retains state and the process.
 ## Procedural Quick Play admission and exact replay
 
 QuickPlayAdmission version4 supports the registered family/profile request
-identities. The normal menu exposes ten enabled pairs: nine EASY synchronous
-leaf families (including SENSOR_CONTROL) and the composed MEDIUM family.
-The Q30 multi-rail MEDIUM provider remains registered but is blocked for normal
-publication pending its acceptance repair. Other available difficulty labels do
+identities. The normal menu exposes eleven enabled pairs: nine EASY synchronous
+leaf families (including SENSOR_CONTROL), the composed MEDIUM family and the
+accepted Q30 multi-rail MEDIUM provider. Other available difficulty labels do
 not advertise electrical content that has not passed that profile. Fresh signed-long
 entropy is never reduced to reference seed lists. A bounded page-session root
 history prevents recent New Board launches from reusing an identity even if the
@@ -108,8 +110,8 @@ Every normal launch has at most four deterministic candidates sharing the
 existing 90-second, 640-unit and five-second bounds. The staged normal-medium
 policy is `NORMAL_MEDIUM_EXECUTION@2`, with the same 90,000 ms cumulative limit.
 The earlier 300-second production policy was not authorized and is retired.
-Q30 remains registered for private qualification, but normal publication is
-blocked pending acceptance of its performance and original scale scope.
+Q30 remains available for private qualification and is now enabled for normal
+local play after parent acceptance of the documented scale/performance evidence.
 `PhysicalBoardFingerprint` records exact full geometry for evidence and a stricter
 novelty identity that ignores the seed, fault, values,
 board translation, outline-only differences and route-tree segmentation while
@@ -123,7 +125,7 @@ programming error and cleanup failure never publish. Difficulty is computed from
 complete current diagnostic/repair evidence. Qualified EASY and composed-MEDIUM
 content is enabled; HARD/PSYCHOTIC and unimplemented family/profile content are
 not made playable by layout policy. Q30's catalog registration and plan-4
-20–40-part variation are implemented but await normal-player acceptance.
+20-40-part variation are accepted within the documented host/corpus scope.
 Historical passes under the rejected 300-second policy do not qualify the
 authorized 90-second production limit.
 
@@ -154,7 +156,7 @@ candidate. The rebuilt procedural browser matrix covers the ten families that
 preceded Q30 registration and passes three launches per pair, exact replay,
 privacy, power isolation and owned-process cleanup. The current source catalog
 has eleven registered entries, including the implemented Q30 candidate,
-and ten enabled normal-player entries. Q30 acceptance remains blocked. See the
+and eleven enabled normal-player entries after Q30 acceptance. See the
 [historical evidence](task-evidence/ProceduralFamilies/README.md)
 and the [historical ten-family matrix](task-evidence/D01/quickplay-procedural-matrix.json).
 The [historical eleven-family matrix](task-evidence/Q30/normal-admission/browser-modern-22-root-result.json)
@@ -624,7 +626,7 @@ or an independent-domain count.
 Initial conservative MEDIUM requires at least two distinguishing readings,
 multiple repair owners/classes, and temporal or parallel-path interaction.
 The composed controller and registered Q30 multi-rail implementation are MEDIUM
-candidates; Q30 normal publication remains blocked. The nine synchronous leaf families are EASY candidates even when
+candidates; Q30 is enabled after parent acceptance. The nine synchronous leaf families are EASY candidates even when
 they have more packages. Every admission must prove the requested band. HARD
 and PSYCHOTIC remain unavailable. Human trials
 and the qualified corpus bound the calibration; mathematical counters cannot
@@ -2143,10 +2145,10 @@ leaf IDs from `QuickPlayFamilyRegistry`, the composed controlled-indicator ID, a
 `RB30_CONTROL`. Its versioned `PLAYER_FAMILY_EXECUTION@1` declaration binds each
 family to its profile, execution policy and physical-admission identity. The
 catalog entry is registration state, not a normal publication receipt; the
-Q30 normal-player entry is disabled. The unaccepted plan-4 candidate supports
+Q30 normal-player entry is enabled after parent acceptance. The plan-4 provider supports
 procedural 20–40-package declarations and retains explicit 33/35/37 regression
 fixtures. Structural coverage is distinct from electrical/physical admission
-and normal cold-corpus timing; scale and production performance remain unaccepted.
+and normal cold-corpus timing; acceptance retains the documented host and corpus limits.
 
 Normal-medium qualification has a separate `GeneratedPhysicalAdmission` seam.
 `MediumBoardNormalAdmission` binds an accepted bounded P07 route to immutable
@@ -2183,7 +2185,7 @@ The catalog's enabled projection supplies the menu, while registered identities
 remain available for private qualification and structural/replay contracts.
 The coordinator checks normal eligibility before canceling a predecessor and
 again before publication, alongside the actual physical admission. Q30 is
-registered but disabled. Small/composed requests retain
+registered and enabled. Small/composed requests retain
 `SMALL_BOARD_EXECUTION@1`; medium requests use `NORMAL_MEDIUM_EXECUTION@2`.
 Both are limited to 90,000 ms, 640 shared units and 5,000 ms per unit.
 `DifficultyAssessment` v2 still derives the selected profile from actual proof,
@@ -2292,7 +2294,7 @@ regulator-input leakage path. Pending OHM/CONT and DIODE readings retry when the
 actual readiness reaches READY with both probes present, then use the existing
 temporary-source transaction and cleanup. Powered, stale and residual states
 continue to block injection. The isolated-capacitor repair-to-readiness player
-flow remains qualification work; Q30 normal admission is still disabled.
+flow is outside the accepted UI10 scope; Q30 normal admission is now enabled.
 
 The generic P07 router retains its queue, net/branch position and path publication
 across bounded 32,768-operation slices. The synchronous entry drains the same

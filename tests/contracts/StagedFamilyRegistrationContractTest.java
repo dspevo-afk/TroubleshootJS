@@ -17,20 +17,31 @@ public final class StagedFamilyRegistrationContractTest {
         require(PlayerFamilyCatalog.isRegistered(Rb30Plan.FAMILY_ID) &&
             PlayerFamilyCatalog.contains(Rb30Plan.FAMILY_ID),
             "registered family identity remains available to exact replay and private work");
-        require(!PlayerFamilyCatalog.isNormalPlayerEnabled(Rb30Plan.FAMILY_ID) &&
-            !PlayerFamilyCatalog.families().contains(Rb30Plan.FAMILY_ID) &&
-            PlayerFamilyCatalog.registeredFamilies().contains(Rb30Plan.FAMILY_ID),
-            "disabled normal family is registered but absent from the player catalog");
-        require(!PlayerFamilyCatalog.executionDeclaration(Rb30Plan.FAMILY_ID).normalPlayerEnabled,
-            "execution declaration carries normal admission independently of family registration");
+        require(PlayerFamilyCatalog.isNormalPlayerEnabled(Rb30Plan.FAMILY_ID) &&
+            PlayerFamilyCatalog.families().contains(Rb30Plan.FAMILY_ID) &&
+            PlayerFamilyCatalog.executionDeclaration(Rb30Plan.FAMILY_ID).normalPlayerEnabled,
+            "accepted Q30 is enabled in the normal player catalog and execution declaration");
+        PlayerFamilyCatalog.requireNormalPlayerEnabled(Rb30Plan.FAMILY_ID);
+        require(Rb30Plan.FAMILY_ID.equals(PlayerFamilyCatalog.fromRoute("multirail-control")),
+            "accepted Q30 owns its normal-player route");
 
+        PlayerFamilyCatalog.RegistrationBoundary disabled =
+            PlayerFamilyCatalog.newRegistrationBoundary();
+        disabled.setNormalPlayerEnabled(Rb30Plan.FAMILY_ID, false);
+        require(!disabled.isNormalPlayerEnabled(Rb30Plan.FAMILY_ID) &&
+            !disabled.families().contains(Rb30Plan.FAMILY_ID) &&
+            disabled.registeredFamilies().contains(Rb30Plan.FAMILY_ID) &&
+            !disabled.executionDeclaration(Rb30Plan.FAMILY_ID).normalPlayerEnabled,
+            "disabled copy retains registration separately from normal admission");
+        require(PlayerFamilyCatalog.isNormalPlayerEnabled(Rb30Plan.FAMILY_ID),
+            "changing an independent registration copy cannot disable the live catalog");
         boolean rejected = false;
-        try { PlayerFamilyCatalog.requireNormalPlayerEnabled(Rb30Plan.FAMILY_ID); }
+        try { disabled.requireNormalPlayerEnabled(Rb30Plan.FAMILY_ID); }
         catch (IllegalArgumentException expected) { rejected = true; }
         require(rejected, "normal admission rejects a registered but disabled family");
 
         rejected = false;
-        try { PlayerFamilyCatalog.fromRoute("multirail-control"); }
+        try { disabled.fromRoute("multirail-control"); }
         catch (IllegalArgumentException expected) { rejected = true; }
         require(rejected, "disabled family has no normal-player route");
 

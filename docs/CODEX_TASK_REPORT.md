@@ -1,4 +1,41 @@
-# Current checkpoint: Q30 normal warm 77 passes; parent acceptance pending
+# Current checkpoint: Q30 accepted, enabled and built locally
+
+2026-10-05. Branch `codex/q30-multirail-qualification`; enablement base
+`09b79b3172dffa68b4d6df76001db35cf2e0ada8`. Parent accepted Q30 within the documented host/frozen-corpus
+scope, including normal warm 77/77 pairs and 154/154 attempts. Normal Q30 is now
+ENABLED. U06/U07/Q60 remain unstarted. No push/publication/distribution/email.
+
+Delta: catalog flag false to true, developer verifier census and three affected
+contract expectations; independent disabled-copy rejection checks retained.
+No physics, generation, 90s/640/5s or save/replay change. Final four native suites
+PASS (32.855s); actual final-source JDK8/GWT production
+build PASS five permutations (78.467s). Build began after Takeoff's
+reported runtime completion. Prior full suites/cold/warm/UI10 remain accepted
+with their actual epochs and unchanged behavioral scope; no corpus rerun.
+
+One explicit headed ordinary Q30 New board launch PASS; accepted replay
+`tsj-alpha/4/MEDIUM/RB30_CONTROL/6846712061374042181`, powered workbench reached, then menu returned.
+Host ticket observation 68.348s, not exact internal job time.
+No game/evaluate injection; two inspected screenshots; served inputs unchanged.
+Initial smoke observer FAIL preserved: launcher correctly opened a customer
+ticket while the check expected a menu. Existing Main menu navigation corrected
+the check without changing the app. Both attempts cleaned up task-only resources.
+
+All final jobs exit0/job0/handles closed; task Edge/preview instances absent and
+ports closed. Eight original untracked files unchanged. Prior compiled tree and
+all raw evidence retained in `q30-local-enablement-a07zkd1y`; task workspace
+`qualification-local-enablement-20261005-r1` contains exact SHA/artifact paths
+and launcher path in its final handoff. Related Desktop checkout untouched.
+
+Use this worktree's `Start TroubleshootJS.cmd`; initial ticket > Main menu >
+MEDIUM > Multi-rail control board > New board. Historical release stays BLOCKED;
+91.616s unknown failure and six missing inventories remain risks. No unrestricted
+random reliability or modest-host claim. [Local enablement evidence](task-evidence/Q30/qualification-workflow/local-enablement-20261005/README.md).
+Next unstarted milestone: U06, subject to parent coordination; U07/Q60 unstarted.
+
+---
+
+# Historical checkpoint: Q30 normal warm 77 passes; parent acceptance pending
 
 2026-10-05. Branch `codex/q30-multirail-qualification`; local base 6fde7ab0.
 Production remains C621/source identity `87bb04f707ccaf57f92c5d38fdbf4db199d63359c573725fd34bac61484226d7`;

@@ -1,0 +1,13 @@
+{
+  "status": "ACCEPTED_BY_PARENT",
+  "reviewedCommit": "09b79b3172dffa68b4d6df76001db35cf2e0ada8",
+  "reviewSha256": "7e615888d09fa757bd0e231a6015fe74ca165040551f47afd0af957ffc10599a",
+  "scope": "Existing Q30 acceptance within documented host and frozen corpus; normal warm blocker closed.",
+  "retainedLimits": [
+    "Historical in-window release BLOCKED",
+    "Unexplained original 91.616-second failure",
+    "Six missing scratch-directory inventories",
+    "No unrestricted-random reliability or modest-host claim"
+  ],
+  "nextMilestone": "U06 unstarted; U07 and Q60 also unstarted."
+}
