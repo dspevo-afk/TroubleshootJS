@@ -1,0 +1,26 @@
+{
+  "status": "PASS_WITH_LIMITS",
+  "reviewer": "repair_timing_evidence_review",
+  "sourceHead": "ca079d4f70a7509f3ceda95cd2b7799a288c9db0",
+  "scope": [
+    "UI command/response receipts and review script;1355 headed/current source file bindings",
+    "Actual30 DREV Part31 and40 REN Part41 repairs;unrepairedFAIL/repairedFUNCTION VERIFIED;realREADY/OHM/DIODE",
+    "Four original-host seed10014 current/old/old/current case/report source hashes, same spec/host, APP_PASS/HOST_PASS and timing arithmetic",
+    "130 repeated exact-identity/five-port release scope;separate17 UI identities/oneport and missing outer receipts",
+    "Both packet archive hashes versus README",
+    "Static BoardModificationController/PhysicalBoardSlot/PhysicalMutationScope storage-mutation sanity"
+  ],
+  "blockers": [],
+  "limits": [
+    "Nine of166 actions failed and are preserved",
+    "30 automatic retry across completion unproved;mode/probe reselection required",
+    "40 READY transition time unobserved",
+    "DIODE457.626/457.625mV are recorded UI body text, not selected screenshot verification",
+    "Intermediate30 upstream -9.264V unexplained;no explicit capacitor clear/restore in reviewed owners",
+    "CPU unsampled;adaptive matrix observations differ;new diagnostic passes do not replace prior90.621s failed cohort",
+    "Missing UI bounded outer receipts prevent outer exit/deadline/termination proof",
+    "No fresh full77/native matrix/warm/menu-replay/finalsourcearchive or qualification acceptance"
+  ],
+  "writesOrLiveGates": false,
+  "verdict": "No evidence-claim blocker found. Q30 DISABLED / NOT ACCEPTED."
+}

@@ -1,0 +1,386 @@
+{
+  "status": "PASS_TARGETED_30_40_REPAIR_AND_REAL_METERS_ONLY",
+  "sourceIdentity": "57905b14065949fb7e06af1cd7e6b976af3a6776301ed8c0d65936efe83965b4",
+  "recordedBuildBaseHead": "529f42582d903843254fc7cd73624b92eff55bdc",
+  "acceptedLocalHead": "ca079d4f70a7509f3ceda95cd2b7799a288c9db0",
+  "consumedSourceBytesVerified": 1355,
+  "actions": 166,
+  "actionCounts": {
+    "PASS": 157,
+    "FAIL": 9
+  },
+  "failedActions": [
+    {
+      "sequence": 27,
+      "command": {
+        "op": "click",
+        "name": "View"
+      },
+      "startedUtc": "2026-10-05T02:23:41.711581+00:00",
+      "status": "FAIL",
+      "error": "TimeoutError('Locator.click: Timeout 15000ms exceeded.\\nCall log:\\n  - waiting for get_by_role(\"button\", name=\"View\", exact=True)\\n')",
+      "elapsedSeconds": 15.006842199945822,
+      "finishedUtc": "2026-10-05T02:23:56.718969+00:00"
+    },
+    {
+      "sequence": 39,
+      "command": {
+        "op": "click",
+        "name": "Parts tray"
+      },
+      "startedUtc": "2026-10-05T02:28:09.039823+00:00",
+      "status": "FAIL",
+      "error": "TimeoutError('Locator.click: Timeout 15000ms exceeded.\\nCall log:\\n  - waiting for get_by_role(\"button\", name=\"Parts tray\", exact=True)\\n')",
+      "elapsedSeconds": 15.01017809996847,
+      "finishedUtc": "2026-10-05T02:28:24.050654+00:00"
+    },
+    {
+      "sequence": 43,
+      "command": {
+        "op": "click",
+        "name": "\u00e2\u2013\u00b2 PARTS TRAY \u00c2\u00b7 2 parts"
+      },
+      "startedUtc": "2026-10-05T02:34:49.513253+00:00",
+      "status": "FAIL",
+      "error": "TimeoutError('Locator.click: Timeout 15000ms exceeded.\\nCall log:\\n  - waiting for get_by_role(\"button\", name=\"\u00e2\u2013\u00b2 PARTS TRAY \u00c2\u00b7 2 parts\", exact=True)\\n')",
+      "elapsedSeconds": 15.007124199997634,
+      "finishedUtc": "2026-10-05T02:35:04.520942+00:00"
+    },
+    {
+      "sequence": 44,
+      "command": {
+        "op": "click",
+        "name": "\u25b2 PARTS TRAY \u00b7 2 parts"
+      },
+      "startedUtc": "2026-10-05T02:35:26.438015+00:00",
+      "status": "FAIL",
+      "error": "TimeoutError('Locator.click: Timeout 15000ms exceeded.\\nCall log:\\n  - waiting for get_by_role(\"button\", name=\"\u25b2 PARTS TRAY \u00b7 2 parts\", exact=True)\\n')",
+      "elapsedSeconds": 15.010434700059704,
+      "finishedUtc": "2026-10-05T02:35:41.449287+00:00"
+    },
+    {
+      "sequence": 72,
+      "command": {
+        "op": "wait",
+        "text": "180 Ohm",
+        "timeoutMs": 115000
+      },
+      "startedUtc": "2026-10-05T02:38:08.972989+00:00",
+      "status": "FAIL",
+      "error": "TimeoutError('Locator.wait_for: Timeout 115000ms exceeded.\\nCall log:\\n  - waiting for get_by_text(\"180 Ohm\", exact=True) to be visible\\n')",
+      "elapsedSeconds": 115.00601110002026,
+      "finishedUtc": "2026-10-05T02:40:03.979854+00:00"
+    },
+    {
+      "sequence": 75,
+      "command": {
+        "op": "wait",
+        "text": "180 Ohm",
+        "timeoutMs": 115000
+      },
+      "startedUtc": "2026-10-05T02:40:34.014587+00:00",
+      "status": "FAIL",
+      "error": "TimeoutError('Locator.wait_for: Timeout 115000ms exceeded.\\nCall log:\\n  - waiting for get_by_text(\"180 Ohm\", exact=True) to be visible\\n')",
+      "elapsedSeconds": 115.00549569993746,
+      "finishedUtc": "2026-10-05T02:42:29.021053+00:00"
+    },
+    {
+      "sequence": 84,
+      "command": {
+        "op": "wait",
+        "text": "457.627 mV",
+        "timeoutMs": 15000
+      },
+      "startedUtc": "2026-10-05T02:43:12.764293+00:00",
+      "status": "FAIL",
+      "error": "TimeoutError('Locator.wait_for: Timeout 15000ms exceeded.\\nCall log:\\n  - waiting for get_by_text(\"457.627 mV\", exact=True) to be visible\\n')",
+      "elapsedSeconds": 14.999951400095597,
+      "finishedUtc": "2026-10-05T02:43:27.765226+00:00"
+    },
+    {
+      "sequence": 152,
+      "command": {
+        "op": "wait",
+        "text": "180 Ohm",
+        "timeoutMs": 115000
+      },
+      "startedUtc": "2026-10-05T02:49:39.683983+00:00",
+      "status": "FAIL",
+      "error": "TimeoutError('Locator.wait_for: Timeout 115000ms exceeded.\\nCall log:\\n  - waiting for get_by_text(\"180 Ohm\", exact=True) to be visible\\n')",
+      "elapsedSeconds": 115.00473359995522,
+      "finishedUtc": "2026-10-05T02:51:34.689962+00:00"
+    },
+    {
+      "sequence": 153,
+      "command": {
+        "op": "click",
+        "name": "Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Wide lead spacing"
+      },
+      "startedUtc": "2026-10-05T03:13:22.475013+00:00",
+      "status": "FAIL",
+      "error": "TimeoutError('Locator.click: Timeout 15000ms exceeded.\\nCall log:\\n  - waiting for get_by_role(\"button\", name=\"Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Wide lead spacing\", exact=True)\\n')",
+      "elapsedSeconds": 15.003859700052999,
+      "finishedUtc": "2026-10-05T03:13:37.480195+00:00"
+    }
+  ],
+  "case30": {
+    "seed": "10226",
+    "packages": 30,
+    "part": "Distinct catalog Part31 Generic silicon diode, narrow lead spacing",
+    "service": "Original DREV removed, normal compatible replacement installed",
+    "originalRemovalRetainedCharge": {
+      "solverSeconds": 68.219365016054,
+      "seed": "10226",
+      "isolated": true,
+      "readiness": "DISCHARGE",
+      "RAW12": 11.999999659275202,
+      "FUSED12": 11.999999659275202,
+      "RAIL12": 0.0016651881231304825,
+      "RAIL5": 1.78624e-319,
+      "EN5": 0.001648701112010379
+    },
+    "postInstallNegativeSample": {
+      "solverSeconds": 69.48563001645593,
+      "seed": "10226",
+      "isolated": true,
+      "readiness": "DISCHARGE",
+      "RAW12": -9.264377312277954,
+      "FUSED12": -9.264377312277954,
+      "RAIL12": 0.8677751941724356,
+      "RAIL5": 0.009291116316527008,
+      "EN5": 0.859183360566759
+    },
+    "functionalRetest": "Unrepaired FAIL; repaired FUNCTION VERIFIED",
+    "actualReady": {
+      "solverSeconds": 95.22208502462503,
+      "seed": "10226",
+      "isolated": true,
+      "readiness": "READY",
+      "RAW12": 0.12041391513460413,
+      "FUSED12": 0.12041391513460414,
+      "RAIL12": 0.11736452528618758,
+      "RAIL5": 1.78624e-319,
+      "EN5": 0.11620250028335405
+    },
+    "ohm": "180 Ohm",
+    "diode": "457.626 mV",
+    "recoveryBoundary": "Two115s OHM waits failed; completion/settlement cleared earlier mode. GenuineREADY and numeric readings proved after ordinary mode/probe re-selection. No automatic retry timing certification."
+  },
+  "case40": {
+    "seed": "10014",
+    "packages": 40,
+    "part": "Distinct catalog Part41 10000 Ohm +/-5%, wide lead spacing",
+    "service": "Original REN removed, normal compatible replacement installed",
+    "afterRepairStoredEnergy": {
+      "solverSeconds": 5.437964999878715,
+      "seed": "10014",
+      "isolated": true,
+      "readiness": "DISCHARGE",
+      "RAW12": 6.095305222924722,
+      "FUSED12": 6.095305222924722,
+      "RAIL12": 6.095305170573989,
+      "RAIL5": 4.9998409134356585,
+      "EN5": 6.034955614429693
+    },
+    "actualReady": {
+      "solverSeconds": 87.73519502224859,
+      "seed": "10014",
+      "isolated": true,
+      "readiness": "READY",
+      "RAW12": 0.0004819788287891028,
+      "FUSED12": 0.0004819788287891028,
+      "RAIL12": 0.00048197883319555144,
+      "RAIL5": 1.76105e-319,
+      "EN5": 0.00047720676554015
+    },
+    "ohm": "180 Ohm",
+    "diode": "457.625 mV",
+    "functionalRetest": "Unrepaired FAIL; repaired FUNCTION VERIFIED",
+    "recoveryBoundary": "Initial115s OHM wait failed. LaterREADY/180Ohm with pending same probes; no successful gameplay mutation/probe/power/mode action between150 and154. Transition time not observed; elapsed wall time is not a performance PASS."
+  },
+  "observationBoundary": "Actual headed Edge production preview; all gameplay ordinary visible SDK input. Private read-only page.evaluate getter labels actual CircuitJS time/node voltages/readiness only. No controller/solver calls or injected stepping. Built-in Browser unavailable; not CDP wrapper/blind-diagnosis proof.",
+  "driverOutcome": "UI_SESSION_CLOSED_PENDING_FLOW_REVIEW",
+  "pageErrors": [],
+  "inputInventories": {
+    "status": "PASS",
+    "rawInputs": 1355,
+    "compiledFiles": 357,
+    "permutations": 5,
+    "deploymentFiles": 6,
+    "pinnedJars": 9
+  },
+  "cleanup": {
+    "seconds": 0.6358862000051886,
+    "recordedSurvivorsBeforeControllerExit": [
+      {
+        "pid": 24184,
+        "parent": 18256,
+        "created": "2026-10-05T02:20:10.0666320Z",
+        "ExecutablePath": "C:\\WINDOWS\\system32\\conhost.exe",
+        "CommandLine": "\\??\\C:\\WINDOWS\\system32\\conhost.exe 0x4"
+      }
+    ],
+    "previewExitCode": 1,
+    "status": "PENDING_INDEPENDENT_POST_EXIT_RELEASE",
+    "boundary": "This live controller cannot certify release of its own console; all recorded identities still require independent post-exit audit"
+  },
+  "independentRelease": {
+    "acceptanceStatus": "NOT_ASSESSED",
+    "scope": "Current headed launcher/controller/preview and recorded descendants; independent post-exit read only",
+    "processes": [
+      {
+        "created": "2026-10-05T02:20:21.9104950Z",
+        "pid": 2156,
+        "pidPresent": false,
+        "source": "recorded-descendant",
+        "exactInstancePresent": false,
+        "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "created": "2026-10-05T02:20:21.9696490Z",
+        "pid": 4056,
+        "pidPresent": false,
+        "source": "recorded-descendant",
+        "exactInstancePresent": false,
+        "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "created": "2026-10-05T02:20:21.9759510Z",
+        "pid": 5400,
+        "pidPresent": false,
+        "source": "recorded-descendant",
+        "exactInstancePresent": false,
+        "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "created": "2026-10-05T02:30:25.0253150Z",
+        "pid": 5628,
+        "pidPresent": false,
+        "source": "recorded-descendant",
+        "exactInstancePresent": false,
+        "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "created": "2026-10-05T02:20:09.4183950Z",
+        "pid": 7260,
+        "pidPresent": false,
+        "source": "bounded-launcher",
+        "exactInstancePresent": false,
+        "executable": "$USER_HOME\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe"
+      },
+      {
+        "created": "2026-10-05T02:20:22.1550320Z",
+        "pid": 11336,
+        "pidPresent": false,
+        "source": "recorded-descendant",
+        "exactInstancePresent": false,
+        "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+      },
+      {
+        "created": "2026-10-05T02:21:17.3860740Z",
+        "pid": 13728,
+        "pidPresent": false,
+        "source": "recorded-descendant",
+        "exactInstancePresent": false,
+        "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "created": "2026-10-05T02:20:21.6491930Z",
+        "pid": 16552,
+        "pidPresent": false,
+        "source": "recorded-descendant",
+        "exactInstancePresent": false,
+        "executable": "$TASK_TEMP\\q30-finish-0fa2512465\\deps\\playwright\\driver\\node.exe"
+      },
+      {
+        "created": "2026-10-05T02:21:22.0151130Z",
+        "pid": 17764,
+        "pidPresent": false,
+        "source": "recorded-descendant",
+        "exactInstancePresent": false,
+        "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "created": "2026-10-05T03:16:22.5718480Z",
+        "pid": 18184,
+        "pidPresent": false,
+        "source": "recorded-descendant",
+        "exactInstancePresent": false,
+        "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+      },
+      {
+        "created": "2026-10-05T02:20:10.0413090Z",
+        "pid": 18256,
+        "pidPresent": false,
+        "source": "recorded-descendant",
+        "exactInstancePresent": false,
+        "executable": "$WINDOWSAPPS\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+      },
+      {
+        "created": "2026-10-05T02:20:21.8604270Z",
+        "pid": 18540,
+        "pidPresent": false,
+        "source": "recorded-descendant",
+        "exactInstancePresent": false,
+        "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "created": "2026-10-05T02:20:10.9046520Z",
+        "pid": 21104,
+        "pidPresent": false,
+        "source": "recorded-descendant",
+        "exactInstancePresent": false,
+        "executable": "$USER_HOME\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe"
+      },
+      {
+        "created": "2026-10-05T02:20:22.0716710Z",
+        "pid": 21860,
+        "pidPresent": false,
+        "source": "recorded-descendant",
+        "exactInstancePresent": false,
+        "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "created": "2026-10-05T02:20:10.0666320Z",
+        "pid": 24184,
+        "pidPresent": false,
+        "source": "recorded-descendant",
+        "exactInstancePresent": false,
+        "executable": "C:\\WINDOWS\\system32\\conhost.exe"
+      },
+      {
+        "created": "2026-10-05T02:20:22.0661720Z",
+        "pid": 25688,
+        "pidPresent": false,
+        "source": "recorded-descendant",
+        "exactInstancePresent": false,
+        "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "created": "2026-10-05T02:20:21.9965660Z",
+        "pid": 30192,
+        "pidPresent": false,
+        "source": "recorded-descendant",
+        "exactInstancePresent": false,
+        "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "observedUtc": "2026-10-05T03:18:10.7621298Z",
+    "listenerCount": 0,
+    "outerTerminationProven": null,
+    "status": "PASS_EXACT_INSTANCES_AND_PORT_RELEASED",
+    "outerReceiptLimitation": "Missing bounded-process-result.json; independent process/port audit only",
+    "port": 56747,
+    "terminationAttempted": false
+  },
+  "outerLauncher": "Missing bounded-process-result.json and bounded-command-result.json; no outer exit/deadline/termination PASS claimed",
+  "negativeIntermediateLimit": "30 upstream -9.264V after normal install is retained. Static owner review found no capacitor clear/restore mutation and no demonstrated persistent defect; intermediate sign/magnitude attribution remains unresolved.",
+  "screenshotsSelectedAndInspected": [
+    "001-30-unrepaired-discharge.png",
+    "007-30-repaired-isolated-meter.png",
+    "013-40-unrepaired-off-discharge.png",
+    "015-40-repaired-current-state.png",
+    "016-40-repaired-function-verified.png"
+  ],
+  "qualification": "Q30 DISABLED / NOT ACCEPTED; no fullcohort/fullmatrix/current canaries/sourcearchive gates"
+}

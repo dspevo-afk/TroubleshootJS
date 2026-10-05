@@ -1,0 +1,732 @@
+{
+  "status": "PASS_FOUR_BOUNDED_DIAGNOSTICS_NOT_QUALIFICATION",
+  "sourceHead": "ca079d4f70a7509f3ceda95cd2b7799a288c9db0",
+  "currentSourceIdentity": "aa4ad1161aa89f07d70d4761f0e1356ca8d660bc1dcedef7318d2862e95691b5",
+  "oldSourceHead": "d37c3b3b8581abdeaa9b88b7bfb2349cff958d31",
+  "oldSourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+  "cases": [
+    {
+      "index": 1,
+      "variant": "current",
+      "applicationMillis": 77167,
+      "headroomMillis": 12833,
+      "workUnits": 440,
+      "hypothesesMillis": 64544,
+      "hypothesesUnits": 390,
+      "maxActiveOperationMillis": 1371,
+      "matrixObservations": 239,
+      "reportSha256": "627b58d6c8d689695f3435cfe6166d9380f23fb669097435f489be1e6061151e",
+      "readerStatus": "APP_PASS/HOST_PASS",
+      "hostSeconds": 80.786
+    },
+    {
+      "index": 2,
+      "variant": "old",
+      "applicationMillis": 79999,
+      "headroomMillis": 10001,
+      "workUnits": 440,
+      "hypothesesMillis": 66661,
+      "hypothesesUnits": 390,
+      "maxActiveOperationMillis": 1399,
+      "matrixObservations": 241,
+      "reportSha256": "2d1a5c204839774018f2a920397ed74a75d5b2330658074c25c20512a273b81d",
+      "readerStatus": "APP_PASS/HOST_PASS",
+      "hostSeconds": 84.117
+    },
+    {
+      "index": 3,
+      "variant": "old",
+      "applicationMillis": 73799,
+      "headroomMillis": 16201,
+      "workUnits": 440,
+      "hypothesesMillis": 61331,
+      "hypothesesUnits": 390,
+      "maxActiveOperationMillis": 1346,
+      "matrixObservations": 223,
+      "reportSha256": "c5a9281ceb36b8e8a7e9e25c54c6487fa0aa86d54774d814de4295b4b29b302e",
+      "readerStatus": "APP_PASS/HOST_PASS",
+      "hostSeconds": 77.432
+    },
+    {
+      "index": 4,
+      "variant": "current",
+      "applicationMillis": 75904,
+      "headroomMillis": 14096,
+      "workUnits": 440,
+      "hypothesesMillis": 63471,
+      "hypothesesUnits": 390,
+      "maxActiveOperationMillis": 1299,
+      "matrixObservations": 221,
+      "reportSha256": "17eb413814ac9ae0c62c3b696ca95c62c7bd8112d1f0e531bad291ac66834487",
+      "readerStatus": "APP_PASS/HOST_PASS",
+      "hostSeconds": 78.982
+    }
+  ],
+  "limits": {
+    "jobMillis": 90000,
+    "sharedWork": 640,
+    "activeOperationMillis": 5000
+  },
+  "commonHostSha256": "8da1af0f184cea190f17fb02629e4475013337558e32903e95992552723a4440",
+  "sourceAppBindingUnchanged": true,
+  "equalPublishedCandidateAndDifficulty": true,
+  "semanticProofFieldsEqual": {
+    "program": true,
+    "partition": true,
+    "explicitCompletion": true,
+    "evidence": true,
+    "warmReuse": true
+  },
+  "contextCanonicalCharacters": [
+    837235,
+    836947,
+    836947,
+    837235
+  ],
+  "currentMeanApplicationMillis": 76535.5,
+  "oldMeanApplicationMillis": 76899.0,
+  "currentMinusOldMeanMillis": -363.5,
+  "currentMeanHypothesesMillis": 64007.5,
+  "oldMeanHypothesesMillis": 63996.0,
+  "oldSameCodeRangeMillis": 6200,
+  "currentMinimumHeadroomMillis": 12833,
+  "matrixBoundary": "Observed solver matrix counts vary within identical-source repeats; work units and semantic proof equality do not assert identical adaptive solver cost",
+  "build": {
+    "status": "PASS",
+    "operationSeconds": 84.617318,
+    "permutations": 5
+  },
+  "compiledCanaries": {
+    "status": "PASS",
+    "stageSeconds": 18.47423950000666,
+    "hostCleanupSeconds": 1.0952882000710815,
+    "rootsFrozen": 77,
+    "candidateDeclarations": 308
+  },
+  "ownedOperation": {
+    "cleanup": {
+      "cleanupElapsedMs": 0,
+      "cleanupVerified": true,
+      "drainerErrors": [],
+      "drainerWaitMs": 0,
+      "drainsComplete": true,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "liveDrainers": 0,
+      "pid": 10316,
+      "processSignaled": true
+    },
+    "exitCode": 0,
+    "operationElapsedMs": 328874,
+    "reason": null
+  },
+  "cpu": "NOT SAMPLED; no contemporaneous system/process CPU attribution",
+  "conclusion": "Current77.167/75.904s overlaps old79.999/73.799s; same nominal440/390units and semantic program/partition/evidence. Current mean is363.5ms lower. This diagnostic does not reproduce current-source slowdown or justify a production performance fix. Static50x internal-proof supplemental-time path remains a nonblocking scheduling question, not a measured cause. Prior89.195/90.621s failure cause remains unattributed; new paired passes do not replace the failed qualification cohort.",
+  "readiness": "Targeted gates complete; ready for parent-coordinated fresh qualification attempt, not Q30 acceptance",
+  "remaining": "Fresh full77/full native matrix/warm distribution/qualified menu-replay/final-source archive/independent acceptance; Q30 remains disabled",
+  "packetFiles": [
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\01-current-seed10014\\case-result.json",
+      "member": "case-01-current/case-result.json",
+      "sha256": "22ecc7aa7e688d6ac33520febff5c3a37c5604375ec54209b744d8d50e27f26f",
+      "size": 6460
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\01-current-seed10014\\case-spec.json",
+      "member": "case-01-current/case-spec.json",
+      "sha256": "a7fd082aedcdb334eca3dad36a07610171fdc0471c7415b1b594488c79ca989a",
+      "size": 374
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\01-current-seed10014\\host.stdout.bin",
+      "member": "case-01-current/host.stdout.bin",
+      "sha256": "508f65d565d634542d566ff64e21de86e5dbf9606c362f8251dbceb17fd828ea",
+      "size": 47
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\01-current-seed10014\\reader.stdout.bin",
+      "member": "case-01-current/reader.stdout.bin",
+      "sha256": "597abdf53ce89b06e94ff4da39129929e7d3167ab787c8e4247a137764f838f2",
+      "size": 806
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\01-current-seed10014\\reader.stderr.bin",
+      "member": "case-01-current/reader.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\01-current-seed10014\\host\\result.json",
+      "member": "case-01-current/host/result.json",
+      "sha256": "ff3a5bbb3063f4518227f7da8d27fecbf9064a150d1f2873834220974e484313",
+      "size": 5718
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\01-current-seed10014\\host\\cases\\001-cold-10014.report.json",
+      "member": "case-01-current/host/cases/001-cold-10014.report.json",
+      "sha256": "627b58d6c8d689695f3435cfe6166d9380f23fb669097435f489be1e6061151e",
+      "size": 891546
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\01-current-seed10014\\host\\identity.json",
+      "member": "case-01-current/host/identity.json",
+      "sha256": "d91de9ea11305c8b98384d7c4939e8d154ba39f738896bbea83aae5900b7e832",
+      "size": 2148
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\01-current-seed10014\\host\\owned-processes-before.json",
+      "member": "case-01-current/host/owned-processes-before.json",
+      "sha256": "1648073d73e5c09ebc3a71581e1a048b7f90c7776df0b3d7233fa4ff620a2742",
+      "size": 1282
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\01-current-seed10014\\host\\owned-processes-before-close.json",
+      "member": "case-01-current/host/owned-processes-before-close.json",
+      "sha256": "7024993bd4b2d53044fca27f39f65a04b9cb2a070e0abe81bfbe460e1b2fb418",
+      "size": 1648
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\01-current-seed10014\\host\\input-manifest-before.json",
+      "member": "case-01-current/host/input-manifest-before.json",
+      "sha256": "51f6eb8fe5b2da71e4fea2ca142760532049c9fd673a9ba3740a1277bf350285",
+      "size": 291507
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\01-current-seed10014\\host\\input-manifest-after.json",
+      "member": "case-01-current/host/input-manifest-after.json",
+      "sha256": "77620b7b2a3721fcfd6d96d65660e33cf66e198af673ac136beda5c717b1010b",
+      "size": 291507
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\01-current-seed10014\\host\\runner-before.json",
+      "member": "case-01-current/host/runner-before.json",
+      "sha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "size": 135
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\01-current-seed10014\\host\\runner-after.json",
+      "member": "case-01-current/host/runner-after.json",
+      "sha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "size": 135
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\02-old-seed10014\\case-result.json",
+      "member": "case-02-old/case-result.json",
+      "sha256": "d81006f5a3b5f400103aa4742f6d251796c8effad7e3ce0b7db37225b0fb1c07",
+      "size": 6456
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\02-old-seed10014\\case-spec.json",
+      "member": "case-02-old/case-spec.json",
+      "sha256": "a7fd082aedcdb334eca3dad36a07610171fdc0471c7415b1b594488c79ca989a",
+      "size": 374
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\02-old-seed10014\\host.stdout.bin",
+      "member": "case-02-old/host.stdout.bin",
+      "sha256": "fcb9836b4222d8f850d1e7af87b584f583c8530a60737aeff057bc811c6b8243",
+      "size": 47
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\02-old-seed10014\\reader.stdout.bin",
+      "member": "case-02-old/reader.stdout.bin",
+      "sha256": "b1ca16cda63e208f90bfb9c6b099cb69171209ab9fe0743ffe8a2b16afc9f5dd",
+      "size": 806
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\02-old-seed10014\\reader.stderr.bin",
+      "member": "case-02-old/reader.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\02-old-seed10014\\host\\result.json",
+      "member": "case-02-old/host/result.json",
+      "sha256": "dcf0772aee007e284bc03bc6774473ded94fd78d79ddc05f121f6709d82c90c8",
+      "size": 5757
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\02-old-seed10014\\host\\cases\\001-cold-10014.report.json",
+      "member": "case-02-old/host/cases/001-cold-10014.report.json",
+      "sha256": "2d1a5c204839774018f2a920397ed74a75d5b2330658074c25c20512a273b81d",
+      "size": 891259
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\02-old-seed10014\\host\\identity.json",
+      "member": "case-02-old/host/identity.json",
+      "sha256": "937ea07917765797fdf4634fd94339ad1e70df0c221398c487f9f7f4b4642c34",
+      "size": 2161
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\02-old-seed10014\\host\\owned-processes-before.json",
+      "member": "case-02-old/host/owned-processes-before.json",
+      "sha256": "bba8895f7ce28b1d75da1d85e9e31e1feeded4ea244a2935f48338c66b2e9146",
+      "size": 1298
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\02-old-seed10014\\host\\owned-processes-before-close.json",
+      "member": "case-02-old/host/owned-processes-before-close.json",
+      "sha256": "891acfa2d72ca9f05479a5f421d984a1fcbceab3bcb6f5dfb03efb79b63aa8c1",
+      "size": 1668
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\02-old-seed10014\\host\\input-manifest-before.json",
+      "member": "case-02-old/host/input-manifest-before.json",
+      "sha256": "023c33c83136c73e65b6ce00005c91e6a88e099be25c551683a7599d44d45d55",
+      "size": 291507
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\02-old-seed10014\\host\\input-manifest-after.json",
+      "member": "case-02-old/host/input-manifest-after.json",
+      "sha256": "299e3d3f8878b85282a6f5bf17a733020f115af0e9c8e6e5cc40aafa698e03c0",
+      "size": 291507
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\02-old-seed10014\\host\\runner-before.json",
+      "member": "case-02-old/host/runner-before.json",
+      "sha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "size": 135
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\02-old-seed10014\\host\\runner-after.json",
+      "member": "case-02-old/host/runner-after.json",
+      "sha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "size": 135
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\03-old-seed10014\\case-result.json",
+      "member": "case-03-old/case-result.json",
+      "sha256": "9eb53a7fd5884bfe53cd5877cb21584afaa6816a328865821eab083a643d9268",
+      "size": 6458
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\03-old-seed10014\\case-spec.json",
+      "member": "case-03-old/case-spec.json",
+      "sha256": "a7fd082aedcdb334eca3dad36a07610171fdc0471c7415b1b594488c79ca989a",
+      "size": 374
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\03-old-seed10014\\host.stdout.bin",
+      "member": "case-03-old/host.stdout.bin",
+      "sha256": "930c477fd78c059c83774ded41a27ec0706bf8f7c816e4a8ac8210aa3a4fb2fc",
+      "size": 47
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\03-old-seed10014\\reader.stdout.bin",
+      "member": "case-03-old/reader.stdout.bin",
+      "sha256": "65cdf82f00a522e5846ce3c61c90aa04015368473793758084b769ab7d4addae",
+      "size": 806
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\03-old-seed10014\\reader.stderr.bin",
+      "member": "case-03-old/reader.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\03-old-seed10014\\host\\result.json",
+      "member": "case-03-old/host/result.json",
+      "sha256": "14fed1c994393b9f9b4096bcc52a796014ce6b7db816dc93840607ede090a47b",
+      "size": 5753
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\03-old-seed10014\\host\\cases\\001-cold-10014.report.json",
+      "member": "case-03-old/host/cases/001-cold-10014.report.json",
+      "sha256": "c5a9281ceb36b8e8a7e9e25c54c6487fa0aa86d54774d814de4295b4b29b302e",
+      "size": 891259
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\03-old-seed10014\\host\\identity.json",
+      "member": "case-03-old/host/identity.json",
+      "sha256": "2634550787123532a7f1d40ccaf808a319ad37e8d9617904bc9dee50b4dade5e",
+      "size": 2155
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\03-old-seed10014\\host\\owned-processes-before.json",
+      "member": "case-03-old/host/owned-processes-before.json",
+      "sha256": "010cee2fc922851dab511be5dfaf0f90215e59ba1069c59e57e43e0daf683c10",
+      "size": 1291
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\03-old-seed10014\\host\\owned-processes-before-close.json",
+      "member": "case-03-old/host/owned-processes-before-close.json",
+      "sha256": "fec064576599c2f1931320623a2f05956ac87eec044c31caa9dc605b8dad4af2",
+      "size": 1659
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\03-old-seed10014\\host\\input-manifest-before.json",
+      "member": "case-03-old/host/input-manifest-before.json",
+      "sha256": "0869c0829de47ef4feeda9ebc24304e296d2ee81ac52596dd1a40d4ee8940669",
+      "size": 291507
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\03-old-seed10014\\host\\input-manifest-after.json",
+      "member": "case-03-old/host/input-manifest-after.json",
+      "sha256": "b5d654b6b4d90fe3bb497a2546a8d9169ad8f7bdb860cdf34179045050ddf74f",
+      "size": 291507
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\03-old-seed10014\\host\\runner-before.json",
+      "member": "case-03-old/host/runner-before.json",
+      "sha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "size": 135
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\03-old-seed10014\\host\\runner-after.json",
+      "member": "case-03-old/host/runner-after.json",
+      "sha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "size": 135
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\04-current-seed10014\\case-result.json",
+      "member": "case-04-current/case-result.json",
+      "sha256": "e647a56309d9af68c0b63c9655e5c7d571085b7eb543968775978a087b55e6f2",
+      "size": 6460
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\04-current-seed10014\\case-spec.json",
+      "member": "case-04-current/case-spec.json",
+      "sha256": "a7fd082aedcdb334eca3dad36a07610171fdc0471c7415b1b594488c79ca989a",
+      "size": 374
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\04-current-seed10014\\host.stdout.bin",
+      "member": "case-04-current/host.stdout.bin",
+      "sha256": "a7daa53288ffee1f6006d46b8548b907d23459405c4ab2ff4523570f8cbca770",
+      "size": 47
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\04-current-seed10014\\reader.stdout.bin",
+      "member": "case-04-current/reader.stdout.bin",
+      "sha256": "8ef676c0b5d43fb5e9dc1eb0ee500b73b34e2d93703a4d5a9dcf3c14d04c8ed4",
+      "size": 806
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\04-current-seed10014\\reader.stderr.bin",
+      "member": "case-04-current/reader.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\04-current-seed10014\\host\\result.json",
+      "member": "case-04-current/host/result.json",
+      "sha256": "b82407b320cfb4f418a23509f2efba7c00f35b8cfebde30c96bcedfc90e60bdb",
+      "size": 5732
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\04-current-seed10014\\host\\cases\\001-cold-10014.report.json",
+      "member": "case-04-current/host/cases/001-cold-10014.report.json",
+      "sha256": "17eb413814ac9ae0c62c3b696ca95c62c7bd8112d1f0e531bad291ac66834487",
+      "size": 891546
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\04-current-seed10014\\host\\identity.json",
+      "member": "case-04-current/host/identity.json",
+      "sha256": "627814f7d409fc3e0d8582e9e477c02f1f116e61ca6b144e84c3ba543c495440",
+      "size": 2163
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\04-current-seed10014\\host\\owned-processes-before.json",
+      "member": "case-04-current/host/owned-processes-before.json",
+      "sha256": "b1c84a02a5ec1a215a356b2ad1d2a16483b65f62c9c92d2b88dc7c60fb3d3e05",
+      "size": 1296
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\04-current-seed10014\\host\\owned-processes-before-close.json",
+      "member": "case-04-current/host/owned-processes-before-close.json",
+      "sha256": "87e2708e7604998711aeedd39946da82cf903d3b977f58b16c82bca8d9f2953b",
+      "size": 1666
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\04-current-seed10014\\host\\input-manifest-before.json",
+      "member": "case-04-current/host/input-manifest-before.json",
+      "sha256": "970c5ee8adbe4a9df78225e72920bd4c94010f3904701e6e110a2dcaa070a29b",
+      "size": 291507
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\04-current-seed10014\\host\\input-manifest-after.json",
+      "member": "case-04-current/host/input-manifest-after.json",
+      "sha256": "439b915b19836b21c2a36a8a1702ebb238409ec1bd4c4aaabb10b6e530eace65",
+      "size": 291507
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\04-current-seed10014\\host\\runner-before.json",
+      "member": "case-04-current/host/runner-before.json",
+      "sha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "size": 135
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\04-current-seed10014\\host\\runner-after.json",
+      "member": "case-04-current/host/runner-after.json",
+      "sha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "size": 135
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\identity.json",
+      "member": "compiled-host/identity.json",
+      "sha256": "723f1bd7b044d69baf35c96c2c8996cc65b4c746edf0c38b655aae15676f9aa7",
+      "size": 2115
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\owned-processes-before.json",
+      "member": "compiled-host/owned-processes-before.json",
+      "sha256": "7f6d47a3eaaeb0c75c74c17598408a22c7f0803338d6d20f79d4c9bf5506e46a",
+      "size": 1291
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\owned-processes-before-close.json",
+      "member": "compiled-host/owned-processes-before-close.json",
+      "sha256": "86c8e99510effa39bd955c069eec0714d3dd3ce4d1489d037b9f426e073875d1",
+      "size": 1475
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\input-manifest-before.json",
+      "member": "compiled-host/input-manifest-before.json",
+      "sha256": "b9c391fa31af6baf22d961ee4a2df2af0bee885ad08e814a61787946ab9b8384",
+      "size": 291507
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\input-manifest-after.json",
+      "member": "compiled-host/input-manifest-after.json",
+      "sha256": "d4f6ac75a16c8a4454fd3904f631dab75cbbe66dac745f883d1ac76694fbb764",
+      "size": 291507
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\runner-before.json",
+      "member": "compiled-host/runner-before.json",
+      "sha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "size": 135
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\runner-after.json",
+      "member": "compiled-host/runner-after.json",
+      "sha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "size": 135
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\spec.json",
+      "member": "compiled-host/spec.json",
+      "sha256": "49006091cd6e03d0839cd0772865226409112d4fd286ba55a5eefdbe5d49a10c",
+      "size": 1514
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\cases\\001-manifest-export.json",
+      "member": "compiled-host/cases/001-manifest-export.json",
+      "sha256": "62dd38ebe446446c311eb094fe411cc57465e73d878c33e7c73dd5d9b405a0c1",
+      "size": 1784
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\cases\\001-manifest-export.png",
+      "member": "compiled-host/cases/001-manifest-export.png",
+      "sha256": "154387389da712043c3504d2ea5e1b82f6f21f8200c32567d5c9048c99e6e123",
+      "size": 170712
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\cases\\001-manifest-export.report.json",
+      "member": "compiled-host/cases/001-manifest-export.report.json",
+      "sha256": "4a136a2f1609bacbbb55ee1ca5ed479c76e3b762812807a9a672770159628c6a",
+      "size": 827542
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\cases\\001-manifest-export.state.txt",
+      "member": "compiled-host/cases/001-manifest-export.state.txt",
+      "sha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "size": 11
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\cases\\002-unauthorized.json",
+      "member": "compiled-host/cases/002-unauthorized.json",
+      "sha256": "e929ca9dc12b3b5f7cf102cb51a273e9c123593355c7b6fdf0beee59f6a026e8",
+      "size": 1768
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\cases\\002-unauthorized.png",
+      "member": "compiled-host/cases/002-unauthorized.png",
+      "sha256": "154387389da712043c3504d2ea5e1b82f6f21f8200c32567d5c9048c99e6e123",
+      "size": 170712
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\cases\\002-unauthorized.report.json",
+      "member": "compiled-host/cases/002-unauthorized.report.json",
+      "sha256": "e83910d88776cb0cbbafb69aec5f644fbe161a4bc46394f2c8e677ceb11b85a2",
+      "size": 17751
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\cases\\002-unauthorized.state.txt",
+      "member": "compiled-host/cases/002-unauthorized.state.txt",
+      "sha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "size": 11
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\cases\\003-cancel.json",
+      "member": "compiled-host/cases/003-cancel.json",
+      "sha256": "655366ad734bfa489ec07f384eb3e8ad9ca92ac415b81d2115ba8b0a58665341",
+      "size": 1737
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\cases\\003-cancel.png",
+      "member": "compiled-host/cases/003-cancel.png",
+      "sha256": "cbca6aa6cbb25354267c2ffc4be6782253998d42c69381d6ed9515baa8348942",
+      "size": 172204
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\cases\\003-cancel.report.json",
+      "member": "compiled-host/cases/003-cancel.report.json",
+      "sha256": "c24875792580765195eafadab5b5a49a2c3cec6d3d792f829ed16ad2520a9751",
+      "size": 20822
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\cases\\003-cancel.state.txt",
+      "member": "compiled-host/cases/003-cancel.state.txt",
+      "sha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "size": 11
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\cases\\004-scope-loss.json",
+      "member": "compiled-host/cases/004-scope-loss.json",
+      "sha256": "09f9694d59c3a389aec325e6800f545c48dbb8a369d30921b64ecaa046fd3a4c",
+      "size": 1757
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\cases\\004-scope-loss.png",
+      "member": "compiled-host/cases/004-scope-loss.png",
+      "sha256": "f4a824731023eefbf694f31b4a1c13c23747da899dd531bf42fa1710e7da30e2",
+      "size": 172555
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\cases\\004-scope-loss.report.json",
+      "member": "compiled-host/cases/004-scope-loss.report.json",
+      "sha256": "d3b22c753e055f35063976a8be77310d463caf10500319e30e7d4bfd2da5eaa6",
+      "size": 20820
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\cases\\004-scope-loss.state.txt",
+      "member": "compiled-host/cases/004-scope-loss.state.txt",
+      "sha256": "b7b30bdb381cb395a98aebd63d32c0befe6ba6944aff8c542c07c9f0d60ede3d",
+      "size": 11
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\result.json",
+      "member": "owned-result.json",
+      "sha256": "41bddfe9603a2414d29cb5da41c3c8ef99a27896765f2a963751858a734ff82a",
+      "size": 30712
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\controller-identity.json",
+      "member": "controller-identity.json",
+      "sha256": "fd9d34682ee8b07f36697be1c81dc83a2fc2b2d5b6fc6d544a2afc35077df624",
+      "size": 390
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\launch.json",
+      "member": "launch.json",
+      "sha256": "ab48b3987c8fb3360b23cbf7d4464c365486ae4a5e2a140a6ad79d04b4b1bde7",
+      "size": 1187
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\stdout.log",
+      "member": "owned.stdout.log",
+      "sha256": "1907d6df14c3aac2eb9d0ad4f682c225c6c5d803f6c09d9599f045a7460eb04d",
+      "size": 351
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\stderr.log",
+      "member": "owned.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\run.json",
+      "member": "run.json",
+      "sha256": "e8d6c2985d4d9604a1e80f155491f79b260173f2388f75ff690988cb45f97549",
+      "size": 36244
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\hashes-before.json",
+      "member": "hashes-before.json",
+      "sha256": "c591836113ade81899f0cd470435e3ce6f155d0388bdee9a96db3ae37b973ea0",
+      "size": 760304
+    },
+    {
+      "path": "$TASK_TEMP\\q30-root10014-matched-c9414e5c974d42d2a7645975531431a3\\root10014-matched-diagnostic\\hashes-after.json",
+      "member": "hashes-after.json",
+      "sha256": "e9ccdaf6092f42293b943491153ee56a0a323fdd7ff029b11bf7466ca2d69348",
+      "size": 760325
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\source-snapshot.json",
+      "member": "current-source-snapshot.json",
+      "sha256": "c454318801f685ad9f67ff1d7b104004bd90842bc49ffb0d6d8d41f0441ea0d4",
+      "size": 270387
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\isolated\\prepare-receipt.json",
+      "member": "current-prepare-receipt.json",
+      "sha256": "8313a437d3f1c72040707666202929d3a5f29664f633dd83076ff564a27d3bf0",
+      "size": 272945
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\acceptance-plan.json",
+      "member": "current-acceptance-plan.json",
+      "sha256": "65dfddf90b7f2e119166eb1a8b61af412a5e1aedf27d52d4d2af994aae10a297",
+      "size": 51261
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\scale-plan.json",
+      "member": "current-scale-plan.json",
+      "sha256": "f8c6734ef62bcb582d7c3246ce38c8062b9e7004b3d22aff97f30e8268fa9077",
+      "size": 1127299
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\preparation-result.json",
+      "member": "current-preparation-result.json",
+      "sha256": "43a20b369acac708e8c9cb3e2414f250410c30b9429a02ab754b9f2928bc090a",
+      "size": 1968
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\isolated-build-result.json",
+      "member": "current-build-result.json",
+      "sha256": "301c4b3d595e8d7c6b3fcf067724713161dfc24b9ce341aa9c371e2f4e421e59",
+      "size": 673
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\isolated-build-ownership.json",
+      "member": "current-build-ownership.json",
+      "sha256": "470d35bc68afa64a83d36ae1458d5e46e17ac9b3b00226ac56653df00daaef4f",
+      "size": 730
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\isolated-build.log",
+      "member": "current-build.log",
+      "sha256": "481aaf1d32fa62d165911abede3dd380f5120eef1b907a7c15607e0c10d91335",
+      "size": 1266
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-controller\\result.json",
+      "member": "compiled-owner-result.json",
+      "sha256": "7501a85659b8a4242511ecf31f533106e731aae88e0b4f3fba8ee673b7d6513b",
+      "size": 4158
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-controller\\controller-identity.json",
+      "member": "compiled-owner-identity.json",
+      "sha256": "30f88946b221c83095ccc4a81d28705e465a9919470d50ea9453f9d974616655",
+      "size": 384
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313-stage-result.json",
+      "member": "compiled-stage-result.json",
+      "sha256": "e323f5b89bf18fc34011b9e6362e73f4d982111c5110ad3173d3d0762c7bf222",
+      "size": 2913
+    },
+    {
+      "path": "$TASK_TEMP\\q30-seed10014-current-timing-ca079-ckp0dbqk\\compiled-canaries-py313\\result.json",
+      "member": "compiled-host-result.json",
+      "sha256": "b70e5abdd217c3bf5364034385857e3d15b4d62d4eeabf7f89b607a24b457fba",
+      "size": 11624
+    }
+  ]
+}

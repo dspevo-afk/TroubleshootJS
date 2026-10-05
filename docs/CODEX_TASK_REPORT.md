@@ -1,4 +1,80 @@
-# Current checkpoint: Q30 targeted discharge/retry fix verified; acceptance blocked
+# Current checkpoint: Q30 targeted repair/meters and timing comparison complete
+
+2026-10-05. Branch `codex/q30-multirail-qualification`; checked source HEAD
+`ca079d4f70a7509f3ceda95cd2b7799a288c9db0`, 1,355 consumed inputs, current
+identity `aa4ad1161aa89f07d70d4761f0e1356ca8d660bc1dcedef7318d2862e95691b5`.
+This continuation changes documentation/evidence only. A later checkpoint may
+reuse receipts only after unchanged-input audit; gates did not run on a future
+commit. Q30 DISABLED / NOT ACCEPTED. No push/publish/email, evidence deletion,
+limit/threshold/physics/save/replay-format/epoch change or U06/U07/Q60 work.
+Approved targeted scope completed serially; no new full cohort/matrix.
+
+Actual headed ordinary UI repaired 30-part seed 10226 DREV_OPEN using distinct
+catalog Part31 diode and 40-part seed 10014 REN_OPEN using Part41 10000 Ohm
+resistor. Both unrepaired functional retests failed; both repaired retests
+showed FUNCTION VERIFIED. Actual isolated READY and numeric 180 Ohm plus DIODE
+457.626/457.625 mV observed. Removal/install did not reset stored charge.
+30 required ordinary mode/probe reselection after completion cleared its mode;
+automatic retry across that boundary NOT PROVED. Its two 115 s OHM waits and
+exact 457.627 mV wait failed. 40 pending probes later showed READY/180 Ohm;
+its 115 s wait failed and transition time was not observed. No speed guarantee.
+166 actions: 157 PASS/nine FAIL; wrong initial indicator-family route caught
+before acceptance. Five selected screenshots inspected. Private read-only
+solver observations accompany real SDK input; built-in Browser unavailable.
+This is not CDP-wrapper or blind-diagnosis certification. Intermediate 30-part
+upstream -9.264 V sample retained; sign/magnitude cause remains unresolved.
+
+Headed reused production build: 1,355 source/357 compiled/five permutations/
+six deploy/nine pinned jars unchanged before/after, byte-identical to checked
+source. Recorded build base 529f4258 plus declared edits/identity 57905b14;
+accepted ca079 source reuse audit PASS. Prior 20-part real 180 Ohm/457.627 mV
+and automatic retry evidence preserved unchanged; not rerun here.
+
+Fresh maintained current-source preparation PASS, actual JDK8/GWT isolated
+build PASS/exit 0/84.617 s/five permutations. Four compiled export/unauthorized/
+cancel/scope-loss canaries PASS; stage 18.474 s, host cleanup 1.095 s. Frozen
+77 roots/308 declarations unchanged. Task-only placeholder plan and Python
+alias failures rejected before app creation; actual native image validation
+and wrong-image negative canary PASS, no owner/authentication/ACL weakening.
+
+Four fresh original-host seed10014 diagnostics, current/old/old/current:
+77,167 / 79,999 / 73,799 / 75,904 ms, all APP_PASS/HOST_PASS; 440 work and
+390 HYPOTHESES units each. Current mean 76,535.5 vs old 76,899.0 ms;
+current minimum headroom 12,833 ms. Published candidate/difficulty and semantic
+program/partition/evidence/completion/warm-reuse proof equal; adaptive matrix
+counts varied. Original 90,000 ms/640 shared/5,000 ms active limits retained.
+Current slowdown not reproduced; no further production performance fix
+justified. CPU NOT SAMPLED. Prior 89.195/90.621 s cause still unattributed;
+diagnostic passes do not replace failed cold77. Static internal-proof cadence
+question remains nonblocking, not a demonstrated cause or new fix scope.
+
+Native owned timing envelope exit 0/328.874 s, job zero/readers closed;
+cleanup recorded 0 ms. Individual host cleanups 1.298/1.305/1.341/0.835 s.
+Independent release PASS: 130 repeated identity observations, no exact recorded
+instance present, five ports closed; three observations had reused PIDs only.
+Separate headed release PASS: 17 identities absent/port 56747 closed. UI
+preview/query cleanup 0.636 s; pre-exit console/preview exit 1 retained.
+Missing UI outer command/process receipts: no outer exit/deadline/termination
+PASS claimed. Build/browser-close cleanup elapsed not separately recorded.
+No task-owned recorded instance active; scratch/apps/profiles/raw evidence kept.
+
+[Evidence, commands and restart limits](task-evidence/Q30/qualification-workflow/repair-timing-20261005/README.md):
+440-member first portable packet plus 57-member host supplement/five selected
+screenshots. First extension-review packaging failure for maintained .state.txt
+preserved and corrected; application/build results unaffected. Packet roundtrip
+PASS is not the maintained final-source archive gate. Root reviewed receipts
+and diff; leaf review scope/result is recorded with evidence. Eight pre-existing
+untracked files and Desktop sibling preserved. Local checkpoint only.
+
+Next: parent coordinates a fresh qualification attempt with current-HEAD plan,
+new source preparation and fresh launch authorization; never reuse a consumed
+grant. Fresh full77/full native matrix, warm distribution, qualified menu/replay,
+final-source archive and independent acceptance remain NOT RUN for ca079.
+Public enablement only after all acceptance; U06/U07/Q60 remain unstarted.
+
+---
+
+# Historical checkpoint: Q30 targeted discharge/retry fix verified; acceptance blocked
 
 2026-10-05. Branch `codex/q30-multirail-qualification`; checks bound to HEAD
 `529f42582d903843254fc7cd73624b92eff55bdc` plus four declared source/test edits,

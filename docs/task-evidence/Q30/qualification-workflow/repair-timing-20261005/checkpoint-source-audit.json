@@ -1,0 +1,26 @@
+{
+  "status": "PASS_CHECKPOINT_SOURCE_PRESERVATION_PACKET_AUDIT",
+  "headObserved": "ca079d4f70a7509f3ceda95cd2b7799a288c9db0",
+  "branch": "codex/q30-multirail-qualification",
+  "checksRanAtSourceHead": "ca079d4f70a7509f3ceda95cd2b7799a288c9db0",
+  "sourceIdentityAtChecks": "aa4ad1161aa89f07d70d4761f0e1356ca8d660bc1dcedef7318d2862e95691b5",
+  "consumedSourceInputsUnchanged": 1355,
+  "preexistingUntrackedFilesUnchanged": 8,
+  "packets": [
+    {
+      "archive": "evidence.tar.gz",
+      "sha256": "2c835de045d9caf1e7940c8cd01e0b6d30bb03e3c01498ec03480d53707b4db0",
+      "bytes": 6008067,
+      "members": 440
+    },
+    {
+      "archive": "host-receipts.tar.gz",
+      "sha256": "91d8c1f2c914de7853abf08f7fca49610f440be62f5fa299433d412c4785f926",
+      "bytes": 1488495,
+      "members": 57
+    }
+  ],
+  "qualification": "Q30 DISABLED / NOT ACCEPTED; documentation-only checkpoint does not create fresh qualification evidence",
+  "shippedQ30Disabled": true,
+  "boundary": "Consumed source, preserved untracked hashes and packet content only; final Git index/commit audit is separate."
+}

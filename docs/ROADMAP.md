@@ -7,8 +7,28 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Q30 targeted discharge/retry fix verified; NOT ACCEPTED**
-**Targeted continuation (2026-10-05):** Snapshot HEAD 529f4258 plus four source/test
+**Current task:** **Q30 targeted repair/meters and timing comparison complete; NOT ACCEPTED**
+**Targeted repair/timing continuation (2026-10-05):** Checked ca079d4f source,
+1,355 inputs/identity aa4ad116. Actual headed normal Shop/remove/compatible
+install repaired 30-part 10226 DREV and 40-part 10014 REN; unrepaired retests
+failed, repaired retests FUNCTION VERIFIED, isolated READY/180 Ohm and real
+DIODE 457.626/457.625 mV. 30 needed mode/probe reselection after completion;
+automatic retry boundary unproved. 40 transition time unobserved. Retain nine
+failed actions/166, wrong initial menu route and intermediate -9.264 V sample.
+Five selected screenshots inspected; SDK input/private read-only observations
+do not certify CDP/blind diagnosis. Prior20 180 Ohm/457.627 mV evidence retained.
+Fresh actual JDK8/GWT isolated build/four compiled canaries PASS; 77/308 frozen
+declarations unchanged. Four original-host seed10014 diagnostic passes:
+current77.167/75.904 s vs old79.999/73.799 s; no current slowdown reproduced,
+no further production fix justified. 90 s/640 units/5 s and safety guards unchanged.
+CPU not sampled, prior failed cold77 90.621 s remains unresolved. Exact-instance/
+port release PASS; missing headed outer receipts explicitly limit launch proof.
+Fresh full77/full native matrix/warm distribution/qualified menu-replay/final-
+source archive and parent acceptance pending. Q30 disabled; no publication/
+U06/U07/Q60. See [checkpoint](CODEX_TASK_REPORT.md) and
+[repair/timing evidence](task-evidence/Q30/qualification-workflow/repair-timing-20261005/README.md).
+
+**Earlier targeted discharge/retry continuation (2026-10-05):** Snapshot HEAD 529f4258 plus four source/test
 edits, 1,355 inputs/identity 57905b14. Actual solver distinguishes slow UI advancement
 from DREV-isolated input storage and REN-open 22-second leakage tail. Family-only
 off-state scheduling advances 5 ms once every actual source is isolated; powered
