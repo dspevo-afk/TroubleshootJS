@@ -1,0 +1,360 @@
+{
+  "schema": 1,
+  "freezeUtc": "2026-10-05T15:36:56.357623+00:00",
+  "rawDisposition": "REFERENCE_ONLY_RETAINED_LOCALLY",
+  "currentHandoff": {
+    "path": "W/q30-qualification-live-handoff.json",
+    "bytes": 832331,
+    "sha256": "3149380d66f3d72b23727265482d56a90047c70e0ca576dfc1ce5ec709bc43db"
+  },
+  "rawSources": [
+    {
+      "path": "B/batch-result.json",
+      "bytes": 189410,
+      "sha256": "57f93040368e4bbd4fe49bf99eed4e62642ae522eeb985997d9c9b3cbbbab96d"
+    },
+    {
+      "path": "B/controller-result.json",
+      "bytes": 379774,
+      "sha256": "91c26c98f3c8fdb02e31d5dca12a7c3705ff71c4ca2957a1662468eaaea45054"
+    },
+    {
+      "path": "N/audit_current_cold_release.unknown-identity-fix.ps1",
+      "bytes": 40855,
+      "sha256": "28916f71867d453bd1fd691eece00dcad0e2c50f412e1d08764649eefd9e05b6"
+    },
+    {
+      "path": "N/cold-release-adaptation-notes.json",
+      "bytes": 11927,
+      "sha256": "ae01dfb68f87b061308b7c473b2acdc7de9f3cbeba527aeac41fe67d646ddda6"
+    },
+    {
+      "path": "N/cold-release-r4-exact-pids-current-observation.json",
+      "bytes": 588,
+      "sha256": "cf362366c0e6f3af528492525e065ed0a813b3330db5d3657a32cbead92a8810"
+    },
+    {
+      "path": "N/cold-release-unknown-identity-fix-review.json",
+      "bytes": 2021,
+      "sha256": "30f1b65070ae7e9816d5b50ddf7786fbb35e409461186a9dbbc19e5277664b27"
+    },
+    {
+      "path": "N/cold-release-unknown-identity-selected-canaries.json",
+      "bytes": 3655,
+      "sha256": "01a7d8e7f420438cd41b3bdfa9a59905984332fea68e600ece9d079f154018d0"
+    },
+    {
+      "path": "N/cold77-current-run-pointer.json",
+      "bytes": 4797,
+      "sha256": "162687d1de1a8c3952688fb33cf36dc72a83039c73a057c1bd82513e80f2d070"
+    },
+    {
+      "path": "N/current-input-preservation-pre-final.json",
+      "bytes": 5518,
+      "sha256": "97ce8e44476d78bdc5b581bf542aec293ba28a6ffd3025a6492ee577ce6b99e0"
+    },
+    {
+      "path": "N/current-raw-input-preservation-final.json",
+      "bytes": 2278,
+      "sha256": "a78046c56da1ab5762cd81d7ffaa09467d7cd4e1b0b48f15cb24dbc750fbbc5f"
+    },
+    {
+      "path": "N/current-raw-input-preservation-independent.json",
+      "bytes": 2265,
+      "sha256": "d75d2c677366b2178e2f85e76af0ee54d9947cd7229cdfb540a736e6b023e9d4"
+    },
+    {
+      "path": "N/current-source-snapshot.json",
+      "bytes": 270387,
+      "sha256": "6fd6544fc12df1f1817452f56ee6fd43ceb177d0d08ea26c75f1b0c476b20fc3"
+    },
+    {
+      "path": "N/detached-observer-audit-root-audit-r2.json",
+      "bytes": 2104,
+      "sha256": "7a0eedea181e9f5f5184595aa07ede59bb9ff1ad9cbdd0bd3ffd695d141fdb67"
+    },
+    {
+      "path": "N/detached-observer-canary-root-audit-r2.json",
+      "bytes": 2104,
+      "sha256": "22b290e14f6613c8f88a110d412672e6d4ef8d11c0e72dc39ee454d1f48a0d22"
+    },
+    {
+      "path": "N/detached-observer-root-syntax-review-r2.json",
+      "bytes": 710,
+      "sha256": "da0f3b86c22caaca7e0d23511f81173b700ad0a4a5089a00958706c769599ac8"
+    },
+    {
+      "path": "N/detached-parent-pid-guard-correction.json",
+      "bytes": 7854,
+      "sha256": "9712b0c7c4ab625ce73dc42067278c45428b207f2d1d7410c83a6664b349c1ab"
+    },
+    {
+      "path": "N/detached-r5-current-checkpoint.json",
+      "bytes": 1108,
+      "sha256": "ed4a3572af04e7bf38e3ed4ace59f5d46654b0ac7efdcb4812e9324128b806cc"
+    },
+    {
+      "path": "N/later-invocation-failures-20261005.json",
+      "bytes": 2883,
+      "sha256": "4ca586ac89f0087f8bcffc67eb6d28838b27bfe3285ac93a3e413df1e987e553"
+    },
+    {
+      "path": "N/launch_detached_release_observer.ps1",
+      "bytes": 15329,
+      "sha256": "646762409912e3e26d24062f308ce0e33caddb5bfade7ea8fc60efe20aaf398f"
+    },
+    {
+      "path": "N/private-gates/archive_current_private_sources.py",
+      "bytes": 22590,
+      "sha256": "2bada10ccb486bb979b6a438b24db0996bcdb0480e201661a9ab06e39c7cd5d5"
+    },
+    {
+      "path": "N/private-gates/bind_current_private_roles.py",
+      "bytes": 21983,
+      "sha256": "6025809ccf711bd66f3893af17d971c962531491c6796065789748cefeaccab8"
+    },
+    {
+      "path": "N/private-gates/run_epoch15_private_menu.current.py",
+      "bytes": 122349,
+      "sha256": "9c2b3df0da209de17e513633cf90c76ce2e44d10cb980839dfd8e438d75e602a"
+    },
+    {
+      "path": "N/private-gates/snapshot-schema-adaptation-notes.json",
+      "bytes": 6054,
+      "sha256": "1df4812c9a2c4b4058b3a3e8d80a4f5499cf08930f5c4ea0eaca50d29fe23846"
+    },
+    {
+      "path": "N/private-snapshot-selected-negative-canaries.json",
+      "bytes": 1657,
+      "sha256": "6bbb1a77697f73fd07d137a0ff5d98828d50e5a4896084ef09e6d887176987f2"
+    },
+    {
+      "path": "N/q30-retrospective-20261005.md",
+      "bytes": 7599,
+      "sha256": "5d8803602c5906bbef6fcadf63484d6c1aca6fbc7069d437ca0f61b68df0406d"
+    },
+    {
+      "path": "N/quiet-window-grant-20261005-current.json",
+      "bytes": 803,
+      "sha256": "2266c83e2ef432adf4609bcf72d4c793ecf78401d1bf8ec44e1c19f3db179329"
+    },
+    {
+      "path": "N/quiet-window-resource-observation.json",
+      "bytes": 4506,
+      "sha256": "de38cbefdef3351e959ba81eeb8d87f299533902a99180689255af7fcd7b53ef"
+    },
+    {
+      "path": "N/run_detached_release_observer.ps1",
+      "bytes": 22426,
+      "sha256": "f72382df5e53bdb31c0f056cf595f605f1d53156f4268924a9c738f2542624ec"
+    },
+    {
+      "path": "N/selected-release-publication-canaries.json",
+      "bytes": 864,
+      "sha256": "a664c001a48586a284baa2faf2f6758224237b612af42ec49be4eccdc139418e"
+    },
+    {
+      "path": "N/shipping-gates/shipping-role-pointer.json",
+      "bytes": 1915,
+      "sha256": "8ceb6bacd551fa87a5d47f9e2510217eae05e9cd730f1aff95d9e6d391aca15f"
+    },
+    {
+      "path": "OBSERVER_AUDIT/observer-publication.json",
+      "bytes": 313,
+      "sha256": "1e3724a273d3adc6053f5d6fabd436e622f6625be985081a9450b45e73b58f60"
+    },
+    {
+      "path": "OBSERVER_AUDIT/observer-result.json",
+      "bytes": 2198,
+      "sha256": "79f0256fd2c406581c1532c921c5020f060f324adc7cef12ad4ee090da6bb18c"
+    },
+    {
+      "path": "OBSERVER_CANARY/observer-publication.json",
+      "bytes": 316,
+      "sha256": "a554dc80a8d5094f419846ab4e99b71f0535325e7423f9243d3d82ff4212321d"
+    },
+    {
+      "path": "OBSERVER_CANARY/observer-result.json",
+      "bytes": 2640,
+      "sha256": "7fc0f21a60ee560877ebac91f58a41d1c0a8172f82c5c5fab131b5688749444c"
+    },
+    {
+      "path": "REPO/src/com/lushprojects/circuitjs1/client/Q30DiagnosticAdmissionVerifier.java",
+      "bytes": 129863,
+      "sha256": "3a5dee8c4b21e577f8196946925d8dac65b17895cb209a8d2d091796aad74ad6"
+    },
+    {
+      "path": "T/cold77-descriptive-summary.json",
+      "bytes": 4479,
+      "sha256": "5fccb5154386b01c469a7942c2f67feb5cbbedc2a29169f862a4a66085cfb798"
+    },
+    {
+      "path": "T/cold77-independent-release-diagnostic-r4.json",
+      "bytes": 1095274,
+      "sha256": "61857cd39363246b2c11ea0950eef2a8362c9fd0820a3bf3a41d5857bb1f9147"
+    },
+    {
+      "path": "T/cold77-independent-release-r2.json",
+      "bytes": 1094325,
+      "sha256": "383da9d08dc19afcc2c896c8b42eefc6d649c818d2e95afeee63322122f15251"
+    },
+    {
+      "path": "T/cold77-independent-release-r3.json",
+      "bytes": 1094338,
+      "sha256": "fca78660941ebaf990f377199d4c4872817a92d7a162d8fb1a41620809154934"
+    },
+    {
+      "path": "T/cold77-independent-release-unknown-identity-r5.json",
+      "bytes": 1095796,
+      "sha256": "aa0c1b936e8cda291dcc3d82916dd6dea8dab0b77b92a2239e5b159e4b2c73b4"
+    },
+    {
+      "path": "T/cold77-independent-release.json",
+      "bytes": 60468,
+      "sha256": "d387feb6ce7e624e62450dd1b979ad29778918c8d0ce114e8e8583fdb6c4f662"
+    },
+    {
+      "path": "T/compiled-canaries-py313-stage-result.json",
+      "bytes": 2832,
+      "sha256": "68063a59c45b16cc4396653076403d92f70044baea254bad1cf601be7e41a171"
+    },
+    {
+      "path": "T/compiled31-audit.json",
+      "bytes": 31412,
+      "sha256": "d95d6fc666e4ad3a77982be63580a784589625770c869049b2fd5b7f16d90407"
+    },
+    {
+      "path": "T/compiled31-independent-release.json",
+      "bytes": 5657,
+      "sha256": "f007e1dcb373da00ec2576a2c2cb900cd396569ee33b7e5dec2a054135c84895"
+    },
+    {
+      "path": "T/compiled31/result.json",
+      "bytes": 88386,
+      "sha256": "d43e8962b7706430902ad2f82a4efa688fb34f32bb768b00385baf1fd1f5acc2"
+    },
+    {
+      "path": "T/current-source-archive-result.json",
+      "bytes": 673,
+      "sha256": "3757417df646c3604deaecb2368a85b859fca5f458a3d0986491408213f5476c"
+    },
+    {
+      "path": "T/disabled-menu-audit.json",
+      "bytes": 296044,
+      "sha256": "c75d4d3edd4ce618e7fd282425a6fe107cdceff83752b45a96e5396ca2e53462"
+    },
+    {
+      "path": "T/disabled-menu-stage-result.json",
+      "bytes": 129074,
+      "sha256": "aae979425db47a24c59e12c3bb116e65f35c7995954b8b418383ef2562c4a22e"
+    },
+    {
+      "path": "T/disabled-menu/composed_controlled_indicator-bottom.png",
+      "bytes": 190255,
+      "sha256": "400304d3a8f5f99e9e746e48d81cf0d1ba1d6e835f71bfbb670165237529c4c8"
+    },
+    {
+      "path": "T/disabled-menu/led_indicator-top.png",
+      "bytes": 207176,
+      "sha256": "b42ff2ac9ceef80a45244b82990a839ccbb3ddf030846a037c51e4c86215f6e5"
+    },
+    {
+      "path": "T/isolated-build-result.json",
+      "bytes": 666,
+      "sha256": "7d15a604d58660122542b7b206a887e1e18e57e5637ee850772683df4865430c"
+    },
+    {
+      "path": "T/native-append-audit.json",
+      "bytes": 6689,
+      "sha256": "8c8b5086c59955d04824e1ffd0a477592ba4570535d6cd23be100b990f9ef6ab"
+    },
+    {
+      "path": "T/native-append-result.json",
+      "bytes": 1570,
+      "sha256": "12e5fa188967c6c2e0fcb925e93bb00a2959233b093d50f8be20daea0e13fad2"
+    },
+    {
+      "path": "T/native-full-audit.json",
+      "bytes": 9206,
+      "sha256": "9fbae9591d0e033de4c2b776e61fe8fd585a0d13694195515891b0a4f9c8e2af"
+    },
+    {
+      "path": "T/native-full-result.json",
+      "bytes": 1808,
+      "sha256": "6b7d674972c81aa630369cbecf93c4de8b47770693c6f8b4102cd6c2ad307b20"
+    },
+    {
+      "path": "T/native-warm-descriptive-summary.json",
+      "bytes": 400177,
+      "sha256": "9e75854934f83d023de5eb8f35941738c652d53c867ca0692c3c7b4c632c9b71"
+    },
+    {
+      "path": "T/shipping-build-result.json",
+      "bytes": 665,
+      "sha256": "d2c04484eef91685ccf8599373f2796fa75f8afa937e57b7a8efa3372b136f60"
+    },
+    {
+      "path": "T/warm-descriptive-summary.json",
+      "bytes": 26124,
+      "sha256": "bda093f619a0d4a27b7e783c87a1efb370153c8e03435d8d2266777de1dc1899"
+    },
+    {
+      "path": "W/q30-qualification-live-handoff.json",
+      "bytes": 832331,
+      "sha256": "3149380d66f3d72b23727265482d56a90047c70e0ca576dfc1ce5ec709bc43db"
+    }
+  ],
+  "portableOutputs": [
+    {
+      "path": "candidate-source-pin.json",
+      "bytes": 1109,
+      "sha256": "f1bbd325023cf077eaec21d8b3bdeec59b9977dcfa7acd38b76f10ab47a8a90c"
+    },
+    {
+      "path": "cold77-summary.json",
+      "bytes": 7685,
+      "sha256": "e1fe2cc4bb1a5aed346eabf780a376e78181f3b362837144b54721e974b08204"
+    },
+    {
+      "path": "gate-summary.json",
+      "bytes": 14807,
+      "sha256": "48fcc92980dc7c8eb0f5ce807c56e2dd1fe6a9374e582cdeb219bd8201341ec2"
+    },
+    {
+      "path": "private-gate-status.json",
+      "bytes": 3138,
+      "sha256": "f46e6de9194419095df20c67da7a93fac773044f7098549447cf2add76bab343"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6795,
+      "sha256": "aade32168469265e6a9dcf34df306db59a4e745ce18e44b1c72a067764181647"
+    },
+    {
+      "path": "retrospective.md",
+      "bytes": 7599,
+      "sha256": "5d8803602c5906bbef6fcadf63484d6c1aca6fbc7069d437ca0f61b68df0406d"
+    },
+    {
+      "path": "review-only-helper-source-pins.json",
+      "bytes": 1638,
+      "sha256": "cd4dd6cb387db1be7d10ed5110ae54aabee4c4481b34d1949b095a414e6287a6"
+    },
+    {
+      "path": "shipping-composed-indicator-bottom.png",
+      "bytes": 190255,
+      "sha256": "400304d3a8f5f99e9e746e48d81cf0d1ba1d6e835f71bfbb670165237529c4c8"
+    },
+    {
+      "path": "shipping-led-indicator-top.png",
+      "bytes": 207176,
+      "sha256": "b42ff2ac9ceef80a45244b82990a839ccbb3ddf030846a037c51e4c86215f6e5"
+    },
+    {
+      "path": "windows-method-canaries.json",
+      "bytes": 6002,
+      "sha256": "d8de2ac7b4227474f0f21df6fa93af4b123260b9bc479d3b474a3be4c0c250b1"
+    }
+  ],
+  "selfHash": "Manifest cannot hash itself; commit tree is the final tracked integrity boundary."
+}

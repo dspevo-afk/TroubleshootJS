@@ -7,8 +7,24 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Q30 charged relay verifier timing fixed; final qualification pending; NOT ACCEPTED**
-**Verifier timing continuation (2026-10-05):** Fresh pre-fix native 83/append 26,
+**Current task:** **Q30 fresh matrix/cold77 pass; independent release BLOCKED; NOT ACCEPTED**
+**Final regression continuation (2026-10-05):** Candidate c621b55d/1,355 inputs:
+fresh native83/append26, actual isolated+shipping JDK8/GWT5, compiled31 strict,
+disabled shipping menu/replay and source-only archive PASS. Serial cold77 and
+controller PASS 77/77/exit 0, worst 85.003 s under unchanged 90 s/640 units/5 s. Actual quiet
+window consumed once. Independent detached release R5 BLOCKED/exit 2: 806/809
+absent, three unresolved live images, 77 ports closed, all cleanup verified.
+Different same-precision births with unavailable executable paths remain
+unresolved under the unchanged strict oracle. Real observer lifecycle canaries
+and exact owned-instance release PASS; hard stalled-I/O watchdog NOT PROVED.
+Private enabled build/menu/replay/archive NOT RUN; fresh visible repair QA
+NOT RUN because supported input tooling is unavailable. Q30 stays disabled;
+parent acceptance pending. All failures/raw evidence/eight untracked files
+preserved; no push/email/global PC change or U06/U07/Q60. See
+[current checkpoint](CODEX_TASK_REPORT.md) and
+[fresh gate evidence/restart](task-evidence/Q30/qualification-workflow/final-regression-20261005/README.md).
+
+**Historical verifier timing continuation (2026-10-05):** Fresh pre-fix native 83/append 26,
 standard/isolated GWT5, four canaries and source archive passed, then full
 compiled 31 failed 20 positive D01 charged-relay preconditions before proof;
 ten core cases and original seed 35 typed rejection passed. Full failures retained.
@@ -2795,6 +2811,16 @@ Times for seeds 7/13/64 are 86.809/93.243/82.580 seconds, with exact proof/work
 parity against their controls. One still exceeds 90 seconds; no full-corpus
 normal acceptance or broad scale claim follows from this small comparison.
 
+**Current candidate (2026-10-05):** c621b55d fresh native83/append26,
+isolated+shipping GWT5, compiled31, disabled menu/replay and source-only archive
+PASS. Current serial cold77/controller PASS 77/77, worst 85.003 s under original
+90s/640/5s. Independent release R5 BLOCKED: 806/809 absent, three unresolved
+live images, 77 closed ports; no predicate or budget relaxed. Private enabled
+build/menu/replay/archive NOT RUN, fresh visible-input repair proof NOT RUN,
+parent acceptance pending. Q30 remains disabled; U06/U07/Q60 unstarted.
+[Current final regression checkpoint](task-evidence/Q30/qualification-workflow/final-regression-20261005/README.md).
+
+**Historical active-readiness checkpoint:**
 Q30 remains BLOCKED / NOT ACCEPTED under its unchanged original scope.
 Plan-4 20-40-part generation and fresh original-host cold77 pass the frozen
 cohort. Fresh full native regression, private enabled production build phase/

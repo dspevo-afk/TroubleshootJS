@@ -1,0 +1,111 @@
+{
+  "failedEvidenceToPreserve": [
+    {
+      "reference": "W/q30-qualification-live-handoff.json at the captured 2026-10-05T14:14:43Z snapshot",
+      "status": "FAIL_NATIVE_BIRTH_PRECISION_MISMATCH; selectedReleaseMethodCanaries=FAIL",
+      "scope": "Earlier native process-birth and release-method checks; historical failures only."
+    },
+    {
+      "path": "N/cold-release-adaptation-notes.json",
+      "bytes": 11927,
+      "sha256": "ae01dfb68f87b061308b7c473b2acdc7de9f3cbeba527aeac41fe67d646ddda6",
+      "context": "Source for the pre-R1 host-variable and New-Item -LiteralPath failures; derived incomplete audit is not an actual leak."
+    },
+    {
+      "path": "N/cold-release-unknown-identity-fix-review.json",
+      "bytes": 2021,
+      "sha256": "30f1b65070ae7e9816d5b50ddf7786fbb35e409461186a9dbbc19e5277664b27",
+      "status": "STATIC_REVIEW_ONLY_NOT_RUN",
+      "context": "A constrained-language parser failure was reported during the earlier helper review; do not present this artifact as a real Windows runtime canary."
+    },
+    {
+      "path": "N/later-invocation-failures-20261005.json",
+      "bytes": 2883,
+      "sha256": "4ca586ac89f0087f8bcffc67eb6d28838b27bfe3285ac93a3e413df1e987e553",
+      "status": "PRESERVED_FAILURES",
+      "context": "Contains the sandbox tempfile blocker, stale-contract failure, safe-git and marker failures with resolved checks. This ledger can be appended; re-hash at freeze."
+    }
+  ],
+  "actualWindowsPasses": [
+    {
+      "path": "N/cold-release-unknown-identity-selected-canaries.json",
+      "bytes": 3655,
+      "sha256": "01a7d8e7f420438cd41b3bdfa9a59905984332fea68e600ece9d079f154018d0",
+      "toolReference": "79a270",
+      "status": "PASS_SELECTED_REAL_WINDOWS_IDENTITY_CANARIES",
+      "operationSeconds": 0.67925711,
+      "scope": "Actual PowerShell 7 syntax check plus nine selected auditor-loop/native/CIM identity cases: exact live blocks; forged birth/image reuse blocks; missing birth/image or wrong precision stays unresolved; one-view-only absence stays unresolved; actual absence can be classified absent."
+    },
+    {
+      "path": "N/selected-release-publication-canaries.json",
+      "bytes": 864,
+      "sha256": "a664c001a48586a284baa2faf2f6758224237b612af42ec49be4eccdc139418e",
+      "toolReference": "034e47",
+      "status": "PASS_SELECTED_LITERAL_EXCLUSIVE_PUBLICATION",
+      "scope": "No-BOM/CreateNew publication behavior and existing-output rejection only; cold release verdict NOT_ASSESSED."
+    }
+  ],
+  "methodBoundary": "These selected method canaries validate bounded identity and publication operations only. They do not prove full OS process snapshots, watchdog/kill behavior, all-process cleanup, listener/port release, or the cold77 independent-release predicate.",
+  "freshDetachedObserver": {
+    "sources": [
+      "646762409912e3e26d24062f308ce0e33caddb5bfade7ea8fc60efe20aaf398f",
+      "f72382df5e53bdb31c0f056cf595f605f1d53156f4268924a9c738f2542624ec"
+    ],
+    "selectedSyntax": "PASS_FULLLANGUAGE",
+    "canaryStatus": "PASS_CANARY",
+    "canaryAssertions": {
+      "exactOwnerWaitAndExit": true,
+      "launcherExitCodeZero": true,
+      "exactPositive": true,
+      "forgedPidRejected": true,
+      "forgedBirthRejected": true,
+      "forgedImageRejected": true,
+      "missingBirthRejected": true,
+      "coldPidGuardClear": true,
+      "sourceSnapshotStable": true,
+      "nativePipeClosureBeforeReady": true,
+      "stdoutFileOwned": true,
+      "stderrFileOwned": true,
+      "stdoutNotTruncated": true,
+      "stderrNotTruncated": true,
+      "ownedLogsClosed": true,
+      "launcherHandleReleased": true
+    },
+    "canaryRootAudit": {
+      "path": "N/detached-observer-canary-root-audit-r2.json",
+      "bytes": 2104,
+      "sha256": "22b290e14f6613c8f88a110d412672e6d4ef8d11c0e72dc39ee454d1f48a0d22"
+    },
+    "auditLifecycle": {
+      "path": "N/detached-observer-audit-root-audit-r2.json",
+      "bytes": 2104,
+      "sha256": "7a0eedea181e9f5f5184595aa07ede59bb9ff1ad9cbdd0bd3ffd695d141fdb67"
+    },
+    "canaryExactOwnedIdentitiesAbsent": true,
+    "auditExactOwnedIdentitiesAbsent": true,
+    "actualClosedWritesBeforeDeadline": true,
+    "nativeStdHandlesClosed": true,
+    "logCloseOk": true,
+    "truncated": false,
+    "terminationUsed": false,
+    "actualReleaseStatus": "BLOCKED_EXIT_2",
+    "independentStaticReview": "Leaf reviewed only parent-PID guard correction; no concrete source-level blocker. Root verified actual canary/audit and superseded stale correction-time NOT_RUN.",
+    "limits": "Cooperative bounded I/O. Actual completed closed writes verified before deadline; hard blocked-I/O termination/watchdog NOT_PROVED.",
+    "actualLauncherPidOverlapExercised": false,
+    "launcherPidOverlapLimit": "Both fresh CANARY and AUDIT report launcherPidWasRecorded=false. Allowed parent-PID-overlap branch was reviewed statically but NOT_EXERCISED by these native runs."
+  },
+  "finalPacketReview": {
+    "scope": "Read-only leaf packet/receipt/privacy review; not independent Q30 electrical acceptance.",
+    "reportedFindings": [
+      "Earlier local freeze receipt had58 raw pins while final manifest had59.",
+      "Fresh native runs did not exercise allowed launcher-PID overlap; explicit scope limit required."
+    ],
+    "rootCorrections": [
+      "Prior58 receipt retained; new final-checkpoint-freeze-receipt-r2.json binds59-pin manifest.",
+      "Actual overlap NOT_EXERCISED limit recorded in JSON and README."
+    ],
+    "nonblockingSummaryGap": "README now includes the passing compiled canaries and manifest freeze explicitly.",
+    "confirmedBoundaries": "R5 BLOCKED exit2/806 absent/3 unresolved/77 ports closed; private NOT_RUN/public false; source1355/all8 preserved; no personal absolute paths.",
+    "rootDeltaReview": "PASS corrected scope, completed receipts and current59-pin manifest; no acceptance upgrade."
+  }
+}

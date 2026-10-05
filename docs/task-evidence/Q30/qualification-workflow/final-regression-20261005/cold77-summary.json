@@ -1,0 +1,193 @@
+{
+  "schema": 1,
+  "cohort": {
+    "gate": "cold77CohortAndController",
+    "status": "PASS_DESCRIPTIVE_COHORT_AND_CONTROLLER",
+    "cases": 77,
+    "pass": 77,
+    "fail": 0,
+    "notRun": 0,
+    "worstApplicationCase": {
+      "seed": 35,
+      "elapsedMs": 85003,
+      "workUnits": 506
+    },
+    "unchangedLimits": {
+      "applicationJobMs": 90000,
+      "activeOperationMs": 5000,
+      "sharedWorkUnits": 640
+    },
+    "normalLauncherChild": {
+      "pid": 17052,
+      "birthUtc": "2026-10-05T12:21:11.428686Z",
+      "identityVerified": true,
+      "ownerWallSeconds": 4442.0612935,
+      "batchAlias": "q30-cold77-owned-batch-a5n_53xu"
+    },
+    "serialOuterController": {
+      "pid": 17304,
+      "operationMs": 4440490,
+      "cleanupMs": 0,
+      "cleanupClockNote": "0 ms is recorded granularity, not proof of zero overhead."
+    },
+    "outerAllocation": {
+      "operationLimitMs": 15043439,
+      "cleanupLimitMs": 15000,
+      "releaseReserveMs": 30000
+    },
+    "evidence": [
+      {
+        "path": "T/cold77-descriptive-summary.json",
+        "bytes": 4479,
+        "sha256": "5fccb5154386b01c469a7942c2f67feb5cbbedc2a29169f862a4a66085cfb798"
+      },
+      {
+        "path": "N/cold77-current-run-pointer.json",
+        "bytes": 4797,
+        "sha256": "162687d1de1a8c3952688fb33cf36dc72a83039c73a057c1bd82513e80f2d070"
+      }
+    ],
+    "scope": "Descriptive cohort/controller timing only. The 85.003-second worst application case is below the unchanged 90-second job limit; worker wall time is a separate clock. This result does not prove independent release or overall Q30 acceptance."
+  },
+  "release": {
+    "gate": "cold77IndependentRelease",
+    "status": "BLOCKED",
+    "reason": "R5 completed BLOCKED: 806/809 absent, three unresolved live images. All 77 ports closed. Strict zero-reuse/unknown rules unchanged.",
+    "attempts": [
+      {
+        "revision": "R1",
+        "status": "BLOCKED",
+        "operationMs": 553,
+        "afterNormalExitSeconds": 349.201206,
+        "path": "T/cold77-independent-release.json",
+        "bytes": 60468,
+        "sha256": "d387feb6ce7e624e62450dd1b979ad29778918c8d0ce114e8e8583fdb6c4f662",
+        "notes": "An early host-variable collision stopped before OS audit; the derived incomplete audit is not evidence of an actual process leak. A New-Item -LiteralPath publication failure occurred before the R1 receipt. Preserve these details from N/cold-release-adaptation-notes.json (11927 bytes, SHA-256 ae01dfb68f87b061308b7c473b2acdc7de9f3cbeba527aeac41fe67d646ddda6), along with later invocation failures."
+      },
+      {
+        "revision": "R2",
+        "status": "BLOCKED",
+        "operationMs": 8902,
+        "afterNormalExitSeconds": 736.185781,
+        "path": "T/cold77-independent-release-r2.json",
+        "bytes": 1094325,
+        "sha256": "383da9d08dc19afcc2c896c8b42eefc6d649c818d2e95afeee63322122f15251",
+        "notes": "Per-case cleanup and process/listener/port audits completed; the receipt classified PID 24060 as reuse. The captured evidence does not retain a conflicting live tuple, so describe this as the receipt classification."
+      },
+      {
+        "revision": "R3",
+        "status": "BLOCKED",
+        "operationMs": 7950,
+        "afterNormalExitSeconds": 1124.1294364,
+        "path": "T/cold77-independent-release-r3.json",
+        "bytes": 1094338,
+        "sha256": "fca78660941ebaf990f377199d4c4872817a92d7a162d8fb1a41620809154934",
+        "notes": "The receipt classified PIDs 18936, 23864 and 27544 as reuse. It does not retain a conflicting live tuple; preserve the classification without inferring a precise mismatch."
+      },
+      {
+        "revision": "R4",
+        "status": "BLOCKED",
+        "operationMs": 7941,
+        "afterNormalExitSeconds": 1573.3163874,
+        "path": "T/cold77-independent-release-diagnostic-r4.json",
+        "bytes": 1095274,
+        "sha256": "61857cd39363246b2c11ea0950eef2a8362c9fd0820a3bf3a41d5857bb1f9147",
+        "notes": "A precise conhost identity accounts for PID 24872. R4 also counted unknown native PID 18752 in two reuses/809 absences, but it had no birth ticks or executable/image, so its absence is unproven. R2-R4 finished within the window with the 30-second reserve."
+      }
+    ],
+    "exactPidObservation": {
+      "path": "N/cold-release-r4-exact-pids-current-observation.json",
+      "bytes": 588,
+      "sha256": "cf362366c0e6f3af528492525e065ed0a813b3330db5d3657a32cbead92a8810",
+      "meaning": "Later exact PID queries observed the PID absent in native and CIM reads without query errors; this does not rewrite or upgrade the earlier incomplete R4 identity evidence."
+    },
+    "scope": "No cold qualification or overall acceptance; all five blocked receipts retained.",
+    "latestAttempt": {
+      "revision": "R5",
+      "status": "BLOCKED",
+      "actualAuditorExitCode": 2,
+      "operationMs": 8352,
+      "observerAuditorMs": 8461,
+      "recordedInstances": 809,
+      "absent": 806,
+      "unresolvedOrLive": 3,
+      "knownReuse": 0,
+      "caseCleanupVerified": 77,
+      "portsClosed": 77,
+      "beforeWindowEnd": true,
+      "terminationUsed": false,
+      "path": "T/cold77-independent-release-unknown-identity-r5.json",
+      "bytes": 1095796,
+      "sha256": "aa0c1b936e8cda291dcc3d82916dd6dea8dab0b77b92a2239e5b159e4b2c73b4"
+    },
+    "unresolvedRows": [
+      {
+        "pid": 9032,
+        "status": "UNRESOLVED_IDENTITY_METADATA",
+        "birthPrecision": "CIM_MICROSECOND",
+        "recordedBirthTicks": 134356765446133230,
+        "observedBirthTicks": 134356865793803060,
+        "observedImage": null,
+        "livePidIsObserver": false,
+        "identityMetadataProblems": [
+          "live.executable"
+        ],
+        "sourceCaseAliases": [
+          "003-seed-10014"
+        ]
+      },
+      {
+        "pid": 6540,
+        "status": "UNRESOLVED_IDENTITY_METADATA",
+        "birthPrecision": "CIM_MICROSECOND",
+        "recordedBirthTicks": 134356787951066420,
+        "observedBirthTicks": 134356837955143470,
+        "observedImage": null,
+        "livePidIsObserver": false,
+        "identityMetadataProblems": [
+          "live.executable"
+        ],
+        "sourceCaseAliases": [
+          "040-seed-60"
+        ]
+      },
+      {
+        "pid": 12212,
+        "status": "UNRESOLVED_IDENTITY_METADATA",
+        "birthPrecision": "CIM_MICROSECOND",
+        "recordedBirthTicks": 134356806361612870,
+        "observedBirthTicks": 134356869458463120,
+        "observedImage": null,
+        "livePidIsObserver": false,
+        "identityMetadataProblems": [
+          "live.executable"
+        ],
+        "sourceCaseAliases": [
+          "073-seed-10016"
+        ]
+      }
+    ]
+  },
+  "authorization": {
+    "quietWindowApproval": {
+      "sourceTimestampUtc": "2026-10-05T11:42:46Z",
+      "sourceMessage": "Ok sorry yes I approve everything",
+      "parentMessageReference": "01a1017d-669f-76ed-b3cf-1341fcc89016",
+      "windowStartUtc": "2026-10-05T12:20:46.188302Z",
+      "windowEndUtc": "2026-10-05T16:32:46.188302Z",
+      "windowMs": 15120000,
+      "grantEvidence": {
+        "path": "N/quiet-window-grant-20261005-current.json",
+        "bytes": 803,
+        "sha256": "2266c83e2ef432adf4609bcf72d4c793ecf78401d1bf8ec44e1c19f3db179329"
+      },
+      "resourceObservation": {
+        "path": "N/quiet-window-resource-observation.json",
+        "bytes": 4506,
+        "sha256": "de38cbefdef3351e959ba81eeb8d87f299533902a99180689255af7fcd7b53ef"
+      }
+    }
+  },
+  "observationBoundary": "One corrected detached audit; parent exited before query and actual observer PID not in recorded set. No retry scheduled.",
+  "sourceAndLimitsUnchanged": true
+}

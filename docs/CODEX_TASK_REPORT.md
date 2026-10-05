@@ -1,4 +1,77 @@
-# Current checkpoint: Q30 charged relay verifier timing fixed; final qualification pending
+# Current checkpoint: Q30 fresh matrix and cold77 pass; independent release blocked
+
+2026-10-05. Branch `codex/q30-multirail-qualification`; actual gates consumed
+HEAD `c621b55d2b071e064d5afd383451d2715e35940d`, 1,355 inputs, source identity
+`87bb04f707ccaf57f92c5d38fdbf4db199d63359c573725fd34bac61484226d7`.
+This checkpoint changes documentation/evidence only. Receipts retain their
+consumed source SHA after a later documentation commit; unchanged-input reuse
+requires an audit. Q30 DISABLED / NOT ACCEPTED; parent owns acceptance.
+No push/publication/email, evidence deletion, global PC changes or U06/U07/Q60.
+
+Fresh native83 PASS/strict zero issues (3,918.455 s), append26 PASS/zero issues
+(192.366 s), actual isolated and shipping JDK8/GWT5 PASS (82.844/81.496 s),
+four compiled canaries/frozen 77-root/308-declaration checks PASS. Full compiled31
+PASS/31 of 31/zero strict errors (2,944.978 s): current charged-relay D01 cases,
+typed seed 35 rejection and core cases pass. Disabled shipping menu/replay
+PASS/30 launches/two exact replays/stale rejection/privacy (210.132 s).
+Compiled/menu host cleanup PASS/1.280/0.569 s; exact independent release r2
+PASS/1.061/0.896 s, 12/9 recorded instances absent and ports closed. Maintained
+source-only archive PASS_SOURCE_ARCHIVE_ONLY (75.878 s); private-enabled archive
+acceptance NOT ASSESSED. Native/build/archive separate cleanup NOT RECORDED.
+Native structural and compiled developer warm summaries are descriptive;
+normal-player warm reliability UNMEASURED.
+
+Actual user-approved quiet window 12:20:46.188302Z-16:32:46.188302Z consumed
+once for the serial cold77 cohort/controller: 77/77 PASS, normal/controller
+exit 0, worst application seed 35 85.003 s/506 units, unchanged 90 s/640 units/5 s limits.
+Controller operation 4,440.490 s; recorded cleanup 0 ms is clock granularity.
+Outer normal child PID 17052 is distinct from serial controller PID 17304.
+No duplicate cohort or relaxed timing budget. Current seed 10014 PASS 74.201 s;
+earlier 90.621 s timeout and all pre-fix compiled failures remain preserved.
+
+Independent cold release remains BLOCKED. Corrected detached R5 exited 2:
+8,352 ms audit operation/8,461 ms observer call, 806/809 recorded instances
+proven absent, three unresolved live images, zero classified complete reuse,
+77 ports closed and 77 case/outer cleanup verified within the actual window.
+PIDs 9032/6540/12212 have different same-precision CIM births but unavailable
+executables; unchanged strict zero-reuse/unknown predicates keep them unresolved.
+No termination or additional unchanged retry. R1-R4 and publication/adapter
+failures retained; R4's unknown row counted absent is not literal absence proof.
+Fresh corrected Windows syntax and 16 real detached lifecycle assertions PASS;
+parent exited0 through retained handle before query, observer PID outside cold
+set, native std handles/logs closed and actual file writes before deadline.
+Both exact detached instances independently absent. Hard stalled-I/O watchdog
+termination NOT PROVED. Read-only leaf parent-guard and final packet reviews
+have their actual scope recorded in evidence; root owns integration.
+
+Local private snapshot adapter fixed to maintained exact four-key schema with
+snapshot-bound catalog/layout byte checks. Actual preflight, five memory-only
+negative cases and independent final 1,355/all-eight preservation checks PASS.
+Private role binding/enabled production build/menu/replay/source archive
+NOT RUN because strict cold release is BLOCKED. Tracked catalog remains false.
+Fresh visible 20/30/40 repair QA NOT RUN: supported Browser/computer visible-input
+tool unavailable. Two inspected headless shipping screens prove only current
+layout/privacy; historical headed repair evidence retains its failed actions
+and readiness limits and is not fresh c621b55d input evidence.
+
+[Current gate evidence and restart](task-evidence/Q30/qualification-workflow/final-regression-20261005/README.md)
+provides sanitized summaries and 59 raw reference pins. Local current task
+`q30-qualification-c621b55d-mcp4z52b`, cold batch
+`q30-cold77-owned-batch-a5n_53xu`, and workspace
+`epoch15-final/qualification-verifierfix-20261005-r2` retain raw failures,
+receipts, profiles and owners. Durable live handoff refreshed after R5. All
+eight original untracked files preserved; no recorded task-owned expensive
+gate active; Desktop sibling untouched. No global PC idle claim.
+
+Next: parent assesses strict release prerequisite and visible-input gap before
+private enabled gates/archive and independent acceptance. Public enablement
+only after all acceptance. No unrequested U06/U07/Q60. The linked retrospective
+ranks future runner/schema/process-ownership/feedback improvements; proposals
+not implemented. Production ownership unchanged; ARCHITECTURE.md unchanged.
+
+---
+
+# Historical checkpoint: Q30 charged relay verifier timing fixed; final qualification pending
 
 2026-10-05. Branch `codex/q30-multirail-qualification`; checks bound to HEAD
 `4bf9a6ac9d630f10b2408423295f0933d9bb052f` plus the single declared

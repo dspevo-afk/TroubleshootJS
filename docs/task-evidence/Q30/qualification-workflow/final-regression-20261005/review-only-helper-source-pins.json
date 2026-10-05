@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "status": "LOCAL_REVIEW_REFERENCES_ONLY",
+  "helpers": [
+    {
+      "path": "N/private-gates/run_epoch15_private_menu.current.py",
+      "bytes": 122349,
+      "sha256": "9c2b3df0da209de17e513633cf90c76ce2e44d10cb980839dfd8e438d75e602a"
+    },
+    {
+      "path": "N/private-gates/bind_current_private_roles.py",
+      "bytes": 21983,
+      "sha256": "6025809ccf711bd66f3893af17d971c962531491c6796065789748cefeaccab8"
+    },
+    {
+      "path": "N/private-gates/archive_current_private_sources.py",
+      "bytes": 22590,
+      "sha256": "2bada10ccb486bb979b6a438b24db0996bcdb0480e201661a9ab06e39c7cd5d5"
+    },
+    {
+      "path": "N/audit_current_cold_release.unknown-identity-fix.ps1",
+      "bytes": 40855,
+      "sha256": "28916f71867d453bd1fd691eece00dcad0e2c50f412e1d08764649eefd9e05b6"
+    },
+    {
+      "path": "N/launch_detached_release_observer.ps1",
+      "bytes": 15329,
+      "sha256": "646762409912e3e26d24062f308ce0e33caddb5bfade7ea8fc60efe20aaf398f"
+    },
+    {
+      "path": "N/run_detached_release_observer.ps1",
+      "bytes": 22426,
+      "sha256": "f72382df5e53bdb31c0f056cf595f605f1d53156f4268924a9c738f2542624ec"
+    }
+  ],
+  "copiedRunnableHelpers": false,
+  "consumedProductionInputsUnchanged": true,
+  "binderReleasePath": "Still points at R3 BLOCKED; not executed. A future accepted changed release requires an explicitly reviewed binding change.",
+  "sourceBoundary": "A later documentation commit must retain c621b55d receipt labels; inspect all 1355 consumed inputs before reuse. Hard-coded helper HEAD pins must be refreshed through their maintained contract before any new launch."
+}

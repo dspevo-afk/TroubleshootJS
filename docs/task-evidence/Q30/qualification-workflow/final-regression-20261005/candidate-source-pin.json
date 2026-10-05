@@ -1,0 +1,26 @@
+{
+  "commit": "c621b55d2b071e064d5afd383451d2715e35940d",
+  "sourceIdentity": "87bb04f707ccaf57f92c5d38fdbf4db199d63359c573725fd34bac61484226d7",
+  "sourceInputCount": 1355,
+  "acceptancePlanSha256": "92e548c38d9b07b6a16c832e66a2ec731e9dfa7907ddb745318b0ac36fe5ff92",
+  "sourceSnapshot": {
+    "path": "N/current-source-snapshot.json",
+    "bytes": 270387,
+    "sha256": "6fd6544fc12df1f1817452f56ee6fd43ceb177d0d08ea26c75f1b0c476b20fc3"
+  },
+  "changedJavaSource": {
+    "path": "REPO/src/com/lushprojects/circuitjs1/client/Q30DiagnosticAdmissionVerifier.java",
+    "bytes": 129863,
+    "sha256": "3a5dee8c4b21e577f8196946925d8dac65b17895cb209a8d2d091796aad74ad6"
+  },
+  "publicQ30CatalogEnabled": false,
+  "schema": 1,
+  "evidenceConsumedHead": "c621b55d2b071e064d5afd383451d2715e35940d",
+  "documentationCommit": "Recorded by Git; never relabel consumed evidence",
+  "freezeUtc": "2026-10-05T15:24:23.060180+00:00",
+  "finalPreservation": {
+    "path": "N/current-raw-input-preservation-final.json",
+    "bytes": 2278,
+    "sha256": "a78046c56da1ab5762cd81d7ffaa09467d7cd4e1b0b48f15cb24dbc750fbbc5f"
+  }
+}

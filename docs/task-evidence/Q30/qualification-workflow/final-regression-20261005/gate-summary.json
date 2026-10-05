@@ -1,0 +1,363 @@
+{
+  "schema": 1,
+  "consumedHead": "c621b55d2b071e064d5afd383451d2715e35940d",
+  "sourceIdentity": "87bb04f707ccaf57f92c5d38fdbf4db199d63359c573725fd34bac61484226d7",
+  "overallAcceptance": "NOT_ACCEPTED",
+  "gates": [
+    {
+      "gate": "native83",
+      "status": "PASS",
+      "operationSeconds": 3918.4552657,
+      "cleanupSeconds": "not recorded separately",
+      "result": {
+        "path": "T/native-full-result.json",
+        "bytes": 1808,
+        "sha256": "6b7d674972c81aa630369cbecf93c4de8b47770693c6f8b4102cd6c2ad307b20"
+      },
+      "strictAudit": {
+        "path": "T/native-full-audit.json",
+        "bytes": 9206,
+        "sha256": "9fbae9591d0e033de4c2b776e61fe8fd585a0d13694195515891b0a4f9c8e2af"
+      },
+      "scope": "83 suites; 1355 consumed inputs; strict audit reviewed PASS."
+    },
+    {
+      "gate": "append26",
+      "status": "PASS",
+      "operationSeconds": 192.3656986,
+      "cleanupSeconds": "not recorded separately",
+      "result": {
+        "path": "T/native-append-result.json",
+        "bytes": 1570,
+        "sha256": "12e5fa188967c6c2e0fcb925e93bb00a2959233b093d50f8be20daea0e13fad2"
+      },
+      "strictAudit": {
+        "path": "T/native-append-audit.json",
+        "bytes": 6689,
+        "sha256": "8c8b5086c59955d04824e1ffd0a477592ba4570535d6cd23be100b990f9ef6ab"
+      },
+      "scope": "26 appended cases; 1355 consumed inputs; strict audit reviewed PASS."
+    },
+    {
+      "gate": "isolatedAndShippingGwt",
+      "status": "PASS",
+      "isolatedOperationSeconds": 82.8444179,
+      "shippingOperationSeconds": 81.496056,
+      "cleanupSeconds": "not recorded separately",
+      "permutationsEach": 5,
+      "isolatedResult": {
+        "path": "T/isolated-build-result.json",
+        "bytes": 666,
+        "sha256": "7d15a604d58660122542b7b206a887e1e18e57e5637ee850772683df4865430c"
+      },
+      "shippingResult": {
+        "path": "T/shipping-build-result.json",
+        "bytes": 665,
+        "sha256": "d2c04484eef91685ccf8599373f2796fa75f8afa937e57b7a8efa3372b136f60"
+      },
+      "shippingRolePointer": {
+        "path": "N/shipping-gates/shipping-role-pointer.json",
+        "bytes": 1915,
+        "sha256": "8ceb6bacd551fa87a5d47f9e2510217eae05e9cd730f1aff95d9e6d391aca15f"
+      },
+      "scope": "Both builds used 1355 inputs and the current source identity; Q30 shipping catalog remains disabled."
+    },
+    {
+      "gate": "compiledCanariesAndManifestFreeze",
+      "status": "PASS",
+      "operationSeconds": 18.10657539998647,
+      "hostCleanupSeconds": 1.176912699942477,
+      "hostExitCode": 0,
+      "freezeExitCode": 0,
+      "frozenRoots": 77,
+      "candidateDeclarations": 308,
+      "originalCanonicalsUnchanged": true,
+      "result": {
+        "path": "T/compiled-canaries-py313-stage-result.json",
+        "bytes": 2832,
+        "sha256": "68063a59c45b16cc4396653076403d92f70044baea254bad1cf601be7e41a171"
+      },
+      "scope": "Actual manifest export, unauthorized/cancel/scope-loss canaries and original 77/308 freeze; no visible input proof."
+    },
+    {
+      "gate": "compiledAttribute31",
+      "status": "PASS",
+      "operationSeconds": 2944.9777081,
+      "cleanup": {
+        "releaseReceipt": "PASS_RECORDED_RESOURCES_RELEASED",
+        "operationSeconds": 1.060753,
+        "cleanupSeconds": 1.2798547,
+        "receiptPath": "T/compiled31-independent-release-r2.json",
+        "bytes": 5900,
+        "sha256": "fc95905423824ce47c6cd1eba5a37031cb5734aaaf83433090fec1a4e2e621dc"
+      },
+      "result": {
+        "path": "T/compiled31/result.json",
+        "bytes": 88386,
+        "sha256": "d43e8962b7706430902ad2f82a4efa688fb34f32bb768b00385baf1fd1f5acc2"
+      },
+      "strictAudit": {
+        "path": "T/compiled31-audit.json",
+        "bytes": 31412,
+        "sha256": "d95d6fc666e4ad3a77982be63580a784589625770c869049b2fd5b7f16d90407"
+      },
+      "preservedInitialReleaseBlock": {
+        "path": "T/compiled31-independent-release.json",
+        "bytes": 5657,
+        "sha256": "f007e1dcb373da00ec2576a2c2cb900cd396569ee33b7e5dec2a054135c84895",
+        "status": "BLOCKED_RESOURCE_QUERY_FAILED"
+      },
+      "scope": "31/31 cases; strict audit zero errors; intended typed seed-35 rejection passed. The first release attempt remains preserved; corrected r2 proves resources released, not qualification."
+    },
+    {
+      "gate": "disabledMenuAndReplay",
+      "status": "PASS",
+      "operationSeconds": 210.1315763,
+      "cleanup": {
+        "releaseReceipt": "PASS_RECORDED_RESOURCES_RELEASED",
+        "operationSeconds": 0.8963975,
+        "cleanupSeconds": 0.5692817,
+        "receiptPath": "T/disabled-menu-independent-release-r2.json",
+        "bytes": 4843,
+        "sha256": "82e7cbe1e1ec6625fe52cceef2b7e72d6dda1fb6b315b86e6f5cbd48aefa318c"
+      },
+      "result": {
+        "path": "T/disabled-menu-stage-result.json",
+        "bytes": 129074,
+        "sha256": "aae979425db47a24c59e12c3bb116e65f35c7995954b8b418383ef2562c4a22e"
+      },
+      "strictAudit": {
+        "path": "T/disabled-menu-audit.json",
+        "bytes": 296044,
+        "sha256": "c75d4d3edd4ce618e7fd282425a6fe107cdceff83752b45a96e5396ca2e53462"
+      },
+      "scope": "30 launches plus 2 replays; stale/disabled family and privacy checks passed. Release r2 passed; do not imply acceptance."
+    },
+    {
+      "gate": "currentSourceArchive",
+      "status": "PASS_SOURCE_ARCHIVE_ONLY",
+      "operationSeconds": 75.8776894,
+      "cleanupSeconds": "not recorded separately",
+      "result": {
+        "path": "T/current-source-archive-result.json",
+        "bytes": 673,
+        "sha256": "3757417df646c3604deaecb2368a85b859fca5f458a3d0986491408213f5476c"
+      },
+      "scope": "1355 inputs; archive acceptance not assessed. Private-enabled archive and private menu/replay were NOT RUN."
+    },
+    {
+      "gate": "cold77CohortAndController",
+      "status": "PASS_DESCRIPTIVE_COHORT_AND_CONTROLLER",
+      "cases": 77,
+      "pass": 77,
+      "fail": 0,
+      "notRun": 0,
+      "worstApplicationCase": {
+        "seed": 35,
+        "elapsedMs": 85003,
+        "workUnits": 506
+      },
+      "unchangedLimits": {
+        "applicationJobMs": 90000,
+        "activeOperationMs": 5000,
+        "sharedWorkUnits": 640
+      },
+      "normalLauncherChild": {
+        "pid": 17052,
+        "birthUtc": "2026-10-05T12:21:11.428686Z",
+        "identityVerified": true,
+        "ownerWallSeconds": 4442.0612935,
+        "batchAlias": "q30-cold77-owned-batch-a5n_53xu"
+      },
+      "serialOuterController": {
+        "pid": 17304,
+        "operationMs": 4440490,
+        "cleanupMs": 0,
+        "cleanupClockNote": "0 ms is recorded granularity, not proof of zero overhead."
+      },
+      "outerAllocation": {
+        "operationLimitMs": 15043439,
+        "cleanupLimitMs": 15000,
+        "releaseReserveMs": 30000
+      },
+      "evidence": [
+        {
+          "path": "T/cold77-descriptive-summary.json",
+          "bytes": 4479,
+          "sha256": "5fccb5154386b01c469a7942c2f67feb5cbbedc2a29169f862a4a66085cfb798"
+        },
+        {
+          "path": "N/cold77-current-run-pointer.json",
+          "bytes": 4797,
+          "sha256": "162687d1de1a8c3952688fb33cf36dc72a83039c73a057c1bd82513e80f2d070"
+        }
+      ],
+      "scope": "Descriptive cohort/controller timing only. The 85.003-second worst application case is below the unchanged 90-second job limit; worker wall time is a separate clock. This result does not prove independent release or overall Q30 acceptance."
+    },
+    {
+      "gate": "cold77IndependentRelease",
+      "status": "BLOCKED",
+      "reason": "R5 completed BLOCKED: 806/809 absent, three unresolved live images. All 77 ports closed. Strict zero-reuse/unknown rules unchanged.",
+      "attempts": [
+        {
+          "revision": "R1",
+          "status": "BLOCKED",
+          "operationMs": 553,
+          "afterNormalExitSeconds": 349.201206,
+          "path": "T/cold77-independent-release.json",
+          "bytes": 60468,
+          "sha256": "d387feb6ce7e624e62450dd1b979ad29778918c8d0ce114e8e8583fdb6c4f662",
+          "notes": "An early host-variable collision stopped before OS audit; the derived incomplete audit is not evidence of an actual process leak. A New-Item -LiteralPath publication failure occurred before the R1 receipt. Preserve these details from N/cold-release-adaptation-notes.json (11927 bytes, SHA-256 ae01dfb68f87b061308b7c473b2acdc7de9f3cbeba527aeac41fe67d646ddda6), along with later invocation failures."
+        },
+        {
+          "revision": "R2",
+          "status": "BLOCKED",
+          "operationMs": 8902,
+          "afterNormalExitSeconds": 736.185781,
+          "path": "T/cold77-independent-release-r2.json",
+          "bytes": 1094325,
+          "sha256": "383da9d08dc19afcc2c896c8b42eefc6d649c818d2e95afeee63322122f15251",
+          "notes": "Per-case cleanup and process/listener/port audits completed; the receipt classified PID 24060 as reuse. The captured evidence does not retain a conflicting live tuple, so describe this as the receipt classification."
+        },
+        {
+          "revision": "R3",
+          "status": "BLOCKED",
+          "operationMs": 7950,
+          "afterNormalExitSeconds": 1124.1294364,
+          "path": "T/cold77-independent-release-r3.json",
+          "bytes": 1094338,
+          "sha256": "fca78660941ebaf990f377199d4c4872817a92d7a162d8fb1a41620809154934",
+          "notes": "The receipt classified PIDs 18936, 23864 and 27544 as reuse. It does not retain a conflicting live tuple; preserve the classification without inferring a precise mismatch."
+        },
+        {
+          "revision": "R4",
+          "status": "BLOCKED",
+          "operationMs": 7941,
+          "afterNormalExitSeconds": 1573.3163874,
+          "path": "T/cold77-independent-release-diagnostic-r4.json",
+          "bytes": 1095274,
+          "sha256": "61857cd39363246b2c11ea0950eef2a8362c9fd0820a3bf3a41d5857bb1f9147",
+          "notes": "A precise conhost identity accounts for PID 24872. R4 also counted unknown native PID 18752 in two reuses/809 absences, but it had no birth ticks or executable/image, so its absence is unproven. R2-R4 finished within the window with the 30-second reserve."
+        }
+      ],
+      "exactPidObservation": {
+        "path": "N/cold-release-r4-exact-pids-current-observation.json",
+        "bytes": 588,
+        "sha256": "cf362366c0e6f3af528492525e065ed0a813b3330db5d3657a32cbead92a8810",
+        "meaning": "Later exact PID queries observed the PID absent in native and CIM reads without query errors; this does not rewrite or upgrade the earlier incomplete R4 identity evidence."
+      },
+      "scope": "No cold qualification or overall acceptance; all five blocked receipts retained.",
+      "latestAttempt": {
+        "revision": "R5",
+        "status": "BLOCKED",
+        "actualAuditorExitCode": 2,
+        "operationMs": 8352,
+        "observerAuditorMs": 8461,
+        "recordedInstances": 809,
+        "absent": 806,
+        "unresolvedOrLive": 3,
+        "knownReuse": 0,
+        "caseCleanupVerified": 77,
+        "portsClosed": 77,
+        "beforeWindowEnd": true,
+        "terminationUsed": false,
+        "path": "T/cold77-independent-release-unknown-identity-r5.json",
+        "bytes": 1095796,
+        "sha256": "aa0c1b936e8cda291dcc3d82916dd6dea8dab0b77b92a2239e5b159e4b2c73b4"
+      },
+      "unresolvedRows": [
+        {
+          "pid": 9032,
+          "status": "UNRESOLVED_IDENTITY_METADATA",
+          "birthPrecision": "CIM_MICROSECOND",
+          "recordedBirthTicks": 134356765446133230,
+          "observedBirthTicks": 134356865793803060,
+          "observedImage": null,
+          "livePidIsObserver": false,
+          "identityMetadataProblems": [
+            "live.executable"
+          ],
+          "sourceCaseAliases": [
+            "003-seed-10014"
+          ]
+        },
+        {
+          "pid": 6540,
+          "status": "UNRESOLVED_IDENTITY_METADATA",
+          "birthPrecision": "CIM_MICROSECOND",
+          "recordedBirthTicks": 134356787951066420,
+          "observedBirthTicks": 134356837955143470,
+          "observedImage": null,
+          "livePidIsObserver": false,
+          "identityMetadataProblems": [
+            "live.executable"
+          ],
+          "sourceCaseAliases": [
+            "040-seed-60"
+          ]
+        },
+        {
+          "pid": 12212,
+          "status": "UNRESOLVED_IDENTITY_METADATA",
+          "birthPrecision": "CIM_MICROSECOND",
+          "recordedBirthTicks": 134356806361612870,
+          "observedBirthTicks": 134356869458463120,
+          "observedImage": null,
+          "livePidIsObserver": false,
+          "identityMetadataProblems": [
+            "live.executable"
+          ],
+          "sourceCaseAliases": [
+            "073-seed-10016"
+          ]
+        }
+      ]
+    }
+  ],
+  "warmBoundary": "Native structural and compiled developer warm timings are descriptive; normal-player warm reliability UNMEASURED.",
+  "cleanupBoundary": "Native/build/archive elapsed cleanup NOT_RECORDED separately; browser host cleanup and independent release clocks are separate.",
+  "warmDescriptiveEvidence": {
+    "nativeStructuralRootCount": 77,
+    "nativeOutcomes": {
+      "ACCEPTED": 70,
+      "REJECTED_POLICY": 5,
+      "REJECTED_ROUTE": 2
+    },
+    "nativeRouteCold": {
+      "maximumMs": 5380.963,
+      "minimumMs": 1155.0493,
+      "missingSeeds": [],
+      "n": 77,
+      "p50Ms": 2960.3974,
+      "p95Ms": 4696.1898
+    },
+    "nativeRouteWarm": {
+      "maximumMs": 4704.8204,
+      "minimumMs": 652.9358,
+      "missingSeeds": [],
+      "n": 77,
+      "p50Ms": 2345.948,
+      "p95Ms": 4134.4508
+    },
+    "nativePercentileMethod": "p50 arithmetic median; p95 nearest rank ceil(.95*n); nanos converted to milliseconds",
+    "compiledDeveloperObservedCases": 21,
+    "compiledPositiveCases": 20,
+    "declaredRejectionSeed": "35",
+    "compiledWarmConstruction": {
+      "maximumMs": 15689,
+      "minimumMs": 3481,
+      "n": 20,
+      "p50Ms": 9192.0,
+      "p95Ms": 11350
+    },
+    "compiledWarmPreparation": {
+      "maximumMs": 4485,
+      "minimumMs": 1251,
+      "n": 20,
+      "p50Ms": 3674.0,
+      "p95Ms": 4456
+    },
+    "compiledPercentileMethod": "p50 arithmetic median; p95 nearest rank ceil(.95*n); descriptive only",
+    "scope": "Descriptive structural/developer context only; normal-player warm reliability UNMEASURED. Cache receipt elapsed0 is not measured warm proof wall time."
+  }
+}

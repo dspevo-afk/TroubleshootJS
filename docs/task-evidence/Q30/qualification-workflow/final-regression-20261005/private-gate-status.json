@@ -1,0 +1,56 @@
+{
+  "status": "NOT_RUN_BLOCKED_PREREQUISITE",
+  "preflightStatus": "PASS_AFTER_FIX",
+  "successfulPreflight": {
+    "toolReference": "7995dd",
+    "ownerSha256": "9c2b3df0da209de17e513633cf90c76ce2e44d10cb980839dfd8e438d75e602a",
+    "path": "N/current-input-preservation-pre-final.json",
+    "bytes": 5518,
+    "sha256": "97ce8e44476d78bdc5b581bf542aec293ba28a6ffd3025a6492ee577ce6b99e0",
+    "operationSeconds": 0.985,
+    "result": "1355 source inputs and all 8 pre-existing untracked items preserved; current four-key snapshot accepted."
+  },
+  "snapshotNegatives": {
+    "toolReference": "0b2c11",
+    "path": "N/private-snapshot-selected-negative-canaries.json",
+    "bytes": 1657,
+    "sha256": "6bbb1a77697f73fd07d137a0ff5d98828d50e5a4896084ef09e6d887176987f2",
+    "operationSeconds": 0.078,
+    "status": "PASS",
+    "scope": "Five memory-only snapshot/source negative cases plus the real positive; not an Edge or private-menu gate."
+  },
+  "independentPreservation": {
+    "toolReference": "f97710",
+    "path": "N/current-raw-input-preservation-independent.json",
+    "bytes": 2265,
+    "sha256": "d75d2c677366b2178e2f85e76af0ee54d9947cd7229cdfb540a736e6b023e9d4",
+    "operationSeconds": 0.625,
+    "status": "PASS_INDEPENDENT_CURRENT1355_ALL8_PRESERVED"
+  },
+  "priorFailureToPreserve": {
+    "toolReference": "95fc10",
+    "status": "FAIL_EXIT_1",
+    "cause": "The previous adapter required legacy fields status/layoutAlgorithmVersion/q30NormalPlayerEnabled absent from the maintained four-key snapshot. Root observed the actual tool traceback; no standalone gate JSON was created. Preserve this failure through N/later-invocation-failures-20261005.json rather than inventing a raw receipt."
+  },
+  "setupFailureToPreserve": "The earlier sandbox tempfile attempt 1b036f failed before the actual preflight; keep it separate from the schema failure and current passing adapter result.",
+  "currentPinsToRevalidateAtFreeze": {
+    "privateOwner": "9c2b3df0da209de17e513633cf90c76ce2e44d10cb980839dfd8e438d75e602a",
+    "roleBinder": "6025809ccf711bd66f3893af17d971c962531491c6796065789748cefeaccab8",
+    "privateArchiveHelper": "2bada10ccb486bb979b6a438b24db0996bcdb0480e201661a9ab06e39c7cd5d5",
+    "scope": "Root-reported final candidate pins; revalidate source bytes and backup preservation before integration."
+  },
+  "privateMenuReplay": "NOT RUN; private work remains gated on cold77 independent release.",
+  "privateEnabledArchive": "NOT RUN",
+  "scopeLimit": "N-only adapter/helper edits do not change the consumed 1355 repository source inputs; no full matrix rerun is required solely because of these helper edits.",
+  "strictRelease": "BLOCKED_R5",
+  "enabledBuild": "NOT_RUN",
+  "sourceArchive": "NOT_RUN",
+  "roleBinding": "NOT_RUN",
+  "publicCatalogEnabled": false,
+  "finalRawPreservation": {
+    "path": "N/current-raw-input-preservation-final.json",
+    "bytes": 2278,
+    "sha256": "a78046c56da1ab5762cd81d7ffaa09467d7cd4e1b0b48f15cb24dbc750fbbc5f"
+  },
+  "resume": "Do not launch binder while its release prerequisite is blocked. Current helper pins are local review-only and remain bound to c621b55d."
+}
