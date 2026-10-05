@@ -103,10 +103,11 @@ class WarmObservationTests(unittest.TestCase):
     def test_terminal_token_identity_and_monotonic_time_are_required(self):
         row = {'name': 'launch', 'first': 'RB30_CONTROL', 'second': '-9223372036854775808',
             'third': 'MEDIUM', 'terminalObserved': True, 'startedHidden': False,
-            'generationToken': 8, 'beforeToken': 7, 'terminalToken': 8,
+            'generationToken': 8, 'beforeToken': 7, 'terminalToken': 9,
             'terminalScreen': 'TICKET', 'startedMs': 100, 'finishedMs': 250, 'elapsedMs': 150}
         self.assertEqual(DRIVER['validate_warm_observation'](row, row['second']), 150)
-        for changes in ({'terminalToken': 7}, {'generationToken': 7}, {'startedHidden': True},
+        for changes in ({'terminalToken': 7}, {'terminalToken': 8}, {'terminalToken': 10},
+                        {'generationToken': 7}, {'beforeToken': 6}, {'startedHidden': True},
                         {'elapsedMs': 0}, {'elapsedMs': float('nan')}, {'finishedMs': 249},
                         {'terminalObserved': False}, {'second': '-9223372036854775807'}):
             with self.assertRaises(ValueError):
@@ -128,7 +129,8 @@ class WarmObservationTests(unittest.TestCase):
                         window.receivedSeed = seed;
                         state = {token: 8, screen: 'PREPARING'};
                         document.body.setAttribute('data-player-screen', state.screen);
-                        setTimeout(() => { state = {token: 8, screen: 'TICKET', ready: true,
+                        // Actual PlayerSession revokes the preparing token at publication.
+                        setTimeout(() => { state = {token: 9, screen: 'TICKET', ready: true,
                             replay: 'tsj-alpha/4/MEDIUM/RB30_CONTROL/' + seed};
                             document.body.setAttribute('data-player-screen', state.screen); }, 60);
                     }};
@@ -144,6 +146,8 @@ class WarmObservationTests(unittest.TestCase):
                 elapsed = DRIVER['validate_warm_observation'](trace['rows'][0], '-9223372036854775808')
                 self.assertGreaterEqual(elapsed, 40)
                 self.assertLess(elapsed, 5000)
+                self.assertEqual(trace['rows'][0]['postDispatchToken'], 8)
+                self.assertEqual(trace['rows'][0]['terminalToken'], 9)
                 self.assertEqual(trace['hiddenEvents'], [])
             finally:
                 context.close()

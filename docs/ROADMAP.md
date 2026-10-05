@@ -2836,6 +2836,17 @@ supports cleanup only. No duplicate cold run solely for the historical deadline,
 no new p95 target, limit relaxation or normal enablement. U06/U07/Q60 unstarted.
 [Warm preparation and restart boundary](task-evidence/Q30/qualification-workflow/warm-preparation-20261005/README.md).
 
+**Normal warm continuation (2026-10-05):** Frozen 77 ordinary exact-seed pairs
+PASS 154/154 completed attempts, zero failures/over 90s intervals. Warm p50/p95/worst
+12.552/18.313/20.066s using existing A01;
+normal 90s/640/5s unchanged. Initial observer token failure preserved, corrected
+against PlayerSession and verified by focused 4 plus actual pilot/full corpus.
+All inputs unchanged per slice; native cleanup/source/resource checks pass within
+the parent-coordinated window. Exact counter and desktop/external-load limits are
+explicit. Historical release remains BLOCKED as late; earlier 91.616s failure and
+six missing inventories remain risks. Parent acceptance pending; Q30 disabled,
+U06/U07/Q60 unstarted. [Normal warm evidence](task-evidence/Q30/qualification-workflow/normal-warm-20261005/README.md).
+
 **Historical active-readiness checkpoint:**
 Q30 remains BLOCKED / NOT ACCEPTED under its unchanged original scope.
 Plan-4 20-40-part generation and fresh original-host cold77 pass the frozen

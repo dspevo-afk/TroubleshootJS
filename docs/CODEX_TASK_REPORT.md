@@ -1,4 +1,82 @@
-# Current checkpoint: Q30 warm preparation ready; timing window pending
+# Current checkpoint: Q30 normal warm 77 passes; parent acceptance pending
+
+2026-10-05. Branch `codex/q30-multirail-qualification`; local base 6fde7ab0.
+Production remains C621/source identity `87bb04f707ccaf57f92c5d38fdbf4db199d63359c573725fd34bac61484226d7`;
+all 1,355 application inputs/nine jars/357+6 built files unchanged. Normal Q30
+DISABLED / NOT ACCEPTED. No push/email/deletion/PC change/restart or U06/U07/Q60.
+
+Frozen 77 normal exact-seed pairs PASS 154/154 attempts. Warm p50/p95/worst
+12.552/18.313/20.066s; priming
+64.999/82.820/87.291s. Zero product
+failures, public intervals above 90s, unestablished pairs, page errors or hidden
+events. Exact identities, same document, immediate repeat gaps and unchanged
+source pins checked throughout. Existing A01 percentile; no new threshold or
+budget relaxation. Public UI clock and sampled work/stages are explicit; exact
+internal cache/matrix/proof/terminal counters unavailable. These are warm normal
+exact-seed requests, not a random New Board population claim or new cold gate.
+
+Initial extra seed 10387 attempt remains instrumentation FAIL: product reached
+TICKET, observer wrongly expected an unchanged preparation token. Corrected to
+PlayerSession's begin+completion increments; focused 4/4 PASS in 1.051s
+and actual 3-pair pilot PASS before continuation. All original failure/profile/log
+bytes retained. Root reviewed correction and completed slice evidence; parent
+independent acceptance remains pending. Earlier accepted suites were not rerun.
+
+Parent coordinated 19:45 to 22:45 UTC project-team heavy-work window. Actual corpus
+19:51:14 to 21:32:17 UTC (101.045 minutes), 26 serial slices/one browser/no compiles.
+No whole-PC idle claim. Every host exit 0/job 0/handles closed; operation and cleanup
+separate. Final read-only resource audit PASS: 330 instances
+absent/27 ports closed. All 8 original untracked files
+preserved; no task-owned persistent resources among recorded instances. One native
+PID query initially denied access; its BLOCKED audit is preserved. Existing CIM
+fallback proved a different creation time for the reused PID, without termination.
+
+Original historical release stays BLOCKED as late under parent disposition;
+later absence supports cleanup only. Original 91.616s failure and six missing
+scratch inventories remain risks. Evidence: [normal warm packet](task-evidence/Q30/qualification-workflow/normal-warm-20261005/README.md).
+Restart workspace `qualification-warm-20261005-r1`; raw successful root
+`q30-normal-warm-r2-wuzljoz4`, original failed root `q30-normal-warm-3uo9_oeu`.
+Final summaries, manifest, parent slot, source/raw pins and local SHA are in the
+final warm handoff. Next: parent independent acceptance; U06/U07/Q60 unstarted.
+
+---
+
+# Historical checkpoint: Q30 normal warm continuation in progress
+
+2026-10-05,21:09UTC. Branch`codex/q30-multirail-qualification`, local HEAD
+`6fde7ab038d12e2d122d26b6665746ba6476d642`; production remains C621.
+Normal Q30 DISABLED / NOT ACCEPTED; no push/email/evidence deletion or later milestones.
+
+Parent coordinated TJS-only heavy work19:45–22:45UTC; Takeoff's final checks are
+deferred. This coordinates project teams, not all PC use. One serial Edge browser,
+unchanged90s/640/5s, same frozen77 canonical exact/replay priming-repeat protocol.
+Start host CPU2percent/Balanced; no global setting change or foreign termination.
+
+Completed slices0–19 PASS60/77 pairs,120/120 constructions; warm worst20.066s,
+priming worst82.925s, zero product failures/over90s intervals. Identity/document/
+visibility/source/native cleanup verified per completed slice. Slice20 is running;
+its process/port/profile ownership is retained at launch. Do not rerun completed
+slices or claim a final distribution before all77 finish.
+
+Initial original-root slice0 remains instrumentation FAIL:10387 reached TICKET,
+but the observer missed PlayerSession's second token increment. Fixed observer
+and failure-path retention; focused4/4 PASS1.051s plus actual3-pair pilot PASS.
+Original failed attempt/profile/log retained outside the new complete cohort.
+No production source or budget change; accepted suites were not rerun.
+
+Restart workspace`qualification-warm-20261005-r1`: `run_chunk_r2.py`,
+`warm-manifest-r2.json`, unchanged`warm-plan-final.json`, `parent-slot.json`,
+`pilot-continuation-review-r2.json`. Active raw root`q30-normal-warm-r2-wuzljoz4`;
+old failure root`q30-normal-warm-3uo9_oeu`. Read the latest completed chunk receipt
+and active owned job before resuming; use the same finite window only while active.
+Original historical release remains BLOCKED as late; unexplained91.616s menu
+failure and six missing scratch inventories remain risks. U06/U07/Q60 unstarted.
+Next: finish frozen77, audit recorded resources, checkpoint and release window
+to parent for Takeoff's deferred checks. Parent owns independent acceptance.
+
+---
+
+# Historical checkpoint: Q30 warm preparation ready; timing window pending
 
 2026-10-05. Branch `codex/q30-multirail-qualification`; local checkpoint base
 `2a482140976e14f2f647a5c4e7fe787c6bdb29dc`. Production remains

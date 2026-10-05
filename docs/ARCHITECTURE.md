@@ -57,10 +57,13 @@ priming remain distinct from a completed measurement; ERROR replay metadata neve
 certifies a rebuilt identity. Public stage samples do not supply exact internal
 cache/work/rejection counters. This qualification observer does not change normal
 admission, product timing limits, public behavior or save/replay formats.
-Four focused warm contracts pass, including real Edge synthetic event observation.
-Normal warm measurements are NOT RUN pending parent resource coordination. No phase
-result alone enables Q30; the remaining normal-player warm distribution and parent
-acceptance are required. See [current warm preparation](task-evidence/Q30/qualification-workflow/warm-preparation-20261005/README.md)
+The observer follows PlayerSession's separate begin/completion token increments
+and saves observations before browser close even on failure. Four focused contracts
+and the actual frozen 77 normal priming/repeat pairs pass; warm p50/p95/worst are
+12.552/18.313/20.066s with no failures.
+The first incorrect-token observer attempt remains separately preserved.
+See [normal warm evidence](task-evidence/Q30/qualification-workflow/normal-warm-20261005/README.md). No phase
+result alone enables Q30; parent independent acceptance remains required. See [current warm preparation](task-evidence/Q30/qualification-workflow/warm-preparation-20261005/README.md)
 and [accepted menu evidence](task-evidence/Q30/qualification-workflow/menu-diagnosis-20261005/README.md).
 
 ## Windows Quick Play preview lifecycle

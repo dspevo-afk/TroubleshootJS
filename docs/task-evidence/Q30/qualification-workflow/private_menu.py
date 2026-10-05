@@ -111,7 +111,8 @@ WARM_OBSERVER_JS = r"""() => {
     function observe() {
         if (!active || active.terminalObserved || active.generationToken === undefined) return;
         const state = window.tsjProduct.snapshot(false);
-        if (state.token !== active.generationToken) return;
+        // PlayerSession.begin increments once; prepared/failed revoke it once more.
+        if (state.token !== active.generationToken + 1) return;
         if ((state.screen === 'TICKET' || state.screen === 'ERROR') &&
                 document.body.getAttribute('data-player-screen') === state.screen) {
             active.terminalObserved = true;
@@ -127,12 +128,14 @@ WARM_OBSERVER_JS = r"""() => {
         if (name === 'launch' || name === 'replay') {
             if ((active && !active.terminalObserved) || history.rows.length >= 6)
                 throw new Error('Warm observer overlapping or excessive launch');
-            active = {name, first, second, third, beforeToken: token,
+            active = {name, first, second, third, beforeToken: token, generationToken: token + 1,
                 startedMs: performance.now(), startedUtcMillis: Date.now(),
                 startedHidden: document.hidden, terminalObserved: false};
             history.rows.push(active);
             const value = originalAction.apply(this, arguments);
-            active.generationToken = window.tsjProduct.snapshot(false).token;
+            const dispatched = window.tsjProduct.snapshot(false);
+            active.postDispatchToken = dispatched.token;
+            active.postDispatchScreen = dispatched.screen;
             observe();
             return value;
         }
@@ -154,8 +157,9 @@ def validate_warm_observation(observation, expected_seed):
             or observation.get('terminalObserved') is not True
             or observation.get('startedHidden') is not False
             or type(observation.get('generationToken')) is not int
-            or observation['generationToken'] <= observation.get('beforeToken', observation['generationToken'])
-            or observation.get('terminalToken') != observation['generationToken']
+            or type(observation.get('beforeToken')) is not int
+            or observation['generationToken'] != observation['beforeToken'] + 1
+            or observation.get('terminalToken') != observation['generationToken'] + 1
             or observation.get('terminalScreen') not in ('TICKET', 'ERROR')):
         raise ValueError('Warm terminal observation is not bound to this normal exact launch')
     import math
@@ -630,6 +634,16 @@ try:
             assert not result['errors'], result['errors']
             result['outcome'] = 'PASS'
         finally:
+            if warm_rows:
+                # Retain the observer on failed instrumentation as well as success.
+                try:
+                    result['warmObservation'] = page.evaluate('window.__q30WarmObservation')
+                    save('warm-observations.json', result['warmObservation'])
+                    save('warm-terminal-snapshot.json', snapshot())
+                except Exception as error:
+                    result['warmObservationCaptureError'] = repr(error)
+                    if result['outcome'] == 'WARM_MEASUREMENT_COMPLETE':
+                        result['outcome'] = 'FAIL'
             capture_error = None
             try:
                 owned = list({(row['pid'], row['creationFileTimeTicks']): row

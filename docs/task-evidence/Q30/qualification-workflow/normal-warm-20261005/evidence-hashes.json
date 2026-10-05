@@ -1,0 +1,2456 @@
+{
+  "schema": 1,
+  "rootMap": "Retained task workspace warm-evidence-root-map.json",
+  "files": [
+    {
+      "path": "S/parent-slot.json",
+      "sha256": "1ce553d43185fe7f93193687200675db9f4895c9d660e691bcd01e9834ff9bae",
+      "bytes": 908
+    },
+    {
+      "path": "S/host-start.json",
+      "sha256": "45e494fd86300b303743f9ae7a28fc0fa4b2590a7219bdc9ca2559e49e4c0e7c",
+      "bytes": 816
+    },
+    {
+      "path": "S/host-end.json",
+      "sha256": "7694004e788fac4d30eef8ebea335ac5c05892dcd1d87a79a014c2ff96ee4185",
+      "bytes": 819
+    },
+    {
+      "path": "S/run_chunk_r2.py",
+      "sha256": "707ccd399080976957b9bb8f4ed1716c5e83f03616a96ba8d43e64ef59df1aed",
+      "bytes": 5369
+    },
+    {
+      "path": "S/run-pointer-r2.json",
+      "sha256": "e92e71417638e1e2e346345d9ef50df2816105d8c239967db3a593ad60137b44",
+      "bytes": 479
+    },
+    {
+      "path": "S/warm-plan-final.json",
+      "sha256": "ca43f4e5731f614a4ea39e3866c925caaf53a14b6dd71e853aa5921b4a465dc1",
+      "bytes": 87871
+    },
+    {
+      "path": "S/warm-manifest-r2.json",
+      "sha256": "2c81657fa8f6ce481f08574e3d0fd1b9d4d5222a8b5330ae844d654e46cbbbbe",
+      "bytes": 6572
+    },
+    {
+      "path": "S/first-pilot-failure-disposition.json",
+      "sha256": "13767287b9319a000d434f2c0a4fadfde0d1adea5d35eb45eef5d7947f4c00c2",
+      "bytes": 1551
+    },
+    {
+      "path": "S/focused-host-result-token-fix.json",
+      "sha256": "d5352a949abdd379cb5807f83e202e7a37a99b9cfea711e41976f6708fa0fcd0",
+      "bytes": 1691
+    },
+    {
+      "path": "S/token-fix-source-audit.json",
+      "sha256": "65a1538b965b89d238d826b0d1cc20243ad6c6c9dba33cdf2071d2b9a0186d54",
+      "bytes": 1364
+    },
+    {
+      "path": "S/pilot-continuation-review-r2.json",
+      "sha256": "0f1e5ade0cfc9d7db09f0e016fbf15c03cd5268916f60f464af086aabc2f93f8",
+      "bytes": 1318
+    },
+    {
+      "path": "S/private_menu.before-terminal-token-fix.py",
+      "sha256": "b054322bf40b6053c3c5a2bfa59b817479fb5d2b6691a35cf4b1d242358ea2f5",
+      "bytes": 38397
+    },
+    {
+      "path": "S/test_private_menu.before-terminal-token-fix.py",
+      "sha256": "ba006023d22fd2d9c7b24597a533653556d07928fbc6826a5aece5bcfdbdc388",
+      "bytes": 9549
+    },
+    {
+      "path": "S/summarize_warm.py",
+      "sha256": "769525ff2e38c44e9bb5b2dd47269e2438872b372922f748fea5e518e319ab8f",
+      "bytes": 8070
+    },
+    {
+      "path": "S/final-warm-summary.json",
+      "sha256": "875e107badb5c1ed9c48db083860de55c3de49810f8b01223c2f31ae403713fa",
+      "bytes": 130325
+    },
+    {
+      "path": "S/audit_warm_resources.py",
+      "sha256": "785b68087213ab27a8f186703e8ba93239b75378c8a6f7d144088da04b91a206",
+      "bytes": 4400
+    },
+    {
+      "path": "S/final-warm-resource-audit.json",
+      "sha256": "35d8edc8e17eccdc788621ae31a989670a1b17f41288f01f2e28e89513b9e057",
+      "bytes": 266688
+    },
+    {
+      "path": "S/resolve_warm_resource_identity.py",
+      "sha256": "d161d34a12e507688dab0cf8887671daddd542aa558219200809e39ce0c7bd45",
+      "bytes": 3228
+    },
+    {
+      "path": "S/final-warm-resource-audit-resolved.json",
+      "sha256": "3804760c9ae781d55579ea0c162b6bb24bc10b4faef254c4f6c41b8db1f49a91",
+      "bytes": 270537
+    },
+    {
+      "path": "D/chunk-00-launch.json",
+      "sha256": "c8323de6405d5a4d1e577b99f57dfa8ce9c0d5780d734ca7788acb0535eacf9f",
+      "bytes": 2616
+    },
+    {
+      "path": "D/chunk-00.json",
+      "sha256": "bc5b474ed37d8681da7e1a52fa31614c40185e17d6819bb57b2bd24c71f8d2b9",
+      "bytes": 4799
+    },
+    {
+      "path": "D/owned-warm-00/launch.json",
+      "sha256": "a7452a0ad32a21600d5eca874e2b2ce86a40988fd74cca19c2654787edc5c841",
+      "bytes": 390
+    },
+    {
+      "path": "D/owned-warm-00/host-result.json",
+      "sha256": "11f5b8d2579f06a131f3c0d8851d3ed84df857c917f0ba2a8f6a3542e53990ad",
+      "bytes": 1632
+    },
+    {
+      "path": "D/owned-warm-00/stdout.log",
+      "sha256": "52ececbfbe2d4d4feca7f317a0c049d006223692c472d837c54791d90db9846f",
+      "bytes": 2001
+    },
+    {
+      "path": "D/owned-warm-00/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D/warm-00/result.json",
+      "sha256": "d69de6d6782bf7de93ff1d9c5e985f8f7086ee5135378adf176cf7fc3c46835e",
+      "bytes": 77331
+    },
+    {
+      "path": "D/warm-00/identity.json",
+      "sha256": "275246d8674afae8fee8e606bbb60068c8615675a5129bfc7841e298f47bddae",
+      "bytes": 388
+    },
+    {
+      "path": "D/warm-00/owned-processes.json",
+      "sha256": "bcedea7a82178b54e11d33308f9e7d92015ce1b366cde0937c01c83489d3d96d",
+      "bytes": 1648
+    },
+    {
+      "path": "D/warm-00/listener-query.json",
+      "sha256": "28dfce7fac22729b8df16dbd9e2bfbc0cc50c78eb5ee56e7932afa90a0659d74",
+      "bytes": 2127
+    },
+    {
+      "path": "D/warm-00/launch-actions.json",
+      "sha256": "2364ab09c41c5d6e41588032b7716c4cb490feab789ee95b2b33a51b78a62198",
+      "bytes": 187
+    },
+    {
+      "path": "D/warm-00/progress.json",
+      "sha256": "82a6a5fe904715f764e4dbc45e5441645f86792c6b5d6ea9b3dcef3b25ffc36b",
+      "bytes": 1728
+    },
+    {
+      "path": "D/warm-00/progress-samples.jsonl",
+      "sha256": "cc5e91b321b6a893b3537894439af8a64c8c9cd69bc38ca002e39e33a6ebf679",
+      "bytes": 25074
+    },
+    {
+      "path": "D/warm-00/release-query-31c814351c8d4666abc2b6562868431d/host/host-result.json",
+      "sha256": "e1bc639f391b11762280b2633537b5a0751e9c7ece812e95c9b9107a7e94d1e6",
+      "bytes": 1294
+    },
+    {
+      "path": "D/warm-00/release-query-31c814351c8d4666abc2b6562868431d/host/launch.json",
+      "sha256": "d44ea3fd620ba9e60e8e0cfe5ed96986e963f8fd014e48748346ebce7f03b60c",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-00-launch.json",
+      "sha256": "e1f52274c5f5d3df6d5c325a41c2f49ddb93f3810af0bfa1b1dfed4878c3682b",
+      "bytes": 2619
+    },
+    {
+      "path": "D2/chunk-00.json",
+      "sha256": "35f6680a13a34e874e5b46e36aa326dcee8b169e0f7e160790b05c586453f247",
+      "bytes": 4855
+    },
+    {
+      "path": "D2/owned-warm-00/launch.json",
+      "sha256": "6696fb955fa4b89f2305b7844b8cf4fda52c6a2b115ba2108cb4de694fc05740",
+      "bytes": 390
+    },
+    {
+      "path": "D2/owned-warm-00/host-result.json",
+      "sha256": "8d5406cc544c78386ed8393729d6e2dd94524d92085e236082bfe0597b38b5e3",
+      "bytes": 1635
+    },
+    {
+      "path": "D2/owned-warm-00/stdout.log",
+      "sha256": "c8dd1c6f6f7af8c0cc27310394f3ed031f2aaf1feaab0f32df7590a51c519164",
+      "bytes": 279
+    },
+    {
+      "path": "D2/owned-warm-00/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-00/result.json",
+      "sha256": "5340169d9c085794bafa40256ef623f38d826a7301bec0cf320c4c468100374e",
+      "bytes": 371991
+    },
+    {
+      "path": "D2/warm-00/identity.json",
+      "sha256": "38d89469f5e3a742f60c456cdd477d7e712e8a0def5b5f82bfcb1bcbc4e9f7b5",
+      "bytes": 391
+    },
+    {
+      "path": "D2/warm-00/owned-processes.json",
+      "sha256": "f021e5e415a3da4a5ac2f52751fc5b34b49d9ce9f208934fe8e7a359019fb53f",
+      "bytes": 1856
+    },
+    {
+      "path": "D2/warm-00/listener-query.json",
+      "sha256": "e3dd1785255f7c635ffd4ff0a6078b2820bc8bce7f184cf9c27c47677a45e8d4",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-00/launch-actions.json",
+      "sha256": "318b0d84782fb25dac8e6c8da6fa7c5bcf125b3224fb6c08e95f0216f8eff08c",
+      "bytes": 1114
+    },
+    {
+      "path": "D2/warm-00/progress.json",
+      "sha256": "a27f9eb6797227cb4f3e47768ecb1f8832706c39220e5fc04ae214f9f8f5767a",
+      "bytes": 367806
+    },
+    {
+      "path": "D2/warm-00/progress-samples.jsonl",
+      "sha256": "0a03c4e4f8dcb5d2d28ce2f38fbcdf71410e7727e7fe0aa227e81c5efc218ed0",
+      "bytes": 118715
+    },
+    {
+      "path": "D2/warm-00/warm-observations.json",
+      "sha256": "2efaeedf237da4b68a6ce35e509f5573ba3dc49b82acb8f0f0156108457966fc",
+      "bytes": 3756
+    },
+    {
+      "path": "D2/warm-00/warm-terminal-snapshot.json",
+      "sha256": "30a207dde2fe7c4be208bc3800f6bd53d05e5ae0fd21193c743992bceb079420",
+      "bytes": 2092
+    },
+    {
+      "path": "D2/warm-00/release-query-946ba64d83d74bcfb1ca15404bcdeae6/host/host-result.json",
+      "sha256": "203d2c075850ee8955650c71d23b54736a307a8270a84fdaa80a18d6f621542b",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-00/release-query-946ba64d83d74bcfb1ca15404bcdeae6/host/launch.json",
+      "sha256": "60b7651b26a556d5348b81661d53fa4ba12420360880b6027e8af0118a1caae6",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-01-launch.json",
+      "sha256": "95450843029485ad10ffe18d09cc45551626dd5f888ed21ced73751da25b3196",
+      "bytes": 2608
+    },
+    {
+      "path": "D2/chunk-01.json",
+      "sha256": "cdf7ab91d9cc1abd9b169673ad79028bf9e5ff17adce238ca583224985f20460",
+      "bytes": 4844
+    },
+    {
+      "path": "D2/owned-warm-01/launch.json",
+      "sha256": "15ff162ed5449891d53c1cfa686a99a1a675a86611cfc0039ae1701f121c868d",
+      "bytes": 390
+    },
+    {
+      "path": "D2/owned-warm-01/host-result.json",
+      "sha256": "78b71a6c7a34137399986c92fab9ed6dc8484dfd3e3140e7812dcaff84d64cf4",
+      "bytes": 1635
+    },
+    {
+      "path": "D2/owned-warm-01/stdout.log",
+      "sha256": "69be5751eddea1e91a9e821dc9343b284d00ef3c0371f41b41c668b64bb857f0",
+      "bytes": 258
+    },
+    {
+      "path": "D2/owned-warm-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-01/result.json",
+      "sha256": "7caf301bbbea65963e64d8545443225d1fed822c69087df7c0ca31cbe739d677",
+      "bytes": 478378
+    },
+    {
+      "path": "D2/warm-01/identity.json",
+      "sha256": "bad3d7402920f9c771fb22d8818643e4c502715a1ab27a23a38a94007ef76ee1",
+      "bytes": 391
+    },
+    {
+      "path": "D2/warm-01/owned-processes.json",
+      "sha256": "7abbc2a2b1f739f6ea98010c8506d5cffee4ee791099d6c1e64c339b0254958b",
+      "bytes": 1856
+    },
+    {
+      "path": "D2/warm-01/listener-query.json",
+      "sha256": "7cb7749c636cd5802a7c82228aed5e25c8962bd8a52b601df07a0edf7f156569",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-01/launch-actions.json",
+      "sha256": "47c657da8423e4ae4debf567729069137258da59070830be6ab574dbbc989c69",
+      "bytes": 1092
+    },
+    {
+      "path": "D2/warm-01/progress.json",
+      "sha256": "8d4901bdcad34c61d6afa507a253c3905281bfa3b49281392ec2d23dec0b8788",
+      "bytes": 474217
+    },
+    {
+      "path": "D2/warm-01/progress-samples.jsonl",
+      "sha256": "8c708b6a8a093b8ad74cbb911d56c210b336efdee7f92310516890f13f693601",
+      "bytes": 156446
+    },
+    {
+      "path": "D2/warm-01/warm-observations.json",
+      "sha256": "455db2fde31d2b7671d85a98d6fce17fd4541e1916b6d5d688680ae1e87e76a6",
+      "bytes": 3732
+    },
+    {
+      "path": "D2/warm-01/warm-terminal-snapshot.json",
+      "sha256": "6ee5678b65e9ef59e1c4f40e29119d8976db1c1230da093ee0e0d19d1ac996e1",
+      "bytes": 2067
+    },
+    {
+      "path": "D2/warm-01/release-query-80a2d59e29254986bf7757f20e90997a/host/host-result.json",
+      "sha256": "cf7cfc88eca24e6f115f8d310055a6a1c6c3cc7b8ba1f481dacb98e8a0985f74",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-01/release-query-80a2d59e29254986bf7757f20e90997a/host/launch.json",
+      "sha256": "510e541d53e19b43173fbd996be21bd0c90452b4767d00528a1021f3339780fc",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-02-launch.json",
+      "sha256": "5f222e1dc0dfb9e81d7ae53a2f29c984c7530ca0b8c0b04a559102c4bed30b68",
+      "bytes": 2609
+    },
+    {
+      "path": "D2/chunk-02.json",
+      "sha256": "8f97652671b24b9927d1a07fd4976d2d84b9786bf2f9feaa266db27b57e25d4d",
+      "bytes": 4845
+    },
+    {
+      "path": "D2/owned-warm-02/launch.json",
+      "sha256": "ec73cfbca07a7104b194fe047edb9da571326570e422f2e4fcbbc591cf90dbdc",
+      "bytes": 390
+    },
+    {
+      "path": "D2/owned-warm-02/host-result.json",
+      "sha256": "0719dc18932592aafb5affa9512a917a69d04b9bac7c048756f822799274a790",
+      "bytes": 1635
+    },
+    {
+      "path": "D2/owned-warm-02/stdout.log",
+      "sha256": "9092a4292f50438a0065b5200864f20febdf98c8003033653855dec8db3272b5",
+      "bytes": 260
+    },
+    {
+      "path": "D2/owned-warm-02/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-02/result.json",
+      "sha256": "2eba28b11b548ffc47d70d9a95f70a8c4170a4556047a4125126a2fb3671df59",
+      "bytes": 444393
+    },
+    {
+      "path": "D2/warm-02/identity.json",
+      "sha256": "9f86bdfff1dbc849d28dc47c2e2653c102942668f15da83f720eb34b51811aea",
+      "bytes": 391
+    },
+    {
+      "path": "D2/warm-02/owned-processes.json",
+      "sha256": "c6d5bd327e91a9a389419b3d9ce45610ab298e3eadf9ec11634493e2d7fe7444",
+      "bytes": 1854
+    },
+    {
+      "path": "D2/warm-02/listener-query.json",
+      "sha256": "1e98a406b1301648e115a1350727a78f1e0eabe19efe90befab7f5bf6844fcc1",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-02/launch-actions.json",
+      "sha256": "25c8db3a86775528ebd1b8ab4acfed3bbd1a4adc9bb2173e10357bc44cccb475",
+      "bytes": 1094
+    },
+    {
+      "path": "D2/warm-02/progress.json",
+      "sha256": "540b591c6c1b72cfd2de3a3511ced813e3c61143d6b3f7ce1bbeb1c5b327c071",
+      "bytes": 440255
+    },
+    {
+      "path": "D2/warm-02/progress-samples.jsonl",
+      "sha256": "7c87e2069975adc21e7cb483ef2f5cff673987d927310bcc35fd9686a1a072d2",
+      "bytes": 144488
+    },
+    {
+      "path": "D2/warm-02/warm-observations.json",
+      "sha256": "57412b567599f9300832f8bd4b36250e22f9e23d51bdc55046b0d4b65120cc53",
+      "bytes": 3709
+    },
+    {
+      "path": "D2/warm-02/warm-terminal-snapshot.json",
+      "sha256": "310015e414a4f9c1c84e3ccfe680374f42034a2db378b337f78ae9af19475247",
+      "bytes": 2088
+    },
+    {
+      "path": "D2/warm-02/release-query-5c98db49350544b8bccc678b09ee7ef4/host/host-result.json",
+      "sha256": "5bf51969f5b2ca4853a298a44981f94700765687509f4c834d8b3109f030a7b7",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-02/release-query-5c98db49350544b8bccc678b09ee7ef4/host/launch.json",
+      "sha256": "d7f0c7b42773304b6a49a008a63f261d311a45b3cc22c963b1d5963bb0d8f7d7",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-03-launch.json",
+      "sha256": "55bb1a4808ac908903955d802e4f6f2c3f11b5d55df4d45bcf046a70f6e8961a",
+      "bytes": 2610
+    },
+    {
+      "path": "D2/chunk-03.json",
+      "sha256": "09eb5aa884c80a5485cb92dcb90a6ee919f045abd2d114e5a2e3d00312673140",
+      "bytes": 4846
+    },
+    {
+      "path": "D2/owned-warm-03/launch.json",
+      "sha256": "bc00f4d7ee521fd198b515256126433134ebaef8eaa4660f765e37c8210b9fe2",
+      "bytes": 390
+    },
+    {
+      "path": "D2/owned-warm-03/host-result.json",
+      "sha256": "96cc6fbab6c9cf1921d094735b43db5aabf6733babb4909d051e1125f76226df",
+      "bytes": 1635
+    },
+    {
+      "path": "D2/owned-warm-03/stdout.log",
+      "sha256": "05f1ae33a3a7edbee132dc375a8a26a4a83764ba8d925d37cadf0be88bad45fe",
+      "bytes": 261
+    },
+    {
+      "path": "D2/owned-warm-03/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-03/result.json",
+      "sha256": "f1a6046d91e5241a628f9170b1309833c199f705a0e46ddca68a95fabc9d2a18",
+      "bytes": 438178
+    },
+    {
+      "path": "D2/warm-03/identity.json",
+      "sha256": "ed4db78e9c13ebde637167373472d385b2fd593ce8da1e5af7b35ea09d65f8fe",
+      "bytes": 391
+    },
+    {
+      "path": "D2/warm-03/owned-processes.json",
+      "sha256": "8aa8beb601b221891104fb60a5752b2634646598b82748575e81adcc7a9caf7e",
+      "bytes": 1853
+    },
+    {
+      "path": "D2/warm-03/listener-query.json",
+      "sha256": "1a2fcb4c1061167b6204a29404cd5cbff4cde8b029c77e9333af3a433b8db36d",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-03/launch-actions.json",
+      "sha256": "e1f5bddbc3b6c0243696539728d1d7f8a5678d9e19c70a4c99f1287cace5562d",
+      "bytes": 1096
+    },
+    {
+      "path": "D2/warm-03/progress.json",
+      "sha256": "0996329fc0c7a0f1b0ea69be3f753b435cdd1425b4dd59e048a44fe4ee80ee2e",
+      "bytes": 434010
+    },
+    {
+      "path": "D2/warm-03/progress-samples.jsonl",
+      "sha256": "203d387eb30dd786269143adf2e6b2d5377e0deb789267cfabee453b76b1a91a",
+      "bytes": 142399
+    },
+    {
+      "path": "D2/warm-03/warm-observations.json",
+      "sha256": "cee7bc0d047450d7d8180619d0b5ded6b9f47520441d1be816597af3d996f2ce",
+      "bytes": 3739
+    },
+    {
+      "path": "D2/warm-03/warm-terminal-snapshot.json",
+      "sha256": "40d787f0db7bae98205018ed7671c0aacea5091d282df9b2779454cd03a5db14",
+      "bytes": 2067
+    },
+    {
+      "path": "D2/warm-03/release-query-aa8917b9c57f47fb9e2b7db0cf51add4/host/host-result.json",
+      "sha256": "d2ec75fd8825ad7332ae9d798b9792f0d0d3cab461edc859d9fedfb024faa88c",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-03/release-query-aa8917b9c57f47fb9e2b7db0cf51add4/host/launch.json",
+      "sha256": "d0ca64f175472be122002f0df6c68c55ee6c2c1d828781cd149d94469182d608",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-04-launch.json",
+      "sha256": "5b37246ae3e321ead3395ff81f20f4e4e07acd25db0ccddc4fe62df593e62651",
+      "bytes": 2607
+    },
+    {
+      "path": "D2/chunk-04.json",
+      "sha256": "80209a2335ee13b764901f5898df145987577ca11d60f166a69309abf5b9f7fb",
+      "bytes": 4846
+    },
+    {
+      "path": "D2/owned-warm-04/launch.json",
+      "sha256": "30159b2486fab6620173d37ff52ab0066f1da401616202a727eeda2b82c9cea3",
+      "bytes": 390
+    },
+    {
+      "path": "D2/owned-warm-04/host-result.json",
+      "sha256": "515d03b5a7af06ae9845495dd4d1fe442ee5757c56351158387c744a1317ba56",
+      "bytes": 1636
+    },
+    {
+      "path": "D2/owned-warm-04/stdout.log",
+      "sha256": "1ba416676f573d0bcde52b3f2ab4eba9e0bd8362b2b12027a116965797f65839",
+      "bytes": 261
+    },
+    {
+      "path": "D2/owned-warm-04/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-04/result.json",
+      "sha256": "81474acf794a0e3ba9040c42642af63635df6b4e1edcacd3bc9a79cec485a1af",
+      "bytes": 611847
+    },
+    {
+      "path": "D2/warm-04/identity.json",
+      "sha256": "6c0312a5ab1c7757becdbacb5e1130421aecf3a4dede724d5e4b74f0484bf6ad",
+      "bytes": 391
+    },
+    {
+      "path": "D2/warm-04/owned-processes.json",
+      "sha256": "6b3043aad9f045058f899a4d9317353d4fd43f7e2624ffd46b6241506b8d191d",
+      "bytes": 1856
+    },
+    {
+      "path": "D2/warm-04/listener-query.json",
+      "sha256": "b7938deec6a014cb175e52b31933c7cd97cdfa10a47540fe50bff40f2cb16fa2",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-04/launch-actions.json",
+      "sha256": "95a1ff2e20a45841dbe221651dcbcbc24fb4fc3315974d01b6d710c7b991da7c",
+      "bytes": 1130
+    },
+    {
+      "path": "D2/warm-04/progress.json",
+      "sha256": "cfda29dee87d0ab8f81bb4526639ccfec19f701fdca4154ac5495108cf6793df",
+      "bytes": 607665
+    },
+    {
+      "path": "D2/warm-04/progress-samples.jsonl",
+      "sha256": "78e43e77f5a6f6b56abbc945994f03a15ccbaadec7a22d0a20407d3ac47576a7",
+      "bytes": 204232
+    },
+    {
+      "path": "D2/warm-04/warm-observations.json",
+      "sha256": "9553e392695beeb8745c4399b5cf579a72f2b4bcb0d914c3afdc60096999524b",
+      "bytes": 3753
+    },
+    {
+      "path": "D2/warm-04/warm-terminal-snapshot.json",
+      "sha256": "2109eca27e467ed2b4fcc515ad3a623c2036d491c1a946e04f70533d45bbe35a",
+      "bytes": 2089
+    },
+    {
+      "path": "D2/warm-04/release-query-11caf7c113534c509eb9cd0f8368d1a4/host/host-result.json",
+      "sha256": "f3b65e892201324110a2fb034dacc11e790cd82bfe1ad2fc6f69a4541491efa4",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-04/release-query-11caf7c113534c509eb9cd0f8368d1a4/host/launch.json",
+      "sha256": "8b1c11e65444395c93876c342eaf08c68aa26cd272c308e127ab83e9e499ad28",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-05-launch.json",
+      "sha256": "262c91e0ae6d2430c97ea575df01b3253d806e87640809adbbcc49d1d374c6d4",
+      "bytes": 2610
+    },
+    {
+      "path": "D2/chunk-05.json",
+      "sha256": "a64ea4f12d3b76eaebd4f7a2edecb0e0065fce232a68967a31d0b39bc5cca689",
+      "bytes": 4847
+    },
+    {
+      "path": "D2/owned-warm-05/launch.json",
+      "sha256": "ec921057f6ecb469a478f19823faab7b3b32d05a05793308416f64572095184b",
+      "bytes": 390
+    },
+    {
+      "path": "D2/owned-warm-05/host-result.json",
+      "sha256": "2b2ab5a52cdebe1e0ba5f1fe2f3d7dd8e7bd6ab9e01e38c0194a13999aee42c5",
+      "bytes": 1636
+    },
+    {
+      "path": "D2/owned-warm-05/stdout.log",
+      "sha256": "d3dc9f63194183930aa9326732c5b777e76e08d265938984648f6edd0aff69f6",
+      "bytes": 263
+    },
+    {
+      "path": "D2/owned-warm-05/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-05/result.json",
+      "sha256": "d455bec40aac53fb9f2ffb9bae250bb874e2eabc9c75a6c6a37fb14a62e117fc",
+      "bytes": 586846
+    },
+    {
+      "path": "D2/warm-05/identity.json",
+      "sha256": "f75266b3100506b774c9a9e8e7a5ed3867c980299a425d4c1716f58652af9c18",
+      "bytes": 391
+    },
+    {
+      "path": "D2/warm-05/owned-processes.json",
+      "sha256": "3d3666a212ac1e50235d965090b2346e113eeae0b3f8c817032c2766f4daa991",
+      "bytes": 1856
+    },
+    {
+      "path": "D2/warm-05/listener-query.json",
+      "sha256": "4be77c694bb456d82f1c66eb566d49ff8e90c544bc922950a33011e18bba8795",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-05/launch-actions.json",
+      "sha256": "3d704ca1f8461f60de95b3d1f00899e684df0fb65726f3636f4e2a37f39572d6",
+      "bytes": 1096
+    },
+    {
+      "path": "D2/warm-05/progress.json",
+      "sha256": "4f743b167ed04601bf1cc8999efc1ba7111f93521ce7e863150b346c511c052d",
+      "bytes": 582705
+    },
+    {
+      "path": "D2/warm-05/progress-samples.jsonl",
+      "sha256": "42c11628b2ac0965b5e7664fe8d0f1d8bfc561b1608c223a159d2abbcff69125",
+      "bytes": 195441
+    },
+    {
+      "path": "D2/warm-05/warm-observations.json",
+      "sha256": "f037a137fe865c3cbd43e6347a200fba61e9de6bd70379a65365e01b9bddda1a",
+      "bytes": 3712
+    },
+    {
+      "path": "D2/warm-05/warm-terminal-snapshot.json",
+      "sha256": "24dae5cf1887999c04015b9ec54213820775908bc9f2d68e383b8d954683b757",
+      "bytes": 2089
+    },
+    {
+      "path": "D2/warm-05/release-query-1e534c46ef6149368d32698a710077dd/host/host-result.json",
+      "sha256": "caaa47c7d42dd4ff990079beab0dc767e3310f9d1650e21e87b6eb18050d02ae",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-05/release-query-1e534c46ef6149368d32698a710077dd/host/launch.json",
+      "sha256": "3683c1b0a3bbed19997fd0f1e2e7fafa308ab8403dd3c9aec9fa34b48cba1b1b",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-06-launch.json",
+      "sha256": "bd49082306cdd377afb56f54b84d79991c844a3e3a61f0df5c9ed46cfc969318",
+      "bytes": 2610
+    },
+    {
+      "path": "D2/chunk-06.json",
+      "sha256": "2c491af08a1595a0defe01237ee5501750bab1134a0441ceacd1d3bba0d75ac6",
+      "bytes": 4845
+    },
+    {
+      "path": "D2/owned-warm-06/launch.json",
+      "sha256": "8956260e0678eb37defacc47013a8978f185b5bb5ec5b4904b04d3855c803476",
+      "bytes": 389
+    },
+    {
+      "path": "D2/owned-warm-06/host-result.json",
+      "sha256": "267a0934879e0a1bb886a98cdc910333814f117bfada11d01b45e3913ae57c57",
+      "bytes": 1634
+    },
+    {
+      "path": "D2/owned-warm-06/stdout.log",
+      "sha256": "89305d0d64e94e533aef64e9e2abe50a2a70374be31b061509fb7af100e12306",
+      "bytes": 259
+    },
+    {
+      "path": "D2/owned-warm-06/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-06/result.json",
+      "sha256": "6cc2ae66fe81a90358eaa38a68fa07648e7130b62e04ad802d85bbcdff5e4831",
+      "bytes": 400373
+    },
+    {
+      "path": "D2/warm-06/identity.json",
+      "sha256": "706d981fd480f9aa9f3424e535696570e68df7586107d26aa4e8c007e96d9715",
+      "bytes": 390
+    },
+    {
+      "path": "D2/warm-06/owned-processes.json",
+      "sha256": "ed703c0052dc7797f655d66493e4dfa76c6ed5044919f61d8ceef0a403072598",
+      "bytes": 1854
+    },
+    {
+      "path": "D2/warm-06/listener-query.json",
+      "sha256": "4b6afe255596085ce44058457b5b77ab810a333a4018b9314ae732b5a99a5f13",
+      "bytes": 2130
+    },
+    {
+      "path": "D2/warm-06/launch-actions.json",
+      "sha256": "f490c62ae8b5140c48214a6c5e77e3dbc4bb886e0064c5e994647bb80924c330",
+      "bytes": 1096
+    },
+    {
+      "path": "D2/warm-06/progress.json",
+      "sha256": "2e2df180eaf75dcef2876404f7febc017f5dd14a4e1d78c9783c4a388df3375e",
+      "bytes": 396254
+    },
+    {
+      "path": "D2/warm-06/progress-samples.jsonl",
+      "sha256": "55e53cf27d161393cbc74476fca740c0fd5ce14c115b21d5037f980f9d2ff97e",
+      "bytes": 129316
+    },
+    {
+      "path": "D2/warm-06/warm-observations.json",
+      "sha256": "7d20b5bd8e5c57d520f9e02ce6f38c2b3c6501a90f891abf0d078dea070bbefa",
+      "bytes": 3690
+    },
+    {
+      "path": "D2/warm-06/warm-terminal-snapshot.json",
+      "sha256": "17115986879e6e082944134189ed91ae2adcde1dbe884480d3cf0938802edada",
+      "bytes": 2067
+    },
+    {
+      "path": "D2/warm-06/release-query-4b45f8a11853487ea5bd054a15bdf22d/host/host-result.json",
+      "sha256": "e63ecca9fa5ee019e5fc5d8a72812235909db6af3581f307f921692a05c0c511",
+      "bytes": 1294
+    },
+    {
+      "path": "D2/warm-06/release-query-4b45f8a11853487ea5bd054a15bdf22d/host/launch.json",
+      "sha256": "6d86032b21f1b6a09c7b4ea03ed43828d9f2916a4e95ca60432bf394cf4059fc",
+      "bytes": 379
+    },
+    {
+      "path": "D2/chunk-07-launch.json",
+      "sha256": "c486be1809fef520d35cf53883dda9be579931ef26331f101ccbfbbd6b1ccecd",
+      "bytes": 2607
+    },
+    {
+      "path": "D2/chunk-07.json",
+      "sha256": "3f54ee6a7271f39b29e8f428f97426cc18235f9dbbbb82756c4a415c6bc3a64b",
+      "bytes": 4843
+    },
+    {
+      "path": "D2/owned-warm-07/launch.json",
+      "sha256": "751248af3a86a276e86e4a5e0f5a47ef84acd72278441f3aeccb3b7c6b0a6fc3",
+      "bytes": 389
+    },
+    {
+      "path": "D2/owned-warm-07/host-result.json",
+      "sha256": "8c3dd21bc0bf2ddca5252fb9292c727b9836c3141e63e4f7112d08c4bb7407f1",
+      "bytes": 1634
+    },
+    {
+      "path": "D2/owned-warm-07/stdout.log",
+      "sha256": "c91827b4af3996c1ae5522db5a1a25f70689e4c3f9a746c85e34953420fe6ac3",
+      "bytes": 258
+    },
+    {
+      "path": "D2/owned-warm-07/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-07/result.json",
+      "sha256": "0ae0a524a458bcd5e8e1873e228b50fb2d39c3389296fdb5c1ac362ba1d2da39",
+      "bytes": 463752
+    },
+    {
+      "path": "D2/warm-07/identity.json",
+      "sha256": "3e7e18fed96e007565db13ac4990c29c3c58c9450b20d8b01521c39ca9b93264",
+      "bytes": 390
+    },
+    {
+      "path": "D2/warm-07/owned-processes.json",
+      "sha256": "89d1d4012348af2222195964601987a6136749927c109de0417f1950d99a7fc0",
+      "bytes": 1854
+    },
+    {
+      "path": "D2/warm-07/listener-query.json",
+      "sha256": "acdc01702f3b2daa03af3090c20f27e32d14ab59b22ab087da59227d68b4cb0d",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-07/launch-actions.json",
+      "sha256": "774203876474c66ad7894da37dceacf3d9412039d61586b6f3b39b328f852fee",
+      "bytes": 1092
+    },
+    {
+      "path": "D2/warm-07/progress.json",
+      "sha256": "8a16857a94233419838e8b654e7765745ec2c74e62636800aa4922f311a3e256",
+      "bytes": 459565
+    },
+    {
+      "path": "D2/warm-07/progress-samples.jsonl",
+      "sha256": "dfda195906e46d762c9fe815457c60861cc4a0e025bf25a9de91bb9b0dce295a",
+      "bytes": 151779
+    },
+    {
+      "path": "D2/warm-07/warm-observations.json",
+      "sha256": "443b65b39211e9a848ef41541984f03f3c1365fcf53fde641355c05185115e4f",
+      "bytes": 3759
+    },
+    {
+      "path": "D2/warm-07/warm-terminal-snapshot.json",
+      "sha256": "fbdb5d55cb8cd44867cb502877b45b7f819c6f56923e784349df3aa0a3b422bf",
+      "bytes": 2066
+    },
+    {
+      "path": "D2/warm-07/release-query-cce8624b16c046619f83ade1093cb8af/host/host-result.json",
+      "sha256": "2f4fdf2f1afeba63803bae1d687e15e8fd836636474f095ff8aa4042a1d27617",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-07/release-query-cce8624b16c046619f83ade1093cb8af/host/launch.json",
+      "sha256": "86e574b3cd06696c6ee7844702b5f9c1019f4d5d8bdc6c825850a888f30a065d",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-08-launch.json",
+      "sha256": "d0d281a2a4b974c0059754e8adfe8996a87db6aee6a6c37b51376dfc5d48c060",
+      "bytes": 2608
+    },
+    {
+      "path": "D2/chunk-08.json",
+      "sha256": "d6916e5c95e13248dfb3a708c6029cacb317da4414678d2ea91af5a61bea5252",
+      "bytes": 4845
+    },
+    {
+      "path": "D2/owned-warm-08/launch.json",
+      "sha256": "34cb9fe3f9539b718bd5d26fbca6e8968b7268df2e19086c245ddbd3890afac3",
+      "bytes": 390
+    },
+    {
+      "path": "D2/owned-warm-08/host-result.json",
+      "sha256": "459a7c22415711c993018179dd8815bc0b24a00c32d8fb37b823037a6b05c4c9",
+      "bytes": 1636
+    },
+    {
+      "path": "D2/owned-warm-08/stdout.log",
+      "sha256": "22275f7944dd137dd0bdf909c3ea97f67010334f874a78685053b4fa2907479b",
+      "bytes": 257
+    },
+    {
+      "path": "D2/owned-warm-08/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-08/result.json",
+      "sha256": "d6ae97adbd66e01d4b4f220b489fdef847a594df171d185d618c40b44990f3f5",
+      "bytes": 405575
+    },
+    {
+      "path": "D2/warm-08/identity.json",
+      "sha256": "da81fbe7434395566a447df7fe04727c1693b4c19dec27c270f1de2eafa2ecd9",
+      "bytes": 391
+    },
+    {
+      "path": "D2/warm-08/owned-processes.json",
+      "sha256": "9328c7b7eb7de11beb40b72a897dab36152be7181e7d69957760b548dcf85c36",
+      "bytes": 1855
+    },
+    {
+      "path": "D2/warm-08/listener-query.json",
+      "sha256": "f44432dfd792dd268c552680d9a87cd32d997fafff998f4a3ee22c2263445344",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-08/launch-actions.json",
+      "sha256": "cec6bb2391b766960f68a89eb2ca039692d87a7b65b6e9fc1e4991fae41cb212",
+      "bytes": 1092
+    },
+    {
+      "path": "D2/warm-08/progress.json",
+      "sha256": "a20644fa5c44085fda486eeed9292cfc0f16565fdddde8060930b5c53dbe26b2",
+      "bytes": 401434
+    },
+    {
+      "path": "D2/warm-08/progress-samples.jsonl",
+      "sha256": "ee8a1b0b5ab8288606d75673aeaaa923a056655b003ca2a5f0421cbebaa6dc7e",
+      "bytes": 131147
+    },
+    {
+      "path": "D2/warm-08/warm-observations.json",
+      "sha256": "2a6fca7f7eaa90f25321b4b05b99a1551dfe5768ea09d916305ab6fd8ca74242",
+      "bytes": 3712
+    },
+    {
+      "path": "D2/warm-08/warm-terminal-snapshot.json",
+      "sha256": "0daee47010dd21e33c7146644cb6ce8698dee6f6a918577d948f599d8a9f8707",
+      "bytes": 2066
+    },
+    {
+      "path": "D2/warm-08/release-query-fede8344a5d94b3e8e83f3267c3ff325/host/host-result.json",
+      "sha256": "4ed4501fb9d8b80fa155edf1707a50ba8cfaed6c706a828793313f563aecc6fb",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-08/release-query-fede8344a5d94b3e8e83f3267c3ff325/host/launch.json",
+      "sha256": "124c51425a2cf4b27c5e560cd05836be1af8ef1b9536ab3274b91630077599f3",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-09-launch.json",
+      "sha256": "36a9f06f9fc7ada725023c4a92858ba957f791fc3d0911ebcd845f3412a768d2",
+      "bytes": 2609
+    },
+    {
+      "path": "D2/chunk-09.json",
+      "sha256": "f6772f144c21a1fd65e6c8b333a5525ad02bf1d8bc65e42199e1a28673ec1a20",
+      "bytes": 4844
+    },
+    {
+      "path": "D2/owned-warm-09/launch.json",
+      "sha256": "4dd8a90f7eea8a0ad379c531c4f60fe22ee526192443c1bf3cb9a3e401b2719c",
+      "bytes": 389
+    },
+    {
+      "path": "D2/owned-warm-09/host-result.json",
+      "sha256": "677397f0553a937d27e8c828177914f4b95a9a56c0d231fbe183fd6049564831",
+      "bytes": 1634
+    },
+    {
+      "path": "D2/owned-warm-09/stdout.log",
+      "sha256": "c116198914359bf7e8cd34ef5218a3e5869bb65378c27c0439210a4728e09b94",
+      "bytes": 260
+    },
+    {
+      "path": "D2/owned-warm-09/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-09/result.json",
+      "sha256": "5694f125171687b0ca2b3f4e380c125084a20736f6dad33ff6206e7b0adf23d7",
+      "bytes": 429207
+    },
+    {
+      "path": "D2/warm-09/identity.json",
+      "sha256": "682b9b92e3560d9a33cc5ab5b673bd3479c87da3dbd587b4c9832e94a45f676b",
+      "bytes": 390
+    },
+    {
+      "path": "D2/warm-09/owned-processes.json",
+      "sha256": "685acfec282da3259fe800ebea20c4c237c1a113d2213d645e79fc6a228d3ab2",
+      "bytes": 1857
+    },
+    {
+      "path": "D2/warm-09/listener-query.json",
+      "sha256": "6da0c4a98f19a88b1184138f38beaaabcfed5841140b2e865a9c6e9db386fc12",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-09/launch-actions.json",
+      "sha256": "7db1af2b0efa7f4c36248f433df6f7b76f14fd48d5a65caa7170954c336807c3",
+      "bytes": 1130
+    },
+    {
+      "path": "D2/warm-09/progress.json",
+      "sha256": "936a6df16c2b951a87756aadaf5c8549384f5087c43c1f74e155e014fe43697f",
+      "bytes": 424979
+    },
+    {
+      "path": "D2/warm-09/progress-samples.jsonl",
+      "sha256": "e7197a1550290eaab7128a137efdb20e38a936adffc4e4fe398db7ac28c45338",
+      "bytes": 139327
+    },
+    {
+      "path": "D2/warm-09/warm-observations.json",
+      "sha256": "6bf699cea8b22fc77ba818fc3b3c85a1a2b3e2b75a839fa3adb1e909e5aba414",
+      "bytes": 3799
+    },
+    {
+      "path": "D2/warm-09/warm-terminal-snapshot.json",
+      "sha256": "042473e6846d630ef606cf18b8b3c28c178f47476b034723018c422819282884",
+      "bytes": 2067
+    },
+    {
+      "path": "D2/warm-09/release-query-7f9c8a1e848249bfb47a15e568316520/host/host-result.json",
+      "sha256": "c5599bda2a663b3ff6ddc26f1b9c2c6b0052f984772646c1dadf8c2422b9d8cb",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-09/release-query-7f9c8a1e848249bfb47a15e568316520/host/launch.json",
+      "sha256": "688d34045a1f39e9130dc602f9dc88cecddfa2cee5b587731a4e44a3481322db",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-10-launch.json",
+      "sha256": "3e40e5e30f3cae0db3d98c8701d38094d869043b9e76ed19c7538a3adcde4869",
+      "bytes": 2611
+    },
+    {
+      "path": "D2/chunk-10.json",
+      "sha256": "a5428cf6aa426e4d64f556e4dc2f47895e5e5d2a9fbec9ccf7feeb5889f27202",
+      "bytes": 4848
+    },
+    {
+      "path": "D2/owned-warm-10/launch.json",
+      "sha256": "40c8cb9398b8ab870cfbeaf1e099be1186b24d7effd221abfd3c7c6af51f2dfb",
+      "bytes": 390
+    },
+    {
+      "path": "D2/owned-warm-10/host-result.json",
+      "sha256": "ce2a25bbb423ddff4deb1ef67928ecfff2817c53be2fbf575b8ce6cde307049c",
+      "bytes": 1636
+    },
+    {
+      "path": "D2/owned-warm-10/stdout.log",
+      "sha256": "ec7ee7b98116cc029e8418b1ea72f28031b6f4bd07270e3a21406dd6b4f55c7d",
+      "bytes": 263
+    },
+    {
+      "path": "D2/owned-warm-10/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-10/result.json",
+      "sha256": "195d2a12d8df088cf169862d1c8c8921ef0ab3fb8775b4602a8abc7df56df986",
+      "bytes": 607245
+    },
+    {
+      "path": "D2/warm-10/identity.json",
+      "sha256": "1c5547e0b5b8cf0769c91995f3c1f28a78a22c080e6bf82be35f49fb539b924a",
+      "bytes": 391
+    },
+    {
+      "path": "D2/warm-10/owned-processes.json",
+      "sha256": "dc5fd505e25c4d436f7312de9661eeae6e1b7d4636d51d86d6f3c488d729cbef",
+      "bytes": 1857
+    },
+    {
+      "path": "D2/warm-10/listener-query.json",
+      "sha256": "29bf0c6df7fe1cc70db89e1bfb20330d545ef1ac5f5f25b5bd4ab719ab319bd2",
+      "bytes": 2130
+    },
+    {
+      "path": "D2/warm-10/launch-actions.json",
+      "sha256": "4ed54fc900f4cb83db9bd7a93569ecefc6b7afe75f22952d8a211269deb8a98d",
+      "bytes": 1096
+    },
+    {
+      "path": "D2/warm-10/progress.json",
+      "sha256": "c2be898623ab8d948ae679bb6656877194b7b702cfaf5312c562a31f7c53d9a2",
+      "bytes": 603063
+    },
+    {
+      "path": "D2/warm-10/progress-samples.jsonl",
+      "sha256": "6145a4f51a15add40d8391c89f1446a97a31f4272b452d5aab2dc465eeb20dbd",
+      "bytes": 202702
+    },
+    {
+      "path": "D2/warm-10/warm-observations.json",
+      "sha256": "587f7f1a68a272af1deb475bb241a62556136d033300727ce5b18a0f511ee369",
+      "bytes": 3753
+    },
+    {
+      "path": "D2/warm-10/warm-terminal-snapshot.json",
+      "sha256": "25e364200533e28710ff0b6a46a77838947b08907b36b0e0712aaa01886aabee",
+      "bytes": 2089
+    },
+    {
+      "path": "D2/warm-10/release-query-280f015669d24874a1e5f342ba61feca/host/host-result.json",
+      "sha256": "16e2e11136772aa8d8770dadb871865cffdfd8d0c02c826fa6dec44fd18a5ccd",
+      "bytes": 1294
+    },
+    {
+      "path": "D2/warm-10/release-query-280f015669d24874a1e5f342ba61feca/host/launch.json",
+      "sha256": "20d1bc5d6aeed68c11d5c665908f81d1fafeaa05fa136e4be535416f8e2dc26e",
+      "bytes": 379
+    },
+    {
+      "path": "D2/chunk-11-launch.json",
+      "sha256": "00e061b3380187fe63f90f516fd8cc1c3f76e2cd469aaf5947b2bba2a7589d89",
+      "bytes": 2612
+    },
+    {
+      "path": "D2/chunk-11.json",
+      "sha256": "02eb266c48d7c912158b13837567d06f0e0fa3b69cfbb405c095914ab9b7f0d3",
+      "bytes": 4849
+    },
+    {
+      "path": "D2/owned-warm-11/launch.json",
+      "sha256": "50b456c1acf76018852de619d3af5a2b16ed0aa578c2a534c3c969eb487fbc43",
+      "bytes": 390
+    },
+    {
+      "path": "D2/owned-warm-11/host-result.json",
+      "sha256": "3d1ceec9e7c65af2cb08fd252f384df7cb23e39243206ec7a3a26a2cc5253289",
+      "bytes": 1636
+    },
+    {
+      "path": "D2/owned-warm-11/stdout.log",
+      "sha256": "bd6a46e2727293d804c06066bd712fb7262e0a3a1d11be987cb5c7b48ae9268d",
+      "bytes": 259
+    },
+    {
+      "path": "D2/owned-warm-11/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-11/result.json",
+      "sha256": "eead04a1ad626bbf307fe4ee628dee372ed46a999093520a63fa21705cc429b4",
+      "bytes": 384742
+    },
+    {
+      "path": "D2/warm-11/identity.json",
+      "sha256": "ce4d2aee78c8e121fa72191c4a93daafcf62dee9f572e3e4f4471d2a78540497",
+      "bytes": 391
+    },
+    {
+      "path": "D2/warm-11/owned-processes.json",
+      "sha256": "c535744dd46ae43a9ab99831210c4ad36ac2ba4a8091799d4d8c2b37074b66fb",
+      "bytes": 1854
+    },
+    {
+      "path": "D2/warm-11/listener-query.json",
+      "sha256": "89f11205876cd99025ab5586ffce67c263fdf2d2f2bad4472ba7639e38e5d509",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-11/launch-actions.json",
+      "sha256": "1b76d93d0574f405ffb4aed9e183a0e57b8751bb2d824fe0f93e5a13f9a9b3b0",
+      "bytes": 1098
+    },
+    {
+      "path": "D2/warm-11/progress.json",
+      "sha256": "768e62f546508468eba5fc5c270756afa868963b0e9dff07d52cbeb690187e2f",
+      "bytes": 380589
+    },
+    {
+      "path": "D2/warm-11/progress-samples.jsonl",
+      "sha256": "42aabe9812be5245ec1581ebba0f5b5b49de5ed850ae47b521fb3a9085adbb2e",
+      "bytes": 123709
+    },
+    {
+      "path": "D2/warm-11/warm-observations.json",
+      "sha256": "8827629919fc5228dd9a30de75d0cd85dd032b05a32f3bfcb27b284063be13a9",
+      "bytes": 3726
+    },
+    {
+      "path": "D2/warm-11/warm-terminal-snapshot.json",
+      "sha256": "6d358295f93dc0ea672bdd1c24fe2330936e7702ff8b5185e7fd135b5997061a",
+      "bytes": 2089
+    },
+    {
+      "path": "D2/warm-11/release-query-aab213b6bf974430a7aaa26e9e37c0e0/host/host-result.json",
+      "sha256": "f9922a0cb5f0a7a50dd97773cf5969d63c6361888cee39a42c64d475495b834f",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-11/release-query-aab213b6bf974430a7aaa26e9e37c0e0/host/launch.json",
+      "sha256": "af2aaa424eb5b5aaf96f36d7df2545846f5b1897189d9b51341832cbaa22729e",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-12-launch.json",
+      "sha256": "ca734bc0e93c87659b565e69d4ac15503f5a6162f5c234e7593886da97ee55bc",
+      "bytes": 2610
+    },
+    {
+      "path": "D2/chunk-12.json",
+      "sha256": "a4c36e346c1d5eee26b691b08b5a5f4a31f7cda6aa9ad727a470919ecede6b2e",
+      "bytes": 4848
+    },
+    {
+      "path": "D2/owned-warm-12/launch.json",
+      "sha256": "abd8e7a2013ddbf0b2aeb2da13cbf7f82e4c0b5197416bb23431680c69fad4d1",
+      "bytes": 390
+    },
+    {
+      "path": "D2/owned-warm-12/host-result.json",
+      "sha256": "d7916f28fa1cb41e3f029852c892b34e23a7b9c73c0720410ae65bf8fe5a79b2",
+      "bytes": 1636
+    },
+    {
+      "path": "D2/owned-warm-12/stdout.log",
+      "sha256": "71c6cf24146f6ff7229eb7b5fc0204f47efdd6d2d466c11ee9a2302fdf38fc84",
+      "bytes": 259
+    },
+    {
+      "path": "D2/owned-warm-12/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-12/result.json",
+      "sha256": "86515cdb1140e97f76a16a5d82f8c094bdbb6d940084d92fe13443baa506ff1d",
+      "bytes": 392810
+    },
+    {
+      "path": "D2/warm-12/identity.json",
+      "sha256": "f3cdd7fd37dc1c156e4e1ea75a6a7de67162d937c13a275aa79540c90e2ada6d",
+      "bytes": 391
+    },
+    {
+      "path": "D2/warm-12/owned-processes.json",
+      "sha256": "703d4ccbe0247b3e41b9bc6cce893d57aaab11e5696435863cc0b481e3f88dd5",
+      "bytes": 1854
+    },
+    {
+      "path": "D2/warm-12/listener-query.json",
+      "sha256": "b20f93883eb0f39d37498654b6dce5f83a09742b35fb81bb1e491cf3a8a7f68f",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-12/launch-actions.json",
+      "sha256": "e8f940ab3faee9914e2fbff60f1cb9e8d07de83a804afe2d29545d692bf8ce65",
+      "bytes": 1168
+    },
+    {
+      "path": "D2/warm-12/progress.json",
+      "sha256": "f26c1aa2d89549fba39788369f3ce9a4df8bbbb50198c02694dad8bc4a6424ba",
+      "bytes": 388499
+    },
+    {
+      "path": "D2/warm-12/progress-samples.jsonl",
+      "sha256": "af378fb31f5b7ffd32fd1cdb713608c515ed4a36c01b01432e5d4d3c16c46f59",
+      "bytes": 126186
+    },
+    {
+      "path": "D2/warm-12/warm-observations.json",
+      "sha256": "ed31abf39796cc4e1ecdfc097d95ac9f2f02382247d4a80b24dafe65fa4486d1",
+      "bytes": 3882
+    },
+    {
+      "path": "D2/warm-12/warm-terminal-snapshot.json",
+      "sha256": "6403f4300f0f882a67bfc4a5b50ae58d4eefbbef09562aa20239f0d781c42b4c",
+      "bytes": 2085
+    },
+    {
+      "path": "D2/warm-12/release-query-7b18abcd6778408880067c92788e14fb/host/host-result.json",
+      "sha256": "aae093ea6dde9b1561c027d519cd9efd97fd8e2af2cbde5f1af8cee98a80b6c2",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-12/release-query-7b18abcd6778408880067c92788e14fb/host/launch.json",
+      "sha256": "d0dc4f258b8df6c0e94ce46cd4f3ac9fc61f2a761faff73375448bea229997a2",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-13-launch.json",
+      "sha256": "2fbb36c3edca281ececceaf41281aa01b1e6a6d1955c3f7fc56d844ceade9ffc",
+      "bytes": 2611
+    },
+    {
+      "path": "D2/chunk-13.json",
+      "sha256": "00f9f6d55c4acfd55ad51412f5c21b8b21055d9a205981d3b5a45327fd9a7114",
+      "bytes": 4849
+    },
+    {
+      "path": "D2/owned-warm-13/launch.json",
+      "sha256": "f4711ce4a2f315ad882a49be1e8ec20d87264763f68732ebc41c8ca9ef015b52",
+      "bytes": 390
+    },
+    {
+      "path": "D2/owned-warm-13/host-result.json",
+      "sha256": "729ed278a51423efabb949ad385e9442ca07164803ddc4e9c73c0cdef02f3af4",
+      "bytes": 1636
+    },
+    {
+      "path": "D2/owned-warm-13/stdout.log",
+      "sha256": "16e0bdbd819939ef8a3938fbb808ba7cc0f2a7ea4b2ea4051d7abf730df2e068",
+      "bytes": 264
+    },
+    {
+      "path": "D2/owned-warm-13/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-13/result.json",
+      "sha256": "ece26f96c38d4f0c497bdb4042a460cf55f6b172d27299a40fa414a03b993cce",
+      "bytes": 482722
+    },
+    {
+      "path": "D2/warm-13/identity.json",
+      "sha256": "7ce93a8cc19c06775b2c15a1f4ae06d071740ee8418d7a5d70bd27f2d9d81e05",
+      "bytes": 391
+    },
+    {
+      "path": "D2/warm-13/owned-processes.json",
+      "sha256": "eb5f1565d056695d73d722fd522a1518ccb014e7d07041295942d5038d612198",
+      "bytes": 1855
+    },
+    {
+      "path": "D2/warm-13/listener-query.json",
+      "sha256": "186febb10d061e952a6d89efe99dff5bc18cd00bceacd42c82b198a437f8a700",
+      "bytes": 2130
+    },
+    {
+      "path": "D2/warm-13/launch-actions.json",
+      "sha256": "b23fcaf73772fb917971590499100b496747f6fa177fff82943e4f4c5c460d3f",
+      "bytes": 1098
+    },
+    {
+      "path": "D2/warm-13/progress.json",
+      "sha256": "9222e21fd6d37e1fcee7abf7cdc8c1ac422306fb2c7675740cb51fb3f85f13e5",
+      "bytes": 478594
+    },
+    {
+      "path": "D2/warm-13/progress-samples.jsonl",
+      "sha256": "35638a084297cffa435e7bcf77201cc26cfb80eba631c18e605119762fc28ac3",
+      "bytes": 158512
+    },
+    {
+      "path": "D2/warm-13/warm-observations.json",
+      "sha256": "82e1f804773b30f48af650ac64931e78173385aa02712d4370ddfb06b3f40150",
+      "bytes": 3699
+    },
+    {
+      "path": "D2/warm-13/warm-terminal-snapshot.json",
+      "sha256": "107e7ffaa76ba40c1d29f928e4da6a450f21d73f39e5d124013339338f58bf23",
+      "bytes": 2089
+    },
+    {
+      "path": "D2/warm-13/release-query-6bb4fc0a662947ae8983f3512387dffd/host/host-result.json",
+      "sha256": "0aaa8612efc4b86a601129c296f76502715e6cb20ab2bdf18c8a48e311d13536",
+      "bytes": 1294
+    },
+    {
+      "path": "D2/warm-13/release-query-6bb4fc0a662947ae8983f3512387dffd/host/launch.json",
+      "sha256": "5be4a8a156d7cdd16acec2c55ce1ead5e302fa49d909c6a857dca10f44bcafa2",
+      "bytes": 379
+    },
+    {
+      "path": "D2/chunk-14-launch.json",
+      "sha256": "c77cc2d980eae89709d15635a599cc286ac0c850b3c4bee03f7e4ef4e8d8723b",
+      "bytes": 2611
+    },
+    {
+      "path": "D2/chunk-14.json",
+      "sha256": "144f4501c8ba4ae3be6d5130dd0afcb899b2e772b3e65d4b8464666a25800f14",
+      "bytes": 4848
+    },
+    {
+      "path": "D2/owned-warm-14/launch.json",
+      "sha256": "50bbc7107bda56404844dfdad0d6e9a3a4f6f4d1c9e0c54aae3da24158b2525d",
+      "bytes": 390
+    },
+    {
+      "path": "D2/owned-warm-14/host-result.json",
+      "sha256": "c34397f6235b89b30544689c86a996a04f09c265d42c5009ebd658fc03da9e62",
+      "bytes": 1636
+    },
+    {
+      "path": "D2/owned-warm-14/stdout.log",
+      "sha256": "67f9ee1fd3e01feae6e87a22852a924a270072bd348371b27473f0f2ed098ac9",
+      "bytes": 260
+    },
+    {
+      "path": "D2/owned-warm-14/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-14/result.json",
+      "sha256": "2faf4309b66aae75a58c44c6690826e94924f0b73c63d77fde20563a8574505b",
+      "bytes": 492359
+    },
+    {
+      "path": "D2/warm-14/identity.json",
+      "sha256": "1e033c0e0ba35ab376c5c267136c938f4d6b042b84d9669eb22be9ec0c6377c1",
+      "bytes": 391
+    },
+    {
+      "path": "D2/warm-14/owned-processes.json",
+      "sha256": "b2d0ef7cdbf61de65166f8dd0eaf63f9c8a679bcbfb50d6c9d5cd3c142a5578d",
+      "bytes": 1855
+    },
+    {
+      "path": "D2/warm-14/listener-query.json",
+      "sha256": "ee6b5e380a29bd33072b0b31d21181ff1854b53748ad3bb61117d9765333dd63",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-14/launch-actions.json",
+      "sha256": "0d663361427b7bc6b5b4fe86e4050cc6a395192518e1e65960a80eb030fc3213",
+      "bytes": 1096
+    },
+    {
+      "path": "D2/warm-14/progress.json",
+      "sha256": "a3ed6bdc7faded61f40b021dc528cf10bd0165f25dff832004918bf9ccb58a32",
+      "bytes": 488190
+    },
+    {
+      "path": "D2/warm-14/progress-samples.jsonl",
+      "sha256": "e28b4321083ffb8d4a10ebccc7e79519a12c5a18d3f2970613c034d134c3b01d",
+      "bytes": 161881
+    },
+    {
+      "path": "D2/warm-14/warm-observations.json",
+      "sha256": "d61833b379a690174ddcfb11db149172df6606ce503478337850ddf69662d238",
+      "bytes": 3740
+    },
+    {
+      "path": "D2/warm-14/warm-terminal-snapshot.json",
+      "sha256": "15ae3a643f8c86e3c6d46886229a9ae9239353d0b2af7f54579f3b3d98bf72e0",
+      "bytes": 2089
+    },
+    {
+      "path": "D2/warm-14/release-query-93af8d935eb947c3b167bd93ba912751/host/host-result.json",
+      "sha256": "660a65fb0b68b4363323f8b6b03394ae39c0ab276bf8bea4b4d580545b031b93",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-14/release-query-93af8d935eb947c3b167bd93ba912751/host/launch.json",
+      "sha256": "61eb182849166af2051471ab9de29441ff9bd02278b13c3f02a8fcd2abfca802",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-15-launch.json",
+      "sha256": "8f1b7c06e056f455a1a4a3db57e183725ebe74751a600586c1881c5e78c6dd15",
+      "bytes": 2609
+    },
+    {
+      "path": "D2/chunk-15.json",
+      "sha256": "f9aa76d3b89e7f62ed4195a6f766fc4a0be08b6af5c162d29a52f97b2965061c",
+      "bytes": 4847
+    },
+    {
+      "path": "D2/owned-warm-15/launch.json",
+      "sha256": "a595a95a4d25d54769f45c8a268d96d3cdc03f93a7949371cdb1e2c530daa114",
+      "bytes": 390
+    },
+    {
+      "path": "D2/owned-warm-15/host-result.json",
+      "sha256": "cfebf3e37b2d80f4e9929701692877056f5e6cae08f98c8273a9f06be1ad6a08",
+      "bytes": 1636
+    },
+    {
+      "path": "D2/owned-warm-15/stdout.log",
+      "sha256": "e8dede2de4dc68ee1fa38898d02d7439b08580b82c1fbfc07b6357024ade6156",
+      "bytes": 256
+    },
+    {
+      "path": "D2/owned-warm-15/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-15/result.json",
+      "sha256": "7a6d5adcef670279f040682f2aba87c2a4cb6d6866665f3e31051d6f97f06445",
+      "bytes": 482572
+    },
+    {
+      "path": "D2/warm-15/identity.json",
+      "sha256": "0743b6d733d9269226638cbf5ab8974731bd030dc7fba53a76facd566fba8b00",
+      "bytes": 391
+    },
+    {
+      "path": "D2/warm-15/owned-processes.json",
+      "sha256": "af9f4d7d232d2700455d0bd752f0190b4dc1e6c7e40435fdb33f4b18102b47dd",
+      "bytes": 1856
+    },
+    {
+      "path": "D2/warm-15/listener-query.json",
+      "sha256": "7d6d1600c5e4130a502e228b8cd765391ca56a28524f67b07caa93a7e42da078",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-15/launch-actions.json",
+      "sha256": "7dd925a50254c8e204aa423385147f61ed6e99863223bbd5020fed9595a5e993",
+      "bytes": 1094
+    },
+    {
+      "path": "D2/warm-15/progress.json",
+      "sha256": "2eb44b48247e462ca56429626fc5420d8b4e4010b55a8e67c2be449bdf835311",
+      "bytes": 478441
+    },
+    {
+      "path": "D2/warm-15/progress-samples.jsonl",
+      "sha256": "31a804acb1b2f8f523f0e2bed97fd470f2a391deac5f8d8b6f100214053bb213",
+      "bytes": 158479
+    },
+    {
+      "path": "D2/warm-15/warm-observations.json",
+      "sha256": "57080c2b4a0b18af293fb7c5a13ac30191c60030260cd495ff8951878747a1ca",
+      "bytes": 3702
+    },
+    {
+      "path": "D2/warm-15/warm-terminal-snapshot.json",
+      "sha256": "fd67385e322f140b2c57ff18ddd8609bf0a2cde3ce4912717ea81a9e3b03d568",
+      "bytes": 2088
+    },
+    {
+      "path": "D2/warm-15/release-query-ec13bb67d35543eeaae18660c49b1475/host/host-result.json",
+      "sha256": "0c7eb3fba3e054c13cf91d1720790a0e12c2ea6acac99940582ba88e4d19e068",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-15/release-query-ec13bb67d35543eeaae18660c49b1475/host/launch.json",
+      "sha256": "a6e4123645f8f41c6311063d040c4756de98d6b218e63f112bbff6c671a4f4a9",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-16-launch.json",
+      "sha256": "1462f3f1d9a556994fe46110736a20c8e2b251553689aa913b0ebae95d8e5416",
+      "bytes": 2611
+    },
+    {
+      "path": "D2/chunk-16.json",
+      "sha256": "9606d78bb9065f13eeeb3fac1cfd37db0a12eb0c8f43c6613423e9af82fa113b",
+      "bytes": 4846
+    },
+    {
+      "path": "D2/owned-warm-16/launch.json",
+      "sha256": "b0d85ac5514506afb96123c374cb1ba1d41fa763cad600bccbe9ee14434381c4",
+      "bytes": 389
+    },
+    {
+      "path": "D2/owned-warm-16/host-result.json",
+      "sha256": "84860024125671c257154ff9eedb15315b4a69064fdee0c4ba11e5442a05fbaa",
+      "bytes": 1634
+    },
+    {
+      "path": "D2/owned-warm-16/stdout.log",
+      "sha256": "15cc390fb94c4974c46a565fbf8b70314266c121313f7c3f49f73a2972829e73",
+      "bytes": 261
+    },
+    {
+      "path": "D2/owned-warm-16/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-16/result.json",
+      "sha256": "cbe3d0d436deeb4517339dc1040004d45679ed88b8752411ea09005a629e840b",
+      "bytes": 419794
+    },
+    {
+      "path": "D2/warm-16/identity.json",
+      "sha256": "1a5c390da98603744ba70f87eaab8b4ae1ad7952f99ade1953085564ba4ccf92",
+      "bytes": 390
+    },
+    {
+      "path": "D2/warm-16/owned-processes.json",
+      "sha256": "3c25ab3b01f74cdc5b509ff46a8da8ad5d78ee2048a578b4538d3f62c5575dcc",
+      "bytes": 1856
+    },
+    {
+      "path": "D2/warm-16/listener-query.json",
+      "sha256": "947e7066cc84ea6325c0f6bdc8adf590d853491f578f25190f1fcefea7648447",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-16/launch-actions.json",
+      "sha256": "599c0a465b34fbe6b6dc7523ca7634f6d21632bb8c5a7e4d9e53afbd6b069737",
+      "bytes": 1096
+    },
+    {
+      "path": "D2/warm-16/progress.json",
+      "sha256": "6f8b1deebed9efb244d0710d0b99c7a311f16b3dc29571f5b2efddd6c33de1f1",
+      "bytes": 415647
+    },
+    {
+      "path": "D2/warm-16/progress-samples.jsonl",
+      "sha256": "b916caf29ece47338bb7e219d9862c25a008a6b1529bb315cd368a850880dccf",
+      "bytes": 136197
+    },
+    {
+      "path": "D2/warm-16/warm-observations.json",
+      "sha256": "9ab2fd930332ed536fc3f511c3dbf86a08d23b976c844c57aaf2f85918ad1e3f",
+      "bytes": 3719
+    },
+    {
+      "path": "D2/warm-16/warm-terminal-snapshot.json",
+      "sha256": "67c89639d46f342bbf583a3921dabc8afd0ec285366c18499c80762193229247",
+      "bytes": 2089
+    },
+    {
+      "path": "D2/warm-16/release-query-99292fc1a30d436e9e8de2b322ce357c/host/host-result.json",
+      "sha256": "82ea2b45c1c4fad28ecc1052fed24f13f58970b2d3175071760088ceb35b0b12",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-16/release-query-99292fc1a30d436e9e8de2b322ce357c/host/launch.json",
+      "sha256": "39033d7a10336ea17d673398dcb578225f8404c3734f81099fa78bd53ba36669",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-17-launch.json",
+      "sha256": "970c04fcb99d30d11340f8b4749f7dc2289e79422ac101355c1f1d7729a874d8",
+      "bytes": 2660
+    },
+    {
+      "path": "D2/chunk-17.json",
+      "sha256": "d59864f7bc2c5285ed1f837f5809ddeaeb6fed51a392619ed555a436a20496e1",
+      "bytes": 4895
+    },
+    {
+      "path": "D2/owned-warm-17/launch.json",
+      "sha256": "873fabec1b52a249b4f68c7b10652fb0d03030faad6a7283845ca368c9d8ad46",
+      "bytes": 389
+    },
+    {
+      "path": "D2/owned-warm-17/host-result.json",
+      "sha256": "90be57bda8a7d2c3192feb92a49a0e2933318acec96ed36edb746a3d889d1653",
+      "bytes": 1634
+    },
+    {
+      "path": "D2/owned-warm-17/stdout.log",
+      "sha256": "3eac94fbeb852ddd3db77f6f3d32d819247799c64d40bc2e182a8a30ed6f3abf",
+      "bytes": 359
+    },
+    {
+      "path": "D2/owned-warm-17/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-17/result.json",
+      "sha256": "cd33b4c59acfd551216f256a852799cc54a3d0751b9fa91b73358c66a14baaf7",
+      "bytes": 410069
+    },
+    {
+      "path": "D2/warm-17/identity.json",
+      "sha256": "ed155182e0a653192cac5fd3cf661287081c7c22a17c3d228e02cfffd40cbcc5",
+      "bytes": 390
+    },
+    {
+      "path": "D2/warm-17/owned-processes.json",
+      "sha256": "4b8e78c91c8febcf13433c32176cec0938ce29b2b471ba95390d81b37dcd3785",
+      "bytes": 1856
+    },
+    {
+      "path": "D2/warm-17/listener-query.json",
+      "sha256": "a026b5df7322c46550ce7c5319f93c4559afbc195da0161cac5ca9b92d2a0d52",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-17/launch-actions.json",
+      "sha256": "01570f78b3afe89978319c888a7287b126bd7b0ac9c1d903bdf7b4c68327ada1",
+      "bytes": 1194
+    },
+    {
+      "path": "D2/warm-17/progress.json",
+      "sha256": "fe2d91cde00c65a7effeb6e1ae0773dd29c0a491e18dcb16230fcac39194516f",
+      "bytes": 405718
+    },
+    {
+      "path": "D2/warm-17/progress-samples.jsonl",
+      "sha256": "92f286d626451fb56e1bce655902e568e4253b8c0cb8af58bdc994a728172513",
+      "bytes": 132106
+    },
+    {
+      "path": "D2/warm-17/warm-observations.json",
+      "sha256": "63e2ab2644aa7defc78f13a1f5b72c03b901130be2a40980be3f8a1ffc6bb970",
+      "bytes": 3923
+    },
+    {
+      "path": "D2/warm-17/warm-terminal-snapshot.json",
+      "sha256": "b342802c8c0ab8cbd54ad29b9f6ad177867b9009f91db1d411d1fe9b8983b37d",
+      "bytes": 2081
+    },
+    {
+      "path": "D2/warm-17/release-query-91f6bccee4424fc3bbcf0a0ab6715891/host/host-result.json",
+      "sha256": "884fbb72432a1abf5bb2da5d27881e8e6f172b8a82d65d17179de23d6041d115",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-17/release-query-91f6bccee4424fc3bbcf0a0ab6715891/host/launch.json",
+      "sha256": "c601a767c6332417db169772221884dcaa6b10ec6cdfdf96742075275f62212e",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-18-launch.json",
+      "sha256": "99751b9acd318e9cbc54e111cc9baefb0e399be4cb673ac4a0b5e8fdcc7827aa",
+      "bytes": 2620
+    },
+    {
+      "path": "D2/chunk-18.json",
+      "sha256": "9eea714e7bfba452c0dabfc2a7f402f7880007cbf2c02436f5dc4885bda6e311",
+      "bytes": 4857
+    },
+    {
+      "path": "D2/owned-warm-18/launch.json",
+      "sha256": "094af883bd03bbc9d85c8fa4875bc6bcb847e64064e2eba0589c2b360c3d37d9",
+      "bytes": 390
+    },
+    {
+      "path": "D2/owned-warm-18/host-result.json",
+      "sha256": "9e5f5a93b6ace9b40383afe89032178df8bbcbf57b53c10dc131a7c9889ccf18",
+      "bytes": 1636
+    },
+    {
+      "path": "D2/owned-warm-18/stdout.log",
+      "sha256": "3b2ae0dca7e9b31625045fc114e5112a6621e99f616483dc2f683424276c2620",
+      "bytes": 277
+    },
+    {
+      "path": "D2/owned-warm-18/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-18/result.json",
+      "sha256": "378afe17d8aa75653a908cc29bea341dcc55569b20b77b08319958ae7a64883b",
+      "bytes": 367144
+    },
+    {
+      "path": "D2/warm-18/identity.json",
+      "sha256": "2bb522c1d3f4510e313f8b851e0a72a38f749b360150ac3eaf80fe31db012e76",
+      "bytes": 391
+    },
+    {
+      "path": "D2/warm-18/owned-processes.json",
+      "sha256": "fa30b6006e2f9f9d8c98a1d9e778098cde8110a8c3e31203b08485259df79b6e",
+      "bytes": 1855
+    },
+    {
+      "path": "D2/warm-18/listener-query.json",
+      "sha256": "b24f10bb8d5403dab9fab5b62f4a2d4d0611770f1c29e23db363904e1b91bd1b",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-18/launch-actions.json",
+      "sha256": "a5a9f9a9a90205285a8190080d6a185c31398776cca29d8864105604e7e2b7eb",
+      "bytes": 1144
+    },
+    {
+      "path": "D2/warm-18/progress.json",
+      "sha256": "18c794c8a272a22eba03d04d3f78c5a7f65b591691244f3efc5343c9f1d49d34",
+      "bytes": 362901
+    },
+    {
+      "path": "D2/warm-18/progress-samples.jsonl",
+      "sha256": "9bfb84c93a9e9c374bf48c9596b4a66ddb7fe444070bbf42941ad811ec01e2ad",
+      "bytes": 117250
+    },
+    {
+      "path": "D2/warm-18/warm-observations.json",
+      "sha256": "c5bf908977868cbd5b588a8556edfbc748125097a003ba2b494e66445eedc1c4",
+      "bytes": 3814
+    },
+    {
+      "path": "D2/warm-18/warm-terminal-snapshot.json",
+      "sha256": "ec00b0b0bb87ee42816aa5d0dc73f7c6e4986bb71621e9e682465b654f0498ba",
+      "bytes": 2085
+    },
+    {
+      "path": "D2/warm-18/release-query-4fd5c022c3f34e43a7493cf1c8fc0f1b/host/host-result.json",
+      "sha256": "649d8d57a48d86f40479040bf56dd689253c2601f7fcd0afbe32294f27f14988",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-18/release-query-4fd5c022c3f34e43a7493cf1c8fc0f1b/host/launch.json",
+      "sha256": "c39d7ae4c384b0de15ef5dbe4dee5004ecf8a9587092c4412e296c6bf4f1d108",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-19-launch.json",
+      "sha256": "690c4e8517da3abb9947f9a65dd1caff7f412abee029db4846a46df55a92d82a",
+      "bytes": 2620
+    },
+    {
+      "path": "D2/chunk-19.json",
+      "sha256": "2f10307d419d1e94c943ef2959b72bd09500918c498004ebf51029aaa93aeb19",
+      "bytes": 4857
+    },
+    {
+      "path": "D2/owned-warm-19/launch.json",
+      "sha256": "8da5ae4dff438aaf0c922d691bbc61e595e47dde572210525379c659c887c419",
+      "bytes": 390
+    },
+    {
+      "path": "D2/owned-warm-19/host-result.json",
+      "sha256": "0413c7478457d80e631c14ab29570df7825d5cb92478f894d63aa4f1ecd3e617",
+      "bytes": 1636
+    },
+    {
+      "path": "D2/owned-warm-19/stdout.log",
+      "sha256": "9bbf630dfe7f9d9c0add7c53c2fa9c2ca844f98785eca8691da40c1a6f56bfeb",
+      "bytes": 281
+    },
+    {
+      "path": "D2/owned-warm-19/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-19/result.json",
+      "sha256": "a7e8f5a312c0a6f84e52a2746efe316c4bd0ac6ea0447ea77e0ee0051860f486",
+      "bytes": 576904
+    },
+    {
+      "path": "D2/warm-19/identity.json",
+      "sha256": "1f2b4a5fa368157e1e9bfd330ead788a018514cdc66b60be1b404c0cc1ba8ba6",
+      "bytes": 391
+    },
+    {
+      "path": "D2/warm-19/owned-processes.json",
+      "sha256": "df2c67c4404d9e4bec950b03e825d3825d8400240b1fdb0154620f6ec6765bd5",
+      "bytes": 1855
+    },
+    {
+      "path": "D2/warm-19/listener-query.json",
+      "sha256": "1ecb8466c05418c60c7a305441685c7e1d0c8f8cbe16a80ca43f09cc2e92c7e5",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-19/launch-actions.json",
+      "sha256": "6c45785d14cf5559b4ca13f09c918112dba19a7a11e42ff3c2596774888ee9e4",
+      "bytes": 1114
+    },
+    {
+      "path": "D2/warm-19/progress.json",
+      "sha256": "58eb6d4688124c4794af28a39117072c90dfe990f834506048f40995649810bd",
+      "bytes": 572700
+    },
+    {
+      "path": "D2/warm-19/progress-samples.jsonl",
+      "sha256": "df4f3b9141e3cdf752a9e1ba015042ff32267f38ac4258ad5476866753a33c9c",
+      "bytes": 191826
+    },
+    {
+      "path": "D2/warm-19/warm-observations.json",
+      "sha256": "03c7f60a5042fa1dc328d6b3b078d08b08bc39bc28438fa2f2a73bfdb3940afd",
+      "bytes": 3775
+    },
+    {
+      "path": "D2/warm-19/warm-terminal-snapshot.json",
+      "sha256": "dcecf92d97a271fa19bd2932860784352da9eacbae86b4ab74f07b20a0f660c5",
+      "bytes": 2092
+    },
+    {
+      "path": "D2/warm-19/release-query-c80ea29940614ccf9995dc02bb4056cd/host/host-result.json",
+      "sha256": "8caab316249647fa39cc05e847e76f7690ebb0024e0fbe78e6984d5d02d5cde8",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-19/release-query-c80ea29940614ccf9995dc02bb4056cd/host/launch.json",
+      "sha256": "5516fff5a436f0e219a4da8ea69ecdc71e316a9cdbbc03849631373787894b27",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-20-launch.json",
+      "sha256": "756277e7795461734f2ebd764f6f3c02be1dc255e48dd676a4f948342c6e5a2c",
+      "bytes": 2620
+    },
+    {
+      "path": "D2/chunk-20.json",
+      "sha256": "34b074cf3fe9ede402fa7ebe9ee09d50a1deca78e72c89480fe37a8048236bd3",
+      "bytes": 4855
+    },
+    {
+      "path": "D2/owned-warm-20/launch.json",
+      "sha256": "dc179b0ba8dacf7fa6dfff57628254828d59365cf28f26119c7783ac4c26eccd",
+      "bytes": 389
+    },
+    {
+      "path": "D2/owned-warm-20/host-result.json",
+      "sha256": "a7141e5a8d19909c5ca111d6c41ea0263f3f4e4d6a44dbe5582085c89cd0a4db",
+      "bytes": 1634
+    },
+    {
+      "path": "D2/owned-warm-20/stdout.log",
+      "sha256": "25f1c5756adcf0a5ff7639a5fcae5a26652dc4c59c5df513b1807e5eeab3b76e",
+      "bytes": 279
+    },
+    {
+      "path": "D2/owned-warm-20/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-20/result.json",
+      "sha256": "fa5f6ddb84c8eaa4e1b87c47e9138c8c77ddd08e118077a75ba69c6e56be7c63",
+      "bytes": 577543
+    },
+    {
+      "path": "D2/warm-20/identity.json",
+      "sha256": "b03bb13c07cff95a60d2999f94ee9db4c73d0fa72c5a73160db3c9fb99083d09",
+      "bytes": 390
+    },
+    {
+      "path": "D2/warm-20/owned-processes.json",
+      "sha256": "2dda153a1052f57bcaa1ce00f4bc59320da77135af2604779cdf240aa6133805",
+      "bytes": 1855
+    },
+    {
+      "path": "D2/warm-20/listener-query.json",
+      "sha256": "347c96ef104f89b2e62d0ecdf090861c1dd275db7da0b3c818b05b8ad82c9a3a",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-20/launch-actions.json",
+      "sha256": "b4c523d4d9d6e45c28f075995f33b4b562bafbddf4e7e72584ab63ca7bbe7313",
+      "bytes": 1114
+    },
+    {
+      "path": "D2/warm-20/progress.json",
+      "sha256": "7e30f41b4f9bcb7d48daf72398f95261a8e14790c05aa790a508c23a628ac48d",
+      "bytes": 573375
+    },
+    {
+      "path": "D2/warm-20/progress-samples.jsonl",
+      "sha256": "463576b1b5d19aaea5db937da47e99c0307daf6b1fc71613e1746607b11ee429",
+      "bytes": 192106
+    },
+    {
+      "path": "D2/warm-20/warm-observations.json",
+      "sha256": "c12349e36c7fa7393f575d72b4841777a9605a402e4049369a90489ed8ed7f7f",
+      "bytes": 3739
+    },
+    {
+      "path": "D2/warm-20/warm-terminal-snapshot.json",
+      "sha256": "c6e2d12391d3e60afcec56758b9b292612d50c906a97715157f070baa1c46371",
+      "bytes": 2092
+    },
+    {
+      "path": "D2/warm-20/release-query-6630cfad648742aeaa6cba977d7b46d9/host/host-result.json",
+      "sha256": "6fe459fa4559e53c37e5644a792984894340b97cc4b4752e5c1d74bff6aa92c2",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-20/release-query-6630cfad648742aeaa6cba977d7b46d9/host/launch.json",
+      "sha256": "2425af36047b8cdd61bc093fe39098a72cd62203485dc20b8ba2b0902930d261",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-21-launch.json",
+      "sha256": "89e003ddcac6d23f6ffd353842eee4298d0e6dc6994dd30cfcea9f914de6ec19",
+      "bytes": 2620
+    },
+    {
+      "path": "D2/chunk-21.json",
+      "sha256": "8f0366583bc31efcb29b3829f10bc55969a86badd00caf481150ca0d95ba3422",
+      "bytes": 4857
+    },
+    {
+      "path": "D2/owned-warm-21/launch.json",
+      "sha256": "49497d5fa75694c541a9367d994eadf38c153f7f196233c9a24d86012d63b27b",
+      "bytes": 390
+    },
+    {
+      "path": "D2/owned-warm-21/host-result.json",
+      "sha256": "374cc6067811258c7c1afbecf80a8df4553e7b3ecc4d076b128799c0f4a783f7",
+      "bytes": 1636
+    },
+    {
+      "path": "D2/owned-warm-21/stdout.log",
+      "sha256": "fcaee2d457e0d0027bc23409807e1e84b2011938d8badd10163b89ef20922671",
+      "bytes": 278
+    },
+    {
+      "path": "D2/owned-warm-21/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-21/result.json",
+      "sha256": "df51fd07aeea40e35c695bdb0b17264ca004e7c0b5e21fd8a3c6727a205cc716",
+      "bytes": 338209
+    },
+    {
+      "path": "D2/warm-21/identity.json",
+      "sha256": "e186d80556ab282319c5af82a1c0bd7787aa540a5f9d7de9a9f3981bf5f030d6",
+      "bytes": 391
+    },
+    {
+      "path": "D2/warm-21/owned-processes.json",
+      "sha256": "c427ac9570f2a1bc801310db0ef331eb4b0c6c1a686cce497b672da229e3c42f",
+      "bytes": 1856
+    },
+    {
+      "path": "D2/warm-21/listener-query.json",
+      "sha256": "7be8e1e134cd702d62f55e517bc5781b1f817e887bb64e721179a608f860118f",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-21/launch-actions.json",
+      "sha256": "01336fc5aa7ab6f5e5b9aebe3c00fc7dda071ea2d72d8c75bcd7c8805186f1da",
+      "bytes": 1144
+    },
+    {
+      "path": "D2/warm-21/progress.json",
+      "sha256": "564caa9743a0f2a2955aa3f8f4c3cb1f0fa1c1b33318fb01d706ddad428baa24",
+      "bytes": 333957
+    },
+    {
+      "path": "D2/warm-21/progress-samples.jsonl",
+      "sha256": "ca4398139f0c6609a51fa07ff5f51cbefc17807a25509bddbbb6a5a50c638a9e",
+      "bytes": 106944
+    },
+    {
+      "path": "D2/warm-21/warm-observations.json",
+      "sha256": "e3dec0ea4c0cc22b8f8c6c90579594e5792f8312f4742144cf69155fe7f068e7",
+      "bytes": 3823
+    },
+    {
+      "path": "D2/warm-21/warm-terminal-snapshot.json",
+      "sha256": "77f9023f856350dc395a20ad241de7ceb4686ec1f3c261e4c67812484e80125d",
+      "bytes": 2085
+    },
+    {
+      "path": "D2/warm-21/release-query-460ec2c098854836ad067cddb23d64c8/host/host-result.json",
+      "sha256": "dd49a0d95308619f663ff0e738053ff8cd39bd2ab5ac63f02e9bff54fcc56acc",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-21/release-query-460ec2c098854836ad067cddb23d64c8/host/launch.json",
+      "sha256": "5803ba074cf60d7af5fb56227f024c30a59b01c6fe07857432927ce8b3e52cb7",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-22-launch.json",
+      "sha256": "376b007fc145c583633b6837adc168abffcd716f5d7ddd178a26d5b19b2fd001",
+      "bytes": 2620
+    },
+    {
+      "path": "D2/chunk-22.json",
+      "sha256": "f5e4bd089633f4c82334b56d30b4370f35ae9f9d3913cf7d02efd6cd1ac2485f",
+      "bytes": 4857
+    },
+    {
+      "path": "D2/owned-warm-22/launch.json",
+      "sha256": "d72e0683b5e297f1898f60fbf3f2ca640bf7b28ba25fdd3853683b719fe14048",
+      "bytes": 390
+    },
+    {
+      "path": "D2/owned-warm-22/host-result.json",
+      "sha256": "fa5d2df94fe33aa222c914ca31220ca01ccce7e45a5b1807e7a248a0c0abde08",
+      "bytes": 1636
+    },
+    {
+      "path": "D2/owned-warm-22/stdout.log",
+      "sha256": "c388d377df7c4d50b464787e4f165081cc9ca69b1e61ce0d156ca2697e513860",
+      "bytes": 277
+    },
+    {
+      "path": "D2/owned-warm-22/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-22/result.json",
+      "sha256": "071f0bb74c9fedd2b0e768b5ba54bc0560126b02b2812e86bc8172cacbca90b9",
+      "bytes": 381743
+    },
+    {
+      "path": "D2/warm-22/identity.json",
+      "sha256": "85812f5140a5acb358e4224512cfe8adebafa592b164f64390a399c8999506ac",
+      "bytes": 391
+    },
+    {
+      "path": "D2/warm-22/owned-processes.json",
+      "sha256": "b3450e07a7ce9f5850ddc321fe8492b51b7b0e7fb89ddca6bc6e79f475ca6c56",
+      "bytes": 1855
+    },
+    {
+      "path": "D2/warm-22/listener-query.json",
+      "sha256": "4d2102ff9f43fcadbe98a2e73f260715c432aa2de501d4045ba4d99f07a10e39",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-22/launch-actions.json",
+      "sha256": "2249d0d325648cd8e313c2622c54c53a3234ad602a3e4e07bf8d1a384b6d70d6",
+      "bytes": 1114
+    },
+    {
+      "path": "D2/warm-22/progress.json",
+      "sha256": "1b7d873cda8837389012e7754dd26d0bb48f69044d6bd38579f624edd400217e",
+      "bytes": 377534
+    },
+    {
+      "path": "D2/warm-22/progress-samples.jsonl",
+      "sha256": "0ac8701f980cd556a5a704bb596208fa1519a3d4697652d1773eed10bc23d562",
+      "bytes": 122596
+    },
+    {
+      "path": "D2/warm-22/warm-observations.json",
+      "sha256": "8fe82a86f9329d27c46c59040f8086a1a64bd95a2abd3e4c4c015b28b5c140a3",
+      "bytes": 3780
+    },
+    {
+      "path": "D2/warm-22/warm-terminal-snapshot.json",
+      "sha256": "63cfcc7350df555349a3380754572a04dffe3a4fcc2308abbf8c620e61d1c88f",
+      "bytes": 2070
+    },
+    {
+      "path": "D2/warm-22/release-query-a7c8d23fb0a94e46be7d9fbd6572b97b/host/host-result.json",
+      "sha256": "718381b0e713cc4c450408444b0893778a3b66b26a54b1be60e7317e78c02ba0",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-22/release-query-a7c8d23fb0a94e46be7d9fbd6572b97b/host/launch.json",
+      "sha256": "3456cdcc1a6c008dfb438cf09266f446a8be9155d4f91ccffcc1cd5e773c3bb0",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-23-launch.json",
+      "sha256": "9bedad8912688f4270ab9f2153ea9c5c0d35c2846850f090e8776b7bde74afc4",
+      "bytes": 2619
+    },
+    {
+      "path": "D2/chunk-23.json",
+      "sha256": "111acbfbe804d5178099bcca593932d451d6eb50f481c76b7c2d0a94e6b9fe0c",
+      "bytes": 4857
+    },
+    {
+      "path": "D2/owned-warm-23/launch.json",
+      "sha256": "0b3198faa0b7f15aaa4826c0fa9d9ed325d7fcc0ec35e67f127bd4bdae33d72a",
+      "bytes": 390
+    },
+    {
+      "path": "D2/owned-warm-23/host-result.json",
+      "sha256": "a88f941f2757d0b725952dee2ca378c034f3bf2281a708112b354d3166da62a6",
+      "bytes": 1636
+    },
+    {
+      "path": "D2/owned-warm-23/stdout.log",
+      "sha256": "6e5ce8dae58b87986668668a23a9ff784e2e2f094576d9dab6f3b3ed6a6fe6c5",
+      "bytes": 279
+    },
+    {
+      "path": "D2/owned-warm-23/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-23/result.json",
+      "sha256": "85c40ab3aae752b59e6aca921aaf5ed9e3b04a04fd6728277db3041d5fe827a0",
+      "bytes": 588035
+    },
+    {
+      "path": "D2/warm-23/identity.json",
+      "sha256": "06b862a713bcc4ae81224535a3df91840a2e6364798d6e5505bd41a39805749b",
+      "bytes": 391
+    },
+    {
+      "path": "D2/warm-23/owned-processes.json",
+      "sha256": "d7ed20ba7ff509d74b4575f17c2d4a649419d90980ca29be52349341e6891634",
+      "bytes": 1857
+    },
+    {
+      "path": "D2/warm-23/listener-query.json",
+      "sha256": "c6404de9312d43e19cf16c3e40961fb90457381e0f77d4f8731f341d915cbe99",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-23/launch-actions.json",
+      "sha256": "650c26917942b08cb426d4a7639e430a05b1691b82861d3955082a54165849b9",
+      "bytes": 1114
+    },
+    {
+      "path": "D2/warm-23/progress.json",
+      "sha256": "35da871e351e1e6b72be5cfdcbf88a1294d753b81ed8e05d8dea0fc277e6e5a4",
+      "bytes": 583862
+    },
+    {
+      "path": "D2/warm-23/progress-samples.jsonl",
+      "sha256": "24dc8e9dcdca283f90d70d7c424b019fc76c87739d5cb8c34246de71b3174c99",
+      "bytes": 195832
+    },
+    {
+      "path": "D2/warm-23/warm-observations.json",
+      "sha256": "169e8aefd33ee57940adce6f535df4b17bb3be8060796742a829f4e023f3aa0d",
+      "bytes": 3744
+    },
+    {
+      "path": "D2/warm-23/warm-terminal-snapshot.json",
+      "sha256": "e039ae5be61bc31ab23a4fb3c8afe3e3c2c7402d32e9630d24f4da2d0039f651",
+      "bytes": 2092
+    },
+    {
+      "path": "D2/warm-23/release-query-dba732925bb24b6c9141ea2007910536/host/host-result.json",
+      "sha256": "c8b4ce896efc7827feb13c483874861bf1447ea680ef1a2e2feaf6b232d936c2",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-23/release-query-dba732925bb24b6c9141ea2007910536/host/launch.json",
+      "sha256": "365a834240c375a77cc4c87e2816118983ac9e7b547ef2ff49a08836c76462a2",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-24-launch.json",
+      "sha256": "3d96dd2055bcf5300713d468b447c182d52005ed02a4da08987a190043edde59",
+      "bytes": 2620
+    },
+    {
+      "path": "D2/chunk-24.json",
+      "sha256": "3a4465805b13738b8ed611044f0a493420606e8266a17d9a596d0e0d6f13c53c",
+      "bytes": 4855
+    },
+    {
+      "path": "D2/owned-warm-24/launch.json",
+      "sha256": "d54397c76535d92d660ea36378e20c733bd6db8d2a19da0dca42e6c758c1cc9a",
+      "bytes": 389
+    },
+    {
+      "path": "D2/owned-warm-24/host-result.json",
+      "sha256": "afbd06b2401cf2049b77f00000cf85ed63f2aeea13a87ce967685f4d56c8d246",
+      "bytes": 1634
+    },
+    {
+      "path": "D2/owned-warm-24/stdout.log",
+      "sha256": "9049cf6398b7b1b2b0300b4d750da6803c84e06fbb47defe65e6a1fd1aa6e010",
+      "bytes": 280
+    },
+    {
+      "path": "D2/owned-warm-24/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-24/result.json",
+      "sha256": "15af93daa0c93a69a80017a4de501bcf230edbfdb77dd1df448686e2369d016f",
+      "bytes": 504809
+    },
+    {
+      "path": "D2/warm-24/identity.json",
+      "sha256": "60d43f8d6a921cf8fbd15c1c314d8ed470773a7c9156f51a1bbc2d48d5fcb851",
+      "bytes": 390
+    },
+    {
+      "path": "D2/warm-24/owned-processes.json",
+      "sha256": "08ab70f39d896b5802a73f453a6787cdeeccaf038e35e89805f6d9d43fae8df4",
+      "bytes": 1854
+    },
+    {
+      "path": "D2/warm-24/listener-query.json",
+      "sha256": "ac3d875ebdba7fa11aefbd200418b735406d06d3b05047ca1ae60bc766a767e8",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-24/launch-actions.json",
+      "sha256": "97e49c64e7f2d33b8dba9b3226bd30dd7cef043de16ff3d1a76b18640f87015b",
+      "bytes": 1114
+    },
+    {
+      "path": "D2/warm-24/progress.json",
+      "sha256": "37a6184386ef2839bd9ac517718ce78acbb17e0a6d517b08f761384de6c7f9cb",
+      "bytes": 500631
+    },
+    {
+      "path": "D2/warm-24/progress-samples.jsonl",
+      "sha256": "6b0b65eba25224ad0052daaeac5bebed5e5434ba7ed60ce94aea53824faf3c2a",
+      "bytes": 166269
+    },
+    {
+      "path": "D2/warm-24/warm-observations.json",
+      "sha256": "debb888bf52681bf6af722b60db77a180441a47dfebd2fd3215de83288c8d39f",
+      "bytes": 3749
+    },
+    {
+      "path": "D2/warm-24/warm-terminal-snapshot.json",
+      "sha256": "cea06d02d7b006af59cc1e9386b3539e0e82831d360cac857099fec0c9205a5f",
+      "bytes": 2092
+    },
+    {
+      "path": "D2/warm-24/release-query-f128c16be9414263b7968050732181f0/host/host-result.json",
+      "sha256": "173a0ee228df6214ff0eb46be459e0a6109039807440dd08bc0ab73e8b301c07",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-24/release-query-f128c16be9414263b7968050732181f0/host/launch.json",
+      "sha256": "a2cdffb6d6c27777aa3e3455a03061436660a5ed893fc36ac2974ed446fed42b",
+      "bytes": 380
+    },
+    {
+      "path": "D2/chunk-25-launch.json",
+      "sha256": "92eed43b4ae7d37e7ecf66f4a44076a1dbea96988976c0ea7aaeee2fffd15146",
+      "bytes": 2606
+    },
+    {
+      "path": "D2/chunk-25.json",
+      "sha256": "6e8cd448df5d25e90e7383daa3394aaddc177b0e6aea1c4d4aae2327299a2656",
+      "bytes": 4838
+    },
+    {
+      "path": "D2/owned-warm-25/launch.json",
+      "sha256": "d33bdd117fb96db11bf99b43489524077990500b323eb0aa7a46015a34ccc261",
+      "bytes": 389
+    },
+    {
+      "path": "D2/owned-warm-25/host-result.json",
+      "sha256": "cdbd822efedde2e78ed1cb01b57f6f553caab54e5a939f24b27cd5137c3161aa",
+      "bytes": 1633
+    },
+    {
+      "path": "D2/owned-warm-25/stdout.log",
+      "sha256": "881f7f2d0a09d36070db78a47a5324f86f7f3d74efd4fe8771175d3123515b8b",
+      "bytes": 200
+    },
+    {
+      "path": "D2/owned-warm-25/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D2/warm-25/result.json",
+      "sha256": "b1cb2ba5b55d5d7e6a3e4784acbd4d7218a927ed90074f766b3c093c025cf19c",
+      "bytes": 200741
+    },
+    {
+      "path": "D2/warm-25/identity.json",
+      "sha256": "3fb5a3b79ae73d841b0715c9a966f3f641155762192cad2d75ce057d4b9b44c8",
+      "bytes": 390
+    },
+    {
+      "path": "D2/warm-25/owned-processes.json",
+      "sha256": "a0e4a645e3842525d3eec01efd51b02e1f5766f4c4becded9da06ac22b6b27d1",
+      "bytes": 2062
+    },
+    {
+      "path": "D2/warm-25/listener-query.json",
+      "sha256": "cfad8c77869308cef224125324432e98ad07da75e0c7817476e560f45d6efbf6",
+      "bytes": 2132
+    },
+    {
+      "path": "D2/warm-25/launch-actions.json",
+      "sha256": "fbd844b49b4864c63e600216712bb7ee21d0551e3e4fdb12679273ce51154a7e",
+      "bytes": 770
+    },
+    {
+      "path": "D2/warm-25/progress.json",
+      "sha256": "c2fd0417aff06a8b8b878b87f6942e6688625a9f8059f59fe648608539e3c8dd",
+      "bytes": 197802
+    },
+    {
+      "path": "D2/warm-25/progress-samples.jsonl",
+      "sha256": "cf7c0a0409de575b5d1e2b415ace019de38bd6cc3314e71885f6c7a1e52f71d5",
+      "bytes": 62309
+    },
+    {
+      "path": "D2/warm-25/warm-observations.json",
+      "sha256": "b655b0b2452ed8fae705aae91e40340261cad9282abfb3f23ef94123ca3a6112",
+      "bytes": 2590
+    },
+    {
+      "path": "D2/warm-25/warm-terminal-snapshot.json",
+      "sha256": "7c76af6944159ab16e40d1d17d826adeffef7ddfff7467a292dce6ca10834778",
+      "bytes": 2070
+    },
+    {
+      "path": "D2/warm-25/release-query-f8e6935b220d462f9407008a82c8c10a/host/host-result.json",
+      "sha256": "80d25cbab5d1fdd00bc30fb31630d4e315dd6eb712c744e08f03bdba69cdca08",
+      "bytes": 1296
+    },
+    {
+      "path": "D2/warm-25/release-query-f8e6935b220d462f9407008a82c8c10a/host/launch.json",
+      "sha256": "8b4d142bee1611cd7b2985210b8c7723650908287070f1105efa7dcb5fa7dc19",
+      "bytes": 380
+    },
+    {
+      "path": "F/launch.json",
+      "sha256": "4a240a5e727a17416cd79174f49746f7838e8e6e105c212295e990200e3811c3",
+      "bytes": 2608
+    },
+    {
+      "path": "F/test-results.json",
+      "sha256": "42c1f743b279ad528eb1605e82eb4994df48c43c13f1d785994933a05bfb2d46",
+      "bytes": 4025
+    },
+    {
+      "path": "D/owned-warm-focused-tests-token-fix/launch.json",
+      "sha256": "864452b4128ad8a97c86618db612c7b52ab45b528496c5b7caa8b8767632c02e",
+      "bytes": 389
+    },
+    {
+      "path": "D/owned-warm-focused-tests-token-fix/host-result.json",
+      "sha256": "a0ef87a1c721733da334cbd147d805a34b5229c437094e7a8268dd4313478020",
+      "bytes": 1330
+    },
+    {
+      "path": "D/owned-warm-focused-tests-token-fix/stdout.log",
+      "sha256": "075b3e62c411b60e5540ec3587129eabef400734a13b1843e467a40de3264eb7",
+      "bytes": 168
+    },
+    {
+      "path": "D/owned-warm-focused-tests-token-fix/stderr.log",
+      "sha256": "5eaf9b33c3537dd7402b575c85ff4d0b9f008a20571020d015028aaeb72f7bac",
+      "bytes": 791
+    },
+    {
+      "path": "L/launch.json",
+      "sha256": "81437a384afbb3fcfdd5f227dbae056006eb7f34a2e9a3f9a19a34d53a1d8855",
+      "bytes": 380
+    },
+    {
+      "path": "L/host-result.json",
+      "sha256": "b96309ad7a356c2aa4a8a206a18df4808b010c228f45ea85c1b1e13e05b10fb5",
+      "bytes": 1287
+    },
+    {
+      "path": "L/stdout.log",
+      "sha256": "0982629413e5cb822eb273f2a38d31dde8423eddb5cbf4ea2b7e54345ca650e2",
+      "bytes": 1273
+    },
+    {
+      "path": "L/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "L0/launch.json",
+      "sha256": "d1f41b8c63dfb889e86397585dfe6c66843906a16c266a6f02c0bad81b74dfd6",
+      "bytes": 380
+    },
+    {
+      "path": "L0/host-result.json",
+      "sha256": "6895f251237d04bb4b8d01f0d38b67327cdbc2399cff6fd269f6cee85f5716ba",
+      "bytes": 1287
+    },
+    {
+      "path": "L0/stdout.log",
+      "sha256": "27d3584d7f2f18dfaf379ae5374cf8e789573ae21dbab630e5619cfaade9d2cd",
+      "bytes": 1164
+    },
+    {
+      "path": "L0/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}

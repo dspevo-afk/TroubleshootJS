@@ -1,0 +1,83 @@
+{
+  "status": "COMPLETE_MEASUREMENTS",
+  "completedSlices": 26,
+  "completedPairs": 77,
+  "normalProductAttempts": 154,
+  "primingOutcomeCounts": {
+    "PASS": 77
+  },
+  "warmOutcomeCounts": {
+    "PASS": 77
+  },
+  "establishedWarmPasses": {
+    "count": 77,
+    "p50Ms": 12552,
+    "p95Ms": 18313,
+    "worstMs": 20066,
+    "totalMs": 852464.5999994278
+  },
+  "passedPriming": {
+    "count": 77,
+    "p50Ms": 64999,
+    "p95Ms": 82820,
+    "worstMs": 87291,
+    "totalMs": 4156907.9000000954
+  },
+  "warmFailureCount": 0,
+  "primingFailureCount": 0,
+  "unestablishedWarmCount": 0,
+  "sampledFailureStages": {},
+  "gapWorstMs": 1232.5,
+  "warmPlanSha256": "ca43f4e5731f614a4ea39e3866c925caaf53a14b6dd71e853aa5921b4a465dc1",
+  "manifestSha256": "2c81657fa8f6ce481f08574e3d0fd1b9d4d5222a8b5330ae844d654e46cbbbbe",
+  "a01PercentileOwnerSha256": "294c5d0f0fae804e58d6c5298e546bc11f2c330b9272b7252c734dbd6ae4b9a3",
+  "baseHead": "6fde7ab038d12e2d122d26b6665746ba6476d642",
+  "productionBase": "c621b55d2b071e064d5afd383451d2715e35940d",
+  "sourceIdentity": "87bb04f707ccaf57f92c5d38fdbf4db199d63359c573725fd34bac61484226d7",
+  "normalQ30Enabled": false,
+  "q30Accepted": false,
+  "publicIntervalsOver90000Ms": [],
+  "sourceInputsUnchanged": true,
+  "actualStartUtc": "2026-10-05T19:51:14.491184Z",
+  "actualEndUtc": "2026-10-05T21:32:17.194948Z",
+  "wallSecondsIncludingBetweenSliceGaps": 6062.703764,
+  "hostOperationTotalMs": 5181853,
+  "browserServerCleanupTotalSeconds": 30.575562200159766,
+  "hostCleanupTotalMs": 0,
+  "coordinatedWindow": {
+    "startUtc": "2026-10-05T19:45:00Z",
+    "endUtc": "2026-10-05T22:45:00Z",
+    "wholePcIdleClaim": false
+  },
+  "extraInitialAttempt": {
+    "status": "INSTRUMENTATION_FAIL_PRESERVED",
+    "seed": "10387",
+    "productScreen": "TICKET",
+    "hostPolledSeconds": 22.517799800029024,
+    "validWarmMeasurement": false,
+    "cause": "Observer expected constant token; actual PlayerSession increments at both begin and completion."
+  },
+  "focusedTests": {
+    "status": "PASS",
+    "count": 4,
+    "seconds": 1.0507392999716103,
+    "sourceHashes": 24
+  },
+  "resources": {
+    "status": "PASS",
+    "observedUtc": "2026-10-05T21:33:58.893149+00:00",
+    "recordedInstancesAbsent": 330,
+    "portsClosed": 27,
+    "termination": false,
+    "initialAudit": "BLOCKED: one native PID query denied; preserved.",
+    "resolution": "Maintained CIM fallback proves a different creation time for the reused PID; no process terminated."
+  },
+  "historicalRelease": "BLOCKED_LATE; later absence is cleanup evidence only, as directed by parent.",
+  "historicalRisks": [
+    "Unexplained91.616s original menu failure",
+    "Six earlier scratch directories without prior inventories"
+  ],
+  "originalUntrackedPreserved": 8,
+  "evidenceDeleted": false,
+  "rootReview": "Integrated observer diff and every completed slice validated; parent independent acceptance pending."
+}
