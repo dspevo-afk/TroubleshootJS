@@ -14,6 +14,8 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
     static final double SAMPLE_SECONDS = .030;
     static final double SOLVER_MAX_STEP_SECONDS = 5e-6;
     static final double SOLVER_MIN_STEP_SECONDS = 50e-12;
+    static final double LIVE_POWERED_SECONDS = .0001;
+    static final double LIVE_ISOLATED_SECONDS = .005;
     private final TroubleshootBoard board;
     private final GeneratedExternalPowerBindings power;
     private final String[] channels;
@@ -156,10 +158,14 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
     }
     public GeneratedBoardOperationCatalog getOperationCatalog() { return operations; }
     public GeneratedCustomerRetestProfile getCustomerRetestProfile() { return retest; }
-    // The ordinary CircuitJS run already advances time. Keep its additional
-    // UI-frame increment small on this larger graph; explicit profiles retain
-    // their full 30 ms settling interval and unchanged solver budgets.
-    public double getLiveSolverAdvanceSeconds() { return .0001; }
+    // Preserve the powered cadence on this larger graph. Once every actual
+    // source switch is isolated, advance the same transient in bounded 5 ms
+    // slices so its high-resistance storage tails can discharge in live play.
+    // This changes scheduling only; voltages, timesteps and readiness still
+    // come from CircuitJS. Fault-isolated capacitors can remain charged.
+    public double getLiveSolverAdvanceSeconds() {
+        return power.areAllDisconnected() ? LIVE_ISOLATED_SECONDS : LIVE_POWERED_SECONDS;
+    }
     public int getProfileWorkUnits() { return profileWorkUnits; }
 
     public GeneratedTemporalDependency getDependency(GeneratedBoardInstance owner) {
@@ -171,6 +177,8 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
             "healthy-two-conditions-then-LOW-apply-fault-then-HIGH" :
             "healthy-four-conditions-then-LOW-apply-fault-then-HIGH");
         values.put("sample-seconds", Double.toString(SAMPLE_SECONDS));
+        values.put("live-powered-seconds", Double.toString(LIVE_POWERED_SECONDS));
+        values.put("live-isolated-seconds", Double.toString(LIVE_ISOLATED_SECONDS));
         values.put("qualification-solver", "CircuitJS-adaptive");
         values.put("qualification-maximum-step-seconds", Double.toString(SOLVER_MAX_STEP_SECONDS));
         values.put("qualification-minimum-step-seconds", Double.toString(SOLVER_MIN_STEP_SECONDS));

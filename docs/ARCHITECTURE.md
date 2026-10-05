@@ -2255,8 +2255,20 @@ The staged developer service verifier binds its timer work and failure cleanup
 to the exact owner, graph, challenge and modification controller. It uses the
 production observation cursor and physical capabilities, with explicit absence
 of relay lead lifting. The retained developer sidebar is widened for its real
-controls. Ordinary CircuitJS UI stepping remains active; Q30 adds only 0.1 ms
-per live frame, while explicit input profiles retain their full 30 ms interval.
+controls. Ordinary CircuitJS UI stepping remains active. Q30 retains its 0.1 ms
+additional live increment while any actual source switch is connected; once all
+external sources are isolated, its family behavior advances the same transient
+in bounded 5 ms slices. Explicit input profiles retain their full 30 ms interval,
+adaptive solver step bounds and work budgets. Both live intervals are immutable
+temporal-dependency parameters, independent of the current source-control state.
+This scheduling does not reset capacitors, add discharge paths, alter the 0.25 V
+active-meter guard or grant readiness from wall time. An open DREV can leave the
+optional fused-input capacitor charged; an open REN leaves the slower real 1 MOhm
+regulator-input leakage path. Pending OHM/CONT and DIODE readings retry when the
+actual readiness reaches READY with both probes present, then use the existing
+temporary-source transaction and cleanup. Powered, stale and residual states
+continue to block injection. The isolated-capacitor repair-to-readiness player
+flow remains qualification work; Q30 normal admission is still disabled.
 
 The generic P07 router retains its queue, net/branch position and path publication
 across bounded 32,768-operation slices. The synchronous entry drains the same

@@ -1,4 +1,77 @@
-# Current checkpoint: Q30 NOT ACCEPTED; cold deadline and visible recovery gaps
+# Current checkpoint: Q30 targeted discharge/retry fix verified; acceptance blocked
+
+2026-10-05. Branch `codex/q30-multirail-qualification`; checks bound to HEAD
+`529f42582d903843254fc7cd73624b92eff55bdc` plus four declared source/test edits,
+1,355 consumed inputs, identity `57905b14065949fb7e06af1cd7e6b976af3a6776301ed8c0d65936efe83965b4`.
+The later local checkpoint may reuse these receipts only after unchanged-input
+audit; commands did not run on a future commit. Q30 DISABLED / NOT ACCEPTED.
+No push/publish/email/evidence deletion, 90 s waiver, model/solver/readiness
+threshold/save/replay-format/epoch change, wide machine change or U06/U07/Q60.
+Parent authorized targeted investigation/fixes, with no new cohort; expensive
+native/GWT gates ran serially. Parent owns independent acceptance.
+
+Actual pre-fix CircuitJS diagnostic advanced 20 simulated seconds for three roots. The 20-part
+10387 naturally READY at 15 s. The 30-part root 10226 DREV_OPEN keeps optional fused-input
+C12 near 12 V at 20 s, though RAIL12 decays. The 40-part root 10014 REN_OPEN leaves 22 uF/1 MOhm
+input leakage: 4.652 V at 20 s; 22-second time constant, about 85 simulated seconds
+from 12 V to 0.25 V is an estimate, not proved recovery. OFF did not pause solver;
+the prior 0.1 ms extra/frame advanced too little time. No stored energy was reset.
+
+Family-local fix: unchanged 0.1 ms live increment while any actual source remains
+connected; bounded 5 ms same-graph solver advancement when all are isolated.
+Explicit 30 ms profiles/adaptive bounds/work budgets unchanged; both live constants
+enter immutable temporal dependency identity. Pending OHM/CONT and DIODE retry
+on genuine READY with both probes; existing guards/temporary cleanup remain.
+Read-only leaf final four-file review found no blocker after its no-probe edge fix.
+
+Final focused eight-suite maintained native PASS/exit 0/86.621 s; separate receipt/input
+audit PASS. Readiness: 144 assertions; real three-root OHM/DIODE and charged negatives.
+Natural 20-part same-graph recovery: 12.31528 additional simulated seconds/2463 advances,
+0.249916686 V, 180 Ohm/0.457627119 V, sources still off. Actual JDK8/GWT public-
+disabled build PASS/83.209 s operation; private diagnostic PASS/
+83.080 s operation. Each: five permutations/1355 raw/357 compiled/6 deploy/9 jars;
+unchanged inventories. Private-only catalog toggle/read-only snapshot not tracked.
+
+Actual final headed 20-part PASS/targeted recovery only: 44/44 ordinary UI actions,
+powered block, charged DISCHARGE, automatic 180 Ohm/120.798 s and 457.627 mV/
+120.654 s after off; same probes, no reset/mutation/injected stepping. Later
+actual READY/0.12042 and 0.08063 V samples remained isolated. Active DIODE toggle
+exited while OFF. Four screenshots inspected. Built-in Browser unavailable;
+headed SDK input plus private read-only `page.evaluate` observations is not CDP-
+wrapper or blind-diagnosis certification. Fresh 30/40 repair-to-readiness NOT RUN.
+
+Resource audits PASS: 12 recorded diagnostic/native/build owners absent; final
+headed 17 identities absent/port 57359 closed; preliminary 16/port 51500 closed.
+Maintained build child jobs/readers closed. UI pre-exit console/terminated preview
+exit 1 preserved; driver exit 0 and independent release separate. Final preview/
+query cleanup 0.645 s; native/browser-close cleanup elapsed not separately recorded.
+No task-owned process left recorded active; scratch/evidence/profiles retained.
+Failed sandbox prepare, STALE_OWNER diagnostic fixture and prelaunch Python image
+canary preserved. Preliminary UI stopped at 0.466 V was DISCHARGE, not recovery.
+
+Seed 10014 read-only hash-backed comparison: 75.535 s old vs 89.195 s focused,
+equal 440 units/390 hypothesis units/matching proof data; HYPOTHESES +13.234 s.
+Storage metadata adds 204 context chars, no demonstrated timing-code cause; host
+variation unresolved. Prior full cold77 remains FAIL 90.621 s/435 units, 2 PASS/
+74 NOT RUN. Original 90,000 ms/640 shared/5,000 ms active limits unchanged. No
+performance fix, comparison benchmark or cohort rerun. Prior native83/append26,
+compiled canaries/source archive PASS are historical abbc614e/49bff752 evidence,
+not fresh final-source PASS. New full matrix/compiled canaries/archive NOT RUN.
+
+[Targeted evidence and limits](task-evidence/Q30/qualification-workflow/targeted-discharge-20261005/README.md)
+contains 167 regular packet members, four inspected screenshots, source/receipt,
+timing/release/preservation audits and restart callers. Original failures remain
+in [prior final-source evidence](task-evidence/Q30/qualification-workflow/final-source-abbc614e-20261005/README.md).
+Eight pre-existing untracked files/Desktop sibling preserved; local checkpoint only.
+
+Next: parent coordinates timing attribution/new-source full77, full native matrix/
+compiled canaries, warm distribution, qualified menu/replay, visible 30/40 physical
+repair-to-readiness/source archive and independent acceptance. No public enablement
+before all gates; no consumed launch-grant reuse. U06/U07/Q60 remain unstarted.
+
+---
+
+# Historical checkpoint: Q30 NOT ACCEPTED; cold deadline and visible recovery gaps
 
 2026-10-05. Source candidate `abbc614e9456d9fae56274da583175f8721a84c2`,
 branch `codex/q30-multirail-qualification`; 1,355 consumed inputs, identity

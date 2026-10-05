@@ -88,7 +88,10 @@ final class DiodeTestInstrumentMode extends AbstractInstrumentModeStrategy {
         ActiveMeasurementReadiness readiness = controller.getActiveMeasurementReadinessForStrategy(
             controller.getRedProbeForStrategy(), controller.getBlackProbeForStrategy());
         if (refreshPending && (didAnalyze || readiness == ActiveMeasurementReadiness.WAITING ||
-                readiness == ActiveMeasurementReadiness.DISCHARGE))
+                readiness == ActiveMeasurementReadiness.DISCHARGE ||
+                (readiness == ActiveMeasurementReadiness.READY &&
+                 controller.getRedProbeForStrategy() != null &&
+                 controller.getBlackProbeForStrategy() != null)))
             controller.updateReadingForStrategy();
     }
 

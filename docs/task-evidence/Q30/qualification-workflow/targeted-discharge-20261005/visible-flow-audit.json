@@ -1,0 +1,62 @@
+{
+  "status": "PASS_TARGETED_20_RECOVERY_ONLY",
+  "sourceIdentity": "57905b14065949fb7e06af1cd7e6b976af3a6776301ed8c0d65936efe83965b4",
+  "seed": "10387",
+  "packages": 20,
+  "ohmWallSecondsUntilVisibleReading": 120.79796,
+  "diodeWallSecondsUntilVisibleReading": 120.653965,
+  "ohmReadySnapshot": {
+    "solverSeconds": 21.752285001304713,
+    "seed": "10387",
+    "isolated": true,
+    "readiness": "READY",
+    "RAW12": 0.12042195749704483,
+    "FUSED12": 0.12042195749704485,
+    "RAIL12": 0.1204219581879675,
+    "RAIL5": 1.8752e-319,
+    "EN5": 0.11922966157224504
+  },
+  "diodeReadySnapshot": {
+    "solverSeconds": 48.07408500965961,
+    "seed": "10387",
+    "isolated": true,
+    "readiness": "READY",
+    "RAW12": 0.08062974119175484,
+    "FUSED12": 0.08062974119175485,
+    "RAIL12": 0.08062974181620788,
+    "RAIL5": 1.8752e-319,
+    "EN5": 0.0798314275407999
+  },
+  "actualOhmDisplay": "180 Ohm",
+  "actualDiodeDisplay": "457.627 mV",
+  "automaticRecovery": "No mode,probe,power,reset,mutation or injected stepping between DISCHARGE and numeric reading in either cycle",
+  "activeModeToggleExit": "PASS via second DIODE click; board remains OFF",
+  "actions": 44,
+  "failedActions": 0,
+  "pageEvaluateUsed": true,
+  "observationBoundary": "Private-only read-only getter reads actual CircuitJS time/voltages/readiness; ordinary SDK input drives all gameplay. No injected controller/solver calls. Built-in Browser unavailable. Not CDP wrapper or blind diagnosis certification.",
+  "screenshotsInspected": [
+    "001-final20-powered.png",
+    "002-final20-discharge.png",
+    "004-final20-ohm-recovered.png",
+    "005-final20-diode-recovered.png"
+  ],
+  "threeRootRecovery": "NOT PROVEN;30 DREV-isolated C12 persists,40 REN-open tail slower. Fresh visible repair/retest on this source NOT RUN.",
+  "cleanup": {
+    "seconds": 0.644842499983497,
+    "recordedSurvivorsBeforeControllerExit": [
+      {
+        "pid": 29924,
+        "parent": 27504,
+        "created": "2026-10-05T01:56:08.9118450Z",
+        "ExecutablePath": "C:\\WINDOWS\\system32\\conhost.exe",
+        "CommandLine": "\\??\\C:\\WINDOWS\\system32\\conhost.exe 0x4"
+      }
+    ],
+    "previewExitCode": 1,
+    "status": "PENDING_INDEPENDENT_POST_EXIT_RELEASE",
+    "boundary": "This live controller cannot certify release of its own console; all recorded identities still require independent post-exit audit"
+  },
+  "independentRelease": "PASS_EXACT_INSTANCES_AND_PORT_RELEASED",
+  "acceptance": "Q30 DISABLED / NOT ACCEPTED"
+}

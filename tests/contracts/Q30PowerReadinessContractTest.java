@@ -54,6 +54,8 @@ public final class Q30PowerReadinessContractTest {
         runtime.onBoardPowerStateChanged(BoardPowerState.POWERED);
         owner.getFaultBinding().setApplied(false);
         Rb30Behavior behavior=(Rb30Behavior)owner.getFamilyState();
+        check(behavior.getLiveSolverAdvanceSeconds()==.0001,"connected sources retain the original powered cadence");
+        String dependency=behavior.getDependency(owner).canonical();
         settle(sim,owner,modifications,.000040);
         behavior.prepareHealthyProfile(sim,owner);
         behavior.verifyHealthy(owner,BoardPowerState.POWERED);
@@ -75,6 +77,43 @@ public final class Q30PowerReadinessContractTest {
         }
         check(Math.abs(voltage(owner,"RAW12","CTRL_RETURN"))>.25,"actual input-side residual was not erased or synthesized");
         System.out.println("Q30_POWER_READINESS seed="+seed+" packages="+owner.getBoard().getComponentIds().size()+" status=PASS residual=DISCHARGE thresholdVolts=0.25 activeOhm=PASS activeDiode=PASS");
+        check(behavior.getLiveSolverAdvanceSeconds()==.005,"all actual sources isolated select bounded faster transient work");
+        check(dependency.equals(behavior.getDependency(owner).canonical()),"live scheduling identity is independent of current power state");
+        if(seed==10387L) verifyNaturalRecovery(sim,owner,modifications,behavior,red,black);
+        else check(sim.getActiveMeasurementReadiness(red,black)==ActiveMeasurementReadiness.DISCHARGE,"real fault-dependent residual stays blocked");
+        sim.boardPowerController.setSourceConnected("SENSOR_A",true);
+        check(behavior.getLiveSolverAdvanceSeconds()==.0001,"one remaining connected source excludes off-state acceleration");
+        sim.boardPowerController.setState(BoardPowerState.UNPOWERED);
+        owner.getPhysicalBoardRuntime().onBoardPowerStateChanged(BoardPowerState.UNPOWERED);
+        check(sim.boardPowerController.isElectricallyUnpowered(),"cadence checks restore real source isolation");
+    }
+    private static void verifyNaturalRecovery(NativeMeterCirSim sim,GeneratedBoardInstance owner,
+            BoardModificationController modifications,Rb30Behavior behavior,
+            CircuitPostMeasurementEndpoint red,CircuitPostMeasurementEndpoint black) {
+        Vector<CircuitElm> graph=sim.elmList;
+        double started=sim.t;int frames=0;
+        // Already one second into isolation. Independent network calculation:
+        // 22 uF * (1 Mohm || (10 kohm + 1 Mohm)) is about 11.06 s. The observed
+        // .761 V tail therefore crosses .25 V after another roughly 12.3 s.
+        while(sim.getActiveMeasurementReadiness(red,black)==ActiveMeasurementReadiness.DISCHARGE &&
+                sim.t-started<14.0) {
+            sim.solverExecutor.advanceFor(behavior.getLiveSolverAdvanceSeconds());
+            owner.getPhysicalBoardRuntime().observeSimulationTime(sim.t);frames++;
+        }
+        GeneratedRuntimeInvariant.verify(owner,modifications,sim.elmList);
+        GeneratedBoardVerifier.verify(owner,BoardPowerState.UNPOWERED,modifications,sim.elmList,false);
+        check(sim.elmList==graph&&sim.boardPowerController.isElectricallyUnpowered(),"natural recovery preserves the same charged graph and source isolation");
+        check(frames>2000&&frames<2801&&sim.t-started>10.0,"recovery required real accepted solver time, not wall-clock permission");
+        check(sim.getActiveMeasurementReadiness(red,black)==ActiveMeasurementReadiness.READY,"actual storage decay admits measurements after the unchanged guard");
+        double residual=Math.abs(voltage(owner,"RAIL12","CTRL_RETURN"));
+        check(residual>0&&residual<=.25,"solver-observed capacitor voltage naturally crosses the existing threshold");
+        double ohms=sim.measureResistance(red,black);
+        check(finite(ohms)&&Math.abs(ohms-180)<1,"charged-to-ready graph yields the real external load resistance");
+        settle(sim,owner,modifications,.000040);
+        DiodeMeasurementResult diode=sim.measureDiode(red,black);
+        check(diode!=null&&Math.abs(diode.voltage-3.0*180/1180)<.005&&Math.abs(diode.current-3.0/1180)<.00002,"charged-to-ready graph yields the real finite-compliance diode reading");
+        check(!sim.activeMeasurementOverlay&&sim.isActiveMeasurementSolverRestoredForDeveloperVerification()&&sim.boardPowerController.isElectricallyUnpowered(),"recovered measurements restore the graph without repowering");
+        System.out.println("Q30_NATURAL_RECOVERY seed=10387 additionalSolverSeconds="+(sim.t-started)+" liveFrames="+frames+" residualVolts="+residual+" realOhm="+ohms+" realDiode="+diode.voltage);
     }
     private static void verifyConservativePolicy(PowerDomainContract contract) {
         Map<String,PowerOperatingAssessment.SourceState> sources=new TreeMap<String,PowerOperatingAssessment.SourceState>();

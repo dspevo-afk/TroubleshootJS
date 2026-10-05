@@ -1,0 +1,208 @@
+{
+  "schemaVersion": 1,
+  "reviewedAtUtc": "2026-10-05T01:51:39Z",
+  "scope": "Read-only, exact seed10014 report/receipt comparison. No repository edits, gates, builds, or cohort rerun.",
+  "sources": {
+    "historical": {
+      "sourceCommit": "d37c3b3b8581abdeaa9b88b7bfb2349cff958d31",
+      "sourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+      "repositoryInputCount": 1354,
+      "reportArchiveMember": "repo/docs/task-evidence/Q30/qualification-workflow/cold77-actual-window-1/exact-app-reports.tar.gz#003-seed-10014.report.json",
+      "reportSha256FromBoundHostAndSequenceReceipts": "8d0e9b53cffa41cb368f9998659e1af987eb8af357a45c24fdc069ef5d4dc977",
+      "reportBytes": 891258,
+      "archiveSha256Rechecked": "b5917f7f8938a432e9e9329d8d89e3d0d9b8cfea253c873ef13ded7680d4a0bb",
+      "application": {
+        "status": "PASS",
+        "elapsedMs": 75535,
+        "limitMs": 90000,
+        "headroomMs": 14465,
+        "workUnits": 440,
+        "maxActiveOperationMs": 1427,
+        "hypothesesStageMs": 63009,
+        "hypothesesStageUnits": 390,
+        "proofElapsedMsNested": 64187,
+        "routingElapsedMsNested": 5532,
+        "planSha256": "b57e6a39a9ad385734347d0e066ab82ed28dbf46bbb6baa680b700cc054f8f21"
+      },
+      "host": {
+        "hostRunnerSha256": "8da1af0f184cea190f17fb02629e4475013337558e32903e95992552723a4440",
+        "browser": "Microsoft Edge 154.0.4258.53",
+        "caseOutcome": "PASS",
+        "terminalReached": true,
+        "caseOperationSeconds": 76.0617627,
+        "browserStartupMs": 305.272,
+        "compiledResourceSha256": "5eea24c9cb41102821f4dd43ca7199f109bd4c9f8612b9d1b57ebf59c895c9b6",
+        "compiledResourceBytes": 3140259,
+        "pageHttpConsoleErrors": 0
+      }
+    },
+    "currentFullCohortFailure": {
+      "sourceCommit": "abbc614e9456d9fae56274da583175f8721a84c2",
+      "sourceIdentity": "49bff7525b019d321a821eeafb7bb15ccc0fa5d101442820dabccded5126a45c",
+      "repositoryInputCount": 1355,
+      "rawReportPath": "%LOCALAPPDATA%\\Temp\\q30-cold77-owned-batch-z78tx7xh\\sequence\\cases\\003-seed-10014\\host-output\\cases\\001-cold-10014.report.json",
+      "rawReportSha256Rechecked": "629ce01b271d4afcc03bc86f98cf3229c323a4f7668dc5ad144c22f9c049303d",
+      "rawReportBytes": 21115,
+      "strictReaderPath": "%LOCALAPPDATA%\\Temp\\q30-cold77-owned-batch-z78tx7xh\\sequence\\cases\\003-seed-10014\\strict-reader-result.json",
+      "strictReaderSha256Rechecked": "2fde3d0d564f3c14d20a4b94264a83595515a29043aff8bc433f6242dcc9b08",
+      "sequenceSummaryPath": "%LOCALAPPDATA%\\Temp\\q30-cold77-owned-batch-z78tx7xh\\sequence\\sequence-summary.json",
+      "sequenceSummarySha256Rechecked": "e7e1ee3bc81e7a4fcfb933aa804e081c1966694b633ea29830643d64eda43046",
+      "planSha256": "d6421609121797b9113eca228b9c0e5b94bcb9b19d9076fae56f05ab23a0a542",
+      "application": {
+        "status": "TIMEOUT",
+        "terminalStage": "HYPOTHESES",
+        "elapsedMs": 90621,
+        "limitMs": 90000,
+        "headroomMs": -621,
+        "workUnits": 435,
+        "maxActiveOperationMs": 1701,
+        "hypothesesStageMs": 77908,
+        "hypothesesStageUnits": 387,
+        "proofUnitsCompleted": 387
+      },
+      "host": {
+        "hostRunnerSha256": "8da1af0f184cea190f17fb02629e4475013337558e32903e95992552723a4440",
+        "browser": "Microsoft Edge 154.0.4258.53",
+        "hostCaseOutcome": "PASS",
+        "terminalReached": true,
+        "reportMatched": true,
+        "caseOperationSeconds": 91.0881512,
+        "browserStartupMs": 262.281,
+        "compiledResourceSha256": "9a41ad9d19c701f99509fc2f80d0dbb75488d74078c254c2ac04183a99877ad2",
+        "compiledResourceBytes": 3140422,
+        "pageHttpConsoleErrors": 0,
+        "cleanup": "PASS; server stopped; no owned survivors",
+        "sequenceRow": "FAIL because worker returned exit code 1 after the app report was TIMEOUT; this is not a browser transport failure"
+      }
+    },
+    "currentFocusedDiagnosticPass": {
+      "sourceCommit": "abbc614e9456d9fae56274da583175f8721a84c2",
+      "sourceIdentity": "49bff7525b019d321a821eeafb7bb15ccc0fa5d101442820dabccded5126a45c",
+      "repositoryInputCount": 1355,
+      "rawReportPath": "%LOCALAPPDATA%\\Temp\\q30-cold10014-diagnostic-5b7dacd59c6e470a9c30a005e4f907f7\\cases\\001-seed-10014\\host-output\\cases\\001-cold-10014.report.json",
+      "rawReportSha256Rechecked": "6327c59e373f08e2871888becce8d5c56065cb17463138407ce7ddce8827d305",
+      "rawReportBytes": 891460,
+      "sequenceSummaryPath": "%LOCALAPPDATA%\\Temp\\q30-cold10014-diagnostic-5b7dacd59c6e470a9c30a005e4f907f7\\sequence-summary.json",
+      "sequenceSummarySha256Rechecked": "55b3a29c8a05aebd974e18e2c0afd4050c486726c69538694513e79d5414b1c5",
+      "application": {
+        "status": "PASS",
+        "elapsedMs": 89195,
+        "limitMs": 90000,
+        "headroomMs": 805,
+        "workUnits": 440,
+        "maxActiveOperationMs": 1822,
+        "hypothesesStageMs": 76243,
+        "hypothesesStageUnits": 390,
+        "proofElapsedMsNested": 77731,
+        "routingElapsedMsNested": 5588,
+        "planSha256": "d6421609121797b9113eca228b9c0e5b94bcb9b19d9076fae56f05ab23a0a542"
+      },
+      "host": {
+        "hostRunnerSha256": "8da1af0f184cea190f17fb02629e4475013337558e32903e95992552723a4440",
+        "browser": "Microsoft Edge 154.0.4258.53",
+        "caseOutcome": "PASS",
+        "terminalReached": true,
+        "caseOperationSeconds": 89.7105076,
+        "browserStartupMs": 278.986,
+        "compiledResourceSha256": "9a41ad9d19c701f99509fc2f80d0dbb75488d74078c254c2ac04183a99877ad2",
+        "compiledResourceBytes": 3140422,
+        "pageHttpConsoleErrors": 0,
+        "cleanup": "PASS; server stopped; no owned survivors"
+      }
+    }
+  },
+  "workIdentityComparisons": {
+    "sameHistoricalAndFocusedReportManifestSha256": "70bb3c32fc6d13416c8c7b47dd996a155440d8948b9d472118679d893e2571a8",
+    "samePlanCanonical": true,
+    "sameGenerationReceiptManifest": true,
+    "samePublishedCandidateShape": true,
+    "sameD01ProofProgram": true,
+    "sameD01ProofPartition": true,
+    "sameD01Evidence": true,
+    "proofProgramCharacters": 3131,
+    "proofPartitionCharacters": 4959,
+    "proofEvidenceItems": 5,
+    "proofProgramHasDcVoltage": true,
+    "proofProgramHasResistanceContinuityOrDiodeActions": false,
+    "cacheOnBothCompletedRuns": "fresh, initially empty; 0 ordinary hits, 1 miss",
+    "historicalProofContextCharacters": 836947,
+    "currentFocusedProofContextCharacters": 837151,
+    "proofContextDeltaCharacters": 204,
+    "currentFailedRunWorkComparedWithCompletedRun": "Same plan/source as focused PASS, but timed out 3 hypothesis units earlier at 435 vs 440 total units."
+  },
+  "timingComparison": {
+    "focusedMinusHistoricalElapsedMs": 13660,
+    "focusedMinusHistoricalHypothesesStageMs": 13234,
+    "focusedMinusHistoricalProofElapsedNestedMs": 13544,
+    "focusedMinusHistoricalRoutingElapsedNestedMs": 56,
+    "focusedMinusHistoricalHealthyStageMs": 100,
+    "currentFailureMinusFocusedPassElapsedMs": 1426,
+    "interpretation": "The measured increase is concentrated in HYPOTHESES. Matching completed work and same-source B/D timing spread do not identify a source cause."
+  },
+  "codePathAssessment": {
+    "comparisonRange": "d37c3b3b8581abdeaa9b88b7bfb2349cff958d31..abbc614e9456d9fae56274da583175f8721a84c2",
+    "runtimeRelevantFile": "src/com/lushprojects/circuitjs1/client/Rb30PowerDomains.java",
+    "otherJavaChanges": [
+      "src/com/lushprojects/circuitjs1/client/CirSim.java: E02 explicit forced-failure canary handling",
+      "src/com/lushprojects/circuitjs1/client/QuickPlayDeveloperVerifier.java: SENSOR_CONTROL developer-verifier route"
+    ],
+    "demonstratedEffect": "Rb30PowerDomains expands StorageRequirement declarations over existing nets. A03RealizationReplay serializes per-rail storage into realization identity, and GenerationDependencyContext serializes the typed contract into the dependency context. The observed +204 context characters confirm a canonical/dependency-key change. PowerDomainRuntimeCapability.assessPower reads rails on active-meter readiness; the recorded D01 proof program has DC_VOLTAGE and no resistance/continuity/diode actions, so this proof does not exercise the added readiness observation loop per hypothesis unit.",
+    "possibleSmallCost": "Extra plan-contract construction and one-time context/identity serialization may add fixed work; no profile quantifies it.",
+    "notDemonstrated": "No evidence ties the +204-character context change or the declaration expansion to the +13,234 ms HYPOTHESES-stage delta."
+  },
+  "hostVariabilityAndLimits": {
+    "sameExecutedHostRunnerShaAcrossRuns": "8da1af0f184cea190f17fb02629e4475013337558e32903e95992552723a4440",
+    "sameBrowserVersionAcrossRuns": "Microsoft Edge 154.0.4258.53",
+    "sameCurrentCompiledResourceForFailureAndFocusedPass": true,
+    "sameCurrentSourceIdentityForFailureAndFocusedPass": true,
+    "observedSameSourceAppTimeSpreadMs": 1426,
+    "historicalResourceSample": {
+      "path": "repo/docs/task-evidence/Q30/qualification-workflow/cold77-actual-window-1/resource-midrun-1.json",
+      "sha256": "6c6d045b23f0f387eed065e8e2710aac389b93c94c80737eb72168f523bfafa3",
+      "observedUtc": "2026-10-04T12:44:52.599701-04:00",
+      "freeMemoryGiB": 14.07,
+      "cpuPercent": 10,
+      "temporalLimit": "About 24 minutes after this seed's 12:20:50-04:00 host completion; not a contemporaneous load sample."
+    },
+    "unknowns": [
+      "The d37 and abbc app builds differ, source identities/input counts differ, and runs were separated by hours.",
+      "No contemporaneous CPU/process utilization or profiler trace exists for the three application runs.",
+      "Same host runner and browser version do not establish equal OS scheduling, CPU frequency, antivirus, or background load."
+    ]
+  },
+  "recommendation": {
+    "performanceFixJustified": false,
+    "timeoutBudgetChangeJustified": false,
+    "preservePowerStorageDeclarations": true,
+    "keepLimits": {
+      "jobMillis": 90000,
+      "sharedWork": 640,
+      "activeOperationMillis": 5000
+    },
+    "q30Status": "DISABLED / NOT ACCEPTED",
+    "nextDiscriminatorIfNeeded": "A serial, same-seed d37/abbc paired run under the same existing runner and quiet-window protocol, fresh caches/profiles, with per-stage plus process/resource timing. Do not rerun full77 for this attribution question."
+  },
+  "supportingArtifacts": [
+    {
+      "path": "repo/docs/task-evidence/Q30/qualification-workflow/cold77-actual-window-1/exact-app-reports.tar.gz",
+      "sha256": "b5917f7f8938a432e9e9329d8d89e3d0d9b8cfea253c873ef13ded7680d4a0bb"
+    },
+    {
+      "path": "repo/docs/task-evidence/Q30/qualification-workflow/cold77-actual-window-1/sanitized-case-receipts.tar.gz",
+      "sha256": "3a6c63630df12fd6df8c36021f15b0a068a051a9000cab982e1c602025aab58f"
+    },
+    {
+      "path": "repo/docs/task-evidence/Q30/qualification-workflow/cold77-actual-window-1/sequence-summary.json",
+      "sha256": "46d08efc559813282b69451c37ba22bf1c2889a6e3853a9b0eaeF41ab6324f86"
+    },
+    {
+      "path": "repo/docs/task-evidence/Q30/qualification-workflow/cold77-actual-window-1/quiet-window-grant.json",
+      "sha256": "b3128c329ee2db8a1b375b94c874473563c3dcdc6f0fd6bb6808a4cad7a45379"
+    }
+  ],
+  "worktreeState": {
+    "headAtReview": "529f42582d903843254fc7cde73624b92eff55bdc",
+    "repositoryUntouched": true,
+    "note": "The worktree already had tracked/untracked changes; review used the named commit objects and bound receipts and preserved that state."
+  }
+}
