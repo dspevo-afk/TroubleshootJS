@@ -40,15 +40,28 @@ owns the private menu/archive phases. `audit_release.py` owns release checks;
 `visible_repair.py` owns headed repair evidence. The actual JDK 8/GWT 5 private
 build and source-only archive passed. Headed production preview20/30/40
 repair/retest passed through ordinary input with served-input/CLI/cleanup proof.
-The private menu gate failed on its second random Q30 launch; required replay,
-stale and complete privacy checks were not reached. Release remains BLOCKED
-because its audit finished after the approved window. Focused workflow88/88
-passed under23 exact source hashes. D37 receipts keep their historical binding;
-each C621 phase retains its actual manifest epoch. All1,355 compiler inputs,
-nine jars and357+6 compiled/deployment outputs were audited before reuse.
-No phase result alone enables normal Q30 publication. Complete private menu/
-replay/privacy, timely release adjudication and parent acceptance remain required.
-See [current evidence](task-evidence/Q30/qualification-workflow/simplification-20261005/README.md).
+The later private menu gate passed33/33 launches, all three replays, stale-v3
+rejection, privacy and owned cleanup; parent independent review accepted those
+receipts at2a482. The original91.616s failure remains preserved with unknown
+failed seed/cause. The original release remains BLOCKED because its audit finished
+after the approved window; parent directs disclosure, with later absence proving
+present cleanup only. Each C621 phase retains its actual manifest epoch. All1,355
+compiler inputs, nine jars and357+6 compiled/deployment outputs were audited before reuse.
+
+The existing `private_menu.py` now owns an opt-in bounded normal warm path using
+ordinary exact-seed UI input. Its forwarding-only observer binds browser monotonic
+action-to-terminal-view timing to the exact seed and generation token. Each frozen
+accepted candidate is constructed then immediately repeated in the same document;
+the existing native job owner bounds each serial slice. Product failures and failed
+priming remain distinct from a completed measurement; ERROR replay metadata never
+certifies a rebuilt identity. Public stage samples do not supply exact internal
+cache/work/rejection counters. This qualification observer does not change normal
+admission, product timing limits, public behavior or save/replay formats.
+Four focused warm contracts pass, including real Edge synthetic event observation.
+Normal warm measurements are NOT RUN pending parent resource coordination. No phase
+result alone enables Q30; the remaining normal-player warm distribution and parent
+acceptance are required. See [current warm preparation](task-evidence/Q30/qualification-workflow/warm-preparation-20261005/README.md)
+and [accepted menu evidence](task-evidence/Q30/qualification-workflow/menu-diagnosis-20261005/README.md).
 
 ## Windows Quick Play preview lifecycle
 

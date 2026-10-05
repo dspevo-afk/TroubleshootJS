@@ -2824,6 +2824,18 @@ directories lack prior content inventories. Parent acceptance pending; normal
 Q30 disabled; U06/U07/Q60 unstarted.
 [Current menu diagnosis packet](task-evidence/Q30/qualification-workflow/menu-diagnosis-20261005/README.md).
 
+**Warm continuation preparation (2026-10-05):** Parent independent review accepts
+the menu/replay/stale/privacy/cleanup, cold77 and headed repair evidence at2a482;
+normal-player warm timings/failure distribution remain the substantive gap.
+The frozen77 order now has an ordinary exact/replay priming-repeat plan under A01,
+with four focused observer/identity/plan checks PASS. Product measurements NOT RUN;
+parent resource coordination pending while Takeoff/Price Scraper shares Windows.
+Estimated90–105minutes, three-hour hard stop, one serial browser/no compiles.
+Original in-window release remains BLOCKED by parent disposition; later absence
+supports cleanup only. No duplicate cold run solely for the historical deadline,
+no new p95 target, limit relaxation or normal enablement. U06/U07/Q60 unstarted.
+[Warm preparation and restart boundary](task-evidence/Q30/qualification-workflow/warm-preparation-20261005/README.md).
+
 **Historical active-readiness checkpoint:**
 Q30 remains BLOCKED / NOT ACCEPTED under its unchanged original scope.
 Plan-4 20-40-part generation and fresh original-host cold77 pass the frozen

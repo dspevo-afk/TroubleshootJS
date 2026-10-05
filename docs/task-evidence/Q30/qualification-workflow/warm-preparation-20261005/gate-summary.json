@@ -1,0 +1,83 @@
+{
+  "status": "PREPARATION_PASS_MEASUREMENTS_NOT_RUN",
+  "baseHead": "2a482140976e14f2f647a5c4e7fe787c6bdb29dc",
+  "productionBase": "c621b55d2b071e064d5afd383451d2715e35940d",
+  "sourceIdentity": "87bb04f707ccaf57f92c5d38fdbf4db199d63359c573725fd34bac61484226d7",
+  "normalQ30Enabled": false,
+  "q30Accepted": false,
+  "warmPlanSha256": "ca43f4e5731f614a4ea39e3866c925caaf53a14b6dd71e853aa5921b4a465dc1",
+  "normalPrimingAttempts": 0,
+  "normalWarmAttempts": 0,
+  "normalWarmP50Ms": null,
+  "normalWarmP95Ms": null,
+  "normalWarmWorstMs": null,
+  "normalWarmFailures": null,
+  "normalWarmRejectionDistribution": null,
+  "measurementBlocker": "Parent coordination of a bounded quiet timing window while Takeoff/Price Scraper shares Windows.",
+  "focusedChecks": {
+    "status": "PASS",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 2.6847408999456093,
+    "sourceHashCount": 24,
+    "actualEdgeSyntheticObserver": true,
+    "operation": {
+      "elapsedMs": 2950,
+      "exitCode": 0,
+      "reason": null
+    },
+    "cleanup": {
+      "cleanupElapsedMs": 0,
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "processSignaled": true,
+      "liveDrainers": 0,
+      "drainsComplete": true
+    }
+  },
+  "uncoordinatedNegative": {
+    "status": "PASS_EXPECTED_REJECTION",
+    "operation": {
+      "elapsedMs": 91,
+      "exitCode": 1,
+      "reason": null
+    },
+    "cleanupVerified": true,
+    "allProductLaunchOutputsAbsent": true
+  },
+  "reusedSourceAudit": {
+    "rawInputs": 1355,
+    "jars": 9,
+    "compiledFiles": 357,
+    "deploymentFiles": 6,
+    "privateRawInputInventorySha256": "6cd0de71c0a1dd770a24e4fa14acc96ca7fbd0513ac6c6c71ec85ca1de8c20b8",
+    "compiledInventorySha256": "1e2970745ac3f1248fc13bc40b2b040556352e5157817dfdac919f4db800f23e",
+    "testResultSha256": "2a7d658639eda168e403bbdf479b49d4195bbfd0a2b08012fbe6719443ff5592",
+    "testedSourcesUnchanged": true
+  },
+  "runtimeEstimate": {
+    "retainedColdSumMs": 3969451,
+    "warmNonProofEstimateMs": 921040,
+    "pairedNominalMs": 4890491,
+    "method": "Sum retained cold wall plus each job wall less diagnostic-proof stage time; estimate only, not measured warm results. Add startup/input/cleanup/headroom before coordinating.",
+    "pilot": "First three frozen rows (20/30/40 boundaries) counted once in the corpus; validate observations and projection before continuing."
+  },
+  "estimatedPracticalMinutes": [
+    90,
+    105
+  ],
+  "proposedHardStopMinutes": 180,
+  "concurrency": 1,
+  "newCompiles": 0,
+  "historicalRelease": "BLOCKED_LATE; parent directs disclosure, no duplicate cold rerun solely for timestamp",
+  "historicalUnresolvedRisks": [
+    "Original91.616s failure: exact seed/terminal phase/cause unknown.",
+    "Six removed scratch directories: prior names/content inventories missing."
+  ],
+  "originalUntrackedPreserved": 8,
+  "evidenceDeleted": false,
+  "rootReview": "Integrated helper diff reviewed; four focused checks and native negative preflight. No independent review of this new opt-in warm branch.",
+  "next": "Parent coordinates slot; run first3 pilot once, assess projected duration/real observations, then sequential remaining fixed slices if justified. Parent acceptance follows all evidence."
+}

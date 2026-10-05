@@ -45,11 +45,17 @@ parser.add_argument('--diagnose-launches', type=int, choices=range(1, 5), defaul
 parser.add_argument('--diagnose-exact-seed', action='append', default=[],
                     help='Use the ordinary exact-seed UI for these diagnosis-only inputs')
 parser.add_argument('--headed', action='store_true')
+parser.add_argument('--warm-plan', type=Path,
+                    help='Frozen Q30 normal exact/replay repeat plan; separate from menu qualification')
+parser.add_argument('--warm-start', type=int, default=0)
+parser.add_argument('--warm-count', type=int, choices=range(1, 4), default=3)
 args = parser.parse_args()
 if args.diagnose_exact_seed and not args.diagnose_q30:
     parser.error('Exact-seed diagnosis requires --diagnose-q30')
 if len(args.diagnose_exact_seed) > 4:
     parser.error('At most four diagnosis seeds may be supplied')
+if args.warm_plan and (args.diagnose_q30 or args.diagnose_exact_seed):
+    parser.error('Warm measurement and bounded diagnosis are separate scopes')
 root, output = args.app.resolve(), args.output.resolve()
 output.mkdir(parents=True, exist_ok=False)
 
@@ -67,6 +73,107 @@ def failed_launch_seed(message, family, profile):
         return None
     parsed = int(value)
     return value if -(1 << 63) <= parsed < (1 << 63) and str(parsed) == value else None
+
+
+def load_warm_rows(path, app, start, count):
+    plan = json.loads(Path(path).read_bytes())
+    frozen = json.loads((Path(app) / 'tests/qualification/q30-scale-acceptance/acceptance-plan.json').read_bytes())
+    rows = plan.get('cases')
+    if (plan.get('schema') != 1 or plan.get('status') != 'FROZEN_NORMAL_WARM_PLAN'
+            or not isinstance(rows, list) or len(rows) != 77
+            or [row.get('rootSeed') for row in rows] != frozen['coldOrder']
+            or type(start) is not int or type(count) is not int
+            or not 0 <= start < 77 or not 1 <= count <= 3 or start + count > 77):
+        raise ValueError('Warm plan must retain the frozen 77-root order and a bounded slice')
+    for index, row in enumerate(rows):
+        seed = row.get('acceptedSeed'); root_seed = row.get('rootSeed')
+        ordinal = row.get('publishedOrdinal')
+        for value in (seed, root_seed):
+            if (not isinstance(value, str) or not re.fullmatch(r'-?(0|[1-9][0-9]*)', value)
+                    or len(value) > 20 or not -(1 << 63) <= int(value) < (1 << 63)
+                    or str(int(value)) != value):
+                raise ValueError('Warm plan seed must be exact canonical signed-long text')
+        if type(ordinal) is not int or not 0 <= ordinal < 4:
+            raise ValueError('Warm plan accepted ordinal is outside the frozen four candidates')
+        expected = ((int(root_seed) + ordinal * 0x9e3779b97f4a7c15 + (1 << 63)) % (1 << 64)) - (1 << 63)
+        if (row.get('order') != index or seed != str(expected)
+                or row.get('expectedReplay') != 'tsj-alpha/4/MEDIUM/RB30_CONTROL/' + seed
+                or type(row.get('packages')) is not int or not 20 <= row['packages'] <= 40):
+            raise ValueError('Warm plan accepted identity is not the frozen canonical candidate')
+    return rows[start:start + count]
+
+
+WARM_OBSERVER_JS = r"""() => {
+    const originalAction = window.tsjProduct.action;
+    const history = {timeOrigin: performance.timeOrigin, rows: [], hiddenEvents: []};
+    window.__q30WarmObservation = history;
+    let active = null;
+    function observe() {
+        if (!active || active.terminalObserved || active.generationToken === undefined) return;
+        const state = window.tsjProduct.snapshot(false);
+        if (state.token !== active.generationToken) return;
+        if ((state.screen === 'TICKET' || state.screen === 'ERROR') &&
+                document.body.getAttribute('data-player-screen') === state.screen) {
+            active.terminalObserved = true;
+            active.finishedMs = performance.now();
+            active.elapsedMs = active.finishedMs - active.startedMs;
+            active.terminalScreen = state.screen;
+            active.terminalToken = state.token;
+            active.replay = state.replay || null;
+            active.ready = state.ready === true;
+        }
+    }
+    window.tsjProduct.action = function(token, view, name, first, second, third) {
+        if (name === 'launch' || name === 'replay') {
+            if ((active && !active.terminalObserved) || history.rows.length >= 6)
+                throw new Error('Warm observer overlapping or excessive launch');
+            active = {name, first, second, third, beforeToken: token,
+                startedMs: performance.now(), startedUtcMillis: Date.now(),
+                startedHidden: document.hidden, terminalObserved: false};
+            history.rows.push(active);
+            const value = originalAction.apply(this, arguments);
+            active.generationToken = window.tsjProduct.snapshot(false).token;
+            observe();
+            return value;
+        }
+        return originalAction.apply(this, arguments);
+    };
+    new MutationObserver(observe).observe(document.body,
+        {attributes: true, attributeFilter: ['data-player-screen']});
+    document.addEventListener('visibilitychange', () => {
+        if (history.hiddenEvents.length >= 32) throw new Error('Warm visibility bound exceeded');
+        history.hiddenEvents.push({atMs: performance.now(), hidden: document.hidden});
+    });
+}"""
+
+
+def validate_warm_observation(observation, expected_seed):
+    if (not isinstance(observation, dict) or observation.get('name') != 'launch'
+            or observation.get('first') != 'RB30_CONTROL'
+            or observation.get('second') != expected_seed or observation.get('third') != 'MEDIUM'
+            or observation.get('terminalObserved') is not True
+            or observation.get('startedHidden') is not False
+            or type(observation.get('generationToken')) is not int
+            or observation['generationToken'] <= observation.get('beforeToken', observation['generationToken'])
+            or observation.get('terminalToken') != observation['generationToken']
+            or observation.get('terminalScreen') not in ('TICKET', 'ERROR')):
+        raise ValueError('Warm terminal observation is not bound to this normal exact launch')
+    import math
+    elapsed = observation.get('elapsedMs')
+    start, finish = observation.get('startedMs'), observation.get('finishedMs')
+    if (any(type(value) not in (int, float) or not math.isfinite(value) for value in (elapsed, start, finish))
+            or elapsed <= 0 or finish <= start or abs(elapsed - (finish - start)) > 0.001):
+        raise ValueError('Warm browser monotonic interval is missing or inconsistent')
+    return elapsed
+
+
+def warm_identity_matches(first, repeated, expected_replay):
+    # On ERROR the public replay belongs to the predecessor, not a new board.
+    return (first.get('outcome') == 'PASS' and repeated.get('outcome') == 'PASS'
+            and first.get('replay') == repeated.get('replay') == expected_replay)
+
+
+warm_rows = load_warm_rows(args.warm_plan, root, args.warm_start, args.warm_count) if args.warm_plan else None
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -197,7 +304,7 @@ thread.start()
 base = 'http://127.0.0.1:' + str(server.server_port)
 owned = []
 result = {'outcome': 'NOT_RUN', 'cases': [], 'errors': [],
-          'scope': 'Q30_DIAGNOSIS_ONLY' if args.diagnose_q30 else 'FULL_MENU_QUALIFICATION',
+          'scope': 'NORMAL_WARM_MEASUREMENT' if warm_rows else 'Q30_DIAGNOSIS_ONLY' if args.diagnose_q30 else 'FULL_MENU_QUALIFICATION',
           'headed': args.headed, 'launchObserver': 'forwarding-only public action arguments; no seed mutation'}
 try:
     owner_row = next(row for row in processes() if row['pid'] == os.getpid())
@@ -290,6 +397,79 @@ try:
             def select(family):
                 page.locator('label.tsj-product-field').filter(has_text='Difficulty').locator('select').select_option(family['profile'])
                 page.locator('label.tsj-product-field').filter(has_text='Board family').locator('select').select_option(family['id'])
+
+
+            if warm_rows:
+                page.evaluate(WARM_OBSERVER_JS)
+                result['warmPlan'] = {'path': str(args.warm_plan),
+                    'start': args.warm_start, 'count': args.warm_count}
+                result['browserEnvironment'] = page.evaluate("""() => ({
+                    userAgent: navigator.userAgent, hardwareConcurrency: navigator.hardwareConcurrency,
+                    deviceMemoryGiB: navigator.deviceMemory || null,
+                    width: window.innerWidth, height: window.innerHeight,
+                    devicePixelRatio: window.devicePixelRatio, hidden: document.hidden,
+                    timeOrigin: performance.timeOrigin})""")
+                result['browserVersion'] = context.browser.version if context.browser else None
+                result['metric'] = 'performance.now: ordinary exact-seed public action to terminal player view'
+                result['internalMetricLimit'] = 'Public interface supplies sampled progress only, not exact terminal reason, final work count or cache-hit count.'
+                result['warmPairs'] = []
+                family = next(f for f in families if f['id'] == 'RB30_CONTROL')
+                for case in warm_rows:
+                    pair = {'rootSeed': case['rootSeed'], 'acceptedSeed': case['acceptedSeed'],
+                        'order': case['order'], 'expectedReplay': case['expectedReplay'], 'attempts': []}
+                    result['warmPairs'].append(pair)
+                    for temperature in ('PRIMING', 'WARM'):
+                        row = {'family': family['id'], 'profile': family['profile'],
+                            'ordinal': case['order'], 'temperature': temperature,
+                            'rootSeed': case['rootSeed'], 'acceptedSeed': case['acceptedSeed'],
+                            'outcome': 'STARTED'}
+                        pair['attempts'].append(row); result['cases'].append(row)
+                        save('progress.json', result)
+                        select(family)
+                        row['predecessorReplay'] = snapshot().get('replay')
+                        page.get_by_text('Enter an exact seed', exact=True).click()
+                        page.get_by_label('Exact seed (signed decimal integer)', exact=True).fill(case['acceptedSeed'])
+                        click('Prepare exact seed')
+                        row['launchAction'] = page.evaluate('window.__q30MenuLaunchTrace.slice(-1)[0]')
+                        save('launch-actions.json', page.evaluate('window.__q30MenuLaunchTrace'))
+                        state, seconds, samples = prepare(family, row)
+                        page.wait_for_function('() => window.__q30WarmObservation.rows.slice(-1)[0].terminalObserved', timeout=5000)
+                        observation = page.evaluate('window.__q30WarmObservation.rows.slice(-1)[0]')
+                        row['publicAdmissionMs'] = validate_warm_observation(observation, case['acceptedSeed'])
+                        row['browserObservation'] = observation
+                        row['publicAdmissionWithin90000Ms'] = row['publicAdmissionMs'] <= NORMAL_JOB_MILLIS
+                        row['lastObservedStage'] = samples[-1]['label'] if samples else None
+                        row['internalTerminalReason'] = None
+                        row['exactFinalWorkUnits'] = None
+                        row['seconds'] = seconds
+                        if state['screen'] == 'TICKET':
+                            assert state['replay'] == case['expectedReplay'], 'Warm repeated board identity changed'
+                            assert observation['replay'] == state['replay'] and observation['ready']
+                            click('Accept ticket and start')
+                            page.wait_for_function("() => document.body.getAttribute('data-player-screen') === 'WORKBENCH' && window.tsjProduct.snapshot(false).ready", timeout=30000)
+                            row['outcome'] = 'PASS'
+                            click('Main menu')
+                        else:
+                            row['outcome'] = 'ERROR'
+                            row['failureVisibleText'] = page.locator('body').inner_text(timeout=3000)
+                            page.screenshot(path=str(output / ('failure-' + str(case['order']) + '-' + temperature + '.png')))
+                            page.get_by_role('button', name='Main menu', exact=True).last().click(timeout=15000)
+                        page.wait_for_function("() => document.body.getAttribute('data-player-screen') === 'MENU'", timeout=30000)
+                        save('warm-observations.json', page.evaluate('window.__q30WarmObservation'))
+                        save('progress.json', result)
+                        print('WARM_ATTEMPT', case['rootSeed'], temperature, row['outcome'], round(row['publicAdmissionMs'], 3), flush=True)
+                    first, repeated = pair['attempts']
+                    pair['warmEstablished'] = first['outcome'] == 'PASS'
+                    pair['sameIdentity'] = warm_identity_matches(first, repeated, case['expectedReplay'])
+                    pair['interAttemptGapMs'] = repeated['browserObservation']['startedMs'] - first['browserObservation']['finishedMs']
+                    pair['sameDocumentTimeOrigin'] = result['browserEnvironment']['timeOrigin'] == page.evaluate('performance.timeOrigin')
+                    assert pair['sameDocumentTimeOrigin'] and pair['interAttemptGapMs'] >= 0
+                    save('progress.json', result)
+                result['warmObservation'] = page.evaluate('window.__q30WarmObservation')
+                assert result['warmObservation']['hiddenEvents'] == [] and not result['errors']
+                assert len(result['cases']) == 2 * len(warm_rows)
+                result['outcome'] = 'WARM_MEASUREMENT_COMPLETE'
+                raise DiagnosticComplete()
 
             saved = {}
             selected_families = [f for f in families if f['id'] == 'RB30_CONTROL'] if args.diagnose_q30 else families
@@ -488,4 +668,4 @@ finally:
                          'ownedSurvivors': survivors}
     save('result.json', result)
     print('FINISHED', result['outcome'], 'cases', len(result['cases']), flush=True)
-    sys.exit(0 if result['outcome'] in ('PASS', 'DIAGNOSTIC_PASS') and port_closed and not survivors and not thread.is_alive() else 1)
+    sys.exit(0 if result['outcome'] in ('PASS', 'DIAGNOSTIC_PASS', 'WARM_MEASUREMENT_COMPLETE') and port_closed and not survivors and not thread.is_alive() else 1)

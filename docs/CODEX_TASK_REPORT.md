@@ -1,4 +1,49 @@
-# Current checkpoint: Q30 private menu passes; acceptance remains pending
+# Current checkpoint: Q30 warm preparation ready; timing window pending
+
+2026-10-05. Branch `codex/q30-multirail-qualification`; local checkpoint base
+`2a482140976e14f2f647a5c4e7fe787c6bdb29dc`. Production remains
+`c621b55d2b071e064d5afd383451d2715e35940d`,1,355 unchanged application inputs,
+identity `87bb04f707ccaf57f92c5d38fdbf4db199d63359c573725fd34bac61484226d7`.
+Q30 DISABLED / NOT ACCEPTED; parent owns acceptance. No push/email/deletion,
+PC setting change/restart, repeated accepted suite, new cold cohort or U06/U07/Q60.
+
+Parent independent review accepts2a482's menu33/33, three replays/stale/privacy/
+cleanup, cold77 worst85.003s and actual headed20/30/40 repair evidence. Remaining
+substantive gate: normal-player warm timing/failure distribution under existing A01.
+Original in-window release stays BLOCKED; parent directs disclosure, later-only
+cleanup reuse and no hours-long cold rerun solely to repair the historical timestamp.
+Original91.616s unexplained launch and six missing scratch inventories remain risks.
+
+Added an opt-in path to the existing menu helper: frozen77 canonical accepted
+candidates, ordinary exact UI PRIMING then immediate WARM in one document, exact
+seed/token/browser-clock observations and truthful failed-repeat identity. Normal
+90s/640/5s, public behavior, save/replay and production code are unchanged. Existing
+native jobs bound three pairs per browser; source/build hashes checked per slice.
+Final focused4/4 PASS2.685s, zero skips/errors; host2.950s/exit0/job0/cleanup verified.
+Actual Edge synthetic observer only; product measurements0/77 NOT RUN. Unconfirmed
+parent-window negative PASS, expected host exit1 in0.091s; no product startup.
+All24 tested helper hashes unchanged;1,355 inputs/nine jars/357+6 built files audited.
+Root reviewed the opt-in diff; no new independent review or visual/product PASS.
+
+BLOCKER: parent-coordinated timing window while Takeoff/Price Scraper shares Windows.
+Estimate81.508minutes nominal,90–105 practical; three-hour hard stop, one browser,
+no compiles. First3 frozen20/30/40 pairs count once as pilot; verify observations,
+projection and cleanup before further slices. No quiet-host claim before coordination.
+No p50/p95/worst or warm failure-rate claim exists yet. Exact internal counters/
+terminal reasons remain unavailable; preserve sampled-stage and timing limitations.
+
+Evidence: [warm preparation packet](task-evidence/Q30/qualification-workflow/warm-preparation-20261005/README.md).
+Retained workspace `qualification-warm-20261005-r1` has final plan/manifest,
+`RESTART.md`, native controller and raw pointers. OS-temp `q30-normal-warm-3uo9_oeu`,
+focused `q30-workflow-tests-_puk1hhc`, private app `q30-simplification-final-d7iuck_h`.
+All eight original untracked bytes preserved; every new profile/log/receipt retained.
+Native test jobs closed with zero active processes; no product process was launched.
+Next: coordinate finite slot, measure frozen77 normal pairs, report distributions,
+then parent acceptance. U06/U07/Q60 remain the next unstarted milestones.
+
+---
+
+# Historical checkpoint: Q30 private menu passes; acceptance remains pending
 
 2026-10-05. Branch `codex/q30-multirail-qualification`; checkpoint base
 `781f94750fe3d91757bef702b4a353b037ed86ef`. Production remains
