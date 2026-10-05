@@ -7,7 +7,23 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Q30 targeted repair/meters and timing comparison complete; NOT ACCEPTED**
+**Current task:** **Q30 charged relay verifier timing fixed; final qualification pending; NOT ACCEPTED**
+**Verifier timing continuation (2026-10-05):** Fresh pre-fix native 83/append 26,
+standard/isolated GWT5, four canaries and source archive passed, then full
+compiled 31 failed 20 positive D01 charged-relay preconditions before proof;
+ten core cases and original seed 35 typed rejection passed. Full failures retained.
+Developer-only fix captures the real charged graph before ordinary settlement,
+runs the first bounded cursor unit, records settlement separately, and requires
+final actual physical readiness. Native 2/GWT5/focused 20/30/40 plus 35 compiled
+fixtures and maintained semantic audit PASS; exact recorded resource release
+PASS. No production physics, thresholds, solver cadence, 90s/640/5s caps or
+save/replay change. Full gates require fresh source binding after this edit;
+no normal job 90 s PASS from extended developer fixture clocks. Public Q30 remains
+disabled. Fresh parent 4 h 12 min quiet allocation still pending for cold 77; qualified
+private menu/replay and parent acceptance pending. U06/U07/Q60 unstarted.
+See [current checkpoint](CODEX_TASK_REPORT.md) and
+[verifier timing evidence](task-evidence/Q30/qualification-workflow/verifier-cursor-timing-20261005/README.md).
+
 **Targeted repair/timing continuation (2026-10-05):** Checked ca079d4f source,
 1,355 inputs/identity aa4ad116. Actual headed normal Shop/remove/compatible
 install repaired 30-part 10226 DREV and 40-part 10014 REN; unrepaired retests

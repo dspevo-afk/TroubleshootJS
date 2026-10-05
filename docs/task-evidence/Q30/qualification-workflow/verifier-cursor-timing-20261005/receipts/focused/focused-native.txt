@@ -1,0 +1,7 @@
+Q30_POWER_READINESS seed=10387 packages=20 status=PASS residual=DISCHARGE thresholdVolts=0.25 activeOhm=PASS activeDiode=PASS
+Q30_NATURAL_RECOVERY seed=10387 additionalSolverSeconds=12.315279999572832 liveFrames=2463 residualVolts=0.24991668647120496 realOhm=179.99999999999727 realDiode=0.45762711864406125
+Q30_POWER_READINESS seed=10226 packages=30 status=PASS residual=DISCHARGE thresholdVolts=0.25 activeOhm=PASS activeDiode=PASS
+Q30_POWER_READINESS seed=10014 packages=40 status=PASS residual=DISCHARGE thresholdVolts=0.25 activeOhm=PASS activeDiode=PASS
+PASS: Q30 power readiness contracts 144 assertions seeds=3 realOhm=3 realDiode=3
+
+PASS: diagnostic service preparation contracts 18 assertions policy=action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner

@@ -1,0 +1,14 @@
+{
+  "manifestSha256": "d06a7e849380cc654784e9b86a8d44bc90904bd4f5d3637491ef3d847dc849e3",
+  "status": "PASS_SOURCE_ARCHIVE_ONLY",
+  "sourceInputs": 1355,
+  "startedUtc": "2026-10-05T07:59:53.4267019Z",
+  "cleanupElapsedSeconds": "NOT_RECORDED_SEPARATELY",
+  "sourceIdentity": "926d99d51a94b6282481156e8d7dba045de545c52c9901ce78d838fda4609efc",
+  "elapsedSeconds": 75.2385842,
+  "acceptanceStatus": "NOT_ASSESSED",
+  "finishedUtc": "2026-10-05T08:01:08.6676276Z",
+  "archiveRoot": "<USER_HOME>\\AppData\\Local\\Temp\\<BASELINE_TASK_ID>\\current-source-archive",
+  "baseHead": "4bf9a6ac9d630f10b2408423295f0933d9bb052f",
+  "exitCode": 0
+}

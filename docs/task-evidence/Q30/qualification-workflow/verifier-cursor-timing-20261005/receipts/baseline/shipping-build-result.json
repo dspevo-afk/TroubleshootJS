@@ -1,0 +1,16 @@
+{
+  "head": "4bf9a6ac9d630f10b2408423295f0933d9bb052f",
+  "schema": 1,
+  "consumedInputsVerified": 1355,
+  "exitCode": 0,
+  "finishedUtc": "2026-10-05T07:54:22.2955255Z",
+  "elapsedSeconds": 83.1182674,
+  "compilationConfirmed": true,
+  "consumedSourceIdentity": "926d99d51a94b6282481156e8d7dba045de545c52c9901ce78d838fda4609efc",
+  "permutations": 5,
+  "app": "<USER_HOME>\\AppData\\Local\\Temp\\<BASELINE_TASK_ID>\\shipping\\app",
+  "status": "PASS",
+  "scope": "Fresh shipping JDK8/GWT5 app; tracked Q30 catalog disabled",
+  "startedUtc": "2026-10-05T07:52:59.1656691Z",
+  "prepareReceipt": "shipping/prepare-receipt.json"
+}

@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "status": "PASS_ACTUAL1355_FINAL_SOURCE_BYTES",
+  "baseHead": "4bf9a6ac9d630f10b2408423295f0933d9bb052f",
+  "sourceIdentity": "096a9bf708b549dc3e0323fc1b55af1e271a13a2846e2a91ae6b2f04cdafb944",
+  "declaredModifiedPaths": [
+    "src/com/lushprojects/circuitjs1/client/Q30DiagnosticAdmissionVerifier.java"
+  ],
+  "inputCount": 1355,
+  "sourceSnapshotSha256": "13a9af583f7ea927cfb3d7bd09cc5b95cdec6394889f5e080d050d8539d34caf",
+  "normalCatalogDisabled": true,
+  "checkedUtc": "2026-10-05T09:15:36.486176+00:00",
+  "boundary": "Focusednative2/final-sourceGWT/focusedD01 fourcase candidate only; full qualification remains unestablished"
+}

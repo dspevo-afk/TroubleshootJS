@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "status": "EXACT_UNCHANGED_CASE_SUBSET",
+  "fullFrozenSpecSha256": "898145a040b8920350461961dbad85b94f2d7ef286e95a0ebd347781d291bc97",
+  "subsetSpecSha256": "e1d1200984cf4728611e9a1594968b828ef50c3658d209a42c5ed66fcad76ead",
+  "names": [
+    "d01-descriptive21-seed-10387",
+    "d01-descriptive21-seed-10226",
+    "d01-descriptive21-seed-10014",
+    "d01-descriptive21-seed-35"
+  ],
+  "applicationOrHostLimitsChanged": false,
+  "scope": "Focused real changed verifier canary and maintained positive/cache/rejection semantic functions; not full31 or cold77 qualification"
+}

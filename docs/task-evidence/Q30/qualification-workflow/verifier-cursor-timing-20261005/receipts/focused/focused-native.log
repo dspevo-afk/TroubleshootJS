@@ -1,0 +1,108 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+Q30_POWER_READINESS seed=10387 packages=20 status=PASS residual=DISCHARGE thresholdVolts=0.25 activeOhm=PASS activeDiode=PASS
+Q30_NATURAL_RECOVERY seed=10387 additionalSolverSeconds=12.315279999572832 liveFrames=2463 residualVolts=0.24991668647120496 realOhm=179.99999999999727 realDiode=0.45762711864406125
+Q30_POWER_READINESS seed=10226 packages=30 status=PASS residual=DISCHARGE thresholdVolts=0.25 activeOhm=PASS activeDiode=PASS
+Q30_POWER_READINESS seed=10014 packages=40 status=PASS residual=DISCHARGE thresholdVolts=0.25 activeOhm=PASS activeDiode=PASS
+PASS: Q30 power readiness contracts 144 assertions seeds=3 realOhm=3 realDiode=3
+
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 9 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+converged after 9 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 9 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 12 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+
+PASS: diagnostic service preparation contracts 18 assertions policy=action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner
+
+PASS: focused current contracts; 2 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "baseHead": "4bf9a6ac9d630f10b2408423295f0933d9bb052f",
+  "sourceIdentity": "096a9bf708b549dc3e0323fc1b55af1e271a13a2846e2a91ae6b2f04cdafb944",
+  "taskRoot": "<USER_HOME>\\AppData\\Local\\Temp\\<FOCUSED_TASK_ID>",
+  "sourceSnapshotSha256": "13a9af583f7ea927cfb3d7bd09cc5b95cdec6394889f5e080d050d8539d34caf",
+  "declaredModifiedPaths": [
+    "src/com/lushprojects/circuitjs1/client/Q30DiagnosticAdmissionVerifier.java"
+  ],
+  "status": "PREPARED_FOR_FOCUSED_VALIDATION_ONLY"
+}

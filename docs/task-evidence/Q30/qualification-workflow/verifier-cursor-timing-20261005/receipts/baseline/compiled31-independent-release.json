@@ -1,0 +1,112 @@
+{
+  "profilesRetained": true,
+  "processes": [
+    {
+      "source": "recorded-owned-edge",
+      "exactInstancePresent": false,
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 1580,
+      "createdUtc": "2026-10-05T08:23:06.6633630Z",
+      "pidPresent": false
+    },
+    {
+      "source": "recorded-owned-edge",
+      "exactInstancePresent": false,
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 5652,
+      "createdUtc": "2026-10-05T08:23:06.7492120Z",
+      "pidPresent": false
+    },
+    {
+      "source": "recorded-owned-edge",
+      "exactInstancePresent": false,
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 6920,
+      "createdUtc": "2026-10-05T08:24:06.7915910Z",
+      "pidPresent": false
+    },
+    {
+      "source": "recorded-owned-edge",
+      "exactInstancePresent": false,
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 9184,
+      "createdUtc": "2026-10-05T08:23:06.5874670Z",
+      "pidPresent": false
+    },
+    {
+      "source": "recorded-owned-edge",
+      "exactInstancePresent": false,
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 9480,
+      "createdUtc": "2026-10-05T08:23:06.7547680Z",
+      "pidPresent": false
+    },
+    {
+      "source": "recorded-owned-edge",
+      "exactInstancePresent": false,
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 11336,
+      "createdUtc": "2026-10-05T08:34:06.7872120Z",
+      "pidPresent": false
+    },
+    {
+      "source": "browser-host",
+      "exactInstancePresent": false,
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+      "pid": 18568,
+      "createdUtc": "2026-10-05T08:23:05.6127640Z",
+      "pidPresent": false
+    },
+    {
+      "source": "recorded-owned-edge",
+      "exactInstancePresent": false,
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 21772,
+      "createdUtc": "2026-10-05T08:23:07.6703380Z",
+      "pidPresent": false
+    },
+    {
+      "source": "recorded-owned-edge",
+      "exactInstancePresent": false,
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 22452,
+      "createdUtc": "2026-10-05T08:23:06.6574230Z",
+      "pidPresent": false
+    },
+    {
+      "source": "recorded-owned-edge",
+      "exactInstancePresent": false,
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 25816,
+      "createdUtc": "2026-10-05T08:23:06.5673360Z",
+      "pidPresent": false
+    },
+    {
+      "source": "recorded-owned-edge",
+      "exactInstancePresent": false,
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 26536,
+      "createdUtc": "2026-10-05T08:23:06.6848720Z",
+      "pidPresent": false
+    },
+    {
+      "source": "stage-wrapper",
+      "exactInstancePresent": false,
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+      "pid": 27184,
+      "createdUtc": "2026-10-05T08:23:03.2052810Z",
+      "pidPresent": false
+    }
+  ],
+  "baseHead": "4bf9a6ac9d630f10b2408423295f0933d9bb052f",
+  "scope": "Recorded compiled31 stage/host/owned Edge identities and its exact listener only; qualification remains FAIL",
+  "operationSeconds": 1.4005025,
+  "terminationAttempted": false,
+  "finishedUtc": "2026-10-05T08:50:34.6392104Z",
+  "schema": 1,
+  "startedUtc": "2026-10-05T08:50:33.2398449Z",
+  "port": 51442,
+  "status": "PASS_EXACT_RECORDED_COMPILED_INSTANCES_AND_PORT_RELEASED",
+  "listenerCount": 0,
+  "hostCleanupSeconds": 1.115324700018391
+}

@@ -1,0 +1,336 @@
+{
+  "cases": [
+    {
+      "name": "alpha-full41",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 900,
+      "expectedState": "PASS:alpha",
+      "reportAttribute": "data-tsj-alpha-report"
+    },
+    {
+      "name": "alpha-explicit-negative",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyAlpha=true&tsjAlphaFail=true",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedPrefix": "FAIL:alpha:",
+      "reportAttribute": "data-tsj-alpha-report"
+    },
+    {
+      "name": "a07-real-solver-nonfinite-pivot",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyA07=true",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS:a07",
+      "reportAttribute": "data-tsj-a07-report"
+    },
+    {
+      "name": "a07-explicit-negative",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyA07=true&tsjA07Fail=true",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedPrefix": "FAIL:a07"
+    },
+    {
+      "name": "a10-positive",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyA10=true",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS:a10",
+      "reportAttribute": "data-tsj-a10-report"
+    },
+    {
+      "name": "a10-explicit-negative",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyA10=true&tsjA10Fail=true",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedPrefix": "FAIL:a10"
+    },
+    {
+      "name": "e02-positive",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyE02=true",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedState": "PASS:e02",
+      "reportAttribute": "data-tsj-e02-report"
+    },
+    {
+      "name": "e02-explicit-negative",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyE02=true&tsjE02Fail=true",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedPrefix": "FAIL:e02"
+    },
+    {
+      "name": "e04-sensor-control-quickplay",
+      "path": "circuitjs.html?tsjDebug=true&tsjQuickPlay=true&tsjVerifyQuickPlay=true&tsjQuickPlayTestFamily=7&tsjQuickPlayTestSeed=3",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120,
+      "expectedState": "PASS:quick-play"
+    },
+    {
+      "name": "q30-service-seed13",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30Seed=13&tsjQ30Bench=true&tsjQ30Service=true",
+      "stateAttribute": "data-tsj-q30-service",
+      "timeoutSeconds": 600,
+      "expectedPrefix": "{\"status\":\"PASS\",\"normalAdmission\":false,\"d01Admission\":false",
+      "terminalPrefixes": [
+        "{\"status\":\"PASS\"",
+        "{\"status\":\"FAIL\""
+      ],
+      "reportAttribute": "data-tsj-q30-service"
+    },
+    {
+      "name": "d01-descriptive21-seed-10387",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10387",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-10226",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10226",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-10014",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10014",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-0",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=0",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-1",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=1",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-15",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=15",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-14",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=14",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-8",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=8",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-10",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-12",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=12",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-48",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=48",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-35",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=35",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "FAIL",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-18",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=18",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-43",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=43",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-4",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=4",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-11",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=11",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-3",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=3",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-10000",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10000",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-10009",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10009",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-10016",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10016",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    },
+    {
+      "name": "d01-descriptive21-seed-10017",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10017",
+      "stateAttribute": "data-tsj-q30-d01-state",
+      "timeoutSeconds": 600,
+      "expectedState": "PASS",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "reportAttribute": "data-tsj-q30-d01-report"
+    }
+  ]
+}

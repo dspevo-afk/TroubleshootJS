@@ -1,0 +1,31 @@
+{
+  "profilePathPrivacyFindings": 0,
+  "selectedArtifactHashPairsVerified": 49,
+  "fullAcceptanceAfterFix": "NOT_RUN",
+  "browserProcessesLaunched": false,
+  "schema": 1,
+  "manifestSha256": "85034ba0917933b05fc88f74544e4d5aa2761bf868b878c686bafef98c1653fc",
+  "rawMirrorStatus": "PASS_RAW_BYTES_MIRRORED",
+  "rawMirrorSelectedPinsVerified": 34,
+  "status": "PASS_BOUNDED_PACKET_HASH_JSON_PRIVACY",
+  "readmeSha256": "7cbc7eec9b8c37cb2b3a9830a4cfb010a4880c8570c654199becef9d93d93bcc",
+  "applicationTestsLaunched": false,
+  "validationRecordSelfIncludedInJsonRoundtrip": true,
+  "rawMirrorFileCount": 147,
+  "rawMirrorBytes": 4969697.0,
+  "selectedArtifactCount": 49,
+  "jsonFailures": 0,
+  "sourceRunnerExactCopy": true,
+  "checkpointAudit": "PASS_EXACT8_PREEXISTING_UNTRACKED_UNCHANGED",
+  "rawMirrorSelectedPinsExpected": 34,
+  "jsonFilesRoundTripped": 38,
+  "rootReadmeWhitespaceCorrection": "Removed two Markdown hard-break spaces; no evidence/source/oracle change",
+  "byteExactArchive": {
+    "file": "evidence.tar.gz",
+    "sha256": "89a24307e8040d7f56c3d437dc7a89e05344ff9a9c3d1a9f4bf39447f6a39e35",
+    "memberCount": 52,
+    "roundtrip": "PASS",
+    "artifactHashesChecked": 49,
+    "scope": "Archive includes stable packet edition before this outer README/archive note; no self-reference"
+  }
+}

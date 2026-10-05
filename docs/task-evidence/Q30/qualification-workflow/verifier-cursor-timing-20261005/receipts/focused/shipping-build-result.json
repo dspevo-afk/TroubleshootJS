@@ -1,0 +1,16 @@
+{
+  "consumedInputsVerified": 1355,
+  "prepareReceipt": "shipping/prepare-receipt.json",
+  "consumedSourceIdentity": "096a9bf708b549dc3e0323fc1b55af1e271a13a2846e2a91ae6b2f04cdafb944",
+  "exitCode": 0,
+  "permutations": 5,
+  "elapsedSeconds": 83.4187844,
+  "scope": "Fresh shipping JDK8/GWT5 app; tracked Q30 catalog disabled",
+  "schema": 1,
+  "compilationConfirmed": true,
+  "head": "4bf9a6ac9d630f10b2408423295f0933d9bb052f",
+  "status": "PASS",
+  "startedUtc": "2026-10-05T09:03:33.9078640Z",
+  "app": "<USER_HOME>\\AppData\\Local\\Temp\\<FOCUSED_TASK_ID>\\shipping\\app",
+  "finishedUtc": "2026-10-05T09:04:57.3388211Z"
+}

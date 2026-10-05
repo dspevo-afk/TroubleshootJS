@@ -1,0 +1,9 @@
+{
+  "status": "UNVERIFIED_VERIFIER_ONLY_FIX",
+  "sourcePath": "src/com/lushprojects/circuitjs1/client/Q30DiagnosticAdmissionVerifier.java",
+  "sourceBeforeSha256": "4d44f1683a5f0e07a2e9f8f213cebbe94ab9970faf64c42b7252753da5841673",
+  "sourceAfterSha256": "3a5dee8c4b21e577f8196946925d8dac65b17895cb209a8d2d091796aad74ad6",
+  "scope": "Move charged relay cursor capture and first bounded solve before ordinary settlement; keep physical/cursor/power/restore guards; record settlement time separately",
+  "normalCadencePhysicsModelOrLimitsChanged": false,
+  "oldCompiled31Preserved": true
+}

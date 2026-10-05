@@ -70,8 +70,7 @@ final class Q30DiagnosticAdmissionVerifier {
 
         private enum ServiceCanaryStage {
             START_HEALTHY_SETUP, HEALTHY_PROFILE, DRIVE_HIGH, CHECK_ENERGIZED_RELAY,
-            POWER_OFF_RELAY, RELAY_FIRST_READINESS, SETTLE_RELAY_ISOLATION,
-            RELAY_READINESS, RESISTOR_READINESS, GUARD_CANARIES,
+            POWER_OFF_RELAY, RELAY_READINESS, RESISTOR_READINESS, GUARD_CANARIES,
             CANCELLATION, RESTORE_OFF, RESTORE_FAULT_AND_POWER, RESTORE_FAULT_PROFILE,
             VERIFY_RESTORED, DONE
         }
@@ -553,22 +552,14 @@ final class Q30DiagnosticAdmissionVerifier {
                 serviceCanaryStage = ServiceCanaryStage.POWER_OFF_RELAY;
                 return;
             case POWER_OFF_RELAY:
-                double powerOffTime = sim.t;
                 sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-                require(sim.t == powerOffTime &&
-                        sim.getBoardPowerController().isElectricallyUnpowered(),
-                    "Q30 relay canary did not isolate without advancing stored energy");
-                // Capture the real charged graph before ordinary settlement's
-                // isolated live cadence can discharge it. The cursor owns the
-                // first bounded off-state solver advance; settlement follows.
+                GeneratedRuntimeDeveloperSettlement.settle(sim, serviceCanaryOwner,
+                    "q30-service-canary-power-off-energized-relay");
                 serviceRelayCoilCurrentAfterPowerOff = relayCoilCurrent(serviceRelayTarget);
                 require(Math.abs(serviceRelayCoilCurrentAfterPowerOff) >=
                         RelayOutputBehavior.DISCHARGED_AMPS,
                     "Q30 relay energy disappeared before the bounded service cursor ran");
                 PhysicalPart<?> relay = serviceRelayTarget;
-                require(!Rb30RelayService.isDischarged(serviceCanaryOwner,
-                        serviceRelayComponentId),
-                    "Q30 charged relay did not retain its physical residual-energy guard");
                 require(!serviceCanaryAvailable(serviceRelayComponentId, relay),
                     "Q30 energized relay REMOVE became available before bounded discharge work");
                 serviceCanaryCursor = beginServiceCanaryCursor(serviceRelayComponentId, relay);
@@ -578,38 +569,9 @@ final class Q30DiagnosticAdmissionVerifier {
                 put(pendingServiceCase, "availableBefore", false);
                 put(pendingServiceCase, "coilCurrentBeforePowerOffAmps",
                     serviceRelayCoilCurrentBeforePowerOff);
-                put(pendingServiceCase, "coilCurrentAtCursorCaptureAmps",
+                put(pendingServiceCase, "coilCurrentAfterPowerOffSettleAmps",
                     serviceRelayCoilCurrentAfterPowerOff);
-                put(pendingServiceCase, "physicalRelayDischargedAtCursorCapture", false);
-                put(pendingServiceCase, "runtimeSettledAtCursorCapture",
-                    sim.isGeneratedRuntimeSettled());
                 put(pendingServiceCase, "maxSolverAdvances", serviceCanaryPolicy.getWorkUnits());
-                serviceCanaryStage = ServiceCanaryStage.RELAY_FIRST_READINESS;
-                return;
-            case RELAY_FIRST_READINESS:
-                double firstCursorTime = sim.t;
-                runServiceCanaryCursorUnit("relayDelayed", "DELAYED_READY_WITHIN_BOUND");
-                require(serviceCanaryCursor != null && pendingServiceCase != null &&
-                        serviceCanaryCursor.getCompletedUnits() == 1 && sim.t > firstCursorTime,
-                    "Q30 charged relay did not consume its first real bounded cursor advance");
-                put(pendingServiceCase, "coilCurrentAfterFirstCursorAdvanceAmps",
-                    relayCoilCurrent(serviceRelayTarget));
-                put(pendingServiceCase, "physicalRelayDischargedAfterFirstCursorAdvance",
-                    Rb30RelayService.isDischarged(serviceCanaryOwner, serviceRelayComponentId));
-                serviceCanaryStage = ServiceCanaryStage.SETTLE_RELAY_ISOLATION;
-                return;
-            case SETTLE_RELAY_ISOLATION:
-                double isolationSettlementTime = sim.t;
-                GeneratedRuntimeDeveloperSettlement.settle(sim, serviceCanaryOwner,
-                    "q30-service-canary-settle-after-first-relay-cursor-advance");
-                require(sim.getBoardPowerController().isElectricallyUnpowered() &&
-                        sim.isGeneratedRuntimeSettled() && !sim.simIsRunning(),
-                    "Q30 relay canary settlement lost isolated, settled, paused ownership");
-                // This is ordinary pending verification work, not cursor work.
-                put(pendingServiceCase, "isolationSettlementAdvanceSeconds",
-                    sim.t - isolationSettlementTime);
-                put(pendingServiceCase, "availableAfterIsolationSettlement",
-                    serviceCanaryAvailable(serviceRelayComponentId, serviceRelayTarget));
                 serviceCanaryStage = ServiceCanaryStage.RELAY_READINESS;
                 return;
             case RELAY_READINESS:
@@ -814,15 +776,11 @@ final class Q30DiagnosticAdmissionVerifier {
             if ("resistorImmediate".equals(name))
                 require(available && intValue(pendingServiceCase.get("solverAdvances")) == 0,
                     "Q30 resistor readiness advanced the solver or lost actual availability");
-            else {
+            else
                 require(available && intValue(pendingServiceCase.get("solverAdvances")) > 0 &&
                         intValue(pendingServiceCase.get("solverAdvances")) <=
                             serviceCanaryPolicy.getWorkUnits(),
                     "Q30 energized relay did not require and complete bounded real advances");
-                require(Rb30RelayService.isDischarged(serviceCanaryOwner, componentId),
-                    "Q30 relay cursor finished without actual physical residual-energy readiness");
-                put(pendingServiceCase, "physicalRelayDischargedAfter", true);
-            }
             pendingServiceCase = null;
             publishProgress("servicePreparationCanaries", serviceCanaryClosedCount, 7);
         }

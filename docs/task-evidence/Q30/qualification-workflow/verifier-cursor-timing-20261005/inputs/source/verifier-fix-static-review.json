@@ -1,0 +1,8 @@
+{
+  "status": "PASS_WITH_LIMITS",
+  "reviewer": "repair_timing_evidence_review",
+  "scope": "Actual verifier-only source diff; no runtimechecks performed byreviewer",
+  "sourceAfterSha256": "3a5dee8c4b21e577f8196946925d8dac65b17895cb209a8d2d091796aad74ad6",
+  "preserved": "Exact owner, real charged/isolation guard, original five50ms cursorunits, separate cursor/settlement clocks, final physical availability, cleanup/restore",
+  "limit": "Postfirst-step discharged status is observed, not asserted. Do notclaimfirst50msalone clears allphysicalguards; settlement may contribute. Focusedactualcompiledfixture required."
+}

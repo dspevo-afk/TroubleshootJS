@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "caseName": "d01-descriptive21-seed-35",
+  "seed": "35",
+  "outcome": "REJECTED_POLICY",
+  "isWarmPass": false,
+  "reason": "Normal medium admission requires a selected P07 two-layer route",
+  "requiredFailurePhase": "construction",
+  "requiredFlags": {
+    "status": "FAIL",
+    "normalAdmission": false,
+    "d01Admission": false,
+    "playerPublished": false,
+    "cleanupComplete": true,
+    "cleanupPending": false,
+    "ownerRestored": true
+  },
+  "basis": "Maintained native seed35 fix receipt: routeOutcome SUCCESS; normalAdmissionOutcome REJECTED_POLICY; P05_ONLY_NORMAL_ADMISSION_REQUIRES_P07. Final raw D01 rejection and ordinary next-candidate proof must be inspected separately.",
+  "originalSpecificationSha256": "38aceb3222ccfe61f39bd7112e6aab8b72cdd4e269276a33e36a35d9748674fc",
+  "specificationSha256": "898145a040b8920350461961dbad85b94f2d7ef286e95a0ebd347781d291bc97",
+  "failureIdentity": "D01 describe(Throwable) exports only the message when nonempty. Require the exact message and construction phase; bind typed rejection to the final compiled source and native REJECTED_POLICY receipt, not an absent JSON type field."
+}

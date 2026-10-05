@@ -1,4 +1,71 @@
-# Current checkpoint: Q30 targeted repair/meters and timing comparison complete
+# Current checkpoint: Q30 charged relay verifier timing fixed; final qualification pending
+
+2026-10-05. Branch `codex/q30-multirail-qualification`; checks bound to HEAD
+`4bf9a6ac9d630f10b2408423295f0933d9bb052f` plus the single declared
+`Q30DiagnosticAdmissionVerifier.java` edit, SHA256
+`3a5dee8c4b21e577f8196946925d8dac65b17895cb209a8d2d091796aad74ad6`.
+Focused snapshot: 1,355 inputs, identity
+`096a9bf708b549dc3e0323fc1b55af1e271a13a2846e2a91ae6b2f04cdafb944`.
+A later local commit must audit this boundary; commands did not run on a future
+SHA. Q30 DISABLED / NOT ACCEPTED; parent owns independent acceptance. No
+push/publication/email, evidence deletion, wide machine changes or U06/U07/Q60.
+
+Fresh baseline full native 83 PASS/strict audit zero issues (3,963.524 s),
+append 26 PASS/zero issues (189.753 s), standard JDK8/GWT5 PASS (83.118 s),
+isolated GWT5/four compiled canaries PASS and maintained source archive
+PASS_SOURCE_ARCHIVE_ONLY (75.239 s). These consumed the pre-fix 4bf9 source;
+they are historical after the verifier edit. Structural 77: 70 accepted/seven
+declared rejects; structural native timing is not normal-player admission.
+
+Actual full compiled 31 FAIL/exit 1 (1,127.175 s): ten core cases PASS, seed 35
+typed policy rejection PASS, all 20 positive D01 cases failed the same charged
+relay precondition before proof work. Strict audit retained 723 downstream
+errors, no timeout or host/read/console errors. Cleanup PASS/1.115 s, exact
+recorded 12-instance/port 51442 release PASS. All raw failures preserved.
+Ordinary settlement had already advanced the isolated solver and discharged
+the coil before the developer canary captured it. Fix captures the real
+charged, isolated graph first, runs the first existing bounded cursor unit,
+then settles pending verification separately and completes the cursor. Actual
+physical guards remain required; no invented charge or measurement. Production
+physics/readiness thresholds, solver cadence, five 50 ms cursor bounds,
+90,000 ms/640 units/5,000 ms admission limits and save/replay formats unchanged.
+
+Final declared-edit focused native 2 PASS/exit 0 (75.297 s), actual standard
+JDK8/GWT PASS/exit 0/five permutations (83.419 s). Actual maintained compiled
+10387/10226/10014 cold+warm PASS and original seed 35 declared rejection PASS.
+Maintained semantic audit PASS/zero errors, all seven service canaries per
+positive case PASS. Physical relay guard stayed unsafe after first cursor
+advance and separately measured settlement, then became safe after remaining
+bounded cursor work. Cursor advances 5/3/3, simulated 0.25/0.15/0.15 s;
+ordinary settlement about 0.005005 s recorded separately. Extended developer
+fixture host clocks 45.557/63.354/143.016 s are not normal job 90 s qualification.
+Host cleanup PASS/1.259 s; independent release PASS: 12 exact recorded instances
+absent/port 56366 closed (1.038 s, no termination). All 1,355 consumed source
+bytes rechecked unchanged. Native cleanup marker present; separate cleanup
+elapsed NOT RECORDED. Read-only leaf diff review PASS_WITH_LIMITS; root
+reviewed actual source diff and receipts. No new foreground visible QA;
+prior actual headed repair evidence remains historical with its stated limits.
+
+[Evidence and restart boundary](task-evidence/Q30/qualification-workflow/verifier-cursor-timing-20261005/README.md)
+preserves failed full 31 and focused actual proof in a sanitized portable packet.
+Raw baseline task `q30-qualification-4bf9a6ac-511b2glo` and focused task
+`q30-d01-canary-fix-4bf9-_3s8v7et` retained in OS temp; task workspace
+`epoch15-final/qualification-4bf9a6ac-20261005-r1` has exact pointers, owners,
+raw mirror and source audits. Durable live handoff records actual current
+state. No known recorded task-owned process remains active; profiles/scratch
+and all eight pre-existing untracked files preserved. Desktop sibling untouched.
+
+Next: commit verified local fix checkpoint, prepare fresh clean-HEAD binding,
+then fresh full native 83/append 26, compiled 31/frozen 21 warm evidence,
+disabled production menu/replay and final-source archive. Fresh cold 77 requires
+actual parent 4 h 12 min quiet allocation; none granted/claimed or consumed here.
+Old source-bound cold manifest must not launch after this edit. Qualified
+private enabled build/menu/replay and parent acceptance remain pending;
+public enablement only after all acceptance. U06/U07/Q60 unstarted.
+
+---
+
+# Historical checkpoint: Q30 targeted repair/meters and timing comparison complete
 
 2026-10-05. Branch `codex/q30-multirail-qualification`; checked source HEAD
 `ca079d4f70a7509f3ceda95cd2b7799a288c9db0`, 1,355 consumed inputs, current

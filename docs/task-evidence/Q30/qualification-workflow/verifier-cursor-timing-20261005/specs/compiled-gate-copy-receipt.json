@@ -1,0 +1,16 @@
+{
+  "scope": "Current task copy of original31-case spec and originaldeclared35P05oracle; no values changed",
+  "status": "PASS_EXACT_FROZEN_INPUT_COPY",
+  "schema": 1,
+  "copiedUtc": "2026-10-05T07:42:48.2825363Z",
+  "files": [
+    {
+      "sha256": "76c4adb18948b1b7770a4228948a4b1f94c627d77a9cc352dd124e1e7bf09838",
+      "path": "declared-physical-rejection.json"
+    },
+    {
+      "sha256": "898145a040b8920350461961dbad85b94f2d7ef286e95a0ebd347781d291bc97",
+      "path": "compiled-gates.json"
+    }
+  ]
+}

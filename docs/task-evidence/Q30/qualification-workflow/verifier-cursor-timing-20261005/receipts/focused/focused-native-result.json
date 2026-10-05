@@ -1,0 +1,20 @@
+{
+  "consumedInputsVerified": 1355,
+  "operationSeconds": 75.2973158,
+  "suites": [
+    "DiagnosticServicePreparationContractTest",
+    "Q30PowerReadinessContractTest"
+  ],
+  "status": "PASS_FOCUSED_NATIVE2",
+  "startedUtc": "2026-10-05T09:01:01.6364630Z",
+  "exitCode": 0,
+  "cleanupElapsedSeconds": "NOT RECORDED separately",
+  "declaredModifiedPaths": [
+    "src/com/lushprojects/circuitjs1/client/Q30DiagnosticAdmissionVerifier.java"
+  ],
+  "baseHead": "4bf9a6ac9d630f10b2408423295f0933d9bb052f",
+  "schema": 1,
+  "consumedSourceIdentity": "096a9bf708b549dc3e0323fc1b55af1e271a13a2846e2a91ae6b2f04cdafb944",
+  "finishedUtc": "2026-10-05T09:02:16.9422225Z",
+  "complete": true
+}

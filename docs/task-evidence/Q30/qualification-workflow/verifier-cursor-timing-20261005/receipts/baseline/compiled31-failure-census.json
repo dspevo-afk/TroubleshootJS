@@ -1,0 +1,999 @@
+{
+  "schema": 1,
+  "status": "FAIL_D01_PREPROOF_CANARY",
+  "baseHead": "4bf9a6ac9d630f10b2408423295f0933d9bb052f",
+  "coreCasesPassed": 10,
+  "unexpectedD01Failures": 20,
+  "expectedSeed35TypedRejectionPassed": true,
+  "applicationTimeouts": 0,
+  "coldProofWorkUnitsAllPositive": 0,
+  "warmExecution": "NOT_RUN",
+  "hostInputAudit": "PASS",
+  "hostCleanup": {
+    "status": "PASS",
+    "seconds": 1.115324700018391,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "strictAuditStatus": "FAIL",
+  "strictAuditErrorCount": 723,
+  "failureClassification": "Correctness/precondition failure before electrical proof; not a performance timeout. Exactcause investigation pending.",
+  "cases": [
+    {
+      "seed": "10387",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 7.775835099979304,
+      "hostTimedOut": false,
+      "reportSha256": "0163ac1cf7121594ca0b02122c3afe52a1e3456643485f30e7522752b7f72fc8",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 4383,
+        "stagedPreparationMs": 1291,
+        "physicalValidationMs": 15,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 12,
+        "totalMs": 7165
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "10226",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 10.59121690003667,
+      "hostTimedOut": false,
+      "reportSha256": "58cb18a1e63a3fdd6c656a8fc1eba70dcb7649faf885e654530f9b560f2d2e64",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 5376,
+        "stagedPreparationMs": 2085,
+        "physicalValidationMs": 26,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 14,
+        "totalMs": 9830
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "10014",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 17.29210800002329,
+      "hostTimedOut": false,
+      "reportSha256": "8a6bee2a2aee0a585127422ab88af3dde24f64e52a9befa3ba1e9bc5e12ffe03",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 7157,
+        "stagedPreparationMs": 4521,
+        "physicalValidationMs": 40,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 17,
+        "totalMs": 16578
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "0",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 18.10855760006234,
+      "hostTimedOut": false,
+      "reportSha256": "3bf84ae6342449ef9bdbcf3c311aefd0192fca82ed4350c8de1766b751626f29",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 9988,
+        "stagedPreparationMs": 3546,
+        "physicalValidationMs": 34,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 16,
+        "totalMs": 17428
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "1",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 18.722340099979192,
+      "hostTimedOut": false,
+      "reportSha256": "c417c868a2a0dab3ba9fc48847a6b54009ca8021209898ce2d2dc81eea9aabdd",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 10381,
+        "stagedPreparationMs": 3619,
+        "physicalValidationMs": 39,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 16,
+        "totalMs": 18081
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "15",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 7.57209209993016,
+      "hostTimedOut": false,
+      "reportSha256": "9375b61dce01256b2a5a15e6681ac440c16b6855bc8234ceae5122963610fcb4",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 3496,
+        "stagedPreparationMs": 1548,
+        "physicalValidationMs": 21,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 14,
+        "totalMs": 6966
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "14",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 8.172671500011347,
+      "hostTimedOut": false,
+      "reportSha256": "0010f8239a2e182b1f111a6ecae2a6a32b2c57ff97c04edf628c3f7414b6804e",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 4088,
+        "stagedPreparationMs": 1618,
+        "physicalValidationMs": 20,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 14,
+        "totalMs": 7547
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "8",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 14.842373199993744,
+      "hostTimedOut": false,
+      "reportSha256": "ce9f505154de941a6def9817c6526ec2b59fce432c6698684aaaafa9d62fddb0",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 7109,
+        "stagedPreparationMs": 3274,
+        "physicalValidationMs": 32,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 15,
+        "totalMs": 14063
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "10",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 23.9815725000808,
+      "hostTimedOut": false,
+      "reportSha256": "48fc86068c9b788e24ca40c9542c6fd03a1f11e058e80bdf65ebc451dd7f5edf",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 15206,
+        "stagedPreparationMs": 3908,
+        "physicalValidationMs": 37,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 16,
+        "totalMs": 23310
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "12",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 7.9738539000973105,
+      "hostTimedOut": false,
+      "reportSha256": "403d1bedceb88462256460d26da9e6c85eefdf9db147b60a3d95daf07bcd813a",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 3479,
+        "stagedPreparationMs": 1673,
+        "physicalValidationMs": 24,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 13,
+        "totalMs": 7229
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "48",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 8.561051900032908,
+      "hostTimedOut": false,
+      "reportSha256": "ea00a2262342b067c235759cb162147b900a0bc5d61cfec1d5b53910fadc9bc2",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 4537,
+        "stagedPreparationMs": 1577,
+        "physicalValidationMs": 20,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 12,
+        "totalMs": 7974
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "35",
+      "hostOutcome": "PASS",
+      "hostOperationSeconds": 3.5055710000451654,
+      "hostTimedOut": false,
+      "reportSha256": "b09f995795cd8539df5ebefcafcb16bc22973289293a392882cf0e7bf7e70113",
+      "applicationStatus": "FAIL",
+      "failurePhase": "construction",
+      "failure": "Normal medium admission requires a selected P07 two-layer route",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 0,
+        "stagedPreparationMs": 0,
+        "physicalValidationMs": 0,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 5,
+        "totalMs": 2762
+      },
+      "servicePreparationCanaries": null,
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "18",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 18.949431300046854,
+      "hostTimedOut": false,
+      "reportSha256": "a450e67eb49eb4973d03e2c5afaa43510bc85b8862f09ead7523eba3678a720d",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 9781,
+        "stagedPreparationMs": 4092,
+        "physicalValidationMs": 39,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 17,
+        "totalMs": 18269
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "43",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 17.659297400037758,
+      "hostTimedOut": false,
+      "reportSha256": "d4cce70dd4fd1d26ce7c1984491e3e4e3100b7d8a5339f38d6583db402461dca",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 8682,
+        "stagedPreparationMs": 3891,
+        "physicalValidationMs": 43,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 15,
+        "totalMs": 16925
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "4",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 18.0697679000441,
+      "hostTimedOut": false,
+      "reportSha256": "02f86e65b43008847ad5fbe3919bab5e6581cb7aa60a1a4a408735a701921821",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 9669,
+        "stagedPreparationMs": 3651,
+        "physicalValidationMs": 38,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 15,
+        "totalMs": 17297
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "11",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 18.692203899961896,
+      "hostTimedOut": false,
+      "reportSha256": "6d8ae04b107e10c6f8abb0c554e703e642b2b2f9ddd5a4121f33f71f687f1149",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 9694,
+        "stagedPreparationMs": 3947,
+        "physicalValidationMs": 36,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 15,
+        "totalMs": 18071
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "3",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 19.937753300066106,
+      "hostTimedOut": false,
+      "reportSha256": "bb22cf2358b8b172e254ad79f475a892a6714e0ae4fa508395edf64ba00d195b",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 10796,
+        "stagedPreparationMs": 3989,
+        "physicalValidationMs": 37,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 18,
+        "totalMs": 19258
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "10000",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 19.122780699981377,
+      "hostTimedOut": false,
+      "reportSha256": "690da9d98b5399c021b964f9b228a39ad433571bcc854dd1f933b0cf2a1efe19",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 10608,
+        "stagedPreparationMs": 3701,
+        "physicalValidationMs": 38,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 16,
+        "totalMs": 18444
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "10009",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 18.912889599916525,
+      "hostTimedOut": false,
+      "reportSha256": "7f7bc640178ba0267e21bdee0b31ab5cccdb0598cda22d1d91638d09c054ede2",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 9947,
+        "stagedPreparationMs": 3936,
+        "physicalValidationMs": 41,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 16,
+        "totalMs": 18281
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "10016",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 8.987940300023183,
+      "hostTimedOut": false,
+      "reportSha256": "6d1c4112e5ab859116c1e66b34d4380415bd410126c722fb8077626467eaff29",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 4834,
+        "stagedPreparationMs": 1556,
+        "physicalValidationMs": 23,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 12,
+        "totalMs": 8235
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    },
+    {
+      "seed": "10017",
+      "hostOutcome": "FAIL",
+      "hostOperationSeconds": 19.28969780006446,
+      "hostTimedOut": false,
+      "reportSha256": "8e05e81b7feb990355210ce857f49767a956db03bbf39d0a8c8fde22706c48c7",
+      "applicationStatus": "FAIL",
+      "failurePhase": "servicePreparationCanaries",
+      "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+      "cold": {
+        "status": "FAIL",
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "warm": {
+        "status": "NOT_RUN"
+      },
+      "phaseElapsedMs": {
+        "constructionMs": 9323,
+        "stagedPreparationMs": 4539,
+        "physicalValidationMs": 42,
+        "coldProofMs": 0,
+        "coldProofActiveWorkMs": 0,
+        "failedCleanupCanaryMs": 0,
+        "warmConstructionMs": 0,
+        "warmPreparationMs": 0,
+        "classificationMs": 0,
+        "cleanupMs": 17,
+        "totalMs": 18644
+      },
+      "servicePreparationCanaries": {
+        "status": "FAIL",
+        "providerId": "rb30-control-diagnostic@4",
+        "policyCanonical": "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner",
+        "caseCount": 7,
+        "passedCount": 0,
+        "totalSolverAdvances": 0,
+        "healthyProfileAdvanceUnits": 0,
+        "cleanupComplete": false,
+        "cases": {},
+        "cleanup": {},
+        "failure": "Q30 D01: Q30 relay energy disappeared before the bounded service cursor ran",
+        "failureStage": "POWER_OFF_RELAY"
+      },
+      "ownerRestored": true,
+      "cleanupComplete": true
+    }
+  ],
+  "recordedUtc": "2026-10-05T08:52:26.712483+00:00"
+}

@@ -1,0 +1,393 @@
+{
+  "schema": 1,
+  "runner": "compiled_attribute_acceptance.py",
+  "repository": "<USER_HOME>\\AppData\\Local\\Temp\\<FOCUSED_TASK_ID>\\shipping\\app",
+  "startedUtc": "2026-10-05T09:06:21.963601+00:00",
+  "outcome": "PASS",
+  "cases": [
+    {
+      "schema": 1,
+      "case": {
+        "index": 1,
+        "name": "d01-descriptive21-seed-10387",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10387",
+        "stateAttribute": "data-tsj-q30-d01-state",
+        "expectedState": "PASS",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-q30-d01-report"
+      },
+      "url": "http://127.0.0.1:56366/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10387",
+      "startedUtc": "2026-10-05T09:06:25.544705+00:00",
+      "finishedUtc": "2026-10-05T09:07:11.101458+00:00",
+      "operationSeconds": 45.556748599978164,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS",
+      "lastObservedState": "PASS",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 458704,
+      "reportSha256": "ef6fc2434d51f0aa456ee69da4a2a9b77ae1a0bc07259396389e3026e59243e4",
+      "reportFile": "cases/001-d01-descriptive21-seed-10387.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "observerErrors": [],
+      "observation": {
+        "transport": "PASSIVE_CDP_DOM",
+        "stateEvents": 11,
+        "compiledScriptsHeld": 1,
+        "scriptAttachment": {
+          "generation": 1,
+          "documentBackend": 3,
+          "htmlBackend": 5,
+          "exactPageUrl": true,
+          "resourceType": "script"
+        },
+        "currentDocuments": 2,
+        "finalStateReadRequired": true,
+        "terminalScopeVerified": true,
+        "scopeIdentity": {
+          "generationBefore": 2,
+          "generationAfter": 2,
+          "stateChangesBefore": 11,
+          "stateChangesAfter": 11,
+          "documentNodeBefore": 4,
+          "documentNodeAfter": 7,
+          "htmlNodeBefore": 6,
+          "htmlNodeAfter": 9,
+          "documentBackendBefore": 3,
+          "documentBackendAfter": 3,
+          "htmlBackendBefore": 5,
+          "htmlBackendAfter": 5,
+          "pageUrlMatches": true,
+          "documentUrlMatches": true,
+          "stateMatches": true,
+          "attributeMatches": true
+        }
+      },
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 2,
+        "name": "d01-descriptive21-seed-10226",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10226",
+        "stateAttribute": "data-tsj-q30-d01-state",
+        "expectedState": "PASS",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-q30-d01-report"
+      },
+      "url": "http://127.0.0.1:56366/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10226",
+      "startedUtc": "2026-10-05T09:07:11.103069+00:00",
+      "finishedUtc": "2026-10-05T09:08:14.456963+00:00",
+      "operationSeconds": 63.35389199992642,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS",
+      "lastObservedState": "PASS",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 633689,
+      "reportSha256": "1788422d92190e88d5d345025417adb7d5a5f585030b78204dfb88e4d575d641",
+      "reportFile": "cases/002-d01-descriptive21-seed-10226.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "observerErrors": [],
+      "observation": {
+        "transport": "PASSIVE_CDP_DOM",
+        "stateEvents": 11,
+        "compiledScriptsHeld": 1,
+        "scriptAttachment": {
+          "generation": 1,
+          "documentBackend": 36,
+          "htmlBackend": 38,
+          "exactPageUrl": true,
+          "resourceType": "script"
+        },
+        "currentDocuments": 2,
+        "finalStateReadRequired": true,
+        "terminalScopeVerified": true,
+        "scopeIdentity": {
+          "generationBefore": 2,
+          "generationAfter": 2,
+          "stateChangesBefore": 11,
+          "stateChangesAfter": 11,
+          "documentNodeBefore": 4,
+          "documentNodeAfter": 7,
+          "htmlNodeBefore": 6,
+          "htmlNodeAfter": 9,
+          "documentBackendBefore": 36,
+          "documentBackendAfter": 36,
+          "htmlBackendBefore": 38,
+          "htmlBackendAfter": 38,
+          "pageUrlMatches": true,
+          "documentUrlMatches": true,
+          "stateMatches": true,
+          "attributeMatches": true
+        }
+      },
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 3,
+        "name": "d01-descriptive21-seed-10014",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10014",
+        "stateAttribute": "data-tsj-q30-d01-state",
+        "expectedState": "PASS",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-q30-d01-report"
+      },
+      "url": "http://127.0.0.1:56366/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=10014",
+      "startedUtc": "2026-10-05T09:08:14.458710+00:00",
+      "finishedUtc": "2026-10-05T09:10:37.474485+00:00",
+      "operationSeconds": 143.0157721999567,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "PASS",
+      "lastObservedState": "PASS",
+      "timedOut": false,
+      "expectedFailureCanary": false,
+      "expectedFailureStateWasNotAnUnexpectedError": false,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 876153,
+      "reportSha256": "1bb9ee40d379dd9d955d942191e8bd6d583f1e6345f0583e01f6cc491b81b623",
+      "reportFile": "cases/003-d01-descriptive21-seed-10014.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "observerErrors": [],
+      "observation": {
+        "transport": "PASSIVE_CDP_DOM",
+        "stateEvents": 11,
+        "compiledScriptsHeld": 1,
+        "scriptAttachment": {
+          "generation": 1,
+          "documentBackend": 69,
+          "htmlBackend": 71,
+          "exactPageUrl": true,
+          "resourceType": "script"
+        },
+        "currentDocuments": 2,
+        "finalStateReadRequired": true,
+        "terminalScopeVerified": true,
+        "scopeIdentity": {
+          "generationBefore": 2,
+          "generationAfter": 2,
+          "stateChangesBefore": 11,
+          "stateChangesAfter": 11,
+          "documentNodeBefore": 4,
+          "documentNodeAfter": 7,
+          "htmlNodeBefore": 6,
+          "htmlNodeAfter": 9,
+          "documentBackendBefore": 69,
+          "documentBackendAfter": 69,
+          "htmlBackendBefore": 71,
+          "htmlBackendAfter": 71,
+          "pageUrlMatches": true,
+          "documentUrlMatches": true,
+          "stateMatches": true,
+          "attributeMatches": true
+        }
+      },
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    },
+    {
+      "schema": 1,
+      "case": {
+        "index": 4,
+        "name": "d01-descriptive21-seed-35",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=35",
+        "stateAttribute": "data-tsj-q30-d01-state",
+        "expectedState": "FAIL",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 600.0,
+        "reportAttribute": "data-tsj-q30-d01-report"
+      },
+      "url": "http://127.0.0.1:56366/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ30=true&tsjQ30D01=true&tsjQ30Seed=35",
+      "startedUtc": "2026-10-05T09:10:37.476237+00:00",
+      "finishedUtc": "2026-10-05T09:10:40.783385+00:00",
+      "operationSeconds": 3.3071451999712735,
+      "outcome": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "observedState": "FAIL",
+      "lastObservedState": "FAIL",
+      "timedOut": false,
+      "expectedFailureCanary": true,
+      "expectedFailureStateWasNotAnUnexpectedError": true,
+      "reportObserved": true,
+      "reportJsonValid": true,
+      "reportJsonError": null,
+      "reportMatch": true,
+      "reportLength": 961,
+      "reportSha256": "b61943cc7f241f90aa9453448a3f4c5eb86f4b0bff1abcc663c9eb064d028d87",
+      "reportFile": "cases/004-d01-descriptive21-seed-35.report.json",
+      "pageErrors": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "attributeReadErrors": [],
+      "observerErrors": [],
+      "observation": {
+        "transport": "PASSIVE_CDP_DOM",
+        "stateEvents": 3,
+        "compiledScriptsHeld": 1,
+        "scriptAttachment": {
+          "generation": 1,
+          "documentBackend": 102,
+          "htmlBackend": 104,
+          "exactPageUrl": true,
+          "resourceType": "script"
+        },
+        "currentDocuments": 2,
+        "finalStateReadRequired": true,
+        "terminalScopeVerified": true,
+        "scopeIdentity": {
+          "generationBefore": 2,
+          "generationAfter": 2,
+          "stateChangesBefore": 3,
+          "stateChangesAfter": 3,
+          "documentNodeBefore": 4,
+          "documentNodeAfter": 7,
+          "htmlNodeBefore": 6,
+          "htmlNodeAfter": 9,
+          "documentBackendBefore": 102,
+          "documentBackendAfter": 102,
+          "htmlBackendBefore": 104,
+          "htmlBackendAfter": 104,
+          "pageUrlMatches": true,
+          "documentUrlMatches": true,
+          "stateMatches": true,
+          "attributeMatches": true
+        }
+      },
+      "listenerCleanupErrors": [],
+      "navigationError": null
+    }
+  ],
+  "caseCount": 4,
+  "errors": [],
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "5155d5542454f479884a2b5cf0f775e0a58f794d332c6fb782702ffb6f50f42e",
+    "afterSha256": "5155d5542454f479884a2b5cf0f775e0a58f794d332c6fb782702ffb6f50f42e",
+    "sourceSha256Before": "94ebc91117bec64618be42fbaed31c7d805381f3c477a81ecab4e52339dd1cba",
+    "sourceSha256After": "94ebc91117bec64618be42fbaed31c7d805381f3c477a81ecab4e52339dd1cba",
+    "webSha256Before": "3c5a13ddfbf59e4d587d0f0673de5c65c01f1ed725b84f1f3ebedfe2517ebe81",
+    "webSha256After": "3c5a13ddfbf59e4d587d0f0673de5c65c01f1ed725b84f1f3ebedfe2517ebe81",
+    "runnerBeforeSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+    "runnerAfterSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+    "fileCountBefore": 1524,
+    "fileCountAfter": 1524,
+    "seconds": 0.3731961000012234
+  },
+  "identity": {
+    "schema": 1,
+    "runner": {
+      "pid": 14856,
+      "created": "2026-10-05T09:06:20.8830490Z",
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe"
+    },
+    "edgeProcessesBeforeCases": [
+      {
+        "pid": 3276,
+        "parent": 25048,
+        "created": "2026-10-05T09:06:24.9441830Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 24652,
+        "parent": 3276,
+        "created": "2026-10-05T09:06:24.9648110Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 11052,
+        "parent": 3276,
+        "created": "2026-10-05T09:06:25.0377440Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 8948,
+        "parent": 3276,
+        "created": "2026-10-05T09:06:25.0438740Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 16344,
+        "parent": 3276,
+        "created": "2026-10-05T09:06:25.0650000Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 12028,
+        "parent": 3276,
+        "created": "2026-10-05T09:06:25.1472460Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 25700,
+        "parent": 3276,
+        "created": "2026-10-05T09:06:25.1530240Z",
+        "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      }
+    ],
+    "profile": "<USER_HOME>\\AppData\\Local\\Temp\\<FOCUSED_TASK_ID>\\focused-d01\\profile",
+    "port": 56366,
+    "baseUrl": "http://127.0.0.1:56366"
+  },
+  "operationStartedUtc": "2026-10-05T09:06:25.544694+00:00",
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 1.258541400078684,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "finishedUtc": "2026-10-05T09:10:42.416445+00:00"
+}

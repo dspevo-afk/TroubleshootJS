@@ -1,0 +1,115 @@
+{
+  "startedUtc": "2026-10-05T09:14:15.9000880Z",
+  "finishedUtc": "2026-10-05T09:14:16.9370597Z",
+  "scope": "Recorded native/build/focused host/owned Edge identities and exact listener only; full qualification not established",
+  "profilesRetained": true,
+  "listenerCount": 0,
+  "operationSeconds": 1.0381488,
+  "port": 56366,
+  "status": "PASS_EXACT_RECORDED_FOCUSED_INSTANCES_AND_PORT_RELEASED",
+  "declaredModifiedPaths": [
+    "src/com/lushprojects/circuitjs1/client/Q30DiagnosticAdmissionVerifier.java"
+  ],
+  "terminationAttempted": false,
+  "sourceIdentity": "096a9bf708b549dc3e0323fc1b55af1e271a13a2846e2a91ae6b2f04cdafb944",
+  "schema": 1,
+  "baseHead": "4bf9a6ac9d630f10b2408423295f0933d9bb052f",
+  "processes": [
+    {
+      "exactInstancePresent": false,
+      "source": "recorded-focused-edge",
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 3276,
+      "pidPresent": false,
+      "createdUtc": "2026-10-05T09:06:24.9441830Z"
+    },
+    {
+      "exactInstancePresent": false,
+      "source": "focused-native-ownership.json",
+      "executable": "<USER_HOME>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "pid": 8948,
+      "pidPresent": false,
+      "createdUtc": "2026-10-05T09:01:01.0189520Z"
+    },
+    {
+      "exactInstancePresent": false,
+      "source": "recorded-focused-edge",
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 8948,
+      "pidPresent": false,
+      "createdUtc": "2026-10-05T09:06:25.0438740Z"
+    },
+    {
+      "exactInstancePresent": false,
+      "source": "recorded-focused-edge",
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 11052,
+      "pidPresent": false,
+      "createdUtc": "2026-10-05T09:06:25.0377440Z"
+    },
+    {
+      "exactInstancePresent": false,
+      "source": "recorded-focused-edge",
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 12028,
+      "pidPresent": false,
+      "createdUtc": "2026-10-05T09:06:25.1472460Z"
+    },
+    {
+      "exactInstancePresent": false,
+      "source": "focused-d01-host",
+      "executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+      "pid": 14856,
+      "pidPresent": false,
+      "createdUtc": "2026-10-05T09:06:20.8830490Z"
+    },
+    {
+      "exactInstancePresent": false,
+      "source": "recorded-focused-edge",
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 16344,
+      "pidPresent": false,
+      "createdUtc": "2026-10-05T09:06:25.0650000Z"
+    },
+    {
+      "exactInstancePresent": false,
+      "source": "shipping-build-ownership.json",
+      "executable": "<USER_HOME>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "pid": 16984,
+      "pidPresent": false,
+      "createdUtc": "2026-10-05T09:03:33.3284590Z"
+    },
+    {
+      "exactInstancePresent": false,
+      "source": "recorded-focused-edge",
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 24652,
+      "pidPresent": false,
+      "createdUtc": "2026-10-05T09:06:24.9648110Z"
+    },
+    {
+      "exactInstancePresent": false,
+      "source": "recorded-focused-edge",
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 25700,
+      "pidPresent": false,
+      "createdUtc": "2026-10-05T09:06:25.1530240Z"
+    },
+    {
+      "exactInstancePresent": false,
+      "source": "recorded-focused-edge",
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 27392,
+      "pidPresent": true,
+      "createdUtc": "2026-10-05T09:07:25.1721090Z"
+    },
+    {
+      "exactInstancePresent": false,
+      "source": "recorded-focused-edge",
+      "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "pid": 30692,
+      "pidPresent": false,
+      "createdUtc": "2026-10-05T09:06:26.0160390Z"
+    }
+  ]
+}
