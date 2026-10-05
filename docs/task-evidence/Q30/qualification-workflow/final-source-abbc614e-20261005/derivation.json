@@ -1,0 +1,3378 @@
+{
+  "schema": 1,
+  "scope": "Evidence packaging only; acceptance BLOCKED",
+  "candidate": "abbc614e9456d9fae56274da583175f8721a84c2",
+  "sourceIdentity": "49bff7525b019d321a821eeafb7bb15ccc0fa5d101442820dabccded5126a45c",
+  "rawInputCount": 1355,
+  "files": [
+    {
+      "member": "current/acceptance-plan.json",
+      "originalBytes": 51261,
+      "originalSha256": "4038608784b7aac8ec400d06f715625d603ac0a5db15315b52f8a6448a83a562",
+      "portableBytes": 51261,
+      "portableSha256": "4038608784b7aac8ec400d06f715625d603ac0a5db15315b52f8a6448a83a562",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/cold-owner-adapter-audit.json",
+      "originalBytes": 1179,
+      "originalSha256": "ed6960e7dcfded0a59926c84b38f7c90e0752677ec854da47115ec4fcc51dd8d",
+      "portableBytes": 1179,
+      "portableSha256": "ed6960e7dcfded0a59926c84b38f7c90e0752677ec854da47115ec4fcc51dd8d",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/cold-owner-adapter-final-audit.json",
+      "originalBytes": 1086,
+      "originalSha256": "2dbdebdb2a737917327cc97f8a8d7f02413cdc90d5dddb0f6dbe58967295ce5a",
+      "portableBytes": 1240,
+      "portableSha256": "af92606a7b8158c98c3b384c3b2c05221a60d6a98244d69d30dbb46efc5689cb",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/cold77-failed-attempt-independent-release.json",
+      "originalBytes": 10156,
+      "originalSha256": "e5fe667e02a68762e2ac772d12dbe1901b21c95ddbd5b294a22b484e2c8f8e27",
+      "portableBytes": 9868,
+      "portableSha256": "07da4b468bdc08bb5d0b56f92cb18734bb5927335ec3004ba22272a57bd11e02",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/compiled-canaries-py313-spec.json",
+      "originalBytes": 1514,
+      "originalSha256": "49006091cd6e03d0839cd0772865226409112d4fd286ba55a5eefdbe5d49a10c",
+      "portableBytes": 1466,
+      "portableSha256": "681a1d0dadf57091ca4d0321bb1c18675e7b6878666e72e6c5a09e52f1659894",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/compiled-canaries-py313-stage-result.json",
+      "originalBytes": 3062,
+      "originalSha256": "e9628abc805e71a73cdfcb4fbb937d26149d4b523b0550e8152adadf13ea313c",
+      "portableBytes": 1947,
+      "portableSha256": "cc50609e17566f50eb9b40280ad2e58ba9922cfdb082314f2c9b30a494c78145",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/current-binding-negative-canaries.json",
+      "originalBytes": 411,
+      "originalSha256": "5003c905bca99b1029dafb660ef28b14902e46750215aa70698f8740ce5d97a2",
+      "portableBytes": 495,
+      "portableSha256": "bd3996c8fedaff5358b2b3399c93d8f627ad312aca26b8b33f2ffd062637e6a9",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/current-source-archive-owner.json",
+      "originalBytes": 699,
+      "originalSha256": "18532604ea8c557867720474d41cf2509cd8934f682a6c4c2ea3c11f82d973a2",
+      "portableBytes": 503,
+      "portableSha256": "f4301b2189b329f5b0b70b9a5eb63e39f6ed48690c7402e6dd5ff5fff454eb41",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/current-source-archive-result.json",
+      "originalBytes": 695,
+      "originalSha256": "4abecd1101b74d1f238ac7e51787e338b0581fe2e741c23998a9249a5764759c",
+      "portableBytes": 593,
+      "portableSha256": "14445d8a76d7c8a8e8fdda49c408010ea52a8debb1c78360269ebd30ff872972",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/focused-10014-diagnostic-owner.json",
+      "originalBytes": 663,
+      "originalSha256": "e80f15e0455d6a71c5203a44989e50e18d5c9ae3d11ccc4f62a0b8a60e0d7d0f",
+      "portableBytes": 643,
+      "portableSha256": "85f0a10ae2caa6b8ad4b3f2e89ce1f84098a104631202d09260aa19e1073acce",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/focused-10014-diagnostic-result.json",
+      "originalBytes": 4355,
+      "originalSha256": "3022d02d6fa75b8a6c2d2830cfe1b61567c7c26eb4bc7d91f1b2b95d50cd29cf",
+      "portableBytes": 5979,
+      "portableSha256": "7110799860ef4619ca6c12d48d0dab047ca435e55b22cf0d33cd6e318223f91d",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/focused-10014-independent-release.json",
+      "originalBytes": 2867,
+      "originalSha256": "0388b347833b658335fafe7559fc44fb8e96527b511676c669b8552b70882dfc",
+      "portableBytes": 2751,
+      "portableSha256": "0e5c429a560d11876402b2ac9914720fc0e92f7fbc7d7ce5cb545606453d674d",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/fresh-cold-input-audit.json",
+      "originalBytes": 1324,
+      "originalSha256": "1fcdc0f6d6b8725c056374df5ba9637ce6d16cc976e118b3e8baaa11620cabdb",
+      "portableBytes": 1477,
+      "portableSha256": "598b1803944441fc003ab56e4d62d195ce704f6e050fbad82996517a441f093e",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/fresh-preparation-result.json",
+      "originalBytes": 571,
+      "originalSha256": "73ead8853960fe8f4ffa8c9245ecac90fbb5803cc4dc2b35a97b4528e452a6b6",
+      "portableBytes": 395,
+      "portableSha256": "daba0ae21c307ddb05cd8d9ce5e3757804c9ca9f8e50c809a52d4745f63c444b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/isolated-build-ownership.json",
+      "originalBytes": 746,
+      "originalSha256": "c8eb192716ccb8c03c7512732e1c4c16f332a192b893375d5744c15769aee70d",
+      "portableBytes": 461,
+      "portableSha256": "e5d8fffceea277bdb2efde2c2f1f5289742d1c6f86f0cfdb64e16f300b52fe82",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/isolated-build-result.json",
+      "originalBytes": 690,
+      "originalSha256": "78274f5cadc19a06a61d05f911dbe567feef29d48c7b6cde943e9d327bdadcf1",
+      "portableBytes": 586,
+      "portableSha256": "a2301f026808eb568102bda02328980c8b99c643373b2112533930b8a3f4cafd",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/native-append-audit.json",
+      "originalBytes": 6780,
+      "originalSha256": "9cca4d50a2214b45c9b726d518c94030819b1e509c2edbadcb2cfbf88a2f399c",
+      "portableBytes": 6353,
+      "portableSha256": "f5987634787a55c6ca3257c46fd8ccd4b6fdc4e1a4823683850b7ae5889b11ce",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/native-append-ownership.json",
+      "originalBytes": 665,
+      "originalSha256": "ce99e349084908d759d24d3819ea5b00b6f2b15c8b1208a359d2f70ceffb30d6",
+      "portableBytes": 468,
+      "portableSha256": "5e4f6dabfd5b75f1ff34a8e10768e7777905527e28fe25ce308a6043a8d31c27",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/native-append-result.json",
+      "originalBytes": 1569,
+      "originalSha256": "7654ce000c2d3eea9f532a34c82a303ec9a964c15c3a564282091bc3f6544bfc",
+      "portableBytes": 1479,
+      "portableSha256": "621528c7d8d53cef6e04b4ec742ef8e70f3a346ae339f2a57762e1333f1b078a",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/native-archive-independent-release.json",
+      "originalBytes": 1298,
+      "originalSha256": "60d391ab5d7ea90f7505f5227247b94daa4a00fd9a15700303ad43a35eebf94c",
+      "portableBytes": 1248,
+      "portableSha256": "4e3a3365d82a8e6a967efed43012af9165fe49a302ea8e0d9fbc2855196c3e30",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/native-full-audit.json",
+      "originalBytes": 9459,
+      "originalSha256": "3b6a9bc401cecc520bdcd0bf0b1e964adf64a6c39615e742355089fab39edcda",
+      "portableBytes": 8416,
+      "portableSha256": "9fbbdbf775fa7bbed40d4fcd244f92b88da48ef9e7f20208a18289754294b612",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/native-full-ownership.json",
+      "originalBytes": 661,
+      "originalSha256": "d4a920f8d996cbb4f8665d3bb1108b90a8d4a9a274e0631dd080f43d8a8c3058",
+      "portableBytes": 464,
+      "portableSha256": "99d6160fa21b76a068752f9625cadc7c8c124e66dee682018c11768614e56fcd",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/native-full-result.json",
+      "originalBytes": 1808,
+      "originalSha256": "c72113347859384d9e87016cfeb9a3112a9ce96227e957de9e1a00a894c0e978",
+      "portableBytes": 1693,
+      "portableSha256": "e1e9eed99a5b23ac70cb4115824b29b7470a9540f048235268671eda95ea03ea",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/prepare-command.json",
+      "originalBytes": 828,
+      "originalSha256": "1745f34296d86ad2abcc39fcab4ea5385fcdb9c3e686f14d4487086c5129dd1a",
+      "portableBytes": 421,
+      "portableSha256": "44c0c848f42ffd426f78e197fd361d1d64b84b0606ef128ba52fb88b04dd0891",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/preserved-evidence-audit.json",
+      "originalBytes": 2498,
+      "originalSha256": "e3d6fde9b84b8fa93e5af2b740bf4e7923070b0147265e26de83cf5c29692cfd",
+      "portableBytes": 2498,
+      "portableSha256": "e3d6fde9b84b8fa93e5af2b740bf4e7923070b0147265e26de83cf5c29692cfd",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/scale-plan.json",
+      "originalBytes": 1127298,
+      "originalSha256": "d6421609121797b9113eca228b9c0e5b94bcb9b19d9076fae56f05ab23a0a542",
+      "portableBytes": 1127298,
+      "portableSha256": "d6421609121797b9113eca228b9c0e5b94bcb9b19d9076fae56f05ab23a0a542",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/source-snapshot.json",
+      "originalBytes": 270386,
+      "originalSha256": "c95c717e3f8f958320c4ca15f6fd52be7cbe3f4c9f62477205a3c567aca634d6",
+      "portableBytes": 263604,
+      "portableSha256": "6074c8290cafffda7a02d786f1dd350d736150a003736d9ebea2ced1bf73a102",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/start-resource-audit.json",
+      "originalBytes": 5909,
+      "originalSha256": "e741eb47d919453e9d044fb4c4be5c1be2dfb213d48d711534a643404e8b498d",
+      "portableBytes": 5695,
+      "portableSha256": "3e46b8307098080530b8fce89f4d1ae10377c60e23f5ea7f418924f02af1c9b2",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/batch-result.json",
+      "originalBytes": 11284,
+      "originalSha256": "6e94bdd6f91251e264b8e855643743ff955fee91dda80c1dbcb4251c9ffe730b",
+      "portableBytes": 16595,
+      "portableSha256": "e0fecced74072ed416a643665e53a87e3f815ed7723ae1ad28c508aca6d53a54",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/batch-spec.json",
+      "originalBytes": 74309,
+      "originalSha256": "bebc744f0dfc08aec122dcad0f00539a1c0535dd52b3356192d9354dfeac933e",
+      "portableBytes": 60879,
+      "portableSha256": "317572b6aada7572dfbf82555f5febcfe1c04a359f09bdb68dda02b1cac70b67",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/controller-publication.json",
+      "originalBytes": 209,
+      "originalSha256": "ad2b8995daacf0d72168a1fa5bd55c6a2c7c01989a30b90cfa61f0f66883797e",
+      "portableBytes": 226,
+      "portableSha256": "d98c8915cfb7cce8fbfae2098d02a726ee3bc13505fb80b4985cbe87213f9fa5",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/controller-result.json",
+      "originalBytes": 23578,
+      "originalSha256": "f77dadeac0bb23fcb0556c33776ac915074e08da60ddce9a90e569f51ce7dfa1",
+      "portableBytes": 36806,
+      "portableSha256": "e2588cc89a24c80f018d8237a0f6827e65bdc0300e0460036c4cbd0c8a34ede8",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/input-audit-after.json",
+      "originalBytes": 1185,
+      "originalSha256": "215ae63f109e822399d945f28b48b1cafa9fedabe8e4770f55d6fa78a716ad87",
+      "portableBytes": 1273,
+      "portableSha256": "57373e2828300f99fbd06dc1f043d2c6c6d54d179240f318b9ccbbe560da7adf",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/input-audit-before.json",
+      "originalBytes": 1185,
+      "originalSha256": "215ae63f109e822399d945f28b48b1cafa9fedabe8e4770f55d6fa78a716ad87",
+      "portableBytes": 1273,
+      "portableSha256": "57373e2828300f99fbd06dc1f043d2c6c6d54d179240f318b9ccbbe560da7adf",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/launch.json",
+      "originalBytes": 690,
+      "originalSha256": "0bd089c67f64dbffa8f5a11864ba562edf89c3799fc6218308274a44920fdd6c",
+      "portableBytes": 709,
+      "portableSha256": "78aec34fa5caa3028319123d7756ad6ca326b8868bdce7459eb588312ba7876d",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/quiet-window-grant.json",
+      "originalBytes": 792,
+      "originalSha256": "abb3c4c7b64c338f0a792404e6869807fd48f7cba19293a4745953510a0b6f82",
+      "portableBytes": 866,
+      "portableSha256": "0eab8e6f8c31dfbf3258e463f363f6c7bc51fcf9da78d9fa46011b4e8d87e8f8",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/sequence-summary.json",
+      "originalBytes": 4088,
+      "originalSha256": "55b3a29c8a05aebd974e18e2c0afd4050c486726c69538694513e79d5414b1c5",
+      "portableBytes": 5477,
+      "portableSha256": "b9858cc263cc06912aaf9b0b0ee7cb07dcbc21527c8191177a5bf4d5eb5e3263",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/spec.json",
+      "originalBytes": 1269,
+      "originalSha256": "bcad90710633fd726f0f81c68a295091a300cdba1b99be6e9519175290fa3ec2",
+      "portableBytes": 1139,
+      "portableSha256": "3b01e244f8a319f79ef1a0d75e231f91d18ec5c635e08da74344aa640f798be6",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/isolated/prepare-receipt.json",
+      "originalBytes": 272944,
+      "originalSha256": "c57079c8fabd3263c93efc3437f92c4686653b3f2f013aff9d65077da23f025f",
+      "portableBytes": 266049,
+      "portableSha256": "7fbcd4818298a0a79a7e800e60adc31c01f0200e725cd5462fee959606f865cb",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/isolated/source-snapshot.json",
+      "originalBytes": 270386,
+      "originalSha256": "c95c717e3f8f958320c4ca15f6fd52be7cbe3f4c9f62477205a3c567aca634d6",
+      "portableBytes": 263604,
+      "portableSha256": "6074c8290cafffda7a02d786f1dd350d736150a003736d9ebea2ced1bf73a102",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/cold77-normal-launch/canary-release-audit.json",
+      "originalBytes": 215,
+      "originalSha256": "403a8f827dbbf1960de310065deb06358873a675ffcf4237da56c76b5f16e393",
+      "portableBytes": 206,
+      "portableSha256": "b50c5b6aa3950f54f48fd1c98f30b651c1463996a1c8ed8a4d0c79267cd2c924",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/cold77-normal-launch/launcher-identity.json",
+      "originalBytes": 738,
+      "originalSha256": "5a2b3a5a2b7898a2c8533315da2ca16d1e7be9a43553e8f1d8ebe6d92ef4b896",
+      "portableBytes": 454,
+      "portableSha256": "2d8c1906d761a401ab6b5b03eb8882dc9cf3d5c613ac8cc799fac0519be5f38e",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/cold77-normal-launch/normal-exit.json",
+      "originalBytes": 348,
+      "originalSha256": "a8bc473a6a617182eedff7ba36b2f000dfeef8acd189a9cc103b31a8379b50b0",
+      "portableBytes": 338,
+      "portableSha256": "c3afba8bf210fe8f6f7e580ffedd25eb5a84c8d5e7032a9e67fb400bf41977cf",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/cold77-normal-launch/normal-owner.json",
+      "originalBytes": 3097,
+      "originalSha256": "72408922f0d7d0f1ad90d601106d29ebf4454f913e2804bbed03695cdbb92178",
+      "portableBytes": 1888,
+      "portableSha256": "b27f0c90301d45134dd15dc52d6d13d7d76dfca42eacdce43a4785da0fafb810",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/cold77-normal-launch/preflight.json",
+      "originalBytes": 96224,
+      "originalSha256": "3366c9b289b3aaf030fb311b5fe59e09c525686457ec469b4f25735e29899b0b",
+      "portableBytes": 66000,
+      "portableSha256": "aec7a0e16fad658e173727bf6cf6c458f42f298109189585c9c59dcd0f289662",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/cold77-normal-launch/quiet-window-grant.json",
+      "originalBytes": 885,
+      "originalSha256": "8d0259a24a292c62b06ad3abff390aa49245684f09701549fcb14d3e730af92a",
+      "portableBytes": 866,
+      "portableSha256": "e24127c32338aadac1b1e68b04fdbdba789870807c903f7b4c6301c1bf30b68b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/private-instrument-diagnostic/build-launch.json",
+      "originalBytes": 5374,
+      "originalSha256": "3742f96bde5e3bc3903edcc286816d80a7d013a20ee4f9dbd73fa9654c45d6ba",
+      "portableBytes": 5346,
+      "portableSha256": "b0bea8e7ea475074f6d1dc20b423175d731bcd6321b726538e62009e4551ddba",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/private-instrument-diagnostic/independent-release.json",
+      "originalBytes": 1151,
+      "originalSha256": "2b7ebe5dbcbce6c6f128c8fe7a0eb24826ab43bd12197cd94c8fbb03fb26fcb1",
+      "portableBytes": 1109,
+      "portableSha256": "1ff99213d20c3128a5896198acf5664490764d732e4c72915b6a39638343741b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/private-instrument-diagnostic/launch.json",
+      "originalBytes": 1099,
+      "originalSha256": "9c7ee19d14bd5a74b04c3f99dd82578280fe7ead074671dee864a2cb415b5122",
+      "portableBytes": 1128,
+      "portableSha256": "910b5937aa0cab90352fd96f69227c86876b8a0fcba371a569f4ff7a0bac397d",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/private-instrument-diagnostic/private-source-snapshot.json",
+      "originalBytes": 217900,
+      "originalSha256": "61f651ca35549b104e963c652d391dfc427c11eb56849dbcf70ea9afc566634f",
+      "portableBytes": 264067,
+      "portableSha256": "e892ccb664293697b9b1af3ec08b0a7a24fbb96b9b79b42cd825e8bb3ed6ee5f",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/private-instrument-diagnostic/result.json",
+      "originalBytes": 56601,
+      "originalSha256": "df9a07d476a7a9662a57f6722f734b4c48c7148ef06a78f9bbc8ef6bd8ca760a",
+      "portableBytes": 69288,
+      "portableSha256": "ccfb98df025bac7a1e4a82818dd1d1561b5f0400cf8cc21630f3e89b28056b27",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/current-source-archive/archive-manifest.json",
+      "originalBytes": 4350,
+      "originalSha256": "04935c85cd9f152f81053f23462e1d158b7321ac74bbdc997f3ca117059c08d9",
+      "portableBytes": 4267,
+      "portableSha256": "1d1e76e1565106c934999cf3d8879a04f668ca550a23bbf901f917622d3bb613",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/current-source-archive/isolated/declared-baseline-originals.tar.gz",
+      "originalBytes": 29280,
+      "originalSha256": "aa79b13b3221727d5b82fada623d34fa819ba5829fa4bbb1f6d17daf16b2cf41",
+      "portableBytes": 29280,
+      "portableSha256": "aa79b13b3221727d5b82fada623d34fa819ba5829fa4bbb1f6d17daf16b2cf41",
+      "derivation": "EXACT_BYTES"
+    },
+    {
+      "member": "current/current-source-archive/isolated/overlay.tar.gz",
+      "originalBytes": 17328,
+      "originalSha256": "f01a134d4f4be0611a626f6a3a16cded667b6867f2c58694a40723294294045f",
+      "portableBytes": 17328,
+      "portableSha256": "f01a134d4f4be0611a626f6a3a16cded667b6867f2c58694a40723294294045f",
+      "derivation": "EXACT_BYTES"
+    },
+    {
+      "member": "current/current-source-archive/isolated/prepare-receipt.json",
+      "originalBytes": 272944,
+      "originalSha256": "c57079c8fabd3263c93efc3437f92c4686653b3f2f013aff9d65077da23f025f",
+      "portableBytes": 266049,
+      "portableSha256": "7fbcd4818298a0a79a7e800e60adc31c01f0200e725cd5462fee959606f865cb",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/current-source-archive/isolated/source-delta.json",
+      "originalBytes": 457806,
+      "originalSha256": "19469ca4e1640db380bf80e12b1ad65368b641d060cfd8c70fdbb36a074acbb6",
+      "portableBytes": 447572,
+      "portableSha256": "cc91b8ac4971eadf965471b4c23434be64ebe1816fba569b2e908376eaf1361a",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/current-source-archive/isolated/source-delta.patch.gz",
+      "originalBytes": 4212904,
+      "originalSha256": "fe683de0c2291ec3eb4568324da86f3d5edc4875ab74122d175dbbd0a01907b1",
+      "portableBytes": 4212904,
+      "portableSha256": "fe683de0c2291ec3eb4568324da86f3d5edc4875ab74122d175dbbd0a01907b1",
+      "derivation": "EXACT_BYTES"
+    },
+    {
+      "member": "current/current-source-archive/isolated/source-file-audit.json",
+      "originalBytes": 8299,
+      "originalSha256": "7463a07e43cf78df7bd04d0115c31776938bd044b639496b4943aaddcaa273ae",
+      "portableBytes": 8109,
+      "portableSha256": "b13b15bc4ccb03f8a92c16df47a5612d3909c8cc83771b6bddedb29c215badf2",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/current-source-archive/isolated/source-snapshot.json",
+      "originalBytes": 270386,
+      "originalSha256": "c95c717e3f8f958320c4ca15f6fd52be7cbe3f4c9f62477205a3c567aca634d6",
+      "portableBytes": 263604,
+      "portableSha256": "6074c8290cafffda7a02d786f1dd350d736150a003736d9ebea2ced1bf73a102",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/sequence-summary.json",
+      "originalBytes": 14960,
+      "originalSha256": "e7e1ee3bc81e7a4fcfb933aa804e081c1966694b633ea29830643d64eda43046",
+      "portableBytes": 21666,
+      "portableSha256": "57a415e5c164fa0f5687b8b7c5e77661ba932a780aa1138b10973bf40d371e17",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/spec.json",
+      "originalBytes": 74309,
+      "originalSha256": "bebc744f0dfc08aec122dcad0f00539a1c0535dd52b3356192d9354dfeac933e",
+      "portableBytes": 60879,
+      "portableSha256": "317572b6aada7572dfbf82555f5febcfe1c04a359f09bdb68dda02b1cac70b67",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/cold-spec.json",
+      "originalBytes": 284,
+      "originalSha256": "765ac95bf730a8d5a54fe9fd424811049c0fd7ef69a106462d6cd7414dca5006",
+      "portableBytes": 374,
+      "portableSha256": "cf7f5b2d14b0fac1e0ce76c7f47c0173b78bc848c23ed3855f4c71cdfb637135",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/input-audit-after.json",
+      "originalBytes": 1185,
+      "originalSha256": "215ae63f109e822399d945f28b48b1cafa9fedabe8e4770f55d6fa78a716ad87",
+      "portableBytes": 1273,
+      "portableSha256": "57373e2828300f99fbd06dc1f043d2c6c6d54d179240f318b9ccbbe560da7adf",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/input-audit-before.json",
+      "originalBytes": 1185,
+      "originalSha256": "215ae63f109e822399d945f28b48b1cafa9fedabe8e4770f55d6fa78a716ad87",
+      "portableBytes": 1273,
+      "portableSha256": "57373e2828300f99fbd06dc1f043d2c6c6d54d179240f318b9ccbbe560da7adf",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/normalized-receipt.json",
+      "originalBytes": 2416,
+      "originalSha256": "c252220baf44c937bab933769e28fe562d4ebdc049da2f6878f8ece97194c6a2",
+      "portableBytes": 2856,
+      "portableSha256": "1e51b4194b40641cb3d1908f644680d01e14b8c6306d9371f5d7c175056e76db",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/step-result.json",
+      "originalBytes": 1116,
+      "originalSha256": "2698ec84e4498dc4604e964f5d99b0a113c63628232a1d299320b872f4f8d276",
+      "portableBytes": 1388,
+      "portableSha256": "f2f17ff0e7f90d336cc5828538909cc7f25f6467186ece778a0532d3c69e4eff",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/strict-reader-result.json",
+      "originalBytes": 644,
+      "originalSha256": "eab056e55f200babf545f1e90d0e0543c6fd20888b9aa0452c20b0ecc25c828f",
+      "portableBytes": 778,
+      "portableSha256": "960fba0984d911a2a09ca4f3aaeb9102849ac446869a0d6fd40d06b458e2ccde",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/worker-receipt.json",
+      "originalBytes": 2369,
+      "originalSha256": "1934ebb04c2fb2da23cae7538395a76762de6c39cde2b5d8bf471b4edc0b8e02",
+      "portableBytes": 2790,
+      "portableSha256": "8915442edeba79a8bd0e153bf00ab8c2df0345a03b42bb8b29268a9cf25a82b2",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/host-output/identity.json",
+      "originalBytes": 2127,
+      "originalSha256": "b46b1c28cd68a9413e7b5c7e7027bc3786815f5bc9a238b6530ac32538d4f981",
+      "portableBytes": 2068,
+      "portableSha256": "98567aece6fa100687634ba4b64694226bfc0135d559aa4550ff63e0c1d4911e",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/host-output/input-manifest-after.json",
+      "originalBytes": 291507,
+      "originalSha256": "4dc7a905ef16f1c4e6f1eb26fe1c507886a47bacd0c89be6ac526e3f824ad5e4",
+      "portableBytes": 291507,
+      "portableSha256": "4dc7a905ef16f1c4e6f1eb26fe1c507886a47bacd0c89be6ac526e3f824ad5e4",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/host-output/input-manifest-before.json",
+      "originalBytes": 291507,
+      "originalSha256": "3c4f8e4b282c5c2c48ce01eb86ce0f81cb76050a9971cb991e2c00c71935689e",
+      "portableBytes": 291507,
+      "portableSha256": "3c4f8e4b282c5c2c48ce01eb86ce0f81cb76050a9971cb991e2c00c71935689e",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/host-output/owned-processes-before-close.json",
+      "originalBytes": 1480,
+      "originalSha256": "cbe0b4f5094bdf13fd896509bec310885a71c11dbd81d00ba7f30207c8790f24",
+      "portableBytes": 1480,
+      "portableSha256": "cbe0b4f5094bdf13fd896509bec310885a71c11dbd81d00ba7f30207c8790f24",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/host-output/owned-processes-before.json",
+      "originalBytes": 1295,
+      "originalSha256": "4f0f2f93eba6c21a00ff5cb9a263ddaaca7284bcec65242a08bddc89e477be76",
+      "portableBytes": 1295,
+      "portableSha256": "4f0f2f93eba6c21a00ff5cb9a263ddaaca7284bcec65242a08bddc89e477be76",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/host-output/progress.json",
+      "originalBytes": 4988,
+      "originalSha256": "f0b72276cc39efacbcc9cde6cf4ece5a385df2b0d49fe07367b0721f329c26de",
+      "portableBytes": 4841,
+      "portableSha256": "543f79314639693befb61c7c0c95a590871c4981e5ecb17f49b25b199541a4b9",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/host-output/result.json",
+      "originalBytes": 5711,
+      "originalSha256": "59e4b0ff0f27695870a50ee6b6f8f29bdfccc6eb3b887739e83016bad66a82ec",
+      "portableBytes": 5564,
+      "portableSha256": "96a540a53aa4c0d44f24520ba007a5e32219494183153c5748a1ead0c98aee7b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/host-output/run-start.json",
+      "originalBytes": 351,
+      "originalSha256": "8aade02a87f5bd3f3bec0d4fefdad3df949aecd5fb343a7a191ad1f96f689b52",
+      "portableBytes": 263,
+      "portableSha256": "a2773db95394b16aff4e0c453dcad8bbb417d02d1f35e0255c0c58be9e87a997",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/host-output/runner-after.json",
+      "originalBytes": 135,
+      "originalSha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "portableBytes": 135,
+      "portableSha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/host-output/runner-before.json",
+      "originalBytes": 135,
+      "originalSha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "portableBytes": 135,
+      "portableSha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/host-output/spec.json",
+      "originalBytes": 284,
+      "originalSha256": "765ac95bf730a8d5a54fe9fd424811049c0fd7ef69a106462d6cd7414dca5006",
+      "portableBytes": 374,
+      "portableSha256": "cf7f5b2d14b0fac1e0ce76c7f47c0173b78bc848c23ed3855f4c71cdfb637135",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/001-seed-10387/host-output/cases/001-cold-10387.report.json",
+      "originalBytes": 472227,
+      "originalSha256": "bde752a47e0c5ca8d89241e0b26b2936755ffa079bf3513cba370cf182c02705",
+      "portableBytes": 472227,
+      "portableSha256": "bde752a47e0c5ca8d89241e0b26b2936755ffa079bf3513cba370cf182c02705",
+      "derivation": "EXACT_BYTES"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/cold-spec.json",
+      "originalBytes": 284,
+      "originalSha256": "08c89074cca52432eed2be4e11881be4be7abc11cc53fff2160bc54f1490caf3",
+      "portableBytes": 374,
+      "portableSha256": "6aae4916957e25b99630c226c0b17ca0bd6baf6d05059f33b90a83bf05c96b32",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/input-audit-after.json",
+      "originalBytes": 1185,
+      "originalSha256": "215ae63f109e822399d945f28b48b1cafa9fedabe8e4770f55d6fa78a716ad87",
+      "portableBytes": 1273,
+      "portableSha256": "57373e2828300f99fbd06dc1f043d2c6c6d54d179240f318b9ccbbe560da7adf",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/input-audit-before.json",
+      "originalBytes": 1185,
+      "originalSha256": "215ae63f109e822399d945f28b48b1cafa9fedabe8e4770f55d6fa78a716ad87",
+      "portableBytes": 1273,
+      "portableSha256": "57373e2828300f99fbd06dc1f043d2c6c6d54d179240f318b9ccbbe560da7adf",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/normalized-receipt.json",
+      "originalBytes": 2418,
+      "originalSha256": "c46156dfac68a41a54d16b8417376e0ad81e2f4367b6bf2a42569b24e4afe49a",
+      "portableBytes": 2858,
+      "portableSha256": "0b11cbbf6776d464a5c8fb396b07c9a62ce6d61a767e884a13b8a0bdaf8af308",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/step-result.json",
+      "originalBytes": 1118,
+      "originalSha256": "ce2b800a38f1240ac6c98bc72fbbc00ccf2c54c3dc038c9ef4d21c210d434878",
+      "portableBytes": 1390,
+      "portableSha256": "744d5f999fc1009c7530cf451545711713f35e8d5c485a3d617829771176507d",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/strict-reader-result.json",
+      "originalBytes": 646,
+      "originalSha256": "4e60aefe6ebf12138959cc7d6db27a43a407d210ce863a71ce22bcba8cb8b35f",
+      "portableBytes": 780,
+      "portableSha256": "8fac6308c1135f7d5bcfe71ac9866b67b742f1be22457e8d6190392e8adfd693",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/worker-receipt.json",
+      "originalBytes": 2371,
+      "originalSha256": "4a79372868f5f0c1fb24e2261db1da4b6e12228fae3cd087b8c950907cff0bed",
+      "portableBytes": 2792,
+      "portableSha256": "5bbe0152c16731d27854e47e8930a313b9e434cd564280dc5d582c9f4375cbf7",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/host-output/identity.json",
+      "originalBytes": 2127,
+      "originalSha256": "9d084b4e7e79c2f1b06a9b95a34f09c48d310f595fde1da051dfb44dec761baa",
+      "portableBytes": 2068,
+      "portableSha256": "6989bc08c1a8fa590aed86c4b29354e2ff6bcfd23cfd1ebd1c7ab24f94588a5e",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/host-output/input-manifest-after.json",
+      "originalBytes": 291507,
+      "originalSha256": "ba918dc9901aa98de90b01c9945005825a8c9f19b1a48c98d3fa7519b1aed6d5",
+      "portableBytes": 291507,
+      "portableSha256": "ba918dc9901aa98de90b01c9945005825a8c9f19b1a48c98d3fa7519b1aed6d5",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/host-output/input-manifest-before.json",
+      "originalBytes": 291507,
+      "originalSha256": "c21c1f2b67a2c29ec21392fa32eacebaf04fc94128d8b72abfa20f32d1c4d149",
+      "portableBytes": 291507,
+      "portableSha256": "c21c1f2b67a2c29ec21392fa32eacebaf04fc94128d8b72abfa20f32d1c4d149",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/host-output/owned-processes-before-close.json",
+      "originalBytes": 1295,
+      "originalSha256": "23c326edd1a8b6bf4f994e2548edd3ae055a0edfb9fedf915a01d75801d0ae0b",
+      "portableBytes": 1295,
+      "portableSha256": "23c326edd1a8b6bf4f994e2548edd3ae055a0edfb9fedf915a01d75801d0ae0b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/host-output/owned-processes-before.json",
+      "originalBytes": 1295,
+      "originalSha256": "23c326edd1a8b6bf4f994e2548edd3ae055a0edfb9fedf915a01d75801d0ae0b",
+      "portableBytes": 1295,
+      "portableSha256": "23c326edd1a8b6bf4f994e2548edd3ae055a0edfb9fedf915a01d75801d0ae0b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/host-output/progress.json",
+      "originalBytes": 4987,
+      "originalSha256": "593e7264ccd5c4f88f71a9fc2efaadab917ab9280e66daef18d2699ec7dd8e30",
+      "portableBytes": 4840,
+      "portableSha256": "8cc548e50ad17db685272cbdd9514bd7f818594196413951c30f3cb6dfbbe416",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/host-output/result.json",
+      "originalBytes": 5712,
+      "originalSha256": "a3438361c9ac67b20072e6267108ab31259fbeb60a9c8cf144118e4c6843bf14",
+      "portableBytes": 5565,
+      "portableSha256": "d3d00e401bbbbb586ee70a2818a73b2865444cfb41359da967e4c8f4662c555c",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/host-output/run-start.json",
+      "originalBytes": 351,
+      "originalSha256": "ec6c1b9ab20c683d3b794ac92d5c5a823d2561b126827b4ae25ac15a04cafcf6",
+      "portableBytes": 263,
+      "portableSha256": "4832af63718a42490a69b3c67e6a05f7c41f3a78bf793588b64d80dd287f82d9",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/host-output/runner-after.json",
+      "originalBytes": 135,
+      "originalSha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "portableBytes": 135,
+      "portableSha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/host-output/runner-before.json",
+      "originalBytes": 135,
+      "originalSha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "portableBytes": 135,
+      "portableSha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/host-output/spec.json",
+      "originalBytes": 284,
+      "originalSha256": "08c89074cca52432eed2be4e11881be4be7abc11cc53fff2160bc54f1490caf3",
+      "portableBytes": 374,
+      "portableSha256": "6aae4916957e25b99630c226c0b17ca0bd6baf6d05059f33b90a83bf05c96b32",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/002-seed-10226/host-output/cases/001-cold-10226.report.json",
+      "originalBytes": 647312,
+      "originalSha256": "2d6275bb7fe68aebc72f0e353678142f02f10eb2ddd12ba17ce9b19cc3d9d872",
+      "portableBytes": 647312,
+      "portableSha256": "2d6275bb7fe68aebc72f0e353678142f02f10eb2ddd12ba17ce9b19cc3d9d872",
+      "derivation": "EXACT_BYTES"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/cold-spec.json",
+      "originalBytes": 284,
+      "originalSha256": "115af258d7374e4245cb75bfd56b4a8ccf4f111572de8ec7c708bfd71b13429d",
+      "portableBytes": 374,
+      "portableSha256": "a1a600dfc723e9276523485d164816feb6a6014ca44bcf64a8fcaded263243bd",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/input-audit-after.json",
+      "originalBytes": 1185,
+      "originalSha256": "215ae63f109e822399d945f28b48b1cafa9fedabe8e4770f55d6fa78a716ad87",
+      "portableBytes": 1273,
+      "portableSha256": "57373e2828300f99fbd06dc1f043d2c6c6d54d179240f318b9ccbbe560da7adf",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/input-audit-before.json",
+      "originalBytes": 1185,
+      "originalSha256": "215ae63f109e822399d945f28b48b1cafa9fedabe8e4770f55d6fa78a716ad87",
+      "portableBytes": 1273,
+      "portableSha256": "57373e2828300f99fbd06dc1f043d2c6c6d54d179240f318b9ccbbe560da7adf",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/normalized-receipt.json",
+      "originalBytes": 2464,
+      "originalSha256": "43c87da794895e58278db3a16f6657e8066decf4b9d1ac2ed80f21f2888bbac1",
+      "portableBytes": 2904,
+      "portableSha256": "f43035b885b8118b1d753b46fb8b8bee13cfb7593658a2f751ebbaf594507775",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/step-result.json",
+      "originalBytes": 1144,
+      "originalSha256": "5ebfbb9c72b44158ac5c4c3f2c93787a579ab24179b290679fdbc1bfe3589a9f",
+      "portableBytes": 1416,
+      "portableSha256": "9a9a4186c70117d08ee7c3b85c4c47a4a66e53e943774b61cfc417d7f6ee7672",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/strict-reader-result.json",
+      "originalBytes": 669,
+      "originalSha256": "2fde3d0d564f3c14d20a4b94264a83595515a29043afff8bc433f6242dcc9b08",
+      "portableBytes": 803,
+      "portableSha256": "e21853f865536c9ec4156baf1fc6cc633878ea3139fe90cf726354e02e326462",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/worker-receipt.json",
+      "originalBytes": 2390,
+      "originalSha256": "2f27c5861bfeff6eef40439ce820ff03377a6b0a443e070f5fd5d94443f15b90",
+      "portableBytes": 2811,
+      "portableSha256": "a77ff973ba66bab505560ba291a2b28c66a5812085585d535cc83bc0e1f8ca8d",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/host-output/identity.json",
+      "originalBytes": 2123,
+      "originalSha256": "36e86c9c432ec430851592ef6c5a7f047a4e9b2ccedee5df8f1a09c56be5dd3c",
+      "portableBytes": 2064,
+      "portableSha256": "50c5e131b7c653ba409e69834236f15d5306ce9706b12c6fc55e8bb5d767b29c",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/host-output/input-manifest-after.json",
+      "originalBytes": 291507,
+      "originalSha256": "96edffccd7231e28123e025f58b702d602206fc1b1212e0e627a799132624637",
+      "portableBytes": 291507,
+      "portableSha256": "96edffccd7231e28123e025f58b702d602206fc1b1212e0e627a799132624637",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/host-output/input-manifest-before.json",
+      "originalBytes": 291507,
+      "originalSha256": "4afa89417279c59694fabf46967303285f0d30539df4503017bb1f2aca6cc58f",
+      "portableBytes": 291507,
+      "portableSha256": "4afa89417279c59694fabf46967303285f0d30539df4503017bb1f2aca6cc58f",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/host-output/owned-processes-before-close.json",
+      "originalBytes": 1474,
+      "originalSha256": "c6a3ee8054cf8223c5c452ed64b6a4c44234d9d458e41996b5dcf8f6ead46f9f",
+      "portableBytes": 1474,
+      "portableSha256": "c6a3ee8054cf8223c5c452ed64b6a4c44234d9d458e41996b5dcf8f6ead46f9f",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/host-output/owned-processes-before.json",
+      "originalBytes": 1290,
+      "originalSha256": "8db4b967c70acca6b2d6768f6ca87d837024f622e18f63ffd42310c4c04b4d70",
+      "portableBytes": 1290,
+      "portableSha256": "8db4b967c70acca6b2d6768f6ca87d837024f622e18f63ffd42310c4c04b4d70",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/host-output/progress.json",
+      "originalBytes": 4983,
+      "originalSha256": "9962f4af900d9f907848e56a35a37a5b7021757b2f667b4782a64313a6a94f76",
+      "portableBytes": 4836,
+      "portableSha256": "4684f05aa2f7201f4b4679ef516188c09b16f897b620f7aba0a06877f2b25f59",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/host-output/result.json",
+      "originalBytes": 5707,
+      "originalSha256": "2c5fcbc8802d9c33e2d0bf5a447c504b88911c6d39db4e9e33304233f9225fc4",
+      "portableBytes": 5560,
+      "portableSha256": "fcca9b7ad06851167e2ed6ab41e5f5fd9f296d813d300a5a9efcc4baffb5344d",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/host-output/run-start.json",
+      "originalBytes": 351,
+      "originalSha256": "f014f6d4910116831602c78e95dcf88f9654f5299882d84d794eb6c1030984c2",
+      "portableBytes": 263,
+      "portableSha256": "69bd7465fe4063fb71c12ef60e18bc98ab8da2f534eab94ff165170dad01aef0",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/host-output/runner-after.json",
+      "originalBytes": 135,
+      "originalSha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "portableBytes": 135,
+      "portableSha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/host-output/runner-before.json",
+      "originalBytes": 135,
+      "originalSha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "portableBytes": 135,
+      "portableSha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/host-output/spec.json",
+      "originalBytes": 284,
+      "originalSha256": "115af258d7374e4245cb75bfd56b4a8ccf4f111572de8ec7c708bfd71b13429d",
+      "portableBytes": 374,
+      "portableSha256": "a1a600dfc723e9276523485d164816feb6a6014ca44bcf64a8fcaded263243bd",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "cold-failed/sequence/cases/003-seed-10014/host-output/cases/001-cold-10014.report.json",
+      "originalBytes": 21115,
+      "originalSha256": "629ce01b271d4afcc03bc86f98cf3229c323a4f7668dc5ad144c22f9c049303d",
+      "portableBytes": 21115,
+      "portableSha256": "629ce01b271d4afcc03bc86f98cf3229c323a4f7668dc5ad144c22f9c049303d",
+      "derivation": "EXACT_BYTES"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/cold-spec.json",
+      "originalBytes": 284,
+      "originalSha256": "115af258d7374e4245cb75bfd56b4a8ccf4f111572de8ec7c708bfd71b13429d",
+      "portableBytes": 374,
+      "portableSha256": "a1a600dfc723e9276523485d164816feb6a6014ca44bcf64a8fcaded263243bd",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/input-audit-after.json",
+      "originalBytes": 1185,
+      "originalSha256": "215ae63f109e822399d945f28b48b1cafa9fedabe8e4770f55d6fa78a716ad87",
+      "portableBytes": 1273,
+      "portableSha256": "57373e2828300f99fbd06dc1f043d2c6c6d54d179240f318b9ccbbe560da7adf",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/input-audit-before.json",
+      "originalBytes": 1185,
+      "originalSha256": "215ae63f109e822399d945f28b48b1cafa9fedabe8e4770f55d6fa78a716ad87",
+      "portableBytes": 1273,
+      "portableSha256": "57373e2828300f99fbd06dc1f043d2c6c6d54d179240f318b9ccbbe560da7adf",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/normalized-receipt.json",
+      "originalBytes": 2418,
+      "originalSha256": "3f78cbc907d930527c0a5b1cd626342d9797f04b2cd0780df6ba55aa3517801b",
+      "portableBytes": 2858,
+      "portableSha256": "fc862fd00cf38349a5bbe1a384ecf1aa913f4a89fe3163f87c43ffbd75fcf2cc",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/step-result.json",
+      "originalBytes": 1118,
+      "originalSha256": "b4dfd703fc12d7467cee69c3b4a7422925912ecdc695db1e67285c7ad612a937",
+      "portableBytes": 1390,
+      "portableSha256": "5bbb8c33946e972bbb51e735c044f4a70eb6cf66a460a668476c16a2d1d52cf7",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/strict-reader-result.json",
+      "originalBytes": 644,
+      "originalSha256": "1edf28d7e08e01cf4cf20fb0471d1ef822ac794c11c251b32a174c99d5498348",
+      "portableBytes": 778,
+      "portableSha256": "019db0ef89ec7a8aecbdda0c3da8d5c6d951aec4db7e4a5b3f3e9486b79d37e9",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/worker-receipt.json",
+      "originalBytes": 2371,
+      "originalSha256": "c2d4975f7b82fe34b723ce621b5b4f6791af05a63d99c7af8a0346790be57685",
+      "portableBytes": 2792,
+      "portableSha256": "0f28f03b73da41b9aa23b55107027be6ac3d3a602327efa086aef42e2bfbdc05",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/host-output/identity.json",
+      "originalBytes": 2144,
+      "originalSha256": "219c433846af84061d0ca27541f42aa1a164470d05985b4c303c342913aea78f",
+      "portableBytes": 2066,
+      "portableSha256": "9666d6889bbacf45dbdeb3a0aa58ba3561164c5e346456baf9de6c623b950892",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/host-output/input-manifest-after.json",
+      "originalBytes": 291507,
+      "originalSha256": "bc90590e566bdde9cda873e5e50b3d52e0cfc89540b9a1daf968a8f672b29d0f",
+      "portableBytes": 291507,
+      "portableSha256": "bc90590e566bdde9cda873e5e50b3d52e0cfc89540b9a1daf968a8f672b29d0f",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/host-output/input-manifest-before.json",
+      "originalBytes": 291507,
+      "originalSha256": "08d5f8287e046bd425eb6fc5d26f1d38610d5e23e5c51cb092068b4e9f71911a",
+      "portableBytes": 291507,
+      "portableSha256": "08d5f8287e046bd425eb6fc5d26f1d38610d5e23e5c51cb092068b4e9f71911a",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/host-output/owned-processes-before-close.json",
+      "originalBytes": 1480,
+      "originalSha256": "4bc492ede8fabfa713f461d117acdcb7b1a799269c226afb621a3242b8a8cecc",
+      "portableBytes": 1480,
+      "portableSha256": "4bc492ede8fabfa713f461d117acdcb7b1a799269c226afb621a3242b8a8cecc",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/host-output/owned-processes-before.json",
+      "originalBytes": 1296,
+      "originalSha256": "78e23500aa801cfdeadc9599d3b19c184d0b2704a9828ccd73821d5cdf8f8150",
+      "portableBytes": 1296,
+      "portableSha256": "78e23500aa801cfdeadc9599d3b19c184d0b2704a9828ccd73821d5cdf8f8150",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/host-output/progress.json",
+      "originalBytes": 5005,
+      "originalSha256": "9a63cb2b870ae8a0a0a931d6caeab4c2c27862d60244681d8ef3df9c656fc140",
+      "portableBytes": 4839,
+      "portableSha256": "948922585ea2fd29fb6ee2824474068d8f6a8f3d8da0ffad60267ac815b223c5",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/host-output/result.json",
+      "originalBytes": 5727,
+      "originalSha256": "4549383f7a8bc110c855ee4135af3c6696275f88c2daa100f8fef365c1832f37",
+      "portableBytes": 5561,
+      "portableSha256": "f9eae362f0fc56abb7f038b7229fbb06f09a8d6f14ca7fccdb57916d0b636cf4",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/host-output/run-start.json",
+      "originalBytes": 351,
+      "originalSha256": "a5b3661725ac73696b5735cc5e22d57bb8b48740d2511e1a2c7357626f305f3a",
+      "portableBytes": 263,
+      "portableSha256": "d40b50ffd83d76cc9de64d785d5fc3822319decb71054c3c0a398a57d2a650a5",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/host-output/runner-after.json",
+      "originalBytes": 135,
+      "originalSha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "portableBytes": 135,
+      "portableSha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/host-output/runner-before.json",
+      "originalBytes": 135,
+      "originalSha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "portableBytes": 135,
+      "portableSha256": "95b3ccc1bff0a8da2387398cf1da54b294e1fdf6764e40ad137989802f1521fb",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/host-output/spec.json",
+      "originalBytes": 284,
+      "originalSha256": "115af258d7374e4245cb75bfd56b4a8ccf4f111572de8ec7c708bfd71b13429d",
+      "portableBytes": 374,
+      "portableSha256": "a1a600dfc723e9276523485d164816feb6a6014ca44bcf64a8fcaded263243bd",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "focused-diagnostic/cases/001-seed-10014/host-output/cases/001-cold-10014.report.json",
+      "originalBytes": 891460,
+      "originalSha256": "6327c59e373f08e2871888becce8d5c56065cb17463138407ce7ddce8827d305",
+      "portableBytes": 891460,
+      "portableSha256": "6327c59e373f08e2871888becce8d5c56065cb17463138407ce7ddce8827d305",
+      "derivation": "EXACT_BYTES"
+    },
+    {
+      "member": "current/isolated-build.log",
+      "originalBytes": 1282,
+      "originalSha256": "2d3217f258027958fa6a4d3dd12f910075ca1cdaee7823cdf6ccba4ded7c357f",
+      "portableBytes": 1200,
+      "portableSha256": "b0892e0ca50ed630546e366a6d7020f898e6ea16e0026539ffa256ae29ad321f",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/native-full.log",
+      "originalBytes": 4331254,
+      "originalSha256": "3c9b40b405ce75b65d712a0e8067616c44ea8982c50a51a66ce845f4151a4f6a",
+      "portableBytes": 4331254,
+      "portableSha256": "3c9b40b405ce75b65d712a0e8067616c44ea8982c50a51a66ce845f4151a4f6a",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/native-full.txt",
+      "originalBytes": 4342278,
+      "originalSha256": "4729829104c6493b50b87261ae3d7d8009eb3a0fdc19f2f019aa2b87e1a0d632",
+      "portableBytes": 4342278,
+      "portableSha256": "4729829104c6493b50b87261ae3d7d8009eb3a0fdc19f2f019aa2b87e1a0d632",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/native-append.log",
+      "originalBytes": 160164,
+      "originalSha256": "ac20fadad834776893696af62a8fa58439aecabb946be92cd2e6c309fad86ff7",
+      "portableBytes": 160164,
+      "portableSha256": "ac20fadad834776893696af62a8fa58439aecabb946be92cd2e6c309fad86ff7",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/native-append.txt",
+      "originalBytes": 161322,
+      "originalSha256": "70be50d6f3f261bbe3722b772436467022fc0191136c3d9c3899738fe044c765",
+      "portableBytes": 161322,
+      "portableSha256": "70be50d6f3f261bbe3722b772436467022fc0191136c3d9c3899738fe044c765",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/current-source-archive.log",
+      "originalBytes": 301,
+      "originalSha256": "daab3e403857a3a0a22e5273891c7ae58aca6ce97068911f22235d05d27acafa",
+      "portableBytes": 219,
+      "portableSha256": "7420aed027297b9b9296a4640d81d388b3d52ac0dd5035af642bd0e2d5984124",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/private-instrument-diagnostic/stdout.log",
+      "originalBytes": 1274,
+      "originalSha256": "ace3c6ada39d9da89b0dd5f493b8cbf58ff11d2addb796709ff04f06b96358b5",
+      "portableBytes": 1208,
+      "portableSha256": "43da2b482e5baf2696c21e819ba63bacccb7a391f5df4b6ea9643d8df3ef50d5",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "current/private-instrument-diagnostic/stderr.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "portableBytes": 0,
+      "portableSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/bounded-command-result.json",
+      "originalBytes": 268,
+      "originalSha256": "f473126f3a74fd1b1bf9d4da2e4fc10e0c110ee769635a3e9935956ab7987ce4",
+      "portableBytes": 261,
+      "portableSha256": "96dc75a0cc65aa62a591f02169e6d254892443894669871258877e72a69b4952",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/bounded-controller-identity.json",
+      "originalBytes": 833,
+      "originalSha256": "2efaa02c43072a136124711113599f73627c3f48422ced3a379b1d9d5f1972ef",
+      "portableBytes": 723,
+      "portableSha256": "46a2d3e1c689c361ee34563a518312c640b8795e6f5e8c67d46fbe03b08e980b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/bounded-process-result.json",
+      "originalBytes": 1733,
+      "originalSha256": "a84c3168c562c527dda5344adfc9bf28ff0311b87d833c15f8ee0151af3c44e4",
+      "portableBytes": 1366,
+      "portableSha256": "eed0effc79414a7d898b23da9f28fd88fb6aff45285fa69f1e7488a8845bea1e",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/controller-identity.json",
+      "originalBytes": 746,
+      "originalSha256": "309ae6d4715f813fe846c3dc43793a2954b936cf0de593b79cf7d5506fdbcfd5",
+      "portableBytes": 481,
+      "portableSha256": "508541d5e9b1158568be495214d73be6fd2c249a01d6aa582051133e8119c93b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/flow-review.json",
+      "originalBytes": 4738,
+      "originalSha256": "a16be69e0327f94f4532fc72b0bc44a72f38dda081c022fee1c97ee2e1f894de",
+      "portableBytes": 4619,
+      "portableSha256": "5906b3d1a19c92148e761fe5ec28c2c1b38df259c6e8e2487dfe0a86f893291e",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/independent-release-audit.json",
+      "originalBytes": 5294,
+      "originalSha256": "49dbd7a3a42b52efea3a2b0d28bf39ac6680ddf115347a609a03c4e89c0c76a4",
+      "portableBytes": 5104,
+      "portableSha256": "f4a6e43b5da79c55163a1369725b0ce9cd93c08730cf6352fd9eb5b3e4a1a5cb",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/listener-query-positive.json",
+      "originalBytes": 177,
+      "originalSha256": "c54026617ef02a324277d67ca545eebcd543fb912ec461067357c2e39711006d",
+      "portableBytes": 170,
+      "portableSha256": "c854f41eb48937dc3981c5c427badf53feaa1811103b1069e6964aacac76dd85",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/owned-processes.json",
+      "originalBytes": 17463,
+      "originalSha256": "9072786c2d8ee44b95b02b35544d225f044b9c3b37dc2b8b2cc602cca47eec12",
+      "portableBytes": 16015,
+      "portableSha256": "9b4af86229fb52b5173604bd5f02fc4cd25d03240d981c0fc2bbd1ca8f1e1eca",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/preview-process-identity.json",
+      "originalBytes": 514,
+      "originalSha256": "dd871240ebf5d9530d73ea15b51229d04e7d8eb5f9d84265c6022b97bb949649",
+      "portableBytes": 423,
+      "portableSha256": "9cbc9ad6a025d8128d988fe3b77a102169a5f1fc63e361fa952855c9dfb2a58e",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/preview-serving-identity.json",
+      "originalBytes": 1202,
+      "originalSha256": "8c70e189cff7d811ada26718573b37cca841fbe81b41dc1a5f4bbe5674d04572",
+      "portableBytes": 824,
+      "portableSha256": "a1815a587727dda77e51c805f75b230cb5e877ed07cce5a2b5e819d2b1b24833",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/ready.json",
+      "originalBytes": 10644,
+      "originalSha256": "21281e1278d9485643985aa00686a3cd7ec36f1398b3dddc43ed495d453a2445",
+      "portableBytes": 9775,
+      "portableSha256": "fbe50deba37ad5c7ae0d74c27f3cc26d3d5d53f3080f6fc3c9d8c7727b80237b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/result-progress.json",
+      "originalBytes": 76285,
+      "originalSha256": "f670f1186466593bd7d168c151d4638199016325443141e5240ec2feb6ef0d1e",
+      "portableBytes": 72737,
+      "portableSha256": "5477d47e2e2e9425feaefad336ff93e96917acbacd45cb7dade13f6aaf160b15",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/result.json",
+      "originalBytes": 77167,
+      "originalSha256": "e31a170528afb0b453843bb3647397c24e12e7d5edd3c24ffa20071ac43f4663",
+      "portableBytes": 73594,
+      "portableSha256": "d138ebfed567e64141226286b0d0bb1ae01de88b1979d83dd7431d06c09db5f1",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0001.json",
+      "originalBytes": 1355,
+      "originalSha256": "7bfd011a591229f621b3d557977bd3746a46df9fd7a2775b79955f45f12c8fc3",
+      "portableBytes": 1321,
+      "portableSha256": "5b86e6abc0cffb45b928ea2d0a83aa2386d9c466ed99b574a7537e768f6f5392",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0002.json",
+      "originalBytes": 274,
+      "originalSha256": "fcd7dd2732c25880631d9bd049253b450db1da53eb55f11903987ab8afa3d020",
+      "portableBytes": 263,
+      "portableSha256": "314c245819a9804e5d2c8a663821b7c13d26c6b7b2e5667598f9fae3e17bbf38",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0003.json",
+      "originalBytes": 309,
+      "originalSha256": "f3ace1bbf0b0ea8e29a1e16b5715722360688b4fddca7e7da290e449814a5b6a",
+      "portableBytes": 297,
+      "portableSha256": "0ef4903511e64d3ec257caf582f7425a7c2744c6a9f42020392e9eac85c352c1",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0004.json",
+      "originalBytes": 270,
+      "originalSha256": "a53de800f9b16d214ba972fb0c5d64f945b76bc761e3d2d5fb9141937924039e",
+      "portableBytes": 259,
+      "portableSha256": "55e32947e68fe1c7c3c0445d5c82180d6493255a79b8b8b391e1dfecc2c1a8bd",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0005.json",
+      "originalBytes": 298,
+      "originalSha256": "7493ad0c18b5431c45940d4cac8348cda3f4e37259643564d595c34f8d17b0f4",
+      "portableBytes": 286,
+      "portableSha256": "361a1763252fc9de15cc972885c17676f8fc0992d0929088caa8b30dc5f488bf",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0006.json",
+      "originalBytes": 1278,
+      "originalSha256": "54f12bb37ebd570d7a77215da4b6d050eaa40b5b9305bcd099f73625d6ecb1aa",
+      "portableBytes": 1238,
+      "portableSha256": "7226e9e5c98d69d75d3463f2270be9ac8b130a1c4333fc46a5c824ce0112b1d6",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0007.json",
+      "originalBytes": 439,
+      "originalSha256": "902e428915844b87965b7c54808687c2277e331932a8e5db5239e16c2aa118c1",
+      "portableBytes": 426,
+      "portableSha256": "1f5deefa0429a2c14bb60480b15cc668ecb20eef3270b6e49bfc8dfba7b79846",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0008.json",
+      "originalBytes": 260,
+      "originalSha256": "0b6801c78cc7acbd191213bb5233ef76d5ee5e10c8dc6df9c79206a82044518b",
+      "portableBytes": 249,
+      "portableSha256": "6f5ee53171450bd14a7151da83219236ae207ee57b4b786894e52a7cb555a6c3",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0009.json",
+      "originalBytes": 461,
+      "originalSha256": "3940286e257790b21e6fffcf34964f13c4d50aeddb84d10d3ebe34c98a964304",
+      "portableBytes": 448,
+      "portableSha256": "b9b0cc46c9bd0f1fe144ac6210da1640eb5d5408e09bdcece29b0b075fe8362d",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0010.json",
+      "originalBytes": 441,
+      "originalSha256": "c87261c4a53429c96eaad116b7895ad4ef4beba4b8f10fe708bbe7237b6605cd",
+      "portableBytes": 428,
+      "portableSha256": "9e296026658a5856522dd5df5c34fa22fc7799df6a32e2b142b05952b9c71f46",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0011.json",
+      "originalBytes": 1461,
+      "originalSha256": "caca4685a0a91eabd4f649b1ab23ce6b1a3902402a6a6b2e899d76e8180f8729",
+      "portableBytes": 1426,
+      "portableSha256": "9fe75741326c9ee10d272a5c0673fb3263579893ef437849d56776e12eb64c3d",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0012.json",
+      "originalBytes": 312,
+      "originalSha256": "23bd018ee6844226ec88f80e0fb53d8f0dec6b18dc3980a56d211bf02167571e",
+      "portableBytes": 300,
+      "portableSha256": "b442edc98245795646d3358ddebf76812ada53540f3f12dff04448b3900a9183",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0013.json",
+      "originalBytes": 266,
+      "originalSha256": "33fff550fde3a111e278e02402dea8803afef44522908a59701e335f236e2849",
+      "portableBytes": 254,
+      "portableSha256": "21a7945a9465462483843a9898586606b2566328be06c2ae1d7f5b92651cfc01",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0014.json",
+      "originalBytes": 261,
+      "originalSha256": "9f0b7d111a54e91758aa2991a906848bcb5cdba8db0367b966e767ace350c52e",
+      "portableBytes": 250,
+      "portableSha256": "b22129d03bb2a080c4f6ccbb4715b36bfe763e308ddc177713491bea4bc37448",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0015.json",
+      "originalBytes": 256,
+      "originalSha256": "35fe7949aaabc6fa156a3b109b1044153ff7bab59fde029d6c67e17199b9440b",
+      "portableBytes": 245,
+      "portableSha256": "2ddf64324fea13cfbbfdb8b4be79832373ecfc0c36105ae9a9e0d21d62c888e9",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0016.json",
+      "originalBytes": 266,
+      "originalSha256": "98aff870d34c770ed3b7a9f3c79ed4d011d4645a11083eea72a8b5863196bdd7",
+      "portableBytes": 254,
+      "portableSha256": "d7ae5db32d63acbfa1f86689988d5f1e75a617671650cca3cb9af1a6e98d6cf7",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0017.json",
+      "originalBytes": 255,
+      "originalSha256": "950347eaa1e6c7120600e666f88a910784a00e936169b522ec0f685a07165fd0",
+      "portableBytes": 244,
+      "portableSha256": "d782c707d1eeefd193682266868822a1194db2e51873de6eca3b009752f2fc61",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0018.json",
+      "originalBytes": 256,
+      "originalSha256": "8c97f0af09b7d790d5cb99dc730ad527adb90b3e311a88fab9912338cd9524af",
+      "portableBytes": 245,
+      "portableSha256": "073c01a35e47756dc007698e5abae222f595f19a66824173ca732f27733b823f",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0019.json",
+      "originalBytes": 276,
+      "originalSha256": "b73a9af0826451f8800a85cb54c8d184961e8cde42fe427dfbe8036216666a2a",
+      "portableBytes": 265,
+      "portableSha256": "aa610e28800ae8c87eca904265a07d911762c2c5f046d16ebaf672ffb6aba61b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0020.json",
+      "originalBytes": 310,
+      "originalSha256": "bd42136cda9bd2e54d492bf0f5922caaa4ec7b247ee13ec9ef70d6fec97ceea7",
+      "portableBytes": 298,
+      "portableSha256": "24c5c8caf1fd2555dc0153dc78e14741bf3dfe561c0d2433024e7dbc3a0b2709",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0021.json",
+      "originalBytes": 270,
+      "originalSha256": "65747c93441c6d7c07c71beb2676968bf20b3b5a5333f83a709e6b5f227167c3",
+      "portableBytes": 259,
+      "portableSha256": "155b025536b89362ec2cfae9f8ffd96b804994caa08a3f67af8e1626c6906943",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0022.json",
+      "originalBytes": 299,
+      "originalSha256": "e5a47ebd595035a805da7edfd37cad5e35271e41aa71d756f38a479ac270164a",
+      "portableBytes": 287,
+      "portableSha256": "238183c0b35864dd8a87c4b82d6cbc2343d2d9c05769a390ee69661174ee2bf0",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0023.json",
+      "originalBytes": 1377,
+      "originalSha256": "86a35707d203f201eed224cd888c9f80a602d3ee1351d8fdbc92dc7c48353587",
+      "portableBytes": 1337,
+      "portableSha256": "9662e2261e7370d5050854275e25b3d75eaa79f4f571191d2fe0001fd76ad6bc",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0024.json",
+      "originalBytes": 276,
+      "originalSha256": "c383619c362db99f036d0c762e0f5bde4e50624ae94053224f6ddb55a7340f1f",
+      "portableBytes": 265,
+      "portableSha256": "21265a596b9c6476cbe1ba1b59b9336d117247e1398e965833f7c3e6116056fd",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0025.json",
+      "originalBytes": 322,
+      "originalSha256": "1ba5a2460f607025003fe8c533d459607ae131bedf7629de7e61b2970e1efad7",
+      "portableBytes": 310,
+      "portableSha256": "02b60d6781772736fc9461a144e548fa7962f769bbd3677b278260ca5d5c8a56",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0026.json",
+      "originalBytes": 1333,
+      "originalSha256": "76101551433f1e667661b0c8963a129fe3ea474ef180e31e7ed50c8415cfcee0",
+      "portableBytes": 1241,
+      "portableSha256": "85c6dc1e349f6b380e3ff96b35823aa97c501e227d160c51887855f2c637d01f",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0027.json",
+      "originalBytes": 255,
+      "originalSha256": "dfd0e63177b2fdd28d819ebec14b5971c6c7fe216998a719191fbcaeceb70c33",
+      "portableBytes": 244,
+      "portableSha256": "510c9e04cfcbdfcf4719d3c601d3d9b873546119559fc26627b9d5d1672cf08c",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0028.json",
+      "originalBytes": 265,
+      "originalSha256": "84aff1b9a3a9205794fbc08fcaa2442044e94deed22f1752816583815f4b88ac",
+      "portableBytes": 253,
+      "portableSha256": "47ca5dce378f51556f15be019a19c09320f0326028f82c3687e34d16cd90901f",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0029.json",
+      "originalBytes": 291,
+      "originalSha256": "85bcae37a45a9fbfdb52e2955d55b35307115ae7a25ce49131a273c66f9323bc",
+      "portableBytes": 278,
+      "portableSha256": "53f49295669f2a697cbbb00a738abb7a7b2ebbd24167c3f0c05d97874df61239",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0030.json",
+      "originalBytes": 1336,
+      "originalSha256": "2102ab4de34bee0cfae49fc19e81db4071e4badeec0074839f39d7b4c895e9d5",
+      "portableBytes": 1244,
+      "portableSha256": "5d869ab53f14dac8256be6bde033920df10645ecabaff46644c3c6302e616863",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0031.json",
+      "originalBytes": 266,
+      "originalSha256": "545a6d827dad168fe25dbf8a103787b2cd1295a6bf5b8e52899648735a349ba1",
+      "portableBytes": 255,
+      "portableSha256": "a183d7c8744332271c391316fd7dc7e502e82605910cf19466fc8fc0b6f7e2c3",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0032.json",
+      "originalBytes": 1338,
+      "originalSha256": "ac34ef21744ce7eaa7d5d308d86de69e8d2527482fc8c7c8bab0fe805b70f445",
+      "portableBytes": 1246,
+      "portableSha256": "e951e6608298d48dd3c60b7941c5be4452461cb9aae459ea3a77bb51dba0eec3",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0033.json",
+      "originalBytes": 325,
+      "originalSha256": "83e0fa82b97c863101042e57dd26c97b75852ca3fc1ea90ff74cf361b23e6fbe",
+      "portableBytes": 313,
+      "portableSha256": "e7140b4cffb39a2ba5982c7a607cc7bb6f2b18a525e6a38e6f0fe301f666e3b8",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0034.json",
+      "originalBytes": 1338,
+      "originalSha256": "299d654fad31b577e9009740c0bc529199d64c06f0737f1ca533b1ca4124babe",
+      "portableBytes": 1246,
+      "portableSha256": "bc5d13fe41aebc3d72ed21e9cd13e9edc76628bea54adcd77b23f2273b5993ab",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0035.json",
+      "originalBytes": 1338,
+      "originalSha256": "a7514e5cd273fb0f6249f5d0d78596b0577f85037dbe9bd1291eb2625e4a870e",
+      "portableBytes": 1246,
+      "portableSha256": "fd104d5b70a1133039e2942efe70413dac0a2e261c966e0df637df42c741432d",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0036.json",
+      "originalBytes": 255,
+      "originalSha256": "1da246b536cec4d2e7fa80b5af7b56de4b7f805d681eebf1d08edffb3dfb8290",
+      "portableBytes": 244,
+      "portableSha256": "6728c12eece8a190b025d7c61199ed26b7e656258980f05fa4b80a0051cb374e",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0037.json",
+      "originalBytes": 1335,
+      "originalSha256": "f4d43d99d75cdde70fea35d9836535ddc918997313f37a8674cf598422e94387",
+      "portableBytes": 1243,
+      "portableSha256": "1e052841f7843376e0bf7f54bb32eeb6a81c8bbdc95b09d8e45a3540c3572490",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0038.json",
+      "originalBytes": 256,
+      "originalSha256": "2023a8a442d5a385a74260e4635462a76f5f7e563df60349e2f2221ae8c10a32",
+      "portableBytes": 245,
+      "portableSha256": "4a64f9cfe7c660521543572c6abb208f1fdad62918882d1545bc9e6959e6406e",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0039.json",
+      "originalBytes": 1339,
+      "originalSha256": "a975001b85c2bbaf28286d9b9a89cedd513156f8f542c2c0f5922e92b10b2d38",
+      "portableBytes": 1247,
+      "portableSha256": "094b3857589c6e5d7d071922e2d2842d5c3149ac10fd076010c735d2566a2603",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0040.json",
+      "originalBytes": 256,
+      "originalSha256": "d1ae999c3ebbefb2daec7d7957c06ea907191d123ba888dda1217d05639203cd",
+      "portableBytes": 245,
+      "portableSha256": "a0392398a9b1a8db4addd7d0d385dad4acfeeb292c48a12597a1be65e1261896",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0041.json",
+      "originalBytes": 267,
+      "originalSha256": "8163c5d8f23250537ffece2bf9ee6c1d270102bcf2ec96717cb0bb373955f56e",
+      "portableBytes": 255,
+      "portableSha256": "8c3dcb0dcdfc3015655afcef217d503844244eedd80824993f1f8218adda15ee",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0042.json",
+      "originalBytes": 290,
+      "originalSha256": "01206f268639f546e32199f4c9ac951d5c06e6b8520ce2a58a4b0554f32036a0",
+      "portableBytes": 277,
+      "portableSha256": "829e420bbafd0918856d34ead17b91a70ca9de9d2fa8999c48a128c92634bd52",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0043.json",
+      "originalBytes": 1337,
+      "originalSha256": "f7286b76b8a3ba4e29e9c6a0469a802d15c297ede9435ae478a3ce75b74cd301",
+      "portableBytes": 1245,
+      "portableSha256": "276b519f4285d8dada9d1906c0e52adb59109a8aa466f6b49af95bb475409b33",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0044.json",
+      "originalBytes": 255,
+      "originalSha256": "c4266b65f7a15712eb0d1d5ae98b895f9749df875f14fd261129011e4e880175",
+      "portableBytes": 244,
+      "portableSha256": "275826b2e55bdf782555f5d2eb440d712fa184f6a9bdf02b00691bf96273378b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0045.json",
+      "originalBytes": 267,
+      "originalSha256": "09e64d9db632faa8aa4ed8992ac3c22540dd8f04c1d114c873c3dad99c52f99e",
+      "portableBytes": 255,
+      "portableSha256": "80d725e137b195a43146de0c249f34077a05b81aef83333c85f912eca79695cd",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0046.json",
+      "originalBytes": 291,
+      "originalSha256": "5b97e74548f0aa33ac7f956ede4cc7111bd803b4c75898c7f1ae0d79295f71fc",
+      "portableBytes": 278,
+      "portableSha256": "0e1626f9547c9609b16fd05f45d7beee21eb9cc0bfe3f706997982bdab5985b5",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0047.json",
+      "originalBytes": 1337,
+      "originalSha256": "87e0aaac3eb84b53ba8855edd6fa9145d9a17e711c9fdf1c46908d05c9511ed7",
+      "portableBytes": 1245,
+      "portableSha256": "1c466c5ba9058abafda833eb769df6805201a4313d8dcce7ddd690d55f851334",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0048.json",
+      "originalBytes": 1338,
+      "originalSha256": "3c7da8e1e3464db13878c400c6f56a51d15b3b604c8515d13dc4e841beca7048",
+      "portableBytes": 1246,
+      "portableSha256": "3102bf5c44d9d264f73a20223887a5d3478e6a88fc61b0c24f4b10c7a0ace79b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0049.json",
+      "originalBytes": 261,
+      "originalSha256": "e5ca0cad17c93e0c99e7c5132aaa72e8064f2988e1c24350043ed8ca927ef43e",
+      "portableBytes": 250,
+      "portableSha256": "5e8b2118f6a99bf813760b7047e2ad23c47b749542e704dd2828438a3b96626c",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0050.json",
+      "originalBytes": 275,
+      "originalSha256": "6747998466554890dfd4e0f41646101b35f588e947601879642ef97edc26ea0e",
+      "portableBytes": 264,
+      "portableSha256": "bd2281f4239ea933a2de075920f95784c646a3782b6957db9044a68cedc2c357",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0051.json",
+      "originalBytes": 309,
+      "originalSha256": "85612e17b045e3c36d8f4260b22074e1bec13ff8fc1b7b628a3565985c786163",
+      "portableBytes": 297,
+      "portableSha256": "6873ba3ef116e3f9f33a1e38f8861b05257a56c6f00c158c8b674eae80eb37b8",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0052.json",
+      "originalBytes": 270,
+      "originalSha256": "7760295e697ad0712976f1178ae9e47660007bfac08e341b2072e9b041f6eab4",
+      "portableBytes": 259,
+      "portableSha256": "088867e49c531b7ff310b6cfa0ff304e6988c66cc5083a05e61cb79a6889d428",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0053.json",
+      "originalBytes": 300,
+      "originalSha256": "c9abc846cb9bf99e679f272f2fb906c36dbd50a433f3bcaf7ca71912c293f5c4",
+      "portableBytes": 288,
+      "portableSha256": "5f570b3c21d628f9a0112813c33cc5b8b8c1a1283ca16c71bca03baf9a299a3c",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0054.json",
+      "originalBytes": 1280,
+      "originalSha256": "3690131fc7eb0c7f2f6a7f8f6a37d1c64bb308473ff432976e3dc8602ca36809",
+      "portableBytes": 1240,
+      "portableSha256": "d93e0d20197839d94f725c70b10d2ea0477b67d2e5b48285e5eb162491c116c0",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0055.json",
+      "originalBytes": 261,
+      "originalSha256": "61aa3ce60bffb34a32a54323755290806dea0c726e8aea0d1704ea641ededfbf",
+      "portableBytes": 250,
+      "portableSha256": "1987fed31097f5f23d95ae69b42f57c1b8faa391d3754695e7c0ffbf941e9926",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0056.json",
+      "originalBytes": 266,
+      "originalSha256": "ca885da86ac9a8fa473fa5489fb9b76bb6de9be8956b45ec825bb40b53301c93",
+      "portableBytes": 254,
+      "portableSha256": "aac274c70af26bce668fb814013b74a6e7e49949302ec1036056fec89dc77aa8",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0057.json",
+      "originalBytes": 260,
+      "originalSha256": "26bddca9512437070bde5fb28d06bd5753dd00fd481cc04fdb308c03278746b4",
+      "portableBytes": 249,
+      "portableSha256": "f06642b8fb03c0b0390536f940746d9dbfbdbc073e2c312b253e9904334d5154",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0058.json",
+      "originalBytes": 256,
+      "originalSha256": "a0a282ced3d5893e39e3950d6c8999ea34fd7f8534a696d895d0bdf9d3c24f16",
+      "portableBytes": 245,
+      "portableSha256": "b6528191e00302f968073f02a8db990ec7b93ed13f11e906d18c6d8d3d57a85d",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0059.json",
+      "originalBytes": 266,
+      "originalSha256": "1f85fbedfce6f0222731fe50eda2c6e4aa6cfb4976aee2255e429a4cf234d887",
+      "portableBytes": 254,
+      "portableSha256": "cf2d525a505fcb7e69acce525ab87c0e2ac2c4cc581d033c89a97f7282de3390",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0060.json",
+      "originalBytes": 255,
+      "originalSha256": "9bab021af8ce643dd48fe5aaa618afb5616fbcf9d47df30c3f713175fc61fd8f",
+      "portableBytes": 244,
+      "portableSha256": "23a7fe23aa7dde55f76c2728a2abbc3600597bc16e3b1d3aabd68252c79ff3b0",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0061.json",
+      "originalBytes": 256,
+      "originalSha256": "f1be457f6532bb75feac7ba19d56c2f1eac89964f52307208e6332678087b6ca",
+      "portableBytes": 245,
+      "portableSha256": "b9d53915d10ff868c6ac13d9768d5f52408165413a489204d6447cdcb5494869",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0062.json",
+      "originalBytes": 276,
+      "originalSha256": "96803bd4c4c286dc4ff2bdb2abd4e28b9cb96747056f553b014d8e1a07704943",
+      "portableBytes": 265,
+      "portableSha256": "85b86aae2f302f232ecdd059692ac898d56f18274c8094d29d455ea39b19bd81",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0063.json",
+      "originalBytes": 310,
+      "originalSha256": "0de81cc6525dc29a738900bf94c303ae0292ed32b48ebf8cab793942e55c57cb",
+      "portableBytes": 298,
+      "portableSha256": "d8fe3a1def91bd0ac7452e9dd4d7f13a1d81d51de8d59ed4eee4ea6d2b6d0bff",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0064.json",
+      "originalBytes": 268,
+      "originalSha256": "f4b8c2cf47adf83776ab365bd61a9bbaf6a355d4c8f54a55a28846e65f6865f8",
+      "portableBytes": 257,
+      "portableSha256": "29a2e4b12189a7d15453423e47837e105294d6cb071c4ac4f1b7ac38ca332ee5",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0065.json",
+      "originalBytes": 299,
+      "originalSha256": "afe1114967f471bd655e81606dfff797f16b3f734786329a3248616d49c60950",
+      "portableBytes": 287,
+      "portableSha256": "0a2cb2f2e39a7ed3f48ea0a13e44630b1e312575bdf5244f546fa6b2e28b6344",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0066.json",
+      "originalBytes": 1379,
+      "originalSha256": "c27562f26d37b1e2b27a83ae962a97385febdb754fd44ccadbbb334d0d75b3fc",
+      "portableBytes": 1339,
+      "portableSha256": "625eecc78ea2c1e8aa44b6564a1e8b32d11a3ad336d2828796a85b5036d94a2c",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0067.json",
+      "originalBytes": 276,
+      "originalSha256": "d33a077fe600505f457629d415031a7e7e0d6f21b9fd30603b4b21f080709b8d",
+      "portableBytes": 265,
+      "portableSha256": "5fbf3592b2adeb8ed875f8b6929d09fb69b2c0f6479ac0039df5efe8721a62d7",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0068.json",
+      "originalBytes": 322,
+      "originalSha256": "be43a9ebfa59b71d6a746c7660597c8c470c32b095511b5dee809e95657ccbf9",
+      "portableBytes": 310,
+      "portableSha256": "757a53d090259556b2c237c4a1b2c2e297a45fb678133664314147906df93b5e",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0069.json",
+      "originalBytes": 257,
+      "originalSha256": "cdaa3825556390c4dd11ccf8dd0416114c344a4167813592724f1bd724a4efcd",
+      "portableBytes": 246,
+      "portableSha256": "1050074224247482831a6959baf1df2967b7879fec3c4e4e8382660083fb482f",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0070.json",
+      "originalBytes": 267,
+      "originalSha256": "0d9171e33128e160aba64ec4c18a5f86763675abd70c2894e8a41e6e5011f214",
+      "portableBytes": 255,
+      "portableSha256": "72c93269a02077b63970b6ca573c8d911246241765717ff9661399e0dba63a63",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0071.json",
+      "originalBytes": 291,
+      "originalSha256": "51d7022f19770f33f804defa18d711f0c5337be1a1a378c882809a5992ac9a47",
+      "portableBytes": 278,
+      "portableSha256": "a54b4b793f709293117e3662edf689ef236907c68d82e56d007cb1c03fe8d3fa",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0072.json",
+      "originalBytes": 1337,
+      "originalSha256": "3754dbb1540cf47f7167a98817fd17daf3528a2ce8536aac6dce487323249069",
+      "portableBytes": 1245,
+      "portableSha256": "38c92421bc2261da5269bef1616bb84896fb94964e94e5a34b0eb9532db72e3f",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0073.json",
+      "originalBytes": 267,
+      "originalSha256": "7ff449ec08ad763a7c72b2bc5ba37e579010f383e1f7552da405233669ad826e",
+      "portableBytes": 256,
+      "portableSha256": "97a8fa7b88f3b6f3bef48d8956f90c7bea34fdc5ad6c5b849cccf4e01f941350",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0074.json",
+      "originalBytes": 1338,
+      "originalSha256": "2bd22f9633cc55caff56573519c15d10b6863f269f9450018ccd4b1e43501a35",
+      "portableBytes": 1246,
+      "portableSha256": "fb19b2d511efe71d9b46ca3486c518db02963249b9b713da17b77ba106d76c0c",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0075.json",
+      "originalBytes": 326,
+      "originalSha256": "c7349dd4786784472e6e5bb6eb495981704d253a8f3e4440ef87964175d048f5",
+      "portableBytes": 314,
+      "portableSha256": "9c30aa81f026d25fab172a4d88b2d8ab1ae1c98ee81bf5c97837e8dcef66988e",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0076.json",
+      "originalBytes": 1338,
+      "originalSha256": "16a2f88a1ab1ee3489ecf1c5f0a3d73383edf19542e2d6492c8cdf7e2347cb0d",
+      "portableBytes": 1246,
+      "portableSha256": "665addb23d64b36c4530d0f226ce92c910d120671a52499825edbe5ca3890063",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0077.json",
+      "originalBytes": 267,
+      "originalSha256": "4908582c15be170f82f9a2eb48d5a77b616049553f5ceafda6fa364cd59fe337",
+      "portableBytes": 255,
+      "portableSha256": "a5c55822cc63af122819bfe78f84317de18d617f99d371004aa6c6b8075f8fc2",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0078.json",
+      "originalBytes": 291,
+      "originalSha256": "705aeaca2175020bf6e7a246dc1750b1bdab24b3d42d1aa6e6c0dee511babd70",
+      "portableBytes": 278,
+      "portableSha256": "e6d8d9aadc1f656e1526e2ab8747b4f32ca0839c756cbd10ca137cee186b71ae",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0079.json",
+      "originalBytes": 1338,
+      "originalSha256": "514a4cf701e4f77359abd165d5c5ae27230ae357fcf8336c0b6ef33af5f8ae6e",
+      "portableBytes": 1246,
+      "portableSha256": "d72d6b221ea3aee974cdbda659970b49f7e4d17fd96173d395c72da9a3813ac6",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0080.json",
+      "originalBytes": 255,
+      "originalSha256": "2d9fc71df8dd02f0901bafc8db0f375821f0ae94b22c7d60c4fb29cb6dcd104b",
+      "portableBytes": 244,
+      "portableSha256": "0fffe4918ad01443b1d90ae60a0fc0ec085136f190fec522a6fd1f98a95d8625",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0081.json",
+      "originalBytes": 1337,
+      "originalSha256": "d4bb76322f6a1cb8ed3c710f955f400e7d37ebf10fe347fbf7c13ba3501c3494",
+      "portableBytes": 1245,
+      "portableSha256": "96f51e55d0ff2936d4034981186b67f6432563d9b5f3009e9ee5938370e9095a",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0082.json",
+      "originalBytes": 1337,
+      "originalSha256": "3ffef8dc10cf9f8ea8e6d7ca1db0725ac1ae2da2d59af502d45faad8c086335f",
+      "portableBytes": 1245,
+      "portableSha256": "e53671141fe2312e3aa4a9dcd17b0f86d2143dadb130c90b8fffb86dfdb74759",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0083.json",
+      "originalBytes": 1338,
+      "originalSha256": "a26d852908967730fd6c860118a96474bfb864794fd743f9f34a2a4d27b67ba6",
+      "portableBytes": 1246,
+      "portableSha256": "1c0afdaa9e8f97a206f965f6134371f12168f5aa22e033cadaf32b52d56e93ba",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0084.json",
+      "originalBytes": 261,
+      "originalSha256": "a97c2ef73d0b5c06ee16a511d8142b849a2034d4eb082757d1679a220381e4c4",
+      "portableBytes": 250,
+      "portableSha256": "67f5bc8be1dab2de19884ea85240a314421c777232b2830e23844348e11cc343",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0085.json",
+      "originalBytes": 266,
+      "originalSha256": "f884ea0d4cbb5f32ebc449eeb27e24e9d58ae9cadd6dba516c77a455aba81b92",
+      "portableBytes": 254,
+      "portableSha256": "9972cf46dbb64e07288d3635caf3a13d024e3a1e43f0519e48c5f33a305708b1",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0086.json",
+      "originalBytes": 260,
+      "originalSha256": "6f97627aebaa006598518266f7cf99d8e9d2b3ce64822f684f139970c47e975d",
+      "portableBytes": 249,
+      "portableSha256": "458fe7f08c37d703efad02c035128362690b0d2e13104f534906d2022b0c6689",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0087.json",
+      "originalBytes": 254,
+      "originalSha256": "ce03b338647262f6eb287a937612de9ef01e29ea44c1ba96e3193b07ca186b76",
+      "portableBytes": 243,
+      "portableSha256": "48c31d4297af24846fed78fc1e851c40e883b4db0d4e67ebd867ba81cf4ed908",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0088.json",
+      "originalBytes": 266,
+      "originalSha256": "a9de752067fc9d1fdec155f8d3af775021a24d54ae207abec2c15004194e24e0",
+      "portableBytes": 254,
+      "portableSha256": "7b1234b1c84388897996fabd77bddf88737210772bf6e11041ae480c25c246d8",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0089.json",
+      "originalBytes": 254,
+      "originalSha256": "dc459db086a9c9e327b98e2f23edad612e1b0769533dfae9fb1a9ec82771e4de",
+      "portableBytes": 243,
+      "portableSha256": "9c5d04f50606ae45a36bc2fc5d7a860263aadad623b883464f34a255a5f7e696",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0090.json",
+      "originalBytes": 256,
+      "originalSha256": "92c6b4c5109f13219059097cf63c9eeec1dab2f3d785ed09116ee09b418e1836",
+      "portableBytes": 245,
+      "portableSha256": "fc482e734e45576f8ec61648230eb7a65562baf96af7c7191209bd51d108976c",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0091.json",
+      "originalBytes": 275,
+      "originalSha256": "b5350e212049dac7380e1c334a79243a31180387725636f593289ca792748795",
+      "portableBytes": 264,
+      "portableSha256": "bcbaf572e4d7b03295a6f01eee20128de37185c154fe0de2bc6d66129e178e3c",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0092.json",
+      "originalBytes": 309,
+      "originalSha256": "cf6c0f1a5884da6530436f3a142daa207e4036ec18f8ca76e07345c2c0a62dd9",
+      "portableBytes": 297,
+      "portableSha256": "30760e67fa7750ee6a8ce310164acb7bba7dfb9ab113f77ee5bb261967472126",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0093.json",
+      "originalBytes": 269,
+      "originalSha256": "edebfc8fee5298e64db2da30994d3ca0b1e240edb485b2e14f7200402ee8641b",
+      "portableBytes": 258,
+      "portableSha256": "79b3655ee6f8b8e1f6e7aa82ab0ef8d50cbf0112c510adb691967f1436a22458",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0094.json",
+      "originalBytes": 297,
+      "originalSha256": "14b6a0e8426cc80fb9438b18ef79557ef6019de1bef138a89d2935458cb42537",
+      "portableBytes": 285,
+      "portableSha256": "067346f92877aa43ceb3b85505447c76a35ed47f958f7884f8613d091ece60d5",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0095.json",
+      "originalBytes": 1400,
+      "originalSha256": "ed746b19b1aa379d03badf48ff80889b8c67c77e81493cc01ad1d7aad0adb26f",
+      "portableBytes": 1360,
+      "portableSha256": "f260a17bd0baa4d4d739c3c75da111adae8e6303564628c2b3b0981fb918c9b4",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0096.json",
+      "originalBytes": 275,
+      "originalSha256": "2f7e494f93474bf4f59361992fab1d083b0d757046550ead2859f82aa80d0a8a",
+      "portableBytes": 264,
+      "portableSha256": "f8f0555ee2bef5b6020fc853426d677a3acc98fa0e7246b975ef23ba90bc2122",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0097.json",
+      "originalBytes": 322,
+      "originalSha256": "086e79c1cbd872a66ce895b18c90ba074a2b9ec214ed5e2ec92c79399a5c27a8",
+      "portableBytes": 310,
+      "portableSha256": "839d3ea2e1ebd6c041709f57dd280138ab9ce2722003cb9153a84db19ce59553",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0098.json",
+      "originalBytes": 266,
+      "originalSha256": "89e1ad1f5db8c6d82be34e29ef424d920e00280eacce5e3ef78cd2f24b440d6d",
+      "portableBytes": 254,
+      "portableSha256": "2293e84c744e2899e0884dd6d42f241c9f00ea54bf9436f0e39a41b071d4d998",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0099.json",
+      "originalBytes": 290,
+      "originalSha256": "010fa7271c5d343272ba1873c9a6c0937175999f00d6492c6ca9a6eb0906c7ee",
+      "portableBytes": 277,
+      "portableSha256": "4ee6bee5d6c0323f6521cc4bc54702d50e703cc1a98ca8d3108be11a52dbb26e",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0100.json",
+      "originalBytes": 1336,
+      "originalSha256": "73365d150ed318a5fab4a82db5cbf22ad67038fca82e9819ad238cf0816c9254",
+      "portableBytes": 1244,
+      "portableSha256": "3149eb89f4b39f7d783626c006b2c03fbaabca212afdae70a039d7c9618e7962",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0101.json",
+      "originalBytes": 268,
+      "originalSha256": "ff9b55538885695a9228257b4034204198d4949172fdca7458807fd7d2148452",
+      "portableBytes": 257,
+      "portableSha256": "fbaac00bde39965997484a769a51069585885778e6634a2b8e5cdcb233501e86",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0102.json",
+      "originalBytes": 1338,
+      "originalSha256": "a463e296d359d0b1ee3750a6a6bf9456b47926e3578d9bc8bbc653a79c7dd93d",
+      "portableBytes": 1246,
+      "portableSha256": "f9751e8e62f3337dce8631b44fb20e50e26e7367f7e53a333556b4f6a77c02d6",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0103.json",
+      "originalBytes": 327,
+      "originalSha256": "32890e33ff046c13b8d9bd06cbebf6cc3029e63dfa62dcc7ddcd5bf63c4b3321",
+      "portableBytes": 315,
+      "portableSha256": "4f0a3917752a464a7c94771ba0b34aa02c4d628988ea1ac37354b9f4e2c68534",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0104.json",
+      "originalBytes": 1338,
+      "originalSha256": "0ec8cf64118b29ceedd5529cc2588aa83424e1bfb67f8c84f46a397f417ac644",
+      "portableBytes": 1246,
+      "portableSha256": "e627c37401baf1ce826dcf919353bc31b9b2510a8da44c9546e7d848f1fb45e4",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0105.json",
+      "originalBytes": 258,
+      "originalSha256": "88cc23afd077da39353732bcc211a81f7c100112751f8896655775bebc40b75e",
+      "portableBytes": 247,
+      "portableSha256": "cba29a6593db0b613d942fa4870094edef9aee2a5025466c8c15dd39b455e2a3",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0106.json",
+      "originalBytes": 1339,
+      "originalSha256": "9d84aa9fcd696041e0b0a332691799c8c2b4836f4b29bf7570939d2fee804cbd",
+      "portableBytes": 1247,
+      "portableSha256": "52f159d84a2ecbdaba1fcdc6ff79b5c304c5a1ce0b7cd1fbeb06af509b4bcdf4",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0107.json",
+      "originalBytes": 267,
+      "originalSha256": "22323d278144e4c73fd756429afe1b65df855d84014f92d3336a7f9fd92cfaaf",
+      "portableBytes": 255,
+      "portableSha256": "a94bc3ea9c4d83fd6a8d45117b1e77e4b68bcaea921b60e562bab95f1e22d9b7",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0108.json",
+      "originalBytes": 290,
+      "originalSha256": "57b36909276ecd7caeeea98ba4315b55d6c2b3c2da6d77d90929c7b5af0a59a5",
+      "portableBytes": 277,
+      "portableSha256": "af54829e8568ac654e2b6abd161cd878929987cb6bca828d2fd9162f8648fdda",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0109.json",
+      "originalBytes": 1338,
+      "originalSha256": "1d89b43a7a95429019c0934069eee78279eda90ff0695ec2749301a6773339f0",
+      "portableBytes": 1246,
+      "portableSha256": "aa61644573b9f96b7a0ecd682d801c97a87ad7943bdfe8054805c8137a2f946a",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0110.json",
+      "originalBytes": 256,
+      "originalSha256": "a5a9567750c4f6081d66f81bf6a064fbd19b2035c0f50421b0e5e454947ecb5f",
+      "portableBytes": 245,
+      "portableSha256": "336f4891b3189e0ab4f15c5c9e6d3a32c99283530ee048a2c0eadadce2d65bbb",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0111.json",
+      "originalBytes": 1339,
+      "originalSha256": "33faeab98718df6631f87be8e1e7d6657a002efd4196a03e753ab6fc11380cd8",
+      "portableBytes": 1247,
+      "portableSha256": "fda94369fee2f7a8e36600b26cd72dcb949afab20d33988455b9ec5aa1317ffc",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0112.json",
+      "originalBytes": 1337,
+      "originalSha256": "19c8a280b89f4b29c784dd63a4095a6c22c055febe1053b842b3bd79cde3070f",
+      "portableBytes": 1245,
+      "portableSha256": "a20e7ed8b00c86ca7603fa74e625e9643a6ccd654cc0d512775a97f3a92a3a7b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0113.json",
+      "originalBytes": 254,
+      "originalSha256": "e81acb31f13e49378c77e1992fd5df29061d58e0a644c2656549de31e627ff54",
+      "portableBytes": 243,
+      "portableSha256": "edc2ea9a49af29a543f31afdb56ad0f9c53cde7543c0df9d31fad4003a462f87",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0114.json",
+      "originalBytes": 1335,
+      "originalSha256": "1f51f11c1780ab106f8939887b9537c94ff7bcb9ff7d1e22ae5f2dfb05829d6d",
+      "portableBytes": 1243,
+      "portableSha256": "6201aff0d328fd997934563b5cf93a43508c4137e31d62650f94e1a7b759902a",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/responses/0115.json",
+      "originalBytes": 140,
+      "originalSha256": "febf8cc46539b792aa602b59042803bf7b79c82c6d37d3142b4ba33be2fa2ced",
+      "portableBytes": 132,
+      "portableSha256": "48623e8650e3ea8f46ad24f0ff7ea4010efc23c876d63b384aba4d2a3f849869",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0001.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0002.json",
+      "originalBytes": 52,
+      "originalSha256": "5ced35ea6e5716e2802dab89d1bace2ec5936665be47dc9645e5d833d6a99815",
+      "portableBytes": 57,
+      "portableSha256": "053a7cc72001e176787d28b3dc00d58114f3ee6abba993c6f8830a8f0c03e678",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0003.json",
+      "originalBytes": 81,
+      "originalSha256": "4507c7cff6fcf0b012159a3093d85df3014d862a84e009fb26098ced23cb304e",
+      "portableBytes": 88,
+      "portableSha256": "36a777ceed83d8be4295a22727d081adc5bbe5516548b0713a60b88ab2d9c090",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0004.json",
+      "originalBytes": 47,
+      "originalSha256": "80d1236cd728c66d146cf5b1b908c05d31a46ccfd1e293c7294ff9cda7e60ebc",
+      "portableBytes": 52,
+      "portableSha256": "c3b08feab32b219fc54ef39b6d0c74d163886a124d096999b2f7228601fe793f",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0005.json",
+      "originalBytes": 72,
+      "originalSha256": "f6cc6deb6528031e98b8be635c3bcd2d40d2e6228fc20e088b715a96df140836",
+      "portableBytes": 79,
+      "portableSha256": "46d2e9b0aa5a0a9edcc8ab1ef6f7b197f8c8ad1780e02513a2929257b47aea6b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0006.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0007.json",
+      "originalBytes": 54,
+      "originalSha256": "4a4f43eacb8b6a1dd417b59722f866064948bbd807b30dbf9e8a692ef3f04508",
+      "portableBytes": 61,
+      "portableSha256": "03822273cea68f48f2d9fe374abbe27d2590d2037b4ef25b01238d7af831f791",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0008.json",
+      "originalBytes": 38,
+      "originalSha256": "526f234d1748e850df15788a06d7d7c3955b7407cde8dc9f84fc754111cfc068",
+      "portableBytes": 43,
+      "portableSha256": "ca5ec140e38c38e00e703f1766d1b4be06c42d11b6157b245cf2901dc65de10a",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0009.json",
+      "originalBytes": 80,
+      "originalSha256": "8e8a875e6ddbe57ab08cce5be002abf5852832cb07234a0468296e3135f4a347",
+      "portableBytes": 87,
+      "portableSha256": "21e2eedb54779262c2a4872767455cac8c1d1ee94fe2cee6ba6de6bdb8edb626",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0010.json",
+      "originalBytes": 60,
+      "originalSha256": "c0dbb8c2eb8061994caecedec5d154153650a2261ea95779fa734cd430199923",
+      "portableBytes": 67,
+      "portableSha256": "1953125bae63d465e4b69046c62bba0e700668137bf03527bbc592b85b7c48ab",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0011.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0012.json",
+      "originalBytes": 48,
+      "originalSha256": "a413ff20ea4625db9ad8721dd5f45750969636ba3d98f315ec958ded3002ba0c",
+      "portableBytes": 53,
+      "portableSha256": "3cbeb959116bbcdf19fba6e35c8df5d3003a1c2ec0ebd1a6e838609b17ff97bf",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0013.json",
+      "originalBytes": 37,
+      "originalSha256": "7ba821bb039eb31b35d181255e2ba2428fd59498de02a17f5fd2b6c60ec8b710",
+      "portableBytes": 44,
+      "portableSha256": "192654b7be612116496b1ee77758fa78eb5ac8835d87b99f24ec55e2fa2cc18b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0014.json",
+      "originalBytes": 36,
+      "originalSha256": "f7bdbc65cc49faae9e6e55077a0196d34d0b4c483ee60e8376329e7c48bc1bb5",
+      "portableBytes": 41,
+      "portableSha256": "efd4f09511270a3aaf482a398b913e4e80304178983749d0977b3faa1ae6b13b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0015.json",
+      "originalBytes": 32,
+      "originalSha256": "d84bc70644d019ba744578b8f88db5aceb9a645253f9d3242cd21a54717e54b8",
+      "portableBytes": 37,
+      "portableSha256": "8783ae72f147cce95086701c11fdf24bfa103abd0cbb0354894bfcdd2b69fcf6",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0016.json",
+      "originalBytes": 37,
+      "originalSha256": "98db4e60e80ad1e227e6c566c8cd7134f442055b323e0c56ac9b4fb4f3d83f6b",
+      "portableBytes": 44,
+      "portableSha256": "bf2b844d234c5ab3edd8f12658ef0469006da1f8eb10f926371a4e33ecbff4e9",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0017.json",
+      "originalBytes": 30,
+      "originalSha256": "31cadbeb886b1f53bdaef7ebb32583113b47fda5c39eea392ae3df6c82302692",
+      "portableBytes": 35,
+      "portableSha256": "c21e6caf3d52bb0bf0f335a2a879630a93dcf1ec748a7f57ca155bee993e1a93",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0018.json",
+      "originalBytes": 32,
+      "originalSha256": "d84bc70644d019ba744578b8f88db5aceb9a645253f9d3242cd21a54717e54b8",
+      "portableBytes": 37,
+      "portableSha256": "8783ae72f147cce95086701c11fdf24bfa103abd0cbb0354894bfcdd2b69fcf6",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0019.json",
+      "originalBytes": 52,
+      "originalSha256": "5ced35ea6e5716e2802dab89d1bace2ec5936665be47dc9645e5d833d6a99815",
+      "portableBytes": 57,
+      "portableSha256": "053a7cc72001e176787d28b3dc00d58114f3ee6abba993c6f8830a8f0c03e678",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0020.json",
+      "originalBytes": 81,
+      "originalSha256": "4507c7cff6fcf0b012159a3093d85df3014d862a84e009fb26098ced23cb304e",
+      "portableBytes": 88,
+      "portableSha256": "36a777ceed83d8be4295a22727d081adc5bbe5516548b0713a60b88ab2d9c090",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0021.json",
+      "originalBytes": 47,
+      "originalSha256": "80d1236cd728c66d146cf5b1b908c05d31a46ccfd1e293c7294ff9cda7e60ebc",
+      "portableBytes": 52,
+      "portableSha256": "c3b08feab32b219fc54ef39b6d0c74d163886a124d096999b2f7228601fe793f",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0022.json",
+      "originalBytes": 72,
+      "originalSha256": "f6cc6deb6528031e98b8be635c3bcd2d40d2e6228fc20e088b715a96df140836",
+      "portableBytes": 79,
+      "portableSha256": "46d2e9b0aa5a0a9edcc8ab1ef6f7b197f8c8ad1780e02513a2929257b47aea6b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0023.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0024.json",
+      "originalBytes": 52,
+      "originalSha256": "c61f7ffeb0ce4ee17deedfa613b78e65dfd8f608f80a8b36557662a6fe97bf50",
+      "portableBytes": 57,
+      "portableSha256": "47f2c7ab37c9d5c42d90bd23d9d405422421b4e762eda7d7c59734ffe8bb70db",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0025.json",
+      "originalBytes": 53,
+      "originalSha256": "bbeed7bda3d269cc652d020045b027167169819122a38419074d5a3709017f19",
+      "portableBytes": 58,
+      "portableSha256": "5694d940f9d4e21163b29d939a278388a58dfdb89ca361de144cc24703283cfe",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0026.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0027.json",
+      "originalBytes": 32,
+      "originalSha256": "d8405a08a4a89cb030d1b4560a5cf10e7d1ed49e82da5fb600bbb4b6fe86284d",
+      "portableBytes": 37,
+      "portableSha256": "604e8d81b4f3cd478f6dcdf96b64a009ac7a49ff20f59c375e1d6911f9576ba8",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0028.json",
+      "originalBytes": 38,
+      "originalSha256": "1d5bbb34d089ee9bb6e994ef6bdf380e1ba7a6f4ca1e5e39d8e807db31ee0dba",
+      "portableBytes": 45,
+      "portableSha256": "38aab27c66127ef494c9f2ea62324a86a21a341c4608fe13f90d74cc934efb9f",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0029.json",
+      "originalBytes": 57,
+      "originalSha256": "3dfc0494b332c48e8dccddf795691ff0a56df317f96f1eaec3a1d5dad585c3a0",
+      "portableBytes": 66,
+      "portableSha256": "da31e0d47e2f283fa8a2ba582abaaa8e522849c3e83d6d1faa8e7e4c1b2a392c",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0030.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0031.json",
+      "originalBytes": 44,
+      "originalSha256": "1436eecb5bfa380fa90970cdd6a8c03016ce498827d45d6110b224ca4d7131dd",
+      "portableBytes": 49,
+      "portableSha256": "fe4e6f40885c2e4c2a490671ad55787a6472f8d06641081f1d7007c4dbe0f611",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0032.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0033.json",
+      "originalBytes": 55,
+      "originalSha256": "e1e7b13dbe061ec291604b9eeddc9dcbdb216833cf61d1186bce645b35f3bb3c",
+      "portableBytes": 60,
+      "portableSha256": "8e7355c006b28faa4fb695e0f58dd3ba495592cc1a3ab16b77d8407334b19277",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0034.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0035.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0036.json",
+      "originalBytes": 32,
+      "originalSha256": "d8405a08a4a89cb030d1b4560a5cf10e7d1ed49e82da5fb600bbb4b6fe86284d",
+      "portableBytes": 37,
+      "portableSha256": "604e8d81b4f3cd478f6dcdf96b64a009ac7a49ff20f59c375e1d6911f9576ba8",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0037.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0038.json",
+      "originalBytes": 34,
+      "originalSha256": "2e1b8ef3399598ccb15580adc27431d55b0ab6a054419148ad659c8f704d9bfe",
+      "portableBytes": 39,
+      "portableSha256": "31948b83809268bb7b07dac40216c10bf457dfa9049229475de0870f5f1ff758",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0039.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0040.json",
+      "originalBytes": 33,
+      "originalSha256": "664650f88a94dcd433c654c1bb80e04e93c5e0f33f86f65985fb27f48e0478d3",
+      "portableBytes": 38,
+      "portableSha256": "c88bf00e34c8c6af7fe9e0773f4e5d488a47fd0ffcdfe7a8c2ad6c23be1543cd",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0041.json",
+      "originalBytes": 37,
+      "originalSha256": "b2c108f3f5f3053adc9ccab373748bc3e7b5e5050d3c7ffa59a2e60a5e1e3715",
+      "portableBytes": 44,
+      "portableSha256": "80b5e7a847112bb76021e4ef661fb75f33946adb39386efbfad90bc86a0c46be",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0042.json",
+      "originalBytes": 56,
+      "originalSha256": "00c79044379d93b7d92de6c3d2f431c4b45db0462532ed96ff8b784e143a702e",
+      "portableBytes": 65,
+      "portableSha256": "3677c59a9451458e4c90c2f3fffec0333b627d0859f1a11b3c33d2dd89deb7b5",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0043.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0044.json",
+      "originalBytes": 32,
+      "originalSha256": "d8405a08a4a89cb030d1b4560a5cf10e7d1ed49e82da5fb600bbb4b6fe86284d",
+      "portableBytes": 37,
+      "portableSha256": "604e8d81b4f3cd478f6dcdf96b64a009ac7a49ff20f59c375e1d6911f9576ba8",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0045.json",
+      "originalBytes": 38,
+      "originalSha256": "1d5bbb34d089ee9bb6e994ef6bdf380e1ba7a6f4ca1e5e39d8e807db31ee0dba",
+      "portableBytes": 45,
+      "portableSha256": "38aab27c66127ef494c9f2ea62324a86a21a341c4608fe13f90d74cc934efb9f",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0046.json",
+      "originalBytes": 57,
+      "originalSha256": "3dfc0494b332c48e8dccddf795691ff0a56df317f96f1eaec3a1d5dad585c3a0",
+      "portableBytes": 66,
+      "portableSha256": "da31e0d47e2f283fa8a2ba582abaaa8e522849c3e83d6d1faa8e7e4c1b2a392c",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0047.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0048.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0049.json",
+      "originalBytes": 38,
+      "originalSha256": "526f234d1748e850df15788a06d7d7c3955b7407cde8dc9f84fc754111cfc068",
+      "portableBytes": 43,
+      "portableSha256": "ca5ec140e38c38e00e703f1766d1b4be06c42d11b6157b245cf2901dc65de10a",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0050.json",
+      "originalBytes": 52,
+      "originalSha256": "5ced35ea6e5716e2802dab89d1bace2ec5936665be47dc9645e5d833d6a99815",
+      "portableBytes": 57,
+      "portableSha256": "053a7cc72001e176787d28b3dc00d58114f3ee6abba993c6f8830a8f0c03e678",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0051.json",
+      "originalBytes": 81,
+      "originalSha256": "f979ceddfe9eae4c6cc102cded268f7daf6271f48aae857199699c507f63e423",
+      "portableBytes": 88,
+      "portableSha256": "0633efef840432d81f1172008c2893ed66719cb3c151df2cb0a273eff97ac697",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0052.json",
+      "originalBytes": 47,
+      "originalSha256": "80d1236cd728c66d146cf5b1b908c05d31a46ccfd1e293c7294ff9cda7e60ebc",
+      "portableBytes": 52,
+      "portableSha256": "c3b08feab32b219fc54ef39b6d0c74d163886a124d096999b2f7228601fe793f",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0053.json",
+      "originalBytes": 72,
+      "originalSha256": "f6cc6deb6528031e98b8be635c3bcd2d40d2e6228fc20e088b715a96df140836",
+      "portableBytes": 79,
+      "portableSha256": "46d2e9b0aa5a0a9edcc8ab1ef6f7b197f8c8ad1780e02513a2929257b47aea6b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0054.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0055.json",
+      "originalBytes": 38,
+      "originalSha256": "526f234d1748e850df15788a06d7d7c3955b7407cde8dc9f84fc754111cfc068",
+      "portableBytes": 43,
+      "portableSha256": "ca5ec140e38c38e00e703f1766d1b4be06c42d11b6157b245cf2901dc65de10a",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0056.json",
+      "originalBytes": 37,
+      "originalSha256": "7ba821bb039eb31b35d181255e2ba2428fd59498de02a17f5fd2b6c60ec8b710",
+      "portableBytes": 44,
+      "portableSha256": "192654b7be612116496b1ee77758fa78eb5ac8835d87b99f24ec55e2fa2cc18b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0057.json",
+      "originalBytes": 36,
+      "originalSha256": "f7bdbc65cc49faae9e6e55077a0196d34d0b4c483ee60e8376329e7c48bc1bb5",
+      "portableBytes": 41,
+      "portableSha256": "efd4f09511270a3aaf482a398b913e4e80304178983749d0977b3faa1ae6b13b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0058.json",
+      "originalBytes": 32,
+      "originalSha256": "d84bc70644d019ba744578b8f88db5aceb9a645253f9d3242cd21a54717e54b8",
+      "portableBytes": 37,
+      "portableSha256": "8783ae72f147cce95086701c11fdf24bfa103abd0cbb0354894bfcdd2b69fcf6",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0059.json",
+      "originalBytes": 37,
+      "originalSha256": "98db4e60e80ad1e227e6c566c8cd7134f442055b323e0c56ac9b4fb4f3d83f6b",
+      "portableBytes": 44,
+      "portableSha256": "bf2b844d234c5ab3edd8f12658ef0469006da1f8eb10f926371a4e33ecbff4e9",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0060.json",
+      "originalBytes": 30,
+      "originalSha256": "31cadbeb886b1f53bdaef7ebb32583113b47fda5c39eea392ae3df6c82302692",
+      "portableBytes": 35,
+      "portableSha256": "c21e6caf3d52bb0bf0f335a2a879630a93dcf1ec748a7f57ca155bee993e1a93",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0061.json",
+      "originalBytes": 32,
+      "originalSha256": "d84bc70644d019ba744578b8f88db5aceb9a645253f9d3242cd21a54717e54b8",
+      "portableBytes": 37,
+      "portableSha256": "8783ae72f147cce95086701c11fdf24bfa103abd0cbb0354894bfcdd2b69fcf6",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0062.json",
+      "originalBytes": 52,
+      "originalSha256": "5ced35ea6e5716e2802dab89d1bace2ec5936665be47dc9645e5d833d6a99815",
+      "portableBytes": 57,
+      "portableSha256": "053a7cc72001e176787d28b3dc00d58114f3ee6abba993c6f8830a8f0c03e678",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0063.json",
+      "originalBytes": 81,
+      "originalSha256": "f979ceddfe9eae4c6cc102cded268f7daf6271f48aae857199699c507f63e423",
+      "portableBytes": 88,
+      "portableSha256": "0633efef840432d81f1172008c2893ed66719cb3c151df2cb0a273eff97ac697",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0064.json",
+      "originalBytes": 47,
+      "originalSha256": "80d1236cd728c66d146cf5b1b908c05d31a46ccfd1e293c7294ff9cda7e60ebc",
+      "portableBytes": 52,
+      "portableSha256": "c3b08feab32b219fc54ef39b6d0c74d163886a124d096999b2f7228601fe793f",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0065.json",
+      "originalBytes": 72,
+      "originalSha256": "f6cc6deb6528031e98b8be635c3bcd2d40d2e6228fc20e088b715a96df140836",
+      "portableBytes": 79,
+      "portableSha256": "46d2e9b0aa5a0a9edcc8ab1ef6f7b197f8c8ad1780e02513a2929257b47aea6b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0066.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0067.json",
+      "originalBytes": 52,
+      "originalSha256": "c61f7ffeb0ce4ee17deedfa613b78e65dfd8f608f80a8b36557662a6fe97bf50",
+      "portableBytes": 57,
+      "portableSha256": "47f2c7ab37c9d5c42d90bd23d9d405422421b4e762eda7d7c59734ffe8bb70db",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0068.json",
+      "originalBytes": 53,
+      "originalSha256": "32a177f4b78d2f5f937a9d9cfbff24d012673ffb97039ed6c4a5c7261e9cf502",
+      "portableBytes": 58,
+      "portableSha256": "9ceca05ed765db37aceface3f7cdf4d9b11ba472bfbd8a4b94084815767384f1",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0069.json",
+      "originalBytes": 34,
+      "originalSha256": "2e1b8ef3399598ccb15580adc27431d55b0ab6a054419148ad659c8f704d9bfe",
+      "portableBytes": 39,
+      "portableSha256": "31948b83809268bb7b07dac40216c10bf457dfa9049229475de0870f5f1ff758",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0070.json",
+      "originalBytes": 38,
+      "originalSha256": "a719df2fd4e3060378d574f1d99a726568f24a52dd103501277357e39f82635f",
+      "portableBytes": 45,
+      "portableSha256": "7314a3ddd1e6ffaa894e5b9d6aa9f3d02d3ff8a16cd3759bec0d81fdf2b22c8b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0071.json",
+      "originalBytes": 57,
+      "originalSha256": "69965087232725b8b0a6a2b137445a3bd2f8f4f01f6786733d2e4d195af1145b",
+      "portableBytes": 66,
+      "portableSha256": "0ea6a116a64ee18a7db5475c6b9bc5243052c30777f4ae87580eb09d3e287e0d",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0072.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0073.json",
+      "originalBytes": 44,
+      "originalSha256": "1436eecb5bfa380fa90970cdd6a8c03016ce498827d45d6110b224ca4d7131dd",
+      "portableBytes": 49,
+      "portableSha256": "fe4e6f40885c2e4c2a490671ad55787a6472f8d06641081f1d7007c4dbe0f611",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0074.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0075.json",
+      "originalBytes": 55,
+      "originalSha256": "7b2406a758defaa350639836de0df8d76bb643093359776ea79203ccbc9a81b3",
+      "portableBytes": 60,
+      "portableSha256": "4b410345813ad5584bd2e3cd2d4275819a797cfba0a1326c349afff228644707",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0076.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0077.json",
+      "originalBytes": 38,
+      "originalSha256": "1d2cb188a6af4868b023dd53bc9dcafbcb91eae62a892b17af50315cd58a14b0",
+      "portableBytes": 45,
+      "portableSha256": "47455b4c20ff4ec9351d7a9d35dda7c454af1a8a8a0d84490f937284e3558c61",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0078.json",
+      "originalBytes": 57,
+      "originalSha256": "648f20db6e4039a8cbb1e93d65a97fd5f8b059522541517c9e9187c356d5bad0",
+      "portableBytes": 66,
+      "portableSha256": "a36b60f5a186daaa53e7e84c25b3c91d8bc90f7103ffb0aef6afe6d010ee9242",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0079.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0080.json",
+      "originalBytes": 32,
+      "originalSha256": "d8405a08a4a89cb030d1b4560a5cf10e7d1ed49e82da5fb600bbb4b6fe86284d",
+      "portableBytes": 37,
+      "portableSha256": "604e8d81b4f3cd478f6dcdf96b64a009ac7a49ff20f59c375e1d6911f9576ba8",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0081.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0082.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0083.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0084.json",
+      "originalBytes": 38,
+      "originalSha256": "526f234d1748e850df15788a06d7d7c3955b7407cde8dc9f84fc754111cfc068",
+      "portableBytes": 43,
+      "portableSha256": "ca5ec140e38c38e00e703f1766d1b4be06c42d11b6157b245cf2901dc65de10a",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0085.json",
+      "originalBytes": 37,
+      "originalSha256": "7ba821bb039eb31b35d181255e2ba2428fd59498de02a17f5fd2b6c60ec8b710",
+      "portableBytes": 44,
+      "portableSha256": "192654b7be612116496b1ee77758fa78eb5ac8835d87b99f24ec55e2fa2cc18b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0086.json",
+      "originalBytes": 36,
+      "originalSha256": "f7bdbc65cc49faae9e6e55077a0196d34d0b4c483ee60e8376329e7c48bc1bb5",
+      "portableBytes": 41,
+      "portableSha256": "efd4f09511270a3aaf482a398b913e4e80304178983749d0977b3faa1ae6b13b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0087.json",
+      "originalBytes": 32,
+      "originalSha256": "d84bc70644d019ba744578b8f88db5aceb9a645253f9d3242cd21a54717e54b8",
+      "portableBytes": 37,
+      "portableSha256": "8783ae72f147cce95086701c11fdf24bfa103abd0cbb0354894bfcdd2b69fcf6",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0088.json",
+      "originalBytes": 37,
+      "originalSha256": "98db4e60e80ad1e227e6c566c8cd7134f442055b323e0c56ac9b4fb4f3d83f6b",
+      "portableBytes": 44,
+      "portableSha256": "bf2b844d234c5ab3edd8f12658ef0469006da1f8eb10f926371a4e33ecbff4e9",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0089.json",
+      "originalBytes": 30,
+      "originalSha256": "31cadbeb886b1f53bdaef7ebb32583113b47fda5c39eea392ae3df6c82302692",
+      "portableBytes": 35,
+      "portableSha256": "c21e6caf3d52bb0bf0f335a2a879630a93dcf1ec748a7f57ca155bee993e1a93",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0090.json",
+      "originalBytes": 32,
+      "originalSha256": "d84bc70644d019ba744578b8f88db5aceb9a645253f9d3242cd21a54717e54b8",
+      "portableBytes": 37,
+      "portableSha256": "8783ae72f147cce95086701c11fdf24bfa103abd0cbb0354894bfcdd2b69fcf6",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0091.json",
+      "originalBytes": 52,
+      "originalSha256": "5ced35ea6e5716e2802dab89d1bace2ec5936665be47dc9645e5d833d6a99815",
+      "portableBytes": 57,
+      "portableSha256": "053a7cc72001e176787d28b3dc00d58114f3ee6abba993c6f8830a8f0c03e678",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0092.json",
+      "originalBytes": 81,
+      "originalSha256": "528f368e97b5ce1cd04ca9ff3f51c67f66a6f007c624cbf5d3059b42f6a4c770",
+      "portableBytes": 88,
+      "portableSha256": "efb2e05ede878285eca0768cb5f99a3bae9bcb7d4f50e2457734d0f85af396a8",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0093.json",
+      "originalBytes": 47,
+      "originalSha256": "80d1236cd728c66d146cf5b1b908c05d31a46ccfd1e293c7294ff9cda7e60ebc",
+      "portableBytes": 52,
+      "portableSha256": "c3b08feab32b219fc54ef39b6d0c74d163886a124d096999b2f7228601fe793f",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0094.json",
+      "originalBytes": 72,
+      "originalSha256": "f6cc6deb6528031e98b8be635c3bcd2d40d2e6228fc20e088b715a96df140836",
+      "portableBytes": 79,
+      "portableSha256": "46d2e9b0aa5a0a9edcc8ab1ef6f7b197f8c8ad1780e02513a2929257b47aea6b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0095.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0096.json",
+      "originalBytes": 52,
+      "originalSha256": "c61f7ffeb0ce4ee17deedfa613b78e65dfd8f608f80a8b36557662a6fe97bf50",
+      "portableBytes": 57,
+      "portableSha256": "47f2c7ab37c9d5c42d90bd23d9d405422421b4e762eda7d7c59734ffe8bb70db",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0097.json",
+      "originalBytes": 53,
+      "originalSha256": "d20046c8084d625a371c13d0fa5a08d3b64e7641db7b0c7d0ba09a4b37a9897f",
+      "portableBytes": 58,
+      "portableSha256": "dceb0145a42d10eb4a7c0aaf824d42199fbfa8ae26cbd3d0ab8776829e2e3bd1",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0098.json",
+      "originalBytes": 37,
+      "originalSha256": "58602795ce282a5896caa57ea8e336200fa22337e5cf3ad506d5fd0fff365a14",
+      "portableBytes": 44,
+      "portableSha256": "29ae8089462d3888fbdf63abc891097cc8eb9066bcad398751e8ad55278e04b1",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0099.json",
+      "originalBytes": 56,
+      "originalSha256": "671dab036f99375e7fcce711d07e8d201152502db682bed5ff1f3c434a0bb587",
+      "portableBytes": 65,
+      "portableSha256": "00776cd3b079300ac78aecfdf411dff42505eba357bc852a3e7371a0fe23fe6c",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0100.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0101.json",
+      "originalBytes": 44,
+      "originalSha256": "1436eecb5bfa380fa90970cdd6a8c03016ce498827d45d6110b224ca4d7131dd",
+      "portableBytes": 49,
+      "portableSha256": "fe4e6f40885c2e4c2a490671ad55787a6472f8d06641081f1d7007c4dbe0f611",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0102.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0103.json",
+      "originalBytes": 55,
+      "originalSha256": "d4a8e950a671bd10cd62aa9829504799d4208e5d0c1df0d34dc284c8fe856e9d",
+      "portableBytes": 60,
+      "portableSha256": "87f95c1b525bc6769c385147e3a4574364d5cfd09f749795cee97d1393434cd6",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0104.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0105.json",
+      "originalBytes": 34,
+      "originalSha256": "2e1b8ef3399598ccb15580adc27431d55b0ab6a054419148ad659c8f704d9bfe",
+      "portableBytes": 39,
+      "portableSha256": "31948b83809268bb7b07dac40216c10bf457dfa9049229475de0870f5f1ff758",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0106.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0107.json",
+      "originalBytes": 37,
+      "originalSha256": "e3fc9905b47ddf162995b184d1b96bab2ca6c174718c8e5136727433d0666a05",
+      "portableBytes": 44,
+      "portableSha256": "5945d8b051b37a2e70108c893304fb09d0e94dfb2f03e52c5282ff17392af606",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0108.json",
+      "originalBytes": 56,
+      "originalSha256": "9cd67b995e38ca3f970666ed2902ca5526b231e498dc1566301a3ca6ce238e26",
+      "portableBytes": 65,
+      "portableSha256": "a99769f6685e1f0c62b7d04c5bcfda430a5493f32741eb16ee3c0bd9821a4123",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0109.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0110.json",
+      "originalBytes": 32,
+      "originalSha256": "d8405a08a4a89cb030d1b4560a5cf10e7d1ed49e82da5fb600bbb4b6fe86284d",
+      "portableBytes": 37,
+      "portableSha256": "604e8d81b4f3cd478f6dcdf96b64a009ac7a49ff20f59c375e1d6911f9576ba8",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0111.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0112.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0113.json",
+      "originalBytes": 32,
+      "originalSha256": "d8405a08a4a89cb030d1b4560a5cf10e7d1ed49e82da5fb600bbb4b6fe86284d",
+      "portableBytes": 37,
+      "portableSha256": "604e8d81b4f3cd478f6dcdf96b64a009ac7a49ff20f59c375e1d6911f9576ba8",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0114.json",
+      "originalBytes": 16,
+      "originalSha256": "8be301dbaf8c1c2bd3435c0d699f9e55573ccd6bd5d887acdb5caf4a0a4ce6d7",
+      "portableBytes": 19,
+      "portableSha256": "be21501cbe53096ad48298e83742b43fcfbc28eea802b56098798723eafea946",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/commands/0115.json",
+      "originalBytes": 17,
+      "originalSha256": "6ed6ed231c4056a5362eb8cce886a96a7d78c097fb54bd6ce793616c95feeebe",
+      "portableBytes": 20,
+      "portableSha256": "88c0071db4b68b77c27ddc88c553c5a98861ccb474e5dd222a476ffcce63b66b",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/adapt_headed_meter_driver.py",
+      "originalBytes": 3221,
+      "originalSha256": "e2666fa54be394b5ad13f7008d8a9205474a7cf9640e84fdb1f381d4143d0396",
+      "portableBytes": 3221,
+      "portableSha256": "e2666fa54be394b5ad13f7008d8a9205474a7cf9640e84fdb1f381d4143d0396",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/audit_epoch15_native.py",
+      "originalBytes": 34050,
+      "originalSha256": "db7f627c969b957e6e80287edc46b77ccdc7c8081755208ca15f0024f6a2a148",
+      "portableBytes": 33981,
+      "portableSha256": "6b17a0ba134d3d61ae5c553f9e753548636aeff7ff5b121ca4aea35b565d43ec",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/build_private_instrument_diagnostic.py",
+      "originalBytes": 7307,
+      "originalSha256": "fcefd4746fba16157970c672e34df5bd7b43f19446305493b5eb3457bbf08ca1",
+      "portableBytes": 7181,
+      "portableSha256": "476da255de94fda42b32aeb595604ce0d3281d27229547969565c811f2a9f9a1",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/checkpoint_current_source.py",
+      "originalBytes": 4804,
+      "originalSha256": "31c1053143b5d8ea97ffa50592397d877650be2963af8549dc15f6f31983d442",
+      "portableBytes": 4735,
+      "portableSha256": "1aa9232c3abbfca93267656f8a59a7fbe8a9249c5fae447d2f46c91f045d3154",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/checkpoint_native_archive.py",
+      "originalBytes": 4542,
+      "originalSha256": "74e69815b80bc1a1709bdbf8ae3df7317d89189de0d7fe6ebb223c3481ca422f",
+      "portableBytes": 4473,
+      "portableSha256": "59616f7579e8f834e427feef95d04d649fb499d06631e7c999b1337b27d9f89c",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/cold77_batch.py",
+      "originalBytes": 17087,
+      "originalSha256": "eac3b78ab8944766a26167c36ea808298369faf797d46a99561073a0fe6d94e6",
+      "portableBytes": 17087,
+      "portableSha256": "eac3b78ab8944766a26167c36ea808298369faf797d46a99561073a0fe6d94e6",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/cold77_case_worker.py",
+      "originalBytes": 12163,
+      "originalSha256": "1f21abd335f654da45af8be5dc7a95e05086e1375639c04d1492ecaeb1399d66",
+      "portableBytes": 12163,
+      "portableSha256": "1f21abd335f654da45af8be5dc7a95e05086e1375639c04d1492ecaeb1399d66",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/freeze_current_cold_candidate.py",
+      "originalBytes": 3284,
+      "originalSha256": "c59300334dcaddc0b49e1ca61696bab08f512eda884e43ca15d2e2c28a0de528",
+      "portableBytes": 3284,
+      "portableSha256": "c59300334dcaddc0b49e1ca61696bab08f512eda884e43ca15d2e2c28a0de528",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/headed_q30_command.py",
+      "originalBytes": 1445,
+      "originalSha256": "6c0724da96becff0a9d0717eaab22dd40508a8091072e68a87b90c084f0bfc6a",
+      "portableBytes": 1445,
+      "portableSha256": "6c0724da96becff0a9d0717eaab22dd40508a8091072e68a87b90c084f0bfc6a",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/headed_q30_ui.py",
+      "originalBytes": 11792,
+      "originalSha256": "0a8b286dd20c06187478e49e951a888ea88aea54cd5c07c3bbf27edfa8e72c22",
+      "portableBytes": 11788,
+      "portableSha256": "b64f59f4fa8c6dc608e8f599c259fd1a916db96554ff3fafa62408f74d6b9519",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/package_current_phase.py",
+      "originalBytes": 7506,
+      "originalSha256": "04ccd71929834e734e9042c8ca5a0fe941837f26ce8998817ae8dfaf910fe7fb",
+      "portableBytes": 7312,
+      "portableSha256": "e7914e59ff1b580f1b2bdebc92aa7bfd59bd5c46f2dfad9bdaa2627e918fac12",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/receipts.py",
+      "originalBytes": 8473,
+      "originalSha256": "5d0865564e39a33a679a7fe5adda0e3ba2c539ce5740034e0a495135619ab0a8",
+      "portableBytes": 8473,
+      "portableSha256": "5d0865564e39a33a679a7fe5adda0e3ba2c539ce5740034e0a495135619ab0a8",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/run_compiled_canaries_owned.py",
+      "originalBytes": 3000,
+      "originalSha256": "b58e1810f338c3e7b29430ab57796c49a996aff5ec796a758a4814b64ced39d3",
+      "portableBytes": 2975,
+      "portableSha256": "1f875fc7fabe00f52f4f54c5df521257ecf81242e4800d124de4d83b9be91a40",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/run_current_10014_diagnostic.py",
+      "originalBytes": 2269,
+      "originalSha256": "1a06811feecf91cba5a42f8ca3335493c5dbcc286e9b508d11fde4309534e2e3",
+      "portableBytes": 2216,
+      "portableSha256": "56f842888601221eec3c6ee29832d82fa1cb6eda309d95338f0384ccfa2a238a",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/run_epoch15_canaries.py",
+      "originalBytes": 6184,
+      "originalSha256": "0890337a5f938ff46e59118555969aec7ca8a6b0a5dfff2282fc00656a4ab2cb",
+      "portableBytes": 6115,
+      "portableSha256": "301ca3e805e93760b1a8654575192239890013005bc7e928b040d1bd88d3dd0d",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/run_root75_matched_diagnostic.py",
+      "originalBytes": 26291,
+      "originalSha256": "6b9178d3995aeacfeae41028cf8a92407ce2e39d5f66e05e957d419c048bd709",
+      "portableBytes": 26197,
+      "portableSha256": "23d42b79c938c0f8b74c889446c84269e1c3c1d49635732d120764ca7d264018",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/serial_runner.py",
+      "originalBytes": 28314,
+      "originalSha256": "19931855b98aeb358f16dcbd94b6c69d81a221191bed2f07697a3ccdcffff5e6",
+      "portableBytes": 28313,
+      "portableSha256": "3fa0fc3392a12de460d60cb570331775338f8841add6c8dac540d2691748cb12",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/write_current_flow_review.py",
+      "originalBytes": 4278,
+      "originalSha256": "f88552f3c789b004de8a2d14a20907d3eeee3ad02769e59d6986318776c89ac9",
+      "portableBytes": 4278,
+      "portableSha256": "f88552f3c789b004de8a2d14a20907d3eeee3ad02769e59d6986318776c89ac9",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/audit_current_headed_release.ps1",
+      "originalBytes": 2758,
+      "originalSha256": "803d0c92c304d84b54fa2dbae08381b60e04199831c886174a26efabcd23420a",
+      "portableBytes": 2758,
+      "portableSha256": "803d0c92c304d84b54fa2dbae08381b60e04199831c886174a26efabcd23420a",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/audit_failed_cold_release.ps1",
+      "originalBytes": 3604,
+      "originalSha256": "99c8d327986f3dbfb2b55afded9defffa9254ec4b16a5650bf2eddc3c6773b7c",
+      "portableBytes": 3469,
+      "portableSha256": "f82240b829db77ea2daf6de584823a9040017ba317402f829e2251bc4eb70eb1",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/headed_current_meter_launch.ps1",
+      "originalBytes": 2991,
+      "originalSha256": "91dba81741d05e607e0915a7de4f52da06358f7c691bffd86734533ff1bc73bc",
+      "portableBytes": 2897,
+      "portableSha256": "0db8065cc931eba049af97d149d8265b032a21ec16c00389e7947f8edf5bdd64",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/launch_current_cold77.ps1",
+      "originalBytes": 6516,
+      "originalSha256": "4f040d94a5a0d78cda5a4a07542eb987146d8d2a4851fee8878991a274cf83e7",
+      "portableBytes": 6422,
+      "portableSha256": "6cf77792ef343bcd982de7e3fc0a4d9f63d0b9cb390c578a4bfde06a3caf050c",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/run_current_source_archive.ps1",
+      "originalBytes": 3673,
+      "originalSha256": "7214f243f70067c35617aca332c6638a2435cc7127e9deb2441c9268e34518e7",
+      "portableBytes": 3604,
+      "portableSha256": "75b4946ced6b9f6dce74d22f4f32283394f0e6449b1829e64047fd78637ecde5",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/run_epoch15_build.ps1",
+      "originalBytes": 3716,
+      "originalSha256": "74d5c4d54b9eefdd2d994b50cb9a29523c62320fee7d0d50594ec47ba3569e8f",
+      "portableBytes": 3691,
+      "portableSha256": "9e78410d67057acf1c3457184c0f0f191af366666fb41e6f62586a7f3ca9a091",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/run_epoch15_native.ps1",
+      "originalBytes": 4870,
+      "originalSha256": "46589483aa92ceddf31bf56f1d1546e66db4b1c035c1daa115890ce8c72b5f50",
+      "portableBytes": 4772,
+      "portableSha256": "3c79f6c3dd704e41afec4a528040267d7b11ce39c9aebe700bb0c4d6fb748742",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/epoch15-task-pointer.json",
+      "originalBytes": 972,
+      "originalSha256": "85930d22f89b24ab3903b3c15f14a21c5d10536d54a0c3f316cc4ce0e23fb3f3",
+      "portableBytes": 884,
+      "portableSha256": "dee680391080c6bb1c3fa975082cc36d126fc5c58da56f5944e69a8aa38437c4",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/integration-pointer.json",
+      "originalBytes": 256,
+      "originalSha256": "d60f72079b676df51345f548c88932ed084589fa836cb2273c8a55c7ba62c21a",
+      "portableBytes": 168,
+      "portableSha256": "b7099d81810199ab94f21c7107507b3d5ab2ad750ff1646762e6cf83dfbea541",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "callers/prelaunch-helper-notes.json",
+      "originalBytes": 3418,
+      "originalSha256": "47414400039a08710362829bd30fde1d99a2d0cdf1a995c4915e113fb4e5cdbf",
+      "portableBytes": 3361,
+      "portableSha256": "b782ecc3af8df937a1a2bb17f9a02f011d50bf40638db5c79ae9792f3b927553",
+      "derivation": "PATH_AND_CREDENTIAL_STRING_SANITIZATION; semantic keys/booleans/numbers retained"
+    },
+    {
+      "member": "headed-current/screenshots/001-current-menu.png",
+      "originalBytes": 207755,
+      "originalSha256": "31a1b1acd1f1c576269b5eec41970adea01f61aeacd1c2aa4621f43009daab01",
+      "portableBytes": 207755,
+      "portableSha256": "31a1b1acd1f1c576269b5eec41970adea01f61aeacd1c2aa4621f43009daab01",
+      "derivation": "EXACT_BYTES"
+    },
+    {
+      "member": "headed-current/screenshots/002-current20-powered.png",
+      "originalBytes": 361634,
+      "originalSha256": "60b8e6a6b8bc82e09a58441421e0fd70ef37f6d643984ead81eaf70e3e5047b2",
+      "portableBytes": 361634,
+      "portableSha256": "60b8e6a6b8bc82e09a58441421e0fd70ef37f6d643984ead81eaf70e3e5047b2",
+      "derivation": "EXACT_BYTES"
+    },
+    {
+      "member": "headed-current/screenshots/003-current20-discharge.png",
+      "originalBytes": 362082,
+      "originalSha256": "a50fe7410af09105324514e8603ef3925e42b5c7632ac84502d2ca6c57022f3c",
+      "portableBytes": 362082,
+      "portableSha256": "a50fe7410af09105324514e8603ef3925e42b5c7632ac84502d2ca6c57022f3c",
+      "derivation": "EXACT_BYTES"
+    },
+    {
+      "member": "headed-current/screenshots/004-current30-powered.png",
+      "originalBytes": 344297,
+      "originalSha256": "8da61a7ab333ae6f44fe8644790b66596a4007608c7e0d27d368726ba8327d8f",
+      "portableBytes": 344297,
+      "portableSha256": "8da61a7ab333ae6f44fe8644790b66596a4007608c7e0d27d368726ba8327d8f",
+      "derivation": "EXACT_BYTES"
+    },
+    {
+      "member": "headed-current/screenshots/006-current40-powered.png",
+      "originalBytes": 329880,
+      "originalSha256": "84b29a02ec3094e69e964cfb8f39bf8212620925b8aef6304f3a55818f9f4302",
+      "portableBytes": 329880,
+      "portableSha256": "84b29a02ec3094e69e964cfb8f39bf8212620925b8aef6304f3a55818f9f4302",
+      "derivation": "EXACT_BYTES"
+    }
+  ],
+  "sanitizerBoundary": "String values/local paths sanitized; semantic JSON keys, booleans and numbers retained. Exact originals and all failures retained locally. Sanitized task callers are evidence derivatives, not executable reconstruction promises. Exact gzip patches/overlay archives and app reports were bounded and inspected for personal path patterns."
+}

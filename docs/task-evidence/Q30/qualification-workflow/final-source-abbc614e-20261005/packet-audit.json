@@ -1,0 +1,13 @@
+{
+  "status": "PASS_PORTABLE_EVIDENCE_ONLY",
+  "archiveMembersVerified": 421,
+  "standaloneFilesVerified": 9,
+  "acceptance": "BLOCKED",
+  "manifestSha256": "4de5fbd5155e9c2d39472f92ded680b5136031d21201d93ad47918b72257faa6",
+  "cold77": "FAIL",
+  "chargedRecovery": "NOT_OBSERVED",
+  "personalPathTextChecks": 425,
+  "archiveRegularMembersAndBounds": "PASS",
+  "sourceGateReuse": "Consumed source inputs unchanged; documentation/evidence-only checkpoint",
+  "reviewScope": "Root archive/hash/path audit only; no acceptance assertion"
+}

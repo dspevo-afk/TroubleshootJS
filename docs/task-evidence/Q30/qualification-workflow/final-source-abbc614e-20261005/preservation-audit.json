@@ -1,0 +1,64 @@
+{
+  "status": "PASS_RECORDED_SOURCE_AND_PRESERVED_INPUTS_UNCHANGED",
+  "sourceCandidate": "abbc614e9456d9fae56274da583175f8721a84c2",
+  "sourceIdentity": "49bff7525b019d321a821eeafb7bb15ccc0fa5d101442820dabccded5126a45c",
+  "sourceInputsChecked": 1355,
+  "preexistingUntrackedChecked": [
+    {
+      "path": "docs/task-evidence/Q30/qualification-workflow/cold77-launch-used-c2af161d006cf812bb4b22ca6efc912de2015dddd21036a7429e8a4dd191472a.json",
+      "sha256": "daa36e2ceb90d01825f99c877702ab65dc8d14c23af143bd3e05152732a6c233"
+    },
+    {
+      "path": "docs/task-evidence/Q30/scale-plan-4/__pycache__/check_d01.cpython-313.pyc",
+      "sha256": "3eea5d3a388e0497720dcf2f6cad96d0c4bea696760dc96dbe8dba9fa7e9d873"
+    },
+    {
+      "path": "tests/contracts/__pycache__/alpha_evidence_contract.cpython-313.pyc",
+      "sha256": "d4c5fd3635bd524bd0f1160869995c02c064f91ace9eb5ec49121adb2ea94387"
+    },
+    {
+      "path": "tests/contracts/__pycache__/task46_seed_reference.cpython-313.pyc",
+      "sha256": "3ae962d487e6353390e34207142c1b39a2cef86940e659f3f6dd25bce78cd715"
+    },
+    {
+      "path": "tests/qualification/q30-normal-screen/__pycache__/q30_screen_reader.cpython-313.pyc",
+      "sha256": "84e0ee1327cf7104f6dae66e8a4ba3d2542ad0a7ba6f4b4806f8bdfc25476bd0"
+    },
+    {
+      "path": "tests/qualification/q30-scale-acceptance/__pycache__/freeze_plan.cpython-313.pyc",
+      "sha256": "2aaa06e8fb17de95ec9e72de9382f8bc76a16d52286a615a1edbb7c2352e07e6"
+    },
+    {
+      "path": "tests/qualification/q30-scale-acceptance/__pycache__/q30_scale_reader.cpython-313.pyc",
+      "sha256": "e41b8404cec0b024fb983d5d678c278ea360f60798879d6c2e2ca22cbed8b76f"
+    },
+    {
+      "path": "tests/qualification/q30-scale-acceptance/__pycache__/test_q30_scale_reader.cpython-313.pyc",
+      "sha256": "beb6ffd21422cff5156bf6c92e0cdfdf0e58a3c2aabcd657e7daebc175cb31d7"
+    }
+  ],
+  "priorPacketManifestsAndListedFilesChecked": [
+    {
+      "packet": "active-readiness-review-20261004",
+      "manifestSha256": "b3982e733337ab96924d3a437b2e76976942f988ce9624666e619040f3e3b987",
+      "verifiedFiles": 40
+    },
+    {
+      "packet": "headed-visible-20261004",
+      "manifestSha256": "b0a81a80294b598008665599a10dcf367b11bf3efd39041e448c961cd7f2023f",
+      "verifiedFiles": 29
+    },
+    {
+      "packet": "remaining-gates-20261004",
+      "manifestSha256": "a17b2d7e5ebfe5b310a8776c46cdcdde0918a11f9b38b72eccae8ebab2221b97",
+      "verifiedFiles": 41
+    },
+    {
+      "packet": "cold77-actual-window-1",
+      "manifestSha256": "82e5c6aee32f1ac323caca8e5ad1ce52dfd2a63770eafe0d8890e43cd0b52ac4",
+      "verifiedFiles": 27
+    }
+  ],
+  "priorListedArtifactCount": 137,
+  "boundary": "All 1355 consumed src/tests/war/scripts bytes unchanged. Documentation/evidence-only checkpoint does not rebuild unchanged production inputs. Four earlier manifest hashes and137 listed artifacts plus eight preexisting untracked files unchanged; Desktop sibling untouched. No acceptance inferred."
+}

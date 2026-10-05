@@ -1,4 +1,71 @@
-# Current checkpoint: Q30 residual-exposure fix verified locally; acceptance blocked
+# Current checkpoint: Q30 NOT ACCEPTED; cold deadline and visible recovery gaps
+
+2026-10-05. Source candidate `abbc614e9456d9fae56274da583175f8721a84c2`,
+branch `codex/q30-multirail-qualification`; 1,355 consumed inputs, identity
+`49bff7525b019d321a821eeafb7bb15ccc0fa5d101442820dabccded5126a45c`.
+Subsequent changes are documentation/evidence only; consumed inputs unchanged.
+Q30 DISABLED / NOT ACCEPTED. No push, publication, email, evidence deletion,
+limit/save/replay/model-epoch change or U06/U07/Q60 work. Parent authorized this
+fresh final-source attempt with foreground Windows allocated; expensive gates
+ran serially. Parent owns independent acceptance.
+
+Maintained preparation PASS; actual isolated JDK8/GWT OBF build PASS/exit 0,
+106.059 s/five permutations. Compiled export/unauthorized/cancel/scope-loss
+canaries PASS, 18.423 s stage/1.109 s host cleanup. Frozen 77 roots/308 candidate
+declarations and original criteria retained. Binding negatives reject stale
+pointer and changed loader bytes before execution.
+
+Fresh full cold77 FAIL: 10387/10226 PASS (23,564/36,128 ms); 10014 TIMEOUT
+90,621 ms/435 units; 74 NOT RUN. Hypothesis proof consumed 77,908 ms. Original
+90,000 ms/640 shared/5,000 ms active limits unchanged. Host completed without
+browser errors; task job/readers closed. Independent release PASS: 32 recorded
+instances absent/three ports closed. Focused 10014 diagnostic PASS: 89,195 ms/
+440 units, only 805 ms headroom; release PASS/18 recorded observations absent/
+owned port closed. Diagnostic does not replace failed cohort. Same-day prior
+accepted root was 75,535 ms/440 units; current focused hypothesis proof took
+13.234 s longer. No demonstrated slowdown cause; failures retained.
+
+Fresh native83 PASS/exit 0/4,384.108 s; separate strict audit PASS/zero issues:
+105 service/repair, 105 sensitivity, 51 structural rows/four independent oracles.
+Append26 PASS/exit 0/216.548 s; separate strict audit PASS/zero issues. Combined
+77 structural rows: 70 accepted/seven contract-valid rejected/zero failures.
+Maintained cleanup markers verified; cleanup duration not recorded separately.
+Compact source archive PASS/source-only/exit 0/80.951 s: 1,355-input binding,
+1,276-file delta reconstruction, three overlays/four expected baseline-patch
+differences verified. Maintained compact mode omits full source trees; scratch
+retained. Native/archive release audit checked three recorded launchers absent.
+
+Private instrument diagnostic build PASS/build-only/94.591 s operation; one
+private catalog delta, public source unchanged. Actual headed 20/30/40 charged
+isolation shows DISCHARGE, but numeric OHM/DIODE recovery NOT OBSERVED at sampled
+337/330/360 s off; required recovery proof FAIL. Real UI ledger: 115 actions,
+112 PASS/three selector failures; two wrong default-family attempts excluded
+and retained. Host exit 0/input inventories unchanged. Pre-exit console and
+terminated preview exit 1 retained; separate release PASS/17 exact instances
+absent/port 53304 closed, no termination by audit. Five screenshots inspected.
+No game-function/page-evaluation calls. Guided SDK input is not CDP-wrapper or
+blind-diagnosis certification. Browser-context-close duration not recorded;
+final preview/process-query cleanup 0.630 s. Native83 and UI receipts received
+read-only leaf reviews; parent acceptance remains pending.
+
+Original normal warm-population distribution remains NOT RUN; public telemetry
+does not attest cache hits/final proof work. Current qualified private menu/replay
+and public enabled build remain BLOCKED. Old source-bound results are historical.
+[Current evidence and limits](task-evidence/Q30/qualification-workflow/final-source-abbc614e-20261005/README.md)
+contains the 421-member packet, exact reconstruction inputs, five inspected
+screenshots and preservation audit. Raw receipts, failed preparation, failures,
+source snapshots and task callers retained. Recorded owners checked released;
+archive/browser-log scratch retained. Eight pre-existing untracked files and
+Desktop sibling preserved. No wide machine changes or evidence cleanup.
+
+Next: parent adjudicates cold timing and actual recovery gaps and selects any
+controlled comparison/bounded Q30 fix. Do not reuse consumed launch grant or
+repeat full77 without rationale/new allocation; no budget waiver or public
+enablement. U06/U07/Q60 remain unstarted.
+
+---
+
+# Historical checkpoint: Q30 residual-exposure fix verified locally; acceptance blocked
 
 2026-10-04. Branch `codex/q30-multirail-qualification`; HEAD before this local
 fix checkpoint `88e9ff27411a470a6dde2120732c7e3af609257e`.

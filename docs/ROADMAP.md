@@ -7,7 +7,21 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Q30 NOT ACCEPTED - headed 20/30/40 repair/retest recorded; parent acceptance pending**
+**Current task:** **Q30 NOT ACCEPTED - cold deadline and visible recovery gaps**
+**Current-source qualification (2026-10-05):** Candidate `abbc614e`, 1,355 inputs;
+fresh maintained preparation, JDK8/GWT five-permutation build and compiled
+canaries PASS. Full cold77 FAIL: two PASS, root 10014 TIMEOUT 90,621 ms, 74 NOT RUN.
+Separate single-root PASS 89,195 ms is diagnostic only; unchanged 90 s/640 units/5 s.
+Failed cohort and cleanup/release receipts retained. Fresh full83 native and
+append26 strict audits PASS: 105 repair/105 sensitivity/77 structural roots,
+four independent oracles. Current compact source reconstruction PASS/source-only.
+Separate private instrument build PASS/build-only. Actual visible 20/30/40
+remain DISCHARGE after sampled 337/330/360 s off; numeric OHM/DIODE recovery NOT OBSERVED.
+Headed host exit0/unchanged inputs; release PASS/17 instances/port 53304 closed.
+Five screenshots inspected. Qualified admission/public enabled build blocked;
+original warm distribution and parent acceptance pending. Q30 remains disabled.
+No publication or next milestone. See current checkpoint in [task report](CODEX_TASK_REPORT.md).
+
 **Q30 headed visible followup (2026-10-04):** Parent-authorized actual headed
 Edge SDK input on the audited private production preview. Frozen 20/30/40 roots
 10387/10226/10014: three unrepaired retests failed, normal Shop/remove/compatible
