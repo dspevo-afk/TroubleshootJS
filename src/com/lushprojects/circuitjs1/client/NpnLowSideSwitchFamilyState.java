@@ -99,6 +99,13 @@ final class NpnLowSideSwitchFamilyState implements GeneratedBoardFamilyState {
         return GeneratedBoardFamilyPolicy.isFaultedTargetInstalled(instance, componentId);
     }
 
+    public String getSessionInputSignature() {
+        if ((controlCommandSwitch.position == 0) != commandedOn)
+            throw new IllegalStateException("Control command disagrees with its switch");
+        return commandedOn ? GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
+            GeneratedBoardOperationIds.CONTROL_INPUT_LOW;
+    }
+
     public GeneratedBoardOperationCatalog getOperationCatalog() { return operations; }
     public GeneratedCustomerRetestProfile getCustomerRetestProfile() { return retestProfile; }
 }

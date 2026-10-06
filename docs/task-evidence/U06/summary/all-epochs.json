@@ -1,0 +1,3904 @@
+{
+  "omittedFields": [],
+  "original": {
+    "bytes": 140859,
+    "sha256": "a8cc7b2fcf8ccffd27f931f20bbe3166c320cb01f8cf2dc221f655349ef95690",
+    "taskRootPath": "scratch/evidence-summary-final.json"
+  },
+  "receipt": {
+    "extraRepresentatives": [
+      {
+        "family": "SENSOR_CONTROL",
+        "latestPhase": "compiled-r27",
+        "seed": "1",
+        "status": "PASS"
+      }
+    ],
+    "families": [
+      {
+        "attempts": [
+          {
+            "phase": "compiled-r1",
+            "status": "FAIL"
+          },
+          {
+            "phase": "compiled-r2",
+            "status": "PASS"
+          },
+          {
+            "phase": "compiled-r13",
+            "status": "PASS"
+          },
+          {
+            "phase": "compiled-r25",
+            "status": "PASS"
+          }
+        ],
+        "family": "LED_INDICATOR",
+        "latestPhase": "compiled-r25",
+        "seed": "0",
+        "status": "PASS"
+      },
+      {
+        "attempts": [
+          {
+            "phase": "compiled-r3",
+            "status": "PASS"
+          },
+          {
+            "phase": "compiled-r16",
+            "status": "PASS"
+          },
+          {
+            "phase": "compiled-r28",
+            "status": "PASS"
+          }
+        ],
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "latestPhase": "compiled-r28",
+        "seed": "0",
+        "status": "PASS"
+      },
+      {
+        "attempts": [
+          {
+            "phase": "compiled-r4",
+            "status": "PASS"
+          },
+          {
+            "phase": "compiled-r17",
+            "status": "PASS"
+          },
+          {
+            "phase": "compiled-r29",
+            "status": "PASS"
+          }
+        ],
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "latestPhase": "compiled-r29",
+        "seed": "0",
+        "status": "PASS"
+      },
+      {
+        "attempts": [
+          {
+            "phase": "compiled-r5",
+            "status": "PASS"
+          },
+          {
+            "phase": "compiled-r18",
+            "status": "PASS"
+          },
+          {
+            "phase": "compiled-r30",
+            "status": "PASS"
+          }
+        ],
+        "family": "RC_DELAY",
+        "latestPhase": "compiled-r30",
+        "seed": "0",
+        "status": "PASS"
+      },
+      {
+        "attempts": [
+          {
+            "phase": "compiled-r6",
+            "status": "PASS"
+          },
+          {
+            "phase": "compiled-r31",
+            "status": "PASS"
+          }
+        ],
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "latestPhase": "compiled-r31",
+        "seed": "0",
+        "status": "PASS"
+      },
+      {
+        "attempts": [
+          {
+            "phase": "compiled-r7",
+            "status": "PASS"
+          },
+          {
+            "phase": "compiled-r32",
+            "status": "PASS"
+          }
+        ],
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "latestPhase": "compiled-r32",
+        "seed": "0",
+        "status": "PASS"
+      },
+      {
+        "attempts": [
+          {
+            "phase": "compiled-r8",
+            "status": "PASS"
+          },
+          {
+            "phase": "compiled-r33",
+            "status": "PASS"
+          }
+        ],
+        "family": "RELAY_OUTPUT",
+        "latestPhase": "compiled-r33",
+        "seed": "0",
+        "status": "PASS"
+      },
+      {
+        "attempts": [
+          {
+            "phase": "compiled-r9",
+            "status": "FAIL"
+          },
+          {
+            "phase": "compiled-r14",
+            "status": "PASS"
+          },
+          {
+            "phase": "compiled-r26",
+            "status": "PASS"
+          }
+        ],
+        "family": "SENSOR_CONTROL",
+        "latestPhase": "compiled-r26",
+        "seed": "0",
+        "status": "PASS"
+      },
+      {
+        "attempts": [
+          {
+            "phase": "compiled-r10",
+            "status": "PASS"
+          },
+          {
+            "phase": "compiled-r34",
+            "status": "PASS"
+          }
+        ],
+        "family": "RB15_CONTROL",
+        "latestPhase": "compiled-r34",
+        "seed": "0",
+        "status": "PASS"
+      },
+      {
+        "attempts": [
+          {
+            "phase": "compiled-r11",
+            "status": "PASS"
+          },
+          {
+            "phase": "compiled-r35",
+            "status": "PASS"
+          }
+        ],
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "latestPhase": "compiled-r35",
+        "seed": "0",
+        "status": "PASS"
+      },
+      {
+        "attempts": [
+          {
+            "phase": "compiled-r36",
+            "status": "PASS"
+          }
+        ],
+        "family": "RB30_CONTROL",
+        "latestPhase": "compiled-r36",
+        "seed": "10387",
+        "status": "PASS"
+      }
+    ],
+    "gates": {
+      "compiledElevenFamilies": "PASS",
+      "compiledSensorSeedOneRegression": "PASS",
+      "integratedReviewPublication": "NOT_ASSESSED: outside this read-only summary",
+      "manualScreenshotReview": "NOT_RUN: requires separately recorded root review",
+      "nativeFinalNineteenSuites": "PASS",
+      "productionJdk8Gwt5": "PASS",
+      "visiblePlayerFlow": "PASS"
+    },
+    "generatedUtc": "2026-10-06T01:45:07.750849+00:00",
+    "historicalFailures": [
+      {
+        "failurePhase": null,
+        "family": null,
+        "phase": "native-r4",
+        "status": "FAIL"
+      },
+      {
+        "failurePhase": null,
+        "family": null,
+        "phase": "native-r5",
+        "status": "FAIL"
+      },
+      {
+        "failurePhase": "normal-generation",
+        "family": "LED_INDICATOR",
+        "phase": "compiled-r1",
+        "status": "FAIL"
+      },
+      {
+        "failurePhase": "semantic-actions",
+        "family": "SENSOR_CONTROL",
+        "phase": "compiled-r9",
+        "status": "FAIL"
+      },
+      {
+        "failurePhase": null,
+        "family": null,
+        "phase": "visual-r2",
+        "status": "FAIL"
+      },
+      {
+        "failurePhase": null,
+        "family": null,
+        "phase": "visual-r3",
+        "status": "FAIL"
+      },
+      {
+        "failurePhase": null,
+        "family": null,
+        "phase": "visual-r4",
+        "status": "FAIL"
+      }
+    ],
+    "limits": [
+      "PASS records retain their actual source epochs; changed inputs need an explicit reuse audit.",
+      "Cleanup validates retained operation-time receipts, not present OS process/listener state.",
+      "No overall PASS is inferred from partial family, visible-flow, or manual-review evidence.",
+      "Compiled developer actions and controlled damage fixtures are not player-input proof."
+    ],
+    "overallStatus": "INCOMPLETE",
+    "phases": [
+      {
+        "cleanupMillis": 0,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "kind": "native",
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 34116,
+        "phase": "native-r1",
+        "receipt": {
+          "bytes": 3117,
+          "file": "evidence/native-r1-receipt.json",
+          "sha256": "4ac688f18f8c553684830012c2e89a7f108e10e4e9f49a49e1830d7fb8f1567d"
+        },
+        "requiredFinalNineteenSuites": false,
+        "requiredNineSuites": false,
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1862,
+          "file": "evidence/native-r1-result.json",
+          "sha256": "9cf3260a399b1acfe26597134235b4243fecfa9b5a0ecf11117e39295b64ade2"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "scripts/verify-current-contracts.ps1",
+            "src/com/lushprojects/circuitjs1/client/CirSim.java",
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionSave.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionState.java",
+            "src/com/lushprojects/circuitjs1/client/ProtectionFuseElm.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1184,
+          "recordedSha256": "39803eed12ca94abb57a814c2ab38763a3ca3b69027751f58b93f1caf0574045"
+        },
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "suiteCount": 5,
+        "suites": [
+          {
+            "assertions": 16,
+            "suite": "generated power control observation contracts"
+          },
+          {
+            "assertions": 3914,
+            "suite": "U04 session contracts"
+          },
+          {
+            "assertions": 405,
+            "suite": "U06 session save contracts"
+          },
+          {
+            "assertions": 96015,
+            "suite": "E01 source contracts"
+          },
+          {
+            "assertions": 152,
+            "suite": "A06 power contracts"
+          }
+        ]
+      },
+      {
+        "cleanupMillis": 0,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "kind": "native",
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 34988,
+        "phase": "native-r2",
+        "receipt": {
+          "bytes": 4490,
+          "file": "evidence/native-r2-receipt.json",
+          "sha256": "ea80337904bc5542079848abf011e6d1bcbe1d75494c6f69134ca8240de09358"
+        },
+        "requiredFinalNineteenSuites": false,
+        "requiredNineSuites": false,
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1862,
+          "file": "evidence/native-r2-result.json",
+          "sha256": "95a54993705931206a7f4dbf73455abda5537d3eb48a414a54345aa73a8502f5"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "scripts/verify-current-contracts.ps1",
+            "src/com/lushprojects/circuitjs1/client/CirSim.java",
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionSave.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionState.java",
+            "src/com/lushprojects/circuitjs1/client/U06SessionDeveloperVerifier.java",
+            "tests/contracts/E04SensorControlContractTest.java",
+            "tests/contracts/SensorControlFamilyContractTest.java",
+            "tests/contracts/U06SessionSaveContractTest.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1292,
+          "recordedSha256": "73670ccaf52dd47d8b061073a716bc8a5e7785b9b617ca8878b74b59de8d5969"
+        },
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "suiteCount": 8,
+        "suites": [
+          {
+            "assertions": 16,
+            "suite": "generated power control observation contracts"
+          },
+          {
+            "assertions": 1250,
+            "suite": "physical serviceability contracts"
+          },
+          {
+            "assertions": 3914,
+            "suite": "U04 session contracts"
+          },
+          {
+            "assertions": 475,
+            "suite": "U06 session save contracts"
+          },
+          {
+            "assertions": 280,
+            "suite": "A05 role providers"
+          },
+          {
+            "assertions": 96015,
+            "suite": "E01 source contracts"
+          },
+          {
+            "assertions": 152,
+            "suite": "A06 power contracts"
+          },
+          {
+            "assertions": 3209,
+            "suite": "P02 conductor contracts"
+          }
+        ]
+      },
+      {
+        "cleanupMillis": 0,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "kind": "native",
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 37985,
+        "phase": "native-r3",
+        "receipt": {
+          "bytes": 4550,
+          "file": "evidence/native-r3-receipt.json",
+          "sha256": "2de3124ac0e918e53fd0336fd30fc439eea50ac8dfa90038a0b5390ec58eacf7"
+        },
+        "requiredFinalNineteenSuites": false,
+        "requiredNineSuites": true,
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1862,
+          "file": "evidence/native-r3-result.json",
+          "sha256": "7b17e71ba9fdfa9239d8e84fbcafc3edf9ea4b776a7dcfe7e4e0fd5a3bfe03c2"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "scripts/verify-current-contracts.ps1",
+            "src/com/lushprojects/circuitjs1/client/CirSim.java",
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "tests/contracts/E04SensorControlContractTest.java",
+            "tests/contracts/SensorControlFamilyContractTest.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "928237ecfcf3a8a6d453df8c080d5897b8ad028fc42d5d569226ad3e2ca8265a"
+        },
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "suiteCount": 9,
+        "suites": [
+          {
+            "assertions": 16,
+            "suite": "generated power control observation contracts"
+          },
+          {
+            "assertions": 1250,
+            "suite": "physical serviceability contracts"
+          },
+          {
+            "assertions": 3914,
+            "suite": "U04 session contracts"
+          },
+          {
+            "assertions": 479,
+            "suite": "U06 session save contracts"
+          },
+          {
+            "assertions": 95,
+            "suite": "PlayerSessionFingerprintContractTest"
+          },
+          {
+            "assertions": 280,
+            "suite": "A05 role providers"
+          },
+          {
+            "assertions": 96015,
+            "suite": "E01 source contracts"
+          },
+          {
+            "assertions": 152,
+            "suite": "A06 power contracts"
+          },
+          {
+            "assertions": 3209,
+            "suite": "P02 conductor contracts"
+          }
+        ]
+      },
+      {
+        "cleanupMillis": 0,
+        "evidenceIssues": [],
+        "exitCode": 2,
+        "kind": "native",
+        "nativeCleanup": "PASS",
+        "nativeStatus": "FAIL",
+        "operationMillis": 21407,
+        "phase": "native-r4",
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1862,
+          "file": "evidence/native-r4-result.json",
+          "sha256": "1b9b549b2294f9eef37880ad04b169b0a70f3eed5793d6d1d2ad637ae506f717"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "scripts/verify-current-contracts.ps1",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "4f31f748f9dfdbe7c8908b3bb03aefb91256502065585cd5b2328ce543e26906"
+        },
+        "sourceUnchangedDuringPhase": true,
+        "status": "FAIL"
+      },
+      {
+        "cleanupMillis": 0,
+        "evidenceIssues": [],
+        "exitCode": 64,
+        "kind": "native",
+        "nativeCleanup": "PASS",
+        "nativeStatus": "FAIL",
+        "operationMillis": 137,
+        "phase": "native-r5",
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1862,
+          "file": "evidence/native-r5-result.json",
+          "sha256": "b9e38afc5cafc6df5271002f8d2a909cd1f63501ce32ebbb8a0257ed7c0be48d"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "scripts/verify-current-contracts.ps1",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "4f31f748f9dfdbe7c8908b3bb03aefb91256502065585cd5b2328ce543e26906"
+        },
+        "sourceUnchangedDuringPhase": true,
+        "status": "FAIL"
+      },
+      {
+        "cleanupMillis": 0,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "kind": "native",
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 25729,
+        "phase": "native-r6",
+        "receipt": {
+          "bytes": 16281,
+          "file": "evidence/native-r6-receipt.json",
+          "sha256": "06c5c321b11e577b0b4dfa6cbd6c9d416cbd4d7a3fcfcd9a8aab1e8da1914093"
+        },
+        "requiredFinalNineteenSuites": false,
+        "requiredNineSuites": false,
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1863,
+          "file": "evidence/native-r6-result.json",
+          "sha256": "40e7086af75af9ddc7fee0f117be34ce3f8775d8efdae454edbf7197dce27e7a"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "9d8730232cc8d095b13d9d716d2dbd5de7318cd822564bd25935de44d33f0374"
+        },
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "suiteCount": 3,
+        "suites": [
+          {
+            "assertions": 1441,
+            "suite": "E02 regulator contracts"
+          },
+          {
+            "assertions": 352,
+            "suite": "E04 sensor-control contracts"
+          },
+          {
+            "assertions": 332,
+            "suite": "SensorControl family contracts"
+          }
+        ]
+      },
+      {
+        "cleanupMillis": 0,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "kind": "native",
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 52733,
+        "phase": "native-final",
+        "receipt": {
+          "bytes": 468394,
+          "file": "evidence/native-final-receipt.json",
+          "sha256": "0d92125a6463c2a5e0749bf98e0a7184a80e6d573c25e52ae8cf20467e6f3afd"
+        },
+        "requiredFinalNineteenSuites": true,
+        "requiredNineSuites": false,
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1870,
+          "file": "evidence/native-final-result.json",
+          "sha256": "046aa88bf59e4af74d3e6d6b3639183304cc0465deffc31f4a0d3353103f34c1"
+        },
+        "sourceBinding": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5"
+        },
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "suiteCount": 19,
+        "suites": [
+          {
+            "assertions": 16,
+            "suite": "generated power control observation contracts"
+          },
+          {
+            "assertions": 1250,
+            "suite": "physical serviceability contracts"
+          },
+          {
+            "assertions": 3914,
+            "suite": "U04 session contracts"
+          },
+          {
+            "assertions": 479,
+            "suite": "U06 session save contracts"
+          },
+          {
+            "assertions": 95,
+            "suite": "PlayerSessionFingerprintContractTest"
+          },
+          {
+            "assertions": 161,
+            "suite": "E03 relay contracts"
+          },
+          {
+            "assertions": 1441,
+            "suite": "E02 regulator contracts"
+          },
+          {
+            "assertions": 352,
+            "suite": "E04 sensor-control contracts"
+          },
+          {
+            "assertions": 332,
+            "suite": "SensorControl family contracts"
+          },
+          {
+            "assertions": 280,
+            "suite": "A05 role providers"
+          },
+          {
+            "assertions": 96015,
+            "suite": "E01 source contracts"
+          },
+          {
+            "assertions": 152,
+            "suite": "A06 power contracts"
+          },
+          {
+            "assertions": 271808,
+            "suite": "A07 execution contracts"
+          },
+          {
+            "assertions": 322,
+            "suite": "A09 diagnostic contracts"
+          },
+          {
+            "assertions": 190,
+            "suite": "A10 generation contracts"
+          },
+          {
+            "assertions": 15,
+            "suite": "A10 dependency contracts"
+          },
+          {
+            "assertions": 429,
+            "suite": "A11 provider conformance"
+          },
+          {
+            "assertions": 30,
+            "suite": "A03IdentityContractTest"
+          },
+          {
+            "assertions": 3209,
+            "suite": "P02 conductor contracts"
+          }
+        ]
+      },
+      {
+        "cleanupMillis": 0,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "jdk": "8",
+        "kind": "build",
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 91689,
+        "permutations": 5,
+        "phase": "build-r1",
+        "productionBuild": true,
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 2054,
+          "file": "evidence/build-r1-result.json",
+          "sha256": "c58cdcb1eea02d08fd2fa809532cfe62505aad2256941ddf2b83d72569bd65ae"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "scripts/verify-current-contracts.ps1",
+            "src/com/lushprojects/circuitjs1/client/CirSim.java",
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "tests/contracts/E04SensorControlContractTest.java",
+            "tests/contracts/SensorControlFamilyContractTest.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "928237ecfcf3a8a6d453df8c080d5897b8ad028fc42d5d569226ad3e2ca8265a"
+        },
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS"
+      },
+      {
+        "cleanupMillis": 0,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "jdk": "8",
+        "kind": "build",
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 87346,
+        "permutations": 5,
+        "phase": "build-r2",
+        "productionBuild": true,
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 2054,
+          "file": "evidence/build-r2-result.json",
+          "sha256": "7463a721cc553ec2a9a57fc48bfaee8839046d22b246dfd6a0fb5c85060f866c"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "scripts/verify-current-contracts.ps1",
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "tests/contracts/E04SensorControlContractTest.java",
+            "tests/contracts/SensorControlFamilyContractTest.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "95998ddaf42cd3913253723a4036dc956801add5ea41ab7f9d4e5640e7581bd8"
+        },
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS"
+      },
+      {
+        "cleanupMillis": 0,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "jdk": "8",
+        "kind": "build",
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 86518,
+        "permutations": 5,
+        "phase": "build-r3",
+        "productionBuild": true,
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 2054,
+          "file": "evidence/build-r3-result.json",
+          "sha256": "d876f46ece71cdaabc391084e77d5e9b67ca89fa24950540a0d171c9944a5a1e"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "9d8730232cc8d095b13d9d716d2dbd5de7318cd822564bd25935de44d33f0374"
+        },
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS"
+      },
+      {
+        "cleanupMillis": 0,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "jdk": "8",
+        "kind": "build",
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 86220,
+        "permutations": 5,
+        "phase": "build-r4",
+        "productionBuild": true,
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 2052,
+          "file": "evidence/build-r4-result.json",
+          "sha256": "555ec687a190799b610fffd295fbe6d4a46801f2f2d591f93b31795c1d3bc01c"
+        },
+        "sourceBinding": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5"
+        },
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS"
+      },
+      {
+        "actionsMillis": 0,
+        "applicationStatus": "FAIL",
+        "assertions": 7,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 827.671,
+        "browserOperationMillis": 536.492,
+        "cleanupMillis": 0,
+        "comparedLiveFields": null,
+        "errorCount": 1,
+        "evidenceIssues": [],
+        "exitCode": 1,
+        "failurePhase": "normal-generation",
+        "family": "LED_INDICATOR",
+        "fuseFixtures": null,
+        "generations": [
+          {
+            "elapsedMillis": 85,
+            "outcome": "CANCELLED",
+            "phase": "normal-generation",
+            "stage": "HYPOTHESES",
+            "workUnits": 3
+          }
+        ],
+        "inputCommands": null,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "FAIL",
+        "operationMillis": 4743,
+        "phase": "compiled-r1",
+        "portClosure": "NOT_RUN",
+        "replay": "tsj-alpha/4/EASY/LED_INDICATOR/0",
+        "report": {
+          "bytes": 789,
+          "file": "evidence/u06-compiled-r1/cases/001-U06-LED_INDICATOR-seed-0-session-reconstruction-pilot.report.json",
+          "sha256": "2821cd752b1aab51d18021e1139265cfac43cabc41246b8fdd7df99730d65b3f"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1811,
+          "file": "evidence/compiled-r1-result.json",
+          "sha256": "18f12e5682112115cb40e555edbac1a6919e2659df7d1840609793b0f1e03e11"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/CirSim.java",
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "war/circuitjs1/circuitjs1.nocache.js",
+            "war/circuitjs1/compilation-mappings.txt"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/3A382993819ECF99C680050A370F1F4C.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/83AC8AB476545E3F750117E8925F3713.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/AE8D41F7FE66FBDB9234DAA75EB00AA4.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BB1E339CF1ED1764A75CEE1A857171A4.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/C2E12E58571EB743EAD3DFB7C59C222B.symbolMap",
+            "war/circuitjs1/3A382993819ECF99C680050A370F1F4C.cache.js",
+            "war/circuitjs1/83AC8AB476545E3F750117E8925F3713.cache.js",
+            "war/circuitjs1/AE8D41F7FE66FBDB9234DAA75EB00AA4.cache.js",
+            "war/circuitjs1/BB1E339CF1ED1764A75CEE1A857171A4.cache.js",
+            "war/circuitjs1/C2E12E58571EB743EAD3DFB7C59C222B.cache.js"
+          ],
+          "recordedFiles": 1529,
+          "recordedSha256": "c2789720e60f6e3c27f4e012410fa81a936e2958dd0d5ed12321c6c83b6d1445"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "scripts/verify-current-contracts.ps1",
+            "src/com/lushprojects/circuitjs1/client/CirSim.java",
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "tests/contracts/E04SensorControlContractTest.java",
+            "tests/contracts/SensorControlFamilyContractTest.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "928237ecfcf3a8a6d453df8c080d5897b8ad028fc42d5d569226ad3e2ca8265a"
+        },
+        "sourceSha256": "3b07b1e40cecd7710189934ceb4ba2cba753a611b4b9049854983697c52cbc55",
+        "sourceUnchangedDuringPhase": true,
+        "status": "FAIL",
+        "webSha256": "542cde53792656dbb3e6e4745991cc5e51e8970571af40eb55a89e277a0e9b6c"
+      },
+      {
+        "actionsMillis": 82,
+        "applicationStatus": "PASS",
+        "assertions": 439,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1271.821,
+        "browserOperationMillis": 1531.167,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 100,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "LED_INDICATOR",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 442,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 59
+          },
+          {
+            "elapsedMillis": 304,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 59
+          },
+          {
+            "elapsedMillis": 276,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 59
+          },
+          {
+            "elapsedMillis": 18,
+            "outcome": "CANCELLED",
+            "phase": "cancel-session-restore",
+            "stage": "PHYSICAL",
+            "workUnits": 2
+          }
+        ],
+        "inputCommands": 0,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 7632,
+        "phase": "compiled-r2",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/LED_INDICATOR/0",
+        "report": {
+          "bytes": 20390,
+          "file": "evidence/u06-compiled-r2/cases/001-U06-LED_INDICATOR-seed-0-session-reconstruction-pilot.report.json",
+          "sha256": "1cb756c57082b08932ebf690aee87062354f4323bfc09155460bdebb145b61a1"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1811,
+          "file": "evidence/compiled-r2-result.json",
+          "sha256": "2d0ec620a914b1f7f5f45cfcc043836b0443e7d004493bc224393fe3de16210e"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "war/circuitjs1/circuitjs1.nocache.js",
+            "war/circuitjs1/compilation-mappings.txt"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/0FEED6AF9E00CB1D3F7D9BA140CB105C.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/223A76A479E055BA539B9E0465845A34.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/8F8C24CEF492AD4CE3896EEB2D5CC6FC.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BB1E339CF1ED1764A75CEE1A857171A4.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BE9A2142B183FCAD5C925377D400E062.symbolMap",
+            "war/circuitjs1/0FEED6AF9E00CB1D3F7D9BA140CB105C.cache.js",
+            "war/circuitjs1/223A76A479E055BA539B9E0465845A34.cache.js",
+            "war/circuitjs1/8F8C24CEF492AD4CE3896EEB2D5CC6FC.cache.js",
+            "war/circuitjs1/BB1E339CF1ED1764A75CEE1A857171A4.cache.js",
+            "war/circuitjs1/BE9A2142B183FCAD5C925377D400E062.cache.js"
+          ],
+          "recordedFiles": 1529,
+          "recordedSha256": "9485a7c5c585fa29183a00e9c92eff5ac8d8ef5fbf55cbf3140d5d034be82cfb"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "scripts/verify-current-contracts.ps1",
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "tests/contracts/E04SensorControlContractTest.java",
+            "tests/contracts/SensorControlFamilyContractTest.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "95998ddaf42cd3913253723a4036dc956801add5ea41ab7f9d4e5640e7581bd8"
+        },
+        "sourceSha256": "b09d9274989413cf306ced1182d260a8535cbdb366d3317afe3c71f310513fd6",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "984f03ab40852f57bdb84479f51061516c2d82cb4d1600889814552055027967"
+      },
+      {
+        "actionsMillis": 94,
+        "applicationStatus": "PASS",
+        "assertions": 375,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 946.862,
+        "browserOperationMillis": 1344.971,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 117,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 345,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 24
+          },
+          {
+            "elapsedMillis": 232,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 24
+          },
+          {
+            "elapsedMillis": 207,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 24
+          }
+        ],
+        "inputCommands": 0,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 5303,
+        "phase": "compiled-r3",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/DIODE_PROTECTED_INDICATOR/0",
+        "report": {
+          "bytes": 17990,
+          "file": "evidence/u06-compiled-r3/cases/001-U06-DIODE_PROTECTED_INDICATOR-seed-0-session-reconstruction.report.json",
+          "sha256": "84848623ee27815bef631e4695daf953805cb89f54e357e8d8ad70d7403cfef7"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1811,
+          "file": "evidence/compiled-r3-result.json",
+          "sha256": "b4a22ac22b69a15a6c8f2ceeb188120d077e4d891d07371377a128d8492c4dfe"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "war/circuitjs1/circuitjs1.nocache.js",
+            "war/circuitjs1/compilation-mappings.txt"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/0FEED6AF9E00CB1D3F7D9BA140CB105C.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/223A76A479E055BA539B9E0465845A34.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/8F8C24CEF492AD4CE3896EEB2D5CC6FC.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BB1E339CF1ED1764A75CEE1A857171A4.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BE9A2142B183FCAD5C925377D400E062.symbolMap",
+            "war/circuitjs1/0FEED6AF9E00CB1D3F7D9BA140CB105C.cache.js",
+            "war/circuitjs1/223A76A479E055BA539B9E0465845A34.cache.js",
+            "war/circuitjs1/8F8C24CEF492AD4CE3896EEB2D5CC6FC.cache.js",
+            "war/circuitjs1/BB1E339CF1ED1764A75CEE1A857171A4.cache.js",
+            "war/circuitjs1/BE9A2142B183FCAD5C925377D400E062.cache.js"
+          ],
+          "recordedFiles": 1529,
+          "recordedSha256": "9485a7c5c585fa29183a00e9c92eff5ac8d8ef5fbf55cbf3140d5d034be82cfb"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "scripts/verify-current-contracts.ps1",
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "tests/contracts/E04SensorControlContractTest.java",
+            "tests/contracts/SensorControlFamilyContractTest.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "95998ddaf42cd3913253723a4036dc956801add5ea41ab7f9d4e5640e7581bd8"
+        },
+        "sourceSha256": "b09d9274989413cf306ced1182d260a8535cbdb366d3317afe3c71f310513fd6",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "984f03ab40852f57bdb84479f51061516c2d82cb4d1600889814552055027967"
+      },
+      {
+        "actionsMillis": 110,
+        "applicationStatus": "PASS",
+        "assertions": 428,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1039.746,
+        "browserOperationMillis": 2775.086,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 135,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 814,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 93
+          },
+          {
+            "elapsedMillis": 637,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 93
+          },
+          {
+            "elapsedMillis": 615,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 93
+          }
+        ],
+        "inputCommands": 0,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 6773,
+        "phase": "compiled-r4",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/PARALLEL_DUAL_INDICATOR/0",
+        "report": {
+          "bytes": 20470,
+          "file": "evidence/u06-compiled-r4/cases/001-U06-PARALLEL_DUAL_INDICATOR-seed-0-session-reconstruction.report.json",
+          "sha256": "9ec6dc32a6c83aa5ee4fa79f0a37b763b53cdb36a5b0319251738ceac1dbe15c"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1811,
+          "file": "evidence/compiled-r4-result.json",
+          "sha256": "925c184abc1a015c810367eeb1e465657c94c7a21c01a04b5ecf0d73da367b71"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "war/circuitjs1/circuitjs1.nocache.js",
+            "war/circuitjs1/compilation-mappings.txt"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/0FEED6AF9E00CB1D3F7D9BA140CB105C.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/223A76A479E055BA539B9E0465845A34.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/8F8C24CEF492AD4CE3896EEB2D5CC6FC.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BB1E339CF1ED1764A75CEE1A857171A4.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BE9A2142B183FCAD5C925377D400E062.symbolMap",
+            "war/circuitjs1/0FEED6AF9E00CB1D3F7D9BA140CB105C.cache.js",
+            "war/circuitjs1/223A76A479E055BA539B9E0465845A34.cache.js",
+            "war/circuitjs1/8F8C24CEF492AD4CE3896EEB2D5CC6FC.cache.js",
+            "war/circuitjs1/BB1E339CF1ED1764A75CEE1A857171A4.cache.js",
+            "war/circuitjs1/BE9A2142B183FCAD5C925377D400E062.cache.js"
+          ],
+          "recordedFiles": 1529,
+          "recordedSha256": "9485a7c5c585fa29183a00e9c92eff5ac8d8ef5fbf55cbf3140d5d034be82cfb"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "scripts/verify-current-contracts.ps1",
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "tests/contracts/E04SensorControlContractTest.java",
+            "tests/contracts/SensorControlFamilyContractTest.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "95998ddaf42cd3913253723a4036dc956801add5ea41ab7f9d4e5640e7581bd8"
+        },
+        "sourceSha256": "b09d9274989413cf306ced1182d260a8535cbdb366d3317afe3c71f310513fd6",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "984f03ab40852f57bdb84479f51061516c2d82cb4d1600889814552055027967"
+      },
+      {
+        "actionsMillis": 271,
+        "applicationStatus": "PASS",
+        "assertions": 479,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 877.326,
+        "browserOperationMillis": 98564.484,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 152,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "RC_DELAY",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 31693,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 82
+          },
+          {
+            "elapsedMillis": 32944,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 82
+          },
+          {
+            "elapsedMillis": 33229,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 82
+          }
+        ],
+        "inputCommands": 0,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 102737,
+        "phase": "compiled-r5",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/RC_DELAY/0",
+        "report": {
+          "bytes": 22863,
+          "file": "evidence/u06-compiled-r5/cases/001-U06-RC_DELAY-seed-0-session-reconstruction.report.json",
+          "sha256": "37ef0e46ad1ccb164a9655ad181345844c7d72e7a19fb172db91169f66e463e0"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1811,
+          "file": "evidence/compiled-r5-result.json",
+          "sha256": "728612506f4143ab4770b4aae934f035fa789a0abe33dc216840bddd1d81731c"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "war/circuitjs1/circuitjs1.nocache.js",
+            "war/circuitjs1/compilation-mappings.txt"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/0FEED6AF9E00CB1D3F7D9BA140CB105C.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/223A76A479E055BA539B9E0465845A34.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/8F8C24CEF492AD4CE3896EEB2D5CC6FC.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BB1E339CF1ED1764A75CEE1A857171A4.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BE9A2142B183FCAD5C925377D400E062.symbolMap",
+            "war/circuitjs1/0FEED6AF9E00CB1D3F7D9BA140CB105C.cache.js",
+            "war/circuitjs1/223A76A479E055BA539B9E0465845A34.cache.js",
+            "war/circuitjs1/8F8C24CEF492AD4CE3896EEB2D5CC6FC.cache.js",
+            "war/circuitjs1/BB1E339CF1ED1764A75CEE1A857171A4.cache.js",
+            "war/circuitjs1/BE9A2142B183FCAD5C925377D400E062.cache.js"
+          ],
+          "recordedFiles": 1529,
+          "recordedSha256": "9485a7c5c585fa29183a00e9c92eff5ac8d8ef5fbf55cbf3140d5d034be82cfb"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "scripts/verify-current-contracts.ps1",
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "tests/contracts/E04SensorControlContractTest.java",
+            "tests/contracts/SensorControlFamilyContractTest.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "95998ddaf42cd3913253723a4036dc956801add5ea41ab7f9d4e5640e7581bd8"
+        },
+        "sourceSha256": "b09d9274989413cf306ced1182d260a8535cbdb366d3317afe3c71f310513fd6",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "984f03ab40852f57bdb84479f51061516c2d82cb4d1600889814552055027967"
+      },
+      {
+        "actionsMillis": 163,
+        "applicationStatus": "PASS",
+        "assertions": 563,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1001.52,
+        "browserOperationMillis": 3806.523,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 182,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 1154,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 80
+          },
+          {
+            "elapsedMillis": 1050,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 80
+          },
+          {
+            "elapsedMillis": 1042,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 80
+          }
+        ],
+        "inputCommands": 2,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 8065,
+        "phase": "compiled-r6",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/NPN_LOW_SIDE_SWITCH/0",
+        "report": {
+          "bytes": 26619,
+          "file": "evidence/u06-compiled-r6/cases/001-U06-NPN_LOW_SIDE_SWITCH-seed-0-session-reconstruction.report.json",
+          "sha256": "0471f59cbcc12d9688a5f011df2483690b690971188212ebdd55537ab980656d"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1811,
+          "file": "evidence/compiled-r6-result.json",
+          "sha256": "c2a6c1fbd302b505199e0fbc7fe9e86cbac2063e12226d06ceeab21157da27eb"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "war/circuitjs1/circuitjs1.nocache.js",
+            "war/circuitjs1/compilation-mappings.txt"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/0FEED6AF9E00CB1D3F7D9BA140CB105C.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/223A76A479E055BA539B9E0465845A34.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/8F8C24CEF492AD4CE3896EEB2D5CC6FC.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BB1E339CF1ED1764A75CEE1A857171A4.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BE9A2142B183FCAD5C925377D400E062.symbolMap",
+            "war/circuitjs1/0FEED6AF9E00CB1D3F7D9BA140CB105C.cache.js",
+            "war/circuitjs1/223A76A479E055BA539B9E0465845A34.cache.js",
+            "war/circuitjs1/8F8C24CEF492AD4CE3896EEB2D5CC6FC.cache.js",
+            "war/circuitjs1/BB1E339CF1ED1764A75CEE1A857171A4.cache.js",
+            "war/circuitjs1/BE9A2142B183FCAD5C925377D400E062.cache.js"
+          ],
+          "recordedFiles": 1529,
+          "recordedSha256": "9485a7c5c585fa29183a00e9c92eff5ac8d8ef5fbf55cbf3140d5d034be82cfb"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "scripts/verify-current-contracts.ps1",
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "tests/contracts/E04SensorControlContractTest.java",
+            "tests/contracts/SensorControlFamilyContractTest.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "95998ddaf42cd3913253723a4036dc956801add5ea41ab7f9d4e5640e7581bd8"
+        },
+        "sourceSha256": "b09d9274989413cf306ced1182d260a8535cbdb366d3317afe3c71f310513fd6",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "984f03ab40852f57bdb84479f51061516c2d82cb4d1600889814552055027967"
+      },
+      {
+        "actionsMillis": 145,
+        "applicationStatus": "PASS",
+        "assertions": 510,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 962.191,
+        "browserOperationMillis": 3379.447,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 164,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 957,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 80
+          },
+          {
+            "elapsedMillis": 905,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 80
+          },
+          {
+            "elapsedMillis": 891,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 80
+          }
+        ],
+        "inputCommands": 2,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 7559,
+        "phase": "compiled-r7",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/NMOS_LOW_SIDE_SWITCH/0",
+        "report": {
+          "bytes": 24135,
+          "file": "evidence/u06-compiled-r7/cases/001-U06-NMOS_LOW_SIDE_SWITCH-seed-0-session-reconstruction.report.json",
+          "sha256": "754b57485e6fc09aa8f992a1411783887dd3c7ff54a414f19865dd4c1d7d3c42"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1809,
+          "file": "evidence/compiled-r7-result.json",
+          "sha256": "4552443cadfa3e52de7c83ade76eb5864e7be73e912c53e5bbd1353f751d7751"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "war/circuitjs1/circuitjs1.nocache.js",
+            "war/circuitjs1/compilation-mappings.txt"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/0FEED6AF9E00CB1D3F7D9BA140CB105C.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/223A76A479E055BA539B9E0465845A34.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/8F8C24CEF492AD4CE3896EEB2D5CC6FC.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BB1E339CF1ED1764A75CEE1A857171A4.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BE9A2142B183FCAD5C925377D400E062.symbolMap",
+            "war/circuitjs1/0FEED6AF9E00CB1D3F7D9BA140CB105C.cache.js",
+            "war/circuitjs1/223A76A479E055BA539B9E0465845A34.cache.js",
+            "war/circuitjs1/8F8C24CEF492AD4CE3896EEB2D5CC6FC.cache.js",
+            "war/circuitjs1/BB1E339CF1ED1764A75CEE1A857171A4.cache.js",
+            "war/circuitjs1/BE9A2142B183FCAD5C925377D400E062.cache.js"
+          ],
+          "recordedFiles": 1529,
+          "recordedSha256": "9485a7c5c585fa29183a00e9c92eff5ac8d8ef5fbf55cbf3140d5d034be82cfb"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "scripts/verify-current-contracts.ps1",
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "tests/contracts/E04SensorControlContractTest.java",
+            "tests/contracts/SensorControlFamilyContractTest.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "95998ddaf42cd3913253723a4036dc956801add5ea41ab7f9d4e5640e7581bd8"
+        },
+        "sourceSha256": "b09d9274989413cf306ced1182d260a8535cbdb366d3317afe3c71f310513fd6",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "984f03ab40852f57bdb84479f51061516c2d82cb4d1600889814552055027967"
+      },
+      {
+        "actionsMillis": 714,
+        "applicationStatus": "PASS",
+        "assertions": 708,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1118.783,
+        "browserOperationMillis": 25903.847,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 233,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "RELAY_OUTPUT",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 7488,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 81
+          },
+          {
+            "elapsedMillis": 8909,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 81
+          },
+          {
+            "elapsedMillis": 8338,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 81
+          }
+        ],
+        "inputCommands": 2,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 30011,
+        "phase": "compiled-r8",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/RELAY_OUTPUT/0",
+        "report": {
+          "bytes": 33347,
+          "file": "evidence/u06-compiled-r8/cases/001-U06-RELAY_OUTPUT-seed-0-session-reconstruction.report.json",
+          "sha256": "781a29d37cfdd65d66cd5c9c2d977111a54ebf4a44550eaa1b02e139a5224b8f"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1810,
+          "file": "evidence/compiled-r8-result.json",
+          "sha256": "59b7ec3124b059865be936fcda5964f034cfee0848d753c473c939c5789ed9be"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "war/circuitjs1/circuitjs1.nocache.js",
+            "war/circuitjs1/compilation-mappings.txt"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/0FEED6AF9E00CB1D3F7D9BA140CB105C.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/223A76A479E055BA539B9E0465845A34.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/8F8C24CEF492AD4CE3896EEB2D5CC6FC.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BB1E339CF1ED1764A75CEE1A857171A4.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BE9A2142B183FCAD5C925377D400E062.symbolMap",
+            "war/circuitjs1/0FEED6AF9E00CB1D3F7D9BA140CB105C.cache.js",
+            "war/circuitjs1/223A76A479E055BA539B9E0465845A34.cache.js",
+            "war/circuitjs1/8F8C24CEF492AD4CE3896EEB2D5CC6FC.cache.js",
+            "war/circuitjs1/BB1E339CF1ED1764A75CEE1A857171A4.cache.js",
+            "war/circuitjs1/BE9A2142B183FCAD5C925377D400E062.cache.js"
+          ],
+          "recordedFiles": 1529,
+          "recordedSha256": "9485a7c5c585fa29183a00e9c92eff5ac8d8ef5fbf55cbf3140d5d034be82cfb"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "scripts/verify-current-contracts.ps1",
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "tests/contracts/E04SensorControlContractTest.java",
+            "tests/contracts/SensorControlFamilyContractTest.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "95998ddaf42cd3913253723a4036dc956801add5ea41ab7f9d4e5640e7581bd8"
+        },
+        "sourceSha256": "b09d9274989413cf306ced1182d260a8535cbdb366d3317afe3c71f310513fd6",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "984f03ab40852f57bdb84479f51061516c2d82cb4d1600889814552055027967"
+      },
+      {
+        "actionsMillis": 115,
+        "applicationStatus": "FAIL",
+        "assertions": 25,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1097.848,
+        "browserOperationMillis": 3187.966,
+        "cleanupMillis": 0,
+        "comparedLiveFields": null,
+        "errorCount": 1,
+        "evidenceIssues": [],
+        "exitCode": 1,
+        "failurePhase": "semantic-actions",
+        "family": "SENSOR_CONTROL",
+        "fuseFixtures": null,
+        "generations": [
+          {
+            "elapsedMillis": 2593,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 155
+          }
+        ],
+        "inputCommands": null,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "FAIL",
+        "operationMillis": 6285,
+        "phase": "compiled-r9",
+        "portClosure": "NOT_RUN",
+        "replay": "tsj-alpha/4/EASY/SENSOR_CONTROL/0",
+        "report": {
+          "bytes": 1601,
+          "file": "evidence/u06-compiled-r9/cases/001-U06-SENSOR_CONTROL-seed-0-session-reconstruction.report.json",
+          "sha256": "53e0a09bf1cb8a74e538699d6efdd871c3eb0595c53daee30ab99510e8b3553a"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1811,
+          "file": "evidence/compiled-r9-result.json",
+          "sha256": "38ae1672ce1bcf28a100dd5f6abc82f60c7cf9730f079fd2f4cb41717fad2282"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "war/circuitjs1/circuitjs1.nocache.js",
+            "war/circuitjs1/compilation-mappings.txt"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/0FEED6AF9E00CB1D3F7D9BA140CB105C.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/223A76A479E055BA539B9E0465845A34.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/8F8C24CEF492AD4CE3896EEB2D5CC6FC.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BB1E339CF1ED1764A75CEE1A857171A4.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BE9A2142B183FCAD5C925377D400E062.symbolMap",
+            "war/circuitjs1/0FEED6AF9E00CB1D3F7D9BA140CB105C.cache.js",
+            "war/circuitjs1/223A76A479E055BA539B9E0465845A34.cache.js",
+            "war/circuitjs1/8F8C24CEF492AD4CE3896EEB2D5CC6FC.cache.js",
+            "war/circuitjs1/BB1E339CF1ED1764A75CEE1A857171A4.cache.js",
+            "war/circuitjs1/BE9A2142B183FCAD5C925377D400E062.cache.js"
+          ],
+          "recordedFiles": 1529,
+          "recordedSha256": "9485a7c5c585fa29183a00e9c92eff5ac8d8ef5fbf55cbf3140d5d034be82cfb"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "scripts/verify-current-contracts.ps1",
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "tests/contracts/E04SensorControlContractTest.java",
+            "tests/contracts/SensorControlFamilyContractTest.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "95998ddaf42cd3913253723a4036dc956801add5ea41ab7f9d4e5640e7581bd8"
+        },
+        "sourceSha256": "b09d9274989413cf306ced1182d260a8535cbdb366d3317afe3c71f310513fd6",
+        "sourceUnchangedDuringPhase": true,
+        "status": "FAIL",
+        "webSha256": "984f03ab40852f57bdb84479f51061516c2d82cb4d1600889814552055027967"
+      },
+      {
+        "actionsMillis": 1562,
+        "applicationStatus": "PASS",
+        "assertions": 1122,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 893.843,
+        "browserOperationMillis": 38800.396,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 369,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "RB15_CONTROL",
+        "fuseFixtures": 2,
+        "generations": [
+          {
+            "elapsedMillis": 11145,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 82
+          },
+          {
+            "elapsedMillis": 13149,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 82
+          },
+          {
+            "elapsedMillis": 12409,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 82
+          }
+        ],
+        "inputCommands": 2,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 42676,
+        "phase": "compiled-r10",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/RB15_CONTROL/0",
+        "report": {
+          "bytes": 52830,
+          "file": "evidence/u06-compiled-r10/cases/001-U06-RB15_CONTROL-seed-0-session-reconstruction.report.json",
+          "sha256": "d89eab05d448ea708fe492acc3a32389927e1273a49eb5e4909a65c276d7a8e8"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1814,
+          "file": "evidence/compiled-r10-result.json",
+          "sha256": "d9060d657d6c036ae24029d0cb00824015cd171e6ef09eb7371cd4c9ac01bc91"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "war/circuitjs1/circuitjs1.nocache.js",
+            "war/circuitjs1/compilation-mappings.txt"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/0FEED6AF9E00CB1D3F7D9BA140CB105C.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/223A76A479E055BA539B9E0465845A34.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/8F8C24CEF492AD4CE3896EEB2D5CC6FC.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BB1E339CF1ED1764A75CEE1A857171A4.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BE9A2142B183FCAD5C925377D400E062.symbolMap",
+            "war/circuitjs1/0FEED6AF9E00CB1D3F7D9BA140CB105C.cache.js",
+            "war/circuitjs1/223A76A479E055BA539B9E0465845A34.cache.js",
+            "war/circuitjs1/8F8C24CEF492AD4CE3896EEB2D5CC6FC.cache.js",
+            "war/circuitjs1/BB1E339CF1ED1764A75CEE1A857171A4.cache.js",
+            "war/circuitjs1/BE9A2142B183FCAD5C925377D400E062.cache.js"
+          ],
+          "recordedFiles": 1529,
+          "recordedSha256": "9485a7c5c585fa29183a00e9c92eff5ac8d8ef5fbf55cbf3140d5d034be82cfb"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "scripts/verify-current-contracts.ps1",
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "tests/contracts/E04SensorControlContractTest.java",
+            "tests/contracts/SensorControlFamilyContractTest.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "95998ddaf42cd3913253723a4036dc956801add5ea41ab7f9d4e5640e7581bd8"
+        },
+        "sourceSha256": "b09d9274989413cf306ced1182d260a8535cbdb366d3317afe3c71f310513fd6",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "984f03ab40852f57bdb84479f51061516c2d82cb4d1600889814552055027967"
+      },
+      {
+        "actionsMillis": 506,
+        "applicationStatus": "PASS",
+        "assertions": 1014,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 982.96,
+        "browserOperationMillis": 14974.378,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 336,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 4434,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 620
+          },
+          {
+            "elapsedMillis": 4691,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 620
+          },
+          {
+            "elapsedMillis": 4757,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 620
+          }
+        ],
+        "inputCommands": 4,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 18961,
+        "phase": "compiled-r11",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/0",
+        "report": {
+          "bytes": 47635,
+          "file": "evidence/u06-compiled-r11/cases/001-U06-COMPOSED_CONTROLLED_INDICATOR-seed-0-session-reconstruction.report.json",
+          "sha256": "2f1ddaef8a0168ed37ffc9696db4ef5628c501f1f1cc70479767adb3839772b0"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1812,
+          "file": "evidence/compiled-r11-result.json",
+          "sha256": "4f8c8f5aa9e577781057cf6192c4597bf4d20ed10bd1e7ff32db56945db21a00"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "war/circuitjs1/circuitjs1.nocache.js",
+            "war/circuitjs1/compilation-mappings.txt"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/0FEED6AF9E00CB1D3F7D9BA140CB105C.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/223A76A479E055BA539B9E0465845A34.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/8F8C24CEF492AD4CE3896EEB2D5CC6FC.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BB1E339CF1ED1764A75CEE1A857171A4.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/BE9A2142B183FCAD5C925377D400E062.symbolMap",
+            "war/circuitjs1/0FEED6AF9E00CB1D3F7D9BA140CB105C.cache.js",
+            "war/circuitjs1/223A76A479E055BA539B9E0465845A34.cache.js",
+            "war/circuitjs1/8F8C24CEF492AD4CE3896EEB2D5CC6FC.cache.js",
+            "war/circuitjs1/BB1E339CF1ED1764A75CEE1A857171A4.cache.js",
+            "war/circuitjs1/BE9A2142B183FCAD5C925377D400E062.cache.js"
+          ],
+          "recordedFiles": 1529,
+          "recordedSha256": "9485a7c5c585fa29183a00e9c92eff5ac8d8ef5fbf55cbf3140d5d034be82cfb"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "scripts/verify-current-contracts.ps1",
+            "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "tests/contracts/E04SensorControlContractTest.java",
+            "tests/contracts/SensorControlFamilyContractTest.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "95998ddaf42cd3913253723a4036dc956801add5ea41ab7f9d4e5640e7581bd8"
+        },
+        "sourceSha256": "b09d9274989413cf306ced1182d260a8535cbdb366d3317afe3c71f310513fd6",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "984f03ab40852f57bdb84479f51061516c2d82cb4d1600889814552055027967"
+      },
+      {
+        "actionsMillis": 85,
+        "applicationStatus": "PASS",
+        "assertions": 439,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1221.496,
+        "browserOperationMillis": 1552.417,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 100,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "LED_INDICATOR",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 443,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 59
+          },
+          {
+            "elapsedMillis": 317,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 59
+          },
+          {
+            "elapsedMillis": 286,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 59
+          },
+          {
+            "elapsedMillis": 18,
+            "outcome": "CANCELLED",
+            "phase": "cancel-session-restore",
+            "stage": "PHYSICAL",
+            "workUnits": 2
+          }
+        ],
+        "inputCommands": 0,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 6925,
+        "phase": "compiled-r13",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/LED_INDICATOR/0",
+        "report": {
+          "bytes": 20390,
+          "file": "evidence/u06-compiled-r13/cases/001-U06-LED_INDICATOR-seed-0-session-reconstruction-pilot.report.json",
+          "sha256": "038245208da4314c94c6f00bb2674e6fff7d90c878c111137d75cfd9055bdad9"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1813,
+          "file": "evidence/compiled-r13-result.json",
+          "sha256": "ac571ae377ae610d21c39aa035bbb546f1e40cf1cf2d60714fce78553180977e"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/F1158995E77E765EFBCFE014E828981E.symbolMap",
+            "war/circuitjs1/circuitjs1.nocache.js",
+            "war/circuitjs1/compilation-mappings.txt"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/3EBC39AA91CF2767E21D06F4F13AC575.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/489B0B71785C1902240FE80F6CC85DCD.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/A687C9731DBC3BCBB73EEF2B9A912DBA.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/C6D07C914F1BFC709AB9C9A2320A9426.symbolMap",
+            "war/circuitjs1/3EBC39AA91CF2767E21D06F4F13AC575.cache.js",
+            "war/circuitjs1/489B0B71785C1902240FE80F6CC85DCD.cache.js",
+            "war/circuitjs1/A687C9731DBC3BCBB73EEF2B9A912DBA.cache.js",
+            "war/circuitjs1/C6D07C914F1BFC709AB9C9A2320A9426.cache.js"
+          ],
+          "recordedFiles": 1529,
+          "recordedSha256": "66ccb2a63f005976d118ff871f7e8249c3e6db67b8cfdf98c4aa5d06780516a0"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "9d8730232cc8d095b13d9d716d2dbd5de7318cd822564bd25935de44d33f0374"
+        },
+        "sourceSha256": "d68bc0ccbdac21d9d6b70a7f03d61c353fd09baea1b7de48a138e07a32b86706",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "466c7f8d801974103fcc88bda9fac32c30b16cda9fdf066326b749fa4a4aa8e1"
+      },
+      {
+        "actionsMillis": 245,
+        "applicationStatus": "PASS",
+        "assertions": 693,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1133.51,
+        "browserOperationMillis": 8736.093,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 223,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "SENSOR_CONTROL",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 2624,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 155
+          },
+          {
+            "elapsedMillis": 2694,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 155
+          },
+          {
+            "elapsedMillis": 2606,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 155
+          }
+        ],
+        "inputCommands": 3,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 12861,
+        "phase": "compiled-r14",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/SENSOR_CONTROL/0",
+        "report": {
+          "bytes": 32910,
+          "file": "evidence/u06-compiled-r14/cases/001-U06-SENSOR_CONTROL-seed-0-session-reconstruction.report.json",
+          "sha256": "0bab2db5e22f233de1714d691f515c12ed6a2118c67e83dfc6b766947d9d9fd0"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1814,
+          "file": "evidence/compiled-r14-result.json",
+          "sha256": "ec307fb478a1802d74431656b4855cb52f31261ad3bad7adc58c5cbd54e91094"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/F1158995E77E765EFBCFE014E828981E.symbolMap",
+            "war/circuitjs1/circuitjs1.nocache.js",
+            "war/circuitjs1/compilation-mappings.txt"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/3EBC39AA91CF2767E21D06F4F13AC575.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/489B0B71785C1902240FE80F6CC85DCD.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/A687C9731DBC3BCBB73EEF2B9A912DBA.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/C6D07C914F1BFC709AB9C9A2320A9426.symbolMap",
+            "war/circuitjs1/3EBC39AA91CF2767E21D06F4F13AC575.cache.js",
+            "war/circuitjs1/489B0B71785C1902240FE80F6CC85DCD.cache.js",
+            "war/circuitjs1/A687C9731DBC3BCBB73EEF2B9A912DBA.cache.js",
+            "war/circuitjs1/C6D07C914F1BFC709AB9C9A2320A9426.cache.js"
+          ],
+          "recordedFiles": 1529,
+          "recordedSha256": "66ccb2a63f005976d118ff871f7e8249c3e6db67b8cfdf98c4aa5d06780516a0"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "9d8730232cc8d095b13d9d716d2dbd5de7318cd822564bd25935de44d33f0374"
+        },
+        "sourceSha256": "d68bc0ccbdac21d9d6b70a7f03d61c353fd09baea1b7de48a138e07a32b86706",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "466c7f8d801974103fcc88bda9fac32c30b16cda9fdf066326b749fa4a4aa8e1"
+      },
+      {
+        "actionsMillis": 296,
+        "applicationStatus": "PASS",
+        "assertions": 746,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1135.475,
+        "browserOperationMillis": 8720.598,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 241,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "SENSOR_CONTROL",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 2391,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 155
+          },
+          {
+            "elapsedMillis": 2880,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 155
+          },
+          {
+            "elapsedMillis": 2675,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 155
+          }
+        ],
+        "inputCommands": 3,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 12762,
+        "phase": "compiled-r15",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/SENSOR_CONTROL/1",
+        "report": {
+          "bytes": 35393,
+          "file": "evidence/u06-compiled-r15/cases/001-U06-SENSOR_CONTROL-seed-1-session-reconstruction.report.json",
+          "sha256": "e59116395be2f39c79f5f23b2a62f90855ef3973f515c796c52b5f08fcd6656e"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1814,
+          "file": "evidence/compiled-r15-result.json",
+          "sha256": "7a882a2917436da18e7ece6a1baa86576d0d48240dbb0a227bab68e798f65649"
+        },
+        "seed": "1",
+        "servedInputs": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/F1158995E77E765EFBCFE014E828981E.symbolMap",
+            "war/circuitjs1/circuitjs1.nocache.js",
+            "war/circuitjs1/compilation-mappings.txt"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/3EBC39AA91CF2767E21D06F4F13AC575.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/489B0B71785C1902240FE80F6CC85DCD.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/A687C9731DBC3BCBB73EEF2B9A912DBA.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/C6D07C914F1BFC709AB9C9A2320A9426.symbolMap",
+            "war/circuitjs1/3EBC39AA91CF2767E21D06F4F13AC575.cache.js",
+            "war/circuitjs1/489B0B71785C1902240FE80F6CC85DCD.cache.js",
+            "war/circuitjs1/A687C9731DBC3BCBB73EEF2B9A912DBA.cache.js",
+            "war/circuitjs1/C6D07C914F1BFC709AB9C9A2320A9426.cache.js"
+          ],
+          "recordedFiles": 1529,
+          "recordedSha256": "66ccb2a63f005976d118ff871f7e8249c3e6db67b8cfdf98c4aa5d06780516a0"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "9d8730232cc8d095b13d9d716d2dbd5de7318cd822564bd25935de44d33f0374"
+        },
+        "sourceSha256": "d68bc0ccbdac21d9d6b70a7f03d61c353fd09baea1b7de48a138e07a32b86706",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "466c7f8d801974103fcc88bda9fac32c30b16cda9fdf066326b749fa4a4aa8e1"
+      },
+      {
+        "actionsMillis": 91,
+        "applicationStatus": "PASS",
+        "assertions": 375,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 972.754,
+        "browserOperationMillis": 1326.831,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 117,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 330,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 24
+          },
+          {
+            "elapsedMillis": 219,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 24
+          },
+          {
+            "elapsedMillis": 197,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 24
+          }
+        ],
+        "inputCommands": 0,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 5183,
+        "phase": "compiled-r16",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/DIODE_PROTECTED_INDICATOR/0",
+        "report": {
+          "bytes": 17990,
+          "file": "evidence/u06-compiled-r16/cases/001-U06-DIODE_PROTECTED_INDICATOR-seed-0-session-reconstruction.report.json",
+          "sha256": "f6e3080f03d6c65d730a28e6792dc0358af1b1147be787b87fd76de380e44a5d"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1813,
+          "file": "evidence/compiled-r16-result.json",
+          "sha256": "d98440eef3ebbfb86d486b52ff837eba33de6fc92328ebc8df6731ba4ad0d8d3"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/F1158995E77E765EFBCFE014E828981E.symbolMap",
+            "war/circuitjs1/circuitjs1.nocache.js",
+            "war/circuitjs1/compilation-mappings.txt"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/3EBC39AA91CF2767E21D06F4F13AC575.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/489B0B71785C1902240FE80F6CC85DCD.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/A687C9731DBC3BCBB73EEF2B9A912DBA.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/C6D07C914F1BFC709AB9C9A2320A9426.symbolMap",
+            "war/circuitjs1/3EBC39AA91CF2767E21D06F4F13AC575.cache.js",
+            "war/circuitjs1/489B0B71785C1902240FE80F6CC85DCD.cache.js",
+            "war/circuitjs1/A687C9731DBC3BCBB73EEF2B9A912DBA.cache.js",
+            "war/circuitjs1/C6D07C914F1BFC709AB9C9A2320A9426.cache.js"
+          ],
+          "recordedFiles": 1529,
+          "recordedSha256": "66ccb2a63f005976d118ff871f7e8249c3e6db67b8cfdf98c4aa5d06780516a0"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "9d8730232cc8d095b13d9d716d2dbd5de7318cd822564bd25935de44d33f0374"
+        },
+        "sourceSha256": "d68bc0ccbdac21d9d6b70a7f03d61c353fd09baea1b7de48a138e07a32b86706",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "466c7f8d801974103fcc88bda9fac32c30b16cda9fdf066326b749fa4a4aa8e1"
+      },
+      {
+        "actionsMillis": 105,
+        "applicationStatus": "PASS",
+        "assertions": 428,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1242.278,
+        "browserOperationMillis": 2574.602,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 135,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 776,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 93
+          },
+          {
+            "elapsedMillis": 617,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 93
+          },
+          {
+            "elapsedMillis": 592,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 93
+          }
+        ],
+        "inputCommands": 0,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 6839,
+        "phase": "compiled-r17",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/PARALLEL_DUAL_INDICATOR/0",
+        "report": {
+          "bytes": 20470,
+          "file": "evidence/u06-compiled-r17/cases/001-U06-PARALLEL_DUAL_INDICATOR-seed-0-session-reconstruction.report.json",
+          "sha256": "275c4cb521b916d5701c23a599b7493a51519f6f915ef7fc727bc118fe3f1bde"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1813,
+          "file": "evidence/compiled-r17-result.json",
+          "sha256": "206ee1bd4fcfcce40f5a3d1a523cfdf4625ddf08cfb7a85c07a7818c534d2957"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/F1158995E77E765EFBCFE014E828981E.symbolMap",
+            "war/circuitjs1/circuitjs1.nocache.js",
+            "war/circuitjs1/compilation-mappings.txt"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/3EBC39AA91CF2767E21D06F4F13AC575.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/489B0B71785C1902240FE80F6CC85DCD.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/A687C9731DBC3BCBB73EEF2B9A912DBA.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/C6D07C914F1BFC709AB9C9A2320A9426.symbolMap",
+            "war/circuitjs1/3EBC39AA91CF2767E21D06F4F13AC575.cache.js",
+            "war/circuitjs1/489B0B71785C1902240FE80F6CC85DCD.cache.js",
+            "war/circuitjs1/A687C9731DBC3BCBB73EEF2B9A912DBA.cache.js",
+            "war/circuitjs1/C6D07C914F1BFC709AB9C9A2320A9426.cache.js"
+          ],
+          "recordedFiles": 1529,
+          "recordedSha256": "66ccb2a63f005976d118ff871f7e8249c3e6db67b8cfdf98c4aa5d06780516a0"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "9d8730232cc8d095b13d9d716d2dbd5de7318cd822564bd25935de44d33f0374"
+        },
+        "sourceSha256": "d68bc0ccbdac21d9d6b70a7f03d61c353fd09baea1b7de48a138e07a32b86706",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "466c7f8d801974103fcc88bda9fac32c30b16cda9fdf066326b749fa4a4aa8e1"
+      },
+      {
+        "actionsMillis": 270,
+        "applicationStatus": "PASS",
+        "assertions": 479,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1229.754,
+        "browserOperationMillis": 98995.143,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 152,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "RC_DELAY",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 33459,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 82
+          },
+          {
+            "elapsedMillis": 32324,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 82
+          },
+          {
+            "elapsedMillis": 32452,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 82
+          }
+        ],
+        "inputCommands": 0,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 103189,
+        "phase": "compiled-r18",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/RC_DELAY/0",
+        "report": {
+          "bytes": 22863,
+          "file": "evidence/u06-compiled-r18/cases/001-U06-RC_DELAY-seed-0-session-reconstruction.report.json",
+          "sha256": "dcfdaca28668bcd4fa275ccb2a82ba61ef3c9691d29cddee1e02b154f8d28c13"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1815,
+          "file": "evidence/compiled-r18-result.json",
+          "sha256": "7fc91a785451ae73e16c8823f3d4b246a37f727a0ee4a82254649a4e15328197"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/F1158995E77E765EFBCFE014E828981E.symbolMap",
+            "war/circuitjs1/circuitjs1.nocache.js",
+            "war/circuitjs1/compilation-mappings.txt"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/3EBC39AA91CF2767E21D06F4F13AC575.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/489B0B71785C1902240FE80F6CC85DCD.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/A687C9731DBC3BCBB73EEF2B9A912DBA.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/C6D07C914F1BFC709AB9C9A2320A9426.symbolMap",
+            "war/circuitjs1/3EBC39AA91CF2767E21D06F4F13AC575.cache.js",
+            "war/circuitjs1/489B0B71785C1902240FE80F6CC85DCD.cache.js",
+            "war/circuitjs1/A687C9731DBC3BCBB73EEF2B9A912DBA.cache.js",
+            "war/circuitjs1/C6D07C914F1BFC709AB9C9A2320A9426.cache.js"
+          ],
+          "recordedFiles": 1529,
+          "recordedSha256": "66ccb2a63f005976d118ff871f7e8249c3e6db67b8cfdf98c4aa5d06780516a0"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "9d8730232cc8d095b13d9d716d2dbd5de7318cd822564bd25935de44d33f0374"
+        },
+        "sourceSha256": "d68bc0ccbdac21d9d6b70a7f03d61c353fd09baea1b7de48a138e07a32b86706",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "466c7f8d801974103fcc88bda9fac32c30b16cda9fdf066326b749fa4a4aa8e1"
+      },
+      {
+        "actionsMillis": 82,
+        "applicationStatus": "PASS",
+        "assertions": 439,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1286.637,
+        "browserOperationMillis": 1530.538,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 100,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "LED_INDICATOR",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 420,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 59
+          },
+          {
+            "elapsedMillis": 320,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 59
+          },
+          {
+            "elapsedMillis": 263,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 59
+          },
+          {
+            "elapsedMillis": 17,
+            "outcome": "CANCELLED",
+            "phase": "cancel-session-restore",
+            "stage": "PHYSICAL",
+            "workUnits": 2
+          }
+        ],
+        "inputCommands": 0,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 5493,
+        "phase": "compiled-r25",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/LED_INDICATOR/0",
+        "report": {
+          "bytes": 20390,
+          "file": "evidence/u06-compiled-r25/cases/001-U06-LED_INDICATOR-seed-0-session-reconstruction-pilot.report.json",
+          "sha256": "3a943f43bf1c4487c9bcbdf0a66ab246771aa72bcca2314b468cc7da2175ccd2"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1813,
+          "file": "evidence/compiled-r25-result.json",
+          "sha256": "ceb1e5146d2987b4edeff231b7c4d66c25beebc2e8f54e61ebf8070c1ec17565"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1529,
+          "recordedSha256": "6d1f7cb2f63faa592afb62d71103cd0bf970f8f8301c3c728079126e9ba589d1"
+        },
+        "sourceBinding": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5"
+        },
+        "sourceSha256": "5888ffb2e23c5c0b779c1b889973ab5d902ba61668c6903f4d8685322aff7903",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "de4c3eae971ef1c0b81d447fa3f888fb59d3bf9d6278aaf9e5899c124dbe5bb4"
+      },
+      {
+        "actionsMillis": 265,
+        "applicationStatus": "PASS",
+        "assertions": 693,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1140.934,
+        "browserOperationMillis": 8706.615,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 223,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "SENSOR_CONTROL",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 2638,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 155
+          },
+          {
+            "elapsedMillis": 2728,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 155
+          },
+          {
+            "elapsedMillis": 2601,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 155
+          }
+        ],
+        "inputCommands": 3,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 12836,
+        "phase": "compiled-r26",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/SENSOR_CONTROL/0",
+        "report": {
+          "bytes": 32910,
+          "file": "evidence/u06-compiled-r26/cases/001-U06-SENSOR_CONTROL-seed-0-session-reconstruction.report.json",
+          "sha256": "d9439d743ccaea49d5437a2a6c17c1294b602c6b75761bc4ef98ef31c137a0e3"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1814,
+          "file": "evidence/compiled-r26-result.json",
+          "sha256": "943bca07c3b2564fd3f576a9bf8770fab3003ae3891c594d9876a27146b8d9c0"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1529,
+          "recordedSha256": "6d1f7cb2f63faa592afb62d71103cd0bf970f8f8301c3c728079126e9ba589d1"
+        },
+        "sourceBinding": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5"
+        },
+        "sourceSha256": "5888ffb2e23c5c0b779c1b889973ab5d902ba61668c6903f4d8685322aff7903",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "de4c3eae971ef1c0b81d447fa3f888fb59d3bf9d6278aaf9e5899c124dbe5bb4"
+      },
+      {
+        "actionsMillis": 310,
+        "applicationStatus": "PASS",
+        "assertions": 746,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1280.512,
+        "browserOperationMillis": 9132.314,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 241,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "SENSOR_CONTROL",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 2385,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 155
+          },
+          {
+            "elapsedMillis": 3012,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 155
+          },
+          {
+            "elapsedMillis": 2851,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 155
+          }
+        ],
+        "inputCommands": 3,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 13468,
+        "phase": "compiled-r27",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/SENSOR_CONTROL/1",
+        "report": {
+          "bytes": 35393,
+          "file": "evidence/u06-compiled-r27/cases/001-U06-SENSOR_CONTROL-seed-1-session-reconstruction.report.json",
+          "sha256": "dd32d73c86cbf261c975fd46bd9d86b13fcf83812c00bd082637837583fed22e"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1814,
+          "file": "evidence/compiled-r27-result.json",
+          "sha256": "0658631e70d4736de5a7996f96eb73e743d1c7b056820a3d165f8ce6c1c90981"
+        },
+        "seed": "1",
+        "servedInputs": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1529,
+          "recordedSha256": "6d1f7cb2f63faa592afb62d71103cd0bf970f8f8301c3c728079126e9ba589d1"
+        },
+        "sourceBinding": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5"
+        },
+        "sourceSha256": "5888ffb2e23c5c0b779c1b889973ab5d902ba61668c6903f4d8685322aff7903",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "de4c3eae971ef1c0b81d447fa3f888fb59d3bf9d6278aaf9e5899c124dbe5bb4"
+      },
+      {
+        "actionsMillis": 92,
+        "applicationStatus": "PASS",
+        "assertions": 375,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 970.685,
+        "browserOperationMillis": 1345.886,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 117,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 332,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 24
+          },
+          {
+            "elapsedMillis": 220,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 24
+          },
+          {
+            "elapsedMillis": 200,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 24
+          }
+        ],
+        "inputCommands": 0,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 5311,
+        "phase": "compiled-r28",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/DIODE_PROTECTED_INDICATOR/0",
+        "report": {
+          "bytes": 17990,
+          "file": "evidence/u06-compiled-r28/cases/001-U06-DIODE_PROTECTED_INDICATOR-seed-0-session-reconstruction.report.json",
+          "sha256": "fdec754cedd340d36e10f7f14a88defb73da3a6edf1022586241251c845a6e41"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1813,
+          "file": "evidence/compiled-r28-result.json",
+          "sha256": "43aebddf30a275cf538ca9582044aba83c41d4d21748a6b77c9b0f941cd5648d"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1529,
+          "recordedSha256": "6d1f7cb2f63faa592afb62d71103cd0bf970f8f8301c3c728079126e9ba589d1"
+        },
+        "sourceBinding": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5"
+        },
+        "sourceSha256": "5888ffb2e23c5c0b779c1b889973ab5d902ba61668c6903f4d8685322aff7903",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "de4c3eae971ef1c0b81d447fa3f888fb59d3bf9d6278aaf9e5899c124dbe5bb4"
+      },
+      {
+        "actionsMillis": 111,
+        "applicationStatus": "PASS",
+        "assertions": 428,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1268.842,
+        "browserOperationMillis": 2570.258,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 135,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 766,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 93
+          },
+          {
+            "elapsedMillis": 648,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 93
+          },
+          {
+            "elapsedMillis": 592,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 93
+          }
+        ],
+        "inputCommands": 0,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 6884,
+        "phase": "compiled-r29",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/PARALLEL_DUAL_INDICATOR/0",
+        "report": {
+          "bytes": 20470,
+          "file": "evidence/u06-compiled-r29/cases/001-U06-PARALLEL_DUAL_INDICATOR-seed-0-session-reconstruction.report.json",
+          "sha256": "4c2e8210031052b89fbed041ae2c7ad79caa5b620d888bddcd4b8adda9d575c6"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1813,
+          "file": "evidence/compiled-r29-result.json",
+          "sha256": "d8af1496f43c77d880105e818cb8d99e0e6c0e019c9ee7e32a872a34498f166b"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1529,
+          "recordedSha256": "6d1f7cb2f63faa592afb62d71103cd0bf970f8f8301c3c728079126e9ba589d1"
+        },
+        "sourceBinding": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5"
+        },
+        "sourceSha256": "5888ffb2e23c5c0b779c1b889973ab5d902ba61668c6903f4d8685322aff7903",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "de4c3eae971ef1c0b81d447fa3f888fb59d3bf9d6278aaf9e5899c124dbe5bb4"
+      },
+      {
+        "actionsMillis": 289,
+        "applicationStatus": "PASS",
+        "assertions": 479,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1255.32,
+        "browserOperationMillis": 99227.152,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 152,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "RC_DELAY",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 31728,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 82
+          },
+          {
+            "elapsedMillis": 33646,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 82
+          },
+          {
+            "elapsedMillis": 33157,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 82
+          }
+        ],
+        "inputCommands": 0,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 103515,
+        "phase": "compiled-r30",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/RC_DELAY/0",
+        "report": {
+          "bytes": 22863,
+          "file": "evidence/u06-compiled-r30/cases/001-U06-RC_DELAY-seed-0-session-reconstruction.report.json",
+          "sha256": "ed3053bbd484bd717772c53b50d073b4a4aec34342f4ef440779b7eb81673924"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1815,
+          "file": "evidence/compiled-r30-result.json",
+          "sha256": "a50f6808ad1d10ce17cb3817167717b3ec80d0a54a17e1782c807d179f0ed347"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1529,
+          "recordedSha256": "6d1f7cb2f63faa592afb62d71103cd0bf970f8f8301c3c728079126e9ba589d1"
+        },
+        "sourceBinding": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5"
+        },
+        "sourceSha256": "5888ffb2e23c5c0b779c1b889973ab5d902ba61668c6903f4d8685322aff7903",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "de4c3eae971ef1c0b81d447fa3f888fb59d3bf9d6278aaf9e5899c124dbe5bb4"
+      },
+      {
+        "actionsMillis": 168,
+        "applicationStatus": "PASS",
+        "assertions": 563,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 851.381,
+        "browserOperationMillis": 3985.444,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 182,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 1164,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 80
+          },
+          {
+            "elapsedMillis": 1039,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 80
+          },
+          {
+            "elapsedMillis": 1108,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 80
+          }
+        ],
+        "inputCommands": 2,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 7842,
+        "phase": "compiled-r31",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/NPN_LOW_SIDE_SWITCH/0",
+        "report": {
+          "bytes": 26619,
+          "file": "evidence/u06-compiled-r31/cases/001-U06-NPN_LOW_SIDE_SWITCH-seed-0-session-reconstruction.report.json",
+          "sha256": "78494d2534eb38cec4458f7deb4bbe94b50073d0d947b604e5ef463ae393e4c1"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1813,
+          "file": "evidence/compiled-r31-result.json",
+          "sha256": "b29ac45ed725a4c1756e100c9ee5c31346ba3a0a49fb4ad2888306e4c0c1184b"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1529,
+          "recordedSha256": "6d1f7cb2f63faa592afb62d71103cd0bf970f8f8301c3c728079126e9ba589d1"
+        },
+        "sourceBinding": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5"
+        },
+        "sourceSha256": "5888ffb2e23c5c0b779c1b889973ab5d902ba61668c6903f4d8685322aff7903",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "de4c3eae971ef1c0b81d447fa3f888fb59d3bf9d6278aaf9e5899c124dbe5bb4"
+      },
+      {
+        "actionsMillis": 147,
+        "applicationStatus": "PASS",
+        "assertions": 510,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1236.03,
+        "browserOperationMillis": 3575.744,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 164,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 995,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 80
+          },
+          {
+            "elapsedMillis": 951,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 80
+          },
+          {
+            "elapsedMillis": 978,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 80
+          }
+        ],
+        "inputCommands": 2,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 7775,
+        "phase": "compiled-r32",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/NMOS_LOW_SIDE_SWITCH/0",
+        "report": {
+          "bytes": 24135,
+          "file": "evidence/u06-compiled-r32/cases/001-U06-NMOS_LOW_SIDE_SWITCH-seed-0-session-reconstruction.report.json",
+          "sha256": "9360042ad0e19912b9e33e7df9ace456f41d86b5e22c1703a57d525a04459971"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1811,
+          "file": "evidence/compiled-r32-result.json",
+          "sha256": "0988f3f47f4788e7a4cd733313a5f19b8bd958af33fb36c2a20df23b0ce9e7ee"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1529,
+          "recordedSha256": "6d1f7cb2f63faa592afb62d71103cd0bf970f8f8301c3c728079126e9ba589d1"
+        },
+        "sourceBinding": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5"
+        },
+        "sourceSha256": "5888ffb2e23c5c0b779c1b889973ab5d902ba61668c6903f4d8685322aff7903",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "de4c3eae971ef1c0b81d447fa3f888fb59d3bf9d6278aaf9e5899c124dbe5bb4"
+      },
+      {
+        "actionsMillis": 784,
+        "applicationStatus": "PASS",
+        "assertions": 708,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1042.99,
+        "browserOperationMillis": 25951.86,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 233,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "RELAY_OUTPUT",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 7942,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 81
+          },
+          {
+            "elapsedMillis": 8354,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 81
+          },
+          {
+            "elapsedMillis": 8314,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 81
+          }
+        ],
+        "inputCommands": 2,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 30082,
+        "phase": "compiled-r33",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/RELAY_OUTPUT/0",
+        "report": {
+          "bytes": 33347,
+          "file": "evidence/u06-compiled-r33/cases/001-U06-RELAY_OUTPUT-seed-0-session-reconstruction.report.json",
+          "sha256": "e1d3526ca9e855438eceffb63fc1c6e099d9dd2ab04c9effc6e2d003757036b3"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1814,
+          "file": "evidence/compiled-r33-result.json",
+          "sha256": "f10a22b58a11551d735006bf8e1645e56d3d58ac7c93a99328fbc6f3b29bb2ce"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1529,
+          "recordedSha256": "6d1f7cb2f63faa592afb62d71103cd0bf970f8f8301c3c728079126e9ba589d1"
+        },
+        "sourceBinding": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5"
+        },
+        "sourceSha256": "5888ffb2e23c5c0b779c1b889973ab5d902ba61668c6903f4d8685322aff7903",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "de4c3eae971ef1c0b81d447fa3f888fb59d3bf9d6278aaf9e5899c124dbe5bb4"
+      },
+      {
+        "actionsMillis": 1431,
+        "applicationStatus": "PASS",
+        "assertions": 1122,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1184.948,
+        "browserOperationMillis": 37912.825,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 369,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "RB15_CONTROL",
+        "fuseFixtures": 2,
+        "generations": [
+          {
+            "elapsedMillis": 10886,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 82
+          },
+          {
+            "elapsedMillis": 12492,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 82
+          },
+          {
+            "elapsedMillis": 12591,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 82
+          }
+        ],
+        "inputCommands": 2,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 42142,
+        "phase": "compiled-r34",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/EASY/RB15_CONTROL/0",
+        "report": {
+          "bytes": 52830,
+          "file": "evidence/u06-compiled-r34/cases/001-U06-RB15_CONTROL-seed-0-session-reconstruction.report.json",
+          "sha256": "aa6e125b7bd206254797b45e823fe4ec4d91dae89fe601d3ae55dc2b8798c6fd"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1814,
+          "file": "evidence/compiled-r34-result.json",
+          "sha256": "230367d2efcf6beaee25f1adc4b9e4f809e355bc8db145c000213983296c7734"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1529,
+          "recordedSha256": "6d1f7cb2f63faa592afb62d71103cd0bf970f8f8301c3c728079126e9ba589d1"
+        },
+        "sourceBinding": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5"
+        },
+        "sourceSha256": "5888ffb2e23c5c0b779c1b889973ab5d902ba61668c6903f4d8685322aff7903",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "de4c3eae971ef1c0b81d447fa3f888fb59d3bf9d6278aaf9e5899c124dbe5bb4"
+      },
+      {
+        "actionsMillis": 414,
+        "applicationStatus": "PASS",
+        "assertions": 1014,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1186.418,
+        "browserOperationMillis": 13779.5,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 336,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "fuseFixtures": 0,
+        "generations": [
+          {
+            "elapsedMillis": 4164,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 620
+          },
+          {
+            "elapsedMillis": 4274,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 620
+          },
+          {
+            "elapsedMillis": 4292,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 620
+          }
+        ],
+        "inputCommands": 4,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 18078,
+        "phase": "compiled-r35",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/0",
+        "report": {
+          "bytes": 47635,
+          "file": "evidence/u06-compiled-r35/cases/001-U06-COMPOSED_CONTROLLED_INDICATOR-seed-0-session-reconstruction.report.json",
+          "sha256": "dc56098e74a21fb06b7ac238dc943474064e2a14820638317c8c9c9ed0992dd3"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1814,
+          "file": "evidence/compiled-r35-result.json",
+          "sha256": "541569b192b4e79e32285afcba8dbba90e62548fed89c5280dbba03714a9d66b"
+        },
+        "seed": "0",
+        "servedInputs": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1529,
+          "recordedSha256": "6d1f7cb2f63faa592afb62d71103cd0bf970f8f8301c3c728079126e9ba589d1"
+        },
+        "sourceBinding": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5"
+        },
+        "sourceSha256": "5888ffb2e23c5c0b779c1b889973ab5d902ba61668c6903f4d8685322aff7903",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "de4c3eae971ef1c0b81d447fa3f888fb59d3bf9d6278aaf9e5899c124dbe5bb4"
+      },
+      {
+        "actionsMillis": 1992,
+        "applicationStatus": "PASS",
+        "assertions": 1391,
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1085.705,
+        "browserOperationMillis": 77503.223,
+        "cleanupMillis": 0,
+        "comparedLiveFields": 462,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "family": "RB30_CONTROL",
+        "fuseFixtures": 2,
+        "generations": [
+          {
+            "elapsedMillis": 23606,
+            "outcome": "PASS",
+            "phase": "normal-generation",
+            "stage": "PUBLISH",
+            "workUnits": 272
+          },
+          {
+            "elapsedMillis": 25788,
+            "outcome": "PASS",
+            "phase": "valid-session-restore",
+            "stage": "PUBLISH",
+            "workUnits": 272
+          },
+          {
+            "elapsedMillis": 25500,
+            "outcome": "PROGRAMMING_FAILURE",
+            "phase": "invalid-signature-restore",
+            "stage": "PUBLISH",
+            "workUnits": 272
+          }
+        ],
+        "inputCommands": 2,
+        "kind": "compiled",
+        "listenerSources": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 5,
+          "recordedSha256": "9f6dbe1f099eb6c3f2c0fd73f3fa293a4b568d079e07a439e32847a237943828"
+        },
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 81722,
+        "phase": "compiled-r36",
+        "portClosure": "PASS",
+        "replay": "tsj-alpha/4/MEDIUM/RB30_CONTROL/10387",
+        "report": {
+          "bytes": 65429,
+          "file": "evidence/u06-compiled-r36/cases/001-U06-RB30_CONTROL-seed-10387-session-reconstruction.report.json",
+          "sha256": "a98b2f7ec1d1c0c00812e740cf47f81c6f17abfd433110ab0b6052002f5af138"
+        },
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1812,
+          "file": "evidence/compiled-r36-result.json",
+          "sha256": "96736cb2229cab7c8739f771bff3b939f631771862e69b0dd8347e13702490ce"
+        },
+        "seed": "10387",
+        "servedInputs": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1529,
+          "recordedSha256": "6d1f7cb2f63faa592afb62d71103cd0bf970f8f8301c3c728079126e9ba589d1"
+        },
+        "sourceBinding": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5"
+        },
+        "sourceSha256": "5888ffb2e23c5c0b779c1b889973ab5d902ba61668c6903f4d8685322aff7903",
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "webSha256": "de4c3eae971ef1c0b81d447fa3f888fb59d3bf9d6278aaf9e5899c124dbe5bb4"
+      },
+      {
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1245.472,
+        "cases": [
+          {
+            "name": "initial-file-durable-restore-and-truncated-rejection",
+            "status": "FAIL"
+          },
+          {
+            "name": "wrong-repair-inventory-history-durable-roundtrip",
+            "status": "NOT_RUN"
+          },
+          {
+            "name": "pristine-sharing-excludes-mutable-repair-and-inventory",
+            "status": "NOT_RUN"
+          },
+          {
+            "name": "correct-repair-durable-roundtrip-and-fresh-retest",
+            "status": "NOT_RUN"
+          }
+        ],
+        "cleanupMillis": 0,
+        "downloadCount": 1,
+        "evidenceIssues": [],
+        "exitCode": 1,
+        "kind": "visual",
+        "nativeCleanup": "PASS",
+        "nativeStatus": "FAIL",
+        "operationMillis": 33305,
+        "phase": "visual-r2",
+        "portClosure": "PASS",
+        "reportedOutcome": "FAIL",
+        "requiredFourCasesPresent": true,
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1809,
+          "file": "evidence/visual-r2-result.json",
+          "sha256": "79f6fa47409182ed0b780d9c124af74a8f15676bf15695cac217dc09fe24604f"
+        },
+        "screenshotReview": "NOT_RUN: human inspection is not inferred from file presence",
+        "screenshots": [
+          {
+            "bytes": 183105,
+            "file": "evidence/u06-visible-r2/screenshots/000-menu.png",
+            "sha256": "1f8bb7deb448c130f9ab1c5145d667b4ddb3e195ad16b8a406069492e985b79e"
+          },
+          {
+            "bytes": 202557,
+            "file": "evidence/u06-visible-r2/screenshots/failure.png",
+            "sha256": "120a970592032e8ff2eb2ca546ab9e0d65286db943e280f2b8c2951ced320d8a"
+          }
+        ],
+        "servedInputs": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/F1158995E77E765EFBCFE014E828981E.symbolMap",
+            "war/circuitjs1/circuitjs1.nocache.js",
+            "war/circuitjs1/compilation-mappings.txt"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/3EBC39AA91CF2767E21D06F4F13AC575.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/489B0B71785C1902240FE80F6CC85DCD.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/A687C9731DBC3BCBB73EEF2B9A912DBA.symbolMap",
+            "war/WEB-INF/deploy/circuitjs1/symbolMaps/C6D07C914F1BFC709AB9C9A2320A9426.symbolMap",
+            "war/circuitjs1/3EBC39AA91CF2767E21D06F4F13AC575.cache.js",
+            "war/circuitjs1/489B0B71785C1902240FE80F6CC85DCD.cache.js",
+            "war/circuitjs1/A687C9731DBC3BCBB73EEF2B9A912DBA.cache.js",
+            "war/circuitjs1/C6D07C914F1BFC709AB9C9A2320A9426.cache.js"
+          ],
+          "recordedFiles": 1531,
+          "recordedSha256": "f15b767092619a7fadb57a3fd29ebbbe536d485a641971a6a1193c6811055c7b"
+        },
+        "sourceBinding": {
+          "changedPaths": [
+            "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java"
+          ],
+          "current": "DIFFERENT",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "9d8730232cc8d095b13d9d716d2dbd5de7318cd822564bd25935de44d33f0374"
+        },
+        "sourceUnchangedDuringPhase": true,
+        "status": "FAIL",
+        "visibleOperationMillis": 31694.756,
+        "visibleReport": {
+          "bytes": 67386,
+          "file": "evidence/u06-visible-r2/result.json",
+          "sha256": "6b3c02756872075c7e8959faf9c169f63326dd1db41f3ef37786b4e9bde3d94e"
+        }
+      },
+      {
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1201.016,
+        "cases": [
+          {
+            "name": "initial-file-durable-restore-and-truncated-rejection",
+            "status": "PASS"
+          },
+          {
+            "name": "wrong-repair-inventory-history-durable-roundtrip",
+            "status": "FAIL"
+          },
+          {
+            "name": "pristine-sharing-excludes-mutable-repair-and-inventory",
+            "status": "NOT_RUN"
+          },
+          {
+            "name": "correct-repair-durable-roundtrip-and-fresh-retest",
+            "status": "NOT_RUN"
+          }
+        ],
+        "cleanupMillis": 0,
+        "downloadCount": 2,
+        "evidenceIssues": [],
+        "exitCode": 1,
+        "kind": "visual",
+        "nativeCleanup": "PASS",
+        "nativeStatus": "FAIL",
+        "operationMillis": 33697,
+        "phase": "visual-r3",
+        "portClosure": "PASS",
+        "reportedOutcome": "FAIL",
+        "requiredFourCasesPresent": true,
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1809,
+          "file": "evidence/visual-r3-result.json",
+          "sha256": "8fda1787d52ddd0dc1b5e3732e5370d864196f7c18bfec3aa12a1441a147e384"
+        },
+        "screenshotReview": "NOT_RUN: human inspection is not inferred from file presence",
+        "screenshots": [
+          {
+            "bytes": 183105,
+            "file": "evidence/u06-visible-r3/screenshots/000-menu.png",
+            "sha256": "1f8bb7deb448c130f9ab1c5145d667b4ddb3e195ad16b8a406069492e985b79e"
+          },
+          {
+            "bytes": 198173,
+            "file": "evidence/u06-visible-r3/screenshots/failure.png",
+            "sha256": "a57d52d91920020cc803a74e2f174ff0e40d3899ea329eba020a9346b9791632"
+          }
+        ],
+        "servedInputs": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1531,
+          "recordedSha256": "cbed5577230368b221dea5f4f1310df8e959996fa326eecf9a72358bb0a77935"
+        },
+        "sourceBinding": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5"
+        },
+        "sourceUnchangedDuringPhase": true,
+        "status": "FAIL",
+        "visibleOperationMillis": 32140.065,
+        "visibleReport": {
+          "bytes": 95059,
+          "file": "evidence/u06-visible-r3/result.json",
+          "sha256": "7bf3cad56eaa731000cb8833d7671a4eebcd62f3e57d91ad768655c06be3c395"
+        }
+      },
+      {
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1292.323,
+        "cases": [
+          {
+            "name": "initial-file-durable-restore-and-truncated-rejection",
+            "status": "PASS"
+          },
+          {
+            "name": "wrong-repair-inventory-history-durable-roundtrip",
+            "status": "FAIL"
+          },
+          {
+            "name": "pristine-sharing-excludes-mutable-repair-and-inventory",
+            "status": "NOT_RUN"
+          },
+          {
+            "name": "correct-repair-durable-roundtrip-and-fresh-retest",
+            "status": "NOT_RUN"
+          }
+        ],
+        "cleanupMillis": 0,
+        "downloadCount": 2,
+        "evidenceIssues": [],
+        "exitCode": 1,
+        "kind": "visual",
+        "nativeCleanup": "PASS",
+        "nativeStatus": "FAIL",
+        "operationMillis": 19113,
+        "phase": "visual-r4",
+        "portClosure": "PASS",
+        "reportedOutcome": "FAIL",
+        "requiredFourCasesPresent": true,
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1807,
+          "file": "evidence/visual-r4-result.json",
+          "sha256": "de0c242d78554f9bdc0ac8eda40259c3556d7ade2f1f433c44cafa874d977123"
+        },
+        "screenshotReview": "NOT_RUN: human inspection is not inferred from file presence",
+        "screenshots": [
+          {
+            "bytes": 183105,
+            "file": "evidence/u06-visible-r4/screenshots/000-menu.png",
+            "sha256": "1f8bb7deb448c130f9ab1c5145d667b4ddb3e195ad16b8a406069492e985b79e"
+          },
+          {
+            "bytes": 218150,
+            "file": "evidence/u06-visible-r4/screenshots/failure.png",
+            "sha256": "7929995fae85a7106b9c4b374d1112c7dc4d20a1379f57f61461793cde55d006"
+          }
+        ],
+        "servedInputs": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1531,
+          "recordedSha256": "cbed5577230368b221dea5f4f1310df8e959996fa326eecf9a72358bb0a77935"
+        },
+        "sourceBinding": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5"
+        },
+        "sourceUnchangedDuringPhase": true,
+        "status": "FAIL",
+        "visibleOperationMillis": 17487.338,
+        "visibleReport": {
+          "bytes": 111124,
+          "file": "evidence/u06-visible-r4/result.json",
+          "sha256": "a8f3aeaccad4601846ec3403b39fd3c2e45d739d7edf89200206975144c37fbf"
+        }
+      },
+      {
+        "browserCleanup": "PASS",
+        "browserCleanupMillis": 1300.445,
+        "cases": [
+          {
+            "name": "initial-file-durable-restore-and-truncated-rejection",
+            "status": "PASS"
+          },
+          {
+            "name": "wrong-repair-inventory-history-durable-roundtrip",
+            "status": "PASS"
+          },
+          {
+            "name": "pristine-sharing-excludes-mutable-repair-and-inventory",
+            "status": "PASS"
+          },
+          {
+            "name": "correct-repair-durable-roundtrip-and-fresh-retest",
+            "status": "PASS"
+          }
+        ],
+        "cleanupMillis": 0,
+        "downloadCount": 4,
+        "evidenceIssues": [],
+        "exitCode": 0,
+        "kind": "visual",
+        "nativeCleanup": "PASS",
+        "nativeStatus": "PASS",
+        "operationMillis": 27490,
+        "phase": "visual-r5",
+        "portClosure": "PASS",
+        "reportedOutcome": "PASS",
+        "requiredFourCasesPresent": true,
+        "resourceIdentityVerified": true,
+        "result": {
+          "bytes": 1809,
+          "file": "evidence/visual-r5-result.json",
+          "sha256": "0468877f3e3c7ca38e4ccdb2d3f7acc6dc576d79913a54342e0ff8d6b6a2a706"
+        },
+        "screenshotReview": "NOT_RUN: human inspection is not inferred from file presence",
+        "screenshots": [
+          {
+            "bytes": 183105,
+            "file": "evidence/u06-visible-r5/screenshots/000-menu.png",
+            "sha256": "1f8bb7deb448c130f9ab1c5145d667b4ddb3e195ad16b8a406069492e985b79e"
+          },
+          {
+            "bytes": 216984,
+            "file": "evidence/u06-visible-r5/screenshots/001-wrong-repair-failed-retest.png",
+            "sha256": "060fee7b4bd7249d34a7d3c9c3cabdf9d5f8d612cb7aa1b934822b651558376e"
+          },
+          {
+            "bytes": 215315,
+            "file": "evidence/u06-visible-r5/screenshots/002-reloaded-wrong-repair-retained-original.png",
+            "sha256": "824d91d3c29b71c1cef89891845d3bdb68f3a3d7add44a7e731c97e5667201dc"
+          },
+          {
+            "bytes": 211536,
+            "file": "evidence/u06-visible-r5/screenshots/003-repaired-session-save-history.png",
+            "sha256": "498173caf4515c23dc55f5dba22a4e7710dcd943892d927633016fa0842ce32f"
+          },
+          {
+            "bytes": 235491,
+            "file": "evidence/u06-visible-r5/screenshots/004-reloaded-correct-repair-fresh-retest-pass.png",
+            "sha256": "d93751675ac2d671cd070e0e591739e07637275b93eed4009242d2cb7c741775"
+          }
+        ],
+        "servedInputs": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1531,
+          "recordedSha256": "cbed5577230368b221dea5f4f1310df8e959996fa326eecf9a72358bb0a77935"
+        },
+        "sourceBinding": {
+          "changedPaths": [],
+          "current": "MATCH",
+          "missingPaths": [],
+          "recordedFiles": 1294,
+          "recordedSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5"
+        },
+        "sourceUnchangedDuringPhase": true,
+        "status": "PASS",
+        "visibleOperationMillis": 25760.546,
+        "visibleReport": {
+          "bytes": 263947,
+          "file": "evidence/u06-visible-r5/result.json",
+          "sha256": "1b2ea605f2d6881ee9fe82a5de14cf0e5e068128c126a0a8490e5f732195fe69"
+        }
+      }
+    ],
+    "pointerSha256": "3df17c9c610a4ffe8875ded453929ce175cb4b010c111bc0a9085e1c3caac5a5",
+    "procedure": {
+      "bytes": 37427,
+      "file": "scratch/summarize_u06.py",
+      "sha256": "fe3963b7ae9335b709832c363a80c19ec6d04f018be01f4220335b570f3563f0"
+    },
+    "schema": 1,
+    "scope": "Independent retained-evidence audit; no test execution, current process query, or milestone acceptance."
+  },
+  "recursiveOmittedFieldNames": [
+    "commandLine",
+    "executable",
+    "failureCaptureError",
+    "failureTraceback",
+    "profile",
+    "traceback"
+  ],
+  "transformation": "Task-root path normalization; explicitly listed fields omitted."
+}

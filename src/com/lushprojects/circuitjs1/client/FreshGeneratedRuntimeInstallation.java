@@ -171,13 +171,26 @@ final class FreshGeneratedRuntimeInstallation {
             PcbConductorProjection.audit(candidate, sim.elmList);
             GeneratedDiagnosticSolvabilityAdmission.validate(sim, candidate);
         }
-        void publish() {
+        void publish() { publish(null); }
+        void publish(PlayerSessionSave saved) {
             enterStep();
             if (sim.getGeneratedChallengeController().getDiagnosticProofReceipt() == null ||
                     sim.getGeneratedChallengeController().getScenario() == null ||
                     !sim.isGeneratedRuntimeSettled())
                 throw new IllegalStateException("Generation publication has incomplete qualification");
             validatePhysical();
+            if (saved != null) {
+                // Fresh pristine admission remains historical evidence. Import
+                // never supplies a proof or customer-completion authorization.
+                PlayerSessionState.restore(sim, candidate, saved);
+                candidate.getBoard().validate();
+                candidate.getPhysicalBoardRuntime().validateCommittedState(candidate,
+                    sim.getBoardModificationController(), sim.elmList);
+                candidate.getPcbLayout().validateGeometry(candidate.getBoard());
+                PcbConductorProjection.audit(candidate, sim.elmList);
+                candidateController.invalidateCustomerRetest();
+                candidate.getPhysicalBoardRuntime().getSessionHistory().restore(saved.getHistory());
+            }
             reached(sim, Stage.VALIDATION);
             sim.pcbWorkbenchController.attachToSidebar(sim.verticalPanel);
             reached(sim, Stage.WORKBENCH);

@@ -1,0 +1,40 @@
+{
+  "omittedFields": [
+    "sourceFiles (deduplicated to shared inventory)"
+  ],
+  "original": {
+    "bytes": 179593,
+    "sha256": "c733642f3cf7698c706e59f3117be93d2a5fa2f8bc8aa8eff23eba68760b7578",
+    "taskRootPath": "evidence/compiled-r27-launch.json"
+  },
+  "receipt": {
+    "argv": [
+      "<PYTHON>",
+      "-B",
+      "<SCRATCH>\\compiled-r27.py"
+    ],
+    "controller": {
+      "identity": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357243124191799,
+        "pid": 27352
+      },
+      "metadataErrors": [],
+      "pid": 27352,
+      "queryStatus": "PRESENT"
+    },
+    "phase": "compiled-r27",
+    "sourceInventory": "inventories/current-source-pins.json",
+    "sourcePinsSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5",
+    "startedUtc": "2026-10-06T01:38:32.664113+00:00"
+  },
+  "recursiveOmittedFieldNames": [
+    "commandLine",
+    "executable",
+    "failureCaptureError",
+    "failureTraceback",
+    "profile",
+    "traceback"
+  ],
+  "transformation": "Task-root path normalization; explicitly listed fields omitted."
+}

@@ -1,0 +1,78 @@
+{
+  "omittedFields": [],
+  "original": {
+    "bytes": 1809,
+    "sha256": "0468877f3e3c7ca38e4ccdb2d3f7acc6dc576d79913a54342e0ff8d6b6a2a706",
+    "taskRootPath": "evidence/visual-r5-result.json"
+  },
+  "receipt": {
+    "changedInputs": [],
+    "host": {
+      "cleanup": {
+        "cleanupElapsedMs": 0,
+        "cleanupVerified": true,
+        "drainerErrors": [],
+        "drainerWaitMs": 0,
+        "drainsComplete": true,
+        "jobAccountingDrainMs": 0,
+        "jobAccountingDrainSucceeded": true,
+        "jobAccountingError": null,
+        "jobActiveProcesses": 0,
+        "jobClosedForCleanup": false,
+        "liveDrainers": 0,
+        "pid": 29828,
+        "processSignaled": true
+      },
+      "command": [
+        "<PYTHON>",
+        "-B",
+        "<SCRATCH>\\visual-r5.py"
+      ],
+      "deadlineMs": 900000,
+      "finishedUtc": "2026-10-06T01:36:02.348112Z",
+      "handlesClosed": true,
+      "logs": {
+        "stderr": {
+          "bytes": 0,
+          "errors": [],
+          "overflow": false,
+          "readerAlive": false,
+          "streamClosed": true
+        },
+        "stdout": {
+          "bytes": 3256,
+          "errors": [],
+          "overflow": false,
+          "readerAlive": false,
+          "streamClosed": true
+        }
+      },
+      "operation": {
+        "elapsedMs": 27490,
+        "exitCode": 0,
+        "reason": null
+      },
+      "process": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357241348526959,
+        "pid": 29828
+      },
+      "schema": 1,
+      "scope": "owned host phase; no application measurements",
+      "startedUtc": "2026-10-06T01:35:34.849910Z",
+      "status": "PASS"
+    },
+    "phase": "visual-r5",
+    "sourceFiles": 1294,
+    "sourceInputsUnchanged": true
+  },
+  "recursiveOmittedFieldNames": [
+    "commandLine",
+    "executable",
+    "failureCaptureError",
+    "failureTraceback",
+    "profile",
+    "traceback"
+  ],
+  "transformation": "Task-root path normalization; explicitly listed fields omitted."
+}

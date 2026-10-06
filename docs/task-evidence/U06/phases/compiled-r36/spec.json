@@ -1,0 +1,33 @@
+{
+  "omittedFields": [],
+  "original": {
+    "bytes": 443,
+    "sha256": "06fb103cabf1898cd82615cc4030564782827b11a5ddeaea5330a82996109579",
+    "taskRootPath": "evidence/u06-compiled-r36/spec.json"
+  },
+  "receipt": {
+    "cases": [
+      {
+        "expectedState": "PASS",
+        "name": "U06 RB30_CONTROL seed 10387 session reconstruction",
+        "path": "circuitjs.html?tsjDebug=true&tsjVerifyU06=true&tsjU06Family=RB30_CONTROL&tsjU06Seed=10387",
+        "reportAttribute": "data-tsj-u06-report",
+        "stateAttribute": "data-tsj-u06-state",
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 360
+      }
+    ]
+  },
+  "recursiveOmittedFieldNames": [
+    "commandLine",
+    "executable",
+    "failureCaptureError",
+    "failureTraceback",
+    "profile",
+    "traceback"
+  ],
+  "transformation": "Task-root path normalization; explicitly listed fields omitted."
+}

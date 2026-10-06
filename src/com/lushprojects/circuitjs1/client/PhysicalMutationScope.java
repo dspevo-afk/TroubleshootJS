@@ -408,6 +408,9 @@ final class PhysicalMutationScope {
                 intent.getOperation());
         closeInternal();
         runtime.recordMutationReceipt(PhysicalMutationReceipt.committed(intent));
+        boolean graphOnly = "graph-remove".equals(intent.getOperation()) || "graph-restore".equals(intent.getOperation());
+        if (!graphOnly || !connectedBefore.equals(modifications.captureConnectionStates(intent.getComponentId())))
+            runtime.getSessionHistory().committed(sim, intent, acquiredPart);
     }
 
     /**

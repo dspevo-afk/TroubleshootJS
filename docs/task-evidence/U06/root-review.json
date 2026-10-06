@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "recordedUtc": "2026-10-06T01:48:44.263003+00:00",
+  "status": "ACCEPTED_WITH_DOCUMENTED_SCOPE",
+  "sourceBindingSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5",
+  "rootIntegratedDiffReview": "PASS: current production owners, codec, reconstruction, fingerprint, UI transport, sensor model and contracts inspected; no unresolved blocker.",
+  "independentSourceReview": "PASS: u06_owner_review reviewed final integrated source including sensor paths, logger selection and admitted-retest notice fix; no concrete blocker.",
+  "manualScreenshotReview": {
+    "status": "PASS",
+    "method": "Root visually inspected actual headed production-preview screenshots; ordinary visible input, no injected controller actions.",
+    "screenshots": [
+      {
+        "file": "screenshots/001-wrong-repair-failed-retest.png",
+        "sha256": "060fee7b4bd7249d34a7d3c9c3cabdf9d5f8d612cb7aa1b934822b651558376e"
+      },
+      {
+        "file": "screenshots/002-reloaded-wrong-repair-retained-original.png",
+        "sha256": "824d91d3c29b71c1cef89891845d3bdb68f3a3d7add44a7e731c97e5667201dc"
+      },
+      {
+        "file": "screenshots/003-repaired-session-save-history.png",
+        "sha256": "498173caf4515c23dc55f5dba22a4e7710dcd943892d927633016fa0842ce32f"
+      },
+      {
+        "file": "screenshots/004-reloaded-correct-repair-fresh-retest-pass.png",
+        "sha256": "d93751675ac2d671cd070e0e591739e07637275b93eed4009242d2cb7c741775"
+      }
+    ]
+  },
+  "independentDownloadReview": {
+    "status": "PASS",
+    "reviewer": "u06_player_ui",
+    "cases": 4,
+    "actions": 340,
+    "bytes": [
+      439,
+      798,
+      1027
+    ],
+    "scope": "Complete framing, matching public history and OFF/OFF/ON sources, opaque digests, checked hidden-fault/netlist/raw-canonical/completion markers absent; exact source and served-input hashes recomputed."
+  },
+  "resourceAudit": {
+    "status": "PASS",
+    "counts": {
+      "evidenceFiles": 362,
+      "portStates": {
+        "CLOSED": 33
+      },
+      "processStates": {
+        "ABSENT": 447,
+        "REUSED_PID_RECORDED_INSTANCE_ABSENT": 4
+      },
+      "recordedInstances": 451,
+      "recordedPorts": 33
+    },
+    "originalReceiptSha256": "0f7e2c7cfd96fe148ed4880e9beedfe520a2ff5229d5414ba0bcc08704d95c04",
+    "helperSha256": "08256d031f082a783ed3410beef73b270bce55236ab7b6ae4401f4024f1c82ae",
+    "blockers": []
+  },
+  "publication": "NOT_ASSESSED: commit and remote verification are separate later operations; no email.",
+  "limits": [
+    "Representative family seeds and guided repairs, not a population or blind-diagnosis qualification.",
+    "Restart mode is not exact mid-transient resume.",
+    "8192-operation artifact cap is not measured capacity or bounded live history.",
+    "Delayed FileReader callbacks, native I/O error, oversized-file UI path and Windows file-dialog keyboard navigation NOT RUN.",
+    "Controlled damage fixtures verify persistence/ownership, not overload physics.",
+    "U07 and Q60 remain unstarted."
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "omittedFields": [
+    "all other stdout"
+  ],
+  "original": {
+    "bytes": 1259,
+    "sha256": "3f715133c4ff00b76616a60b18fb90a84249f4318b908d5f8987d96be1b38553",
+    "taskRootPath": "evidence/owned-build-r4/stdout.log"
+  },
+  "receipt": {
+    "lines": [
+      "[java-version:stderr] openjdk version \"1.8.0_502\"",
+      "[java-version:stderr] OpenJDK Runtime Environment (Temurin)(build 1.8.0_502-b07)",
+      "[java-version:stderr] OpenJDK 64-Bit Server VM (Temurin)(build 25.502-b07, mixed mode)",
+      "[gwt-compile:stdout] Compiling module com.lushprojects.circuitjs1.circuitjs1",
+      "[gwt-compile:stdout]    Compiling 5 permutations",
+      "[gwt-compile:stdout]       Compiling permutation 0...",
+      "[gwt-compile:stdout]       Compiling permutation 1...",
+      "[gwt-compile:stdout]       Compiling permutation 2...",
+      "[gwt-compile:stdout]       Compiling permutation 3...",
+      "[gwt-compile:stdout]       Compiling permutation 4...",
+      "[gwt-compile:stdout]    Compile of permutations succeeded",
+      "[gwt-compile:stdout]    Compilation succeeded -- 82.797s",
+      "[gwt-compile:stdout]    Link succeeded",
+      "[gwt-compile:stdout]    Linking succeeded -- 1.393s"
+    ]
+  },
+  "recursiveOmittedFieldNames": [
+    "commandLine",
+    "executable",
+    "failureCaptureError",
+    "failureTraceback",
+    "profile",
+    "traceback"
+  ],
+  "transformation": "Task-root path normalization; explicitly listed fields omitted."
+}

@@ -1,0 +1,217 @@
+{
+  "limitations": [
+    "Exact private scratch driver sources are not redistributed.",
+    "Maintained host commands, committed production verifier, case specs, and original source hashes support reproduction.",
+    "Root screenshot inspection and acceptance are documented separately; copying an image does not prove review."
+  ],
+  "sources": [
+    {
+      "bytes": 22305,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r25",
+      "role": "wrapper-source.py",
+      "sha256": "324563a29dff8226b39db2ff573bd0d5a70ff8e16d0ed5b7d8974b0eb93d066e",
+      "taskRootPath": "evidence/u06-compiled-r25/wrapper-source.py"
+    },
+    {
+      "bytes": 13204,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r26",
+      "role": "wrapper-source.py",
+      "sha256": "a36bffc719eec6a5e6f01abccfdfe24aa6da5012f012f49d103576f830aa7512",
+      "taskRootPath": "evidence/u06-compiled-r26/wrapper-source.py"
+    },
+    {
+      "bytes": 22305,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r26",
+      "role": "shared-validator-source.py",
+      "sha256": "324563a29dff8226b39db2ff573bd0d5a70ff8e16d0ed5b7d8974b0eb93d066e",
+      "taskRootPath": "evidence/u06-compiled-r26/shared-validator-source.py"
+    },
+    {
+      "bytes": 13204,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r27",
+      "role": "wrapper-source.py",
+      "sha256": "a36bffc719eec6a5e6f01abccfdfe24aa6da5012f012f49d103576f830aa7512",
+      "taskRootPath": "evidence/u06-compiled-r27/wrapper-source.py"
+    },
+    {
+      "bytes": 22305,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r27",
+      "role": "shared-validator-source.py",
+      "sha256": "324563a29dff8226b39db2ff573bd0d5a70ff8e16d0ed5b7d8974b0eb93d066e",
+      "taskRootPath": "evidence/u06-compiled-r27/shared-validator-source.py"
+    },
+    {
+      "bytes": 13204,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r28",
+      "role": "wrapper-source.py",
+      "sha256": "a36bffc719eec6a5e6f01abccfdfe24aa6da5012f012f49d103576f830aa7512",
+      "taskRootPath": "evidence/u06-compiled-r28/wrapper-source.py"
+    },
+    {
+      "bytes": 22305,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r28",
+      "role": "shared-validator-source.py",
+      "sha256": "324563a29dff8226b39db2ff573bd0d5a70ff8e16d0ed5b7d8974b0eb93d066e",
+      "taskRootPath": "evidence/u06-compiled-r28/shared-validator-source.py"
+    },
+    {
+      "bytes": 13204,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r29",
+      "role": "wrapper-source.py",
+      "sha256": "a36bffc719eec6a5e6f01abccfdfe24aa6da5012f012f49d103576f830aa7512",
+      "taskRootPath": "evidence/u06-compiled-r29/wrapper-source.py"
+    },
+    {
+      "bytes": 22305,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r29",
+      "role": "shared-validator-source.py",
+      "sha256": "324563a29dff8226b39db2ff573bd0d5a70ff8e16d0ed5b7d8974b0eb93d066e",
+      "taskRootPath": "evidence/u06-compiled-r29/shared-validator-source.py"
+    },
+    {
+      "bytes": 13204,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r30",
+      "role": "wrapper-source.py",
+      "sha256": "a36bffc719eec6a5e6f01abccfdfe24aa6da5012f012f49d103576f830aa7512",
+      "taskRootPath": "evidence/u06-compiled-r30/wrapper-source.py"
+    },
+    {
+      "bytes": 22305,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r30",
+      "role": "shared-validator-source.py",
+      "sha256": "324563a29dff8226b39db2ff573bd0d5a70ff8e16d0ed5b7d8974b0eb93d066e",
+      "taskRootPath": "evidence/u06-compiled-r30/shared-validator-source.py"
+    },
+    {
+      "bytes": 13204,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r31",
+      "role": "wrapper-source.py",
+      "sha256": "a36bffc719eec6a5e6f01abccfdfe24aa6da5012f012f49d103576f830aa7512",
+      "taskRootPath": "evidence/u06-compiled-r31/wrapper-source.py"
+    },
+    {
+      "bytes": 22305,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r31",
+      "role": "shared-validator-source.py",
+      "sha256": "324563a29dff8226b39db2ff573bd0d5a70ff8e16d0ed5b7d8974b0eb93d066e",
+      "taskRootPath": "evidence/u06-compiled-r31/shared-validator-source.py"
+    },
+    {
+      "bytes": 13204,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r32",
+      "role": "wrapper-source.py",
+      "sha256": "a36bffc719eec6a5e6f01abccfdfe24aa6da5012f012f49d103576f830aa7512",
+      "taskRootPath": "evidence/u06-compiled-r32/wrapper-source.py"
+    },
+    {
+      "bytes": 22305,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r32",
+      "role": "shared-validator-source.py",
+      "sha256": "324563a29dff8226b39db2ff573bd0d5a70ff8e16d0ed5b7d8974b0eb93d066e",
+      "taskRootPath": "evidence/u06-compiled-r32/shared-validator-source.py"
+    },
+    {
+      "bytes": 13204,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r33",
+      "role": "wrapper-source.py",
+      "sha256": "a36bffc719eec6a5e6f01abccfdfe24aa6da5012f012f49d103576f830aa7512",
+      "taskRootPath": "evidence/u06-compiled-r33/wrapper-source.py"
+    },
+    {
+      "bytes": 22305,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r33",
+      "role": "shared-validator-source.py",
+      "sha256": "324563a29dff8226b39db2ff573bd0d5a70ff8e16d0ed5b7d8974b0eb93d066e",
+      "taskRootPath": "evidence/u06-compiled-r33/shared-validator-source.py"
+    },
+    {
+      "bytes": 13204,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r34",
+      "role": "wrapper-source.py",
+      "sha256": "a36bffc719eec6a5e6f01abccfdfe24aa6da5012f012f49d103576f830aa7512",
+      "taskRootPath": "evidence/u06-compiled-r34/wrapper-source.py"
+    },
+    {
+      "bytes": 22305,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r34",
+      "role": "shared-validator-source.py",
+      "sha256": "324563a29dff8226b39db2ff573bd0d5a70ff8e16d0ed5b7d8974b0eb93d066e",
+      "taskRootPath": "evidence/u06-compiled-r34/shared-validator-source.py"
+    },
+    {
+      "bytes": 13204,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r35",
+      "role": "wrapper-source.py",
+      "sha256": "a36bffc719eec6a5e6f01abccfdfe24aa6da5012f012f49d103576f830aa7512",
+      "taskRootPath": "evidence/u06-compiled-r35/wrapper-source.py"
+    },
+    {
+      "bytes": 22305,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r35",
+      "role": "shared-validator-source.py",
+      "sha256": "324563a29dff8226b39db2ff573bd0d5a70ff8e16d0ed5b7d8974b0eb93d066e",
+      "taskRootPath": "evidence/u06-compiled-r35/shared-validator-source.py"
+    },
+    {
+      "bytes": 13204,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r36",
+      "role": "wrapper-source.py",
+      "sha256": "a36bffc719eec6a5e6f01abccfdfe24aa6da5012f012f49d103576f830aa7512",
+      "taskRootPath": "evidence/u06-compiled-r36/wrapper-source.py"
+    },
+    {
+      "bytes": 22305,
+      "copyPolicy": "Hash only; original preserved outside repository",
+      "phase": "compiled-r36",
+      "role": "shared-validator-source.py",
+      "sha256": "324563a29dff8226b39db2ff573bd0d5a70ff8e16d0ed5b7d8974b0eb93d066e",
+      "taskRootPath": "evidence/u06-compiled-r36/shared-validator-source.py"
+    },
+    {
+      "bytes": 24607,
+      "copyPolicy": "Hash only; original preserved",
+      "phase": "visual-r5",
+      "role": "visible driver",
+      "sha256": "85d4cf0f03bc765bc56a151971862288053f0a03bd7ee9c134219b75cd91ed8c",
+      "taskRootPath": "scratch/visual-r5.py"
+    },
+    {
+      "bytes": 21211,
+      "copyPolicy": "Hash only; original preserved",
+      "phase": "visual-r5",
+      "role": "visible driver",
+      "sha256": "5ec8a3cae2f6588136b4700a448a2327d442a2e4d9a822a17da61d0b41a1d8c9",
+      "taskRootPath": "scratch/visual-r1.py"
+    },
+    {
+      "bytes": 54128,
+      "copyPolicy": "Hash only; original preserved",
+      "phase": "visual-r5",
+      "role": "visible driver",
+      "sha256": "22be524c90d5a4468308764cd168e532c21987fca7360a8b6b7a144ea628dbcb",
+      "taskRootPath": "repo/docs/task-evidence/Q30/qualification-workflow/visible_repair.py"
+    }
+  ]
+}

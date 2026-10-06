@@ -156,6 +156,19 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
     public boolean isFaultedTargetInstalled(GeneratedBoardInstance owner, String id) {
         return GeneratedBoardFamilyPolicy.isFaultedTargetInstalled(owner, id);
     }
+    public String getSessionInputSignature() {
+        StringBuilder out = new StringBuilder("RB30_INPUTS@1:");
+        for (int index = 0; index < channels.length; index++) {
+            double expected = (input & (1 << index)) != 0 ? 5 : 0;
+            LimitedDcSupplyElm source = power.getBinding("SENSOR_" + channels[index]).getLimitedSupply();
+            if (source == null || source.maxVoltage != expected)
+                throw new IllegalStateException("Sensor command disagrees with its source");
+            out.append(channels[index].length()).append(':').append(channels[index])
+                .append(expected == 0 ? ":LOW;" : ":HIGH;");
+        }
+        return out.toString();
+    }
+
     public GeneratedBoardOperationCatalog getOperationCatalog() { return operations; }
     public GeneratedCustomerRetestProfile getCustomerRetestProfile() { return retest; }
     // Preserve the powered cadence on this larger graph. Once every actual

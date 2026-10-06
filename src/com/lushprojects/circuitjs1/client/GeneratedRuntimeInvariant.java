@@ -137,7 +137,6 @@ final class GeneratedRuntimeInvariant {
             Vector<CircuitElm> canonical, Vector<CircuitElm> claimed) {
         TroubleshootBoard board = instance.getBoard();
         GeneratedExternalPowerBindings power = instance.getExternalPowerBindings();
-        Boolean connected = null;
         for (String powerInputId : board.getPowerInputIds()) {
             ExternalPowerSimulationBinding binding;
             try {
@@ -151,12 +150,9 @@ final class GeneratedRuntimeInvariant {
             require(!backing.isEmpty(), "Power input has no backing: " + powerInputId);
             verifyOwnedUniqueElements(backing, canonical, claimed,
                 "power backing " + powerInputId);
-            boolean inputConnected = binding.isConnected();
-            if (connected == null)
-                connected = Boolean.valueOf(inputConnected);
-            else
-                require(connected.booleanValue() == inputConnected,
-                    "Power controls disagree across generated inputs");
+            // A05 gives each source its own physical connection command.
+            // Mixed supply states are valid; ownership and executable controls
+            // above remain mandatory for each individual input.
         }
     }
 

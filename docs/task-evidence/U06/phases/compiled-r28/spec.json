@@ -1,0 +1,33 @@
+{
+  "omittedFields": [],
+  "original": {
+    "bytes": 461,
+    "sha256": "ee7dc8501a113fce5d59f380657693009dc1179bd918bcdad7c46fefefde5dc7",
+    "taskRootPath": "evidence/u06-compiled-r28/spec.json"
+  },
+  "receipt": {
+    "cases": [
+      {
+        "expectedState": "PASS",
+        "name": "U06 DIODE_PROTECTED_INDICATOR seed 0 session reconstruction",
+        "path": "circuitjs.html?tsjDebug=true&tsjVerifyU06=true&tsjU06Family=DIODE_PROTECTED_INDICATOR&tsjU06Seed=0",
+        "reportAttribute": "data-tsj-u06-report",
+        "stateAttribute": "data-tsj-u06-state",
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 360
+      }
+    ]
+  },
+  "recursiveOmittedFieldNames": [
+    "commandLine",
+    "executable",
+    "failureCaptureError",
+    "failureTraceback",
+    "profile",
+    "traceback"
+  ],
+  "transformation": "Task-root path normalization; explicitly listed fields omitted."
+}

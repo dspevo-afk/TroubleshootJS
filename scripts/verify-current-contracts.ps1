@@ -16,7 +16,7 @@ param(
 )
 
 # Maintained current seed, identity, geometry, recipe and construction contracts.
-# Compiles the real client source once; only the Q30/full-suite JVM path uses an
+# Compiles the real client source once; the Q30/E02/E04/full-suite JVM paths use an
 # exact scratch replacement for CirSim's JSNI console logger. The actual GWT
 # solver/player gates remain separate.
 Set-StrictMode -Version Latest
@@ -290,7 +290,10 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'Q30TemporalWorkContractTest' -or
         $Suite -contains 'DiagnosticServicePreparationContractTest' -or
         $Suite -contains 'Q30CatalogTransferContractTest' -or
-        $Suite -contains 'Q30SolverStepSensitivityContractTest'
+        $Suite -contains 'Q30SolverStepSensitivityContractTest' -or
+        $Suite -contains 'E02RegulatorContractTest' -or
+        $Suite -contains 'E04SensorControlContractTest' -or
+        $Suite -contains 'SensorControlFamilyContractTest'
     $nativeLoggerShim = ''
     if ($needsQ30NativeLoggerBridge) {
         # CircuitJS's unconnected-node and convergence diagnostics use JSNI.
@@ -337,6 +340,8 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'ArchitectureFootprintContractTest'; Marker = 'architecture footprint contracts ' },
         @{ Name = 'PhysicalServiceabilityContractTest'; Marker = 'physical serviceability contracts ' },
         @{ Name = 'U04SessionContractTest'; Marker = 'U04 session contracts ' },
+        @{ Name = 'U06SessionSaveContractTest'; Marker = 'U06 session save contracts ' },
+        @{ Name = 'PlayerSessionFingerprintContractTest'; Marker = 'PlayerSessionFingerprintContractTest assertions=' },
         @{ Name = 'U05DifficultyContractTest'; Marker = 'U05 difficulty contracts ' },
         @{ Name = 'E03RelayContractTest'; Marker = 'E03 relay contracts ' },
         @{ Name = 'E02RegulatorContractTest'; Marker = 'E02 regulator contracts ' },

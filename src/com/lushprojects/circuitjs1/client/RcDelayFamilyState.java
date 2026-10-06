@@ -45,6 +45,10 @@ final class RcDelayFamilyState implements GeneratedBoardFamilyState {
         return GeneratedBoardFamilyPolicy.isFaultedTargetInstalled(instance, componentId);
     }
 
+    public String getSessionInputSignature() {
+        return "NO_SEMANTIC_INPUTS@1";
+    }
+
     public GeneratedBoardOperationCatalog getOperationCatalog() { return operations; }
     public GeneratedCustomerRetestProfile getCustomerRetestProfile() { return retestProfile; }
 }

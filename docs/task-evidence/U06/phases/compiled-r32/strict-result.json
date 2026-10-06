@@ -1,0 +1,122 @@
+{
+  "omittedFields": [],
+  "original": {
+    "bytes": 4896,
+    "sha256": "b5d29443db1330988452214cb032267e03080777e5ca4c8a5dacc01db4787b38",
+    "taskRootPath": "evidence/u06-compiled-r32/strict-result.json"
+  },
+  "receipt": {
+    "bindings": {
+      "deps": "<PLAYWRIGHT_DEPS>",
+      "expectedFuseFixtures": 0,
+      "expectedInputCounts": [
+        2
+      ],
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "listenerOwnerSourceSha256": {
+        "audit_release.py": "7a76a9ca504eada3a7658dd74ac8851cbcbc10c6d7d45598894fe448aa696324",
+        "private_menu.py": "9d42f39649fc13e5b5820815e75c33731ebb2dc29a48f69763d2cea4a592acab",
+        "receipts.py": "ae22c139fc9834c767aed8d6b2ae3dcdb9e8db010c3721deba3ae34bd1119dd1",
+        "serial_runner.py": "08ce044c8c014ae7bc3b194c07827c8383990b4f950be82137b94dc504f1ebe2",
+        "windows_process_identity.py": "88b18fa7ff41fc006fe9e17dac2aba73cb15c9342bad8b163bedb60bce161017"
+      },
+      "nativeJobMember": true,
+      "phase": "compiled-r32",
+      "pilotPrerequisite": {
+        "currentInputSha256": "e6950a0c127d411d10dc209f62a3f9f024962489b6865b20de47c760ccedaa5e",
+        "files": {
+          "native": {
+            "path": "<EVIDENCE>\\compiled-r25-result.json",
+            "sha256": "ceb1e5146d2987b4edeff231b7c4d66c25beebc2e8f54e61ebf8070c1ec17565"
+          },
+          "raw": {
+            "path": "<EVIDENCE>\\u06-compiled-r25\\result.json",
+            "sha256": "84a6f66a6fe585ee24710b7f07cdfdfafde37795f379f58948619745814ca3dc"
+          },
+          "strict": {
+            "path": "<EVIDENCE>\\u06-compiled-r25\\strict-result.json",
+            "sha256": "d13b67cf32eba296d0c65e8e6d15faa6cf9ae9f4a908534d13b96d8e5da44793"
+          }
+        },
+        "output": "<EVIDENCE>\\u06-compiled-r25",
+        "phase": "compiled-r25",
+        "reportSha256": "3a943f43bf1c4487c9bcbdf0a66ab246771aa72bcca2314b468cc7da2175ccd2",
+        "status": "PASS",
+        "validator": "<SCRATCH>\\compiled-r25.py"
+      },
+      "pointerSha256": "3df17c9c610a4ffe8875ded453929ce175cb4b010c111bc0a9085e1c3caac5a5",
+      "python": "<PYTHON>",
+      "runnerSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "seed": "0",
+      "sharedValidatorSha256": "324563a29dff8226b39db2ff573bd0d5a70ff8e16d0ed5b7d8974b0eb93d066e",
+      "specSha256": "f04770e19682ae6db73c16bd4508ffd0b28b4737b0a5ab663750347b61bfe375",
+      "startedUtc": "2026-10-06T01:40:52.102979+00:00",
+      "wrapperSha256": "a36bffc719eec6a5e6f01abccfdfe24aa6da5012f012f49d103576f830aa7512"
+    },
+    "errors": [],
+    "evidence": {
+      "actionsElapsedMillis": 147,
+      "assertions": 510,
+      "comparedLiveFields": 164,
+      "damageFixtures": "controlled state injection",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "fuseDamageFixtures": 0,
+      "generationJobs": [
+        {
+          "elapsedMillis": 995,
+          "outcome": "PASS",
+          "phase": "normal-generation",
+          "stage": "PUBLISH",
+          "workUnits": 80
+        },
+        {
+          "elapsedMillis": 951,
+          "outcome": "PASS",
+          "phase": "valid-session-restore",
+          "stage": "PUBLISH",
+          "workUnits": 80
+        },
+        {
+          "elapsedMillis": 978,
+          "outcome": "PROGRAMMING_FAILURE",
+          "phase": "invalid-signature-restore",
+          "stage": "PUBLISH",
+          "workUnits": 80
+        }
+      ],
+      "hostCleanupSeconds": 1.236029600026086,
+      "hostOperationSeconds": 3.5757440999150276,
+      "inputAuditSeconds": 0.3535849000327289,
+      "inputCommands": 2,
+      "playerInputEvidence": false,
+      "portClosed": true,
+      "remainingLimitations": [
+        "Only the declared NMOS_LOW_SIDE_SWITCH/0 representative; no population or random-reliability claim.",
+        "No visible player-input, malformed UI upload, or browser reload proof.",
+        "Per-unit 5-second guard remains production-owned; report exposes total time and work only.",
+        "Native run_phase job cleanup must additionally PASS after this wrapper exits.",
+        "Cancellation and stale-controller boundaries are exercised by the separately bound LED pilot."
+      ],
+      "replay": "tsj-alpha/4/EASY/NMOS_LOW_SIDE_SWITCH/0",
+      "reportFile": "cases/001-U06-NMOS_LOW_SIDE_SWITCH-seed-0-session-reconstruction.report.json",
+      "reportSha256": "9360042ad0e19912b9e33e7df9ace456f41d86b5e22c1703a57d525a04459971",
+      "resistorDamageFixtures": 2,
+      "seed": "0",
+      "sourceSha256": "5888ffb2e23c5c0b779c1b889973ab5d902ba61668c6903f4d8685322aff7903",
+      "webSha256": "de4c3eae971ef1c0b81d447fa3f888fb59d3bf9d6278aaf9e5899c124dbe5bb4"
+    },
+    "finishedUtc": "2026-10-06T01:40:59.379501+00:00",
+    "runnerExitCode": 0,
+    "status": "PASS",
+    "wrapperElapsedSeconds": 7.276063099969178
+  },
+  "recursiveOmittedFieldNames": [
+    "commandLine",
+    "executable",
+    "failureCaptureError",
+    "failureTraceback",
+    "profile",
+    "traceback"
+  ],
+  "transformation": "Task-root path normalization; explicitly listed fields omitted."
+}

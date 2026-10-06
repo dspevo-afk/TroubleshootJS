@@ -1,0 +1,98 @@
+{
+  "omittedFields": [],
+  "original": {
+    "bytes": 3453,
+    "sha256": "d13b67cf32eba296d0c65e8e6d15faa6cf9ae9f4a908534d13b96d8e5da44793",
+    "taskRootPath": "evidence/u06-compiled-r25/strict-result.json"
+  },
+  "receipt": {
+    "bindings": {
+      "deps": "<PLAYWRIGHT_DEPS>",
+      "invocation": "run_phase.py compiled-r25",
+      "listenerOwnerSourceSha256": {
+        "audit_release.py": "7a76a9ca504eada3a7658dd74ac8851cbcbc10c6d7d45598894fe448aa696324",
+        "private_menu.py": "9d42f39649fc13e5b5820815e75c33731ebb2dc29a48f69763d2cea4a592acab",
+        "receipts.py": "ae22c139fc9834c767aed8d6b2ae3dcdb9e8db010c3721deba3ae34bd1119dd1",
+        "serial_runner.py": "08ce044c8c014ae7bc3b194c07827c8383990b4f950be82137b94dc504f1ebe2",
+        "windows_process_identity.py": "88b18fa7ff41fc006fe9e17dac2aba73cb15c9342bad8b163bedb60bce161017"
+      },
+      "nativeJobMember": true,
+      "pointerSha256": "3df17c9c610a4ffe8875ded453929ce175cb4b010c111bc0a9085e1c3caac5a5",
+      "python": "<PYTHON>",
+      "runnerSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "specSha256": "df1fba251642a5ba18eb2bd8f4035426470acb13e7e5f4bdb7255be7018d365b",
+      "startedUtc": "2026-10-06T01:37:36.756685+00:00",
+      "wrapperSha256": "324563a29dff8226b39db2ff573bd0d5a70ff8e16d0ed5b7d8974b0eb93d066e"
+    },
+    "errors": [],
+    "evidence": {
+      "actionsElapsedMillis": 82,
+      "assertions": 439,
+      "comparedLiveFields": 100,
+      "damageFixtures": "controlled state injection",
+      "family": "LED_INDICATOR",
+      "fuseDamageFixtures": 0,
+      "generationJobs": [
+        {
+          "elapsedMillis": 420,
+          "outcome": "PASS",
+          "phase": "normal-generation",
+          "stage": "PUBLISH",
+          "workUnits": 59
+        },
+        {
+          "elapsedMillis": 320,
+          "outcome": "PASS",
+          "phase": "valid-session-restore",
+          "stage": "PUBLISH",
+          "workUnits": 59
+        },
+        {
+          "elapsedMillis": 263,
+          "outcome": "PROGRAMMING_FAILURE",
+          "phase": "invalid-signature-restore",
+          "stage": "PUBLISH",
+          "workUnits": 59
+        },
+        {
+          "elapsedMillis": 17,
+          "outcome": "CANCELLED",
+          "phase": "cancel-session-restore",
+          "stage": "PHYSICAL",
+          "workUnits": 2
+        }
+      ],
+      "hostCleanupSeconds": 1.2866366000380367,
+      "hostOperationSeconds": 1.5305381000507623,
+      "inputAuditSeconds": 0.34092330001294613,
+      "playerInputEvidence": false,
+      "portClosed": true,
+      "remainingLimitations": [
+        "Only LED_INDICATOR exact seed 0; remaining ten families NOT RUN.",
+        "No visible player-input, malformed UI upload, or browser reload proof.",
+        "Per-unit 5-second guard remains production-owned; report exposes total time and work only.",
+        "Native run_phase job cleanup must additionally PASS after this wrapper exits."
+      ],
+      "replay": "tsj-alpha/4/EASY/LED_INDICATOR/0",
+      "reportFile": "cases/001-U06-LED_INDICATOR-seed-0-session-reconstruction-pilot.report.json",
+      "reportSha256": "3a943f43bf1c4487c9bcbdf0a66ab246771aa72bcca2314b468cc7da2175ccd2",
+      "resistorDamageFixtures": 2,
+      "seed": "0",
+      "sourceSha256": "5888ffb2e23c5c0b779c1b889973ab5d902ba61668c6903f4d8685322aff7903",
+      "webSha256": "de4c3eae971ef1c0b81d447fa3f888fb59d3bf9d6278aaf9e5899c124dbe5bb4"
+    },
+    "finishedUtc": "2026-10-06T01:37:42.132193+00:00",
+    "runnerExitCode": 0,
+    "status": "PASS",
+    "wrapperElapsedSeconds": 5.3750920000020415
+  },
+  "recursiveOmittedFieldNames": [
+    "commandLine",
+    "executable",
+    "failureCaptureError",
+    "failureTraceback",
+    "profile",
+    "traceback"
+  ],
+  "transformation": "Task-root path normalization; explicitly listed fields omitted."
+}

@@ -1,0 +1,76 @@
+{
+  "omittedFields": [
+    "query.hostResult.command (CIM query implementation, bound by maintained source hashes)"
+  ],
+  "original": {
+    "bytes": 2160,
+    "sha256": "8b8197d771d4efae6667ec1b3b85c0cfa42364ff969c2df805b706b999f63f59",
+    "taskRootPath": "evidence/u06-compiled-r33/listener-proof/listener-query.json"
+  },
+  "receipt": {
+    "closed": true,
+    "port": 63153,
+    "query": {
+      "hostResult": {
+        "cleanup": {
+          "cleanupElapsedMs": 0,
+          "cleanupVerified": true,
+          "drainerErrors": [],
+          "drainerWaitMs": 0,
+          "drainsComplete": true,
+          "jobAccountingDrainMs": 0,
+          "jobAccountingDrainSucceeded": true,
+          "jobAccountingError": null,
+          "jobActiveProcesses": 0,
+          "jobClosedForCleanup": false,
+          "liveDrainers": 0,
+          "pid": 22824,
+          "processSignaled": true
+        },
+        "deadlineMs": 20000,
+        "finishedUtc": "2026-10-06T01:41:29.821799Z",
+        "handlesClosed": true,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "errors": [],
+            "overflow": false,
+            "readerAlive": false,
+            "streamClosed": true
+          },
+          "stdout": {
+            "bytes": 1309,
+            "errors": [],
+            "overflow": false,
+            "readerAlive": false,
+            "streamClosed": true
+          }
+        },
+        "operation": {
+          "elapsedMs": 784,
+          "exitCode": 0,
+          "reason": null
+        },
+        "process": {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134357244888209043,
+          "pid": 22824
+        },
+        "schema": 1,
+        "scope": "owned host phase; no application measurements",
+        "startedUtc": "2026-10-06T01:41:28.820009Z",
+        "status": "PASS"
+      },
+      "hostRoot": "<EVIDENCE>\\u06-compiled-r33\\listener-proof\\release-query-d474680c88e1401c8dbc3b3c3598e730\\host"
+    }
+  },
+  "recursiveOmittedFieldNames": [
+    "commandLine",
+    "executable",
+    "failureCaptureError",
+    "failureTraceback",
+    "profile",
+    "traceback"
+  ],
+  "transformation": "Task-root path normalization; explicitly listed fields omitted."
+}

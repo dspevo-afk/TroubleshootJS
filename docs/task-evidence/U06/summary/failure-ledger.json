@@ -1,0 +1,53 @@
+{
+  "historicalFailures": [
+    {
+      "failurePhase": null,
+      "family": null,
+      "phase": "native-r4",
+      "status": "FAIL"
+    },
+    {
+      "failurePhase": null,
+      "family": null,
+      "phase": "native-r5",
+      "status": "FAIL"
+    },
+    {
+      "failurePhase": "normal-generation",
+      "family": "LED_INDICATOR",
+      "phase": "compiled-r1",
+      "status": "FAIL"
+    },
+    {
+      "failurePhase": "semantic-actions",
+      "family": "SENSOR_CONTROL",
+      "phase": "compiled-r9",
+      "status": "FAIL"
+    },
+    {
+      "failurePhase": null,
+      "family": null,
+      "phase": "visual-r2",
+      "status": "FAIL"
+    },
+    {
+      "failurePhase": null,
+      "family": null,
+      "phase": "visual-r3",
+      "status": "FAIL"
+    },
+    {
+      "failurePhase": null,
+      "family": null,
+      "phase": "visual-r4",
+      "status": "FAIL"
+    }
+  ],
+  "otherIncompleteEpochs": [],
+  "rule": "Historical FAILs remain FAIL. Old PASS records retain their original source epoch; they are not reused as final acceptance.",
+  "sourceSummary": {
+    "bytes": 140859,
+    "sha256": "a8cc7b2fcf8ccffd27f931f20bbe3166c320cb01f8cf2dc221f655349ef95690",
+    "taskRootPath": "scratch/evidence-summary-final.json"
+  }
+}

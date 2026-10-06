@@ -7,6 +7,13 @@ import java.util.Vector;
 /** Composition-root registry for physical board design, slots, and installed parts. */
 final class PhysicalBoardRuntime {
     private final TroubleshootBoard board;
+    private final PlayerSessionHistory sessionHistory = new PlayerSessionHistory();
+    PlayerSessionHistory getSessionHistory() { return sessionHistory; }
+    Vector<String> getPartSerialNamespaces() {
+        Vector<String> result = new Vector<String>(nextPartSerials.keySet());
+        Collections.sort(result);
+        return result;
+    }
     private final HashMap<String, PhysicalBoardSlot> slotsByComponent =
         new HashMap<String, PhysicalBoardSlot>();
     private final Vector<String> slotOrder = new Vector<String>();

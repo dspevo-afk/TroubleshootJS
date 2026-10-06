@@ -213,6 +213,9 @@ body.tsj-workbench-ui .tsj-native-popover > tbody { display: table; width: 100%;
 .tsj-product-exact { border-top: 1px solid var(--tsj-line); margin-top: 18px; padding-top: 15px; }
 .tsj-product-exact .tsj-product-field { margin-bottom: 7px; }
 .tsj-product-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0; }
+.tsj-product-session summary { cursor: pointer; font-weight: 600; }
+.tsj-session-history { max-height: 260px; margin: 12px 0 0; padding-left: 24px; overflow-y: auto; overflow-wrap: anywhere; }
+.tsj-session-history li { padding: 3px 8px 3px 0; }
 .tsj-product-support { margin: 22px 0 0; border-top: 1px solid var(--tsj-line); padding-top: 1px; color: var(--tsj-muted); font-size: 12px; }
 .tsj-product-support h3 { color: var(--tsj-muted); font-size: 13px; }
 .tsj-product-identity { margin-top: 20px; border-top: 1px solid var(--tsj-line); padding-top: 12px; color: var(--tsj-muted); font-size: 12px; }

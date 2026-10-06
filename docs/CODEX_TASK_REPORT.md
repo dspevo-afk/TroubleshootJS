@@ -1,4 +1,46 @@
-# Current checkpoint: Q30 accepted, enabled and built locally
+# Current checkpoint: U06 accepted; U07 next and unstarted
+
+2026-10-06. Branch `codex/q30-multirail-qualification`; pre-commit HEAD
+`e97046267a42206459c38b6e061a3139a8833255` is already-published Q30. This
+checkpoint's commit contains accepted U06. The later user instruction and parent
+confirmation authorize commit/push after validation; no email. Publication is a
+separate normal push with an exact remote-SHA receipt, never inferred from tests.
+
+U06 delivers current semantic history and bounded local `.tsjsave` save/load,
+stable parts/inventory/mutations, inputs, independent supply controls and
+permanent resistor/fuse state. Private fresh reconstruction validates before
+publication and preserves the predecessor on rejection/cancellation. Dynamics
+explicitly restart and customer completion requires fresh retest. Pristine
+sharing remains `tsj-alpha/4`; 90s/640/5s unchanged. Sensor support originals now
+own real secondary-open paths; retest clears the stale restored notice.
+
+Final candidate: 1,294 inputs, SHA256 `ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5`.
+PASS: native19 (52.733s host), actual JDK8/GWT production5 (86.220s), compiled11
+families plus sensor seed1, actual headed four-case/340-action save/reload/wrong-
+repair/pristine-share/correct-repair flow (27.490s host). Q30 seed10387 jobs
+23.606/25.788/25.500s; the last is intentional signature rejection with exact
+rollback. RC jobs31.728/33.646/33.157s. All final gates bind unchanged inputs.
+Four actual screenshots inspected; independent source and downloaded-file
+reviews found no unresolved blocker. [Evidence and limitations](task-evidence/U06/README.md).
+
+Seven failed attempts remain in the retained ledger with their source epochs and
+causes; no failed check relabeled. Full historical Q30 matrix/cold77/warm corpus
+was not rerun for U06. Historical91.616s unknown failure, six missing inventories
+and late-release BLOCKED remain. Artifact caps are not measured maximum restore
+capacity; live history and long-session reliability remain U07. Delayed native
+FileReader callbacks/I/O-error/oversized-file UI paths NOT RUN; controller stale
+tests do not prove those paths. This is guided repair, not blind diagnosis.
+
+Resource audit PASS:451 recorded instances absent (four PIDs reused),33 recorded
+ports closed; no task-owned app/test processes remain. Raw evidence and helpers
+retained in task roots `tsj-u06-nnsw2vr7` and `u06-20261006-r1`; prior built tree
+and all failed evidence preserved. Desktop sibling and eight original untracked
+files preserved. No broad cleanup/global changes. Next unstarted: U07; Q60 also
+unstarted. Commit/normal-push verification is the final publication step.
+
+---
+
+# Historical checkpoint: Q30 accepted, enabled and built locally
 
 2026-10-05. Branch `codex/q30-multirail-qualification`; enablement base
 `09b79b3172dffa68b4d6df76001db35cf2e0ada8`. Parent accepted Q30 within the documented host/frozen-corpus

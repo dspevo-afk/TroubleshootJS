@@ -139,6 +139,10 @@ final class SensorControlFamilyState implements GeneratedBoardFamilyState {
         return GeneratedBoardFamilyPolicy.isFaultedTargetInstalled(instance, componentId);
     }
 
+    public String getSessionInputSignature() {
+        return "SENSOR_CONDITION@1:" + commandedCondition.name();
+    }
+
     public GeneratedBoardOperationCatalog getOperationCatalog() { return operations; }
     public GeneratedCustomerRetestProfile getCustomerRetestProfile() { return retestProfile; }
 }

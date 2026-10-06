@@ -1,0 +1,78 @@
+{
+  "omittedFields": [],
+  "original": {
+    "bytes": 1814,
+    "sha256": "230367d2efcf6beaee25f1adc4b9e4f809e355bc8db145c000213983296c7734",
+    "taskRootPath": "evidence/compiled-r34-result.json"
+  },
+  "receipt": {
+    "changedInputs": [],
+    "host": {
+      "cleanup": {
+        "cleanupElapsedMs": 0,
+        "cleanupVerified": true,
+        "drainerErrors": [],
+        "drainerWaitMs": 0,
+        "drainsComplete": true,
+        "jobAccountingDrainMs": 0,
+        "jobAccountingDrainSucceeded": true,
+        "jobAccountingError": null,
+        "jobActiveProcesses": 0,
+        "jobClosedForCleanup": false,
+        "liveDrainers": 0,
+        "pid": 13380,
+        "processSignaled": true
+      },
+      "command": [
+        "<PYTHON>",
+        "-B",
+        "<SCRATCH>\\compiled-r34.py"
+      ],
+      "deadlineMs": 900000,
+      "finishedUtc": "2026-10-06T01:42:12.389825Z",
+      "handlesClosed": true,
+      "logs": {
+        "stderr": {
+          "bytes": 0,
+          "errors": [],
+          "overflow": false,
+          "readerAlive": false,
+          "streamClosed": true
+        },
+        "stdout": {
+          "bytes": 314,
+          "errors": [],
+          "overflow": false,
+          "readerAlive": false,
+          "streamClosed": true
+        }
+      },
+      "operation": {
+        "elapsedMs": 42142,
+        "exitCode": 0,
+        "reason": null
+      },
+      "process": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357244902424442,
+        "pid": 13380
+      },
+      "schema": 1,
+      "scope": "owned host phase; no application measurements",
+      "startedUtc": "2026-10-06T01:41:30.239559Z",
+      "status": "PASS"
+    },
+    "phase": "compiled-r34",
+    "sourceFiles": 1294,
+    "sourceInputsUnchanged": true
+  },
+  "recursiveOmittedFieldNames": [
+    "commandLine",
+    "executable",
+    "failureCaptureError",
+    "failureTraceback",
+    "profile",
+    "traceback"
+  ],
+  "transformation": "Task-root path normalization; explicitly listed fields omitted."
+}

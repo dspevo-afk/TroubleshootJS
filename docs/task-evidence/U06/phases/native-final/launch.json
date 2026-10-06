@@ -1,0 +1,43 @@
+{
+  "omittedFields": [
+    "sourceFiles (deduplicated to shared inventory)"
+  ],
+  "original": {
+    "bytes": 179648,
+    "sha256": "6f6f87dcb8451f82b9d7348e9bbfd8d84147dc99311867b920cd46575fff5a20",
+    "taskRootPath": "evidence/native-final-launch.json"
+  },
+  "receipt": {
+    "argv": [
+      "<POWERSHELL>",
+      "-NoLogo",
+      "-NoProfile",
+      "-NonInteractive",
+      "-File",
+      "<SCRATCH>\\native-final.ps1"
+    ],
+    "controller": {
+      "identity": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357241800893263,
+        "pid": 28532
+      },
+      "metadataErrors": [],
+      "pid": 28532,
+      "queryStatus": "PRESENT"
+    },
+    "phase": "native-final",
+    "sourceInventory": "inventories/current-source-pins.json",
+    "sourcePinsSha256": "ee249cbf29c0bd3f5030d8dcbc1f12feab6c801a507774a4a4136e40cbf57db5",
+    "startedUtc": "2026-10-06T01:36:20.361469+00:00"
+  },
+  "recursiveOmittedFieldNames": [
+    "commandLine",
+    "executable",
+    "failureCaptureError",
+    "failureTraceback",
+    "profile",
+    "traceback"
+  ],
+  "transformation": "Task-root path normalization; explicitly listed fields omitted."
+}

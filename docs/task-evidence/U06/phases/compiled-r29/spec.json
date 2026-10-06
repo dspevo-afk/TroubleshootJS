@@ -1,0 +1,33 @@
+{
+  "omittedFields": [],
+  "original": {
+    "bytes": 457,
+    "sha256": "8570f59899806824ff6ab9214c5d5081fd11194dec10301a0b2721ddb17f8728",
+    "taskRootPath": "evidence/u06-compiled-r29/spec.json"
+  },
+  "receipt": {
+    "cases": [
+      {
+        "expectedState": "PASS",
+        "name": "U06 PARALLEL_DUAL_INDICATOR seed 0 session reconstruction",
+        "path": "circuitjs.html?tsjDebug=true&tsjVerifyU06=true&tsjU06Family=PARALLEL_DUAL_INDICATOR&tsjU06Seed=0",
+        "reportAttribute": "data-tsj-u06-report",
+        "stateAttribute": "data-tsj-u06-state",
+        "terminalPrefixes": [
+          "PASS",
+          "FAIL"
+        ],
+        "timeoutSeconds": 360
+      }
+    ]
+  },
+  "recursiveOmittedFieldNames": [
+    "commandLine",
+    "executable",
+    "failureCaptureError",
+    "failureTraceback",
+    "profile",
+    "traceback"
+  ],
+  "transformation": "Task-root path normalization; explicitly listed fields omitted."
+}

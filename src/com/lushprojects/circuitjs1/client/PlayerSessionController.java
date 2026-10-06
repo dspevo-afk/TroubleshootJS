@@ -58,19 +58,26 @@ final class PlayerSessionController {
         refresh();
     }
 
-    private void launch(PlayerLaunchRequest selected) {
+    private void launch(PlayerLaunchRequest selected) { launch(selected, null); }
+
+    private void launch(PlayerLaunchRequest selected, final PlayerSessionSave saved) {
         if (!sim.isGeneratedRuntimeSettled() || sim.generationCoordinator.isRunning())
             throw new IllegalStateException("The current board is busy");
         final PlayerLaunchRequest request = newBoardIdentities.allocate(selected);
         final int token = session.begin(request);
         notice = ""; refresh();
         try {
-            sim.generationCoordinator.start(request.generation(), new GenerationCoordinator.Completion() {
+            GenerationCoordinator.Completion completion = new GenerationCoordinator.Completion() {
                 public void complete(GenerationJob job, GeneratedBoardInstance published) {
                     if (job.getOutcome() == GenerationJob.Outcome.PASS) {
                         if (!request.familyId.equals(published.getCircuitFamilyId()))
                             throw new IllegalStateException("Published family differs from the launch");
+                        published.getPhysicalBoardRuntime().getSessionHistory().start();
                         session.prepared(token, request, request.accepted(published.getSeed()), published);
+                        if (saved != null) {
+                            session.enter(session.token(), PlayerSession.Screen.WORKBENCH);
+                            notice = "Session restored. Transient behavior restarted; retest the board.";
+                        }
                     } else session.failed(token, job.getOutcome() == GenerationJob.Outcome.CANCELLED,
                         job.getOutcome() == GenerationJob.Outcome.CANCELLED ? "Board preparation cancelled." :
                         request.candidateSearch ?
@@ -79,7 +86,9 @@ final class PlayerSessionController {
                         "This exact board could not be prepared for this difficulty. Try another seed or board. Replay: " + request.replay());
                     sim.refreshChallengeInteractionState(); refresh(); sim.repaint();
                 }
-            }, true);
+            };
+            if (saved == null) sim.generationCoordinator.start(request.generation(), completion, true);
+            else sim.generationCoordinator.startSessionRestore(request.generation(), saved, completion);
         } catch (RuntimeException failure) {
             session.failed(token, false, "Board preparation could not start. The previous board is retained.");
             refresh();
@@ -96,6 +105,13 @@ final class PlayerSessionController {
             if ("launch".equals(action)) launch(new PlayerLaunchRequest(first, second, third));
             else if ("random".equals(action)) launch(PlayerLaunchRequest.random(first, second, third));
             else if ("replay".equals(action)) launch(PlayerLaunchRequest.parse(first));
+            else if ("load-session".equals(action)) {
+                if (view != viewToken) return "This file selection belongs to a closed view.";
+                PlayerSessionSave saved;
+                try { saved = PlayerSessionSave.parse(first); }
+                catch (RuntimeException invalid) { return "This session file is incomplete, incompatible or unsupported. The current board is unchanged."; }
+                launch(PlayerLaunchRequest.parse(saved.replay), saved);
+            }
             else if ("cancel".equals(action) && session.screen() == PlayerSession.Screen.PREPARING) sim.generationCoordinator.cancel();
             else if ("menu".equals(action)) session.enter(expected, PlayerSession.Screen.MENU);
             else if ("resume".equals(action)) session.enter(expected, PlayerSession.Screen.WORKBENCH);
@@ -113,6 +129,43 @@ final class PlayerSessionController {
         } catch (IllegalArgumentException invalid) { return invalid.getMessage(); }
         catch (RuntimeException failure) { return "The action is unavailable while the board is busy or requires isolation."; }
         refresh(); return "";
+    }
+
+    private boolean canSaveSession() {
+        return ownsCurrentBoard() && sim.isGeneratedRuntimeSettled() && !sim.activeMeasurementOverlay &&
+            session.screen() != PlayerSession.Screen.PREPARING && session.screen() != PlayerSession.Screen.RETEST;
+    }
+
+    String saveSession(int expected, int view) {
+        JSONObject result = new JSONObject();
+        try {
+            if (!session.accepts(expected) || view != viewToken || !canSaveSession())
+                throw new IllegalStateException("The current session is busy or this view has closed.");
+            PlayerSessionSave saved = PlayerSessionState.capture(sim, session.request(),
+                sim.getGeneratedBoardInstance().getPhysicalBoardRuntime().getSessionHistory().operations(),
+                GWT.getPermutationStrongName());
+            put(result, "contents", saved.encode());
+            result.put("ok", JSONBoolean.getInstance(true));
+        } catch (RuntimeException failure) {
+            result.put("ok", JSONBoolean.getInstance(false));
+            put(result, "error", "The session could not be saved. Wait for the board to settle and try again; this format supports up to 8192 operations.");
+        }
+        return result.toString();
+    }
+
+    private static String historyLabel(PlayerSessionSave.Operation operation) {
+        String kind = operation.kind;
+        if ("REMOVE".equals(kind)) return "Removed a part.";
+        if ("INSTALL".equals(kind)) return "Installed a part from the tray.";
+        if ("ACQUIRE".equals(kind)) return "Added a part to the tray.";
+        if ("CATALOG".equals(kind)) return "Installed a catalog part.";
+        if ("LEAD".equals(kind)) return "CONNECTED".equals(operation.result) ? "Reconnected a lead." : "Lifted a lead.";
+        if ("GRAPH_REMOVE".equals(kind)) return "Disconnected a component.";
+        if ("GRAPH_RESTORE".equals(kind)) return "Reconnected a component.";
+        if ("INPUT".equals(kind)) return "Changed a board input.";
+        if ("SOURCE".equals(kind)) return "Changed a supply setting.";
+        if ("RESET".equals(kind)) return "Reset simulation and service wear.";
+        throw new IllegalArgumentException("Unsupported history operation");
     }
 
     boolean isWorkbenchScreen() { return session.screen() == PlayerSession.Screen.WORKBENCH && ownsCurrentBoard(); }
@@ -149,7 +202,8 @@ final class PlayerSessionController {
         if (!ownsCurrentBoard() || !sim.isGeneratedSemanticInteractionEnabled() ||
                 sim.getGeneratedChallengeController().isCompleted()) return;
         final Object owner = session.owner();
-        int token = session.retest(expected, owner); refresh();
+        int token = session.retest(expected, owner);
+        notice = ""; refresh();
         try {
             GeneratedCustomerRetestResult result = sim.performCustomerRetest();
             pendingRetest = new PendingRetest(token, owner, sim.getGeneratedChallengeController(), result);
@@ -204,6 +258,14 @@ final class PlayerSessionController {
         put(out, "screen", session.screen().name()); put(out, "message", session.message()); put(out, "notice", notice);
         put(out, "epoch", PlayerLaunchRequest.EPOCH); put(out, "build", GWT.getPermutationStrongName());
         out.put("hasBoard", JSONBoolean.getInstance(session.owner() != null));
+        out.put("sessionSaveAvailable", JSONBoolean.getInstance(canSaveSession()));
+        JSONArray history = new JSONArray();
+        if (ownsCurrentBoard()) {
+            for (PlayerSessionSave.Operation operation : sim.getGeneratedBoardInstance()
+                    .getPhysicalBoardRuntime().getSessionHistory().operations())
+                history.set(history.size(), new JSONString(historyLabel(operation)));
+        }
+        out.put("sessionHistory", history);
         PlayerLaunchRequest request = session.request();
         if (request != null) { put(out, "replay", request.replay()); put(out, "profile", request.profile.name()); }
         JSONArray families = new JSONArray();
@@ -262,6 +324,9 @@ final class PlayerSessionController {
         var owner = this;
         $wnd.tsjProduct = {
             snapshot: $entry(function(includeCatalog) { return JSON.parse(owner.@com.lushprojects.circuitjs1.client.PlayerSessionController::snapshot(Z)(includeCatalog !== false)); }),
+            saveSession: $entry(function(token, view) {
+                return JSON.parse(owner.@com.lushprojects.circuitjs1.client.PlayerSessionController::saveSession(II)(token, view));
+            }),
             action: $entry(function(token, view, name, a, b, c) {
                 return owner.@com.lushprojects.circuitjs1.client.PlayerSessionController::action(IILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)(token, view, name, a || '', b || '', c || '');
             }),

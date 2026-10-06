@@ -18,7 +18,7 @@ final class ProtectionFuseElm extends FuseElm {
     // Newton retries and rejected trial steps must not accumulate irreversible damage.
     void startIteration() { }
     void stepFinished() {
-        if (blown || sim.dcAnalysisFlag) return;
+        if (blown || sim.dcAnalysisFlag || PlayerSessionState.isRestoring(sim)) return;
         heat = Math.max(0, heat + (current * current - i2t / 3) * sim.timeStep);
         if (heat >= i2t) blown = true;
     }

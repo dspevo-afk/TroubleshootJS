@@ -1,0 +1,100 @@
+{
+  "omittedFields": [
+    "raw vectors and all non-summary stdout; this source is text despite its historical .json extension"
+  ],
+  "original": {
+    "bytes": 468394,
+    "sha256": "0d92125a6463c2a5e0749bf98e0a7184a80e6d573c25e52ae8cf20467e6f3afd",
+    "taskRootPath": "evidence/native-final-receipt.json"
+  },
+  "receipt": {
+    "suiteCount": 19,
+    "suites": [
+      {
+        "assertions": 16,
+        "suite": "generated power control observation contracts"
+      },
+      {
+        "assertions": 1250,
+        "suite": "physical serviceability contracts"
+      },
+      {
+        "assertions": 3914,
+        "suite": "U04 session contracts"
+      },
+      {
+        "assertions": 479,
+        "suite": "U06 session save contracts"
+      },
+      {
+        "assertions": 95,
+        "suite": "PlayerSessionFingerprintContractTest"
+      },
+      {
+        "assertions": 161,
+        "suite": "E03 relay contracts"
+      },
+      {
+        "assertions": 1441,
+        "suite": "E02 regulator contracts"
+      },
+      {
+        "assertions": 352,
+        "suite": "E04 sensor-control contracts"
+      },
+      {
+        "assertions": 332,
+        "suite": "SensorControl family contracts"
+      },
+      {
+        "assertions": 280,
+        "suite": "A05 role providers"
+      },
+      {
+        "assertions": 96015,
+        "suite": "E01 source contracts"
+      },
+      {
+        "assertions": 152,
+        "suite": "A06 power contracts"
+      },
+      {
+        "assertions": 271808,
+        "suite": "A07 execution contracts"
+      },
+      {
+        "assertions": 322,
+        "suite": "A09 diagnostic contracts"
+      },
+      {
+        "assertions": 190,
+        "suite": "A10 generation contracts"
+      },
+      {
+        "assertions": 15,
+        "suite": "A10 dependency contracts"
+      },
+      {
+        "assertions": 429,
+        "suite": "A11 provider conformance"
+      },
+      {
+        "assertions": 30,
+        "suite": "A03IdentityContractTest"
+      },
+      {
+        "assertions": 3209,
+        "suite": "P02 conductor contracts"
+      }
+    ]
+  },
+  "recursiveOmittedFieldNames": [
+    "commandLine",
+    "executable",
+    "failureCaptureError",
+    "failureTraceback",
+    "profile",
+    "traceback"
+  ],
+  "transformation": "Task-root path normalization; explicitly listed fields omitted."
+}

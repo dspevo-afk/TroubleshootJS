@@ -6,6 +6,9 @@ interface GeneratedBoardFamilyState {
 
     boolean isFaultedTargetInstalled(GeneratedBoardInstance instance, String componentId);
 
+    /** Current input commands, independently read from the family owner. */
+    String getSessionInputSignature();
+
     GeneratedBoardOperationCatalog getOperationCatalog();
 
     GeneratedCustomerRetestProfile getCustomerRetestProfile();

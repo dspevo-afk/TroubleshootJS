@@ -633,6 +633,96 @@ and the qualified corpus bound the calibration; mathematical counters cannot
 establish subjective difficulty by themselves. The current report records
 acceptance status, evidence and limits.
 
+## U06 semantic history, session saves and private reconstruction
+
+`PlayerLaunchRequest` remains the pristine sharing contract: the current
+`tsj-alpha/4/PROFILE/FAMILY/SEED` identity recreates a newly admitted challenge.
+Mutable progress uses the separate `PlayerSessionSave` contract,
+`tsj-session/1` with `tsj-session-model/1` and explicit `restart` dynamics.
+`PlayerSessionController` owns save/load requests under current session and
+modal leases. Its normal history projection contains neutral action labels;
+serialized operation identities are consumed by reconstruction adapters.
+
+`PhysicalBoardRuntime` owns `PlayerSessionHistory`. Successful physical commits
+record through `PhysicalMutationScope` and the existing modification owner;
+input, source and reset commands record at their existing simulator entrypoints.
+History starts only after normal publication, and private generation,
+diagnostic work and reconstruction do not append player actions. The journal
+stores semantic commands and stable identities rather than callbacks or a
+second mutable graph. Export bounds history without silently truncating it.
+The live journal can continue growing beyond the save cap; its long-session
+retention and capacity qualification belong to U07.
+
+`PlayerSessionSave` owns strict, length-delimited parsing, section order,
+record populations and current schema/model compatibility. Numeric state uses
+canonical IEEE-754 bit hex. Build identity is provenance; compatibility is
+controlled by the model/schema and reconstructed realization, rather than a
+promise of byte-identical older-build behavior. Unknown, malformed, partial or
+unsupported data rejects without a migration reader. Format limits are
+2,097,152 characters, 8,192 operations, 96 sources, 96 resistor stress records
+and 96 fuse records. These are input limits, not measured long-session or
+reconstruction performance guarantees.
+
+`GenerationCoordinator.startSessionRestore` uses the ordinary bounded exact
+launch. `FreshGeneratedRuntimeInstallation.Staged` retains the previous owner's
+graph and snapshot while it constructs and admits a disjoint pristine candidate.
+Only then does `PlayerSessionState.restore` reconstruct that private candidate.
+Supplies are isolated while existing provider adapters replay removals,
+acquisitions, installations and lead/graph changes; family operation catalogs
+apply semantic inputs and reject customer-retest commands. Acquisition results
+must reproduce the saved physical IDs and order. Source inventory membership,
+original versus purchased identity, cross-slot mounts, formed geometry and
+continued serial allocation are checked against actual runtime state.
+
+Final source commands restore each supply's connection and current limit,
+including mixed source states. `GeneratedBoardFamilyState` supplies current
+input signatures from its owning controls. Resistor service time, accumulated
+damage and secondary-open state, plus each physical fuse's heat and blown state,
+are restored by physical part identity across installed and loose inventories.
+Records must cover the reconstructed population and satisfy their model's
+failure constraints. Reconstruction solver steps do not accrue resistor service
+damage or fuse heat. CircuitJS still owns all electrical response and readings.
+
+E04 support originals `RREF_LOW` and `RFB_HYST` now own real series secondary-
+failure paths in `E04SensorControlModel`. Their sole fixture leads terminate
+downstream, and physical preparation replaces those leads at the same public
+terminals. These are service-damage paths, not additional generated-fault seams;
+the original fault candidates and component identities remain unchanged.
+
+The declared restart mode resets simulation time, capacitor charge, relay
+motion and hysteresis through existing element/capability reset owners before
+restoring permanent state. Retained loose backing remains in the active graph
+and participates in that reset. Imported data carries no solver nodes, matrices,
+object addresses, pending events, proof grants or customer completion. Fresh
+pristine admission remains historical evidence for the new owner; saved progress
+requires a new customer retest before completion.
+
+`PlayerSessionState` constructs an independent canonical final-state signature
+from the live owners, not from journal text. `PlayerSessionFingerprint` hashes
+that private signature and the exact `PhysicalBoardFingerprint` realization
+using synchronous, portable SHA-256 over canonical UTF-8. Export contains
+64-character lowercase digests instead of pad/net topology or generated-fault
+ownership text. The digest is a consistency check, not authentication or an
+authorization to trust imported state. Its canonical input is bounded to
+1,048,576 UTF-16 units; malformed surrogate sequences reject.
+
+`tsj-workbench-ui.js` owns local `.tsjsave` downloads and FileReader transport.
+It checks current session/modal leases and attached controls before applying a
+read, detaches callbacks and aborts pending reads when the view closes, and
+revokes task-owned object URLs. Browser files have a 2 MiB byte limit, separate
+from the codec character limit. Transport cleanup and delayed-callback coverage
+are recorded independently from controller-level stale-request checks.
+
+Runtime identity, binding, geometry and copper-projection audits plus the final
+signature comparison finish before workbench attachment. This format supports
+only the current pristine copper snapshot; live cuts reject rather than being
+migrated by position. Invalid reconstruction and time-budget failures abort
+through the staged snapshot boundary; cleanup failure remains an explicit
+failure. Reconstruction checkpoints share the existing 90-second job,
+640-work-unit and five-second unit limits. A structurally valid file may exceed
+those limits and fail before publication. Measured workloads and acceptance
+remain in the task report and evidence, separate from these format caps.
+
 ## U01 viewport and P03/P04 physical planning
 
 `PcbViewport` owns the permanent board camera and the temporary cursor-centered

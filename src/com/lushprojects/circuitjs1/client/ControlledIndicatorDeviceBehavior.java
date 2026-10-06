@@ -723,6 +723,14 @@ final class ControlledIndicatorDeviceBehavior
         public boolean isFaultedTargetInstalled(GeneratedBoardInstance instance, String componentId) {
             return GeneratedBoardFamilyPolicy.isFaultedTargetInstalled(instance, componentId);
         }
+        public String getSessionInputSignature() {
+            StringBuilder out = new StringBuilder("CONTROLLED_INPUTS@1:");
+            for (Map.Entry<String, Boolean> entry : behavior.channelStates().entrySet())
+                out.append(entry.getKey().length()).append(':').append(entry.getKey())
+                    .append(entry.getValue().booleanValue() ? ":HIGH;" : ":LOW;");
+            return out.toString();
+        }
+
         public GeneratedBoardOperationCatalog getOperationCatalog() { return operations; }
         public GeneratedCustomerRetestProfile getCustomerRetestProfile() { return retestProfile; }
     }

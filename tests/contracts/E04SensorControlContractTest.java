@@ -18,6 +18,7 @@ public final class E04SensorControlContractTest {
         verifyDecisionDumpRoundTrip();
         verifyEndpointBindingsAndPassiveOwnership();
         verifyElementOwnershipCensusAndGhostRejection();
+        verifySupportSecondaryOpenPaths();
         verifyLoadingAndReferenceInfluence();
         verifyHystereticAscendingDescendingBehavior();
         verifyBrownoutAndUnsupportedStates();
@@ -327,6 +328,66 @@ public final class E04SensorControlContractTest {
                     h.model.validateElementOwnership(ghosted);
                 }}, "foreign E04 physical ghost element");
                 ghost.delete();
+            } finally {
+                h.close();
+            }
+        }
+    }
+
+    /** A support failure must interrupt the actual branch, including fixture wiring. */
+    private static void verifySupportSecondaryOpenPaths() {
+        for (E04SensorControlModel.Variant variant : E04SensorControlModel.Variant.values()) {
+            final Harness h = new Harness(variant, 1e-4);
+            try {
+                String[] ids = variant == E04SensorControlModel.Variant.DIRECT_THRESHOLD ?
+                    new String[] { "RREF_LOW" } : new String[] { "RREF_LOW", "RFB_HYST" };
+                for (String id : ids) {
+                    E04SensorControlModel.PassiveBinding passive = h.model.getBoardSupportPassive(id);
+                    ResistorSecondaryOpenPath path = passive.getOpenPath();
+                    check(path != null && passive.getFaultIsolation() == null,
+                        id + " has a secondary failure owner without a generated fault switch");
+                    CircuitElm backing = path.getSimulationElement();
+                    E04SensorControlModel.ElementOwnership owner = h.model.getElementOwnership(backing);
+                    check(owner != null && owner.getElement() == backing && id.equals(owner.getOwnerId()) &&
+                            owner.getKind() == E04SensorControlModel.ElementOwnershipKind.MAPPED_COMPONENT,
+                        id + " secondary path belongs to its exact physical component");
+                    check(passive.getSecondEndpoint().getElement() == backing &&
+                            passive.getSecondEndpoint().getPostIndex() == 1,
+                        id + " exposes the downstream secondary-path post");
+                    Point internal = passive.getElement().getPost(1);
+                    int internalPosts = 0;
+                    for (CircuitElm element : h.model.getSimulationElements())
+                        for (int post = 0; post < element.getPostCount(); post++) {
+                            Point point = element.getPost(post);
+                            if (point.x == internal.x && point.y == internal.y) {
+                                check((element == passive.getElement() && post == 1) ||
+                                        (element == backing && post == 0),
+                                    id + " internal junction has no fixture or copper bypass");
+                                internalPosts++;
+                            }
+                        }
+                    check(internalPosts == 2, id + " branch contains one series failure boundary");
+                    final Vector<CircuitElm> incomplete = h.model.getSimulationElements();
+                    incomplete.remove(backing);
+                    reject(new Runnable() { public void run() {
+                        h.model.validateElementOwnership(incomplete);
+                    }}, id + " missing secondary-path backing");
+
+                    h.setSensorVoltage(.6);
+                    h.settle();
+                    double closedCurrent = Math.abs(passive.getElement().getCurrent());
+                    check(finite(closedCurrent) && closedCurrent > 1e-6,
+                        id + " healthy fixture carries a real solved branch current");
+                    path.open();
+                    h.analyze(); h.settle();
+                    check(path.isOpen() && Math.abs(passive.getElement().getCurrent()) < 1e-9,
+                        id + " secondary failure interrupts solved current without a direct bypass");
+                    path.resetForBoardReset();
+                    h.analyze(); h.settle();
+                    check(!path.isOpen() && Math.abs(Math.abs(passive.getElement().getCurrent()) -
+                            closedCurrent) < 1e-8,
+                        id + " reset restores its original solved branch current");
+                }
             } finally {
                 h.close();
             }

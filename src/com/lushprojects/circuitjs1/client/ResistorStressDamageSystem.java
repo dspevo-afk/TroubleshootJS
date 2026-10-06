@@ -60,6 +60,10 @@ class ResistorStressDamageSystem {
     void observeSimulationTime(double simulationTime) {
         if (Double.isNaN(simulationTime) || Double.isInfinite(simulationTime))
             return;
+        if (PlayerSessionState.isRestoring(sim)) {
+            lastSimulationTime = simulationTime;
+            return;
+        }
         double delta = simulationTime - lastSimulationTime;
         lastSimulationTime = simulationTime;
         if (delta <= 0 || sim.activeMeasurementOverlay || !isBoardPowered())

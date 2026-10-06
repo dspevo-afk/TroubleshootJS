@@ -21,6 +21,7 @@ public final class SensorControlFamilyContractTest {
         verifyFinalGhostRejection();
         verifyRegulatorReplacementRetainsPhysicalMapping();
         verifyServicedPhysicalOwnersRemainTruthful();
+        verifySupportSecondaryReset();
         verifyEachFaultHypothesisChangesLiveGraph(sim);
         verifyPhysicalIntegrationAndScenarioSymptom(sim);
         System.out.println("PASS: SensorControl family contracts " + assertions +
@@ -208,6 +209,83 @@ public final class SensorControlFamilyContractTest {
         acknowledgeNativeServiceMutation(context.sim);
     }
 
+    /** Production reset covers installed replacements and the retained support originals. */
+    private static void verifySupportSecondaryReset() {
+        for (long seed : new long[] { 0L, 1L }) {
+            NativeServiceContext context = new NativeServiceContext(seed);
+            String[] ids = seed == 0L ? new String[] { "RREF_LOW" } :
+                new String[] { "RREF_LOW", "RFB_HYST" };
+            for (String id : ids) {
+                PhysicalResistorPart original = (PhysicalResistorPart) context.runtime.getInstalledPart(id);
+                ResistorSecondaryOpenPath path = original.getSecondaryOpenPath();
+                E04SensorControlModel.PassiveBinding passive = context.state.getModel().getBoardSupportPassive(id);
+                check(path != null && path == passive.getOpenPath() && original.getFaultBinding() == null,
+                    "E04 seed " + seed + " support original owns the model secondary path only");
+                CircuitElm backing = path.getSimulationElement();
+                Vector<CircuitElm> auxiliary = context.instance.getComponentBindings().getAuxiliaryElements(id);
+                check(auxiliary.size() == 1 && auxiliary.firstElement() == backing &&
+                        original.getElectricalBacking().getCircuitElements().contains(backing) &&
+                        context.sim.elmList.contains(backing),
+                    "E04 " + id + " original path is component-owned physical solver backing");
+                check(sameEndpoint(connection(context.instance, id + ".2").getComponentEndpoint(),
+                            path.getPublicTerminal()),
+                    "E04 " + id + " detachable second lead terminates after secondary failure");
+                Point internal = original.getElement().getPost(1);
+                int internalPosts = 0;
+                for (CircuitElm element : context.sim.elmList)
+                    for (int post = 0; post < element.getPostCount(); post++) {
+                        Point point = element.getPost(post);
+                        if (point.x == internal.x && point.y == internal.y) {
+                            check((element == original.getElement() && post == 1) ||
+                                    (element == backing && post == 0),
+                                "E04 " + id + " physical preparation leaves no original fixture bypass");
+                            internalPosts++;
+                        }
+                    }
+                check(internalPosts == 2, "E04 " + id + " prepared secondary path is strictly in series");
+                ResistorSlotController controller = (ResistorSlotController) context.runtime.getMutationProvider(id);
+                check(controller.removeInstalledPart(), "E04 " + id + " keeps its original loose for reset");
+                acknowledgeNativeServiceMutation(context.sim);
+                check(controller.installNewFromCatalog(correctResistorCatalogId(id)),
+                    "E04 " + id + " installs a distinct support replacement before reset");
+                acknowledgeNativeServiceMutation(context.sim);
+            }
+            // Seed explicit permanent-state fixtures; this contract exercises
+            // reset ownership, not a synthetic assertion about overload physics.
+            int stressCount = 0;
+            for (PhysicalBoardRuntimeCapability capability : context.runtime.getCapabilities())
+                if (capability instanceof ReplaceableResistorBoardCapability)
+                    for (ResistorStressState state : ((ReplaceableResistorBoardCapability) capability)
+                            .getStressDamageSystem().getStates()) {
+                        state.accumulatedDamage = 1.25;
+                        state.serviceTime = 4;
+                        state.failureServiceTime = 3;
+                        state.failed = true;
+                        state.getPart().getSecondaryOpenPath().open();
+                        stressCount++;
+                    }
+            check(stressCount == (seed == 0L ? 5 : 7),
+                "E04 reset fixture includes every installed resistor and loose support original");
+            GeneratedFaultBinding selected = context.instance.getFaultBinding();
+            selected.setApplied(true);
+            context.runtime.resetForBoardReset();
+            for (PhysicalBoardRuntimeCapability capability : context.runtime.getCapabilities())
+                if (capability instanceof ReplaceableResistorBoardCapability)
+                    for (ResistorStressState state : ((ReplaceableResistorBoardCapability) capability)
+                            .getStressDamageSystem().getStates())
+                        check(!state.isFailed() && state.getAccumulatedDamage() == 0 &&
+                                state.getServiceTime() == 0 && Double.isNaN(state.getFailureServiceTime()) &&
+                                !state.getPart().getSecondaryOpenPath().isOpen(),
+                            "E04 production reset clears and recloses each exact physical resistor");
+            check(selected.isApplied(), "E04 secondary reset retains the selected original customer fault");
+            for (String id : ids)
+                check(context.runtime.getInstalledPart(id) != context.runtime.getPart(id + "_ORIGINAL") &&
+                        !context.runtime.getPart(id + "_ORIGINAL").isInstalled(),
+                    "E04 reset preserves installed replacement and loose original identities");
+            context.sim.solverExecutor.retire();
+        }
+    }
+
     private static void requireNativeServiceState(NativeServiceContext context,
             String message) {
         GeneratedRuntimeInvariant.verify(context.instance, context.modifications,
@@ -280,6 +358,7 @@ public final class SensorControlFamilyContractTest {
             sim.solverExecutor.advanceSteps(8);
             SensorControlFamilyState state = (SensorControlFamilyState) instance.getFamilyState();
             verifyDecisionAndSupportPhysicalMapping(instance, state);
+            verifySupportSecondaryElectricalEffects(sim, instance);
             E04SensorControlModel ownershipModel = state.getModel();
             ownershipModel.validateElementOwnership(
                 ownershipModel.getSimulationElements(), instance.getBoard());
@@ -340,6 +419,38 @@ public final class SensorControlFamilyContractTest {
                     instance.getOperationCatalog().find(GeneratedBoardOperationIds.SENSOR_CONDITION_MID) != null &&
                     instance.getOperationCatalog().find(GeneratedBoardOperationIds.SENSOR_CONDITION_HIGH) != null,
                 "E04 operation catalog contains only semantic sensor controls");
+        }
+    }
+
+    /** Opening an original support part must break the published physical graph too. */
+    private static void verifySupportSecondaryElectricalEffects(CirSim sim,
+            GeneratedBoardInstance instance) {
+        boolean hysteretic = ((SensorControlFamilyState) instance.getFamilyState())
+            .getModel().hasRegenerativeFeedback();
+        String[] ids = hysteretic ? new String[] { "RREF_LOW", "RFB_HYST" } :
+            new String[] { "RREF_LOW" };
+        for (String id : ids) {
+            PhysicalResistorPart part = (PhysicalResistorPart) instance.getPhysicalBoardRuntime()
+                .getInstalledPart(id);
+            ResistorSecondaryOpenPath path = part.getSecondaryOpenPath();
+            check(path != null, "E04 " + id + " original has a live secondary failure boundary");
+            double closedCurrent = Math.abs(part.getElement().getCurrent());
+            check(closedCurrent > 1e-6 && !Double.isInfinite(closedCurrent),
+                "E04 " + id + " published graph carries a finite healthy branch current");
+            path.open();
+            sim.solverExecutor.invalidate();
+            sim.analyzeCircuit();
+            sim.solverExecutor.advanceSteps(8);
+            check(part.getFailureState().isFailed() &&
+                    Math.abs(part.getElement().getCurrent()) < 1e-9,
+                "E04 " + id + " secondary failure interrupts its published physical branch");
+            path.resetForBoardReset();
+            sim.solverExecutor.invalidate();
+            sim.analyzeCircuit();
+            sim.solverExecutor.advanceSteps(8);
+            check(!part.getFailureState().isFailed() &&
+                    Math.abs(Math.abs(part.getElement().getCurrent()) - closedCurrent) < 1e-8,
+                "E04 " + id + " restored path recovers its published physical branch current");
         }
     }
 

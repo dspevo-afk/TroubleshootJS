@@ -46,6 +46,8 @@ class BoardModificationController {
         for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings().getForComponent(componentId)) {
             changed |= setConnection(binding, false);
         }
+        if (changed) instance.getPhysicalBoardRuntime().getSessionHistory().record(sim,
+            "GRAPH_REMOVE", componentId, "", "");
         finishMutation(changed, refreshControls);
         return changed;
     }
@@ -58,6 +60,8 @@ class BoardModificationController {
         boolean changed = false;
         for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings().getForComponent(componentId))
             changed |= setConnection(binding, true);
+        if (changed) instance.getPhysicalBoardRuntime().getSessionHistory().record(sim,
+            "GRAPH_RESTORE", componentId, "", "");
         finishMutation(changed);
         return changed;
     }
@@ -184,6 +188,8 @@ class BoardModificationController {
     private boolean setLeadConnectionWithoutScope(
             GeneratedComponentConnectionBinding binding, boolean shouldConnect) {
         boolean changed = setConnection(binding, shouldConnect);
+        if (changed) instance.getPhysicalBoardRuntime().getSessionHistory().record(sim,
+            "LEAD", binding.getComponentId(), binding.getPadId(), shouldConnect ? "CONNECTED" : "DISCONNECTED");
         finishMutation(changed);
         return changed;
     }

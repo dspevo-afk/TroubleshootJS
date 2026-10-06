@@ -667,24 +667,26 @@ public final class E04SensorControlModel {
         outputLoad = span(new ResistorElm(1056, 288), 1056, 480);
         sensorSourceFaultIsolation = seriesSwitch(sensorSourceResistance);
         referenceHighFaultIsolation = seriesSwitch(referenceHigh);
-        // Supporting RREF_LOW is physically replaceable but is not one of
-        // the generated fault seams.  Keep its solver path direct so the
-        // support resistor does not add a parallel ideal-switch branch.
+        // Supporting resistors have their own secondary-failure path even
+        // though they are not generated fault seams.  The fixture leads below
+        // terminate after that path, leaving no direct resistor-post bypass.
         referenceLowFaultIsolation = null;
         outputResistanceFaultIsolation = seriesSwitch(outputResistance);
         sensorSourceOpenPath = ResistorSecondaryOpenPath.create(
             postEndpoint(sensorSourceFaultIsolation, 1));
         referenceHighOpenPath = ResistorSecondaryOpenPath.create(
             postEndpoint(referenceHighFaultIsolation, 1));
-        referenceLowOpenPath = null;
+        referenceLowOpenPath = ResistorSecondaryOpenPath.create(
+            postEndpoint(referenceLow, 1));
         outputResistanceOpenPath = ResistorSecondaryOpenPath.create(
             postEndpoint(outputResistanceFaultIsolation, 1));
         if (variant == Variant.HYSTERETIC_REGENERATIVE) {
-            // Feedback is a mapped support resistor rather than an admitted
-            // fault seam; its direct posts remain the authoritative endpoints.
+            // Feedback can fail in service without becoming an admitted
+            // generated fault candidate.
             feedback = span(new ResistorElm(800, 400), 800, 480);
             feedbackFaultIsolation = null;
-            feedbackOpenPath = null;
+            feedbackOpenPath = ResistorSecondaryOpenPath.create(
+                postEndpoint(feedback, 1));
             hasFeedback = true;
         } else {
             feedback = null;
@@ -716,6 +718,7 @@ public final class E04SensorControlModel {
         add(sensorSourceFaultIsolation);
         add(sensorSourceOpenPath.getSimulationElement());
         add(referenceHigh); add(referenceLow); add(decision);
+        add(referenceLowOpenPath.getSimulationElement());
         add(referenceHighFaultIsolation);
         add(referenceHighOpenPath.getSimulationElement());
         add(outputResistance); add(outputLoad);
@@ -723,6 +726,7 @@ public final class E04SensorControlModel {
         add(outputResistanceOpenPath.getSimulationElement());
         if (feedback != null) {
             add(feedback);
+            add(feedbackOpenPath.getSimulationElement());
         }
         if (regulator == null) {
             wire(ground.getPost(0), railSource.getPost(0));
@@ -742,10 +746,12 @@ public final class E04SensorControlModel {
         wire(ground.getPost(0), sensorSource.getPost(0));
         wire(ground.getPost(0), railLoad.getPost(1));
         wire(ground.getPost(0), sensorLoad.getPost(1));
-        // The fixture retains a direct ground return for standalone solver
-        // behavior; physical-board preparation removes this lead so RREF_LOW
-        // is terminated only through its mapped detachable seam.
-        referenceLowGroundFixtureLead = wire(ground.getPost(0), referenceLow.getPost(1));
+        // The fixture return is downstream of the secondary-failure path.
+        // Physical preparation removes this sole return lead before the board
+        // contributes its detachable connection at the same public terminal.
+        referenceLowGroundFixtureLead = wire(ground.getPost(0),
+            referenceLowOpenPath.getPublicTerminal().getElement().getPost(
+                referenceLowOpenPath.getPublicTerminal().getPostIndex()));
         decisionReturnFixtureLead = wire(ground.getPost(0), decision.getPost(4));
         wire(ground.getPost(0), outputLoad.getPost(1));
         if (regulator == null)
@@ -762,7 +768,7 @@ public final class E04SensorControlModel {
             .getElement().getPost(referenceHighOpenPath.getPublicTerminal().getPostIndex()),
             decision.getPost(1));
         referenceLowFirstLead = wire(decision.getPost(1), referenceLow.getPost(0));
-        // The standalone fixture's direct return is also the second lead
+        // The standalone fixture's series return is also the second lead
         // removed during physical preparation; the board generator then
         // contributes its own detachable return lead.
         referenceLowSecondLead = referenceLowGroundFixtureLead;
@@ -773,7 +779,9 @@ public final class E04SensorControlModel {
             outputLoad.getPost(0));
         if (feedback != null) {
             feedbackFirstLead = wire(decision.getPost(3), feedback.getPost(0));
-            feedbackSecondLead = wire(feedback.getPost(1), decision.getPost(0));
+            feedbackSecondLead = wire(feedbackOpenPath.getPublicTerminal()
+                .getElement().getPost(feedbackOpenPath.getPublicTerminal().getPostIndex()),
+                decision.getPost(0));
         } else {
             feedbackFirstLead = null;
             feedbackSecondLead = null;
@@ -868,6 +876,8 @@ public final class E04SensorControlModel {
         markOwnership(referenceHighOpenPath.getSimulationElement(), "RREF",
             ElementOwnershipKind.MAPPED_COMPONENT);
         markOwnership(referenceLow, "RREF_LOW", ElementOwnershipKind.MAPPED_COMPONENT);
+        markOwnership(referenceLowOpenPath.getSimulationElement(), "RREF_LOW",
+            ElementOwnershipKind.MAPPED_COMPONENT);
         markOwnership(outputResistance, "RFB", ElementOwnershipKind.MAPPED_COMPONENT);
         markOwnership(outputResistanceFaultIsolation, "RFB", ElementOwnershipKind.MAPPED_COMPONENT);
         markOwnership(outputResistanceOpenPath.getSimulationElement(), "RFB",
@@ -892,6 +902,8 @@ public final class E04SensorControlModel {
         markOwnership(outputLoad, "J3", ElementOwnershipKind.EXTERNAL_INFRASTRUCTURE);
         if (feedback != null) {
             markOwnership(feedback, "RFB_HYST", ElementOwnershipKind.MAPPED_COMPONENT);
+            markOwnership(feedbackOpenPath.getSimulationElement(), "RFB_HYST",
+                ElementOwnershipKind.MAPPED_COMPONENT);
         }
     }
 

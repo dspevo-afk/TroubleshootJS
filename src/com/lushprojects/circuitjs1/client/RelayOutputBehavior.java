@@ -105,6 +105,11 @@ final class RelayOutputBehavior implements GeneratedBoardFamilyState,
     public boolean isFaultedTargetInstalled(GeneratedBoardInstance owner, String id) {
         return GeneratedBoardFamilyPolicy.isFaultedTargetInstalled(owner, id);
     }
+    public String getSessionInputSignature() {
+        return isCommandedOn() ? GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
+            GeneratedBoardOperationIds.CONTROL_INPUT_LOW;
+    }
+
     public GeneratedBoardOperationCatalog getOperationCatalog() { return operations; }
     public GeneratedCustomerRetestProfile getCustomerRetestProfile() { return retest; }
     public double getLiveSolverAdvanceSeconds() { return .005; }

@@ -1,0 +1,87 @@
+{
+  "omittedFields": [],
+  "original": {
+    "bytes": 2052,
+    "sha256": "555ec687a190799b610fffd295fbe6d4a46801f2f2d591f93b31795c1d3bc01c",
+    "taskRootPath": "evidence/build-r4-result.json"
+  },
+  "receipt": {
+    "changedInputs": [],
+    "host": {
+      "cleanup": {
+        "cleanupElapsedMs": 0,
+        "cleanupVerified": true,
+        "drainerErrors": [],
+        "drainerWaitMs": 0,
+        "drainsComplete": true,
+        "jobAccountingDrainMs": 0,
+        "jobAccountingDrainSucceeded": true,
+        "jobAccountingError": null,
+        "jobActiveProcesses": 0,
+        "jobClosedForCleanup": false,
+        "liveDrainers": 0,
+        "pid": 2888,
+        "processSignaled": true
+      },
+      "command": [
+        "<POWERSHELL>",
+        "-NoLogo",
+        "-NoProfile",
+        "-NonInteractive",
+        "-File",
+        "<REPO>\\scripts\\build.ps1",
+        "-JavaHome",
+        "<JAVA_HOME>",
+        "-Target",
+        "Compile",
+        "-Style",
+        "OBF"
+      ],
+      "deadlineMs": 1100000,
+      "finishedUtc": "2026-10-06T01:29:08.144002Z",
+      "handlesClosed": true,
+      "logs": {
+        "stderr": {
+          "bytes": 0,
+          "errors": [],
+          "overflow": false,
+          "readerAlive": false,
+          "streamClosed": true
+        },
+        "stdout": {
+          "bytes": 1259,
+          "errors": [],
+          "overflow": false,
+          "readerAlive": false,
+          "streamClosed": true
+        }
+      },
+      "operation": {
+        "elapsedMs": 86220,
+        "exitCode": 0,
+        "reason": null
+      },
+      "process": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357236617077697,
+        "pid": 2888
+      },
+      "schema": 1,
+      "scope": "owned host phase; no application measurements",
+      "startedUtc": "2026-10-06T01:27:41.706927Z",
+      "status": "PASS"
+    },
+    "phase": "build-r4",
+    "sourceFiles": 1294,
+    "sourceInputsUnchanged": true
+  },
+  "recursiveOmittedFieldNames": [
+    "commandLine",
+    "executable",
+    "failureCaptureError",
+    "failureTraceback",
+    "profile",
+    "traceback"
+  ],
+  "transformation": "Task-root path normalization; explicitly listed fields omitted."
+}

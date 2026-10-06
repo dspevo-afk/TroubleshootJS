@@ -1,0 +1,25 @@
+{
+  "omittedFields": [
+    "all unrelated process rows",
+    "all unrelated listener rows"
+  ],
+  "original": {
+    "bytes": 1237,
+    "sha256": "9cfab26aaf8831928e73dc205eab22021ecd6e60e1675288f25dfd0f3f96cace",
+    "taskRootPath": "evidence/u06-compiled-r25/listener-proof/release-query-10ded98056ca46adbe1f5809a169413b/host/stdout.log"
+  },
+  "receipt": {
+    "ok": true,
+    "targetPort": 52551,
+    "targetPortListeners": []
+  },
+  "recursiveOmittedFieldNames": [
+    "commandLine",
+    "executable",
+    "failureCaptureError",
+    "failureTraceback",
+    "profile",
+    "traceback"
+  ],
+  "transformation": "Task-root path normalization; explicitly listed fields omitted."
+}

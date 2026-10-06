@@ -1,0 +1,344 @@
+{
+  "omittedFields": [
+    "actions",
+    "ready"
+  ],
+  "original": {
+    "bytes": 263947,
+    "sha256": "1b2ea605f2d6881ee9fe82a5de14cf0e5e068128c126a0a8490e5f732195fe69",
+    "taskRootPath": "evidence/u06-visible-r5/result.json"
+  },
+  "receipt": {
+    "apiBoundary": [
+      "Ordinary visible locators, filechooser event, download, reload and screenshots.",
+      "No evaluate, controller, model, hidden runtime snapshot, synthetic event dispatch or save parsing.",
+      "Private verifier attributes are checked for absence; values are not recorded."
+    ],
+    "browserChannel": "msedge",
+    "browserCount": 1,
+    "cases": [
+      {
+        "name": "initial-file-durable-restore-and-truncated-rejection",
+        "originalR1VisibleText": "R1\n\n\nType: resistor\n\n\nMarkings: Color bands\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\nTurn board power off before modifying components.\n\nLift lead 1\nLift lead 2\nRemove component",
+        "restoredRetest": "FAIL_EXPECTED_UNREPAIRED",
+        "restoredSource": "OFF",
+        "status": "PASS",
+        "truncatedFile": "REJECTED_WITH_REPLAY_HISTORY_POWER_TRAY_UNCHANGED",
+        "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+      },
+      {
+        "afterReloadRetest": "FAIL_EXPECTED_UNREPAIRED",
+        "beforeSaveRetest": "FAIL_EXPECTED_UNREPAIRED",
+        "installedPartLabel": "Part 4 - 10000000 Ohm +/-5%",
+        "name": "wrong-repair-inventory-history-durable-roundtrip",
+        "publicHistory": [
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Removed a part.",
+          "Added a part to the tray.",
+          "Installed a part from the tray.",
+          "Changed a supply setting.",
+          "Changed a supply setting."
+        ],
+        "retainedTrayLabels": [
+          "Part 2 - Color bands"
+        ],
+        "sourceAtSaveAndRestore": "OFF",
+        "status": "PASS"
+      },
+      {
+        "name": "pristine-sharing-excludes-mutable-repair-and-inventory",
+        "originalMarkings": "R1\n\n\nType: resistor\n\n\nMarkings: Color bands\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\nTurn board power off before modifying components.\n\nLift lead 1\nLift lead 2\nRemove component",
+        "pristinePower": "ON",
+        "pristineRetest": "FAIL_EXPECTED_UNREPAIRED",
+        "repairedInventoryExcluded": true,
+        "replay": "tsj-alpha/4/EASY/LED_INDICATOR/0",
+        "status": "PASS"
+      },
+      {
+        "acquiredPartLabel": "Part 5 - 330 Ohm +/-5%",
+        "afterReloadRetest": "FUNCTION VERIFIED",
+        "beforeSaveRetest": "FUNCTION VERIFIED",
+        "freshRetestRequiredAfterLoad": true,
+        "name": "correct-repair-durable-roundtrip-and-fresh-retest",
+        "publicHistory": [
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Removed a part.",
+          "Added a part to the tray.",
+          "Installed a part from the tray.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Removed a part.",
+          "Added a part to the tray.",
+          "Installed a part from the tray.",
+          "Changed a supply setting."
+        ],
+        "retainedTrayLabels": [
+          "Part 2 - Color bands",
+          "Part 4 - 10000000 Ohm +/-5%"
+        ],
+        "sourceAtSaveAndRestore": "ON",
+        "status": "PASS"
+      }
+    ],
+    "cleanup": {
+      "contextClose": "PASS",
+      "edgeAbsence": {
+        "recordedInstances": 11,
+        "status": "PASS",
+        "survivors": {}
+      },
+      "elapsedSeconds": 1.3004453999456018,
+      "listenerProof": {
+        "evidence": "listener-proof/listener-query.json",
+        "functionSourceSha256": "f45447757c13ec38da457863353b8efdd5661f4b1a3cb6049fcc0d5ec592f6da",
+        "owner": "private_menu.port_is_closed / audit_release._run_cim_and_ports",
+        "queryOwner": "serial_runner.run_command native process job",
+        "queryTimeoutMs": 20000
+      },
+      "playwrightStop": "PASS",
+      "previewAfterClose": {
+        "classification": {
+          "queryStatus": "ABSENT",
+          "reason": "pid-query-confirmed-absent",
+          "status": "ABSENT"
+        },
+        "exitCode": 1
+      },
+      "previewBeforeClose": {
+        "classification": {
+          "queryStatus": "PRESENT",
+          "reason": "birth-and-image-match",
+          "status": "MATCH"
+        },
+        "poll": null
+      },
+      "previewStop": "PASS_EXACT_INSTANCE_ABSENT",
+      "status": "PASS",
+      "taskPortClosed": true
+    },
+    "controllerIdentity": {
+      "birthPrecision": "NATIVE_100NS",
+      "creationFileTimeTicks": 134357241348526959,
+      "pid": 29828
+    },
+    "driverSources": [
+      {
+        "file": "visual-r5.py",
+        "sha256": "85d4cf0f03bc765bc56a151971862288053f0a03bd7ee9c134219b75cd91ed8c"
+      },
+      {
+        "file": "visual-r1.py",
+        "sha256": "5ec8a3cae2f6588136b4700a448a2327d442a2e4d9a822a17da61d0b41a1d8c9"
+      },
+      {
+        "file": "visible_repair.py",
+        "sha256": "22be524c90d5a4468308764cd168e532c21987fca7360a8b6b7a144ea628dbcb"
+      }
+    ],
+    "elapsedSeconds": 27.341,
+    "errors": [],
+    "files": [
+      {
+        "bytes": 439,
+        "file": "unrepaired-source-off.tsjsave",
+        "sha256": "4d1327d0a7f32df82c8586d80fd745d043274b3dbd7029613c49383e9aa82f48",
+        "suggestedFilename": "troubleshootjs-session.tsjsave"
+      },
+      {
+        "bytes": 219,
+        "file": "truncated.tsjsave",
+        "sha256": "8cb418f2027112f5ab354ca47c15ae85422e8f96fca62cb289afd8ebd3ebccb0"
+      },
+      {
+        "bytes": 798,
+        "file": "wrong-10000000ohm-source-off.tsjsave",
+        "sha256": "ba419389643551ccf625632989f1e5a0e394149b06ecbf56de2c44119fb88901",
+        "suggestedFilename": "troubleshootjs-session.tsjsave"
+      },
+      {
+        "bytes": 1027,
+        "file": "repaired-330ohm-source-on.tsjsave",
+        "sha256": "1e1694cf61df1fc32cdcf438a774a4722fcc829d0ee9deab306b552d378bd9eb",
+        "suggestedFilename": "troubleshootjs-session.tsjsave"
+      }
+    ],
+    "finalInputAuditSeconds": 0.2778698999900371,
+    "finishedUtc": "2026-10-06T01:36:02.318004+00:00",
+    "fixture": {
+      "correctR1Ohms": 330,
+      "method": "Known fixture-guided ordinary UI repair; not blind diagnosis",
+      "oracle": "LedIndicatorGenerator RESISTOR_VALUES; java.util.Random(0).nextInt(3) == 0",
+      "replay": "tsj-alpha/4/EASY/LED_INDICATOR/0",
+      "tolerancePercent": 5,
+      "wrongR1Ohms": 10000000
+    },
+    "gameFunctionsCalled": false,
+    "headed": true,
+    "headedProof": {
+      "edgeExecutableIdentities": [
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134357241461062136,
+          "pid": 3196
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134357241462587109,
+          "pid": 3604
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134357241461665440,
+          "pid": 11448
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134357241461725901,
+          "pid": 14052
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134357241462520891,
+          "pid": 19316
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134357241478768455,
+          "pid": 19548
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134357241467852931,
+          "pid": 24512
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134357241461837823,
+          "pid": 27004
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134357241504716153,
+          "pid": 27232
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134357241488352365,
+          "pid": 27920
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134357241460416761,
+          "pid": 29708
+        }
+      ],
+      "headlessArgument": false,
+      "launchArguments": [
+        "--window-size=1460,1100"
+      ],
+      "pageCount": 1,
+      "visibleWindows": [
+        {
+          "hwnd": 2759026,
+          "pid": 29708,
+          "title": "about:blank - Profile 1 - Microsoft\u200b Edge",
+          "visible": true
+        }
+      ]
+    },
+    "headless": false,
+    "hostTimerPolicy": "task-local browser background timer/render throttling disabled; solver unchanged",
+    "identityHelperSha256": "88b18fa7ff41fc006fe9e17dac2aba73cb15c9342bad8b163bedb60bce161017",
+    "limits": {
+      "fileBytes": 2097152,
+      "generationActiveOperationMs": 5000,
+      "generationJobMs": 90000,
+      "generationWorkUnits": 640,
+      "maxScreenshots": 5,
+      "operationSeconds": 780,
+      "requiredNativeOuterSeconds": 900,
+      "reservedCleanupSeconds": 120
+    },
+    "listenerOwnerSourceSha256": {
+      "audit_release.py": "7a76a9ca504eada3a7658dd74ac8851cbcbc10c6d7d45598894fe448aa696324",
+      "private_menu.py": "9d42f39649fc13e5b5820815e75c33731ebb2dc29a48f69763d2cea4a592acab",
+      "receipts.py": "ae22c139fc9834c767aed8d6b2ae3dcdb9e8db010c3721deba3ae34bd1119dd1",
+      "serial_runner.py": "08ce044c8c014ae7bc3b194c07827c8383990b4f950be82137b94dc504f1ebe2",
+      "windows_process_identity.py": "88b18fa7ff41fc006fe9e17dac2aba73cb15c9342bad8b163bedb60bce161017"
+    },
+    "operationSeconds": 25.76054559997283,
+    "outcome": "PASS",
+    "pageEvaluateUsed": false,
+    "phase": "closed",
+    "playwrightVersion": "1.63.0",
+    "preview": {
+      "command": [
+        "<POWERSHELL>",
+        "-NoProfile",
+        "-NonInteractive",
+        "-File",
+        "<REPO>\\scripts\\preview.ps1",
+        "-Port",
+        "64650",
+        "-ForceTcpListener"
+      ],
+      "nativeIdentity": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357241351837741,
+        "pid": 17756
+      },
+      "pid": 17756,
+      "port": 64650,
+      "servingIdentity": {
+        "executionDigest": "de9bbc794a511217fe094e1432039c1a1962d107e474b7440dbe080693642ea2",
+        "executionFileCount": 1549,
+        "previewPort": 64650,
+        "previewScript": "<REPO>\\scripts\\preview.ps1",
+        "processId": 17756,
+        "processStartTicks": 639268473351837741,
+        "protocol": "troubleshootjs-preview-identity-v1",
+        "repositoryRoot": "<REPO>",
+        "scriptDigest": "043dd83fd83d42311206a99f0033ce52fa20403485adfd5d56e0f016027826c5",
+        "scriptRoot": "<REPO>\\scripts",
+        "sourceDigest": "66d5b2b8080ea95df0b665dd76b4c4bd75058f0aa75fd9dcd8fd079f25fcccf5",
+        "sourceRoot": "<REPO>\\src",
+        "verifierNonce": "",
+        "verifierRunId": "",
+        "webDigest": "056f61603da09c7ae6f981d8a051fef7aa6ad9ba55f0f9e3bd3995cca38a7831",
+        "webRoot": "<REPO>\\war"
+      },
+      "servingStartClock": "DOTNET_100NS_SINCE_0001; converted exactly from native FILETIME epoch1601",
+      "startedUtc": "2026-10-06T01:35:35.373095+00:00"
+    },
+    "schema": 1,
+    "scope": "U06_FULL_GUIDED_INDICATOR_SAVE_RESTORE_HISTORY_PRISTINE_SHARE",
+    "scopeLimitations": [
+      "Guided deterministic Indicator seed-0 workflow; no blind diagnosis or population qualification claim.",
+      "Transient restart disclosure is checked; exact capacitor/relay/sensor internal dynamics are outside this fixture.",
+      "Native FileReader I/O-error, oversized-file and stale-picker cases are NOT_RUN by this visible driver.",
+      "Filechooser.set_files supplies a real file through the invoked picker event; Windows dialog keyboard navigation is not tested.",
+      "Saved payload privacy/format inspection is separate; this driver records only artifact sizes and hashes.",
+      "The 780-second operation deadline is cooperative; root must provide the 900-second hard native owner."
+    ],
+    "servedInputInventory": {
+      "afterSha256": "ada8a48ea8abe64c3c88de1bbf38377cfb84bf79868559bb0a6c2511dd4fe915",
+      "beforeSha256": "ada8a48ea8abe64c3c88de1bbf38377cfb84bf79868559bb0a6c2511dd4fe915",
+      "fileCount": 1531
+    },
+    "startedUtc": "2026-10-06T01:35:34.976545+00:00",
+    "syntheticDispatchUsed": false
+  },
+  "recursiveOmittedFieldNames": [
+    "commandLine",
+    "executable",
+    "failureCaptureError",
+    "failureTraceback",
+    "profile",
+    "traceback"
+  ],
+  "transformation": "Task-root path normalization; explicitly listed fields omitted."
+}

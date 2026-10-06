@@ -431,6 +431,8 @@ MouseOutHandler, MouseWheelHandler {
     boolean troubleshootU02U03Verification, troubleshootU02U03VerificationComplete,
         troubleshootU02U03VisualHold;
     String troubleshootTemporalFixture;
+    boolean troubleshootU06Verification, troubleshootU06VerificationComplete;
+    String troubleshootU06Family, troubleshootU06Seed;
     boolean troubleshootA10Verification;
     boolean troubleshootA10VerificationComplete;
     boolean troubleshootA10ForcedFailure;
@@ -648,6 +650,9 @@ MouseOutHandler, MouseWheelHandler {
                 qp.getValue("tsjTemporalFixture") : null;
             troubleshootU02U03VisualHold = troubleshootU02U03Verification &&
                 qp.getBooleanValue("tsjTemporalVisualHold", false);
+            troubleshootU06Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyU06", false);
+            troubleshootU06Family = qp.getValue("tsjU06Family");
+            troubleshootU06Seed = qp.getValue("tsjU06Seed");
             troubleshootA10Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA10", false);
             troubleshootA10ForcedFailure = troubleshootA10Verification && qp.getBooleanValue("tsjA10Fail", false);
 	    troubleshootA08Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyA08", false);
@@ -1098,7 +1103,7 @@ MouseOutHandler, MouseWheelHandler {
 		    readSetupFile(startCircuit, startLabel);
 		}
 		else if (!troubleshootDebug || troubleshootFixture != null || troubleshootChallenge != null ||
-			troubleshootQuickPlay)
+			troubleshootQuickPlay || troubleshootU06Verification)
 		    getSetupList(false);
 		else
 		    getSetupList(true);
@@ -1879,6 +1884,7 @@ MouseOutHandler, MouseWheelHandler {
             runQ30DeveloperWorkbenchIfReady();
             runU01ViewportVerificationIfReady();
             runA10GenerationVerificationIfReady();
+            runU06SessionVerificationIfReady();
 			// Deferred meter work may consume this analysis only after the
 			// generated verification has made its current owner actionable.
 			instrumentController.onSimulationStepComplete(didAnalyze);
@@ -3565,7 +3571,9 @@ MouseOutHandler, MouseWheelHandler {
 	for (i = 0; i != scopeCount; i++)
 		scopes[i].resetGraph(true);
 	if (generatedBoardInstance != null)
-	    generatedBoardInstance.getPhysicalBoardRuntime().resetForBoardReset();
+            generatedBoardInstance.getPhysicalBoardRuntime().resetForBoardReset();
+        if (generatedBoardInstance != null)
+            generatedBoardInstance.getPhysicalBoardRuntime().getSessionHistory().record(this, "RESET", "", "", "");
 	if (generatedBoardInstance != null)
 	    requestGeneratedBoardVerification();
     	repaint();
@@ -5024,6 +5032,17 @@ MouseOutHandler, MouseWheelHandler {
         }, asynchronous);
     }
 
+    private void runU06SessionVerificationIfReady() {
+        if (!troubleshootDebug || !troubleshootU06Verification || troubleshootU06VerificationComplete ||
+                developerVerifierRunning || generationCoordinator == null || generationCoordinator.isRunning() ||
+                !isGeneratedRuntimeSettled()) return;
+        troubleshootU06VerificationComplete = true;
+        developerVerifierRunning = true;
+        U06SessionDeveloperVerifier.verify(this,
+            troubleshootU06Family == null ? "LED_INDICATOR" : troubleshootU06Family,
+            troubleshootU06Seed == null ? "0" : troubleshootU06Seed);
+    }
+
     private void runA10GenerationVerificationIfReady() {
         if (developerVerifierRunning || !troubleshootA10Verification || troubleshootA10VerificationComplete ||
                 generationCoordinator == null || generationCoordinator.isRunning() ||
@@ -6146,7 +6165,11 @@ MouseOutHandler, MouseWheelHandler {
 	boolean invokeGeneratedPlayerOperation(String stableId) {
 	if (generatedChallengeController == null)
 	    return false;
-	return generatedChallengeController.invokePlayerOperation(stableId);
+        boolean changed = generatedChallengeController.invokePlayerOperation(stableId);
+        if (changed && !GeneratedBoardOperationIds.CUSTOMER_RETEST.equals(stableId))
+            generatedBoardInstance.getPhysicalBoardRuntime().getSessionHistory().record(this,
+                "INPUT", stableId, "", "");
+        return changed;
 	}
 
 	boolean isChallengeInteractionEnabled() {
@@ -6276,12 +6299,13 @@ MouseOutHandler, MouseWheelHandler {
 	}
 	if (!isChallengeInteractionEnabled())
 	    return;
-	applyGeneratedBoardPowerState(state);
+        applyGeneratedBoardPowerState(state);
     }
 
     private void applyGeneratedBoardPowerState(BoardPowerState state) {
 	if (!boardPowerController.setState(state))
 	    return;
+        generatedBoardInstance.getPhysicalBoardRuntime().getSessionHistory().sources(this, generatedBoardInstance);
 	solverTimeObservations.invalidate();
 	generatedBoardInstance.getPhysicalBoardRuntime().onBoardPowerStateChanged(state);
 	if (generatedChallengeController != null)
@@ -6299,6 +6323,7 @@ MouseOutHandler, MouseWheelHandler {
         ExternalPowerSimulationBinding binding = owner.getExternalPowerBindings().getBinding(inputId);
         if (limitAmps != null) binding.setCurrentLimit(limitAmps);
         if (connected != null) boardPowerController.setSourceConnected(inputId, connected);
+        owner.getPhysicalBoardRuntime().getSessionHistory().sources(this, owner);
 	/* A source edit is a new observation epoch even before the next solver
 	 * operation notices the control signature. */
 	solverTimeObservations.invalidate();

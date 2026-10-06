@@ -1,0 +1,137 @@
+{
+  "omittedFields": [
+    "identity.edgeProcessesBeforeCases (unrelated process inventory)"
+  ],
+  "original": {
+    "bytes": 5949,
+    "sha256": "b0413994d189766d6d6e5f55f512da541cf204a8e36972d622c2773c789ca6da",
+    "taskRootPath": "evidence/u06-compiled-r30/result.json"
+  },
+  "receipt": {
+    "caseCount": 1,
+    "cases": [
+      {
+        "attributeReadErrors": [],
+        "case": {
+          "expectedPrefix": null,
+          "expectedState": "PASS",
+          "index": 1,
+          "name": "U06 RC_DELAY seed 0 session reconstruction",
+          "path": "circuitjs.html?tsjDebug=true&tsjVerifyU06=true&tsjU06Family=RC_DELAY&tsjU06Seed=0",
+          "reportAttribute": "data-tsj-u06-report",
+          "stateAttribute": "data-tsj-u06-state",
+          "terminalPrefixes": [
+            "PASS",
+            "FAIL"
+          ],
+          "timeoutSeconds": 360.0
+        },
+        "consoleErrors": [],
+        "expectedFailureCanary": false,
+        "expectedFailureStateWasNotAnUnexpectedError": false,
+        "finishedUtc": "2026-10-06T01:40:40.330845+00:00",
+        "httpErrors": [],
+        "lastObservedState": "PASS",
+        "listenerCleanupErrors": [],
+        "navigationError": null,
+        "observation": {
+          "compiledScriptsHeld": 1,
+          "currentDocuments": 2,
+          "finalStateReadRequired": true,
+          "scopeIdentity": {
+            "attributeMatches": true,
+            "documentBackendAfter": 3,
+            "documentBackendBefore": 3,
+            "documentNodeAfter": 7,
+            "documentNodeBefore": 4,
+            "documentUrlMatches": true,
+            "generationAfter": 2,
+            "generationBefore": 2,
+            "htmlBackendAfter": 5,
+            "htmlBackendBefore": 5,
+            "htmlNodeAfter": 9,
+            "htmlNodeBefore": 6,
+            "pageUrlMatches": true,
+            "stateChangesAfter": 2,
+            "stateChangesBefore": 2,
+            "stateMatches": true
+          },
+          "scriptAttachment": {
+            "documentBackend": 3,
+            "exactPageUrl": true,
+            "generation": 1,
+            "htmlBackend": 5,
+            "resourceType": "script"
+          },
+          "stateEvents": 2,
+          "terminalScopeVerified": true,
+          "transport": "PASSIVE_CDP_DOM"
+        },
+        "observedState": "PASS",
+        "observerErrors": [],
+        "operationSeconds": 99.22715239995159,
+        "outcome": "PASS",
+        "pageErrors": [],
+        "reportFile": "cases/001-U06-RC_DELAY-seed-0-session-reconstruction.report.json",
+        "reportJsonError": null,
+        "reportJsonValid": true,
+        "reportLength": 22863,
+        "reportMatch": true,
+        "reportObserved": true,
+        "reportSha256": "ed3053bbd484bd717772c53b50d073b4a4aec34342f4ef440779b7eb81673924",
+        "schema": 1,
+        "startedUtc": "2026-10-06T01:39:01.103689+00:00",
+        "stateMatch": true,
+        "terminalReached": true,
+        "timedOut": false,
+        "url": "http://127.0.0.1:58714/circuitjs.html?tsjDebug=true&tsjVerifyU06=true&tsjU06Family=RC_DELAY&tsjU06Seed=0"
+      }
+    ],
+    "cleanup": {
+      "errors": [],
+      "ownedSurvivors": [],
+      "seconds": 1.2553200999973342,
+      "serverStopped": true,
+      "status": "PASS"
+    },
+    "errors": [],
+    "finishedUtc": "2026-10-06T01:40:41.976703+00:00",
+    "identity": {
+      "baseUrl": "http://127.0.0.1:58714",
+      "port": 58714,
+      "runner": {
+        "created": "2026-10-06T01:38:59.5106150Z",
+        "pid": 14912
+      }
+    },
+    "inputAudit": {
+      "afterSha256": "e6950a0c127d411d10dc209f62a3f9f024962489b6865b20de47c760ccedaa5e",
+      "beforeSha256": "e6950a0c127d411d10dc209f62a3f9f024962489b6865b20de47c760ccedaa5e",
+      "fileCountAfter": 1529,
+      "fileCountBefore": 1529,
+      "runnerAfterSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "runnerBeforeSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "seconds": 0.38917939993552864,
+      "sourceSha256After": "5888ffb2e23c5c0b779c1b889973ab5d902ba61668c6903f4d8685322aff7903",
+      "sourceSha256Before": "5888ffb2e23c5c0b779c1b889973ab5d902ba61668c6903f4d8685322aff7903",
+      "status": "PASS",
+      "webSha256After": "de4c3eae971ef1c0b81d447fa3f888fb59d3bf9d6278aaf9e5899c124dbe5bb4",
+      "webSha256Before": "de4c3eae971ef1c0b81d447fa3f888fb59d3bf9d6278aaf9e5899c124dbe5bb4"
+    },
+    "operationStartedUtc": "2026-10-06T01:39:01.103679+00:00",
+    "outcome": "PASS",
+    "repository": "<REPO>",
+    "runner": "compiled_attribute_acceptance.py",
+    "schema": 1,
+    "startedUtc": "2026-10-06T01:38:59.986964+00:00"
+  },
+  "recursiveOmittedFieldNames": [
+    "commandLine",
+    "executable",
+    "failureCaptureError",
+    "failureTraceback",
+    "profile",
+    "traceback"
+  ],
+  "transformation": "Task-root path normalization; explicitly listed fields omitted."
+}

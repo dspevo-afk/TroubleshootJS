@@ -8,6 +8,8 @@
   var background = [], controls = {}, shopRows = [], shopCategories = [], shopSignature = '', shopCategory = '';
   var localMessage = '', settingsNotice = '', serial = 0, progressTimer = null;
   var toolbarHost = null, toolbarObserver = null, toolbarQueued = false, nativeTools = [];
+  var sessionRead = null, sessionDownload = null, sessionSaving = false, sessionHistoryLabels = null;
+  var sessionFileLimit = 2 * 1024 * 1024;
   var settingsKey = 'tsj.presentation.v1';
   var settings = { version: 1, highContrast: false, largeText: false, reducedMotion: false };
 
@@ -105,9 +107,9 @@
   }
   function identity(parent) {
     var details = append(parent, 'details', undefined, 'tsj-product-identity');
-    append(details, 'summary', 'Replay and bug-report identity');
-    append(details, 'p', 'Replay reconstructs the initial challenge. It does not save repairs or inventory. Only the current replay format is supported.');
-    readOnly(details, 'Current replay', snapshot.replay);
+    append(details, 'summary', 'Share pristine challenge');
+    append(details, 'p', 'Share this replay code to reconstruct the initial challenge. Repairs and tray contents are not included. Only the current replay format is supported.');
+    readOnly(details, 'Pristine challenge replay', snapshot.replay);
     readOnly(details, 'Interpretation / build', snapshot.epoch + ' / ' + snapshot.build);
     append(details, 'p', 'You can select and copy this information for a bug report. Nothing is sent automatically.');
   }
@@ -115,10 +117,152 @@
     var note = append(parent, 'section', undefined, 'tsj-product-support');
     append(note, 'h3', 'About this desktop alpha');
     append(note, 'p', 'Selected low-voltage families include a 16-part procedural control board and multi-rail control boards with 33, 35 or 37 parts. The 3-part indicator and 4-part protected indicator are introductory practice boards.');
-    append(note, 'p', 'EASY and MEDIUM candidates are checked before play. HARD and PSYCHOTIC are unavailable. Only the listed board families are supported. Mains circuits and general multilayer routing are not supported. Session saves are not available.');
+    append(note, 'p', 'EASY and MEDIUM candidates are checked before play. HARD and PSYCHOTIC are unavailable. Only the listed board families are supported. Mains circuits and general multilayer routing are not supported. Use Main menu to save or load a session file. Loading restarts dynamic state; retest the board afterward.');
+  }
+
+  function releaseSessionDownload() {
+    if (!sessionDownload) return;
+    window.clearTimeout(sessionDownload.timer);
+    window.URL.revokeObjectURL(sessionDownload.url);
+    sessionDownload = null;
+  }
+  function detachSessionReader(read) {
+    read.reader.onload = read.reader.onerror = read.reader.onabort = null;
+  }
+  function cancelSessionTransport() {
+    if (sessionRead) {
+      var read = sessionRead; sessionRead = null;
+      detachSessionReader(read);
+      if (read.reader.readyState === 1) read.reader.abort();
+    }
+    releaseSessionDownload();
+  }
+  function ownsSessionControl(token, view, node) {
+    return snapshot && snapshot.token === token && lease === view && node.isConnected &&
+      snapshot.screen !== 'PREPARING' && snapshot.screen !== 'RETEST';
+  }
+  function updateSessionControls() {
+    var panel = controls.sessionPanel;
+    if (!panel || !panel.isConnected) return;
+    var busy = sessionSaving || sessionRead !== null || snapshot.screen === 'PREPARING' || snapshot.screen === 'RETEST';
+    panel.setAttribute('aria-busy', busy ? 'true' : 'false');
+    controls.sessionSave.disabled = busy || snapshot.sessionSaveAvailable !== true;
+    controls.sessionLoad.disabled = busy;
+    controls.sessionPicker.disabled = busy;
+    controls.sessionSaveHint.hidden = !snapshot.hasBoard || snapshot.sessionSaveAvailable === true;
+    var labels = Array.isArray(snapshot.sessionHistory) ? snapshot.sessionHistory.filter(function (label) { return typeof label === 'string'; }) : [];
+    if (!sessionHistoryLabels || labels.length !== sessionHistoryLabels.length ||
+        labels.some(function (label, index) { return label !== sessionHistoryLabels[index]; })) {
+      sessionHistoryLabels = labels.slice();
+      controls.sessionHistory.replaceChildren();
+      labels.forEach(function (label) { append(controls.sessionHistory, 'li', label); });
+      controls.sessionHistory.hidden = labels.length === 0;
+      controls.sessionHistoryEmpty.hidden = labels.length !== 0;
+    }
+  }
+  function saveSession(token, view, node) {
+    if (!ownsSessionControl(token, view, node) || sessionRead || sessionSaving) return;
+    sessionSaving = true; updateSessionControls(); status('Preparing session download...');
+    var link = null;
+    try {
+      var result = bridge.saveSession(token, view);
+      if (!result || result.ok !== true || typeof result.contents !== 'string') {
+        status(result && result.error || 'The session could not be saved. Wait for the board to settle and try again.');
+        return;
+      }
+      if (!ownsSessionControl(token, view, node)) return;
+      var file = new window.Blob([result.contents], { type: 'text/plain;charset=utf-8' });
+      if (!file.size || file.size > sessionFileLimit) {
+        status('The session file must be between 1 byte and 2 MiB. It was not downloaded.'); return;
+      }
+      releaseSessionDownload();
+      var download = { url: window.URL.createObjectURL(file), timer: null };
+      sessionDownload = download;
+      link = append(content, 'a'); link.hidden = true;
+      link.href = download.url; link.download = 'troubleshootjs-session.tsjsave'; link.click();
+      download.timer = window.setTimeout(function () {
+        if (sessionDownload === download) releaseSessionDownload();
+      }, 1000);
+      status('Session download started. Keep the .tsjsave file to load it later.');
+    } catch (error) {
+      releaseSessionDownload();
+      status('The session download could not start. Check that this browser permits file downloads and try again.');
+    } finally {
+      if (link) link.remove();
+      sessionSaving = false; updateSessionControls();
+    }
+  }
+  function finishSessionRead(read) {
+    var current = sessionRead === read && ownsSessionControl(read.token, read.view, read.picker);
+    if (sessionRead === read) sessionRead = null;
+    detachSessionReader(read); updateSessionControls(); return current;
+  }
+  function loadSessionFile(token, view, picker) {
+    if (!ownsSessionControl(token, view, picker) || sessionRead || sessionSaving) return;
+    var file = picker.files && picker.files[0]; picker.value = '';
+    if (!file) return;
+    if (!/\.tsjsave$/i.test(file.name)) { status('Choose a .tsjsave session file.'); return; }
+    if (!file.size || file.size > sessionFileLimit) {
+      status('Choose a session file between 1 byte and 2 MiB. The current board has not changed.'); return;
+    }
+    var read;
+    try {
+      read = { reader: new window.FileReader(), token: token, view: view, picker: picker };
+      sessionRead = read; updateSessionControls(); status('Reading session file...');
+      read.reader.onload = function () {
+        var contents = read.reader.result;
+        if (!finishSessionRead(read)) return;
+        if (typeof contents !== 'string' || !contents.length) {
+          status('The session file could not be read as text. The current board has not changed.'); return;
+        }
+        try { invoke(token, view, 'load-session', contents); }
+        catch (error) { status('The session could not be loaded. Return to Main menu and try again.'); }
+      };
+      read.reader.onerror = function () {
+        if (finishSessionRead(read)) status('The session file could not be read. Choose it again or select another file.');
+      };
+      read.reader.onabort = function () {
+        if (finishSessionRead(read)) status('Session file reading was cancelled.');
+      };
+      read.reader.readAsText(file, 'UTF-8');
+    } catch (error) {
+      if (read) finishSessionRead(read);
+      status('The session file could not be read. Choose it again or select another file.');
+    }
+  }
+  function sessionControls(parent) {
+    var panel = append(parent, 'section', undefined, 'tsj-product-form tsj-product-session');
+    controls.sessionPanel = panel; sessionHistoryLabels = null;
+    append(panel, 'h3', 'Your session');
+    append(panel, 'p', 'Download a .tsjsave file to keep this board and its parts. Load a current compatible file from your device (up to 2 MiB).', 'tsj-product-hint');
+    var disclosure = append(panel, 'p', 'Restoring a session restarts capacitor charge, relay motion, sensor hysteresis and simulation time. Repairs, parts, permanent damage and supply/input settings are preserved. Retest the board after loading.');
+    disclosure.id = 'tsj-session-disclosure-' + (++serial);
+    var token = snapshot.token, view = lease;
+    var actions = append(panel, 'div', undefined, 'tsj-product-actions');
+    var save = controls.sessionSave = button(actions, 'Save session', function () { saveSession(token, view, save); });
+    save.hidden = !snapshot.hasBoard; save.disabled = snapshot.sessionSaveAvailable !== true;
+    save.setAttribute('aria-describedby', disclosure.id);
+    var picker = controls.sessionPicker = append(panel, 'input');
+    picker.type = 'file'; picker.accept = '.tsjsave'; picker.hidden = true;
+    picker.setAttribute('aria-label', 'Load session file');
+    picker.addEventListener('change', function () { loadSessionFile(token, view, picker); });
+    var load = controls.sessionLoad = button(actions, 'Load session', function () {
+      if (!ownsSessionControl(token, view, load)) return;
+      try { picker.value = ''; picker.click(); }
+      catch (error) { status('The file picker could not open. Try loading the session in a browser with local file support.'); }
+    });
+    load.setAttribute('aria-describedby', disclosure.id);
+    controls.sessionSaveHint = append(panel, 'p', 'Save session becomes available when the current board is ready.', 'tsj-product-hint');
+    var history = append(panel, 'details'); history.hidden = !snapshot.hasBoard;
+    append(history, 'summary', 'Session history');
+    controls.sessionHistoryEmpty = append(history, 'p', 'No session operations yet.', 'tsj-product-hint');
+    controls.sessionHistory = append(history, 'ol', undefined, 'tsj-session-history');
+    controls.sessionHistory.setAttribute('aria-label', 'Session history'); controls.sessionHistory.tabIndex = 0;
+    return panel;
   }
 
   function invalidateView() {
+    cancelSessionTransport();
     if (lease !== null && bridge) bridge.closeView(lease);
     lease = null;
   }
@@ -196,6 +340,7 @@
     append(intro, 'p', 'A customer. A faulty board. A bench full of possibilities.');
     var process = append(intro, 'ol', undefined, 'tsj-product-process');
     ['Examine', 'Measure', 'Isolate', 'Repair', 'Retest'].forEach(function (step) { append(process, 'li', step); });
+    sessionControls(parent);
     var setup = append(parent, 'div', undefined, 'tsj-product-setup');
     var form = append(setup, 'form', undefined, 'tsj-product-form tsj-product-new-board');
     append(form, 'h3', 'Start a service job');
@@ -469,7 +614,7 @@
       append(audioText, 'small', 'Mechanical clicks follow actual relay pickup and release.');
       audioInput.addEventListener('change', function () { window.tsjBenchAudio.setMuted(!audioInput.checked); });
     }
-    append(parent, 'p', 'Session saves are not available in this alpha.');
+    append(parent, 'p', 'Use Main menu to save or load a session file and review Session history. Loading restarts dynamic state; retest the board afterward.');
   }
 
   function progressView(parent) {
@@ -674,6 +819,9 @@
       if (!auxiliary && savedContent) {
         savedContent.forEach(function (node) { content.appendChild(node); });
         controls.start = savedStart; savedContent = null; savedStart = null;
+        // Restored menu fields retain their values; file controls need this new lease.
+        var retainedSession = content.querySelector('.tsj-product-session');
+        if (retainedSession) retainedSession.replaceWith(sessionControls(element('div')));
       }
       else if (page === 'MENU') menu(content);
       else if (page === 'TICKET') ticket(content);
@@ -694,6 +842,7 @@
       }
       renderedKey = key; showOverlay(); content.scrollTop = 0; focusDialog();
     }
+    if (page === 'MENU') updateSessionControls();
     if (page === 'Shop') updateShop();
     if (page === 'PREPARING') updateProgress();
     if (controls.start) controls.start.disabled = !snapshot.ready;
@@ -746,6 +895,7 @@
     closeNativeTools();
   });
   window.addEventListener('resize', closeNativeTools);
+  window.addEventListener('pagehide', cancelSessionTransport);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
   else start();
 }(window, document));

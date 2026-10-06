@@ -177,6 +177,12 @@ final class GenerationCoordinator {
         start(request, completion, asynchronous, true, normalMaximumJobMillis(request), false, null);
     }
 
+    void startSessionRestore(GenerationRequest request, PlayerSessionSave saved, Completion completion) {
+        if (saved == null || !PlayerLaunchRequest.parse(saved.replay).generation().canonical().equals(request.canonical()))
+            throw new IllegalArgumentException("Saved challenge differs from the restore request");
+        start(request, completion, true, false, normalMaximumJobMillis(request), false, null, saved);
+    }
+
     private static long normalMaximumJobMillis(GenerationRequest request) {
         if (request == null) throw new IllegalArgumentException("Missing generation request");
         GenerationExecutionPolicy policy = request.getExecutionPolicy();
@@ -194,6 +200,13 @@ final class GenerationCoordinator {
             boolean allowDiagnosticProofReuse, long maximumJobMillis,
             boolean measurementOnly,
             ControlledP09NegativeForDeveloperVerification controlledP09Negative) {
+        start(request, completion, asynchronous, allowDiagnosticProofReuse, maximumJobMillis,
+            measurementOnly, controlledP09Negative, null);
+    }
+
+    private void start(GenerationRequest request, Completion completion, boolean asynchronous,
+            boolean allowDiagnosticProofReuse, long maximumJobMillis, boolean measurementOnly,
+            ControlledP09NegativeForDeveloperVerification controlledP09Negative, PlayerSessionSave saved) {
         if (request == null || advancing)
             throw new IllegalStateException("Generation cannot start inside an active stage");
         if (request.isPrivateDiagnosticQualification() != measurementOnly)
@@ -221,7 +234,7 @@ final class GenerationCoordinator {
             diagnosticMeasurementProofs : diagnosticProofs;
         if (measurementOnly) diagnosticMeasurementWorkTimings.clear();
         services = new Services(request, completion, allowDiagnosticProofReuse,
-            proofCache, measurementOnly, controlledP09Negative);
+            proofCache, measurementOnly, controlledP09Negative, saved);
         job = new GenerationJob(services, maximumJobMillis, MAX_JOB_STEPS, MAX_STEP_MILLIS);
         yields = 0; cancelledAt = 0; cancellationLatency = 0; maxAdvanceMillis = 0;
         lastRoutingElapsedMillis = 0; lastProofElapsedMillis = 0;
@@ -398,6 +411,7 @@ final class GenerationCoordinator {
         private final GenerationRequest selection;
         private GenerationRequest request;
         private final Completion completion;
+        private final PlayerSessionSave restoredSession;
         private final boolean allowDiagnosticProofReuse;
         private final GeneratedDiagnosticProofCache proofCache;
         private final boolean measurementOnly;
@@ -423,7 +437,8 @@ final class GenerationCoordinator {
 
         Services(GenerationRequest request, Completion completion, boolean allowDiagnosticProofReuse,
                 GeneratedDiagnosticProofCache proofCache, boolean measurementOnly,
-                ControlledP09NegativeForDeveloperVerification controlledP09Negative) {
+                ControlledP09NegativeForDeveloperVerification controlledP09Negative, PlayerSessionSave saved) {
+            restoredSession = saved;
             if (proofCache == null)
                 throw new IllegalArgumentException("Missing diagnostic proof cache owner");
             this.selection = request; this.request = request.candidate(0); this.completion = completion;
@@ -651,7 +666,7 @@ final class GenerationCoordinator {
                     request.getDescriptor().getRootSeed());
                 sim.quickPlaySession = QuickPlaySession.forCandidate(selection, candidate);
             }
-            installation.publish();
+            installation.publish(restoredSession);
             if (physicalFingerprint != null) recentBoards.published(physicalFingerprint);
             /* A proof artifact becomes reusable only after the same candidate
              * passed final dependency validation and its fresh publication.

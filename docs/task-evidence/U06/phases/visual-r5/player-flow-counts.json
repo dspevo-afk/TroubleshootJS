@@ -1,0 +1,11 @@
+{
+  "downloadRecords": 4,
+  "manualReview": "Root reports inspection of screenshots 001-004; independent review and acceptance are documented separately.",
+  "original": {
+    "bytes": 263947,
+    "sha256": "1b2ea605f2d6881ee9fe82a5de14cf0e5e068128c126a0a8490e5f732195fe69",
+    "taskRootPath": "evidence/u06-visible-r5/result.json"
+  },
+  "passedCases": 4,
+  "retainedActionCount": 340
+}
