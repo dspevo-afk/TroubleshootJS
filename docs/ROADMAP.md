@@ -7,15 +7,14 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Q30 and U06 ACCEPTED within documented scope; U07/Q60 unstarted**
-Q30 remains accepted and published at its documented host/frozen-corpus boundary.
-U06 current-format history/save/restore passed final native19, actual JDK8/GWT5,
-11 compiled families plus second sensor variant, and actual headed durable-file/
-wrong-and-correct-repair checks. Restart dynamics and format limits are explicit;
-no exact transient, maximum-capacity or long-session claim. No budget change.
-No email. Historical Q30 release lateness, unknown91.616s failure and six missing
-inventories remain disclosed. [U06 evidence](task-evidence/U06/README.md) and
-[current checkpoint](CODEX_TASK_REPORT.md). Next unstarted milestone: U07.
+**Current task:** **U07 ACCEPTED within its declared inventory and 100-cycle browser envelope; E05 next**
+Q30 and U06 remain accepted within their documented scopes. U07 adds lazy
+50-entry history pages and pre-replay 96-part population validation. Nine native
+suites, the production GWT build, 6,024 compiled checks, the accumulated 64-part
+save/load/Q30 flow and 100 same-document owner/repair cycles pass. All retained
+failures and resource-review limitations remain explicit; no generation budgets
+changed and no unchanged Q30 corpus was rerun. No email.
+[U07 evidence](task-evidence/U07/README.md), [current checkpoint](CODEX_TASK_REPORT.md).
 
 **Historical menu checkpoint:** **Q30 private menu PASS; acceptance pending; normal play disabled**
 **Current continuation (2026-10-05):** C621/1,355 production inputs unchanged.
@@ -1014,7 +1013,7 @@ Every enabled instrument declares electrical connection/stimulus, burden/loading
 
 ## 7.1 Status and authority
 
-T49, N00, A01-A11, R00, P01-P09, U01, E01-E04, Q15, U02, U03, U04, U05, D01 and REL-A were recorded accepted/completed at the E02/E04/D01 publication: 35 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. The historical non-catalog post-P09 follow-up covered procedural layouts for the nine then-current normal families and resistor shop/formation; SENSOR_CONTROL subsequently made ten family/profile pairs and required its own fresh catalog evidence. U02/U03 provide the bounded solver-time meter/scope boundary. Q30 is accepted within its documented host/corpus scope; U06 is accepted for the measured current-format restart scope. U07 remains unstarted. Only currently implemented EASY/MEDIUM content is qualified; unavailable difficulties remain deferred. P08 current isolated CLI runs satisfy unchanged ownership/cleanup gates; earlier unqualified launch attempts remain separately recorded.
+T49, N00, A01-A11, R00, P01-P09, U01, E01-E04, Q15, U02, U03, U04, U05, D01 and REL-A were recorded accepted/completed at the E02/E04/D01 publication: 35 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. The historical non-catalog post-P09 follow-up covered procedural layouts for the nine then-current normal families and resistor shop/formation; SENSOR_CONTROL subsequently made ten family/profile pairs and required its own fresh catalog evidence. U02/U03 provide the bounded solver-time meter/scope boundary. Q30 is accepted within its documented host/corpus scope; U06 is accepted for the measured current-format restart scope. U07 is accepted for its frozen inventory and 100-cycle owner/repair scope; E05 is next. Only currently implemented EASY/MEDIUM content is qualified; unavailable difficulties remain deferred. P08 current isolated CLI runs satisfy unchanged ownership/cleanup gates; earlier unqualified launch attempts remain separately recorded.
 
 A task-specific prompt authorizes a bounded scope. Follow current AGENTS.md for orchestration, ownership, review, publication and safety; R00 replaced its contradictory blanket compatibility wording under the owner's explicit instruction. A current correct requirement outranks an obsolete test. Do not start writers before relevant shared-interface investigations are reconciled.
 
@@ -1029,11 +1028,11 @@ preferred queue. The milestone cards remain authoritative for scope, hard
 prerequisites, acceptance and conditional capabilities; this section chooses the
 preferred next eligible milestone. Future implementation needs its own authorization.
 
-**Already complete:** T49, N00, A01-A11, R00, P01-P09, U01, E01-E04, Q15, U02, U03, U04, U05, D01, REL-A, Q30 and U06 (each within its documented scope). A10 and A11 ran earlier
+**Already complete:** T49, N00, A01-A11, R00, P01-P09, U01, E01-E04, Q15, U02, U03, U04, U05, D01, REL-A, Q30, U06 and U07 (each within its documented scope). A10 and A11 ran earlier
 than the old preferred order while satisfying their hard prerequisites: A10
 required A05/A07/A09/P02; A11 required A04/A08/A09. Their earlier placement does
 not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 → Q15 → U04 → U05 → REL-A → U02/U03 → E02 → E04 → D01 is complete. Q30 is now accepted within its documented host/corpus scope.
-**Completed milestone: Q30 — ACCEPTED within documented host/corpus scope.** The generic-generation and 90-second acceptance repair preserves the working family. Historical normal-player passes under a 300-second policy do not satisfy the frozen budget. U06 current-format restart saves and semantic history are accepted. U07 is the next unstarted milestone; Q60 and later milestones remain unstarted. Pending visual/FPS/tray work remains preserved.
+**Completed milestone: Q30 — ACCEPTED within documented host/corpus scope.** The generic-generation and 90-second acceptance repair preserves the working family. Historical normal-player passes under a 300-second policy do not satisfy the frozen budget. U06 current-format restart saves and semantic history are accepted. U07 is accepted within its declared scope. E05 is the next unstarted milestone; E06/Q60 and later milestones remain unstarted. Pending visual/FPS/tray work remains preserved.
 
 | Wave | Preferred sequence |
 |---|---|
@@ -1926,7 +1925,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### U07 · Long-session, inventory and browser reliability envelope
 
-**Status:** UNSTARTED.
+**Status:** PASS (2026-10-07), within the frozen accumulated-inventory and 100-cycle owner/repair envelope. Nine native suites, production GWT (five permutations), 6,024 compiled checks, ordinary 64-part save/load/Q30 flow and 100 real owner/repair cycles pass. Resource receipt gap and browser-proxy limits are explicit. [Evidence](task-evidence/U07/README.md).
 
 **Hard prerequisites:** [U06](#m-u06), [Q30](#m-q30), [A11](#m-a11)
 
@@ -2774,7 +2773,7 @@ The shared current-only policy and validation rules apply to every card. There i
 scope; normal Q30 is enabled locally after a fresh production build and narrow
 normal QuickPlay check. Limits remain90s/640/5s. Historical release lateness, the
 unknown91.616s failure and six missing inventories remain explicit. No unlimited
-random-population or modest-host claim. U06 is accepted within its measured scope; U07/Q60 remain unstarted.
+random-population or modest-host claim. U06 and U07 are accepted within their measured scopes; Q60 remains unstarted.
 [Local enablement evidence](task-evidence/Q30/qualification-workflow/local-enablement-20261005/README.md).
 
 **Historical acceptance repair:** Independent review rejected `97e0727` for

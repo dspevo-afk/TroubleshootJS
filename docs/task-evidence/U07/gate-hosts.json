@@ -1,0 +1,289 @@
+{
+  "build-r1": {
+    "cleanup": {
+      "cleanupElapsedMs": 0,
+      "cleanupVerified": true,
+      "drainerErrors": [],
+      "drainerWaitMs": 0,
+      "drainsComplete": true,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "liveDrainers": 0,
+      "pid": 14084,
+      "processSignaled": true
+    },
+    "command": [
+      "<POWERSHELL>",
+      "-NoLogo",
+      "-NoProfile",
+      "-NonInteractive",
+      "-File",
+      "<REPO>\\scripts\\build.ps1",
+      "-JavaHome",
+      "<JDK8>",
+      "-Target",
+      "Compile",
+      "-Style",
+      "OBF"
+    ],
+    "deadlineMs": 1100000,
+    "finishedUtc": "2026-10-06T02:12:42.653155Z",
+    "handlesClosed": true,
+    "logs": {
+      "stderr": {
+        "bytes": 0,
+        "errors": [],
+        "overflow": false,
+        "readerAlive": false,
+        "streamClosed": true
+      },
+      "stdout": {
+        "bytes": 1259,
+        "errors": [],
+        "overflow": false,
+        "readerAlive": false,
+        "streamClosed": true
+      }
+    },
+    "operation": {
+      "elapsedMs": 84344,
+      "exitCode": 0,
+      "reason": null
+    },
+    "process": {
+      "birthPrecision": "NATIVE_100NS",
+      "creationFileTimeTicks": 134357262781255241,
+      "pid": 14084
+    },
+    "schema": 1,
+    "scope": "owned host phase; no application measurements",
+    "startedUtc": "2026-10-06T02:11:18.116668Z",
+    "status": "PASS"
+  },
+  "compiled-r2": {
+    "cleanup": {
+      "cleanupElapsedMs": 0,
+      "cleanupVerified": true,
+      "drainerErrors": [],
+      "drainerWaitMs": 0,
+      "drainsComplete": true,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "liveDrainers": 0,
+      "pid": 24876,
+      "processSignaled": true
+    },
+    "command": [
+      "<PYTHON>",
+      "-B",
+      "<TASK>\\compiled-r2.py"
+    ],
+    "deadlineMs": 300000,
+    "finishedUtc": "2026-10-06T02:13:46.285020Z",
+    "handlesClosed": true,
+    "logs": {
+      "stderr": {
+        "bytes": 0,
+        "errors": [],
+        "overflow": false,
+        "readerAlive": false,
+        "streamClosed": true
+      },
+      "stdout": {
+        "bytes": 2788,
+        "errors": [],
+        "overflow": false,
+        "readerAlive": false,
+        "streamClosed": true
+      }
+    },
+    "operation": {
+      "elapsedMs": 18478,
+      "exitCode": 0,
+      "reason": null
+    },
+    "process": {
+      "birthPrecision": "NATIVE_100NS",
+      "creationFileTimeTicks": 134357264078011168,
+      "pid": 24876
+    },
+    "schema": 1,
+    "scope": "owned host phase; no application measurements",
+    "startedUtc": "2026-10-06T02:13:27.798331Z",
+    "status": "PASS"
+  },
+  "native-r2": {
+    "cleanup": {
+      "cleanupElapsedMs": 0,
+      "cleanupVerified": true,
+      "drainerErrors": [],
+      "drainerWaitMs": 0,
+      "drainsComplete": true,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "liveDrainers": 0,
+      "pid": 7500,
+      "processSignaled": true
+    },
+    "command": [
+      "<POWERSHELL>",
+      "-NoLogo",
+      "-NoProfile",
+      "-NonInteractive",
+      "-File",
+      "<TASK>\\native-r2.ps1"
+    ],
+    "deadlineMs": 600000,
+    "finishedUtc": "2026-10-06T02:10:36.869547Z",
+    "handlesClosed": true,
+    "logs": {
+      "stderr": {
+        "bytes": 0,
+        "errors": [],
+        "overflow": false,
+        "readerAlive": false,
+        "streamClosed": true
+      },
+      "stdout": {
+        "bytes": 2072,
+        "errors": [],
+        "overflow": false,
+        "readerAlive": false,
+        "streamClosed": true
+      }
+    },
+    "operation": {
+      "elapsedMs": 48375,
+      "exitCode": 0,
+      "reason": null
+    },
+    "process": {
+      "birthPrecision": "NATIVE_100NS",
+      "creationFileTimeTicks": 134357261883148877,
+      "pid": 7500
+    },
+    "schema": 1,
+    "scope": "owned host phase; no application measurements",
+    "startedUtc": "2026-10-06T02:09:48.314207Z",
+    "status": "PASS"
+  },
+  "visual-r3": {
+    "cleanup": {
+      "cleanupElapsedMs": 0,
+      "cleanupVerified": true,
+      "drainerErrors": [],
+      "drainerWaitMs": 0,
+      "drainsComplete": true,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "liveDrainers": 0,
+      "pid": 7620,
+      "processSignaled": true
+    },
+    "command": [
+      "<PYTHON>",
+      "-B",
+      "<TASK>\\visual-r3.py"
+    ],
+    "deadlineMs": 840000,
+    "finishedUtc": "2026-10-07T21:35:36.817536Z",
+    "handlesClosed": true,
+    "logs": {
+      "stderr": {
+        "bytes": 0,
+        "errors": [],
+        "overflow": false,
+        "readerAlive": false,
+        "streamClosed": true
+      },
+      "stdout": {
+        "bytes": 995,
+        "errors": [],
+        "overflow": false,
+        "readerAlive": false,
+        "streamClosed": true
+      }
+    },
+    "operation": {
+      "elapsedMs": 131763,
+      "exitCode": 0,
+      "reason": null
+    },
+    "process": {
+      "birthPrecision": "NATIVE_100NS",
+      "creationFileTimeTicks": 134358824050386956,
+      "pid": 7620
+    },
+    "schema": 1,
+    "scope": "owned host phase; no application measurements",
+    "startedUtc": "2026-10-07T21:33:25.035537Z",
+    "status": "PASS"
+  },
+  "visual-r4": {
+    "cleanup": {
+      "cleanupElapsedMs": 0,
+      "cleanupVerified": true,
+      "drainerErrors": [],
+      "drainerWaitMs": 0,
+      "drainsComplete": true,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "liveDrainers": 0,
+      "pid": 12012,
+      "processSignaled": true
+    },
+    "command": [
+      "<PYTHON>",
+      "-B",
+      "<TASK>\\visual-r4.py"
+    ],
+    "deadlineMs": 1020000,
+    "finishedUtc": "2026-10-07T21:44:51.676549Z",
+    "handlesClosed": true,
+    "logs": {
+      "stderr": {
+        "bytes": 0,
+        "errors": [],
+        "overflow": false,
+        "readerAlive": false,
+        "streamClosed": true
+      },
+      "stdout": {
+        "bytes": 6342,
+        "errors": [],
+        "overflow": false,
+        "readerAlive": false,
+        "streamClosed": true
+      }
+    },
+    "operation": {
+      "elapsedMs": 216217,
+      "exitCode": 0,
+      "reason": null
+    },
+    "process": {
+      "birthPrecision": "NATIVE_100NS",
+      "creationFileTimeTicks": 134358828754543665,
+      "pid": 12012
+    },
+    "schema": 1,
+    "scope": "owned host phase; no application measurements",
+    "startedUtc": "2026-10-07T21:41:15.451697Z",
+    "status": "PASS"
+  }
+}

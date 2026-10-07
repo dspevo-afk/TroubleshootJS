@@ -8,7 +8,7 @@
   var background = [], controls = {}, shopRows = [], shopCategories = [], shopSignature = '', shopCategory = '';
   var localMessage = '', settingsNotice = '', serial = 0, progressTimer = null;
   var toolbarHost = null, toolbarObserver = null, toolbarQueued = false, nativeTools = [];
-  var sessionRead = null, sessionDownload = null, sessionSaving = false, sessionHistoryLabels = null;
+  var sessionRead = null, sessionDownload = null, sessionSaving = false, sessionHistoryView = null;
   var sessionFileLimit = 2 * 1024 * 1024;
   var settingsKey = 'tsj.presentation.v1';
   var settings = { version: 1, highContrast: false, largeText: false, reducedMotion: false };
@@ -150,15 +150,40 @@
     controls.sessionLoad.disabled = busy;
     controls.sessionPicker.disabled = busy;
     controls.sessionSaveHint.hidden = !snapshot.hasBoard || snapshot.sessionSaveAvailable === true;
-    var labels = Array.isArray(snapshot.sessionHistory) ? snapshot.sessionHistory.filter(function (label) { return typeof label === 'string'; }) : [];
-    if (!sessionHistoryLabels || labels.length !== sessionHistoryLabels.length ||
-        labels.some(function (label, index) { return label !== sessionHistoryLabels[index]; })) {
-      sessionHistoryLabels = labels.slice();
-      controls.sessionHistory.replaceChildren();
-      labels.forEach(function (label) { append(controls.sessionHistory, 'li', label); });
-      controls.sessionHistory.hidden = labels.length === 0;
-      controls.sessionHistoryEmpty.hidden = labels.length !== 0;
+    updateSessionHistory();
+  }
+  function ownsHistoryView(history) {
+    return history === sessionHistoryView && history.details.open &&
+      ownsSessionControl(history.token, history.view, history.details);
+  }
+  function showSessionHistory(history, offset) {
+    if (!ownsHistoryView(history)) return;
+    var result;
+    try { result = bridge.historyPage(history.token, history.view, offset); }
+    catch (error) { result = null; }
+    if (!ownsHistoryView(history)) return;
+    if (!result || result.ok !== true) {
+      history.page = null; history.list.replaceChildren(); history.list.hidden = true;
+      history.older.disabled = history.newer.disabled = true;
+      setText(history.range, result && result.error || 'Session history is unavailable. Close and reopen it to try again.');
+      return;
     }
+    history.page = result;
+    history.list.replaceChildren(); history.list.start = result.offset + 1;
+    result.entries.forEach(function (label) { append(history.list, 'li', label); });
+    history.list.hidden = result.entries.length === 0;
+    history.list.scrollTop = 0;
+    history.older.disabled = result.previousOffset < 0;
+    history.newer.disabled = result.nextOffset < 0;
+    setText(history.range, result.total ? 'Operations ' + (result.offset + 1) + '–' +
+      (result.offset + result.entries.length) + ' of ' + result.total + '.' : 'No session operations yet.');
+  }
+  function updateSessionHistory() {
+    var history = sessionHistoryView;
+    if (!history || !ownsHistoryView(history)) return;
+    if (history.page && history.page.total === snapshot.sessionHistoryCount) return;
+    // Follow new entries only when already viewing the latest page.
+    showSessionHistory(history, history.page && history.page.nextOffset >= 0 ? history.page.offset : -1);
   }
   function saveSession(token, view, node) {
     if (!ownsSessionControl(token, view, node) || sessionRead || sessionSaving) return;
@@ -232,7 +257,7 @@
   }
   function sessionControls(parent) {
     var panel = append(parent, 'section', undefined, 'tsj-product-form tsj-product-session');
-    controls.sessionPanel = panel; sessionHistoryLabels = null;
+    controls.sessionPanel = panel;
     append(panel, 'h3', 'Your session');
     append(panel, 'p', 'Download a .tsjsave file to keep this board and its parts. Load a current compatible file from your device (up to 2 MiB).', 'tsj-product-hint');
     var disclosure = append(panel, 'p', 'Restoring a session restarts capacitor charge, relay motion, sensor hysteresis and simulation time. Repairs, parts, permanent damage and supply/input settings are preserved. Retest the board after loading.');
@@ -253,15 +278,33 @@
     });
     load.setAttribute('aria-describedby', disclosure.id);
     controls.sessionSaveHint = append(panel, 'p', 'Save session becomes available when the current board is ready.', 'tsj-product-hint');
-    var history = append(panel, 'details'); history.hidden = !snapshot.hasBoard;
-    append(history, 'summary', 'Session history');
-    controls.sessionHistoryEmpty = append(history, 'p', 'No session operations yet.', 'tsj-product-hint');
-    controls.sessionHistory = append(history, 'ol', undefined, 'tsj-session-history');
-    controls.sessionHistory.setAttribute('aria-label', 'Session history'); controls.sessionHistory.tabIndex = 0;
+    var details = append(panel, 'details'); details.hidden = !snapshot.hasBoard;
+    append(details, 'summary', 'Session history');
+    var history = sessionHistoryView = { token: token, view: view, details: details, page: null };
+    history.range = append(details, 'p', '', 'tsj-product-hint');
+    history.range.setAttribute('role', 'status'); history.range.setAttribute('aria-live', 'polite');
+    history.list = append(details, 'ol', undefined, 'tsj-session-history');
+    history.list.id = 'tsj-session-history-' + (++serial);
+    history.list.setAttribute('aria-label', 'Session history'); history.list.tabIndex = 0;
+    var navigation = append(details, 'nav', undefined, 'tsj-product-actions');
+    navigation.setAttribute('aria-label', 'Session history pages');
+    history.older = button(navigation, 'Older operations', function () {
+      if (history.page && history.page.previousOffset >= 0) showSessionHistory(history, history.page.previousOffset);
+    });
+    history.newer = button(navigation, 'Newer operations', function () {
+      if (history.page && history.page.nextOffset >= 0) showSessionHistory(history, history.page.nextOffset);
+    });
+    history.older.setAttribute('aria-controls', history.list.id);
+    history.newer.setAttribute('aria-controls', history.list.id);
+    history.older.disabled = history.newer.disabled = true;
+    details.addEventListener('toggle', function () {
+      if (history === sessionHistoryView) updateSessionHistory();
+    });
     return panel;
   }
 
   function invalidateView() {
+    sessionHistoryView = null;
     cancelSessionTransport();
     if (lease !== null && bridge) bridge.closeView(lease);
     lease = null;

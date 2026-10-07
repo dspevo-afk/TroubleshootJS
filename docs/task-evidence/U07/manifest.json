@@ -1,0 +1,93 @@
+{
+  "fileCount": 22,
+  "files": {
+    "README.md": {
+      "bytes": 7395,
+      "sha256": "179e0b9e26d013cdb8201ceac3011e4c58bd83e5620a6c55f5a9becea5dc15a7"
+    },
+    "attempt-ledger.json": {
+      "bytes": 1905,
+      "sha256": "334191d696e33b5262f48bdff818381e6855b517905c4d042f3cd3d15143e49a"
+    },
+    "compiled-spec.json": {
+      "bytes": 446,
+      "sha256": "a2aef1c80652eba8d16afe489ec0851af5d01aae1ce5e49b15a95500187e2ba3"
+    },
+    "compiled-workload.json": {
+      "bytes": 3593,
+      "sha256": "224d143b77b058c6b0a255b8b446b7c4999e83783d6081c1892ca6609120f4dc"
+    },
+    "current-input-pins.json": {
+      "bytes": 178980,
+      "sha256": "b22da6deee006098b0f83f04cf6c3d2bb61def81d0a23f0394ce6c4e369238a2"
+    },
+    "endurance-actions.json": {
+      "bytes": 4924168,
+      "sha256": "606a31eaed2408f9d5d8765e5ffbf2613900565758a9099166b74356a1872254"
+    },
+    "endurance-provenance.json": {
+      "bytes": 356560,
+      "sha256": "583caba344973cd036c20a757291cbe92ed0999025926c6799daf754207e954b"
+    },
+    "endurance-workload.json": {
+      "bytes": 114621,
+      "sha256": "aa524ddebd4b7246e848e508356a1635648d56323bdaeece491eddbea143f4fb"
+    },
+    "gate-hosts.json": {
+      "bytes": 7222,
+      "sha256": "30ecbb1fa82c46e3ae24d70383352acc10618a06f303a1c7c67c96e6258fd594"
+    },
+    "native-contracts.json": {
+      "bytes": 942,
+      "sha256": "ffb7e63260e104065b3d7090fd8966a98eb5e433e812670863ee67f2f1a7d0ad"
+    },
+    "resource-observation.json": {
+      "bytes": 100516,
+      "sha256": "7a3b76edc799e5a499c58913c586df2e7d43dead6a2813a6b4675a48f405d2dc"
+    },
+    "resource-review.json": {
+      "bytes": 1881,
+      "sha256": "c5ecaead227bfa223ed678b539425e3e9202476d8b4e1ab6fc9b78e47f7db493"
+    },
+    "review.json": {
+      "bytes": 2443,
+      "sha256": "b707cb6b1eb38a243ea55b3d13f845d5f5e96f02fd8631d6e453883fdfa0d928"
+    },
+    "screenshots/001-inventory64-last-loose-measurement.png": {
+      "bytes": 159718,
+      "sha256": "05a11bb51e627b8ad52a7f8d90a50d5fcdf78a9d466c7a10a32bf42683e28b24"
+    },
+    "screenshots/002-paged-history-before-save-reload.png": {
+      "bytes": 210960,
+      "sha256": "d2135c77bff0626cd1fe24b22b190dc6ce64d4749926524132b670c92ca96f2f"
+    },
+    "screenshots/003-third-pristine-owner-empty-tray.png": {
+      "bytes": 212493,
+      "sha256": "82ef510109efd885cda0c16c72420a47549d10fa5dfe31899df9728ba0017b84"
+    },
+    "screenshots/004-q30-restored-eight-loose-parts.png": {
+      "bytes": 362133,
+      "sha256": "d313a38ad44abb41b42fc31b4d13f57c1524f7fe3911c38f69086fc08aa48ef5"
+    },
+    "screenshots/005-100-repaired-menu-five-operations.png": {
+      "bytes": 206563,
+      "sha256": "da99e2840a69b2092752f0ba65da1733d92e38e1044dd9a4762a41cbb4750f16"
+    },
+    "source-binding.json": {
+      "bytes": 2086,
+      "sha256": "27652b1e0aea06c76aa30b827c64b44bbc62b3b6386f84edd5f61c96d5f2e3c8"
+    },
+    "visible-actions.json": {
+      "bytes": 417514,
+      "sha256": "597a734c305bdb24c229f6e3c6af07f22b4f97a58237941a84916666dd6dcd77"
+    },
+    "visible-provenance.json": {
+      "bytes": 356368,
+      "sha256": "2863b495670fb4c33cbace0cce1782c474929673bdb66ded7f309fb3492558e5"
+    },
+    "visible-workload.json": {
+      "bytes": 36207,
+      "sha256": "5482501a65fddf5a90ec6cadb8d0d83808783197eb50f7e53d20e4b020b89840"
+    }
+  }
+}

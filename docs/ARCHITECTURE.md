@@ -650,8 +650,8 @@ History starts only after normal publication, and private generation,
 diagnostic work and reconstruction do not append player actions. The journal
 stores semantic commands and stable identities rather than callbacks or a
 second mutable graph. Export bounds history without silently truncating it.
-The live journal can continue growing beyond the save cap; its long-session
-retention and capacity qualification belong to U07.
+The live journal can continue growing beyond the save cap. U07 qualifies the
+fixed inventory/owner workloads below without changing that semantic policy.
 
 `PlayerSessionSave` owns strict, length-delimited parsing, section order,
 record populations and current schema/model compatibility. Numeric state uses
@@ -722,6 +722,30 @@ failure. Reconstruction checkpoints share the existing 90-second job,
 640-work-unit and five-second unit limits. A structurally valid file may exceed
 those limits and fail before publication. Measured workloads and acceptance
 remain in the task report and evidence, separate from these format caps.
+
+## U07 bounded history projection and retained session ownership
+
+`PhysicalBoardRuntime` retains the complete `PlayerSessionHistory` journal.
+Routine snapshots expose its count; `PlayerSessionController.historyPage`
+copies and projects at most 50 neutral operation labels under the current board,
+session token and Main menu lease. The UI fetches only while expanded, preserves
+unchanged rows and offers chronological Older/Newer navigation. Closed or replaced
+views revoke their callbacks. Saving still consumes the complete journal.
+
+Before private replay, `PlayerSessionState` validates original parts plus every
+ACQUIRE/CATALOG command against `PlayerSessionSave.MAX_PARTS` (96). Removal,
+installation and reset retain ownership. Shop shares the same existing cap.
+The preflight precedes restoration ownership/isolation and all replay commands.
+The graph remains the electrical and ownership authority; no parallel cache of
+part state or silent journal truncation is introduced.
+
+The developer-only U06 verifier's opt-in U07 workload qualifies 96 total/93 loose
+parts and 192 endpoints, repeated mutations, three actual restores, bounded 32-sample
+observations and typed over-capacity rejection. Headed production flows separately
+qualify 64 purchases with durable restore, Q30's focused eight-part restore, and 100
+same-document owner replacements with actual repair/retest. Heap/input metrics
+are proxies with frozen budgets, not guarantees of unlimited runtime or explicit
+GC reachability. [Evidence, source bindings and limits](task-evidence/U07/README.md).
 
 ## U01 viewport and P03/P04 physical planning
 

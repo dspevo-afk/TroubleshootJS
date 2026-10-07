@@ -1,0 +1,3463 @@
+{
+  "auditBudgetKind": "PASS_ACCEPTANCE_BUDGET_NOT_HARD_WHOLE_SCRIPT_TIMEOUT",
+  "auditBudgetMs": 30000,
+  "blockers": [
+    "Application started without available recorded identity: u07-compiled-r1"
+  ],
+  "cimFallbackPidCount": 1,
+  "counts": {
+    "evidenceFiles": 59,
+    "portStates": {
+      "CLOSED": 5
+    },
+    "processStates": {
+      "ABSENT": 75,
+      "REUSED_PID_RECORDED_INSTANCE_ABSENT": 4
+    },
+    "recordedInstances": 79,
+    "recordedPorts": 5
+  },
+  "effectiveQueries": {
+    "10344": {
+      "identity": null,
+      "pid": 10344,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "1040": {
+      "identity": null,
+      "pid": 1040,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "10564": {
+      "identity": null,
+      "pid": 10564,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "12012": {
+      "identity": null,
+      "pid": 12012,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "12332": {
+      "identity": null,
+      "pid": 12332,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "12504": {
+      "identity": null,
+      "pid": 12504,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "13040": {
+      "identity": null,
+      "pid": 13040,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "14084": {
+      "identity": null,
+      "pid": 14084,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "14372": {
+      "identity": null,
+      "pid": 14372,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "14836": {
+      "identity": null,
+      "pid": 14836,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "15032": {
+      "identity": null,
+      "pid": 15032,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "15100": {
+      "identity": null,
+      "pid": 15100,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "15568": {
+      "identity": null,
+      "pid": 15568,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "15948": {
+      "identity": null,
+      "pid": 15948,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "16008": {
+      "identity": null,
+      "pid": 16008,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "16100": {
+      "identity": null,
+      "pid": 16100,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "16316": {
+      "identity": null,
+      "pid": 16316,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "16660": {
+      "identity": null,
+      "pid": 16660,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "18156": {
+      "identity": null,
+      "pid": 18156,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "18316": {
+      "identity": null,
+      "pid": 18316,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "18356": {
+      "identity": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358820549268037,
+        "pid": 18356
+      },
+      "metadataErrors": [],
+      "pid": 18356,
+      "queryStatus": "PRESENT"
+    },
+    "18792": {
+      "identity": null,
+      "pid": 18792,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "19304": {
+      "identity": null,
+      "pid": 19304,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "19860": {
+      "identity": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358831208528222,
+        "pid": 19860
+      },
+      "metadataErrors": [],
+      "pid": 19860,
+      "queryStatus": "PRESENT"
+    },
+    "20040": {
+      "identity": null,
+      "pid": 20040,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "20320": {
+      "identity": null,
+      "pid": 20320,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "20572": {
+      "identity": null,
+      "pid": 20572,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "21312": {
+      "identity": null,
+      "pid": 21312,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "21316": {
+      "identity": null,
+      "pid": 21316,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "21844": {
+      "identity": null,
+      "pid": 21844,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "21928": {
+      "identity": null,
+      "pid": 21928,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "21988": {
+      "identity": null,
+      "pid": 21988,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "21992": {
+      "identity": null,
+      "pid": 21992,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "22044": {
+      "identity": null,
+      "pid": 22044,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "22148": {
+      "identity": null,
+      "pid": 22148,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "22476": {
+      "identity": null,
+      "pid": 22476,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "22604": {
+      "identity": null,
+      "pid": 22604,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "23184": {
+      "identity": null,
+      "pid": 23184,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "23576": {
+      "identity": null,
+      "pid": 23576,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "23796": {
+      "identity": null,
+      "pid": 23796,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "24724": {
+      "identity": null,
+      "pid": 24724,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "24832": {
+      "identity": null,
+      "pid": 24832,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "24876": {
+      "identity": null,
+      "pid": 24876,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "24972": {
+      "identity": null,
+      "pid": 24972,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "25404": {
+      "identity": null,
+      "pid": 25404,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "25632": {
+      "identity": null,
+      "pid": 25632,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "26036": {
+      "identity": null,
+      "pid": 26036,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "27572": {
+      "identity": null,
+      "pid": 27572,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "28188": {
+      "identity": null,
+      "pid": 28188,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "28716": {
+      "identity": null,
+      "pid": 28716,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "28948": {
+      "identity": null,
+      "pid": 28948,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "29416": {
+      "identity": null,
+      "pid": 29416,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "29472": {
+      "identity": null,
+      "pid": 29472,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "30396": {
+      "identity": null,
+      "pid": 30396,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "30520": {
+      "identity": null,
+      "pid": 30520,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "3256": {
+      "identity": null,
+      "pid": 3256,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "3412": {
+      "identity": null,
+      "pid": 3412,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "3792": {
+      "identity": null,
+      "pid": 3792,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "3876": {
+      "identity": null,
+      "pid": 3876,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "4748": {
+      "identity": {
+        "birthPrecision": "CIM_MICROSECOND",
+        "creationFileTimeTicks": 134357328780056400,
+        "pid": 4748
+      },
+      "pid": 4748,
+      "queryStatus": "PRESENT"
+    },
+    "4876": {
+      "identity": null,
+      "pid": 4876,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "4904": {
+      "identity": null,
+      "pid": 4904,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "4916": {
+      "identity": null,
+      "pid": 4916,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "5260": {
+      "identity": null,
+      "pid": 5260,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "6148": {
+      "identity": null,
+      "pid": 6148,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "6284": {
+      "identity": null,
+      "pid": 6284,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "6960": {
+      "identity": null,
+      "pid": 6960,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "7380": {
+      "identity": null,
+      "pid": 7380,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "7500": {
+      "identity": null,
+      "pid": 7500,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "7620": {
+      "identity": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828140848706,
+        "pid": 7620
+      },
+      "metadataErrors": [],
+      "pid": 7620,
+      "queryStatus": "PRESENT"
+    },
+    "7644": {
+      "identity": null,
+      "pid": 7644,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "8156": {
+      "identity": null,
+      "pid": 8156,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "8204": {
+      "identity": null,
+      "pid": 8204,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "8632": {
+      "identity": null,
+      "pid": 8632,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "9280": {
+      "identity": null,
+      "pid": 9280,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "9336": {
+      "identity": null,
+      "pid": 9336,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "9424": {
+      "identity": null,
+      "pid": 9424,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "9852": {
+      "identity": null,
+      "pid": 9852,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    }
+  },
+  "elapsedMs": 1372,
+  "evidenceDeleted": false,
+  "evidenceFiles": {
+    "build-r1-launch.json": {
+      "bytes": 179803,
+      "sha256": "f3c6de3065b714f5da6dd4880d51f593ebb74f5ac98f4c6ea64d817716d09620"
+    },
+    "build-r1-result.json": {
+      "bytes": 2054,
+      "sha256": "a2d55d6ce3ac2a57575806efbbbe1f6f1ecb97c83219fc3cfc02358423ea455a"
+    },
+    "compiled-r1-launch.json": {
+      "bytes": 179543,
+      "sha256": "a50e569830771bf676cc9bda33152a0e3f4bd82b06bd7a12bfe90e3b84c4dfa5"
+    },
+    "compiled-r1-result.json": {
+      "bytes": 1763,
+      "sha256": "8c1bf07b27d985608999106132b92f42f6bba92dad2b6785fe522615858739e4"
+    },
+    "compiled-r2-launch.json": {
+      "bytes": 179579,
+      "sha256": "bc62cb21293b57901670d6490c0a9f9cc212a50d87967f509da2aef6f537bde5"
+    },
+    "compiled-r2-result.json": {
+      "bytes": 1801,
+      "sha256": "60d884a9c61f47a03add5c48f731d2e5514c1735d6384f259a07f19f67fb2c67"
+    },
+    "native-r1-launch.json": {
+      "bytes": 179612,
+      "sha256": "b680fd116ec3317a12788c6d1555bb545923cee2ca1464781d1204063d326048"
+    },
+    "native-r1-result.json": {
+      "bytes": 1850,
+      "sha256": "172403cfc63004816d20d35a89304a29aeb162441601f9f9bb0e9166e9b0c8fb"
+    },
+    "native-r2-launch.json": {
+      "bytes": 179612,
+      "sha256": "b74f29bcd54a77ce90eab2ad697199d2fa4ddb885bd83faf5581779924f103a3"
+    },
+    "native-r2-result.json": {
+      "bytes": 1848,
+      "sha256": "367ce14795994b759db9b2628fc070cfffaba4b5b0557b66174d4cf4520b1b3e"
+    },
+    "owned-build-r1/host-result.json": {
+      "bytes": 1395,
+      "sha256": "5a5a0ded19b812633bb4383c4de7fcb214fc7ab1397479ff3191fe13742b193b"
+    },
+    "owned-build-r1/launch.json": {
+      "bytes": 382,
+      "sha256": "baddda780c6aabff08044fdeae4cf32bde25f3563dc646342b3ecbce65e02d4f"
+    },
+    "owned-compiled-r1/host-result.json": {
+      "bytes": 1173,
+      "sha256": "8fea573af73bce266e9687da10e992325322db808c32ed3f9f04827c6a19c62e"
+    },
+    "owned-compiled-r1/launch.json": {
+      "bytes": 370,
+      "sha256": "d59ef0d2658ba9eb46895a7bd322a48ccbf96ed2883571ec45684abc0af1569c"
+    },
+    "owned-compiled-r2/host-result.json": {
+      "bytes": 1211,
+      "sha256": "694ce805d62abfe028f06344bd9181533448804c3640e1df7aab5aa5f78b097c"
+    },
+    "owned-compiled-r2/launch.json": {
+      "bytes": 389,
+      "sha256": "26a2318c541bb35fdf16c2db233d9a753e4a87781c100b1cc85f7c2bb98c07b4"
+    },
+    "owned-native-r1/host-result.json": {
+      "bytes": 1238,
+      "sha256": "14962b09cb75283335f812550c4b235a6d57666a9758355e90a58e6c3a1355db"
+    },
+    "owned-native-r1/launch.json": {
+      "bytes": 381,
+      "sha256": "b061bb90364b48e9738d5240d3026ffff9496f599dc5c582f6e2eaebf7713aaa"
+    },
+    "owned-native-r2/host-result.json": {
+      "bytes": 1236,
+      "sha256": "e80735dac72d4ef6d01a0efd056ec6b4bef9c8edf4ac820101586c549a2c2d31"
+    },
+    "owned-native-r2/launch.json": {
+      "bytes": 380,
+      "sha256": "c9e771564a3b1929b186c1452d3293a41f4cd859af7dbe24dc193363069a802c"
+    },
+    "owned-visual-r1/host-result.json": {
+      "bytes": 1209,
+      "sha256": "4d78df064ca7f65c54424279af010075766d2296b24f96c7da088fc7a02f33cb"
+    },
+    "owned-visual-r1/launch.json": {
+      "bytes": 389,
+      "sha256": "fcc56c66872ac01c6d6b261cea9a92102e421a47de23dba63973b753ab5e88b9"
+    },
+    "owned-visual-r2/host-result.json": {
+      "bytes": 1210,
+      "sha256": "2eabf2e39e04329267b84af3fac6211eafaa1f7099953dd9745f8f863645ddb1"
+    },
+    "owned-visual-r2/launch.json": {
+      "bytes": 389,
+      "sha256": "f1bbb6239677f8dcd0acf4d49f89319bf2eb8da2f839fab4a69755f3805ac73c"
+    },
+    "owned-visual-r3/host-result.json": {
+      "bytes": 1207,
+      "sha256": "9784df01396c54c0a2da7239874ffc32283cc030e3228207c73ad627361352cf"
+    },
+    "owned-visual-r3/launch.json": {
+      "bytes": 388,
+      "sha256": "cf26dae89c1d5c4e27226cd47ed09810d7a191b1c32a7bbe521030ff413065d7"
+    },
+    "owned-visual-r4/host-result.json": {
+      "bytes": 1211,
+      "sha256": "294ea17a3984bfafca5ab2d3cd28c3824b8efe67f5e72747b42e0d0d5d2280a9"
+    },
+    "owned-visual-r4/launch.json": {
+      "bytes": 390,
+      "sha256": "59fdd827cffb348d25ce4ea4e69eb3436010f0850a3f1715c27d7c2f079fa5f7"
+    },
+    "u07-compiled-r1/result.json": {
+      "bytes": 1804,
+      "sha256": "dc29d9b2e975a785813722a2a88498e427454b7c0653dc0bf17c4e2f3f19c1e2"
+    },
+    "u07-compiled-r2/identity.json": {
+      "bytes": 1811,
+      "sha256": "758bd7a902d02e41889f80aedc13e86ab7c929887047ecaa3604b01cf256df44"
+    },
+    "u07-compiled-r2/listener-proof/release-query-7df8a59dd21f43ba961f7e78ce53a29e/host/host-result.json": {
+      "bytes": 1315,
+      "sha256": "f17a5839c762f1834a314dbe1fe0e18ef49d836285459271fdb3cb8729f6f492"
+    },
+    "u07-compiled-r2/listener-proof/release-query-7df8a59dd21f43ba961f7e78ce53a29e/host/launch.json": {
+      "bytes": 380,
+      "sha256": "ee161dc5f9bbb335f22b395f324d134869fe070ee81e9319ef3a189a17c1dcf3"
+    },
+    "u07-compiled-r2/owned-processes-before-close.json": {
+      "bytes": 1665,
+      "sha256": "cb5abab0218e4ac41049dcf0e1f375d36aa4c5a6eed8dd8945bc0c38c5b0d17a"
+    },
+    "u07-compiled-r2/owned-processes-before.json": {
+      "bytes": 1296,
+      "sha256": "589ebbfa85da6ced86304fcebc6951ae10c819563739f9df2fc456e225085ec3"
+    },
+    "u07-compiled-r2/result.json": {
+      "bytes": 5994,
+      "sha256": "8fcad6e391b47ad06d1f165aa77457c9d220327b9ddb7611b43b13e5923a0446"
+    },
+    "u07-visible-r1/listener-proof/release-query-0cb8c7569d7841a2896b6f3769cb86b1/host/host-result.json": {
+      "bytes": 1313,
+      "sha256": "7f1f6315acbdfb0d9b6d2924bfbe9aab43eabc194fa4a74b16e9caa5aa29d0b1"
+    },
+    "u07-visible-r1/listener-proof/release-query-0cb8c7569d7841a2896b6f3769cb86b1/host/launch.json": {
+      "bytes": 380,
+      "sha256": "72dcc3a0fd0d6375273d6817b6b7a551032b937a9e0633fd37b8b32667c4cce7"
+    },
+    "u07-visible-r1/result-progress.json": {
+      "bytes": 472328,
+      "sha256": "1ce3201dd76ffb9c36d00bfa7e9bfb9d21fe95cb66794e6544caf55296badb1e"
+    },
+    "u07-visible-r1/result.json": {
+      "bytes": 472358,
+      "sha256": "06b6b7485fd8a14ae6fd9b0b8df4a5754601596dc569fa92cf72bb74a8a75668"
+    },
+    "u07-visible-r2/listener-proof/release-query-8e1f47f904fa4006b40769b020dec1da/host/host-result.json": {
+      "bytes": 1313,
+      "sha256": "d04d5e0ca71505240c9b804d9b33e55511240641faf56816b31d975c7adaa175"
+    },
+    "u07-visible-r2/listener-proof/release-query-8e1f47f904fa4006b40769b020dec1da/host/launch.json": {
+      "bytes": 380,
+      "sha256": "f7c26b0cd5ef9496e4d791ca9c475efc20d7443c0f175e16b633bb2b19a6ee9a"
+    },
+    "u07-visible-r2/result-progress.json": {
+      "bytes": 548869,
+      "sha256": "5c59f53214cd97bb859fa3bbf98e81591c30f9fb9571f1509b54e0ffb862a13d"
+    },
+    "u07-visible-r2/result.json": {
+      "bytes": 548899,
+      "sha256": "481b44f44dd00c16593a23c3872946b12b83503f0d252783aa2d89ac8343eaeb"
+    },
+    "u07-visible-r3/listener-proof/release-query-2f81b59d3ecd4dcaae0cab9bff7cf7f7/host/host-result.json": {
+      "bytes": 1314,
+      "sha256": "3862392731cc056d9ba01413b313b5796bdbff312fd48621f82586660e3faabf"
+    },
+    "u07-visible-r3/listener-proof/release-query-2f81b59d3ecd4dcaae0cab9bff7cf7f7/host/launch.json": {
+      "bytes": 380,
+      "sha256": "30b29591a6d0d1978a20d484ebef989d674e51da61ddb319d6b11640e3918c47"
+    },
+    "u07-visible-r3/result-progress.json": {
+      "bytes": 594297,
+      "sha256": "f592c1d7688933038471b1053d436d8668573b78c6deb35aa6b977544e000be2"
+    },
+    "u07-visible-r3/result.json": {
+      "bytes": 594327,
+      "sha256": "7034484e5734aa710111896b978d7f95ff37c67d0aa709f1063d739cc2645b66"
+    },
+    "u07-visible-r4/listener-proof/release-query-e0c14b0a705246459ee1bad0af39a0e8/host/host-result.json": {
+      "bytes": 1311,
+      "sha256": "f285abd460418da5ca3c08c8445e9b11c4a1d178d880677235aedf0ecd7f81fe"
+    },
+    "u07-visible-r4/listener-proof/release-query-e0c14b0a705246459ee1bad0af39a0e8/host/launch.json": {
+      "bytes": 379,
+      "sha256": "87f2983de064af1d72b4492313691c96b92370a6c5fcacc5c9cc894e08b59798"
+    },
+    "u07-visible-r4/result-progress.json": {
+      "bytes": 6391997,
+      "sha256": "1c2c1e556546f2fbc0c9b7a29ef8b17dd05e7016f6fe9415cd971ef3fb86dca9"
+    },
+    "u07-visible-r4/result.json": {
+      "bytes": 6392027,
+      "sha256": "3c542d49b9b1ab67370df0fc1fb05281eec9b1ece23518d9fb6580a8984159e5"
+    },
+    "visual-r1-launch.json": {
+      "bytes": 179575,
+      "sha256": "84b4dd2227e48c4f4730b5bc7bd2deaad0a0816555ce66ad7e6445fbb09006c4"
+    },
+    "visual-r1-result.json": {
+      "bytes": 1797,
+      "sha256": "3003e244806a41c6010446cd15e461ad89348841bd10319c63a8eadcfe9cf618"
+    },
+    "visual-r2-launch.json": {
+      "bytes": 179575,
+      "sha256": "2ba60015cc3bf974a84ecfdd7a0131a04f3ff1db73b72df6af91c4efdca23c2c"
+    },
+    "visual-r2-result.json": {
+      "bytes": 1798,
+      "sha256": "a9e6fc0d5dbaa861e4267e6325fa9efb7373cc74601850a62641bf613beefde6"
+    },
+    "visual-r3-launch.json": {
+      "bytes": 179573,
+      "sha256": "7cc477c39f45c1970340126cd990111b3b52c4b7ddda53a65b5534c9a1557c7f"
+    },
+    "visual-r3-result.json": {
+      "bytes": 1795,
+      "sha256": "16e4980bca572b8cf36df9e62c86b8e0e62b16f52ffd37e67acb93a9c205b057"
+    },
+    "visual-r4-launch.json": {
+      "bytes": 179573,
+      "sha256": "8df07434aafe1572705fecc041439c948fa08f5bf398da77220a1aa0c1eb978c"
+    },
+    "visual-r4-result.json": {
+      "bytes": 1799,
+      "sha256": "4d7faeeaa6e221ee617cde549a67e20303bc54b2638846c8d4e9d57dbcf1e90f"
+    }
+  },
+  "finishedUtc": "2026-10-07T21:45:24.490295Z",
+  "helperSha256": "6dd612e0b7ea3383df05c0b949675bbb7ffd066a6fbef5f40d6ab10f0543d9f5",
+  "maintainedOwnerSha256": {
+    "audit_release.py": "7a76a9ca504eada3a7658dd74ac8851cbcbc10c6d7d45598894fe448aa696324",
+    "receipts.py": "ae22c139fc9834c767aed8d6b2ae3dcdb9e8db010c3721deba3ae34bd1119dd1",
+    "serial_runner.py": "08ce044c8c014ae7bc3b194c07827c8383990b4f950be82137b94dc504f1ebe2",
+    "windows_process_identity.py": "88b18fa7ff41fc006fe9e17dac2aba73cb15c9342bad8b163bedb60bce161017"
+  },
+  "nativeQueries": {
+    "10344": {
+      "identity": null,
+      "pid": 10344,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "1040": {
+      "identity": null,
+      "pid": 1040,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "10564": {
+      "identity": null,
+      "pid": 10564,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "12012": {
+      "identity": null,
+      "pid": 12012,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "12332": {
+      "identity": null,
+      "pid": 12332,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "12504": {
+      "identity": null,
+      "pid": 12504,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "13040": {
+      "identity": null,
+      "pid": 13040,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "14084": {
+      "identity": null,
+      "pid": 14084,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "14372": {
+      "identity": null,
+      "pid": 14372,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "14836": {
+      "identity": null,
+      "pid": 14836,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "15032": {
+      "identity": null,
+      "pid": 15032,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "15100": {
+      "identity": null,
+      "pid": 15100,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "15568": {
+      "identity": null,
+      "pid": 15568,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "15948": {
+      "identity": null,
+      "pid": 15948,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "16008": {
+      "identity": null,
+      "pid": 16008,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "16100": {
+      "identity": null,
+      "pid": 16100,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "16316": {
+      "identity": null,
+      "pid": 16316,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "16660": {
+      "identity": null,
+      "pid": 16660,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "18156": {
+      "identity": null,
+      "pid": 18156,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "18316": {
+      "identity": null,
+      "pid": 18316,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "18356": {
+      "identity": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358820549268037,
+        "pid": 18356
+      },
+      "metadataErrors": [],
+      "pid": 18356,
+      "queryStatus": "PRESENT"
+    },
+    "18792": {
+      "identity": null,
+      "pid": 18792,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "19304": {
+      "identity": null,
+      "pid": 19304,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "19860": {
+      "identity": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358831208528222,
+        "pid": 19860
+      },
+      "metadataErrors": [],
+      "pid": 19860,
+      "queryStatus": "PRESENT"
+    },
+    "20040": {
+      "identity": null,
+      "pid": 20040,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "20320": {
+      "identity": null,
+      "pid": 20320,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "20572": {
+      "identity": null,
+      "pid": 20572,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "21312": {
+      "identity": null,
+      "pid": 21312,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "21316": {
+      "identity": null,
+      "pid": 21316,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "21844": {
+      "identity": null,
+      "pid": 21844,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "21928": {
+      "identity": null,
+      "pid": 21928,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "21988": {
+      "identity": null,
+      "pid": 21988,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "21992": {
+      "identity": null,
+      "pid": 21992,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "22044": {
+      "identity": null,
+      "pid": 22044,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "22148": {
+      "identity": null,
+      "pid": 22148,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "22476": {
+      "identity": null,
+      "pid": 22476,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "22604": {
+      "identity": null,
+      "pid": 22604,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "23184": {
+      "identity": null,
+      "pid": 23184,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "23576": {
+      "identity": null,
+      "pid": 23576,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "23796": {
+      "identity": null,
+      "pid": 23796,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "24724": {
+      "identity": null,
+      "pid": 24724,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "24832": {
+      "identity": null,
+      "pid": 24832,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "24876": {
+      "identity": null,
+      "pid": 24876,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "24972": {
+      "identity": null,
+      "pid": 24972,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "25404": {
+      "identity": null,
+      "pid": 25404,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "25632": {
+      "identity": null,
+      "pid": 25632,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "26036": {
+      "identity": null,
+      "pid": 26036,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "27572": {
+      "identity": null,
+      "pid": 27572,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "28188": {
+      "identity": null,
+      "pid": 28188,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "28716": {
+      "identity": null,
+      "pid": 28716,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "28948": {
+      "identity": null,
+      "pid": 28948,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "29416": {
+      "identity": null,
+      "pid": 29416,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "29472": {
+      "identity": null,
+      "pid": 29472,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "30396": {
+      "identity": null,
+      "pid": 30396,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "30520": {
+      "identity": null,
+      "pid": 30520,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "3256": {
+      "identity": null,
+      "pid": 3256,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "3412": {
+      "identity": null,
+      "pid": 3412,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "3792": {
+      "identity": null,
+      "pid": 3792,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "3876": {
+      "identity": null,
+      "pid": 3876,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "4748": {
+      "identity": null,
+      "pid": 4748,
+      "queryError": {
+        "message": "Access is denied.",
+        "operation": "OpenProcess",
+        "winerror": 5
+      },
+      "queryStatus": "FAILED"
+    },
+    "4876": {
+      "identity": null,
+      "pid": 4876,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "4904": {
+      "identity": null,
+      "pid": 4904,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "4916": {
+      "identity": null,
+      "pid": 4916,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "5260": {
+      "identity": null,
+      "pid": 5260,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "6148": {
+      "identity": null,
+      "pid": 6148,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "6284": {
+      "identity": null,
+      "pid": 6284,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "6960": {
+      "identity": null,
+      "pid": 6960,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "7380": {
+      "identity": null,
+      "pid": 7380,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "7500": {
+      "identity": null,
+      "pid": 7500,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "7620": {
+      "identity": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828140848706,
+        "pid": 7620
+      },
+      "metadataErrors": [],
+      "pid": 7620,
+      "queryStatus": "PRESENT"
+    },
+    "7644": {
+      "identity": null,
+      "pid": 7644,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "8156": {
+      "identity": null,
+      "pid": 8156,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "8204": {
+      "identity": null,
+      "pid": 8204,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "8632": {
+      "identity": null,
+      "pid": 8632,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "9280": {
+      "identity": null,
+      "pid": 9280,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "9336": {
+      "identity": null,
+      "pid": 9336,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "9424": {
+      "identity": null,
+      "pid": 9424,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    },
+    "9852": {
+      "identity": null,
+      "pid": 9852,
+      "queryError": {
+        "message": "The parameter is incorrect.",
+        "operation": "OpenProcess",
+        "winerror": 87
+      },
+      "queryStatus": "ABSENT"
+    }
+  },
+  "notes": [],
+  "physicalQuery": {
+    "hostResult": {
+      "cleanup": {
+        "cleanupElapsedMs": 0,
+        "cleanupVerified": true,
+        "drainerErrors": [],
+        "drainerWaitMs": 0,
+        "drainsComplete": true,
+        "jobAccountingDrainMs": 0,
+        "jobAccountingDrainSucceeded": true,
+        "jobAccountingError": null,
+        "jobActiveProcesses": 0,
+        "jobClosedForCleanup": false,
+        "liveDrainers": 0,
+        "pid": 21816,
+        "processSignaled": true
+      },
+      "command": [
+        "<USER>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+        "-NoLogo",
+        "-NoProfile",
+        "-NonInteractive",
+        "-File",
+        "<EVIDENCE>\\resource-audit-20261007T214523-6d63eb0f432a4da4bf61b6438d916df6\\release-query-020c4670f8704746a06880e507caf626\\query.ps1"
+      ],
+      "deadlineMs": 20000,
+      "finishedUtc": "2026-10-07T21:45:24.466314Z",
+      "handlesClosed": true,
+      "logs": {
+        "stderr": {
+          "bytes": 0,
+          "errors": [],
+          "overflow": false,
+          "readerAlive": false,
+          "streamClosed": true
+        },
+        "stdout": {
+          "bytes": 1527,
+          "errors": [],
+          "overflow": false,
+          "readerAlive": false,
+          "streamClosed": true
+        }
+      },
+      "operation": {
+        "elapsedMs": 908,
+        "exitCode": 0,
+        "reason": null
+      },
+      "process": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358831233449993,
+        "pid": 21816
+      },
+      "schema": 1,
+      "scope": "owned host phase; no application measurements",
+      "startedUtc": "2026-10-07T21:45:23.343116Z",
+      "status": "PASS"
+    },
+    "hostRoot": "<EVIDENCE>\\resource-audit-20261007T214523-6d63eb0f432a4da4bf61b6438d916df6\\release-query-020c4670f8704746a06880e507caf626\\host"
+  },
+  "pointerSha256": "e33cfe2c5e8245e4b4ae992861418bcedcab0821dc0cc6e635ad66cb4689324c",
+  "portAudit": [
+    {
+      "liveOwners": [],
+      "port": 50124,
+      "sources": [
+        "u07-visible-r1/result.json/preview/port",
+        "u07-visible-r1/result-progress.json/preview/port"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "liveOwners": [],
+      "port": 57047,
+      "sources": [
+        "u07-compiled-r2/identity.json/port",
+        "u07-compiled-r2/result.json/port"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "liveOwners": [],
+      "port": 60239,
+      "sources": [
+        "u07-visible-r2/result.json/preview/port",
+        "u07-visible-r2/result-progress.json/preview/port"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "liveOwners": [],
+      "port": 64294,
+      "sources": [
+        "u07-visible-r4/result.json/preview/port",
+        "u07-visible-r4/result-progress.json/preview/port"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "liveOwners": [],
+      "port": 65346,
+      "sources": [
+        "u07-visible-r3/result.json/preview/port",
+        "u07-visible-r3/result-progress.json/preview/port"
+      ],
+      "status": "CLOSED"
+    }
+  ],
+  "processAudit": [
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357262778808815,
+        "pid": 24832,
+        "recordedCreated": null,
+        "sources": [
+          "build-r1-launch.json/controller"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357262781255241,
+        "pid": 14084,
+        "recordedCreated": null,
+        "sources": [
+          "build-r1-result.json/host/process",
+          "owned-build-r1/launch.json/process",
+          "owned-build-r1/host-result.json/process"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357263727518820,
+        "pid": 29416,
+        "recordedCreated": null,
+        "sources": [
+          "compiled-r1-launch.json/controller"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357263730002398,
+        "pid": 3412,
+        "recordedCreated": null,
+        "sources": [
+          "compiled-r1-result.json/host/process",
+          "owned-compiled-r1/launch.json/process",
+          "owned-compiled-r1/host-result.json/process"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357264075286913,
+        "pid": 30396,
+        "recordedCreated": null,
+        "sources": [
+          "compiled-r2-launch.json/controller"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357264078011168,
+        "pid": 24876,
+        "recordedCreated": null,
+        "sources": [
+          "compiled-r2-result.json/host/process",
+          "owned-compiled-r2/launch.json/process",
+          "owned-compiled-r2/host-result.json/process"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357260731999754,
+        "pid": 29472,
+        "recordedCreated": null,
+        "sources": [
+          "native-r1-launch.json/controller"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357260734543703,
+        "pid": 12332,
+        "recordedCreated": null,
+        "sources": [
+          "native-r1-result.json/host/process",
+          "owned-native-r1/launch.json/process",
+          "owned-native-r1/host-result.json/process"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357261880654926,
+        "pid": 14836,
+        "recordedCreated": null,
+        "sources": [
+          "native-r2-launch.json/controller"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357261883148877,
+        "pid": 7500,
+        "recordedCreated": null,
+        "sources": [
+          "native-r2-result.json/host/process",
+          "owned-native-r2/launch.json/process",
+          "owned-native-r2/host-result.json/process"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357264574969406,
+        "pid": 28716,
+        "recordedCreated": null,
+        "sources": [
+          "owned-visual-r1/launch.json/process",
+          "owned-visual-r1/host-result.json/process",
+          "u07-visible-r1/result.json/controllerIdentity",
+          "u07-visible-r1/result-progress.json/controllerIdentity",
+          "visual-r1-result.json/host/process"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "PRESENT",
+        "reason": "precise-birth-differs",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357265518141572,
+        "pid": 19860,
+        "recordedCreated": null,
+        "sources": [
+          "owned-visual-r2/launch.json/process",
+          "owned-visual-r2/host-result.json/process",
+          "u07-visible-r2/result.json/controllerIdentity",
+          "u07-visible-r2/result-progress.json/controllerIdentity",
+          "visual-r2-result.json/host/process"
+        ]
+      },
+      "state": "REUSED_PID_RECORDED_INSTANCE_ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "PRESENT",
+        "reason": "precise-birth-differs",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824050386956,
+        "pid": 7620,
+        "recordedCreated": null,
+        "sources": [
+          "owned-visual-r3/launch.json/process",
+          "owned-visual-r3/host-result.json/process",
+          "u07-visible-r3/result.json/controllerIdentity",
+          "u07-visible-r3/result-progress.json/controllerIdentity",
+          "visual-r3-result.json/host/process"
+        ]
+      },
+      "state": "REUSED_PID_RECORDED_INSTANCE_ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828754543665,
+        "pid": 12012,
+        "recordedCreated": null,
+        "sources": [
+          "owned-visual-r4/launch.json/process",
+          "owned-visual-r4/host-result.json/process",
+          "u07-visible-r4/result.json/controllerIdentity",
+          "u07-visible-r4/result-progress.json/controllerIdentity",
+          "visual-r4-result.json/host/process"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "CIM_MICROSECOND",
+        "creationFileTimeTicks": 134357264078011160,
+        "pid": 24876,
+        "recordedCreated": "2026-10-06T02:13:27.8011160Z",
+        "sources": [
+          "u07-compiled-r2/identity.json/runner",
+          "u07-compiled-r2/result.json/runner"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "PRESENT",
+        "reason": "precise-birth-differs",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "CIM_MICROSECOND",
+        "creationFileTimeTicks": 134357264085111090,
+        "pid": 18356,
+        "recordedCreated": "2026-10-06T02:13:28.5111090Z",
+        "sources": [
+          "u07-compiled-r2/identity.json/edgeProcessesBeforeCases/0",
+          "u07-compiled-r2/result.json/edgeProcessesBeforeCases/0",
+          "u07-compiled-r2/owned-processes-before.json/0",
+          "u07-compiled-r2/owned-processes-before-close.json/0"
+        ]
+      },
+      "state": "REUSED_PID_RECORDED_INSTANCE_ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "CIM_MICROSECOND",
+        "creationFileTimeTicks": 134357264085360650,
+        "pid": 15948,
+        "recordedCreated": "2026-10-06T02:13:28.5360650Z",
+        "sources": [
+          "u07-compiled-r2/identity.json/edgeProcessesBeforeCases/1",
+          "u07-compiled-r2/result.json/edgeProcessesBeforeCases/1",
+          "u07-compiled-r2/owned-processes-before.json/1",
+          "u07-compiled-r2/owned-processes-before-close.json/1"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "CIM_MICROSECOND",
+        "creationFileTimeTicks": 134357264086209870,
+        "pid": 16660,
+        "recordedCreated": "2026-10-06T02:13:28.6209870Z",
+        "sources": [
+          "u07-compiled-r2/identity.json/edgeProcessesBeforeCases/2",
+          "u07-compiled-r2/result.json/edgeProcessesBeforeCases/2",
+          "u07-compiled-r2/owned-processes-before.json/2",
+          "u07-compiled-r2/owned-processes-before-close.json/2"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "CIM_MICROSECOND",
+        "creationFileTimeTicks": 134357264086268710,
+        "pid": 6960,
+        "recordedCreated": "2026-10-06T02:13:28.6268710Z",
+        "sources": [
+          "u07-compiled-r2/identity.json/edgeProcessesBeforeCases/3",
+          "u07-compiled-r2/result.json/edgeProcessesBeforeCases/3",
+          "u07-compiled-r2/owned-processes-before.json/3",
+          "u07-compiled-r2/owned-processes-before-close.json/3"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "PRESENT",
+        "reason": "precise-birth-differs",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "CIM_MICROSECOND",
+        "creationFileTimeTicks": 134357264086486850,
+        "pid": 4748,
+        "recordedCreated": "2026-10-06T02:13:28.6486850Z",
+        "sources": [
+          "u07-compiled-r2/identity.json/edgeProcessesBeforeCases/4",
+          "u07-compiled-r2/result.json/edgeProcessesBeforeCases/4",
+          "u07-compiled-r2/owned-processes-before.json/4",
+          "u07-compiled-r2/owned-processes-before-close.json/4"
+        ]
+      },
+      "state": "REUSED_PID_RECORDED_INSTANCE_ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "CIM_MICROSECOND",
+        "creationFileTimeTicks": 134357264087166220,
+        "pid": 16316,
+        "recordedCreated": "2026-10-06T02:13:28.7166220Z",
+        "sources": [
+          "u07-compiled-r2/identity.json/edgeProcessesBeforeCases/5",
+          "u07-compiled-r2/result.json/edgeProcessesBeforeCases/5",
+          "u07-compiled-r2/owned-processes-before.json/5",
+          "u07-compiled-r2/owned-processes-before-close.json/5"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "CIM_MICROSECOND",
+        "creationFileTimeTicks": 134357264087224970,
+        "pid": 24724,
+        "recordedCreated": "2026-10-06T02:13:28.7224970Z",
+        "sources": [
+          "u07-compiled-r2/identity.json/edgeProcessesBeforeCases/6",
+          "u07-compiled-r2/result.json/edgeProcessesBeforeCases/6",
+          "u07-compiled-r2/owned-processes-before.json/6",
+          "u07-compiled-r2/owned-processes-before-close.json/6"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "CIM_MICROSECOND",
+        "creationFileTimeTicks": 134357264095817720,
+        "pid": 8632,
+        "recordedCreated": "2026-10-06T02:13:29.5817720Z",
+        "sources": [
+          "u07-compiled-r2/owned-processes-before-close.json/7"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "CIM_MICROSECOND",
+        "creationFileTimeTicks": 134357264098700480,
+        "pid": 15032,
+        "recordedCreated": "2026-10-06T02:13:29.8700480Z",
+        "sources": [
+          "u07-compiled-r2/owned-processes-before-close.json/8"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357264246059470,
+        "pid": 28948,
+        "recordedCreated": null,
+        "sources": [
+          "u07-compiled-r2/listener-proof/release-query-7df8a59dd21f43ba961f7e78ce53a29e/host/launch.json/process",
+          "u07-compiled-r2/listener-proof/release-query-7df8a59dd21f43ba961f7e78ce53a29e/host/host-result.json/process"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357264578109182,
+        "pid": 21992,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r1/result.json/preview/nativeIdentity",
+          "u07-visible-r1/result-progress.json/preview/nativeIdentity"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357264694475043,
+        "pid": 1040,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r1/result.json/headedProof/edgeExecutableIdentities/0",
+          "u07-visible-r1/result-progress.json/headedProof/edgeExecutableIdentities/0"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357264694611484,
+        "pid": 3876,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r1/result.json/headedProof/edgeExecutableIdentities/1",
+          "u07-visible-r1/result-progress.json/headedProof/edgeExecutableIdentities/1"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357264882429780,
+        "pid": 6148,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r1/result.json/headedProof/edgeExecutableIdentities/2",
+          "u07-visible-r1/result-progress.json/headedProof/edgeExecutableIdentities/2"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357264866028258,
+        "pid": 13040,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r1/result.json/headedProof/edgeExecutableIdentities/3",
+          "u07-visible-r1/result-progress.json/headedProof/edgeExecutableIdentities/3"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357264700047605,
+        "pid": 14372,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r1/result.json/headedProof/edgeExecutableIdentities/4",
+          "u07-visible-r1/result-progress.json/headedProof/edgeExecutableIdentities/4"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357264693833356,
+        "pid": 16008,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r1/result.json/headedProof/edgeExecutableIdentities/5",
+          "u07-visible-r1/result-progress.json/headedProof/edgeExecutableIdentities/5"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357264694323357,
+        "pid": 20572,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r1/result.json/headedProof/edgeExecutableIdentities/6",
+          "u07-visible-r1/result-progress.json/headedProof/edgeExecutableIdentities/6"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357264695340318,
+        "pid": 23184,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r1/result.json/headedProof/edgeExecutableIdentities/7",
+          "u07-visible-r1/result-progress.json/headedProof/edgeExecutableIdentities/7"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357264695412327,
+        "pid": 23796,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r1/result.json/headedProof/edgeExecutableIdentities/8",
+          "u07-visible-r1/result-progress.json/headedProof/edgeExecutableIdentities/8"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357264693315654,
+        "pid": 24972,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r1/result.json/headedProof/edgeExecutableIdentities/9",
+          "u07-visible-r1/result-progress.json/headedProof/edgeExecutableIdentities/9"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357264710463612,
+        "pid": 25632,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r1/result.json/headedProof/edgeExecutableIdentities/10",
+          "u07-visible-r1/result-progress.json/headedProof/edgeExecutableIdentities/10"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357264967666746,
+        "pid": 28188,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r1/listener-proof/release-query-0cb8c7569d7841a2896b6f3769cb86b1/host/launch.json/process",
+          "u07-visible-r1/listener-proof/release-query-0cb8c7569d7841a2896b6f3769cb86b1/host/host-result.json/process"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357265521275046,
+        "pid": 25404,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r2/result.json/preview/nativeIdentity",
+          "u07-visible-r2/result-progress.json/preview/nativeIdentity"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357265814188685,
+        "pid": 7380,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r2/result.json/headedProof/edgeExecutableIdentities/0",
+          "u07-visible-r2/result-progress.json/headedProof/edgeExecutableIdentities/0"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357265637504280,
+        "pid": 8204,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r2/result.json/headedProof/edgeExecutableIdentities/1",
+          "u07-visible-r2/result-progress.json/headedProof/edgeExecutableIdentities/1"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357265638424185,
+        "pid": 9280,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r2/result.json/headedProof/edgeExecutableIdentities/2",
+          "u07-visible-r2/result-progress.json/headedProof/edgeExecutableIdentities/2"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357265644203554,
+        "pid": 10564,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r2/result.json/headedProof/edgeExecutableIdentities/3",
+          "u07-visible-r2/result-progress.json/headedProof/edgeExecutableIdentities/3"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357265636947064,
+        "pid": 16100,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r2/result.json/headedProof/edgeExecutableIdentities/4",
+          "u07-visible-r2/result-progress.json/headedProof/edgeExecutableIdentities/4"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357265637444911,
+        "pid": 21312,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r2/result.json/headedProof/edgeExecutableIdentities/5",
+          "u07-visible-r2/result-progress.json/headedProof/edgeExecutableIdentities/5"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357265636438226,
+        "pid": 21316,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r2/result.json/headedProof/edgeExecutableIdentities/6",
+          "u07-visible-r2/result-progress.json/headedProof/edgeExecutableIdentities/6"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357265653480953,
+        "pid": 22148,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r2/result.json/headedProof/edgeExecutableIdentities/7",
+          "u07-visible-r2/result-progress.json/headedProof/edgeExecutableIdentities/7"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357265637722803,
+        "pid": 22604,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r2/result.json/headedProof/edgeExecutableIdentities/8",
+          "u07-visible-r2/result-progress.json/headedProof/edgeExecutableIdentities/8"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357266237859709,
+        "pid": 23576,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r2/result.json/headedProof/edgeExecutableIdentities/9",
+          "u07-visible-r2/result-progress.json/headedProof/edgeExecutableIdentities/9"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357265638365360,
+        "pid": 26036,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r2/result.json/headedProof/edgeExecutableIdentities/10",
+          "u07-visible-r2/result-progress.json/headedProof/edgeExecutableIdentities/10"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357268011812725,
+        "pid": 15100,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r2/listener-proof/release-query-8e1f47f904fa4006b40769b020dec1da/host/launch.json/process",
+          "u07-visible-r2/listener-proof/release-query-8e1f47f904fa4006b40769b020dec1da/host/host-result.json/process"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824057933925,
+        "pid": 5260,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r3/result.json/preview/nativeIdentity",
+          "u07-visible-r3/result-progress.json/preview/nativeIdentity"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824363356851,
+        "pid": 3792,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r3/result.json/headedProof/edgeExecutableIdentities/0",
+          "u07-visible-r3/result-progress.json/headedProof/edgeExecutableIdentities/0"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824188619660,
+        "pid": 4904,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r3/result.json/headedProof/edgeExecutableIdentities/1",
+          "u07-visible-r3/result-progress.json/headedProof/edgeExecutableIdentities/1"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824189120960,
+        "pid": 7644,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r3/result.json/headedProof/edgeExecutableIdentities/2",
+          "u07-visible-r3/result-progress.json/headedProof/edgeExecutableIdentities/2"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824204813179,
+        "pid": 9424,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r3/result.json/headedProof/edgeExecutableIdentities/3",
+          "u07-visible-r3/result-progress.json/headedProof/edgeExecutableIdentities/3"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824187451281,
+        "pid": 9852,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r3/result.json/headedProof/edgeExecutableIdentities/4",
+          "u07-visible-r3/result-progress.json/headedProof/edgeExecutableIdentities/4"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824189405815,
+        "pid": 12504,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r3/result.json/headedProof/edgeExecutableIdentities/5",
+          "u07-visible-r3/result-progress.json/headedProof/edgeExecutableIdentities/5"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824789497328,
+        "pid": 18156,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r3/result.json/headedProof/edgeExecutableIdentities/6",
+          "u07-visible-r3/result-progress.json/headedProof/edgeExecutableIdentities/6"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824189027655,
+        "pid": 18316,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r3/result.json/headedProof/edgeExecutableIdentities/7",
+          "u07-visible-r3/result-progress.json/headedProof/edgeExecutableIdentities/7"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824190115715,
+        "pid": 20040,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r3/result.json/headedProof/edgeExecutableIdentities/8",
+          "u07-visible-r3/result-progress.json/headedProof/edgeExecutableIdentities/8"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824190057255,
+        "pid": 20320,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r3/result.json/headedProof/edgeExecutableIdentities/9",
+          "u07-visible-r3/result-progress.json/headedProof/edgeExecutableIdentities/9"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358825348143504,
+        "pid": 10344,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r3/listener-proof/release-query-2f81b59d3ecd4dcaae0cab9bff7cf7f7/host/launch.json/process",
+          "u07-visible-r3/listener-proof/release-query-2f81b59d3ecd4dcaae0cab9bff7cf7f7/host/host-result.json/process"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828757864033,
+        "pid": 8156,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r4/result.json/preview/nativeIdentity",
+          "u07-visible-r4/result-progress.json/preview/nativeIdentity"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828895464369,
+        "pid": 3256,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r4/result.json/headedProof/edgeExecutableIdentities/0",
+          "u07-visible-r4/result-progress.json/headedProof/edgeExecutableIdentities/0"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828873753005,
+        "pid": 4876,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r4/result.json/headedProof/edgeExecutableIdentities/1",
+          "u07-visible-r4/result-progress.json/headedProof/edgeExecutableIdentities/1"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828876506392,
+        "pid": 15568,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r4/result.json/headedProof/edgeExecutableIdentities/2",
+          "u07-visible-r4/result-progress.json/headedProof/edgeExecutableIdentities/2"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828876246924,
+        "pid": 18792,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r4/result.json/headedProof/edgeExecutableIdentities/3",
+          "u07-visible-r4/result-progress.json/headedProof/edgeExecutableIdentities/3"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828877337529,
+        "pid": 19304,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r4/result.json/headedProof/edgeExecutableIdentities/4",
+          "u07-visible-r4/result-progress.json/headedProof/edgeExecutableIdentities/4"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828890838898,
+        "pid": 21844,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r4/result.json/headedProof/edgeExecutableIdentities/5",
+          "u07-visible-r4/result-progress.json/headedProof/edgeExecutableIdentities/5"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828875330703,
+        "pid": 21928,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r4/result.json/headedProof/edgeExecutableIdentities/6",
+          "u07-visible-r4/result-progress.json/headedProof/edgeExecutableIdentities/6"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358829477907815,
+        "pid": 21988,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r4/result.json/headedProof/edgeExecutableIdentities/7",
+          "u07-visible-r4/result-progress.json/headedProof/edgeExecutableIdentities/7"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828877406056,
+        "pid": 22044,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r4/result.json/headedProof/edgeExecutableIdentities/8",
+          "u07-visible-r4/result-progress.json/headedProof/edgeExecutableIdentities/8"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828876175774,
+        "pid": 22476,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r4/result.json/headedProof/edgeExecutableIdentities/9",
+          "u07-visible-r4/result-progress.json/headedProof/edgeExecutableIdentities/9"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358830901289009,
+        "pid": 9336,
+        "recordedCreated": null,
+        "sources": [
+          "u07-visible-r4/listener-proof/release-query-e0c14b0a705246459ee1bad0af39a0e8/host/launch.json/process",
+          "u07-visible-r4/listener-proof/release-query-e0c14b0a705246459ee1bad0af39a0e8/host/host-result.json/process"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357264572333416,
+        "pid": 27572,
+        "recordedCreated": null,
+        "sources": [
+          "visual-r1-launch.json/controller"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134357265515478275,
+        "pid": 30520,
+        "recordedCreated": null,
+        "sources": [
+          "visual-r2-launch.json/controller"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824046401740,
+        "pid": 6284,
+        "recordedCreated": null,
+        "sources": [
+          "visual-r3-launch.json/controller"
+        ]
+      },
+      "state": "ABSENT"
+    },
+    {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "recorded": {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828751782470,
+        "pid": 4916,
+        "recordedCreated": null,
+        "sources": [
+          "visual-r4-launch.json/controller"
+        ]
+      },
+      "state": "ABSENT"
+    }
+  ],
+  "queryCleanupAllowanceMs": 15000,
+  "queryOwner": "audit_release._run_cim_and_ports / serial_runner native bounded job",
+  "queryTimeoutMs": 20000,
+  "queryTimingScope": "Operation deadline plus owner cleanup; startup and receipt I/O additional",
+  "recordedPhaseReceiptStatus": {
+    "build-r1": {
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "hostStatus": "PASS"
+    },
+    "compiled-r1": {
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "hostStatus": "FAIL"
+    },
+    "compiled-r2": {
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "hostStatus": "PASS"
+    },
+    "native-r1": {
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "hostStatus": "FAIL"
+    },
+    "native-r2": {
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "hostStatus": "PASS"
+    },
+    "visual-r1": {
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "hostStatus": "FAIL"
+    },
+    "visual-r2": {
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "hostStatus": "FAIL"
+    },
+    "visual-r3": {
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "hostStatus": "PASS"
+    },
+    "visual-r4": {
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "hostStatus": "PASS"
+    }
+  },
+  "recordedProfiles": {
+    "<EVIDENCE>\\u07-compiled-r2\\profile": [
+      "u07-compiled-r2/identity.json/profile",
+      "u07-compiled-r2/result.json/profile"
+    ],
+    "<EVIDENCE>\\u07-visible-r1\\profile": [
+      "u07-visible-r1/result.json/headedProof/profile",
+      "u07-visible-r1/result-progress.json/headedProof/profile"
+    ],
+    "<EVIDENCE>\\u07-visible-r2\\profile": [
+      "u07-visible-r2/result.json/headedProof/profile",
+      "u07-visible-r2/result-progress.json/headedProof/profile"
+    ],
+    "<EVIDENCE>\\u07-visible-r3\\profile": [
+      "u07-visible-r3/result.json/headedProof/profile",
+      "u07-visible-r3/result-progress.json/headedProof/profile"
+    ],
+    "<EVIDENCE>\\u07-visible-r4\\profile": [
+      "u07-visible-r4/result.json/headedProof/profile",
+      "u07-visible-r4/result-progress.json/headedProof/profile"
+    ]
+  },
+  "recordedResourceTerminationUsed": false,
+  "schema": 1,
+  "scope": "Recorded U07 instances and ports only; no fresh gate or whole-PC cleanliness claim",
+  "startedUtc": "2026-10-07T21:45:23.143429Z",
+  "status": "BLOCKED"
+}

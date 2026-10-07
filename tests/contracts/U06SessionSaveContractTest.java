@@ -2,7 +2,7 @@ package com.lushprojects.circuitjs1.client;
 
 import java.util.Vector;
 
-/** Pure current-format parser falsifiers. Runtime reconstruction is a separate gate. */
+/** Current-format parser and bounded history falsifiers. Runtime reconstruction is a separate gate. */
 public final class U06SessionSaveContractTest {
     private static int assertions;
     private interface Attempt { void run(); }
@@ -14,6 +14,9 @@ public final class U06SessionSaveContractTest {
         verifyInvalidRecords();
         verifyFuses();
         verifyBounds();
+        verifyHistoryPages();
+        verifyHistoryPageLeases();
+        verifyInventoryPopulation();
         System.out.println("PASS: U06 session save contracts assertions=" + assertions);
     }
 
@@ -281,6 +284,141 @@ public final class U06SessionSaveContractTest {
         reject(new Attempt() { public void run() { new PlayerSessionSave.Operation("GRAPH_REMOVE", longId, "", ""); } }, "identifier size rejects");
         final Vector<PlayerSessionSave.Operation> missing = new Vector<PlayerSessionSave.Operation>(); missing.add(null);
         reject(new Attempt() { public void run() { create(missing, new Vector<PlayerSessionSave.Source>(), new Vector<PlayerSessionSave.Stress>()); } }, "null history entry rejects");
+    }
+
+    private static void verifyHistoryPages() {
+        // Total, latest offset and latest population are independent boundary expectations.
+        for (int[] boundary : new int[][] {{0, 0, 0}, {1, 0, 1}, {49, 0, 49}, {50, 0, 50},
+                {51, 50, 1}, {99, 50, 49}, {100, 50, 50}, {101, 100, 1},
+                {8192, 8150, 42}, {8193, 8150, 43}}) {
+            int total = boundary[0];
+            final PlayerSessionHistory history = new PlayerSessionHistory();
+            Vector<PlayerSessionSave.Operation> original = new Vector<PlayerSessionSave.Operation>();
+            for (int i = 0; i < total; i++)
+                original.add(new PlayerSessionSave.Operation("GRAPH_REMOVE", "PART_" + i, "", ""));
+            history.restore(original);
+            original.clear();
+            check(history.size() == total, "history count is independent of restored vector storage");
+            int latest = boundary[1];
+            PlayerSessionHistory.Page page = history.page(-1);
+            check(page.offset == latest && page.operations.size() == boundary[2] &&
+                page.total == total && page.nextOffset() == -1,
+                "latest page uses independently expected boundary for " + total);
+            int seen = 0;
+            for (int offset = 0; offset <= latest; offset += 50) {
+                page = history.page(offset);
+                int expectedCount = Math.min(50, total - offset);
+                check(page.offset == offset && page.total == total && page.operations.size() == expectedCount,
+                    "fixed chronological page contains at most 50 entries");
+                check(page.previousOffset() == (offset == 0 ? -1 : offset - 50) &&
+                    page.nextOffset() == (offset < latest ? offset + 50 : -1), "navigation has exact boundaries");
+                for (int i = 0; i < expectedCount; i++) {
+                    check(page.operations.get(i).owner.equals("PART_" + seen), "all entries are ordered, once each");
+                    seen++;
+                }
+                page.operations.clear();
+            }
+            check(seen == total && history.size() == total && history.operations().size() == total,
+                "paging never truncates or mutates the complete journal, including above save cap");
+            Vector<PlayerSessionSave.Operation> journal = history.operations();
+            for (int i = 0; i < total; i++)
+                check(journal.get(i).owner.equals("PART_" + i), "complete save journal retains original order");
+            if (total <= 8192) {
+                Vector<PlayerSessionSave.Operation> complete = history.operations();
+                PlayerSessionSave saved = create(complete, new Vector<PlayerSessionSave.Source>(), new Vector<PlayerSessionSave.Stress>());
+                String bytes = saved.encode();
+                history.page(-1).operations.clear(); history.operations().clear();
+                PlayerSessionSave afterPaging = create(history.operations(), new Vector<PlayerSessionSave.Source>(), new Vector<PlayerSessionSave.Stress>());
+                check(bytes.equals(afterPaging.encode()) && PlayerSessionSave.parse(bytes).getHistory().size() == total,
+                    "bounded presentation preserves complete exact save bytes");
+            } else {
+                reject(new Attempt() { public void run() {
+                    create(history.operations(), new Vector<PlayerSessionSave.Source>(), new Vector<PlayerSessionSave.Stress>());
+                } }, "above-cap live history still rejects saving instead of silently truncating");
+            }
+            for (final int invalid : new int[] {-2, 1, latest + 50, Integer.MAX_VALUE})
+                reject(new Attempt() { public void run() { history.page(invalid); } }, "invalid page offset rejects");
+        }
+    }
+
+    private static void verifyHistoryPageLeases() {
+        CirSim sim = new CirSim(); sim.gridSize = 16; sim.gridMask = ~15; sim.gridRound = 7;
+        CircuitElm.sim = sim;
+        sim.generationCoordinator = new GenerationCoordinator(sim);
+        PlayerLaunchRequest request = new PlayerLaunchRequest("LED_INDICATOR", "0", "EASY");
+        GeneratedBoardInstance owner = request.generation().resolve(new GenerationRequest.PlanCache()).construct().instance;
+        installHistoryOwner(sim, owner);
+        final PlayerSessionController controller = new PlayerSessionController(sim);
+        controller.session.adopt(owner, request);
+        controller.session.enter(controller.session.token(), PlayerSession.Screen.MENU);
+        final int token = controller.session.token();
+        final int view = controller.openView();
+        PlayerSessionHistory history = owner.getPhysicalBoardRuntime().getSessionHistory();
+        history.start(); history.record(sim, "RESET", "", "", "");
+        check(controller.historyPage(token, view, -1).operations.size() == 1, "live menu lease reads current history");
+        controller.closeView(view);
+        rejectClosedHistory(controller, token, view, "closed-view callback rejects");
+        int reopened = controller.openView();
+        rejectClosedHistory(controller, token, view, "reopening cannot revive the old callback");
+        check(controller.historyPage(token, reopened, 0).total == 1, "new view reads full retained history");
+        controller.session.enter(token, PlayerSession.Screen.WORKBENCH);
+        rejectClosedHistory(controller, token, reopened, "old session token rejects after leaving menu");
+        rejectClosedHistory(controller, controller.session.token(), reopened, "history is unavailable outside menu");
+        controller.session.enter(controller.session.token(), PlayerSession.Screen.MENU);
+        int current = controller.session.token();
+        sim.generatedBoardInstance = null;
+        rejectClosedHistory(controller, current, reopened, "displaced board owner rejects");
+        sim.generatedBoardInstance = owner;
+        GeneratedBoardInstance successor = request.generation().resolve(new GenerationRequest.PlanCache()).construct().instance;
+        installHistoryOwner(sim, successor);
+        controller.session.adopt(successor, request);
+        controller.session.enter(controller.session.token(), PlayerSession.Screen.MENU);
+        rejectClosedHistory(controller, current, reopened, "old callback cannot read successor history");
+        check(history.size() == 1 && controller.historyPage(controller.session.token(), controller.openView(), -1).total == 0,
+            "successor history is independent and predecessor journal remains intact");
+    }
+
+    /** Native fixture uses the real capability installation before challenge validation. */
+    private static void installHistoryOwner(CirSim sim, GeneratedBoardInstance owner) {
+        sim.elmList = new Vector<CircuitElm>(owner.getSimulationElements());
+        sim.adjustables = new Vector<Adjustable>();
+        sim.undoStack = new Vector<String>();
+        sim.redoStack = new Vector<String>();
+        sim.generatedBoardInstance = owner;
+        sim.boardModificationController = new BoardModificationController(sim, owner);
+        owner.getPhysicalBoardRuntime().installRegisteredCapabilities(sim, owner,
+            sim.boardModificationController, 0);
+        sim.boardPowerController.attach(owner.getExternalPowerBindings());
+        sim.generatedChallengeController = new GeneratedChallengeController(sim, owner);
+    }
+
+    private static void rejectClosedHistory(PlayerSessionController controller, int token, int view, String message) {
+        assertions++;
+        try { controller.historyPage(token, view, -1); }
+        catch (IllegalStateException expected) { return; }
+        throw new AssertionError(message);
+    }
+
+    private static void verifyInventoryPopulation() {
+        final Vector<PlayerSessionSave.Operation> operations = new Vector<PlayerSessionSave.Operation>();
+        for (int i = 0; i < 93; i++) {
+            operations.add(new PlayerSessionSave.Operation(i % 2 == 0 ? "ACQUIRE" : "CATALOG",
+                "R1", "R_CATALOG_1000", "STOCK_" + i));
+            operations.add(new PlayerSessionSave.Operation("RESET", "", "", ""));
+            operations.add(new PlayerSessionSave.Operation("REMOVE", "R1", "STOCK_" + i, ""));
+        }
+        PlayerSessionState.validateInventoryPopulation(3, operations);
+        check(operations.size() == 279, "three originals plus 93 acquisitions support 96 retained parts");
+        operations.add(new PlayerSessionSave.Operation("ACQUIRE", "R1", "R_CATALOG_1000", "STOCK_93"));
+        reject(new Attempt() { public void run() { PlayerSessionState.validateInventoryPopulation(3, operations); } },
+            "97 retained parts reject despite intervening reset and removal operations");
+        operations.clear();
+        PlayerSessionState.validateInventoryPopulation(96, operations);
+        check(operations.isEmpty(), "96 original parts need no acquisitions");
+        reject(new Attempt() { public void run() { PlayerSessionState.validateInventoryPopulation(97, operations); } },
+            "97 original parts reject");
+        reject(new Attempt() { public void run() { PlayerSessionState.validateInventoryPopulation(-1, operations); } },
+            "negative original count rejects");
     }
 
     private static PlayerSessionSave create(Vector<PlayerSessionSave.Operation> history,

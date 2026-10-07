@@ -153,6 +153,33 @@ final class PlayerSessionController {
         return result.toString();
     }
 
+    PlayerSessionHistory.Page historyPage(int expected, int view, int offset) {
+        if (!session.accepts(expected) || view <= 0 || view != viewToken ||
+                session.screen() != PlayerSession.Screen.MENU || !ownsCurrentBoard())
+            throw new IllegalStateException("This history view has closed.");
+        return sim.getGeneratedBoardInstance().getPhysicalBoardRuntime().getSessionHistory().page(offset);
+    }
+
+    private String historyPageJson(int expected, int view, int offset) {
+        JSONObject result = new JSONObject();
+        try {
+            PlayerSessionHistory.Page page = historyPage(expected, view, offset);
+            JSONArray entries = new JSONArray();
+            for (PlayerSessionSave.Operation operation : page.operations)
+                entries.set(entries.size(), new JSONString(historyLabel(operation)));
+            result.put("entries", entries);
+            result.put("offset", new JSONNumber(page.offset));
+            result.put("total", new JSONNumber(page.total));
+            result.put("previousOffset", new JSONNumber(page.previousOffset()));
+            result.put("nextOffset", new JSONNumber(page.nextOffset()));
+            result.put("ok", JSONBoolean.getInstance(true));
+        } catch (RuntimeException failure) {
+            result.put("ok", JSONBoolean.getInstance(false));
+            put(result, "error", "This history page is unavailable. Reopen Session history and try again.");
+        }
+        return result.toString();
+    }
+
     private static String historyLabel(PlayerSessionSave.Operation operation) {
         String kind = operation.kind;
         if ("REMOVE".equals(kind)) return "Removed a part.";
@@ -179,7 +206,7 @@ final class PlayerSessionController {
                 sim.activeMeasurementOverlay || !sim.getBoardPowerController().isElectricallyUnpowered())
             return "Disconnect all board supplies and wait for settling before acquiring parts.";
         GeneratedBoardInstance owner = sim.getGeneratedBoardInstance();
-        if (owner.getPhysicalBoardRuntime().getPhysicalParts().size() >= 96)
+        if (owner.getPhysicalBoardRuntime().getPhysicalParts().size() >= PlayerSessionSave.MAX_PARTS)
             return "This session's parts inventory is full. Start a new board to clear it.";
         PlayerShopCatalog.Entry selection = new PlayerShopCatalog(owner).category(categoryId).entry(catalogId);
         String component = selection.acquisitionComponent;
@@ -259,13 +286,8 @@ final class PlayerSessionController {
         put(out, "epoch", PlayerLaunchRequest.EPOCH); put(out, "build", GWT.getPermutationStrongName());
         out.put("hasBoard", JSONBoolean.getInstance(session.owner() != null));
         out.put("sessionSaveAvailable", JSONBoolean.getInstance(canSaveSession()));
-        JSONArray history = new JSONArray();
-        if (ownsCurrentBoard()) {
-            for (PlayerSessionSave.Operation operation : sim.getGeneratedBoardInstance()
-                    .getPhysicalBoardRuntime().getSessionHistory().operations())
-                history.set(history.size(), new JSONString(historyLabel(operation)));
-        }
-        out.put("sessionHistory", history);
+        out.put("sessionHistoryCount", new JSONNumber(ownsCurrentBoard() ? sim.getGeneratedBoardInstance()
+            .getPhysicalBoardRuntime().getSessionHistory().size() : 0));
         PlayerLaunchRequest request = session.request();
         if (request != null) { put(out, "replay", request.replay()); put(out, "profile", request.profile.name()); }
         JSONArray families = new JSONArray();
@@ -324,6 +346,11 @@ final class PlayerSessionController {
         var owner = this;
         $wnd.tsjProduct = {
             snapshot: $entry(function(includeCatalog) { return JSON.parse(owner.@com.lushprojects.circuitjs1.client.PlayerSessionController::snapshot(Z)(includeCatalog !== false)); }),
+            historyPage: $entry(function(token, view, offset) {
+                if (typeof offset !== 'number' || offset % 1 !== 0 || offset < -1 || offset > 2147483647)
+                    return { ok: false, error: 'This history page is unavailable.' };
+                return JSON.parse(owner.@com.lushprojects.circuitjs1.client.PlayerSessionController::historyPageJson(III)(token, view, offset));
+            }),
             saveSession: $entry(function(token, view) {
                 return JSON.parse(owner.@com.lushprojects.circuitjs1.client.PlayerSessionController::saveSession(II)(token, view));
             }),

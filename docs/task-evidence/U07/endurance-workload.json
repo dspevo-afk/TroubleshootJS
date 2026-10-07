@@ -1,0 +1,2920 @@
+{
+  "actionLedgerPersistence": {
+    "allActionRecordsRetained": true,
+    "forcedFlushes": [
+      "each completed cycle",
+      "error snapshot",
+      "operation end",
+      "final result"
+    ],
+    "owner": "task-local instance save wrapper; maintained VisibleRun.action unchanged",
+    "progressSaveIntervalSeconds": 1
+  },
+  "apiBoundary": [
+    "Player input: ordinary visible UI locators, selects, clicks and screenshots.",
+    "DOM read-only: public labels, text, visibility and privacy-attribute presence.",
+    "Metrics only: Performance.enable/getMetrics, Memory.getDOMCounters, HeapProfiler.collectGarbage.",
+    "No Runtime.evaluate, page.evaluate, controller/model/snapshot calls, synthetic dispatch or save-payload parsing."
+  ],
+  "browserChannel": "msedge",
+  "browserCount": 1,
+  "browserMetrics": [
+    {
+      "completedOwnerRepairCycles": 1,
+      "dom": {
+        "documents": 4,
+        "jsEventListeners": 466,
+        "nodes": 5557
+      },
+      "forcedGarbageCollection": true,
+      "heapTotalBytes": 23306240,
+      "heapUsedBytes": 19641636,
+      "label": "repaired-owner-1-baseline",
+      "looseParts": 1,
+      "metrics": {
+        "AdSubframes": 0,
+        "ArrayBufferContents": 0,
+        "AudioHandlers": 2,
+        "AudioWorkletProcessors": 0,
+        "ContextLifecycleStateObservers": 25,
+        "DetachedScriptStates": 0,
+        "DevToolsCommandDuration": 0.238234,
+        "Documents": 4,
+        "DomContentLoaded": 150027.046184,
+        "FirstMeaningfulPaint": 150027.611878,
+        "Frames": 4,
+        "JSEventListeners": 466,
+        "JSHeapTotalSize": 23306240,
+        "JSHeapUsedSize": 19641636,
+        "LayoutCount": 165,
+        "LayoutDuration": 0.050999,
+        "LayoutObjects": 388,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "NavigationStart": 150026.238575,
+        "Nodes": 5557,
+        "ProcessTime": 2.14861,
+        "RTCPeerConnections": 0,
+        "RecalcStyleCount": 581,
+        "RecalcStyleDuration": 0.035555,
+        "ResourceFetchers": 4,
+        "Resources": 16,
+        "ScriptDuration": 0.671068,
+        "TaskDuration": 1.175945,
+        "TaskOtherDuration": 0.180089,
+        "ThreadTime": 1.104283,
+        "Timestamp": 150031.157671,
+        "UACSSResources": 0,
+        "V8CompileDuration": 0,
+        "V8PerContextDatas": 8,
+        "WorkerGlobalScopes": 0
+      },
+      "publicOperationCount": 5,
+      "publicState": "Indicator seed0, 330 Ohm R1 installed, power ON, successful customer retest, Main menu with five-operation history open, exactly one original R1 loose, all bench tools closed",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "seconds": 17.19566460000351
+    },
+    {
+      "completedOwnerRepairCycles": 1,
+      "dom": {
+        "documents": 4,
+        "jsEventListeners": 466,
+        "nodes": 5557
+      },
+      "forcedGarbageCollection": true,
+      "heapTotalBytes": 20684800,
+      "heapUsedBytes": 19689060,
+      "label": "owner-repair-1",
+      "looseParts": 1,
+      "metrics": {
+        "AdSubframes": 0,
+        "ArrayBufferContents": 0,
+        "AudioHandlers": 2,
+        "AudioWorkletProcessors": 0,
+        "ContextLifecycleStateObservers": 25,
+        "DetachedScriptStates": 0,
+        "DevToolsCommandDuration": 0.238322,
+        "Documents": 4,
+        "DomContentLoaded": 150027.046184,
+        "FirstMeaningfulPaint": 150027.611878,
+        "Frames": 4,
+        "JSEventListeners": 466,
+        "JSHeapTotalSize": 20684800,
+        "JSHeapUsedSize": 19689060,
+        "LayoutCount": 165,
+        "LayoutDuration": 0.050999,
+        "LayoutObjects": 388,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "NavigationStart": 150026.238575,
+        "Nodes": 5557,
+        "ProcessTime": 2.216535,
+        "RTCPeerConnections": 0,
+        "RecalcStyleCount": 582,
+        "RecalcStyleDuration": 0.035578,
+        "ResourceFetchers": 4,
+        "Resources": 16,
+        "ScriptDuration": 0.674182,
+        "TaskDuration": 1.192798,
+        "TaskOtherDuration": 0.193717,
+        "ThreadTime": 1.120795,
+        "Timestamp": 150031.177383,
+        "UACSSResources": 0,
+        "V8CompileDuration": 0,
+        "V8PerContextDatas": 8,
+        "WorkerGlobalScopes": 0
+      },
+      "publicOperationCount": 5,
+      "publicState": "Indicator seed0, 330 Ohm R1 installed, power ON, successful customer retest, Main menu with five-operation history open, exactly one original R1 loose, all bench tools closed",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "seconds": 17.215492599993013
+    },
+    {
+      "completedOwnerRepairCycles": 25,
+      "dom": {
+        "documents": 4,
+        "jsEventListeners": 3058,
+        "nodes": 32031
+      },
+      "forcedGarbageCollection": true,
+      "heapTotalBytes": 26976256,
+      "heapUsedBytes": 22850980,
+      "label": "owner-repair-25",
+      "looseParts": 1,
+      "metrics": {
+        "AdSubframes": 0,
+        "ArrayBufferContents": 0,
+        "AudioHandlers": 2,
+        "AudioWorkletProcessors": 0,
+        "ContextLifecycleStateObservers": 25,
+        "DetachedScriptStates": 0,
+        "DevToolsCommandDuration": 4.432289,
+        "Documents": 4,
+        "DomContentLoaded": 150027.046184,
+        "FirstMeaningfulPaint": 150027.611878,
+        "Frames": 4,
+        "JSEventListeners": 3058,
+        "JSHeapTotalSize": 26976256,
+        "JSHeapUsedSize": 22850980,
+        "LayoutCount": 2907,
+        "LayoutDuration": 0.625412,
+        "LayoutObjects": 388,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "NavigationStart": 150026.238575,
+        "Nodes": 32031,
+        "ProcessTime": 19.748104,
+        "RTCPeerConnections": 0,
+        "RecalcStyleCount": 10956,
+        "RecalcStyleDuration": 0.585025,
+        "ResourceFetchers": 4,
+        "Resources": 16,
+        "ScriptDuration": 5.782115,
+        "TaskDuration": 14.202776,
+        "TaskOtherDuration": 2.777935,
+        "ThreadTime": 14.205408,
+        "Timestamp": 150077.446504,
+        "UACSSResources": 0,
+        "V8CompileDuration": 0,
+        "V8PerContextDatas": 8,
+        "WorkerGlobalScopes": 0
+      },
+      "publicOperationCount": 5,
+      "publicState": "Indicator seed0, 330 Ohm R1 installed, power ON, successful customer retest, Main menu with five-operation history open, exactly one original R1 loose, all bench tools closed",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "seconds": 63.48401849999209
+    },
+    {
+      "completedOwnerRepairCycles": 50,
+      "dom": {
+        "documents": 4,
+        "jsEventListeners": 5758,
+        "nodes": 59608
+      },
+      "forcedGarbageCollection": true,
+      "heapTotalBytes": 28024832,
+      "heapUsedBytes": 24159536,
+      "label": "owner-repair-50",
+      "looseParts": 1,
+      "metrics": {
+        "AdSubframes": 0,
+        "ArrayBufferContents": 0,
+        "AudioHandlers": 2,
+        "AudioWorkletProcessors": 0,
+        "ContextLifecycleStateObservers": 25,
+        "DetachedScriptStates": 0,
+        "DevToolsCommandDuration": 8.827559,
+        "Documents": 4,
+        "DomContentLoaded": 150027.046184,
+        "FirstMeaningfulPaint": 150027.611878,
+        "Frames": 4,
+        "JSEventListeners": 5758,
+        "JSHeapTotalSize": 28024832,
+        "JSHeapUsedSize": 24159536,
+        "LayoutCount": 5760,
+        "LayoutDuration": 1.22216,
+        "LayoutObjects": 388,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "NavigationStart": 150026.238575,
+        "Nodes": 59606,
+        "ProcessTime": 38.329197,
+        "RTCPeerConnections": 0,
+        "RecalcStyleCount": 21819,
+        "RecalcStyleDuration": 1.161904,
+        "ResourceFetchers": 4,
+        "Resources": 16,
+        "ScriptDuration": 11.240134,
+        "TaskDuration": 28.078983,
+        "TaskOtherDuration": 5.627226,
+        "ThreadTime": 28.16444,
+        "Timestamp": 150126.539113,
+        "UACSSResources": 0,
+        "V8CompileDuration": 0,
+        "V8PerContextDatas": 8,
+        "WorkerGlobalScopes": 0
+      },
+      "publicOperationCount": 5,
+      "publicState": "Indicator seed0, 330 Ohm R1 installed, power ON, successful customer retest, Main menu with five-operation history open, exactly one original R1 loose, all bench tools closed",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "seconds": 112.57996319999802
+    },
+    {
+      "completedOwnerRepairCycles": 75,
+      "dom": {
+        "documents": 4,
+        "jsEventListeners": 8458,
+        "nodes": 87181
+      },
+      "forcedGarbageCollection": true,
+      "heapTotalBytes": 30646272,
+      "heapUsedBytes": 25452100,
+      "label": "owner-repair-75",
+      "looseParts": 1,
+      "metrics": {
+        "AdSubframes": 0,
+        "ArrayBufferContents": 0,
+        "AudioHandlers": 2,
+        "AudioWorkletProcessors": 0,
+        "ContextLifecycleStateObservers": 25,
+        "DetachedScriptStates": 0,
+        "DevToolsCommandDuration": 13.219472,
+        "Documents": 4,
+        "DomContentLoaded": 150027.046184,
+        "FirstMeaningfulPaint": 150027.611878,
+        "Frames": 4,
+        "JSEventListeners": 8458,
+        "JSHeapTotalSize": 30646272,
+        "JSHeapUsedSize": 25452100,
+        "LayoutCount": 8611,
+        "LayoutDuration": 1.805137,
+        "LayoutObjects": 388,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "NavigationStart": 150026.238575,
+        "Nodes": 87181,
+        "ProcessTime": 57.559165,
+        "RTCPeerConnections": 0,
+        "RecalcStyleCount": 32748,
+        "RecalcStyleDuration": 1.736161,
+        "ResourceFetchers": 4,
+        "Resources": 16,
+        "ScriptDuration": 16.913999,
+        "TaskDuration": 42.306601,
+        "TaskOtherDuration": 8.631832,
+        "ThreadTime": 42.490676,
+        "Timestamp": 150176.788315,
+        "UACSSResources": 0,
+        "V8CompileDuration": 0,
+        "V8PerContextDatas": 8,
+        "WorkerGlobalScopes": 0
+      },
+      "publicOperationCount": 5,
+      "publicState": "Indicator seed0, 330 Ohm R1 installed, power ON, successful customer retest, Main menu with five-operation history open, exactly one original R1 loose, all bench tools closed",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "seconds": 162.826235799992
+    },
+    {
+      "completedOwnerRepairCycles": 100,
+      "dom": {
+        "documents": 4,
+        "jsEventListeners": 11158,
+        "nodes": 114758
+      },
+      "forcedGarbageCollection": true,
+      "heapTotalBytes": 30908416,
+      "heapUsedBytes": 26319856,
+      "label": "owner-repair-100",
+      "looseParts": 1,
+      "metrics": {
+        "AdSubframes": 0,
+        "ArrayBufferContents": 0,
+        "AudioHandlers": 2,
+        "AudioWorkletProcessors": 0,
+        "ContextLifecycleStateObservers": 25,
+        "DetachedScriptStates": 0,
+        "DevToolsCommandDuration": 17.546183,
+        "Documents": 4,
+        "DomContentLoaded": 150027.046184,
+        "FirstMeaningfulPaint": 150027.611878,
+        "Frames": 4,
+        "JSEventListeners": 11158,
+        "JSHeapTotalSize": 30908416,
+        "JSHeapUsedSize": 26319856,
+        "LayoutCount": 11469,
+        "LayoutDuration": 2.394994,
+        "LayoutObjects": 388,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "NavigationStart": 150026.238575,
+        "Nodes": 114756,
+        "ProcessTime": 77.410745,
+        "RTCPeerConnections": 0,
+        "RecalcStyleCount": 43744,
+        "RecalcStyleDuration": 2.311366,
+        "ResourceFetchers": 4,
+        "Resources": 16,
+        "ScriptDuration": 22.694814,
+        "TaskDuration": 56.705534,
+        "TaskOtherDuration": 11.758177,
+        "ThreadTime": 56.992609,
+        "Timestamp": 150227.744005,
+        "UACSSResources": 0,
+        "V8CompileDuration": 0,
+        "V8PerContextDatas": 8,
+        "WorkerGlobalScopes": 0
+      },
+      "publicOperationCount": 5,
+      "publicState": "Indicator seed0, 330 Ohm R1 installed, power ON, successful customer retest, Main menu with five-operation history open, exactly one original R1 loose, all bench tools closed",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "seconds": 213.78249640000286
+    }
+  ],
+  "cases": [
+    {
+      "cycle": 1,
+      "elapsedSeconds": 2.201728899992304,
+      "finishedUtc": "2026-10-07T21:41:32.903968+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-1",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:41:30.702233+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 2,
+      "elapsedSeconds": 2.1252379000070505,
+      "finishedUtc": "2026-10-07T21:41:35.031125+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-2",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:41:32.905883+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 3,
+      "elapsedSeconds": 1.914813800016418,
+      "finishedUtc": "2026-10-07T21:41:36.948834+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-3",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:41:35.034013+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 4,
+      "elapsedSeconds": 1.9592091999948025,
+      "finishedUtc": "2026-10-07T21:41:38.910914+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-4",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:41:36.951700+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 5,
+      "elapsedSeconds": 1.8895449999836273,
+      "finishedUtc": "2026-10-07T21:41:40.804832+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-5",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:41:38.915280+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 6,
+      "elapsedSeconds": 1.887674400000833,
+      "finishedUtc": "2026-10-07T21:41:42.697513+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-6",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:41:40.809835+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 7,
+      "elapsedSeconds": 1.8656916999898385,
+      "finishedUtc": "2026-10-07T21:41:44.569213+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-7",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:41:42.703516+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 8,
+      "elapsedSeconds": 1.9060836000135168,
+      "finishedUtc": "2026-10-07T21:41:46.481929+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-8",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:41:44.575839+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 9,
+      "elapsedSeconds": 1.9368488999898545,
+      "finishedUtc": "2026-10-07T21:41:48.425448+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-9",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:41:46.488596+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 10,
+      "elapsedSeconds": 1.8847742000070866,
+      "finishedUtc": "2026-10-07T21:41:50.318002+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-10",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:41:48.433224+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 11,
+      "elapsedSeconds": 1.924194899998838,
+      "finishedUtc": "2026-10-07T21:41:52.249465+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-11",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:41:50.325263+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 12,
+      "elapsedSeconds": 1.8801049000176135,
+      "finishedUtc": "2026-10-07T21:41:54.138137+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-12",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:41:52.258024+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 13,
+      "elapsedSeconds": 1.9033004000084475,
+      "finishedUtc": "2026-10-07T21:41:56.050693+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-13",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:41:54.147387+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 14,
+      "elapsedSeconds": 1.92501470001298,
+      "finishedUtc": "2026-10-07T21:41:57.986706+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-14",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:41:56.061685+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 15,
+      "elapsedSeconds": 1.986864999984391,
+      "finishedUtc": "2026-10-07T21:41:59.985257+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-15",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:41:57.998386+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 16,
+      "elapsedSeconds": 1.896665500011295,
+      "finishedUtc": "2026-10-07T21:42:01.891589+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-16",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:41:59.994914+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 17,
+      "elapsedSeconds": 1.875432799977716,
+      "finishedUtc": "2026-10-07T21:42:03.779332+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-17",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:01.903889+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 18,
+      "elapsedSeconds": 1.8431168000097387,
+      "finishedUtc": "2026-10-07T21:42:05.634228+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-18",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:03.791105+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 19,
+      "elapsedSeconds": 1.877259699977003,
+      "finishedUtc": "2026-10-07T21:42:07.523447+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-19",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:05.646181+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 20,
+      "elapsedSeconds": 1.9272545999847353,
+      "finishedUtc": "2026-10-07T21:42:09.462984+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-20",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:07.535724+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 21,
+      "elapsedSeconds": 1.9400059999898076,
+      "finishedUtc": "2026-10-07T21:42:11.419355+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-21",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:09.479342+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 22,
+      "elapsedSeconds": 1.8856778999906965,
+      "finishedUtc": "2026-10-07T21:42:13.319861+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-22",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:11.434177+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 23,
+      "elapsedSeconds": 1.8885243000113405,
+      "finishedUtc": "2026-10-07T21:42:15.224989+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-23",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:13.336456+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 24,
+      "elapsedSeconds": 1.8290643000218552,
+      "finishedUtc": "2026-10-07T21:42:17.074683+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-24",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:15.245610+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 25,
+      "elapsedSeconds": 1.9815704000066034,
+      "finishedUtc": "2026-10-07T21:42:19.075766+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-25",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:17.094188+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 26,
+      "elapsedSeconds": 1.90621960000135,
+      "finishedUtc": "2026-10-07T21:42:20.998867+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-26",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:19.092641+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 27,
+      "elapsedSeconds": 1.9258082000014838,
+      "finishedUtc": "2026-10-07T21:42:22.942922+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-27",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:21.017105+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 28,
+      "elapsedSeconds": 1.9148008000047412,
+      "finishedUtc": "2026-10-07T21:42:24.878095+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-28",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:22.963288+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 29,
+      "elapsedSeconds": 1.918516500008991,
+      "finishedUtc": "2026-10-07T21:42:26.817484+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-29",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:24.898959+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 30,
+      "elapsedSeconds": 1.8925503000209574,
+      "finishedUtc": "2026-10-07T21:42:28.731242+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-30",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:26.838686+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 31,
+      "elapsedSeconds": 1.973786199989263,
+      "finishedUtc": "2026-10-07T21:42:30.726738+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-31",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:28.752945+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 32,
+      "elapsedSeconds": 1.9263176000094973,
+      "finishedUtc": "2026-10-07T21:42:32.675357+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-32",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:30.749032+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 33,
+      "elapsedSeconds": 1.932711500005098,
+      "finishedUtc": "2026-10-07T21:42:34.629701+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-33",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:32.696983+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 34,
+      "elapsedSeconds": 1.9367568000161555,
+      "finishedUtc": "2026-10-07T21:42:36.588820+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-34",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:34.652056+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 35,
+      "elapsedSeconds": 1.941273700009333,
+      "finishedUtc": "2026-10-07T21:42:38.556832+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-35",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:36.615550+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 36,
+      "elapsedSeconds": 1.9720266000076663,
+      "finishedUtc": "2026-10-07T21:42:40.554148+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-36",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:38.582114+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 37,
+      "elapsedSeconds": 1.9158133000019006,
+      "finishedUtc": "2026-10-07T21:42:42.496175+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-37",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:40.580355+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 38,
+      "elapsedSeconds": 1.9292552999977488,
+      "finishedUtc": "2026-10-07T21:42:44.453597+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-38",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:42.524334+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 39,
+      "elapsedSeconds": 1.9531503000180237,
+      "finishedUtc": "2026-10-07T21:42:46.435150+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-39",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:44.481993+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 40,
+      "elapsedSeconds": 1.9148264999967068,
+      "finishedUtc": "2026-10-07T21:42:48.378677+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-40",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:46.463844+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 41,
+      "elapsedSeconds": 1.9726377000042703,
+      "finishedUtc": "2026-10-07T21:42:50.378482+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-41",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:48.405793+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 42,
+      "elapsedSeconds": 1.9751960000139661,
+      "finishedUtc": "2026-10-07T21:42:52.383531+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-42",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:50.408328+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 43,
+      "elapsedSeconds": 1.9536224999756087,
+      "finishedUtc": "2026-10-07T21:42:54.367205+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-43",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:52.413574+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 44,
+      "elapsedSeconds": 1.9708767000120133,
+      "finishedUtc": "2026-10-07T21:42:56.370620+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-44",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:54.399735+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 45,
+      "elapsedSeconds": 1.9316267000103835,
+      "finishedUtc": "2026-10-07T21:42:58.334337+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-45",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:56.402706+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 46,
+      "elapsedSeconds": 1.8864701999991667,
+      "finishedUtc": "2026-10-07T21:43:00.252751+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-46",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:42:58.366273+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 47,
+      "elapsedSeconds": 1.9754380999947898,
+      "finishedUtc": "2026-10-07T21:43:02.261675+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-47",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:00.286226+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 48,
+      "elapsedSeconds": 1.9327079999784473,
+      "finishedUtc": "2026-10-07T21:43:04.229771+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-48",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:02.297055+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 49,
+      "elapsedSeconds": 1.9344437000108883,
+      "finishedUtc": "2026-10-07T21:43:06.200184+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-49",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:04.265735+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 50,
+      "elapsedSeconds": 1.9505564999999478,
+      "finishedUtc": "2026-10-07T21:43:08.187839+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-50",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:06.237275+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 51,
+      "elapsedSeconds": 1.918353199987905,
+      "finishedUtc": "2026-10-07T21:43:10.139374+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-51",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:08.221012+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 52,
+      "elapsedSeconds": 1.9939382000011392,
+      "finishedUtc": "2026-10-07T21:43:12.173265+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-52",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:10.179320+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 53,
+      "elapsedSeconds": 1.9625522999849636,
+      "finishedUtc": "2026-10-07T21:43:14.173682+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-53",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:12.211122+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 54,
+      "elapsedSeconds": 1.9485907000198495,
+      "finishedUtc": "2026-10-07T21:43:16.160226+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-54",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:14.211627+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 55,
+      "elapsedSeconds": 1.9228759999969043,
+      "finishedUtc": "2026-10-07T21:43:18.120065+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-55",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:16.197176+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 56,
+      "elapsedSeconds": 1.9513398999988567,
+      "finishedUtc": "2026-10-07T21:43:20.116244+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-56",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:18.164895+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 57,
+      "elapsedSeconds": 1.9098578999983147,
+      "finishedUtc": "2026-10-07T21:43:22.066723+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-57",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:20.156857+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 58,
+      "elapsedSeconds": 2.019558700005291,
+      "finishedUtc": "2026-10-07T21:43:24.126631+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-58",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:22.107067+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 59,
+      "elapsedSeconds": 1.9247556000191253,
+      "finishedUtc": "2026-10-07T21:43:26.094054+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-59",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:24.169293+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 60,
+      "elapsedSeconds": 1.9417705000087153,
+      "finishedUtc": "2026-10-07T21:43:28.079841+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-60",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:26.138063+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 61,
+      "elapsedSeconds": 1.9004865000024438,
+      "finishedUtc": "2026-10-07T21:43:30.022502+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-61",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:28.122010+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 62,
+      "elapsedSeconds": 1.9387887999764644,
+      "finishedUtc": "2026-10-07T21:43:32.005140+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-62",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:30.066342+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 63,
+      "elapsedSeconds": 1.9350250999850687,
+      "finishedUtc": "2026-10-07T21:43:33.985516+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-63",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:32.050483+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 64,
+      "elapsedSeconds": 1.9467492999974638,
+      "finishedUtc": "2026-10-07T21:43:35.980680+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-64",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:34.033918+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 65,
+      "elapsedSeconds": 1.8866857000102755,
+      "finishedUtc": "2026-10-07T21:43:37.916337+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-65",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:36.029643+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 66,
+      "elapsedSeconds": 1.9538746000034735,
+      "finishedUtc": "2026-10-07T21:43:39.917271+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-66",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:37.963390+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 67,
+      "elapsedSeconds": 1.8814048000203911,
+      "finishedUtc": "2026-10-07T21:43:41.847692+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-67",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:39.966280+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 68,
+      "elapsedSeconds": 2.0002288999967277,
+      "finishedUtc": "2026-10-07T21:43:43.895758+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-68",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:41.895518+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 69,
+      "elapsedSeconds": 1.9443538000050467,
+      "finishedUtc": "2026-10-07T21:43:45.888092+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-69",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:43.943729+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 70,
+      "elapsedSeconds": 1.9054758000129368,
+      "finishedUtc": "2026-10-07T21:43:47.842317+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-70",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:45.936829+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 71,
+      "elapsedSeconds": 2.16597780000302,
+      "finishedUtc": "2026-10-07T21:43:50.060200+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-71",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:47.894213+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 72,
+      "elapsedSeconds": 1.9794240999908652,
+      "finishedUtc": "2026-10-07T21:43:52.095583+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-72",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:50.116151+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 73,
+      "elapsedSeconds": 2.006325399997877,
+      "finishedUtc": "2026-10-07T21:43:54.155889+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-73",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:52.149555+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 74,
+      "elapsedSeconds": 2.0333296000026166,
+      "finishedUtc": "2026-10-07T21:43:56.247632+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-74",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:54.214294+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 75,
+      "elapsedSeconds": 2.1976911000092514,
+      "finishedUtc": "2026-10-07T21:43:58.499641+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-75",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:56.301942+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 76,
+      "elapsedSeconds": 1.9659347000124399,
+      "finishedUtc": "2026-10-07T21:44:00.520282+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-76",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:43:58.554321+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 77,
+      "elapsedSeconds": 1.9279997999838088,
+      "finishedUtc": "2026-10-07T21:44:02.505129+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-77",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:00.577120+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 78,
+      "elapsedSeconds": 1.9706803000008222,
+      "finishedUtc": "2026-10-07T21:44:04.534691+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-78",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:02.564002+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 79,
+      "elapsedSeconds": 2.0074564999958966,
+      "finishedUtc": "2026-10-07T21:44:06.595610+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-79",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:04.588147+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 80,
+      "elapsedSeconds": 1.9709460000158288,
+      "finishedUtc": "2026-10-07T21:44:08.624285+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-80",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:06.653334+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 81,
+      "elapsedSeconds": 2.0009760000102688,
+      "finishedUtc": "2026-10-07T21:44:10.683563+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-81",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:08.682579+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 82,
+      "elapsedSeconds": 1.9545359000039753,
+      "finishedUtc": "2026-10-07T21:44:12.704235+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-82",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:10.749689+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 83,
+      "elapsedSeconds": 2.004802200011909,
+      "finishedUtc": "2026-10-07T21:44:14.766784+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-83",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:12.761970+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 84,
+      "elapsedSeconds": 1.873246700008167,
+      "finishedUtc": "2026-10-07T21:44:16.703845+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-84",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:14.830591+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 85,
+      "elapsedSeconds": 1.93872510001529,
+      "finishedUtc": "2026-10-07T21:44:18.703952+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-85",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:16.765216+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 86,
+      "elapsedSeconds": 1.9214438000053633,
+      "finishedUtc": "2026-10-07T21:44:20.686021+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-86",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:18.764570+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 87,
+      "elapsedSeconds": 1.9794628000236116,
+      "finishedUtc": "2026-10-07T21:44:22.716690+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-87",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:20.737221+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 88,
+      "elapsedSeconds": 2.0122959000000264,
+      "finishedUtc": "2026-10-07T21:44:24.788633+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-88",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:22.776330+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 89,
+      "elapsedSeconds": 1.902675800025463,
+      "finishedUtc": "2026-10-07T21:44:26.758403+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-89",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:24.855718+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 90,
+      "elapsedSeconds": 1.9589714000176173,
+      "finishedUtc": "2026-10-07T21:44:28.785888+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-90",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:26.826907+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 91,
+      "elapsedSeconds": 1.9136982000200078,
+      "finishedUtc": "2026-10-07T21:44:30.764055+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-91",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:28.850344+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 92,
+      "elapsedSeconds": 1.9110532000195235,
+      "finishedUtc": "2026-10-07T21:44:32.736022+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-92",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:30.824962+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 93,
+      "elapsedSeconds": 1.9984246999956667,
+      "finishedUtc": "2026-10-07T21:44:34.794004+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-93",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:32.795572+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 94,
+      "elapsedSeconds": 2.000152900000103,
+      "finishedUtc": "2026-10-07T21:44:36.857752+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-94",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:34.857592+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 95,
+      "elapsedSeconds": 1.9369035999989137,
+      "finishedUtc": "2026-10-07T21:44:38.864108+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-95",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:36.927196+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 96,
+      "elapsedSeconds": 2.046053900005063,
+      "finishedUtc": "2026-10-07T21:44:40.974805+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-96",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:38.928744+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 97,
+      "elapsedSeconds": 1.9528745999850798,
+      "finishedUtc": "2026-10-07T21:44:43.002159+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-97",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:41.049274+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 98,
+      "elapsedSeconds": 2.017559500003699,
+      "finishedUtc": "2026-10-07T21:44:45.094228+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-98",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:43.076656+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 99,
+      "elapsedSeconds": 2.001967500022147,
+      "finishedUtc": "2026-10-07T21:44:47.172395+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-99",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:45.170420+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    },
+    {
+      "cycle": 100,
+      "elapsedSeconds": 2.378006100014318,
+      "finishedUtc": "2026-10-07T21:44:49.616482+00:00",
+      "installedPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "installedR1VisibleText": "R1\n\n\nType: resistor\n\n\nValue: 330 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component",
+      "name": "owner-repair-cycle-100",
+      "power": "ON",
+      "publicHistory": [
+        "Changed a supply setting.",
+        "Removed a part.",
+        "Added a part to the tray.",
+        "Installed a part from the tray.",
+        "Changed a supply setting."
+      ],
+      "repairedRetest": "FUNCTION VERIFIED",
+      "retainedOriginalLabels": [
+        "Part 2 - Color bands"
+      ],
+      "startedUtc": "2026-10-07T21:44:47.238469+00:00",
+      "status": "PASS",
+      "unrepairedRetest": "FAIL_EXPECTED_UNREPAIRED"
+    }
+  ],
+  "cleanup": {
+    "contextClose": "PASS",
+    "edgeAbsence": {
+      "recordedInstances": 10,
+      "status": "PASS",
+      "survivors": {}
+    },
+    "elapsedSeconds": 1.6650822999945376,
+    "includes": "browser/preview/listener release and final source audit",
+    "listenerProof": {
+      "evidence": "listener-proof/listener-query.json",
+      "functionSourceSha256": "f45447757c13ec38da457863353b8efdd5661f4b1a3cb6049fcc0d5ec592f6da",
+      "owner": "private_menu.port_is_closed / audit_release._run_cim_and_ports",
+      "queryOwner": "serial_runner.run_command native process job",
+      "queryTimeoutMs": 20000
+    },
+    "playwrightStop": "PASS",
+    "previewAfterClose": {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "exitCode": 1
+    },
+    "previewBeforeClose": {
+      "classification": {
+        "queryStatus": "PRESENT",
+        "reason": "birth-and-image-match",
+        "status": "MATCH"
+      },
+      "poll": null
+    },
+    "previewStop": "PASS_EXACT_INSTANCE_ABSENT",
+    "status": "PASS",
+    "taskPortClosed": true
+  },
+  "completedFunctionVerifiedRepairs": 100,
+  "completedOwnerRepairCycles": 100,
+  "completedOwnerReplacements": 100,
+  "elapsedSeconds": 215.987,
+  "errors": [],
+  "finishedUtc": "2026-10-07T21:44:51.559852+00:00",
+  "fixture": {
+    "correctR1Ohms": 330,
+    "method": "Known fixture-guided ordinary UI repair; not blind diagnosis",
+    "replay": "tsj-alpha/4/EASY/LED_INDICATOR/0",
+    "tolerancePercent": 5
+  },
+  "gameFunctionsCalled": false,
+  "headed": true,
+  "headedProof": {
+    "edgeExecutableIdentities": [
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828895464369,
+        "pid": 3256
+      },
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828873753005,
+        "pid": 4876
+      },
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828876506392,
+        "pid": 15568
+      },
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828876246924,
+        "pid": 18792
+      },
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828877337529,
+        "pid": 19304
+      },
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828890838898,
+        "pid": 21844
+      },
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828875330703,
+        "pid": 21928
+      },
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358829477907815,
+        "pid": 21988
+      },
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828877406056,
+        "pid": 22044
+      },
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358828876175774,
+        "pid": 22476
+      }
+    ],
+    "headlessArgument": false,
+    "launchArguments": [
+      "--window-size=1460,1100"
+    ],
+    "pageCount": 1,
+    "visibleWindows": [
+      {
+        "hwnd": 8389882,
+        "pid": 4876,
+        "title": "about:blank - Profile 1 - Microsoft\u200b Edge",
+        "visible": true
+      }
+    ]
+  },
+  "headless": false,
+  "hostTimerPolicy": "task-local browser background timer/render throttling disabled; solver unchanged",
+  "identityHelperSha256": "88b18fa7ff41fc006fe9e17dac2aba73cb15c9342bad8b163bedb60bce161017",
+  "initialPredecessor": {
+    "looseParts": 0,
+    "operationCount": 0,
+    "power": "ON",
+    "replay": "tsj-alpha/4/EASY/LED_INDICATOR/0",
+    "status": "PASS"
+  },
+  "inputActionLatencyProxy": {
+    "count": 4311,
+    "excluded": "generation/settlement waits, metrics, GC, screenshots, file I/O, assertions",
+    "failedInputActions": [],
+    "kind": "automation wall-time input-action proxy; not browser Event Timing latency",
+    "maxSeconds": 0.079,
+    "p50Seconds": 0.031,
+    "p95Seconds": 0.057,
+    "violations": []
+  },
+  "limits": {
+    "checkpoints": [
+      1,
+      25,
+      50,
+      75,
+      100
+    ],
+    "generationActiveOperationMs": 5000,
+    "generationJobMs": 90000,
+    "generationWorkUnits": 640,
+    "heapUsedBytes": 209715200,
+    "historyPageEntries": 50,
+    "initialUnrepairedPredecessors": 1,
+    "inputActionProxySeconds": 5,
+    "maxHistoryPages": 4,
+    "maxScreenshots": 3,
+    "operationSeconds": 900,
+    "ownerRepairCycles": 100,
+    "progressSaveIntervalSeconds": 1,
+    "replacementHeapIncreaseBytes": 33554432,
+    "requiredNativeOuterSeconds": 1020,
+    "reservedCleanupSeconds": 120,
+    "totalPublishedOwners": 101
+  },
+  "listenerOwnerSourceSha256": {
+    "audit_release.py": "7a76a9ca504eada3a7658dd74ac8851cbcbc10c6d7d45598894fe448aa696324",
+    "private_menu.py": "9d42f39649fc13e5b5820815e75c33731ebb2dc29a48f69763d2cea4a592acab",
+    "receipts.py": "ae22c139fc9834c767aed8d6b2ae3dcdb9e8db010c3721deba3ae34bd1119dd1",
+    "serial_runner.py": "08ce044c8c014ae7bc3b194c07827c8383990b4f950be82137b94dc504f1ebe2",
+    "windows_process_identity.py": "88b18fa7ff41fc006fe9e17dac2aba73cb15c9342bad8b163bedb60bce161017"
+  },
+  "matchedHeapBaseline": {
+    "cycle": 1,
+    "dom": {
+      "documents": 4,
+      "jsEventListeners": 466,
+      "nodes": 5557
+    },
+    "heapUsedBytes": 19641636,
+    "publicState": "Indicator seed0, 330 Ohm R1 installed, power ON, successful customer retest, Main menu with five-operation history open, exactly one original R1 loose, all bench tools closed"
+  },
+  "operationSeconds": 214.1993528000021,
+  "outcome": "PASS",
+  "ownerReplacementHeapGrowth": {
+    "baselineCycle": 1,
+    "baselineHeapUsedBytes": 19641636,
+    "checkpointCycles": [
+      1,
+      25,
+      50,
+      75,
+      100
+    ],
+    "kind": "post-GC browser heap proxy at identical repaired public states",
+    "lastCheckpointSlopeBytesPerReplacement": 67456.76767676767,
+    "maxIncreaseBytes": 6678220,
+    "publicState": "Indicator seed0, 330 Ohm R1 installed, power ON, successful customer retest, Main menu with five-operation history open, exactly one original R1 loose, all bench tools closed"
+  },
+  "pageEvaluateUsed": false,
+  "pairedBlocks": [
+    {
+      "cycle": 1,
+      "firstAction": 38,
+      "inputActionProxy": {
+        "count": 38,
+        "maxSeconds": 0.062,
+        "p50Seconds": 0.036,
+        "p95Seconds": 0.061
+      },
+      "lastAction": 123,
+      "name": "ordinary-owner-repair-cycle-1",
+      "publicStart": "new pristine Indicator seed0 owner, power ON, empty tray/history",
+      "publicState": "Indicator seed0, 330 Ohm R1 installed, power ON, successful customer retest, Main menu with five-operation history open, exactly one original R1 loose, all bench tools closed",
+      "wallSeconds": 1.804026999976486
+    },
+    {
+      "cycle": 100,
+      "firstAction": 9553,
+      "inputActionProxy": {
+        "count": 38,
+        "maxSeconds": 0.063,
+        "p50Seconds": 0.03,
+        "p95Seconds": 0.062
+      },
+      "lastAction": 9638,
+      "name": "ordinary-owner-repair-cycle-100",
+      "publicStart": "new pristine Indicator seed0 owner, power ON, empty tray/history",
+      "publicState": "Indicator seed0, 330 Ohm R1 installed, power ON, successful customer retest, Main menu with five-operation history open, exactly one original R1 loose, all bench tools closed",
+      "wallSeconds": 1.7563389999850187
+    }
+  ],
+  "phase": "closed",
+  "playwrightVersion": "1.63.0",
+  "retainedLoosePartsPerMatchedOwner": 1,
+  "schema": 1,
+  "scope": "U07_FROZEN100_OWNER_REPAIR_SAME_DOCUMENT_BROWSER_ENVELOPE",
+  "scopeLimitations": [
+    "One desktop/Edge/version/profile and one deterministic Indicator fixture; no population or maximum-capacity claim.",
+    "One unrepaired predecessor plus 100 replay replacements and 100 actual repairs; retained inventory is fixed at one original per repaired owner.",
+    "Separate accumulated 64 inventory, measurement/save/load and Q30 extension belong to the preserved r3 workload.",
+    "Matched post-GC baseline is completed repair 1; checkpoints 1/25/50/75/100 have identical public state.",
+    "CDP heap/DOM counters are browser proxies; no application retained-object identity, active solver count or captured stale callback is inspected.",
+    "Input-action latency is the maintained automation wall-time proxy, not browser Event Timing latency.",
+    "Screenshots require root visual inspection; the maintained startup-menu screenshot plus paired repair 1/100 screenshots are retained.",
+    "Operation 900s/cleanup 120s require the root-supplied 1020s hard native process owner."
+  ],
+  "servedInputInventory": {
+    "afterSha256": "a094335afaa5cc370c21bfe972c45e4755cbf658dad8380dc77905a1ef923b89",
+    "beforeSha256": "a094335afaa5cc370c21bfe972c45e4755cbf658dad8380dc77905a1ef923b89",
+    "fileCount": 1531
+  },
+  "startedUtc": "2026-10-07T21:41:15.572927+00:00",
+  "syntheticDispatchUsed": false,
+  "totalPublishedOwners": 101
+}

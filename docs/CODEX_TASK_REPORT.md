@@ -1,4 +1,111 @@
-# Current checkpoint: U06 accepted; U07 next and unstarted
+# Current checkpoint: U07 accepted locally; normal publication next
+
+2026-10-07. Dave resumed the existing roadmap through completion and requested
+Sol 6.1 Ultra/Fast for subsequent work. The October 6 stop is superseded.
+Branch `codex/q30-multirail-qualification`; published U06/base HEAD
+`12641608a7f10372d39c2a8fa98e6e349049e09f`. This candidate completes U07; commit/normal
+push/remote SHA verification remain separate final steps. No email.
+
+Lazy 50-entry neutral history pages preserve the whole semantic journal; 96-part
+retained-population preflight precedes replay. Five screenshots reviewed; the
+4em number gutter displays 101-105 fully. Native 9 (48.375 s), actual production
+GWT (five permutations) (84.344 s) and 6,024 compiled assertions pass. Exact source/output reuse audit
+found only the final CSS gutter difference; actual headed final flows cover it.
+
+PASS: accumulated 64 inventory/real loose measurements/105 history entries/durable
+save-load/three pristine replacements/Q30 seed 10387 eight-part roundtrip,
+768 actions/128.930 s operation. Separate 100/100 ordinary owner
+replacement and actual repair/retest cycles passed in one document, with 101 total
+published owners; 9,644 actions/214.199 s operation. Matched post-GC growth
+6,678,220 bytes under 32 MiB; metrics are browser/automation proxies.
+No unlimited-runtime, maximum-capacity, blind-diagnosis or modest-machine claim.
+[Evidence and retained failures](task-evidence/U07/README.md).
+
+All 79 recorded task instances absent/5 ports closed. Automated audit retains
+one BLOCKED pre-browser identity inference; hash-bound source and zero-case
+receipt prove no browser launched and the in-process server/native job closed.
+Root supplementary review resolves current resource release without relabeling
+historical evidence. Eight original untracked files and all failed/raw evidence
+remain intact; no unrelated project/process touched. Retained task root:
+`2026-10-05/task-2/u07`; raw temp `tsj-u07-host-a04nt_ti`.
+
+Next: staged diff review, commit and verified normal branch push; then E05→E06→Q60,
+fresh HARD calibration, REL-B, Q100 and the remaining applicable roadmap gates.
+E05 electrical/geometry drafts are isolated in the local task workspace and are
+not yet applied to this candidate. Historical Q30 unknown91.616 s failure, six
+missing inventories and late-release audit remain unchanged. Other projects,
+Core/Android and unrelated browser/server/disk jobs remain outside this scope.
+
+---
+
+# Historical checkpoint: October6 stop before final U07 validation
+
+2026-10-06. Dave requested a stop at 02:20:42 UTC. No further roadmap work or
+application tests are authorized by the earlier continue instruction. All workers
+are stopped. No build, browser, preview or test operation remains running.
+
+Branch `codex/q30-multirail-qualification`; HEAD and verified remote branch are
+`12641608a7f10372d39c2a8fa98e6e349049e09f` (accepted U06). Replacement owner made
+one normal push after confirming the remote was still Q30, then verified the full
+SHA; a read-only remote check at stop confirms it again. No U07 commit/push,
+force push, main merge, email or deletion. Eight original untracked files retain
+their exact bytes; the index remains unchanged.
+
+Seven unfinished code/test/UI files are preserved: PlayerSessionHistory,
+PlayerSessionController, PlayerSessionState, U06SessionDeveloperVerifier,
+U06SessionSaveContractTest, tsj-workbench-ui.js and tsj-workbench-ui.css. They add
+50-entry lazy history pages without truncating semantic history, pre-replay
+96-part population validation and a bounded compiled lifecycle/inventory fixture.
+The CSS number gutter was widened from 24px to 4em after screenshot review;
+that final CSS change has NOT received a new visual check. This checkpoint is
+the only additional tracked documentation change. U07 is NOT accepted/completed.
+
+PASS: native-r2 nine focused suites (48.375s host; U06 contract 34,927 assertions),
+actual JDK8/GWT build-r1 five production permutations (84.344s), compiled-r2
+6,024 checks (18.478s host): 96 retained parts, 93 loose, 192 terminals, three
+actual owner restores, bounded 32-sample observations, stale-owner release and
+expected 97-part rejection before replay. Independent production review and
+focused JS checks found no blocker. All 1,294 pinned source inputs still match
+these runs except the disclosed CSS gutter edit.
+
+Headed visual-r2 is FAIL, not an acceptance pass. Before failure it completed
+64 acquisitions, loose-part 330-ohm measurements, all 105 history entries across
+three pages, save/reload/load and three empty successor owners. Input-action
+wall-time proxy max0.701s; heap checkpoints approximately18.7-20.8MB, explicitly
+browser proxies. Q30 seed10387 extension stopped at a selector mismatch: its
+330-ohm choices have Narrow/Wide lead-spacing suffixes, while the observer
+requested the unsuffixed Indicator label. The failure screenshot shows readiness;
+no production readiness failure was established. No visual-r3 was run. Earlier
+native fixture, Python runtime and hidden-empty-list observer failures are kept.
+
+Stop resource audit: all51 recorded instances ABSENT and all3 ports CLOSED;
+overall BLOCKED because compiled-r1 has no application identity receipt. Its
+retained result contains zero cases and an import failure before application
+startup; owned host job exited, job processes0, handles closed, cleanup PASS.
+Do not relabel the resource-audit receipt. No recorded live operation or unrelated
+process was stopped. Scratch and prior accepted U06 build backup remain intact.
+
+Raw evidence: task-owned temp `tsj-u07-host-a04nt_ti`; local task `2026-10-05/task-2`
+contains `u07/pointer.json`, drivers, `STOP_HANDOFF.md`, `stop-receipt.json` and
+`unfinished-u07.patch`. Stop audit subdirectory is
+`resource-audit-20261006T022234-5177ed51b0294252985f9534e100e5cc`.
+U06 publication receipt remains in `2026-10-01/task-6/u06-20261006-r1`.
+No completed public U07 evidence packet has been emitted.
+
+Exact next step, only when Dave asks to resume: parameterize the headed driver's
+acquisition label and select the actual Q30 Narrow lead-spacing choice; run one
+bounded final visual pass and inspect the widened three-digit history gutter.
+Preserve both failed visual attempts. Then finish source/resource review,
+sanitized U07 evidence/roadmap/architecture, staged review and authorized normal
+publication. Audit unchanged input pins before reusing native/build/compiled
+passes; do not rerun unchanged Q30 cold77/warm77 corpora. Q60 remains unstarted
+and first requires E05 then E06. Only read-only prerequisite plans were made;
+no E05/E06/Q60 repository implementation began. Historical Q30 91.616s unknown
+failure, six missing inventories and late-release BLOCKED remain unchanged.
+
+---
+
+# Historical checkpoint: U06 accepted before publication
 
 2026-10-06. Branch `codex/q30-multirail-qualification`; pre-commit HEAD
 `e97046267a42206459c38b6e061a3139a8833255` is already-published Q30. This

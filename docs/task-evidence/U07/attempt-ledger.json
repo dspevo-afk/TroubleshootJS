@@ -1,0 +1,41 @@
+{
+  "attempts": [
+    {
+      "exitCode": 2,
+      "hostElapsedMs": 47734,
+      "phase": "native-r1",
+      "sha256": "172403cfc63004816d20d35a89304a29aeb162441601f9f9bb0e9166e9b0c8fb",
+      "status": "FAIL"
+    },
+    {
+      "exitCode": 1,
+      "hostElapsedMs": 3735,
+      "phase": "compiled-r1",
+      "sha256": "8c1bf07b27d985608999106132b92f42f6bba92dad2b6785fe522615858739e4",
+      "status": "FAIL"
+    },
+    {
+      "exitCode": 1,
+      "hostElapsedMs": 40511,
+      "phase": "visual-r1",
+      "sha256": "3003e244806a41c6010446cd15e461ad89348841bd10319c63a8eadcfe9cf618",
+      "status": "FAIL"
+    },
+    {
+      "exitCode": 1,
+      "hostElapsedMs": 250656,
+      "phase": "visual-r2",
+      "sha256": "a9e6fc0d5dbaa861e4267e6325fa9efb7373cc74601850a62641bf613beefde6",
+      "status": "FAIL"
+    }
+  ],
+  "notes": [
+    "Initial sandbox-owned output path denied host writes before native test launch; retained separately.",
+    "Native-r1 exposed missing capability installation in the new test fixture; fixture fixed without weakening production admission.",
+    "Compiled-r1 ran zero cases because Python3.12 did not match the retained cp313 browser dependencies; existing Python3.13 reused.",
+    "Visual-r1 passed the large inventory/measurement/save/load segment then its observer could not locate a correctly hidden empty list.",
+    "Visual-r2 reached the Q30 extension but requested an unsuffixed 330-ohm label; that family exposes Narrow/Wide lead-spacing choices. Its screenshot showed ready supplies; r3 corrects only the selection label.",
+    "Root screenshot review found three-digit history markers clipped by the old24px gutter; widened to4em before final visual review.",
+    "Accepted build backup initially encountered the intentionally changed UI file; exact committed U06 bytes were recovered and all392 pins verified."
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "inputReuse": "1294 source pins,1529 compiled input files,1531 served input files and9 GWT jars audited; only CSS gutter differed from reused gates. Both new headed runs consumed the final CSS. Tool executable-content hashes were not captured by prior receipts.",
+  "inspectedScreenshots": [
+    "screenshots/001-inventory64-last-loose-measurement.png",
+    "screenshots/002-paged-history-before-save-reload.png",
+    "screenshots/003-third-pristine-owner-empty-tray.png",
+    "screenshots/004-q30-restored-eight-loose-parts.png",
+    "screenshots/005-100-repaired-menu-five-operations.png"
+  ],
+  "publication": "Separate normal commit/push verification; no email.",
+  "publishedU06": "12641608a7f10372d39c2a8fa98e6e349049e09f",
+  "resourceDisposition": "Accepted resource release; pre-browser receipt gap explained by hash-bound source and completed native job.",
+  "reviewedUtc": "2026-10-07T21:46:20.477323+00:00",
+  "screenshots": [
+    {
+      "file": "screenshots/001-inventory64-last-loose-measurement.png",
+      "sha256": "05a11bb51e627b8ad52a7f8d90a50d5fcdf78a9d466c7a10a32bf42683e28b24"
+    },
+    {
+      "file": "screenshots/002-paged-history-before-save-reload.png",
+      "sha256": "d2135c77bff0626cd1fe24b22b190dc6ce64d4749926524132b670c92ca96f2f"
+    },
+    {
+      "file": "screenshots/003-third-pristine-owner-empty-tray.png",
+      "sha256": "82ef510109efd885cda0c16c72420a47549d10fa5dfe31899df9728ba0017b84"
+    },
+    {
+      "file": "screenshots/004-q30-restored-eight-loose-parts.png",
+      "sha256": "d313a38ad44abb41b42fc31b4d13f57c1524f7fe3911c38f69086fc08aa48ef5"
+    },
+    {
+      "file": "screenshots/005-100-repaired-menu-five-operations.png",
+      "sha256": "da99e2840a69b2092752f0ba65da1733d92e38e1044dd9a4762a41cbb4750f16"
+    }
+  ],
+  "sourceReview": "Root integrated diff plus independent read-only History/Controller/State/UI/test and receipt reviews; no unresolved code blocker.",
+  "status": "PASS_WITH_DECLARED_LIMITS",
+  "visualFindings": [
+    "Last of64 loose resistors measures330 Ohm through visible probe input.",
+    "History101-105 numbering is complete after4em gutter change; navigation and range remain readable.",
+    "Third pristine owner shows empty tray and cleared instrument state.",
+    "Q30 restored owner retains all8 purchased labels and OFF state.",
+    "Cycle100 retains the exact five-operation repaired-owner history."
+  ]
+}

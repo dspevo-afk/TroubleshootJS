@@ -1,0 +1,15 @@
+{
+  "command": "scripts/verify-current-contracts.ps1 -JavaHome <JDK8> -PythonExe <PYTHON> -Suite U06SessionSaveContractTest,U04SessionContractTest,PhysicalServiceabilityContractTest,U02MeasurementContractTest,U03ObservationContractTest,A07ExecutionContractTest,A10GenerationContractTest,A10DependencyContractTest,A11ProviderConformanceTest",
+  "passLines": [
+    "PASS: physical serviceability contracts assertions=1250",
+    "PASS: U04 session contracts assertions=3914",
+    "PASS: U06 session save contracts assertions=34927",
+    "PASS: A07 execution contracts assertions=271808",
+    "PASS: A10 generation contracts assertions=190",
+    "PASS: A10 dependency contracts assertions=15",
+    "PASS: A11 provider conformance",
+    "PASS: U02 measurement contracts assertions=585",
+    "PASS: U03 observation contracts assertions=17"
+  ],
+  "receiptSha256": "d144907c778c28ae08a9b48af4658265e6bfed70f4dba32ec3ac07104c248c4f"
+}

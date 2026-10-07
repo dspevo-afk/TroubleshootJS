@@ -1,0 +1,114 @@
+{
+  "errors": [],
+  "evidence": {
+    "checks": 6024,
+    "generationJobs": [
+      {
+        "elapsedMillis": 427,
+        "outcome": "PASS",
+        "phase": "normal-generation",
+        "stage": "PUBLISH",
+        "workUnits": 59
+      },
+      {
+        "elapsedMillis": 3140,
+        "outcome": "PASS",
+        "phase": "u07-owner-restore-1",
+        "stage": "PUBLISH",
+        "workUnits": 59
+      },
+      {
+        "elapsedMillis": 2894,
+        "outcome": "PASS",
+        "phase": "u07-owner-restore-2",
+        "stage": "PUBLISH",
+        "workUnits": 59
+      },
+      {
+        "elapsedMillis": 2848,
+        "outcome": "PASS",
+        "phase": "u07-owner-restore-3",
+        "stage": "PUBLISH",
+        "workUnits": 59
+      },
+      {
+        "elapsedMillis": 229,
+        "outcome": "PROGRAMMING_FAILURE",
+        "phase": "u07-inventory-overflow",
+        "stage": "PUBLISH",
+        "workUnits": 59
+      }
+    ],
+    "hostCleanupSeconds": 1.1980506000109017,
+    "hostOperationSeconds": 13.669663999928162,
+    "inputAuditSeconds": 0.5756650000112131,
+    "inventories": [
+      {
+        "activeGraphElements": 209,
+        "activePartBacking": 192,
+        "history": 127,
+        "inactivePartBacking": 0,
+        "loose": 93,
+        "parts": 96,
+        "restore": 0,
+        "terminals": 192,
+        "waveformCapacity": 32
+      },
+      {
+        "activeGraphElements": 209,
+        "activePartBacking": 192,
+        "history": 127,
+        "inactivePartBacking": 0,
+        "loose": 93,
+        "parts": 96,
+        "restore": 1,
+        "terminals": 192,
+        "waveformCapacity": 32
+      },
+      {
+        "activeGraphElements": 209,
+        "activePartBacking": 192,
+        "history": 127,
+        "inactivePartBacking": 0,
+        "loose": 93,
+        "parts": 96,
+        "restore": 2,
+        "terminals": 192,
+        "waveformCapacity": 32
+      },
+      {
+        "activeGraphElements": 209,
+        "activePartBacking": 192,
+        "history": 127,
+        "inactivePartBacking": 0,
+        "loose": 93,
+        "parts": 96,
+        "restore": 3,
+        "terminals": 192,
+        "waveformCapacity": 32
+      }
+    ],
+    "portClosed": true,
+    "reportFile": "cases/001-U07-retained-inventory-and-owner-lifecycle.report.json",
+    "reportSha256": "dbd0359f951900176464d4c800ebb71e086a8ebd6283948d6576739ebf40e936",
+    "requiredChecks": {
+      "U07 97-part artifact rejects before its first replay command": 1,
+      "U07 completed generation releases protected owners and reconstruction scopes": 3,
+      "U07 first middle and last retained resistor have real isolated readings": 12,
+      "U07 overflow rejection preserves predecessor and releases private owners": 1,
+      "U07 real 128-step waveform retains exactly 32 samples": 4,
+      "U07 repeated removal committed": 16,
+      "U07 repeated retained-part installation committed": 16,
+      "U07 replaced owner retires probe scope subscription and solved receipt": 3,
+      "U07 retained-part measurement releases its temporary graph": 12,
+      "U07 second real waveform batch cannot grow the ring": 4,
+      "U07 unsubscribed waveform releases its retained samples": 4,
+      "independent state field population exact": 4
+    },
+    "sourceSha256": "ee9a0a521e23a685302735a6d007bcd4f7987c67d803f6f31eff3ba84c8d630e",
+    "status": "PASS",
+    "webSha256": "0f10f5365d43881bdbb8cd8344e23abdc81c247736c00d6f40bd45883343815e"
+  },
+  "runnerExitCode": 0,
+  "status": "PASS"
+}

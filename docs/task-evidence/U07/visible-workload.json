@@ -1,0 +1,1240 @@
+{
+  "apiBoundary": [
+    "Player input: ordinary visible UI locators, mouse, keyboard, reload, browser downloads and filechooser.",
+    "DOM read-only: public labels, visibility, geometry, canvas width/height and privacy-attribute presence.",
+    "Metrics only: Performance.enable/getMetrics, Memory.getDOMCounters, HeapProfiler.collectGarbage.",
+    "No Runtime.evaluate, page.evaluate, controller API, model, hidden snapshot, synthetic dispatch or save payload parsing."
+  ],
+  "browserChannel": "msedge",
+  "browserCount": 1,
+  "browserMetrics": [
+    {
+      "dom": {
+        "documents": 4,
+        "jsEventListeners": 356,
+        "nodes": 4253
+      },
+      "forcedGarbageCollection": true,
+      "heapTotalBytes": 20946944,
+      "heapUsedBytes": 18676632,
+      "label": "inventory-0",
+      "looseParts": 0,
+      "metrics": {
+        "AdSubframes": 0,
+        "ArrayBufferContents": 0,
+        "AudioHandlers": 2,
+        "AudioWorkletProcessors": 0,
+        "ContextLifecycleStateObservers": 17,
+        "DetachedScriptStates": 0,
+        "DevToolsCommandDuration": 0.052199,
+        "Documents": 4,
+        "DomContentLoaded": 149558.081401,
+        "FirstMeaningfulPaint": 149558.536485,
+        "Frames": 4,
+        "JSEventListeners": 356,
+        "JSHeapTotalSize": 20946944,
+        "JSHeapUsedSize": 18676632,
+        "LayoutCount": 43,
+        "LayoutDuration": 0.014521,
+        "LayoutObjects": 209,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "NavigationStart": 149557.504719,
+        "Nodes": 4253,
+        "ProcessTime": 1.12821,
+        "RTCPeerConnections": 0,
+        "RecalcStyleCount": 148,
+        "RecalcStyleDuration": 0.00904,
+        "ResourceFetchers": 4,
+        "Resources": 16,
+        "ScriptDuration": 0.352505,
+        "TaskDuration": 0.48672,
+        "TaskOtherDuration": 0.058455,
+        "ThreadTime": 0.417897,
+        "Timestamp": 149559.694161,
+        "UACSSResources": 0,
+        "V8CompileDuration": 0,
+        "V8PerContextDatas": 8,
+        "WorkerGlobalScopes": 0
+      },
+      "seconds": 15.736827499989886
+    },
+    {
+      "dom": {
+        "documents": 4,
+        "jsEventListeners": 454,
+        "nodes": 5126
+      },
+      "forcedGarbageCollection": true,
+      "heapTotalBytes": 21995520,
+      "heapUsedBytes": 19254136,
+      "label": "inventory-16",
+      "looseParts": 16,
+      "metrics": {
+        "AdSubframes": 0,
+        "ArrayBufferContents": 0,
+        "AudioHandlers": 2,
+        "AudioWorkletProcessors": 0,
+        "ContextLifecycleStateObservers": 15,
+        "DetachedScriptStates": 0,
+        "DevToolsCommandDuration": 0.119055,
+        "Documents": 4,
+        "DomContentLoaded": 149558.081401,
+        "FirstMeaningfulPaint": 149558.536485,
+        "Frames": 4,
+        "JSEventListeners": 454,
+        "JSHeapTotalSize": 21995520,
+        "JSHeapUsedSize": 19254136,
+        "LayoutCount": 105,
+        "LayoutDuration": 0.041426,
+        "LayoutObjects": 211,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "NavigationStart": 149557.504719,
+        "Nodes": 5126,
+        "ProcessTime": 1.719262,
+        "RTCPeerConnections": 0,
+        "RecalcStyleCount": 384,
+        "RecalcStyleDuration": 0.021037,
+        "ResourceFetchers": 4,
+        "Resources": 16,
+        "ScriptDuration": 0.557025,
+        "TaskDuration": 0.86743,
+        "TaskOtherDuration": 0.128887,
+        "ThreadTime": 0.791641,
+        "Timestamp": 149560.635021,
+        "UACSSResources": 0,
+        "V8CompileDuration": 0,
+        "V8PerContextDatas": 8,
+        "WorkerGlobalScopes": 0
+      },
+      "seconds": 16.677051400009077
+    },
+    {
+      "dom": {
+        "documents": 4,
+        "jsEventListeners": 552,
+        "nodes": 6009
+      },
+      "forcedGarbageCollection": true,
+      "heapTotalBytes": 21471232,
+      "heapUsedBytes": 19907316,
+      "label": "inventory-32",
+      "looseParts": 32,
+      "metrics": {
+        "AdSubframes": 0,
+        "ArrayBufferContents": 0,
+        "AudioHandlers": 2,
+        "AudioWorkletProcessors": 0,
+        "ContextLifecycleStateObservers": 15,
+        "DetachedScriptStates": 0,
+        "DevToolsCommandDuration": 0.194411,
+        "Documents": 4,
+        "DomContentLoaded": 149558.081401,
+        "FirstMeaningfulPaint": 149558.536485,
+        "Frames": 4,
+        "JSEventListeners": 552,
+        "JSHeapTotalSize": 21471232,
+        "JSHeapUsedSize": 19907316,
+        "LayoutCount": 168,
+        "LayoutDuration": 0.054932,
+        "LayoutObjects": 211,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "NavigationStart": 149557.504719,
+        "Nodes": 6009,
+        "ProcessTime": 2.441867,
+        "RTCPeerConnections": 0,
+        "RecalcStyleCount": 631,
+        "RecalcStyleDuration": 0.032725,
+        "ResourceFetchers": 4,
+        "Resources": 16,
+        "ScriptDuration": 0.820619,
+        "TaskDuration": 1.312239,
+        "TaskOtherDuration": 0.209552,
+        "ThreadTime": 1.236815,
+        "Timestamp": 149561.706104,
+        "UACSSResources": 0,
+        "V8CompileDuration": 0,
+        "V8PerContextDatas": 8,
+        "WorkerGlobalScopes": 0
+      },
+      "seconds": 17.74871399998665
+    },
+    {
+      "dom": {
+        "documents": 4,
+        "jsEventListeners": 666,
+        "nodes": 6956
+      },
+      "forcedGarbageCollection": true,
+      "heapTotalBytes": 22257664,
+      "heapUsedBytes": 20851688,
+      "label": "inventory-64",
+      "looseParts": 64,
+      "metrics": {
+        "AdSubframes": 0,
+        "ArrayBufferContents": 0,
+        "AudioHandlers": 2,
+        "AudioWorkletProcessors": 0,
+        "ContextLifecycleStateObservers": 15,
+        "DetachedScriptStates": 0,
+        "DevToolsCommandDuration": 0.320154,
+        "Documents": 4,
+        "DomContentLoaded": 149558.081401,
+        "FirstMeaningfulPaint": 149558.536485,
+        "Frames": 4,
+        "JSEventListeners": 666,
+        "JSHeapTotalSize": 22257664,
+        "JSHeapUsedSize": 20851688,
+        "LayoutCount": 279,
+        "LayoutDuration": 0.079864,
+        "LayoutObjects": 211,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "NavigationStart": 149557.504719,
+        "Nodes": 6956,
+        "ProcessTime": 3.904227,
+        "RTCPeerConnections": 0,
+        "RecalcStyleCount": 1075,
+        "RecalcStyleDuration": 0.051724,
+        "ResourceFetchers": 4,
+        "Resources": 16,
+        "ScriptDuration": 1.518372,
+        "TaskDuration": 2.309254,
+        "TaskOtherDuration": 0.33914,
+        "ThreadTime": 2.233988,
+        "Timestamp": 149563.876785,
+        "UACSSResources": 0,
+        "V8CompileDuration": 0,
+        "V8PerContextDatas": 8,
+        "WorkerGlobalScopes": 0
+      },
+      "seconds": 19.91952150000725
+    },
+    {
+      "dom": {
+        "documents": 4,
+        "jsEventListeners": 423,
+        "nodes": 4569
+      },
+      "forcedGarbageCollection": true,
+      "heapTotalBytes": 21733376,
+      "heapUsedBytes": 20123988,
+      "label": "restored-inventory-64",
+      "looseParts": 64,
+      "metrics": {
+        "AdSubframes": 0,
+        "ArrayBufferContents": 0,
+        "AudioHandlers": 2,
+        "AudioWorkletProcessors": 0,
+        "ContextLifecycleStateObservers": 25,
+        "DetachedScriptStates": 0,
+        "DevToolsCommandDuration": 0.199499,
+        "Documents": 4,
+        "DomContentLoaded": 149575.447224,
+        "FirstMeaningfulPaint": 0,
+        "Frames": 4,
+        "JSEventListeners": 423,
+        "JSHeapTotalSize": 21733376,
+        "JSHeapUsedSize": 20123988,
+        "LayoutCount": 90,
+        "LayoutDuration": 0.032712,
+        "LayoutObjects": 385,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "NavigationStart": 149574.96812,
+        "Nodes": 4569,
+        "ProcessTime": 13.109718,
+        "RTCPeerConnections": 0,
+        "RecalcStyleCount": 280,
+        "RecalcStyleDuration": 0.026141,
+        "ResourceFetchers": 4,
+        "Resources": 16,
+        "ScriptDuration": 2.064512,
+        "TaskDuration": 2.567635,
+        "TaskOtherDuration": 0.239259,
+        "ThreadTime": 2.520618,
+        "Timestamp": 149579.749933,
+        "UACSSResources": 0,
+        "V8CompileDuration": 0.005512,
+        "V8PerContextDatas": 8,
+        "WorkerGlobalScopes": 0
+      },
+      "seconds": 35.79778059999808
+    },
+    {
+      "dom": {
+        "documents": 4,
+        "jsEventListeners": 440,
+        "nodes": 4692
+      },
+      "forcedGarbageCollection": true,
+      "heapTotalBytes": 22519808,
+      "heapUsedBytes": 19904616,
+      "label": "owner-replacement-1",
+      "looseParts": 0,
+      "metrics": {
+        "AdSubframes": 0,
+        "ArrayBufferContents": 0,
+        "AudioHandlers": 2,
+        "AudioWorkletProcessors": 0,
+        "ContextLifecycleStateObservers": 25,
+        "DetachedScriptStates": 0,
+        "DevToolsCommandDuration": 0.267824,
+        "Documents": 4,
+        "DomContentLoaded": 149575.447224,
+        "FirstMeaningfulPaint": 0,
+        "Frames": 4,
+        "JSEventListeners": 440,
+        "JSHeapTotalSize": 22519808,
+        "JSHeapUsedSize": 19904616,
+        "LayoutCount": 155,
+        "LayoutDuration": 0.047883,
+        "LayoutObjects": 202,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "NavigationStart": 149574.96812,
+        "Nodes": 4692,
+        "ProcessTime": 13.935364,
+        "RTCPeerConnections": 0,
+        "RecalcStyleCount": 459,
+        "RecalcStyleDuration": 0.041059,
+        "ResourceFetchers": 4,
+        "Resources": 16,
+        "ScriptDuration": 2.356122,
+        "TaskDuration": 3.038084,
+        "TaskOtherDuration": 0.319684,
+        "ThreadTime": 2.989169,
+        "Timestamp": 149580.855547,
+        "UACSSResources": 0,
+        "V8CompileDuration": 0.005512,
+        "V8PerContextDatas": 8,
+        "WorkerGlobalScopes": 0
+      },
+      "seconds": 36.89908470000955
+    },
+    {
+      "dom": {
+        "documents": 4,
+        "jsEventListeners": 457,
+        "nodes": 4832
+      },
+      "forcedGarbageCollection": true,
+      "heapTotalBytes": 22519808,
+      "heapUsedBytes": 20729104,
+      "label": "owner-replacement-2",
+      "looseParts": 0,
+      "metrics": {
+        "AdSubframes": 0,
+        "ArrayBufferContents": 0,
+        "AudioHandlers": 2,
+        "AudioWorkletProcessors": 0,
+        "ContextLifecycleStateObservers": 25,
+        "DetachedScriptStates": 0,
+        "DevToolsCommandDuration": 0.329914,
+        "Documents": 4,
+        "DomContentLoaded": 149575.447224,
+        "FirstMeaningfulPaint": 0,
+        "Frames": 4,
+        "JSEventListeners": 457,
+        "JSHeapTotalSize": 22519808,
+        "JSHeapUsedSize": 20729104,
+        "LayoutCount": 208,
+        "LayoutDuration": 0.059249,
+        "LayoutObjects": 206,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "NavigationStart": 149574.96812,
+        "Nodes": 4832,
+        "ProcessTime": 14.459604,
+        "RTCPeerConnections": 0,
+        "RecalcStyleCount": 626,
+        "RecalcStyleDuration": 0.051635,
+        "ResourceFetchers": 4,
+        "Resources": 16,
+        "ScriptDuration": 2.512239,
+        "TaskDuration": 3.343912,
+        "TaskOtherDuration": 0.385363,
+        "ThreadTime": 3.296133,
+        "Timestamp": 149581.801094,
+        "UACSSResources": 0,
+        "V8CompileDuration": 0.005512,
+        "V8PerContextDatas": 8,
+        "WorkerGlobalScopes": 0
+      },
+      "seconds": 37.84383009999874
+    },
+    {
+      "dom": {
+        "documents": 4,
+        "jsEventListeners": 477,
+        "nodes": 5034
+      },
+      "forcedGarbageCollection": true,
+      "heapTotalBytes": 22781952,
+      "heapUsedBytes": 20765028,
+      "label": "owner-replacement-3",
+      "looseParts": 0,
+      "metrics": {
+        "AdSubframes": 0,
+        "ArrayBufferContents": 0,
+        "AudioHandlers": 2,
+        "AudioWorkletProcessors": 0,
+        "ContextLifecycleStateObservers": 25,
+        "DetachedScriptStates": 0,
+        "DevToolsCommandDuration": 0.415417,
+        "Documents": 4,
+        "DomContentLoaded": 149575.447224,
+        "FirstMeaningfulPaint": 0,
+        "Frames": 4,
+        "JSEventListeners": 477,
+        "JSHeapTotalSize": 22781952,
+        "JSHeapUsedSize": 20765028,
+        "LayoutCount": 270,
+        "LayoutDuration": 0.071763,
+        "LayoutObjects": 213,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "NavigationStart": 149574.96812,
+        "Nodes": 5034,
+        "ProcessTime": 15.128462,
+        "RTCPeerConnections": 0,
+        "RecalcStyleCount": 872,
+        "RecalcStyleDuration": 0.065739,
+        "ResourceFetchers": 4,
+        "Resources": 16,
+        "ScriptDuration": 2.712444,
+        "TaskDuration": 3.748344,
+        "TaskOtherDuration": 0.477469,
+        "ThreadTime": 3.702738,
+        "Timestamp": 149583.182999,
+        "UACSSResources": 0,
+        "V8CompileDuration": 0.005512,
+        "V8PerContextDatas": 8,
+        "WorkerGlobalScopes": 0
+      },
+      "seconds": 39.226569499995094
+    },
+    {
+      "dom": {
+        "documents": 4,
+        "jsEventListeners": 674,
+        "nodes": 7121
+      },
+      "forcedGarbageCollection": true,
+      "heapTotalBytes": 31940608,
+      "heapUsedBytes": 27177936,
+      "label": "q30-inventory-8",
+      "looseParts": 8,
+      "metrics": {
+        "AdSubframes": 0,
+        "ArrayBufferContents": 0,
+        "AudioHandlers": 2,
+        "AudioWorkletProcessors": 0,
+        "ContextLifecycleStateObservers": 15,
+        "DetachedScriptStates": 0,
+        "DevToolsCommandDuration": 0.579286,
+        "Documents": 4,
+        "DomContentLoaded": 149575.447224,
+        "FirstMeaningfulPaint": 0,
+        "Frames": 4,
+        "JSEventListeners": 674,
+        "JSHeapTotalSize": 31940608,
+        "JSHeapUsedSize": 27177936,
+        "LayoutCount": 549,
+        "LayoutDuration": 0.132155,
+        "LayoutObjects": 204,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "NavigationStart": 149574.96812,
+        "Nodes": 7121,
+        "ProcessTime": 60.562309,
+        "RTCPeerConnections": 0,
+        "RecalcStyleCount": 1640,
+        "RecalcStyleDuration": 0.10664,
+        "ResourceFetchers": 4,
+        "Resources": 16,
+        "ScriptDuration": 44.318199,
+        "TaskDuration": 45.932828,
+        "TaskOtherDuration": 0.791036,
+        "ThreadTime": 45.699645,
+        "Timestamp": 149626.501478,
+        "UACSSResources": 0,
+        "V8CompileDuration": 0.005512,
+        "V8PerContextDatas": 8,
+        "WorkerGlobalScopes": 0
+      },
+      "seconds": 82.63681560000987
+    },
+    {
+      "dom": {
+        "documents": 4,
+        "jsEventListeners": 373,
+        "nodes": 4802
+      },
+      "forcedGarbageCollection": true,
+      "heapTotalBytes": 28794880,
+      "heapUsedBytes": 24942544,
+      "label": "q30-restored-inventory-8",
+      "looseParts": 8,
+      "metrics": {
+        "AdSubframes": 0,
+        "ArrayBufferContents": 0,
+        "AudioHandlers": 1,
+        "AudioWorkletProcessors": 0,
+        "ContextLifecycleStateObservers": 24,
+        "DetachedScriptStates": 0,
+        "DevToolsCommandDuration": 0.108491,
+        "Documents": 4,
+        "DomContentLoaded": 149632.482058,
+        "FirstMeaningfulPaint": 149632.832308,
+        "Frames": 4,
+        "JSEventListeners": 373,
+        "JSHeapTotalSize": 28794880,
+        "JSHeapUsedSize": 24942544,
+        "LayoutCount": 247,
+        "LayoutDuration": 0.037683,
+        "LayoutObjects": 208,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "NavigationStart": 149631.961913,
+        "Nodes": 4796,
+        "ProcessTime": 105.971274,
+        "RTCPeerConnections": 0,
+        "RecalcStyleCount": 426,
+        "RecalcStyleDuration": 0.029469,
+        "ResourceFetchers": 4,
+        "Resources": 16,
+        "ScriptDuration": 35.380199,
+        "TaskDuration": 35.832936,
+        "TaskOtherDuration": 0.270393,
+        "ThreadTime": 35.569221,
+        "Timestamp": 149669.145329,
+        "UACSSResources": 0,
+        "V8CompileDuration": 0.006701,
+        "V8PerContextDatas": 8,
+        "WorkerGlobalScopes": 0
+      },
+      "seconds": 125.27830939998967
+    }
+  ],
+  "cases": [],
+  "cleanup": {
+    "contextClose": "PASS",
+    "edgeAbsence": {
+      "recordedInstances": 10,
+      "status": "PASS",
+      "survivors": {}
+    },
+    "elapsedSeconds": 2.0574422999925446,
+    "listenerProof": {
+      "evidence": "listener-proof/listener-query.json",
+      "functionSourceSha256": "f45447757c13ec38da457863353b8efdd5661f4b1a3cb6049fcc0d5ec592f6da",
+      "owner": "private_menu.port_is_closed / audit_release._run_cim_and_ports",
+      "queryOwner": "serial_runner.run_command native process job",
+      "queryTimeoutMs": 20000
+    },
+    "playwrightStop": "PASS",
+    "previewAfterClose": {
+      "classification": {
+        "queryStatus": "ABSENT",
+        "reason": "pid-query-confirmed-absent",
+        "status": "ABSENT"
+      },
+      "exitCode": 1
+    },
+    "previewBeforeClose": {
+      "classification": {
+        "queryStatus": "PRESENT",
+        "reason": "birth-and-image-match",
+        "status": "MATCH"
+      },
+      "poll": null
+    },
+    "previewStop": "PASS_EXACT_INSTANCE_ABSENT",
+    "status": "PASS",
+    "taskPortClosed": true
+  },
+  "elapsedSeconds": 131.222,
+  "errors": [],
+  "files": [
+    {
+      "bytes": 8414,
+      "file": "indicator64-off.tsjsave",
+      "sha256": "b8c5d8f2d3345b19582931a5b731474654707b1fc78ed980a097987aa2e46204",
+      "suggestedFilename": "troubleshootjs-session.tsjsave"
+    },
+    {
+      "bytes": 2001,
+      "file": "q30-seed10387-eight-parts-off.tsjsave",
+      "sha256": "a1ea65685d3cc46aeee6fc5b93491f14c1ea78bab68102d2dda3ddc87572424b",
+      "suggestedFilename": "troubleshootjs-session.tsjsave"
+    }
+  ],
+  "finishedUtc": "2026-10-07T21:35:36.790397+00:00",
+  "fullPublicHistory": [
+    "Changed a supply setting.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Added a part to the tray.",
+    "Removed a part.",
+    "Installed a part from the tray.",
+    "Removed a part.",
+    "Installed a part from the tray.",
+    "Removed a part.",
+    "Installed a part from the tray.",
+    "Removed a part.",
+    "Installed a part from the tray.",
+    "Removed a part.",
+    "Installed a part from the tray.",
+    "Removed a part.",
+    "Installed a part from the tray.",
+    "Removed a part.",
+    "Installed a part from the tray.",
+    "Removed a part.",
+    "Installed a part from the tray.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting.",
+    "Changed a supply setting."
+  ],
+  "gameFunctionsCalled": false,
+  "headed": true,
+  "headedProof": {
+    "edgeExecutableIdentities": [
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824363356851,
+        "pid": 3792
+      },
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824188619660,
+        "pid": 4904
+      },
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824189120960,
+        "pid": 7644
+      },
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824204813179,
+        "pid": 9424
+      },
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824187451281,
+        "pid": 9852
+      },
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824189405815,
+        "pid": 12504
+      },
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824789497328,
+        "pid": 18156
+      },
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824189027655,
+        "pid": 18316
+      },
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824190115715,
+        "pid": 20040
+      },
+      {
+        "birthPrecision": "NATIVE_100NS",
+        "creationFileTimeTicks": 134358824190057255,
+        "pid": 20320
+      }
+    ],
+    "headlessArgument": false,
+    "launchArguments": [
+      "--window-size=1460,1100"
+    ],
+    "pageCount": 1,
+    "visibleWindows": [
+      {
+        "hwnd": 26019040,
+        "pid": 9852,
+        "title": "about:blank - Profile 1 - Microsoft\u200b Edge",
+        "visible": true
+      }
+    ]
+  },
+  "headless": false,
+  "hostTimerPolicy": "task-local browser background timer/render throttling disabled; solver unchanged",
+  "identityHelperSha256": "88b18fa7ff41fc006fe9e17dac2aba73cb15c9342bad8b163bedb60bce161017",
+  "inputActionLatencyProxy": {
+    "count": 412,
+    "excluded": "generation/settlement waits, metrics, GC, screenshots, file I/O, assertions",
+    "failedInputActions": [],
+    "kind": "automation wall-time input-action proxy; not browser Event Timing latency",
+    "maxSeconds": 0.907,
+    "p50Seconds": 0.034,
+    "p95Seconds": 0.678,
+    "violations": []
+  },
+  "inventoryLabels": [
+    "Part 4 - 330 Ohm +/-5%",
+    "Part 5 - 330 Ohm +/-5%",
+    "Part 6 - 330 Ohm +/-5%",
+    "Part 7 - 330 Ohm +/-5%",
+    "Part 8 - 330 Ohm +/-5%",
+    "Part 9 - 330 Ohm +/-5%",
+    "Part 10 - 330 Ohm +/-5%",
+    "Part 11 - 330 Ohm +/-5%",
+    "Part 12 - 330 Ohm +/-5%",
+    "Part 13 - 330 Ohm +/-5%",
+    "Part 14 - 330 Ohm +/-5%",
+    "Part 15 - 330 Ohm +/-5%",
+    "Part 16 - 330 Ohm +/-5%",
+    "Part 17 - 330 Ohm +/-5%",
+    "Part 18 - 330 Ohm +/-5%",
+    "Part 19 - 330 Ohm +/-5%",
+    "Part 20 - 330 Ohm +/-5%",
+    "Part 21 - 330 Ohm +/-5%",
+    "Part 22 - 330 Ohm +/-5%",
+    "Part 23 - 330 Ohm +/-5%",
+    "Part 24 - 330 Ohm +/-5%",
+    "Part 25 - 330 Ohm +/-5%",
+    "Part 26 - 330 Ohm +/-5%",
+    "Part 27 - 330 Ohm +/-5%",
+    "Part 28 - 330 Ohm +/-5%",
+    "Part 29 - 330 Ohm +/-5%",
+    "Part 30 - 330 Ohm +/-5%",
+    "Part 31 - 330 Ohm +/-5%",
+    "Part 32 - 330 Ohm +/-5%",
+    "Part 33 - 330 Ohm +/-5%",
+    "Part 34 - 330 Ohm +/-5%",
+    "Part 35 - 330 Ohm +/-5%",
+    "Part 36 - 330 Ohm +/-5%",
+    "Part 37 - 330 Ohm +/-5%",
+    "Part 38 - 330 Ohm +/-5%",
+    "Part 39 - 330 Ohm +/-5%",
+    "Part 40 - 330 Ohm +/-5%",
+    "Part 41 - 330 Ohm +/-5%",
+    "Part 42 - 330 Ohm +/-5%",
+    "Part 43 - 330 Ohm +/-5%",
+    "Part 44 - 330 Ohm +/-5%",
+    "Part 45 - 330 Ohm +/-5%",
+    "Part 46 - 330 Ohm +/-5%",
+    "Part 47 - 330 Ohm +/-5%",
+    "Part 48 - 330 Ohm +/-5%",
+    "Part 49 - 330 Ohm +/-5%",
+    "Part 50 - 330 Ohm +/-5%",
+    "Part 51 - 330 Ohm +/-5%",
+    "Part 52 - 330 Ohm +/-5%",
+    "Part 53 - 330 Ohm +/-5%",
+    "Part 54 - 330 Ohm +/-5%",
+    "Part 55 - 330 Ohm +/-5%",
+    "Part 56 - 330 Ohm +/-5%",
+    "Part 57 - 330 Ohm +/-5%",
+    "Part 58 - 330 Ohm +/-5%",
+    "Part 59 - 330 Ohm +/-5%",
+    "Part 60 - 330 Ohm +/-5%",
+    "Part 61 - 330 Ohm +/-5%",
+    "Part 62 - 330 Ohm +/-5%",
+    "Part 63 - 330 Ohm +/-5%",
+    "Part 64 - 330 Ohm +/-5%",
+    "Part 65 - 330 Ohm +/-5%",
+    "Part 66 - 330 Ohm +/-5%",
+    "Part 67 - 330 Ohm +/-5%"
+  ],
+  "limits": {
+    "acquiredResistors": 64,
+    "checkpoints": [
+      0,
+      16,
+      32,
+      64
+    ],
+    "generationActiveOperationMs": 5000,
+    "generationJobMs": 90000,
+    "generationWorkUnits": 640,
+    "heapUsedBytes": 209715200,
+    "historyPageEntries": 50,
+    "inputActionProxySeconds": 5,
+    "maxHistoryPages": 4,
+    "maxScreenshots": 5,
+    "operationSeconds": 720,
+    "q30ExtensionParts": 8,
+    "q30ReadinessObservationSeconds": 180,
+    "removeMeasureInstallCycles": 8,
+    "replacementHeapIncreaseBytes": 33554432,
+    "replayReplacements": 3,
+    "requiredNativeOuterSeconds": 840,
+    "reservedCleanupSeconds": 120,
+    "supplyToggles": 24
+  },
+  "listenerOwnerSourceSha256": {
+    "audit_release.py": "7a76a9ca504eada3a7658dd74ac8851cbcbc10c6d7d45598894fe448aa696324",
+    "private_menu.py": "9d42f39649fc13e5b5820815e75c33731ebb2dc29a48f69763d2cea4a592acab",
+    "receipts.py": "ae22c139fc9834c767aed8d6b2ae3dcdb9e8db010c3721deba3ae34bd1119dd1",
+    "serial_runner.py": "08ce044c8c014ae7bc3b194c07827c8383990b4f950be82137b94dc504f1ebe2",
+    "windows_process_identity.py": "88b18fa7ff41fc006fe9e17dac2aba73cb15c9342bad8b163bedb60bce161017"
+  },
+  "looseMeasurements": [
+    {
+      "canvasBox": {
+        "height": 888,
+        "width": 1440,
+        "x": 0,
+        "y": 112
+      },
+      "canvasPixels": [
+        1440,
+        888
+      ],
+      "display": "330 Ohm",
+      "looseIndex": 0,
+      "observedScrollPixels": 0.0,
+      "publicPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "sourceGuidedClickPoints": [
+        [
+          30.0,
+          921.0
+        ],
+        [
+          158.0,
+          921.0
+        ]
+      ]
+    },
+    {
+      "canvasBox": {
+        "height": 888,
+        "width": 1440,
+        "x": 0,
+        "y": 112
+      },
+      "canvasPixels": [
+        1440,
+        888
+      ],
+      "display": "330 Ohm",
+      "looseIndex": 63,
+      "observedScrollPixels": 10364.0,
+      "publicPartLabel": "Part 67 - 330 Ohm +/-5%",
+      "sourceGuidedClickPoints": [
+        [
+          1258.0,
+          921.0
+        ],
+        [
+          1386.0,
+          921.0
+        ]
+      ]
+    },
+    {
+      "canvasBox": {
+        "height": 888,
+        "width": 1440,
+        "x": 0,
+        "y": 112
+      },
+      "canvasPixels": [
+        1440,
+        888
+      ],
+      "display": "330 Ohm",
+      "looseIndex": 64,
+      "observedScrollPixels": 10548.0,
+      "publicPartLabel": "Part 67 - 330 Ohm +/-5%",
+      "sourceGuidedClickPoints": [
+        [
+          1258.0,
+          921.0
+        ],
+        [
+          1386.0,
+          921.0
+        ]
+      ]
+    },
+    {
+      "canvasBox": {
+        "height": 888,
+        "width": 1440,
+        "x": 0,
+        "y": 112
+      },
+      "canvasPixels": [
+        1440,
+        888
+      ],
+      "display": "330 Ohm",
+      "looseIndex": 64,
+      "observedScrollPixels": 10548.0,
+      "publicPartLabel": "Part 67 - 330 Ohm +/-5%",
+      "sourceGuidedClickPoints": [
+        [
+          1258.0,
+          921.0
+        ],
+        [
+          1386.0,
+          921.0
+        ]
+      ]
+    },
+    {
+      "canvasBox": {
+        "height": 888,
+        "width": 1440,
+        "x": 0,
+        "y": 112
+      },
+      "canvasPixels": [
+        1440,
+        888
+      ],
+      "display": "330 Ohm",
+      "looseIndex": 64,
+      "observedScrollPixels": 10548.0,
+      "publicPartLabel": "Part 67 - 330 Ohm +/-5%",
+      "sourceGuidedClickPoints": [
+        [
+          1258.0,
+          921.0
+        ],
+        [
+          1386.0,
+          921.0
+        ]
+      ]
+    },
+    {
+      "canvasBox": {
+        "height": 888,
+        "width": 1440,
+        "x": 0,
+        "y": 112
+      },
+      "canvasPixels": [
+        1440,
+        888
+      ],
+      "display": "330 Ohm",
+      "looseIndex": 64,
+      "observedScrollPixels": 10548.0,
+      "publicPartLabel": "Part 67 - 330 Ohm +/-5%",
+      "sourceGuidedClickPoints": [
+        [
+          1258.0,
+          921.0
+        ],
+        [
+          1386.0,
+          921.0
+        ]
+      ]
+    },
+    {
+      "canvasBox": {
+        "height": 888,
+        "width": 1440,
+        "x": 0,
+        "y": 112
+      },
+      "canvasPixels": [
+        1440,
+        888
+      ],
+      "display": "330 Ohm",
+      "looseIndex": 64,
+      "observedScrollPixels": 10548.0,
+      "publicPartLabel": "Part 67 - 330 Ohm +/-5%",
+      "sourceGuidedClickPoints": [
+        [
+          1258.0,
+          921.0
+        ],
+        [
+          1386.0,
+          921.0
+        ]
+      ]
+    },
+    {
+      "canvasBox": {
+        "height": 888,
+        "width": 1440,
+        "x": 0,
+        "y": 112
+      },
+      "canvasPixels": [
+        1440,
+        888
+      ],
+      "display": "330 Ohm",
+      "looseIndex": 64,
+      "observedScrollPixels": 10548.0,
+      "publicPartLabel": "Part 67 - 330 Ohm +/-5%",
+      "sourceGuidedClickPoints": [
+        [
+          1258.0,
+          921.0
+        ],
+        [
+          1386.0,
+          921.0
+        ]
+      ]
+    },
+    {
+      "canvasBox": {
+        "height": 888,
+        "width": 1440,
+        "x": 0,
+        "y": 112
+      },
+      "canvasPixels": [
+        1440,
+        888
+      ],
+      "display": "330 Ohm",
+      "looseIndex": 64,
+      "observedScrollPixels": 10548.0,
+      "publicPartLabel": "Part 67 - 330 Ohm +/-5%",
+      "sourceGuidedClickPoints": [
+        [
+          1258.0,
+          921.0
+        ],
+        [
+          1386.0,
+          921.0
+        ]
+      ]
+    },
+    {
+      "canvasBox": {
+        "height": 888,
+        "width": 1440,
+        "x": 0,
+        "y": 112
+      },
+      "canvasPixels": [
+        1440,
+        888
+      ],
+      "display": "330 Ohm",
+      "looseIndex": 64,
+      "observedScrollPixels": 10548.0,
+      "publicPartLabel": "Part 67 - 330 Ohm +/-5%",
+      "sourceGuidedClickPoints": [
+        [
+          1258.0,
+          921.0
+        ],
+        [
+          1386.0,
+          921.0
+        ]
+      ]
+    },
+    {
+      "canvasBox": {
+        "height": 888,
+        "width": 1440,
+        "x": 0,
+        "y": 112
+      },
+      "canvasPixels": [
+        1440,
+        888
+      ],
+      "display": "330 Ohm",
+      "looseIndex": 0,
+      "observedScrollPixels": 0.0,
+      "publicPartLabel": "Part 4 - 330 Ohm +/-5%",
+      "sourceGuidedClickPoints": [
+        [
+          30.0,
+          921.0
+        ],
+        [
+          158.0,
+          921.0
+        ]
+      ]
+    },
+    {
+      "canvasBox": {
+        "height": 888,
+        "width": 1440,
+        "x": 0,
+        "y": 112
+      },
+      "canvasPixels": [
+        1440,
+        888
+      ],
+      "display": "330 Ohm",
+      "looseIndex": 63,
+      "observedScrollPixels": 10364.0,
+      "publicPartLabel": "Part 67 - 330 Ohm +/-5%",
+      "sourceGuidedClickPoints": [
+        [
+          1258.0,
+          921.0
+        ],
+        [
+          1386.0,
+          921.0
+        ]
+      ]
+    }
+  ],
+  "operationSeconds": 128.9297918000084,
+  "outcome": "PASS",
+  "pageEvaluateUsed": false,
+  "pairedBlocks": [
+    {
+      "firstAction": 17,
+      "inputActionProxy": {
+        "count": 10,
+        "maxSeconds": 0.051,
+        "p50Seconds": 0.031,
+        "p95Seconds": 0.051
+      },
+      "lastAction": 29,
+      "name": "fresh-profile-first-owner",
+      "publicState": "Indicator seed0, power OFF, empty tray, all tools closed",
+      "wallSeconds": 0.3443494999955874
+    },
+    {
+      "firstAction": 679,
+      "inputActionProxy": {
+        "count": 10,
+        "maxSeconds": 0.043,
+        "p50Seconds": 0.035,
+        "p95Seconds": 0.043
+      },
+      "lastAction": 691,
+      "name": "warm-profile-third-replay-owner",
+      "publicState": "Indicator seed0, power OFF, empty tray, all tools closed",
+      "wallSeconds": 0.475393200002145
+    }
+  ],
+  "phase": "closed",
+  "playwrightVersion": "1.63.0",
+  "q30InventoryLabels": [
+    "Part 21 - 330 Ohm +/-5%",
+    "Part 22 - 330 Ohm +/-5%",
+    "Part 23 - 330 Ohm +/-5%",
+    "Part 24 - 330 Ohm +/-5%",
+    "Part 25 - 330 Ohm +/-5%",
+    "Part 26 - 330 Ohm +/-5%",
+    "Part 27 - 330 Ohm +/-5%",
+    "Part 28 - 330 Ohm +/-5%"
+  ],
+  "schema": 1,
+  "scope": "U07_FROZEN64_INVENTORY_HISTORY_OWNER_BROWSER_ENVELOPE",
+  "scopeLimitations": [
+    "One desktop/Edge/version and one fresh profile; finite workload, not maximum capacity or population reliability.",
+    "Fresh-profile first-owner and warm-profile third-owner use identical public UI blocks, not a cold/warm corpus.",
+    "CDP metrics and forced GC are browser proxies; they do not prove application retained-object identity or active solver counts.",
+    "Heap growth is measured across three empty successor owners, separately from legitimate retained64 inventory growth.",
+    "Visible successor history/tray/notice checks are stale-state checks; no captured stale private callback is invoked.",
+    "Physical loose probe clicks use published source geometry and actual DOM boxes; screenshots require root visual inspection.",
+    "Q30 extension is only seed10387/eight acquisitions/durable roundtrip; no cold77/warm77 or new generation budget.",
+    "Filechooser.set_files is a real browser filechooser event, not Windows file-dialog keyboard coverage."
+  ],
+  "servedInputInventory": {
+    "afterSha256": "a094335afaa5cc370c21bfe972c45e4755cbf658dad8380dc77905a1ef923b89",
+    "beforeSha256": "a094335afaa5cc370c21bfe972c45e4755cbf658dad8380dc77905a1ef923b89",
+    "fileCount": 1531
+  },
+  "startedUtc": "2026-10-07T21:33:25.568337+00:00",
+  "syntheticDispatchUsed": false
+}

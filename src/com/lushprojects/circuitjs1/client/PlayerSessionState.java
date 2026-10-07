@@ -48,6 +48,8 @@ final class PlayerSessionState {
             if (!part.isOriginal()) throw invalid("Session reconstruction requires fresh inventory");
         if (!sim.getBoardModificationController().isFullyRestored())
             throw invalid("Session reconstruction requires fresh physical connections");
+        Vector<PlayerSessionSave.Operation> history = save.getHistory();
+        validateInventoryPopulation(candidate.getPhysicalBoardRuntime().getPhysicalParts().size(), history);
         restoringOwner = sim;
         try {
             sim.setBoardPowerState(BoardPowerState.UNPOWERED);
@@ -56,7 +58,7 @@ final class PlayerSessionState {
                 throw invalid("Session reconstruction failed to isolate its sources");
             restart(sim, candidate);
             int index = 0;
-            for (PlayerSessionSave.Operation operation : save.getHistory()) {
+            for (PlayerSessionSave.Operation operation : history) {
                 requirePrivateOwner(sim, candidate);
                 checkpoint(sim);
                 replay(sim, candidate, operation);
@@ -85,6 +87,17 @@ final class PlayerSessionState {
         } finally {
             restoringOwner = null;
         }
+    }
+
+    /** All acquired parts remain owned across removal and reset; reject before replay mutates. */
+    static void validateInventoryPopulation(int originalParts, Vector<PlayerSessionSave.Operation> history) {
+        if (originalParts < 0 || originalParts > PlayerSessionSave.MAX_PARTS || history == null)
+            throw invalid("Session parts inventory exceeds the supported limit");
+        int retained = originalParts;
+        for (PlayerSessionSave.Operation operation : history)
+            if (("ACQUIRE".equals(operation.kind) || "CATALOG".equals(operation.kind)) &&
+                    ++retained > PlayerSessionSave.MAX_PARTS)
+                throw invalid("Session parts inventory exceeds the supported limit");
     }
 
     private static void replay(CirSim sim, GeneratedBoardInstance owner,

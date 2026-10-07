@@ -4,6 +4,19 @@ import java.util.Vector;
 
 /** Value-only committed player operations. Private qualification never enters this history. */
 final class PlayerSessionHistory {
+    static final int PAGE_SIZE = 50;
+
+    /** A bounded copy for presentation; the complete journal remains authoritative. */
+    static final class Page {
+        final int offset, total;
+        final Vector<PlayerSessionSave.Operation> operations;
+        Page(int offset, int total, Vector<PlayerSessionSave.Operation> operations) {
+            this.offset = offset; this.total = total; this.operations = operations;
+        }
+        int previousOffset() { return offset == 0 ? -1 : offset - PAGE_SIZE; }
+        int nextOffset() { return total - offset > PAGE_SIZE ? offset + PAGE_SIZE : -1; }
+    }
+
     private final Vector<PlayerSessionSave.Operation> operations = new Vector<PlayerSessionSave.Operation>();
     private boolean active;
 
@@ -15,6 +28,21 @@ final class PlayerSessionHistory {
     Vector<PlayerSessionSave.Operation> operations() {
         return new Vector<PlayerSessionSave.Operation>(operations);
     }
+    int size() { return operations.size(); }
+
+    /** -1 selects the latest page. Other offsets name fixed chronological pages. */
+    Page page(int offset) {
+        int total = operations.size();
+        int last = total == 0 ? 0 : ((total - 1) / PAGE_SIZE) * PAGE_SIZE;
+        if (offset == -1) offset = last;
+        if (offset < 0 || offset > last || offset % PAGE_SIZE != 0)
+            throw new IllegalArgumentException("This history page is unavailable.");
+        int count = Math.min(PAGE_SIZE, total - offset);
+        Vector<PlayerSessionSave.Operation> entries = new Vector<PlayerSessionSave.Operation>(count);
+        for (int i = 0; i < count; i++) entries.add(operations.get(offset + i));
+        return new Page(offset, total, entries);
+    }
+
     private boolean records(CirSim sim) { return active && !sim.developerVerifierRunning; }
 
     void record(CirSim sim, String kind, String owner, String argument, String result) {

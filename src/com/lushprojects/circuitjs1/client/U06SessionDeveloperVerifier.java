@@ -26,6 +26,13 @@ final class U06SessionDeveloperVerifier {
     private long actionsMillis;
     private boolean finished;
     private int inputCount, fuseFixtureCount;
+    private boolean u07;
+    private int u07Restores;
+    private final JSONArray u07Inventories = new JSONArray();
+    private PcbWorkbenchController u07Workbench;
+    private SolverTimeObservationService.Subscription u07Scope;
+    private SolverExecutionBoundary.Observation u07Observation;
+    private ProbeTarget u07Probe;
 
     private U06SessionDeveloperVerifier(CirSim sim) { this.sim = sim; }
 
@@ -42,6 +49,16 @@ final class U06SessionDeveloperVerifier {
             verifier.report.put("replay", new JSONString(verifier.request.replay()));
             verifier.report.put("playerInputEvidence", JSONBoolean.getInstance(false));
             verifier.report.put("damageFixtures", new JSONString("controlled state injection"));
+            verifier.u07 = new QueryParameters().getBooleanValue("tsjU07", false);
+            if (verifier.u07) {
+                verifier.check("LED_INDICATOR".equals(family) && "0".equals(seed),
+                    "U07 frozen workload requires LED_INDICATOR seed zero");
+                verifier.report.put("u07Workload", new JSONString("inventory96-restore3-observation32-v1"));
+                verifier.report.put("damageFixtures", new JSONString("none in U07 workload"));
+                verifier.report.put("u07Inventories", verifier.u07Inventories);
+                verifier.report.put("u07RetentionScope", new JSONString(
+                    "reachable-owner and graph census; verifier deliberately retains predecessor references; no heap-collection or visible-input claim"));
+            }
             verifier.codec();
             sim.setSimRunning(false);
             if (sim.generationCoordinator == null) sim.generationCoordinator = new GenerationCoordinator(sim);
@@ -67,7 +84,9 @@ final class U06SessionDeveloperVerifier {
                     if (finished) return;
                     long began = System.currentTimeMillis();
                     try {
-                        if ("invalid-signature-restore".equals(label)) {
+                        if ("u07-inventory-overflow".equals(label)) {
+                            u07Rejected(job, published);
+                        } else if ("invalid-signature-restore".equals(label)) {
                             rejected(job, published);
                         } else if ("cancel-session-restore".equals(label)) {
                             cancelled(job, published);
@@ -77,7 +96,9 @@ final class U06SessionDeveloperVerifier {
                             check(sim.getGeneratedBoardInstance() == published &&
                                 sim.getGeneratedChallengeController().isReady() && sim.isGeneratedRuntimeSettled(),
                                 label + " actionable owner");
-                            if (value == null) prepare(); else restored(published);
+                            if (u07) {
+                                if (value == null) u07Prepare(); else u07Restored(published);
+                            } else if (value == null) prepare(); else restored(published);
                         }
                     } catch (Throwable failure) { fail(failure); }
                     finally { actionsMillis += Math.max(0, System.currentTimeMillis() - began); publish(finished ?
@@ -88,6 +109,178 @@ final class U06SessionDeveloperVerifier {
         if (value == null) sim.generationCoordinator.start(request.generation(), completion, true);
         else sim.generationCoordinator.startSessionRestore(request.generation(), value, completion);
         if ("cancel-session-restore".equals(label)) awaitPrivateCancellation();
+    }
+
+    private void u07Prepare() {
+        phase = "u07-inventory-growth";
+        beforeOwner = sim.getGeneratedBoardInstance();
+        PhysicalBoardRuntime runtime = beforeOwner.getPhysicalBoardRuntime();
+        runtime.getSessionHistory().start();
+        sim.developerVerifierRunning = false;
+        sim.setBoardPowerState(BoardPowerState.UNPOWERED); settle("U07 isolation");
+        for (PhysicalBoardRuntimeCapability capability : runtime.getCapabilities())
+            if (capability instanceof ReplaceableResistorBoardCapability) {
+                resistorComponent = ((ReplaceableResistorBoardCapability)capability).getSlot().getComponentId();
+                break;
+            }
+        check(resistorComponent != null, "U07 fixture has a replaceable resistor");
+        WorkbenchPartsProvider shop = runtime.getWorkbenchPartsProvider(resistorComponent);
+        PhysicalSlotMutationProvider provider = runtime.getMutationProvider(resistorComponent);
+        check(provider instanceof CatalogAcquisitionProvider && shop != null && !shop.getCatalogEntries().isEmpty(),
+            "U07 fixture supports real catalog acquisition");
+        resistorCatalogEntry = shop.getCatalogEntries().firstElement().getId();
+        PhysicalPart<?> original = runtime.getInstalledPart(resistorComponent), first = null;
+        report.put("u07OriginalParts", new JSONNumber(runtime.getPartOrder().size()));
+        while (runtime.getPartOrder().size() < PlayerSessionSave.MAX_PARTS) {
+            PhysicalPart<?> acquired = ((CatalogAcquisitionProvider)provider).acquireFromCatalog(resistorCatalogEntry);
+            if (first == null) first = acquired;
+            settle("U07 retained acquisition");
+        }
+        check(first != null && original != null, "U07 retained stock and original are distinct");
+        for (int cycle = 0; cycle < 16; cycle++) {
+            check(provider.removeInstalledPart(), "U07 repeated removal committed"); settle("U07 removal");
+            check(provider.install((cycle % 2 == 0 ? first : original).getId()),
+                "U07 repeated retained-part installation committed"); settle("U07 installation");
+        }
+        sim.resetAction(); settle("U07 retained inventory reset");
+        sim.developerVerifierRunning = true;
+        u07Census();
+        u07StartRestore();
+    }
+
+    private void u07Census() {
+        GeneratedBoardInstance owner = sim.getGeneratedBoardInstance();
+        PhysicalBoardRuntime runtime = owner.getPhysicalBoardRuntime();
+        Vector<CircuitElm> activeBacking = new Vector<CircuitElm>(), inactiveBacking = new Vector<CircuitElm>();
+        Vector<PhysicalResistorPart> purchases = new Vector<PhysicalResistorPart>();
+        int loose = 0, terminals = 0;
+        check(runtime.getPartOrder().size() == PlayerSessionSave.MAX_PARTS,
+            "U07 all 96 retained parts survive actions reset and reconstruction");
+        for (PhysicalPart<?> part : runtime.getPhysicalParts()) {
+            if (!part.isInstalled()) loose++;
+            if (!part.isOriginal() && part instanceof PhysicalResistorPart && !part.isInstalled())
+                purchases.add((PhysicalResistorPart)part);
+            for (CircuitElm element : part.getElectricalBacking().getCircuitElements()) {
+                Vector<CircuitElm> population = sim.elmList.contains(element) ? activeBacking : inactiveBacking;
+                if (!population.contains(element)) population.add(element);
+            }
+            for (PhysicalPartTerminal terminal : part.getTerminals()) {
+                check(terminal.getEndpoint() instanceof CircuitPostMeasurementEndpoint,
+                    "U07 physical terminal retains a real CircuitJS endpoint");
+                CircuitPostMeasurementEndpoint endpoint = (CircuitPostMeasurementEndpoint)terminal.getEndpoint();
+                check(sim.elmList.contains(endpoint.getElement()) && endpoint.getPostIndex() >= 0 &&
+                    endpoint.getPostIndex() < endpoint.getElement().getPostCount(),
+                    "U07 retained terminal backing remains in the active graph");
+                terminals++;
+            }
+        }
+        check(purchases.size() > 2, "U07 has first middle and last loose purchased resistors");
+        for (int index : new int[] { 0, purchases.size() / 2, purchases.size() - 1 }) {
+            PhysicalResistorPart part = purchases.get(index);
+            double measured = sim.measureResistance(
+                (CircuitPostMeasurementEndpoint)part.getTerminal(0).getEndpoint(),
+                (CircuitPostMeasurementEndpoint)part.getTerminal(1).getEndpoint());
+            double expected = part.getSpecification().getNominalResistanceOhms();
+            check(!Double.isNaN(measured) && Math.abs(measured - expected) <= expected * .01,
+                "U07 first middle and last retained resistor have real isolated readings");
+            check(!sim.activeMeasurementOverlay && sim.isActiveMeasurementSolverRestoredForDeveloperVerification(),
+                "U07 retained-part measurement releases its temporary graph");
+            settle("U07 loose-part measurement");
+        }
+        PhysicalResistorPart observed = purchases.firstElement();
+        SolverTimeObservationService.Subscription bounded = sim.solverTimeObservations.subscribe(
+            (CircuitPostMeasurementEndpoint)observed.getTerminal(0).getEndpoint(),
+            (CircuitPostMeasurementEndpoint)observed.getTerminal(1).getEndpoint(), 32, false);
+        try {
+            sim.solverExecutor.advanceSteps(128);
+            check(bounded.getSampleCount() == 32, "U07 real 128-step waveform retains exactly 32 samples");
+            sim.solverExecutor.advanceSteps(128);
+            check(bounded.getSampleCount() == 32, "U07 second real waveform batch cannot grow the ring");
+        } finally { sim.solverTimeObservations.unsubscribe(bounded); }
+        check(bounded.isClosed() && bounded.getSampleCount() == 0,
+            "U07 unsubscribed waveform releases its retained samples");
+        JSONObject row = new JSONObject();
+        row.put("restore", new JSONNumber(u07Restores)); row.put("parts", new JSONNumber(runtime.getPartOrder().size()));
+        row.put("loose", new JSONNumber(loose)); row.put("terminals", new JSONNumber(terminals));
+        row.put("activeGraphElements", new JSONNumber(sim.elmList.size()));
+        row.put("activePartBacking", new JSONNumber(activeBacking.size()));
+        row.put("inactivePartBacking", new JSONNumber(inactiveBacking.size()));
+        row.put("history", new JSONNumber(runtime.getSessionHistory().operations().size()));
+        row.put("waveformCapacity", new JSONNumber(32)); u07Inventories.set(u07Inventories.size(), row);
+    }
+
+    private void u07StartRestore() {
+        beforeOwner = sim.getGeneratedBoardInstance();
+        u07Workbench = sim.pcbWorkbenchController;
+        Vector<String> pads = beforeOwner.getPhysicalBoardRuntime().getSlot(resistorComponent).getPadIds();
+        u07Probe = new BoardPadProbeTarget(sim, beforeOwner, pads.get(0), u07Workbench.getRenderer());
+        ProbeTarget black = new BoardPadProbeTarget(sim, beforeOwner, pads.get(1), u07Workbench.getRenderer());
+        check(u07Probe.isValid() && black.isValid(), "U07 active owner has valid physical scope targets");
+        sim.instrumentController.clearTargets();
+        sim.instrumentController.activateScopeModeForDeveloperVerification();
+        sim.instrumentController.handlePointerInput(com.google.gwt.dom.client.NativeEvent.BUTTON_LEFT, u07Probe);
+        sim.instrumentController.handlePointerInput(com.google.gwt.dom.client.NativeEvent.BUTTON_RIGHT, black);
+        u07Scope = sim.instrumentController.getScopeSubscriptionForDeveloperVerification();
+        check(u07Scope != null && !u07Scope.isClosed(), "U07 normal scope strategy owns a live subscription");
+        sim.solverExecutor.advanceSteps(64);
+        u07Observation = sim.solverExecutor.observation(beforeOwner);
+        check(u07Observation != null && u07Scope.getSampleCount() > 0,
+            "U07 owner replacement starts with a real solved receipt and waveform");
+        saved = PlayerSessionState.capture(sim, request,
+            beforeOwner.getPhysicalBoardRuntime().getSessionHistory().operations(), "u07-compiled");
+        saved = PlayerSessionSave.parse(saved.encode());
+        before = new Snapshot(sim);
+        generate(saved, "u07-owner-restore-" + (u07Restores + 1));
+    }
+
+    private void u07Restored(GeneratedBoardInstance owner) {
+        phase = "u07-owner-release";
+        check(owner != beforeOwner && sim.elmList != before.graph &&
+            owner.getPhysicalBoardRuntime() != before.runtime, "U07 restore publishes distinct graph and runtime owners");
+        for (CircuitElm element : before.graph)
+            check(!sim.elmList.contains(element), "U07 successor graph contains no predecessor element");
+        check(beforeOwner.getExternalPowerBindings().areAllDisconnected() &&
+            !u07Workbench.isAttachedToSidebarForDeveloperVerification() &&
+            !u07Workbench.hasPendingViewFrameForDeveloperVerification() &&
+            sim.getAttachedPcbWorkbenchCountForDeveloperVerification() == 1,
+            "U07 replaced owner releases power attached workbench and queued view frame");
+        check(!u07Probe.isValid() && u07Scope.isClosed() && u07Scope.getSampleCount() == 0 &&
+            !sim.solverExecutor.isCurrent(u07Observation, owner),
+            "U07 replaced owner retires probe scope subscription and solved receipt");
+        check(!sim.generationCoordinator.retainsSavedOwnersForDeveloperVerification() &&
+            !FreshGeneratedRuntimeInstallation.isInProgress(sim) && !PlayerSessionState.isRestoring(sim),
+            "U07 completed generation releases protected owners and reconstruction scopes");
+        before.compare(new Snapshot(sim), this);
+        check(saved.stateSignature.equals(PlayerSessionState.semanticSignature(sim)),
+            "U07 repeated reconstruction preserves complete semantic signature");
+        u07Restores++; u07Census();
+        if (u07Restores < 3) { u07StartRestore(); return; }
+        sim.instrumentController.clearTargets();
+        beforeOwner = owner; before = new Snapshot(sim);
+        Vector<PlayerSessionSave.Operation> overflow = saved.getHistory();
+        // If replay starts before preflight, this deliberately invalid first command wins.
+        overflow.insertElementAt(new PlayerSessionSave.Operation("REMOVE", "NO_SUCH_COMPONENT", "NO_SUCH_PART", ""), 0);
+        overflow.add(new PlayerSessionSave.Operation("ACQUIRE", resistorComponent, resistorCatalogEntry, "OVERFLOW_PART"));
+        PlayerSessionSave invalid = new PlayerSessionSave(saved.replay, saved.build, saved.realization,
+            saved.stateSignature, overflow, saved.getSources(), saved.getStress(), saved.getFuses());
+        generate(PlayerSessionSave.parse(invalid.encode()), "u07-inventory-overflow");
+    }
+
+    private void u07Rejected(GenerationJob job, GeneratedBoardInstance published) {
+        phase = "u07-complete";
+        boolean capacityFailure = false;
+        for (Throwable problem = job.getFailure(); problem != null; problem = problem.getCause())
+            if ("Session parts inventory exceeds the supported limit".equals(problem.getMessage())) capacityFailure = true;
+        check(published == null && job.getOutcome() == GenerationJob.Outcome.PROGRAMMING_FAILURE &&
+            job.getStage() == GenerationJob.Stage.PUBLISH && capacityFailure,
+            "U07 97-part artifact rejects before its first replay command");
+        check(sim.getGeneratedBoardInstance() == beforeOwner && sim.elmList == before.graph &&
+            sim.getGeneratedChallengeController() == before.challenge && sim.isGeneratedRuntimeSettled() &&
+            !sim.generationCoordinator.retainsSavedOwnersForDeveloperVerification(),
+            "U07 overflow rejection preserves predecessor and releases private owners");
+        before.compare(new Snapshot(sim), this);
+        report.put("u07Restores", new JSONNumber(u07Restores));
+        finished = true;
     }
 
     private void prepare() {

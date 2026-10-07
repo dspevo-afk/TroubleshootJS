@@ -1,0 +1,16 @@
+{
+  "cases": [
+    {
+      "expectedState": "PASS",
+      "name": "U07 retained inventory and owner lifecycle",
+      "path": "circuitjs.html?tsjDebug=true&tsjVerifyU06=true&tsjU06Family=LED_INDICATOR&tsjU06Seed=0&tsjU07=true",
+      "reportAttribute": "data-tsj-u06-report",
+      "stateAttribute": "data-tsj-u06-state",
+      "terminalPrefixes": [
+        "PASS",
+        "FAIL"
+      ],
+      "timeoutSeconds": 180
+    }
+  ]
+}

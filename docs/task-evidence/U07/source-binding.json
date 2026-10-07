@@ -1,0 +1,43 @@
+{
+  "build-r1": {
+    "currentInputDifferences": [
+      "war/tsj-workbench-ui.css"
+    ],
+    "launchSha256": "f3c6de3065b714f5da6dd4880d51f593ebb74f5ac98f4c6ea64d817716d09620",
+    "resultSha256": "a2d55d6ce3ac2a57575806efbbbe1f6f1ecb97c83219fc3cfc02358423ea455a",
+    "reuseBoundary": "Only static history number-gutter CSS may differ; all Java/GWT inputs, scripts, tests and JS unchanged.",
+    "sourceFiles": 1294
+  },
+  "compiled-r2": {
+    "currentInputDifferences": [
+      "war/tsj-workbench-ui.css"
+    ],
+    "launchSha256": "bc62cb21293b57901670d6490c0a9f9cc212a50d87967f509da2aef6f537bde5",
+    "resultSha256": "60d884a9c61f47a03add5c48f731d2e5514c1735d6384f259a07f19f67fb2c67",
+    "reuseBoundary": "Only static history number-gutter CSS may differ; all Java/GWT inputs, scripts, tests and JS unchanged.",
+    "sourceFiles": 1294
+  },
+  "native-r2": {
+    "currentInputDifferences": [
+      "war/tsj-workbench-ui.css"
+    ],
+    "launchSha256": "b74f29bcd54a77ce90eab2ad697199d2fa4ddb885bd83faf5581779924f103a3",
+    "resultSha256": "367ce14795994b759db9b2628fc070cfffaba4b5b0557b66174d4cf4520b1b3e",
+    "reuseBoundary": "Only static history number-gutter CSS may differ; all Java/GWT inputs, scripts, tests and JS unchanged.",
+    "sourceFiles": 1294
+  },
+  "visual-r3": {
+    "currentInputDifferences": [],
+    "launchSha256": "7cc477c39f45c1970340126cd990111b3b52c4b7ddda53a65b5534c9a1557c7f",
+    "resultSha256": "16e4980bca572b8cf36df9e62c86b8e0e62b16f52ffd37e67acb93a9c205b057",
+    "reuseBoundary": "Only static history number-gutter CSS may differ; all Java/GWT inputs, scripts, tests and JS unchanged.",
+    "sourceFiles": 1294
+  },
+  "visual-r4": {
+    "currentInputDifferences": [],
+    "launchSha256": "8df07434aafe1572705fecc041439c948fa08f5bf398da77220a1aa0c1eb978c",
+    "resultSha256": "4d7faeeaa6e221ee617cde549a67e20303bc54b2638846c8d4e9d57dbcf1e90f",
+    "reuseBoundary": "Only static history number-gutter CSS may differ; all Java/GWT inputs, scripts, tests and JS unchanged.",
+    "sourceFiles": 1294
+  }
+}

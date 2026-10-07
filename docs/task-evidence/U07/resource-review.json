@@ -1,0 +1,34 @@
+{
+  "automatedAuditStatus": "BLOCKED",
+  "automatedBlockersPreserved": [
+    "Application started without available recorded identity: u07-compiled-r1"
+  ],
+  "counts": {
+    "evidenceFiles": 59,
+    "portStates": {
+      "CLOSED": 5
+    },
+    "processStates": {
+      "ABSENT": 75,
+      "REUSED_PID_RECORDED_INSTANCE_ABSENT": 4
+    },
+    "recordedInstances": 79,
+    "recordedPorts": 5
+  },
+  "evidenceDeleted": false,
+  "explanation": "compiled-r1 wrote run-start.json before browser startup. It started an in-process HTTP server, then raised the missing-Playwright import error before Playwright.start, browser creation, page navigation or application execution. Zero cases ran. The server cleanup passed, its owned native job ended with zero processes and closed handles, and that exact recorded process is absent in the final query. A browser identity receipt does not exist because no browser launched. The original BLOCKED audit remains unchanged.",
+  "priorAttemptHostSha256": "8c1bf07b27d985608999106132b92f42f6bba92dad2b6785fe522615858739e4",
+  "priorAttemptResultSha256": "dc29d9b2e975a785813722a2a88498e427454b7c0653dc0bf17c4e2f3f19c1e2",
+  "rawAuditSha256": "d317acfc33aa60ca4826acdf5fefdef2a8f71ab1da29e83ad14704a5bb0dadfc",
+  "recordedResources": "ABSENT_AND_PORTS_CLOSED",
+  "resourceTerminationUsed": false,
+  "rootDisposition": "Accepted resource release; pre-browser receipt gap explained by hash-bound source and completed native job.",
+  "scope": "All recorded U07 process instances and task ports at the final observation; no whole-PC claim.",
+  "sourceOrdering": {
+    "browserStartupLines": "868-873",
+    "file": "tests/browser/compiled_attribute_acceptance.py",
+    "preBrowserFailureLine": 867,
+    "serverStartLines": "859-864",
+    "sha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839"
+  }
+}
