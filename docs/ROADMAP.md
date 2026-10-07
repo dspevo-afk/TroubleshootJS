@@ -34,12 +34,12 @@ new cold cohort/global PC change/restart. See [checkpoint](CODEX_TASK_REPORT.md)
 and [current packet](task-evidence/Q30/qualification-workflow/menu-diagnosis-20261005/README.md).
 
 **Historical verifier timing continuation (2026-10-05):** Fresh pre-fix native 83/append 26,
-standard/isolated GWT 5, four canaries and source archive passed, then full
+standard/isolated GWT5, four canaries and source archive passed, then full
 compiled 31 failed 20 positive D01 charged-relay preconditions before proof;
 ten core cases and original seed 35 typed rejection passed. Full failures retained.
 Developer-only fix captures the real charged graph before ordinary settlement,
 runs the first bounded cursor unit, records settlement separately, and requires
-final actual physical readiness. Native 2/GWT 5/focused 20/30/40 plus 35 compiled
+final actual physical readiness. Native 2/GWT5/focused 20/30/40 plus 35 compiled
 fixtures and maintained semantic audit PASS; exact recorded resource release
 PASS. No production physics, thresholds, solver cadence, 90s/640/5s caps or
 save/replay change. Full gates require fresh source binding after this edit;
@@ -333,7 +333,7 @@ remain pending. No push/merge/email/evidence deletion.
 [phase/harness evidence](task-evidence/Q30/epoch15-root75-phase-and-harness-review/README.md).
 
 **Historical post-P09 Quick Play qualification:** The nine families then current used fresh signed-long candidates and real placement/routing. Nineteen affected native suites, 144 structural cases, 18 actual launches, exact replay/cancellation/privacy/shop and compiled mutation/relay/generation gates passed. EASY/MEDIUM content eligibility remains; HARD/PSYCHOTIC are not unlocked. [Evidence at that checkpoint](task-evidence/ProceduralFamilies/README.md).
-**Quick Play uniqueness qualification (2026-09-19):** Every family/profile selectable at that checkpoint had bounded procedural New Board candidates, recent-root and physical duplicate guards, and single-candidate exact replay. The then-menu-discovered nine-pair, 180-board matrix had 20 distinct placements and merged copper patterns per pair with no structural rejects. Final native55, GWT 5, 27/27 visible New Board launches, two exact replays and face-view evidence passed. That content spanned 3–16 parts; HARD/PSYCHOTIC and larger families remain unqualified. This historical matrix did not include the later SENSOR_CONTROL family; that checkpoint's catalog had ten family/profile pairs. [Historical audit, timings and limits](task-evidence/QuickPlayUnique/README.md).
+**Quick Play uniqueness qualification (2026-09-19):** Every family/profile selectable at that checkpoint had bounded procedural New Board candidates, recent-root and physical duplicate guards, and single-candidate exact replay. The then-menu-discovered nine-pair, 180-board matrix had 20 distinct placements and merged copper patterns per pair with no structural rejects. Final native55, GWT5, 27/27 visible New Board launches, two exact replays and face-view evidence passed. That content spanned 3–16 parts; HARD/PSYCHOTIC and larger families remain unqualified. This historical matrix did not include the later SENSOR_CONTROL family; that checkpoint's catalog had ten family/profile pairs. [Historical audit, timings and limits](task-evidence/QuickPlayUnique/README.md).
 **Historical ten-pair catalog verification (2026-09-23):** The rebuilt production browser matrix passed three launches for each family/profile pair then current, including SENSOR_CONTROL/EASY, plus exact replay, power isolation, privacy and owned cleanup. A visible ordinary menu launch of an exact Sensor Control seed reached the Customer ticket, and a separate visible repair flow reached a passing customer retest. This remains fresh evidence for the ten-pair catalog at that checkpoint, not a rewrite of the 2026-09-19 nine-pair/180-board qualification. [Current matrix receipt](task-evidence/D01/quickplay-procedural-matrix.json) and [Sensor Control evidence](task-evidence/E04/README.md).
 **Q30 review correction (2026-09-27):** The completion claim in `97e0727`
 is rejected. Its 300-second production allowance was not authorized; the
@@ -359,13 +359,13 @@ times are 86.809, 93.243 and 82.580 seconds; seed 13 still fails 90 seconds.
 These private measurements preserve full proof parity and do not establish
 normal-corpus acceptance or sufficient margin. Scale remains 33/35/37.
 
-**P09 qualification (2026-09-16):** `THT_SINGLE_FACE@1` is enforced at normal installation/admission/publication with unchanged geometry/electrical/diagnostic requirements. Clean native48, integrated native9, both GWT 5 builds, RC/Q15 and real normal menu/navigation/privacy checks pass. Frozen held-out structural results retain ten passes and two explicit rejections. Production two-layer/via/link adoption is rejected for this epoch. [Evidence and limits](task-evidence/P09/README.md).
-**P08 qualification:** The evidence-selected interval broad phase, immutable copper/view caches and exact solver-partition projection are qualified. Current brute-force parity and 2,022 adversarial assertions pass; 15/30/56/100 mixed inventories and dense contact work are measured. Full native46, both GWT 5 builds and 13 compiled browser runs pass. P09 is now separately qualified; P08 itself does not imply normal large-board/layer-strategy adoption. [P08 evidence](task-evidence/P08/README.md).
+**P09 qualification (2026-09-16):** `THT_SINGLE_FACE@1` is enforced at normal installation/admission/publication with unchanged geometry/electrical/diagnostic requirements. Clean native48, integrated native9, both GWT5 builds, RC/Q15 and real normal menu/navigation/privacy checks pass. Frozen held-out structural results retain ten passes and two explicit rejections. Production two-layer/via/link adoption is rejected for this epoch. [Evidence and limits](task-evidence/P09/README.md).
+**P08 qualification:** The evidence-selected interval broad phase, immutable copper/view caches and exact solver-partition projection are qualified. Current brute-force parity and 2,022 adversarial assertions pass; 15/30/56/100 mixed inventories and dense contact work are measured. Full native46, both GWT5 builds and 13 compiled browser runs pass. P09 is now separately qualified; P08 itself does not imply normal large-board/layer-strategy adoption. [P08 evidence](task-evidence/P08/README.md).
 **P07 qualification (2026-09-15):** The required developer-only four-policy comparison and real plated-via/top-bottom probe bench are qualified. All 54 structural rows are retained; six prototype RB30 requests succeed, while the frozen 56/100 requests reject within bounds. Normal adoption is not qualified by P09. [P07 evidence](task-evidence/P07/README.md). P08 is now separately qualified.
 **P06 qualification (2026-09-15):** The real finite-link prototype, explicit insulated underpass, physical service/probes, bounded sparse policy and matched no-link comparisons are qualified. Normal adoption is not qualified by P09. See [P06 evidence](task-evidence/P06/README.md). P07 is now separately qualified.
 **P05 qualification (2026-09-15):** Bounded routing recovery is complete on the existing branch, with unrelated visual work preserved. See [P05 evidence](task-evidence/P05/README.md). P06 and P07 are now separately qualified; the post-P09 Quick Play gate is now separately qualified for RB15_CONTROL/EASY.
 
-**Accepted alpha checkpoint:** **U04 / U05 / REL-A COMPLETE.** Typed sessions, initial computed EASY/MEDIUM profiles and limited low-voltage desktop alpha are qualified, with mandatory eleven-seed normal RB15 admission, the full website catalog, compatible purchased-part installation, Windows launcher recovery and exact meter endpoint fixes. Final GWT 5/native33, Alpha38, Q15all11/66 copper readings, affected compiled/strict/negative gates and actual repair/retest/replay/privacy/focus flows pass. Human attempts and uncertainty remain qualitative evidence; no population difficulty or arbitrary-seed guarantee is claimed. The separately authorized visual pass is completed in its own commit, documented below. U02/U03 add bounded solver-time AC/scope observation; E02/E04/D01 now qualify rails, sensor control and static proof partitions; Q30 is BLOCKED / NOT ACCEPTED; **U06 and U07 remain unstarted pending Q30.** [Evidence and limits](task-evidence/REL-A/README.md).
+**Accepted alpha checkpoint:** **U04 / U05 / REL-A COMPLETE.** Typed sessions, initial computed EASY/MEDIUM profiles and limited low-voltage desktop alpha are qualified, with mandatory eleven-seed normal RB15 admission, the full website catalog, compatible purchased-part installation, Windows launcher recovery and exact meter endpoint fixes. Final GWT5/native33, Alpha38, Q15all11/66 copper readings, affected compiled/strict/negative gates and actual repair/retest/replay/privacy/focus flows pass. Human attempts and uncertainty remain qualitative evidence; no population difficulty or arbitrary-seed guarantee is claimed. The separately authorized visual pass is completed in its own commit, documented below. U02/U03 add bounded solver-time AC/scope observation; E02/E04/D01 now qualify rails, sensor control and static proof partitions; Q30 is BLOCKED / NOT ACCEPTED; **U06 and U07 remain unstarted pending Q30.** [Evidence and limits](task-evidence/REL-A/README.md).
 **Roadmap clarification (2026-09-14):** The post-P09 Procedural Quick Play Admission Gate now explicitly requires fresh arbitrary candidate signed-long seeds within qualified families/envelopes, bounded rejection/retry, exact accepted-seed replay, and population/layout-diversity evidence before normal-medium procedural qualification proceeds. This is a documentation/product-contract clarification only: REL-A remains curated/bounded, no generator or Quick Play production behavior is changed here, this clarification did not implement P05. P05 is now separately qualified below.
 
 **Completed post-release correction:** The authorized visual pass and fault-blind serviceability correction are qualified in the completion commit containing this update. All nine playable families have real supported part-service ownership. Fresh GWT33 build, Q15/native proof repair and actual menu/progress/measure/drag/shop/repair/retest flow pass; unaffected GWT32 and native31 results are explicitly reused under input audits. [Final evidence and limitations](task-evidence/visual-productization/final33/README.md). **P05 is now separately qualified; see its evidence below.**
@@ -1561,7 +1561,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### P05 · Bounded rerouting and congestion recovery
 
-**Status:** COMPLETE. Five bounded deterministic orderings and conflict-informed local rip-up/reroute preserve private occupancy until final legal publication. Frozen fixed-placement acceptance improves 14/70 to 24/70; full generation improves 11/13 to 13/13. Exact occupancy, true exhaustion, determinism, P03/P04/correspondence, both final GWT 5 builds, compiled layout/Q15 and normal-player input pass. Search-cost and per-seed area regressions remain explicit. [Evidence, bounds and limitations](task-evidence/P05/README.md).
+**Status:** COMPLETE. Five bounded deterministic orderings and conflict-informed local rip-up/reroute preserve private occupancy until final legal publication. Frozen fixed-placement acceptance improves 14/70 to 24/70; full generation improves 11/13 to 13/13. Exact occupancy, true exhaustion, determinism, P03/P04/correspondence, both final GWT5 builds, compiled layout/Q15 and normal-player input pass. Search-cost and per-seed area regressions remain explicit. [Evidence, bounds and limitations](task-evidence/P05/README.md).
 
 **Hard prerequisites:** [P04](#m-p04)
 
@@ -1655,7 +1655,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 **Status:** COMPLETE - SCALE/CACHE QUALIFIED.
 
-**Qualification:** The interval broad phase preserves exact contact/clearance predicates and agrees with a test-only all-pairs oracle. Changed snapshots rebuild full connectivity; single-entry projections use exact ownership, every view value, face and policy. The current suite passes 2,022 assertions, including stale arrays/pose/package/layer/policy, deleted vias, nonlocal contact and cut-split negatives. Eight scale rows include mixed 15/30/56/100 inventories on validation-only trees and dense 128-segment copper retaining all 8,128 comparisons. Full native46/oracles, both GWT 5 builds and 13 compiled browser runs pass. JVM timings are not FPS; production large-board/layer-strategy admission remains P09. [Evidence and limits](task-evidence/P08/README.md).
+**Qualification:** The interval broad phase preserves exact contact/clearance predicates and agrees with a test-only all-pairs oracle. Changed snapshots rebuild full connectivity; single-entry projections use exact ownership, every view value, face and policy. The current suite passes 2,022 assertions, including stale arrays/pose/package/layer/policy, deleted vias, nonlocal contact and cut-split negatives. Eight scale rows include mixed 15/30/56/100 inventories on validation-only trees and dense 128-segment copper retaining all 8,128 comparisons. Full native46/oracles, both GWT5 builds and 13 compiled browser runs pass. JVM timings are not FPS; production large-board/layer-strategy admission remains P09. [Evidence and limits](task-evidence/P08/README.md).
 
 **Hard prerequisites:** [P02](#m-p02), [P04](#m-p04), [A01](#m-a01)
 
@@ -1893,7 +1893,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### U06 · Semantic history, durable resume and distinct sharing contracts
 
-**Status:** PASS (2026-10-06). Current-format restart save/history accepted for the measured fixtures after final native19, production GWT 5, compiled11 plus sensor regression and actual visible durable-file/repair gates. Format capacity, long-session and broad browser claims remain excluded. [Qualification evidence](task-evidence/U06/README.md).
+**Status:** PASS (2026-10-06). Current-format restart save/history accepted for the measured fixtures after final native19, production GWT5, compiled11 plus sensor regression and actual visible durable-file/repair gates. Format capacity, long-session and broad browser claims remain excluded. [Qualification evidence](task-evidence/U06/README.md).
 
 **Hard prerequisites:** [U04](#m-u04), [A08](#m-a08), [A03](#m-a03), [P02](#m-p02), [A10](#m-a10)
 
@@ -2772,7 +2772,7 @@ The shared current-only policy and validation rules apply to every card. There i
 **Status:** PASS. Parent accepted09b79b31 within the documented host/frozen-corpus
 scope; normal Q30 is enabled locally after a fresh production build and narrow
 normal QuickPlay check. Limits remain90s/640/5s. Historical release lateness, the
-unknown 91.616s failure and six missing inventories remain explicit. No unlimited
+unknown91.616s failure and six missing inventories remain explicit. No unlimited
 random-population or modest-host claim. U06 and U07 are accepted within their measured scopes; Q60 remains unstarted.
 [Local enablement evidence](task-evidence/Q30/qualification-workflow/local-enablement-20261005/README.md).
 
@@ -2828,7 +2828,7 @@ parity against their controls. One still exceeds 90 seconds; no full-corpus
 normal acceptance or broad scale claim follows from this small comparison.
 
 **Current candidate (2026-10-05):** C621 production inputs unchanged.
-Retained native83/append26/GWT 5/compiled31/cold77/private build/archive/headed
+Retained native83/append26/GWT5/compiled31/cold77/private build/archive/headed
 UI10 keep their audited source epochs and limits. Fresh private menu PASS33/33,
 three replays/stale rejection/privacy/cleanup; Q30 times83.339/79.186/26.471s
 under unchanged90s/640/5s. Exact identity logging and native listener proof
