@@ -11,15 +11,47 @@ final class PcbPlacementConstraints {
     static final int DEFAULT_PHYSICAL_POLICY_VERSION = 1;
 
     enum Anchor { NONE, LEFT, RIGHT, EDGE }
+    static final class TerminalDomain {
+        final String terminalId, domainId;
+        TerminalDomain(String terminalId, String domainId) {
+            if (empty(terminalId) || empty(domainId))
+                throw new IllegalArgumentException("Invalid terminal physical domain");
+            this.terminalId = terminalId; this.domainId = domainId;
+        }
+    }
     static final class Part {
         final String componentId, regionId, regionLabel, domainId;
         final Anchor anchor;
         final int accessMargin;
+        private final TreeMap<String,TerminalDomain> terminalDomains =
+            new TreeMap<String,TerminalDomain>();
         Part(String componentId, String regionId, String regionLabel, String domainId, Anchor anchor, int accessMargin) {
+            this(componentId, regionId, regionLabel, domainId, anchor, accessMargin,
+                new Vector<TerminalDomain>());
+        }
+        Part(String componentId, String regionId, String regionLabel, String domainId,
+                Anchor anchor, int accessMargin, Vector<TerminalDomain> declarations) {
             if (empty(componentId) || empty(regionId) || empty(regionLabel) || empty(domainId) || anchor == null ||
                     accessMargin < 16 || accessMargin > 500) throw new IllegalArgumentException("Invalid physical demand");
             this.componentId=componentId; this.regionId=regionId; this.regionLabel=regionLabel;
             this.domainId=domainId; this.anchor=anchor; this.accessMargin=accessMargin;
+            if (declarations == null)
+                throw new IllegalArgumentException("Missing terminal domain declarations");
+            for (TerminalDomain declaration : declarations)
+                if (declaration == null || terminalDomains.put(declaration.terminalId,
+                        declaration) != null)
+                    throw new IllegalArgumentException("Duplicate terminal physical domain");
+        }
+        String terminalDomain(String terminalId) {
+            if (terminalDomains.isEmpty()) return domainId;
+            TerminalDomain declaration = terminalDomains.get(terminalId);
+            if (declaration == null)
+                throw new IllegalArgumentException("Missing terminal physical domain: " +
+                    componentId + "." + terminalId);
+            return declaration.domainId;
+        }
+        Vector<TerminalDomain> getTerminalDomains() {
+            return new Vector<TerminalDomain>(terminalDomains.values());
         }
     }
     static final class Barrier {
@@ -87,6 +119,60 @@ final class PcbPlacementConstraints {
     Part get(String id) { return parts.get(id); }
     Vector<Part> getParts() { return new Vector<Part>(parts.values()); }
     Vector<Barrier> getBarriers() { return new Vector<Barrier>(barriers); }
+    String domainForPad(TroubleshootBoard board, String padId) {
+        BoardPad pad = board.getPad(padId);
+        if (pad == null || get(pad.getComponentId()) == null)
+            throw new IllegalArgumentException("Unknown physical-domain pad: " + padId);
+        return get(pad.getComponentId()).terminalDomain(pad.getTerminalId());
+    }
+    TreeMap<String,Rectangle> domainCourtyards(PcbComponentPlacement placement) {
+        Part part = get(placement.getComponentId());
+        if (part == null) throw new IllegalArgumentException("Missing physical demand");
+        TreeMap<String,Rectangle> result = new TreeMap<String,Rectangle>();
+        PhysicalPackageGeometry geometry = placement.getPhysicalGeometry();
+        PhysicalPackageGeometry.IsolationBody body = geometry.getIsolationBody();
+        if (body == null) result.put(part.domainId, placement.getRoutingCourtyard());
+        else {
+            PhysicalPackageGeometry.Placement placed = geometry.placedAt(placement.getPose());
+            result.put(body.domain(part, true), placed.getIsolationFirstCourtyard());
+            result.put(body.domain(part, false), placed.getIsolationSecondCourtyard());
+        }
+        return result;
+    }
+    private boolean hasBarrier(String first, String second) {
+        for (Barrier barrier : barriers) if (barrier.separates(first, second)) return true;
+        return false;
+    }
+    private void validateTerminalDomains(Part part, PhysicalPackage physical) {
+        Vector<String> terminals = physical.getTerminalIds();
+        Vector<TerminalDomain> declared = part.getTerminalDomains();
+        if (!declared.isEmpty()) {
+            if (declared.size() != terminals.size())
+                throw new IllegalArgumentException("Incomplete terminal physical domains");
+            for (TerminalDomain declaration : declared)
+                if (!terminals.contains(declaration.terminalId))
+                    throw new IllegalArgumentException("Foreign terminal physical domain");
+        }
+        java.util.TreeSet<String> domains = new java.util.TreeSet<String>();
+        for (String terminal : terminals) domains.add(part.terminalDomain(terminal));
+        if (!domains.contains(part.domainId))
+            throw new IllegalArgumentException("Packing domain is absent from package terminals");
+        for (PhysicalPackage.GeometryVariant variant : physical.getGeometryVariants()) {
+            PhysicalPackageGeometry.IsolationBody body = variant.getGeometry().getIsolationBody();
+            if (domains.size() > 1) {
+                if (domains.size() != 2 || body == null || part.anchor != Anchor.NONE ||
+                        variant.getGeometry().isDeveloperGeneric() ||
+                        body.domain(part, true).equals(body.domain(part, false)) ||
+                        !hasBarrier(body.domain(part, true), body.domain(part, false)))
+                    throw new IllegalArgumentException("Mixed-domain package lacks a declared body barrier");
+            } else if (body != null)
+                throw new IllegalArgumentException("Isolation body requires two terminal domains");
+        }
+        for (String first : terminals) for (String second : terminals)
+            if (physical.isInternallyConnected(first, second) &&
+                    hasBarrier(part.terminalDomain(first), part.terminalDomain(second)))
+                throw new IllegalArgumentException("Package connectivity crosses isolated physical domains");
+    }
     int margin(String domain) {
         int margin=0;
         for (Barrier barrier : barriers) if (barrier.firstDomain.equals(domain) || barrier.secondDomain.equals(domain))
@@ -99,6 +185,7 @@ final class PcbPlacementConstraints {
         for (String id : board.getComponentIds()) {
             Part part=get(id);
             if (part==null) throw new IllegalArgumentException("Missing physical demand: "+id);
+            validateTerminalDomains(part, board.getComponent(id).getPhysicalPackage());
             String label=labels.put(part.regionId,part.regionLabel);
             if (label!=null && !label.equals(part.regionLabel)) throw new IllegalArgumentException("Conflicting public region label");
             if (part.anchor!=Anchor.NONE && !board.getComponent(id).getPhysicalPackage().isConnector())
@@ -106,12 +193,17 @@ final class PcbPlacementConstraints {
         }
         for (Barrier barrier : barriers) {
             boolean first=false,second=false;
-            for (Part part : parts.values()) { first |= barrier.firstDomain.equals(part.domainId); second |= barrier.secondDomain.equals(part.domainId); }
+            for (Part part : parts.values())
+                for (String terminal : board.getComponent(part.componentId).getPhysicalPackage().getTerminalIds()) {
+                    String domain = part.terminalDomain(terminal);
+                    first |= barrier.firstDomain.equals(domain);
+                    second |= barrier.secondDomain.equals(domain);
+                }
             if (!first || !second) throw new IllegalArgumentException("Barrier references an absent domain");
             for (String netId : board.getNetIds()) {
                 first=false; second=false;
                 for (String pad : board.getNet(netId).getPadIds()) {
-                    String domain=get(board.getPad(pad).getComponentId()).domainId;
+                    String domain=domainForPad(board,pad);
                     first |= barrier.firstDomain.equals(domain); second |= barrier.secondDomain.equals(domain);
                 }
                 if (first && second) throw new IllegalArgumentException("One conductive net crosses isolated physical domains");

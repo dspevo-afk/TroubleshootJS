@@ -32,6 +32,26 @@ final class PhysicalPackages {
         new String[] { "B", "C", "E" }, false, to92(new String[] { "B", "C", "E" }));
     static final PhysicalPackage TO92_NMOS = fixedPackage("TO92_NMOS",
         new String[] { "G", "D", "S" }, false, to92(new String[] { "G", "D", "S" }));
+    /** E05 fixture package; no manufacturing or equipment safety rating is implied. */
+    static final PhysicalPackage E05_ISOLATION_TRANSFORMER_4 = fixedPackage(
+        "E05_ISOLATION_TRANSFORMER_4", new String[] { "P1", "P2", "S1", "S2" },
+        false, e05IsolationTransformer());
+
+    private static PhysicalPackageGeometry e05IsolationTransformer() {
+        Vector<PhysicalPackageGeometry.Terminal> terminals =
+            new Vector<PhysicalPackageGeometry.Terminal>();
+        terminals.add(terminal("P1", 30, 60, 90, 60, 70, 60, -1, 0, 40));
+        terminals.add(terminal("P2", 30, 150, 90, 150, 70, 150, -1, 0, 40));
+        terminals.add(terminal("S1", 390, 60, 330, 60, 350, 60, 1, 0, 40));
+        terminals.add(terminal("S2", 390, 150, 330, 150, 350, 150, 1, 0, 40));
+        return geometry(420, 220, terminals, new Rectangle(90, 25, 240, 165),
+            new Rectangle(85, 20, 250, 175), new Rectangle(10, 10, 400, 200))
+            .withIsolationBody(new PhysicalPackageGeometry.IsolationBody(
+                toVector(new String[] { "P1", "P2" }), toVector(new String[] { "S1", "S2" }),
+                new Rectangle(10, 10, 105, 200), new Rectangle(305, 10, 105, 200),
+                new Rectangle(90, 25, 240, 165)));
+    }
+
     /** Four-lead through-hole regulator package; the exposed pins remain separate. */
     static final PhysicalPackage TO220_REGULATOR_4 = fixedPackage(
         "TO220_REGULATOR_4", new String[] { "INPUT", "OUTPUT", "RETURN", "ENABLE" },

@@ -1,0 +1,60 @@
+{
+  "baseCommit": "2921c786351bc8c852ce98c277c059208e646bfb",
+  "limitations": [
+    "Developer foundation bench only; no normal family, offline converter or Q60 acceptance.",
+    "Raw visual-r3 remains FAIL after completed foundation flow; separate r4 completes debug-off seed3 privacy.",
+    "Backward Euler numerical damping and analytically bounded published diode-current KCL residual disclosed."
+  ],
+  "preparedUtc": "2026-10-07T23:38:59.401742+00:00",
+  "requiredRemaining": [
+    "commit and normal push verification"
+  ],
+  "resourceAudit": {
+    "counts": {
+      "evidenceFiles": 176,
+      "portStates": {
+        "CLOSED": 10
+      },
+      "processStates": {
+        "ABSENT": 168,
+        "REUSED_PID_RECORDED_INSTANCE_ABSENT": 1
+      },
+      "recordedInstances": 169,
+      "recordedPorts": 10
+    },
+    "rawSha256": "60a7edfd165884b9b10ae6f3e86f7eea0891523bd604ce035348823203613665",
+    "status": "PASS"
+  },
+  "reviewedUtc": "2026-10-07T23:40:25.265200+00:00",
+  "scope": "Integrated production/test diff and five actual screenshots reviewed; native14+1+1, GWT5, compiled positive/forced and scoped visible r3+r4 receipts bound to current inputs. No unresolved E05 blocker.",
+  "screenshots": [
+    {
+      "file": "screenshots/001-primary-ac-top-nameplate.png",
+      "sha256": "b10db808e08b4ac7240765d3bc85c0db0df90637d60416eb45de5412dcff5853"
+    },
+    {
+      "file": "screenshots/002-secondary-ac-top.png",
+      "sha256": "0bd744dd264c8f2d3f778d8d96b3fa0b091a957f541e3f5fc1103c3998f648b4"
+    },
+    {
+      "file": "screenshots/003-rectified-dc-bottom.png",
+      "sha256": "e7c33ab884a3bdb0ee0ddb4bde03f7df99e47eac5e5fb8c0aa06911450114d98"
+    },
+    {
+      "file": "screenshots/004-source-off-residual-readiness.png",
+      "sha256": "c9924fcab1dae8486fe424767e6e53c919fc4541d45db5139e2c21b444def10d"
+    },
+    {
+      "file": "screenshots/005-debug-off-seed3-accepted-board.png",
+      "sha256": "47657d7a4a240e7dcfe32b01a35addf4fb6a1dfdf04fc487c419f4542f289a61"
+    }
+  ],
+  "stagedReview": {
+    "intendedPaths": 54,
+    "reviewedUtc": "2026-10-07T23:42:16.671080+00:00",
+    "status": "PASS",
+    "trackedUnstaged": "NONE",
+    "whitespace": "PASS"
+  },
+  "status": "ROOT_REVIEW_PASS"
+}

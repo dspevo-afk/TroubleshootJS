@@ -1244,6 +1244,60 @@ and is tested as such, but missing-supply faults are not silently admitted as
 unseparable E04 hypotheses. The normal player flow uses the same public input,
 shop, board-power and customer-retest owners as proof. [Qualification](task-evidence/E04/README.md).
 
+## E05 bounded AC, stored energy and isolated references
+
+`E05AcInputModel` declares a simulated 120 V RMS, 60 Hz input with 22 ohms
+series impedance; the actual CircuitJS sine peak is `120 * sqrt(2)`.
+`SwitchExternalPowerControl` owns both actual source isolation poles and reports
+any partially closed source as connected. `PowerInputNameplate.acRms` preserves
+RMS/frequency semantics. The developer bench exposes that same marking through
+JAC's ordinary component inspector; existing DC nameplates retain their meaning.
+
+`E05ElectricalFixtures` composes real source, fuse, bridge diodes, bulk storage,
+bleeder and load elements. The isolated rectifier adds a linear 4 H transformer
+with secondary/primary turns ratio 0.1 and coupling 0.999. Its existing backward
+Euler integration removes the measured open-primary alternating voltage mode;
+the separate reference-only transformer retains trapezoidal integration and its
+energy oracles. Backward Euler adds measured numerical damping, with no physical
+core-loss or efficiency claim. The diode acceptance contract bounds the published
+Shockley-current KCL residual using the analytic exponential remainder under the
+existing junction-voltage convergence condition. Neither model changes the global
+solver or instrument thresholds.
+
+`E05InstalledFixture` constructs eleven actual packages (JAC, F1, T1, D1-D4,
+C1, RBLEED, RLOAD and JOUT) through `ServiceableBoardConstruction`. Persistent
+board endpoints and current typed component bindings survive backing relocation.
+T1 maps P1/P2/S1/S2 to posts 0/2/1/3 and is visibly fixed and unserviceable. The
+bench has no customer family, fault population or normal diagnostic admission.
+Its private behavior implements the existing live temporal contract with 5 ms
+advances and a 50 us maximum accepted timestep, including while OFF. Actual source,
+transformer and timestep parameters bind its immutable temporal dependency.
+
+Immutable per-terminal isolation domains and the transformer package's insulating
+body span enter geometry and dependency identity. Only that body may cross the
+barrier. Lands, connected/lifted lead metal, trace strokes on both faces, vias,
+plated holes and NPTH drills have no exception. Routing and final layout validation
+enforce the constraints. Empty declarations, production package admission and the
+normal 20-40-part limit retain their existing behavior. These are logical board
+clearances, without a manufacturing or equipment rating.
+
+PRIMARY uses PRI_RETURN; SECONDARY retains distinct SEC_B and DC_MINUS references.
+A shared isolation region does not join those returns, and a numerical ground
+provides no physical earth bond. Ordinary AC/DC instruments measure the active
+graph; unsupported references are refused. OFF opens both poles without clearing
+capacitor or magnetic state. Active resistance measurements require a fresh
+canonical observation and every declared rail below the existing 0.25 V threshold.
+
+`E05InstalledRuntimeVerifier` checks actual installation, both-face target identity,
+finite-burden instruments, residual-energy refusal and final readiness. Its RC
+comparison follows 50 ms of real magnetic settling. Completion and failure restore
+the exact prior owner and separately retire the candidate and temporary meter.
+A debug-only 120-second hold exposes ordinary controls plus read-only pad geometry;
+a stale callback preserves a successor. Its existing wider debug sidebar keeps
+markings and controls visible. Native graph checks, production GWT, compiled
+positive/forced cleanup and real visible input are distinct evidence boundaries.
+[Qualification, numerical limits and retained failures](task-evidence/E05/README.md).
+
 ## Q15 small procedural control board
 
 `Rb15Plan` resolves the RB15_CONTROL intent into sixteen causal packages and

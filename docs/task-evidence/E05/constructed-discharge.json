@@ -1,0 +1,15 @@
+{
+  "actualSamples": [
+    "E05_CONSTRUCTED_DISCHARGE phase=0;offTime=0.5999999999999421;firstTime=0.6000499999999421;firstVolts=15.528786528650746;firstPrimaryAmps=-1.2073675392798577E-15;firstSecondaryAmps=-1.0600164492545314;firstMagneticJoules=0.022472697453804202;rcStartTime=0.6500499999999366;rcEndTime=0.9000499999999091;rcStartVolts=16.081624471763952;rcEndVolts=8.95838281189597;elapsed=0.24999999999997247;observedRatio=0.5570570826115894;expectedRatio=0.5570465983835319;settledPrimaryAmps=2.77555424133948E-23;settledSecondaryAmps=1.1942281778532025E-14;settledMagneticJoules=2.8523620140103792E-30;earlyObservedRatio=0.6485037429413034;earlyExpectedRatio=0.5570465983835319;capacitance=4.7E-4;bleedOhms=10000.0;loadOhms=1000.0",
+    "E05_CONSTRUCTED_OFF_RAILS {\"phase\":0,\"timeStep\":5.0E-5,\"offSeconds\":3.300849999997636,\"samples\":16,\"maxVolts\":{\"PRIMARY_WINDING\":6.311045857160995E-14,\"SECONDARY_WINDING\":6.317363217277076E-15,\"PRI_LINE\":6.311045857160995E-14,\"PRI_FUSED\":6.311045857160995E-14,\"SEC_A\":6.317363217277076E-15,\"DC_PLUS\":0.007927120784379162}}",
+    "E05_CONSTRUCTED_DISCHARGE phase=1;offTime=0.6041999999999417;firstTime=0.6042499999999417;firstVolts=15.468780671555892;firstPrimaryAmps=-6.938893903907228E-17;firstSecondaryAmps=0.039715364877692005;firstMagneticJoules=3.154620414736313E-5;rcStartTime=0.6542499999999362;rcEndTime=0.9042499999999086;rcStartVolts=13.76235175488145;rcEndVolts=7.6663956071877255;elapsed=0.24999999999997247;observedRatio=0.5570556358195456;expectedRatio=0.5570465983835319;settledPrimaryAmps=-7.11178605963219E-24;settledSecondaryAmps=1.0595816823533642E-14;settledMagneticJoules=2.2454266530456403E-30;earlyObservedRatio=0.5571290648386386;earlyExpectedRatio=0.5570465983835319;capacitance=4.7E-4;bleedOhms=10000.0;loadOhms=1000.0",
+    "E05_CONSTRUCTED_OFF_RAILS {\"phase\":1,\"timeStep\":5.0E-5,\"offSeconds\":3.3008499999976264,\"samples\":16,\"maxVolts\":{\"PRIMARY_WINDING\":9.764308686170384E-14,\"SECONDARY_WINDING\":9.77408276983169E-15,\"PRI_LINE\":9.764308686170384E-14,\"PRI_FUSED\":9.764308686170384E-14,\"SEC_A\":9.77408276983169E-15,\"DC_PLUS\":0.006780831162170946}}"
+  ],
+  "passMarkers": [
+    "PASS: E05 installed fixture contracts assertions=284",
+    "PASS: focused current contracts; 1 Java suites. Full matrix and independent oracles NOT RUN."
+  ],
+  "phase": "native-r15",
+  "rawStdoutSha256": "f3c5e1971cbb5151390c3c65d67cd089a74043c25de6f8eeef5200f1f814e0f5",
+  "scope": "Actual service-completed graph; no native player-installation claim."
+}

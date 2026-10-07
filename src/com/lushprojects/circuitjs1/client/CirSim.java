@@ -449,6 +449,8 @@ MouseOutHandler, MouseWheelHandler {
     boolean troubleshootRender0Verification, troubleshootRender0Forced, troubleshootRender0Complete;
     boolean troubleshootServiceVerification, troubleshootServiceForced, troubleshootServiceComplete;
     int troubleshootAlphaCase = -1;
+    boolean troubleshootE05Verification, troubleshootE05VerificationComplete, troubleshootE05ForcedFailure;
+    boolean troubleshootE05VisualHold;
     boolean troubleshootE01Verification, troubleshootE01VerificationComplete, troubleshootE01ForcedFailure;
 	boolean troubleshootE02Verification, troubleshootE02VerificationComplete, troubleshootE02ForcedFailure;
 	boolean troubleshootA06Verification;
@@ -650,6 +652,9 @@ MouseOutHandler, MouseWheelHandler {
                 qp.getValue("tsjTemporalFixture") : null;
             troubleshootU02U03VisualHold = troubleshootU02U03Verification &&
                 qp.getBooleanValue("tsjTemporalVisualHold", false);
+            troubleshootE05Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyE05", false);
+            troubleshootE05ForcedFailure = troubleshootE05Verification && qp.getBooleanValue("tsjE05Fail", false);
+            troubleshootE05VisualHold = troubleshootE05Verification && qp.getBooleanValue("tsjE05VisualHold", false);
             troubleshootU06Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyU06", false);
             troubleshootU06Family = qp.getValue("tsjU06Family");
             troubleshootU06Seed = qp.getValue("tsjU06Seed");
@@ -783,9 +788,9 @@ MouseOutHandler, MouseWheelHandler {
 	    VERTICALPANELWIDTH = 166;
 	if (VERTICALPANELWIDTH < 128)
 	    VERTICALPANELWIDTH = 128;
-	// A retained Q30 developer challenge has the real service catalogs and
-	// input buttons. Keep their hit targets inside the debug sidebar.
-	if (troubleshootQ30Bench)
+	// Retained developer benches expose the real service controls and markings.
+	// Keep their hit targets and labels inside the debug sidebar.
+	if (troubleshootQ30Bench || troubleshootE05VisualHold)
 	    VERTICALPANELWIDTH = Math.min(360, width / 2);
 	// Normal workbench controls occupy the top dock; its canvas keeps the full width.
 	if (!troubleshootDebug)
@@ -1103,7 +1108,7 @@ MouseOutHandler, MouseWheelHandler {
 		    readSetupFile(startCircuit, startLabel);
 		}
 		else if (!troubleshootDebug || troubleshootFixture != null || troubleshootChallenge != null ||
-			troubleshootQuickPlay || troubleshootU06Verification)
+			troubleshootQuickPlay || troubleshootU06Verification || troubleshootE05Verification)
 		    getSetupList(false);
 		else
 		    getSetupList(true);
@@ -4930,7 +4935,7 @@ MouseOutHandler, MouseWheelHandler {
 	pcbWorkbenchController = (!troubleshootDebug || FreshGeneratedRuntimeInstallation.isInProgress(this) ||
 	    troubleshootTask41Verification || troubleshootTask43PVerification || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
-	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootQuickPlayGateVerification || troubleshootE03Verification || troubleshootE01Verification || troubleshootE02Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootQ30Verification || troubleshootU01Verification || troubleshootA10Verification ||
+	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootQuickPlayGateVerification || troubleshootE03Verification || troubleshootE01Verification || troubleshootE02Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootE05Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootQ30Verification || troubleshootU01Verification || troubleshootA10Verification ||
 	    troubleshootA01Measurement ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
@@ -5544,6 +5549,14 @@ MouseOutHandler, MouseWheelHandler {
                 publishBrowserVerificationResult("RUNNING:a08");
                 A08MutationDeveloperVerifier.start(this, troubleshootA08ForcedFailure);
             }
+            if (!developerVerifierRunning && troubleshootE05Verification && !troubleshootE05VerificationComplete &&
+                    !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+                    generatedChallengeController != null && generatedChallengeController.isReady() &&
+                    isGeneratedRuntimeSettled()) {
+                developerVerifierRunning = true; troubleshootE05VerificationComplete = true;
+                publishBrowserVerificationResult("RUNNING:e05");
+                E05ElectricalDeveloperVerifier.start(this, troubleshootE05ForcedFailure);
+            }
             if (!developerVerifierRunning && troubleshootA07Verification && !troubleshootA07VerificationComplete &&
                     !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
                     generatedChallengeController != null && generatedChallengeController.isReady() &&
@@ -5866,7 +5879,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootTask40Verification || troubleshootTask41Verification ||
 		    troubleshootA01Measurement ||
 		    troubleshootTask46Verification || troubleshootTask47Verification ||
-		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootQuickPlayGateVerification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootU01Verification || troubleshootA10Verification ||
+		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootQuickPlayGateVerification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootE05Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootU01Verification || troubleshootA10Verification ||
 		    troubleshootTask43Verification || troubleshootTask43PVerification)) {
 		String failureMessage = e.getMessage();
 		if (troubleshootTask43PForcedFailure && failureMessage != null &&
@@ -5953,6 +5966,20 @@ MouseOutHandler, MouseWheelHandler {
     }
     private static native void publishA08Evidence(String evidence) /*-{
         $doc.documentElement.setAttribute("data-tsj-a08-report", evidence);
+    }-*/;
+
+    void finishE05Verification(String evidence, Throwable failure) {
+        developerVerifierRunning = false;
+        if (evidence != null) publishE05Evidence(evidence);
+        if (failure == null) {
+            publishBrowserVerificationResult("PASS:e05");
+        } else {
+            publishBrowserVerificationResult("FAIL:e05:" + failure.getMessage());
+            console("E05 failure: " + failure);
+        }
+    }
+    private static native void publishE05Evidence(String evidence) /*-{
+        $doc.documentElement.setAttribute("data-tsj-e05-report", evidence);
     }-*/;
 
     void finishA07Verification(String evidence, Throwable failure) {

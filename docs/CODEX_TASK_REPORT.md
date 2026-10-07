@@ -1,4 +1,50 @@
-# Current checkpoint: U07 accepted locally; normal publication next
+# Current checkpoint: E05 accepted locally; publication pending
+
+2026-10-07. Branch `codex/q30-multirail-qualification`; HEAD and verified remote
+are `2921c786351bc8c852ce98c277c059208e646bfb` (U07). U06 is published at
+`12641608a7f10372d39c2a8fa98e6e349049e09f`. E05 is accepted locally; staged review,
+commit, normal push and remote SHA verification are the next operation. No email.
+Dave's resumed roadmap instruction supersedes the historical October 6 stop;
+subsequent workers use the requested Sol 6.1 Ultra model.
+
+E05 delivers bounded simulated 120 V RMS/60 Hz input, actual two-pole isolation,
+fuse/bridge/storage/linear-transformer graphs and per-terminal physical barriers.
+Its eleven-package developer bench has ordinary AC/DC probing, source inspection,
+OFF discharge and resistance readiness. Normal family/admission limits remain
+unchanged. Architecture and [full evidence](task-evidence/E05/README.md) describe
+ownership, source bindings and limits.
+
+Native 14 + 1 + 1: fourteen unaffected native-final suites retain scoped proof; r12
+refreshes Power 76 / reference 12 rows and 36,108 assertions / electrical 18 rows and 323,919 assertions in 27.668 s; r15 refreshes
+installed construction (284 assertions) in 23.718 s. GWT build-r7 passes five
+permutations in 93.037 s. Compiled-r6 passes positive and forced-failure cleanup
+in 32.402 s, including 194 installed checks and actual four-rail READY.
+
+Visible-r3 completes foundation actions 1-93 and exact original-owner restoration
+with PASS:e05. It retains whole-run FAIL because a borrowed helper insisted on
+seed 0 while the actual public replay correctly showed seed 3. Supplemental r4
+passes only the remaining debug-off menu/ticket/accept/privacy flow in 17.569 s.
+Root inspected five useful screenshots. Actual foundation readings include
+119.967 V RMS primary, 11.981 V RMS secondary, 15.34 V bottom-side DC, OFF
+DISCHARGE, then 331.725 ohms after decay. All source/served bindings remain current.
+
+Measured trapezoidal open-primary numerical ringing led to fixture-only backward
+Euler; reference-only transformer energy cases retain trapezoidal integration.
+The measured Euler damping and 4.1670856 mA maximum analytically bounded published
+diode-current KCL residual are disclosed. No global solver or readiness threshold
+changed. All 33 attempted gates remain in the ledger; failures were not relabeled.
+
+Resource audit PASS: all 169 recorded task instances absent (one reused PID has a
+different birth), ten ports closed. Task scratch/raw evidence and accepted U07
+compiled backup remain intact. Eight original untracked files retain their bytes.
+Q30's unknown 91.616-second failure, six missing scratch inventories and historical
+late-release audit remain unchanged. No other project, Core/Android or unrelated
+process work occurred. Next after verified E05 publication: E06, then applicable
+Q60 and subsequent roadmap dependencies. E06/Q60 remain unstarted.
+
+---
+
+# Historical checkpoint: U07 accepted locally before publication
 
 2026-10-07. Dave resumed the existing roadmap through completion and requested
 Sol 6.1 Ultra/Fast for subsequent work. The October 6 stop is superseded.
@@ -32,7 +78,7 @@ remain intact; no unrelated project/process touched. Retained task root:
 Next: staged diff review, commit and verified normal branch push; then E05→E06→Q60,
 fresh HARD calibration, REL-B, Q100 and the remaining applicable roadmap gates.
 E05 electrical/geometry drafts are isolated in the local task workspace and are
-not yet applied to this candidate. Historical Q30 unknown91.616 s failure, six
+not yet applied to this candidate. Historical Q30 unknown 91.616 s failure, six
 missing inventories and late-release audit remain unchanged. Other projects,
 Core/Android and unrelated browser/server/disk jobs remain outside this scope.
 
@@ -384,7 +430,7 @@ Final Astra/Ultra read-only review finds no new local-checkpoint blocker;
 23source/34staged/8untracked hashes verified. Its raw OS-temp reads were
 denied; root separately verified61 new packet raw pins and source reuse.
 
-Retained native83/append26/GWT5/compiled31/canaries/disabled-menu/cold77 PASS
+Retained native83/append26/GWT 5/compiled31/canaries/disabled-menu/cold77 PASS
 under consumed C621 source; final reuse audit verifies all production inputs,
 nine jars, exact private catalog delta and357+6 compiled/deployment files.
 Cold77 PASS77/77, worst85.003s under90s. Current native cold CLI default audit
@@ -392,7 +438,7 @@ PASS with zero browsers/cases. Corrected release proves809 old instances gone
 and77 ports closed, but remains BLOCKED after the approved16:32:46.188302Z
 window. Old R5 and all earlier failures remain; no late timing PASS.
 
-Actual private JDK8/GWT5 build PASS87.495s. Private source-only archive PASS,
+Actual private JDK8/GWT 5 build PASS87.495s. Private source-only archive PASS,
 exact1,355 members, SHA256 a0ec761b1d9686010cbf10a5370e6a4c2a23f568eeb5d3c13a608ffe6a8eaa19.
 Private headless menu FAIL:31 launches pass; second random Q30 launch reaches
 ERROR at91.616s/selected90,000ms, candidates0/1/max447 units. Failed seed
@@ -447,7 +493,7 @@ requires an audit. Q30 DISABLED / NOT ACCEPTED; parent owns acceptance.
 No push/publication/email, evidence deletion, global PC changes or U06/U07/Q60.
 
 Fresh native83 PASS/strict zero issues (3,918.455 s), append26 PASS/zero issues
-(192.366 s), actual isolated and shipping JDK8/GWT5 PASS (82.844/81.496 s),
+(192.366 s), actual isolated and shipping JDK8/GWT 5 PASS (82.844/81.496 s),
 four compiled canaries/frozen 77-root/308-declaration checks PASS. Full compiled31
 PASS/31 of 31/zero strict errors (2,944.978 s): current charged-relay D01 cases,
 typed seed 35 rejection and core cases pass. Disabled shipping menu/replay
@@ -522,8 +568,8 @@ SHA. Q30 DISABLED / NOT ACCEPTED; parent owns independent acceptance. No
 push/publication/email, evidence deletion, wide machine changes or U06/U07/Q60.
 
 Fresh baseline full native 83 PASS/strict audit zero issues (3,963.524 s),
-append 26 PASS/zero issues (189.753 s), standard JDK8/GWT5 PASS (83.118 s),
-isolated GWT5/four compiled canaries PASS and maintained source archive
+append 26 PASS/zero issues (189.753 s), standard JDK8/GWT 5 PASS (83.118 s),
+isolated GWT 5/four compiled canaries PASS and maintained source archive
 PASS_SOURCE_ARCHIVE_ONLY (75.239 s). These consumed the pre-fix 4bf9 source;
 they are historical after the verifier edit. Structural 77: 70 accepted/seven
 declared rejects; structural native timing is not normal-player admission.
@@ -1570,7 +1616,7 @@ all1,354 consumed inputs unchanged. Q30 NOT ACCEPTED and disabled.77 roots/
 
 Authoritative full cold77 remains FAIL:root75 TIMEOUT90.221s,31 prior PASS,
 45 NOT_RUN; full auditor FAIL/incomplete. Prior fresh native82/append26,
-structural77, both GWT5, compiled31/focused/transport, disabled menu and
+structural77, both GWT 5, compiled31/focused/transport, disabled menu and
 source-only archive results remain scoped to their unchanged consumed inputs;
 the historical checkpoint immediately below has their exact clocks/limits.
 Enabled build/menu still BLOCKED by cold FAIL. Actual visible20/30/40 diagnosis/
@@ -1629,7 +1675,7 @@ all1,354 consumed inputs unchanged. Q30 NOT ACCEPTED and disabled. Original77 ro
 Fresh final-source gates: native82 PASS4035.361s and append26 PASS196.324s;
 combined structural77=70 admitted/7 typed route rejects/0 failed, with exact105
 service/105 sensitivity rows and all four independent oracles. Native cleanup
-review PASS; cleanup elapsed NOT RECORDED separately. Shipping/isolated JDK8/GWT5
+review PASS; cleanup elapsed NOT RECORDED separately. Shipping/isolated JDK8/GWT 5
 PASS84.999s/85.285s; compiled31 PASS31/31, strict audit PASS, operation2691.423s,
 cleanupPASS1.287s. Focused E02+/negative/E04 PASS3/3. Actual transport21 and both
 live process ownership canaries PASS; earlier failures remain preserved.
@@ -1694,7 +1740,7 @@ Frozen source `a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51`
 **Q30 NOT ACCEPTED; disabled.** No push/merge/publication/email/evidence deletion.
 Original77 roots/308 candidates/90s/640/5s unchanged; U06/U07/Q60 unstarted.
 
-Fresh actual disabled shipping JDK8/GWT5 PASS84.999s, five permutations.
+Fresh actual disabled shipping JDK8/GWT 5 PASS84.999s, five permutations.
 Focused production E02+/negative/E04 PASS3/3,20.328s; cleanup PASS1.289s.
 Final compiled31 **PASS31/31**, strict audit PASS0 errors; original spec/oracle
 unchanged. Operation/stage 2691.423s; host cleanup PASS
@@ -1745,7 +1791,7 @@ ArchiveSHA`ef26cb46f381c417097e68866ab4ffbdb81ebef8416157917ef1ddf9e5ca5766`.
 Root corrected equivalent UTC fractional formatting and escaped-path sanitation
 in the packet helper before execution; leaf static review preceded those fixes.
 
-Fresh isolated JDK8/GWT5 PASS85.285s/five permutations, tool51363 exited0.
+Fresh isolated JDK8/GWT 5 PASS85.285s/five permutations, tool51363 exited0.
 Compiled4/export/freeze PASS19.297s, host cleanup PASS1.278s separately;
 original77 roots/308 canonical candidates/order/limits match the original plan.
 Tool18523 exited0. Separate short-controller live capture arrived after exit:
@@ -1834,7 +1880,7 @@ packet directory/files inherited owner-only Temp permissions on rename; only tho
 four entries were reset to existing repo inheritance, bytes unchanged. ACL backup
 is private workspace evidence. No unrelated/system/sandbox permissions changed.
 
-Fresh actual shipping JDK8/GWT5 PASS84.999s, five permutations;
+Fresh actual shipping JDK8/GWT 5 PASS84.999s, five permutations;
 focused production E02+/negative/E04 PASS3/3,20.328s,
 cleanup PASS1.289s/no survivors/errors;1,354 inputs unchanged.
 Final full compiled31 RUNNING, session82391; controller PID7368, creation
@@ -1848,7 +1894,7 @@ Raw task label `q30-process-pinned-final-qualification-fcffecff8fa444889bce93725
 binds frozen source/plan, retained originals and previous failures. Root owns each
 launched runner through terminal/audit. One expensive job; LocalDots priority.
 
-Next: terminal compiled31/audit, fresh native82/structural77, isolatedGWT5,
+Next: terminal compiled31/audit, fresh native82/structural77, isolatedGWT 5,
 compiled4/export/freeze/cold77, disabled/private menu/replay and exact sourcearchive.
 Earlier native/cold/archive proof remains history; final-source gates pending.
 Parent independent acceptance review pending. Supported Browser/computer/node_repl
@@ -1868,7 +1914,7 @@ Original77 roots/308 candidates/90s/640/5s unchanged; U06/U07/Q60 unstarted.
 Final-source compiled31 terminal **FAIL_CLEANUP**,31/31 app cases PASS,
 operation/stage 2534.582s, exit1; strict audit FAIL with six
 aggregate/stage/cleanup findings. All declared positive/negative oracles retained,
-including seed35's typed physical rejection. No observer/read/browser case error.
+including seed 35's typed physical rejection. No observer/read/browser case error.
 Cleanup FAIL5.845s: serverStopped=true, pre-close process
 query and20 survivor queries returned nonzero with blank stderr. Existing error
 omits returncode/stdout; exact underlying cause is unknown. No cleanup PASS claim.
@@ -1886,7 +1932,7 @@ it records bounded returncode/stdout/stderr diagnostics. Root will validate actu
 Windows/Edge ownership, sibling exclusion and shutdown before integrating/rerunning.
 No cases, budgets, errors or cleanup assertions are waived.
 
-Shipping actual JDK8/GWT5 PASS82.656s; focused E02+/negative/E04 PASS3/3,
+Shipping actual JDK8/GWT 5 PASS82.656s; focused E02+/negative/E04 PASS3/3,
 18.343s, cleanup PASS1.238s; selected transport21 PASS59.717s with four cleanup
 PASS receipts. [Fix proof](task-evidence/Q30/epoch15-final-fix-proof/README.md)
 retains221 verified sanitized payloads and both earlier failed attempts.
@@ -1924,7 +1970,7 @@ Final transport21 scenarios PASS59.717s: startup and synchronous12s scripts,
 wrong-node filtering, preterminal replacement, explicit negative, eleven fatal
 negatives (including same-URL HTML replacement and duplicate script), actual CDP
 loss and cancellation; all four cleanup receipts PASS/no survivors/errors.
-Final-source actual shipping JDK8/GWT5 PASS82.656s;
+Final-source actual shipping JDK8/GWT 5 PASS82.656s;
 focused E02positive/negative/E04 PASS3/3,18.343s;
 E04 sensor repair/retest13.271s, cleanup PASS1.238s, all input hashes unchanged.
 
@@ -1956,7 +2002,7 @@ false-PASS/cleanup/player issue and excludes full acceptance. Four original cach
 edits preserved. [Prior terminal packet](task-evidence/Q30/epoch15-compiled31-terminal/README.md).
 
 Next: terminal compiled31/strict audit, then fresh native82/structural77,
-isolated GWT5/compiled4/export/freeze/cold77, disabled/private menus/replay/archive.
+isolated GWT 5/compiled4/export/freeze/cold77, disabled/private menus/replay/archive.
 Parent independent acceptance review pending. Supported Browser/computer/node_repl
 unavailable: visible20/30/40 diagnosis/repair/retest BLOCKED/NOT RUN. No visual PASS.
 
@@ -1971,12 +2017,12 @@ U06/U07/Q60 unstarted. [Compiled terminal evidence](task-evidence/Q30/epoch15-co
 
 Fresh cold77 strict PASS: exact77 roots/308 predeclared candidates/all20-40 sizes;
 max80.978s, headroom9.022s under unchanged90s; work506/640, active1.343/5s.
-Native82/service105/sensitivity105/structural77, JDK8/GWT5 and compiled4/freeze
+Native82/service105/sensitivity105/structural77, JDK8/GWT 5 and compiled4/freeze
 PASS; all1,354 raw inputs unchanged. Prior zero-case ABI failure preserved and
 corrected using existing CP313 dependencies without installing/changing protection.
 
 Compiled31 finished exit1,27 PASS/4 FAIL,2,681.344s; strict audit FAIL(12 findings).
-All21 D01 and Q30service13 PASS, including seed35's declared physical rejection.
+All21 D01 and Q30service13 PASS, including seed 35's declared physical rejection.
 Alpha/A10 APP PASS but10/14 attribute reads timed out at10s; no blanket waiver.
 E02 expected canary rethrows; E04 current sensor selection hits stale LED repair
 guard. Independent read-only review agrees. Cause fixes and fresh gates pending.
@@ -2013,7 +2059,7 @@ All1,354 raw inputs unchanged. Pilot phase136.313s; remaining74 phase3933.352s;
 cleanup89.157s total/1.455s max, all server/survivor/error receipts PASS.
 Cold session47937 completed exit0; wrapper6456 created06:42:49.0889270Z exited.
 
-Retained PASS: native82/service105/sensitivity105/structural77, isolated GWT5,
+Retained PASS: native82/service105/sensitivity105/structural77, isolated GWT 5,
 compiled4/freeze and independent cleanup/oracles. Initial zero-case ABI failure
 preserved; existing matching CP313 host corrected it without source/install or
 protection changes. [Prior packet](task-evidence/Q30/epoch15-native-qualification/README.md).
@@ -2024,7 +2070,7 @@ Do not duplicate/kill. Raw progress/identity/logs under task label `q30-epoch15-
 workspace epoch15-task-pointer.json binds exact paths. One expensive gate at a
 time; LocalDots priority, Defender enabled, four existing caches/sibling edits preserved.
 
-Next: finish compiled31, run semantic audit including seed35's typed rejection;
+Next: finish compiled31, run semantic audit including seed 35's typed rejection;
 then disabled-menu30/replay2, private enabled GWT/menu33/replay3, formal archive.
 Private copy changes only catalog boolean; tracked source remains false. Parent
 acceptance review pending. Browser/computer/node_repl unavailable: visible20/30/40
@@ -2042,7 +2088,7 @@ All1,354 raw inputs unchanged; architecture current layout epoch15.
 
 Retained fresh PASS: native82 (4,328.150s), service105/sensitivity105, structural
 77 (70 accepted/7 explicit rejection/zero failures), independent oracles/cleanup;
-new isolated GWT5 (126.553s), compiled4/freeze (17.890s; cleanup1.116s), all77 roots/
+new isolated GWT 5 (126.553s), compiled4/freeze (17.890s; cleanup1.116s), all77 roots/
 308 manifests declared before cold. Initial zero-case ABI failure preserved and
 resolved by existing CP313 host; no install/protection/source change.
 [Prior phase packet](task-evidence/Q30/epoch15-native-qualification/README.md).
@@ -2063,7 +2109,7 @@ caches and sibling worktree edits remain. Defender stays enabled, no exceptions.
 
 Next: monitor existing runner; after completion strict-audit77 with maintained
 reader and workspace `audit_epoch15_cold77.py`, including all20-40 published sizes.
-Only after PASS run compiled31/semantic D01 review (seed35 typed rejection),
+Only after PASS run compiled31/semantic D01 review (seed 35 typed rejection),
 disabled control/private menu-replay, formal archive and parent acceptance review.
 Compiled audit's full inventory comparison fixed before first gate; five cache
 permutations independently required. Use explicit existing CP313 host and retained
@@ -2099,7 +2145,7 @@ Raw task evidence/helpers retained under OS-temp label `q30-epoch15-qualificatio
 workspace pointer `epoch15-task-pointer.json`. Preserve all earlier raw evidence,
 four untracked caches and sibling edits. Shipping GWT reuse audits1,354 raw bytes
 unchanged from passing five-permutation build; only baseHead metadata differs.
-Fresh isolated JDK8/GWT5 build PASS, 126.553s, with actual compile/link confirmation.
+Fresh isolated JDK8/GWT 5 build PASS, 126.553s, with actual compile/link confirmation.
 Fresh compiled4/freeze PASS17.890s, host cleanup PASS1.116s: all77 roots/308
 candidate manifests frozen before cold. First compiled host failed before any
 case because bundled Python3.12 could not load retained CP313 greenlet. Failure
@@ -2114,7 +2160,7 @@ Next: run `run_epoch15_cold.ps1 -Batch cold-pilot` (first3 frozen roots), then
 review its results before `-Batch cold-rest` (remaining74) serially. Use actual
 Windows PowerShell host with permission for task temp and CIM. Do not rerun
 completed native/build/canaries. Compiled31/D01-21, disabled and
-private menu/replay, source archive and parent acceptance follow. Maintain seed35
+private menu/replay, source archive and parent acceptance follow. Maintain seed 35
 typed policy-rejection oracle. Tracked shipping Q30 remains false. Interactive
 Browser/computer/node_repl tools absent: visible20/30/40 diagnosis/repair/retest
 BLOCKED/NOT RUN. Headless menu results cannot close that gap.
@@ -2191,7 +2237,7 @@ and independent oracles NOT RUN; no later gate was started.
 **PASS:** [cold77](task-evidence/Q30/epoch14-cold77/README.md), all 77 APP/HOST/cleanup,
 all sizes 20-40 published; worst 82.787 s, 7.213 s headroom, 507 work, 1.377 s active.
 Strict rereview and all 1,354 raw source hashes unchanged after native failure.
-Source identity: e186ffb8ed12b6a1d947e932124095998c98fcd7cb1f68253d892456e39fc332. Earlier isolated GWT5/four compiled
+Source identity: e186ffb8ed12b6a1d947e932124095998c98fcd7cb1f68253d892456e39fc332. Earlier isolated GWT 5/four compiled
 canaries and 16 reader tests remain bound; full acceptance is not claimed.
 
 **Resources:** native session 10932 finished; wrapper 22456 and delayed capture
@@ -2228,7 +2274,7 @@ maximum 1.371 s; servers stopped, no owned survivors/errors. Outer pilot/rest
 totals 129.857/3,811.925 s include host lifecycle and are not launch budgets.
 Source identity: e186ffb8ed12b6a1d947e932124095998c98fcd7cb1f68253d892456e39fc332.
 
-Earlier final-source isolated GWT5/four compiled cases and three pilots PASS remain bound in
+Earlier final-source isolated GWT 5/four compiled cases and three pilots PASS remain bound in
 first-stage packet. Original reader FAIL_INVALID/exit 2 remains preserved. Current
 16 reader tests PASS and read-only leaf continuation review found no blocker.
 Copied service metadata hardening is a nonblocking follow-up; this audit compared
@@ -2265,7 +2311,7 @@ Reader continuation fix is qualification-only: explicit plan changes ONLY baseHe
 strictly preserves every other JSON field/type and retains all evidence checks.
 16 focused tests PASS; original FAIL_INVALID/exit 2 pilot preserved, not relabeled.
 
-Fresh exact 1,354-source isolated GWT5 PASS 82.337 s; pinned four compiled cases PASS
+Fresh exact 1,354-source isolated GWT 5 PASS 82.337 s; pinned four compiled cases PASS
 17.258 s, host cleanup 0.888 s; 77 roots/308 manifests frozen before cold launch.
 Final source identity: e186ffb8ed12b6a1d947e932124095998c98fcd7cb1f68253d892456e39fc332.
 Fresh pilot 3 PASS: 20 parts 19,958 ms / 272 work / 488 ms active;
@@ -2289,7 +2335,7 @@ only with exact 1,354 frozen-source hash proof. Compiled31/D01-21, ordinary
 menu33/replay3, enabled build, archive and final parent acceptance remain pending.
 Visible20/30/40 player repair/retest BLOCKED/NOT RUN due unavailable graphical/
 node_repl tools; user review steps will be prepared before treating that as final
-gap. Preserve distinct D01 seed35 rejection oracle. No later milestone starts.
+gap. Preserve distinct D01 seed 35 rejection oracle. No later milestone starts.
 
 ---
 
@@ -2730,7 +2776,7 @@ reusing pivot-mutated row references or skipping numerical factorization.
 Accepted numeric LU scratch remains distinct from the absent production
 structural tracker; its isolated time is not established.
 
-Fresh PASS: control/final-private JDK8/GWT5, compiled A07/normal-disabled,
+Fresh PASS: control/final-private JDK8/GWT 5, compiled A07/normal-disabled,
 14 complete proof projections with 43 strict corruptions each, independent
 metadata reader with 13 negatives, source/runtime audits and host cleanup.
 The new native test initially failed its reflection invocation (campaign exit 2);
@@ -2882,7 +2928,7 @@ multiple balanced components, but none preserved the original partition:
 49–58 added edges and 30–36 cross-original edges prohibit static partition reuse.
 Outside-component scan fractions around 35–36% overlap and are not time savings.
 Cold OFF/ON/OFF 99.209/99.041/98.243 s placed ON inside the 0.966-s control range.
-Full parity/negative readers, native7, GWT5, compiled canaries and cleanup PASS.
+Full parity/negative readers, native7, GWT 5, compiled canaries and cleanup PASS.
 Root source/report/inventory audit and staged byte audit PASS. No census code
 is integrated; prior failed gates and corrected packaging attributions remain.
 
@@ -2907,7 +2953,7 @@ host cleanups PASS. Application fields remain wall-clock; whole-host operation
 is monotonic and cleanup separate. No warm-proof reuse, clock-jump evidence,
 speed claim or established OS/thermal/noise cause. Tracking cost remains unresolved.
 
-Prototype native9 PASS (56.037 s), GWT5 PASS (100.522 s), compiled A07/disabled
+Prototype native9 PASS (56.037 s), GWT 5 PASS (100.522 s), compiled A07/disabled
 normal PASS (7.584 s; cleanup 1.350 s), strict reader/three negatives PASS.
 Source audit `ce1b55ca0b463746b19976871a5be1401972c294bf0cc881070bdd36284b7ba4`
 binds 1,343 inputs; runtime 1,526. Inputs stayed unchanged throughout the trial.
@@ -3002,7 +3048,7 @@ they overlap and are not nonzero work or seconds saved. Fallback observation
 remains unavailable and every exact flag is false.
 
 Census native7 PASS (44.894 s; collector 4,224, actual LU 328 and pivot oracle
-388 assertions), actual GWT5 PASS (83.352 s), compiled A07/disabled-normal
+388 assertions), actual GWT 5 PASS (83.352 s), compiled A07/disabled-normal
 PASS (5.886 s; cleanup 0.911 s), and metadata/strict negative checks PASS.
 Earlier stale-manifest, unsupported-clone GWT and native-marker failures remain.
 Root packet audit PASS: 179 artifacts, five exact reports, source map 1,343,
@@ -3020,7 +3066,7 @@ rejected under current callback contracts. No prototype source is integrated.
 
 Prototype focused native9 PASS (56.037 s): structural tracker 1,661, numerical
 factorization 2,148, plus unchanged execution/temporal/budget/policy/generation
-contracts. Actual GWT5 PASS (100.522 s); compiled A07/disabled-normal PASS
+contracts. Actual GWT 5 PASS (100.522 s); compiled A07/disabled-normal PASS
 (7.584 s; cleanup 1.350 s), strict reader plus three negatives PASS.
 Source audit `ce1b55ca0b463746b19976871a5be1401972c294bf0cc881070bdd36284b7ba4`
 binds 1,343 inputs; all are unchanged after build. Runtime has 1,526 inputs.
@@ -3096,7 +3142,7 @@ Three real CPU-host canaries and separate mapping fixtures PASS. Review caught
 and repaired source-attribution, host lifecycle, request-type and reference-path
 defects before the final evidence was accepted. Original hashes/failures remain.
 The publication fixture passed native5 (47.385 s; collector 1,634 assertions),
-actual GWT5 (83.570 s), A07/disabled-normal (5.928 s; cleanup 0.942 s) and three
+actual GWT 5 (83.570 s), A07/disabled-normal (5.928 s; cleanup 0.942 s) and three
 strict negatives. Its initial relative-output-path exit-2 rejection is retained.
 Publication instrumentation remains isolated; no voltage/current calls are batched.
 Root publication packet audit PASS: 147 artifacts, five exact raw reports and
@@ -3108,7 +3154,7 @@ check caught whitespace in stored unified-diff context; all five diff payloads
 were preserved byte-exact under deterministic gzip and the failure retained.
 
 Latest optimization trial: one inline LU update finite guard. Native6 (46.348 s),
-actual GWT5 (80.098 s), compiled A07/disabled-normal (4.957 s; cleanup 0.904 s),
+actual GWT 5 (80.098 s), compiled A07/disabled-normal (4.957 s; cleanup 0.904 s),
 three strict negatives and exact compiled guard inspection PASS. Fresh cold
 control/candidate: 98.020/98.102 s; proof 68.772/68.797 s. Full non-timing parity
 and cleanup PASS, but no credible benefit. The predeclared continuation rule
@@ -3131,7 +3177,7 @@ net-switch witness, repeated cache hits, both live copper faces, holes, via cap,
 route fingerprints and work. Existing P07/resumption/physical/budget/policy checks
 remain. Earlier noncontrastive test coverage and source-preparation newline
 assertion corrections are retained; no application failure was hidden.
-Actual GWT5 PASS (79.627 s), compiled A07/disabled-normal PASS (5.879 s; cleanup
+Actual GWT 5 PASS (79.627 s), compiled A07/disabled-normal PASS (5.879 s; cleanup
 0.937 s), three reader negatives and five-permutation memo mechanism inspection
 PASS. A test-only R3 edit leaves all 1,525 compiled runtime inputs byte-identical;
 that explicit audit bounds GWT/canary reuse. Fresh control/candidate/candidate/
@@ -3157,7 +3203,7 @@ active/lost-scope incompleteness. An isolated JDK8 collector smoke passed
 4,224 assertions (0.440 s); this is not real-LU/host acceptance. Actual GWT2.7
 then failed (exit 2; 5.982 s) because array clone calls are unsupported. The
 failure is retained; four defensive copies now use System.arraycopy. Corrected
-GWT5 PASS (83.352 s). Compiled A07/disabled-normal PASS (5.886 s;
+GWT 5 PASS (83.352 s). Compiled A07/disabled-normal PASS (5.886 s;
 cleanup 0.911 s), with the maintained strict reader and three negatives PASS. Current private collector SHA-256
 `1c2aeaa150a766f4e6dcddacaa9f8865b58274f9e160294d90b8073646bfd5b5`;
 manifest `b1b0eea88eeb71c12f1fbc757289cff722fb33689babe13a69f02062fe8efe17`.
@@ -3278,9 +3324,9 @@ This supports a bounded repeated-seed benefit, not population or normal acceptan
 The frozen plan's prose incorrectly calls seed 7 a 35-package row; the unchanged
 request actually has 37. The original plan/hash is retained with that correction.
 
-Measured R2 native6/GWT5/A07/disabled-normal and strict negatives PASS. The distinct
+Measured R2 native6/GWT 5/A07/disabled-normal and strict negatives PASS. The distinct
 1,339-input pure final-source export excludes unaccepted plan-4/normal-hook work:
-native6 (37.033 s), GWT5 (79.701 s), compiled A07 and three reader negatives PASS;
+native6 (37.033 s), GWT 5 (79.701 s), compiled A07 and three reader negatives PASS;
 disabled-normal was not run on that export. Root GWT passes (77.504 s), with all
 1,525 consumed inputs and 392 WAR files identical to measured R2. All 1,330 staged
 source blobs plus nine pinned JARs match the passing export. The measured 1,340
@@ -3320,7 +3366,7 @@ scopes; broad deferral is not safe. No publication/refresh change is implemented
 and the mixed wire/callback timing bucket does not establish an isolated cost.
 
 Routing trial: an exact two-pass Manhattan field in the simpler router passes
-native6/GWT5/A07/disabled-normal, its 724-assertion BFS oracle and strict readers.
+native6/GWT 5/A07/disabled-normal, its 724-assertion BFS oracle and strict readers.
 Fresh control/candidate cold times are 97.240/97.296 s, routing 22.543/22.486 s.
 The 57-ms routing gain and 56-ms cold regression are inconclusive. The predeclared
 continuation rule stopped the trial; six rows are NOT RUN. The transform remains
@@ -3329,7 +3375,7 @@ all four exact raw reports and the 1,340-to-1,341-input source reconstruction.
 Inventory: `83971f4f6adab97d85d2b642beb9cb3626dccd0ade9f5552d58447b045a0bcfa`.
 New private instrumentation covers both simple routing and P07's multilayer search.
 The private routing-profile fixture now passes native9 (39.004 s, including 145
-new collector assertions), GWT5 (80.934 s), compiled A07/disabled-normal and three
+new collector assertions), GWT 5 (80.934 s), compiled A07/disabled-normal and three
 strict negative canaries. Root restored an existing wall-timer boundary before
 gates. Reader review/preflight caught and repaired a contradictory clock-count
 check and a browser-profile-directory false rejection; original drafts/failure
@@ -3385,7 +3431,7 @@ Two review source references omitted the intermediate Temp directory; metadata
 was corrected without changing payloads, and previous inventory hashes remain.
 The separate solver-publication probe repairs pause/resume accounting, invalid
 finalization and clock handling before execution. Its five focused native suites
-PASS (47.385 s; new collector 1,634 assertions). Actual JDK8/GWT5 PASSes (83.570 s),
+PASS (47.385 s; new collector 1,634 assertions). Actual JDK8/GWT 5 PASSes (83.570 s),
 as do compiled A07/disabled-normal (5.928 s, cleanup 0.942 s) and three strict
 negatives. The first canary command failed before launch because its output path
 was relative; that exit-2 failure is retained, and the corrected absolute-path
@@ -3399,7 +3445,7 @@ zero at the 0.1-ms timer quantum, so those are coarse inferences, not exact tota
 Ten rollback calls were unselected (unknown cost), the immediate-wire path was
 not exercised, and one UI-wire sample is insufficient for expansion. The source
 remains isolated in Temp and is not an accepted optimization; packaging is pending.
-A separate one-site LU finite-guard trial passes native6 (46.348 s), GWT5
+A separate one-site LU finite-guard trial passes native6 (46.348 s), GWT 5
 (80.098 s), compiled A07/disabled-normal (4.957 s, cleanup 0.904 s) and three
 reader negatives. All five exact compiled factors put the existing failure
 helper behind the unchanged inline finite predicate. An initial inspection reader
@@ -3491,7 +3537,7 @@ gates. Seed 10014/40 parts still takes 103.346 s cold, proof 74.354 s and routin
 22.468 s. [Accepted evidence](task-evidence/Q30/validated-factor-input/README.md).
 
 This local documentation checkpoint records current-preflight measurement
-evidence and integrates no sampler. R2 native5 PASS 47.422 s, production GWT5
+evidence and integrates no sampler. R2 native5 PASS 47.422 s, production GWT 5
 PASS 81.103 s, compiled A07/disabled-normal and exact reader/three corruptions
 PASS. Fresh seed-10014/40 profile/off cold times are 102.757/103.323 s; proof
 73.810/74.275 s and routing 22.466/22.521 s. All 1,339 source inputs are unchanged;
@@ -3526,7 +3572,7 @@ cold ranges are 0.627 s control/0.691 s candidate, and proof ranges 0.635/0.553 
 This supports the repeated gain; the single 20-part delta is not a population
 claim. The 40-part candidate still takes 99.800 s (proof 70.808 s, routing
 22.637 s), above the normal limit. The exact-index source excludes the existing
-normal hook and plan-4 changes; its native5 PASSes in 36.888 s, production GWT5
+normal hook and plan-4 changes; its native5 PASSes in 36.888 s, production GWT 5
 and compiled A07 plus three strict-reader corruptions PASS, with owned cleanup
 0.881 s. Root production refresh PASSes in 76.798 s. Its complete 392-file WAR
 and all 1,525 consumed inputs match the measured r2 candidate byte-for-byte,
@@ -3547,7 +3593,7 @@ actual triangular solves and count factored lower/upper coefficients and initial
 RHS finiteness. It invokes the actual solve once and changes no arithmetic.
 Before the first gate, root rebased the accepted row scan, added the test's
 required PASS marker and corrected its explicit L*U fixture RHS (12.5 to 23).
-Native7 PASSes in 46.750 s (24 new solve-sampler assertions); actual GWT5 PASSes
+Native7 PASSes in 46.750 s (24 new solve-sampler assertions); actual GWT 5 PASSes
 in 78.412 s. Compiled A07/disabled-normal and exact reader/three corruptions
 PASS, with 0.934 s owned cleanup. The predeclared fresh off/on seed-10014 pair
 completed with cold 99.730/99.729 s and proof 71.015/70.837 s. Both host runs PASS,
@@ -3574,7 +3620,7 @@ independent LU oracle checks; only `lu_solve` differs. The candidate scans the
 initial RHS once, skips exact-zero terms while all stored values remain finite,
 and permanently falls back to the historical dense loops after any nonfinite
 value. Native5 PASSes in 32.934 s, including 271,699 A07 assertions. Candidate/
-control GWT5 PASS in 79.406/78.902 s; actual A07/disabled-normal and each exact
+control GWT 5 PASS in 79.406/78.902 s; actual A07/disabled-normal and each exact
 reader/three corruptions PASS, with host cleanup 1.191/1.155 s. All eight fresh
 rows and four complete-report comparisons PASS, with unchanged work/proofs,
 empty host error arrays, stable inputs and owned cleanup. Paired cold savings
@@ -3588,8 +3634,8 @@ acceptance. Root integrated only its two files and selectively staged the solver
 method and independent checks; the existing normal hook and all plan-4 changes
 remain outside the index. Exact index-source tree
 `27a5e7244e31e3debabded8670dacc95b1feddd8` has 1,338 inputs. Exact index native5
-PASSes in 36.753 s, GWT5 in 78.811 s, and compiled A07 plus three reader
-corruptions PASS with cleanup 0.873 s. Root GWT5 PASSes in 77.827 s. All 1,525
+PASSes in 36.753 s, GWT 5 in 78.811 s, and compiled A07 plus three reader
+corruptions PASS with cleanup 0.873 s. Root GWT 5 PASSes in 77.827 s. All 1,525
 consumed inputs and the entire 392-file WAR match the measured candidate
 byte-for-byte, supporting reuse of its compiled evidence. Independent source
 review finds no algebra, proof or budget blocker; signed-zero bit identity
@@ -3609,7 +3655,7 @@ The next isolated whole-factor probe changes no numerical operation. Its first
 native gate FAILed after 33.950 s because the new test attempted browser-only
 GWT JSON construction on the JVM. R1 is preserved. R2 changes only that test:
 native timing/cleanup checks remain, and exact serialized scope/counters are
-required by the real browser metadata reader. Native8, production GWT5,
+required by the real browser metadata reader. Native8, production GWT 5,
 compiled A07/disabled-normal and exact A07/three corruptions all PASS. Fresh
 off/profile measurement is now running; no profiler is integrated.
 
@@ -3632,14 +3678,14 @@ until normal completion/timeout; lease close retains the last snapshot DOM
 attribute; and broad binding-exception handling can admit incomplete snapshots.
 R4 is retained without a GWT/browser gate. R5 fixes those three source gaps but
 its first native gate FAILs at 22.808 s on a JSONObject helper overload. R6 fixes
-that compile call; native5 PASSes in 46.757 s and actual GWT5 in 79.313 s. Review
+that compile call; native5 PASSes in 46.757 s and actual GWT 5 in 79.313 s. Review
 also finds that native hook/DOM removal exceptions can leave success flags true,
 and a repeated close can erase failed receipts. A bounded r7 repair is in scratch;
 r6 browser qualification is NOT RUN while this cleanup blocker remains. R7's
 focused source review finds no blocker, and its synthetic reader self-test
 PASSes in 0.047 s. The original r7 prepared fixture remains NOT RUN; a separate
 final fixture includes the accepted sticky-finite solver. Native5 PASSes in
-34.807 s and actual GWT5 in 78.389 s. The separate construction metadata reader needed an r2 repair
+34.807 s and actual GWT 5 in 78.389 s. The separate construction metadata reader needed an r2 repair
 to require r7's top-level close status/error and three cleanup confirmations;
 its 17 synthetic corruptions pass. Real scope-loss, terminal-timing and terminal-
 clock negative cases PASS their boundary checks and cleanup, including disposal
@@ -3727,7 +3773,7 @@ compiled solver checks, fresh counterbalanced timing and cleanup evidence:
   savings 5.742 s includes host variation: unchanged seed-64 proof varies 5.010 s,
   and repeated seed-7 cold ranges are 4.449 s control/5.222 s candidate.
   Seed 13 still takes 92.615 s. Final combined-source native3 PASS 35.392 s,
-  GWT5 PASS 82.017 s, compiled A07 PASS 1.285 s plus three negative canaries,
+  GWT 5 PASS 82.017 s, compiled A07 PASS 1.285 s plus three negative canaries,
   disabled-normal canary, stable 1,525 inputs and owned cleanup PASS.
   [Evidence](task-evidence/Q30/routing-bookkeeping/README.md).
 
@@ -3751,7 +3797,7 @@ ranking evidence only. [CPU limits](task-evidence/Q30/cdp-cpu-profile/README.md)
 Rejected packed-index, row-list, bounded-via and geometry trials are removed,
 with failures and evidence retained. Zero-coefficient triangular solve also
 remains rejected: review found hidden nonfinite propagation during transformer
-inversion; the repair passed native4/GWT5/A07 but its first pair was
+inversion; the repair passed native4/GWT 5/A07 but its first pair was
 94.810 s versus 89.794 s control. Remaining six runs were NOT RUN under its
 early-stop rule; no zero-solve source was integrated. `02450fb` retains this
 trial; the current documentation corrects three receipt links.
@@ -3787,7 +3833,7 @@ receipts found no such host errors. This fix does not erase the 40-part D01
 failure. [Runner fix](task-evidence/Q30/attribute-read-failure/README.md).
 
 The current private LU sampler is validated measurement evidence, not an integrated
-optimization. Final native6 PASS 46.887 s, GWT5 PASS 78.185 s, compiled A07 and
+optimization. Final native6 PASS 46.887 s, GWT 5 PASS 78.185 s, compiled A07 and
 disabled-normal canaries PASS, including the exact reader/three corruptions.
 Native r1/r2 and GWT r1 failures and their repairs are preserved. Temporal
 coverage now explicitly checks one/two-channel input, work, settling and cleanup;
@@ -3820,7 +3866,7 @@ No deadline, hypothesis, settling requirement or acceptance threshold is relaxed
 
 Resources: completed native/build/browser jobs have stopped; owned browser/server
 cleanup reports PASS with no survivors. No heavy gate is active. Root source now
-contains the validated factor-input delta; its final JDK8/GWT5 rebuild PASSes
+contains the validated factor-input delta; its final JDK8/GWT 5 rebuild PASSes
 in 78.540 s. All 1,525 consumed inputs and the complete 392-file WAR match the
 measured r3 candidate byte-for-byte, permitting reuse of its compiled canaries.
 Exact current-source and staged-source builds live in the owned fixtures.
@@ -3839,11 +3885,11 @@ path; two independent source audits found no current producer-coverage gap.
 The general input scans, every zero-row check, numerical ordering and arithmetic
 guards remain. A predeclared fresh A/B experiment spans 20/37/40 parts and repeats
 seed 7. Initial native4 PASS 45.839 s;
-candidate/control GWT5 PASS 78.646/79.319 s. Both initial compiled checks FAILed
+candidate/control GWT 5 PASS 78.646/79.319 s. Both initial compiled checks FAILed
 the new factor-overflow canary because a constant-column stamp overflowed RHS
 before LU. The r3 fixture marks the DC branch dynamic before simplification;
 required factor=1, solve=0, accepted=0 and samples=0 assertions are unchanged.
-Final r3 native4 PASS 44.459 s, candidate/control GWT5 PASS 78.499/78.009 s,
+Final r3 native4 PASS 44.459 s, candidate/control GWT 5 PASS 78.499/78.009 s,
 both actual A07/disabled-normal checks and exact readers/three corruptions PASS.
 All host error arrays are empty; input audits and owned cleanup PASS. All eight
 predeclared private cold/warm runs and four complete-report comparisons PASS.
@@ -3860,7 +3906,7 @@ Commit `e285675` includes only the optimization, strengthened A07 canaries,
 its evidence and the checkpoint report; the normal hook and plan-4 work remain
 uncommitted. All 1,338 working inputs match the measured
 candidate. An independent exact-index fixture (1,337 inputs; committed plan-2
-baseline) also passes native4 48.284 s, GWT5 80.962 s and compiled A07 plus strict
+baseline) also passes native4 48.284 s, GWT 5 80.962 s and compiled A07 plus strict
 reader/three corruptions, with host cleanup 0.877 s. Root reviewed the integrated
 source and independently checked the evidence inventory, compressed payloads,
 privacy, exact reconstruction of both 1,338-input arms, and all eight raw reports.
@@ -3869,7 +3915,7 @@ privacy, exact reconstruction of both 1,338-input arms, and all eight raw report
 The current private-preflight sampler is isolated measurement code, not integrated
 into root production source. Source review found no correctness blocker after
 adding an explicit timing-completion counter to the native early-return/exception
-canaries. R1 is retained; r2 native5 PASS 47.422 s, GWT5 PASS 81.103 s, actual A07
+canaries. R1 is retained; r2 native5 PASS 47.422 s, GWT 5 PASS 81.103 s, actual A07
 and disabled-normal canaries PASS, exact A07 reader/three corruptions PASS.
 All 1,339 source-fixture inputs match their prebuild audit; compiled canaries and
 both timing runs consume identical source/web/runner manifests.
@@ -4234,10 +4280,10 @@ canary now supplies six actual P09 predicate/retry/replay/cancellation cases;
 fresh same-candidate population/native coverage remains pending.
 Population results and physical thresholds remain unchanged.
 
-Fresh Alpha12 FAILs at first LED seed0 catalog R1: obsolete assertion demanded a
+Fresh Alpha12 FAILs at first LED seed 0 catalog R1: obsolete assertion demanded a
 bound realization for valid unformed loose axial stock. Source audit confirms the
 player uses canonical LoosePartPose geometry; the verifier correction checks that
-actual adapter. QuickPlay12 LED seed3 FAILs an obsolete completed-board removal
+actual adapter. QuickPlay12 LED seed 3 FAILs an obsolete completed-board removal
 rejection assertion: completed boards intentionally remain interactive since
 8b371d9. The correction will verify real removal/reinstallation and latched result.
 Both failures are retained. GWT14 focused runtime later passed Alpha LED0 and
@@ -4352,7 +4398,7 @@ P09, MEDIUM_BOARD@1, the 48-via cap, shared models and solver budgets are unchan
 Validation: PASS full maintained native67 plus independent oracles, report and
 non-live listener checks; PASS final three affected suites (4,249 assertions,
 10/10 service cases) after an explicit input-reuse audit; PASS actual final-source
-JDK8/GWT5 (85.395 s compile / 1.405 s link); PASS same-build compiled 10/10
+JDK8/GWT 5 (85.395 s compile / 1.405 s link); PASS same-build compiled 10/10
 (37 samples each, all 20 fault pairs distinguishable); PASS independent reader
 and seven rejection canaries; PASS real visible meter, unrepaired retest,
 lift/reconnect, replacement and repaired retest with four inspected screenshots.
@@ -4897,7 +4943,7 @@ Medium 17's five-second work-unit failure is fixed without raising budgets. Comp
 retains a legal original route when a proposed contraction exceeds the detour limit.
 
 Fresh isolated qualification: 19 native suites, 1,173,968 reported assertions;144 structural
-cases; GWT5; compiled A08/E03/A10 plus negative canary;18 normal launches, two exact
+cases; GWT 5; compiled A08/E03/A10 plus negative canary;18 normal launches, two exact
 replays, relay4 replay, retained-owner cancellation, old-epoch rejection, privacy and
 actual Shop purchase. Final Edge permutation: F63F0B949660B0B120FDF246ECE5A01D.
 No owned browser survivors; native classes cleaned up. Full historical matrix/corpus
@@ -4926,7 +4972,7 @@ Production mixed-layer/via/factory-link adoption is rejected for this epoch.
 Temporal startup health and scheduler snapshot restoration are repaired; no
 ordinary backwards-time, mutation, power or deterministic work guard was relaxed.
 
-Final clean native48, integrated native9, both production GWT5 builds, full RC,
+Final clean native48, integrated native9, both production GWT 5 builds, full RC,
 Q15 all11 and strict readers/22 malformed controls, forced negatives, nine normal
 families and actual menu/seed/ticket/face/pan/zoom/privacy inputs pass. P09 native58
 and compiled49 checks pass. Clean P06/P07 prototype regressions and mouse probes
@@ -5310,7 +5356,7 @@ runtime oracle accepts zero blockers and rejects a wrong run. A08's intentional
 failure is exactly `FAIL:a08:a08-explicit-failure-canary`; the original observer
 expected a wrong token, and that failed receipt remains preserved.
 
-Fresh normal-player CDP input on real compiled GWT33: menu New board -> RB15seed3
+Fresh normal-player CDP input on real compiled GWT33: menu New board -> RB15seed 3
 with advancing visible progress -> ticket -> workbench; meter drag, board flip,
 diagonal bounded pan; Parallel0 -> real OL/680 Ohm readings -> healthy removal,
 failed retest, drag restoration -> shop330 purchase -> physical drag installation
@@ -5321,7 +5367,7 @@ and transcripts accompany [final evidence](task-evidence/visual-productization/f
 ### Limitations and cleanup
 
 The larger normal board took about36 seconds; progress is honest, not a promise
-of instant preparation. Same-plan compaction reduced seed0 outline area by5.49%
+of instant preparation. Same-plan compaction reduced seed 0 outline area by5.49%
 to28.59%, depending on family, not a cross-build generation speed benchmark.
 HARD/PSYCHOTIC, arbitrary-seed acceptance, general browser support and human
 difficulty/population calibration remain outside this task. No independent
@@ -5359,7 +5405,7 @@ Next roadmap milestone is P05, requiring separate authorization.
 
 - **Resume:** [POST_REL_A_CHECKPOINT.md](POST_REL_A_CHECKPOINT.md) is the complete current continuation file. User requested a durable checkpoint at1% remaining allowance; live main weekly remaining is1%. Implementation and acceptance are unfinished. No heavy gate remains running.
 - **Scope/base:** Recovered visual/productization and small developer RENDER-0, subtle wood grain, and fault-blind removal/replacement for every actual part on every playable board. Branch `codex/task43p-final-recovery`; HEAD `f41e80f6227ffd04c0092ff01207bdc8e392c2ed`. Root only; no agents, staging, commit, push or email. P05 remains unstarted.
-- **Implemented:** All nine families/71 seed0 positions have real physical service providers, including supporting parts/connectors/fuses; tray provenance, eligible wrong repairs, ordinary READY after player edits and replacement/loose-capacitor energy guards. Recovered visual camera/tray/drag/lifted-tip changes and wood grain are integrated. CircuitJS hot-path changes preserve equations/steps/budgets and have independent original-algorithm comparisons.
+- **Implemented:** All nine families/71 seed 0 positions have real physical service providers, including supporting parts/connectors/fuses; tray provenance, eligible wrong repairs, ordinary READY after player edits and replacement/loose-capacitor energy guards. Recovered visual camera/tray/drag/lifted-tip changes and wood grain are integrated. CircuitJS hot-path changes preserve equations/steps/budgets and have independent original-algorithm comparisons.
 - **Compiled GWT15:** Actual JDK8/GWT PASS,5 permutations,69.882s compile/1.320s link/exit0. Full native35 plus independent seed/value/role/report474/cleanup PASS. A08 PASS1103/90 compensated writes/5 fresh failures/45174ms/cleanup and strict-reader negative. Execution digest `69b1024cb02a4a2c6f591b63d4ba4151061e3118de8a677a8c9bf8a91497b9d7`;779 frozen inputs. The sole14-to15 input delta was the A08 earlier-construction-rejection fixture, audited.
 - **Full corpus GWT14:** Alpha38 PASS9835 assertions/356 physical-service positions/310 mutation checks/9 categories/400 acquisitions/379 stale-provider callbacks/357 negatives;1146895ms operation/3ms cleanup/exact owner restored. All three RC repaired retests pass; max active unit1980ms. Strict reader plus38 malformed canaries PASS. A07 PASS24867 pure/73 runtime/59 model; service61/RENDER-0 65/six negatives/current UI108 PASS. Forced Alpha/service/RENDER-0 restore their exact owners. These retain their actual candidate boundary.
 - **Unbuilt after15:** E03 still expected healthy flyback D1 to be fixed. Updated `E03RelayMutationChecks.java` to prove real healthy removal/reinstallation and retest. Also updated `ArchitectureDeveloperVerifier.java` to derive service expectations from declared providers instead of provenance, and `Task43PPhysicalTruthDeveloperVerifier.java` for separable service connector endpoints. These three verifier edits are UNBUILT/NOT RUN. Preserve `e03-build15-failure.json` and earlier failures. New build and affected gates are next; do not call current preview final source.
@@ -5372,7 +5418,7 @@ Next roadmap milestone is P05, requiring separate authorization.
 - **Scope/HEAD:** U04/U05/REL-A and Shop/launcher/meter fixes published at f41e80f6227ffd04c0092ff01207bdc8e392c2ed on codex/task43p-final-recovery. Normal origin push and exact remote SHA verified; established Gmail SENT, message 1a09ca4dda7fc336. The separately authorized visual/productization pass and developer-only RENDER-0 second-renderer proof are active. P05 is unstarted.
 - **Current work:** Polished physical packages, light-green masked traces and metallic pads; a top toolbar with consolidated controls; no Inspect X shortcuts. Latest owner additions: wooden bench, metal parts tray anchored beside the PCB and sharing its camera, fix the old side-scroll container clipping the toolbar, and improve choppy RB15 panning. Preserve actual geometry/access, stable identities and CircuitJS truth. No new trace-repair or 3D gameplay.
 - **Ownership:** Root owns Java, integration, RENDER-0, performance, docs and qualification. Astra visual_interface owns only war/tsj-workbench-ui.js, war/tsj-workbench-ui.css and tests/contracts/u04_ui_contract.mjs; current responsive follow-up is active. Read-only RENDER-0 investigation finished. No simultaneous heavy gates.
-- **Evidence/status:** Historical alpha gates remain accepted for its published candidate. Visual paint pilot GWT5 PASS77.472s/1.366s; current top layout, world tray and RENDER-0 are NOT YET qualified. Before screenshots retained in task-evidence/visual-productization. Current Browser tab14 still runs the old sidebar candidate; old loaded pages do not prove the new layout. Final-source build, native and compiled boundary/lifecycle/meter checks plus real player screenshots/interactions remain required.
+- **Evidence/status:** Historical alpha gates remain accepted for its published candidate. Visual paint pilot GWT 5 PASS77.472s/1.366s; current top layout, world tray and RENDER-0 are NOT YET qualified. Before screenshots retained in task-evidence/visual-productization. Current Browser tab14 still runs the old sidebar candidate; old loaded pages do not prove the new layout. Final-source build, native and compiled boundary/lifecycle/meter checks plus real player screenshots/interactions remain required.
 - **Resources/preserved:** Visual scratch OS-temp/TroubleshootJS-visual-render0-ed186ee1af314d17b02d71c3aa18f544. Existing previews and alpha scratch retain the exact ownership records below; their startup fingerprints are stale after source/build edits. Browser currently lists only tab14. Pre-existing tests/contracts/__pycache__/ is retained/excluded.
 - **Next:** Finish integrated visual/renderer changes, inspect the actual fresh production preview, resolve findings and qualify. Commit/push visual follow-on separately, verify remote and notify once. Stop before P05.
 
@@ -5382,7 +5428,7 @@ Next roadmap milestone is P05, requiring separate authorization.
 - **Scope/base:** U04/U05/REL-A, mandatory Q15 seed correction and user-reported Shop, Windows launcher and continuity fixes complete on codex/task43p-final-recovery, base ec10aa8b849149c33ae00153873c94c6aa6c9ca6. The accepting commit contains this checkpoint; normal push and Gmail follow actual execution. The authorized major visual pass follows from that integrated HEAD in a separate commit. P05 remains unstarted.
 - **Delivered:** Typed exact-replay/session/menu/ticket/retest/error flow; Resources/Settings/focus/privacy; computed initial EASY/MEDIUM and unavailable advanced profiles; generic full website catalog and purchased-part compatibility independent of source target; canonical empty-slot/identity/stress restoration. Normal RB15 selection is exactly eleven qualified seeds. Root launcher recovers proven local stale state/reuses proven live state and preserves foreign/uncertain state.
 - **Meter correction:** Real RB15/0 J1.1/F1.1 reproduced OL/0 on lead reversal. Interactive grid snapping displaced one temporary meter endpoint; resistance, diode and loaded-DC now use exact solver positions. No fake same-net result, replacement solver or power/budget change. Actual CONT/OHM both ways read0;20 independent compiled off-grid assertions and66 directed Q15 copper readings pass. Generated broken traces/E08 remain unstarted.
-- **Final gates:** Actual JDK8/GWT5 PASS69.974s compile/1.407s link/exit0; native33 plus independent oracles/owned cleanup PASS. Alpha38 PASS1245 assertions/230 mutation rows/115 acquisitions,915535ms operation/2ms cleanup; Q15all11 PASS613+80/66 copper,623124ms/2ms. Quick Play16x8, A101274/24, A081103, E0121, E0346+113, Task4120 routes/182 samples, Task49397, A0758/71/59, U011237 and identified Task43P runtime pass. Maintained combined/strict readers, forced failures and malformed canaries pass. UI88/syntax reused under exact unchanged-input audit.
+- **Final gates:** Actual JDK8/GWT 5 PASS69.974s compile/1.407s link/exit0; native33 plus independent oracles/owned cleanup PASS. Alpha38 PASS1245 assertions/230 mutation rows/115 acquisitions,915535ms operation/2ms cleanup; Q15all11 PASS613+80/66 copper,623124ms/2ms. Quick Play16x8, A101274/24, A081103, E0121, E0346+113, Task4120 routes/182 samples, Task49397, A0758/71/59, U011237 and identified Task43P runtime pass. Maintained combined/strict readers, forced failures and malformed canaries pass. UI88/syntax reused under exact unchanged-input audit.
 - **Player/review:** Current RB15 full diagnosis/generic repair/HIGH-LOW/retest, Settings/Resources/menu focus,41-flag debug-off privacy, LED3/RC3 entries, cancellation, normal RB15 draws3/42, two honest exact failures retaining42/OFF and full9007199254740993 replay pass. Prior MEDIUM3 same-part A-to-B-to-A transfer/retest retains its before-meter identity; current compiled composed0/3 qualify the integrated mechanics. Root integrated review and bounded optional meter/session/catalog reviews found no blocker. Human EASY/MEDIUM attempts remain qualitative; failed MEDIUM restriction is retained, EASY outcome/timings unspecified, no fabricated human retry or population estimate.
 - **Frozen candidate:** Execution 6c330f5040aa15d42d40da1a0695a1177e5c0652a34a832860e7d0eb901e39ae;1155-input aggregate 6635af42c3bffd9cc7855f7c767533f72896ce5f699019e6de20f15ff741d371; maintained1437 execution files and exact preview/HTTP owner rechecked with no drift. Final proof: [REL-A](task-evidence/REL-A/final-shop/README.md). Historical failed builds, observer timeouts, missing-tab/report and canary mistakes remain. Windows CDP wrapper remains unqualified; ordinary Browser proof is separate.
 - **Resources/preserved:** Final64209 PID17324/start639249258397003903/session51157/run U04-U05-RELA-continuity-1, nonce edc7b8fccb1d4971a6bb45f72eac7d1c. Tab12 repaired RB15/0 is completed/ON; tab14 exact9007199254740993 is OFF with both supplies disconnected; tab13 completed debug canary. Preserve user-used pre-fix tab11 and completed MEDIUM tab10 on64207 PID19672/start639249239073717074/session35287; root launcher8899 PID4108/start639249237920404051; original64206 PID19396/start639249145018110986/session71577. Scratch OS-temp/TroubleshootJS-shop-correction-d1f14699fdbb4f36bac7956b7ae0a863. No active heavy gate/worker. Pre-existing tests/contracts/__pycache__/ retained/excluded; do not claim cache bytes unchanged.
@@ -5413,9 +5459,9 @@ Next roadmap milestone is P05, requiring separate authorization.
 
 - **Scope/candidate:** U01 → P03 → P04 and the owner-added A11-R1 repair are complete; E01 is unstarted. Branch `codex/task43p-final-recovery`, base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`. The publication commit contains this checkpoint; use Git history for its exact SHA. Final 1,078-input fingerprint `5157451312ae9d2eb828b2a73008251e4986ecdb3ebdd15f77b734d98f42fc18`; layout epoch6/dependency-v5.
 - **Delivered:** One shared viewport/probe transform, pan/zoom/fit/public navigation, separate tray and held-Space inspection; bounded package-demand/region/domain/anchor placement with common escape access; typed multi-terminal trees, contact-preserving canonical paths and unique-copper metrics. R1 removes null-part capability probing while preserving full package equivalence and fail-closed actual-part renderer admission. Alternate NMOS behavior/population is unchanged by R1. [U01](task-evidence/U01/README.md), [P03](task-evidence/P03/README.md), [P04](task-evidence/P04/README.md), [R1](task-evidence/A11-R1/README.md).
-- **Gates before R1:** PASS: 27 native suites/independent readers; P03 864,267 and P04 6,408 assertions; compiled A10 1,273/24 attempts plus strict reader, Task41/A09 plus strict readers. The routing geometry snapshot preserves 18 exact outcomes and reduces LED seed0 admission from 6,816 to 1,042 ms without changing budgets. Final-source identities and [R1 reuse audit](task-evidence/A11-R1/reuse-audit.json) separate retained evidence from fresh checks; the owner explicitly waived a complete post-R1 matrix repeat.
+- **Gates before R1:** PASS: 27 native suites/independent readers; P03 864,267 and P04 6,408 assertions; compiled A10 1,273/24 attempts plus strict reader, Task41/A09 plus strict readers. The routing geometry snapshot preserves 18 exact outcomes and reduces LED seed 0 admission from 6,816 to 1,042 ms without changing budgets. Final-source identities and [R1 reuse audit](task-evidence/A11-R1/reuse-audit.json) separate retained evidence from fresh checks; the owner explicitly waived a complete post-R1 matrix repeat.
 - **Fresh final-R1 gates:** PASS: actual JDK8/GWT five permutations/exit0 (82.499 s compile, 1.622 s link); native A11 429/20, A04 680, P01 8,357, U01 1,233 and provider reader125; compiled Task49 397/four solver cases with strict reader and nine-seed value/six-seed role oracles; R1 admission on 15 real parts/zero null-part calls; P01 316 runtime/16 SMD poses, P02 LED/diode/parallel copper correspondence, U01 1,237/six targets, forced failure and normal-player privacy.
-- **Player/review:** Earlier real 15/30/56/100 rendered input trials and the user's 52 trusted held-Space moves/exact restoration are retained under input audits. The cursor stays free and canvas exit dismisses inspection. A fresh final-R1 LED seed3 canary passed failed retest → unpowered 100 kOhm measurement → marked 1 kOhm catalog replacement → powered customer retest, with the removed original in the tray. Final unrepaired/repaired screenshots inspected. Root integrated review PASS; separate agent review NOT RUN (optional).
+- **Player/review:** Earlier real 15/30/56/100 rendered input trials and the user's 52 trusted held-Space moves/exact restoration are retained under input audits. The cursor stays free and canvas exit dismisses inspection. A fresh final-R1 LED seed 3 canary passed failed retest → unpowered 100 kOhm measurement → marked 1 kOhm catalog replacement → powered customer retest, with the removed original in the tray. Final unrepaired/repaired screenshots inspected. Root integrated review PASS; separate agent review NOT RUN (optional).
 - **Limits/failures:** A11-D1 remains nonblocking NMOS physical parameter-comparison coverage debt. Large fixtures are structural, not complete larger playable circuits. RC admission/repeat is 49,318/48,952 ms; max active units 3,824/3,711 ms, within unchanged 90-second/640-unit/five-second guards. Earlier preparation, A10, transport and fixture failures remain recorded; coarse earlier private-operation failures have no individually established cause. Historical Windows CLI browser-wrapper and synchronous verifier repaint-retention limits remain. [Retained failures](task-evidence/U01/retained-failures.json).
 - **Resources/preserved:** Exact task preview PID126856/start639248481877497755/port64921 was identity-checked and stopped (36 ms cleanup); no verification job remains. Successful test tabs are closed; startup error tabs6/8 remain after supported close attempts. Automatic approval review rejected combined cleanup with “blocked by policy”; a narrower preview shutdown passed, and external task scratch including classes is retained. Foreign preview state PID161740/port8899 and pre-existing `tests/contracts/__pycache__/` are untouched. The supplied planning edits and historical handoff are preserved. [Resource receipt](task-evidence/U01/resource-cleanup.json).
 - **Publication/next:** Accepted work is ready for explicit staging, normal commit/push, origin SHA verification and the established Gmail notification; this pre-publication checkpoint does not assert those actions already occurred. Next unstarted milestone: E01; later waves and conditional E08 are unchanged. Do not start another milestone without new scope.
@@ -6344,7 +6390,7 @@ Next roadmap milestone is P05, requiring separate authorization.
   NMOS DS_OPEN, DS_SHORT and GATE_OPEN PASS. All four legacy descriptors/replays/
   parity strings exactly match accepted Task47. Forced Task48 AssertionError
   reaches the required terminal FAIL. No failed or missing result is a PASS.
-- **Visible input/privacy:** Real visible Browser, debug off, full seed0 RLOAD
+- **Visible input/privacy:** Real visible Browser, debug off, full seed 0 RLOAD
   and seed1 RG sequences PASS: complaint, faulty LOW/HIGH, ordinary left-red /
   right-black probes, distinguishing voltages/resistances, all-source isolation,
   physical catalog repair and visible OFF/ON customer pass. Unrepaired retests

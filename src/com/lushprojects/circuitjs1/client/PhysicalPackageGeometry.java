@@ -28,6 +28,7 @@ final class PhysicalPackageGeometry {
     private final PcbGeometryContractVersion geometryContractVersion;
     private final boolean developerGeneric;
     private final RaisedCrossoverGeometry raisedCrossover;
+    private final IsolationBody isolationBody;
 
     PhysicalPackageGeometry(int width, int height, Vector<Terminal> terminals,
             Rectangle bodyBounds, Rectangle bodyKeepOut, Rectangle routingCourtyard,
@@ -57,6 +58,16 @@ final class PhysicalPackageGeometry {
             Rectangle selectionEnvelope, Rectangle dragEnvelope,
             PcbGeometryContractVersion geometryContractVersion, boolean developerGeneric,
             RaisedCrossoverGeometry raisedCrossover) {
+        this(width, height, terminals, bodyBounds, bodyKeepOut, routingCourtyard,
+            selectionEnvelope, dragEnvelope, geometryContractVersion, developerGeneric,
+            raisedCrossover, null);
+    }
+
+    private PhysicalPackageGeometry(int width, int height, Vector<Terminal> terminals,
+            Rectangle bodyBounds, Rectangle bodyKeepOut, Rectangle routingCourtyard,
+            Rectangle selectionEnvelope, Rectangle dragEnvelope,
+            PcbGeometryContractVersion geometryContractVersion, boolean developerGeneric,
+            RaisedCrossoverGeometry raisedCrossover, IsolationBody isolationBody) {
         if (width <= 0 || height <= 0 || terminals == null || terminals.size() == 0 ||
                 bodyBounds == null || bodyKeepOut == null || routingCourtyard == null ||
                 selectionEnvelope == null || dragEnvelope == null ||
@@ -79,8 +90,10 @@ final class PhysicalPackageGeometry {
         this.geometryContractVersion = geometryContractVersion;
         this.developerGeneric = developerGeneric;
         this.raisedCrossover = raisedCrossover;
+        this.isolationBody = isolationBody;
         validate();
         if (raisedCrossover != null) raisedCrossover.validate(this);
+        if (isolationBody != null) isolationBody.validate(this);
     }
 
     PhysicalPackageGeometry withRaisedCrossover(RaisedCrossoverGeometry declaration) {
@@ -88,10 +101,91 @@ final class PhysicalPackageGeometry {
             throw new IllegalArgumentException("Missing or duplicate raised crossover declaration");
         return new PhysicalPackageGeometry(width, height, terminals, bodyBounds, bodyKeepOut,
             routingCourtyard, selectionEnvelope, dragEnvelope, geometryContractVersion,
-            developerGeneric, declaration);
+            developerGeneric, declaration, isolationBody);
     }
 
     RaisedCrossoverGeometry getRaisedCrossover() { return raisedCrossover; }
+
+    PhysicalPackageGeometry withIsolationBody(IsolationBody declaration) {
+        if (declaration == null || isolationBody != null || raisedCrossover != null || developerGeneric)
+            throw new IllegalArgumentException("Invalid isolation body declaration");
+        return new PhysicalPackageGeometry(width, height, terminals, bodyBounds, bodyKeepOut,
+            routingCourtyard, selectionEnvelope, dragEnvelope, geometryContractVersion,
+            developerGeneric, null, declaration);
+    }
+    IsolationBody getIsolationBody() { return isolationBody; }
+
+    /** Only this declared insulating body may span its terminal-domain barrier. */
+    static final class IsolationBody {
+        private final Vector<String> firstTerminals, secondTerminals;
+        private final Rectangle firstCourtyard, secondCourtyard, bodySpan;
+        IsolationBody(Vector<String> first, Vector<String> second, Rectangle firstCourtyard,
+                Rectangle secondCourtyard, Rectangle bodySpan) {
+            if (first == null || second == null || first.isEmpty() || second.isEmpty())
+                throw new IllegalArgumentException("Isolation body requires two terminal groups");
+            this.firstTerminals = new Vector<String>(first);
+            this.secondTerminals = new Vector<String>(second);
+            this.firstCourtyard = copyPositive(firstCourtyard, "first isolation courtyard");
+            this.secondCourtyard = copyPositive(secondCourtyard, "second isolation courtyard");
+            this.bodySpan = copyPositive(bodySpan, "insulating body span");
+        }
+        String domain(PcbPlacementConstraints.Part part, boolean first) {
+            Vector<String> terminals = first ? firstTerminals : secondTerminals;
+            String domain = part.terminalDomain(terminals.firstElement());
+            for (String terminal : terminals) if (!domain.equals(part.terminalDomain(terminal)))
+                throw new IllegalArgumentException("Isolation terminal group has conflicting domains");
+            return domain;
+        }
+        private void validate(PhysicalPackageGeometry geometry) {
+            if (geometry.developerGeneric || geometry.raisedCrossover != null ||
+                    !contains(geometry.routingCourtyard, firstCourtyard) ||
+                    !contains(geometry.routingCourtyard, secondCourtyard) ||
+                    intersects(firstCourtyard, secondCourtyard) ||
+                    !contains(geometry.bodyBounds, bodySpan))
+                throw new IllegalArgumentException("Invalid isolation body geometry");
+            Vector<String> seen = new Vector<String>();
+            validateGroup(geometry, firstTerminals, firstCourtyard, seen);
+            validateGroup(geometry, secondTerminals, secondCourtyard, seen);
+            if (seen.size() != geometry.terminals.size())
+                throw new IllegalArgumentException("Isolation body omits package terminals");
+        }
+        private void validateGroup(PhysicalPackageGeometry geometry, Vector<String> terminals,
+                Rectangle courtyard, Vector<String> seen) {
+            for (String id : terminals) {
+                Terminal terminal = geometry.getTerminal(id);
+                if (terminal == null || seen.contains(id))
+                    throw new IllegalArgumentException("Invalid isolation terminal group");
+                seen.add(id);
+                if (!contains(courtyard, terminal.padBounds) ||
+                        !contains(courtyard, terminal.boardPadProbeBounds) ||
+                        !contains(courtyard, terminal.connectedLead.bounds) ||
+                        !contains(courtyard, terminal.liftedLead.bounds) ||
+                        !contains(courtyard, terminal.connectedLead.componentProbeBounds) ||
+                        !contains(courtyard, terminal.liftedLead.componentProbeBounds))
+                    throw new IllegalArgumentException("Isolation courtyard omits terminal metal or access");
+            }
+        }
+        String canonical() {
+            StringBuilder out = new StringBuilder("isolation-body-v1|");
+            for (String terminal : firstTerminals) out.append(PcbConductorGraph.field(terminal));
+            out.append('|');
+            for (String terminal : secondTerminals) out.append(PcbConductorGraph.field(terminal));
+            rectangle(out, firstCourtyard); rectangle(out, secondCourtyard); rectangle(out, bodySpan);
+            return out.toString();
+        }
+        private static void rectangle(StringBuilder out, Rectangle value) {
+            out.append('|').append(value.x).append(',').append(value.y).append(',')
+                .append(value.width).append(',').append(value.height);
+        }
+        private IsolationBody mirroredHorizontally(int width) {
+            return new IsolationBody(firstTerminals, secondTerminals,
+                mirror(firstCourtyard, width), mirror(secondCourtyard, width), mirror(bodySpan, width));
+        }
+        private static Rectangle mirror(Rectangle rectangle, int width) {
+            return new Rectangle(checkedInt((long)width - rectangle.x - rectangle.width),
+                rectangle.y, rectangle.width, rectangle.height);
+        }
+    }
 
     int getWidth() { return width; }
     int getHeight() { return height; }
@@ -157,7 +251,8 @@ final class PhysicalPackageGeometry {
             mirrorRect(bodyBounds), mirrorRect(bodyKeepOut), mirrorRect(routingCourtyard),
             mirrorRect(selectionEnvelope), mirrorRect(dragEnvelope),
             geometryContractVersion, developerGeneric, raisedCrossover == null ? null :
-                raisedCrossover.mirroredHorizontally(width));
+                raisedCrossover.mirroredHorizontally(width), isolationBody == null ? null :
+                isolationBody.mirroredHorizontally(width));
     }
 
     /** Package-local geometry translated into board coordinates. */
@@ -189,6 +284,15 @@ final class PhysicalPackageGeometry {
         Rectangle getRoutingCourtyard() { return transformed(source.routingCourtyard); }
         Rectangle getSelectionEnvelope() { return transformed(source.selectionEnvelope); }
         Rectangle getDragEnvelope() { return transformed(source.dragEnvelope); }
+        Rectangle getIsolationFirstCourtyard() {
+            return source.isolationBody == null ? null : transformed(source.isolationBody.firstCourtyard);
+        }
+        Rectangle getIsolationSecondCourtyard() {
+            return source.isolationBody == null ? null : transformed(source.isolationBody.secondCourtyard);
+        }
+        Rectangle getIsolationBodySpan() {
+            return source.isolationBody == null ? null : transformed(source.isolationBody.bodySpan);
+        }
 
         Point getPadPoint(int index) {
             Terminal terminal = source.getTerminal(index);
@@ -582,6 +686,8 @@ final class PhysicalPackageGeometry {
                 developerGeneric != other.developerGeneric ||
                 (raisedCrossover == null ? other.raisedCrossover != null :
                     !raisedCrossover.isEquivalentTo(other.raisedCrossover)) ||
+                (isolationBody == null ? other.isolationBody != null :
+                    other.isolationBody == null || !isolationBody.canonical().equals(other.isolationBody.canonical())) ||
                 !bodyBounds.equals(other.bodyBounds) || !bodyKeepOut.equals(other.bodyKeepOut) ||
                 !routingCourtyard.equals(other.routingCourtyard) ||
                 !selectionEnvelope.equals(other.selectionEnvelope) ||

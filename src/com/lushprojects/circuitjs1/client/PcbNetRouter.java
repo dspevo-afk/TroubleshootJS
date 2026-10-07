@@ -301,6 +301,7 @@ final class PcbNetRouter {
         private final int attempt;
         private final SeededPcbLayoutGenerator.AttemptObserver observer;
         private final PcbCopperLayer layer;
+        private final PcbTwoLayerRules domainRules;
         private boolean emptyComponentFace=true;
         boolean factoryUnderpasses=true;
         private String[][] horizontalReservation,verticalReservation,padAt;
@@ -318,6 +319,8 @@ final class PcbNetRouter {
             this.attempt = attempt;
             this.observer = observer;
             layer=selectedLayer;
+            domainRules=board.getPlacementConstraints().getBarriers().isEmpty()?null:
+                new PcbTwoLayerRules(board,layout);
             minX = outline.x + GRID;
             minY = outline.y + GRID;
             gridWidth = (outline.width - 2 * GRID) / GRID + 1;
@@ -574,6 +577,9 @@ final class PcbNetRouter {
 
         private boolean canTraverse(int fromX, int fromY, int toX, int toY,
                 PcbPadPlacement startPad, PcbPadPlacement endPad,String net) {
+            // The same corridor owner rejects both copper faces before route publication.
+            if (domainRules!=null && !domainRules.permits(net,traceStroke(
+                    minX+fromX*GRID,minY+fromY*GRID,minX+toX*GRID,minY+toY*GRID))) return false;
             // Cache the exact existing rectangle/step intersection predicate on
             // the unpopulated face, avoiding a per-search-edge scan of every pad.
             if(emptyComponentFace) {

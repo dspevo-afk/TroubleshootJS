@@ -272,6 +272,9 @@ class PcbBoardLayout {
             validateTraceCourtyards(board, trace, startPad, endPad);
         }
         for (PcbBoardHole hole : holes.values()) requireInside(hole.getBounds(),boardOutline,"hole " + hole.id);
+        // Final isolation authority for both single-face and two-face route providers.
+        if (!board.getPlacementConstraints().getBarriers().isEmpty())
+            new PcbTwoLayerRules(board,this).validate(this);
         validatePhysicalConnectivity(board);
         validateTraceClearance();
     }

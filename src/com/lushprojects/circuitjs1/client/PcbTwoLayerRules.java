@@ -25,19 +25,22 @@ final class PcbTwoLayerRules {
         for(String net:board.getNetIds()) {
             java.util.TreeSet<String> domainsForNet=new java.util.TreeSet<String>();
             for(String pad:board.getNet(net).getPadIds())
-                domainsForNet.add(demands.get(board.getPad(pad).getComponentId()).domainId);
+                domainsForNet.add(demands.domainForPad(board,pad));
             netDomains.put(net,domainsForNet);
         }
         TreeMap<String,Rectangle> domains=new TreeMap<String,Rectangle>();
         for(PcbPlacementConstraints.Part part:demands.getParts()) {
-            Rectangle r=layout.getComponent(part.componentId).getRoutingCourtyard();
-            Rectangle old=domains.get(part.domainId);
-            if(old==null) domains.put(part.domainId,r);
-            else {
-                int right=Math.max(old.x+old.width,r.x+r.width);
-                int bottom=Math.max(old.y+old.height,r.y+r.height);
-                old.x=Math.min(old.x,r.x); old.y=Math.min(old.y,r.y);
-                old.width=right-old.x; old.height=bottom-old.y;
+            PcbComponentPlacement placement = layout.getComponent(part.componentId);
+            if (placement == null) throw new IllegalArgumentException("Missing domain package placement");
+            for (java.util.Map.Entry<String,Rectangle> entry : demands.domainCourtyards(placement).entrySet()) {
+                Rectangle r=entry.getValue(),old=domains.get(entry.getKey());
+                if(old==null) domains.put(entry.getKey(),r);
+                else {
+                    int right=Math.max(old.x+old.width,r.x+r.width);
+                    int bottom=Math.max(old.y+old.height,r.y+r.height);
+                    old.x=Math.min(old.x,r.x); old.y=Math.min(old.y,r.y);
+                    old.width=right-old.x; old.height=bottom-old.y;
+                }
             }
         }
         for(PcbPlacementConstraints.Barrier barrier:demands.getBarriers()) {
@@ -59,6 +62,14 @@ final class PcbTwoLayerRules {
     boolean permits(String net,Rectangle copper) {
         java.util.Set<String> domains=netDomains.get(net);
         if(domains==null) return false;
+        return permitsDomains(domains,copper);
+    }
+    private boolean permitsDomain(String domain,Rectangle copper) {
+        java.util.TreeSet<String> domains=new java.util.TreeSet<String>();
+        domains.add(domain);
+        return permitsDomains(domains,copper);
+    }
+    private boolean permitsDomains(java.util.Set<String> domains,Rectangle copper) {
         for(Boundary boundary:boundaries) {
             int first=boundary.horizontal?copper.x:copper.y;
             int last=first+(boundary.horizontal?copper.width:copper.height);
@@ -179,15 +190,66 @@ final class PcbTwoLayerRules {
     static boolean contains(Rectangle r,int x,int y) {
         return x>=r.x && y>=r.y && x<=r.x+r.width && y<=r.y+r.height;
     }
+    private boolean permitsDrill(Rectangle drill) {
+        for (Boundary boundary : boundaries) {
+            long first=boundary.horizontal?drill.x:drill.y;
+            long last=first+(boundary.horizontal?drill.width:drill.height);
+            if(last>boundary.lowLimit && first<boundary.highLimit) return false;
+        }
+        return true;
+    }
+    private void validateIsolationBodies(PcbBoardLayout layout) {
+        PcbPlacementConstraints demands=board.getPlacementConstraints();
+        for (PcbComponentPlacement part : layout.getComponents()) {
+            PhysicalPackageGeometry geometry=part.getPhysicalGeometry();
+            PhysicalPackageGeometry.IsolationBody body=geometry.getIsolationBody();
+            if (body==null) continue;
+            PcbPlacementConstraints.Part demand=demands.get(part.getComponentId());
+            Rectangle span=geometry.placedAt(part.getPose()).getIsolationBodySpan();
+            Rectangle bounds=part.getBodyBounds();
+            for (Boundary boundary : boundaries) {
+                int first=boundary.horizontal?bounds.x:bounds.y;
+                int last=first+(boundary.horizontal?bounds.width:bounds.height);
+                int start=Math.max(first,boundary.lowLimit),end=Math.min(last,boundary.highLimit);
+                if (end<=start) continue;
+                String a=body.domain(demand,true),b=body.domain(demand,false);
+                if (!(boundary.low.equals(a)&&boundary.high.equals(b) ||
+                        boundary.low.equals(b)&&boundary.high.equals(a)))
+                    throw new IllegalStateException("Insulating body crosses an unrelated barrier");
+                Rectangle crossing=boundary.horizontal?
+                    new Rectangle(start,bounds.y,end-start,bounds.height):
+                    new Rectangle(bounds.x,start,bounds.width,end-start);
+                if (!inside(span,crossing))
+                    throw new IllegalStateException("Package body crosses outside its declared insulating span");
+            }
+        }
+    }
     void validate(PcbBoardLayout layout) {
+        PcbPlacementConstraints demands=board.getPlacementConstraints();
+        validateIsolationBodies(layout);
+        for (PcbPadPlacement pad : layout.getPads()) {
+            BoardPad logical=board.getPad(pad.getPadId());
+            if (logical==null || !permits(logical.getNetId(),pad.getPadBounds()))
+                throw new IllegalStateException("Component land crosses a physical domain barrier");
+        }
+        for (PcbComponentPlacement part : layout.getComponents()) {
+            Vector<String> terminals=part.getPhysicalPackage().getTerminalIds();
+            PcbPlacementConstraints.Part demand=demands.get(part.getComponentId());
+            for(int index=0;index<terminals.size();index++)
+                if (!permitsDomain(demand.terminalDomain(terminals.get(index)),part.getLeadBounds(index)) ||
+                        !permitsDomain(demand.terminalDomain(terminals.get(index)),part.getLeadBounds(index,true)))
+                    throw new IllegalStateException("Component lead crosses a physical domain barrier");
+        }
         for(PcbTraceGeometry trace:layout.getTraces()) {
             int[] x=trace.getXPoints(),y=trace.getYPoints();
             for(int i=1;i<x.length;i++) if(!permits(trace.getNetId(),PcbConductorBuilder.stroke(x[i-1],y[i-1],x[i],y[i])))
                 throw new IllegalStateException("P07 copper crosses a physical domain barrier");
         }
         for(PcbBoardHole hole:layout.getHoles()) {
-            if(hole.kind==PcbBoardHole.Kind.NON_PLATED) continue;
-            if(board.getNet(hole.netId)==null || !permits(hole.netId,hole.getBounds()))
+            if (!permitsDrill(hole.getBounds()))
+                throw new IllegalStateException("Drill or land crosses a physical domain barrier");
+            if(hole.kind!=PcbBoardHole.Kind.NON_PLATED &&
+                    (board.getNet(hole.netId)==null || !permits(hole.netId,hole.getBounds())))
                 throw new IllegalStateException("P07 via crosses a domain barrier or has an unknown net");
             Rectangle clearance=expand(hole.getBounds(),PcbTraceRules.MIN_VISIBLE_CLEARANCE);
             for(PcbComponentPlacement part:layout.getComponents())
@@ -197,7 +259,7 @@ final class PcbTwoLayerRules {
                 if(PcbConductorBuilder.touch(clearance,pad.getPadBounds()))
                     throw new IllegalStateException("P07 via overlaps a component pad or its clearance");
             for(PcbTraceGeometry trace:layout.getTraces()) {
-                if(hole.netId.equals(trace.getNetId())) continue;
+                if(hole.netId!=null && hole.netId.equals(trace.getNetId())) continue;
                 int[] x=trace.getXPoints(),y=trace.getYPoints();
                 for(int i=1;i<x.length;i++) if(PcbConductorBuilder.touch(clearance,
                         PcbConductorBuilder.stroke(x[i-1],y[i-1],x[i],y[i])))

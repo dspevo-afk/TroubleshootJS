@@ -171,6 +171,10 @@ final class MediumBoardNormalAdmission implements GeneratedPhysicalAdmission {
                 Integer.toString(physical.getGeometryContractVersionValue()));
             field(out, "component-package-geometry", physical.getGeometry().getWidth() + "x" +
                 physical.getGeometry().getHeight());
+            for (PhysicalPackage.GeometryVariant variant : physical.getGeometryVariants())
+                if (variant.getGeometry().getIsolationBody() != null)
+                    field(out,"component-package-isolation-body." + variant.getKey(),
+                        variant.getGeometry().getIsolationBody().canonical());
             field(out, "component-package-developer-generic",
                 Boolean.toString(physical.isDeveloperGeneric()));
             Vector<String> connected = new Vector<String>();
@@ -222,6 +226,12 @@ final class MediumBoardNormalAdmission implements GeneratedPhysicalAdmission {
             field(out, "placement-part", part.componentId + "|" + part.regionId + "|" +
                 part.regionLabel + "|" + part.domainId + "|" + part.anchor + "|" +
                 part.accessMargin);
+        for (PcbPlacementConstraints.Part part : parts)
+            for (PcbPlacementConstraints.TerminalDomain declaration : part.getTerminalDomains()) {
+                field(out,"placement-terminal-domain.component",part.componentId);
+                field(out,"placement-terminal-domain.terminal",declaration.terminalId);
+                field(out,"placement-terminal-domain.domain",declaration.domainId);
+            }
         Vector<PcbPlacementConstraints.Barrier> barriers = constraints.getBarriers();
         for (PcbPlacementConstraints.Barrier barrier : barriers)
             field(out, "placement-barrier", barrier.firstDomain + "|" +

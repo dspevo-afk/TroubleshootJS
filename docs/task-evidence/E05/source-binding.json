@@ -1,0 +1,117 @@
+{
+  "build-r7": {
+    "changedPins": {},
+    "currentInputDifferences": [],
+    "launchSha256": "cf9b94f912d495d04d825921f129640d4e986f979b7592c3dfbd79d2fcc46427",
+    "resultSha256": "3b5537aab2385534fb5be331c60ad12fa9e3a82dd53591ca87f32d2e87a979aa",
+    "sourceFiles": 1308
+  },
+  "compiled-r6": {
+    "changedPins": {},
+    "currentInputDifferences": [],
+    "launchSha256": "520d8b097983e177a2293148894ed35c23f18f7d68a858afc23b371da6537f87",
+    "resultSha256": "27336deb180606673bc6139a969b9b5c278287410d931ce252b9158053570fd1",
+    "sourceFiles": 1308
+  },
+  "native-final": {
+    "changedPins": {
+      "scripts/verify-current-contracts.ps1": {
+        "now": "e6664c15b1c0ccb34624502ee188d43715018ba509b2ffb590565e86661029d8",
+        "then": "780ad860a1588d38c9fd971ad954f0eb696e8a02ca6faeb3df70e868d1602c20"
+      },
+      "src/com/lushprojects/circuitjs1/client/CirSim.java": {
+        "now": "7e71fa5dc3dcdcab454f083953beb6692e40508cd3f1891f4ae9ac22447d3e95",
+        "then": "a2612b8cac846b92f1ac528760256ff4926e1631e84e88584081d2e1ea0e4e6f"
+      },
+      "src/com/lushprojects/circuitjs1/client/E05ElectricalDeveloperVerifier.java": {
+        "now": "a85ece496dec4bfc45c7473aebe91e743ffadd74bce4f1bb5d04a8fb6b156cd3",
+        "then": "1f1c1b3e80b568a47fb43bc0e2d209351aa7e59d622778ecd84644da9d4bc079"
+      },
+      "src/com/lushprojects/circuitjs1/client/E05ElectricalFixtures.java": {
+        "now": "5885ec710df7b1abcb4f01008ff6065a99765531290da10e9b56603f1f89cc65",
+        "then": "3adfcb8afbed6b6485142644ad3a70b96c42ef17eac3846562edd4796e12b112"
+      },
+      "src/com/lushprojects/circuitjs1/client/E05InstalledFixture.java": {
+        "now": "1f00dc647ba73e43f057cbb528f3d0163f5807ba69e0b94a1eef0a350f7530f3",
+        "then": "9621d905bb330771c2d49f22981ec22385984c3906aa6392a01ffc50743c36bf"
+      },
+      "src/com/lushprojects/circuitjs1/client/E05InstalledRuntimeVerifier.java": {
+        "now": "4bcb5bf3ade48f550f4e448fc02b25aadac04ec1519e99e3dd6b27d2fec77207",
+        "then": "43cd230a1bd5db622725623acf67dd5d62f605acf9ab2ed76c1ced69d37506e0"
+      },
+      "tests/contracts/E05InstalledFixtureContractTest.java": {
+        "now": "c9083efeca7fdedce921c6ea5d38232797409815b084b24f82e1fc20899b66d3",
+        "then": "272362eaca94fec8e5d6a66de18c88c60dda879f0dcba161aae1a9cf333f1442"
+      },
+      "tests/contracts/E05PowerContractTest.java": {
+        "now": "1d6e16ed240977aacc81c30a2042dbf4351aebc96c3051592ae0d14905d18e7f",
+        "then": "5c5dea61a4416c4dba14d6e1ee001516677ffba9b829b5c6da9160bd1d195159"
+      }
+    },
+    "currentInputDifferences": [
+      "scripts/verify-current-contracts.ps1",
+      "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "src/com/lushprojects/circuitjs1/client/E05ElectricalDeveloperVerifier.java",
+      "src/com/lushprojects/circuitjs1/client/E05ElectricalFixtures.java",
+      "src/com/lushprojects/circuitjs1/client/E05InstalledFixture.java",
+      "src/com/lushprojects/circuitjs1/client/E05InstalledRuntimeVerifier.java",
+      "tests/contracts/E05InstalledFixtureContractTest.java",
+      "tests/contracts/E05PowerContractTest.java"
+    ],
+    "launchSha256": "4501a73a60bf821874edc68cfec7d7e5b2ee10ab07c713848167e12a9225ed00",
+    "resultSha256": "8c90730acb6d93a84179a373bb442d07cf2720e5b6bc3c4dc7704cec8a8a73b8",
+    "sourceFiles": 1308
+  },
+  "native-r12": {
+    "changedPins": {
+      "src/com/lushprojects/circuitjs1/client/CirSim.java": {
+        "now": "7e71fa5dc3dcdcab454f083953beb6692e40508cd3f1891f4ae9ac22447d3e95",
+        "then": "a2612b8cac846b92f1ac528760256ff4926e1631e84e88584081d2e1ea0e4e6f"
+      },
+      "src/com/lushprojects/circuitjs1/client/E05InstalledFixture.java": {
+        "now": "1f00dc647ba73e43f057cbb528f3d0163f5807ba69e0b94a1eef0a350f7530f3",
+        "then": "9621d905bb330771c2d49f22981ec22385984c3906aa6392a01ffc50743c36bf"
+      },
+      "tests/contracts/E05InstalledFixtureContractTest.java": {
+        "now": "c9083efeca7fdedce921c6ea5d38232797409815b084b24f82e1fc20899b66d3",
+        "then": "5227c10d8efae131dacbe96b6d94ba849e9002500187b6212d9e69a50f56b15a"
+      }
+    },
+    "currentInputDifferences": [
+      "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "src/com/lushprojects/circuitjs1/client/E05InstalledFixture.java",
+      "tests/contracts/E05InstalledFixtureContractTest.java"
+    ],
+    "launchSha256": "8c6727a61ad17b99eff4b70e65ee6b6f472cf973f4fabbc6a2a14a66b31f8450",
+    "resultSha256": "c954a29f3cf152a706218d0ef17bd0918a68ca293a1330b0e35c4878e10b894f",
+    "sourceFiles": 1308
+  },
+  "native-r15": {
+    "changedPins": {
+      "src/com/lushprojects/circuitjs1/client/CirSim.java": {
+        "now": "7e71fa5dc3dcdcab454f083953beb6692e40508cd3f1891f4ae9ac22447d3e95",
+        "then": "a2612b8cac846b92f1ac528760256ff4926e1631e84e88584081d2e1ea0e4e6f"
+      }
+    },
+    "currentInputDifferences": [
+      "src/com/lushprojects/circuitjs1/client/CirSim.java"
+    ],
+    "launchSha256": "e7ef07c94cfe389df8de922f202f9ed9b42baec8998af11bc7fded34526033bb",
+    "resultSha256": "0d9b6b864c0f2f2106ec802e101ecbddcc2057b8374a08573cd2ed88b94b2eee",
+    "sourceFiles": 1308
+  },
+  "visual-r3": {
+    "changedPins": {},
+    "currentInputDifferences": [],
+    "launchSha256": "b1c976b4ab0b73791840dc2c2ba6b1df914ca9e5dbe473360010386fc134c9fd",
+    "resultSha256": "d580bbb8548ffd608a7832eb7714b034ce14dd5341fbf8e32f1c6456c9192ff2",
+    "sourceFiles": 1308
+  },
+  "visual-r4": {
+    "changedPins": {},
+    "currentInputDifferences": [],
+    "launchSha256": "60adc4942adb6f402aa3db399748dfb45ae80d1a6394f7bf3b154938daf94393",
+    "resultSha256": "f8fc1623fc86ccf1604574fa4298901b15e3d7f1b62b5e1b5ba099e6a6bb84f2",
+    "sourceFiles": 1308
+  }
+}

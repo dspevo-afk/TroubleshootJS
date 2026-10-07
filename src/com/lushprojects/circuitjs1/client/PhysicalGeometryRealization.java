@@ -60,7 +60,9 @@ final class PhysicalGeometryRealization {
     String fingerprint() {
         return physicalPackage.getId() + "|variant=" + variantKey + "|transform=" +
             transformKey + "|version=" + geometryContractVersion.getValue() + "|geometry=" +
-            physicalGeometry.getWidth() + "x" + physicalGeometry.getHeight();
+            physicalGeometry.getWidth() + "x" + physicalGeometry.getHeight() +
+            (physicalGeometry.getIsolationBody() == null ? "" :
+                "|isolationBody=" + physicalGeometry.getIsolationBody().canonical());
     }
 
     String geometryFingerprint() { return fingerprint(); }

@@ -1,0 +1,430 @@
+{
+  "foundation": {
+    "apiBoundary": [
+      "Ordinary visible locators, mouse and reload; DOM public labels/canvas geometry/attributes read only.",
+      "Explicit developer fixture metadata: pad-hit geometry/nameplate/phase, never model or controller calls.",
+      "No page.evaluate, Runtime.evaluate, hidden numeric solver state, injected event, metrics or GC."
+    ],
+    "browserChannel": "msedge",
+    "browserCount": 1,
+    "cases": [],
+    "cleanup": {
+      "contextClose": "PASS",
+      "edgeAbsence": {
+        "recordedInstances": 10,
+        "status": "PASS",
+        "survivors": {}
+      },
+      "elapsedSeconds": 1.4195723999873735,
+      "listenerProof": {
+        "evidence": "listener-proof/listener-query.json",
+        "functionSourceSha256": "f45447757c13ec38da457863353b8efdd5661f4b1a3cb6049fcc0d5ec592f6da",
+        "owner": "private_menu.port_is_closed / audit_release._run_cim_and_ports",
+        "queryOwner": "serial_runner.run_command native process job",
+        "queryTimeoutMs": 20000
+      },
+      "playwrightStop": "PASS",
+      "previewAfterClose": {
+        "classification": {
+          "queryStatus": "ABSENT",
+          "reason": "pid-query-confirmed-absent",
+          "status": "ABSENT"
+        },
+        "exitCode": 1
+      },
+      "previewBeforeClose": {
+        "classification": {
+          "queryStatus": "PRESENT",
+          "reason": "birth-and-image-match",
+          "status": "MATCH"
+        },
+        "poll": null
+      },
+      "previewStop": "PASS_EXACT_INSTANCE_ABSENT",
+      "status": "PASS",
+      "taskPortClosed": true
+    },
+    "elapsedSeconds": 150.774,
+    "errors": [
+      "FlowFailure('Visible replay did not identify current EASY exact-seed-0 challenge')"
+    ],
+    "failure": "FlowFailure('Visible replay did not identify current EASY exact-seed-0 challenge')",
+    "finishedUtc": "2026-10-07T23:35:29.010748+00:00",
+    "gameFunctionsCalled": false,
+    "headed": true,
+    "headedProof": {
+      "edgeExecutableIdentities": [
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358895895152118,
+          "pid": 8040
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358895893551828,
+          "pid": 9732
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358895894317384,
+          "pid": 10536
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358895893022040,
+          "pid": 19368
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358895900850634,
+          "pid": 20756
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358895895085524,
+          "pid": 21676
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358895893989895,
+          "pid": 22560
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358895894061643,
+          "pid": 23940
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358895922683144,
+          "pid": 24352
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358896495695666,
+          "pid": 24636
+        }
+      ],
+      "headlessArgument": false,
+      "launchArguments": [
+        "--window-size=1460,1100"
+      ],
+      "pageCount": 1,
+      "visibleWindows": [
+        {
+          "hwnd": 8128086,
+          "pid": 19368,
+          "title": "about:blank - Profile 1 - Microsoft\u200b Edge",
+          "visible": true
+        }
+      ]
+    },
+    "headless": false,
+    "hostTimerPolicy": "task-local browser background timer/render throttling disabled; solver unchanged",
+    "identityHelperSha256": "88b18fa7ff41fc006fe9e17dac2aba73cb15c9342bad8b163bedb60bce161017",
+    "limits": {
+      "dischargeObservationSeconds": 20,
+      "fixtureHoldSeconds": 120,
+      "holdStartObservationSeconds": 45,
+      "maxScreenshots": 5,
+      "meterObservationSeconds": 5,
+      "operationSeconds": 180,
+      "requiredNativeOuterSeconds": 300,
+      "reservedCleanupSeconds": 120
+    },
+    "listenerOwnerSourceSha256": {
+      "audit_release.py": "7a76a9ca504eada3a7658dd74ac8851cbcbc10c6d7d45598894fe448aa696324",
+      "private_menu.py": "9d42f39649fc13e5b5820815e75c33731ebb2dc29a48f69763d2cea4a592acab",
+      "receipts.py": "ae22c139fc9834c767aed8d6b2ae3dcdb9e8db010c3721deba3ae34bd1119dd1",
+      "serial_runner.py": "08ce044c8c014ae7bc3b194c07827c8383990b4f950be82137b94dc504f1ebe2",
+      "windows_process_identity.py": "88b18fa7ff41fc006fe9e17dac2aba73cb15c9342bad8b163bedb60bce161017"
+    },
+    "operationSeconds": 149.09499169999617,
+    "outcome": "FAIL",
+    "pageEvaluateUsed": false,
+    "phase": "closed",
+    "playwrightVersion": "1.63.0",
+    "schema": 1,
+    "scope": "E05_DEVELOPER_FOUNDATION_GEOMETRY_GUIDED_VISIBLE_INPUT",
+    "scopeLimitations": [
+      "Fixed eleven-package developer foundation bench; does not enable a normal customer family.",
+      "Fixture geometry guides ordinary visible mouse probes; this is not blind diagnosis.",
+      "Actual display text supplies electrical observations; metadata supplies only geometry/nameplate/phase.",
+      "Discharge observation bounds are wall-time host bounds; no wall-time-to-solver-time equivalence.",
+      "Source nameplate and two faces require root visual inspection of the retained screenshots."
+    ],
+    "servedInputInventory": {
+      "afterSha256": "227747b6ffcb276c64b7a8374e5d826359fa0d19fcf2ccdc3f233bd71aca72f4",
+      "beforeSha256": "227747b6ffcb276c64b7a8374e5d826359fa0d19fcf2ccdc3f233bd71aca72f4",
+      "fileCount": 1537
+    },
+    "startedUtc": "2026-10-07T23:32:58.236518+00:00",
+    "syntheticDispatchUsed": false,
+    "visibleMeasurements": [
+      {
+        "display": "119.967 V RMS",
+        "expectedRange": [
+          110,
+          125
+        ],
+        "name": "visible differential primary AC RMS",
+        "unit": "V RMS",
+        "value": 119.967
+      },
+      {
+        "display": "11.981 V RMS",
+        "expectedRange": [
+          9,
+          13
+        ],
+        "name": "visible isolated secondary AC RMS",
+        "unit": "V RMS",
+        "value": 11.981
+      },
+      {
+        "display": "15.359 V",
+        "expectedRange": [
+          12,
+          18
+        ],
+        "name": "visible top-face rectified output DC",
+        "unit": "V",
+        "value": 15.359
+      },
+      {
+        "display": "15.34 V",
+        "expectedRange": [
+          12,
+          18
+        ],
+        "name": "visible bottom-face rectified output DC",
+        "unit": "V",
+        "value": 15.34
+      },
+      {
+        "display": "331.725 Ohm",
+        "expectedRange": [
+          0,
+          10000000
+        ],
+        "name": "discharged owner permits a real active resistance reading",
+        "unit": "Ohm",
+        "value": 331.725
+      }
+    ],
+    "visibleOffReadiness": {
+      "inputSequence": [
+        "ordinary Board Power: ON click",
+        "actual Board Power: OFF visible",
+        "visible DC meter text",
+        "ordinary OHM click",
+        "visible readiness text"
+      ],
+      "readinessDisplays": [
+        "DISCHARGE"
+      ],
+      "residual": {
+        "display": "15.786 V",
+        "volts": 15.786
+      },
+      "sourcePower": "OFF"
+    },
+    "visibleSourceNameplate": {
+      "evidence": "ordinary public Component inspection, with retained screenshot001",
+      "marking": "Marking: 120 VAC RMS / 60 Hz input",
+      "publicPanelText": "JAC\n\n\nType: through_hole_connector_2\n\n\nMarking: 120 VAC RMS / 60 Hz input\n\n\nState: Installed\n\n\nLead 1: JAC.1\n\n\nLead 2: JAC.2\n\n\nTurn board power off before modifying components.\n\nLift lead 1\nLift lead 2\nRemove component",
+      "screenshotBounds": {
+        "marking": {
+          "height": 15,
+          "width": 301,
+          "x": 1102,
+          "y": 738
+        },
+        "meter": {
+          "height": 48,
+          "width": 299,
+          "x": 1103,
+          "y": 169
+        },
+        "viewport": {
+          "height": 1000,
+          "width": 1440
+        }
+      },
+      "selectedComponent": "JAC"
+    }
+  },
+  "foundationAcceptedActions": "1..93",
+  "foundationPhase": "visual-r3",
+  "foundationResultSha256": "687c46367da14f6450c34252ec543e3ea687ccc3019d597b456c35e3f2e39683",
+  "foundationWholeRunOutcome": "FAIL",
+  "reuseBoundary": "All source pins match current files. Foundation r3 completes ordinary measurements, OFF/discharge, and exact restoration/PASS:e05. It then fails only the borrowed seed-0 replay assertion although the actual replay is seed3. The raw FAIL and complete104 actions remain preserved. Supplemental r4 qualifies only the outstanding debug-off exact-seed3 ticket/accept/privacy flow; no repeated foundation run.",
+  "status": "PASS_SCOPED_COMPOSITE",
+  "supplement": {
+    "apiBoundary": [
+      "Ordinary visible menu/select/button inputs and public read-only replay text.",
+      "Verifier-attribute reads check absence only; no private payload or model/controller calls.",
+      "No page.evaluate, Runtime.evaluate, injected events, metrics or GC."
+    ],
+    "browserChannel": "msedge",
+    "browserCount": 1,
+    "cases": [],
+    "cleanup": {
+      "contextClose": "PASS",
+      "edgeAbsence": {
+        "recordedInstances": 9,
+        "status": "PASS",
+        "survivors": {}
+      },
+      "elapsedSeconds": 1.322512499988079,
+      "listenerProof": {
+        "evidence": "listener-proof/listener-query.json",
+        "functionSourceSha256": "f45447757c13ec38da457863353b8efdd5661f4b1a3cb6049fcc0d5ec592f6da",
+        "owner": "private_menu.port_is_closed / audit_release._run_cim_and_ports",
+        "queryOwner": "serial_runner.run_command native process job",
+        "queryTimeoutMs": 20000
+      },
+      "playwrightStop": "PASS",
+      "previewAfterClose": {
+        "classification": {
+          "queryStatus": "ABSENT",
+          "reason": "pid-query-confirmed-absent",
+          "status": "ABSENT"
+        },
+        "exitCode": 1
+      },
+      "previewBeforeClose": {
+        "classification": {
+          "queryStatus": "PRESENT",
+          "reason": "birth-and-image-match",
+          "status": "MATCH"
+        },
+        "poll": null
+      },
+      "previewStop": "PASS_EXACT_INSTANCE_ABSENT",
+      "status": "PASS",
+      "taskPortClosed": true
+    },
+    "elapsedSeconds": 17.439,
+    "errors": [],
+    "finishedUtc": "2026-10-07T23:38:39.193277+00:00",
+    "gameFunctionsCalled": false,
+    "headed": true,
+    "headedProof": {
+      "edgeExecutableIdentities": [
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358899136687207,
+          "pid": 4728
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358899137590892,
+          "pid": 7044
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358899136183181,
+          "pid": 12192
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358899136912348,
+          "pid": 20756
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358899135493954,
+          "pid": 21736
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358899136629527,
+          "pid": 23324
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358899146940285,
+          "pid": 23720
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358899137656679,
+          "pid": 24024
+        },
+        {
+          "birthPrecision": "NATIVE_100NS",
+          "creationFileTimeTicks": 134358899165164118,
+          "pid": 24436
+        }
+      ],
+      "headlessArgument": false,
+      "launchArguments": [
+        "--window-size=1460,1100"
+      ],
+      "pageCount": 1,
+      "visibleWindows": [
+        {
+          "hwnd": 12387578,
+          "pid": 21736,
+          "title": "about:blank - Profile 1 - Microsoft\u200b Edge",
+          "visible": true
+        }
+      ]
+    },
+    "headless": false,
+    "hostTimerPolicy": "task-local browser background timer/render throttling disabled; solver unchanged",
+    "identityHelperSha256": "88b18fa7ff41fc006fe9e17dac2aba73cb15c9342bad8b163bedb60bce161017",
+    "limits": {
+      "dischargeObservationSeconds": 20,
+      "fixtureHoldSeconds": 120,
+      "holdStartObservationSeconds": 45,
+      "maxScreenshots": 5,
+      "meterObservationSeconds": 5,
+      "operationSeconds": 180,
+      "requiredNativeOuterSeconds": 300,
+      "reservedCleanupSeconds": 120
+    },
+    "listenerOwnerSourceSha256": {
+      "audit_release.py": "7a76a9ca504eada3a7658dd74ac8851cbcbc10c6d7d45598894fe448aa696324",
+      "private_menu.py": "9d42f39649fc13e5b5820815e75c33731ebb2dc29a48f69763d2cea4a592acab",
+      "receipts.py": "ae22c139fc9834c767aed8d6b2ae3dcdb9e8db010c3721deba3ae34bd1119dd1",
+      "serial_runner.py": "08ce044c8c014ae7bc3b194c07827c8383990b4f950be82137b94dc504f1ebe2",
+      "windows_process_identity.py": "88b18fa7ff41fc006fe9e17dac2aba73cb15c9342bad8b163bedb60bce161017"
+    },
+    "operationSeconds": 15.89701749998494,
+    "outcome": "PASS",
+    "pageEvaluateUsed": false,
+    "phase": "closed",
+    "playwrightVersion": "1.63.0",
+    "schema": 1,
+    "scope": "E05_SUPPLEMENTAL_DEBUG_OFF_SEED3_PRIVACY_VISIBLE_INPUT",
+    "scopeLimitations": [
+      "Supplemental debug-OFF ordinary exact-seed3 menu, ticket, accept and privacy flow only.",
+      "Preserved r3 supplied completed E05 foundation measurements and exact owner restoration; raw r3 remains FAIL.",
+      "This supplemental run does not repeat the developer fixture, measurements, hold or restoration."
+    ],
+    "servedInputInventory": {
+      "afterSha256": "227747b6ffcb276c64b7a8374e5d826359fa0d19fcf2ccdc3f233bd71aca72f4",
+      "beforeSha256": "227747b6ffcb276c64b7a8374e5d826359fa0d19fcf2ccdc3f233bd71aca72f4",
+      "fileCount": 1537
+    },
+    "startedUtc": "2026-10-07T23:38:21.754624+00:00",
+    "supplementalDebugOff": {
+      "difficulty": "EASY",
+      "family": "LED_INDICATOR",
+      "replay": "tsj-alpha/4/EASY/LED_INDICATOR/3",
+      "requestedDebug": "false",
+      "requestedE05Flags": [
+        "tsjVerifyE05",
+        "tsjE05Fail",
+        "tsjE05VisualHold"
+      ],
+      "scope": "ordinary menu, prepared customer ticket, accepted board and verifier-attribute privacy",
+      "seed": "3"
+    },
+    "syntheticDispatchUsed": false
+  },
+  "supplementPhase": "visual-r4",
+  "supplementResultSha256": "f2e71070eae3f42dfd7fe2d54da8d6301857aaf7d0affcbe6f892a5d41c4a0c4"
+}

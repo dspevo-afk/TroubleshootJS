@@ -29,6 +29,8 @@ final class StandardPhysicalPartRenderProviders {
             new FixedProvider(new NpnRenderer()));
         registry.register(PhysicalPackages.TO92_NMOS,
             new FixedProvider(new NmosRenderer()));
+        registry.register(PhysicalPackages.E05_ISOLATION_TRANSFORMER_4,
+            new FixedProvider(new TransformerRenderer()));
         registry.register(PhysicalPackages.TO220_REGULATOR_4,
             new FixedProvider(new MultiTerminalRenderer()));
         registry.register(PhysicalPackages.E04_DECISION_CONTROL_5,
@@ -809,6 +811,14 @@ final class StandardPhysicalPartRenderProviders {
         protected void drawPackageBody(Graphics graphics, PhysicalPartRenderContext context, Rectangle bounds) {
             WorkbenchVisualTheme.body(graphics, bounds, WorkbenchVisualTheme.BODY,
                 WorkbenchVisualTheme.BODY_LIGHT, false);
+        }
+    }
+
+    private static final class TransformerRenderer extends MultiTerminalRenderer {
+        protected void drawPackageBody(Graphics graphics, PhysicalPartRenderContext context, Rectangle bounds) {
+            WorkbenchVisualTheme.body(graphics,bounds,"#76644c","#bbaa8a",false);
+            WorkbenchVisualTheme.marking(graphics,"T",bounds,Math.max(9,context.scale(12)),
+                WorkbenchVisualTheme.TEXT);
         }
     }
 

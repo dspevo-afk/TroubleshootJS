@@ -1,0 +1,20 @@
+{
+  "cases": [
+    {
+      "expectedState": "PASS:e05",
+      "name": "e05-positive",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyE05=true&running=true",
+      "reportAttribute": "data-tsj-e05-report",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 180
+    },
+    {
+      "expectedState": "FAIL:e05:e05-explicit-failure-canary",
+      "name": "e05-forced-failure",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyE05=true&tsjE05Fail=true&running=true",
+      "reportAttribute": "data-tsj-e05-report",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 30
+    }
+  ]
+}

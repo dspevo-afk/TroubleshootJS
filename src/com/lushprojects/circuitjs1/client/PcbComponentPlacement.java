@@ -305,6 +305,8 @@ class PcbComponentPlacement {
             .append("developerGeneric=").append(geometry.isDeveloperGeneric()).append('|');
         if (geometry.getRaisedCrossover() != null)
             result.append("raisedCrossover=").append(geometry.getRaisedCrossover().fingerprint()).append('|');
+        if (geometry.getIsolationBody() != null)
+            result.append("isolationBody=").append(geometry.getIsolationBody().canonical()).append('|');
         appendRectangle(result, "localBody", geometry.getBodyBounds());
         appendRectangle(result, "localKeepout", geometry.getBodyKeepOut());
         appendRectangle(result, "localCourtyard", geometry.getRoutingCourtyard());

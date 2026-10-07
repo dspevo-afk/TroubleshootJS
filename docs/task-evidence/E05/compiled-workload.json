@@ -1,0 +1,86 @@
+{
+  "bindings": {
+    "<REPO>\\docs\\task-evidence\\Q30\\qualification-workflow\\audit_release.py": "7a76a9ca504eada3a7658dd74ac8851cbcbc10c6d7d45598894fe448aa696324",
+    "<REPO>\\docs\\task-evidence\\Q30\\qualification-workflow\\private_menu.py": "9d42f39649fc13e5b5820815e75c33731ebb2dc29a48f69763d2cea4a592acab",
+    "<REPO>\\docs\\task-evidence\\Q30\\qualification-workflow\\receipts.py": "ae22c139fc9834c767aed8d6b2ae3dcdb9e8db010c3721deba3ae34bd1119dd1",
+    "<REPO>\\docs\\task-evidence\\Q30\\qualification-workflow\\serial_runner.py": "08ce044c8c014ae7bc3b194c07827c8383990b4f950be82137b94dc504f1ebe2",
+    "<REPO>\\docs\\task-evidence\\Q30\\qualification-workflow\\windows_process_identity.py": "88b18fa7ff41fc006fe9e17dac2aba73cb15c9342bad8b163bedb60bce161017",
+    "<REPO>\\tests\\browser\\compiled_attribute_acceptance.py": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+    "<TASK>\\e05-browser\\compiled-r6-spec.json": "33f8b7c7c8af35a06dd52da734d2f006f752d4627a49f3a16f410f54b7e880d2",
+    "<TASK>\\e05-browser\\compiled-r6.py": "81456ab2025e77cebc01687ec45db4b60c1a7aff8e6094bb1b0fc98bd0784d7e",
+    "<TASK>\\e05-browser\\report_contract_r5.py": "ad05bef2773d69ace79daae94c57e423c1b86234c014b219bd33c7126bfc1b37",
+    "<TASK>\\e05\\pointer.json": "31e80ff568088dcb6cb84b09694554a2b137e4d342bf8a23fe45a9a5c607caeb",
+    "<U06_TASK>\\compiled-r1.py": "c52805860d8f5533fab2af44f5efb6499020ee8f33c89176e94a7c435edbeb51"
+  },
+  "errors": [],
+  "forcedCleanupReport": {
+    "candidateDisposed": true,
+    "expectedFailureObserved": true,
+    "installedDischarge": {
+      "acceptedSettlingSeconds": 0.04999999999999449,
+      "currentAndEnergyMagnitudeThresholds": "NONE_ADDED",
+      "elapsedSeconds": 0.24999999999997247,
+      "expectedRatio": 0.5570465983835319,
+      "expectedTauSeconds": 0.42727272727272725,
+      "observedRatio": 0.5570562105974163,
+      "status": "PASS"
+    },
+    "installedReadiness": {
+      "afterFinalDc": "READY",
+      "beforeFinalDc": "READY",
+      "bulkVolts": 0.007191644956264301,
+      "canonicalAcceptedObservation": true,
+      "meterDcVolts": 0.007192488981090553,
+      "powerIssues": "[]",
+      "powerRailConditions": "{DC_PLUS=DISCHARGED, PRI_FUSED=DISCHARGED, PRI_LINE=DISCHARGED, SEC_A=DISCHARGED}",
+      "powerReadiness": "READY",
+      "sampleTimeSeconds": 3.9160999999975425,
+      "status": "PASS"
+    },
+    "ownerRestored": true,
+    "status": "PASS",
+    "temporaryMeterClean": true
+  },
+  "forcedFailureState": "FAIL:e05:e05-explicit-failure-canary",
+  "playerInputEvidence": false,
+  "portClosed": true,
+  "reportFile": "cases/001-e05-positive.report.json",
+  "reportSha256": "9073804e6e337637a14941e33e525196561eededfe6cfc8415866124f9a75836",
+  "runnerExitCode": 0,
+  "scope": "E05_COMPILED_NUMERICAL_REPORT_AND_FORCED_CLEANUP_CANARY",
+  "semanticReport": {
+    "electricalAssertions": 323919,
+    "electricalRows": 18,
+    "installedAssertions": 194,
+    "installedDischarge": {
+      "acceptedSettlingSeconds": 0.04999999999999449,
+      "currentAndEnergyMagnitudeThresholds": "NONE_ADDED",
+      "elapsedSeconds": 0.24999999999997247,
+      "expectedRatio": 0.5570465983835319,
+      "expectedTauSeconds": 0.42727272727272725,
+      "observedRatio": 0.5570562105974163,
+      "status": "PASS"
+    },
+    "installedReadiness": {
+      "afterFinalDc": "READY",
+      "beforeFinalDc": "READY",
+      "bulkVolts": 0.007191644956264301,
+      "canonicalAcceptedObservation": true,
+      "meterDcVolts": 0.007192488981090553,
+      "powerIssues": "[]",
+      "powerRailConditions": "{DC_PLUS=DISCHARGED, PRI_FUSED=DISCHARGED, PRI_LINE=DISCHARGED, SEC_A=DISCHARGED}",
+      "powerReadiness": "READY",
+      "sampleTimeSeconds": 3.9160999999975425,
+      "status": "PASS"
+    },
+    "packages": 11,
+    "referenceAssertions": 36108,
+    "referenceRows": 12,
+    "renderedEndpoints": 48,
+    "status": "PASS"
+  },
+  "semanticReportReview": "PASS",
+  "sourceSha256": "408d89ac611db2b154d071b6d726552fc5bc5a99e052f4368efb60cdb4babd61",
+  "status": "PASS",
+  "webSha256": "c9ccf2423b1f157b8c5d6f1d0430754b51911316b805daead425ec9d64262867"
+}

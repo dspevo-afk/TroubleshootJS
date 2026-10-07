@@ -16,7 +16,7 @@ param(
 )
 
 # Maintained current seed, identity, geometry, recipe and construction contracts.
-# Compiles the real client source once; the Q30/E02/E04/full-suite JVM paths use an
+# Compiles the real client source once; the Q30/E02/E04/E05/full-suite JVM paths use an
 # exact scratch replacement for CirSim's JSNI console logger. The actual GWT
 # solver/player gates remain separate.
 Set-StrictMode -Version Latest
@@ -293,6 +293,8 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'Q30SolverStepSensitivityContractTest' -or
         $Suite -contains 'E02RegulatorContractTest' -or
         $Suite -contains 'E04SensorControlContractTest' -or
+        $Suite -contains 'E05PowerContractTest' -or
+        $Suite -contains 'E05InstalledFixtureContractTest' -or
         $Suite -contains 'SensorControlFamilyContractTest'
     $nativeLoggerShim = ''
     if ($needsQ30NativeLoggerBridge) {
@@ -346,6 +348,10 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'E03RelayContractTest'; Marker = 'E03 relay contracts ' },
         @{ Name = 'E02RegulatorContractTest'; Marker = 'E02 regulator contracts ' },
         @{ Name = 'E04SensorControlContractTest'; Marker = 'E04 sensor-control contracts ' },
+        @{ Name = 'E05PowerContractTest'; Marker = 'E05 power contracts ' },
+        @{ Name = 'E05IsolationGeometryContractTest'; Marker = 'E05 isolation geometry contracts ' },
+        @{ Name = 'E05NameplateContractTest'; Marker = 'E05 nameplate contracts ' },
+        @{ Name = 'E05InstalledFixtureContractTest'; Marker = 'E05 installed fixture contracts ' },
         @{ Name = 'SensorControlFamilyContractTest'; Marker = 'SensorControl family contracts ' },
         @{ Name = 'Q15ControlBoardContractTest'; Marker = 'Q15 control board contracts ' },
         @{ Name = 'Q30PlanContractTest'; Marker = 'Q30 plan contracts ' },

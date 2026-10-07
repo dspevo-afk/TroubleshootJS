@@ -741,11 +741,14 @@ final class PcbPlacementPlanner {
         for(int i=0;i<placed.size();i++) if(i!=self) {
             PcbFootprint other=placed.get(i); PcbPlacementConstraints.Part od=constraints.get(other.getPlacement().getComponentId());
             Rectangle b=envelope(other,od.accessMargin); if(r.intersects(b)) return false;
-            for(PcbPlacementConstraints.Barrier barrier:constraints.getBarriers()) if(barrier.separates(demand.domainId,od.domainId)) {
-                Rectangle ac=f.getPlacement().getRoutingCourtyard(),bc=other.getPlacement().getRoutingCourtyard();
-                int dx=Math.max(ac.x-bc.x-bc.width,bc.x-ac.x-ac.width),dy=Math.max(ac.y-bc.y-bc.height,bc.y-ac.y-ac.height);
-                if(Math.max(dx,dy)<barrier.clearance) return false;
-            }
+            for(PcbPlacementConstraints.Barrier barrier:constraints.getBarriers())
+                for(java.util.Map.Entry<String,Rectangle> a:constraints.domainCourtyards(f.getPlacement()).entrySet())
+                    for(java.util.Map.Entry<String,Rectangle> c:constraints.domainCourtyards(other.getPlacement()).entrySet())
+                        if(barrier.separates(a.getKey(),c.getKey())) {
+                            Rectangle ac=a.getValue(),bc=c.getValue();
+                            int dx=Math.max(ac.x-bc.x-bc.width,bc.x-ac.x-ac.width),dy=Math.max(ac.y-bc.y-bc.height,bc.y-ac.y-ac.height);
+                            if(Math.max(dx,dy)<barrier.clearance) return false;
+                        }
         }
         return true;
     }

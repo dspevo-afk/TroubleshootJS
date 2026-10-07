@@ -1,0 +1,905 @@
+{
+  "attempts": [
+    {
+      "cleanupVerified": true,
+      "failureLines": [
+        "[gwt-compile:stdout]       [ERROR] Errors in 'file:/<REPO>/src/com/lushprojects/circuitjs1/client/SwitchExternalPowerControl.java'",
+        "[gwt-compile:stdout]          [ERROR] Line 14: Cannot invoke clone() on the array type SwitchElm[]",
+        "[gwt-compile:stdout]    [ERROR] Hint: Check the inheritance chain from your module; it may not be inheriting a required module or a module may not be adding its source path entries properly",
+        "BUILD_INFRASTRUCTURE: GWT Compile failed with exit code 1. Logs retained at '<TEMP>\\TroubleshootJS\\build-process-fa75e4148a3b4e7396b192256fa50532'."
+      ],
+      "operation": {
+        "elapsedMs": 7789,
+        "exitCode": 2,
+        "reason": null
+      },
+      "phase": "build-r1",
+      "rawStdoutSha256": "02e22e337352b57ee7745f658ce3ceafdee1c85caad58323060baa7fb71d39a1",
+      "resultSha256": "efb821cb0cd6d95d4620a40b3dcaab4155fb775bce57f7d014d454a51b71ccd6",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 88763,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "build-r2",
+      "rawStdoutSha256": "9239492195bb2f89077c38743c3771cd3276e28d9286ba2b405298cb78523030",
+      "resultSha256": "97b78da9c44bbfd62dab886f366e5dcd069ea9aa9bf488b2ac27276e29c0f59f",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 92086,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "build-r3",
+      "rawStdoutSha256": "e02af1c7c0300052697ed33087da360de5bd6708c7d30ca9aa9c9a6702ef8855",
+      "resultSha256": "a0083cb6b59dc864fe68f32d9776d73c2333596f054ec0d2114fb4f1f78cd01d",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 90311,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "build-r4",
+      "rawStdoutSha256": "72e471c0260c8ae1d8df2a4b0d46c6a1385b9c668e6bd5b268786c0a3fa6af0c",
+      "resultSha256": "390dc31aae1d1c7740645681c3ee942622f94b916b1b07d870ada636a7594437",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 91936,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "build-r5",
+      "rawStdoutSha256": "054954eb7a498f7c0c4106d3c191ca997f3bbd7384c1e2c9348da6efeeffb84e",
+      "resultSha256": "0bc5da513ef6af4f5e98c5c806edcf1cf58ac80caf74bd80ca0908af6da0d243",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 94496,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "build-r6",
+      "rawStdoutSha256": "ff5b3635cfbdb131484f94144d4d6a76f75ea58d66e0e90cd641e92617b313cd",
+      "resultSha256": "7e04ed2db4053152fbd1ef45e24e93ff54d56b1b6fe8395be024671400be1063",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 93037,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "build-r7",
+      "rawStdoutSha256": "45cc822c57440a09c6f48c68808bf1e03ddb09396b504a5b0b944ff8916eef81",
+      "resultSha256": "3b5537aab2385534fb5be331c60ad12fa9e3a82dd53591ca87f32d2e87a979aa",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "applicationCleanup": "PASS",
+      "applicationErrors": [],
+      "applicationFailure": null,
+      "applicationOutcome": "FAIL",
+      "applicationResultSha256": "07a11c20f15218046acc8e4c62a7ae519f2b8edba6de3cd8629bf414c95dccd0",
+      "cases": [
+        {
+          "elapsedSeconds": null,
+          "installed": {
+            "assertions": 3,
+            "candidateDisposed": false,
+            "error": "com.lushprojects.circuitjs1.client.PcbNetRouter$Rejected: TOTAL_SEARCH_WORK_BUDGET",
+            "ownerRestored": true,
+            "readiness": null,
+            "status": "FAIL",
+            "temporaryMeterClean": true
+          },
+          "name": null,
+          "outcome": "FAIL",
+          "reportSha256": "232e850e68a5ae4c1e959f5e887195ddc945f39aaca87e81781391df58c35e3a",
+          "state": null
+        },
+        {
+          "elapsedSeconds": null,
+          "installed": {
+            "assertions": 3,
+            "candidateDisposed": false,
+            "error": "com.lushprojects.circuitjs1.client.PcbNetRouter$Rejected: TOTAL_SEARCH_WORK_BUDGET",
+            "ownerRestored": true,
+            "readiness": null,
+            "status": "FAIL",
+            "temporaryMeterClean": true
+          },
+          "name": null,
+          "outcome": "FAIL",
+          "reportSha256": "75354077671363eb264c3c3f1e4d5c29c4d4f36f6e5bcf68968cefeabefd4547",
+          "state": null
+        }
+      ],
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 45353,
+        "exitCode": 1,
+        "reason": null
+      },
+      "phase": "compiled-r1",
+      "rawStdoutSha256": "74be89b6cb91e33f65b3b6acd49399a06c23777151e7831fa5f5529393b81837",
+      "resultSha256": "714ef0906efd2ed2008d5a466c8f3f61dae230b72bbfe3c7a0825e5e5e1304d5",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "applicationCleanup": "PASS",
+      "applicationErrors": [],
+      "applicationFailure": null,
+      "applicationOutcome": "FAIL",
+      "applicationResultSha256": "507828c23831d644282d40afabadb528c0326857d63f57bdf3aa6121c1c8e14a",
+      "cases": [
+        {
+          "elapsedSeconds": null,
+          "installed": {
+            "assertions": 173,
+            "candidateDisposed": true,
+            "error": "java.lang.IllegalStateException: E05 installed runtime: accepted solver discharge follows the independent parallel-RC expectation",
+            "ownerRestored": true,
+            "readiness": null,
+            "status": "FAIL",
+            "temporaryMeterClean": true
+          },
+          "name": null,
+          "outcome": "FAIL",
+          "reportSha256": "504a66fb0b3297691c11813fe20fceb4dafa6dd7480292e0fe1afdc240307782",
+          "state": null
+        },
+        {
+          "elapsedSeconds": null,
+          "installed": {
+            "assertions": 173,
+            "candidateDisposed": true,
+            "error": "java.lang.IllegalStateException: E05 installed runtime: accepted solver discharge follows the independent parallel-RC expectation",
+            "ownerRestored": true,
+            "readiness": null,
+            "status": "FAIL",
+            "temporaryMeterClean": true
+          },
+          "name": null,
+          "outcome": "FAIL",
+          "reportSha256": "435c7959211260277581432ae88a2848b4adf18acf4912d84fe131f6b2236102",
+          "state": null
+        }
+      ],
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 39186,
+        "exitCode": 1,
+        "reason": null
+      },
+      "phase": "compiled-r2",
+      "rawStdoutSha256": "c7100ace2962294a4972ec88b573aeedaf913aa13e508a91fd5227d6e6805f95",
+      "resultSha256": "02b4c1bf12bfe6e27c2e9794520d9a411608a1840925634f3a7cba2e469d2a79",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "applicationCleanup": "PASS",
+      "applicationErrors": [],
+      "applicationFailure": null,
+      "applicationOutcome": "FAIL",
+      "applicationResultSha256": "21f9388ec72b6bfc2ed696ac5b2beb74efc2c129cd256c41fa0184f37ff11727",
+      "cases": [
+        {
+          "elapsedSeconds": null,
+          "installed": {
+            "assertions": 182,
+            "candidateDisposed": true,
+            "error": "java.lang.IllegalStateException: E05 installed runtime: stored energy reaches actual READY after accepted steps",
+            "ownerRestored": true,
+            "readiness": null,
+            "status": "FAIL",
+            "temporaryMeterClean": true
+          },
+          "name": null,
+          "outcome": "FAIL",
+          "reportSha256": "56622a1013e0bba891586bfb4bb824799d98fcfc0bcd57046042f53cadb9a266",
+          "state": null
+        },
+        {
+          "elapsedSeconds": null,
+          "installed": {
+            "assertions": 182,
+            "candidateDisposed": true,
+            "error": "java.lang.IllegalStateException: E05 installed runtime: stored energy reaches actual READY after accepted steps",
+            "ownerRestored": true,
+            "readiness": null,
+            "status": "FAIL",
+            "temporaryMeterClean": true
+          },
+          "name": null,
+          "outcome": "FAIL",
+          "reportSha256": "6c513cdbb8cdc2db12f986c8d427411c3b66ade5e5e14f76245d53af4e3bc28c",
+          "state": null
+        }
+      ],
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 42728,
+        "exitCode": 1,
+        "reason": null
+      },
+      "phase": "compiled-r3",
+      "rawStdoutSha256": "ddfed5498359b055265cb0c40d2ef9c861b488285946a1ebc9d5cfb9d69c461a",
+      "resultSha256": "1dd4788a035443b37fa89dcc947f8423f87493c11890e4eb75c3f5b26eb4378a",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "applicationCleanup": "PASS",
+      "applicationErrors": [],
+      "applicationFailure": null,
+      "applicationOutcome": "FAIL",
+      "applicationResultSha256": "ff4871a8341d2a478d925a716333ecfde536ad7ac92db80f86abda3737163e53",
+      "cases": [
+        {
+          "elapsedSeconds": null,
+          "installed": {
+            "assertions": 186,
+            "candidateDisposed": true,
+            "error": "java.lang.IllegalStateException: E05 installed runtime: stored energy reaches actual READY after accepted steps: {\"sampleTimeSeconds\":3.9010999999975775,\"beforeFinalDc\":\"DISCHARGE\",\"afterFinalDc\":\"DISCHARGE\",\"canonicalAcceptedObservation\":true,\"bulkVolts\":0.007857319314960455,\"meterDcVolts\":0.007858241456076151,\"powerReadiness\":\"DISCHARGE\",\"powerRailConditions\":\"{DC_PLUS=DISCHARGED, PRI_FUSED=RESIDUAL, PRI_LINE=RESIDUAL, SEC_A=DISCHARGED}\",\"powerIssues\":\"[]\"}",
+            "ownerRestored": true,
+            "readiness": {
+              "afterFinalDc": "DISCHARGE",
+              "beforeFinalDc": "DISCHARGE",
+              "bulkVolts": 0.007857319314960455,
+              "canonicalAcceptedObservation": true,
+              "meterDcVolts": 0.007858241456076151,
+              "powerIssues": "[]",
+              "powerRailConditions": "{DC_PLUS=DISCHARGED, PRI_FUSED=RESIDUAL, PRI_LINE=RESIDUAL, SEC_A=DISCHARGED}",
+              "powerReadiness": "DISCHARGE",
+              "sampleTimeSeconds": 3.9010999999975775
+            },
+            "status": "FAIL",
+            "temporaryMeterClean": true
+          },
+          "name": null,
+          "outcome": "FAIL",
+          "reportSha256": "79cb27d542bb4f55f9c3d8d87446b7e0f09a2a5460c7810b4808f4fbe6912e27",
+          "state": null
+        },
+        {
+          "elapsedSeconds": null,
+          "installed": {
+            "assertions": 186,
+            "candidateDisposed": true,
+            "error": "java.lang.IllegalStateException: E05 installed runtime: stored energy reaches actual READY after accepted steps: {\"sampleTimeSeconds\":3.9010999999975775,\"beforeFinalDc\":\"DISCHARGE\",\"afterFinalDc\":\"DISCHARGE\",\"canonicalAcceptedObservation\":true,\"bulkVolts\":0.007857319314960455,\"meterDcVolts\":0.007858241456076151,\"powerReadiness\":\"DISCHARGE\",\"powerRailConditions\":\"{DC_PLUS=DISCHARGED, PRI_FUSED=RESIDUAL, PRI_LINE=RESIDUAL, SEC_A=DISCHARGED}\",\"powerIssues\":\"[]\"}",
+            "ownerRestored": true,
+            "readiness": {
+              "afterFinalDc": "DISCHARGE",
+              "beforeFinalDc": "DISCHARGE",
+              "bulkVolts": 0.007857319314960455,
+              "canonicalAcceptedObservation": true,
+              "meterDcVolts": 0.007858241456076151,
+              "powerIssues": "[]",
+              "powerRailConditions": "{DC_PLUS=DISCHARGED, PRI_FUSED=RESIDUAL, PRI_LINE=RESIDUAL, SEC_A=DISCHARGED}",
+              "powerReadiness": "DISCHARGE",
+              "sampleTimeSeconds": 3.9010999999975775
+            },
+            "status": "FAIL",
+            "temporaryMeterClean": true
+          },
+          "name": null,
+          "outcome": "FAIL",
+          "reportSha256": "a1f1da9281f2304d330d30f76c5c177df0cad01cd0ea8aa59476e24161c036c6",
+          "state": null
+        }
+      ],
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 36046,
+        "exitCode": 1,
+        "reason": null
+      },
+      "phase": "compiled-r4",
+      "rawStdoutSha256": "3a3a93830e91e437c5a0831fc3cd441d0f4bdfecf907375c83bd08ccfcbe7e37",
+      "resultSha256": "c36ad084f71209c250cc9bcd70d8eda721f40ec08da6a7318a0c65817d4513e0",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "applicationCleanup": "PASS",
+      "applicationErrors": [],
+      "applicationFailure": null,
+      "applicationOutcome": "PASS",
+      "applicationResultSha256": "412df51003a2095c67d6c97bc509f5e8a974013ace9bdbbdc07a0285a85d3fd5",
+      "cases": [
+        {
+          "elapsedSeconds": null,
+          "installed": {
+            "assertions": 194,
+            "candidateDisposed": true,
+            "error": null,
+            "ownerRestored": true,
+            "readiness": {
+              "afterFinalDc": "READY",
+              "beforeFinalDc": "READY",
+              "bulkVolts": 0.007191644956264301,
+              "canonicalAcceptedObservation": true,
+              "meterDcVolts": 0.007192488981090553,
+              "powerIssues": "[]",
+              "powerRailConditions": "{DC_PLUS=DISCHARGED, PRI_FUSED=DISCHARGED, PRI_LINE=DISCHARGED, SEC_A=DISCHARGED}",
+              "powerReadiness": "READY",
+              "sampleTimeSeconds": 3.9160999999975425
+            },
+            "status": "PASS",
+            "temporaryMeterClean": true
+          },
+          "name": null,
+          "outcome": "PASS",
+          "reportSha256": "4124907984d392ebf456e31eff518514f907e1e6d28a9650f409d8e9a6f60dea",
+          "state": null
+        },
+        {
+          "elapsedSeconds": null,
+          "installed": {
+            "assertions": 194,
+            "candidateDisposed": true,
+            "error": "java.lang.IllegalStateException: e05-explicit-failure-canary",
+            "ownerRestored": true,
+            "readiness": {
+              "afterFinalDc": "READY",
+              "beforeFinalDc": "READY",
+              "bulkVolts": 0.007191644956264301,
+              "canonicalAcceptedObservation": true,
+              "meterDcVolts": 0.007192488981090553,
+              "powerIssues": "[]",
+              "powerRailConditions": "{DC_PLUS=DISCHARGED, PRI_FUSED=DISCHARGED, PRI_LINE=DISCHARGED, SEC_A=DISCHARGED}",
+              "powerReadiness": "READY",
+              "sampleTimeSeconds": 3.9160999999975425
+            },
+            "status": "FAIL",
+            "temporaryMeterClean": true
+          },
+          "name": null,
+          "outcome": "PASS",
+          "reportSha256": "8bcd35651a9612734fb268b7515a7adeabf6fb6cc97b37177302c10e7dec6069",
+          "state": null
+        }
+      ],
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 33786,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "compiled-r5",
+      "rawStdoutSha256": "785f9c3c869eb7b19517b7ba70c7d04e2214b8fdbc64583cee7429bb4e9e6fce",
+      "resultSha256": "524463d8b55d3339dd7cac03acfb54245d4e7b207931d6b9730ef4f6fe8e97f9",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "applicationCleanup": "PASS",
+      "applicationErrors": [],
+      "applicationFailure": null,
+      "applicationOutcome": "PASS",
+      "applicationResultSha256": "52a3c55ec947ef093521ff131250dde0fb4601ca0c9d9120ac65e8e246411d8a",
+      "cases": [
+        {
+          "elapsedSeconds": null,
+          "installed": {
+            "assertions": 194,
+            "candidateDisposed": true,
+            "error": null,
+            "ownerRestored": true,
+            "readiness": {
+              "afterFinalDc": "READY",
+              "beforeFinalDc": "READY",
+              "bulkVolts": 0.007191644956264301,
+              "canonicalAcceptedObservation": true,
+              "meterDcVolts": 0.007192488981090553,
+              "powerIssues": "[]",
+              "powerRailConditions": "{DC_PLUS=DISCHARGED, PRI_FUSED=DISCHARGED, PRI_LINE=DISCHARGED, SEC_A=DISCHARGED}",
+              "powerReadiness": "READY",
+              "sampleTimeSeconds": 3.9160999999975425
+            },
+            "status": "PASS",
+            "temporaryMeterClean": true
+          },
+          "name": null,
+          "outcome": "PASS",
+          "reportSha256": "9073804e6e337637a14941e33e525196561eededfe6cfc8415866124f9a75836",
+          "state": null
+        },
+        {
+          "elapsedSeconds": null,
+          "installed": {
+            "assertions": 194,
+            "candidateDisposed": true,
+            "error": "java.lang.IllegalStateException: e05-explicit-failure-canary",
+            "ownerRestored": true,
+            "readiness": {
+              "afterFinalDc": "READY",
+              "beforeFinalDc": "READY",
+              "bulkVolts": 0.007191644956264301,
+              "canonicalAcceptedObservation": true,
+              "meterDcVolts": 0.007192488981090553,
+              "powerIssues": "[]",
+              "powerRailConditions": "{DC_PLUS=DISCHARGED, PRI_FUSED=DISCHARGED, PRI_LINE=DISCHARGED, SEC_A=DISCHARGED}",
+              "powerReadiness": "READY",
+              "sampleTimeSeconds": 3.9160999999975425
+            },
+            "status": "FAIL",
+            "temporaryMeterClean": true
+          },
+          "name": null,
+          "outcome": "PASS",
+          "reportSha256": "28517784c1bc70b62e3f068051584eb4c059c0165ac19320e0e95b0878a8b5de",
+          "state": null
+        }
+      ],
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 32402,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "compiled-r6",
+      "rawStdoutSha256": "78cd0a6887cac83de084d950881f8f8f9144c6ab0aa7d67cd5d7f3bd05e3b84b",
+      "resultSha256": "27336deb180606673bc6139a969b9b5c278287410d931ce252b9158053570fd1",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 76719,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "native-final",
+      "rawStdoutSha256": "24ee4eab8d5ee6954eada2fa273aea254e68d6717b09e95918f435b544730bc9",
+      "resultSha256": "8c90730acb6d93a84179a373bb442d07cf2720e5b6bc3c4dc7704cec8a8a73b8",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [
+        "CURRENT_CONTRACT_FAILURE: Current production-class compilation failed, exit 1"
+      ],
+      "operation": {
+        "elapsedMs": 12792,
+        "exitCode": 2,
+        "reason": null
+      },
+      "phase": "native-r1",
+      "rawStdoutSha256": "302ca5f9511c499c74313e0ecb1c98755adb8f11b864285e3f3c68f39cabe351",
+      "resultSha256": "3557b34b0e8fb182cf48f9af0a5c9cea57ed4fa79f9f247cd89f8ab394a33961",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [
+        "Exception in thread \"main\" java.lang.IllegalStateException: Invalid accepted-state event boundary",
+        "CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: E05InstalledFixtureContractTest, exit 1"
+      ],
+      "operation": {
+        "elapsedMs": 25432,
+        "exitCode": 2,
+        "reason": null
+      },
+      "phase": "native-r10",
+      "rawStdoutSha256": "f65c949658e52052f8c8be8c868884166b7cedd6b7362245683a98ea7d5bc030",
+      "resultSha256": "734a19f7f85bf8ce299390e59f079d560abedcf4bb71a8a0af63e39861ffbf3a",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 22259,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "native-r11",
+      "rawStdoutSha256": "104ffbc42d37a775246e68051ce663c23de035b197ec9db9b11791908f45619a",
+      "resultSha256": "ee8021cc2061a57d5d3de890cd46bf920b54431dee3fea43a5bd984cf6f9462d",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 27668,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "native-r12",
+      "rawStdoutSha256": "d875a4a405f6178477a4bd5a8580ff38ace0aab674c6a39296efc6a926eafc40",
+      "resultSha256": "c954a29f3cf152a706218d0ef17bd0918a68ca293a1330b0e35c4878e10b894f",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 28580,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "native-r13",
+      "rawStdoutSha256": "91c4d252fe04fc7867178f24151b00826694fba5b23f93cfb8c686581df9f11f",
+      "resultSha256": "408d5a2d8126be0de311bab143c585fd2770a35222a8c7e03eb30db4e58c094d",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 23917,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "native-r14",
+      "rawStdoutSha256": "88078993b4c5648416d7430e655d4d2cfa66dc410f6da902042503a498547cb7",
+      "resultSha256": "902a61024b95e661b4397ffd3972dd64631c401c3b425a7d956d03b24e944d02",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 23718,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "native-r15",
+      "rawStdoutSha256": "f3c5e1971cbb5151390c3c65d67cd089a74043c25de6f8eeef5200f1f814e0f5",
+      "resultSha256": "0d9b6b864c0f2f2106ec802e101ecbddcc2057b8374a08573cd2ed88b94b2eee",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 23004,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "native-r2",
+      "rawStdoutSha256": "482e4326c2c95357e26bb424203274f4fd01b0581bbb87a8887650c6e1f67fa3",
+      "resultSha256": "20c76a0ddd9691f5e41e74307afa9a6ab21a0c6b315716bb8624151e7beecd7c",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [
+        "Exception in thread \"main\" java.lang.AssertionError: E05 electrical: independent positive bridge-node current balance: 0.005433752799457836 expected 0.0054285841345770875",
+        "CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: E05PowerContractTest, exit 1"
+      ],
+      "operation": {
+        "elapsedMs": 22474,
+        "exitCode": 2,
+        "reason": null
+      },
+      "phase": "native-r3",
+      "rawStdoutSha256": "7cf8e86136e2476fa16a4f29f23bb433729218e7d5963fbb4473b5383e7c6e03",
+      "resultSha256": "e2468995961c15fae5b7e0032c7f32281c015ff09cc077ecd0679bc2d7bc5e85",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [
+        "Exception in thread \"main\" java.io.FileNotFoundException: tests\\benchmarks\\p03-components.tsv (The system cannot find the path specified)",
+        "CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: P03PlacementContractTest, exit 1"
+      ],
+      "operation": {
+        "elapsedMs": 67100,
+        "exitCode": 2,
+        "reason": null
+      },
+      "phase": "native-r4",
+      "rawStdoutSha256": "5670ace90134e7f4e480f75a182a5999c30c8d39b1ebc1290114fad206c63360",
+      "resultSha256": "cbcccab976d283f6cb90f9a50192ceb0e871c46abb1751018c55cea2bd219243",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 27682,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "native-r5",
+      "rawStdoutSha256": "f7eb7696a45a292c49411e5160637f95262fba88d5b6d4e4817e2127cd6ec0c3",
+      "resultSha256": "127b29734873f3a26198009ad6e24cc52a0cb6f4a7074537be6a59c6fd316c65",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 29042,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "native-r6",
+      "rawStdoutSha256": "b61c48179591a7ddb19379a4e5340aa191e87adcb2c988a84130da2807ac0e05",
+      "resultSha256": "77c2726413796f21efed74abf8b475106e0fc50c31ee86be4baa15c53d711078",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [
+        "Exception in thread \"main\" java.lang.IllegalArgumentException: Package does not declare requested PCB pose: C1 / 1420,260|rotation=DEG_180|mount=TOP",
+        "CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: E05InstalledFixtureContractTest, exit 1"
+      ],
+      "operation": {
+        "elapsedMs": 25558,
+        "exitCode": 2,
+        "reason": null
+      },
+      "phase": "native-r7",
+      "rawStdoutSha256": "7e9093175d1f34c0a2f8f666d2eaead9ce813508dd1f8b1435e1725e099b0d50",
+      "resultSha256": "2b9846c753e4c97210d32921fde2131801bb04cc44db76fea4915992117ef4e1",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [
+        "Exception in thread \"main\" java.lang.IllegalStateException: PCB component has no reference label: D4",
+        "CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: E05InstalledFixtureContractTest, exit 1"
+      ],
+      "operation": {
+        "elapsedMs": 23762,
+        "exitCode": 2,
+        "reason": null
+      },
+      "phase": "native-r8",
+      "rawStdoutSha256": "d8b1d8dae870a47c7c77d8558187e8996a8f7596b94bde99ef7450122bb6813e",
+      "resultSha256": "163ed2aeda7bc42bb9d16b497d6674e9b50982492e7b15eab2032148d7724c02",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "cleanupVerified": true,
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 24964,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "native-r9",
+      "rawStdoutSha256": "bd7fd88f788f8cc2956b6e238d71057271637015cd8bbd638e163c55a997e217",
+      "resultSha256": "b0a11ebcec9d3b933c8b9ef96be34d7d2f09f448c5fd225be1d4b0a0831f1dce",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "applicationCleanup": "PASS",
+      "applicationErrors": [
+        "TimeoutError('Locator.get_attribute: Timeout 5000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n')"
+      ],
+      "applicationFailure": "TimeoutError('Locator.get_attribute: Timeout 5000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n')",
+      "applicationOutcome": "FAIL",
+      "applicationResultSha256": "577b602b49d267ff1d93d6b6f79786ff054dbcae4be13d3fe4e3a17fdfc5a905",
+      "cleanupVerified": true,
+      "failedActions": [
+        {
+          "elapsedSeconds": 5.796,
+          "error": "TimeoutError('Locator.get_attribute: Timeout 5000ms exceeded.\\nCall log:\\n  - waiting for locator(\"html\")\\n')",
+          "name": "wait for bounded E05 visible HOLD after compiled fixture checks",
+          "phase": "e05-developer-fixture-visible-hold",
+          "sequence": 5,
+          "status": "FAIL"
+        },
+        {
+          "elapsedSeconds": 5.008,
+          "error": "TimeoutError('Page.screenshot: Timeout 5000ms exceeded.\\nCall log:\\n  - taking page screenshot\\n')",
+          "name": "headed screenshot failure.png",
+          "phase": "e05-developer-fixture-visible-hold",
+          "sequence": 6,
+          "status": "FAIL"
+        }
+      ],
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 26538,
+        "exitCode": 1,
+        "reason": null
+      },
+      "phase": "visual-r1",
+      "rawStdoutSha256": "02a67ccbaaeee938e2afe7b29b30a45a9b2255500728673f169d471c04958101",
+      "resultSha256": "0d45dbda7db950af64a305e4a2e667d5188fb9dd9de2dd1c75473e9097bde4c8",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "applicationCleanup": "PASS",
+      "applicationErrors": [
+        "TimeoutError('Locator.click: Timeout 5000ms exceeded.\\nCall log:\\n  - waiting for get_by_role(\"button\", name=\"Board view\", exact=True)\\n')"
+      ],
+      "applicationFailure": "TimeoutError('Locator.click: Timeout 5000ms exceeded.\\nCall log:\\n  - waiting for get_by_role(\"button\", name=\"Board view\", exact=True)\\n')",
+      "applicationOutcome": "FAIL",
+      "applicationResultSha256": "afb47b327b49c724fa970f9d0a2eb4207429914b769491b25ef03b87b9649687",
+      "cleanupVerified": true,
+      "failedActions": [
+        {
+          "elapsedSeconds": 5.006,
+          "error": "TimeoutError('Locator.click: Timeout 5000ms exceeded.\\nCall log:\\n  - waiting for get_by_role(\"button\", name=\"Board view\", exact=True)\\n')",
+          "name": "click Board view",
+          "phase": "e05-developer-fixture-visible-hold",
+          "sequence": 65,
+          "status": "FAIL"
+        }
+      ],
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 35391,
+        "exitCode": 1,
+        "reason": null
+      },
+      "phase": "visual-r2",
+      "rawStdoutSha256": "d9259e40629aa40f78be7589cee8496e8fa56e351275bbdbfd92014651b9fd59",
+      "resultSha256": "304a16f5faca27c57e037022d93bc90958c24834572d2e756a624eb30c027437",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "applicationCleanup": "PASS",
+      "applicationErrors": [
+        "FlowFailure('Visible replay did not identify current EASY exact-seed-0 challenge')"
+      ],
+      "applicationFailure": "FlowFailure('Visible replay did not identify current EASY exact-seed-0 challenge')",
+      "applicationOutcome": "FAIL",
+      "applicationResultSha256": "687c46367da14f6450c34252ec543e3ea687ccc3019d597b456c35e3f2e39683",
+      "cleanupVerified": true,
+      "failedActions": [],
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 150904,
+        "exitCode": 1,
+        "reason": null
+      },
+      "phase": "visual-r3",
+      "rawStdoutSha256": "9fb139f4adc8841b1dacbc4c01b56c64de2d5672d3445c8d8d7d87e52ae5a826",
+      "resultSha256": "d580bbb8548ffd608a7832eb7714b034ce14dd5341fbf8e32f1c6456c9192ff2",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "applicationCleanup": "PASS",
+      "applicationErrors": [],
+      "applicationFailure": null,
+      "applicationOutcome": "PASS",
+      "applicationResultSha256": "f2e71070eae3f42dfd7fe2d54da8d6301857aaf7d0affcbe6f892a5d41c4a0c4",
+      "cleanupVerified": true,
+      "failedActions": [],
+      "failureLines": [],
+      "operation": {
+        "elapsedMs": 17569,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "visual-r4",
+      "rawStdoutSha256": "214125538a2c49eddf4385fc3d8e06f41900f917f9fd6bd9e785807da88b0d48",
+      "resultSha256": "f8fc1623fc86ccf1604574fa4298901b15e3d7f1b62b5e1b5ba099e6a6bb84f2",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    }
+  ],
+  "historicalComposite": {
+    "benchmark": {
+      "gitBlob": "1582ab9b9099d8d56b8ca7c8efd06aba2f443099",
+      "lastWriteUtc": "2026-09-23T20:25:36.210420+00:00",
+      "path": "tests/benchmarks/p03-components.tsv",
+      "qualification": "Supplementary post-run audit: benchmark omitted from original launch inventory; matches HEAD and last write predates launch. Added to future phase pinning.",
+      "sha256": "a62495d35f8957802aed12fa09f6dfa2bf9d35d7a52eba73b7d88ef934802124",
+      "trackedUnchanged": true
+    },
+    "originalUntrackedPreserved": 8,
+    "phases": [
+      {
+        "cleanupVerified": true,
+        "elapsedMs": 67100,
+        "hostStatus": "FAIL",
+        "passMarkers": [
+          "PASS: generated power control observation contracts assertions=16",
+          "PASS: E05 power contracts assertions=75",
+          "PASS: E05 isolation geometry contracts assertions=138",
+          "PASS: E05 nameplate contracts assertions=25",
+          "PASS: medium physical policy contracts assertions=59 receipt=MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=26436;routes=6;routingWork=16/4129171;p05=3/0;p07=3/1;selectedAttempt=1;ranked=[1, 0, 4, 2, 3, 5];placementScores=[1{total=1081897;electrical=121430;region=9090;connector=5230;corridor=2636;outline=8330900;courtyard=607412;demand=2148811}, 0{total=1200416;electrical=136230;region=10120;connector=6420;corridor=1728;outline=8063400;courtyard=613412;demand=2164811}, 4{total=1226287;electrical=136220;region=10468;connector=6770;corridor=3576;outline=8328300;courtyard=618212;demand=2177611}, 2{total=1264786;electrical=139130;region=10345;connector=7280;corridor=4662;outline=7982600;courtyard=608612;demand=2152011}, 3{total=1275246;electrical=142610;region=10357;connector=6990;corridor=3333;outline=8220000;courtyard=614612;demand=2168011}, 5{total=1313529;electrical=143020;region=10640;connector=8080;corridor=5623;outline=8098400;courtyard=607412;demand=2148811}];selectedScore=1081897;selectedQualityMilli=167916420;routeOutcomes=[P05_ONE_FACE@1=REJECTED:Unable to route net RAIL5 from U2B.RAIL@1400,1330 to connected tree, P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@1=SUCCESS, P07_FULLER_TWO_LAYER@0=REJECTED:DISCONNECTED_ESCAPE_CHANNEL, P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:RAIL5:NO_PATH];failure=null",
+          "PASS: medium normal admission contracts 9 assertions",
+          "PASS: Task45 202 assertions",
+          "PASS: E01 source contracts 96015 assertions",
+          "PASS: A06 power contracts assertions=152",
+          "PASS: A07 execution contracts assertions=271808",
+          "PASS: A10 dependency contracts assertions=15",
+          "PASS: U02 measurement contracts assertions=585",
+          "PASS: U03 observation contracts assertions=17"
+        ],
+        "passedSuites": 13,
+        "phase": "native-r4",
+        "rawStdoutSha256": "5670ace90134e7f4e480f75a182a5999c30c8d39b1ebc1290114fad206c63360"
+      },
+      {
+        "cleanupVerified": true,
+        "elapsedMs": 27682,
+        "hostStatus": "PASS",
+        "passMarkers": [
+          "PASS: P03 placement contracts assertions=864267",
+          "PASS: P07 two-layer contracts assertions=11686"
+        ],
+        "passedSuites": 2,
+        "phase": "native-r5",
+        "rawStdoutSha256": "f7eb7696a45a292c49411e5160637f95262fba88d5b6d4e4817e2127cd6ec0c3"
+      }
+    ],
+    "retainedFailure": "native-r4 remains FAIL: P03 could not read its relative benchmark under runner scratch cwd; no production code changed for r5.",
+    "scope": "15 selected native suites; composite of 13 completed r4 cases and two r5 cases",
+    "sourceFiles": 1303,
+    "sourcesStillMatch": true,
+    "status": "PASS",
+    "supersedes": "native-composite-audit.json used newline-normalized stdout hashes; r2 binds exact raw bytes."
+  },
+  "notes": [
+    "Native-r4 remains FAIL; its completed13 cases plus r5 two cases formed an earlier composite.",
+    "Native-final originally passed all16 integrated suites. Fourteen unaffected suites retain their scoped proof; native-r12 refreshes E05 power/reference/electrical after the integration-mode change; native-r15 refreshes the constructed fixture after its ordinary bounded live temporal declaration.",
+    "Compiled-r1 reference/electrical reports passed but the installed fixture hit the routing work cap.",
+    "Native-r7 caught unsupported fixed-package rotation; r8 routed but lacked component labels.",
+    "Compiled-r2 found the installed pure-RC check began during real transformer energy transfer. Native-r10 measured the cause, then its second case caught a test timeline reset error. Native-r11 retires that test timeline and passes both OFF phases. RC tolerance and production physics remain unchanged.",
+    "Compiled-r3 failed final readiness; its developer helper was missing the ordinary accepted-time notification. Compiled-r4 supplied a fresh canonical observation but correctly retained DISCHARGE for actual residual primary rail voltages. Native-r13 measured an alternating trapezoidal voltage mode with negligible energy; existing backward Euler removed that mode in all four dt/OFF-phase comparisons. The final E05 rectifier/storage fixture selects that integration mode and explicitly discloses its numerical damping. Reference-only transformer energy tests retain their original trapezoidal mode.",
+    "Visual-r1 failed setup because its metadata read inherited a 5 s action timeout inside a declared 45 s startup observation window. The next driver caps that setup read at the remaining original startup deadline; action, meter, discharge, hold, operation and cleanup budgets stay unchanged.",
+    "Visual-r2 passed primary/secondary AC, reference refusals and top DC before a wrong Board view button selector failed. The actual direct View bottom copper control is used in r3. Its screenshots also exposed the hidden connector detail and clipped developer sidebar; the fixture now exposes its existing source marking through the ordinary inspector and the explicit visual hold uses the existing wider sidebar.",
+    "Visual-r3 completed all E05 foundation actions and exact owner restoration/PASS:e05, then its borrowed replay helper rejected correct seed3 because that helper internally insists on seed0. The entire raw run remains FAIL; final visible acceptance combines its completed scoped flow with a fresh minimal debug-off seed3 supplement, under unchanged current source pins.",
+    "No routing budget, solver convergence, product admission limit or unchanged Q30 corpus changed."
+  ],
+  "originalUntrackedPreserved": 8
+}

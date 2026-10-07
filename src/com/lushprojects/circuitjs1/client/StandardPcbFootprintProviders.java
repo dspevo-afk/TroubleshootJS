@@ -23,6 +23,8 @@ final class StandardPcbFootprintProviders {
         registry.register(PhysicalPackages.THROUGH_HOLE_LED, new LedProvider());
         registry.register(PhysicalPackages.TO92_NPN, new NpnProvider());
         registry.register(PhysicalPackages.TO92_NMOS, new NmosProvider());
+        registry.register(PhysicalPackages.E05_ISOLATION_TRANSFORMER_4,
+            new MultiTerminalProvider(4, 4));
         registry.register(PhysicalPackages.TO220_REGULATOR_4,
             new MultiTerminalProvider(4, 4));
         registry.register(PhysicalPackages.E04_DECISION_CONTROL_5,

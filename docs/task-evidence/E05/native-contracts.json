@@ -1,0 +1,64 @@
+{
+  "command": [
+    "<POWERSHELL>",
+    "-NoLogo",
+    "-NoProfile",
+    "-NonInteractive",
+    "-File",
+    "<TASK>\\e05\\native-final.ps1"
+  ],
+  "originalPassMarkers": [
+    "PASS: generated power control observation contracts assertions=16",
+    "PASS: E05 power contracts assertions=75",
+    "PASS: E05 isolation geometry contracts assertions=138",
+    "PASS: E05 nameplate contracts assertions=25",
+    "PASS: E05 installed fixture contracts assertions=46",
+    "PASS: medium physical policy contracts assertions=59 receipt=MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=26436;routes=6;routingWork=16/4129171;p05=3/0;p07=3/1;selectedAttempt=1;ranked=[1, 0, 4, 2, 3, 5];placementScores=[1{total=1081897;electrical=121430;region=9090;connector=5230;corridor=2636;outline=8330900;courtyard=607412;demand=2148811}, 0{total=1200416;electrical=136230;region=10120;connector=6420;corridor=1728;outline=8063400;courtyard=613412;demand=2164811}, 4{total=1226287;electrical=136220;region=10468;connector=6770;corridor=3576;outline=8328300;courtyard=618212;demand=2177611}, 2{total=1264786;electrical=139130;region=10345;connector=7280;corridor=4662;outline=7982600;courtyard=608612;demand=2152011}, 3{total=1275246;electrical=142610;region=10357;connector=6990;corridor=3333;outline=8220000;courtyard=614612;demand=2168011}, 5{total=1313529;electrical=143020;region=10640;connector=8080;corridor=5623;outline=8098400;courtyard=607412;demand=2148811}];selectedScore=1081897;selectedQualityMilli=167916420;routeOutcomes=[P05_ONE_FACE@1=REJECTED:Unable to route net RAIL5 from U2B.RAIL@1400,1330 to connected tree, P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@1=SUCCESS, P07_FULLER_TWO_LAYER@0=REJECTED:DISCONNECTED_ESCAPE_CHANNEL, P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:RAIL5:NO_PATH];failure=null",
+    "PASS: medium normal admission contracts 9 assertions",
+    "PASS: Task45 202 assertions",
+    "PASS: E01 source contracts 96015 assertions",
+    "PASS: A06 power contracts assertions=152",
+    "PASS: A07 execution contracts assertions=271808",
+    "PASS: A10 dependency contracts assertions=15",
+    "PASS: U02 measurement contracts assertions=585",
+    "PASS: U03 observation contracts assertions=17",
+    "PASS: P03 placement contracts assertions=864267",
+    "PASS: P07 two-layer contracts assertions=11686"
+  ],
+  "rawStdoutSha256": "24ee4eab8d5ee6954eada2fa273aea254e68d6717b09e95918f435b544730bc9",
+  "refreshedPassMarkers": {
+    "native-r12": [
+      "PASS: E05 power contracts assertions=76"
+    ],
+    "native-r15": [
+      "PASS: E05 installed fixture contracts assertions=284"
+    ]
+  },
+  "refreshedSuiteCount": 2,
+  "refreshedSuites": [
+    "E05PowerContractTest",
+    "E05InstalledFixtureContractTest"
+  ],
+  "reuseBoundary": "Original16-suite evidence is preserved with its original pins. Fourteen unaffected geometry/source/instrument/identity suites are reused. The changed E05 rectifier/storage transformer uses existing backward Euler; E05 power/reference/electrical refresh in native-r12; constructed-fixture/live-declaration/inspector-marking refresh in native-r15. The only later CirSim change expands the explicit E05 visual-hold sidebar using its existing layout branch; its exact inverse with original CRLF is hash-checked against native-r15 and actual GWT/visible gates cover it. The developer installed verifier also fixes its measured RC window and accepted-time notification; final GWT/compiled/visible gates cover that owner. No global solver, instrument guard, router budget or normal-family admission changed.",
+  "reusedPassMarkers": [
+    "PASS: generated power control observation contracts assertions=16",
+    "PASS: E05 isolation geometry contracts assertions=138",
+    "PASS: E05 nameplate contracts assertions=25",
+    "PASS: medium physical policy contracts assertions=59 receipt=MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=26436;routes=6;routingWork=16/4129171;p05=3/0;p07=3/1;selectedAttempt=1;ranked=[1, 0, 4, 2, 3, 5];placementScores=[1{total=1081897;electrical=121430;region=9090;connector=5230;corridor=2636;outline=8330900;courtyard=607412;demand=2148811}, 0{total=1200416;electrical=136230;region=10120;connector=6420;corridor=1728;outline=8063400;courtyard=613412;demand=2164811}, 4{total=1226287;electrical=136220;region=10468;connector=6770;corridor=3576;outline=8328300;courtyard=618212;demand=2177611}, 2{total=1264786;electrical=139130;region=10345;connector=7280;corridor=4662;outline=7982600;courtyard=608612;demand=2152011}, 3{total=1275246;electrical=142610;region=10357;connector=6990;corridor=3333;outline=8220000;courtyard=614612;demand=2168011}, 5{total=1313529;electrical=143020;region=10640;connector=8080;corridor=5623;outline=8098400;courtyard=607412;demand=2148811}];selectedScore=1081897;selectedQualityMilli=167916420;routeOutcomes=[P05_ONE_FACE@1=REJECTED:Unable to route net RAIL5 from U2B.RAIL@1400,1330 to connected tree, P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@1=SUCCESS, P07_FULLER_TWO_LAYER@0=REJECTED:DISCONNECTED_ESCAPE_CHANNEL, P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:RAIL5:NO_PATH];failure=null",
+    "PASS: medium normal admission contracts 9 assertions",
+    "PASS: Task45 202 assertions",
+    "PASS: E01 source contracts 96015 assertions",
+    "PASS: A06 power contracts assertions=152",
+    "PASS: A07 execution contracts assertions=271808",
+    "PASS: A10 dependency contracts assertions=15",
+    "PASS: U02 measurement contracts assertions=585",
+    "PASS: U03 observation contracts assertions=17",
+    "PASS: P03 placement contracts assertions=864267",
+    "PASS: P07 two-layer contracts assertions=11686"
+  ],
+  "reusedSuiteCount": 14,
+  "routing": [
+    "E05_INSTALLED_FIXTURE_ROUTING routing-work@1;outcome=SUCCESS;reason=null;netAttempts=7;branchSearches=17;orders=1;ripPasses=0;ripped=0;rerouted=0;expansions=55436;failures=0;rawSegments=632;conflicts=798;order[0]=10:PRI_RETURN,8:PRI_LINE,8:DC_MINUS,7:DC_PLUS,9:PRI_FUSED,5:SEC_A,5:SEC_B,tree=0;"
+  ],
+  "selectedSuiteCount": 16
+}

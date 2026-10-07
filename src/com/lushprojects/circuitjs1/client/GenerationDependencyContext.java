@@ -264,6 +264,9 @@ final class GenerationDependencyContext {
             frame(out,"placement"); frame(out,demand.componentId); frame(out,demand.regionId);
             frame(out,demand.regionLabel); frame(out,demand.domainId);
             frame(out,demand.anchor.toString()); frame(out,Integer.toString(demand.accessMargin));
+            for (PcbPlacementConstraints.TerminalDomain declaration : demand.getTerminalDomains()) {
+                frame(out,"terminal-domain"); frame(out,declaration.terminalId); frame(out,declaration.domainId);
+            }
         }
         for(PcbPlacementConstraints.Barrier barrier:placementConstraints.getBarriers()) {
             frame(out,"barrier"); frame(out,barrier.firstDomain); frame(out,barrier.secondDomain);
@@ -813,6 +816,9 @@ final class GenerationDependencyContext {
             require(variant != null, "Missing physical package geometry variant");
             PhysicalPackageGeometry variantGeometry = variant.getGeometry();
             require(variantGeometry != null, "Missing package variant geometry");
+            if (variantGeometry.getIsolationBody() != null)
+                appendField(out,key + ".isolation-body." + variant.getKey(),
+                    variantGeometry.getIsolationBody().canonical());
             variants.add(variant.getKey() + "|" + variant.getTransformKey() + "|" +
                 variantGeometry.getWidth() + "x" + variantGeometry.getHeight() + "|" +
                 variantGeometry.getGeometryContractVersionValue());
