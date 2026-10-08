@@ -14,6 +14,7 @@ class PcbComponentPlacement {
     private final Rectangle routingCourtyard;
     private final PhysicalPackage physicalPackage;
     private final PhysicalPackageGeometry physicalGeometry;
+    private final PhysicalPackageGeometry.Placement placedGeometry;
     private final String geometryVariantKey;
     private final String geometryTransformKey;
     private final PcbGeometryContractVersion geometryContractVersion;
@@ -73,6 +74,7 @@ class PcbComponentPlacement {
         this.routingCourtyard = new Rectangle(routingCourtyard);
         this.physicalPackage = physicalPackage;
         this.physicalGeometry = physicalGeometry;
+        this.placedGeometry = placed;
         this.geometryVariantKey = variantKey;
         this.geometryTransformKey = transformKey;
         this.geometryContractVersion = physicalPackage.getGeometryContractVersion();
@@ -264,7 +266,7 @@ class PcbComponentPlacement {
     }
 
     private PhysicalPackageGeometry.Placement placedGeometry() {
-        return physicalGeometry.placedAt(pose);
+        return placedGeometry;
     }
 
     private static int checkedAdd(int first, int second) {

@@ -163,6 +163,8 @@ public final class E05IsolationGeometryContractTest {
         check(!rules.permits("P_A", new Rectangle(551,450,10,10)), "independent 550..670 corridor excludes PRIMARY");
         check(rules.permits("S_A", new Rectangle(700,450,10,10)), "SECONDARY copper stays right of 670");
         check(!rules.permits("S_A", new Rectangle(650,450,10,10)), "corridor excludes SECONDARY");
+        check(!rules.permits("P_A", new Rectangle(700,450,10,10)), "PRIMARY copper beyond the opposite side is rejected");
+        check(!rules.permits("S_A", new Rectangle(500,450,10,10)), "SECONDARY copper beyond the opposite side is rejected");
         rules.validate(fixture.layout);
         fixture.layout.validateRoutingGeometry(fixture.board);
         checks += 2;

@@ -5,6 +5,7 @@ public final class P07TwoLayerContractTest {
     static void require(boolean ok,String why) { checks++; if(!ok) throw new AssertionError(why); }
     public static void main(String[] args) {
         componentFaceEscapesReachFreeCopper();
+        terminalViaOutletsRemainReserved();
         holeSnapshotsPreserveOwnerAndOrder();
         closedCopperEdgesMatchLongOracle();
         typedQueueMatchesPriorityQueue();
@@ -67,6 +68,100 @@ public final class P07TwoLayerContractTest {
             }
         }
     }
+    /** Earlier foreign copper must leave the first legal plated exit of a real controller accessible. */
+    private static void terminalViaOutletsRemainReserved() {
+        // Independent placed-package coordinates: reference pad, declared escape end, legal via,
+        // forbidden earlier crossbar, and the next unobstructed crossbar. No reservation formula oracle.
+        int[][] points={
+            {480,550,480,610,480,620,470,630,490,630,470,650,490,650},
+            {460,480,400,480,390,480,380,470,380,490,360,470,360,490},
+            {580,460,580,400,580,390,570,380,590,380,570,360,590,360},
+            {550,580,610,580,620,580,630,570,630,590,650,570,650,590}
+        };
+        PcbRotation[] rotations={PcbRotation.DEG_0,PcbRotation.DEG_90,PcbRotation.DEG_180,PcbRotation.DEG_270};
+        PhysicalPackage production=PhysicalPackages.E04_DECISION_CONTROL_5;
+        PhysicalPackageGeometry geometry=production.getGeometry();
+        java.util.Vector<PhysicalPackage.GeometryVariant> variants=new java.util.Vector<PhysicalPackage.GeometryVariant>();
+        variants.add(new PhysicalPackage.GeometryVariant("DEFAULT","IDENTITY",geometry));
+        java.util.Vector<PcbRotation> declaredRotations=new java.util.Vector<PcbRotation>();
+        for(PcbRotation rotation:rotations) declaredRotations.add(rotation);
+        java.util.Vector<PcbBoardSide> sides=new java.util.Vector<PcbBoardSide>(); sides.add(PcbBoardSide.TOP);
+        // Only this structural test declaration admits cardinal poses; production E04 stays DEG_0/TOP.
+        PhysicalPackage cardinal=new PhysicalPackage("DEV_P07_CARDINAL_CONTROLLER_5",production.getTerminalIds(),
+            new java.util.Vector<String>(),false,geometry,variants,"DEFAULT",
+            PhysicalPackage.GeometryVariantSelection.FIXED_DEFAULT,declaredRotations,sides);
+        for(int index=0;index<rotations.length;index++) {
+            int[] p=points[index];
+            TroubleshootBoard board=new TroubleshootBoard("P07_VIA_OUTLET_"+rotations[index]);
+            PcbPackagePose pose=new PcbPackagePose(400,400,rotations[index],PcbBoardSide.TOP);
+            require(production.supportsPose(pose)==(index==0),
+                "production E04 admits only DEG_0 and rejects the three test-only cardinal poses");
+            PhysicalPackage pkg=index==0?production:cardinal;
+            BoardComponent component=new BoardComponent("U","CONTROL",pkg); board.addComponent(component);
+            for(String terminal:pkg.getTerminalIds()) {
+                board.addNet(new BoardNet(terminal));
+                board.addPad(new BoardPad("U."+terminal,"U",terminal,terminal));
+            }
+            board.addNet(new BoardNet("FOREIGN"));
+            PcbBoardLayout layout=new PcbBoardLayout(1400,1000,new Rectangle(20,20,1000,800),
+                new Rectangle(1120,120,200,600));
+            PcbFootprint footprint=PcbFootprint.fromPhysicalPackage(component,pose,pkg.getGeometry());
+            layout.addComponent(footprint.getPlacement());
+            for(PcbPadPlacement pad:footprint.getPads()) layout.addPad(pad);
+            int crossDx=(p[8]-p[6])/20,crossDy=(p[9]-p[7])/20;
+            addPoint(board,layout,"A","FOREIGN",p[6]-90*crossDx,p[7]-90*crossDy);
+            addPoint(board,layout,"B","FOREIGN",p[8]+90*crossDx,p[9]+90*crossDy);
+            board.validate(); layout.validateAgainst(board);
+            String before=layout.geometryFingerprint();
+            PcbPadPlacement reference=layout.getPad("U.REFERENCE"),a=layout.getPad("A.1"),b=layout.getPad("B.1");
+            require(reference.getX()==p[0] && reference.getY()==p[1] && reference.getEscapeLength()==60 &&
+                reference.getX()+60*reference.getEscapeDx()==p[2] &&
+                reference.getY()+60*reference.getEscapeDy()==p[3],"authoritative controller dimensions match independent cardinal fixture coordinates");
+            final PcbBoardLayout blockedVia=layout.copyForRouting();
+            blockedVia.addHole(PcbTwoLayerRules.via("declared-end","REFERENCE",p[2],p[3]));
+            boolean courtyardRejected=false;
+            try { new PcbTwoLayerRules(board,blockedVia).validate(blockedVia); }
+            catch(IllegalStateException expected) { courtyardRejected=expected.getMessage().contains("courtyard"); }
+            require(courtyardRejected,"declared escape endpoint cannot carry a via touching the real courtyard");
+            PcbBoardLayout legalVia=layout.copyForRouting();
+            legalVia.addHole(PcbTwoLayerRules.via("first-legal-exit","REFERENCE",p[4],p[5]));
+            new PcbTwoLayerRules(board,legalVia).validate(legalVia);
+            PcbNetRouter.Router ordinary=new PcbNetRouter.Router(layout,board,layout.getBoardOutline(),
+                0,P06FactoryLinkFixtures.OBSERVER,PcbCopperLayer.TOP);
+            require(ordinary.permitsLayerStep(p[6],p[7],p[8],p[9],"FOREIGN",a,b),
+                "ordinary radius-zero routing keeps its previously legal crossbar");
+            PcbNetRouter.Router[] fuller=outletFaces(board,layout,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER);
+            require(!fuller[PcbCopperLayer.TOP.ordinal()].permitsLayerStep(p[6],p[7],p[8],p[9],"FOREIGN",a,b),
+                "actual transition-capable P07 setup reserves the later terminal's legal via outlet");
+            require(fuller[PcbCopperLayer.TOP.ordinal()].permitsLayerStep(p[10],p[11],p[12],p[13],"FOREIGN",a,b),
+                "nearby foreign copper remains legal beyond the protected outlet");
+            require(!fuller[PcbCopperLayer.TOP.ordinal()].permitsLayerStep(p[0],p[1],p[0]+10*crossDx,p[1]+10*crossDy,
+                "REFERENCE",reference,null),"physical courtyard still rejects a premature sideways terminal exit");
+            for(PcbLayerRoutingPrototype.Policy policy:new PcbLayerRoutingPrototype.Policy[]{
+                    PcbLayerRoutingPrototype.Policy.ONE_LAYER,PcbLayerRoutingPrototype.Policy.SPARSE_LINK})
+                require(outletFaces(board,layout,policy)[PcbCopperLayer.TOP.ordinal()].permitsLayerStep(
+                    p[6],p[7],p[8],p[9],"FOREIGN",a,b),"actual zero-transition P07 policy retains ordinary reservation behavior");
+            PcbNetRouter.Router opposite=new PcbNetRouter.Router(layout,board,layout.getBoardOutline(),
+                0,P06FactoryLinkFixtures.OBSERVER,PcbCopperLayer.BOTTOM);
+            require(opposite.permitsLayerStep(p[6],p[7],p[8],p[9],"FOREIGN",a,b) &&
+                fuller[PcbCopperLayer.BOTTOM.ordinal()].permitsLayerStep(p[6],p[7],p[8],p[9],"FOREIGN",a,b),
+                "opposite-face point reservations remain unchanged");
+            require(before.equals(layout.geometryFingerprint()) && layout.getTraces().isEmpty() && layout.getHoles().isEmpty(),
+                "outlet predicates and independent collision falsifiers preserve the actual input placement");
+        }
+    }
+    private static PcbNetRouter.Router[] outletFaces(TroubleshootBoard board,PcbBoardLayout layout,
+            PcbLayerRoutingPrototype.Policy policy) {
+        PcbLayerRoutingPrototype.Session session=PcbLayerRoutingPrototype.begin(board,layout,policy,P06FactoryLinkFixtures.OBSERVER);
+        require(!session.advanceSlice(1) && session.expansions()==0,"fixture installs actual P07 faces without queue-search work");
+        try {
+            java.lang.reflect.Field state=PcbLayerRoutingPrototype.Session.class.getDeclaredField("search");
+            state.setAccessible(true); Object search=state.get(session);
+            java.lang.reflect.Field faces=search.getClass().getDeclaredField("faces");
+            faces.setAccessible(true); return (PcbNetRouter.Router[])faces.get(search);
+        } catch(Exception failure) { throw new AssertionError("actual P07 face setup must be observable in this native contract",failure); }
+    }
+
     /** Electrical membership is fixed; spatial proximity and canonical ties choose branches. */
     private static void nearestBranchesFollowSpatialTree() {
         TroubleshootBoard board=new TroubleshootBoard("P07_NEAREST_BRANCH");

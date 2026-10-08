@@ -1,0 +1,1 @@
+Current row-copy r6: FAIL, complete; 2/6 cases PASS. Overall Q60 remains FAIL/unqualified. Current build14/native104/A0746 PASS; normal50 FAIL. All six reports retain their original bytes/hashes and Task41 cleanup. R5 and all earlier evidence remain untouched. No visible60-part, endurance or modest-host proof is claimed.

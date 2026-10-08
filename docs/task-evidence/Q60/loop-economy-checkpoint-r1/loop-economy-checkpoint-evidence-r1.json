@@ -1,0 +1,353 @@
+{
+  "protocol": "Q60_LOOP_ECONOMY_CHECKPOINT_COMPACT_EVIDENCE_R1",
+  "status": "DRAFT_CHECKPOINT_NOT_PUBLISHED",
+  "preparedUtc": "2026-10-08T19:09:30.029613+00:00",
+  "qualificationStatus": "IN_PROGRESS_UNACCEPTED",
+  "intendedRepositoryPath": "docs/task-evidence/Q60/loop-economy-checkpoint-r1/loop-economy-checkpoint-evidence-r1.json",
+  "branch": "codex/q30-multirail-qualification",
+  "localHead": "a2fc74b23d177e0a971974a9d958bf0d559a06c5",
+  "acceptedPublishedBaseAsLastVerified": "7aa0e1932f3c853e7265bf186e98989ada641a51",
+  "q60PushClaimed": false,
+  "sourceHashes": {
+    "src/com/lushprojects/circuitjs1/client/CirSim.java": "de7d42e051a03ec43951354611a4ec2d150722ecbb203816ecfa5422e558720a",
+    "src/com/lushprojects/circuitjs1/client/PcbComponentPlacement.java": "3f3225e9652c022cb454a77f7dd62d795b6263e387b7e8e98da24add45a171cc",
+    "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java": "37e6d230fcd6d0c3fd768864251452a51856fcbd9c851fb036a4aa3adc3f7f7a",
+    "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java": "4794e1e77033c901df72f43c8753533d72b943a87e083d6cc38da7e740b945e3",
+    "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java": "221a820ba04874f36e33f23d43783b7190333a9fcdda25d42df12c1774d9c0df",
+    "tests/contracts/Q30OwnedLuZeroRowContractTest.java": "6fe542faec03ccde8b940ac9fb5bb1ffffa02cc764771bca4aed261400e3d2ac"
+  },
+  "closedGates": [
+    {
+      "phase": "native-r128",
+      "status": "PASS",
+      "outerElapsedSeconds": 57.858,
+      "repositoryInputs": 1353,
+      "unchangedInputs": true,
+      "cleanup": "PASS",
+      "retainedReceipt": "native-r128-result.json",
+      "retainedReceiptSha256": "96f8bbd0424b79d27cdc95a50b9c41eff48df75b8391a1a97cdbb9f09912f573"
+    },
+    {
+      "phase": "build-r24",
+      "status": "PASS",
+      "outerElapsedSeconds": 97.061,
+      "repositoryInputs": 1222,
+      "unchangedInputs": true,
+      "cleanup": "PASS",
+      "retainedReceipt": "build-r24-result.json",
+      "retainedReceiptSha256": "de35faea96a09d12d47d8e2bb1ccdde808580fa0fc8847b05e8bf606d51acc1e"
+    },
+    {
+      "phase": "compiled-r84",
+      "status": "PASS",
+      "outerElapsedSeconds": 7.311,
+      "repositoryInputs": 1222,
+      "unchangedInputs": true,
+      "cleanup": "PASS",
+      "retainedReceipt": "compiled-r84-result.json",
+      "retainedReceiptSha256": "fc2757c65bdd06317fbbb27f919f63559f66773d69d7959b68363a02c51e18e4"
+    },
+    {
+      "phase": "native-r129",
+      "status": "PASS",
+      "outerElapsedSeconds": 26.182,
+      "repositoryInputs": 1353,
+      "unchangedInputs": true,
+      "cleanup": "PASS",
+      "retainedReceipt": "native-r129-result.json",
+      "retainedReceiptSha256": "e1f43ced83d99e8ed1cf09fb63308b4be993b8a57a514101bf0371496f9675fc"
+    },
+    {
+      "phase": "native-r130",
+      "status": "PASS",
+      "outerElapsedSeconds": 28.45,
+      "repositoryInputs": 1353,
+      "unchangedInputs": true,
+      "cleanup": "PASS",
+      "retainedReceipt": "native-r130-result.json",
+      "retainedReceiptSha256": "608b731c794978a73cc673924821c031abc899e32efc4a7957300ac2ad33ce0c"
+    },
+    {
+      "phase": "compiled-r85",
+      "status": "FAIL",
+      "outerElapsedSeconds": 96.921,
+      "repositoryInputs": 1222,
+      "unchangedInputs": true,
+      "cleanup": "PASS",
+      "retainedReceipt": "compiled-r85-result.json",
+      "retainedReceiptSha256": "e879c459d5d34f2a8787595889c23c96d0f2f70c2472720a294852bfe5fbfdcf"
+    },
+    {
+      "phase": "compiled-r86",
+      "status": "PASS",
+      "outerElapsedSeconds": 80.491,
+      "repositoryInputs": 1222,
+      "unchangedInputs": true,
+      "cleanup": "PASS",
+      "retainedReceipt": "compiled-r86-result.json",
+      "retainedReceiptSha256": "37364ca25e6819c7e6dee3fad5401dbdc3925d17302283e5bc81d4ad5c872f97"
+    }
+  ],
+  "native128": {
+    "suites": 11,
+    "a07Assertions": 306504,
+    "ownedAssertions": 292,
+    "fullMatrix": "NOT_RUN"
+  },
+  "compiled84": {
+    "pureAssertions": 306503,
+    "runtimeAssertions": 83,
+    "runtimeCases": 23,
+    "modelAssertions": 59,
+    "modelRows": 21,
+    "scaleRows": 16,
+    "task41InjectedFailureAndRecovery": "PASS",
+    "earlyTerminalCanaryScope": "EARLY_TERMINAL_AND_HOST_CLEANUP_ONLY"
+  },
+  "sourceConsumption": {
+    "nativeRepositoryInputs": 1353,
+    "gwtBuildRepositoryInputs": 1222,
+    "changedBuildInputs23To24": [
+      "src/com/lushprojects/circuitjs1/client/CirSim.java"
+    ],
+    "otherBuildInputsUnchanged": 1221,
+    "ownedNativeOnly": true,
+    "rawPairTaskWitnesses": 12,
+    "taskWitnessesIncludedInGenericOuterPins": false,
+    "controllerSha256": "446b2bfbe01d7bbab6f361b9387b1c909dd48e7a2b9d5e6ec9ea5487816f1e2d"
+  },
+  "rawPair": {
+    "comparisons": 236,
+    "scope": "THREE_FIXED_ACTUAL_ASSEMBLED_GRAPHS_ONLY",
+    "production400us": true,
+    "sensitivity200us": true,
+    "wholeMetricsCaseSummaryRawExactVs": [
+      "native126/127",
+      "native123/124"
+    ],
+    "fieldExclusions": [],
+    "criteriaSha256": "fce9d3be318ff1c5f534976e3b641917d90d48f7f1616dffeed99b3d738d422e",
+    "evidenceSha256": "1a6117a818a9e1a97bdfe18f2a5c08ee927ef173d479a805d9ec4f33be50430f",
+    "independentReviewSha256": "472fdb69e79e394aacbbf3614414fa6bd125278c4e2b66679005486ed5379b44",
+    "maximumRelativeErrorPercent": 0.12969724577458352,
+    "maximumAbsoluteErrorMicrovolts": 331.44442907869984,
+    "newFull24Claimed": false
+  },
+  "normal55": {
+    "status": "FAIL",
+    "seed": "-1067",
+    "caseOperationSeconds": 90.84894170000916,
+    "failureStage": "HYPOTHESES",
+    "jobMillis": 90001,
+    "jobWork": 447,
+    "maximumUnitMillis": 2042,
+    "healthyMillis": 26127,
+    "hypothesesMillis": 61549,
+    "replayInstallations": 4,
+    "completedQualifierRepairRetests": 3,
+    "partialFourth": true,
+    "applicationCleanup": "PASS",
+    "hostCleanup": "PASS",
+    "qualifiedPublication": false,
+    "normalCatalogEnabled": false,
+    "playerInputEvidence": false,
+    "strictReceiptSha256": "e26cfa26e3f80575c50e683e2e8304f0628d52ff4700241893d56e031c3d2f9d"
+  },
+  "historicalProfile83": {
+    "sourceCirSimSha256": "bfd2269432b095ee9d4015c501df9929ad34367bb7762d1e2dd55b8a8d33712b",
+    "capture": "CAPTURED",
+    "qualification": "FAIL",
+    "rawProfileSha256": "befbf41b93c274c04f8c90b06a63835e9a956afd0d71bde5cb2261a66adb0fff",
+    "helperSelfSeconds": 25.311696,
+    "luStackInclusiveSeconds": 35.085371,
+    "pcbLayoutUnionSeconds": 20.806471,
+    "overlapRetained": true,
+    "currentDE7ProfileClaimed": false,
+    "speedClaimed": false
+  },
+  "historicalScopes": {
+    "normalQ30Compiled79": {
+      "status": "PASS",
+      "source": "BFD2",
+      "caseSecondsRounded": 86.076,
+      "currentDE7Status": "PASS_SCOPED_COMPILED86"
+    },
+    "fullSixR7": {
+      "status": "FAIL",
+      "pass": 2,
+      "cases": 6,
+      "laterDrafts": "UNRUN"
+    },
+    "visible40R8": {
+      "status": "PASS",
+      "source": "HISTORICAL_SOURCE85",
+      "afterFirstObservedPublicationSeconds": 307.383,
+      "semanticCheckpoints": 3,
+      "screenshotsInspected": 4,
+      "current60Proof": false
+    },
+    "native98": {
+      "owners": 100,
+      "inventoryPackages": 96,
+      "scope": "NATIVE_ONLY_NO_BROWSER_ENDURANCE_OR_TASK41_UI"
+    }
+  },
+  "outstanding": [
+    "Current normal55 admission deadline",
+    "Complete current-source frozen holdout",
+    "Exact60 two-channel visible and >=300s/three-checkpoint owner session",
+    "Actual declared modest-machine evidence"
+  ],
+  "heldNormalPaths": [
+    "RB56",
+    "HARD",
+    "RB56 save/load"
+  ],
+  "unstarted": [
+    "REL-B",
+    "Q100"
+  ],
+  "preservation": {
+    "originalUntrackedFiles": 8,
+    "byteHashesAndStatusVerified": true,
+    "indexEmpty": true,
+    "unfinishedWorkPreserved": true,
+    "q30HistoricalRisks": [
+      "Unknown91.616s failure",
+      "Six missing scratch inventories",
+      "Late BLOCKED release audit"
+    ]
+  },
+  "originalLimits": {
+    "jobMillis": 90000,
+    "sharedWork": 640,
+    "unitMillis": 5000,
+    "hypotheses": 5,
+    "q30TimeStepMicros": 5
+  },
+  "rejectedCadence": {
+    "taskOnly1000_500us": "REJECTED",
+    "offRailDifferenceMillivolts": 2.215618,
+    "originalLimitMillivolts": 1
+  },
+  "omittedHeavyData": [
+    "Absolute local paths",
+    "Full source inventories",
+    "Raw browser/native logs",
+    "Profile samples",
+    "Hidden fault identities"
+  ],
+  "claimsExcluded": [
+    "Q60 acceptance",
+    "Full24 requalification",
+    "DE7 browser endurance",
+    "DE7 speedup",
+    "Broader Q30 corpus/performance-cause claim",
+    "Modest-machine proof"
+  ],
+  "draftActions": {
+    "repositoryWrites": 0,
+    "gates": 0,
+    "stageCommitPush": 0
+  },
+  "currentNormalQ30": {
+    "status": "PASS",
+    "scope": "ONE_CURRENT_PRODUCTION_Q30_NORMAL_UI_GENERATION",
+    "hostOutcome": "DIAGNOSTIC_PASS",
+    "family": "RB30_CONTROL",
+    "profile": "MEDIUM",
+    "seed": "10014",
+    "normalReplay": "tsj-alpha/5/MEDIUM/RB30_CONTROL/10014",
+    "noReroll": true,
+    "expectedPackagesFromFrozenPlan": 40,
+    "expectedChannelsFromFrozenPlan": 2,
+    "runtimePackageCensus": "NOT_EXPOSED_BY_PUBLIC_HOST",
+    "hostObservationSeconds": 74.98882990001584,
+    "outerElapsedSeconds": 80.491,
+    "maxObservedWorkUnits": 443,
+    "exactTerminalCostEvidence": false,
+    "runtimeMetricLimit": "Public progress is sampled; exact terminal work and maximum active-operation time are not exposed. Production guards are source-bound, not replaced by host timing.",
+    "limits": {
+      "jobMillis": 90000,
+      "sharedWork": 640,
+      "activeOperationMillis": 5000,
+      "hostObservationSeconds": 115,
+      "nativeOuterSeconds": 300
+    },
+    "hostCleanup": {
+      "seconds": 1.0696507999964524,
+      "serverStopped": true,
+      "portClosed": true,
+      "ownedSurvivors": []
+    },
+    "outerCleanup": "PASS",
+    "receiptSha256": "37364ca25e6819c7e6dee3fad5401dbdc3925d17302283e5bc81d4ad5c872f97",
+    "launchReceiptSha256": "28d89750169eff1179bc6be445642a6d0f3ab5361ea4c8332d463215760f70ad",
+    "strictReceiptSha256": "e0679b600588474a48aa5450d07c9f850a609fb51ba66457fbbe8043398327f6",
+    "hostReceiptSha256": "3b23b9a7fe6812e5f5b6efd433ba246d42e599ddfb14c6acba3201acd0624282",
+    "sourceAggregateSha256": "00bda2649e6a9c71a48489166d1ab2927341b6d01bd9cca1c6daf50aa98b418a",
+    "webAggregateSha256": "8672d9f179f653421fbea5e299cd3f262d8d39dc76f1775fd1e6860ffe75af49",
+    "repositoryInputs": 1222,
+    "allInputPinsExactActualBuild24": true,
+    "actualCirSimSha256": "de7d42e051a03ec43951354611a4ec2d150722ecbb203816ecfa5422e558720a",
+    "actualNative128ReceiptSha256": "96f8bbd0424b79d27cdc95a50b9c41eff48df75b8391a1a97cdbb9f09912f573",
+    "actualBuild24ReceiptSha256": "de35faea96a09d12d47d8e2bb1ccdde808580fa0fc8847b05e8bf606d51acc1e",
+    "strictBindings": [
+      {
+        "file": "audit_release.py",
+        "sha256": "7a76a9ca504eada3a7658dd74ac8851cbcbc10c6d7d45598894fe448aa696324"
+      },
+      {
+        "file": "private_menu.py",
+        "sha256": "1a0ba9d1c49d442728c427ebd6830913a8af0fb8cc07faab91cf465df57a90e9"
+      },
+      {
+        "file": "receipts.py",
+        "sha256": "ae22c139fc9834c767aed8d6b2ae3dcdb9e8db010c3721deba3ae34bd1119dd1"
+      },
+      {
+        "file": "serial_runner.py",
+        "sha256": "08ce044c8c014ae7bc3b194c07827c8383990b4f950be82137b94dc504f1ebe2"
+      },
+      {
+        "file": "windows_process_identity.py",
+        "sha256": "88b18fa7ff41fc006fe9e17dac2aba73cb15c9342bad8b163bedb60bce161017"
+      },
+      {
+        "file": "GenerationCoordinator.java",
+        "sha256": "495236f544b61b946f900b1fd2acb78a82c7f01ae66786068ee2ec0bb3ad304f"
+      },
+      {
+        "file": "compiled_attribute_acceptance.py",
+        "sha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839"
+      },
+      {
+        "file": "acceptance-plan.json",
+        "sha256": "1078cb80a13e8fcde2dac6dd1188ee8fa3add3faf6b64a385ed27ed4cc19b749"
+      },
+      {
+        "file": "compiled-r1.py",
+        "sha256": "c52805860d8f5533fab2af44f5efb6499020ee8f33c89176e94a7c435edbeb51"
+      },
+      {
+        "file": "compiled-r86-spec.json",
+        "sha256": "699fbf6c9078762838812e1f677d2409ee169acaf7e2727ba1f5de9b18dfac98"
+      },
+      {
+        "file": "compiled-r86.py",
+        "sha256": "c3626dd96dc843bb7e4d8da31d5f1c739795285c47e88d98063687329fc9403a"
+      },
+      {
+        "file": "pointer.json",
+        "sha256": "5999e74d82a111124d57f1a1517900be23d334b6ee0d191df8b2ec22354ef402"
+      }
+    ],
+    "all12StrictBindingsVerifiedCurrent": true,
+    "speedCauseClaimed": false,
+    "broaderCorpusClaimed": false,
+    "currentFullHoldoutClaimed": false,
+    "current60SessionClaimed": false
+  },
+  "revisionUtc": "2026-10-08T19:20:28.756967+00:00",
+  "revisionScope": "ONLY_CURRENT_Q30_NOT_RUN_TO_CLOSED_COMPILED86_SCOPED_PASS"
+}

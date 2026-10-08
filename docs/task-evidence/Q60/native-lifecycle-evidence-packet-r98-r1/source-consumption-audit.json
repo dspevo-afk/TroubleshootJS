@@ -1,0 +1,85 @@
+{
+  "protocol": "Q60-NATIVE98-SOURCE-CONSUMPTION-AUDIT-1",
+  "status": "OFFLINE_SOURCE_DIFF_AND_CALL_CLOSURE_AUDITED",
+  "auditUtc": "2026-10-08T11:46:25.1433919Z",
+  "phase": "native-r98",
+  "originalLaunchPins": 1358,
+  "currentUnchangedLaunchPins": 1357,
+  "missingInputs": [],
+  "nativeAdapterPreflightPins": 941,
+  "currentUnchangedPreflightPins": 940,
+  "changes": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+      "beforeSha256": "4025420138518d0a6185ebe24350cc8a030f251588bdd00c84d7c9080b0e832f",
+      "afterSha256": "6e59d86f9507b1849fdca55b07898f0d4ff4924c0441363a0e77c1a26e14cc7e"
+    }
+  ],
+  "documentedIntegration": "q60/task41-ui-bind-integration-r1.json",
+  "exactPatch": "q60/task41-ui-bind-restore-draft-r1/candidate.patch",
+  "patchScope": "Add solverExecutor.snapshotRestored(solverState) before UI readiness refresh in normal restore and guarded best-effort restore. Existing outer-finally binding and identity assertions retained.",
+  "task41": {
+    "compiledInNative98": true,
+    "restoreInvokedBySelectedNativeWorkloads": false,
+    "beforeUiBindingInvokedBySelectedNativeWorkloads": false,
+    "uiRestoreRegressionCovered": false,
+    "why": "Task fixture performs direct developer-owner assignment, physical lifecycle resets, scoped provider mutations, temporary instrument reconstruction and manual raw-graph retirement; it never invokes Task41 capture/restore or PrivateSolverContext."
+  },
+  "callClosure": [
+    {
+      "path": "q60/native-owner-inventory-draft-r6/Rb56FaultPopulationContractTest.java",
+      "lines": "16-17,68-76,440-449",
+      "owner": "Explicit workload arguments, developerOwner(), direct simulator owner/graph/controller/power assignment; UnqualifiedBehavior deliberately disallows electrical/customer qualification."
+    },
+    {
+      "path": "q60/native-owner-inventory-draft-r6/Rb56FaultPopulationContractTest.java",
+      "lines": "112-145,164",
+      "owner": "Existing provider remove/acquire/install and candidate.runtime.resetForBoardReset(); bypasses CirSim.resetAction and Task41 snapshot restoration."
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PhysicalBoardRuntime.java",
+      "lines": "459-462",
+      "owner": "Registered runtime lifecycle resets, without Task41 restore."
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/ResistorSlotController.java",
+      "lines": "102,122,155",
+      "owner": "Actual provider remove/acquire/install via PhysicalMutationScope; scoped mutation rollback is a different owner from Task41 snapshot."
+    },
+    {
+      "path": "q60/native-owner-inventory-draft-r6/Rb56FaultPopulationContractTest.java",
+      "lines": "341-349",
+      "owner": "Inventory reads actual first/middle/last loose10k terminals using sim.measureResistance; verifies stimulus absent and canonical graph restored."
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "lines": "6523-6533,6746-6851",
+      "owner": "measureResistance -> runTemporaryActiveMeasurement -> runTemporaryMeasurement: install real stimulus, analyze/advance, remove stimulus, reconstruct solver and synchronize runtime; no Task41 snapshot or PrivateSolverContext."
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/ResistanceMeasurementStimulus.java",
+      "lines": "36-49",
+      "owner": "Direct temporary source/internal/reference resistor/ground insertion and removal."
+    },
+    {
+      "path": "q60/native-owner-inventory-draft-r6/Rb56FaultPopulationContractTest.java",
+      "lines": "188-210,243-267,271-284,350-365",
+      "owner": "Explicit executor retirement, raw-graph/source detachment and element.delete; rejects predecessor graph/runtime/history/observation, bounds waveform32 and unsubscribes; no workbench attachment or Task41 restoration."
+    },
+    {
+      "path": "q60/native-owner-inventory-draft-r6/Rb56FaultPopulationContractTest.java",
+      "lines": "506-516",
+      "owner": "Native TestCirSim advances actual solver, but setSimRunning only changes a field; repaint/requestGeneratedBoardVerification/refreshBoardModificationControls/refreshChallengeInteractionState are no-ops."
+    },
+    {
+      "path": "q60/native-owner-inventory-draft-r6/verify-native-owner-inventory.ps1",
+      "lines": "398-404,532-538,804-805",
+      "owner": "Compiles all selected current client sources, substituting exactly one task Java test; executes only the selected custom native workload."
+    }
+  ],
+  "independentReview": "Same call-closure conclusion independently reported by /root/q60_current_review; no gate or process launch.",
+  "receiptReuseBoundary": "Retain native98 as source-bound actual native owner/service/inventory evidence for its consumed unchanged implementation. Do not rewrite its original pins or represent native98 as a run on the new Task41 source. It provides no validation of the compiled31 UI restore failure or the new early-binding patch.",
+  "priorArtifactsPreserved": true,
+  "repositoryEdited": false,
+  "gatesRun": false
+}

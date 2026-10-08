@@ -1,0 +1,753 @@
+{
+  "protocol": "Q60_FINAL_NATIVE_MODEL_SENSITIVITY_EVIDENCE_R1",
+  "status": "PASS_SELECTED_NATIVE_E06_AND_RAW_SENSITIVITY_ONLY",
+  "scope": "Source-bound actual E06 full24 and assembled raw40/55/60 production400/fine200 proof; repository supplement for root review",
+  "productionMaximumAveragedStepSeconds": 0.0004,
+  "fineSensitivityMaximumStepSeconds": 0.0002,
+  "productionQ30MaximumStepSeconds": 5e-06,
+  "phases": {
+    "native-r97": {
+      "overallBatchStatus": "FAIL",
+      "selectedAssemblyStatus": "PASS",
+      "selectedAssemblyAssertions": 207281,
+      "phaseElapsedMs": 154202,
+      "elapsedScope": "Whole native batch including other suites and compilation",
+      "sourceInputs": 1353,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "remainingOwnedProcesses": 0,
+      "liveDrainers": 0,
+      "logsComplete": true,
+      "sourceMapSha256": "e1a857ef6fd0d5cf6079057eb016ef1f5c37d457cbe83bb4c567c5c9ed1049b0",
+      "phaseRunnerSha256": "38898e876aa2d434638bc2760062727ddccd40de77d1f7d17c2220d067520580",
+      "actualDeclaration": {
+        "sensorLowCommandV": 0,
+        "sensorHighCommandV": 5,
+        "maximumStepSeconds": 0.0004,
+        "minimumStepSeconds": 5e-11,
+        "adaptive": true,
+        "startupSeconds": 0.4,
+        "conditionSeconds": 0.03,
+        "sampleSeconds": 0.01,
+        "mainOnlyOffSeconds": 2.5,
+        "allOffSeconds": 3,
+        "rail12Mean": [
+          10.64,
+          11.76
+        ],
+        "rail12RippleMax": 0.05,
+        "rail12DriftMax": 0.02,
+        "rail5": [
+          4.75,
+          5.25
+        ],
+        "contactOn": [
+          10.8,
+          12.6
+        ],
+        "contactOffMax": 0.05,
+        "residualMax": 0.25,
+        "optoGminMax": 1.0001e-12,
+        "recipe": "RB56_ADAPTIVE_400US_MIN_50PS",
+        "maximumStepOwner": "Rb30Behavior.RB56_MAX_STEP_SECONDS",
+        "scope": "ACTUAL_ASSEMBLED_GRAPH_ONLY"
+      }
+    },
+    "native-final": {
+      "overallBatchStatus": "PASS",
+      "selectedAssemblyStatus": "PASS",
+      "selectedAssemblyAssertions": 389420,
+      "phaseElapsedMs": 28517,
+      "elapsedScope": "Fine-only native adapter including compilation",
+      "sourceInputs": 1360,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "remainingOwnedProcesses": 0,
+      "liveDrainers": 0,
+      "logsComplete": true,
+      "sourceMapSha256": "74e71a1ddc5c2cc70449c691fb70d46f030e789a4fb58ff849b8325a5ddb4271",
+      "phaseRunnerSha256": "fd544bc7d10c3322e9abc6ab139b066e96f6ff8a34adfcfe842f02eb97abfdce",
+      "actualDeclaration": {
+        "sensorLowCommandV": 0,
+        "sensorHighCommandV": 5,
+        "maximumStepSeconds": 0.0002,
+        "minimumStepSeconds": 5e-11,
+        "adaptive": true,
+        "startupSeconds": 0.4,
+        "conditionSeconds": 0.03,
+        "sampleSeconds": 0.01,
+        "mainOnlyOffSeconds": 2.5,
+        "allOffSeconds": 3,
+        "rail12Mean": [
+          10.64,
+          11.76
+        ],
+        "rail12RippleMax": 0.05,
+        "rail12DriftMax": 0.02,
+        "rail5": [
+          4.75,
+          5.25
+        ],
+        "contactOn": [
+          10.8,
+          12.6
+        ],
+        "contactOffMax": 0.05,
+        "residualMax": 0.25,
+        "optoGminMax": 1.0001e-12,
+        "recipe": "RB56_ADAPTIVE_200US_MIN_50PS_FINE_OF_400US",
+        "maximumStepOwner": "TASK_ONLY_FINE_200US_OF_Rb30Behavior.RB56_MAX_STEP_SECONDS",
+        "scope": "ACTUAL_ASSEMBLED_GRAPH_ONLY"
+      }
+    }
+  },
+  "sensitivity": {
+    "status": "PASS",
+    "comparisons": 236,
+    "allMetricsPass": true,
+    "criteriaSha256": "fce9d3be318ff1c5f534976e3b641917d90d48f7f1616dffeed99b3d738d422e",
+    "largestRelative": {
+      "name": "PAIR.40.SENSOR_MASK_1.rail12.mean",
+      "candidate": 11.137509788387794,
+      "reference": 11.123083455500801,
+      "error": 0.0012969724577458351,
+      "limit": 0.02,
+      "comparison": "RELATIVE_REFERENCE_DENOMINATOR",
+      "pass": true
+    },
+    "largestRelativeErrorPercent": 0.12969724577458352,
+    "largestAbsoluteVolts": {
+      "name": "PAIR.40.MAINAC_ONLY_OFF.rail12.mean",
+      "candidate": 0.02520141892298968,
+      "reference": 0.02486997449391098,
+      "error": 0.00033144442907869984,
+      "limit": 0.001,
+      "comparison": "ABSOLUTE_VOLTS",
+      "pass": true
+    },
+    "largestAbsoluteErrorMillivolts": 0.33144442907869986,
+    "largestInputEndpointVolts": {
+      "name": "PAIR.60.SENSOR_MASK_2.A.senseV",
+      "candidate": 2.7630608911977106e-09,
+      "reference": 4.071623038726102e-10,
+      "error": 2.3558985873251004e-09,
+      "limit": 0.001,
+      "comparison": "ABSOLUTE_VOLTS",
+      "pass": true
+    },
+    "largestInputEndpointErrorNanovolts": 2.3558985873251004,
+    "retainedReferenceRuns": [],
+    "referenceEvidenceClaimed": false,
+    "rawTotalsAndCases": {
+      "coarse400": {
+        "totals": {
+          "acceptedSteps": 50820,
+          "sampledAcceptedSteps": 50820,
+          "attemptedNewtonTrials": 193103,
+          "acceptedFinalSolveTrials": 189403,
+          "discardedTimestepAttemptTrials": 3700,
+          "failedUnacceptedAttemptTrials": 0,
+          "maximumAcceptedIterations": 76,
+          "maximumOptoGmin": 1e-12,
+          "minimumBiasLossW": 0.0,
+          "maximumFinalResidualV": 6.893829004804825e-05,
+          "rawCleanups": 3
+        },
+        "cases": [
+          {
+            "packages": 40,
+            "seed": "17",
+            "topology": "RB56_CH1_SHARED_DIRECT_A_BJT_S5_true_S12_false_F1_O0_B5_false",
+            "acceptedSteps": 15529,
+            "attemptedNewtonTrials": 57033,
+            "healthyAndOffWindows": 5,
+            "comparisonWindows": 5,
+            "requestedFinalSeconds": 5.96,
+            "actualFinalSeconds": 5.959999999999409,
+            "cleanupVerified": true
+          },
+          {
+            "packages": 55,
+            "seed": "77",
+            "topology": "RB56_CH2_SHARED_HYSTERETIC_A_BJT_B_NMOS_S5_true_S12_true_F3_O0_B5_false",
+            "acceptedSteps": 17291,
+            "attemptedNewtonTrials": 65381,
+            "healthyAndOffWindows": 7,
+            "comparisonWindows": 7,
+            "requestedFinalSeconds": 6.17,
+            "actualFinalSeconds": 6.170359374999473,
+            "cleanupVerified": true
+          },
+          {
+            "packages": 60,
+            "seed": "42",
+            "topology": "RB56_CH2_SHARED_HYSTERETIC_A_NMOS_B_BJT_S5_true_S12_true_F3_O3_B5_true",
+            "acceptedSteps": 18000,
+            "attemptedNewtonTrials": 70689,
+            "healthyAndOffWindows": 7,
+            "comparisonWindows": 7,
+            "requestedFinalSeconds": 6.02,
+            "actualFinalSeconds": 6.0203437499994354,
+            "cleanupVerified": true
+          }
+        ]
+      },
+      "fine200": {
+        "totals": {
+          "acceptedSteps": 96261,
+          "sampledAcceptedSteps": 96261,
+          "attemptedNewtonTrials": 294364,
+          "acceptedFinalSolveTrials": 291164,
+          "discardedTimestepAttemptTrials": 3200,
+          "failedUnacceptedAttemptTrials": 0,
+          "maximumAcceptedIterations": 86,
+          "maximumOptoGmin": 1e-12,
+          "minimumBiasLossW": 0.0,
+          "maximumFinalResidualV": 5.286716144932033e-05,
+          "rawCleanups": 3
+        },
+        "cases": [
+          {
+            "packages": 40,
+            "seed": "17",
+            "topology": "RB56_CH1_SHARED_DIRECT_A_BJT_S5_true_S12_false_F1_O0_B5_false",
+            "acceptedSteps": 30395,
+            "attemptedNewtonTrials": 89245,
+            "healthyAndOffWindows": 5,
+            "comparisonWindows": 5,
+            "requestedFinalSeconds": 5.96,
+            "actualFinalSeconds": 5.960075000003766,
+            "cleanupVerified": true
+          },
+          {
+            "packages": 55,
+            "seed": "77",
+            "topology": "RB56_CH2_SHARED_HYSTERETIC_A_BJT_B_NMOS_S5_true_S12_true_F3_O0_B5_false",
+            "acceptedSteps": 33584,
+            "attemptedNewtonTrials": 107910,
+            "healthyAndOffWindows": 7,
+            "comparisonWindows": 7,
+            "requestedFinalSeconds": 6.17,
+            "actualFinalSeconds": 6.170114062504224,
+            "cleanupVerified": true
+          },
+          {
+            "packages": 60,
+            "seed": "42",
+            "topology": "RB56_CH2_SHARED_HYSTERETIC_A_NMOS_B_BJT_S5_true_S12_true_F3_O3_B5_true",
+            "acceptedSteps": 32282,
+            "attemptedNewtonTrials": 97209,
+            "healthyAndOffWindows": 7,
+            "comparisonWindows": 7,
+            "requestedFinalSeconds": 6.02,
+            "actualFinalSeconds": 6.020090625003899,
+            "cleanupVerified": true
+          }
+        ]
+      }
+    },
+    "unchangedCases": [
+      {
+        "seed": "17",
+        "packages": 40,
+        "channels": 1,
+        "reference": "SHARED_DIRECT",
+        "enableOpenSeconds": 0,
+        "expectedFinalSeconds": 5.96
+      },
+      {
+        "seed": "77",
+        "packages": 55,
+        "channels": 2,
+        "reference": "SHARED_HYSTERETIC",
+        "enableOpenSeconds": 0.15,
+        "expectedFinalSeconds": 6.17
+      },
+      {
+        "seed": "42",
+        "packages": 60,
+        "channels": 2,
+        "reference": "SHARED_HYSTERETIC",
+        "enableOpenSeconds": 0,
+        "expectedFinalSeconds": 6.02
+      }
+    ],
+    "unchangedNumericBounds": {
+      "rail12Mean": [
+        10.64,
+        11.76
+      ],
+      "rail12Ripple": 0.05,
+      "rail12Drift": 0.02,
+      "rail5": [
+        4.75,
+        5.25
+      ],
+      "contactON": [
+        10.8,
+        12.6
+      ],
+      "contactOFFMax": 0.05,
+      "sensorCommands": [
+        0,
+        5
+      ],
+      "gminMax": 1.0001e-12,
+      "biasPassivityMinimumW": -1e-09,
+      "residualAllCapsAndDeclaredRailsV": 0.25,
+      "coilOffBound": "RelayOutputBehavior.DISCHARGED_AMPS unchanged"
+    },
+    "unchangedMeasurement": {
+      "startupWindowSeconds": 0.05,
+      "conditionAndOFFWindowSeconds": 0.01,
+      "mean": "right-endpoint actual value times clipped accepted interval overlap divided by covered physical seconds",
+      "drift": "relative difference of physical first-half and second-half means",
+      "coverageToleranceSeconds": 1e-12,
+      "sampleCount": "observational; no fixed-step count oracle"
+    },
+    "unchangedComparison": {
+      "window": "fixed final10ms of each original phase; original STARTUP final50ms independent oracle is preserved separately",
+      "relative": "abs(candidate-reference)/abs(reference); reference must be nonzero",
+      "healthyRail12MeanRelative": 0.02,
+      "healthyRail5MeanRelative": 0.02,
+      "energizedContactMeanRelative": 0.02,
+      "OFFRailOrContactMeanAbsoluteVolts": 0.001,
+      "inputEndpointAbsoluteVolts": 0.001,
+      "inputFields": [
+        "sourceActualV",
+        "rawV",
+        "senseV",
+        "referenceV",
+        "decisionOutputV"
+      ],
+      "commandsControlAndPositions": "EXACT",
+      "coverageToleranceSeconds": 1e-12,
+      "bothRuns": "Every original independent physical bound, all three complete source timelines, accepted gmin/passivity, no errors and exact cleanup; both share the same two E06 max100 overrides.",
+      "referenceRuns": [],
+      "referenceLimit": "Fresh100/fresh50 same-current-source comparison is mandatory. Older passing50/25 evidence is preserved as context; no unproved current-code equivalence is assumed.",
+      "measurementsOnly": [
+        "scalar power differences",
+        "coil current differences",
+        "bulk/internal storage numerical differences",
+        "Brownout transition time differences",
+        "Newton/trial/runtime/GC counts"
+      ]
+    }
+  },
+  "e06": {
+    "status": "PASS_SELECTED_SUITE",
+    "overallBatchStatus": "FAIL",
+    "cases": 24,
+    "caseIdentities": [
+      "DETAILED_SEQUENCE_COARSE_REF0",
+      "DETAILED_SEQUENCE_FINE_REF0",
+      "AVERAGED_SEQUENCE_COARSE_REF0",
+      "AVERAGED_SEQUENCE_FINE_REF0",
+      "DETAILED_SENSE_OPEN_COARSE_REF0",
+      "DETAILED_FUSE_BLOWN_COARSE_REF0",
+      "DETAILED_REFERENCE_COARSE_REF0",
+      "DETAILED_REFERENCE_COARSE_REF1",
+      "DETAILED_REFERENCE_COARSE_REF2",
+      "DETAILED_REFERENCE_COARSE_REF3",
+      "DETAILED_REFERENCE_COARSE_REF4",
+      "DETAILED_REFERENCE_COARSE_REF5",
+      "DETAILED_REFERENCE_COARSE_REF6",
+      "DETAILED_REFERENCE_COARSE_REF7",
+      "AVERAGED_SENSE_OPEN_COARSE_REF0",
+      "AVERAGED_FUSE_BLOWN_COARSE_REF0",
+      "AVERAGED_REFERENCE_COARSE_REF0",
+      "AVERAGED_REFERENCE_COARSE_REF1",
+      "AVERAGED_REFERENCE_COARSE_REF2",
+      "AVERAGED_REFERENCE_COARSE_REF3",
+      "AVERAGED_REFERENCE_COARSE_REF4",
+      "AVERAGED_REFERENCE_COARSE_REF5",
+      "AVERAGED_REFERENCE_COARSE_REF6",
+      "AVERAGED_REFERENCE_COARSE_REF7"
+    ],
+    "assertions": 303827262,
+    "actualFidelityDeclaration": "NOMINAL_FIDELITY_NOT_QUALIFIED",
+    "detailedStepsSeconds": [
+      5e-06,
+      2.5e-06
+    ],
+    "averagedStepsSeconds": [
+      0.0004,
+      0.0002
+    ],
+    "comparisonCounts": {
+      "DETAILED_AVERAGED": 6,
+      "COARSE_FINE": 6,
+      "REFERENCE": 12
+    },
+    "cleanupCases": 24,
+    "healthyCoarseHalfWindows": 13,
+    "physicalHalfCriterion": {
+      "windowSeconds": 0.05,
+      "equalHalfSeconds": 0.025,
+      "coarseWindowSamples": 125,
+      "reportedHalfCounts": [
+        62,
+        63
+      ],
+      "equalHalfSampleWeights": [
+        62.5,
+        62.5
+      ],
+      "correction": "reportedHalfDrift + 0.016 * (maximum - minimum) / abs(mean)",
+      "requiredUpperBound": 0.02,
+      "actualMaximumUpperBound": 0.0034604957013051377
+    },
+    "maximumDetailedAveragedOutputRelative": 0.006377222465466907,
+    "requiredDetailedAveragedOutputRelative": 0.05,
+    "maximumDetailedAveragedInputEnergyRelative": 0.1021039332410275,
+    "requiredDetailedAveragedInputEnergyRelative": 0.15,
+    "maximumSameModelTimestepOutputRelative": 0.00015683175933637114,
+    "requiredSameModelTimestepOutputRelative": 0.02,
+    "maximumReferenceOutputDeltaV": 1.2107648217352107e-10,
+    "requiredReferenceOutputDeltaV": 0.001
+  },
+  "sourceBoundary": {
+    "actualFine941InventoryPinsVerified": true,
+    "fine941InventoryMapSha256": "133b0c94ef280482b6e7a47ec0fe05064e2843bbac0fef396b03b48ce36a01a3",
+    "selectedRepositoryPins": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+        "r97Sha256": "ef7cbbe4b5f892a7057306760da388a4688cfaaef2305ff7d09bc332b000aa21",
+        "fineFinalSha256": "ef7cbbe4b5f892a7057306760da388a4688cfaaef2305ff7d09bc332b000aa21"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java",
+        "r97Sha256": "83f3c11155dca77c843dd2ab109e229c85be24d016bb52c9acfd3d663f4636c1",
+        "fineFinalSha256": "83f3c11155dca77c843dd2ab109e229c85be24d016bb52c9acfd3d663f4636c1"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/WireCurrentAdjacencyChecks.java",
+        "r97Sha256": "a03be446a875a6db96ca63ed73404df6181ff8754e339b03a518575dd58de471",
+        "fineFinalSha256": "a03be446a875a6db96ca63ed73404df6181ff8754e339b03a518575dd58de471"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+        "r97Sha256": "47e339442d1c3e50f6e0cb97ae890765e5c63e672658a75b2d7caf7d7a5af752",
+        "fineFinalSha256": "47e339442d1c3e50f6e0cb97ae890765e5c63e672658a75b2d7caf7d7a5af752"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PrivateSolverContext.java",
+        "r97Sha256": "6c8042ab431760c7441b08b94ecc03ca29026fd7b360580779bc6a24b820012c",
+        "fineFinalSha256": "6c8042ab431760c7441b08b94ecc03ca29026fd7b360580779bc6a24b820012c"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+        "r97Sha256": "4025420138518d0a6185ebe24350cc8a030f251588bdd00c84d7c9080b0e832f",
+        "fineFinalSha256": "6e59d86f9507b1849fdca55b07898f0d4ff4924c0441363a0e77c1a26e14cc7e"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Rb30Behavior.java",
+        "r97Sha256": "3bf60880cdc45740986ffeb378d019126f255c72a15145acf1310104ea969462",
+        "fineFinalSha256": "3bf60880cdc45740986ffeb378d019126f255c72a15145acf1310104ea969462"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Rb56Plan.java",
+        "r97Sha256": "1ea5bd8a17730979f18400ac270e41cf4396101f1c8c1faac77a7b69fced22d2",
+        "fineFinalSha256": "1ea5bd8a17730979f18400ac270e41cf4396101f1c8c1faac77a7b69fced22d2"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Rb56PowerStageAssembly.java",
+        "r97Sha256": "25cf8f995d3811742ca6969aa581dfbd7fe1390ed4e80098262c67cb4f010c74",
+        "fineFinalSha256": "25cf8f995d3811742ca6969aa581dfbd7fe1390ed4e80098262c67cb4f010c74"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Rb56ControlTail.java",
+        "r97Sha256": "9df07699ba206acec1273e8f757794833cb5c1c735186b140cbb97756aef54a8",
+        "fineFinalSha256": "9df07699ba206acec1273e8f757794833cb5c1c735186b140cbb97756aef54a8"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/E06ConverterContract.java",
+        "r97Sha256": "40b7adc777ee1c5dc801678c42366e076287dea319ef1f6304cde8e1a2910c2b",
+        "fineFinalSha256": "40b7adc777ee1c5dc801678c42366e076287dea319ef1f6304cde8e1a2910c2b"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/E06AveragedConverterElm.java",
+        "r97Sha256": "29ab646a7d303d1de94765364c38cb9a7b9dbae76dfc63549f41a9ef8d84a7e1",
+        "fineFinalSha256": "29ab646a7d303d1de94765364c38cb9a7b9dbae76dfc63549f41a9ef8d84a7e1"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/E06PwmControllerElm.java",
+        "r97Sha256": "9854b8099954836d51a35c4d8bc88475f383aaceb5cf6cad39c5733a4ccdb13c",
+        "fineFinalSha256": "9854b8099954836d51a35c4d8bc88475f383aaceb5cf6cad39c5733a4ccdb13c"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/E06ConverterFixtures.java",
+        "r97Sha256": "2ffa43c6de05a8f3355ffb9c63d3b7dba12805d80557e5d5787310fc652689c7",
+        "fineFinalSha256": "2ffa43c6de05a8f3355ffb9c63d3b7dba12805d80557e5d5787310fc652689c7"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+        "r97Sha256": "f694ae7cdf615a51ec650a35fedc5b8eaf27114b1a80d9badd46dda577a012bb",
+        "fineFinalSha256": "f694ae7cdf615a51ec650a35fedc5b8eaf27114b1a80d9badd46dda577a012bb"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/ChipElm.java",
+        "r97Sha256": "b10ab30b273dcb603d258fde662a9f4d1f457cbe88ee75eaffb2d7359417d314",
+        "fineFinalSha256": "b10ab30b273dcb603d258fde662a9f4d1f457cbe88ee75eaffb2d7359417d314"
+      },
+      {
+        "path": "tests/contracts/E06ConverterPilotContractTest.java",
+        "r97Sha256": "cd30b7062908abe063f0b503ab38451b8ce15b06523c02dc88efe6858b09ffea",
+        "fineFinalSha256": "cd30b7062908abe063f0b503ab38451b8ce15b06523c02dc88efe6858b09ffea"
+      },
+      {
+        "path": "tests/contracts/Rb56AssemblyContractTest.java",
+        "r97Sha256": "ec19412e38c69fa6a71981f616e49a72b6e7a0c18da6ded5d86cac24f968f066",
+        "fineFinalSha256": "ec19412e38c69fa6a71981f616e49a72b6e7a0c18da6ded5d86cac24f968f066"
+      },
+      {
+        "path": "scripts/verify-current-contracts.ps1",
+        "r97Sha256": "49f179d90cec6abf4466d3cb23d8b17e942da42a613528173db2c27f5a46570a",
+        "fineFinalSha256": "49f179d90cec6abf4466d3cb23d8b17e942da42a613528173db2c27f5a46570a"
+      },
+      {
+        "path": "scripts/VerifierIsolation.psm1",
+        "r97Sha256": "aafe38893e5fc185a5b543b8c76a383ce7494fe76783fbf4e0330fded4dd298f",
+        "fineFinalSha256": "aafe38893e5fc185a5b543b8c76a383ce7494fe76783fbf4e0330fded4dd298f"
+      }
+    ],
+    "fineTaskPins": [
+      {
+        "artifact": "q60/final-current-fine200-r2/E06ConverterContract.java",
+        "sha256": "40b7adc777ee1c5dc801678c42366e076287dea319ef1f6304cde8e1a2910c2b"
+      },
+      {
+        "artifact": "q60/final-current-fine200-r2/E06AveragedConverterElm.java",
+        "sha256": "29ab646a7d303d1de94765364c38cb9a7b9dbae76dfc63549f41a9ef8d84a7e1"
+      },
+      {
+        "artifact": "q60/final-current-fine200-r2/E06ConverterPilotContractTest.java",
+        "sha256": "cd30b7062908abe063f0b503ab38451b8ce15b06523c02dc88efe6858b09ffea"
+      },
+      {
+        "artifact": "q60/final-current-fine200-r2/Rb56AssemblyContractTest.java",
+        "sha256": "fde356139cfa9a7683721e74a9ce4920c9de6fcca21e417174ed4a0079ef100a"
+      },
+      {
+        "artifact": "q60/final-current-fine200-r2/verify-cadence.ps1",
+        "sha256": "b25b2c24be92abfb7cb4cd9cfa8dcecb3f2f79960aa0e746af7984d6928e0bbc"
+      },
+      {
+        "artifact": "q60/native-final.ps1",
+        "sha256": "a034c9a60fcd6448f8793c7bb1132dc11bdfd4abc9ab547fa3448d07d0e2a5a7"
+      }
+    ],
+    "underlyingConsumedSourcesIdentical": true,
+    "unconsumedSourceChanges": [
+      {
+        "path": "tests/contracts/P07TwoLayerContractTest.java",
+        "r97Sha256": "7321e5143b7cce5fa4fa13b77d889284b5888c624ca94648fecb4a3de4a1e22b",
+        "currentSha256": "32465c4db692952f2020488d1202e6dfd68ae12ce5388e68df5b0c99d8e7f25f"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+        "r97Sha256": "4025420138518d0a6185ebe24350cc8a030f251588bdd00c84d7c9080b0e832f",
+        "currentSha256": "6e59d86f9507b1849fdca55b07898f0d4ff4924c0441363a0e77c1a26e14cc7e"
+      }
+    ],
+    "consumptionBasis": [
+      "Rb56AssemblyContractTest54-61 directly builds raw Assembly, power stage and control tail;134-158 manually restores elmList, retires/invalidates executor, deletes elements and restores globals.",
+      "E06ConverterPilotContractTest194-225 uses manual raw cleanup; its private TestCirSim and assembly TestCirSim override UI refresh methods with no-ops.",
+      "Neither selected fixture nor Rb56PowerStageAssembly/Rb56ControlTail/E06ConverterFixtures references Task41SimulationSnapshot. The exact production delta adds two early bind calls plus comment/exception guard inside that uninvoked restoration owner."
+    ],
+    "overlays": "Three E06 model/pilot overlays are exact current production bytes; raw fine test changes only maximum accepted step and declared fine recipe/owner. Existing part/model laws, fixed cases, timelines and physical/window oracles remain unchanged."
+  },
+  "nativeBridge": {
+    "actualMarkers": [
+      "NATIVE BRIDGE: E06 scratch-only factory-name interning preserves GWT string-value dispatch; actual compiled factory gate remains required.",
+      "NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.",
+      "NATIVE BRIDGE: E06 scratch-only ChipElm full-grid drawing preference (smallGrid=false); actual compiled constructor gate remains required."
+    ],
+    "toolchain": "javac 1.8.0_502",
+    "scope": "Maintained native scratch adapters for exact console output, GWT string dispatch and ChipElm grid preference. This packet contains native proof; actual compiled constructor, snapshot/UI and player behavior have separate root-owned evidence."
+  },
+  "retainedFailures": [
+    {
+      "phase": "native-r97",
+      "overallBatchStatus": "FAIL",
+      "exitCode": 1,
+      "failedSuite": "P07TwoLayerContractTest",
+      "cause": "Package U fixture requested unsupported DEG_90/TOP PCB pose",
+      "actualFailureMarker": "CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: P07TwoLayerContractTest, exit 1",
+      "selectedE06Status": "PASS",
+      "selectedRawAssemblyStatus": "PASS",
+      "failureRewrittenAsPass": false
+    },
+    {
+      "historicalPacket": "q60/sensor-final-fidelity-evidence-r1.json",
+      "scope": "Retains native-r78 diagnostic cast failure and true native-r80 RSA baseline failure, separately from corrected r81/r86 passes; historical failures remain unchanged."
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact": "TEMP_ARTIFACTS/native-r97-result.json",
+      "sha256": "ec0bf04ec28a239633d0bac56ae55ab1db7244c3df6ebc01f769876879c96c9e",
+      "bytes": 1855
+    },
+    {
+      "artifact": "TEMP_ARTIFACTS/native-r97-launch.json",
+      "sha256": "698abb4c708570e123ae1e0916b4501e2da0992de2a478814eaa5593774addd1",
+      "bytes": 187832
+    },
+    {
+      "artifact": "TEMP_ARTIFACTS/native-r97-full-output.log",
+      "sha256": "64eb20c7ddb0057f21e287a27ae743aef270d5ca2b29e00bf7b975389c52e06a",
+      "bytes": 1887552
+    },
+    {
+      "artifact": "TEMP_ARTIFACTS/owned-native-r97/host-result.json",
+      "sha256": "9298e4642f20e1010a73154c8e4fc835d29e003849751d8059edf6c4fa1a410c",
+      "bytes": 1242
+    },
+    {
+      "artifact": "TEMP_ARTIFACTS/owned-native-r97/stdout.log",
+      "sha256": "88ec544d2b71c5041f283d7cef25101213b4500138dd59d72a35cc6cbed650df",
+      "bytes": 3414
+    },
+    {
+      "artifact": "TEMP_ARTIFACTS/owned-native-r97/stderr.log",
+      "sha256": "043339449358340224cddd2223046b278c2274dcc380e28e3934f16ab15fb62f",
+      "bytes": 298
+    },
+    {
+      "artifact": "TEMP_ARTIFACTS/native-final-result.json",
+      "sha256": "6a89599b397b417992a91b18cc765228bd1ca2d920d01baafb22296184331c09",
+      "bytes": 1855
+    },
+    {
+      "artifact": "TEMP_ARTIFACTS/native-final-launch.json",
+      "sha256": "33a4ca65df9a3f7f138ecb0f5c0991305856403415b6a43b2277d933cc87bf97",
+      "bytes": 189200
+    },
+    {
+      "artifact": "TEMP_ARTIFACTS/native-final-full-output.log",
+      "sha256": "11665716de4e793fb13921f5c1cfed304e4dd99c570cc7ddfedefedaa8a66574",
+      "bytes": 137795
+    },
+    {
+      "artifact": "TEMP_ARTIFACTS/owned-native-final/host-result.json",
+      "sha256": "501727b8e12901770cf5b7370e2ffa359a7e49ab481787a3e0c632bdbaa174e9",
+      "bytes": 1240
+    },
+    {
+      "artifact": "TEMP_ARTIFACTS/owned-native-final/stdout.log",
+      "sha256": "5225a752af71df406f5dfb60efa8bfeec84df6fea50b67cf7003891eb43f1834",
+      "bytes": 915
+    },
+    {
+      "artifact": "TEMP_ARTIFACTS/owned-native-final/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "artifact": "q60/final-current400-200-sensitivity-r2.json",
+      "sha256": "f6e46a60a26cd7b7dfb10dc7297381e1e661aedced724778439784767f57617f",
+      "bytes": 71967
+    },
+    {
+      "artifact": "q60/e06-400-independent-assessment-r97-r1.json",
+      "sha256": "744d1bd932ebbd2477ffe16866a72f094c45c4304ba72ae6fc5bab206431c9f6",
+      "bytes": 6574
+    },
+    {
+      "artifact": "q60/assess-e06-400-r97-r1.py",
+      "sha256": "02b5297ecd725a6b2b69cf6b3cc9ec40b39373b9aa6f065a88cb71dcd9bcd30f",
+      "bytes": 6984
+    },
+    {
+      "artifact": "q60/final-current400-200-sensitivity-reader-r2/compare-pair.py",
+      "sha256": "385d5dc86d20a8abed8513eac61fedd018edc73e88d6b71434e840157de3e1e7",
+      "bytes": 22620
+    },
+    {
+      "artifact": "q60/final-current400-200-sensitivity-reader-r2/declarations-r1.json",
+      "sha256": "105b5f4d122b7d3cf27c1ca5734156fefe4d6098bbbb7229dbc478be31f6fcb4",
+      "bytes": 195290
+    },
+    {
+      "artifact": "q60/final-current400-200-sensitivity-reader-r2/pair-criteria-r1.json",
+      "sha256": "fce9d3be318ff1c5f534976e3b641917d90d48f7f1616dffeed99b3d738d422e",
+      "bytes": 6280
+    },
+    {
+      "artifact": "q60/final-current400-200-sensitivity-reader-r2/prepared-inputs.json",
+      "sha256": "9b04afcfa19633d0e095788b642cd8cf88fd503dfac5db270331e095d2b8798e",
+      "bytes": 359147
+    },
+    {
+      "artifact": "q60/final-current-fine200-inputs-r2.json",
+      "sha256": "efff004f310a5892b87dcb2837f7f18049d6051485d6619e952db413219c5057",
+      "bytes": 173926
+    },
+    {
+      "artifact": "q60/final-current-fine200-rebind-r2.json",
+      "sha256": "c89b8675540bc496aba803c3c0f9e216f33e6516d37081354d64b924fb4a3342",
+      "bytes": 7877
+    },
+    {
+      "artifact": "q60/native-final.ps1",
+      "sha256": "a034c9a60fcd6448f8793c7bb1132dc11bdfd4abc9ab547fa3448d07d0e2a5a7",
+      "bytes": 1118
+    },
+    {
+      "artifact": "q60/final-current-fine200-r2/verify-cadence.ps1",
+      "sha256": "b25b2c24be92abfb7cb4cd9cfa8dcecb3f2f79960aa0e746af7984d6928e0bbc",
+      "bytes": 73936
+    },
+    {
+      "artifact": "q60/current400-200-sensitivity-reader-r1/e06-physical-half-drift-bound.json",
+      "sha256": "cac65083ca59f20c007d521c6c9318154582aef84f2d31ba7d16013e42a8fa66",
+      "bytes": 4055
+    }
+  ],
+  "immutableHistoricalArtifacts": [
+    {
+      "artifact": "q60/cadence400-qualified-evidence-r1.json",
+      "sha256": "383eefd324ca7e7b9755384008c479bd3012a615fbad784b07f9445fc7b356a7",
+      "bytes": 26961
+    },
+    {
+      "artifact": "q60/sensor-final-fidelity-evidence-r1.json",
+      "sha256": "74e7748c3f98517c967cbad5d96c210a477ec77dc0f903c010a4479f369903d0",
+      "bytes": 50040
+    },
+    {
+      "artifact": "q60/e06-400-independent-assessment-r1.json",
+      "sha256": "e76521dfd99201a88167f6813dc9c13c742540b8a99900888dd0cf380b0e9e5e",
+      "bytes": 4366
+    },
+    {
+      "artifact": "q60/e06-400-independent-assessment-r93-r1.json",
+      "sha256": "04842d4763354d64d68c02c011e9ad64c6f90af8642300bbe1a2c70f52af3903",
+      "bytes": 4418
+    },
+    {
+      "artifact": "q60/final-current-fine200-inputs-r1.json",
+      "sha256": "4b4e0e49c83e2afe546205c4b30a8355a1f12575350c07aa95a07f0ffcfc6f29",
+      "bytes": 173338
+    },
+    {
+      "artifact": "q60/native-final-pre-rebind-r1.ps1",
+      "sha256": "a70b433d9d9454728c0d53d2c74f7a1b17e1f186f9d3fcd2ebd52c1681377f5b",
+      "bytes": 1118
+    }
+  ],
+  "limitations": [
+    "E06 aggregate half-window bound concerns fixed-dt right-endpoint numerical quadrature; unseen continuous waveforms and exact last-bit clock clipping are outside that proof.",
+    "R97 elapsed time covers its full failing batch. Fine elapsed time covers the isolated fine adapter. Native work counts do not establish browser speedup or generation deadline reliability.",
+    "The selected native fixtures do not exercise Task41 installed UI restoration or normal player lifecycle. Exact unconsumed source changes are scoped to these fixtures.",
+    "This packet does not claim Q60 acceptance, general converter nominal qualification, final player/cohort qualification or publication."
+  ],
+  "gateRunsHere": 0,
+  "comparisonReaderRunsHere": 0,
+  "repositoryWrites": false,
+  "acceptanceClaimed": false,
+  "publicationClaimed": false
+}

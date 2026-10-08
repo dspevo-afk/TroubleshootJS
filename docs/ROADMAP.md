@@ -7,13 +7,20 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **E06 published; Q60 checkpoint IN PROGRESS**
-U06/U07/E05/E06 are published. Q60 native geometry, 40/55/60 context capture,
-bounded service and final GWT checks pass. The real 40-part visible repair/retest
-passes after fixing stale discharge controls. The complete frozen browser cohort
-fails four of six deadlines, and ordinary Q30 seed10014 regresses against its
-published pass. This local checkpoint remains unaccepted and unpushed; normal
-RB56 admission, HARD and normal RB56 save/load stay held. No unchanged corpus rerun.
+**Current task:** **E06 published; Q60 IN PROGRESS**
+U06/U07/E05/E06 are published. Current source0A native132/build25/compiled87
+and all236 original400/200us raw comparisons pass. Unprofiled normal55
+compiled88 still fails the unchanged90s wall limit:520 work, four complete
+flows and a partial fifth; cleanup passes. Current normal Q30 seed10014
+compiled89 passes85.757s observation/92.293s outer; sampled443 is not terminal
+work. Profile90 is closed CAPTURED/qualificationFAIL; its root audit and original
+offline attribution are diagnostic, without paired speed proof. Historical
+DE7/BFD, full-six r7 FAIL2/6 and source85 visible40 UI keep their source scopes.
+Current exact60/two-channel visible/session and actual modest-machine proof
+remain outstanding. Q60 remains unaccepted; normal RB56/HARD/save-load stay held.
+This feature-branch checkpoint is not release acceptance. Native135 healthy55 census passes; unit specialization is NO_GO from
+operation counts, with source unchanged and no speed/admission claim.
+Original limits, eight files and historical Q30 risks remain preserved.
 [Q60 evidence](task-evidence/Q60/README.md), [current checkpoint](CODEX_TASK_REPORT.md).
 
 **Historical menu checkpoint:** **Q30 private menu PASS; acceptance pending; normal play disabled**
@@ -2989,7 +2996,7 @@ evidence; they do not replace the original acceptance target or full-cohort gate
 
 ### Q60 · Advanced 40-60-part appliance/control-board qualification
 
-**Status:** IN PROGRESS, 2026-10-08; local implementation checkpoint, not accepted or published. E06 base is `7aa0e1932f3c853e7265bf186e98989ada641a51`. Shared 40-60-package graph and complete five-fault provider are implemented. Context capacity, package escapes and medium-placement weighting have measured corrections; all frozen 40/55/60 native captures and geometry pass. Final build-r8 passes all five GWT permutations. Visible-r4 passes the frozen 40-part public-control diagnosis/removal/replacement/retest with the failed original retained, after fixing stale readiness controls. The complete six-case compiled cohort remains FAIL (two pass, four unchanged 90-second deadlines). Current ordinary Q30 seed10014 fails despite its historical 75.535-second pass; control10387 does not clear that regression. Missing 60-part player-flow, modest-host and long-session evidence remain pending. All failures and historical Q30 limits are preserved. Normal RB56 admission, public HARD and normal RB56 save/load remain held for Q60 and fresh U05/REL-B qualification. [Evidence](task-evidence/Q60/README.md).
+**Status:** IN PROGRESS, 2026-10-08; unaccepted feature-branch checkpoint. This is not release acceptance. Published E06 base is `7aa0e1932f3c853e7265bf186e98989ada641a51`. Current source0A native132/build25/compiled87 and all236 original400/200us raw comparisons pass; whole raw/criteria/cleanup receipts are exact129/130 and126/127 with zero exclusions. Normal55 compiled88 FAILS the original90s wall limit:97.105s outer/91.4795234s case,90398ms application/520 work/max1958ms; five replay installs, four completed flows and a partial fifth, cleanup PASS and publication false. Current normal Q30 seed10014 compiled89 PASS85.7567492s observation/92.293s outer under original90s/640/5s; sampled443 is not exact terminal cost and runtime package census is not exposed. Profile90 is closed CAPTURED/qualificationFAIL97.273s outer,90029ms/448 work/max2316ms; original offline readers and root closure/pin audit pass, without independent profile90 review or paired speed proof. Historical DE7/BFD, full-six r7 FAIL2/6 and source85 visible40 r8 PASS307.383s/three checkpoints/four screenshots retain their original source scopes. Later full-six drafts are unrun. Current exact60/two-channel visible/session and actual modest-machine evidence remain outstanding; Ryzen7700 is the reference desktop. Normal RB56/HARD/normal saves remain held for Q60 and fresh U05/REL-B. Courtyard grids remain unintegrated and not selected; native135 source-neutral healthy55 census PASS32.677s retains exact121/131 raw/criteria/cleanup; unit specialization is NO_GO from counted dispatch cost, without a speed/admission claim. Original limits, failed cases, eight original files and historical Q30 risks remain preserved. [Evidence](task-evidence/Q60/README.md).
 
 **Hard prerequisites:** [Q30](#m-q30), [E05](#m-e05), [E06](#m-e06), [U03](#m-u03), [U07](#m-u07), [P09](#m-p09), [D01](#m-d01)
 

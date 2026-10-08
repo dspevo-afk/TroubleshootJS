@@ -1,0 +1,42 @@
+{
+  "status": "TASK_ONLY_DRAFT_READY_FOR_ROOT_REVIEW",
+  "replacementDestination": "docs/CODEX_TASK_REPORT.md current checkpoint only; retain earlier checkpoint under historical heading",
+  "proposedEvidenceDestination": "docs/task-evidence/Q60/current400-checkpoint-full-six-packet-r1/",
+  "staleCurrentFrontmatter": [
+    {
+      "path": "docs/CODEX_TASK_REPORT.md",
+      "beforeSha256": "fd28c526faaac44d93d9f994f9ca2a4744d2ed6df393eb8995fd16dda7bacf44",
+      "finding": "Top checkpoint still says reference42 and final wire-array/GWT/A07 checks pending."
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "beforeSha256": "799e236aaba4cbd09d4e3cd341ff8ba64539060507cd46584b6ad3bbcb39ecb0",
+      "finding": "Current-task block still says reference42 rejects and current build/A07 are pending."
+    },
+    {
+      "path": "docs/task-evidence/Q60/README.md",
+      "beforeSha256": "64f2ae6724b2844d8592e2c048c4e6f872d86d30dac4dff15f4a440e92dec7f6",
+      "finding": "Current continuation still says reference42 rejects and full cohort pending; historical entries retain original source scope."
+    }
+  ],
+  "rootNote": "Synchronize current roadmap/index frontmatter only. Keep r5 evidence pre-unroll source-bound. Update current candidate pending statement only after actual new gates close; preserve all earlier failures.",
+  "liveDeltaFromPreUnroll1222": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "beforeSha256": "ef7cbbe4b5f892a7057306760da388a4688cfaaef2305ff7d09bc332b000aa21",
+      "currentSha256": "a5f3fa34408865badbe3bcef05eb9fa989841bc3ae17c1722582b0dc3231af91"
+    }
+  ],
+  "repositoryWrites": 0,
+  "gateRuns": 0,
+  "currentDraftClosedGates": [
+    "build-r14 PASS92.482s",
+    "native-r104 PASS37.753s",
+    "compiled-r46 PASS7.146s"
+  ],
+  "pendingAtDraft": [
+    "compiled-r50 normal Q30",
+    "fixed full-six r6"
+  ],
+  "stablePhaseControllerSha256": "4c5e57af2c0400e1d4731f207c20a29d741a92d3d857140842bb7302335fbb60"
+}

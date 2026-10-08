@@ -1,0 +1,5 @@
+Q60_NATIVE_INVENTORY {"cycle":1,"parts":96,"installed":60,"loose":36,"terminals":215,"activeGraphElements":449,"activePartBacking":166,"inactivePartBacking":0,"history":38,"waveformCapacity":32,"subscriptions":0,"playerInputEvidence":false}
+RB56_FAULT_CASE {"packages":60,"fault":"RENAC_HIGH_RESISTANCE","acceptedTime":0.012199999999999954,"originalOhms":1.0E9,"replacementOhms":10000.0,"keeperFaultApplied":true,"resetCompleted":true}
+RB56_FAULT_CLEANUP {"packages":60,"fault":"RENAC_HIGH_RESISTANCE","elapsedSeconds":1.2710143,"candidateDisposed":true,"rawGraphRestored":true,"clean":true}
+Q60_NATIVE_CYCLE {"cycle":1,"required":1,"status":"PASS","elapsedSeconds":1.3636433}
+PASS: RB56 fault-population contracts assertions=52428 nativeOwnerServiceCycles=1 packages=60 retainedParts=96 acceptedServiceSteps=44 scope=Q60_NATIVE_OWNER_SERVICE_INVENTORY_ONLY normalSessionLoad=false fullProductionD01=false playerInputEvidence=false browserHeapEvidence=false

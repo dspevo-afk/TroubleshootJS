@@ -22,12 +22,12 @@ public final class Rb56AssemblyContractTest {
         RoutineConvergenceStream routine = new RoutineConvergenceStream(original);
         try {
             System.setErr(routine);
-            check(DT == .000200 && DT == E06ConverterContract.MAX_AVERAGED_STEP_SECONDS,
-                "raw assembly uses the declared RB56 200us averaged-model recipe cap");
+            check(DT == .000400 && DT == E06ConverterContract.MAX_AVERAGED_STEP_SECONDS,
+                "raw assembly uses the declared RB56 400us averaged-model recipe cap");
             System.out.println("RB56_ASSEMBLY_CRITERIA {\"sensorLowCommandV\":0,\"sensorHighCommandV\":5,\"maximumStepSeconds\":" + number(DT) + ",\"minimumStepSeconds\":0.00000000005,\"adaptive\":true,\"startupSeconds\":0.4,\"conditionSeconds\":0.03," +
                 "\"sampleSeconds\":0.01,\"mainOnlyOffSeconds\":2.5,\"allOffSeconds\":3,\"rail12Mean\":[10.64,11.76]," +
                 "\"rail12RippleMax\":0.05,\"rail12DriftMax\":0.02,\"rail5\":[4.75,5.25],\"contactOn\":[10.8,12.6]," +
-                "\"contactOffMax\":0.05,\"residualMax\":0.25,\"optoGminMax\":1.0001e-12,\"recipe\":\"RB56_ADAPTIVE_200US_MIN_50PS\",\"maximumStepOwner\":\"Rb30Behavior.RB56_MAX_STEP_SECONDS\",\"scope\":\"ACTUAL_ASSEMBLED_GRAPH_ONLY\"}");
+                "\"contactOffMax\":0.05,\"residualMax\":0.25,\"optoGminMax\":1.0001e-12,\"recipe\":\"RB56_ADAPTIVE_400US_MIN_50PS\",\"maximumStepOwner\":\"Rb30Behavior.RB56_MAX_STEP_SECONDS\",\"scope\":\"ACTUAL_ASSEMBLED_GRAPH_ONLY\"}");
             runCase(Rb56Plan.configured(17, 1, Rb56Plan.ReferenceArrangement.SHARED_DIRECT, true, false, 1, 0, false), 40, false);
             runCase(Rb56Plan.reference(77), 55, true);
             runCase(Rb56Plan.configured(42, 2, Rb56Plan.ReferenceArrangement.SHARED_HYSTERETIC, true, true, 3, 3, true), 60, false);

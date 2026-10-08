@@ -312,6 +312,10 @@ final class PcbNetRouter {
         }
         Router(PcbBoardLayout layout,TroubleshootBoard board,Rectangle outline,int attempt,
                 SeededPcbLayoutGenerator.AttemptObserver observer,PcbCopperLayer selectedLayer) {
+            this(layout,board,outline,attempt,observer,selectedLayer,0);
+        }
+        Router(PcbBoardLayout layout,TroubleshootBoard board,Rectangle outline,int attempt,
+                SeededPcbLayoutGenerator.AttemptObserver observer,PcbCopperLayer selectedLayer,int escapeOutletLand) {
             this.layout = layout;
             work=new PcbRoutingWork(PcbRoutingWork.Limits.DEFAULT,board.getNetIds().size());
             this.board = board;
@@ -338,6 +342,15 @@ final class PcbNetRouter {
                     throw new IllegalArgumentException("Requested routing layer has no pad land: "+pad.getPadId());
                 padNets[index] = board.getPad(pad.getPadId()).getNetId();
                 int length = ((pad.getEscapeLength() + GRID - 1) / GRID) * GRID;
+                if(escapeOutletLand>0 && pad.getEscapeLength()>0 && pad.getMountingSide()==layer.getFace()) {
+                    // A P07 via land must clear the owning courtyard before earlier copper can use this outlet.
+                    Rectangle owner=layout.getComponent(board.getPad(pad.getPadId()).getComponentId()).getRoutingCourtyard();
+                    int dx=pad.getEscapeDx(),dy=pad.getEscapeDy();
+                    int edge=dx!=0?(dx>0?owner.x+owner.width:owner.x):(dy>0?owner.y+owner.height:owner.y);
+                    int distance=dx!=0?(edge-pad.getX())*dx:(edge-pad.getY())*dy;
+                    int outlet=distance+escapeOutletLand+1; // Via contact with the courtyard boundary is forbidden.
+                    length=Math.max(length,((outlet+GRID-1)/GRID)*GRID);
+                }
                 int ex = pad.getX() + pad.getEscapeDx() * length;
                 int ey = pad.getY() + pad.getEscapeDy() * length;
                 int margin = PcbTraceRules.MIN_CENTERLINE_CLEARANCE - 1;
@@ -355,18 +368,19 @@ final class PcbNetRouter {
                 if(components[index].getMountingSide()==layer.getFace()) emptyComponentFace=false;
                 collisionCourtyards[index] = traceCollisionEnvelope(courtyards[index]);
             }
-            if(emptyComponentFace) {
-                horizontalReservation=new String[gridWidth][gridHeight];verticalReservation=new String[gridWidth][gridHeight];padAt=new String[gridWidth][gridHeight];
-                for(int i=0;i<pads.length;i++) {
-                    Rectangle r=escapeReservations[i];
-                    int px=gridX(pads[i].getX()),py=gridY(pads[i].getY());
-                    if(px>=0&&py>=0&&px<gridWidth&&py<gridHeight)padAt[px][py]=pads[i].getPadId();
-                    int x0=Math.max(0,(r.x-minX)/GRID-1),x1=Math.min(gridWidth-1,(r.x+r.width-minX)/GRID+1);
-                    int y0=Math.max(0,(r.y-minY)/GRID-1),y1=Math.min(gridHeight-1,(r.y+r.height-minY)/GRID+1);
-                    for(int x=x0;x<=x1;x++) for(int y=y0;y<=y1;y++) {
-                        if(r.intersects(new Rectangle(minX+x*GRID,minY+y*GRID,GRID,1))) reserve(horizontalReservation,x,y,padNets[i]);
-                        if(r.intersects(new Rectangle(minX+x*GRID,minY+y*GRID,1,GRID))) reserve(verticalReservation,x,y,padNets[i]);
-                    }
+            // The private placement snapshot is fixed for this routing attempt.
+            // Reuse its exact escape-step reservations on either component face.
+            horizontalReservation=new String[gridWidth][gridHeight];verticalReservation=new String[gridWidth][gridHeight];
+            if(emptyComponentFace) padAt=new String[gridWidth][gridHeight];
+            for(int i=0;i<pads.length;i++) {
+                Rectangle r=escapeReservations[i];
+                int px=gridX(pads[i].getX()),py=gridY(pads[i].getY());
+                if(emptyComponentFace && px>=0&&py>=0&&px<gridWidth&&py<gridHeight)padAt[px][py]=pads[i].getPadId();
+                int x0=Math.max(0,(r.x-minX)/GRID-1),x1=Math.min(gridWidth-1,(r.x+r.width-minX)/GRID+1);
+                int y0=Math.max(0,(r.y-minY)/GRID-1),y1=Math.min(gridHeight-1,(r.y+r.height-minY)/GRID+1);
+                for(int x=x0;x<=x1;x++) for(int y=y0;y<=y1;y++) {
+                    if(r.intersects(new Rectangle(minX+x*GRID,minY+y*GRID,GRID,1))) reserve(horizontalReservation,x,y,padNets[i]);
+                    if(r.intersects(new Rectangle(minX+x*GRID,minY+y*GRID,1,GRID))) reserve(verticalReservation,x,y,padNets[i]);
                 }
             }
         }
@@ -426,7 +440,7 @@ final class PcbNetRouter {
                     int nextX = current.x + directionX[direction];
                     int nextY = current.y + directionY[direction];
                     if (nextX < 0 || nextY < 0 || nextX >= gridWidth || nextY >= gridHeight ||
-                            !isLegalMove(current, nextX, nextY, direction, startX, startY,
+                            !isLegalMove(current.x, current.y, nextX, nextY, direction, startX, startY,
                                 endX, endY, startPad, endPad) ||
                             !canTraverse(current.x, current.y, nextX, nextY, startPad, endPad,netId) ||
                             !canOccupy(nextX, nextY, netId, startPad, endPad))
@@ -519,10 +533,10 @@ final class PcbNetRouter {
             return distance;
         }
 
-        private boolean isLegalMove(SearchNode current, int nextX, int nextY, int direction,
+        private boolean isLegalMove(int fromX, int fromY, int nextX, int nextY, int direction,
                 int startX, int startY, int endX, int endY, PcbPadPlacement startPad,
                 PcbPadPlacement endPad) {
-            int startDx=current.x-startX,startDy=current.y-startY;
+            int startDx=fromX-startX,startDy=fromY-startY;
             int startDistance=(startDx*startPad.getEscapeDx()+startDy*startPad.getEscapeDy())*GRID;
             if (startPad.getMountingSide()==layer.getFace() && startPad.getEscapeLength() > 0 && startDistance>=0 && startDistance<startPad.getEscapeLength() &&
                     startDx*startPad.getEscapeDy()==startDy*startPad.getEscapeDx() &&
@@ -592,13 +606,20 @@ final class PcbNetRouter {
             int endPhysicalY = minY + toY * GRID;
             String startComponentId = board.getPad(startPad.getPadId()).getComponentId();
             String endComponentId = endPad==null?null:board.getPad(endPad.getPadId()).getComponentId();
-            Rectangle move = new Rectangle(Math.min(startPhysicalX,endPhysicalX),Math.min(startPhysicalY,endPhysicalY),
-                Math.max(1,Math.abs(startPhysicalX-endPhysicalX)),Math.max(1,Math.abs(startPhysicalY-endPhysicalY)));
-            for(int index = 0; index < pads.length; index++) {
-                if(net.equals(padNets[index])) continue;
-                // Reserve every terminal's escape before routing any net. An early rail
-                // cannot occupy the only way out of a later signal's courtyard.
-                if(escapeReservations[index].intersects(move)) return false;
+            if(net!=null && Math.abs(fromX-toX)+Math.abs(fromY-toY)==1) {
+                String reserved=fromY==toY?horizontalReservation[Math.min(fromX,toX)][fromY]:verticalReservation[fromX][Math.min(fromY,toY)];
+                // Stored board net IDs are nonempty; the empty string means mixed owners.
+                if(reserved!=null && (reserved.length()==0 || !reserved.equals(net))) return false;
+            } else {
+                // Retain the exact scan for nonadjacent, diagonal or zero-length calls.
+                Rectangle move = new Rectangle(Math.min(startPhysicalX,endPhysicalX),Math.min(startPhysicalY,endPhysicalY),
+                    Math.max(1,Math.abs(startPhysicalX-endPhysicalX)),Math.max(1,Math.abs(startPhysicalY-endPhysicalY)));
+                for(int index = 0; index < pads.length; index++) {
+                    if(net.equals(padNets[index])) continue;
+                    // Reserve every terminal's escape before routing any net. An early rail
+                    // cannot occupy the only way out of a later signal's courtyard.
+                    if(escapeReservations[index].intersects(move)) return false;
+                }
             }
             Rectangle stroke = traceStroke(startPhysicalX, startPhysicalY, endPhysicalX, endPhysicalY);
             for (int index = 0; index < components.length; index++) {
@@ -779,8 +800,7 @@ final class PcbNetRouter {
             if(x<0 || y<0 || nx<0 || ny<0 || x>=gridWidth || nx>=gridWidth ||
                     y>=gridHeight || ny>=gridHeight) return false;
             int direction=nx>x?1:nx<x?3:ny>y?2:0;
-            SearchNode current=new SearchNode(x,y,4,0,0,0);
-            return isLegalMove(current,nx,ny,direction,gridX(start.getX()),gridY(start.getY()),
+            return isLegalMove(x,y,nx,ny,direction,gridX(start.getX()),gridY(start.getY()),
                 end==null?-1:gridX(end.getX()),end==null?-1:gridY(end.getY()),start,end) &&
                 canTraverse(x,y,nx,ny,start,end,net) && canOccupy(nx,ny,net,start,end);
         }

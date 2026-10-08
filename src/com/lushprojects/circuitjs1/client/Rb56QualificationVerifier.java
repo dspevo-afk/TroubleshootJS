@@ -7,6 +7,7 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import java.util.Vector;
 
@@ -17,6 +18,7 @@ import java.util.Vector;
  */
 final class Rb56QualificationVerifier {
     static final int BENCH_HOLD_MILLIS = 120000;
+    static final int SESSION_BENCH_HOLD_MILLIS = 360000;
     static final String CANARY = "rb56-explicit-after-publish-canary";
     private static Runner active;
 
@@ -82,6 +84,7 @@ final class Rb56QualificationVerifier {
         final GeneratedChallengeController predecessorController;
         final Vector<CircuitElm> predecessorGraph;
         final boolean originalDebug, originalVerifierRunning, forced, keepBench;
+        final int benchHoldMillis;
         final JSONObject report = new JSONObject();
         final Timer advanceTimer = new Timer() { public void run() { advance(); } };
         final Timer holdTimer = new Timer() { public void run() { endBench(); } };
@@ -100,6 +103,9 @@ final class Rb56QualificationVerifier {
         Runner(CirSim sim, long seed, Task41SimulationSnapshot snapshot, boolean forced, boolean keepBench) {
             this.sim = sim; this.seed = seed; this.snapshot = snapshot;
             this.forced = forced; this.keepBench = keepBench;
+            // The explicit debug-only route may retain this same owner for a bounded session.
+            benchHoldMillis = keepBench && "true".equals(
+                Window.Location.getParameter("tsjRb56Session")) ? SESSION_BENCH_HOLD_MILLIS : BENCH_HOLD_MILLIS;
             coordinator = sim.generationCoordinator;
             previousJob = coordinator.getJob();
             predecessor = sim.getGeneratedBoardInstance();
@@ -283,9 +289,9 @@ final class Rb56QualificationVerifier {
             retained = true;
             sim.refreshChallengeInteractionState();
             sim.updateCircuit();
-            put(report, "holdMillis", BENCH_HOLD_MILLIS); put(report, "normalLabels", !sim.troubleshootDebug);
+            put(report, "holdMillis", benchHoldMillis); put(report, "normalLabels", !sim.troubleshootDebug);
             publish("HOLD", "HOLD:rb56");
-            holdTimer.schedule(BENCH_HOLD_MILLIS);
+            holdTimer.schedule(benchHoldMillis);
         }
 
         void endBench() {

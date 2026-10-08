@@ -5091,6 +5091,43 @@ This corrects the measured old-bound failure; final compiled proof is pending.
 
 ## Q60 implemented RB56 ownership and qualification boundary
 
+`CirSim` retains one authoritative typed `WireInfo[]`. A local vector still
+builds the original sorted dependency closure; the array is published only after
+validation and executor stamping. Analysis invalidation, private graph switching
+and retirement clear it. Task41 restores exact array/content identity and rebinds
+the executor before synchronous UI readiness can observe the restored graph;
+the final restore boundary remains. Actual compiled failure/recovery and D01
+checks verify this path.
+
+Reduced nonlinear matrix rows reuse their owned allocations; malformed or direct
+alias targets retain the primitive copy fallback. Native uses `System.arraycopy`;
+the script branch copies four ascending values per loop and then the exact tail.
+Independent value/metadata/permuted-row/Crout oracles pass in native and compiled
+contexts. This preserves arithmetic and does not establish deadline clearance.
+
+The owned LU path keeps bounded baseline/current eligibility with its graph.
+Distinct finite rows of size at most128 and input magnitude at most1e100 use
+the proved finite trailing path; reciprocal/scaling guards and checked alias/
+unsafe fallback remain. The current helper gathers up to8 immutable ascending
+upper entries into scalars, unrolls4 rows and handles exact4/1-3 remainders
+inline. It adds no calls, numeric buffer, cache or backend and preserves each cell's
+multiply/subtract/store sequence. Lower scaling skips same-reference stores before
+first underflow and preserves stable suffix compaction/null cleanup. Accumulated
+stamps retain their value locally, store before finite validation and can revoke
+eligibility; baseline restoration and Task41 preserve proof flags. Native132/
+compiled87 original Crout, failure-prefix and cleanup contracts pass. Actual
+all-five emission grows974 to2373 bytes/15 to26 locals and preserves21 other
+mapped guard/owner/snapshot/oracle bodies. These local changes and historical
+healthy-only work economics do not establish CPU speedup or admission clearance.
+
+P07 reserves the first grid via landing clear of the owning courtyard, including
+the existing margin, before other nets route across that outlet. Ordinary routing
+keeps its zero-via-landing constructor. Layout16 and public epoch5 distinguish the
+geometry interpretation; prior public epoch4 rejects before construction.
+
+Only explicit private `tsjRb56Session=true` bench qualification selects360s HOLD;
+default120s, end/timeout cleanup and normal admission rules remain unchanged.
+
 The Q60 implementation remains UNQUALIFIED and normal RB56 publication is
 disabled. `Rb56Plan` owns one immutable, versioned 40-60-package inventory,
 terminal/net declarations, topology and independent named seed streams.
@@ -5117,6 +5154,13 @@ intent checks this before its permit; scoped atomic writes reuse that exact
 authorization, while unscoped disconnects check before their first write.
 Acquire/reconnect and existing charged-capacitor service semantics are unchanged.
 
+Each channel's existing RPIN is a 100 kOhm SENSE-to-return bias. The shared
+hysteretic variant uses 220 kOhm command-to-SENSE feedback, so the actual 1 Gohm
+RSA fault releases a previously HIGH decision rather than latching near its
+threshold. Both physical package identities remain unchanged; terminal/net/value
+canonical data records the wiring and value correction. Native direct and
+prior-HIGH hysteretic fault profiles pass their unchanged symptom oracles.
+
 One fault declaration supplies four actual 1 Gohm resistor-value faults
 (RENAC, REN, RSA, RDA) and the active single/second-channel relay coil-open fault.
 Every candidate retains all five. The selected effect binds the exact original
@@ -5127,10 +5171,12 @@ with the same full fault population and sealed admitted layout.
 The existing `Rb30Behavior` owns a finite RB56 recipe: fresh LOW commands,
 eight 50 ms startup units, every two/four sensor combination, 30 ms settling,
 and prior-input restoration for healthy/faulted/repair profiles. Its temporal
-dependency records this recipe and its current candidate adaptive CircuitJS
-200 us maximum/50 ps minimum for RB56. The prior accepted E06 envelope was 50 us;
-the candidate has native full-matrix/sensitivity and seed77 compiled evidence.
-Whole-family/player qualification remains pending. Q30 retains its 5 us maximum. It binds
+dependency records this recipe and its bounded adaptive CircuitJS
+400 us maximum/50 ps minimum for RB56. E06's full24 matrix and independent
+400/200 us assembled-graph sensitivity qualify the converter cadence; final
+production temporal/model/restart checks and five-permutation GWT build pass.
+Whole-family/player qualification remains pending; source-bound historical
+50/100/200 us evidence retains its original scope. Q30 retains its 5 us maximum. It binds
 current parts, external-load harnesses and the accepted final 10 ms windows.
 Window means use actual step duration and 5 ms halves; 12 V mean/ripple/drift,
 5 V extrema and actual load extrema decide function. Samples resolve current
@@ -5149,7 +5195,7 @@ constitute the full production serial D01 proof or player qualification.
 `Rb56QualificationVerifier`, behind the explicit developer route, is implemented to exercise
 the same cold staged coordinator, full five-hypothesis production D01 receipt,
 repair/retest and owner cleanup with the normal catalog held disabled. Its
-current200 us seed77 positive/forced browser attempts complete all five hypotheses
+historical200 us seed77 positive/forced browser attempts complete all five hypotheses
 and six stages in59.334/60.015 s within unchanged90s/640/5s limits. Full receipt
 hashing and application/host cleanup pass. Earlier50/100 us deadline and receipt
 failures remain preserved. Those compiled results predate the complete-context
@@ -5157,9 +5203,36 @@ capacity and package escape corrections. The TO220/E04 component-face exits
 now clear their own courtyards; their larger placement envelopes affect layout.
 Medium placement now uses its degree-normalized objective weights when
 choosing connected targets; the historical local-refinement overload is unchanged.
-All frozen native 40/55/60 captures and shared Q30 connector-locality checks pass.
-The complete six-case compiled cohort fails four unchanged deadlines; ordinary
-Q30 seed10014 also fails its former accepted deadline. Q60 is not accepted.
+Current native132 passes11 affected suites, including fixed40/55/60 physical
+canaries, Q30 temporal work, Task41/D01 restoration and original A07 LU contracts.
+Build25 passes all5 GWT permutations; compiled87 passes306,503 pure/83 runtime
+assertions,23 runtime cases,59 model assertions/21 rows and16 scale rows, with
+actual Task41 injected failure/recovery and a scoped early-terminal canary.
+Raw native133/134 retain all236 original400/200us comparisons and whole
+raw/criteria/cleanup receipts exact129/130 and126/127 with zero exclusions.
+This proves three fixed raw graphs, not a new full24 or player admission.
+
+Unprofiled normal55 compiled88 still times out in HYPOTHESES at90398ms/520
+work units:five replay installs, four completed repair/retest/restoration flows
+and a partial fifth; cleanup passes and publication remains false. Current
+normal Q30 seed10014 compiled89 passes85.7567492s observation/92.293s outer
+under original90s/640/5s with exact replay `tsj-alpha/5/MEDIUM/RB30_CONTROL/10014`.
+Frozen-plan40 packages/two channels and sampled443 units do not supply runtime
+census or exact terminal work. Profile90 is closed CAPTURED/qualificationFAIL
+at90029ms/448 work/max2316ms; original offline attribution and root closure/pin
+audit pass. Its overlapping sample costs are not paired speed proof or an
+independent profile90 review. All current bindings and cleanup pass. Historical
+DE7/BFD, native131 panel rejection, full-six r7 FAIL2/6 and source85 visible40
+r8 PASS307.383s/three checkpoints/four inspected images retain their own sources.
+The earlier Reset correction preserves its synchronous current-owner handler
+and settled-runtime guard. Native98's100-owner/96-inventory scope stays separate.
+Current exact60/two-channel visible/session and actual modest-machine evidence
+remain outstanding. Courtyard grids are unintegrated and not selected; native135
+source-neutral healthy55 census PASS32.677s retains exact121/131 raw/criteria/
+cleanup; unit specialization is NO_GO from operation counts, with source0A
+unchanged and no speed/admission claim. Q60 remains unaccepted;
+normal RB56/HARD/save-load remain held. This feature-branch checkpoint is not
+release acceptance.
 
 `PcbWorkbenchController` tracks the last detachment-readiness value used to
 build its controls. The existing same-owner, settled `CirSim` update checks it

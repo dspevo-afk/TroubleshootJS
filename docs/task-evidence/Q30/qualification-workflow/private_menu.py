@@ -97,7 +97,7 @@ def load_warm_rows(path, app, start, count):
             raise ValueError('Warm plan accepted ordinal is outside the frozen four candidates')
         expected = ((int(root_seed) + ordinal * 0x9e3779b97f4a7c15 + (1 << 63)) % (1 << 64)) - (1 << 63)
         if (row.get('order') != index or seed != str(expected)
-                or row.get('expectedReplay') != 'tsj-alpha/4/MEDIUM/RB30_CONTROL/' + seed
+                or row.get('expectedReplay') != 'tsj-alpha/5/MEDIUM/RB30_CONTROL/' + seed
                 or type(row.get('packages')) is not int or not 20 <= row['packages'] <= 40):
             raise ValueError('Warm plan accepted identity is not the frozen canonical candidate')
     return rows[start:start + count]
@@ -500,7 +500,7 @@ try:
                         save('progress.json', result)
                         state, seconds, samples = prepare(family, row)
                         assert state['screen'] == 'TICKET', row
-                        assert state['replay'].startswith('tsj-alpha/4/' + family['profile'] + '/' + family['id'] + '/'), row
+                        assert state['replay'].startswith('tsj-alpha/5/' + family['profile'] + '/' + family['id'] + '/'), row
                         assert state['replay'] not in replays, row
                         replays.add(state['replay'])
                         saved[family['id']] = state['replay']

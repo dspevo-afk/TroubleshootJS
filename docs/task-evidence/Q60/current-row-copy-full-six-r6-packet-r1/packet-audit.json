@@ -1,0 +1,30 @@
+{
+  "protocol": "Q60_CURRENT_ROW_COPY_R6_PACKET_AUDIT_R1",
+  "status": "PASS_OFFLINE_ALLOWLIST_SOURCE_NUMERIC_AND_SANITIZATION_AUDIT",
+  "checks": {
+    "finalAggregateCompleteAndOriginalSixOrder": true,
+    "allRawReportHashesAndCompleteOriginalFieldsMatch": true,
+    "originalQualificationStatusRetained": true,
+    "allGenerationLimitsUnchanged": true,
+    "allSixTask41CleanupPassed": true,
+    "allSevenHostJobsClosedWithNoSurvivors": true,
+    "allCurrent1222ApplicationInputsMatchBuild14": true,
+    "normal50FailNoExactTerminalCountOrAttributedSpeedup": true,
+    "priorEvidenceUntouched": true,
+    "repositoryWrites": 0,
+    "gateLaunches": 0,
+    "publicWrites": 0
+  },
+  "files": [
+    {
+      "file": "current-row-copy-full-six-r6-evidence-r1.json",
+      "bytes": 70069,
+      "sha256": "e0e02f65b3d55cdd75e7a4c666449d9f420dfdd751eb67caf805b5532e8ede7e"
+    },
+    {
+      "file": "README.txt",
+      "bytes": 324,
+      "sha256": "8e3b28b9c7023de433fd0932470a2e3287219cedbb7b9dfe06d4f51886245d48"
+    }
+  ]
+}

@@ -124,7 +124,7 @@ package com.lushprojects.circuitjs1.client;
         	    if (Math.abs(dv) < 1e-6)
         		dv = 1e-6;
         	    exprState.values[i] = volts[i];
-        	    double v = -expr.eval(exprState);
+            double v = v0;
         	    exprState.values[i] = volts[i]-dv;
         	    double v2 = -expr.eval(exprState);
         	    double dx = (v-v2)/dv;

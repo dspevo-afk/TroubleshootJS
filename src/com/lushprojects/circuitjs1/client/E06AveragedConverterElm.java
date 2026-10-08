@@ -10,7 +10,7 @@ final class E06AveragedConverterElm extends CircuitElm {
     // Current-only codec. Increment when this fixed model's interpretation changes.
     static final int DUMP_TYPE = 458;
     static final String DUMP_VERSION = "1", DUMP_KIND = "e06-averaged";
-    private static final double MAX_STEP_SECONDS = .0002;
+    private static final double MAX_STEP_SECONDS = .0004;
     private static final double MAX_NEWTON_DROP_STEP_VOLTS = .5;
     private static final double RESTART_TARGET_STEP_VOLTS = .25;
     private static final double CURRENT_TOLERANCE_AMPS = 1e-8;
@@ -273,7 +273,7 @@ final class E06AveragedConverterElm extends CircuitElm {
     }
     private void requireStep() {
         if (!E06ConverterContract.finite(sim.timeStep) || sim.timeStep <= 0 || sim.timeStep > MAX_STEP_SECONDS)
-            throw new IllegalArgumentException("E06 averaged pilot requires an accepted timestep in (0, 200 us]");
+            throw new IllegalArgumentException("E06 averaged pilot requires an accepted timestep in (0, 400 us]");
     }
     private void requireAcceptedEnvelope() {
         if (!E06ConverterContract.finite(acceptedInputVolts) || !E06ConverterContract.finite(acceptedOutputVolts) ||

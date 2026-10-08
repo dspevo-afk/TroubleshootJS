@@ -378,7 +378,7 @@ public final class Rb56TemporalWorkContractTest {
                 "no subscription or stimulus survives a yielded unit");
         }
         check(sim.maxTimeStep == Rb30Behavior.RB56_MAX_STEP_SECONDS && sim.minTimeStep == 50e-12 && sim.adjustTimeStep,
-            "actual RB56 profile retains candidate adaptive 200 us / 50 ps recipe");
+            "actual RB56 profile retains qualified adaptive 400 us / 50 ps recipe");
     }
 
     /** Real accepted charged-OFF state; no injected currents or additional solver advance. */

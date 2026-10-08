@@ -1,0 +1,59 @@
+{
+  "protocol": "Q60-VISUAL-R6-FINAL-STATIC-REVIEW-1",
+  "status": "STATIC_SCOPE_GUARDS_REVIEWED_ROOT_SYNTAX_AND_FREEZE_PENDING",
+  "inputs": [
+    {
+      "file": "q60-browser/visual-r6.py",
+      "bytes": 42212,
+      "sha256": "2f5ee36b1aaa131aed460cffac969b5743236c51ab2220452105f22d633b29dd"
+    },
+    {
+      "file": "q60-browser/frozen-criteria-r6.json",
+      "bytes": 6389,
+      "sha256": "fe5975e08c6a676175d3b041b98f8ccd0d55c33269da62b825650c907d977a5c"
+    },
+    {
+      "file": "q60/private-session-hold-draft-r1/approved-session-spec-r2.json",
+      "bytes": 12745,
+      "sha256": "bfb9e5fb4ca3e9063d68d4ef910e626dc00c4e34ab31c71a4ea3028d7a89d8a3"
+    }
+  ],
+  "reviewed": {
+    "collectorCap": 23,
+    "diagnosisCap": 19,
+    "exactlyAdditionalScheduledReadings": 4,
+    "perReadingSeconds": 3,
+    "readinessSeconds": 30,
+    "generationJobMs": 90000,
+    "generationWorkUnits": 640,
+    "generationActiveOperationMs": 5000,
+    "oneColdGeneration": true,
+    "semanticHealthyCheckpoints": 3,
+    "extraFaultRestorationCycles": 1,
+    "actualUiInputs": "Existing authorized headed Edge VisibleRun locator clicks/selects; no evaluate, runtime/controller/model reads, injected inputs, new browser framework or repeated generation/customer loops.",
+    "screenshotCap": 5,
+    "minimumActualElapsedAfterHoldSeconds": 300,
+    "privateHoldSeconds": 360,
+    "operationSeconds": 480,
+    "cleanupReserveSeconds": 60,
+    "requiredNativeOuterSeconds": 540,
+    "readingGuards": "volts() refuses collection once23 present; full_flow diagnosis independently≤19 before repair; elapsed_session requires exactly4 extra readings. Original r5max19 and r6draft1 are preserved.",
+    "sessionReadings": [
+      "LOW A",
+      "HIGH A",
+      "B-only LOW A",
+      "B-only HIGH B"
+    ],
+    "sourcesConsumesApprovedSpecR2": true,
+    "syntaxReview": "Manual control/indentation and lexical structure reviewed; no Python AST/py_compile or runtime invocation performed by leaf."
+  },
+  "remaining": [
+    "Root actual Python syntax check, final source/build freeze and compiled-cohort prerequisite.",
+    "Narrow static gap: session_metric explicitly validates finite heap counters, but recorded DOM counters documents/nodes/jsEventListeners lack an explicit availability/finite check despite the r6 criterion. Root informed; one task-driver need() guard is sufficient if accepted. Preserve reviewed r6 bytes before any change.",
+    "Actual one-generation elapsed browser flow and root inspection2-5screens are still unrun.",
+    "Current desktop is Ryzen7700 owner exception; actual modest-host access/evidence remains separate."
+  ],
+  "rootOwnsAllRuntime": true,
+  "gateRun": false,
+  "repositoryEdited": false
+}

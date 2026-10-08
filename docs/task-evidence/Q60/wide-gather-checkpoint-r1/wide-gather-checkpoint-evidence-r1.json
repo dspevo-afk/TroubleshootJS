@@ -1,0 +1,995 @@
+{
+  "schema": 1,
+  "protocol": "Q60_WIDE_GATHER_SOURCE0A_CLOSED_CHECKPOINT_DRAFT_R1",
+  "packetStatus": "FEATURE_BRANCH_CHECKPOINT_EVIDENCE_Q60_NOT_ACCEPTED",
+  "overallQ60Status": "FAIL_UNQUALIFIED_IN_PROGRESS",
+  "preparedUtc": "2026-10-08T20:55:50.761169+00:00",
+  "proposedRepositoryDestination": "docs/task-evidence/Q60/wide-gather-checkpoint-r1/wide-gather-checkpoint-evidence-r1.json",
+  "paths": "Repository-relative source paths; task/ and retained-temp/ paths are logical provenance authorities. No personal absolute paths or PIDs. Referenced complete receipts remain retained; no full raw inventory copied.",
+  "source": {
+    "currentPins": {
+      "src/com/lushprojects/circuitjs1/client/CirSim.java": "0a281ca50b170ec53fa95e4a898a333f6445f38a2fe6dceed6f8286e77df1f1c",
+      "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java": "4794e1e77033c901df72f43c8753533d72b943a87e083d6cc38da7e740b945e3",
+      "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java": "221a820ba04874f36e33f23d43783b7190333a9fcdda25d42df12c1774d9c0df",
+      "tests/contracts/Q30OwnedLuZeroRowContractTest.java": "6fe542faec03ccde8b940ac9fb5bb1ffffa02cc764771bca4aed261400e3d2ac",
+      "src/com/lushprojects/circuitjs1/client/PcbComponentPlacement.java": "3f3225e9652c022cb454a77f7dd62d795b6263e387b7e8e98da24add45a171cc",
+      "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java": "37e6d230fcd6d0c3fd768864251452a51856fcbd9c851fb036a4aa3adc3f7f7a"
+    },
+    "controllerSha256": "446b2bfbe01d7bbab6f361b9387b1c909dd48e7a2b9d5e6ec9ea5487816f1e2d",
+    "method": "CirSim.lu_applyBoundedTrailingUpdates",
+    "change": "One immutable ascending upper gather widens from4 to8; four-row unroll, inline full4 remainder and inline partial1/2/3 remain. No new calls, numeric buffer, cache, backend, model/time-step/cadence/seed/fault/criteria change. Checked general/alias/unsafe path and ownership/finite proof unchanged. Each cell retains its multiply/subtract/store sequence.",
+    "helperOnlyInverseToDE7": true,
+    "other1352NativeAnd1221ApplicationInputsExact": true,
+    "layoutAndReplayIdentityUnchanged": "Layout16/public tsj-alpha/5",
+    "integration": {
+      "path": "task/q60/wide-gather-integration-r1.json",
+      "sha256": "f43c796abc8227171a207e32839c92df30f43354e1991f894d7b1875eb3bbf07"
+    },
+    "candidateManifest": {
+      "path": "task/q60/lu-bounded-upper8-draft-r1/manifest.json",
+      "sha256": "203c4d39a2be3f96004b234b173c4a709b044b75d8a0d32b625dda87164b910a"
+    }
+  },
+  "closedOuterGates": [
+    {
+      "phase": "native-r132",
+      "outerStatus": "PASS",
+      "outerElapsedMs": 54546,
+      "outerRepositoryInputs": 1353,
+      "sourceInputsUnchanged": true,
+      "changedInputs": [],
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "drainsComplete": true,
+      "handlesClosed": true,
+      "launch": {
+        "path": "retained-temp/native-r132-launch.json",
+        "sha256": "c9544a61eb8a2965cbf1e0a3e59daaba584aab4c194ac13b5547e767e6675a68"
+      },
+      "result": {
+        "path": "retained-temp/native-r132-result.json",
+        "sha256": "c573a04040b94ac5ce342b6a2f58fd29bd72979e58f7e767946c85e029147666"
+      },
+      "ownedHost": {
+        "path": "retained-temp/owned-native-r132/host-result.json",
+        "sha256": "2c91bc5cf46ec3df0c5d20685d7db0dede59dda09b6ce43f0d082a9fc853ccdf"
+      }
+    },
+    {
+      "phase": "build-r25",
+      "outerStatus": "PASS",
+      "outerElapsedMs": 88949,
+      "outerRepositoryInputs": 1222,
+      "sourceInputsUnchanged": true,
+      "changedInputs": [],
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "drainsComplete": true,
+      "handlesClosed": true,
+      "launch": {
+        "path": "retained-temp/build-r25-launch.json",
+        "sha256": "4227715e3ae78b7eafeb4a8cb65f43a4942aad1f0b8e2cf1ff497ec4a97a4b5b"
+      },
+      "result": {
+        "path": "retained-temp/build-r25-result.json",
+        "sha256": "c1d67523c4060f157328ff27fa2a4e222024b234e7e1bda9719525689546b95c"
+      },
+      "ownedHost": {
+        "path": "retained-temp/owned-build-r25/host-result.json",
+        "sha256": "65eb40a548a5943a5a32d711b4b55412763f2ad5d37d0df2eaf3ef22815fb6bb"
+      }
+    },
+    {
+      "phase": "native-r133",
+      "outerStatus": "PASS",
+      "outerElapsedMs": 28757,
+      "outerRepositoryInputs": 1353,
+      "sourceInputsUnchanged": true,
+      "changedInputs": [],
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "drainsComplete": true,
+      "handlesClosed": true,
+      "launch": {
+        "path": "retained-temp/native-r133-launch.json",
+        "sha256": "8cefb439ac2b3d1a74492d3e61a40da8d85708fcfac1c30f4e81ce6172ae13ce"
+      },
+      "result": {
+        "path": "retained-temp/native-r133-result.json",
+        "sha256": "5bf6a5addd7c8bd2b21968f16a5a9fd2405fc94eb418caf9a50fa0e9f410c433"
+      },
+      "ownedHost": {
+        "path": "retained-temp/owned-native-r133/host-result.json",
+        "sha256": "b3a5775a35a83910ae30488ff86486cce29dc8c46ba84057b822fa843fb7e22c"
+      }
+    },
+    {
+      "phase": "native-r134",
+      "outerStatus": "PASS",
+      "outerElapsedMs": 28154,
+      "outerRepositoryInputs": 1353,
+      "sourceInputsUnchanged": true,
+      "changedInputs": [],
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "drainsComplete": true,
+      "handlesClosed": true,
+      "launch": {
+        "path": "retained-temp/native-r134-launch.json",
+        "sha256": "145ea900301eb0ffa67c2675c48f01229a7c012c1dea545e6a461a72eb112ac0"
+      },
+      "result": {
+        "path": "retained-temp/native-r134-result.json",
+        "sha256": "23e71a753be5e37094b69dd4d2c206ad98bcbdd54f201ad91f223f90eceff58f"
+      },
+      "ownedHost": {
+        "path": "retained-temp/owned-native-r134/host-result.json",
+        "sha256": "7c9daf7662da604a4ad84289ca978abf42514eac29b8d5d71fb42cc2ee70bfa6"
+      }
+    },
+    {
+      "phase": "compiled-r87",
+      "outerStatus": "PASS",
+      "outerElapsedMs": 7923,
+      "outerRepositoryInputs": 1222,
+      "sourceInputsUnchanged": true,
+      "changedInputs": [],
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "drainsComplete": true,
+      "handlesClosed": true,
+      "launch": {
+        "path": "retained-temp/compiled-r87-launch.json",
+        "sha256": "e7851318f3628e030756c4d3f5d53c5c08a79894c652820707621c04c95fb36f"
+      },
+      "result": {
+        "path": "retained-temp/compiled-r87-result.json",
+        "sha256": "3baaea8ccb01493ae35c517f4d756853bb96b04754d86f829bfee473cc96b578"
+      },
+      "ownedHost": {
+        "path": "retained-temp/owned-compiled-r87/host-result.json",
+        "sha256": "bac1dd4d283b2eb0183ce32f377b56f54065f9bcabb9c7edd5cee24b239a3283"
+      }
+    },
+    {
+      "phase": "compiled-r88",
+      "outerStatus": "FAIL",
+      "outerElapsedMs": 97105,
+      "outerRepositoryInputs": 1222,
+      "sourceInputsUnchanged": true,
+      "changedInputs": [],
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "drainsComplete": true,
+      "handlesClosed": true,
+      "launch": {
+        "path": "retained-temp/compiled-r88-launch.json",
+        "sha256": "83fe271c3ef2ff9c720a26849be5664954240b8ef6524d93abd48b83c2545f66"
+      },
+      "result": {
+        "path": "retained-temp/compiled-r88-result.json",
+        "sha256": "e01ebfd3c141fbe0c4eb516368c8fc0e8d8e421e2cde3b1bab4e676b38033629"
+      },
+      "ownedHost": {
+        "path": "retained-temp/owned-compiled-r88/host-result.json",
+        "sha256": "14563a9f24b9d1f9ef1be93c7d03ae160181349c30814cbef3dfb287810af6fb"
+      }
+    },
+    {
+      "phase": "compiled-r89",
+      "outerStatus": "PASS",
+      "outerElapsedMs": 92293,
+      "outerRepositoryInputs": 1222,
+      "sourceInputsUnchanged": true,
+      "changedInputs": [],
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "drainsComplete": true,
+      "handlesClosed": true,
+      "launch": {
+        "path": "retained-temp/compiled-r89-launch.json",
+        "sha256": "54e2815abc9853ec0d33404dd5faba0630f198813fb9e70678fb91d8459687a8"
+      },
+      "result": {
+        "path": "retained-temp/compiled-r89-result.json",
+        "sha256": "9037d6ee7c771f908b067812e9a88286c9aef7396c9215dfeb1d3ac775446efd"
+      },
+      "ownedHost": {
+        "path": "retained-temp/owned-compiled-r89/host-result.json",
+        "sha256": "b90c1bce9e1276e4cabde48704d284ee355d71c27289f16e0bf192d06c90c516"
+      }
+    },
+    {
+      "phase": "compiled-r90",
+      "outerStatus": "FAIL",
+      "outerElapsedMs": 97273,
+      "outerRepositoryInputs": 1222,
+      "sourceInputsUnchanged": true,
+      "changedInputs": [],
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "drainsComplete": true,
+      "handlesClosed": true,
+      "launch": {
+        "path": "retained-temp/compiled-r90-launch.json",
+        "sha256": "3cc6e04df19b630834e852b9b0d9ad66c2400276362a52f986002d515eeb3d62"
+      },
+      "result": {
+        "path": "retained-temp/compiled-r90-result.json",
+        "sha256": "f118b087d006a70515cea18d18c9cebd5ebc5c77f9133aacb6397f68954198e2"
+      },
+      "ownedHost": {
+        "path": "retained-temp/owned-compiled-r90/host-result.json",
+        "sha256": "0fe23c1696b9805dfc06e70e6ff73e05394a40e3538045be9956d3f761bf8269"
+      }
+    },
+    {
+      "phase": "native-r136",
+      "outerStatus": "PASS",
+      "outerElapsedMs": 40742,
+      "outerRepositoryInputs": 1353,
+      "sourceInputsUnchanged": true,
+      "changedInputs": [],
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "drainsComplete": true,
+      "handlesClosed": true,
+      "launch": {
+        "path": "retained-temp/native-r136-launch.json",
+        "sha256": "36483c953db02dc78358fff7fe1af11aaf8bcca9483bfbb04d7a4bc7bc2ca573"
+      },
+      "result": {
+        "path": "retained-temp/native-r136-result.json",
+        "sha256": "83f071677d08ed398837e0726751e6e08e53d7f9564a7b02406b3050f9f726ba"
+      },
+      "fullOutput": {
+        "path": "retained-temp/native-r136-full-output.log",
+        "sha256": "9a848b903be5afb4f81e9e2147790b5571a1215581146c7482f44b42305b8380"
+      },
+      "focusedSuites": 4,
+      "actualPassMarkers": [
+        "PASS: controlled source derivative contracts 679",
+        "PASS: RB56 temporal work contracts 295 assertions seed=77 packages=55 fault=RELAY_B_COIL_OPEN units=13 scope=FIXED_TEMPORAL_PILOT_ONLY",
+        "PASS: Q30 LU pivot collection contracts 388",
+        "PASS: Quick Play gate contracts assertions=27074",
+        "PASS: focused current contracts; 4 Java suites. Full matrix and independent oracles NOT RUN."
+      ],
+      "assertions": {
+        "controlledSourceDerivative": 679,
+        "RB56Temporal": 295,
+        "Q30PivotCollection": 388,
+        "QuickPlayGate": 27074
+      },
+      "RB56TemporalScope": "Native seed77/55, REPLAY fixed13 work units; not normal catalog admission or visible player-flow evidence.",
+      "fullMatrixAndIndependentAppOracleBatch": "NOT_RUN"
+    }
+  ],
+  "native132": {
+    "suites": 11,
+    "actualPassMarkers": [
+      "PASS: U06 session save contracts assertions=34927",
+      "PASS: PlayerSessionFingerprintContractTest assertions=119",
+      "PASS: RB56 session backing contracts assertions=202 scope=DEVELOPER_MODEL_DIGEST_AND_RESTART_ONLY normalSessionLoad=false",
+      "PASS: RB56 geometry contracts 1601 assertions cases=3 acceptedRoutes=3 admittedRoutes=3 scope=FIXED_SEEDED_PHYSICAL_CANARIES_ONLY",
+      "PASS: E05 isolation geometry contracts assertions=140",
+      "PASS: Q30 temporal work contracts 167 assertions oneChannelHealthyFaultedRetestUnits=3/3/3 twoChannelHealthyFaultedRetestUnits=5/5/5",
+      "PASS: A07 execution contracts assertions=306504",
+      "PASS: Q30 owned LU zero-row contracts assertions=292",
+      "PASS: D01 diagnostic contracts assertions=168",
+      "PASS: P07 two-layer contracts assertions=11832",
+      "PASS: Pcb layer routing resumption contracts assertions=2203",
+      "PASS: focused current contracts; 11 Java suites. Full matrix and independent oracles NOT RUN."
+    ],
+    "fullMatrixAndIndependentOracleBatch": "NOT_RUN",
+    "fullOutput": {
+      "path": "retained-temp/native-r132-full-output.log",
+      "sha256": "821b45c7360db3f83f3516340787ca866bc65bf10e9f87bc32506a5816710a7a"
+    }
+  },
+  "build25Emission": {
+    "status": "PASS_ALL5",
+    "review": {
+      "path": "task/q60/wide-gather-build25-all5-emission-review-r1.json",
+      "sha256": "f860123a02a468b39b7cc5158dcd604ea507569c42a6e3a46738255ca4a562f8"
+    },
+    "helperBytesBefore974After2373": [
+      974,
+      2373
+    ],
+    "helperLocalsBefore15After26": [
+      15,
+      26
+    ],
+    "fiveArguments": true,
+    "scalarMultiplySubtractStorePairs": 72,
+    "singleAscendingPivotScan": true,
+    "noNewHelperCallsCastsOrAllocations": true,
+    "sevenScalarDefaultsAndWidthAssignmentSurvive": true,
+    "all21OtherMappedGuardOwnershipSnapshotAndOracleBodiesRawByteExactToBuild24": true,
+    "performanceInference": false
+  },
+  "originalRawFidelity": {
+    "status": "PASS",
+    "comparisonCount": 236,
+    "fixtures": [
+      {
+        "seed": "17",
+        "packages": 40
+      },
+      {
+        "seed": "77",
+        "packages": 55
+      },
+      {
+        "seed": "42",
+        "packages": 60
+      }
+    ],
+    "cadencesSeconds": [
+      0.0004,
+      0.0002
+    ],
+    "wholeRawCriteriaCleanupTextAndCanonicalExactTo129130And126127": true,
+    "whole236MetricsAndCaseSummaryExactBothPriorPairs": true,
+    "fieldExclusions": [],
+    "maximumRelativeErrorPercent": 0.12969724577458352,
+    "maximumAbsoluteErrorMicrovolts": 331.44442907869984,
+    "manualWitnesses": 12,
+    "fineOverrideWitnesses": 5,
+    "manualScopeSeparateFromGeneric1353": true,
+    "comparison": {
+      "path": "task/q60/wide-gather-fidelity-r133-r134-comparison-r1.json",
+      "sha256": "d6ef83254b2f2eaa62966ba05a4fe0e2b4dc3815cc95dccad4f38750290d167b"
+    },
+    "independentAudit": {
+      "path": "task/q60/native133-134-independent-fidelity-review-r1.json",
+      "sha256": "fcb5e328d77ed024fc628d6956d9f2cd7ab89b1bf1fbb91d44dcc3bfb8d18913"
+    },
+    "qualificationScope": "Full raw model sensitivity only; player admission, corpus, current exact60/session/hardware acceptance remain separate."
+  },
+  "compiled87": {
+    "qualificationScope": "A07 pure/runtime/model/scale and actual Task41 failure-recovery canaries only",
+    "positive": {
+      "status": "PASS",
+      "pureAssertions": 306503,
+      "runtimeAssertions": 83,
+      "runtimeCases": 23,
+      "modelAssertions": 59,
+      "modelRows": 21,
+      "scaleRows": 16,
+      "cleanup": "PASS",
+      "injectedTask41CleanupFailureAndRecovery": true
+    },
+    "earlyTerminalCanary": {
+      "state": "FAIL:a07:a07-explicit-failure-canary",
+      "scope": "EARLY_TERMINAL_AND_HOST_CLEANUP_ONLY",
+      "applicationFailureReportClaimed": false,
+      "task41FailureClaimed": false
+    },
+    "bindings": {
+      "frozenInputs": 1389,
+      "selfReviewBindings": 1,
+      "strictTotal": 1390,
+      "allCurrentHashesExact": true,
+      "wrapperBeforeAndAfterVerificationPassed": true,
+      "outerRepositoryInputs": 1222,
+      "outerBeforeAfterUnchanged": true,
+      "outerAllCurrentHashesExact": true,
+      "transportBeforeAfterFiles": 1562,
+      "transportBeforeAfterFileListsExact": true,
+      "transportAllCurrentFileHashesAndSizesExact": true,
+      "transportRunnerBeforeAfterCurrentExact": true
+    },
+    "cleanup": {
+      "outerHost": "PASS",
+      "browserAndServer": "PASS",
+      "application": "PASS",
+      "portClosedRecorded": true
+    },
+    "review": {
+      "path": "task/q60/wide-gather-compiled87-strict-independent-review-r1.json",
+      "sha256": "8014baf94596bfba3fe1da2d5296bb7665b5b28498993db9c1f4b206e5d5d484"
+    }
+  },
+  "compiled88Normal55": {
+    "qualificationStatus": "FAIL",
+    "frozenFixture": {
+      "seed": "-1067",
+      "plannedPackages": 55,
+      "plannedChannels": 2,
+      "successfulRuntimePackageCensusClaimed": false
+    },
+    "failure": "Generation wall budget exhausted",
+    "failurePhase": "COLD_GENERATION",
+    "jobOutcome": "TIMEOUT",
+    "jobStage": "HYPOTHESES",
+    "timingScopes": {
+      "outerHostMillis": 97105,
+      "caseOperationSeconds": 91.47952339999028,
+      "applicationJobMillis": 90398,
+      "applicationWallMillis": 90506,
+      "maximumUnitMillis": 1958
+    },
+    "progress": {
+      "totalWork": 520,
+      "hypothesisWork": 429,
+      "replayInstallations": 5,
+      "completedCustomerRetests": 4,
+      "completedEvidenceRestorations": 4,
+      "interpretation": "Four complete diagnostic flows and a fifth replay started but incomplete; no successful publication.",
+      "diagnosticUnitCounts": {
+        "REPLAY_INSTALL": 5,
+        "CANDIDATE_HEALTHY_SETTLE": 64,
+        "CANDIDATE_SETTLE": 52,
+        "OBSERVATION_STEP:INPUT": 4,
+        "OBSERVATION_STEP:WAIT": 4,
+        "OBSERVATION_STEP:DC_VOLTAGE": 48,
+        "OBSERVATION_STEP:POWER": 4,
+        "OBSERVATION_STEP:SETTLE": 4,
+        "POWER_OFF_SETTLE": 120,
+        "REMOVE_SETTLE": 4,
+        "REPLACE_SETTLE": 4,
+        "POWER_ON_SETTLE": 4,
+        "REPAIR_STATUS_SETTLE": 52,
+        "CUSTOMER_RETEST": 52,
+        "CUSTOMER_RETEST_COMPLETION": 4,
+        "EVIDENCE_RESTORE_PRIMARY": 4
+      }
+    },
+    "publication": {
+      "normalCatalogEnabled": false,
+      "qualifiedPublication": false,
+      "ordinaryCustomerRetestPassed": false,
+      "publishWork": 0
+    },
+    "originalLimits": {
+      "jobMillis": 90000,
+      "sharedWork": 640,
+      "activeOperationMillis": 5000,
+      "hostObservationSeconds": 120,
+      "nativeOuterSeconds": 300
+    },
+    "bindings": {
+      "frozenInputs": 1398,
+      "selfReviewBindings": 1,
+      "strictTotal": 1399,
+      "allCurrentHashesExact": true,
+      "wrapperBeforeAfterVerificationPassed": true,
+      "outerRepositoryInputs": 1222,
+      "outerBeforeAfterUnchanged": true,
+      "outerAllCurrentHashesExact": true,
+      "transportBeforeAfterFiles": 1562,
+      "transportBeforeAfterFileListsExact": true,
+      "transportAllCurrentHashesAndSizesExact": true,
+      "transportRunnerBeforeAfterCurrentExact": true
+    },
+    "cleanup": {
+      "application": "PASS",
+      "browserAndServer": "PASS",
+      "outerHost": "PASS",
+      "ownerRestored": true,
+      "candidateDisposed": true,
+      "temporaryMeterClean": true,
+      "debugRestored": true,
+      "coordinatorReleased": true,
+      "portClosedRecorded": true
+    },
+    "review": {
+      "path": "task/q60/wide-gather-compiled88-failure-independent-review-r1.json",
+      "sha256": "797e443c16c87fe94c1850e1b711655adf20eff9036daf61ab66fd82512a33b9"
+    },
+    "interpretation": "520 total work, four complete flows and partial fifth. The generation wall limit remains a real failure. Descriptive comparison with DE7 compiled85 only; no matched causal speed or JIT conclusion."
+  },
+  "compiled89NormalQ30": {
+    "status": "PASS_ONE_EXACT_NORMAL_RUN",
+    "normalReplay": "tsj-alpha/5/MEDIUM/RB30_CONTROL/10014",
+    "observedSeconds": 85.75674919999437,
+    "outerSeconds": 92.293,
+    "sampledWorkUnits": 443,
+    "exactTerminalCostEvidence": false,
+    "runtimePackageCensus": "NOT_EXPOSED_BY_PUBLIC_HOST",
+    "frozenPlanPackages": 40,
+    "frozenPlanChannels": 2,
+    "originalLimits": {
+      "jobMillis": 90000,
+      "sharedWork": 640,
+      "activeOperationMillis": 5000,
+      "hostObservationSeconds": 115,
+      "nativeOuterSeconds": 300
+    },
+    "cleanupSeconds": 1.4969343999982812,
+    "applicationBrowserServerNativeCleanup": "PASS",
+    "driverOwnBindings": 12,
+    "maintainedTransportBeforeAfterBindings": 1562,
+    "outerRepositoryInputs": 1222,
+    "externalFrozenUnion": 1403,
+    "externalReviewSeparatelyBoundSha256": "05e353bcaf42766430501e8c5aea2157a7a143518e1bdde1233503fef7283f0f",
+    "beforeExternalRehash": "Root external union1403 plus separate self witness rehashed PASS before and after; independent review verifies immutable freeze and current AFTER hashes.",
+    "externalUnionNotClaimedDriverConsumed": true,
+    "review": {
+      "path": "task/q60/compiled89-normal-q30-independent-closed-review-r1.json",
+      "sha256": "326c8935bfea85e31f65418a80952ab0ce5341d798fbf57eb1d02505d8841fc5"
+    },
+    "scope": "One normal seed10014 regression. No corpus, full-six, exact60 or milestone completion claim; no controlled causal performance inference.",
+    "externalUnionBeforeAndAfterRootRehash": "PASS",
+    "bindingAuthorityDistinction": "Root external1403+self witness; actual driver12, maintained transport1562, and outer1222 remain separate authorities."
+  },
+  "profile90": {
+    "status": "CLOSED_CAPTURED_DIAGNOSTIC_QUALIFICATION_FAIL",
+    "qualificationStatus": "FAIL",
+    "captureStatus": "CAPTURED",
+    "scope": "One source0A private normal-label55 seed-1067 CPU capture; diagnostic attribution only.",
+    "sourceCirSimSha256": "0a281ca50b170ec53fa95e4a898a333f6445f38a2fe6dceed6f8286e77df1f1c",
+    "profileSha256": "6a16cad6eb0490ef7fef91e16282f8633000a701c0c3e1edc2c1cf634e66a818",
+    "originalProfileReceiptPins": {
+      "strict-result.json": "de980632ee7688505a226de4593b78bd359f4fd84eb417c0fe87c53b4c60556e",
+      "host/input-manifest-before.json": "c61f75de3c7d356cb84f93ea5dfc8988e498fe5e4ce5b163688868ddc9a2350a",
+      "host/input-manifest-after.json": "149a6a7adbcdfebf7722c3b073132fc26b0f08488efb11d1dfc3b03adfa97dc0",
+      "host/generation.cpuprofile": "6a16cad6eb0490ef7fef91e16282f8633000a701c0c3e1edc2c1cf634e66a818",
+      "host/profile-capture.json": "82cbbbfb7813a8bcedca2be189a7eee78f483e0196a90c1587343e507119de73",
+      "host/result.json": "8d437a2e6918cdd983d2d11f623e230881887dc847ded6696aa1719769188bdd",
+      "host/progress.json": "4c81ded11b4a533e7ef9a71b9dbb240667a10eba2e3bfae8763133a972ef101a",
+      "host/identity.json": "2e4d715e98a26e39b8441856415d8d62f4be0dc7fc7318c661aba66ed3f174e5",
+      "host/owned-processes-before.json": "c21de08469037a48ceb134f1158a657ba047874c54a1b15004c9678553af7df8",
+      "host/cases/001-rb56-seed-1067-positive.report.json": "baf5f692c5006e13d39e9b7ca304d3aa0af8984e1adc5f70233166a1981d5388",
+      "host/profile-inputs/638EE60B4BC3508C1D58900F36CEBC41.cache.js": "75e1a0843f9e8afcccef85e8f86cfd55b5911833ad3b6ed0eadaf5303b38b655",
+      "host/profile-inputs/638EE60B4BC3508C1D58900F36CEBC41.symbolMap": "ffc220a982a80affc26111983f4e47b780776bd1a0f12ec080adae416bac3d62",
+      "host/profile-inputs/63D4F3F1A52C43B58C52801FB19B1465.cache.js": "10d4e974c7cac30e45ff574dfac38f6bd3a8141a1ed66196aa13a6edf3420964",
+      "host/profile-inputs/63D4F3F1A52C43B58C52801FB19B1465.symbolMap": "eb02c30ca37b506ec9c9c74ad530557d0c54c0d9c6d40bca0e79c2cadc39ef83",
+      "host/profile-inputs/75518A21A1DBEE2176953205966B6C38.cache.js": "d3e0f5da516a33d8a709d8a3a39a77feb3b7328d58db580053272b8783ca5652",
+      "host/profile-inputs/75518A21A1DBEE2176953205966B6C38.symbolMap": "9bc8f19c640ee26482a91ad91cd3522ff5d756671dde2ca0dd9f78af0023e6fc",
+      "host/profile-inputs/B66AC65ECD6EBC2E0E3A02F39B435FDF.cache.js": "c135797f5cca1f8aed9454ad458a0a3649f728a4ef22a1ba1f7b925b6c687638",
+      "host/profile-inputs/B66AC65ECD6EBC2E0E3A02F39B435FDF.symbolMap": "c3d87b82fab4cf32b1edd86b98f20f1ea7d6362a920fb7718cc99755eebaa375",
+      "host/profile-inputs/EC8A8805003A4E7F4D8FAEA06ECD5166.cache.js": "edcedb003489e4b6786f78ecdaf62099324b4d7a5486374205309abb66c42e64",
+      "host/profile-inputs/EC8A8805003A4E7F4D8FAEA06ECD5166.symbolMap": "bee08b0f51ad06221eaf783094f905033a869815b53d22fcbaa899934eb02760"
+    },
+    "summary": {
+      "path": "task/q60/rb56-55-profile-draft-r90/results/summary.json",
+      "sha256": "64d6272f3d2e3027b2a091f99a5129b7ec166d7d419b9837fadb33b8a931be5d"
+    },
+    "componentCosts": {
+      "path": "task/q60/rb56-55-profile-draft-r90/results/component-costs-r2.json",
+      "sha256": "0d590394028e4114eece2d3c994fb977f88328251b4706498be34f6cea77c3b3"
+    },
+    "originalReaders": {
+      "profile": {
+        "path": "task/q60/rb56-55-profile-draft-r90/read-profile-r90.py",
+        "sha256": "ab07add9c79b53a4f82d02ac971b069d8855449f66a7041a7f8b1c5aa40423a3"
+      },
+      "components": {
+        "path": "task/q60/rb56-55-profile-draft-r90/read-components-r90.py",
+        "sha256": "409c0feb5452be7f2258e720f57153a365c9d5812311188a9b0533f5eec5944c"
+      },
+      "status": "ORIGINAL_OFFLINE_READERS_COMPLETED_PASS"
+    },
+    "rootClosedBindingAudit": {
+      "path": "task/q60/profile90-root-closed-binding-audit-r1.json",
+      "sha256": "a2072db4d8949c75e038cadad92c8e1e1ae67f259cf9b4fe92b872da091c6658"
+    },
+    "auditAuthorship": "ROOT_AUDIT; not an independent profile90 review.",
+    "bindings": {
+      "frozenInputs": 1446,
+      "separateReviewSelfSha256": "6cdc3ca16b3b07721b298c99931171ce4ca5920a159514561c5d0432e719328f",
+      "outerRepositoryInputs": 1222,
+      "transportInputs": 1562,
+      "allCurrentPinsExact": true,
+      "allBeforeAfterPinsRehashed": true
+    },
+    "actualQualification": {
+      "failure": "Deadline: Generation wall budget exhausted",
+      "failurePhase": "COLD_GENERATION",
+      "jobOutcome": "TIMEOUT",
+      "jobStage": "HYPOTHESES",
+      "outerHostMillis": 97273,
+      "wrapperElapsedSeconds": 96.71398560001398,
+      "observedCaseElapsedSeconds": 91.00056260000565,
+      "applicationJobMillis": 90029,
+      "applicationWallMillis": 90078,
+      "work": 448,
+      "maxUnitMillis": 2316,
+      "replayInstallations": 4,
+      "completedRepairRetestRestorationFlows": 3,
+      "fourthFlow": "PARTIAL",
+      "qualifiedPublication": false,
+      "originalLimits": {
+        "jobMillis": 90000,
+        "sharedWork": 640,
+        "activeOperationMillis": 5000
+      }
+    },
+    "sampleWeights": {
+      "samples": 40697,
+      "signedWeightMs": 90951.588,
+      "positiveWeightMs": 90951.601,
+      "negativeSamples": [
+        {
+          "index": 436,
+          "node": 1372,
+          "deltaMicros": -13
+        }
+      ],
+      "treatment": "One raw -13us delta at index436/node1372 is preserved and excluded from positive attribution; charge the 0.013ms difference. No raw profile rewrite."
+    },
+    "attributionMillis": {
+      "boundedHelperSelf": 26574.949,
+      "LUFactorInclusiveStackUnion": 35634.177,
+      "PcbRoutingLayoutInclusiveStackUnion": 21072.373,
+      "LUSolveInclusiveStackUnion": 4673.77,
+      "matrixRowCopyInclusiveStackUnion": 2518.674
+    },
+    "cleanup": {
+      "application": "PASS",
+      "browserServer": "PASS",
+      "nativeHost": "PASS",
+      "ownedSurvivors": [],
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "drainsComplete": true,
+      "handlesClosed": true
+    },
+    "limits": [
+      "Self and inclusive costs are sample-weighted elapsed attribution, not exact operation counts or OS CPU time.",
+      "Inclusive costs overlap; they must not be summed across ancestor/descendant functions.",
+      "Profiler overhead is present; this one observed run does not establish an unprofiled regression cause.",
+      "No per-stage CPU windows are inferred. Actual aggregate generation stage/work timings are retained from the original qualifier report.",
+      "Owned CPU counters cover only identity-matched pre-launch processes; an exited PID and later children are omitted. Process roles were not retained.",
+      "Captured compiled bodies and maps are authoritative; changed current Java sources are flagged.",
+      "Earlier r45/Q30 and frozen unprofiled RB56 receipts are different runs; this capture alone establishes neither a matched speed change nor a profiler-free deadline outcome.",
+      "Categories are inclusive stack unions and overlap; do not sum them.",
+      "Runtime caller self costs require a uniquely mapped sampled leaf; unmapped native child samples are excluded.",
+      "Zero samples in an inlined function do not prove zero implementation cost."
+    ],
+    "pairedSpeedProof": false,
+    "admissionDeadlineClearance": false,
+    "interpretation": "Costs are sample-weighted self or inclusive stack unions; categories overlap and must not be summed. Profiler overhead is present. No matched causal speed, JIT, CPU-time or full-six qualification claim."
+  },
+  "staticEconomics": {
+    "scope": "Retained native113 historical healthy55 seed-1067 exact joint(U,R) only; not fault/current timing",
+    "indexedReadsAndStoresBefore": 618769829,
+    "indexedReadsAndStoresProjectedAfter": 578158659,
+    "removedRowAndFactorReads": 40611170,
+    "indexedReductionPercent": 6.563211083777648,
+    "netPredicateTestsRemovedAfterDispatch": 5946448,
+    "extraScalarAssignmentsCharged": 18550608,
+    "extraLabeledGatherBreaksCharged": 796013,
+    "emittedGrowthChargedSeparately": "974\u21922373 bytes,15\u219226locals actual; no CPU conversion or55 deadline clearance claim",
+    "evidence": {
+      "path": "task/q60/lu-bounded-gather8-economics-r1.json",
+      "sha256": "4ac951b96e3a6b37e059ba0cd777aba615a1bd45b9e9b44cfb8683461d5b2bcb"
+    }
+  },
+  "rejectedSparsePanel131": {
+    "status": "NO_GO_NOT_IMPLEMENTED",
+    "census": {
+      "path": "task/q60/lu-sparse-panel-support-native131-r1/result-summary-r1.json",
+      "sha256": "b00d2e4f370f99dec3f0fd73396d3e4b960f58f699eac4cebb833fcc5d4fafc6"
+    },
+    "fullyChargedCostDecision": {
+      "path": "task/q60/native131-panel-traversal-cost-assessment-r1.json",
+      "sha256": "cb6a9d51b571eeffb8f25c4bfe8ac1a5c3458987ac2cb5ade6337034a0691b1d"
+    },
+    "indexedOperationsBefore618769829After980339365": [
+      618769829,
+      980339365
+    ],
+    "explicitTestsBranchesBefore195334468After1563372588": [
+      195334468,
+      1563372588
+    ],
+    "scope": "One source-neutral healthy55 census; exact raw/cleanup preserved and zero avoided-zero diagnostics. Diagnostic25.116s is not performance evidence. Fewer target stores do not overcome charged operand/union/control work.",
+    "source": "HISTORICAL_DE7_SOURCE_NEUTRAL",
+    "outerElapsedMs": 25116,
+    "healthyRawWindows": 7,
+    "wholeRawCriteriaCleanupExactToNative121": true,
+    "fieldExclusions": [],
+    "bothZeroPivotCounts": [
+      0,
+      0
+    ],
+    "retainedRepositoryEvidence": {
+      "path": "docs/task-evidence/Q60/sparse-panel-census-r1/sparse-panel-cost-evidence-r1.json",
+      "sha256": "aba7e01b96d546f6aa8a28a0b9861651e98d17e943c8266dd9df272d4ce4ca28"
+    },
+    "performanceInference": false,
+    "implementationStarted": false
+  },
+  "historicalScopes": [
+    {
+      "source": "DE7",
+      "CirSimSha256": "de7d42e051a03ec43951354611a4ec2d150722ecbb203816ecfa5422e558720a",
+      "normal55Compiled85": "FAIL447work under original90s",
+      "normalQ30Compiled86": "PASS74.98883s observation/80.491souter; sampled443 not terminal cost",
+      "fidelityAudit": {
+        "path": "task/q60/native129-130-independent-fidelity-review-r1.json",
+        "sha256": "472fdb69e79e394aacbbf3614414fa6bd125278c4e2b66679005486ed5379b44"
+      },
+      "sourceRebasedTo0A": false
+    },
+    {
+      "source": "BFD",
+      "CirSimSha256": "bfd2269432b095ee9d4015c501df9929ad34367bb7762d1e2dd55b8a8d33712b",
+      "normalQ30Compiled79": "PASS86.076s observation under original90s",
+      "fidelityAudit": {
+        "path": "task/q60/native126-127-independent-fidelity-review-r1.json",
+        "sha256": "1f2cb3dbbb6849aa75bc893c06382e46945f23d8c0d754ce5ecb5a02a24dc7df"
+      },
+      "sourceRebasedTo0A": false
+    },
+    {
+      "source": "F460 historical full-six r7",
+      "status": "FAIL_COMPLETE_2_OF_6",
+      "aggregate": {
+        "path": "retained-temp/q60-full6-lu-trailing-r7.json",
+        "sha256": "8c6d2480b72f7d08206a0602fccc2f25e459f9e44316aa43792006e0e0fcb1fc"
+      },
+      "allSixSeedsInOrder": [
+        "-1017",
+        "-1067",
+        "-1022",
+        "9007199254741579",
+        "-1004",
+        "-1028"
+      ],
+      "current0AFullSixClaim": "NOT_RUN_UNQUALIFIED",
+      "sourceRebasedTo0A": false
+    },
+    {
+      "source": "85d80 historical visible40 r8",
+      "CirSimSha256": "85d80a04efe528a3249985f65121f6d9e194ec6573fc4b6b1cf4e011703f49ff",
+      "status": "PASS_SEPARATE40_ONE_CHANNEL_UI_ONLY",
+      "observedPublicationLowerBoundSeconds": 307.3831545999856,
+      "semanticCheckpoints": 3,
+      "diagnosisReadings": 4,
+      "scheduledReadings": 4,
+      "evidence": {
+        "path": "task/q60/visible40-session-r8-evidence-packet-r1/visible40-session-r8-evidence-r1.json",
+        "sha256": "af2b35b9d16e7df7e3a6cc7a98ac872ba0a89b9ae7107d48588616f71f644a9c"
+      },
+      "sourceRebasedTo0A": false,
+      "scope": "Four screenshots inspected by root on historical source. No current exact60/two-channel/ordinary save-load/modest-host claim."
+    }
+  ],
+  "preservationAndRemainingGates": {
+    "publication": "Q60 remains unaccepted; normal RB56/HARD/normal sessions remain held. This feature-branch checkpoint is not release acceptance; commit/push is verified separately. Fresh U05/REL-B and unstartedQ100 remain separate.",
+    "originalEight": {
+      "count": 8,
+      "byteHashesUnchanged": true,
+      "untrackedSubsetPreserved": true,
+      "indexEmptyReadOnly": true
+    },
+    "historicalFailures": "Preserve native97 overallFAIL, its20 selectedPASS and corrected99 focused4PASS, prior visual7 Reset failure and preUI fullsix/normal50 failures as distinct source scopes. No historical status rewrite.",
+    "currentBlockers": [
+      "Normal55 admission wall deadline",
+      "Current complete frozen-six/exact60 two-channel visible and session proof",
+      "Actual modest-machine environment and declared measurement protocol",
+      "Fresh advertised normal-save/HARD/release proof under held-route requirements"
+    ],
+    "hardware": "Ryzen7 7700 is the reference desktop exception; no modest-machine proof. C4130/server access excluded.",
+    "hardwareHandoff": {
+      "path": "task/q60/modest-machine-qualification-handoff-r1.md",
+      "sha256": "94ddcc7c90412c99ed30879b7608b1df51e31148c360b0b1a90998be22673657"
+    },
+    "historicalQ30Risks": "No unchanged cold/warm corpus rerun, historical risk-section rewrite, terminal work/package census inference, EventTiming/FPS/leak-reachability or proxy-based hardware qualification. A normal seed10014 pass alone does not discharge these risks.",
+    "historicalQ30RiskDetails": [
+      "Unknown91.616s failure",
+      "Six missing scratch inventories",
+      "Late BLOCKED release audit"
+    ],
+    "preDraftReadmeScopeAnchor": {
+      "path": "docs/task-evidence/Q60/README.md",
+      "sha256": "716307c8608a7150a0b57adba4182bb4121ec43f072d3d321ce934b69d3bdace",
+      "lines": [
+        15,
+        27,
+        30,
+        37,
+        108,
+        109
+      ],
+      "scope": "PRE_DRAFT_README_SNAPSHOT_ONLY; positions and hash identify the retained preimage, not the proposed updated current README or production inputs."
+    }
+  },
+  "checkpointProse": "Source0A native132/build25/compiled87 and all236 original production400us/fine200us raw comparisons pass. Whole raw/criteria/cleanup receipts are exact129/130 and126/127 with zero exclusions. The bounded helper widens the immutable ascending gather4to8 and retains per-cell arithmetic sequence; larger2373-byte/26-local emission and historical healthy-only work economics prove no speedup.\n\nUnprofiled normal55 compiled88 remains FAIL97.105s outer/91.4795234s case, app90398ms/520work/max1958ms, five replay installs, four complete flows plus partial fifth. Current normal Q30 compiled89 PASS92.293s outer/85.7567492s observation for exact normal seed10014 under original90s/640/5s; sampled443 is not terminal work. Profile90 is CLOSED CAPTURED with qualificationFAIL97.273s outer/job90029ms/work448/max2316ms; four replay installs and three full flows plus partial fourth. Original offline readers attribute26.575s helper self, 35.634s factor union,21.072s routing union,4.674s solve union and2.519s row-copy union, with overlap. The root closure/pin audit is PASS, not an independent profile90 review or paired speed proof.\n\nHistorical DE7/BFD checkpoint, DE7 native131 panel rejection, full-six r7 FAIL2/6 and source85 visible40 r8 307.383s/three-checkpoint/four-image evidence retain their original scopes. Current exact60/two-channel session and actual modest-machine evidence remain outstanding. Q60 remains unaccepted; normal RB56/HARD/saves stay held. This feature-branch checkpoint is not release acceptance; commit/push results are verified separately. Original eight files, limits, failures and Q30 risks are preserved. Courtyard grids are unintegrated and not selected; native135 closed source-neutral healthy55 census passes32.677s with raw/criteria/cleanup exact121/131. Unit specialization is NO_GO from charged dispatch counts(+1zero; -1 weighted961339/211651517=0.4542084%); no speed/admission claim.",
+  "actionsByThisPreparation": {
+    "taskOnlyPacketTemplate": true,
+    "repositoryWrites": 0,
+    "controllerWrites": 0,
+    "indexWrites": 0,
+    "gatesLaunched": 0,
+    "future90OutputsRead": false,
+    "newTestsComparisonsVariantsOrFramework": false,
+    "completeRawInventoryCopied": false,
+    "closed90OutputsRead": true,
+    "originalOffline90ReadersOutputsRead": true,
+    "sixCurrentDocumentReplacementRangesPrepared": true,
+    "oldPacketTemplateOverwritten": false,
+    "future135OutputsRead": false,
+    "profile90ReviewClaim": "ROOT_CLOSURE_AUDIT_ONLY",
+    "closed135SummaryAndIndependentReviewRead": true,
+    "closed136SupplementRead": true
+  },
+  "base": {
+    "branch": "codex/q30-multirail-qualification",
+    "publishedMilestones": [
+      "U06",
+      "U07",
+      "E05",
+      "E06"
+    ],
+    "Q60": "FEATURE_BRANCH_CHECKPOINT_NOT_ACCEPTED",
+    "normalRB56_HARD_saveLoad": "HELD",
+    "preCommitParentSHA": "a2fc74b23d177e0a971974a9d958bf0d559a06c5",
+    "publishedE06Base": "7aa0e1932f3c853e7265bf186e98989ada641a51",
+    "publicationStatus": "Commit/push result is recorded separately after verification; no successful push is claimed by this preparation."
+  },
+  "retainedHistoricalCheckpoint": {
+    "path": "docs/task-evidence/Q60/loop-economy-checkpoint-r1/loop-economy-checkpoint-evidence-r1.json",
+    "sha256": "f19493159e9c3ef778f0cb1a2ed5f33a4328e18783eb21ee1c808dacfa70dff8",
+    "scope": "Historical DE7/BFD checkpoint remains unchanged and is not rebound to0A."
+  },
+  "pendingTaskOnlyWork": {
+    "courtyardGrid": {
+      "status": "SOURCE_ONLY_CORRECT_UNINTEGRATED_NOT_SELECTED",
+      "review": {
+        "path": "task/q60/populated-face-courtyard-union-independent-review-r1.json",
+        "sha256": "55e0c5a3113d460aab7fd8adc24ba00724a1fb0d1fa4237732c93b2b0592cd55"
+      },
+      "reason": "Three flat boolean grids add up to2.1M logical slots plus setup work; no low-memory or net-performance qualification. Current router37E6 remains unchanged.",
+      "freshGatesRun": false,
+      "performanceClaim": false
+    },
+    "unitFactorFrequencyNative135": {
+      "status": "CLOSED_PASS_DIAGNOSTIC_NO_GO_UNIT_SPECIALIZATION",
+      "scope": "One source-neutral exact healthy55 seed-1067 factor-equality support census; integer operation counts and diagnostic fidelity only.",
+      "originalDraftManifest": {
+        "path": "task/q60/lu-unit-factor-census-native135-draft-r1/manifest.json",
+        "sha256": "ef20d77230b4efc6cc096727a030d4057ad0208b263e8b625d69502daf1d4342"
+      },
+      "resultSummary": {
+        "path": "task/q60/lu-unit-factor-census-native135-r1/result-summary-r1.json",
+        "sha256": "698417052b5b169b075916c7d0d10f5b34fb2978d1b6977c4edaff8e5789f246"
+      },
+      "independentClosedReview": {
+        "path": "task/q60/native135-unit-factor-census-independent-closed-review-r1.json",
+        "sha256": "62e64f4cd62b02e02fb09e81e8ea2757c6b1102d73dec83620816290e03458d3"
+      },
+      "productionCirSimSha256": "0a281ca50b170ec53fa95e4a898a333f6445f38a2fe6dceed6f8286e77df1f1c",
+      "productionSourceUnchanged": true,
+      "outerElapsedMs": 32677,
+      "bindings": {
+        "snapshotSourceInputs": 941,
+        "observerInputs": 1,
+        "manualConsumedAndWitnessInputs": 969,
+        "genericRepositoryInputsSeparate": 1353,
+        "runtimeBeforeAfterAttestation": true,
+        "independentCurrentAfterRehash": true,
+        "genericInputsExactNative132AndCurrent": true,
+        "preparedInputsSha256": "a409b1366b813bcb66de861c93238018c0b59ca30ea64f425f13d1bf8e09dc1f",
+        "launcherSha256": "60e5b789885782a222dc51f4cee6d852ff018f5e8ff7dae41b4625d3ac13367b",
+        "controllerSha256": "446b2bfbe01d7bbab6f361b9387b1c909dd48e7a2b9d5e6ec9ea5487816f1e2d"
+      },
+      "wholeOriginalReceipts": {
+        "RB56_ASSEMBLY": {
+          "literalSha256": "0423decc61770b269f97bfbd99c261a343e73b52f92e74851e07d0d3a734223d",
+          "canonicalSha256": "780c722c0f547b42d38552770a159de6adbebf1df496cc1f2abcd85dcd28a88f",
+          "baselineComparison": {
+            "121": {
+              "wholeLiteralExact": true,
+              "wholeCanonicalExact": true
+            },
+            "131": {
+              "wholeLiteralExact": true,
+              "wholeCanonicalExact": true
+            }
+          }
+        },
+        "RB56_ASSEMBLY_CRITERIA": {
+          "literalSha256": "ed98692b20ee3bf20a52955bb0c301c277173b38039c5f8afe579e3c78426856",
+          "canonicalSha256": "645ada07532ad1a22def55b3243771e2d7f2177afa29c4430fef585995fd6fb2",
+          "baselineComparison": {
+            "121": {
+              "wholeLiteralExact": true,
+              "wholeCanonicalExact": true
+            },
+            "131": {
+              "wholeLiteralExact": true,
+              "wholeCanonicalExact": true
+            }
+          }
+        },
+        "RB56_ASSEMBLY_CLEANUP": {
+          "literalSha256": "7cd559885a39b51ccb4e3b5819a4ee392e445a11a958c17b2150619cecda3c5a",
+          "canonicalSha256": "76738279ec8a05ebb1ee77f498da8c520055e5e14b3c650f1588d60f83424be3",
+          "baselineComparison": {
+            "121": {
+              "wholeLiteralExact": true,
+              "wholeCanonicalExact": true
+            },
+            "131": {
+              "wholeLiteralExact": true,
+              "wholeCanonicalExact": true
+            }
+          }
+        }
+      },
+      "sevenWindowsExact": [
+        "STARTUP_LOW",
+        "SENSOR_MASK_0",
+        "SENSOR_MASK_1",
+        "SENSOR_MASK_2",
+        "SENSOR_MASK_3",
+        "MAINAC_ONLY_OFF",
+        "ALL_INPUTS_OFF"
+      ],
+      "fieldExclusions": [],
+      "rawNormalization": [],
+      "plusOneOccurrences": 0,
+      "minusOneWeightedUpdates": 961339,
+      "allWeightedUpdates": 211651517,
+      "minusOneWeightedUpdateSharePercent": 0.4542084146743914,
+      "exactChargedEconomics": {
+        "fullEightOnly": {
+          "executedRowChunkVisits": 20305585,
+          "positiveUnitRowChunkVisits": 0,
+          "negativeUnitRowChunkVisits": 43579,
+          "totalExecutedUpdates": 162444680,
+          "positiveUnitWeightedUpdates": 0,
+          "negativeUnitWeightedUpdates": 348632,
+          "potentialMultiplicationsRemoved": 348632,
+          "plusFirstMinusSecondAddedEqualityComparisons": 40611170,
+          "minusOnlyAddedEqualityComparisons": 20305585,
+          "weightedUnitUpdateSharePercent": 0.21461583106322718,
+          "unitRowVisitSharePercent": 0.21461583106322718,
+          "twoDispatchComparisonsPerPotentialMultiplicationRemoved": 116.48721287776222,
+          "minusOnlyComparisonsPerPotentialMultiplicationRemoved": 58.24360643888111
+        },
+        "allChunks": {
+          "executedRowChunkVisits": 38472918,
+          "positiveUnitRowChunkVisits": 0,
+          "negativeUnitRowChunkVisits": 327995,
+          "totalExecutedUpdates": 211651517,
+          "positiveUnitWeightedUpdates": 0,
+          "negativeUnitWeightedUpdates": 961339,
+          "potentialMultiplicationsRemoved": 961339,
+          "plusFirstMinusSecondAddedEqualityComparisons": 76945836,
+          "minusOnlyAddedEqualityComparisons": 38472918,
+          "weightedUnitUpdateSharePercent": 0.4542084146743914,
+          "unitRowVisitSharePercent": 0.8525347622449642,
+          "twoDispatchComparisonsPerPotentialMultiplicationRemoved": 80.04027299422992,
+          "minusOnlyComparisonsPerPotentialMultiplicationRemoved": 40.02013649711496
+        }
+      },
+      "rootDecision": "NO_GO_UNIT_SPECIALIZATION",
+      "noFurtherUnitVariantOrCensus": true,
+      "cleanup": {
+        "rawGraphRestored": true,
+        "acceptedObserverCancelled": true,
+        "candidateDisposed": true,
+        "singletonRestored": true,
+        "retainedSolverReferences": 0,
+        "nativeHost": "PASS",
+        "jobActiveProcesses": 0,
+        "liveDrainers": 0,
+        "drainsComplete": true,
+        "handlesClosed": true
+      },
+      "limits": [
+        "Runtime BEFORE is recorded by successful bound launcher and immutable pin receipt; reviewer independently rehashed current AFTER inputs.",
+        "Native JVM exited; observer restoration is source/control-flow evidence from the bound selector, with report emitted after restoration, rather than a separate live JVM inspection.",
+        "Focused one-case healthy55 diagnostic; original three-case suite, full matrix, independent app oracles, compiled browser/profile gates and Q60 acceptance not established by135.",
+        "Operation counts are exact for this fixture and dispatch model; no causal or future performance inference."
+      ],
+      "qualificationOrSpeedClaim": false,
+      "interpretation": "The cheaper minus-only dispatch model still adds20,305,585 full8 comparisons to remove348,632 multiplications, or38,472,918 comparisons to remove961,339 multiplications across all chunks. Root rejects specialization as an operation-count decision; no causal timing or admission inference."
+    }
+  }
+}

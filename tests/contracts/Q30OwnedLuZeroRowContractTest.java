@@ -6,6 +6,8 @@ import java.lang.reflect.Method;
 /** Native contract for the finite-input nonlinear-owned LU zero-row preflight. */
 public final class Q30OwnedLuZeroRowContractTest {
     private static Method ownedFactor;
+    private static Method boundedOwnedFactor;
+    private static Method finiteMatrix;
     private static Method originalFactor;
     private static Method originalSolve;
     private static int assertions;
@@ -15,6 +17,12 @@ public final class Q30OwnedLuZeroRowContractTest {
             ownedFactor = CirSim.class.getDeclaredMethod("lu_factorNonlinearOwned",
                     double[][].class, int.class, int[].class, CirSim.LuFactorizationWorkspace.class);
             ownedFactor.setAccessible(true);
+            boundedOwnedFactor = CirSim.class.getDeclaredMethod("lu_factorNonlinearOwned",
+                    double[][].class, int.class, int[].class, CirSim.LuFactorizationWorkspace.class,
+                    boolean.class);
+            boundedOwnedFactor.setAccessible(true);
+            finiteMatrix = CirSim.class.getDeclaredMethod("requireFiniteMatrix");
+            finiteMatrix.setAccessible(true);
             originalFactor = LuFactorizationChecks.class.getDeclaredMethod("originalFactor",
                     double[][].class, int.class, int[].class);
             originalFactor.setAccessible(true);
@@ -83,7 +91,192 @@ public final class Q30OwnedLuZeroRowContractTest {
         // Reuse after the exception proves finally cleanup left the scratch safe.
         compareFinite(new double[][] { { 2, 0 }, { 1, 3 } },
                 new double[] { 2, 4 }, workspace, "valid solve after overflow failure");
+
+        checkBoundedProducer();
+        compareBoundedFinite(new double[][] {
+                { 4, 1, 2, 3, 4 }, { 2, 8, 1, 0, 1 }, { 1, 0, 7, 1, 0 },
+                { 0, 1, 0, 9, 1 }, { 1, 0, 1, 0, 10 }
+            }, new double[] { 3, -2, 5, 7, -1 }, workspace);
+        checkLateUnderflowSurvivor(workspace);
+        compareCheckedProofFalseOverflow(workspace);
         return assertions;
+    }
+
+    /** Independent Crout fixture: a retained factor precedes a zero and a later survivor. */
+    private static void checkLateUnderflowSurvivor(CirSim.LuFactorizationWorkspace workspace) {
+        double[][] before = {
+            { 1e100, 1, 2, 3 }, { 5e99, 8, 1, 2 },
+            { Double.MIN_VALUE, 0, 11, 1 }, { 2.5e99, 2, 1, 13 }
+        };
+        double[] rhs = { 1, 2, 3, 4 };
+        double[][] expected = copy(before);
+        int[] pivots = new int[4];
+        check(invokeOriginalFactor(expected, 4, pivots),
+                "late-underflow fixture is singular in the independent oracle");
+        for (int i = 0; i < 4; i++)
+            check(pivots[i] == i, "late-underflow fixture unexpectedly changed row order at " + i);
+        check(expected[1][0] != 0 && expected[2][0] == 0 && expected[3][0] != 0,
+                "late-underflow fixture omitted the retained prefix, zero, or later survivor");
+        compareFinite(before, rhs, workspace, "late underflow followed by nonzero survivor");
+        compareBoundedFinite(before, rhs, workspace);
+    }
+
+    /** Exercise the actual producer without installing a UI or changing a live graph. */
+    private static void checkBoundedProducer() {
+        CirSim previous = CirSim.theSim;
+        try {
+            CirSim sim = new CirSim();
+            check(!sim.luBaselineBounded && !sim.luCurrentBounded,
+                    "new simulator published a bounded matrix before scanning");
+            sim.circuitMatrixSize = 2;
+            sim.circuitMatrix = new double[][] { { 4, 1 }, { 2, 3 } };
+            sim.circuitNeedsMap = false;
+            invokeFiniteMatrix(sim);
+            check(sim.luBaselineBounded && sim.luCurrentBounded,
+                    "finite small matrix did not publish both bounded flags");
+            sim.stampMatrix(1, 1, 2e100);
+            check(sim.luBaselineBounded && !sim.luCurrentBounded,
+                    "large accumulated dynamic stamp did not invalidate only current proof");
+            sim.stampMatrix(1, 1, -2e100);
+            check(sim.luBaselineBounded && !sim.luCurrentBounded,
+                    "a later small accumulated value re-enabled the current proof");
+
+            sim.circuitMatrix = new double[][] { { 4, 1 }, { 2, 3 } };
+            invokeFiniteMatrix(sim);
+            sim.stampMatrix(1, 1, Double.MAX_VALUE);
+            boolean rejectedAccumulatedStamp = false;
+            try {
+                sim.stampMatrix(1, 1, Double.MAX_VALUE);
+            } catch (SolverExecutionBoundary.Failure failure) {
+                rejectedAccumulatedStamp =
+                        failure.outcome == SolverExecutionBoundary.Outcome.NUMERICAL_FAILURE;
+            }
+            check(rejectedAccumulatedStamp, "accumulated stamp overflow was not rejected");
+            check(sim.circuitMatrix[0][0] == Double.POSITIVE_INFINITY,
+                    "stamp overflow changed the original store-before-validation boundary");
+            check(sim.luBaselineBounded && !sim.luCurrentBounded,
+                    "stamp overflow changed the baseline or re-enabled the current proof");
+
+            sim.circuitMatrix = new double[][] { { 1e100, 0 }, { 0, 1 } };
+            invokeFiniteMatrix(sim);
+            check(sim.luBaselineBounded && sim.luCurrentBounded,
+                    "inclusive magnitude boundary was rejected");
+            sim.circuitMatrix[0][0] = Math.nextAfter(1e100, Double.POSITIVE_INFINITY);
+            invokeFiniteMatrix(sim);
+            check(!sim.luBaselineBounded && !sim.luCurrentBounded,
+                    "entry above the magnitude boundary retained a proof");
+
+            sim.circuitMatrixSize = 128;
+            sim.circuitMatrix = new double[128][128];
+            invokeFiniteMatrix(sim);
+            check(sim.luBaselineBounded && sim.luCurrentBounded,
+                    "inclusive dimension boundary was rejected by the producer");
+            sim.circuitMatrixSize = 129;
+            sim.circuitMatrix = new double[129][129];
+            invokeFiniteMatrix(sim);
+            check(!sim.luBaselineBounded && !sim.luCurrentBounded,
+                    "dimension above the boundary retained a proof");
+
+            double[] nonfinite = { Double.NaN, Double.POSITIVE_INFINITY };
+            for (int entry = 0; entry < nonfinite.length; entry++) {
+                sim.circuitMatrixSize = 2;
+                sim.circuitMatrix = new double[][] { { 4, 1 }, { 2, 3 } };
+                invokeFiniteMatrix(sim);
+                sim.circuitMatrix[0][0] = nonfinite[entry];
+                boolean rejected = false;
+                try {
+                    invokeFiniteMatrix(sim);
+                } catch (SolverExecutionBoundary.Failure expected) {
+                    rejected = expected.outcome == SolverExecutionBoundary.Outcome.NUMERICAL_FAILURE;
+                }
+                check(rejected, "nonfinite baseline scan did not report numerical failure");
+                check(!sim.luBaselineBounded && !sim.luCurrentBounded,
+                        "failed baseline scan retained a bounded proof");
+            }
+        } finally {
+            CirSim.theSim = previous;
+        }
+    }
+
+    private static void compareBoundedFinite(double[][] before, double[] rhs,
+            CirSim.LuFactorizationWorkspace workspace) {
+        int n = before.length;
+        double[][] expected = copy(before);
+        double[][] actual = copy(before);
+        int[] expectedPivots = new int[n];
+        int[] actualPivots = new int[n];
+        boolean expectedResult = invokeOriginalFactor(expected, n, expectedPivots);
+        boolean actualResult = invokeBoundedOwnedFactor(actual, n, actualPivots, workspace, true);
+        check(expectedResult, "bounded owned fixture is singular in the independent oracle");
+        check(actualResult == expectedResult, "bounded owned factor result differs from oracle");
+        workspaceClear(workspace, "bounded owned success");
+        for (int i = 0; i < n; i++) {
+            check(expectedPivots[i] == actualPivots[i], "bounded owned pivot differs at " + i);
+            for (int j = 0; j < n; j++)
+                check(expected[i][j] == actual[i][j],
+                        "bounded owned factor differs at [" + i + "][" + j + "]");
+        }
+        double[] expectedRhs = rhs.clone();
+        double[] actualRhs = rhs.clone();
+        invokeOriginalSolve(expected, n, expectedPivots, expectedRhs);
+        CirSim.lu_solve(actual, n, actualPivots, actualRhs);
+        for (int i = 0; i < n; i++)
+            check(SolverExecutionBoundary.finite(expectedRhs[i]) && expectedRhs[i] == actualRhs[i],
+                    "bounded owned solve differs from independent oracle at " + i);
+    }
+
+    /** False proof must preserve the existing checked entry's exact failure prefix. */
+    private static void compareCheckedProofFalseOverflow(CirSim.LuFactorizationWorkspace workspace) {
+        double[][] before = { { 1e308, 1e308 }, { 1e308, -1e308 } };
+        double[][] expected = copy(before);
+        double[][] actual = copy(before);
+        int[] expectedPivots = new int[2];
+        int[] actualPivots = new int[2];
+        boolean expectedRejected = false;
+        try {
+            invokeOwnedFactor(expected, 2, expectedPivots, workspace);
+        } catch (SolverExecutionBoundary.Failure failure) {
+            expectedRejected = failure.outcome == SolverExecutionBoundary.Outcome.NUMERICAL_FAILURE;
+        }
+        check(expectedRejected, "checked overflow fixture did not report numerical failure");
+        workspaceClear(workspace, "checked overflow reference");
+        boolean actualRejected = false;
+        try {
+            invokeBoundedOwnedFactor(actual, 2, actualPivots, workspace, false);
+        } catch (SolverExecutionBoundary.Failure failure) {
+            actualRejected = failure.outcome == SolverExecutionBoundary.Outcome.NUMERICAL_FAILURE;
+        }
+        check(actualRejected, "false-proof owned overflow did not report numerical failure");
+        workspaceClear(workspace, "false-proof overflow");
+        for (int i = 0; i < 2; i++) {
+            check(expectedPivots[i] == actualPivots[i], "false-proof failure pivot differs at " + i);
+            for (int j = 0; j < 2; j++)
+                check(Double.doubleToLongBits(expected[i][j]) == Double.doubleToLongBits(actual[i][j]),
+                        "false-proof failure prefix differs at [" + i + "][" + j + "]");
+        }
+    }
+
+    private static void invokeFiniteMatrix(CirSim sim) {
+        try {
+            finiteMatrix.invoke(sim);
+        } catch (InvocationTargetException wrapped) {
+            throwUnchecked(wrapped.getCause());
+        } catch (Exception failure) {
+            throw new AssertionError("could not invoke actual finite matrix producer", failure);
+        }
+    }
+
+    private static boolean invokeBoundedOwnedFactor(double[][] matrix, int n, int[] pivots,
+            CirSim.LuFactorizationWorkspace workspace, boolean bounded) {
+        try {
+            return ((Boolean) boundedOwnedFactor.invoke(null, matrix, n, pivots, workspace,
+                    Boolean.valueOf(bounded))).booleanValue();
+        } catch (InvocationTargetException wrapped) {
+            throwUnchecked(wrapped.getCause());
+            throw new AssertionError("unreachable");
+        } catch (Exception failure) {
+            throw new AssertionError("could not invoke private bounded owned LU helper", failure);
+        }
     }
 
     private static void compareSingularWithZeroRow(int zeroRow,

@@ -1,0 +1,768 @@
+{
+  "schema": "Q60_REFERENCE_ROUTE_EXACT_INPUT_PINS_V2",
+  "digestEncoding": "Canonical JSON SHA256 uses UTF-8, sorted keys, compact comma/colon separators and ensure_ascii=false. Raw artifact SHA256 covers actual file bytes. Raw host receipt and manifest hashes may cover private fields; no private field values are copied.",
+  "phases": [
+    {
+      "phase": "native-r91",
+      "status": "FAIL",
+      "hostElapsedMs": 36928,
+      "exitCode": 1,
+      "sourceFiles": 1366,
+      "sourceInputsUnchanged": true,
+      "changedInputs": [],
+      "cleanup": {
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "cleanupVerified": true,
+        "jobAccountingDrainSucceeded": true
+      },
+      "handlesClosed": true,
+      "rawArtifacts": [
+        {
+          "name": "native-r91-launch.json",
+          "bytes": 190338,
+          "sha256": "42ca2fa6d653dc97eb6653ba2918bb51a54b247c69ff7f2815a6250f16f4af35",
+          "retainedOnly": true
+        },
+        {
+          "name": "native-r91-result.json",
+          "bytes": 1853,
+          "sha256": "aa399139ef9ec868ecaa9e3a974fd74dc4aed5931b6043b1e6c2a0d561327003",
+          "retainedOnly": true
+        },
+        {
+          "name": "native-r91-full-output.log",
+          "bytes": 2020965,
+          "sha256": "4149a03a7c4424aa0cfcd8c050a69568f9b7776f5e3439d8a2d8717cc28a0879",
+          "retainedOnly": true
+        },
+        {
+          "name": "native-r91.ps1",
+          "bytes": 1163,
+          "sha256": "3d1e3ffcb5dbe1be2efd91c3c1bc506928f284a612e28b5ec0301db42068ccd2",
+          "retainedOnly": true
+        }
+      ],
+      "rawHostReceiptCanonicalSha256": "78a61301b9855d07ae2a1b36488ee673ea7e34062817b46697db2889d59eb33c",
+      "rawSourceManifestCanonicalSha256": "2ecd8fa60c672c7f26a90474f2474d83e6cccac6417e7b39f27650679de79535",
+      "repositorySourceManifestCanonicalSha256": "0e36ae3064bc8fc82f9ab3612f09daf0cf00126b2d192e511d6cd8f6770a803a",
+      "repositorySourceFiles": 1353,
+      "taskSourceInputs": [
+        {
+          "name": "Rb56FaultPopulationContractTest.java",
+          "sha256": "9cc17e5f3c3692b94039a9fd1e780f0e7628bcd0afdac9417d77e7106a0fbd8a"
+        },
+        {
+          "name": "Rb56GeometryContractTest.java",
+          "sha256": "aa6504f29a32cc723a67879b4576ff2575a2009fd6946137bf87f12f9e827892"
+        },
+        {
+          "name": "file-only-review.json",
+          "sha256": "96718e6302bc3650ddc3754738ebc2b330d3bd96ecadddcd1e03f9f04fa1693b"
+        },
+        {
+          "name": "focused-current-inputs-r91-r92-r94.json",
+          "sha256": "12439623c00b0a90397c2908dd86a12cbb5a94ee0d4cc0797735e8717421968c"
+        },
+        {
+          "name": "native-r91.ps1",
+          "sha256": "3d1e3ffcb5dbe1be2efd91c3c1bc506928f284a612e28b5ec0301db42068ccd2"
+        },
+        {
+          "name": "native-r92.ps1",
+          "sha256": "da4bdf03d678b2e8dc5815bda33e17feafab612f4c1a06b0f31dbf34babf72c3"
+        },
+        {
+          "name": "native-r94.ps1",
+          "sha256": "ed07df6712702373ea7031f581e1b8dadda9211053895605c4188817bcd6f8db"
+        },
+        {
+          "name": "prepare-focused-current-r91-r92-r94.py",
+          "sha256": "12bae3200e58c8b4e838f6bdab92298e224f76b7450070ddabadcc2e4422169c"
+        },
+        {
+          "name": "prepared-inputs.json",
+          "sha256": "1323b8d5a244cccacda176c1a4e6e8e521581600ab92adb4024538800a5750c2"
+        },
+        {
+          "name": "source-preflight.json",
+          "sha256": "4ef74b7c0ed7957f7bbe99905ba4bbdd9245010d3473cddc5643a59755f2405e"
+        },
+        {
+          "name": "task-method-boundary-fix-audit.json",
+          "sha256": "034859319143bcd88bbb5553d557af931599f478b7e3733fa743009e10b5c271"
+        },
+        {
+          "name": "verify-configured42-diagnostic.ps1",
+          "sha256": "7442c56f300b7d6e9ced2945cc217d28752a13765b5f0deb942b2670b9d5e3c1"
+        },
+        {
+          "name": "verify-native-owner-inventory.ps1",
+          "sha256": "a9f6b208359fefd60105217739a7b1ae9db5d64cea349c516adb3d22be69e9f7"
+        }
+      ],
+      "phaseRunnerLaunchRecordedSha256": "38898e876aa2d434638bc2760062727ddccd40de77d1f7d17c2220d067520580"
+    },
+    {
+      "phase": "native-r96",
+      "status": "PASS",
+      "hostElapsedMs": 92510,
+      "exitCode": 0,
+      "sourceFiles": 1353,
+      "sourceInputsUnchanged": true,
+      "changedInputs": [],
+      "cleanup": {
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "cleanupVerified": true,
+        "jobAccountingDrainSucceeded": true
+      },
+      "handlesClosed": true,
+      "rawArtifacts": [
+        {
+          "name": "native-r96-launch.json",
+          "bytes": 187834,
+          "sha256": "123545736db341afbf7bdf0562c6912012acb6e327df74df9c8c5f7b37e77b36",
+          "retainedOnly": true
+        },
+        {
+          "name": "native-r96-result.json",
+          "bytes": 1852,
+          "sha256": "22fc8fac4e0a1d92fa11216cec2225fc712a68fd87afe53f78adc54578ada298",
+          "retainedOnly": true
+        },
+        {
+          "name": "native-r96-full-output.log",
+          "bytes": 18412,
+          "sha256": "cd3bf9238c03c63458006d902ed9ff71a63cfa4b179344355f2c575250674a4e",
+          "retainedOnly": true
+        },
+        {
+          "name": "native-r96-receipt.json",
+          "bytes": 17336,
+          "sha256": "0a17c911c3b0d6dfac9f12c1616efa29b49a19df3e6136d7d8c706a93440e738",
+          "retainedOnly": true
+        },
+        {
+          "name": "native-r96.ps1",
+          "bytes": 1279,
+          "sha256": "49499d100adbda89336d802ef728c5488026963bdbd396b3b698b2d50ec25ec5",
+          "retainedOnly": true
+        }
+      ],
+      "rawHostReceiptCanonicalSha256": "44722e4b5fcf4c1b01afacf608ad5e218124e1a8fe54b913f195e2afdaea0c11",
+      "rawSourceManifestCanonicalSha256": "8eef96d4aff9c648e475369bd660b759b3fe4129b1f7da97dbd1c616a13573c7",
+      "repositorySourceManifestCanonicalSha256": "8eef96d4aff9c648e475369bd660b759b3fe4129b1f7da97dbd1c616a13573c7",
+      "repositorySourceFiles": 1353,
+      "taskSourceInputs": [],
+      "phaseRunnerLaunchRecordedSha256": "38898e876aa2d434638bc2760062727ddccd40de77d1f7d17c2220d067520580"
+    },
+    {
+      "phase": "native-r97",
+      "status": "FAIL",
+      "hostElapsedMs": 154202,
+      "exitCode": 1,
+      "sourceFiles": 1353,
+      "sourceInputsUnchanged": true,
+      "changedInputs": [],
+      "cleanup": {
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "cleanupVerified": true,
+        "jobAccountingDrainSucceeded": true
+      },
+      "handlesClosed": true,
+      "rawArtifacts": [
+        {
+          "name": "native-r97-launch.json",
+          "bytes": 187832,
+          "sha256": "698abb4c708570e123ae1e0916b4501e2da0992de2a478814eaa5593774addd1",
+          "retainedOnly": true
+        },
+        {
+          "name": "native-r97-result.json",
+          "bytes": 1855,
+          "sha256": "ec0bf04ec28a239633d0bac56ae55ab1db7244c3df6ebc01f769876879c96c9e",
+          "retainedOnly": true
+        },
+        {
+          "name": "native-r97-full-output.log",
+          "bytes": 1887552,
+          "sha256": "64eb20c7ddb0057f21e287a27ae743aef270d5ca2b29e00bf7b975389c52e06a",
+          "retainedOnly": true
+        },
+        {
+          "name": "native-r97.ps1",
+          "bytes": 1854,
+          "sha256": "22d461fb16b82335dd4ee18935975ac4a75afefeb1ecf2d0690926becd06574b",
+          "retainedOnly": true
+        }
+      ],
+      "rawHostReceiptCanonicalSha256": "22f25307a4659cd3f300892a293090f4b33b5e5091d3a6ebef6401d175af5d0b",
+      "rawSourceManifestCanonicalSha256": "e1a857ef6fd0d5cf6079057eb016ef1f5c37d457cbe83bb4c567c5c9ed1049b0",
+      "repositorySourceManifestCanonicalSha256": "e1a857ef6fd0d5cf6079057eb016ef1f5c37d457cbe83bb4c567c5c9ed1049b0",
+      "repositorySourceFiles": 1353,
+      "taskSourceInputs": [],
+      "phaseRunnerLaunchRecordedSha256": "38898e876aa2d434638bc2760062727ddccd40de77d1f7d17c2220d067520580"
+    },
+    {
+      "phase": "native-r99",
+      "status": "PASS",
+      "hostElapsedMs": 26407,
+      "exitCode": 0,
+      "sourceFiles": 1353,
+      "sourceInputsUnchanged": true,
+      "changedInputs": [],
+      "cleanup": {
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "cleanupVerified": true,
+        "jobAccountingDrainSucceeded": true
+      },
+      "handlesClosed": true,
+      "rawArtifacts": [
+        {
+          "name": "native-r99-launch.json",
+          "bytes": 187834,
+          "sha256": "0e00b6f47aa1374670b4b36c857c19908c40ae7f69a0cc04511c68c0b3dfe237",
+          "retainedOnly": true
+        },
+        {
+          "name": "native-r99-result.json",
+          "bytes": 1851,
+          "sha256": "1e95add221ae866ce8076c4f52d421a7ebaf07c2352ccb705b2f8e7dcd041a6e",
+          "retainedOnly": true
+        },
+        {
+          "name": "native-r99-full-output.log",
+          "bytes": 1674,
+          "sha256": "b100c751b22f497b032da48426ba0d857b2fd888ba76694c3c479f8fc70edbc5",
+          "retainedOnly": true
+        },
+        {
+          "name": "native-r99-receipt.json",
+          "bytes": 986,
+          "sha256": "903bb803d73ebe7c659101dd36fff8dae953e9ce0aa054686a5957495beb1435",
+          "retainedOnly": true
+        },
+        {
+          "name": "owned-native-r99/launch.json",
+          "bytes": 381,
+          "sha256": "cc012101f26dbd6a6270d6f3a0563aa4dd32fae1e1eac5532baceb9827bb331a",
+          "retainedOnly": true
+        },
+        {
+          "name": "owned-native-r99/host-result.json",
+          "bytes": 1238,
+          "sha256": "c6444bbfe9081e70598f2eba3ab0e910b85f0b73de6f187ac07306bef817fe01",
+          "retainedOnly": true
+        },
+        {
+          "name": "owned-native-r99/stdout.log",
+          "bytes": 401,
+          "sha256": "f292f72b17da2f9de0c3994b6631fa03434db6f45514fa828996c6ff809870d6",
+          "retainedOnly": true
+        },
+        {
+          "name": "owned-native-r99/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedOnly": true
+        },
+        {
+          "name": "native-r99.ps1",
+          "bytes": 1177,
+          "sha256": "8359c633f4d6bc5fe4f59098187a4177bd06a39b262be9ae42c74fa9d1c91e46",
+          "retainedOnly": true
+        }
+      ],
+      "rawHostReceiptCanonicalSha256": "bc564f8f27f74b71ea633f33a39b7248998d706fd0d9e1eaa35482dab5f3796d",
+      "rawSourceManifestCanonicalSha256": "31a202dff20d3a3b0d60cce1faa8736c90b86f51ca20c559b11bdc65b9b1682c",
+      "repositorySourceManifestCanonicalSha256": "31a202dff20d3a3b0d60cce1faa8736c90b86f51ca20c559b11bdc65b9b1682c",
+      "repositorySourceFiles": 1353,
+      "taskSourceInputs": [],
+      "phaseRunnerLaunchRecordedSha256": "eb391c682ced1999ed24e7617bb257ed169387f514f0fbbe158cbf79fa6a9af7"
+    },
+    {
+      "phase": "build-r12",
+      "status": "PASS",
+      "hostElapsedMs": 93961,
+      "exitCode": 0,
+      "sourceFiles": 1222,
+      "sourceInputsUnchanged": true,
+      "changedInputs": [],
+      "cleanup": {
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "cleanupVerified": true,
+        "jobAccountingDrainSucceeded": true
+      },
+      "handlesClosed": true,
+      "rawArtifacts": [
+        {
+          "name": "build-r12-launch.json",
+          "bytes": 171622,
+          "sha256": "56bbf2fa79d41d4fdab9ca63d911d84f98f22fb107625bff0ab56516a619736a",
+          "retainedOnly": true
+        },
+        {
+          "name": "build-r12-result.json",
+          "bytes": 2055,
+          "sha256": "242219615298f93184f918369bca641d839bff28572a9e291d60405cca2767cc",
+          "retainedOnly": true
+        },
+        {
+          "name": "owned-build-r12/launch.json",
+          "bytes": 382,
+          "sha256": "0b3a4167e71bb8c7596bd8f129d4ca42e5b91df680df6c8e773507d9e0fdefa9",
+          "retainedOnly": true
+        },
+        {
+          "name": "owned-build-r12/host-result.json",
+          "bytes": 1395,
+          "sha256": "1a34236ebc1678eb4c22c2a074f538adc9910133d3bff75a5dc31b00b0b67a59",
+          "retainedOnly": true
+        },
+        {
+          "name": "owned-build-r12/stdout.log",
+          "bytes": 1259,
+          "sha256": "4de4fac689bcc17e5713f06c38e43ab78a223b553e52a3ab19b38a57f3580640",
+          "retainedOnly": true
+        },
+        {
+          "name": "owned-build-r12/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedOnly": true
+        },
+        {
+          "name": "scripts/build.ps1",
+          "bytes": 27878,
+          "sha256": "424f91d0be7d8452b85c050a2312b1e61e7541b124200074496dc64ca13af45c",
+          "retainedOnly": true
+        }
+      ],
+      "rawHostReceiptCanonicalSha256": "93fc9f781ca9d1d4ff0cad674e6a6cce46a33b177a9c28a85fadfb7d750af5e1",
+      "rawSourceManifestCanonicalSha256": "f1ab80644e7c2ff65f369058a9230bbee09e11c799791f8c84d9722b344baffe",
+      "repositorySourceManifestCanonicalSha256": "f1ab80644e7c2ff65f369058a9230bbee09e11c799791f8c84d9722b344baffe",
+      "repositorySourceFiles": 1222,
+      "taskSourceInputs": [],
+      "phaseRunnerLaunchRecordedSha256": "38898e876aa2d434638bc2760062727ddccd40de77d1f7d17c2220d067520580"
+    }
+  ],
+  "sourceDeltas": [
+    {
+      "before": "native-r91",
+      "after": "native-r96",
+      "sharedInputs": 1353,
+      "beforeOnlyInputs": 13,
+      "afterOnlyInputs": 0,
+      "changed": [
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+          "beforeSha256": "bd438a571b6ff9d1eab88fe0e21c305c8ea7e2d58f41444df92afb1a2f4a608e",
+          "afterSha256": "ef7cbbe4b5f892a7057306760da388a4688cfaaef2305ff7d09bc332b000aa21"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+          "beforeSha256": "e3f2219de7f4c796994dc2b2913fc4a2615b882c02c196d41faf7b5bd3941fa4",
+          "afterSha256": "47e339442d1c3e50f6e0cb97ae890765e5c63e672658a75b2d7caf7d7a5af752"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+          "beforeSha256": "9982f56957331bd0cd918b8f482b13df090f8f3fd45cad627c8287871fb34ed1",
+          "afterSha256": "3ec2fd7e732d1d5e46e8dea45a946cecb85810e0c7f3da915edcefd30fb324fb"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+          "beforeSha256": "daac77b5eca16ac7aa68201278253014738f7af1c9f85005638149cdfac8ccdb",
+          "afterSha256": "964814f9a16087a7f148bdf630613ba28fbd0587d1e0c13af47f444ade6a4a60"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/PrivateSolverContext.java",
+          "beforeSha256": "70056738d5f7a633b5fc25ac504665ef6a7cdf1aaa48221d6181b38763d987d5",
+          "afterSha256": "6c8042ab431760c7441b08b94ecc03ca29026fd7b360580779bc6a24b820012c"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+          "beforeSha256": "0a91d0670bd329a49cb7b8467f5079f513e9d70fd4e153d7202ae92458cf0325",
+          "afterSha256": "4025420138518d0a6185ebe24350cc8a030f251588bdd00c84d7c9080b0e832f"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/WireCurrentAdjacencyChecks.java",
+          "beforeSha256": "8982d0359f84cf925e8636d80253ce882bce3c25734db22cfd5a5fa93986c45b",
+          "afterSha256": "a03be446a875a6db96ca63ed73404df6181ff8754e339b03a518575dd58de471"
+        }
+      ]
+    },
+    {
+      "before": "native-r96",
+      "after": "native-r97",
+      "sharedInputs": 1353,
+      "beforeOnlyInputs": 0,
+      "afterOnlyInputs": 0,
+      "changed": [
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/PlayerLaunchRequest.java",
+          "beforeSha256": "91ac900b34b1cf4f3e945c0f3090b79079dbdc4698367d4cb885d1150214b914",
+          "afterSha256": "6a433d914c84889492df58daa9be4022954afa182c6865c90eed487ff063f519"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/Rb56QualificationVerifier.java",
+          "beforeSha256": "0302225ae7b6ccf078c0626b26414c1a0ba6e67fb150135fb56b02c7d6f8c63b",
+          "afterSha256": "a29ef38db9ea4d3a8278174ce79dd6cf3e8df5c06ee93fc422d36e606a1aceae"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+          "beforeSha256": "97792582f78565d412341fe19b38082cf1e914be5de0d8aa61512f775eec56cd",
+          "afterSha256": "339d4d46ff2fac6253444155171fa72fb7241d128712f01be3d8272f20566ca0"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/U06SessionDeveloperVerifier.java",
+          "beforeSha256": "cd14580e627b7bfe77a7f5418e7115d9bcd0c750d772b4d25494ca6f26127983",
+          "afterSha256": "cff753c418845f9a425370038a2d6b4f27f5dc4bb179ff30384880ff600cf8a0"
+        },
+        {
+          "path": "tests/browser/quickplay_procedural_acceptance.py",
+          "beforeSha256": "c07da2fad9cca960bc4f1efde78accf082de85c1765a3d602ba11da500dd035d",
+          "afterSha256": "18000e53eb63eb03a57509de8b445054f46ba87faeca645ae8a61e4e75fd4c9d"
+        },
+        {
+          "path": "tests/contracts/P07TwoLayerContractTest.java",
+          "beforeSha256": "34fb380ef33ab0fb2e972b3a575b3d85a1507d076bb811b197264376ec5cc9bc",
+          "afterSha256": "7321e5143b7cce5fa4fa13b77d889284b5888c624ca94648fecb4a3de4a1e22b"
+        },
+        {
+          "path": "tests/contracts/Q30TemporalWorkContractTest.java",
+          "beforeSha256": "2577ee99308311ee0cef5b7e901cf269271e9ad34df0b736bd5f7c3feffa42d4",
+          "afterSha256": "7bc5eea178a8cb06fe4baf83cf3f6030f6d98b3dd37483df9af7f5c054d160f2"
+        },
+        {
+          "path": "tests/contracts/QuickPlayGateContractTest.java",
+          "beforeSha256": "8f59c6329df0f19a2fbdfb068be8e0fae6941c9c7e54b39271e4bf8f4f1fc420",
+          "afterSha256": "3db74eb0eea5d1fca883dd3663ab3c69c7681f7b1eeb568aef95f09e00e01619"
+        },
+        {
+          "path": "tests/contracts/U06SessionSaveContractTest.java",
+          "beforeSha256": "91165a4988612da352b6766dbb9206822e730ea12ac1055bb801c5015415d88f",
+          "afterSha256": "ff2ac987846d59fcd69e9f5a221f81ac7b4f0184aaff124df9d31c25673dc56d"
+        },
+        {
+          "path": "tests/contracts/quickplay_gate_evidence.py",
+          "beforeSha256": "7454965699da2c6cbfa8544be66b3f8726ee6d51f8a5c0a447744e155e64e5a8",
+          "afterSha256": "ff5fff13317417978ff75a8a8e13685f0ae5e199fc5005dbdfbbb2554dd71023"
+        }
+      ]
+    },
+    {
+      "before": "native-r97",
+      "after": "native-r99",
+      "sharedInputs": 1353,
+      "beforeOnlyInputs": 0,
+      "afterOnlyInputs": 0,
+      "changed": [
+        {
+          "path": "tests/contracts/P07TwoLayerContractTest.java",
+          "beforeSha256": "7321e5143b7cce5fa4fa13b77d889284b5888c624ca94648fecb4a3de4a1e22b",
+          "afterSha256": "32465c4db692952f2020488d1202e6dfd68ae12ce5388e68df5b0c99d8e7f25f"
+        }
+      ]
+    },
+    {
+      "before": "build-r12",
+      "after": "native-r99",
+      "sharedInputs": 1222,
+      "beforeOnlyInputs": 0,
+      "afterOnlyInputs": 131,
+      "changed": [],
+      "meaning": "Build and native consumed sets differ by131 test/benchmark inputs; all1222 build inputs are identical. The corrected P07 test is absent from the build input set."
+    }
+  ],
+  "unchangedGeometryModelOwnersAcross91_96_97": [
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "sha256": "49f179d90cec6abf4466d3cb23d8b17e942da42a613528173db2c27f5a46570a"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java",
+      "sha256": "335dc396b4f2f8fcaaa411179c579d55ac927153e86c29d1b9a1805ed7b76556"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java",
+      "sha256": "670afa43ad269266411355cf9a0a30217708c097be41e67390641f58b72c3b4a"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbFootprint.java",
+      "sha256": "322596458d3ad616cff73e66170aa48c0d1d38bb514ec5428dee543472e296a9"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java",
+      "sha256": "16283149636c836e66386d80c0e911acc3ddf91030441f8b65f563ba784922a2"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PhysicalPackage.java",
+      "sha256": "bf6e080bbfd756084115263d6d228d800903841748959aeb05644aae9a7ba239"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PhysicalPackages.java",
+      "sha256": "60f58a4499c10f396654f5d69ea19b7a9a7fd480952fed7196ba8a3c30dc88cd"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+      "sha256": "3463fdedf485c4af7ca9a152e1b378a8ec34102b40ddf4d8f1d0bace939a6cbb"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb56Plan.java",
+      "sha256": "1ea5bd8a17730979f18400ac270e41cf4396101f1c8c1faac77a7b69fced22d2"
+    },
+    {
+      "path": "tests/contracts/Rb56GeometryContractTest.java",
+      "sha256": "a8608eae32bb5d3c6e98c8f0ad24b39f93e67d0dc5a88971e5619567e831ff88"
+    }
+  ],
+  "retainedToolBinariesObservedAfterRuns": [
+    {
+      "role": "powershell",
+      "name": "pwsh.exe",
+      "sha256": "362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139",
+      "hashProvenance": "Observed retained executable after the run; launch receipts pin command/tool selection, not these binary hashes"
+    },
+    {
+      "role": "python",
+      "name": "python3.13.exe",
+      "sha256": "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec",
+      "hashProvenance": "Observed retained executable after the run; launch receipts pin command/tool selection, not these binary hashes"
+    },
+    {
+      "role": "java",
+      "name": "java.exe",
+      "sha256": "e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce",
+      "hashProvenance": "Observed retained executable after the run; launch receipts pin command/tool selection, not these binary hashes"
+    },
+    {
+      "role": "javac",
+      "name": "javac.exe",
+      "sha256": "61fa6463ee5b59004719b9833a16b148740cfa9f2d1f5a95ca598cc90be04c64",
+      "hashProvenance": "Observed retained executable after the run; launch receipts pin command/tool selection, not these binary hashes"
+    }
+  ],
+  "taskEvidenceArtifacts": [
+    {
+      "name": "configured42-route-diagnostic-r1/native91-observer-geometry-audit.json",
+      "bytes": 11764,
+      "sha256": "e588a15a2bd39fcaec9feedcfda52359ecb8f4d9a7c0b70dfc875dd7978fb4f9",
+      "retainedOnly": true
+    },
+    {
+      "name": "configured42-route-diagnostic-r1/native91-capture-summary.json",
+      "bytes": 22638,
+      "sha256": "77e2f89abe9990195cd08cb76fc3403d0f4290de21d127c1fe33a386726286f1",
+      "retainedOnly": true
+    },
+    {
+      "name": "configured42-route-diagnostic-r1/native91-escape-outlet-candidate-r1/candidate.patch",
+      "bytes": 2941,
+      "sha256": "0046e81c3c5cf179314acefc905b98ae7e5fb94ccf73dd1e4284b6a084d74298",
+      "retainedOnly": true
+    },
+    {
+      "name": "configured42-route-diagnostic-r1/version16-epoch5-current-consumers-r2/versions-current-consumers.patch",
+      "bytes": 13683,
+      "sha256": "5b7c903b7e8b3813914528863daeeecd2b67519923f6c9f4e063f25fe4dc03a1",
+      "retainedOnly": true
+    },
+    {
+      "name": "configured42-route-diagnostic-r1/p07-outlet-fixture-r1/P07TwoLayerContractTest.java",
+      "bytes": 30584,
+      "sha256": "7321e5143b7cce5fa4fa13b77d889284b5888c624ca94648fecb4a3de4a1e22b",
+      "retainedOnly": true
+    },
+    {
+      "name": "configured42-route-diagnostic-r1/p07-outlet-fixture-r2/P07TwoLayerContractTest.java",
+      "bytes": 31817,
+      "sha256": "32465c4db692952f2020488d1202e6dfd68ae12ce5388e68df5b0c99d8e7f25f",
+      "retainedOnly": true
+    },
+    {
+      "name": "configured42-route-diagnostic-r1/p07-outlet-fixture-r2/p07-outlet-fixture-correction.patch",
+      "bytes": 3726,
+      "sha256": "5e2eeb206cdebf8bb550c243dc938104d6bc92113aef5649f135d583e9ccbc92",
+      "retainedOnly": true
+    },
+    {
+      "name": "route-outlet-integration-r1.json",
+      "bytes": 953,
+      "sha256": "9e40b8ea836d259920c96d7fb7c6926e8536d887deef5a825a3c07b94b913759",
+      "retainedOnly": true
+    },
+    {
+      "name": "epoch5-outlet-oracle-integration-r2.json",
+      "bytes": 3594,
+      "sha256": "b8a5ae75a08d7e36882497d5c8d6bb5688c4dbe045a9bb94465bce26e7473690",
+      "retainedOnly": true
+    }
+  ],
+  "attemptLedgerSnapshot": {
+    "name": "attempt-ledger.json",
+    "bytes": 2614205,
+    "sha256": "3f8ef95d036d821a21f8bd1cb939b70cd36f534e2ad20c0cacbdfc1e6c192c20",
+    "retainedOnly": true,
+    "selectedRows": [
+      {
+        "phase": "native-r91",
+        "status": "FAIL",
+        "operation": {
+          "elapsedMs": 36928,
+          "exitCode": 1,
+          "reason": null
+        },
+        "cleanupVerified": true,
+        "sourceInputsUnchanged": true,
+        "sourceFiles": 1366,
+        "logSha256": "b90bbf11fe08ea3341914e79db30ff982a8c988f1bf3485e06f3128d93d7ff1c",
+        "passMarkers": [],
+        "failure": [
+          "Exception in thread \"main\" java.lang.AssertionError: RB56 configured42 actual accepted-route oracle remains required",
+          "CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: Rb56GeometryContractTest, exit 1"
+        ],
+        "stderrSha256": "0f833b1970488932b5de5f91cb29e3c0192445db4d0067f32b59e973eb34d3f2",
+        "stderrBytes": 297
+      },
+      {
+        "phase": "native-r96",
+        "status": "PASS",
+        "operation": {
+          "elapsedMs": 92510,
+          "exitCode": 0,
+          "reason": null
+        },
+        "cleanupVerified": true,
+        "sourceInputsUnchanged": true,
+        "sourceFiles": 1353,
+        "logSha256": "db75817e41d3b639e68342364a35bbad5e1190a22dfc762a208f4de79b9bea43",
+        "passMarkers": [
+          "PASS: RB56 dependency capture contracts 1166 assertions cases=3 scope=FULL_CONTEXT_CAPTURE_ONLY normalSessionLoad=false",
+          "PASS: RB56 geometry contracts 1601 assertions cases=3 acceptedRoutes=3 admittedRoutes=3 scope=FIXED_SEEDED_PHYSICAL_CANARIES_ONLY",
+          "PASS: medium physical policy contracts assertions=59 receipt=MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=26436;routes=6;routingWork=19/3520364;p05=3/0;p07=3/3;selectedAttempt=1;ranked=[2, 5, 1, 4, 3, 0];placementScores=[2{total=1046719;electrical=118020;region=9647;connector=6160;corridor=1351;outline=8030400;courtyard=608612;demand=2161511}, 5{total=1054417;electrical=118470;region=8957;connector=5200;corridor=2392;outline=8160000;courtyard=607412;demand=2158311}, 1{total=1072552;electrical=120950;region=9175;connector=5800;corridor=1860;outline=8367600;courtyard=607412;demand=2158311}, 4{total=1160444;electrical=131360;region=10120;connector=6240;corridor=1706;outline=8367400;courtyard=618212;demand=2187111}, 3{total=1181416;electrical=132210;region=9820;connector=7710;corridor=2262;outline=8261100;courtyard=614612;demand=2177511}, 0{total=1223733;electrical=137760;region=11215;connector=6500;corridor=2240;outline=8126600;courtyard=613412;demand=2174311}];selectedScore=1072552;selectedQualityMilli=176948283;routeOutcomes=[P05_ONE_FACE@2=REJECTED:Unable to route net RAIL12 from REN.1@1140,810 to connected tree, P05_ONE_FACE@5=REJECTED:Unable to route net A_COIL_LOW from DA.A@1720,1220 to connected tree, P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@2=SUCCESS, P07_FULLER_TWO_LAYER@5=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS];failure=null",
+          "PASS: medium normal admission contracts 9 assertions",
+          "PASS: P07 two-layer contracts assertions=11776",
+          "PASS: Pcb layer routing resumption contracts assertions=2203",
+          "PASS: focused current contracts; 6 Java suites. Full matrix and independent oracles NOT RUN."
+        ],
+        "failure": [],
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrBytes": 0
+      },
+      {
+        "phase": "native-r97",
+        "status": "FAIL",
+        "operation": {
+          "elapsedMs": 154202,
+          "exitCode": 1,
+          "reason": null
+        },
+        "cleanupVerified": true,
+        "sourceInputsUnchanged": true,
+        "sourceFiles": 1353,
+        "logSha256": "88ec544d2b71c5041f283d7cef25101213b4500138dd59d72a35cc6cbed650df",
+        "passMarkers": [
+          "PASS: U06 session save contracts assertions=34927",
+          "PASS: PlayerSessionFingerprintContractTest assertions=119",
+          "PASS: E04 sensor-control contracts 352 assertions",
+          "PASS: native inductor accepted-state contracts assertions=274 cases=3 scope=RL_REJECTED_STEP_HISTORY_AND_RELAY_ALIAS",
+          "PASS: controlled source derivative contracts 679",
+          "PASS: E06 nominal pilot mechanics assertions=303827262 fidelity=NOMINAL_FIDELITY_NOT_QUALIFIED cases=24 scope=FOCUSED_ELECTRICAL_MATRIX criteria=e06-fidelity-criteria-v1",
+          "PASS: RB56 model-identity contracts assertions=123",
+          "PASS: RB56 assembly contracts assertions=207281 cases=3 BJT=3 NMOS=2 scope=ACTUAL_ASSEMBLED_GRAPH_ONLY",
+          "PASS: RB56 session backing contracts assertions=202 scope=DEVELOPER_MODEL_DIGEST_AND_RESTART_ONLY normalSessionLoad=false",
+          "PASS: RB56 temporal work contracts 295 assertions seed=77 packages=55 fault=RELAY_B_COIL_OPEN units=13 scope=FIXED_TEMPORAL_PILOT_ONLY",
+          "PASS: RB56 dependency capture contracts 1166 assertions cases=3 scope=FULL_CONTEXT_CAPTURE_ONLY normalSessionLoad=false",
+          "PASS: RB56 geometry contracts 1601 assertions cases=3 acceptedRoutes=3 admittedRoutes=3 scope=FIXED_SEEDED_PHYSICAL_CANARIES_ONLY",
+          "PASS: Q30 temporal work contracts 167 assertions oneChannelHealthyFaultedRetestUnits=3/3/3 twoChannelHealthyFaultedRetestUnits=5/5/5",
+          "PASS: medium physical policy contracts assertions=59 receipt=MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=26436;routes=6;routingWork=19/3520364;p05=3/0;p07=3/3;selectedAttempt=1;ranked=[2, 5, 1, 4, 3, 0];placementScores=[2{total=1046719;electrical=118020;region=9647;connector=6160;corridor=1351;outline=8030400;courtyard=608612;demand=2161511}, 5{total=1054417;electrical=118470;region=8957;connector=5200;corridor=2392;outline=8160000;courtyard=607412;demand=2158311}, 1{total=1072552;electrical=120950;region=9175;connector=5800;corridor=1860;outline=8367600;courtyard=607412;demand=2158311}, 4{total=1160444;electrical=131360;region=10120;connector=6240;corridor=1706;outline=8367400;courtyard=618212;demand=2187111}, 3{total=1181416;electrical=132210;region=9820;connector=7710;corridor=2262;outline=8261100;courtyard=614612;demand=2177511}, 0{total=1223733;electrical=137760;region=11215;connector=6500;corridor=2240;outline=8126600;courtyard=613412;demand=2174311}];selectedScore=1072552;selectedQualityMilli=176948283;routeOutcomes=[P05_ONE_FACE@2=REJECTED:Unable to route net RAIL12 from REN.1@1140,810 to connected tree, P05_ONE_FACE@5=REJECTED:Unable to route net A_COIL_LOW from DA.A@1720,1220 to connected tree, P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@2=SUCCESS, P07_FULLER_TWO_LAYER@5=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS];failure=null",
+          "PASS: medium normal admission contracts 9 assertions",
+          "PASS: A07 execution contracts assertions=272227",
+          "PASS: Q30 owned LU zero-row contracts assertions=164",
+          "PASS: Q30 LU pivot collection contracts 388",
+          "PASS: D01 diagnostic contracts assertions=168",
+          "PASS: A03IdentityContractTest assertions=30"
+        ],
+        "failure": [
+          "Exception in thread \"main\" java.lang.IllegalArgumentException: Package does not declare requested PCB pose: U / 400,400|rotation=DEG_90|mount=TOP",
+          "CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: P07TwoLayerContractTest, exit 1"
+        ],
+        "stderrSha256": "043339449358340224cddd2223046b278c2274dcc380e28e3934f16ab15fb62f",
+        "stderrBytes": 298
+      },
+      {
+        "phase": "native-r99",
+        "status": "PASS",
+        "operation": {
+          "elapsedMs": 26407,
+          "exitCode": 0,
+          "reason": null
+        },
+        "cleanupVerified": true,
+        "sourceInputsUnchanged": true,
+        "sourceFiles": 1353,
+        "logSha256": "f292f72b17da2f9de0c3994b6631fa03434db6f45514fa828996c6ff809870d6",
+        "passMarkers": [
+          "PASS: P07 two-layer contracts assertions=11832",
+          "PASS: Pcb layer routing resumption contracts assertions=2203",
+          "PASS: Quick Play gate contracts assertions=27074",
+          "PASS: A02ReplayContractTest assertions=148",
+          "PASS: focused current contracts; 4 Java suites. Full matrix and independent oracles NOT RUN."
+        ],
+        "failure": [],
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrBytes": 0
+      },
+      {
+        "phase": "build-r12",
+        "status": "PASS",
+        "operation": {
+          "elapsedMs": 93961,
+          "exitCode": 0,
+          "reason": null
+        },
+        "cleanupVerified": true,
+        "sourceInputsUnchanged": true,
+        "sourceFiles": 1222,
+        "logSha256": "4de4fac689bcc17e5713f06c38e43ab78a223b553e52a3ab19b38a57f3580640",
+        "passMarkers": [],
+        "failure": [],
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrBytes": 0
+      }
+    ],
+    "logHashMeaning": "Ledger logSha256 is the owned host stdout.log, not native full-output.log; both exact artifacts are separately hashed above."
+  },
+  "priorPacketFilePins": [
+    {
+      "name": "reference-route-evidence-packet-r1/README.txt",
+      "sha256": "90e847e224de0df9f4c1cd150780345b551431d2c99996f1abcd3dc027d68967"
+    },
+    {
+      "name": "reference-route-evidence-packet-r1/evidence.json",
+      "sha256": "23beef037649944f19920ec3b3994aee3667f6036c1d57b2f8a9c51a90b891fc"
+    },
+    {
+      "name": "reference-route-evidence-packet-r1/input-pins.json",
+      "sha256": "56b3b16da72565488f2355bad13072b7f92fb2311046473dc8a28359b5cd527f"
+    },
+    {
+      "name": "reference-route-evidence-packet-r1/packet-audit.json",
+      "sha256": "80cddc9561f811ad16b92ad10a35473e8b061fd59e91df96dcdf71c1189a0eeb"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "protocol": "Q60_SEPARATE40_VISIBLE_R8_PACKET_AUDIT_R1",
+  "status": "PASS_OFFLINE_SOURCE_FIELD_PRESERVATION_AND_SANITIZATION_AUDIT",
+  "originalSessionStatus": "PASS",
+  "overallQ60Status": "FAIL_UNQUALIFIED",
+  "collectorSha256": "d5e5b68389b1e86f10cdde2b67d3f523df54a1cbd1604b9dea1f378872418b3b",
+  "preparedManifestSha256": "917839e41b937dc378b1bdbb8773396ca3f6e1d8f805b07b710c4004c951da32",
+  "originalReceiptCount": 8,
+  "repositoryWrites": 0,
+  "gateLaunches": 0,
+  "historicalInputsUnchanged": true,
+  "files": [
+    {
+      "file": "README.txt",
+      "bytes": 394,
+      "sha256": "cbae013c315229dac20da0f14f4f70621fe829fd607b4f448dc37df5f54d95b5"
+    },
+    {
+      "file": "screenshots/000-menu.png",
+      "bytes": 183105,
+      "sha256": "1f8bb7deb448c130f9ab1c5145d667b4ddb3e195ad16b8a406069492e985b79e"
+    },
+    {
+      "file": "screenshots/001-unrepaired-customer-retest.png",
+      "bytes": 430622,
+      "sha256": "9973db1e0e114846e097ee803ce0f586aa3571b638783438094fc31676dcadd3"
+    },
+    {
+      "file": "screenshots/002-diagnosis-and-original-marking.png",
+      "bytes": 424944,
+      "sha256": "6a9023a9063fb6e22895a8b41e57d26a01df6c0168bd3552d7378c52fd68b29c"
+    },
+    {
+      "file": "screenshots/003-replacement-and-retained-original.png",
+      "bytes": 433895,
+      "sha256": "e2b614d5b9f7d848776a9e6e6bd214019eec7454b9c0150d02a674043621c608"
+    },
+    {
+      "file": "screenshots/004-repaired-customer-retest-pass.png",
+      "bytes": 427833,
+      "sha256": "5385232617b401193bf5bfd5c5e8d07d8d089711656cbf7564235ace29103f8c"
+    },
+    {
+      "file": "visible40-session-r8-evidence-r1.json",
+      "bytes": 2363966,
+      "sha256": "af2b35b9d16e7df7e3a6cc7a98ac872ba0a89b9ae7107d48588616f71f644a9c"
+    }
+  ]
+}

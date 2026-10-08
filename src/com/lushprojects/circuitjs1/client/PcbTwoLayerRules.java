@@ -74,8 +74,8 @@ final class PcbTwoLayerRules {
             int first=boundary.horizontal?copper.x:copper.y;
             int last=first+(boundary.horizontal?copper.width:copper.height);
             if(last>boundary.lowLimit && first<boundary.highLimit) return false;
-            if(domains.contains(boundary.low) && last>boundary.lowLimit ||
-                    domains.contains(boundary.high) && first<boundary.highLimit) return false;
+            if(last>boundary.lowLimit && domains.contains(boundary.low) ||
+                    first<boundary.highLimit && domains.contains(boundary.high)) return false;
         }
         return true;
     }

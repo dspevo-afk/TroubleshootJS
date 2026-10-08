@@ -686,7 +686,7 @@ final class U06SessionDeveloperVerifier {
             "compiled SHA256 two-block standard vector");
         // These bytes are deliberately also frozen in the independent native contract test.
         String wire = "tsj-session/1\ntsj-session-model/1\nrestart\n" +
-            "47:tsj-alpha/4/EASY/LED_INDICATOR/9007199254740993\n" +
+            "47:tsj-alpha/5/EASY/LED_INDICATOR/9007199254740993\n" +
             "13:fixture-build\n19:fixture-realization\n13:fixture-state\n" +
             "HISTORY\n1\n5:RESET\n0:\n0:\n0:\n" +
             "SOURCES\n1\n4:MAIN\n9:CONNECTED\n16:3fd0000000000000\n" +

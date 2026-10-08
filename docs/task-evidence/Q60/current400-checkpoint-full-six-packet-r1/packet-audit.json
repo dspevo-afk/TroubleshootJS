@@ -1,0 +1,45 @@
+{
+  "protocol": "Q60_CURRENT400_CHECKPOINT_PACKET_AUDIT_R1",
+  "status": "PASS_OFFLINE_ALLOWLIST_NUMERIC_SOURCE_SANITIZATION_AUDIT",
+  "files": [
+    {
+      "file": "checkpoint-source-review.json",
+      "bytes": 2023,
+      "sha256": "73888bf8e2cc5f0153c08c4fae10b65db49d61bf1957df876461400cd8df6195"
+    },
+    {
+      "file": "current-checkpoint.md",
+      "bytes": 5944,
+      "sha256": "1283197623bb23892c8545d935b9a460e509392d6d4f80fbbee0d9949c212c9d"
+    },
+    {
+      "file": "current400-full-six-evidence-r1.json",
+      "bytes": 143151,
+      "sha256": "337dc1b165692964dbc98e37caec5202a8bcf16f378ecd410a9e10a6409c66fb"
+    }
+  ],
+  "checks": {
+    "aggregateExactExpectedHash": true,
+    "allSixOriginalOrderAndReportHashes": true,
+    "twoPassFourHypothesesTimeoutsRetained": true,
+    "allSixTask41CleanupTrueCustomerRetestFalse": true,
+    "strictPairAndAggregateFailPreserved": true,
+    "threeRunnerAndHostCleanupsPass": true,
+    "all1222ConsumedBaselineInputsSameAcrossNinePhases": true,
+    "onlyLaterRootCirSimUnrollChangeSeparated": true,
+    "build13FiveCompileLinkMarkers": true,
+    "native97OverallFailAfter20And99Focused4": true,
+    "native98Task41UiRestoreUninvoked": true,
+    "profileCapturedNormalFailNoExactTerminalCount": true,
+    "oneMsComparison25FailNoAdoption": true,
+    "allEightOriginalBytesMatchPointer": true,
+    "aggregateBindingsMatchedExceptOneExplicitPostCollectionSourceChange": true,
+    "privateFieldViolations": [],
+    "repositoryWrites": 0,
+    "gatesRun": 0,
+    "publicWrites": 0,
+    "subsequentUnrollThreeActualClosedGatesSame1222InputsAndCleanupPass": true,
+    "compiled46ActualPrivateCleanupFailureRecoveryAndOriginalCounts": true
+  },
+  "boundary": "Task-only offline draft/evidence audit. Historical passing scopes do not qualify the changed unroll candidate or overall Q60."
+}

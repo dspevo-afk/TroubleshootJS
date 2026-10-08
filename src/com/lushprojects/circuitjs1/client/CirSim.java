@@ -240,6 +240,9 @@ MouseOutHandler, MouseWheelHandler {
 	origRightSide[], origMatrix[][];
     private final LuFactorizationWorkspace luFactorizationWorkspace =
 	new LuFactorizationWorkspace();
+    private static final int LU_BOUNDED_MAX_SIZE = 128;
+    private static final double LU_BOUNDED_ENTRY_LIMIT = 1e100;
+    boolean luBaselineBounded, luCurrentBounded;
     RowInfo circuitRowInfo[];
     int circuitPermute[];
     boolean simRunning;
@@ -2372,15 +2375,15 @@ MouseOutHandler, MouseWheelHandler {
 	}
     }
     // info about each wire and its neighbors, used to calculate wire currents
-    Vector<WireInfo> wireInfoList;
+    WireInfo[] wireInfoList;
     
     // find groups of nodes connected by wires and map them to the same node.  this speeds things
     // up considerably by reducing the size of the matrix
-    void calculateWireClosure() {
+    Vector<WireInfo> calculateWireClosure() {
 	int i;
 	nodeMap = new HashMap<Point,NodeMapEntry>();
 //	int mergeCount = 0;
-	wireInfoList = new Vector<WireInfo>();
+	Vector<WireInfo> wireInfoList = new Vector<WireInfo>();
 	for (i = 0; i != elmList.size(); i++) {
 	    CircuitElm ce = getElm(i);
 	    if (!(ce instanceof WireElm))
@@ -2414,6 +2417,7 @@ MouseOutHandler, MouseWheelHandler {
 	}
 	
 //	console("got " + (groupCount-mergeCount) + " groups with " + nodeMap.size() + " nodes " + mergeCount);
+	return wireInfoList;
     }
     
     // generate info we need to calculate wire currents.  Most other elements calculate currents using
@@ -2423,7 +2427,7 @@ MouseOutHandler, MouseWheelHandler {
     // We create a list of WireInfo objects instead to help us calculate the wire currents instead,
     // so we make the matrix less complex, and we only calculate the wire currents when we need them
     // (once per frame, not once per subiteration)
-    boolean calcWireInfo() {
+    boolean calcWireInfo(Vector<WireInfo> wireInfoList) {
 	int i;
 	int moved = 0;
 	for (i = 0; i != wireInfoList.size(); i++) {
@@ -2761,12 +2765,15 @@ MouseOutHandler, MouseWheelHandler {
 
     void analyzeCircuitOwned(SolverExecutionBoundary.Operation operation) {
         solverExecutor.check(operation);
+        // Only a completed analysis may publish adjacency for this graph.
+        wireInfoList = null;
 	analysisCountForDeveloperVerification++;
 	if (a01MeasurementRunning)
 	    a01AnalysisCount++;
 	if (elmList.isEmpty()) {
 	    postDrawList = new Vector<Point>();
 	    badConnectionList = new Vector<Point>();
+            if (stopMessage == null) wireInfoList = new WireInfo[0];
 	    return;
 	}
 	stopMessage = null;
@@ -2775,7 +2782,7 @@ MouseOutHandler, MouseWheelHandler {
 	nodeList = new Vector<CircuitNode>();
 	postCountMap = new HashMap<Point,Integer>();
 
-	calculateWireClosure();
+	Vector<WireInfo> analyzedWires = calculateWireClosure();
 	setGroundNode();
 
 	// allocate nodes and voltage sources
@@ -2783,7 +2790,7 @@ MouseOutHandler, MouseWheelHandler {
 	makeNodeList();
 	
 	makePostDrawList();
-	if (!calcWireInfo())
+	if (!calcWireInfo(analyzedWires))
 	    return;
 	for (CircuitNode node : nodeList) node.prepareVoltageRecipients();
 	nodeMap = null; // done with this
@@ -2828,10 +2835,13 @@ MouseOutHandler, MouseWheelHandler {
 	} catch (Exception e) {
 	    stop("Exception in stampCircuit()", null);
 	}
+        if (stopMessage == null && circuitMatrix != null)
+            wireInfoList = analyzedWires.toArray(new WireInfo[analyzedWires.size()]);
     }
     
     // stamp the matrix, meaning populate the matrix as required to simulate the circuit (for all linear elements, at least)
     void stampCircuit() {
+        luBaselineBounded = luCurrentBounded = false;
 	if (a01MeasurementRunning)
 	    a01StampCount++;
 	int i;
@@ -3228,8 +3238,13 @@ MouseOutHandler, MouseWheelHandler {
 		i--;
 		j--;
 	    }
-	    circuitMatrix[i][j] += x;
-	    requireFiniteStamp(circuitMatrix[i][j]);
+	    double[] matrixRow = circuitMatrix[i];
+	    double value = matrixRow[j] + x;
+	    matrixRow[j] = value;
+	    requireFiniteStamp(value);
+            if (luCurrentBounded &&
+                    Math.abs(value) > LU_BOUNDED_ENTRY_LIMIT)
+                luCurrentBounded = false;
 	}
     }
 
@@ -3240,8 +3255,15 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     private void requireFiniteMatrix() {
+        luBaselineBounded = luCurrentBounded = false;
+        boolean bounded = circuitMatrixSize >= 0 && circuitMatrixSize <= LU_BOUNDED_MAX_SIZE;
         for (int i = 0; i < circuitMatrixSize; i++)
-            for (int j = 0; j < circuitMatrixSize; j++) requireFiniteStamp(circuitMatrix[i][j]);
+            for (int j = 0; j < circuitMatrixSize; j++) {
+                double value = circuitMatrix[i][j];
+                requireFiniteStamp(value);
+                if (Math.abs(value) > LU_BOUNDED_ENTRY_LIMIT) bounded = false;
+            }
+        luBaselineBounded = luCurrentBounded = bounded;
     }
 
     // stamp value x on the right side of row i, representing an
@@ -3380,7 +3402,9 @@ MouseOutHandler, MouseWheelHandler {
 		    circuitRightSide[i] = origRightSide[i];
 		if (circuitNonLinear) {
                     for (i = 0; i != circuitMatrixSize; i++)
-                        circuitMatrix[i] = copyReducedMatrixRow(origMatrix[i], circuitMatrixSize);
+                        circuitMatrix[i] = restoreReducedMatrixRow(origMatrix[i],
+                                circuitMatrix[i], circuitMatrixSize);
+                    luCurrentBounded = luBaselineBounded;
 		}
 		for (i = 0; i != iterationElementCount; i++)
 		    iterationElements[i].doStep();
@@ -3408,7 +3432,7 @@ MouseOutHandler, MouseWheelHandler {
 		    if (a01MeasurementRunning)
 			a01FactorizationCount++;
 		    if (!lu_factorNonlinearOwned(circuitMatrix, circuitMatrixSize,
-			  circuitPermute, luFactorizationWorkspace)) {
+			  circuitPermute, luFactorizationWorkspace, luCurrentBounded)) {
 			stop("Singular matrix!", null);
 			return;
 		    }
@@ -3548,11 +3572,11 @@ MouseOutHandler, MouseWheelHandler {
 	int i;
 	
 	// for debugging
-	//for (i = 0; i != wireInfoList.size(); i++)
-	 //   wireInfoList.get(i).wire.setCurrent(-1, 1.23);
+	//for (i = 0; i != wireInfoList.length; i++)
+	 //   wireInfoList[i].wire.setCurrent(-1, 1.23);
 	
-	for (i = 0; i != wireInfoList.size(); i++) {
-	    WireInfo wi = wireInfoList.get(i);
+	for (i = 0; i != wireInfoList.length; i++) {
+	    WireInfo wi = wireInfoList[i];
 	    double cur = 0;
 	    int j;
 	    for (j = 0; j != wi.currentNeighbors.length; j++) {
@@ -6487,7 +6511,8 @@ MouseOutHandler, MouseWheelHandler {
     private void updateGeneratedView() {
 	boolean pcbVisible = isPcbWorkbenchVisible() || !troubleshootDebug;
 	menuBar.setVisible(!pcbVisible);
-	buttonPanel.setVisible(!pcbVisible);
+	buttonPanel.setVisible(!pcbVisible || generatedBoardInstance != null);
+	runStopButton.setVisible(!pcbVisible);
 	if (loadFileInput != null)
 	    loadFileInput.setVisible(!pcbVisible);
 	simulationSpeedLabel.setVisible(!pcbVisible);
@@ -8070,6 +8095,30 @@ MouseOutHandler, MouseWheelHandler {
     	}
     }
     
+    /** Restore an owned reduced row; malformed or aliased targets keep the copy fallback. */
+    static double[] restoreReducedMatrixRow(double[] original, double[] working, int size) {
+        if (original == null || size < 0 || size > original.length ||
+                working == null || working.length != size || working == original)
+            return copyReducedMatrixRow(original, size);
+        if (GWT.isScript()) restoreReducedMatrixRowInScript(original, working, size);
+        else System.arraycopy(original, 0, working, 0, size);
+        return working;
+    }
+
+    // Reuse the already typed double[] without replacing its class/cast metadata.
+    private static native void restoreReducedMatrixRowInScript(double[] original,
+            double[] working, int size) /*-{
+        var index = 0;
+        var bulkEnd = size - size % 4;
+        for (; index < bulkEnd; index += 4) {
+            working[index] = original[index];
+            working[index + 1] = original[index + 1];
+            working[index + 2] = original[index + 2];
+            working[index + 3] = original[index + 3];
+        }
+        for (; index < size; index++) working[index] = original[index];
+    }-*/;
+
     /** Copy the active prefix; analysis keeps the original rows at the full size. */
     static double[] copyReducedMatrixRow(double[] original, int size) {
         if (original == null || size < 0 || size > original.length)
@@ -8087,8 +8136,8 @@ MouseOutHandler, MouseWheelHandler {
         return @com.google.gwt.lang.Array::cloneSubrange([Ljava/lang/Object;II)(original, 0, size);
     }-*/;
 
-    // Scratch row references are valid only while one pivot column is processed.
-    // Reused capacity is cleared after each column and in lu_factor's finally block.
+    // Scratch counts delimit rows and columns valid for the current pivot.
+    // Remaining row references are released by the factor call's finally cleanup.
     static final class LuFactorizationWorkspace {
         private double[][] lowerRows = new double[0][];
         private int[] upperColumns = new int[0];
@@ -8119,12 +8168,12 @@ MouseOutHandler, MouseWheelHandler {
         }
 
         private void clearPivot() {
-            for (int i = 0; i < lowerRowCount; i++) lowerRows[i] = null;
             lowerRowCount = 0;
             upperColumnCount = 0;
         }
 
         private void clear() {
+            for (int i = 0; i < activeSize; i++) lowerRows[i] = null;
             clearPivot();
             activeSize = 0;
         }
@@ -8154,16 +8203,21 @@ MouseOutHandler, MouseWheelHandler {
         try {
             workspace.reset(n);
             int i, j;
+            boolean bounded = n >= 0 && n <= LU_BOUNDED_MAX_SIZE;
             for (i = 0; i != n; i++) {
                 boolean row_all_zeros = true;
                 double[] row = a[i];
+                if (bounded)
+                    for (int prior = 0; prior < i; prior++)
+                        if (row == a[prior]) bounded = false;
                 for (j = 0; j != n; j++) {
                     requireFiniteStamp(row[j]);
+                    if (Math.abs(row[j]) > LU_BOUNDED_ENTRY_LIMIT) bounded = false;
                     if (row[j] != 0) row_all_zeros = false;
                 }
                 if (row_all_zeros) return false;
             }
-            return lu_factorAfterInputScan(a, n, ipvt, workspace);
+            return lu_factorAfterInputScan(a, n, ipvt, workspace, bounded);
         } finally {
             workspace.clear();
         }
@@ -8176,6 +8230,11 @@ MouseOutHandler, MouseWheelHandler {
      */
     private static boolean lu_factorNonlinearOwned(double a[][], int n, int ipvt[],
             LuFactorizationWorkspace workspace) {
+        return lu_factorNonlinearOwned(a, n, ipvt, workspace, false);
+    }
+
+    private static boolean lu_factorNonlinearOwned(double a[][], int n, int ipvt[],
+            LuFactorizationWorkspace workspace, boolean bounded) {
         if (workspace == null) throw new IllegalArgumentException("null LU workspace");
         try {
             workspace.reset(n);
@@ -8191,7 +8250,7 @@ MouseOutHandler, MouseWheelHandler {
                 }
                 if (row_all_zeros) return false;
             }
-            return lu_factorAfterInputScan(a, n, ipvt, workspace);
+            return lu_factorAfterInputScan(a, n, ipvt, workspace, bounded);
         } finally {
             workspace.clear();
         }
@@ -8199,7 +8258,7 @@ MouseOutHandler, MouseWheelHandler {
 
     /** Called only after one of the two complete input/zero-row scans above. */
     private static boolean lu_factorAfterInputScan(double a[][], int n, int ipvt[],
-            LuFactorizationWorkspace workspace) {
+            LuFactorizationWorkspace workspace, boolean bounded) {
         int i, j, k;
         // Apply each pivot to the trailing matrix. For any individual entry,
         // pivots still update in ascending k order, matching Crout.
@@ -8265,16 +8324,28 @@ MouseOutHandler, MouseWheelHandler {
                 requireFiniteStamp(mult);
                 double[][] rows = workspace.lowerRows;
                 int candidateCount = workspace.lowerRowCount;
-                int scaledCount = 0;
-                for (int entry = 0; entry < candidateCount; entry++) {
-                    double[] row = rows[entry];
+                // Until the first underflow, every retained row already occupies its slot.
+                int scaleEntry = 0;
+                for (; scaleEntry < candidateCount; scaleEntry++) {
+                    double[] row = rows[scaleEntry];
                     double value = row[k] * mult;
                     requireFiniteStamp(value);
                     row[k] = value;
-                    if (value != 0) rows[scaledCount++] = row;
+                    if (value == 0) break;
                 }
-                for (int entry = scaledCount; entry < candidateCount; entry++)
-                    rows[entry] = null;
+                int scaledCount = scaleEntry;
+                if (scaleEntry < candidateCount) {
+                    // The first zero was scaled above; compact only the remaining suffix.
+                    for (scaleEntry++; scaleEntry < candidateCount; scaleEntry++) {
+                        double[] row = rows[scaleEntry];
+                        double value = row[k] * mult;
+                        requireFiniteStamp(value);
+                        row[k] = value;
+                        if (value != 0) rows[scaledCount++] = row;
+                    }
+                }
+                for (scaleEntry = scaledCount; scaleEntry < candidateCount; scaleEntry++)
+                    rows[scaleEntry] = null;
                 workspace.lowerRowCount = scaledCount;
 
                 // With no nonzero lower factor there is no trailing update.
@@ -8286,6 +8357,11 @@ MouseOutHandler, MouseWheelHandler {
                 }
 
                 double[] pivotRow = a[k];
+                if (bounded) {
+                    lu_applyBoundedTrailingUpdates(rows, scaledCount, pivotRow, k, n);
+                    workspace.clearPivot();
+                    continue;
+                }
                 for (j = k+1; j != n; j++)
                     if (pivotRow[j] != 0) workspace.appendUpperColumn(j);
 
@@ -8296,14 +8372,69 @@ MouseOutHandler, MouseWheelHandler {
                     workspace.clearPivot();
                     continue;
                 }
-                for (int entry = 0; entry < rowCount; entry++) {
-                    double[] row = rows[entry];
-                    double factor = row[k];
-                    for (int upper = 0; upper < upperCount; upper++) {
-                        j = columns[upper];
-                        double value = row[j] - factor * pivotRow[j];
-                        requireFiniteStamp(value);
-                        row[j] = value;
+                if (upperCount < 4) {
+                    for (int entry = 0; entry < rowCount; entry++) {
+                        double[] row = rows[entry];
+                        double factor = row[k];
+                        for (int upper = 0; upper < upperCount; upper++) {
+                            j = columns[upper];
+                            double value = row[j] - factor * pivotRow[j];
+                            requireFiniteStamp(value);
+                            row[j] = value;
+                        }
+                    }
+                } else {
+                    int upperBulkEnd = upperCount - upperCount % 4;
+                    int column0 = columns[0];
+                    int column1 = columns[1];
+                    int column2 = columns[2];
+                    int column3 = columns[3];
+                    for (int entry = 0; entry < rowCount; entry++) {
+                        double[] row = rows[entry];
+                        double factor = row[k];
+                        {
+                            j = column0;
+                            double value = row[j] - factor * pivotRow[j];
+                            requireFiniteStamp(value);
+                            row[j] = value;
+                            j = column1;
+                            value = row[j] - factor * pivotRow[j];
+                            requireFiniteStamp(value);
+                            row[j] = value;
+                            j = column2;
+                            value = row[j] - factor * pivotRow[j];
+                            requireFiniteStamp(value);
+                            row[j] = value;
+                            j = column3;
+                            value = row[j] - factor * pivotRow[j];
+                            requireFiniteStamp(value);
+                            row[j] = value;
+                        }
+                        int upper = 4;
+                        for (; upper < upperBulkEnd; upper += 4) {
+                            j = columns[upper];
+                            double value = row[j] - factor * pivotRow[j];
+                            requireFiniteStamp(value);
+                            row[j] = value;
+                            j = columns[upper + 1];
+                            value = row[j] - factor * pivotRow[j];
+                            requireFiniteStamp(value);
+                            row[j] = value;
+                            j = columns[upper + 2];
+                            value = row[j] - factor * pivotRow[j];
+                            requireFiniteStamp(value);
+                            row[j] = value;
+                            j = columns[upper + 3];
+                            value = row[j] - factor * pivotRow[j];
+                            requireFiniteStamp(value);
+                            row[j] = value;
+                        }
+                        for (; upper < upperCount; upper++) {
+                            j = columns[upper];
+                            double value = row[j] - factor * pivotRow[j];
+                            requireFiniteStamp(value);
+                            row[j] = value;
+                        }
                     }
                 }
                 workspace.clearPivot();
@@ -8311,6 +8442,313 @@ MouseOutHandler, MouseWheelHandler {
         }
         return true;
     }
+    /**
+     * Distinct finite inputs <= 1e100 and n <= 128 have bound B_k = 2^(333+2*k).
+     * Partial pivoting and the guarded reciprocal give |factor| < 2; each update stays < 4*B_k.
+     */
+    private static void lu_applyBoundedTrailingUpdates(double[][] rows, int rowCount,
+            double[] pivotRow, int k, int n) {
+        // Read each immutable pivot entry once; the bounded rows cannot change it.
+        int rowBulkEnd = rowCount - rowCount % 4;
+        int next = k + 1;
+        for (;;) {
+            int column0 = next;
+            double pivot0;
+            for (;;) {
+                if (column0 == n) return;
+                pivot0 = pivotRow[column0];
+                if (pivot0 != 0) break;
+                column0++;
+            }
+            int column1 = column0 + 1;
+            double pivot1;
+            for (;;) {
+                if (column1 == n) {
+                    for (int entry = 0; entry < rowCount; entry++) {
+                        double[] row = rows[entry];
+                        double factor = row[k];
+                        double value = row[column0] - factor * pivot0;
+                        row[column0] = value;
+                    }
+                    return;
+                }
+                pivot1 = pivotRow[column1];
+                if (pivot1 != 0) break;
+                column1++;
+            }
+            int column2 = column1 + 1;
+            double pivot2;
+            for (;;) {
+                if (column2 == n) {
+                    for (int entry = 0; entry < rowCount; entry++) {
+                        double[] row = rows[entry];
+                        double factor = row[k];
+                        double value = row[column0] - factor * pivot0;
+                        row[column0] = value;
+                        value = row[column1] - factor * pivot1;
+                        row[column1] = value;
+                    }
+                    return;
+                }
+                pivot2 = pivotRow[column2];
+                if (pivot2 != 0) break;
+                column2++;
+            }
+            int column3 = column2 + 1;
+            double pivot3;
+            for (;;) {
+                if (column3 == n) {
+                    for (int entry = 0; entry < rowCount; entry++) {
+                        double[] row = rows[entry];
+                        double factor = row[k];
+                        double value = row[column0] - factor * pivot0;
+                        row[column0] = value;
+                        value = row[column1] - factor * pivot1;
+                        row[column1] = value;
+                        value = row[column2] - factor * pivot2;
+                        row[column2] = value;
+                    }
+                    return;
+                }
+                pivot3 = pivotRow[column3];
+                if (pivot3 != 0) break;
+                column3++;
+            }
+            int width;
+            int column4 = column3 + 1;
+            int column5 = 0, column6 = 0, column7 = 0;
+            double pivot4 = 0, pivot5 = 0, pivot6 = 0, pivot7 = 0;
+            gatherEight: {
+                for (;;) {
+                    if (column4 == n) {
+                        width = 4;
+                        break gatherEight;
+                    }
+                    pivot4 = pivotRow[column4];
+                    if (pivot4 != 0) break;
+                    column4++;
+                }
+                column5 = column4 + 1;
+                for (;;) {
+                    if (column5 == n) {
+                        width = 5;
+                        break gatherEight;
+                    }
+                    pivot5 = pivotRow[column5];
+                    if (pivot5 != 0) break;
+                    column5++;
+                }
+                column6 = column5 + 1;
+                for (;;) {
+                    if (column6 == n) {
+                        width = 6;
+                        break gatherEight;
+                    }
+                    pivot6 = pivotRow[column6];
+                    if (pivot6 != 0) break;
+                    column6++;
+                }
+                column7 = column6 + 1;
+                for (;;) {
+                    if (column7 == n) {
+                        width = 7;
+                        break gatherEight;
+                    }
+                    pivot7 = pivotRow[column7];
+                    if (pivot7 != 0) break;
+                    column7++;
+                }
+                width = 8;
+            }
+            if (width == 8) {
+                int entry = 0;
+                for (; entry < rowBulkEnd; entry += 4) {
+                    double[] row = rows[entry];
+                    double factor = row[k];
+                    double value = row[column0] - factor * pivot0;
+                    row[column0] = value;
+                    value = row[column1] - factor * pivot1;
+                    row[column1] = value;
+                    value = row[column2] - factor * pivot2;
+                    row[column2] = value;
+                    value = row[column3] - factor * pivot3;
+                    row[column3] = value;
+                    value = row[column4] - factor * pivot4;
+                    row[column4] = value;
+                    value = row[column5] - factor * pivot5;
+                    row[column5] = value;
+                    value = row[column6] - factor * pivot6;
+                    row[column6] = value;
+                    value = row[column7] - factor * pivot7;
+                    row[column7] = value;
+                    row = rows[entry + 1];
+                    factor = row[k];
+                    value = row[column0] - factor * pivot0;
+                    row[column0] = value;
+                    value = row[column1] - factor * pivot1;
+                    row[column1] = value;
+                    value = row[column2] - factor * pivot2;
+                    row[column2] = value;
+                    value = row[column3] - factor * pivot3;
+                    row[column3] = value;
+                    value = row[column4] - factor * pivot4;
+                    row[column4] = value;
+                    value = row[column5] - factor * pivot5;
+                    row[column5] = value;
+                    value = row[column6] - factor * pivot6;
+                    row[column6] = value;
+                    value = row[column7] - factor * pivot7;
+                    row[column7] = value;
+                    row = rows[entry + 2];
+                    factor = row[k];
+                    value = row[column0] - factor * pivot0;
+                    row[column0] = value;
+                    value = row[column1] - factor * pivot1;
+                    row[column1] = value;
+                    value = row[column2] - factor * pivot2;
+                    row[column2] = value;
+                    value = row[column3] - factor * pivot3;
+                    row[column3] = value;
+                    value = row[column4] - factor * pivot4;
+                    row[column4] = value;
+                    value = row[column5] - factor * pivot5;
+                    row[column5] = value;
+                    value = row[column6] - factor * pivot6;
+                    row[column6] = value;
+                    value = row[column7] - factor * pivot7;
+                    row[column7] = value;
+                    row = rows[entry + 3];
+                    factor = row[k];
+                    value = row[column0] - factor * pivot0;
+                    row[column0] = value;
+                    value = row[column1] - factor * pivot1;
+                    row[column1] = value;
+                    value = row[column2] - factor * pivot2;
+                    row[column2] = value;
+                    value = row[column3] - factor * pivot3;
+                    row[column3] = value;
+                    value = row[column4] - factor * pivot4;
+                    row[column4] = value;
+                    value = row[column5] - factor * pivot5;
+                    row[column5] = value;
+                    value = row[column6] - factor * pivot6;
+                    row[column6] = value;
+                    value = row[column7] - factor * pivot7;
+                    row[column7] = value;
+                }
+                for (; entry < rowCount; entry++) {
+                    double[] row = rows[entry];
+                    double factor = row[k];
+                    double value = row[column0] - factor * pivot0;
+                    row[column0] = value;
+                    value = row[column1] - factor * pivot1;
+                    row[column1] = value;
+                    value = row[column2] - factor * pivot2;
+                    row[column2] = value;
+                    value = row[column3] - factor * pivot3;
+                    row[column3] = value;
+                    value = row[column4] - factor * pivot4;
+                    row[column4] = value;
+                    value = row[column5] - factor * pivot5;
+                    row[column5] = value;
+                    value = row[column6] - factor * pivot6;
+                    row[column6] = value;
+                    value = row[column7] - factor * pivot7;
+                    row[column7] = value;
+                }
+                next = column7 + 1;
+                continue;
+            }
+            int entry = 0;
+            for (; entry < rowBulkEnd; entry += 4) {
+                double[] row = rows[entry];
+                double factor = row[k];
+                double value = row[column0] - factor * pivot0;
+                row[column0] = value;
+                value = row[column1] - factor * pivot1;
+                row[column1] = value;
+                value = row[column2] - factor * pivot2;
+                row[column2] = value;
+                value = row[column3] - factor * pivot3;
+                row[column3] = value;
+                row = rows[entry + 1];
+                factor = row[k];
+                value = row[column0] - factor * pivot0;
+                row[column0] = value;
+                value = row[column1] - factor * pivot1;
+                row[column1] = value;
+                value = row[column2] - factor * pivot2;
+                row[column2] = value;
+                value = row[column3] - factor * pivot3;
+                row[column3] = value;
+                row = rows[entry + 2];
+                factor = row[k];
+                value = row[column0] - factor * pivot0;
+                row[column0] = value;
+                value = row[column1] - factor * pivot1;
+                row[column1] = value;
+                value = row[column2] - factor * pivot2;
+                row[column2] = value;
+                value = row[column3] - factor * pivot3;
+                row[column3] = value;
+                row = rows[entry + 3];
+                factor = row[k];
+                value = row[column0] - factor * pivot0;
+                row[column0] = value;
+                value = row[column1] - factor * pivot1;
+                row[column1] = value;
+                value = row[column2] - factor * pivot2;
+                row[column2] = value;
+                value = row[column3] - factor * pivot3;
+                row[column3] = value;
+            }
+            for (; entry < rowCount; entry++) {
+                double[] row = rows[entry];
+                double factor = row[k];
+                double value = row[column0] - factor * pivot0;
+                row[column0] = value;
+                value = row[column1] - factor * pivot1;
+                row[column1] = value;
+                value = row[column2] - factor * pivot2;
+                row[column2] = value;
+                value = row[column3] - factor * pivot3;
+                row[column3] = value;
+            }
+            if (width == 4) return;
+            if (width == 5) {
+                for (int tailEntry = 0; tailEntry < rowCount; tailEntry++) {
+                    double[] row = rows[tailEntry];
+                    double factor = row[k];
+                    double value = row[column4] - factor * pivot4;
+                    row[column4] = value;
+                }
+                return;
+            }
+            if (width == 6) {
+                for (int tailEntry = 0; tailEntry < rowCount; tailEntry++) {
+                    double[] row = rows[tailEntry];
+                    double factor = row[k];
+                    double value = row[column4] - factor * pivot4;
+                    row[column4] = value;
+                    value = row[column5] - factor * pivot5;
+                    row[column5] = value;
+                }
+                return;
+            }
+            for (int tailEntry = 0; tailEntry < rowCount; tailEntry++) {
+                double[] row = rows[tailEntry];
+                double factor = row[k];
+                double value = row[column4] - factor * pivot4;
+                row[column4] = value;
+                value = row[column5] - factor * pivot5;
+                row[column5] = value;
+                value = row[column6] - factor * pivot6;
+                row[column6] = value;
+            }
+            return;
+        }
+    }
+
     // Solves the set of n linear equations using a LU factorization
     // previously performed by lu_factor.  On input, b[0..n-1] is the right
     // hand side of the equations, and on output, contains the solution.

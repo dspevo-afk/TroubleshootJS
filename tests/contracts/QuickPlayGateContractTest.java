@@ -36,18 +36,18 @@ public final class QuickPlayGateContractTest {
     }
     private static void replayEpoch() {
         boolean stale = false;
-        try { PlayerLaunchRequest.parse("tsj-alpha/3/MEDIUM/RB30_CONTROL/13"); }
+        try { PlayerLaunchRequest.parse("tsj-alpha/4/MEDIUM/RB30_CONTROL/13"); }
         catch (IllegalArgumentException expected) {
             stale = "Unsupported replay identity or epoch".equals(expected.getMessage());
         }
-        check(stale, "A v3 Q30 replay silently adopted the v4 interpretation");
+        check(stale, "A v4 Q30 replay silently adopted the v5 interpretation");
         for (long seed : new long[] {Long.MIN_VALUE, Long.MIN_VALUE + 1, -9007199254740993L,
                 -1, 0, 1, 9007199254740993L, Long.MAX_VALUE - 1, Long.MAX_VALUE}) {
-            String replay = "tsj-alpha/4/MEDIUM/RB30_CONTROL/" + Long.toString(seed);
+            String replay = "tsj-alpha/5/MEDIUM/RB30_CONTROL/" + Long.toString(seed);
             PlayerLaunchRequest decoded = PlayerLaunchRequest.parse(replay);
             check(decoded.seed == seed && decoded.profile == DifficultyProfile.MEDIUM &&
                     Rb30Plan.FAMILY_ID.equals(decoded.familyId) && replay.equals(decoded.replay()),
-                "Current v4 replay rounded or reinterpreted signed-long seed " + seed);
+                "Current v5 replay rounded or reinterpreted signed-long seed " + seed);
         }
     }
 

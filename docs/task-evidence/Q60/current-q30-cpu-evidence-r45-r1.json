@@ -1,0 +1,497 @@
+{
+  "schema": 1,
+  "status": "SANITIZED_OFFLINE_R45_CPU_ATTRIBUTION",
+  "scope": "One retained ordinary Q30 seed10014 run; no corpus or qualification acceptance",
+  "case": {
+    "family": "RB30_CONTROL",
+    "profile": "MEDIUM",
+    "seed": "10014",
+    "replayEpoch": "tsj-alpha/5",
+    "packagesFromFrozenPlan": 40,
+    "channelsFromFrozenPlan": 2
+  },
+  "outcomes": {
+    "ordinaryGeneration": "FAIL",
+    "cpuCapture": "CAPTURED",
+    "offlineAttribution": "PASS",
+    "applicationLimits": {
+      "jobMillis": 90000,
+      "sharedWorkUnits": 640,
+      "activeOperationMillis": 5000
+    },
+    "hostObservationSeconds": 115,
+    "nativeOuterSeconds": 300,
+    "rootHostElapsedMs": 98824,
+    "wrapperElapsedSeconds": 98.36063819998526,
+    "observedCaseElapsedSeconds": 91.24847279998357,
+    "lastSampledPhase": "Verify measurements and repairs",
+    "lastSampledUnits": 436,
+    "sampledProgressIsExactTerminalWork": false
+  },
+  "cleanup": {
+    "sourceInputsUnchanged": true,
+    "changedInputCount": 0,
+    "rootSourceFileCount": 1222,
+    "nativeJobActiveProcesses": 0,
+    "nativeHandlesClosed": true,
+    "nativeCleanupVerified": true,
+    "nativeDrainsComplete": true,
+    "nativeLiveDrainers": 0,
+    "nativeDrainerErrorCount": 0,
+    "browserServerStopped": true,
+    "browserPortClosed": true,
+    "browserOwnedSurvivorCount": 0
+  },
+  "sourcePins": {
+    "captureBeforeUnroll": {
+      "authority": "repository-source",
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "sha256": "ef7cbbe4b5f892a7057306760da388a4688cfaaef2305ff7d09bc332b000aa21"
+    },
+    "integratedUnrollAfterCapture": {
+      "authority": "repository-source",
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "sha256": "a5f3fa34408865badbe3bcef05eb9fa989841bc3ae17c1722582b0dc3231af91"
+    },
+    "interpretation": "The captured profile measures pre-unroll row-reuse and typed-wire production. It is not a measurement of the subsequent four-value unroll."
+  },
+  "profile": {
+    "sha256": "f17e0b6838d674233e7703fd32262927175595583934f472e4fbce69fc00ae1e",
+    "nominalSamplingIntervalMicros": 2000,
+    "samples": 38391,
+    "signedDeltaSumMs": 91337.734,
+    "sampleWeightedMs": 91337.739,
+    "profilerDurationMs": 91337.944,
+    "negativeDeltaAnomalies": [
+      {
+        "sampleIndex": 3874,
+        "deltaMicros": -5
+      }
+    ],
+    "negativeDeltaTreatment": "Preserve raw signed timeline and anomaly; exclude negative sample weights. Weighted total exceeds signed total by0.005ms."
+  },
+  "mappedIdentity": {
+    "method": "Unique exhaustive named-function declaration location match across five copied captured response bodies",
+    "strongName": "83B3676CC4C0BC615E46B448CF923427",
+    "compiledResponse": "83B3676CC4C0BC615E46B448CF923427.cache.js",
+    "compiledResponseSha256": "d31a27e8e31c705ff2af5624236675fde59fe4693b47d29727a7df8c7b726ab9",
+    "symbolMap": "83B3676CC4C0BC615E46B448CF923427.symbolMap",
+    "symbolMapSha256": "a679442e5c9849521cc525d06ab94af3b95cefc816d944b4cdd77f24ead095e0",
+    "decodedScriptSha256": "4512605ebe86d30a96bddabf285171a13a539633a84c582f50cf987731adfbdf",
+    "exactNamedAliasLocations": 1147,
+    "exactNamedIncludingBlankUrlLocations": 1386,
+    "fivePermutationLocationMatches": [
+      {
+        "file": "1F39EB552A6B01828BF6300ED8DA7F6C.cache.js",
+        "matchedLocations": 0,
+        "totalLocations": 1147,
+        "sha256": "ceea20d7b870147642daae792a9fb2c198a62c5cddefd436a0daa42031c9b1a8"
+      },
+      {
+        "file": "83B3676CC4C0BC615E46B448CF923427.cache.js",
+        "matchedLocations": 1147,
+        "totalLocations": 1147,
+        "sha256": "d31a27e8e31c705ff2af5624236675fde59fe4693b47d29727a7df8c7b726ab9"
+      },
+      {
+        "file": "B9AF4B1668CFE0B01889EFB7965A2927.cache.js",
+        "matchedLocations": 2,
+        "totalLocations": 1147,
+        "sha256": "f8f5513da938af58f28d0411002f327f1acb965b819cc77ef7c9894c5f73ecf5"
+      },
+      {
+        "file": "C7805C0DCB93807A75EF86E1837D7362.cache.js",
+        "matchedLocations": 2,
+        "totalLocations": 1147,
+        "sha256": "133fbebcb879640ca41175bd7cca1fcdbaedd9c90af251e41114df9a6fa2b3f1"
+      },
+      {
+        "file": "CDA73E11744C4201B6CA10D102104E83.cache.js",
+        "matchedLocations": 1,
+        "totalLocations": 1147,
+        "sha256": "356583cf75af33772bf2c215061ecbe12dce99a898c0e9ccfd55e76793c78157"
+      }
+    ]
+  },
+  "inclusiveCategorySampleMs": {
+    "GWT array/cast incl": 3245.577,
+    "PCB routing/layout incl": 8195.635,
+    "PCB geometry validation incl": 614.943,
+    "owned checks and finite vector validation incl": 767.477,
+    "graph analysis incl": 1840.751,
+    "core runCircuitOwned incl": 75254.397,
+    "temporal solver advanceFor incl": 76409.197,
+    "LU factor incl": 31991.733,
+    "LU solve incl": 9835.53,
+    "matrix row copy incl": 7546.313,
+    "wire current processing incl": 3534.284,
+    "relay model incl": 992.545,
+    "Inductor helper incl": 128.546
+  },
+  "namedFunctionCosts": [
+    {
+      "javaClass": "com.lushprojects.circuitjs1.client.CirSim",
+      "javaMember": "lu_factorAfterInputScan",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": 8224,
+      "selfSampleMs": 28467.747,
+      "inclusiveSampleMs": 30188.031,
+      "selfSamplePercent": 31.167562621623468,
+      "compiledFunction": "aXb",
+      "zeroBasedCompiledLine": 9334,
+      "zeroBasedCompiledColumn": 12
+    },
+    {
+      "javaClass": "com.lushprojects.circuitjs1.client.CirSim",
+      "javaMember": "lu_solve",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": 8340,
+      "selfSampleMs": 9701.797,
+      "inclusiveSampleMs": 9835.53,
+      "selfSamplePercent": 10.621893103791413,
+      "compiledFunction": "cXb",
+      "zeroBasedCompiledLine": 8788,
+      "zeroBasedCompiledColumn": 12
+    },
+    {
+      "javaClass": "com.lushprojects.circuitjs1.client.CirSim",
+      "javaMember": "restoreReducedMatrixRowInScript",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": 8091,
+      "selfSampleMs": 7323.144,
+      "inclusiveSampleMs": 7323.144,
+      "selfSamplePercent": 8.017654126516094,
+      "compiledFunction": "CXb",
+      "zeroBasedCompiledLine": 2505,
+      "zeroBasedCompiledColumn": 12
+    },
+    {
+      "javaClass": "com.lushprojects.circuitjs1.client.CirSim",
+      "javaMember": "$runCircuitOwned",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": 3314,
+      "selfSampleMs": 5211.916,
+      "inclusiveSampleMs": 75254.397,
+      "selfSamplePercent": 5.706202120899883,
+      "compiledFunction": "pVb",
+      "zeroBasedCompiledLine": 9875,
+      "zeroBasedCompiledColumn": 12
+    },
+    {
+      "javaClass": "com.lushprojects.circuitjs1.client.CircuitNode",
+      "javaMember": "$applyVoltage",
+      "source": "com/lushprojects/circuitjs1/client/CircuitNode.java",
+      "sourceLine": 45,
+      "selfSampleMs": 3173.318,
+      "inclusiveSampleMs": 6108.046,
+      "selfSamplePercent": 3.474268177363138,
+      "compiledFunction": "rZb",
+      "zeroBasedCompiledLine": 5368,
+      "zeroBasedCompiledColumn": 12
+    },
+    {
+      "javaClass": "com.lushprojects.circuitjs1.client.CirSim",
+      "javaMember": "$calcWireCurrents",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": 3554,
+      "selfSampleMs": 2094.275,
+      "inclusiveSampleMs": 3534.284,
+      "selfSamplePercent": 2.2928912221048083,
+      "compiledFunction": "mSb",
+      "zeroBasedCompiledLine": 6235,
+      "zeroBasedCompiledColumn": 12
+    },
+    {
+      "javaClass": "com.lushprojects.circuitjs1.client.CirSim",
+      "javaMember": "lu_factorNonlinearOwned",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": 8200,
+      "selfSampleMs": 1798.809,
+      "inclusiveSampleMs": 31991.733,
+      "selfSamplePercent": 1.9694039065276183,
+      "compiledFunction": "bXb",
+      "zeroBasedCompiledLine": 6885,
+      "zeroBasedCompiledColumn": 12
+    },
+    {
+      "javaClass": "com.google.gwt.lang.Cast",
+      "javaMember": "canCast",
+      "source": "com/google/gwt/dev/jjs/intrinsic/com/google/gwt/lang/Cast.java",
+      "sourceLine": 40,
+      "selfSampleMs": 1541.263,
+      "inclusiveSampleMs": 1698.186,
+      "selfSamplePercent": 1.6874328364970803,
+      "compiledFunction": "Ss",
+      "zeroBasedCompiledLine": 2851,
+      "zeroBasedCompiledColumn": 11
+    },
+    {
+      "javaClass": "com.lushprojects.circuitjs1.client.CirSim",
+      "javaMember": "requireFiniteStamp",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": 3242,
+      "selfSampleMs": 1540.705,
+      "inclusiveSampleMs": 1540.705,
+      "selfSamplePercent": 1.68682191706103,
+      "compiledFunction": "AXb",
+      "zeroBasedCompiledLine": 4832,
+      "zeroBasedCompiledColumn": 12
+    },
+    {
+      "javaClass": "com.lushprojects.circuitjs1.client.CirSim",
+      "javaMember": "$setNodeVoltages",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": 3545,
+      "selfSampleMs": 1259.498,
+      "inclusiveSampleMs": 8233.114,
+      "selfSamplePercent": 1.3789458922340962,
+      "compiledFunction": "TVb",
+      "zeroBasedCompiledLine": 3696,
+      "zeroBasedCompiledColumn": 12
+    },
+    {
+      "javaClass": "com.lushprojects.circuitjs1.client.CircuitSolverExecutor",
+      "javaMember": "$advanceFor",
+      "source": "com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+      "sourceLine": 142,
+      "selfSampleMs": 1174.659,
+      "inclusiveSampleMs": 76409.197,
+      "selfSamplePercent": 1.2860609566873558,
+      "compiledFunction": "GZb",
+      "zeroBasedCompiledLine": 8728,
+      "zeroBasedCompiledColumn": 12
+    },
+    {
+      "javaClass": "com.lushprojects.circuitjs1.client.CirSim",
+      "javaMember": "$applySolvedRightSide",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": 3515,
+      "selfSampleMs": 1123.548,
+      "inclusiveSampleMs": 9378.856,
+      "selfSamplePercent": 1.230102707052996,
+      "compiledFunction": "iSb",
+      "zeroBasedCompiledLine": 8165,
+      "zeroBasedCompiledColumn": 12
+    },
+    {
+      "javaClass": "com.lushprojects.circuitjs1.client.CirSim",
+      "javaMember": "restoreReducedMatrixRow",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": 8081,
+      "selfSampleMs": 223.169,
+      "inclusiveSampleMs": 7546.313,
+      "selfSamplePercent": 0.24433383445149656,
+      "compiledFunction": "BXb",
+      "zeroBasedCompiledLine": 5692,
+      "zeroBasedCompiledColumn": 12
+    }
+  ],
+  "costInterpretation": "Self costs attribute the sampled leaf. Inclusive costs cover stacks, overlap across nested functions/categories, and are nonadditive. Samples are weighted elapsed attribution rather than exact OS CPU or operation counts.",
+  "observedPhases": [
+    {
+      "phase": 1,
+      "label": "Resolve circuit",
+      "domSamples": 1,
+      "firstElapsedMs": 4,
+      "lastElapsedMs": 4,
+      "firstUnits": 0,
+      "lastUnits": 0,
+      "sampleWeightedMs": 0.0
+    },
+    {
+      "phase": 2,
+      "label": "Build and test healthy circuit",
+      "domSamples": 35,
+      "firstElapsedMs": 278,
+      "lastElapsedMs": 13750,
+      "firstUnits": 2,
+      "lastUnits": 51,
+      "sampleWeightedMs": 13425.026972656166
+    },
+    {
+      "phase": 4,
+      "label": "Verify measurements and repairs",
+      "domSamples": 99,
+      "firstElapsedMs": 14030,
+      "lastElapsedMs": 89445,
+      "firstUnits": 57,
+      "lastUnits": 436,
+      "sampleWeightedMs": 75368.02197265583
+    }
+  ],
+  "repairPhaseInclusiveCategorySampleMs": {
+    "GWT array/cast incl": 1798.0,
+    "PCB routing/layout incl": 0.0,
+    "PCB geometry validation incl": 193.688,
+    "owned checks and finite vector validation incl": 691.063,
+    "graph analysis incl": 1771.577,
+    "core runCircuitOwned incl": 68759.059,
+    "temporal solver advanceFor incl": 69800.546,
+    "LU factor incl": 29100.468,
+    "LU solve incl": 9045.594,
+    "matrix row copy incl": 6851.207,
+    "wire current processing incl": 3243.288,
+    "relay model incl": 892.346,
+    "Inductor helper incl": 116.179
+  },
+  "phaseInterpretation": "Only conservative interiors of actual same-label DOM observations are attributed; exact phase boundaries are unavailable.",
+  "ownedCpuSummary": {
+    "commonIdentityMatchedOwnedProcessCpuMs": 96062.5,
+    "profileCommandWallMs": 91288.87489999761,
+    "processRolesRetained": false,
+    "beforeIdentityReadErrorCount": 0,
+    "afterIdentityReadErrorCount": 1,
+    "scope": "Only pre-launch identity-matched owned processes retained at both brackets; later children and exited processes can be omitted. No renderer role is inferred."
+  },
+  "candidate": {
+    "name": "Four-value row-restoration loop unroll",
+    "performanceStatus": "UNMEASURED_UNTIL_ACTUAL_NORMAL50",
+    "targetSource": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+    "targetMethod": "restoreReducedMatrixRowInScript",
+    "targetSourceLineBeforeChange": 8091,
+    "capturedLoopSelfMs": 7323.144,
+    "capturedLoopSelfPercent": 8.017654126516094,
+    "wholeRestoreInclusiveMs": 7546.313,
+    "preserves": [
+      "Forward read/write order",
+      "Owned matrix row identity and primitive metadata",
+      "Signed zero, NaN and infinities",
+      "Native arraycopy and alias/malformed copy fallback",
+      "Finite/ownership guards and all application thresholds",
+      "Existing independent Crout and portable restore oracles"
+    ],
+    "claimedSpeedup": null,
+    "claimedDeadlineClearance": false
+  },
+  "historicalContext": {
+    "oldR30RowCopyInclusiveMs": 5868.71,
+    "oldR30OrdinaryGeneration": "FAIL",
+    "comparisonStatus": "NONMATCHED_CONTEXT_ONLY",
+    "interpretation": "Old intrinsic slice/copy has allocation and metadata costs; its retained footprint is lower than the current scalar loop footprint. Different sources/permutations/completed work/host conditions prevent a matched speed or causal regression claim.",
+    "history91616CauseClaim": false
+  },
+  "evidence": [
+    {
+      "authority": "retained-run",
+      "path": "q30-current-cpu-profile-r45/host/generation.cpuprofile",
+      "sha256": "f17e0b6838d674233e7703fd32262927175595583934f472e4fbce69fc00ae1e"
+    },
+    {
+      "authority": "retained-run",
+      "path": "q30-current-cpu-profile-r45/host/profile-capture.json",
+      "sha256": "d0a0b4b02482c21ea721f3e32c26487c64c1987f43784c021235de9d130f57e4"
+    },
+    {
+      "authority": "retained-run",
+      "path": "q30-current-cpu-profile-r45/host/result.json",
+      "sha256": "8023eb47a298cd3de644dd4003313b05e5a7cd0403b8fe2dfa80a3eaa3cceb42"
+    },
+    {
+      "authority": "retained-run",
+      "path": "q30-current-cpu-profile-r45/host/progress-samples.jsonl",
+      "sha256": "0b428dff87e43257f7eb9e80e997ae2d3d9f2372dab5b90918eabfa5c9f3bf36"
+    },
+    {
+      "authority": "retained-run",
+      "path": "q30-current-cpu-profile-r45/strict-result.json",
+      "sha256": "b0b6cf2c0726a2c70454340ea1eaebab9d14542802bde6ae93d0519e8ae03d45"
+    },
+    {
+      "authority": "retained-run",
+      "path": "q30-current-cpu-profile-r45/input-manifest-before.json",
+      "sha256": "fed1cad964afc27d259ed279935857eb6bca206ddbff9a003db6a9dfa0db82ff"
+    },
+    {
+      "authority": "retained-run",
+      "path": "q30-current-cpu-profile-r45/input-manifest-after.json",
+      "sha256": "224112bb0a33ccf41aafcf411deddad88c2e4658d2c9866d8c16340566fbe0e8"
+    },
+    {
+      "authority": "retained-run",
+      "path": "compiled-r45-launch.json",
+      "sha256": "b4558e88f31779a8af8ed9df03aaa81ce93aa36a756f8c84730b707094263a63"
+    },
+    {
+      "authority": "retained-run",
+      "path": "compiled-r45-result.json",
+      "sha256": "f03a3a19dbd837d26ad08a0b27f68f6a8f4741e721e6771948341f14b0b50111"
+    },
+    {
+      "authority": "retained-run",
+      "path": "owned-compiled-r45/host-result.json",
+      "sha256": "47e2495532a42a63d1e45460aaeede7b3753e3136f86eac809f3cbf77fbc79a9"
+    },
+    {
+      "authority": "retained-run",
+      "path": "build-r13-result.json",
+      "sha256": "d3e8fe7935c9f9992e64f57f74985b355fb7e21b9cb50b1b2218ab419c48374c"
+    },
+    {
+      "authority": "task-artifact",
+      "path": "q60/q30-current-cpu-reader-r45/results/summary.json",
+      "sha256": "8b8f426c7af1bcd488dca3dcb50f6afb8dc2bf8c95e4c024234574d9e8677bff"
+    },
+    {
+      "authority": "task-artifact",
+      "path": "q60/q30-current-cpu-reader-r45/results/function-costs.json",
+      "sha256": "144c07e678c19575edca1f2b29402cf583fe87817abb4e3c9e805d94805fc533"
+    },
+    {
+      "authority": "task-artifact",
+      "path": "q60/q30-current-cpu-reader-r45/results/component-costs-r2.json",
+      "sha256": "916dee72aba7587e73a78dbcd4def9c822d4713024548b0ac5dfaded420d4faa"
+    },
+    {
+      "authority": "task-artifact",
+      "path": "q60/q30-current-cpu-reader-r45/finding-r2.json",
+      "sha256": "34f24eeb6a12a17d59264984039de4897853f4993f2b64c4589201033159f412"
+    },
+    {
+      "authority": "task-artifact",
+      "path": "q60/q30-current-cpu-reader-r45/read-profile.py",
+      "sha256": "6c85e98c5ac87f9d35f96c6bd64b0ec4e0eb8de03e345a1cb9e27b59b878e976"
+    },
+    {
+      "authority": "task-artifact",
+      "path": "q60/q30-current-cpu-reader-r45/read-components.py",
+      "sha256": "e3dab39fc5e6f41ff94199c48a59762a5309340e838a0b6acb68c0487c8a27f1"
+    },
+    {
+      "authority": "task-artifact",
+      "path": "q60/q30-current-cpu-reader-r45/row-restore-unroll4-draft/CirSim-row-restore-unroll4-lf.patch",
+      "sha256": "5644102b9a7f61e583cacf434b52e132aa40a113d718496b90c588ee07915ffe"
+    },
+    {
+      "authority": "task-artifact",
+      "path": "q60/q30-current-cpu-reader-r45/row-restore-unroll4-draft/source-review-r2.json",
+      "sha256": "6bf71f7c2a619179e135c36da77dd64981c335cc5c791e1b8b6c9404a3a0512b"
+    },
+    {
+      "authority": "retained-run",
+      "path": "q30-current-cpu-profile-r45/host/profile-inputs/83B3676CC4C0BC615E46B448CF923427.cache.js",
+      "sha256": "d31a27e8e31c705ff2af5624236675fde59fe4693b47d29727a7df8c7b726ab9"
+    },
+    {
+      "authority": "retained-run",
+      "path": "q30-current-cpu-profile-r45/host/profile-inputs/83B3676CC4C0BC615E46B448CF923427.symbolMap",
+      "sha256": "a679442e5c9849521cc525d06ab94af3b95cefc816d944b4cdd77f24ead095e0"
+    }
+  ],
+  "sanitization": {
+    "construction": "Explicit allowlist from retained receipts and reader outputs",
+    "absolutePathsIncluded": false,
+    "processIdentifiersIncluded": false,
+    "personalFieldsIncluded": false,
+    "relativeReferenceAuthorities": [
+      "repository-source",
+      "retained-run",
+      "task-artifact"
+    ]
+  },
+  "limitations": [
+    "Successful CPU capture does not change failed ordinary generation into qualification PASS.",
+    "Profiler overhead remains; normal50 is the separate unprofiled performance check.",
+    "No attribution to rejected model-cap draft, finite/ownership guard removal, LU cache/sparse/pivot redesign or accepted-history cause is established.",
+    "No new browser/server/native gate or repository write by this packet author."
+  ]
+}

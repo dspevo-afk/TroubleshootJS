@@ -1,0 +1,43 @@
+{
+  "schema": "Q60_REFERENCE_ROUTE_PACKET_AUDIT_V2",
+  "status": "PASS_OFFLINE_NUMERIC_SOURCE_AND_SANITIZATION_AUDIT",
+  "files": [
+    {
+      "name": "evidence.json",
+      "bytes": 39161,
+      "sha256": "ab69ab5f0da80587e7742a5a9045b01c6112b3bab3f6261fbad9c51525b10b9f"
+    },
+    {
+      "name": "input-pins.json",
+      "bytes": 35542,
+      "sha256": "cb835fb448247bbebec826eb19fd2747c73f952e8a01b169e0890cb4ebdaef24"
+    },
+    {
+      "name": "README.txt",
+      "bytes": 1654,
+      "sha256": "6662e56fc45ffc8d4f8f5130b86f37fb19eaab68f224983e1e1cecd7b3aebe28"
+    }
+  ],
+  "checks": {
+    "priorR1PacketAllFourFilesPreservedByteForByte": true,
+    "native99ActualFourPassMarkersAndCountsMatchLedgerAndFullLog": true,
+    "native99OnlyOneChangedInputAcross1353SharedWith97": true,
+    "native99P07InputEqualsExactCorrectedTaskCandidate": true,
+    "actualCurrentMaintainedP07TestStillMatchesNative99Pin": true,
+    "all1222Build12InputsMatchNative99": true,
+    "buildDidNotConsumeP07TestSource": true,
+    "buildActualFivePermutationsCompileAndLinkMarkersPresent": true,
+    "native99AndBuild12HostSourceChecksAndCleanupVerified": true,
+    "ownedStdoutAndStderrHashesMatchActualLedger": true,
+    "ledgerAndNativeFullLogHashesDistinguished": true,
+    "routeProductionAndLayout16Epoch5HashesUnchanged": true,
+    "failedPredecessor91And97EvidenceRetained": true,
+    "noAbsolutePathsPersonalNamesProcessIdsOrRawPrivateGeneralLogs": true,
+    "privatePatternViolations": [],
+    "repositoryWrites": 0,
+    "gateRuns": 0,
+    "publicWrites": 0,
+    "currentReplayConsumerPinsExcludeHistoricalFailedFixturePin": true
+  },
+  "boundary": "Offline evidence audit only. Focused native99 and actual GWT compilation do not establish overall Q60 qualification."
+}

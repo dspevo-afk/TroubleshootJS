@@ -4,9 +4,9 @@ package com.lushprojects.circuitjs1.client;
 final class WireCurrentAdjacencyChecks {
     static void verify(CirSim sim) {
         verifyEndpoints(sim);
-        double[] before = new double[sim.wireInfoList.size()];
+        double[] before = new double[sim.wireInfoList.length];
         double[] expected = new double[before.length];
-        for (int i = 0; i < before.length; i++) before[i] = sim.wireInfoList.get(i).wire.getCurrent();
+        for (int i = 0; i < before.length; i++) before[i] = sim.wireInfoList[i].wire.getCurrent();
         try {
             // READY is an ownership boundary, not a wire-display sampling
             // boundary. Temporal work can update companion-model currents
@@ -25,13 +25,13 @@ final class WireCurrentAdjacencyChecks {
             sim.calcWireCurrents();
             for (int i = 0; i < expected.length; i++)
                 if (!PowerDomainContract.finite(expected[i]) ||
-                        expected[i] != sim.wireInfoList.get(i).wire.getCurrent())
+                        expected[i] != sim.wireInfoList[i].wire.getCurrent())
                     throw new IllegalStateException("Cached wire current differs from original coordinate algorithm");
         } finally { restore(sim, before); }
     }
 
     private static void restore(CirSim sim, double[] currents) {
-        for (int i = 0; i < currents.length; i++) sim.wireInfoList.get(i).wire.setCurrent(-1, currents[i]);
+        for (int i = 0; i < currents.length; i++) sim.wireInfoList[i].wire.setCurrent(-1, currents[i]);
     }
 
     private static void verifyEndpoints(CirSim sim) {

@@ -228,7 +228,8 @@ final class Rb56Plan {
             add("U2" + channel, "SENSOR_CONTROL", Kind.DECISION, PhysicalPackages.E04_DECISION_CONTROL_5, 0, channel, null,
                 channel + "_SENSE", referenceNet(channel), "RAIL5", channel + "_CMD", "CTRL_RETURN");
             resistor("RS" + channel, 10000, channel + "_RAW", channel + "_SENSE");
-            resistor("RPIN_" + channel, 1000, channel + "_RAW", "CTRL_RETURN");
+            // Bias the conditioned input so a high-resistance sensor lead has a defined LOW state.
+            resistor("RPIN_" + channel, 100000, channel + "_SENSE", "CTRL_RETURN");
             if ((sensorInputFilterMask & ("A".equals(channel) ? 1 : 2)) != 0)
                 capacitor("CFLT_" + channel, 100e-9, false, channel + "_SENSE", "CTRL_RETURN");
             resistor("RD" + channel, 1000, channel + "_CMD", channel + "_DRIVE");
@@ -249,7 +250,8 @@ final class Rb56Plan {
             resistor("RREF_L" + channel, 10000, channel + "_REF", "CTRL_RETURN");
         }
         if (sharedHystereticReference()) for (String channel : channels())
-            resistor("RFB_" + channel, 22000, channel + "_CMD", channel + "_SENSE");
+            // Retain regenerative feedback without holding a disconnected sensor above the falling threshold.
+            resistor("RFB_" + channel, 220000, channel + "_CMD", channel + "_SENSE");
         if (hasFiveVoltIndicator) indicator("RLED", "LED1", 3300, "RAIL5", "LED_FEED", "CTRL_RETURN");
         if (hasTwelveVoltIndicator) indicator("RLED12", "LED12", 10000, "RAIL12", "LED12_FEED", "CTRL_RETURN");
         for (String channel : channels()) if ((outputIndicatorMask & ("A".equals(channel) ? 1 : 2)) != 0)

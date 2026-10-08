@@ -61,7 +61,7 @@ def case(row):
         require(row['hypotheses']==3 and row['proofUnits']>=3,'Diagnostic population shrank')
         require(attempts[-1]['proofUnits']==row['proofUnits'],'Candidate proof accounting mismatch')
         require(row['board']['seed']==str(signed(int(seed)+STRIDE*(len(attempts)-1))),'Accepted seed not in ordinal order')
-        require(row['replay']=='tsj-alpha/4/EASY/RB15_CONTROL/'+row['board']['seed'],'Replay is not the exact accepted candidate')
+        require(row['replay']=='tsj-alpha/5/EASY/RB15_CONTROL/'+row['board']['seed'],'Replay is not the exact accepted candidate')
         board(row['board'])
     else:
         require(row['outcome'] in ['EXPECTED_REJECTION','TIMEOUT','WORK_EXHAUSTED','CANCELLED'],'Unexpected runtime failure')
@@ -132,10 +132,10 @@ def validate_controlled_canaries(canaries):
         replay1['requestedSeed']==successor and replay2['requestedSeed']==successor,
         'Two exact successor replay controls are missing or changed')
     require(replay1.get('replayGroup')==replay2.get('replayGroup')=='p09-controlled-successor-replay' and
-        replay1['replay']==replay2['replay']=='tsj-alpha/4/EASY/RB15_CONTROL/'+successor and
+        replay1['replay']==replay2['replay']=='tsj-alpha/5/EASY/RB15_CONTROL/'+successor and
         replay1['board']==replay2['board'] and
         replay1['board'].get('geometryFingerprint')==replay2['board'].get('geometryFingerprint'),
-        'Two exact replays did not reproduce the same v4 replay and geometry')
+        'Two exact replays did not reproduce the same v5 replay and geometry')
     for row in (replay1,replay2,healthy,hypotheses):
         require('controlledNegative' not in row,'Controlled P09 provenance polluted an uninjected canary')
 
@@ -208,7 +208,7 @@ def main(root):
     bad=copy.deepcopy(data); bad['compiled'][accepted]['board']['parts'].pop('K1'); negatives.append(bad)
     bad=copy.deepcopy(data); bad['compiled'][accepted]['replay']='tsj-alpha/1/EASY/RB15_CONTROL/0'; negatives.append(bad)
     bad=copy.deepcopy(data); bad['compiled'][accepted]['replay']='tsj-alpha/2/EASY/RB15_CONTROL/'+bad['compiled'][accepted]['board']['seed']; negatives.append(bad)
-    bad=copy.deepcopy(data); bad['compiled'][accepted]['replay']='tsj-alpha/3/EASY/RB15_CONTROL/'+bad['compiled'][accepted]['board']['seed']; negatives.append(bad)
+    bad=copy.deepcopy(data); bad['compiled'][accepted]['replay']='tsj-alpha/4/EASY/RB15_CONTROL/'+bad['compiled'][accepted]['board']['seed']; negatives.append(bad)
     for field,value in [('ordinal',1),('outcome','EXPECTED_REJECTION'),('manifest','root-seed=0;')]:
         bad=copy.deepcopy(data); bad['compiled'][accepted]['attempts'][0][field]=value; negatives.append(bad)
     bad=copy.deepcopy(data); bad['canaries']=[]; negatives.append(bad)

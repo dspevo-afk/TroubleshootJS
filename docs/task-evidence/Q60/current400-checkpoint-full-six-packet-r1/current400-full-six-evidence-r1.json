@@ -1,0 +1,3286 @@
+{
+  "protocol": "Q60_PRE_UNROLL_CURRENT400_FULL_SIX_R5_EVIDENCE_R1",
+  "status": "FAIL_COMPLETE_FROZEN_COHORT;SCOPED_PRE_UNROLL_CONTRACT_PASSES;Q60_UNACCEPTED_UNPUSHED",
+  "scope": "Exact pre-unroll build13/compiled39-45 source-bound private six-case qualification and scoped native/build/session/profile evidence. Later unroll-four is a separate candidate requiring fresh gates.",
+  "identity": {
+    "branch": "codex/q30-multirail-qualification",
+    "localCheckpointHead": "a2fc74b23d177e0a971974a9d958bf0d559a06c5",
+    "acceptedPublishedBase": "7aa0e1932f3c853e7265bf186e98989ada641a51",
+    "layoutVersion": 16,
+    "publicReplayEpoch": "tsj-alpha/5",
+    "priorPublicReplayEpochRejected": "tsj-alpha/4",
+    "generationDependencyEpoch": "tsj-generation-dependencies-v16",
+    "planVersion": 1,
+    "normalRB56CatalogEnabled": false,
+    "normalRB56SessionsHeld": true,
+    "hardHeld": true
+  },
+  "productionCadence": {
+    "averagedMaximumSeconds": 0.0004,
+    "fineSensitivitySeconds": 0.0002,
+    "detailedMaximumSeconds": 5e-06,
+    "detailedFineSeconds": 2.5e-06,
+    "q30MaximumSeconds": 5e-06,
+    "allFiveHypothesesRetained": true,
+    "frozenSignedSeedsAndOrderRetained": true,
+    "generationLimits": [
+      90000,
+      640,
+      5000
+    ],
+    "boundedModelPins": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/E06ConverterContract.java",
+        "sha256": "40b7adc777ee1c5dc801678c42366e076287dea319ef1f6304cde8e1a2910c2b"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/E06AveragedConverterElm.java",
+        "sha256": "29ab646a7d303d1de94765364c38cb9a7b9dbae76dfc63549f41a9ef8d84a7e1"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Rb56Plan.java",
+        "sha256": "1ea5bd8a17730979f18400ac270e41cf4396101f1c8c1faac77a7b69fced22d2"
+      }
+    ],
+    "retainedSensitivity": {
+      "status": "PASS_UNCHANGED_BOUNDED_MODEL_SCOPE",
+      "comparisons": 236,
+      "largestRelativeErrorPercent": 0.12969724577458352,
+      "largestOffAbsoluteErrorV": 0.00033144442907869984,
+      "bounds": {
+        "healthyOutputMeanRelative": 0.02,
+        "offRailOrContactAbsoluteV": 0.001,
+        "inputEndpointAbsoluteV": 0.001,
+        "originalIndependentPhysicalAndCleanupOracles": "UNCHANGED"
+      },
+      "reuseBoundary": "Original400/fine200 raw3 source-bound model/assembly proof; later routing/Task41/CirSim changes do not turn it into a new whole-family gate."
+    }
+  },
+  "fullSix": {
+    "status": "FAIL",
+    "complete": true,
+    "scope": "FROZEN_FULL6_COLLECTION_WITH_ORIGINAL_STRICT_QUALIFICATION",
+    "noReroll": true,
+    "expectedCases": 6,
+    "passedCases": 2,
+    "failedCases": 4,
+    "budgets": {
+      "caseObservationSeconds": 120,
+      "totalCaseObservationSeconds": 240,
+      "requiredNativeOuterSeconds": 300,
+      "sharedSetupAndCleanupAllowanceSeconds": 60,
+      "generationMillis": 90000,
+      "generationUnits": 640,
+      "generationUnitMillis": 5000
+    },
+    "cases": [
+      {
+        "seed": "-1017",
+        "phase": "compiled-r41",
+        "status": "PASS",
+        "plannedPackages": 40,
+        "actualReportedPackages": 40,
+        "runnerCaseObservationSeconds": 39.35391130001517,
+        "observedState": "PASS:rb56",
+        "terminalReached": true,
+        "browserObserverTimedOut": false,
+        "rawApplicationReport": {
+          "artifact": "phase-temp/q60-compiled-r41/cases/001-rb56-seed-1017-positive.report.json",
+          "bytes": 1127,
+          "sha256": "6f9def28327d1e1a3108012ebe9fe270cdbc69280dbdd4a895e664b71ef006a0",
+          "retainedPrivately": true
+        },
+        "applicationReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_SHARED_WORKBENCH",
+          "family": "RB56_CONTROL",
+          "seed": "-1017",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "PASS",
+          "phase": "RESTORED",
+          "packages": 40,
+          "hypotheses": 5,
+          "solverSamples": 55,
+          "generationStages": 6,
+          "generationWork": 528,
+          "generationMillis": 38320,
+          "maxManualUnitMillis": 1483,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "fc0c2082957ab65be17fa620300f545d9517e8bf2416fc4976002717f5740aae",
+          "diagnosticContextDigest": "d9030e3035e2227b24e0dd2b6d2a5a4a1c1b65d8a4d2d4099bdd0c5d91455473",
+          "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+          "qualifiedPublication": true,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "wallMillis": 38548
+        }
+      },
+      {
+        "seed": "-1067",
+        "phase": "compiled-r41",
+        "status": "FAIL",
+        "plannedPackages": 55,
+        "actualReportedPackages": null,
+        "runnerCaseObservationSeconds": 91.15842490000068,
+        "observedState": "FAIL:rb56:Generation wall budget exhausted",
+        "terminalReached": true,
+        "browserObserverTimedOut": false,
+        "rawApplicationReport": {
+          "artifact": "phase-temp/q60-compiled-r41/cases/002-rb56-seed-1067-positive.report.json",
+          "bytes": 2123,
+          "sha256": "466e18d9cf7535dee11bdfdfb9d8ec162e9b2f3bde798cf3f4aa3ccfbbca8606",
+          "retainedPrivately": true
+        },
+        "applicationReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_SHARED_WORKBENCH",
+          "family": "RB56_CONTROL",
+          "seed": "-1067",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "FAIL",
+          "phase": "RESTORED",
+          "qualifiedPublication": false,
+          "failurePhase": "COLD_GENERATION",
+          "jobOutcome": "TIMEOUT",
+          "jobStage": "HYPOTHESES",
+          "jobWork": 400,
+          "jobMillis": 90358,
+          "manualUnitMaxMillis": 2072,
+          "routingMillis": 0,
+          "proofMillis": 0,
+          "jobStageMillis": {
+            "RESOLVE": 1,
+            "HEALTHY": 30463,
+            "PHYSICAL": 166,
+            "HYPOTHESES": 57736,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "jobStageWork": {
+            "RESOLVE": 1,
+            "HEALTHY": 89,
+            "PHYSICAL": 1,
+            "HYPOTHESES": 309,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "diagnosticWorkTimings": {
+            "REPLAY_INSTALL": {
+              "units": 3,
+              "millis": 666,
+              "maxMillis": 232
+            },
+            "CANDIDATE_HEALTHY_SETTLE": {
+              "units": 39,
+              "millis": 12348,
+              "maxMillis": 938
+            },
+            "CANDIDATE_SETTLE": {
+              "units": 39,
+              "millis": 5458,
+              "maxMillis": 879
+            },
+            "OBSERVATION_STEP:INPUT": {
+              "units": 3,
+              "millis": 376,
+              "maxMillis": 129
+            },
+            "OBSERVATION_STEP:WAIT": {
+              "units": 3,
+              "millis": 0,
+              "maxMillis": 0
+            },
+            "OBSERVATION_STEP:DC_VOLTAGE": {
+              "units": 36,
+              "millis": 493,
+              "maxMillis": 15
+            },
+            "OBSERVATION_STEP:POWER": {
+              "units": 3,
+              "millis": 148,
+              "maxMillis": 53
+            },
+            "OBSERVATION_STEP:SETTLE": {
+              "units": 3,
+              "millis": 259,
+              "maxMillis": 91
+            },
+            "POWER_OFF_SETTLE": {
+              "units": 90,
+              "millis": 8515,
+              "maxMillis": 435
+            },
+            "REMOVE_SETTLE": {
+              "units": 3,
+              "millis": 372,
+              "maxMillis": 128
+            },
+            "REPLACE_SETTLE": {
+              "units": 3,
+              "millis": 366,
+              "maxMillis": 126
+            },
+            "POWER_ON_SETTLE": {
+              "units": 3,
+              "millis": 258,
+              "maxMillis": 104
+            },
+            "REPAIR_STATUS_SETTLE": {
+              "units": 39,
+              "millis": 16340,
+              "maxMillis": 1391
+            },
+            "CUSTOMER_RETEST": {
+              "units": 38,
+              "millis": 12027,
+              "maxMillis": 1025
+            },
+            "CUSTOMER_RETEST_COMPLETION": {
+              "units": 2,
+              "millis": 27,
+              "maxMillis": 14
+            },
+            "EVIDENCE_RESTORE_PRIMARY": {
+              "units": 2,
+              "millis": 95,
+              "maxMillis": 58
+            }
+          },
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "wallMillis": 90399,
+          "failure": "Deadline: Generation wall budget exhausted"
+        }
+      },
+      {
+        "seed": "-1022",
+        "phase": "compiled-r42",
+        "status": "FAIL",
+        "plannedPackages": 60,
+        "actualReportedPackages": null,
+        "runnerCaseObservationSeconds": 92.44980620002025,
+        "observedState": "FAIL:rb56:Generation wall budget exhausted",
+        "terminalReached": true,
+        "browserObserverTimedOut": false,
+        "rawApplicationReport": {
+          "artifact": "phase-temp/q60-compiled-r42/cases/001-rb56-seed-1022-positive.report.json",
+          "bytes": 2125,
+          "sha256": "7181fcee48ce70260b05aa548db615a3ccaa9883c55de75e2a2dfb5e2f831a41",
+          "retainedPrivately": true
+        },
+        "applicationReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_SHARED_WORKBENCH",
+          "family": "RB56_CONTROL",
+          "seed": "-1022",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "FAIL",
+          "phase": "RESTORED",
+          "qualifiedPublication": false,
+          "failurePhase": "COLD_GENERATION",
+          "jobOutcome": "TIMEOUT",
+          "jobStage": "HYPOTHESES",
+          "jobWork": 390,
+          "jobMillis": 91554,
+          "manualUnitMaxMillis": 2175,
+          "routingMillis": 0,
+          "proofMillis": 0,
+          "jobStageMillis": {
+            "RESOLVE": 1,
+            "HEALTHY": 36246,
+            "PHYSICAL": 206,
+            "HYPOTHESES": 53169,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "jobStageWork": {
+            "RESOLVE": 1,
+            "HEALTHY": 103,
+            "PHYSICAL": 1,
+            "HYPOTHESES": 285,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "diagnosticWorkTimings": {
+            "REPLAY_INSTALL": {
+              "units": 3,
+              "millis": 748,
+              "maxMillis": 252
+            },
+            "CANDIDATE_HEALTHY_SETTLE": {
+              "units": 39,
+              "millis": 12064,
+              "maxMillis": 1946
+            },
+            "CANDIDATE_SETTLE": {
+              "units": 39,
+              "millis": 7193,
+              "maxMillis": 1922
+            },
+            "OBSERVATION_STEP:INPUT": {
+              "units": 3,
+              "millis": 456,
+              "maxMillis": 155
+            },
+            "OBSERVATION_STEP:WAIT": {
+              "units": 3,
+              "millis": 0,
+              "maxMillis": 0
+            },
+            "OBSERVATION_STEP:DC_VOLTAGE": {
+              "units": 36,
+              "millis": 583,
+              "maxMillis": 20
+            },
+            "OBSERVATION_STEP:POWER": {
+              "units": 3,
+              "millis": 162,
+              "maxMillis": 58
+            },
+            "OBSERVATION_STEP:SETTLE": {
+              "units": 3,
+              "millis": 321,
+              "maxMillis": 128
+            },
+            "POWER_OFF_SETTLE": {
+              "units": 90,
+              "millis": 9881,
+              "maxMillis": 545
+            },
+            "REMOVE_SETTLE": {
+              "units": 3,
+              "millis": 421,
+              "maxMillis": 147
+            },
+            "REPLACE_SETTLE": {
+              "units": 3,
+              "millis": 465,
+              "maxMillis": 172
+            },
+            "POWER_ON_SETTLE": {
+              "units": 3,
+              "millis": 248,
+              "maxMillis": 86
+            },
+            "REPAIR_STATUS_SETTLE": {
+              "units": 27,
+              "millis": 12650,
+              "maxMillis": 1989
+            },
+            "CUSTOMER_RETEST": {
+              "units": 26,
+              "millis": 7870,
+              "maxMillis": 1939
+            },
+            "CUSTOMER_RETEST_COMPLETION": {
+              "units": 2,
+              "millis": 30,
+              "maxMillis": 16
+            },
+            "EVIDENCE_RESTORE_PRIMARY": {
+              "units": 2,
+              "millis": 84,
+              "maxMillis": 42
+            }
+          },
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "wallMillis": 91600,
+          "failure": "Deadline: Generation wall budget exhausted"
+        }
+      },
+      {
+        "seed": "9007199254741579",
+        "phase": "compiled-r42",
+        "status": "FAIL",
+        "plannedPackages": 50,
+        "actualReportedPackages": null,
+        "runnerCaseObservationSeconds": 90.8555650000053,
+        "observedState": "FAIL:rb56:Generation wall budget exhausted",
+        "terminalReached": true,
+        "browserObserverTimedOut": false,
+        "rawApplicationReport": {
+          "artifact": "phase-temp/q60-compiled-r42/cases/002-rb56-seed9007199254741579-positive.report.json",
+          "bytes": 2136,
+          "sha256": "a99f8cbae08978c44480be367803bbd698046c596866427592fbc62e01066ed5",
+          "retainedPrivately": true
+        },
+        "applicationReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_SHARED_WORKBENCH",
+          "family": "RB56_CONTROL",
+          "seed": "9007199254741579",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "FAIL",
+          "phase": "RESTORED",
+          "qualifiedPublication": false,
+          "failurePhase": "COLD_GENERATION",
+          "jobOutcome": "TIMEOUT",
+          "jobStage": "HYPOTHESES",
+          "jobWork": 564,
+          "jobMillis": 90003,
+          "manualUnitMaxMillis": 1903,
+          "routingMillis": 0,
+          "proofMillis": 0,
+          "jobStageMillis": {
+            "RESOLVE": 1,
+            "HEALTHY": 24850,
+            "PHYSICAL": 133,
+            "HYPOTHESES": 62221,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "jobStageWork": {
+            "RESOLVE": 1,
+            "HEALTHY": 84,
+            "PHYSICAL": 1,
+            "HYPOTHESES": 478,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "diagnosticWorkTimings": {
+            "REPLAY_INSTALL": {
+              "units": 5,
+              "millis": 949,
+              "maxMillis": 200
+            },
+            "CANDIDATE_HEALTHY_SETTLE": {
+              "units": 65,
+              "millis": 15797,
+              "maxMillis": 1472
+            },
+            "CANDIDATE_SETTLE": {
+              "units": 65,
+              "millis": 5409,
+              "maxMillis": 718
+            },
+            "OBSERVATION_STEP:INPUT": {
+              "units": 5,
+              "millis": 417,
+              "maxMillis": 106
+            },
+            "OBSERVATION_STEP:WAIT": {
+              "units": 5,
+              "millis": 0,
+              "maxMillis": 0
+            },
+            "OBSERVATION_STEP:DC_VOLTAGE": {
+              "units": 60,
+              "millis": 718,
+              "maxMillis": 15
+            },
+            "OBSERVATION_STEP:POWER": {
+              "units": 5,
+              "millis": 210,
+              "maxMillis": 49
+            },
+            "OBSERVATION_STEP:SETTLE": {
+              "units": 5,
+              "millis": 335,
+              "maxMillis": 73
+            },
+            "POWER_OFF_SETTLE": {
+              "units": 139,
+              "millis": 9085,
+              "maxMillis": 315
+            },
+            "REMOVE_SETTLE": {
+              "units": 4,
+              "millis": 410,
+              "maxMillis": 109
+            },
+            "REPLACE_SETTLE": {
+              "units": 4,
+              "millis": 409,
+              "maxMillis": 107
+            },
+            "POWER_ON_SETTLE": {
+              "units": 4,
+              "millis": 246,
+              "maxMillis": 63
+            },
+            "REPAIR_STATUS_SETTLE": {
+              "units": 52,
+              "millis": 14890,
+              "maxMillis": 1432
+            },
+            "CUSTOMER_RETEST": {
+              "units": 52,
+              "millis": 13152,
+              "maxMillis": 1432
+            },
+            "CUSTOMER_RETEST_COMPLETION": {
+              "units": 4,
+              "millis": 44,
+              "maxMillis": 12
+            },
+            "EVIDENCE_RESTORE_PRIMARY": {
+              "units": 4,
+              "millis": 128,
+              "maxMillis": 35
+            }
+          },
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "wallMillis": 90040,
+          "failure": "Deadline: Generation wall budget exhausted"
+        }
+      },
+      {
+        "seed": "-1004",
+        "phase": "compiled-r43",
+        "status": "PASS",
+        "plannedPackages": 44,
+        "actualReportedPackages": 44,
+        "runnerCaseObservationSeconds": 47.53012719997787,
+        "observedState": "PASS:rb56",
+        "terminalReached": true,
+        "browserObserverTimedOut": false,
+        "rawApplicationReport": {
+          "artifact": "phase-temp/q60-compiled-r43/cases/001-rb56-seed-1004-positive.report.json",
+          "bytes": 1127,
+          "sha256": "20a73c01d6c4e49002042ca3f60be515b47c87946c6d3bca89543f1f973edc08",
+          "retainedPrivately": true
+        },
+        "applicationReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_SHARED_WORKBENCH",
+          "family": "RB56_CONTROL",
+          "seed": "-1004",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "PASS",
+          "phase": "RESTORED",
+          "packages": 44,
+          "hypotheses": 5,
+          "solverSamples": 55,
+          "generationStages": 6,
+          "generationWork": 529,
+          "generationMillis": 46468,
+          "maxManualUnitMillis": 1476,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "27780f83e4906b7744f378b926e040b59992508fc9e95f43933a8b12afd46f79",
+          "diagnosticContextDigest": "793a635068278e5d96aee4d0c414b97f74a5f7aaf0b7e762d749da08e57f6d97",
+          "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+          "qualifiedPublication": true,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "wallMillis": 46712
+        }
+      },
+      {
+        "seed": "-1028",
+        "phase": "compiled-r43",
+        "status": "FAIL",
+        "plannedPackages": 56,
+        "actualReportedPackages": null,
+        "runnerCaseObservationSeconds": 90.80119800000102,
+        "observedState": "FAIL:rb56:Generation wall budget exhausted",
+        "terminalReached": true,
+        "browserObserverTimedOut": false,
+        "rawApplicationReport": {
+          "artifact": "phase-temp/q60-compiled-r43/cases/002-rb56-seed-1028-positive.report.json",
+          "bytes": 2124,
+          "sha256": "0dd2454d216c2b11e9b7f679b67917c25a42e76a0ae9bb18fb642722b404f8b9",
+          "retainedPrivately": true
+        },
+        "applicationReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_SHARED_WORKBENCH",
+          "family": "RB56_CONTROL",
+          "seed": "-1028",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "FAIL",
+          "phase": "RESTORED",
+          "qualifiedPublication": false,
+          "failurePhase": "COLD_GENERATION",
+          "jobOutcome": "TIMEOUT",
+          "jobStage": "HYPOTHESES",
+          "jobWork": 562,
+          "jobMillis": 90000,
+          "manualUnitMaxMillis": 2227,
+          "routingMillis": 0,
+          "proofMillis": 0,
+          "jobStageMillis": {
+            "RESOLVE": 1,
+            "HEALTHY": 35091,
+            "PHYSICAL": 159,
+            "HYPOTHESES": 51946,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "jobStageWork": {
+            "RESOLVE": 1,
+            "HEALTHY": 118,
+            "PHYSICAL": 1,
+            "HYPOTHESES": 442,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "diagnosticWorkTimings": {
+            "REPLAY_INSTALL": {
+              "units": 5,
+              "millis": 1096,
+              "maxMillis": 268
+            },
+            "CANDIDATE_HEALTHY_SETTLE": {
+              "units": 65,
+              "millis": 10222,
+              "maxMillis": 238
+            },
+            "CANDIDATE_SETTLE": {
+              "units": 64,
+              "millis": 7573,
+              "maxMillis": 225
+            },
+            "OBSERVATION_STEP:INPUT": {
+              "units": 4,
+              "millis": 556,
+              "maxMillis": 154
+            },
+            "OBSERVATION_STEP:WAIT": {
+              "units": 4,
+              "millis": 0,
+              "maxMillis": 0
+            },
+            "OBSERVATION_STEP:DC_VOLTAGE": {
+              "units": 48,
+              "millis": 699,
+              "maxMillis": 18
+            },
+            "OBSERVATION_STEP:POWER": {
+              "units": 4,
+              "millis": 203,
+              "maxMillis": 54
+            },
+            "OBSERVATION_STEP:SETTLE": {
+              "units": 4,
+              "millis": 351,
+              "maxMillis": 89
+            },
+            "POWER_OFF_SETTLE": {
+              "units": 120,
+              "millis": 12701,
+              "maxMillis": 534
+            },
+            "REMOVE_SETTLE": {
+              "units": 4,
+              "millis": 524,
+              "maxMillis": 157
+            },
+            "REPLACE_SETTLE": {
+              "units": 4,
+              "millis": 536,
+              "maxMillis": 166
+            },
+            "POWER_ON_SETTLE": {
+              "units": 4,
+              "millis": 340,
+              "maxMillis": 102
+            },
+            "REPAIR_STATUS_SETTLE": {
+              "units": 52,
+              "millis": 9238,
+              "maxMillis": 681
+            },
+            "CUSTOMER_RETEST": {
+              "units": 52,
+              "millis": 7656,
+              "maxMillis": 241
+            },
+            "CUSTOMER_RETEST_COMPLETION": {
+              "units": 4,
+              "millis": 57,
+              "maxMillis": 16
+            },
+            "EVIDENCE_RESTORE_PRIMARY": {
+              "units": 4,
+              "millis": 168,
+              "maxMillis": 51
+            }
+          },
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "wallMillis": 90093,
+          "failure": "Deadline: Generation wall budget exhausted"
+        }
+      }
+    ],
+    "batches": [
+      {
+        "phase": "compiled-r41",
+        "terminalCollectionAndCleanup": "PASS",
+        "strictQualificationStatus": "FAIL",
+        "maintainedRunnerOutcome": "FAIL",
+        "ownedHostStatus": "FAIL",
+        "hostOperationElapsedMs": 133510,
+        "runnerCleanup": {
+          "status": "PASS",
+          "seconds": 0.9657020000158809,
+          "serverStopped": true,
+          "ownedSurvivors": [],
+          "errors": []
+        },
+        "inputAudit": {
+          "status": "PASS",
+          "beforeSha256": "a3b1899b07b42bbe6c602cb3a68091e056441c97e6511e4d142ca6bc32e388c2",
+          "afterSha256": "a3b1899b07b42bbe6c602cb3a68091e056441c97e6511e4d142ca6bc32e388c2",
+          "sourceSha256Before": "ce89e1712f1e973b84ac45d481983b5b763397cbddfc5c57d867af36d9fce909",
+          "sourceSha256After": "ce89e1712f1e973b84ac45d481983b5b763397cbddfc5c57d867af36d9fce909",
+          "webSha256Before": "51cce2e921f4fd55871a30e626f6541672c7147a217cc7f7301ee1fc17bb5e73",
+          "webSha256After": "51cce2e921f4fd55871a30e626f6541672c7147a217cc7f7301ee1fc17bb5e73",
+          "runnerBeforeSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+          "runnerAfterSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+          "fileCountBefore": 1562,
+          "fileCountAfter": 1562,
+          "seconds": 0.4311126999964472
+        }
+      },
+      {
+        "phase": "compiled-r42",
+        "terminalCollectionAndCleanup": "PASS",
+        "strictQualificationStatus": "FAIL",
+        "maintainedRunnerOutcome": "FAIL",
+        "ownedHostStatus": "FAIL",
+        "hostOperationElapsedMs": 187913,
+        "runnerCleanup": {
+          "status": "PASS",
+          "seconds": 0.9303429999854416,
+          "serverStopped": true,
+          "ownedSurvivors": [],
+          "errors": []
+        },
+        "inputAudit": {
+          "status": "PASS",
+          "beforeSha256": "a3b1899b07b42bbe6c602cb3a68091e056441c97e6511e4d142ca6bc32e388c2",
+          "afterSha256": "a3b1899b07b42bbe6c602cb3a68091e056441c97e6511e4d142ca6bc32e388c2",
+          "sourceSha256Before": "ce89e1712f1e973b84ac45d481983b5b763397cbddfc5c57d867af36d9fce909",
+          "sourceSha256After": "ce89e1712f1e973b84ac45d481983b5b763397cbddfc5c57d867af36d9fce909",
+          "webSha256Before": "51cce2e921f4fd55871a30e626f6541672c7147a217cc7f7301ee1fc17bb5e73",
+          "webSha256After": "51cce2e921f4fd55871a30e626f6541672c7147a217cc7f7301ee1fc17bb5e73",
+          "runnerBeforeSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+          "runnerAfterSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+          "fileCountBefore": 1562,
+          "fileCountAfter": 1562,
+          "seconds": 0.434764500008896
+        }
+      },
+      {
+        "phase": "compiled-r43",
+        "terminalCollectionAndCleanup": "PASS",
+        "strictQualificationStatus": "FAIL",
+        "maintainedRunnerOutcome": "FAIL",
+        "ownedHostStatus": "FAIL",
+        "hostOperationElapsedMs": 148376,
+        "runnerCleanup": {
+          "status": "PASS",
+          "seconds": 1.2945719999843277,
+          "serverStopped": true,
+          "ownedSurvivors": [],
+          "errors": []
+        },
+        "inputAudit": {
+          "status": "PASS",
+          "beforeSha256": "a3b1899b07b42bbe6c602cb3a68091e056441c97e6511e4d142ca6bc32e388c2",
+          "afterSha256": "a3b1899b07b42bbe6c602cb3a68091e056441c97e6511e4d142ca6bc32e388c2",
+          "sourceSha256Before": "ce89e1712f1e973b84ac45d481983b5b763397cbddfc5c57d867af36d9fce909",
+          "sourceSha256After": "ce89e1712f1e973b84ac45d481983b5b763397cbddfc5c57d867af36d9fce909",
+          "webSha256Before": "51cce2e921f4fd55871a30e626f6541672c7147a217cc7f7301ee1fc17bb5e73",
+          "webSha256After": "51cce2e921f4fd55871a30e626f6541672c7147a217cc7f7301ee1fc17bb5e73",
+          "runnerBeforeSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+          "runnerAfterSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+          "fileCountBefore": 1562,
+          "fileCountAfter": 1562,
+          "seconds": 6.001576200011186
+        }
+      }
+    ],
+    "aggregateQualificationErrors": [
+      {
+        "qualificationFailure": "Frozen batch strict checks did not pass: compiled-r41"
+      }
+    ],
+    "allSixTask41CleanupPassed": true,
+    "allSixOrdinaryCustomerRetestPassed": false,
+    "timingMeaning": "Runner observation, original application generation/job/wall clocks, owned phase durations and cleanup are separate fields.",
+    "failedCensusMeaning": "Failed reports omit actual packages;55/60/50/56 are frozen planned counts only.",
+    "privatePublicationMeaning": "qualifiedPublication in the private report does not mean public Q60 admission, release or customer retest.",
+    "terminalCollectionDoesNotChangeQualification": true
+  },
+  "preUnrollSourceBoundary": {
+    "applicationInputs": 1222,
+    "manifestCanonicalSha256": "4c43ab39a8a84526ab4e4a10bf21ff0882c6b30b6de2fa957d7499e148961505",
+    "identicalConsumedInputsAcross": [
+      "native-r100",
+      "build-r13",
+      "compiled-r39",
+      "compiled-r40",
+      "compiled-r41",
+      "compiled-r42",
+      "compiled-r43",
+      "compiled-r44",
+      "compiled-r45"
+    ],
+    "browserSourceSha256": "ce89e1712f1e973b84ac45d481983b5b763397cbddfc5c57d867af36d9fce909",
+    "browserWebSha256": "51cce2e921f4fd55871a30e626f6541672c7147a217cc7f7301ee1fc17bb5e73",
+    "browserAllInputManifestSha256": "a3b1899b07b42bbe6c602cb3a68091e056441c97e6511e4d142ca6bc32e388c2",
+    "browserInputCount": 1562,
+    "priorSourceDeltas": [
+      {
+        "before": "native-r97",
+        "after": "pre-unroll-build-r13",
+        "sharedApplicationInputs": 1222,
+        "changed": [
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+            "beforeSha256": "4025420138518d0a6185ebe24350cc8a030f251588bdd00c84d7c9080b0e832f",
+            "afterSha256": "6e59d86f9507b1849fdca55b07898f0d4ff4924c0441363a0e77c1a26e14cc7e"
+          }
+        ],
+        "reuseBoundary": "Original phase pins preserved. Reuse only unchanged behavior; pre-unroll compiled r44 and r5 separately check the later Task41 early UI-binding change."
+      },
+      {
+        "before": "native-r98",
+        "after": "pre-unroll-build-r13",
+        "sharedApplicationInputs": 1222,
+        "changed": [
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+            "beforeSha256": "4025420138518d0a6185ebe24350cc8a030f251588bdd00c84d7c9080b0e832f",
+            "afterSha256": "6e59d86f9507b1849fdca55b07898f0d4ff4924c0441363a0e77c1a26e14cc7e"
+          }
+        ],
+        "reuseBoundary": "Original phase pins preserved. Reuse only unchanged behavior; pre-unroll compiled r44 and r5 separately check the later Task41 early UI-binding change."
+      },
+      {
+        "before": "native-r99",
+        "after": "pre-unroll-build-r13",
+        "sharedApplicationInputs": 1222,
+        "changed": [
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+            "beforeSha256": "4025420138518d0a6185ebe24350cc8a030f251588bdd00c84d7c9080b0e832f",
+            "afterSha256": "6e59d86f9507b1849fdca55b07898f0d4ff4924c0441363a0e77c1a26e14cc7e"
+          }
+        ],
+        "reuseBoundary": "Original phase pins preserved. Reuse only unchanged behavior; pre-unroll compiled r44 and r5 separately check the later Task41 early UI-binding change."
+      }
+    ],
+    "laterRootSourceChange": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+        "beforeSha256": "ef7cbbe4b5f892a7057306760da388a4688cfaaef2305ff7d09bc332b000aa21",
+        "currentSha256": "a5f3fa34408865badbe3bcef05eb9fa989841bc3ae17c1722582b0dc3231af91"
+      }
+    ],
+    "newCandidateEvidenceNotReusedFromPreUnrollGates": true
+  },
+  "referenceRoute": {
+    "status": "ACTUAL_NATIVE96_97_REFERENCES_AND_CORRECTED99_FIXTURE_PASS",
+    "original91FailedOrdersPreserved": 9,
+    "referenceCases": [
+      "17/40",
+      "77/55",
+      "42/60"
+    ],
+    "configured42Admitted": true,
+    "adoptedRouterPins": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "sha256": "964814f9a16087a7f148bdf630613ba28fbd0587d1e0c13af47f444ade6a4a60"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "sha256": "3ec2fd7e732d1d5e46e8dea45a946cecb85810e0c7f3da915edcefd30fb324fb"
+      }
+    ],
+    "native97OverallStatus": "FAIL",
+    "native97PassingSuitesBeforeFailure": 20,
+    "native99Status": "PASS_FOCUSED_FOUR_REMAINING",
+    "native99Assertions": {
+      "P07TwoLayerContractTest": 11832,
+      "PcbLayerRoutingResumptionContractTest": 2203,
+      "QuickPlayGateContractTest": 27074,
+      "A02ReplayContractTest": 148
+    },
+    "fixtureScope": "Real E04 DEG_0 plus explicitly declared test-only90/180/270 geometry over identical authoritative dimensions; unsupported production poses reject",
+    "reuseBoundary": "Original route evidence remains bound to its actual phase sources; exact physical router/model/placement owners are unchanged. Current unroll-four needs separate gates."
+  },
+  "native100": {
+    "status": "PASS",
+    "hostOperationElapsedMs": 36598,
+    "suiteCount": 6,
+    "maintainedPassMarkers": [
+      "PASS: U06 session save contracts assertions=34927",
+      "PASS: PlayerSessionFingerprintContractTest assertions=119",
+      "PASS: RB56 session backing contracts assertions=202 scope=DEVELOPER_MODEL_DIGEST_AND_RESTART_ONLY normalSessionLoad=false",
+      "PASS: Q30 temporal work contracts 167 assertions oneChannelHealthyFaultedRetestUnits=3/3/3 twoChannelHealthyFaultedRetestUnits=5/5/5",
+      "PASS: A07 execution contracts assertions=272227",
+      "PASS: D01 diagnostic contracts assertions=168",
+      "PASS: focused current contracts; 6 Java suites. Full matrix and independent oracles NOT RUN."
+    ],
+    "scope": "Pre-unroll six affected session/fingerprint/backing/temporal/A07/D01 suites; not full native matrix"
+  },
+  "build13": {
+    "status": "PASS",
+    "hostOperationElapsedMs": 90944,
+    "optimizedGwtPermutations": 5,
+    "compileAndLinkSucceeded": true,
+    "style": "OBF",
+    "applicationInputs": 1222,
+    "scope": "Actual pre-unroll400 compile/link only"
+  },
+  "compiled44": {
+    "status": "PASS",
+    "hostOperationElapsedMs": 5551,
+    "positiveReport": {
+      "status": "PASS",
+      "pureAssertions": 272226,
+      "runtimeAssertions": 83,
+      "runtimeCases": 23,
+      "modelAssertions": 59,
+      "modelRows": 21,
+      "scaleRows": 16,
+      "cleanup": "PASS",
+      "injectedTask41CleanupFailureAndRecovery": true
+    },
+    "earlyForcedTerminal": {
+      "status": "PASS",
+      "state": "FAIL:a07:a07-explicit-failure-canary",
+      "scope": "EARLY_TERMINAL_AND_HOST_CLEANUP_ONLY",
+      "applicationFailureReportClaimed": false,
+      "task41FailureClaimed": false
+    },
+    "scope": "Pre-unroll compiled solver row/wire/private-context contracts; early forced terminal is only host cleanup"
+  },
+  "sessions": [
+    {
+      "phase": "compiled-r39",
+      "status": "PASS",
+      "hostOperationElapsedMs": 5012,
+      "scope": "Pre-unroll controlled compiled reconstruction fixture; not visible player input or normal RB56 sessions",
+      "evidence": {
+        "family": "LED_INDICATOR",
+        "seed": "0",
+        "replay": "tsj-alpha/5/EASY/LED_INDICATOR/0",
+        "assertions": 439,
+        "comparedLiveFields": 100,
+        "generationJobs": [
+          {
+            "phase": "normal-generation",
+            "outcome": "PASS",
+            "stage": "PUBLISH",
+            "elapsedMillis": 421,
+            "workUnits": 59
+          },
+          {
+            "phase": "valid-session-restore",
+            "outcome": "PASS",
+            "stage": "PUBLISH",
+            "elapsedMillis": 306,
+            "workUnits": 59
+          },
+          {
+            "phase": "invalid-signature-restore",
+            "outcome": "PROGRAMMING_FAILURE",
+            "stage": "PUBLISH",
+            "elapsedMillis": 262,
+            "workUnits": 59
+          },
+          {
+            "phase": "cancel-session-restore",
+            "outcome": "CANCELLED",
+            "stage": "PHYSICAL",
+            "elapsedMillis": 17,
+            "workUnits": 2
+          }
+        ],
+        "actionsElapsedMillis": 81,
+        "playerInputEvidence": false,
+        "damageFixtures": "controlled state injection",
+        "resistorDamageFixtures": 2,
+        "fuseDamageFixtures": 0,
+        "remainingLimitations": [
+          "Only LED_INDICATOR exact seed 0; remaining ten families NOT RUN.",
+          "No visible player-input, malformed UI upload, or browser reload proof.",
+          "Per-unit 5-second guard remains production-owned; report exposes total time and work only.",
+          "Native run_phase job cleanup must additionally PASS after this wrapper exits."
+        ],
+        "hostOperationSeconds": 1.5278589999943506,
+        "hostCleanupSeconds": 0.7579970999795478,
+        "portClosed": true,
+        "reportSha256": "bc41e594db08928e3f5995ea73c561c7317b42383cc5c9cece5885974f391dc0",
+        "sourceSha256": "ce89e1712f1e973b84ac45d481983b5b763397cbddfc5c57d867af36d9fce909",
+        "webSha256": "51cce2e921f4fd55871a30e626f6541672c7147a217cc7f7301ee1fc17bb5e73"
+      }
+    },
+    {
+      "phase": "compiled-r40",
+      "status": "PASS",
+      "hostOperationElapsedMs": 77935,
+      "scope": "Pre-unroll controlled compiled reconstruction fixture; not visible player input or normal RB56 sessions",
+      "evidence": {
+        "family": "RB30_CONTROL",
+        "seed": "10387",
+        "replay": "tsj-alpha/5/MEDIUM/RB30_CONTROL/10387",
+        "assertions": 1391,
+        "comparedLiveFields": 462,
+        "generationJobs": [
+          {
+            "phase": "normal-generation",
+            "outcome": "PASS",
+            "stage": "PUBLISH",
+            "elapsedMillis": 22306,
+            "workUnits": 262
+          },
+          {
+            "phase": "valid-session-restore",
+            "outcome": "PASS",
+            "stage": "PUBLISH",
+            "elapsedMillis": 24429,
+            "workUnits": 262
+          },
+          {
+            "phase": "invalid-signature-restore",
+            "outcome": "PROGRAMMING_FAILURE",
+            "stage": "PUBLISH",
+            "elapsedMillis": 24137,
+            "workUnits": 262
+          }
+        ],
+        "actionsElapsedMillis": 2174,
+        "playerInputEvidence": false,
+        "damageFixtures": "controlled state injection",
+        "resistorDamageFixtures": 2,
+        "fuseDamageFixtures": 2,
+        "remainingLimitations": [
+          "Only the declared RB30_CONTROL/10387 representative; no population or random-reliability claim.",
+          "No visible player-input, malformed UI upload, or browser reload proof.",
+          "Per-unit 5-second guard remains production-owned; report exposes total time and work only.",
+          "Native run_phase job cleanup must additionally PASS after this wrapper exits.",
+          "Cancellation and stale-controller boundaries are exercised by the separately bound LED pilot."
+        ],
+        "hostOperationSeconds": 73.71707730001071,
+        "hostCleanupSeconds": 1.1768864000041503,
+        "portClosed": true,
+        "reportSha256": "b7b0ca1aea1c0e12887c1d28877c4cef1dd5bb7ae92f803b56ebf3e02b2bafd6",
+        "sourceSha256": "ce89e1712f1e973b84ac45d481983b5b763397cbddfc5c57d867af36d9fce909",
+        "webSha256": "51cce2e921f4fd55871a30e626f6541672c7147a217cc7f7301ee1fc17bb5e73"
+      }
+    }
+  ],
+  "native98Lifecycle": {
+    "status": "PASS",
+    "hostOperationElapsedMs": 55295,
+    "ownerCycles": 100,
+    "ownerCycleAssertions": 802503,
+    "ownerCycleInstalledPackages": 60,
+    "ownerCycleRetainedParts": 61,
+    "inventoryRetainedParts": 96,
+    "inventoryAssertions": 52428,
+    "task41RestoreInvoked": false,
+    "uiRestoreRegressionCovered": false,
+    "normalSessionLoad": false,
+    "fullProductionD01": false,
+    "playerInputEvidence": false,
+    "browserHeapEvidence": false,
+    "browserLongSessionClaimed": false,
+    "scope": "Native developer owner/service/inventory only; Task41/UI restore was not invoked"
+  },
+  "normalQ30Profile45": {
+    "phase": "compiled-r45",
+    "ordinaryFlowStatus": "FAIL",
+    "captureStatus": "CAPTURED",
+    "scope": "TASK_ONLY_CURRENT_Q30_SAMPLE_NOT_QUALIFICATION",
+    "seed": "10014",
+    "profile": "MEDIUM",
+    "replay": "tsj-alpha/5/MEDIUM/RB30_CONTROL/10014",
+    "hostOperationElapsedMs": 98824,
+    "observedCaseSeconds": 91.24847279998357,
+    "lastObservedUnits": 436,
+    "exactTerminalCostEvidence": false,
+    "sourceProfileSha256": "f17e0b6838d674233e7703fd32262927175595583934f472e4fbce69fc00ae1e",
+    "samplingIntervalMicros": 2000,
+    "applicationLimits": [
+      90000,
+      640,
+      5000
+    ],
+    "stopReason": "ordinary-terminal-ERROR",
+    "serverStopped": true,
+    "portClosed": true,
+    "ownedSurvivors": [],
+    "readerStatus": "OFFLINE_CURRENT_PROFILE_ATTRIBUTION_PASS",
+    "limitations": [
+      "Self and inclusive costs are sample-weighted elapsed attribution, not exact operation counts or OS CPU time.",
+      "Inclusive costs overlap; they must not be summed across ancestor/descendant functions.",
+      "Profiler overhead is present; this one observed run does not establish an unprofiled regression cause.",
+      "DOM phase windows are conservative observed interiors, not exact phase receipts; only phases actually sampled are attributed.",
+      "Owned CPU counters cover only identity-matched pre-launch processes; an exited PID and later children are omitted. Process roles were not retained.",
+      "Captured compiled bodies and maps are authoritative; changed current Java sources are flagged.",
+      "Historical cold77 wall receipts and old seed77 CPU profiles have different source/workload/host conditions."
+    ],
+    "unprofiledCauseClaimed": false
+  },
+  "rejected1000Candidate": {
+    "status": "REJECTED_NOT_ADOPTED",
+    "scope": "Task-only raw1000/fine500 assembled candidate; production400 unchanged",
+    "productionCadenceConfigured": false,
+    "playerGenerationQualificationClaimed": false,
+    "rawNative101Status": "PASS",
+    "rawNative102Status": "PASS",
+    "requiredOriginalSensitivityComparisons": 236,
+    "comparisonsBeforeFirstFail": 25,
+    "firstFailedComparison": {
+      "name": "PAIR.40.MAINAC_ONLY_OFF.rail12.mean",
+      "candidate": 0.02774534061598099,
+      "reference": 0.025529722211407858,
+      "error": 0.002215618404573131,
+      "limit": 0.001,
+      "comparison": "ABSOLUTE_VOLTS",
+      "pass": false
+    },
+    "failure": "Frozen sensitivity failed: PAIR.40.MAINAC_ONLY_OFF.rail12.mean",
+    "originalBoundUnchanged": true,
+    "full24CandidateFollowup": "NOT_RUN",
+    "candidateBuild": "NOT_RUN",
+    "candidatePlayerFlow": "NOT_RUN",
+    "productionAdoption": false,
+    "candidateSourceMap": [
+      {
+        "variant": "coarse1000",
+        "repositoryPath": "src/com/lushprojects/circuitjs1/client/E06ConverterContract.java",
+        "productionSha256": "40b7adc777ee1c5dc801678c42366e076287dea319ef1f6304cde8e1a2910c2b",
+        "taskOverlayArtifact": "task/q60/cadence1000-500-r1/coarse1000/E06ConverterContract.java",
+        "taskOverlaySha256": "80c3dbdc897c56b1cfb2ad30d31e2faa7dadb793d1f530ed85072270d598e9b1"
+      },
+      {
+        "variant": "coarse1000",
+        "repositoryPath": "src/com/lushprojects/circuitjs1/client/E06AveragedConverterElm.java",
+        "productionSha256": "29ab646a7d303d1de94765364c38cb9a7b9dbae76dfc63549f41a9ef8d84a7e1",
+        "taskOverlayArtifact": "task/q60/cadence1000-500-r1/coarse1000/E06AveragedConverterElm.java",
+        "taskOverlaySha256": "4b479bfa2d4e8c45748c14ea74c771323788daba6e399f8691b4e8db087d3640"
+      },
+      {
+        "variant": "coarse1000",
+        "repositoryPath": "tests/contracts/E06ConverterPilotContractTest.java",
+        "productionSha256": "cd30b7062908abe063f0b503ab38451b8ce15b06523c02dc88efe6858b09ffea",
+        "taskOverlayArtifact": "task/q60/cadence1000-500-r1/coarse1000/E06ConverterPilotContractTest.java",
+        "taskOverlaySha256": "8bfa7991701e444f5a2e2f68c3c1e26fedfeeb4c6432f7a95b1fe5834ee249dc"
+      },
+      {
+        "variant": "coarse1000",
+        "repositoryPath": "tests/contracts/Rb56AssemblyContractTest.java",
+        "productionSha256": "ec19412e38c69fa6a71981f616e49a72b6e7a0c18da6ded5d86cac24f968f066",
+        "taskOverlayArtifact": "task/q60/cadence1000-500-r1/coarse1000/Rb56AssemblyContractTest.java",
+        "taskOverlaySha256": "f57e1035237f05c99dfcb95476087819c812800b19916109147ee46091961b47"
+      },
+      {
+        "variant": "fine500",
+        "repositoryPath": "src/com/lushprojects/circuitjs1/client/E06ConverterContract.java",
+        "productionSha256": "40b7adc777ee1c5dc801678c42366e076287dea319ef1f6304cde8e1a2910c2b",
+        "taskOverlayArtifact": "task/q60/cadence1000-500-r1/fine500/E06ConverterContract.java",
+        "taskOverlaySha256": "80c3dbdc897c56b1cfb2ad30d31e2faa7dadb793d1f530ed85072270d598e9b1"
+      },
+      {
+        "variant": "fine500",
+        "repositoryPath": "src/com/lushprojects/circuitjs1/client/E06AveragedConverterElm.java",
+        "productionSha256": "29ab646a7d303d1de94765364c38cb9a7b9dbae76dfc63549f41a9ef8d84a7e1",
+        "taskOverlayArtifact": "task/q60/cadence1000-500-r1/fine500/E06AveragedConverterElm.java",
+        "taskOverlaySha256": "4b479bfa2d4e8c45748c14ea74c771323788daba6e399f8691b4e8db087d3640"
+      },
+      {
+        "variant": "fine500",
+        "repositoryPath": "tests/contracts/E06ConverterPilotContractTest.java",
+        "productionSha256": "cd30b7062908abe063f0b503ab38451b8ce15b06523c02dc88efe6858b09ffea",
+        "taskOverlayArtifact": "task/q60/cadence1000-500-r1/fine500/E06ConverterPilotContractTest.java",
+        "taskOverlaySha256": "8bfa7991701e444f5a2e2f68c3c1e26fedfeeb4c6432f7a95b1fe5834ee249dc"
+      },
+      {
+        "variant": "fine500",
+        "repositoryPath": "tests/contracts/Rb56AssemblyContractTest.java",
+        "productionSha256": "ec19412e38c69fa6a71981f616e49a72b6e7a0c18da6ded5d86cac24f968f066",
+        "taskOverlayArtifact": "task/q60/cadence1000-500-r1/fine500/Rb56AssemblyContractTest.java",
+        "taskOverlaySha256": "f99392a033db450210a75ca59cf614ffaf23d822cb14f2817dd6b030497af50c"
+      }
+    ]
+  },
+  "phaseReceipts": [
+    {
+      "phase": "native-r97",
+      "status": "FAIL",
+      "hostOperationElapsedMs": 154202,
+      "exitCode": 1,
+      "launchSourceFiles": 1353,
+      "sourceInputsUnchanged": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "sourceManifestCanonicalSha256": "e1a857ef6fd0d5cf6079057eb016ef1f5c37d457cbe83bb4c567c5c9ed1049b0",
+      "hostReceiptCanonicalSha256": "22f25307a4659cd3f300892a293090f4b33b5e5091d3a6ebef6401d175af5d0b",
+      "launchRecordedPhaseRunnerSha256": "38898e876aa2d434638bc2760062727ddccd40de77d1f7d17c2220d067520580",
+      "rawArtifactPins": [
+        {
+          "artifact": "phase-temp/native-r97-launch.json",
+          "bytes": 187832,
+          "sha256": "698abb4c708570e123ae1e0916b4501e2da0992de2a478814eaa5593774addd1",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/native-r97-result.json",
+          "bytes": 1855,
+          "sha256": "ec0bf04ec28a239633d0bac56ae55ab1db7244c3df6ebc01f769876879c96c9e",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r97/host-result.json",
+          "bytes": 1242,
+          "sha256": "9298e4642f20e1010a73154c8e4fc835d29e003849751d8059edf6c4fa1a410c",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r97/stdout.log",
+          "bytes": 3414,
+          "sha256": "88ec544d2b71c5041f283d7cef25101213b4500138dd59d72a35cc6cbed650df",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r97/stderr.log",
+          "bytes": 298,
+          "sha256": "043339449358340224cddd2223046b278c2274dcc380e28e3934f16ab15fb62f",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/native-r97-full-output.log",
+          "bytes": 1887552,
+          "sha256": "64eb20c7ddb0057f21e287a27ae743aef270d5ca2b29e00bf7b975389c52e06a",
+          "retainedPrivately": true
+        }
+      ]
+    },
+    {
+      "phase": "native-r98",
+      "status": "PASS",
+      "hostOperationElapsedMs": 55295,
+      "exitCode": 0,
+      "launchSourceFiles": 1358,
+      "sourceInputsUnchanged": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "sourceManifestCanonicalSha256": "e580930c81e8591fe1f0b17679550d5a58f855b15569877aa613e12ba9d524f6",
+      "hostReceiptCanonicalSha256": "b189afcfcc18ae07904c24b2037444915ae0427b05c31ae79704899a99ea2cb1",
+      "launchRecordedPhaseRunnerSha256": "eb391c682ced1999ed24e7617bb257ed169387f514f0fbbe158cbf79fa6a9af7",
+      "rawArtifactPins": [
+        {
+          "artifact": "phase-temp/native-r98-launch.json",
+          "bytes": 188867,
+          "sha256": "957a0d82b770b5da4e4175a544dac414e42171b25dd6cfcb2efc0dc18adc0dcd",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/native-r98-result.json",
+          "bytes": 1852,
+          "sha256": "a47a62bd464b5ce00b65a159bb86992d25e0d428dfa5874ec7fd0f993fa059ef",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r98/host-result.json",
+          "bytes": 1239,
+          "sha256": "3b96cc9dbef4221426b7a3b2d2af5de3c6c902a9ba50db89ecc4ff237c366017",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r98/stdout.log",
+          "bytes": 1005,
+          "sha256": "3097c4b8f8bcbb5f17f6f00315de797a116a9783f51a715234a40e5d32182e44",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r98/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedPrivately": true
+        }
+      ]
+    },
+    {
+      "phase": "native-r99",
+      "status": "PASS",
+      "hostOperationElapsedMs": 26407,
+      "exitCode": 0,
+      "launchSourceFiles": 1353,
+      "sourceInputsUnchanged": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "sourceManifestCanonicalSha256": "31a202dff20d3a3b0d60cce1faa8736c90b86f51ca20c559b11bdc65b9b1682c",
+      "hostReceiptCanonicalSha256": "bc564f8f27f74b71ea633f33a39b7248998d706fd0d9e1eaa35482dab5f3796d",
+      "launchRecordedPhaseRunnerSha256": "eb391c682ced1999ed24e7617bb257ed169387f514f0fbbe158cbf79fa6a9af7",
+      "rawArtifactPins": [
+        {
+          "artifact": "phase-temp/native-r99-launch.json",
+          "bytes": 187834,
+          "sha256": "0e00b6f47aa1374670b4b36c857c19908c40ae7f69a0cc04511c68c0b3dfe237",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/native-r99-result.json",
+          "bytes": 1851,
+          "sha256": "1e95add221ae866ce8076c4f52d421a7ebaf07c2352ccb705b2f8e7dcd041a6e",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r99/host-result.json",
+          "bytes": 1238,
+          "sha256": "c6444bbfe9081e70598f2eba3ab0e910b85f0b73de6f187ac07306bef817fe01",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r99/stdout.log",
+          "bytes": 401,
+          "sha256": "f292f72b17da2f9de0c3994b6631fa03434db6f45514fa828996c6ff809870d6",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r99/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/native-r99-full-output.log",
+          "bytes": 1674,
+          "sha256": "b100c751b22f497b032da48426ba0d857b2fd888ba76694c3c479f8fc70edbc5",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/native-r99-receipt.json",
+          "bytes": 986,
+          "sha256": "903bb803d73ebe7c659101dd36fff8dae953e9ce0aa054686a5957495beb1435",
+          "retainedPrivately": true
+        }
+      ]
+    },
+    {
+      "phase": "native-r100",
+      "status": "PASS",
+      "hostOperationElapsedMs": 36598,
+      "exitCode": 0,
+      "launchSourceFiles": 1353,
+      "sourceInputsUnchanged": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "sourceManifestCanonicalSha256": "7548986dee284ac34b9599d451ec0b72548e4ecfa17efe6ff76d98121b7af04b",
+      "hostReceiptCanonicalSha256": "5ef31ad4bc2af659443fe653779c97983067934cb7ed151a9d19d2f49fcc13a1",
+      "launchRecordedPhaseRunnerSha256": "364dd46c6979d84fd61a6e3b5676e152fcd12a0f841d4319633171dd9963edb3",
+      "rawArtifactPins": [
+        {
+          "artifact": "phase-temp/native-r100-launch.json",
+          "bytes": 187836,
+          "sha256": "07f140c004c00444ae96f8f825020b0a71f2e43d7836abc0fac29e4fbd2e43bd",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/native-r100-result.json",
+          "bytes": 1851,
+          "sha256": "9fc362caee5337244d45e6286da73cfc45f7ac8c394eca4e1bd24ae3485dad30",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r100/host-result.json",
+          "bytes": 1237,
+          "sha256": "d4a230d19c9cfb2f988c6da46a4eeff52135ca331e9b54aa4faa12e5fc062915",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r100/stdout.log",
+          "bytes": 660,
+          "sha256": "a9a91e5879fae472beaa40640b60fa197feb3d993ad00cdf4c3dd9cd6916bdcd",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r100/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/native-r100-full-output.log",
+          "bytes": 4918,
+          "sha256": "c50de2a0f1ab0fcbd6018947fba98bc7cb8ec15e6c1bfb7f72392d1af3ed1449",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/native-r100-receipt.json",
+          "bytes": 682,
+          "sha256": "8c837efc4977a71f90abcc8f4d34bea7004bc9f241742232c83bbf0a5985db37",
+          "retainedPrivately": true
+        }
+      ]
+    },
+    {
+      "phase": "build-r13",
+      "status": "PASS",
+      "hostOperationElapsedMs": 90944,
+      "exitCode": 0,
+      "launchSourceFiles": 1222,
+      "sourceInputsUnchanged": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "sourceManifestCanonicalSha256": "4c43ab39a8a84526ab4e4a10bf21ff0882c6b30b6de2fa957d7499e148961505",
+      "hostReceiptCanonicalSha256": "910b9b6f0413ad62ac46f9858e6dc6c46886e926f901148746c2481b3e3020b4",
+      "launchRecordedPhaseRunnerSha256": "364dd46c6979d84fd61a6e3b5676e152fcd12a0f841d4319633171dd9963edb3",
+      "rawArtifactPins": [
+        {
+          "artifact": "phase-temp/build-r13-launch.json",
+          "bytes": 171622,
+          "sha256": "e5fea663b3b8f37be5feee7a0f934dec6239520b1c2c24fcfd0c7fead6a5bdc3",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/build-r13-result.json",
+          "bytes": 2053,
+          "sha256": "d3e8fe7935c9f9992e64f57f74985b355fb7e21b9cb50b1b2218ab419c48374c",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-build-r13/host-result.json",
+          "bytes": 1393,
+          "sha256": "9ca437b4c4df1dec29cdb4a19b6aaf5c459a13fd6af5d7319be85f908ea1ef0a",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-build-r13/stdout.log",
+          "bytes": 1259,
+          "sha256": "c5703a2c3ad1fff4eef19f6ac5f7162e5716be668e967e6d7389215c7be559b2",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-build-r13/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedPrivately": true
+        }
+      ]
+    },
+    {
+      "phase": "compiled-r39",
+      "status": "PASS",
+      "hostOperationElapsedMs": 5012,
+      "exitCode": 0,
+      "launchSourceFiles": 1222,
+      "sourceInputsUnchanged": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "sourceManifestCanonicalSha256": "4c43ab39a8a84526ab4e4a10bf21ff0882c6b30b6de2fa957d7499e148961505",
+      "hostReceiptCanonicalSha256": "150dfe83c02b5bee442d69cf0c7ef7f167e543678dc6b0a9742edc56e94cdb3c",
+      "launchRecordedPhaseRunnerSha256": "fd544bc7d10c3322e9abc6ab139b066e96f6ff8a34adfcfe842f02eb97abfdce",
+      "rawArtifactPins": [
+        {
+          "artifact": "phase-temp/compiled-r39-launch.json",
+          "bytes": 171389,
+          "sha256": "5ae722b4edcbd2aca359676b4bebbf2d55806daf535d2384aec4e5162581c703",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/compiled-r39-result.json",
+          "bytes": 1809,
+          "sha256": "9183e5be9e120da748af33c2dfa3aa71a1012613eb4575edb678b53c17aa8ff0",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r39/host-result.json",
+          "bytes": 1218,
+          "sha256": "235f2b2f1ff932023c2e6b940a3913586e8fa3747dc118f6278783bd2381f42f",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r39/stdout.log",
+          "bytes": 259,
+          "sha256": "c83f9489c8e54a4f0f7ac2aac1c0fbe04b3c5f91f7ff3a798960d3ac2f060e89",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r39/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedPrivately": true
+        }
+      ]
+    },
+    {
+      "phase": "compiled-r40",
+      "status": "PASS",
+      "hostOperationElapsedMs": 77935,
+      "exitCode": 0,
+      "launchSourceFiles": 1222,
+      "sourceInputsUnchanged": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "sourceManifestCanonicalSha256": "4c43ab39a8a84526ab4e4a10bf21ff0882c6b30b6de2fa957d7499e148961505",
+      "hostReceiptCanonicalSha256": "adb66062816788ac8f8f2c41936f570611bdd2db590b40953a62db2538efe5d0",
+      "launchRecordedPhaseRunnerSha256": "fd544bc7d10c3322e9abc6ab139b066e96f6ff8a34adfcfe842f02eb97abfdce",
+      "rawArtifactPins": [
+        {
+          "artifact": "phase-temp/compiled-r40-launch.json",
+          "bytes": 171389,
+          "sha256": "747a6fc8f2a0b35e15c2fa1639e7e707344c19642c19c19b169c1b21802cdf83",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/compiled-r40-result.json",
+          "bytes": 1810,
+          "sha256": "29e60f75ca4371a77306bc06d260b3efcdac81891cf462fedb9ef862ddd5c8bc",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r40/host-result.json",
+          "bytes": 1219,
+          "sha256": "5c20808dae291760c18909fbac4fad62de525874ba0ecd37ce9683aa1223cde3",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r40/stdout.log",
+          "bytes": 334,
+          "sha256": "80ce6603b27a88ed0252c6ad59af390925b04d6341dc13f9df8f438b4395ceb1",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r40/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedPrivately": true
+        }
+      ]
+    },
+    {
+      "phase": "compiled-r41",
+      "status": "FAIL",
+      "hostOperationElapsedMs": 133510,
+      "exitCode": 1,
+      "launchSourceFiles": 1222,
+      "sourceInputsUnchanged": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "sourceManifestCanonicalSha256": "4c43ab39a8a84526ab4e4a10bf21ff0882c6b30b6de2fa957d7499e148961505",
+      "hostReceiptCanonicalSha256": "96e80ae4a979c9e56d50af35b0baae840e18bc2d027ffd72bc60c73324e9d67b",
+      "launchRecordedPhaseRunnerSha256": "fd544bc7d10c3322e9abc6ab139b066e96f6ff8a34adfcfe842f02eb97abfdce",
+      "rawArtifactPins": [
+        {
+          "artifact": "phase-temp/compiled-r41-launch.json",
+          "bytes": 171389,
+          "sha256": "c14d89363c64ebdf6401c586ffbc2b9e6cdad4e487b9732c36aa1dd24d62c339",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/compiled-r41-result.json",
+          "bytes": 1811,
+          "sha256": "41040cc05312cd789a841ec448a3ab2f6d1b8f95129b9e28404d3b315de65e66",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r41/host-result.json",
+          "bytes": 1220,
+          "sha256": "02eb419cfc8fdabc336d0f432d5f57cf2184bc5f539a5e838d0605eebed10e29",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r41/stdout.log",
+          "bytes": 16824,
+          "sha256": "3327c4c6a24eb42ee585ec2486f5414e7505cf72ed630b875108054abe8a4269",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r41/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedPrivately": true
+        }
+      ]
+    },
+    {
+      "phase": "compiled-r42",
+      "status": "FAIL",
+      "hostOperationElapsedMs": 187913,
+      "exitCode": 1,
+      "launchSourceFiles": 1222,
+      "sourceInputsUnchanged": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "sourceManifestCanonicalSha256": "4c43ab39a8a84526ab4e4a10bf21ff0882c6b30b6de2fa957d7499e148961505",
+      "hostReceiptCanonicalSha256": "e02cde6434039b422d360bdb1c51feff66ad40b38703a6d8a6e8696e0c36d009",
+      "launchRecordedPhaseRunnerSha256": "fd544bc7d10c3322e9abc6ab139b066e96f6ff8a34adfcfe842f02eb97abfdce",
+      "rawArtifactPins": [
+        {
+          "artifact": "phase-temp/compiled-r42-launch.json",
+          "bytes": 171387,
+          "sha256": "abad237531096290231fb35816693ee8ac42e896a024c97f981a6a2cce4e10ef",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/compiled-r42-result.json",
+          "bytes": 1811,
+          "sha256": "ecffa5762a3bdae5a57bf38d3ec9173e52b9fa5d08694b0022a5b4faf4f5a276",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r42/host-result.json",
+          "bytes": 1220,
+          "sha256": "a52c9cad46ffa207294fc537b9a03af06d4c0c8c4ad362da28ac636e33f0b3c7",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r42/stdout.log",
+          "bytes": 17004,
+          "sha256": "4631c6393a644c8bf68ee002fff64f466832fb81f36d7e2d07d4d067e6e51ec0",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r42/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedPrivately": true
+        }
+      ]
+    },
+    {
+      "phase": "compiled-r43",
+      "status": "FAIL",
+      "hostOperationElapsedMs": 148376,
+      "exitCode": 1,
+      "launchSourceFiles": 1222,
+      "sourceInputsUnchanged": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "sourceManifestCanonicalSha256": "4c43ab39a8a84526ab4e4a10bf21ff0882c6b30b6de2fa957d7499e148961505",
+      "hostReceiptCanonicalSha256": "f020cd0473530ae69aa6da38e911769310b39fbf86074f5db6eafe72015a7160",
+      "launchRecordedPhaseRunnerSha256": "fd544bc7d10c3322e9abc6ab139b066e96f6ff8a34adfcfe842f02eb97abfdce",
+      "rawArtifactPins": [
+        {
+          "artifact": "phase-temp/compiled-r43-launch.json",
+          "bytes": 171389,
+          "sha256": "ee6aea0d87e4a69624164781f32a57efa7ed7c39fad9c28b272985ab7ac9e9e3",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/compiled-r43-result.json",
+          "bytes": 1813,
+          "sha256": "c92093f76f4092d8c607f749368de662472c9bb86cbcffe94875d4aca56fb23b",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r43/host-result.json",
+          "bytes": 1222,
+          "sha256": "58bf9d971d9edc29acdaf4b64b61b98a1b1255d37b8b3e9880a81c2a78f6a2c4",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r43/stdout.log",
+          "bytes": 16824,
+          "sha256": "7cdb700452c75c2045229bcd4f20c3f31ee61da042a6663d3139d9d550a427bb",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r43/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedPrivately": true
+        }
+      ]
+    },
+    {
+      "phase": "compiled-r44",
+      "status": "PASS",
+      "hostOperationElapsedMs": 5551,
+      "exitCode": 0,
+      "launchSourceFiles": 1222,
+      "sourceInputsUnchanged": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "sourceManifestCanonicalSha256": "4c43ab39a8a84526ab4e4a10bf21ff0882c6b30b6de2fa957d7499e148961505",
+      "hostReceiptCanonicalSha256": "abdc68a7fbadd04df6964c1239ff66331ea777e30fca4d4f7c157eca152cbd21",
+      "launchRecordedPhaseRunnerSha256": "fd544bc7d10c3322e9abc6ab139b066e96f6ff8a34adfcfe842f02eb97abfdce",
+      "rawArtifactPins": [
+        {
+          "artifact": "phase-temp/compiled-r44-launch.json",
+          "bytes": 171387,
+          "sha256": "b62a4ba823611dee602aade0061ffcdd222fc2b490dd6ca30852de482dd68f7d",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/compiled-r44-result.json",
+          "bytes": 1811,
+          "sha256": "e6b34329db87e5407257f60ede8734f1d2a602f5b912081ea3c5ee29fb3d41bc",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r44/host-result.json",
+          "bytes": 1220,
+          "sha256": "a8778f13c5678a4dea7657f2b3c99d1eb8051dea1367c60b73e84df2ba58967f",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r44/stdout.log",
+          "bytes": 10430,
+          "sha256": "84562d67fbfe8898aba41fcc3a3f7c816e2985528c340a7ac4019bb0e79b0ca3",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r44/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedPrivately": true
+        }
+      ]
+    },
+    {
+      "phase": "compiled-r45",
+      "status": "FAIL",
+      "hostOperationElapsedMs": 98824,
+      "exitCode": 1,
+      "launchSourceFiles": 1222,
+      "sourceInputsUnchanged": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "sourceManifestCanonicalSha256": "4c43ab39a8a84526ab4e4a10bf21ff0882c6b30b6de2fa957d7499e148961505",
+      "hostReceiptCanonicalSha256": "2bd504ff16728ac0209f63ed4f5e635ad6fe7aa04a0e6a44b8d976a72a3477a3",
+      "launchRecordedPhaseRunnerSha256": "fd544bc7d10c3322e9abc6ab139b066e96f6ff8a34adfcfe842f02eb97abfdce",
+      "rawArtifactPins": [
+        {
+          "artifact": "phase-temp/compiled-r45-launch.json",
+          "bytes": 171389,
+          "sha256": "b4558e88f31779a8af8ed9df03aaa81ce93aa36a756f8c84730b707094263a63",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/compiled-r45-result.json",
+          "bytes": 1812,
+          "sha256": "f03a3a19dbd837d26ad08a0b27f68f6a8f4741e721e6771948341f14b0b50111",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r45/host-result.json",
+          "bytes": 1221,
+          "sha256": "47e2495532a42a63d1e45460aaeede7b3753e3136f86eac809f3cbf77fbc79a9",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r45/stdout.log",
+          "bytes": 73689,
+          "sha256": "02c0512192cafb9ce114a81d82a8dc08197beecb57eb961ab5d519177105a5ea",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r45/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedPrivately": true
+        }
+      ]
+    },
+    {
+      "phase": "native-r101",
+      "status": "PASS",
+      "hostOperationElapsedMs": 27170,
+      "exitCode": 0,
+      "launchSourceFiles": 1367,
+      "sourceInputsUnchanged": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "sourceManifestCanonicalSha256": "07d81692e45c4e8b1635ef70925ad9bee65cc535b97c611548529f94b723dd0b",
+      "hostReceiptCanonicalSha256": "c6d16dc06b3fc61cf60ac08322c84a70466116fdcbd5b1ae71f56e85be049e4c",
+      "launchRecordedPhaseRunnerSha256": "e3acbfb8a82aa837cb19b27a113b7f129d6241eed31f9b9956f9e5143d6ac108",
+      "rawArtifactPins": [
+        {
+          "artifact": "phase-temp/native-r101-launch.json",
+          "bytes": 190550,
+          "sha256": "ebf20973f86578ca32f300d3b9e91e47694c32f7a3202aa6a0a444b930d43c16",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/native-r101-result.json",
+          "bytes": 1853,
+          "sha256": "0b76433f3a63be6168c38b1068f70fafe865ca8c78181056a7f810bd64abf017",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r101/host-result.json",
+          "bytes": 1239,
+          "sha256": "dbbbb08a0e856c013f459a36951ba3a25f2c24b93167328ce13ff6e68f612533",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r101/stdout.log",
+          "bytes": 922,
+          "sha256": "2273260e2fef7539ae01ceb2c8e89e72824d72ed6e8a0848868298f357e3eaee",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r101/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/native-r101-full-output.log",
+          "bytes": 139579,
+          "sha256": "6a198d6a161a2a981289c87a700e1c117936e545c68c3ff5bda9e7cf21255f34",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/native-r101-receipt.json",
+          "bytes": 132404,
+          "sha256": "9ee5d6c736556547528f6d7f717579326158a961302e6fb7db35e85007cb562b",
+          "retainedPrivately": true
+        }
+      ]
+    },
+    {
+      "phase": "native-r102",
+      "status": "PASS",
+      "hostOperationElapsedMs": 26911,
+      "exitCode": 0,
+      "launchSourceFiles": 1367,
+      "sourceInputsUnchanged": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "sourceManifestCanonicalSha256": "07d81692e45c4e8b1635ef70925ad9bee65cc535b97c611548529f94b723dd0b",
+      "hostReceiptCanonicalSha256": "c0008676f10dd5168225834d34d705ca6477128c521386edabc4817d76dfa4cb",
+      "launchRecordedPhaseRunnerSha256": "e3acbfb8a82aa837cb19b27a113b7f129d6241eed31f9b9956f9e5143d6ac108",
+      "rawArtifactPins": [
+        {
+          "artifact": "phase-temp/native-r102-launch.json",
+          "bytes": 190550,
+          "sha256": "e7808441c51a34643190384605a4e5710c0d0c2a8d3ed1ef5795545b2458a53e",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/native-r102-result.json",
+          "bytes": 1853,
+          "sha256": "1a28822dce1e3a7e1cd9b5ef1af35495ac73e53d7428c5dfebe1cdf99f055b4d",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r102/host-result.json",
+          "bytes": 1239,
+          "sha256": "f088634694c646966789c1953aa4c04e01403bc9f43fc9541f450d5cc87f1976",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r102/stdout.log",
+          "bytes": 931,
+          "sha256": "890737f9774fec3b3eeb44eabf8d5f56ac25f762c0c49d93754a71512f0b2286",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r102/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/native-r102-full-output.log",
+          "bytes": 137885,
+          "sha256": "54c803e184d5e08a78d645f616bc4e2b4d3789fd8b49ec1ffb3eae0870fa2aed",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/native-r102-receipt.json",
+          "bytes": 132874,
+          "sha256": "4838cccb8e903e02faa3e84eb2e5794fe4fc7f93a2bead0735100f410dc16da0",
+          "retainedPrivately": true
+        }
+      ]
+    },
+    {
+      "phase": "build-r14",
+      "status": "PASS",
+      "hostOperationElapsedMs": 92482,
+      "exitCode": 0,
+      "launchSourceFiles": 1222,
+      "sourceInputsUnchanged": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "sourceManifestCanonicalSha256": "31a89d2a26880df8df27197aabd03b6138cc2847b15a739063678e048cb572ca",
+      "hostReceiptCanonicalSha256": "60794e11b21dc660f40ece164c6baf185586c7089c74719643c9498c2c19b14a",
+      "launchRecordedPhaseRunnerSha256": "e3acbfb8a82aa837cb19b27a113b7f129d6241eed31f9b9956f9e5143d6ac108",
+      "rawArtifactPins": [
+        {
+          "artifact": "phase-temp/build-r14-launch.json",
+          "bytes": 171620,
+          "sha256": "03882e965cb7b99a59629dafcd130095d4582ffd9ab9acc0a6e561040dd6dc5f",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/build-r14-result.json",
+          "bytes": 2055,
+          "sha256": "3daa26e366aeada211469ad5ab0b64388dbfb724b85a4dc7e2120feb1aa75ed8",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-build-r14/host-result.json",
+          "bytes": 1395,
+          "sha256": "9a3b4b3a5ab624bc9a77a06998062b7d91f3e81dea70c94a940ad239c0a56549",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-build-r14/stdout.log",
+          "bytes": 1259,
+          "sha256": "db8551dbb264cb320939e5855a87fd4836cf59c2973fc5b6750223f00873a495",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-build-r14/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedPrivately": true
+        }
+      ]
+    },
+    {
+      "phase": "native-r104",
+      "status": "PASS",
+      "hostOperationElapsedMs": 37753,
+      "exitCode": 0,
+      "launchSourceFiles": 1355,
+      "sourceInputsUnchanged": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "sourceManifestCanonicalSha256": "463408a4ccd9af9bd6279af5a1878b6f5c2c2a46e053ec6e6819c7fcce8e52c7",
+      "hostReceiptCanonicalSha256": "36ddc07a1d1b830ee9798cf2fa5f0764cb74bdc552c84b2bb97812281d0a26c8",
+      "launchRecordedPhaseRunnerSha256": "52b4fabe69d4cb3cb579f8e58e3d6db44741eca00e91c0f7d84b44ecdad08ec3",
+      "rawArtifactPins": [
+        {
+          "artifact": "phase-temp/native-r104-launch.json",
+          "bytes": 188235,
+          "sha256": "4f6c6cdeba1dd838f406b60621b55f16e97a0985cc7fe297f1df71ee78ab95ff",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/native-r104-result.json",
+          "bytes": 1853,
+          "sha256": "b1b3742b3cb9d305f193dc36841bae1754561a3eaadde1260b39316c2357d44b",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r104/host-result.json",
+          "bytes": 1239,
+          "sha256": "1ae847e1593da0fc677882574a747337e37842db85cbd6f741e70e754495e52a",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r104/stdout.log",
+          "bytes": 660,
+          "sha256": "a9a91e5879fae472beaa40640b60fa197feb3d993ad00cdf4c3dd9cd6916bdcd",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-native-r104/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/native-r104-full-output.log",
+          "bytes": 4918,
+          "sha256": "c50de2a0f1ab0fcbd6018947fba98bc7cb8ec15e6c1bfb7f72392d1af3ed1449",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/native-r104-receipt.json",
+          "bytes": 682,
+          "sha256": "8c837efc4977a71f90abcc8f4d34bea7004bc9f241742232c83bbf0a5985db37",
+          "retainedPrivately": true
+        }
+      ]
+    },
+    {
+      "phase": "compiled-r46",
+      "status": "PASS",
+      "hostOperationElapsedMs": 7146,
+      "exitCode": 0,
+      "launchSourceFiles": 1222,
+      "sourceInputsUnchanged": true,
+      "jobActiveProcesses": 0,
+      "liveDrainers": 0,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "sourceManifestCanonicalSha256": "31a89d2a26880df8df27197aabd03b6138cc2847b15a739063678e048cb572ca",
+      "hostReceiptCanonicalSha256": "ded379395826abe07b00832c65c810ab4753a071bf91150b742d92ccbeaaf055",
+      "launchRecordedPhaseRunnerSha256": "4c5e57af2c0400e1d4731f207c20a29d741a92d3d857140842bb7302335fbb60",
+      "rawArtifactPins": [
+        {
+          "artifact": "phase-temp/compiled-r46-launch.json",
+          "bytes": 171389,
+          "sha256": "190b797acc76632d195580613c29880f776726c275ff710ff88daadf2378f72e",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/compiled-r46-result.json",
+          "bytes": 1812,
+          "sha256": "d9ef7b4cf7b7dfe408e227b71823f0456799c0b7b960fa98be99ffb4879b65c2",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r46/host-result.json",
+          "bytes": 1221,
+          "sha256": "8ef11b3af95b0546c31d1d62f5d1c28358039180356dc3bb2c40f00c3b0a7838",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r46/stdout.log",
+          "bytes": 278643,
+          "sha256": "0913958c663b76ec2bbc7c30686ddba47ec590e3b880d01de93ac881efc5c36f",
+          "retainedPrivately": true
+        },
+        {
+          "artifact": "phase-temp/owned-compiled-r46/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedPrivately": true
+        }
+      ]
+    }
+  ],
+  "exactArtifactPins": {
+    "fullSixAggregate": {
+      "artifact": "phase-temp/q60-full6-final400-r5.json",
+      "bytes": 42587,
+      "sha256": "e438007fbca913ce0b104cbc08b5173484ce6db680298acd9c95f04a49752568",
+      "retainedPrivately": true
+    },
+    "aggregateFrozenBindings": [
+      {
+        "artifact": "task/q60-browser/compiled_cohort_r5_aggregate_only.py",
+        "collectionRecordedSha256": "b078838c627be53e9cf0b56c700e56e75ed10527469fe14bb1c53c9cc68318e1",
+        "currentObservedSha256": "b078838c627be53e9cf0b56c700e56e75ed10527469fe14bb1c53c9cc68318e1",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r41/result.json",
+        "collectionRecordedSha256": "e93e0c095bb9dcd8ffac29ebb874b1e7ac716b273b84d9ae02c91918699354df",
+        "currentObservedSha256": "e93e0c095bb9dcd8ffac29ebb874b1e7ac716b273b84d9ae02c91918699354df",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r41/cases/001-rb56-seed-1017-positive.report.json",
+        "collectionRecordedSha256": "6f9def28327d1e1a3108012ebe9fe270cdbc69280dbdd4a895e664b71ef006a0",
+        "currentObservedSha256": "6f9def28327d1e1a3108012ebe9fe270cdbc69280dbdd4a895e664b71ef006a0",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r41/cases/002-rb56-seed-1067-positive.report.json",
+        "collectionRecordedSha256": "466e18d9cf7535dee11bdfdfb9d8ec162e9b2f3bde798cf3f4aa3ccfbbca8606",
+        "currentObservedSha256": "466e18d9cf7535dee11bdfdfb9d8ec162e9b2f3bde798cf3f4aa3ccfbbca8606",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r41/strict-result.json",
+        "collectionRecordedSha256": "6d245fb901f3c1d21d4bbf57bf8ab7a6aac79c842c5bc23aab2706aa58c47d78",
+        "currentObservedSha256": "6d245fb901f3c1d21d4bbf57bf8ab7a6aac79c842c5bc23aab2706aa58c47d78",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/compiled-r41-launch.json",
+        "collectionRecordedSha256": "c14d89363c64ebdf6401c586ffbc2b9e6cdad4e487b9732c36aa1dd24d62c339",
+        "currentObservedSha256": "c14d89363c64ebdf6401c586ffbc2b9e6cdad4e487b9732c36aa1dd24d62c339",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/compiled-r41-result.json",
+        "collectionRecordedSha256": "41040cc05312cd789a841ec448a3ab2f6d1b8f95129b9e28404d3b315de65e66",
+        "currentObservedSha256": "41040cc05312cd789a841ec448a3ab2f6d1b8f95129b9e28404d3b315de65e66",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r41/input-manifest-before.json",
+        "collectionRecordedSha256": "ebb46d21f893e9cc2efb0c3f12568f5b8c6846499ca870561e9eb7aef2835fbc",
+        "currentObservedSha256": "ebb46d21f893e9cc2efb0c3f12568f5b8c6846499ca870561e9eb7aef2835fbc",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r41/input-manifest-after.json",
+        "collectionRecordedSha256": "57026229794ddc3862369efe81f136fc986e74ae07c34e70c02d0fd077abe5d8",
+        "currentObservedSha256": "57026229794ddc3862369efe81f136fc986e74ae07c34e70c02d0fd077abe5d8",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "task/q60-browser/compiled_cohort_r5.py",
+        "collectionRecordedSha256": "48e7690c67f9a108ab470482db917d408955f1baa5f023bb7c453013b8b8c30a",
+        "currentObservedSha256": "48e7690c67f9a108ab470482db917d408955f1baa5f023bb7c453013b8b8c30a",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "task/q60-browser/compiled-r41.py",
+        "collectionRecordedSha256": "dcdcc2445418ca322a463fbeac661f9f94566c6da3f2decfb805bf7606eb8c2f",
+        "currentObservedSha256": "dcdcc2445418ca322a463fbeac661f9f94566c6da3f2decfb805bf7606eb8c2f",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "task/q60-browser/compiled-r1.py",
+        "collectionRecordedSha256": "7bac799eea101e234ef5c7f8740bea729c2d7e6bf25c65b5c4e077ba69fba9a1",
+        "currentObservedSha256": "7bac799eea101e234ef5c7f8740bea729c2d7e6bf25c65b5c4e077ba69fba9a1",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "task/q60/pointer.json",
+        "collectionRecordedSha256": "5999e74d82a111124d57f1a1517900be23d334b6ee0d191df8b2ec22354ef402",
+        "currentObservedSha256": "5999e74d82a111124d57f1a1517900be23d334b6ee0d191df8b2ec22354ef402",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "task/q60-browser/compiled-r41-spec.json",
+        "collectionRecordedSha256": "a9ccbd923ff37418f86200546e3c11fea52d890bd34d23cb307d2d61c0be556b",
+        "currentObservedSha256": "a9ccbd923ff37418f86200546e3c11fea52d890bd34d23cb307d2d61c0be556b",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/tests/browser/compiled_attribute_acceptance.py",
+        "collectionRecordedSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+        "currentObservedSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "matched-helper/compiled-r1.py",
+        "collectionRecordedSha256": "c52805860d8f5533fab2af44f5efb6499020ee8f33c89176e94a7c435edbeb51",
+        "currentObservedSha256": "c52805860d8f5533fab2af44f5efb6499020ee8f33c89176e94a7c435edbeb51",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "task/q60-browser/report_contract_r1.py",
+        "collectionRecordedSha256": "4364f82cc2658cac76a4b09e866db552e8aeb1355ea3156872c77314f48959ea",
+        "currentObservedSha256": "4364f82cc2658cac76a4b09e866db552e8aeb1355ea3156872c77314f48959ea",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "task/e06-browser/compiled-r2.py",
+        "collectionRecordedSha256": "137c888f2cd816e4e4a7c409071aebb26c1bb309956be14448412680e2e714b8",
+        "currentObservedSha256": "137c888f2cd816e4e4a7c409071aebb26c1bb309956be14448412680e2e714b8",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "task/q60/holdout-recommendation/holdout-neutral-census-r3.json",
+        "collectionRecordedSha256": "da73adfd394b1078b6715a8adb8e00f4b20cee50936a0ae845141af17066c460",
+        "currentObservedSha256": "da73adfd394b1078b6715a8adb8e00f4b20cee50936a0ae845141af17066c460",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "task/q60-browser/compiled-r42.py",
+        "collectionRecordedSha256": "6f3232418f673d0984ff9b9a25f794ec0347955d10270e13d81e1c1d039d8119",
+        "currentObservedSha256": "6f3232418f673d0984ff9b9a25f794ec0347955d10270e13d81e1c1d039d8119",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "task/q60-browser/compiled-r42-spec.json",
+        "collectionRecordedSha256": "94a02ec3c1662f2d7adc4cb09cf28df7b706b3c70562df89201debfd34de92ab",
+        "currentObservedSha256": "94a02ec3c1662f2d7adc4cb09cf28df7b706b3c70562df89201debfd34de92ab",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "task/q60-browser/compiled-r43.py",
+        "collectionRecordedSha256": "2387450b15ff388426b1837c03b190da6949d6482e7528da8f7ab3e418a0ee87",
+        "currentObservedSha256": "2387450b15ff388426b1837c03b190da6949d6482e7528da8f7ab3e418a0ee87",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "task/q60-browser/compiled-r43-spec.json",
+        "collectionRecordedSha256": "fadd782929d74edc228ca181002e887c6cccc30b0a4eaf54e40d1c8e8debc88b",
+        "currentObservedSha256": "fadd782929d74edc228ca181002e887c6cccc30b0a4eaf54e40d1c8e8debc88b",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/docs/task-evidence/Q30/qualification-workflow/private_menu.py",
+        "collectionRecordedSha256": "1a0ba9d1c49d442728c427ebd6830913a8af0fb8cc07faab91cf465df57a90e9",
+        "currentObservedSha256": "1a0ba9d1c49d442728c427ebd6830913a8af0fb8cc07faab91cf465df57a90e9",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/docs/task-evidence/Q30/qualification-workflow/audit_release.py",
+        "collectionRecordedSha256": "7a76a9ca504eada3a7658dd74ac8851cbcbc10c6d7d45598894fe448aa696324",
+        "currentObservedSha256": "7a76a9ca504eada3a7658dd74ac8851cbcbc10c6d7d45598894fe448aa696324",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/docs/task-evidence/Q30/qualification-workflow/serial_runner.py",
+        "collectionRecordedSha256": "08ce044c8c014ae7bc3b194c07827c8383990b4f950be82137b94dc504f1ebe2",
+        "currentObservedSha256": "08ce044c8c014ae7bc3b194c07827c8383990b4f950be82137b94dc504f1ebe2",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/docs/task-evidence/Q30/qualification-workflow/windows_process_identity.py",
+        "collectionRecordedSha256": "88b18fa7ff41fc006fe9e17dac2aba73cb15c9342bad8b163bedb60bce161017",
+        "currentObservedSha256": "88b18fa7ff41fc006fe9e17dac2aba73cb15c9342bad8b163bedb60bce161017",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/docs/task-evidence/Q30/qualification-workflow/receipts.py",
+        "collectionRecordedSha256": "ae22c139fc9834c767aed8d6b2ae3dcdb9e8db010c3721deba3ae34bd1119dd1",
+        "currentObservedSha256": "ae22c139fc9834c767aed8d6b2ae3dcdb9e8db010c3721deba3ae34bd1119dd1",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/Rb56ControlTail.java",
+        "collectionRecordedSha256": "9df07699ba206acec1273e8f757794833cb5c1c735186b140cbb97756aef54a8",
+        "currentObservedSha256": "9df07699ba206acec1273e8f757794833cb5c1c735186b140cbb97756aef54a8",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/Rb56DiagnosticProvider.java",
+        "collectionRecordedSha256": "d36eb413e76790b575a45d47a77217dd3e9be44744d76717c755bbbdcecbd644",
+        "currentObservedSha256": "d36eb413e76790b575a45d47a77217dd3e9be44744d76717c755bbbdcecbd644",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/Rb56Generator.java",
+        "collectionRecordedSha256": "f830e3564fcab3a3d8f9eb430ead516d02744c4766f320f1d8b6aae001cf6231",
+        "currentObservedSha256": "f830e3564fcab3a3d8f9eb430ead516d02744c4766f320f1d8b6aae001cf6231",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/Rb56InstrumentAdmissionCapability.java",
+        "collectionRecordedSha256": "c18e9fc3a619d4cb0818aea8913b76883b9ca8e2dc126c3257009ca18df0f1dc",
+        "currentObservedSha256": "c18e9fc3a619d4cb0818aea8913b76883b9ca8e2dc126c3257009ca18df0f1dc",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/Rb56PhysicalAssembly.java",
+        "collectionRecordedSha256": "e314b24fe0808d26498ed0ae68f22a05e5815da9e8024ddcf3727edc2e6cedd5",
+        "currentObservedSha256": "e314b24fe0808d26498ed0ae68f22a05e5815da9e8024ddcf3727edc2e6cedd5",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+        "collectionRecordedSha256": "3463fdedf485c4af7ca9a152e1b378a8ec34102b40ddf4d8f1d0bace939a6cbb",
+        "currentObservedSha256": "3463fdedf485c4af7ca9a152e1b378a8ec34102b40ddf4d8f1d0bace939a6cbb",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/Rb56Plan.java",
+        "collectionRecordedSha256": "1ea5bd8a17730979f18400ac270e41cf4396101f1c8c1faac77a7b69fced22d2",
+        "currentObservedSha256": "1ea5bd8a17730979f18400ac270e41cf4396101f1c8c1faac77a7b69fced22d2",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/Rb56PlayerFamilyCapability.java",
+        "collectionRecordedSha256": "2744a4c5951f1c74a99efad61083b23867f50876b4859a9bc39784b59ae849e5",
+        "currentObservedSha256": "2744a4c5951f1c74a99efad61083b23867f50876b4859a9bc39784b59ae849e5",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/Rb56PowerDomains.java",
+        "collectionRecordedSha256": "848f32d1880aee545a5d5d7bca736aa00827eedbbf38ae1360b9c458d12c0d02",
+        "currentObservedSha256": "848f32d1880aee545a5d5d7bca736aa00827eedbbf38ae1360b9c458d12c0d02",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/Rb56PowerStage.java",
+        "collectionRecordedSha256": "c7cd40b3ce8d65574ec171188bdb4177d11d0dc90dec92548e7b7cb46c1a0cdd",
+        "currentObservedSha256": "c7cd40b3ce8d65574ec171188bdb4177d11d0dc90dec92548e7b7cb46c1a0cdd",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/Rb56PowerStageAssembly.java",
+        "collectionRecordedSha256": "25cf8f995d3811742ca6969aa581dfbd7fe1390ed4e80098262c67cb4f010c74",
+        "currentObservedSha256": "25cf8f995d3811742ca6969aa581dfbd7fe1390ed4e80098262c67cb4f010c74",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/Rb56QualificationVerifier.java",
+        "collectionRecordedSha256": "a29ef38db9ea4d3a8278174ce79dd6cf3e8df5c06ee93fc422d36e606a1aceae",
+        "currentObservedSha256": "a29ef38db9ea4d3a8278174ce79dd6cf3e8df5c06ee93fc422d36e606a1aceae",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GenerationConstraints.java",
+        "collectionRecordedSha256": "6c9755b74f51ecfdcf05c8e6bfebbec151dcbe12730efcc16271eebce2dd8955",
+        "currentObservedSha256": "6c9755b74f51ecfdcf05c8e6bfebbec151dcbe12730efcc16271eebce2dd8955",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+        "collectionRecordedSha256": "495236f544b61b946f900b1fd2acb78a82c7f01ae66786068ee2ec0bb3ad304f",
+        "currentObservedSha256": "495236f544b61b946f900b1fd2acb78a82c7f01ae66786068ee2ec0bb3ad304f",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+        "collectionRecordedSha256": "f7862dbe8edaffdeff6bfdea95bcd5b69060ae99e0e375817b691a2cc92f4f6c",
+        "currentObservedSha256": "f7862dbe8edaffdeff6bfdea95bcd5b69060ae99e0e375817b691a2cc92f4f6c",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GenerationExecutionPolicy.java",
+        "collectionRecordedSha256": "1c1aff0670074fc06f73d5bb2004f713f7d853e92a4ff4650ea858098e145c8f",
+        "currentObservedSha256": "1c1aff0670074fc06f73d5bb2004f713f7d853e92a4ff4650ea858098e145c8f",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GenerationJob.java",
+        "collectionRecordedSha256": "340d584f744dd3338c9ad1a567116dca9cd79b73d41326e716c7dd95cc741bef",
+        "currentObservedSha256": "340d584f744dd3338c9ad1a567116dca9cd79b73d41326e716c7dd95cc741bef",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GenerationProgress.java",
+        "collectionRecordedSha256": "e7c7e7c4facad64a7aaea2a9b90a4259c521801099a4dc0a758c687ea17ff7a0",
+        "currentObservedSha256": "e7c7e7c4facad64a7aaea2a9b90a4259c521801099a4dc0a758c687ea17ff7a0",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GenerationReceipt.java",
+        "collectionRecordedSha256": "04dd7faddb0b18f2282076fb44f2e46a47b64a3d7cf557f42581b62c378f41d9",
+        "currentObservedSha256": "04dd7faddb0b18f2282076fb44f2e46a47b64a3d7cf557f42581b62c378f41d9",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GenerationRequest.java",
+        "collectionRecordedSha256": "4b834f621a3483b6abd0cffcd1546b59c8bcdd463b5e4504d00fd72525ad6ed8",
+        "currentObservedSha256": "4b834f621a3483b6abd0cffcd1546b59c8bcdd463b5e4504d00fd72525ad6ed8",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GenerationWorkScope.java",
+        "collectionRecordedSha256": "8d1ecdc2d8463d4fe1ab738950c94e2eda4ce3d4a1b25b63031203c32e6cf632",
+        "currentObservedSha256": "8d1ecdc2d8463d4fe1ab738950c94e2eda4ce3d4a1b25b63031203c32e6cf632",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticContextKey.java",
+        "collectionRecordedSha256": "8491c7e3ebeee36a27ede42ea1099caf51da8c76e54c5d682d9ddff3758a502f",
+        "currentObservedSha256": "8491c7e3ebeee36a27ede42ea1099caf51da8c76e54c5d682d9ddff3758a502f",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticEquivalence.java",
+        "collectionRecordedSha256": "010e11ff75bd4b6ca4e6af855bbce6c932c2a68e7b77aebc719fe9e1d2244398",
+        "currentObservedSha256": "010e11ff75bd4b6ca4e6af855bbce6c932c2a68e7b77aebc719fe9e1d2244398",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticExecutionProvider.java",
+        "collectionRecordedSha256": "0b48f59a2f98a208b17215f2e679653fd54220d837344803d71c8a7de05680a2",
+        "currentObservedSha256": "0b48f59a2f98a208b17215f2e679653fd54220d837344803d71c8a7de05680a2",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticExecutionTrace.java",
+        "collectionRecordedSha256": "3ded94663338a64b0e371e86fd10a2ef67396afac4eaa0e44365b877b8481649",
+        "currentObservedSha256": "3ded94663338a64b0e371e86fd10a2ef67396afac4eaa0e44365b877b8481649",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticObservationExecutor.java",
+        "collectionRecordedSha256": "a280f4935aa3a3463aca6e2601e06da3cf6e49e455e7478b2cfb7fcadf5a6000",
+        "currentObservedSha256": "a280f4935aa3a3463aca6e2601e06da3cf6e49e455e7478b2cfb7fcadf5a6000",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticOwnerDiversity.java",
+        "collectionRecordedSha256": "cbfe567d4dcde1c7ff84b4a2fa81693d31401a97a992b39389e529548948bf56",
+        "currentObservedSha256": "cbfe567d4dcde1c7ff84b4a2fa81693d31401a97a992b39389e529548948bf56",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticPartitionPlan.java",
+        "collectionRecordedSha256": "ad65c61495cc8e70a7232934ec7c1b635745af9bb4696f00b20663b605d40eca",
+        "currentObservedSha256": "ad65c61495cc8e70a7232934ec7c1b635745af9bb4696f00b20663b605d40eca",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticPlan.java",
+        "collectionRecordedSha256": "1708c394b5af196344ad98b2a4bf8f73b6bcca198cdfd1cd1c56173a0f255766",
+        "currentObservedSha256": "1708c394b5af196344ad98b2a4bf8f73b6bcca198cdfd1cd1c56173a0f255766",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticPlanCatalog.java",
+        "collectionRecordedSha256": "b4990f019490451b742b8c9aae1e6ce21a150916ab186708d01bfc6802dfc6d8",
+        "currentObservedSha256": "b4990f019490451b742b8c9aae1e6ce21a150916ab186708d01bfc6802dfc6d8",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProgram.java",
+        "collectionRecordedSha256": "a8434d50f292efe5b16d3c4d9050e4e77c5c5d48b16deb0142bf038c646d100d",
+        "currentObservedSha256": "a8434d50f292efe5b16d3c4d9050e4e77c5c5d48b16deb0142bf038c646d100d",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofCache.java",
+        "collectionRecordedSha256": "75567e992ee35f51061ab0772d6d56f970c554a5f07e76625eb3f2fbdbe12205",
+        "currentObservedSha256": "75567e992ee35f51061ab0772d6d56f970c554a5f07e76625eb3f2fbdbe12205",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofReceipt.java",
+        "collectionRecordedSha256": "5dd0e292725bd2125ce7d8bdb0405421f170dddedc156d6d7b7daabd2c76ce08",
+        "currentObservedSha256": "5dd0e292725bd2125ce7d8bdb0405421f170dddedc156d6d7b7daabd2c76ce08",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+        "collectionRecordedSha256": "eacf91be952de4438cc0721e4ff21fd551fc69ee1d52c0435d9ed9becfaee8ac",
+        "currentObservedSha256": "eacf91be952de4438cc0721e4ff21fd551fc69ee1d52c0435d9ed9becfaee8ac",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProvider.java",
+        "collectionRecordedSha256": "a24d1b6fcd2e0ce1012c1343231907399fb3d875df96e4852df70499d54f6809",
+        "currentObservedSha256": "a24d1b6fcd2e0ce1012c1343231907399fb3d875df96e4852df70499d54f6809",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticSample.java",
+        "collectionRecordedSha256": "51f05cc909db4e39831fdffdd7e215accb92596e771973ac7c827077be4b4b8d",
+        "currentObservedSha256": "51f05cc909db4e39831fdffdd7e215accb92596e771973ac7c827077be4b4b8d",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticServicePreparation.java",
+        "collectionRecordedSha256": "7949d86749e508d231a88287752031a68bee8e7ab4603d52f2643a39f5b02d37",
+        "currentObservedSha256": "7949d86749e508d231a88287752031a68bee8e7ab4603d52f2643a39f5b02d37",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticSolvabilityAdmission.java",
+        "collectionRecordedSha256": "071fc1e334b04b68525f93d612af5b1e34a0f33df64c0acad0b62fa07aacca00",
+        "currentObservedSha256": "071fc1e334b04b68525f93d612af5b1e34a0f33df64c0acad0b62fa07aacca00",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticSolvabilityContract.java",
+        "collectionRecordedSha256": "00437c267431a53aac04255fb0f6998361b671fd5e192fbb0c6d3d87261086be",
+        "currentObservedSha256": "00437c267431a53aac04255fb0f6998361b671fd5e192fbb0c6d3d87261086be",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticSolvabilityEvidence.java",
+        "collectionRecordedSha256": "dbaaa503d09c2140cec4d33afd2ecce8d2b5d95509d4451da9ffb14dbd66b0ff",
+        "currentObservedSha256": "dbaaa503d09c2140cec4d33afd2ecce8d2b5d95509d4451da9ffb14dbd66b0ff",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/CirSim.java",
+        "collectionRecordedSha256": "ef7cbbe4b5f892a7057306760da388a4688cfaaef2305ff7d09bc332b000aa21",
+        "currentObservedSha256": "a5f3fa34408865badbe3bcef05eb9fa989841bc3ae17c1722582b0dc3231af91",
+        "postCollectionChange": "Root integrated JSNI unroll-four after r5 closed; original source hash remains pinned by r5 launch and before/after source manifests. This mutable source is not claimed byte-identical now."
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/PlayerFamilyCatalog.java",
+        "collectionRecordedSha256": "b104e12c5ab0931a927ea6004cca7378213c3d4143f171ebe1c86a33ebcd6a29",
+        "currentObservedSha256": "b104e12c5ab0931a927ea6004cca7378213c3d4143f171ebe1c86a33ebcd6a29",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/PcbWorkbenchController.java",
+        "collectionRecordedSha256": "24acbc39259173fbc79eaf8a037239edd08908c940f2d56f11c74103932f9c6b",
+        "currentObservedSha256": "24acbc39259173fbc79eaf8a037239edd08908c940f2d56f11c74103932f9c6b",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/GeneratedRuntimeInvariant.java",
+        "collectionRecordedSha256": "9a12e90c706c9c712e27a6882e4523186f6745ddab5bbb182fc98a2564ac346c",
+        "currentObservedSha256": "9a12e90c706c9c712e27a6882e4523186f6745ddab5bbb182fc98a2564ac346c",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+        "collectionRecordedSha256": "6e59d86f9507b1849fdca55b07898f0d4ff4924c0441363a0e77c1a26e14cc7e",
+        "currentObservedSha256": "6e59d86f9507b1849fdca55b07898f0d4ff4924c0441363a0e77c1a26e14cc7e",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/Rb30Behavior.java",
+        "collectionRecordedSha256": "3bf60880cdc45740986ffeb378d019126f255c72a15145acf1310104ea969462",
+        "currentObservedSha256": "3bf60880cdc45740986ffeb378d019126f255c72a15145acf1310104ea969462",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/MediumBoardNormalAdmission.java",
+        "collectionRecordedSha256": "2f005cf35b4e9e6ca97e7546173470cf35c2e51c8253bfb7e1826722e9806d55",
+        "currentObservedSha256": "2f005cf35b4e9e6ca97e7546173470cf35c2e51c8253bfb7e1826722e9806d55",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/PlayerSessionFingerprint.java",
+        "collectionRecordedSha256": "e1efcc45ae485b978f9ee771193eaae2622f4930d7a7461318de4c09c10673cf",
+        "currentObservedSha256": "e1efcc45ae485b978f9ee771193eaae2622f4930d7a7461318de4c09c10673cf",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "repository/src/com/lushprojects/circuitjs1/client/NamedRandomStreams.java",
+        "collectionRecordedSha256": "bbb1276d0166f47b13bc77cfac6bfd4f1e02ae27731af8e48ebc7fe5baaf660e",
+        "currentObservedSha256": "bbb1276d0166f47b13bc77cfac6bfd4f1e02ae27731af8e48ebc7fe5baaf660e",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "task/q60/holdout-recommendation/derive_metadata.py",
+        "collectionRecordedSha256": "fe175fe9b2db38588fbbf404c2742218a471c83d14dafdab78de1b269794d87d",
+        "currentObservedSha256": "fe175fe9b2db38588fbbf404c2742218a471c83d14dafdab78de1b269794d87d",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r42/result.json",
+        "collectionRecordedSha256": "57df3aedabcb4f747502f29acad6339e4f38031077afb5439788795cbe83d675",
+        "currentObservedSha256": "57df3aedabcb4f747502f29acad6339e4f38031077afb5439788795cbe83d675",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r42/cases/001-rb56-seed-1022-positive.report.json",
+        "collectionRecordedSha256": "7181fcee48ce70260b05aa548db615a3ccaa9883c55de75e2a2dfb5e2f831a41",
+        "currentObservedSha256": "7181fcee48ce70260b05aa548db615a3ccaa9883c55de75e2a2dfb5e2f831a41",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r42/cases/002-rb56-seed9007199254741579-positive.report.json",
+        "collectionRecordedSha256": "a99f8cbae08978c44480be367803bbd698046c596866427592fbc62e01066ed5",
+        "currentObservedSha256": "a99f8cbae08978c44480be367803bbd698046c596866427592fbc62e01066ed5",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r42/strict-result.json",
+        "collectionRecordedSha256": "c77de671174315918234525482f0e1e3831e7e33761aa25d8c8bf303e7f9621a",
+        "currentObservedSha256": "c77de671174315918234525482f0e1e3831e7e33761aa25d8c8bf303e7f9621a",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/compiled-r42-launch.json",
+        "collectionRecordedSha256": "abad237531096290231fb35816693ee8ac42e896a024c97f981a6a2cce4e10ef",
+        "currentObservedSha256": "abad237531096290231fb35816693ee8ac42e896a024c97f981a6a2cce4e10ef",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/compiled-r42-result.json",
+        "collectionRecordedSha256": "ecffa5762a3bdae5a57bf38d3ec9173e52b9fa5d08694b0022a5b4faf4f5a276",
+        "currentObservedSha256": "ecffa5762a3bdae5a57bf38d3ec9173e52b9fa5d08694b0022a5b4faf4f5a276",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r42/input-manifest-before.json",
+        "collectionRecordedSha256": "cc9473aa7f6aec46ccc7f4659c237b4dca25232b25f0f36bfe55a2f9ccc1506a",
+        "currentObservedSha256": "cc9473aa7f6aec46ccc7f4659c237b4dca25232b25f0f36bfe55a2f9ccc1506a",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r42/input-manifest-after.json",
+        "collectionRecordedSha256": "7c54b95e4d8b71c18e9b2eb16537e151d25ddb90736946b3aa21bcfda6962039",
+        "currentObservedSha256": "7c54b95e4d8b71c18e9b2eb16537e151d25ddb90736946b3aa21bcfda6962039",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-before-compiled-r42-cleanup/retired-phase.json",
+        "collectionRecordedSha256": "2eb56aa8a0aea162f450fc77c966292fd93943648db71f6f2400791276f7d13e",
+        "currentObservedSha256": "2eb56aa8a0aea162f450fc77c966292fd93943648db71f6f2400791276f7d13e",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-before-compiled-r42-cleanup/listener-proof/listener-query.json",
+        "collectionRecordedSha256": "09e53ab8b838512b126fc17aed035b11f5a7425d2ee38b7a013fd31247691051",
+        "currentObservedSha256": "09e53ab8b838512b126fc17aed035b11f5a7425d2ee38b7a013fd31247691051",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r43/result.json",
+        "collectionRecordedSha256": "eb54729825fd737df68cece840fba0943ed96e9d16c17c31f5d8c87524e4ec05",
+        "currentObservedSha256": "eb54729825fd737df68cece840fba0943ed96e9d16c17c31f5d8c87524e4ec05",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r43/cases/001-rb56-seed-1004-positive.report.json",
+        "collectionRecordedSha256": "20a73c01d6c4e49002042ca3f60be515b47c87946c6d3bca89543f1f973edc08",
+        "currentObservedSha256": "20a73c01d6c4e49002042ca3f60be515b47c87946c6d3bca89543f1f973edc08",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r43/cases/002-rb56-seed-1028-positive.report.json",
+        "collectionRecordedSha256": "0dd2454d216c2b11e9b7f679b67917c25a42e76a0ae9bb18fb642722b404f8b9",
+        "currentObservedSha256": "0dd2454d216c2b11e9b7f679b67917c25a42e76a0ae9bb18fb642722b404f8b9",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r43/strict-result.json",
+        "collectionRecordedSha256": "1d7bad10359fa8b462222e7e9998cf1d0b9a57276db1db86e9d369f9ee3845c6",
+        "currentObservedSha256": "1d7bad10359fa8b462222e7e9998cf1d0b9a57276db1db86e9d369f9ee3845c6",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/compiled-r43-launch.json",
+        "collectionRecordedSha256": "ee6aea0d87e4a69624164781f32a57efa7ed7c39fad9c28b272985ab7ac9e9e3",
+        "currentObservedSha256": "ee6aea0d87e4a69624164781f32a57efa7ed7c39fad9c28b272985ab7ac9e9e3",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/compiled-r43-result.json",
+        "collectionRecordedSha256": "c92093f76f4092d8c607f749368de662472c9bb86cbcffe94875d4aca56fb23b",
+        "currentObservedSha256": "c92093f76f4092d8c607f749368de662472c9bb86cbcffe94875d4aca56fb23b",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r43/input-manifest-before.json",
+        "collectionRecordedSha256": "306ae6aaf6a4a6c369676b2d0fe6bde443de1b1129861e0b9e710c55f9a8212c",
+        "currentObservedSha256": "306ae6aaf6a4a6c369676b2d0fe6bde443de1b1129861e0b9e710c55f9a8212c",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r43/input-manifest-after.json",
+        "collectionRecordedSha256": "d8c5379546da0af914db1df0e573a69b5d28d1c043d0de265080d71e9e0f44ca",
+        "currentObservedSha256": "d8c5379546da0af914db1df0e573a69b5d28d1c043d0de265080d71e9e0f44ca",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-before-compiled-r43-cleanup/retired-phase.json",
+        "collectionRecordedSha256": "8a599be7ae6b78e288362a213d284a4d726daff09f22e046639ab0362275ba5f",
+        "currentObservedSha256": "8a599be7ae6b78e288362a213d284a4d726daff09f22e046639ab0362275ba5f",
+        "retainedPrivatelyByteIdentical": true
+      },
+      {
+        "artifact": "phase-temp/q60-before-compiled-r43-cleanup/listener-proof/listener-query.json",
+        "collectionRecordedSha256": "d8c3aea1d15da480f044df3dfef60c5d65127a4d00bd64ff296e0278594f4424",
+        "currentObservedSha256": "d8c3aea1d15da480f044df3dfef60c5d65127a4d00bd64ff296e0278594f4424",
+        "retainedPrivatelyByteIdentical": true
+      }
+    ],
+    "caseRunnerReportsAndManifests": [
+      {
+        "artifact": "phase-temp/q60-compiled-r41/cases/001-rb56-seed-1017-positive.report.json",
+        "bytes": 1127,
+        "sha256": "6f9def28327d1e1a3108012ebe9fe270cdbc69280dbdd4a895e664b71ef006a0",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r41/cases/002-rb56-seed-1067-positive.report.json",
+        "bytes": 2123,
+        "sha256": "466e18d9cf7535dee11bdfdfb9d8ec162e9b2f3bde798cf3f4aa3ccfbbca8606",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r41/result.json",
+        "bytes": 8689,
+        "sha256": "e93e0c095bb9dcd8ffac29ebb874b1e7ac716b273b84d9ae02c91918699354df",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r41/strict-result.json",
+        "bytes": 17364,
+        "sha256": "6d245fb901f3c1d21d4bbf57bf8ab7a6aac79c842c5bc23aab2706aa58c47d78",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r41/input-manifest-before.json",
+        "bytes": 298711,
+        "sha256": "ebb46d21f893e9cc2efb0c3f12568f5b8c6846499ca870561e9eb7aef2835fbc",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r41/input-manifest-after.json",
+        "bytes": 298711,
+        "sha256": "57026229794ddc3862369efe81f136fc986e74ae07c34e70c02d0fd077abe5d8",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r41/spec.json",
+        "bytes": 692,
+        "sha256": "a9ccbd923ff37418f86200546e3c11fea52d890bd34d23cb307d2d61c0be556b",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r41/run-start.json",
+        "bytes": 291,
+        "sha256": "32a26768af6c6cc2ead21b9b97745a7ed2c8a7a80ad3a88649e48d68aaa4b0bf",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r41/runner-before.json",
+        "bytes": 160,
+        "sha256": "12fb182d8d38827da6df72ca2759e5af352262b31dc6bd157a5368e4a472ce85",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r41/runner-after.json",
+        "bytes": 160,
+        "sha256": "12fb182d8d38827da6df72ca2759e5af352262b31dc6bd157a5368e4a472ce85",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r42/cases/001-rb56-seed-1022-positive.report.json",
+        "bytes": 2125,
+        "sha256": "7181fcee48ce70260b05aa548db615a3ccaa9883c55de75e2a2dfb5e2f831a41",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r42/cases/002-rb56-seed9007199254741579-positive.report.json",
+        "bytes": 2136,
+        "sha256": "a99f8cbae08978c44480be367803bbd698046c596866427592fbc62e01066ed5",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r42/result.json",
+        "bytes": 8799,
+        "sha256": "57df3aedabcb4f747502f29acad6339e4f38031077afb5439788795cbe83d675",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r42/strict-result.json",
+        "bytes": 17548,
+        "sha256": "c77de671174315918234525482f0e1e3831e7e33761aa25d8c8bf303e7f9621a",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r42/input-manifest-before.json",
+        "bytes": 298711,
+        "sha256": "cc9473aa7f6aec46ccc7f4659c237b4dca25232b25f0f36bfe55a2f9ccc1506a",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r42/input-manifest-after.json",
+        "bytes": 298711,
+        "sha256": "7c54b95e4d8b71c18e9b2eb16537e151d25ddb90736946b3aa21bcfda6962039",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r42/spec.json",
+        "bytes": 714,
+        "sha256": "94a02ec3c1662f2d7adc4cb09cf28df7b706b3c70562df89201debfd34de92ab",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r42/run-start.json",
+        "bytes": 291,
+        "sha256": "e868b29a6ce64e7fba568da0c7bd9401ba17a9eaecf03997e72e2828bbdf70cc",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r42/runner-before.json",
+        "bytes": 160,
+        "sha256": "12fb182d8d38827da6df72ca2759e5af352262b31dc6bd157a5368e4a472ce85",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r42/runner-after.json",
+        "bytes": 160,
+        "sha256": "12fb182d8d38827da6df72ca2759e5af352262b31dc6bd157a5368e4a472ce85",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r43/cases/001-rb56-seed-1004-positive.report.json",
+        "bytes": 1127,
+        "sha256": "20a73c01d6c4e49002042ca3f60be515b47c87946c6d3bca89543f1f973edc08",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r43/cases/002-rb56-seed-1028-positive.report.json",
+        "bytes": 2124,
+        "sha256": "0dd2454d216c2b11e9b7f679b67917c25a42e76a0ae9bb18fb642722b404f8b9",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r43/result.json",
+        "bytes": 8678,
+        "sha256": "eb54729825fd737df68cece840fba0943ed96e9d16c17c31f5d8c87524e4ec05",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r43/strict-result.json",
+        "bytes": 17365,
+        "sha256": "1d7bad10359fa8b462222e7e9998cf1d0b9a57276db1db86e9d369f9ee3845c6",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r43/input-manifest-before.json",
+        "bytes": 298711,
+        "sha256": "306ae6aaf6a4a6c369676b2d0fe6bde443de1b1129861e0b9e710c55f9a8212c",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r43/input-manifest-after.json",
+        "bytes": 298711,
+        "sha256": "d8c5379546da0af914db1df0e573a69b5d28d1c043d0de265080d71e9e0f44ca",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r43/spec.json",
+        "bytes": 692,
+        "sha256": "fadd782929d74edc228ca181002e887c6cccc30b0a4eaf54e40d1c8e8debc88b",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r43/run-start.json",
+        "bytes": 291,
+        "sha256": "12714f3c99909d192a4aa6098461ffa016092f55d4bf63b2ed67651a69942111",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r43/runner-before.json",
+        "bytes": 160,
+        "sha256": "12fb182d8d38827da6df72ca2759e5af352262b31dc6bd157a5368e4a472ce85",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q60-compiled-r43/runner-after.json",
+        "bytes": 160,
+        "sha256": "12fb182d8d38827da6df72ca2759e5af352262b31dc6bd157a5368e4a472ce85",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/u06-compiled-r39/result.json",
+        "bytes": 6001,
+        "sha256": "072044aca11f1f419d9f83e1b1c134a668c031f82c146311f2bc8bb127d28960",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/u06-compiled-r39/strict-result.json",
+        "bytes": 11280,
+        "sha256": "878f94dfbc77afd0ea83f353e524fff129a993a6a1e9e00da7b88fdae0bbe206",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/u06-compiled-r39/input-manifest-before.json",
+        "bytes": 298711,
+        "sha256": "13243dee2392b3422fba686ab04e077f88886e1653e06913cc7efa25f5f96437",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/u06-compiled-r39/input-manifest-after.json",
+        "bytes": 298711,
+        "sha256": "79a081fc6e45be36e8065409adf3d1f965e53d59326449e0491c0377fdf580b1",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/u06-compiled-r39/cases/001-U06-LED_INDICATOR-seed-0-session-reconstruction-pilot.report.json",
+        "bytes": 20414,
+        "sha256": "bc41e594db08928e3f5995ea73c561c7317b42383cc5c9cece5885974f391dc0",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/u06-compiled-r40/result.json",
+        "bytes": 5999,
+        "sha256": "e2865562a0a6603e67cb7f16750db77fdbbacce406a7ca6119a42ee1b4a0e02e",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/u06-compiled-r40/strict-result.json",
+        "bytes": 14988,
+        "sha256": "6137f06af5fc69867a3574961149f70896a5802650dfb5d112afbcde93230b49",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/u06-compiled-r40/input-manifest-before.json",
+        "bytes": 298711,
+        "sha256": "bed7bc764b22db0415de4258ad73b4c97c3e11aace2e0b374e18adec089e9656",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/u06-compiled-r40/input-manifest-after.json",
+        "bytes": 298711,
+        "sha256": "0073f8995db2279d775df6566e0e18765d767b085b46fed66b67ea914670c0e1",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/u06-compiled-r40/cases/001-U06-RB30_CONTROL-seed-10387-session-reconstruction.report.json",
+        "bytes": 65453,
+        "sha256": "b7b0ca1aea1c0e12887c1d28877c4cef1dd5bb7ae92f803b56ebf3e02b2bafd6",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/a07-q30-wire-array-compiled-r44/result.json",
+        "bytes": 8494,
+        "sha256": "c68098c7db449bb0dbe89de6cf84b8320f5cde42ef4cc105074d625a82e5645b",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/a07-q30-wire-array-compiled-r44/strict-result.json",
+        "bytes": 10696,
+        "sha256": "91957d1e87dab89bbc20e93e95151893f7f009977de435e1f9979f2558c27f13",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/a07-q30-wire-array-compiled-r44/input-manifest-before.json",
+        "bytes": 298711,
+        "sha256": "5ee3efcd8ed6b8b325a86abfa47be07fdebee1161aa04c9864bfe40f98482137",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/a07-q30-wire-array-compiled-r44/input-manifest-after.json",
+        "bytes": 298711,
+        "sha256": "a24345c01d873ab158a7fc1b992ff97b7a76adbaa644303e9a5bb2cb96d76851",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/a07-q30-wire-array-compiled-r44/cases/001-q30-wire-array-a07-positive.report.json",
+        "bytes": 80902,
+        "sha256": "0e1eb0b367bec17445e357e0ea5f9fcb6bd013a8c8e9af95d62dd970f33de1ff",
+        "retainedPrivately": true
+      }
+    ],
+    "profileCaptureAndReader": [
+      {
+        "artifact": "phase-temp/q30-current-cpu-profile-r45/strict-result.json",
+        "bytes": 285110,
+        "sha256": "b0b6cf2c0726a2c70454340ea1eaebab9d14542802bde6ae93d0519e8ae03d45",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q30-current-cpu-profile-r45/host/result.json",
+        "bytes": 166243,
+        "sha256": "8023eb47a298cd3de644dd4003313b05e5a7cd0403b8fe2dfa80a3eaa3cceb42",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q30-current-cpu-profile-r45/host/profile-capture.json",
+        "bytes": 6499,
+        "sha256": "d0a0b4b02482c21ea721f3e32c26487c64c1987f43784c021235de9d130f57e4",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/q30-current-cpu-profile-r45/host/generation.cpuprofile",
+        "bytes": 3936332,
+        "sha256": "f17e0b6838d674233e7703fd32262927175595583934f472e4fbce69fc00ae1e",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "task/q60/q30-current-cpu-reader-r45/results/summary.json",
+        "bytes": 113862,
+        "sha256": "8b8f426c7af1bcd488dca3dcb50f6afb8dc2bf8c95e4c024234574d9e8677bff",
+        "retainedPrivately": true
+      }
+    ],
+    "rejectedCandidateReader": [
+      {
+        "artifact": "task/q60/cadence1000-500-r1/pair-actual-r101-r102.json",
+        "bytes": 7113,
+        "sha256": "b0644583b1c8137e810834d5b5c2a30a3b664f5cee5c3413bf646f4a29a71962",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "task/q60/cadence1000-500-r1/reader/compare-pair.py",
+        "bytes": 22251,
+        "sha256": "d63b2e358e64904d2599848b036629e9eb391dd6238162795516cb433dc6b6c2",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "task/q60/cadence1000-500-r1/reader/pair-criteria-r1.json",
+        "bytes": 6280,
+        "sha256": "fce9d3be318ff1c5f534976e3b641917d90d48f7f1616dffeed99b3d738d422e",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "task/q60/cadence1000-500-r1/reader/prepared-inputs.json",
+        "bytes": 174373,
+        "sha256": "2b5e2195e079a479978add21be96ef51f62c102c4ff6801e8709bfaa1093a565",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "task/q60/cadence1000-500-r1/reader/declarations-r1.json",
+        "bytes": 139049,
+        "sha256": "634b4f97f547f08bf6bc879db4e54385fba67fa1bd9721bed3d027850002cbb2",
+        "retainedPrivately": true
+      }
+    ],
+    "relatedReviewedEvidence": [
+      {
+        "artifact": "task/q60/reference-route-evidence-packet-r2/evidence.json",
+        "bytes": 39161,
+        "sha256": "ab69ab5f0da80587e7742a5a9045b01c6112b3bab3f6261fbad9c51525b10b9f",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "task/q60/reference-route-evidence-packet-r2/input-pins.json",
+        "bytes": 35542,
+        "sha256": "cb835fb448247bbebec826eb19fd2747c73f952e8a01b169e0890cb4ebdaef24",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "task/q60/reference-route-evidence-packet-r2/packet-audit.json",
+        "bytes": 1808,
+        "sha256": "efa0caedba905ad69e54c59d30efd188cd439ccfd527844d487d9ac3bd836efd",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "task/q60/native-lifecycle-evidence-packet-r98-r1/packet.json",
+        "bytes": 12962,
+        "sha256": "443ebe456059a1804e7e2f9d007847a214111b9cb19ca4ab9dfb250e88de20bf",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "task/q60/native-lifecycle-evidence-packet-r98-r1/source-consumption-audit.json",
+        "bytes": 5158,
+        "sha256": "3c3bf2caaa2bfbe30f1587b996a10883efd1639ada458762afdf2dae46b00677",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "repository/docs/task-evidence/Q60/sensor-final-fidelity-evidence-r1.json",
+        "bytes": 50040,
+        "sha256": "74e7748c3f98517c967cbad5d96c210a477ec77dc0f903c010a4479f369903d0",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "repository/docs/task-evidence/Q60/cadence400-qualified-evidence-r1.json",
+        "bytes": 26961,
+        "sha256": "383eefd324ca7e7b9755384008c479bd3012a615fbad784b07f9445fc7b356a7",
+        "retainedPrivately": true
+      }
+    ],
+    "attemptLedgerSnapshot": {
+      "artifact": "task/q60/attempt-ledger.json",
+      "bytes": 2627655,
+      "sha256": "284017e36714963e5d31720aed71da3c2798a2ce5b6fce6b4a258a551c7f2882",
+      "retainedPrivately": true,
+      "logHashMeaning": "Ledger logSha256 covers owned stdout.log; native full-output.log is separately pinned."
+    }
+  },
+  "originalEightPreservation": {
+    "status": "CURRENT_BYTES_MATCH_POINTER",
+    "files": [
+      {
+        "path": "docs/task-evidence/Q30/qualification-workflow/cold77-launch-used-c2af161d006cf812bb4b22ca6efc912de2015dddd21036a7429e8a4dd191472a.json",
+        "sha256": "daa36e2ceb90d01825f99c877702ab65dc8d14c23af143bd3e05152732a6c233"
+      },
+      {
+        "path": "docs/task-evidence/Q30/scale-plan-4/__pycache__/check_d01.cpython-313.pyc",
+        "sha256": "3eea5d3a388e0497720dcf2f6cad96d0c4bea696760dc96dbe8dba9fa7e9d873"
+      },
+      {
+        "path": "tests/contracts/__pycache__/alpha_evidence_contract.cpython-313.pyc",
+        "sha256": "d4c5fd3635bd524bd0f1160869995c02c064f91ace9eb5ec49121adb2ea94387"
+      },
+      {
+        "path": "tests/contracts/__pycache__/task46_seed_reference.cpython-313.pyc",
+        "sha256": "3ae962d487e6353390e34207142c1b39a2cef86940e659f3f6dd25bce78cd715"
+      },
+      {
+        "path": "tests/qualification/q30-normal-screen/__pycache__/q30_screen_reader.cpython-313.pyc",
+        "sha256": "84e0ee1327cf7104f6dae66e8a4ba3d2542ad0a7ba6f4b4806f8bdfc25476bd0"
+      },
+      {
+        "path": "tests/qualification/q30-scale-acceptance/__pycache__/freeze_plan.cpython-313.pyc",
+        "sha256": "2aaa06e8fb17de95ec9e72de9382f8bc76a16d52286a615a1edbb7c2352e07e6"
+      },
+      {
+        "path": "tests/qualification/q30-scale-acceptance/__pycache__/q30_scale_reader.cpython-313.pyc",
+        "sha256": "e41b8404cec0b024fb983d5d678c278ea360f60798879d6c2e2ca22cbed8b76f"
+      },
+      {
+        "path": "tests/qualification/q30-scale-acceptance/__pycache__/test_q30_scale_reader.cpython-313.pyc",
+        "sha256": "beb6ffd21422cff5156bf6c92e0cdfdf0e58a3c2aabcd657e7daebc175cb31d7"
+      }
+    ],
+    "gitStatusClaimedByLeaf": false
+  },
+  "remaining": [
+    "Four fixed two-channel HYPOTHESES deadline failures in pre-unroll r5",
+    "Current ordinary Q30 compiled-r50 and fixed full-six-r6 require actual close/source/cleanup evidence; build14/native104/A0746 have passed.",
+    "Separate ordinary Q30 seed10014 failure with no proved unprofiled cause",
+    "Current60-part visible diagnosis/repair/customer flow",
+    "Browser long-session/retained inventory and actual modest hardware",
+    "Root acceptance/publication and RB56/HARD/session enablement withheld"
+  ],
+  "historicalRisks": [
+    "Unknown Q30 91.616-second failure retained",
+    "Six historical scratch inventories missing",
+    "Late historical Q30 release audit BLOCKED",
+    "R69 retained scratch and R41 separate inventory preserved"
+  ],
+  "sanitation": {
+    "method": "Explicit field allowlists. Private paths mapped to artifact labels; process/URL/traceback/general-log values omitted.",
+    "rawLogsCopied": false,
+    "absolutePathsCopied": false,
+    "processIdsCopied": false
+  },
+  "leafActions": {
+    "repositoryWrites": 0,
+    "gatesRun": 0,
+    "publicWrites": 0,
+    "deletions": 0
+  },
+  "subsequentUnrollFourClosedGates": {
+    "scope": "Subsequent actual closed unroll-four gates; r5 cases remain historical source-bound and FAIL. No Q60 acceptance or ordinary generation clearance inferred.",
+    "sameConsumedApplicationInputs": 1222,
+    "currentApplicationManifestCanonicalSha256": "31a89d2a26880df8df27197aabd03b6138cc2847b15a739063678e048cb572ca",
+    "CirSimSha256": "a5f3fa34408865badbe3bcef05eb9fa989841bc3ae17c1722582b0dc3231af91",
+    "stablePhaseControllerSha256": "4c5e57af2c0400e1d4731f207c20a29d741a92d3d857140842bb7302335fbb60",
+    "build14": {
+      "status": "PASS",
+      "hostOperationElapsedMs": 92482,
+      "sourceFiles": 1222,
+      "optimizedGwtPermutations": 5,
+      "compileAndLinkSucceeded": true
+    },
+    "native104": {
+      "status": "PASS",
+      "hostOperationElapsedMs": 37753,
+      "sourceFiles": 1355,
+      "suiteCount": 6,
+      "maintainedPassMarkers": [
+        "PASS: U06 session save contracts assertions=34927",
+        "PASS: PlayerSessionFingerprintContractTest assertions=119",
+        "PASS: RB56 session backing contracts assertions=202 scope=DEVELOPER_MODEL_DIGEST_AND_RESTART_ONLY normalSessionLoad=false",
+        "PASS: Q30 temporal work contracts 167 assertions oneChannelHealthyFaultedRetestUnits=3/3/3 twoChannelHealthyFaultedRetestUnits=5/5/5",
+        "PASS: A07 execution contracts assertions=272227",
+        "PASS: D01 diagnostic contracts assertions=168",
+        "PASS: focused current contracts; 6 Java suites. Full matrix and independent oracles NOT RUN."
+      ]
+    },
+    "compiled46": {
+      "status": "PASS",
+      "hostOperationElapsedMs": 7146,
+      "sourceFiles": 1222,
+      "positiveReport": {
+        "status": "PASS",
+        "pureAssertions": 272226,
+        "runtimeAssertions": 83,
+        "runtimeCases": 23,
+        "modelAssertions": 59,
+        "modelRows": 21,
+        "scaleRows": 16,
+        "cleanup": "PASS",
+        "injectedTask41CleanupFailureAndRecovery": true
+      },
+      "earlyForcedTerminal": {
+        "status": "PASS",
+        "state": "FAIL:a07:a07-explicit-failure-canary",
+        "scope": "EARLY_TERMINAL_AND_HOST_CLEANUP_ONLY",
+        "applicationFailureReportClaimed": false,
+        "task41FailureClaimed": false
+      },
+      "browserSourceSha256": "b0990a196b0656dbfcd1eca56d5193b831c8bb54f28af865ce89af0ef1579f17",
+      "browserWebSha256": "c763e0b8a2f757434aa7135280c2b69c929d7339c82e18625b2ae007433e14de",
+      "portClosed": true
+    },
+    "pendingAtDraft": [
+      "Ordinary Q30 compiled-r50",
+      "Fixed full-six r6"
+    ],
+    "actualCurrentA07ArtifactPins": [
+      {
+        "artifact": "phase-temp/a07-q30-wire-array-compiled-r46/result.json",
+        "bytes": 8489,
+        "sha256": "27436b54098e6231b27c355f75974dd1d79ebab8d14c7557edd60aa799f8bd39",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/a07-q30-wire-array-compiled-r46/strict-result.json",
+        "bytes": 284964,
+        "sha256": "4346d20c3106b05978d7e33dd34e9df967fee69308263a664127ebe052f9217d",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/a07-q30-wire-array-compiled-r46/input-manifest-before.json",
+        "bytes": 298711,
+        "sha256": "71325bc1f969dfda442c4bc34a7c27f9aefe2df17ee53ff597d749e777e0b571",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/a07-q30-wire-array-compiled-r46/input-manifest-after.json",
+        "bytes": 298711,
+        "sha256": "211e52df99b6e4f4ed629a1130f295705fb82efb4f023a230fd00ee1eb393e2c",
+        "retainedPrivately": true
+      },
+      {
+        "artifact": "phase-temp/a07-q30-wire-array-compiled-r46/cases/001-q30-wire-array-a07-positive.report.json",
+        "bytes": 80902,
+        "sha256": "d3527469a292e7b9b3ef58d02cbf08fc31b63f380d86b27480a70a57df558254",
+        "retainedPrivately": true
+      }
+    ]
+  }
+}

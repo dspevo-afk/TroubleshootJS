@@ -3,7 +3,7 @@ package com.lushprojects.circuitjs1.client;
 /** Independent pre-optimization Crout oracle, exercised in JVM and GWT. */
 final class LuFactorizationChecks {
     static int run() {
-        int assertions = matrixRowCopyChecks();
+        int assertions = matrixRowCopyChecks() + matrixRowRestoreChecks();
         CirSim.LuFactorizationWorkspace workspace = new CirSim.LuFactorizationWorkspace();
         for (int size : new int[] { 0, 1, 2, 3, 8, 24, 31, 32, 33, 63, 64, 65, 81 }) {
             for (int fixture = 0; fixture < 12; fixture++)
@@ -127,8 +127,179 @@ final class LuFactorizationChecks {
         assertions += compareWithOriginal(new double[][] { { 3, 1 }, { 1, 2 } },
                 workspace, "valid factorization after failures");
 
+        assertions += bulkTrailingFailurePrefixChecks();
         assertions += checkStickyFiniteSolveCases();
         assertions += checkInvertMatrix();
+        assertions += boundedTrailingChecks();
+        return assertions;
+    }
+
+    // Exercise each failure lane for support widths 1-4 in the thin and bulk loops.
+    // The finite prefix is written; the failing value and untouched suffix are
+    // retained, and finally must release every recorded scratch row.
+    private static int bulkTrailingFailurePrefixChecks() {
+        int assertions = 0;
+        CirSim.LuFactorizationWorkspace workspace = new CirSim.LuFactorizationWorkspace();
+        for (int width = 1; width <= 4; width++) {
+            for (int failingColumn = 1; failingColumn <= width; failingColumn++) {
+                double[][] matrix = {
+                    { 1, 1.0e308, 1.0e308, 1.0e308, 1.0e308 },
+                    { .5, 5.0e307, 5.0e307, 5.0e307, 5.0e307 },
+                    { 0, 0, 1, 0, 0 },
+                    { 0, 0, 0, 1, 0 },
+                    { 0, 0, 0, 0, 1 }
+                };
+                for (int column = width + 1; column <= 4; column++) {
+                    matrix[0][column] = 0;
+                    matrix[1][column] = 0;
+                }
+                matrix[1][failingColumn] = -1.75e308;
+                boolean rejected = false;
+                try {
+                    CirSim.lu_factor(matrix, 5, new int[5], workspace);
+                } catch (SolverExecutionBoundary.Failure expected) {
+                    rejected = expected.outcome == SolverExecutionBoundary.Outcome.NUMERICAL_FAILURE;
+                }
+                require(rejected, "trailing LU overflow was not rejected at width/column " + width + "/" + failingColumn);
+                assertions++;
+                for (int column = 1; column <= 4; column++) {
+                    double expected = column > width ? 0 : column < failingColumn ? 0 :
+                        column == failingColumn ? -1.75e308 : 5.0e307;
+                    require(matrix[1][column] == expected,
+                        "trailing LU failure changed prefix/suffix at " + width + "/" + failingColumn + "/" + column);
+                    assertions++;
+                }
+                assertions += workspaceClearAssertions(workspace);
+            }
+        }
+        return assertions;
+    }
+
+
+    // Independent Crout comparisons at the bounded-path limits, plus failures
+    // that must still stop before the failing value is stored.
+    private static int boundedTrailingChecks() {
+        int assertions = 0;
+        CirSim.LuFactorizationWorkspace workspace = new CirSim.LuFactorizationWorkspace();
+        assertions += compareWithOriginal(makeFixture(128, 8), workspace, "bounded dimension 128");
+        assertions += compareWithOriginal(makeFixture(129, 8), workspace, "checked dimension 129");
+
+        double limit = 1.0e100;
+        double aboveLimit = Double.longBitsToDouble(Double.doubleToLongBits(limit) + 1);
+        require(aboveLimit > limit && SolverExecutionBoundary.finite(aboveLimit),
+                "next representable bound fixture is not finite and above the limit");
+        assertions++;
+        for (double maximum : new double[] { limit, aboveLimit }) {
+            assertions += compareWithOriginal(new double[][] {
+                { maximum, 2, 3 }, { -maximum, 7, 11 }, { maximum / 2, 13, 17 }
+            }, workspace, "bounded magnitude boundary " + maximum);
+        }
+
+        // Exact first-pivot support widths cover thin, leading bulk, remaining
+        // bulk and tail updates against the unchanged independent oracle.
+        for (int width = 1; width <= 9; width++) {
+            double[][] matrix = new double[width + 1][width + 1];
+            matrix[0][0] = 16;
+            for (int column = 1; column <= width; column++) matrix[0][column] = column + 1;
+            for (int row = 1; row <= width; row++) {
+                matrix[row][0] = row;
+                matrix[row][row] = 16 + row;
+            }
+            assertions += compareWithOriginal(matrix, workspace, "bounded upper width " + width);
+        }
+
+        assertions += compareWithOriginal(new double[][] {
+            { 1.0e100, 1, -2 }, { Double.MIN_VALUE, 2, 1 }, { -1.0e99, 3, 7 }
+        }, workspace, "bounded underflow-created lower zero");
+        assertions += compareWithOriginal(new double[][] {
+            { 4, -0.0, 2 }, { 1, 5, -0.0 }, { -Double.MIN_VALUE, 1, 6 }
+        }, workspace, "bounded signed-zero and subnormal entries");
+
+        double subnormalReciprocal = 1.0 / 1.0e308;
+        require(subnormalReciprocal > 0 && subnormalReciprocal < Double.MIN_NORMAL,
+                "checked-path fixture does not have a subnormal reciprocal");
+        assertions++;
+        assertions += compareWithOriginal(new double[][] {
+            { 1.0e308, 1 }, { 1.0e307, 2 }
+        }, workspace, "checked finite subnormal reciprocal");
+        assertions += boundedReciprocalFailurePrefixChecks(workspace);
+        assertions += aliasedBoundedFailurePrefixChecks(workspace);
+        return assertions;
+    }
+
+    private static int boundedReciprocalFailurePrefixChecks(
+            CirSim.LuFactorizationWorkspace workspace) {
+        double[] first = { 2, 1, 0 };
+        double[] second = { 1, .5, 0 };
+        double[] third = { 0, Double.MIN_VALUE, 1 };
+        double[][] matrix = { first, second, third };
+        int[] pivots = { -7, -7, -7 };
+        boolean rejected = false;
+        try {
+            CirSim.lu_factor(matrix, 3, pivots, workspace);
+        } catch (SolverExecutionBoundary.Failure expected) {
+            rejected = expected.outcome == SolverExecutionBoundary.Outcome.NUMERICAL_FAILURE;
+        }
+        require(rejected, "bounded reciprocal overflow was not rejected");
+        require(matrix[0] == first && matrix[1] == third && matrix[2] == second,
+                "bounded reciprocal failure changed the pivoted row identities");
+        int assertions = 2;
+        double[][] expectedPrefix = {
+            { 2, 1, 0 }, { 0, Double.MIN_VALUE, 1 }, { .5, 0, 0 }
+        };
+        for (int row = 0; row < 3; row++)
+            assertions += restoredRowValueChecks(expectedPrefix[row], matrix[row], 3);
+        require(pivots[0] == 0 && pivots[1] == 2 && pivots[2] == -7,
+                "bounded reciprocal failure changed the pivot-vector prefix");
+        assertions++;
+        assertions += workspaceClearAssertions(workspace);
+        assertions += compareWithOriginal(new double[][] { { 3, 1 }, { 1, 2 } },
+                workspace, "bounded workspace recovery after reciprocal failure");
+        return assertions;
+    }
+
+    private static int aliasedBoundedFailurePrefixChecks(
+            CirSim.LuFactorizationWorkspace workspace) {
+        // Numeric bounds alone are insufficient: repeated aliases scale the
+        // shared pivot and then overwrite later reads of that same pivot row.
+        double[] shared = { 1.0e-20, 1.0e100, 1.0e100, 1.0e100, 1.0e100, 1.0e100 };
+        double expectedScale = 1.0e-20;
+        double reciprocal = 1.0 / expectedScale;
+        for (int entry = 0; entry < 5; entry++) expectedScale *= reciprocal;
+        double firstUpdate = 1.0e100 - expectedScale * 1.0e100;
+        double secondUpdate = firstUpdate - expectedScale * firstUpdate;
+        double thirdUpdate = secondUpdate - expectedScale * secondUpdate;
+        require(SolverExecutionBoundary.finite(expectedScale) &&
+                SolverExecutionBoundary.finite(secondUpdate) &&
+                !SolverExecutionBoundary.finite(thirdUpdate),
+                "aliased fixture does not overflow at the intended third update");
+        double[][] matrix = new double[6][];
+        int[] pivots = new int[6];
+        for (int row = 0; row < 6; row++) { matrix[row] = shared; pivots[row] = -7; }
+        boolean rejected = false;
+        try {
+            CirSim.lu_factor(matrix, 6, pivots, workspace);
+        } catch (SolverExecutionBoundary.Failure expected) {
+            rejected = expected.outcome == SolverExecutionBoundary.Outcome.NUMERICAL_FAILURE;
+        }
+        require(rejected, "bounded aliased rows bypassed the checked overflow guard");
+        require(shared[0] == expectedScale, "aliased scaling prefix changed");
+        require(SolverExecutionBoundary.finite(shared[1]) && shared[1] == secondUpdate,
+                "aliased trailing failure stored a nonfinite value or changed its exact finite prefix");
+        int assertions = 4;
+        for (int column = 2; column < 6; column++) {
+            require(shared[column] == shared[1], "aliased trailing failure changed the untouched suffix");
+            assertions++;
+        }
+        for (int row = 0; row < 6; row++) {
+            require(matrix[row] == shared, "aliased LU replaced a shared caller row");
+            require(pivots[row] == (row == 0 ? 5 : -7),
+                    "aliased trailing failure changed the pivot-vector prefix");
+            assertions += 2;
+        }
+        assertions += workspaceClearAssertions(workspace);
+        assertions += compareWithOriginal(new double[][] { { 3, 1 }, { 1, 2 } },
+                workspace, "bounded workspace recovery after aliased failure");
         return assertions;
     }
 
@@ -166,6 +337,122 @@ final class LuFactorizationChecks {
         require(nullRejected, "matrix row copy accepted a null baseline");
         assertions++;
         return assertions;
+    }
+
+    private static int matrixRowRestoreChecks() {
+        int assertions = 0;
+        double[] original = { 3.25, +0.0, -0.0, Double.MIN_VALUE, Double.MAX_VALUE,
+            Double.NaN, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, -91.5 };
+        double[] saved = new double[original.length];
+        for (int i = 0; i < original.length; i++) saved[i] = original[i];
+        for (int size = 0; size <= original.length; size++) {
+            double[] working = new double[size];
+            double[] result = CirSim.restoreReducedMatrixRow(original, working, size);
+            Object untyped = result;
+            require(result == working && result.length == size &&
+                    result.getClass() == original.getClass() &&
+                    untyped instanceof double[] && (double[])untyped == result,
+                    "restore changed reduced-row identity, length or primitive metadata");
+            assertions++;
+            assertions += restoredRowValueChecks(original, result, size);
+            assertions += restoredRowValueChecks(saved, original, saved.length);
+            if (size > 0) {
+                result[0] = -19;
+                require(original[0] == 3.25 &&
+                        CirSim.restoreReducedMatrixRow(original, working, size) == working,
+                        "second restore changed baseline or reduced-row identity");
+                assertions++;
+                assertions += restoredRowValueChecks(original, working, size);
+            }
+        }
+        for (double[] working : new double[][] { null, original, new double[2], new double[4] }) {
+            double[] result = CirSim.restoreReducedMatrixRow(original, working, 3);
+            require(result != original && result != working && result.length == 3 &&
+                    result.getClass() == original.getClass(),
+                    "missing, wrong-size or baseline-alias target lost independent copy fallback");
+            assertions++;
+            assertions += restoredRowValueChecks(original, result, 3);
+            result[0] = -19;
+            assertions += restoredRowValueChecks(saved, original, saved.length);
+        }
+        double[] large = CirSim.restoreReducedMatrixRow(original, new double[7], 7);
+        double[] small = CirSim.restoreReducedMatrixRow(original, large, 2);
+        double[] grown = CirSim.restoreReducedMatrixRow(original, small, 8);
+        require(small != large && small.length == 2 && grown != small && grown.length == 8,
+                "dimension change retained a wrong-size working row");
+        assertions++;
+        assertions += restoredRowValueChecks(original, grown, 8);
+        for (int size : new int[] { -1, original.length + 1 }) {
+            boolean rejected = false;
+            try { CirSim.restoreReducedMatrixRow(original, new double[2], size); }
+            catch (IllegalArgumentException expected) { rejected = true; }
+            require(rejected, "row restore accepted invalid baseline prefix");
+            assertions++;
+        }
+        boolean nullRejected = false;
+        try { CirSim.restoreReducedMatrixRow(null, new double[0], 0); }
+        catch (IllegalArgumentException expected) { nullRejected = true; }
+        require(nullRejected, "row restore accepted a null baseline");
+        assertions++;
+
+        double[][] full = { { 0, 1, 2, 100, -0.0 }, { 1, 1, 3, 101, +0.0 },
+            { 2, 4, 9, 102, Double.NaN } };
+        double[][] fullSaved = new double[3][5];
+        double[][] working = new double[3][3];
+        double[][] allocatedRows = new double[3][];
+        for (int row = 0; row < 3; row++) {
+            allocatedRows[row] = working[row];
+            for (int column = 0; column < 5; column++) fullSaved[row][column] = full[row][column];
+        }
+        CirSim.LuFactorizationWorkspace workspace = new CirSim.LuFactorizationWorkspace();
+        for (int pass = 0; pass < 3; pass++) {
+            double[][] expected = new double[3][3];
+            int[] expectedPivots = new int[3], actualPivots = new int[3];
+            for (int row = 0; row < 3; row++) {
+                double[] current = working[row];
+                require(CirSim.restoreReducedMatrixRow(full[row], current, 3) == current,
+                        "restore replaced a row after LU permutation");
+                assertions++;
+                assertions += restoredRowValueChecks(full[row], current, 3);
+                for (int column = 0; column < 3; column++) expected[row][column] = full[row][column];
+            }
+            require(originalFactor(expected, 3, expectedPivots) &&
+                    CirSim.lu_factor(working, 3, actualPivots, workspace),
+                    "restored pivot fixture is singular");
+            assertions++;
+            boolean moved = false;
+            for (int row = 0; row < 3; row++) {
+                require(expectedPivots[row] == actualPivots[row],
+                        "restored pivot differs from independent Crout oracle");
+                assertions++;
+                assertions += restoredRowValueChecks(expected[row], working[row], 3);
+                int membership = 0;
+                for (double[] allocated : allocatedRows) if (working[row] == allocated) membership++;
+                require(membership == 1, "restored LU row left its original allocation set");
+                assertions++;
+                for (int other = 0; other < row; other++) {
+                    require(working[row] != working[other], "restored working rows alias");
+                    assertions++;
+                }
+                moved |= actualPivots[row] != row;
+                assertions += restoredRowValueChecks(fullSaved[row], full[row], 5);
+            }
+            require(moved, "restore fixture performed no row pivot");
+            assertions++;
+            double[] expectedRhs = { 1, -2, 4 }, actualRhs = { 1, -2, 4 };
+            originalSolve(expected, 3, expectedPivots, expectedRhs);
+            CirSim.lu_solve(working, 3, actualPivots, actualRhs);
+            assertions += restoredRowValueChecks(expectedRhs, actualRhs, 3);
+            assertions += workspaceClearAssertions(workspace);
+        }
+        return assertions;
+    }
+
+    private static int restoredRowValueChecks(double[] expected, double[] actual, int size) {
+        for (int i = 0; i < size; i++)
+            require(Double.doubleToLongBits(expected[i]) == Double.doubleToLongBits(actual[i]),
+                    "row restore changed value or signed zero at " + i);
+        return size;
     }
 
     private static double[][] makeFixture(int size, int fixture) {

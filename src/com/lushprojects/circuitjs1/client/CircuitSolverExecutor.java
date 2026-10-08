@@ -50,7 +50,9 @@ final class CircuitSolverExecutor {
         return sim.generatedBoardInstance == null ? observedControls == null :
             observedControls != null && observedControls.isCurrent();
     }
-    private void bindCurrent() {
+    private void bindCurrent() { bindCurrent(false); }
+    // Restore paths already selected the exact retained or successor graph.
+    private void bindCurrent(boolean preserveWireInfo) {
         if (CircuitElm.sim != sim || sim.elmList == null)
             throw new Failure(Outcome.STALE_OWNER, "CircuitJS singleton context changed");
         if (privateOwner != null && (sim.elmList != privateGraph || sim.generatedBoardInstance != null))
@@ -58,12 +60,14 @@ final class CircuitSolverExecutor {
         Object owner = currentOwner();
         if (boundOwner != owner || boundGraph != sim.elmList) {
             boundary.bind(owner, sim.elmList);
+            if (!preserveWireInfo) sim.wireInfoList = null;
             sim.solverTimeObservations.invalidate();
             boundOwner = owner; boundGraph = sim.elmList; requiresAnalysis = true;
             events = new SolverEventQueue(1024, 1024, sim.t);
             goodIterations = 100; goodIteration = true;
         } else if (!controlsCurrent()) {
             boundary.invalidate(); sim.solverTimeObservations.invalidate(); requiresAnalysis = true;
+            if (!preserveWireInfo) sim.wireInfoList = null;
         }
         Observation priorSample = boundary.observation();
         if (priorSample != null && priorSample.simulationTime != sim.t) {
@@ -76,10 +80,12 @@ final class CircuitSolverExecutor {
         if (restoringPrivate) return;
         requirePublicAccess(); bindCurrent(); boundary.invalidate();
         sim.solverTimeObservations.invalidate(); requiresAnalysis = true;
+        sim.wireInfoList = null;
     }
     void retire() {
         if (restoringPrivate) return;
         requirePublicAccess(); boundary.retire(); sim.solverTimeObservations.invalidate();
+        sim.wireInfoList = null;
         boundOwner = null; boundGraph = null;
         events = new SolverEventQueue(1024, 1024, sim.t);
         goodIterations = 100; goodIteration = true;
@@ -256,7 +262,7 @@ final class CircuitSolverExecutor {
     void snapshotRestored(PrivateState saved) {
         if (privateOwner != null) return; // Exact private permit owns its separate restoration.
         requirePublicAccess(); boundary.retire(); sim.solverTimeObservations.invalidate();
-        boundOwner = null; boundGraph = null; bindCurrent();
+        boundOwner = null; boundGraph = null; bindCurrent(true);
         if (boundOwner == saved.owner && boundGraph == saved.graph) {
             saved.events.restore(saved.eventState);
             events = saved.events; goodIterations = saved.goodIterations; goodIteration = saved.goodIteration;
@@ -282,9 +288,12 @@ final class CircuitSolverExecutor {
     }
     void releasePrivate(Object permit, PrivateState saved, boolean restored) {
         if (privateOwner != permit) throw new Failure(Outcome.STALE_OWNER, "Private solver permit retired");
-        boundary.requireIdle(); privateOwner = null; privateGraph = null; restoringPrivate = false;
+        boundary.requireIdle();
+        boolean preserveWireInfo = restored || sim.elmList != privateGraph ||
+            sim.generatedBoardInstance != null;
+        privateOwner = null; privateGraph = null; restoringPrivate = false;
         boundary.retire(); sim.solverTimeObservations.invalidate();
-        bindCurrent();
+        bindCurrent(preserveWireInfo);
         if (restored && boundOwner == saved.owner && boundGraph == saved.graph) {
             saved.events.restore(saved.eventState);
             events = saved.events; goodIterations = saved.goodIterations; goodIteration = saved.goodIteration;

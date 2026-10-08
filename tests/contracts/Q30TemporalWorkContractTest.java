@@ -74,6 +74,10 @@ public final class Q30TemporalWorkContractTest {
         check(f.sim.maxTimeStep == Rb30Behavior.SOLVER_MAX_STEP_SECONDS &&
                 f.sim.minTimeStep == Rb30Behavior.SOLVER_MIN_STEP_SECONDS && f.sim.adjustTimeStep,
             "healthy profile applies the declared adaptive 5us/50ps CircuitJS recipe");
+        WireCurrentAdjacencyChecks.verify(f.sim);
+        check(WireCurrentAdjacencyChecks.rejectsStaleEndpoint(f.sim),
+            "healthy-final-LOW wire oracle rejects a stale analyzed terminal");
+        WireCurrentAdjacencyChecks.verify(f.sim);
     }
 
     private static void verifyFaultedProfile(Fixture f, int[] expectedInputs,
@@ -90,6 +94,10 @@ public final class Q30TemporalWorkContractTest {
                     GeneratedObservedBehavior.RELAY_LOAD_NOT_SWITCHING &&
                     !f.behavior.healthy(f.owner, allInputs),
             "faulted profile records the real all-HIGH symptom after one solver interval");
+        WireCurrentAdjacencyChecks.verify(f.sim);
+        check(WireCurrentAdjacencyChecks.rejectsStaleEndpoint(f.sim),
+            "fault-ALL_HIGH-before-unapply wire oracle rejects a stale analyzed terminal");
+        WireCurrentAdjacencyChecks.verify(f.sim);
         f.owner.getFaultBinding().setApplied(false);
         settle(f.sim);
     }
@@ -112,6 +120,10 @@ public final class Q30TemporalWorkContractTest {
                 (expectedChannels == 1 ||
                     Math.abs(Rb30Behavior.voltage(f.owner, "JOB.1", "JOB.2")) <= .05),
             "customer retest restores its prior inputs and leaves matching real outputs");
+        WireCurrentAdjacencyChecks.verify(f.sim);
+        check(WireCurrentAdjacencyChecks.rejectsStaleEndpoint(f.sim),
+            "retest-final-A_HIGH wire oracle rejects a stale analyzed terminal");
+        WireCurrentAdjacencyChecks.verify(f.sim);
     }
 
     private static void verifyCancellationRestoresOnlyForCurrentOwner(Fixture f) {

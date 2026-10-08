@@ -1,0 +1,31 @@
+{
+  "status": "PASS_ROOT_VISUAL_INSPECTION",
+  "inspectedUtc": "2026-10-08T13:16:16.036144+00:00",
+  "mechanism": "Root viewed the four actual PNGs using view_image after the phase closed; no image editing.",
+  "actualSessionStatus": "PASS",
+  "overallQ60Status": "UNACCEPTED",
+  "resultSha256": "2c130aeff4063feb6b634d2f7c6b5b3424be8b5a0435cfc6aa07319df1956b4d",
+  "images": [
+    {
+      "artifact": "screenshots/001-unrepaired-customer-retest.png",
+      "sha256": "9973db1e0e114846e097ee803ce0f586aa3571b638783438094fc31676dcadd3",
+      "observed": "Ordinary one-channel Service Ticket shows customer retest did not pass; normal component labels and actual board remain visible."
+    },
+    {
+      "artifact": "screenshots/002-diagnosis-and-original-marking.png",
+      "sha256": "6a9023a9063fb6e22895a8b41e57d26a01df6c0168bd3552d7378c52fd68b29c",
+      "observed": "Existing Reset is visible while Run/Stop is absent; actual DC V display reads9.082mV at UAC IN- selection, with RENAC highlighted. Full marking and other measurements are retained in public DOM receipts."
+    },
+    {
+      "artifact": "screenshots/003-replacement-and-retained-original.png",
+      "sha256": "e2b614d5b9f7d848776a9e6e6bd214019eec7454b9c0150d02a674043621c608",
+      "observed": "RENAC public panel shows10000Ohm+/-5%, Installed, both leads and ordinary replacement controls. Retained-original tray label is outside this screenshot viewport and is verified by the public DOM checkpoint receipts."
+    },
+    {
+      "artifact": "screenshots/004-repaired-customer-retest-pass.png",
+      "sha256": "5385232617b401193bf5bfd5c5e8d07d8d089711656cbf7564235ace29103f8c",
+      "observed": "Final ordinary customer retest passed and Finish Job enabled; RENAC remains10000Ohm+/-5% Installed, with powered modification controls disabled and normal one-channel source controls."
+    }
+  ],
+  "scope": "Current-desktop40-part one-channel private workbench only; no full-six, normal-Q30, exact60, ordinary sessions, FPS/leak or modest-host acceptance."
+}

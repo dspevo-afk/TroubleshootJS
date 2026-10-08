@@ -1,0 +1,355 @@
+{
+  "protocol": "Q60-NATIVE-LIFECYCLE-EVIDENCE-PACKET-R98-1",
+  "status": "ACTUAL_NATIVE98_PASS_SANITIZED_EXTRACTION",
+  "scope": "Native developer-owner service/retirement and retained physical inventory only.",
+  "phase": {
+    "phase": "native-r98",
+    "status": "PASS",
+    "operationElapsedMs": 55295,
+    "exitCode": 0,
+    "outerDeadlineMs": 600000,
+    "startedUtc": "2026-10-08T11:25:48.142373Z",
+    "finishedUtc": "2026-10-08T11:26:43.625862Z",
+    "launchOrder": [
+      "OwnerCycles",
+      "Inventory"
+    ],
+    "sourceInputsUnchangedDuringPhase": true,
+    "launchSourceInputs": 1358,
+    "cleanupVerified": true,
+    "processSignaled": true,
+    "jobActiveProcesses": 0,
+    "liveDrainers": 0,
+    "drainsComplete": true,
+    "handlesClosed": true,
+    "stdoutOverflow": false,
+    "stderrBytes": 0,
+    "stdoutSha256": "3097c4b8f8bcbb5f17f6f00315de797a116a9783f51a715234a40e5d32182e44",
+    "perWorkloadOuterTimingAvailable": false
+  },
+  "fixture": {
+    "plan": "Rb56Plan.configured(42,2,SHARED_HYSTERETIC,true,true,3,3,true)",
+    "physicalPackages": 60,
+    "channels": 2,
+    "sharedTestCirSim": "One reused native TestCirSim per workload; each cycle installs a fresh developer physical owner and retires it before its successor.",
+    "productionTestSubstitutions": 1,
+    "immutableInputs": [
+      {
+        "file": "q60/native-r98.ps1",
+        "bytes": 1541,
+        "sha256": "c9e21b739ccbc95b01f84a31ef0103441fe863cc00d660cf549d799cf8cf3827"
+      },
+      {
+        "file": "q60/native-owner-inventory-draft-r6/Rb56FaultPopulationContractTest.java",
+        "bytes": 39599,
+        "sha256": "9cc17e5f3c3692b94039a9fd1e780f0e7628bcd0afdac9417d77e7106a0fbd8a"
+      },
+      {
+        "file": "q60/native-owner-inventory-draft-r6/verify-native-owner-inventory.ps1",
+        "bytes": 75383,
+        "sha256": "a9f6b208359fefd60105217739a7b1ae9db5d64cea349c516adb3d22be69e9f7"
+      },
+      {
+        "file": "q60/native-owner-inventory-draft-r6/source-preflight.json",
+        "bytes": 171677,
+        "sha256": "54b39a7d0f7f61b2ceda2afbc61ec4c806e1632b5dccbeb2817860114ac9bd76"
+      },
+      {
+        "file": "q60/native-owner-inventory-draft-r6/source-rebind-audit.json",
+        "bytes": 461,
+        "sha256": "eaf0547108b04fffca44cd2f263319c1b438bda52df09292426803c58523a391"
+      }
+    ],
+    "compileArguments": [
+      "-source",
+      "7",
+      "-target",
+      "7",
+      "-encoding",
+      "UTF-8",
+      "-classpath",
+      "<maintained adapter classpath>",
+      "-sourcepath",
+      "<empty task source path>",
+      "-d",
+      "<owned scratch classes>",
+      "@<owned sources.txt>"
+    ]
+  },
+  "workloads": [
+    {
+      "workload": "OwnerCycles",
+      "adapter": "q60/native-owner-inventory-draft-r6/verify-native-owner-inventory.ps1",
+      "adapterArguments": {
+        "JavaHome": "<pointer.tools.javaHome>",
+        "PythonExe": "<pointer.tools.python>",
+        "Suite": [
+          "Rb56FaultPopulationContractTest"
+        ],
+        "LifecycleRepositoryRoot": "<pointer.repo>",
+        "LifecycleWorkload": "OwnerCycles",
+        "ReceiptOutputPath": "<phase-temp>/native-r98-owner-receipt.json"
+      },
+      "javaArguments": [
+        "-ea",
+        "-cp",
+        "<maintained adapter classpath>",
+        "com.lushprojects.circuitjs1.client.Rb56FaultPopulationContractTest",
+        "--q60-owner-cycles"
+      ],
+      "javacBudgetMs": 60000,
+      "javaBudgetMs": 60000,
+      "assertions": 802503,
+      "completedOwnerCycles": 100,
+      "packages": 60,
+      "retainedParts": 61,
+      "acceptedServiceSteps": 600,
+      "acceptedServiceStepMeaning": "One solverExecutor.advanceSteps(1) call in fixture advance(); excludes additional waveform and temporary-meter advances.",
+      "fixtureElapsedSeconds": 6.208902,
+      "fixtureElapsedMeaning": "Cumulative q60LongSession monotonic runtime through final native cycle; excludes adapter compilation and is not a per-workload outer-process measurement.",
+      "records": {
+        "census": 100,
+        "faultCases": 100,
+        "candidateCleanup": 100,
+        "completedCycles": 100,
+        "totalLines": 401
+      },
+      "faultDistribution": [
+        {
+          "fault": "DRIVE_A_HIGH_RESISTANCE",
+          "cycles": 20
+        },
+        {
+          "fault": "RELAY_B_COIL_OPEN",
+          "cycles": 20
+        },
+        {
+          "fault": "REN_HIGH_RESISTANCE",
+          "cycles": 20
+        },
+        {
+          "fault": "RENAC_HIGH_RESISTANCE",
+          "cycles": 20
+        },
+        {
+          "fault": "SENSOR_A_HIGH_RESISTANCE",
+          "cycles": 20
+        }
+      ],
+      "census": {
+        "installed": [
+          60
+        ],
+        "loose": [
+          1
+        ],
+        "history": [
+          3
+        ],
+        "inactivePartBacking": [
+          0
+        ],
+        "waveformCapacity": [
+          32
+        ],
+        "subscriptionsAfterUnsubscribe": [
+          0
+        ],
+        "nativeInputEvidence": [
+          false
+        ],
+        "first": {
+          "cycle": 1,
+          "parts": 61,
+          "installed": 60,
+          "loose": 1,
+          "terminals": 145,
+          "activeGraphElements": 379,
+          "activePartBacking": 96,
+          "inactivePartBacking": 0,
+          "history": 3,
+          "waveformCapacity": 32,
+          "subscriptions": 0,
+          "playerInputEvidence": false
+        },
+        "last": {
+          "cycle": 100,
+          "parts": 61,
+          "installed": 60,
+          "loose": 1,
+          "terminals": 148,
+          "activeGraphElements": 378,
+          "activePartBacking": 95,
+          "inactivePartBacking": 0,
+          "history": 3,
+          "waveformCapacity": 32,
+          "subscriptions": 0,
+          "playerInputEvidence": false
+        }
+      },
+      "everyCandidateDisposed": true,
+      "everyRawGraphRestored": true,
+      "everyCandidateCleanupClean": true,
+      "nativeScratchCleanupMarker": true,
+      "passMarker": "PASS: RB56 fault-population contracts assertions=802503 nativeOwnerServiceCycles=100 packages=60 retainedParts=61 acceptedServiceSteps=600 scope=Q60_NATIVE_OWNER_SERVICE_INVENTORY_ONLY normalSessionLoad=false fullProductionD01=false playerInputEvidence=false browserHeapEvidence=false",
+      "receipt": {
+        "file": "owner-receipt.txt",
+        "bytes": 68201,
+        "sha256": "82fdfdf26bf1fe634426822646d49c509210452f5b9689ccd2bc0cae2cd6084c"
+      },
+      "originalReceipt": "<phase-temp>/native-r98-owner-receipt.json",
+      "receiptFormat": "Text record stream: four prefixed JSON record types and one PASS marker. The original .json suffix is not a single JSON document.",
+      "fullOutput": {
+        "file": "<phase-temp>/native-r98-owner-full-output.log",
+        "bytes": 121599,
+        "sha256": "5b915c666e9096c2d5bdcf43bd4306f6131394583dd24340ae54e28b6379ca25"
+      }
+    },
+    {
+      "workload": "Inventory",
+      "adapter": "q60/native-owner-inventory-draft-r6/verify-native-owner-inventory.ps1",
+      "adapterArguments": {
+        "JavaHome": "<pointer.tools.javaHome>",
+        "PythonExe": "<pointer.tools.python>",
+        "Suite": [
+          "Rb56FaultPopulationContractTest"
+        ],
+        "LifecycleRepositoryRoot": "<pointer.repo>",
+        "LifecycleWorkload": "Inventory",
+        "ReceiptOutputPath": "<phase-temp>/native-r98-inventory-receipt.json"
+      },
+      "javaArguments": [
+        "-ea",
+        "-cp",
+        "<maintained adapter classpath>",
+        "com.lushprojects.circuitjs1.client.Rb56FaultPopulationContractTest",
+        "--q60-inventory"
+      ],
+      "javacBudgetMs": 60000,
+      "javaBudgetMs": 60000,
+      "assertions": 52428,
+      "completedOwnerCycles": 1,
+      "packages": 60,
+      "retainedParts": 96,
+      "acceptedServiceSteps": 44,
+      "acceptedServiceStepMeaning": "One solverExecutor.advanceSteps(1) call in fixture advance(); excludes additional waveform and temporary-meter advances.",
+      "fixtureElapsedSeconds": 1.3636433,
+      "fixtureElapsedMeaning": "Cumulative q60LongSession monotonic runtime through final native cycle; excludes adapter compilation and is not a per-workload outer-process measurement.",
+      "records": {
+        "census": 1,
+        "faultCases": 1,
+        "candidateCleanup": 1,
+        "completedCycles": 1,
+        "totalLines": 5
+      },
+      "faultDistribution": [
+        {
+          "fault": "RENAC_HIGH_RESISTANCE",
+          "cycles": 1
+        }
+      ],
+      "census": {
+        "installed": [
+          60
+        ],
+        "loose": [
+          36
+        ],
+        "history": [
+          38
+        ],
+        "inactivePartBacking": [
+          0
+        ],
+        "waveformCapacity": [
+          32
+        ],
+        "subscriptionsAfterUnsubscribe": [
+          0
+        ],
+        "nativeInputEvidence": [
+          false
+        ],
+        "first": {
+          "cycle": 1,
+          "parts": 96,
+          "installed": 60,
+          "loose": 36,
+          "terminals": 215,
+          "activeGraphElements": 449,
+          "activePartBacking": 166,
+          "inactivePartBacking": 0,
+          "history": 38,
+          "waveformCapacity": 32,
+          "subscriptions": 0,
+          "playerInputEvidence": false
+        },
+        "last": {
+          "cycle": 1,
+          "parts": 96,
+          "installed": 60,
+          "loose": 36,
+          "terminals": 215,
+          "activeGraphElements": 449,
+          "activePartBacking": 166,
+          "inactivePartBacking": 0,
+          "history": 38,
+          "waveformCapacity": 32,
+          "subscriptions": 0,
+          "playerInputEvidence": false
+        }
+      },
+      "everyCandidateDisposed": true,
+      "everyRawGraphRestored": true,
+      "everyCandidateCleanupClean": true,
+      "nativeScratchCleanupMarker": true,
+      "passMarker": "PASS: RB56 fault-population contracts assertions=52428 nativeOwnerServiceCycles=1 packages=60 retainedParts=96 acceptedServiceSteps=44 scope=Q60_NATIVE_OWNER_SERVICE_INVENTORY_ONLY normalSessionLoad=false fullProductionD01=false playerInputEvidence=false browserHeapEvidence=false",
+      "receipt": {
+        "file": "inventory-receipt.txt",
+        "bytes": 963,
+        "sha256": "82e2ea8f5453a8e2503714067413297b33595c92841942392942bfcb7c450e14"
+      },
+      "originalReceipt": "<phase-temp>/native-r98-inventory-receipt.json",
+      "receiptFormat": "Text record stream: four prefixed JSON record types and one PASS marker. The original .json suffix is not a single JSON document.",
+      "fullOutput": {
+        "file": "<phase-temp>/native-r98-inventory-full-output.log",
+        "bytes": 24105,
+        "sha256": "72b3ee51f1a3fc4fc3998c377781a63bc21fe53380135beade3d6b188850780d"
+      }
+    }
+  ],
+  "inventoryAcquisition": "Separate Inventory workload repairs RENAC then acquires35 actual loose healthy10k catalog resistors.60installed+36loose=96 retained,38 ordered operations. First/middle/last loose stock reads10k within1percent using actual solver.",
+  "evidence": [
+    {
+      "file": "<phase-temp>/native-r98-launch.json",
+      "bytes": 188867,
+      "sha256": "957a0d82b770b5da4e4175a544dac414e42171b25dd6cfcb2efc0dc18adc0dcd"
+    },
+    {
+      "file": "<phase-temp>/native-r98-result.json",
+      "bytes": 1852,
+      "sha256": "a47a62bd464b5ce00b65a159bb86992d25e0d428dfa5874ec7fd0f993fa059ef"
+    },
+    {
+      "file": "q60/record-native-r98.txt",
+      "bytes": 1273,
+      "sha256": "bdd823a167d6edb9f914fc8473fb114d88ec4ed0bcb8f4789880b440d73b2855"
+    }
+  ],
+  "sourceConsumptionAudit": "source-consumption-audit.json",
+  "sanitation": "Packet uses logical task/repository/phase-temp paths and tool placeholders, omits host usernames/absolute home paths/PIDs, copies original safe receipt streams byte-for-byte. Full raw compiler/output/launch logs remain at their original phase-temp location and are identified by length/hash.",
+  "exclusions": [
+    "normal RB56 admission/menu/HARD/save/load",
+    "browser input or browser endurance",
+    "100 full production electrical generations or customer profiles",
+    "Task41 snapshot/UI restore qualification",
+    "browser heap reachability or EventTiming/FPS",
+    "actual modest-host or blanket performance qualification",
+    "full native suite matrix/independent oracles",
+    "overall Q60 completion"
+  ],
+  "preservation": "All r1-r6 drafts, original native89 failure and r90 NOT_RUN, native92/94/98 receipts and original8 repo untracked remain untouched. No source-pin refresh or new runtime gate in this extraction.",
+  "repositoryEdited": false,
+  "gatesRun": false,
+  "browserLaunched": false
+}

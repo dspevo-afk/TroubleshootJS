@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 /** Focused matched electrical matrix; native results do not admit a physical/player family. */
 public final class E06ConverterPilotContractTest {
-    private static final double DETAILED_DT = .000005, AVERAGED_DT = .0002;
+    private static final double DETAILED_DT = .000005, AVERAGED_DT = .0004;
     private static final String FIDELITY = "NOMINAL_FIDELITY_NOT_QUALIFIED";
     private static final String[] CHANNELS = {"sourceV", "sourceI", "bulkV", "outputV", "loadI",
         "primaryV", "primaryI", "secondaryV", "secondaryI", "ledI", "collectorI", "feedbackV",

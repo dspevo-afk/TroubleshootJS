@@ -1,4 +1,92 @@
-# Current checkpoint: Q60 implementation retained; acceptance blocked
+# Current checkpoint: Q60 numerical contracts pass; normal55 admission still fails
+
+2026-10-08. Branch `codex/q30-multirail-qualification`; parent checkpoint
+`a2fc74b23d177e0a971974a9d958bf0d559a06c5` plus intended working changes.
+U06/U07/E05/E06 are published at accepted E06 base
+`7aa0e1932f3c853e7265bf186e98989ada641a51`. Q60 remains unaccepted;
+normal RB56/HARD/save-load stay held. This feature-branch checkpoint is not
+release acceptance; commit/push results are recorded separately after verification.
+
+Current CirSim is `0a281ca50b170ec53fa95e4a898a333f6445f38a2fe6dceed6f8286e77df1f1c`.
+Its bounded helper widens one immutable ascending upper gather from4 to8;
+four-row unroll and exact inline4/1-3 remainders retain per-cell arithmetic order.
+Placement3F32/router37E6, native-only Owned6FE and all other1,352 native/
+1,221 application inputs remain exact. Finite/alias/ownership guards, electrical
+cadence, seeds, five hypotheses and90s/640/5s limits remain unchanged. All-five
+GWT emission preserves21 other mapped guard/owner/snapshot/oracle bodies;
+helper code grows974 to2373 bytes and15 to26 locals. Static healthy-only work
+economics and these local changes establish no CPU speedup or deadline clearance.
+
+| Closed current gate | Actual result and scope |
+| --- | --- |
+| Native132 | PASS54.546s:11 affected suites, including A07 306,504/Owned292;1,353 repository inputs; full matrix NOT RUN |
+| Build25 | PASS88.949s:all5 actual JDK8/GWT OBF permutations;1,222 repository inputs |
+| Compiled87 | PASS7.923s:pure306,503; runtime83/23cases; models59/21rows; scale16; actual Task41 failure/recovery and scoped early-terminal canary |
+| Raw native133/134 | PASS28.757/28.154s:all236 original fixed17/77/42 production400us/fine200us comparisons; whole metrics, raw/criteria/cleanup receipts exact129/130 and126/127, zero exclusions |
+| Unprofiled normal55 compiled88 | FAIL97.105s outer/91.4795234s case; HYPOTHESES wall timeout, app90398ms/520 work/max1958ms; five replay installs, four full flows plus partial fifth; publication false |
+| Normal Q30 compiled89 | PASS92.293s outer/85.7567492s observation:normal seed10014/replay `tsj-alpha/5/MEDIUM/RB30_CONTROL/10014`; frozen-plan40 packages/two channels; sampled443 is not terminal work; runtime census unexposed |
+| Profile90 | CLOSED CAPTURED/qualificationFAIL97.273s outer; job90029ms/448 work/max2316ms; four replay installs, three full flows plus partial fourth; publication false |
+| Supplemental native136 | PASS40.742s:controlled derivative679; RB56 temporal295(seed77/55, REPLAY fixed13units); Q30 pivot collection388; QuickPlayGate27,074; four maintained suites/generic1,353 exact/cleanup PASS; full matrix and independent oracles NOT RUN |
+| Current complete holdout/exact60 session | NOT RUN; historical full-six r7 FAIL2/6 and later unrun drafts preserved |
+| Actual modest machine | Outstanding hardware evidence; Ryzen7700 remains the reference desktop |
+
+All current native/build/raw/compiled pins remain exact and all application,
+browser/server and native host cleanup passes. Compiled89's root external1403
+plus separate self witness rehashes pass before/after; driver12, transport1562
+and outer1222 are distinct authorities. Its independent closed review passes
+within one seed10014 scope, without corpus or causal performance inference.
+Fresh236 proves three fixed raw graphs; it is not a new full24 or admission pass.
+
+Profile90's original offline readers completed on actual profile
+`6a16cad6eb0490ef7fef91e16282f8633000a701c0c3e1edc2c1cf634e66a818`:
+26.575s bounded-helper self,35.634s LU-factor union,21.072s routing/layout union,
+4.674s solve union and2.519s row-copy union. Inclusive unions overlap and must
+not be summed. Of40,697 samples, signed weight is90,951.588ms and positive
+weight90,951.601ms. The one-13us delta at index436/node1372 remains raw and
+is excluded from positive attribution; the0.013ms difference is charged.
+The ROOT closure/pin audit rehashes1,446 frozen inputs plus its separate self
+witness,1,222 outer and1,562 transport pins. It is not an independent profile90
+review. Profiler overhead is present; this capture is not paired speed proof.
+
+Historical DE7 native131 is a source-neutral healthy55 support census
+PASS25.116s:all seven raw windows, original criteria and cleanup receipts exact
+native121 with zero exclusions; both zero-pivot counts are0. The row-outer panel
+was rejected before implementation:charged indexed accesses618.770M to980.339M
+and tests/branches195.334M to1,563.373M. It supplies no timing/admission claim.
+[Historical DE7 panel census and rejection](task-evidence/Q60/sparse-panel-census-r1/sparse-panel-cost-evidence-r1.json).
+
+The retained DE7/BFD checkpoint and source85 separate40-part UI r8 remain
+historical. UI r8 passed307.383s on one owner, three checkpoints, wrong/correct
+repair, Reset/power/input restoration, customer retest and cleanup; four actual
+screenshots were inspected. Approved endurance is at least300s/three checkpoints;
+native98's100 owners/96-part inventory is separate native-only proof. Current
+exact60/two-channel visible/session evidence and actual modest hardware remain
+outstanding. Production400us/fine200us/Q30 5us stay fixed; the1ms experiment
+remains rejected at2.215618mV against the original1mV OFF bound.
+
+Closed native135 PASS32.677s is one source-neutral healthy55 diagnostic. All7
+raw windows/criteria/cleanup are exact121/131;969 manual,941 source plus observer
+and separate generic1,353 pins pass. +1 occurs0 times; -1 weights961,339 of
+211,651,517 updates(0.4542084%). Unit specialization is NO_GO:full8 adds20.305M
+minus checks to avoid0.349M multiplies; all chunks add38.473M to avoid0.961M.
+Source0A and cleanup remain exact; operation counts establish no speed/admission
+claim. The independent closed diagnostic review passes within that one-case scope.
+
+Courtyard grids are source-only correct, unintegrated and not selected because
+their allocations/setup lack low-memory or net-performance proof. All8 original
+files remain untracked with exact hashes; the
+index is empty. Historical Q30 risks remain:unknown91.616s failure, six missing
+scratch inventories and late BLOCKED release audit. No unchanged Q30 corpus
+rerun. Next:finish normal55 performance,
+the complete holdout, exact60 visible/session and actual modest-machine evidence.
+REL-B/Q100 remain unstarted. No email, deletion, server or unrelated edit.
+
+[Current compact evidence](task-evidence/Q60/wide-gather-checkpoint-r1/wide-gather-checkpoint-evidence-r1.json),
+[historical DE7/BFD checkpoint](task-evidence/Q60/loop-economy-checkpoint-r1/loop-economy-checkpoint-evidence-r1.json).
+
+---
+
+# Historical checkpoint: Q60 implementation before qualified400 cadence
 
 2026-10-08. Branch `codex/q30-multirail-qualification`. The accepted/published
 base, upstream and freshly verified remote are E06

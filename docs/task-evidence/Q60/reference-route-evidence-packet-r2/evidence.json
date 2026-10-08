@@ -1,0 +1,908 @@
+{
+  "schema": "Q60_REFERENCE_ROUTE_SUPPLEMENTAL_EVIDENCE_V2",
+  "scope": "Fixed actual seeded physical routing and admission; no overall Q60, browser deadline, symptom, complete fault-population or manufacturing qualification claim",
+  "status": "REFERENCE_ROUTE_AND_CORRECTED_GENERIC_FIXTURE_CHECKS_PASS; FAILED_PREDECESSORS_RETAINED; OVERALL_Q60_NOT_QUALIFIED",
+  "reference": {
+    "rootSeed": "42",
+    "packages": 60,
+    "pads": 143,
+    "placementSeed": "5526715536693200536",
+    "routingSeed": "4493419427463069983",
+    "routingPolicy": "MEDIUM_BOARD@1",
+    "admission": "RB56_BOARD_NORMAL@1",
+    "placementCandidates": 6,
+    "rankedRoutingCandidates": 3,
+    "p05ThenP07": true,
+    "routeCallsPerCase": 1,
+    "seedSearch": false
+  },
+  "native91": {
+    "status": "FAIL",
+    "purpose": "One unchanged maintained configured42 route call with task-only retained-state diagnostics; expected original rejection preserved",
+    "captureAuditStatus": "PASS_OFFLINE_CAPTURE_AND_GEOMETRIC_CAUSE_AUDIT",
+    "capture": {
+      "placementRows": 3,
+      "failedOrderRows": 9,
+      "completedResultRows": 3,
+      "interruptedRows": 0,
+      "placements": [
+        4,
+        5,
+        0
+      ],
+      "sixPlacementRanking": "[4,5,0,1,2,3]",
+      "packagePadCensus": [
+        60,
+        143
+      ],
+      "checks": [
+        {
+          "attempt": 4,
+          "orderedPasses": 3,
+          "templatePrefixMatchesAllPartialRoutes": true,
+          "finalFailureMatchesResult": true
+        },
+        {
+          "attempt": 5,
+          "orderedPasses": 3,
+          "templatePrefixMatchesAllPartialRoutes": true,
+          "finalFailureMatchesResult": true
+        },
+        {
+          "attempt": 0,
+          "orderedPasses": 3,
+          "templatePrefixMatchesAllPartialRoutes": true,
+          "finalFailureMatchesResult": true
+        }
+      ],
+      "boardAndPlanIdenticalForAllPlacements": true,
+      "heapKeyEncodingValidForEveryRemainingHead": true
+    },
+    "observer": "Source reads retained failed Search before next pass work, exact fields all resolve. Every expected pass captured. Queue output reads values[0] after queue.poll and is the next remaining node; the failed popped local was never captured or claimed.",
+    "placements": [
+      {
+        "rootSeed": "42",
+        "placementSeed": "5526715536693200536",
+        "routingSeed": "4493419427463069983",
+        "attempt": 4,
+        "rankedAttempts": "[4, 5, 0, 1, 2, 3]",
+        "score": "4{total=1880094;electrical=214590;region=16390;connector=6280;corridor=2836;outline=21281200;courtyard=1069640;demand=3752340}",
+        "boardFingerprintSha256": "d00fb78c202182a32587896f931461b566bd3ffda72f8a71660621200dc78454",
+        "placementGeometryFingerprintSha256": "8655cc5a69575560de36356ab2dc9735e7edde9038ac9181e02bc1548b471829"
+      },
+      {
+        "rootSeed": "42",
+        "placementSeed": "5526715536693200536",
+        "routingSeed": "4493419427463069983",
+        "attempt": 5,
+        "rankedAttempts": "[4, 5, 0, 1, 2, 3]",
+        "score": "5{total=1895705;electrical=214270;region=19125;connector=7620;corridor=2752;outline=21462400;courtyard=1074440;demand=3765140}",
+        "boardFingerprintSha256": "d00fb78c202182a32587896f931461b566bd3ffda72f8a71660621200dc78454",
+        "placementGeometryFingerprintSha256": "28874cc8689ff2c3a21a461342c0368a1ba8f088de94600c99b6023b70f1b523"
+      },
+      {
+        "rootSeed": "42",
+        "placementSeed": "5526715536693200536",
+        "routingSeed": "4493419427463069983",
+        "attempt": 0,
+        "rankedAttempts": "[4, 5, 0, 1, 2, 3]",
+        "score": "0{total=2005610;electrical=226540;region=17428;connector=8400;corridor=3939;outline=21115200;courtyard=1062440;demand=3733140}",
+        "boardFingerprintSha256": "d00fb78c202182a32587896f931461b566bd3ffda72f8a71660621200dc78454",
+        "placementGeometryFingerprintSha256": "4dbcf10bdbe1493052b3ec9fc50caac1e0ba757e0394c125d622d6743b56a8ac"
+      }
+    ],
+    "failedOrders": [
+      {
+        "attempt": 4,
+        "pass": 0,
+        "reason": "FB_AC:NO_PATH",
+        "start": {
+          "id": "UAC.FB",
+          "x": 1370,
+          "y": 1560,
+          "escapeDx": -1,
+          "escapeDy": 0,
+          "escapeLength": 40
+        },
+        "root": {
+          "id": "CFB.1",
+          "x": 1450,
+          "y": 1230,
+          "escapeDx": 0,
+          "escapeDy": -1,
+          "escapeLength": 35
+        },
+        "branchExpansions": 2953,
+        "totalExpansions": 355598,
+        "queueRemaining": 0,
+        "partialViaCount": 48,
+        "partialTraceCount": 140,
+        "remainingHeadCoordinate": null,
+        "partialGeometrySha256": "391eddd877c702c5e16e3c8c4d6ffe2e25f9ee3c6e2aaa25ba1304d74adcbd87"
+      },
+      {
+        "attempt": 4,
+        "pass": 1,
+        "reason": "ENABLE_AC:NO_PATH",
+        "start": {
+          "id": "UAC.EN",
+          "x": 1370,
+          "y": 1510,
+          "escapeDx": -1,
+          "escapeDy": 0,
+          "escapeLength": 40
+        },
+        "root": {
+          "id": "RENAC.2",
+          "x": 1220,
+          "y": 1550,
+          "escapeDx": 1,
+          "escapeDy": 0,
+          "escapeLength": 50
+        },
+        "branchExpansions": 2009,
+        "totalExpansions": 703097,
+        "queueRemaining": 0,
+        "partialViaCount": 48,
+        "partialTraceCount": 146,
+        "remainingHeadCoordinate": null,
+        "partialGeometrySha256": "b2d237f00a257a44157414bd50b53bff08dd3a52d29b3572ccfc1c8a8759cc34"
+      },
+      {
+        "attempt": 4,
+        "pass": 2,
+        "reason": "A_COIL_LOW:BRANCH_SEARCH_LIMIT",
+        "start": {
+          "id": "KA.A2",
+          "x": 5480,
+          "y": 1770,
+          "escapeDx": 1,
+          "escapeDy": 0,
+          "escapeLength": 50
+        },
+        "root": {
+          "id": "DA.A",
+          "x": 4570,
+          "y": 2500,
+          "escapeDx": -1,
+          "escapeDy": 0,
+          "escapeLength": 50
+        },
+        "branchExpansions": 100000,
+        "totalExpansions": 933697,
+        "queueRemaining": 60804,
+        "partialViaCount": 15,
+        "partialTraceCount": 53,
+        "remainingHeadCoordinate": [
+          5120,
+          2070
+        ],
+        "partialGeometrySha256": "fcce3c13938caffd567196fe2124c65e50aa4d22977730f5bd073db78203b1b4"
+      },
+      {
+        "attempt": 5,
+        "pass": 0,
+        "reason": "A_COIL_LOW:BRANCH_SEARCH_LIMIT",
+        "start": {
+          "id": "QA.D",
+          "x": 4030,
+          "y": 1080,
+          "escapeDx": 0,
+          "escapeDy": 1,
+          "escapeLength": 36
+        },
+        "root": {
+          "id": "DA.A",
+          "x": 4140,
+          "y": 2460,
+          "escapeDx": -1,
+          "escapeDy": 0,
+          "escapeLength": 50
+        },
+        "branchExpansions": 100000,
+        "totalExpansions": 214021,
+        "queueRemaining": 17515,
+        "partialViaCount": 21,
+        "partialTraceCount": 89,
+        "remainingHeadCoordinate": [
+          4270,
+          1330
+        ],
+        "partialGeometrySha256": "bd71675336136be3b0b56bd986329391308409d1ca3ef9b4ef58e067ba808e80"
+      },
+      {
+        "attempt": 5,
+        "pass": 1,
+        "reason": "B_DRIVE:BRANCH_SEARCH_LIMIT",
+        "start": {
+          "id": "RDB.2",
+          "x": 4870,
+          "y": 1960,
+          "escapeDx": 1,
+          "escapeDy": 0,
+          "escapeLength": 50
+        },
+        "root": {
+          "id": "QB.B",
+          "x": 3490,
+          "y": 2470,
+          "escapeDx": -1,
+          "escapeDy": 0,
+          "escapeLength": 30
+        },
+        "branchExpansions": 100000,
+        "totalExpansions": 545318,
+        "queueRemaining": 42227,
+        "partialViaCount": 41,
+        "partialTraceCount": 128,
+        "remainingHeadCoordinate": [
+          4060,
+          2220
+        ],
+        "partialGeometrySha256": "90e1fe57a2b05c6c46de721b7e227297d152f53769c1bc02fc32e20a49e6d847"
+      },
+      {
+        "attempt": 5,
+        "pass": 2,
+        "reason": "CTRL_RETURN:TOTAL_SEARCH_LIMIT",
+        "start": {
+          "id": "QB.E",
+          "x": 3570,
+          "y": 2470,
+          "escapeDx": 0,
+          "escapeDy": 1,
+          "escapeLength": 36
+        },
+        "root": {
+          "id": "C5.2",
+          "x": 3960,
+          "y": 1680,
+          "escapeDx": 0,
+          "escapeDy": -1,
+          "escapeLength": 35
+        },
+        "branchExpansions": 450,
+        "totalExpansions": 1000000,
+        "queueRemaining": 136,
+        "partialViaCount": 48,
+        "partialTraceCount": 145,
+        "remainingHeadCoordinate": [
+          3550,
+          2440
+        ],
+        "partialGeometrySha256": "d446645cbd4b3451ad310320bbdc5628662bdba604c64c3e69c54b2d1d8ecea5"
+      },
+      {
+        "attempt": 0,
+        "pass": 0,
+        "reason": "REF_SHARED:NO_PATH",
+        "start": {
+          "id": "U2A.REFERENCE",
+          "x": 4090,
+          "y": 1910,
+          "escapeDx": 0,
+          "escapeDy": 1,
+          "escapeLength": 60
+        },
+        "root": {
+          "id": "RREF_H.2",
+          "x": 3990,
+          "y": 1670,
+          "escapeDx": 1,
+          "escapeDy": 0,
+          "escapeLength": 50
+        },
+        "branchExpansions": 33,
+        "totalExpansions": 427775,
+        "queueRemaining": 0,
+        "partialViaCount": 46,
+        "partialTraceCount": 140,
+        "remainingHeadCoordinate": null,
+        "partialGeometrySha256": "0692b1dc4f9ac9374b3cb6d7d2a97f605342a86b90ee463d028ecd3b256a9d99"
+      },
+      {
+        "attempt": 0,
+        "pass": 1,
+        "reason": "REF_SHARED:NO_PATH",
+        "start": {
+          "id": "U2A.REFERENCE",
+          "x": 4090,
+          "y": 1910,
+          "escapeDx": 0,
+          "escapeDy": 1,
+          "escapeLength": 60
+        },
+        "root": {
+          "id": "RREF_H.2",
+          "x": 3990,
+          "y": 1670,
+          "escapeDx": 1,
+          "escapeDy": 0,
+          "escapeLength": 50
+        },
+        "branchExpansions": 33,
+        "totalExpansions": 578703,
+        "queueRemaining": 0,
+        "partialViaCount": 23,
+        "partialTraceCount": 89,
+        "remainingHeadCoordinate": null,
+        "partialGeometrySha256": "cb9763f38a71b15e607eda6daa30e8ca55c9ad268a139fd0e54d6240ed0ceefd"
+      },
+      {
+        "attempt": 0,
+        "pass": 2,
+        "reason": "RAIL5:BRANCH_SEARCH_LIMIT",
+        "start": {
+          "id": "DA.K",
+          "x": 5340,
+          "y": 1750,
+          "escapeDx": 1,
+          "escapeDy": 0,
+          "escapeLength": 50
+        },
+        "root": {
+          "id": "C5.1",
+          "x": 3290,
+          "y": 1880,
+          "escapeDx": 0,
+          "escapeDy": -1,
+          "escapeLength": 35
+        },
+        "branchExpansions": 100000,
+        "totalExpansions": 829931,
+        "queueRemaining": 22355,
+        "partialViaCount": 12,
+        "partialTraceCount": 52,
+        "remainingHeadCoordinate": [
+          3970,
+          1880
+        ],
+        "partialGeometrySha256": "3ac62df7487702f2520061343e41efc6b18a73058955b37beb6466c84b1601e0"
+      }
+    ],
+    "provedReferenceCages": [
+      {
+        "attempt": 0,
+        "pass": 0,
+        "blockedBy": {
+          "source": "p07/A_SENSE/83/2",
+          "layer": "TOP",
+          "net": "A_SENSE",
+          "from": [
+            4130,
+            1990
+          ],
+          "to": [
+            4000,
+            1990
+          ]
+        },
+        "branchExpansions": 33,
+        "queueRemaining": 0,
+        "partialViaCount": 46
+      },
+      {
+        "attempt": 0,
+        "pass": 1,
+        "blockedBy": {
+          "source": "p07/A_SENSE/49/0",
+          "layer": "TOP",
+          "net": "A_SENSE",
+          "from": [
+            4300,
+            1990
+          ],
+          "to": [
+            4000,
+            1990
+          ]
+        },
+        "branchExpansions": 33,
+        "queueRemaining": 0,
+        "partialViaCount": 23
+      }
+    ],
+    "geometry": {
+      "referencePad": [
+        4090,
+        1910
+      ],
+      "declaredEscapeEnd": [
+        4090,
+        1970
+      ],
+      "U2ACourtyard": [
+        4015,
+        1765,
+        250,
+        200
+      ],
+      "existingViaLandAtEnd": [
+        4084,
+        1964,
+        12,
+        12
+      ],
+      "endLandContact": "land y1964..1976 overlaps own courtyard through y1965",
+      "firstOwnCourtyardClearGridViaCenter": [
+        4090,
+        1980
+      ],
+      "firstClearLand": [
+        4084,
+        1974,
+        12,
+        12
+      ],
+      "existingMountedEscapeReservation": [
+        4076,
+        1896,
+        28,
+        88
+      ],
+      "existingReservationEndY": 1984,
+      "neighborEscapeReservations": {
+        "U2A.SENSOR": [
+          4026,
+          1896,
+          28,
+          88
+        ],
+        "U2A.RAIL": [
+          4126,
+          1896,
+          28,
+          88
+        ]
+      },
+      "foreignASenseTopY": 1990,
+      "foreignCopperOneGridHaloBlocksY": 1980,
+      "topCage": "Forced exit reaches y1970; neighboring reservations block lateral row crossings at x4050 and4130, A_SENSE blocks y1980, and every reachable via land still touches U2A courtyard.",
+      "bottomCage": "CTRL_RETURN runs x3800..4240 at y1890; RAIL5 runs x3840..4140 at y1930, enclosing reference y1910 between their halos, with SENSOR/RAIL side pad branches. Courtyard prevents a legal via from the enclosed rows.",
+      "viaBudgetIndependent": [
+        {
+          "pass": 0,
+          "used": 46,
+          "allowed": 48
+        },
+        {
+          "pass": 1,
+          "used": 23,
+          "allowed": 48
+        }
+      ]
+    }
+  },
+  "genericFix": {
+    "adoptedSourcePins": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "beforeSha256": "daac77b5eca16ac7aa68201278253014738f7af1c9f85005638149cdfac8ccdb",
+        "candidateSha256": "964814f9a16087a7f148bdf630613ba28fbd0587d1e0c13af47f444ade6a4a60",
+        "lineEnding": "CRLF"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "beforeSha256": "9982f56957331bd0cd918b8f482b13df090f8f3fd45cad627c8287871fb34ed1",
+        "candidateSha256": "3ec2fd7e732d1d5e46e8dea45a946cecb85810e0c7f3da915edcefd30fb324fb",
+        "lineEnding": "LF"
+      }
+    ],
+    "constructorDefaultOutletRadius": 0,
+    "viaLandRadiusDrawingUnits": 6,
+    "fullerPolicyTransitions": 4,
+    "escapeMarginDrawingUnits": 14,
+    "sourceProof": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "startLine": 312,
+        "endLine": 353,
+        "claim": "Old constructor delegates radius0. Only mounted terminals with positive declared escapes use an outlet radius; four signed cardinal directions select the owning courtyard edge, require strictly clear land, round outward to the existing grid, and retain at least the original escape length."
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "startLine": 245,
+        "endLine": 248,
+        "claim": "Only transition-capable policies pass existing VIA_LAND=6. Both zero-transition policies continue to pass0."
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "startLine": 507,
+        "endLine": 526,
+        "claim": "Existing via domain, outline, face occupancy, courtyard, pad, and hole predicates remain in force."
+      }
+    ],
+    "actualLocalEffect": {
+      "oldReferenceReserveEndY": 1984,
+      "firstCourtyardClearGridViaCenter": [
+        4090,
+        1980
+      ],
+      "newReferenceReserveEndY": 1994,
+      "previousForeignCrossbarY": 1990,
+      "result": "Prevents earlier foreign copper from sealing the first physically legal via outlet"
+    },
+    "unchanged": [
+      "signed seed population and order",
+      "six placement candidates and scoring",
+      "three ranked routing candidates and three deterministic P07 orderings",
+      "branch/global search limits, transition limits, and48-via allowance",
+      "route step and physical via/collision predicates",
+      "ordinary radius0 routing",
+      "opposite-face reservations",
+      "zero-transition policies",
+      "fault, symptom and admission criteria"
+    ]
+  },
+  "native96": {
+    "status": "PASS",
+    "layoutVersion": 15,
+    "publicReplayEpoch": "tsj-alpha/4",
+    "configured42Accepted": true,
+    "allThreeReferenceCases": {
+      "CRITERIA": [
+        {
+          "cases": 3,
+          "rootSeeds": [
+            "17",
+            "77",
+            "42"
+          ],
+          "packages": [
+            40,
+            55,
+            60
+          ],
+          "pads": [
+            96,
+            133,
+            143
+          ],
+          "routingPolicy": "MEDIUM_BOARD@1",
+          "admission": "RB56_BOARD_NORMAL@1",
+          "corridorDrawingUnits": 80,
+          "routeCallsPerCase": 1,
+          "seedSearch": false,
+          "scope": "FIXED_SEEDED_PHYSICAL_CANARIES_ONLY"
+        }
+      ],
+      "BEGIN": [
+        {
+          "rootSeed": "17",
+          "placementSeed": "5184606405683509778",
+          "routingSeed": "-5462107092257565683",
+          "packages": 40,
+          "pads": 96,
+          "topology": "RB56_CH1_SHARED_DIRECT_A_BJT_S5_true_S12_false_F1_O0_B5_false"
+        },
+        {
+          "rootSeed": "77",
+          "placementSeed": "8340372057885795380",
+          "routingSeed": "-4672375462570993469",
+          "packages": 55,
+          "pads": 133,
+          "topology": "RB56_CH2_SHARED_HYSTERETIC_A_BJT_B_NMOS_S5_true_S12_true_F3_O0_B5_false"
+        },
+        {
+          "rootSeed": "42",
+          "placementSeed": "5526715536693200536",
+          "routingSeed": "4493419427463069983",
+          "packages": 60,
+          "pads": 143,
+          "topology": "RB56_CH2_SHARED_HYSTERETIC_A_NMOS_B_BJT_S5_true_S12_true_F3_O3_B5_true"
+        }
+      ],
+      "ROUTE": [
+        {
+          "rootSeed": "17",
+          "accepted": true,
+          "receipt": "MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=33058;routes=6;routingWork=20/3706519;p05=3/0;p07=3/3;selectedAttempt=5;ranked=[2, 5, 3, 1, 4, 0];placementScores=[2{total=1172883;electrical=137430;region=9660;connector=2220;corridor=731;outline=9379800;courtyard=761848;demand=2571199}, 5{total=1218501;electrical=142620;region=9225;connector=3010;corridor=811;outline=9526300;courtyard=759448;demand=2564799}, 3{total=1223941;electrical=143320;region=10530;connector=2260;corridor=727;outline=9667800;courtyard=755848;demand=2555199}, 1{total=1321295;electrical=153480;region=11430;connector=2610;corridor=1600;outline=9530400;courtyard=765448;demand=2580799}, 4{total=1325126;electrical=155130;region=10440;connector=3590;corridor=687;outline=9249100;courtyard=751048;demand=2542399}, 0{total=1356178;electrical=157420;region=10745;connector=2460;corridor=2180;outline=9591000;courtyard=760648;demand=2567999}];selectedScore=1218501;selectedQualityMilli=219575576;routeOutcomes=[P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@3=REJECTED:Unable to route net RAIL12 from CIN.+@2500,1220 to COUT.+@3230,670, P07_FULLER_TWO_LAYER@2=SUCCESS, P07_FULLER_TWO_LAYER@5=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS];failure=null"
+        },
+        {
+          "rootSeed": "77",
+          "accepted": true,
+          "receipt": "MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=43707;routes=6;routingWork=12/5046913;p05=3/0;p07=3/2;selectedAttempt=1;ranked=[4, 0, 1, 5, 3, 2];placementScores=[4{total=1638315;electrical=186200;region=13640;connector=6470;corridor=2722;outline=18176400;courtyard=1010408;demand=3485154}, 0{total=1746361;electrical=197850;region=15045;connector=7150;corridor=3170;outline=17924800;courtyard=1016408;demand=3501154}, 1{total=1755932;electrical=199560;region=15300;connector=7190;corridor=2691;outline=18321600;courtyard=1011608;demand=3488354}, 5{total=1829229;electrical=207880;region=16365;connector=7360;corridor=2843;outline=17958000;courtyard=1010408;demand=3485154}, 3{total=1849838;electrical=209510;region=16758;connector=8210;corridor=2912;outline=18027200;courtyard=1010408;demand=3485154}, 2{total=2076741;electrical=238070;region=17660;connector=9210;corridor=1991;outline=17868800;courtyard=1017608;demand=3504354}];selectedScore=1755932;selectedQualityMilli=381635536;routeOutcomes=[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:A_COIL_LOW:TOTAL_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@0=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS];failure=null"
+        },
+        {
+          "rootSeed": "42",
+          "accepted": true,
+          "receipt": "MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=47221;routes=6;routingWork=13/5731272;p05=3/0;p07=3/1;selectedAttempt=0;ranked=[4, 5, 0, 1, 2, 3];placementScores=[4{total=1880094;electrical=214590;region=16390;connector=6280;corridor=2836;outline=21281200;courtyard=1069640;demand=3752340}, 5{total=1895705;electrical=214270;region=19125;connector=7620;corridor=2752;outline=21462400;courtyard=1074440;demand=3765140}, 0{total=2005610;electrical=226540;region=17428;connector=8400;corridor=3939;outline=21115200;courtyard=1062440;demand=3733140}, 1{total=2026802;electrical=227910;region=19298;connector=10200;corridor=3272;outline=21045600;courtyard=1069640;demand=3752340}, 2{total=2045079;electrical=234500;region=17335;connector=7360;corridor=2425;outline=21640900;courtyard=1074440;demand=3765140}, 3{total=2147377;electrical=243750;region=19158;connector=8250;corridor=3799;outline=20858100;courtyard=1063640;demand=3736340}];selectedScore=2005610;selectedQualityMilli=571979927;routeOutcomes=[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:A_COIL_LOW:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@5=REJECTED:P07_FULLER_TWO_LAYER:CTRL_RETURN:TOTAL_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@0=SUCCESS];failure=null"
+        }
+      ],
+      "CASE": [
+        {
+          "rootSeed": "17",
+          "status": "PASS",
+          "packages": 40,
+          "pads": 96,
+          "admission": "RB56_BOARD_NORMAL@1"
+        },
+        {
+          "rootSeed": "77",
+          "status": "PASS",
+          "packages": 55,
+          "pads": 133,
+          "admission": "RB56_BOARD_NORMAL@1"
+        },
+        {
+          "rootSeed": "42",
+          "status": "PASS",
+          "packages": 60,
+          "pads": 143,
+          "admission": "RB56_BOARD_NORMAL@1"
+        }
+      ]
+    },
+    "maintainedPassLines": [
+      "PASS: RB56 dependency capture contracts 1166 assertions cases=3 scope=FULL_CONTEXT_CAPTURE_ONLY normalSessionLoad=false",
+      "PASS: RB56 geometry contracts 1601 assertions cases=3 acceptedRoutes=3 admittedRoutes=3 scope=FIXED_SEEDED_PHYSICAL_CANARIES_ONLY",
+      "PASS: medium physical policy contracts assertions=59 receipt=MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=26436;routes=6;routingWork=19/3520364;p05=3/0;p07=3/3;selectedAttempt=1;ranked=[2, 5, 1, 4, 3, 0];placementScores=[2{total=1046719;electrical=118020;region=9647;connector=6160;corridor=1351;outline=8030400;courtyard=608612;demand=2161511}, 5{total=1054417;electrical=118470;region=8957;connector=5200;corridor=2392;outline=8160000;courtyard=607412;demand=2158311}, 1{total=1072552;electrical=120950;region=9175;connector=5800;corridor=1860;outline=8367600;courtyard=607412;demand=2158311}, 4{total=1160444;electrical=131360;region=10120;connector=6240;corridor=1706;outline=8367400;courtyard=618212;demand=2187111}, 3{total=1181416;electrical=132210;region=9820;connector=7710;corridor=2262;outline=8261100;courtyard=614612;demand=2177511}, 0{total=1223733;electrical=137760;region=11215;connector=6500;corridor=2240;outline=8126600;courtyard=613412;demand=2174311}];selectedScore=1072552;selectedQualityMilli=176948283;routeOutcomes=[P05_ONE_FACE@2=REJECTED:Unable to route net RAIL12 from REN.1@1140,810 to connected tree, P05_ONE_FACE@5=REJECTED:Unable to route net A_COIL_LOW from DA.A@1720,1220 to connected tree, P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@2=SUCCESS, P07_FULLER_TWO_LAYER@5=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS];failure=null",
+      "PASS: medium normal admission contracts 9 assertions",
+      "PASS: P07 two-layer contracts assertions=11776",
+      "PASS: Pcb layer routing resumption contracts assertions=2203",
+      "PASS: focused current contracts; 6 Java suites. Full matrix and independent oracles NOT RUN."
+    ],
+    "boundary": "Before layout16/epoch5, new generic fixture and private qualification hold. Seven shared source changes since91 include the two exact adopted routers plus five concurrent solver/wire sources; this is not an isolated two-file performance experiment."
+  },
+  "native97": {
+    "status": "FAIL",
+    "layoutVersion": 16,
+    "publicReplayEpoch": "tsj-alpha/5",
+    "configured42Accepted": true,
+    "allThreeReferenceGeometryRowsIdenticalToNative96": true,
+    "maintainedPassLinesBeforeFailure": [
+      "PASS: U06 session save contracts assertions=34927",
+      "PASS: PlayerSessionFingerprintContractTest assertions=119",
+      "PASS: E04 sensor-control contracts 352 assertions",
+      "PASS: native inductor accepted-state contracts assertions=274 cases=3 scope=RL_REJECTED_STEP_HISTORY_AND_RELAY_ALIAS",
+      "PASS: controlled source derivative contracts 679",
+      "PASS: E06 nominal pilot mechanics assertions=303827262 fidelity=NOMINAL_FIDELITY_NOT_QUALIFIED cases=24 scope=FOCUSED_ELECTRICAL_MATRIX criteria=e06-fidelity-criteria-v1",
+      "PASS: RB56 model-identity contracts assertions=123",
+      "PASS: RB56 assembly contracts assertions=207281 cases=3 BJT=3 NMOS=2 scope=ACTUAL_ASSEMBLED_GRAPH_ONLY",
+      "PASS: RB56 session backing contracts assertions=202 scope=DEVELOPER_MODEL_DIGEST_AND_RESTART_ONLY normalSessionLoad=false",
+      "PASS: RB56 temporal work contracts 295 assertions seed=77 packages=55 fault=RELAY_B_COIL_OPEN units=13 scope=FIXED_TEMPORAL_PILOT_ONLY",
+      "PASS: RB56 dependency capture contracts 1166 assertions cases=3 scope=FULL_CONTEXT_CAPTURE_ONLY normalSessionLoad=false",
+      "PASS: RB56 geometry contracts 1601 assertions cases=3 acceptedRoutes=3 admittedRoutes=3 scope=FIXED_SEEDED_PHYSICAL_CANARIES_ONLY",
+      "PASS: Q30 temporal work contracts 167 assertions oneChannelHealthyFaultedRetestUnits=3/3/3 twoChannelHealthyFaultedRetestUnits=5/5/5",
+      "PASS: medium physical policy contracts assertions=59 receipt=MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=26436;routes=6;routingWork=19/3520364;p05=3/0;p07=3/3;selectedAttempt=1;ranked=[2, 5, 1, 4, 3, 0];placementScores=[2{total=1046719;electrical=118020;region=9647;connector=6160;corridor=1351;outline=8030400;courtyard=608612;demand=2161511}, 5{total=1054417;electrical=118470;region=8957;connector=5200;corridor=2392;outline=8160000;courtyard=607412;demand=2158311}, 1{total=1072552;electrical=120950;region=9175;connector=5800;corridor=1860;outline=8367600;courtyard=607412;demand=2158311}, 4{total=1160444;electrical=131360;region=10120;connector=6240;corridor=1706;outline=8367400;courtyard=618212;demand=2187111}, 3{total=1181416;electrical=132210;region=9820;connector=7710;corridor=2262;outline=8261100;courtyard=614612;demand=2177511}, 0{total=1223733;electrical=137760;region=11215;connector=6500;corridor=2240;outline=8126600;courtyard=613412;demand=2174311}];selectedScore=1072552;selectedQualityMilli=176948283;routeOutcomes=[P05_ONE_FACE@2=REJECTED:Unable to route net RAIL12 from REN.1@1140,810 to connected tree, P05_ONE_FACE@5=REJECTED:Unable to route net A_COIL_LOW from DA.A@1720,1220 to connected tree, P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@2=SUCCESS, P07_FULLER_TWO_LAYER@5=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS];failure=null",
+      "PASS: medium normal admission contracts 9 assertions",
+      "PASS: A07 execution contracts assertions=272227",
+      "PASS: Q30 owned LU zero-row contracts assertions=164",
+      "PASS: Q30 LU pivot collection contracts 388",
+      "PASS: D01 diagnostic contracts assertions=168",
+      "PASS: A03IdentityContractTest assertions=30"
+    ],
+    "failedFixtureSourceSha256": "7321e5143b7cce5fa4fa13b77d889284b5888c624ca94648fecb4a3de4a1e22b",
+    "failure": "Original generic fixture requested unsupported production E04 DEG_90/TOP pose. The package guard rejected it. This was a test-fixture scope error; overall run failed.",
+    "notCompletedWithinFailedRun": [
+      "Corrected P07 fixture and maintained P07 suite",
+      "PcbLayerRoutingResumptionContractTest",
+      "A02ReplayContractTest",
+      "QuickPlayGateContractTest"
+    ],
+    "laterFocusedCompletion": "native-r99 passes the four remaining suites with exactly one changed maintained test source. Native97 remains an overall failed historical run and was not rerun."
+  },
+  "fixtureCorrection": {
+    "status": "ACTUAL_NATIVE99_PASS_EXACT_CORRECTED_SOURCE",
+    "originalFailedFixturePreserved": true,
+    "expectedNative97TestSha256": "7321e5143b7cce5fa4fa13b77d889284b5888c624ca94648fecb4a3de4a1e22b",
+    "candidateTestSha256": "32465c4db692952f2020488d1202e6dfd68ae12ce5388e68df5b0c99d8e7f25f",
+    "patchSha256": "5e2eeb206cdebf8bb550c243dc938104d6bc92113aef5649f135d583e9ccbc92",
+    "scope": "Exactly four original literal-coordinate cases: one actual E04 DEG_0/TOP and three explicitly declared structural test poses DEG_90/180/270 over the identical authoritative E04 PhysicalPackageGeometry object",
+    "guard": "Every case asserts actual production.supportsPose accepts only0; ordinary PcbFootprint production pose validation still runs for all footprints. Production allowed rotations/mounting sides are unchanged.",
+    "literalCoordinatesByDeclaredRotation": {
+      "DEG_0": [
+        480,
+        550,
+        480,
+        610,
+        480,
+        620,
+        470,
+        630,
+        490,
+        630,
+        470,
+        650,
+        490,
+        650
+      ],
+      "DEG_90": [
+        460,
+        480,
+        400,
+        480,
+        390,
+        480,
+        380,
+        470,
+        380,
+        490,
+        360,
+        470,
+        360,
+        490
+      ],
+      "DEG_180": [
+        580,
+        460,
+        580,
+        400,
+        580,
+        390,
+        570,
+        380,
+        590,
+        380,
+        570,
+        360,
+        590,
+        360
+      ],
+      "DEG_270": [
+        550,
+        580,
+        610,
+        580,
+        620,
+        580,
+        630,
+        570,
+        630,
+        590,
+        650,
+        570,
+        650,
+        590
+      ]
+    },
+    "coordinateFields": [
+      "padXY",
+      "declaredEscapeEndXY",
+      "firstCourtyardClearViaXY",
+      "blockedCrossbarFromXY",
+      "blockedCrossbarToXY",
+      "fartherCrossbarFromXY",
+      "fartherCrossbarToXY"
+    ],
+    "checks": "Independent actual physical via validator rejects declared-end land and admits first clear outlet; previous foreign crossbar blocked, farther crossbar permitted; ordinary radius0, both zero-transition policies, opposite face and premature-side-exit checks preserved. No route search or production pose whitelist changes.",
+    "acceptance": {
+      "phase": "native-r99",
+      "testSourceSha256": "32465c4db692952f2020488d1202e6dfd68ae12ce5388e68df5b0c99d8e7f25f",
+      "maintainedP07Assertions": 11832,
+      "priorNative96MaintainedP07Assertions": 11776,
+      "assertionCountIncrease": 56,
+      "productionPoseWhitelistChanged": false,
+      "fourLiteralCoordinateCasesPreserved": true
+    },
+    "historicalOriginalFixtureIntegrationPin": {
+      "path": "tests/contracts/P07TwoLayerContractTest.java",
+      "beforeSha256": "34fb380ef33ab0fb2e972b3a575b3d85a1507d076bb811b197264376ec5cc9bc",
+      "afterSha256": "7321e5143b7cce5fa4fa13b77d889284b5888c624ca94648fecb4a3de4a1e22b"
+    }
+  },
+  "versionOwnership": {
+    "currentLayoutVersion": 16,
+    "currentPublicReplayEpoch": "tsj-alpha/5",
+    "nearestPriorEpochRejected": "tsj-alpha/4",
+    "canonicalSessionFramingCharacters": 47,
+    "rootIntegratedCurrentConsumerPins": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+        "beforeSha256": "97792582f78565d412341fe19b38082cf1e914be5de0d8aa61512f775eec56cd",
+        "afterSha256": "339d4d46ff2fac6253444155171fa72fb7241d128712f01be3d8272f20566ca0"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PlayerLaunchRequest.java",
+        "beforeSha256": "91ac900b34b1cf4f3e945c0f3090b79079dbdc4698367d4cb885d1150214b914",
+        "afterSha256": "6a433d914c84889492df58daa9be4022954afa182c6865c90eed487ff063f519"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/U06SessionDeveloperVerifier.java",
+        "beforeSha256": "cd14580e627b7bfe77a7f5418e7115d9bcd0c750d772b4d25494ca6f26127983",
+        "afterSha256": "cff753c418845f9a425370038a2d6b4f27f5dc4bb179ff30384880ff600cf8a0"
+      },
+      {
+        "path": "tests/contracts/U06SessionSaveContractTest.java",
+        "beforeSha256": "91165a4988612da352b6766dbb9206822e730ea12ac1055bb801c5015415d88f",
+        "afterSha256": "ff2ac987846d59fcd69e9f5a221f81ac7b4f0184aaff124df9d31c25673dc56d"
+      },
+      {
+        "path": "tests/contracts/QuickPlayGateContractTest.java",
+        "beforeSha256": "8f59c6329df0f19a2fbdfb068be8e0fae6941c9c7e54b39271e4bf8f4f1fc420",
+        "afterSha256": "3db74eb0eea5d1fca883dd3663ab3c69c7681f7b1eeb568aef95f09e00e01619"
+      },
+      {
+        "path": "tests/contracts/quickplay_gate_evidence.py",
+        "beforeSha256": "7454965699da2c6cbfa8544be66b3f8726ee6d51f8a5c0a447744e155e64e5a8",
+        "afterSha256": "ff5fff13317417978ff75a8a8e13685f0ae5e199fc5005dbdfbbb2554dd71023"
+      },
+      {
+        "path": "tests/browser/quickplay_procedural_acceptance.py",
+        "beforeSha256": "c07da2fad9cca960bc4f1efde78accf082de85c1765a3d602ba11da500dd035d",
+        "afterSha256": "18000e53eb63eb03a57509de8b445054f46ba87faeca645ae8a61e4e75fd4c9d"
+      },
+      {
+        "path": "docs/task-evidence/Q30/qualification-workflow/private_menu.py",
+        "beforeSha256": "9d42f39649fc13e5b5820815e75c33731ebb2dc29a48f69763d2cea4a592acab",
+        "afterSha256": "1a0ba9d1c49d442728c427ebd6830913a8af0fb8cc07faab91cf465df57a90e9"
+      }
+    ],
+    "historicalEvidenceUnchanged": true
+  },
+  "evidenceLimits": [
+    "All original failing diagnostic orders and the later failed fixture remain retained",
+    "The corrected four-direction structural fixture now passes in native99. Its three rotated cases are explicitly declared test-only orientations, not supported production E04 poses.",
+    "Native99 is focused completion of four suites, not a new complete native97 run. Build12 is compilation evidence only. Overall Q60 remains unqualified by this packet.",
+    "Host elapsed values are owned runner durations, not application deadline measurements",
+    "Root performed all native gates; this leaf performed only offline reads and task-local packet creation",
+    "No source/gate/seed/budget/oracle changes by this leaf; no public push"
+  ],
+  "revision": {
+    "supersedesForCurrentSupplementalStatus": "reference-route-evidence-packet-r1",
+    "priorPacketPreservedByteForByte": true,
+    "priorPacketFilePins": [
+      {
+        "name": "README.txt",
+        "sha256": "90e847e224de0df9f4c1cd150780345b551431d2c99996f1abcd3dc027d68967"
+      },
+      {
+        "name": "evidence.json",
+        "sha256": "23beef037649944f19920ec3b3994aee3667f6036c1d57b2f8a9c51a90b891fc"
+      },
+      {
+        "name": "input-pins.json",
+        "sha256": "56b3b16da72565488f2355bad13072b7f92fb2311046473dc8a28359b5cd527f"
+      },
+      {
+        "name": "packet-audit.json",
+        "sha256": "80cddc9561f811ad16b92ad10a35473e8b061fd59e91df96dcdf71c1189a0eeb"
+      }
+    ]
+  },
+  "native99": {
+    "status": "PASS",
+    "scope": "Four remaining maintained suites after the test-only pose correction; no full native97 rerun",
+    "hostElapsedMs": 26407,
+    "sourceFiles": 1353,
+    "sourceInputsUnchanged": true,
+    "cleanupVerified": true,
+    "jobActiveProcesses": 0,
+    "maintainedPassLines": [
+      "PASS: P07 two-layer contracts assertions=11832",
+      "PASS: Pcb layer routing resumption contracts assertions=2203",
+      "PASS: Quick Play gate contracts assertions=27074",
+      "PASS: A02ReplayContractTest assertions=148",
+      "PASS: focused current contracts; 4 Java suites. Full matrix and independent oracles NOT RUN."
+    ],
+    "assertions": {
+      "P07TwoLayerContractTest": 11832,
+      "PcbLayerRoutingResumptionContractTest": 2203,
+      "QuickPlayGateContractTest": 27074,
+      "A02ReplayContractTest": 148
+    },
+    "layoutVersion": 16,
+    "publicReplayEpoch": "tsj-alpha/5",
+    "nearestPriorPublicReplayEpochRejected": "tsj-alpha/4",
+    "sourceBoundary": "All1353 inputs shared with native97; only P07TwoLayerContractTest.java changed to the exact corrected task candidate. Both routing production sources, layout16, epoch5 and current replay consumers are unchanged.",
+    "normalQ60QualificationClaim": false
+  },
+  "build12": {
+    "status": "PASS",
+    "scope": "Actual optimized GWT compile and link only; no browser application/deadline acceptance claim",
+    "hostElapsedMs": 93961,
+    "sourceFiles": 1222,
+    "sourceInputsUnchanged": true,
+    "cleanupVerified": true,
+    "jobActiveProcesses": 0,
+    "gwtPermutations": 5,
+    "compileSucceeded": true,
+    "linkSucceeded": true,
+    "gwtReportedCompilationSeconds": 90.637,
+    "gwtReportedLinkingSeconds": 1.475,
+    "all1222ConsumedInputsMatchNative99": true,
+    "testSourcesConsumedByBuild": false,
+    "style": "OBF",
+    "target": "Compile"
+  }
+}

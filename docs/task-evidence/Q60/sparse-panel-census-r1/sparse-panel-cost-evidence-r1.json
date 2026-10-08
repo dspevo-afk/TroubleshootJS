@@ -1,0 +1,158 @@
+{
+  "protocol": "Q60_CLOSED_HEALTHY55_SPARSE_PANEL_DECISION_R1",
+  "status": "NO_GO_FOR_SPECIFIED_ROW_OUTER_TRAVERSAL",
+  "recordedUtc": "2026-10-08T19:45:16.516213+00:00",
+  "sourceBinding": {
+    "outer1353Unchanged": true,
+    "mappedSnapshot941Exact": true,
+    "observer1Exact": true,
+    "manual966BeforeAfterAndCurrentExact": true,
+    "preparedAndFinalLauncherExactSeparateReceipt": true,
+    "genericOuterPinsSeparate": true,
+    "productionCirSimSha256": "de7d42e051a03ec43951354611a4ec2d150722ecbb203816ecfa5422e558720a"
+  },
+  "fixture": {
+    "seed": "-1067",
+    "physicalPackages": 55,
+    "channels": 2,
+    "bjt": 0,
+    "nmos": 2,
+    "topology": "RB56_CH2_SEPARATE_DIRECT_A_NMOS_B_NMOS_S5_true_S12_false_F0_O3_B5_false",
+    "enableCanary": false,
+    "omittedOriginalRepresentatives": [
+      17,
+      77,
+      42
+    ],
+    "physicalSeconds": 6.02,
+    "maximumStepSeconds": 0.0004,
+    "minimumStepSeconds": 5e-11,
+    "windows": [
+      "STARTUP_LOW",
+      "SENSOR_MASK_0",
+      "SENSOR_MASK_1",
+      "SENSOR_MASK_2",
+      "SENSOR_MASK_3",
+      "MAINAC_ONLY_OFF",
+      "ALL_INPUTS_OFF"
+    ]
+  },
+  "wholeOriginalReceipts": {
+    "RB56_ASSEMBLY": {
+      "wholeCanonicalExact121": true,
+      "wholeTextExact121": true,
+      "canonicalSha256": "780c722c0f547b42d38552770a159de6adbebf1df496cc1f2abcd85dcd28a88f",
+      "literalSha256": "060eb7431b4118555cc3c36bb843478117106bd161d509691e094df4664af63e"
+    },
+    "RB56_ASSEMBLY_CRITERIA": {
+      "wholeCanonicalExact121": true,
+      "wholeTextExact121": true,
+      "canonicalSha256": "645ada07532ad1a22def55b3243771e2d7f2177afa29c4430fef585995fd6fb2",
+      "literalSha256": "a2402dd2ba455eec18ffb12d77d300656811e13b248c65a26552dfe95e9a26d9"
+    },
+    "RB56_ASSEMBLY_CLEANUP": {
+      "wholeCanonicalExact121": true,
+      "wholeTextExact121": true,
+      "canonicalSha256": "76738279ec8a05ebb1ee77f498da8c520055e5e14b3c650f1588d60f83424be3",
+      "literalSha256": "be56b7ae942759b477325a34de66acbee7d81469891b4f426a1e2466ee8ff9a4"
+    }
+  },
+  "rawFieldExclusions": [],
+  "rawNormalization": [],
+  "histogram": {
+    "D": 185767048,
+    "C": 98845787,
+    "F": 123183524,
+    "FminusC": 24337737
+  },
+  "contributions": {
+    "old": 211651517,
+    "eager": 11781652,
+    "selectedCatchup": 14102817,
+    "remaining": 185767048,
+    "selectedChangedCells": 9368871,
+    "remainingChangedCells": 98845787,
+    "remainingUnionCells": 123183524,
+    "remainingFalseCells": 24337737
+  },
+  "indexedOperations": {
+    "oldReads": 407118312,
+    "oldStores": 211651517,
+    "oldTotal": 618769829,
+    "panelReads": 845239474,
+    "panelStores": 135099891,
+    "panelTotal": 980339365,
+    "increase": 361569536,
+    "increasePercent": 58.433607951495645,
+    "targetReadsSaved": 18899870,
+    "targetStoresSaved": 91655207,
+    "newUnionBufferStores": 15103581
+  },
+  "explicitTestsAndBranches": {
+    "oldNonzeroTests": 77909789,
+    "oldLoopGuards": 117424679,
+    "oldTotal": 195334468,
+    "panelNonzeroTests": 478465399,
+    "panelAnyAndStoreTests": 219494309,
+    "panelFactorBranches": 608307038,
+    "panelLoopAndDispatchGuards": 257105842,
+    "panelTotal": 1563372588,
+    "increase": 1368038120
+  },
+  "controlChargeLimits": [
+    "The totals include all explicitly specified union/catch-up nonzero predicates, factor branches, changed-store/any tests, width/tail dispatch and loop guards. Old/eager gather nonzero tests are counted in addition to end tests.",
+    "catchupCalls contributes one selected-row indexed acquisition each to the indexed total.",
+    "Future panel-admission, scheduling, state updates, catch-up eligibility/boolean combinations, buffer cleanup and failure/zero drains have no implementation yet and remain additional uncharged costs, never assumed free. Common LU scans, pivots, reciprocal/scaling guards and arithmetic remain required.",
+    "Literal source counts are not V8 instruction weights or timings; no causal speedup/regression claim follows from the diagnostic25.116s."
+  ],
+  "literalAvoidedZeroOccurrences": 0,
+  "nonterminalAvoidedZeroPivots": 0,
+  "referenceRelease": true,
+  "hostOperationSeconds": 25.116,
+  "hostCleanup": "PASS",
+  "decision": "Reject this explicit traversal before implementation: repeated pivot/factor/index reads and false Cartesian cells outweigh saved target stores; already measured literal work increases substantially before additional panel-owner control. Do not expand into benchmark variants or adopt a panel backend on this evidence.",
+  "evidence": {
+    "closedPhase": {
+      "file": "native-r131-result.json",
+      "sha256": "6cc5abcc576cefd0c4f9cc86eb1c8a2fa72e4371dc34650a05d286430188d169"
+    },
+    "launch": {
+      "file": "native-r131-launch.json",
+      "sha256": "07b03f761fff5cb72adf022ad0f47b7e09ee0b6257f028de28c1c13a04771a18"
+    },
+    "snapshotPinReceipt": {
+      "file": "native-r131-snapshot-pin-receipt.json",
+      "sha256": "7c5b414c6b8838f02635b6694a078966279d3796bb7f83dc4714eb474fe50568"
+    },
+    "rawFullLog": {
+      "file": "native-r131-full-output.log",
+      "sha256": "19f0e24ac7e4ed9b153e65a91ca4085c6f7db838755d9091bed4011355d3750e"
+    },
+    "preparedInputs": {
+      "file": "prepared-inputs.json",
+      "sha256": "b3efb3f04771181a44fb6915fd4845750b1d7ae3b5a5bba3dc8df0d0ca845e5b"
+    },
+    "materializationReceipt": {
+      "file": "materialization-receipt.json",
+      "sha256": "55fab598302922242e7fa3e1da1b0f33f6b3562a8ddff488406861838b1bd1da"
+    },
+    "baseline121Summary": {
+      "file": "result-summary-r1.json",
+      "sha256": "209d481d3c54c9a620b37a7bc17ca1366d131f2b6e2e1f704dec5334f7e9325d"
+    },
+    "baseline121FullLog": {
+      "file": "native-r121-full-output.log",
+      "sha256": "f63302473fd71ab467549a3e2fcc39b6389613783ffdcae0acff2acae13c095a"
+    },
+    "reader": {
+      "file": "read-native131-result-r1.py",
+      "sha256": "cb942eee6c5e9267c37324988042a9feb357711d4123fb7239d5049098a1a9f7"
+    }
+  },
+  "strictSummarySha256": "b00d2e4f370f99dec3f0fd73396d3e4b960f58f699eac4cebb833fcc5d4fafc6",
+  "assessmentSha256": "cb6a9d51b571eeffb8f25c4bfe8ac1a5c3458987ac2cb5ade6337034a0691b1d",
+  "qualification": "NOT_CLAIMED",
+  "productionWrites": false,
+  "controllerWrites": false,
+  "q60Published": false
+}

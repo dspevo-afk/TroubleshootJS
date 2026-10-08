@@ -1,0 +1,675 @@
+{
+  "protocol": "Q60-AVERAGED400-QUALIFIED-CADENCE-SUPPLEMENT-1",
+  "status": "BOUNDED_E06_CADENCE_QUALIFIED_Q60_ACCEPTANCE_PENDING",
+  "createdUtc": "2026-10-08T09:56:49.337746+00:00",
+  "publication": {
+    "acceptedBase": "7aa0e1932f3c853e7265bf186e98989ada641a51",
+    "localCheckpoint": "a2fc74b23d177e0a971974a9d958bf0d559a06c5",
+    "Q60Pushed": false
+  },
+  "adoption": {
+    "maximumAveragedStepSeconds": 0.0004,
+    "fineReferenceStepSeconds": 0.0002,
+    "unchangedDetailedStepsSeconds": [
+      5e-06,
+      2.5e-06
+    ],
+    "controllerPeriodSeconds": 0.0005,
+    "sourceChanges": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/E06ConverterContract.java",
+        "beforeSha256": "f103030b087b70b903799817e5dee1774be3f89c352e8dbf2292f3c61a3f6666",
+        "scratchSha256": "40b7adc777ee1c5dc801678c42366e076287dea319ef1f6304cde8e1a2910c2b",
+        "afterSha256": "40b7adc777ee1c5dc801678c42366e076287dea319ef1f6304cde8e1a2910c2b",
+        "scratchBehaviorIdentical": true,
+        "declarationOnlyDifference": false
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/E06AveragedConverterElm.java",
+        "beforeSha256": "820c79b35141402fbf8f377946e8e8114b0b40c0205f152ad77c9bc30784174b",
+        "scratchSha256": "29ab646a7d303d1de94765364c38cb9a7b9dbae76dfc63549f41a9ef8d84a7e1",
+        "afterSha256": "29ab646a7d303d1de94765364c38cb9a7b9dbae76dfc63549f41a9ef8d84a7e1",
+        "scratchBehaviorIdentical": true,
+        "declarationOnlyDifference": false
+      },
+      {
+        "path": "tests/contracts/E06ConverterPilotContractTest.java",
+        "beforeSha256": "4b1b97fa653df2a9eec8b0633afc778643d1f96e9dd3581ea8b584d97b05aacd",
+        "scratchSha256": "cd30b7062908abe063f0b503ab38451b8ce15b06523c02dc88efe6858b09ffea",
+        "afterSha256": "cd30b7062908abe063f0b503ab38451b8ce15b06523c02dc88efe6858b09ffea",
+        "scratchBehaviorIdentical": true,
+        "declarationOnlyDifference": false
+      },
+      {
+        "path": "tests/contracts/Rb56AssemblyContractTest.java",
+        "beforeSha256": "74531280d951a3d948c8ab9aeb001f8288feb8b7cdcc5fecc4f7c2a1001dbd42",
+        "scratchSha256": "b2ae662c325fb7b676bb928cc70e14a9a5a54cc18e02f2cbf07e6e50c6824df8",
+        "afterSha256": "ec19412e38c69fa6a71981f616e49a72b6e7a0c18da6ded5d86cac24f968f066",
+        "scratchBehaviorIdentical": true,
+        "declarationOnlyDifference": true
+      },
+      {
+        "path": "tests/contracts/Rb56TemporalWorkContractTest.java",
+        "beforeSha256": "459debbd041ce9a1f02cd34d5117c716ce3e10663cc5c68e02c147be063b51e3",
+        "afterSha256": "eaa568e5a0b12cf17ee3b909458810958ad0b1afd57c1d58b09f99e391bfad9b",
+        "declarationOnlyDifference": true
+      }
+    ],
+    "runtimeBehaviorMatchesMeasuredOverlay": true,
+    "reuseBoundary": "Production contract, averaged element and E06 pilot byte-match the measured coarse overlay. Raw assembly differs only in public recipe/owner declarations and assertion text. Temporal test changed only its message and has fresh production native validation. All other consumed runtime inputs are unchanged.",
+    "numericalOraclesChanged": false,
+    "physicalTimelinesChanged": false,
+    "Q30MaximumStepSeconds": 5e-06,
+    "generationLimits": {
+      "jobMs": 90000,
+      "work": 640,
+      "activeMs": 5000
+    }
+  },
+  "sensitivity": {
+    "comparisons": 236,
+    "largestRelativeErrorPercent": 0.16710327416735965,
+    "largestAbsoluteErrorMicrovolts": 331.00706868568335,
+    "limits": {
+      "relative": 0.02,
+      "absoluteVolts": 0.001
+    },
+    "status": "PASS",
+    "acceptedSteps": {
+      "coarse": 50494,
+      "fine": 95663
+    },
+    "NewtonTrials": {
+      "coarse": 183795,
+      "fine": 289119
+    },
+    "actualGraphCleanupCount": 3,
+    "evidence": {
+      "artifact": "current400-200-sensitivity-reader-r1/result-summary-r73-r74.json",
+      "sha256": "2de209d1d0595b5a89b75a2b755febd875eabc666f5afc4b8731c68c5db7d61c"
+    },
+    "costLimit": "Native work-count reduction only; browser deadline outcomes require their own final source receipts."
+  },
+  "fullE06": {
+    "status": "PASS",
+    "fullCases": 24,
+    "fullAssertions": 303827262,
+    "coarseHealthyHalfWindows": 13,
+    "maximumEqualDurationHalfDriftUpperBound": 0.0034604957013051377,
+    "maximumDetailedAveragedOutputRelative": 0.006377222465466907,
+    "maximumDetailedAveragedInputEnergyRelative": 0.1021039332410275,
+    "maximumSameModelTimestepOutputRelative": 0.00015683175933637114,
+    "maximumReferenceOutputDeltaV": 1.2107648217352107e-10
+  },
+  "phases": {
+    "native-r69": {
+      "phase": "native-r69",
+      "status": "FAIL",
+      "operationMs": 53449,
+      "exitCode": 57857,
+      "sourceInputs": 1353,
+      "unchangedInputs": true,
+      "sourceInventorySha256": "f05c1209fe797d0a616bac92ba884b0106ea815b4ca34068ac77ad8498096337",
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "passMarkers": [
+        "PASS: controlled source derivative contracts 679",
+        "PASS: E06 nominal pilot mechanics assertions=306733762 fidelity=NOMINAL_FIDELITY_NOT_QUALIFIED cases=24 scope=FOCUSED_ELECTRICAL_MATRIX criteria=e06-fidelity-criteria-v1",
+        "PASS: RB56 temporal work contracts 295 assertions seed=77 packages=55 fault=RELAY_B_COIL_OPEN units=13 scope=FIXED_TEMPORAL_PILOT_ONLY"
+      ],
+      "stdoutOverflow": true,
+      "stderrOverflow": false,
+      "evidence": {
+        "host": {
+          "artifact": "native-r69-result.json",
+          "sha256": "00eb85e75ad7e8bad6ad9ed64169c235f361af256542af8282c84437513d79ba"
+        },
+        "launch": {
+          "artifact": "native-r69-launch.json",
+          "sha256": "b6ee345e94eeea70f52906ef3cc14f09377658a10a970efded32591a4ece56c8"
+        },
+        "stdout": {
+          "artifact": "owned-native-r69/stdout.log",
+          "sha256": "f4ce619c2eda53f2538cfc9987b82d2b9c7e2c4bd5ff6fd6e307adb7e2de1e28"
+        }
+      }
+    },
+    "native-r70": {
+      "phase": "native-r70",
+      "status": "PASS",
+      "operationMs": 78558,
+      "exitCode": 0,
+      "sourceInputs": 1353,
+      "unchangedInputs": true,
+      "sourceInventorySha256": "f7722409a57828e6cee465878dfd51662918a852cb0102e0f26ad7577880c988",
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "passMarkers": [
+        "PASS: controlled source derivative contracts 679",
+        "PASS: E06 nominal pilot mechanics assertions=306733762 fidelity=NOMINAL_FIDELITY_NOT_QUALIFIED cases=24 scope=FOCUSED_ELECTRICAL_MATRIX criteria=e06-fidelity-criteria-v1",
+        "PASS: RB56 temporal work contracts 295 assertions seed=77 packages=55 fault=RELAY_B_COIL_OPEN units=13 scope=FIXED_TEMPORAL_PILOT_ONLY",
+        "PASS: Q30 temporal work contracts 161 assertions oneChannelHealthyFaultedRetestUnits=3/3/3 twoChannelHealthyFaultedRetestUnits=5/5/5",
+        "PASS: focused current contracts; 4 Java suites. Full matrix and independent oracles NOT RUN."
+      ],
+      "stdoutOverflow": false,
+      "stderrOverflow": false,
+      "evidence": {
+        "host": {
+          "artifact": "native-r70-result.json",
+          "sha256": "e146832a2579e7bdf52f34dc9f1a63889b8a9790a3c6469b2889400a7ca4b16c"
+        },
+        "launch": {
+          "artifact": "native-r70-launch.json",
+          "sha256": "104938d926ec72bd362ac590afea3e8946a5319e614140a628854864cabdfe6b"
+        },
+        "stdout": {
+          "artifact": "owned-native-r70/stdout.log",
+          "sha256": "b6b6289c76972dbf97015c833416a8db1971a20942188c166f9a41bbe51a059f"
+        }
+      }
+    },
+    "native-r71": {
+      "phase": "native-r71",
+      "status": "PASS",
+      "operationMs": 29752,
+      "exitCode": 0,
+      "sourceInputs": 1364,
+      "unchangedInputs": true,
+      "sourceInventorySha256": "24501bb2967d8a6d32a439dffe9a62f1d1acb53a905ef7347537e2dd0efb015a",
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "passMarkers": [
+        "PASS: Q30 single interval cost canary source=current seed=10014 intervals=1 scope=ACTUAL_FIRST_HEALTHY_SENSOR_INTERVAL_NOT_QUALIFICATION",
+        "PASS: focused current contracts; 1 Java suites. Full matrix and independent oracles NOT RUN."
+      ],
+      "stdoutOverflow": false,
+      "stderrOverflow": false,
+      "evidence": {
+        "host": {
+          "artifact": "native-r71-result.json",
+          "sha256": "bd6016863c4a741415f4f7c4b22ef7f06620fbd758bb4855568bef2dcd827fd4"
+        },
+        "launch": {
+          "artifact": "native-r71-launch.json",
+          "sha256": "441ac84ff412fce495772ed8736fc4dee7cb2ccb7ebcde0450253418e9b846ac"
+        },
+        "stdout": {
+          "artifact": "owned-native-r71/stdout.log",
+          "sha256": "e47921ee744a02797294dd62e50ff471c92be587e45fc418d0d5b4971fb14f94"
+        }
+      }
+    },
+    "native-r72": {
+      "phase": "native-r72",
+      "status": "PASS",
+      "operationMs": 30018,
+      "exitCode": 0,
+      "sourceInputs": 1366,
+      "unchangedInputs": true,
+      "sourceInventorySha256": "e78e66e86d5745043dca3eb913e600573bce600e72986f1306c14414938ef81c",
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "passMarkers": [
+        "PASS: Q30 single interval cost canary source=charged-current seed=10014 intervals=1 scope=ACTUAL_FIRST_HEALTHY_SENSOR_INTERVAL_NOT_QUALIFICATION",
+        "PASS: focused current contracts; 1 Java suites. Full matrix and independent oracles NOT RUN."
+      ],
+      "stdoutOverflow": false,
+      "stderrOverflow": false,
+      "evidence": {
+        "host": {
+          "artifact": "native-r72-result.json",
+          "sha256": "70ee9aec2c77cfa9587664373b9eeeac9e03240c2e810aaba53b9779c4335e25"
+        },
+        "launch": {
+          "artifact": "native-r72-launch.json",
+          "sha256": "d6d38573532d5688c526041fda3089ae53015defaa62583b0e82775412d6d375"
+        },
+        "stdout": {
+          "artifact": "owned-native-r72/stdout.log",
+          "sha256": "f53fc569bd82b2f5d9b46cbc9fe54ce92fd1876bd17eca2b5bb96e87b9342dd4"
+        }
+      }
+    },
+    "native-r73": {
+      "phase": "native-r73",
+      "status": "PASS",
+      "operationMs": 27160,
+      "exitCode": 0,
+      "sourceInputs": 1377,
+      "unchangedInputs": true,
+      "sourceInventorySha256": "d4d2e3670718af5bf64c1edea79a730d06abd7e4e06917235f6567b967c16fd4",
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "passMarkers": [
+        "PASS: RB56 assembly contracts assertions=205977 cases=3 BJT=3 NMOS=2 scope=ACTUAL_ASSEMBLED_GRAPH_ONLY",
+        "PASS: focused current contracts; 1 Java suites. Full matrix and independent oracles NOT RUN."
+      ],
+      "stdoutOverflow": false,
+      "stderrOverflow": false,
+      "evidence": {
+        "host": {
+          "artifact": "native-r73-result.json",
+          "sha256": "e5e2d233f2133aa729ad99512003291accd44bd1e759dc8433a084c449adf46b"
+        },
+        "launch": {
+          "artifact": "native-r73-launch.json",
+          "sha256": "5acf1f775742b0db96374ba136ee6f3d2271f729fada0ede43a7503d82cd527b"
+        },
+        "stdout": {
+          "artifact": "owned-native-r73/stdout.log",
+          "sha256": "1d6efe623f5d4b8af234d6ccc7aa41f3cea98303200feb63b183cf5f38bebf91"
+        }
+      }
+    },
+    "native-r74": {
+      "phase": "native-r74",
+      "status": "PASS",
+      "operationMs": 29160,
+      "exitCode": 0,
+      "sourceInputs": 1377,
+      "unchangedInputs": true,
+      "sourceInventorySha256": "d4d2e3670718af5bf64c1edea79a730d06abd7e4e06917235f6567b967c16fd4",
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "passMarkers": [
+        "PASS: RB56 assembly contracts assertions=387028 cases=3 BJT=3 NMOS=2 scope=ACTUAL_ASSEMBLED_GRAPH_ONLY",
+        "PASS: focused current contracts; 1 Java suites. Full matrix and independent oracles NOT RUN."
+      ],
+      "stdoutOverflow": false,
+      "stderrOverflow": false,
+      "evidence": {
+        "host": {
+          "artifact": "native-r74-result.json",
+          "sha256": "d5d29d99867502ecce2dc8f1ac09772a104b914108a550b2cbb899029985e3bb"
+        },
+        "launch": {
+          "artifact": "native-r74-launch.json",
+          "sha256": "28b9450efca0040fa971e17fa02d2ade8fe148d1df0a38ccd7fdfce77ac5d9a7"
+        },
+        "stdout": {
+          "artifact": "owned-native-r74/stdout.log",
+          "sha256": "e46c634f4c5601726bb99f9d4b2baa716bc7223c96c23a65a36146f9424e9bb9"
+        }
+      }
+    },
+    "native-r75": {
+      "phase": "native-r75",
+      "status": "PASS",
+      "operationMs": 51173,
+      "exitCode": 0,
+      "sourceInputs": 1377,
+      "unchangedInputs": true,
+      "sourceInventorySha256": "d4d2e3670718af5bf64c1edea79a730d06abd7e4e06917235f6567b967c16fd4",
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "passMarkers": [
+        "PASS: E06 nominal pilot mechanics assertions=303827262 fidelity=NOMINAL_FIDELITY_NOT_QUALIFIED cases=24 scope=FOCUSED_ELECTRICAL_MATRIX criteria=e06-fidelity-criteria-v1",
+        "PASS: focused current contracts; 1 Java suites. Full matrix and independent oracles NOT RUN."
+      ],
+      "stdoutOverflow": false,
+      "stderrOverflow": false,
+      "evidence": {
+        "host": {
+          "artifact": "native-r75-result.json",
+          "sha256": "38a65e7e92e5b797951528bf98cc5d23b8a88aa210bfe58e01b560e9c8f8ba8c"
+        },
+        "launch": {
+          "artifact": "native-r75-launch.json",
+          "sha256": "634dfded2768186bca791dfc421575720b7afbff162d3d4ee23a8d4a7a96295c"
+        },
+        "stdout": {
+          "artifact": "owned-native-r75/stdout.log",
+          "sha256": "c7c714a0c350eee535e1c20902ec66b97f6565abc3b1cae13fe5737f5413cd62"
+        }
+      }
+    },
+    "native-r76": {
+      "phase": "native-r76",
+      "status": "PASS",
+      "operationMs": 30687,
+      "exitCode": 0,
+      "sourceInputs": 1366,
+      "unchangedInputs": true,
+      "sourceInventorySha256": "d05d82fc56cba0137fa290871c9639b57b171762c4b8b9d7c4083894ecd6146f",
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "passMarkers": [
+        "PASS: Q30 REN_OPEN single interval cost canary source=current seed=10014 fault=REN_OPEN setupProfileIntervals=5 measuredIntervals=1 scope=ACTUAL_FIRST_FAULT_LOW_TO_HIGH_SENSOR_INTERVAL_NOT_QUALIFICATION",
+        "PASS: focused current contracts; 1 Java suites. Full matrix and independent oracles NOT RUN."
+      ],
+      "stdoutOverflow": false,
+      "stderrOverflow": false,
+      "evidence": {
+        "host": {
+          "artifact": "native-r76-result.json",
+          "sha256": "1909e5f4bea75fab21ac9f1304f8ae5f12698e29a7bd08a5bb0061dd0e0678ff"
+        },
+        "launch": {
+          "artifact": "native-r76-launch.json",
+          "sha256": "a0bd0982087a299cc9126664c492e4c869ecc209de109d90929b68b20d691cb5"
+        },
+        "stdout": {
+          "artifact": "owned-native-r76/stdout.log",
+          "sha256": "2b849c2832169d558e5544a2aa438396b9d4c9dcf713a7b6b239a6649c5854ca"
+        }
+      }
+    },
+    "native-r77": {
+      "phase": "native-r77",
+      "status": "PASS",
+      "operationMs": 51648,
+      "exitCode": 0,
+      "sourceInputs": 1353,
+      "unchangedInputs": true,
+      "sourceInventorySha256": "8a969cc1117f0441d6ffba7efce65605fc1c6538aed6a3993cff3f3c27b238bf",
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "passMarkers": [
+        "PASS: controlled source derivative contracts 679",
+        "PASS: RB56 model-identity contracts assertions=123",
+        "PASS: RB56 session backing contracts assertions=202 scope=DEVELOPER_MODEL_DIGEST_AND_RESTART_ONLY normalSessionLoad=false",
+        "PASS: RB56 temporal work contracts 295 assertions seed=77 packages=55 fault=RELAY_B_COIL_OPEN units=13 scope=FIXED_TEMPORAL_PILOT_ONLY",
+        "PASS: focused current contracts; 4 Java suites. Full matrix and independent oracles NOT RUN."
+      ],
+      "stdoutOverflow": false,
+      "stderrOverflow": false,
+      "evidence": {
+        "host": {
+          "artifact": "native-r77-result.json",
+          "sha256": "c802e51899536391bca823e0e686c0dfa49db0e124f81f6736310bcda932a840"
+        },
+        "launch": {
+          "artifact": "native-r77-launch.json",
+          "sha256": "fec9147efec15cbcaa81890a3cb5c58a52f4720dc63157fae9e725565113a124"
+        },
+        "stdout": {
+          "artifact": "owned-native-r77/stdout.log",
+          "sha256": "782afb7bce06af1eaa2bd5e69913922213b48f1346dc30aa8a82f0d630595677"
+        }
+      }
+    },
+    "build-r9": {
+      "phase": "build-r9",
+      "status": "PASS",
+      "operationMs": 90955,
+      "exitCode": 0,
+      "sourceInputs": 1222,
+      "unchangedInputs": true,
+      "sourceInventorySha256": "1bafb096d7b14d09f9289a6c1c36bc1795de91cca0135e1c8d193973f8fb5533",
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "passMarkers": [],
+      "stdoutOverflow": false,
+      "stderrOverflow": false,
+      "evidence": {
+        "host": {
+          "artifact": "build-r9-result.json",
+          "sha256": "2b2353babc39936efdd3f065a07643acb173ff773f95cd680276403e8bec4713"
+        },
+        "launch": {
+          "artifact": "build-r9-launch.json",
+          "sha256": "eb941ac4330965d9cb4cb9ff87f6fb7f7832e2d9d03bd922eecae844e3c8bbe0"
+        },
+        "stdout": {
+          "artifact": "owned-build-r9/stdout.log",
+          "sha256": "8c57b48c4398a54cef736bb71cd8e4cd617c23b9a3106fefc936d82c7674d5cc"
+        }
+      }
+    },
+    "build-r10": {
+      "phase": "build-r10",
+      "status": "PASS",
+      "operationMs": 119817,
+      "exitCode": 0,
+      "sourceInputs": 1222,
+      "unchangedInputs": true,
+      "sourceInventorySha256": "fb499a22049e0cb0e09dbfbba8ff9784f2e01688775e1580537a80a355ada7f7",
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "passMarkers": [],
+      "stdoutOverflow": false,
+      "stderrOverflow": false,
+      "evidence": {
+        "host": {
+          "artifact": "build-r10-result.json",
+          "sha256": "13f82b9683225eeb4d81ad544660193687b694a5d25c466ee19da7f8d637b725"
+        },
+        "launch": {
+          "artifact": "build-r10-launch.json",
+          "sha256": "87285b474af88a82095fadc4b604a7e48eafccaf2c8c3e11b52b38405bb1bb13"
+        },
+        "stdout": {
+          "artifact": "owned-build-r10/stdout.log",
+          "sha256": "84f71f36b74f16e6c93f48c99e0edb19f1fa68aac3481f1c1e8b3eef263b1a26"
+        }
+      }
+    },
+    "compiled-r22": {
+      "phase": "compiled-r22",
+      "status": "PASS",
+      "operationMs": 18689,
+      "exitCode": 0,
+      "sourceInputs": 1222,
+      "unchangedInputs": true,
+      "sourceInventorySha256": "1bafb096d7b14d09f9289a6c1c36bc1795de91cca0135e1c8d193973f8fb5533",
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "passMarkers": [],
+      "stdoutOverflow": false,
+      "stderrOverflow": false,
+      "evidence": {
+        "host": {
+          "artifact": "compiled-r22-result.json",
+          "sha256": "38a9c971229b2aced7110c3c133cad1ec525622956c21da6bac702924b2ea1fa"
+        },
+        "launch": {
+          "artifact": "compiled-r22-launch.json",
+          "sha256": "85b4289e9b7bca206eed46d2bd9552b4c9dd3c4548bd554453037aca3d5a7d45"
+        },
+        "stdout": {
+          "artifact": "owned-compiled-r22/stdout.log",
+          "sha256": "9464daec144f11b53f65b573bb205f4fd4406e8c99da9a009d35aaadf43a25ec"
+        }
+      }
+    },
+    "compiled-r23": {
+      "phase": "compiled-r23",
+      "status": "FAIL",
+      "operationMs": 147143,
+      "exitCode": 1,
+      "sourceInputs": 1222,
+      "unchangedInputs": true,
+      "sourceInventorySha256": "1bafb096d7b14d09f9289a6c1c36bc1795de91cca0135e1c8d193973f8fb5533",
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "passMarkers": [],
+      "stdoutOverflow": false,
+      "stderrOverflow": false,
+      "evidence": {
+        "host": {
+          "artifact": "compiled-r23-result.json",
+          "sha256": "3590c490b5ce286336f833239a361f7e2a8a46dde659532a9a538fa45569e99e"
+        },
+        "launch": {
+          "artifact": "compiled-r23-launch.json",
+          "sha256": "4faedd31d31d17e693ff49438c13b87feb68474158e65181b6957468fbc17b85"
+        },
+        "stdout": {
+          "artifact": "owned-compiled-r23/stdout.log",
+          "sha256": "13126de47262735d24e59fd847965131eab7e740f04c37d4fb2c3c6cf2a6cb30"
+        }
+      }
+    },
+    "compiled-r24": {
+      "phase": "compiled-r24",
+      "status": "FAIL",
+      "operationMs": 20230,
+      "exitCode": 1,
+      "sourceInputs": 1222,
+      "unchangedInputs": true,
+      "sourceInventorySha256": "fb499a22049e0cb0e09dbfbba8ff9784f2e01688775e1580537a80a355ada7f7",
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "passMarkers": [],
+      "stdoutOverflow": false,
+      "stderrOverflow": false,
+      "evidence": {
+        "host": {
+          "artifact": "compiled-r24-result.json",
+          "sha256": "76e37444806005ad62b6cbc1e37023a667c85f34354c10893e50a57ca291c446"
+        },
+        "launch": {
+          "artifact": "compiled-r24-launch.json",
+          "sha256": "78823665100e7d68ecbc22ab511ecd315370baa77402c1dc77497ac6eddf7596"
+        },
+        "stdout": {
+          "artifact": "owned-compiled-r24/stdout.log",
+          "sha256": "f1e5bc2926df854e9e41b4862a020bdf7a2c2be48248d1ba2eab07086de036b8"
+        }
+      }
+    },
+    "compiled-r28": {
+      "phase": "compiled-r28",
+      "status": "PASS",
+      "operationMs": 16840,
+      "exitCode": 0,
+      "sourceInputs": 1222,
+      "unchangedInputs": true,
+      "sourceInventorySha256": "fb499a22049e0cb0e09dbfbba8ff9784f2e01688775e1580537a80a355ada7f7",
+      "cleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "passMarkers": [],
+      "stdoutOverflow": false,
+      "stderrOverflow": false,
+      "evidence": {
+        "host": {
+          "artifact": "compiled-r28-result.json",
+          "sha256": "000d29a405e2a000f6ef05859531ff7acc288e3588cca32a1989f83c44b514a5"
+        },
+        "launch": {
+          "artifact": "compiled-r28-launch.json",
+          "sha256": "a1fd5e26b447975c1fd461dc69031308491dfac3771440984506e8be69d3541e"
+        },
+        "stdout": {
+          "artifact": "owned-compiled-r28/stdout.log",
+          "sha256": "1f4fbf5c5b6037c44ce3843e928d7c27f07abfe0c3427e5c26d73fc92f0c4604"
+        }
+      }
+    }
+  },
+  "finalGwt": {
+    "phase": "build-r10",
+    "permutations": 5,
+    "compiled": true,
+    "linked": true
+  },
+  "compiledE06": {
+    "phase": "compiled-r28",
+    "semantic": {
+      "status": "PASS",
+      "scope": "COMPILED_MECHANICS_ONLY",
+      "fidelity": "NOT_QUALIFIED",
+      "forcedFailure": false,
+      "cases": [
+        {
+          "model": "DETAILED",
+          "acceptedSteps": 40000,
+          "elapsedSeconds": 0.20000000000012963,
+          "timestepSeconds": 5e-06,
+          "trials": 124366,
+          "finiteTerminalSamples": 42076,
+          "playerOwnerRestored": true,
+          "candidateDisposed": true,
+          "forcedAfterAcceptedSolve": false
+        },
+        {
+          "model": "AVERAGED",
+          "acceptedSteps": 500,
+          "elapsedSeconds": 0.20000000000000162,
+          "timestepSeconds": 0.0004,
+          "trials": 2114,
+          "finiteTerminalSamples": 416,
+          "playerOwnerRestored": true,
+          "candidateDisposed": true,
+          "forcedAfterAcceptedSolve": false
+        }
+      ],
+      "playerOwnerRestored": true,
+      "candidateDisposed": true
+    },
+    "forcedCleanup": {
+      "status": "PASS",
+      "scope": "COMPILED_MECHANICS_ONLY",
+      "fidelity": "NOT_QUALIFIED",
+      "forcedFailure": true,
+      "cases": [
+        {
+          "model": "DETAILED",
+          "acceptedSteps": 40000,
+          "elapsedSeconds": 0.20000000000012963,
+          "timestepSeconds": 5e-06,
+          "trials": 124366,
+          "finiteTerminalSamples": 42076,
+          "playerOwnerRestored": true,
+          "candidateDisposed": true,
+          "forcedAfterAcceptedSolve": false
+        },
+        {
+          "model": "AVERAGED",
+          "acceptedSteps": 500,
+          "elapsedSeconds": 0.20000000000000162,
+          "timestepSeconds": 0.0004,
+          "trials": 2114,
+          "finiteTerminalSamples": 416,
+          "playerOwnerRestored": true,
+          "candidateDisposed": true,
+          "forcedAfterAcceptedSolve": true
+        }
+      ],
+      "playerOwnerRestored": true,
+      "candidateDisposed": true
+    },
+    "sourceSha256": "71afb3eb66c03606481ed0adf10b677c282c99ab1e8a7228e2b230733aba6b69",
+    "webSha256": "aa35807e6823ad8c9dee1908bed6b7f81d2a985db0ccbcb715fdabc7aa4a8811"
+  },
+  "preservedFailures": [
+    {
+      "phase": "compiled-r23",
+      "scope": "FIRST_FROZEN_PAIR_AFTER_CONTROLLED_SOURCE_REUSE",
+      "result": "FAIL; planned55 HYPOTHESES90.042s/376exactunits;40PASS52.489s/532."
+    },
+    {
+      "phase": "compiled-r24",
+      "scope": "TASK_READER_EXPECTATION",
+      "result": "FAIL; both actual compiled cases passed, but task reader expected5batches instead of4. Corrected independent census125+375steps at128/batch; finalcompiled-r28PASS."
+    },
+    {
+      "phase": "native-r69",
+      "scope": "WHOLE_HOST_OUTPUT_CAP",
+      "result": "FAIL;1MiB outer output cap. Task-owned retained scratch2818files/6dirs/13432894bytes/no reparse points; subsequent file-backed runnernative-r70PASS. No deletion or relabel."
+    }
+  ],
+  "Q30Diagnostics": {
+    "status": "THREE_INTERVAL_COST_CANARIES_ONLY_NOT_QUALIFICATION",
+    "seed": "10014",
+    "measuredAcceptedStepsEach": 6000,
+    "adaptiveRetriesEach": 0,
+    "renOpenBoundedTrials": 12,
+    "renOpenNewLocalVetoes": 0,
+    "conclusion": "No added convergence veto or retry work in these exact intervals; full ordinary generation regression remains unresolved."
+  },
+  "remaining": [
+    "Frozen6 browser cohort on400us pending.",
+    "60-part visible repair/retest pending.",
+    "Q30 seed10014 current deadline regression unresolved.",
+    "Long-session/inventory and actual modest-host proof pending.",
+    "Normal RB56 admission/HARD/normal session remain held."
+  ],
+  "historicalRisks": [
+    "Q30 unknown91.616s failure",
+    "Six missing scratch inventories",
+    "Late BLOCKED original release audit"
+  ],
+  "originalEightUntrackedPreserved": true,
+  "sanitization": "Selected neutral gate metrics, source hashes and relative raw artifacts; no personal paths, credentials, private proof payloads or process/profile/endpoints."
+}

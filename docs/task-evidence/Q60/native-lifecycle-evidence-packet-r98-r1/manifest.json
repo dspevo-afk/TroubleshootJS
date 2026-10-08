@@ -1,0 +1,39 @@
+{
+  "protocol": "Q60-NATIVE98-SANITIZED-PACKET-MANIFEST-1",
+  "files": [
+    {
+      "file": "inventory-receipt.txt",
+      "bytes": 963,
+      "sha256": "82e2ea8f5453a8e2503714067413297b33595c92841942392942bfcb7c450e14"
+    },
+    {
+      "file": "owner-receipt.txt",
+      "bytes": 68201,
+      "sha256": "82fdfdf26bf1fe634426822646d49c509210452f5b9689ccd2bc0cae2cd6084c"
+    },
+    {
+      "file": "packet.json",
+      "bytes": 12962,
+      "sha256": "443ebe456059a1804e7e2f9d007847a214111b9cb19ca4ab9dfb250e88de20bf"
+    },
+    {
+      "file": "README.txt",
+      "bytes": 2544,
+      "sha256": "692cf189562ec5bfaa61c8e84a32d6d2fedaf2815c91f698b206066d987196ba"
+    },
+    {
+      "file": "source-consumption-audit.json",
+      "bytes": 5158,
+      "sha256": "3c3bf2caaa2bfbe30f1587b996a10883efd1639ada458762afdf2dae46b00677"
+    },
+    {
+      "file": "visible-r6-static-review.json",
+      "bytes": 2781,
+      "sha256": "251eb1568be09cb66d8fe007bc8c25397a35047f02375435af46cfb5bcfc4497"
+    }
+  ],
+  "sourceReceiptCopiesByteIdentical": true,
+  "originalsUntouched": true,
+  "repositoryEdited": false,
+  "gatesRun": false
+}

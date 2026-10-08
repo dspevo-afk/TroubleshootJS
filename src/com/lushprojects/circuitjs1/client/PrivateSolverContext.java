@@ -24,6 +24,7 @@ final class PrivateSolverContext {
         try {
             snapshot.beginProof(sim);
             sim.elmList = graph;
+            sim.wireInfoList = null;
             sim.adjustables = new Vector<Adjustable>();
             sim.undoStack = new Vector<String>(); sim.redoStack = new Vector<String>();
             sim.generatedBoardInstance = null; sim.generatedChallengeController = null;

@@ -58,8 +58,8 @@ final class Task41SimulationSnapshot {
     private final HashMap<Point, CirSim.NodeMapEntry> nodeMapContents;
     private final HashMap<Point, Integer> postCountMap;
     private final HashMap<Point, Integer> postCountMapContents;
-    private final Vector<CirSim.WireInfo> wireInfoList;
-    private final Vector<CirSim.WireInfo> wireInfoListContents;
+    private final CirSim.WireInfo[] wireInfoList;
+    private final CirSim.WireInfo[] wireInfoListContents;
     private final double[][] circuitMatrix;
     private final double[][] circuitMatrixContents;
     private final double[] circuitRightSide;
@@ -141,6 +141,7 @@ final class Task41SimulationSnapshot {
     private final boolean dcAnalysisFlag;
     private final boolean simRunning;
     private final boolean circuitNonLinear;
+    private final boolean luBaselineBounded, luCurrentBounded;
     private final boolean adjustTimeStep;
     private final int voltageSourceCount;
     private final int circuitMatrixSize;
@@ -306,6 +307,8 @@ final class Task41SimulationSnapshot {
         dcAnalysisFlag = sim.dcAnalysisFlag;
         simRunning = sim.simRunning;
         circuitNonLinear = sim.circuitNonLinear;
+        luBaselineBounded = sim.luBaselineBounded;
+        luCurrentBounded = sim.luCurrentBounded;
         adjustTimeStep = sim.adjustTimeStep;
         voltageSourceCount = sim.voltageSourceCount;
         circuitMatrixSize = sim.circuitMatrixSize;
@@ -486,6 +489,8 @@ final class Task41SimulationSnapshot {
 
         restoreGraphAndRuntimeState(sim);
         maybeInjectRestoreFailure(RESTORE_FAILURE_GRAPH);
+        // UI readiness queries must see this exact restored graph before refresh.
+        sim.solverExecutor.snapshotRestored(solverState);
 
         sim.refreshGeneratedUiForDeveloperVerification();
         sim.refreshChallengeInteractionState();
@@ -532,6 +537,9 @@ final class Task41SimulationSnapshot {
         } catch (Throwable ignored) { }
         try {
             restoreGraphAndRuntimeState(sim);
+        } catch (Throwable ignored) { }
+        try {
+            sim.solverExecutor.snapshotRestored(solverState);
         } catch (Throwable ignored) { }
         try {
             sim.refreshGeneratedUiForDeveloperVerification();
@@ -667,6 +675,8 @@ final class Task41SimulationSnapshot {
         sim.dcAnalysisFlag = dcAnalysisFlag;
         sim.simRunning = simRunning;
         sim.circuitNonLinear = circuitNonLinear;
+        sim.luBaselineBounded = luBaselineBounded;
+        sim.luCurrentBounded = luCurrentBounded;
         sim.adjustTimeStep = adjustTimeStep;
         sim.voltageSourceCount = voltageSourceCount;
         sim.circuitMatrixSize = circuitMatrixSize;
@@ -716,7 +726,7 @@ final class Task41SimulationSnapshot {
         restoreArray(voltageSources, voltageSourcesContents);
         restoreMap(nodeMap, nodeMapContents);
         restoreMap(postCountMap, postCountMapContents);
-        restoreVector(wireInfoList, wireInfoListContents);
+        restoreArray(wireInfoList, wireInfoListContents);
         restoreMatrix(circuitMatrix, circuitMatrixContents);
         restoreArray(circuitRightSide, circuitRightSideContents);
         restoreArray(lastNodeVoltages, lastNodeVoltagesContents);
@@ -830,6 +840,7 @@ final class Task41SimulationSnapshot {
                 !sameDouble(sim.timeStepAccum, timeStepAccum) || sim.timeStepCount != timeStepCount ||
                 sim.analyzeFlag != analyzeFlag || sim.dcAnalysisFlag != dcAnalysisFlag ||
                 sim.circuitNonLinear != circuitNonLinear || sim.voltageSourceCount != voltageSourceCount ||
+                sim.luBaselineBounded != luBaselineBounded || sim.luCurrentBounded != luCurrentBounded ||
                 sim.circuitMatrixSize != circuitMatrixSize ||
                 sim.circuitMatrixFullSize != circuitMatrixFullSize || sim.circuitNeedsMap != circuitNeedsMap ||
                 !sameString(sim.stopMessage, stopMessage) || sim.converged != converged ||
@@ -934,6 +945,13 @@ final class Task41SimulationSnapshot {
     private static int[] copy(int[] source) {
         if (source == null) return null;
         int[] result = new int[source.length];
+        for (int index = 0; index < source.length; index++) result[index] = source[index];
+        return result;
+    }
+
+    private static CirSim.WireInfo[] copy(CirSim.WireInfo[] source) {
+        if (source == null) return null;
+        CirSim.WireInfo[] result = new CirSim.WireInfo[source.length];
         for (int index = 0; index < source.length; index++) result[index] = source[index];
         return result;
     }

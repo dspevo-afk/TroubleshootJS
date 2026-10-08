@@ -146,7 +146,7 @@ try:
                         click('New board')
                         state, seconds, samples = prepare(family, row)
                         assert state['screen'] == 'TICKET', row
-                        assert state['replay'].startswith('tsj-alpha/4/' + family['profile'] + '/' + family['id'] + '/'), row
+                        assert state['replay'].startswith('tsj-alpha/5/' + family['profile'] + '/' + family['id'] + '/'), row
                         assert state['replay'] not in replays, row
                         replays.add(state['replay'])
                         saved[family['id']] = state['replay']
@@ -213,9 +213,9 @@ try:
                     raise
             assert len(result['replays']) == 2 and all(
                 row['outcome'] == 'PASS' for row in result['replays'])
-            # Stale v3 Q30 codes are rejected at parse time before session/board mutation.
+            # Prior v4 Q30 codes are rejected at parse time before session/board mutation.
             before_stale = snapshot()
-            stale_replay = 'tsj-alpha/3/MEDIUM/RB30_CONTROL/13'
+            stale_replay = 'tsj-alpha/4/MEDIUM/RB30_CONTROL/13'
             page.get_by_text('Open a saved replay code', exact=True).click()
             page.get_by_label('Open current replay', exact=True).fill(stale_replay)
             click('Prepare replay')
@@ -235,10 +235,10 @@ try:
                 'noGenerationStarted': True, 'prelaunchStateUnchanged': True,
             }
 
-            # The current v4 request remains a separate Q30 normal-admission canary.
+            # The current v5 request remains a separate Q30 normal-admission canary.
             before_blocked = snapshot()
             page.get_by_label('Open current replay', exact=True).fill(
-                'tsj-alpha/4/MEDIUM/RB30_CONTROL/13')
+                'tsj-alpha/5/MEDIUM/RB30_CONTROL/13')
             click('Prepare replay')
             page.wait_for_function(
                 "() => window.tsjProduct.snapshot(false).screen === 'ERROR'", timeout=15000)
@@ -247,7 +247,7 @@ try:
             assert blocked['replay'] == before_blocked['replay']
             assert 'progress' not in blocked
             result['blockedFamilyReplay'] = {
-                'family': 'RB30_CONTROL', 'replayEpoch': 'tsj-alpha/4',
+                'family': 'RB30_CONTROL', 'replayEpoch': 'tsj-alpha/5',
                 'outcome': 'EXPECTED_BLOCKED', 'screen': blocked['screen'],
                 'predecessorReplay': blocked['replay'],
                 'predecessorIsolated': blocked['isolated'], 'noGenerationStarted': True,

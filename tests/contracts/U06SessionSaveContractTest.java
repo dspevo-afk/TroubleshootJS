@@ -23,7 +23,7 @@ public final class U06SessionSaveContractTest {
     /** Frozen independent wire bytes for a compiled-environment parity consumer. */
     static String crossEnvironmentFixture() {
         return "tsj-session/1\ntsj-session-model/1\nrestart\n" +
-            "47:tsj-alpha/4/EASY/LED_INDICATOR/9007199254740993\n" +
+            "47:tsj-alpha/5/EASY/LED_INDICATOR/9007199254740993\n" +
             "13:fixture-build\n19:fixture-realization\n13:fixture-state\n" +
             "HISTORY\n1\n5:RESET\n0:\n0:\n0:\n" +
             "SOURCES\n1\n4:MAIN\n9:CONNECTED\n16:3fd0000000000000\n" +
@@ -41,7 +41,7 @@ public final class U06SessionSaveContractTest {
         stress.add(new PlayerSessionSave.Stress("R1", .5, 4, false, Double.NaN));
         Vector<PlayerSessionSave.Fuse> fuses = new Vector<PlayerSessionSave.Fuse>();
         fuses.add(new PlayerSessionSave.Fuse("F1", .125, false));
-        return new PlayerSessionSave("tsj-alpha/4/EASY/LED_INDICATOR/9007199254740993",
+        return new PlayerSessionSave("tsj-alpha/5/EASY/LED_INDICATOR/9007199254740993",
             "fixture-build", "fixture-realization", "fixture-state", operations, sources, stress, fuses);
     }
 
@@ -64,7 +64,7 @@ public final class U06SessionSaveContractTest {
             "3fd0000000000000".equals(PlayerSessionSave.number(.25)), "numeric bits have independent expectations");
         for (String seed : new String[] {"0", "-1", "9007199254740993", "-9007199254740993",
                 "-9223372036854775808", "9223372036854775807"}) {
-            PlayerSessionSave exact = new PlayerSessionSave("tsj-alpha/4/EASY/LED_INDICATOR/" + seed,
+            PlayerSessionSave exact = new PlayerSessionSave("tsj-alpha/5/EASY/LED_INDICATOR/" + seed,
                 "build", "realization\nwith:delimiters", "signature\nHISTORY\n0\nEND\n",
                 save.getHistory(), save.getSources(), save.getStress(), save.getFuses());
             PlayerSessionSave restored = PlayerSessionSave.parse(exact.encode());
@@ -124,7 +124,7 @@ public final class U06SessionSaveContractTest {
         for (final String broken : new String[] {
                 valid + "x", valid + "END\n", valid.replace("tsj-session/1", "tsj-session/0"),
                 valid.replace("tsj-session-model/1", "tsj-session-model/2"),
-                valid.replace("restart\n", "exact\n"), valid.replace("tsj-alpha/4", "tsj-alpha/3"),
+                valid.replace("restart\n", "exact\n"), valid.replace("tsj-alpha/5", "tsj-alpha/4"),
                 valid.replace("47:", "047:"), valid.replace("47:", "-1:"),
                 valid.replace("47:", "2147483648:"), valid.replace("47:", "48:"),
                 valid.replace("HISTORY\n1\n", "HISTORY\n01\n"),
@@ -428,7 +428,7 @@ public final class U06SessionSaveContractTest {
     private static PlayerSessionSave create(Vector<PlayerSessionSave.Operation> history,
             Vector<PlayerSessionSave.Source> sources, Vector<PlayerSessionSave.Stress> stress,
             Vector<PlayerSessionSave.Fuse> fuses) {
-        return new PlayerSessionSave("tsj-alpha/4/EASY/LED_INDICATOR/0", "build", "realization", "state", history, sources, stress, fuses);
+        return new PlayerSessionSave("tsj-alpha/5/EASY/LED_INDICATOR/0", "build", "realization", "state", history, sources, stress, fuses);
     }
     private static String repeated(char character, int count) {
         char[] chars = new char[count]; java.util.Arrays.fill(chars, character); return new String(chars);

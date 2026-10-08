@@ -123,7 +123,7 @@ class CCCSElm extends VCCSElm {
                     if (Math.abs(dv) < 1e-6)
                         dv = 1e-6;
                     setCurrentExprValue(i, cur);
-                    double v = expr.eval(exprState);
+                    double v = v0;
                     setCurrentExprValue(i, cur-dv);
                     double v2 = expr.eval(exprState);
                     double dx = (v-v2)/dv;

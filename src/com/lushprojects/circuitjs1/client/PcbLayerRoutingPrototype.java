@@ -243,7 +243,8 @@ final class PcbLayerRoutingPrototype {
             pads=layout.getPads().toArray(new PcbPadPlacement[0]);
             parts=layout.getComponents().toArray(new PcbComponentPlacement[0]);
             for(int layer=0;layer<2;layer++) {
-                faces[layer]=new PcbNetRouter.Router(layout,board,r,pass,observer,PcbCopperLayer.values()[layer]);
+                faces[layer]=new PcbNetRouter.Router(layout,board,r,pass,observer,PcbCopperLayer.values()[layer],
+                    policy.transitions>0?PcbTwoLayerRules.VIA_LAND:0);
                 faces[layer].factoryUnderpasses=policy.underpasses;
             }
         }
@@ -369,8 +370,9 @@ final class PcbLayerRoutingPrototype {
                 observer.check(pass);
             }
             void offerStep(Node current,int n,int direction) {
-                if(!faces[current.layer].permitsLayerStep(x(current.cell),y(current.cell),x(n),y(n),net,start,root) ||
-                        !rules.permits(net,PcbConductorBuilder.stroke(x(current.cell),y(current.cell),x(n),y(n)))) return;
+                // The face predicate already checks this exact domain corridor.
+                // In-grid adjacent centers keep the 9-unit stroke inside the validated outline.
+                if(!faces[current.layer].permitsLayerStep(x(current.cell),y(current.cell),x(n),y(n),net,start,root)) return;
                 int cost=current.cost+GRID+(current.layer==primary?0:policy.secondaryCost)+
                     (current.direction!=4 && current.direction!=direction?35:0);
                 offer(queue,best,new Node(n,current.layer,direction,current.transitions,cost,
